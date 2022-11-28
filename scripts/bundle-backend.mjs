@@ -2,38 +2,37 @@
 
 // @ts-check
 import {rollup} from 'rollup';
+import alias from '@rollup/plugin-alias';
+import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
+import {nodeResolve} from '@rollup/plugin-node-resolve';
+
+const [entry, outfile] = process.argv.slice(2);
 
 /** @type {import('rollup').RollupOptions} */
-const inputOptions = {};
+const inputOptions = {
+  external: ['rn-bridge'],
+  input: entry,
+  plugins: [
+    commonjs(),
+    nodeResolve({
+      preferBuiltins: true,
+    }),
+    json(),
+    alias(),
+  ],
+};
 
-const outputOptionsList = [];
+/** @type {import('rollup').OutputOptions} */
+const outputOptions = {
+  file: outfile,
+  format: 'cjs',
+};
 
 async function build() {
-  /** @type {import('rollup').RollupBuild} */
-  let bundle;
-  let buildFailed = false;
-
-  try {
-    bundle = await rollup(inputOptions);
-
-    await generateOutputs(bundle);
-  } catch (err) {
-    buildFailed = true;
-
-    console.error(error);
-  }
-
-  if (bundle) {
-    await bundle.close();
-  }
-
-  process.exit(buildFailed ? 1 : 0);
+  const bundle = await rollup(inputOptions);
+  await bundle.write(outputOptions);
+  await bundle.close();
 }
 
-/**
- * @param {import('rollup').RollupBuild} bundle
- */
-async function generateOutputs(bundle) {
-  for (const outputOptions of outputOptionsList) {
-  }
-}
+build();

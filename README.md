@@ -1,4 +1,4 @@
-# Mapeo + Mapeo Core Next Example
+# React Native + Mapeo Core Next Example
 
 > Minimal(ish) example of integrating [Mapeo Core Next](https://github.com/digidem/mapeo-core-next) into React Native
 

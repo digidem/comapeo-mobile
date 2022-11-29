@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "build": "node ./scripts/bundle-backend.mjs index.js index.bundle.js",
-    "lint": "tsc"
+    "lint": "tsc",
+    "postinstall": "patch-package"
   },
   "author": "Digital Democracy",
   "license": "MIT",
@@ -23,6 +24,7 @@
     "@tsconfig/node16": "^1.0.3",
     "@types/debug": "^4.1.7",
     "@types/node": "^16.18.3",
+    "patch-package": "^6.5.0",
     "rollup": "^3.5.0",
     "tslib": "^2.4.1",
     "typescript": "^4.8.4"

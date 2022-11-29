@@ -29,7 +29,7 @@ const App = () => {
 
 function useNodejsMobile() {
   React.useEffect(() => {
-    nodejs.start('main.js');
+    nodejs.start('loader.js');
 
     const subscription = nodejs.channel.addListener('message', msg => {
       console.log('RECEIVED MESSAGE', msg);

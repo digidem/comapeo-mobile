@@ -32,4 +32,26 @@ mkdir -p ./nodejs-assets/nodejs-project/node_modules
 echo "Installing dependencies..."
 cd ./nodejs-assets/backend && npm ci
 
-node 
+echo -en "Creating bundle..."
+npm run build
+cd ../..
+echo -en " done.\n"
+
+echo -en "Keeping whitelisted files..."
+declare -a keepThese=("package.json" "index.bundle.js" "loader.js")
+for x in "${keepThese[@]}"; do
+  if [ -e "./nodejs-assets/backend/$x" ]; then
+    mv "./nodejs-assets/backend/$x" "./nodejs-assets/nodejs-project/$x"
+  fi
+done
+
+# Rename index.bundle.js to index.js after it's moved to nodejs-project/
+mv "./nodejs-assets/nodejs-project/index.bundle.js" "./nodejs-assets/nodejs-project/index.js"
+
+echo -en " done.\n"
+
+# TODO: Move any native deps to ./nodejs-assets/nodejs-project/node_modules
+
+echo -en "Cleanup..."
+rm -rf ./nodejs-assets/backend
+echo -en " done.\n"

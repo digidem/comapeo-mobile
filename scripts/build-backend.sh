@@ -55,10 +55,35 @@ done
 
 # Rename index.bundle.js to index.js after it's moved to nodejs-project/
 mv "./nodejs-assets/nodejs-project/index.bundle.js" "./nodejs-assets/nodejs-project/index.js"
-
 echo -en " done.\n"
 
-# TODO: Move any native deps to ./nodejs-assets/nodejs-project/node_modules
+echo -en "Keeping some node modules..."
+declare -a keepThese=(
+  # We need to leave this in place so that nodejs-mobile finds it and builds it
+  ".bin"
+  "better-sqlite3"
+  "crc-universal"
+  "fs-native-extensions"
+  "napi-build-utils"
+  "napi-macros"
+  "node-gyp-build"
+  "quickbit-universal"
+  "simdle-universal"
+  "sodium-native"
+  "udx-native"
+)
+for x in "${keepThese[@]}"; do
+  if [ -e "./nodejs-assets/backend/node_modules/$x" ]; then
+    dest="./nodejs-assets/nodejs-project/node_modules/$x"
+    mkdir -p "${dest%/*}"
+    mv "./nodejs-assets/backend/node_modules/$x" "${dest}"
+  fi
+done
+echo -en " done.\n"
+
+echo -en "Removing unused .bin aliases..."
+find "./nodejs-assets/nodejs-project/node_modules/.bin" ! -iname "node-gyp-build*" \( -type f -o -type l \) -exec rm -f {} +
+echo -en " done.\n"
 
 echo -en "Cleanup..."
 rm -rf ./nodejs-assets/backend

@@ -13,7 +13,11 @@
   "license": "MIT",
   "dependencies": {
     "@mapeo/core": "github:digidem/mapeo-core-next",
-    "debug": "^4.3.4"
+    "better-sqlite3": "^7.6.2",
+    "corestore": "^6.2.1",
+    "debug": "^4.3.4",
+    "mapeo-schema": "^2.0.2",
+    "random-access-memory": "^6.1.0"
   },
   "devDependencies": {
     "@rollup/plugin-alias": "^4.0.2",
@@ -24,6 +28,7 @@
     "@tsconfig/node16": "^1.0.3",
     "@types/debug": "^4.1.7",
     "@types/node": "^16.18.3",
+    "node-gyp-build": "^4.5.0",
     "patch-package": "^6.5.0",
     "rollup": "^3.5.0",
     "tslib": "^2.4.1",

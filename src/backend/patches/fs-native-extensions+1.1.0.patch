@@ -1,26 +1,17 @@
 diff --git a/node_modules/fs-native-extensions/binding.gyp b/node_modules/fs-native-extensions/binding.gyp
-index f1f518c..5537e19 100644
+index f1f518c..f91caeb 100644
 --- a/node_modules/fs-native-extensions/binding.gyp
 +++ b/node_modules/fs-native-extensions/binding.gyp
-@@ -36,6 +36,22 @@
+@@ -36,6 +36,13 @@
            './src/posix.c',
          ],
        }],
-+      ['OS == "android"', {
++      ['OS == "android" or OS=="ios"', {
 +        'sources': [
 +          './src/linux.c'
 +        ],
 +        'cflags': [ '-fPIC' ],
-+        'ldflags': [ '-fPIC' ],
-+        'cflags!': [
-+          '-fno-tree-vrp',
-+          '-mfloat-abi=hard',
-+          '-fPIE'
-+        ],
-+        'ldflags!': [ '-fPIE' ]
-+      }],
-+      ['target_arch == "arm"', {
-+        'cflags': [ '-mfloat-abi=hard' ]
++        'ldflags': [ '-fPIC' ]
 +      }]
      ],
    }]

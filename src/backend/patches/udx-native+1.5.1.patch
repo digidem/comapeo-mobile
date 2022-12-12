@@ -1,0 +1,25 @@
+diff --git a/node_modules/udx-native/binding.gyp b/node_modules/udx-native/binding.gyp
+index 04a3389..3dbfa74 100644
+--- a/node_modules/udx-native/binding.gyp
++++ b/node_modules/udx-native/binding.gyp
+@@ -32,6 +32,10 @@
+           './src/io_posix.c',
+         ],
+       }],
++      ['OS=="android" or OS=="ios"', {
++        'cflags': ['-fPIC'],
++        'ldflags': ['-fPIC']
++      }]
+     ],
+     'xcode_settings': {
+       'OTHER_CFLAGS': [
+diff --git a/node_modules/udx-native/lib/binding.js b/node_modules/udx-native/lib/binding.js
+index b5517d1..f13fecf 100644
+--- a/node_modules/udx-native/lib/binding.js
++++ b/node_modules/udx-native/lib/binding.js
+@@ -1,4 +1,4 @@
+ const path = require('path')
+ const load = require('node-gyp-build')
+ 
+-module.exports = load(path.join(__dirname, '..'))
++module.exports = require('bindings')({bindings: 'udx_native', name: 'udx-native'})

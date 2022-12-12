@@ -1,0 +1,15 @@
+diff --git a/node_modules/sodium-native/binding.gyp b/node_modules/sodium-native/binding.gyp
+index 2d29097..0e8066e 100644
+--- a/node_modules/sodium-native/binding.gyp
++++ b/node_modules/sodium-native/binding.gyp
+@@ -20,6 +20,10 @@
+             'SODIUM_EXPORT',
+           ]
+         }],
++        ['OS == "android" or OS=="ios"', {
++          'cflags': [ '-fPIC' ],
++          'ldflags': [ '-fPIC' ]
++        }]
+       ],
+       'xcode_settings': {
+         'OTHER_CFLAGS': [

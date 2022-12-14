@@ -12,7 +12,7 @@ function onFailure() {
 }
 
 # Ensure we start in the right place
-dir0="$( cd "$( dirname "$0" )" && pwd )"
+dir0="$(cd "$(dirname "$0")" && pwd)"
 repo_root="$(dirname "$dir0")"
 cd "$repo_root"
 
@@ -81,9 +81,13 @@ for x in "${keepThese[@]}"; do
 done
 echo -en " done.\n"
 
-echo -en "Removing unused .bin aliases..."
-find "./nodejs-assets/nodejs-project/node_modules/.bin" ! -iname "node-gyp-build*" \( -type f -o -type l \) -exec rm -f {} +
-echo -en " done.\n"
+# Reduce apk size by removing prebuild/ directories found in native deps
+rm -rd ./nodejs-assets/nodejs-project/node_modules/**/prebuilds/
+
+# TODO: Uncomment and maybe account for other needed executables
+# echo -en "Removing unused .bin aliases..."
+# find "./nodejs-assets/nodejs-project/node_modules/.bin" ! -iname "node-gyp-build*" \( -type f -o -type l \) -exec rm -f {} +
+# echo -en " done.\n"
 
 echo -en "Cleanup..."
 rm -rf ./nodejs-assets/backend

@@ -11,7 +11,7 @@ shopt -s extdebug extglob
 IFS=$'\n\t'
 
 OR='\033[0;33m' # Orange
-NC='\033[0m' # No Color
+NC='\033[0m'    # No Color
 
 trap 'onFailure $?' ERR
 
@@ -33,10 +33,19 @@ if [[ -z "${ANDROID_SDK_ROOT}" ]]; then
 fi
 
 ANDROID_NDK_ROOT="${ANDROID_SDK_ROOT}/ndk/${NDK_VERSION}"
-project_dir=$( cd "$( dirname "$(dirname "${BASH_SOURCE[0]}")")" ; pwd -P )
+project_dir=$(
+  cd "$(dirname "$(dirname "${BASH_SOURCE[0]}")")"
+  pwd -P
+)
 project_npm_bin="${project_dir}/node_modules/.bin"
-nodejs_mobile_dir=$( cd "${project_dir}"; node -e 'process.stdout.write(require("path").dirname(require.resolve("nodejs-mobile-react-native/package.json")));' )
-nodejs_mobile_gyp_dir=$( cd "${project_dir}"; node -e 'process.stdout.write(require("path").dirname(require.resolve("nodejs-mobile-gyp/package.json")));' )
+nodejs_mobile_dir=$(
+  cd "${project_dir}"
+  node -e 'process.stdout.write(require("path").dirname(require.resolve("nodejs-mobile-react-native/package.json")));'
+)
+nodejs_mobile_gyp_dir=$(
+  cd "${project_dir}"
+  node -e 'process.stdout.write(require("path").dirname(require.resolve("nodejs-mobile-gyp/package.json")));'
+)
 node_gyp="${nodejs_mobile_gyp_dir}/bin/node-gyp.js"
 
 # export PATH="${project_npm_bin}:$PATH"

@@ -34,6 +34,8 @@ echo -e "Building native modules for \"$MODULE\" ($abi_name)\n"
 
 echo -e "(1) Starting task CopyNodeProjectAssetsFolder\n"
 
+mkdir -p $ROOT_PROJECT_BUILD_DIR/nodejs-assets/nodejs-project
+
 cp -fR $ROOT_PROJECT_PROJECT_DIR/../nodejs-assets/nodejs-project/ \
   $ROOT_PROJECT_BUILD_DIR/nodejs-assets/nodejs-project/
 

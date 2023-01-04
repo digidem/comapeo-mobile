@@ -207,7 +207,7 @@ declare $CARGO_TARGET_LINKER_ENV_VAR="$npm_toolchain_link"
 TOOLCHAIN="$toolchain_path"
 AR="$npm_toolchain_ar"
 CC="$npm_toolchain_cc"
-CX="$npm_toolchain_cxx"
+CXX="$npm_toolchain_cxx"
 LINK="$npm_toolchain_link"
 GYP_DEFINES="$npm_gyp_defines"
 

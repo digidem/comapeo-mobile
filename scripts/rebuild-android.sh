@@ -34,8 +34,12 @@ fi
 
 ANDROID_NDK_ROOT="${ANDROID_SDK_ROOT}/ndk/${NDK_VERSION}"
 project_dir=$( cd "$( dirname "$(dirname "${BASH_SOURCE[0]}")")" ; pwd -P )
-project_npm_bin=$( cd "$project_dir"; npm bin )
-nodejs_mobile_dir=$( node -e 'process.stdout.write(require("path").dirname(require.resolve("nodejs-mobile-react-native")));' )
+project_npm_bin="${project_dir}/node_modules/.bin"
+nodejs_mobile_dir=$( cd "${project_dir}"; node -e 'process.stdout.write(require("path").dirname(require.resolve("nodejs-mobile-react-native/package.json")));' )
+nodejs_mobile_gyp_dir=$( cd "${project_dir}"; node -e 'process.stdout.write(require("path").dirname(require.resolve("nodejs-mobile-gyp/package.json")));' )
+node_gyp="${nodejs_mobile_gyp_dir}/bin/node-gyp.js"
+
+# export PATH="${project_npm_bin}:$PATH"
 
 echo -e "Building native modules for \"$MODULE\" ($ARCH)\n"
 
@@ -109,7 +113,8 @@ export npm_config_nodedir="$nodejs_mobile_dir/android/libnode"
 export npm_config_arch="$ARCH"
 export npm_config_platform="android"
 export npm_config_format="make-android"
-export npm_config_node_gyp="${project_npm_bin}/nodejs-mobile-gyp"
+export npm_config_node_gyp="${node_gyp}"
+export npm_config_loglevel="silly"
 
 export CARGO_BUILD_TARGET="$cargo_build_target"
 
@@ -122,7 +127,7 @@ declare -x "$CARGO_TARGET_LINKER_ENV_VAR"="$npm_toolchain_link"
 export TOOLCHAIN="$toolchain_path"
 export AR="$npm_toolchain_ar"
 export CC="$npm_toolchain_cc"
-export CX="$npm_toolchain_cxx"
+export CXX="$npm_toolchain_cxx"
 export LINK="$npm_toolchain_link"
 export GYP_DEFINES="$npm_gyp_defines"
 
@@ -131,9 +136,10 @@ printenv | grep "CARGO_.*"
 printenv | grep "TOOLCHAIN=.*"
 printenv | grep "AR=.*"
 printenv | grep "CC=.*"
-printenv | grep "CX=.*"
+printenv | grep "CXX=.*"
 printenv | grep "LINK=.*"
 printenv | grep "GYP_DEFINES=.*"
+printenv | grep "^PATH=.*"
 
 ### 2. Build npm module
 
@@ -143,4 +149,4 @@ npm --verbose rebuild --build-from-source "${MODULE}"
 
 ###
 
-echo "All done! Check $BUILD_ASSETS_OUTPUT_DIR/node_modules/$MODULE"
+echo "All done!"

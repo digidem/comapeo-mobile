@@ -7,7 +7,7 @@
 1. Pre-requisites needed:
 
    - Install [Node](https://nodejs.org), ideally through a proper node version manager such as [nvm](https://github.com/nvm-sh/nvm), [fnm](https://github.com/Schniz/fnm), or [asdf](https://asdf-vm.com/)
-     - This project currently uses Node v16 with npm v8
+     - This project currently uses Node v16 with **npm v6**
    - Follow instructions for setting up dev environment: https://reactnative.dev/docs/environment-setup
 
 2. Install deps: `npm install`

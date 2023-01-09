@@ -1,15 +1,161 @@
-diff --git a/node_modules/sodium-native/binding.gyp b/node_modules/sodium-native/binding.gyp
-index 2d29097..0e8066e 100644
---- a/node_modules/sodium-native/binding.gyp
-+++ b/node_modules/sodium-native/binding.gyp
-@@ -20,6 +20,10 @@
-             'SODIUM_EXPORT',
-           ]
-         }],
-+        ['OS == "android" or OS=="ios"', {
-+          'cflags': [ '-fPIC' ],
-+          'ldflags': [ '-fPIC' ]
-+        }]
+diff --git a/node_modules/sodium-native/deps/bin.js b/node_modules/sodium-native/deps/bin.js
+index 086a757..38b6f4d 100755
+--- a/node_modules/sodium-native/deps/bin.js
++++ b/node_modules/sodium-native/deps/bin.js
+@@ -9,6 +9,7 @@ const path = require('path')
+ const os = require('os')
+ 
+ const IS_WINDOWS = process.platform === 'win32'
++
+ const VERSION = '1.0.18'
+ const VS = 'v141'
+ const MACOSX_DEPLOYMENT_TARGET = '10.10'
+@@ -17,6 +18,7 @@ const UNIX = `https://download.libsodium.org/libsodium/releases/libsodium-${VERS
+ const WIN = `https://download.libsodium.org/libsodium/releases/libsodium-${VERSION}-msvc.zip`
+ 
+ const UNIX_OUT = path.join(__dirname, 'unix')
++const ANDROID_OUT = path.join(__dirname, 'android')
+ const WIN_OUT = path.join(__dirname, 'win')
+ 
+ const TMP = path.join(__dirname, 'tmp')
+@@ -39,8 +41,10 @@ const build = arg('clean')
+   ? clean
+   : arg('all')
+     ? all
+-    : (IS_WINDOWS ? win : unix)
++    // : (IS_WINDOWS ? win : unix)
++    : android
+ 
++console.log(process.env)
+ start()
+ 
+ async function start () {
+@@ -51,7 +55,7 @@ async function start () {
+     console.error(err.stack)
+     process.exit(1)
+   }
+-  await rmf(TMP)
++  // await rmf(TMP)
+   if (arg('gyp')) {
+     await nodeGyp()
+   }
+@@ -60,6 +64,20 @@ async function start () {
+ async function all () {
+   await unix()
+   await win()
++  await android()
++}
++
++async function android() {
++  await fetchUnix()
++  await buildAndroid()
++
++  if (arg('print-lib')) {
++    console.log(path.join(ANDROID_OUT, 'arm64/lib/libsodium.so'))
++  }
++
++  if (arg('print-include')) {
++    console.log(path.join(ANDROID_OUT, 'arm64/include'))
++  }
+ }
+ 
+ async function unix () {
+@@ -109,6 +127,51 @@ async function nodeGyp () {
+   await run(['node-gyp' + (IS_WINDOWS ? '.cmd' : ''), 'rebuild', '-v'], { cwd: path.join(__dirname, '..') })
+ }
+ 
++async function buildAndroid (arch = 'arm64') {
++  if (!['arm', 'arm64'].includes(arch)) throw new Error("Only arm and arm64 supported for Android")
++
++  // await useBuildScript()
++  await useConfigure()
++
++  async function useBuildScript () {
++    const outputDir = path.join(ANDROID_OUT, arch)
++    const outputLibDir = path.join(outputDir, 'lib')
++    const outputIncludeDir = path.join(outputDir, 'include')
++
++    await fs.mkdir(path.join(outputDir, 'lib'), {recursive: true})
++
++    const soFinalFilePath = path.join(outputLibDir, 'libsodium.so')
++
++    try {
++      await fs.access(soFinalFilePath)
++      return
++    } catch {
++    }
++
++    const scriptName = arch === 'arm' ? 'android-armv7-a.sh' : 'android-armv8-a.sh'
++
++    await run(['./autogen.sh'], { cwd: SRC })
++    await run([`./dist-build/${scriptName}`], { cwd: SRC })
++
++    const buildOutputDir = arch === 'arm' ? 'libsodium-android-armv7-a' : 'libsodium-android-armv8-a'
++
++    await fs.rename(path.join(SRC, buildOutputDir, 'lib', 'libsodium.so'), soFinalFilePath)
++
++    await fs.mkdir(outputIncludeDir, {recursive: true})
++    await fs.rename(path.join(SRC, buildOutputDir, 'include'), outputIncludeDir)
++  }
++
++  async function useConfigure () {
++    const host = arch === 'arm' ? 'arm-linux-androideabi' : 'aarch64-linux-android'
++    await run(['./configure', '--prefix=' + TMP_OUT, '--enable-static', '--with-pic', '--disable-pie', `--host=${host}`], { cwd: SRC })
++    await run(['make', 'clean'], { cwd: SRC })
++    await run(['make', 'install'], { cwd: SRC })
++
++    // await rmf(ANDROID_OUT)
++    // await fs.rename(TMP_OUT, ANDROID_OUT)
++  }
++}
++
+ async function buildUnix () {
+   if (!(await flag('build', UNIX_OUT))) return
+ 
+@@ -121,7 +184,7 @@ async function buildUnix () {
+ }
+ 
+ async function fetchUnix () {
+-  if (!(await flag('fetch', SRC))) return
++  // if (!(await flag('fetch', SRC))) return
+ 
+   await fs.mkdir(TMP_SRC, { recursive: true })
+   const tar = await fetch(UNIX)
+@@ -171,6 +234,7 @@ async function clean () {
+   await rmf(SRC)
+   await rmf(UNIX_OUT)
+   await rmf(WIN_OUT)
++  await rmf(ANDROID_OUT)
+ }
+ 
+ async function rmf (dir) {
+@@ -206,15 +270,29 @@ function run (cmd, opts = {}) {
+       stdio: [
+         opts.stdin ? 'pipe' : 'ignore',
+         QUIET ? 'ignore' : 2, 
++        // 'inherit',
+         QUIET ? 'ignore' : 2 
++        // 'inherit',
        ],
-       'xcode_settings': {
-         'OTHER_CFLAGS': [
++      // env: { MACOSX_DEPLOYMENT_TARGET, ...process.env, LIBSODIUM_FULL_BUILD: 'yes' }
+       env: { MACOSX_DEPLOYMENT_TARGET, ...process.env }
+     })
+ 
++
+     if (opts.stdin) {
+       opts.stdin.pipe(proc.stdin)
+     }
+ 
++    // proc.stdout.on('data', (data) => {
++    //   console.log(`stdout: ${data}`);
++    // });
++    
++    // proc.stderr.on('data', (data) => {
++    //   console.error(`stderr: ${data}`);
++    // });
++    
++
++
+     proc.on('exit', function (code) {
+       if (code) process.exit(code)
+       else resolve()

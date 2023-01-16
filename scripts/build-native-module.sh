@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ### Debug script to replicate steps taken by NodeJS Mobile React Native (see its android/build.gradle)
 ### Intended to only work on a single module at a time

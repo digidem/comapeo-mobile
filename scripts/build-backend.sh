@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -eEu -o pipefail
 shopt -s extdebug
@@ -69,7 +69,7 @@ declare -a keepThese=(
   "node-gyp-build"
   "quickbit-universal"
   "simdle-universal"
-  # "sodium-native"
+  "sodium-native"
   "udx-native"
 )
 for x in "${keepThese[@]}"; do

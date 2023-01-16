@@ -69,7 +69,7 @@ declare -a keepThese=(
   "node-gyp-build"
   "quickbit-universal"
   "simdle-universal"
-  "sodium-native"
+  # "sodium-native"
   "udx-native"
 )
 for x in "${keepThese[@]}"; do
@@ -82,7 +82,7 @@ done
 echo -en " done.\n"
 
 # Reduce apk size by removing prebuild/ directories found in native deps
-rm -rd ./nodejs-assets/nodejs-project/node_modules/**/prebuilds/
+find "./nodejs-assets/nodejs-project/node_modules" -type d -name 'prebuilds' -exec rm -rf {} +
 
 # echo -en "Removing unused .bin aliases..."
 find "./nodejs-assets/nodejs-project/node_modules/.bin" ! -iname "node-gyp-build*" \( -type f -o -type l \) -exec rm -f {} +

@@ -81,12 +81,14 @@ for x in "${keepThese[@]}"; do
 done
 echo -en " done.\n"
 
-# Reduce apk size by removing prebuild/ directories found in native deps
+# Reduce apk size by removing prebuilds/ directories found in native deps
+echo -en "Removing prebuilds/ directory from native modules..."
 find "./nodejs-assets/nodejs-project/node_modules" -type d -name 'prebuilds' -exec rm -rf {} +
+echo -en " done.\n"
 
-# echo -en "Removing unused .bin aliases..."
+echo -en "Removing unused .bin aliases..."
 find "./nodejs-assets/nodejs-project/node_modules/.bin" ! -iname "node-gyp-build*" \( -type f -o -type l \) -exec rm -f {} +
-# echo -en " done.\n"
+echo -en " done.\n"
 
 echo -en "Cleanup..."
 rm -rf ./nodejs-assets/backend

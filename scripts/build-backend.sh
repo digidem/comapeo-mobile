@@ -58,18 +58,23 @@ mv "./nodejs-assets/nodejs-project/index.bundle.js" "./nodejs-assets/nodejs-proj
 echo -en " done.\n"
 
 echo -en "Keeping some node modules..."
+# We need to leave this in place so that nodejs-mobile finds it and builds it
 declare -a keepThese=(
-  # We need to leave this in place so that nodejs-mobile finds it and builds it
+  # Build tools needed for some of the modules listed here
   ".bin"
-  "better-sqlite3"
-  "crc-universal"
-  "fs-native-extensions"
   "napi-build-utils"
   "napi-macros"
   "node-gyp-build"
+
+  # Native modules that actually get built and used
+  "better-sqlite3"
+  "fs-native-extensions"
+  "sodium-native"
+
+  # Native modules that don't get built (can potentially remove them from here)
+  "crc-universal"
   "quickbit-universal"
   "simdle-universal"
-  "sodium-native"
   "udx-native"
 )
 for x in "${keepThese[@]}"; do

@@ -2,11 +2,13 @@
 
 // @ts-check
 import {rollup} from 'rollup';
-import alias from '@rollup/plugin-alias';
+// import alias from '@rollup/plugin-alias';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import {nodeResolve} from '@rollup/plugin-node-resolve';
-import typescript from '@rollup/plugin-typescript';
+// import typescript from '@rollup/plugin-typescript';
+import {babel} from '@rollup/plugin-babel';
+import replace from '@rollup/plugin-replace';
 
 const [entry, outfile] = process.argv.slice(2);
 
@@ -15,13 +17,23 @@ const inputOptions = {
   external: ['rn-bridge'],
   input: entry,
   plugins: [
-    commonjs(),
+    // alias({
+    //   entries: {
+    //     'sodium-native': 'sodium-javascript',
+    //     'sodium-universal': 'sodium-javascript',
+    //   },
+    // }),
+    replace({
+      preventAssignment: true,
+      'sodium-native': 'sodium-javascript',
+      'sodium-universal': 'sodium-javascript',
+    }),
+    json(),
     nodeResolve({
       preferBuiltins: true,
     }),
-    json(),
-    alias(),
-    typescript(),
+    commonjs({ignoreDynamicRequires: true}),
+    babel({babelHelpers: 'bundled'}),
   ],
 };
 

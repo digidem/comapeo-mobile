@@ -12,18 +12,22 @@
   "author": "Digital Democracy",
   "license": "MIT",
   "dependencies": {
-    "@mapeo/core": "github:digidem/mapeo-core-next",
+    "@mapeo/core": "github:digidem/mapeo-core-next#authstore",
     "better-sqlite3": "^7.6.2",
     "corestore": "^6.2.1",
     "debug": "^4.3.4",
-    "mapeo-schema": "^2.0.2",
-    "random-access-memory": "^6.1.0"
+    "random-access-memory": "^6.1.0",
+    "sodium-javascript": "^0.8.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@babel/preset-env": "^7.20.2",
     "@rollup/plugin-alias": "^4.0.2",
+    "@rollup/plugin-babel": "^6.0.3",
     "@rollup/plugin-commonjs": "^23.0.3",
     "@rollup/plugin-json": "^5.0.2",
     "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-replace": "^5.0.2",
     "@rollup/plugin-typescript": "^10.0.1",
     "@tsconfig/node16": "^1.0.3",
     "@types/debug": "^4.1.7",

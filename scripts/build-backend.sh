@@ -69,7 +69,7 @@ declare -a keepThese=(
   # Native modules that actually get built and used
   "better-sqlite3"
   "fs-native-extensions"
-  "sodium-native"
+  # "sodium-native"
 
   # Native modules that don't get built (can potentially remove them from here)
   "crc-universal"

@@ -2,6 +2,10 @@
 
 > Minimal(ish) example of integrating [Mapeo Core Next](https://github.com/digidem/mapeo-core-next) into React Native
 
+## Regarding native modules
+
+The main challenge is regarding sodium native. See more info in [`KNOWN_ISSUES.md`](./KNOWN_ISSUES.md).
+
 ## How to run on Android
 
 1. Pre-requisites needed:

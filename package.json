@@ -8,6 +8,7 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "postinstall": "patch-package",
     "prepare": "husky install",
     "format": "prettier \"src/**/*.{js,ts,jsx,tsx}\" --write",
     "build:intl-polyfills": "node ./scripts/build-intl-polyfills.js"

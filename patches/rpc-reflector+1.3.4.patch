@@ -12,10 +12,18 @@ index 819d618..e2ca7d5 100644
    } else if (
      typeof value.on === 'function' &&
 diff --git a/node_modules/rpc-reflector/lib/validate-message.js b/node_modules/rpc-reflector/lib/validate-message.js
-index 11c2b45..0cd2308 100644
+index 11c2b45..e476b2b 100644
 --- a/node_modules/rpc-reflector/lib/validate-message.js
 +++ b/node_modules/rpc-reflector/lib/validate-message.js
-@@ -16,7 +16,7 @@ const objectStreamSuggest =
+@@ -2,6 +2,7 @@ const { isStringArray } = require('./prop-array-utils')
+ const { msgType } = require('./constants')
+ const { types } = require('util')
+ const isArrayLike = require('validate.io-array-like')
++const Buffer = require('buffer').Buffer
+ 
+ /** @typedef {import("./types").Message} Message */
+ 
+@@ -16,7 +17,7 @@ const objectStreamSuggest =
   */
  module.exports = function isValidMessage(msg) {
    let invalid = ''

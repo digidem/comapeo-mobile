@@ -2,12 +2,11 @@ import * as React from 'react';
 import nodejs from 'nodejs-mobile-react-native';
 import {SafeAreaView, Button, TextInput} from 'react-native';
 import {createClient} from 'rpc-reflector';
-import MessagePortLike from './lib/message-port-like';
+import MessagePortLike from '../shared/lib/message-port-like.js';
 import {api} from '../backend/api.js';
 
 const App = () => {
   const [messageText, setMessageText] = React.useState('');
-
   const clientApi = useNodejsMobile();
 
   return (
@@ -25,10 +24,10 @@ const App = () => {
         title="Send message"
         disabled={messageText.length === 0}
         onPress={async () => {
-          try{
+          try {
             const res = await clientApi?.greet(messageText);
             console.log('rpc call', res);
-          }catch(e){
+          } catch (e) {
             console.log('error sendind rpc', e);
           }
           try {
@@ -44,10 +43,10 @@ const App = () => {
 };
 
 function useNodejsMobile() {
-  const [clientApi, setClientApi] = React.useState<typeof api | null>(null);
+  const [clientApi, setClientApi] = React.useState<typeof api>();
   React.useEffect(() => {
     nodejs.start('loader.js');
-    const channel = new MessagePortLike();
+    const channel = new MessagePortLike(nodejs.channel);
     setClientApi(createClient<typeof api>(channel));
     channel.start();
     return () => {

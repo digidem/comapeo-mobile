@@ -1,41 +1,43 @@
 import * as React from 'react';
 import nodejs from 'nodejs-mobile-react-native';
-import {SafeAreaView, Button} from 'react-native';
-import {IntlProvider} from './contexts/IntlContext';
+import {SafeAreaView, Button, TextInput} from 'react-native';
+import {createClient} from 'rpc-reflector';
+import MessagePortLike from './lib/message-port-like';
+import api from '../api.js'
 
 const App = () => {
   const [messageText, setMessageText] = React.useState('');
-  const channel = useNodejsMobile();
+
+  useNodejsMobile();
 
   return (
-    <IntlProvider>
-      <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
-        <Button
-          title="Send message"
-          onPress={() => channel.send(messageText)}
-        />
-      </SafeAreaView>
-    </IntlProvider>
+    <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
+      <TextInput
+        onChangeText={setMessageText}
+        value={messageText}
+        style={{
+          backgroundColor: 'white',
+          borderColor: 'black',
+          color: 'black',
+        }}
+      />
+      <Button
+        title="Send message"
+        disabled={messageText.length === 0}
+        onPress={() => console.log}
+      />
+    </SafeAreaView>
   );
 };
 
 function useNodejsMobile() {
   React.useEffect(() => {
     nodejs.start('loader.js');
-
-    const subscription = nodejs.channel.addListener('message', msg => {
-      console.log('RECEIVED MESSAGE', msg);
-    });
-
-    return () => {
-      // @ts-expect-error
-      subscription.remove();
-    };
-  }, []);
-
-  return {
-    send: (msg: string) => nodejs.channel.send(msg),
-  };
+    const channel = new MessagePortLike();
+    const clientApi = createClient<typeof api>(channel);
+    console.log('HI', clientApi.greet('tomi'));
+    return () => channel.close();
+  });
 }
 
 export default App;

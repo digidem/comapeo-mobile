@@ -33,12 +33,21 @@ const App = () => {
 function useNodejsMobile() {
   React.useEffect(() => {
     nodejs.start('loader.js');
+    const subscription = nodejs.channel.addListener('message', m => {
+      console.log('message from backend', m);
+    });
     const channel = new MessagePortLike();
     const clientApi = createClient<typeof api>(channel);
-    clientApi.greet('tomi')
+    clientApi
+      .greet('tomi')
       .then(d => console.log('rpc call', d))
-      .catch(e => console.log('rpc error', e))
-  });
+      .catch(e => console.log('rpc error', e));
+    return () => {
+      // @ts-expect-error
+      subscription.remove();
+      channel.close();
+    };
+  }, []);
 }
 
 export default App;

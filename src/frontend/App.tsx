@@ -38,6 +38,7 @@ function useNodejsMobile() {
     });
     const channel = new MessagePortLike();
     const clientApi = createClient<typeof api>(channel);
+    channel.start();
     clientApi
       .greet('tomi')
       .then(d => console.log('rpc call', d))

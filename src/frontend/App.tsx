@@ -35,12 +35,9 @@ function useNodejsMobile() {
     nodejs.start('loader.js');
     const channel = new MessagePortLike();
     const clientApi = createClient<typeof api>(channel);
-    try {
-      console.log('rpc call!', clientApi.greet('tomi'));
-    } catch (e) {
-      console.log('rpc error', e);
-    }
-    return () => channel.close();
+    clientApi.greet('tomi')
+      .then(d => console.log('rpc call', d))
+      .catch(e => console.log('rpc error', e))
   });
 }
 

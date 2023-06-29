@@ -38,11 +38,9 @@ class MessagePortLike extends TypedEmitter {
       }
     };
     this.#channel = channel;
-    if ('on' in channel) {
-      channel.on(this.#API_EVENT_NAME, this.#messageHandler);
-    } else {
-      channel.addListener(this.#API_EVENT_NAME, this.#messageHandler);
-    }
+    const method = 'on' in channel ? 'on' : 'addListener';
+    channel[method](this.#API_EVENT_NAME, this.#messageHandler)
+    this.start();
   }
 
   start() {
@@ -60,7 +58,8 @@ class MessagePortLike extends TypedEmitter {
     if (this.#state === 'closed') {
       return;
     }
-    this.#channel.off(this.#API_EVENT_NAME, this.#messageHandler);
+    const method = 'off' in this.channel ? 'off' : 'removeListener';
+    this.#channel[method](this.#API_EVENT_NAME, this.#messageHandler);
     this.#state = 'closed';
     this.#queuedMessages = [];
   }

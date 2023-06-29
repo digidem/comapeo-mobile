@@ -3,7 +3,7 @@ import nodejs from 'nodejs-mobile-react-native';
 import {SafeAreaView, Button, TextInput} from 'react-native';
 import {createClient} from 'rpc-reflector';
 import MessagePortLike from './lib/message-port-like';
-import api from '../api.js'
+import {api} from '../backend/index.js';
 
 const App = () => {
   const [messageText, setMessageText] = React.useState('');
@@ -35,7 +35,11 @@ function useNodejsMobile() {
     nodejs.start('loader.js');
     const channel = new MessagePortLike();
     const clientApi = createClient<typeof api>(channel);
-    console.log('HI', clientApi.greet('tomi'));
+    try {
+      console.log('rpc call!', clientApi.greet('tomi'));
+    } catch (e) {
+      console.log('rpc error', e);
+    }
     return () => channel.close();
   });
 }

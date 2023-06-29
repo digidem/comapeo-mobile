@@ -48,7 +48,6 @@ function useNodejsMobile() {
     nodejs.start('loader.js');
     const channel = new MessagePortLike(nodejs.channel);
     setClientApi(createClient<typeof api>(channel));
-    channel.start();
     return () => {
       channel.close();
     };

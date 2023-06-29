@@ -4,11 +4,7 @@ import debug from 'debug';
 import rn_bridge from 'rn-bridge';
 import {createServer} from 'rpc-reflector';
 import MessagePortLike from './lib/message-port-like.js';
-
-export const api = {
-  /** @param {String} who */
-  greet: who => `hi ${who} from rpc-reflector`,
-};
+import api from './api.js';
 
 // TODO: Account for args passed from node.startWithArgs
 debug.enable('*');

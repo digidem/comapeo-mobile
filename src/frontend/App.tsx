@@ -3,12 +3,12 @@ import nodejs from 'nodejs-mobile-react-native';
 import {SafeAreaView, Button, TextInput} from 'react-native';
 import {createClient} from 'rpc-reflector';
 import MessagePortLike from './lib/message-port-like';
-import {api} from '../backend/index.js';
+import {api} from '../backend/api.js';
 
 const App = () => {
   const [messageText, setMessageText] = React.useState('');
 
-  useNodejsMobile();
+  const clientApi = useNodejsMobile();
 
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
@@ -24,31 +24,36 @@ const App = () => {
       <Button
         title="Send message"
         disabled={messageText.length === 0}
-        onPress={() => console.log}
+        onPress={async () => {
+          try{
+            const res = await clientApi?.greet(messageText);
+            console.log('rpc call', res);
+          }catch(e){
+            console.log('error sendind rpc', e);
+          }
+          try {
+            const res = await clientApi?.asyncGreet(messageText);
+            console.log('async rpc call', res);
+          } catch (e) {
+            console.log('error sendind async rpc', e);
+          }
+        }}
       />
     </SafeAreaView>
   );
 };
 
 function useNodejsMobile() {
+  const [clientApi, setClientApi] = React.useState<typeof api | null>(null);
   React.useEffect(() => {
     nodejs.start('loader.js');
-    const subscription = nodejs.channel.addListener('message', m => {
-      console.log('message from backend', m);
-    });
     const channel = new MessagePortLike();
-    const clientApi = createClient<typeof api>(channel);
+    setClientApi(createClient<typeof api>(channel));
     channel.start();
-    clientApi
-      .greet('tomi')
-      .then(d => console.log('rpc call', d))
-      .catch(e => console.log('rpc error', e));
     return () => {
-      // @ts-expect-error
-      subscription.remove();
       channel.close();
     };
   }, []);
+  return clientApi;
 }
-
 export default App;

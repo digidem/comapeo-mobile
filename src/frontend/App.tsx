@@ -1,11 +1,14 @@
 import * as React from 'react';
 import nodejs from 'nodejs-mobile-react-native';
 import {SafeAreaView, Button, TextInput} from 'react-native';
+import {createClient} from 'rpc-reflector';
+import MessagePortLike from './lib/message-port-like';
+import api from '../api.js'
 
 const App = () => {
   const [messageText, setMessageText] = React.useState('');
 
-  const channel = useNodejsMobile();
+  useNodejsMobile();
 
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
@@ -21,7 +24,7 @@ const App = () => {
       <Button
         title="Send message"
         disabled={messageText.length === 0}
-        onPress={() => channel.send(messageText)}
+        onPress={() => console.log}
       />
     </SafeAreaView>
   );
@@ -30,20 +33,11 @@ const App = () => {
 function useNodejsMobile() {
   React.useEffect(() => {
     nodejs.start('loader.js');
-
-    const subscription = nodejs.channel.addListener('message', msg => {
-      console.log('RECEIVED MESSAGE', msg);
-    });
-
-    return () => {
-      // @ts-expect-error
-      subscription.remove();
-    };
-  }, []);
-
-  return {
-    send: (msg: string) => nodejs.channel.send(msg),
-  };
+    const channel = new MessagePortLike();
+    const clientApi = createClient<typeof api>(channel);
+    console.log('HI', clientApi.greet('tomi'));
+    return () => channel.close();
+  });
 }
 
 export default App;

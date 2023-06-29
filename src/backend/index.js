@@ -5,7 +5,11 @@ import packageJson from './package.json';
 import rn_bridge from 'rn-bridge';
 import {createServer} from 'rpc-reflector';
 import MessagePortLike from './lib/message-port-like.js';
-import api from '../api.js';
+
+export const api = {
+  /** @param {String} who */
+  greet: who => `hi ${who} from rpc-reflector`,
+};
 
 // TODO: Account for args passed from node.startWithArgs
 debug.enable('*');
@@ -20,7 +24,7 @@ const channel = new MessagePortLike();
 
 try {
   const {close} = createServer(api, channel);
-}  catch (e) {
+} catch (e) {
   rn_bridge.channel.send(`error initializing rpc-reflector: ${e}`);
 }
 

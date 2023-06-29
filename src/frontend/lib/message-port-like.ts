@@ -1,8 +1,6 @@
 import {TypedEmitter} from 'tiny-typed-emitter';
 import nodejs from 'nodejs-mobile-react-native';
 
-const API_EVENT_NAME = '@@API_MESSAGE';
-
 /**
  * @typedef {Object} MessagePortEvents
  * @property {(value: any) => void} message
@@ -17,7 +15,7 @@ class MessagePortLike extends TypedEmitter {
   #queuedMessages: any[] = [];
   #state: 'idle' | 'started' | 'closed' = 'idle';
   #messageHandler: (message: any) => void;
-
+  #API_EVENT_NAME = '@@API_MESSAGE';
   constructor() {
     super();
     this.#messageHandler = message => {
@@ -30,7 +28,7 @@ class MessagePortLike extends TypedEmitter {
         // (the event listener should be removed anyway)
       }
     };
-    nodejs.channel.addListener(API_EVENT_NAME, this.#messageHandler);
+    nodejs.channel.addListener(this.#API_EVENT_NAME, this.#messageHandler);
   }
 
   start() {
@@ -48,13 +46,13 @@ class MessagePortLike extends TypedEmitter {
     if (this.#state === 'closed') {
       return;
     }
-    nodejs.channel.removeListener(API_EVENT_NAME, this.#messageHandler);
+    nodejs.channel.removeListener(this.#API_EVENT_NAME, this.#messageHandler);
     this.#state = 'closed';
     this.#queuedMessages = [];
   }
 
   postMessage(message: any): void {
-    nodejs.channel.post(API_EVENT_NAME, message);
+    nodejs.channel.post(this.#API_EVENT_NAME, message);
   }
 }
 

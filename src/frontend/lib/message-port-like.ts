@@ -46,7 +46,7 @@ class MessagePortLike extends TypedEmitter {
     if (this.#state === 'closed') {
       return;
     }
-    nodejs.channel.removeListener(this.#API_EVENT_NAME, this.#messageHandler);
+    nodejs.channel.off(this.#API_EVENT_NAME, this.#messageHandler);
     this.#state = 'closed';
     this.#queuedMessages = [];
   }

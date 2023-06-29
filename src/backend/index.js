@@ -17,6 +17,7 @@ const channel = new MessagePortLike();
 
 try {
   const {close} = createServer(api, channel);
+  channel.start()
 } catch (e) {
   rn_bridge.channel.send(`error initializing rpc-reflector: ${e}`);
 }

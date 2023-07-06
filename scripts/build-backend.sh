@@ -28,7 +28,7 @@ else
 fi
 cp -r ./src/backend ./nodejs-assets
 mkdir -p ./nodejs-assets/shared/lib
-cp -r ./src/shared/lib/* ./nodejs-assets/shared/lib/
+cp -r ./src/shared/* ./nodejs-assets/shared/
 mkdir -p ./nodejs-assets/nodejs-project/node_modules
 
 echo "Installing dependencies..."

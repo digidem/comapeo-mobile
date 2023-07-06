@@ -1,4 +1,4 @@
-export const api = {
+export const MapeoClient = {
   /** @param {String} who */
   greet: who => `hi ${who} from rpc-reflector`,
   /** @param {String} who
@@ -12,5 +12,4 @@ export const api = {
     }),
 };
 
-export default api;
-
+export default MapeoClient;

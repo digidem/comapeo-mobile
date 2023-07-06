@@ -4,14 +4,14 @@ import debug from 'debug';
 import rn_bridge from 'rn-bridge';
 import {createServer} from 'rpc-reflector';
 import MessagePortLike from '../shared/lib/message-port-like.js';
-import api from './api.js';
+import {MapeoClient} from '../shared/MapeoClient.js';
 
 // TODO: Account for args passed from node.startWithArgs
 debug.enable('*');
 const channel = new MessagePortLike(rn_bridge.channel);
 
 try {
-  const {close} = createServer(api, channel);
+  const {close} = createServer(MapeoClient, channel);
 } catch (e) {
   rn_bridge.channel.send(`error initializing rpc-reflector: ${e}`);
 }

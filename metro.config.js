@@ -18,8 +18,5 @@ module.exports = {
   },
   resolver: {
     blockList: exclusionList([/nodejs-assets\/.*/, /android\/.*/, /ios\/.*/]),
-    extraNodeModules: {
-      stream: require.resolve('readable-stream'),
-    }
   },
 };

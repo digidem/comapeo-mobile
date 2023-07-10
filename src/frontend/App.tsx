@@ -2,10 +2,11 @@ import * as React from 'react';
 import nodejs from 'nodejs-mobile-react-native';
 import {SafeAreaView, Button, TextInput} from 'react-native';
 
+// Initiate the nodejs mobile process
+nodejs.start('loader.js');
+
 const App = () => {
   const [messageText, setMessageText] = React.useState('');
-
-  const channel = useNodejsMobile();
 
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
@@ -21,29 +22,10 @@ const App = () => {
       <Button
         title="Send message"
         disabled={messageText.length === 0}
-        onPress={() => channel.send(messageText)}
+        onPress={() => nodejs.channel.send(messageText)}
       />
     </SafeAreaView>
   );
 };
-
-function useNodejsMobile() {
-  React.useEffect(() => {
-    nodejs.start('loader.js');
-
-    const subscription = nodejs.channel.addListener('message', msg => {
-      console.log('RECEIVED MESSAGE', msg);
-    });
-
-    return () => {
-      // @ts-expect-error
-      subscription.remove();
-    };
-  }, []);
-
-  return {
-    send: (msg: string) => nodejs.channel.send(msg),
-  };
-}
 
 export default App;

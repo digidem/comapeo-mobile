@@ -12,7 +12,7 @@ function onFailure() {
 }
 
 # Ensure we start in the right place
-dir0="$( cd "$( dirname "$0" )" && pwd )"
+dir0="$(cd "$(dirname "$0")" && pwd)"
 repo_root="$(dirname "$dir0")"
 cd "$repo_root"
 
@@ -27,7 +27,7 @@ else
   echo "Set Build Native Modules on"
 fi
 cp -r ./src/backend ./nodejs-assets
-mkdir -p ./nodejs-assets/shared/lib
+mkdir -p ./nodejs-assets/shared/
 cp -r ./src/shared/* ./nodejs-assets/shared/
 mkdir -p ./nodejs-assets/nodejs-project/node_modules
 

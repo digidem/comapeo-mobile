@@ -1,8 +1,8 @@
 import * as React from 'react';
 import nodejs from 'nodejs-mobile-react-native';
 import {SafeAreaView, Button, TextInput} from 'react-native';
-import {createClient} from 'rpc-reflector';
-import MessagePortLike from '../shared/lib/message-port-like.js';
+import createClient, {ClientApi} from 'rpc-reflector/client';
+
 import {MapeoClient} from '../shared/MapeoClient.js';
 
 const App = () => {
@@ -43,7 +43,8 @@ const App = () => {
 };
 
 function useNodejsMobile() {
-  const [clientApi, setClientApi] = React.useState<typeof MapeoClient>();
+  const [clientApi, setClientApi] =
+    React.useState<ClientApi<typeof MapeoClient>>();
   React.useEffect(() => {
     nodejs.start('loader.js');
     const channel = new MessagePortLike(nodejs.channel);
@@ -54,4 +55,5 @@ function useNodejsMobile() {
   }, []);
   return clientApi;
 }
+
 export default App;

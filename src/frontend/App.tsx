@@ -4,6 +4,7 @@ import {SafeAreaView, Button, TextInput} from 'react-native';
 import createClient, {ClientApi} from 'rpc-reflector/client';
 
 import {MapeoClient} from '../shared/MapeoClient.js';
+import {MessagePortLike} from './MessagePortLike';
 
 const App = () => {
   const [messageText, setMessageText] = React.useState('');

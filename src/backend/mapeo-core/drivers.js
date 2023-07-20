@@ -82,14 +82,14 @@
  */
 export class DataTypeDriver {
   /** @type {MapeoDoc<T>[]} */
-  _db = []
+  _db = [];
 
   /**
    *
    * @param {string} name
    */
   constructor(name) {
-    this._name = name
+    this._name = name;
   }
 
   /**
@@ -98,7 +98,7 @@ export class DataTypeDriver {
    * @returns {MapeoDoc<T>}
    */
   create(value) {
-    const now = Date.now()
+    const now = Date.now();
 
     const doc = {
       id: now.toString(),
@@ -109,11 +109,11 @@ export class DataTypeDriver {
       value,
       forks: [],
       links: [],
-    }
+    };
 
-    this._db.push(doc)
+    this._db.push(doc);
 
-    return doc
+    return doc;
   }
 
   /**
@@ -124,14 +124,14 @@ export class DataTypeDriver {
    */
   getByDocId(id) {
     for (let i = this._db.length; i > -1; i--) {
-      const doc = this._db[i]
+      const doc = this._db[i];
 
       if (doc && doc.id === id) {
-        return doc
+        return doc;
       }
     }
 
-    throw new Error('Could not find')
+    throw new Error('Could not find');
   }
 
   /**
@@ -141,14 +141,14 @@ export class DataTypeDriver {
    */
   getByVersionId(id) {
     for (let i = this._db.length; i > -1; i--) {
-      const doc = this._db[i]
+      const doc = this._db[i];
 
       if (doc && doc.version === id) {
-        return doc
+        return doc;
       }
     }
 
-    throw new Error('Could not find')
+    throw new Error('Could not find');
   }
 
   /**
@@ -159,7 +159,7 @@ export class DataTypeDriver {
   getMany(opts) {
     return opts && opts.includeDeleted
       ? this._db
-      : this._db.filter((d) => !d.deleted)
+      : this._db.filter(d => !d.deleted);
   }
 
   /**
@@ -169,28 +169,31 @@ export class DataTypeDriver {
    * @returns {MapeoDoc<T>}
    */
   update(version, value) {
-    if (Array.isArray(version))
-      throw new Error('Version array not supported yet')
+    if (Array.isArray(version)) {
+      throw new Error('Version array not supported yet');
+    }
 
-    const doc = this.getByVersionId(version)
+    const doc = this.getByVersionId(version);
 
-    if (doc.deleted) throw new Error('Cannot update deleted doc')
+    if (doc.deleted) {
+      throw new Error('Cannot update deleted doc');
+    }
 
-    const [id, prevVersionNumber] = doc.version.split('@')
+    const [id, prevVersionNumber] = doc.version.split('@');
 
-    const nextVersion = `${id}@${parseInt(prevVersionNumber, 10) + 1}`
+    const nextVersion = `${id}@${parseInt(prevVersionNumber, 10) + 1}`;
 
     const updated = {
       ...doc,
       version: nextVersion,
       links: [...doc.links, doc.version],
       updated_at: Date.now(),
-      value: { ...doc.value, ...value },
-    }
+      value: {...doc.value, ...value},
+    };
 
-    this._db.push(updated)
+    this._db.push(updated);
 
-    return updated
+    return updated;
   }
 
   /**
@@ -199,30 +202,31 @@ export class DataTypeDriver {
    * @returns {MapeoDoc<T>}
    */
   delete(version) {
-    if (Array.isArray(version))
-      throw new Error('Version array not supported yet')
+    if (Array.isArray(version)) {
+      throw new Error('Version array not supported yet');
+    }
 
-    const doc = this.getByVersionId(version)
+    const doc = this.getByVersionId(version);
 
     const updated = {
       ...doc,
       deleted: true,
       links: [...doc.links, doc.version],
       updated_at: Date.now(),
-    }
+    };
 
-    this._db.push(updated)
+    this._db.push(updated);
 
-    return updated
+    return updated;
   }
 }
 
 export class SyncDriver {
   /** @type {Set<ConnectionType>} */
-  _discovery = new Set()
+  _discovery = new Set();
 
   /** @type {Set<ConnectionType>} */
-  _sync = new Set()
+  _sync = new Set();
 
   /**
    * @returns {SyncInfo}
@@ -231,19 +235,19 @@ export class SyncDriver {
     return {
       discovery: Array.from(this._discovery.values()),
       sync: Array.from(this._sync.values()),
-    }
+    };
   }
 
   /**
    * @param {ConnectionType[] | null} connectionTypes
    */
   setDiscovery(connectionTypes) {
-    const ct = connectionTypes || []
+    const ct = connectionTypes || [];
 
-    this._discovery.clear()
+    this._discovery.clear();
 
     for (const val of ct) {
-      this._discovery.add(val)
+      this._discovery.add(val);
     }
   }
 
@@ -251,53 +255,53 @@ export class SyncDriver {
    * @param {ConnectionType[] | null} connectionTypes
    */
   setSync(connectionTypes) {
-    const ct = connectionTypes || []
+    const ct = connectionTypes || [];
 
-    this._sync.clear()
+    this._sync.clear();
 
     for (const val of ct) {
-      this._sync.add(val)
+      this._sync.add(val);
     }
   }
 }
 
 export class PeerDriver {
   /** @type {Map<string, Peer>} */
-  _peers = new Map()
+  _peers = new Map();
 
   /**
    * @param {string} id
    * @returns {Peer | null}
    */
   get(id) {
-    return this._peers.get(id) || null
+    return this._peers.get(id) || null;
   }
 
   /**
    * @returns {Peer[]}
    */
   getAll() {
-    return Array.from(this._peers.values())
+    return Array.from(this._peers.values());
   }
 }
 
 export class ProjectDriver {
   /** @type {Map<string, ProjectMember>} */
-  _members = new Map()
+  _members = new Map();
 
   /** @type {Map<string, {id: string, role: ProjectRole}>} */
-  _invites = new Map()
+  _invites = new Map();
 
   /**
    * @param {string} name
    */
   constructor(name) {
-    this._id = Date.now().toString()
-    this._name = name
+    this._id = Date.now().toString();
+    this._name = name;
   }
 
   get member() {
-    const self = this
+    const self = this;
 
     /**
      * @param {string} id
@@ -310,9 +314,9 @@ export class ProjectDriver {
        * @return {ProjectMember | null}
        */
       get(id) {
-        const member = self._members.get(id)
+        const member = self._members.get(id);
 
-        return member || null
+        return member || null;
       },
 
       /**
@@ -320,7 +324,7 @@ export class ProjectDriver {
        * @returns {ProjectMember[]}
        */
       getMany(opts) {
-        return Array.from(self._members.values())
+        return Array.from(self._members.values());
       },
 
       /**
@@ -330,17 +334,21 @@ export class ProjectDriver {
        * @returns {ProjectMember}
        */
       add(id, info) {
-        if (self._members.has(id)) throw new Error('Already exists')
-        const member = { ...info, id }
-        self._members.set(id, member)
-        return member
+        if (self._members.has(id)) {
+          throw new Error('Already exists');
+        }
+        const member = {...info, id};
+        self._members.set(id, member);
+        return member;
       },
       /**
        * @param {string} id
        */
       remove(id) {
-        if (!self._members.has(id)) throw new Error('Does not exist')
-        self._members.delete(id)
+        if (!self._members.has(id)) {
+          throw new Error('Does not exist');
+        }
+        self._members.delete(id);
       },
 
       /**
@@ -350,28 +358,31 @@ export class ProjectDriver {
        * @returns {ProjectMember}
        */
       update(id, info) {
-        if (info.name === undefined && info.role === undefined)
-          throw new Error('Must provide name or role to update')
+        if (info.name === undefined && info.role === undefined) {
+          throw new Error('Must provide name or role to update');
+        }
 
-        const member = self._members.get(id)
+        const member = self._members.get(id);
 
-        if (!member) throw new Error('Does not exist')
+        if (!member) {
+          throw new Error('Does not exist');
+        }
 
         if (info.name !== undefined) {
-          member.name = info.name
+          member.name = info.name;
         }
 
         if (info.role) {
-          member.role = info.role
+          member.role = info.role;
         }
 
-        return member
+        return member;
       },
-    }
+    };
   }
 
   get invite() {
-    const self = this
+    const self = this;
 
     return {
       /**
@@ -380,7 +391,7 @@ export class ProjectDriver {
        */
       create(id, role) {
         if (!self._invites.has(id)) {
-          self._invites.set(id, { id, role })
+          self._invites.set(id, {id, role});
         }
       },
 
@@ -389,16 +400,16 @@ export class ProjectDriver {
        * @returns {{id: string, role: ProjectRole}[]}
        */
       getMany(opts) {
-        return Array.from(self._invites.values())
+        return Array.from(self._invites.values());
       },
-    }
+    };
   }
 
   /**
    * @returns {Project}
    */
   info() {
-    return { id: this._id, name: this._name }
+    return {id: this._id, name: this._name};
   }
 
   /**
@@ -406,23 +417,24 @@ export class ProjectDriver {
    * @returns {Project}
    */
   update(info) {
-    this._name = info.name
-    return this.info()
+    this._name = info.name;
+    return this.info();
   }
 }
 
 export class ProjectsManagementDriver {
-  _id = Date.now().toString()
+  _id = Date.now().toString();
 
   /** @type {Map<string, ProjectDriver>} */
-  _projects = new Map()
+  _projects = new Map();
 
   /**
    * @param {ProjectDriver} [initProjectDriver]
    */
   constructor(initProjectDriver) {
-    if (initProjectDriver)
-      this._projects.set(initProjectDriver.info().id, initProjectDriver)
+    if (initProjectDriver) {
+      this._projects.set(initProjectDriver.info().id, initProjectDriver);
+    }
   }
 
   /**
@@ -431,11 +443,13 @@ export class ProjectsManagementDriver {
    * @returns {Project | null}
    */
   get(id) {
-    const project = this._projects.get(id)
+    const project = this._projects.get(id);
 
-    if (!project) return null
+    if (!project) {
+      return null;
+    }
 
-    return project.info()
+    return project.info();
   }
 
   /**
@@ -444,7 +458,7 @@ export class ProjectsManagementDriver {
    * @returns {Project[]}
    */
   getMany(opts) {
-    return Array.from(this._projects.values()).map((p) => p.info())
+    return Array.from(this._projects.values()).map(p => p.info());
   }
 
   /**
@@ -453,13 +467,13 @@ export class ProjectsManagementDriver {
    * @returns {Project}
    */
   create(opts) {
-    const project = new ProjectDriver(opts.name)
+    const project = new ProjectDriver(opts.name);
 
-    const info = project.info()
+    const info = project.info();
 
-    this._projects.set(info.id, project)
+    this._projects.set(info.id, project);
 
-    return info
+    return info;
   }
 
   /**
@@ -469,11 +483,13 @@ export class ProjectsManagementDriver {
    * @returns {Project}
    */
   update(id, info) {
-    const project = this._projects.get(id)
+    const project = this._projects.get(id);
 
-    if (!project) throw new Error('Not found')
+    if (!project) {
+      throw new Error('Not found');
+    }
 
-    return project.update(info)
+    return project.update(info);
   }
 
   /**
@@ -482,17 +498,19 @@ export class ProjectsManagementDriver {
    * @returns {Project}
    */
   delete(id) {
-    const project = this._projects.get(id)
+    const project = this._projects.get(id);
 
-    if (!project) throw new Error('Not found')
+    if (!project) {
+      throw new Error('Not found');
+    }
 
-    this._projects.delete(id)
+    this._projects.delete(id);
 
-    return project.info()
+    return project.info();
   }
 
   get invite() {
-    const self = this
+    const self = this;
 
     return {
       /**
@@ -506,6 +524,6 @@ export class ProjectsManagementDriver {
        * @param {*} params
        */
       async decline(id, params) {},
-    }
+    };
   }
 }

@@ -24,11 +24,7 @@ const App = () => {
         disabled={messageText.length === 0}
         onPress={async () => {
           try {
-            const res = await clientApi?.observation.create({
-              lat: 0,
-              lon: 0,
-              tags: {type: messageText},
-            });
+            const res = await clientApi?.observation.getMany();
             console.log('rpc call', res);
           } catch (e) {
             console.log('error sendind rpc', e);

@@ -5,6 +5,8 @@ import {TypedEmitter} from 'tiny-typed-emitter';
  * @property {(value: any) => void} message
  */
 
+/** @typedef {import('nodejs-mobile-react-native').Channel} Channel */
+
 /**
  * Wrap the nodejs-mobile RNBridge to act like a MessagePort. Queues messages
  * until `start()` is called.
@@ -38,8 +40,7 @@ class MessagePortLike extends TypedEmitter {
       }
     };
     this.#channel = channel;
-    const method = 'on' in channel ? 'on' : 'addListener';
-    channel[method](this.#API_EVENT_NAME, this.#messageHandler)
+    channel.addListener(this.#API_EVENT_NAME, this.#messageHandler);
     this.start();
   }
 
@@ -58,8 +59,8 @@ class MessagePortLike extends TypedEmitter {
     if (this.#state === 'closed') {
       return;
     }
-    const method = 'off' in this.channel ? 'off' : 'removeListener';
-    this.#channel[method](this.#API_EVENT_NAME, this.#messageHandler);
+
+    this.#channel.removeListener(this.#API_EVENT_NAME, this.#messageHandler);
     this.#state = 'closed';
     this.#queuedMessages = [];
   }

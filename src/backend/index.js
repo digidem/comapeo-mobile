@@ -3,7 +3,7 @@
 import debug from 'debug';
 import rn_bridge from 'rn-bridge';
 import {createServer} from 'rpc-reflector';
-import {MapeoClient} from '../shared/MapeoClient.js';
+import {MapeoClient} from './mapeo-core/index';
 import MessagePortLike from './message-port-like.js';
 
 // TODO: Account for args passed from node.startWithArgs
@@ -13,7 +13,8 @@ debug.enable('*');
 const channel = new MessagePortLike(rn_bridge.channel);
 
 try {
-  const {close} = createServer(MapeoClient, channel);
+  const mapeoClient = new MapeoClient()
+  const {close} = createServer(mapeoClient, channel);
 } catch (e) {
   rn_bridge.channel.send(`error initializing rpc-reflector: ${e}`);
 }

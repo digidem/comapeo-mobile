@@ -27,8 +27,6 @@ else
   echo "Set Build Native Modules on"
 fi
 cp -r ./src/backend ./nodejs-assets
-mkdir -p ./nodejs-assets/shared/
-cp -r ./src/shared/* ./nodejs-assets/shared/
 mkdir -p ./nodejs-assets/nodejs-project/node_modules
 
 echo "Installing dependencies..."

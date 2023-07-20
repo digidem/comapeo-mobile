@@ -24,16 +24,14 @@ const App = () => {
         disabled={messageText.length === 0}
         onPress={async () => {
           try {
-            const res = await clientApi?.greet(messageText);
+            const res = await clientApi?.observation.create({
+              lat: 0,
+              lon: 0,
+              tags: {type: messageText},
+            });
             console.log('rpc call', res);
           } catch (e) {
             console.log('error sendind rpc', e);
-          }
-          try {
-            const res = await clientApi?.asyncGreet(messageText);
-            console.log('async rpc call', res);
-          } catch (e) {
-            console.log('error sendind async rpc', e);
           }
         }}
       />

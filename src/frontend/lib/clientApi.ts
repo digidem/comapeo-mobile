@@ -5,10 +5,17 @@ import {MessagePortLike} from './MessagePortLike';
 
 export const initClientApi = () => {
   const channel = new MessagePortLike(nodejs.channel);
-  nodejs.channel.addListener('server-started', state => {
-    console.log('server started, starting port', state);
+  let started = false;
+  nodejs.channel.addListener('server-started', _ => {
     // if the server responds then we know that it has started
-    channel.start();
+    // Also this event can happen twice (on server start and
+    // on asking server state), thats why we wrap it in
+    // a conditional
+    if (!started) {
+      console.log('server started, starting port');
+      channel.start();
+      started = true;
+    }
   });
   nodejs.channel.post('get-server-state');
   return createClient<ClientApi<typeof MapeoClient>>(channel);

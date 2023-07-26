@@ -1,12 +1,13 @@
 import * as React from 'react';
 import nodejs from 'nodejs-mobile-react-native';
 import {SafeAreaView, Button, TextInput} from 'react-native';
-import {useClientApi} from './hooks/useClientApi';
+import {initClientApi} from './lib/clientApi';
+
+const clientApi = initClientApi()
 
 const App = () => {
   const [messageText, setMessageText] = React.useState('');
   nodejs.start('loader.js');
-  const clientApi = useClientApi();
 
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>

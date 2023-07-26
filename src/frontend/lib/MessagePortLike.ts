@@ -38,6 +38,11 @@ export class MessagePortLike extends EventEmitter {
       handleChannelMessage,
     );
 
+    channel.addListener('message', ({value}) => {
+      if (value === 'started') {
+        console.log('server started');
+      }
+    });
     this.start();
   }
 
@@ -80,7 +85,9 @@ export class MessagePortLike extends EventEmitter {
   removeListener(event: string, listener: (...args: any[]) => void) {
     const registry = this.#eventsSubscriptions.get(event);
 
-    if (!registry) return;
+    if (!registry) {
+      return;
+    }
 
     const subscription = registry.get(listener);
 

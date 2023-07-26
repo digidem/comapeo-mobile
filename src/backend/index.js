@@ -13,7 +13,7 @@ debug.enable('*');
 const channel = new MessagePortLike(rn_bridge.channel);
 
 try {
-  const mapeoClient = new MapeoClient()
+  const mapeoClient = new MapeoClient();
   const {close} = createServer(mapeoClient, channel);
 } catch (e) {
   rn_bridge.channel.send(`error initializing rpc-reflector: ${e}`);

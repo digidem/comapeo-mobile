@@ -3,7 +3,7 @@ import nodejs from 'nodejs-mobile-react-native';
 import {SafeAreaView, Button, TextInput} from 'react-native';
 import {initClientApi} from './lib/clientApi';
 
-const clientApi = initClientApi()
+const clientApi = initClientApi();
 
 const App = () => {
   const [messageText, setMessageText] = React.useState('');

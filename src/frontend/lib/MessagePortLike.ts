@@ -43,7 +43,6 @@ export class MessagePortLike extends EventEmitter {
         console.log('server started');
       }
     });
-    this.start();
   }
 
   postMessage(message: any) {

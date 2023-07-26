@@ -41,7 +41,6 @@ class MessagePortLike extends TypedEmitter {
     };
     this.#channel = channel;
     channel.addListener(this.#API_EVENT_NAME, this.#messageHandler);
-    this.start();
   }
 
   start() {

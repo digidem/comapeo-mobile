@@ -10,9 +10,13 @@ import {mockData} from './mockData.js';
 // TODO: Account for args passed from node.startWithArgs
 debug.enable('*');
 
+rn_bridge.channel.on('get-server-state', () => {
+  rn_bridge.channel.post('server-started', true);
+});
+
 // @ts-expect-error
 const channel = new MessagePortLike(rn_bridge.channel);
-
+channel.start();
 try {
   const mapeoClient = new MapeoClient();
   mockData.forEach(async doc => {
@@ -24,8 +28,7 @@ try {
   });
   const {close} = createServer(mapeoClient, channel);
 } catch (e) {
-  rn_bridge.channel.send(`error initializing rpc-reflector: ${e}`);
+  console.error(`error initializing rpc-reflector: ${e}`);
 }
 
-// just to know if the backend is actually working
-rn_bridge.channel.send('Node was initialized.');
+console.log('Node was initialized.');

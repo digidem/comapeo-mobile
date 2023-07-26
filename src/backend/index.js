@@ -10,13 +10,15 @@ import {mockData} from './mockData.js';
 // TODO: Account for args passed from node.startWithArgs
 debug.enable('*');
 
-rn_bridge.channel.on('get-server-state', () => {
-  rn_bridge.channel.post('server-started', true);
-});
-
 // @ts-expect-error
 const channel = new MessagePortLike(rn_bridge.channel);
 channel.start();
+
+rn_bridge.channel.on('get-server-state', () => {
+  rn_bridge.channel.post('server-started', {});
+});
+rn_bridge.channel.post('server-started', {});
+
 try {
   const mapeoClient = new MapeoClient();
   mockData.forEach(async doc => {

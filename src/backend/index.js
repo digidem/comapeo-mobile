@@ -5,7 +5,7 @@ import rn_bridge from 'rn-bridge';
 import {createServer} from 'rpc-reflector';
 import {MapeoClient} from './mapeo-core/index';
 import MessagePortLike from './message-port-like.js';
-import {mockData} from '../utils/mockData.js';
+import {mockData} from './mockData.js';
 
 // TODO: Account for args passed from node.startWithArgs
 debug.enable('*');

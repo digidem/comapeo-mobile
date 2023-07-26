@@ -4,11 +4,7 @@ import {TypedEmitter} from 'tiny-typed-emitter';
 import {DataTypeDriver} from './drivers.js';
 
 /**
- * @typedef {{
- * lat: number
- * lon: number
- * tags?: { type: string }
- * }} Observation
+ * @typedef {Object} Observation
  */
 
 export class MapeoClient extends TypedEmitter {

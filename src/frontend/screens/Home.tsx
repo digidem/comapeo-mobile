@@ -1,10 +1,12 @@
+import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
-import { View } from 'react-native';
+import { Button, Text, View } from 'react-native';
 
-export const Home = () => {
+export const Home = ({navigation}) => {
+
     return(
-        <View>
-            {/* Add buttons here for all the screens */}
+        <View onTouchEnd={()=>navigation.navigate("ObservationsList")}>
+            <Text> This is the home screen </Text>
         </View>
     )
 }

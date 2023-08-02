@@ -1,18 +1,23 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Home } from '../screens/Home';
+import { NavigationContainer as NativeNavigationContainer } from '@react-navigation/native';
+import ObservationsListView from '../screens/ObservationList';
 
-type AppStackParamList = {
+
+export type AppStackParamList = {
     Home:undefined,
     ObservationsList:undefined
 }
 
 const AppStack = createNativeStackNavigator<AppStackParamList>()
 
-export const AppStackScreens = () => {
-    <AppStack.Navigator>
-        <AppStack.Screen 
-            name={"Home"}
-            component={Home}
-        />
-    </AppStack.Navigator>
-}
+export const NavigationContainer = () => (
+    <NativeNavigationContainer>
+        <AppStack.Navigator>
+            <AppStack.Screen
+                name={"ObservationsList"}
+                component={ObservationsListView}
+            />
+        </AppStack.Navigator>
+    </NativeNavigationContainer>
+)

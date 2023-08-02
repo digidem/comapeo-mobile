@@ -7,7 +7,7 @@ import {DataTypeDriver} from './drivers.js';
  * @typedef {Object} Observation
  */
 
-export class MapeoClient extends TypedEmitter {
+export class MapeoApi extends TypedEmitter {
   /** @type {DataTypeDriver<Observation>} */
   #observation;
 

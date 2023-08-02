@@ -1,7 +1,7 @@
 import {useQuery} from '@tanstack/react-query'
-import { useClientApi } from './useClientApi'
+import { useClientApiContext } from '../contexts/ClientApiProvider'
 
 export const useObservations = () => {
-    const clientApi = useClientApi()
-    return useQuery({ queryKey: ['observations'], queryFn: clientApi?.observation.getMany() })
+    const clientApi = useClientApiContext()
+    return useQuery(['observations'], ()=>clientApi.observation.getMany())
 }

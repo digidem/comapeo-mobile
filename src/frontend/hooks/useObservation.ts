@@ -3,5 +3,7 @@ import { useClientApi } from './useClientApi'
 
 export const useObservation = (id:string) => {
     const clientApi = useClientApi()
-    return useQuery({ queryKey: ['observation', id], queryFn: clientApi?.observation.getByDocId(id) })
+    return useQuery(['observation', id], ()=>{
+        return clientApi?.observation.getByDocId(id)
+    })
 }

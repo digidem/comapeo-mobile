@@ -1,11 +1,11 @@
 import {useState, useEffect} from 'react';
 import nodejs from 'nodejs-mobile-react-native';
 import createClient, {ClientApi} from 'rpc-reflector/client';
-import {MapeoClient} from '../../backend/mapeo-core';
+import {MapeoApi} from '../../backend/mapeo-core';
 import {MessagePortLike} from '../lib/MessagePortLike';
 
 export const useClientApi = () => {
-  const [clientApi, setClientApi] = useState<ClientApi<typeof MapeoClient>>();
+  const [clientApi, setClientApi] = useState<ClientApi<MapeoApi>>();
   useEffect(() => {
     const channel = new MessagePortLike(nodejs.channel);
     let started = false;
@@ -21,7 +21,7 @@ export const useClientApi = () => {
       }
     });
     nodejs.channel.post('get-server-state');
-    setClientApi(createClient<ClientApi<typeof MapeoClient>>(channel));
+    setClientApi(createClient<MapeoApi>(channel));
 
     return () => {
       // what cleanup should be done here?

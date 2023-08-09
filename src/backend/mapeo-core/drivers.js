@@ -101,7 +101,7 @@ export class DataTypeDriver {
     const now = Date.now();
 
     const doc = {
-      id: now.toString(),
+      id: Math.floor(Math.random() * now).toString(),
       version: `${now}@1`,
       created_at: now,
       updated_at: null,

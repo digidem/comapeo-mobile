@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ClientApi } from 'rpc-reflector';
 import { MapeoApi } from '../../backend/mapeo-core';
-import { initClientApi } from '../lib/ClientApi';
 
 const ClientApiContext = React.createContext<ClientApi<MapeoApi>|undefined>(undefined)
 
@@ -13,9 +12,8 @@ export const useClientApiContext = ()=>{
     return clientApi
 } 
 
-export function ClientApiProvider({ children}:{children:React.ReactNode}) {
-    const client = initClientApi()
-    console.log("Render")
+export function ClientApiProvider({ children, client}:{children:React.ReactNode, client:ClientApi<MapeoApi>}) {
+  
     return (
       <ClientApiContext.Provider value={client}>
         {children}

@@ -3,5 +3,5 @@ import { useClientApiContext } from '../contexts/ClientApiProvider'
 
 export const useObservations = () => {
     const clientApi = useClientApiContext()
-    return useQuery(['observations'], ()=>clientApi.observation.getMany())
+    return useQuery(['observations'], async()=> await clientApi.observation.getMany())
 }

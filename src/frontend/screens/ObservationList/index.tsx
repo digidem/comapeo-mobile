@@ -6,6 +6,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { AppStackParamList } from "../../navigation/AppScreens";
 import { useObservations } from "../../hooks/useObservations";
 import { MapeoDoc } from "../../../backend/mapeo-core/drivers";
+import { useClientApiContext } from "../../contexts/ClientApiProvider";
 
 const m = defineMessages({
   loading: {
@@ -50,6 +51,7 @@ const ObservationsListView = ({
 
     const {data:observations, isLoading, error} = useObservations()
 
+
     if(!observations){
         return(
             <React.Fragment>
@@ -61,10 +63,10 @@ const ObservationsListView = ({
     (Dimensions.get("window").height - 65) / OBSERVATION_CELL_HEIGHT
   );
 
-  const sortedObservations = React.useMemo(
-    () => observations.sort((a, b) => (a.created_at < b.created_at ? 1 : -1)),
-    [observations]
-  );
+  // const sortedObservations = React.useMemo(
+  //   () => observations.sort((a, b) => (a.created_at < b.created_at ? 1 : -1)),
+  //   [observations]
+  // );
 
   if (isLoading) {
     return (
@@ -105,7 +107,7 @@ const ObservationsListView = ({
             />
           );
         }}
-        data={sortedObservations}
+        data={observations}
       />
     </View>
   );

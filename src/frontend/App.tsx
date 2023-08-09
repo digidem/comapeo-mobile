@@ -6,15 +6,18 @@ import {
 } from '@tanstack/react-query'
 import { NavigationContainer } from './navigation/AppScreens';
 import { ClientApiProvider } from './contexts/ClientApiProvider';
+import { initClientApi } from './lib/ClientApi';
 
 const queryClient = new QueryClient()
-
+nodejs.start('loader.js');
+const client = initClientApi()
 
 const App = () => {
-  nodejs.start('loader.js');
+  
+
 
   return (
-    <ClientApiProvider>
+    <ClientApiProvider client={client}>
       <QueryClientProvider client={queryClient}>
         <NavigationContainer/>
       </QueryClientProvider>

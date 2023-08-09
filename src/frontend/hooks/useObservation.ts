@@ -1,9 +1,9 @@
 import {useQuery} from '@tanstack/react-query'
-import { useClientApi } from './useClientApi'
+import { useClientApiContext } from '../contexts/ClientApiProvider'
 
 export const useObservation = (id:string) => {
-    const clientApi = useClientApi()
+    const clientApi = useClientApiContext()
     return useQuery(['observation', id], ()=>{
-        return clientApi?.observation.getByDocId(id)
+        return clientApi.observation.getByDocId(id)
     })
 }

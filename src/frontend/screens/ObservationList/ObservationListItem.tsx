@@ -16,8 +16,6 @@ const ObservationListItem = ({
   onPress = () => {},
 }: ObservationListItemProps) => {
   const {data:observation} = useObservation(observationId);
-
-  console.log(observation)
   
   if (!observation) return null; // Should never get here!
 

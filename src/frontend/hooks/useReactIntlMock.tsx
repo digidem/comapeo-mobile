@@ -23,12 +23,11 @@ export const FormattedMessage = (message:Message) => {
     )
 }
 
-export const useIntl = (message:Message) => {
-    function FormattedMessage(parentMessage:Message){
-        return parentMessage.defaultMessage
-    }
-    
+export const useIntl = () => {
+
     return {
-        FormattedMessage: FormattedMessage(message)
+        formatMessage: (message:Message)=>{
+            return message.defaultMessage
+        }
     }
 }

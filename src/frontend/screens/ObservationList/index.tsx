@@ -6,7 +6,6 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { AppStackParamList } from "../../navigation/AppScreens";
 import { useObservations } from "../../hooks/useObservations";
 import { MapeoDoc } from "../../../backend/mapeo-core/drivers";
-import { useClientApiContext } from "../../contexts/ClientApiProvider";
 
 const m = defineMessages({
   loading: {
@@ -38,8 +37,6 @@ const getItemLayout = (
 const keyExtractor = (item: MapeoDoc<Object>) => item.id.toString();
 
 type Props = {
-  // Called when the user presses a list item, called with observation id
-  onPressObservation: (id: string) => void;
   navigation:NativeStackNavigationProp<AppStackParamList, "ObservationsList", undefined>
 };
 
@@ -50,7 +47,14 @@ const ObservationsListView = ({
 }: Props) => {
 
     const {data:observations, isLoading, error} = useObservations()
-
+    
+    const sortedObservations = React.useMemo(
+        () =>{ 
+          if(!observations) return []
+          return observations.sort((a, b) => (a.created_at < b.created_at ? 1 : -1))
+        },
+        [observations]
+      );
 
     if(!observations){
         return(
@@ -63,10 +67,7 @@ const ObservationsListView = ({
     (Dimensions.get("window").height - 65) / OBSERVATION_CELL_HEIGHT
   );
 
-  // const sortedObservations = React.useMemo(
-  //   () => observations.sort((a, b) => (a.created_at < b.created_at ? 1 : -1)),
-  //   [observations]
-  // );
+  
 
   if (isLoading) {
     return (
@@ -103,11 +104,10 @@ const ObservationsListView = ({
               key={item.id}
               testID={`observationListItem:${index}`}
               observationId={item.id}
-              onPress={()=>{}}
             />
           );
         }}
-        data={observations}
+        data={sortedObservations}
       />
     </View>
   );

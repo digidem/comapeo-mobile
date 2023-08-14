@@ -2,27 +2,27 @@ import * as React from "react";
 import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
 
 import { useObservation } from "../../hooks/useObservation";
+import { useNavigation } from "@react-navigation/native";
+import { AppStackParamList } from "../../navigation/AppScreens";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 
 interface ObservationListItemProps {
   observationId: string;
   testID: string;
-  onPress: (id: string) => void;
 }
 
 const ObservationListItem = ({
   observationId,
   testID,
-  onPress = () => {},
 }: ObservationListItemProps) => {
   const {data:observation} = useObservation(observationId);
+  const navigation = useNavigation<NativeStackNavigationProp< AppStackParamList>>()
   
-  if (!observation) return null; // Should never get here!
-
   const isMine = false
   return (
     <TouchableHighlight
-      onPress={() => onPress(observationId)}
+      onPress={() => {navigation.navigate("Observation", {observationId})}}
       testID={testID}
       style={{ flex: 1, height: 80 }}
     >
@@ -31,12 +31,10 @@ const ObservationListItem = ({
       >
         <View style={styles.text}>
           <Text style={styles.title}>
-            {/* @ts-ignore */}
-            {observation['preset']}
+            {observation?.id}
           </Text>
           <Text>
-            {/* @ts-ignore */}
-            {observation['date']}
+            {observation?.updated_at}
           </Text>
         </View>
       </View>

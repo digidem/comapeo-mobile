@@ -1,4 +1,5 @@
 import {TypedEmitter} from 'tiny-typed-emitter';
+import rn_bridge from 'rn-bridge';
 
 /**
  * @typedef {Object} MessagePortEvents
@@ -21,13 +22,8 @@ class MessagePortLike extends TypedEmitter {
   #messageHandler;
   /** @type {String} */
   #API_EVENT_NAME = '@@API_MESSAGE';
-  /** @type {Channel} */
-  #channel;
 
-  /**
-   * @param {Channel} channel
-   */
-  constructor(channel) {
+  constructor() {
     super();
     this.#messageHandler = message => {
       if (this.#state === 'idle') {
@@ -39,8 +35,7 @@ class MessagePortLike extends TypedEmitter {
         // (the event listener should be removed anyway)
       }
     };
-    this.#channel = channel;
-    channel.addListener(this.#API_EVENT_NAME, this.#messageHandler);
+    rn_bridge.channel.addListener(this.#API_EVENT_NAME, this.#messageHandler);
   }
 
   start() {
@@ -59,7 +54,10 @@ class MessagePortLike extends TypedEmitter {
       return;
     }
 
-    this.#channel.removeListener(this.#API_EVENT_NAME, this.#messageHandler);
+    rn_bridge.channel.removeListener(
+      this.#API_EVENT_NAME,
+      this.#messageHandler,
+    );
     this.#state = 'closed';
     this.#queuedMessages = [];
   }
@@ -69,7 +67,7 @@ class MessagePortLike extends TypedEmitter {
    * @returns {void}
    */
   postMessage(message) {
-    this.#channel.post(this.#API_EVENT_NAME, message);
+    rn_bridge.channel.post(this.#API_EVENT_NAME, message);
   }
 }
 

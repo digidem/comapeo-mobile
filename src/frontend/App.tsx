@@ -1,9 +1,12 @@
 import * as React from 'react';
 import nodejs from 'nodejs-mobile-react-native';
 import {SafeAreaView, Button, TextInput} from 'react-native';
+import { createPersistedState } from './hooks/usePersistedState';
+
+const usePersistedTestTextState = createPersistedState('test')
 
 const App = () => {
-  const [messageText, setMessageText] = React.useState('');
+  const [messageText, setMessageText] = usePersistedTestTextState("this is the first")
 
   const channel = useNodejsMobile();
 

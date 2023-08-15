@@ -12,7 +12,9 @@
   "dependencies": {
     "nodejs-mobile-react-native": "^0.8.2",
     "react": "18.1.0",
-    "react-native": "0.70.6"
+    "react-native": "0.70.6",
+    "react-native-mmkv": "^2.10.1",
+    "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

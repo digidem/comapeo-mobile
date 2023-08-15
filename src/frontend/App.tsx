@@ -1,39 +1,38 @@
 import * as React from 'react';
-import nodejs from 'nodejs-mobile-react-native';
 import {SafeAreaView, Button, TextInput} from 'react-native';
-import {useClientApi} from './hooks/useClientApi';
-
+import {Loading} from './components/Loading';
+import {api} from './api';
 
 const App = () => {
   const [messageText, setMessageText] = React.useState('');
-  nodejs.start('loader.js');
-
-  const clientApi = useClientApi();
 
   return (
-    <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
-      <TextInput
-        onChangeText={setMessageText}
-        value={messageText}
-        style={{
-          backgroundColor: 'white',
-          borderColor: 'black',
-          color: 'black',
-        }}
-      />
-      <Button
-        title="Send message"
-        disabled={messageText.length === 0}
-        onPress={async () => {
-          try {
-            const res = await clientApi?.observation.getMany();
-            console.log('rpc call', res);
-          } catch (e) {
-            console.log('error sendind rpc', e);
-          }
-        }}
-      />
-    </SafeAreaView>
+    <Loading>
+      <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
+        <TextInput
+          onChangeText={setMessageText}
+          value={messageText}
+          style={{
+            backgroundColor: 'white',
+            borderColor: 'black',
+            color: 'black',
+          }}
+        />
+        <Button
+          title="Send message"
+          disabled={messageText.length === 0}
+          onPress={async () => {
+            try {
+              // TODO: I think rpc-reflector is not properly promisifying the method types
+              const res = await api.observation.getMany();
+              console.log('rpc call', res);
+            } catch (e) {
+              console.log('error sendind rpc', e);
+            }
+          }}
+        />
+      </SafeAreaView>
+    </Loading>
   );
 };
 

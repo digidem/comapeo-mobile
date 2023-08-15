@@ -51,6 +51,7 @@ process.on('exit', () => {
 });
 
 // 4. Send initial status message to client
-rn_bridge.channel.post('status', {value: 'listening'});
+state.status = 'listening';
+rn_bridge.channel.post('status', {value: state.status});
 
 log('Node was initialized!');

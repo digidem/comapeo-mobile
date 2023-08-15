@@ -7,7 +7,7 @@ import {MessagePortLike} from '../lib/MessagePortLike';
 export const useClientApi = () => {
   const [clientApi, setClientApi] = useState<ClientApi<typeof MapeoClient>>();
   useEffect(() => {
-    const channel = new MessagePortLike(nodejs.channel);
+    const channel = new MessagePortLike();
     let started = false;
     nodejs.channel.addListener('server-started', _ => {
       // if the server responds then we know that it has started

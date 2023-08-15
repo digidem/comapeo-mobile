@@ -6427,12 +6427,12 @@
   "resolved" "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.70.3.tgz"
   "version" "0.70.3"
 
-"react-native-mmkv@^2.10.1":
-  "integrity" "sha512-MCrYytUJ3JhSVg7LwVXCj7ExbMHe48FoQdDA1xo1q/M4c1/QyI3M9L9d2dyJUhYPnsSO0+5c2mJICm7v39XA0w=="
-  "resolved" "https://registry.npmjs.org/react-native-mmkv/-/react-native-mmkv-2.10.1.tgz"
-  "version" "2.10.1"
+"react-native-mmkv@^2.5.1":
+  "integrity" "sha512-5eQu25z3H6zf6w0NkJoTuFEFrbOu6luZxZ6+rK1W+XwY/rjPSFZFQPVtMaz3im90RbILFXXM/KrFGZrpaJJRoQ=="
+  "resolved" "https://registry.npmjs.org/react-native-mmkv/-/react-native-mmkv-2.5.1.tgz"
+  "version" "2.5.1"
 
-"react-native@>=0.60.0", "react-native@>=0.71.0", "react-native@0.70.6":
+"react-native@*", "react-native@>=0.60.0", "react-native@0.70.6":
   "integrity" "sha512-xtQdImPHnwgraEx3HIZFOF+D1hJ9bC5mfpIdUGoMHRws6OmvHAjmFpO6qfdnaQ29vwbmZRq7yf14sbury74R/w=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.70.6.tgz"
   "version" "0.70.6"

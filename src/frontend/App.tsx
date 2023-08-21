@@ -2,9 +2,9 @@ import * as React from 'react';
 import nodejs from 'nodejs-mobile-react-native';
 import {SafeAreaView, Button, TextInput} from 'react-native';
 
-const App = () => {
-  const [messageText, setMessageText] = React.useState('');
 
+const App = () => {
+  const [messageText, setMessageText] = React.useState("")
   const channel = useNodejsMobile();
 
   return (

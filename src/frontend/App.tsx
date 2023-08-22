@@ -2,9 +2,8 @@ import * as React from 'react';
 import nodejs from 'nodejs-mobile-react-native';
 import {SafeAreaView, Button, TextInput} from 'react-native';
 
-
 const App = () => {
-  const [messageText, setMessageText] = React.useState("")
+  const [messageText, setMessageText] = React.useState('');
   const channel = useNodejsMobile();
 
   return (
@@ -18,11 +17,7 @@ const App = () => {
           color: 'black',
         }}
       />
-      <Button
-        title="Send message"
-        disabled={messageText.length === 0}
-        onPress={() => channel.send(messageText)}
-      />
+      <Button title="Send message" onPress={() => channel.send(messageText)} />
     </SafeAreaView>
   );
 };

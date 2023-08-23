@@ -1,37 +1,43 @@
 import * as React from 'react';
-import {SafeAreaView, Button, TextInput} from 'react-native';
-import {Loading} from './components/Loading';
+import nodejs from 'nodejs-mobile-react-native';
+import {AppNavigator} from './Navigation/AppNavigator';
+import {
+  NavigationContainer,
+  useNavigationContainerRef,
+} from '@react-navigation/native';
+import {AppStackList} from './Navigation/AppStack';
 import {api} from './api';
 
 const App = () => {
   const [messageText, setMessageText] = React.useState('');
 
+  // const [initialNavState, setInitialNavState] = React.useState<
+  //   InitialState | "loading" | undefined
+  // >("loading");
+  const initialNavState = undefined;
+  const navRef = useNavigationContainerRef<AppStackList>();
+
   return (
-    <Loading>
-      <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
-        <TextInput
-          onChangeText={setMessageText}
-          value={messageText}
-          style={{
-            backgroundColor: 'white',
-            borderColor: 'black',
-            color: 'black',
-          }}
-        />
-        <Button
-          title="Send message"
-          onPress={async () => {
-            try {
-              // TODO: I think rpc-reflector is not properly promisifying the method types
-              const res = await api.observation.getMany();
-              console.log('rpc call', res);
-            } catch (e) {
-              console.log('error sendind rpc', e);
-            }
-          }}
-        />
-      </SafeAreaView>
-    </Loading>
+    <NavigationContainer
+      initialState={initialNavState}
+      onStateChange={() => {}}
+      // linking={{prefixes: [URI_PREFIX]}}
+      ref={navRef}>
+      <AppNavigator />
+    </NavigationContainer>
+  //   <Button
+  //   title="Send message"
+  //   onPress={async () => {
+  //     try {
+  //       // TODO: I think rpc-reflector is not properly promisifying the method types
+  //       const res = await api.observation.getMany();
+  //       console.log('rpc call', res);
+  //     } catch (e) {
+  //       console.log('error sendind rpc', e);
+  //     }
+  //   }}
+  // />
+    
   );
 };
 

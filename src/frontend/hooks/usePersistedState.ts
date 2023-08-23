@@ -1,5 +1,10 @@
-import {create} from 'zustand';
-import {StateStorage, persist, createJSONStorage} from 'zustand/middleware';
+import {StateCreator, create} from 'zustand';
+import {
+  StateStorage,
+  persist,
+  createJSONStorage,
+  PersistOptions,
+} from 'zustand/middleware';
 import {MMKV} from 'react-native-mmkv';
 
 const storage = new MMKV();
@@ -19,31 +24,17 @@ const MMKVZustandStorage: StateStorage = {
   },
 };
 
-type PersistedStateCreator<T> = {
-  state: T;
-  setState: (newState: T) => void;
-};
-
-/**
- * @param {PersistedStoreKey} persistedStoreKey is a hardcoded string located in the type:`PersistedStoreKey`  (`usePersistedStore.ts`). If you want to create a new persisted store, add the key to the `PersistedStoreKey` type.
- */
-export function createPersistedState(persistedStoreKey: PersistedStoreKey) {
-  return function usePersistedStore<T>(initialState: T) {
-    const persistedStore = create<
-      PersistedStateCreator<T>,
-      [['zustand/persist', PersistedStateCreator<T>]]
-    >(
-      persist(
-        set => ({
-          state: initialState,
-          setState: state => set({state}),
-        }),
-        {
-          name: persistedStoreKey,
-          storage: createJSONStorage(() => MMKVZustandStorage),
-        },
-      ),
-    );
-    return persistedStore(store => [store.state, store.setState] as const);
-  };
+function createPersistedState<T>(
+  slice: StateCreator<T>,
+  persistedStoreKey: PersistedStoreKey,
+  migrationOpt?: {version: number; migrateFn: PersistOptions<T, T>['migrate']},
+) {
+  return create<T, [['zustand/persist', T]]>(
+    persist(slice, {
+      name: persistedStoreKey,
+      storage: createJSONStorage(() => MMKVZustandStorage),
+      version: migrationOpt?.version,
+      migrate: migrationOpt?.migrateFn,
+    }),
+  );
 }

@@ -9,7 +9,7 @@ import {MMKV} from 'react-native-mmkv';
 
 const storage = new MMKV();
 
-type PersistedStoreKey = 'test' | 'MapeoLocale';
+type PersistedStoreKey = 'MapeoLocale';
 
 const MMKVZustandStorage: StateStorage = {
   setItem: (name, value) => {
@@ -24,17 +24,27 @@ const MMKVZustandStorage: StateStorage = {
   },
 };
 
-function createPersistedState<T>(
+/**
+ * alskdfasdf
+ */
+type MigrationOpt<T> =
+  | {version: number; migrateFn: PersistOptions<T, T>['migrate']}
+  | {version: number};
+
+export function createPersistedState<T>(
   slice: StateCreator<T>,
   persistedStoreKey: PersistedStoreKey,
-  migrationOpt?: {version: number; migrateFn: PersistOptions<T, T>['migrate']},
+  migrationOpt?: MigrationOpt<T>,
 ) {
   return create<T, [['zustand/persist', T]]>(
     persist(slice, {
       name: persistedStoreKey,
       storage: createJSONStorage(() => MMKVZustandStorage),
       version: migrationOpt?.version,
-      migrate: migrationOpt?.migrateFn,
+      migrate:
+        migrationOpt && 'migrateFn' in migrationOpt
+          ? migrationOpt.migrateFn
+          : undefined,
     }),
   );
 }

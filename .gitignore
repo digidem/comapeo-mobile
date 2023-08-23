@@ -38,6 +38,9 @@ local.properties
 #
 node_modules/
 npm-debug.log
+
+# Yarn
+
 yarn-error.log
 yarn.lock
 

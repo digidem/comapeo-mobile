@@ -1,41 +1,38 @@
 import * as React from 'react';
-import nodejs from 'nodejs-mobile-react-native';
-import {SafeAreaView, Button} from 'react-native';
-import {IntlProvider} from './contexts/IntlContext';
+import {SafeAreaView, Button, TextInput} from 'react-native';
+import {Loading} from './components/Loading';
+import {api} from './api';
 
 const App = () => {
   const [messageText, setMessageText] = React.useState('');
-  const channel = useNodejsMobile();
 
   return (
-    <IntlProvider>
+    <Loading>
       <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
+        <TextInput
+          onChangeText={setMessageText}
+          value={messageText}
+          style={{
+            backgroundColor: 'white',
+            borderColor: 'black',
+            color: 'black',
+          }}
+        />
         <Button
           title="Send message"
-          onPress={() => channel.send(messageText)}
+          onPress={async () => {
+            try {
+              // TODO: I think rpc-reflector is not properly promisifying the method types
+              const res = await api.observation.getMany();
+              console.log('rpc call', res);
+            } catch (e) {
+              console.log('error sendind rpc', e);
+            }
+          }}
         />
       </SafeAreaView>
-    </IntlProvider>
+    </Loading>
   );
 };
-
-function useNodejsMobile() {
-  React.useEffect(() => {
-    nodejs.start('loader.js');
-
-    const subscription = nodejs.channel.addListener('message', msg => {
-      console.log('RECEIVED MESSAGE', msg);
-    });
-
-    return () => {
-      // @ts-expect-error
-      subscription.remove();
-    };
-  }, []);
-
-  return {
-    send: (msg: string) => nodejs.channel.send(msg),
-  };
-}
 
 export default App;

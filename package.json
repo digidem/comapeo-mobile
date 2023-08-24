@@ -3,11 +3,14 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
+    "build:backend": "./scripts/build-backend.sh",
+    "android": "npm run build:backend && npm run android-no-backend-rebuild",
+    "android-no-backend-rebuild": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "postinstall": "patch-package",
     "prepare": "husky install",
     "format": "prettier \"src/**/*.{js,ts,jsx,tsx}\" --write",
     "build:intl-polyfills": "node ./scripts/build-intl-polyfills.js"
@@ -16,6 +19,9 @@
     "@formatjs/intl-locale": "^3.3.2",
     "@formatjs/intl-pluralrules": "^5.2.4",
     "@formatjs/intl-relativetimeformat": "^11.2.4",
+    "assert": "^2.0.0",
+    "buffer": "^6.0.3",
+    "eventemitter3": "^5.0.1",
     "expo": "^48.0.0",
     "expo-localization": "~14.1.1",
     "nodejs-mobile-react-native": "^0.8.2",
@@ -23,6 +29,9 @@
     "react-intl": "^6.4.4",
     "react-native": "0.71.13",
     "react-native-mmkv": "^2.10.1",
+    "readable-stream": "^4.4.1",
+    "rpc-reflector": "^1.3.10",
+    "tiny-typed-emitter": "^2.1.0",
     "zustand": "^4.4.1"
   },
   "devDependencies": {
@@ -47,6 +56,7 @@
     "patch-package": "^6.5.0",
     "prettier": "^3.0.2",
     "react-test-renderer": "18.2.0",
+    "rollup-plugin-node-polyfills": "^0.2.1",
     "typescript": "^4.8.4"
   },
   "jest": {

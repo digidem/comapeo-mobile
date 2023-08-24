@@ -12,7 +12,7 @@ function onFailure() {
 }
 
 # Ensure we start in the right place
-dir0="$( cd "$( dirname "$0" )" && pwd )"
+dir0="$(cd "$(dirname "$0")" && pwd)"
 repo_root="$(dirname "$dir0")"
 cd "$repo_root"
 

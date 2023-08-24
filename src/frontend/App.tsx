@@ -1,37 +1,23 @@
 import * as React from 'react';
-import {SafeAreaView, Button, TextInput} from 'react-native';
+import {
+  NavigationContainer,
+  useNavigationContainerRef,
+} from '@react-navigation/native';
+
+import {AppNavigator} from './Navigation/AppNavigator';
+import {AppStackList} from './Navigation/AppStack';
+import {IntlProvider} from './contexts/IntlContext';
 import {Loading} from './components/Loading';
-import {api} from './api';
 
 const App = () => {
-  const [messageText, setMessageText] = React.useState('');
+  const navRef = useNavigationContainerRef<AppStackList>();
 
   return (
-    <Loading>
-      <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
-        <TextInput
-          onChangeText={setMessageText}
-          value={messageText}
-          style={{
-            backgroundColor: 'white',
-            borderColor: 'black',
-            color: 'black',
-          }}
-        />
-        <Button
-          title="Send message"
-          onPress={async () => {
-            try {
-              // TODO: I think rpc-reflector is not properly promisifying the method types
-              const res = await api.observation.getMany();
-              console.log('rpc call', res);
-            } catch (e) {
-              console.log('error sendind rpc', e);
-            }
-          }}
-        />
-      </SafeAreaView>
-    </Loading>
+    <IntlProvider>
+      <NavigationContainer ref={navRef}>
+        <AppNavigator />
+      </NavigationContainer>
+    </IntlProvider>
   );
 };
 

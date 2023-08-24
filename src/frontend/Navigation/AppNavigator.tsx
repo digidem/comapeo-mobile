@@ -27,22 +27,14 @@ import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 // update them efficiently.
 
 export const AppNavigator = () => {
-  // const {formatMessage} = useIntl();
-  // const {authState} = React.useContext(SecurityContext);
+  const {formatMessage} = useIntl();
   const navigation = useNavigationFromRoot();
-
-  // React.useEffect(() => {
-  //   if (authState === 'unauthenticated') {
-  //     navigation.navigate('AuthScreen');
-  //   }
-  // }, [authState, navigation]);
 
   return (
     <RootStack.Navigator
       initialRouteName="Home"
       screenOptions={NavigatorScreenOptions}>
-      {createDefaultScreenGroup()}
-      {/* {devExperiments.onboarding && createOnboardingScreenGroup(formatMessage)} */}
+      {createDefaultScreenGroup(formatMessage)}
     </RootStack.Navigator>
   );
 };

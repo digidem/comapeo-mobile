@@ -1,21 +1,14 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
-
 const HomeHeader = () => {
-  const navigation = useNavigationFromRoot();
-
-  console.log({navigation});
-
   return (
     <View style={[styles.header]}>
       <LinearGradient
         style={styles.linearGradient}
         colors={['#0006', '#0000']}
       />
-      <Text>title</Text>
     </View>
   );
 };

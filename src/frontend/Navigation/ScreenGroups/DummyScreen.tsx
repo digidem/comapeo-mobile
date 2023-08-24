@@ -1,11 +1,19 @@
 import * as React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Button, StyleSheet, Text, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {NativeHomeTabsNavigationProps} from '../../sharedTypes';
 
-export const DummyScreen = () => (
+export const DummyScreen = (
+  prop: NativeHomeTabsNavigationProps<'Map' | 'Camera'>,
+) => (
   <View style={styles.container}>
     <Text style={styles.text}>Test screen</Text>
-    <MaterialIcons name={'home'} size={30} color={'white'} />
+    <Button
+      onPress={() => {
+        prop.navigation.navigate('Settings');
+      }}
+      title="Nav to stack"
+    />
   </View>
 );
 

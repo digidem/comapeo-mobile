@@ -32,6 +32,8 @@ export const Loading = ({children}: React.PropsWithChildren<{}>) => {
   React.useEffect(() => {
     let channel: MessagePortLike | undefined;
 
+    console.log(status);
+
     if (status === 'idle') {
       nodejs.start('loader.js');
       channel = new MessagePortLike();

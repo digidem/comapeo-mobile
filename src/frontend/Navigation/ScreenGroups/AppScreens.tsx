@@ -7,6 +7,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {DummyScreen} from './DummyScreen';
 import HomeHeader from '../../components/HomeHeader';
 import {RootStack} from '../AppStack';
+import {ScreenWithHeader} from './ScreenWithHeader';
+import {MessageDescriptor} from 'react-intl';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -85,13 +87,20 @@ const HomeTabs = () => (
 
 // **NOTE**: No hooks allowed here (this is not a component, it is a function
 // that returns a react element)
-export const createDefaultScreenGroup = () => (
+export const createDefaultScreenGroup = (
+  intl: (title: MessageDescriptor) => string,
+) => (
   // intl: (title: MessageDescriptor) => string,
   <RootStack.Group key="default">
     <RootStack.Screen
       name="Home"
       options={{headerShown: false}}
       component={HomeTabs}
+    />
+    <RootStack.Screen
+      name="Settings"
+      component={ScreenWithHeader}
+      options={{headerTitle: intl(ScreenWithHeader.navTitle)}}
     />
   </RootStack.Group>
 );

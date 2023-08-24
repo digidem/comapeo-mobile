@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {NativeNavigationComponent} from '../../sharedTypes';
+import {NativeNavigationScreen} from '../../sharedTypes';
 import {defineMessages} from 'react-intl';
 
 const m = defineMessages({
@@ -10,7 +10,7 @@ const m = defineMessages({
   },
 });
 
-export const ScreenWithHeader: NativeNavigationComponent<'Settings'> = () => (
+export const ScreenWithHeader: NativeNavigationScreen<'Settings'> = () => (
   <View style={styles.container}>
     <Text style={styles.text}>Stack Screen</Text>
   </View>

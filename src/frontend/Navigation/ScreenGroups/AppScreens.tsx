@@ -1,7 +1,6 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigatorScreenParams} from '@react-navigation/native';
 import * as React from 'react';
-// import {MessageDescriptor} from 'react-intl';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import {DummyScreen} from './DummyScreen';
@@ -90,7 +89,6 @@ const HomeTabs = () => (
 export const createDefaultScreenGroup = (
   intl: (title: MessageDescriptor) => string,
 ) => (
-  // intl: (title: MessageDescriptor) => string,
   <RootStack.Group key="default">
     <RootStack.Screen
       name="Home"

@@ -10,11 +10,8 @@ import {HomeTabsList} from './Navigation/ScreenGroups/AppScreens';
 export type NativeRootNavigationProps<ScreenName extends keyof AppStackList> =
   NativeStackScreenProps<AppStackList, ScreenName>;
 
-/**
- * Add description here
- */
-export type NativeNavigationComponent<ScreenName extends keyof AppStackList> =
-  React.FC<NativeRootNavigationProps<ScreenName>> & {
+export type NativeNavigationScreen<ScreenName extends keyof AppStackList> =
+  React.FC<NativeStackScreenProps<AppStackList, ScreenName>> & {
     navTitle: MessageDescriptor;
   };
 

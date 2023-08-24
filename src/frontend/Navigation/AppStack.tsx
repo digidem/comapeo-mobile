@@ -1,17 +1,10 @@
-// import React from 'react';
-// import CustomHeaderLeft from '../sharedComponents/CustomHeaderLeft';
+import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {
-  // HeaderButtonProps,
-  NativeStackNavigationOptions,
-} from '@react-navigation/native-stack/lib/typescript/src/types';
+import {NativeStackNavigationOptions} from '@react-navigation/native-stack/lib/typescript/src/types';
 import {WHITE} from '../lib/styles';
-// import {IccaStackList} from '../screens/Intro';
-// import {OnboardingStackList} from './ScreenGroups/Onboarding';
 import {AppList} from './ScreenGroups/AppScreens';
 import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 
-// export {createOnboardingScreenGroup} from './ScreenGroups/Onboarding';
 export {createDefaultScreenGroup} from './ScreenGroups/AppScreens';
 
 // export type AppStackList = AppList & OnboardingStackList & IccaStackList;

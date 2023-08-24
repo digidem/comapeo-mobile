@@ -14,11 +14,9 @@ const App = () => {
 
   return (
     <IntlProvider>
-      <Loading>
-        <NavigationContainer ref={navRef}>
-          <AppNavigator />
-        </NavigationContainer>
-      </Loading>
+      <NavigationContainer ref={navRef}>
+        <AppNavigator />
+      </NavigationContainer>
     </IntlProvider>
   );
 };

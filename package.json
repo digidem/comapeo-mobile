@@ -9,16 +9,21 @@
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "prepare": "husky install",
-    "format": "prettier \"src/**/*.{js,ts,jsx,tsx}\" --write"
+    "format": "prettier \"src/**/*.{js,ts,jsx,tsx}\" --write",
+    "build:intl-polyfills": "node ./scripts/build-intl-polyfills.js"
   },
   "dependencies": {
+    "@formatjs/intl-locale": "^3.3.2",
+    "@formatjs/intl-pluralrules": "^5.2.4",
+    "@formatjs/intl-relativetimeformat": "^11.2.4",
+    "expo": "^48.0.0",
+    "expo-localization": "~14.1.1",
     "nodejs-mobile-react-native": "^0.8.2",
     "react": "18.2.0",
     "react-intl": "^6.4.4",
     "react-native": "0.71.13",
     "react-native-mmkv": "^2.10.1",
-    "zustand": "^4.4.1",
-    "expo": "^48.0.0"
+    "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

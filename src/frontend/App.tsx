@@ -1,24 +1,21 @@
 import * as React from 'react';
 import nodejs from 'nodejs-mobile-react-native';
-import {SafeAreaView, Button, TextInput} from 'react-native';
+import {SafeAreaView, Button} from 'react-native';
+import {IntlProvider} from './contexts/IntlContext';
 
 const App = () => {
   const [messageText, setMessageText] = React.useState('');
   const channel = useNodejsMobile();
 
   return (
-    <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
-      <TextInput
-        onChangeText={setMessageText}
-        value={messageText}
-        style={{
-          backgroundColor: 'white',
-          borderColor: 'black',
-          color: 'black',
-        }}
-      />
-      <Button title="Send message" onPress={() => channel.send(messageText)} />
-    </SafeAreaView>
+    <IntlProvider>
+      <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
+        <Button
+          title="Send message"
+          onPress={() => channel.send(messageText)}
+        />
+      </SafeAreaView>
+    </IntlProvider>
   );
 };
 

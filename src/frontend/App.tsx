@@ -20,7 +20,6 @@ const App = () => {
         />
         <Button
           title="Send message"
-          disabled={messageText.length === 0}
           onPress={async () => {
             try {
               // TODO: I think rpc-reflector is not properly promisifying the method types

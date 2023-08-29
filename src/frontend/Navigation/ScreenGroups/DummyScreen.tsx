@@ -1,7 +1,10 @@
 import * as React from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes';
+import {
+  BottomSheetContent,
+  BottomSheetModal,
+} from '../../sharedComponents/BottomSheetModal';
 
 export const DummyScreen = (
   prop: NativeHomeTabsNavigationProps<'Map' | 'Camera'>,

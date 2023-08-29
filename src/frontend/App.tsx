@@ -7,16 +7,17 @@ import {
 import {AppNavigator} from './Navigation/AppNavigator';
 import {AppStackList} from './Navigation/AppStack';
 import {IntlProvider} from './contexts/IntlContext';
-import {Loading} from './components/Loading';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();
-
   return (
     <IntlProvider>
-      <NavigationContainer ref={navRef}>
-        <AppNavigator />
-      </NavigationContainer>
+      <GestureHandlerRootView style={{flex: 1}}>
+        <NavigationContainer ref={navRef}>
+          <AppNavigator />
+        </NavigationContainer>
+      </GestureHandlerRootView>
     </IntlProvider>
   );
 };

@@ -1,5 +1,7 @@
 import {StateCreator} from 'zustand';
 import {createPersistedState} from './createPersistedState';
+import {getSupportedLocale} from '../../contexts/IntlContext';
+import {getLocales} from 'expo-localization';
 
 type LocaleSlice = {
   locale: string;
@@ -7,8 +9,11 @@ type LocaleSlice = {
 };
 
 const localeSlice: StateCreator<LocaleSlice> = (set, get) => ({
-  locale: 'en',
+  locale: getSupportedLocale(getLocales()[0].languageTag) || 'en',
   setLocale: newlocale => set({locale: newlocale}),
 });
 
-export const usePersistedLocale = createPersistedState(localeSlice, 'MapeoLocale');
+export const usePersistedLocale = createPersistedState(
+  localeSlice,
+  'MapeoLocale',
+);

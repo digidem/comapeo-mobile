@@ -1,10 +1,9 @@
 import * as React from 'react';
 import {IntlProvider as IntlProviderOrig, CustomFormats} from 'react-intl';
-import {getLocales} from 'expo-localization';
 
-import {createPersistedState} from '../hooks/usePersistedState';
 import messages from '../translations/messages.json';
 import languages from '../languages.json';
+import {usePersistedLocale} from '../hooks/persistedState/usePersistedLocale';
 
 export const formats: CustomFormats = {
   date: {
@@ -54,12 +53,8 @@ a language name and translations in \`src/frontend/languages.json\``,
     return a.englishName.localeCompare(b.englishName);
   });
 
-const usePersistedState = createPersistedState('MapeoLocale');
-
 export const IntlProvider = ({children}: {children: React.ReactNode}) => {
-  const [appLocale, setLocale] = usePersistedState<string>(
-    getSupportedLocale(getLocales()[0].languageTag) || 'en',
-  );
+  const appLocale = usePersistedLocale(store => store.locale);
 
   const languageCode = appLocale.split('-')[0];
 
@@ -90,7 +85,7 @@ function onError(e: Error) {
 // translations for `en`. If we don't have translations for a given device
 // language, then we ignore it and fallback to `en` or the user selected
 // language for the app
-function getSupportedLocale(
+export function getSupportedLocale(
   locale: string,
 ): keyof typeof languages | undefined {
   if (supportedLanguages.find(lang => lang.locale === locale))

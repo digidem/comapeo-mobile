@@ -24,9 +24,6 @@ const MMKVZustandStorage: StateStorage = {
   },
 };
 
-/**
- * alskdfasdf
- */
 type MigrationOpt<T> =
   | {version: number; migrateFn: PersistOptions<T, T>['migrate']}
   | {version: number};

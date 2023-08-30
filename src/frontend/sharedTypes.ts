@@ -1,4 +1,5 @@
 // TS port of /src/frontend/types.js
+import {ImageStyle, StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {CompositeScreenProps} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -21,3 +22,5 @@ export type NativeHomeTabsNavigationProps<
   BottomTabScreenProps<HomeTabsList, ScreenName>,
   NativeStackScreenProps<AppStackList>
 >;
+
+export type ViewStyleProp = StyleProp<ViewStyle>;

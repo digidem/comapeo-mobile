@@ -7,7 +7,6 @@ import {
 import {AppNavigator} from './Navigation/AppNavigator';
 import {AppStackList} from './Navigation/AppStack';
 import {IntlProvider} from './contexts/IntlContext';
-import {Loading} from './components/Loading';
 
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();

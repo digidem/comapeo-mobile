@@ -29,7 +29,7 @@ export const DummyScreen = (
         }}
         title="Open Modal"
       />
-      <BottomSheetModal ref={sheetRef} onDismiss={() => {}}>
+      <BottomSheetModal ref={sheetRef}>
         <BottomSheetContent
           title={'Example'}
           description={'This is an example bottomsheet'}
@@ -51,7 +51,6 @@ export const DummyScreen = (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'deeppink',
     justifyContent: 'center',
     alignItems: 'center',
   },

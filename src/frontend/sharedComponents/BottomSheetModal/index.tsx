@@ -99,14 +99,14 @@ const useSnapPointsCalculator = () => {
 };
 
 interface Props extends React.PropsWithChildren<{}> {
-  onDismiss: () => void;
+  onDismiss?: () => void;
   onHardwareBackPress?: () => void | boolean;
   snapPoints?: (string | number)[];
-  disableBackrop?: boolean;
+  disableBackdrop?: boolean;
 }
 
 export const BottomSheetModal = React.forwardRef<RNBottomSheetModal, Props>(
-  ({children, onDismiss, onHardwareBackPress, disableBackrop}, ref) => {
+  ({children, onDismiss, onHardwareBackPress, disableBackdrop}, ref) => {
     useBackPressHandler(onHardwareBackPress);
 
     const {snapPoints, updateSheetHeight} = useSnapPointsCalculator();
@@ -115,7 +115,7 @@ export const BottomSheetModal = React.forwardRef<RNBottomSheetModal, Props>(
       <BottomSheetModalProvider>
         <RNBottomSheetModal
           ref={ref}
-          backdropComponent={disableBackrop ? null : Backdrop}
+          backdropComponent={Backdrop}
           enableContentPanningGesture={false}
           enableHandlePanningGesture={false}
           handleComponent={() => null}

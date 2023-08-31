@@ -1,29 +1,33 @@
 import * as React from 'react';
-import Animated, {interpolate} from 'react-native-reanimated';
+import Animated, {
+  Extrapolate,
+  interpolate,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
 import {BottomSheetBackdropProps} from '@gorhom/bottom-sheet';
 
 import {BLACK} from '../../lib/styles';
 
-export const Backdrop = ({
-  animatedIndex,
-  style,
-  ...rest
-}: BottomSheetBackdropProps) => {
-  const animatedOpacity = React.useMemo(
-    () => interpolate(animatedIndex.value, [0, 1], [0, 0.3]),
-    [animatedIndex],
-  );
+export const Backdrop = ({animatedIndex, style}: BottomSheetBackdropProps) => {
+  const containerAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      animatedIndex.value,
+      [0, 1],
+      [0, 1],
+      Extrapolate.CLAMP,
+    ),
+  }));
 
   const containerStyle = React.useMemo(
     () => [
       style,
       {
-        backgroundColor: BLACK,
-        opacity: animatedOpacity,
+        backgroundColor: '#a8b5eb',
       },
+      containerAnimatedStyle,
     ],
-    [style, animatedOpacity],
+    [style, containerAnimatedStyle],
   );
 
-  return <Animated.View {...rest} style={containerStyle} />;
+  return <Animated.View style={containerStyle} />;
 };

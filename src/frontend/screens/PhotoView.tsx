@@ -1,3 +1,4 @@
+// This screen will be replaced my the photo modal and is just being used as a proof of concept to show that photo URI is being saved
 import React, {useState} from 'react';
 import {View, StyleSheet, Image, StyleProp, ViewStyle} from 'react-native';
 import {NativeNavigationScreenWithProps} from '../sharedTypes';

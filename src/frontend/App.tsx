@@ -13,6 +13,7 @@ import {lockAsync, OrientationLock} from 'expo-screen-orientation';
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();
 
+  // in Mapeo this was done in android file, but can now be done using this relatively small expo module
   React.useLayoutEffect(() => {
     async function lockScreenToPortrait() {
       await lockAsync(OrientationLock.PORTRAIT);

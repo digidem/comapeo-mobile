@@ -8,6 +8,8 @@ import HomeHeader from '../../components/HomeHeader';
 import {RootStack} from '../AppStack';
 import {ScreenWithHeader} from './ScreenWithHeader';
 import {MessageDescriptor} from 'react-intl';
+import {PhotoView} from '../../screens/PhotoView';
+import {CameraScreen} from '../../screens/CameraScreen';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -28,6 +30,9 @@ export type AppList = {
     photoIndex: number;
     observationId?: string;
     editing: boolean;
+  };
+  PhotoView: {
+    uri: string;
   };
   CategoryChooser: undefined;
   AddPhoto: undefined;
@@ -80,7 +85,7 @@ const HomeTabs = () => (
     initialRouteName="Map"
     backBehavior="initialRoute">
     <Tab.Screen name="Map" component={DummyScreen} />
-    <Tab.Screen name="Camera" component={DummyScreen} />
+    <Tab.Screen name="Camera" component={CameraScreen} />
   </Tab.Navigator>
 );
 
@@ -99,6 +104,11 @@ export const createDefaultScreenGroup = (
       name="Settings"
       component={ScreenWithHeader}
       options={{headerTitle: intl(ScreenWithHeader.navTitle)}}
+    />
+    <RootStack.Screen
+      name="PhotoView"
+      component={PhotoView}
+      options={{headerTitle: intl(PhotoView.navTitle)}}
     />
   </RootStack.Group>
 );

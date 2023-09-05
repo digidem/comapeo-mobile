@@ -16,7 +16,7 @@ type MapeoPermissions = Extract<
 
 /**
  *
- * Turns on a listener that listens for whether the user has enabled the permission manually in the Android settings. If it has enabled the `recheckPermission()` function is called, syncing the react state with Android Permission State. Listener is turned off when the permssion is granted. This Listener does NOT check if the user has taken away the permission, as by default android resets the entire app when any permission is taken away.
+ * Turns on a listener that tracks whether the user has enabled the permission manually in the Android settings. If it has been enabled, the `recheckPermission()` function is called, syncing the react state with Android Permission State. Listener is turned off when the permssion is granted. This Listener does NOT check if the user has taken away the permission, as by default android resets the entire app when any permission is taken away.
  */
 export const useResetPermissions = (
   permission: MapeoPermissions,

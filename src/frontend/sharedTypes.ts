@@ -15,6 +15,13 @@ export type NativeNavigationScreen<ScreenName extends keyof AppStackList> =
     navTitle: MessageDescriptor;
   };
 
+export type NativeNavigationScreenWithProps<
+  ScreenName extends keyof AppStackList,
+  T,
+> = React.FC<NativeStackScreenProps<AppStackList, ScreenName> & T> & {
+  navTitle: MessageDescriptor;
+};
+
 export type NativeHomeTabsNavigationProps<
   ScreenName extends keyof HomeTabsList,
 > = CompositeScreenProps<

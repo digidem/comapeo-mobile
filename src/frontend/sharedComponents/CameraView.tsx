@@ -6,12 +6,15 @@ import {
   CameraType,
   CameraCapturedPicture,
 } from 'expo-camera';
+import ImageResizer from '@bam.tech/react-native-image-resizer';
+import {Accelerometer, AccelerometerMeasurement} from 'expo-sensors';
 
 import {AddButton} from './AddButton';
 import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 import {useResetPermissions} from '../hooks/useResetPermissions';
 import {Loading} from './Loading';
 import {WHITE} from '../lib/styles';
+import {Subscription} from 'expo-screen-orientation';
 
 const m = defineMessages({
   noCameraAccess: {
@@ -24,6 +27,8 @@ const m = defineMessages({
   },
 });
 
+const CAPTURE_QUALITY = 75;
+
 const captureOptions: CameraPictureOptions = {
   base64: false,
   exif: true,
@@ -33,23 +38,51 @@ const captureOptions: CameraPictureOptions = {
 type Props = {
   // Called when the user takes a picture, with a promise that resolves to an
   // object with the property `uri` for the captured (and rotated) photo.
-  onAddPress: (capture: Promise<CameraCapturedPicture>) => void;
+  onAddPress: (capture: Promise<{uri: string}>) => void;
 };
+
+// type Rotation = DeviceMotionMeasurement["rotation"]
 
 export const CameraView = ({onAddPress}: Props) => {
   const [capturing, setCapturing] = React.useState(false);
   const [cameraReady, setCameraReady] = React.useState(false);
   const [status, requestPermission] = Camera.useCameraPermissions();
   const ref = React.useRef<Camera>(null);
+  const accelerometerMeasurement = React.useRef<AccelerometerMeasurement>();
+
   const {navigateToSettings} = useResetPermissions(
     'android.permission.CAMERA',
     requestPermission,
   );
+
   const {formatMessage: t} = useIntl();
 
   React.useEffect(() => {
     requestPermission();
   }, [requestPermission]);
+
+  React.useEffect(() => {
+    let isCancelled = false;
+    let deviceMotionSub: Subscription;
+    (async () => {
+      try {
+        const motionAvailable = await Accelerometer.isAvailableAsync();
+        if (!motionAvailable || isCancelled) return;
+        Accelerometer.setUpdateInterval(300);
+        if (isCancelled) return;
+        deviceMotionSub = Accelerometer.addListener(acc => {
+          accelerometerMeasurement.current = acc;
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+
+    return () => {
+      isCancelled = true;
+      if (deviceMotionSub) deviceMotionSub.remove();
+    };
+  }, []);
 
   const handleAddPress = React.useCallback(() => {
     if (!ref.current) {
@@ -63,14 +96,15 @@ export const CameraView = ({onAddPress}: Props) => {
 
     setCapturing(true);
 
-    const capturedPromise = ref.current
+    ref.current
       .takePictureAsync(captureOptions)
       .then(pic => {
+        onAddPress(rotatePhoto(pic, accelerometerMeasurement.current));
+      })
+      .catch(err => {
+        console.log(err);
         setCapturing(false);
-        return pic;
       });
-
-    onAddPress(capturedPromise);
 
     return () => {
       setCapturing(false);
@@ -114,6 +148,53 @@ export const CameraView = ({onAddPress}: Props) => {
     </View>
   );
 };
+
+function rotatePhoto(
+  {uri, width, height}: CameraCapturedPicture,
+  acc?: AccelerometerMeasurement,
+) {
+  const resizePromise = ImageResizer.createResizedImage(
+    uri,
+    width,
+    height,
+    'JPEG',
+    CAPTURE_QUALITY,
+    getPhotoRotation(acc),
+  ).then(({uri}) => {
+    return {uri};
+  });
+
+  return resizePromise;
+}
+
+const ACC_AT_45_DEG = Math.sin(Math.PI / 4);
+
+function getPhotoRotation(acc?: AccelerometerMeasurement) {
+  if (!acc) return 0;
+  const {x, y, z} = acc;
+  let rotation = 0;
+  if (z < -ACC_AT_45_DEG || z > ACC_AT_45_DEG) {
+    // camera is pointing up or down
+    if (Math.abs(y) > Math.abs(x)) {
+      // camera is vertical
+      if (y <= 0) rotation = 180;
+      else rotation = 0;
+    } else {
+      // camera is horizontal
+      if (x >= 0) rotation = -90;
+      else rotation = 90;
+    }
+  } else if (x > -ACC_AT_45_DEG && x < ACC_AT_45_DEG) {
+    // camera is vertical
+    if (y <= 0) rotation = 180;
+    else rotation = 0;
+  } else {
+    // camera is horizontal
+    if (x >= 0) rotation = -90;
+    else rotation = 90;
+  }
+  return rotation;
+}
 
 const styles = StyleSheet.create({
   container: {

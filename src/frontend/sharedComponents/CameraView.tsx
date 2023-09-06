@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Text, Button} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import {
   Camera,
   CameraPictureOptions,
@@ -10,11 +10,9 @@ import ImageResizer from '@bam.tech/react-native-image-resizer';
 import {Accelerometer, AccelerometerMeasurement} from 'expo-sensors';
 
 import {AddButton} from './AddButton';
-import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
-import {useResetPermissions} from '../hooks/useResetPermissions';
-import {Loading} from './Loading';
-import {WHITE} from '../lib/styles';
-import {Subscription} from 'expo-screen-orientation';
+import {FormattedMessage, defineMessages} from 'react-intl';
+import {usePermissionContext} from '../contexts/PermissionsContext';
+import {Subscription} from 'expo-sensors/build/DeviceSensor';
 
 const m = defineMessages({
   noCameraAccess: {
@@ -46,20 +44,14 @@ type Props = {
 export const CameraView = ({onAddPress}: Props) => {
   const [capturing, setCapturing] = React.useState(false);
   const [cameraReady, setCameraReady] = React.useState(false);
-  const [status, requestPermission] = Camera.useCameraPermissions();
+  const {permissions, requestPermissions} = usePermissionContext();
   const ref = React.useRef<Camera>(null);
   const accelerometerMeasurement = React.useRef<AccelerometerMeasurement>();
 
-  const {navigateToSettings} = useResetPermissions(
-    'android.permission.CAMERA',
-    requestPermission,
-  );
-
-  const {formatMessage: t} = useIntl();
-
   React.useEffect(() => {
-    requestPermission();
-  }, [requestPermission]);
+    // in mapeo 5 this was done in the loading screen, and can be moved back there when loading screen is made
+    requestPermissions('android.permission.CAMERA');
+  }, [requestPermissions]);
 
   React.useEffect(() => {
     let isCancelled = false;
@@ -82,7 +74,7 @@ export const CameraView = ({onAddPress}: Props) => {
       isCancelled = true;
       if (deviceMotionSub) deviceMotionSub.remove();
     };
-  }, []);
+  }, [Accelerometer]);
 
   const handleAddPress = React.useCallback(() => {
     if (!ref.current) {
@@ -112,20 +104,16 @@ export const CameraView = ({onAddPress}: Props) => {
   }, [capturing, setCapturing, onAddPress]);
 
   const disableButton = capturing || !cameraReady;
+  const cameraPermissions =
+    permissions['android.permission.CAMERA'] === 'granted';
 
   return (
     <View style={styles.container}>
-      {!status ? (
-        <Loading color={WHITE} />
-      ) : !status.granted ? (
+      {!cameraPermissions ? (
         <View style={styles.noPermissionContainer}>
           <Text style={{marginBottom: 10}}>
             <FormattedMessage {...m.noCameraAccess} />
           </Text>
-          <Button
-            onPress={() => navigateToSettings()}
-            title={t(m.goToSettings)}
-          />
         </View>
       ) : (
         <Camera

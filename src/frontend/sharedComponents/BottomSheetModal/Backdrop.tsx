@@ -22,7 +22,7 @@ export const Backdrop = ({animatedIndex, style}: BottomSheetBackdropProps) => {
     () => [
       style,
       {
-        backgroundColor: '#a8b5eb',
+        backgroundColor: BLACK,
       },
       containerAnimatedStyle,
     ],

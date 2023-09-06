@@ -10,7 +10,7 @@ import {
 export const DummyScreen = (
   prop: NativeHomeTabsNavigationProps<'Map' | 'Camera'>,
 ) => {
-  const {sheetRef, closeSheet, openSheet} = useBottomSheetModal({
+  const {sheetRef, closeSheet, openSheet, isOpen} = useBottomSheetModal({
     openOnMount: false,
   });
   return (
@@ -29,7 +29,7 @@ export const DummyScreen = (
         }}
         title="Open Modal"
       />
-      <BottomSheetModal ref={sheetRef}>
+      <BottomSheetModal disableBackrop={false} isOpen={isOpen} ref={sheetRef}>
         <BottomSheetContent
           title={'Example'}
           description={'This is an example bottomsheet'}

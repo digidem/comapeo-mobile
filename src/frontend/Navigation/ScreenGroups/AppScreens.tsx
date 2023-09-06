@@ -6,10 +6,17 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {DummyScreen} from './DummyScreen';
 import HomeHeader from '../../components/HomeHeader';
 import {RootStack} from '../AppStack';
-import {ScreenWithHeader} from './ScreenWithHeader';
 import {MessageDescriptor} from 'react-intl';
 import {PhotoView} from '../../screens/PhotoView';
 import {CameraScreen} from '../../screens/CameraScreen';
+import {AppPasscode} from '../../screens/AppPasscode';
+import {ConfirmPasscodeSheet} from '../../screens/AppPasscode/ConfirmPasscodeSheet';
+import {EnterPassToTurnOff} from '../../screens/AppPasscode/EnterPassToTurnOff';
+import {SetPasscode} from '../../screens/AppPasscode/SetPasscode';
+import {TurnOffPasscode} from '../../screens/AppPasscode/TurnOffPasscode';
+import {Security} from '../../screens/Security';
+import {AuthScreen} from '../../screens/AuthScreen';
+import {ObscurePasscode} from '../../screens/ObscurePasscode';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -101,9 +108,44 @@ export const createDefaultScreenGroup = (
       component={HomeTabs}
     />
     <RootStack.Screen
-      name="Settings"
-      component={ScreenWithHeader}
-      options={{headerTitle: intl(ScreenWithHeader.navTitle)}}
+      name="AuthScreen"
+      component={AuthScreen}
+      options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="Security"
+      component={Security}
+      options={{headerTitle: intl(Security.navTitle)}}
+    />
+    <RootStack.Screen
+      name="AppPasscode"
+      component={AppPasscode}
+      options={{headerTitle: intl(AppPasscode.navTitle)}}
+    />
+    <RootStack.Screen
+      name="DisablePasscode"
+      component={TurnOffPasscode}
+      options={{headerTitle: intl(TurnOffPasscode.navTitle)}}
+    />
+    <RootStack.Screen
+      name="SetPasscode"
+      component={SetPasscode}
+      options={{headerTitle: intl(SetPasscode.navTitle)}}
+    />
+    <RootStack.Screen
+      name="EnterPassToTurnOff"
+      component={EnterPassToTurnOff}
+      options={{headerTitle: intl(EnterPassToTurnOff.navTitle)}}
+    />
+    <RootStack.Screen
+      name="ObscurePasscode"
+      component={ObscurePasscode}
+      options={{headerTitle: intl(ObscurePasscode.navTitle)}}
+    />
+    <RootStack.Screen
+      name="ConfirmPasscodeSheet"
+      component={ConfirmPasscodeSheet}
+      options={{headerShown: false, presentation: 'modal'}}
     />
     <RootStack.Screen
       name="PhotoView"

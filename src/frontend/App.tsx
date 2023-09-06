@@ -21,13 +21,15 @@ const App = () => {
 
   return (
     <IntlProvider>
-      <GestureHandlerRootView style={{flex: 1}}>
-        <PermissionsProvider>
-          <NavigationContainer ref={navRef}>
-            <AppNavigator />
-          </NavigationContainer>
-        </PermissionsProvider>
-      </GestureHandlerRootView>
+      <BottomSheetModalProvider>
+        <GestureHandlerRootView style={{flex: 1}}>
+          <PermissionsProvider>
+            <NavigationContainer ref={navRef}>
+              <AppNavigator />
+            </NavigationContainer>
+          </PermissionsProvider>
+        </GestureHandlerRootView>
+      </BottomSheetModalProvider>
     </IntlProvider>
   );
 };

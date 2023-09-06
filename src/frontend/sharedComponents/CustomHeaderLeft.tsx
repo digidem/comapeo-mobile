@@ -15,17 +15,19 @@ export const HeaderBackIcon = ({tintColor}: {tintColor: string}) => {
 interface CustomHeaderLeftProps {
   tintColor?: string;
   headerBackButtonProps: HeaderBackButtonProps;
+  onPress?: () => void;
 }
 
 export const CustomHeaderLeft = ({
   tintColor,
   headerBackButtonProps,
+  onPress,
 }: CustomHeaderLeftProps) => {
   const navigation = useNavigationFromRoot();
   return (
     <HeaderBackButton
       {...headerBackButtonProps}
-      onPress={() => navigation.goBack()}
+      onPress={onPress || (() => navigation.goBack())}
       style={{marginLeft: 0, marginRight: 15}}
       backImage={() => <HeaderBackIcon tintColor={tintColor || BLACK} />}
     />

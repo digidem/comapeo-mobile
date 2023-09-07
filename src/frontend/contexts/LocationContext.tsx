@@ -10,7 +10,6 @@ import {
   usePermissionContext,
 } from './PermissionsContext';
 import {storage} from '../hooks/persistedState/createPersistedState';
-// import { usePermissions } from "../hooks/usePermissions";
 
 interface Provider {
   backgroundModeEnabled: boolean;
@@ -85,11 +84,6 @@ const stopWatchingLocation = (
 const LocationContext: React.Context<LocationContextType> =
   React.createContext<LocationContextType>(DEFAULT_CONTEXT);
 
-const storageResults = storage.getString(STORE_KEY);
-const savedPosition = !storageResults
-  ? undefined
-  : (JSON.parse(storageResults) as Position);
-
 /**
  * The LocationProvider provides details about the current device location based
  * on sensors including GPS. It must be included in the component heirarchy
@@ -104,6 +98,12 @@ export const LocationProvider = ({children}: React.PropsWithChildren<{}>) => {
 
   const [error, setError] = React.useState(false);
   const [position, setPosition] = React.useState<Position>();
+  const [savedPosition] = React.useState<Position | undefined>(() => {
+    const storageResults = storage.getString(STORE_KEY);
+    return !storageResults
+      ? undefined
+      : (JSON.parse(storageResults) as Position);
+  });
   const [provider, setProvider] = React.useState<Provider>();
 
   const timeoutId = React.useRef<ReturnType<typeof setTimeout>>();

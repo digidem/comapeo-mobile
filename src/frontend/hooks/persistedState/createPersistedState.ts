@@ -9,7 +9,7 @@ import {MMKV} from 'react-native-mmkv';
 
 const storage = new MMKV();
 
-type PersistedStoreKey = 'MapeoLocale';
+type PersistedStoreKey = 'MapeoLocale' | '@MapeoDraft';
 
 const MMKVZustandStorage: StateStorage = {
   setItem: (name, value) => {

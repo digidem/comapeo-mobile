@@ -4,6 +4,8 @@ import {defineMessages} from 'react-intl';
 import {OBSCURE_PASSCODE} from '../../constants';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {NativeNavigationScreen} from '../../sharedTypes';
+import {ConfirmPasscodeSheet} from './ConfirmPasscodeSheet';
+import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
 
 const m = defineMessages({
   titleSet: {
@@ -96,30 +98,33 @@ SetPasscode.navTitle = m.title;
 
 const SetPasswordConfirm = ({initialPass}: {initialPass: string}) => {
   const [error, setError] = React.useState(false);
-  const {navigate} = useNavigationFromRoot();
 
   function validate(inputVal: string) {
+    console.log('here');
+    console.log({inputVal, initialPass});
     if (inputVal === initialPass) {
-      navigate('ConfirmPasscodeSheet', {passcode: inputVal});
-      return;
+      return true;
     }
 
     setError(true);
+    return false;
   }
 
   return (
-    <InputPasscode
-      text={{
-        title: m.titleConfirm,
-        errorMessage: m.passwordDoesNotMatch,
-        subtitle: m.subTitleSet,
-      }}
-      validate={validate}
-      error={error}
-      showPasscodeValues={true}
-      hideError={() => {
-        setError(false);
-      }}
-    />
+    <React.Fragment>
+      <InputPasscode
+        text={{
+          title: m.titleConfirm,
+          errorMessage: m.passwordDoesNotMatch,
+          subtitle: m.subTitleSet,
+        }}
+        validate={validate}
+        error={error}
+        showPasscodeValues={true}
+        hideError={() => {
+          setError(false);
+        }}
+      />
+    </React.Fragment>
   );
 };

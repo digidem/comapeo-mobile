@@ -5,11 +5,12 @@ import {RED} from '../../lib/styles';
 import {
   BottomSheetContent,
   BottomSheetModal,
-  useBottomSheetModal,
 } from '../../sharedComponents/BottomSheetModal';
 import {ErrorIcon} from '../../sharedComponents/icons';
 import {NativeRootNavigationProps} from '../../sharedTypes';
 import {usePersistedPasscode} from '../../hooks/persistedState/usePersistedPasscode';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 
 const m = defineMessages({
   title: {
@@ -32,17 +33,21 @@ const m = defineMessages({
   },
 });
 
-export const ConfirmPasscodeSheet = ({
-  navigation,
-  route,
-}: NativeRootNavigationProps<'ConfirmPasscodeSheet'>) => {
+type ConfirmPasscodeSheetProps = {
+  inputtedPasscode: string;
+  isOpen: boolean;
+};
+
+export const ConfirmPasscodeSheet = React.forwardRef<
+  BottomSheetModalMethods,
+  ConfirmPasscodeSheetProps
+>(({inputtedPasscode, isOpen}, sheetRef) => {
   const {formatMessage: t} = useIntl();
   const setPasscode = usePersistedPasscode(store => store.setPasscode);
-  const {sheetRef, isOpen} = useBottomSheetModal({openOnMount: true});
-  const {passcode} = route.params;
+  const navigation = useNavigationFromRoot();
 
   function setPasscodeAndNavigateBack() {
-    setPasscode(passcode);
+    setPasscode(inputtedPasscode);
     navigation.navigate('Security');
   }
 
@@ -52,7 +57,7 @@ export const ConfirmPasscodeSheet = ({
         titleStyle={styles.text}
         descriptionStyle={styles.text}
         title={t(m.title)}
-        description={`${t(m.passcode)}: ${passcode}`}
+        description={`${t(m.passcode)}: ${inputtedPasscode}`}
         buttonConfigs={[
           {
             text: t(m.cancel),
@@ -73,7 +78,7 @@ export const ConfirmPasscodeSheet = ({
       />
     </BottomSheetModal>
   );
-};
+});
 
 const styles = StyleSheet.create({
   text: {

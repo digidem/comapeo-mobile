@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {BackHandler, StyleSheet, Text, View} from 'react-native';
+import {BackHandler, StyleSheet, View} from 'react-native';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import BottomSheet, {BottomSheetBackdrop} from '@gorhom/bottom-sheet';
@@ -21,6 +21,7 @@ import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {HeaderButtonProps} from '@react-navigation/native-stack/lib/typescript/src/types';
 import {usePersistedPasscode} from '../../hooks/persistedState/usePersistedPasscode';
 import {useSecurityContext} from '../../contexts/SecurityContext';
+import {Text} from '../../sharedComponents/Text';
 
 const m = defineMessages({
   usePasscode: {

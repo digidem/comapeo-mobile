@@ -1,12 +1,15 @@
 import * as React from 'react';
 import {defineMessages, FormattedMessage, MessageDescriptor} from 'react-intl';
-import {View, StyleSheet, Text, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {useBlurOnFulfill} from 'react-native-confirmation-code-field';
 
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {WHITE, RED, MAPEO_BLUE} from '../../lib/styles';
 import {Button} from '../../sharedComponents/Button';
 import {CELL_COUNT, PasscodeInput} from '../../sharedComponents/PasscodeInput';
+import {Text} from '../../sharedComponents/Text';
+import {ConfirmPasscodeSheet} from './ConfirmPasscodeSheet';
+import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
 
 const m = defineMessages({
   button: {
@@ -24,7 +27,7 @@ interface InputPasscodeProps {
     subtitle: MessageDescriptor;
     errorMessage: MessageDescriptor;
   };
-  validate: (pass: string) => void;
+  validate: (pass: string) => void | boolean;
   showPasscodeValues?: boolean;
   error: boolean;
   hideError: () => void;
@@ -40,6 +43,9 @@ export const InputPasscode = ({
   showNext = true,
 }: InputPasscodeProps) => {
   const [inputValue, setInputValue] = React.useState('');
+  const {sheetRef, isOpen, openSheet} = useBottomSheetModal({
+    openOnMount: false,
+  });
 
   const inputRef = useBlurOnFulfill({
     value: inputValue,
@@ -59,58 +65,69 @@ export const InputPasscode = ({
 
   const {navigate} = useNavigationFromRoot();
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View>
-          <Text style={[styles.header]}>
-            <FormattedMessage {...text.title} />
-          </Text>
-          <Text style={[styles.subtext]}>
-            <FormattedMessage {...text.subtitle} />
-          </Text>
-
-          <PasscodeInput
-            error={error}
-            ref={inputRef}
-            inputValue={inputValue}
-            onChangeTextWithValidation={updateInput}
-            maskValues={!showPasscodeValues}
-          />
-
-          {error && (
-            <Text style={styles.error}>
-              <FormattedMessage {...text.errorMessage} />
+    <React.Fragment>
+      <ScrollView>
+        <View style={styles.container}>
+          <View>
+            <Text style={[styles.header]}>
+              <FormattedMessage {...text.title} />
             </Text>
-          )}
-        </View>
-
-        <View>
-          <Button
-            fullWidth
-            variant="outlined"
-            style={{marginBottom: 20, marginTop: 20}}
-            onPress={() => {
-              navigate('Security');
-            }}>
-            <Text style={[styles.buttonText, {color: MAPEO_BLUE}]}>
-              <FormattedMessage {...m.cancel} />
+            <Text style={[styles.subtext]}>
+              <FormattedMessage {...text.subtitle} />
             </Text>
-          </Button>
 
-          {showNext && (
+            <PasscodeInput
+              error={error}
+              ref={inputRef}
+              inputValue={inputValue}
+              onChangeTextWithValidation={updateInput}
+              maskValues={!showPasscodeValues}
+            />
+
+            {error && (
+              <Text style={styles.error}>
+                <FormattedMessage {...text.errorMessage} />
+              </Text>
+            )}
+          </View>
+
+          <View>
             <Button
               fullWidth
+              variant="outlined"
+              style={{marginBottom: 20, marginTop: 20}}
               onPress={() => {
-                validate(inputValue);
+                navigate('Security');
               }}>
-              <Text style={[styles.buttonText, {color: WHITE}]}>
-                <FormattedMessage {...m.button} />
+              <Text style={[styles.buttonText, {color: MAPEO_BLUE}]}>
+                <FormattedMessage {...m.cancel} />
               </Text>
             </Button>
-          )}
+
+            {showNext && (
+              <Button
+                fullWidth
+                onPress={() => {
+                  {
+                    if (validate(inputValue)) {
+                      openSheet();
+                    }
+                  }
+                }}>
+                <Text style={[styles.buttonText, {color: WHITE}]}>
+                  <FormattedMessage {...m.button} />
+                </Text>
+              </Button>
+            )}
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+      <ConfirmPasscodeSheet
+        inputtedPasscode={inputValue}
+        ref={sheetRef}
+        isOpen={isOpen}
+      />
+    </React.Fragment>
   );
 };
 

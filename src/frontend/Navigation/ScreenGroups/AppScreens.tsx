@@ -10,7 +10,6 @@ import {MessageDescriptor} from 'react-intl';
 import {PhotoView} from '../../screens/PhotoView';
 import {CameraScreen} from '../../screens/CameraScreen';
 import {AppPasscode} from '../../screens/AppPasscode';
-import {ConfirmPasscodeSheet} from '../../screens/AppPasscode/ConfirmPasscodeSheet';
 import {EnterPassToTurnOff} from '../../screens/AppPasscode/EnterPassToTurnOff';
 import {SetPasscode} from '../../screens/AppPasscode/SetPasscode';
 import {TurnOffPasscode} from '../../screens/AppPasscode/TurnOffPasscode';
@@ -141,16 +140,6 @@ export const createDefaultScreenGroup = (
       name="ObscurePasscode"
       component={ObscurePasscode}
       options={{headerTitle: intl(ObscurePasscode.navTitle)}}
-    />
-    <RootStack.Screen
-      name="ConfirmPasscodeSheet"
-      component={ConfirmPasscodeSheet}
-      options={{headerShown: false, presentation: 'modal'}}
-    />
-    <RootStack.Screen
-      name="PhotoView"
-      component={PhotoView}
-      options={{headerTitle: intl(PhotoView.navTitle)}}
     />
   </RootStack.Group>
 );

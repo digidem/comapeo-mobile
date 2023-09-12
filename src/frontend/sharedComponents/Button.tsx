@@ -62,7 +62,13 @@ export const Button = ({
   );
 
   return (
-    <View style={[styles.buttonBase, fullWidth && styles.fullWidth, style]}>
+    <View
+      style={[
+        styles.buttonBase,
+        buttonStyle,
+        fullWidth && styles.fullWidth,
+        style,
+      ]}>
       {TouchableComponent ? (
         <TouchableComponent {...sharedTouchableProps}>
           {buttonContent}
@@ -84,7 +90,11 @@ function capitalize(str: string) {
 
 function getButtonStyle(variant?: Variant) {
   if (variant) {
-    return styles[('button' + capitalize(variant)) as keyof typeof styles];
+    return variant === 'contained'
+      ? styles.buttonContained
+      : variant === 'outlined'
+      ? styles.buttonOutlined
+      : undefined;
   }
 }
 

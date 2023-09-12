@@ -9,7 +9,7 @@ import {
   isLastFilledCell,
   RenderCellOptions,
 } from 'react-native-confirmation-code-field';
-import {MEDIUM_GREY, DARK_GREY, RED} from '../lib/styles';
+import {MEDIUM_GREY, DARK_GREY, RED, BLACK} from '../lib/styles';
 
 export const CELL_COUNT = 5;
 const onlyNumRegEx = new RegExp('^[0-9]+$');
@@ -104,6 +104,7 @@ const styles = StyleSheet.create({
     borderColor: MEDIUM_GREY,
     textAlign: 'center',
     textAlignVertical: 'center',
+    color: BLACK,
   },
   focusCell: {
     borderColor: DARK_GREY,

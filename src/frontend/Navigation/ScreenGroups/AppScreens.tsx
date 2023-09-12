@@ -112,6 +112,11 @@ export const createDefaultScreenGroup = (
       options={{headerShown: false}}
     />
     <RootStack.Screen
+      name="PhotoView"
+      component={PhotoView}
+      options={{headerTitle: intl(PhotoView.navTitle)}}
+    />
+    <RootStack.Screen
       name="Security"
       component={Security}
       options={{headerTitle: intl(Security.navTitle)}}

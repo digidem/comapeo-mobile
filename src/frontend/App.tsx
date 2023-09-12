@@ -15,21 +15,24 @@ import {IntlProvider} from './contexts/IntlContext';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 // import {Loading} from './components/Loading';
 import {PermissionsProvider} from './contexts/PermissionsContext';
+import {SecurityProvider} from './contexts/SecurityContext';
 
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();
 
   return (
     <IntlProvider>
-      <BottomSheetModalProvider>
+      <PermissionsProvider>
         <GestureHandlerRootView style={{flex: 1}}>
-          <PermissionsProvider>
+          <BottomSheetModalProvider>
             <NavigationContainer ref={navRef}>
-              <AppNavigator />
+              <SecurityProvider>
+                <AppNavigator />
+              </SecurityProvider>
             </NavigationContainer>
-          </PermissionsProvider>
+          </BottomSheetModalProvider>
         </GestureHandlerRootView>
-      </BottomSheetModalProvider>
+      </PermissionsProvider>
     </IntlProvider>
   );
 };

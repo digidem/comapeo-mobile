@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {
   BackHandler,
+  LayoutChangeEvent,
   NativeEventSubscription,
   useWindowDimensions,
 } from 'react-native';
@@ -11,14 +12,9 @@ import {
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 
 import {Backdrop} from './Backdrop';
+import {BLACK, DARK_GREY, LIGHT_GREY, MEDIUM_GREY} from '../../lib/styles';
 
 const MIN_SHEET_HEIGHT = 400;
-
-type UpdateSheetHeight = {
-  nativeEvent: {
-    layout: {height: number};
-  };
-};
 
 export const MODAL_NAVIGATION_OPTIONS: NativeStackNavigationOptions = {
   presentation: 'transparentModal',
@@ -82,18 +78,14 @@ const useSnapPointsCalculator = () => {
 
   const snapPoints = React.useMemo(() => [sheetHeight], [sheetHeight]);
 
-  const updateSheetHeight: (props: UpdateSheetHeight) => void =
+  const updateSheetHeight: (props: LayoutChangeEvent) => void =
     React.useCallback(
       ({
         nativeEvent: {
           layout: {height},
         },
       }) => {
-        const newSheetHeight = Math.max(
-          Math.min(windowHeight * 0.75, height),
-          MIN_SHEET_HEIGHT,
-        );
-
+        const newSheetHeight = Math.max(windowHeight * 0.75, height);
         setSheetHeight(newSheetHeight);
       },
       [windowHeight],
@@ -128,11 +120,17 @@ export const BottomSheetModal = React.forwardRef<RNBottomSheetModal, Props>(
         onDismiss={onDismiss}
         snapPoints={snapPoints}>
         <BottomSheetView
-          onLayout={updateSheetHeight}
+          onLayout={props => {
+            updateSheetHeight(props);
+          }}
           style={{
             flex: 1,
             paddingHorizontal: 20,
             paddingTop: 30,
+            borderColor: LIGHT_GREY,
+            borderWidth: 2,
+            borderTopLeftRadius: 32,
+            borderTopRightRadius: 32,
           }}>
           {children}
         </BottomSheetView>

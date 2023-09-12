@@ -6,6 +6,11 @@ import React from 'react';
 import {MessageDescriptor} from 'react-intl';
 import {AppStackList} from './Navigation/AppStack';
 import {HomeTabsList} from './Navigation/ScreenGroups/AppScreens';
+import {StyleProp, ViewStyle, TextStyle, ImageStyle} from 'react-native';
+
+export type ViewStyleProp = StyleProp<ViewStyle>;
+export type TextStyleProp = StyleProp<TextStyle>;
+export type ImageStyleProps = StyleProp<ImageStyle>;
 
 export type NativeRootNavigationProps<ScreenName extends keyof AppStackList> =
   NativeStackScreenProps<AppStackList, ScreenName>;

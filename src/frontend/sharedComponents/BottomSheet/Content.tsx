@@ -45,7 +45,7 @@ export const Content = ({
   descriptionStyle,
 }: Props) => (
   <View style={styles.container}>
-    <View style={{flex: 1}}>
+    <View>
       {icon && <View style={styles.iconContainer}>{icon}</View>}
       <View style={styles.textContainer}>
         <Text style={[styles.title, styles.bold, titleStyle]}>{title}</Text>
@@ -113,7 +113,7 @@ export const Content = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
   },
   iconContainer: {
     alignItems: 'center',

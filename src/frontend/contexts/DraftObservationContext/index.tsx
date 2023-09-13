@@ -1,5 +1,7 @@
 import * as React from 'react';
 import {
+  CancellablePhotoPromise,
+  CapturePicturePromiseWithId,
   CapturedPictureMM,
   DraftPhoto,
   PREVIEW_QUALITY,
@@ -9,12 +11,6 @@ import {
   THUMBNAIL_SIZE,
 } from './types';
 import ImageResizer from 'react-native-image-resizer';
-
-type CancellablePhotoPromise = Promise<DraftPhoto> & {signal?: Signal};
-
-export type CapturePicturePromiseWithId = Promise<CapturedPictureMM> & {
-  draftPhotoId: string;
-};
 
 type PhotoPromiseContextState = {
   addPhotoPromise: (

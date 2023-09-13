@@ -1,16 +1,16 @@
-import {StateCreator, StoreApi} from 'zustand';
+import {StateCreator} from 'zustand';
 import {createPersistedState} from '../createPersistedState';
 import {
   Photo,
   Observation,
   DraftPhoto,
+  CapturePicturePromiseWithId,
 } from '../../../contexts/DraftObservationContext/types';
 import {
   deletePhoto,
   filterPhotosFromAttachments,
   replaceDraftPhotos,
 } from './photosMethods';
-import {CapturePicturePromiseWithId} from '../../../contexts/DraftObservationContext';
 
 export type DraftObservationSlice = {
   photos: Photo[];

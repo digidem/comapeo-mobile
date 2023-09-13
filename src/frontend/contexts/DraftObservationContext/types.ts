@@ -45,6 +45,7 @@ export interface SavedPhoto {
 export interface DraftPhoto {
   // If the photo is still being captured
   capturing: boolean;
+  draftPhotoId: string;
   // uri to a local thumbnail image (this is uploaded to Mapeo server)
   thumbnailUri?: string;
   // uri to a local preview image

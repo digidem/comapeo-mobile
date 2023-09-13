@@ -1,10 +1,10 @@
 import {useCallback} from 'react';
+import {usePhotoPromiseContext} from '../contexts/DraftObservationContext';
+import {useDraftObservationActions} from './persistedState/usePersistedDraftObservation';
 import {
   CapturePicturePromiseWithId,
-  usePhotoPromiseContext,
-} from '../contexts/DraftObservationContext';
-import {useDraftObservationActions} from './persistedState/usePersistedDraftObservation';
-import {Observation} from '../contexts/DraftObservationContext/types';
+  Observation,
+} from '../contexts/DraftObservationContext/types';
 
 export const useDraftObservation = () => {
   const {addPhotoPromise, cancelPhotoProcessing, deletePhotoPromise} =

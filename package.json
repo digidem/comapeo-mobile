@@ -13,6 +13,7 @@
     "postinstall": "patch-package",
     "prepare": "husky install",
     "format": "prettier \"src/**/*.{js,ts,jsx,tsx}\" --write",
+    "deep-clean": "./scripts/build-backend.sh",
     "build:intl-polyfills": "node ./scripts/build-intl-polyfills.js"
   },
   "dependencies": {

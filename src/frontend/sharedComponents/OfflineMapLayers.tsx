@@ -1,5 +1,5 @@
 import * as React from 'react';
-import MapboxGL from '@react-native-mapbox-gl/maps';
+import MapboxGL from '@rnmapbox/maps';
 
 import riversSource from 'mapeo-offline-map/dist/rivers.json';
 import boundariesSource from 'mapeo-offline-map/dist/boundaries.json';

@@ -1,6 +1,6 @@
-import MapboxGL from '@react-native-mapbox-gl/maps';
+import MapboxGL from '@rnmapbox/maps';
 import * as React from 'react';
-import {useExperiments} from '../../hooks/useExperiments';
+// import {useExperiments} from '../../hooks/useExperiments';
 interface UserLocationProps {
   visible: boolean;
   minDisplacement: number;

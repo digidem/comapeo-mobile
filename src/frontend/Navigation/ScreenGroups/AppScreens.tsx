@@ -8,6 +8,9 @@ import HomeHeader from '../../components/HomeHeader';
 import {RootStack} from '../AppStack';
 import {ScreenWithHeader} from './ScreenWithHeader';
 import {MessageDescriptor} from 'react-intl';
+import {MapScreen} from '../../screens/MapScreen';
+
+console.log({MapScreen});
 
 export type HomeTabsList = {
   Map: undefined;
@@ -79,7 +82,7 @@ const HomeTabs = () => (
     })}
     initialRouteName="Map"
     backBehavior="initialRoute">
-    <Tab.Screen name="Map" component={DummyScreen} />
+    <Tab.Screen name="Map" component={MapScreen} />
     <Tab.Screen name="Camera" component={DummyScreen} />
   </Tab.Navigator>
 );

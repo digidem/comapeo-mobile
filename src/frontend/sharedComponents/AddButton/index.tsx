@@ -12,10 +12,10 @@ interface AddButtonProps {
 const AddButtonNoMemo = ({style, testID, onPress}: AddButtonProps) => (
   <View testID={testID} style={[styles.container, style]}>
     <TouchableOpacity onPress={onPress}>
-      <Image
+      {/* <Image
         source={require('../images/add-button.png')}
         style={styles.button}
-      />
+      /> */}
     </TouchableOpacity>
   </View>
 );

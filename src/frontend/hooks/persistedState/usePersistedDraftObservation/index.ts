@@ -4,37 +4,32 @@ import {
   Photo,
   Observation,
   DraftPhoto,
-  Signal,
-  CapturedPictureMM,
-} from './types';
+} from '../../../contexts/DraftObservationContext/types';
 import {
-  addPhoto,
-  cancelPhotoProcessing,
   deletePhoto,
   filterPhotosFromAttachments,
+  replaceDraftPhotos,
 } from './photosMethods';
+import {CapturePicturePromiseWithId} from '../../../contexts/DraftObservationContext';
 
-export type Setter = StoreApi<DraftObservationSlice>['setState'];
-export type Getter = StoreApi<DraftObservationSlice>['getState'];
-
-type DraftObservationSlice = {
+export type DraftObservationSlice = {
   photos: Photo[];
   value: Observation | null;
-  photoPromises: (Promise<DraftPhoto> & {signal?: Signal})[];
   observationId?: string;
   actions: {
-    addPhoto: (capture: Promise<CapturedPictureMM>) => Promise<void>;
+    addPhotoPlaceholder: (draftPhotoId: string) => void;
+    replacePhotoPlaceholderWithPhoto: (photo: DraftPhoto) => void;
     // Performs a shallow merge of the observation value, like setState
-    updateDraft: (value: Observation) => void;
+    updatePersistedDraft: (value: Observation) => void;
     // Clear the current draft
-    clearDraft: () => void;
+    clearPersistedDraft: () => void;
     // Create a new draft observation
-    newDraft: (
+    newPersistedDraft: (
       id?: string,
       value?: Observation | null,
-      capture?: Promise<CapturedPictureMM>,
+      capture?: CapturePicturePromiseWithId,
     ) => void;
-    deletePhoto: (id: string) => void;
+    deletePersistedPhoto: (id: string) => void;
   };
 };
 
@@ -44,13 +39,24 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
 ) => ({
   photos: [],
   value: null,
-  photoPromises: [],
   actions: {
-    deletePhoto: id => deletePhoto(set, get, id),
-    addPhoto: capture => addPhoto(set, get, capture),
-    clearDraft: () => clearDraft(set, get),
-    updateDraft: value => set({value}),
-    newDraft: (id, value, capture) => newDraft(set, get, id, value, capture),
+    deletePersistedPhoto: id => deletePhoto(set, get, id),
+    addPhotoPlaceholder: draftPhotoId =>
+      set({photos: [...get().photos, {draftPhotoId, capturing: true}]}),
+    replacePhotoPlaceholderWithPhoto: draftPhoto =>
+      replaceDraftPhotos(set, get, draftPhoto),
+    clearPersistedDraft: () =>
+      set({
+        photos: [],
+        value: null,
+      }),
+    updatePersistedDraft: value => set({value}),
+    newPersistedDraft: (id, value) =>
+      set({
+        observationId: id,
+        photos: value ? filterPhotosFromAttachments(value.attachments) : [],
+        value,
+      }),
   },
 });
 
@@ -61,31 +67,3 @@ export const usePersistedDraftObservation = createPersistedState(
 
 export const useDraftObservationActions = () =>
   usePersistedDraftObservation(state => state.actions);
-
-function clearDraft(set: Setter, get: Getter) {
-  cancelPhotoProcessing(set, get);
-  set({
-    photoPromises: [],
-    photos: [],
-    value: null,
-  });
-}
-
-function newDraft(
-  set: Setter,
-  get: Getter,
-  id?: string,
-  value?: Observation | null,
-  capture?: Promise<CapturedPictureMM>,
-) {
-  cancelPhotoProcessing(set, get);
-
-  set({
-    observationId: id,
-    photoPromises: [],
-    photos: value ? filterPhotosFromAttachments(value.attachments) : [],
-    value,
-  });
-
-  if (capture) addPhoto(set, get, capture);
-}

@@ -1,5 +1,5 @@
 import {StoreApi} from 'zustand';
-import {DraftPhoto} from '../../../contexts/DraftObservationContext/types';
+import {DraftPhoto} from '../../../contexts/PhotoPromiseContext/types';
 import {DraftObservationSlice} from '.';
 
 export interface ObservationAttachment {

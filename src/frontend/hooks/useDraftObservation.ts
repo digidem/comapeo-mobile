@@ -1,14 +1,25 @@
-import {useCallback} from 'react';
-import {usePhotoPromiseContext} from '../contexts/DraftObservationContext';
-import {useDraftObservationActions} from './persistedState/usePersistedDraftObservation';
+import {useCallback, useId} from 'react';
 import {
+  processPhoto,
+  usePhotoPromiseContext,
+} from '../contexts/PhotoPromiseContext';
+import {
+  useDraftObservationActions,
+  usePersistedDraftObservation,
+} from './persistedState/usePersistedDraftObservation';
+import {
+  CancellablePhotoPromise,
   CapturePicturePromiseWithId,
+  CapturedPictureMM,
+  DraftPhoto,
   Observation,
-} from '../contexts/DraftObservationContext/types';
+  Signal,
+} from '../contexts/PhotoPromiseContext/types';
 
 export const useDraftObservation = () => {
   const {addPhotoPromise, cancelPhotoProcessing, deletePhotoPromise} =
     usePhotoPromiseContext();
+  const draftPhotoId = useId();
   const {
     addPhotoPlaceholder,
     replacePhotoPlaceholderWithPhoto,
@@ -19,10 +30,14 @@ export const useDraftObservation = () => {
   } = useDraftObservationActions();
 
   const addPhoto = useCallback(
-    async (capturePromise: CapturePicturePromiseWithId) => {
-      const {draftPhotoId} = capturePromise;
+    async (capturePromise: Promise<CapturedPictureMM>) => {
+      // create id here
+
       addPhotoPlaceholder(draftPhotoId);
-      const photoPromise = addPhotoPromise(capturePromise);
+      const photoPromise = addPhotoPromise({
+        draftPhotoId,
+        promise: capturePromise,
+      });
       try {
         const photo = await photoPromise;
         replacePhotoPlaceholderWithPhoto(photo);

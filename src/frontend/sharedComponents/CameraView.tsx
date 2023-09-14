@@ -13,6 +13,7 @@ import {AddButton} from './AddButton';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import {usePermissionContext} from '../contexts/PermissionsContext';
 import {Subscription} from 'expo-sensors/build/DeviceSensor';
+import {CapturePicturePromiseWithId} from '../contexts/PhotoPromiseContext/types';
 
 const m = defineMessages({
   noCameraAccess: {
@@ -36,7 +37,7 @@ const captureOptions: CameraPictureOptions = {
 type Props = {
   // Called when the user takes a picture, with a promise that resolves to an
   // object with the property `uri` for the captured (and rotated) photo.
-  onAddPress: (capture: Promise<{uri: string}>) => void;
+  onAddPress: (capture: CapturePicturePromiseWithId) => void;
 };
 
 // type Rotation = DeviceMotionMeasurement["rotation"]
@@ -45,6 +46,7 @@ export const CameraView = ({onAddPress}: Props) => {
   const [capturing, setCapturing] = React.useState(false);
   const [cameraReady, setCameraReady] = React.useState(false);
   const {permissions, requestPermissions} = usePermissionContext();
+  const photoId = React.useId();
   const ref = React.useRef<Camera>(null);
   const accelerometerMeasurement = React.useRef<AccelerometerMeasurement>();
 
@@ -91,7 +93,7 @@ export const CameraView = ({onAddPress}: Props) => {
     ref.current
       .takePictureAsync(captureOptions)
       .then(pic => {
-        onAddPress(rotatePhoto(pic, accelerometerMeasurement.current));
+        onAddPress(rotatePhoto(pic, photoId, accelerometerMeasurement.current));
       })
       .catch(err => {
         console.log(err);
@@ -139,8 +141,9 @@ export const CameraView = ({onAddPress}: Props) => {
 
 function rotatePhoto(
   {uri, width, height}: CameraCapturedPicture,
+  id: string,
   acc?: AccelerometerMeasurement,
-) {
+): CapturePicturePromiseWithId {
   const resizePromise = ImageResizer.createResizedImage(
     uri,
     width,
@@ -152,7 +155,7 @@ function rotatePhoto(
     return {uri};
   });
 
-  return resizePromise;
+  return {draftPhotoId: id, promise: resizePromise};
 }
 
 const ACC_AT_45_DEG = Math.sin(Math.PI / 4);

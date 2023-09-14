@@ -15,6 +15,7 @@ import {IntlProvider} from './contexts/IntlContext';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 // import {Loading} from './components/Loading';
 import {PermissionsProvider} from './contexts/PermissionsContext';
+import {PhotoPromiseProvider} from './contexts/PhotoPromiseContext';
 
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();
@@ -24,9 +25,11 @@ const App = () => {
       <BottomSheetModalProvider>
         <GestureHandlerRootView style={{flex: 1}}>
           <PermissionsProvider>
-            <NavigationContainer ref={navRef}>
-              <AppNavigator />
-            </NavigationContainer>
+            <PhotoPromiseProvider>
+              <NavigationContainer ref={navRef}>
+                <AppNavigator />
+              </NavigationContainer>
+            </PhotoPromiseProvider>
           </PermissionsProvider>
         </GestureHandlerRootView>
       </BottomSheetModalProvider>

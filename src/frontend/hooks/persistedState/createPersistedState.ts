@@ -33,11 +33,18 @@ export function createPersistedState<T>(
   persistedStoreKey: PersistedStoreKey,
   migrationOpt?: MigrationOpt<T>,
 ) {
-  return create<T, [['zustand/persist', T]]>(
+  return create<T>()(
     persist(slice, {
       name: persistedStoreKey,
       storage: createJSONStorage(() => MMKVZustandStorage),
       version: migrationOpt?.version,
+      partialize: state => {
+        if (typeof state === 'object' && state && 'actions' in state) {
+          const {actions, ...other} = state;
+          return other;
+        }
+        return state;
+      },
       migrate:
         migrationOpt && 'migrateFn' in migrationOpt
           ? migrationOpt.migrateFn

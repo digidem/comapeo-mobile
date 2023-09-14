@@ -5,7 +5,7 @@ import {
   Observation,
   DraftPhoto,
   CapturePicturePromiseWithId,
-} from '../../../contexts/DraftObservationContext/types';
+} from '../../../contexts/PhotoPromiseContext/types';
 import {
   deletePhoto,
   filterPhotosFromAttachments,

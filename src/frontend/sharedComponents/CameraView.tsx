@@ -13,7 +13,7 @@ import {AddButton} from './AddButton';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import {usePermissionContext} from '../contexts/PermissionsContext';
 import {Subscription} from 'expo-sensors/build/DeviceSensor';
-import {CapturePicturePromiseWithId} from '../contexts/PhotoPromiseContext/types';
+import {CapturedPictureMM} from '../contexts/PhotoPromiseContext/types';
 
 const m = defineMessages({
   noCameraAccess: {
@@ -37,7 +37,7 @@ const captureOptions: CameraPictureOptions = {
 type Props = {
   // Called when the user takes a picture, with a promise that resolves to an
   // object with the property `uri` for the captured (and rotated) photo.
-  onAddPress: (capture: CapturePicturePromiseWithId) => void;
+  onAddPress: (capture: Promise<CapturedPictureMM>) => void;
 };
 
 // type Rotation = DeviceMotionMeasurement["rotation"]
@@ -143,7 +143,7 @@ function rotatePhoto(
   {uri, width, height}: CameraCapturedPicture,
   id: string,
   acc?: AccelerometerMeasurement,
-): CapturePicturePromiseWithId {
+) {
   const resizePromise = ImageResizer.createResizedImage(
     uri,
     width,
@@ -155,7 +155,7 @@ function rotatePhoto(
     return {uri};
   });
 
-  return {draftPhotoId: id, promise: resizePromise};
+  return resizePromise;
 }
 
 const ACC_AT_45_DEG = Math.sin(Math.PI / 4);

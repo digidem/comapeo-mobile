@@ -31,7 +31,7 @@ export function replaceDraftPhotos(
   draftPhoto: DraftPhoto,
 ) {
   const updatedPhotosState = get().photos.map(p => {
-    if ('draftPhotoId' in p && p.draftPhotoId === draftPhoto.draftPhotoId) {
+    if ('originalUri' in p && p.originalUri === draftPhoto.originalUri) {
       return draftPhoto;
     }
     return p;

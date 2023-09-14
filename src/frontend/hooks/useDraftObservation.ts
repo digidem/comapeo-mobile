@@ -1,25 +1,17 @@
-import {useCallback, useId} from 'react';
+import {useCallback} from 'react';
+import {usePhotoPromiseContext} from '../contexts/PhotoPromiseContext';
+import {usePersistedDraftObservationActions} from './persistedState/usePersistedDraftObservation';
 import {
-  processPhoto,
-  usePhotoPromiseContext,
-} from '../contexts/PhotoPromiseContext';
-import {
-  useDraftObservationActions,
-  usePersistedDraftObservation,
-} from './persistedState/usePersistedDraftObservation';
-import {
-  CancellablePhotoPromise,
-  CapturePicturePromiseWithId,
   CapturedPictureMM,
-  DraftPhoto,
   Observation,
-  Signal,
 } from '../contexts/PhotoPromiseContext/types';
-
+// draft observation have 2 parts:
+// 1. All the information, except processed photos are saved to persisted state.
+// 2. Photos are processed async (to be turned into a useable format by mapeo). Since promises cannot be stored in persisted storage, we hold those in a context. Once those photos are processed we save them to persisted state.
 export const useDraftObservation = () => {
   const {addPhotoPromise, cancelPhotoProcessing, deletePhotoPromise} =
     usePhotoPromiseContext();
-  const draftPhotoId = useId();
+
   const {
     addPhotoPlaceholder,
     replacePhotoPlaceholderWithPhoto,
@@ -27,24 +19,28 @@ export const useDraftObservation = () => {
     newPersistedDraft,
     updatePersistedDraft: updateDraft,
     deletePersistedPhoto,
-  } = useDraftObservationActions();
+  } = usePersistedDraftObservationActions();
 
   const addPhoto = useCallback(
     async (capturePromise: Promise<CapturedPictureMM>) => {
-      // create id here
-
-      addPhotoPlaceholder(draftPhotoId);
-      const photoPromise = addPhotoPromise({
-        draftPhotoId,
-        promise: capturePromise,
-      });
+      const capturedPhoto = await capturePromise;
+      // adds the originalUri of the unprocessed photo into persisted state (as a placeholder)
+      addPhotoPlaceholder(capturedPhoto.uri);
+      // creates a promise of the original photo. This promise resolves into a processed photo with the thumbnail, preview, and original photo
+      const photoPromise = addPhotoPromise(capturedPhoto);
       try {
+        // the promise is run
         const photo = await photoPromise;
+        // when the promise has been fufilled, we find the the originalUri of the unprocessed photo, which was saved above in `addPhotoPlaceholder`. The we replace it with the processed photo
         replacePhotoPlaceholderWithPhoto(photo);
       } catch (err) {
         if (!(err instanceof Error)) return;
 
-        const photo = {capturing: false, error: true, draftPhotoId};
+        const photo = {
+          capturing: false,
+          error: true,
+          originalUri: capturedPhoto.uri,
+        };
         replacePhotoPlaceholderWithPhoto(photo);
 
         if (
@@ -69,10 +65,11 @@ export const useDraftObservation = () => {
     (
       id?: string,
       value?: Observation | null,
-      capture?: CapturePicturePromiseWithId,
+      capture?: Promise<CapturedPictureMM>,
     ) => {
       cancelPhotoProcessing();
-      newPersistedDraft(id, value, capture);
+      newPersistedDraft(id, value);
+      if (capture) addPhoto(capture);
     },
     [cancelPhotoProcessing, newPersistedDraft],
   );

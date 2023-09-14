@@ -4,7 +4,6 @@ import {
   Photo,
   Observation,
   DraftPhoto,
-  CapturePicturePromiseWithId,
 } from '../../../contexts/PhotoPromiseContext/types';
 import {
   deletePhoto,
@@ -17,18 +16,14 @@ export type DraftObservationSlice = {
   value: Observation | null;
   observationId?: string;
   actions: {
-    addPhotoPlaceholder: (draftPhotoId: string) => void;
+    addPhotoPlaceholder: (originalUri: string) => void;
     replacePhotoPlaceholderWithPhoto: (photo: DraftPhoto) => void;
     // Performs a shallow merge of the observation value, like setState
     updatePersistedDraft: (value: Observation) => void;
     // Clear the current draft
     clearPersistedDraft: () => void;
     // Create a new draft observation
-    newPersistedDraft: (
-      id?: string,
-      value?: Observation | null,
-      capture?: CapturePicturePromiseWithId,
-    ) => void;
+    newPersistedDraft: (id?: string, value?: Observation | null) => void;
     deletePersistedPhoto: (id: string) => void;
   };
 };
@@ -41,8 +36,8 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
   value: null,
   actions: {
     deletePersistedPhoto: id => deletePhoto(set, get, id),
-    addPhotoPlaceholder: draftPhotoId =>
-      set({photos: [...get().photos, {draftPhotoId, capturing: true}]}),
+    addPhotoPlaceholder: originalUri =>
+      set({photos: [...get().photos, {originalUri, capturing: true}]}),
     replacePhotoPlaceholderWithPhoto: draftPhoto =>
       replaceDraftPhotos(set, get, draftPhoto),
     clearPersistedDraft: () =>
@@ -50,7 +45,8 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
         photos: [],
         value: null,
       }),
-    updatePersistedDraft: value => set({value}),
+    updatePersistedDraft: newValue =>
+      set({value: {...get().value, ...newValue}}),
     newPersistedDraft: (id, value) =>
       set({
         observationId: id,
@@ -65,5 +61,5 @@ export const usePersistedDraftObservation = createPersistedState(
   '@MapeoDraft',
 );
 
-export const useDraftObservationActions = () =>
+export const usePersistedDraftObservationActions = () =>
   usePersistedDraftObservation(state => state.actions);

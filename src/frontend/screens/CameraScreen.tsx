@@ -4,7 +4,7 @@ import {useIsFocused} from '@react-navigation/native';
 
 import {CameraView} from '../sharedComponents/CameraView';
 import {NativeHomeTabsNavigationProps} from '../sharedTypes';
-import {CapturePicturePromiseWithId} from '../contexts/PhotoPromiseContext/types';
+import {CapturedPictureMM} from '../contexts/PhotoPromiseContext/types';
 import {useDraftObservation} from '../hooks/useDraftObservation';
 import {usePersistedDraftObservation} from '../hooks/persistedState/usePersistedDraftObservation';
 
@@ -15,7 +15,7 @@ export const CameraScreen = ({
   const {addPhoto} = useDraftObservation();
   const photos = usePersistedDraftObservation(store => store.photos);
 
-  function handleAddPress(photoPromise: CapturePicturePromiseWithId) {
+  function handleAddPress(photoPromise: Promise<CapturedPictureMM>) {
     addPhoto(photoPromise);
   }
 

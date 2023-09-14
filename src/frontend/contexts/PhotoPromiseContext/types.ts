@@ -45,13 +45,12 @@ export interface SavedPhoto {
 export interface DraftPhoto {
   // If the photo is still being captured
   capturing: boolean;
-  draftPhotoId: string;
+  // uri to a local full-resolution image (this is uploaded to Mapeo server)
+  originalUri: string;
   // uri to a local thumbnail image (this is uploaded to Mapeo server)
   thumbnailUri?: string;
   // uri to a local preview image
   previewUri?: string;
-  // uri to a local full-resolution image (this is uploaded to Mapeo server)
-  originalUri?: string;
   // If an image is to be deleted
   deleted?: boolean;
   // If there was any kind of error on image capture
@@ -76,8 +75,3 @@ export interface Signal {
 }
 
 export type CancellablePhotoPromise = Promise<DraftPhoto> & {signal?: Signal};
-
-export type CapturePicturePromiseWithId = {
-  draftPhotoId: string;
-  promise: Promise<CapturedPictureMM>;
-};

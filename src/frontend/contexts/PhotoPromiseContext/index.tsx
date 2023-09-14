@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {
   CancellablePhotoPromise,
-  CapturePicturePromiseWithId,
+  CapturedPictureMM,
   DraftPhoto,
   PREVIEW_QUALITY,
   PREVIEW_SIZE,
@@ -12,9 +12,7 @@ import {
 import ImageResizer from '@bam.tech/react-native-image-resizer';
 
 type PhotoPromiseContextState = {
-  addPhotoPromise: (
-    photo: CapturePicturePromiseWithId,
-  ) => CancellablePhotoPromise;
+  addPhotoPromise: (photo: CapturedPictureMM) => CancellablePhotoPromise;
   cancelPhotoProcessing: () => void;
   deletePhotoPromise: (uri: string) => void;
 };
@@ -39,25 +37,19 @@ export const PhotoPromiseProvider = ({
     CancellablePhotoPromise[]
   >([]);
 
-  const addPhotoPromise = React.useCallback(
-    async (capturePromise: CapturePicturePromiseWithId) => {
-      // Use signal to cancel processing by setting signal.didCancel = true
-      // Important because image resize/rotate is expensive
-      const signal: Signal = {};
+  const addPhotoPromise = React.useCallback((photo: CapturedPictureMM) => {
+    // Use signal to cancel processing by setting signal.didCancel = true
+    // Important because image resize/rotate is expensive
+    const signal: Signal = {};
 
-      const photoPromise: CancellablePhotoPromise = processPhoto(
-        capturePromise,
-        signal,
-      );
+    const photoPromise: CancellablePhotoPromise = processPhoto(photo, signal);
 
-      photoPromise.signal = signal;
+    photoPromise.signal = signal;
 
-      setPhotoPromises(photos => [...photos, photoPromise]);
+    setPhotoPromises(photos => [...photos, photoPromise]);
 
-      return photoPromise;
-    },
-    [],
-  );
+    return photoPromise;
+  }, []);
 
   const cancelPhotoProcessing = React.useCallback(() => {
     photoPromises.forEach(p => p.signal && (p.signal.didCancel = true));
@@ -99,12 +91,10 @@ export const PhotoPromiseProvider = ({
   );
 };
 
-export async function processPhoto(
-  capturePromise: CapturePicturePromiseWithId,
+async function processPhoto(
+  {uri: originalUri, rotate}: CapturedPictureMM,
   {didCancel = false}: Signal,
 ): Promise<DraftPhoto> {
-  const {uri: originalUri, rotate} = await capturePromise.promise;
-
   if (didCancel) throw new Error('Cancelled');
 
   // rotate will be defined if the original photo failed to rotate (this
@@ -133,7 +123,6 @@ export async function processPhoto(
   if (didCancel) throw new Error('Cancelled');
 
   return {
-    draftPhotoId: capturePromise.draftPhotoId,
     originalUri,
     previewUri,
     thumbnailUri,

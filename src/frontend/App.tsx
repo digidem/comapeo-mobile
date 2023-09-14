@@ -17,6 +17,7 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {PermissionsProvider} from './contexts/PermissionsContext';
 import {SecurityProvider} from './contexts/SecurityContext';
 import {LocationProvider} from './contexts/LocationContext';
+import {PhotoPromiseProvider} from './contexts/PhotoPromiseContext';
 
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();
@@ -29,7 +30,9 @@ const App = () => {
             <NavigationContainer ref={navRef}>
               <LocationProvider>
                 <SecurityProvider>
-                  <AppNavigator />
+                  <PhotoPromiseProvider>
+                    <AppNavigator />
+                  </PhotoPromiseProvider>
                 </SecurityProvider>
               </LocationProvider>
             </NavigationContainer>

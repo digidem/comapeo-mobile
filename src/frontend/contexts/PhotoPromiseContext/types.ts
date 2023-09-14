@@ -75,4 +75,9 @@ export interface Signal {
   didCancel?: boolean;
 }
 
-export type CancellablePromise<T> = Promise<T> & {signal?: Signal};
+export type CancellablePhotoPromise = Promise<DraftPhoto> & {signal?: Signal};
+
+export type CapturePicturePromiseWithId = {
+  draftPhotoId: string;
+  promise: Promise<CapturedPictureMM>;
+};

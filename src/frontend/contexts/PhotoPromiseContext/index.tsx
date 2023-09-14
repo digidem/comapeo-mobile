@@ -2,7 +2,6 @@ import * as React from 'react';
 import {
   CancellablePhotoPromise,
   CapturePicturePromiseWithId,
-  CapturedPictureMM,
   DraftPhoto,
   PREVIEW_QUALITY,
   PREVIEW_SIZE,
@@ -10,7 +9,7 @@ import {
   THUMBNAIL_QUALITY,
   THUMBNAIL_SIZE,
 } from './types';
-import ImageResizer from 'react-native-image-resizer';
+import ImageResizer from '@bam.tech/react-native-image-resizer';
 
 type PhotoPromiseContextState = {
   addPhotoPromise: (
@@ -100,11 +99,11 @@ export const PhotoPromiseProvider = ({
   );
 };
 
-async function processPhoto(
+export async function processPhoto(
   capturePromise: CapturePicturePromiseWithId,
   {didCancel = false}: Signal,
 ): Promise<DraftPhoto> {
-  const {uri: originalUri, rotate} = await capturePromise;
+  const {uri: originalUri, rotate} = await capturePromise.promise;
 
   if (didCancel) throw new Error('Cancelled');
 

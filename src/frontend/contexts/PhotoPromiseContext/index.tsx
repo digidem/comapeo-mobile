@@ -12,7 +12,10 @@ import {
 import ImageResizer from '@bam.tech/react-native-image-resizer';
 
 type PhotoPromiseContextState = {
-  addPhotoPromise: (photo: CapturedPictureMM) => CancellablePhotoPromise;
+  addPhotoPromise: (
+    photo: Promise<CapturedPictureMM>,
+    draftPhotoId: string,
+  ) => CancellablePhotoPromise;
   cancelPhotoProcessing: () => void;
   deletePhotoPromise: (uri: string) => void;
 };
@@ -37,19 +40,26 @@ export const PhotoPromiseProvider = ({
     CancellablePhotoPromise[]
   >([]);
 
-  const addPhotoPromise = React.useCallback((photo: CapturedPictureMM) => {
-    // Use signal to cancel processing by setting signal.didCancel = true
-    // Important because image resize/rotate is expensive
-    const signal: Signal = {};
+  const addPhotoPromise = React.useCallback(
+    (photo: Promise<CapturedPictureMM>, draftPhotoId: string) => {
+      // Use signal to cancel processing by setting signal.didCancel = true
+      // Important because image resize/rotate is expensive
+      const signal: Signal = {};
 
-    const photoPromise: CancellablePhotoPromise = processPhoto(photo, signal);
+      const photoPromise: CancellablePhotoPromise = processPhoto(
+        photo,
+        draftPhotoId,
+        signal,
+      );
 
-    photoPromise.signal = signal;
+      photoPromise.signal = signal;
 
-    setPhotoPromises(photos => [...photos, photoPromise]);
+      setPhotoPromises(photos => [...photos, photoPromise]);
 
-    return photoPromise;
-  }, []);
+      return photoPromise;
+    },
+    [],
+  );
 
   const cancelPhotoProcessing = React.useCallback(() => {
     photoPromises.forEach(p => p.signal && (p.signal.didCancel = true));
@@ -92,9 +102,12 @@ export const PhotoPromiseProvider = ({
 };
 
 async function processPhoto(
-  {uri: originalUri, rotate}: CapturedPictureMM,
+  photo: Promise<CapturedPictureMM>,
+  draftPhotoId: string,
   {didCancel = false}: Signal,
 ): Promise<DraftPhoto> {
+  const {uri: originalUri, rotate} = await photo;
+
   if (didCancel) throw new Error('Cancelled');
 
   // rotate will be defined if the original photo failed to rotate (this
@@ -123,6 +136,7 @@ async function processPhoto(
   if (didCancel) throw new Error('Cancelled');
 
   return {
+    draftPhotoId,
     originalUri,
     previewUri,
     thumbnailUri,

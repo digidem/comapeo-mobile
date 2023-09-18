@@ -5,6 +5,8 @@ import {
   CapturedPictureMM,
   Observation,
 } from '../contexts/PhotoPromiseContext/types';
+import {nanoid} from 'nanoid';
+
 // draft observation have 2 parts:
 // 1. All the information, except processed photos are saved to persisted state.
 // 2. Photos are processed async (to be turned into a useable format by mapeo). Since promises cannot be stored in persisted storage, we hold those in a context. Once those photos are processed we save them to persisted state.
@@ -23,11 +25,11 @@ export const useDraftObservation = () => {
 
   const addPhoto = useCallback(
     async (capturePromise: Promise<CapturedPictureMM>) => {
-      const capturedPhoto = await capturePromise;
+      const draftPhotoId = nanoid();
       // adds the originalUri of the unprocessed photo into persisted state (as a placeholder)
-      addPhotoPlaceholder(capturedPhoto.uri);
+      addPhotoPlaceholder(draftPhotoId);
       // creates a promise of the original photo. This promise resolves into a processed photo with the thumbnail, preview, and original photo
-      const photoPromise = addPhotoPromise(capturedPhoto);
+      const photoPromise = addPhotoPromise(capturePromise, draftPhotoId);
       try {
         // the promise is run
         const photo = await photoPromise;
@@ -39,7 +41,7 @@ export const useDraftObservation = () => {
         const photo = {
           capturing: false,
           error: true,
-          originalUri: capturedPhoto.uri,
+          draftPhotoId,
         };
         replacePhotoPlaceholderWithPhoto(photo);
 

@@ -2,16 +2,14 @@ import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
 import SaveButton from './SaveButton';
-import {
-  NativeNavigationScreen,
-  NativeNavigationScreenWithProps,
-} from '../../sharedTypes';
+import {NativeNavigationScreen} from '../../sharedTypes';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {View, ScrollView, StyleSheet} from 'react-native';
 import {LocationView} from './LocationView';
 import {DescriptionField} from './DescriptionField';
 import {BottomSheet} from './BottomSheet';
-import {useObservations} from '../../hooks/useObservations';
+import {ThumbnailScrollView} from '../../sharedComponents/ThumbnailScrollView';
+import {CustomHeaderLeftClose} from '../../sharedComponents/CustomHeaderLeftClose';
 
 const m = defineMessages({
   editTitle: {
@@ -35,17 +33,22 @@ export const ObservationEdit: NativeNavigationScreen<'ObservationEdit'> = ({
   navigation,
   route,
 }) => {
-  const observationId = route.params?.observationId;
-  const isNew = route.params?.isNew;
+  const observationId = route.params.observationId;
   const photos = usePersistedDraftObservation(store => store.photos);
   const {formatMessage: t} = useIntl();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: !!observationId ? t(m.editTitle) : t(m.newTitle),
+      headerTitle: observationId ? t(m.editTitle) : t(m.newTitle),
+      headerLeft: props => (
+        <CustomHeaderLeftClose
+          headerBackButtonProps={props}
+          observationId={observationId}
+        />
+      ),
       headerRight: () => <SaveButton observationId={observationId} />,
     });
-  }, [navigation, observationId]);
+  }, [navigation, observationId, CustomHeaderLeftClose, SaveButton]);
 
   const handleCategoryPress = React.useCallback(() => {
     navigation.navigate({
@@ -64,11 +67,12 @@ export const ObservationEdit: NativeNavigationScreen<'ObservationEdit'> = ({
 
   const handlePhotoPress = React.useCallback(
     (photoIndex: number) => {
-      navigation.navigate('PhotosModal', {
-        photoIndex: photoIndex,
-        observationId: observationId,
-        editing: true,
-      });
+      // navigation.navigate('PhotosModal', {
+      //   photoIndex: photoIndex,
+      //   observationId: observationId,
+      //   editing: true,
+      // });
+      return;
     },
     [navigation],
   );
@@ -94,7 +98,7 @@ export const ObservationEdit: NativeNavigationScreen<'ObservationEdit'> = ({
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.scrollViewContent}>
-        {isNew && (
+        {!observationId && (
           <LocationView />
 
           // <LocationField locked={!isNew}>
@@ -103,7 +107,7 @@ export const ObservationEdit: NativeNavigationScreen<'ObservationEdit'> = ({
         )}
         {/* <CategoryView preset={preset} onPress={handleCategoryPress} /> */}
         <DescriptionField />
-        {/* <ThumbnailScrollView onPressPhoto={handlePhotoPress} photos={photos} /> */}
+        <ThumbnailScrollView onPressPhoto={handlePhotoPress} photos={photos} />
       </ScrollView>
       <BottomSheet items={bottomSheetItems} />
     </View>

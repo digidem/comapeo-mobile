@@ -7,6 +7,7 @@ import IconButton from '../../sharedComponents/IconButton';
 import {SaveIcon} from '../../sharedComponents/icons/SaveIcon';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
+import {useDraftObservation} from '../../hooks/useDraftObservation';
 
 const m = defineMessages({
   noGpsTitle: {
@@ -54,11 +55,12 @@ const log = debug('SaveButton');
 
 const SaveButton = ({observationId}: {observationId?: string}) => {
   const value = usePersistedDraftObservation(store => store.value);
+  const {clearDraft} = useDraftObservation();
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
 
   function saveDraft() {
-    return;
+    clearDraft();
   }
 
   const confirmationOptions: AlertButton[] = [
@@ -79,6 +81,7 @@ const SaveButton = ({observationId}: {observationId?: string}) => {
   ];
 
   const handleSavePress = () => {
+    clearDraft();
     log('Draft value > ', value);
     if (!value) return;
     const isNew = !observationId;

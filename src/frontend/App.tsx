@@ -13,7 +13,7 @@ import {AppNavigator} from './Navigation/AppNavigator';
 import {AppStackList} from './Navigation/AppStack';
 import {IntlProvider} from './contexts/IntlContext';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-// import {Loading} from './components/Loading';
+import {Loading} from './components/Loading';
 import {PermissionsProvider} from './contexts/PermissionsContext';
 import {PhotoPromiseProvider} from './contexts/PhotoPromiseContext';
 
@@ -22,17 +22,19 @@ const App = () => {
 
   return (
     <IntlProvider>
-      <BottomSheetModalProvider>
-        <GestureHandlerRootView style={{flex: 1}}>
-          <PermissionsProvider>
-            <PhotoPromiseProvider>
-              <NavigationContainer ref={navRef}>
-                <AppNavigator />
-              </NavigationContainer>
-            </PhotoPromiseProvider>
-          </PermissionsProvider>
-        </GestureHandlerRootView>
-      </BottomSheetModalProvider>
+      <Loading>
+        <BottomSheetModalProvider>
+          <GestureHandlerRootView style={{flex: 1}}>
+            <PermissionsProvider>
+              <PhotoPromiseProvider>
+                <NavigationContainer ref={navRef}>
+                  <AppNavigator />
+                </NavigationContainer>
+              </PhotoPromiseProvider>
+            </PermissionsProvider>
+          </GestureHandlerRootView>
+        </BottomSheetModalProvider>
+      </Loading>
     </IntlProvider>
   );
 };

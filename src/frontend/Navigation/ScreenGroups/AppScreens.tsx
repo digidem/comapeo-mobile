@@ -16,6 +16,8 @@ import {TurnOffPasscode} from '../../screens/AppPasscode/TurnOffPasscode';
 import {Security} from '../../screens/Security';
 import {AuthScreen} from '../../screens/AuthScreen';
 import {ObscurePasscode} from '../../screens/ObscurePasscode';
+import {Settings} from '../../screens/Settings';
+import {EmptySettingsScreen} from '../../screens/Settings/EmptySettingsScreen';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -27,6 +29,7 @@ export type AppList = {
   GpsModal: undefined;
   SyncModal: undefined;
   Settings: undefined;
+  Empty: undefined;
   ProjectConfig: undefined;
   AboutMapeo: undefined;
   LanguageSettings: undefined;
@@ -145,6 +148,12 @@ export const createDefaultScreenGroup = (
       name="ObscurePasscode"
       component={ObscurePasscode}
       options={{headerTitle: intl(ObscurePasscode.navTitle)}}
+    />
+    <RootStack.Screen name="Settings" component={Settings} />
+    <RootStack.Screen
+      name="Empty"
+      component={EmptySettingsScreen}
+      options={{headerTitle: 'Empty screen'}}
     />
   </RootStack.Group>
 );

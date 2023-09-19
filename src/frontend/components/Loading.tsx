@@ -57,14 +57,5 @@ export const Loading = ({children}: React.PropsWithChildren<{}>) => {
     );
   }
 
-  if (status === 'listening') {
-    return <>{children}</>;
-  }
-
-  return (
-    <SafeAreaView
-      style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Loading...</Text>
-    </SafeAreaView>
-  );
+  return <>{children}</>;
 };

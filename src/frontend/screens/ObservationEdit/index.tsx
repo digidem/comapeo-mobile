@@ -11,6 +11,7 @@ import {View, ScrollView, StyleSheet} from 'react-native';
 import {LocationView} from './LocationView';
 import {DescriptionField} from './DescriptionField';
 import {BottomSheet} from './BottomSheet';
+import {useObservations} from '../../hooks/useObservations';
 
 const m = defineMessages({
   editTitle: {

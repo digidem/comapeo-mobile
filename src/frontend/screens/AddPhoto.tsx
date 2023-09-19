@@ -28,7 +28,6 @@ export const AddPhotoScreen = ({
 }: NativeRootNavigationProps<'AddPhoto'>) => {
   const {addPhoto} = useDraftObservation();
 
-  // TODO: addPhoto changes every render, so we can't useCallback here
   const handleAddPress = (capture: Promise<CapturedPictureMM>) => {
     log('pressed add button');
     addPhoto(capture);

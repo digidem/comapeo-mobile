@@ -16,6 +16,9 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Loading} from './components/Loading';
 import {PermissionsProvider} from './contexts/PermissionsContext';
 import {PhotoPromiseProvider} from './contexts/PhotoPromiseContext';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();
@@ -23,17 +26,19 @@ const App = () => {
   return (
     <IntlProvider>
       <Loading>
-        <BottomSheetModalProvider>
-          <GestureHandlerRootView style={{flex: 1}}>
-            <PermissionsProvider>
-              <PhotoPromiseProvider>
-                <NavigationContainer ref={navRef}>
-                  <AppNavigator />
-                </NavigationContainer>
-              </PhotoPromiseProvider>
-            </PermissionsProvider>
-          </GestureHandlerRootView>
-        </BottomSheetModalProvider>
+        <QueryClientProvider client={queryClient}>
+          <BottomSheetModalProvider>
+            <GestureHandlerRootView style={{flex: 1}}>
+              <PermissionsProvider>
+                <PhotoPromiseProvider>
+                  <NavigationContainer ref={navRef}>
+                    <AppNavigator />
+                  </NavigationContainer>
+                </PhotoPromiseProvider>
+              </PermissionsProvider>
+            </GestureHandlerRootView>
+          </BottomSheetModalProvider>
+        </QueryClientProvider>
       </Loading>
     </IntlProvider>
   );

@@ -1,6 +1,7 @@
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, TextInput} from 'react-native';
 import Field from './Field';
+import React from 'react';
 
 const m = defineMessages({
   descriptionPlaceholder: {
@@ -19,23 +20,22 @@ const notesField = {
 
 export const DescriptionField = () => {
   const {formatMessage: t} = useIntl();
+  const [value, setValue] = React.useState('');
   return (
-    <Field field={notesField}>
-      {({value, onChange}) => (
-        <TextInput
-          style={styles.textInput}
-          value={value}
-          onChangeText={onChange}
-          placeholder={t(m.descriptionPlaceholder)}
-          placeholderTextColor="silver"
-          underlineColorAndroid="transparent"
-          multiline
-          scrollEnabled={false}
-          textContentType="none"
-          testID="observationDescriptionField"
-        />
-      )}
-    </Field>
+    <TextInput
+      style={styles.textInput}
+      value={value}
+      onChangeText={newVal => {
+        setValue(newVal);
+      }}
+      placeholder={t(m.descriptionPlaceholder)}
+      placeholderTextColor="silver"
+      underlineColorAndroid="transparent"
+      multiline
+      scrollEnabled={false}
+      textContentType="none"
+      testID="observationDescriptionField"
+    />
   );
 };
 

@@ -2,7 +2,10 @@ import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
 import SaveButton from './SaveButton';
-import {NativeNavigationScreenWithProps} from '../../sharedTypes';
+import {
+  NativeNavigationScreen,
+  NativeNavigationScreenWithProps,
+} from '../../sharedTypes';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {View, ScrollView, StyleSheet} from 'react-native';
 import {LocationView} from './LocationView';
@@ -27,11 +30,12 @@ const m = defineMessages({
   },
 });
 
-export const ObservationEdit: NativeNavigationScreenWithProps<
-  'ObservationEdit',
-  {isNew: boolean}
-> = ({isNew, navigation, route}) => {
+export const ObservationEdit: NativeNavigationScreen<'ObservationEdit'> = ({
+  navigation,
+  route,
+}) => {
   const observationId = route.params?.observationId;
+  const isNew = route.params?.isNew;
   const photos = usePersistedDraftObservation(store => store.photos);
   const {formatMessage: t} = useIntl();
 

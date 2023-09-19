@@ -1,7 +1,8 @@
 import * as React from 'react';
 
 import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {Field as FieldType} from '../../context/ConfigContext';
+//import {Field as FieldType} from '../../context/ConfigContext';
+import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 
 type Props = {
   field: FieldType;
@@ -12,10 +13,11 @@ type Props = {
 };
 
 const Field = ({field, children}: Props) => {
-  const [{value: draftValue}, {updateDraft}] = useDraftObservation();
+  const draftValue = usePersistedDraftObservation(store => store.value);
+  const {updateDraft} = useDraftObservation();
   const fieldKey: string = Array.isArray(field.key) ? field.key[0] : field.key;
-  const tags = draftValue?.tags || {};
-  const value = tags[fieldKey];
+  const tags = {};
+  // const value = tags[fieldKey];
   const onChange = (fieldValue: any) =>
     updateDraft({
       tags: {

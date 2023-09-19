@@ -10,6 +10,8 @@ import {ScreenWithHeader} from './ScreenWithHeader';
 import {MessageDescriptor} from 'react-intl';
 import {PhotoView} from '../../screens/PhotoView';
 import {CameraScreen} from '../../screens/CameraScreen';
+import {ObservationEdit} from '../../screens/ObservationEdit';
+import {AddPhotoScreen} from '../../screens/AddPhoto';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -38,7 +40,7 @@ export type AppList = {
   AddPhoto: undefined;
   ObservationList: undefined;
   Observation: {observationId: string};
-  ObservationEdit: {observationId?: string} | undefined;
+  ObservationEdit: {observationId?: string; isNew: boolean} | undefined;
   ManualGpsScreen: undefined;
   ObservationDetails: {question: number};
   LeaveProjectScreen: undefined;
@@ -109,6 +111,16 @@ export const createDefaultScreenGroup = (
       name="PhotoView"
       component={PhotoView}
       options={{headerTitle: intl(PhotoView.navTitle)}}
+    />
+    <RootStack.Screen
+      name="ObservationEdit"
+      component={ObservationEdit}
+      options={{headerTitle: intl(ObservationEdit.navTitle)}}
+    />
+    <RootStack.Screen
+      name="AddPhoto"
+      component={AddPhotoScreen}
+      options={{headerShown: false}}
     />
   </RootStack.Group>
 );

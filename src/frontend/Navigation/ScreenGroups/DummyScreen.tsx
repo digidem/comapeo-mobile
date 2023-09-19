@@ -18,7 +18,7 @@ export const DummyScreen = (
       <Text style={styles.text}>Test screen</Text>
       <Button
         onPress={() => {
-          prop.navigation.navigate('Settings');
+          prop.navigation.navigate('ObservationEdit');
         }}
         title="Nav to stack"
       />

@@ -1,13 +1,12 @@
-import React, {useEffect} from 'react';
-import {Alert} from 'react-native';
+import React from 'react';
+import {Alert, AlertButton} from 'react-native';
 import debug from 'debug';
 import {defineMessages, useIntl} from 'react-intl';
 
 import IconButton from '../../sharedComponents/IconButton';
 import {SaveIcon} from '../../sharedComponents/icons/SaveIcon';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {ObservationValue} from '../../context/ObservationsContext';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 
 const m = defineMessages({
   noGpsTitle: {
@@ -53,11 +52,16 @@ const m = defineMessages({
 const MINIMUM_ACCURACY = 10;
 const log = debug('SaveButton');
 
-const SaveButton = ({observationId}) => {
-  const {} = useDraftObservation();
+const SaveButton = ({observationId}: {observationId?: string}) => {
+  const value = usePersistedDraftObservation(store => store.value);
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
-  const confirmationOptions = [
+
+  function saveDraft() {
+    return;
+  }
+
+  const confirmationOptions: AlertButton[] = [
     {
       text: t(m.saveAnyway),
       onPress: () => {}, //save draft here
@@ -82,7 +86,7 @@ const SaveButton = ({observationId}) => {
 
     const hasLocation = value.lat !== undefined && value.lon !== undefined;
     const locationSetManually = value.metadata && value.metadata.manualLocation;
-    if (hasLocation && (locationSetManually || isGpsAccurate(value))) {
+    if (hasLocation && (locationSetManually || isGpsAccurate())) {
       // Observation has a location, which is either from an accurate GPS
       // reading, or is manually entered
       saveDraft();
@@ -95,33 +99,37 @@ const SaveButton = ({observationId}) => {
     }
   };
 
-  useEffect(() => {
-    if (savingStatus !== 'success') return;
-    if (typeof observationId === 'string') {
-      navigation.pop();
-    } else {
-      navigation.navigate('Home', {screen: 'Map'});
-    }
-  }, [savingStatus, navigation, observationId]);
+  // useEffect(() => {
+  //   if (savingStatus !== 'success') return;
+  //   if (typeof observationId === 'string') {
+  //     navigation.pop();
+  //   } else {
+  //     navigation.navigate('Home', {screen: 'Map'});
+  //   }
+  // }, [savingStatus, navigation, observationId]);
 
   return (
     <IconButton onPress={handleSavePress} testID="saveButton">
-      <SaveIcon inprogress={savingStatus === 'loading'} />
+      <SaveIcon inprogress={false} />
     </IconButton>
   );
 };
 
 export default SaveButton;
 
-function isGpsAccurate(value: ObservationValue): boolean {
-  // TODO: metadata changed in new mapeo-schema
-  const accuracy =
-    value &&
-    value.metadata &&
-    value.metadata.location &&
-    value.metadata.location.position &&
-    value.metadata.location.position.coords.accuracy;
+// function isGpsAccurate(value: ObservationValue): boolean {
+//   // TODO: metadata changed in new mapeo-schema
+//   const accuracy =
+//     value &&
+//     value.metadata &&
+//     value.metadata.location &&
+//     value.metadata.location.position &&
+//     value.metadata.location.position.coords.accuracy;
 
-  // If we don't have accuracy, allow save anyway
-  return typeof accuracy === 'number' ? accuracy < MINIMUM_ACCURACY : true;
+//   // If we don't have accuracy, allow save anyway
+//   return typeof accuracy === 'number' ? accuracy < MINIMUM_ACCURACY : true;
+// }
+
+function isGpsAccurate(): boolean {
+  return true;
 }

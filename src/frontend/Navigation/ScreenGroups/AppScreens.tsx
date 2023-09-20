@@ -10,8 +10,6 @@ import {ScreenWithHeader} from './ScreenWithHeader';
 import {MessageDescriptor} from 'react-intl';
 import {MapScreen} from '../../screens/MapScreen';
 
-console.log({MapScreen});
-
 export type HomeTabsList = {
   Map: undefined;
   Camera: undefined;

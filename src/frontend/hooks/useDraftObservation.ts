@@ -5,7 +5,8 @@ import {
   CapturedPictureMM,
   Observation,
 } from '../contexts/PhotoPromiseContext/types';
-import {nanoid} from 'nanoid';
+// react native does not have a random bytes generator, `non-secure` does not require a random bytes generator.
+import {nanoid} from 'nanoid/non-secure';
 
 // draft observation have 2 parts:
 // 1. All the information, except processed photos are saved to persisted state.

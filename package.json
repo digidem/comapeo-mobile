@@ -39,7 +39,6 @@
     "react-native": "0.71.13",
     "react-native-confirmation-code-field": "^7.3.1",
     "react-native-gesture-handler": "^2.12.1",
-    "react-native-get-random-values": "^1.9.0",
     "react-native-indicators": "^0.17.0",
     "react-native-linear-gradient": "^2.5.4",
     "react-native-mmkv": "^2.10.1",

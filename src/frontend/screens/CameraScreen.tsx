@@ -12,11 +12,14 @@ export const CameraScreen = ({
   navigation,
 }: NativeHomeTabsNavigationProps<'Camera'>) => {
   const isFocused = useIsFocused();
-  const {addPhoto} = useDraftObservation();
+  const {addPhoto, clearDraft} = useDraftObservation();
   const photos = usePersistedDraftObservation(store => store.photos);
 
   function handleAddPress(photoPromise: Promise<CapturedPictureMM>) {
+    // temporarily here. for the sake of testing we want to just access the first photo. clearing draft before taking a photo means the first photo in the array will be the photot that is about to be taken
+    clearDraft();
     addPhoto(photoPromise);
+    navigation.navigate('PhotoView');
   }
 
   return (

@@ -37,9 +37,7 @@ export type AppList = {
     observationId?: string;
     editing: boolean;
   };
-  PhotoView: {
-    uri: string;
-  };
+  PhotoView: undefined;
   CategoryChooser: undefined;
   AddPhoto: undefined;
   ObservationList: undefined;

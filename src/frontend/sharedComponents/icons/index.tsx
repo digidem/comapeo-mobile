@@ -5,7 +5,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import {Image} from 'react-native';
 
-import Circle from './Circle';
+import {Circle} from './Circle';
 import {RED, DARK_GREY, MANGO, MEDIUM_GREY} from '../../lib/styles';
 import type {TextStyleProp, ImageStyleProp} from '../../sharedTypes';
 
@@ -20,10 +20,10 @@ type ImageIconProps = {
   style?: ImageStyleProp;
 };
 
-export {default as GpsIcon} from './GpsIcon';
+export {GpsIcon} from './GpsIcon';
 // export { CategoryIcon, CategoryCircleIcon } from "./CategoryIcon";
-export {default as SaveIcon} from './SaveIcon';
-export {default as SyncIconCircle} from './SyncIconCircle';
+export {SaveIcon} from './SaveIcon';
+export {SyncIconCircle} from './SyncIconCircle';
 
 export const AlertIcon = ({size = 30, color = RED, style}: FontIconProps) => (
   <MaterialCommunityIcon color={color} name="alert" size={size} style={style} />

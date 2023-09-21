@@ -7,7 +7,7 @@ type Props = {
   progress?: number;
 };
 
-const Progress = ({size, color, progress}: Props) =>
+export const Progress = ({size, color, progress}: Props) =>
   progress !== undefined && progress < 1 ? (
     <Circle
       size={size}
@@ -26,5 +26,3 @@ const Progress = ({size, color, progress}: Props) =>
       direction="clockwise"
     />
   );
-
-export default Progress;

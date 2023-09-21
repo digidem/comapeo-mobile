@@ -16,7 +16,7 @@ interface Props
     style?: ViewStyleProp;
   }> {}
 
-const Circle = ({children, color, radius = 25, style}: Props) => {
+export const Circle = ({children, color, radius = 25, style}: Props) => {
   const validColor = !!(color && validateColor(color));
   return (
     <View
@@ -34,8 +34,6 @@ const Circle = ({children, color, radius = 25, style}: Props) => {
     </View>
   );
 };
-
-export default Circle;
 
 const styles = StyleSheet.create({
   base: {

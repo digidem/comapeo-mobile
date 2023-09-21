@@ -18,15 +18,13 @@ export const SyncIcon = ({color = 'white'}: {color?: string}) => (
   />
 );
 
-const SyncIconCircle = ({inprogress}: Props) => (
+export const SyncIconCircle = ({inprogress}: Props) => (
   <View style={[styles.outerCircle, {opacity: inprogress ? 0.5 : 1}]}>
     <View style={styles.innerCircle}>
       <SyncIcon />
     </View>
   </View>
 );
-
-export default SyncIconCircle;
 
 const styles = StyleSheet.create({
   outerCircle: {

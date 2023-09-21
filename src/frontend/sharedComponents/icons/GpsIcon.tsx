@@ -44,7 +44,7 @@ const RenderIcon = ({color = '#00FF02'}: {color?: string}) => (
 
 type Props = {variant: LocationStatus};
 
-const GpsIcon = ({variant}: Props) => {
+const GpsIconComponent = ({variant}: Props) => {
   switch (variant) {
     case 'error':
       return <RenderError />;
@@ -58,4 +58,4 @@ const GpsIcon = ({variant}: Props) => {
   }
 };
 
-export default React.memo<Props>(GpsIcon);
+export const GpsIcon = React.memo<Props>(GpsIconComponent);

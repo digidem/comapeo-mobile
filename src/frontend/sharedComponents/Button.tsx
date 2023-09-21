@@ -2,9 +2,10 @@ import * as React from 'react';
 import {GestureResponderEvent, StyleSheet, View, ViewStyle} from 'react-native';
 
 import {VERY_LIGHT_BLUE} from '../lib/styles';
-import {StyleProp} from 'react-native/Libraries/StyleSheet/StyleSheet';
 import {Text} from './Text';
 import {TouchableNativeFeedback} from 'react-native-gesture-handler';
+
+import {ViewStyleProp} from '../sharedTypes';
 
 type ColorScheme = 'dark' | 'light';
 type Variant = 'contained' | 'outlined' | 'text';
@@ -23,7 +24,7 @@ interface Props {
   fullWidth?: boolean;
   onPress: (event: GestureResponderEvent) => void;
   size?: Size;
-  style?: StyleProp<ViewStyle>;
+  style?: ViewStyleProp;
   testID?: string;
   variant?: Variant;
 }

@@ -6,7 +6,7 @@ import OpenSettings from 'react-native-android-open-settings';
 
 import {TouchableNativeFeedback} from './Touchables';
 
-// import { WifiIcon, WifiOffIcon } from "./icons";
+import {WifiIcon, WifiOffIcon} from './icons';
 import {Text} from './Text';
 
 const m = defineMessages({
@@ -35,7 +35,7 @@ export const WifiBar = ({
   <TouchableNativeFeedback onPress={onPress}>
     <View style={styles.wifiBar}>
       <View style={styles.wifiInfo}>
-        {/* {ssid ? <WifiIcon /> : <WifiOffIcon color="white" />} */}
+        {ssid ? <WifiIcon /> : <WifiOffIcon color="white" />}
         <Text style={styles.wifiBarText} numberOfLines={1}>
           <Text style={styles.bold}>
             <FormattedMessage {...(ssid ? m.wifi : m.noWifi)} />

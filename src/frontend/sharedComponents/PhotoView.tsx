@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Image, ActivityIndicator} from 'react-native';
 
-// import { AlertIcon } from "./icons";
+import {AlertIcon} from './icons';
 import type {ViewStyleProp} from '../sharedTypes';
 
 type Props = {
@@ -22,7 +22,9 @@ const PhotoViewComponent = ({
     <View style={[styles.container, style]}>
       {variant === 'loading' ? (
         <ActivityIndicator />
-      ) : variant === 'error' || error || !uri ? null : ( // <AlertIcon />
+      ) : variant === 'error' || error || !uri ? (
+        <AlertIcon />
+      ) : (
         <Image
           onError={({nativeEvent: {error}}) => setError(error)}
           source={{uri}}

@@ -108,7 +108,7 @@ const m = defineMessages({
   },
 });
 
-const Settings: NativeNavigationComponent<'Settings'> = () => {
+export const Settings: NativeNavigationComponent<'Settings'> = () => {
   const {navigate} = useNavigationFromRoot();
 
   // const [experiments] = useExperiments();
@@ -194,5 +194,3 @@ const Settings: NativeNavigationComponent<'Settings'> = () => {
 };
 
 Settings.navTitle = m.settingsTitle;
-
-export default Settings;

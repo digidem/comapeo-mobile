@@ -1,4 +1,3 @@
-// @flow
 import React, {useState} from 'react';
 import {View, StyleSheet, Image, ActivityIndicator} from 'react-native';
 

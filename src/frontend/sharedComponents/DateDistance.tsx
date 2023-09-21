@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import {Text} from './Text';
 import {FormattedRelativeTime, FormattedDate} from 'react-intl';

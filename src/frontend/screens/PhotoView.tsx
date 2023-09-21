@@ -3,6 +3,8 @@ import React, {useState} from 'react';
 import {View, StyleSheet, Image, StyleProp, ViewStyle} from 'react-native';
 import {NativeNavigationScreenWithProps} from '../sharedTypes';
 import {defineMessages} from 'react-intl';
+import {usePersistedDraftObservation} from '../hooks/persistedState/usePersistedDraftObservation';
+import {Text} from '../sharedComponents/Text';
 
 const m = defineMessages({
   navTitle: {
@@ -22,15 +24,21 @@ export const PhotoView: NativeNavigationScreenWithProps<'PhotoView', Props> = ({
   route,
 }) => {
   const [error, setError] = useState();
+  const photo = usePersistedDraftObservation(store => store.photos)[0];
+
   return (
     <View style={[styles.container, style]}>
-      <Image
-        onError={({nativeEvent: {error}}) => setError(error)}
-        source={{uri: route.params.uri}}
-        style={styles.image}
-        resizeMethod="scale"
-        resizeMode={resizeMode}
-      />
+      {!('previewUri' in photo) ? (
+        <Text> loading</Text>
+      ) : (
+        <Image
+          onError={({nativeEvent: {error}}) => setError(error)}
+          source={{uri: photo.previewUri}}
+          style={styles.image}
+          resizeMethod="scale"
+          resizeMode={resizeMode}
+        />
+      )}
     </View>
   );
 };

@@ -26,15 +26,15 @@ export const useDraftObservation = () => {
 
   const addPhoto = useCallback(
     async (capturePromise: Promise<CapturedPictureMM>) => {
+      // creates an id, that is stored as a placeholder in persisted photots. This is associated with the processed photo, so when the photo is done processsing, we can replace the placeholder with the actual photo
       const draftPhotoId = nanoid();
-      // adds the originalUri of the unprocessed photo into persisted state (as a placeholder)
       addPhotoPlaceholder(draftPhotoId);
       // creates a promise of the original photo. This promise resolves into a processed photo with the thumbnail, preview, and original photo
       const photoPromise = addPhotoPromise(capturePromise, draftPhotoId);
       try {
         // the promise is run
         const photo = await photoPromise;
-        // when the promise has been fufilled, we find the the originalUri of the unprocessed photo, which was saved above in `addPhotoPlaceholder`. The we replace it with the processed photo
+        // when the promise has been fufilled, we find the the id of the unprocessed photo, which was saved above in `addPhotoPlaceholder`. The we replace it with the processed photo
         replacePhotoPlaceholderWithPhoto(photo);
       } catch (err) {
         if (!(err instanceof Error)) return;

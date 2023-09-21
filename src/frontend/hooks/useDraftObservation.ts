@@ -9,7 +9,7 @@ import {nanoid} from 'nanoid';
 
 // draft observation have 2 parts:
 // 1. All the information, except processed photos are saved to persisted state.
-// 2. Photos are processed async (to be turned into a useable format by mapeo). Since promises cannot be stored in persisted storage, we hold those in a context. Once those photos are processed we save them to persisted state.
+// 2. Photos are processed (to be turned into a useable format by mapeo) async. Since promises cannot be stored in persisted storage, we hold those in a context. Once those photos are processed we save them to persisted state.
 export const useDraftObservation = () => {
   const {addPhotoPromise, cancelPhotoProcessing, deletePhotoPromise} =
     usePhotoPromiseContext();

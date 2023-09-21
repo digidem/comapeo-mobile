@@ -29,6 +29,13 @@ export const DummyScreen = (
         }}
         title="Open Modal"
       />
+      <View style={{marginTop: 8}} />
+      <Button
+        onPress={() => {
+          prop.navigation.navigate('Settings');
+        }}
+        title="Settings"
+      />
       <BottomSheetModal disableBackrop={false} isOpen={isOpen} ref={sheetRef}>
         <BottomSheetContent
           title={'Example'}

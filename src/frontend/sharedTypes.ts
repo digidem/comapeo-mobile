@@ -10,13 +10,20 @@ import {StyleProp, ViewStyle, TextStyle, ImageStyle} from 'react-native';
 
 export type ViewStyleProp = StyleProp<ViewStyle>;
 export type TextStyleProp = StyleProp<TextStyle>;
-export type ImageStyleProps = StyleProp<ImageStyle>;
+export type ImageStyleProp = StyleProp<ImageStyle>;
+
+export type IconSize = 'small' | 'medium' | 'large';
 
 export type NativeRootNavigationProps<ScreenName extends keyof AppStackList> =
   NativeStackScreenProps<AppStackList, ScreenName>;
 
 export type NativeNavigationScreen<ScreenName extends keyof AppStackList> =
   React.FC<NativeStackScreenProps<AppStackList, ScreenName>> & {
+    navTitle: MessageDescriptor;
+  };
+
+export type NativeNavigationComponent<ScreenName extends keyof AppStackList> =
+  React.FC<NativeRootNavigationProps<ScreenName>> & {
     navTitle: MessageDescriptor;
   };
 

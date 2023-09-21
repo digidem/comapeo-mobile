@@ -16,6 +16,8 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Loading} from './components/Loading';
 import {PermissionsProvider} from './contexts/PermissionsContext';
 import {PhotoPromiseProvider} from './contexts/PhotoPromiseContext';
+import {SecurityProvider} from './contexts/SecurityContext';
+import {LocationProvider} from './contexts/LocationContext';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 const queryClient = new QueryClient();
@@ -25,21 +27,23 @@ const App = () => {
 
   return (
     <IntlProvider>
-      <Loading>
-        <QueryClientProvider client={queryClient}>
-          <BottomSheetModalProvider>
-            <GestureHandlerRootView style={{flex: 1}}>
-              <PermissionsProvider>
-                <PhotoPromiseProvider>
-                  <NavigationContainer ref={navRef}>
-                    <AppNavigator />
-                  </NavigationContainer>
-                </PhotoPromiseProvider>
-              </PermissionsProvider>
-            </GestureHandlerRootView>
-          </BottomSheetModalProvider>
-        </QueryClientProvider>
-      </Loading>
+      <QueryClientProvider client={queryClient}>
+        <PermissionsProvider>
+          <GestureHandlerRootView style={{flex: 1}}>
+            <BottomSheetModalProvider>
+              <NavigationContainer ref={navRef}>
+                <LocationProvider>
+                  <SecurityProvider>
+                    <PhotoPromiseProvider>
+                      <AppNavigator />
+                    </PhotoPromiseProvider>
+                  </SecurityProvider>
+                </LocationProvider>
+              </NavigationContainer>
+            </BottomSheetModalProvider>
+          </GestureHandlerRootView>
+        </PermissionsProvider>
+      </QueryClientProvider>
     </IntlProvider>
   );
 };

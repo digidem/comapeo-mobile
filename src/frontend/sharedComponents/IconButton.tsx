@@ -1,22 +1,18 @@
 import * as React from 'react';
-import {
-  GestureResponderEvent,
-  StyleProp,
-  StyleSheet,
-  TouchableNativeFeedback,
-  View,
-  ViewStyle,
-} from 'react-native';
+import {GestureResponderEvent, StyleSheet, View} from 'react-native';
+import {TouchableNativeFeedback} from './Touchables';
+
 import {VERY_LIGHT_BLUE} from '../lib/styles';
+import type {ViewStyleProp} from '../sharedTypes';
 
 type Props = {
   children: React.ReactNode;
   onPress: ((event: GestureResponderEvent) => void) | (() => void);
-  style?: StyleProp<ViewStyle>;
+  style?: ViewStyleProp;
   testID?: string;
 };
 
-const IconButton = ({children, onPress, style, testID}: Props) => (
+const IconButtonComponent = ({children, onPress, style, testID}: Props) => (
   <TouchableNativeFeedback
     testID={testID}
     onPress={onPress}
@@ -25,7 +21,7 @@ const IconButton = ({children, onPress, style, testID}: Props) => (
   </TouchableNativeFeedback>
 );
 
-export default React.memo<Props>(IconButton);
+export const IconButton = React.memo<Props>(IconButtonComponent);
 
 const styles = StyleSheet.create({
   container: {

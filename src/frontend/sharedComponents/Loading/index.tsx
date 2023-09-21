@@ -2,10 +2,10 @@ import * as React from 'react';
 import {SafeAreaView, Text} from 'react-native';
 import nodejs from 'nodejs-mobile-react-native';
 import createClient from 'rpc-reflector/client';
-import {MessagePortLike} from '../lib/MessagePortLike';
-import {Status, StatusMessage} from '../../backend/types/api';
+import {MessagePortLike} from '../../lib/MessagePortLike';
+import {Status, StatusMessage} from '../../../backend/types/api';
 
-import {setApi} from '../api';
+import {setApi} from '../../api';
 
 export const Loading = ({children}: React.PropsWithChildren<{}>) => {
   const [status, setStatus] = React.useState<Status>('idle');

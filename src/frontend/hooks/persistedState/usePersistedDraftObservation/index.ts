@@ -16,7 +16,7 @@ export type DraftObservationSlice = {
   value: Observation | null;
   observationId?: string;
   actions: {
-    addPhotoPlaceholder: (originalUri: string) => void;
+    addPhotoPlaceholder: (draftPhotoId: string) => void;
     replacePhotoPlaceholderWithPhoto: (photo: DraftPhoto) => void;
     // Performs a shallow merge of the observation value, like setState
     updatePersistedDraft: (value: Observation) => void;
@@ -36,8 +36,8 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
   value: null,
   actions: {
     deletePersistedPhoto: id => deletePhoto(set, get, id),
-    addPhotoPlaceholder: originalUri =>
-      set({photos: [...get().photos, {originalUri, capturing: true}]}),
+    addPhotoPlaceholder: draftPhotoId =>
+      set({photos: [...get().photos, {draftPhotoId, capturing: true}]}),
     replacePhotoPlaceholderWithPhoto: draftPhoto =>
       replaceDraftPhotos(set, get, draftPhoto),
     clearPersistedDraft: () =>

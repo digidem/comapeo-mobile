@@ -20,7 +20,7 @@ export const DummyScreen = (
         onPress={() => {
           prop.navigation.navigate('ObservationEdit');
         }}
-        title="Nav to stack"
+        title="Security"
       />
       <View style={{marginTop: 8}} />
       <Button
@@ -28,6 +28,13 @@ export const DummyScreen = (
           openSheet();
         }}
         title="Open Modal"
+      />
+      <View style={{marginTop: 8}} />
+      <Button
+        onPress={() => {
+          prop.navigation.navigate('Settings');
+        }}
+        title="Settings"
       />
       <BottomSheetModal disableBackrop={false} isOpen={isOpen} ref={sheetRef}>
         <BottomSheetContent

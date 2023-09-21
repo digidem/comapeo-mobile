@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-const HomeHeader = () => {
+export const HomeHeader = () => {
   return (
     <View style={[styles.header]}>
       <LinearGradient
@@ -12,8 +12,6 @@ const HomeHeader = () => {
     </View>
   );
 };
-
-export default HomeHeader;
 
 const styles = StyleSheet.create({
   header: {

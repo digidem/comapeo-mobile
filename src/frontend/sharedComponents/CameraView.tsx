@@ -46,7 +46,6 @@ export const CameraView = ({onAddPress}: Props) => {
   const [capturing, setCapturing] = React.useState(false);
   const [cameraReady, setCameraReady] = React.useState(false);
   const {permissions, requestPermissions} = usePermissionContext();
-  const photoId = React.useId();
   const ref = React.useRef<Camera>(null);
   const accelerometerMeasurement = React.useRef<AccelerometerMeasurement>();
 
@@ -93,7 +92,7 @@ export const CameraView = ({onAddPress}: Props) => {
     ref.current
       .takePictureAsync(captureOptions)
       .then(pic => {
-        onAddPress(rotatePhoto(pic, photoId, accelerometerMeasurement.current));
+        onAddPress(rotatePhoto(pic, accelerometerMeasurement.current));
       })
       .catch(err => {
         console.log(err);
@@ -141,7 +140,6 @@ export const CameraView = ({onAddPress}: Props) => {
 
 function rotatePhoto(
   {uri, width, height}: CameraCapturedPicture,
-  id: string,
   acc?: AccelerometerMeasurement,
 ) {
   const resizePromise = ImageResizer.createResizedImage(

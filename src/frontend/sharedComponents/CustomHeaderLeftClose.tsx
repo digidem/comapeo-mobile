@@ -7,7 +7,6 @@ import {CloseIcon} from './icons';
 import {BLACK} from '../lib/styles';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import {useDraftObservation} from '../hooks/useDraftObservation';
-import {Observation} from '../../backend/mapeo-core';
 import {defineMessages, useIntl} from 'react-intl';
 import {useObservation} from '../hooks/useObservation';
 

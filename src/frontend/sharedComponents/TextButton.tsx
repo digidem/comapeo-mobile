@@ -16,7 +16,7 @@ type Props = {
   style?: ViewStyleProp;
 };
 
-const TextButton = ({
+export const TextButton = ({
   onPress,
   containerStyle,
   textStyle,
@@ -30,8 +30,6 @@ const TextButton = ({
     <Text style={[styles.buttonText, textStyle]}>{title.toUpperCase()}</Text>
   </TouchableNativeFeedback>
 );
-
-export default TextButton;
 
 const styles = StyleSheet.create({
   buttonContainer: {

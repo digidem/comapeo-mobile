@@ -20,7 +20,7 @@ type Props<Value> = {
   testID?: string;
 };
 
-const Select = <Value extends string | number>({
+export const Select = <Value extends string | number>({
   containerStyles,
   label,
   mode,
@@ -55,5 +55,3 @@ const styles = StyleSheet.create({
     marginBottom: -3,
   },
 });
-
-export default Select;

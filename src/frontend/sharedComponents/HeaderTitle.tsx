@@ -9,7 +9,7 @@ interface Props {
   style?: TextStyleProp;
 }
 
-const HeaderTitle = ({children, style}: Props) => (
+export const HeaderTitle = ({children, style}: Props) => (
   <Text style={[styles.title, style]}>{children}</Text>
 );
 
@@ -36,5 +36,3 @@ const styles = StyleSheet.create({
     }),
   },
 });
-
-export default HeaderTitle;

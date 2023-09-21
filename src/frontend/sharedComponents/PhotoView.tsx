@@ -12,7 +12,7 @@ type Props = {
   resizeMode?: 'cover' | 'contain' | 'stretch' | 'center';
 };
 
-const PhotoView = ({
+const PhotoViewComponent = ({
   uri,
   variant = 'photo',
   resizeMode = 'contain',
@@ -23,8 +23,7 @@ const PhotoView = ({
     <View style={[styles.container, style]}>
       {variant === 'loading' ? (
         <ActivityIndicator />
-      ) : variant === 'error' || error || !uri ? // <AlertIcon />
-      null : (
+      ) : variant === 'error' || error || !uri ? null : ( // <AlertIcon />
         <Image
           onError={({nativeEvent: {error}}) => setError(error)}
           source={{uri}}
@@ -37,7 +36,7 @@ const PhotoView = ({
   );
 };
 
-export default React.memo<Props>(PhotoView);
+export const PhotoView = React.memo<Props>(PhotoViewComponent);
 
 const styles = StyleSheet.create({
   container: {

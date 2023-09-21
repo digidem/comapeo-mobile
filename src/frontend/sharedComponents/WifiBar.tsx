@@ -27,7 +27,7 @@ interface Props {
   ssid?: string | null;
 }
 
-const WifiBar = ({
+export const WifiBar = ({
   deviceName,
   onPress = () => OpenSettings.wifiSettings(),
   ssid,
@@ -85,5 +85,3 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
 });
-
-export default WifiBar;

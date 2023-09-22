@@ -21,6 +21,7 @@ export const useDraftObservation = () => {
     clearPersistedDraft,
     newPersistedDraft,
     updatePersistedDraft: updateDraft,
+    updatePersistedPosition: updatePosition,
     deletePersistedPhoto,
   } = usePersistedDraftObservationActions();
 
@@ -82,5 +83,12 @@ export const useDraftObservation = () => {
     deletePhotoPromise(uri);
   }, []);
 
-  return {addPhoto, clearDraft, newDraft, updateDraft, deletePhoto};
+  return {
+    addPhoto,
+    clearDraft,
+    newDraft,
+    updateDraft,
+    deletePhoto,
+    updatePosition,
+  };
 };

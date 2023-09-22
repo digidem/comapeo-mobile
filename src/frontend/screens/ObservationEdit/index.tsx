@@ -33,7 +33,8 @@ export const ObservationEdit: NativeNavigationScreen<'ObservationEdit'> = ({
   navigation,
   route,
 }) => {
-  const observationId = route.params.observationId;
+  const observationId = route.params?.observationId;
+  const isNew = route.params?.isNew;
   const photos = usePersistedDraftObservation(store => store.photos);
   const {formatMessage: t} = useIntl();
 
@@ -98,13 +99,8 @@ export const ObservationEdit: NativeNavigationScreen<'ObservationEdit'> = ({
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.scrollViewContent}>
-        {!observationId && (
-          <LocationView />
+        {isNew && <LocationView />}
 
-          // <LocationField locked={!isNew}>
-          //   {fieldProps => <LocationView {...fieldProps} />}
-          // </LocationField>
-        )}
         {/* <CategoryView preset={preset} onPress={handleCategoryPress} /> */}
         <DescriptionField />
         <ThumbnailScrollView onPressPhoto={handlePhotoPress} photos={photos} />

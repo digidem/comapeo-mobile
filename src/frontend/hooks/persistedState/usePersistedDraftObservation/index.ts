@@ -10,6 +10,8 @@ import {
   filterPhotosFromAttachments,
   replaceDraftPhotos,
 } from './photosMethods';
+import {Position} from '../../../contexts/LocationContext';
+import {PermissionResult} from '../../../contexts/PermissionsContext';
 
 export type DraftObservationSlice = {
   photos: Photo[];
@@ -25,6 +27,15 @@ export type DraftObservationSlice = {
     // Create a new draft observation
     newPersistedDraft: (id?: string, value?: Observation | null) => void;
     deletePersistedPhoto: (id: string) => void;
+    updatePersistedPosition: ({
+      position,
+      error,
+      permissionResult,
+    }: {
+      position?: Position;
+      error?: boolean;
+      permissionResult?: PermissionResult;
+    }) => void;
   };
 };
 
@@ -47,6 +58,28 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
       }),
     updatePersistedDraft: newValue =>
       set({value: {...get().value, ...newValue}}),
+    updatePersistedPosition: ({position, error, permissionResult}) => {
+      if (!position) return;
+      const prevValue = get().value;
+      if (!prevValue)
+        throw new Error(
+          'Cannot update persisted position if draft value has not been initialized',
+        );
+      set({
+        value: {
+          ...prevValue,
+          lon: position.coords.longitude,
+          lat: position.coords.latitude,
+          metadata: {
+            ...prevValue.metadata,
+            location:
+              !error || !permissionResult
+                ? undefined
+                : {permission: permissionResult, error: error},
+          },
+        },
+      });
+    },
     newPersistedDraft: (id, value) =>
       set({
         observationId: id,

@@ -3,7 +3,7 @@ import {Alert, AlertButton} from 'react-native';
 import debug from 'debug';
 import {defineMessages, useIntl} from 'react-intl';
 
-import IconButton from '../../sharedComponents/IconButton';
+import {IconButton} from '../../sharedComponents/IconButton';
 import {SaveIcon} from '../../sharedComponents/icons/SaveIcon';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';

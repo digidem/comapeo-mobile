@@ -47,7 +47,7 @@ export type AppList = {
   AddPhoto: undefined;
   ObservationList: undefined;
   Observation: {observationId: string};
-  ObservationEdit: {observationId?: string} | undefined;
+  ObservationEdit: {observationId?: string; isNew?: boolean} | undefined;
   ManualGpsScreen: undefined;
   ObservationDetails: {question: number};
   LeaveProjectScreen: undefined;

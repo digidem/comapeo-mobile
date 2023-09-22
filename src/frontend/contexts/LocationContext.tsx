@@ -84,6 +84,10 @@ const stopWatchingLocation = (
 const LocationContext: React.Context<LocationContextType> =
   React.createContext<LocationContextType>(DEFAULT_CONTEXT);
 
+export const useLocationContext = () => {
+  return React.useContext(LocationContext);
+};
+
 /**
  * The LocationProvider provides details about the current device location based
  * on sensors including GPS. It must be included in the component heirarchy

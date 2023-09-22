@@ -20,7 +20,7 @@ export const DummyScreen = (
         onPress={() => {
           prop.navigation.navigate('ObservationEdit');
         }}
-        title="Security"
+        title="Observation Edit"
       />
       <View style={{marginTop: 8}} />
       <Button

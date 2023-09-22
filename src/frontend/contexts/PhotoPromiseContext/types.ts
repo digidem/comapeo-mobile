@@ -15,6 +15,7 @@ export interface Observation {
       permission: 'granted' | 'denied' | 'never_ask_again';
     };
     manualLocation?: boolean;
+    accuracy?: number;
   };
   refs?: {
     id: string;

@@ -115,7 +115,7 @@ function shouldUpdateComponentBasedOnAccuracy(
   // if there is no position or accuracy, do not rerender
   if (!nextProps.position || !nextProps.position.coords.accuracy) return false;
 
-  // if there was previously no position.coords.accuracy and there is now, do re-render
+  // if there was previously no accuracy and there is now, do re-render
   if (
     (!prevProps.position || !prevProps.position.coords.accuracy) &&
     nextProps.position.coords.accuracy

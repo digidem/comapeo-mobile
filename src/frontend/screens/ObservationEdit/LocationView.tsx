@@ -3,11 +3,11 @@ import {FormattedMessage, defineMessages} from 'react-intl';
 import {View, Text, StyleSheet} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {BLACK, LIGHT_GREY} from '../../lib/styles';
-import {Position, useLocationContext} from '../../contexts/LocationContext';
+import {useLocationContext} from '../../contexts/LocationContext';
 import {convertToUTM} from '../../lib/utils';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {PermissionResult} from '../../contexts/PermissionsContext';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
+import {Position} from '../../sharedTypes';
 
 const m = defineMessages({
   searching: {
@@ -22,13 +22,12 @@ export const LocationView = () => {
   const draftHasManualLocation =
     value && value.metadata && value.metadata.manualLocation;
 
-  if (!draftHasManualLocation) {
-    // this component will update the location
-    return <LocationViewMemoized />;
+  if (draftHasManualLocation) {
+    // this component will stop updating the location (because the user has typed in a manual location)
+    return <LocationViewStatic />;
   }
 
-  // this component will stop updating the location (because the user has typed in a manual location)
-  return <LocationViewStatic />;
+  return <LocationViewMemoized />;
 };
 
 type LocationTextProps = {
@@ -72,20 +71,22 @@ const LocationText = ({lat, lon, accuracy}: LocationTextProps) => {
 
 type LocationViewMemoizedProps = {
   position?: Position;
-  permission?: PermissionResult;
-  error?: boolean;
 };
 const LocationViewMemoizedInner = React.memo<LocationViewMemoizedProps>(
-  ({position, permission, error}) => {
+  ({position}) => {
     const {updatePosition} = useDraftObservation();
 
-    updatePosition({position, permissionResult: permission, error});
+    updatePosition({position, manualLocation: false});
 
     return (
       <LocationText
-        lat={position?.coords.latitude}
-        lon={position?.coords.longitude}
-        accuracy={position?.coords.accuracy}
+        lat={position && position.coords ? position.coords.latitude : undefined}
+        lon={
+          position && position.coords ? position.coords.longitude : undefined
+        }
+        accuracy={
+          position && position.coords ? position?.coords.accuracy : undefined
+        }
       />
     );
   },
@@ -93,31 +94,28 @@ const LocationViewMemoizedInner = React.memo<LocationViewMemoizedProps>(
 );
 
 const LocationViewMemoized = () => {
-  const {position, permission, error} = useLocationContext();
+  const {position} = useLocationContext();
 
-  return (
-    <LocationViewMemoizedInner
-      position={position}
-      permission={permission}
-      error={error}
-    />
-  );
+  return <LocationViewMemoizedInner position={position} />;
 };
 
 function shouldUpdateComponentBasedOnAccuracy(
   prevProps: LocationViewMemoizedProps,
   nextProps: LocationViewMemoizedProps,
 ) {
-  if (prevProps.error !== nextProps.error) return true;
-
-  if (prevProps.permission !== nextProps.permission) return true;
-
   // if there is no position or accuracy, do not rerender
-  if (!nextProps.position || !nextProps.position.coords.accuracy) return false;
+  if (
+    !nextProps.position ||
+    !nextProps.position.coords ||
+    !nextProps.position.coords.accuracy
+  )
+    return false;
 
   // if there was previously no accuracy and there is now, do re-render
   if (
-    (!prevProps.position || !prevProps.position.coords.accuracy) &&
+    (!prevProps.position ||
+      !prevProps.position.coords ||
+      !prevProps.position.coords.accuracy) &&
     nextProps.position.coords.accuracy
   )
     return true;
@@ -125,6 +123,7 @@ function shouldUpdateComponentBasedOnAccuracy(
   // if accuracy has increased rerender
   if (
     prevProps.position &&
+    prevProps.position.coords &&
     prevProps.position.coords.accuracy &&
     nextProps.position.coords.accuracy < prevProps.position.coords.accuracy
   )
@@ -144,7 +143,13 @@ const LocationViewStatic = () => {
     <LocationText
       lat={value.lat}
       lon={value.lon}
-      accuracy={value.metadata?.accuracy}
+      accuracy={
+        value.metadata.position &&
+        value.metadata.position.coords &&
+        value.metadata.position.coords.accuracy
+          ? value.metadata.position.coords.accuracy
+          : undefined
+      }
     />
   );
 };

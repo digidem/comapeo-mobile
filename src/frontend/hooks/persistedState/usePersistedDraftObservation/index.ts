@@ -1,27 +1,26 @@
 import {StateCreator} from 'zustand';
 import {createPersistedState} from '../createPersistedState';
-import {
-  Photo,
-  Observation,
-  DraftPhoto,
-} from '../../../contexts/PhotoPromiseContext/types';
+import {Photo, DraftPhoto} from '../../../contexts/PhotoPromiseContext/types';
 import {
   deletePhoto,
   filterPhotosFromAttachments,
   replaceDraftPhotos,
 } from './photosMethods';
-import {Position} from '../../../contexts/LocationContext';
 import {PermissionResult} from '../../../contexts/PermissionsContext';
+import {
+  Observation,
+  ClientGeneratedObservation,
+  Position,
+} from '../../../sharedTypes';
+import {Tag} from '../../../../backend/mapeo-core';
 
 export type DraftObservationSlice = {
   photos: Photo[];
-  value: Observation | null;
+  value: Observation | null | ClientGeneratedObservation;
   observationId?: string;
   actions: {
     addPhotoPlaceholder: (draftPhotoId: string) => void;
     replacePhotoPlaceholderWithPhoto: (photo: DraftPhoto) => void;
-    // Performs a shallow merge of the observation value, like setState
-    updatePersistedDraft: (value: Observation) => void;
     // Clear the current draft
     clearPersistedDraft: () => void;
     // Create a new draft observation
@@ -29,13 +28,12 @@ export type DraftObservationSlice = {
     deletePersistedPhoto: (id: string) => void;
     updatePersistedPosition: ({
       position,
-      error,
-      permissionResult,
+      manualLocation,
     }: {
       position?: Position;
-      error?: boolean;
-      permissionResult?: PermissionResult;
+      manualLocation?: boolean;
     }) => void;
+    updatePersistedTags: (tag: Tag) => void;
   };
 };
 
@@ -56,14 +54,12 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
         photos: [],
         value: null,
       }),
-    updatePersistedDraft: newValue =>
-      set({value: {...get().value, ...newValue}}),
-    updatePersistedPosition: ({position, error, permissionResult}) => {
-      if (!position) return;
+    updatePersistedPosition: ({position, manualLocation}) => {
+      if (!position || !position.coords) return;
       const prevValue = get().value;
       if (!prevValue)
         throw new Error(
-          'Cannot update persisted position if draft value has not been initialized',
+          'Cannot set position if obsevation does not already exist (aka if the user has not chosen a category)',
         );
       set({
         value: {
@@ -72,10 +68,8 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
           lat: position.coords.latitude,
           metadata: {
             ...prevValue.metadata,
-            location:
-              !error || !permissionResult
-                ? undefined
-                : {permission: permissionResult, error: error},
+            position: position,
+            manualLocation,
           },
         },
       });
@@ -86,6 +80,27 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
         photos: value ? filterPhotosFromAttachments(value.attachments) : [],
         value,
       }),
+    updatePersistedTags: tag => {
+      const prevValue = get().value;
+      if (prevValue) {
+        set({
+          value: {
+            ...prevValue,
+            tags: {
+              ...prevValue.tags,
+              ...tag,
+            },
+          },
+        });
+        return;
+      }
+      set({
+        value: {
+          tags: tag,
+          metadata: {},
+        },
+      });
+    },
   },
 });
 

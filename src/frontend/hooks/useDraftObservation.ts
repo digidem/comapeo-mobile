@@ -1,12 +1,10 @@
 import {useCallback} from 'react';
 import {usePhotoPromiseContext} from '../contexts/PhotoPromiseContext';
 import {usePersistedDraftObservationActions} from './persistedState/usePersistedDraftObservation';
-import {
-  CapturedPictureMM,
-  Observation,
-} from '../contexts/PhotoPromiseContext/types';
+import {CapturedPictureMM} from '../contexts/PhotoPromiseContext/types';
 // react native does not have a random bytes generator, `non-secure` does not require a random bytes generator.
 import {nanoid} from 'nanoid/non-secure';
+import {Observation} from '../sharedTypes';
 
 // draft observation have 2 parts:
 // 1. All the information, except processed photos are saved to persisted state.
@@ -20,9 +18,9 @@ export const useDraftObservation = () => {
     replacePhotoPlaceholderWithPhoto,
     clearPersistedDraft,
     newPersistedDraft,
-    updatePersistedDraft: updateDraft,
     updatePersistedPosition: updatePosition,
     deletePersistedPhoto,
+    updatePersistedTags: updateTags,
   } = usePersistedDraftObservationActions();
 
   const addPhoto = useCallback(
@@ -87,8 +85,8 @@ export const useDraftObservation = () => {
     addPhoto,
     clearDraft,
     newDraft,
-    updateDraft,
     deletePhoto,
     updatePosition,
+    updateTags,
   };
 };

@@ -1,32 +1,3 @@
-export interface Observation {
-  attachments?: {
-    id: string;
-    type?: string;
-  }[];
-  created_at: string;
-  deviceId?: string;
-  id: string;
-  lat?: number | null;
-  links?: string[];
-  lon?: number | null;
-  metadata?: {
-    location?: {
-      error: boolean;
-      permission: 'granted' | 'denied' | 'never_ask_again';
-    };
-    manualLocation?: boolean;
-    accuracy?: number;
-  };
-  refs?: {
-    id: string;
-  }[];
-  schemaVersion: 3;
-  timestamp?: string;
-  type: 'observation';
-  userId?: string;
-  version: string;
-}
-
 export const THUMBNAIL_SIZE = 400;
 export const THUMBNAIL_QUALITY = 30;
 export const PREVIEW_SIZE = 1200;

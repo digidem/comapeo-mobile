@@ -20,6 +20,7 @@ import {AuthScreen} from '../../screens/AuthScreen';
 import {ObscurePasscode} from '../../screens/ObscurePasscode';
 import {Settings} from '../../screens/Settings';
 import {EmptySettingsScreen} from '../../screens/Settings/EmptySettingsScreen';
+import CategoryChooser from '../../screens/CategoryChooser';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -164,6 +165,11 @@ export const createDefaultScreenGroup = (
       name="Empty"
       component={EmptySettingsScreen}
       options={{headerTitle: 'Empty screen'}}
+    />
+    <RootStack.Screen
+      name="CategoryChooser"
+      component={CategoryChooser}
+      options={{headerTitle: intl(CategoryChooser.navTitle)}}
     />
   </RootStack.Group>
 );

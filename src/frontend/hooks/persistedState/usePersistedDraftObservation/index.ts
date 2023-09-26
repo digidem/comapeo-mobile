@@ -6,18 +6,14 @@ import {
   filterPhotosFromAttachments,
   replaceDraftPhotos,
 } from './photosMethods';
-import {PermissionResult} from '../../../contexts/PermissionsContext';
-import {
-  Observation,
-  ClientGeneratedObservation,
-  Position,
-} from '../../../sharedTypes';
-import {Tag} from '../../../../backend/mapeo-core';
+import {ClientGeneratedObservation, Position} from '../../../sharedTypes';
+import {Observation, Preset} from '@mapeo/schema';
 
 export type DraftObservationSlice = {
   photos: Photo[];
   value: Observation | null | ClientGeneratedObservation;
   observationId?: string;
+  preset?: Preset;
   actions: {
     addPhotoPlaceholder: (draftPhotoId: string) => void;
     replacePhotoPlaceholderWithPhoto: (photo: DraftPhoto) => void;
@@ -33,7 +29,8 @@ export type DraftObservationSlice = {
       position?: Position;
       manualLocation?: boolean;
     }) => void;
-    updatePersistedTags: (tag: Tag) => void;
+    updatePersistedPreset: (preset: Preset) => void;
+    updatePersistedNotesField: (notes: string) => void;
   };
 };
 
@@ -53,13 +50,15 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
       set({
         photos: [],
         value: null,
+        preset: undefined,
+        observationId: undefined,
       }),
     updatePersistedPosition: ({position, manualLocation}) => {
       if (!position || !position.coords) return;
       const prevValue = get().value;
       if (!prevValue)
         throw new Error(
-          'Cannot set position if obsevation does not already exist (aka if the user has not chosen a category)',
+          'Cannot set position if observation does not already exist (aka if the user has not chosen a category)',
         );
       set({
         value: {
@@ -79,8 +78,9 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
         observationId: id,
         photos: value ? filterPhotosFromAttachments(value.attachments) : [],
         value,
+        preset: undefined,
       }),
-    updatePersistedTags: tag => {
+    updatePersistedPreset: preset => {
       const prevValue = get().value;
       if (prevValue) {
         set({
@@ -88,16 +88,37 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
             ...prevValue,
             tags: {
               ...prevValue.tags,
-              ...tag,
+              categoryId: preset.docId,
             },
           },
+          preset: preset,
         });
         return;
       }
       set({
         value: {
-          tags: tag,
+          refs: [],
+          attachments: [],
+          schemaName: 'observation',
+          tags: {categoryId: preset.docId},
           metadata: {},
+        },
+        preset: preset,
+      });
+    },
+    updatePersistedNotesField: notes => {
+      const prevValue = get().value;
+      if (!prevValue)
+        throw new Error(
+          'Cannot set position if observation does not already exist (aka if the user has not chosen a category)',
+        );
+      set({
+        value: {
+          ...prevValue,
+          tags: {
+            ...prevValue.tags,
+            notes,
+          },
         },
       });
     },

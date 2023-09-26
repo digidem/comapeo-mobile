@@ -6,7 +6,7 @@ export const PREVIEW_QUALITY = 30;
 export interface SavedPhoto {
   // id of the photo in the Mapeo database
   id: string;
-  type?: 'image/jpeg';
+  type?: 'photo';
   // If an image is to be deleted
   deleted?: boolean;
 }

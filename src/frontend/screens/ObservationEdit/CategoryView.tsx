@@ -4,7 +4,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import {BLACK, LIGHT_BLUE} from '../../lib/styles';
 import {TextButton} from '../../sharedComponents/TextButton';
 import {CategoryCircleIcon} from '../../sharedComponents/icons/CategoryIcon';
-import {Preset} from '../../sharedTypes';
+import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 
 const m = defineMessages({
   observation: {
@@ -19,22 +19,20 @@ const m = defineMessages({
   },
 });
 
-export const CategoryView = ({
-  preset,
-  onPress,
-}: {
-  preset: Preset;
-  onPress: () => void;
-}) => {
+export const CategoryView = ({onPress}: {onPress: () => void}) => {
   const {formatMessage: t} = useIntl();
+
+  const preset = usePersistedDraftObservation(store => store.preset);
+  const name = preset
+    ? t({id: `presets.${preset.docId}.name`, defaultMessage: preset.name})
+    : t(m.observation);
+
   return (
     <View style={styles.categoryContainer}>
       <View style={styles.categoryIcon}>
         <CategoryCircleIcon />
       </View>
-      <Text style={styles.categoryName}>
-        <FormattedPresetName preset={preset} />
-      </Text>
+      <Text style={styles.categoryName}>{name}</Text>
       <TextButton
         containerStyle={styles.changeButton}
         textStyle={styles.changeButtonText}
@@ -43,17 +41,6 @@ export const CategoryView = ({
       />
     </View>
   );
-};
-
-// Format the translated preset name, with a fallback to "Observation" if no
-// preset is defined
-export const FormattedPresetName = ({preset}: {preset: Preset}) => {
-  const {formatMessage: t} = useIntl();
-  const name = preset
-    ? t({id: `presets.${preset.id}.name`, defaultMessage: preset.name})
-    : t(m.observation);
-
-  return <React.Fragment>{name}</React.Fragment>;
 };
 
 const styles = StyleSheet.create({

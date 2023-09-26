@@ -90,7 +90,7 @@ const LocationViewMemoizedInner = React.memo<LocationViewMemoizedProps>(
       />
     );
   },
-  shouldUpdateComponentBasedOnAccuracy,
+  shouldComponentIgnoreRerender,
 );
 
 const LocationViewMemoized = () => {
@@ -99,7 +99,7 @@ const LocationViewMemoized = () => {
   return <LocationViewMemoizedInner position={position} />;
 };
 
-function shouldUpdateComponentBasedOnAccuracy(
+function shouldComponentIgnoreRerender(
   prevProps: LocationViewMemoizedProps,
   nextProps: LocationViewMemoizedProps,
 ) {
@@ -109,7 +109,7 @@ function shouldUpdateComponentBasedOnAccuracy(
     !nextProps.position.coords ||
     !nextProps.position.coords.accuracy
   )
-    return false;
+    return true;
 
   // if there was previously no accuracy and there is now, do re-render
   if (
@@ -118,7 +118,7 @@ function shouldUpdateComponentBasedOnAccuracy(
       !prevProps.position.coords.accuracy) &&
     nextProps.position.coords.accuracy
   )
-    return true;
+    return false;
 
   // if accuracy has increased rerender
   if (
@@ -127,9 +127,9 @@ function shouldUpdateComponentBasedOnAccuracy(
     prevProps.position.coords.accuracy &&
     nextProps.position.coords.accuracy < prevProps.position.coords.accuracy
   )
-    return true;
+    return false;
 
-  return false;
+  return true;
 }
 
 const LocationViewStatic = () => {

@@ -12,9 +12,13 @@ import {defineMessages, FormattedMessage} from 'react-intl';
 import {useDraftObservation} from '../hooks/useDraftObservation';
 import {CategoryCircleIcon} from '../sharedComponents/icons/CategoryIcon';
 import {WHITE} from '../lib/styles';
-import {NativeNavigationComponent, Preset} from '../sharedTypes';
+import {NativeNavigationComponent} from '../sharedTypes';
 import {api} from '../api';
 import {Loading} from '../sharedComponents/Loading';
+import {useQuery} from '@tanstack/react-query';
+import {CustomHeaderLeftClose} from '../sharedComponents/CustomHeaderLeftClose';
+import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
+import {Preset} from '@mapeo/schema';
 
 const m = defineMessages({
   categoryTitle: {
@@ -46,12 +50,12 @@ const Item = React.memo(
       onPress={() => onSelect(item)}
       activeOpacity={1}
       underlayColor="#000033"
-      testID={`${item.id}CategoryButton`}>
+      testID={`${item.docId}CategoryButton`}>
       <View style={styles.cellContainer}>
         <CategoryCircleIcon size="medium" />
         <Text numberOfLines={3} style={styles.categoryName}>
           <DynFormattedMessage
-            id={`presets.${item.id}.name`}
+            id={`presets.${item.docId}.name`}
             defaultMessage={item.name}
           />
         </Text>
@@ -63,26 +67,44 @@ const Item = React.memo(
 const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
   navigation,
 }) => {
-  const [presets, setPresets] = React.useState<Preset[] | null>(null);
-  // const [{ value: draftValue }, { updateDraft }] = useDraftObservation();
-  const {updateTags} = useDraftObservation();
+  const {updatePreset} = useDraftObservation();
+  const state = navigation.getState();
+  const currentIndex = state.index;
+  const routes = state.routes;
+  const prevRouteNameInStack = !routes[currentIndex - 1]
+    ? undefined
+    : routes[currentIndex - 1].name;
 
-  React.useEffect(() => {
-    getAllPresets();
+  // This query is only used here so no need to make it a custom hook
+  const {data: presets} = useQuery({
+    queryFn: async () => {
+      const presets = await api.preset.getMany();
+      return Array.from(presets).map(pres => pres.value);
+    },
+    queryKey: ['presets'],
+  });
 
-    async function getAllPresets() {
-      const newPresets = await api.preset.getMany();
-      // @ts-ignore
-      setPresets(newPresets);
-    }
-  }, []);
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: props =>
+        prevRouteNameInStack === 'Home' ? (
+          <CustomHeaderLeftClose headerBackButtonProps={props} />
+        ) : (
+          <CustomHeaderLeft headerBackButtonProps={props} />
+        ),
+    });
+  }, [prevRouteNameInStack, CustomHeaderLeft, CustomHeaderLeftClose]);
+
+  console.log({presets});
 
   const presetsList = !presets
     ? null
     : Array.from(presets)
         // Sort presets by sort property and then by name, then filter only point presets
+        // @ts-ignore
         .sort(presetCompare)
         // Only show presets where the geometry property includes "point"
+        // @ts-ignore
         .filter(p => p.geometry.includes('point'));
 
   const handleSelectPreset = (selectedPreset: Preset) => {
@@ -109,9 +131,11 @@ const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
     //   {}
     // );
 
-    updateTags({categoryId: selectedPreset.id});
+    updatePreset(selectedPreset);
 
-    navigation.navigate('ObservationEdit');
+    navigation.navigate('ObservationEdit', {
+      isNew: prevRouteNameInStack === 'Home',
+    });
   };
 
   const rowsPerWindow = Math.ceil(
@@ -135,6 +159,7 @@ const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
           renderItem={({item}) => (
             <Item
               key={keyExtractor(item)}
+              // @ts-ignore
               item={item}
               onSelect={handleSelectPreset}
             />

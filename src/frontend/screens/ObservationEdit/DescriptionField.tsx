@@ -2,6 +2,8 @@ import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, TextInput} from 'react-native';
 import Field from './Field';
 import React from 'react';
+import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
+import {useDraftObservation} from '../../hooks/useDraftObservation';
 
 const m = defineMessages({
   descriptionPlaceholder: {
@@ -20,13 +22,17 @@ const notesField = {
 
 export const DescriptionField = () => {
   const {formatMessage: t} = useIntl();
-  const [value, setValue] = React.useState('');
+  const value = usePersistedDraftObservation(store => store.value?.tags.notes);
+  const total = usePersistedDraftObservation(store => store.value);
+  const {updateNotes} = useDraftObservation();
+
+  console.log(total);
   return (
     <TextInput
       style={styles.textInput}
-      value={value}
+      value={!value || typeof value !== 'string' ? '' : value}
       onChangeText={newVal => {
-        setValue(newVal);
+        updateNotes(newVal);
       }}
       placeholder={t(m.descriptionPlaceholder)}
       placeholderTextColor="silver"

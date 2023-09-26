@@ -6,6 +6,7 @@ import {
   BottomSheetModal,
   useBottomSheetModal,
 } from '../../sharedComponents/BottomSheetModal';
+import {useDraftObservation} from '../../hooks/useDraftObservation';
 
 export const DummyScreen = (
   prop: NativeHomeTabsNavigationProps<'Map' | 'Camera'>,
@@ -13,14 +14,16 @@ export const DummyScreen = (
   const {sheetRef, closeSheet, openSheet, isOpen} = useBottomSheetModal({
     openOnMount: false,
   });
+  const {newDraft} = useDraftObservation();
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Test screen</Text>
       <Button
         onPress={() => {
-          prop.navigation.navigate('ObservationEdit');
+          newDraft();
+          prop.navigation.navigate('CategoryChooser');
         }}
-        title="Observation Edit"
+        title="New Observation"
       />
       <View style={{marginTop: 8}} />
       <Button

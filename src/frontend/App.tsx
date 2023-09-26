@@ -13,7 +13,7 @@ import {AppNavigator} from './Navigation/AppNavigator';
 import {AppStackList} from './Navigation/AppStack';
 import {IntlProvider} from './contexts/IntlContext';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {Loading} from './sharedComponents/Loading';
+import {Loading} from './sharedComponents/ApiLoading';
 import {PermissionsProvider} from './contexts/PermissionsContext';
 import {PhotoPromiseProvider} from './contexts/PhotoPromiseContext';
 import {SecurityProvider} from './contexts/SecurityContext';
@@ -35,7 +35,9 @@ const App = () => {
                 <LocationProvider>
                   <SecurityProvider>
                     <PhotoPromiseProvider>
-                      <AppNavigator />
+                      <Loading>
+                        <AppNavigator />
+                      </Loading>
                     </PhotoPromiseProvider>
                   </SecurityProvider>
                 </LocationProvider>

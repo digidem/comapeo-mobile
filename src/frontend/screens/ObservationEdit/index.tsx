@@ -10,6 +10,7 @@ import {DescriptionField} from './DescriptionField';
 import {BottomSheet} from './BottomSheet';
 import {ThumbnailScrollView} from '../../sharedComponents/ThumbnailScrollView';
 import {CustomHeaderLeftClose} from '../../sharedComponents/CustomHeaderLeftClose';
+import {CategoryView} from './CategoryView';
 
 const m = defineMessages({
   editTitle: {
@@ -101,7 +102,7 @@ export const ObservationEdit: NativeNavigationScreen<'ObservationEdit'> = ({
         contentContainerStyle={styles.scrollViewContent}>
         {isNew && <LocationView />}
 
-        {/* <CategoryView preset={preset} onPress={handleCategoryPress} /> */}
+        <CategoryView onPress={handleCategoryPress} />
         <DescriptionField />
         <ThumbnailScrollView onPressPhoto={handlePhotoPress} photos={photos} />
       </ScrollView>

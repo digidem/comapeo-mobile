@@ -39,13 +39,6 @@ export const Thumbnail = ({photo, style, size, onPress}: ThumbnailProps) => {
     setError(true);
   }
 
-  // const uri =
-  //   typeof photo.id === "string"
-  //     ? api.getMediaUrl(photo.id, "thumbnail")
-  //     : photo.thumbnailUri != null
-  //     ? photo.thumbnailUri
-  //     : undefined;
-
   return (
     <TouchableOpacity
       style={[styles.thumbnailContainer, {width: size, height: size}, style]}

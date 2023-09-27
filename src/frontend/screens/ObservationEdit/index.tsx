@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
-import SaveButton from './SaveButton';
+import {SaveButton} from './SaveButton';
 import {NativeNavigationScreen} from '../../sharedTypes';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {View, ScrollView, StyleSheet} from 'react-native';

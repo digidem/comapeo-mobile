@@ -35,18 +35,14 @@ const captureOptions: CameraPictureOptions = {
 };
 
 type Props = {
-  // Called when the user takes a picture, with a promise that resolves to an
-  // object with the property `uri` for the captured (and rotated) photo.
+  // Called when the user takes a picture.
   onAddPress: (capture: Promise<CapturedPictureMM>) => void;
 };
-
-// type Rotation = DeviceMotionMeasurement["rotation"]
 
 export const CameraView = ({onAddPress}: Props) => {
   const [capturing, setCapturing] = React.useState(false);
   const [cameraReady, setCameraReady] = React.useState(false);
   const {permissions, requestPermissions} = usePermissionContext();
-  const photoId = React.useId();
   const ref = React.useRef<Camera>(null);
   const accelerometerMeasurement = React.useRef<AccelerometerMeasurement>();
 
@@ -93,16 +89,15 @@ export const CameraView = ({onAddPress}: Props) => {
     ref.current
       .takePictureAsync(captureOptions)
       .then(pic => {
-        onAddPress(rotatePhoto(pic, photoId, accelerometerMeasurement.current));
+        onAddPress(rotatePhoto(pic, accelerometerMeasurement.current));
       })
       .catch(err => {
         console.log(err);
         setCapturing(false);
+      })
+      .finally(() => {
+        setCapturing(false);
       });
-
-    return () => {
-      setCapturing(false);
-    };
   }, [capturing, setCapturing, onAddPress]);
 
   const disableButton = capturing || !cameraReady;
@@ -141,7 +136,6 @@ export const CameraView = ({onAddPress}: Props) => {
 
 function rotatePhoto(
   {uri, width, height}: CameraCapturedPicture,
-  id: string,
   acc?: AccelerometerMeasurement,
 ) {
   const resizePromise = ImageResizer.createResizedImage(

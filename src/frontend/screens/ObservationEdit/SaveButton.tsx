@@ -9,7 +9,6 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {useCreateObservation} from '../../hooks/server/useCreateObservation';
-import {Observation} from '@mapeo/schema';
 
 const m = defineMessages({
   noGpsTitle: {
@@ -55,7 +54,7 @@ const m = defineMessages({
 const MINIMUM_ACCURACY = 10;
 const log = debug('SaveButton');
 
-const SaveButton = ({observationId}: {observationId?: string}) => {
+export const SaveButton = ({observationId}: {observationId?: string}) => {
   const value = usePersistedDraftObservation(store => store.value);
   const {clearDraft} = useDraftObservation();
   const {formatMessage: t} = useIntl();
@@ -116,36 +115,12 @@ const SaveButton = ({observationId}: {observationId?: string}) => {
     Alert.alert(t(m.weakGpsTitle), t(m.weakGpsDesc), confirmationOptions);
   };
 
-  // useEffect(() => {
-  //   if (savingStatus !== 'success') return;
-  //   if (typeof observationId === 'string') {
-  //     navigation.pop();
-  //   } else {
-  //     navigation.navigate('Home', {screen: 'Map'});
-  //   }
-  // }, [savingStatus, navigation, observationId]);
-
   return (
     <IconButton onPress={handleSavePress} testID="saveButton">
       <SaveIcon inprogress={false} />
     </IconButton>
   );
 };
-
-export default SaveButton;
-
-// function isGpsAccurate(value: ObservationValue): boolean {
-//   // TODO: metadata changed in new mapeo-schema
-//   const accuracy =
-//     value &&
-//     value.metadata &&
-//     value.metadata.location &&
-//     value.metadata.location.position &&
-//     value.metadata.location.position.coords.accuracy;
-
-//   // If we don't have accuracy, allow save anyway
-//   return typeof accuracy === 'number' ? accuracy < MINIMUM_ACCURACY : true;
-// }
 
 function isGpsAccurate(accuracy?: number): boolean {
   return typeof accuracy === 'number' ? accuracy < MINIMUM_ACCURACY : true;

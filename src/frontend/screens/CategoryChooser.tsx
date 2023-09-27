@@ -13,12 +13,11 @@ import {useDraftObservation} from '../hooks/useDraftObservation';
 import {CategoryCircleIcon} from '../sharedComponents/icons/CategoryIcon';
 import {WHITE} from '../lib/styles';
 import {NativeNavigationComponent} from '../sharedTypes';
-import {api} from '../api';
 import {Loading} from '../sharedComponents/Loading';
-import {useQuery} from '@tanstack/react-query';
 import {CustomHeaderLeftClose} from '../sharedComponents/CustomHeaderLeftClose';
 import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 import {Preset} from '@mapeo/schema';
+import {usePresets} from '../hooks/server/usePresets';
 
 const m = defineMessages({
   categoryTitle: {
@@ -75,13 +74,7 @@ const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
     ? undefined
     : routes[currentIndex - 1].name;
 
-  // This query is only used here so no need to make it a custom hook
-  const {data: presets} = useQuery({
-    queryFn: async () => {
-      return await api.preset.getMany();
-    },
-    queryKey: ['presets'],
-  });
+  const {data: presets, isLoading} = usePresets();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -97,12 +90,10 @@ const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
   const presetsList = !presets
     ? null
     : Array.from(presets)
-        // Sort presets by sort property and then by name, then filter only point presets
-        // @ts-ignore
-        .sort(presetCompare)
         // Only show presets where the geometry property includes "point"
-        // @ts-ignore
-        .filter(p => p.geometry.includes('point'));
+        .filter(p => p.geometry.includes('point'))
+        // Sort presets by sort property and then by name, then filter only point presets
+        .sort(presetCompare);
 
   const handleSelectPreset = (selectedPreset: Preset) => {
     // Tags from current preset
@@ -140,7 +131,7 @@ const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
 
   return (
     <View style={styles.container}>
-      {!presetsList ? (
+      {!isLoading ? (
         <Loading />
       ) : (
         <FlatList

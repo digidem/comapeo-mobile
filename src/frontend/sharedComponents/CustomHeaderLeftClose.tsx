@@ -8,7 +8,7 @@ import {BLACK} from '../lib/styles';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import {useDraftObservation} from '../hooks/useDraftObservation';
 import {defineMessages, useIntl} from 'react-intl';
-import {useObservation} from '../hooks/useObservation';
+import {useObservation} from '../hooks/server/useObservation';
 
 const m = defineMessages({
   discardTitle: {

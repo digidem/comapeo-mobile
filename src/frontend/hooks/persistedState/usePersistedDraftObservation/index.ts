@@ -98,8 +98,6 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
       set({
         value: {
           refs: [],
-          attachments: [],
-          schemaName: 'observation',
           tags: {categoryId: preset.docId},
           metadata: {},
         },
@@ -110,7 +108,7 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
       const prevValue = get().value;
       if (!prevValue)
         throw new Error(
-          'Cannot set position if observation does not already exist (aka if the user has not chosen a category)',
+          'Cannot set notes if observation does not already exist (aka if the user has not chosen a category)',
         );
       set({
         value: {
@@ -130,5 +128,5 @@ export const usePersistedDraftObservation = createPersistedState(
   '@MapeoDraft',
 );
 
-export const usePersistedDraftObservationActions = () =>
+export const _usePersistedDraftObservationActions = () =>
   usePersistedDraftObservation(state => state.actions);

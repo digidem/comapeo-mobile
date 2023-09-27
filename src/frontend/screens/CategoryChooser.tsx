@@ -41,7 +41,7 @@ const getItemLayout = (_data: unknown, index: number) => ({
   index,
 });
 
-const keyExtractor = (item: {id: string}) => item.id;
+const keyExtractor = (item: {docId: string}) => item.docId;
 
 const Item = React.memo(
   ({item, onSelect}: {item: Preset; onSelect: (preset: Preset) => void}) => (
@@ -78,8 +78,7 @@ const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
   // This query is only used here so no need to make it a custom hook
   const {data: presets} = useQuery({
     queryFn: async () => {
-      const presets = await api.preset.getMany();
-      return Array.from(presets).map(pres => pres.value);
+      return await api.preset.getMany();
     },
     queryKey: ['presets'],
   });
@@ -94,8 +93,6 @@ const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
         ),
     });
   }, [prevRouteNameInStack, CustomHeaderLeft, CustomHeaderLeftClose]);
-
-  console.log({presets});
 
   const presetsList = !presets
     ? null
@@ -133,9 +130,7 @@ const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
 
     updatePreset(selectedPreset);
 
-    navigation.navigate('ObservationEdit', {
-      isNew: prevRouteNameInStack === 'Home',
-    });
+    navigation.navigate('ObservationEdit');
   };
 
   const rowsPerWindow = Math.ceil(

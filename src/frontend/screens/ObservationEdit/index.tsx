@@ -34,9 +34,11 @@ export const ObservationEdit: NativeNavigationScreen<'ObservationEdit'> = ({
   navigation,
   route,
 }) => {
-  const observationId = route.params?.observationId;
-  const isNew = route.params?.isNew;
   const photos = usePersistedDraftObservation(store => store.photos);
+  const observationId = usePersistedDraftObservation(
+    store => store.observationId,
+  );
+  const isNew = !observationId;
   const {formatMessage: t} = useIntl();
 
   React.useLayoutEffect(() => {

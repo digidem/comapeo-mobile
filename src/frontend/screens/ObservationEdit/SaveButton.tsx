@@ -8,6 +8,8 @@ import {SaveIcon} from '../../sharedComponents/icons/SaveIcon';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
+import {useCreateObservation} from '../../hooks/server/useCreateObservation';
+import {Observation} from '@mapeo/schema';
 
 const m = defineMessages({
   noGpsTitle: {
@@ -58,20 +60,28 @@ const SaveButton = ({observationId}: {observationId?: string}) => {
   const {clearDraft} = useDraftObservation();
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
+  const createObservationCall = useCreateObservation();
 
-  function saveDraft() {
-    clearDraft();
+  function createObservation() {
+    if (!value) throw new Error('no observation saved in persisted state ');
+    createObservationCall(value);
+    navigation.navigate('Home', {screen: 'Map'});
   }
 
   const confirmationOptions: AlertButton[] = [
     {
       text: t(m.saveAnyway),
-      onPress: () => {}, //save draft here
+      onPress: () => {
+        createObservation();
+      },
       style: 'default',
     },
     {
       text: t(m.manualEntry),
-      onPress: () => navigation.navigate('ManualGpsScreen'),
+      onPress: () => {
+        clearDraft();
+        navigation.navigate('ManualGpsScreen');
+      },
       style: 'cancel',
     },
     {
@@ -81,25 +91,29 @@ const SaveButton = ({observationId}: {observationId?: string}) => {
   ];
 
   const handleSavePress = () => {
-    clearDraft();
     log('Draft value > ', value);
     if (!value) return;
     const isNew = !observationId;
-    if (!isNew) return saveDraft();
+    if (!isNew) return; // update observation here
 
-    const hasLocation = value.lat !== undefined && value.lon !== undefined;
-    const locationSetManually = value.metadata && value.metadata.manualLocation;
-    if (hasLocation && (locationSetManually || isGpsAccurate())) {
+    const hasLocation = value.lat && value.lon;
+    const locationSetManually = value.metadata.manualLocation;
+    if (
+      locationSetManually ||
+      (hasLocation && isGpsAccurate(value.metadata.position?.coords?.accuracy))
+    ) {
       // Observation has a location, which is either from an accurate GPS
       // reading, or is manually entered
-      saveDraft();
-    } else if (!hasLocation) {
+      createObservation();
+      return;
+    }
+    if (!hasLocation) {
       // Observation doesn't have a location
       Alert.alert(t(m.noGpsTitle), t(m.noGpsDesc), confirmationOptions);
-    } else {
-      // Inaccurate GPS reading
-      Alert.alert(t(m.weakGpsTitle), t(m.weakGpsDesc), confirmationOptions);
+      return;
     }
+    // Inaccurate GPS reading
+    Alert.alert(t(m.weakGpsTitle), t(m.weakGpsDesc), confirmationOptions);
   };
 
   // useEffect(() => {
@@ -133,6 +147,6 @@ export default SaveButton;
 //   return typeof accuracy === 'number' ? accuracy < MINIMUM_ACCURACY : true;
 // }
 
-function isGpsAccurate(): boolean {
-  return true;
+function isGpsAccurate(accuracy?: number): boolean {
+  return typeof accuracy === 'number' ? accuracy < MINIMUM_ACCURACY : true;
 }

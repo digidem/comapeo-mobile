@@ -27,10 +27,6 @@ const state = {
 // 2. Initialize Mapeo API server
 const mapeoClient = new MapeoClient();
 
-mockObservations.forEach(doc => {
-  mapeoClient.observation.create(doc);
-});
-
 MockPreset.forEach(doc => {
   mapeoClient.preset.create(doc);
 });

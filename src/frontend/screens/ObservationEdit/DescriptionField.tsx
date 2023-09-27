@@ -22,15 +22,13 @@ const notesField = {
 
 export const DescriptionField = () => {
   const {formatMessage: t} = useIntl();
-  const value = usePersistedDraftObservation(store => store.value?.tags.notes);
-  const total = usePersistedDraftObservation(store => store.value);
+  const notes = usePersistedDraftObservation(store => store.value?.tags.notes);
   const {updateNotes} = useDraftObservation();
 
-  console.log(total);
   return (
     <TextInput
       style={styles.textInput}
-      value={!value || typeof value !== 'string' ? '' : value}
+      value={!notes || typeof notes !== 'string' ? '' : notes}
       onChangeText={newVal => {
         updateNotes(newVal);
       }}

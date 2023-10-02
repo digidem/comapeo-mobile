@@ -7,13 +7,13 @@ interface UserLocationProps {
 }
 
 export const UserLocation = ({visible, minDisplacement}: UserLocationProps) => {
-  const [{directionalArrow}] = useExperiments();
+  // const [{directionalArrow}] = useExperiments();
 
   return (
     <MapboxGL.UserLocation
       visible={visible}
-      minDisplacement={directionalArrow ? 1 : minDisplacement}
-      showsUserHeadingIndicator={directionalArrow}
+      minDisplacement={minDisplacement}
+      // showsUserHeadingIndicator={directionalArrow}
     />
   );
 };

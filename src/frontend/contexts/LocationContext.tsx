@@ -10,7 +10,7 @@ import {
   usePermissionContext,
 } from './PermissionsContext';
 import {storage} from '../hooks/persistedState/createPersistedState';
-import {Position, Observation, Provider} from '../sharedTypes';
+import {Position, Provider} from '../sharedTypes';
 
 const log = debug('mapeo:Location');
 const STORE_KEY = '@MapeoPosition@1';

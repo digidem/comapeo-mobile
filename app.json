@@ -2,6 +2,7 @@
   "name": "MapeoNext",
   "displayName": "MapeoNext",
   "plugins": [
-    "expo-localization"
+    "expo-localization",
+    "@config-plugins/detox"
   ]
 }

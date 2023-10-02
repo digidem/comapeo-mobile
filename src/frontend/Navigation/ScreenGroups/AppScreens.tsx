@@ -4,7 +4,7 @@ import * as React from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import {DummyScreen} from './DummyScreen';
-import HomeHeader from '../../components/HomeHeader';
+import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {RootStack} from '../AppStack';
 import {MessageDescriptor} from 'react-intl';
 import {PhotoView} from '../../screens/PhotoView';

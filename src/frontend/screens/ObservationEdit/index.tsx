@@ -2,7 +2,7 @@ import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
 import {SaveButton} from './SaveButton';
-import {NativeNavigationScreen} from '../../sharedTypes';
+import {NativeNavigationComponent} from '../../sharedTypes';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {View, ScrollView, StyleSheet} from 'react-native';
 import {LocationView} from './LocationView';
@@ -30,7 +30,7 @@ const m = defineMessages({
   },
 });
 
-export const ObservationEdit: NativeNavigationScreen<'ObservationEdit'> = ({
+export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   navigation,
   route,
 }) => {

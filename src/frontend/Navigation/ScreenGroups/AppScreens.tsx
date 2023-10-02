@@ -3,7 +3,6 @@ import {NavigatorScreenParams} from '@react-navigation/native';
 import * as React from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import {DummyScreen} from './DummyScreen';
 import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {RootStack} from '../AppStack';
 import {MessageDescriptor} from 'react-intl';
@@ -21,7 +20,7 @@ import {AuthScreen} from '../../screens/AuthScreen';
 import {ObscurePasscode} from '../../screens/ObscurePasscode';
 import {Settings} from '../../screens/Settings';
 import {EmptySettingsScreen} from '../../screens/Settings/EmptySettingsScreen';
-import CategoryChooser from '../../screens/CategoryChooser';
+import {CategoryChooser} from '../../screens/CategoryChooser';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -96,7 +95,7 @@ const HomeTabs = () => (
     initialRouteName="Map"
     backBehavior="initialRoute">
     <Tab.Screen name="Map" component={MapScreen} />
-    <Tab.Screen name="Camera" component={DummyScreen} />
+    <Tab.Screen name="Camera" component={CameraScreen} />
   </Tab.Navigator>
 );
 

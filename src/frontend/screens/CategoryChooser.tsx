@@ -63,7 +63,7 @@ const Item = React.memo(
   ),
 );
 
-const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
+export const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
   navigation,
 }) => {
   const {updatePreset} = useDraftObservation();
@@ -93,7 +93,9 @@ const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
         // Only show presets where the geometry property includes "point"
         .filter(p => p.geometry.includes('point'))
         // Sort presets by sort property and then by name, then filter only point presets
-        .sort(presetCompare);
+        .sort((a, b) => {
+          return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+        });
 
   const handleSelectPreset = (selectedPreset: Preset) => {
     // Tags from current preset
@@ -131,7 +133,7 @@ const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
 
   return (
     <View style={styles.container}>
-      {!isLoading ? (
+      {isLoading ? (
         <Loading />
       ) : (
         <FlatList
@@ -159,17 +161,6 @@ const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
 };
 
 CategoryChooser.navTitle = m.categoryTitle;
-
-export default CategoryChooser;
-
-// Sort presets by sort property and then by name, then filter only point presets
-function presetCompare(a: Preset, b: Preset) {
-  return compareStrings(a.name, b.name);
-}
-
-function compareStrings(a = '', b = '') {
-  return a.toLowerCase().localeCompare(b.toLowerCase());
-}
 
 const styles = StyleSheet.create({
   container: {

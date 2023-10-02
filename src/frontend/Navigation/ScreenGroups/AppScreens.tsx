@@ -4,11 +4,24 @@ import * as React from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import {DummyScreen} from './DummyScreen';
-import HomeHeader from '../../components/HomeHeader';
+import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {RootStack} from '../AppStack';
-import {ScreenWithHeader} from './ScreenWithHeader';
 import {MessageDescriptor} from 'react-intl';
 import {MapScreen} from '../../screens/MapScreen';
+import {PhotoView} from '../../screens/PhotoView';
+import {CameraScreen} from '../../screens/CameraScreen';
+import {ObservationEdit} from '../../screens/ObservationEdit';
+import {AddPhotoScreen} from '../../screens/AddPhoto';
+import {AppPasscode} from '../../screens/AppPasscode';
+import {EnterPassToTurnOff} from '../../screens/AppPasscode/EnterPassToTurnOff';
+import {SetPasscode} from '../../screens/AppPasscode/SetPasscode';
+import {TurnOffPasscode} from '../../screens/AppPasscode/TurnOffPasscode';
+import {Security} from '../../screens/Security';
+import {AuthScreen} from '../../screens/AuthScreen';
+import {ObscurePasscode} from '../../screens/ObscurePasscode';
+import {Settings} from '../../screens/Settings';
+import {EmptySettingsScreen} from '../../screens/Settings/EmptySettingsScreen';
+import CategoryChooser from '../../screens/CategoryChooser';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -20,6 +33,7 @@ export type AppList = {
   GpsModal: undefined;
   SyncModal: undefined;
   Settings: undefined;
+  Empty: undefined;
   ProjectConfig: undefined;
   AboutMapeo: undefined;
   LanguageSettings: undefined;
@@ -30,6 +44,7 @@ export type AppList = {
     observationId?: string;
     editing: boolean;
   };
+  PhotoView: undefined;
   CategoryChooser: undefined;
   AddPhoto: undefined;
   ObservationList: undefined;
@@ -97,9 +112,65 @@ export const createDefaultScreenGroup = (
       component={HomeTabs}
     />
     <RootStack.Screen
-      name="Settings"
-      component={ScreenWithHeader}
-      options={{headerTitle: intl(ScreenWithHeader.navTitle)}}
+      name="AuthScreen"
+      component={AuthScreen}
+      options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="PhotoView"
+      component={PhotoView}
+      options={{headerTitle: intl(PhotoView.navTitle)}}
+    />
+    <RootStack.Screen
+      name="ObservationEdit"
+      component={ObservationEdit}
+      options={{headerTitle: intl(ObservationEdit.navTitle)}}
+    />
+    <RootStack.Screen
+      name="AddPhoto"
+      component={AddPhotoScreen}
+      options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="Security"
+      component={Security}
+      options={{headerTitle: intl(Security.navTitle)}}
+    />
+    <RootStack.Screen
+      name="AppPasscode"
+      component={AppPasscode}
+      options={{headerTitle: intl(AppPasscode.navTitle)}}
+    />
+    <RootStack.Screen
+      name="DisablePasscode"
+      component={TurnOffPasscode}
+      options={{headerTitle: intl(TurnOffPasscode.navTitle)}}
+    />
+    <RootStack.Screen
+      name="SetPasscode"
+      component={SetPasscode}
+      options={{headerTitle: intl(SetPasscode.navTitle)}}
+    />
+    <RootStack.Screen
+      name="EnterPassToTurnOff"
+      component={EnterPassToTurnOff}
+      options={{headerTitle: intl(EnterPassToTurnOff.navTitle)}}
+    />
+    <RootStack.Screen
+      name="ObscurePasscode"
+      component={ObscurePasscode}
+      options={{headerTitle: intl(ObscurePasscode.navTitle)}}
+    />
+    <RootStack.Screen name="Settings" component={Settings} />
+    <RootStack.Screen
+      name="Empty"
+      component={EmptySettingsScreen}
+      options={{headerTitle: 'Empty screen'}}
+    />
+    <RootStack.Screen
+      name="CategoryChooser"
+      component={CategoryChooser}
+      options={{headerTitle: intl(CategoryChooser.navTitle)}}
     />
   </RootStack.Group>
 );

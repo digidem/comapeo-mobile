@@ -1,23 +1,26 @@
 // @ts-check
 import {TypedEmitter} from 'tiny-typed-emitter';
 
-import {DataTypeDriver} from './drivers.js';
-
-/**
- * @typedef {Object} Observation
- */
+import {ObservationDriver, PresetDriver} from './drivers.js';
 
 export class MapeoClient extends TypedEmitter {
-  /** @type {DataTypeDriver<Observation>} */
+  /** @type {ObservationDriver} */
   #observation;
+  /** @type {PresetDriver} */
+  #preset;
 
   constructor() {
     super();
 
-    this.#observation = new DataTypeDriver('observation');
+    this.#observation = new ObservationDriver();
+    this.#preset = new PresetDriver();
   }
 
   get observation() {
     return this.#observation;
+  }
+
+  get preset() {
+    return this.#preset;
   }
 }

@@ -2,13 +2,14 @@ import * as React from 'react';
 import {SafeAreaView, Text} from 'react-native';
 import nodejs from 'nodejs-mobile-react-native';
 import createClient from 'rpc-reflector/client';
-import {MessagePortLike} from '../lib/MessagePortLike';
-import {Status, StatusMessage} from '../../backend/types/api';
+import {MessagePortLike} from '../../lib/MessagePortLike';
+import {Status, StatusMessage} from '../../../backend/types/api';
 
-import {setApi} from '../api';
+import {setApi} from '../../api';
 
 export const Loading = ({children}: React.PropsWithChildren<{}>) => {
   const [status, setStatus] = React.useState<Status>('idle');
+  console.log(status);
 
   React.useEffect(() => {
     // This is a subscription object but nodejs mobile types are broken
@@ -56,14 +57,5 @@ export const Loading = ({children}: React.PropsWithChildren<{}>) => {
     );
   }
 
-  if (status === 'listening') {
-    return <>{children}</>;
-  }
-
-  return (
-    <SafeAreaView
-      style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Loading...</Text>
-    </SafeAreaView>
-  );
+  return <>{children}</>;
 };

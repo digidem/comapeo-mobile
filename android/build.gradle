@@ -73,6 +73,11 @@ allprojects {
                 password = getenv("MAPBOX_DOWNLOAD_TOKEN") ?: ""
             }
         }
-        // ...even more repos?
+        // * Add a new maven block after other repositories / blocks *
+        maven {
+            // expo-camera bundles a custom com.google.android:cameraview
+            url "$rootDir/../node_modules/expo-camera/android/maven"
+        }
+        
     }
 }

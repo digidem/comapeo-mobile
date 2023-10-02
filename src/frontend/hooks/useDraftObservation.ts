@@ -16,12 +16,12 @@ export const useDraftObservation = () => {
   const {
     addPhotoPlaceholder,
     replacePhotoPlaceholderWithPhoto,
-    clearPersistedDraft,
-    newPersistedDraft,
-    updatePersistedPosition: updatePosition,
-    deletePersistedPhoto,
-    updatePersistedPreset: updatePreset,
-    updatePersistedNotesField: updateNotes,
+    clearDraft: clearPersistedDraft,
+    newDraft: newPersistedDraft,
+    updateObservationPosition,
+    deletePhoto: deletePersistedPhoto,
+    updatePreset,
+    updateObservationNotes,
   } = _usePersistedDraftObservationActions();
 
   const addPhoto = useCallback(
@@ -87,8 +87,8 @@ export const useDraftObservation = () => {
     clearDraft,
     newDraft,
     deletePhoto,
-    updatePosition,
+    updateObservationPosition,
     updatePreset,
-    updateNotes,
+    updateObservationNotes,
   };
 };

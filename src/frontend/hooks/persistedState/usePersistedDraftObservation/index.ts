@@ -18,19 +18,19 @@ export type DraftObservationSlice = {
     addPhotoPlaceholder: (draftPhotoId: string) => void;
     replacePhotoPlaceholderWithPhoto: (photo: DraftPhoto) => void;
     // Clear the current draft
-    clearPersistedDraft: () => void;
+    clearDraft: () => void;
     // Create a new draft observation
-    newPersistedDraft: (id?: string, value?: Observation | null) => void;
-    deletePersistedPhoto: (id: string) => void;
-    updatePersistedPosition: ({
+    newDraft: (id?: string, value?: Observation | null) => void;
+    deletePhoto: (id: string) => void;
+    updateObservationPosition: ({
       position,
       manualLocation,
     }: {
       position?: Position;
       manualLocation?: boolean;
     }) => void;
-    updatePersistedPreset: (preset: Preset) => void;
-    updatePersistedNotesField: (notes: string) => void;
+    updatePreset: (preset: Preset) => void;
+    updateObservationNotes: (notes: string) => void;
   };
 };
 
@@ -41,19 +41,19 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
   photos: [],
   value: null,
   actions: {
-    deletePersistedPhoto: id => deletePhoto(set, get, id),
+    deletePhoto: id => deletePhoto(set, get, id),
     addPhotoPlaceholder: draftPhotoId =>
       set({photos: [...get().photos, {draftPhotoId, capturing: true}]}),
     replacePhotoPlaceholderWithPhoto: draftPhoto =>
       replaceDraftPhotos(set, get, draftPhoto),
-    clearPersistedDraft: () =>
+    clearDraft: () =>
       set({
         photos: [],
         value: null,
         preset: undefined,
         observationId: undefined,
       }),
-    updatePersistedPosition: ({position, manualLocation}) => {
+    updateObservationPosition: ({position, manualLocation}) => {
       if (!position || !position.coords) return;
       const prevValue = get().value;
       if (!prevValue)
@@ -73,14 +73,14 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
         },
       });
     },
-    newPersistedDraft: (id, value) =>
+    newDraft: (id, value) =>
       set({
         observationId: id,
         photos: value ? filterPhotosFromAttachments(value.attachments) : [],
         value,
         preset: undefined,
       }),
-    updatePersistedPreset: preset => {
+    updatePreset: preset => {
       const prevValue = get().value;
       if (prevValue) {
         set({
@@ -104,7 +104,7 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
         preset: preset,
       });
     },
-    updatePersistedNotesField: notes => {
+    updateObservationNotes: notes => {
       const prevValue = get().value;
       if (!prevValue)
         throw new Error(

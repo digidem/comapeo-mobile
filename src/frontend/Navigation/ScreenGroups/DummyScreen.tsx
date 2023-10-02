@@ -7,7 +7,6 @@ import {
   useBottomSheetModal,
 } from '../../sharedComponents/BottomSheetModal';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useObservations} from '../../hooks/server/useObservations';
 
 export const DummyScreen = (

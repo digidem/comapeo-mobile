@@ -74,9 +74,9 @@ type LocationViewMemoizedProps = {
 };
 const LocationViewMemoizedInner = React.memo<LocationViewMemoizedProps>(
   ({position}) => {
-    const {updatePosition} = useDraftObservation();
+    const {updateObservationPosition} = useDraftObservation();
 
-    updatePosition({position, manualLocation: false});
+    updateObservationPosition({position, manualLocation: false});
 
     return (
       <LocationText

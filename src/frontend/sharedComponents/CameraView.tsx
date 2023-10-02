@@ -35,12 +35,9 @@ const captureOptions: CameraPictureOptions = {
 };
 
 type Props = {
-  // Called when the user takes a picture, with a promise that resolves to an
-  // object with the property `uri` for the captured (and rotated) photo.
+  // Called when the user takes a picture.
   onAddPress: (capture: Promise<CapturedPictureMM>) => void;
 };
-
-// type Rotation = DeviceMotionMeasurement["rotation"]
 
 export const CameraView = ({onAddPress}: Props) => {
   const [capturing, setCapturing] = React.useState(false);
@@ -97,11 +94,10 @@ export const CameraView = ({onAddPress}: Props) => {
       .catch(err => {
         console.log(err);
         setCapturing(false);
+      })
+      .finally(() => {
+        setCapturing(false);
       });
-
-    return () => {
-      setCapturing(false);
-    };
   }, [capturing, setCapturing, onAddPress]);
 
   const disableButton = capturing || !cameraReady;

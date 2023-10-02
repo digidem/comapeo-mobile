@@ -4,11 +4,13 @@ import * as React from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import {DummyScreen} from './DummyScreen';
-import HomeHeader from '../../components/HomeHeader';
+import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {RootStack} from '../AppStack';
 import {MessageDescriptor} from 'react-intl';
 import {PhotoView} from '../../screens/PhotoView';
 import {CameraScreen} from '../../screens/CameraScreen';
+import {ObservationEdit} from '../../screens/ObservationEdit';
+import {AddPhotoScreen} from '../../screens/AddPhoto';
 import {AppPasscode} from '../../screens/AppPasscode';
 import {EnterPassToTurnOff} from '../../screens/AppPasscode/EnterPassToTurnOff';
 import {SetPasscode} from '../../screens/AppPasscode/SetPasscode';
@@ -18,6 +20,7 @@ import {AuthScreen} from '../../screens/AuthScreen';
 import {ObscurePasscode} from '../../screens/ObscurePasscode';
 import {Settings} from '../../screens/Settings';
 import {EmptySettingsScreen} from '../../screens/Settings/EmptySettingsScreen';
+import CategoryChooser from '../../screens/CategoryChooser';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -118,6 +121,16 @@ export const createDefaultScreenGroup = (
       options={{headerTitle: intl(PhotoView.navTitle)}}
     />
     <RootStack.Screen
+      name="ObservationEdit"
+      component={ObservationEdit}
+      options={{headerTitle: intl(ObservationEdit.navTitle)}}
+    />
+    <RootStack.Screen
+      name="AddPhoto"
+      component={AddPhotoScreen}
+      options={{headerShown: false}}
+    />
+    <RootStack.Screen
       name="Security"
       component={Security}
       options={{headerTitle: intl(Security.navTitle)}}
@@ -152,6 +165,11 @@ export const createDefaultScreenGroup = (
       name="Empty"
       component={EmptySettingsScreen}
       options={{headerTitle: 'Empty screen'}}
+    />
+    <RootStack.Screen
+      name="CategoryChooser"
+      component={CategoryChooser}
+      options={{headerTitle: intl(CategoryChooser.navTitle)}}
     />
   </RootStack.Group>
 );

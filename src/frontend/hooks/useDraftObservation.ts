@@ -1,12 +1,10 @@
 import {useCallback} from 'react';
 import {usePhotoPromiseContext} from '../contexts/PhotoPromiseContext';
-import {usePersistedDraftObservationActions} from './persistedState/usePersistedDraftObservation';
-import {
-  CapturedPictureMM,
-  Observation,
-} from '../contexts/PhotoPromiseContext/types';
+import {_usePersistedDraftObservationActions} from './persistedState/usePersistedDraftObservation';
+import {CapturedPictureMM} from '../contexts/PhotoPromiseContext/types';
 // react native does not have a random bytes generator, `non-secure` does not require a random bytes generator.
 import {nanoid} from 'nanoid/non-secure';
+import {Observation} from '@mapeo/schema';
 
 // draft observation have 2 parts:
 // 1. All the information, except processed photos are saved to persisted state.
@@ -18,11 +16,13 @@ export const useDraftObservation = () => {
   const {
     addPhotoPlaceholder,
     replacePhotoPlaceholderWithPhoto,
-    clearPersistedDraft,
-    newPersistedDraft,
-    updatePersistedDraft: updateDraft,
-    deletePersistedPhoto,
-  } = usePersistedDraftObservationActions();
+    clearDraft: clearPersistedDraft,
+    newDraft: newPersistedDraft,
+    updateObservationPosition,
+    deletePhoto: deletePersistedPhoto,
+    updatePreset,
+    updateObservationNotes,
+  } = _usePersistedDraftObservationActions();
 
   const addPhoto = useCallback(
     async (capturePromise: Promise<CapturedPictureMM>) => {
@@ -82,5 +82,13 @@ export const useDraftObservation = () => {
     deletePhotoPromise(uri);
   }, []);
 
-  return {addPhoto, clearDraft, newDraft, updateDraft, deletePhoto};
+  return {
+    addPhoto,
+    clearDraft,
+    newDraft,
+    deletePhoto,
+    updateObservationPosition,
+    updatePreset,
+    updateObservationNotes,
+  };
 };

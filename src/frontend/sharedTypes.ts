@@ -7,6 +7,7 @@ import {MessageDescriptor} from 'react-intl';
 import {AppStackList} from './Navigation/AppStack';
 import {HomeTabsList} from './Navigation/ScreenGroups/AppScreens';
 import {StyleProp, ViewStyle, TextStyle, ImageStyle} from 'react-native';
+import {Observation, ObservationValue} from '@mapeo/schema';
 
 export type ViewStyleProp = StyleProp<ViewStyle>;
 export type TextStyleProp = StyleProp<TextStyle>;
@@ -39,4 +40,15 @@ export type NativeHomeTabsNavigationProps<
 > = CompositeScreenProps<
   BottomTabScreenProps<HomeTabsList, ScreenName>,
   NativeStackScreenProps<AppStackList>
+>;
+
+export type Status = 'idle' | 'loading' | 'error' | 'success' | void;
+
+export type Position = Observation['metadata']['position'];
+
+export type Provider = Observation['metadata']['positionProvider'];
+
+export type ClientGeneratedObservation = Omit<
+  ObservationValue,
+  'schemaName' | 'attachments'
 >;

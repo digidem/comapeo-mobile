@@ -1,18 +1,14 @@
 import {StoreApi} from 'zustand';
 import {DraftPhoto} from '../../../contexts/PhotoPromiseContext/types';
 import {DraftObservationSlice} from '.';
-
-export interface ObservationAttachment {
-  id: string;
-  type?: string;
-}
+import {ObservationValue} from '@mapeo/schema';
 
 type Setter = StoreApi<DraftObservationSlice>['setState'];
 type Getter = StoreApi<DraftObservationSlice>['getState'];
 export interface SavedPhoto {
   // id of the photo in the Mapeo database
   id: string;
-  type?: 'image/jpeg';
+  type?: 'photo';
   // If an image is to be deleted
   deleted?: boolean;
 }
@@ -42,16 +38,16 @@ export function replaceDraftPhotos(
 // Filter photos from an array of observation attachments (we could have videos
 // and other media types)
 export function filterPhotosFromAttachments(
-  attachments: Array<ObservationAttachment> = [],
+  attachments: ObservationValue['attachments'] = [],
 ): Array<SavedPhoto> {
   return attachments.reduce<Array<SavedPhoto>>((acc, att) => {
     if (
-      att.type === 'image/jpeg' ||
+      att.type === 'photo' ||
       // This is needed for backwards compat, because early versions did not
       // save a type
-      (att.type === undefined && /(\.jpg|\.jpeg)$/i.test(att.id))
+      (att.type === undefined && /(\.jpg|\.jpeg)$/i.test(att.hash))
     )
-      acc.push({id: att.id, type: att.type});
+      acc.push({id: `${att.driveId}/${att.type}/${att.name}`, type: att.type});
     return acc;
   }, []);
 }

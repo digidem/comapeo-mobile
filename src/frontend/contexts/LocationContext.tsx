@@ -10,29 +10,7 @@ import {
   usePermissionContext,
 } from './PermissionsContext';
 import {storage} from '../hooks/persistedState/createPersistedState';
-
-interface Provider {
-  backgroundModeEnabled: boolean;
-  gpsAvailable?: boolean;
-  passiveAvailable?: boolean;
-  locationServicesEnabled: boolean;
-  networkAvailable?: boolean;
-}
-
-export interface Position {
-  // Position details, should be self explanatory. Units in meters
-  coords: {
-    latitude: number;
-    longitude: number;
-    altitude: number | null;
-    accuracy: number | null;
-    altitudeAccuracy: number | null;
-    heading: number | null;
-    speed: number | null;
-  };
-  // The timestamp of when the current position was obtained
-  timestamp: number;
-}
+import {Position, Observation, Provider} from '../sharedTypes';
 
 const log = debug('mapeo:Location');
 const STORE_KEY = '@MapeoPosition@1';
@@ -83,6 +61,10 @@ const stopWatchingLocation = (
 
 const LocationContext: React.Context<LocationContextType> =
   React.createContext<LocationContextType>(DEFAULT_CONTEXT);
+
+export const useLocationContext = () => {
+  return React.useContext(LocationContext);
+};
 
 /**
  * The LocationProvider provides details about the current device location based
@@ -137,7 +119,15 @@ export const LocationProvider = ({children}: React.PropsWithChildren<{}>) => {
             // we can update the state with the current status
             if (timeoutId.current) clearTimeout(timeoutId.current);
             timeoutId.current = setTimeout(updateStatus, LOCATION_TIMEOUT);
-            setPosition(location as Position);
+            const newCoord = Object.entries(location.coords).map(
+              ([key, val]) => [key, !val ? undefined : val] as const,
+            );
+
+            setPosition({
+              timestamp: location.timestamp.toString(),
+              mocked: location.mocked || false,
+              coords: Object.fromEntries(newCoord),
+            });
           },
         );
       } else {

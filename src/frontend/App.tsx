@@ -13,32 +13,39 @@ import {AppNavigator} from './Navigation/AppNavigator';
 import {AppStackList} from './Navigation/AppStack';
 import {IntlProvider} from './contexts/IntlContext';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-// import {Loading} from './components/Loading';
+import {Loading} from './sharedComponents/ApiLoading';
 import {PermissionsProvider} from './contexts/PermissionsContext';
+import {PhotoPromiseProvider} from './contexts/PhotoPromiseContext';
 import {SecurityProvider} from './contexts/SecurityContext';
 import {LocationProvider} from './contexts/LocationContext';
-import {PhotoPromiseProvider} from './contexts/PhotoPromiseContext';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();
 
   return (
     <IntlProvider>
-      <PermissionsProvider>
-        <GestureHandlerRootView style={{flex: 1}}>
-          <BottomSheetModalProvider>
-            <NavigationContainer ref={navRef}>
-              <LocationProvider>
-                <SecurityProvider>
-                  <PhotoPromiseProvider>
-                    <AppNavigator />
-                  </PhotoPromiseProvider>
-                </SecurityProvider>
-              </LocationProvider>
-            </NavigationContainer>
-          </BottomSheetModalProvider>
-        </GestureHandlerRootView>
-      </PermissionsProvider>
+      <QueryClientProvider client={queryClient}>
+        <PermissionsProvider>
+          <GestureHandlerRootView style={{flex: 1}}>
+            <BottomSheetModalProvider>
+              <NavigationContainer ref={navRef}>
+                <LocationProvider>
+                  <SecurityProvider>
+                    <PhotoPromiseProvider>
+                      <Loading>
+                        <AppNavigator />
+                      </Loading>
+                    </PhotoPromiseProvider>
+                  </SecurityProvider>
+                </LocationProvider>
+              </NavigationContainer>
+            </BottomSheetModalProvider>
+          </GestureHandlerRootView>
+        </PermissionsProvider>
+      </QueryClientProvider>
     </IntlProvider>
   );
 };

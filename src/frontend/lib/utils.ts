@@ -1,5 +1,5 @@
 // import { Alert } from "react-native";
-// import { fromLatLon } from "utm";
+import {fromLatLon} from 'utm';
 // import type { SelectOptions, LabeledSelectOption, Key } from "mapeo-schema";
 
 // import type { LocationContextType } from "../context/LocationContext";
@@ -159,19 +159,19 @@ export type LocationStatus = 'searching' | 'improving' | 'good' | 'error';
 //   return `${latitude} ${latitudeCardinal}, ${longitude} ${longitudeCardinal}`;
 // }
 
-// function convertToUTM({ lat, lon }) {
-//   try {
-//     let { easting, northing, zoneNum, zoneLetter } = fromLatLon(lat, lon);
-//     easting = leftPad(easting.toFixed(), 6, "0");
-//     northing = leftPad(northing.toFixed(), 6, "0");
-//     return `UTM ${zoneNum}${zoneLetter} ${easting} ${northing}`;
-//   } catch (e) {
-//     // Some coordinates (e.g. < 80S or 84N) cannot be formatted as UTM
-//     return `${lat >= 0 ? "+" : ""}${lat.toFixed(6)}°, ${
-//       lon >= 0 ? "+" : ""
-//     }${lon.toFixed(6)}°`;
-//   }
-// }
+export function convertToUTM({lat, lon}: {lat: number; lon: number}) {
+  try {
+    let {easting, northing, zoneNum, zoneLetter} = fromLatLon(lat, lon);
+    easting = leftPad(easting.toFixed(), 6, '0');
+    northing = leftPad(northing.toFixed(), 6, '0');
+    return `UTM ${zoneNum}${zoneLetter} ${easting} ${northing}`;
+  } catch (e) {
+    // Some coordinates (e.g. < 80S or 84N) cannot be formatted as UTM
+    return `${lat >= 0 ? '+' : ''}${lat.toFixed(6)}°, ${
+      lon >= 0 ? '+' : ''
+    }${lon.toFixed(6)}°`;
+  }
+}
 
 // // Style from National Geographic style guide
 // // https://sites.google.com/a/ngs.org/ngs-style-manual/home/L/latitude-and-longitude
@@ -237,20 +237,20 @@ export type LocationStatus = 'searching' | 'improving' | 'good' | 'error';
 //   });
 // }
 
-// function leftPad(str: string, len: number, char: string): string {
-//   // doesn't need to pad
-//   len = len - str.length;
-//   if (len <= 0) return str;
+function leftPad(str: string, len: number, char: string): string {
+  // doesn't need to pad
+  len = len - str.length;
+  if (len <= 0) return str;
 
-//   var pad = "";
-//   while (true) {
-//     if (len & 1) pad += char;
-//     len >>= 1;
-//     if (len) char += char;
-//     else break;
-//   }
-//   return pad + str;
-// }
+  var pad = '';
+  while (true) {
+    if (len & 1) pad += char;
+    len >>= 1;
+    if (len) char += char;
+    else break;
+  }
+  return pad + str;
+}
 
 // // This is a helper function to force the type definition
 // // It filters an array to remove any falsy values

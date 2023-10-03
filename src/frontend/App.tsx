@@ -19,6 +19,7 @@ import {PhotoPromiseProvider} from './contexts/PhotoPromiseContext';
 import {SecurityProvider} from './contexts/SecurityContext';
 import {LocationProvider} from './contexts/LocationContext';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import {ObservationProvider} from './contexts/ObservationsContext';
 
 const queryClient = new QueryClient();
 
@@ -31,17 +32,19 @@ const App = () => {
         <PermissionsProvider>
           <GestureHandlerRootView style={{flex: 1}}>
             <BottomSheetModalProvider>
-              <NavigationContainer ref={navRef}>
-                <LocationProvider>
-                  <SecurityProvider>
-                    <PhotoPromiseProvider>
-                      <Loading>
-                        <AppNavigator />
-                      </Loading>
-                    </PhotoPromiseProvider>
-                  </SecurityProvider>
-                </LocationProvider>
-              </NavigationContainer>
+              <ObservationProvider>
+                <NavigationContainer ref={navRef}>
+                  <LocationProvider>
+                    <SecurityProvider>
+                      <PhotoPromiseProvider>
+                        <Loading>
+                          <AppNavigator />
+                        </Loading>
+                      </PhotoPromiseProvider>
+                    </SecurityProvider>
+                  </LocationProvider>
+                </NavigationContainer>
+              </ObservationProvider>
             </BottomSheetModalProvider>
           </GestureHandlerRootView>
         </PermissionsProvider>

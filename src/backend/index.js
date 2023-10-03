@@ -31,6 +31,10 @@ MockPreset.forEach(doc => {
   mapeoClient.preset.create(doc);
 });
 
+mockObservations.forEach(doc => {
+  mapeoClient.observation.create(doc);
+});
+
 const channel = new MessagePortLike();
 
 const {close} = createServer(mapeoClient, channel);

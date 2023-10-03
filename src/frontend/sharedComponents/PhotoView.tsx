@@ -1,33 +1,34 @@
-import React, {useState} from 'react';
+import * as React from 'react';
 import {View, StyleSheet, Image, ActivityIndicator} from 'react-native';
 
 import {AlertIcon} from './icons';
-import type {ViewStyleProp} from '../sharedTypes';
+import type {Attachment, PhotoVariant, ViewStyleProp} from '../sharedTypes';
+import {useGetMediaUrl} from '../hooks/server/useGetMediaUrl';
 
 type Props = {
-  uri?: string;
-  variant?: 'photo' | 'loading' | 'error';
+  attachment: Attachment;
+  variant: PhotoVariant;
   style?: ViewStyleProp;
   resizeMode?: 'cover' | 'contain' | 'stretch' | 'center';
 };
 
 const PhotoViewComponent = ({
-  uri,
-  variant = 'photo',
+  attachment,
+  variant,
   resizeMode = 'contain',
   style,
 }: Props) => {
-  const [error, setError] = useState();
+  const {data, isLoading, isError} = useGetMediaUrl({attachment, variant});
   return (
     <View style={[styles.container, style]}>
-      {variant === 'loading' ? (
+      {isLoading ? (
         <ActivityIndicator />
-      ) : variant === 'error' || error || !uri ? (
+      ) : isError ? (
         <AlertIcon />
       ) : (
         <Image
-          onError={({nativeEvent: {error}}) => setError(error)}
-          source={{uri}}
+          // @ts-ignore
+          source={data}
           style={styles.image}
           resizeMethod="scale"
           resizeMode={resizeMode}

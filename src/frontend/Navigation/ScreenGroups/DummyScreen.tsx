@@ -7,7 +7,6 @@ import {
   useBottomSheetModal,
 } from '../../sharedComponents/BottomSheetModal';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {useObservations} from '../../hooks/server/useObservations';
 
 export const DummyScreen = (
   prop: NativeHomeTabsNavigationProps<'Map' | 'Camera'>,
@@ -16,21 +15,15 @@ export const DummyScreen = (
     openOnMount: false,
   });
   const {newDraft} = useDraftObservation();
-  const {data} = useObservations();
-
-  if (data) {
-    console.log({length: data.length});
-  }
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Test screen</Text>
       <Button
         onPress={() => {
-          newDraft();
-          prop.navigation.navigate('CategoryChooser');
+          prop.navigation.navigate('ObservationList');
         }}
-        title="New Observation"
+        title="List Observations"
       />
       <View style={{marginTop: 8}} />
       <Button
@@ -42,9 +35,10 @@ export const DummyScreen = (
       <View style={{marginTop: 8}} />
       <Button
         onPress={() => {
-          prop.navigation.navigate('Settings');
+          newDraft();
+          prop.navigation.navigate('CategoryChooser');
         }}
-        title="Settings"
+        title="New Observation"
       />
       <BottomSheetModal disableBackrop={false} isOpen={isOpen} ref={sheetRef}>
         <BottomSheetContent

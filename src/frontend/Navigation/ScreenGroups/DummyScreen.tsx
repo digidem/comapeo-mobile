@@ -21,7 +21,6 @@ export const DummyScreen = (
       <Text style={styles.text}>Test screen</Text>
       <Button
         onPress={() => {
-          newDraft();
           prop.navigation.navigate('ObservationList');
         }}
         title="List Observations"

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Observation} from '@mapeo/schema';
-import {useObservations} from '../hooks/server/useObservations';
+import {useObservationsQuery} from '../hooks/server/useObservationsQuery';
 import {Loading} from '../sharedComponents/Loading';
 import {Text} from '../sharedComponents/Text';
 
@@ -21,7 +21,7 @@ export const ObservationProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const {data, isLoading, isError} = useObservations();
+  const {data, isLoading, isError} = useObservationsQuery();
 
   const observations = React.useMemo(() => {
     if (!data) return new Map();

@@ -32,7 +32,6 @@ const DynFormattedMessage = FormattedMessage;
 
 const ROW_HEIGHT = 120;
 const MIN_COL_WIDTH = 100;
-// const log = debug("CategoriesView");
 
 const getItemLayout = (_data: unknown, index: number) => ({
   length: ROW_HEIGHT,
@@ -93,7 +92,11 @@ const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
         // Only show presets where the geometry property includes "point"
         .filter(p => p.geometry.includes('point'))
         // Sort presets by sort property and then by name, then filter only point presets
-        .sort(presetCompare);
+        .sort((a, b) => {
+          return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+        });
+
+  console.log({presetsList});
 
   const handleSelectPreset = (selectedPreset: Preset) => {
     // Tags from current preset
@@ -131,7 +134,7 @@ const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
 
   return (
     <View style={styles.container}>
-      {!isLoading ? (
+      {isLoading ? (
         <Loading />
       ) : (
         <FlatList
@@ -145,7 +148,6 @@ const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
           renderItem={({item}) => (
             <Item
               key={keyExtractor(item)}
-              // @ts-ignore
               item={item}
               onSelect={handleSelectPreset}
             />

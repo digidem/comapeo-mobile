@@ -21,6 +21,7 @@ import {ObscurePasscode} from '../../screens/ObscurePasscode';
 import {Settings} from '../../screens/Settings';
 import {EmptySettingsScreen} from '../../screens/Settings/EmptySettingsScreen';
 import CategoryChooser from '../../screens/CategoryChooser';
+import {ObservationsList} from '../../screens/ObservationsList';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -170,6 +171,11 @@ export const createDefaultScreenGroup = (
       name="CategoryChooser"
       component={CategoryChooser}
       options={{headerTitle: intl(CategoryChooser.navTitle)}}
+    />
+    <RootStack.Screen
+      name="ObservationList"
+      component={ObservationsList}
+      options={{headerTitle: intl(ObservationsList.navTitle)}}
     />
   </RootStack.Group>
 );

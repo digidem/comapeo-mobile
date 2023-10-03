@@ -17,7 +17,7 @@ import {Loading} from '../sharedComponents/Loading';
 import {CustomHeaderLeftClose} from '../sharedComponents/CustomHeaderLeftClose';
 import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 import {Preset} from '@mapeo/schema';
-import {usePresets} from '../hooks/server/usePresets';
+import {usePresetsQuery} from '../hooks/server/usePresetsQuery';
 
 const m = defineMessages({
   categoryTitle: {
@@ -73,7 +73,7 @@ const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
     ? undefined
     : routes[currentIndex - 1].name;
 
-  const {data: presets, isLoading} = usePresets();
+  const {data: presets, isLoading} = usePresetsQuery();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({

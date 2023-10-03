@@ -5,9 +5,9 @@ import {ObservationListItem} from './ObservationListItem';
 import ObservationEmptyView from './ObservationsEmptyView';
 
 import {Observation} from '@mapeo/schema';
-import {useObservationContext} from '../../contexts/ObservationsContext';
 import {NativeNavigationComponent} from '../../sharedTypes';
 import {SettingsButton} from './SettingsButton';
+import {useAllObservations} from '../../hooks/useAllObservations';
 
 const m = defineMessages({
   loading: {
@@ -46,7 +46,7 @@ const keyExtractor = (item: Observation) => item.docId;
 export const ObservationsList: NativeNavigationComponent<'ObservationList'> = ({
   navigation,
 }) => {
-  const {observations} = useObservationContext();
+  const observations = useAllObservations();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -54,21 +54,11 @@ export const ObservationsList: NativeNavigationComponent<'ObservationList'> = ({
     });
   }, [SettingsButton, navigation]);
 
-  const sortedObservations = React.useMemo(
-    () =>
-      observations
-        ? Array.from(observations.values()).sort((a, b) =>
-            a.createdAt < b.createdAt ? 1 : -1,
-          )
-        : [],
-    [observations],
-  );
-
   const rowsPerWindow = Math.ceil(
     (Dimensions.get('window').height - 65) / OBSERVATION_CELL_HEIGHT,
   );
 
-  if (!sortedObservations.length) {
+  if (!observations.length) {
     return (
       <ObservationEmptyView
         onPressBack={() => navigation.navigate('Home', {screen: 'Map'})}
@@ -90,7 +80,7 @@ export const ObservationsList: NativeNavigationComponent<'ObservationList'> = ({
             <ObservationListItem
               key={item.docId}
               testID={`observationListItem:${index}`}
-              observationId={item.docId}
+              observation={item}
               style={styles.listItem}
               onPress={() =>
                 navigation.navigate('Observation', {observationId: item.docId})
@@ -98,7 +88,7 @@ export const ObservationsList: NativeNavigationComponent<'ObservationList'> = ({
             />
           );
         }}
-        data={sortedObservations}
+        data={observations}
       />
     </View>
   );

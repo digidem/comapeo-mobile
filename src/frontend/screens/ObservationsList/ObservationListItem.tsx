@@ -3,7 +3,6 @@ import {StyleSheet, View} from 'react-native';
 import {Text} from '../../sharedComponents/Text';
 
 import {TouchableHighlight} from '../../sharedComponents/Touchables';
-import {useObservation} from '../../hooks/useObservation';
 import {CategoryCircleIcon} from '../../sharedComponents/icons/CategoryIcon';
 //import PhotoView from "../../sharedComponents/PhotoView";
 // import useDeviceId from "../../hooks/useDeviceId";
@@ -15,10 +14,12 @@ import {ViewStyleProp} from '../../sharedTypes';
 import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types';
 import {filterPhotosFromAttachments} from '../../hooks/persistedState/usePersistedDraftObservation/photosMethods';
 import {BLACK} from '../../lib/styles';
+import {Observation} from '@mapeo/schema';
+import {usePresetsQuery} from '../../hooks/server/usePresetsQuery';
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;
-  observationId: string;
+  observation: Observation;
   testID: string;
   onPress: (id: string) => void;
 }
@@ -31,11 +32,11 @@ export const ObservationListItem = React.memo<ObservationListItemProps>(
 
 function ObservationListItemNotMemoized({
   style,
-  observationId,
+  observation,
   testID,
   onPress = () => {},
 }: ObservationListItemProps) {
-  const {observationQuery, preset} = useObservation(observationId);
+  const preset = useGetPreset(observation);
   // const deviceId = useDeviceId();
   //const iconId = preset && preset.icon;
   const iconId = '';
@@ -49,16 +50,18 @@ function ObservationListItemNotMemoized({
   const isMine = true;
   return (
     <TouchableHighlight
-      onPress={() => onPress(observationId)}
+      onPress={() => onPress(observation.docId)}
       testID={testID}
       style={{flex: 1, height: 80}}>
       <View
         style={[styles.container, style, !isMine && styles.syncedObservation]}>
         <View style={styles.text}>
-          <Text style={styles.title}>
-            {preset?.name}
-            {/* <FormattedPresetName preset={preset} /> */}
-          </Text>
+          {preset && (
+            <Text style={styles.title}>
+              {preset.name}
+              {/* <FormattedPresetName preset={preset} /> */}
+            </Text>
+          )}
           {/* <Text>
             <FormattedObservationDate
               observation={observation}
@@ -83,6 +86,19 @@ function ObservationListItemNotMemoized({
       </View>
     </TouchableHighlight>
   );
+}
+
+function useGetPreset(observation: Observation) {
+  const {data, isLoading} = usePresetsQuery();
+
+  if (isLoading) return undefined;
+
+  if (!data) return undefined;
+
+  if (!observation.tags && !('categoryId' in observation.tags))
+    return undefined;
+
+  return data.find(pres => pres.docId === observation.tags.categoryId);
 }
 
 function PhotoStack({photos}: {photos: SavedPhoto[]}) {

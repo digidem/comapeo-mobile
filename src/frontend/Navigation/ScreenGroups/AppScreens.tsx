@@ -7,7 +7,6 @@ import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {RootStack} from '../AppStack';
 import {MessageDescriptor} from 'react-intl';
 import {MapScreen} from '../../screens/MapScreen';
-import {PhotoView} from '../../screens/PhotoView';
 import {CameraScreen} from '../../screens/CameraScreen';
 import {ObservationEdit} from '../../screens/ObservationEdit';
 import {AddPhotoScreen} from '../../screens/AddPhoto';
@@ -21,6 +20,7 @@ import {ObscurePasscode} from '../../screens/ObscurePasscode';
 import {Settings} from '../../screens/Settings';
 import {EmptySettingsScreen} from '../../screens/Settings/EmptySettingsScreen';
 import {CategoryChooser} from '../../screens/CategoryChooser';
+import {ObservationsList} from '../../screens/ObservationsList';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -116,11 +116,6 @@ export const createDefaultScreenGroup = (
       options={{headerShown: false}}
     />
     <RootStack.Screen
-      name="PhotoView"
-      component={PhotoView}
-      options={{headerTitle: intl(PhotoView.navTitle)}}
-    />
-    <RootStack.Screen
       name="ObservationEdit"
       component={ObservationEdit}
       options={{headerTitle: intl(ObservationEdit.navTitle)}}
@@ -170,6 +165,11 @@ export const createDefaultScreenGroup = (
       name="CategoryChooser"
       component={CategoryChooser}
       options={{headerTitle: intl(CategoryChooser.navTitle)}}
+    />
+    <RootStack.Screen
+      name="ObservationList"
+      component={ObservationsList}
+      options={{headerTitle: intl(ObservationsList.navTitle)}}
     />
   </RootStack.Group>
 );

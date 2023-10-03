@@ -47,7 +47,7 @@ async function mockBlobApi(
 ): Promise<Observation['attachments']> {
   return [
     {
-      driveId: '',
+      driveDiscoveryId: '',
       name: '',
       type: 'photo',
       hash: '',

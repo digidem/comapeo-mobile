@@ -17,7 +17,7 @@ import {Loading} from '../sharedComponents/Loading';
 import {CustomHeaderLeftClose} from '../sharedComponents/CustomHeaderLeftClose';
 import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 import {Preset} from '@mapeo/schema';
-import {usePresets} from '../hooks/server/usePresets';
+import {usePresetsQuery} from '../hooks/server/usePresetsQuery';
 
 const m = defineMessages({
   categoryTitle: {
@@ -32,36 +32,6 @@ const DynFormattedMessage = FormattedMessage;
 
 const ROW_HEIGHT = 120;
 const MIN_COL_WIDTH = 100;
-// const log = debug("CategoriesView");
-
-const getItemLayout = (_data: unknown, index: number) => ({
-  length: ROW_HEIGHT,
-  offset: ROW_HEIGHT * index,
-  index,
-});
-
-const keyExtractor = (item: {docId: string}) => item.docId;
-
-const Item = React.memo(
-  ({item, onSelect}: {item: Preset; onSelect: (preset: Preset) => void}) => (
-    <TouchableHighlight
-      style={styles.cellTouchable}
-      onPress={() => onSelect(item)}
-      activeOpacity={1}
-      underlayColor="#000033"
-      testID={`${item.docId}CategoryButton`}>
-      <View style={styles.cellContainer}>
-        <CategoryCircleIcon size="medium" />
-        <Text numberOfLines={3} style={styles.categoryName}>
-          <DynFormattedMessage
-            id={`presets.${item.docId}.name`}
-            defaultMessage={item.name}
-          />
-        </Text>
-      </View>
-    </TouchableHighlight>
-  ),
-);
 
 export const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
   navigation,
@@ -74,7 +44,7 @@ export const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
     ? undefined
     : routes[currentIndex - 1].name;
 
-  const {data: presets, isLoading} = usePresets();
+  const {data: presets, isLoading} = usePresetsQuery();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -98,31 +68,7 @@ export const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
         });
 
   const handleSelectPreset = (selectedPreset: Preset) => {
-    // Tags from current preset
-    // const currentDraftTags = (draftValue || {}).tags || {};
-    // Tags from previous preset
-    // const prevPresetTags =
-    //   (presets.get(currentDraftTags.categoryId as string) || {}).tags || {};
-    // Create object with new tags only
-    // const draftTags = Object.keys(currentDraftTags).reduce(
-    //   (previous, current) => {
-    //     // Check if tag belongs to previous preset
-    //     const tagIsFromPrevPreset =
-    //       typeof currentDraftTags[current] !== "undefined" &&
-    //       currentDraftTags[current] === prevPresetTags[current];
-    //     // If belongs to previous preset, ignore it
-    //     if (tagIsFromPrevPreset) return previous;
-    //     // Else, include in new object
-    //     return {
-    //       ...previous,
-    //       [current]: currentDraftTags[current],
-    //     };
-    //   },
-    //   {}
-    // );
-
     updatePreset(selectedPreset);
-
     navigation.navigate('ObservationEdit');
   };
 
@@ -147,7 +93,6 @@ export const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
           renderItem={({item}) => (
             <Item
               key={keyExtractor(item)}
-              // @ts-ignore
               item={item}
               onSelect={handleSelectPreset}
             />
@@ -159,6 +104,39 @@ export const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
     </View>
   );
 };
+
+function getItemLayout(_data: unknown, index: number) {
+  return {
+    length: ROW_HEIGHT,
+    offset: ROW_HEIGHT * index,
+    index,
+  };
+}
+
+function keyExtractor(item: {docId: string}) {
+  return item.docId;
+}
+
+const Item = React.memo(
+  ({item, onSelect}: {item: Preset; onSelect: (preset: Preset) => void}) => (
+    <TouchableHighlight
+      style={styles.cellTouchable}
+      onPress={() => onSelect(item)}
+      activeOpacity={1}
+      underlayColor="#000033"
+      testID={`${item.docId}CategoryButton`}>
+      <View style={styles.cellContainer}>
+        <CategoryCircleIcon size="medium" />
+        <Text numberOfLines={3} style={styles.categoryName}>
+          <DynFormattedMessage
+            id={`presets.${item.docId}.name`}
+            defaultMessage={item.name}
+          />
+        </Text>
+      </View>
+    </TouchableHighlight>
+  ),
+);
 
 CategoryChooser.navTitle = m.categoryTitle;
 

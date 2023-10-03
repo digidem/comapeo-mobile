@@ -93,7 +93,14 @@ export const mockObservations = [
         id: 'EEC4BBeeegafb3ea80De05cA455ddbD2201',
       },
     ],
-    attachments: [],
+    attachments: [
+      {
+        driveDiscoveryId: 'fb3ea80De05cA455d',
+        hash: '1fbeaeAc43f28e7EdaBdb9aCc8d0b6',
+        name: 'Church',
+        type: 'photo',
+      },
+    ],
     tags: {
       categoryId: '2',
       notes: 'Observation',

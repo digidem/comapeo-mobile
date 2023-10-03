@@ -6,16 +6,17 @@ import {TouchableHighlight} from '../../sharedComponents/Touchables';
 import {CategoryCircleIcon} from '../../sharedComponents/icons/CategoryIcon';
 //import PhotoView from "../../sharedComponents/PhotoView";
 // import useDeviceId from "../../hooks/useDeviceId";
-// import {
-//   FormattedPresetName,
-//   FormattedObservationDate,
-// } from "../../sharedComponents/FormattedData";
-import {ViewStyleProp} from '../../sharedTypes';
+import {Attachment, ViewStyleProp} from '../../sharedTypes';
 import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types';
 import {filterPhotosFromAttachments} from '../../hooks/persistedState/usePersistedDraftObservation/photosMethods';
 import {BLACK} from '../../lib/styles';
 import {Observation} from '@mapeo/schema';
 import {usePresetsQuery} from '../../hooks/server/usePresetsQuery';
+import {
+  FormattedObservationDate,
+  FormattedPresetName,
+} from '../../sharedComponents/FormattedData';
+import {PhotoView} from '../../sharedComponents/PhotoView';
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;
@@ -58,16 +59,15 @@ function ObservationListItemNotMemoized({
         <View style={styles.text}>
           {preset && (
             <Text style={styles.title}>
-              {preset.name}
-              {/* <FormattedPresetName preset={preset} /> */}
+              <FormattedPresetName preset={preset} />
             </Text>
           )}
-          {/* <Text>
+          <Text>
             <FormattedObservationDate
-              observation={observation}
+              createdDate={observation.createdAt}
               variant="relative"
             />
-          </Text> */}
+          </Text>
         </View>
         {photos.length ? (
           <View style={styles.photoContainer}>
@@ -101,22 +101,23 @@ function useGetPreset(observation: Observation) {
   return data.find(pres => pres.docId === observation.tags.categoryId);
 }
 
-function PhotoStack({photos}: {photos: SavedPhoto[]}) {
+function PhotoStack({attachments}: {attachments: Attachment[]}) {
   return (
     <View
       style={{
-        width: 60 + (photos.length - 1) * photoOverlap,
+        width: 60 + (attachments.length - 1) * photoOverlap,
         height: 60,
         backgroundColor: 'aqua',
       }}>
-      {/* {photos.map((photo, idx) => (
+      {attachments.map((attachment, idx) => (
         <PhotoView
-          key={photo.id}
-          uri={api.getMediaUrl(photo.id, "thumbnail")}
-          style={[styles.photo, { left: idx * photoOverlap }]}
+          key={`${attachment.driveDiscoveryId}/${attachment.type}/${attachment.name}`}
+          attachment={attachment}
+          variant="thumbnail"
+          style={[styles.photo, {left: idx * photoOverlap}]}
           resizeMode="cover"
         />
-      ))} */}
+      ))}
     </View>
   );
 }

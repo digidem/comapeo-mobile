@@ -52,3 +52,7 @@ export type ClientGeneratedObservation = Omit<
   ObservationValue,
   'schemaName' | 'attachments'
 >;
+
+export type Attachment = Observation['attachments'][0];
+
+export type PhotoVariant = 'original' | 'thumbnail' | 'preview';

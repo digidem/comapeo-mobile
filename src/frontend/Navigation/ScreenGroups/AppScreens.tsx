@@ -7,7 +7,6 @@ import {DummyScreen} from './DummyScreen';
 import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {RootStack} from '../AppStack';
 import {MessageDescriptor} from 'react-intl';
-import {PhotoView} from '../../screens/PhotoView';
 import {CameraScreen} from '../../screens/CameraScreen';
 import {ObservationEdit} from '../../screens/ObservationEdit';
 import {AddPhotoScreen} from '../../screens/AddPhoto';
@@ -20,7 +19,7 @@ import {AuthScreen} from '../../screens/AuthScreen';
 import {ObscurePasscode} from '../../screens/ObscurePasscode';
 import {Settings} from '../../screens/Settings';
 import {EmptySettingsScreen} from '../../screens/Settings/EmptySettingsScreen';
-import CategoryChooser from '../../screens/CategoryChooser';
+import {CategoryChooser} from '../../screens/CategoryChooser';
 import {ObservationsList} from '../../screens/ObservationsList';
 
 export type HomeTabsList = {
@@ -115,11 +114,6 @@ export const createDefaultScreenGroup = (
       name="AuthScreen"
       component={AuthScreen}
       options={{headerShown: false}}
-    />
-    <RootStack.Screen
-      name="PhotoView"
-      component={PhotoView}
-      options={{headerTitle: intl(PhotoView.navTitle)}}
     />
     <RootStack.Screen
       name="ObservationEdit"

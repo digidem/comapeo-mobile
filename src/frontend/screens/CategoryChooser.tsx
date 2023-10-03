@@ -33,36 +33,7 @@ const DynFormattedMessage = FormattedMessage;
 const ROW_HEIGHT = 120;
 const MIN_COL_WIDTH = 100;
 
-const getItemLayout = (_data: unknown, index: number) => ({
-  length: ROW_HEIGHT,
-  offset: ROW_HEIGHT * index,
-  index,
-});
-
-const keyExtractor = (item: {docId: string}) => item.docId;
-
-const Item = React.memo(
-  ({item, onSelect}: {item: Preset; onSelect: (preset: Preset) => void}) => (
-    <TouchableHighlight
-      style={styles.cellTouchable}
-      onPress={() => onSelect(item)}
-      activeOpacity={1}
-      underlayColor="#000033"
-      testID={`${item.docId}CategoryButton`}>
-      <View style={styles.cellContainer}>
-        <CategoryCircleIcon size="medium" />
-        <Text numberOfLines={3} style={styles.categoryName}>
-          <DynFormattedMessage
-            id={`presets.${item.docId}.name`}
-            defaultMessage={item.name}
-          />
-        </Text>
-      </View>
-    </TouchableHighlight>
-  ),
-);
-
-const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
+export const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
   navigation,
 }) => {
   const {updatePreset} = useDraftObservation();
@@ -96,34 +67,8 @@ const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
           return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
         });
 
-  console.log({presetsList});
-
   const handleSelectPreset = (selectedPreset: Preset) => {
-    // Tags from current preset
-    // const currentDraftTags = (draftValue || {}).tags || {};
-    // Tags from previous preset
-    // const prevPresetTags =
-    //   (presets.get(currentDraftTags.categoryId as string) || {}).tags || {};
-    // Create object with new tags only
-    // const draftTags = Object.keys(currentDraftTags).reduce(
-    //   (previous, current) => {
-    //     // Check if tag belongs to previous preset
-    //     const tagIsFromPrevPreset =
-    //       typeof currentDraftTags[current] !== "undefined" &&
-    //       currentDraftTags[current] === prevPresetTags[current];
-    //     // If belongs to previous preset, ignore it
-    //     if (tagIsFromPrevPreset) return previous;
-    //     // Else, include in new object
-    //     return {
-    //       ...previous,
-    //       [current]: currentDraftTags[current],
-    //     };
-    //   },
-    //   {}
-    // );
-
     updatePreset(selectedPreset);
-
     navigation.navigate('ObservationEdit');
   };
 
@@ -160,18 +105,40 @@ const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
   );
 };
 
+function getItemLayout(_data: unknown, index: number) {
+  return {
+    length: ROW_HEIGHT,
+    offset: ROW_HEIGHT * index,
+    index,
+  };
+}
+
+function keyExtractor(item: {docId: string}) {
+  return item.docId;
+}
+
+const Item = React.memo(
+  ({item, onSelect}: {item: Preset; onSelect: (preset: Preset) => void}) => (
+    <TouchableHighlight
+      style={styles.cellTouchable}
+      onPress={() => onSelect(item)}
+      activeOpacity={1}
+      underlayColor="#000033"
+      testID={`${item.docId}CategoryButton`}>
+      <View style={styles.cellContainer}>
+        <CategoryCircleIcon size="medium" />
+        <Text numberOfLines={3} style={styles.categoryName}>
+          <DynFormattedMessage
+            id={`presets.${item.docId}.name`}
+            defaultMessage={item.name}
+          />
+        </Text>
+      </View>
+    </TouchableHighlight>
+  ),
+);
+
 CategoryChooser.navTitle = m.categoryTitle;
-
-export default CategoryChooser;
-
-// Sort presets by sort property and then by name, then filter only point presets
-function presetCompare(a: Preset, b: Preset) {
-  return compareStrings(a.name, b.name);
-}
-
-function compareStrings(a = '', b = '') {
-  return a.toLowerCase().localeCompare(b.toLowerCase());
-}
 
 const styles = StyleSheet.create({
   container: {

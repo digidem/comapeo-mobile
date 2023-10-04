@@ -71,7 +71,7 @@ function ObservationListItemNotMemoized({
         </View>
         {photos.length ? (
           <View style={styles.photoContainer}>
-            {/* <PhotoStack photos={photos} /> */}
+            <PhotoStack attachments={observation.attachments} />
             <View style={styles.smallIconContainer}>
               <CategoryCircleIcon
                 iconId={iconId}

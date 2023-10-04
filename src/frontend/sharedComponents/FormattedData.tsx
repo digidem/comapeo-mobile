@@ -104,23 +104,29 @@ export const FormattedFieldValue = ({
 
 // Format the created_at date of an observation as either a datetime, or a
 // relative datetime (e.g. "3 minutes ago")
-export const FormattedObservationDate = ({
-  createdDate,
-  variant,
-}: {
-  createdDate: string;
-  // 'relative' = relative date format e.g. "3 minutes ago"
-  // for other formats see formats.date
-  variant: 'relative' | keyof typeof formats.date;
-}) => {
-  const createdAtDate = new Date(createdDate);
-  switch (variant) {
-    case 'relative':
-      return <DateDistance date={createdAtDate} />;
-    default:
-      return <FormattedDate value={createdAtDate} format={variant} />;
-  }
-};
+export const FormattedObservationDate = React.memo(
+  ({
+    createdDate,
+    variant,
+  }: {
+    createdDate: string;
+    // 'relative' = relative date format e.g. "3 minutes ago"
+    // for other formats see formats.date
+    variant: 'relative' | keyof typeof formats.date;
+  }) => {
+    // if date format is unixTimeZero convert to a number, else leaves in string format
+    const createdAtDate = new Date(
+      isNaN(+createdDate) ? createdDate : +createdDate,
+    );
+
+    switch (variant) {
+      case 'relative':
+        return <DateDistance date={createdAtDate} />;
+      default:
+        return <FormattedDate value={createdAtDate} format={variant} />;
+    }
+  },
+);
 
 // Format the translated preset name, with a fallback to "Observation" if no
 // preset is defined

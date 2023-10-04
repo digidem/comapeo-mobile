@@ -22,6 +22,7 @@ export const ObservationProvider = ({
   children: React.ReactNode;
 }) => {
   const {data, isLoading, isError} = useObservationsQuery();
+  console.log(data?.length);
 
   const observations = React.useMemo(() => {
     if (!data) return new Map();

@@ -22,7 +22,7 @@ type MapViewProps = {
   locationServiceEnabled?: boolean;
 };
 
-const MAP_STYLE = Mapbox.StyleURL.TrafficNight;
+const MAP_STYLE = Mapbox.StyleURL.Outdoors;
 
 type Props = {
   // observations: ObservationsMap;

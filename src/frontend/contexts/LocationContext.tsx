@@ -50,7 +50,9 @@ const positionOptions = {
 const LOCATION_TIMEOUT = 10000;
 
 const stopWatchingLocation = (
-  timeoutIdRef: React.MutableRefObject<number | undefined>,
+  timeoutIdRef: React.MutableRefObject<
+    ReturnType<typeof setTimeout> | undefined
+  >,
   subscriptionRef: React.MutableRefObject<Subscription | undefined>,
 ) => {
   log('Stopping GPS watch');

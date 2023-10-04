@@ -6,14 +6,12 @@ import {CameraView} from '../sharedComponents/CameraView';
 import {NativeHomeTabsNavigationProps} from '../sharedTypes';
 import {CapturedPictureMM} from '../contexts/PhotoPromiseContext/types';
 import {useDraftObservation} from '../hooks/useDraftObservation';
-import {usePersistedDraftObservation} from '../hooks/persistedState/usePersistedDraftObservation';
 
 export const CameraScreen = ({
   navigation,
 }: NativeHomeTabsNavigationProps<'Camera'>) => {
   const isFocused = useIsFocused();
   const {newDraft} = useDraftObservation();
-  const photos = usePersistedDraftObservation(store => store.photos);
 
   function handleAddPress(photoPromise: Promise<CapturedPictureMM>) {
     newDraft(undefined, undefined, photoPromise);

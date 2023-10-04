@@ -24,16 +24,6 @@ type MapViewProps = {
 
 const MAP_STYLE = Mapbox.StyleURL.Outdoors;
 
-type Props = {
-  // observations: ObservationsMap;
-  styleURL: string;
-  isOfflineFallback: boolean;
-  // location: LocationContextType;
-  onPressObservation: (observationId: string) => any;
-  isFocused: boolean;
-};
-type Coords = number[];
-
 export const MapView = React.memo(
   ({coords, locationServiceEnabled, isFocused}: MapViewProps) => {
     const [zoom, setZoom] = React.useState(DEFAULT_ZOOM);
@@ -88,6 +78,7 @@ function shouldComponentSkipRerender(
   prevProps: MapViewProps,
   nextProps: MapViewProps,
 ) {
+  // if map screen is not in focus, do not re-render
   if (!nextProps.isFocused) return true;
 
   if (prevProps.locationServiceEnabled !== nextProps.locationServiceEnabled)

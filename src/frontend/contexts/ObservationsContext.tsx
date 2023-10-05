@@ -9,10 +9,12 @@ export type ObservationsMap = Map<string, Observation>;
 
 type ObservationContextType = {
   observations: ObservationsMap;
+  presets: Preset[];
 };
 
 const ObservationContext = React.createContext<ObservationContextType>({
   observations: new Map(),
+  presets: [],
 });
 
 export const useObservationContext = () => React.useContext(ObservationContext);
@@ -23,6 +25,7 @@ export const ObservationProvider = ({
   children: React.ReactNode;
 }) => {
   const observationsQuery = useObservationsQuery();
+  const presetsQuery = usePresetsQuery();
 
   const observations = React.useMemo(() => {
     if (!observationsQuery.data) return new Map();
@@ -30,17 +33,18 @@ export const ObservationProvider = ({
     return new Map(observationsQuery.data.map(obs => [obs.docId, obs]));
   }, [observationsQuery.data]);
 
-  if (observationsQuery.isLoading) {
+  if (observationsQuery.data && presetsQuery.data) {
+    return (
+      <ObservationContext.Provider
+        value={{observations, presets: presetsQuery.data}}>
+        {children}
+      </ObservationContext.Provider>
+    );
+  }
+
+  if (observationsQuery.isLoading || presetsQuery.isLoading) {
     <Loading />;
   }
 
-  if (observationsQuery.isError) {
-    <Text>Error</Text>;
-  }
-
-  return (
-    <ObservationContext.Provider value={{observations}}>
-      {children}
-    </ObservationContext.Provider>
-  );
+  <Text>Error</Text>;
 };

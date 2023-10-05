@@ -42,6 +42,7 @@ import {PresetHeader} from './PresetHeader';
 import {FieldDetails} from './FieldDetails';
 import {useFieldsQuery} from '../../hooks/server/useFieldsQuery';
 import {usePresetsQuery} from '../../hooks/server/usePresetsQuery';
+import {useObservation} from '../../hooks/useObservation';
 
 const m = defineMessages({
   share: {
@@ -132,30 +133,21 @@ type ObservationViewProps = {
   observation: Observation;
 };
 
-export const ObservationView = ({observation}: ObservationViewProps) => {
+export const ObservationView = ({id}: {id: string}) => {
   const {formatMessage: t} = useIntl();
-
-  const presetsQuery = usePresetsQuery();
+  const {observation, preset} = useObservation(id);
   const fieldsQuery = useFieldsQuery();
 
-  const preset =
-    typeof observation.tags['categoryId'] !== 'string' || !presetsQuery.data
-      ? undefined
-      : presetsQuery.data.find(
-          pres => pres.docId === observation.tags['categoryId'],
-        );
-
   const defaultAcc: Field[] = [];
-  const fields =
-    !preset || !fieldsQuery.data
-      ? undefined
-      : preset.fieldIds.reduce((acc, pres) => {
-          const fieldToAdd = fieldsQuery.data.find(
-            field => field.tagKey === pres,
-          );
-          if (!fieldToAdd) return acc;
-          return [...acc, fieldToAdd];
-        }, defaultAcc);
+  const fields = !fieldsQuery.data
+    ? undefined
+    : preset.fieldIds.reduce((acc, pres) => {
+        const fieldToAdd = fieldsQuery.data.find(
+          field => field.tagKey === pres,
+        );
+        if (!fieldToAdd) return acc;
+        return [...acc, fieldToAdd];
+      }, defaultAcc);
 
   const deviceId = '';
   const {lat, lon, createdBy, attachments} = observation;

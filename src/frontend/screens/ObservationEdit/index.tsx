@@ -83,7 +83,6 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         style={styles.container}
         contentContainerStyle={styles.scrollViewContent}>
         {isNew && <LocationView />}
-
         <CategoryView />
         <DescriptionField />
         <ThumbnailScrollView />

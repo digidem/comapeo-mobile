@@ -11,12 +11,12 @@ import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types';
 import {filterPhotosFromAttachments} from '../../hooks/persistedState/usePersistedDraftObservation/photosMethods';
 import {BLACK} from '../../lib/styles';
 import {Observation} from '@mapeo/schema';
-import {usePresetsQuery} from '../../hooks/server/usePresetsQuery';
 import {
   FormattedObservationDate,
   FormattedPresetName,
 } from '../../sharedComponents/FormattedData';
 import {PhotoView} from '../../sharedComponents/PhotoView';
+import {useObservation} from '../../hooks/useObservation';
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;
@@ -37,7 +37,7 @@ function ObservationListItemNotMemoized({
   testID,
   onPress = () => {},
 }: ObservationListItemProps) {
-  const preset = useGetPreset(observation);
+  const {preset} = useObservation(observation.docId);
   // const deviceId = useDeviceId();
   //const iconId = preset && preset.icon;
   const iconId = '';
@@ -86,19 +86,6 @@ function ObservationListItemNotMemoized({
       </View>
     </TouchableHighlight>
   );
-}
-
-function useGetPreset(observation: Observation) {
-  const {data, isLoading} = usePresetsQuery();
-
-  if (isLoading) return undefined;
-
-  if (!data) return undefined;
-
-  if (!observation.tags && !('categoryId' in observation.tags))
-    return undefined;
-
-  return data.find(pres => pres.docId === observation.tags.categoryId);
 }
 
 function PhotoStack({attachments}: {attachments: Attachment[]}) {

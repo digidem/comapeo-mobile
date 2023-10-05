@@ -24,6 +24,7 @@ export const CategoryView = () => {
   const {formatMessage: t} = useIntl();
   const {navigate} = useNavigationFromRoot();
   const preset = usePersistedDraftObservation(store => store.preset);
+  console.log({preset});
   const name = preset
     ? t({id: `presets.${preset.docId}.name`, defaultMessage: preset.name})
     : t(m.observation);

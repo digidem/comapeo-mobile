@@ -10,20 +10,17 @@ import {SyncIcon} from '../../sharedComponents/icons/SyncIconCircle';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 
 const ObservationHeaderRight = ({observationId}: {observationId: string}) => {
-  const observation = useObservation(observationId);
+  const observationWithPreset = useObservation(observationId);
   const deviceId = '';
-  const {newDraft} = useDraftObservation();
+  const {editSavedObservation} = useDraftObservation();
   const navigation = useNavigationFromRoot();
 
   function handlePress() {
-    if (!observation) return;
-    newDraft(observation.docId, observation);
+    editSavedObservation(observationWithPreset);
     navigation.navigate('ObservationEdit', {observationId});
   }
 
-  // Don't render the button if observation doesn't exist
-  if (!observation) return null;
-  const isMine = observation.createdBy === deviceId;
+  const isMine = observationWithPreset.observation.createdBy === deviceId;
   return isMine ? (
     <IconButton onPress={handlePress} testID="editButton">
       <EditIcon />

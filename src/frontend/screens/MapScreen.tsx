@@ -18,12 +18,6 @@ export const MapScreen = ({
   const isFocused = useIsFullyFocused();
   const {newDraft} = useDraftObservation();
 
-  // const handleObservationPress = React.useCallback(
-  //   (observationId: string) =>
-  //     navigation.navigate('Observation', {observationId}),
-  //   [navigation],
-  // );
-
   const handleAddPress = () => {
     newDraft();
     navigation.navigate('CategoryChooser');

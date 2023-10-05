@@ -5,6 +5,7 @@ import CheapRuler from 'cheap-ruler';
 import {IconButton} from '../IconButton';
 import {LocationFollowingIcon, LocationNoFollowIcon} from '../icons';
 import {View, StyleSheet} from 'react-native';
+import {ObservationMapLayer} from './ObsevationMapLayer';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -33,6 +34,11 @@ export const MapView = React.memo(
       Mapbox.setTelemetryEnabled(false);
     }, []);
 
+    function handleLocationPress() {
+      setZoom(DEFAULT_ZOOM);
+      setFollowing(prev => !prev);
+    }
+
     return (
       <React.Fragment>
         <Mapbox.MapView
@@ -44,30 +50,38 @@ export const MapView = React.memo(
           surfaceView={true}
           attributionPosition={{right: 8, bottom: 8}}
           compassEnabled={false}
-          styleURL={MAP_STYLE}>
+          styleURL={MAP_STYLE}
+          onMoveShouldSetResponder={() => {
+            if (following) setFollowing(false);
+            return true;
+          }}>
           <Mapbox.Camera
             defaultSettings={{
               centerCoordinate: coords,
               zoomLevel: zoom,
             }}
             centerCoordinate={following ? coords : undefined}
+            zoomLevel={following ? zoom : undefined}
             // zoomLevel={zoom}
             animationDuration={1000}
             animationMode="flyTo"
             followUserLocation={false}
           />
-          {locationServiceEnabled ? (
+          <ObservationMapLayer />
+          {locationServiceEnabled && (
             <UserLocation
               visible={isFocused}
               minDisplacement={MIN_DISPLACEMENT}
             />
-          ) : null}
+          )}
         </Mapbox.MapView>
-        <View style={styles.locationButton}>
-          <IconButton onPress={() => setFollowing(prev => !prev)}>
-            {following ? <LocationFollowingIcon /> : <LocationNoFollowIcon />}
-          </IconButton>
-        </View>
+        {locationServiceEnabled && (
+          <View style={styles.locationButton}>
+            <IconButton onPress={handleLocationPress}>
+              {following ? <LocationFollowingIcon /> : <LocationNoFollowIcon />}
+            </IconButton>
+          </View>
+        )}
       </React.Fragment>
     );
   },
@@ -81,8 +95,7 @@ function shouldComponentSkipRerender(
   // if map screen is not in focus, do not re-render
   if (!nextProps.isFocused) return true;
 
-  if (prevProps.locationServiceEnabled !== nextProps.locationServiceEnabled)
-    return false;
+  if (shallowDiffers(prevProps, nextProps, ['coords'])) return false;
 
   if (!nextProps.coords) return true;
 
@@ -95,6 +108,14 @@ function shouldComponentSkipRerender(
 
   if (distanceMoved < MIN_DISPLACEMENT) return true;
 
+  return false;
+}
+
+function shallowDiffers(a: any, b: any, omit: string[] = []) {
+  for (const i in a) if (!(i in b)) return true;
+  for (const i in b) {
+    if (a[i] !== b[i] && omit.indexOf(i) === -1) return true;
+  }
   return false;
 }
 

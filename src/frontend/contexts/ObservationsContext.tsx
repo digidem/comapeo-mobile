@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {Observation} from '@mapeo/schema';
+import {Observation, Preset} from '@mapeo/schema';
 import {useObservationsQuery} from '../hooks/server/useObservationsQuery';
 import {Loading} from '../sharedComponents/Loading';
 import {Text} from '../sharedComponents/Text';
+import {usePresetsQuery} from '../hooks/server/usePresetsQuery';
 
 export type ObservationsMap = Map<string, Observation>;
 
@@ -21,19 +22,19 @@ export const ObservationProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const {data, isLoading, isError} = useObservationsQuery();
+  const observationsQuery = useObservationsQuery();
 
   const observations = React.useMemo(() => {
-    if (!data) return new Map();
+    if (!observationsQuery.data) return new Map();
 
-    return new Map(data.map(obs => [obs.docId, obs]));
-  }, [data]);
+    return new Map(observationsQuery.data.map(obs => [obs.docId, obs]));
+  }, [observationsQuery.data]);
 
-  if (isLoading) {
+  if (observationsQuery.isLoading) {
     <Loading />;
   }
 
-  if (isError) {
+  if (observationsQuery.isError) {
     <Text>Error</Text>;
   }
 

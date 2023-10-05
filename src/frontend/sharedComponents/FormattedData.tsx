@@ -1,5 +1,10 @@
 import * as React from 'react';
-import {FormattedDate, defineMessages, useIntl} from 'react-intl';
+import {
+  CustomFormatConfig,
+  FormattedDate,
+  defineMessages,
+  useIntl,
+} from 'react-intl';
 import {Field, Observation, Preset} from '@mapeo/schema';
 
 import {formatCoords, convertSelectOptionsToLabeled} from '../lib/utils';
@@ -112,7 +117,7 @@ export const FormattedObservationDate = React.memo(
     createdDate: string;
     // 'relative' = relative date format e.g. "3 minutes ago"
     // for other formats see formats.date
-    variant: 'relative' | keyof typeof formats.date;
+    variant: 'relative' | CustomFormatConfig['format'];
   }) => {
     // if date format is unixTimeZero convert to a number, else leaves in string format
     const createdAtDate = new Date(

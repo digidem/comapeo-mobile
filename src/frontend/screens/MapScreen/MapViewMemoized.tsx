@@ -29,7 +29,7 @@ type MapViewProps = {
   locationServiceEnabled?: boolean;
 };
 
-const MAP_STYLE = Mapbox.StyleURL.Outdoors;
+export const MAP_STYLE = Mapbox.StyleURL.Outdoors;
 
 export const MapViewMemoized = React.memo(
   ({coords, locationServiceEnabled, isFocused}: MapViewProps) => {

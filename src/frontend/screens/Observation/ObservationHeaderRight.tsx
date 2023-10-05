@@ -2,7 +2,7 @@ import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 
 import {IconButton} from '../../sharedComponents/IconButton';
-import {useObservation} from '../../hooks/useObservation';
+import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 
 import {EditIcon} from '../../sharedComponents/icons';
@@ -10,7 +10,7 @@ import {SyncIcon} from '../../sharedComponents/icons/SyncIconCircle';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 
 const ObservationHeaderRight = ({observationId}: {observationId: string}) => {
-  const observationWithPreset = useObservation(observationId);
+  const observationWithPreset = useObservationWithPreset(observationId);
   const deviceId = '';
   const {editSavedObservation} = useDraftObservation();
   const navigation = useNavigationFromRoot();

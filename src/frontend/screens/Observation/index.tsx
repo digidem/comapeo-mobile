@@ -7,7 +7,7 @@ import {BLACK, WHITE, DARK_GREY, LIGHT_GREY} from '../../lib/styles';
 import {FormattedObservationDate} from '../../sharedComponents/FormattedData';
 import {Field} from '@mapeo/schema';
 import {PresetHeader} from './PresetHeader';
-import {useObservation} from '../../hooks/useObservation';
+import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
 import {useFieldsQuery} from '../../hooks/server/useFieldsQuery';
 import {FieldDetails} from './FieldDetails';
 import {InsetMapView} from './InsetMapView';
@@ -43,7 +43,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
     });
   }, [navigation, observationId]);
 
-  const {observation, preset} = useObservation(observationId);
+  const {observation, preset} = useObservationWithPreset(observationId);
   const fieldsQuery = useFieldsQuery();
 
   const defaultAcc: Field[] = [];

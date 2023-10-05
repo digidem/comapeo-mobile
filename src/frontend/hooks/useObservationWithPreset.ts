@@ -1,6 +1,6 @@
 import {useObservationContext} from '../contexts/ObservationsContext';
 
-export const useObservation = (observationId: string) => {
+export const useObservationWithPreset = (observationId: string) => {
   const {observations, presets} = useObservationContext();
   const observation = observations.get(observationId);
   const preset =

@@ -15,7 +15,7 @@ import {
   FormattedPresetName,
 } from '../../sharedComponents/FormattedData';
 import {PhotoView} from '../../sharedComponents/PhotoView';
-import {useObservation} from '../../hooks/useObservation';
+import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;
@@ -36,7 +36,7 @@ function ObservationListItemNotMemoized({
   testID,
   onPress = () => {},
 }: ObservationListItemProps) {
-  const {preset} = useObservation(observation.docId);
+  const {preset} = useObservationWithPreset(observation.docId);
   const deviceId = '';
   //const iconId = preset && preset.icon;
   const iconId = '';

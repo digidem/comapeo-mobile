@@ -34,15 +34,15 @@ const App = () => {
             <BottomSheetModalProvider>
               <ObservationProvider>
                 <NavigationContainer ref={navRef}>
-                  <LocationProvider>
-                    <SecurityProvider>
-                      <PhotoPromiseProvider>
+                  <PhotoPromiseProvider>
+                    <LocationProvider>
+                      <SecurityProvider>
                         <Loading>
                           <AppNavigator />
                         </Loading>
-                      </PhotoPromiseProvider>
-                    </SecurityProvider>
-                  </LocationProvider>
+                      </SecurityProvider>
+                    </LocationProvider>
+                  </PhotoPromiseProvider>
                 </NavigationContainer>
               </ObservationProvider>
             </BottomSheetModalProvider>

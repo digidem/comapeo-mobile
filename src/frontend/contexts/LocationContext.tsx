@@ -11,6 +11,7 @@ import {
 } from './PermissionsContext';
 import {storage} from '../hooks/persistedState/createPersistedState';
 import {Position, Provider} from '../sharedTypes';
+import {useDraftObservation} from '../hooks/useDraftObservation';
 
 const log = debug('mapeo:Location');
 const STORE_KEY = '@MapeoPosition@1';
@@ -79,6 +80,7 @@ export const useLocationContext = () => {
  */
 export const LocationProvider = ({children}: React.PropsWithChildren<{}>) => {
   const {permissions, requestPermissions} = usePermissionContext();
+  const {updateObservationPosition} = useDraftObservation();
 
   const [error, setError] = React.useState(false);
   const [position, setPosition] = React.useState<Position>();
@@ -125,11 +127,13 @@ export const LocationProvider = ({children}: React.PropsWithChildren<{}>) => {
               ([key, val]) => [key, !val ? undefined : val] as const,
             );
 
-            setPosition({
+            const position = {
               timestamp: location.timestamp.toString(),
               mocked: location.mocked || false,
               coords: Object.fromEntries(newCoord),
-            });
+            };
+            updateObservationPosition({position});
+            setPosition(position);
           },
         );
       } else {

@@ -21,7 +21,7 @@ import {Settings} from '../../screens/Settings';
 import {EmptySettingsScreen} from '../../screens/Settings/EmptySettingsScreen';
 import {PresetChooser} from '../../screens/PresetChooser';
 import {ObservationsList} from '../../screens/ObservationsList';
-import Observation from '../../screens/Observation';
+import {ObservationScreen} from '../../screens/Observation';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -174,8 +174,8 @@ export const createDefaultScreenGroup = (
     />
     <RootStack.Screen
       name="Observation"
-      component={Observation}
-      options={{headerTitle: intl(Observation.navTitle)}}
+      component={ObservationScreen}
+      options={{headerTitle: intl(ObservationScreen.navTitle)}}
     />
   </RootStack.Group>
 );

@@ -7,7 +7,6 @@ import {CategoryCircleIcon} from '../../sharedComponents/icons/CategoryIcon';
 //import PhotoView from "../../sharedComponents/PhotoView";
 // import useDeviceId from "../../hooks/useDeviceId";
 import {Attachment, ViewStyleProp} from '../../sharedTypes';
-import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types';
 import {filterPhotosFromAttachments} from '../../hooks/persistedState/usePersistedDraftObservation/photosMethods';
 import {BLACK} from '../../lib/styles';
 import {Observation} from '@mapeo/schema';
@@ -38,7 +37,7 @@ function ObservationListItemNotMemoized({
   onPress = () => {},
 }: ObservationListItemProps) {
   const {preset} = useObservation(observation.docId);
-  // const deviceId = useDeviceId();
+  const deviceId = '';
   //const iconId = preset && preset.icon;
   const iconId = '';
   // const iconColor = preset && preset.color;
@@ -48,7 +47,7 @@ function ObservationListItemNotMemoized({
   //   observationQuery.data && observationQuery.data.attachments
   // ).slice(0, 3);
   const photos = [];
-  const isMine = true;
+  const isMine = observation.createdBy === deviceId;
   return (
     <TouchableHighlight
       onPress={() => onPress(observation.docId)}

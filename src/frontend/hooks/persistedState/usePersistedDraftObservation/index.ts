@@ -56,22 +56,29 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
     updateObservationPosition: ({position, manualLocation}) => {
       if (!position || !position.coords) return;
       const prevValue = get().value;
-      if (!prevValue)
-        throw new Error(
-          'Cannot set position if observation does not already exist (aka if the user has not chosen a category)',
-        );
-      set({
-        value: {
-          ...prevValue,
-          lon: position.coords.longitude,
-          lat: position.coords.latitude,
-          metadata: {
-            ...prevValue.metadata,
-            position: position,
-            manualLocation,
+
+      // if there is no draft observation initialized, ignore update
+      if (!prevValue) return;
+      // if the location has been manually set it cannot be overwritten unless there is a new manual location
+      if (prevValue.metadata.manualLocation && !manualLocation) return;
+      const prevAccuracy = prevValue.metadata.position?.coords?.accuracy;
+      const newAccuracy = position.coords?.accuracy;
+      if (!newAccuracy) return;
+      if (!prevAccuracy || newAccuracy < prevAccuracy) {
+        set({
+          value: {
+            ...prevValue,
+            lon: position.coords.longitude,
+            lat: position.coords.latitude,
+            metadata: {
+              ...prevValue.metadata,
+              position: position,
+              manualLocation,
+            },
           },
-        },
-      });
+        });
+        return;
+      }
     },
     newDraft: (id, value) =>
       set({

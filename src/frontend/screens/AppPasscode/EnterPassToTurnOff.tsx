@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {defineMessages} from 'react-intl';
 
-import {NativeNavigationScreen} from '../../sharedTypes';
+import {NativeNavigationComponent} from '../../sharedTypes';
 import {InputPasscode} from './InputPasscode';
 import {useSecurityContext} from '../../contexts/SecurityContext';
 
@@ -24,7 +24,7 @@ const m = defineMessages({
   },
 });
 
-export const EnterPassToTurnOff: NativeNavigationScreen<
+export const EnterPassToTurnOff: NativeNavigationComponent<
   'EnterPassToTurnOff'
 > = ({navigation}) => {
   const {authenticate, authValuesSet} = useSecurityContext();

@@ -3,10 +3,10 @@ import {NavigatorScreenParams} from '@react-navigation/native';
 import * as React from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import {DummyScreen} from './DummyScreen';
 import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {RootStack} from '../AppStack';
 import {MessageDescriptor} from 'react-intl';
+import {MapScreen} from '../../screens/MapScreen';
 import {CameraScreen} from '../../screens/CameraScreen';
 import {ObservationEdit} from '../../screens/ObservationEdit';
 import {AddPhotoScreen} from '../../screens/AddPhoto';
@@ -94,7 +94,7 @@ const HomeTabs = () => (
     })}
     initialRouteName="Map"
     backBehavior="initialRoute">
-    <Tab.Screen name="Map" component={DummyScreen} />
+    <Tab.Screen name="Map" component={MapScreen} />
     <Tab.Screen name="Camera" component={CameraScreen} />
   </Tab.Navigator>
 );

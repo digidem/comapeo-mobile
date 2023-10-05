@@ -12,7 +12,7 @@ type Props = {
   testID?: string;
 };
 
-const IconButtonComponent = ({children, onPress, style, testID}: Props) => (
+const IconButtonNotMemoized = ({children, onPress, style, testID}: Props) => (
   <TouchableNativeFeedback
     testID={testID}
     onPress={onPress}
@@ -21,7 +21,7 @@ const IconButtonComponent = ({children, onPress, style, testID}: Props) => (
   </TouchableNativeFeedback>
 );
 
-export const IconButton = React.memo<Props>(IconButtonComponent);
+export const IconButton = React.memo<Props>(IconButtonNotMemoized);
 
 const styles = StyleSheet.create({
   container: {

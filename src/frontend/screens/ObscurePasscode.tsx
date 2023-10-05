@@ -6,7 +6,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {OBSCURE_PASSCODE} from '../constants';
 import {LIGHT_GREY} from '../lib/styles';
 import {Text} from '../sharedComponents/Text';
-import {NativeNavigationScreen} from '../sharedTypes';
+import {NativeNavigationComponent} from '../sharedTypes';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {useSecurityContext} from '../contexts/SecurityContext';
 import {usePersistedPasscode} from '../hooks/persistedState/usePersistedPasscode';
@@ -36,7 +36,7 @@ const m = defineMessages({
   },
 });
 
-export const ObscurePasscode: NativeNavigationScreen<'ObscurePasscode'> = ({
+export const ObscurePasscode: NativeNavigationComponent<'ObscurePasscode'> = ({
   navigation,
 }) => {
   const {authValuesSet, authState} = useSecurityContext();

@@ -3,7 +3,7 @@ import {InputPasscode} from './InputPasscode';
 import {defineMessages} from 'react-intl';
 import {OBSCURE_PASSCODE} from '../../constants';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {NativeNavigationScreen} from '../../sharedTypes';
+import {NativeNavigationComponent} from '../../sharedTypes';
 import {ConfirmPasscodeSheet} from './ConfirmPasscodeSheet';
 import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
 
@@ -45,7 +45,7 @@ type SetPasswordError =
     }
   | {error: false; isObscurePassword: false};
 
-export const SetPasscode: NativeNavigationScreen<'SetPasscode'> = () => {
+export const SetPasscode: NativeNavigationComponent<'SetPasscode'> = () => {
   const [error, setError] = React.useState<SetPasswordError>({
     error: false,
     isObscurePassword: false,

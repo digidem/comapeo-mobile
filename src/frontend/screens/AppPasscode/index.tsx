@@ -3,7 +3,7 @@ import {defineMessages} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 
 import {WHITE} from '../../lib/styles';
-import {NativeNavigationScreen} from '../../sharedTypes';
+import {NativeNavigationComponent} from '../../sharedTypes';
 import {PasscodeIntro} from './PasscodeIntro';
 import {useSecurityContext} from '../../contexts/SecurityContext';
 
@@ -14,7 +14,7 @@ const m = defineMessages({
   },
 });
 
-export const AppPasscode: NativeNavigationScreen<'AppPasscode'> = ({
+export const AppPasscode: NativeNavigationComponent<'AppPasscode'> = ({
   navigation,
 }) => {
   const {authState} = useSecurityContext();

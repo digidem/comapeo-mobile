@@ -4,7 +4,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {FormattedMessage, defineMessages} from 'react-intl';
 
 import {List, ListItem, ListItemText} from '../../sharedComponents/List';
-import {NativeNavigationScreen} from '../../sharedTypes';
+import {NativeNavigationComponent} from '../../sharedTypes';
 import {MEDIUM_GREY, RED} from '../../lib/styles';
 import {Text} from 'react-native';
 import {useSecurityContext} from '../../contexts/SecurityContext';
@@ -44,7 +44,9 @@ const m = defineMessages({
   },
 });
 
-export const Security: NativeNavigationScreen<'Security'> = ({navigation}) => {
+export const Security: NativeNavigationComponent<'Security'> = ({
+  navigation,
+}) => {
   const {authState, authValuesSet} = useSecurityContext();
   const [highlight, setHighlight] = React.useState(false);
 

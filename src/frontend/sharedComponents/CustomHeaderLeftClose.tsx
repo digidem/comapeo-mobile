@@ -8,7 +8,6 @@ import {BLACK} from '../lib/styles';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import {useDraftObservation} from '../hooks/useDraftObservation';
 import {defineMessages, useIntl} from 'react-intl';
-import {useObservationQuery} from '../hooks/server/useObservationQuery';
 
 const m = defineMessages({
   discardTitle: {
@@ -120,7 +119,6 @@ const HeaderBackEditObservation = ({
   const {formatMessage: t} = useIntl();
 
   const {clearDraft} = useDraftObservation();
-  const {data, isLoading} = useObservationQuery(observationId);
 
   const handleCloseRequest = React.useCallback(() => {
     // if untouched just go back and dont do alert
@@ -142,11 +140,7 @@ const HeaderBackEditObservation = ({
       {...headerBackButtonProps}
       onPress={handleCloseRequest}
       style={{marginLeft: 0, marginRight: 15}}
-      backImage={
-        isLoading
-          ? undefined
-          : () => <HeaderCloseIcon tintColor={tintColor || BLACK} />
-      }
+      backImage={() => <HeaderCloseIcon tintColor={tintColor || BLACK} />}
     />
   );
 };

@@ -10,6 +10,7 @@ export function useCreateObservation() {
 
   return (value: ClientGeneratedObservation) =>
     attachmentsMutation.mutateAsync().then(att => {
+      console.log({att}, 'from mutation ');
       observationMutation.mutate({value, att});
     });
 }
@@ -28,7 +29,7 @@ function useObservationMutation() {
       await api.observation.create({
         schemaName: 'observation',
         ...value,
-        attachments: {...att},
+        attachments: att,
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ['observations']});

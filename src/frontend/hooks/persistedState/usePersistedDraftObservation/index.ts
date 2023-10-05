@@ -83,7 +83,10 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
     newDraft: (id, value) =>
       set({
         observationId: id,
-        photos: value ? filterPhotosFromAttachments(value.attachments) : [],
+        photos:
+          value && value.attachments
+            ? filterPhotosFromAttachments(value.attachments)
+            : [],
         value,
         preset: undefined,
       }),

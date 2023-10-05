@@ -1,35 +1,22 @@
 import React from 'react';
 import {Alert} from 'react-native';
 import {Text} from '../../sharedComponents/Text';
-import {defineMessages, useIntl, FormattedMessage} from 'react-intl';
+import {defineMessages, FormattedMessage} from 'react-intl';
 
 import {CenteredView} from '../../sharedComponents/CenteredView';
 import ObservationHeaderRight from './ObservationHeaderRight';
 import {NativeNavigationComponent} from '../../sharedTypes';
-import {useObservationQuery} from '../../hooks/server/useObservationQuery';
 import {Loading} from '../../sharedComponents/Loading';
 import {ObservationView} from './ObservationView';
+import {useObservation} from '../../hooks/useObservation';
+import {usePresetsQuery} from '../../hooks/server/usePresetsQuery';
+import {useFieldsQuery} from '../../hooks/server/useFieldsQuery';
 
 const m = defineMessages({
   notFound: {
     id: 'screens.Observation.notFound',
     defaultMessage: 'Observation not found',
     description: 'Message shown when an observation is not found',
-  },
-  deleteTitle: {
-    id: 'screens.Observation.deleteTitle',
-    defaultMessage: 'Delete observation?',
-    description: 'Title of dialog asking confirmation to delete an observation',
-  },
-  cancel: {
-    id: 'screens.Observation.cancel',
-    defaultMessage: 'Cancel',
-    description: 'Button to cancel delete of observation',
-  },
-  confirm: {
-    id: 'screens.Observation.confirm',
-    defaultMessage: 'Yes, delete',
-    description: 'Button to confirm delete of observation',
   },
   title: {
     id: 'screens.Observation.title',
@@ -64,42 +51,11 @@ const Observation: NativeNavigationComponent<'Observation'> = ({
     });
   }, [navigation, observationId]);
 
-  const {formatMessage: t} = useIntl();
+  const observation = useObservation(observationId);
 
-  const observationQuery = useObservationQuery(observationId);
+  if (!observation) return <ObservationNotFound />;
 
-  function handlePressPhoto(photoIndex: number) {
-    navigation.navigate('PhotosModal', {
-      photoIndex: photoIndex,
-      observationId: observationId,
-      editing: false,
-    });
-  }
-
-  function handlePressDelete() {
-    Alert.alert(t(m.deleteTitle), undefined, [
-      {
-        text: t(m.cancel),
-        onPress: () => {},
-      },
-      {
-        text: t(m.confirm),
-        onPress: () => {
-          //deleteObservation();
-          //navigation.pop();
-          return;
-        },
-      },
-    ]);
-  }
-
-  if (observationQuery.data) {
-    return <ObservationView observation={observationQuery.data} />;
-  }
-
-  if (observationQuery.isLoading) return <Loading />;
-
-  return <Text>Error</Text>;
+  return <ObservationView observation={observation} />;
 };
 
 Observation.navTitle = m.title;

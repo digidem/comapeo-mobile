@@ -1,22 +1,13 @@
 import {View, Text, StyleSheet} from 'react-native';
-import {usePresetQuery} from '../../hooks/server/usePresetQuery';
 import {MEDIUM_GREY, DARK_GREY, BLACK} from '../../lib/styles';
 import {
   FormattedFieldProp,
   FormattedFieldValue,
 } from '../../sharedComponents/FormattedData';
 import {Loading} from '../../sharedComponents/Loading';
+import {Field} from '@mapeo/schema';
 
-export const CategoryDetails = ({categoryId}: {categoryId: string}) => {
-  const preset = usePresetQuery(categoryId);
-
-  if (preset.isError) {
-    return <></>;
-  }
-  if (preset.isLoading) {
-    return <Loading />;
-  }
-
+export const FieldDetails = ({fields}: {fields: Field[]}) => {
   return (
     <View>
       {/* {fields.map((field, idx) => {

@@ -35,14 +35,13 @@ import {
   FormattedObservationDate,
 } from '../../sharedComponents/FormattedData';
 import {filterPhotosFromAttachments} from '../../hooks/persistedState/usePersistedDraftObservation/photosMethods';
-import {Observation, Preset} from '@mapeo/schema';
+import {Field, Observation, Preset} from '@mapeo/schema';
 import {MAP_STYLE} from '../MapScreen/MapViewMemoized';
-import {useObservationQuery} from '../../hooks/server/useObservationQuery';
-import {observation, preset} from '@mapeo/schema/dist/validations';
-import {NativeNavigationComponent} from '../../sharedTypes';
 import {convertToUTM} from '../../lib/utils';
-import {usePresetQuery} from '../../hooks/server/usePresetQuery';
-import {CategoryHeader} from './CategoryHeader';
+import {PresetHeader} from './PresetHeader';
+import {FieldDetails} from './FieldDetails';
+import {useFieldsQuery} from '../../hooks/server/useFieldsQuery';
+import {usePresetsQuery} from '../../hooks/server/usePresetsQuery';
 
 const m = defineMessages({
   share: {
@@ -129,16 +128,65 @@ const Button = ({onPress, color, iconName, title}: ButtonProps) => (
   </TouchableOpacity>
 );
 
-export const ObservationView = ({observation}: {observation: Observation}) => {
+type ObservationViewProps = {
+  observation: Observation;
+};
+
+export const ObservationView = ({observation}: ObservationViewProps) => {
   const {formatMessage: t} = useIntl();
+
+  const presetsQuery = usePresetsQuery();
+  const fieldsQuery = useFieldsQuery();
+
+  const preset =
+    typeof observation.tags['categoryId'] !== 'string' || !presetsQuery.data
+      ? undefined
+      : presetsQuery.data.find(
+          pres => pres.docId === observation.tags['categoryId'],
+        );
+
+  const defaultAcc: Field[] = [];
+  const fields =
+    !preset || !fieldsQuery.data
+      ? undefined
+      : preset.fieldIds.reduce((acc, pres) => {
+          const fieldToAdd = fieldsQuery.data.find(
+            field => field.tagKey === pres,
+          );
+          if (!fieldToAdd) return acc;
+          return [...acc, fieldToAdd];
+        }, defaultAcc);
+
   const deviceId = '';
   const {lat, lon, createdBy, attachments} = observation;
   const isMine = deviceId === createdBy;
   // Currently only show photo attachments
-  const photos = filterPhotosFromAttachments(attachments);
+  const photos = [];
 
-  // const fields = (preset && preset.fieldIds) || [];
-  // const icon = (preset && preset.iconId) || undefined;
+  // function handlePressPhoto(photoIndex: number) {
+  //   navigation.navigate('PhotosModal', {
+  //     photoIndex: photoIndex,
+  //     observationId: observationId,
+  //     editing: false,
+  //   });
+  // }
+
+  // function handlePressDelete() {
+  //   Alert.alert(t(m.deleteTitle), undefined, [
+  //     {
+  //       text: t(m.cancel),
+  //       onPress: () => {},
+  //     },
+  //     {
+  //       text: t(m.confirm),
+  //       onPress: () => {
+  //         //deleteObservation();
+  //         //navigation.pop();
+  //         return;
+  //       },
+  //     },
+  //   ]);
+  // }
 
   return (
     <ScrollView
@@ -170,49 +218,22 @@ export const ObservationView = ({observation}: {observation: Observation}) => {
           </Text>
         </View>
         <View style={[styles.section, {flex: 1}]}>
-          {typeof observation.tags.categoryId === 'string' && (
-            <CategoryHeader categoryId={observation.tags.categoryId} />
-          )}
+          {preset && <PresetHeader preset={preset} />}
           {typeof observation.tags.notes === 'string' ? (
             <View style={{paddingTop: 15}}>
               <Text style={styles.textNotes}>{observation.tags.notes}</Text>
             </View>
           ) : null}
-          {!!photos.length && (
+          {/* {!!photos.length && (
             <ThumbnailScrollView
               photos={
-                // $FlowFixMe
                 photos
               }
               onPressPhoto={() => {}}
             />
-          )}
+          )} */}
         </View>
-        {/* {fields && fields.length > 0 && (
-          <View>
-            {fields.map((field, idx) => {
-              const value = getProp(observation.tags, field.key);
-              return (
-                <View
-                  key={idx}
-                  style={[styles.section, styles.optionalSection]}
-                >
-                  <Text style={styles.fieldTitle}>
-                    <FormattedFieldProp field={field} propName="label" />
-                  </Text>
-                  <Text
-                    style={[
-                      styles.fieldAnswer,
-                      { color: value === undefined ? MEDIUM_GREY : DARK_GREY },
-                    ]}
-                  >
-                    <FormattedFieldValue value={value} field={field} />
-                  </Text>
-                </View>
-              );
-            })}
-          </View>
-        )} */}
+        {fields && fields.length > 0 && <FieldDetails fields={fields} />}
         <View style={styles.divider}></View>
         <View style={styles.buttonContainer}>
           {isMine && (

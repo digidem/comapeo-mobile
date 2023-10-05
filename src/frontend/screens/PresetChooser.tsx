@@ -33,7 +33,7 @@ const DynFormattedMessage = FormattedMessage;
 const ROW_HEIGHT = 120;
 const MIN_COL_WIDTH = 100;
 
-export const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
+export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
   navigation,
 }) => {
   const {updatePreset} = useDraftObservation();
@@ -138,7 +138,7 @@ const Item = React.memo(
   ),
 );
 
-CategoryChooser.navTitle = m.categoryTitle;
+PresetChooser.navTitle = m.categoryTitle;
 
 const styles = StyleSheet.create({
   container: {

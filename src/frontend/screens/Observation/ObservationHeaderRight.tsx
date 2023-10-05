@@ -1,31 +1,29 @@
-// @flow
-import React from 'react';
+import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 
-import IconButton from '../../sharedComponents/IconButton';
+import {IconButton} from '../../sharedComponents/IconButton';
 import {useObservation} from '../../hooks/useObservation';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 
 import {EditIcon} from '../../sharedComponents/icons';
-import useDeviceId from '../../hooks/useDeviceId';
 import {SyncIcon} from '../../sharedComponents/icons/SyncIconCircle';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 
-const ObservationHeaderRight = ({observationId}) => {
-  const [{observation}] = useObservation(observationId);
-  const deviceId = useDeviceId();
-  const [, {newDraft}] = useDraftObservation();
+const ObservationHeaderRight = ({observationId}: {observationId: string}) => {
+  const observation = useObservation(observationId);
+  const deviceId = '';
+  const {newDraft} = useDraftObservation();
   const navigation = useNavigationFromRoot();
 
   function handlePress() {
     if (!observation) return;
-    newDraft(observation.id, observation);
+    newDraft(observation.docId, observation);
     navigation.navigate('ObservationEdit', {observationId});
   }
 
   // Don't render the button if observation doesn't exist
   if (!observation) return null;
-  const isMine = observation.deviceId === deviceId;
+  const isMine = observation.createdBy === deviceId;
   return isMine ? (
     <IconButton onPress={handlePress} testID="editButton">
       <EditIcon />

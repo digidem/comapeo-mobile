@@ -17,6 +17,7 @@ import {LIGHT_GREY} from '../lib/styles';
 import {AlertIcon} from './icons';
 import {Photo} from '../contexts/PhotoPromiseContext/types';
 import {api} from '../api';
+import {usePersistedDraftObservation} from '../hooks/persistedState/usePersistedDraftObservation';
 
 const spacing = 10;
 const minSize = 150;
@@ -58,21 +59,22 @@ export const Thumbnail = ({photo, style, size, onPress}: ThumbnailProps) => {
   );
 };
 
-type Props = {
-  onPressPhoto: (index: number) => any;
-  photos: Array<Photo>;
-};
-
-export const ThumbnailScrollView = ({onPressPhoto, photos}: Props) => {
+export const ThumbnailScrollView = () => {
   const scrollViewRef = React.useRef<ScrollView>(null);
+  const photos = usePersistedDraftObservation(store => store.photos);
 
   React.useLayoutEffect(() => {
-    // For some reason without the timeout this does not work.
-    const timeoutID = setTimeout(() => {
-      scrollViewRef.current && scrollViewRef.current.scrollToEnd();
-    }, 50);
-    return () => clearTimeout(timeoutID);
+    scrollViewRef.current && scrollViewRef.current.scrollToEnd();
   }, [photos.length]);
+
+  function handlePhotoPress(photoIndex: number) {
+    // navigation.navigate('PhotosModal', {
+    //   photoIndex: photoIndex,
+    //   observationId: observationId,
+    //   editing: true,
+    // });
+    return;
+  }
 
   if (photos.length === 0) return null;
   const windowWidth = Dimensions.get('window').width;
@@ -96,7 +98,7 @@ export const ThumbnailScrollView = ({onPressPhoto, photos}: Props) => {
             photo={photo}
             style={styles.thumbnail}
             size={size}
-            onPress={() => onPressPhoto(photos.indexOf(photo))}
+            onPress={() => handlePhotoPress(photos.indexOf(photo))}
           />
         ))}
     </ScrollView>

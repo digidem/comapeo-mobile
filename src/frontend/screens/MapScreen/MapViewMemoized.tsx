@@ -40,7 +40,7 @@ export const MapViewMemoized = React.memo(
 
     const handleAddPress = () => {
       newDraft();
-      navigate('CategoryChooser');
+      navigate('PresetChooser');
     };
 
     React.useEffect(() => {

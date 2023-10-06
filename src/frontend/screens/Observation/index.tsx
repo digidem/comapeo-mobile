@@ -98,7 +98,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
         </View>
         {fields && fields.length > 0 && <FieldDetails fields={fields} />}
         <View style={styles.divider}></View>
-        <ButtonFields isMine={isMine} />
+        <ButtonFields isMine={isMine} observationId={observationId} />
       </>
     </ScrollView>
   );

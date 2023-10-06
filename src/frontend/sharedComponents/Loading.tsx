@@ -3,13 +3,13 @@ import {View, StyleSheet, Easing} from 'react-native';
 import {DotIndicator} from 'react-native-indicators';
 import {WHITE} from '../lib/styles';
 
-export const Loading = ({color}: {color?: string}) => (
+export const Loading = ({color, size}: {color?: string; size?: number}) => (
   <View style={styles.root}>
     <DotIndicator
       color={color}
       count={3}
       animationDuration={1500}
-      size={10}
+      size={size || 10}
       animationEasing={Easing.ease}
     />
   </View>

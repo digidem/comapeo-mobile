@@ -42,9 +42,9 @@ export const ObservationProvider = ({
     );
   }
 
-  if (observationsQuery.isLoading || presetsQuery.isLoading) {
-    <Loading />;
+  if (observationsQuery.isError || presetsQuery.isError) {
+    <Text>Error</Text>;
   }
 
-  return <Text>Error</Text>;
+  return <Loading />;
 };

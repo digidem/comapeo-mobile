@@ -7,13 +7,14 @@ import {
   LocationFollowingIcon,
   LocationNoFollowIcon,
 } from '../../sharedComponents/icons';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Easing, ActivityIndicator} from 'react-native';
 import {ObservationMapLayer} from './ObsevationMapLayer';
 import {AddButton} from '../../sharedComponents/AddButton';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 // @ts-ignore
 import ScaleBar from 'react-native-scale-bar';
+import {BallIndicator} from 'react-native-indicators';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -29,13 +30,15 @@ type MapViewProps = {
   coords?: number[];
   isFocused: boolean;
   locationServiceEnabled?: boolean;
+  savedCoords?: number[];
 };
 
 export const MAP_STYLE = Mapbox.StyleURL.Outdoors;
 
 export const MapViewMemoized = React.memo(
-  ({coords, locationServiceEnabled, isFocused}: MapViewProps) => {
+  ({coords, locationServiceEnabled, isFocused, savedCoords}: MapViewProps) => {
     const [zoom, setZoom] = React.useState(DEFAULT_ZOOM);
+    const [isFinishedLoading, setIsFinishedLoading] = React.useState(false);
     const [following, setFollowing] = React.useState(false);
     const {newDraft} = useDraftObservation();
     const {navigate} = useNavigationFromHomeTabs();
@@ -54,6 +57,11 @@ export const MapViewMemoized = React.memo(
       setFollowing(prev => !prev);
     }
 
+    function handleDidFinishLoadingStyle() {
+      setIsFinishedLoading(true);
+      setFollowing(true);
+    }
+
     return (
       <View style={{flex: 1}}>
         <Mapbox.MapView
@@ -67,13 +75,14 @@ export const MapViewMemoized = React.memo(
           compassEnabled={false}
           scaleBarEnabled={false}
           styleURL={MAP_STYLE}
+          onDidFinishLoadingStyle={handleDidFinishLoadingStyle}
           onMoveShouldSetResponder={() => {
             if (following) setFollowing(false);
             return true;
           }}>
           <Mapbox.Camera
             defaultSettings={{
-              centerCoordinate: coords,
+              centerCoordinate: coords || savedCoords,
               zoomLevel: zoom,
             }}
             centerCoordinate={following ? coords : undefined}
@@ -82,7 +91,8 @@ export const MapViewMemoized = React.memo(
             animationMode="flyTo"
             followUserLocation={false}
           />
-          <ObservationMapLayer />
+
+          {isFinishedLoading && <ObservationMapLayer />}
           {locationServiceEnabled && (
             <UserLocation
               visible={isFocused}
@@ -90,19 +100,24 @@ export const MapViewMemoized = React.memo(
             />
           )}
         </Mapbox.MapView>
+
         <ScaleBar
           zoom={zoom || 10}
           latitude={coords ? coords[1] : undefined}
           bottom={20}
         />
-        {locationServiceEnabled && (
+        {locationServiceEnabled && isFinishedLoading && (
           <View style={styles.locationButton}>
             <IconButton onPress={handleLocationPress}>
               {following ? <LocationFollowingIcon /> : <LocationNoFollowIcon />}
             </IconButton>
           </View>
         )}
-        <AddButton testID="addButtonMap" onPress={handleAddPress} />
+        <AddButton
+          testID="addButtonMap"
+          onPress={handleAddPress}
+          isLoading={!isFinishedLoading}
+        />
       </View>
     );
   },

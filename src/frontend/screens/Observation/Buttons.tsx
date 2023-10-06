@@ -1,7 +1,10 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {DARK_GREY, RED} from '../../lib/styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {defineMessages, useIntl} from 'react-intl';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {useDeleteObservation} from '../../hooks/server/observation/useDeleteObservation';
+import {Text} from '../../sharedComponents/Text';
 
 const m = defineMessages({
   delete: {
@@ -9,10 +12,55 @@ const m = defineMessages({
     defaultMessage: 'Delete',
     description: 'Button to delete an observation',
   },
+  cancel: {
+    id: 'screens.Observation.cancel',
+    defaultMessage: 'Cancel',
+    description: 'Button to cancel delete of observation',
+  },
+  confirm: {
+    id: 'screens.Observation.confirm',
+    defaultMessage: 'Yes, delete',
+    description: 'Button to confirm delete of observation',
+  },
+  title: {
+    id: 'screens.Observation.title',
+    defaultMessage: 'Observation',
+    description:
+      'Title of observation screen showing (non-editable) view of observation with map and answered questions',
+  },
+  deleteTitle: {
+    id: 'screens.Observation.deleteTitle',
+    defaultMessage: 'Delete observation?',
+    description: 'Title of dialog asking confirmation to delete an observation',
+  },
 });
 
-export const ButtonFields = ({isMine}: {isMine: boolean}) => {
+export const ButtonFields = ({
+  isMine,
+  observationId,
+}: {
+  isMine: boolean;
+  observationId: string;
+}) => {
   const {formatMessage: t} = useIntl();
+  const navigation = useNavigationFromRoot();
+  const deleteObservation = useDeleteObservation(observationId);
+
+  function handlePressDelete() {
+    Alert.alert(t(m.deleteTitle), undefined, [
+      {
+        text: t(m.cancel),
+        onPress: () => {},
+      },
+      {
+        text: t(m.confirm),
+        onPress: () => {
+          deleteObservation.mutate();
+          navigation.pop();
+        },
+      },
+    ]);
+  }
 
   return (
     <View style={styles.buttonContainer}>
@@ -21,7 +69,7 @@ export const ButtonFields = ({isMine}: {isMine: boolean}) => {
           iconName="delete"
           title={t(m.delete)}
           color={RED}
-          onPress={() => {}}
+          onPress={handlePressDelete}
         />
       )}
     </View>

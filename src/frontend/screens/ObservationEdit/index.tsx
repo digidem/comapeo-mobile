@@ -32,7 +32,6 @@ const m = defineMessages({
 
 export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   navigation,
-  route,
 }) => {
   const observationId = usePersistedDraftObservation(
     store => store.observationId,

@@ -8,7 +8,7 @@ import {useIsFullyFocused} from '../../hooks/useIsFullyFocused';
 const log = debug('mapeo:MapScreen');
 
 export const MapScreen = () => {
-  const {position, provider} = useLocationContext();
+  const {position, provider, savedPosition} = useLocationContext();
   const isFocused = useIsFullyFocused();
 
   const coords = React.useMemo(() => {
@@ -18,10 +18,18 @@ export const MapScreen = () => {
     return [position.coords.longitude, position.coords.latitude];
   }, [position]);
 
+  const savedCoords = React.useMemo(() => {
+    if (!savedPosition?.coords?.latitude) return undefined;
+    if (!savedPosition?.coords?.longitude) return undefined;
+
+    return [savedPosition.coords.longitude, savedPosition.coords.latitude];
+  }, [savedPosition]);
+
   return (
     <MapViewMemoized
       coords={coords}
       isFocused={isFocused}
+      savedCoords={savedCoords}
       locationServiceEnabled={provider && provider.locationServicesEnabled}
     />
   );

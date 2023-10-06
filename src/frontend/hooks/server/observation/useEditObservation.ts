@@ -10,11 +10,7 @@ export const useEditObservation = (observationId?: string) => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async (observation: EditObservationProps) => {
-      const thing = await api.observation.update(
-        observation.versionId,
-        observation,
-      );
-      return thing;
+      return await api.observation.update(observation.versionId, observation);
     },
     onSuccess: () => {
       queryClient.invalidateQueries([

@@ -75,9 +75,10 @@ export const useDraftObservation = () => {
 
   const editSavedObservation = useCallback(
     ({observation, preset}: {observation: Observation; preset: Preset}) => {
+      cancelPhotoProcessing();
       newPersistedDraft({observation, preset});
     },
-    [newPersistedDraft],
+    [newPersistedDraft, cancelPhotoProcessing],
   );
 
   const deletePhoto = useCallback((uri: string) => {

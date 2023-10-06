@@ -32,6 +32,7 @@ export const InsetMapView = React.memo<MapProps>(({lon, lat}: MapProps) => {
         pitchEnabled={false}
         rotateEnabled={false}
         compassEnabled={false}
+        scaleBarEnabled={false}
         styleURL={MAP_STYLE}>
         <MapboxGL.Camera
           centerCoordinate={[lon, lat]}

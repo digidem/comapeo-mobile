@@ -8,8 +8,8 @@ import {SaveIcon} from '../../sharedComponents/icons/SaveIcon';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {useCreateObservation} from '../../hooks/server/useCreateObservation';
-import {useEditObservation} from '../../hooks/server/useEditObservation';
+import {useCreateObservation} from '../../hooks/server/observation/useCreateObservation';
+import {useEditObservation} from '../../hooks/server/observation/useEditObservation';
 
 const m = defineMessages({
   noGpsTitle: {

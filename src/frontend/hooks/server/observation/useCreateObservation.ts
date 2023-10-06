@@ -1,8 +1,8 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
-import {api} from '../../api';
-import {ClientGeneratedObservation} from '../../sharedTypes';
+import {api} from '../../../api';
+import {ClientGeneratedObservation} from '../../../sharedTypes';
 import {Observation} from '@mapeo/schema';
-import {DraftPhoto} from '../../contexts/PhotoPromiseContext/types';
+import {DraftPhoto} from '../../../contexts/PhotoPromiseContext/types';
 
 export function useCreateObservation() {
   const attachmentsMutation = useAttachmentsMutation();

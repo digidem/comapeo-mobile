@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Observation, Preset} from '@mapeo/schema';
-import {useObservationsQuery} from '../hooks/server/useObservationsQuery';
+import {useObservationsQuery} from '../hooks/server/observation/useObservationsQuery';
 import {Loading} from '../sharedComponents/Loading';
 import {Text} from '../sharedComponents/Text';
 import {usePresetsQuery} from '../hooks/server/usePresetsQuery';
@@ -33,7 +33,7 @@ export const ObservationProvider = ({
     return new Map(observationsQuery.data.map(obs => [obs.docId, obs]));
   }, [observationsQuery.data]);
 
-  if (presetsQuery.data && presetsQuery.data) {
+  if (presetsQuery.data && observationsQuery.data) {
     return (
       <ObservationContext.Provider
         value={{observations, presets: presetsQuery.data}}>

@@ -1,6 +1,6 @@
 import {Observation} from '@mapeo/schema';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
-import {api} from '../../api';
+import {api} from '../../../api';
 
 type EditObservationProps = Partial<Observation> & {
   versionId: Observation['versionId'];
@@ -17,11 +17,10 @@ export const useEditObservation = (observationId?: string) => {
       return thing;
     },
     onSuccess: () => {
-      console.log('HERE');
       queryClient.invalidateQueries([
-        'observations',
         'observation',
         observationId,
+        'observations',
       ]);
     },
   });

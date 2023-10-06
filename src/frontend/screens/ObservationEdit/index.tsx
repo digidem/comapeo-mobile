@@ -10,7 +10,7 @@ import {DescriptionField} from './DescriptionField';
 import {BottomSheet} from './BottomSheet';
 import {ThumbnailScrollView} from '../../sharedComponents/ThumbnailScrollView';
 import {CustomHeaderLeftClose} from '../../sharedComponents/CustomHeaderLeftClose';
-import {CategoryView} from './CategoryView';
+import {PresetView} from './PresetView';
 
 const m = defineMessages({
   editTitle: {
@@ -32,9 +32,7 @@ const m = defineMessages({
 
 export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   navigation,
-  route,
 }) => {
-  const photos = usePersistedDraftObservation(store => store.photos);
   const observationId = usePersistedDraftObservation(
     store => store.observationId,
   );
@@ -54,13 +52,6 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     });
   }, [navigation, observationId, CustomHeaderLeftClose, SaveButton]);
 
-  const handleCategoryPress = React.useCallback(() => {
-    navigation.navigate({
-      key: 'fromObservationEdit',
-      name: 'CategoryChooser',
-    });
-  }, [navigation]);
-
   const handleCameraPress = React.useCallback(() => {
     navigation.navigate('AddPhoto');
   }, [navigation]);
@@ -68,18 +59,6 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   const handleDetailsPress = React.useCallback(() => {
     navigation.navigate('ObservationDetails', {question: 1});
   }, [navigation]);
-
-  const handlePhotoPress = React.useCallback(
-    (photoIndex: number) => {
-      // navigation.navigate('PhotosModal', {
-      //   photoIndex: photoIndex,
-      //   observationId: observationId,
-      //   editing: true,
-      // });
-      return;
-    },
-    [navigation],
-  );
 
   const bottomSheetItems = [
     {
@@ -103,10 +82,9 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         style={styles.container}
         contentContainerStyle={styles.scrollViewContent}>
         {isNew && <LocationView />}
-
-        <CategoryView onPress={handleCategoryPress} />
+        <PresetView />
         <DescriptionField />
-        <ThumbnailScrollView onPressPhoto={handlePhotoPress} photos={photos} />
+        <ThumbnailScrollView />
       </ScrollView>
       <BottomSheet items={bottomSheetItems} />
     </View>

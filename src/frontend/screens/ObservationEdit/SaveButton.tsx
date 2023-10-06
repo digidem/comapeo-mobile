@@ -8,7 +8,8 @@ import {SaveIcon} from '../../sharedComponents/icons/SaveIcon';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {useCreateObservation} from '../../hooks/server/useCreateObservation';
+import {useCreateObservation} from '../../hooks/server/observation/useCreateObservation';
+import {useEditObservation} from '../../hooks/server/observation/useEditObservation';
 
 const m = defineMessages({
   noGpsTitle: {
@@ -60,11 +61,20 @@ export const SaveButton = ({observationId}: {observationId?: string}) => {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
   const createObservationCall = useCreateObservation();
+  const editObservationCall = useEditObservation(observationId);
 
   function createObservation() {
     if (!value) throw new Error('no observation saved in persisted state ');
     createObservationCall(value);
     navigation.navigate('Home', {screen: 'Map'});
+  }
+
+  function editObservation() {
+    if (!value) throw new Error('no observation saved in persisted state ');
+    if (!('versionId' in value))
+      throw new Error('Cannot update a unsaved observation (must create one)');
+    editObservationCall.mutate(value);
+    navigation.pop();
   }
 
   const confirmationOptions: AlertButton[] = [
@@ -93,7 +103,10 @@ export const SaveButton = ({observationId}: {observationId?: string}) => {
     log('Draft value > ', value);
     if (!value) return;
     const isNew = !observationId;
-    if (!isNew) return; // update observation here
+    if (!isNew) {
+      editObservation();
+      return;
+    }
 
     const hasLocation = value.lat && value.lon;
     const locationSetManually = value.metadata.manualLocation;

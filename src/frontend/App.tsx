@@ -27,29 +27,29 @@ const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();
 
   return (
-    <IntlProvider>
-      <QueryClientProvider client={queryClient}>
-        <PermissionsProvider>
-          <GestureHandlerRootView style={{flex: 1}}>
-            <BottomSheetModalProvider>
-              <ObservationProvider>
-                <NavigationContainer ref={navRef}>
-                  <PhotoPromiseProvider>
-                    <LocationProvider>
-                      <SecurityProvider>
-                        <Loading>
+    <Loading>
+      <IntlProvider>
+        <QueryClientProvider client={queryClient}>
+          <PermissionsProvider>
+            <GestureHandlerRootView style={{flex: 1}}>
+              <BottomSheetModalProvider>
+                <ObservationProvider>
+                  <NavigationContainer ref={navRef}>
+                    <PhotoPromiseProvider>
+                      <LocationProvider>
+                        <SecurityProvider>
                           <AppNavigator />
-                        </Loading>
-                      </SecurityProvider>
-                    </LocationProvider>
-                  </PhotoPromiseProvider>
-                </NavigationContainer>
-              </ObservationProvider>
-            </BottomSheetModalProvider>
-          </GestureHandlerRootView>
-        </PermissionsProvider>
-      </QueryClientProvider>
-    </IntlProvider>
+                        </SecurityProvider>
+                      </LocationProvider>
+                    </PhotoPromiseProvider>
+                  </NavigationContainer>
+                </ObservationProvider>
+              </BottomSheetModalProvider>
+            </GestureHandlerRootView>
+          </PermissionsProvider>
+        </QueryClientProvider>
+      </IntlProvider>
+    </Loading>
   );
 };
 

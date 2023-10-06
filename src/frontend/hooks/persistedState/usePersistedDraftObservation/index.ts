@@ -9,6 +9,13 @@ import {
 import {ClientGeneratedObservation, Position} from '../../../sharedTypes';
 import {Observation, Preset} from '@mapeo/schema';
 
+type newDraftProps = {observation: Observation; preset: Preset};
+const emptyObservation: ClientGeneratedObservation = {
+  metadata: {},
+  refs: [],
+  tags: {},
+};
+
 export type DraftObservationSlice = {
   photos: Photo[];
   value: Observation | null | ClientGeneratedObservation;
@@ -20,7 +27,7 @@ export type DraftObservationSlice = {
     // Clear the current draft
     clearDraft: () => void;
     // Create a new draft observation
-    newDraft: (id?: string, value?: Observation | null) => void;
+    newDraft: (observation?: newDraftProps) => void;
     deletePhoto: (id: string) => void;
     updateObservationPosition: ({
       position,
@@ -80,13 +87,24 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
         return;
       }
     },
-    newDraft: (id, value) =>
+    newDraft: draftProps => {
+      if (!draftProps) {
+        set({
+          value: emptyObservation,
+        });
+        return;
+      }
+
       set({
-        observationId: id,
-        photos: value ? filterPhotosFromAttachments(value.attachments) : [],
-        value,
-        preset: undefined,
-      }),
+        value: draftProps.observation,
+        preset: draftProps.preset,
+        observationId: draftProps.observation.docId,
+        photos:
+          draftProps.observation.attachments.length > 0
+            ? filterPhotosFromAttachments(draftProps.observation.attachments)
+            : undefined,
+      });
+    },
     updatePreset: preset => {
       const prevValue = get().value;
       if (prevValue) {

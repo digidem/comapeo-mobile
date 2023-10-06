@@ -40,6 +40,8 @@ export function replaceDraftPhotos(
 export function filterPhotosFromAttachments(
   attachments: ObservationValue['attachments'] = [],
 ): Array<SavedPhoto> {
+  if (!attachments || attachments.length < 1) return [];
+
   return attachments.reduce<Array<SavedPhoto>>((acc, att) => {
     if (
       att.type === 'photo' ||
@@ -47,7 +49,10 @@ export function filterPhotosFromAttachments(
       // save a type
       (att.type === undefined && /(\.jpg|\.jpeg)$/i.test(att.hash))
     )
-      acc.push({id: `${att.driveId}/${att.type}/${att.name}`, type: att.type});
+      acc.push({
+        id: `${att.driveDiscoveryId}/${att.type}/${att.name}`,
+        type: att.type,
+      });
     return acc;
   }, []);
 }

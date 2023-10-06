@@ -17,7 +17,7 @@ import {Loading} from '../sharedComponents/Loading';
 import {CustomHeaderLeftClose} from '../sharedComponents/CustomHeaderLeftClose';
 import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 import {Preset} from '@mapeo/schema';
-import {usePresetsQuery} from '../hooks/server/usePresetsQuery';
+import {useObservationContext} from '../contexts/ObservationsContext';
 
 const m = defineMessages({
   categoryTitle: {
@@ -33,18 +33,17 @@ const DynFormattedMessage = FormattedMessage;
 const ROW_HEIGHT = 120;
 const MIN_COL_WIDTH = 100;
 
-export const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
+export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
   navigation,
 }) => {
   const {updatePreset} = useDraftObservation();
+  const {presets} = useObservationContext();
   const state = navigation.getState();
   const currentIndex = state.index;
   const routes = state.routes;
   const prevRouteNameInStack = !routes[currentIndex - 1]
     ? undefined
     : routes[currentIndex - 1].name;
-
-  const {data: presets, isLoading} = usePresetsQuery();
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -79,28 +78,24 @@ export const CategoryChooser: NativeNavigationComponent<'CategoryChooser'> = ({
 
   return (
     <View style={styles.container}>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <FlatList
-          initialNumToRender={rowsPerWindow}
-          keyExtractor={keyExtractor}
-          getItemLayout={getItemLayout}
-          windowSize={1}
-          maxToRenderPerBatch={numColumns}
-          removeClippedSubviews
-          style={{width: Dimensions.get('window').width}}
-          renderItem={({item}) => (
-            <Item
-              key={keyExtractor(item)}
-              item={item}
-              onSelect={handleSelectPreset}
-            />
-          )}
-          data={presetsList}
-          numColumns={numColumns}
-        />
-      )}
+      <FlatList
+        initialNumToRender={rowsPerWindow}
+        keyExtractor={keyExtractor}
+        getItemLayout={getItemLayout}
+        windowSize={1}
+        maxToRenderPerBatch={numColumns}
+        removeClippedSubviews
+        style={{width: Dimensions.get('window').width}}
+        renderItem={({item}) => (
+          <Item
+            key={keyExtractor(item)}
+            item={item}
+            onSelect={handleSelectPreset}
+          />
+        )}
+        data={presetsList}
+        numColumns={numColumns}
+      />
     </View>
   );
 };
@@ -138,7 +133,7 @@ const Item = React.memo(
   ),
 );
 
-CategoryChooser.navTitle = m.categoryTitle;
+PresetChooser.navTitle = m.categoryTitle;
 
 const styles = StyleSheet.create({
   container: {

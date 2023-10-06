@@ -19,8 +19,9 @@ import {AuthScreen} from '../../screens/AuthScreen';
 import {ObscurePasscode} from '../../screens/ObscurePasscode';
 import {Settings} from '../../screens/Settings';
 import {EmptySettingsScreen} from '../../screens/Settings/EmptySettingsScreen';
-import {CategoryChooser} from '../../screens/CategoryChooser';
+import {PresetChooser} from '../../screens/PresetChooser';
 import {ObservationsList} from '../../screens/ObservationsList';
+import {ObservationScreen} from '../../screens/Observation';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -44,7 +45,7 @@ export type AppList = {
     editing: boolean;
   };
   PhotoView: undefined;
-  CategoryChooser: undefined;
+  PresetChooser: undefined;
   AddPhoto: undefined;
   ObservationList: undefined;
   Observation: {observationId: string};
@@ -162,14 +163,19 @@ export const createDefaultScreenGroup = (
       options={{headerTitle: 'Empty screen'}}
     />
     <RootStack.Screen
-      name="CategoryChooser"
-      component={CategoryChooser}
-      options={{headerTitle: intl(CategoryChooser.navTitle)}}
+      name="PresetChooser"
+      component={PresetChooser}
+      options={{headerTitle: intl(PresetChooser.navTitle)}}
     />
     <RootStack.Screen
       name="ObservationList"
       component={ObservationsList}
       options={{headerTitle: intl(ObservationsList.navTitle)}}
+    />
+    <RootStack.Screen
+      name="Observation"
+      component={ObservationScreen}
+      options={{headerTitle: intl(ObservationScreen.navTitle)}}
     />
   </RootStack.Group>
 );

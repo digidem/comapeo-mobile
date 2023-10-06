@@ -1,17 +1,20 @@
 import * as React from 'react';
-import {Observation} from '@mapeo/schema';
-import {useObservationsQuery} from '../hooks/server/useObservationsQuery';
+import {Observation, Preset} from '@mapeo/schema';
+import {useObservationsQuery} from '../hooks/server/observation/useObservationsQuery';
 import {Loading} from '../sharedComponents/Loading';
 import {Text} from '../sharedComponents/Text';
+import {usePresetsQuery} from '../hooks/server/usePresetsQuery';
 
 export type ObservationsMap = Map<string, Observation>;
 
 type ObservationContextType = {
   observations: ObservationsMap;
+  presets: Preset[];
 };
 
 const ObservationContext = React.createContext<ObservationContextType>({
   observations: new Map(),
+  presets: [],
 });
 
 export const useObservationContext = () => React.useContext(ObservationContext);
@@ -21,25 +24,27 @@ export const ObservationProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const {data, isLoading, isError} = useObservationsQuery();
+  const observationsQuery = useObservationsQuery();
+  const presetsQuery = usePresetsQuery();
 
   const observations = React.useMemo(() => {
-    if (!data) return new Map();
+    if (!observationsQuery.data) return new Map();
 
-    return new Map(data.map(obs => [obs.docId, obs]));
-  }, [data]);
+    return new Map(observationsQuery.data.map(obs => [obs.docId, obs]));
+  }, [observationsQuery.data]);
 
-  if (isLoading) {
-    <Loading />;
+  if (presetsQuery.data && observationsQuery.data) {
+    return (
+      <ObservationContext.Provider
+        value={{observations, presets: presetsQuery.data}}>
+        {children}
+      </ObservationContext.Provider>
+    );
   }
 
-  if (isError) {
+  if (observationsQuery.isError || presetsQuery.isError) {
     <Text>Error</Text>;
   }
 
-  return (
-    <ObservationContext.Provider value={{observations}}>
-      {children}
-    </ObservationContext.Provider>
-  );
+  return <Loading />;
 };

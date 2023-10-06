@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {View, FlatList, Dimensions, StyleSheet} from 'react-native';
-import {defineMessages, FormattedMessage} from 'react-intl';
+import {defineMessages} from 'react-intl';
 import {ObservationListItem} from './ObservationListItem';
 import ObservationEmptyView from './ObservationsEmptyView';
 

@@ -39,7 +39,7 @@ export const LocationView = () => {
           />
           <Text style={styles.locationText}>
             {
-              // This needs to be changed to a formatted coor eventually
+              // This needs to be changed to a formatted coord eventually
               convertToUTM({lat, lon})
             }
           </Text>

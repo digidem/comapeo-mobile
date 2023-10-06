@@ -5,6 +5,7 @@ import {BLACK, LIGHT_BLUE} from '../../lib/styles';
 import {TextButton} from '../../sharedComponents/TextButton';
 import {CategoryCircleIcon} from '../../sharedComponents/icons/CategoryIcon';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 
 const m = defineMessages({
   observation: {
@@ -19,9 +20,9 @@ const m = defineMessages({
   },
 });
 
-export const CategoryView = ({onPress}: {onPress: () => void}) => {
+export const PresetView = () => {
   const {formatMessage: t} = useIntl();
-
+  const {navigate} = useNavigationFromRoot();
   const preset = usePersistedDraftObservation(store => store.preset);
   const name = preset
     ? t({id: `presets.${preset.docId}.name`, defaultMessage: preset.name})
@@ -36,7 +37,12 @@ export const CategoryView = ({onPress}: {onPress: () => void}) => {
       <TextButton
         containerStyle={styles.changeButton}
         textStyle={styles.changeButtonText}
-        onPress={onPress}
+        onPress={() =>
+          navigate({
+            key: 'fromObservationEdit',
+            name: 'PresetChooser',
+          })
+        }
         title={t(m.changePreset)}
       />
     </View>

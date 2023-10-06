@@ -7,14 +7,13 @@ import {
   LocationFollowingIcon,
   LocationNoFollowIcon,
 } from '../../sharedComponents/icons';
-import {View, StyleSheet, Easing, ActivityIndicator} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {ObservationMapLayer} from './ObsevationMapLayer';
 import {AddButton} from '../../sharedComponents/AddButton';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 // @ts-ignore
 import ScaleBar from 'react-native-scale-bar';
-import {BallIndicator} from 'react-native-indicators';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the

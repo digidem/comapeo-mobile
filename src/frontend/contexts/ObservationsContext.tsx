@@ -33,7 +33,7 @@ export const ObservationProvider = ({
     return new Map(observationsQuery.data.map(obs => [obs.docId, obs]));
   }, [observationsQuery.data]);
 
-  if (observationsQuery.data && presetsQuery.data) {
+  if (presetsQuery.data && presetsQuery.data) {
     return (
       <ObservationContext.Provider
         value={{observations, presets: presetsQuery.data}}>
@@ -46,5 +46,5 @@ export const ObservationProvider = ({
     <Loading />;
   }
 
-  <Text>Error</Text>;
+  return <Text>Error</Text>;
 };

@@ -10,7 +10,6 @@ export function useCreateObservation() {
 
   return (value: ClientGeneratedObservation) =>
     attachmentsMutation.mutateAsync().then(att => {
-      console.log({att}, 'from mutation ');
       observationMutation.mutate({value, att});
     });
 }

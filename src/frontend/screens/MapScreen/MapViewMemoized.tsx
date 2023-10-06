@@ -12,6 +12,8 @@ import {ObservationMapLayer} from './ObsevationMapLayer';
 import {AddButton} from '../../sharedComponents/AddButton';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
+// @ts-ignore
+import ScaleBar from 'react-native-scale-bar';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -63,6 +65,7 @@ export const MapViewMemoized = React.memo(
           surfaceView={true}
           attributionPosition={{right: 8, bottom: 8}}
           compassEnabled={false}
+          scaleBarEnabled={false}
           styleURL={MAP_STYLE}
           onMoveShouldSetResponder={() => {
             if (following) setFollowing(false);
@@ -75,7 +78,6 @@ export const MapViewMemoized = React.memo(
             }}
             centerCoordinate={following ? coords : undefined}
             zoomLevel={following ? zoom : undefined}
-            // zoomLevel={zoom}
             animationDuration={1000}
             animationMode="flyTo"
             followUserLocation={false}
@@ -88,6 +90,11 @@ export const MapViewMemoized = React.memo(
             />
           )}
         </Mapbox.MapView>
+        <ScaleBar
+          zoom={zoom || 10}
+          latitude={coords ? coords[1] : undefined}
+          bottom={20}
+        />
         {locationServiceEnabled && (
           <View style={styles.locationButton}>
             <IconButton onPress={handleLocationPress}>

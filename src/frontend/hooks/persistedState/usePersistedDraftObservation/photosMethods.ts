@@ -40,7 +40,6 @@ export function replaceDraftPhotos(
 export function filterPhotosFromAttachments(
   attachments: ObservationValue['attachments'] = [],
 ): Array<SavedPhoto> {
-  console.log({attachments});
   if (!attachments || attachments.length < 1) return [];
 
   return attachments.reduce<Array<SavedPhoto>>((acc, att) => {

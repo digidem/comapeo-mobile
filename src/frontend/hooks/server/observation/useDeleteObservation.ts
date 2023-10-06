@@ -15,6 +15,8 @@ export const useDeleteObservation = (observationId: string) => {
       ]);
     },
   });
+
+  return mutation;
 };
 
 async function mockDelete(observationId: string) {

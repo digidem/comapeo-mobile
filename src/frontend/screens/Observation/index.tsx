@@ -13,7 +13,7 @@ import {FieldDetails} from './FieldDetails';
 import {InsetMapView} from './InsetMapView';
 import {ButtonFields} from './Buttons';
 import {NativeNavigationComponent} from '../../sharedTypes';
-import ObservationHeaderRight from './ObservationHeaderRight';
+import {ObservationHeaderRight} from './ObservationHeaderRight';
 
 const m = defineMessages({
   deleteTitle: {

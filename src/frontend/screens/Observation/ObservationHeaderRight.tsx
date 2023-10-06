@@ -9,7 +9,11 @@ import {EditIcon} from '../../sharedComponents/icons';
 import {SyncIcon} from '../../sharedComponents/icons/SyncIconCircle';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 
-const ObservationHeaderRight = ({observationId}: {observationId: string}) => {
+export const ObservationHeaderRight = ({
+  observationId,
+}: {
+  observationId: string;
+}) => {
   const observationWithPreset = useObservationWithPreset(observationId);
   const deviceId = '';
   const {editSavedObservation} = useDraftObservation();
@@ -31,8 +35,6 @@ const ObservationHeaderRight = ({observationId}: {observationId: string}) => {
     </View>
   );
 };
-
-export default ObservationHeaderRight;
 
 const styles = StyleSheet.create({
   syncIconContainer: {

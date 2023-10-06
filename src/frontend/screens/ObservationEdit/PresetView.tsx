@@ -20,7 +20,7 @@ const m = defineMessages({
   },
 });
 
-export const CategoryView = () => {
+export const PresetView = () => {
   const {formatMessage: t} = useIntl();
   const {navigate} = useNavigationFromRoot();
   const preset = usePersistedDraftObservation(store => store.preset);

@@ -57,6 +57,7 @@ const log = debug('SaveButton');
 
 export const SaveButton = ({observationId}: {observationId?: string}) => {
   const value = usePersistedDraftObservation(store => store.value);
+  const photos = usePersistedDraftObservation(store => store.photos);
   const {clearDraft} = useDraftObservation();
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
@@ -65,7 +66,7 @@ export const SaveButton = ({observationId}: {observationId?: string}) => {
 
   function createObservation() {
     if (!value) throw new Error('no observation saved in persisted state ');
-    createObservationCall(value);
+    createObservationCall({value, photos});
     navigation.navigate('Home', {screen: 'Map'});
   }
 

@@ -13,7 +13,6 @@ import {useDraftObservation} from '../hooks/useDraftObservation';
 import {CategoryCircleIcon} from '../sharedComponents/icons/CategoryIcon';
 import {WHITE} from '../lib/styles';
 import {NativeNavigationComponent} from '../sharedTypes';
-import {Loading} from '../sharedComponents/Loading';
 import {CustomHeaderLeftClose} from '../sharedComponents/CustomHeaderLeftClose';
 import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 import {Preset} from '@mapeo/schema';

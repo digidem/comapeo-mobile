@@ -38,7 +38,6 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   );
   const isNew = !observationId;
   const {formatMessage: t} = useIntl();
-
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: observationId ? t(m.editTitle) : t(m.newTitle),

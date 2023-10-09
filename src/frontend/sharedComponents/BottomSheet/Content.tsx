@@ -2,7 +2,7 @@ import * as React from 'react';
 import {StyleSheet, TextStyle, View} from 'react-native';
 import {TouchableHighlight} from '@gorhom/bottom-sheet';
 
-import {LIGHT_BLUE, MAGENTA, MAPEO_BLUE, RED, WHITE} from '../../lib/styles';
+import {LIGHT_BLUE, MAGENTA, COMAPEO_BLUE, RED, WHITE} from '../../lib/styles';
 import {Button} from '../Button';
 import {Text} from '../Text';
 
@@ -82,7 +82,7 @@ export const Content = ({
                   ? WHITE
                   : config.dangerous
                   ? MAGENTA
-                  : MAPEO_BLUE,
+                  : COMAPEO_BLUE,
               marginTop: index > 0 ? 20 : undefined,
             }}
             variant={config.variation === 'outlined' ? 'outlined' : undefined}>
@@ -97,7 +97,8 @@ export const Content = ({
                   styles.buttonText,
                   styles.bold,
                   {
-                    color: config.variation === 'outlined' ? MAPEO_BLUE : WHITE,
+                    color:
+                      config.variation === 'outlined' ? COMAPEO_BLUE : WHITE,
                   },
                 ]}>
                 {config.text}

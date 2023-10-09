@@ -5,7 +5,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import {
   LIGHT_BLUE,
   LIGHT_GREY,
-  MAPEO_BLUE,
+  COMAPEO_BLUE,
   MEDIUM_BLUE,
   WHITE,
 } from '../lib/styles';
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'flex-start',
     padding: 5,
-    backgroundColor: MAPEO_BLUE,
+    backgroundColor: COMAPEO_BLUE,
   },
   text: {
     fontSize: 12,

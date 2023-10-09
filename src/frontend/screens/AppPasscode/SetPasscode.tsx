@@ -100,8 +100,6 @@ const SetPasswordConfirm = ({initialPass}: {initialPass: string}) => {
   const [error, setError] = React.useState(false);
 
   function validate(inputVal: string) {
-    console.log('here');
-    console.log({inputVal, initialPass});
     if (inputVal === initialPass) {
       return true;
     }

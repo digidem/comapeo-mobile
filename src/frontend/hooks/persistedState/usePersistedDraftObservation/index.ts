@@ -13,7 +13,9 @@ type newDraftProps = {observation: Observation; preset: Preset};
 const emptyObservation: ClientGeneratedObservation = {
   metadata: {},
   refs: [],
-  tags: {},
+  tags: {
+    notes: '',
+  },
 };
 
 export type DraftObservationSlice = {
@@ -53,19 +55,21 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
       set({photos: [...get().photos, {draftPhotoId, capturing: true}]}),
     replacePhotoPlaceholderWithPhoto: draftPhoto =>
       replaceDraftPhotos(set, get, draftPhoto),
-    clearDraft: () =>
+    clearDraft: () => {
       set({
         photos: [],
         value: null,
         preset: undefined,
         observationId: undefined,
-      }),
+      });
+    },
     updateObservationPosition: ({position, manualLocation}) => {
       if (!position || !position.coords) return;
       const prevValue = get().value;
 
       // if there is no draft observation initialized, ignore update
-      if (!prevValue) return;
+      // if user is editting a saved observation, ignore update
+      if (!prevValue || 'docId' in prevValue) return;
       // if the location has been manually set it cannot be overwritten unless there is a new manual location
       if (prevValue.metadata.manualLocation && !manualLocation) return;
       const prevAccuracy = prevValue.metadata.position?.coords?.accuracy;
@@ -88,6 +92,7 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
       }
     },
     newDraft: draftProps => {
+      get().actions.clearDraft();
       if (!draftProps) {
         set({
           value: emptyObservation,
@@ -102,7 +107,7 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
         photos:
           draftProps.observation.attachments.length > 0
             ? filterPhotosFromAttachments(draftProps.observation.attachments)
-            : undefined,
+            : [],
       });
     },
     updatePreset: preset => {

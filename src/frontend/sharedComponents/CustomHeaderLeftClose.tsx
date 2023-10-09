@@ -1,13 +1,23 @@
 import React from 'react';
 import {HeaderBackButton} from '@react-navigation/elements';
 import {HeaderBackButtonProps} from '@react-navigation/native-stack/lib/typescript/src/types';
-import {Alert} from 'react-native';
+import {Alert, BackHandler} from 'react-native';
+import isEqual from 'lodash.isequal';
 
 import {CloseIcon} from './icons';
 import {BLACK} from '../lib/styles';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import {useDraftObservation} from '../hooks/useDraftObservation';
 import {defineMessages, useIntl} from 'react-intl';
+import {useObservationWithPreset} from '../hooks/useObservationWithPreset';
+import {ClientGeneratedObservation} from '../sharedTypes';
+import {Observation} from '@mapeo/schema';
+import {usePersistedDraftObservation} from '../hooks/persistedState/usePersistedDraftObservation';
+import {
+  CommonActions,
+  useFocusEffect,
+  useNavigation,
+} from '@react-navigation/native';
 
 const m = defineMessages({
   discardTitle: {
@@ -43,14 +53,14 @@ export const HeaderCloseIcon = ({tintColor}: {tintColor: string}) => {
   return <CloseIcon color={tintColor} />;
 };
 
-interface CustomHeaderLeftCloseSharedProps {
+interface SharedBackButtonProps {
   tintColor?: string;
   headerBackButtonProps: HeaderBackButtonProps;
 }
 
 type CustomHeaderLeftCloseProps = {
   observationId?: string;
-} & CustomHeaderLeftCloseSharedProps;
+} & SharedBackButtonProps;
 
 export const CustomHeaderLeftClose = ({
   tintColor,
@@ -78,69 +88,133 @@ export const CustomHeaderLeftClose = ({
 const HeaderBackNewObservation = ({
   tintColor,
   headerBackButtonProps,
-}: CustomHeaderLeftCloseSharedProps) => {
+}: SharedBackButtonProps) => {
   const navigation = useNavigationFromRoot();
   const {formatMessage: t} = useIntl();
-
   const {clearDraft} = useDraftObservation();
-  const handleCloseRequest = React.useCallback(() => {
-    Alert.alert(t(m.discardTitle), undefined, [
-      {
-        text: t(m.discardConfirm),
-        onPress: () => {
-          clearDraft();
-          navigation.navigate('Home', {screen: 'Map'});
-        },
-      },
-      {text: t(m.discardCancel), onPress: () => {}},
-    ]);
-  }, [clearDraft, navigation, t]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        Alert.alert(t(m.discardTitle), undefined, [
+          {
+            text: t(m.discardConfirm),
+            onPress: () => {
+              clearDraft();
+              navigation.dispatch(
+                CommonActions.navigate('Home', {screen: 'map'}),
+              );
+            },
+          },
+          {text: t(m.discardCancel), onPress: () => {}},
+        ]);
+        return true;
+      };
+
+      const subscription = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress,
+      );
+
+      return () => subscription.remove();
+    }, [clearDraft, navigation, t]),
+  );
 
   return (
-    <HeaderBackButton
-      {...headerBackButtonProps}
-      onPress={handleCloseRequest}
-      style={{marginLeft: 0, marginRight: 15}}
-      backImage={() => <HeaderCloseIcon tintColor={tintColor || BLACK} />}
+    <SharedBackButton
+      headerBackButtonProps={headerBackButtonProps}
+      tintColor={tintColor}
     />
   );
 };
 
 type HeaderBackEditObservationProps = {
   observationId: string;
-} & CustomHeaderLeftCloseSharedProps;
+} & SharedBackButtonProps;
 
 const HeaderBackEditObservation = ({
   headerBackButtonProps,
   tintColor,
+
   observationId,
 }: HeaderBackEditObservationProps) => {
   const navigation = useNavigationFromRoot();
   const {formatMessage: t} = useIntl();
 
   const {clearDraft} = useDraftObservation();
+  const {observation} = useObservationWithPreset(observationId);
+  const photos = usePersistedDraftObservation(store => store.photos);
+  const draftObservation = usePersistedDraftObservation(store => store.value);
 
-  const handleCloseRequest = React.useCallback(() => {
-    // if untouched just go back and dont do alert
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', e => {
+      if (
+        checkEqual(observation, {
+          numberOfPhotos: photos.length,
+          editted: draftObservation,
+        })
+      ) {
+        return;
+      }
 
-    Alert.alert(t(m.discardChangesTitle), undefined, [
-      {
-        text: t(m.discardChangesConfirm),
-        onPress: () => {
-          clearDraft();
-          navigation.goBack();
+      e.preventDefault();
+
+      Alert.alert(t(m.discardChangesTitle), undefined, [
+        {
+          text: t(m.discardChangesConfirm),
+          onPress: () => {
+            clearDraft();
+            navigation.dispatch(e.data.action);
+          },
         },
-      },
-      {text: t(m.discardCancel), onPress: () => {}},
-    ]);
-  }, [clearDraft, navigation, t]);
+        {text: t(m.discardCancel), onPress: () => {}},
+      ]);
+    });
 
+    return () => unsubscribe();
+  }, [observation, photos, draftObservation, navigation, clearDraft]);
+
+  return (
+    <SharedBackButton
+      headerBackButtonProps={headerBackButtonProps}
+      tintColor={tintColor}
+    />
+  );
+};
+
+const SharedBackButton = ({
+  headerBackButtonProps,
+  tintColor,
+}: SharedBackButtonProps) => {
+  const navigation = useNavigation();
   return (
     <HeaderBackButton
       {...headerBackButtonProps}
-      onPress={handleCloseRequest}
       style={{marginLeft: 0, marginRight: 15}}
+      onPress={() => {
+        navigation.goBack();
+      }}
       backImage={() => <HeaderCloseIcon tintColor={tintColor || BLACK} />}
     />
   );
 };
+
+function checkEqual(
+  original: Observation,
+  {
+    editted,
+    numberOfPhotos,
+  }: {
+    editted: Observation | ClientGeneratedObservation | null;
+    numberOfPhotos?: number;
+  },
+) {
+  if (!editted || !('docId' in editted)) return false;
+  // attachments are created right before an observation is made, so we need to check # photos that are about to be saved
+  const {attachments: originalAtts, ...orignalNoPhotos} = original;
+
+  if (originalAtts.length !== numberOfPhotos) return false;
+
+  const {attachments, ...edittedNoPhotos} = editted;
+  return isEqual(orignalNoPhotos, edittedNoPhotos);
+}

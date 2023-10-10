@@ -4,7 +4,7 @@ import {View, StyleSheet, ScrollView} from 'react-native';
 import {useBlurOnFulfill} from 'react-native-confirmation-code-field';
 
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {WHITE, RED, MAPEO_BLUE} from '../../lib/styles';
+import {WHITE, RED, COMAPEO_BLUE} from '../../lib/styles';
 import {Button} from '../../sharedComponents/Button';
 import {CELL_COUNT, PasscodeInput} from '../../sharedComponents/PasscodeInput';
 import {Text} from '../../sharedComponents/Text';
@@ -99,7 +99,7 @@ export const InputPasscode = ({
               onPress={() => {
                 navigate('Security');
               }}>
-              <Text style={[styles.buttonText, {color: MAPEO_BLUE}]}>
+              <Text style={[styles.buttonText, {color: COMAPEO_BLUE}]}>
                 <FormattedMessage {...m.cancel} />
               </Text>
             </Button>

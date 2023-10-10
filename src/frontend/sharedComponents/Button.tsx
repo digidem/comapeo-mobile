@@ -124,7 +124,7 @@ function getTouchableStyle(size: Size) {
 
 const styles = StyleSheet.create({
   buttonBase: {
-    borderRadius: 6,
+    borderRadius: 30,
     alignSelf: 'center',
     overflow: 'hidden',
   },

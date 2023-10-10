@@ -10,7 +10,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {Loading} from './Loading';
-import {BLACK, DARK_MANGO, DARK_ORANGE, MAPEO_BLUE} from '../lib/styles';
+import {BLACK, DARK_MANGO, DARK_ORANGE, COMAPEO_BLUE} from '../lib/styles';
 
 interface AddButtonProps {
   style?: StyleProp<ViewStyle>;

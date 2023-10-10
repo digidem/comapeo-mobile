@@ -8,6 +8,8 @@ import {
 import {useIntl} from 'react-intl';
 // import {SecurityContext} from '../context/SecurityContext';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
+import {createDeviceNamingScreenGroups} from './ScreenGroups/DeviceNamingScreens';
+import {usePersistedDeviceName} from '../hooks/persistedState/usePersistedDeviceName';
 // import {devExperiments} from '../lib/DevExperiments';
 
 // React Navigation expects children of the Navigator to be a `Screen`, `Group`
@@ -28,13 +30,15 @@ import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 
 export const AppNavigator = () => {
   const {formatMessage} = useIntl();
-  const navigation = useNavigationFromRoot();
+  const deviceName = usePersistedDeviceName(store => store.deviceName);
 
   return (
     <RootStack.Navigator
       initialRouteName="Home"
       screenOptions={NavigatorScreenOptions}>
-      {createDefaultScreenGroup(formatMessage)}
+      {!deviceName
+        ? createDeviceNamingScreenGroups(formatMessage)
+        : createDefaultScreenGroup(formatMessage)}
     </RootStack.Navigator>
   );
 };

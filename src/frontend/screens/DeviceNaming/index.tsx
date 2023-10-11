@@ -13,6 +13,23 @@ import {LIGHT_GREY, MEDIUM_GREY, RED} from '../../lib/styles';
 import {Text} from '../../sharedComponents/Text';
 import {Button} from '../../sharedComponents/Button';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import {defineMessages, useIntl} from 'react-intl';
+
+const m = defineMessages({
+  header: {
+    id: 'screens.DeviceNaming.header',
+    defaultMessage: 'Add a name for your device',
+  },
+  description: {
+    id: 'screens.DeviceNaming.description',
+    defaultMessage:
+      "Guidance on how to choose a name and what it's for. You can edit this later",
+  },
+  addName: {
+    id: 'screens.DeviceNaming.addName',
+    defaultMessage: 'Add Name',
+  },
+});
 
 export const DeviceNaming = ({
   navigation,
@@ -20,6 +37,7 @@ export const DeviceNaming = ({
   const [name, setName] = React.useState('');
   const [errorTimeout, setErrorTimeout] = useErrorTimeout();
   const invalidName = name.length === 0 || name.length > 60;
+  const {formatMessage: t} = useIntl();
 
   function setNameWithValidation(nameValue: string) {
     if (nameValue.length > 60) {
@@ -45,7 +63,7 @@ export const DeviceNaming = ({
         <View>
           <CoMapeoText style={{alignSelf: 'center'}} />
 
-          <Text style={{marginTop: 20}}>Add a name for your device</Text>
+          <Text style={{marginTop: 20}}>{t(m.header)}</Text>
           <TextInput
             style={[
               styles.textInput,
@@ -63,15 +81,12 @@ export const DeviceNaming = ({
             {`${name.length}/60`}
           </Text>
           <View style={styles.greyBox}>
-            <Text>
-              Guidance on how to choose a name and what it's for. You can edit
-              this later
-            </Text>
+            <Text>{t(m.description)}</Text>
           </View>
         </View>
 
         <Button fullWidth onPress={handleAddNamePress}>
-          Add Name
+          {t(m.addName)}
         </Button>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

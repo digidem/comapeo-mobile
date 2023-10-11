@@ -7,6 +7,22 @@ import {DeviceNamingList} from '../../Navigation/ScreenGroups/DeviceNamingScreen
 import {Text} from '../../sharedComponents/Text';
 import {Button} from '../../sharedComponents/Button';
 import {usePersistedDeviceName} from '../../hooks/persistedState/usePersistedDeviceName';
+import {defineMessages, useIntl} from 'react-intl';
+
+const m = defineMessages({
+  success: {
+    id: 'screens.DeviceNaming.Success.success',
+    defaultMessage: 'Success!',
+  },
+  description: {
+    id: 'screens.DeviceNaming.Success.description',
+    defaultMessage: 'You named your device',
+  },
+  goToMap: {
+    id: 'screens.DeviceNaming.Success.goToMap',
+    defaultMessage: 'Go to Map',
+  },
+});
 
 // these routes are conditionally rendered by react navigation. If the user does not have a deviceName(which is stored in persisted state), they can only see the device naming screens
 // According to React Navigation, we are not suppose manually navigate to the map screen(https://reactnavigation.org/docs/auth-flow#dont-manually-navigate-when-conditionally-rendering-screens), the change of deviceName state will handle that
@@ -17,6 +33,7 @@ export const Success = ({
 }: NativeStackScreenProps<DeviceNamingList, 'Success'>) => {
   const setDeviceName = usePersistedDeviceName(store => store.setDeviceName);
   const deviceName = route.params.deviceName;
+  const {formatMessage: t} = useIntl();
 
   React.useEffect(() => {
     const unsubscribe = AppState.addEventListener('change', nextState => {
@@ -31,8 +48,8 @@ export const Success = ({
     <View style={styles.container}>
       <View style={{alignItems: 'center'}}>
         <SuccessIcon />
-        <Text style={styles.text}>Success!</Text>
-        <Text style={{marginTop: 20}}>You named your device</Text>
+        <Text style={styles.text}>{t(m.success)}</Text>
+        <Text style={{marginTop: 20}}>{t(m.description)} </Text>
         <View style={styles.deviceText}>
           <NewDeviceLogo />
           <Text style={{marginLeft: 10}}>{deviceName}</Text>
@@ -41,10 +58,9 @@ export const Success = ({
       <Button
         fullWidth
         onPress={() => {
-          console.log('We are here');
           setDeviceName(deviceName);
         }}>
-        Go to Map
+        {t(m.goToMap)}
       </Button>
     </View>
   );

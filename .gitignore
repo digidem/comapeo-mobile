@@ -72,3 +72,8 @@ yarn.lock
 # Temporary files created by Metro to check the health of the file watcher
 .metro-health-check*
 
+# Translation files
+/translations
+
+# Intl polyfills (generated via /scripts/build-intl-polyfill.js)
+/src/frontend/polyfills/intl-relativetimeformat.ts

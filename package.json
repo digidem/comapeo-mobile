@@ -68,7 +68,8 @@
     "tiny-typed-emitter": "^2.1.0",
     "utm": "^1.1.1",
     "validate-color": "^2.2.4",
-    "zustand": "^4.4.1"
+    "zustand": "^4.4.1",
+    "expo-secure-store": "~12.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

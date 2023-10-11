@@ -120,6 +120,30 @@
     "description": "Title for category chooser screen",
     "message": "Choose what is happening"
   },
+  "screens.DeviceNaming.GetStarted.getStarted": {
+    "message": "Get Started"
+  },
+  "screens.DeviceNaming.GetStarted.startMessage": {
+    "message": "Collaborate on mapping and monitoring projects"
+  },
+  "screens.DeviceNaming.Success.description": {
+    "message": "You named your device"
+  },
+  "screens.DeviceNaming.Success.goToMap": {
+    "message": "Go to Map"
+  },
+  "screens.DeviceNaming.Success.success": {
+    "message": "Success!"
+  },
+  "screens.DeviceNaming.addName": {
+    "message": "Add Name"
+  },
+  "screens.DeviceNaming.description": {
+    "message": "Guidance on how to choose a name and what it's for. You can edit this later"
+  },
+  "screens.DeviceNaming.header": {
+    "message": "Add a name for your device"
+  },
   "screens.EnterPassword.enterPass": {
     "message": "Enter your passcode"
   },

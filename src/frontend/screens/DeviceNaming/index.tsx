@@ -9,7 +9,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
 } from 'react-native';
-import {LIGHT_GREY, MEDIUM_GREY, RED} from '../../lib/styles';
+import {BLACK, LIGHT_GREY, MEDIUM_GREY, RED} from '../../lib/styles';
 import {Text} from '../../sharedComponents/Text';
 import {Button} from '../../sharedComponents/Button';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
@@ -71,6 +71,7 @@ export const DeviceNaming = ({
             ]}
             value={name}
             onChangeText={setNameWithValidation}
+            placeholderTextColor={LIGHT_GREY}
             placeholder="Device Name"
           />
           <Text
@@ -130,6 +131,7 @@ const styles = StyleSheet.create({
   textInput: {
     borderWidth: 1.5,
     borderRadius: 5,
+    color: BLACK,
     fontSize: 16,
     marginTop: 10,
     paddingLeft: 10,

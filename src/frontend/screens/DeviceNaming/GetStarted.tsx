@@ -19,6 +19,9 @@ const m = defineMessages({
   },
 });
 
+const TopoLinesWidth = 360;
+const TopoLineHeight = 640;
+
 export const GetStarted = ({
   navigation,
 }: NativeStackScreenProps<DeviceNamingList, 'GetStarted'>) => {
@@ -26,7 +29,11 @@ export const GetStarted = ({
 
   return (
     <React.Fragment>
-      <TopoLinesBackground width={'100%'} height={'100%'} />
+      {/* Followed this https://stackoverflow.com/questions/61657859/how-to-find-correct-values-for-width-height-and-viewbox-with-react-native-svg/61792447#61792447 to get the background completely covered */}
+      <View
+        style={{aspectRatio: TopoLinesWidth / TopoLineHeight, height: '100%'}}>
+        <TopoLinesBackground width={'100%'} height={'100%'} />
+      </View>
       <View style={styles.container}>
         <View style={{alignItems: 'center'}}>
           <CoMapeoLogo />

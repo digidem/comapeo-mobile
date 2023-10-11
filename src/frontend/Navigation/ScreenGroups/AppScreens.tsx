@@ -21,6 +21,8 @@ import {Settings} from '../../screens/Settings';
 import {PresetChooser} from '../../screens/PresetChooser';
 import {ObservationsList} from '../../screens/ObservationsList';
 import {ObservationScreen} from '../../screens/Observation';
+import {AppSettings} from '../../screens/Settings/AppSettings';
+import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -76,6 +78,8 @@ export type AppList = {
   DisablePasscode: undefined;
   SetPasscode: undefined;
   EnterPassToTurnOff: undefined;
+  AppSettings: undefined;
+  ProjectSettings: undefined;
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
@@ -169,6 +173,16 @@ export const createDefaultScreenGroup = (
       name="Observation"
       component={ObservationScreen}
       options={{headerTitle: intl(ObservationScreen.navTitle)}}
+    />
+    <RootStack.Screen
+      name="AppSettings"
+      component={AppSettings}
+      options={{headerTitle: intl(AppSettings.navTitle)}}
+    />
+    <RootStack.Screen
+      name="ProjectSettings"
+      component={ProjectSettings}
+      options={{headerTitle: intl(ProjectSettings.navTitle)}}
     />
   </RootStack.Group>
 );

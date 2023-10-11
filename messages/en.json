@@ -276,10 +276,6 @@
   "screens.Security.title": {
     "message": "Security"
   },
-  "screens.Settings.EmptySettingsScreen.navTitle": {
-    "description": "Temporary empty screen",
-    "message": "Empty screen"
-  },
   "screens.Settings.aboutMapeo": {
     "description": "Primary text for 'About Mapeo' link (version info)",
     "message": "About Mapeo"
@@ -288,67 +284,25 @@
     "description": "Description of the 'About Mapeo' page",
     "message": "Version and build number"
   },
-  "screens.Settings.appInstall": {
-    "description": "Primary text for Mapeo APK test",
-    "message": "Install APK"
+  "screens.Settings.appSettings": {
+    "message": "App Settings"
   },
-  "screens.Settings.appInstallDesc": {
-    "description": "Secondary text for Mapeo APK test",
-    "message": "Test APK install (re-installs app)"
+  "screens.Settings.appSettingsDesc": {
+    "description": "list of avaialable app settings",
+    "message": "Language, Security, Coordinates"
   },
-  "screens.Settings.appShare": {
-    "description": "Primary text for sharing the mapeo APK installer",
-    "message": "Share Mapeo Installer"
+  "screens.Settings.createOrJoin": {
+    "message": "Create or Join Project"
   },
-  "screens.Settings.appShareDesc": {
-    "description": "Secondary text for sharing the mapeo APK installer",
-    "message": "Install or update Mapeo on another phone"
+  "screens.Settings.createOrJoinDesc": {
+    "message": "Create a new project or join existing one"
   },
-  "screens.Settings.coordinateFormat": {
-    "description": "Settings for coordinate format",
-    "message": "Coordinate Format"
+  "screens.Settings.projectSettings": {
+    "message": "Project Settings"
   },
-  "screens.Settings.coordinateFormatDesc": {
-    "description": "Description of the 'Coordinate Format' page",
-    "message": "Choose how coordinates are displayed"
-  },
-  "screens.Settings.experiments": {
-    "description": "Experimental features",
-    "message": "Experiments"
-  },
-  "screens.Settings.experimentsDesc": {
-    "description": "Description of the 'Experiment' page",
-    "message": "Turn on experimental new features"
-  },
-  "screens.Settings.language": {
-    "description": "Primary text for language settings",
-    "message": "Language"
-  },
-  "screens.Settings.languageDesc": {
-    "description": "Secondary text for language settings",
-    "message": "Display language for App"
-  },
-  "screens.Settings.mapSettings": {
-    "description": "Description of map settings button in settings",
-    "message": "Map Settings"
-  },
-  "screens.Settings.mapSettingsSubtitle": {
-    "message": "Background Maps"
-  },
-  "screens.Settings.projectConfig": {
-    "description": "Primary text for project config settings",
-    "message": "Project Configuration"
-  },
-  "screens.Settings.projectConfigDesc": {
-    "description": "Secondary text for project config settings",
-    "message": "Categories, icons and questions"
-  },
-  "screens.Settings.security": {
-    "message": "Security"
-  },
-  "screens.Settings.securityDesc": {
-    "description": "Description of security button in settings",
-    "message": "App Passcode and Device Security"
+  "screens.Settings.projectSettingsDesc": {
+    "description": "list of avaialable project settings",
+    "message": "Categories, Config, Team"
   },
   "screens.Settings.title": {
     "description": "Title of settings screen",

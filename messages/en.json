@@ -19,6 +19,27 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "Discard observation?"
   },
+  "Screens.Settings.AppSettings.language": {
+    "message": "Language"
+  },
+  "Screens.Settings.AppSettings.languageDesc": {
+    "message": "Display language for app"
+  },
+  "Screens.Settings.AppSettings.title": {
+    "message": "App Setttings"
+  },
+  "Screens.Settings.ProjectSettings.configuration": {
+    "message": "Configuration"
+  },
+  "Screens.Settings.ProjectSettings.deviceName": {
+    "message": "Device Name"
+  },
+  "Screens.Settings.ProjectSettings.title": {
+    "message": "Project Setttings"
+  },
+  "Screens.Settings.ProjectSettings.yourTeam": {
+    "message": "Your Team"
+  },
   "screens.AddPhoto.cancel": {
     "message": "Cancel"
   },

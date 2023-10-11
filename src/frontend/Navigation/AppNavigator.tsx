@@ -1,19 +1,19 @@
 import * as React from 'react';
 import {
+  AppStackList,
   NavigatorScreenOptions,
   RootStack,
   createDefaultScreenGroup,
-  // createOnboardingScreenGroup,
 } from './AppStack';
 import {useIntl} from 'react-intl';
-// import {SecurityContext} from '../context/SecurityContext';
-import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
-// import {devExperiments} from '../lib/DevExperiments';
+import {
+  NavigationContainer,
+  useNavigationContainerRef,
+} from '@react-navigation/native';
 
 // React Navigation expects children of the Navigator to be a `Screen`, `Group`
 // or `React.Fragment` element type. We want to keep this logic in a separate
-// file (so that we can alter included screens at built-time for the ICCA
-// variant). If we defined a screen group as a component in a separate file,
+// file. If we defined a screen group as a component in a separate file,
 // then it would not be of any of these types. Therefore we export screen groups
 // as functions that create React Elements (_not_ components), and pass them as
 // children of the Navigator component. Because of this we cannot use any
@@ -28,13 +28,15 @@ import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 
 export const AppNavigator = () => {
   const {formatMessage} = useIntl();
-  const navigation = useNavigationFromRoot();
+  const navRef = useNavigationContainerRef<AppStackList>();
 
   return (
-    <RootStack.Navigator
-      initialRouteName="Home"
-      screenOptions={NavigatorScreenOptions}>
-      {createDefaultScreenGroup(formatMessage)}
-    </RootStack.Navigator>
+    <NavigationContainer ref={navRef}>
+      <RootStack.Navigator
+        initialRouteName="Home"
+        screenOptions={NavigatorScreenOptions}>
+        {createDefaultScreenGroup(formatMessage)}
+      </RootStack.Navigator>
+    </NavigationContainer>
   );
 };

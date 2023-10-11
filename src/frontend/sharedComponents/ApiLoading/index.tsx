@@ -9,7 +9,6 @@ import {setApi} from '../../api';
 
 export const Loading = ({children}: React.PropsWithChildren<{}>) => {
   const [status, setStatus] = React.useState<Status>('idle');
-  console.log(status);
 
   React.useEffect(() => {
     // This is a subscription object but nodejs mobile types are broken

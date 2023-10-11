@@ -9,7 +9,7 @@ const {
 const {
   shouldPolyfill: shouldPolyfillPlural,
 } = require('@formatjs/intl-pluralrules/should-polyfill');
-const messages = require('../src/frontend/translations/messages.json');
+const messages = require('../translations/messages.json');
 const languages = require('../src/frontend/languages.json');
 
 // For @formatjs/intl-relativetimeformat and @formatjs/intl-locale, which are needed for jsc-intl runtime

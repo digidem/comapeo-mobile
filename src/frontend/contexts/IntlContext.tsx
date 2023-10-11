@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {IntlProvider as IntlProviderOrig, CustomFormats} from 'react-intl';
 
-import messages from '../translations/messages.json';
+import messages from '../../../translations/messages.json';
 import languages from '../languages.json';
 import {usePersistedLocale} from '../hooks/persistedState/usePersistedLocale';
 

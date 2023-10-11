@@ -1,14 +1,29 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+
+type ListItemIconProps =
+  | {
+      iconName: string;
+    }
+  | {icon: React.ReactNode};
 
 /**
  * A simple wrapper to apply `List` styles to an `Icon` or `SvgIcon`.
  */
-export const ListItemIcon = ({iconName}: {iconName: string}) => {
+export const ListItemIcon = (props: ListItemIconProps) => {
   return (
     <View style={styles.root}>
-      <MaterialIcon name={iconName} size={24} color="rgba(0, 0, 0, 0.54)" />
+      {'icon' in props ? (
+        props.icon
+      ) : (
+        <MaterialIcon
+          name={props.iconName}
+          size={24}
+          color="rgba(0, 0, 0, 0.54)"
+        />
+      )}
     </View>
   );
 };

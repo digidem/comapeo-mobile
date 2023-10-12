@@ -23,6 +23,7 @@ import {ObservationsList} from '../../screens/ObservationsList';
 import {ObservationScreen} from '../../screens/Observation';
 import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
+import {DeviceName} from '../../screens/Settings/ProjectSettings/DeviceName';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -80,6 +81,7 @@ export type AppList = {
   EnterPassToTurnOff: undefined;
   AppSettings: undefined;
   ProjectSettings: undefined;
+  DeviceName: undefined;
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
@@ -183,6 +185,11 @@ export const createDefaultScreenGroup = (
       name="ProjectSettings"
       component={ProjectSettings}
       options={{headerTitle: intl(ProjectSettings.navTitle)}}
+    />
+    <RootStack.Screen
+      name="DeviceName"
+      component={DeviceName}
+      options={{headerTitle: intl(DeviceName.navTitle)}}
     />
   </RootStack.Group>
 );

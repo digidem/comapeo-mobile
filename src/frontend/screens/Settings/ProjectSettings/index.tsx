@@ -22,13 +22,16 @@ const m = defineMessages({
   },
 });
 
-export const ProjectSettings: NativeNavigationComponent<
-  'ProjectSettings'
-> = () => {
+export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
+  navigation,
+}) => {
   return (
     <ScrollView>
       <List>
-        <ListItem onPress={() => {}}>
+        <ListItem
+          onPress={() => {
+            navigation.navigate('DeviceName');
+          }}>
           <ListItemText primary={<FormattedMessage {...m.deviceName} />} />
         </ListItem>
         <ListItem onPress={() => {}}>

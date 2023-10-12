@@ -24,6 +24,7 @@ import {ObservationScreen} from '../../screens/Observation';
 import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
 import {CoordinateFormat} from '../../screens/Settings/AppSettings/CoordinateFormat';
+import {DeviceName} from '../../screens/Settings/ProjectSettings/DeviceName';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -81,6 +82,7 @@ export type AppList = {
   EnterPassToTurnOff: undefined;
   AppSettings: undefined;
   ProjectSettings: undefined;
+  DeviceName: undefined;
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
@@ -189,6 +191,12 @@ export const createDefaultScreenGroup = (
       name="CoordinateFormat"
       component={CoordinateFormat}
       options={{headerTitle: intl(CoordinateFormat.navTitle)}}
+    />
+
+    <RootStack.Screen
+      name="DeviceName"
+      component={DeviceName}
+      options={{headerTitle: intl(DeviceName.navTitle)}}
     />
   </RootStack.Group>
 );

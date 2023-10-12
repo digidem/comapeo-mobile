@@ -1,8 +1,6 @@
 import * as React from 'react';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import {ScrollView} from 'react-native-gesture-handler';
-// import { SecurityContext } from "../../context/SecurityContext";
-// import { useExperiments } from "../../hooks/useExperiments";
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {
   List,
@@ -11,32 +9,13 @@ import {
   ListItemIcon,
 } from '../../sharedComponents/List';
 import {NativeNavigationComponent} from '../../sharedTypes';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const m = defineMessages({
   settingsTitle: {
     id: 'screens.Settings.title',
     defaultMessage: 'Settings',
     description: 'Title of settings screen',
-  },
-  language: {
-    id: 'screens.Settings.language',
-    defaultMessage: 'Language',
-    description: 'Primary text for language settings',
-  },
-  languageDesc: {
-    id: 'screens.Settings.languageDesc',
-    defaultMessage: 'Display language for App',
-    description: 'Secondary text for language settings',
-  },
-  projectConfig: {
-    id: 'screens.Settings.projectConfig',
-    defaultMessage: 'Project Configuration',
-    description: 'Primary text for project config settings',
-  },
-  projectConfigDesc: {
-    id: 'screens.Settings.projectConfigDesc',
-    defaultMessage: 'Categories, icons and questions',
-    description: 'Secondary text for project config settings',
   },
   aboutMapeo: {
     id: 'screens.Settings.aboutMapeo',
@@ -48,146 +27,87 @@ const m = defineMessages({
     defaultMessage: 'Version and build number',
     description: "Description of the 'About Mapeo' page",
   },
-  appShare: {
-    id: 'screens.Settings.appShare',
-    defaultMessage: 'Share Mapeo Installer',
-    description: 'Primary text for sharing the mapeo APK installer',
+  createOrJoin: {
+    id: 'screens.Settings.createOrJoin',
+    defaultMessage: 'Create or Join Project',
   },
-  appShareDesc: {
-    id: 'screens.Settings.appShareDesc',
-    defaultMessage: 'Install or update Mapeo on another phone',
-    description: 'Secondary text for sharing the mapeo APK installer',
+  createOrJoinDesc: {
+    id: 'screens.Settings.createOrJoinDesc',
+    defaultMessage: 'Create a new project or join existing one',
   },
-  appInstall: {
-    id: 'screens.Settings.appInstall',
-    defaultMessage: 'Install APK',
-    description: 'Primary text for Mapeo APK test',
+  projectSettings: {
+    id: 'screens.Settings.projectSettings',
+    defaultMessage: 'Project Settings',
   },
-  appInstallDesc: {
-    id: 'screens.Settings.appInstallDesc',
-    defaultMessage: 'Test APK install (re-installs app)',
-    description: 'Secondary text for Mapeo APK test',
+  projectSettingsDesc: {
+    id: 'screens.Settings.projectSettingsDesc',
+    defaultMessage: 'Categories, Config, Team',
+    description: 'list of avaialable project settings',
   },
-  coordinateFormat: {
-    id: 'screens.Settings.coordinateFormat',
-    defaultMessage: 'Coordinate Format',
-    description: 'Settings for coordinate format',
+  appSettings: {
+    id: 'screens.Settings.appSettings',
+    defaultMessage: 'App Settings',
   },
-  coordinateFormatDesc: {
-    id: 'screens.Settings.coordinateFormatDesc',
-    defaultMessage: 'Choose how coordinates are displayed',
-    description: "Description of the 'Coordinate Format' page",
-  },
-  experiments: {
-    id: 'screens.Settings.experiments',
-    defaultMessage: 'Experiments',
-    description: 'Experimental features',
-  },
-  experimentsDesc: {
-    id: 'screens.Settings.experimentsDesc',
-    defaultMessage: 'Turn on experimental new features',
-    description: "Description of the 'Experiment' page",
-  },
-  security: {
-    id: 'screens.Settings.security',
-    defaultMessage: 'Security',
-  },
-  securityDesc: {
-    id: 'screens.Settings.securityDesc',
-    defaultMessage: 'App Passcode and Device Security',
-    description: 'Description of security button in settings',
-  },
-  mapSettings: {
-    id: 'screens.Settings.mapSettings',
-    defaultMessage: 'Map Settings',
-    description: 'Description of map settings button in settings',
-  },
-  mapSettingSubtitle: {
-    id: 'screens.Settings.mapSettingsSubtitle',
-    defaultMessage: 'Background Maps',
+  appSettingsDesc: {
+    id: 'screens.Settings.appSettingsDesc',
+    defaultMessage: 'Language, Security, Coordinates',
+    description: 'list of avaialable app settings',
   },
 });
 
 export const Settings: NativeNavigationComponent<'Settings'> = () => {
   const {navigate} = useNavigationFromRoot();
 
-  // const [experiments] = useExperiments();
-
-  // const { authState } = React.useContext(SecurityContext);
-
   return (
     <ScrollView>
-      <List testID="settingsList">
-        <ListItem
-          onPress={() => navigate('Empty')}
-          testID="settingsLanguageButton">
-          <ListItemIcon iconName="language" />
+      <List>
+        <ListItem onPress={() => {}}>
+          <ListItemIcon
+            icon={
+              <MaterialCommunityIcons
+                name="shape-square-rounded-plus"
+                size={24}
+                color="rgba(0, 0, 0, 0.54)"
+              />
+            }
+          />
           <ListItemText
-            primary={<FormattedMessage {...m.language} />}
-            secondary={<FormattedMessage {...m.languageDesc} />}></ListItemText>
+            primary={<FormattedMessage {...m.createOrJoin} />}
+            secondary={
+              <FormattedMessage {...m.createOrJoinDesc} />
+            }></ListItemText>
         </ListItem>
         <ListItem
-          onPress={() => navigate('Empty')}
-          testID="settingsProjectConfigButton">
+          onPress={() => {
+            navigate('ProjectSettings');
+          }}>
           <ListItemIcon iconName="assignment" />
           <ListItemText
-            primary={<FormattedMessage {...m.projectConfig} />}
+            primary={<FormattedMessage {...m.projectSettings} />}
             secondary={
-              <FormattedMessage {...m.projectConfigDesc} />
+              <FormattedMessage {...m.projectSettingsDesc} />
             }></ListItemText>
         </ListItem>
-        {/* {experiments.backgroundMaps && (
-          <ListItem
-            onPress={() => navigate("MapSettings")}
-            testID="settingsMapSettings"
-          >
-            <ListItemIcon iconName="map" />
-            <ListItemText
-              primary={<FormattedMessage {...m.mapSettings} />}
-              secondary={<FormattedMessage {...m.mapSettingSubtitle} />}
-            />
-          </ListItem>
-        )} */}
         <ListItem
-          onPress={() => navigate('Empty')}
-          testID="settingsCoodinatesButton">
-          <ListItemIcon iconName="explore" />
+          onPress={() => {
+            navigate('AppSettings');
+          }}>
+          <ListItemIcon iconName="settings-suggest" />
           <ListItemText
-            primary={<FormattedMessage {...m.coordinateFormat} />}
+            primary={<FormattedMessage {...m.appSettings} />}
             secondary={
-              <FormattedMessage {...m.coordinateFormatDesc} />
+              <FormattedMessage {...m.appSettingsDesc} />
             }></ListItemText>
         </ListItem>
-        <ListItem
-          onPress={() => navigate('Empty')}
-          testID="settingsAboutButton">
+        {/* this requires the use of `react-native-device-info` which takes some android level configuration. Im going to leave it out of the MVP for the sake of time */}
+        {/* <ListItem onPress={() => {}} testID="settingsAboutButton">
           <ListItemIcon iconName="info-outline" />
           <ListItemText
             primary={<FormattedMessage {...m.aboutMapeo} />}
             secondary={
               <FormattedMessage {...m.aboutMapeoDesc} />
             }></ListItemText>
-        </ListItem>
-        <ListItem
-          onPress={() => navigate('Empty')}
-          testID="settingsExperimentButton">
-          <ListItemIcon iconName="flag" />
-          <ListItemText
-            primary={<FormattedMessage {...m.experiments} />}
-            secondary={
-              <FormattedMessage {...m.experimentsDesc} />
-            }></ListItemText>
-        </ListItem>
-
-        {/* {authState !== "obscured" && (
-          <ListItem onPress={() => navigate("Security")}>
-            <ListItemIcon iconName="security" />
-            <ListItemText
-              primary={<FormattedMessage {...m.security} />}
-              secondary={<FormattedMessage {...m.securityDesc} />}
-            ></ListItemText>
-          </ListItem>
-        )} */}
+        </ListItem> */}
       </List>
     </ScrollView>
   );

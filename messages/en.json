@@ -34,6 +34,21 @@
   "Screens.Settings.AppSettings.title": {
     "message": "App Setttings"
   },
+  "Screens.Settings.ProjectSettings.DeviceName.continueEditting": {
+    "message": "Continue Editting"
+  },
+  "Screens.Settings.ProjectSettings.DeviceName.discardChanges": {
+    "message": "Discard Changes"
+  },
+  "Screens.Settings.ProjectSettings.DeviceName.editDevice": {
+    "message": "Edit Device Name"
+  },
+  "Screens.Settings.ProjectSettings.DeviceName.title": {
+    "message": "Device Name"
+  },
+  "Screens.Settings.ProjectSettings.DeviceName.yourDevice": {
+    "message": "Your Device Name"
+  },
   "Screens.Settings.ProjectSettings.configuration": {
     "message": "Configuration"
   },

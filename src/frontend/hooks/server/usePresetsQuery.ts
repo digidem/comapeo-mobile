@@ -1,10 +1,11 @@
 import {useQuery} from '@tanstack/react-query';
-import {api} from '../../api';
+import {useProjectContext} from '../../contexts/ProjectContext';
 
 export function usePresetsQuery() {
+  const project = useProjectContext();
   return useQuery({
     queryFn: async () => {
-      return await api.preset.getMany();
+      return await project.preset.getMany();
     },
     queryKey: ['presets'],
   });

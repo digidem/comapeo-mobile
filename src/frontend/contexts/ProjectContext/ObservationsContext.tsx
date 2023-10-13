@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {Observation, Preset} from '@mapeo/schema';
-import {useObservationsQuery} from '../hooks/server/observation/useObservationsQuery';
-import {Loading} from '../sharedComponents/Loading';
-import {Text} from '../sharedComponents/Text';
-import {usePresetsQuery} from '../hooks/server/usePresetsQuery';
+import {useObservationsQuery} from '../../hooks/server/observation/useObservationsQuery';
+import {Loading} from '../../sharedComponents/Loading';
+import {Text} from '../../sharedComponents/Text';
+import {usePresetsQuery} from '../../hooks/server/usePresetsQuery';
 
 export type ObservationsMap = Map<string, Observation>;
 

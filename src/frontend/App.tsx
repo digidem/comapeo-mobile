@@ -18,10 +18,6 @@ import {PermissionsProvider} from './contexts/PermissionsContext';
 import {PhotoPromiseProvider} from './contexts/PhotoPromiseContext';
 import {SecurityProvider} from './contexts/SecurityContext';
 import {LocationProvider} from './contexts/LocationContext';
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import {ObservationProvider} from './contexts/ObservationsContext';
-
-const queryClient = new QueryClient();
 
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();
@@ -29,25 +25,21 @@ const App = () => {
   return (
     <Loading>
       <IntlProvider>
-        <QueryClientProvider client={queryClient}>
-          <PermissionsProvider>
-            <GestureHandlerRootView style={{flex: 1}}>
-              <BottomSheetModalProvider>
-                <ObservationProvider>
-                  <NavigationContainer ref={navRef}>
-                    <PhotoPromiseProvider>
-                      <LocationProvider>
-                        <SecurityProvider>
-                          <AppNavigator />
-                        </SecurityProvider>
-                      </LocationProvider>
-                    </PhotoPromiseProvider>
-                  </NavigationContainer>
-                </ObservationProvider>
-              </BottomSheetModalProvider>
-            </GestureHandlerRootView>
-          </PermissionsProvider>
-        </QueryClientProvider>
+        <PermissionsProvider>
+          <GestureHandlerRootView style={{flex: 1}}>
+            <BottomSheetModalProvider>
+              <NavigationContainer ref={navRef}>
+                <PhotoPromiseProvider>
+                  <LocationProvider>
+                    <SecurityProvider>
+                      <AppNavigator />
+                    </SecurityProvider>
+                  </LocationProvider>
+                </PhotoPromiseProvider>
+              </NavigationContainer>
+            </BottomSheetModalProvider>
+          </GestureHandlerRootView>
+        </PermissionsProvider>
       </IntlProvider>
     </Loading>
   );

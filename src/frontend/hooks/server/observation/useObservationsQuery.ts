@@ -1,9 +1,11 @@
 import {useQuery} from '@tanstack/react-query';
-import {api} from '../../../api';
+import {useProjectContext} from '../../../contexts/ProjectContext';
 
 export const useObservationsQuery = () => {
+  const project = useProjectContext();
+
   return useQuery(
     ['observations'],
-    async () => await api.observation.getMany(),
+    async () => await project.observation.getMany(),
   );
 };

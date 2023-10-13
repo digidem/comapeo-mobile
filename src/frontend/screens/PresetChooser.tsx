@@ -16,7 +16,7 @@ import {NativeNavigationComponent} from '../sharedTypes';
 import {CustomHeaderLeftClose} from '../sharedComponents/CustomHeaderLeftClose';
 import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 import {Preset} from '@mapeo/schema';
-import {useObservationContext} from '../contexts/ObservationsContext';
+import {useObservationContext} from '../contexts/ProjectContext/ObservationsContext';
 
 const m = defineMessages({
   categoryTitle: {

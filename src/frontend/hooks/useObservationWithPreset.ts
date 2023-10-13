@@ -1,4 +1,4 @@
-import {useObservationContext} from '../contexts/ObservationsContext';
+import {useObservationContext} from '../contexts/ProjectContext/ObservationsContext';
 
 export const useObservationWithPreset = (observationId: string) => {
   const {observations, presets} = useObservationContext();

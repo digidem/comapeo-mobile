@@ -1,3 +1,43 @@
+export class ManagerDriver {
+  /**@type {ProjectDriver[]} */
+  _db = [];
+
+  constructor() {}
+  /**
+   *
+   * @param {string|null} id
+   */
+  getProject(id) {
+    if (!id) {
+      return this.createProject();
+    }
+    const project = this._db.find(proj => proj.projectId === id);
+    // should return undefined proj, but for example i am going to create one
+    if (!project) {
+      return this.createProject();
+    }
+
+    return project;
+  }
+
+  createProject() {
+    const createdProj = new ProjectDriver();
+    this._db.push(createdProj);
+    return createdProj;
+  }
+}
+
+export class ProjectDriver {
+  /**@type {string} */
+  projectId = Date.now.toString();
+  /** @type {ObservationDriver} */
+  observation = new ObservationDriver();
+  /** @type {PresetDriver} */
+  preset = new PresetDriver();
+
+  constructor() {}
+}
+
 export class ObservationDriver {
   /** @type {import("@mapeo/schema").Observation[]} */
   _db = [];
@@ -23,6 +63,7 @@ export class ObservationDriver {
       links: [],
       createdBy: '',
       ...value,
+      deleted: false,
     };
 
     this._db.push(observation);
@@ -130,6 +171,7 @@ export class PresetDriver {
       links: [],
       createdBy: '',
       ...value,
+      deleted: false,
     };
 
     this._db.push(preset);

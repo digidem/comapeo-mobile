@@ -27,13 +27,13 @@ const state = {
 // 2. Initialize Mapeo API server
 const mapeoClient = new MapeoClient();
 
-MockPreset.forEach(doc => {
-  mapeoClient.preset.create(doc);
-});
+// MockPreset.forEach(doc => {
+//   mapeoClient.preset.create(doc);
+// });
 
-mockObservations.forEach(doc => {
-  mapeoClient.observation.create(doc);
-});
+// mockObservations.forEach(doc => {
+//   mapeoClient.observation.create(doc);
+// });
 
 const channel = new MessagePortLike();
 

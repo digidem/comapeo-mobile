@@ -1,6 +1,6 @@
 import {useMemo} from 'react';
 
-import {useObservationContext} from '../contexts/ObservationsContext';
+import {useObservationContext} from '../contexts/ProjectContext/ObservationsContext';
 
 export function useAllObservations() {
   const {observations} = useObservationContext();

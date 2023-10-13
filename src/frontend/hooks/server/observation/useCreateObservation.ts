@@ -3,6 +3,7 @@ import {api} from '../../../api';
 import {ClientGeneratedObservation} from '../../../sharedTypes';
 import {Observation} from '@mapeo/schema';
 import {Photo} from '../../../contexts/PhotoPromiseContext/types';
+import {useProjectContext} from '../../../contexts/ProjectContext';
 
 export function useCreateObservation() {
   const attachmentsMutation = useAttachmentsMutation();
@@ -22,6 +23,7 @@ export function useCreateObservation() {
 
 function useObservationMutation() {
   const queryClient = useQueryClient();
+  const project = useProjectContext();
 
   return useMutation({
     mutationFn: async ({
@@ -31,7 +33,7 @@ function useObservationMutation() {
       value: ClientGeneratedObservation;
       att: Observation['attachments'];
     }) =>
-      await api.observation.create({
+      await project.observation.create({
         schemaName: 'observation',
         ...value,
         attachments: att,

@@ -23,6 +23,9 @@ import {ObservationsList} from '../../screens/ObservationsList';
 import {ObservationScreen} from '../../screens/Observation';
 import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
+import {CreateOrJoinProject} from '../../screens/Settings/CreateOrJoinProject';
+import {CreateProject} from '../../screens/Settings/CreateOrJoinProject/CreateProject';
+import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateProject/ProjectCreated';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -58,7 +61,7 @@ export type AppList = {
   UnableToLinkScreen: undefined;
   ConnectingToDeviceScreen: {task: () => Promise<void>};
   ConfirmLeavePracticeModeScreen: {projectAction: 'join' | 'create'};
-  CreateProjectScreen: undefined;
+  CreateProject: undefined;
   Security: undefined;
   DirectionalArrow: undefined;
   P2pUpgrade: undefined;
@@ -80,6 +83,8 @@ export type AppList = {
   EnterPassToTurnOff: undefined;
   AppSettings: undefined;
   ProjectSettings: undefined;
+  CreateOrJoinProject: undefined;
+  ProjectCreated: {name: string};
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
@@ -183,6 +188,21 @@ export const createDefaultScreenGroup = (
       name="ProjectSettings"
       component={ProjectSettings}
       options={{headerTitle: intl(ProjectSettings.navTitle)}}
+    />
+    <RootStack.Screen
+      name="CreateOrJoinProject"
+      component={CreateOrJoinProject}
+      options={{headerTitle: intl(CreateOrJoinProject.navTitle)}}
+    />
+    <RootStack.Screen
+      name="CreateProject"
+      component={CreateProject}
+      options={{headerTitle: intl(CreateProject.navTitle)}}
+    />
+    <RootStack.Screen
+      name="ProjectCreated"
+      component={ProjectCreated}
+      options={{headerShown: false}}
     />
   </RootStack.Group>
 );

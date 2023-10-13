@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {GestureResponderEvent, StyleSheet, View, ViewStyle} from 'react-native';
 
-import {VERY_LIGHT_BLUE} from '../lib/styles';
+import {BLACK, VERY_LIGHT_BLUE} from '../lib/styles';
 import {Text} from './Text';
 import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   textOutlinedDark: {
-    color: '#0066FF',
+    color: BLACK,
   },
   textOutlinedLightDisabled: {
     color: '#666666',

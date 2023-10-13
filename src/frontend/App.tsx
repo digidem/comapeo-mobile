@@ -18,6 +18,10 @@ import {PermissionsProvider} from './contexts/PermissionsContext';
 import {PhotoPromiseProvider} from './contexts/PhotoPromiseContext';
 import {SecurityProvider} from './contexts/SecurityContext';
 import {LocationProvider} from './contexts/LocationContext';
+import {AppLoading} from './AppLoading';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();
@@ -28,15 +32,19 @@ const App = () => {
         <PermissionsProvider>
           <GestureHandlerRootView style={{flex: 1}}>
             <BottomSheetModalProvider>
-              <NavigationContainer ref={navRef}>
-                <PhotoPromiseProvider>
-                  <LocationProvider>
-                    <SecurityProvider>
-                      <AppNavigator />
-                    </SecurityProvider>
-                  </LocationProvider>
-                </PhotoPromiseProvider>
-              </NavigationContainer>
+              <QueryClientProvider client={queryClient}>
+                <AppLoading>
+                  <PhotoPromiseProvider>
+                    <LocationProvider>
+                      <SecurityProvider>
+                        <NavigationContainer ref={navRef}>
+                          <AppNavigator />
+                        </NavigationContainer>
+                      </SecurityProvider>
+                    </LocationProvider>
+                  </PhotoPromiseProvider>
+                </AppLoading>
+              </QueryClientProvider>
             </BottomSheetModalProvider>
           </GestureHandlerRootView>
         </PermissionsProvider>

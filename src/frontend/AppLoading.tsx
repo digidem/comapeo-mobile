@@ -10,7 +10,6 @@ type KeyStoreKey = '@RootKey' | '@ProjectId';
 
 export const AppLoading = ({children}: {children: React.ReactNode}) => {
   const [rootKey, rootKeyStatus, setRootKey] = useSecureStore('@RootKey');
-  const [projectKey, projectKeyStatus] = useSecureStore('@ProjectId');
   const [managerReady, setManagerReady] = React.useState(false);
   // if there is no root key, create one
   // The root key should only be create ONCE, on first app load
@@ -33,15 +32,11 @@ export const AppLoading = ({children}: {children: React.ReactNode}) => {
     };
   }, []);
 
-  if (managerReady || projectKeyStatus === 'loading') {
+  if (!managerReady) {
     return <Loading />;
   }
 
-  return (
-    <ProjectProvider secureStoreProjectId={projectKey}>
-      {children}
-    </ProjectProvider>
-  );
+  return <ProjectProvider>{children}</ProjectProvider>;
 };
 
 function useSecureStore(key: KeyStoreKey) {

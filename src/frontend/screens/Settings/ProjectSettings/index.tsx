@@ -22,9 +22,9 @@ const m = defineMessages({
   },
 });
 
-export const ProjectSettings: NativeNavigationComponent<
-  'ProjectSettings'
-> = () => {
+export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
+  navigation,
+}) => {
   return (
     <ScrollView>
       <List>
@@ -34,7 +34,10 @@ export const ProjectSettings: NativeNavigationComponent<
         <ListItem onPress={() => {}}>
           <ListItemText primary={<FormattedMessage {...m.configuration} />} />
         </ListItem>
-        <ListItem onPress={() => {}}>
+        <ListItem
+          onPress={() => {
+            navigation.navigate('YourTeam');
+          }}>
           <ListItemText primary={<FormattedMessage {...m.yourTeam} />} />
         </ListItem>
       </List>

@@ -30,6 +30,7 @@ import {CreateOrJoinProject} from '../../screens/Settings/CreateOrJoinProject';
 import {CreateProject} from '../../screens/Settings/CreateOrJoinProject/CreateProject';
 import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateProject/ProjectCreated';
 import {JoinExistingProject} from '../../screens/Settings/CreateOrJoinProject/JoinExistingProject';
+import {YourTeam} from '../../screens/Settings/ProjectSettings/YourTeam';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -90,6 +91,7 @@ export type AppList = {
   CreateOrJoinProject: undefined;
   ProjectCreated: {name: string};
   JoinExistingProject: undefined;
+  YourTeam: undefined;
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
@@ -232,6 +234,11 @@ export const createDefaultScreenGroup = (
       name="JoinExistingProject"
       component={JoinExistingProject}
       options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="YourTeam"
+      component={YourTeam}
+      options={{headerTitle: intl(YourTeam.navTitle)}}
     />
   </RootStack.Group>
 );

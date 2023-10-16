@@ -1,14 +1,16 @@
 // @ts-check
 import debug from 'debug';
-import rn_bridge from 'rn-bridge';
-import {createServer} from 'rpc-reflector';
-import {MapeoClient} from './mapeo-core/index';
-import MessagePortLike from './message-port-like.js';
-import {MockPreset, mockObservations} from './mockData.js';
+import rnBridge from 'rn-bridge';
+import {MapeoManager} from '@mapeo/core';
+import {createMapeoServer} from '@mapeo/ipc';
+import {KeyManager} from '@mapeo/crypto';
+import RAM from 'random-access-memory';
+
+import MessagePortLike from './src/message-port-like.js';
 
 /** @typedef {Object} State
  *
- * @property {import('./types/api').Status} State.status
+ * @property {import('./types/api.js').Status} status
  */
 
 // TODO: Account for args passed from node.startWithArgs
@@ -20,42 +22,38 @@ log('Starting Node...');
 
 // 1. Initialize server state
 /** @type {State} */
-const state = {
-  status: 'idle',
-};
+const state = {status: 'idle'};
 
 // 2. Initialize Mapeo API server
-const mapeoClient = new MapeoClient();
-
-MockPreset.forEach(doc => {
-  mapeoClient.preset.create(doc);
-});
-
-mockObservations.forEach(doc => {
-  mapeoClient.observation.create(doc);
-});
-
 const channel = new MessagePortLike();
 
-const {close} = createServer(mapeoClient, channel);
+const manager = new MapeoManager({
+  rootKey: KeyManager.generateRootKey(),
+  dbFolder: ':memory:',
+  coreStorage: () => new RAM(),
+});
+
+const {close} = createMapeoServer(manager, channel);
 
 channel.start();
 
 // 3. Initialize event listeners
-rn_bridge.channel.on('get-status', () => {
-  rn_bridge.channel.post('status', state.status);
+rnBridge.channel.on('get-status', () => {
+  rnBridge.channel.post('status', state.status);
 });
 
-rn_bridge.channel.on('close', () => {
+rnBridge.channel.on('close', () => {
   close();
+  state.status = 'closed';
 });
 
 process.on('exit', () => {
   close();
+  state.status = 'closed';
 });
 
 // 4. Send initial status message to client
 state.status = 'listening';
-rn_bridge.channel.post('status', {value: state.status});
+rnBridge.channel.post('status', {value: state.status});
 
 log('Node was initialized!');

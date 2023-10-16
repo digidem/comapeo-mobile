@@ -1,12 +1,12 @@
 import EventEmitter from 'events';
 
 declare module 'rn-bridge' {
-  interface Channel extends EventEmitter {
+  export interface Channel extends EventEmitter {
     on(event: string, callback: (message: any) => void): void;
     post(event: string, message: any): void;
     send(message: any): void;
   }
-  interface App {
+  export interface App {
     on(
       event: 'pause',
       callback: (pauseLock: {release: () => void}) => void,

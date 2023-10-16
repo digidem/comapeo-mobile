@@ -1,12 +1,12 @@
 import {TypedEmitter} from 'tiny-typed-emitter';
-import rn_bridge from 'rn-bridge';
+import rnBridge from 'rn-bridge';
 
 /**
  * @typedef {Object} MessagePortEvents
  * @property {(value: any) => void} message
  */
 
-/** @typedef {import('nodejs-mobile-react-native').Channel} Channel */
+/** @typedef {import('rn-bridge').Channel} Channel */
 
 /**
  * Wrap the nodejs-mobile RNBridge to act like a MessagePort. Queues messages
@@ -35,7 +35,7 @@ class MessagePortLike extends TypedEmitter {
         // (the event listener should be removed anyway)
       }
     };
-    rn_bridge.channel.addListener(this.#API_EVENT_NAME, this.#messageHandler);
+    rnBridge.channel.addListener(this.#API_EVENT_NAME, this.#messageHandler);
   }
 
   start() {
@@ -43,10 +43,12 @@ class MessagePortLike extends TypedEmitter {
       return;
     }
     this.#state = 'started';
-    for (const msg of this.#queuedMessages) {
-      this.emit('message', msg);
+
+    /** @type {{id: string, message: any} | undefined} */
+    let event;
+    while ((event = this.#queuedMessages.shift())) {
+      this.#messageHandler(event);
     }
-    this.#queuedMessages = [];
   }
 
   close() {
@@ -54,10 +56,7 @@ class MessagePortLike extends TypedEmitter {
       return;
     }
 
-    rn_bridge.channel.removeListener(
-      this.#API_EVENT_NAME,
-      this.#messageHandler,
-    );
+    rnBridge.channel.removeListener(this.#API_EVENT_NAME, this.#messageHandler);
     this.#state = 'closed';
     this.#queuedMessages = [];
   }
@@ -67,7 +66,23 @@ class MessagePortLike extends TypedEmitter {
    * @returns {void}
    */
   postMessage(message) {
-    rn_bridge.channel.post(this.#API_EVENT_NAME, message);
+    rnBridge.channel.post(this.#API_EVENT_NAME, message);
+  }
+
+  /**
+   * @param {keyof MessagePortEvents} event
+   * @param {any} listener
+   */
+  addEventListener(event, listener) {
+    this.addListener(event, listener);
+  }
+
+  /**
+   * @param {keyof MessagePortEvents} event
+   * @param {any} listener
+   */
+  removeEventListener(event, listener) {
+    this.removeEventListener(event, listener);
   }
 }
 

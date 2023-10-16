@@ -1,4 +1,3 @@
-// @ts-check
 import debug from 'debug';
 import rnBridge from 'rn-bridge';
 import {MapeoManager} from '@mapeo/core';

@@ -8,6 +8,7 @@ import {
 } from './photosMethods';
 import {ClientGeneratedObservation, Position} from '../../../sharedTypes';
 import {Observation, Preset} from '@mapeo/schema';
+import {FieldValueType} from '../../../sharedTypes/PresetTypes';
 
 type newDraftProps = {observation: Observation; preset: Preset};
 const emptyObservation: ClientGeneratedObservation = {
@@ -40,6 +41,13 @@ export type DraftObservationSlice = {
     }) => void;
     updatePreset: (preset: Preset) => void;
     updateObservationNotes: (notes: string) => void;
+    updateObservationFields: ({
+      tagKey,
+      value,
+    }: {
+      tagKey: string;
+      value: FieldValueType;
+    }) => void;
   };
 };
 
@@ -146,6 +154,22 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
           tags: {
             ...prevValue.tags,
             notes,
+          },
+        },
+      });
+    },
+    updateObservationFields: ({tagKey, value}) => {
+      const prevValue = get().value;
+      if (!prevValue)
+        throw new Error(
+          'Cannot set observation field if observation does not already exist (aka if the user has not chosen a category)',
+        );
+      set({
+        value: {
+          ...prevValue,
+          tags: {
+            ...prevValue.tags,
+            [tagKey]: value,
           },
         },
       });

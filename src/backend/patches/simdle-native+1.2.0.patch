@@ -1,0 +1,10 @@
+diff --git a/node_modules/simdle-native/index.js b/node_modules/simdle-native/index.js
+index f1866c4..e432fc8 100644
+--- a/node_modules/simdle-native/index.js
++++ b/node_modules/simdle-native/index.js
+@@ -1,4 +1,4 @@
+-const binding = require('node-gyp-build')(__dirname)
++const binding = require('node-gyp-build')(__dirname, 'simdle-native')
+ const b4a = require('b4a')
+ 
+ function unary (u8, u16, u32) {

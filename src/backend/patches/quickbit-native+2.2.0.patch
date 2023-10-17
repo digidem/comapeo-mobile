@@ -1,0 +1,10 @@
+diff --git a/node_modules/quickbit-native/index.js b/node_modules/quickbit-native/index.js
+index 7eb54fc..acef796 100644
+--- a/node_modules/quickbit-native/index.js
++++ b/node_modules/quickbit-native/index.js
+@@ -1,4 +1,4 @@
+-const binding = require('node-gyp-build')(__dirname)
++const binding = require('node-gyp-build')(__dirname, 'quickbit-native')
+ const b4a = require('b4a')
+ 
+ exports.get = function get (field, bit) {

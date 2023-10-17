@@ -5,6 +5,8 @@ import {HeaderBackButtonProps} from '@react-navigation/native-stack/lib/typescri
 import {BackIcon} from './icons';
 import {BLACK} from '../lib/styles';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
+import {useFocusEffect} from '@react-navigation/native';
+import {BackHandler} from 'react-native';
 
 // We use a slightly larger back icon, to improve accessibility
 // TODO iOS: This should probably be a chevron not an arrow
@@ -24,6 +26,23 @@ export const CustomHeaderLeft = ({
   onPress,
 }: CustomHeaderLeftProps) => {
   const navigation = useNavigationFromRoot();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        onPress ? onPress() : navigation.goBack();
+        return true;
+      };
+
+      const subscription = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress,
+      );
+
+      return () => subscription.remove();
+    }, [onPress, navigation]),
+  );
+
   return (
     <HeaderBackButton
       {...headerBackButtonProps}

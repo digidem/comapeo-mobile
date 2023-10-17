@@ -26,7 +26,7 @@ export const TextButton = ({
     style={[styles.buttonContainer, containerStyle]}
     background={TouchableNativeFeedback.Ripple(VERY_LIGHT_BLUE, true)}
     onPress={onPress}>
-    <Text style={[styles.buttonText, textStyle]}>{title.toUpperCase()}</Text>
+    <Text style={[styles.buttonText, textStyle]}>{title}</Text>
   </TouchableNativeFeedback>
 );
 

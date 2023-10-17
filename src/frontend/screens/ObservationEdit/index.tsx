@@ -11,6 +11,7 @@ import {BottomSheet} from './BottomSheet';
 import {ThumbnailScrollView} from '../../sharedComponents/ThumbnailScrollView';
 import {CustomHeaderLeftClose} from '../../sharedComponents/CustomHeaderLeftClose';
 import {PresetView} from './PresetView';
+import {DetailsIcon} from '../../sharedComponents/icons';
 
 const m = defineMessages({
   editTitle: {
@@ -28,6 +29,11 @@ const m = defineMessages({
     defaultMessage: 'Add Photo',
     description: 'Button label for adding photo',
   },
+  detailsButton: {
+    id: 'screens.ObservationEdit.ObservationEditView.detailsButton',
+    defaultMessage: 'Add Details',
+    description: 'Button label to add details',
+  },
 });
 
 export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
@@ -36,6 +42,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   const observationId = usePersistedDraftObservation(
     store => store.observationId,
   );
+  const preset = usePersistedDraftObservation(store => store.preset);
   const isNew = !observationId;
   const {formatMessage: t} = useIntl();
   React.useLayoutEffect(() => {
@@ -56,7 +63,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   }, [navigation]);
 
   const handleDetailsPress = React.useCallback(() => {
-    navigation.navigate('ObservationDetails', {question: 1});
+    navigation.navigate('ObservationFields', {question: 1});
   }, [navigation]);
 
   const bottomSheetItems = [
@@ -66,14 +73,14 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       onPress: handleCameraPress,
     },
   ];
-  // if (preset && preset.fields && preset.fields.length) {
-  //   // Only show the option to add details if preset fields are defined.
-  //   bottomSheetItems.push({
-  //     icon: <DetailsIcon />,
-  //     label: t(m.detailsButton),
-  //     onPress: handleDetailsPress,
-  //   });
-  // }
+  if (preset && preset.fieldIds.length) {
+    // Only show the option to add details if preset fields are defined.
+    bottomSheetItems.push({
+      icon: <DetailsIcon />,
+      label: t(m.detailsButton),
+      onPress: handleDetailsPress,
+    });
+  }
 
   return (
     <View style={styles.container}>

@@ -23,6 +23,7 @@ import {ObservationsList} from '../../screens/ObservationsList';
 import {ObservationScreen} from '../../screens/Observation';
 import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
+import {ObservationFields} from '../../screens/ObservationFields';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -51,7 +52,7 @@ export type AppList = {
   Observation: {observationId: string};
   ObservationEdit: {observationId?: string} | undefined;
   ManualGpsScreen: undefined;
-  ObservationDetails: {question: number};
+  ObservationFields: {question: number};
   LeaveProjectScreen: undefined;
   AlreadyOnProj: undefined;
   AddToProjectScreen: undefined;
@@ -184,5 +185,6 @@ export const createDefaultScreenGroup = (
       component={ProjectSettings}
       options={{headerTitle: intl(ProjectSettings.navTitle)}}
     />
+    <RootStack.Screen name="ObservationFields" component={ObservationFields} />
   </RootStack.Group>
 );

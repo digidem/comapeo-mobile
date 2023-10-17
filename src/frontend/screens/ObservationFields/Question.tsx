@@ -4,19 +4,18 @@ import {SelectOne} from './SelectOne';
 import {SelectMultiple} from './SelectMultiple';
 import {TextArea} from './TextArea';
 import {Field} from '@mapeo/schema';
+import {isSelectMultipleField, isSelectOneField} from '../../lib/utils';
 
 export type QuestionProps = {
   field: Field;
 };
 
 export const Question = ({field}: QuestionProps) => {
-  if (field.type === 'selectOne' && Array.isArray(field.options)) {
-    // @ts-ignore
+  if (isSelectOneField(field) && Array.isArray(field.options)) {
     return <SelectOne field={field} />;
   }
 
-  if (field.type === 'selectMultiple' && Array.isArray(field.options)) {
-    // @ts-ignore
+  if (isSelectMultipleField(field) && Array.isArray(field.options)) {
     return <SelectMultiple field={field} />;
   }
 

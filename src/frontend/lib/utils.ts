@@ -1,6 +1,30 @@
 // import { Alert } from "react-native";
 import {fromLatLon} from 'utm';
-import {SelectOptions, LabeledSelectOption} from '../sharedTypes/PresetTypes';
+import {
+  SelectOptions,
+  LabeledSelectOption,
+  SelectOneField,
+  SelectMultipleField,
+} from '../sharedTypes/PresetTypes';
+import {Field} from '@mapeo/schema';
+
+export function isSelectOneField(field: Field): field is Omit<
+  SelectOneField,
+  'type'
+> & {
+  type: Extract<SelectOneField['type'], 'selectOne'>;
+} {
+  return field.type === 'selectOne';
+}
+
+export function isSelectMultipleField(field: Field): field is Omit<
+  SelectMultipleField,
+  'type'
+> & {
+  type: Extract<SelectMultipleField['type'], 'selectMultiple'>;
+} {
+  return field.type === 'selectMultiple';
+}
 
 // import type { LocationContextType } from "../context/LocationContext";
 // import type {

@@ -4,7 +4,7 @@ import rn_bridge from 'rn-bridge';
 import {createServer} from 'rpc-reflector';
 import {MapeoClient} from './mapeo-core/index';
 import MessagePortLike from './message-port-like.js';
-import {MockPreset, mockObservations} from './mockData.js';
+import {MockPreset, mockFields, mockObservations} from './mockData.js';
 
 /** @typedef {Object} State
  *
@@ -33,6 +33,10 @@ MockPreset.forEach(doc => {
 
 mockObservations.forEach(doc => {
   mapeoClient.observation.create(doc);
+});
+
+mockFields.forEach(doc => {
+  mapeoClient.field.create(doc);
 });
 
 const channel = new MessagePortLike();

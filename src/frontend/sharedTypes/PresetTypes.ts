@@ -1,7 +1,7 @@
 import {Field} from '@mapeo/schema';
 
 export interface TextField extends Field {
-  appearance: 'singleline' | 'multiline';
+  appearance: Field['appearance'];
   type: 'text';
 }
 
@@ -20,3 +20,15 @@ export interface SelectOneField extends BaseSelectField {
 export interface SelectMultipleField extends BaseSelectField {
   type: 'selectMultiple';
 }
+
+// Calling this FieldValueType to seperate it from @mapeo/schema's FieldValue
+export type FieldValueType = SelectableFieldValue | SelectableFieldValue[];
+
+export type SelectableFieldValue = boolean | number | string | null;
+
+export interface LabeledSelectOption {
+  label: string;
+  value: SelectableFieldValue;
+}
+
+export type SelectOptions = (SelectableFieldValue | LabeledSelectOption)[];

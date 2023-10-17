@@ -1,0 +1,16 @@
+diff --git a/node_modules/nodejs-mobile-react-native/android/build.gradle b/node_modules/nodejs-mobile-react-native/android/build.gradle
+index 76df601..481c431 100644
+--- a/node_modules/nodejs-mobile-react-native/android/build.gradle
++++ b/node_modules/nodejs-mobile-react-native/android/build.gradle
+@@ -102,6 +102,11 @@ task CopyNodeProjectAssetsFolder (type:Sync) {
+     exclude '**/*~' // temporary files
+     exclude '**/.*' // files and dirs starting with .
+     exclude '**/*.gz' // gzip files will cause errors on aapt when merging assets.
++
++    // Without this, each native module containing their prebuilds will be included in the Android project's nodejs-project/node_modules/ directory
++    // This is not needed for the prebuilds detection step since that uses the nodejs-assets directory outside the Android project
++    exclude '**/prebuilds'
++    includeEmptyDirs = false
+ }
+ 
+ task GenerateNodeProjectAssetsLists {

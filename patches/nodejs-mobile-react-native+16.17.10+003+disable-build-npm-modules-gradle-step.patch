@@ -1,0 +1,13 @@
+diff --git a/node_modules/nodejs-mobile-react-native/android/build.gradle b/node_modules/nodejs-mobile-react-native/android/build.gradle
+index f60139f..02537f3 100644
+--- a/node_modules/nodejs-mobile-react-native/android/build.gradle
++++ b/node_modules/nodejs-mobile-react-native/android/build.gradle
+@@ -411,6 +411,8 @@ if ("1".equals(shouldRebuildNativeModules)) {
+         }
+ 
+         task "BuildNpmModules${abi_name}" (type:Exec) {
++            // We don't need this because we solely rely on using prebuilds
++            enabled = false
+             dependsOn "DetectCorrectPrebuilds${abi_name}"
+             description = "Building native modules for ${abi_name}."
+             def nodeVersionStdout = new ByteArrayOutputStream()

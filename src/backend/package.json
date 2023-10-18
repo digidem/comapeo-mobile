@@ -14,12 +14,13 @@
   "license": "MIT",
   "dependencies": {
     "@mapeo/core": "^9.0.0-alpha.1",
-    "@mapeo/crypto": "^1.0.0-alpha.8",
+    "@mapeo/crypto": "^1.0.0-alpha.9",
     "@mapeo/ipc": "^0.1.2",
     "debug": "^4.3.4",
     "fastify": "^4.24.0",
     "random-access-file": "^4.0.4",
-    "random-access-memory": "^6.2.0"
+    "random-access-memory": "^6.2.0",
+    "sodium-native": "^4.0.4"
   },
   "devDependencies": {
     "@digidem/types": "~2.1.0",

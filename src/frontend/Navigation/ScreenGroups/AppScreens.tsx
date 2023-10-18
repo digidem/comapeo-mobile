@@ -27,6 +27,9 @@ import {CoordinateFormat} from '../../screens/Settings/AppSettings/CoordinateFor
 import {CustomHeaderLeftClose} from '../../sharedComponents/CustomHeaderLeftClose';
 import {SaveButton} from '../../screens/ObservationEdit/SaveButton';
 import {YourTeam} from '../../screens/Settings/ProjectSettings/YourTeam';
+import {SelectDevice} from '../../screens/Settings/ProjectSettings/YourTeam/SelectDevice';
+import {DeviceType} from '../../sharedTypes';
+import {SelectInviteeRole} from '../../screens/Settings/ProjectSettings/YourTeam/SelectInviteeRole';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -85,6 +88,8 @@ export type AppList = {
   AppSettings: undefined;
   ProjectSettings: undefined;
   YourTeam: undefined;
+  SelectDevice: undefined;
+  SelectInviteeRole: {name: string; deviceType: DeviceType; deviceId?: string};
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
@@ -212,6 +217,16 @@ export const createDefaultScreenGroup = (
       name="YourTeam"
       component={YourTeam}
       options={{headerTitle: intl(YourTeam.navTitle)}}
+    />
+    <RootStack.Screen
+      name="SelectDevice"
+      component={SelectDevice}
+      options={{headerTitle: intl(SelectDevice.navTitle)}}
+    />
+    <RootStack.Screen
+      name="SelectInviteeRole"
+      component={SelectInviteeRole}
+      options={{headerTitle: intl(SelectInviteeRole.navTitle)}}
     />
   </RootStack.Group>
 );

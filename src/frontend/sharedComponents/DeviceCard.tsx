@@ -3,9 +3,10 @@ import DeviceMobile from '../images/DeviceMobile.svg';
 import DeviceDesktop from '../images/DeviceDesktop.svg';
 import {Text} from './Text';
 import {LIGHT_GREY, MEDIUM_GREY} from '../lib/styles';
-import {ViewStyleProp} from '../sharedTypes';
+import {DeviceType, ViewStyleProp} from '../sharedTypes';
 import {defineMessages, useIntl} from 'react-intl';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {DeviceNameWithIcon} from './DeviceNameWithIcon';
 
 const m = defineMessages({
   thisDevice: {
@@ -15,7 +16,7 @@ const m = defineMessages({
 });
 
 type DeviceCardProps = {
-  deviceType: 'mobile' | 'desktop'; // to do add "cloud"
+  deviceType: DeviceType;
   name: string;
   thisDevice?: boolean;
   deviceId?: string;
@@ -40,16 +41,13 @@ export const DeviceCard = ({
       disabled={!onPress}
       onPress={() => (onPress ? onPress() : {})}
       style={[styles.container, style]}>
-      {deviceType === 'mobile' ? <DeviceMobile /> : <DeviceDesktop />}
-      <View style={{justifyContent: 'center', marginLeft: 10}}>
-        <Text style={{fontWeight: 'bold'}}>{name}</Text>
-        {deviceId && <Text style={{color: MEDIUM_GREY}}>{deviceId}</Text>}
-        {thisDevice && (
-          <Text style={{color: MEDIUM_GREY}}>
-            {formatMessage(m.thisDevice)}
-          </Text>
-        )}
-      </View>
+      <DeviceNameWithIcon
+        name={name}
+        thisDevice={thisDevice}
+        deviceType={deviceType}
+        deviceId={deviceId}
+        iconSize={75}
+      />
     </TouchableOpacity>
   );
 };

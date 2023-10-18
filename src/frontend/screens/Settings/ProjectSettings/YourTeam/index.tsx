@@ -54,7 +54,12 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
 
   return (
     <ScrollView style={styles.container}>
-      <Button fullWidth variant="outlined" onPress={() => {}}>
+      <Button
+        fullWidth
+        variant="outlined"
+        onPress={() => {
+          navigation.navigate('SelectDevice');
+        }}>
         <View
           style={{
             flexDirection: 'row',

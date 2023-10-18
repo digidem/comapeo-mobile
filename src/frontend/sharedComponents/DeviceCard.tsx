@@ -5,6 +5,7 @@ import {Text} from './Text';
 import {LIGHT_GREY, MEDIUM_GREY} from '../lib/styles';
 import {ViewStyleProp} from '../sharedTypes';
 import {defineMessages, useIntl} from 'react-intl';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const m = defineMessages({
   thisDevice: {
@@ -20,7 +21,7 @@ type DeviceCardProps = {
   deviceId?: string;
   dateAdded?: Date;
   style?: ViewStyleProp;
-  leaveAction?: () => void;
+  onPress?: () => void;
 };
 
 export const DeviceCard = ({
@@ -30,12 +31,15 @@ export const DeviceCard = ({
   thisDevice,
   deviceId,
   dateAdded,
-  leaveAction,
+  onPress,
 }: DeviceCardProps) => {
   const {formatMessage} = useIntl();
 
   return (
-    <View style={[styles.container, style]}>
+    <TouchableOpacity
+      disabled={!onPress}
+      onPress={() => (onPress ? onPress() : {})}
+      style={[styles.container, style]}>
       {deviceType === 'mobile' ? <DeviceMobile /> : <DeviceDesktop />}
       <View style={{justifyContent: 'center', marginLeft: 10}}>
         <Text style={{fontWeight: 'bold'}}>{name}</Text>
@@ -46,7 +50,7 @@ export const DeviceCard = ({
           </Text>
         )}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

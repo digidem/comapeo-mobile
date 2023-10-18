@@ -32,8 +32,11 @@ import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateP
 import {JoinExistingProject} from '../../screens/Settings/CreateOrJoinProject/JoinExistingProject';
 import {YourTeam} from '../../screens/Settings/ProjectSettings/YourTeam';
 import {SelectDevice} from '../../screens/Settings/ProjectSettings/YourTeam/SelectDevice';
-import {DeviceType} from '../../sharedTypes';
+import {DeviceRole, DeviceType} from '../../sharedTypes';
 import {SelectInviteeRole} from '../../screens/Settings/ProjectSettings/YourTeam/SelectInviteeRole';
+import {ReviewInvitation} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewInvitation';
+import {WaitingForInviteAccept} from '../../screens/Settings/ProjectSettings/YourTeam/WaitingForInviteAccept';
+import {InviteAccepted} from '../../screens/Settings/ProjectSettings/YourTeam/InviteAccepted';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -97,6 +100,24 @@ export type AppList = {
   YourTeam: undefined;
   SelectDevice: undefined;
   SelectInviteeRole: {name: string; deviceType: DeviceType; deviceId?: string};
+  ReviewInvitation: {
+    name: string;
+    deviceType: DeviceType;
+    deviceId?: string;
+    role: DeviceRole;
+  };
+  WaitingForInviteAccept: {
+    name: string;
+    deviceType: DeviceType;
+    deviceId?: string;
+    role: DeviceRole;
+  };
+  InviteAccepted: {
+    name: string;
+    deviceType: DeviceType;
+    deviceId?: string;
+    role: DeviceRole;
+  };
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
@@ -254,6 +275,21 @@ export const createDefaultScreenGroup = (
       name="SelectInviteeRole"
       component={SelectInviteeRole}
       options={{headerTitle: intl(SelectInviteeRole.navTitle)}}
+    />
+    <RootStack.Screen
+      name="ReviewInvitation"
+      component={ReviewInvitation}
+      options={{headerTitle: intl(ReviewInvitation.navTitle)}}
+    />
+    <RootStack.Screen
+      name="WaitingForInviteAccept"
+      component={WaitingForInviteAccept}
+      options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="InviteAccepted"
+      component={InviteAccepted}
+      options={{headerShown: false}}
     />
   </RootStack.Group>
 );

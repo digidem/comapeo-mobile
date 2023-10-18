@@ -1,6 +1,6 @@
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeNavigationComponent} from '../../../../sharedTypes';
-import {StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import useWifiStatus from '../../../../hooks/useWifiStatus';
 import WifiIcon from '../../../../images/WifiIcon.svg';
 import {Text} from '../../../../sharedComponents/Text';
@@ -31,7 +31,7 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
   const {ssid} = useWifiStatus();
   const {formatMessage: t} = useIntl();
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <WifiIcon style={{marginRight: 10}} width={30} height={30} />
         <Text>{ssid}</Text>
@@ -56,7 +56,7 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
           })
         }
       />
-    </View>
+    </ScrollView>
   );
 };
 

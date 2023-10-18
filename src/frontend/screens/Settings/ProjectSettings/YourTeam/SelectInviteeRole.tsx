@@ -5,13 +5,12 @@ import {
 } from '../../../../sharedTypes';
 import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../../../sharedComponents/Text';
-import DeviceMobile from '../../../../images/DeviceMobile.svg';
-import DeviceDesktop from '../../../../images/DeviceDesktop.svg';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import MaterialCommunity from 'react-native-vector-icons/MaterialCommunityIcons';
-import {BLACK, DARK_GREY, LIGHT_GREY} from '../../../../lib/styles';
+import {DARK_GREY, LIGHT_GREY} from '../../../../lib/styles';
 import React from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {DeviceNameWithIcon} from '../../../../sharedComponents/DeviceNameWithIcon';
+import {RoleWithIcon} from '../../../../sharedComponents/RoleWithIcon';
 
 const m = defineMessages({
   title: {
@@ -22,18 +21,10 @@ const m = defineMessages({
     id: 'screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.selectingDevice',
     defaultMessage: 'You are selecting a role for this device:',
   },
-  particpant: {
-    id: 'screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.particpant',
-    defaultMessage: 'Particpant',
-  },
   particpantDescription: {
     id: 'screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.particpantDescription',
     defaultMessage:
       'As a Participant this device can take and share observations. They cannot manage users or project details.',
-  },
-  coordinator: {
-    id: 'screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.coordinator',
-    defaultMessage: 'Coordinator',
   },
   coordinatorDescription: {
     id: 'screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.coordinatorDescription',
@@ -44,59 +35,60 @@ const m = defineMessages({
 
 export const SelectInviteeRole: NativeNavigationComponent<
   'SelectInviteeRole'
-> = ({route}) => {
-  const {deviceType, deviceId, name} = route.params;
+> = ({route, navigation}) => {
   const {formatMessage: t} = useIntl();
   return (
     <View style={styles.container}>
       <Text style={{fontSize: 18, fontWeight: 'bold'}}>
         {t(m.selectingDevice)}
       </Text>
-      <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 20}}>
-        {deviceType === 'mobile' ? <DeviceMobile /> : <DeviceDesktop />}
-        <View style={{justifyContent: 'center', marginLeft: 10}}>
-          <Text>{name}</Text>
-          {deviceId && <Text>{deviceId}</Text>}
-        </View>
-      </View>
+      <DeviceNameWithIcon {...route.params} style={{marginTop: 10}} />
       <RoleCard
         style={{marginTop: 20}}
-        icon={<MaterialIcon name={'people'} size={25} color={BLACK} />}
-        role={t(m.particpant)}
-        roleDescription={t(m.particpantDescription)}
+        role="particpant"
+        onPress={() =>
+          navigation.navigate('ReviewInvitation', {
+            ...route.params,
+            role: 'particpant',
+          })
+        }
       />
       <RoleCard
         style={{marginTop: 10}}
-        icon={<MaterialCommunity name="account-cog" size={25} color={BLACK} />}
-        role={t(m.coordinator)}
-        roleDescription={t(m.coordinatorDescription)}
+        role="coordinator"
+        onPress={() =>
+          navigation.navigate('ReviewInvitation', {
+            ...route.params,
+            role: 'coordinator',
+          })
+        }
       />
     </View>
   );
 };
 
 type RoleCardProps = {
-  icon: React.ReactNode;
-  role: string;
-  roleDescription: string;
+  role: 'particpant' | 'coordinator';
+  onPress: () => void;
   style?: ViewStyleProp;
 };
 
-export const RoleCard = ({
-  icon,
-  role,
-  roleDescription,
-  style,
-}: RoleCardProps) => {
+export const RoleCard = ({role, style, onPress}: RoleCardProps) => {
+  const {formatMessage} = useIntl();
   return (
-    <TouchableOpacity style={[styles.flexRow, styles.cardContainer, style]}>
+    <TouchableOpacity
+      style={[styles.flexRow, styles.cardContainer, style]}
+      onPress={onPress}>
       <MaterialIcon name="radio-button-off" size={25} color={DARK_GREY} />
       <View style={{marginLeft: 10}}>
-        <View style={styles.flexRow}>
-          {icon}
-          <Text style={{marginLeft: 10}}>{role}</Text>
-        </View>
-        <Text>{roleDescription}</Text>
+        <RoleWithIcon role={role} />
+        <Text>
+          {formatMessage(
+            role === 'coordinator'
+              ? m.coordinatorDescription
+              : m.particpantDescription,
+          )}
+        </Text>
       </View>
     </TouchableOpacity>
   );

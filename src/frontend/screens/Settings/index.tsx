@@ -59,7 +59,7 @@ export const Settings: NativeNavigationComponent<'Settings'> = () => {
   const {navigate} = useNavigationFromRoot();
 
   return (
-    <ScrollView style={{flex: 1}}>
+    <ScrollView>
       <List>
         <ListItem onPress={() => {}}>
           <ListItemIcon

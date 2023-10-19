@@ -113,7 +113,6 @@ export const Content = ({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'space-evenly',
   },
   iconContainer: {

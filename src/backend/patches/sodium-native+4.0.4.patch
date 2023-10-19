@@ -1,7 +1,0 @@
-diff --git a/node_modules/sodium-native/index.js b/node_modules/sodium-native/index.js
-index ffd9386..17f1198 100644
---- a/node_modules/sodium-native/index.js
-+++ b/node_modules/sodium-native/index.js
-@@ -1 +1 @@
--module.exports = require('node-gyp-build')(__dirname)
-+module.exports = require('node-gyp-build')(__dirname, 'sodium-native')

@@ -10,12 +10,6 @@ import {
 } from '../../sharedComponents/List';
 import {NativeNavigationComponent} from '../../sharedTypes';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {
-  BottomSheetContent,
-  BottomSheetModal,
-  useBottomSheetModal,
-} from '../../sharedComponents/BottomSheetModal';
-import Logo from '../../images/CoMapeoLogo.svg';
 
 const m = defineMessages({
   settingsTitle: {
@@ -63,17 +57,11 @@ const m = defineMessages({
 
 export const Settings: NativeNavigationComponent<'Settings'> = () => {
   const {navigate} = useNavigationFromRoot();
-  const {sheetRef, isOpen, closeSheet, openSheet} = useBottomSheetModal({
-    openOnMount: true,
-  });
 
   return (
     <ScrollView style={{flex: 1}}>
       <List>
-        <ListItem
-          onPress={() => {
-            openSheet();
-          }}>
+        <ListItem onPress={() => {}}>
           <ListItemIcon
             icon={
               <MaterialCommunityIcons
@@ -121,27 +109,6 @@ export const Settings: NativeNavigationComponent<'Settings'> = () => {
             }></ListItemText>
         </ListItem> */}
       </List>
-      <BottomSheetModal
-        isOpen={isOpen}
-        ref={sheetRef}
-        onBack={() => closeSheet()}>
-        <BottomSheetContent
-          title="New thing to test"
-          description="This is a new thing that you can do"
-          buttonConfigs={[
-            {
-              onPress: () => closeSheet(),
-              text: 'close',
-              variation: 'outlined',
-            },
-            {
-              onPress: () => {},
-              text: 'Another',
-              variation: 'filled',
-            },
-          ]}
-        />
-      </BottomSheetModal>
     </ScrollView>
   );
 };

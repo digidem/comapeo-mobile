@@ -1,7 +1,0 @@
-diff --git a/node_modules/udx-native/binding.js b/node_modules/udx-native/binding.js
-index ffd9386..7ae61aa 100644
---- a/node_modules/udx-native/binding.js
-+++ b/node_modules/udx-native/binding.js
-@@ -1 +1 @@
--module.exports = require('node-gyp-build')(__dirname)
-+module.exports = require('node-gyp-build')(__dirname, 'udx-native')

@@ -67,6 +67,17 @@ const KEEP_THESE = [
   'loader.js',
   // Static folders referenced by @mapeo/core code
   'node_modules/@mapeo/core/drizzle',
+  'node_modules/crc-native',
+  'node_modules/fs-native-extensions',
+  'node_modules/quickbit-native',
+  'node_modules/simdle-native',
+  'node_modules/sodium-native',
+  'node_modules/udx-native',
+  'node_modules/better-sqlite3',
+  'node_modules/napi-macros',
+  'node_modules/node-gyp-build',
+  'node_modules/bindings',
+  'node_modules/file-uri-to-path',
 ];
 
 for (const name of KEEP_THESE) {

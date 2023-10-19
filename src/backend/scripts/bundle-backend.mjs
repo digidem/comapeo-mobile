@@ -10,7 +10,19 @@ const [entry, outfile] = process.argv.slice(2);
 
 /** @type {import('rollup').RollupOptions} */
 const inputOptions = {
-  external: ['rn-bridge'],
+  external: [
+    'rn-bridge',
+    'better-sqlite3',
+    'crc-native',
+    'fs-native-extensions',
+    'quickbit-native',
+    'simdle-native',
+    'sodium-native',
+    'udx-native',
+    'node-gyp-build',
+    'bindings',
+    'napi-macros',
+  ],
   input: entry,
   plugins: [commonjs(), esmShim(), nodeResolve({preferBuiltins: true}), json()],
 };

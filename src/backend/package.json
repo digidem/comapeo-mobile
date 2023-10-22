@@ -19,6 +19,7 @@
     "@mapeo/sqlite-indexer": "1.0.0-alpha.6",
     "debug": "^4.3.4",
     "fastify": "^4.24.0",
+    "magic-string": "^0.30.5",
     "random-access-file": "^4.0.4",
     "random-access-memory": "^6.2.0",
     "sodium-native": "^4.0.4"

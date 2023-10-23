@@ -1,6 +1,6 @@
 // @ts-check
-import MagicString from 'magic-string';
-import path from 'path';
+import MagicString from 'magic-string'
+import path from 'path'
 
 /**
  *
@@ -18,15 +18,15 @@ export default function nativePathsPlugin({
     {
       // node-bindings as used by better-sqlite3
       pattern: /require\(['"]bindings['"]\)\(((['"]).+?\2)?\)/g,
-      replacement: packageName =>
+      replacement: (packageName) =>
         `require('bindings')({ module_root: cjsPath.join(__dirname, '${relativePath}', '${packageName}'), bindings: $1 })`,
     },
     {
       pattern: /require\(['"]node-gyp-build['"]\)\(__dirname\)/g,
-      replacement: packageName =>
+      replacement: (packageName) =>
         `require('node-gyp-build')(cjsPath.join(__dirname, '${relativePath}', '${packageName}'))`,
     },
-  ];
+  ]
 
   return {
     name: 'rollup-plugin-natives',
@@ -36,28 +36,28 @@ export default function nativePathsPlugin({
      * @param {string} id
      */
     transform(code, id) {
-      const magicString = new MagicString(code);
-      const packageName = getPackageName(id);
+      const magicString = new MagicString(code)
+      const packageName = getPackageName(id)
 
       if (!packageName) {
-        return null;
+        return null
       }
 
-      for (const {pattern, replacement} of replacements) {
-        magicString.replaceAll(pattern, replacement(packageName));
+      for (const { pattern, replacement } of replacements) {
+        magicString.replaceAll(pattern, replacement(packageName))
       }
 
       if (!magicString.hasChanged()) {
-        return null;
+        return null
       }
 
       const result = {
         code: magicString.toString(),
-        map: magicString.generateMap({hires: true}),
-      };
-      return result;
+        map: magicString.generateMap({ hires: true }),
+      }
+      return result
     },
-  };
+  }
 }
 
 // Vendored from https://github.com/i-like-robots/get-package-name/blob/d9f819b/index.js
@@ -69,19 +69,19 @@ export default function nativePathsPlugin({
  */
 function getPackageName(modulePath, packageFolder = 'node_modules') {
   if (typeof modulePath === 'string' && modulePath.includes(packageFolder)) {
-    const segments = modulePath.split(path.sep);
-    const index = segments.lastIndexOf(packageFolder);
+    const segments = modulePath.split(path.sep)
+    const index = segments.lastIndexOf(packageFolder)
 
     if (index > -1) {
-      const name = segments[index + 1] || '';
-      const scopedName = segments[index + 2] || '';
+      const name = segments[index + 1] || ''
+      const scopedName = segments[index + 2] || ''
 
       if (name[0] === '@') {
-        return scopedName ? `${name}/${scopedName}` : undefined;
+        return scopedName ? `${name}/${scopedName}` : undefined
       }
 
       if (name) {
-        return name;
+        return name
       }
     }
   }

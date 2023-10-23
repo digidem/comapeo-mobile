@@ -1,7 +1,7 @@
-import {TypedEmitter} from 'tiny-typed-emitter';
-import {createRequire} from 'module';
-const require = createRequire(import.meta.url);
-const rnBridge = require('rn-bridge');
+import { TypedEmitter } from 'tiny-typed-emitter'
+import { createRequire } from 'module'
+const require = createRequire(import.meta.url)
+const rnBridge = require('rn-bridge')
 
 /**
  * @typedef {Object} MessagePortEvents
@@ -17,50 +17,50 @@ const rnBridge = require('rn-bridge');
  */
 class MessagePortLike extends TypedEmitter {
   /** @type {any[]} */
-  #queuedMessages = [];
+  #queuedMessages = []
   /** @type {'idle' | 'started' | 'closed'} */
-  #state = 'idle';
+  #state = 'idle'
   /** @type {(message: any) => void} */
-  #messageHandler;
+  #messageHandler
   /** @type {String} */
-  #API_EVENT_NAME = '@@API_MESSAGE';
+  #API_EVENT_NAME = '@@API_MESSAGE'
 
   constructor() {
-    super();
-    this.#messageHandler = message => {
+    super()
+    this.#messageHandler = (message) => {
       if (this.#state === 'idle') {
-        this.#queuedMessages.push(message);
+        this.#queuedMessages.push(message)
       } else if (this.#state === 'started') {
-        this.emit('message', message);
+        this.emit('message', message)
       } else {
         // no-op if the port is closed
         // (the event listener should be removed anyway)
       }
-    };
-    rnBridge.channel.addListener(this.#API_EVENT_NAME, this.#messageHandler);
+    }
+    rnBridge.channel.addListener(this.#API_EVENT_NAME, this.#messageHandler)
   }
 
   start() {
     if (this.#state !== 'idle') {
-      return;
+      return
     }
-    this.#state = 'started';
+    this.#state = 'started'
 
     /** @type {{id: string, message: any} | undefined} */
-    let event;
+    let event
     while ((event = this.#queuedMessages.shift())) {
-      this.#messageHandler(event);
+      this.#messageHandler(event)
     }
   }
 
   close() {
     if (this.#state === 'closed') {
-      return;
+      return
     }
 
-    rnBridge.channel.removeListener(this.#API_EVENT_NAME, this.#messageHandler);
-    this.#state = 'closed';
-    this.#queuedMessages = [];
+    rnBridge.channel.removeListener(this.#API_EVENT_NAME, this.#messageHandler)
+    this.#state = 'closed'
+    this.#queuedMessages = []
   }
 
   /**
@@ -68,7 +68,7 @@ class MessagePortLike extends TypedEmitter {
    * @returns {void}
    */
   postMessage(message) {
-    rnBridge.channel.post(this.#API_EVENT_NAME, message);
+    rnBridge.channel.post(this.#API_EVENT_NAME, message)
   }
 
   /**
@@ -76,7 +76,7 @@ class MessagePortLike extends TypedEmitter {
    * @param {any} listener
    */
   addEventListener(event, listener) {
-    this.addListener(event, listener);
+    this.addListener(event, listener)
   }
 
   /**
@@ -84,8 +84,8 @@ class MessagePortLike extends TypedEmitter {
    * @param {any} listener
    */
   removeEventListener(event, listener) {
-    this.removeEventListener(event, listener);
+    this.removeEventListener(event, listener)
   }
 }
 
-export default MessagePortLike;
+export default MessagePortLike

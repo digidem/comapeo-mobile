@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-import {rollup} from 'rollup';
-import commonjs from '@rollup/plugin-commonjs';
-import json from '@rollup/plugin-json';
-import {nodeResolve} from '@rollup/plugin-node-resolve';
-import esmShim from '@rollup/plugin-esm-shim';
-import nativePaths from './rollup-plugin-native-paths.mjs';
+import { rollup } from 'rollup'
+import commonjs from '@rollup/plugin-commonjs'
+import json from '@rollup/plugin-json'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
+import esmShim from '@rollup/plugin-esm-shim'
+import nativePaths from './rollup-plugin-native-paths.mjs'
 
-const [entry, outfile] = process.argv.slice(2);
+const [entry, outfile] = process.argv.slice(2)
 
 /** @type {import('rollup').RollupOptions} */
 const inputOptions = {
@@ -19,18 +19,18 @@ const inputOptions = {
       ignoreDynamicRequires: true,
     }),
     esmShim(),
-    nodeResolve({preferBuiltins: true}),
+    nodeResolve({ preferBuiltins: true }),
     json(),
   ],
-};
-
-/** @type {import('rollup').OutputOptions} */
-const outputOptions = {file: outfile, format: 'esm'};
-
-async function build() {
-  const bundle = await rollup(inputOptions);
-  await bundle.write(outputOptions);
-  await bundle.close();
 }
 
-build();
+/** @type {import('rollup').OutputOptions} */
+const outputOptions = { file: outfile, format: 'esm' }
+
+async function build() {
+  const bundle = await rollup(inputOptions)
+  await bundle.write(outputOptions)
+  await bundle.close()
+}
+
+build()

@@ -13,4 +13,4 @@ os.homedir = () => nodejsProjectDir
 process.cwd = () => nodejsProjectDir
 process.env = process.env || {}
 
-import('./index.js')
+import './index.js'

@@ -18,10 +18,11 @@ import {Security} from '../../screens/Security';
 import {AuthScreen} from '../../screens/AuthScreen';
 import {ObscurePasscode} from '../../screens/ObscurePasscode';
 import {Settings} from '../../screens/Settings';
-import {EmptySettingsScreen} from '../../screens/Settings/EmptySettingsScreen';
 import {PresetChooser} from '../../screens/PresetChooser';
 import {ObservationsList} from '../../screens/ObservationsList';
 import {ObservationScreen} from '../../screens/Observation';
+import {AppSettings} from '../../screens/Settings/AppSettings';
+import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -33,7 +34,6 @@ export type AppList = {
   GpsModal: undefined;
   SyncModal: undefined;
   Settings: undefined;
-  Empty: undefined;
   ProjectConfig: undefined;
   AboutMapeo: undefined;
   LanguageSettings: undefined;
@@ -78,6 +78,8 @@ export type AppList = {
   DisablePasscode: undefined;
   SetPasscode: undefined;
   EnterPassToTurnOff: undefined;
+  AppSettings: undefined;
+  ProjectSettings: undefined;
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
@@ -158,11 +160,6 @@ export const createDefaultScreenGroup = (
     />
     <RootStack.Screen name="Settings" component={Settings} />
     <RootStack.Screen
-      name="Empty"
-      component={EmptySettingsScreen}
-      options={{headerTitle: 'Empty screen'}}
-    />
-    <RootStack.Screen
       name="PresetChooser"
       component={PresetChooser}
       options={{headerTitle: intl(PresetChooser.navTitle)}}
@@ -176,6 +173,16 @@ export const createDefaultScreenGroup = (
       name="Observation"
       component={ObservationScreen}
       options={{headerTitle: intl(ObservationScreen.navTitle)}}
+    />
+    <RootStack.Screen
+      name="AppSettings"
+      component={AppSettings}
+      options={{headerTitle: intl(AppSettings.navTitle)}}
+    />
+    <RootStack.Screen
+      name="ProjectSettings"
+      component={ProjectSettings}
+      options={{headerTitle: intl(ProjectSettings.navTitle)}}
     />
   </RootStack.Group>
 );

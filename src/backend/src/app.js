@@ -1,61 +1,82 @@
 import debug from 'debug'
 import { createRequire } from 'module'
+/** @type {import('../types/rn-bridge.js')} */
 const rnBridge = createRequire(import.meta.url)('rn-bridge')
 import { MapeoManager } from '@mapeo/core'
-import { createMapeoServer } from '@mapeo/ipc'
 import { KeyManager } from '@mapeo/crypto'
 import RAM from 'random-access-memory'
 
-import MessagePortLike from './message-port-like.js'
+import { Server } from './server.js'
 
-/** @typedef {Object} State
- *
- * @property {import('../types/api.js').Status} status
- */
-
-// TODO: Account for args passed from node.startWithArgs
-debug.enable('*')
-const log = debug('mapeo:index')
-
-log('Starting Node...')
+const log = debug('mapeo:app')
 
 /**
  * @param {Object} [options]
  * @param {string} [options.version] Device Version
  */
 export async function init({ version } = {}) {
+  // TODO: Account for args passed from node.startWithArgs
+  debug.enable('*')
+
+  log('Starting app...')
   log(`Device version is ${version}`)
 
-  // 1. Initialize server state
-  /** @type {State} */
-  const state = { status: 'idle' }
+  // TODO: Persisted and read from local file
+  /** @type {{ activeProjectId: string | null }} */
+  const state = {
+    activeProjectId: null,
+  }
 
-  // 2. Initialize Mapeo API server
-  const channel = new MessagePortLike()
-
+  // 1. Initialize Mapeo
   const manager = new MapeoManager({
     rootKey: KeyManager.generateRootKey(),
+    // TODO: Use actual file storage instead of memory
     dbFolder: ':memory:',
     coreStorage: () => new RAM(),
   })
 
-  const { close } = createMapeoServer(manager, channel)
+  // Automatically create initial project if no projects exist yet
+  if ((await manager.listProjects()).length === 0) {
+    const projectId = await manager.createProject()
+    log(`Created initial project with id ${projectId}`)
+    state.activeProjectId = projectId
+  }
 
-  channel.start()
+  const server = new Server(manager)
 
-  // 3. Initialize event listeners
-  rnBridge.channel.on('get-status', () => {
-    rnBridge.channel.post('status', state.status)
+  // 2. Set up event listeners
+  rnBridge.channel.on('update-active-project-id', (id) => {
+    // TODO: Write to persisted file
+    state.activeProjectId = id
   })
 
-  process.on('exit', () => {
-    close()
-    state.status = 'closed'
+  rnBridge.channel.on('get-active-project-id', async () => {
+    // TODO: Read from persisted file
+    rnBridge.channel.post('app:active-project-id', state.activeProjectId)
   })
 
-  // 4. Send initial status message to client
-  state.status = 'listening'
-  rnBridge.channel.post('status', { value: state.status })
+  rnBridge.app.on('resume', () => {
+    log('App went into foreground')
+    // When the RN app requests permissions from the user it causes a resume event
+    // but no pause event. We don't need to start the server if it's already
+    // listening (because it wasn't paused)
+    // https://github.com/janeasystems/nodejs-mobile/issues/177
+    server.start()
+  })
 
-  log('Node was initialized!')
+  rnBridge.app.on('pause', (pauseLock) => {
+    log('App went into background')
+    server.stop()
+    pauseLock.release()
+  })
+
+  process.on('exit', (code) => {
+    log(`App process exited with code ${code}`)
+    server.stop()
+  })
+
+  // 3. Start server
+  server.start()
+
+  log('App started!')
 }

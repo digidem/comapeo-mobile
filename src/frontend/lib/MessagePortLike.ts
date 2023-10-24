@@ -9,11 +9,12 @@ export class MessagePortLike extends EventEmitter {
   #channelSubscription: EventSubscription;
   #state: ServerState = 'idle';
   #queuedMessages: any[] = [];
+  #handleChannelMessage;
 
   constructor() {
     super();
 
-    const handleChannelMessage = (message: any) => {
+    this.#handleChannelMessage = (message: any) => {
       if (this.#state === 'idle') {
         this.#queuedMessages.push(message);
       } else if (this.#state === 'started') {
@@ -27,7 +28,7 @@ export class MessagePortLike extends EventEmitter {
     // @ts-expect-error
     this.#channelSubscription = nodejs.channel.addListener(
       this.#API_EVENT_NAME,
-      handleChannelMessage,
+      this.#handleChannelMessage,
     );
   }
 
@@ -40,10 +41,12 @@ export class MessagePortLike extends EventEmitter {
       return;
     }
     this.#state = 'started';
-    for (const msg of this.#queuedMessages) {
-      this.emit('message', msg);
+
+    let message;
+
+    while ((message = this.#queuedMessages.shift())) {
+      this.#handleChannelMessage(message);
     }
-    this.#queuedMessages = [];
   }
 
   close() {
@@ -55,5 +58,13 @@ export class MessagePortLike extends EventEmitter {
     this.#queuedMessages = [];
 
     this.#channelSubscription.remove();
+  }
+
+  addEventListener(event: string, listener: (msg: any) => void) {
+    this.addListener(event, listener);
+  }
+
+  removeEventListener(event: string, listener: (msg: any) => void) {
+    this.removeListener(event, listener);
   }
 }

@@ -16,5 +16,5 @@ try {
     version: typeof values.version === 'string' ? values.version : undefined,
   })
 } catch (err) {
-  console.log('Server startup error:', err)
+  console.error('Server startup error:', err)
 }

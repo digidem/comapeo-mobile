@@ -1,0 +1,24 @@
+diff --git a/node_modules/nodejs-mobile-react-native/android/build.gradle b/node_modules/nodejs-mobile-react-native/android/build.gradle
+index f60139f..a6fac6f 100644
+--- a/node_modules/nodejs-mobile-react-native/android/build.gradle
++++ b/node_modules/nodejs-mobile-react-native/android/build.gradle
+@@ -411,6 +411,8 @@ if ("1".equals(shouldRebuildNativeModules)) {
+         }
+ 
+         task "BuildNpmModules${abi_name}" (type:Exec) {
++            // We don't need this because we solely rely on using prebuilds
++            enabled = false
+             dependsOn "DetectCorrectPrebuilds${abi_name}"
+             description = "Building native modules for ${abi_name}."
+             def nodeVersionStdout = new ByteArrayOutputStream()
+@@ -467,7 +469,9 @@ if ("1".equals(shouldRebuildNativeModules)) {
+         }
+ 
+         task "CopyBuiltNpmAssets${abi_name}" (type:Sync) {
+-            dependsOn "BuildNpmModules${abi_name}"
++            // We disabled the BuildNpmModules task above
++            // dependsOn "BuildNpmModules${abi_name}"
++            dependsOn "DetectCorrectPrebuilds${abi_name}"
+             description = "Copying node assets with build native modules for ${abi_name}."
+             from "${rootProject.buildDir}/nodejs-native-assets-temp-build/nodejs-native-assets-${abi_name}/nodejs-project/"
+             into "${rootProject.buildDir}/nodejs-native-assets/nodejs-native-assets-${abi_name}/"

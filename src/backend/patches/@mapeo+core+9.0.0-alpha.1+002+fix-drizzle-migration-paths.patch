@@ -1,0 +1,26 @@
+diff --git a/node_modules/@mapeo/core/src/mapeo-manager.js b/node_modules/@mapeo/core/src/mapeo-manager.js
+index a62d7df..1ca509f 100644
+--- a/node_modules/@mapeo/core/src/mapeo-manager.js
++++ b/node_modules/@mapeo/core/src/mapeo-manager.js
+@@ -66,7 +66,7 @@ export class MapeoManager {
+     )
+     this.#db = drizzle(sqlite)
+     migrate(this.#db, {
+-      migrationsFolder: new URL('../drizzle/client', import.meta.url).pathname,
++      migrationsFolder: new URL('./node_modules/@mapeo/core/drizzle/client', import.meta.url).pathname,
+     })
+ 
+     this.#rpc = new MapeoRPC()
+diff --git a/node_modules/@mapeo/core/src/mapeo-project.js b/node_modules/@mapeo/core/src/mapeo-project.js
+index 62dac9e..a495aeb 100644
+--- a/node_modules/@mapeo/core/src/mapeo-project.js
++++ b/node_modules/@mapeo/core/src/mapeo-project.js
+@@ -82,7 +82,7 @@ export class MapeoProject {
+     const sqlite = new Database(dbPath)
+     const db = drizzle(sqlite)
+     migrate(db, {
+-      migrationsFolder: new URL('../drizzle/project', import.meta.url).pathname,
++      migrationsFolder: new URL('./node_modules/@mapeo/core/drizzle/project', import.meta.url).pathname,
+     })
+ 
+     ///////// 2. Setup random-access-storage functions

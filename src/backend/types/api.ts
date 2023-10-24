@@ -1,25 +1,25 @@
 export type StatusMessage =
   | {
-      value: 'idle';
+      value: 'idle'
     }
   | {
-      value: 'starting';
+      value: 'starting'
     }
   | {
-      value: 'listening';
+      value: 'listening'
     }
   | {
-      value: 'closing';
+      value: 'closing'
     }
   | {
-      value: 'closed';
+      value: 'closed'
     }
   | {
-      value: 'timeout';
+      value: 'timeout'
     }
   | {
-      value: 'error';
-      error: string;
-    };
+      value: 'error'
+      error: string
+    }
 
-export type Status = StatusMessage['value'];
+export type Status = StatusMessage['value']

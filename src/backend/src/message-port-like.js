@@ -1,7 +1,6 @@
 import { TypedEmitter } from 'tiny-typed-emitter'
 import { createRequire } from 'module'
-const require = createRequire(import.meta.url)
-const rnBridge = require('rn-bridge')
+const rnBridge = createRequire(import.meta.url)('rn-bridge')
 
 /**
  * @typedef {Object} MessagePortEvents

@@ -24,14 +24,10 @@ await Promise.all([
 fs.cpSync('./src/backend', './nodejs-assets/backend', {recursive: true});
 fs.mkdirSync('./nodejs-assets/nodejs-project/node_modules', {recursive: true});
 
-if (fs.existsSync('./nodejs-assets/BUILD_NATIVE_MODULES.txt')) {
-  console.log('Build native modules on');
-} else {
-  fs.writeFileSync('./nodejs-assets/BUILD_NATIVE_MODULES.txt', '1', {
-    encoding: 'utf-8',
-  });
-  console.log('Set build native modules on');
-}
+fs.writeFileSync('./nodejs-assets/BUILD_NATIVE_MODULES.txt', '1', {
+  encoding: 'utf-8',
+});
+console.log('Set build native modules on');
 
 console.groupEnd();
 

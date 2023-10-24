@@ -4,8 +4,11 @@ import {$} from 'execa';
 import {mkdirSync, unlinkSync} from 'fs';
 import path from 'path';
 
+// TODO: Get this from nodejs-mobile(-react-native)
 const NODE_ABI = process.versions.modules;
 const TARGETS = ['android-arm', 'android-arm64', 'android-x64'];
+
+// TODO: Derive this using something like https://github.com/digidem/nodejs-mobile-prebuilds/blob/main/build.js#L118
 const NATIVE_MODULES = {
   'better-sqlite3': '8.7.0',
   'crc-native': '1.0.7',

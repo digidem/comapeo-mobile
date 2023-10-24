@@ -119,9 +119,7 @@
     ]
   },
   "lint-staged": {
-    "*.{js,ts,jsx,tsx}": [
-      "prettier --write",
-      "npm run extract-messages"
-    ]
+    "*.{js,ts,jsx,tsx}": "prettier --write",
+    "src/frontend/**/*.{ts,tsx}": "npm run extract-messages"
   }
 }

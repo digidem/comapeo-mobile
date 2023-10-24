@@ -48,11 +48,6 @@ export async function init({ version } = {}) {
     rnBridge.channel.post('status', state.status)
   })
 
-  rnBridge.channel.on('close', () => {
-    close()
-    state.status = 'closed'
-  })
-
   process.on('exit', () => {
     close()
     state.status = 'closed'

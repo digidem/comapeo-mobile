@@ -85,8 +85,7 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  */
 def reactNativeArchitectures() {
     def value = project.getProperties().get("reactNativeArchitectures")
-    // NOTE: nodejs-mobile v16.17.X does not support x86: https://github.com/nodejs-mobile/nodejs-mobile/blob/main/doc_mobile/CHANGELOG.md#2023-01-26-version-16170
-    return value ? value.split(",") : ["armeabi-v7a", "x86_64", "arm64-v8a"] 
+    return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"] 
 }
 
 android {

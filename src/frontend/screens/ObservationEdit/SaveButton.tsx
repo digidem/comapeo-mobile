@@ -8,8 +8,8 @@ import {SaveIcon} from '../../sharedComponents/icons/SaveIcon';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {useCreateObservation} from '../../hooks/server/observation/useCreateObservation';
-import {useEditObservation} from '../../hooks/server/observation/useEditObservation';
+import {useCreateObservation} from '../../hooks/server/observations';
+import {useEditObservation} from '../../hooks/server/observations';
 
 const m = defineMessages({
   noGpsTitle: {
@@ -61,12 +61,12 @@ export const SaveButton = ({observationId}: {observationId?: string}) => {
   const {clearDraft} = useDraftObservation();
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
-  const createObservationCall = useCreateObservation();
-  const editObservationCall = useEditObservation(observationId);
+  const createObservationMutation = useCreateObservation();
+  const editObservationMutation = useEditObservation();
 
   function createObservation() {
     if (!value) throw new Error('no observation saved in persisted state ');
-    createObservationCall({value, photos});
+    createObservationMutation.mutate({value, photos});
     navigation.navigate('Home', {screen: 'Map'});
   }
 
@@ -74,7 +74,7 @@ export const SaveButton = ({observationId}: {observationId?: string}) => {
     if (!value) throw new Error('no observation saved in persisted state ');
     if (!('versionId' in value))
       throw new Error('Cannot update a unsaved observation (must create one)');
-    editObservationCall.mutate(value);
+    editObservationMutation.mutate({id: observationId, value});
     navigation.pop();
   }
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Observation, Preset} from '@mapeo/schema';
-import {useObservationsQuery} from '../hooks/server/observation/useObservationsQuery';
+import {useObservations} from '../hooks/server/observations';
 import {Loading} from '../sharedComponents/Loading';
 import {Text} from '../sharedComponents/Text';
 import {usePresetsQuery} from '../hooks/server/presets';
@@ -24,7 +24,7 @@ export const ObservationProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const observationsQuery = useObservationsQuery();
+  const observationsQuery = useObservations();
   const presetsQuery = usePresetsQuery();
 
   const observations = React.useMemo(() => {

@@ -3,7 +3,7 @@ import {DARK_GREY, RED} from '../../lib/styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {useDeleteObservation} from '../../hooks/server/observation/useDeleteObservation';
+import {useDeleteObservation} from '../../hooks/server/observations';
 import {Text} from '../../sharedComponents/Text';
 
 const m = defineMessages({
@@ -44,7 +44,7 @@ export const ButtonFields = ({
 }) => {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
-  const deleteObservation = useDeleteObservation(observationId);
+  const deleteObservationMutation = useDeleteObservation();
 
   function handlePressDelete() {
     Alert.alert(t(m.deleteTitle), undefined, [
@@ -55,7 +55,7 @@ export const ButtonFields = ({
       {
         text: t(m.confirm),
         onPress: () => {
-          deleteObservation.mutate();
+          deleteObservationMutation.mutate({id: observationId});
           navigation.pop();
         },
       },

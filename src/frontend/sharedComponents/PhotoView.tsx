@@ -3,7 +3,6 @@ import {View, StyleSheet, Image, ActivityIndicator} from 'react-native';
 
 import {AlertIcon} from './icons';
 import type {Attachment, PhotoVariant, ViewStyleProp} from '../sharedTypes';
-import {useGetMediaUrl} from '../hooks/server/useGetMediaUrl';
 
 type Props = {
   attachment: Attachment;
@@ -18,10 +17,10 @@ const PhotoViewComponent = ({
   resizeMode = 'contain',
   style,
 }: Props) => {
-  const {data, isLoading, isError} = useGetMediaUrl({attachment, variant});
+  // const {data, isLoading, isError} = useGetMediaUrl({attachment, variant});
   return (
     <View style={[styles.container, style]}>
-      {isLoading ? (
+      {/* {isLoading ? (
         <ActivityIndicator />
       ) : isError ? (
         <AlertIcon />
@@ -33,7 +32,7 @@ const PhotoViewComponent = ({
           resizeMethod="scale"
           resizeMode={resizeMode}
         />
-      )}
+      )} */}
     </View>
   );
 };

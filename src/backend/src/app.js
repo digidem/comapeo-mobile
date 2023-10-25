@@ -1,3 +1,4 @@
+// @ts-check
 import debug from 'debug'
 import { createRequire } from 'module'
 /** @type {import('../types/rn-bridge.js')} */
@@ -7,6 +8,8 @@ import { KeyManager } from '@mapeo/crypto'
 import RAM from 'random-access-memory'
 
 import { Server } from './server.js'
+import { MapeoProject } from '@mapeo/core/dist/mapeo-project.js'
+import { MockPreset } from '../mockdata.js'
 
 const log = debug('mapeo:app')
 
@@ -40,6 +43,9 @@ export async function init({ version } = {}) {
     const projectId = await manager.createProject()
     log(`Created initial project with id ${projectId}`)
     state.activeProjectId = projectId
+
+    const project = await manager.getProject(projectId)
+    createMockPresets(project)
   }
 
   const server = new Server(manager)
@@ -52,6 +58,7 @@ export async function init({ version } = {}) {
 
   rnBridge.channel.on('get-active-project-id', async () => {
     // TODO: Read from persisted file
+    console.log('project', state.activeProjectId)
     rnBridge.channel.post('app:active-project-id', state.activeProjectId)
   })
 
@@ -79,4 +86,14 @@ export async function init({ version } = {}) {
   server.start()
 
   log('App started!')
+}
+
+/**
+ *
+ * @param {MapeoProject} project
+ */
+function createMockPresets(project) {
+  MockPreset.forEach((preset) => {
+    project.preset.create(preset)
+  })
 }

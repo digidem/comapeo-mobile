@@ -8,12 +8,12 @@ import {FormattedObservationDate} from '../../sharedComponents/FormattedData';
 import {Field} from '@mapeo/schema';
 import {PresetHeader} from './PresetHeader';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
-import {useFieldsQuery} from '../../hooks/server/useFieldsQuery';
 import {FieldDetails} from './FieldDetails';
 import {InsetMapView} from './InsetMapView';
 import {ButtonFields} from './Buttons';
 import {NativeNavigationComponent} from '../../sharedTypes';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
+import {useFieldsQuery} from '../../hooks/server/fields';
 
 const m = defineMessages({
   deleteTitle: {

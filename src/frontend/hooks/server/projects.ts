@@ -40,6 +40,7 @@ export function useUpdateActiveProjectId() {
 export function useProject() {
   const api = useApi();
   const {data: projectId} = useActiveProjectId();
+  console.log({projectId});
 
   return useQuery({
     queryKey: ['projects', projectId],

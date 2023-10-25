@@ -3,8 +3,9 @@ import {DARK_GREY, RED} from '../../lib/styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {useDeleteObservation} from '../../hooks/server/observation/useDeleteObservation';
+
 import {Text} from '../../sharedComponents/Text';
+import {useDeleteObservation} from '../../hooks/server/observations';
 
 const m = defineMessages({
   delete: {

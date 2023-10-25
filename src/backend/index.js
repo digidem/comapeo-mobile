@@ -12,8 +12,11 @@ try {
 
   const { values } = args
 
-  await init({
+  // Do not await this as we want this to run indefinitely
+  init({
     version: typeof values.version === 'string' ? values.version : undefined,
+  }).catch((err) => {
+    console.error('Server startup error:', err)
   })
 } catch (err) {
   console.error('Server startup error:', err)

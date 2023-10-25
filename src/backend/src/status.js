@@ -61,7 +61,7 @@ export class ServerStatus {
     if (this.#intervalId) return // Don't have two heartbeats
     this.#intervalId = setInterval(() => {
       rnBridge.channel.post(
-        'status',
+        'server:status',
         /** @type {StatusMessage} */
         { value: this.state },
       )
@@ -102,7 +102,7 @@ export class ServerStatus {
     this.#state = nextState
 
     rnBridge.channel.post(
-      'status',
+      'server:status',
       /** @type {StatusMessage} */
       {
         value: nextState,

@@ -1,7 +1,8 @@
 import debug from 'debug'
 import { createRequire } from 'module'
+const require = createRequire(import.meta.url)
 /** @type {import('../types/rn-bridge.js')} */
-const rnBridge = createRequire(import.meta.url)('rn-bridge')
+const rnBridge = require('rn-bridge')
 import { MapeoManager } from '@mapeo/core'
 import { KeyManager } from '@mapeo/crypto'
 import RAM from 'random-access-memory'

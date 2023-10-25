@@ -45,7 +45,9 @@ export function useProject() {
     queryKey: ['projects', projectId],
     queryFn: async () => {
       if (!projectId) throw new Error('Project id must be defined');
-      return api.getProject(projectId);
+      const project = await api.getProject(projectId);
+      await project.ready();
+      return project;
     },
     enabled: !!projectId,
   });

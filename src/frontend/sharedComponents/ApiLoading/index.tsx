@@ -33,11 +33,13 @@ function useNodejsMobileInit() {
 function useSetupApi(serverStatus: Status) {
   const {enable, disable} = useApiActions();
 
-  if (serverStatus === 'CLOSED') {
-    return disable();
-  }
+  React.useEffect(() => {
+    if (serverStatus === 'CLOSED') {
+      return disable();
+    }
 
-  if (serverStatus === 'LISTENING') {
-    return enable();
-  }
+    if (serverStatus === 'LISTENING') {
+      return enable();
+    }
+  }, [serverStatus, enable, disable]);
 }

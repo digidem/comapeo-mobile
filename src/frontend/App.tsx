@@ -13,7 +13,7 @@ import {AppNavigator} from './Navigation/AppNavigator';
 import {AppStackList} from './Navigation/AppStack';
 import {IntlProvider} from './contexts/IntlContext';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {Loading} from './sharedComponents/ApiLoading';
+import {ApiLoading} from './sharedComponents/ApiLoading';
 import {PermissionsProvider} from './contexts/PermissionsContext';
 import {PhotoPromiseProvider} from './contexts/PhotoPromiseContext';
 import {SecurityProvider} from './contexts/SecurityContext';
@@ -27,10 +27,10 @@ const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();
 
   return (
-    <Loading>
-      <IntlProvider>
+    <IntlProvider>
+      <PermissionsProvider>
         <QueryClientProvider client={queryClient}>
-          <PermissionsProvider>
+          <ApiLoading>
             <GestureHandlerRootView style={{flex: 1}}>
               <BottomSheetModalProvider>
                 <ObservationProvider>
@@ -46,10 +46,10 @@ const App = () => {
                 </ObservationProvider>
               </BottomSheetModalProvider>
             </GestureHandlerRootView>
-          </PermissionsProvider>
+          </ApiLoading>
         </QueryClientProvider>
-      </IntlProvider>
-    </Loading>
+      </PermissionsProvider>
+    </IntlProvider>
   );
 };
 

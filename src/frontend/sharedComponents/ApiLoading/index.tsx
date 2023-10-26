@@ -6,7 +6,7 @@ import type {Status} from '../../../backend/src/status';
 import {useServerStatus} from '../../stores/serverStatusStore';
 import {useApiActions} from '../../stores/apiStore';
 
-export const Loading = ({children}: React.PropsWithChildren<{}>) => {
+export const ApiLoading = ({children}: React.PropsWithChildren<{}>) => {
   useNodejsMobileInit();
   const serverStatus = useServerStatus();
   useSetupApi(serverStatus);

@@ -66,7 +66,7 @@ export const SaveButton = ({observationId}: {observationId?: string}) => {
 
   function createObservation() {
     if (!value) throw new Error('no observation saved in persisted state ');
-    createObservationMutation.mutate({value, photos});
+    createObservationMutation.mutate({value});
     navigation.navigate('Home', {screen: 'Map'});
   }
 

@@ -6,6 +6,7 @@ import {
 } from '@tanstack/react-query';
 
 import {useProject} from './projects';
+import {ClientGeneratedObservation} from '../../sharedTypes';
 
 export function useObservations() {
   const project = useProject();
@@ -36,13 +37,14 @@ export function useCreateObservation() {
   const project = useProject();
 
   return useMutation({
-    mutationFn: async ({
-      value,
-    }: {
-      value: Parameters<MapeoProject['observation']['create']>[0];
-    }) => {
+    mutationFn: async ({value}: {value: ClientGeneratedObservation}) => {
       if (!project) throw new Error('Project instance does not exist');
-      return project.observation.create(value);
+
+      return project.observation.create({
+        schemaName: 'observation',
+        attachments: [],
+        ...value,
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ['observations']});

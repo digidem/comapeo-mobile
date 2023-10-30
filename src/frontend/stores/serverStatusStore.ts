@@ -13,10 +13,10 @@ const useServerStatusStore = create<ServerStatusStore>()((set, get) => {
   const subscription = nodejs.channel.addListener(
     'server:status',
     (msg: StatusMessage) => {
-      console.log('STATUS RECEIVED', msg);
       const prevStatus = get().status;
 
       if (prevStatus !== msg.value) {
+        console.log('newStatus', msg);
         set({status: msg.value});
       }
     },

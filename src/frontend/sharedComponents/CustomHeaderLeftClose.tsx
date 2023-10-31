@@ -56,6 +56,7 @@ export const HeaderCloseIcon = ({tintColor}: {tintColor: string}) => {
 interface SharedBackButtonProps {
   tintColor?: string;
   headerBackButtonProps: HeaderBackButtonProps;
+  onPress?: () => void;
 }
 
 type CustomHeaderLeftCloseProps = {
@@ -93,21 +94,23 @@ const HeaderBackNewObservation = ({
   const {formatMessage: t} = useIntl();
   const {clearDraft} = useDraftObservation();
 
+  const onGoBack = React.useCallback(() => {
+    Alert.alert(t(m.discardTitle), undefined, [
+      {
+        text: t(m.discardConfirm),
+        onPress: () => {
+          clearDraft();
+          navigation.dispatch(CommonActions.navigate('Home', {screen: 'map'}));
+        },
+      },
+      {text: t(m.discardCancel), onPress: () => {}},
+    ]);
+  }, [navigation, clearDraft, t]);
+
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
-        Alert.alert(t(m.discardTitle), undefined, [
-          {
-            text: t(m.discardConfirm),
-            onPress: () => {
-              clearDraft();
-              navigation.dispatch(
-                CommonActions.navigate('Home', {screen: 'map'}),
-              );
-            },
-          },
-          {text: t(m.discardCancel), onPress: () => {}},
-        ]);
+        onGoBack();
         return true;
       };
 
@@ -117,13 +120,14 @@ const HeaderBackNewObservation = ({
       );
 
       return () => subscription.remove();
-    }, [clearDraft, navigation, t]),
+    }, [onGoBack]),
   );
 
   return (
     <SharedBackButton
       headerBackButtonProps={headerBackButtonProps}
       tintColor={tintColor}
+      onPress={onGoBack}
     />
   );
 };
@@ -185,15 +189,14 @@ const HeaderBackEditObservation = ({
 const SharedBackButton = ({
   headerBackButtonProps,
   tintColor,
+  onPress,
 }: SharedBackButtonProps) => {
   const navigation = useNavigation();
   return (
     <HeaderBackButton
       {...headerBackButtonProps}
       style={{marginLeft: 0, marginRight: 15}}
-      onPress={() => {
-        navigation.goBack();
-      }}
+      onPress={onPress ? onPress : () => navigation.goBack()}
       backImage={() => <HeaderCloseIcon tintColor={tintColor || BLACK} />}
     />
   );

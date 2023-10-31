@@ -2,7 +2,7 @@ import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 
-import {LIGHT_GREY} from '../lib/styles';
+import {BLACK, LIGHT_GREY} from '../lib/styles';
 import {ViewStyleProp} from '../sharedTypes';
 
 type Option<Value> = {
@@ -36,6 +36,7 @@ export const Select = <Value extends string | number>({
       onValueChange={onChange}
       selectedValue={selectedValue}
       style={styles.picker}
+      dropdownIconColor={BLACK}
       testID={testID}>
       {options.map(option => (
         <Picker.Item key={option.value} {...option} />
@@ -53,5 +54,6 @@ const styles = StyleSheet.create({
   picker: {
     marginTop: -6,
     marginBottom: -3,
+    color: BLACK,
   },
 });

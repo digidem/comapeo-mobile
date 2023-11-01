@@ -37,10 +37,11 @@ process.on('exit', (code) => {
 })
 
 /**
- * @param {Object} [options]
+ * @param {Object} options
  * @param {string} [options.version] Device Version
+ * @param {string} options.rootKey
  */
-export async function init({ version } = {}) {
+export async function init({ version, rootKey }) {
   // TODO: Account for args passed from node.startWithArgs
   debug.enable('*')
 
@@ -49,7 +50,7 @@ export async function init({ version } = {}) {
 
   // 1. Initialize Mapeo
   const manager = new MapeoManager({
-    rootKey: KeyManager.generateRootKey(),
+    rootKey: Buffer.from(rootKey, 'hex'),
     // TODO: Use actual file storage instead of memory
     dbFolder: ':memory:',
     coreStorage: () => new RAM(),

@@ -15,24 +15,20 @@ export function useSecureStore(key: SecureStoreKey) {
       .finally(() => {
         setStatus('idle');
       });
-  }, [key, getItemAsync]);
+  }, [key]);
 
   const setToSecureStore = useCallback(
     (val: string) => {
       setStatus('loading');
-      console.log(val);
       setItemAsync(key, val)
         .then(() => {
           setValue(val);
-        })
-        .catch(err => {
-          throw new Error(err);
         })
         .finally(() => {
           setStatus('idle');
         });
     },
-    [key, setItemAsync],
+    [key],
   );
 
   return [value, status, setToSecureStore] as const;

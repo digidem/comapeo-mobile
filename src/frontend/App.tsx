@@ -13,15 +13,20 @@ import {AppNavigator} from './Navigation/AppNavigator';
 import {AppStackList} from './Navigation/AppStack';
 import {IntlProvider} from './contexts/IntlContext';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {ApiLoading} from './sharedComponents/ApiLoading';
+import {ApiProvider} from './contexts/ApiContext';
 import {PermissionsProvider} from './contexts/PermissionsContext';
 import {PhotoPromiseProvider} from './contexts/PhotoPromiseContext';
 import {SecurityProvider} from './contexts/SecurityContext';
 import {LocationProvider} from './contexts/LocationContext';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {ObservationProvider} from './contexts/ObservationsContext';
+import {MessagePortLike} from './lib/MessagePortLike';
+import {createMapeoClient} from '@mapeo/ipc';
+import {ApiLoading} from './sharedComponents/ApiLoading/index.js';
 
 const queryClient = new QueryClient();
+const messagePort = new MessagePortLike();
+const mapeoApi = createMapeoClient(messagePort);
 
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();
@@ -30,22 +35,24 @@ const App = () => {
     <IntlProvider>
       <PermissionsProvider>
         <QueryClientProvider client={queryClient}>
-          <ApiLoading>
-            <GestureHandlerRootView style={{flex: 1}}>
-              <BottomSheetModalProvider>
-                <ObservationProvider>
-                  <NavigationContainer ref={navRef}>
-                    <PhotoPromiseProvider>
-                      <LocationProvider>
-                        <SecurityProvider>
-                          <AppNavigator />
-                        </SecurityProvider>
-                      </LocationProvider>
-                    </PhotoPromiseProvider>
-                  </NavigationContainer>
-                </ObservationProvider>
-              </BottomSheetModalProvider>
-            </GestureHandlerRootView>
+          <ApiLoading messagePort={messagePort}>
+            <ApiProvider api={mapeoApi}>
+              <GestureHandlerRootView style={{flex: 1}}>
+                <BottomSheetModalProvider>
+                  <ObservationProvider>
+                    <NavigationContainer ref={navRef}>
+                      <PhotoPromiseProvider>
+                        <LocationProvider>
+                          <SecurityProvider>
+                            <AppNavigator />
+                          </SecurityProvider>
+                        </LocationProvider>
+                      </PhotoPromiseProvider>
+                    </NavigationContainer>
+                  </ObservationProvider>
+                </BottomSheetModalProvider>
+              </GestureHandlerRootView>
+            </ApiProvider>
           </ApiLoading>
         </QueryClientProvider>
       </PermissionsProvider>

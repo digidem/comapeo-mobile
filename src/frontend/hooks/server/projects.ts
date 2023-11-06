@@ -1,7 +1,7 @@
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import nodejs from 'nodejs-mobile-react-native';
 
-import {useApi} from '../../stores/apiStore';
+import {useApi} from '../../contexts/ApiContext';
 
 function useActiveProjectId() {
   return useQuery({

@@ -15,7 +15,7 @@
   "dependencies": {
     "@mapeo/core": "^9.0.0-alpha.1",
     "@mapeo/crypto": "^1.0.0-alpha.9",
-    "@mapeo/ipc": "^0.1.2",
+    "@mapeo/ipc": "^0.1.3",
     "@mapeo/schema": "3.0.0-next.9",
     "@mapeo/sqlite-indexer": "1.0.0-alpha.6",
     "debug": "^4.3.4",

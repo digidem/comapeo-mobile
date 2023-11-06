@@ -6,7 +6,7 @@ import {Photo} from '../../contexts/PhotoPromiseContext/types';
 import {useProject} from './projects';
 
 export function useCreateAttachmentsMutation() {
-  const {data: project} = useProject();
+  const project = useProject();
 
   return useMutation({
     mutationFn: async (photos: Photo[]) => {
@@ -31,7 +31,7 @@ export function useObservationAttachmentUrl(
   // @ts-expect-error
   variant: BlobVariant<(typeof attachment)['type']>,
 ) {
-  const {data: project} = useProject();
+  const project = useProject();
 
   return useQuery({
     queryKey: ['attachmentUrl'],

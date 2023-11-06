@@ -3,7 +3,7 @@ import {createPersistedState} from './createPersistedState';
 
 type ProjectIdSlice = {
   projectId: string | undefined;
-  setProjectId: (id: string | undefined) => void;
+  setProjectId: (id?: string) => void;
 };
 
 const projectIdSlice: StateCreator<ProjectIdSlice> = (set, get) => ({

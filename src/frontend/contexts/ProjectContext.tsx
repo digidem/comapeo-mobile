@@ -5,14 +5,22 @@ import {usePersistedProjectId} from '../hooks/persistedState/usePersistedProject
 
 type MapeoProject = Awaited<ReturnType<MapeoClientApi['getProject']>>;
 
-type ActiveProjectContext = {
+type ActiveProjectContextType = {
   project: MapeoProject | undefined;
   switchProject(projectId: string): void;
 };
 
-export const ActiveProjectContext = React.createContext<
-  ActiveProjectContext | undefined
+const ActiveProjectContext = React.createContext<
+  ActiveProjectContextType | undefined
 >(undefined);
+
+export const useActiveProjectContext = () => {
+  const projectContext = React.useContext(ActiveProjectContext);
+  if (!projectContext) {
+    throw new Error('Undefined project context, use ProjectProvider');
+  }
+  return projectContext;
+};
 
 export const ActiveProjectProvider = ({
   children,
@@ -62,7 +70,7 @@ export const ActiveProjectProvider = ({
     };
   }, [activeProjectId, setActiveProjectId]);
 
-  const contextValue = React.useMemo<ActiveProjectContext>(() => {
+  const contextValue = React.useMemo<ActiveProjectContextType>(() => {
     return {
       project: activeProject,
       switchProject(projectId: string) {

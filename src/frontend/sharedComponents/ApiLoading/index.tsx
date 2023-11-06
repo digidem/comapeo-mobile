@@ -42,7 +42,7 @@ export const ApiLoading = ({
 
   // Don't render any children while the backend is starting - this avoids
   // timeouts from API methods if server startup takes more than 5 seconds - all
-  // api calls should be form children of this component.
+  // api calls should be from children of this component.
   if (serverStatus.value === 'STARTING') {
     return (
       <SafeAreaView

@@ -2,13 +2,10 @@ import * as React from 'react';
 import {SafeAreaView, Text} from 'react-native';
 import nodejs from 'nodejs-mobile-react-native';
 
-import type {StatusMessage} from '../../../backend/src/status';
-import {MessagePortLike} from '../../lib/MessagePortLike.js';
+import type {StatusMessage} from '../backend/src/status';
+import {MessagePortLike} from './lib/MessagePortLike.js';
 
-// Start this as soon as possible, e.g. before react renders
-nodejs.start('loader.js');
-
-export const ApiLoading = ({
+export const ServerLoading = ({
   messagePort,
   children,
 }: React.PropsWithChildren<{messagePort: MessagePortLike}>) => {
@@ -29,7 +26,7 @@ export const ApiLoading = ({
     nodejs.channel.post('get-server-status');
     // @ts-ignore - incorrect types on nodejs.channel
     return () => subscription.remove();
-  }, []);
+  }, [setServerStatus]);
 
   if (serverStatus.value === 'ERROR') {
     return (

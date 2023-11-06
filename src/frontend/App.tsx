@@ -22,12 +22,14 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {ObservationProvider} from './contexts/ObservationsContext';
 import {MessagePortLike} from './lib/MessagePortLike';
 import {createMapeoClient} from '@mapeo/ipc';
-import {ApiLoading} from './sharedComponents/ApiLoading';
+import {ServerLoading} from './ServerLoading';
 import {ActiveProjectProvider} from './contexts/ProjectContext';
+import {initializeNodejs} from './initializeNodejs';
 
 const queryClient = new QueryClient();
 const messagePort = new MessagePortLike();
 const mapeoApi = createMapeoClient(messagePort);
+initializeNodejs();
 
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();
@@ -36,7 +38,7 @@ const App = () => {
     <IntlProvider>
       <PermissionsProvider>
         <QueryClientProvider client={queryClient}>
-          <ApiLoading messagePort={messagePort}>
+          <ServerLoading messagePort={messagePort}>
             <ApiProvider api={mapeoApi}>
               <ActiveProjectProvider>
                 <GestureHandlerRootView style={{flex: 1}}>
@@ -56,7 +58,7 @@ const App = () => {
                 </GestureHandlerRootView>
               </ActiveProjectProvider>
             </ApiProvider>
-          </ApiLoading>
+          </ServerLoading>
         </QueryClientProvider>
       </PermissionsProvider>
     </IntlProvider>

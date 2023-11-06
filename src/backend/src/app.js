@@ -47,12 +47,6 @@ export async function init({ version } = {}) {
   log('Starting app...')
   log(`Device version is ${version}`)
 
-  // TODO: Persisted and read from local file
-  /** @type {{ activeProjectId: string | null }} */
-  const state = {
-    activeProjectId: null,
-  }
-
   // 1. Initialize Mapeo
   const manager = new MapeoManager({
     rootKey: KeyManager.generateRootKey(),
@@ -61,28 +55,10 @@ export async function init({ version } = {}) {
     coreStorage: () => new RAM(),
   })
 
-  // Automatically create initial project if no projects exist yet
-  if ((await manager.listProjects()).length === 0) {
-    const projectId = await manager.createProject()
-    log(`Created initial project with id ${projectId}`)
-    state.activeProjectId = projectId
-  }
-
   const messagePort = new MessagePortLike()
   createMapeoServer(manager, messagePort)
   messagePort.start()
   serverStatus.setState('STARTED')
-
-  // 2. Set up event listeners
-  rnBridge.channel.on('update-active-project-id', (id) => {
-    // TODO: Write to persisted file
-    state.activeProjectId = id
-  })
-
-  rnBridge.channel.on('get-active-project-id', async () => {
-    // TODO: Read from persisted file
-    rnBridge.channel.post('app:active-project-id', state.activeProjectId)
-  })
 
   log('App started!')
 }

@@ -3,7 +3,7 @@ import {useQuery} from '@tanstack/react-query';
 import {useProject} from './projects';
 
 export const useFieldsQuery = () => {
-  const {data: project} = useProject();
+  const project = useProject();
 
   return useQuery({
     queryKey: ['fields'],

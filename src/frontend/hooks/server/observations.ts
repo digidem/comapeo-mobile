@@ -4,7 +4,7 @@ import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {useProject} from './projects';
 
 export function useObservations() {
-  const {data: project} = useProject();
+  const project = useProject();
 
   return useQuery({
     queryKey: ['observations'],
@@ -17,7 +17,7 @@ export function useObservations() {
 }
 
 export function useObservation(observationId: string) {
-  const {data: project} = useProject();
+  const project = useProject();
 
   return useQuery({
     queryKey: ['observations', observationId],
@@ -31,7 +31,7 @@ export function useObservation(observationId: string) {
 
 export function useCreateObservation() {
   const queryClient = useQueryClient();
-  const {data: project} = useProject();
+  const project = useProject();
 
   return useMutation({
     mutationFn: async ({
@@ -50,7 +50,7 @@ export function useCreateObservation() {
 
 export function useEditObservation() {
   const queryClient = useQueryClient();
-  const {data: project} = useProject();
+  const project = useProject();
 
   return useMutation({
     mutationFn: async ({
@@ -71,7 +71,7 @@ export function useEditObservation() {
 
 export function useDeleteObservation() {
   const queryClient = useQueryClient();
-  const {data: project} = useProject();
+  const project = useProject();
 
   return useMutation({
     mutationFn: async ({id}: {id: string}) => {

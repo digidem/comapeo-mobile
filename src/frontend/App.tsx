@@ -22,7 +22,8 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {ObservationProvider} from './contexts/ObservationsContext';
 import {MessagePortLike} from './lib/MessagePortLike';
 import {createMapeoClient} from '@mapeo/ipc';
-import {ApiLoading} from './sharedComponents/ApiLoading/index.js';
+import {ApiLoading} from './sharedComponents/ApiLoading';
+import {ActiveProjectProvider} from './contexts/ProjectContext';
 
 const queryClient = new QueryClient();
 const messagePort = new MessagePortLike();
@@ -37,21 +38,23 @@ const App = () => {
         <QueryClientProvider client={queryClient}>
           <ApiLoading messagePort={messagePort}>
             <ApiProvider api={mapeoApi}>
-              <GestureHandlerRootView style={{flex: 1}}>
-                <BottomSheetModalProvider>
-                  <ObservationProvider>
-                    <NavigationContainer ref={navRef}>
-                      <PhotoPromiseProvider>
-                        <LocationProvider>
-                          <SecurityProvider>
-                            <AppNavigator />
-                          </SecurityProvider>
-                        </LocationProvider>
-                      </PhotoPromiseProvider>
-                    </NavigationContainer>
-                  </ObservationProvider>
-                </BottomSheetModalProvider>
-              </GestureHandlerRootView>
+              <ActiveProjectProvider>
+                <GestureHandlerRootView style={{flex: 1}}>
+                  <BottomSheetModalProvider>
+                    <ObservationProvider>
+                      <NavigationContainer ref={navRef}>
+                        <PhotoPromiseProvider>
+                          <LocationProvider>
+                            <SecurityProvider>
+                              <AppNavigator />
+                            </SecurityProvider>
+                          </LocationProvider>
+                        </PhotoPromiseProvider>
+                      </NavigationContainer>
+                    </ObservationProvider>
+                  </BottomSheetModalProvider>
+                </GestureHandlerRootView>
+              </ActiveProjectProvider>
             </ApiProvider>
           </ApiLoading>
         </QueryClientProvider>

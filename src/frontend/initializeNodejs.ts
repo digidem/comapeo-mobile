@@ -19,5 +19,5 @@ export async function initializeNodejs() {
     }
   }
 
-  nodejs.startWithArgs(`loader.js --rootKey ${rootKey}`);
+  nodejs.startWithArgs(`loader.js --rootKey=${rootKey}`);
 }

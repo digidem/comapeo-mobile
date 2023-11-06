@@ -6,7 +6,7 @@ import {usePersistedProjectId} from '../hooks/persistedState/usePersistedProject
 type MapeoProject = Awaited<ReturnType<MapeoClientApi['getProject']>>;
 
 type ActiveProjectContextType = {
-  project?: MapeoProject;
+  project: MapeoProject | undefined;
   switchProject(projectId: string): void;
 };
 

@@ -21,8 +21,9 @@ import {LocationProvider} from './contexts/LocationContext';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {ObservationProvider} from './contexts/ObservationsContext';
 import {MessagePortLike} from './lib/MessagePortLike';
-import {ActiveProjectProvider} from './contexts/ProjectContext';
 import {createMapeoClient} from '@mapeo/ipc';
+import {ApiLoading} from './sharedComponents/ApiLoading';
+import {ActiveProjectProvider} from './contexts/ProjectContext';
 
 const queryClient = new QueryClient();
 const messagePort = new MessagePortLike();
@@ -35,25 +36,27 @@ const App = () => {
     <IntlProvider>
       <PermissionsProvider>
         <QueryClientProvider client={queryClient}>
-          <ApiProvider messagePort={messagePort} api={mapeoApi}>
-            <ActiveProjectProvider>
-              <GestureHandlerRootView style={{flex: 1}}>
-                <BottomSheetModalProvider>
-                  <ObservationProvider>
-                    <NavigationContainer ref={navRef}>
-                      <PhotoPromiseProvider>
-                        <LocationProvider>
-                          <SecurityProvider>
-                            <AppNavigator />
-                          </SecurityProvider>
-                        </LocationProvider>
-                      </PhotoPromiseProvider>
-                    </NavigationContainer>
-                  </ObservationProvider>
-                </BottomSheetModalProvider>
-              </GestureHandlerRootView>
-            </ActiveProjectProvider>
-          </ApiProvider>
+          <ApiLoading messagePort={messagePort}>
+            <ApiProvider api={mapeoApi}>
+              <ActiveProjectProvider>
+                <GestureHandlerRootView style={{flex: 1}}>
+                  <BottomSheetModalProvider>
+                    <ObservationProvider>
+                      <NavigationContainer ref={navRef}>
+                        <PhotoPromiseProvider>
+                          <LocationProvider>
+                            <SecurityProvider>
+                              <AppNavigator />
+                            </SecurityProvider>
+                          </LocationProvider>
+                        </PhotoPromiseProvider>
+                      </NavigationContainer>
+                    </ObservationProvider>
+                  </BottomSheetModalProvider>
+                </GestureHandlerRootView>
+              </ActiveProjectProvider>
+            </ApiProvider>
+          </ApiLoading>
         </QueryClientProvider>
       </PermissionsProvider>
     </IntlProvider>

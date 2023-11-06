@@ -1,15 +1,11 @@
 import * as React from 'react';
-
-import {type createMapeoClient} from '@mapeo/ipc';
-
-// TODO: export type from @mapeo/ipc
-export type MapeoApi = ReturnType<typeof createMapeoClient>;
+import {type MapeoClientApi} from '@mapeo/ipc';
 
 // TODO: support passing api mock for unit tests
-const ApiContext = React.createContext<MapeoApi | undefined>(undefined);
+const ApiContext = React.createContext<MapeoClientApi | undefined>(undefined);
 
 export type ApiProviderProps = {
-  api: MapeoApi;
+  api: MapeoClientApi;
   children?: React.ReactNode;
 };
 

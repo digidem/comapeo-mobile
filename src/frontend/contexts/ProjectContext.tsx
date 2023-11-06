@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {MapeoApi, useApi} from './ApiContext';
+import {type MapeoClientApi} from '@mapeo/ipc';
+import {useApi} from './ApiContext';
 import {usePersistedProjectId} from '../hooks/persistedState/usePersistedProjectId';
 
-type MapeoProject = Awaited<ReturnType<MapeoApi['getProject']>>;
+type MapeoProject = Awaited<ReturnType<MapeoClientApi['getProject']>>;
 
 type ActiveProjectContext = {
   project: MapeoProject | undefined;
@@ -79,7 +80,7 @@ export const ActiveProjectProvider = ({
 
 // If we don't have an activeProjectId set, then we use either the first project
 // returned by mapeo.listProjects() or we create a new default project
-async function getExistingProjectIdOrCreate(mapeoApi: MapeoApi) {
+async function getExistingProjectIdOrCreate(mapeoApi: MapeoClientApi) {
   const projects = await mapeoApi.listProjects();
   // We shouldn't normally get here, except when somehow we end up with an
   // invalid active project id

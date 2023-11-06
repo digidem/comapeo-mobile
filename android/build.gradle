@@ -38,6 +38,7 @@ buildscript {
         minSdkVersion = 21
         compileSdkVersion = 33
         targetSdkVersion = 33
+        kotlinVersion = findProperty("android.kotlinVersion") ?: "1.8.10"
 
         // We use NDK 23 which has both M1 support and is the side-by-side NDK version from AGP.
         ndkVersion = "23.1.7779620"
@@ -48,10 +49,11 @@ buildscript {
         mavenCentral()
     }
 
-        
+
     dependencies {
         classpath("com.android.tools.build:gradle:7.4.1")
         classpath("com.facebook.react:react-native-gradle-plugin")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
     }
 }
 
@@ -78,6 +80,6 @@ allprojects {
             // expo-camera bundles a custom com.google.android:cameraview
             url "$rootDir/../node_modules/expo-camera/android/maven"
         }
-        
+
     }
 }

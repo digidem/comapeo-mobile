@@ -7,7 +7,6 @@ const ROOT_KEY = '__RootKey';
 
 export async function initializeNodejs() {
   let rootKey = await getItemAsync(ROOT_KEY);
-  console.log({rootKey});
   if (!rootKey) {
     try {
       const newRootKey = uint8ArrayToHex(getRandomBytes(16));

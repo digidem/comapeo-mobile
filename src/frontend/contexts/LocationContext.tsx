@@ -124,7 +124,7 @@ export const LocationProvider = ({children}: React.PropsWithChildren<{}>) => {
             if (timeoutId.current) clearTimeout(timeoutId.current);
             timeoutId.current = setTimeout(updateStatus, LOCATION_TIMEOUT);
             const newCoord = Object.entries(location.coords).map(
-              ([key, val]) => [key, !val ? undefined : val] as const,
+              ([key, val]) => [key, val === null ? undefined : val] as const,
             );
 
             const position = {

@@ -5,7 +5,9 @@
 import os from 'os'
 import path from 'path'
 import { createRequire } from 'module'
-const rnBridge = createRequire(import.meta.url)('rn-bridge')
+const require = createRequire(import.meta.url)
+/** @type {import('./types/rn-bridge.js')} */
+const rnBridge = require('rn-bridge')
 
 const nodejsProjectDir = path.resolve(rnBridge.app.datadir(), 'nodejs-project')
 os.homedir = () => nodejsProjectDir

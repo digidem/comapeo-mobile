@@ -72,8 +72,10 @@ export const SaveButton = ({observationId}: {observationId?: string}) => {
 
   function editObservation() {
     if (!value) throw new Error('no observation saved in persisted state ');
+    if (!observationId) throw new Error('Need an observation Id to edit');
     if (!('versionId' in value))
       throw new Error('Cannot update a unsaved observation (must create one)');
+    // @ts-expect-error
     editObservationMutation.mutate({id: observationId, value});
     navigation.pop();
   }

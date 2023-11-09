@@ -5,7 +5,7 @@ import {
 } from '@tanstack/react-query';
 
 import {useProject} from './projects';
-import {Preset, PresetValue} from '@mapeo/schema';
+import {PresetValue} from '@mapeo/schema';
 import {MockPreset} from '../../mockdata';
 
 export function usePresetsQuery() {

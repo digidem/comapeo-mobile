@@ -32,13 +32,14 @@
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
     "@rnmapbox/maps": "^10.0.12",
-    "@tanstack/react-query": "^4.35.3",
+    "@tanstack/react-query": "^5.8.1",
     "assert": "^2.0.0",
     "buffer": "^6.0.3",
     "cheap-ruler": "^3.0.2",
     "eventemitter3": "^5.0.1",
     "expo": "^48.0.0",
     "expo-camera": "~13.2.1",
+    "expo-crypto": "~12.2.1",
     "expo-localization": "~14.1.1",
     "expo-location": "~15.1.1",
     "expo-secure-store": "~12.1.1",
@@ -71,8 +72,7 @@
     "uint8array-extras": "^0.5.0",
     "utm": "^1.1.1",
     "validate-color": "^2.2.4",
-    "zustand": "^4.4.1",
-    "expo-crypto": "~12.2.1"
+    "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

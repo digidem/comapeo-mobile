@@ -47,6 +47,6 @@ export function useObservationAttachmentUrl(
     enabled: !!project,
     // setting staleTime and CacheTime to infinity means it will only call the api once (aka photos do not get editted so we do not need to keep getting from the server)
     staleTime: Infinity,
-    cacheTime: Infinity,
+    gcTime: Infinity,
   });
 }

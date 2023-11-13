@@ -1,15 +1,20 @@
 import debug from 'debug'
+import { join } from 'path'
+import { existsSync, mkdirSync } from 'fs'
 import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
 /** @type {import('../types/rn-bridge.js')} */
 const rnBridge = require('rn-bridge')
 import { MapeoManager } from '@mapeo/core'
-import { KeyManager } from '@mapeo/crypto'
-import RAM from 'random-access-memory'
+import RAF from 'random-access-file'
 
 import MessagePortLike from './message-port-like.js'
 import { createMapeoServer } from '@mapeo/ipc'
 import { ServerStatus } from './status.js'
+
+// Do not touch these!
+const DB_DIR_NAME = 'database'
+const INDEX_DIR_NAME = 'index'
 
 const log = debug('mapeo:app')
 
@@ -45,12 +50,23 @@ export async function init({ version, rootKey }) {
   log('Starting app...')
   log(`Device version is ${version}`)
 
-  // 1. Initialize Mapeo
+  const privateStorageDir = rnBridge.app.datadir()
+  const dbDir = join(privateStorageDir, DB_DIR_NAME)
+  const indexDir = join(privateStorageDir, INDEX_DIR_NAME)
+
+  if (!existsSync(dbDir)) {
+    mkdirSync(dbDir)
+  }
+
+  if (!existsSync(indexDir)) {
+    mkdirSync(indexDir)
+  }
+
   const manager = new MapeoManager({
     rootKey,
-    // TODO: Use actual file storage instead of memory
-    dbFolder: ':memory:',
-    coreStorage: () => new RAM(),
+    dbFolder: dbDir,
+    // TODO: Need to update @mapeo/core so that we can only pass indexDir as string to this opt
+    coreStorage: (name) => new RAF(name, { directory: indexDir }),
   })
 
   const messagePort = new MessagePortLike()

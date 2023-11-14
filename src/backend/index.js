@@ -11,7 +11,7 @@ try {
   })
 
   if (typeof values.rootKey !== 'string') {
-    throw new Error('backend did not recieve root key from front end')
+    throw new Error('backend did not receive root key from front end')
   }
 
   // Do not await this as we want this to run indefinitely

@@ -6,7 +6,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "node ./scripts/bundle-backend.mjs index.js index.bundle.js",
+    "build": "node ./scripts/bundle-backend.mjs --entry=index.js --output=index.bundle.js",
     "lint": "tsc",
     "postinstall": "patch-package"
   },
@@ -38,6 +38,7 @@
     "patch-package": "^8.0.0",
     "prettier": "^3.0.3",
     "rollup": "^3.5.0",
+    "rollup-plugin-esbuild": "^6.1.0",
     "typescript": "^5.2.2"
   },
   "prettier": {

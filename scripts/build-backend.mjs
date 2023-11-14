@@ -1,9 +1,18 @@
 #!/usr/bin/env node
 
+import {parseArgs} from 'util';
 import {$} from 'execa';
 import path from 'path';
 import fs from 'fs';
 import {downloadPrebuilds} from './download-prebuilds.mjs';
+
+const {
+  values: {prod},
+} = parseArgs({
+  options: {
+    prod: {type: 'boolean'},
+  },
+});
 
 const $$ = $({stdio: 'inherit'});
 
@@ -49,9 +58,11 @@ await $$({
   cwd: './nodejs-assets/backend',
 })`npm run postinstall`;
 
-console.log('Creating bundle...');
-
-await $$({cwd: './nodejs-assets/backend'})`npm run build`;
+if (prod) {
+  await $$({cwd: './nodejs-assets/backend'})`npm run build -- --minify`;
+} else {
+  await $$({cwd: './nodejs-assets/backend'})`npm run build`;
+}
 
 console.log(
   'Moving relevant files to nodejs-assets/nodejs-project directory...',

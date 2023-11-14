@@ -2,16 +2,13 @@ import { parseArgs } from 'util'
 
 import { init } from './src/app.js'
 
-/** @type {import('util').ParseArgsConfig['options']} */
-const options = {
-  version: { type: 'string' },
-  rootKey: { type: 'string' },
-}
-
 try {
-  const args = parseArgs({ options })
-
-  const { values } = args
+  const { values } = parseArgs({
+    options: {
+      version: { type: 'string' },
+      rootKey: { type: 'string' },
+    },
+  })
 
   if (typeof values.rootKey !== 'string') {
     throw new Error('backend did not recieve root key from front end')

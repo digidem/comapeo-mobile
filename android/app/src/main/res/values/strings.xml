@@ -1,4 +1,3 @@
 <resources>
     <string name="app_name">MapeoNext</string>
-    <string name="expo_splash_screen_resize_mode">native</string>
 </resources>

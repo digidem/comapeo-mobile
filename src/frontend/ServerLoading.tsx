@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {SafeAreaView, Text} from 'react-native';
 import nodejs from 'nodejs-mobile-react-native';
-import * as SplashScreen from 'expo-splash-screen';
+import BootSplash from 'react-native-bootsplash';
 
 import type {StatusMessage} from '../backend/src/status';
 import {MessagePortLike} from './lib/MessagePortLike.js';
@@ -21,7 +21,7 @@ export const ServerLoading = ({
       }
 
       if (msg.value === 'STARTED' || msg.value === 'ERROR') {
-        SplashScreen.hideAsync();
+        BootSplash.hide({fade: true});
       }
 
       setServerStatus(msg);

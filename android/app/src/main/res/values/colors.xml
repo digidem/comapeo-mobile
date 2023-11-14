@@ -1,4 +1,3 @@
 <resources>
-    <!-- expo-splash-screen -->
-    <color name="splashscreen_background">#050F77</color>
+    <color name="bootsplash_background">#050F77</color>
 </resources>

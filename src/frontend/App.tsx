@@ -9,7 +9,6 @@ import {
 // See https://github.com/gorhom/react-native-bottom-sheet/issues/1157
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {createMapeoClient} from '@mapeo/ipc';
-import * as SplashScreen from 'expo-splash-screen';
 
 import {AppNavigator} from './Navigation/AppNavigator';
 import {AppStackList} from './Navigation/AppStack';
@@ -31,8 +30,6 @@ const queryClient = new QueryClient();
 const messagePort = new MessagePortLike();
 const mapeoApi = createMapeoClient(messagePort);
 initializeNodejs();
-
-SplashScreen.preventAutoHideAsync();
 
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();

@@ -40,10 +40,12 @@
     "eventemitter3": "^5.0.1",
     "expo": "^48.0.0",
     "expo-camera": "~13.2.1",
+    "expo-crypto": "~12.2.1",
     "expo-localization": "~14.1.1",
     "expo-location": "~15.1.1",
     "expo-secure-store": "~12.1.1",
     "expo-sensors": "~12.1.1",
+    "expo-splash-screen": "~0.18.2",
     "lodash.isequal": "^4.5.0",
     "nanoid": "^5.0.1",
     "nodejs-mobile-react-native": "^16.17.10",
@@ -72,8 +74,7 @@
     "uint8array-extras": "^0.5.0",
     "utm": "^1.1.1",
     "validate-color": "^2.2.4",
-    "zustand": "^4.4.1",
-    "expo-crypto": "~12.2.1"
+    "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

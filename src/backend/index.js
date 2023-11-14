@@ -16,8 +16,8 @@ try {
 
   // Do not await this as we want this to run indefinitely
   init({
-    version: typeof values.version === 'string' ? values.version : undefined,
-    rootKey: values.rootKey,
+    version: values.version,
+    rootKey: Buffer.from(values.rootKey, 'hex'),
   }).catch((err) => {
     console.error('Server startup error:', err)
   })

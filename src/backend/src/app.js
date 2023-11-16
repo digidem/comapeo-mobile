@@ -42,9 +42,6 @@ process.on('exit', (code) => {
  * @param {Buffer} options.rootKey
  */
 export async function init({ version, rootKey }) {
-  // TODO: Account for args passed from node.startWithArgs
-  debug.enable('*')
-
   log('Starting app...')
   log(`Device version is ${version}`)
 

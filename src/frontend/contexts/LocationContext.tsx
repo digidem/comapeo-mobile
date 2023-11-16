@@ -1,14 +1,9 @@
 import * as React from 'react';
-import {AppState, AppStateStatus} from 'react-native';
+import {AppState, AppStateStatus, PermissionStatus} from 'react-native';
 import * as Location from 'expo-location';
 import debug from 'debug';
 
-import {
-  PERMISSIONS,
-  RESULTS,
-  PermissionResult,
-  usePermissionContext,
-} from './PermissionsContext';
+import {PERMISSIONS, usePermissions} from '../hooks/store/permissionsStore';
 import {storage} from '../hooks/persistedState/createPersistedState';
 import {Position, Provider} from '../sharedTypes';
 import {useDraftObservation} from '../hooks/useDraftObservation';
@@ -22,7 +17,7 @@ export type LocationContextType = {
   // What location services / providers are available on this device
   provider?: Provider;
   // Whether the user has granted permissions to use location to this app
-  permission?: PermissionResult;
+  permission?: PermissionStatus;
   // This is the previous known position from the last time the app was open
   savedPosition?: Position;
   // True if there is some kind of error getting the device location
@@ -79,7 +74,7 @@ export const useLocationContext = () => {
  * user has turned off location.
  */
 export const LocationProvider = ({children}: React.PropsWithChildren<{}>) => {
-  const {permissions, requestPermissions} = usePermissionContext();
+  const permissions = usePermissions();
   const {updateObservationPosition} = useDraftObservation();
 
   const [error, setError] = React.useState(false);
@@ -95,13 +90,12 @@ export const LocationProvider = ({children}: React.PropsWithChildren<{}>) => {
   const timeoutId = React.useRef<ReturnType<typeof setTimeout>>();
   const subscription = React.useRef<Subscription>();
 
-  const fineLocationPermissionResult = permissions[
-    PERMISSIONS.ACCESS_FINE_LOCATION
-  ] as PermissionResult;
+  const fineLocationPermissionResult =
+    permissions[PERMISSIONS.ACCESS_FINE_LOCATION];
 
   const updateStatus = React.useCallback(async () => {
     try {
-      if (fineLocationPermissionResult !== RESULTS.GRANTED) return;
+      if (fineLocationPermissionResult !== 'denied') return;
 
       if (timeoutId.current) clearTimeout(timeoutId.current);
 
@@ -158,11 +152,6 @@ export const LocationProvider = ({children}: React.PropsWithChildren<{}>) => {
   }, [fineLocationPermissionResult]);
 
   React.useEffect(() => {
-    requestPermissions([
-      'android.permission.ACCESS_COARSE_LOCATION',
-      'android.permission.ACCESS_FINE_LOCATION',
-    ]);
-
     return () => stopWatchingLocation(timeoutId, subscription);
   }, []);
 

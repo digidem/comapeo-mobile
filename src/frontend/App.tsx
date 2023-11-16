@@ -16,7 +16,6 @@ import {AppStackList} from './Navigation/AppStack';
 import {IntlProvider} from './contexts/IntlContext';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {ApiProvider} from './contexts/ApiContext';
-import {PermissionsProvider} from './contexts/PermissionsContext';
 import {PhotoPromiseProvider} from './contexts/PhotoPromiseContext';
 import {SecurityProvider} from './contexts/SecurityContext';
 import {LocationProvider} from './contexts/LocationContext';
@@ -26,6 +25,10 @@ import {MessagePortLike} from './lib/MessagePortLike';
 import {ServerLoading} from './ServerLoading';
 import {ActiveProjectProvider} from './contexts/ProjectContext';
 import {initializeNodejs} from './initializeNodejs';
+import {
+  PERMISSIONS,
+  usePermissionsActions,
+} from './hooks/store/permissionsStore';
 
 const queryClient = new QueryClient();
 const messagePort = new MessagePortLike();
@@ -34,36 +37,53 @@ initializeNodejs();
 
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();
+  const [permissionsAnswered, setPermissionsAnswered] = React.useState(false);
+  const {requestPermissions} = usePermissionsActions();
+
+  React.useEffect(() => {
+    requestPermissions([
+      PERMISSIONS.ACCESS_FINE_LOCATION,
+      PERMISSIONS.ACCESS_COARSE_LOCATION,
+      PERMISSIONS.CAMERA,
+    ])
+      .catch(err => {
+        console.error(err);
+      })
+      .finally(() => {
+        console.log('ANSWERED');
+        setPermissionsAnswered(true);
+      });
+  }, []);
 
   return (
     <IntlProvider>
-      <PermissionsProvider>
-        <QueryClientProvider client={queryClient}>
-          <ServerLoading messagePort={messagePort}>
-            <ApiProvider api={mapeoApi}>
-              <ActiveProjectProvider>
-                <GestureHandlerRootView style={{flex: 1}}>
-                  <BottomSheetModalProvider>
-                    <ObservationProvider>
-                      <NavigationContainer
-                        ref={navRef}
-                        onReady={() => BootSplash.hide()}>
-                        <PhotoPromiseProvider>
-                          <LocationProvider>
-                            <SecurityProvider>
-                              <AppNavigator />
-                            </SecurityProvider>
-                          </LocationProvider>
-                        </PhotoPromiseProvider>
-                      </NavigationContainer>
-                    </ObservationProvider>
-                  </BottomSheetModalProvider>
-                </GestureHandlerRootView>
-              </ActiveProjectProvider>
-            </ApiProvider>
-          </ServerLoading>
-        </QueryClientProvider>
-      </PermissionsProvider>
+      <QueryClientProvider client={queryClient}>
+        <ServerLoading
+          messagePort={messagePort}
+          permissionsAnswered={permissionsAnswered}>
+          <ApiProvider api={mapeoApi}>
+            <ActiveProjectProvider>
+              <GestureHandlerRootView style={{flex: 1}}>
+                <BottomSheetModalProvider>
+                  <ObservationProvider>
+                    <NavigationContainer
+                      ref={navRef}
+                      onReady={() => BootSplash.hide()}>
+                      <PhotoPromiseProvider>
+                        <LocationProvider>
+                          <SecurityProvider>
+                            <AppNavigator />
+                          </SecurityProvider>
+                        </LocationProvider>
+                      </PhotoPromiseProvider>
+                    </NavigationContainer>
+                  </ObservationProvider>
+                </BottomSheetModalProvider>
+              </GestureHandlerRootView>
+            </ActiveProjectProvider>
+          </ApiProvider>
+        </ServerLoading>
+      </QueryClientProvider>
     </IntlProvider>
   );
 };

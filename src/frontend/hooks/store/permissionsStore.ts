@@ -1,6 +1,5 @@
 import {create} from 'zustand';
 import {useShallow} from 'zustand/react/shallow';
-
 import {Permission, PermissionsAndroid, PermissionStatus} from 'react-native';
 
 type RelevantAndroidPermission = Extract<
@@ -37,7 +36,7 @@ const usePermissionsStore = create<PermissionsState>()(set => ({
     requestPermissions: async permissions => {
       const result: AppPermissions =
         await PermissionsAndroid.requestMultiple(permissions);
-      set(state => ({permissions: {...state, ...result}}));
+      set(state => ({permissions: {...state.permissions, ...result}}));
     },
   },
 }));

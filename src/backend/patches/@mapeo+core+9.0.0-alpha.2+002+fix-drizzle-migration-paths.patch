@@ -1,8 +1,8 @@
 diff --git a/node_modules/@mapeo/core/src/mapeo-manager.js b/node_modules/@mapeo/core/src/mapeo-manager.js
-index a62d7df..1ca509f 100644
+index d138f56..29c23d5 100644
 --- a/node_modules/@mapeo/core/src/mapeo-manager.js
 +++ b/node_modules/@mapeo/core/src/mapeo-manager.js
-@@ -66,7 +66,7 @@ export class MapeoManager {
+@@ -94,7 +94,7 @@ export class MapeoManager extends TypedEmitter {
      )
      this.#db = drizzle(sqlite)
      migrate(this.#db, {
@@ -10,12 +10,12 @@ index a62d7df..1ca509f 100644
 +      migrationsFolder: new URL('./node_modules/@mapeo/core/drizzle/client', import.meta.url).pathname,
      })
  
-     this.#rpc = new MapeoRPC()
+     this.#localPeers = new LocalPeers({ logger: this.#l })
 diff --git a/node_modules/@mapeo/core/src/mapeo-project.js b/node_modules/@mapeo/core/src/mapeo-project.js
-index 62dac9e..a495aeb 100644
+index 25bd118..cfbb9f4 100644
 --- a/node_modules/@mapeo/core/src/mapeo-project.js
 +++ b/node_modules/@mapeo/core/src/mapeo-project.js
-@@ -82,7 +82,7 @@ export class MapeoProject {
+@@ -102,7 +102,7 @@ export class MapeoProject {
      const sqlite = new Database(dbPath)
      const db = drizzle(sqlite)
      migrate(db, {

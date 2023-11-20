@@ -37,30 +37,15 @@ initializeNodejs();
 
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();
-  const [permissionsAnswered, setPermissionsAnswered] = React.useState(false);
-  const {requestPermissions} = usePermissionsActions();
 
-  React.useEffect(() => {
-    requestPermissions([
-      PERMISSIONS.ACCESS_FINE_LOCATION,
-      PERMISSIONS.ACCESS_COARSE_LOCATION,
-      PERMISSIONS.CAMERA,
-    ])
-      .catch(err => {
-        console.error(err);
-      })
-      .finally(() => {
-        console.log('ANSWERED');
-        setPermissionsAnswered(true);
-      });
-  }, []);
+  const permissionsAnswered = useRequestAppPermissions();
+
+  if (!permissionsAnswered) return null;
 
   return (
     <IntlProvider>
       <QueryClientProvider client={queryClient}>
-        <ServerLoading
-          messagePort={messagePort}
-          permissionsAnswered={permissionsAnswered}>
+        <ServerLoading messagePort={messagePort}>
           <ApiProvider api={mapeoApi}>
             <ActiveProjectProvider>
               <GestureHandlerRootView style={{flex: 1}}>
@@ -89,3 +74,27 @@ const App = () => {
 };
 
 export default App;
+
+// Ideally just inline the effect into the App component but we need to conditionally render the app
+// because of a potential limitation/bug with the splash screen library
+// (splash screen hides automatically if children are allowed to render while permission dialog is active)
+function useRequestAppPermissions() {
+  const [permissionsAnswered, setPermissionsAnswered] = React.useState(false);
+  const {requestPermissions} = usePermissionsActions();
+
+  React.useEffect(() => {
+    requestPermissions([
+      PERMISSIONS.ACCESS_FINE_LOCATION,
+      PERMISSIONS.ACCESS_COARSE_LOCATION,
+      PERMISSIONS.CAMERA,
+    ])
+      .catch(err => {
+        console.error(err);
+      })
+      .finally(() => {
+        setPermissionsAnswered(true);
+      });
+  }, [requestPermissions]);
+
+  return permissionsAnswered;
+}

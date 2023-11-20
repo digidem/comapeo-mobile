@@ -7,12 +7,8 @@ import {MessagePortLike} from './lib/MessagePortLike.js';
 
 export const ServerLoading = ({
   messagePort,
-  permissionsAnswered,
   children,
-}: React.PropsWithChildren<{
-  messagePort: MessagePortLike;
-  permissionsAnswered: boolean;
-}>) => {
+}: React.PropsWithChildren<{messagePort: MessagePortLike}>) => {
   const [serverStatus, setServerStatus] = React.useState<StatusMessage>({
     value: 'STARTING',
   });
@@ -37,11 +33,6 @@ export const ServerLoading = ({
       BootSplash.hide({fade: true});
     }
   }, [serverStatus.value]);
-
-  // Currently needed because of a potential bug in bootsplash where splash screen hides automatically
-  if (!permissionsAnswered) {
-    return null;
-  }
 
   // Don't render any children while the backend is starting - this avoids
   // timeouts from API methods if server startup takes more than 5 seconds - all

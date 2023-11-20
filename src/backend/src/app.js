@@ -6,7 +6,6 @@ const require = createRequire(import.meta.url)
 /** @type {import('../types/rn-bridge.js')} */
 const rnBridge = require('rn-bridge')
 import { MapeoManager } from '@mapeo/core'
-import RAF from 'random-access-file'
 
 import MessagePortLike from './message-port-like.js'
 import { createMapeoServer } from '@mapeo/ipc'
@@ -65,8 +64,7 @@ export async function init({ version, rootKey }) {
   const manager = new MapeoManager({
     rootKey,
     dbFolder: dbDir,
-    // TODO: Need to update @mapeo/core so that we can only pass indexDir as string to this opt
-    coreStorage: (name) => new RAF(name, { directory: indexDir }),
+    coreStorage: indexDir,
   })
 
   const messagePort = new MessagePortLike()

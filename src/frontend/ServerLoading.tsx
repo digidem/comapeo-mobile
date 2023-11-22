@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {SafeAreaView, Text} from 'react-native';
 import nodejs from 'nodejs-mobile-react-native';
-import BootSplash from 'react-native-bootsplash';
 
 import type {StatusMessage} from '../backend/src/status';
 import {MessagePortLike} from './lib/MessagePortLike.js';
@@ -18,10 +17,6 @@ export const ServerLoading = ({
     const subscription = nodejs.channel.addListener('server:status', msg => {
       if (msg.value === 'STARTED') {
         messagePort.start();
-      }
-
-      if (msg.value === 'STARTED' || msg.value === 'ERROR') {
-        BootSplash.hide({fade: true});
       }
 
       setServerStatus(msg);

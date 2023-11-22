@@ -9,6 +9,7 @@ import {
 // See https://github.com/gorhom/react-native-bottom-sheet/issues/1157
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {createMapeoClient} from '@mapeo/ipc';
+import BootSplash from 'react-native-bootsplash';
 
 import {AppNavigator} from './Navigation/AppNavigator';
 import {AppStackList} from './Navigation/AppStack';
@@ -44,7 +45,9 @@ const App = () => {
                 <GestureHandlerRootView style={{flex: 1}}>
                   <BottomSheetModalProvider>
                     <ObservationProvider>
-                      <NavigationContainer ref={navRef}>
+                      <NavigationContainer
+                        ref={navRef}
+                        onReady={() => BootSplash.hide()}>
                         <PhotoPromiseProvider>
                           <LocationProvider>
                             <SecurityProvider>

@@ -4,7 +4,6 @@ const require = createRequire(import.meta.url)
 /** @type {import('../types/rn-bridge.js')} */
 const rnBridge = require('rn-bridge')
 import { MapeoManager } from '@mapeo/core'
-import { KeyManager } from '@mapeo/crypto'
 import RAM from 'random-access-memory'
 
 import MessagePortLike from './message-port-like.js'
@@ -51,6 +50,19 @@ export async function init({ version, rootKey }) {
     // TODO: Use actual file storage instead of memory
     dbFolder: ':memory:',
     coreStorage: () => new RAM(),
+  })
+
+  await manager.start()
+
+  rnBridge.app.on('pause', async (pauseLock) => {
+    log('App went into background')
+    await manager.stop()
+    pauseLock.release()
+  })
+
+  rnBridge.app.on('resume', () => {
+    log('App went into foreground')
+    manager.start()
   })
 
   const messagePort = new MessagePortLike()

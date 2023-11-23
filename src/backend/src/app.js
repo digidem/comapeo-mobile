@@ -1,6 +1,6 @@
 import debug from 'debug'
 import { join } from 'path'
-import { existsSync, mkdirSync } from 'fs'
+import { mkdirSync } from 'fs'
 import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
 /** @type {import('../types/rn-bridge.js')} */
@@ -52,6 +52,9 @@ export async function init({ version, rootKey }) {
   const privateStorageDir = rnBridge.app.datadir()
   const dbDir = join(privateStorageDir, DB_DIR_NAME)
   const indexDir = join(privateStorageDir, CORE_STORAGE_DIR_NAME)
+
+  mkdirSync(dbDir, { recursive: true })
+  mkdirSync(indexDir, { recursive: true })
 
   const manager = new MapeoManager({
     rootKey,

@@ -52,7 +52,8 @@ export async function init({ version, rootKey }) {
     coreStorage: () => new RAM(),
   })
 
-  await manager.start()
+// Don't await, methods that use the server will await this internally
+manager.start()
 
   rnBridge.app.on('pause', async (pauseLock) => {
     log('App went into background')

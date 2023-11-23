@@ -12,8 +12,8 @@ import { createMapeoServer } from '@mapeo/ipc'
 import { ServerStatus } from './status.js'
 
 // Do not touch these!
-const DB_DIR_NAME = 'database'
-const INDEX_DIR_NAME = 'index'
+const DB_DIR_NAME = 'sqlite-dbs'
+const CORE_STORAGE_DIR_NAME = 'core-storage'
 
 const log = debug('mapeo:app')
 
@@ -51,15 +51,7 @@ export async function init({ version, rootKey }) {
 
   const privateStorageDir = rnBridge.app.datadir()
   const dbDir = join(privateStorageDir, DB_DIR_NAME)
-  const indexDir = join(privateStorageDir, INDEX_DIR_NAME)
-
-  if (!existsSync(dbDir)) {
-    mkdirSync(dbDir)
-  }
-
-  if (!existsSync(indexDir)) {
-    mkdirSync(indexDir)
-  }
+  const indexDir = join(privateStorageDir, CORE_STORAGE_DIR_NAME)
 
   const manager = new MapeoManager({
     rootKey,

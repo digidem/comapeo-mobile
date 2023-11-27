@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@bam.tech/react-native-image-resizer": "^3.0.7",
+    "@bugsnag/react-native": "^7.22.2",
     "@formatjs/intl-locale": "^3.3.2",
     "@formatjs/intl-pluralrules": "^5.2.4",
     "@formatjs/intl-relativetimeformat": "^11.2.4",

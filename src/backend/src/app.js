@@ -62,6 +62,20 @@ export async function init({ version, rootKey }) {
     coreStorage: indexDir,
   })
 
+  // Don't await, methods that use the server will await this internally
+  manager.start()
+
+  rnBridge.app.on('pause', async (pauseLock) => {
+    log('App went into background')
+    await manager.stop()
+    pauseLock.release()
+  })
+
+  rnBridge.app.on('resume', () => {
+    log('App went into foreground')
+    manager.start()
+  })
+
   const messagePort = new MessagePortLike()
   createMapeoServer(manager, messagePort)
   messagePort.start()

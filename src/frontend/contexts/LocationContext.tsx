@@ -3,7 +3,10 @@ import {AppState, AppStateStatus, PermissionStatus} from 'react-native';
 import * as Location from 'expo-location';
 import debug from 'debug';
 
-import {PERMISSIONS, usePermissions} from '../hooks/store/permissionsStore';
+import {
+  ANDROID_PERMISSIONS,
+  usePermissions,
+} from '../hooks/store/permissionsStore';
 import {storage} from '../hooks/persistedState/createPersistedState';
 import {Position, Provider} from '../sharedTypes';
 import {useDraftObservation} from '../hooks/useDraftObservation';
@@ -91,7 +94,7 @@ export const LocationProvider = ({children}: React.PropsWithChildren<{}>) => {
   const subscription = React.useRef<Subscription>();
 
   const fineLocationPermissionResult =
-    permissions[PERMISSIONS.ACCESS_FINE_LOCATION];
+    permissions[ANDROID_PERMISSIONS.ACCESS_FINE_LOCATION];
 
   const updateStatus = React.useCallback(async () => {
     try {

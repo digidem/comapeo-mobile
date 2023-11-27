@@ -2,35 +2,33 @@ import {create} from 'zustand';
 import {useShallow} from 'zustand/react/shallow';
 import {Permission, PermissionsAndroid, PermissionStatus} from 'react-native';
 
-type RelevantAndroidPermission = Extract<
-  Permission,
-  | 'android.permission.CAMERA'
-  | 'android.permission.ACCESS_FINE_LOCATION'
-  | 'android.permission.ACCESS_COARSE_LOCATION'
->;
-
-type AppPermissions = {[key in RelevantAndroidPermission]: PermissionStatus};
-
-export const PERMISSIONS = {
+export const ANDROID_PERMISSIONS = {
   CAMERA: 'android.permission.CAMERA',
   ACCESS_FINE_LOCATION: 'android.permission.ACCESS_FINE_LOCATION',
   ACCESS_COARSE_LOCATION: 'android.permission.ACCESS_COARSE_LOCATION',
 } as const;
 
+type RelevantAndroidPermission = Extract<
+  Permission,
+  (typeof ANDROID_PERMISSIONS)[keyof typeof ANDROID_PERMISSIONS]
+>;
+
+type AppPermissions = {[key in RelevantAndroidPermission]: PermissionStatus};
+
 interface PermissionsState {
   permissions: AppPermissions;
   actions: {
     requestPermissions: (
-      permissions: Array<(typeof PERMISSIONS)[keyof typeof PERMISSIONS]>,
+      permissions: Array<RelevantAndroidPermission>,
     ) => Promise<void>;
   };
 }
 
 const usePermissionsStore = create<PermissionsState>()(set => ({
   permissions: {
-    'android.permission.CAMERA': 'denied',
-    'android.permission.ACCESS_COARSE_LOCATION': 'denied',
-    'android.permission.ACCESS_FINE_LOCATION': 'denied',
+    [ANDROID_PERMISSIONS.CAMERA]: 'denied',
+    [ANDROID_PERMISSIONS.ACCESS_COARSE_LOCATION]: 'denied',
+    [ANDROID_PERMISSIONS.ACCESS_FINE_LOCATION]: 'denied',
   },
   actions: {
     requestPermissions: async permissions => {

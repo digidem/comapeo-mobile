@@ -13,7 +13,10 @@ import {AddButton} from './AddButton';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import {Subscription} from 'expo-sensors/build/DeviceSensor';
 import {CapturedPictureMM} from '../contexts/PhotoPromiseContext/types';
-import {PERMISSIONS, usePermissions} from '../hooks/store/permissionsStore';
+import {
+  ANDROID_PERMISSIONS,
+  usePermissions,
+} from '../hooks/store/permissionsStore';
 
 const m = defineMessages({
   noCameraAccess: {
@@ -96,7 +99,8 @@ export const CameraView = ({onAddPress}: Props) => {
   }, [capturing, setCapturing, onAddPress]);
 
   const disableButton = capturing || !cameraReady;
-  const cameraPermissions = permissions[PERMISSIONS.CAMERA] === 'granted';
+  const cameraPermissions =
+    permissions[ANDROID_PERMISSIONS.CAMERA] === 'granted';
 
   return (
     <View style={styles.container}>

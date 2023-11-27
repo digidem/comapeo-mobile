@@ -26,7 +26,7 @@ import {ServerLoading} from './ServerLoading';
 import {ActiveProjectProvider} from './contexts/ProjectContext';
 import {initializeNodejs} from './initializeNodejs';
 import {
-  PERMISSIONS,
+  ANDROID_PERMISSIONS,
   usePermissionsActions,
 } from './hooks/store/permissionsStore';
 
@@ -82,9 +82,9 @@ function useRequestAppPermissions() {
 
   React.useEffect(() => {
     requestPermissions([
-      PERMISSIONS.ACCESS_FINE_LOCATION,
-      PERMISSIONS.ACCESS_COARSE_LOCATION,
-      PERMISSIONS.CAMERA,
+      ANDROID_PERMISSIONS.ACCESS_FINE_LOCATION,
+      ANDROID_PERMISSIONS.ACCESS_COARSE_LOCATION,
+      ANDROID_PERMISSIONS.CAMERA,
     ]).then(() => {
       setPermissionsAnswered(true);
     });

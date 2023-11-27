@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {SafeAreaView, Text} from 'react-native';
 import nodejs from 'nodejs-mobile-react-native';
+import BootSplash from 'react-native-bootsplash';
 
 import type {StatusMessage} from '../backend/src/status';
 import {MessagePortLike} from './lib/MessagePortLike.js';
@@ -19,6 +20,10 @@ export const ServerLoading = ({
         messagePort.start();
       }
 
+      if (msg.value === 'STARTED' || msg.value === 'ERROR') {
+        BootSplash.hide({fade: true});
+      }
+
       setServerStatus(msg);
     });
     // In case the server starts before us (we miss the original
@@ -27,12 +32,6 @@ export const ServerLoading = ({
     // @ts-ignore - incorrect types on nodejs.channel
     return () => subscription.remove();
   }, [setServerStatus]);
-
-  React.useEffect(() => {
-    if (serverStatus.value === 'STARTED' || serverStatus.value === 'ERROR') {
-      BootSplash.hide({fade: true});
-    }
-  }, [serverStatus.value]);
 
   // Don't render any children while the backend is starting - this avoids
   // timeouts from API methods if server startup takes more than 5 seconds - all

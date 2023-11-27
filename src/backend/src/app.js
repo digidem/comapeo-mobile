@@ -1,14 +1,19 @@
 import debug from 'debug'
+import { join } from 'path'
+import { mkdirSync } from 'fs'
 import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
 /** @type {import('../types/rn-bridge.js')} */
 const rnBridge = require('rn-bridge')
 import { MapeoManager } from '@mapeo/core'
-import RAM from 'random-access-memory'
 
 import MessagePortLike from './message-port-like.js'
 import { createMapeoServer } from '@mapeo/ipc'
 import { ServerStatus } from './status.js'
+
+// Do not touch these!
+const DB_DIR_NAME = 'sqlite-dbs'
+const CORE_STORAGE_DIR_NAME = 'core-storage'
 
 const log = debug('mapeo:app')
 
@@ -44,16 +49,21 @@ export async function init({ version, rootKey }) {
   log('Starting app...')
   log(`Device version is ${version}`)
 
-  // 1. Initialize Mapeo
+  const privateStorageDir = rnBridge.app.datadir()
+  const dbDir = join(privateStorageDir, DB_DIR_NAME)
+  const indexDir = join(privateStorageDir, CORE_STORAGE_DIR_NAME)
+
+  mkdirSync(dbDir, { recursive: true })
+  mkdirSync(indexDir, { recursive: true })
+
   const manager = new MapeoManager({
     rootKey,
-    // TODO: Use actual file storage instead of memory
-    dbFolder: ':memory:',
-    coreStorage: () => new RAM(),
+    dbFolder: dbDir,
+    coreStorage: indexDir,
   })
 
-// Don't await, methods that use the server will await this internally
-manager.start()
+  // Don't await, methods that use the server will await this internally
+  manager.start()
 
   rnBridge.app.on('pause', async (pauseLock) => {
     log('App went into background')

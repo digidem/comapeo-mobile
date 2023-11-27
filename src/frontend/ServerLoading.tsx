@@ -18,7 +18,7 @@ export const ServerLoading = ({
       if (msg.value === 'STARTED') {
         messagePort.start();
       }
-      // TODO: Hide splash screen if status is `STARTED` or `ERROR`
+
       setServerStatus(msg);
     });
     // In case the server starts before us (we miss the original
@@ -28,23 +28,18 @@ export const ServerLoading = ({
     return () => subscription.remove();
   }, [setServerStatus]);
 
+  // Don't render any children while the backend is starting - this avoids
+  // timeouts from API methods if server startup takes more than 5 seconds - all
+  // api calls should be from children of this component.
+  if (serverStatus.value === 'STARTING') {
+    return null;
+  }
+
   if (serverStatus.value === 'ERROR') {
     return (
       <SafeAreaView
         style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Text>Error!</Text>
-      </SafeAreaView>
-    );
-  }
-
-  // Don't render any children while the backend is starting - this avoids
-  // timeouts from API methods if server startup takes more than 5 seconds - all
-  // api calls should be from children of this component.
-  if (serverStatus.value === 'STARTING') {
-    return (
-      <SafeAreaView
-        style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>Initializing Mapeo Core...</Text>
       </SafeAreaView>
     );
   }

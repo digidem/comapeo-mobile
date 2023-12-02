@@ -19,13 +19,13 @@ import {ApiProvider} from './contexts/ApiContext';
 import {PermissionsProvider} from './contexts/PermissionsContext';
 import {PhotoPromiseProvider} from './contexts/PhotoPromiseContext';
 import {SecurityProvider} from './contexts/SecurityContext';
-import {LocationProvider} from './contexts/LocationContext';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {ObservationProvider} from './contexts/ObservationsContext';
 import {MessagePortLike} from './lib/MessagePortLike';
 import {ServerLoading} from './ServerLoading';
 import {ActiveProjectProvider} from './contexts/ProjectContext';
 import {initializeNodejs} from './initializeNodejs';
+import {useForegroundPermissions as useForegroundLocationPermissions} from 'expo-location';
 
 const queryClient = new QueryClient();
 const messagePort = new MessagePortLike();
@@ -34,6 +34,11 @@ initializeNodejs();
 
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();
+  const [, requestPermissions] = useForegroundLocationPermissions();
+
+  React.useEffect(() => {
+    requestPermissions();
+  }, []);
 
   return (
     <IntlProvider>
@@ -49,11 +54,9 @@ const App = () => {
                         ref={navRef}
                         onReady={() => BootSplash.hide()}>
                         <PhotoPromiseProvider>
-                          <LocationProvider>
-                            <SecurityProvider>
-                              <AppNavigator />
-                            </SecurityProvider>
-                          </LocationProvider>
+                          <SecurityProvider>
+                            <AppNavigator />
+                          </SecurityProvider>
                         </PhotoPromiseProvider>
                       </NavigationContainer>
                     </ObservationProvider>

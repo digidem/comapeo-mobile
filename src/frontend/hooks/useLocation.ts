@@ -3,16 +3,11 @@ import CheapRuler from 'cheap-ruler';
 import {
   watchPositionAsync,
   hasServicesEnabledAsync,
+  useForegroundPermissions,
   type LocationObject,
   Accuracy,
 } from 'expo-location';
 import React from 'react';
-import {
-  PERMISSIONS,
-  type PermissionResult,
-  usePermissionContext,
-  RESULTS,
-} from '../contexts/PermissionsContext';
 
 interface LocationOptions {
   /** Only update location if it has changed by at least this distance in meters (or maxTimeInterval has passed) */
@@ -34,15 +29,12 @@ const LOCATION_TIMEOUT = 10000;
 export function useLocation(options: LocationOptions) {
   const {minTimeInterval: timeInterval = 200, ...debounceOptions} = options;
   const [location, setLocation] = React.useState<LocationObject | undefined>();
-  const {permissions} = usePermissionContext();
 
-  const fineLocationPermissionResult = permissions[
-    PERMISSIONS.ACCESS_FINE_LOCATION
-  ] as PermissionResult;
+  const [permissions] = useForegroundPermissions();
 
   useFocusEffect(
     React.useCallback(() => {
-      if (fineLocationPermissionResult !== RESULTS.GRANTED) return;
+      if (!permissions || !permissions.granted) return;
 
       let ignore = false;
       const LocationSubscriptionProm = watchPositionAsync(
@@ -54,11 +46,12 @@ export function useLocation(options: LocationOptions) {
           setLocation(location);
         }),
       );
+
       return () => {
         ignore = true;
         LocationSubscriptionProm.then(sub => sub.remove());
       };
-    }, [fineLocationPermissionResult]),
+    }, [permissions]),
   );
 
   return {location, latLon: location ? getCoords(location) : undefined};

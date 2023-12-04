@@ -43,7 +43,7 @@ export function useCreateObservation() {
       return project.observation.create(value);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['observations']);
+      queryClient.invalidateQueries({queryKey: ['observations']});
     },
   });
 }
@@ -64,7 +64,7 @@ export function useEditObservation() {
       return project.observation.update(id, value);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['observations']);
+      queryClient.invalidateQueries({queryKey: ['observations']});
     },
   });
 }
@@ -79,7 +79,7 @@ export function useDeleteObservation() {
       return project.observation.delete(id);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['observations']);
+      queryClient.invalidateQueries({queryKey: ['observations']});
     },
   });
 }

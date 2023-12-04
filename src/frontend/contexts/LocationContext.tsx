@@ -3,10 +3,6 @@ import {AppState, AppStateStatus, PermissionStatus} from 'react-native';
 import * as Location from 'expo-location';
 import debug from 'debug';
 
-import {
-  ANDROID_PERMISSIONS,
-  usePermissions,
-} from '../hooks/store/permissionsStore';
 import {storage} from '../hooks/persistedState/createPersistedState';
 import {Position, Provider} from '../sharedTypes';
 import {useDraftObservation} from '../hooks/useDraftObservation';
@@ -19,8 +15,6 @@ export type LocationContextType = {
   position?: Position;
   // What location services / providers are available on this device
   provider?: Provider;
-  // Whether the user has granted permissions to use location to this app
-  permission?: PermissionStatus;
   // This is the previous known position from the last time the app was open
   savedPosition?: Position;
   // True if there is some kind of error getting the device location
@@ -77,7 +71,6 @@ export const useLocationContext = () => {
  * user has turned off location.
  */
 export const LocationProvider = ({children}: React.PropsWithChildren<{}>) => {
-  const permissions = usePermissions();
   const {updateObservationPosition} = useDraftObservation();
 
   const [error, setError] = React.useState(false);
@@ -93,8 +86,7 @@ export const LocationProvider = ({children}: React.PropsWithChildren<{}>) => {
   const timeoutId = React.useRef<ReturnType<typeof setTimeout>>();
   const subscription = React.useRef<Subscription>();
 
-  const fineLocationPermissionResult =
-    permissions[ANDROID_PERMISSIONS.ACCESS_FINE_LOCATION];
+  const fineLocationPermissionResult = useFineLocationPermissionStatus();
 
   const updateStatus = React.useCallback(async () => {
     try {
@@ -192,12 +184,11 @@ export const LocationProvider = ({children}: React.PropsWithChildren<{}>) => {
   const contextValue = React.useMemo(
     () => ({
       error,
-      permission: fineLocationPermissionResult,
       position,
       provider,
       savedPosition,
     }),
-    [error, fineLocationPermissionResult, position, provider],
+    [error, position, provider],
   );
 
   return (
@@ -206,3 +197,15 @@ export const LocationProvider = ({children}: React.PropsWithChildren<{}>) => {
     </LocationContext.Provider>
   );
 };
+
+function useFineLocationPermissionStatus(): Location.PermissionStatus {
+  const [response] = Location.useForegroundPermissions();
+
+  if (!response) return Location.PermissionStatus.DENIED;
+
+  const {status, android} = response;
+
+  if (android?.accuracy !== 'fine') return Location.PermissionStatus.DENIED;
+
+  return status;
+}

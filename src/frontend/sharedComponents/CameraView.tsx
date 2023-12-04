@@ -13,10 +13,6 @@ import {AddButton} from './AddButton';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import {Subscription} from 'expo-sensors/build/DeviceSensor';
 import {CapturedPictureMM} from '../contexts/PhotoPromiseContext/types';
-import {
-  ANDROID_PERMISSIONS,
-  usePermissions,
-} from '../hooks/store/permissionsStore';
 
 const m = defineMessages({
   noCameraAccess: {
@@ -45,9 +41,9 @@ type Props = {
 export const CameraView = ({onAddPress}: Props) => {
   const [capturing, setCapturing] = React.useState(false);
   const [cameraReady, setCameraReady] = React.useState(false);
-  const permissions = usePermissions();
   const ref = React.useRef<Camera>(null);
   const accelerometerMeasurement = React.useRef<AccelerometerMeasurement>();
+  const [permissionsResponse] = Camera.useCameraPermissions();
 
   React.useEffect(() => {
     let isCancelled = false;
@@ -99,12 +95,11 @@ export const CameraView = ({onAddPress}: Props) => {
   }, [capturing, setCapturing, onAddPress]);
 
   const disableButton = capturing || !cameraReady;
-  const cameraPermissions =
-    permissions[ANDROID_PERMISSIONS.CAMERA] === 'granted';
+  const permissionGranted = permissionsResponse?.status === 'granted';
 
   return (
     <View style={styles.container}>
-      {!cameraPermissions ? (
+      {!permissionGranted ? (
         <View style={styles.noPermissionContainer}>
           <Text style={{marginBottom: 10}}>
             <FormattedMessage {...m.noCameraAccess} />

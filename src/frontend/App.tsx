@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {PermissionsAndroid} from 'react-native';
 import {
   NavigationContainer,
   useNavigationContainerRef,
@@ -9,7 +10,6 @@ import {
 // See https://github.com/gorhom/react-native-bottom-sheet/issues/1157
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {createMapeoClient} from '@mapeo/ipc';
-import BootSplash from 'react-native-bootsplash';
 
 import {AppNavigator} from './Navigation/AppNavigator';
 import {AppStackList} from './Navigation/AppStack';
@@ -25,10 +25,6 @@ import {MessagePortLike} from './lib/MessagePortLike';
 import {ServerLoading} from './ServerLoading';
 import {ActiveProjectProvider} from './contexts/ProjectContext';
 import {initializeNodejs} from './initializeNodejs';
-import {
-  ANDROID_PERMISSIONS,
-  usePermissionsActions,
-} from './hooks/store/permissionsStore';
 
 const queryClient = new QueryClient();
 const messagePort = new MessagePortLike();
@@ -40,9 +36,7 @@ const App = () => {
 
   const permissionsAnswered = useRequestAppPermissions();
 
-  if (!permissionsAnswered) {
-    return null;
-  }
+  if (!permissionsAnswered) return null;
 
   return (
     <IntlProvider>
@@ -80,17 +74,16 @@ export default App;
 // (splash screen hides automatically if children are allowed to render while permission dialog is active)
 function useRequestAppPermissions() {
   const [permissionsAnswered, setPermissionsAnswered] = React.useState(false);
-  const {requestPermissions} = usePermissionsActions();
 
   React.useEffect(() => {
-    requestPermissions([
-      ANDROID_PERMISSIONS.ACCESS_FINE_LOCATION,
-      ANDROID_PERMISSIONS.ACCESS_COARSE_LOCATION,
-      ANDROID_PERMISSIONS.CAMERA,
+    PermissionsAndroid.requestMultiple([
+      'android.permission.CAMERA',
+      'android.permission.ACCESS_FINE_LOCATION',
+      'android.permission.ACCESS_COARSE_LOCATION',
     ]).then(() => {
       setPermissionsAnswered(true);
     });
-  }, [requestPermissions]);
+  }, []);
 
   return permissionsAnswered;
 }

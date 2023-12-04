@@ -20,14 +20,14 @@ interface LocationOptions {
   maxTimeInterval?: number;
 }
 
-const MAX_RULER_LAT_DISPLACEMENT = 1;
-
 // Timeout between location updates --> means location was probably turned off
 // so we need to check it.
 const LOCATION_TIMEOUT = 10000;
 
-export function useLocation(options: LocationOptions) {
-  const {minTimeInterval: timeInterval = 200, ...debounceOptions} = options;
+export function useLocation({
+  minDistanceInterval: distanceInterval = 1,
+  ...debounceOptions
+}: LocationOptions) {
   const [location, setLocation] = React.useState<LocationObject | undefined>();
 
   const [permissions] = useForegroundPermissions();
@@ -38,10 +38,11 @@ export function useLocation(options: LocationOptions) {
 
       let ignore = false;
       const LocationSubscriptionProm = watchPositionAsync(
-        {accuracy: Accuracy.BestForNavigation},
-        debounceLocation({
-          ...debounceOptions,
-        })(location => {
+        {
+          accuracy: Accuracy.BestForNavigation,
+          distanceInterval,
+        },
+        debounceLocation(debounceOptions)(location => {
           if (ignore) return;
           setLocation(location);
         }),
@@ -51,7 +52,7 @@ export function useLocation(options: LocationOptions) {
         ignore = true;
         LocationSubscriptionProm.then(sub => sub.remove());
       };
-    }, [permissions]),
+    }, [permissions, debounceOptions]),
   );
 
   return {location, latLon: location ? getCoords(location) : undefined};
@@ -59,13 +60,12 @@ export function useLocation(options: LocationOptions) {
 
 function debounceLocation({
   maxDistanceInterval,
-  minDistanceInterval = 1,
   maxTimeInterval = 1000,
-}: Omit<LocationOptions, 'minTimeInterval'>) {
+  minTimeInterval = 200,
+}: Omit<LocationOptions, 'minDistanceInterval'>) {
   let lastLocation: LocationObject | undefined;
-  let ruler: any;
-  let rulerLat = 0;
-  let timeout: ReturnType<typeof setTimeout>;
+  let interval: ReturnType<typeof setInterval>;
+
   return function (callback: (location: LocationObject | undefined) => any) {
     return function (location: LocationObject) {
       // The user can turn off location services via the quick settings dropdown
@@ -74,32 +74,31 @@ function debounceLocation({
       // won't know why. If we haven't had a location update for a while, we check
       // on the provider status to see if location services are enabled, so that
       // we can update the state with the current status
-      if (timeout) clearTimeout(timeout);
-      timeout = setTimeout(async () => {
+      if (interval) clearInterval(interval);
+      interval = setInterval(async () => {
         if (!(await hasServicesEnabledAsync())) {
           lastLocation = undefined;
           callback(undefined);
+          clearInterval(interval);
           return;
         }
       }, LOCATION_TIMEOUT);
+
       if (!lastLocation) {
         lastLocation = location;
         callback(location);
         return;
       }
+      const timeElapsed = location.timestamp - lastLocation.timestamp;
+
+      // expo's Location.watchPositionAsync has a `timeInterval` property that does this BUT it is not compatible with iOS, that is why we are manually calculating it here
+      if (timeElapsed < minTimeInterval) return;
+
       const coords = getCoords(location);
       const lastCoords = getCoords(lastLocation);
-      const rulerLatDisplacement = Math.abs(rulerLat - coords[1]);
-      if (!ruler || rulerLatDisplacement > MAX_RULER_LAT_DISPLACEMENT) {
-        rulerLat = coords[1];
-        ruler = new CheapRuler(rulerLat, 'meters');
-      }
+      const ruler = new CheapRuler(lastCoords[1], 'meters');
       const distance = ruler.distance(coords, lastCoords);
-      const time = location.timestamp - lastLocation.timestamp;
-      if (
-        distance > maxDistanceInterval ||
-        (time > maxTimeInterval && distance > minDistanceInterval)
-      ) {
+      if (distance > maxDistanceInterval || timeElapsed > maxTimeInterval) {
         lastLocation = location;
         callback(location);
       }
@@ -107,7 +106,7 @@ function debounceLocation({
   };
 }
 
-function getCoords(location: LocationObject) {
+function getCoords(location: LocationObject): [number, number] {
   const {longitude, latitude} = location.coords;
   return [longitude, latitude];
 }

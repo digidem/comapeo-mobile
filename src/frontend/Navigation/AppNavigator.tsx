@@ -41,7 +41,7 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   return (
     <React.Suspense fallback={<Loading />}>
       <RootStack.Navigator
-        initialRouteName="Home"
+        initialRouteName="IntroToCoMapeo"
         screenOptions={NavigatorScreenOptions}>
         {createDefaultScreenGroup(formatMessage)}
       </RootStack.Navigator>

@@ -2,8 +2,8 @@ import MapboxGL from '@rnmapbox/maps';
 import React from 'react';
 import {View, Text, StyleSheet, Dimensions, Image} from 'react-native';
 import {convertToUTM} from '../../lib/utils';
-import {MAP_STYLE} from '../MapScreen/MapViewMemoized';
 import {BLACK, WHITE} from '../../lib/styles';
+import {MAP_STYLE} from '../MapScreen';
 
 const MAP_HEIGHT = 175;
 const ICON_OFFSET = {x: 22, y: 21};

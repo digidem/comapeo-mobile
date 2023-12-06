@@ -2,7 +2,6 @@
 import {fromLatLon} from 'utm';
 import {SelectOptions, LabeledSelectOption} from '../sharedTypes/PresetTypes';
 
-// import type { LocationContextType } from "../context/LocationContext";
 // import type {
 //   ObservationValue,
 //   ObservationAttachment,
@@ -55,7 +54,7 @@ export type LocationStatus = 'searching' | 'improving' | 'good' | 'error';
 //   provider,
 //   permission,
 //   error,
-// }: LocationContextType): LocationStatus {
+// }: Type): LocationStatus {
 //   const precision = position && position.coords.accuracy;
 //   const gpsUnavailable = provider && !provider.gpsAvailable;
 //   const locationServicesDisabled =

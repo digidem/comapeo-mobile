@@ -18,7 +18,6 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {ApiProvider} from './contexts/ApiContext';
 import {PhotoPromiseProvider} from './contexts/PhotoPromiseContext';
 import {SecurityProvider} from './contexts/SecurityContext';
-import {LocationProvider} from './contexts/LocationContext';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {ObservationProvider} from './contexts/ObservationsContext';
 import {MessagePortLike} from './lib/MessagePortLike';
@@ -49,11 +48,9 @@ const App = () => {
                   <ObservationProvider>
                     <NavigationContainer ref={navRef}>
                       <PhotoPromiseProvider>
-                        <LocationProvider>
-                          <SecurityProvider>
-                            <AppNavigator />
-                          </SecurityProvider>
-                        </LocationProvider>
+                        <SecurityProvider>
+                          <AppNavigator />
+                        </SecurityProvider>
                       </PhotoPromiseProvider>
                     </NavigationContainer>
                   </ObservationProvider>

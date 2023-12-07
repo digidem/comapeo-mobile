@@ -18,13 +18,16 @@ export class ServerStatus {
   #state = 'STARTING'
 
   constructor() {
-    rnBridge.channel.on('get-server-status', () => {
+    rnBridge.channel.on('get-server-status', async () => {
       log('status request -> ' + this.state)
-      rnBridge.channel.post(
-        'server:status',
-        /** @type {StatusMessage} */
-        { value: this.state },
-      )
+      this.#postState()
+    })
+    // Sometimes rnBridge.channel.post doesn't work if the app is in the
+    // background, so when we resume we re-send the state to the front-end. This
+    // fixes a bug with hot reloading in React Native where the server state
+    // would not be sent after fast refresh.
+    rnBridge.app.on('resume', () => {
+      this.#postState()
     })
   }
 
@@ -63,6 +66,15 @@ export class ServerStatus {
         error: error && error.message,
         context,
       },
+    )
+  }
+
+  #postState() {
+    log('posting state --> ' + this.state)
+    rnBridge.channel.post(
+      'server:status',
+      /** @type {StatusMessage} */
+      { value: this.state },
     )
   }
 }

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {PermissionsAndroid} from 'react-native';
 import {
   NavigationContainer,
   useNavigationContainerRef,
@@ -33,10 +32,6 @@ initializeNodejs();
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();
 
-  const permissionsAnswered = useRequestAppPermissions();
-
-  if (!permissionsAnswered) return null;
-
   return (
     <IntlProvider>
       <QueryClientProvider client={queryClient}>
@@ -65,22 +60,3 @@ const App = () => {
 };
 
 export default App;
-
-// Ideally just inline the effect into the App component but we need to conditionally render the app
-// because of a potential limitation/bug with the splash screen library
-// (splash screen hides automatically if children are allowed to render while permission dialog is active)
-function useRequestAppPermissions() {
-  const [permissionsAnswered, setPermissionsAnswered] = React.useState(false);
-
-  React.useEffect(() => {
-    PermissionsAndroid.requestMultiple([
-      'android.permission.CAMERA',
-      'android.permission.ACCESS_FINE_LOCATION',
-      'android.permission.ACCESS_COARSE_LOCATION',
-    ]).then(() => {
-      setPermissionsAnswered(true);
-    });
-  }, []);
-
-  return permissionsAnswered;
-}

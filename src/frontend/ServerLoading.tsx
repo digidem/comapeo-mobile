@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {SafeAreaView, Text} from 'react-native';
+import {PermissionsAndroid, SafeAreaView, Text} from 'react-native';
 import nodejs from 'nodejs-mobile-react-native';
 import BootSplash from 'react-native-bootsplash';
 
@@ -14,24 +14,31 @@ export const ServerLoading = ({
     value: 'STARTING',
   });
 
+  const permissionsAnswered = useRequestPermissions();
+
   React.useEffect(() => {
     const subscription = nodejs.channel.addListener('server:status', msg => {
       if (msg.value === 'STARTED') {
         messagePort.start();
       }
 
-      if (msg.value === 'STARTED' || msg.value === 'ERROR') {
+      if (
+        permissionsAnswered &&
+        (msg.value === 'STARTED' || msg.value === 'ERROR')
+      ) {
         BootSplash.hide({fade: true});
       }
 
       setServerStatus(msg);
     });
+
     // In case the server starts before us (we miss the original
     // `server-started` event), prompt the server to re-send.
     nodejs.channel.post('get-server-status');
+
     // @ts-ignore - incorrect types on nodejs.channel
     return () => subscription.remove();
-  }, [setServerStatus]);
+  }, [setServerStatus, permissionsAnswered]);
 
   // Don't render any children while the backend is starting - this avoids
   // timeouts from API methods if server startup takes more than 5 seconds - all
@@ -51,3 +58,19 @@ export const ServerLoading = ({
 
   return <>{children}</>;
 };
+
+function useRequestPermissions() {
+  const [permissionsAnswered, setPermissionsAnswered] = React.useState(false);
+
+  React.useEffect(() => {
+    PermissionsAndroid.requestMultiple([
+      'android.permission.CAMERA',
+      'android.permission.ACCESS_FINE_LOCATION',
+      'android.permission.ACCESS_COARSE_LOCATION',
+    ]).then(() => {
+      setPermissionsAnswered(true);
+    });
+  }, []);
+
+  return permissionsAnswered;
+}

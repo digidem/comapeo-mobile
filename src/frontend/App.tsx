@@ -25,6 +25,7 @@ import {ActiveProjectProvider} from './contexts/ProjectContext';
 import {initializeNodejs} from './initializeNodejs';
 import {PermissionsAndroid} from 'react-native';
 import {useForegroundPermissions} from 'expo-location';
+import {useIsLoadedActions} from './hooks/store/loadingSplashStore';
 
 const queryClient = new QueryClient();
 const messagePort = new MessagePortLike();
@@ -33,13 +34,16 @@ initializeNodejs();
 
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();
+  const setPermissionsLoaded = useIsLoadedActions();
 
   React.useEffect(() => {
     PermissionsAndroid.requestMultiple([
       'android.permission.CAMERA',
       'android.permission.ACCESS_FINE_LOCATION',
       'android.permission.ACCESS_COARSE_LOCATION',
-    ]).then(val => console.log('is being called'));
+    ]).then(val =>
+      setPermissionsLoaded({property: 'permissions', value: true}),
+    );
   }, []);
 
   return (

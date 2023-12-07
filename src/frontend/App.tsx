@@ -23,6 +23,8 @@ import {MessagePortLike} from './lib/MessagePortLike';
 import {ServerLoading} from './ServerLoading';
 import {ActiveProjectProvider} from './contexts/ProjectContext';
 import {initializeNodejs} from './initializeNodejs';
+import {PermissionsAndroid} from 'react-native';
+import {useForegroundPermissions} from 'expo-location';
 
 const queryClient = new QueryClient();
 const messagePort = new MessagePortLike();
@@ -31,6 +33,14 @@ initializeNodejs();
 
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();
+
+  React.useEffect(() => {
+    PermissionsAndroid.requestMultiple([
+      'android.permission.CAMERA',
+      'android.permission.ACCESS_FINE_LOCATION',
+      'android.permission.ACCESS_COARSE_LOCATION',
+    ]).then(val => console.log('is being called'));
+  }, []);
 
   return (
     <IntlProvider>

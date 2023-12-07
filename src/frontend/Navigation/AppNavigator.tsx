@@ -7,7 +7,9 @@ import {
 } from './AppStack';
 import {useIntl} from 'react-intl';
 // import {SecurityContext} from '../context/SecurityContext';
-import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
+
+import BootSplash from 'react-native-bootsplash';
+
 // import {devExperiments} from '../lib/DevExperiments';
 
 // React Navigation expects children of the Navigator to be a `Screen`, `Group`
@@ -28,7 +30,6 @@ import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 
 export const AppNavigator = () => {
   const {formatMessage} = useIntl();
-  const navigation = useNavigationFromRoot();
 
   return (
     <RootStack.Navigator

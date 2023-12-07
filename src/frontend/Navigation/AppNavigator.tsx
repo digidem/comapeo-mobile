@@ -9,6 +9,9 @@ import {useIntl} from 'react-intl';
 // import {SecurityContext} from '../context/SecurityContext';
 
 import BootSplash from 'react-native-bootsplash';
+import {useDeviceName} from '../hooks/server/deviceInfo';
+import {useEverythingLoaded} from '../hooks/store/loadingSplashStore';
+import {Loading} from '../sharedComponents/Loading';
 
 // import {devExperiments} from '../lib/DevExperiments';
 
@@ -30,12 +33,20 @@ import BootSplash from 'react-native-bootsplash';
 
 export const AppNavigator = () => {
   const {formatMessage} = useIntl();
+  const isLoaded = useEverythingLoaded();
+  const deviceName = useDeviceName();
+
+  if (isLoaded && !deviceName.isPending) {
+    BootSplash.hide();
+  }
 
   return (
-    <RootStack.Navigator
-      initialRouteName="Home"
-      screenOptions={NavigatorScreenOptions}>
-      {createDefaultScreenGroup(formatMessage)}
-    </RootStack.Navigator>
+    <React.Suspense fallback={<Loading />}>
+      <RootStack.Navigator
+        initialRouteName="Home"
+        screenOptions={NavigatorScreenOptions}>
+        {createDefaultScreenGroup(formatMessage)}
+      </RootStack.Navigator>
+    </React.Suspense>
   );
 };

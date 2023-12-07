@@ -18,13 +18,11 @@ import {ApiProvider} from './contexts/ApiContext';
 import {PhotoPromiseProvider} from './contexts/PhotoPromiseContext';
 import {SecurityProvider} from './contexts/SecurityContext';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import {ObservationProvider} from './contexts/ObservationsContext';
 import {MessagePortLike} from './lib/MessagePortLike';
 import {ServerLoading} from './ServerLoading';
 import {ActiveProjectProvider} from './contexts/ProjectContext';
 import {initializeNodejs} from './initializeNodejs';
 import {PermissionsAndroid} from 'react-native';
-import {useForegroundPermissions} from 'expo-location';
 import {useIsLoadedActions} from './hooks/store/loadingSplashStore';
 
 const queryClient = new QueryClient();
@@ -54,15 +52,13 @@ const App = () => {
             <ActiveProjectProvider>
               <GestureHandlerRootView style={{flex: 1}}>
                 <BottomSheetModalProvider>
-                  <ObservationProvider>
-                    <NavigationContainer ref={navRef}>
-                      <PhotoPromiseProvider>
-                        <SecurityProvider>
-                          <AppNavigator />
-                        </SecurityProvider>
-                      </PhotoPromiseProvider>
-                    </NavigationContainer>
-                  </ObservationProvider>
+                  <NavigationContainer ref={navRef}>
+                    <PhotoPromiseProvider>
+                      <SecurityProvider>
+                        <AppNavigator />
+                      </SecurityProvider>
+                    </PhotoPromiseProvider>
+                  </NavigationContainer>
                 </BottomSheetModalProvider>
               </GestureHandlerRootView>
             </ActiveProjectProvider>

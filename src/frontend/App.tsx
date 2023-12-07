@@ -1,29 +1,21 @@
 import * as React from 'react';
-import {
-  NavigationContainer,
-  useNavigationContainerRef,
-} from '@react-navigation/native';
-// We need to wrap the app with this provider to fix an issue with the bottom sheet modal backdrop
-// not overlaying the navigation header. Without this, the header is accessible even when
-// the modal is open, which we don't want (e.g. header back button shouldn't be reachable).
-// See https://github.com/gorhom/react-native-bottom-sheet/issues/1157
-import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import {useNavigationContainerRef} from '@react-navigation/native';
 import {createMapeoClient} from '@mapeo/ipc';
 
 import {AppNavigator} from './Navigation/AppNavigator';
 import {AppStackList} from './Navigation/AppStack';
 import {IntlProvider} from './contexts/IntlContext';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {ApiProvider} from './contexts/ApiContext';
 import {PhotoPromiseProvider} from './contexts/PhotoPromiseContext';
 import {SecurityProvider} from './contexts/SecurityContext';
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import {QueryClient} from '@tanstack/react-query';
 import {MessagePortLike} from './lib/MessagePortLike';
 import {ServerLoading} from './ServerLoading';
 import {ActiveProjectProvider} from './contexts/ProjectContext';
 import {initializeNodejs} from './initializeNodejs';
 import {PermissionsAndroid} from 'react-native';
 import {useIsLoadedActions} from './hooks/store/loadingSplashStore';
+import {ExternalProvider} from './contexts/ExternalProviders';
 
 const queryClient = new QueryClient();
 const messagePort = new MessagePortLike();
@@ -46,25 +38,19 @@ const App = () => {
 
   return (
     <IntlProvider>
-      <QueryClientProvider client={queryClient}>
+      <ExternalProvider queryClient={queryClient} navRef={navRef}>
         <ServerLoading messagePort={messagePort}>
           <ApiProvider api={mapeoApi}>
             <ActiveProjectProvider>
-              <GestureHandlerRootView style={{flex: 1}}>
-                <BottomSheetModalProvider>
-                  <NavigationContainer ref={navRef}>
-                    <PhotoPromiseProvider>
-                      <SecurityProvider>
-                        <AppNavigator />
-                      </SecurityProvider>
-                    </PhotoPromiseProvider>
-                  </NavigationContainer>
-                </BottomSheetModalProvider>
-              </GestureHandlerRootView>
+              <PhotoPromiseProvider>
+                <SecurityProvider>
+                  <AppNavigator />
+                </SecurityProvider>
+              </PhotoPromiseProvider>
             </ActiveProjectProvider>
           </ApiProvider>
         </ServerLoading>
-      </QueryClientProvider>
+      </ExternalProvider>
     </IntlProvider>
   );
 };

@@ -71,15 +71,6 @@ export const ActiveProjectProvider = ({
     };
   }, [activeProjectId, setActiveProjectId]);
 
-  const contextValue = React.useMemo(() => {
-    return {
-      project: activeProject,
-      switchProject(projectId: string) {
-        setActiveProjectId(projectId);
-      },
-    };
-  }, [activeProject, setActiveProjectId]);
-
   if (!activeProject) {
     return <Loading />;
   }

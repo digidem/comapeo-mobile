@@ -18,7 +18,7 @@ type ExternalProviderProp = {
   navRef: NavigationContainerRefWithCurrent<AppStackList>;
 };
 
-export const ExternalProvider = ({
+export const ExternalProviders = ({
   children,
   queryClient,
   navRef,

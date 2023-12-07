@@ -15,7 +15,7 @@ import {ActiveProjectProvider} from './contexts/ProjectContext';
 import {initializeNodejs} from './initializeNodejs';
 import {PermissionsAndroid} from 'react-native';
 import {useIsLoadedActions} from './hooks/store/loadingSplashStore';
-import {ExternalProvider} from './contexts/ExternalProviders';
+import {ExternalProviders} from './contexts/ExternalProviders';
 
 const queryClient = new QueryClient();
 const messagePort = new MessagePortLike();
@@ -38,7 +38,7 @@ const App = () => {
 
   return (
     <IntlProvider>
-      <ExternalProvider queryClient={queryClient} navRef={navRef}>
+      <ExternalProviders queryClient={queryClient} navRef={navRef}>
         <ServerLoading messagePort={messagePort}>
           <ApiProvider api={mapeoApi}>
             <ActiveProjectProvider>
@@ -50,7 +50,7 @@ const App = () => {
             </ActiveProjectProvider>
           </ApiProvider>
         </ServerLoading>
-      </ExternalProvider>
+      </ExternalProviders>
     </IntlProvider>
   );
 };

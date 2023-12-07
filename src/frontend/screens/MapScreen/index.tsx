@@ -13,7 +13,7 @@ import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 // @ts-ignore
 import ScaleBar from 'react-native-scale-bar';
-import {useLocation} from '../../hooks/useLocation';
+import {getCoords, useLocation} from '../../hooks/useLocation';
 import {getLastKnownPositionAsync} from 'expo-location';
 import {useIsFullyFocused} from '../../hooks/useIsFullyFocused';
 
@@ -37,7 +37,8 @@ export const MapScreen = () => {
   const [following, setFollowing] = React.useState(false);
   const {newDraft} = useDraftObservation();
   const {navigate} = useNavigationFromHomeTabs();
-  const {latLon: coords} = useLocation({maxDistanceInterval: MIN_DISPLACEMENT});
+  const {location} = useLocation({maxDistanceInterval: MIN_DISPLACEMENT});
+  const coords = location && getCoords(location);
 
   const handleAddPress = () => {
     newDraft();

@@ -20,6 +20,11 @@ interface LocationOptions {
   maxTimeInterval?: number;
 }
 
+interface LocationState {
+  location: LocationObject | undefined;
+  error: Error | undefined;
+}
+
 // Timeout between location updates --> means location was probably turned off
 // so we need to check it.
 const LOCATION_TIMEOUT = 10000;
@@ -27,8 +32,11 @@ const LOCATION_TIMEOUT = 10000;
 export function useLocation({
   minDistanceInterval: distanceInterval = 1,
   ...debounceOptions
-}: LocationOptions) {
-  const [location, setLocation] = React.useState<LocationObject | undefined>();
+}: LocationOptions): LocationState {
+  const [location, setLocation] = React.useState<LocationState>({
+    location: undefined,
+    error: undefined,
+  });
 
   const [permissions] = useForegroundPermissions();
 
@@ -37,25 +45,32 @@ export function useLocation({
       if (!permissions || !permissions.granted) return;
 
       let ignore = false;
-      const LocationSubscriptionProm = watchPositionAsync(
+      const locationSubscriptionProm = watchPositionAsync(
         {
           accuracy: Accuracy.BestForNavigation,
           distanceInterval,
         },
         debounceLocation(debounceOptions)(location => {
           if (ignore) return;
-          setLocation(location);
+          setLocation({location, error: undefined});
         }),
       );
 
+      locationSubscriptionProm.catch(error => {
+        if (ignore) return;
+        setLocation(({location}) => {
+          return {location, error};
+        });
+      });
+
       return () => {
         ignore = true;
-        LocationSubscriptionProm.then(sub => sub.remove());
+        locationSubscriptionProm.then(sub => sub.remove());
       };
     }, [permissions, debounceOptions]),
   );
 
-  return {location, latLon: location ? getCoords(location) : undefined};
+  return location;
 }
 
 function debounceLocation({
@@ -106,7 +121,12 @@ function debounceLocation({
   };
 }
 
-function getCoords(location: LocationObject): [number, number] {
+/**
+ * For a LocationObject, get the lon,lat tuple
+ *
+ * @returns [longitude, latitude]
+ */
+export function getCoords(location: LocationObject): [number, number] {
   const {longitude, latitude} = location.coords;
   return [longitude, latitude];
 }

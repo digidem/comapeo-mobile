@@ -44,8 +44,9 @@ process.on('exit', (code) => {
  * @param {Object} options
  * @param {string} [options.version] Device Version
  * @param {Buffer} options.rootKey
+ * @param {string} options.migrationsFolderPath
  */
-export async function init({ version, rootKey }) {
+export async function init({ version, rootKey, migrationsFolderPath }) {
   log('Starting app...')
   log(`Device version is ${version}`)
 
@@ -60,20 +61,22 @@ export async function init({ version, rootKey }) {
     rootKey,
     dbFolder: dbDir,
     coreStorage: indexDir,
+    clientMigrationsFolder: join(migrationsFolderPath, 'client'),
+    projectMigrationsFolder: join(migrationsFolderPath, 'project'),
   })
 
   // Don't await, methods that use the server will await this internally
-  manager.start()
+  manager.startMediaServer()
 
   rnBridge.app.on('pause', async (pauseLock) => {
     log('App went into background')
-    await manager.stop()
+    await manager.stopMediaServer()
     pauseLock.release()
   })
 
   rnBridge.app.on('resume', () => {
     log('App went into foreground')
-    manager.start()
+    manager.startMediaServer()
   })
 
   const messagePort = new MessagePortLike()

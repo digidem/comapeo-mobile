@@ -12,7 +12,7 @@ import {
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {AppStackList} from '../Navigation/AppStack';
 
-type ExternalProviderProp = {
+type ExternalProvidersProp = {
   children: React.ReactNode;
   queryClient: QueryClient;
   navRef: NavigationContainerRefWithCurrent<AppStackList>;
@@ -22,7 +22,7 @@ export const ExternalProviders = ({
   children,
   queryClient,
   navRef,
-}: ExternalProviderProp) => {
+}: ExternalProvidersProp) => {
   return (
     <QueryClientProvider client={queryClient}>
       <GestureHandlerRootView style={{flex: 1}}>

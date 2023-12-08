@@ -61,7 +61,7 @@ export function useLocation({
           if (!(await hasServicesEnabledAsync())) {
             lastLocation.current = undefined;
             setLocation({
-              location,
+              location: undefined,
               error: new Error('Location service is not enabled'),
             });
             clearInterval(interval.current);

@@ -9,7 +9,7 @@ import {useIntl} from 'react-intl';
 // import {SecurityContext} from '../context/SecurityContext';
 
 import BootSplash from 'react-native-bootsplash';
-import {useDeviceName} from '../hooks/server/deviceInfo';
+import {useDeviceInfo} from '../hooks/server/deviceInfo';
 import {Loading} from '../sharedComponents/Loading';
 import {createDeviceNamingScreens} from './ScreenGroups/DeviceNamingScreens';
 
@@ -33,7 +33,7 @@ import {createDeviceNamingScreens} from './ScreenGroups/DeviceNamingScreens';
 
 export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   const {formatMessage} = useIntl();
-  const deviceName = useDeviceName();
+  const deviceName = useDeviceInfo();
 
   if (permissionAsked && !deviceName.isPending) {
     BootSplash.hide();

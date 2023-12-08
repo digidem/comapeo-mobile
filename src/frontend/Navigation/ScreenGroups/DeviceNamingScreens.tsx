@@ -3,6 +3,7 @@ import {MessageDescriptor} from 'react-intl';
 import {RootStack} from '../AppStack';
 import {IntroToCoMapeo} from '../../screens/IntroToCoMapeo';
 import {DeviceNaming} from '../../screens/DeviceNaming';
+import {Success} from '../../screens/Success';
 
 export type DeviceNamingSceens = {
   IntroToCoMapeo: undefined;
@@ -22,6 +23,11 @@ export const createDeviceNamingScreens = (
     <RootStack.Screen
       name="DeviceNaming"
       component={DeviceNaming}
+      options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="Success"
+      component={Success}
       options={{headerShown: false}}
     />
   </RootStack.Group>

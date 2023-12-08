@@ -1,6 +1,7 @@
 export const BLACK = '#000000';
 export const WHITE = '#ffffff';
 export const COMAPEO_BLUE = '#0066FF';
+export const COMAPEO_DARK_BLUE = '#050F77';
 export const MEDIUM_BLUE = '#2752d1';
 export const DARK_BLUE = '#17317c';
 export const DARK_GREY = '#333333';

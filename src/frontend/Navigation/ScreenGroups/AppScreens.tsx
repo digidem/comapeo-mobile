@@ -23,7 +23,6 @@ import {ObservationsList} from '../../screens/ObservationsList';
 import {ObservationScreen} from '../../screens/Observation';
 import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
-import {IntroToCoMapeo} from '../../screens/IntroToCoMapeo';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -81,7 +80,6 @@ export type AppList = {
   EnterPassToTurnOff: undefined;
   AppSettings: undefined;
   ProjectSettings: undefined;
-  IntroToCoMapeo: undefined;
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
@@ -185,11 +183,6 @@ export const createDefaultScreenGroup = (
       name="ProjectSettings"
       component={ProjectSettings}
       options={{headerTitle: intl(ProjectSettings.navTitle)}}
-    />
-    <RootStack.Screen
-      name="IntroToCoMapeo"
-      component={IntroToCoMapeo}
-      options={{headerShown: false}}
     />
   </RootStack.Group>
 );

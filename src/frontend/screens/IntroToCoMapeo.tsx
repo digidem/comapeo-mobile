@@ -7,6 +7,8 @@ import {getVersion} from 'react-native-device-info';
 import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../sharedComponents/Text';
 import {Button} from '../sharedComponents/Button';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {DeviceNamingSceens} from '../Navigation/ScreenGroups/DeviceNamingScreens';
 
 const m = defineMessages({
   isNow: {
@@ -30,7 +32,9 @@ const m = defineMessages({
   },
 });
 
-export const IntroToCoMapeo = () => {
+export const IntroToCoMapeo = ({
+  navigation,
+}: NativeStackScreenProps<DeviceNamingSceens, 'IntroToCoMapeo'>) => {
   const {formatMessage} = useIntl();
   return (
     <View style={{backgroundColor: COMAPEO_DARK_BLUE}}>
@@ -57,7 +61,11 @@ export const IntroToCoMapeo = () => {
           <Text style={[styles.text, {fontSize: 20, marginBottom: 30}]}>
             {formatMessage(m.collaborate)}
           </Text>
-          <Button fullWidth onPress={() => {}}>
+          <Button
+            fullWidth
+            onPress={() => {
+              navigation.navigate('DeviceNaming');
+            }}>
             {formatMessage(m.getStarted)}
           </Button>
         </View>

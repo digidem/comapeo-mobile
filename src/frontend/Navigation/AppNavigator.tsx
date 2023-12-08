@@ -11,6 +11,7 @@ import {useIntl} from 'react-intl';
 import BootSplash from 'react-native-bootsplash';
 import {useDeviceName} from '../hooks/server/deviceInfo';
 import {Loading} from '../sharedComponents/Loading';
+import {createDeviceNamingScreens} from './ScreenGroups/DeviceNamingScreens';
 
 // import {devExperiments} from '../lib/DevExperiments';
 
@@ -38,12 +39,19 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
     BootSplash.hide();
   }
 
+  // the user should never actually see this because the splash screen is visible, so this is to appease typescript
+  if (deviceName.isLoading) {
+    return <Loading />;
+  }
+
   return (
     <React.Suspense fallback={<Loading />}>
       <RootStack.Navigator
         initialRouteName="IntroToCoMapeo"
         screenOptions={NavigatorScreenOptions}>
-        {createDefaultScreenGroup(formatMessage)}
+        {deviceName.data && deviceName.data.name
+          ? createDefaultScreenGroup(formatMessage)
+          : createDeviceNamingScreens(formatMessage)}
       </RootStack.Navigator>
     </React.Suspense>
   );

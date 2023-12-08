@@ -141,6 +141,15 @@
     "description": "Title for category chooser screen",
     "message": "Choose what is happening"
   },
+  "screens.DeviceNaming.Success.description": {
+    "message": "You named your device"
+  },
+  "screens.DeviceNaming.Success.goToMap": {
+    "message": "Go to Map"
+  },
+  "screens.DeviceNaming.Success.success": {
+    "message": "Success!"
+  },
   "screens.DeviceNaming.addName": {
     "message": "Add Name"
   },

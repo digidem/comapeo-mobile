@@ -7,7 +7,7 @@ import {
   type LocationObject,
   Accuracy,
 } from 'expo-location';
-import React from 'react';
+import React, {useEffect} from 'react';
 
 interface LocationOptions {
   /** Only update location if it has changed by at least this distance in meters (or maxTimeInterval has passed) */
@@ -38,7 +38,67 @@ export function useLocation({
     error: undefined,
   });
 
+  const interval = React.useRef<ReturnType<typeof setInterval>>();
+  const lastLocation = React.useRef<LocationObject>();
+
   const [permissions] = useForegroundPermissions();
+
+  const debounceLocation = React.useCallback(
+    ({
+      maxDistanceInterval,
+      maxTimeInterval = 1000,
+      minTimeInterval = 200,
+    }: Omit<LocationOptions, 'minDistanceInterval'>) => {
+      return function (location: LocationObject) {
+        // The user can turn off location services via the quick settings dropdown
+        // (swiping down from the top of their phone screen) without moving away
+        // from the app. In this case the location will just stop updating and we
+        // won't know why. If we haven't had a location update for a while, we check
+        // on the provider status to see if location services are enabled, so that
+        // we can update the state with the current status
+        if (interval.current) clearInterval(interval.current);
+        interval.current = setInterval(async () => {
+          if (!(await hasServicesEnabledAsync())) {
+            lastLocation.current = undefined;
+            setLocation({
+              location,
+              error: new Error('Location service is not enabled'),
+            });
+            clearInterval(interval.current);
+            return;
+          }
+        }, LOCATION_TIMEOUT);
+
+        if (!lastLocation.current) {
+          lastLocation.current = location;
+          setLocation({location, error: undefined});
+          return;
+        }
+        const timeElapsed = location.timestamp - lastLocation.current.timestamp;
+
+        // expo's Location.watchPositionAsync has a `timeInterval` property that does this BUT it is not compatible with iOS, that is why we are manually calculating it here
+        if (timeElapsed < minTimeInterval) return;
+
+        const coords = getCoords(location);
+        const lastCoords = getCoords(lastLocation.current);
+        const ruler = new CheapRuler(lastCoords[1], 'meters');
+        const distance = ruler.distance(coords, lastCoords);
+        if (distance > maxDistanceInterval || timeElapsed > maxTimeInterval) {
+          lastLocation.current = location;
+          setLocation({location, error: undefined});
+        }
+      };
+    },
+    [setLocation],
+  );
+
+  useEffect(() => {
+    return () => {
+      if (interval.current) {
+        clearInterval(interval.current);
+      }
+    };
+  }, []);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -50,10 +110,7 @@ export function useLocation({
           accuracy: Accuracy.BestForNavigation,
           distanceInterval,
         },
-        debounceLocation(debounceOptions)(location => {
-          if (ignore) return;
-          setLocation({location, error: undefined});
-        }),
+        debounceLocation(debounceOptions),
       );
 
       locationSubscriptionProm.catch(error => {
@@ -71,54 +128,6 @@ export function useLocation({
   );
 
   return location;
-}
-
-function debounceLocation({
-  maxDistanceInterval,
-  maxTimeInterval = 1000,
-  minTimeInterval = 200,
-}: Omit<LocationOptions, 'minDistanceInterval'>) {
-  let lastLocation: LocationObject | undefined;
-  let interval: ReturnType<typeof setInterval>;
-
-  return function (callback: (location: LocationObject | undefined) => any) {
-    return function (location: LocationObject) {
-      // The user can turn off location services via the quick settings dropdown
-      // (swiping down from the top of their phone screen) without moving away
-      // from the app. In this case the location will just stop updating and we
-      // won't know why. If we haven't had a location update for a while, we check
-      // on the provider status to see if location services are enabled, so that
-      // we can update the state with the current status
-      if (interval) clearInterval(interval);
-      interval = setInterval(async () => {
-        if (!(await hasServicesEnabledAsync())) {
-          lastLocation = undefined;
-          callback(undefined);
-          clearInterval(interval);
-          return;
-        }
-      }, LOCATION_TIMEOUT);
-
-      if (!lastLocation) {
-        lastLocation = location;
-        callback(location);
-        return;
-      }
-      const timeElapsed = location.timestamp - lastLocation.timestamp;
-
-      // expo's Location.watchPositionAsync has a `timeInterval` property that does this BUT it is not compatible with iOS, that is why we are manually calculating it here
-      if (timeElapsed < minTimeInterval) return;
-
-      const coords = getCoords(location);
-      const lastCoords = getCoords(lastLocation);
-      const ruler = new CheapRuler(lastCoords[1], 'meters');
-      const distance = ruler.distance(coords, lastCoords);
-      if (distance > maxDistanceInterval || timeElapsed > maxTimeInterval) {
-        lastLocation = location;
-        callback(location);
-      }
-    };
-  };
 }
 
 /**

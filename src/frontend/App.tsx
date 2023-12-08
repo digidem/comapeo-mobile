@@ -14,7 +14,6 @@ import {ServerLoading} from './ServerLoading';
 import {ActiveProjectProvider} from './contexts/ProjectContext';
 import {initializeNodejs} from './initializeNodejs';
 import {PermissionsAndroid} from 'react-native';
-import {useIsLoadedActions} from './hooks/store/loadingSplashStore';
 import {ExternalProviders} from './contexts/ExternalProviders';
 
 const queryClient = new QueryClient();
@@ -24,16 +23,13 @@ initializeNodejs();
 
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();
-  const setPermissionsLoaded = useIsLoadedActions();
-
+  const [permissionsAsked, setPermissionsAsked] = React.useState(false);
   React.useEffect(() => {
     PermissionsAndroid.requestMultiple([
       'android.permission.CAMERA',
       'android.permission.ACCESS_FINE_LOCATION',
       'android.permission.ACCESS_COARSE_LOCATION',
-    ]).then(val =>
-      setPermissionsLoaded({property: 'permissions', value: true}),
-    );
+    ]).then(val => setPermissionsAsked(true));
   }, []);
 
   return (
@@ -44,7 +40,7 @@ const App = () => {
             <ActiveProjectProvider>
               <PhotoPromiseProvider>
                 <SecurityProvider>
-                  <AppNavigator />
+                  <AppNavigator permissionAsked={permissionsAsked} />
                 </SecurityProvider>
               </PhotoPromiseProvider>
             </ActiveProjectProvider>

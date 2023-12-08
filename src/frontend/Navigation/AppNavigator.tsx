@@ -10,7 +10,6 @@ import {useIntl} from 'react-intl';
 
 import BootSplash from 'react-native-bootsplash';
 import {useDeviceName} from '../hooks/server/deviceInfo';
-import {useEverythingLoaded} from '../hooks/store/loadingSplashStore';
 import {Loading} from '../sharedComponents/Loading';
 
 // import {devExperiments} from '../lib/DevExperiments';
@@ -31,12 +30,11 @@ import {Loading} from '../sharedComponents/Loading';
 // Note that screen groups should have a `key` prop, so that React knows how to
 // update them efficiently.
 
-export const AppNavigator = () => {
+export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   const {formatMessage} = useIntl();
-  const isLoaded = useEverythingLoaded();
   const deviceName = useDeviceName();
 
-  if (isLoaded && !deviceName.isPending) {
+  if (permissionAsked && !deviceName.isPending) {
     BootSplash.hide();
   }
 

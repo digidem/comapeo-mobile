@@ -110,7 +110,10 @@ export function useLocation({
           accuracy: Accuracy.BestForNavigation,
           distanceInterval,
         },
-        debounceLocation(debounceOptions),
+        location => {
+          if (ignore) return;
+          debounceLocation(debounceOptions)(location);
+        },
       );
 
       locationSubscriptionProm.catch(error => {

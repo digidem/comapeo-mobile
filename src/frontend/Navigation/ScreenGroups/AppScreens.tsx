@@ -23,6 +23,9 @@ import {ObservationsList} from '../../screens/ObservationsList';
 import {ObservationScreen} from '../../screens/Observation';
 import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
+import {NoWifi} from '../../screens/Sync/NoWifi';
+import {COMAPEO_BLUE, WHITE} from '../../lib/styles';
+import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -80,6 +83,7 @@ export type AppList = {
   EnterPassToTurnOff: undefined;
   AppSettings: undefined;
   ProjectSettings: undefined;
+  NoWifi: undefined;
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
@@ -183,6 +187,18 @@ export const createDefaultScreenGroup = (
       name="ProjectSettings"
       component={ProjectSettings}
       options={{headerTitle: intl(ProjectSettings.navTitle)}}
+    />
+    <RootStack.Screen
+      name="NoWifi"
+      component={NoWifi}
+      options={{
+        headerTitle: intl(NoWifi.navTitle),
+        headerStyle: {backgroundColor: COMAPEO_BLUE},
+        headerTintColor: WHITE,
+        headerLeft: props => (
+          <CustomHeaderLeft headerBackButtonProps={props} tintColor={WHITE} />
+        ),
+      }}
     />
   </RootStack.Group>
 );

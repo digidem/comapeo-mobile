@@ -2,12 +2,13 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {IconButton} from './IconButton';
-import {ObservationListIcon} from './icons';
+import {ObservationListIcon, SyncIconCircle} from './icons';
 import {useNavigationFromHomeTabs} from '../hooks/useNavigationWithTypes';
-import {Text} from './Text';
+import useWifiStatus from '../hooks/useWifiStatus';
 
 export const HomeHeader = () => {
   const navigation = useNavigationFromHomeTabs();
+  const wifiName = useWifiStatus();
 
   return (
     <View style={[styles.header]}>
@@ -15,8 +16,14 @@ export const HomeHeader = () => {
         style={styles.linearGradient}
         colors={['#0006', '#0000']}
       />
-      {/* Stand in for styling,  */}
-      <Text>""</Text>
+      <IconButton
+        style={styles.leftButton}
+        onPress={() => {
+          navigation.navigate('NoWifi');
+          //navigation.navigate(wifiName?"SyncModal":"NoWifi");
+        }}>
+        <SyncIconCircle />
+      </IconButton>
       <IconButton
         style={styles.rightButton}
         onPress={() => {

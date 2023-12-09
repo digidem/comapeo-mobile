@@ -361,6 +361,22 @@
     "description": "Title of settings screen",
     "message": "Settings"
   },
+  "screens.SyncModal.SyncView.noWifiDesc": {
+    "description": "Description shown when no wifi network",
+    "message": "Open your phone settings and connect to a WiFi network to synchronize"
+  },
+  "screens.SyncModal.SyncView.noWifiTitle": {
+    "description": "Title of message shown when no wifi network",
+    "message": "No WiFi"
+  },
+  "screens.SyncModal.SyncView.settingsButton": {
+    "description": "Button to open WiFi settings",
+    "message": "Open Settings"
+  },
+  "screens.SyncModal.SyncView.syncHeader": {
+    "description": "Header of sync screen",
+    "message": "Synchronize"
+  },
   "sharedComponents.WifiBar.noWifi": {
     "message": "No Internet"
   },

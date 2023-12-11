@@ -4,11 +4,11 @@ import LinearGradient from 'react-native-linear-gradient';
 import {IconButton} from './IconButton';
 import {ObservationListIcon, SyncIconCircle} from './icons';
 import {useNavigationFromHomeTabs} from '../hooks/useNavigationWithTypes';
-import useWifiStatus from '../hooks/useWifiStatus';
+import {useWifiName} from '../hooks/useWifiStatus';
 
 export const HomeHeader = () => {
   const navigation = useNavigationFromHomeTabs();
-  const wifiName = useWifiStatus();
+  const ssid = useWifiName();
 
   return (
     <View style={[styles.header]}>
@@ -19,8 +19,7 @@ export const HomeHeader = () => {
       <IconButton
         style={styles.leftButton}
         onPress={() => {
-          navigation.navigate('NoWifi');
-          //navigation.navigate(wifiName?"SyncModal":"NoWifi");
+          navigation.navigate(ssid ? 'Sync' : 'NoWifi');
         }}>
         <SyncIconCircle />
       </IconButton>

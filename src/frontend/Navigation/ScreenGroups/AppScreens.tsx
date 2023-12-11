@@ -26,6 +26,7 @@ import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
 import {NoWifi} from '../../screens/Sync/NoWifi';
 import {COMAPEO_BLUE, WHITE} from '../../lib/styles';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
+import {Sync} from '../../screens/Sync';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -35,7 +36,7 @@ export type HomeTabsList = {
 export type AppList = {
   Home: NavigatorScreenParams<HomeTabsList>;
   GpsModal: undefined;
-  SyncModal: undefined;
+  Sync: undefined;
   Settings: undefined;
   ProjectConfig: undefined;
   AboutMapeo: undefined;
@@ -199,6 +200,11 @@ export const createDefaultScreenGroup = (
           <CustomHeaderLeft headerBackButtonProps={props} tintColor={WHITE} />
         ),
       }}
+    />
+    <RootStack.Screen
+      name="Sync"
+      component={Sync}
+      options={{headerTitleAlign: 'center'}}
     />
   </RootStack.Group>
 );

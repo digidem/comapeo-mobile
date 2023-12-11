@@ -2,7 +2,6 @@ import {useFocusEffect} from '@react-navigation/native';
 import CheapRuler from 'cheap-ruler';
 import {
   watchPositionAsync,
-  hasServicesEnabledAsync,
   useForegroundPermissions,
   type LocationObject,
   Accuracy,
@@ -56,6 +55,7 @@ export function useLocation({
         }),
       );
 
+      // Should not happen because we are checking permissions above, but just in case
       locationSubscriptionProm.catch(error => {
         if (ignore) return;
         setLocation(({location}) => {
@@ -79,26 +79,9 @@ function debounceLocation({
   minTimeInterval = 200,
 }: Omit<LocationOptions, 'minDistanceInterval'>) {
   let lastLocation: LocationObject | undefined;
-  let interval: ReturnType<typeof setInterval>;
 
   return function (callback: (location: LocationObject | undefined) => any) {
     return function (location: LocationObject) {
-      // The user can turn off location services via the quick settings dropdown
-      // (swiping down from the top of their phone screen) without moving away
-      // from the app. In this case the location will just stop updating and we
-      // won't know why. If we haven't had a location update for a while, we check
-      // on the provider status to see if location services are enabled, so that
-      // we can update the state with the current status
-      if (interval) clearInterval(interval);
-      interval = setInterval(async () => {
-        if (!(await hasServicesEnabledAsync())) {
-          lastLocation = undefined;
-          callback(undefined);
-          clearInterval(interval);
-          return;
-        }
-      }, LOCATION_TIMEOUT);
-
       if (!lastLocation) {
         lastLocation = location;
         callback(location);

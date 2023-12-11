@@ -38,7 +38,7 @@ export function useObservationAttachmentUrl(
     queryFn: async () => {
       if (!project) throw new Error('Project instance does not exist');
       return project.$blobs.getUrl({
-        driveId: attachment.driveId,
+        driveId: attachment.driveDiscoveryId,
         // @ts-expect-error
         type: attachment.type,
         variant,

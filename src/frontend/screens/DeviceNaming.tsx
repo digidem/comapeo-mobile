@@ -23,7 +23,7 @@ const m = defineMessages({
   description: {
     id: 'screens.DeviceNaming.description',
     defaultMessage:
-      "Guidance on how to choose a name and what it's for. You can edit this later",
+      'To create or join a new project you will have to name your device. In a future version of CoMapeo, you will be able to manage the projects you created by changing devices roles, deleting devices and much more.',
   },
   addName: {
     id: 'screens.DeviceNaming.addName',

@@ -154,7 +154,7 @@
     "message": "Add Name"
   },
   "screens.DeviceNaming.description": {
-    "message": "Guidance on how to choose a name and what it's for. You can edit this later"
+    "message": "To create or join a new project you will have to name your device. In a future version of CoMapeo, you will be able to manage the projects you created by changing devices roles, deleting devices and much more."
   },
   "screens.DeviceNaming.header": {
     "message": "Add a name for your device"

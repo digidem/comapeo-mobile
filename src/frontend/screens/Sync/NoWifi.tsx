@@ -1,9 +1,11 @@
+import * as React from 'react';
 import {View, StyleSheet, Linking} from 'react-native';
 import {WifiOffIcon} from '../../sharedComponents/icons';
 import {Text} from '../../sharedComponents/Text';
 import {Button} from '../../sharedComponents/Button';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeNavigationComponent} from '../../sharedTypes';
+import {useWifiName} from '../../hooks/useWifiStatus';
 
 const m = defineMessages({
   noWifiTitle: {
@@ -29,8 +31,13 @@ const m = defineMessages({
   },
 });
 
-export const NoWifi: NativeNavigationComponent<'NoWifi'> = () => {
+export const NoWifi: NativeNavigationComponent<'NoWifi'> = ({navigation}) => {
   const {formatMessage: t} = useIntl();
+  const ssid = useWifiName();
+
+  React.useLayoutEffect(() => {
+    if (ssid) navigation.navigate('Sync');
+  }, [ssid, navigation]);
 
   return (
     <View style={styles.noWifiBox}>
@@ -48,7 +55,8 @@ export const NoWifi: NativeNavigationComponent<'NoWifi'> = () => {
         </Text>
       </View>
       <View style={styles.settingsButton}>
-        <Button onPress={() => Linking.openSettings()}>
+        <Button
+          onPress={() => Linking.sendIntent('android.settings.WIFI_SETTINGS')}>
           {t(m.settingsButton)}
         </Button>
       </View>

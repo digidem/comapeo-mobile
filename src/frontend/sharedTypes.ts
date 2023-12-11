@@ -30,6 +30,10 @@ export type NativeNavigationScreenWithProps<
   navTitle: MessageDescriptor;
 };
 
+export type NativeNavigationComponentNoHeader<
+  ScreenName extends keyof AppStackList,
+> = React.FC<NativeRootNavigationProps<ScreenName>>;
+
 export type NativeHomeTabsNavigationProps<
   ScreenName extends keyof HomeTabsList,
 > = CompositeScreenProps<

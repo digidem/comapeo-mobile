@@ -14,8 +14,10 @@ import {useDraftObservation} from '../../hooks/useDraftObservation';
 // @ts-ignore
 import ScaleBar from 'react-native-scale-bar';
 import {getCoords, useLocation} from '../../hooks/useLocation';
-import {getLastKnownPositionAsync} from 'expo-location';
 import {useIsFullyFocused} from '../../hooks/useIsFullyFocused';
+import {useLastSavedLocation} from '../../hooks/useLastSavedLocation';
+import {getLastKnownPositionAsync} from 'expo-location';
+import {Loading} from '../../sharedComponents/Loading';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -29,36 +31,20 @@ export const MAP_STYLE = Mapbox.StyleURL.Outdoors;
 
 export const MapScreen = () => {
   const [zoom, setZoom] = React.useState(DEFAULT_ZOOM);
-  const [savedCoords, setSavedCoords] = React.useState<number[] | undefined>(
-    undefined,
-  );
+
   const isFocused = useIsFullyFocused();
   const [isFinishedLoading, setIsFinishedLoading] = React.useState(false);
   const [following, setFollowing] = React.useState(false);
   const {newDraft} = useDraftObservation();
   const {navigate} = useNavigationFromHomeTabs();
   const {location} = useLocation({maxDistanceInterval: MIN_DISPLACEMENT});
+  const savedLocation = useLastSavedLocation();
   const coords = location && getCoords(location);
 
   const handleAddPress = () => {
     newDraft();
     navigate('PresetChooser');
   };
-
-  // TO DO: create a hook that returns the saved location. setting the saved location after the render has begun defeats the purpose of having the savedlocation, as the saved location is used as a placeholder while the coordinates are being loaded. So we should use a suspenseQuery here, but we need to upgrade react-query before we do that which is out of scope of this PR.
-  // React.useEffect(() => {
-  //   getLastKnownPositionAsync()
-  //     .then(savedLocation => {
-
-  //       // if (savedLocation) {
-  //       //   setSavedCoords([
-  //       //     savedLocation.coords.latitude,
-  //       //     savedLocation.coords.longitude,
-  //       //   ]);
-  //       // }
-  //     })
-  //     .catch(err => console.error(err));
-  // }, []);
 
   React.useEffect(() => {
     Mapbox.setTelemetryEnabled(false);
@@ -72,6 +58,10 @@ export const MapScreen = () => {
   function handleDidFinishLoadingStyle() {
     setIsFinishedLoading(true);
     setFollowing(true);
+  }
+
+  if (savedLocation.isLoading) {
+    return <Loading />;
   }
 
   return (
@@ -94,7 +84,11 @@ export const MapScreen = () => {
         }}>
         <Mapbox.Camera
           defaultSettings={{
-            centerCoordinate: coords,
+            centerCoordinate: coords
+              ? coords
+              : savedLocation.data
+                ? getCoords(savedLocation.data)
+                : undefined,
             zoomLevel: zoom,
           }}
           centerCoordinate={following ? coords : undefined}

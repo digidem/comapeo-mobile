@@ -1,0 +1,339 @@
+{
+  "AppContainer.EditHeader.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Tiếp tục chỉnh sửa"
+  },
+  "AppContainer.EditHeader.discardChangesContent": {
+    "description": "Button on dialog to cancel observation edits",
+    "message": "Hủy bỏ thay đổi"
+  },
+  "AppContainer.EditHeader.discardChangesTitle": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Hủy bỏ thay đổi?"
+  },
+  "AppContainer.EditHeader.discardContent": {
+    "description": "Button on dialog to cancel a new observation",
+    "message": "Hủy bỏ, không lưu lại"
+  },
+  "AppContainer.EditHeader.discardTitle": {
+    "description": "Title of dialog that shows when cancelling a new observation",
+    "message": "Hủy bỏ quan sát?"
+  },
+  "Screens.Settings.AppSettings.language": {
+    "message": "Language"
+  },
+  "Screens.Settings.AppSettings.languageDesc": {
+    "message": "Display language for app"
+  },
+  "Screens.Settings.AppSettings.title": {
+    "message": "App Setttings"
+  },
+  "Screens.Settings.ProjectSettings.configuration": {
+    "message": "Configuration"
+  },
+  "Screens.Settings.ProjectSettings.deviceName": {
+    "message": "Tên thiết bị"
+  },
+  "Screens.Settings.ProjectSettings.title": {
+    "message": "Project Setttings"
+  },
+  "Screens.Settings.ProjectSettings.yourTeam": {
+    "message": "Your Team"
+  },
+  "screens.AddPhoto.cancel": {
+    "message": "Hủy"
+  },
+  "screens.AppPasscode": {
+    "message": "Mật khẩu Ứng dụng"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.cancel": {
+    "message": "Hủy"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
+    "description": "used to indicate to the user what the new passcode will be.",
+    "message": "Mật khẩu"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
+    "message": "Lưu mật khẩu ứng dụng"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.title": {
+    "message": "Mật khẩu ứng dụng không thể được phục hồi nếu bị mất hoặc bị quên! Hãy nhớ ghi lại mật khẩu của bạn ở một nơi an toàn trước khi lưu để dùng."
+  },
+  "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
+    "message": "Vui lòng nhập mật khẩu"
+  },
+  "screens.AppPasscode.EnterPassToTurnOff.titleEnter": {
+    "message": "Nhập mật khẩu"
+  },
+  "screens.AppPasscode.InputPasscodeScreen.cancel": {
+    "message": "Hủy"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleConfirm": {
+    "message": "Nhập lại mật khẩu"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleSet": {
+    "message": "Thiết lập mật khauar ứng dụng"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.button": {
+    "message": "Tiếp theo"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.initialPassError": {
+    "message": "Mật khẩu phải có 5 số"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.obscurePasscodeError": {
+    "message": "Không thể sử dụng làm mật khẩu"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordDoesNotMatch": {
+    "message": "Mật khẩu không khớp"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordError": {
+    "message": "Mật khẩu không đúng"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet": {
+    "message": "Mật khẩu này sẽ được yêu cầu để mở ứng dụng Mapeo"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
+    "message": "Set Passcode"
+  },
+  "screens.AppPasscode.NewPasscode.Splash.continue": {
+    "message": "Tiếp tục"
+  },
+  "screens.AppPasscode.NewPasscode.Splash.title": {
+    "message": "Mật khẩu Ứng dụng là gì?"
+  },
+  "screens.AppPasscode.PasscodeIntro.description": {
+    "message": "Mật khẩu ứng dụng cho phép bạn thêm một lớp bảo mật bổ sung bằng cách yêu cầu bạn nhập mật khẩu để mở ứng dụng Mapeo. Bạn có thể xác định mật khẩu gồm 5 chữ số của riêng mình bằng cách bật tính năng bên dưới."
+  },
+  "screens.AppPasscode.PasscodeIntro.warning": {
+    "message": "**Xin lưu ý rằng mật khẩu đã quên không thể khôi phục được!** Khi tính năng này được bật, nếu bạn quên hoặc mất mật khẩu, bạn sẽ không thể mở Mapeo và sẽ mất quyền truy cập vào mọi dữ liệu Mapeo chưa được đồng bộ hóa với những người tham gia dự án khác."
+  },
+  "screens.AppPasscode.TurnOffPasscode.cancel": {
+    "message": "Hủy"
+  },
+  "screens.AppPasscode.TurnOffPasscode.changePasscode": {
+    "message": "Đổi mật khẩu ứng dụng"
+  },
+  "screens.AppPasscode.TurnOffPasscode.currentlyUsing": {
+    "message": "Bạn đang sử dụng Mật khẩu ứng dụng. Xem bên dưới để ngừng sử dụng hoặc thay đổi mật khẩu của bạn."
+  },
+  "screens.AppPasscode.TurnOffPasscode.description": {
+    "message": "Mật khẩu ứng dụng bổ sung thêm một lớp bảo mật bằng cách yêu cầu bạn nhập mật khẩu để mở ứng dụng Mapeo."
+  },
+  "screens.AppPasscode.TurnOffPasscode.title": {
+    "message": "Mật khẩu Ứng dụng"
+  },
+  "screens.AppPasscode.TurnOffPasscode.turnOff": {
+    "message": "Tắt"
+  },
+  "screens.AppPasscode.TurnOffPasscode.turnOffConfirmation": {
+    "message": "Tắt mật khẩu ứng dụng?"
+  },
+  "screens.AppPasscode.TurnOffPasscode.usePasscode": {
+    "message": "Sử dụng mật khẩu ứng dụng"
+  },
+  "screens.CameraScreen.goToSettings": {
+    "message": "Go to Settings"
+  },
+  "screens.CameraScreen.noCameraAccess": {
+    "message": "No access to camera. Please Allow access in setting"
+  },
+  "screens.CategoryChooser.categoryTitle": {
+    "description": "Title for category chooser screen",
+    "message": "Chọn những gì đang diễn ra"
+  },
+  "screens.EnterPassword.enterPass": {
+    "message": "Nhập mật khẩu"
+  },
+  "screens.EnterPassword.wrongPass": {
+    "message": "Mật khẩu không đúng, vui lòng thử lại"
+  },
+  "screens.ObscurePasscode.description": {
+    "message": "Obscure Passcode is a security feature that allows you to open Mapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of Mapeo which allows you to create demonstration observations that are not saved to the Mapeo database."
+  },
+  "screens.ObscurePasscode.instructions": {
+    "message": "Enter the code above to hide your data in Mapeo"
+  },
+  "screens.ObscurePasscode.title": {
+    "message": "Obscure Passcode"
+  },
+  "screens.ObscurePasscode.toggleMessage": {
+    "message": "Use Obscure Passcode"
+  },
+  "screens.ObscurePasscode.whatIsObscure": {
+    "message": "What is Obscure Passcode?"
+  },
+  "screens.Observation.ObservationEdit.CategoryView.changePreset": {
+    "message": "Thay đổi"
+  },
+  "screens.Observation.ObservationEdit.CategoryView.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Quan sát"
+  },
+  "screens.Observation.ObservationView.delete": {
+    "description": "Button to delete an observation",
+    "message": "Xóa"
+  },
+  "screens.Observation.ObservationView.noAnswer": {
+    "description": "Placeholder text for fields on an observation which are not answered",
+    "message": "Không có câu trả lời"
+  },
+  "screens.Observation.ObservationView.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Quan sát"
+  },
+  "screens.Observation.cancel": {
+    "description": "Button to cancel delete of observation",
+    "message": "Hủy"
+  },
+  "screens.Observation.confirm": {
+    "description": "Button to confirm delete of observation",
+    "message": "Có, xóa"
+  },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "Xóa quan sát?"
+  },
+  "screens.Observation.title": {
+    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
+    "message": "Quan sát"
+  },
+  "screens.ObservationEdit.BottomSheet.addLabel": {
+    "description": "Label above keyboard that expands into bottom sheet of options to add (photo, details etc)",
+    "message": "Thêm vào…"
+  },
+  "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "Có điều gì đang diễn ra ở đây?"
+  },
+  "screens.ObservationEdit.ObservationEditView.photoButton": {
+    "description": "Button label for adding photo",
+    "message": "Thêm ảnh"
+  },
+  "screens.ObservationEdit.ObservationEditView.searching": {
+    "description": "Shown in new observation screen whilst looking for GPS",
+    "message": "Tìm kiếm…"
+  },
+  "screens.ObservationEdit.SaveButton.keepWaiting": {
+    "description": "Button to cancel save and continue waiting for GPS",
+    "message": "Tiếp tục chờ"
+  },
+  "screens.ObservationEdit.SaveButton.manualEntry": {
+    "description": "Button to manually enter GPS coordinates",
+    "message": "Tọa độ thủ công"
+  },
+  "screens.ObservationEdit.SaveButton.noGpsDesc": {
+    "description": "Description in dialog when trying to save with no GPS coords",
+    "message": "Quan sát này không có vị trí. Bạn có thể tiếp tục chờ tín hiệu GPS, lưu quan sát mà không có vị trí, hoặc nhập tọa độ thủ công"
+  },
+  "screens.ObservationEdit.SaveButton.noGpsTitle": {
+    "description": "Title of dialog when trying to save with no GPS coords",
+    "message": "Không có tín hiệu GPS"
+  },
+  "screens.ObservationEdit.SaveButton.saveAnyway": {
+    "description": "Button to save regardless of GPS state",
+    "message": "Lưu"
+  },
+  "screens.ObservationEdit.SaveButton.weakGpsDesc": {
+    "description": "Description in dialog when trying to save with low GPS accuracy.",
+    "message": "Độ chính xác của GPS thấp. Bạn có thể tiếp tục đợi để có độ chính xác cao hơn, lưu quan sát với độ chính xác thấp, hoặc nhập tọa độ thủ công"
+  },
+  "screens.ObservationEdit.SaveButton.weakGpsTitle": {
+    "description": "Title of dialog when trying to save with low GPS accuracy.",
+    "message": "Tín hiệu GPS yếu"
+  },
+  "screens.ObservationEdit.editTitle": {
+    "description": "screen title for edit observation screen",
+    "message": "Chỉnh sửa quan sát"
+  },
+  "screens.ObservationEdit.newTitle": {
+    "description": "screen title for new observation screen",
+    "message": "Quan sát mới"
+  },
+  "screens.ObservationList.observationListTitle": {
+    "description": "Title of screen with list of observations",
+    "message": "Các quan sát"
+  },
+  "screens.ObservationsList.ObservationsEmptyView.backButton": {
+    "description": "Back button on observation list screen when no observations are yet recorded",
+    "message": "Đến Bản đồ"
+  },
+  "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
+    "description": "Description of observation list view when the user has not yet recorded observations",
+    "message": "Bắt đầu từ chế độ xem bản đồ hoặc máy ảnh để ghi lại quan sát đầu tiên của bạn."
+  },
+  "screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
+    "description": "Title of observation list view when the user has not yet recorded observations",
+    "message": "Thêm Quan sát"
+  },
+  "screens.ObservationsList.error": {
+    "description": "message shown when there is an unexpected error when loading observations",
+    "message": "Lỗi tải các quan sát. Hãy thử rời bỏ và khởi động lại Mapeo."
+  },
+  "screens.ObservationsList.loading": {
+    "description": "message shown whilst observations are loading",
+    "message": "Đang tải... việc này có thể càn một chút thời gian sau khi đồng bộ hóa với thiết bị mới"
+  },
+  "screens.Security.obscurePassDescriptonPassNotSet": {
+    "message": "Để sử dụng, bật Mật khẩu ứng dụng"
+  },
+  "screens.Security.obscurePassDescriptonPassSet": {
+    "message": "Bảo vệ thiế bị của bạn khỏi bị tịch thu"
+  },
+  "screens.Security.obscurePasscodeHeader": {
+    "message": "Obscure Passcode"
+  },
+  "screens.Security.passDesriptionPassNotSet": {
+    "message": "Mật khẩu chưa được đặt"
+  },
+  "screens.Security.passDesriptionPassSet": {
+    "message": "Mật khẩu đã được đặt"
+  },
+  "screens.Security.passcodeHeader": {
+    "message": "Mật khẩu Ứng dụng"
+  },
+  "screens.Security.securitySubheader": {
+    "message": "Bảo mật thiết bị"
+  },
+  "screens.Security.title": {
+    "message": "Bảo mật"
+  },
+  "screens.Settings.aboutMapeo": {
+    "description": "Primary text for 'About Mapeo' link (version info)",
+    "message": "Giới thiệu về Mapeo"
+  },
+  "screens.Settings.aboutMapeoDesc": {
+    "description": "Description of the 'About Mapeo' page",
+    "message": "Phiên bản và số hiệu bản tạo"
+  },
+  "screens.Settings.appSettings": {
+    "message": "App Settings"
+  },
+  "screens.Settings.appSettingsDesc": {
+    "description": "list of avaialable app settings",
+    "message": "Language, Security, Coordinates"
+  },
+  "screens.Settings.createOrJoin": {
+    "message": "Create or Join Project"
+  },
+  "screens.Settings.createOrJoinDesc": {
+    "message": "Create a new project or join existing one"
+  },
+  "screens.Settings.projectSettings": {
+    "message": "Project Settings"
+  },
+  "screens.Settings.projectSettingsDesc": {
+    "description": "list of avaialable project settings",
+    "message": "Categories, Config, Team"
+  },
+  "screens.Settings.title": {
+    "description": "Title of settings screen",
+    "message": "Cài đặt"
+  },
+  "sharedComponents.WifiBar.noWifi": {
+    "message": "Không có kết nối Internet"
+  },
+  "sharedComponents.WifiBar.wifi": {
+    "description": "Label for wifi network name",
+    "message": "WiFi:"
+  }
+}

@@ -3,7 +3,7 @@ import {getLastKnownPositionAsync} from 'expo-location';
 
 export const useLastSavedLocation = () => {
   return useQuery({
-    queryKey: ['lastPostition'],
+    queryKey: ['lastLocation'],
     queryFn: async () =>
       getLastKnownPositionAsync().catch(err => console.log(err)),
   });

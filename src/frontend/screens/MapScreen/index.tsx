@@ -16,7 +16,6 @@ import ScaleBar from 'react-native-scale-bar';
 import {getCoords, useLocation} from '../../hooks/useLocation';
 import {useIsFullyFocused} from '../../hooks/useIsFullyFocused';
 import {useLastSavedLocation} from '../../hooks/useLastSavedLocation';
-import {getLastKnownPositionAsync} from 'expo-location';
 import {Loading} from '../../sharedComponents/Loading';
 
 // This is the default zoom used when the map first loads, and also the zoom

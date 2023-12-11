@@ -16,7 +16,7 @@ import {NativeNavigationComponent} from '../sharedTypes';
 import {CustomHeaderLeftClose} from '../sharedComponents/CustomHeaderLeftClose';
 import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 import {Preset} from '@mapeo/schema';
-import {useObservationContext} from '../contexts/ObservationsContext';
+import {usePresetsQuery} from '../hooks/server/presets';
 
 const m = defineMessages({
   categoryTitle: {
@@ -36,7 +36,7 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
   navigation,
 }) => {
   const {updatePreset} = useDraftObservation();
-  const {presets} = useObservationContext();
+  const {data: presets} = usePresetsQuery();
   const state = navigation.getState();
   const currentIndex = state.index;
   const routes = state.routes;

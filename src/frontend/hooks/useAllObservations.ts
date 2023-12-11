@@ -1,9 +1,9 @@
 import {useMemo} from 'react';
 
-import {useObservationContext} from '../contexts/ObservationsContext';
+import {useObservations} from './server/observations';
 
 export function useAllObservations() {
-  const {observations} = useObservationContext();
+  const {data: observations} = useObservations();
 
   const observationsArray = useMemo(
     () =>

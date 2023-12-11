@@ -7,7 +7,11 @@ import {
 } from './AppStack';
 import {useIntl} from 'react-intl';
 // import {SecurityContext} from '../context/SecurityContext';
-import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
+
+import BootSplash from 'react-native-bootsplash';
+import {useDeviceName} from '../hooks/server/deviceInfo';
+import {Loading} from '../sharedComponents/Loading';
+
 // import {devExperiments} from '../lib/DevExperiments';
 
 // React Navigation expects children of the Navigator to be a `Screen`, `Group`
@@ -26,15 +30,21 @@ import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 // Note that screen groups should have a `key` prop, so that React knows how to
 // update them efficiently.
 
-export const AppNavigator = () => {
+export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   const {formatMessage} = useIntl();
-  const navigation = useNavigationFromRoot();
+  const deviceName = useDeviceName();
+
+  if (permissionAsked && !deviceName.isPending) {
+    BootSplash.hide();
+  }
 
   return (
-    <RootStack.Navigator
-      initialRouteName="Home"
-      screenOptions={NavigatorScreenOptions}>
-      {createDefaultScreenGroup(formatMessage)}
-    </RootStack.Navigator>
+    <React.Suspense fallback={<Loading />}>
+      <RootStack.Navigator
+        initialRouteName="Home"
+        screenOptions={NavigatorScreenOptions}>
+        {createDefaultScreenGroup(formatMessage)}
+      </RootStack.Navigator>
+    </React.Suspense>
   );
 };

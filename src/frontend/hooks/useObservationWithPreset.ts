@@ -1,8 +1,9 @@
-import {useObservationContext} from '../contexts/ObservationsContext';
+import {useObservation} from './server/observations';
+import {usePresetsQuery} from './server/presets';
 
 export const useObservationWithPreset = (observationId: string) => {
-  const {observations, presets} = useObservationContext();
-  const observation = observations.get(observationId);
+  const {data: observation} = useObservation(observationId);
+  const {data: presets} = usePresetsQuery();
   const preset =
     observation && typeof observation.tags['categoryId'] === 'string'
       ? presets.find(pres => pres.docId === observation.tags['categoryId'])

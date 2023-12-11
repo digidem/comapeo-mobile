@@ -2,11 +2,12 @@ import * as React from 'react';
 import {type MapeoClientApi} from '@mapeo/ipc';
 import {useApi} from './ApiContext';
 import {usePersistedProjectId} from '../hooks/persistedState/usePersistedProjectId';
+import {Loading} from '../sharedComponents/Loading';
 
 type MapeoProject = Awaited<ReturnType<MapeoClientApi['getProject']>>;
 
 type ActiveProjectContextType = {
-  project: MapeoProject | undefined;
+  project: MapeoProject;
   switchProject(projectId: string): void;
 };
 
@@ -70,17 +71,18 @@ export const ActiveProjectProvider = ({
     };
   }, [activeProjectId, setActiveProjectId]);
 
-  const contextValue = React.useMemo<ActiveProjectContextType>(() => {
-    return {
-      project: activeProject,
-      switchProject(projectId: string) {
-        setActiveProjectId(projectId);
-      },
-    };
-  }, [activeProject, setActiveProjectId]);
+  if (!activeProject) {
+    return <Loading />;
+  }
 
   return (
-    <ActiveProjectContext.Provider value={contextValue}>
+    <ActiveProjectContext.Provider
+      value={{
+        project: activeProject,
+        switchProject(projectId: string) {
+          setActiveProjectId(projectId);
+        },
+      }}>
       {children}
     </ActiveProjectContext.Provider>
   );

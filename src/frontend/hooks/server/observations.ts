@@ -1,31 +1,33 @@
 import type {MapeoProject} from '@mapeo/core/dist/mapeo-project';
-import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {
+  useMutation,
+  useSuspenseQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 import {useProject} from './projects';
 
 export function useObservations() {
   const project = useProject();
 
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['observations'],
     queryFn: async () => {
       if (!project) throw new Error('Project instance does not exist');
       return project.observation.getMany();
     },
-    enabled: !!project,
   });
 }
 
 export function useObservation(observationId: string) {
   const project = useProject();
 
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ['observations', observationId],
     queryFn: async () => {
       if (!project) throw new Error('Project instance does not exist');
       return project.observation.getByDocId(observationId);
     },
-    enabled: !!project,
   });
 }
 

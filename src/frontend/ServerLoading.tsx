@@ -21,9 +21,11 @@ export const ServerLoading = ({
 
       setServerStatus(msg);
     });
+
     // In case the server starts before us (we miss the original
     // `server-started` event), prompt the server to re-send.
     nodejs.channel.post('get-server-status');
+
     // @ts-ignore - incorrect types on nodejs.channel
     return () => subscription.remove();
   }, [setServerStatus]);

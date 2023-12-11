@@ -1,0 +1,339 @@
+{
+  "AppContainer.EditHeader.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Үргэлжлүүлэн засварлах"
+  },
+  "AppContainer.EditHeader.discardChangesContent": {
+    "description": "Button on dialog to cancel observation edits",
+    "message": "Өөрчлөлтийг цуцлах"
+  },
+  "AppContainer.EditHeader.discardChangesTitle": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Өөрчлөлтийг цуцлах уу? "
+  },
+  "AppContainer.EditHeader.discardContent": {
+    "description": "Button on dialog to cancel a new observation",
+    "message": "Хадгалахгүйгээр цуцлах"
+  },
+  "AppContainer.EditHeader.discardTitle": {
+    "description": "Title of dialog that shows when cancelling a new observation",
+    "message": "Сануулгаас татгалзах уу?"
+  },
+  "Screens.Settings.AppSettings.language": {
+    "message": "Хэл"
+  },
+  "Screens.Settings.AppSettings.languageDesc": {
+    "message": "Display language for app"
+  },
+  "Screens.Settings.AppSettings.title": {
+    "message": "App Setttings"
+  },
+  "Screens.Settings.ProjectSettings.configuration": {
+    "message": "Configuration"
+  },
+  "Screens.Settings.ProjectSettings.deviceName": {
+    "message": "Төхөөрөмжний нэр"
+  },
+  "Screens.Settings.ProjectSettings.title": {
+    "message": "Project Setttings"
+  },
+  "Screens.Settings.ProjectSettings.yourTeam": {
+    "message": "Your Team"
+  },
+  "screens.AddPhoto.cancel": {
+    "message": "Цуцлах"
+  },
+  "screens.AppPasscode": {
+    "message": "Аппликэшний нууц үг"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.cancel": {
+    "message": "Цуцлах"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
+    "description": "used to indicate to the user what the new passcode will be.",
+    "message": "Нууц үг"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
+    "message": "Аппликэйшний нууц үгийг хадгалах"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.title": {
+    "message": "Аппликэйшний нууц үгийг алдсан эсвэл мартсан тохиолдолд хэзээ ч сэргээх боломжгүй! Хадгалахаасаа өмнө нууц үгээ аюулгүй газар тэмдэглэнэ үү."
+  },
+  "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
+    "message": "Нууц үгийг оруулна уу"
+  },
+  "screens.AppPasscode.EnterPassToTurnOff.titleEnter": {
+    "message": "Нууц үг оруулах"
+  },
+  "screens.AppPasscode.InputPasscodeScreen.cancel": {
+    "message": "Цуцлах"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleConfirm": {
+    "message": "Нууц үг дахин оруулах"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleSet": {
+    "message": "Нууц үг тохируулах"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.button": {
+    "message": "Дараагийнх"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.initialPassError": {
+    "message": "Нууц үг 5 оронтой тоо байх ёстой"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.obscurePasscodeError": {
+    "message": "Нууц үг болгон ашиглах боломжгүй"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordDoesNotMatch": {
+    "message": "Нууц үг тохирохгүй байна"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordError": {
+    "message": "Нууц үг буруу"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet": {
+    "message": "Mapeo програмыг нээхэд энэ нууц үг шаардлагатай болно"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
+    "message": "Нууц үг тохируулах"
+  },
+  "screens.AppPasscode.NewPasscode.Splash.continue": {
+    "message": "Үргэлжлүүлэх"
+  },
+  "screens.AppPasscode.NewPasscode.Splash.title": {
+    "message": "Аппликэйшний нууц үг гэж юу вэ?"
+  },
+  "screens.AppPasscode.PasscodeIntro.description": {
+    "message": "Аппликэйшний нууц үг нь Mapeo програмыг нээхийн тулд нууц үг оруулах шаардлагатай тул хамгаалалтын нэмэлт давхарга нэмэх боломжийг танд олгоно. Та доорх функцийг идэвхжүүлснээр өөрийн 5 оронтой нууц үгийг тодорхойлж болно."
+  },
+  "screens.AppPasscode.PasscodeIntro.warning": {
+    "message": "**Мартагдсан нууц үгийг сэргээх боломжгүй гэдгийг анхаарна уу!** Энэ функцийг идэвхжүүлсний дараа, хэрэв та нууц үгээ мартсан эсвэл алдсан тохиолдолд Mapeo-г нээх боломжгүй бөгөөд бусад төсөлд оролцогчидтой синк хийгээгүй Mapeo өгөгдөлд хандах эрхээ алдах болно. "
+  },
+  "screens.AppPasscode.TurnOffPasscode.cancel": {
+    "message": "Цуцлах"
+  },
+  "screens.AppPasscode.TurnOffPasscode.changePasscode": {
+    "message": "Аппликэйшний нууц үгийг өөрчлөх"
+  },
+  "screens.AppPasscode.TurnOffPasscode.currentlyUsing": {
+    "message": "Та одоогоор Аппликэйшний нууц үгийг ашиглаж байна. Нууц үгээ ашиглахаа зогсоох эсвэл өөрчлөхийн тулд доороос үзнэ үү."
+  },
+  "screens.AppPasscode.TurnOffPasscode.description": {
+    "message": "Аппликэйшний нууц үг нь Mapeo програмыг нээхийн тулд нууц үг оруулах шаардлагатай тул аюулгүй байдлын нэмэлт давхаргыг нэмдэг."
+  },
+  "screens.AppPasscode.TurnOffPasscode.title": {
+    "message": "Аппликэшний нууц үг"
+  },
+  "screens.AppPasscode.TurnOffPasscode.turnOff": {
+    "message": "Унтраах"
+  },
+  "screens.AppPasscode.TurnOffPasscode.turnOffConfirmation": {
+    "message": "Аппликэйшний нууц үгийг унтраах"
+  },
+  "screens.AppPasscode.TurnOffPasscode.usePasscode": {
+    "message": "Аппликэйшний нууц үгийг ашиглах"
+  },
+  "screens.CameraScreen.goToSettings": {
+    "message": "Go to Settings"
+  },
+  "screens.CameraScreen.noCameraAccess": {
+    "message": "No access to camera. Please Allow access in setting"
+  },
+  "screens.CategoryChooser.categoryTitle": {
+    "description": "Title for category chooser screen",
+    "message": "Юу болж байгааг сонгох"
+  },
+  "screens.EnterPassword.enterPass": {
+    "message": "Нууц үгээ оруулах"
+  },
+  "screens.EnterPassword.wrongPass": {
+    "message": "Нууц үг буруу байна, дахин оролдоно уу"
+  },
+  "screens.ObscurePasscode.description": {
+    "message": "Бүрхэг нууц үг нь Mapeo-г төөрөгдүүлэх горимд нээх боломжийг олгодог хамгаалалтын функц бөгөөд таны бүх өгөгдлийг нуудаг. Танилцуулгын дэлгэцэн дээр тодорхойгүй нууц үгийг оруулснаар Mapeo-ийн хоосон хувилбар гарч ирэх бөгөөд энэ нь танд Mapeo мэдээллийн санд хадгалагдаагүй үзүүлэх ажиглалт үүсгэх боломжийг олгоно."
+  },
+  "screens.ObscurePasscode.instructions": {
+    "message": "Mapeo дээрх өгөгдлөө нуухын тулд дээрх кодыг оруулна уу"
+  },
+  "screens.ObscurePasscode.title": {
+    "message": "Тодорхой бус нууц үг"
+  },
+  "screens.ObscurePasscode.toggleMessage": {
+    "message": "Тодорхой бус нууц үгийг ашиглах"
+  },
+  "screens.ObscurePasscode.whatIsObscure": {
+    "message": "Тодорхой бус нууц үг юу вэ?"
+  },
+  "screens.Observation.ObservationEdit.CategoryView.changePreset": {
+    "message": "Өөрчлөх"
+  },
+  "screens.Observation.ObservationEdit.CategoryView.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Сануулга"
+  },
+  "screens.Observation.ObservationView.delete": {
+    "description": "Button to delete an observation",
+    "message": "Устгах"
+  },
+  "screens.Observation.ObservationView.noAnswer": {
+    "description": "Placeholder text for fields on an observation which are not answered",
+    "message": "Хариулт алга"
+  },
+  "screens.Observation.ObservationView.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Сануулга"
+  },
+  "screens.Observation.cancel": {
+    "description": "Button to cancel delete of observation",
+    "message": "Цуцлах"
+  },
+  "screens.Observation.confirm": {
+    "description": "Button to confirm delete of observation",
+    "message": "Тийм, устгах"
+  },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "Сануулгыг устгах уу?"
+  },
+  "screens.Observation.title": {
+    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
+    "message": "Сануулга"
+  },
+  "screens.ObservationEdit.BottomSheet.addLabel": {
+    "description": "Label above keyboard that expands into bottom sheet of options to add (photo, details etc)",
+    "message": "Нэмэх…"
+  },
+  "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "Энд юу болоод байгаа юм бэ?"
+  },
+  "screens.ObservationEdit.ObservationEditView.photoButton": {
+    "description": "Button label for adding photo",
+    "message": "Фото зураг нэмэх"
+  },
+  "screens.ObservationEdit.ObservationEditView.searching": {
+    "description": "Shown in new observation screen whilst looking for GPS",
+    "message": "Хайлт хийж байна..."
+  },
+  "screens.ObservationEdit.SaveButton.keepWaiting": {
+    "description": "Button to cancel save and continue waiting for GPS",
+    "message": "Үргэлжлүүлэн хүлээж байна"
+  },
+  "screens.ObservationEdit.SaveButton.manualEntry": {
+    "description": "Button to manually enter GPS coordinates",
+    "message": "Гар ажиллагаатай солбицолууд"
+  },
+  "screens.ObservationEdit.SaveButton.noGpsDesc": {
+    "description": "Description in dialog when trying to save with no GPS coords",
+    "message": "Энэ сануулга нь байршилгүй. Та GPS дохиог үргэлжлүүлэн хүлээх, сануулгыг байршилгүйгээр хадгалах эсвэл солбицолуудыг гараар оруулах боломжтой"
+  },
+  "screens.ObservationEdit.SaveButton.noGpsTitle": {
+    "description": "Title of dialog when trying to save with no GPS coords",
+    "message": "GPS-ийн дохио байхгүй"
+  },
+  "screens.ObservationEdit.SaveButton.saveAnyway": {
+    "description": "Button to save regardless of GPS state",
+    "message": "Хадгалах"
+  },
+  "screens.ObservationEdit.SaveButton.weakGpsDesc": {
+    "description": "Description in dialog when trying to save with low GPS accuracy.",
+    "message": "GPS-ийн нарийвчлал бага байна. Та илүү нарийвчлалтай байхыг үргэлжлүүлэн хүлээх, ажиглалтыг бага нарийвчлалтайгаар хадгалах эсвэл солбицолыг гараар оруулах боломжтой."
+  },
+  "screens.ObservationEdit.SaveButton.weakGpsTitle": {
+    "description": "Title of dialog when trying to save with low GPS accuracy.",
+    "message": "GPS-ийн дохио сул байна"
+  },
+  "screens.ObservationEdit.editTitle": {
+    "description": "screen title for edit observation screen",
+    "message": "Сануулга засах"
+  },
+  "screens.ObservationEdit.newTitle": {
+    "description": "screen title for new observation screen",
+    "message": "Шинэ сануулга"
+  },
+  "screens.ObservationList.observationListTitle": {
+    "description": "Title of screen with list of observations",
+    "message": "Сануулгууд"
+  },
+  "screens.ObservationsList.ObservationsEmptyView.backButton": {
+    "description": "Back button on observation list screen when no observations are yet recorded",
+    "message": "Газрын зураг руу очих"
+  },
+  "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
+    "description": "Description of observation list view when the user has not yet recorded observations",
+    "message": "Анхны сануулгаа бичхийн тулд газрын зураг эсвэл камерын харагдацаас эхэл."
+  },
+  "screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
+    "description": "Title of observation list view when the user has not yet recorded observations",
+    "message": "Сануулгууд нэмэх"
+  },
+  "screens.ObservationsList.error": {
+    "description": "message shown when there is an unexpected error when loading observations",
+    "message": "Сануулгыг ачаалахад алдаа гарлаа. Mapeo-г орхиж, дахин эхлүүлээд үзээрэй."
+  },
+  "screens.ObservationsList.loading": {
+    "description": "message shown whilst observations are loading",
+    "message": "Ачаалж байна... шинэ төхөөрөмжтэй зэрэгцүүлэлт хийсний дараа хэсэг хугацаа шаардагдах болно"
+  },
+  "screens.Security.obscurePassDescriptonPassNotSet": {
+    "message": "Ашиглахын тулд Аппликэшний нууц үгийг тааруулах"
+  },
+  "screens.Security.obscurePassDescriptonPassSet": {
+    "message": "Төхөөрөмжөө хураахаас хамгаалаарай"
+  },
+  "screens.Security.obscurePasscodeHeader": {
+    "message": "Тодорхой бус нууц үг"
+  },
+  "screens.Security.passDesriptionPassNotSet": {
+    "message": "Нууц үгийг тохируулаагүй байна"
+  },
+  "screens.Security.passDesriptionPassSet": {
+    "message": "Нууц үгийг тохируулсан байна"
+  },
+  "screens.Security.passcodeHeader": {
+    "message": "Аппликэшний нууц үг"
+  },
+  "screens.Security.securitySubheader": {
+    "message": "Төхөөрөмжийн аюулгүй байдал"
+  },
+  "screens.Security.title": {
+    "message": "Аюулгүй байдал"
+  },
+  "screens.Settings.aboutMapeo": {
+    "description": "Primary text for 'About Mapeo' link (version info)",
+    "message": "Mapeo-гийн тухай"
+  },
+  "screens.Settings.aboutMapeoDesc": {
+    "description": "Description of the 'About Mapeo' page",
+    "message": "Хувилбар ба барилгын дугаар"
+  },
+  "screens.Settings.appSettings": {
+    "message": "App Settings"
+  },
+  "screens.Settings.appSettingsDesc": {
+    "description": "list of avaialable app settings",
+    "message": "Language, Security, Coordinates"
+  },
+  "screens.Settings.createOrJoin": {
+    "message": "Create or Join Project"
+  },
+  "screens.Settings.createOrJoinDesc": {
+    "message": "Create a new project or join existing one"
+  },
+  "screens.Settings.projectSettings": {
+    "message": "Project Settings"
+  },
+  "screens.Settings.projectSettingsDesc": {
+    "description": "list of avaialable project settings",
+    "message": "Categories, Config, Team"
+  },
+  "screens.Settings.title": {
+    "description": "Title of settings screen",
+    "message": "Тохиргоо"
+  },
+  "sharedComponents.WifiBar.noWifi": {
+    "message": "Интернетгүй байна"
+  },
+  "sharedComponents.WifiBar.wifi": {
+    "description": "Label for wifi network name",
+    "message": "WiFi"
+  }
+}

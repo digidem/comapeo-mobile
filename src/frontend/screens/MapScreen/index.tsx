@@ -58,6 +58,10 @@ export const MapScreen = () => {
     setIsFinishedLoading(true);
   }
 
+  if (savedLocation.isLoading) {
+    return <Loading />;
+  }
+
   return (
     <View style={{flex: 1}}>
       <Mapbox.MapView

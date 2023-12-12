@@ -8,6 +8,45 @@ import {
 // How frequently to poll the location provider status
 const POLL_PROVIDER_STATUS_INTERVAL = 10_000; // 10 seconds
 
+function createWatchLocationProviderStatus() {
+  const listeners = new Set<(status: LocationProviderStatus) => void>();
+  let intervalId: ReturnType<typeof setInterval> | undefined;
+
+  return function watchLocationProviderStatus(
+    listener: (status: LocationProviderStatus) => void,
+  ) {
+    if (!intervalId) {
+      intervalId = setInterval(
+        checkProviderStatus,
+        POLL_PROVIDER_STATUS_INTERVAL,
+      );
+    }
+    listeners.add(listener);
+    // Immediately call the listener with the current status
+    getProviderStatusAsync()
+      .then(status => listener(status))
+      .catch(noop);
+    return () => {
+      listeners.delete(listener);
+      if (listeners.size === 0 && intervalId !== undefined) {
+        clearInterval(intervalId);
+      }
+    };
+  };
+
+  function checkProviderStatus() {
+    getProviderStatusAsync()
+      .then(status => {
+        for (const listener of listeners) {
+          listener(status);
+        }
+      })
+      .catch(noop);
+  }
+}
+
+const watchLocationProviderStatus = createWatchLocationProviderStatus();
+
 export function useLocationProviderStatus() {
   const [providerStatus, setProviderStatus] = React.useState<
     LocationProviderStatus | undefined
@@ -17,22 +56,12 @@ export function useLocationProviderStatus() {
   React.useEffect(() => {
     if (!permissions || !permissions.granted) return;
     let ignore = false;
-    async function checkProviderStatus() {
-      getProviderStatusAsync()
-        .then(status => {
-          if (ignore) return;
-          setProviderStatus(status);
-        })
-        // Shouldn't happen because we check permissions.granted above, but just in case
-        .catch(noop);
-    }
-    checkProviderStatus();
-    const intervalId = setInterval(
-      checkProviderStatus,
-      POLL_PROVIDER_STATUS_INTERVAL,
-    );
+    const unsubscribe = watchLocationProviderStatus(status => {
+      if (ignore) return;
+      setProviderStatus(status);
+    });
     return () => {
-      clearInterval(intervalId);
+      unsubscribe();
       ignore = true;
     };
   }, [permissions]);

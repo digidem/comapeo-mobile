@@ -33,14 +33,14 @@ import {createDeviceNamingScreens} from './ScreenGroups/DeviceNamingScreens';
 
 export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   const {formatMessage} = useIntl();
-  const deviceName = useDeviceInfo();
+  const deviceInfo = useDeviceInfo();
 
-  if (permissionAsked && !deviceName.isPending) {
+  if (permissionAsked && !deviceInfo.isPending) {
     BootSplash.hide();
   }
 
   // the user should never actually see this because the splash screen is visible, so this is to appease typescript
-  if (deviceName.isLoading) {
+  if (deviceInfo.isLoading) {
     return <Loading />;
   }
 
@@ -49,7 +49,7 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
       <RootStack.Navigator
         initialRouteName="IntroToCoMapeo"
         screenOptions={NavigatorScreenOptions}>
-        {deviceName.data && deviceName.data.name
+        {deviceInfo.data && deviceInfo.data.name
           ? createDefaultScreenGroup(formatMessage)
           : createDeviceNamingScreens(formatMessage)}
       </RootStack.Navigator>

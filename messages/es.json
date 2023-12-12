@@ -142,22 +142,22 @@
     "message": "Elegir qué está pasando"
   },
   "screens.DeviceNaming.Success.description": {
-    "message": "You named your device"
+    "message": "Nombraste tu dispositivo"
   },
   "screens.DeviceNaming.Success.goToMap": {
-    "message": "Go to Map"
+    "message": "Ir al mapa"
   },
   "screens.DeviceNaming.Success.success": {
-    "message": "Success!"
+    "message": "¡Éxito!"
   },
   "screens.DeviceNaming.addName": {
-    "message": "Add Name"
+    "message": "Agregar nombre"
   },
   "screens.DeviceNaming.description": {
-    "message": "To create or join a new project you will have to name your device. In a future version of CoMapeo, you will be able to manage the projects you created by changing devices roles, deleting devices and much more."
+    "message": "Para crear o unirte a un nuevo proyecto tendrás que nombrar tu dispositivo. En una futura versión de CoMapeo, podrás gestionar los proyectos que hayas creado cambiando los roles de los dispositivos, eliminando dispositivos y mucho más."
   },
   "screens.DeviceNaming.header": {
-    "message": "Add a name for your device"
+    "message": "Agrega un nombre para tu dispositivo"
   },
   "screens.EnterPassword.enterPass": {
     "message": "Introduzca su contraseña"
@@ -166,14 +166,14 @@
     "message": "Contraseña incorrecta, inténtelo de nuevo"
   },
   "screens.IntroToCoMapeo.collaborate": {
-    "message": "Collaborate on mapping and monitoring projects"
+    "message": "Colabora con proyectos de mapeo y monitoreo"
   },
   "screens.IntroToCoMapeo.getStarted": {
-    "message": "Get Started"
+    "message": "¡Comienza ya!"
   },
   "screens.IntroToCoMapeo.isNow": {
     "description": "The full sentence is mapeo 'is now' comapeo. ",
-    "message": "is now"
+    "message": "ahora es"
   },
   "screens.IntroToCoMapeo.version": {
     "description": "v is short for version. the translation for version can be used instead",

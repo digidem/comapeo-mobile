@@ -15,7 +15,7 @@ import {useDraftObservation} from '../../hooks/useDraftObservation';
 import ScaleBar from 'react-native-scale-bar';
 import {getCoords, useLocation} from '../../hooks/useLocation';
 import {useIsFullyFocused} from '../../hooks/useIsFullyFocused';
-import {useLastSavedLocation} from '../../hooks/useLastSavedLocation';
+import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
 import {Loading} from '../../sharedComponents/Loading';
 
 // This is the default zoom used when the map first loads, and also the zoom
@@ -37,7 +37,7 @@ export const MapScreen = () => {
   const {newDraft} = useDraftObservation();
   const {navigate} = useNavigationFromHomeTabs();
   const {location} = useLocation({maxDistanceInterval: MIN_DISPLACEMENT});
-  const savedLocation = useLastSavedLocation();
+  const savedLocation = useLastKnownLocation();
   const coords = location && getCoords(location);
 
   const handleAddPress = () => {
@@ -59,9 +59,9 @@ export const MapScreen = () => {
     setFollowing(true);
   }
 
-  if (savedLocation.isLoading) {
-    return <Loading />;
-  }
+  // if (savedLocation.isLoading) {
+  //   return <Loading />;
+  // }
 
   return (
     <View style={{flex: 1}}>
@@ -90,7 +90,13 @@ export const MapScreen = () => {
                 : undefined,
             zoomLevel: zoom,
           }}
-          centerCoordinate={following ? coords : undefined}
+          centerCoordinate={
+            following
+              ? coords
+              : savedLocation.data
+                ? getCoords(savedLocation.data)
+                : undefined
+          }
           zoomLevel={following ? zoom : undefined}
           animationDuration={1000}
           animationMode="flyTo"

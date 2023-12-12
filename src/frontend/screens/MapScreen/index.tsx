@@ -59,10 +59,6 @@ export const MapScreen = () => {
     setFollowing(true);
   }
 
-  // if (savedLocation.isLoading) {
-  //   return <Loading />;
-  // }
-
   return (
     <View style={{flex: 1}}>
       <Mapbox.MapView

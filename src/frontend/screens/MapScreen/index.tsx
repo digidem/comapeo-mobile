@@ -33,7 +33,7 @@ export const MapScreen = () => {
 
   const isFocused = useIsFullyFocused();
   const [isFinishedLoading, setIsFinishedLoading] = React.useState(false);
-  const [following, setFollowing] = React.useState(false);
+  const [following, setFollowing] = React.useState(true);
   const {newDraft} = useDraftObservation();
   const {navigate} = useNavigationFromHomeTabs();
   const {location} = useLocation({maxDistanceInterval: MIN_DISPLACEMENT});
@@ -56,7 +56,6 @@ export const MapScreen = () => {
 
   function handleDidFinishLoadingStyle() {
     setIsFinishedLoading(true);
-    setFollowing(true);
   }
 
   return (

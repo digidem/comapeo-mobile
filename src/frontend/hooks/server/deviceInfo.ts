@@ -1,6 +1,5 @@
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {useApi} from '../../contexts/ApiContext';
-import {useProject} from './projects';
 
 export const useDeviceInfo = () => {
   const mapeoApi = useApi();

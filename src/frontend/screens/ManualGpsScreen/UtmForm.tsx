@@ -6,7 +6,7 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {Text} from '../../sharedComponents/Text';
 import {BLACK, LIGHT_GREY} from '../../lib/styles';
 import {FormProps, parseNumber} from './shared';
-import {useLastSavedLocation} from '../../hooks/useLastSavedLocation';
+import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
 
 const m = defineMessages({
   zoneNumber: {
@@ -38,7 +38,7 @@ const m = defineMessages({
 const UtmForm = ({onValueUpdate}: FormProps) => {
   const {formatMessage: t} = useIntl();
 
-  const lastSavedLocation = useLastSavedLocation();
+  const lastSavedLocation = useLastKnownLocation();
   const lastSavedLocationCoordinates = lastSavedLocation.data
     ? {
         lat: lastSavedLocation.data.coords.latitude,

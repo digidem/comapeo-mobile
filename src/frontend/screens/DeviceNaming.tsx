@@ -35,7 +35,7 @@ export const DeviceNaming = ({
   navigation,
 }: NativeStackScreenProps<DeviceNamingSceens, 'DeviceNaming'>) => {
   const [name, setName] = React.useState('');
-  const [errorTimeout, setErrorTimeout] = useErrorTimeout();
+  const [errorTimeout, setErrorTimeout] = useTemporaryError();
   const invalidName = name.length === 0 || name.length > 60;
   const {formatMessage: t} = useIntl();
 
@@ -63,7 +63,11 @@ export const DeviceNaming = ({
         <View>
           <CoMapeoText style={{alignSelf: 'center'}} />
 
-          <Text style={{marginTop: 20}}>{t(m.header)}</Text>
+          <View
+            style={{flexDirection: 'row', alignItems: 'center', marginTop: 20}}>
+            <Text style={{fontWeight: '500'}}>{t(m.header)}</Text>
+            <Text style={{color: RED}}>*</Text>
+          </View>
           <TextInput
             style={[
               styles.textInput,
@@ -94,7 +98,7 @@ export const DeviceNaming = ({
   );
 };
 
-function useErrorTimeout() {
+function useTemporaryError() {
   const [errorTimeout, setErrorTimeout] = React.useState(false);
   const timer = React.useRef<NodeJS.Timeout | undefined>();
 

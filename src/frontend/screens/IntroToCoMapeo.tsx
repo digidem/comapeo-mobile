@@ -58,7 +58,11 @@ export const IntroToCoMapeo = ({
           )} ${getVersion()}`}</Text>
         </View>
         <View style={{width: '100%'}}>
-          <Text style={[styles.text, {fontSize: 20, marginBottom: 30}]}>
+          <Text
+            style={[
+              styles.text,
+              {fontSize: 20, marginBottom: 30, fontWeight: '500'},
+            ]}>
             {formatMessage(m.collaborate)}
           </Text>
           <Button

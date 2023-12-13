@@ -9,8 +9,9 @@ import {useIntl} from 'react-intl';
 // import {SecurityContext} from '../context/SecurityContext';
 
 import BootSplash from 'react-native-bootsplash';
-import {useDeviceName} from '../hooks/server/deviceInfo';
+import {useDeviceInfo} from '../hooks/server/deviceInfo';
 import {Loading} from '../sharedComponents/Loading';
+import {createDeviceNamingScreens} from './ScreenGroups/DeviceNamingScreens';
 import {usePrefetchLastKnownLocation} from '../hooks/useLastSavedLocation';
 
 // import {devExperiments} from '../lib/DevExperiments';
@@ -33,19 +34,27 @@ import {usePrefetchLastKnownLocation} from '../hooks/useLastSavedLocation';
 
 export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   const {formatMessage} = useIntl();
-  const deviceName = useDeviceName();
+
+  const deviceInfo = useDeviceInfo();
   usePrefetchLastKnownLocation();
 
-  if (permissionAsked && !deviceName.isPending) {
+  if (permissionAsked && !deviceInfo.isPending) {
     BootSplash.hide();
+  }
+
+  // the user should never actually see this because the splash screen is visible, so this is to appease typescript
+  if (deviceInfo.isLoading) {
+    return <Loading />;
   }
 
   return (
     <React.Suspense fallback={<Loading />}>
       <RootStack.Navigator
-        initialRouteName="Home"
+        initialRouteName="IntroToCoMapeo"
         screenOptions={NavigatorScreenOptions}>
-        {createDefaultScreenGroup(formatMessage)}
+        {deviceInfo.data && deviceInfo.data.name
+          ? createDefaultScreenGroup(formatMessage)
+          : createDeviceNamingScreens(formatMessage)}
       </RootStack.Navigator>
     </React.Suspense>
   );

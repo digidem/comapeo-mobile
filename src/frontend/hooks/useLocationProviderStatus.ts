@@ -4,6 +4,7 @@ import {
   getProviderStatusAsync,
   useForegroundPermissions,
 } from 'expo-location';
+import {useQueryClient} from '@tanstack/react-query';
 
 // How frequently to poll the location provider status
 const POLL_PROVIDER_STATUS_INTERVAL = 10_000; // 10 seconds
@@ -13,6 +14,7 @@ export function useLocationProviderStatus() {
     LocationProviderStatus | undefined
   >(undefined);
   const [permissions] = useForegroundPermissions();
+  const queryClient = useQueryClient();
 
   React.useEffect(() => {
     if (!permissions || !permissions.granted) return;
@@ -21,6 +23,8 @@ export function useLocationProviderStatus() {
       getProviderStatusAsync()
         .then(status => {
           if (ignore) return;
+          if (!status.locationServicesEnabled)
+            queryClient.invalidateQueries({queryKey: ['lastLocation']});
           setProviderStatus(status);
         })
         // Shouldn't happen because we check permissions.granted above, but just in case
@@ -35,7 +39,7 @@ export function useLocationProviderStatus() {
       clearInterval(intervalId);
       ignore = true;
     };
-  }, [permissions]);
+  }, [permissions, queryClient]);
 
   return providerStatus;
 }

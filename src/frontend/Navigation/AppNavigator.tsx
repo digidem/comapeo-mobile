@@ -12,6 +12,7 @@ import BootSplash from 'react-native-bootsplash';
 import {useDeviceInfo} from '../hooks/server/deviceInfo';
 import {Loading} from '../sharedComponents/Loading';
 import {createDeviceNamingScreens} from './ScreenGroups/DeviceNamingScreens';
+import {usePrefetchLastKnownLocation} from '../hooks/useLastSavedLocation';
 
 // import {devExperiments} from '../lib/DevExperiments';
 
@@ -33,7 +34,9 @@ import {createDeviceNamingScreens} from './ScreenGroups/DeviceNamingScreens';
 
 export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   const {formatMessage} = useIntl();
+
   const deviceInfo = useDeviceInfo();
+  usePrefetchLastKnownLocation();
 
   if (permissionAsked && !deviceInfo.isPending) {
     BootSplash.hide();

@@ -17,7 +17,7 @@ import {
   getInitialCardinality,
   parseNumber,
 } from './shared';
-import {useLastSavedLocation} from '../../hooks/useLastSavedLocation';
+import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
 
 const MAX_COORDINATE_INPUT_LENGTH = 11;
 
@@ -93,7 +93,7 @@ const DdForm = ({onValueUpdate}: FormProps) => {
     },
   ];
 
-  const lastSavedLocation = useLastSavedLocation();
+  const lastSavedLocation = useLastKnownLocation();
   const lastSavedLocationCoordinates = lastSavedLocation.data
     ? {
         lat: lastSavedLocation.data.coords.latitude,

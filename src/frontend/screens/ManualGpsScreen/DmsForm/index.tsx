@@ -10,7 +10,7 @@ import {
 } from '../shared';
 import DmsInputGroup from './DmsInputGroup';
 import {convertDmsToDd} from '../../../lib/utils';
-import {useLastSavedLocation} from '../../../hooks/useLastSavedLocation';
+import {useLastKnownLocation} from '../../../hooks/useLastSavedLocation';
 
 const INITIAL_UNIT_VALUES = {
   degrees: '',
@@ -94,7 +94,7 @@ const DmsForm = ({onValueUpdate}: FormProps) => {
   const [longitude, setLongitude] =
     React.useState<DmsData>(INITIAL_UNIT_VALUES);
 
-  const lastSavedLocation = useLastSavedLocation();
+  const lastSavedLocation = useLastKnownLocation();
   const lastSavedLocationCoordinates = lastSavedLocation.data
     ? {
         lat: lastSavedLocation.data.coords.latitude,

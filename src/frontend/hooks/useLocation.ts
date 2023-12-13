@@ -24,13 +24,11 @@ interface LocationState {
   error: Error | undefined;
 }
 
-// Timeout between location updates --> means location was probably turned off
-// so we need to check it.
-const LOCATION_TIMEOUT = 10000;
-
 export function useLocation({
   minDistanceInterval: distanceInterval = 1,
-  ...debounceOptions
+  minTimeInterval,
+  maxTimeInterval,
+  maxDistanceInterval,
 }: LocationOptions): LocationState {
   const [location, setLocation] = React.useState<LocationState>({
     location: undefined,
@@ -49,7 +47,11 @@ export function useLocation({
           accuracy: Accuracy.BestForNavigation,
           distanceInterval,
         },
-        debounceLocation(debounceOptions)(location => {
+        debounceLocation({
+          minTimeInterval,
+          maxTimeInterval,
+          maxDistanceInterval,
+        })(location => {
           if (ignore) return;
           setLocation({location, error: undefined});
         }),
@@ -67,7 +69,13 @@ export function useLocation({
         ignore = true;
         locationSubscriptionProm.then(sub => sub.remove());
       };
-    }, [permissions, debounceOptions]),
+    }, [
+      permissions,
+      distanceInterval,
+      minTimeInterval,
+      maxTimeInterval,
+      maxDistanceInterval,
+    ]),
   );
 
   return location;

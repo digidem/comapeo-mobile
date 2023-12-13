@@ -6,7 +6,7 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {Text} from '../../sharedComponents/Text';
 import {BLACK, LIGHT_GREY} from '../../lib/styles';
 import {FormProps, parseNumber} from './shared';
-import {useLocationContext} from '../../contexts/LocationContext';
+import {useLastSavedLocation} from '../../hooks/useLastSavedLocation';
 
 const m = defineMessages({
   zoneNumber: {
@@ -38,24 +38,23 @@ const m = defineMessages({
 const UtmForm = ({onValueUpdate}: FormProps) => {
   const {formatMessage: t} = useIntl();
 
-  const location = useLocationContext();
-  const lastSavedPositionCoordinates =
-    location.savedPosition && location.savedPosition.coords
-      ? {
-          lat: location.savedPosition.coords.latitude,
-          lon: location.savedPosition.coords.longitude,
-        }
-      : undefined;
+  const lastSavedLocation = useLastSavedLocation();
+  const lastSavedLocationCoordinates = lastSavedLocation.data
+    ? {
+        lat: lastSavedLocation.data.coords.latitude,
+        lon: lastSavedLocation.data.coords.longitude,
+      }
+    : undefined;
 
   const [zoneNum, setZoneNum] = React.useState(() => {
     if (
-      typeof lastSavedPositionCoordinates?.lat === 'number' &&
-      typeof lastSavedPositionCoordinates?.lon === 'number'
+      typeof lastSavedLocationCoordinates?.lat === 'number' &&
+      typeof lastSavedLocationCoordinates?.lon === 'number'
     ) {
       try {
         const {zoneNum} = fromLatLon(
-          lastSavedPositionCoordinates.lat,
-          lastSavedPositionCoordinates.lon,
+          lastSavedLocationCoordinates.lat,
+          lastSavedLocationCoordinates.lon,
         );
         return zoneNum + '';
       } catch (e) {
@@ -68,13 +67,13 @@ const UtmForm = ({onValueUpdate}: FormProps) => {
 
   const [zoneLetter, setZoneLetter] = React.useState<string>(() => {
     if (
-      typeof lastSavedPositionCoordinates?.lat === 'number' &&
-      typeof lastSavedPositionCoordinates?.lon === 'number'
+      typeof lastSavedLocationCoordinates?.lat === 'number' &&
+      typeof lastSavedLocationCoordinates?.lon === 'number'
     ) {
       try {
         const {zoneLetter} = fromLatLon(
-          lastSavedPositionCoordinates.lat,
-          lastSavedPositionCoordinates.lon,
+          lastSavedLocationCoordinates.lat,
+          lastSavedLocationCoordinates.lon,
         );
         return zoneLetter;
       } catch (e) {

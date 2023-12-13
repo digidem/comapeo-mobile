@@ -9,8 +9,8 @@ import {
   parseNumber,
 } from '../shared';
 import DmsInputGroup from './DmsInputGroup';
-import {useLocationContext} from '../../../contexts/LocationContext';
 import {convertDmsToDd} from '../../../lib/utils';
+import {useLastSavedLocation} from '../../../hooks/useLastSavedLocation';
 
 const INITIAL_UNIT_VALUES = {
   degrees: '',
@@ -94,20 +94,19 @@ const DmsForm = ({onValueUpdate}: FormProps) => {
   const [longitude, setLongitude] =
     React.useState<DmsData>(INITIAL_UNIT_VALUES);
 
-  const location = useLocationContext();
-  const lastSavedPositionCoordinates =
-    location.savedPosition && location.savedPosition.coords
-      ? {
-          lat: location.savedPosition.coords.latitude,
-          lon: location.savedPosition.coords.longitude,
-        }
-      : undefined;
+  const lastSavedLocation = useLastSavedLocation();
+  const lastSavedLocationCoordinates = lastSavedLocation.data
+    ? {
+        lat: lastSavedLocation.data.coords.latitude,
+        lon: lastSavedLocation.data.coords.longitude,
+      }
+    : undefined;
 
   const [latCardinality, setLatCardinality] = React.useState(
-    getInitialCardinality('lat', lastSavedPositionCoordinates),
+    getInitialCardinality('lat', lastSavedLocationCoordinates),
   );
   const [lonCardinality, setLonCardinality] = React.useState(
-    getInitialCardinality('lon', lastSavedPositionCoordinates),
+    getInitialCardinality('lon', lastSavedLocationCoordinates),
   );
 
   const updateCoordinate =

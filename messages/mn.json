@@ -141,11 +141,43 @@
     "description": "Title for category chooser screen",
     "message": "Юу болж байгааг сонгох"
   },
+  "screens.DeviceNaming.Success.description": {
+    "message": "You named your device"
+  },
+  "screens.DeviceNaming.Success.goToMap": {
+    "message": "Go to Map"
+  },
+  "screens.DeviceNaming.Success.success": {
+    "message": "Success!"
+  },
+  "screens.DeviceNaming.addName": {
+    "message": "Add Name"
+  },
+  "screens.DeviceNaming.description": {
+    "message": "To create or join a new project you will have to name your device. In a future version of CoMapeo, you will be able to manage the projects you created by changing devices roles, deleting devices and much more."
+  },
+  "screens.DeviceNaming.header": {
+    "message": "Add a name for your device"
+  },
   "screens.EnterPassword.enterPass": {
     "message": "Нууц үгээ оруулах"
   },
   "screens.EnterPassword.wrongPass": {
     "message": "Нууц үг буруу байна, дахин оролдоно уу"
+  },
+  "screens.IntroToCoMapeo.collaborate": {
+    "message": "Collaborate on mapping and monitoring projects"
+  },
+  "screens.IntroToCoMapeo.getStarted": {
+    "message": "Get Started"
+  },
+  "screens.IntroToCoMapeo.isNow": {
+    "description": "The full sentence is mapeo 'is now' comapeo. ",
+    "message": "is now"
+  },
+  "screens.IntroToCoMapeo.version": {
+    "description": "v is short for version. the translation for version can be used instead",
+    "message": "V"
   },
   "screens.ObscurePasscode.description": {
     "message": "Бүрхэг нууц үг нь Mapeo-г төөрөгдүүлэх горимд нээх боломжийг олгодог хамгаалалтын функц бөгөөд таны бүх өгөгдлийг нуудаг. Танилцуулгын дэлгэцэн дээр тодорхойгүй нууц үгийг оруулснаар Mapeo-ийн хоосон хувилбар гарч ирэх бөгөөд энэ нь танд Mapeo мэдээллийн санд хадгалагдаагүй үзүүлэх ажиглалт үүсгэх боломжийг олгоно."

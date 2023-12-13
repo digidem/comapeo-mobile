@@ -24,10 +24,6 @@ interface LocationState {
   error: Error | undefined;
 }
 
-// Timeout between location updates --> means location was probably turned off
-// so we need to check it.
-const LOCATION_TIMEOUT = 10000;
-
 export function useLocation({
   minDistanceInterval: distanceInterval = 1,
   ...debounceOptions

@@ -141,11 +141,43 @@
     "description": "Title for category chooser screen",
     "message": "Elegir qué está pasando"
   },
+  "screens.DeviceNaming.Success.description": {
+    "message": "Nombraste tu dispositivo"
+  },
+  "screens.DeviceNaming.Success.goToMap": {
+    "message": "Ir al mapa"
+  },
+  "screens.DeviceNaming.Success.success": {
+    "message": "¡Éxito!"
+  },
+  "screens.DeviceNaming.addName": {
+    "message": "Agregar nombre"
+  },
+  "screens.DeviceNaming.description": {
+    "message": "Para crear o unirte a un nuevo proyecto tendrás que nombrar tu dispositivo. En una futura versión de CoMapeo, podrás gestionar los proyectos que hayas creado cambiando los roles de los dispositivos, eliminando dispositivos y mucho más."
+  },
+  "screens.DeviceNaming.header": {
+    "message": "Agrega un nombre para tu dispositivo"
+  },
   "screens.EnterPassword.enterPass": {
     "message": "Introduzca su contraseña"
   },
   "screens.EnterPassword.wrongPass": {
     "message": "Contraseña incorrecta, inténtelo de nuevo"
+  },
+  "screens.IntroToCoMapeo.collaborate": {
+    "message": "Colabora con proyectos de mapeo y monitoreo"
+  },
+  "screens.IntroToCoMapeo.getStarted": {
+    "message": "¡Comienza ya!"
+  },
+  "screens.IntroToCoMapeo.isNow": {
+    "description": "The full sentence is mapeo 'is now' comapeo. ",
+    "message": "ahora es"
+  },
+  "screens.IntroToCoMapeo.version": {
+    "description": "v is short for version. the translation for version can be used instead",
+    "message": "V"
   },
   "screens.ObscurePasscode.description": {
     "message": "La Contraseña oscura es una funcionalidad de seguridad que le permite abrir Mapeo en un modo que oculta todos sus datos. Introduciendo la Constraseña oscura en la pantalla de introducción se mostrará una versión vacía de Mapeo que le permite crear observaciones de demostración que no se guardan en la base de datos de Mapeo."

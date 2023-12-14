@@ -6,10 +6,10 @@ import {
   type LocationObject,
   Accuracy,
 } from 'expo-location';
-import {usePersistedDraftObservation} from './persistedState/usePersistedDraftObservation';
-import {useDraftObservation} from './useDraftObservation';
+import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
+import {useDraftObservation} from '../../hooks/useDraftObservation';
 
-export function useMostAccurateLocation() {
+export function useMostAccurateLocationForObservation() {
   const value = usePersistedDraftObservation(store => store.value);
   const {updateObservationPosition} = useDraftObservation();
 

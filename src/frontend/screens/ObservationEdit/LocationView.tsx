@@ -4,7 +4,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {BLACK, LIGHT_GREY} from '../../lib/styles';
 
-import {useMostAccurateLocation} from '../../hooks/useMostAccurateLocation';
+import {useMostAccurateLocationForObservation} from './useMostAccurateLocationForObservation';
 
 const m = defineMessages({
   searching: {
@@ -15,7 +15,7 @@ const m = defineMessages({
 });
 
 export const LocationView = () => {
-  const location = useMostAccurateLocation();
+  const location = useMostAccurateLocationForObservation();
 
   const lat =
     !location || !location.coords ? undefined : location.coords.latitude;

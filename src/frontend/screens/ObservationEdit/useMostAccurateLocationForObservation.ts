@@ -20,7 +20,7 @@ export function useMostAccurateLocationForObservation() {
   const locationServicesTurnedOff =
     providerStatus && !providerStatus.locationServicesEnabled;
 
-  if (locationServicesTurnedOff && value?.metadata.position) {
+  if (locationServicesTurnedOff && !value?.metadata.position) {
     updateObservationPosition({position: undefined, manualLocation: false});
   }
 

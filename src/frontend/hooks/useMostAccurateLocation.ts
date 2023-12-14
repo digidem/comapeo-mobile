@@ -1,22 +1,17 @@
 import {useFocusEffect} from '@react-navigation/native';
-import {useCallback, useState} from 'react';
+import {useCallback} from 'react';
 import {
   watchPositionAsync,
   useForegroundPermissions,
   type LocationObject,
   Accuracy,
 } from 'expo-location';
+import {usePersistedDraftObservation} from './persistedState/usePersistedDraftObservation';
+import {useDraftObservation} from './useDraftObservation';
 
-interface LocationState {
-  location: LocationObject | undefined;
-  error: Error | undefined;
-}
-
-export function useMostAccurateLocation(): LocationState {
-  const [location, setLocation] = useState<LocationState>({
-    location: undefined,
-    error: undefined,
-  });
+export function useMostAccurateLocation() {
+  const value = usePersistedDraftObservation(store => store.value);
+  const {updateObservationPosition} = useDraftObservation();
 
   const [permissions] = useForegroundPermissions();
 
@@ -31,26 +26,36 @@ export function useMostAccurateLocation(): LocationState {
         },
         debounceLocation()(location => {
           if (ignore) return;
-          setLocation({location, error: undefined});
+          const newCoord = !location
+            ? undefined
+            : Object.entries(location.coords).map(
+                ([key, val]) => [key, val === null ? undefined : val] as const,
+              );
+          updateObservationPosition({
+            position: {
+              mocked: false,
+              coords: !newCoord ? undefined : Object.fromEntries(newCoord),
+              timestamp: location?.timestamp.toString(),
+            },
+            manualLocation: false,
+          });
         }),
       );
 
       // Should not happen because we are checking permissions above, but just in case
       locationSubscriptionProm.catch(error => {
         if (ignore) return;
-        setLocation(({location}) => {
-          return {location, error};
-        });
+        // We should probably set up an error boundary and throw
       });
 
       return () => {
         ignore = true;
         locationSubscriptionProm.then(sub => sub.remove());
       };
-    }, [permissions]),
+    }, [permissions, updateObservationPosition]),
   );
 
-  return location;
+  return value?.metadata.position;
 }
 
 function debounceLocation() {

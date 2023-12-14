@@ -24,6 +24,8 @@ import {ObservationScreen} from '../../screens/Observation';
 import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
 import ManualGpsScreen from '../../screens/ManualGpsScreen';
+import {CustomHeaderLeftClose} from '../../sharedComponents/CustomHeaderLeftClose';
+import {SaveButton} from '../../screens/ObservationEdit/SaveButton';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -122,7 +124,21 @@ export const createDefaultScreenGroup = (
     <RootStack.Screen
       name="ObservationEdit"
       component={ObservationEdit}
-      options={{headerTitle: intl(ObservationEdit.navTitle)}}
+      options={props => {
+        const observationId = props.route.params?.observationId;
+        return {
+          headerLeft: props => (
+            <CustomHeaderLeftClose
+              headerBackButtonProps={props}
+              observationId={observationId}
+            />
+          ),
+          headerRight: () => <SaveButton observationId={observationId} />,
+          headerTitle: !observationId
+            ? intl(ObservationEdit.navTitle)
+            : intl(ObservationEdit.editTitle),
+        };
+      }}
     />
     <RootStack.Screen
       name="AddPhoto"

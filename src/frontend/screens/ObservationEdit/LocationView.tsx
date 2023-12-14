@@ -6,7 +6,6 @@ import {BLACK, LIGHT_GREY} from '../../lib/styles';
 import {convertToUTM} from '../../lib/utils';
 
 import {useMostAccurateLocation} from '../../hooks/useMostAccurateLocation';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
 
 const m = defineMessages({
   searching: {
@@ -17,11 +16,14 @@ const m = defineMessages({
 });
 
 export const LocationView = () => {
-  const {location} = useMostAccurateLocation();
+  const location = useMostAccurateLocation();
 
-  const lat = !location ? undefined : location.coords.latitude;
-  const lon = !location ? undefined : location.coords.longitude;
-  const accuracy = !location ? undefined : location.coords.accuracy;
+  const lat =
+    !location || !location.coords ? undefined : location.coords.latitude;
+  const lon =
+    !location || !location.coords ? undefined : location.coords.longitude;
+  const accuracy =
+    !location || !location.coords ? undefined : location.coords.accuracy;
 
   return (
     <View style={styles.locationContainer}>

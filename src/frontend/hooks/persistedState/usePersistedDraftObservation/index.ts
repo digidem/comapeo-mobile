@@ -8,15 +8,6 @@ import {
 } from './photosMethods';
 import {ClientGeneratedObservation, Position} from '../../../sharedTypes';
 import {Observation, Preset} from '@mapeo/schema';
-import {type LocationObject} from 'expo-location';
-
-type UpdateObservationPositionProps =
-  | {
-      position: Position;
-      manualLocation: boolean;
-      positionStale: false;
-    }
-  | {positionStale: true};
 
 type newDraftProps = {observation: Observation; preset: Preset};
 const emptyObservation: ClientGeneratedObservation = {

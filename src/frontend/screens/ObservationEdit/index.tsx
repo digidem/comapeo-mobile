@@ -1,7 +1,6 @@
 import * as React from 'react';
-import {defineMessages, useIntl} from 'react-intl';
+import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 
-import {SaveButton} from './SaveButton';
 import {NativeNavigationComponent} from '../../sharedTypes';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {View, ScrollView, StyleSheet} from 'react-native';
@@ -9,7 +8,6 @@ import {LocationView} from './LocationView';
 import {DescriptionField} from './DescriptionField';
 import {BottomSheet} from './BottomSheet';
 import {ThumbnailScrollView} from '../../sharedComponents/ThumbnailScrollView';
-import {CustomHeaderLeftClose} from '../../sharedComponents/CustomHeaderLeftClose';
 import {PresetView} from './PresetView';
 
 const m = defineMessages({
@@ -30,26 +28,15 @@ const m = defineMessages({
   },
 });
 
-export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
-  navigation,
-}) => {
+export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
+  editTitle: MessageDescriptor;
+} = ({navigation}) => {
   const observationId = usePersistedDraftObservation(
     store => store.observationId,
   );
+
   const isNew = !observationId;
   const {formatMessage: t} = useIntl();
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitle: observationId ? t(m.editTitle) : t(m.newTitle),
-      headerLeft: props => (
-        <CustomHeaderLeftClose
-          headerBackButtonProps={props}
-          observationId={observationId}
-        />
-      ),
-      headerRight: () => <SaveButton observationId={observationId} />,
-    });
-  }, [navigation, observationId, CustomHeaderLeftClose, SaveButton]);
 
   const handleCameraPress = React.useCallback(() => {
     navigation.navigate('AddPhoto');
@@ -91,6 +78,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
 };
 
 ObservationEdit.navTitle = m.newTitle;
+ObservationEdit.editTitle = m.editTitle;
 
 const styles = StyleSheet.create({
   container: {

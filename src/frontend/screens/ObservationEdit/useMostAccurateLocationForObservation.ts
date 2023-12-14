@@ -8,12 +8,21 @@ import {
 } from 'expo-location';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
+import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
 
 export function useMostAccurateLocationForObservation() {
   const value = usePersistedDraftObservation(store => store.value);
   const {updateObservationPosition} = useDraftObservation();
 
   const [permissions] = useForegroundPermissions();
+
+  const providerStatus = useLocationProviderStatus();
+  const locationServicesTurnedOff =
+    providerStatus && !providerStatus.locationServicesEnabled;
+
+  if (locationServicesTurnedOff && value?.metadata.position) {
+    updateObservationPosition({position: undefined, manualLocation: false});
+  }
 
   useFocusEffect(
     useCallback(() => {
@@ -80,14 +89,4 @@ function debounceLocation() {
       }
     };
   };
-}
-
-/**
- * For a LocationObject, get the lon,lat tuple
- *
- * @returns [longitude, latitude]
- */
-export function getCoords(location: LocationObject): [number, number] {
-  const {longitude, latitude} = location.coords;
-  return [longitude, latitude];
 }

@@ -48,7 +48,7 @@ export const DeviceName: NativeNavigationComponent<'DeviceName'> = ({
   const isEditting = useDeviceNameStore(store => store.isEditting);
   const error = useDeviceNameStore(store => store.error);
   const newName = useDeviceNameStore(store => store.newName);
-  const {setNewName} = useDeviceNameStoreActions();
+  const {setNewName, setIsEditting} = useDeviceNameStoreActions();
   const updatedName = useOptimisticDeviceName();
   const deviceInfo = useDeviceInfo();
   const {formatMessage: t} = useIntl();
@@ -63,6 +63,10 @@ export const DeviceName: NativeNavigationComponent<'DeviceName'> = ({
       // Prevent default behavior of leaving the screen
       e.preventDefault();
 
+      if (newName.length < 1) {
+        setIsEditting(false);
+        return;
+      }
       // Prompt the user before leaving the screen
       Alert.alert(t(m.discardChanges), undefined, [
         {text: t(m.continueEditting), style: 'cancel', onPress: () => {}},

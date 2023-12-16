@@ -25,6 +25,7 @@ import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
 import {CoordinateFormat} from '../../screens/Settings/AppSettings/CoordinateFormat';
 import {DeviceName} from '../../screens/Settings/ProjectSettings/DeviceName';
+import {HeaderRightDeviceName} from '../../screens/Settings/ProjectSettings/HeaderRightDeviceName';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -196,7 +197,10 @@ export const createDefaultScreenGroup = (
     <RootStack.Screen
       name="DeviceName"
       component={DeviceName}
-      options={{headerTitle: intl(DeviceName.navTitle)}}
+      options={{
+        headerTitle: intl(DeviceName.navTitle),
+        headerRight: () => <HeaderRightDeviceName />,
+      }}
     />
   </RootStack.Group>
 );

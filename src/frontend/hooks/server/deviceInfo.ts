@@ -1,4 +1,9 @@
-import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {
+  useMutation,
+  useMutationState,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import {useApi} from '../../contexts/ApiContext';
 
 export const useDeviceInfo = () => {
@@ -17,12 +22,20 @@ export const useEditDeviceInfo = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationKey: ['device'],
+    mutationKey: ['deviceInfo'],
     mutationFn: async (name: string) => {
       return mapeoApi.setDeviceInfo({name});
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: ['deviceInfo']});
+    onSuccess: async () => {
+      return await queryClient.invalidateQueries({queryKey: ['deviceInfo']});
     },
   });
 };
+
+export function useOptimisticDeviceName() {
+  const variables = useMutationState<string>({
+    filters: {mutationKey: ['deviceInfo'], status: 'pending'},
+    select: mutation => mutation.state.variables as string,
+  });
+  return variables[0];
+}

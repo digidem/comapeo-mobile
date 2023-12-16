@@ -6,7 +6,18 @@ import {IconButton} from '../../../sharedComponents/IconButton';
 import {EditIcon, SaveIcon} from '../../../sharedComponents/icons';
 import {Text} from '../../../sharedComponents/Text';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import {MEDIUM_GREY} from '../../../lib/styles';
+import {BLACK, MEDIUM_GREY, RED} from '../../../lib/styles';
+import {
+  useDeviceInfo,
+  useEditDeviceInfo,
+  useOptimisticDeviceName,
+} from '../../../hooks/server/deviceInfo';
+import {Loading} from '../../../sharedComponents/Loading';
+import {
+  useDeviceNameStore,
+  useDeviceNameStoreActions,
+} from '../../../hooks/store/useDeviceNameStore';
+import {useMutationState} from '@tanstack/react-query';
 
 const m = defineMessages({
   title: {
@@ -34,35 +45,13 @@ const m = defineMessages({
 export const DeviceName: NativeNavigationComponent<'DeviceName'> = ({
   navigation,
 }) => {
-  const [isEditting, setIsEditting] = React.useState(false);
-  // set default name to peristed state name
-  const [newName, setNewName] = React.useState('');
+  const isEditting = useDeviceNameStore(store => store.isEditting);
+  const error = useDeviceNameStore(store => store.error);
+  const newName = useDeviceNameStore(store => store.newName);
+  const {setNewName} = useDeviceNameStoreActions();
+  const updatedName = useOptimisticDeviceName();
+  const deviceInfo = useDeviceInfo();
   const {formatMessage: t} = useIntl();
-
-  const validateAndSetNewName = React.useCallback(() => {
-    const newNameTrimmed = newName.trim();
-    const nameLength = newNameTrimmed.length;
-    if (nameLength < 1 || nameLength > 60) {
-      //setErrorTimer here
-      return;
-    }
-
-    //setToPersistedState
-    setIsEditting(false);
-  }, [newName, setIsEditting]);
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <IconButton
-          onPress={() =>
-            !isEditting ? setIsEditting(true) : validateAndSetNewName()
-          }>
-          {!isEditting ? <EditIcon /> : <SaveIcon />}
-        </IconButton>
-      ),
-    });
-  }, [isEditting, navigation, validateAndSetNewName, setIsEditting]);
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', e => {
@@ -87,15 +76,6 @@ export const DeviceName: NativeNavigationComponent<'DeviceName'> = ({
     return () => unsubscribe();
   }, [navigation, isEditting]);
 
-  function handleChangeName(newVal: string) {
-    if (newVal.length > 60) {
-      //setErrorTimeout here
-      return;
-    }
-
-    setNewName(newVal);
-  }
-
   return (
     <TouchableWithoutFeedback
       style={styles.container}
@@ -104,17 +84,33 @@ export const DeviceName: NativeNavigationComponent<'DeviceName'> = ({
         {t(!isEditting ? m.yourDevice : m.editDevice)}
       </Text>
       {!isEditting ? (
-        <Text>device name here</Text>
+        deviceInfo.isLoading ? (
+          <Loading />
+        ) : (
+          <Text>{updatedName ? updatedName : deviceInfo.data?.name}</Text>
+        )
       ) : (
         <React.Fragment>
           <TextInput
-            style={{borderColor: MEDIUM_GREY, borderWidth: 1, borderRadius: 5}}
-            value={newName}
-            onChangeText={handleChangeName}
+            style={{
+              borderColor: error ? RED : MEDIUM_GREY,
+              borderWidth: 1,
+              borderRadius: 5,
+              color: BLACK,
+              paddingStart: 10,
+            }}
+            value={newName || undefined}
+            onChangeText={setNewName}
+            placeholderTextColor={MEDIUM_GREY}
+            // placeholder={deviceInfo.data?.name || undefined}
           />
           <Text
-            style={{alignSelf: 'flex-end', marginTop: 10, color: MEDIUM_GREY}}>
-            {`${newName.length}/60`}
+            style={{
+              alignSelf: 'flex-end',
+              marginTop: 10,
+              color: error ? RED : MEDIUM_GREY,
+            }}>
+            {`${newName ? newName.length : 0}/60`}
           </Text>
         </React.Fragment>
       )}

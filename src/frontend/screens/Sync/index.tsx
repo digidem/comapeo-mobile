@@ -7,13 +7,45 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {BLACK} from '../../lib/styles';
 import {SettingsButton} from '../ObservationsList/SettingsButton';
 import {Button} from '../../sharedComponents/Button';
-import {useProject} from '../../hooks/server/projects';
+import {useProject, useProjectSettings} from '../../hooks/server/projects';
+import {State} from '@mapeo/core/dist/sync/sync-api';
+import {useDeviceInfo} from '../../hooks/server/deviceInfo';
+
+/**
+ *
+ * States needed:
+ * - syncing
+ * - not syncing
+ *    - devices waiting to sync
+ *    - data up to date
+ */
 
 export const Sync: NativeNavigationComponentNoHeader<'Sync'> = ({
   navigation,
 }) => {
   const ssid = useWifiName();
-  const project = useProject();
+  const sync = useProject().$sync;
+  const projectSettings = useProjectSettings();
+  const deviceInfo = useDeviceInfo();
+  const [connectedPeers, setConnectedPeers] = React.useState<number>();
+  const [isSyncing, setIsSyncing] = React.useState(false);
+  const [hasDataToSync, setHasDataToSync] = React.useState<boolean>();
+
+  console.log({isSyncing});
+  React.useEffect(() => {
+    const syncListener = (val: State) => {
+      console.log(val);
+      setConnectedPeers(val.connectedPeers);
+      setIsSyncing(val.data.syncing);
+      setHasDataToSync(val.data.dataToSync);
+    };
+
+    sync.addListener('sync-state', syncListener);
+
+    return () => {
+      sync.removeListener('sync-state', syncListener);
+    };
+  }, [sync]);
 
   React.useLayoutEffect(() => {
     if (ssid)
@@ -37,15 +69,55 @@ export const Sync: NativeNavigationComponentNoHeader<'Sync'> = ({
   return (
     <View style={styles.container}>
       <View>
-        <Text>Project Name Here</Text>
-        <Text>Your device name is </Text>
+        {projectSettings.data && projectSettings.data.name && (
+          <Text>{projectSettings.data.name}</Text>
+        )}
+        {deviceInfo.data && deviceInfo.data.name && (
+          <Text>Your device name is {deviceInfo.data.name}</Text>
+        )}
         <MaterialIcons name="wifi" size={20} color={BLACK} />
+        {connectedPeers !== undefined && (
+          <Text>{`Connected Peers: ${connectedPeers}`}</Text>
+        )}
+        {isSyncing ? (
+          <View>{/* syncing here */}</View>
+        ) : (
+          <View>
+            {hasDataToSync ? (
+              <Text>devices want to sync</Text>
+            ) : (
+              <Text>No data to sync</Text>
+            )}
+          </View>
+        )}
       </View>
-      <Button fullWidth onPress={() => {}}>
-        {}
-      </Button>
+
+      <SyncButton isSyncing={false} hasDataToSync={true} />
     </View>
   );
+};
+
+const SyncButton = ({
+  isSyncing,
+  hasDataToSync,
+}: {
+  isSyncing: boolean;
+  hasDataToSync?: boolean;
+}) => {
+  const sync = useProject().$sync;
+  if (isSyncing) {
+    return <Button onPress={() => sync.stop()}>Stop</Button>;
+  }
+
+  if (hasDataToSync === undefined) {
+    return null;
+  }
+
+  if (!hasDataToSync) {
+    return <Button onPress={() => {}}>You're all caught up</Button>;
+  }
+
+  return <Button onPress={() => sync.start()}>Sync</Button>;
 };
 
 const styles = StyleSheet.create({

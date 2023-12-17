@@ -31,11 +31,3 @@ export const useEditDeviceInfo = () => {
     },
   });
 };
-
-export function useOptimisticDeviceName() {
-  const variables = useMutationState<string>({
-    filters: {mutationKey: ['deviceInfo'], status: 'pending'},
-    select: mutation => mutation.state.variables as string,
-  });
-  return variables[0];
-}

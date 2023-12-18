@@ -25,7 +25,9 @@ import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
 import {CoordinateFormat} from '../../screens/Settings/AppSettings/CoordinateFormat';
 import {DeviceName} from '../../screens/Settings/ProjectSettings/DeviceName';
-import {HeaderRightDeviceName} from '../../screens/Settings/ProjectSettings/HeaderRightDeviceName';
+import {HeaderRightSaveButton} from '../../sharedComponents/HeaderRightSaveButton';
+import {DeviceNameEdit} from '../../screens/Settings/ProjectSettings/DeviceNameEdit';
+import {HeaderRightEditButton} from '../../sharedComponents/HeaderRightEditButton';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -84,6 +86,7 @@ export type AppList = {
   AppSettings: undefined;
   ProjectSettings: undefined;
   DeviceName: undefined;
+  DeviceNameEdit: undefined;
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
@@ -199,7 +202,15 @@ export const createDefaultScreenGroup = (
       component={DeviceName}
       options={{
         headerTitle: intl(DeviceName.navTitle),
-        headerRight: () => <HeaderRightDeviceName />,
+        headerRight: () => <HeaderRightEditButton />,
+      }}
+    />
+    <RootStack.Screen
+      name="DeviceNameEdit"
+      component={DeviceNameEdit}
+      options={{
+        headerTitle: intl(DeviceNameEdit.navTitle),
+        headerRight: () => <HeaderRightSaveButton />,
       }}
     />
   </RootStack.Group>

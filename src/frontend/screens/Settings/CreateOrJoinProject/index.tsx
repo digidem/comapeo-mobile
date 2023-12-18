@@ -5,9 +5,10 @@ import {NativeNavigationComponent, ViewStyleProp} from '../../../sharedTypes';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {LIGHT_GREY} from '../../../lib/styles';
-import {Loading} from '../../../sharedComponents/Loading';
-import {useAllProjects} from '../../../hooks/server/useAllProjects';
 import Warning from '../../../images/Warning.svg';
+import {useAllProjects} from '../../../hooks/server/projects';
+import {CenteredView} from '../../../sharedComponents/CenteredView';
+import {Loading} from '../../../sharedComponents/Loading';
 
 const m = defineMessages({
   title: {
@@ -52,42 +53,48 @@ export const CreateOrJoinProject: NativeNavigationComponent<
   const {formatMessage: t} = useIntl();
   const projects = useAllProjects();
 
-  return (
-    <ScrollView style={styles.container}>
-      <View style={styles.greyBox}>
-        <Text style={{fontWeight: 'bold'}}>{t(m.whatIsAProject)}</Text>
-        <Text>{t(m.projectDescription)}</Text>
-      </View>
-      {projects.isLoading ? (
-        <Loading />
-      ) : projects.data && projects.data.length > 1 ? (
-        <View style={[styles.greyBox, {marginTop: 10}]}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Warning style={{marginRight: 10}} />
-            <View>
-              <Text style={{fontWeight: 'bold'}}>{t(m.createProject)}</Text>
-              <Text>{t(m.alreadyOnProject)}</Text>
+  if (projects.data) {
+    return (
+      <ScrollView style={styles.container}>
+        <View style={styles.greyBox}>
+          <Text style={{fontWeight: 'bold'}}>{t(m.whatIsAProject)}</Text>
+          <Text>{t(m.projectDescription)}</Text>
+        </View>
+        {projects.data.length > 1 ? (
+          <View style={[styles.greyBox, {marginTop: 10}]}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Warning style={{marginRight: 10}} />
+              <View>
+                <Text style={{fontWeight: 'bold'}}>{t(m.createProject)}</Text>
+                <Text>{t(m.alreadyOnProject)}</Text>
+              </View>
             </View>
           </View>
-        </View>
-      ) : (
+        ) : (
+          <CardButton
+            header={m.createProject}
+            subHeader={m.startProject}
+            style={{marginTop: 10}}
+            isLoading={projects.isLoading}
+            onPress={() => {
+              navigation.navigate('CreateProject');
+            }}
+          />
+        )}
         <CardButton
-          header={m.createProject}
-          subHeader={m.startProject}
+          header={m.joinProject}
+          subHeader={m.joinExisting}
           style={{marginTop: 10}}
-          isLoading={projects.isLoading}
-          onPress={() => {
-            navigation.navigate('CreateProject');
-          }}
+          onPress={() => {}}
         />
-      )}
-      <CardButton
-        header={m.joinProject}
-        subHeader={m.joinExisting}
-        style={{marginTop: 10}}
-        onPress={() => {}}
-      />
-    </ScrollView>
+      </ScrollView>
+    );
+  }
+
+  return (
+    <CenteredView>
+      <Loading />
+    </CenteredView>
   );
 };
 

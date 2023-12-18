@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {useForm, Controller} from 'react-hook-form';
-import {Alert, Keyboard, StyleSheet, TextInput} from 'react-native';
+import {useForm} from 'react-hook-form';
+import {Alert, Keyboard, StyleSheet} from 'react-native';
 import {NativeNavigationComponent} from '../../../sharedTypes';
 import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../../sharedComponents/Text';
@@ -12,6 +12,7 @@ import {
 } from '../../../hooks/server/deviceInfo';
 import {Loading} from '../../../sharedComponents/Loading';
 import {HeaderRightDeviceName} from './HeaderRightDeviceName';
+import {HookFormTextInput} from '../../../sharedComponents/HookFormTextInput';
 
 const m = defineMessages({
   title: {
@@ -112,26 +113,19 @@ export const DeviceName: NativeNavigationComponent<'DeviceName'> = ({
         )
       ) : (
         <React.Fragment>
-          <Controller
+          <HookFormTextInput
             name="name"
             control={control}
             rules={{required: true, maxLength: 60}}
-            render={({field: {value, onChange, onBlur}}) => (
-              <TextInput
-                style={{
-                  borderColor: errors.name ? RED : MEDIUM_GREY,
-                  borderWidth: 1,
-                  borderRadius: 5,
-                  color: BLACK,
-                  paddingStart: 10,
-                }}
-                value={value}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                placeholderTextColor={MEDIUM_GREY}
-                placeholder={deviceInfo.data?.name}
-              />
-            )}
+            placeholderTextColor={MEDIUM_GREY}
+            placeholder={deviceInfo.data?.name}
+            style={{
+              borderColor: errors.name ? RED : MEDIUM_GREY,
+              borderWidth: 1,
+              borderRadius: 5,
+              color: BLACK,
+              paddingStart: 10,
+            }}
           />
           <Text>{`${watch().name.length}/60`}</Text>
         </React.Fragment>

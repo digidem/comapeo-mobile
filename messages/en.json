@@ -332,6 +332,15 @@
   "screens.Settings.CreateOrJoinProject.CreateProject.title": {
     "message": "Create a Project"
   },
+  "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
+    "message": "Go back"
+  },
+  "screens.Settings.CreateOrJoinProject.JoinExistingProject.howTo": {
+    "message": "How to Join a Project"
+  },
+  "screens.Settings.CreateOrJoinProject.JoinExistingProject.instructions": {
+    "message": "To join a project find a Coordinator of the project you wish to join. Tell them your device name and the Coordinator will send you an invite."
+  },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.goToMap": {
     "message": "Go to Map"
   },

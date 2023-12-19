@@ -29,6 +29,7 @@ import {SaveButton} from '../../screens/ObservationEdit/SaveButton';
 import {CreateOrJoinProject} from '../../screens/Settings/CreateOrJoinProject';
 import {CreateProject} from '../../screens/Settings/CreateOrJoinProject/CreateProject';
 import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateProject/ProjectCreated';
+import {JoinExistingProject} from '../../screens/Settings/CreateOrJoinProject/JoinExistingProject';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -88,6 +89,7 @@ export type AppList = {
   ProjectSettings: undefined;
   CreateOrJoinProject: undefined;
   ProjectCreated: {name: string};
+  JoinExistingProject: undefined;
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
@@ -224,6 +226,11 @@ export const createDefaultScreenGroup = (
     <RootStack.Screen
       name="ProjectCreated"
       component={ProjectCreated}
+      options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="JoinExistingProject"
+      component={JoinExistingProject}
       options={{headerShown: false}}
     />
   </RootStack.Group>

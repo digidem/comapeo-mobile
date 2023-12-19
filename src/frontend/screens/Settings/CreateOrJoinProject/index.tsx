@@ -62,11 +62,16 @@ export const CreateOrJoinProject: NativeNavigationComponent<
         </View>
         {projects.data.length > 1 ? (
           <View style={[styles.greyBox, {marginTop: 10}]}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Warning style={{marginRight: 10}} />
-              <View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}>
+              <Warning style={{marginRight: 20}} />
+              <View style={{flex: 1}}>
                 <Text style={{fontWeight: 'bold'}}>{t(m.createProject)}</Text>
-                <Text>{t(m.alreadyOnProject)}</Text>
+                <Text style={{}}>{t(m.alreadyOnProject)}</Text>
               </View>
             </View>
           </View>
@@ -85,7 +90,9 @@ export const CreateOrJoinProject: NativeNavigationComponent<
           header={m.joinProject}
           subHeader={m.joinExisting}
           style={{marginTop: 10}}
-          onPress={() => {}}
+          onPress={() => {
+            navigation.navigate('JoinExistingProject');
+          }}
         />
       </ScrollView>
     );
@@ -114,8 +121,12 @@ function CardButton({header, subHeader, style, onPress}: CardButtonProps) {
   return (
     <TouchableOpacity style={[styles.cardButton, style]} onPress={onPress}>
       <React.Fragment>
-        <Text style={{fontSize: 24, fontWeight: 'bold'}}>{t(header)}</Text>
-        <Text style={{fontSize: 16, marginTop: 10}}>{t(subHeader)}</Text>
+        <Text style={{fontSize: 24, fontWeight: 'bold', textAlign: 'center'}}>
+          {t(header)}
+        </Text>
+        <Text style={{fontSize: 16, marginTop: 10, textAlign: 'center'}}>
+          {t(subHeader)}
+        </Text>
       </React.Fragment>
     </TouchableOpacity>
   );

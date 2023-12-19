@@ -1,4 +1,4 @@
-import {useQuery} from '@tanstack/react-query';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {useApi} from '../../contexts/ApiContext';
 import {useActiveProjectContext} from '../../contexts/ProjectContext';
 
@@ -19,5 +19,22 @@ export function useAllProjects() {
     queryFn: async () => await api.listProjects(),
     queryKey: ['projects'],
     throwOnError: true,
+  });
+}
+
+export function useCreateProject() {
+  const api = useApi();
+  const queryClient = useQueryClient();
+  const updateProject = useUpdateActiveProjectId();
+
+  return useMutation({
+    mutationKey: ['createProject'],
+    mutationFn: async (name: string) => {
+      return await api.createProject({name});
+    },
+    onSuccess: async data => {
+      updateProject(data);
+      return await queryClient.invalidateQueries({queryKey: ['projects']});
+    },
   });
 }

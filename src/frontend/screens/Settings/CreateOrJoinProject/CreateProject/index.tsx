@@ -1,12 +1,7 @@
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeNavigationComponent} from '../../../../sharedTypes';
-import {
-  Keyboard,
-  KeyboardAvoidingView,
-  StyleSheet,
-  TextInput,
-  View,
-} from 'react-native';
+import {Keyboard, KeyboardAvoidingView, StyleSheet, View} from 'react-native';
+import {useForm} from 'react-hook-form';
 import {Text} from '../../../../sharedComponents/Text';
 import * as React from 'react';
 import {
@@ -14,9 +9,10 @@ import {
   TouchableOpacity,
 } from 'react-native-gesture-handler';
 import {Button} from '../../../../sharedComponents/Button';
-import {LIGHT_GREY, MEDIUM_GREY, RED} from '../../../../lib/styles';
+import {BLACK, LIGHT_GREY, MEDIUM_GREY, RED} from '../../../../lib/styles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {useErrorTimeout} from '../../../../hooks/useErrorTimer';
+import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
+import {useCreateProject} from '../../../../hooks/server/projects';
 
 const m = defineMessages({
   title: {
@@ -41,32 +37,27 @@ const m = defineMessages({
   },
 });
 
+type ProjectFormType = {
+  projectName: string;
+};
+
 export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
   navigation,
 }) => {
   const {formatMessage: t} = useIntl();
-  const [projectName, setProjectName] = React.useState('');
   const [advancedSettingOpen, setAdvancedSettingOpen] = React.useState(false);
-  const [error, setErrorTimer] = useErrorTimeout();
+  const {mutate} = useCreateProject();
 
-  function handleChangeText(val: string) {
-    if (val.length > 100) {
-      setErrorTimer();
-      return;
-    }
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+    watch,
+  } = useForm<ProjectFormType>({defaultValues: {projectName: ''}});
 
-    setProjectName(val);
-  }
-
-  function handleCreateProjectButton() {
-    const nameLength = projectName.length;
-    if (nameLength < 1 || nameLength > 100) {
-      setErrorTimer();
-      return;
-    }
-    // create project here
-    // on creation, set projectId in persisted state as new project (this should reset the project at the root level)
-    navigation.navigate('ProjectCreated', {name: projectName});
+  function handleCreateProject(val: ProjectFormType) {
+    mutate(val.projectName);
+    navigation.navigate('ProjectCreated', {name: val.projectName});
   }
 
   return (
@@ -76,24 +67,26 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
         style={styles.container}>
         <View>
           <Text style={{marginHorizontal: 20}}>{t(m.enterName)}</Text>
-          <TextInput
-            value={projectName}
+          <HookFormTextInput
+            control={control}
+            name="projectName"
+            rules={{maxLength: 100, required: true}}
             style={{
               borderWidth: 1,
               borderRadius: 6,
-              borderColor: !error ? MEDIUM_GREY : RED,
+              borderColor: !errors.projectName ? MEDIUM_GREY : RED,
               marginTop: 10,
               marginHorizontal: 20,
+              color: BLACK,
             }}
-            onChangeText={handleChangeText}
           />
           <Text
             style={{
               alignSelf: 'flex-end',
-              color: !error ? MEDIUM_GREY : RED,
+              color: !errors.projectName ? MEDIUM_GREY : RED,
               marginTop: 10,
               marginHorizontal: 20,
-            }}>{`${projectName.length}/100`}</Text>
+            }}>{`${watch().projectName.length}/100`}</Text>
           <View style={{marginTop: 20}}>
             <TouchableOpacity
               onPress={() => setAdvancedSettingOpen(prev => !prev)}
@@ -118,7 +111,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
           </View>
         </View>
         <View style={{paddingHorizontal: 20}}>
-          <Button fullWidth onPress={handleCreateProjectButton}>
+          <Button fullWidth onPress={handleSubmit(handleCreateProject)}>
             {t(m.createProjectButton)}
           </Button>
         </View>

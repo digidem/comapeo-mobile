@@ -24,16 +24,19 @@ interface LocationState {
   error: Error | undefined;
 }
 
+const LOCATION_MS_TO_STALE = 1000 * 60 * 5; // 5 minutes
+
 export function useLocation({
   minDistanceInterval: distanceInterval = 1,
   minTimeInterval,
   maxTimeInterval,
   maxDistanceInterval,
-}: LocationOptions): LocationState {
+}: LocationOptions): LocationState & {stale: boolean} {
   const [location, setLocation] = React.useState<LocationState>({
     location: undefined,
     error: undefined,
   });
+  const [stale, setStale] = React.useState(true);
 
   const [permissions] = useForegroundPermissions();
 
@@ -42,6 +45,9 @@ export function useLocation({
       if (!permissions || !permissions.granted) return;
 
       let ignore = false;
+      let staleTimeoutId: ReturnType<typeof setTimeout> | undefined;
+      const onStaleLocation = () => setStale(true);
+      staleTimeoutId = setTimeout(onStaleLocation, LOCATION_MS_TO_STALE);
       const locationSubscriptionProm = watchPositionAsync(
         {
           accuracy: Accuracy.BestForNavigation,
@@ -53,6 +59,9 @@ export function useLocation({
           maxDistanceInterval,
         })(location => {
           if (ignore) return;
+          if (staleTimeoutId) clearTimeout(staleTimeoutId);
+          staleTimeoutId = setTimeout(onStaleLocation, LOCATION_MS_TO_STALE);
+          setStale(false);
           setLocation({location, error: undefined});
         }),
       );
@@ -67,6 +76,7 @@ export function useLocation({
 
       return () => {
         ignore = true;
+        if (staleTimeoutId) clearTimeout(staleTimeoutId);
         locationSubscriptionProm.then(sub => sub.remove());
       };
     }, [
@@ -78,7 +88,7 @@ export function useLocation({
     ]),
   );
 
-  return location;
+  return {...location, stale};
 }
 
 function debounceLocation({

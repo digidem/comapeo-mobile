@@ -10,9 +10,7 @@ import {Field, Observation, Preset} from '@mapeo/schema';
 import {formatCoords, convertSelectOptionsToLabeled} from '../lib/utils';
 import {DateDistance} from './DateDistance';
 import {formats} from '../contexts/IntlContext';
-// import { CoordinateFormat } from "../context/SettingsContext";
-
-type CoordinateFormat = 'utm' | 'dd' | 'dms';
+import {CoordinateFormat} from '../sharedTypes';
 
 const m = defineMessages({
   noAnswer: {
@@ -67,9 +65,9 @@ export const FormattedFieldProp = ({
         defaultMessage: field[propName],
       })
     : // Never show a blank label, fall back to field.key, otherwise return null
-    propName === 'label'
-    ? fieldKey
-    : undefined;
+      propName === 'label'
+      ? fieldKey
+      : undefined;
   if (!value) return null;
   return <>{value}</>;
 };

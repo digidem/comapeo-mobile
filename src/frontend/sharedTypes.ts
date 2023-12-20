@@ -51,3 +51,5 @@ export type ClientGeneratedObservation = Omit<
 export type Attachment = Observation['attachments'][0];
 
 export type PhotoVariant = 'original' | 'thumbnail' | 'preview';
+
+export type CoordinateFormat = 'utm' | 'dd' | 'dms';

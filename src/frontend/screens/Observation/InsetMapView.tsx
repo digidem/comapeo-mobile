@@ -1,8 +1,9 @@
 import MapboxGL from '@rnmapbox/maps';
 import React from 'react';
 import {View, Text, StyleSheet, Dimensions, Image} from 'react-native';
-import {convertToUTM} from '../../lib/utils';
 import {BLACK, WHITE} from '../../lib/styles';
+import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings';
+import {FormattedCoords} from '../../sharedComponents/FormattedData';
 import {MAP_STYLE} from '../MapScreen';
 
 const MAP_HEIGHT = 175;
@@ -14,6 +15,7 @@ type MapProps = {
 };
 
 export const InsetMapView = React.memo<MapProps>(({lon, lat}: MapProps) => {
+  const format = usePersistedSettings(store => store.coordinateFormat);
   return (
     <View>
       <Image
@@ -22,7 +24,9 @@ export const InsetMapView = React.memo<MapProps>(({lon, lat}: MapProps) => {
       />
       <View style={styles.coords}>
         <View style={styles.coordsPointer} />
-        <Text style={styles.positionText}>{convertToUTM({lat, lon})}</Text>
+        <Text style={styles.positionText}>
+          <FormattedCoords format={format} lat={lat} lon={lon} />
+        </Text>
       </View>
       <MapboxGL.MapView
         style={styles.map}

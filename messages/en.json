@@ -361,6 +361,15 @@
     "description": "Title of settings screen",
     "message": "Settings"
   },
+  "screens.SyncModal.SyncView.caughtUp": {
+    "message": "You're all caught up!"
+  },
+  "screens.SyncModal.SyncView.connectedPeers": {
+    "message": "{numberOfDevices} Devices nearby/connected"
+  },
+  "screens.SyncModal.SyncView.noDevices": {
+    "message": "No Device are Syncing"
+  },
   "screens.SyncModal.SyncView.noWifiDesc": {
     "description": "Description shown when no wifi network",
     "message": "Open your phone settings and connect to a WiFi network to synchronize"
@@ -369,13 +378,32 @@
     "description": "Title of message shown when no wifi network",
     "message": "No WiFi"
   },
+  "screens.SyncModal.SyncView.numberWaitingSync": {
+    "description": "Sentence is 'x devices' waiting to sync with you",
+    "message": "{numberOfDevices} Devices"
+  },
   "screens.SyncModal.SyncView.settingsButton": {
     "description": "Button to open WiFi settings",
     "message": "Open Settings"
   },
+  "screens.SyncModal.SyncView.stop": {
+    "description": "Button to stop Synchronization",
+    "message": "Stop"
+  },
+  "screens.SyncModal.SyncView.sync": {
+    "description": "Button to start Synchronization",
+    "message": "Sync"
+  },
   "screens.SyncModal.SyncView.syncHeader": {
     "description": "Header of sync screen",
     "message": "Synchronize"
+  },
+  "screens.SyncModal.SyncView.waitingToSync": {
+    "description": "Sentence is x devices 'waiting to sync with you'",
+    "message": "Waiting to Sync with you"
+  },
+  "screens.SyncModal.SyncView.yourName": {
+    "message": "Your device name is {deviceName}"
   },
   "sharedComponents.WifiBar.noWifi": {
     "message": "No Internet"

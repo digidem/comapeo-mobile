@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import SuccessIcon from '../images/Success.svg';
 import NewDeviceLogo from '../images/NewDeviceLogo.svg';
@@ -10,8 +9,6 @@ import {Button} from '../sharedComponents/Button';
 import {defineMessages, useIntl} from 'react-intl';
 import {DeviceNamingSceens} from '../Navigation/ScreenGroups/DeviceNamingScreens';
 import {useEditDeviceInfo} from '../hooks/server/deviceInfo';
-import {Loading} from '../sharedComponents/Loading';
-import {WHITE} from '../lib/styles';
 
 const m = defineMessages({
   success: {
@@ -30,6 +27,7 @@ const m = defineMessages({
 
 export const Success = ({
   route,
+  navigation,
 }: NativeStackScreenProps<DeviceNamingSceens, 'Success'>) => {
   const setDeviceName = useEditDeviceInfo();
   const deviceName = route.params.deviceName;
@@ -48,16 +46,17 @@ export const Success = ({
       </View>
       <Button
         fullWidth
+        // due to conditional rendering, there is a brief second, where the state is no longer pending, but the user has not been navigated. So if we don't do catch all these state, the button flickers briefly before navigating
+        isLoading={
+          setDeviceName.isPending ||
+          setDeviceName.isSuccess ||
+          setDeviceName.isError
+        }
         onPress={() => {
+          // This route is conditionally rendered. Once a device name is set, the user will be autmatically navigated to the map
           setDeviceName.mutate(deviceName);
         }}>
-        {setDeviceName.isPending ? (
-          <Loading style={{padding: 15}} size={15} color={WHITE} />
-        ) : setDeviceName.isSuccess ? (
-          <MaterialIcons name="check" size={30} color={WHITE} />
-        ) : (
-          t(m.goToMap)
-        )}
+        {t(m.goToMap)}
       </Button>
     </View>
   );

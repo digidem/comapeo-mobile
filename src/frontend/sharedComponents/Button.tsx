@@ -1,11 +1,12 @@
 import * as React from 'react';
 import {GestureResponderEvent, StyleSheet, View, ViewStyle} from 'react-native';
 
-import {VERY_LIGHT_BLUE} from '../lib/styles';
+import {DARK_GREY, VERY_LIGHT_BLUE} from '../lib/styles';
 import {Text} from './Text';
 import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 
 import {ViewStyleProp} from '../sharedTypes';
+import {Loading} from './Loading';
 
 type ColorScheme = 'dark' | 'light';
 type Variant = 'contained' | 'outlined' | 'text';
@@ -27,6 +28,7 @@ interface Props {
   style?: ViewStyleProp;
   testID?: string;
   variant?: Variant;
+  isLoading?: boolean;
 }
 
 export const Button = ({
@@ -39,6 +41,7 @@ export const Button = ({
   size = 'medium',
   style,
   variant = 'contained',
+  isLoading,
 }: Props) => {
   const buttonStyle = getButtonStyle(variant);
   const textStyle = getTextStyle({color, variant, disabled});
@@ -63,25 +66,34 @@ export const Button = ({
   );
 
   return (
-    <View
-      style={[
-        styles.buttonBase,
-        buttonStyle,
-        fullWidth && styles.fullWidth,
-        style,
-      ]}>
-      {TouchableComponent ? (
-        <TouchableComponent {...sharedTouchableProps}>
-          {buttonContent}
-        </TouchableComponent>
+    <React.Fragment>
+      {isLoading ? (
+        <Loading variant="spinner" color={DARK_GREY} />
       ) : (
-        <TouchableNativeFeedback
-          {...sharedTouchableProps}
-          background={TouchableNativeFeedback.Ripple(VERY_LIGHT_BLUE, false)}>
-          {buttonContent}
-        </TouchableNativeFeedback>
+        <View
+          style={[
+            styles.buttonBase,
+            buttonStyle,
+            fullWidth && styles.fullWidth,
+            style,
+          ]}>
+          {TouchableComponent ? (
+            <TouchableComponent {...sharedTouchableProps}>
+              {buttonContent}
+            </TouchableComponent>
+          ) : (
+            <TouchableNativeFeedback
+              {...sharedTouchableProps}
+              background={TouchableNativeFeedback.Ripple(
+                VERY_LIGHT_BLUE,
+                false,
+              )}>
+              {buttonContent}
+            </TouchableNativeFeedback>
+          )}
+        </View>
       )}
-    </View>
+    </React.Fragment>
   );
 };
 
@@ -94,8 +106,8 @@ function getButtonStyle(variant?: Variant) {
     return variant === 'contained'
       ? styles.buttonContained
       : variant === 'outlined'
-      ? styles.buttonOutlined
-      : undefined;
+        ? styles.buttonOutlined
+        : undefined;
   }
 }
 

@@ -12,7 +12,6 @@ import {
   NativeNavigationComponent,
   CoordinateFormat as CoordinateFormatType,
 } from '../../../sharedTypes';
-import {useLocation} from '../../../hooks/useLocation';
 import {useLastKnownLocation} from '../../../hooks/useLastSavedLocation';
 
 const m = defineMessages({

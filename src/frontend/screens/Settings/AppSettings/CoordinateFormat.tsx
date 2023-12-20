@@ -3,7 +3,6 @@ import {ScrollView} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 
 import {formatCoords} from '../../../lib/utils';
-import {useLocationContext} from '../../../contexts/LocationContext';
 import {
   usePersistedSettings,
   usePersistedSettingsAction,
@@ -13,6 +12,8 @@ import {
   NativeNavigationComponent,
   CoordinateFormat as CoordinateFormatType,
 } from '../../../sharedTypes';
+import {useLocation} from '../../../hooks/useLocation';
+import {useLastKnownLocation} from '../../../hooks/useLastSavedLocation';
 
 const m = defineMessages({
   title: {
@@ -45,11 +46,12 @@ export const CoordinateFormat: NativeNavigationComponent<
   'CoordinateFormat'
 > = () => {
   const {formatMessage} = useIntl();
-  const location = useLocationContext();
   const coordinateFormat = usePersistedSettings(
     store => store.coordinateFormat,
   );
   const {setCoordinateFormat} = usePersistedSettingsAction();
+
+  const location = useLastKnownLocation();
 
   const lat = getNestedProperty(
     location,

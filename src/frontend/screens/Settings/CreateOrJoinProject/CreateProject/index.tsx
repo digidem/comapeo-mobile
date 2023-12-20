@@ -9,10 +9,17 @@ import {
   TouchableOpacity,
 } from 'react-native-gesture-handler';
 import {Button} from '../../../../sharedComponents/Button';
-import {BLACK, LIGHT_GREY, MEDIUM_GREY, RED} from '../../../../lib/styles';
+import {
+  BLACK,
+  LIGHT_GREY,
+  MEDIUM_GREY,
+  RED,
+  WHITE,
+} from '../../../../lib/styles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
 import {useCreateProject} from '../../../../hooks/server/projects';
+import {Loading} from '../../../../sharedComponents/Loading';
 
 const m = defineMessages({
   title: {
@@ -46,7 +53,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
 }) => {
   const {formatMessage: t} = useIntl();
   const [advancedSettingOpen, setAdvancedSettingOpen] = React.useState(false);
-  const {mutate} = useCreateProject();
+  const {mutate, isPending} = useCreateProject();
 
   const {
     control,
@@ -56,8 +63,11 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
   } = useForm<ProjectFormType>({defaultValues: {projectName: ''}});
 
   function handleCreateProject(val: ProjectFormType) {
-    mutate(val.projectName);
-    navigation.navigate('ProjectCreated', {name: val.projectName});
+    mutate(val.projectName, {
+      onSuccess: () =>
+        navigation.navigate('ProjectCreated', {name: val.projectName}),
+      onError: err => console.error(err),
+    });
   }
 
   return (
@@ -93,6 +103,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
               style={styles.accordianHeader}>
               <Text>{t(m.advancedSettings)}</Text>
               <MaterialIcon
+                color={BLACK}
                 name={
                   !advancedSettingOpen
                     ? 'keyboard-arrow-up'
@@ -112,7 +123,11 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
         </View>
         <View style={{paddingHorizontal: 20}}>
           <Button fullWidth onPress={handleSubmit(handleCreateProject)}>
-            {t(m.createProjectButton)}
+            {isPending ? (
+              <Loading color={WHITE} style={{margin: 10}} />
+            ) : (
+              t(m.createProjectButton)
+            )}
           </Button>
         </View>
       </TouchableWithoutFeedback>

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import SuccessIcon from '../images/Success.svg';
 import NewDeviceLogo from '../images/NewDeviceLogo.svg';
@@ -11,7 +10,6 @@ import {defineMessages, useIntl} from 'react-intl';
 import {DeviceNamingSceens} from '../Navigation/ScreenGroups/DeviceNamingScreens';
 import {useEditDeviceInfo} from '../hooks/server/deviceInfo';
 import {Loading} from '../sharedComponents/Loading';
-import {WHITE} from '../lib/styles';
 
 const m = defineMessages({
   success: {
@@ -46,19 +44,22 @@ export const Success = ({
           <Text style={{marginLeft: 10}}>{deviceName}</Text>
         </View>
       </View>
-      <Button
-        fullWidth
-        onPress={() => {
-          setDeviceName.mutate(deviceName);
-        }}>
-        {setDeviceName.isPending ? (
-          <Loading style={{padding: 15}} size={15} color={WHITE} />
-        ) : setDeviceName.isSuccess ? (
-          <MaterialIcons name="check" size={30} color={WHITE} />
+      {
+        //due to conditional rendering, there is a brief second, where the state is no longer pending, but the user has not been navigated. So if we don't do catch all these state, the button flickers briefly before navigating
+        setDeviceName.isPending ||
+        setDeviceName.isError ||
+        setDeviceName.isSuccess ? (
+          <Loading variant="spinner" />
         ) : (
-          t(m.goToMap)
-        )}
-      </Button>
+          <Button
+            fullWidth
+            onPress={() => {
+              setDeviceName.mutate(deviceName);
+            }}>
+            {t(m.goToMap)}
+          </Button>
+        )
+      }
     </View>
   );
 };

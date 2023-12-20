@@ -40,14 +40,9 @@ export const MapScreen = () => {
   const {location} = useLocation({maxDistanceInterval: MIN_DISPLACEMENT});
   const savedLocation = useLastKnownLocation();
   const coords = location && getCoords(location);
-  const locationEnabled = useLocationProviderStatus();
-
-  if (
-    locationEnabled !== undefined &&
-    !locationEnabled.locationServicesEnabled &&
-    following
-  )
-    setFollowing(false);
+  const locationProviderStatus = useLocationProviderStatus();
+  const locationServicesEnabled =
+    !!locationProviderStatus?.locationServicesEnabled;
 
   const handleAddPress = () => {
     newDraft();
@@ -94,7 +89,9 @@ export const MapScreen = () => {
                 : undefined,
             zoomLevel: zoom,
           }}
-          centerCoordinate={following ? coords : undefined}
+          centerCoordinate={
+            locationServicesEnabled && following ? coords : undefined
+          }
           zoomLevel={following ? zoom : undefined}
           animationDuration={1000}
           animationMode="flyTo"
@@ -102,14 +99,12 @@ export const MapScreen = () => {
         />
 
         {isFinishedLoading && <ObservationMapLayer />}
-        {coords !== undefined &&
-          locationEnabled &&
-          locationEnabled.locationServicesEnabled && (
-            <UserLocation
-              visible={isFocused}
-              minDisplacement={MIN_DISPLACEMENT}
-            />
-          )}
+        {coords !== undefined && locationServicesEnabled && (
+          <UserLocation
+            visible={isFocused}
+            minDisplacement={MIN_DISPLACEMENT}
+          />
+        )}
       </Mapbox.MapView>
 
       <ScaleBar
@@ -117,7 +112,7 @@ export const MapScreen = () => {
         latitude={coords ? coords[1] : undefined}
         bottom={20}
       />
-      {locationEnabled && locationEnabled.locationServicesEnabled && (
+      {coords !== undefined && locationServicesEnabled && (
         <View style={styles.locationButton}>
           <IconButton onPress={handleLocationPress}>
             {following ? <LocationFollowingIcon /> : <LocationNoFollowIcon />}

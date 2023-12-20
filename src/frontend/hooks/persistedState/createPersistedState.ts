@@ -13,7 +13,8 @@ type PersistedStoreKey =
   | 'MapeoLocale'
   | '@MapeoDraft'
   | 'Passcode'
-  | 'ActiveProjectId';
+  | 'ActiveProjectId'
+  | 'Settings';
 
 const MMKVZustandStorage: StateStorage = {
   setItem: (name, value) => {

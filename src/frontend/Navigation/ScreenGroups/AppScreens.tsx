@@ -23,6 +23,7 @@ import {ObservationsList} from '../../screens/ObservationsList';
 import {ObservationScreen} from '../../screens/Observation';
 import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
+import {CoordinateFormat} from '../../screens/Settings/AppSettings/CoordinateFormat';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -183,6 +184,11 @@ export const createDefaultScreenGroup = (
       name="ProjectSettings"
       component={ProjectSettings}
       options={{headerTitle: intl(ProjectSettings.navTitle)}}
+    />
+    <RootStack.Screen
+      name="CoordinateFormat"
+      component={CoordinateFormat}
+      options={{headerTitle: intl(CoordinateFormat.navTitle)}}
     />
   </RootStack.Group>
 );

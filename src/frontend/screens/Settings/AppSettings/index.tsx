@@ -21,9 +21,19 @@ const m = defineMessages({
     id: 'Screens.Settings.AppSettings.languageDesc',
     defaultMessage: 'Display language for app',
   },
+  coordinateSystem: {
+    id: 'Screens.Settings.AppSettings.coordinateSystem',
+    defaultMessage: 'Coordinate System',
+  },
+  coordinateSystemDesc: {
+    id: 'Screens.Settings.AppSettings.coordinateSystemDesc',
+    defaultMessage: 'UTM,Lat/Lon,DMS',
+  },
 });
 
-export const AppSettings: NativeNavigationComponent<'AppSettings'> = () => {
+export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
+  navigation,
+}) => {
   return (
     <ScrollView>
       <List>
@@ -32,6 +42,16 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = () => {
           <ListItemText
             primary={<FormattedMessage {...m.language} />}
             secondary={<FormattedMessage {...m.languageDesc} />}></ListItemText>
+        </ListItem>
+        <ListItem
+          onPress={() => navigation.navigate('CoordinateFormat')}
+          testID="settingsCoodinatesButton">
+          <ListItemIcon iconName="explore" />
+          <ListItemText
+            primary={<FormattedMessage {...m.coordinateSystem} />}
+            secondary={
+              <FormattedMessage {...m.coordinateSystemDesc} />
+            }></ListItemText>
         </ListItem>
       </List>
     </ScrollView>

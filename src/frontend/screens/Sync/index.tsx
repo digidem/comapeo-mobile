@@ -68,10 +68,12 @@ export const Sync: NativeNavigationComponentNoHeader<'Sync'> = ({
   const sync = useProject().$sync;
   const projectSettings = useProjectSettings();
   const deviceInfo = useDeviceInfo();
-  const [connectedPeers, setConnectedPeers] = React.useState<number>(0);
+  const [connectedPeers, setConnectedPeers] = React.useState<number>(0); //this should initialize with `sync.getState().connectPeers`, but it is undefined
   const [isSyncing, setIsSyncing] = React.useState(false);
-  const [hasDataToSync, setHasDataToSync] = React.useState<boolean>();
+  const [hasDataToSync, setHasDataToSync] = React.useState<boolean>(); //this should initialize with `sync.getState().data.dataToSync`, but it is undefined
   const {formatMessage} = useIntl();
+
+  console.log(sync.getState()); // sync.getState() === {"_h": 0, "_i": 0, "_j": null, "_k": null, "clear": [Function anonymous]}
 
   React.useEffect(() => {
     const syncListener = (val: State) => {

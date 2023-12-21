@@ -1,13 +1,11 @@
 import * as React from 'react';
-import {type MapeoClientApi} from '@mapeo/ipc';
+import {type MapeoClientApi, type MapeoProjectApi} from '@mapeo/ipc';
 import {useApi} from './ApiContext';
 import {usePersistedProjectId} from '../hooks/persistedState/usePersistedProjectId';
 import {Loading} from '../sharedComponents/Loading';
 
-type MapeoProject = Awaited<ReturnType<MapeoClientApi['getProject']>>;
-
 type ActiveProjectContextType = {
-  project: MapeoProject;
+  project: MapeoProjectApi;
   switchProject(projectId: string): void;
 };
 
@@ -28,7 +26,7 @@ export const ActiveProjectProvider = ({
 }: React.PropsWithChildren<{}>) => {
   const mapeoApi = useApi();
   const [activeProject, setActiveProject] = React.useState<
-    MapeoProject | undefined
+    MapeoProjectApi | undefined
   >();
   const activeProjectId = usePersistedProjectId(store => store.projectId);
   const setActiveProjectId = usePersistedProjectId(store => store.setProjectId);

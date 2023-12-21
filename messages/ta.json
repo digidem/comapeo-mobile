@@ -19,6 +19,12 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "அவதானிப்புகளை நீக்கவா?"
   },
+  "Screens.Settings.AppSettings.coordinateSystem": {
+    "message": "Coordinate System"
+  },
+  "Screens.Settings.AppSettings.coordinateSystemDesc": {
+    "message": "UTM,Lat/Lon,DMS"
+  },
   "Screens.Settings.AppSettings.language": {
     "message": "மொழி"
   },
@@ -140,6 +146,22 @@
   "screens.CategoryChooser.categoryTitle": {
     "description": "Title for category chooser screen",
     "message": "என்ன நடக்கிறது என்பதைத் தேர்ந்தெடுக்கவும்"
+  },
+  "screens.CoordinateFormat.dd": {
+    "description": "Decimal Degrees coordinate format",
+    "message": "Decimal Degrees (DD)"
+  },
+  "screens.CoordinateFormat.dms": {
+    "description": "Degrees/Minutes/Seconds coordinate format",
+    "message": "Degrees/Minutes/Seconds (DMS)"
+  },
+  "screens.CoordinateFormat.title": {
+    "description": "Title coordinate format screen",
+    "message": "Coordinate Format"
+  },
+  "screens.CoordinateFormat.utm": {
+    "description": "Universal Transverse Mercator coordinate format",
+    "message": "Universal Transverse Mercator (UTM)"
   },
   "screens.DeviceNaming.Success.description": {
     "message": "You named your device"

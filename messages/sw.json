@@ -1,0 +1,371 @@
+{
+  "AppContainer.EditHeader.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Endelea kuhariri"
+  },
+  "AppContainer.EditHeader.discardChangesContent": {
+    "description": "Button on dialog to cancel observation edits",
+    "message": "Tupa mabadiliko"
+  },
+  "AppContainer.EditHeader.discardChangesTitle": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Ungependa kutupa mabadiliko?"
+  },
+  "AppContainer.EditHeader.discardContent": {
+    "description": "Button on dialog to cancel a new observation",
+    "message": "Tupa bila kuhifadhi"
+  },
+  "AppContainer.EditHeader.discardTitle": {
+    "description": "Title of dialog that shows when cancelling a new observation",
+    "message": "Ungependa kutupa uchunguzi?"
+  },
+  "Screens.Settings.AppSettings.language": {
+    "message": "Lugha"
+  },
+  "Screens.Settings.AppSettings.languageDesc": {
+    "message": "Display language for app"
+  },
+  "Screens.Settings.AppSettings.title": {
+    "message": "App Setttings"
+  },
+  "Screens.Settings.ProjectSettings.configuration": {
+    "message": "Configuration"
+  },
+  "Screens.Settings.ProjectSettings.deviceName": {
+    "message": "Jina la Kifaa"
+  },
+  "Screens.Settings.ProjectSettings.title": {
+    "message": "Project Setttings"
+  },
+  "Screens.Settings.ProjectSettings.yourTeam": {
+    "message": "Your Team"
+  },
+  "screens.AddPhoto.cancel": {
+    "message": "Ghairi"
+  },
+  "screens.AppPasscode": {
+    "message": "Nambari ya siri ya Programu"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.cancel": {
+    "message": "Ghairi"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
+    "description": "used to indicate to the user what the new passcode will be.",
+    "message": "Nambari ya siri"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
+    "message": "Hifadhi Nambari ya siri ya Programu"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.title": {
+    "message": "Nambari za Siri za Programu haziwezi kurejeshwa ikiwa zimepotea au kusahaulika! Hakikisha umeandika nambari yako ya siri katika eneo salama kabla ya kuhifadhi."
+  },
+  "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
+    "message": "Tafadhali Weka Nambari ya siri"
+  },
+  "screens.AppPasscode.EnterPassToTurnOff.titleEnter": {
+    "message": "Weka Nambari ya siri"
+  },
+  "screens.AppPasscode.InputPasscodeScreen.cancel": {
+    "message": "Ghairi"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleConfirm": {
+    "message": "Weka tena Nambari ya siri"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleSet": {
+    "message": "Weka Nambari ya siri ya Programu"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.button": {
+    "message": "Inayofuata"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.initialPassError": {
+    "message": "Nenosiri lazima liwe nambari 5"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.obscurePasscodeError": {
+    "message": "Haiwezi kutumika kama Nambari ya siri"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordDoesNotMatch": {
+    "message": "Nenosiri halilingani"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordError": {
+    "message": "Nambari ya siri si sahihi"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet": {
+    "message": "Nambari hii ya siri itahitajika ili kufungua Programu ya Mapeo"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
+    "message": "Weka Nambari ya siri"
+  },
+  "screens.AppPasscode.NewPasscode.Splash.continue": {
+    "message": "Endelea"
+  },
+  "screens.AppPasscode.NewPasscode.Splash.title": {
+    "message": "Nambari ya siri ya Programu ni nini?"
+  },
+  "screens.AppPasscode.PasscodeIntro.description": {
+    "message": "Nambari ya siri ya Programu hukuruhusu kuongeza safu ya ziada ya usalama kwa kukuhitaji uweke nambari ya siri ili ufungue programu ya Mapeo. Unaweza kufafanua nambari yako ya siri yenye tarakimu 5 kwa kuwasha kipengele kilicho hapa chini."
+  },
+  "screens.AppPasscode.PasscodeIntro.warning": {
+    "message": "**Tafadhali kumbuka kuwa nambari za siri zilizosahaulika haziwezi kurejeshwa!** Kipengele hiki kikiwashwa, ukisahau au kupoteza nambari yako ya siri, hutaweza kufungua Mapeo na utapoteza ufikiaji wa data yoyote ya Mapeo ambayo haijasawazishwa na washiriki wengine wa mradi."
+  },
+  "screens.AppPasscode.TurnOffPasscode.cancel": {
+    "message": "Ghairi"
+  },
+  "screens.AppPasscode.TurnOffPasscode.changePasscode": {
+    "message": "Badilisha Nambari ya siri ya Programu"
+  },
+  "screens.AppPasscode.TurnOffPasscode.currentlyUsing": {
+    "message": "Kwa sasa unatumia Nambari ya siri ya Programu. Tazama hapa chini ili uache kutumia au ubadilishe nenosiri lako."
+  },
+  "screens.AppPasscode.TurnOffPasscode.description": {
+    "message": "Nambari ya siri ya Programu huongeza safu ya ziada ya usalama kwa kukuhitaji uweke nambari ya siri ili ufungue programu ya Mapeo."
+  },
+  "screens.AppPasscode.TurnOffPasscode.title": {
+    "message": "Nambari ya siri ya Programu"
+  },
+  "screens.AppPasscode.TurnOffPasscode.turnOff": {
+    "message": "Zima"
+  },
+  "screens.AppPasscode.TurnOffPasscode.turnOffConfirmation": {
+    "message": "Ungependa Kuzima Nambari ya siri ya Programu?"
+  },
+  "screens.AppPasscode.TurnOffPasscode.usePasscode": {
+    "message": "Tumia Nambari ya siri ya Programu"
+  },
+  "screens.CameraScreen.goToSettings": {
+    "message": "Go to Settings"
+  },
+  "screens.CameraScreen.noCameraAccess": {
+    "message": "No access to camera. Please Allow access in setting"
+  },
+  "screens.CategoryChooser.categoryTitle": {
+    "description": "Title for category chooser screen",
+    "message": "Chagua kinachofanyika"
+  },
+  "screens.DeviceNaming.Success.description": {
+    "message": "You named your device"
+  },
+  "screens.DeviceNaming.Success.goToMap": {
+    "message": "Go to Map"
+  },
+  "screens.DeviceNaming.Success.success": {
+    "message": "Success!"
+  },
+  "screens.DeviceNaming.addName": {
+    "message": "Add Name"
+  },
+  "screens.DeviceNaming.description": {
+    "message": "To create or join a new project you will have to name your device. In a future version of CoMapeo, you will be able to manage the projects you created by changing devices roles, deleting devices and much more."
+  },
+  "screens.DeviceNaming.header": {
+    "message": "Add a name for your device"
+  },
+  "screens.EnterPassword.enterPass": {
+    "message": "Weka nambari yako ya siri"
+  },
+  "screens.EnterPassword.wrongPass": {
+    "message": "Nambari ya siri si sahihi, tafadhali jaribu tena"
+  },
+  "screens.IntroToCoMapeo.collaborate": {
+    "message": "Collaborate on mapping and monitoring projects"
+  },
+  "screens.IntroToCoMapeo.getStarted": {
+    "message": "Get Started"
+  },
+  "screens.IntroToCoMapeo.isNow": {
+    "description": "The full sentence is mapeo 'is now' comapeo. ",
+    "message": "is now"
+  },
+  "screens.IntroToCoMapeo.version": {
+    "description": "v is short for version. the translation for version can be used instead",
+    "message": "V"
+  },
+  "screens.ObscurePasscode.description": {
+    "message": "Nambari ya siri Isiyojulikana ni kipengele cha usalama kinachokuruhusu kufungua Mapeo katika hali bandia ambayo huficha data yako yote. Kuweka Nambari ya siri Isiyojulikana kwenye skrini ya utangulizi kutaonyesha toleo tupu la Mapeo ambalo hukuruhusu kuunda uchunguzi wa maonyesho ambao hauhifadhiwi kwenye hifadhidata ya Mapeo."
+  },
+  "screens.ObscurePasscode.instructions": {
+    "message": "Weka nambari iliyo hapo juu ili kuficha data yako kwenye Mapeo"
+  },
+  "screens.ObscurePasscode.title": {
+    "message": "Nambari ya siri Isiyojulikana"
+  },
+  "screens.ObscurePasscode.toggleMessage": {
+    "message": "Tumia Nambari ya siri Isiyojulikana"
+  },
+  "screens.ObscurePasscode.whatIsObscure": {
+    "message": "Nambari ya siri Isiyojulikana ni nini?"
+  },
+  "screens.Observation.ObservationEdit.CategoryView.changePreset": {
+    "message": "Badilisha"
+  },
+  "screens.Observation.ObservationEdit.CategoryView.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Uchunguzi"
+  },
+  "screens.Observation.ObservationView.delete": {
+    "description": "Button to delete an observation",
+    "message": "Futa"
+  },
+  "screens.Observation.ObservationView.noAnswer": {
+    "description": "Placeholder text for fields on an observation which are not answered",
+    "message": "Hakuna jibu"
+  },
+  "screens.Observation.ObservationView.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Uchunguzi"
+  },
+  "screens.Observation.cancel": {
+    "description": "Button to cancel delete of observation",
+    "message": "Ghairi"
+  },
+  "screens.Observation.confirm": {
+    "description": "Button to confirm delete of observation",
+    "message": "Ndiyo, futa"
+  },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "Ungependa kufuta uchunguzi?"
+  },
+  "screens.Observation.title": {
+    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
+    "message": "Uchunguzi"
+  },
+  "screens.ObservationEdit.BottomSheet.addLabel": {
+    "description": "Label above keyboard that expands into bottom sheet of options to add (photo, details etc)",
+    "message": "Ongeza…"
+  },
+  "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "Ni nini kinachofanyika hapa?"
+  },
+  "screens.ObservationEdit.ObservationEditView.photoButton": {
+    "description": "Button label for adding photo",
+    "message": "Ongeza Picha"
+  },
+  "screens.ObservationEdit.ObservationEditView.searching": {
+    "description": "Shown in new observation screen whilst looking for GPS",
+    "message": "Inatafuta…"
+  },
+  "screens.ObservationEdit.SaveButton.keepWaiting": {
+    "description": "Button to cancel save and continue waiting for GPS",
+    "message": "Endelea kusubiri"
+  },
+  "screens.ObservationEdit.SaveButton.manualEntry": {
+    "description": "Button to manually enter GPS coordinates",
+    "message": "Viratibu vya kuweka Wewe Mwenyewe"
+  },
+  "screens.ObservationEdit.SaveButton.noGpsDesc": {
+    "description": "Description in dialog when trying to save with no GPS coords",
+    "message": "Uchunguzi huu hauna eneo. Unaweza kuendelea kusubiri ishara ya GPS, kuhifadhi uchunguzi bila eneo, au kuweka viratibu wewe mwenyewe"
+  },
+  "screens.ObservationEdit.SaveButton.noGpsTitle": {
+    "description": "Title of dialog when trying to save with no GPS coords",
+    "message": "Hakuna ishara ya GPS"
+  },
+  "screens.ObservationEdit.SaveButton.saveAnyway": {
+    "description": "Button to save regardless of GPS state",
+    "message": "Hifadhi"
+  },
+  "screens.ObservationEdit.SaveButton.weakGpsDesc": {
+    "description": "Description in dialog when trying to save with low GPS accuracy.",
+    "message": "Usahihi wa GPS ni wa chini. Unaweza kuendelea kusubiri usahihi bora, kuhifadhi uchunguzi ulio na usahihi wa chini, au uweke viratibu wewe mwenyewe"
+  },
+  "screens.ObservationEdit.SaveButton.weakGpsTitle": {
+    "description": "Title of dialog when trying to save with low GPS accuracy.",
+    "message": "Ishara dhaifu ya GPS"
+  },
+  "screens.ObservationEdit.editTitle": {
+    "description": "screen title for edit observation screen",
+    "message": "Hariri Uchunguzi"
+  },
+  "screens.ObservationEdit.newTitle": {
+    "description": "screen title for new observation screen",
+    "message": "Uchunguzi Mpya"
+  },
+  "screens.ObservationList.observationListTitle": {
+    "description": "Title of screen with list of observations",
+    "message": "Uchunguzi"
+  },
+  "screens.ObservationsList.ObservationsEmptyView.backButton": {
+    "description": "Back button on observation list screen when no observations are yet recorded",
+    "message": "Nenda kwenye Ramani"
+  },
+  "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
+    "description": "Description of observation list view when the user has not yet recorded observations",
+    "message": "Anza kwenye ramani au mwonekano wa kamera ili urekodi uchunguzi wako wa kwanza."
+  },
+  "screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
+    "description": "Title of observation list view when the user has not yet recorded observations",
+    "message": "Ongeza Uchunguzi"
+  },
+  "screens.ObservationsList.error": {
+    "description": "message shown when there is an unexpected error when loading observations",
+    "message": "Hitilafu ya kupakia uchunguzi. Jaribu kuacha na kuwasha upya Mapeo."
+  },
+  "screens.ObservationsList.loading": {
+    "description": "message shown whilst observations are loading",
+    "message": "Inapakia... hii inaweza kuchukua muda baada ya kusawazisha na kifaa kipya"
+  },
+  "screens.Security.obscurePassDescriptonPassNotSet": {
+    "message": "Ili kutumia, washa Msimbo wa siri wa Programu"
+  },
+  "screens.Security.obscurePassDescriptonPassSet": {
+    "message": "Linda kifaa chako ili kisipokonywe"
+  },
+  "screens.Security.obscurePasscodeHeader": {
+    "message": "Nambari ya siri Isiyojulikana"
+  },
+  "screens.Security.passDesriptionPassNotSet": {
+    "message": "Nambari ya siri haijawekwa"
+  },
+  "screens.Security.passDesriptionPassSet": {
+    "message": "Nambari ya siri imewekwa"
+  },
+  "screens.Security.passcodeHeader": {
+    "message": "Nambari ya siri ya Programu"
+  },
+  "screens.Security.securitySubheader": {
+    "message": "Usalama wa Kifaa"
+  },
+  "screens.Security.title": {
+    "message": "Usalama"
+  },
+  "screens.Settings.aboutMapeo": {
+    "description": "Primary text for 'About Mapeo' link (version info)",
+    "message": "Kuhuu Mapeo"
+  },
+  "screens.Settings.aboutMapeoDesc": {
+    "description": "Description of the 'About Mapeo' page",
+    "message": "Toleo na nambari ya muundo"
+  },
+  "screens.Settings.appSettings": {
+    "message": "App Settings"
+  },
+  "screens.Settings.appSettingsDesc": {
+    "description": "list of avaialable app settings",
+    "message": "Language, Security, Coordinates"
+  },
+  "screens.Settings.createOrJoin": {
+    "message": "Create or Join Project"
+  },
+  "screens.Settings.createOrJoinDesc": {
+    "message": "Create a new project or join existing one"
+  },
+  "screens.Settings.projectSettings": {
+    "message": "Project Settings"
+  },
+  "screens.Settings.projectSettingsDesc": {
+    "description": "list of avaialable project settings",
+    "message": "Categories, Config, Team"
+  },
+  "screens.Settings.title": {
+    "description": "Title of settings screen",
+    "message": "Mipangilio"
+  },
+  "sharedComponents.WifiBar.noWifi": {
+    "message": "Hakuna Intaneti"
+  },
+  "sharedComponents.WifiBar.wifi": {
+    "description": "Label for wifi network name",
+    "message": "WiFi:"
+  }
+}

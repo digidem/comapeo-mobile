@@ -17,6 +17,7 @@ import {getCoords, useLocation} from '../../hooks/useLocation';
 import {useIsFullyFocused} from '../../hooks/useIsFullyFocused';
 import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
 import {Loading} from '../../sharedComponents/Loading';
+import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -39,6 +40,9 @@ export const MapScreen = () => {
   const {location} = useLocation({maxDistanceInterval: MIN_DISPLACEMENT});
   const savedLocation = useLastKnownLocation();
   const coords = location && getCoords(location);
+  const locationProviderStatus = useLocationProviderStatus();
+  const locationServicesEnabled =
+    !!locationProviderStatus?.locationServicesEnabled;
 
   const handleAddPress = () => {
     newDraft();
@@ -86,11 +90,7 @@ export const MapScreen = () => {
             zoomLevel: zoom,
           }}
           centerCoordinate={
-            following
-              ? coords
-              : savedLocation.data
-                ? getCoords(savedLocation.data)
-                : undefined
+            locationServicesEnabled && following ? coords : undefined
           }
           zoomLevel={following ? zoom : undefined}
           animationDuration={1000}
@@ -99,7 +99,7 @@ export const MapScreen = () => {
         />
 
         {isFinishedLoading && <ObservationMapLayer />}
-        {coords !== undefined && (
+        {coords !== undefined && locationServicesEnabled && (
           <UserLocation
             visible={isFocused}
             minDisplacement={MIN_DISPLACEMENT}
@@ -112,7 +112,7 @@ export const MapScreen = () => {
         latitude={coords ? coords[1] : undefined}
         bottom={20}
       />
-      {coords !== undefined && isFinishedLoading && (
+      {coords !== undefined && locationServicesEnabled && (
         <View style={styles.locationButton}>
           <IconButton onPress={handleLocationPress}>
             {following ? <LocationFollowingIcon /> : <LocationNoFollowIcon />}

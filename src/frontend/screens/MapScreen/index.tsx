@@ -18,6 +18,7 @@ import {useIsFullyFocused} from '../../hooks/useIsFullyFocused';
 import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
 import {Loading} from '../../sharedComponents/Loading';
 import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
+import {FatalError} from '../FatalError';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -61,6 +62,8 @@ export const MapScreen = () => {
   function handleDidFinishLoadingStyle() {
     setIsFinishedLoading(true);
   }
+
+  return <FatalError />;
 
   return (
     <View style={{flex: 1}}>

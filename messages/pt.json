@@ -187,6 +187,12 @@
   "screens.EnterPassword.wrongPass": {
     "message": "Senha incorreta. Por favor, tente novamente."
   },
+  "screens.FatalError.restart": {
+    "message": "Restart App"
+  },
+  "screens.FatalError.somethingWrong": {
+    "message": "Something Went Wrong"
+  },
   "screens.IntroToCoMapeo.collaborate": {
     "message": "Collaborate on mapping and monitoring projects"
   },

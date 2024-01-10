@@ -187,6 +187,12 @@
   "screens.EnterPassword.wrongPass": {
     "message": "Nambari ya siri si sahihi, tafadhali jaribu tena"
   },
+  "screens.FatalError.restart": {
+    "message": "Restart App"
+  },
+  "screens.FatalError.somethingWrong": {
+    "message": "Something Went Wrong"
+  },
   "screens.IntroToCoMapeo.collaborate": {
     "message": "Collaborate on mapping and monitoring projects"
   },

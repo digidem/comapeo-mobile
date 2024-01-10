@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import RNRestart from 'react-native-restart';
+import RNRestart from 'react-native-restart'; // Import package from node modules
 import CoMapeoLogo from '../images/CoMapeoLogo.svg';
 import ErrorIcon from '../images/Error.svg';
 import {Text} from '../sharedComponents/Text';
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     paddingTop: 80,
     alignItems: 'center',
     justifyContent: 'space-between',
+    backgroundColor: WHITE,
   },
   text: {
     fontSize: 32,

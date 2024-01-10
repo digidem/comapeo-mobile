@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {SafeAreaView, Text} from 'react-native';
 import nodejs from 'nodejs-mobile-react-native';
+import BootSplash from 'react-native-bootsplash';
 
 import type {StatusMessage} from '../backend/src/status';
 import {MessagePortLike} from './lib/MessagePortLike.js';
+import {FatalError} from './screens/FatalError';
 
 export const ServerLoading = ({
   messagePort,
@@ -38,12 +39,8 @@ export const ServerLoading = ({
   }
 
   if (serverStatus.value === 'ERROR') {
-    return (
-      <SafeAreaView
-        style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>Error!</Text>
-      </SafeAreaView>
-    );
+    BootSplash.hide();
+    return <FatalError />;
   }
 
   return <>{children}</>;

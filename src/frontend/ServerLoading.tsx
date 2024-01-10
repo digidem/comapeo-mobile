@@ -13,7 +13,6 @@ export const ServerLoading = ({
   const [serverStatus, setServerStatus] = React.useState<StatusMessage>({
     value: 'STARTING',
   });
-  console.log(serverStatus);
 
   React.useEffect(() => {
     const subscription = nodejs.channel.addListener('server:status', msg => {

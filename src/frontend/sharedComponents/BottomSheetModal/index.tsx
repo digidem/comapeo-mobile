@@ -105,15 +105,7 @@ export const BottomSheetModal = React.forwardRef<RNBottomSheetModal, Props>(
         snapPoints={!fullHeight ? undefined : ['100%']}
         enableDynamicSizing={!fullHeight}
         handleComponent={() => null}>
-        <BottomSheetView
-          style={{
-            padding: 20,
-            paddingTop: 30,
-            // need to add paddingbottom due to bug: https://github.com/gorhom/react-native-bottom-sheet/issues/791
-            paddingBottom: 20,
-          }}>
-          {children}
-        </BottomSheetView>
+        <BottomSheetView>{children}</BottomSheetView>
       </RNBottomSheetModal>
     );
   },

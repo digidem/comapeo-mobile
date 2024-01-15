@@ -23,6 +23,11 @@ const plugins = [
   nativePaths(),
   commonjs({
     ignoreDynamicRequires: true,
+    ignore: [
+      // Used by @electron/asar but only in Electron environments
+      // https://github.com/electron/asar/blob/e1c143c9ad9ca4571e8f8d447bddf2cdaa1c9664/lib/wrapped-fs.js#L3
+      'original-fs',
+    ],
   }),
   esmShim(),
   nodeResolve({ preferBuiltins: true }),

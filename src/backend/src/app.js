@@ -6,14 +6,17 @@ const require = createRequire(import.meta.url)
 /** @type {import('../types/rn-bridge.js')} */
 const rnBridge = require('rn-bridge')
 import { MapeoManager } from '@mapeo/core'
-
-import MessagePortLike from './message-port-like.js'
 import { createMapeoServer } from '@mapeo/ipc'
+
+import { MapServer } from './map-server/index.js'
+import MessagePortLike from './message-port-like.js'
 import { ServerStatus } from './status.js'
 
 // Do not touch these!
 const DB_DIR_NAME = 'sqlite-dbs'
 const CORE_STORAGE_DIR_NAME = 'core-storage'
+
+const MAP_SERVER_PORT = 9081
 
 const log = debug('mapeo:app')
 
@@ -45,17 +48,27 @@ process.on('exit', (code) => {
  * @param {string} [options.version] Device Version
  * @param {Buffer} options.rootKey
  * @param {string} options.migrationsFolderPath
+ * @param {string} options.sharedStoragePath Path to app-specific external file storage folder
+ *
  */
-export async function init({ version, rootKey, migrationsFolderPath }) {
+export async function init({
+  version,
+  rootKey,
+  migrationsFolderPath,
+  sharedStoragePath,
+}) {
   log('Starting app...')
   log(`Device version is ${version}`)
 
   const privateStorageDir = rnBridge.app.datadir()
   const dbDir = join(privateStorageDir, DB_DIR_NAME)
   const indexDir = join(privateStorageDir, CORE_STORAGE_DIR_NAME)
+  // Same as Mapeo Mobile for serving static style directories - should we keep it that way?
+  const staticStylesDir = join(sharedStoragePath, 'styles', 'default')
 
   mkdirSync(dbDir, { recursive: true })
   mkdirSync(indexDir, { recursive: true })
+  mkdirSync(staticStylesDir, { recursive: true })
 
   const manager = new MapeoManager({
     rootKey,
@@ -65,18 +78,23 @@ export async function init({ version, rootKey, migrationsFolderPath }) {
     projectMigrationsFolder: join(migrationsFolderPath, 'project'),
   })
 
+  const mapServer = new MapServer({ staticStylesDir })
+
   // Don't await, methods that use the server will await this internally
   manager.startMediaServer()
 
+  mapServer.start({ port: MAP_SERVER_PORT })
+
   rnBridge.app.on('pause', async (pauseLock) => {
     log('App went into background')
-    await manager.stopMediaServer()
+    await Promise.all([manager.stopMediaServer(), mapServer.stop()])
     pauseLock.release()
   })
 
   rnBridge.app.on('resume', () => {
     log('App went into foreground')
     manager.startMediaServer()
+    mapServer.start({ port: MAP_SERVER_PORT })
   })
 
   const messagePort = new MessagePortLike()

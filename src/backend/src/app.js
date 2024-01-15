@@ -6,9 +6,9 @@ const require = createRequire(import.meta.url)
 /** @type {import('../types/rn-bridge.js')} */
 const rnBridge = require('rn-bridge')
 import { MapeoManager } from '@mapeo/core'
+import { createMapeoServer } from '@mapeo/ipc'
 
 import MessagePortLike from './message-port-like.js'
-import { createMapeoServer } from '@mapeo/ipc'
 import { ServerStatus } from './status.js'
 
 // Do not touch these!
@@ -45,8 +45,15 @@ process.on('exit', (code) => {
  * @param {string} [options.version] Device Version
  * @param {Buffer} options.rootKey
  * @param {string} options.migrationsFolderPath
+ * @param {string} options.sharedStoragePath Path to app-specific external file storage folder
+ *
  */
-export async function init({ version, rootKey, migrationsFolderPath }) {
+export async function init({
+  version,
+  rootKey,
+  migrationsFolderPath,
+  sharedStoragePath,
+}) {
   log('Starting app...')
   log(`Device version is ${version}`)
 
@@ -70,7 +77,7 @@ export async function init({ version, rootKey, migrationsFolderPath }) {
 
   rnBridge.app.on('pause', async (pauseLock) => {
     log('App went into background')
-    await manager.stopMediaServer()
+    manager.stopMediaServer()
     pauseLock.release()
   })
 

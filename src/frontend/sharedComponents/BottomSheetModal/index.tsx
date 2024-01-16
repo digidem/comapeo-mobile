@@ -8,7 +8,7 @@ import {
 } from '@gorhom/bottom-sheet';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 
-import {LIGHT_GREY} from '../../lib/styles';
+import {DARK_GREY, LIGHT_GREY} from '../../lib/styles';
 
 export const MODAL_NAVIGATION_OPTIONS: NativeStackNavigationOptions = {
   presentation: 'transparentModal',
@@ -22,15 +22,15 @@ export const useBottomSheetModal = ({openOnMount}: {openOnMount: boolean}) => {
 
   const closeSheet = React.useCallback(() => {
     if (sheetRef.current) {
-      sheetRef.current.close();
       setIsOpen(false);
+      sheetRef.current.close();
     }
   }, []);
 
   const openSheet = React.useCallback(() => {
     if (sheetRef.current) {
-      sheetRef.current.present();
       setIsOpen(true);
+      sheetRef.current.present();
     }
   }, []);
 
@@ -70,12 +70,12 @@ interface Props extends React.PropsWithChildren<{}> {
   onDismiss?: () => void;
   // Triggered by: Android hardware back press and gesture back swipe
   onBack?: () => void;
-  snapPoints?: (string | number)[];
   disableBackrop?: boolean;
+  fullHeight?: boolean;
 }
 
 export const BottomSheetModal = React.forwardRef<RNBottomSheetModal, Props>(
-  ({children, isOpen, onBack, disableBackrop}, ref) => {
+  ({children, isOpen, onBack, disableBackrop, fullHeight}, ref) => {
     useBackHandler(isOpen, onBack);
 
     const renderBackdrop = React.useCallback(
@@ -94,24 +94,18 @@ export const BottomSheetModal = React.forwardRef<RNBottomSheetModal, Props>(
     return (
       <RNBottomSheetModal
         ref={ref}
+        backgroundStyle={[
+          fullHeight
+            ? {borderRadius: 0}
+            : {borderColor: DARK_GREY, borderWidth: 1},
+        ]}
         backdropComponent={disableBackrop ? null : renderBackdrop}
         enableContentPanningGesture={false}
         enableHandlePanningGesture={false}
-        enableDynamicSizing
+        snapPoints={!fullHeight ? undefined : ['100%']}
+        enableDynamicSizing={!fullHeight}
         handleComponent={() => null}>
-        <BottomSheetView
-          style={{
-            padding: 20,
-            paddingTop: 30,
-            // need to add paddingbottom due to bug: https://github.com/gorhom/react-native-bottom-sheet/issues/791
-            paddingBottom: 20,
-            borderColor: LIGHT_GREY,
-            borderWidth: 1,
-            borderTopLeftRadius: 16,
-            borderTopRightRadius: 16,
-          }}>
-          {children}
-        </BottomSheetView>
+        <BottomSheetView>{children}</BottomSheetView>
       </RNBottomSheetModal>
     );
   },

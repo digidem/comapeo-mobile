@@ -1,13 +1,12 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import RNRestart from 'react-native-restart'; // Import package from node modules
-import CoMapeoLogo from '../images/CoMapeoLogo.svg';
-import ErrorIcon from '../images/Error.svg';
+import RNRestart from 'react-native-restart';
 import {Text} from '../sharedComponents/Text';
 import {Button} from '../sharedComponents/Button';
 import {WHITE} from '../lib/styles';
 import {defineMessages, useIntl} from 'react-intl';
+import {LogoWithErrorIcon} from '../sharedComponents/LogoWithErrorIcon';
 
 const m = defineMessages({
   somethingWrong: {
@@ -25,14 +24,7 @@ export const FatalError = () => {
   return (
     <View style={styles.container}>
       <View style={{alignItems: 'center'}}>
-        <View style={{position: 'relative'}}>
-          <CoMapeoLogo width={160} height={160} />
-          <ErrorIcon
-            width={50}
-            height={50}
-            style={{position: 'absolute', bottom: 0, right: 0}}
-          />
-        </View>
+        <LogoWithErrorIcon />
         <Text style={styles.text}>{formatMessage(m.somethingWrong)}</Text>
       </View>
       <Button

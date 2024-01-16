@@ -389,6 +389,15 @@
     "description": "Title of settings screen",
     "message": "Pengaturan"
   },
+  "sharedComponents.ErrorModal.goBack": {
+    "message": "Go Back"
+  },
+  "sharedComponents.ErrorModal.somethingWrong": {
+    "message": "Something Went Wrong"
+  },
+  "sharedComponents.ErrorModal.tryAgain": {
+    "message": "Please go back and try again"
+  },
   "sharedComponents.WifiBar.noWifi": {
     "message": "Tidak ada internet"
   },

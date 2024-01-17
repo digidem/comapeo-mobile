@@ -17,7 +17,6 @@ export function usePresetsQuery() {
       if (!project) throw new Error('Project instance does not exist');
       const presets = await project.preset.getMany();
       if (presets.length === 0) {
-        console.log('presets empty, creating presets');
         await Promise.all(MockPreset.map(val => project.preset.create(val)));
         return await project.preset.getMany();
       }
@@ -36,7 +35,6 @@ export function usePresetsMutation() {
       return await project.preset.create(preset);
     },
     onSuccess: () => {
-      console.log('success!');
       queryClient.invalidateQueries({queryKey: ['presets']});
     },
   });

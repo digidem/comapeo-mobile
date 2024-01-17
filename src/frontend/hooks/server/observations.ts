@@ -41,9 +41,9 @@ export function useCreateObservation() {
       if (!project) throw new Error('Project instance does not exist');
 
       return project.observation.create({
+        ...value,
         schemaName: 'observation',
         attachments: [],
-        ...value,
       });
     },
     onSuccess: () => {

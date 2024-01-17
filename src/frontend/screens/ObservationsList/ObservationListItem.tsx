@@ -61,12 +61,12 @@ function ObservationListItemNotMemoized({
               <FormattedPresetName preset={preset} />
             </Text>
           )}
-          {/* <Text>
+          <Text>
             <FormattedObservationDate
               createdDate={observation.createdAt}
               variant="relative"
             />
-          </Text> */}
+          </Text>
         </View>
         {photos.length ? (
           <View style={styles.photoContainer}>
@@ -97,7 +97,7 @@ function PhotoStack({attachments}: {attachments: Attachment[]}) {
       }}>
       {attachments.map((attachment, idx) => (
         <PhotoView
-          key={`${attachment.driveId}/${attachment.type}/${attachment.name}`}
+          key={`${attachment.driveDiscoveryId}/${attachment.type}/${attachment.name}`}
           attachment={attachment}
           variant="thumbnail"
           style={[styles.photo, {left: idx * photoOverlap}]}

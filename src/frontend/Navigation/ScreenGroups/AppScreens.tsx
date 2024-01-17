@@ -134,9 +134,9 @@ export const createDefaultScreenGroup = (
             />
           ),
           headerRight: () => <SaveButton observationId={observationId} />,
-          headerTitle: !observationId
-            ? intl(ObservationEdit.navTitle)
-            : intl(ObservationEdit.editTitle),
+          headerTitle: observationId
+            ? intl(ObservationEdit.editTitle)
+            : intl(ObservationEdit.navTitle),
         };
       }}
     />

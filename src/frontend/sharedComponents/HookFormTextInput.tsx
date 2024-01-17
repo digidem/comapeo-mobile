@@ -3,28 +3,25 @@ import {
   Control,
   Controller,
   FieldValues,
-  RegisterOptions,
   Path,
   useWatch,
   ValidationRule,
   useFormState,
   UseControllerProps,
-  useController,
 } from 'react-hook-form';
 import {TextInput as RNTextInput, StyleSheet, View} from 'react-native';
 import {BLACK, LIGHT_GREY, RED} from '../lib/styles';
 import {ErrorIcon} from './icons';
 import {ViewStyleProp} from '../sharedTypes';
 import {Text} from './Text';
-import {MessageDescriptor, useIntl} from 'react-intl';
 
 type TextInputProps<InputFields extends FieldValues> = {
   containerStyle?: ViewStyleProp;
   showCharacterCount?: boolean;
   control: Control<InputFields>;
-} & Omit<
+} & Pick<
   React.ComponentProps<typeof RNTextInput>,
-  'value' | 'onChangeText' | 'onBlur' | 'style'
+  'placeholder' | 'placeholderTextColor'
 > &
   Omit<UseControllerProps<InputFields>, 'control'>;
 
@@ -45,11 +42,11 @@ export const HookFormTextInput = <InputFields extends FieldValues>({
   rules,
   containerStyle,
   showCharacterCount,
-  ...RNtextInputProps
+  placeholder,
+  placeholderTextColor,
 }: TextInputProps<InputFields>) => {
-  const {
-    fieldState: {error},
-  } = useController({name, control, rules});
+  const error = useFormState({control}).errors[name];
+
   const maxLengthRule = rules ? rules['maxLength'] : undefined;
   const maxLength =
     typeof maxLengthRule === 'number' ? maxLengthRule : maxLengthRule?.value;
@@ -68,8 +65,8 @@ export const HookFormTextInput = <InputFields extends FieldValues>({
               value={value}
               onBlur={onBlur}
               onChangeText={onChange}
-              placeholderTextColor={LIGHT_GREY}
-              {...RNtextInputProps}
+              placeholderTextColor={placeholderTextColor || LIGHT_GREY}
+              placeholder={placeholder}
             />
           )}
         />
@@ -80,7 +77,9 @@ export const HookFormTextInput = <InputFields extends FieldValues>({
           styles.underContainer,
           {justifyContent: !errorMessage ? 'flex-end' : 'space-between'},
         ]}>
-        {errorMessage && <Text style={{color: RED}}>{errorMessage}</Text>}
+        {errorMessage && (
+          <Text style={{color: RED}}>{errorMessage.toString()}</Text>
+        )}
         {maxLength && showCharacterCount && (
           <Counter
             isMaxLengthError={error?.type === 'maxLength'}

@@ -24,6 +24,7 @@ import {ObservationScreen} from '../../screens/Observation';
 import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
 import {CoordinateFormat} from '../../screens/Settings/AppSettings/CoordinateFormat';
+import {ManualGpsScreen} from '../../screens/ManualGpsScreen';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -189,6 +190,11 @@ export const createDefaultScreenGroup = (
       name="CoordinateFormat"
       component={CoordinateFormat}
       options={{headerTitle: intl(CoordinateFormat.navTitle)}}
+    />
+    <RootStack.Screen
+      name="ManualGpsScreen"
+      component={ManualGpsScreen}
+      options={{headerTitle: intl(ManualGpsScreen.navTitle)}}
     />
   </RootStack.Group>
 );

@@ -58,7 +58,6 @@ const log = debug('SaveButton');
 export const SaveButton = ({observationId}: {observationId?: string}) => {
   const value = usePersistedDraftObservation(store => store.value);
   const photos = usePersistedDraftObservation(store => store.photos);
-  const {clearDraft} = useDraftObservation();
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
   const createObservationMutation = useCreateObservation();
@@ -90,10 +89,7 @@ export const SaveButton = ({observationId}: {observationId?: string}) => {
     },
     {
       text: t(m.manualEntry),
-      onPress: () => {
-        clearDraft();
-        navigation.navigate('ManualGpsScreen');
-      },
+      onPress: () => {},
       style: 'cancel',
     },
     {

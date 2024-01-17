@@ -87,29 +87,29 @@ const UtmForm = ({onValueUpdate}: FormProps) => {
   const [easting, setEasting] = React.useState('');
   const [northing, setNorthing] = React.useState('');
 
-  React.useEffect(() => {
-    try {
-      const {latitude, longitude} = toLatLon({
-        easting,
-        northing,
-        zoneLetter,
-        zoneNum,
-      });
+  // React.useEffect(() => {
+  //   try {
+  //     const {latitude, longitude} = toLatLon({
+  //       easting,
+  //       northing,
+  //       zoneLetter,
+  //       zoneNum,
+  //     });
 
-      onValueUpdate({
-        coords: {
-          lat: latitude,
-          lon: longitude,
-        },
-      });
-    } catch (err) {
-      if (err instanceof Error) {
-        onValueUpdate({
-          error: err,
-        });
-      }
-    }
-  }, [easting, northing, zoneLetter, zoneNum, onValueUpdate]);
+  //     onValueUpdate({
+  //       coords: {
+  //         lat: latitude,
+  //         lon: longitude,
+  //       },
+  //     });
+  //   } catch (err) {
+  //     if (err instanceof Error) {
+  //       onValueUpdate({
+  //         error: err,
+  //       });
+  //     }
+  //   }
+  // }, [easting, northing, zoneLetter, zoneNum, onValueUpdate]);
 
   return (
     <View>

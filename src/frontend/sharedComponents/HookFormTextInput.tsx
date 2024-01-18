@@ -19,9 +19,9 @@ type TextInputProps<InputFields extends FieldValues> = {
   containerStyle?: ViewStyleProp;
   showCharacterCount?: boolean;
   control: Control<InputFields>;
-} & Pick<
+} & Omit<
   React.ComponentProps<typeof RNTextInput>,
-  'placeholder' | 'placeholderTextColor'
+  'value' | 'onBlur' | 'onChange'
 > &
   Omit<UseControllerProps<InputFields>, 'control'>;
 
@@ -42,8 +42,7 @@ export const HookFormTextInput = <InputFields extends FieldValues>({
   rules,
   containerStyle,
   showCharacterCount,
-  placeholder,
-  placeholderTextColor,
+  ...RNInputProp
 }: TextInputProps<InputFields>) => {
   const error = useFormState({control}).errors[name];
 
@@ -65,8 +64,7 @@ export const HookFormTextInput = <InputFields extends FieldValues>({
               value={value}
               onBlur={onBlur}
               onChangeText={onChange}
-              placeholderTextColor={placeholderTextColor || LIGHT_GREY}
-              placeholder={placeholder}
+              {...RNInputProp}
             />
           )}
         />

@@ -5,6 +5,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {BLACK, LIGHT_GREY} from '../../lib/styles';
 
 import {useMostAccurateLocationForObservation} from './useMostAccurateLocationForObservation';
+import {FormattedCoords} from '../../sharedComponents/FormattedData';
+import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings';
 
 const m = defineMessages({
   searching: {
@@ -16,7 +18,9 @@ const m = defineMessages({
 
 export const LocationView = () => {
   const location = useMostAccurateLocationForObservation();
-
+  const coordinateFormat = usePersistedSettings(
+    store => store.coordinateFormat,
+  );
   const lat =
     !location || !location.coords ? undefined : location.coords.latitude;
   const lon =
@@ -39,7 +43,7 @@ export const LocationView = () => {
             style={{marginRight: 5}}
           />
           <Text style={styles.locationText}>
-            <FormattedCoords format={format} lat={lat} lon={lon} />
+            <FormattedCoords format={coordinateFormat} lat={lat} lon={lon} />
           </Text>
           {!accuracy ? null : (
             <Text style={styles.accuracy}>

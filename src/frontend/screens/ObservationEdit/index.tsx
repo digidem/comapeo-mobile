@@ -9,6 +9,9 @@ import {DescriptionField} from './DescriptionField';
 import {BottomSheet} from './BottomSheet';
 import {ThumbnailScrollView} from '../../sharedComponents/ThumbnailScrollView';
 import {PresetView} from './PresetView';
+import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
+import {ErrorModal} from '../../sharedComponents/ErrorModal';
+import {SaveButton} from './SaveButton';
 
 const m = defineMessages({
   editTitle: {
@@ -37,6 +40,17 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
 
   const isNew = !observationId;
   const {formatMessage: t} = useIntl();
+  const {openSheet, sheetRef, isOpen, closeSheet} = useBottomSheetModal({
+    openOnMount: false,
+  });
+
+  React.useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <SaveButton observationId={observationId} openErrorModal={openSheet} />
+      ),
+    });
+  }, [navigation, openSheet]);
 
   const handleCameraPress = React.useCallback(() => {
     navigation.navigate('AddPhoto');
@@ -73,6 +87,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
         <ThumbnailScrollView />
       </ScrollView>
       <BottomSheet items={bottomSheetItems} />
+      <ErrorModal sheetRef={sheetRef} closeSheet={closeSheet} isOpen={isOpen} />
     </View>
   );
 };

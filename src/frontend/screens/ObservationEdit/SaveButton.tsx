@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert, AlertButton} from 'react-native';
+import {Alert, AlertButton, View} from 'react-native';
 import debug from 'debug';
 import {defineMessages, useIntl} from 'react-intl';
 
@@ -10,6 +10,7 @@ import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersis
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {useCreateObservation} from '../../hooks/server/observations';
 import {useEditObservation} from '../../hooks/server/observations';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 const m = defineMessages({
   noGpsTitle: {
@@ -55,7 +56,13 @@ const m = defineMessages({
 const MINIMUM_ACCURACY = 10;
 const log = debug('SaveButton');
 
-export const SaveButton = ({observationId}: {observationId?: string}) => {
+export const SaveButton = ({
+  observationId,
+  openErrorModal,
+}: {
+  observationId?: string;
+  openErrorModal?: () => void;
+}) => {
   const value = usePersistedDraftObservation(store => store.value);
   const photos = usePersistedDraftObservation(store => store.photos);
   const {formatMessage: t} = useIntl();
@@ -65,8 +72,17 @@ export const SaveButton = ({observationId}: {observationId?: string}) => {
 
   function createObservation() {
     if (!value) throw new Error('no observation saved in persisted state ');
-    createObservationMutation.mutate({value});
-    navigation.navigate('Home', {screen: 'Map'});
+    createObservationMutation.mutate(
+      {value},
+      {
+        onError: () => {
+          if (openErrorModal) openErrorModal();
+        },
+        onSuccess: () => {
+          navigation.navigate('Home', {screen: 'Map'});
+        },
+      },
+    );
   }
 
   function editObservation() {
@@ -127,7 +143,12 @@ export const SaveButton = ({observationId}: {observationId?: string}) => {
     Alert.alert(t(m.weakGpsTitle), t(m.weakGpsDesc), confirmationOptions);
   };
 
-  return (
+  return createObservationMutation.isPending ||
+    editObservationMutation.isPending ? (
+    <View style={{marginRight: 10}}>
+      <UIActivityIndicator size={30} />
+    </View>
+  ) : (
     <IconButton onPress={handleSavePress} testID="saveButton">
       <SaveIcon inprogress={false} />
     </IconButton>

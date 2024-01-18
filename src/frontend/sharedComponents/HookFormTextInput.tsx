@@ -52,7 +52,7 @@ export const HookFormTextInput = <InputFields extends FieldValues>({
   const errorMessage = error?.message;
 
   return (
-    <React.Fragment>
+    <View>
       <View style={[styles.input, containerStyle, error ? styles.error : {}]}>
         <Controller
           name={name}
@@ -70,24 +70,24 @@ export const HookFormTextInput = <InputFields extends FieldValues>({
         />
         {error && <ErrorIcon style={{position: undefined}} color={RED} />}
       </View>
-      <View
-        style={[
-          styles.underContainer,
-          {justifyContent: !errorMessage ? 'flex-end' : 'space-between'},
-        ]}>
-        {errorMessage && (
-          <Text style={{color: RED}}>{errorMessage.toString()}</Text>
-        )}
-        {maxLength && showCharacterCount && (
-          <Counter
-            isMaxLengthError={error?.type === 'maxLength'}
-            control={control}
-            name={name}
-            maxLength={maxLength}
-          />
-        )}
+      <View style={styles.underContainer}>
+        <View>
+          {errorMessage && (
+            <Text style={{color: RED}}>{errorMessage.toString()}</Text>
+          )}
+        </View>
+        <View>
+          {maxLength && showCharacterCount && (
+            <Counter
+              isMaxLengthError={error?.type === 'maxLength'}
+              control={control}
+              name={name}
+              maxLength={maxLength}
+            />
+          )}
+        </View>
       </View>
-    </React.Fragment>
+    </View>
   );
 };
 

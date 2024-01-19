@@ -15,13 +15,20 @@ import {ErrorIcon} from './icons';
 import {ViewStyleProp} from '../sharedTypes';
 import {Text} from './Text';
 
-type TextInputProps<InputFields extends FieldValues> = {
+type Transform<T extends string> = {
+  transform: (value: string | undefined) => T;
+};
+
+type TextInputProps<T extends string, InputFields extends FieldValues> = {
   containerStyle?: ViewStyleProp;
   showCharacterCount?: boolean;
   control: Control<InputFields>;
-} & Pick<
+  toUppercase?: boolean;
+  toLowercase?: boolean;
+  transform?: Transform<T>;
+} & Omit<
   React.ComponentProps<typeof RNTextInput>,
-  'placeholder' | 'placeholderTextColor'
+  'value' | 'onBlur' | 'onChange'
 > &
   Omit<UseControllerProps<InputFields>, 'control'>;
 
@@ -36,15 +43,18 @@ type CounterProps<InputFields extends FieldValues> = {
  *
  * Uses React Hook Form. The name and control should come from the `useForm<T>`. More info here https://www.react-hook-form.com/get-started/#ReactNative. This component also has access to all the same props as React Native's `<TextInput/>`
  */
-export const HookFormTextInput = <InputFields extends FieldValues>({
+export const HookFormTextInput = <
+  T extends string,
+  InputFields extends FieldValues,
+>({
   name,
   control,
   rules,
   containerStyle,
   showCharacterCount,
-  placeholder,
-  placeholderTextColor,
-}: TextInputProps<InputFields>) => {
+  transform,
+  ...RNInputProp
+}: TextInputProps<T, InputFields>) => {
   const error = useFormState({control}).errors[name];
 
   const maxLengthRule = rules ? rules['maxLength'] : undefined;
@@ -62,11 +72,12 @@ export const HookFormTextInput = <InputFields extends FieldValues>({
           render={({field: {value, onChange, onBlur}}) => (
             <RNTextInput
               style={[{flex: 1, color: BLACK}]}
-              value={value}
+              value={transform ? transform.transform(value) : value}
               onBlur={onBlur}
-              onChangeText={onChange}
-              placeholderTextColor={placeholderTextColor || LIGHT_GREY}
-              placeholder={placeholder}
+              onChangeText={e =>
+                onChange(transform ? transform.transform(e) : e)
+              }
+              {...RNInputProp}
             />
           )}
         />

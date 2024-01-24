@@ -8,19 +8,22 @@ export type Invite = {
   peerId: string;
 };
 
-type InviteWithTimeStamp = Invite & {time: number};
+export type InviteWithTimeStamp = Invite & {time: number};
 
 export const useProjectInviteListener = (currentRoute?: string) => {
   const mapeoApi = useApi();
-  const [invites, setInvites] = useState<InviteWithTimeStamp[]>();
+  const [invites, setInvites] = useState<InviteWithTimeStamp[]>([]);
 
   const clearInvite = useCallback(
-    (invite?: InviteWithTimeStamp) => {
-      if (!invites || !invite) return;
-      setInvites(invites.filter(inv => inv.projectId !== invite.projectId));
+    (inviteProjectId: string) => {
+      setInvites(invites.filter(inv => inv.projectId !== inviteProjectId));
     },
     [invites],
   );
+
+  const clearAllInvites = () => {
+    setInvites([]);
+  };
 
   useEffect(() => {
     const listenAndSetInvite = (invite: Invite) => {
@@ -38,21 +41,11 @@ export const useProjectInviteListener = (currentRoute?: string) => {
     };
   }, [mapeoApi]);
 
-  const oldestInvite =
-    !invites || invites.length < 1
-      ? undefined
-      : invites.reduce((oldest, current) => {
-          return current.time < oldest.time ? current : oldest;
-        }, invites[0]);
-
-  const activeOldestInvite = !EDITING_SCREEN_NAMES.find(
-    val => val === currentRoute,
-  )
-    ? oldestInvite
-    : undefined;
-
   return {
-    projectInvite: activeOldestInvite,
-    clearInvite: () => clearInvite(activeOldestInvite),
+    projectInvites: !EDITING_SCREEN_NAMES.find(val => val === currentRoute)
+      ? invites
+      : [],
+    clearInvite,
+    clearAllInvites,
   };
 };

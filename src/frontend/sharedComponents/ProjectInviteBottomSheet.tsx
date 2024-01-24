@@ -60,6 +60,7 @@ export const ProjectInviteBottomSheet = ({
                 closeSheet();
                 return;
               }
+              // If user accepts an invite, we assume that all other invites can be cleared
               mapeoApi.invite.accept(oldestInvite.projectId);
               clearAllInvites();
               closeSheet();

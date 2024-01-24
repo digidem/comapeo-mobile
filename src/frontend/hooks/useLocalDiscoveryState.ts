@@ -1,4 +1,4 @@
-import {type MapeoClientApi, type MapeoProjectApi} from '@mapeo/ipc';
+import {type MapeoClientApi} from '@mapeo/ipc';
 import {
   AppState,
   AppStateStatus,
@@ -55,13 +55,12 @@ let localDiscoveryController: null | ReturnType<
  * cause a re-render every time any state property updates, because it is
  * creating a new object every time.
  */
-export function useLocalDiscoveryState(
-  selector: (
-    state: LocalDiscoveryState | undefined,
-  ) =>
-    | LocalDiscoveryState
-    | LocalDiscoveryState[keyof LocalDiscoveryState] = state => state,
-) {
+
+export function useLocalDiscoveryState<
+  T extends (state: LocalDiscoveryState) => any = (
+    state: LocalDiscoveryState,
+  ) => LocalDiscoveryState,
+>(selector: T = ((state: LocalDiscoveryState) => state) as T): ReturnType<T> {
   const api = useApi();
   if (!localDiscoveryController) {
     localDiscoveryController = createLocalDiscoveryController(api);

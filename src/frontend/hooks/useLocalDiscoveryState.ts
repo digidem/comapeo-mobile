@@ -1,9 +1,14 @@
 import {type MapeoClientApi, type MapeoProjectApi} from '@mapeo/ipc';
-import {AppState, AppStateStatus} from 'react-native';
+import {
+  AppState,
+  AppStateStatus,
+  type NativeEventSubscription,
+} from 'react-native';
 import NetInfo, {
   type NetInfoWifiState,
   type NetInfoState,
   type NetInfoDisconnectedStates,
+  type NetInfoSubscription,
 } from '@react-native-community/netinfo';
 import StateMachine from 'start-stop-state-machine';
 import {useApi} from '../contexts/ApiContext';
@@ -68,6 +73,8 @@ export function useLocalDiscoveryState(
 function createLocalDiscoveryController(api: MapeoClientApi) {
   let appState = AppState.currentState;
   let netInfo: NetInfoWifiState | NetInfoDisconnectedStates | null = null;
+  let netInfoSubscription: NetInfoSubscription | undefined;
+  let appStateSubscription: NativeEventSubscription | undefined;
   let state: LocalDiscoveryState = {
     status: 'stopped',
     ssid: null,
@@ -93,8 +100,11 @@ function createLocalDiscoveryController(api: MapeoClientApi) {
   });
   const listeners = new Set<() => void>();
 
-  NetInfo.addEventListener(onNetInfo);
-  AppState.addEventListener('change', onAppState);
+  function subscribeInternal() {
+    netInfoSubscription = NetInfo.addEventListener(onNetInfo);
+    appStateSubscription = AppState.addEventListener('change', onAppState);
+  }
+
   refreshWifiState();
 
   function refreshWifiState() {
@@ -187,8 +197,17 @@ function createLocalDiscoveryController(api: MapeoClientApi) {
   return {
     subscribe(listener: () => void) {
       listeners.add(listener);
+      if (!netInfoSubscription || !appStateSubscription) {
+        subscribeInternal();
+      }
       return () => {
         listeners.delete(listener);
+        if (listeners.size === 0) {
+          netInfoSubscription?.();
+          appStateSubscription?.remove();
+          netInfoSubscription = undefined;
+          appStateSubscription = undefined;
+        }
       };
     },
     getSnapshot() {

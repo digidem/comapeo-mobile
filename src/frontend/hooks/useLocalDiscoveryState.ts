@@ -32,6 +32,9 @@ let localDiscoveryController: null | ReturnType<
   typeof createLocalDiscoveryController
 > = null;
 
+// Poll wifi state every 2 seconds
+const POLL_WIFI_STATE_INTERVAL_MS = 2000;
+
 /**
  * Hook to subscribe to the current state of local peer discovery. Using this
  * hook at least once will ensure that local discovery is started and stopped as
@@ -81,6 +84,8 @@ function createLocalDiscoveryController(api: MapeoClientApi) {
     wifiConnection: 'unknown',
     wifiLinkSpeed: null,
   };
+  let cancelNetInfoFetch: undefined | (() => void);
+  let interval: undefined | ReturnType<typeof setInterval>;
 
   const sm = new StateMachine({
     start() {
@@ -100,14 +105,31 @@ function createLocalDiscoveryController(api: MapeoClientApi) {
   const listeners = new Set<() => void>();
 
   function subscribeInternal() {
+    interval = setInterval(refreshWifiState, POLL_WIFI_STATE_INTERVAL_MS);
     netInfoSubscription = NetInfo.addEventListener(onNetInfo);
     appStateSubscription = AppState.addEventListener('change', onAppState);
   }
 
-  refreshWifiState();
+  function unsubscribeInternal() {
+    clearInterval(interval);
+    netInfoSubscription?.();
+    appStateSubscription?.remove();
+    netInfoSubscription = undefined;
+    appStateSubscription = undefined;
+  }
 
   function refreshWifiState() {
-    NetInfo.fetch('wifi').then(onNetInfo).catch(noop);
+    let cancel = false;
+    cancelNetInfoFetch?.();
+    cancelNetInfoFetch = () => {
+      cancel = true;
+    };
+    NetInfo.fetch('wifi')
+      .then(state => {
+        if (cancel) return;
+        onNetInfo(state);
+      })
+      .catch(noop);
   }
 
   function updateState(newState: Partial<LocalDiscoveryState>) {
@@ -122,6 +144,10 @@ function createLocalDiscoveryController(api: MapeoClientApi) {
   }
 
   function onNetInfo(nextNetInfo: NetInfoState) {
+    if (cancelNetInfoFetch) {
+      cancelNetInfoFetch();
+      cancelNetInfoFetch = undefined;
+    }
     if (state.status === 'error') return;
     if (nextNetInfo.type !== 'wifi') {
       // Currently NetInfo events fire with the active default data network. If
@@ -202,10 +228,7 @@ function createLocalDiscoveryController(api: MapeoClientApi) {
       return () => {
         listeners.delete(listener);
         if (listeners.size === 0) {
-          netInfoSubscription?.();
-          appStateSubscription?.remove();
-          netInfoSubscription = undefined;
-          appStateSubscription = undefined;
+          unsubscribeInternal();
         }
       };
     },

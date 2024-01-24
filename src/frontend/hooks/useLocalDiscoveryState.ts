@@ -181,6 +181,7 @@ function createLocalDiscoveryController(api: MapeoClientApi) {
   }
 
   function onAppState(nextAppState: AppStateStatus) {
+    appState = nextAppState;
     if (nextAppState === 'active') {
       // If the app has just become active, we need to check if the wifi
       // connection has changed since the app was last active, and start or stop
@@ -190,7 +191,6 @@ function createLocalDiscoveryController(api: MapeoClientApi) {
       // If the app is not active, we need to stop discovery.
       sm.stop().catch(noop);
     }
-    appState = nextAppState;
   }
 
   return {

@@ -43,6 +43,7 @@ function createLocalPeerState(api: MapeoClientApi) {
   }
 
   function onPeers(peers: LocalPeer[]) {
+    error = undefined;
     if (!isSubscribedInternal) return;
     let stateUpdated = false;
     for (const peer of peers) {

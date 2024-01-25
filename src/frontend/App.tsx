@@ -19,7 +19,6 @@ import {
   LocalDiscoveryProvider,
   createLocalDiscoveryController,
 } from './contexts/LocalDiscoveryContext';
-import {useLocalDiscoveryState} from './hooks/useLocalDiscoveryState';
 
 const queryClient = new QueryClient();
 const messagePort = new MessagePortLike();

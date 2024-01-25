@@ -15,10 +15,25 @@ import {ActiveProjectProvider} from './contexts/ProjectContext';
 import {initializeNodejs} from './initializeNodejs';
 import {PermissionsAndroid} from 'react-native';
 import {ExternalProviders} from './contexts/ExternalProviders';
+import {
+  LocalDiscoveryProvider,
+  createLocalDiscoveryController,
+} from './contexts/LocalDiscoveryContext';
 
 const queryClient = new QueryClient();
 const messagePort = new MessagePortLike();
 const mapeoApi = createMapeoClient(messagePort);
+const localDiscoveryController = createLocalDiscoveryController({
+  startLocalPeerDiscovery() {
+    return mapeoApi.startLocalPeerDiscovery();
+  },
+  stopLocalPeerDiscovery() {
+    // TODO: Wait for sync to finish. Currently will disconnect all peers
+    // immediately, even if they are currently syncing
+    return mapeoApi.stopLocalPeerDiscovery({force: true});
+  },
+});
+localDiscoveryController.start();
 initializeNodejs();
 
 const App = () => {
@@ -36,15 +51,17 @@ const App = () => {
     <IntlProvider>
       <ExternalProviders queryClient={queryClient} navRef={navRef}>
         <ServerLoading messagePort={messagePort}>
-          <ApiProvider api={mapeoApi}>
-            <ActiveProjectProvider>
-              <PhotoPromiseProvider>
-                <SecurityProvider>
-                  <AppNavigator permissionAsked={permissionsAsked} />
-                </SecurityProvider>
-              </PhotoPromiseProvider>
-            </ActiveProjectProvider>
-          </ApiProvider>
+          <LocalDiscoveryProvider value={localDiscoveryController}>
+            <ApiProvider api={mapeoApi}>
+              <ActiveProjectProvider>
+                <PhotoPromiseProvider>
+                  <SecurityProvider>
+                    <AppNavigator permissionAsked={permissionsAsked} />
+                  </SecurityProvider>
+                </PhotoPromiseProvider>
+              </ActiveProjectProvider>
+            </ApiProvider>
+          </LocalDiscoveryProvider>
         </ServerLoading>
       </ExternalProviders>
     </IntlProvider>

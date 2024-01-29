@@ -31,12 +31,9 @@ export type DraftObservationSlice = {
     // Create a new draft observation
     newDraft: (observation?: newDraftProps) => void;
     deletePhoto: (id: string) => void;
-    updateObservationPosition: ({
-      position,
-      manualLocation,
-    }: {
-      position?: Position;
-      manualLocation?: boolean;
+    updateObservationPosition: (props: {
+      position: Position | undefined;
+      manualLocation: boolean;
     }) => void;
     updatePreset: (preset: Preset) => void;
     updateObservationNotes: (notes: string) => void;
@@ -63,33 +60,24 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
         observationId: undefined,
       });
     },
-    updateObservationPosition: ({position, manualLocation}) => {
-      if (!position || !position.coords) return;
+    updateObservationPosition: props => {
       const prevValue = get().value;
+      if (!prevValue)
+        throw new Error(
+          'cannot update the draft position until a draft has been initialized',
+        );
 
-      // if there is no draft observation initialized, ignore update
-      // if user is editting a saved observation, ignore update
-      if (!prevValue || 'docId' in prevValue) return;
-      // if the location has been manually set it cannot be overwritten unless there is a new manual location
-      if (prevValue.metadata.manualLocation && !manualLocation) return;
-      const prevAccuracy = prevValue.metadata.position?.coords?.accuracy;
-      const newAccuracy = position.coords?.accuracy;
-      if (!newAccuracy) return;
-      if (!prevAccuracy || newAccuracy < prevAccuracy) {
-        set({
-          value: {
-            ...prevValue,
-            lon: position.coords.longitude,
-            lat: position.coords.latitude,
-            metadata: {
-              ...prevValue.metadata,
-              position: position,
-              manualLocation,
-            },
+      set({
+        value: {
+          ...prevValue,
+          lon: props?.position?.coords?.longitude,
+          lat: props?.position?.coords?.latitude,
+          metadata: {
+            ...prevValue.metadata,
+            position: props.position,
           },
-        });
-        return;
-      }
+        },
+      });
     },
     newDraft: draftProps => {
       get().actions.clearDraft();

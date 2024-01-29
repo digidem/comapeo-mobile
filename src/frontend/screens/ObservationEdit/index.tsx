@@ -1,7 +1,6 @@
 import * as React from 'react';
-import {defineMessages, useIntl} from 'react-intl';
+import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 
-import {SaveButton} from './SaveButton';
 import {NativeNavigationComponent} from '../../sharedTypes';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {View, ScrollView, StyleSheet} from 'react-native';
@@ -9,8 +8,10 @@ import {LocationView} from './LocationView';
 import {DescriptionField} from './DescriptionField';
 import {BottomSheet} from './BottomSheet';
 import {ThumbnailScrollView} from '../../sharedComponents/ThumbnailScrollView';
-import {CustomHeaderLeftClose} from '../../sharedComponents/CustomHeaderLeftClose';
 import {PresetView} from './PresetView';
+import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
+import {ErrorModal} from '../../sharedComponents/ErrorModal';
+import {SaveButton} from './SaveButton';
 
 const m = defineMessages({
   editTitle: {
@@ -30,26 +31,26 @@ const m = defineMessages({
   },
 });
 
-export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
-  navigation,
-}) => {
+export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
+  editTitle: MessageDescriptor;
+} = ({navigation}) => {
   const observationId = usePersistedDraftObservation(
     store => store.observationId,
   );
+
   const isNew = !observationId;
   const {formatMessage: t} = useIntl();
-  React.useLayoutEffect(() => {
+  const {openSheet, sheetRef, isOpen, closeSheet} = useBottomSheetModal({
+    openOnMount: false,
+  });
+
+  React.useEffect(() => {
     navigation.setOptions({
-      headerTitle: observationId ? t(m.editTitle) : t(m.newTitle),
-      headerLeft: props => (
-        <CustomHeaderLeftClose
-          headerBackButtonProps={props}
-          observationId={observationId}
-        />
+      headerRight: () => (
+        <SaveButton observationId={observationId} openErrorModal={openSheet} />
       ),
-      headerRight: () => <SaveButton observationId={observationId} />,
     });
-  }, [navigation, observationId, CustomHeaderLeftClose, SaveButton]);
+  }, [navigation, openSheet]);
 
   const handleCameraPress = React.useCallback(() => {
     navigation.navigate('AddPhoto');
@@ -86,11 +87,13 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         <ThumbnailScrollView />
       </ScrollView>
       <BottomSheet items={bottomSheetItems} />
+      <ErrorModal sheetRef={sheetRef} closeSheet={closeSheet} isOpen={isOpen} />
     </View>
   );
 };
 
 ObservationEdit.navTitle = m.newTitle;
+ObservationEdit.editTitle = m.editTitle;
 
 const styles = StyleSheet.create({
   container: {

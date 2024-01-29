@@ -4,7 +4,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {BLACK, LIGHT_GREY} from '../../lib/styles';
 
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
+import {useMostAccurateLocationForObservation} from './useMostAccurateLocationForObservation';
 import {FormattedCoords} from '../../sharedComponents/FormattedData';
 import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings';
 
@@ -17,14 +17,17 @@ const m = defineMessages({
 });
 
 export const LocationView = () => {
-  const value = usePersistedDraftObservation(store => store.value);
-  const lat = value && value.lat ? value.lat : undefined;
-  const lon = value && value.lon ? value.lon : undefined;
+  const location = useMostAccurateLocationForObservation();
+  const coordinateFormat = usePersistedSettings(
+    store => store.coordinateFormat,
+  );
+  const lat =
+    !location || !location.coords ? undefined : location.coords.latitude;
+  const lon =
+    !location || !location.coords ? undefined : location.coords.longitude;
   const accuracy =
-    value && value.metadata.position && value.metadata.position.coords
-      ? value.metadata.position?.coords.accuracy
-      : undefined;
-  const format = usePersistedSettings(store => store.coordinateFormat);
+    !location || !location.coords ? undefined : location.coords.accuracy;
+
   return (
     <View style={styles.locationContainer}>
       {!lat || !lon ? (
@@ -40,7 +43,7 @@ export const LocationView = () => {
             style={{marginRight: 5}}
           />
           <Text style={styles.locationText}>
-            <FormattedCoords format={format} lat={lat} lon={lon} />
+            <FormattedCoords format={coordinateFormat} lat={lat} lon={lon} />
           </Text>
           {!accuracy ? null : (
             <Text style={styles.accuracy}>

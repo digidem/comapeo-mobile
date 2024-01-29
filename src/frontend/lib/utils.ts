@@ -135,17 +135,17 @@ export function toDegreesMinutesAndSeconds(coordinate: number) {
   };
 }
 
-// export function convertDmsToDd({
-//   degrees,
-//   minutes,
-//   seconds,
-// }: {|
-//   degrees: number,
-//   minutes: number,
-//   seconds: number,
-// |}) {
-//   return degrees + minutes / 60 + seconds / 3600;
-// }
+export function convertDmsToDd({
+  degrees,
+  minutes,
+  seconds,
+}: {
+  degrees: number;
+  minutes: number;
+  seconds: number;
+}) {
+  return degrees + minutes / 60 + seconds / 3600;
+}
 
 // Style from National Geographic style guide
 // https://sites.google.com/a/ngs.org/ngs-style-manual/home/L/latitude-and-longitude

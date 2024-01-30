@@ -12,6 +12,7 @@ import {Observation, ObservationValue} from '@mapeo/schema';
 export type ViewStyleProp = StyleProp<ViewStyle>;
 export type TextStyleProp = StyleProp<TextStyle>;
 export type ImageStyleProp = StyleProp<ImageStyle>;
+import {RoleId} from '@mapeo/core/dist/capabilities';
 
 export type IconSize = 'small' | 'medium' | 'large';
 
@@ -55,4 +56,4 @@ export type PhotoVariant = 'original' | 'thumbnail' | 'preview';
 export type CoordinateFormat = 'utm' | 'dd' | 'dms';
 export type DeviceType = 'mobile' | 'desktop';
 
-export type DeviceRole = 'particpant' | 'coordinator';
+export type DeviceRole = RoleId;

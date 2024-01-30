@@ -92,23 +92,23 @@ export type AppList = {
   ProjectSettings: undefined;
   YourTeam: undefined;
   SelectDevice: undefined;
-  SelectInviteeRole: {name: string; deviceType: DeviceType; deviceId?: string};
+  SelectInviteeRole: {name: string; deviceType: DeviceType; deviceId: string};
   ReviewInvitation: {
     name: string;
     deviceType: DeviceType;
-    deviceId?: string;
+    deviceId: string;
     role: DeviceRole;
   };
   WaitingForInviteAccept: {
     name: string;
     deviceType: DeviceType;
-    deviceId?: string;
+    deviceId: string;
     role: DeviceRole;
   };
   InviteAccepted: {
     name: string;
     deviceType: DeviceType;
-    deviceId?: string;
+    deviceId: string;
     role: DeviceRole;
   };
 };

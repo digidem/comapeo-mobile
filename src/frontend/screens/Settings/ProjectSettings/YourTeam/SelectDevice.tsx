@@ -1,10 +1,11 @@
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeNavigationComponent} from '../../../../sharedTypes';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import useWifiStatus from '../../../../hooks/useWifiStatus';
 import WifiIcon from '../../../../images/WifiIcon.svg';
 import {Text} from '../../../../sharedComponents/Text';
 import {DeviceCard} from '../../../../sharedComponents/DeviceCard';
+import {useLocalDiscoveryState} from '../../../../hooks/useLocalDiscoveryState';
+import {useLocalPeers} from '../../../../hooks/useLocalPeers';
 
 const m = defineMessages({
   title: {
@@ -28,8 +29,11 @@ const m = defineMessages({
 export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
   navigation,
 }) => {
-  const {ssid} = useWifiStatus();
+  const ssid = useLocalDiscoveryState(state => state.ssid);
   const {formatMessage: t} = useIntl();
+
+  const devices = useLocalPeers();
+
   return (
     <ScrollView style={styles.container}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -43,19 +47,28 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
       <View style={{marginTop: 20}}></View>
 
       {/* List available devices here */}
-      <DeviceCard
-        style={{marginBottom: 10}}
-        name="Joy"
-        deviceType="mobile"
-        deviceId="Android13"
-        onPress={() =>
-          navigation.navigate('SelectInviteeRole', {
-            name: 'Joy',
-            deviceId: 'Android13',
-            deviceType: 'mobile',
-          })
-        }
-      />
+      {devices &&
+        devices.map(device => {
+          const name = device.name;
+          const deviceId = device.deviceId;
+          // this is not exposed yet
+          const deviceType = 'mobile';
+          return (
+            <DeviceCard
+              style={{marginBottom: 10}}
+              name={name || ''}
+              deviceType={deviceType}
+              deviceId={deviceId}
+              onPress={() =>
+                navigation.navigate('SelectInviteeRole', {
+                  name: name || '',
+                  deviceId: deviceId,
+                  deviceType: deviceType,
+                })
+              }
+            />
+          );
+        })}
     </ScrollView>
   );
 };

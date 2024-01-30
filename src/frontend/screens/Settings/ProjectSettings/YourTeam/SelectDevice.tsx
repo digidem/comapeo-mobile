@@ -34,6 +34,8 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
 
   const devices = useLocalPeers();
 
+  console.log({devices});
+
   return (
     <ScrollView style={styles.container}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -45,6 +47,20 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
       <Text style={{marginLeft: 10}}>{`\u2022 ${t(m.sameVersion)}`}</Text>
       {/* Divider */}
       <View style={{marginTop: 20}}></View>
+
+      <DeviceCard
+        style={{marginBottom: 10}}
+        name={'someTesting'}
+        deviceType={'mobile'}
+        deviceId={'asldkfj12ca'}
+        onPress={() =>
+          navigation.navigate('SelectInviteeRole', {
+            name: 'someTesting',
+            deviceId: 'asldkfj12ca',
+            deviceType: 'mobile',
+          })
+        }
+      />
 
       {/* List available devices here */}
       {devices &&

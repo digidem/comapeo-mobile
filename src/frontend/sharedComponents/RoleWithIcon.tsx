@@ -5,24 +5,20 @@ import {defineMessages, useIntl} from 'react-intl';
 import {Text} from './Text';
 import {BLACK} from '../lib/styles';
 import {DeviceRole, ViewStyleProp} from '../sharedTypes';
-import {
-  COORDINATOR_ROLE_ID,
-  MEMBER_ROLE_ID,
-} from '@mapeo/core/dist/capabilities';
 
 const m = defineMessages({
   coordinator: {
     id: 'sharedComponents.RoleWithIcon.coordinator',
     defaultMessage: 'Coordinator',
   },
-  particpant: {
-    id: 'sharedComponents.RoleWithIcon.particpant',
-    defaultMessage: 'Particpant',
+  participant: {
+    id: 'sharedComponents.RoleWithIcon.participant',
+    defaultMessage: 'Participant',
   },
 });
 
 type RoleWithIconProps = {
-  role: DeviceRole;
+  role: 'participant' | 'coordinator';
   style?: ViewStyleProp;
 };
 
@@ -30,15 +26,13 @@ export const RoleWithIcon = ({role, style}: RoleWithIconProps) => {
   const {formatMessage} = useIntl();
   return (
     <View style={[styles.flexRow, style]}>
-      {role === MEMBER_ROLE_ID ? (
+      {role === 'participant' ? (
         <MaterialIcon name={'people'} size={25} color={BLACK} />
       ) : (
         <MaterialCommunity name="account-cog" size={25} color={BLACK} />
       )}
       <Text style={{marginLeft: 10, fontWeight: 'bold'}}>
-        {formatMessage(
-          role === COORDINATOR_ROLE_ID ? m.coordinator : m.particpant,
-        )}
+        {formatMessage(role === 'coordinator' ? m.coordinator : m.participant)}
       </Text>
     </View>
   );

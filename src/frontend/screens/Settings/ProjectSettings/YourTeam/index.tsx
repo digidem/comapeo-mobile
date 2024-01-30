@@ -28,9 +28,9 @@ const m = defineMessages({
     id: 'screens.Setting.ProjectSettings.YourTeam.coordinators',
     defaultMessage: 'Coordinators',
   },
-  particpants: {
-    id: 'screens.Setting.ProjectSettings.YourTeam.particpants',
-    defaultMessage: 'Particpants',
+  participants: {
+    id: 'screens.Setting.ProjectSettings.YourTeam.participants',
+    defaultMessage: 'Participants',
   },
   coordinatorDescription: {
     id: 'screens.Setting.ProjectSettings.YourTeam.coordinatorDescription',
@@ -45,8 +45,8 @@ const m = defineMessages({
     id: 'screens.Setting.ProjectSettings.YourTeam.dateAdded',
     defaultMessage: 'Date Added',
   },
-  particpantDescription: {
-    id: 'screens.Setting.ProjectSettings.YourTeam.particpantDescription',
+  participantDescription: {
+    id: 'screens.Setting.ProjectSettings.YourTeam.participantDescription',
     defaultMessage:
       'Participants can take and share observations. They cannot manage users or project details.',
   },
@@ -142,10 +142,10 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
 
       <IconHeader
         iconName="people"
-        messageDescriptor={m.particpants}
+        messageDescriptor={m.participants}
         style={{marginTop: 20}}
       />
-      <Text style={{marginTop: 10}}>{t(m.particpantDescription)}</Text>
+      <Text style={{marginTop: 10}}>{t(m.participantDescription)}</Text>
 
       {membersQuery.isLoading && <Loading />}
 

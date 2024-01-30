@@ -12,6 +12,9 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {DeviceNameWithIcon} from '../../../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../../../sharedComponents/RoleWithIcon';
 
+export const COORDINATOR_ROLE_ID = 'f7c150f5a3a9a855';
+export const MEMBER_ROLE_ID = '012fd2d431c0bf60';
+
 const m = defineMessages({
   title: {
     id: 'screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title',
@@ -21,8 +24,8 @@ const m = defineMessages({
     id: 'screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.selectingDevice',
     defaultMessage: 'You are selecting a role for this device:',
   },
-  particpantDescription: {
-    id: 'screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.particpantDescription',
+  participantDescription: {
+    id: 'screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.participantDescription',
     defaultMessage:
       'As a Participant this device can take and share observations. They cannot manage users or project details.',
   },
@@ -37,6 +40,7 @@ export const SelectInviteeRole: NativeNavigationComponent<
   'SelectInviteeRole'
 > = ({route, navigation}) => {
   const {formatMessage: t} = useIntl();
+  console.log({route});
   return (
     <View style={styles.container}>
       <Text style={{fontSize: 18, fontWeight: 'bold'}}>
@@ -45,11 +49,11 @@ export const SelectInviteeRole: NativeNavigationComponent<
       <DeviceNameWithIcon {...route.params} style={{marginTop: 10}} />
       <RoleCard
         style={{marginTop: 20}}
-        role="particpant"
+        role="participant"
         onPress={() =>
           navigation.navigate('ReviewInvitation', {
             ...route.params,
-            role: 'particpant',
+            role: MEMBER_ROLE_ID,
           })
         }
       />
@@ -59,7 +63,7 @@ export const SelectInviteeRole: NativeNavigationComponent<
         onPress={() =>
           navigation.navigate('ReviewInvitation', {
             ...route.params,
-            role: 'coordinator',
+            role: COORDINATOR_ROLE_ID,
           })
         }
       />
@@ -68,7 +72,7 @@ export const SelectInviteeRole: NativeNavigationComponent<
 };
 
 type RoleCardProps = {
-  role: 'particpant' | 'coordinator';
+  role: 'participant' | 'coordinator';
   onPress: () => void;
   style?: ViewStyleProp;
 };
@@ -86,7 +90,7 @@ export const RoleCard = ({role, style, onPress}: RoleCardProps) => {
           {formatMessage(
             role === 'coordinator'
               ? m.coordinatorDescription
-              : m.particpantDescription,
+              : m.participantDescription,
           )}
         </Text>
       </View>
@@ -100,6 +104,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     paddingTop: 40,
+    height: '100%',
   },
   flexRow: {
     flexDirection: 'row',

@@ -49,8 +49,8 @@
   "screen.Settings.ProjectSettings.YourTeam.ReviewInvitation.coordinator": {
     "message": "Coordinator"
   },
-  "screen.Settings.ProjectSettings.YourTeam.ReviewInvitation.particpant": {
-    "message": "Particpant"
+  "screen.Settings.ProjectSettings.YourTeam.ReviewInvitation.participant": {
+    "message": "participant"
   },
   "screen.Settings.ProjectSettings.YourTeam.ReviewInvitation.sendInvite": {
     "message": "Send Invite"
@@ -70,7 +70,7 @@
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.coordinatorDescription": {
     "message": "As a Coordinator this device can invite and remove users, and manage project details."
   },
-  "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.particpantDescription": {
+  "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.participantDescription": {
     "message": "As a Participant this device can take and share observations. They cannot manage users or project details."
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.selectingDevice": {
@@ -429,11 +429,11 @@
   "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
     "message": "Invite Device"
   },
-  "screens.Setting.ProjectSettings.YourTeam.particpantDescription": {
+  "screens.Setting.ProjectSettings.YourTeam.participantDescription": {
     "message": "Participants can take and share observations. They cannot manage users or project details."
   },
-  "screens.Setting.ProjectSettings.YourTeam.particpants": {
-    "message": "Particpants"
+  "screens.Setting.ProjectSettings.YourTeam.participants": {
+    "message": "participants"
   },
   "screens.Setting.ProjectSettings.YourTeam.title": {
     "message": "Your Team"
@@ -488,8 +488,8 @@
   "sharedComponents.RoleWithIcon.coordinator": {
     "message": "Coordinator"
   },
-  "sharedComponents.RoleWithIcon.particpant": {
-    "message": "Particpant"
+  "sharedComponents.RoleWithIcon.participant": {
+    "message": "participant"
   },
   "sharedComponents.WifiBar.noWifi": {
     "message": "No Internet"

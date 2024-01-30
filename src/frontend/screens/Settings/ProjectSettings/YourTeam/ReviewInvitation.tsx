@@ -8,10 +8,11 @@ import {WHITE} from '../../../../lib/styles';
 import {Button} from '../../../../sharedComponents/Button';
 import {DeviceNameWithIcon} from '../../../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../../../sharedComponents/RoleWithIcon';
-import {useProject} from '../../../../hooks/server/projects';
+import {useProject, useSendInvite} from '../../../../hooks/server/projects';
+import {WaitingForInviteAccept} from './WaitingForInviteAccept';
+import {useBottomSheetModal} from '../../../../sharedComponents/BottomSheetModal';
+import {MEMBER_ROLE_ID} from './SelectInviteeRole';
 
-// <MaterialIcon name={'people'} size={25} color={BLACK} />
-// <MaterialCommunity name="account-cog" size={25} color={BLACK} />
 const m = defineMessages({
   title: {
     id: 'screens.Setting.ProjectSettings.YourTeam.ReviewInvitation.title',
@@ -25,9 +26,9 @@ const m = defineMessages({
     id: 'screen.Settings.ProjectSettings.YourTeam.ReviewInvitation.coordinator',
     defaultMessage: 'Coordinator',
   },
-  particpant: {
-    id: 'screen.Settings.ProjectSettings.YourTeam.ReviewInvitation.particpant',
-    defaultMessage: 'Particpant',
+  participant: {
+    id: 'screen.Settings.ProjectSettings.YourTeam.ReviewInvitation.participant',
+    defaultMessage: 'Participant',
   },
   sendInvite: {
     id: 'screen.Settings.ProjectSettings.YourTeam.ReviewInvitation.sendInvite',
@@ -35,14 +36,42 @@ const m = defineMessages({
   },
 });
 
-// this should come from mapeo core ideally
-
 export const ReviewInvitation: NativeNavigationComponent<
   'ReviewInvitation'
 > = ({route, navigation}) => {
   const {formatMessage: t} = useIntl();
   const {role, ...rest} = route.params;
+  const [inviteSent, setInviteSent] = React.useState(false);
+  const {openSheet, ...restBottomSheet} = useBottomSheetModal({
+    openOnMount: false,
+  });
   const project = useProject();
+
+  function sendInvite() {
+    setInviteSent(true);
+    project.$member
+      .invite(rest.deviceId, {roleId: role})
+      .then(val => console.log('resolved'));
+    // sendInviteQuery.mutate(
+    //   {roleId: role},
+    //   {
+    //     onSuccess: () => {
+    //       navigation.navigate('InviteAccepted', {...route.params});
+    //     },
+    //     onError: () => {
+    //       openSheet();
+    //     },
+    //     onSettled: () => {
+    //       console.log('completed');
+    //     },
+    //   },
+    // );
+  }
+
+  if (inviteSent) {
+    return <WaitingForInviteAccept {...restBottomSheet} />;
+  }
+
   return (
     <View style={styles.container}>
       <View>
@@ -50,13 +79,12 @@ export const ReviewInvitation: NativeNavigationComponent<
           {t(m.youAreInviting)}
         </Text>
         <DeviceNameWithIcon {...rest} style={{marginTop: 20}} />
-        <RoleWithIcon style={{marginTop: 20}} role={role} />
+        <RoleWithIcon
+          style={{marginTop: 20}}
+          role={role === MEMBER_ROLE_ID ? 'participant' : 'coordinator'}
+        />
       </View>
-      <Button
-        fullWidth
-        onPress={() => {
-          navigation.navigate('WaitingForInviteAccept', {...route.params});
-        }}>
+      <Button fullWidth onPress={sendInvite}>
         <View style={[styles.flexRow]}>
           <MaterialIcon name="send" size={25} color={WHITE} />
           <Text style={{color: WHITE, fontWeight: 'bold', marginLeft: 10}}>

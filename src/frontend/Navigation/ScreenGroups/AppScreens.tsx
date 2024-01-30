@@ -35,7 +35,6 @@ import {SelectDevice} from '../../screens/Settings/ProjectSettings/YourTeam/Sele
 import {DeviceRole, DeviceType} from '../../sharedTypes';
 import {SelectInviteeRole} from '../../screens/Settings/ProjectSettings/YourTeam/SelectInviteeRole';
 import {ReviewInvitation} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewInvitation';
-import {WaitingForInviteAccept} from '../../screens/Settings/ProjectSettings/YourTeam/WaitingForInviteAccept';
 import {InviteAccepted} from '../../screens/Settings/ProjectSettings/YourTeam/InviteAccepted';
 
 export type HomeTabsList = {
@@ -101,12 +100,6 @@ export type AppList = {
   SelectDevice: undefined;
   SelectInviteeRole: {name: string; deviceType: DeviceType; deviceId: string};
   ReviewInvitation: {
-    name: string;
-    deviceType: DeviceType;
-    deviceId: string;
-    role: DeviceRole;
-  };
-  WaitingForInviteAccept: {
     name: string;
     deviceType: DeviceType;
     deviceId: string;
@@ -280,11 +273,6 @@ export const createDefaultScreenGroup = (
       name="ReviewInvitation"
       component={ReviewInvitation}
       options={{headerTitle: intl(ReviewInvitation.navTitle)}}
-    />
-    <RootStack.Screen
-      name="WaitingForInviteAccept"
-      component={WaitingForInviteAccept}
-      options={{headerShown: false}}
     />
     <RootStack.Screen
       name="InviteAccepted"

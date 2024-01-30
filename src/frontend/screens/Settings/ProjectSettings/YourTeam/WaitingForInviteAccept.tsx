@@ -4,12 +4,13 @@ import {Text} from '../../../../sharedComponents/Text';
 import {defineMessages, useIntl} from 'react-intl';
 import React from 'react';
 import {TextButton} from '../../../../sharedComponents/TextButton';
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {NativeRootNavigationProps} from '../../../../sharedTypes';
 import {useProject} from '../../../../hooks/server/projects';
 import {useQueryClient} from '@tanstack/react-query';
 import {ErrorModal} from '../../../../sharedComponents/ErrorModal';
 import {useBottomSheetModal} from '../../../../sharedComponents/BottomSheetModal';
+import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
 
 const m = defineMessages({
   waitingMessage: {
@@ -27,28 +28,13 @@ const m = defineMessages({
 });
 
 export const WaitingForInviteAccept = ({
-  navigation,
-  route,
-}: NativeRootNavigationProps<'WaitingForInviteAccept'>) => {
+  closeSheet,
+  isOpen,
+  sheetRef,
+}: Omit<ReturnType<typeof useBottomSheetModal>, 'openSheet'>) => {
   const {formatMessage: t} = useIntl();
   const [time, setTime] = React.useState(0);
-  const {openSheet, closeSheet, isOpen, sheetRef} = useBottomSheetModal({
-    openOnMount: false,
-  });
-  const project = useProject();
-  const queryClient = useQueryClient();
-
-  React.useEffect(() => {
-    project.$member
-      .invite(route.params.deviceId, {roleId: route.params.role})
-      .then(() => {
-        queryClient.invalidateQueries({queryKey: ['projectMembers']}),
-          navigation.navigate('InviteAccepted', route.params);
-      })
-      .catch(err => {
-        openSheet();
-      });
-  }, []);
+  const navigation = useNavigationFromRoot();
 
   useFocusEffect(
     React.useCallback(() => {

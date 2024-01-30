@@ -4,8 +4,8 @@ import DeviceMobile from '../images/DeviceMobile.svg';
 import DeviceDesktop from '../images/DeviceDesktop.svg';
 import {DeviceType, ViewStyleProp} from '../sharedTypes';
 import {defineMessages, useIntl} from 'react-intl';
-import {BLACK, DARK_GREY, MEDIUM_GREY} from '../lib/styles';
 import {Text} from './Text';
+import {MEDIUM_GREY} from '../lib/styles';
 
 const m = defineMessages({
   thisDevice: {
@@ -32,6 +32,7 @@ export const DeviceNameWithIcon = ({
   style,
 }: DeviceNameWithIconProps) => {
   const {formatMessage} = useIntl();
+  console.log({name});
   return (
     <View style={[styles.flexRow, style]}>
       {deviceType === 'mobile' ? (
@@ -60,6 +61,5 @@ const styles = StyleSheet.create({
   flexRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    flex: 1,
   },
 });

@@ -8,7 +8,7 @@ import {WHITE} from '../../../../lib/styles';
 import {Button} from '../../../../sharedComponents/Button';
 import {DeviceNameWithIcon} from '../../../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../../../sharedComponents/RoleWithIcon';
-import {useProject, useSendInvite} from '../../../../hooks/server/projects';
+import {useProject} from '../../../../hooks/server/projects';
 import {WaitingForInviteAccept} from './WaitingForInviteAccept';
 import {useBottomSheetModal} from '../../../../sharedComponents/BottomSheetModal';
 import {MEMBER_ROLE_ID} from './SelectInviteeRole';
@@ -51,21 +51,8 @@ export const ReviewInvitation: NativeNavigationComponent<
     setInviteSent(true);
     project.$member
       .invite(rest.deviceId, {roleId: role})
-      .then(val => console.log('resolved'));
-    // sendInviteQuery.mutate(
-    //   {roleId: role},
-    //   {
-    //     onSuccess: () => {
-    //       navigation.navigate('InviteAccepted', {...route.params});
-    //     },
-    //     onError: () => {
-    //       openSheet();
-    //     },
-    //     onSettled: () => {
-    //       console.log('completed');
-    //     },
-    //   },
-    // );
+      .then(val => navigation.navigate('InviteAccepted', {...route.params}))
+      .catch(err => openSheet());
   }
 
   if (inviteSent) {

@@ -50,7 +50,7 @@
     "message": "Coordinator"
   },
   "screen.Settings.ProjectSettings.YourTeam.ReviewInvitation.participant": {
-    "message": "participant"
+    "message": "Participant"
   },
   "screen.Settings.ProjectSettings.YourTeam.ReviewInvitation.sendInvite": {
     "message": "Send Invite"
@@ -433,7 +433,7 @@
     "message": "Participants can take and share observations. They cannot manage users or project details."
   },
   "screens.Setting.ProjectSettings.YourTeam.participants": {
-    "message": "participants"
+    "message": "Participants"
   },
   "screens.Setting.ProjectSettings.YourTeam.title": {
     "message": "Your Team"
@@ -489,7 +489,7 @@
     "message": "Coordinator"
   },
   "sharedComponents.RoleWithIcon.participant": {
-    "message": "participant"
+    "message": "Participant"
   },
   "sharedComponents.WifiBar.noWifi": {
     "message": "No Internet"

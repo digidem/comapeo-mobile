@@ -8,6 +8,7 @@ import {WHITE} from '../../../../lib/styles';
 import {Button} from '../../../../sharedComponents/Button';
 import {DeviceNameWithIcon} from '../../../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../../../sharedComponents/RoleWithIcon';
+import {useProject} from '../../../../hooks/server/projects';
 
 // <MaterialIcon name={'people'} size={25} color={BLACK} />
 // <MaterialCommunity name="account-cog" size={25} color={BLACK} />
@@ -34,11 +35,14 @@ const m = defineMessages({
   },
 });
 
+// this should come from mapeo core ideally
+
 export const ReviewInvitation: NativeNavigationComponent<
   'ReviewInvitation'
 > = ({route, navigation}) => {
   const {formatMessage: t} = useIntl();
   const {role, ...rest} = route.params;
+  const project = useProject();
   return (
     <View style={styles.container}>
       <View>
@@ -51,7 +55,6 @@ export const ReviewInvitation: NativeNavigationComponent<
       <Button
         fullWidth
         onPress={() => {
-          mockSendInviteApi();
           navigation.navigate('WaitingForInviteAccept', {...route.params});
         }}>
         <View style={[styles.flexRow]}>
@@ -80,5 +83,3 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-function mockSendInviteApi() {}

@@ -1,10 +1,11 @@
 import * as React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import DeviceMobile from '../images/DeviceMobile.svg';
 import DeviceDesktop from '../images/DeviceDesktop.svg';
 import {DeviceType, ViewStyleProp} from '../sharedTypes';
 import {defineMessages, useIntl} from 'react-intl';
-import {BLACK} from '../lib/styles';
+import {BLACK, DARK_GREY, MEDIUM_GREY} from '../lib/styles';
+import {Text} from './Text';
 
 const m = defineMessages({
   thisDevice: {
@@ -38,10 +39,18 @@ export const DeviceNameWithIcon = ({
       ) : (
         <DeviceDesktop width={iconSize || 35} height={iconSize || 35} />
       )}
-      <View style={{marginLeft: 10}}>
-        <Text style={{fontWeight: 'bold', color: BLACK}}>{name}</Text>
-        {deviceId && <Text>{deviceId}</Text>}
-        {thisDevice && <Text>{formatMessage(m.thisDevice)}</Text>}
+      <View style={{flex: 1, marginLeft: 10}}>
+        <Text style={{fontWeight: 'bold'}}>{name}</Text>
+        {deviceId && (
+          <Text style={{color: MEDIUM_GREY}} numberOfLines={1}>
+            {deviceId}
+          </Text>
+        )}
+        {thisDevice && (
+          <Text style={{flex: 1, color: MEDIUM_GREY}}>
+            {formatMessage(m.thisDevice)}
+          </Text>
+        )}
       </View>
     </View>
   );
@@ -51,5 +60,6 @@ const styles = StyleSheet.create({
   flexRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    flex: 1,
   },
 });

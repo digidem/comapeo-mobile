@@ -46,6 +46,39 @@
   "Screens.Settings.ProjectSettings.yourTeam": {
     "message": "Your Team"
   },
+  "screen.Settings.ProjectSettings.YourTeam.ReviewInvitation.coordinator": {
+    "message": "Coordinator"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.ReviewInvitation.participant": {
+    "message": "Participant"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.ReviewInvitation.sendInvite": {
+    "message": "Send Invite"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.notSeeingDevice": {
+    "message": "Not seeing a Device?"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameVersion": {
+    "message": "Make sure both devices are on the same version of Mapeo"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameWifi": {
+    "message": "Make sure both devices are on the same wifi network"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
+    "message": "Select Device to Invite"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.coordinatorDescription": {
+    "message": "As a Coordinator this device can invite and remove users, and manage project details."
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.participantDescription": {
+    "message": "As a Participant this device can take and share observations. They cannot manage users or project details."
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.selectingDevice": {
+    "message": "You are selecting a role for this device:"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title": {
+    "message": "Select a Role"
+  },
   "screens.AddPhoto.cancel": {
     "message": "Cancel"
   },
@@ -357,6 +390,54 @@
   "screens.Security.title": {
     "message": "Security"
   },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
+    "message": "Add Another Device"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.close": {
+    "message": "Close"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
+    "message": "Invite Accepted"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.ReviewInvitation.title": {
+    "message": "Review Invitation"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.ReviewInvitation.youAreInviting": {
+    "message": "You are inviting:"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.cancelInvite": {
+    "message": "Cancel Invite"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.timerMessage": {
+    "message": "Invite sent {seconds}s ago"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.waitingMessage": {
+    "message": "Waiting for Device to Accept Invite"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.coordinatorDescription": {
+    "message": "Coordinators can invite devices, edit and delete data, and manage project details."
+  },
+  "screens.Setting.ProjectSettings.YourTeam.coordinators": {
+    "message": "Coordinators"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.dateAdded": {
+    "message": "Date Added"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.deviceName": {
+    "message": "Device Name"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
+    "message": "Invite Device"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.participantDescription": {
+    "message": "Participants can take and share observations. They cannot manage users or project details."
+  },
+  "screens.Setting.ProjectSettings.YourTeam.participants": {
+    "message": "Participants"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.title": {
+    "message": "Your Team"
+  },
   "screens.Settings.aboutMapeo": {
     "description": "Primary text for 'About Mapeo' link (version info)",
     "message": "About Mapeo"
@@ -389,6 +470,12 @@
     "description": "Title of settings screen",
     "message": "Settings"
   },
+  "sharedComponents.DeviceCard.ThisDevice": {
+    "message": "This Device!"
+  },
+  "sharedComponents.DeviceIconWithName.thisDevice": {
+    "message": "This Device!"
+  },
   "sharedComponents.ErrorModal.goBack": {
     "message": "Go Back"
   },
@@ -409,6 +496,12 @@
   },
   "sharedComponents.ProjectInviteBottomSheet.joinProject": {
     "message": "Join Project {projName}"
+  },
+  "sharedComponents.RoleWithIcon.coordinator": {
+    "message": "Coordinator"
+  },
+  "sharedComponents.RoleWithIcon.participant": {
+    "message": "Participant"
   },
   "sharedComponents.WifiBar.noWifi": {
     "message": "No Internet"

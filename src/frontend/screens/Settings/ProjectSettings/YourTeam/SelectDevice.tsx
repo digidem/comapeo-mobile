@@ -6,6 +6,7 @@ import {Text} from '../../../../sharedComponents/Text';
 import {DeviceCard} from '../../../../sharedComponents/DeviceCard';
 import {useLocalDiscoveryState} from '../../../../hooks/useLocalDiscoveryState';
 import {useLocalPeers} from '../../../../hooks/useLocalPeers';
+import {RoleId} from '@mapeo/core/dist/capabilities';
 
 const m = defineMessages({
   title: {
@@ -34,8 +35,6 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
 
   const devices = useLocalPeers();
 
-  console.log({devices});
-
   return (
     <ScrollView style={styles.container}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -48,20 +47,6 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
       {/* Divider */}
       <View style={{marginTop: 20}}></View>
 
-      <DeviceCard
-        style={{marginBottom: 10}}
-        name={'someTesting'}
-        deviceType={'mobile'}
-        deviceId={'asldkfj12ca'}
-        onPress={() =>
-          navigation.navigate('SelectInviteeRole', {
-            name: 'someTesting',
-            deviceId: 'asldkfj12ca',
-            deviceType: 'mobile',
-          })
-        }
-      />
-
       {/* List available devices here */}
       {devices &&
         devices.map(device => {
@@ -71,6 +56,7 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
           const deviceType = 'mobile';
           return (
             <DeviceCard
+              key={deviceId}
               style={{marginBottom: 10}}
               name={name || ''}
               deviceType={deviceType}

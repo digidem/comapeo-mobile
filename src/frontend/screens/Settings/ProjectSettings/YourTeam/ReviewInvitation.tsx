@@ -52,7 +52,10 @@ export const ReviewInvitation: NativeNavigationComponent<
     project.$member
       .invite(rest.deviceId, {roleId: role})
       .then(val => navigation.navigate('InviteAccepted', {...route.params}))
-      .catch(err => openSheet());
+      .catch(err => {
+        console.log(err);
+        openSheet();
+      });
   }
 
   if (inviteSent) {
@@ -61,7 +64,8 @@ export const ReviewInvitation: NativeNavigationComponent<
 
   return (
     <View style={styles.container}>
-      <View>
+      <View
+        style={{width: '100%', justifyContent: 'center', alignItems: 'center'}}>
         <Text style={{fontSize: 18, fontWeight: 'bold'}}>
           {t(m.youAreInviting)}
         </Text>

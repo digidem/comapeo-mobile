@@ -77,7 +77,7 @@ export async function init({
 
   rnBridge.app.on('pause', async (pauseLock) => {
     log('App went into background')
-    manager.stopMediaServer()
+    await manager.stopMediaServer()
     pauseLock.release()
   })
 

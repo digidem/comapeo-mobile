@@ -32,7 +32,6 @@ export const useProjectInviteListener = (currentRoute?: string) => {
 
   useEffect(() => {
     const listenAndSetInvite = (invite: Invite) => {
-      console.log('hello');
       setInvites(prev =>
         prev
           ? [...prev, {...invite, time: Date.now()}]

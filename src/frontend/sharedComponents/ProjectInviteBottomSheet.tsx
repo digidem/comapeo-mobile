@@ -89,7 +89,7 @@ export const ProjectInviteBottomSheet = ({
               clearAllInvites();
               closeSheet();
             },
-            text: formatMessage(m.declineInvite),
+            text: formatMessage(m.acceptInvite),
           },
         ]}
         title={formatMessage(m.joinProject, {

@@ -40,7 +40,6 @@ export const SelectInviteeRole: NativeNavigationComponent<
   'SelectInviteeRole'
 > = ({route, navigation}) => {
   const {formatMessage: t} = useIntl();
-  console.log({route});
   return (
     <View style={styles.container}>
       <Text style={{fontSize: 18, fontWeight: 'bold'}}>

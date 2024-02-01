@@ -32,7 +32,6 @@ export const DeviceNameWithIcon = ({
   style,
 }: DeviceNameWithIconProps) => {
   const {formatMessage} = useIntl();
-  console.log({name});
   return (
     <View style={[styles.flexRow, style]}>
       {deviceType === 'mobile' ? (

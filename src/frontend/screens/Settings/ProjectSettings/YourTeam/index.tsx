@@ -81,87 +81,89 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
   );
 
   return (
-    <ScrollView style={styles.container}>
-      <Button
-        fullWidth
-        variant="outlined"
-        onPress={() => {
-          navigation.navigate('SelectDevice');
-        }}>
+    <ScrollView>
+      <View style={styles.container}>
+        <Button
+          fullWidth
+          variant="outlined"
+          onPress={() => {
+            navigation.navigate('SelectDevice');
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <MaterialIcon
+              color={BLACK}
+              size={32}
+              name="person-add"
+              style={{marginRight: 10}}
+            />
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+              {t(m.inviteDevice)}
+            </Text>
+          </View>
+        </Button>
+        <IconHeader
+          iconName="manage-accounts"
+          messageDescriptor={m.coordinators}
+          style={{marginTop: 20}}
+        />
+        <Text style={{marginTop: 10}}>{t(m.coordinatorDescription)}</Text>
+
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'center',
+            justifyContent: 'space-between',
             alignItems: 'center',
+            marginTop: 20,
           }}>
-          <MaterialIcon
-            color={BLACK}
-            size={32}
-            name="person-add"
-            style={{marginRight: 10}}
-          />
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-            {t(m.inviteDevice)}
-          </Text>
+          <Text style={{marginTop: 10}}>{t(m.deviceName)}</Text>
+          <Text style={{marginTop: 10}}>{t(m.dateAdded)}</Text>
         </View>
-      </Button>
-      <IconHeader
-        iconName="manage-accounts"
-        messageDescriptor={m.coordinators}
-        style={{marginTop: 20}}
-      />
-      <Text style={{marginTop: 10}}>{t(m.coordinatorDescription)}</Text>
 
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginTop: 20,
-        }}>
-        <Text style={{marginTop: 10}}>{t(m.deviceName)}</Text>
-        <Text style={{marginTop: 10}}>{t(m.dateAdded)}</Text>
+        {membersQuery.isLoading && <Loading />}
+
+        {coordinators &&
+          coordinators.map(coordinator => (
+            <DeviceCard
+              key={coordinator.deviceId}
+              style={{marginTop: 10}}
+              name={coordinator.name || ''}
+              deviceId={coordinator.deviceId}
+              deviceType="mobile"
+              // This is a weak check. We should be using deviceIds, but those are not exposed
+              thisDevice={
+                deviceInfo.data && deviceInfo.data.name === coordinator.name
+              }
+            />
+          ))}
+
+        <IconHeader
+          iconName="people"
+          messageDescriptor={m.participants}
+          style={{marginTop: 20}}
+        />
+        <Text style={{marginTop: 10}}>{t(m.participantDescription)}</Text>
+
+        {membersQuery.isLoading && <Loading />}
+
+        {participants &&
+          participants.map(participant => (
+            <DeviceCard
+              style={{marginTop: 10}}
+              name={participant.name || ''}
+              deviceId={participant.deviceId}
+              deviceType="mobile"
+              // This is a weak check. We should be using deviceIds, but those are not exposed
+              thisDevice={
+                deviceInfo.data && deviceInfo.data.name === participant.name
+              }
+            />
+          ))}
       </View>
-
-      {membersQuery.isLoading && <Loading />}
-
-      {coordinators &&
-        coordinators.map(coordinator => (
-          <DeviceCard
-            key={coordinator.deviceId}
-            style={{marginTop: 10}}
-            name={coordinator.name || ''}
-            deviceId={coordinator.deviceId}
-            deviceType="mobile"
-            // This is a weak check. We should be using deviceIds, but those are not exposed
-            thisDevice={
-              deviceInfo.data && deviceInfo.data.name === coordinator.name
-            }
-          />
-        ))}
-
-      <IconHeader
-        iconName="people"
-        messageDescriptor={m.participants}
-        style={{marginTop: 20}}
-      />
-      <Text style={{marginTop: 10}}>{t(m.participantDescription)}</Text>
-
-      {membersQuery.isLoading && <Loading />}
-
-      {participants &&
-        participants.map(participant => (
-          <DeviceCard
-            style={{marginTop: 10}}
-            name={participant.name || ''}
-            deviceId={participant.deviceId}
-            deviceType="mobile"
-            // This is a weak check. We should be using deviceIds, but those are not exposed
-            thisDevice={
-              deviceInfo.data && deviceInfo.data.name === participant.name
-            }
-          />
-        ))}
     </ScrollView>
   );
 };
@@ -204,5 +206,6 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     paddingTop: 40,
+    flex: 1,
   },
 });

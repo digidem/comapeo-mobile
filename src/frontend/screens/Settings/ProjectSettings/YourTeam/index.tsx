@@ -153,6 +153,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
         {participants &&
           participants.map(participant => (
             <DeviceCard
+              key={participant.deviceId}
               style={{marginTop: 10}}
               name={participant.name || ''}
               deviceId={participant.deviceId}

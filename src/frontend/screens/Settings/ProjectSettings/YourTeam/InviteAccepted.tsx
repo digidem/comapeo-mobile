@@ -8,6 +8,7 @@ import {DeviceNameWithIcon} from '../../../../sharedComponents/DeviceNameWithIco
 import {RoleWithIcon} from '../../../../sharedComponents/RoleWithIcon';
 import {Button} from '../../../../sharedComponents/Button';
 import {useFocusEffect} from '@react-navigation/native';
+import {COORDINATOR_ROLE_ID} from './SelectInviteeRole';
 
 const m = defineMessages({
   inviteAccepted: {
@@ -50,7 +51,10 @@ export const InviteAccepted = ({
           {t(m.inviteAccepted)}
         </Text>
         <DeviceNameWithIcon {...deviceInfo} style={{marginTop: 10}} />
-        <RoleWithIcon style={{marginTop: 20}} role={role} />
+        <RoleWithIcon
+          style={{marginTop: 20}}
+          role={role === COORDINATOR_ROLE_ID ? 'coordinator' : 'participant'}
+        />
       </View>
       <View style={{width: '100%'}}>
         <Button

@@ -40,11 +40,11 @@ export const DeviceNameWithIcon = ({
       ) : (
         <DeviceDesktop width={iconSize || 35} height={iconSize || 35} />
       )}
-      <View style={{flex: 1, marginLeft: 10}}>
+      <View style={{marginLeft: 10}}>
         <Text style={{fontWeight: 'bold'}}>{name}</Text>
         {deviceId && (
           <Text style={{color: MEDIUM_GREY}} numberOfLines={1}>
-            {deviceId}
+            {`${deviceId.slice(0, 12)}...`}
           </Text>
         )}
         {thisDevice && (

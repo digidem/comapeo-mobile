@@ -12,6 +12,7 @@ import {useProject} from '../../../../hooks/server/projects';
 import {WaitingForInviteAccept} from './WaitingForInviteAccept';
 import {useBottomSheetModal} from '../../../../sharedComponents/BottomSheetModal';
 import {MEMBER_ROLE_ID} from './SelectInviteeRole';
+import {useQueryClient} from '@tanstack/react-query';
 
 const m = defineMessages({
   title: {
@@ -46,12 +47,17 @@ export const ReviewInvitation: NativeNavigationComponent<
     openOnMount: false,
   });
   const project = useProject();
+  const queryClient = useQueryClient();
 
   function sendInvite() {
     setInviteSent(true);
     project.$member
       .invite(rest.deviceId, {roleId: role})
-      .then(val => navigation.navigate('InviteAccepted', {...route.params}))
+      .then(val => {
+        if (val == 'ACCEPT')
+          queryClient.invalidateQueries({queryKey: ['projectMembers']});
+        navigation.navigate('InviteAccepted', {...route.params});
+      })
       .catch(err => {
         console.log(err);
         openSheet();

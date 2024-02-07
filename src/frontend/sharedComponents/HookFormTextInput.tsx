@@ -52,7 +52,7 @@ export const HookFormTextInput = <InputFields extends FieldValues>({
   const errorMessage = error?.message;
 
   return (
-    <View style={containerStyle}>
+    <View>
       <View style={[styles.input, containerStyle, error ? styles.error : {}]}>
         <Controller
           name={name}

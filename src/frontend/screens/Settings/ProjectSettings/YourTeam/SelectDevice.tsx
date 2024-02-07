@@ -48,29 +48,28 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
       <View style={{marginTop: 20}}></View>
 
       {/* List available devices here */}
-      {devices &&
-        devices.map(device => {
-          const name = device.name;
-          const deviceId = device.deviceId;
-          // this is not exposed yet
-          const deviceType = 'mobile';
-          return (
-            <DeviceCard
-              key={deviceId}
-              style={{marginBottom: 10}}
-              name={name || ''}
-              deviceType={deviceType}
-              deviceId={deviceId}
-              onPress={() =>
-                navigation.navigate('SelectInviteeRole', {
-                  name: name || '',
-                  deviceId: deviceId,
-                  deviceType: deviceType,
-                })
-              }
-            />
-          );
-        })}
+      {devices.map(device => {
+        const name = device.name;
+        const deviceId = device.deviceId;
+        // this is not exposed yet
+        const deviceType = 'mobile';
+        return (
+          <DeviceCard
+            key={deviceId}
+            style={{marginBottom: 10}}
+            name={name || ''}
+            deviceType={deviceType}
+            deviceId={deviceId}
+            onPress={() =>
+              navigation.navigate('SelectInviteeRole', {
+                name: name || '',
+                deviceId: deviceId,
+                deviceType: deviceType,
+              })
+            }
+          />
+        );
+      })}
     </ScrollView>
   );
 };

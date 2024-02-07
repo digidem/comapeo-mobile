@@ -12,23 +12,23 @@ import {DeviceRole, DeviceType} from '../../../../../sharedTypes';
 
 const m = defineMessages({
   title: {
-    id: 'screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.title',
+    id: 'screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title',
     defaultMessage: 'Review Invitation',
   },
   youAreInviting: {
-    id: 'screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.youAreInviting',
+    id: 'screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.youAreInviting',
     defaultMessage: 'You are inviting:',
   },
   coordinator: {
-    id: 'screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.coordinator',
+    id: 'screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator',
     defaultMessage: 'Coordinator',
   },
   participant: {
-    id: 'screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.participant',
+    id: 'screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.participant',
     defaultMessage: 'Participant',
   },
   sendInvite: {
-    id: 'screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.sendInvite',
+    id: 'screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.sendInvite',
     defaultMessage: 'Send Invite',
   },
 });

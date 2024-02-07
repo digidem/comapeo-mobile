@@ -59,7 +59,6 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
     control,
     handleSubmit,
     formState: {errors},
-    watch,
   } = useForm<ProjectFormType>({defaultValues: {projectName: ''}});
 
   function handleCreateProject(val: ProjectFormType) {
@@ -77,26 +76,14 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
         style={styles.container}>
         <View>
           <Text style={{marginHorizontal: 20}}>{t(m.enterName)}</Text>
-          <HookFormTextInput
-            control={control}
-            name="projectName"
-            rules={{maxLength: 100, required: true}}
-            style={{
-              borderWidth: 1,
-              borderRadius: 6,
-              borderColor: !errors.projectName ? MEDIUM_GREY : RED,
-              marginTop: 10,
-              marginHorizontal: 20,
-              color: BLACK,
-            }}
-          />
-          <Text
-            style={{
-              alignSelf: 'flex-end',
-              color: !errors.projectName ? MEDIUM_GREY : RED,
-              marginTop: 10,
-              marginHorizontal: 20,
-            }}>{`${watch().projectName.length}/100`}</Text>
+          <View style={{marginHorizontal: 20}}>
+            <HookFormTextInput
+              control={control}
+              name="projectName"
+              rules={{maxLength: 100, required: true, minLength: 1}}
+              showCharacterCount
+            />
+          </View>
           <View style={{marginTop: 20}}>
             <TouchableOpacity
               onPress={() => setAdvancedSettingOpen(prev => !prev)}

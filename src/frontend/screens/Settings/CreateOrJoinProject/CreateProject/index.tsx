@@ -19,7 +19,7 @@ import {
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
 import {useCreateProject} from '../../../../hooks/server/projects';
-import {Loading} from '../../../../sharedComponents/Loading';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 const m = defineMessages({
   title: {
@@ -122,13 +122,13 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
           </View>
         </View>
         <View style={{paddingHorizontal: 20}}>
-          <Button fullWidth onPress={handleSubmit(handleCreateProject)}>
-            {isPending ? (
-              <Loading color={WHITE} style={{margin: 10}} />
-            ) : (
-              t(m.createProjectButton)
-            )}
-          </Button>
+          {isPending ? (
+            <UIActivityIndicator size={30} style={{marginBottom: 20}} />
+          ) : (
+            <Button fullWidth onPress={handleSubmit(handleCreateProject)}>
+              {t(m.createProjectButton)}
+            </Button>
+          )}
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

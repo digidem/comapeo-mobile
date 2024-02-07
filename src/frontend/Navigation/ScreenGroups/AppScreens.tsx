@@ -34,8 +34,9 @@ import {YourTeam} from '../../screens/Settings/ProjectSettings/YourTeam';
 import {SelectDevice} from '../../screens/Settings/ProjectSettings/YourTeam/SelectDevice';
 import {DeviceRole, DeviceType} from '../../sharedTypes';
 import {SelectInviteeRole} from '../../screens/Settings/ProjectSettings/YourTeam/SelectInviteeRole';
-import {ReviewInvitation} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewInvitation';
+import {ReviewInvitation} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/ReviewInvitation';
 import {InviteAccepted} from '../../screens/Settings/ProjectSettings/YourTeam/InviteAccepted';
+import {ReviewAndInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -99,7 +100,7 @@ export type AppList = {
   YourTeam: undefined;
   SelectDevice: undefined;
   SelectInviteeRole: {name: string; deviceType: DeviceType; deviceId: string};
-  ReviewInvitation: {
+  ReviewAndInvite: {
     name: string;
     deviceType: DeviceType;
     deviceId: string;
@@ -270,8 +271,8 @@ export const createDefaultScreenGroup = (
       options={{headerTitle: intl(SelectInviteeRole.navTitle)}}
     />
     <RootStack.Screen
-      name="ReviewInvitation"
-      component={ReviewInvitation}
+      name="ReviewAndInvite"
+      component={ReviewAndInvite}
       options={{headerTitle: intl(ReviewInvitation.navTitle)}}
     />
     <RootStack.Screen

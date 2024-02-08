@@ -18,7 +18,6 @@ export function useAllProjects() {
   return useQuery({
     queryFn: async () => await api.listProjects(),
     queryKey: ['projects'],
-    throwOnError: true,
   });
 }
 

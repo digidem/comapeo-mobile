@@ -61,7 +61,10 @@ export const Settings: NativeNavigationComponent<'Settings'> = () => {
   return (
     <ScrollView>
       <List>
-        <ListItem onPress={() => {}}>
+        <ListItem
+          onPress={() => {
+            navigate('CreateOrJoinProject');
+          }}>
           <ListItemIcon
             icon={
               <MaterialCommunityIcons

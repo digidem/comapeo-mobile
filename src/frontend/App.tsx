@@ -22,7 +22,7 @@ import {
 
 const queryClient = new QueryClient();
 const messagePort = new MessagePortLike();
-const mapeoApi = createMapeoClient(messagePort);
+const mapeoApi = createMapeoClient(messagePort, {timeout: Infinity});
 const localDiscoveryController = createLocalDiscoveryController({
   startLocalPeerDiscovery() {
     return mapeoApi.startLocalPeerDiscovery();

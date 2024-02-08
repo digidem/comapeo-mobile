@@ -30,6 +30,13 @@ import {CreateOrJoinProject} from '../../screens/Settings/CreateOrJoinProject';
 import {CreateProject} from '../../screens/Settings/CreateOrJoinProject/CreateProject';
 import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateProject/ProjectCreated';
 import {JoinExistingProject} from '../../screens/Settings/CreateOrJoinProject/JoinExistingProject';
+import {YourTeam} from '../../screens/Settings/ProjectSettings/YourTeam';
+import {SelectDevice} from '../../screens/Settings/ProjectSettings/YourTeam/SelectDevice';
+import {DeviceRole, DeviceType} from '../../sharedTypes';
+import {SelectInviteeRole} from '../../screens/Settings/ProjectSettings/YourTeam/SelectInviteeRole';
+import {ReviewInvitation} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/ReviewInvitation';
+import {InviteAccepted} from '../../screens/Settings/ProjectSettings/YourTeam/InviteAccepted';
+import {ReviewAndInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -90,6 +97,21 @@ export type AppList = {
   CreateOrJoinProject: undefined;
   ProjectCreated: {name: string};
   JoinExistingProject: undefined;
+  YourTeam: undefined;
+  SelectDevice: undefined;
+  SelectInviteeRole: {name: string; deviceType: DeviceType; deviceId: string};
+  ReviewAndInvite: {
+    name: string;
+    deviceType: DeviceType;
+    deviceId: string;
+    role: DeviceRole;
+  };
+  InviteAccepted: {
+    name: string;
+    deviceType: DeviceType;
+    deviceId: string;
+    role: DeviceRole;
+  };
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
@@ -231,6 +253,31 @@ export const createDefaultScreenGroup = (
     <RootStack.Screen
       name="JoinExistingProject"
       component={JoinExistingProject}
+      options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="YourTeam"
+      component={YourTeam}
+      options={{headerTitle: intl(YourTeam.navTitle)}}
+    />
+    <RootStack.Screen
+      name="SelectDevice"
+      component={SelectDevice}
+      options={{headerTitle: intl(SelectDevice.navTitle)}}
+    />
+    <RootStack.Screen
+      name="SelectInviteeRole"
+      component={SelectInviteeRole}
+      options={{headerTitle: intl(SelectInviteeRole.navTitle)}}
+    />
+    <RootStack.Screen
+      name="ReviewAndInvite"
+      component={ReviewAndInvite}
+      options={{headerTitle: intl(ReviewInvitation.navTitle)}}
+    />
+    <RootStack.Screen
+      name="InviteAccepted"
+      component={InviteAccepted}
       options={{headerShown: false}}
     />
   </RootStack.Group>

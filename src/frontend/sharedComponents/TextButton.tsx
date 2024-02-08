@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 import {Text} from './Text';
 import {TouchableNativeFeedback} from '../sharedComponents/Touchables';
 
-import {VERY_LIGHT_BLUE} from '../lib/styles';
+import {COMAPEO_BLUE, VERY_LIGHT_BLUE} from '../lib/styles';
 import type {ViewStyleProp} from '../sharedTypes';
 
 type Props = {
@@ -26,7 +26,7 @@ export const TextButton = ({
     style={[styles.buttonContainer, containerStyle]}
     background={TouchableNativeFeedback.Ripple(VERY_LIGHT_BLUE, true)}
     onPress={onPress}>
-    <Text style={[styles.buttonText, textStyle]}>{title.toUpperCase()}</Text>
+    <Text style={[styles.buttonText, textStyle]}>{title}</Text>
   </TouchableNativeFeedback>
 );
 
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonText: {
-    color: 'blue',
+    color: COMAPEO_BLUE,
     fontWeight: '700',
   },
 });

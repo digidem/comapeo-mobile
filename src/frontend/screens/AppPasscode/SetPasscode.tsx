@@ -33,7 +33,7 @@ const m = defineMessages({
     defaultMessage: 'Cannot be used as a Passcode',
   },
   title: {
-    id: 'screens.AppPasscode.NewPasscode.InputPasscodeScreen.title',
+    id: 'screens.AppPasscode.NewPasscode.SetPasscodeScreen.title',
     defaultMessage: 'Set Passcode',
   },
 });

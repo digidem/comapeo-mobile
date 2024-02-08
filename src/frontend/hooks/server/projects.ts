@@ -37,3 +37,13 @@ export function useCreateProject() {
     },
   });
 }
+
+export function useProjectMembers() {
+  const project = useProject();
+  return useQuery({
+    queryFn: async () => {
+      return await project.$member.getMany();
+    },
+    queryKey: ['projectMembers'],
+  });
+}

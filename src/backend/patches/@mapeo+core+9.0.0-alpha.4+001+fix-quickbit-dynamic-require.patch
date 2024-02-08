@@ -21,3 +21,68 @@ index d4cfdfd..41cc2db 100644
 +import quickbit from 'quickbit-universal'
  
  export { quickbit }
+diff --git a/node_modules/@mapeo/core/src/discovery/dns-sd.js b/node_modules/@mapeo/core/src/discovery/dns-sd.js
+index 677006d..707ae35 100644
+--- a/node_modules/@mapeo/core/src/discovery/dns-sd.js
++++ b/node_modules/@mapeo/core/src/discovery/dns-sd.js
+@@ -35,18 +35,30 @@ export class DnsSd extends TypedEmitter {
+   #error = null
+   /** @param {import('bonjour-service').Service} service */
+   #handleServiceUp = (service) => {
++    this.#log(service.addresses, 'addresses')
++    this.#log(service.port, 'port')
++    this.#log(service, "service")
++
+     if (service.name === this.#name) {
+       this.#log(`Ignoring service up from self`)
+       return
+     }
+-    const address = service.addresses?.filter(isIpv4)[0]
+-    /* c8 ignore start */
+-    if (!address) {
+-      this.#log(`service up (${service.name}) with no ipv4 addresses`)
++    // const address = service.addresses?.filter(isIpv4)[0]
++    const { name, port, referer } = service
++    if (!referer) {
++      this.#log(`service up (${service.name}) had no referer`)
+       return
+     }
++
++    const { address } = referer
++
++    /* c8 ignore start */
++    // if (!address) {
++    //   this.#log(`service up (${service.name}) with no ipv4 addresses`)
++    //   return
++    // }
+     /* c8 ignore stop */
+-    const { name, port } = service
++    // const { name, port } = service
+     this.#log('serviceUp', name.slice(0, 7), address, port)
+     this.emit('up', { port, name, address })
+   }
+@@ -67,7 +79,7 @@ export class DnsSd extends TypedEmitter {
+     this.#log(`service down`, [name, address, port])
+     this.emit('down', { port, name, address })
+   }
+-  #disableIpv6
++  #disableIpv6 = false
+   /** @type {Promise<any> | null} */
+   #advertisingStarting = null
+   /** @type {Promise<any> | null} */
+@@ -79,14 +91,12 @@ export class DnsSd extends TypedEmitter {
+    *
+    * @param {object} [opts]
+    * @param {string} [opts.name]
+-   * @param {boolean} [opts.disableIpv6]
+    * @param {Logger} [opts.logger]
+    */
+-  constructor({ name, disableIpv6 = true, logger } = {}) {
++  constructor({ name, logger } = {}) {
+     super()
+     this.#l = Logger.create('dnssd', logger)
+     this.#name = name || randomBytes(8).toString('hex')
+-    this.#disableIpv6 = disableIpv6
+     this.#log = this.#l.log.bind(this.#l)
+   }
+ 

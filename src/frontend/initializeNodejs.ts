@@ -3,6 +3,8 @@ import {getItemAsync, setItemAsync} from 'expo-secure-store';
 import nodejs from 'nodejs-mobile-react-native';
 import {uint8ArrayToHex} from 'uint8array-extras';
 
+import {EXTERNAL_FILES_DIR} from './lib/file-system';
+
 const ROOT_KEY = '__RootKey';
 
 export async function initializeNodejs() {
@@ -19,5 +21,11 @@ export async function initializeNodejs() {
     }
   }
 
-  nodejs.startWithArgs(`loader.js --rootKey=${rootKey}`);
+  const flags = [`--rootKey=${rootKey}`];
+
+  if (EXTERNAL_FILES_DIR) {
+    flags.push(`--sharedStoragePath=${EXTERNAL_FILES_DIR}`);
+  }
+
+  nodejs.startWithArgs(`loader.js ${flags.join(' ')}`);
 }

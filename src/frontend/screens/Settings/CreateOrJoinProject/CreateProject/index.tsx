@@ -20,6 +20,8 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
 import {useCreateProject} from '../../../../hooks/server/projects';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {ErrorModal} from '../../../../sharedComponents/ErrorModal';
+import {useBottomSheetModal} from '../../../../sharedComponents/BottomSheetModal';
 
 const m = defineMessages({
   title: {
@@ -53,7 +55,10 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
 }) => {
   const {formatMessage: t} = useIntl();
   const [advancedSettingOpen, setAdvancedSettingOpen] = React.useState(false);
-  const {mutate, isPending} = useCreateProject();
+  const {mutate, isPending, reset} = useCreateProject();
+  const {openSheet, isOpen, closeSheet, sheetRef} = useBottomSheetModal({
+    openOnMount: false,
+  });
 
   const {
     control,
@@ -65,60 +70,70 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
     mutate(val.projectName, {
       onSuccess: () =>
         navigation.navigate('ProjectCreated', {name: val.projectName}),
-      onError: err => console.error(err),
+      onError: err => {
+        openSheet();
+      },
     });
   }
 
   return (
-    <KeyboardAvoidingView>
-      <TouchableWithoutFeedback
-        onPress={() => Keyboard.dismiss()}
-        style={styles.container}>
-        <View>
-          <Text style={{marginHorizontal: 20}}>{t(m.enterName)}</Text>
-          <View style={{marginHorizontal: 20}}>
-            <HookFormTextInput
-              control={control}
-              name="projectName"
-              rules={{maxLength: 100, required: true, minLength: 1}}
-              showCharacterCount
-            />
-          </View>
-          <View style={{marginTop: 20}}>
-            <TouchableOpacity
-              onPress={() => setAdvancedSettingOpen(prev => !prev)}
-              style={styles.accordianHeader}>
-              <Text>{t(m.advancedSettings)}</Text>
-              <MaterialIcon
-                color={BLACK}
-                name={
-                  !advancedSettingOpen
-                    ? 'keyboard-arrow-up'
-                    : 'keyboard-arrow-down'
-                }
-                size={40}
+    <React.Fragment>
+      <KeyboardAvoidingView>
+        <TouchableWithoutFeedback
+          onPress={() => Keyboard.dismiss()}
+          style={styles.container}>
+          <View>
+            <Text style={{marginHorizontal: 20}}>{t(m.enterName)}</Text>
+            <View style={{marginHorizontal: 20, marginTop: 10}}>
+              <HookFormTextInput
+                control={control}
+                name="projectName"
+                rules={{maxLength: 100, required: true, minLength: 1}}
+                showCharacterCount
               />
-            </TouchableOpacity>
-            {advancedSettingOpen && (
-              <View style={{padding: 20}}>
-                <Button fullWidth variant="outlined" onPress={() => {}}>
-                  {t(m.importConfig)}
-                </Button>
-              </View>
+            </View>
+            <View style={{marginTop: 20}}>
+              <TouchableOpacity
+                onPress={() => setAdvancedSettingOpen(prev => !prev)}
+                style={styles.accordianHeader}>
+                <Text>{t(m.advancedSettings)}</Text>
+                <MaterialIcon
+                  color={BLACK}
+                  name={
+                    !advancedSettingOpen
+                      ? 'keyboard-arrow-up'
+                      : 'keyboard-arrow-down'
+                  }
+                  size={40}
+                />
+              </TouchableOpacity>
+              {advancedSettingOpen && (
+                <View style={{padding: 20}}>
+                  <Button fullWidth variant="outlined" onPress={() => {}}>
+                    {t(m.importConfig)}
+                  </Button>
+                </View>
+              )}
+            </View>
+          </View>
+          <View style={{paddingHorizontal: 20}}>
+            {isPending ? (
+              <UIActivityIndicator size={30} style={{marginBottom: 20}} />
+            ) : (
+              <Button fullWidth onPress={handleSubmit(handleCreateProject)}>
+                {t(m.createProjectButton)}
+              </Button>
             )}
           </View>
-        </View>
-        <View style={{paddingHorizontal: 20}}>
-          {isPending ? (
-            <UIActivityIndicator size={30} style={{marginBottom: 20}} />
-          ) : (
-            <Button fullWidth onPress={handleSubmit(handleCreateProject)}>
-              {t(m.createProjectButton)}
-            </Button>
-          )}
-        </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+      <ErrorModal
+        isOpen={isOpen}
+        closeSheet={closeSheet}
+        sheetRef={sheetRef}
+        clearError={reset}
+      />
+    </React.Fragment>
   );
 };
 

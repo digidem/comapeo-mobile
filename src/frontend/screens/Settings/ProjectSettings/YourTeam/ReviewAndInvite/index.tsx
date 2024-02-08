@@ -29,13 +29,14 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
   });
   const project = useProject();
   const queryClient = useQueryClient();
+  const isMounted = React.useRef(true);
 
   function sendInvite() {
     setInviteStatus('waiting');
     project.$member
       .invite(deviceId, {roleId: role})
       .then(val => {
-        if (val == 'ACCEPT') {
+        if (val == 'ACCEPT' && isMounted.current) {
           queryClient.invalidateQueries({queryKey: ['projectMembers']});
           navigation.navigate('InviteAccepted', {...route.params});
           return;
@@ -45,6 +46,13 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
         openSheet();
       });
   }
+
+  // I recognize that this is not the best, BUT it is a temporary stop gap until we can actually cancel the invite promise
+  React.useEffect(() => {
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   return (
     <React.Fragment>

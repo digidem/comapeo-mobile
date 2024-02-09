@@ -93,7 +93,7 @@
     "message": "Nambari hii ya siri itahitajika ili kufungua Programu ya Mapeo"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
-    "message": "Weka Nambari ya siri"
+    "message": "Set Passcode"
   },
   "screens.AppPasscode.NewPasscode.Splash.continue": {
     "message": "Endelea"

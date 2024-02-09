@@ -93,7 +93,7 @@
     "message": "Mapeo програмыг нээхэд энэ нууц үг шаардлагатай болно"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
-    "message": "Нууц үг тохируулах"
+    "message": "Set Passcode"
   },
   "screens.AppPasscode.NewPasscode.Splash.continue": {
     "message": "Үргэлжлүүлэх"

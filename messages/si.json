@@ -93,7 +93,7 @@
     "message": "Mapeo යෙදුම විවෘත කිරීමට මෙම මුර කේතය අවශ්‍ය වනු ඇත"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
-    "message": "යෙදුම් මුර කේතය"
+    "message": "Set Passcode"
   },
   "screens.AppPasscode.NewPasscode.Splash.continue": {
     "message": "ඉදිරියට යන්න"

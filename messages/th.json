@@ -93,7 +93,7 @@
     "message": "This passcode will be required to open the Mapeo App"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
-    "message": "กำหนดรหัสผ่าน"
+    "message": "Set Passcode"
   },
   "screens.AppPasscode.NewPasscode.Splash.continue": {
     "message": "ดำเนินการต่อ"

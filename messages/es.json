@@ -93,7 +93,7 @@
     "message": "Esta contraseña será necesaria para abrir la aplicación de Mapeo"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
-    "message": "Establecer la Contraseña de la aplicación"
+    "message": "Set Passcode"
   },
   "screens.AppPasscode.NewPasscode.Splash.continue": {
     "message": "Continuar"

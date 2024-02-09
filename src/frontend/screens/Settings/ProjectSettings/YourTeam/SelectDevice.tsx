@@ -7,7 +7,6 @@ import {DeviceCard} from '../../../../sharedComponents/DeviceCard';
 import {useLocalDiscoveryState} from '../../../../hooks/useLocalDiscoveryState';
 import {useLocalPeers} from '../../../../hooks/useLocalPeers';
 import {RoleId} from '@mapeo/core/dist/capabilities';
-import {useProjectMembers} from '../../../../hooks/server/projects';
 
 const m = defineMessages({
   title: {
@@ -35,13 +34,6 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
   const {formatMessage: t} = useIntl();
 
   const devices = useLocalPeers();
-  const members = useProjectMembers();
-  const nonMemberDevices = !members.data
-    ? devices
-    : devices.filter(
-        device =>
-          !members.data.some(member => member.deviceId === device.deviceId),
-      );
 
   return (
     <ScrollView style={styles.container}>
@@ -56,29 +48,28 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
       <View style={{marginTop: 20}}></View>
 
       {/* List available devices here */}
-      {nonMemberDevices &&
-        nonMemberDevices.map(device => {
-          const name = device.name;
-          const deviceId = device.deviceId;
-          // this is not exposed yet
-          const deviceType = 'mobile';
-          return (
-            <DeviceCard
-              key={deviceId}
-              style={{marginBottom: 10}}
-              name={name || ''}
-              deviceType={deviceType}
-              deviceId={deviceId}
-              onPress={() =>
-                navigation.navigate('SelectInviteeRole', {
-                  name: name || '',
-                  deviceId: deviceId,
-                  deviceType: deviceType,
-                })
-              }
-            />
-          );
-        })}
+      {devices.map(device => {
+        const name = device.name;
+        const deviceId = device.deviceId;
+        // this is not exposed yet
+        const deviceType = 'mobile';
+        return (
+          <DeviceCard
+            key={deviceId}
+            style={{marginBottom: 10}}
+            name={name || ''}
+            deviceType={deviceType}
+            deviceId={deviceId}
+            onPress={() =>
+              navigation.navigate('SelectInviteeRole', {
+                name: name || '',
+                deviceId: deviceId,
+                deviceType: deviceType,
+              })
+            }
+          />
+        );
+      })}
     </ScrollView>
   );
 };

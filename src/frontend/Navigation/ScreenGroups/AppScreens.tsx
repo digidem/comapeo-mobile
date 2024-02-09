@@ -30,8 +30,13 @@ import {YourTeam} from '../../screens/Settings/ProjectSettings/YourTeam';
 import {SelectDevice} from '../../screens/Settings/ProjectSettings/YourTeam/SelectDevice';
 import {DeviceRole, DeviceType} from '../../sharedTypes';
 import {SelectInviteeRole} from '../../screens/Settings/ProjectSettings/YourTeam/SelectInviteeRole';
-import {ReviewInvitation} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewInvitation';
+import {ReviewInvitation} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/ReviewInvitation';
 import {InviteAccepted} from '../../screens/Settings/ProjectSettings/YourTeam/InviteAccepted';
+import {ReviewAndInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite';
+import {CreateOrJoinProject} from '../../screens/Settings/CreateOrJoinProject';
+import {CreateProject} from '../../screens/Settings/CreateOrJoinProject/CreateProject';
+import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateProject/ProjectCreated';
+import {JoinExistingProject} from '../../screens/Settings/CreateOrJoinProject/JoinExistingProject';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -67,7 +72,7 @@ export type AppList = {
   UnableToLinkScreen: undefined;
   ConnectingToDeviceScreen: {task: () => Promise<void>};
   ConfirmLeavePracticeModeScreen: {projectAction: 'join' | 'create'};
-  CreateProjectScreen: undefined;
+  CreateProject: undefined;
   Security: undefined;
   DirectionalArrow: undefined;
   P2pUpgrade: undefined;
@@ -89,10 +94,13 @@ export type AppList = {
   EnterPassToTurnOff: undefined;
   AppSettings: undefined;
   ProjectSettings: undefined;
+  CreateOrJoinProject: undefined;
+  ProjectCreated: {name: string};
+  JoinExistingProject: undefined;
   YourTeam: undefined;
   SelectDevice: undefined;
   SelectInviteeRole: {name: string; deviceType: DeviceType; deviceId: string};
-  ReviewInvitation: {
+  ReviewAndInvite: {
     name: string;
     deviceType: DeviceType;
     deviceId: string;
@@ -228,6 +236,26 @@ export const createDefaultScreenGroup = (
       options={{headerTitle: intl(CoordinateFormat.navTitle)}}
     />
     <RootStack.Screen
+      name="CreateOrJoinProject"
+      component={CreateOrJoinProject}
+      options={{headerTitle: intl(CreateOrJoinProject.navTitle)}}
+    />
+    <RootStack.Screen
+      name="CreateProject"
+      component={CreateProject}
+      options={{headerTitle: intl(CreateProject.navTitle)}}
+    />
+    <RootStack.Screen
+      name="ProjectCreated"
+      component={ProjectCreated}
+      options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="JoinExistingProject"
+      component={JoinExistingProject}
+      options={{headerShown: false}}
+    />
+    <RootStack.Screen
       name="YourTeam"
       component={YourTeam}
       options={{headerTitle: intl(YourTeam.navTitle)}}
@@ -243,8 +271,8 @@ export const createDefaultScreenGroup = (
       options={{headerTitle: intl(SelectInviteeRole.navTitle)}}
     />
     <RootStack.Screen
-      name="ReviewInvitation"
-      component={ReviewInvitation}
+      name="ReviewAndInvite"
+      component={ReviewAndInvite}
       options={{headerTitle: intl(ReviewInvitation.navTitle)}}
     />
     <RootStack.Screen

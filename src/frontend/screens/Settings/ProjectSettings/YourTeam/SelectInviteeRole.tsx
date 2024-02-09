@@ -50,7 +50,7 @@ export const SelectInviteeRole: NativeNavigationComponent<
         style={{marginTop: 20}}
         role="participant"
         onPress={() =>
-          navigation.navigate('ReviewInvitation', {
+          navigation.navigate('ReviewAndInvite', {
             ...route.params,
             role: MEMBER_ROLE_ID,
           })
@@ -60,7 +60,7 @@ export const SelectInviteeRole: NativeNavigationComponent<
         style={{marginTop: 10}}
         role="coordinator"
         onPress={() =>
-          navigation.navigate('ReviewInvitation', {
+          navigation.navigate('ReviewAndInvite', {
             ...route.params,
             role: COORDINATOR_ROLE_ID,
           })

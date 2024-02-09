@@ -46,13 +46,13 @@
   "Screens.Settings.ProjectSettings.yourTeam": {
     "message": "Your Team"
   },
-  "screen.Settings.ProjectSettings.YourTeam.ReviewInvitation.coordinator": {
+  "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Coordinator"
   },
-  "screen.Settings.ProjectSettings.YourTeam.ReviewInvitation.participant": {
+  "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.participant": {
     "message": "Participant"
   },
-  "screen.Settings.ProjectSettings.YourTeam.ReviewInvitation.sendInvite": {
+  "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.sendInvite": {
     "message": "Send Invite"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.notSeeingDevice": {
@@ -132,6 +132,9 @@
     "message": "This passcode will be required to open the Mapeo App"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
+    "message": "Confirm Passcode"
+  },
+  "screens.AppPasscode.NewPasscode.SetPasscodeScreen.title": {
     "message": "Set Passcode"
   },
   "screens.AppPasscode.NewPasscode.Splash.continue": {
@@ -399,11 +402,14 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
   },
-  "screens.Setting.ProjectSettings.YourTeam.ReviewInvitation.title": {
+  "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Review Invitation"
   },
-  "screens.Setting.ProjectSettings.YourTeam.ReviewInvitation.youAreInviting": {
+  "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.youAreInviting": {
     "message": "You are inviting:"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.title": {
+    "message": "Review Invitation"
   },
   "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.cancelInvite": {
     "message": "Cancel Invite"
@@ -437,6 +443,63 @@
   },
   "screens.Setting.ProjectSettings.YourTeam.title": {
     "message": "Your Team"
+  },
+  "screens.Settings.CreateOrJoinProject.CreateProject.title": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
+    "message": "Go back"
+  },
+  "screens.Settings.CreateOrJoinProject.JoinExistingProject.howTo": {
+    "message": "How to Join a Project"
+  },
+  "screens.Settings.CreateOrJoinProject.JoinExistingProject.instructions": {
+    "message": "To join a project find a Coordinator of the project you wish to join. Tell them your device name and the Coordinator will send you an invite."
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.goToMap": {
+    "message": "Go to Map"
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.invitedDevice": {
+    "message": "Invite Device"
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.projectCreated": {
+    "message": "{projectName} Created!"
+  },
+  "screens.Settings.CreateOrJoinProject.advancedSettings": {
+    "message": "Advanced Project Settings"
+  },
+  "screens.Settings.CreateOrJoinProject.alreadyOnProject": {
+    "message": "You are already on a project. To create a new Project you must uninstall and reininstall CoMapeo."
+  },
+  "screens.Settings.CreateOrJoinProject.createProject": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.CreateOrJoinProject.createProjectButton": {
+    "message": "Create Project"
+  },
+  "screens.Settings.CreateOrJoinProject.enterName": {
+    "message": "Enter a name for the Project"
+  },
+  "screens.Settings.CreateOrJoinProject.importConfig": {
+    "message": "Import Config"
+  },
+  "screens.Settings.CreateOrJoinProject.joinExisting": {
+    "message": "Join an existing Mapeo Project"
+  },
+  "screens.Settings.CreateOrJoinProject.joinProject": {
+    "message": "Join a Project"
+  },
+  "screens.Settings.CreateOrJoinProject.projectDescription": {
+    "message": "A project is a secure container for your data. Only devices you invite can enter and share data with you. Create or Join a project in order to share data with other devices."
+  },
+  "screens.Settings.CreateOrJoinProject.startProject": {
+    "message": "Start a CoMapeo Project"
+  },
+  "screens.Settings.CreateOrJoinProject.title": {
+    "message": "Create or Join"
+  },
+  "screens.Settings.CreateOrJoinProject.whatIsAProject": {
+    "message": "What is a Project"
   },
   "screens.Settings.aboutMapeo": {
     "description": "Primary text for 'About Mapeo' link (version info)",
@@ -484,27 +547,6 @@
   },
   "sharedComponents.ErrorModal.tryAgain": {
     "message": "Please go back and try again"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.acceptInvite": {
-    "message": "Accept Invite"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.declineInvite": {
-    "message": "Decline Invite"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.goToMap": {
-    "message": "Go To Map"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.invitedToJoin": {
-    "message": "You've been invited to join {projName}"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.joinProject": {
-    "message": "Join Project {projName}"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.success": {
-    "message": "Success"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.youHaveJoined": {
-    "message": "You have joined {projName}"
   },
   "sharedComponents.RoleWithIcon.coordinator": {
     "message": "Coordinator"

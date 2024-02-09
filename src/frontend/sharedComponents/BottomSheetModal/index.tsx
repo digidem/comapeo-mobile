@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {BackHandler, NativeEventSubscription} from 'react-native';
+import {BackHandler, NativeEventSubscription, Keyboard} from 'react-native';
 import {
   BottomSheetModal as RNBottomSheetModal,
   BottomSheetView,
@@ -30,6 +30,9 @@ export const useBottomSheetModal = ({openOnMount}: {openOnMount: boolean}) => {
   const openSheet = React.useCallback(() => {
     if (sheetRef.current) {
       setIsOpen(true);
+      if (Keyboard.isVisible()) {
+        Keyboard.dismiss();
+      }
       sheetRef.current.present();
     }
   }, []);

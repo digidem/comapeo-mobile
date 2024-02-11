@@ -12,6 +12,7 @@ import {BLACK} from '../../../../lib/styles';
 import {DeviceCard} from '../../../../sharedComponents/DeviceCard';
 import {useProjectMembers} from '../../../../hooks/server/projects';
 import {Loading} from '../../../../sharedComponents/Loading';
+import {UIActivityIndicator} from 'react-native-indicators';
 import {useDeviceInfo} from '../../../../hooks/server/deviceInfo';
 
 const m = defineMessages({
@@ -71,29 +72,38 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
 
   return (
     <ScrollView style={styles.container}>
-      <Button
-        fullWidth
-        variant="outlined"
-        onPress={() => {
-          navigation.navigate('SelectDevice');
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
+      {deviceInfo.isLoading ? (
+        <UIActivityIndicator size={30} />
+      ) : !deviceInfo.data ||
+        // This is a very weak check. We should be checking device id not name. But device id is not exposed
+        !coordinators.some(
+          coordinator => coordinator.name === deviceInfo.data.name,
+        ) ? null : (
+        <Button
+          fullWidth
+          style={{marginTop: 20}}
+          variant="outlined"
+          onPress={() => {
+            navigation.navigate('SelectDevice');
           }}>
-          <MaterialIcon
-            color={BLACK}
-            size={32}
-            name="person-add"
-            style={{marginRight: 10}}
-          />
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-            {t(m.inviteDevice)}
-          </Text>
-        </View>
-      </Button>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <MaterialIcon
+              color={BLACK}
+              size={32}
+              name="person-add"
+              style={{marginRight: 10}}
+            />
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+              {t(m.inviteDevice)}
+            </Text>
+          </View>
+        </Button>
+      )}
       <IconHeader
         iconName="manage-accounts"
         messageDescriptor={m.coordinators}
@@ -191,6 +201,5 @@ const IconHeader = ({
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    paddingTop: 40,
   },
 });

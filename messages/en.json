@@ -55,15 +55,6 @@
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.sendInvite": {
     "message": "Send Invite"
   },
-  "screen.Settings.ProjectSettings.YourTeam.ReviewInvitation.coordinator": {
-    "message": "Coordinator"
-  },
-  "screen.Settings.ProjectSettings.YourTeam.ReviewInvitation.participant": {
-    "message": "Participant"
-  },
-  "screen.Settings.ProjectSettings.YourTeam.ReviewInvitation.sendInvite": {
-    "message": "Send Invite"
-  },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.notSeeingDevice": {
     "message": "Not seeing a Device?"
   },
@@ -419,12 +410,6 @@
   },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.title": {
     "message": "Review Invitation"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.ReviewInvitation.title": {
-    "message": "Review Invitation"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.ReviewInvitation.youAreInviting": {
-    "message": "You are inviting:"
   },
   "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.cancelInvite": {
     "message": "Cancel Invite"

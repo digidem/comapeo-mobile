@@ -6,7 +6,7 @@ import {Text} from '../../../../sharedComponents/Text';
 import {DeviceCard} from '../../../../sharedComponents/DeviceCard';
 import {useLocalDiscoveryState} from '../../../../hooks/useLocalDiscoveryState';
 import {useLocalPeers} from '../../../../hooks/useLocalPeers';
-import {RoleId} from '@mapeo/core/dist/capabilities';
+import {useProjectMembers} from '../../../../hooks/server/projects';
 
 const m = defineMessages({
   title: {
@@ -34,6 +34,15 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
   const {formatMessage: t} = useIntl();
 
   const devices = useLocalPeers();
+  const projectMembers = useProjectMembers();
+  const nonMemberDevices = !projectMembers.data
+    ? devices
+    : devices.filter(
+        device =>
+          !projectMembers.data.some(
+            member => member.deviceId === device.deviceId,
+          ),
+      );
 
   return (
     <ScrollView style={styles.container}>
@@ -48,7 +57,7 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
       <View style={{marginTop: 20}}></View>
 
       {/* List available devices here */}
-      {devices.map(device => {
+      {nonMemberDevices.map(device => {
         const name = device.name;
         const deviceId = device.deviceId;
         // this is not exposed yet

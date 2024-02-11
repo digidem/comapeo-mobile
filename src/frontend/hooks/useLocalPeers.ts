@@ -48,14 +48,19 @@ function createLocalPeerState(api: MapeoClientApi) {
     let stateUpdated = false;
     for (const peer of peers) {
       const existing = peersById.get(peer.deviceId);
-      const changed = !existing || !shallowEqual(existing, peer);
-      if (changed) {
+      const listOfPeersChanged = !existing || !shallowEqual(existing, peer);
+      if (listOfPeersChanged) {
         peersById.set(peer.deviceId, peer);
+      }
+      const statusOfPeerChanged = existing && existing.status !== peer.status;
+      if (listOfPeersChanged || statusOfPeerChanged) {
         stateUpdated = true;
       }
     }
     if (stateUpdated) {
-      state = Array.from(peersById.values());
+      state = Array.from(peersById.values()).filter(
+        peer => peer.status !== 'disconnected',
+      );
       listeners.forEach(listener => listener());
     }
   }

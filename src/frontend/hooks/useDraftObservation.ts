@@ -22,6 +22,7 @@ export const useDraftObservation = () => {
     deletePhoto: deletePersistedPhoto,
     updatePreset,
     updateObservationNotes,
+    updateObservationFields,
   } = _usePersistedDraftObservationActions();
 
   const addPhoto = useCallback(
@@ -95,5 +96,6 @@ export const useDraftObservation = () => {
     updatePreset,
     updateObservationNotes,
     editSavedObservation,
+    updateObservationFields,
   };
 };

@@ -37,6 +37,18 @@ export type DraftObservationSlice = {
     }) => void;
     updatePreset: (preset: Preset) => void;
     updateObservationNotes: (notes: string) => void;
+    updateObservationFields: ({
+      tagKey,
+      value,
+    }: {
+      tagKey: string;
+      value:
+        | string
+        | number
+        | boolean
+        | (string | number | boolean | null)[]
+        | null;
+    }) => void;
   };
 };
 
@@ -134,6 +146,23 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
           tags: {
             ...prevValue.tags,
             notes,
+          },
+        },
+      });
+    },
+    updateObservationFields: ({tagKey, value}) => {
+      const prevValue = get().value;
+      if (!prevValue) {
+        throw new Error(
+          'Cannot set fields if observation does not already exist (aka if the user has not chosen a category)',
+        );
+      }
+      set({
+        value: {
+          ...prevValue,
+          tags: {
+            ...prevValue.tags,
+            [tagKey]: value,
           },
         },
       });

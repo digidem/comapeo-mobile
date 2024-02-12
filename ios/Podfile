@@ -1,10 +1,22 @@
+require File.join(File.dirname(`node --print "require.resolve('expo/package.json')"`), "scripts/autolinking")
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, '12.4'
+platform :ios, '13.0'
 install! 'cocoapods', :deterministic_uuids => false
 
-target 'MapeoNext' do
+# https://github.com/rnmapbox/maps/blob/v10.0/ios/install.md#mapbox-maps-sdk-v10
+$RNMapboxMapsImpl = 'mapbox'
+
+target 'CoMapeo' do
+  use_expo_modules!
+  post_integrate do |installer|
+    begin
+      expo_patch_react_imports!(installer)
+    rescue => e
+      Pod::UI.warn e
+    end
+  end
   config = use_native_modules!
 
   # Flags change depending on the env values.
@@ -26,12 +38,19 @@ target 'MapeoNext' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'MapeoNextTests' do
+  target 'CoMapeoTests' do
     inherit! :complete
     # Pods for testing
   end
 
+  pre_install do |installer|
+    # https://github.com/rnmapbox/maps/blob/v10.0/ios/install.md
+    $RNMapboxMaps.pre_install(installer)
+  end
+
   post_install do |installer|
+    # https://github.com/rnmapbox/maps/blob/v10.0/ios/install.md
+    $RNMapboxMaps.pre_install(installer)
     react_native_post_install(
       installer,
       # Set `mac_catalyst_enabled` to `true` in order to apply patches

@@ -93,9 +93,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.mapeonext"
+    namespace "com.comapeo"
     defaultConfig {
-        applicationId "com.mapeonext"
+        applicationId "com.comapeo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

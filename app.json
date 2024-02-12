@@ -1,7 +1,5 @@
 {
-  "name": "MapeoNext",
-  "displayName": "MapeoNext",
-  "plugins": [
-    "expo-localization"
-  ]
+  "name": "CoMapeo",
+  "displayName": "CoMapeo",
+  "plugins": ["expo-localization"]
 }

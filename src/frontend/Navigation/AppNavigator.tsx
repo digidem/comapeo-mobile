@@ -1,22 +1,17 @@
 import * as React from 'react';
 import {
-  AppStackList,
   NavigatorScreenOptions,
   RootStack,
   createDefaultScreenGroup,
-  // createOnboardingScreenGroup,
 } from './AppStack';
 import {useIntl} from 'react-intl';
-// import {SecurityContext} from '../context/SecurityContext';
 
 import BootSplash from 'react-native-bootsplash';
 import {useDeviceInfo} from '../hooks/server/deviceInfo';
 import {Loading} from '../sharedComponents/Loading';
 import {createDeviceNamingScreens} from './ScreenGroups/DeviceNamingScreens';
 import {usePrefetchLastKnownLocation} from '../hooks/useLastSavedLocation';
-import {useNavigationContainerRef} from '@react-navigation/native';
 import {useProjectInviteListener} from '../hooks/useProjectInviteListener';
-import {EDITING_SCREEN_NAMES} from '../constants';
 import {useBottomSheetModal} from '../sharedComponents/BottomSheetModal';
 import {ProjectInviteBottomSheet} from '../sharedComponents/ProjectInviteBottomSheet';
 
@@ -44,17 +39,12 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   const deviceInfo = useDeviceInfo();
   usePrefetchLastKnownLocation();
 
-  const navRef = useNavigationContainerRef<AppStackList>();
   const {isOpen, sheetRef, openSheet, closeSheet} = useBottomSheetModal({
     openOnMount: false,
   });
 
-  const currentRoute = navRef.isReady()
-    ? navRef.getCurrentRoute()?.name
-    : undefined;
-
   const {projectInvites, clearInvite, clearAllInvites} =
-    useProjectInviteListener(currentRoute);
+    useProjectInviteListener();
 
   if (projectInvites.length > 0 && !isOpen) {
     openSheet();

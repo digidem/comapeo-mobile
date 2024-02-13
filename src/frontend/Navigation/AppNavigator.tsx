@@ -13,6 +13,8 @@ import {useDeviceInfo} from '../hooks/server/deviceInfo';
 import {Loading} from '../sharedComponents/Loading';
 import {createDeviceNamingScreens} from './ScreenGroups/DeviceNamingScreens';
 import {usePrefetchLastKnownLocation} from '../hooks/useLastSavedLocation';
+import {NavigationContainer, NavigationState} from '@react-navigation/native';
+import {storage} from '../hooks/persistedState/createPersistedState';
 
 // import {devExperiments} from '../lib/DevExperiments';
 
@@ -31,6 +33,15 @@ import {usePrefetchLastKnownLocation} from '../hooks/useLastSavedLocation';
 //
 // Note that screen groups should have a `key` prop, so that React knows how to
 // update them efficiently.
+const PERSISTED_NAV_KEY = '@Navigation';
+
+const initialNavStateString = storage.getString(PERSISTED_NAV_KEY);
+
+const initialNavState = !initialNavStateString
+  ? undefined
+  : (JSON.parse(initialNavStateString) as NavigationState);
+
+console.log({initialNavState: initialNavState?.routes});
 
 export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   const {formatMessage} = useIntl();
@@ -49,13 +60,19 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
 
   return (
     <React.Suspense fallback={<Loading />}>
-      <RootStack.Navigator
-        initialRouteName="IntroToCoMapeo"
-        screenOptions={NavigatorScreenOptions}>
-        {deviceInfo.data && deviceInfo.data.name
-          ? createDefaultScreenGroup(formatMessage)
-          : createDeviceNamingScreens(formatMessage)}
-      </RootStack.Navigator>
+      <NavigationContainer
+        initialState={initialNavState}
+        onStateChange={state =>
+          storage.set(PERSISTED_NAV_KEY, JSON.stringify(state))
+        }>
+        <RootStack.Navigator
+          initialRouteName="IntroToCoMapeo"
+          screenOptions={NavigatorScreenOptions}>
+          {deviceInfo.data && deviceInfo.data.name
+            ? createDefaultScreenGroup(formatMessage)
+            : createDeviceNamingScreens(formatMessage)}
+        </RootStack.Navigator>
+      </NavigationContainer>
     </React.Suspense>
   );
 };

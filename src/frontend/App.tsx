@@ -1,9 +1,7 @@
 import * as React from 'react';
-import {useNavigationContainerRef} from '@react-navigation/native';
 import {createMapeoClient} from '@mapeo/ipc';
 
 import {AppNavigator} from './Navigation/AppNavigator';
-import {AppStackList} from './Navigation/AppStack';
 import {IntlProvider} from './contexts/IntlContext';
 import {ApiProvider} from './contexts/ApiContext';
 import {PhotoPromiseProvider} from './contexts/PhotoPromiseContext';
@@ -37,7 +35,6 @@ localDiscoveryController.start();
 initializeNodejs();
 
 const App = () => {
-  const navRef = useNavigationContainerRef<AppStackList>();
   const [permissionsAsked, setPermissionsAsked] = React.useState(false);
   React.useEffect(() => {
     PermissionsAndroid.requestMultiple([
@@ -49,7 +46,7 @@ const App = () => {
 
   return (
     <IntlProvider>
-      <ExternalProviders queryClient={queryClient} navRef={navRef}>
+      <ExternalProviders queryClient={queryClient}>
         <ServerLoading messagePort={messagePort}>
           <LocalDiscoveryProvider value={localDiscoveryController}>
             <ApiProvider api={mapeoApi}>

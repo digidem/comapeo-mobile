@@ -178,7 +178,7 @@ function EditMode({
       <HookFormTextInput
         control={control}
         name="deviceName"
-        rules={{maxLength: 100, required: true, minLength: 1}}
+        rules={{maxLength: 60, required: true, minLength: 1}}
         // TODO: Update HookFormTextInput implementation so that either:
         // - the implementation fully determines the text input's base style and this component doesn't allow custom styling
         // - this style prop is properly merged with the text input's base style in the implementation

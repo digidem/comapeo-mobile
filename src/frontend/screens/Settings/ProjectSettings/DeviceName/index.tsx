@@ -112,19 +112,18 @@ function EditMode({
   const {formatMessage: t} = useIntl();
   const {mutate: updateDeviceName} = useEditDeviceInfo();
 
-  const {control, handleSubmit, watch} = useForm<{
+  const {control, getValues, handleSubmit} = useForm<{
     deviceName: string;
   }>({
     defaultValues: {deviceName},
   });
 
-  const newDeviceName = watch('deviceName');
-  const nameHasChanges = deviceName !== newDeviceName;
-
   React.useEffect(
     function showDiscardChangesAlert() {
       const unsubscribe = navigation.addListener('beforeRemove', event => {
         event.preventDefault();
+
+        const nameHasChanges = getValues('deviceName') !== deviceName;
 
         if (nameHasChanges) {
           Alert.alert(t(m.discardChangesAlertTitle), undefined, [
@@ -149,7 +148,7 @@ function EditMode({
         unsubscribe();
       };
     },
-    [t, navigation, nameHasChanges],
+    [t, navigation, getValues, deviceName],
   );
 
   React.useEffect(

@@ -194,6 +194,7 @@ function EditMode({
         // - this style prop is properly merged with the text input's base style in the implementation
         style={{flex: 1, color: BLACK, fontSize: 16}}
         showCharacterCount
+        autoFocus
       />
     </FieldRow>
   );

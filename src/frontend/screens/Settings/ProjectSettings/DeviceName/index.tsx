@@ -132,7 +132,6 @@ function EditMode({
               style: 'default',
               text: t(m.discardChangesAlertConfirmText),
               onPress: () => {
-                // navigation.dispatch(event.data.action);
                 // TODO: Is going to display mode desired behavior here? Or should it go back to previous screen
                 navigation.setParams({mode: 'display'});
               },
@@ -157,23 +156,14 @@ function EditMode({
         headerRight: () => {
           return (
             <IconButton
-              onPress={() => {
-                console.log('onPress');
-                handleSubmit(
-                  value => {
-                    console.log('onValid', value);
-                    updateDeviceName(value.deviceName, {
-                      onSuccess: () => navigation.setParams({mode: 'display'}),
-                      onError: err => {
-                        console.log('ERR', err);
-                      },
-                    });
+              onPress={handleSubmit(value => {
+                updateDeviceName(value.deviceName, {
+                  onSuccess: () => navigation.setParams({mode: 'display'}),
+                  onError: _err => {
+                    // TODO: Handle errors
                   },
-                  errors => {
-                    console.log('onInvalid', errors);
-                  },
-                );
-              }}>
+                });
+              })}>
               <SaveIcon />
             </IconButton>
           );

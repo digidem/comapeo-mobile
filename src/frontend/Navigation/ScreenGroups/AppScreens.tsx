@@ -37,6 +37,11 @@ import {SelectInviteeRole} from '../../screens/Settings/ProjectSettings/YourTeam
 import {ReviewInvitation} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/ReviewInvitation';
 import {InviteAccepted} from '../../screens/Settings/ProjectSettings/YourTeam/InviteAccepted';
 import {ReviewAndInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite';
+import {
+  DeviceName,
+  createNavigationOptions as createDeviceNameNavOptions,
+  type NavigationParams as DeviceNameNavParams,
+} from '../../screens/Settings/ProjectSettings/DeviceName';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -112,6 +117,7 @@ export type AppList = {
     deviceId: string;
     role: DeviceRole;
   };
+  DeviceName: DeviceNameNavParams;
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
@@ -279,6 +285,11 @@ export const createDefaultScreenGroup = (
       name="InviteAccepted"
       component={InviteAccepted}
       options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="DeviceName"
+      component={DeviceName}
+      options={createDeviceNameNavOptions({intl})}
     />
   </RootStack.Group>
 );

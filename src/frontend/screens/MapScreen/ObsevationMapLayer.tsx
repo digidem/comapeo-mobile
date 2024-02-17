@@ -57,8 +57,6 @@ function mapObservationsToFeatures(
           },
           properties: {
             id: obs.docId,
-            categoryId:
-              obs.tags && obs.tags.categoryId ? obs.tags.categoryId : undefined,
           },
         },
       ];

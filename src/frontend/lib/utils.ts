@@ -1,6 +1,7 @@
 // import { Alert } from "react-native";
 import {fromLatLon} from 'utm';
 import {SelectOptions, LabeledSelectOption} from '../sharedTypes/PresetTypes';
+import {Preset, Observation} from '@mapeo/schema';
 
 // import type {
 //   ObservationValue,
@@ -72,16 +73,6 @@ export type LocationStatus = 'searching' | 'improving' | 'good' | 'error';
 //     return "good";
 //   else if (typeof precision === "number") return "improving";
 //   return "searching";
-// }
-
-// // Get a matching preset from a Map of presets, for a given observation value
-// export function matchPreset(
-//   observationValue: ObservationValue,
-//   presets: PresetsMap
-// ): Preset | void {
-//   const categoryId = observationValue.tags.categoryId;
-//   if (!categoryId) return;
-//   return presets.get(categoryId);
 // }
 
 // export function addFieldDefinitions(
@@ -278,3 +269,47 @@ function leftPad(str: string, len: number, char: string): string {
 //   // TODO change how we determine whether we are in practice mode or not
 //   return config.metadata.name === "mapeo-default-settings";
 // }
+
+export function matchPreset(
+  availableTags: Observation['tags'],
+  presets: Preset[],
+): Preset | undefined {
+  let bestMatch: Preset | undefined;
+  let bestMatchScore = 0;
+
+  presets.forEach(preset => {
+    let score = 0;
+    let presetTagsCount = Object.keys(preset.tags).length;
+    let matchedTagsCount = 0;
+
+    for (const key in preset.tags) {
+      if (preset.tags.hasOwnProperty(key)) {
+        const presetTag = preset.tags[key];
+        const availableTag = availableTags[key];
+        if (presetTag === availableTag) {
+          score++;
+          matchedTagsCount++;
+        } else if (
+          Array.isArray(presetTag) &&
+          (presetTag as (boolean | number | string | null)[]).includes(
+            availableTag as boolean | number | string | null,
+          )
+        ) {
+          score++;
+          matchedTagsCount++;
+        }
+      }
+    }
+
+    // Calculate a score based on how many tags matched
+    score = (score / presetTagsCount) * 100;
+
+    // Update the best match if the current preset's score is higher
+    if (score > bestMatchScore) {
+      bestMatchScore = score;
+      bestMatch = preset;
+    }
+  });
+
+  return bestMatch;
+}

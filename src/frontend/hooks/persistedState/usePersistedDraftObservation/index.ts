@@ -8,6 +8,8 @@ import {
 } from './photosMethods';
 import {ClientGeneratedObservation, Position} from '../../../sharedTypes';
 import {Observation, Preset} from '@mapeo/schema';
+import {usePresetsQuery} from '../../server/presets';
+import {matchPreset} from '../../../lib/utils';
 
 type newDraftProps = {observation: Observation; preset: Preset};
 const emptyObservation: ClientGeneratedObservation = {
@@ -23,7 +25,6 @@ export type DraftObservationSlice = {
   photos: Photo[];
   value: Observation | null | ClientGeneratedObservation;
   observationId?: string;
-  preset?: Preset;
   actions: {
     addPhotoPlaceholder: (draftPhotoId: string) => void;
     replacePhotoPlaceholderWithPhoto: (photo: DraftPhoto) => void;
@@ -36,8 +37,8 @@ export type DraftObservationSlice = {
       position: Position | undefined;
       manualLocation: boolean;
     }) => void;
+    updateTags: (tags: Observation['tags']) => void;
     updatePreset: (preset: Preset) => void;
-    updateObservationNotes: (notes: string) => void;
   };
 };
 
@@ -57,7 +58,6 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
       set({
         photos: [],
         value: null,
-        preset: undefined,
         observationId: undefined,
       });
     },
@@ -91,7 +91,6 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
 
       set({
         value: draftProps.observation,
-        preset: draftProps.preset,
         observationId: draftProps.observation.docId,
         photos:
           draftProps.observation.attachments.length > 0
@@ -99,7 +98,7 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
             : [],
       });
     },
-    updatePreset: preset => {
+    updateTags: tags => {
       const prevValue = get().value;
       if (prevValue) {
         set({
@@ -107,35 +106,47 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
             ...prevValue,
             tags: {
               ...prevValue.tags,
-              categoryId: preset.docId,
+              ...tags,
             },
           },
-          preset: preset,
         });
         return;
       }
       set({
         value: {
           refs: [],
-          tags: {categoryId: preset.docId},
+          tags: tags,
           metadata: {},
           attachments: [],
         },
-        preset: preset,
       });
     },
-    updateObservationNotes: notes => {
+    updatePreset: ({tags, fieldIds}) => {
       const prevValue = get().value;
-      if (!prevValue)
-        throw new Error(
-          'Cannot set notes if observation does not already exist (aka if the user has not chosen a category)',
-        );
+      if (!prevValue) {
+        set({
+          value: {
+            refs: [],
+            tags: tags,
+            metadata: {},
+          },
+        });
+        return;
+      }
+      // we want to keep any field tags that are the same from the previous preset
+      const savedFieldTags = Object.fromEntries(
+        Object.entries(prevValue.tags).filter(([key]) =>
+          fieldIds.includes(key),
+        ),
+      );
+
       set({
         value: {
           ...prevValue,
           tags: {
-            ...prevValue.tags,
-            notes,
+            ...tags,
+            ...savedFieldTags,
+            ...(prevValue.tags.notes ? {notes: prevValue.tags.notes} : {}),
           },
         },
       });
@@ -147,6 +158,12 @@ export const usePersistedDraftObservation = createPersistedState(
   draftObservationSlice,
   '@MapeoDraft',
 );
+
+export const usePreset = () => {
+  const {data: presets} = usePresetsQuery();
+  const tags = usePersistedDraftObservation(store => store.value?.tags);
+  return !tags ? undefined : matchPreset(tags, presets);
+};
 
 export const _usePersistedDraftObservationActions = () =>
   usePersistedDraftObservation(state => state.actions);

@@ -45,6 +45,7 @@ import {
   EditScreen as DeviceNameEditScreen,
   createNavigationOptions as createDeviceNameEditNavOptions,
 } from '../../screens/Settings/ProjectSettings/DeviceName/EditScreen';
+import {ObservationFields} from '../../screens/ObservationFields';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -72,6 +73,7 @@ export type AppList = {
   ObservationList: undefined;
   Observation: {observationId: string};
   ObservationEdit: {observationId?: string} | undefined;
+  ObservationFields: {question: number};
   ManualGpsScreen: undefined;
   ObservationDetails: {question: number};
   LeaveProjectScreen: undefined;
@@ -300,5 +302,6 @@ export const createDefaultScreenGroup = (
       component={DeviceNameEditScreen}
       options={createDeviceNameEditNavOptions({intl})}
     />
+    <RootStack.Screen name="ObservationFields" component={ObservationFields} />
   </RootStack.Group>
 );

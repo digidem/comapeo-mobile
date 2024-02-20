@@ -11,7 +11,6 @@ import {convertSelectOptionsToLabeled} from '../../lib/utils';
 
 import type {QuestionProps} from './Question';
 import {ViewStyleProp} from '../../sharedTypes';
-import {Field} from '@mapeo/schema';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {SelectOneField} from '../../sharedTypes/PresetTypes';

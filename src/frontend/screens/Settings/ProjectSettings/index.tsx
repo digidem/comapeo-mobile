@@ -30,7 +30,7 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
       <List>
         <ListItem
           onPress={() => {
-            navigation.navigate('DeviceName', {mode: 'display'});
+            navigation.navigate('DeviceNameDisplay');
           }}>
           <ListItemText primary={<FormattedMessage {...m.deviceName} />} />
         </ListItem>

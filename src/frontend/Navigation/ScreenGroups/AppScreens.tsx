@@ -38,10 +38,13 @@ import {ReviewInvitation} from '../../screens/Settings/ProjectSettings/YourTeam/
 import {InviteAccepted} from '../../screens/Settings/ProjectSettings/YourTeam/InviteAccepted';
 import {ReviewAndInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite';
 import {
-  DeviceName,
-  createNavigationOptions as createDeviceNameNavOptions,
-  type NavigationParams as DeviceNameNavParams,
-} from '../../screens/Settings/ProjectSettings/DeviceName';
+  DisplayScreen as DeviceNameDisplayScreen,
+  createNavigationOptions as createDeviceNameDisplayNavOptions,
+} from '../../screens/Settings/ProjectSettings/DeviceName/DisplayScreen';
+import {
+  EditScreen as DeviceNameEditScreen,
+  createNavigationOptions as createDeviceNameEditNavOptions,
+} from '../../screens/Settings/ProjectSettings/DeviceName/EditScreen';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -117,7 +120,8 @@ export type AppList = {
     deviceId: string;
     role: DeviceRole;
   };
-  DeviceName: DeviceNameNavParams;
+  DeviceNameDisplay: undefined;
+  DeviceNameEdit: undefined;
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
@@ -287,9 +291,14 @@ export const createDefaultScreenGroup = (
       options={{headerShown: false}}
     />
     <RootStack.Screen
-      name="DeviceName"
-      component={DeviceName}
-      options={createDeviceNameNavOptions({intl})}
+      name="DeviceNameDisplay"
+      component={DeviceNameDisplayScreen}
+      options={createDeviceNameDisplayNavOptions({intl})}
+    />
+    <RootStack.Screen
+      name="DeviceNameEdit"
+      component={DeviceNameEditScreen}
+      options={createDeviceNameEditNavOptions({intl})}
     />
   </RootStack.Group>
 );

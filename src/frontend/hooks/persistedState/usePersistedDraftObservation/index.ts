@@ -37,7 +37,7 @@ export type DraftObservationSlice = {
       position: Position | undefined;
       manualLocation: boolean;
     }) => void;
-    updateTags: (tags: Observation['tags']) => void;
+    updateTags: (tagKey: string, value: Observation['tags'][0]) => void;
     updatePreset: (preset: Preset) => void;
   };
 };
@@ -98,28 +98,23 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
             : [],
       });
     },
-    updateTags: tags => {
+    updateTags: (tagKey, tagValue) => {
       const prevValue = get().value;
-      if (prevValue) {
-        set({
-          value: {
-            ...prevValue,
-            tags: {
-              ...prevValue.tags,
-              ...tags,
-            },
-          },
-        });
-        return;
-      }
+      if (!prevValue)
+        throw new Error(
+          'cannot update the tags until a draft has been initialized and a preset has been chosem',
+        );
+
       set({
         value: {
-          refs: [],
-          tags: tags,
-          metadata: {},
-          attachments: [],
+          ...prevValue,
+          tags: {
+            ...prevValue.tags,
+            [tagKey]: tagValue,
+          },
         },
       });
+      return;
     },
     updatePreset: ({tags, fieldIds}) => {
       const prevValue = get().value;

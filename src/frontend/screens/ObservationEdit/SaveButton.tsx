@@ -11,6 +11,8 @@ import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {useCreateObservation} from '../../hooks/server/observations';
 import {useEditObservation} from '../../hooks/server/observations';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {useCreateAttachmentsMutation} from '../../hooks/server/media';
+import {DraftPhoto, Photo} from '../../contexts/PhotoPromiseContext/types';
 
 const m = defineMessages({
   noGpsTitle: {
@@ -69,20 +71,43 @@ export const SaveButton = ({
   const navigation = useNavigationFromRoot();
   const createObservationMutation = useCreateObservation();
   const editObservationMutation = useEditObservation();
+  const createAttachmentsMutation = useCreateAttachmentsMutation();
 
   function createObservation() {
     if (!value) throw new Error('no observation saved in persisted state ');
-    createObservationMutation.mutate(
-      {value},
-      {
-        onError: () => {
-          if (openErrorModal) openErrorModal();
-        },
-        onSuccess: () => {
-          navigation.navigate('Home', {screen: 'Map'});
-        },
+
+    const savablePhotos = photos.filter(isSavablePhoto);
+
+    createAttachmentsMutation.mutate(savablePhotos, {
+      onError: () => {
+        if (openErrorModal) openErrorModal();
       },
-    );
+      onSuccess: data => {
+        const attachmentsToSave = data.map(blobId => ({
+          driveDiscoveryId: blobId.driveId,
+          type: blobId.type,
+          name: blobId.name,
+          hash: blobId.hash,
+        }));
+
+        createObservationMutation.mutate(
+          {
+            value: {
+              ...value,
+              attachments: [...value.attachments, ...attachmentsToSave],
+            },
+          },
+          {
+            onError: () => {
+              if (openErrorModal) openErrorModal();
+            },
+            onSuccess: () => {
+              navigation.navigate('Home', {screen: 'Map'});
+            },
+          },
+        );
+      },
+    });
   }
 
   function editObservation() {
@@ -157,4 +182,14 @@ export const SaveButton = ({
 
 function isGpsAccurate(accuracy?: number): boolean {
   return typeof accuracy === 'number' ? accuracy < MINIMUM_ACCURACY : true;
+}
+
+function isSavablePhoto(
+  photo: Photo,
+): photo is DraftPhoto & {originalUri: string} {
+  if (!('draftPhotoId' in photo && !!photo.draftPhotoId)) return false;
+
+  if (photo.deleted || photo.error) return false;
+
+  return !!photo.originalUri;
 }

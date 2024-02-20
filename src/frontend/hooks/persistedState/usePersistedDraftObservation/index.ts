@@ -16,6 +16,7 @@ const emptyObservation: ClientGeneratedObservation = {
   tags: {
     notes: '',
   },
+  attachments: [],
 };
 
 export type DraftObservationSlice = {
@@ -118,6 +119,7 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
           refs: [],
           tags: {categoryId: preset.docId},
           metadata: {},
+          attachments: [],
         },
         preset: preset,
       });

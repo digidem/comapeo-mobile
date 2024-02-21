@@ -78,6 +78,22 @@ export const SaveButton = ({
 
     const savablePhotos = photos.filter(isSavablePhoto);
 
+    if (!savablePhotos) {
+      createObservationMutation.mutate(
+        {value},
+        {
+          onError: () => {
+            if (openErrorModal) openErrorModal();
+          },
+          onSuccess: () => {
+            navigation.navigate('Home', {screen: 'Map'});
+          },
+        },
+      );
+
+      return;
+    }
+
     createAttachmentsMutation.mutate(savablePhotos, {
       onError: () => {
         if (openErrorModal) openErrorModal();

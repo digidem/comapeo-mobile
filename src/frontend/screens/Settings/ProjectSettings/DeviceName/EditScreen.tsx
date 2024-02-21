@@ -13,6 +13,8 @@ import {BLACK} from '../../../../lib/styles';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
 import {IconButton} from '../../../../sharedComponents/IconButton';
 import {SaveIcon} from '../../../../sharedComponents/icons';
+import {useBottomSheetModal} from '../../../../sharedComponents/BottomSheetModal';
+import {ErrorModal} from '../../../../sharedComponents/ErrorModal';
 import {FieldRow} from './FieldRow';
 
 const m = defineMessages({
@@ -76,6 +78,8 @@ export const EditScreen = ({
     formState,
   );
 
+  const errorModal = useBottomSheetModal({openOnMount: false});
+
   React.useEffect(
     function showDiscardChangesAlert() {
       const unsubscribe = navigation.addListener('beforeRemove', event => {
@@ -123,8 +127,8 @@ export const EditScreen = ({
                       editDeviceInfoMutation.mutate(value.deviceName, {
                         onSuccess: () =>
                           navigation.navigate('DeviceNameDisplay'),
-                        onError: _err => {
-                          // TODO: Handle errors
+                        onError: () => {
+                          errorModal.openSheet();
                         },
                       });
                     })
@@ -141,25 +145,33 @@ export const EditScreen = ({
       editDeviceInfoMutation.mutate,
       editDeviceInfoMutation.isPending,
       nameHasChanges,
+      errorModal.openSheet,
     ],
   );
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <FieldRow label={t(m.deviceNameLabel)}>
-        <HookFormTextInput
-          control={control}
-          name="deviceName"
-          rules={{maxLength: 60, required: true, minLength: 1}}
-          // TODO: Update HookFormTextInput implementation so that either:
-          // - the implementation fully determines the text input's base style and this component doesn't allow custom styling
-          // - this style prop is properly merged with the text input's base style in the implementation
-          style={{flex: 1, color: BLACK, fontSize: 16}}
-          showCharacterCount
-          autoFocus
-        />
-      </FieldRow>
-    </ScrollView>
+    <>
+      <ScrollView contentContainerStyle={styles.container}>
+        <FieldRow label={t(m.deviceNameLabel)}>
+          <HookFormTextInput
+            control={control}
+            name="deviceName"
+            rules={{maxLength: 60, required: true, minLength: 1}}
+            // TODO: Update HookFormTextInput implementation so that either:
+            // - the implementation fully determines the text input's base style and this component doesn't allow custom styling
+            // - this style prop is properly merged with the text input's base style in the implementation
+            style={{flex: 1, color: BLACK, fontSize: 16}}
+            showCharacterCount
+            autoFocus
+          />
+        </FieldRow>
+      </ScrollView>
+      <ErrorModal
+        sheetRef={errorModal.sheetRef}
+        closeSheet={errorModal.closeSheet}
+        isOpen={errorModal.isOpen}
+      />
+    </>
   );
 };
 

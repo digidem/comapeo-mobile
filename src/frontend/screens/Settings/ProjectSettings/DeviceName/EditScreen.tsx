@@ -4,7 +4,7 @@ import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {useForm} from 'react-hook-form';
 
-import {NativeNavigationComponent} from '../../../../sharedTypes';
+import {NativeRootNavigationProps} from '../../../../sharedTypes';
 import {
   useDeviceInfo,
   useEditDeviceInfo,
@@ -56,9 +56,9 @@ export function createNavigationOptions({
   };
 }
 
-export const EditScreen: NativeNavigationComponent<'DeviceNameEdit'> = ({
+export const EditScreen = ({
   navigation,
-}) => {
+}: NativeRootNavigationProps<'DeviceNameEdit'>) => {
   const {formatMessage: t} = useIntl();
 
   const {data} = useDeviceInfo();
@@ -143,8 +143,6 @@ export const EditScreen: NativeNavigationComponent<'DeviceNameEdit'> = ({
     </ScrollView>
   );
 };
-
-EditScreen.navTitle = m.title;
 
 const styles = StyleSheet.create({
   container: {

@@ -1,12 +1,9 @@
 import * as React from 'react';
-import {Alert, ScrollView, StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 
-import {
-  NativeNavigationComponent,
-  NativeRootNavigationProps,
-} from '../../../../sharedTypes';
+import {NativeRootNavigationProps} from '../../../../sharedTypes';
 import {useDeviceInfo} from '../../../../hooks/server/deviceInfo';
 import {Text} from '../../../../sharedComponents/Text';
 import {IconButton} from '../../../../sharedComponents/IconButton';
@@ -43,9 +40,7 @@ export function createNavigationOptions({
   };
 }
 
-export const DisplayScreen: NativeNavigationComponent<
-  'DeviceNameDisplay'
-> = () => {
+export const DisplayScreen = () => {
   const {formatMessage: t} = useIntl();
   const {data} = useDeviceInfo();
 
@@ -59,8 +54,6 @@ export const DisplayScreen: NativeNavigationComponent<
     </ScrollView>
   );
 };
-
-DisplayScreen.navTitle = m.title;
 
 const styles = StyleSheet.create({
   container: {

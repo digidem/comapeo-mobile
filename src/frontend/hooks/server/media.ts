@@ -12,28 +12,23 @@ type SavablePhoto = SetRequired<
   'originalUri'
 >;
 
-export function useCreateAttachmentsMutation() {
+export function useCreateBlobMutation(opts: {retry?: number} = {}) {
   const project = useProject();
 
   return useMutation({
-    mutationFn: async (photos: SavablePhoto[]) => {
-      return Promise.all(
-        photos.map(p => {
-          const {originalUri, previewUri, thumbnailUri} = p;
+    retry: opts.retry,
+    mutationFn: async (photo: SavablePhoto) => {
+      const {originalUri, previewUri, thumbnailUri} = photo;
 
-          return project.$blobs.create(
-            {
-              original: new URL(originalUri).pathname,
-              preview: previewUri ? new URL(previewUri).pathname : undefined,
-              thumbnail: thumbnailUri
-                ? new URL(thumbnailUri).pathname
-                : undefined,
-            },
-            // TODO: DraftPhoto type should probably carry MIME type info that feeds this
-            // although backend currently only uses first part of path
-            {mimeType: 'image/jpeg'},
-          );
-        }),
+      return project.$blobs.create(
+        {
+          original: new URL(originalUri).pathname,
+          preview: previewUri ? new URL(previewUri).pathname : undefined,
+          thumbnail: thumbnailUri ? new URL(thumbnailUri).pathname : undefined,
+        },
+        // TODO: DraftPhoto type should probably carry MIME type info that feeds this
+        // although backend currently only uses first part of path
+        {mimeType: 'image/jpeg'},
       );
     },
   });

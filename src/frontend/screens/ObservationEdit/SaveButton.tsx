@@ -7,11 +7,10 @@ import {IconButton} from '../../sharedComponents/IconButton';
 import {SaveIcon} from '../../sharedComponents/icons/SaveIcon';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {useCreateObservation} from '../../hooks/server/observations';
 import {useEditObservation} from '../../hooks/server/observations';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {useCreateAttachmentsMutation} from '../../hooks/server/media';
+import {useCreateBlobMutation} from '../../hooks/server/media';
 import {DraftPhoto, Photo} from '../../contexts/PhotoPromiseContext/types';
 
 const m = defineMessages({
@@ -71,7 +70,7 @@ export const SaveButton = ({
   const navigation = useNavigationFromRoot();
   const createObservationMutation = useCreateObservation();
   const editObservationMutation = useEditObservation();
-  const createAttachmentsMutation = useCreateAttachmentsMutation();
+  const createBlobMutation = useCreateBlobMutation();
 
   function createObservation() {
     if (!value) throw new Error('no observation saved in persisted state ');
@@ -94,23 +93,31 @@ export const SaveButton = ({
       return;
     }
 
-    createAttachmentsMutation.mutate(savablePhotos, {
-      onError: () => {
-        if (openErrorModal) openErrorModal();
-      },
-      onSuccess: data => {
-        const attachmentsToSave = data.map(blobId => ({
-          driveDiscoveryId: blobId.driveId,
-          type: blobId.type,
-          name: blobId.name,
-          hash: blobId.hash,
-        }));
+    // Currently, we abort the process of saving an observation if saving any number of photos fails to save,
+    // but this approach is prone to creating "orphaned" blobs.
+    // The alternative is to save the observation but excluding photos that failed to save, which is prone to an odd UX of an observation "missing" some attachments.
+    // This could potentially be alleviated by a more granular and informative UI about the photo-saving state, but currently there is nothing in place.
+    // Basically, which is worse: orphaned attachments or saving observations that seem to be missing attachments?
+    Promise.all(
+      savablePhotos.map(photo => {
+        return createBlobMutation.mutateAsync(photo);
+      }),
+    )
+      .then(results => {
+        const newAttachments = results.map(
+          ({driveId: driveDiscoveryId, type, name, hash}) => ({
+            driveDiscoveryId,
+            type,
+            name,
+            hash,
+          }),
+        );
 
         createObservationMutation.mutate(
           {
             value: {
               ...value,
-              attachments: [...value.attachments, ...attachmentsToSave],
+              attachments: [...value.attachments, ...newAttachments],
             },
           },
           {
@@ -122,8 +129,10 @@ export const SaveButton = ({
             },
           },
         );
-      },
-    });
+      })
+      .catch(() => {
+        if (openErrorModal) openErrorModal();
+      });
   }
 
   function editObservation() {

@@ -52,8 +52,6 @@ export function useAttachmentUrlQueries(
   return useQueries({
     queries: attachments.map(attachment => {
       return {
-        staleTime: Infinity,
-        gcTime: Infinity,
         queryKey: [
           'attachmentUrl',
           attachment.driveDiscoveryId,

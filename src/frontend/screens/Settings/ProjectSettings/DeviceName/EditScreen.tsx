@@ -65,19 +65,22 @@ export const EditScreen = ({
 
   const deviceName = data?.name;
 
-  const {control, getValues, handleSubmit} = useForm<{
+  const {control, getValues, handleSubmit, formState} = useForm<{
     deviceName: string;
   }>({defaultValues: {deviceName}});
 
-  const {mutate: updateDeviceName} = useEditDeviceInfo();
+  const editDeviceInfoMutation = useEditDeviceInfo();
+
+  const {isDirty: nameHasChanges} = control.getFieldState(
+    'deviceName',
+    formState,
+  );
 
   React.useEffect(
     function showDiscardChangesAlert() {
       const unsubscribe = navigation.addListener('beforeRemove', event => {
         // Ignore cases where navigation after successful submission occurs
         if (event.data.action.type !== 'GO_BACK') return;
-
-        const nameHasChanges = getValues('deviceName') !== deviceName;
 
         if (!nameHasChanges) return;
 
@@ -99,7 +102,7 @@ export const EditScreen = ({
         unsubscribe();
       };
     },
-    [t, navigation, getValues, deviceName],
+    [t, navigation, getValues, nameHasChanges],
   );
 
   React.useEffect(
@@ -108,21 +111,37 @@ export const EditScreen = ({
         headerRight: () => {
           return (
             <IconButton
-              onPress={handleSubmit(value => {
-                updateDeviceName(value.deviceName, {
-                  onSuccess: () => navigation.navigate('DeviceNameDisplay'),
-                  onError: _err => {
-                    // TODO: Handle errors
-                  },
-                });
-              })}>
-              <SaveIcon />
+              onPress={
+                editDeviceInfoMutation.isPending
+                  ? () => {}
+                  : handleSubmit(async value => {
+                      if (!nameHasChanges) {
+                        navigation.navigate('DeviceNameDisplay');
+                        return;
+                      }
+
+                      editDeviceInfoMutation.mutate(value.deviceName, {
+                        onSuccess: () =>
+                          navigation.navigate('DeviceNameDisplay'),
+                        onError: _err => {
+                          // TODO: Handle errors
+                        },
+                      });
+                    })
+              }>
+              <SaveIcon inprogress={editDeviceInfoMutation.isPending} />
             </IconButton>
           );
         },
       });
     },
-    [handleSubmit, navigation, updateDeviceName],
+    [
+      handleSubmit,
+      navigation,
+      editDeviceInfoMutation.mutate,
+      editDeviceInfoMutation.isPending,
+      nameHasChanges,
+    ],
   );
 
   return (

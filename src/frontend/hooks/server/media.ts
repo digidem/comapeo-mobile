@@ -17,8 +17,6 @@ export function useCreateAttachmentsMutation() {
 
   return useMutation({
     mutationFn: async (photos: SavablePhoto[]) => {
-      if (!project) throw new Error('Project instance does not exist');
-
       return Promise.all(
         photos.map(p => {
           const {originalUri, previewUri, thumbnailUri} = p;
@@ -60,8 +58,6 @@ export function useAttachmentUrlQueries(
           attachment.name,
         ],
         queryFn: async () => {
-          if (!project) throw new Error('Project instance does not exist');
-
           switch (attachment.type) {
             case 'UNRECOGNIZED': {
               throw new Error(

@@ -193,7 +193,8 @@ export const SaveButton = ({
     Alert.alert(t(m.weakGpsTitle), t(m.weakGpsDesc), confirmationOptions);
   };
 
-  return createObservationMutation.isPending ||
+  return createBlobMutation.isPending ||
+    createObservationMutation.isPending ||
     editObservationMutation.isPending ? (
     <View style={{marginRight: 10}}>
       <UIActivityIndicator size={30} />

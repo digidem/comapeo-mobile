@@ -1,52 +1,88 @@
 import {Observation} from '@mapeo/schema';
 import {BlobVariant} from '@mapeo/core/dist/types';
-import {useMutation, useQuery} from '@tanstack/react-query';
+import {useMutation, useQueries} from '@tanstack/react-query';
+import {SetRequired} from 'type-fest';
+import {URL} from 'react-native-url-polyfill';
 
-import {Photo} from '../../contexts/PhotoPromiseContext/types';
+import {DraftPhoto} from '../../contexts/PhotoPromiseContext/types';
 import {useProject} from './projects';
 
-export function useCreateAttachmentsMutation() {
+type SavablePhoto = SetRequired<
+  Pick<DraftPhoto, 'originalUri' | 'previewUri' | 'thumbnailUri'>,
+  'originalUri'
+>;
+
+export function useCreateBlobMutation(opts: {retry?: number} = {}) {
   const project = useProject();
 
   return useMutation({
-    mutationFn: async (photos: Photo[]) => {
-      if (!project) throw new Error('Project instance does not exist');
+    retry: opts.retry,
+    mutationFn: async (photo: SavablePhoto) => {
+      const {originalUri, previewUri, thumbnailUri} = photo;
 
-      return Promise.all(
-        photos.map(p => {
-          // TODO: Fix
-          return project.$blobs.create(
-            {original: 'abc'},
-            {mimeType: 'img/png'},
-          );
-        }),
+      return project.$blobs.create(
+        {
+          original: new URL(originalUri).pathname,
+          preview: previewUri ? new URL(previewUri).pathname : undefined,
+          thumbnail: thumbnailUri ? new URL(thumbnailUri).pathname : undefined,
+        },
+        // TODO: DraftPhoto type should probably carry MIME type info that feeds this
+        // although backend currently only uses first part of path
+        {mimeType: 'image/jpeg'},
       );
     },
   });
 }
 
-// TODO: Fix `type` issues
-export function useObservationAttachmentUrl(
-  attachment: Observation['attachments'][number],
-  // @ts-expect-error
-  variant: BlobVariant<(typeof attachment)['type']>,
+export function useAttachmentUrlQueries(
+  attachments: Observation['attachments'],
+  variant: BlobVariant<
+    Exclude<Observation['attachments'][number]['type'], 'UNRECOGNIZED'>
+  >,
 ) {
   const project = useProject();
 
-  return useQuery({
-    queryKey: ['attachmentUrl'],
-    queryFn: async () => {
-      if (!project) throw new Error('Project instance does not exist');
-      return project.$blobs.getUrl({
-        driveId: attachment.driveDiscoveryId,
-        // @ts-expect-error
-        type: attachment.type,
-        variant,
-      });
-    },
-    enabled: !!project,
-    // setting staleTime and CacheTime to infinity means it will only call the api once (aka photos do not get editted so we do not need to keep getting from the server)
-    staleTime: Infinity,
-    gcTime: Infinity,
+  return useQueries({
+    queries: attachments.map(attachment => {
+      return {
+        queryKey: [
+          'attachmentUrl',
+          attachment.driveDiscoveryId,
+          attachment.type,
+          variant,
+          attachment.name,
+        ],
+        queryFn: async () => {
+          switch (attachment.type) {
+            case 'UNRECOGNIZED': {
+              throw new Error(
+                'Cannot get URL for unrecognized attachment type',
+              );
+            }
+            case 'video':
+            case 'audio': {
+              if (variant !== 'original') {
+                throw new Error('Cannot get URL of attachment for variant');
+              }
+
+              return project.$blobs.getUrl({
+                driveId: attachment.driveDiscoveryId,
+                name: attachment.name,
+                type: attachment.type,
+                variant,
+              });
+            }
+            case 'photo': {
+              return project.$blobs.getUrl({
+                driveId: attachment.driveDiscoveryId,
+                name: attachment.name,
+                type: attachment.type,
+                variant,
+              });
+            }
+          }
+        },
+      };
+    }),
   });
 }

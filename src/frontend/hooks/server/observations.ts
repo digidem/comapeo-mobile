@@ -43,7 +43,6 @@ export function useCreateObservation() {
       return project.observation.create({
         ...value,
         schemaName: 'observation',
-        attachments: [],
       });
     },
     onSuccess: () => {

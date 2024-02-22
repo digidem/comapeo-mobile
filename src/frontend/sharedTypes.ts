@@ -44,10 +44,7 @@ export type Position = Observation['metadata']['position'];
 
 export type Provider = Observation['metadata']['positionProvider'];
 
-export type ClientGeneratedObservation = Omit<
-  ObservationValue,
-  'schemaName' | 'attachments'
->;
+export type ClientGeneratedObservation = Omit<ObservationValue, 'schemaName'>;
 
 export type Attachment = Observation['attachments'][0];
 

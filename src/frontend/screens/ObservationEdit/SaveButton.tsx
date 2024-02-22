@@ -7,10 +7,11 @@ import {IconButton} from '../../sharedComponents/IconButton';
 import {SaveIcon} from '../../sharedComponents/icons/SaveIcon';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {useCreateObservation} from '../../hooks/server/observations';
 import {useEditObservation} from '../../hooks/server/observations';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {useCreateBlobMutation} from '../../hooks/server/media';
+import {DraftPhoto, Photo} from '../../contexts/PhotoPromiseContext/types';
 
 const m = defineMessages({
   noGpsTitle: {
@@ -69,20 +70,69 @@ export const SaveButton = ({
   const navigation = useNavigationFromRoot();
   const createObservationMutation = useCreateObservation();
   const editObservationMutation = useEditObservation();
+  const createBlobMutation = useCreateBlobMutation();
 
   function createObservation() {
     if (!value) throw new Error('no observation saved in persisted state ');
-    createObservationMutation.mutate(
-      {value},
-      {
-        onError: () => {
-          if (openErrorModal) openErrorModal();
+
+    const savablePhotos = photos.filter(isSavablePhoto);
+
+    if (!savablePhotos) {
+      createObservationMutation.mutate(
+        {value},
+        {
+          onError: () => {
+            if (openErrorModal) openErrorModal();
+          },
+          onSuccess: () => {
+            navigation.navigate('Home', {screen: 'Map'});
+          },
         },
-        onSuccess: () => {
-          navigation.navigate('Home', {screen: 'Map'});
-        },
-      },
-    );
+      );
+
+      return;
+    }
+
+    // Currently, we abort the process of saving an observation if saving any number of photos fails to save,
+    // but this approach is prone to creating "orphaned" blobs.
+    // The alternative is to save the observation but excluding photos that failed to save, which is prone to an odd UX of an observation "missing" some attachments.
+    // This could potentially be alleviated by a more granular and informative UI about the photo-saving state, but currently there is nothing in place.
+    // Basically, which is worse: orphaned attachments or saving observations that seem to be missing attachments?
+    Promise.all(
+      savablePhotos.map(photo => {
+        return createBlobMutation.mutateAsync(photo);
+      }),
+    )
+      .then(results => {
+        const newAttachments = results.map(
+          ({driveId: driveDiscoveryId, type, name, hash}) => ({
+            driveDiscoveryId,
+            type,
+            name,
+            hash,
+          }),
+        );
+
+        createObservationMutation.mutate(
+          {
+            value: {
+              ...value,
+              attachments: [...value.attachments, ...newAttachments],
+            },
+          },
+          {
+            onError: () => {
+              if (openErrorModal) openErrorModal();
+            },
+            onSuccess: () => {
+              navigation.navigate('Home', {screen: 'Map'});
+            },
+          },
+        );
+      })
+      .catch(() => {
+        if (openErrorModal) openErrorModal();
+      });
   }
 
   function editObservation() {
@@ -143,7 +193,8 @@ export const SaveButton = ({
     Alert.alert(t(m.weakGpsTitle), t(m.weakGpsDesc), confirmationOptions);
   };
 
-  return createObservationMutation.isPending ||
+  return createBlobMutation.isPending ||
+    createObservationMutation.isPending ||
     editObservationMutation.isPending ? (
     <View style={{marginRight: 10}}>
       <UIActivityIndicator size={30} />
@@ -157,4 +208,14 @@ export const SaveButton = ({
 
 function isGpsAccurate(accuracy?: number): boolean {
   return typeof accuracy === 'number' ? accuracy < MINIMUM_ACCURACY : true;
+}
+
+function isSavablePhoto(
+  photo: Photo,
+): photo is DraftPhoto & {originalUri: string} {
+  if (!('draftPhotoId' in photo && !!photo.draftPhotoId)) return false;
+
+  if (photo.deleted || photo.error) return false;
+
+  return !!photo.originalUri;
 }

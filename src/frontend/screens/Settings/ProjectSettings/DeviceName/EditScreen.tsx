@@ -3,6 +3,7 @@ import {Alert, ScrollView, StyleSheet} from 'react-native';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {useForm} from 'react-hook-form';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 import {NativeRootNavigationProps} from '../../../../sharedTypes';
 import {
@@ -133,7 +134,11 @@ export const EditScreen = ({
                       });
                     })
               }>
-              <SaveIcon inprogress={editDeviceInfoMutation.isPending} />
+              {editDeviceInfoMutation.isPending ? (
+                <UIActivityIndicator size={30} />
+              ) : (
+                <SaveIcon />
+              )}
             </IconButton>
           );
         },
@@ -163,6 +168,7 @@ export const EditScreen = ({
             style={{flex: 1, color: BLACK, fontSize: 16}}
             showCharacterCount
             autoFocus
+            editable={!editDeviceInfoMutation.isPending}
           />
         </FieldRow>
       </ScrollView>

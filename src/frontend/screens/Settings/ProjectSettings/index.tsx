@@ -28,7 +28,10 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
   return (
     <ScrollView>
       <List>
-        <ListItem onPress={() => {}}>
+        <ListItem
+          onPress={() => {
+            navigation.navigate('DeviceNameDisplay');
+          }}>
           <ListItemText primary={<FormattedMessage {...m.deviceName} />} />
         </ListItem>
         <ListItem onPress={() => {}}>

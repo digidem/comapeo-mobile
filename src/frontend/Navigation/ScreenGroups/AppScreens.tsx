@@ -37,6 +37,14 @@ import {SelectInviteeRole} from '../../screens/Settings/ProjectSettings/YourTeam
 import {ReviewInvitation} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/ReviewInvitation';
 import {InviteAccepted} from '../../screens/Settings/ProjectSettings/YourTeam/InviteAccepted';
 import {ReviewAndInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite';
+import {
+  DisplayScreen as DeviceNameDisplayScreen,
+  createNavigationOptions as createDeviceNameDisplayNavOptions,
+} from '../../screens/Settings/ProjectSettings/DeviceName/DisplayScreen';
+import {
+  EditScreen as DeviceNameEditScreen,
+  createNavigationOptions as createDeviceNameEditNavOptions,
+} from '../../screens/Settings/ProjectSettings/DeviceName/EditScreen';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -112,6 +120,8 @@ export type AppList = {
     deviceId: string;
     role: DeviceRole;
   };
+  DeviceNameDisplay: undefined;
+  DeviceNameEdit: undefined;
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
@@ -279,6 +289,16 @@ export const createDefaultScreenGroup = (
       name="InviteAccepted"
       component={InviteAccepted}
       options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="DeviceNameDisplay"
+      component={DeviceNameDisplayScreen}
+      options={createDeviceNameDisplayNavOptions({intl})}
+    />
+    <RootStack.Screen
+      name="DeviceNameEdit"
+      component={DeviceNameEditScreen}
+      options={createDeviceNameEditNavOptions({intl})}
     />
   </RootStack.Group>
 );

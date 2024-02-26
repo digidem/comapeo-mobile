@@ -1,31 +1,23 @@
+const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
+
 /**
- * Metro configuration for React Native
- * https://github.com/facebook/react-native
+ * Metro configuration
+ * https://facebook.github.io/metro/docs/configuration
  *
- * @format
+ * @type {import('metro-config').MetroConfig}
  */
+const config = {
+  transformer: {
+    // For https://github.com/kristerkari/react-native-svg-transformer
+    babelTransformerPath: require.resolve('react-native-svg-transformer'),
+  },
+  resolver: {
+    // For nodejs-mobile
+    blockList: [/nodejs-assets\/.*/],
+    // For https://github.com/kristerkari/react-native-svg-transformer
+    assetExts: assetExts.filter(ext => ext !== 'svg'),
+    sourceExts: [...sourceExts, 'svg'],
+  },
+};
 
-const exclusionList = require('metro-config/src/defaults/exclusionList');
-const {getDefaultConfig} = require('metro-config');
-
-module.exports = (async () => {
-  const {
-    resolver: {sourceExts, assetExts},
-  } = await getDefaultConfig();
-  return {
-    transformer: {
-      getTransformOptions: async () => ({
-        transform: {
-          experimentalImportSupport: false,
-          inlineRequires: true,
-        },
-      }),
-      babelTransformerPath: require.resolve('react-native-svg-transformer'),
-    },
-    resolver: {
-      assetExts: assetExts.filter(ext => ext !== 'svg'),
-      sourceExts: [...sourceExts, 'svg'],
-      blockList: exclusionList([/nodejs-assets\/.*/, /android\/.*/, /ios\/.*/]),
-    },
-  };
-})();
+module.exports = mergeConfig(getDefaultConfig(__dirname), config);

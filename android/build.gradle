@@ -35,13 +35,13 @@ loadDotEnv()
 buildscript {
     ext {
         buildToolsVersion = "33.0.0"
-        minSdkVersion = 21
+        minSdkVersion = 24
         compileSdkVersion = 33
         targetSdkVersion = 33
         kotlinVersion = findProperty("android.kotlinVersion") ?: "1.8.10"
 
-        // We use NDK 23 which has both M1 support and is the side-by-side NDK version from AGP.
-        ndkVersion = "23.1.7779620"
+        // We use NDK >= 24 due to NodeJS Mobile React Native
+        ndkVersion = "24.0.8215888"
         RNMapboxMapsImpl = "mapbox"
     }
     repositories {

@@ -47,7 +47,7 @@
     "expo-sensors": "~12.1.1",
     "lodash.isequal": "^4.5.0",
     "nanoid": "^5.0.1",
-    "nodejs-mobile-react-native": "^16.17.10",
+    "nodejs-mobile-react-native": "^18.17.7",
     "react": "18.2.0",
     "react-hook-form": "^7.49.2",
     "react-intl": "^6.4.4",

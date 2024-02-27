@@ -1,0 +1,17 @@
+diff --git a/node_modules/nodejs-mobile-react-native/android/build.gradle b/node_modules/nodejs-mobile-react-native/android/build.gradle
+index 2933b3d..724c377 100644
+--- a/node_modules/nodejs-mobile-react-native/android/build.gradle
++++ b/node_modules/nodejs-mobile-react-native/android/build.gradle
+@@ -418,9 +418,9 @@ if ("1".equals(shouldRebuildNativeModules)) {
+             if (nodeVersionResult.exitValue != 0) {
+                 throw new GradleException("Failed to get node version: ${nodeVersionResult.errorOutput}")
+             }
+-            if (nodeVersionStdout.toString().trim() != "${_nodeVersionRequired}") {
+-                throw new GradleException("nodejs-mobile-react-native requires Node.js version ${_nodeVersionRequired}, but found ${nodeVersionStdout.toString().trim()}")
+-            }
++            // if (nodeVersionStdout.toString().trim() != "${_nodeVersionRequired}") {
++            //     throw new GradleException("nodejs-mobile-react-native requires Node.js version ${_nodeVersionRequired}, but found ${nodeVersionStdout.toString().trim()}")
++            // }
+             inputs.file "${rootProject.buildDir}/nodejs-native-assets-temp-build/nodejs-native-assets-${abi_name}/copy.timestamp"
+             outputs.dir "${rootProject.buildDir}/nodejs-native-assets-temp-build/nodejs-native-assets-${abi_name}/nodejs-project/"
+             workingDir "${rootProject.buildDir}/nodejs-native-assets-temp-build/nodejs-native-assets-${abi_name}/nodejs-project/"

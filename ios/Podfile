@@ -7,7 +7,7 @@ require Pod::Executable.execute_command('node', ['-p',
   
 require File.join(File.dirname(`node --print "require.resolve('expo/package.json')"`), "scripts/autolinking")
 
-platform :ios, '13.0'
+platform :ios, podfile_properties['ios.deploymentTarget'] || '13.4'
 install! 'cocoapods', :deterministic_uuids => false
 
 # https://github.com/rnmapbox/maps/blob/v10.0/ios/install.md#mapbox-maps-sdk-v10

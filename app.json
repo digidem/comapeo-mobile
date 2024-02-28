@@ -1,5 +1,4 @@
 {
   "name": "CoMapeo",
-  "displayName": "CoMapeo",
-  "plugins": ["expo-localization"]
+  "plugins": ["expo-localization", "expo-secure-store"]
 }

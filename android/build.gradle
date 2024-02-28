@@ -34,15 +34,16 @@ loadDotEnv()
 
 buildscript {
     ext {
-        buildToolsVersion = "34.0.0"
-        minSdkVersion = 24
-        compileSdkVersion = 34
-        targetSdkVersion = 34
-        RNMapboxMapsImpl = "mapbox"
+        buildToolsVersion = findProperty('android.buildToolsVersion') ?: '34.0.0'
+        minSdkVersion = Integer.parseInt(findProperty('android.minSdkVersion') ?: '24')
+        compileSdkVersion = Integer.parseInt(findProperty('android.compileSdkVersion') ?: '34')
+        targetSdkVersion = Integer.parseInt(findProperty('android.targetSdkVersion') ?: '34')
+        kotlinVersion = findProperty('android.kotlinVersion') ?: '1.8.10'
 
         // Required by React Native >= 0.73
         ndkVersion = "25.1.8937393"
-        kotlinVersion = "1.8"
+
+        RNMapboxMapsImpl = "mapbox"
     }
     repositories {
         google()

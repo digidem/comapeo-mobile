@@ -59,7 +59,7 @@
     "react-native-device-info": "^10.13.1",
     "react-native-gesture-handler": "~2.14.0",
     "react-native-indicators": "^0.17.0",
-    "react-native-linear-gradient": "^2.5.4",
+    "react-native-linear-gradient": "^2.8.3",
     "react-native-mmkv": "^2.10.1",
     "react-native-network-info": "^5.2.1",
     "react-native-progress": "^5.0.1",

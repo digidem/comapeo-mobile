@@ -114,6 +114,7 @@ android {
     }
 
     packagingOptions {
+        // Mapbox-related: https://github.com/rnmapbox/maps/blob/v10.1.17/android/install.md#troubleshooting
         pickFirst 'lib/x86/libc++_shared.so'
         pickFirst 'lib/x86_64/libc++_shared.so'
         pickFirst 'lib/arm64-v8a/libc++_shared.so'

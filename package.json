@@ -33,7 +33,7 @@
     "@react-navigation/bottom-tabs": "^6.3.1",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
-    "@rnmapbox/maps": "^10.0.12",
+    "@rnmapbox/maps": "^10.1.16",
     "@tanstack/react-query": "^5.12.2",
     "assert": "^2.0.0",
     "buffer": "^6.0.3",
@@ -128,6 +128,12 @@
       "jsx",
       "json",
       "node"
+    ],
+    "setupFilesAfterEnv": [
+      "@rnmapbox/maps/setup-jest"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(...|@rnmapbox))"
     ]
   },
   "lint-staged": {

@@ -1,0 +1,30 @@
+diff --git a/node_modules/react-native-svg-transformer/index.js b/node_modules/react-native-svg-transformer/index.js
+index ac1fe67..bbd077f 100644
+--- a/node_modules/react-native-svg-transformer/index.js
++++ b/node_modules/react-native-svg-transformer/index.js
+@@ -1,6 +1,11 @@
+ const { resolveConfig, transform } = require("@svgr/core");
+ const resolveConfigDir = require("path-dirname");
+ 
++// Implementation uses a fragile approach to figure out which babel transformer to use
++// Makes it uses the one for React Native CLI, which is what's used to bundle our app
++// https://github.com/kristerkari/react-native-svg-transformer/issues/333
++const babelTransformer = require("@react-native/metro-babel-transformer");
++
+ /**
+  * `metro-react-native-babel-transformer` has recently been migrated to the React Native
+  * repository and published under the `@react-native/metro-babel-transformer` name.
+@@ -49,11 +54,11 @@ module.exports.transform = async ({ src, filename, options }) => {
+     const svgrConfig = config
+       ? { ...defaultSVGRConfig, ...config }
+       : defaultSVGRConfig;
+-    return upstreamTransformer.transform({
++    return babelTransformer.transform({
+       src: await transform(src, svgrConfig),
+       filename,
+       options
+     });
+   }
+-  return upstreamTransformer.transform({ src, filename, options });
++  return babelTransformer.transform({ src, filename, options });
+ };

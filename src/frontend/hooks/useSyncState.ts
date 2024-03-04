@@ -9,6 +9,10 @@ const projectStateMap = new WeakMap<
   ReturnType<typeof createSyncState>
 >();
 
+function identity(state: SyncState | undefined) {
+  return state;
+}
+
 /**
  * Hook to subscribe to the current sync state. Optionally pass a selector to
  * subscribe to a subset of the state (to avoid unnecessary re-renders)
@@ -26,16 +30,24 @@ const projectStateMap = new WeakMap<
  * @returns
  */
 export function useSyncState<S = SyncState | undefined>(
-  selector: (state: SyncState | undefined) => S = state => state as any,
+  selector: (state: SyncState | undefined) => S = identity as any,
 ): S {
   const project = useProject();
+
   let state = projectStateMap.get(project);
   if (!state) {
     state = createSyncState(project);
     projectStateMap.set(project, state);
   }
+
   const {subscribe, getSnapshot} = state;
-  return React.useSyncExternalStore(subscribe, () => selector(getSnapshot()));
+
+  const getSelectorSnapshot = React.useCallback(
+    () => selector(getSnapshot()),
+    [selector, getSnapshot],
+  );
+
+  return React.useSyncExternalStore(subscribe, getSelectorSnapshot);
 }
 
 function createSyncState(project: MapeoProjectApi) {

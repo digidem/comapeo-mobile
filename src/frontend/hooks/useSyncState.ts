@@ -25,9 +25,9 @@ const projectStateMap = new WeakMap<
  * @param selector Select a subset of the state to subscribe to. Defaults to return the entire state.
  * @returns
  */
-export function useSyncState(
-  selector: (state: SyncState | undefined) => any = state => state,
-) {
+export function useSyncState<S = SyncState | undefined>(
+  selector: (state: SyncState | undefined) => S = state => state as any,
+): S {
   const project = useProject();
   let state = projectStateMap.get(project);
   if (!state) {

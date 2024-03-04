@@ -34,14 +34,15 @@ loadDotEnv()
 
 buildscript {
     ext {
-        buildToolsVersion = "33.0.0"
-        minSdkVersion = 24
-        compileSdkVersion = 33
-        targetSdkVersion = 33
-        kotlinVersion = findProperty("android.kotlinVersion") ?: "1.8.10"
+        buildToolsVersion = findProperty('android.buildToolsVersion') ?: '34.0.0'
+        minSdkVersion = Integer.parseInt(findProperty('android.minSdkVersion') ?: '24')
+        compileSdkVersion = Integer.parseInt(findProperty('android.compileSdkVersion') ?: '34')
+        targetSdkVersion = Integer.parseInt(findProperty('android.targetSdkVersion') ?: '34')
+        kotlinVersion = findProperty('android.kotlinVersion') ?: '1.8.10'
 
-        // We use NDK >= 24 due to NodeJS Mobile React Native
-        ndkVersion = "24.0.8215888"
+        // Required by React Native >= 0.73
+        ndkVersion = "25.1.8937393"
+
         RNMapboxMapsImpl = "mapbox"
     }
     repositories {
@@ -49,15 +50,14 @@ buildscript {
         mavenCentral()
     }
 
-
     dependencies {
-        classpath("com.android.tools.build:gradle:7.4.1")
+        classpath("com.android.tools.build:gradle")
         classpath("com.facebook.react:react-native-gradle-plugin")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
     }
 }
 
-
+apply plugin: "com.facebook.react.rootproject"
 
 allprojects {
     repositories {

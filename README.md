@@ -1,44 +1,20 @@
-# React Native + Mapeo Core Next Example
+# CoMapeo Mobile
 
-> Minimal(ish) example of integrating [Mapeo Core Next](https://github.com/digidem/mapeo-core-next) into React Native
+The next version of Mapeo Mobile
 
 ## How to run on Android
 
-1. Pre-requisites needed:
+1. Pre-requisites:
 
-   - Install [Node](https://nodejs.org), ideally through a proper node version manager such as [nvm](https://github.com/nvm-sh/nvm), [fnm](https://github.com/Schniz/fnm), or [asdf](https://asdf-vm.com/)
-     - This project currently uses Node v16 with npm v8
+   - Install [Node](https://nodejs.org), ideally through a proper node version manager such as [nvm](https://github.com/nvm-sh/nvm), [fnm](https://github.com/Schniz/fnm), [asdf](https://asdf-vm.com/), or [mise](https://mise.jdx.dev/).
+     - This project currently uses **Node v20** with **npm v10**
    - Follow instructions for setting up dev environment: https://reactnative.dev/docs/environment-setup
 
 2. Install deps: `npm install`
 
-3. Build the backend that's loaded into the app using nodejs-mobile: `scripts/build-backend.sh`
+3. (optional) Start the React Native process: `npm run start`
 
-4. (optional) Start the React Native process: `npm run start`
+4. Build and run the Android app: `npm run android`
 
-5. Build and run the Android app: `npm run android`
-
-   - This will start the React Native process if step (4) was skipped
-   - **IMPORTANT**: JDK 11 is required to build the app. If your JDK 11 installation isn't the default (can check by seeing the output of `java -version`) there are a few options (ordered by convenience):
-
-     1. Set up JDK 11 to be the default JDK version used.
-
-        - Pro: Convenient. Never have to worry about specific files or specifying environment variables.
-
-        - Con: If you work on other projects on the same machine that need a different version as the default.
-
-     2. Add the following to `android/gradle.properties`:
-
-        ```gradle
-        org.gradle.java.home=/path/to/your/jdk/home
-        ```
-
-        - Pro: Any Gradle command for this project will pick this up, so no need to specify an environment variable each time.
-
-        - Con: If this project is shared and used by other people, the path you specify may very likely differ for them and thus affect their usage.
-
-     3. Specify the `JAVA_HOME` environment variable when running the command i.e. `JAVA_HOME=/path/to/your/jdk/home npm run android`.
-
-        - Pro: Least disruptive.
-
-        - Con: Have to manually specify this each time a Gradle command for this project is ran (or export it for the shell process)
+   - This will start the React Native process if step (3) was skipped
+   - **IMPORTANT**: **Java 17** is required to build the app.

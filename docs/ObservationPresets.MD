@@ -2,7 +2,7 @@
 
 ### Tags:
 
-An `Observation` has a tags property.
+An `Observation` has a `tags` property.
 
 ```ts
 type tags = {

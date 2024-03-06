@@ -291,7 +291,7 @@ export function matchPreset(
           matchedTagsCount++;
         } else if (
           Array.isArray(presetTag) &&
-          (presetTag as (boolean | number | string | null)[]).includes(
+          presetTag.includes(
             availableTag as boolean | number | string | null,
           )
         ) {

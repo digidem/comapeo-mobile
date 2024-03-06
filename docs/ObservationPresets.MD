@@ -25,7 +25,7 @@ In the following example, there are 2 different types of tags, defined by the pr
 
 ```ts
 // This tag simply defines the observation as being a bridge
-const tags = {
+const tag = {
   name: 'bridge',
 };
 

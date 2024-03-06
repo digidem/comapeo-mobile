@@ -61,7 +61,7 @@ const tags = {
 
 Each observation can have a several fields associated with it.
 
-Each field has a `type`, where `type: "text" | "number" | "selectOne" | "selectMultiple" | "UNRECOGNIZED";`. This defines how the field is presented to the user,and how the user inputs the value of the field. If the type is `text` or `number` the user inputs a string or number. If the type is `selectOne` or `selectMultiple` the user types is given a list of options to select from which determines the value of the field
+Each field has a `type`, where `type: "text" | "number" | "selectOne" | "selectMultiple" | "UNRECOGNIZED";`. This defines how the field is presented to the user, and how the user inputs the value of the field. If the type is `text` or `number` the user inputs a string or number. If the type is `selectOne` or `selectMultiple` the user is given a list of options to select from which determines the value of the field.
 
 A field has a `tagKey` property. This defined the `key` of the tag saved in the observation
 

@@ -42,7 +42,7 @@ In CoMapeo each preset represents one type of observation (defined by the `name`
 
 ### Fields:
 
-Fields are also saved to an observation as a tag. The difference is that they are editted by the user at the time of the observation. A `preset` has predefined `keys` and a predefined `values`, while a `tag` has predefined `keys` and user editted values. This is useful when there are descriptors that cannot be predetermined.
+Fields are also saved to an observation as a tag. The difference is that they are edited by the user at the time of the observation. A `preset` has predefined `keys` and a predefined `values`, while a `tag` has predefined `keys` and user-edited values. This is useful when there are descriptors that cannot be predetermined.
 
 Using the bridge example:
 

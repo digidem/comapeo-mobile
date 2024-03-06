@@ -38,7 +38,7 @@ const tags = {
 };
 ```
 
-In CoMapeo each preset represnts one type of observation (defined by the name tag). Preset also includes other meta data associated with an observation.
+In CoMapeo each preset represents one type of observation (defined by the `name` tag). Preset also includes other metadata associated with an observation.
 
 ### Fields:
 

@@ -15,7 +15,7 @@ type tags = {
 };
 ```
 
-This is an open ended propery, that allows any key value pair descriptor to be associated with an observation. For example, any notes associated with a observation is simply saved as a tag, with the `key="notes"`
+This is an open-ended property that allows any key-value pair descriptor to be associated with an observation. For example, any notes associated with an observation is simply saved as a tag, with the `key="notes"`
 
 ### Presets:
 

@@ -67,6 +67,6 @@ A field has a `tagKey` property. This defined the `key` of the tag saved in the 
 
 ### Flow for saving an observation
 
-1. User choses a preset. This preset has `tags` and `fieldIds`.
+1. User chooses a preset. This preset has `tags` and `fieldIds`.
 2. Based on the `fieldIds` the user is prompted to fill in several forms. This provides an another `tags` object where the `keys=Field['tagKeys']` and the value is the value inputted by the user.
 3. The tags from the preset, and the tags from the fields are flattened into `tags` object of an observation.

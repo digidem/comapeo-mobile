@@ -57,7 +57,7 @@ const tags = {
 
 ### How to determine the fields associated with a preset
 
-`Presets` have a `fieldsId` property of type `string[]`. For each value in the array, there is an associated field with a matching docId.
+`Presets` have a `fieldsId` property of type `string[]`. For each value in the array, there is an associated field with a matching `docId`.
 
 Each observation can have a several fields associated with it.
 

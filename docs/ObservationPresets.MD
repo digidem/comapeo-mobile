@@ -30,7 +30,7 @@ const tags = {
 };
 
 // this tag defines the observation as an active suspension bridge over a river
-const tags = {
+const tag = {
   name: 'bridge',
   bridgeType: 'suspension',
   bodyOfWater: 'river',

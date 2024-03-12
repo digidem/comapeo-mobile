@@ -13,6 +13,7 @@ import {useDeviceInfo} from '../hooks/server/deviceInfo';
 import {Loading} from '../sharedComponents/Loading';
 import {createDeviceNamingScreens} from './ScreenGroups/DeviceNamingScreens';
 import {usePrefetchLastKnownLocation} from '../hooks/useLastSavedLocation';
+import {usePersistedDraftObservation} from '../hooks/persistedState/usePersistedDraftObservation';
 
 // import {devExperiments} from '../lib/DevExperiments';
 
@@ -34,6 +35,9 @@ import {usePrefetchLastKnownLocation} from '../hooks/useLastSavedLocation';
 
 export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   const {formatMessage} = useIntl();
+  const existingObservation = usePersistedDraftObservation(
+    store => store.value,
+  );
 
   const deviceInfo = useDeviceInfo();
   usePrefetchLastKnownLocation();
@@ -50,9 +54,15 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   return (
     <React.Suspense fallback={<Loading />}>
       <RootStack.Navigator
-        initialRouteName="IntroToCoMapeo"
+        initialRouteName={
+          !deviceInfo.data?.name
+            ? 'IntroToCoMapeo'
+            : existingObservation
+              ? 'ObservationEdit'
+              : 'Home'
+        }
         screenOptions={NavigatorScreenOptions}>
-        {deviceInfo.data && deviceInfo.data.name
+        {deviceInfo.data?.name
           ? createDefaultScreenGroup(formatMessage)
           : createDeviceNamingScreens(formatMessage)}
       </RootStack.Navigator>

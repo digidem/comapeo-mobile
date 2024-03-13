@@ -55,8 +55,8 @@ yarn.lock
 # Translation files
 /translations
 
-# Intl polyfills (generated via /scripts/build-intl-polyfill.js)
-/src/frontend/polyfills/intl-relativetimeformat.ts
+# Intl polyfills (generated via /scripts/build-intl-polyfills.mjs)
+/src/frontend/polyfills/intl.ts
 
 # Expo
 .expo/

@@ -1,6 +1,9 @@
 import {useCallback} from 'react';
 import {usePhotoPromiseContext} from '../contexts/PhotoPromiseContext';
-import {_usePersistedDraftObservationActions} from './persistedState/usePersistedDraftObservation';
+import {
+  _usePersistedDraftObservationActions,
+  usePreset,
+} from './persistedState/usePersistedDraftObservation';
 import {CapturedPictureMM} from '../contexts/PhotoPromiseContext/types';
 // react native does not have a random bytes generator, `non-secure` does not require a random bytes generator.
 import {nanoid} from 'nanoid/non-secure';
@@ -20,8 +23,8 @@ export const useDraftObservation = () => {
     newDraft: newPersistedDraft,
     updateObservationPosition,
     deletePhoto: deletePersistedPhoto,
+    updateTags,
     updatePreset,
-    updateObservationNotes,
   } = _usePersistedDraftObservationActions();
 
   const addPhoto = useCallback(
@@ -92,8 +95,9 @@ export const useDraftObservation = () => {
     newDraft,
     deletePhoto,
     updateObservationPosition,
-    updatePreset,
-    updateObservationNotes,
+    updateTags,
     editSavedObservation,
+    updatePreset,
+    usePreset,
   };
 };

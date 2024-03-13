@@ -4,8 +4,8 @@ import {View, Text, StyleSheet} from 'react-native';
 import {BLACK, LIGHT_BLUE} from '../../lib/styles';
 import {TextButton} from '../../sharedComponents/TextButton';
 import {CategoryCircleIcon} from '../../sharedComponents/icons/CategoryIcon';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {useDraftObservation} from '../../hooks/useDraftObservation';
 
 const m = defineMessages({
   observation: {
@@ -23,7 +23,8 @@ const m = defineMessages({
 export const PresetView = () => {
   const {formatMessage: t} = useIntl();
   const {navigate} = useNavigationFromRoot();
-  const preset = usePersistedDraftObservation(store => store.preset);
+  const {usePreset} = useDraftObservation();
+  const preset = usePreset();
   const name = preset
     ? t({id: `presets.${preset.docId}.name`, defaultMessage: preset.name})
     : t(m.observation);

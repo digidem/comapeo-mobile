@@ -116,15 +116,13 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
       });
       return;
     },
-    updatePreset: ({tags, fieldIds, name}) => {
+    updatePreset: ({tags, fieldIds}) => {
       const prevValue = get().value;
-      // We want the name to overwrite the tags
-      const tagsWithName = {...tags, name};
       if (!prevValue) {
         set({
           value: {
             refs: [],
-            tags: tagsWithName,
+            tags: tags,
             metadata: {},
           },
         });
@@ -141,7 +139,7 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
         value: {
           ...prevValue,
           tags: {
-            ...tagsWithName,
+            ...tags,
             ...savedFieldTags,
             ...(prevValue.tags.notes ? {notes: prevValue.tags.notes} : {}),
           },

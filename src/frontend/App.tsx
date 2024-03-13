@@ -19,6 +19,7 @@ import {
   LocalDiscoveryProvider,
   createLocalDiscoveryController,
 } from './contexts/LocalDiscoveryContext';
+import {Loading} from './sharedComponents/Loading';
 
 const queryClient = new QueryClient();
 const messagePort = new MessagePortLike();
@@ -56,7 +57,9 @@ const App = () => {
               <ActiveProjectProvider>
                 <PhotoPromiseProvider>
                   <SecurityProvider>
-                    <AppNavigator permissionAsked={permissionsAsked} />
+                    <React.Suspense fallback={<Loading />}>
+                      <AppNavigator permissionAsked={permissionsAsked} />
+                    </React.Suspense>
                   </SecurityProvider>
                 </PhotoPromiseProvider>
               </ActiveProjectProvider>

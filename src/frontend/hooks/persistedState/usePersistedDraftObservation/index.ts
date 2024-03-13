@@ -124,6 +124,7 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
             refs: [],
             tags: tags,
             metadata: {},
+            attachments: [],
           },
         });
         return;

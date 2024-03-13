@@ -270,6 +270,13 @@ function leftPad(str: string, len: number, char: string): string {
 //   return config.metadata.name === "mapeo-default-settings";
 // }
 
+/**
+ * Finds the best matching preset based on the tags of an observation. It matches the preset tags to the observation tags, following the id-editors convention. This approach allows for tags to be edited and changed in a preset while still maintaining backwards compatibility when necessary
+ *
+ * @param {Observation['tags']} availableTags - The tags available for matching.
+ * @param {Preset[]} presets - The list of presets to match against.
+ * @return {Preset | undefined} The best matching preset, or undefined if no match is found.
+ */
 export function matchPreset(
   availableTags: Observation['tags'],
   presets: Preset[],
@@ -291,9 +298,7 @@ export function matchPreset(
           matchedTagsCount++;
         } else if (
           Array.isArray(presetTag) &&
-          presetTag.includes(
-            availableTag as boolean | number | string | null,
-          )
+          presetTag.includes(availableTag as boolean | number | string | null)
         ) {
           score++;
           matchedTagsCount++;

@@ -1,0 +1,283 @@
+import * as React from 'react';
+import {defineMessages, useIntl} from 'react-intl';
+import {StyleSheet, View} from 'react-native';
+import {Bar as ProgressBar} from 'react-native-progress';
+
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {useDeviceInfo} from '../../hooks/server/deviceInfo';
+import {useProject, useProjectSettings} from '../../hooks/server/projects';
+import {useSyncState} from '../../hooks/useSyncState';
+import {
+  BLACK,
+  COMAPEO_BLUE,
+  DARK_GREY,
+  LIGHT_GREY,
+  MEDIUM_GREY,
+  WHITE,
+} from '../../lib/styles';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {Button} from '../../sharedComponents/Button';
+import {Text} from '../../sharedComponents/Text';
+import {Loading} from '../../sharedComponents/Loading';
+import {
+  ObservationListIcon,
+  StopIcon,
+  SyncIcon,
+  WifiIcon,
+} from '../../sharedComponents/icons';
+
+// Size used for project icon in header
+const PROJECT_ICON_SIZE = 50;
+
+const m = defineMessages({
+  deviceName: {
+    id: 'screens.Sync.ProjectSyncDisplay.deviceName',
+    defaultMessage: 'Your device name is {name}',
+  },
+  devicesNearby: {
+    id: 'screens.Sync.ProjectSyncDisplay.devicesNearby',
+    defaultMessage:
+      '{count} {count, plural, one {device} other {devices}} nearby/connected',
+  },
+  buttonTextSync: {
+    id: 'screens.Sync.ProjectSyncDisplay.buttonTextSync',
+    defaultMessage: 'Sync',
+  },
+  buttonTextStop: {
+    id: 'screens.Sync.ProjectSyncDisplay.buttonTextStop',
+    defaultMessage: 'Stop',
+  },
+  buttonTextDone: {
+    id: 'screens.Sync.ProjectSyncDisplay.buttonTextDone',
+    defaultMessage: "You're all caught up",
+  },
+  noDevicesSyncing: {
+    id: 'screens.Sync.ProjectSyncDisplay.noDevicesSyncing',
+    defaultMessage: 'No Devices are Syncing',
+  },
+  devicesWaitingToSync: {
+    id: 'screens.Sync.ProjectSyncDisplay.devicesWaitingToSync',
+    defaultMessage:
+      '{count} {count, plural, one {Device} other {Devices}} Waiting to Sync with you',
+  },
+  devicesSyncing: {
+    id: 'screens.Sync.ProjectSyncDisplay.devicesSyncing',
+    defaultMessage:
+      'Syncing with {count} {count, plural, one {Device} other {Devices}}',
+  },
+  upToDate: {
+    id: 'screens.Sync.ProjectSyncDisplay.upToDate',
+    defaultMessage: 'Up to Date!\nNo data to Sync',
+  },
+  syncing: {
+    id: 'screens.Sync.ProjectSyncDisplay.syncing',
+    defaultMessage: 'Syncing…',
+  },
+  syncProgress: {
+    id: 'screens.Sync.ProjectSyncDisplay.syncProgress',
+    defaultMessage: '{value}%',
+  },
+});
+
+export const ProjectSyncDisplay = () => {
+  const navigation = useNavigationFromRoot();
+
+  const {formatMessage: t} = useIntl();
+
+  const project = useProject();
+  const deviceInfoQuery = useDeviceInfo();
+  const projectSettingsQuery = useProjectSettings();
+
+  const syncState = useSyncState();
+
+  // Disables project sync when leaving screen containing this view
+  React.useEffect(() => {
+    // TODO: Add listener when going out of focus too?
+    const unsubscribe = navigation.addListener('beforeRemove', () => {
+      project.$sync.stop();
+    });
+
+    return () => unsubscribe();
+  }, [navigation, project]);
+
+  if (!syncState || !projectSettingsQuery.data || !deviceInfoQuery.data) {
+    return <Loading />;
+  }
+
+  // TODO: Default project shouldn't end up in this screen
+  const projectName = projectSettingsQuery.data.name || 'Default Project';
+  const deviceName = deviceInfoQuery.data.name;
+
+  const {connectedPeers, data, initial} = syncState;
+
+  const isDataSyncEnabled = data.syncing;
+  const isSyncDone = !initial.dataToSync && !data.dataToSync;
+
+  const devicesSyncingText = isSyncDone
+    ? t(m.upToDate)
+    : !isDataSyncEnabled && connectedPeers === 0
+      ? t(m.noDevicesSyncing)
+      : t(
+          !isDataSyncEnabled && connectedPeers > 0
+            ? m.devicesWaitingToSync
+            : m.devicesSyncing,
+          {count: connectedPeers},
+        );
+
+  return (
+    <ScreenContentWithDock
+      contentContainerStyle={styles.contentContainer}
+      dockContent={
+        isDataSyncEnabled && !isSyncDone ? (
+          <Button
+            fullWidth
+            variant="outlined"
+            onPress={() => {
+              project.$sync.stop();
+            }}>
+            <View style={styles.buttonContentContainer}>
+              <StopIcon size={20} color={BLACK} />
+              <Text style={styles.buttonTextSecondary}>
+                {t(m.buttonTextStop)}
+              </Text>
+            </View>
+          </Button>
+        ) : (
+          <Button
+            fullWidth
+            variant="contained"
+            onPress={() => {
+              if (isSyncDone) return;
+              project.$sync.start();
+            }}>
+            <View style={styles.buttonContentContainer}>
+              {isSyncDone ? (
+                <Text style={styles.buttonTextPrimary}>
+                  {t(m.buttonTextDone)}
+                </Text>
+              ) : (
+                <>
+                  <SyncIcon size={20} />
+                  <Text style={styles.buttonTextPrimary}>
+                    {t(m.buttonTextSync)}
+                  </Text>
+                </>
+              )}
+            </View>
+          </Button>
+        )
+      }>
+      <View style={styles.projectInfoContainer}>
+        <View style={styles.projectIconContainer}>
+          {/* TODO: Use SVG variant and change color to black */}
+          <ObservationListIcon size={PROJECT_ICON_SIZE} />
+        </View>
+        {projectName && <Text style={styles.projectName}>{projectName}</Text>}
+        {deviceName && (
+          <Text style={styles.deviceName}>
+            {t(m.deviceName, {name: deviceName})}
+          </Text>
+        )}
+        <View style={styles.connectedDevicesInfo}>
+          <WifiIcon color={DARK_GREY} size={20} />
+          <Text>{t(m.devicesNearby, {count: connectedPeers})}</Text>
+        </View>
+      </View>
+      <Text style={styles.titleText}>{devicesSyncingText}</Text>
+      {!isSyncDone && isDataSyncEnabled && (
+        <View style={styles.syncProgressContainer}>
+          <View style={styles.syncProgressTextContainer}>
+            <SyncIcon color={COMAPEO_BLUE} size={20} />
+            <Text style={styles.syncProgressTitleText}>{t(m.syncing)}</Text>
+          </View>
+          <ProgressBar
+            indeterminate
+            indeterminateAnimationDuration={2000}
+            // TODO: How to measure progress?
+            // progress={progress}
+            height={10}
+            width={null}
+            borderRadius={0}
+            color={COMAPEO_BLUE}
+            unfilledColor={LIGHT_GREY}
+            borderColor={WHITE}
+          />
+          {/* TODO: Uncomment when progress is figured out */}
+          {/* <Text style={styles.syncProgressText}>
+            {t(m.syncProgress, {value: Math.round(progress * 100)})}
+          </Text> */}
+        </View>
+      )}
+    </ScreenContentWithDock>
+  );
+};
+
+const styles = StyleSheet.create({
+  contentContainer: {
+    gap: 36,
+  },
+  projectInfoContainer: {
+    alignItems: 'center',
+    gap: 8,
+  },
+  projectIconContainer: {
+    borderRadius: PROJECT_ICON_SIZE,
+    width: PROJECT_ICON_SIZE * 2,
+    height: PROJECT_ICON_SIZE * 2,
+    backgroundColor: '#CCE0FF',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  connectedDevicesInfo: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  projectName: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  deviceName: {
+    color: MEDIUM_GREY,
+  },
+  syncInfo: {
+    gap: 20,
+  },
+  titleText: {
+    fontSize: 40,
+    textAlign: 'center',
+  },
+  descriptionText: {
+    fontSize: 24,
+    textAlign: 'center',
+  },
+  buttonContentContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  buttonTextPrimary: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: WHITE,
+  },
+  buttonTextSecondary: {
+    fontWeight: 'bold',
+    fontSize: 20,
+  },
+  syncProgressContainer: {
+    gap: 12,
+  },
+  syncProgressTextContainer: {
+    flexDirection: 'row',
+    gap: 8,
+    alignItems: 'center',
+  },
+  syncProgressTitleText: {
+    fontSize: 20,
+    color: COMAPEO_BLUE,
+  },
+  syncProgressText: {
+    color: MEDIUM_GREY,
+    alignSelf: 'flex-end',
+  },
+});

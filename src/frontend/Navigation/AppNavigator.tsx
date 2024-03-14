@@ -62,7 +62,7 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   return (
     <RootStack.Navigator
       initialRouteName={setInitialRouteName({
-        hasName: !!deviceInfo.data?.name,
+        hasDeviceName: !!deviceInfo.data?.name,
         existingObservation,
         presets,
       })}
@@ -76,15 +76,15 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
 
 function setInitialRouteName(
   initialInfo:
-    | {hasName: false}
+    | {hasDeviceName: false}
     | {
-        hasName: true;
+        hasDeviceName: true;
         existingObservation: null | ClientGeneratedObservation | Observation;
         presets: Preset[];
       },
 ): keyof AppList | keyof DeviceNamingSceens {
   // if user has not set a name, navigate to intro screen where they will be prompted to set a name
-  if (!initialInfo.hasName) {
+  if (!initialInfo.hasDeviceName) {
     return 'IntroToCoMapeo';
   }
 

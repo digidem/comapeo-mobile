@@ -47,10 +47,10 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: props =>
-        prevRouteNameInStack === 'Home' ? (
-          <CustomHeaderLeftClose headerBackButtonProps={props} />
-        ) : (
+        prevRouteNameInStack === 'ObservationEdit' ? (
           <CustomHeaderLeft headerBackButtonProps={props} />
+        ) : (
+          <CustomHeaderLeftClose headerBackButtonProps={props} />
         ),
     });
   }, [prevRouteNameInStack, CustomHeaderLeft, CustomHeaderLeftClose]);

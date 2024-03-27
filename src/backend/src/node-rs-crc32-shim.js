@@ -1,5 +1,8 @@
 /**
  * Shim for @node-rs/crc32 written in pure JavaScript.
+ *
+ * Modified from [this sample implementation](https://www.w3.org/TR/2022/WD-png-3-20221025/#D-CRCAppendix).
+ *
  * @module
  */
 

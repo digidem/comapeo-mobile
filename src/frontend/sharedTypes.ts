@@ -8,11 +8,11 @@ import {MessageDescriptor} from 'react-intl';
 import {AppStackList} from './Navigation/AppStack';
 import {HomeTabsList} from './Navigation/ScreenGroups/AppScreens';
 import {Observation, ObservationValue} from '@mapeo/schema';
+import {RoleId} from '@mapeo/core/dist/roles';
 
 export type ViewStyleProp = StyleProp<ViewStyle>;
 export type TextStyleProp = StyleProp<TextStyle>;
 export type ImageStyleProp = StyleProp<ImageStyle>;
-import {RoleId} from '@mapeo/core/dist/capabilities';
 
 export type IconSize = 'small' | 'medium' | 'large';
 

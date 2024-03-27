@@ -6,7 +6,6 @@ import {Text} from '../../../../sharedComponents/Text';
 import {DeviceCard} from '../../../../sharedComponents/DeviceCard';
 import {useLocalDiscoveryState} from '../../../../hooks/useLocalDiscoveryState';
 import {useLocalPeers} from '../../../../hooks/useLocalPeers';
-import {RoleId} from '@mapeo/core/dist/capabilities';
 
 const m = defineMessages({
   title: {

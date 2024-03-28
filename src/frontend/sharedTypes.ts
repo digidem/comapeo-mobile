@@ -55,6 +55,7 @@ export type DeviceType = 'mobile' | 'desktop';
 
 export type DeviceRole = RoleId;
 
+// Copied form /@mapeo/core/src/roles.js. Created an issue to eventuall expose this: https://github.com/digidem/mapeo-core-next/issues/532
 export const CREATOR_ROLE_ID = 'a12a6702b93bd7ff';
 export const COORDINATOR_ROLE_ID = 'f7c150f5a3a9a855';
 export const MEMBER_ROLE_ID = '012fd2d431c0bf60';

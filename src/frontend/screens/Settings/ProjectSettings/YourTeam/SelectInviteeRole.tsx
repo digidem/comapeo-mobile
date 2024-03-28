@@ -11,9 +11,7 @@ import React from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {DeviceNameWithIcon} from '../../../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../../../sharedComponents/RoleWithIcon';
-
-export const COORDINATOR_ROLE_ID = 'f7c150f5a3a9a855';
-export const MEMBER_ROLE_ID = '012fd2d431c0bf60';
+import {COORDINATOR_ROLE_ID, MEMBER_ROLE_ID} from '../../../../sharedTypes';
 
 const m = defineMessages({
   title: {

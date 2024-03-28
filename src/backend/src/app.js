@@ -5,8 +5,9 @@ import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
 /** @type {import('../types/rn-bridge.js')} */
 const rnBridge = require('rn-bridge')
-import { MapeoManager } from '@mapeo/core'
+import { MapeoManager, FastifyController } from '@mapeo/core'
 import { createMapeoServer } from '@mapeo/ipc'
+import Fastify from 'fastify'
 
 import MessagePortLike from './message-port-like.js'
 import { ServerStatus } from './status.js'
@@ -64,26 +65,30 @@ export async function init({
   mkdirSync(dbDir, { recursive: true })
   mkdirSync(indexDir, { recursive: true })
 
+  const fastify = Fastify()
+  const fastifyController = new FastifyController({ fastify })
+
   const manager = new MapeoManager({
     rootKey,
     dbFolder: dbDir,
     coreStorage: indexDir,
     clientMigrationsFolder: join(migrationsFolderPath, 'client'),
     projectMigrationsFolder: join(migrationsFolderPath, 'project'),
+    fastify,
   })
 
   // Don't await, methods that use the server will await this internally
-  manager.startMediaServer()
+  fastifyController.start()
 
   rnBridge.app.on('pause', async (pauseLock) => {
     log('App went into background')
-    await manager.stopMediaServer()
+    await fastifyController.stop()
     pauseLock.release()
   })
 
   rnBridge.app.on('resume', () => {
     log('App went into foreground')
-    manager.startMediaServer()
+    fastifyController.start()
   })
 
   const messagePort = new MessagePortLike()

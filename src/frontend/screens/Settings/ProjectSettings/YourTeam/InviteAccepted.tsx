@@ -8,7 +8,7 @@ import {DeviceNameWithIcon} from '../../../../sharedComponents/DeviceNameWithIco
 import {RoleWithIcon} from '../../../../sharedComponents/RoleWithIcon';
 import {Button} from '../../../../sharedComponents/Button';
 import {useFocusEffect} from '@react-navigation/native';
-import {COORDINATOR_ROLE_ID} from './SelectInviteeRole';
+import {COORDINATOR_ROLE_ID} from '../../../../sharedTypes';
 
 const m = defineMessages({
   inviteAccepted: {

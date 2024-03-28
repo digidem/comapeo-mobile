@@ -13,12 +13,13 @@
   "author": "Digital Democracy",
   "license": "MIT",
   "dependencies": {
-    "@mapeo/core": "9.0.0-alpha.4",
-    "@mapeo/ipc": "^0.1.5",
+    "@mapeo/core": "^9.0.0-alpha.5",
+    "@mapeo/ipc": "^0.1.6",
     "debug": "^4.3.4"
   },
   "devDependencies": {
     "@digidem/types": "~2.1.0",
+    "@rollup/plugin-alias": "^5.1.0",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-esm-shim": "^0.1.4",
     "@rollup/plugin-json": "^6.0.1",

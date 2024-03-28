@@ -13,6 +13,11 @@ import {DeviceCard} from '../../../../sharedComponents/DeviceCard';
 import {useProjectMembers} from '../../../../hooks/server/projects';
 import {Loading} from '../../../../sharedComponents/Loading';
 import {useDeviceInfo} from '../../../../hooks/server/deviceInfo';
+import {
+  COORDINATOR_ROLE_ID,
+  CREATOR_ROLE_ID,
+  MEMBER_ROLE_ID,
+} from '../../../../sharedTypes';
 
 const m = defineMessages({
   title: {
@@ -61,13 +66,13 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
     ? []
     : membersQuery.data.filter(
         member =>
-          member.capabilities.name === 'Coordinator' ||
-          member.capabilities.name === 'Project Creator',
+          member.role.roleId === CREATOR_ROLE_ID ||
+          member.role.roleId === COORDINATOR_ROLE_ID,
       );
 
   const participants = !membersQuery.data
     ? []
-    : membersQuery.data.filter(member => member.capabilities.name === 'Member');
+    : membersQuery.data.filter(member => member.role.roleId === MEMBER_ROLE_ID);
 
   return (
     <ScrollView style={styles.container}>

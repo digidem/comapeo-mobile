@@ -22,6 +22,7 @@ import {Observation, Preset} from '@mapeo/schema';
 import {matchPreset} from '../lib/utils';
 import {AppList} from './ScreenGroups/AppScreens';
 import {usePresetsQuery} from '../hooks/server/presets';
+import {initializeInviteListener} from '../initializeInviteListener';
 
 // import {devExperiments} from '../lib/DevExperiments';
 
@@ -49,6 +50,7 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   const {data: presets} = usePresetsQuery();
   const deviceInfo = useDeviceInfo();
   usePrefetchLastKnownLocation();
+  initializeInviteListener();
 
   if (permissionAsked && !deviceInfo.isPending) {
     BootSplash.hide();

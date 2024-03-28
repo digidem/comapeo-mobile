@@ -17,7 +17,7 @@ import {
   COORDINATOR_ROLE_ID,
   CREATOR_ROLE_ID,
   MEMBER_ROLE_ID,
-} from '@mapeo/core/dist/roles';
+} from '../../../../sharedTypes';
 
 const m = defineMessages({
   title: {

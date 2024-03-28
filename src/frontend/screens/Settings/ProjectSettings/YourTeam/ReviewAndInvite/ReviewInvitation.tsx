@@ -8,7 +8,7 @@ import {Button} from '../../../../../sharedComponents/Button';
 import {DeviceNameWithIcon} from '../../../../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../../../../sharedComponents/RoleWithIcon';
 import {DeviceRole, DeviceType} from '../../../../../sharedTypes';
-import {MEMBER_ROLE_ID} from '@mapeo/core/dist/roles';
+import {MEMBER_ROLE_ID} from '../../../../../sharedTypes';
 
 const m = defineMessages({
   title: {

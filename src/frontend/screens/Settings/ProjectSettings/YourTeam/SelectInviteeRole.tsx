@@ -11,7 +11,7 @@ import React from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {DeviceNameWithIcon} from '../../../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../../../sharedComponents/RoleWithIcon';
-import {COORDINATOR_ROLE_ID, MEMBER_ROLE_ID} from '@mapeo/core/dist/roles';
+import {COORDINATOR_ROLE_ID, MEMBER_ROLE_ID} from '../../../../sharedTypes';
 
 const m = defineMessages({
   title: {

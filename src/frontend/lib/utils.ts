@@ -4,6 +4,7 @@ import {SelectOptions, LabeledSelectOption} from '../sharedTypes/PresetTypes';
 import {Preset, Observation} from '@mapeo/schema';
 import {LocationObject, LocationProviderStatus} from 'expo-location';
 import {NavigationState} from '@react-navigation/native';
+import {EDITING_SCREEN_NAMES} from '../constants';
 
 // import type {
 //   ObservationValue,
@@ -317,5 +318,5 @@ export function isEdittingScreen(
       ? parentRoute.name
       : parentRoute.state.routes[parentRoute.state.index || 0].name;
 
-  return !!routeName;
+  return !!EDITING_SCREEN_NAMES.find(val => val === routeName);
 }

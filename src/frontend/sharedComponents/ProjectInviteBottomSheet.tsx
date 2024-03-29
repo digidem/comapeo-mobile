@@ -56,8 +56,8 @@ export const ProjectInviteBottomSheet = () => {
   const index = useNavigationState(state => (!state ? undefined : state.index));
 
   const isEditScreen = isEdittingScreen(routes, index);
-  console.log('from sheet', {invite, isEditScreen, isOpen});
-  if (!isOpen && invite) {
+
+  if (invite && !isOpen && !isEditScreen) {
     openSheet();
   }
 

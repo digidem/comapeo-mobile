@@ -23,6 +23,7 @@ import {matchPreset} from '../lib/utils';
 import {AppList} from './ScreenGroups/AppScreens';
 import {usePresetsQuery} from '../hooks/server/presets';
 import {initializeInviteListener} from '../initializeInviteListener';
+import {ProjectInviteBottomSheet} from '../sharedComponents/ProjectInviteBottomSheet';
 
 // import {devExperiments} from '../lib/DevExperiments';
 

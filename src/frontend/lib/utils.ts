@@ -307,7 +307,7 @@ export function matchPreset(
 
 export function isEdittingScreen(
   routes: NavigationState['routes'],
-  index: number,
+  index: number | undefined,
 ) {
   const parentRoute = routes[index || 0];
 

@@ -13,22 +13,24 @@ export function useInvites() {
   });
 }
 
-export function useAcceptInvite(inviteId: string) {
+export function useAcceptInvite(inviteId?: string) {
   const mapeoApi = useApi();
   return useMutation({
     mutationKey: [INVITE_KEY, inviteId],
     mutationFn: async () => {
+      if (!inviteId) return;
       mapeoApi.invite.accept({inviteId});
     },
   });
 }
 
-export function useRejectInvite(inviteId: string) {
+export function useRejectInvite(inviteId?: string) {
   const mapeoApi = useApi();
   const invites = useInvites().data;
   return useMutation({
     mutationKey: [INVITE_KEY, inviteId],
     mutationFn: async () => {
+      if (!inviteId) return;
       mapeoApi.invite.reject({inviteId});
     },
     onSuccess: () => {

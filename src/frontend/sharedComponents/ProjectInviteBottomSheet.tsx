@@ -52,12 +52,12 @@ export const ProjectInviteBottomSheet = () => {
   });
   const {accept, invite, reject, resetState} = useProjectInvite();
   const navigation = useNavigationFromRoot();
-  const routes = useNavigationState(state => state.routes);
-  const index = useNavigationState(state => state.index);
+  const routes = useNavigationState(state => (!state ? [] : state.routes));
+  const index = useNavigationState(state => (!state ? undefined : state.index));
 
   const isEditScreen = isEdittingScreen(routes, index);
-
-  if (!isOpen && !isEditScreen && invite) {
+  console.log('from sheet', {invite, isEditScreen, isOpen});
+  if (!isOpen && invite) {
     openSheet();
   }
 
@@ -78,7 +78,7 @@ export const ProjectInviteBottomSheet = () => {
           ]}
           title={formatMessage(m.success)}
           description={formatMessage(m.youHaveJoined, {
-            projName: invite.projectName,
+            projName: invite?.projectName || '',
           })}
           icon={<GreenCheck />}
         />
@@ -108,10 +108,10 @@ export const ProjectInviteBottomSheet = () => {
             },
           ]}
           title={formatMessage(m.joinProject, {
-            projName: invite.projectName,
+            projName: invite?.projectName || '',
           })}
           description={formatMessage(m.invitedToJoin, {
-            projName: invite.projectName,
+            projName: invite?.projectName || '',
           })}
           icon={
             <View

@@ -50,7 +50,8 @@ export const ProjectInviteBottomSheet = () => {
   const {sheetRef, isOpen, closeSheet, openSheet} = useBottomSheetModal({
     openOnMount: false,
   });
-  const {accept, invite, reject, resetState} = useProjectInvite();
+  const {accept, invite, reject, resetState, numberOfInvites} =
+    useProjectInvite();
   const navigation = useNavigationFromRoot();
   const routes = useNavigationState(state => (!state ? [] : state.routes));
   const index = useNavigationState(state => (!state ? undefined : state.index));
@@ -91,7 +92,7 @@ export const ProjectInviteBottomSheet = () => {
               onPress: () => {
                 reject.mutate(undefined, {
                   onSuccess: () => {
-                    if (!invite) {
+                    if (numberOfInvites <= 1) {
                       closeSheet();
                     }
                   },

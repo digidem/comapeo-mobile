@@ -6,6 +6,7 @@ export function useProjectInvite(): {
   reject: ReturnType<typeof useRejectInvite>;
   resetState: () => void;
   invite: Invite;
+  numberOfInvites: number;
 } {
   const invites = useInvites().data;
   // this will eventually sort invite by date
@@ -23,5 +24,6 @@ export function useProjectInvite(): {
     reject: rejectMutation,
     resetState,
     invite: invite,
+    numberOfInvites: invites.length,
   };
 }

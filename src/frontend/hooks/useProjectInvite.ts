@@ -10,8 +10,8 @@ export function useProjectInvite(): {
   const invites = useInvites().data;
   // this will eventually sort invite by date
   const invite = invites[0];
-  const acceptMutation = useAcceptInvite(invite.inviteId);
-  const rejectMutation = useRejectInvite(invite.inviteId);
+  const acceptMutation = useAcceptInvite(invite?.inviteId);
+  const rejectMutation = useRejectInvite(invite?.inviteId);
 
   const resetState = () => {
     acceptMutation.reset();

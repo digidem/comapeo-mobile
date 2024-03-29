@@ -2,11 +2,8 @@
 import {fromLatLon} from 'utm';
 import {SelectOptions, LabeledSelectOption} from '../sharedTypes/PresetTypes';
 import {Preset, Observation} from '@mapeo/schema';
-import {
-  LocationObject,
-  LocationPermissionResponse,
-  LocationProviderStatus,
-} from 'expo-location';
+import {LocationObject, LocationProviderStatus} from 'expo-location';
+import {NavigationState} from '@react-navigation/native';
 
 // import type {
 //   ObservationValue,
@@ -306,4 +303,19 @@ export function matchPreset(
   });
 
   return bestMatch;
+}
+
+export function isEdittingScreen(
+  routes: NavigationState['routes'],
+  index: number,
+) {
+  const parentRoute = routes[index || 0];
+
+  const routeName = !parentRoute
+    ? undefined
+    : !parentRoute.state
+      ? parentRoute.name
+      : parentRoute.state.routes[parentRoute.state.index || 0].name;
+
+  return !!routeName;
 }

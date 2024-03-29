@@ -11,6 +11,8 @@ import {LIGHT_GREY} from '../lib/styles';
 import {View} from 'react-native';
 import {useProjectInvite} from '../hooks/useProjectInvite';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
+import {useNavigationState} from '@react-navigation/native';
+import {isEdittingScreen} from '../lib/utils';
 
 const m = defineMessages({
   declineInvite: {
@@ -50,6 +52,14 @@ export const ProjectInviteBottomSheet = () => {
   });
   const {accept, invite, reject, resetState} = useProjectInvite();
   const navigation = useNavigationFromRoot();
+  const routes = useNavigationState(state => state.routes);
+  const index = useNavigationState(state => state.index);
+
+  const isEditScreen = isEdittingScreen(routes, index);
+
+  if (!isOpen && !isEditScreen && invite) {
+    openSheet();
+  }
 
   return (
     <BottomSheetModal ref={sheetRef} isOpen={isOpen} onDismiss={resetState}>

@@ -569,6 +569,12 @@
   "sharedComponents.ErrorModal.tryAgain": {
     "message": "Please go back and try again"
   },
+  "sharedComponents.GpsPill.noGps": {
+    "message": "No GPS"
+  },
+  "sharedComponents.GpsPill.searching": {
+    "message": "Searching…"
+  },
   "sharedComponents.RoleWithIcon.coordinator": {
     "message": "Coordinator"
   },

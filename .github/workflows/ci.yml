@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    # By default, a workflow only runs when a pull_request 's activity type is
+    # opened , synchronize , or reopened. Adding ready_for_review here ensures
+    # that CI runs when a PR is marked as not a draft, since we skip CI when a
+    # PR is draft
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+    defaults:
+      run:
+        working-directory: './src/backend'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+      - name: Install deps
+        run: |
+          npm ci --ignore-scripts
+          npm run postinstall
+      - name: Check types
+        run: npm run types
+
+  frontend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+      - name: Install deps
+        run: npm ci
+      - name: Build translations
+        run: npm run build:translations
+      - name: Build Intl polyfills
+        run: npm run build:intl-polyfills
+      - name: Check types
+        run: npm run types

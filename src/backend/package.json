@@ -7,7 +7,7 @@
   "main": "index.js",
   "scripts": {
     "build": "node ./scripts/bundle-backend.mjs --entry=index.js --output=index.bundle.js",
-    "lint": "tsc",
+    "types": "tsc --noEmit",
     "postinstall": "patch-package"
   },
   "author": "Digital Democracy",

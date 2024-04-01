@@ -19,7 +19,8 @@
     "deep-clean": "./scripts/deep-clean.sh",
     "build:translations": "node ./scripts/build-translations.js ",
     "build:intl-polyfills": "node ./scripts/build-intl-polyfills.mjs",
-    "extract-messages": "formatjs extract 'src/frontend/**/*.{ts,tsx}' --ignore='**/*.d.ts' --format crowdin --out-file ./messages/en.json"
+    "extract-messages": "formatjs extract 'src/frontend/**/*.{ts,tsx}' --ignore='**/*.d.ts' --format crowdin --out-file ./messages/en.json",
+    "types": "tsc --noEmit"
   },
   "dependencies": {
     "@bam.tech/react-native-image-resizer": "^3.0.7",

@@ -61,7 +61,7 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
 
   return (
     <RootStack.Navigator
-      initialRouteName={setInitialRouteName({
+      initialRouteName={getInitialRouteName({
         hasDeviceName: !!deviceInfo.data?.name,
         existingObservation,
         presets,
@@ -74,7 +74,7 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   );
 };
 
-function setInitialRouteName(
+function getInitialRouteName(
   initialInfo:
     | {hasDeviceName: false}
     | {

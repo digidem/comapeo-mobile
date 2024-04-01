@@ -63,17 +63,20 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   }
 
   return (
-    <RootStack.Navigator
-      initialRouteName={getInitialRouteName({
-        hasDeviceName: !!deviceInfo.data?.name,
-        existingObservation,
-        presets,
-      })}
-      screenOptions={NavigatorScreenOptions}>
-      {deviceInfo.data?.name
-        ? createDefaultScreenGroup(formatMessage)
-        : createDeviceNamingScreens()}
-    </RootStack.Navigator>
+    <React.Fragment>
+      <RootStack.Navigator
+        initialRouteName={getInitialRouteName({
+          hasDeviceName: !!deviceInfo.data?.name,
+          existingObservation,
+          presets,
+        })}
+        screenOptions={NavigatorScreenOptions}>
+        {deviceInfo.data?.name
+          ? createDefaultScreenGroup(formatMessage)
+          : createDeviceNamingScreens()}
+      </RootStack.Navigator>
+      <ProjectInviteBottomSheet />
+    </React.Fragment>
   );
 };
 

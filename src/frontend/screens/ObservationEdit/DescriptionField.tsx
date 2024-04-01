@@ -16,14 +16,14 @@ const m = defineMessages({
 export const DescriptionField = () => {
   const {formatMessage: t} = useIntl();
   const notes = usePersistedDraftObservation(store => store.value?.tags.notes);
-  const {updateObservationNotes} = useDraftObservation();
+  const {updateTags} = useDraftObservation();
 
   return (
     <TextInput
       style={styles.textInput}
       value={!notes || typeof notes !== 'string' ? '' : notes}
       onChangeText={newVal => {
-        updateObservationNotes(newVal);
+        updateTags('notes', newVal);
       }}
       placeholder={t(m.descriptionPlaceholder)}
       placeholderTextColor="silver"

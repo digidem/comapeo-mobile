@@ -12,6 +12,7 @@ import {useEditObservation} from '../../hooks/server/observations';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {useCreateBlobMutation} from '../../hooks/server/media';
 import {DraftPhoto, Photo} from '../../contexts/PhotoPromiseContext/types';
+import {useDraftObservation} from '../../hooks/useDraftObservation';
 
 const m = defineMessages({
   noGpsTitle: {
@@ -66,6 +67,7 @@ export const SaveButton = ({
 }) => {
   const value = usePersistedDraftObservation(store => store.value);
   const photos = usePersistedDraftObservation(store => store.photos);
+  const {clearDraft} = useDraftObservation();
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
   const createObservationMutation = useCreateObservation();
@@ -85,6 +87,7 @@ export const SaveButton = ({
             if (openErrorModal) openErrorModal();
           },
           onSuccess: () => {
+            clearDraft();
             navigation.navigate('Home', {screen: 'Map'});
           },
         },
@@ -125,6 +128,7 @@ export const SaveButton = ({
               if (openErrorModal) openErrorModal();
             },
             onSuccess: () => {
+              clearDraft();
               navigation.navigate('Home', {screen: 'Map'});
             },
           },
@@ -140,9 +144,16 @@ export const SaveButton = ({
     if (!observationId) throw new Error('Need an observation Id to edit');
     if (!('versionId' in value))
       throw new Error('Cannot update a unsaved observation (must create one)');
-    // @ts-expect-error
-    editObservationMutation.mutate({id: observationId, value});
-    navigation.pop();
+    editObservationMutation.mutate(
+      // @ts-expect-error
+      {id: observationId, value},
+      {
+        onSuccess: () => {
+          clearDraft();
+          navigation.pop();
+        },
+      },
+    );
   }
 
   const confirmationOptions: AlertButton[] = [

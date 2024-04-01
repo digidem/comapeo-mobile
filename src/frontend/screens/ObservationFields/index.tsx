@@ -62,14 +62,14 @@ export const ObservationFields = ({
     });
   }, [navigation, current]);
 
-  if (
-    !preset ||
-    preset.fieldIds.length < 1 ||
-    current > preset.fieldIds.length
-  ) {
-    navigation.pop(current);
-    return null;
-  }
+  // if (
+  //   !preset ||
+  //   preset.fieldIds.length < 1 ||
+  //   current > preset.fieldIds.length
+  // ) {
+  //   navigation.pop(current);
+  //   return null;
+  // }
 
   if (fields.isLoading) {
     return <Loading />;
@@ -82,10 +82,10 @@ export const ObservationFields = ({
   const fieldId = preset.fieldIds[current - 1];
   const field = fields.data?.find(val => val.docId === fieldId);
 
-  if (!field) {
-    navigation.pop(current);
-    return null;
-  }
+  // if (!field) {
+  //   navigation.pop(current);
+  //   return null;
+  // }
 
   return (
     <ScrollView style={{flex: 1}}>

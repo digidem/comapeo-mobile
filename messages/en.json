@@ -229,6 +229,42 @@
   "screens.FatalError.somethingWrong": {
     "message": "Something Went Wrong"
   },
+  "screens.GpsModal.details": {
+    "description": "Section title for details about current position",
+    "message": "Details"
+  },
+  "screens.GpsModal.gpsHeader": {
+    "description": "Header for GPS screen",
+    "message": "Current GPS Location"
+  },
+  "screens.GpsModal.lastUpdate": {
+    "description": "Section title for time of last GPS update",
+    "message": "Last update"
+  },
+  "screens.GpsModal.locationDD": {
+    "description": "Section title for DD coordinates",
+    "message": "Coordinates Decimal Degrees"
+  },
+  "screens.GpsModal.locationDMS": {
+    "description": "Section title for DMS coordinates",
+    "message": "Coordinates DMS"
+  },
+  "screens.GpsModal.locationSensors": {
+    "description": "Heading for section about location sensor status",
+    "message": "Sensor Status"
+  },
+  "screens.GpsModal.locationUTM": {
+    "description": "Section title for UTM coordinates",
+    "message": "Coordinates UTM"
+  },
+  "screens.GpsModal.no": {
+    "description": "if a location sensor is active yes/no",
+    "message": "No"
+  },
+  "screens.GpsModal.yes": {
+    "description": "if a location sensor is active yes/no",
+    "message": "Yes"
+  },
   "screens.IntroToCoMapeo.collaborate": {
     "message": "Collaborate on mapping and monitoring projects"
   },

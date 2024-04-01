@@ -45,6 +45,10 @@ import {
   EditScreen as DeviceNameEditScreen,
   createNavigationOptions as createDeviceNameEditNavOptions,
 } from '../../screens/Settings/ProjectSettings/DeviceName/EditScreen';
+import {
+  GpsModal,
+  createNavigationOptions as createGpsModalNavigationOptions,
+} from '../../screens/GpsModal';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -299,6 +303,11 @@ export const createDefaultScreenGroup = (
       name="DeviceNameEdit"
       component={DeviceNameEditScreen}
       options={createDeviceNameEditNavOptions({intl})}
+    />
+    <RootStack.Screen
+      name="GpsModal"
+      component={GpsModal}
+      options={createGpsModalNavigationOptions({intl})}
     />
   </RootStack.Group>
 );

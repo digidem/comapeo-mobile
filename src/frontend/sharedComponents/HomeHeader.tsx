@@ -16,7 +16,11 @@ export const HomeHeader = () => {
         colors={['#0006', '#0000']}
       />
       <View style={styles.leftButton}>{/* Placeholder for left button */}</View>
-      <GpsPill onPress={() => {}} />
+      <GpsPill
+        onPress={() => {
+          navigation.navigate('GpsModal');
+        }}
+      />
       <IconButton
         style={styles.rightButton}
         onPress={() => {

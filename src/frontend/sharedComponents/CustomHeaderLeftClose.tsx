@@ -100,7 +100,9 @@ const HeaderBackNewObservation = ({
         text: t(m.discardConfirm),
         onPress: () => {
           clearDraft();
-          navigation.dispatch(CommonActions.navigate('Home', {screen: 'map'}));
+          navigation.dispatch(
+            CommonActions.reset({index: 0, routes: [{name: 'Home'}]}),
+          );
         },
       },
       {text: t(m.discardCancel), onPress: () => {}},

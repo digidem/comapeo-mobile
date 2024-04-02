@@ -1,23 +1,23 @@
-import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
-import validateColor from 'validate-color';
+import * as React from 'react'
+import { StyleSheet, View } from 'react-native'
+import validateColor from 'validate-color'
 
-import {ViewStyleProp} from '../../sharedTypes';
+import { ViewStyleProp } from '../../sharedTypes'
 
 const BORDER_DEFAULTS = {
   color: '#EAEAEA',
   width: 1,
-} as const;
+} as const
 
 interface Props
   extends React.PropsWithChildren<{
-    color?: string;
-    radius?: number;
-    style?: ViewStyleProp;
+    color?: string
+    radius?: number
+    style?: ViewStyleProp
   }> {}
 
-export const Circle = ({children, color, radius = 25, style}: Props) => {
-  const validColor = !!(color && validateColor(color));
+export const Circle = ({ children, color, radius = 25, style }: Props) => {
+  const validColor = !!(color && validateColor(color))
   return (
     <View
       style={[
@@ -29,11 +29,12 @@ export const Circle = ({children, color, radius = 25, style}: Props) => {
           height: radius * 2,
         },
         style,
-      ]}>
+      ]}
+    >
       {children}
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   base: {
@@ -46,8 +47,8 @@ const styles = StyleSheet.create({
     shadowColor: 'black',
     shadowRadius: 5,
     shadowOpacity: 0.5,
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     elevation: 3,
     overflow: 'hidden',
   },
-});
+})

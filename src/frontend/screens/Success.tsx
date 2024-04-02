@@ -1,17 +1,17 @@
-import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import * as React from 'react'
+import { StyleSheet, View } from 'react-native'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
-import SuccessIcon from '../images/Success.svg';
-import NewDeviceLogo from '../images/NewDeviceLogo.svg';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {Text} from '../sharedComponents/Text';
-import {Button} from '../sharedComponents/Button';
-import {defineMessages, useIntl} from 'react-intl';
-import {DeviceNamingSceens} from '../Navigation/ScreenGroups/DeviceNamingScreens';
-import {useEditDeviceInfo} from '../hooks/server/deviceInfo';
-import {Loading} from '../sharedComponents/Loading';
-import {WHITE} from '../lib/styles';
+import SuccessIcon from '../images/Success.svg'
+import NewDeviceLogo from '../images/NewDeviceLogo.svg'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { Text } from '../sharedComponents/Text'
+import { Button } from '../sharedComponents/Button'
+import { defineMessages, useIntl } from 'react-intl'
+import { DeviceNamingSceens } from '../Navigation/ScreenGroups/DeviceNamingScreens'
+import { useEditDeviceInfo } from '../hooks/server/deviceInfo'
+import { Loading } from '../sharedComponents/Loading'
+import { WHITE } from '../lib/styles'
 
 const m = defineMessages({
   success: {
@@ -26,33 +26,34 @@ const m = defineMessages({
     id: 'screens.DeviceNaming.Success.goToMap',
     defaultMessage: 'Go to Map',
   },
-});
+})
 
 export const Success = ({
   route,
 }: NativeStackScreenProps<DeviceNamingSceens, 'Success'>) => {
-  const setDeviceName = useEditDeviceInfo();
-  const deviceName = route.params.deviceName;
-  const {formatMessage: t} = useIntl();
+  const setDeviceName = useEditDeviceInfo()
+  const deviceName = route.params.deviceName
+  const { formatMessage: t } = useIntl()
 
   return (
     <View style={styles.container}>
-      <View style={{alignItems: 'center'}}>
+      <View style={{ alignItems: 'center' }}>
         <SuccessIcon />
         <Text style={styles.text}>{t(m.success)}</Text>
-        <Text style={{marginTop: 20}}>{t(m.description)} </Text>
+        <Text style={{ marginTop: 20 }}>{t(m.description)} </Text>
         <View style={styles.deviceText}>
           <NewDeviceLogo />
-          <Text style={{marginLeft: 10}}>{deviceName}</Text>
+          <Text style={{ marginLeft: 10 }}>{deviceName}</Text>
         </View>
       </View>
       <Button
         fullWidth
         onPress={() => {
-          setDeviceName.mutate(deviceName);
-        }}>
+          setDeviceName.mutate(deviceName)
+        }}
+      >
         {setDeviceName.isPending ? (
-          <Loading style={{padding: 15}} size={15} color={WHITE} />
+          <Loading style={{ padding: 15 }} size={15} color={WHITE} />
         ) : setDeviceName.isSuccess ? (
           <MaterialIcons name="check" size={30} color={WHITE} />
         ) : (
@@ -60,8 +61,8 @@ export const Success = ({
         )}
       </Button>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -82,4 +83,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-});
+})

@@ -1,15 +1,15 @@
-import * as React from 'react';
-import {FormattedMessage, defineMessages} from 'react-intl';
-import {ScrollView} from 'react-native-gesture-handler';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import * as React from 'react'
+import { FormattedMessage, defineMessages } from 'react-intl'
+import { ScrollView } from 'react-native-gesture-handler'
+import { useNavigationFromRoot } from '../../hooks/useNavigationWithTypes'
 import {
   List,
   ListItem,
   ListItemText,
   ListItemIcon,
-} from '../../sharedComponents/List';
-import {NativeNavigationComponent} from '../../sharedTypes';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+} from '../../sharedComponents/List'
+import { NativeNavigationComponent } from '../../sharedTypes'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const m = defineMessages({
   settingsTitle: {
@@ -53,18 +53,19 @@ const m = defineMessages({
     defaultMessage: 'Language, Security, Coordinates',
     description: 'list of avaialable app settings',
   },
-});
+})
 
 export const Settings: NativeNavigationComponent<'Settings'> = () => {
-  const {navigate} = useNavigationFromRoot();
+  const { navigate } = useNavigationFromRoot()
 
   return (
     <ScrollView>
       <List>
         <ListItem
           onPress={() => {
-            navigate('CreateOrJoinProject');
-          }}>
+            navigate('CreateOrJoinProject')
+          }}
+        >
           <ListItemIcon
             icon={
               <MaterialCommunityIcons
@@ -76,31 +77,30 @@ export const Settings: NativeNavigationComponent<'Settings'> = () => {
           />
           <ListItemText
             primary={<FormattedMessage {...m.createOrJoin} />}
-            secondary={
-              <FormattedMessage {...m.createOrJoinDesc} />
-            }></ListItemText>
+            secondary={<FormattedMessage {...m.createOrJoinDesc} />}
+          />
         </ListItem>
         <ListItem
           onPress={() => {
-            navigate('ProjectSettings');
-          }}>
+            navigate('ProjectSettings')
+          }}
+        >
           <ListItemIcon iconName="assignment" />
           <ListItemText
             primary={<FormattedMessage {...m.projectSettings} />}
-            secondary={
-              <FormattedMessage {...m.projectSettingsDesc} />
-            }></ListItemText>
+            secondary={<FormattedMessage {...m.projectSettingsDesc} />}
+          />
         </ListItem>
         <ListItem
           onPress={() => {
-            navigate('AppSettings');
-          }}>
+            navigate('AppSettings')
+          }}
+        >
           <ListItemIcon iconName="settings-suggest" />
           <ListItemText
             primary={<FormattedMessage {...m.appSettings} />}
-            secondary={
-              <FormattedMessage {...m.appSettingsDesc} />
-            }></ListItemText>
+            secondary={<FormattedMessage {...m.appSettingsDesc} />}
+          />
         </ListItem>
         {/* this requires the use of `react-native-device-info` which takes some android level configuration. Im going to leave it out of the MVP for the sake of time */}
         {/* <ListItem onPress={() => {}} testID="settingsAboutButton">
@@ -113,7 +113,7 @@ export const Settings: NativeNavigationComponent<'Settings'> = () => {
         </ListItem> */}
       </List>
     </ScrollView>
-  );
-};
+  )
+}
 
-Settings.navTitle = m.settingsTitle;
+Settings.navTitle = m.settingsTitle

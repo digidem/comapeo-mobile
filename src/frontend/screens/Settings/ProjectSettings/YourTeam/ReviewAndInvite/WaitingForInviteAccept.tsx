@@ -1,11 +1,11 @@
-import {BackHandler, StyleSheet, View} from 'react-native';
-import InviteSent from '../../../../../images/InviteSent.svg';
-import {Text} from '../../../../../sharedComponents/Text';
-import {defineMessages, useIntl} from 'react-intl';
-import React from 'react';
-import {TextButton} from '../../../../../sharedComponents/TextButton';
-import {useFocusEffect} from '@react-navigation/native';
-import {useNavigationFromRoot} from '../../../../../hooks/useNavigationWithTypes';
+import { BackHandler, StyleSheet, View } from 'react-native'
+import InviteSent from '../../../../../images/InviteSent.svg'
+import { Text } from '../../../../../sharedComponents/Text'
+import { defineMessages, useIntl } from 'react-intl'
+import React from 'react'
+import { TextButton } from '../../../../../sharedComponents/TextButton'
+import { useFocusEffect } from '@react-navigation/native'
+import { useNavigationFromRoot } from '../../../../../hooks/useNavigationWithTypes'
 
 const m = defineMessages({
   waitingMessage: {
@@ -20,48 +20,50 @@ const m = defineMessages({
     id: 'screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.cancelInvite',
     defaultMessage: 'Cancel Invite',
   },
-});
+})
 
 export const WaitingForInviteAccept = () => {
-  const {formatMessage: t} = useIntl();
-  const [time, setTime] = React.useState(0);
-  const navigation = useNavigationFromRoot();
+  const { formatMessage: t } = useIntl()
+  const [time, setTime] = React.useState(0)
+  const navigation = useNavigationFromRoot()
 
   React.useLayoutEffect(() => {
-    navigation.setOptions({headerShown: false});
-  }, [navigation]);
+    navigation.setOptions({ headerShown: false })
+  }, [navigation])
 
   useFocusEffect(
     React.useCallback(() => {
       const subscription = BackHandler.addEventListener(
         'hardwareBackPress',
         () => true,
-      );
+      )
 
-      return () => subscription.remove();
+      return () => subscription.remove()
     }, []),
-  );
+  )
 
   React.useEffect(() => {
-    const interval = setInterval(() => setTime(prev => prev + 1), 1000);
+    const interval = setInterval(() => setTime((prev) => prev + 1), 1000)
 
-    return () => clearInterval(interval);
-  }, []);
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <View style={styles.container}>
       <InviteSent />
-      <Text style={{marginTop: 10}}>{t(m.waitingMessage)}</Text>
-      <Text style={{marginTop: 20}}>{t(m.timerMessage, {seconds: time})}</Text>
+      <Text style={{ marginTop: 10 }}>{t(m.waitingMessage)}</Text>
+      <Text style={{ marginTop: 20 }}>
+        {t(m.timerMessage, { seconds: time })}
+      </Text>
       <TextButton
         title={t(m.cancelInvite)}
         onPress={() => {
-          navigation.navigate('YourTeam');
+          navigation.navigate('YourTeam')
         }}
       />
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -69,4 +71,4 @@ const styles = StyleSheet.create({
     paddingTop: 80,
     alignItems: 'center',
   },
-});
+})

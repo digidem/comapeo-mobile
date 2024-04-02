@@ -1,84 +1,85 @@
-import * as React from 'react';
-import Mapbox, {UserLocation} from '@rnmapbox/maps';
-import config from '../../../config.json';
-import {IconButton} from '../../sharedComponents/IconButton';
+import * as React from 'react'
+import Mapbox, { UserLocation } from '@rnmapbox/maps'
+import config from '../../../config.json'
+import { IconButton } from '../../sharedComponents/IconButton'
 import {
   LocationFollowingIcon,
   LocationNoFollowIcon,
-} from '../../sharedComponents/icons';
-import {View, StyleSheet} from 'react-native';
-import {ObservationMapLayer} from './ObsevationMapLayer';
-import {AddButton} from '../../sharedComponents/AddButton';
-import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
+} from '../../sharedComponents/icons'
+import { View, StyleSheet } from 'react-native'
+import { ObservationMapLayer } from './ObsevationMapLayer'
+import { AddButton } from '../../sharedComponents/AddButton'
+import { useNavigationFromHomeTabs } from '../../hooks/useNavigationWithTypes'
+import { useDraftObservation } from '../../hooks/useDraftObservation'
 // @ts-ignore
-import ScaleBar from 'react-native-scale-bar';
-import {getCoords, useLocation} from '../../hooks/useLocation';
-import {useIsFullyFocused} from '../../hooks/useIsFullyFocused';
-import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
-import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
+import ScaleBar from 'react-native-scale-bar'
+import { getCoords, useLocation } from '../../hooks/useLocation'
+import { useIsFullyFocused } from '../../hooks/useIsFullyFocused'
+import { useLastKnownLocation } from '../../hooks/useLastSavedLocation'
+import { useLocationProviderStatus } from '../../hooks/useLocationProviderStatus'
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
 // current zoom is < 12.
-const DEFAULT_ZOOM = 12;
+const DEFAULT_ZOOM = 12
 
-Mapbox.setAccessToken(config.mapboxAccessToken);
-const MIN_DISPLACEMENT = 15;
+Mapbox.setAccessToken(config.mapboxAccessToken)
+const MIN_DISPLACEMENT = 15
 
-export const MAP_STYLE = Mapbox.StyleURL.Outdoors;
+export const MAP_STYLE = Mapbox.StyleURL.Outdoors
 
 export const MapScreen = () => {
-  const [zoom, setZoom] = React.useState(DEFAULT_ZOOM);
+  const [zoom, setZoom] = React.useState(DEFAULT_ZOOM)
 
-  const isFocused = useIsFullyFocused();
-  const [isFinishedLoading, setIsFinishedLoading] = React.useState(false);
-  const [following, setFollowing] = React.useState(true);
-  const {newDraft} = useDraftObservation();
-  const {navigate} = useNavigationFromHomeTabs();
-  const {location} = useLocation({maxDistanceInterval: MIN_DISPLACEMENT});
-  const savedLocation = useLastKnownLocation();
-  const coords = location && getCoords(location);
-  const locationProviderStatus = useLocationProviderStatus();
+  const isFocused = useIsFullyFocused()
+  const [isFinishedLoading, setIsFinishedLoading] = React.useState(false)
+  const [following, setFollowing] = React.useState(true)
+  const { newDraft } = useDraftObservation()
+  const { navigate } = useNavigationFromHomeTabs()
+  const { location } = useLocation({ maxDistanceInterval: MIN_DISPLACEMENT })
+  const savedLocation = useLastKnownLocation()
+  const coords = location && getCoords(location)
+  const locationProviderStatus = useLocationProviderStatus()
   const locationServicesEnabled =
-    !!locationProviderStatus?.locationServicesEnabled;
+    !!locationProviderStatus?.locationServicesEnabled
 
   const handleAddPress = () => {
-    newDraft();
-    navigate('PresetChooser');
-  };
+    newDraft()
+    navigate('PresetChooser')
+  }
 
   React.useEffect(() => {
-    Mapbox.setTelemetryEnabled(false);
-  }, []);
+    Mapbox.setTelemetryEnabled(false)
+  }, [])
 
   function handleLocationPress() {
-    setZoom(DEFAULT_ZOOM);
-    setFollowing(prev => !prev);
+    setZoom(DEFAULT_ZOOM)
+    setFollowing((prev) => !prev)
   }
 
   function handleDidFinishLoadingStyle() {
-    setIsFinishedLoading(true);
+    setIsFinishedLoading(true)
   }
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <Mapbox.MapView
         testID="mapboxMapView"
-        style={{flex: 1}}
+        style={{ flex: 1 }}
         logoEnabled={false}
         pitchEnabled={false}
         rotateEnabled={false}
         surfaceView={true}
-        attributionPosition={{right: 8, bottom: 8}}
+        attributionPosition={{ right: 8, bottom: 8 }}
         compassEnabled={false}
         scaleBarEnabled={false}
         styleURL={MAP_STYLE}
         onDidFinishLoadingStyle={handleDidFinishLoadingStyle}
         onMoveShouldSetResponder={() => {
-          if (following) setFollowing(false);
-          return true;
-        }}>
+          if (following) setFollowing(false)
+          return true
+        }}
+      >
         <Mapbox.Camera
           defaultSettings={{
             centerCoordinate: coords
@@ -124,8 +125,8 @@ export const MapScreen = () => {
         isLoading={!isFinishedLoading}
       />
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   locationButton: {
@@ -133,4 +134,4 @@ const styles = StyleSheet.create({
     right: 20,
     bottom: 20,
   },
-});
+})

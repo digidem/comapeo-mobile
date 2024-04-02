@@ -1,11 +1,11 @@
-import {defineMessages, useIntl} from 'react-intl';
-import {NativeNavigationComponent} from '../../../../sharedTypes';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import WifiIcon from '../../../../images/WifiIcon.svg';
-import {Text} from '../../../../sharedComponents/Text';
-import {DeviceCard} from '../../../../sharedComponents/DeviceCard';
-import {useLocalDiscoveryState} from '../../../../hooks/useLocalDiscoveryState';
-import {useLocalPeers} from '../../../../hooks/useLocalPeers';
+import { defineMessages, useIntl } from 'react-intl'
+import { NativeNavigationComponent } from '../../../../sharedTypes'
+import { ScrollView, StyleSheet, View } from 'react-native'
+import WifiIcon from '../../../../images/WifiIcon.svg'
+import { Text } from '../../../../sharedComponents/Text'
+import { DeviceCard } from '../../../../sharedComponents/DeviceCard'
+import { useLocalDiscoveryState } from '../../../../hooks/useLocalDiscoveryState'
+import { useLocalPeers } from '../../../../hooks/useLocalPeers'
 
 const m = defineMessages({
   title: {
@@ -24,38 +24,38 @@ const m = defineMessages({
     id: 'screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameVersion',
     defaultMessage: 'Make sure both devices are on the same version of Mapeo',
   },
-});
+})
 
 export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
   navigation,
 }) => {
-  const ssid = useLocalDiscoveryState(state => state.ssid);
-  const {formatMessage: t} = useIntl();
+  const ssid = useLocalDiscoveryState((state) => state.ssid)
+  const { formatMessage: t } = useIntl()
 
-  const devices = useLocalPeers();
+  const devices = useLocalPeers()
 
   return (
     <ScrollView style={styles.container}>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <WifiIcon style={{marginRight: 10}} width={30} height={30} />
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <WifiIcon style={{ marginRight: 10 }} width={30} height={30} />
         <Text>{ssid}</Text>
       </View>
-      <Text style={{marginTop: 10}}>{t(m.notSeeingDevice)}</Text>
-      <Text style={{marginLeft: 10}}>{`\u2022 ${t(m.sameWifi)}`}</Text>
-      <Text style={{marginLeft: 10}}>{`\u2022 ${t(m.sameVersion)}`}</Text>
+      <Text style={{ marginTop: 10 }}>{t(m.notSeeingDevice)}</Text>
+      <Text style={{ marginLeft: 10 }}>{`\u2022 ${t(m.sameWifi)}`}</Text>
+      <Text style={{ marginLeft: 10 }}>{`\u2022 ${t(m.sameVersion)}`}</Text>
       {/* Divider */}
-      <View style={{marginTop: 20}}></View>
+      <View style={{ marginTop: 20 }} />
 
       {/* List available devices here */}
-      {devices.map(device => {
-        const name = device.name;
-        const deviceId = device.deviceId;
+      {devices.map((device) => {
+        const name = device.name
+        const deviceId = device.deviceId
         // this is not exposed yet
-        const deviceType = 'mobile';
+        const deviceType = 'mobile'
         return (
           <DeviceCard
             key={deviceId}
-            style={{marginBottom: 10}}
+            style={{ marginBottom: 10 }}
             name={name || ''}
             deviceType={deviceType}
             deviceId={deviceId}
@@ -67,17 +67,17 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
               })
             }
           />
-        );
+        )
       })}
     </ScrollView>
-  );
-};
+  )
+}
 
-SelectDevice.navTitle = m.title;
+SelectDevice.navTitle = m.title
 
 const styles = StyleSheet.create({
   container: {
     padding: 20,
     paddingTop: 40,
   },
-});
+})

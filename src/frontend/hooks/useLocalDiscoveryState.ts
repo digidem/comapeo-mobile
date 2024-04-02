@@ -1,8 +1,8 @@
-import {useSyncExternalStore} from 'react';
+import { useSyncExternalStore } from 'react'
 import {
   useLocalDiscoveryController,
   type LocalDiscoveryState,
-} from '../contexts/LocalDiscoveryContext';
+} from '../contexts/LocalDiscoveryContext'
 
 /**
  * Hook to subscribe to the current state of local peer discovery. Optionally
@@ -27,6 +27,6 @@ export function useLocalDiscoveryState<
     state: LocalDiscoveryState,
   ) => LocalDiscoveryState,
 >(selector: T = ((state: LocalDiscoveryState) => state) as T): ReturnType<T> {
-  const {subscribe, getSnapshot} = useLocalDiscoveryController();
-  return useSyncExternalStore(subscribe, () => selector(getSnapshot()));
+  const { subscribe, getSnapshot } = useLocalDiscoveryController()
+  return useSyncExternalStore(subscribe, () => selector(getSnapshot()))
 }

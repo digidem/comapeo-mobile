@@ -1,13 +1,13 @@
-import {View, Text, StyleSheet} from 'react-native';
-import {MEDIUM_GREY, DARK_GREY, BLACK} from '../../lib/styles';
+import { View, Text, StyleSheet } from 'react-native'
+import { MEDIUM_GREY, DARK_GREY, BLACK } from '../../lib/styles'
 import {
   FormattedFieldProp,
   FormattedFieldValue,
-} from '../../sharedComponents/FormattedData';
-import {Loading} from '../../sharedComponents/Loading';
-import {Field} from '@mapeo/schema';
+} from '../../sharedComponents/FormattedData'
+import { Loading } from '../../sharedComponents/Loading'
+import { Field } from '@mapeo/schema'
 
-export const FieldDetails = ({fields}: {fields: Field[]}) => {
+export const FieldDetails = ({ fields }: { fields: Field[] }) => {
   return (
     <View>
       {/* {fields.map((field, idx) => {
@@ -32,8 +32,8 @@ export const FieldDetails = ({fields}: {fields: Field[]}) => {
                 );
             })} */}
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   fieldAnswer: {
@@ -46,4 +46,4 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginBottom: 10,
   },
-});
+})

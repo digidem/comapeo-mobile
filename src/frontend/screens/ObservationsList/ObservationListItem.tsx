@@ -1,34 +1,34 @@
-import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {Text} from '../../sharedComponents/Text';
+import * as React from 'react'
+import { StyleSheet, View } from 'react-native'
+import { Text } from '../../sharedComponents/Text'
 
-import {TouchableHighlight} from '../../sharedComponents/Touchables';
-import {CategoryCircleIcon} from '../../sharedComponents/icons/CategoryIcon';
+import { TouchableHighlight } from '../../sharedComponents/Touchables'
+import { CategoryCircleIcon } from '../../sharedComponents/icons/CategoryIcon'
 //import PhotoView from "../../sharedComponents/PhotoView";
 // import useDeviceId from "../../hooks/useDeviceId";
-import {Attachment, ViewStyleProp} from '../../sharedTypes';
-import {filterPhotosFromAttachments} from '../../hooks/persistedState/usePersistedDraftObservation/photosMethods';
-import {BLACK} from '../../lib/styles';
-import {Observation} from '@mapeo/schema';
+import { Attachment, ViewStyleProp } from '../../sharedTypes'
+import { filterPhotosFromAttachments } from '../../hooks/persistedState/usePersistedDraftObservation/photosMethods'
+import { BLACK } from '../../lib/styles'
+import { Observation } from '@mapeo/schema'
 import {
   FormattedObservationDate,
   FormattedPresetName,
-} from '../../sharedComponents/FormattedData';
-import {PhotoView} from '../../sharedComponents/PhotoView';
-import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
+} from '../../sharedComponents/FormattedData'
+import { PhotoView } from '../../sharedComponents/PhotoView'
+import { useObservationWithPreset } from '../../hooks/useObservationWithPreset'
 
 interface ObservationListItemProps {
-  style?: ViewStyleProp;
-  observation: Observation;
-  testID: string;
-  onPress: (id: string) => void;
+  style?: ViewStyleProp
+  observation: Observation
+  testID: string
+  onPress: (id: string) => void
 }
 
-const photoOverlap = 10;
+const photoOverlap = 10
 
 export const ObservationListItem = React.memo<ObservationListItemProps>(
   ObservationListItemNotMemoized,
-);
+)
 
 function ObservationListItemNotMemoized({
   style,
@@ -36,25 +36,27 @@ function ObservationListItemNotMemoized({
   testID,
   onPress = () => {},
 }: ObservationListItemProps) {
-  const {preset} = useObservationWithPreset(observation.docId);
-  const deviceId = '';
+  const { preset } = useObservationWithPreset(observation.docId)
+  const deviceId = ''
   //const iconId = preset && preset.icon;
-  const iconId = '';
+  const iconId = ''
   // const iconColor = preset && preset.color;
-  const iconColor = BLACK;
+  const iconColor = BLACK
 
   // const photos = !observationQuery.data ? [] : filterPhotosFromAttachments(
   //   observationQuery.data && observationQuery.data.attachments
   // ).slice(0, 3);
-  const photos = [];
-  const isMine = observation.createdBy === deviceId;
+  const photos = []
+  const isMine = observation.createdBy === deviceId
   return (
     <TouchableHighlight
       onPress={() => onPress(observation.docId)}
       testID={testID}
-      style={{flex: 1, height: 80}}>
+      style={{ flex: 1, height: 80 }}
+    >
       <View
-        style={[styles.container, style, !isMine && styles.syncedObservation]}>
+        style={[styles.container, style, !isMine && styles.syncedObservation]}
+      >
         <View style={styles.text}>
           {preset && (
             <Text style={styles.title}>
@@ -84,28 +86,29 @@ function ObservationListItemNotMemoized({
         )}
       </View>
     </TouchableHighlight>
-  );
+  )
 }
 
-function PhotoStack({attachments}: {attachments: Attachment[]}) {
+function PhotoStack({ attachments }: { attachments: Attachment[] }) {
   return (
     <View
       style={{
         width: 60 + (attachments.length - 1) * photoOverlap,
         height: 60,
         backgroundColor: 'aqua',
-      }}>
+      }}
+    >
       {attachments.map((attachment, idx) => (
         <PhotoView
           key={`${attachment.driveDiscoveryId}/${attachment.type}/${attachment.name}`}
           attachment={attachment}
           variant="thumbnail"
-          style={[styles.photo, {left: idx * photoOverlap}]}
+          style={[styles.photo, { left: idx * photoOverlap }]}
           resizeMode="cover"
         />
       ))}
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -131,7 +134,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
-  title: {fontSize: 18, fontWeight: '700', color: 'black'},
+  title: { fontSize: 18, fontWeight: '700', color: 'black' },
   photoContainer: {
     position: 'relative',
     marginRight: -5,
@@ -147,5 +150,5 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderStyle: 'solid',
   },
-  smallIconContainer: {position: 'absolute', right: -3, bottom: -3},
-});
+  smallIconContainer: { position: 'absolute', right: -3, bottom: -3 },
+})

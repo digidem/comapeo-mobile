@@ -1,24 +1,24 @@
-import * as React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {Picker} from '@react-native-picker/picker';
+import * as React from 'react'
+import { View, StyleSheet } from 'react-native'
+import { Picker } from '@react-native-picker/picker'
 
-import {BLACK, LIGHT_GREY} from '../lib/styles';
-import {ViewStyleProp} from '../sharedTypes';
+import { BLACK, LIGHT_GREY } from '../lib/styles'
+import { ViewStyleProp } from '../sharedTypes'
 
 type Option<Value> = {
-  value: Value;
-  label: string;
-};
+  value: Value
+  label: string
+}
 
 type Props<Value> = {
-  containerStyles?: ViewStyleProp;
-  label?: string;
-  mode?: 'dialog' | 'dropdown';
-  onChange: (value: Value, index: number) => void;
-  options: Option<Value>[];
-  selectedValue: Value;
-  testID?: string;
-};
+  containerStyles?: ViewStyleProp
+  label?: string
+  mode?: 'dialog' | 'dropdown'
+  onChange: (value: Value, index: number) => void
+  options: Option<Value>[]
+  selectedValue: Value
+  testID?: string
+}
 
 export const Select = <Value extends string | number>({
   containerStyles,
@@ -37,13 +37,14 @@ export const Select = <Value extends string | number>({
       selectedValue={selectedValue}
       style={styles.picker}
       dropdownIconColor={BLACK}
-      testID={testID}>
-      {options.map(option => (
+      testID={testID}
+    >
+      {options.map((option) => (
         <Picker.Item key={option.value} {...option} />
       ))}
     </Picker>
   </View>
-);
+)
 
 const styles = StyleSheet.create({
   container: {
@@ -56,4 +57,4 @@ const styles = StyleSheet.create({
     marginBottom: -3,
     color: BLACK,
   },
-});
+})

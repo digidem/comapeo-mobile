@@ -1,8 +1,8 @@
-import React from 'react';
-import {View} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import React from 'react'
+import { View } from 'react-native'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import type {LocationStatus} from '../../lib/utils';
+import type { LocationStatus } from '../../lib/utils'
 
 const RenderError = () => (
   <View
@@ -12,7 +12,8 @@ const RenderError = () => (
       justifyContent: 'center',
       alignItems: 'center',
       marginLeft: -2,
-    }}>
+    }}
+  >
     <View
       style={{
         backgroundColor: 'white',
@@ -25,12 +26,12 @@ const RenderError = () => (
       name="error"
       color="#660000"
       size={22}
-      style={{position: 'absolute'}}
+      style={{ position: 'absolute' }}
     />
   </View>
-);
+)
 
-const RenderIcon = ({color = '#00FF02'}: {color?: string}) => (
+const RenderIcon = ({ color = '#00FF02' }: { color?: string }) => (
   <View
     style={{
       backgroundColor: color,
@@ -40,22 +41,22 @@ const RenderIcon = ({color = '#00FF02'}: {color?: string}) => (
       height: 14,
     }}
   />
-);
+)
 
-type Props = {variant: LocationStatus};
+type Props = { variant: LocationStatus }
 
-const GpsIconComponent = ({variant}: Props) => {
+const GpsIconComponent = ({ variant }: Props) => {
   switch (variant) {
     case 'error':
-      return <RenderError />;
+      return <RenderError />
     case 'searching':
-      return <RenderIcon color="#0166FF" />;
+      return <RenderIcon color="#0166FF" />
     case 'improving':
-      return <RenderIcon color="#00FF02" />;
+      return <RenderIcon color="#00FF02" />
     case 'good':
     default:
-      return <RenderIcon />;
+      return <RenderIcon />
   }
-};
+}
 
-export const GpsIcon = React.memo<Props>(GpsIconComponent);
+export const GpsIcon = React.memo<Props>(GpsIconComponent)

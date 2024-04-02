@@ -1,9 +1,9 @@
-import * as React from 'react';
-import {defineMessages} from 'react-intl';
+import * as React from 'react'
+import { defineMessages } from 'react-intl'
 
-import {NativeNavigationComponent} from '../../sharedTypes';
-import {InputPasscode} from './InputPasscode';
-import {useSecurityContext} from '../../contexts/SecurityContext';
+import { NativeNavigationComponent } from '../../sharedTypes'
+import { InputPasscode } from './InputPasscode'
+import { useSecurityContext } from '../../contexts/SecurityContext'
 
 const m = defineMessages({
   titleEnter: {
@@ -22,28 +22,28 @@ const m = defineMessages({
     id: 'screens.AppPasscode.NewPasscode.InputPasscodeScreen.title',
     defaultMessage: 'Confirm Passcode',
   },
-});
+})
 
 export const EnterPassToTurnOff: NativeNavigationComponent<
   'EnterPassToTurnOff'
-> = ({navigation}) => {
-  const {authenticate, authValuesSet} = useSecurityContext();
-  const [error, setError] = React.useState(false);
-  const {navigate} = navigation;
+> = ({ navigation }) => {
+  const { authenticate, authValuesSet } = useSecurityContext()
+  const [error, setError] = React.useState(false)
+  const { navigate } = navigation
 
   // Stops user from accessing this page if no password is set
   React.useLayoutEffect(() => {
     if (!authValuesSet.passcodeSet) {
-      navigate('Security');
+      navigate('Security')
     }
-  }, [navigate, authValuesSet]);
+  }, [navigate, authValuesSet])
 
   function validate(passcode: string) {
     if (!authenticate(passcode, true)) {
-      setError(true);
-      return;
+      setError(true)
+      return
     }
-    navigate('DisablePasscode');
+    navigate('DisablePasscode')
   }
 
   return (
@@ -58,7 +58,7 @@ export const EnterPassToTurnOff: NativeNavigationComponent<
       showNext={false}
       hideError={() => setError(false)}
     />
-  );
-};
+  )
+}
 
-EnterPassToTurnOff.navTitle = m.title;
+EnterPassToTurnOff.navTitle = m.title

@@ -1,12 +1,12 @@
-import {ScrollView} from 'react-native';
+import { ScrollView } from 'react-native'
 import {
   List,
   ListItem,
   ListItemText,
   ListItemIcon,
-} from '../../../sharedComponents/List';
-import {FormattedMessage, defineMessages} from 'react-intl';
-import {NativeNavigationComponent} from '../../../sharedTypes';
+} from '../../../sharedComponents/List'
+import { FormattedMessage, defineMessages } from 'react-intl'
+import { NativeNavigationComponent } from '../../../sharedTypes'
 
 const m = defineMessages({
   title: {
@@ -29,7 +29,7 @@ const m = defineMessages({
     id: 'Screens.Settings.AppSettings.coordinateSystemDesc',
     defaultMessage: 'UTM,Lat/Lon,DMS',
   },
-});
+})
 
 export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
   navigation,
@@ -41,21 +41,22 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
           <ListItemIcon iconName="language" />
           <ListItemText
             primary={<FormattedMessage {...m.language} />}
-            secondary={<FormattedMessage {...m.languageDesc} />}></ListItemText>
+            secondary={<FormattedMessage {...m.languageDesc} />}
+          />
         </ListItem>
         <ListItem
           onPress={() => navigation.navigate('CoordinateFormat')}
-          testID="settingsCoodinatesButton">
+          testID="settingsCoodinatesButton"
+        >
           <ListItemIcon iconName="explore" />
           <ListItemText
             primary={<FormattedMessage {...m.coordinateSystem} />}
-            secondary={
-              <FormattedMessage {...m.coordinateSystemDesc} />
-            }></ListItemText>
+            secondary={<FormattedMessage {...m.coordinateSystemDesc} />}
+          />
         </ListItem>
       </List>
     </ScrollView>
-  );
-};
+  )
+}
 
-AppSettings.navTitle = m.title;
+AppSettings.navTitle = m.title

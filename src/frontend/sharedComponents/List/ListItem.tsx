@@ -1,21 +1,21 @@
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import React from 'react'
+import { StyleSheet, View } from 'react-native'
 
-import {TouchableNativeFeedback} from 'react-native-gesture-handler';
-import {VERY_LIGHT_BLUE} from '../../lib/styles';
-import {ViewStyleProp} from '../../sharedTypes';
+import { TouchableNativeFeedback } from 'react-native-gesture-handler'
+import { VERY_LIGHT_BLUE } from '../../lib/styles'
+import { ViewStyleProp } from '../../sharedTypes'
 
 interface ListItemProp {
-  alignItems?: 'flex-start' | 'center';
-  button?: boolean;
-  children: React.ReactNode;
-  style?: ViewStyleProp;
-  dense?: boolean;
-  disabled?: boolean;
-  disableGutters?: boolean;
-  divider?: boolean;
-  onPress?: () => void;
-  testID?: string;
+  alignItems?: 'flex-start' | 'center'
+  button?: boolean
+  children: React.ReactNode
+  style?: ViewStyleProp
+  dense?: boolean
+  disabled?: boolean
+  disableGutters?: boolean
+  divider?: boolean
+  onPress?: () => void
+  testID?: string
 }
 
 export const ListItem = ({
@@ -38,7 +38,7 @@ export const ListItem = ({
     divider && styles.divider,
     alignItems === 'flex-start' && styles.alignItemsFlexStart,
     style,
-  ];
+  ]
 
   return (
     <TouchableNativeFeedback
@@ -46,16 +46,17 @@ export const ListItem = ({
       onPress={onPress}
       disabled={disabled}
       {...otherProps}
-      background={TouchableNativeFeedback.Ripple(VERY_LIGHT_BLUE, false)}>
+      background={TouchableNativeFeedback.Ripple(VERY_LIGHT_BLUE, false)}
+    >
       <View style={componentStyle}>{children}</View>
     </TouchableNativeFeedback>
-  );
-};
+  )
+}
 
 interface ListDividerProp {
-  color?: string;
-  lineWidth?: number;
-  style?: ViewStyleProp;
+  color?: string
+  lineWidth?: number
+  style?: ViewStyleProp
 }
 
 export const ListDivider = ({
@@ -75,11 +76,12 @@ export const ListDivider = ({
           borderBottomColor: color,
         },
         style,
-      ]}>
-      <React.Fragment></React.Fragment>
+      ]}
+    >
+      <React.Fragment />
     </ListItem>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   /* Styles applied to the (normally root) `component` element. May be wrapped by a `container`. */
@@ -113,4 +115,4 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
   },
-});
+})

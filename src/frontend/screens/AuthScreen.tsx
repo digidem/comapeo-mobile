@@ -1,18 +1,18 @@
-import * as React from 'react';
-import {defineMessages, FormattedMessage} from 'react-intl';
+import * as React from 'react'
+import { defineMessages, FormattedMessage } from 'react-intl'
 import {
   Image,
   Text,
   StyleSheet,
   ScrollView,
   KeyboardAvoidingView,
-} from 'react-native';
+} from 'react-native'
 
-import {DARK_BLUE, RED, WHITE} from '../lib/styles';
-import {PasscodeInput} from '../sharedComponents/PasscodeInput';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {AppStackList} from '../Navigation/AppStack';
-import {useSecurityContext} from '../contexts/SecurityContext';
+import { DARK_BLUE, RED, WHITE } from '../lib/styles'
+import { PasscodeInput } from '../sharedComponents/PasscodeInput'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { AppStackList } from '../Navigation/AppStack'
+import { useSecurityContext } from '../contexts/SecurityContext'
 
 const m = defineMessages({
   enterPass: {
@@ -23,66 +23,67 @@ const m = defineMessages({
     id: 'screens.EnterPassword.wrongPass',
     defaultMessage: 'Incorrect passcode, please try again ',
   },
-});
+})
 
 export const AuthScreen = ({
   navigation,
 }: NativeStackScreenProps<AppStackList, 'AuthScreen'>) => {
-  const [error, setError] = React.useState(false);
-  const {authenticate, authState} = useSecurityContext();
-  const [inputtedPass, setInputtedPass] = React.useState('');
-  const scrollViewRef = React.useRef<ScrollView>(null);
+  const [error, setError] = React.useState(false)
+  const { authenticate, authState } = useSecurityContext()
+  const [inputtedPass, setInputtedPass] = React.useState('')
+  const scrollViewRef = React.useRef<ScrollView>(null)
 
   React.useEffect(() => {
     function disableBack(e: any) {
-      if (authState !== 'unauthenticated') return;
+      if (authState !== 'unauthenticated') return
       // Prevent back if unauthenticated
-      e.preventDefault();
+      e.preventDefault()
     }
-    navigation.addListener('beforeRemove', disableBack);
+    navigation.addListener('beforeRemove', disableBack)
 
     return () => {
-      navigation.removeListener('beforeRemove', disableBack);
-    };
-  }, [authState, navigation]);
+      navigation.removeListener('beforeRemove', disableBack)
+    }
+  }, [authState, navigation])
 
   React.useEffect(() => {
-    if (authState === 'unauthenticated') return;
-    navigation.goBack();
-  }, [authState, navigation]);
+    if (authState === 'unauthenticated') return
+    navigation.goBack()
+  }, [authState, navigation])
 
   if (error) {
-    if (inputtedPass.length === 5) setInputtedPass('');
+    if (inputtedPass.length === 5) setInputtedPass('')
   }
 
   function setInputWithValidation(passValue: string) {
     if (error) {
-      setError(false);
+      setError(false)
     }
-    setInputtedPass(passValue);
+    setInputtedPass(passValue)
     if (passValue.length === 5) {
-      validatePass(passValue);
+      validatePass(passValue)
     }
   }
 
   function validatePass(passValue: string) {
     try {
-      authenticate(passValue);
+      authenticate(passValue)
     } catch (err) {
-      scrollViewRef.current?.scrollToEnd();
-      setError(true);
+      scrollViewRef.current?.scrollToEnd()
+      setError(true)
     }
   }
 
   return (
     <ScrollView
       ref={scrollViewRef}
-      style={{height: '100%', backgroundColor: WHITE}}>
+      style={{ height: '100%', backgroundColor: WHITE }}
+    >
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <Image source={require('../images/icon_mapeo_pin.png')} />
         <Text style={[styles.title]}>Mapeo</Text>
 
-        <Text style={[{marginBottom: 20, fontSize: 16}]}>
+        <Text style={[{ marginBottom: 20, fontSize: 16 }]}>
           <FormattedMessage {...m.enterPass} />
         </Text>
 
@@ -99,8 +100,8 @@ export const AuthScreen = ({
         )}
       </KeyboardAvoidingView>
     </ScrollView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -123,4 +124,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: RED,
   },
-});
+})

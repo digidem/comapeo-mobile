@@ -1,18 +1,18 @@
-import React from 'react';
-import {Alert, AlertButton, View} from 'react-native';
-import debug from 'debug';
-import {defineMessages, useIntl} from 'react-intl';
+import React from 'react'
+import { Alert, AlertButton, View } from 'react-native'
+import debug from 'debug'
+import { defineMessages, useIntl } from 'react-intl'
 
-import {IconButton} from '../../sharedComponents/IconButton';
-import {SaveIcon} from '../../sharedComponents/icons/SaveIcon';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
-import {useCreateObservation} from '../../hooks/server/observations';
-import {useEditObservation} from '../../hooks/server/observations';
-import {UIActivityIndicator} from 'react-native-indicators';
-import {useCreateBlobMutation} from '../../hooks/server/media';
-import {DraftPhoto, Photo} from '../../contexts/PhotoPromiseContext/types';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
+import { IconButton } from '../../sharedComponents/IconButton'
+import { SaveIcon } from '../../sharedComponents/icons/SaveIcon'
+import { useNavigationFromRoot } from '../../hooks/useNavigationWithTypes'
+import { usePersistedDraftObservation } from '../../hooks/persistedState/usePersistedDraftObservation'
+import { useCreateObservation } from '../../hooks/server/observations'
+import { useEditObservation } from '../../hooks/server/observations'
+import { UIActivityIndicator } from 'react-native-indicators'
+import { useCreateBlobMutation } from '../../hooks/server/media'
+import { DraftPhoto, Photo } from '../../contexts/PhotoPromiseContext/types'
+import { useDraftObservation } from '../../hooks/useDraftObservation'
 
 const m = defineMessages({
   noGpsTitle: {
@@ -53,47 +53,47 @@ const m = defineMessages({
     defaultMessage: 'Continue waiting',
     description: 'Button to cancel save and continue waiting for GPS',
   },
-});
+})
 
-const MINIMUM_ACCURACY = 10;
-const log = debug('SaveButton');
+const MINIMUM_ACCURACY = 10
+const log = debug('SaveButton')
 
 export const SaveButton = ({
   observationId,
   openErrorModal,
 }: {
-  observationId?: string;
-  openErrorModal?: () => void;
+  observationId?: string
+  openErrorModal?: () => void
 }) => {
-  const value = usePersistedDraftObservation(store => store.value);
-  const photos = usePersistedDraftObservation(store => store.photos);
-  const {clearDraft} = useDraftObservation();
-  const {formatMessage: t} = useIntl();
-  const navigation = useNavigationFromRoot();
-  const createObservationMutation = useCreateObservation();
-  const editObservationMutation = useEditObservation();
-  const createBlobMutation = useCreateBlobMutation();
+  const value = usePersistedDraftObservation((store) => store.value)
+  const photos = usePersistedDraftObservation((store) => store.photos)
+  const { clearDraft } = useDraftObservation()
+  const { formatMessage: t } = useIntl()
+  const navigation = useNavigationFromRoot()
+  const createObservationMutation = useCreateObservation()
+  const editObservationMutation = useEditObservation()
+  const createBlobMutation = useCreateBlobMutation()
 
   function createObservation() {
-    if (!value) throw new Error('no observation saved in persisted state ');
+    if (!value) throw new Error('no observation saved in persisted state ')
 
-    const savablePhotos = photos.filter(isSavablePhoto);
+    const savablePhotos = photos.filter(isSavablePhoto)
 
     if (!savablePhotos) {
       createObservationMutation.mutate(
-        {value},
+        { value },
         {
           onError: () => {
-            if (openErrorModal) openErrorModal();
+            if (openErrorModal) openErrorModal()
           },
           onSuccess: () => {
-            clearDraft();
-            navigation.navigate('Home', {screen: 'Map'});
+            clearDraft()
+            navigation.navigate('Home', { screen: 'Map' })
           },
         },
-      );
+      )
 
-      return;
+      return
     }
 
     // Currently, we abort the process of saving an observation if saving any number of photos fails to save,
@@ -102,19 +102,19 @@ export const SaveButton = ({
     // This could potentially be alleviated by a more granular and informative UI about the photo-saving state, but currently there is nothing in place.
     // Basically, which is worse: orphaned attachments or saving observations that seem to be missing attachments?
     Promise.all(
-      savablePhotos.map(photo => {
-        return createBlobMutation.mutateAsync(photo);
+      savablePhotos.map((photo) => {
+        return createBlobMutation.mutateAsync(photo)
       }),
     )
-      .then(results => {
+      .then((results) => {
         const newAttachments = results.map(
-          ({driveId: driveDiscoveryId, type, name, hash}) => ({
+          ({ driveId: driveDiscoveryId, type, name, hash }) => ({
             driveDiscoveryId,
             type,
             name,
             hash,
           }),
-        );
+        )
 
         createObservationMutation.mutate(
           {
@@ -125,42 +125,42 @@ export const SaveButton = ({
           },
           {
             onError: () => {
-              if (openErrorModal) openErrorModal();
+              if (openErrorModal) openErrorModal()
             },
             onSuccess: () => {
-              clearDraft();
-              navigation.navigate('Home', {screen: 'Map'});
+              clearDraft()
+              navigation.navigate('Home', { screen: 'Map' })
             },
           },
-        );
+        )
       })
       .catch(() => {
-        if (openErrorModal) openErrorModal();
-      });
+        if (openErrorModal) openErrorModal()
+      })
   }
 
   function editObservation() {
-    if (!value) throw new Error('no observation saved in persisted state ');
-    if (!observationId) throw new Error('Need an observation Id to edit');
+    if (!value) throw new Error('no observation saved in persisted state ')
+    if (!observationId) throw new Error('Need an observation Id to edit')
     if (!('versionId' in value))
-      throw new Error('Cannot update a unsaved observation (must create one)');
+      throw new Error('Cannot update a unsaved observation (must create one)')
     editObservationMutation.mutate(
       // @ts-expect-error
-      {id: observationId, value},
+      { id: observationId, value },
       {
         onSuccess: () => {
-          clearDraft();
-          navigation.pop();
+          clearDraft()
+          navigation.pop()
         },
       },
-    );
+    )
   }
 
   const confirmationOptions: AlertButton[] = [
     {
       text: t(m.saveAnyway),
       onPress: () => {
-        createObservation();
+        createObservation()
       },
       style: 'default',
     },
@@ -173,60 +173,60 @@ export const SaveButton = ({
       text: t(m.keepWaiting),
       onPress: () => log('Cancelled save'),
     },
-  ];
+  ]
 
   const handleSavePress = () => {
-    log('Draft value > ', value);
-    if (!value) return;
-    const isNew = !observationId;
+    log('Draft value > ', value)
+    if (!value) return
+    const isNew = !observationId
     if (!isNew) {
-      editObservation();
-      return;
+      editObservation()
+      return
     }
 
-    const hasLocation = value.lat && value.lon;
-    const locationSetManually = value.metadata.manualLocation;
+    const hasLocation = value.lat && value.lon
+    const locationSetManually = value.metadata.manualLocation
     if (
       locationSetManually ||
       (hasLocation && isGpsAccurate(value.metadata.position?.coords?.accuracy))
     ) {
       // Observation has a location, which is either from an accurate GPS
       // reading, or is manually entered
-      createObservation();
-      return;
+      createObservation()
+      return
     }
     if (!hasLocation) {
       // Observation doesn't have a location
-      Alert.alert(t(m.noGpsTitle), t(m.noGpsDesc), confirmationOptions);
-      return;
+      Alert.alert(t(m.noGpsTitle), t(m.noGpsDesc), confirmationOptions)
+      return
     }
     // Inaccurate GPS reading
-    Alert.alert(t(m.weakGpsTitle), t(m.weakGpsDesc), confirmationOptions);
-  };
+    Alert.alert(t(m.weakGpsTitle), t(m.weakGpsDesc), confirmationOptions)
+  }
 
   return createBlobMutation.isPending ||
     createObservationMutation.isPending ||
     editObservationMutation.isPending ? (
-    <View style={{marginRight: 10}}>
+    <View style={{ marginRight: 10 }}>
       <UIActivityIndicator size={30} />
     </View>
   ) : (
     <IconButton onPress={handleSavePress} testID="saveButton">
       <SaveIcon inprogress={false} />
     </IconButton>
-  );
-};
+  )
+}
 
 function isGpsAccurate(accuracy?: number): boolean {
-  return typeof accuracy === 'number' ? accuracy < MINIMUM_ACCURACY : true;
+  return typeof accuracy === 'number' ? accuracy < MINIMUM_ACCURACY : true
 }
 
 function isSavablePhoto(
   photo: Photo,
-): photo is DraftPhoto & {originalUri: string} {
-  if (!('draftPhotoId' in photo && !!photo.draftPhotoId)) return false;
+): photo is DraftPhoto & { originalUri: string } {
+  if (!('draftPhotoId' in photo && !!photo.draftPhotoId)) return false
 
-  if (photo.deleted || photo.error) return false;
+  if (photo.deleted || photo.error) return false
 
-  return !!photo.originalUri;
+  return !!photo.originalUri
 }

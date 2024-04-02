@@ -1,49 +1,49 @@
-import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
-import {useApi} from '../../contexts/ApiContext';
-import {useActiveProjectContext} from '../../contexts/ProjectContext';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useApi } from '../../contexts/ApiContext'
+import { useActiveProjectContext } from '../../contexts/ProjectContext'
 
 export function useUpdateActiveProjectId() {
-  const projectContext = useActiveProjectContext();
-  return projectContext.switchProject;
+  const projectContext = useActiveProjectContext()
+  return projectContext.switchProject
 }
 
 export function useProject() {
-  const projectContext = useActiveProjectContext();
-  return projectContext.project;
+  const projectContext = useActiveProjectContext()
+  return projectContext.project
 }
 
 export function useAllProjects() {
-  const api = useApi();
+  const api = useApi()
 
   return useQuery({
     queryFn: async () => await api.listProjects(),
     queryKey: ['projects'],
-  });
+  })
 }
 
 export function useCreateProject() {
-  const api = useApi();
-  const queryClient = useQueryClient();
-  const updateProject = useUpdateActiveProjectId();
+  const api = useApi()
+  const queryClient = useQueryClient()
+  const updateProject = useUpdateActiveProjectId()
 
   return useMutation({
     mutationKey: ['createProject'],
     mutationFn: async (name: string) => {
-      return await api.createProject({name});
+      return await api.createProject({ name })
     },
-    onSuccess: async data => {
-      updateProject(data);
-      return await queryClient.invalidateQueries({queryKey: ['projects']});
+    onSuccess: async (data) => {
+      updateProject(data)
+      return await queryClient.invalidateQueries({ queryKey: ['projects'] })
     },
-  });
+  })
 }
 
 export function useProjectMembers() {
-  const project = useProject();
+  const project = useProject()
   return useQuery({
     queryFn: async () => {
-      return await project.$member.getMany();
+      return await project.$member.getMany()
     },
     queryKey: ['projectMembers'],
-  });
+  })
 }

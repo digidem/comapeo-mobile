@@ -1,9 +1,9 @@
-import * as React from 'react';
-import {defineMessages, useIntl} from 'react-intl';
-import {StyleSheet, TextInput} from 'react-native';
+import * as React from 'react'
+import { defineMessages, useIntl } from 'react-intl'
+import { StyleSheet, TextInput } from 'react-native'
 
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
+import { usePersistedDraftObservation } from '../../hooks/persistedState/usePersistedDraftObservation'
+import { useDraftObservation } from '../../hooks/useDraftObservation'
 
 const m = defineMessages({
   descriptionPlaceholder: {
@@ -11,19 +11,19 @@ const m = defineMessages({
     defaultMessage: 'What is happening here?',
     description: 'Placeholder for description/notes field',
   },
-});
+})
 
 export const DescriptionField = () => {
-  const {formatMessage: t} = useIntl();
-  const notes = usePersistedDraftObservation(store => store.value?.tags.notes);
-  const {updateTags} = useDraftObservation();
+  const { formatMessage: t } = useIntl()
+  const notes = usePersistedDraftObservation((store) => store.value?.tags.notes)
+  const { updateTags } = useDraftObservation()
 
   return (
     <TextInput
       style={styles.textInput}
       value={!notes || typeof notes !== 'string' ? '' : notes}
-      onChangeText={newVal => {
-        updateTags('notes', newVal);
+      onChangeText={(newVal) => {
+        updateTags('notes', newVal)
       }}
       placeholder={t(m.descriptionPlaceholder)}
       placeholderTextColor="silver"
@@ -33,8 +33,8 @@ export const DescriptionField = () => {
       textContentType="none"
       testID="observationDescriptionField"
     />
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   textInput: {
@@ -47,4 +47,4 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     textAlignVertical: 'top',
   },
-});
+})

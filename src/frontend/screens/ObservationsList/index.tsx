@@ -1,13 +1,13 @@
-import * as React from 'react';
-import {View, FlatList, Dimensions, StyleSheet} from 'react-native';
-import {defineMessages} from 'react-intl';
-import {ObservationListItem} from './ObservationListItem';
-import ObservationEmptyView from './ObservationsEmptyView';
+import * as React from 'react'
+import { View, FlatList, Dimensions, StyleSheet } from 'react-native'
+import { defineMessages } from 'react-intl'
+import { ObservationListItem } from './ObservationListItem'
+import ObservationEmptyView from './ObservationsEmptyView'
 
-import {Observation} from '@mapeo/schema';
-import {NativeNavigationComponent} from '../../sharedTypes';
-import {SettingsButton} from './SettingsButton';
-import {useAllObservations} from '../../hooks/useAllObservations';
+import { Observation } from '@mapeo/schema'
+import { NativeNavigationComponent } from '../../sharedTypes'
+import { SettingsButton } from './SettingsButton'
+import { useAllObservations } from '../../hooks/useAllObservations'
 
 const m = defineMessages({
   loading: {
@@ -28,9 +28,9 @@ const m = defineMessages({
     defaultMessage: 'Observations',
     description: 'Title of screen with list of observations',
   },
-});
+})
 
-const OBSERVATION_CELL_HEIGHT = 80;
+const OBSERVATION_CELL_HEIGHT = 80
 
 const getItemLayout = (
   data: Observation[] | null | undefined,
@@ -39,31 +39,31 @@ const getItemLayout = (
   length: OBSERVATION_CELL_HEIGHT,
   offset: OBSERVATION_CELL_HEIGHT * index,
   index,
-});
+})
 
-const keyExtractor = (item: Observation) => item.docId;
+const keyExtractor = (item: Observation) => item.docId
 
 export const ObservationsList: NativeNavigationComponent<'ObservationList'> = ({
   navigation,
 }) => {
-  const observations = useAllObservations();
+  const observations = useAllObservations()
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => <SettingsButton />,
-    });
-  }, [SettingsButton, navigation]);
+    })
+  }, [SettingsButton, navigation])
 
   const rowsPerWindow = Math.ceil(
     (Dimensions.get('window').height - 65) / OBSERVATION_CELL_HEIGHT,
-  );
+  )
 
   if (!observations.length) {
     return (
       <ObservationEmptyView
-        onPressBack={() => navigation.navigate('Home', {screen: 'Map'})}
+        onPressBack={() => navigation.navigate('Home', { screen: 'Map' })}
       />
-    );
+    )
   }
 
   return (
@@ -75,7 +75,7 @@ export const ObservationsList: NativeNavigationComponent<'ObservationList'> = ({
         style={styles.container}
         windowSize={3}
         removeClippedSubviews
-        renderItem={({item, index}) => {
+        renderItem={({ item, index }) => {
           return (
             <ObservationListItem
               key={item.docId}
@@ -83,18 +83,20 @@ export const ObservationsList: NativeNavigationComponent<'ObservationList'> = ({
               observation={item}
               style={styles.listItem}
               onPress={() =>
-                navigation.navigate('Observation', {observationId: item.docId})
+                navigation.navigate('Observation', {
+                  observationId: item.docId,
+                })
               }
             />
-          );
+          )
         }}
         data={observations}
       />
     </View>
-  );
-};
+  )
+}
 
-ObservationsList.navTitle = m.observationListTitle;
+ObservationsList.navTitle = m.observationListTitle
 
 const styles = StyleSheet.create({
   container: {
@@ -114,4 +116,4 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
   },
-});
+})

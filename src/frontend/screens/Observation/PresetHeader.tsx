@@ -1,10 +1,10 @@
-import {View, Text, StyleSheet} from 'react-native';
-import {BLACK} from '../../lib/styles';
-import {FormattedPresetName} from '../../sharedComponents/FormattedData';
-import {CategoryCircleIcon} from '../../sharedComponents/icons/CategoryIcon';
-import {Preset} from '@mapeo/schema';
+import { View, Text, StyleSheet } from 'react-native'
+import { BLACK } from '../../lib/styles'
+import { FormattedPresetName } from '../../sharedComponents/FormattedData'
+import { CategoryCircleIcon } from '../../sharedComponents/icons/CategoryIcon'
+import { Preset } from '@mapeo/schema'
 
-export const PresetHeader = ({preset}: {preset: Preset}) => {
+export const PresetHeader = ({ preset }: { preset: Preset }) => {
   return (
     <View style={styles.categoryIconContainer}>
       <CategoryCircleIcon color={BLACK} size="medium" />
@@ -12,8 +12,8 @@ export const PresetHeader = ({preset}: {preset: Preset}) => {
         <FormattedPresetName preset={preset} />
       </Text>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   categoryIconContainer: {
@@ -26,4 +26,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginLeft: 10,
   },
-});
+})

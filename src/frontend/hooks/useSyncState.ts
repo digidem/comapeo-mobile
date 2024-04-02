@@ -1,16 +1,16 @@
-import {MapeoProjectApi} from '@mapeo/ipc';
-import React from 'react';
-import {useProject} from './server/projects';
+import { MapeoProjectApi } from '@mapeo/ipc'
+import React from 'react'
+import { useProject } from './server/projects'
 
-type SyncState = Awaited<ReturnType<MapeoProjectApi['$sync']['getState']>>;
+type SyncState = Awaited<ReturnType<MapeoProjectApi['$sync']['getState']>>
 
 const projectStateMap = new WeakMap<
   MapeoProjectApi,
   ReturnType<typeof createSyncState>
->();
+>()
 
 function identity(state: SyncState | undefined) {
-  return state;
+  return state
 }
 
 /**
@@ -32,65 +32,65 @@ function identity(state: SyncState | undefined) {
 export function useSyncState<S = SyncState | undefined>(
   selector: (state: SyncState | undefined) => S = identity as any,
 ): S {
-  const project = useProject();
+  const project = useProject()
 
-  let state = projectStateMap.get(project);
+  let state = projectStateMap.get(project)
   if (!state) {
-    state = createSyncState(project);
-    projectStateMap.set(project, state);
+    state = createSyncState(project)
+    projectStateMap.set(project, state)
   }
 
-  const {subscribe, getSnapshot} = state;
+  const { subscribe, getSnapshot } = state
 
   const getSelectorSnapshot = React.useCallback(
     () => selector(getSnapshot()),
     [selector, getSnapshot],
-  );
+  )
 
-  return React.useSyncExternalStore(subscribe, getSelectorSnapshot);
+  return React.useSyncExternalStore(subscribe, getSelectorSnapshot)
 }
 
 function createSyncState(project: MapeoProjectApi) {
-  let state: SyncState | undefined;
-  let isSubscribedInternal = false;
-  const listeners = new Set<() => void>();
-  let error: Error | undefined;
+  let state: SyncState | undefined
+  let isSubscribedInternal = false
+  const listeners = new Set<() => void>()
+  let error: Error | undefined
 
   function onSyncState(state: SyncState) {
-    state = state;
-    error = undefined;
-    listeners.forEach(listener => listener());
+    state = state
+    error = undefined
+    listeners.forEach((listener) => listener())
   }
 
   function subscribeInternal() {
-    project.$sync.on('sync-state', onSyncState);
-    isSubscribedInternal = true;
+    project.$sync.on('sync-state', onSyncState)
+    isSubscribedInternal = true
     project.$sync
       .getState()
       .then(onSyncState)
-      .catch(e => {
-        error = e;
-        listeners.forEach(listener => listener());
-      });
+      .catch((e) => {
+        error = e
+        listeners.forEach((listener) => listener())
+      })
   }
 
   function unsubscribeInternal() {
-    isSubscribedInternal = false;
-    project.$sync.off('sync-state', onSyncState);
+    isSubscribedInternal = false
+    project.$sync.off('sync-state', onSyncState)
   }
 
   return {
     subscribe: (listener: () => void) => {
-      listeners.add(listener);
-      if (!isSubscribedInternal) subscribeInternal();
+      listeners.add(listener)
+      if (!isSubscribedInternal) subscribeInternal()
       return () => {
-        listeners.delete(listener);
-        if (listeners.size === 0) unsubscribeInternal();
-      };
+        listeners.delete(listener)
+        if (listeners.size === 0) unsubscribeInternal()
+      }
     },
     getSnapshot: () => {
-      if (error) throw error;
-      return state;
+      if (error) throw error
+      return state
     },
-  };
+  }
 }

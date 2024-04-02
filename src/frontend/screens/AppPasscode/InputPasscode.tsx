@@ -1,15 +1,15 @@
-import * as React from 'react';
-import {defineMessages, FormattedMessage, MessageDescriptor} from 'react-intl';
-import {View, StyleSheet, ScrollView} from 'react-native';
-import {useBlurOnFulfill} from 'react-native-confirmation-code-field';
+import * as React from 'react'
+import { defineMessages, FormattedMessage, MessageDescriptor } from 'react-intl'
+import { View, StyleSheet, ScrollView } from 'react-native'
+import { useBlurOnFulfill } from 'react-native-confirmation-code-field'
 
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {WHITE, RED, COMAPEO_BLUE} from '../../lib/styles';
-import {Button} from '../../sharedComponents/Button';
-import {CELL_COUNT, PasscodeInput} from '../../sharedComponents/PasscodeInput';
-import {Text} from '../../sharedComponents/Text';
-import {ConfirmPasscodeSheet} from './ConfirmPasscodeSheet';
-import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
+import { useNavigationFromRoot } from '../../hooks/useNavigationWithTypes'
+import { WHITE, RED, COMAPEO_BLUE } from '../../lib/styles'
+import { Button } from '../../sharedComponents/Button'
+import { CELL_COUNT, PasscodeInput } from '../../sharedComponents/PasscodeInput'
+import { Text } from '../../sharedComponents/Text'
+import { ConfirmPasscodeSheet } from './ConfirmPasscodeSheet'
+import { useBottomSheetModal } from '../../sharedComponents/BottomSheetModal'
 
 const m = defineMessages({
   button: {
@@ -20,18 +20,18 @@ const m = defineMessages({
     id: 'screens.AppPasscode.InputPasscodeScreen.cancel',
     defaultMessage: 'Cancel',
   },
-});
+})
 interface InputPasscodeProps {
   text: {
-    title: MessageDescriptor;
-    subtitle: MessageDescriptor;
-    errorMessage: MessageDescriptor;
-  };
-  validate: (pass: string) => void | boolean;
-  showPasscodeValues?: boolean;
-  error: boolean;
-  hideError: () => void;
-  showNext?: boolean;
+    title: MessageDescriptor
+    subtitle: MessageDescriptor
+    errorMessage: MessageDescriptor
+  }
+  validate: (pass: string) => void | boolean
+  showPasscodeValues?: boolean
+  error: boolean
+  hideError: () => void
+  showNext?: boolean
 }
 
 export const InputPasscode = ({
@@ -42,28 +42,28 @@ export const InputPasscode = ({
   hideError,
   showNext = true,
 }: InputPasscodeProps) => {
-  const [inputValue, setInputValue] = React.useState('');
-  const {sheetRef, isOpen, openSheet} = useBottomSheetModal({
+  const [inputValue, setInputValue] = React.useState('')
+  const { sheetRef, isOpen, openSheet } = useBottomSheetModal({
     openOnMount: false,
-  });
+  })
 
   const inputRef = useBlurOnFulfill({
     value: inputValue,
     cellCount: CELL_COUNT,
-  });
+  })
 
   if (error) {
-    inputRef.current?.focus();
-    if (inputValue.length === 5) setInputValue('');
+    inputRef.current?.focus()
+    if (inputValue.length === 5) setInputValue('')
   }
 
   function updateInput(newVal: string) {
-    if (error) hideError();
-    setInputValue(newVal);
-    if (!showNext && newVal.length === 5) validate(newVal);
+    if (error) hideError()
+    setInputValue(newVal)
+    if (!showNext && newVal.length === 5) validate(newVal)
   }
 
-  const {navigate} = useNavigationFromRoot();
+  const { navigate } = useNavigationFromRoot()
   return (
     <React.Fragment>
       <ScrollView>
@@ -95,11 +95,12 @@ export const InputPasscode = ({
             <Button
               fullWidth
               variant="outlined"
-              style={{marginBottom: 20, marginTop: 20}}
+              style={{ marginBottom: 20, marginTop: 20 }}
               onPress={() => {
-                navigate('Security');
-              }}>
-              <Text style={[styles.buttonText, {color: COMAPEO_BLUE}]}>
+                navigate('Security')
+              }}
+            >
+              <Text style={[styles.buttonText, { color: COMAPEO_BLUE }]}>
                 <FormattedMessage {...m.cancel} />
               </Text>
             </Button>
@@ -110,11 +111,12 @@ export const InputPasscode = ({
                 onPress={() => {
                   {
                     if (validate(inputValue)) {
-                      openSheet();
+                      openSheet()
                     }
                   }
-                }}>
-                <Text style={[styles.buttonText, {color: WHITE}]}>
+                }}
+              >
+                <Text style={[styles.buttonText, { color: WHITE }]}>
                   <FormattedMessage {...m.button} />
                 </Text>
               </Button>
@@ -128,8 +130,8 @@ export const InputPasscode = ({
         isOpen={isOpen}
       />
     </React.Fragment>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   buttonText: {
@@ -165,4 +167,4 @@ const styles = StyleSheet.create({
     marginTop: 20,
     color: RED,
   },
-});
+})

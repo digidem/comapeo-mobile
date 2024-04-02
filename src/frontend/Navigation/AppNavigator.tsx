@@ -1,27 +1,27 @@
-import * as React from 'react';
+import * as React from 'react'
 import {
   NavigatorScreenOptions,
   RootStack,
   createDefaultScreenGroup,
   // createOnboardingScreenGroup,
-} from './AppStack';
-import {useIntl} from 'react-intl';
+} from './AppStack'
+import { useIntl } from 'react-intl'
 // import {SecurityContext} from '../context/SecurityContext';
 
-import BootSplash from 'react-native-bootsplash';
-import {useDeviceInfo} from '../hooks/server/deviceInfo';
-import {Loading} from '../sharedComponents/Loading';
+import BootSplash from 'react-native-bootsplash'
+import { useDeviceInfo } from '../hooks/server/deviceInfo'
+import { Loading } from '../sharedComponents/Loading'
 import {
   DeviceNamingSceens,
   createDeviceNamingScreens,
-} from './ScreenGroups/DeviceNamingScreens';
-import {usePrefetchLastKnownLocation} from '../hooks/useLastSavedLocation';
-import {usePersistedDraftObservation} from '../hooks/persistedState/usePersistedDraftObservation';
-import {ClientGeneratedObservation} from '../sharedTypes';
-import {Observation, Preset} from '@mapeo/schema';
-import {matchPreset} from '../lib/utils';
-import {AppList} from './ScreenGroups/AppScreens';
-import {usePresetsQuery} from '../hooks/server/presets';
+} from './ScreenGroups/DeviceNamingScreens'
+import { usePrefetchLastKnownLocation } from '../hooks/useLastSavedLocation'
+import { usePersistedDraftObservation } from '../hooks/persistedState/usePersistedDraftObservation'
+import { ClientGeneratedObservation } from '../sharedTypes'
+import { Observation, Preset } from '@mapeo/schema'
+import { matchPreset } from '../lib/utils'
+import { AppList } from './ScreenGroups/AppScreens'
+import { usePresetsQuery } from '../hooks/server/presets'
 
 // import {devExperiments} from '../lib/DevExperiments';
 
@@ -41,22 +41,26 @@ import {usePresetsQuery} from '../hooks/server/presets';
 // Note that screen groups should have a `key` prop, so that React knows how to
 // update them efficiently.
 
-export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
-  const {formatMessage} = useIntl();
+export const AppNavigator = ({
+  permissionAsked,
+}: {
+  permissionAsked: boolean
+}) => {
+  const { formatMessage } = useIntl()
   const existingObservation = usePersistedDraftObservation(
-    store => store.value,
-  );
-  const {data: presets} = usePresetsQuery();
-  const deviceInfo = useDeviceInfo();
-  usePrefetchLastKnownLocation();
+    (store) => store.value,
+  )
+  const { data: presets } = usePresetsQuery()
+  const deviceInfo = useDeviceInfo()
+  usePrefetchLastKnownLocation()
 
   if (permissionAsked && !deviceInfo.isPending) {
-    BootSplash.hide();
+    BootSplash.hide()
   }
 
   // the user should never actually see this because the splash screen is visible, so this is to appease typescript
   if (deviceInfo.isLoading) {
-    return <Loading />;
+    return <Loading />
   }
 
   return (
@@ -66,38 +70,39 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
         existingObservation,
         presets,
       })}
-      screenOptions={NavigatorScreenOptions}>
+      screenOptions={NavigatorScreenOptions}
+    >
       {deviceInfo.data?.name
         ? createDefaultScreenGroup(formatMessage)
         : createDeviceNamingScreens(formatMessage)}
     </RootStack.Navigator>
-  );
-};
+  )
+}
 
 function getInitialRouteName(
   initialInfo:
-    | {hasDeviceName: false}
+    | { hasDeviceName: false }
     | {
-        hasDeviceName: true;
-        existingObservation: null | ClientGeneratedObservation | Observation;
-        presets: Preset[];
+        hasDeviceName: true
+        existingObservation: null | ClientGeneratedObservation | Observation
+        presets: Preset[]
       },
 ): keyof AppList | keyof DeviceNamingSceens {
   // if user has not set a name, navigate to intro screen where they will be prompted to set a name
   if (!initialInfo.hasDeviceName) {
-    return 'IntroToCoMapeo';
+    return 'IntroToCoMapeo'
   }
 
   // if no exisiting observation, navigate to home
   if (!initialInfo.existingObservation) {
-    return 'Home';
+    return 'Home'
   }
 
   // if existing observation and no preset match, user has started creating an observation but had not chosen a preset, so navigate to preset chooser
   if (!matchPreset(initialInfo.existingObservation.tags, initialInfo.presets)) {
-    return 'PresetChooser';
+    return 'PresetChooser'
   }
 
   // if existing observation and preset match, navigate to observation edit
-  return 'ObservationEdit';
+  return 'ObservationEdit'
 }

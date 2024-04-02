@@ -1,23 +1,23 @@
-import * as React from 'react';
-import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
+import * as React from 'react'
+import { MessageDescriptor, defineMessages, useIntl } from 'react-intl'
 import {
   NativeNavigationComponent,
   ViewStyleProp,
-} from '../../../../sharedTypes';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import {Button} from '../../../../sharedComponents/Button';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {Text} from '../../../../sharedComponents/Text';
-import {BLACK} from '../../../../lib/styles';
-import {DeviceCard} from '../../../../sharedComponents/DeviceCard';
-import {useProjectMembers} from '../../../../hooks/server/projects';
-import {Loading} from '../../../../sharedComponents/Loading';
-import {useDeviceInfo} from '../../../../hooks/server/deviceInfo';
+} from '../../../../sharedTypes'
+import { ScrollView, StyleSheet, View } from 'react-native'
+import { Button } from '../../../../sharedComponents/Button'
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
+import { Text } from '../../../../sharedComponents/Text'
+import { BLACK } from '../../../../lib/styles'
+import { DeviceCard } from '../../../../sharedComponents/DeviceCard'
+import { useProjectMembers } from '../../../../hooks/server/projects'
+import { Loading } from '../../../../sharedComponents/Loading'
+import { useDeviceInfo } from '../../../../hooks/server/deviceInfo'
 import {
   COORDINATOR_ROLE_ID,
   CREATOR_ROLE_ID,
   MEMBER_ROLE_ID,
-} from '../../../../sharedTypes';
+} from '../../../../sharedTypes'
 
 const m = defineMessages({
   title: {
@@ -54,25 +54,27 @@ const m = defineMessages({
     defaultMessage:
       'Participants can take and share observations. They cannot manage users or project details.',
   },
-});
+})
 
 export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
   navigation,
 }) => {
-  const {formatMessage: t} = useIntl();
-  const membersQuery = useProjectMembers();
-  const deviceInfo = useDeviceInfo();
+  const { formatMessage: t } = useIntl()
+  const membersQuery = useProjectMembers()
+  const deviceInfo = useDeviceInfo()
   const coordinators = !membersQuery.data
     ? []
     : membersQuery.data.filter(
-        member =>
+        (member) =>
           member.role.roleId === CREATOR_ROLE_ID ||
           member.role.roleId === COORDINATOR_ROLE_ID,
-      );
+      )
 
   const participants = !membersQuery.data
     ? []
-    : membersQuery.data.filter(member => member.role.roleId === MEMBER_ROLE_ID);
+    : membersQuery.data.filter(
+        (member) => member.role.roleId === MEMBER_ROLE_ID,
+      )
 
   return (
     <ScrollView style={styles.container}>
@@ -80,21 +82,23 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
         fullWidth
         variant="outlined"
         onPress={() => {
-          navigation.navigate('SelectDevice');
-        }}>
+          navigation.navigate('SelectDevice')
+        }}
+      >
         <View
           style={{
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
-          }}>
+          }}
+        >
           <MaterialIcon
             color={BLACK}
             size={32}
             name="person-add"
-            style={{marginRight: 10}}
+            style={{ marginRight: 10 }}
           />
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
             {t(m.inviteDevice)}
           </Text>
         </View>
@@ -102,9 +106,9 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
       <IconHeader
         iconName="manage-accounts"
         messageDescriptor={m.coordinators}
-        style={{marginTop: 20}}
+        style={{ marginTop: 20 }}
       />
-      <Text style={{marginTop: 10}}>{t(m.coordinatorDescription)}</Text>
+      <Text style={{ marginTop: 10 }}>{t(m.coordinatorDescription)}</Text>
 
       <View
         style={{
@@ -112,17 +116,18 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
           justifyContent: 'space-between',
           alignItems: 'center',
           marginTop: 20,
-        }}>
-        <Text style={{marginTop: 10}}>{t(m.deviceName)}</Text>
-        <Text style={{marginTop: 10}}>{t(m.dateAdded)}</Text>
+        }}
+      >
+        <Text style={{ marginTop: 10 }}>{t(m.deviceName)}</Text>
+        <Text style={{ marginTop: 10 }}>{t(m.dateAdded)}</Text>
       </View>
 
       {membersQuery.isLoading && <Loading />}
 
-      {coordinators.map(coordinator => (
+      {coordinators.map((coordinator) => (
         <DeviceCard
           key={coordinator.deviceId}
-          style={{marginTop: 10}}
+          style={{ marginTop: 10 }}
           name={coordinator.name || ''}
           deviceId={coordinator.deviceId}
           deviceType="mobile"
@@ -136,16 +141,16 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
       <IconHeader
         iconName="people"
         messageDescriptor={m.participants}
-        style={{marginTop: 20}}
+        style={{ marginTop: 20 }}
       />
-      <Text style={{marginTop: 10}}>{t(m.participantDescription)}</Text>
+      <Text style={{ marginTop: 10 }}>{t(m.participantDescription)}</Text>
 
       {membersQuery.isLoading && <Loading />}
 
-      {participants.map(participant => (
+      {participants.map((participant) => (
         <DeviceCard
           key={participant.deviceId}
-          style={{marginTop: 10}}
+          style={{ marginTop: 10 }}
           name={participant.name || ''}
           deviceId={participant.deviceId}
           deviceType="mobile"
@@ -156,21 +161,21 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
         />
       ))}
     </ScrollView>
-  );
-};
+  )
+}
 
-YourTeam.navTitle = m.title;
+YourTeam.navTitle = m.title
 
 const IconHeader = ({
   iconName,
   messageDescriptor,
   style,
 }: {
-  iconName: string;
-  messageDescriptor: MessageDescriptor;
-  style?: ViewStyleProp;
+  iconName: string
+  messageDescriptor: MessageDescriptor
+  style?: ViewStyleProp
 }) => {
-  const {formatMessage: t} = useIntl();
+  const { formatMessage: t } = useIntl()
   return (
     <View
       style={[
@@ -179,23 +184,24 @@ const IconHeader = ({
           alignItems: 'center',
         },
         style,
-      ]}>
+      ]}
+    >
       <MaterialIcon
         color={BLACK}
         size={32}
         name={iconName}
-        style={{marginRight: 10}}
+        style={{ marginRight: 10 }}
       />
-      <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+      <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
         {t(messageDescriptor)}
       </Text>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
     padding: 20,
     paddingTop: 40,
   },
-});
+})

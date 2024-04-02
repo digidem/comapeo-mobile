@@ -1,19 +1,19 @@
-import * as React from 'react';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import CoMapeoText from '../images/CoMapeoTextBlue.svg';
+import * as React from 'react'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import CoMapeoText from '../images/CoMapeoTextBlue.svg'
 import {
   StyleSheet,
   View,
   TextInput,
   KeyboardAvoidingView,
   Keyboard,
-} from 'react-native';
-import {BLACK, LIGHT_GREY, MEDIUM_GREY, RED} from '../lib/styles';
-import {Text} from '../sharedComponents/Text';
-import {Button} from '../sharedComponents/Button';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import {defineMessages, useIntl} from 'react-intl';
-import {DeviceNamingSceens} from '../Navigation/ScreenGroups/DeviceNamingScreens';
+} from 'react-native'
+import { BLACK, LIGHT_GREY, MEDIUM_GREY, RED } from '../lib/styles'
+import { Text } from '../sharedComponents/Text'
+import { Button } from '../sharedComponents/Button'
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
+import { defineMessages, useIntl } from 'react-intl'
+import { DeviceNamingSceens } from '../Navigation/ScreenGroups/DeviceNamingScreens'
 
 const m = defineMessages({
   header: {
@@ -29,49 +29,55 @@ const m = defineMessages({
     id: 'screens.DeviceNaming.addName',
     defaultMessage: 'Add Name',
   },
-});
+})
 
 export const DeviceNaming = ({
   navigation,
 }: NativeStackScreenProps<DeviceNamingSceens, 'DeviceNaming'>) => {
-  const [name, setName] = React.useState('');
-  const [errorTimeout, setErrorTimeout] = useTemporaryError();
-  const invalidName = name.length === 0 || name.length > 60;
-  const {formatMessage: t} = useIntl();
+  const [name, setName] = React.useState('')
+  const [errorTimeout, setErrorTimeout] = useTemporaryError()
+  const invalidName = name.length === 0 || name.length > 60
+  const { formatMessage: t } = useIntl()
 
   function setNameWithValidation(nameValue: string) {
     if (nameValue.length > 60) {
-      setErrorTimeout();
-      return;
+      setErrorTimeout()
+      return
     }
-    setName(nameValue);
+    setName(nameValue)
   }
 
   function handleAddNamePress() {
     if (invalidName) {
-      setErrorTimeout();
-      return;
+      setErrorTimeout()
+      return
     }
 
-    navigation.navigate('Success', {deviceName: name});
+    navigation.navigate('Success', { deviceName: name })
   }
   return (
-    <KeyboardAvoidingView style={{width: '100%', height: '100%'}}>
+    <KeyboardAvoidingView style={{ width: '100%', height: '100%' }}>
       <TouchableWithoutFeedback
         style={styles.container}
-        onPress={Keyboard.dismiss}>
+        onPress={Keyboard.dismiss}
+      >
         <View>
-          <CoMapeoText style={{alignSelf: 'center'}} />
+          <CoMapeoText style={{ alignSelf: 'center' }} />
 
           <View
-            style={{flexDirection: 'row', alignItems: 'center', marginTop: 20}}>
-            <Text style={{fontWeight: '500'}}>{t(m.header)}</Text>
-            <Text style={{color: RED}}>*</Text>
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginTop: 20,
+            }}
+          >
+            <Text style={{ fontWeight: '500' }}>{t(m.header)}</Text>
+            <Text style={{ color: RED }}>*</Text>
           </View>
           <TextInput
             style={[
               styles.textInput,
-              {borderColor: !errorTimeout ? LIGHT_GREY : RED},
+              { borderColor: !errorTimeout ? LIGHT_GREY : RED },
             ]}
             value={name}
             onChangeText={setNameWithValidation}
@@ -82,7 +88,8 @@ export const DeviceNaming = ({
             style={{
               alignSelf: 'flex-end',
               color: errorTimeout ? RED : MEDIUM_GREY,
-            }}>
+            }}
+          >
             {`${name.length}/60`}
           </Text>
           <View style={styles.greyBox}>
@@ -95,33 +102,33 @@ export const DeviceNaming = ({
         </Button>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
-  );
-};
+  )
+}
 
 function useTemporaryError() {
-  const [errorTimeout, setErrorTimeout] = React.useState(false);
-  const timer = React.useRef<NodeJS.Timeout | undefined>();
+  const [errorTimeout, setErrorTimeout] = React.useState(false)
+  const timer = React.useRef<NodeJS.Timeout | undefined>()
 
   React.useEffect(() => {
     if (errorTimeout && !timer.current) {
       timer.current = setTimeout(() => {
-        setErrorTimeout(false);
-        timer.current = undefined;
-      }, 1500);
+        setErrorTimeout(false)
+        timer.current = undefined
+      }, 1500)
     }
 
     return () => {
       if (timer.current) {
-        clearTimeout(timer.current);
-        timer.current = undefined;
+        clearTimeout(timer.current)
+        timer.current = undefined
       }
-    };
-  }, [errorTimeout]);
+    }
+  }, [errorTimeout])
 
   return [
     errorTimeout,
-    () => setErrorTimeout(prevVal => (!prevVal ? true : prevVal)),
-  ] as const;
+    () => setErrorTimeout((prevVal) => (!prevVal ? true : prevVal)),
+  ] as const
 }
 
 const styles = StyleSheet.create({
@@ -149,4 +156,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 40,
   },
-});
+})

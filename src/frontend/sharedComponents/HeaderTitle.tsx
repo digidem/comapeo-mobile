@@ -1,17 +1,17 @@
-import * as React from 'react';
-import {Platform, StyleSheet} from 'react-native';
+import * as React from 'react'
+import { Platform, StyleSheet } from 'react-native'
 
-import {TextStyleProp} from '../sharedTypes';
-import {Text} from './Text';
+import { TextStyleProp } from '../sharedTypes'
+import { Text } from './Text'
 
 interface Props {
-  children: React.ReactNode;
-  style?: TextStyleProp;
+  children: React.ReactNode
+  style?: TextStyleProp
 }
 
-export const HeaderTitle = ({children, style}: Props) => (
+export const HeaderTitle = ({ children, style }: Props) => (
   <Text style={[styles.title, style]}>{children}</Text>
-);
+)
 
 const styles = StyleSheet.create({
   title: {
@@ -35,4 +35,4 @@ const styles = StyleSheet.create({
       },
     }),
   },
-});
+})

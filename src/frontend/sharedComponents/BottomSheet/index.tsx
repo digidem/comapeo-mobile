@@ -1,2 +1,2 @@
-export {Content as BottomSheetContent} from './Content';
-export type {Props as BottomSheetContentProps} from './Content';
+export { Content as BottomSheetContent } from './Content'
+export type { Props as BottomSheetContentProps } from './Content'

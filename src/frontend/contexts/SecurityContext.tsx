@@ -1,42 +1,46 @@
-import * as React from 'react';
-import {AppState, AppStateStatus} from 'react-native';
-import {usePersistedPasscode} from '../hooks/persistedState/usePersistedPasscode';
+import * as React from 'react'
+import { AppState, AppStateStatus } from 'react-native'
+import { usePersistedPasscode } from '../hooks/persistedState/usePersistedPasscode'
 
-type AuthState = 'unauthenticated' | 'authenticated' | 'obscured';
+type AuthState = 'unauthenticated' | 'authenticated' | 'obscured'
 
 type AuthValuesSet = {
-  passcodeSet: boolean;
-  obscureSet: boolean;
-};
+  passcodeSet: boolean
+  obscureSet: boolean
+}
 
 type SecurityContextType = {
-  authValuesSet: AuthValuesSet;
+  authValuesSet: AuthValuesSet
   authenticate: (
     passcodeValue: string | null,
     validateOnly?: boolean,
-  ) => boolean;
-  authState: AuthState;
-};
+  ) => boolean
+  authState: AuthState
+}
 
 const DefaultState: SecurityContextType = {
-  authValuesSet: {passcodeSet: false, obscureSet: false},
+  authValuesSet: { passcodeSet: false, obscureSet: false },
   authenticate: () => false,
   authState: 'unauthenticated',
-};
+}
 
-const SecurityContext = React.createContext<SecurityContextType>(DefaultState);
+const SecurityContext = React.createContext<SecurityContextType>(DefaultState)
 
-export const useSecurityContext = () => React.useContext(SecurityContext);
+export const useSecurityContext = () => React.useContext(SecurityContext)
 
-export const SecurityProvider = ({children}: {children: React.ReactNode}) => {
-  const passcode = usePersistedPasscode(store => store.passcode);
-  const obscureCode = usePersistedPasscode(store => store.obscureCode);
+export const SecurityProvider = ({
+  children,
+}: {
+  children: React.ReactNode
+}) => {
+  const passcode = usePersistedPasscode((store) => store.passcode)
+  const obscureCode = usePersistedPasscode((store) => store.obscureCode)
   const [authState, setAuthState] = React.useState<AuthState>(
     passcode === null ? 'authenticated' : 'unauthenticated',
-  );
+  )
 
-  const passcodeSet = passcode !== null;
-  const obscureSet = obscureCode !== null;
+  const passcodeSet = passcode !== null
+  const obscureSet = obscureCode !== null
 
   React.useEffect(() => {
     const appStateListener = AppState.addEventListener(
@@ -48,33 +52,33 @@ export const SecurityProvider = ({children}: {children: React.ReactNode}) => {
             nextAppState === 'background' ||
             nextAppState === 'inactive'
           ) {
-            setAuthState('unauthenticated');
+            setAuthState('unauthenticated')
           }
         }
       },
-    );
+    )
 
-    return () => appStateListener.remove();
-  }, [passcodeSet]);
+    return () => appStateListener.remove()
+  }, [passcodeSet])
 
   const authenticate: SecurityContextType['authenticate'] = React.useCallback(
     (passcodeValue, validateOnly = false) => {
-      if (validateOnly) return passcodeValue === passcode;
+      if (validateOnly) return passcodeValue === passcode
 
       if (obscureSet && passcodeValue === obscureCode) {
-        setAuthState('obscured');
-        return true;
+        setAuthState('obscured')
+        return true
       }
 
       if (passcodeValue === passcode) {
-        setAuthState('authenticated');
-        return true;
+        setAuthState('authenticated')
+        return true
       }
 
-      throw new Error('Incorrect Passcode');
+      throw new Error('Incorrect Passcode')
     },
     [passcode, obscureCode, obscureSet],
-  );
+  )
 
   const contextValue: SecurityContextType = React.useMemo(
     () => ({
@@ -86,16 +90,16 @@ export const SecurityProvider = ({children}: {children: React.ReactNode}) => {
       authState,
     }),
     [authenticate, passcodeSet, obscureSet, authState],
-  );
+  )
 
   return (
     <SecurityContext.Provider value={contextValue}>
       {children}
     </SecurityContext.Provider>
-  );
-};
+  )
+}
 
 function validPasscode(passcode: string | null): boolean {
-  if (passcode === null) return true;
-  return passcode.length === 5 && !isNaN(parseInt(passcode, 10));
+  if (passcode === null) return true
+  return passcode.length === 5 && !isNaN(parseInt(passcode, 10))
 }

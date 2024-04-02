@@ -1,11 +1,11 @@
-import React from 'react';
-import {defineMessages, useIntl} from 'react-intl';
-import {View, Text, StyleSheet} from 'react-native';
-import {BLACK, LIGHT_BLUE} from '../../lib/styles';
-import {TextButton} from '../../sharedComponents/TextButton';
-import {CategoryCircleIcon} from '../../sharedComponents/icons/CategoryIcon';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
+import React from 'react'
+import { defineMessages, useIntl } from 'react-intl'
+import { View, Text, StyleSheet } from 'react-native'
+import { BLACK, LIGHT_BLUE } from '../../lib/styles'
+import { TextButton } from '../../sharedComponents/TextButton'
+import { CategoryCircleIcon } from '../../sharedComponents/icons/CategoryIcon'
+import { useNavigationFromRoot } from '../../hooks/useNavigationWithTypes'
+import { useDraftObservation } from '../../hooks/useDraftObservation'
 
 const m = defineMessages({
   observation: {
@@ -18,16 +18,16 @@ const m = defineMessages({
     id: 'screens.Observation.ObservationEdit.CategoryView.changePreset',
     defaultMessage: 'Change',
   },
-});
+})
 
 export const PresetView = () => {
-  const {formatMessage: t} = useIntl();
-  const {navigate} = useNavigationFromRoot();
-  const {usePreset} = useDraftObservation();
-  const preset = usePreset();
+  const { formatMessage: t } = useIntl()
+  const { navigate } = useNavigationFromRoot()
+  const { usePreset } = useDraftObservation()
+  const preset = usePreset()
   const name = preset
-    ? t({id: `presets.${preset.docId}.name`, defaultMessage: preset.name})
-    : t(m.observation);
+    ? t({ id: `presets.${preset.docId}.name`, defaultMessage: preset.name })
+    : t(m.observation)
 
   return (
     <View style={styles.categoryContainer}>
@@ -47,8 +47,8 @@ export const PresetView = () => {
         title={t(m.changePreset)}
       />
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   categoryContainer: {
@@ -80,4 +80,4 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '500',
   },
-});
+})

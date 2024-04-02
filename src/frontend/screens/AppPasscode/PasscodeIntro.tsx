@@ -1,10 +1,10 @@
-import * as React from 'react';
-import {defineMessages, useIntl} from 'react-intl';
-import {StyleSheet, View, ScrollView} from 'react-native';
+import * as React from 'react'
+import { defineMessages, useIntl } from 'react-intl'
+import { StyleSheet, View, ScrollView } from 'react-native'
 
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {Button} from '../../sharedComponents/Button';
-import {Text} from '../../sharedComponents/Text';
+import { useNavigationFromRoot } from '../../hooks/useNavigationWithTypes'
+import { Button } from '../../sharedComponents/Button'
+import { Text } from '../../sharedComponents/Text'
 
 const m = defineMessages({
   title: {
@@ -25,11 +25,11 @@ const m = defineMessages({
     defaultMessage:
       '**Please note that forgotten passcodes cannot be recovered!** Once this feature is enabled, if you forget or lose your passcode, you will not be able to open Mapeo and will lose access to any Mapeo data that has not been synced with other project participants.',
   },
-});
+})
 
 export const PasscodeIntro = () => {
-  const {formatMessage: t} = useIntl();
-  const {navigate} = useNavigationFromRoot();
+  const { formatMessage: t } = useIntl()
+  const { navigate } = useNavigationFromRoot()
 
   return (
     <ScrollView>
@@ -37,21 +37,22 @@ export const PasscodeIntro = () => {
         <View>
           <Text style={[styles.title]}>{t(m.title)}</Text>
           <Text style={[styles.description]}>{t(m.description)}</Text>
-          <Text style={[styles.description, {marginTop: 20}]}>
+          <Text style={[styles.description, { marginTop: 20 }]}>
             {t(m.warning)}
           </Text>
         </View>
         <View>
           <Button
             style={[styles.button]}
-            onPress={() => navigate('SetPasscode')}>
+            onPress={() => navigate('SetPasscode')}
+          >
             {t(m.continue)}
           </Button>
         </View>
       </View>
     </ScrollView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -76,4 +77,4 @@ const styles = StyleSheet.create({
     minWidth: 90,
     maxWidth: 280,
   },
-});
+})

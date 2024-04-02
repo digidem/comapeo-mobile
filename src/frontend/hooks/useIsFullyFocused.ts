@@ -1,6 +1,6 @@
-import {useEffect, useState} from 'react';
-import {AppState, AppStateStatus} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import { useEffect, useState } from 'react'
+import { AppState, AppStateStatus } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 /**
  * Similar to `react-navigation/core`'s [`useIsFocused`](https://reactnavigation.org/docs/use-is-focused/)
  * but considers the screen to be focused only when:
@@ -8,26 +8,26 @@ import {useNavigation} from '@react-navigation/native';
  * 2) the app is not in the background
  */
 export const useIsFullyFocused = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation()
 
   const [isNavigationFullyFocused, setIsNavigationFullyFocused] = useState(
     navigation.isFocused(),
-  );
+  )
   const [isAppActive, setIsAppActive] = useState(
     AppState.currentState === 'active',
-  );
+  )
 
   useEffect(() => {
     const onAppStateChange = (nextAppState: AppStateStatus) =>
-      setIsAppActive(nextAppState === 'active');
+      setIsAppActive(nextAppState === 'active')
 
     const changeSubscription = AppState.addEventListener(
       'change',
       onAppStateChange,
-    );
+    )
 
-    return () => changeSubscription.remove();
-  }, []);
+    return () => changeSubscription.remove()
+  }, [])
 
   useEffect(() => {
     // let navSubscriptions: EventListenerCallback<any, any>  [] = [];
@@ -35,10 +35,10 @@ export const useIsFullyFocused = () => {
     const navSubscriptions = [
       navigation.addListener('focus', () => setIsNavigationFullyFocused(true)),
       navigation.addListener('blur', () => setIsNavigationFullyFocused(false)),
-    ];
+    ]
 
-    return () => navSubscriptions.forEach(s => s());
-  }, [navigation]);
+    return () => navSubscriptions.forEach((s) => s())
+  }, [navigation])
 
-  return isNavigationFullyFocused && isAppActive;
-};
+  return isNavigationFullyFocused && isAppActive
+}

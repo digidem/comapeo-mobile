@@ -1,22 +1,22 @@
-import * as React from 'react';
-import {Alert, ScrollView, StyleSheet} from 'react-native';
-import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
-import {useForm} from 'react-hook-form';
-import {UIActivityIndicator} from 'react-native-indicators';
+import * as React from 'react'
+import { Alert, ScrollView, StyleSheet } from 'react-native'
+import { NativeStackNavigationOptions } from '@react-navigation/native-stack'
+import { MessageDescriptor, defineMessages, useIntl } from 'react-intl'
+import { useForm } from 'react-hook-form'
+import { UIActivityIndicator } from 'react-native-indicators'
 
-import {NativeRootNavigationProps} from '../../../../sharedTypes';
+import { NativeRootNavigationProps } from '../../../../sharedTypes'
 import {
   useDeviceInfo,
   useEditDeviceInfo,
-} from '../../../../hooks/server/deviceInfo';
-import {BLACK} from '../../../../lib/styles';
-import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
-import {IconButton} from '../../../../sharedComponents/IconButton';
-import {SaveIcon} from '../../../../sharedComponents/icons';
-import {useBottomSheetModal} from '../../../../sharedComponents/BottomSheetModal';
-import {ErrorModal} from '../../../../sharedComponents/ErrorModal';
-import {FieldRow} from './FieldRow';
+} from '../../../../hooks/server/deviceInfo'
+import { BLACK } from '../../../../lib/styles'
+import { HookFormTextInput } from '../../../../sharedComponents/HookFormTextInput'
+import { IconButton } from '../../../../sharedComponents/IconButton'
+import { SaveIcon } from '../../../../sharedComponents/icons'
+import { useBottomSheetModal } from '../../../../sharedComponents/BottomSheetModal'
+import { ErrorModal } from '../../../../sharedComponents/ErrorModal'
+import { FieldRow } from './FieldRow'
 
 const m = defineMessages({
   title: {
@@ -39,12 +39,12 @@ const m = defineMessages({
     id: 'screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertCancelText',
     defaultMessage: 'Continue Editing',
   },
-});
+})
 
 export function createNavigationOptions({
   intl,
 }: {
-  intl: (title: MessageDescriptor) => string;
+  intl: (title: MessageDescriptor) => string
 }) {
   return (): NativeStackNavigationOptions => {
     return {
@@ -55,60 +55,60 @@ export function createNavigationOptions({
           <SaveIcon />
         </IconButton>
       ),
-    };
-  };
+    }
+  }
 }
 
 export const EditScreen = ({
   navigation,
 }: NativeRootNavigationProps<'DeviceNameEdit'>) => {
-  const {formatMessage: t} = useIntl();
+  const { formatMessage: t } = useIntl()
 
-  const {data} = useDeviceInfo();
+  const { data } = useDeviceInfo()
 
-  const deviceName = data?.name;
+  const deviceName = data?.name
 
-  const {control, getValues, handleSubmit, formState} = useForm<{
-    deviceName: string;
-  }>({defaultValues: {deviceName}});
+  const { control, getValues, handleSubmit, formState } = useForm<{
+    deviceName: string
+  }>({ defaultValues: { deviceName } })
 
-  const editDeviceInfoMutation = useEditDeviceInfo();
+  const editDeviceInfoMutation = useEditDeviceInfo()
 
-  const {isDirty: nameHasChanges} = control.getFieldState(
+  const { isDirty: nameHasChanges } = control.getFieldState(
     'deviceName',
     formState,
-  );
+  )
 
-  const errorModal = useBottomSheetModal({openOnMount: false});
+  const errorModal = useBottomSheetModal({ openOnMount: false })
 
   React.useEffect(
     function showDiscardChangesAlert() {
-      const unsubscribe = navigation.addListener('beforeRemove', event => {
+      const unsubscribe = navigation.addListener('beforeRemove', (event) => {
         // Ignore cases where navigation after successful submission occurs
-        if (event.data.action.type !== 'GO_BACK') return;
+        if (event.data.action.type !== 'GO_BACK') return
 
-        if (!nameHasChanges) return;
+        if (!nameHasChanges) return
 
-        event.preventDefault();
+        event.preventDefault()
 
         Alert.alert(t(m.discardChangesAlertTitle), undefined, [
-          {style: 'cancel', text: t(m.discardChangesAlertCancelText)},
+          { style: 'cancel', text: t(m.discardChangesAlertCancelText) },
           {
             style: 'default',
             text: t(m.discardChangesAlertConfirmText),
             onPress: () => {
-              navigation.dispatch(event.data.action);
+              navigation.dispatch(event.data.action)
             },
           },
-        ]);
-      });
+        ])
+      })
 
       return () => {
-        unsubscribe();
-      };
+        unsubscribe()
+      }
     },
     [t, navigation, getValues, nameHasChanges],
-  );
+  )
 
   React.useEffect(
     function updateNavigationOptions() {
@@ -119,30 +119,31 @@ export const EditScreen = ({
               onPress={
                 editDeviceInfoMutation.isPending
                   ? () => {}
-                  : handleSubmit(async value => {
+                  : handleSubmit(async (value) => {
                       if (!nameHasChanges) {
-                        navigation.navigate('DeviceNameDisplay');
-                        return;
+                        navigation.navigate('DeviceNameDisplay')
+                        return
                       }
 
                       editDeviceInfoMutation.mutate(value.deviceName, {
                         onSuccess: () =>
                           navigation.navigate('DeviceNameDisplay'),
                         onError: () => {
-                          errorModal.openSheet();
+                          errorModal.openSheet()
                         },
-                      });
+                      })
                     })
-              }>
+              }
+            >
               {editDeviceInfoMutation.isPending ? (
                 <UIActivityIndicator size={30} />
               ) : (
                 <SaveIcon />
               )}
             </IconButton>
-          );
+          )
         },
-      });
+      })
     },
     [
       handleSubmit,
@@ -152,7 +153,7 @@ export const EditScreen = ({
       nameHasChanges,
       errorModal.openSheet,
     ],
-  );
+  )
 
   return (
     <>
@@ -161,11 +162,11 @@ export const EditScreen = ({
           <HookFormTextInput
             control={control}
             name="deviceName"
-            rules={{maxLength: 60, required: true, minLength: 1}}
+            rules={{ maxLength: 60, required: true, minLength: 1 }}
             // TODO: Update HookFormTextInput implementation so that either:
             // - the implementation fully determines the text input's base style and this component doesn't allow custom styling
             // - this style prop is properly merged with the text input's base style in the implementation
-            style={{flex: 1, color: BLACK, fontSize: 16}}
+            style={{ flex: 1, color: BLACK, fontSize: 16 }}
             showCharacterCount
             autoFocus
             editable={!editDeviceInfoMutation.isPending}
@@ -178,12 +179,12 @@ export const EditScreen = ({
         isOpen={errorModal.isOpen}
       />
     </>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
     paddingVertical: 40,
   },
-});
+})

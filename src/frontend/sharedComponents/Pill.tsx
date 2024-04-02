@@ -1,6 +1,6 @@
-import * as React from 'react';
-import {FormattedMessage, MessageDescriptor} from 'react-intl';
-import {View, Text, StyleSheet} from 'react-native';
+import * as React from 'react'
+import { FormattedMessage, MessageDescriptor } from 'react-intl'
+import { View, Text, StyleSheet } from 'react-native'
 
 import {
   LIGHT_BLUE,
@@ -8,24 +8,24 @@ import {
   COMAPEO_BLUE,
   MEDIUM_BLUE,
   WHITE,
-} from '../lib/styles';
-import {TextStyleProp, ViewStyleProp} from '../sharedTypes';
+} from '../lib/styles'
+import { TextStyleProp, ViewStyleProp } from '../sharedTypes'
 
 interface PillProps {
-  text: MessageDescriptor;
-  containerStyle?: ViewStyleProp;
-  textStyle?: TextStyleProp;
+  text: MessageDescriptor
+  containerStyle?: ViewStyleProp
+  textStyle?: TextStyleProp
 }
 
-export const Pill = ({text, containerStyle, textStyle}: PillProps) => {
+export const Pill = ({ text, containerStyle, textStyle }: PillProps) => {
   return (
     <View style={[styles.container, containerStyle]}>
       <Text style={[styles.text, textStyle]}>
         <FormattedMessage {...text} />
       </Text>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -43,4 +43,4 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: WHITE,
   },
-});
+})

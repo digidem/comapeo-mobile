@@ -1,11 +1,11 @@
-import * as React from 'react';
-import {Animated} from 'react-native';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import * as React from 'react'
+import { Animated } from 'react-native'
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 
-import {MAGENTA, MEDIUM_BLUE, MEDIUM_GREY} from '../lib/styles';
+import { MAGENTA, MEDIUM_BLUE, MEDIUM_GREY } from '../lib/styles'
 
 export const useAnimatedRadio = () => {
-  const [animatedValue] = React.useState(new Animated.Value(0));
+  const [animatedValue] = React.useState(new Animated.Value(0))
 
   const animate = React.useCallback(() => {
     Animated.timing(animatedValue, {
@@ -13,20 +13,24 @@ export const useAnimatedRadio = () => {
       useNativeDriver: true,
       duration: 500,
     }).start(() => {
-      animatedValue.setValue(0);
-    });
-  }, [animatedValue]);
+      animatedValue.setValue(0)
+    })
+  }, [animatedValue])
 
-  return {animate, animatedValue};
-};
-
-interface Props {
-  animatedValue: Animated.Value;
-  selected?: boolean;
-  showError?: boolean;
+  return { animate, animatedValue }
 }
 
-export const AnimatedRadio = ({animatedValue, selected, showError}: Props) => {
+interface Props {
+  animatedValue: Animated.Value
+  selected?: boolean
+  showError?: boolean
+}
+
+export const AnimatedRadio = ({
+  animatedValue,
+  selected,
+  showError,
+}: Props) => {
   const animatedRadioStyles = React.useMemo(
     () => ({
       margin: 4,
@@ -40,7 +44,7 @@ export const AnimatedRadio = ({animatedValue, selected, showError}: Props) => {
       ],
     }),
     [animatedValue],
-  );
+  )
 
   return (
     <Animated.View style={animatedRadioStyles}>
@@ -50,5 +54,5 @@ export const AnimatedRadio = ({animatedValue, selected, showError}: Props) => {
         color={showError ? MAGENTA : selected ? MEDIUM_BLUE : MEDIUM_GREY}
       />
     </Animated.View>
-  );
-};
+  )
+}

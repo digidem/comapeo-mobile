@@ -1,14 +1,14 @@
-import * as React from 'react';
-import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {Text} from '../Text';
+import * as React from 'react'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { Text } from '../Text'
 
 interface ListProp {
-  children: React.ReactNode;
-  style?: StyleProp<ViewStyle>;
-  disablePadding?: boolean;
-  subheader?: string;
-  dense?: boolean;
-  testID?: string;
+  children: React.ReactNode
+  style?: StyleProp<ViewStyle>
+  disablePadding?: boolean
+  subheader?: string
+  dense?: boolean
+  testID?: string
 }
 
 export const List = ({
@@ -20,17 +20,18 @@ export const List = ({
   testID: testId,
   ...other
 }: ListProp) => {
-  const context = React.useMemo(() => ({dense}), [dense]);
+  const context = React.useMemo(() => ({ dense }), [dense])
   return (
     <View
       style={[styles.root, !disablePadding && styles.padding, style]}
       {...other}
-      testID={testId}>
+      testID={testId}
+    >
       {subheader && <Text style={styles.subheader}>{subheader}</Text>}
       {children}
     </View>
-  );
-};
+  )
+}
 
 export const styles = StyleSheet.create({
   /* Styles applied to the root element. */
@@ -51,4 +52,4 @@ export const styles = StyleSheet.create({
   subheader: {
     paddingTop: 0,
   },
-});
+})

@@ -1,32 +1,37 @@
-import * as React from 'react';
-import {GestureResponderEvent, StyleSheet, View, ViewStyle} from 'react-native';
+import * as React from 'react'
+import {
+  GestureResponderEvent,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from 'react-native'
 
-import {BLACK, VERY_LIGHT_BLUE} from '../lib/styles';
-import {Text} from './Text';
-import {TouchableNativeFeedback} from 'react-native-gesture-handler';
+import { BLACK, VERY_LIGHT_BLUE } from '../lib/styles'
+import { Text } from './Text'
+import { TouchableNativeFeedback } from 'react-native-gesture-handler'
 
-import {ViewStyleProp} from '../sharedTypes';
+import { ViewStyleProp } from '../sharedTypes'
 
-type ColorScheme = 'dark' | 'light';
-type Variant = 'contained' | 'outlined' | 'text';
-type Size = 'medium' | 'large';
+type ColorScheme = 'dark' | 'light'
+type Variant = 'contained' | 'outlined' | 'text'
+type Size = 'medium' | 'large'
 
 interface SharedTouchableProps {
-  disabled?: boolean;
-  onPress: (event: GestureResponderEvent) => void;
+  disabled?: boolean
+  onPress: (event: GestureResponderEvent) => void
 }
 
 interface Props {
-  TouchableComponent?: React.ComponentType<Partial<SharedTouchableProps>>;
-  children: React.ReactNode;
-  color?: ColorScheme;
-  disabled?: boolean;
-  fullWidth?: boolean;
-  onPress: (event: GestureResponderEvent) => void;
-  size?: Size;
-  style?: ViewStyleProp;
-  testID?: string;
-  variant?: Variant;
+  TouchableComponent?: React.ComponentType<Partial<SharedTouchableProps>>
+  children: React.ReactNode
+  color?: ColorScheme
+  disabled?: boolean
+  fullWidth?: boolean
+  onPress: (event: GestureResponderEvent) => void
+  size?: Size
+  style?: ViewStyleProp
+  testID?: string
+  variant?: Variant
 }
 
 export const Button = ({
@@ -40,14 +45,14 @@ export const Button = ({
   style,
   variant = 'contained',
 }: Props) => {
-  const buttonStyle = getButtonStyle(variant);
-  const textStyle = getTextStyle({color, variant, disabled});
-  const touchableStyle = getTouchableStyle(size);
+  const buttonStyle = getButtonStyle(variant)
+  const textStyle = getTextStyle({ color, variant, disabled })
+  const touchableStyle = getTouchableStyle(size)
 
   const sharedTouchableProps = {
     disabled,
     onPress: disabled ? undefined : onPress,
-  };
+  }
 
   const buttonContent = (
     <View style={touchableStyle as ViewStyle}>
@@ -60,7 +65,7 @@ export const Button = ({
         // TODO: Handle <FormattedMessage> as children (wrapping in <Text>)
       }
     </View>
-  );
+  )
 
   return (
     <View
@@ -69,7 +74,8 @@ export const Button = ({
         buttonStyle,
         fullWidth && styles.fullWidth,
         style,
-      ]}>
+      ]}
+    >
       {TouchableComponent ? (
         <TouchableComponent {...sharedTouchableProps}>
           {buttonContent}
@@ -77,16 +83,17 @@ export const Button = ({
       ) : (
         <TouchableNativeFeedback
           {...sharedTouchableProps}
-          background={TouchableNativeFeedback.Ripple(VERY_LIGHT_BLUE, false)}>
+          background={TouchableNativeFeedback.Ripple(VERY_LIGHT_BLUE, false)}
+        >
           {buttonContent}
         </TouchableNativeFeedback>
       )}
     </View>
-  );
-};
+  )
+}
 
 function capitalize(str: string) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+  return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
 function getButtonStyle(variant?: Variant) {
@@ -95,7 +102,7 @@ function getButtonStyle(variant?: Variant) {
       ? styles.buttonContained
       : variant === 'outlined'
         ? styles.buttonOutlined
-        : undefined;
+        : undefined
   }
 }
 
@@ -104,9 +111,9 @@ function getTextStyle({
   disabled,
   variant,
 }: {
-  color?: ColorScheme;
-  disabled?: boolean;
-  variant?: Variant;
+  color?: ColorScheme
+  disabled?: boolean
+  variant?: Variant
 }) {
   if (variant && color) {
     return styles[
@@ -114,12 +121,12 @@ function getTextStyle({
         capitalize(variant) +
         capitalize(color) +
         (disabled ? 'Disabled' : '')) as keyof typeof styles
-    ];
+    ]
   }
 }
 
 function getTouchableStyle(size: Size) {
-  return styles[('touchable' + capitalize(size)) as keyof typeof styles];
+  return styles[('touchable' + capitalize(size)) as keyof typeof styles]
 }
 
 const styles = StyleSheet.create({
@@ -168,4 +175,4 @@ const styles = StyleSheet.create({
   textOutlinedDarkDisabled: {
     color: '#999999',
   },
-});
+})

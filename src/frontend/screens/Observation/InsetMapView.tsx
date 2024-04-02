@@ -1,21 +1,21 @@
-import MapboxGL from '@rnmapbox/maps';
-import React from 'react';
-import {View, Text, StyleSheet, Dimensions, Image} from 'react-native';
-import {BLACK, WHITE} from '../../lib/styles';
-import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings';
-import {FormattedCoords} from '../../sharedComponents/FormattedData';
-import {MAP_STYLE} from '../MapScreen';
+import MapboxGL from '@rnmapbox/maps'
+import React from 'react'
+import { View, Text, StyleSheet, Dimensions, Image } from 'react-native'
+import { BLACK, WHITE } from '../../lib/styles'
+import { usePersistedSettings } from '../../hooks/persistedState/usePersistedSettings'
+import { FormattedCoords } from '../../sharedComponents/FormattedData'
+import { MAP_STYLE } from '../MapScreen'
 
-const MAP_HEIGHT = 175;
-const ICON_OFFSET = {x: 22, y: 21};
+const MAP_HEIGHT = 175
+const ICON_OFFSET = { x: 22, y: 21 }
 
 type MapProps = {
-  lon: number;
-  lat: number;
-};
+  lon: number
+  lat: number
+}
 
-export const InsetMapView = React.memo<MapProps>(({lon, lat}: MapProps) => {
-  const format = usePersistedSettings(store => store.coordinateFormat);
+export const InsetMapView = React.memo<MapProps>(({ lon, lat }: MapProps) => {
+  const format = usePersistedSettings((store) => store.coordinateFormat)
   return (
     <View>
       <Image
@@ -37,7 +37,8 @@ export const InsetMapView = React.memo<MapProps>(({lon, lat}: MapProps) => {
         rotateEnabled={false}
         compassEnabled={false}
         scaleBarEnabled={false}
-        styleURL={MAP_STYLE}>
+        styleURL={MAP_STYLE}
+      >
         <MapboxGL.Camera
           centerCoordinate={[lon, lat]}
           zoomLevel={12}
@@ -45,8 +46,8 @@ export const InsetMapView = React.memo<MapProps>(({lon, lat}: MapProps) => {
         />
       </MapboxGL.MapView>
     </View>
-  );
-});
+  )
+})
 
 const styles = StyleSheet.create({
   coords: {
@@ -90,4 +91,4 @@ const styles = StyleSheet.create({
     color: BLACK,
     fontWeight: '700',
   },
-});
+})

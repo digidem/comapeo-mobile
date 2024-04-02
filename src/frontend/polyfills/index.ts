@@ -1,1 +1,1 @@
-import './intl';
+import './intl'

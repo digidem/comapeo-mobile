@@ -1,17 +1,17 @@
-import * as React from 'react';
-import {View, StyleSheet, Easing} from 'react-native';
-import {DotIndicator} from 'react-native-indicators';
-import {WHITE} from '../lib/styles';
-import {ViewStyleProp} from '../sharedTypes';
+import * as React from 'react'
+import { View, StyleSheet, Easing } from 'react-native'
+import { DotIndicator } from 'react-native-indicators'
+import { WHITE } from '../lib/styles'
+import { ViewStyleProp } from '../sharedTypes'
 
 export const Loading = ({
   color,
   size,
   style,
 }: {
-  color?: string;
-  size?: number;
-  style?: ViewStyleProp;
+  color?: string
+  size?: number
+  style?: ViewStyleProp
 }) => (
   <View style={[styles.root, style]}>
     <DotIndicator
@@ -22,7 +22,7 @@ export const Loading = ({
       animationEasing={Easing.ease}
     />
   </View>
-);
+)
 
 const styles = StyleSheet.create({
   root: {
@@ -32,4 +32,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
   },
-});
+})

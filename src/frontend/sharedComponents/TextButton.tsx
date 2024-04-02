@@ -1,19 +1,19 @@
-import * as React from 'react';
-import {StyleSheet} from 'react-native';
-import {Text} from './Text';
-import {TouchableNativeFeedback} from '../sharedComponents/Touchables';
+import * as React from 'react'
+import { StyleSheet } from 'react-native'
+import { Text } from './Text'
+import { TouchableNativeFeedback } from '../sharedComponents/Touchables'
 
-import {COMAPEO_BLUE, VERY_LIGHT_BLUE} from '../lib/styles';
-import type {ViewStyleProp} from '../sharedTypes';
+import { COMAPEO_BLUE, VERY_LIGHT_BLUE } from '../lib/styles'
+import type { ViewStyleProp } from '../sharedTypes'
 
 type Props = {
-  onPress: () => void;
-  containerStyle?: ViewStyleProp;
-  textStyle?: ViewStyleProp;
-  title: string;
-  testID?: string;
-  style?: ViewStyleProp;
-};
+  onPress: () => void
+  containerStyle?: ViewStyleProp
+  textStyle?: ViewStyleProp
+  title: string
+  testID?: string
+  style?: ViewStyleProp
+}
 
 export const TextButton = ({
   onPress,
@@ -25,10 +25,11 @@ export const TextButton = ({
   <TouchableNativeFeedback
     style={[styles.buttonContainer, containerStyle]}
     background={TouchableNativeFeedback.Ripple(VERY_LIGHT_BLUE, true)}
-    onPress={onPress}>
+    onPress={onPress}
+  >
     <Text style={[styles.buttonText, textStyle]}>{title}</Text>
   </TouchableNativeFeedback>
-);
+)
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -40,4 +41,4 @@ const styles = StyleSheet.create({
     color: COMAPEO_BLUE,
     fontWeight: '700',
   },
-});
+})

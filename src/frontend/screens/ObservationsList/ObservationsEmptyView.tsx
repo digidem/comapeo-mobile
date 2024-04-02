@@ -1,12 +1,12 @@
-import React from 'react';
-import {View, StyleSheet, Dimensions} from 'react-native';
-import {Text} from '../../sharedComponents/Text';
-import {defineMessages, useIntl} from 'react-intl';
-import {ObservationListIcon} from '../../sharedComponents/icons';
+import React from 'react'
+import { View, StyleSheet, Dimensions } from 'react-native'
+import { Text } from '../../sharedComponents/Text'
+import { defineMessages, useIntl } from 'react-intl'
+import { ObservationListIcon } from '../../sharedComponents/icons'
 
-import {Button} from '../../sharedComponents/Button';
+import { Button } from '../../sharedComponents/Button'
 
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window')
 
 const m = defineMessages({
   noObservationsTitle: {
@@ -28,14 +28,14 @@ const m = defineMessages({
       'Back button on observation list screen when no observations are yet recorded',
     defaultMessage: 'Go To Map',
   },
-});
+})
 
 type Props = {
-  onPressBack: () => any;
-};
+  onPressBack: () => any
+}
 
-const ObservationEmptyView = ({onPressBack}: Props) => {
-  const {formatMessage: t} = useIntl();
+const ObservationEmptyView = ({ onPressBack }: Props) => {
+  const { formatMessage: t } = useIntl()
   return (
     <View style={styles.root} testID="observationsEmptyView">
       <View style={styles.iconContainer}>
@@ -57,10 +57,10 @@ const ObservationEmptyView = ({onPressBack}: Props) => {
         </Button>
       </View>
     </View>
-  );
-};
+  )
+}
 
-export default ObservationEmptyView;
+export default ObservationEmptyView
 
 const styles = StyleSheet.create({
   root: {
@@ -105,4 +105,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+})

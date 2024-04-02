@@ -1,9 +1,9 @@
-import {useMemo} from 'react';
+import { useMemo } from 'react'
 
-import {useObservations} from './server/observations';
+import { useObservations } from './server/observations'
 
 export function useAllObservations() {
-  const {data: observations} = useObservations();
+  const { data: observations } = useObservations()
 
   const observationsArray = useMemo(
     () =>
@@ -11,7 +11,7 @@ export function useAllObservations() {
         a.createdAt < b.createdAt ? 1 : -1,
       ),
     [observations],
-  );
+  )
 
-  return observationsArray;
+  return observationsArray
 }

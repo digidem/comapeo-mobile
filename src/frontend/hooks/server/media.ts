@@ -1,24 +1,24 @@
-import {Observation} from '@mapeo/schema';
-import {BlobVariant} from '@mapeo/core/dist/types';
-import {useMutation, useQueries} from '@tanstack/react-query';
-import {SetRequired} from 'type-fest';
-import {URL} from 'react-native-url-polyfill';
+import { Observation } from '@mapeo/schema'
+import { BlobVariant } from '@mapeo/core/dist/types'
+import { useMutation, useQueries } from '@tanstack/react-query'
+import { SetRequired } from 'type-fest'
+import { URL } from 'react-native-url-polyfill'
 
-import {DraftPhoto} from '../../contexts/PhotoPromiseContext/types';
-import {useProject} from './projects';
+import { DraftPhoto } from '../../contexts/PhotoPromiseContext/types'
+import { useProject } from './projects'
 
 type SavablePhoto = SetRequired<
   Pick<DraftPhoto, 'originalUri' | 'previewUri' | 'thumbnailUri'>,
   'originalUri'
->;
+>
 
-export function useCreateBlobMutation(opts: {retry?: number} = {}) {
-  const project = useProject();
+export function useCreateBlobMutation(opts: { retry?: number } = {}) {
+  const project = useProject()
 
   return useMutation({
     retry: opts.retry,
     mutationFn: async (photo: SavablePhoto) => {
-      const {originalUri, previewUri, thumbnailUri} = photo;
+      const { originalUri, previewUri, thumbnailUri } = photo
 
       return project.$blobs.create(
         {
@@ -28,10 +28,10 @@ export function useCreateBlobMutation(opts: {retry?: number} = {}) {
         },
         // TODO: DraftPhoto type should probably carry MIME type info that feeds this
         // although backend currently only uses first part of path
-        {mimeType: 'image/jpeg'},
-      );
+        { mimeType: 'image/jpeg' },
+      )
     },
-  });
+  })
 }
 
 export function useAttachmentUrlQueries(
@@ -40,10 +40,10 @@ export function useAttachmentUrlQueries(
     Exclude<Observation['attachments'][number]['type'], 'UNRECOGNIZED'>
   >,
 ) {
-  const project = useProject();
+  const project = useProject()
 
   return useQueries({
-    queries: attachments.map(attachment => {
+    queries: attachments.map((attachment) => {
       return {
         queryKey: [
           'attachmentUrl',
@@ -55,14 +55,12 @@ export function useAttachmentUrlQueries(
         queryFn: async () => {
           switch (attachment.type) {
             case 'UNRECOGNIZED': {
-              throw new Error(
-                'Cannot get URL for unrecognized attachment type',
-              );
+              throw new Error('Cannot get URL for unrecognized attachment type')
             }
             case 'video':
             case 'audio': {
               if (variant !== 'original') {
-                throw new Error('Cannot get URL of attachment for variant');
+                throw new Error('Cannot get URL of attachment for variant')
               }
 
               return project.$blobs.getUrl({
@@ -70,7 +68,7 @@ export function useAttachmentUrlQueries(
                 name: attachment.name,
                 type: attachment.type,
                 variant,
-              });
+              })
             }
             case 'photo': {
               return project.$blobs.getUrl({
@@ -78,11 +76,11 @@ export function useAttachmentUrlQueries(
                 name: attachment.name,
                 type: attachment.type,
                 variant,
-              });
+              })
             }
           }
         },
-      };
+      }
     }),
-  });
+  })
 }

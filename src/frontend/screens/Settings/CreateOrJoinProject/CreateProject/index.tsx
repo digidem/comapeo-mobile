@@ -1,27 +1,27 @@
-import {defineMessages, useIntl} from 'react-intl';
-import {NativeNavigationComponent} from '../../../../sharedTypes';
-import {Keyboard, KeyboardAvoidingView, StyleSheet, View} from 'react-native';
-import {useForm} from 'react-hook-form';
-import {Text} from '../../../../sharedComponents/Text';
-import * as React from 'react';
+import { defineMessages, useIntl } from 'react-intl'
+import { NativeNavigationComponent } from '../../../../sharedTypes'
+import { Keyboard, KeyboardAvoidingView, StyleSheet, View } from 'react-native'
+import { useForm } from 'react-hook-form'
+import { Text } from '../../../../sharedComponents/Text'
+import * as React from 'react'
 import {
   TouchableWithoutFeedback,
   TouchableOpacity,
-} from 'react-native-gesture-handler';
-import {Button} from '../../../../sharedComponents/Button';
+} from 'react-native-gesture-handler'
+import { Button } from '../../../../sharedComponents/Button'
 import {
   BLACK,
   LIGHT_GREY,
   MEDIUM_GREY,
   RED,
   WHITE,
-} from '../../../../lib/styles';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
-import {useCreateProject} from '../../../../hooks/server/projects';
-import {UIActivityIndicator} from 'react-native-indicators';
-import {ErrorModal} from '../../../../sharedComponents/ErrorModal';
-import {useBottomSheetModal} from '../../../../sharedComponents/BottomSheetModal';
+} from '../../../../lib/styles'
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
+import { HookFormTextInput } from '../../../../sharedComponents/HookFormTextInput'
+import { useCreateProject } from '../../../../hooks/server/projects'
+import { UIActivityIndicator } from 'react-native-indicators'
+import { ErrorModal } from '../../../../sharedComponents/ErrorModal'
+import { useBottomSheetModal } from '../../../../sharedComponents/BottomSheetModal'
 
 const m = defineMessages({
   title: {
@@ -44,36 +44,36 @@ const m = defineMessages({
     id: 'screens.Settings.CreateOrJoinProject.importConfig',
     defaultMessage: 'Import Config',
   },
-});
+})
 
 type ProjectFormType = {
-  projectName: string;
-};
+  projectName: string
+}
 
 export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
   navigation,
 }) => {
-  const {formatMessage: t} = useIntl();
-  const [advancedSettingOpen, setAdvancedSettingOpen] = React.useState(false);
-  const {mutate, isPending, reset} = useCreateProject();
-  const {openSheet, isOpen, closeSheet, sheetRef} = useBottomSheetModal({
+  const { formatMessage: t } = useIntl()
+  const [advancedSettingOpen, setAdvancedSettingOpen] = React.useState(false)
+  const { mutate, isPending, reset } = useCreateProject()
+  const { openSheet, isOpen, closeSheet, sheetRef } = useBottomSheetModal({
     openOnMount: false,
-  });
+  })
 
   const {
     control,
     handleSubmit,
-    formState: {errors},
-  } = useForm<ProjectFormType>({defaultValues: {projectName: ''}});
+    formState: { errors },
+  } = useForm<ProjectFormType>({ defaultValues: { projectName: '' } })
 
   function handleCreateProject(val: ProjectFormType) {
     mutate(val.projectName, {
       onSuccess: () =>
-        navigation.navigate('ProjectCreated', {name: val.projectName}),
-      onError: err => {
-        openSheet();
+        navigation.navigate('ProjectCreated', { name: val.projectName }),
+      onError: (err) => {
+        openSheet()
       },
-    });
+    })
   }
 
   return (
@@ -81,21 +81,23 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
       <KeyboardAvoidingView>
         <TouchableWithoutFeedback
           onPress={() => Keyboard.dismiss()}
-          style={styles.container}>
+          style={styles.container}
+        >
           <View>
-            <Text style={{marginHorizontal: 20}}>{t(m.enterName)}</Text>
-            <View style={{marginHorizontal: 20, marginTop: 10}}>
+            <Text style={{ marginHorizontal: 20 }}>{t(m.enterName)}</Text>
+            <View style={{ marginHorizontal: 20, marginTop: 10 }}>
               <HookFormTextInput
                 control={control}
                 name="projectName"
-                rules={{maxLength: 100, required: true, minLength: 1}}
+                rules={{ maxLength: 100, required: true, minLength: 1 }}
                 showCharacterCount
               />
             </View>
-            <View style={{marginTop: 20}}>
+            <View style={{ marginTop: 20 }}>
               <TouchableOpacity
-                onPress={() => setAdvancedSettingOpen(prev => !prev)}
-                style={styles.accordianHeader}>
+                onPress={() => setAdvancedSettingOpen((prev) => !prev)}
+                style={styles.accordianHeader}
+              >
                 <Text>{t(m.advancedSettings)}</Text>
                 <MaterialIcon
                   color={BLACK}
@@ -108,7 +110,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
                 />
               </TouchableOpacity>
               {advancedSettingOpen && (
-                <View style={{padding: 20}}>
+                <View style={{ padding: 20 }}>
                   <Button fullWidth variant="outlined" onPress={() => {}}>
                     {t(m.importConfig)}
                   </Button>
@@ -116,9 +118,9 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
               )}
             </View>
           </View>
-          <View style={{paddingHorizontal: 20}}>
+          <View style={{ paddingHorizontal: 20 }}>
             {isPending ? (
-              <UIActivityIndicator size={30} style={{marginBottom: 20}} />
+              <UIActivityIndicator size={30} style={{ marginBottom: 20 }} />
             ) : (
               <Button fullWidth onPress={handleSubmit(handleCreateProject)}>
                 {t(m.createProjectButton)}
@@ -134,10 +136,10 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
         clearError={reset}
       />
     </React.Fragment>
-  );
-};
+  )
+}
 
-CreateProject.navTitle = m.title;
+CreateProject.navTitle = m.title
 
 const styles = StyleSheet.create({
   container: {
@@ -155,4 +157,4 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     boderColor: LIGHT_GREY,
   },
-});
+})

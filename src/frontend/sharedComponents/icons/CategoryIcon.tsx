@@ -1,48 +1,48 @@
-import * as React from 'react';
-import {Image} from 'react-native';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import * as React from 'react'
+import { Image } from 'react-native'
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 
-import {Circle} from './Circle';
-import {IconSize} from '../../sharedTypes';
+import { Circle } from './Circle'
+import { IconSize } from '../../sharedTypes'
 
 interface CategoryIconProps {
-  size?: IconSize;
-  iconId?: string;
+  size?: IconSize
+  iconId?: string
 }
 
 interface CategoryCircleIconProps extends CategoryIconProps {
-  color?: string;
+  color?: string
 }
 
 const iconSizes = {
   small: 22,
   medium: 35,
   large: 50,
-};
+}
 
 const radii = {
   small: 15,
   medium: 25,
   large: 35,
-};
+}
 
 export const CategoryIcon = React.memo<CategoryIconProps>(
-  ({size = 'medium', iconId}) => {
-    const [error, setError] = React.useState(false);
-    const iconSize = iconSizes[size] || 35;
+  ({ size = 'medium', iconId }) => {
+    const [error, setError] = React.useState(false)
+    const iconSize = iconSizes[size] || 35
     // Fallback to a default icon if we can't load the icon from mapeo-server
     // if (error || !iconId) {
     //   return <MaterialIcon name="place" size={iconSize} />;
     // }
     return (
       <Image
-        style={{width: iconSize, height: iconSize}}
+        style={{ width: iconSize, height: iconSize }}
         source={require('../../images/icon_mapeo_pin.png')}
         onError={() => setError(true)}
       />
-    );
+    )
   },
-);
+)
 
 export const CategoryCircleIcon = ({
   color,
@@ -66,5 +66,5 @@ export const CategoryCircleIcon = ({
     >
       <CategoryIcon iconId={iconId} size={size} />
     </Circle>
-  );
-};
+  )
+}

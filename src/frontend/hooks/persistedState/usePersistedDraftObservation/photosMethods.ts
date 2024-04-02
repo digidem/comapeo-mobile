@@ -1,24 +1,24 @@
-import {StoreApi} from 'zustand';
-import {DraftPhoto} from '../../../contexts/PhotoPromiseContext/types';
-import {DraftObservationSlice} from '.';
-import {ObservationValue} from '@mapeo/schema';
+import { StoreApi } from 'zustand'
+import { DraftPhoto } from '../../../contexts/PhotoPromiseContext/types'
+import { DraftObservationSlice } from '.'
+import { ObservationValue } from '@mapeo/schema'
 
-type Setter = StoreApi<DraftObservationSlice>['setState'];
-type Getter = StoreApi<DraftObservationSlice>['getState'];
+type Setter = StoreApi<DraftObservationSlice>['setState']
+type Getter = StoreApi<DraftObservationSlice>['getState']
 export interface SavedPhoto {
   // id of the photo in the Mapeo database
-  id: string;
-  type?: 'photo';
+  id: string
+  type?: 'photo'
   // If an image is to be deleted
-  deleted?: boolean;
+  deleted?: boolean
 }
 
 export function deletePhoto(set: Setter, get: Getter, uri: string) {
   const newPhotosArray = get().photos.filter(
-    photo => 'originalUri' in photo && photo.originalUri !== uri,
-  );
+    (photo) => 'originalUri' in photo && photo.originalUri !== uri,
+  )
 
-  set({photos: newPhotosArray});
+  set({ photos: newPhotosArray })
 }
 
 export function replaceDraftPhotos(
@@ -26,13 +26,13 @@ export function replaceDraftPhotos(
   get: Getter,
   draftPhoto: DraftPhoto,
 ) {
-  const updatedPhotosState = get().photos.map(p => {
+  const updatedPhotosState = get().photos.map((p) => {
     if ('draftPhotoId' in p && p.draftPhotoId === draftPhoto.draftPhotoId) {
-      return draftPhoto;
+      return draftPhoto
     }
-    return p;
-  });
-  set({photos: updatedPhotosState});
+    return p
+  })
+  set({ photos: updatedPhotosState })
 }
 
 // Filter photos from an array of observation attachments (we could have videos
@@ -40,7 +40,7 @@ export function replaceDraftPhotos(
 export function filterPhotosFromAttachments(
   attachments: ObservationValue['attachments'] = [],
 ): Array<SavedPhoto> {
-  if (!attachments || attachments.length < 1) return [];
+  if (!attachments || attachments.length < 1) return []
 
   return attachments.reduce<Array<SavedPhoto>>((acc, att) => {
     if (
@@ -52,7 +52,7 @@ export function filterPhotosFromAttachments(
       acc.push({
         id: `${att.driveDiscoveryId}/${att.type}/${att.name}`,
         type: att.type,
-      });
-    return acc;
-  }, []);
+      })
+    return acc
+  }, [])
 }

@@ -1,17 +1,17 @@
-import * as React from 'react';
-import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
+import * as React from 'react'
+import { MessageDescriptor, defineMessages, useIntl } from 'react-intl'
 
-import {NativeNavigationComponent} from '../../sharedTypes';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
-import {View, ScrollView, StyleSheet} from 'react-native';
-import {LocationView} from './LocationView';
-import {DescriptionField} from './DescriptionField';
-import {BottomSheet} from './BottomSheet';
-import {ThumbnailScrollView} from '../../sharedComponents/ThumbnailScrollView';
-import {PresetView} from './PresetView';
-import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
-import {ErrorModal} from '../../sharedComponents/ErrorModal';
-import {SaveButton} from './SaveButton';
+import { NativeNavigationComponent } from '../../sharedTypes'
+import { usePersistedDraftObservation } from '../../hooks/persistedState/usePersistedDraftObservation'
+import { View, ScrollView, StyleSheet } from 'react-native'
+import { LocationView } from './LocationView'
+import { DescriptionField } from './DescriptionField'
+import { BottomSheet } from './BottomSheet'
+import { ThumbnailScrollView } from '../../sharedComponents/ThumbnailScrollView'
+import { PresetView } from './PresetView'
+import { useBottomSheetModal } from '../../sharedComponents/BottomSheetModal'
+import { ErrorModal } from '../../sharedComponents/ErrorModal'
+import { SaveButton } from './SaveButton'
 
 const m = defineMessages({
   editTitle: {
@@ -29,36 +29,36 @@ const m = defineMessages({
     defaultMessage: 'Add Photo',
     description: 'Button label for adding photo',
   },
-});
+})
 
 export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
-  editTitle: MessageDescriptor;
-} = ({navigation}) => {
+  editTitle: MessageDescriptor
+} = ({ navigation }) => {
   const observationId = usePersistedDraftObservation(
-    store => store.observationId,
-  );
+    (store) => store.observationId,
+  )
 
-  const isNew = !observationId;
-  const {formatMessage: t} = useIntl();
-  const {openSheet, sheetRef, isOpen, closeSheet} = useBottomSheetModal({
+  const isNew = !observationId
+  const { formatMessage: t } = useIntl()
+  const { openSheet, sheetRef, isOpen, closeSheet } = useBottomSheetModal({
     openOnMount: false,
-  });
+  })
 
   React.useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <SaveButton observationId={observationId} openErrorModal={openSheet} />
       ),
-    });
-  }, [navigation, openSheet]);
+    })
+  }, [navigation, openSheet])
 
   const handleCameraPress = React.useCallback(() => {
-    navigation.navigate('AddPhoto');
-  }, [navigation]);
+    navigation.navigate('AddPhoto')
+  }, [navigation])
 
   const handleDetailsPress = React.useCallback(() => {
-    navigation.navigate('ObservationDetails', {question: 1});
-  }, [navigation]);
+    navigation.navigate('ObservationDetails', { question: 1 })
+  }, [navigation])
 
   const bottomSheetItems = [
     {
@@ -66,7 +66,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
       label: t(m.photoButton),
       onPress: handleCameraPress,
     },
-  ];
+  ]
   // if (preset && preset.fields && preset.fields.length) {
   //   // Only show the option to add details if preset fields are defined.
   //   bottomSheetItems.push({
@@ -80,7 +80,8 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
     <View style={styles.container}>
       <ScrollView
         style={styles.container}
-        contentContainerStyle={styles.scrollViewContent}>
+        contentContainerStyle={styles.scrollViewContent}
+      >
         {isNew && <LocationView />}
         <PresetView />
         <DescriptionField />
@@ -89,11 +90,11 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
       <BottomSheet items={bottomSheetItems} />
       <ErrorModal sheetRef={sheetRef} closeSheet={closeSheet} isOpen={isOpen} />
     </View>
-  );
-};
+  )
+}
 
-ObservationEdit.navTitle = m.newTitle;
-ObservationEdit.editTitle = m.editTitle;
+ObservationEdit.navTitle = m.newTitle
+ObservationEdit.editTitle = m.editTitle
 
 const styles = StyleSheet.create({
   container: {
@@ -105,4 +106,4 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignContent: 'stretch',
   },
-});
+})

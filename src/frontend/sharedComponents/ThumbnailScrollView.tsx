@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   ActivityIndicator,
   Image,
@@ -10,39 +10,40 @@ import {
   ViewStyle,
   ImageErrorEventData,
   NativeSyntheticEvent,
-} from 'react-native';
-import debug from 'debug';
+} from 'react-native'
+import debug from 'debug'
 
-import {LIGHT_GREY} from '../lib/styles';
-import {AlertIcon} from './icons';
-import {Photo} from '../contexts/PhotoPromiseContext/types';
-import {usePersistedDraftObservation} from '../hooks/persistedState/usePersistedDraftObservation';
+import { LIGHT_GREY } from '../lib/styles'
+import { AlertIcon } from './icons'
+import { Photo } from '../contexts/PhotoPromiseContext/types'
+import { usePersistedDraftObservation } from '../hooks/persistedState/usePersistedDraftObservation'
 
-const spacing = 10;
-const minSize = 150;
-const log = debug('Thumbnail');
+const spacing = 10
+const minSize = 150
+const log = debug('Thumbnail')
 
 type ThumbnailProps = {
-  photo: Photo;
-  onPress: () => any;
-  style?: StyleProp<ViewStyle>;
-  size?: number;
-};
+  photo: Photo
+  onPress: () => any
+  style?: StyleProp<ViewStyle>
+  size?: number
+}
 
-export const Thumbnail = ({photo, style, size, onPress}: ThumbnailProps) => {
-  const [error, setError] = React.useState(false);
+export const Thumbnail = ({ photo, style, size, onPress }: ThumbnailProps) => {
+  const [error, setError] = React.useState(false)
 
-  const uri = 'thumbnailUri' in photo ? photo.thumbnailUri : undefined;
+  const uri = 'thumbnailUri' in photo ? photo.thumbnailUri : undefined
 
   function handleImageError(e: NativeSyntheticEvent<ImageErrorEventData>) {
-    log('Error loading image:\n', e.nativeEvent && e.nativeEvent.error);
-    setError(true);
+    log('Error loading image:\n', e.nativeEvent && e.nativeEvent.error)
+    setError(true)
   }
 
   return (
     <TouchableOpacity
-      style={[styles.thumbnailContainer, {width: size, height: size}, style]}
-      onPress={onPress}>
+      style={[styles.thumbnailContainer, { width: size, height: size }, style]}
+      onPress={onPress}
+    >
       {'capturing' in photo && photo.capturing === true && !error ? (
         <ActivityIndicator />
       ) : error || typeof uri !== 'string' ? (
@@ -50,21 +51,21 @@ export const Thumbnail = ({photo, style, size, onPress}: ThumbnailProps) => {
       ) : (
         <Image
           onError={handleImageError}
-          source={{uri}}
-          style={{width: size, height: size}}
+          source={{ uri }}
+          style={{ width: size, height: size }}
         />
       )}
     </TouchableOpacity>
-  );
-};
+  )
+}
 
 export const ThumbnailScrollView = () => {
-  const scrollViewRef = React.useRef<ScrollView>(null);
-  const photos = usePersistedDraftObservation(store => store.photos);
+  const scrollViewRef = React.useRef<ScrollView>(null)
+  const photos = usePersistedDraftObservation((store) => store.photos)
 
   React.useLayoutEffect(() => {
-    scrollViewRef.current && scrollViewRef.current.scrollToEnd();
-  }, [photos.length]);
+    scrollViewRef.current && scrollViewRef.current.scrollToEnd()
+  }, [photos.length])
 
   function handlePhotoPress(photoIndex: number) {
     // navigation.navigate('PhotosModal', {
@@ -72,25 +73,26 @@ export const ThumbnailScrollView = () => {
     //   observationId: observationId,
     //   editing: true,
     // });
-    return;
+    return
   }
 
-  if (photos.length === 0) return null;
-  const windowWidth = Dimensions.get('window').width;
+  if (photos.length === 0) return null
+  const windowWidth = Dimensions.get('window').width
   // Get a thumbnail size so there is always 1/2 of a thumbnail off the right of
   // the screen.
   const size =
-    windowWidth / (Math.round(0.6 + windowWidth / minSize) - 0.5) - spacing;
+    windowWidth / (Math.round(0.6 + windowWidth / minSize) - 0.5) - spacing
 
   return (
     <ScrollView
       ref={scrollViewRef}
       horizontal
       showsHorizontalScrollIndicator={true}
-      contentInset={{top: 5, right: 5, bottom: 5, left: 5}}
-      style={styles.photosContainer}>
+      contentInset={{ top: 5, right: 5, bottom: 5, left: 5 }}
+      style={styles.photosContainer}
+    >
       {photos
-        .filter(photo => photo.deleted == null)
+        .filter((photo) => photo.deleted == null)
         .map((photo, index) => (
           <Thumbnail
             key={index}
@@ -101,8 +103,8 @@ export const ThumbnailScrollView = () => {
           />
         ))}
     </ScrollView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   photosContainer: {
@@ -118,4 +120,4 @@ const styles = StyleSheet.create({
     backgroundColor: LIGHT_GREY,
     overflow: 'hidden',
   },
-});
+})

@@ -1,38 +1,38 @@
-import * as React from 'react';
-import {StyleSheet, TextStyle, View} from 'react-native';
-import {TouchableHighlight} from '@gorhom/bottom-sheet';
+import * as React from 'react'
+import { StyleSheet, TextStyle, View } from 'react-native'
+import { TouchableHighlight } from '@gorhom/bottom-sheet'
 
-import {LIGHT_BLUE, MAGENTA, COMAPEO_BLUE, RED, WHITE} from '../../lib/styles';
-import {Button} from '../Button';
-import {Text} from '../Text';
+import { LIGHT_BLUE, MAGENTA, COMAPEO_BLUE, RED, WHITE } from '../../lib/styles'
+import { Button } from '../Button'
+import { Text } from '../Text'
 
 interface BaseActionButtonConfig {
-  onPress: () => void;
-  text: React.ReactNode;
-  variation: 'filled' | 'outlined';
-  icon?: React.ReactNode;
+  onPress: () => void
+  text: React.ReactNode
+  variation: 'filled' | 'outlined'
+  icon?: React.ReactNode
 }
 
 interface PrimaryActionButtonConfig extends BaseActionButtonConfig {
-  dangerous?: boolean;
-  variation: 'filled';
+  dangerous?: boolean
+  variation: 'filled'
 }
 
 interface SecondaryActionButtonConfig extends BaseActionButtonConfig {
-  variation: 'outlined';
+  variation: 'outlined'
 }
 
 type ActionButtonConfig =
   | PrimaryActionButtonConfig
-  | SecondaryActionButtonConfig;
+  | SecondaryActionButtonConfig
 
 export interface Props extends React.PropsWithChildren<{}> {
-  buttonConfigs: ActionButtonConfig[];
-  description?: React.ReactNode;
-  icon?: React.ReactNode;
-  title: React.ReactNode;
-  titleStyle?: TextStyle;
-  descriptionStyle?: TextStyle;
+  buttonConfigs: ActionButtonConfig[]
+  description?: React.ReactNode
+  icon?: React.ReactNode
+  title: React.ReactNode
+  titleStyle?: TextStyle
+  descriptionStyle?: TextStyle
 }
 
 export const Content = ({
@@ -55,7 +55,7 @@ export const Content = ({
           </Text>
         )}
       </View>
-      {!!children && <View style={{flex: 1}}>{children}</View>}
+      {!!children && <View style={{ flex: 1 }}>{children}</View>}
     </View>
     <View style={styles.buttonsContainer}>
       {buttonConfigs.map((config, index) => {
@@ -63,7 +63,7 @@ export const Content = ({
           <Button
             fullWidth
             key={index}
-            TouchableComponent={props => (
+            TouchableComponent={(props) => (
               <TouchableHighlight
                 {...props}
                 underlayColor={
@@ -85,7 +85,8 @@ export const Content = ({
                     : COMAPEO_BLUE,
               marginTop: index > 0 ? 20 : undefined,
             }}
-            variant={config.variation === 'outlined' ? 'outlined' : undefined}>
+            variant={config.variation === 'outlined' ? 'outlined' : undefined}
+          >
             <View style={styles.buttonTextContainer}>
               {config.icon ? (
                 <View style={styles.buttonTextIconContainer}>
@@ -100,16 +101,17 @@ export const Content = ({
                     color:
                       config.variation === 'outlined' ? COMAPEO_BLUE : WHITE,
                   },
-                ]}>
+                ]}
+              >
                 {config.text}
               </Text>
             </View>
           </Button>
-        );
+        )
       })}
     </View>
   </View>
-);
+)
 
 const styles = StyleSheet.create({
   container: {
@@ -146,5 +148,5 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 18,
   },
-  bold: {fontWeight: '700'},
-});
+  bold: { fontWeight: '700' },
+})

@@ -47,3 +47,9 @@ This step ensures that the development environment is using the same major Node 
 ### [Force `react-native-svg-transformer` to use the correct Metro Babel transformer](./react-native-svg-transformer+1.3.0.patch)
 
 The module attempts to detect if a project uses Expo and opts to use their babel transformer if detected, which is an incorrect assumption for projects that use Expo modules but not their CLI for bundling. More context in https://github.com/kristerkari/react-native-svg-transformer/issues/333.
+
+## @react-native/eslint-config
+
+### [Disable prettier plugin rules](./@react-native+eslint-config+0.73.2+001+disable-prettier-plugin.patch)
+
+The module uses a plugin whose currently specified version is not compatible with Prettier v3. Additionally, it is not desirable to have Prettier tightly integrated with ESLint. The patch removes the usage of the discouraged plugin.

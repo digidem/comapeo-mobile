@@ -1,30 +1,30 @@
-import * as React from 'react';
-import {View, StyleSheet} from 'react-native';
+import * as React from 'react'
+import { View, StyleSheet } from 'react-native'
 
-import {IconButton} from '../../sharedComponents/IconButton';
-import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
+import { IconButton } from '../../sharedComponents/IconButton'
+import { useObservationWithPreset } from '../../hooks/useObservationWithPreset'
+import { useDraftObservation } from '../../hooks/useDraftObservation'
 
-import {EditIcon} from '../../sharedComponents/icons';
-import {SyncIcon} from '../../sharedComponents/icons/SyncIconCircle';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import { EditIcon } from '../../sharedComponents/icons'
+import { SyncIcon } from '../../sharedComponents/icons/SyncIconCircle'
+import { useNavigationFromRoot } from '../../hooks/useNavigationWithTypes'
 
 export const ObservationHeaderRight = ({
   observationId,
 }: {
-  observationId: string;
+  observationId: string
 }) => {
-  const observationWithPreset = useObservationWithPreset(observationId);
-  const deviceId = '';
-  const {editSavedObservation} = useDraftObservation();
-  const navigation = useNavigationFromRoot();
+  const observationWithPreset = useObservationWithPreset(observationId)
+  const deviceId = ''
+  const { editSavedObservation } = useDraftObservation()
+  const navigation = useNavigationFromRoot()
 
   function handlePress() {
-    editSavedObservation(observationWithPreset);
-    navigation.navigate('ObservationEdit', {observationId});
+    editSavedObservation(observationWithPreset)
+    navigation.navigate('ObservationEdit', { observationId })
   }
 
-  const isMine = observationWithPreset.observation.createdBy === deviceId;
+  const isMine = observationWithPreset.observation.createdBy === deviceId
   return isMine ? (
     <IconButton onPress={handlePress} testID="editButton">
       <EditIcon />
@@ -33,8 +33,8 @@ export const ObservationHeaderRight = ({
     <View style={styles.syncIconContainer}>
       <SyncIcon color="#3C69F6" />
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   syncIconContainer: {
@@ -44,4 +44,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-});
+})

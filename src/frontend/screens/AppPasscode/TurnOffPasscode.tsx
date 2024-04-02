@@ -1,27 +1,27 @@
-import * as React from 'react';
-import {BackHandler, StyleSheet, View} from 'react-native';
-import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import BottomSheet, {BottomSheetBackdrop} from '@gorhom/bottom-sheet';
-import {BottomSheetMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import * as React from 'react'
+import { BackHandler, StyleSheet, View } from 'react-native'
+import { defineMessages, FormattedMessage, useIntl } from 'react-intl'
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
+import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet'
+import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import {
   List,
   ListDivider,
   ListItem,
   ListItemText,
-} from '../../sharedComponents/List';
-import {MEDIUM_GREY, RED, WHITE} from '../../lib/styles';
-import {ErrorIcon} from '../../sharedComponents/icons';
-import {Button} from '../../sharedComponents/Button';
-import {NativeNavigationComponent} from '../../sharedTypes';
-import {useFocusEffect, StackActions} from '@react-navigation/native';
-import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
-import {HeaderButtonProps} from '@react-navigation/native-stack/lib/typescript/src/types';
-import {usePersistedPasscode} from '../../hooks/persistedState/usePersistedPasscode';
-import {useSecurityContext} from '../../contexts/SecurityContext';
-import {Text} from '../../sharedComponents/Text';
+} from '../../sharedComponents/List'
+import { MEDIUM_GREY, RED, WHITE } from '../../lib/styles'
+import { ErrorIcon } from '../../sharedComponents/icons'
+import { Button } from '../../sharedComponents/Button'
+import { NativeNavigationComponent } from '../../sharedTypes'
+import { useFocusEffect, StackActions } from '@react-navigation/native'
+import { CustomHeaderLeft } from '../../sharedComponents/CustomHeaderLeft'
+import { HeaderButtonProps } from '@react-navigation/native-stack/lib/typescript/src/types'
+import { usePersistedPasscode } from '../../hooks/persistedState/usePersistedPasscode'
+import { useSecurityContext } from '../../contexts/SecurityContext'
+import { Text } from '../../sharedComponents/Text'
 
 const m = defineMessages({
   usePasscode: {
@@ -58,63 +58,63 @@ const m = defineMessages({
     id: 'screens.AppPasscode.TurnOffPasscode.title',
     defaultMessage: 'App Passcode',
   },
-});
+})
 
 export const TurnOffPasscode: NativeNavigationComponent<'DisablePasscode'> = ({
   navigation,
 }) => {
-  const {authValuesSet} = useSecurityContext();
-  const setPasscode = usePersistedPasscode(state => state.setPasscode);
+  const { authValuesSet } = useSecurityContext()
+  const setPasscode = usePersistedPasscode((state) => state.setPasscode)
 
-  const sheetRef = React.useRef<BottomSheetMethods>(null);
+  const sheetRef = React.useRef<BottomSheetMethods>(null)
 
-  const {navigate} = navigation;
+  const { navigate } = navigation
 
-  const {formatMessage: t} = useIntl();
+  const { formatMessage: t } = useIntl()
 
   // These next three function forces the user to go back to the setting page instead of the "EnterPassToTurnOff" screen
   const backPress = React.useCallback(() => {
-    const popAction = StackActions.pop(2);
-    navigation.dispatch(popAction);
-  }, [navigation]);
+    const popAction = StackActions.pop(2)
+    navigation.dispatch(popAction)
+  }, [navigation])
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: (props: HeaderButtonProps) => (
         <CustomHeaderLeft headerBackButtonProps={props} onPress={backPress} />
       ),
-    });
-  }, [backPress, navigation]);
+    })
+  }, [backPress, navigation])
 
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
-        backPress();
-        return true;
-      };
+        backPress()
+        return true
+      }
 
       const subscription = BackHandler.addEventListener(
         'hardwareBackPress',
         onBackPress,
-      );
+      )
 
-      return () => subscription.remove();
+      return () => subscription.remove()
     }, [backPress]),
-  );
+  )
 
   function unsetAppPasscode() {
-    setPasscode(null);
-    navigate('Security');
+    setPasscode(null)
+    navigate('Security')
   }
 
   function openBottomSheet() {
-    sheetRef.current?.snapToIndex(1);
+    sheetRef.current?.snapToIndex(1)
   }
 
   return (
     <View style={styles.pageContainer}>
       <Text style={styles.description}>{t(m.description)}</Text>
-      <Text style={{fontSize: 16, marginBottom: 20}}>
+      <Text style={{ fontSize: 16, marginBottom: 20 }}>
         {t(m.currentlyUsing)}
       </Text>
       <List>
@@ -141,9 +141,10 @@ export const TurnOffPasscode: NativeNavigationComponent<'DisablePasscode'> = ({
         {authValuesSet.passcodeSet && (
           <ListItem
             onPress={() => {
-              navigate('SetPasscode');
+              navigate('SetPasscode')
             }}
-            style={{marginTop: 20}}>
+            style={{ marginTop: 20 }}
+          >
             <ListItemText
               style={styles.text}
               primary={<FormattedMessage {...m.changePasscode} />}
@@ -155,28 +156,28 @@ export const TurnOffPasscode: NativeNavigationComponent<'DisablePasscode'> = ({
         turnOffPasscode={unsetAppPasscode}
         ref={sheetRef}
         closeSheet={() => {
-          sheetRef.current?.close();
+          sheetRef.current?.close()
         }}
       />
     </View>
-  );
-};
+  )
+}
 
 interface ConfirmTurnOffPasswordModalProps {
-  turnOffPasscode: () => void;
-  closeSheet: () => void;
+  turnOffPasscode: () => void
+  closeSheet: () => void
 }
 
 const ConfirmTurnOffPasswordModal = React.forwardRef<
   BottomSheetMethods,
   ConfirmTurnOffPasswordModalProps
->(({turnOffPasscode, closeSheet}, sheetRef) => {
+>(({ turnOffPasscode, closeSheet }, sheetRef) => {
   const [snapPoints, setSnapPoints] = React.useState<(number | string)[]>([
     1,
     '40%',
-  ]);
+  ])
 
-  const {formatMessage: t} = useIntl();
+  const { formatMessage: t } = useIntl()
 
   return (
     <BottomSheet
@@ -187,22 +188,25 @@ const ConfirmTurnOffPasswordModal = React.forwardRef<
       enableHandlePanningGesture={false}
       handleHeight={0}
       handleComponent={() => null}
-      index={-1}>
+      index={-1}
+    >
       <View
-        onLayout={e => {
-          const {height} = e.nativeEvent.layout;
-          setSnapPoints([1, height]);
+        onLayout={(e) => {
+          const { height } = e.nativeEvent.layout
+          setSnapPoints([1, height])
         }}
-        style={styles.btmSheetContainer}>
-        <ErrorIcon style={{position: 'relative'}} size={90} color={RED} />
-        <Text style={{fontSize: 24, textAlign: 'center', margin: 10}}>
+        style={styles.btmSheetContainer}
+      >
+        <ErrorIcon style={{ position: 'relative' }} size={90} color={RED} />
+        <Text style={{ fontSize: 24, textAlign: 'center', margin: 10 }}>
           {t(m.turnOffConfirmation)}
         </Text>
         <Button
           onPress={turnOffPasscode}
           fullWidth
           color="dark"
-          style={{backgroundColor: RED, marginTop: 30, marginBottom: 20}}>
+          style={{ backgroundColor: RED, marginTop: 30, marginBottom: 20 }}
+        >
           {t(m.turnOff)}
         </Button>
         <Button onPress={closeSheet} fullWidth variant="outlined">
@@ -210,10 +214,10 @@ const ConfirmTurnOffPasswordModal = React.forwardRef<
         </Button>
       </View>
     </BottomSheet>
-  );
-});
+  )
+})
 
-TurnOffPasscode.navTitle = m.title;
+TurnOffPasscode.navTitle = m.title
 
 const styles = StyleSheet.create({
   text: {
@@ -242,4 +246,4 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: WHITE,
   },
-});
+})

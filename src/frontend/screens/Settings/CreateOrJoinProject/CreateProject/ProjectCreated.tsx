@@ -1,11 +1,11 @@
-import * as React from 'react';
-import {defineMessages, useIntl} from 'react-intl';
-import {BackHandler, StyleSheet, View} from 'react-native';
-import GreenCheck from '../../../../images/GreenCheck.svg';
-import {NativeRootNavigationProps} from '../../../../sharedTypes';
-import {Text} from '../../../../sharedComponents/Text';
-import {Button} from '../../../../sharedComponents/Button';
-import {CommonActions, useFocusEffect} from '@react-navigation/native';
+import * as React from 'react'
+import { defineMessages, useIntl } from 'react-intl'
+import { BackHandler, StyleSheet, View } from 'react-native'
+import GreenCheck from '../../../../images/GreenCheck.svg'
+import { NativeRootNavigationProps } from '../../../../sharedTypes'
+import { Text } from '../../../../sharedComponents/Text'
+import { Button } from '../../../../sharedComponents/Button'
+import { CommonActions, useFocusEffect } from '@react-navigation/native'
 
 const m = defineMessages({
   projectCreated: {
@@ -20,13 +20,13 @@ const m = defineMessages({
     id: 'screens.Settings.CreateOrJoinProject.ProjectCreated.goToMap',
     defaultMessage: 'Go to Map',
   },
-});
+})
 
 export const ProjectCreated = ({
   route,
   navigation,
 }: NativeRootNavigationProps<'ProjectCreated'>) => {
-  const {formatMessage: t} = useIntl();
+  const { formatMessage: t } = useIntl()
 
   // disables back button
   useFocusEffect(
@@ -34,24 +34,24 @@ export const ProjectCreated = ({
       const subscription = BackHandler.addEventListener(
         'hardwareBackPress',
         () => true,
-      );
+      )
 
-      return () => subscription.remove();
+      return () => subscription.remove()
     }, []),
-  );
+  )
 
   function handleGoToMap() {
     navigation.dispatch(
       CommonActions.reset({
         index: 0,
-        routes: [{name: 'Home'}],
+        routes: [{ name: 'Home' }],
       }),
-    );
+    )
   }
 
   return (
     <View style={styles.container}>
-      <View style={{alignItems: 'center'}}>
+      <View style={{ alignItems: 'center' }}>
         <GreenCheck />
         <Text
           style={{
@@ -59,21 +59,22 @@ export const ProjectCreated = ({
             fontSize: 24,
             marginTop: 10,
             fontWeight: 'bold',
-          }}>
-          {t(m.projectCreated, {projectName: route.params.name})}
+          }}
+        >
+          {t(m.projectCreated, { projectName: route.params.name })}
         </Text>
       </View>
-      <View style={{width: '100%'}}>
+      <View style={{ width: '100%' }}>
         <Button fullWidth variant="outlined" onPress={() => {}}>
           {t(m.inviteDevice)}
         </Button>
-        <Button style={{marginTop: 20}} fullWidth onPress={handleGoToMap}>
+        <Button style={{ marginTop: 20 }} fullWidth onPress={handleGoToMap}>
           {t(m.goToMap)}
         </Button>
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -83,4 +84,4 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'space-between',
   },
-});
+})

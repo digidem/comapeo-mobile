@@ -1,12 +1,12 @@
-import React from 'react';
-import {FormattedMessage, defineMessages} from 'react-intl';
-import {View, Text, StyleSheet} from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {BLACK, LIGHT_GREY} from '../../lib/styles';
+import React from 'react'
+import { FormattedMessage, defineMessages } from 'react-intl'
+import { View, Text, StyleSheet } from 'react-native'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import { BLACK, LIGHT_GREY } from '../../lib/styles'
 
-import {useMostAccurateLocationForObservation} from './useMostAccurateLocationForObservation';
-import {FormattedCoords} from '../../sharedComponents/FormattedData';
-import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings';
+import { useMostAccurateLocationForObservation } from './useMostAccurateLocationForObservation'
+import { FormattedCoords } from '../../sharedComponents/FormattedData'
+import { usePersistedSettings } from '../../hooks/persistedState/usePersistedSettings'
 
 const m = defineMessages({
   searching: {
@@ -14,19 +14,19 @@ const m = defineMessages({
     defaultMessage: 'Searching…',
     description: 'Shown in new observation screen whilst looking for GPS',
   },
-});
+})
 
 export const LocationView = () => {
-  const location = useMostAccurateLocationForObservation();
+  const location = useMostAccurateLocationForObservation()
   const coordinateFormat = usePersistedSettings(
-    store => store.coordinateFormat,
-  );
+    (store) => store.coordinateFormat,
+  )
   const lat =
-    !location || !location.coords ? undefined : location.coords.latitude;
+    !location || !location.coords ? undefined : location.coords.latitude
   const lon =
-    !location || !location.coords ? undefined : location.coords.longitude;
+    !location || !location.coords ? undefined : location.coords.longitude
   const accuracy =
-    !location || !location.coords ? undefined : location.coords.accuracy;
+    !location || !location.coords ? undefined : location.coords.accuracy
 
   return (
     <View style={styles.locationContainer}>
@@ -40,7 +40,7 @@ export const LocationView = () => {
             size={14}
             name="location-on"
             color="orange"
-            style={{marginRight: 5}}
+            style={{ marginRight: 5 }}
           />
           <Text style={styles.locationText}>
             <FormattedCoords format={coordinateFormat} lat={lat} lon={lon} />
@@ -53,8 +53,8 @@ export const LocationView = () => {
         </React.Fragment>
       )}
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   locationContainer: {
@@ -74,4 +74,4 @@ const styles = StyleSheet.create({
   accuracy: {
     fontWeight: 'bold',
   },
-});
+})

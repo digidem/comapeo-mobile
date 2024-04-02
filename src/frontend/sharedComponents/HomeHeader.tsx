@@ -1,13 +1,13 @@
-import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import {IconButton} from './IconButton';
-import {ObservationListIcon} from './icons';
-import {useNavigationFromHomeTabs} from '../hooks/useNavigationWithTypes';
-import {Text} from './Text';
+import React from 'react'
+import { View, StyleSheet } from 'react-native'
+import LinearGradient from 'react-native-linear-gradient'
+import { IconButton } from './IconButton'
+import { ObservationListIcon } from './icons'
+import { useNavigationFromHomeTabs } from '../hooks/useNavigationWithTypes'
+import { Text } from './Text'
 
 export const HomeHeader = () => {
-  const navigation = useNavigationFromHomeTabs();
+  const navigation = useNavigationFromHomeTabs()
 
   return (
     <View style={[styles.header]}>
@@ -20,14 +20,15 @@ export const HomeHeader = () => {
       <IconButton
         style={styles.rightButton}
         onPress={() => {
-          navigation.navigate('ObservationList');
+          navigation.navigate('ObservationList')
         }}
-        testID="observationListButton">
+        testID="observationListButton"
+      >
         <ObservationListIcon />
       </IconButton>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   header: {
@@ -49,4 +50,4 @@ const styles = StyleSheet.create({
     left: 0,
     backgroundColor: 'transparent',
   },
-});
+})

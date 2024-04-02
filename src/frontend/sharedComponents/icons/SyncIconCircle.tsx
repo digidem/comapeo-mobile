@@ -1,29 +1,29 @@
-import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import React from 'react'
+import { View, StyleSheet } from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
-import {DARK_MANGO, MANGO} from '../../lib/styles';
+import { DARK_MANGO, MANGO } from '../../lib/styles'
 
 type Props = {
-  inprogress?: boolean;
-};
+  inprogress?: boolean
+}
 
-export const SyncIcon = ({color = 'white'}: {color?: string}) => (
+export const SyncIcon = ({ color = 'white' }: { color?: string }) => (
   <Icon
     color={color}
     name="bolt"
     size={20}
-    style={{transform: [{rotate: '15deg'}]}}
+    style={{ transform: [{ rotate: '15deg' }] }}
   />
-);
+)
 
-export const SyncIconCircle = ({inprogress}: Props) => (
-  <View style={[styles.outerCircle, {opacity: inprogress ? 0.5 : 1}]}>
+export const SyncIconCircle = ({ inprogress }: Props) => (
+  <View style={[styles.outerCircle, { opacity: inprogress ? 0.5 : 1 }]}>
     <View style={styles.innerCircle}>
       <SyncIcon />
     </View>
   </View>
-);
+)
 
 const styles = StyleSheet.create({
   outerCircle: {
@@ -42,4 +42,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-});
+})

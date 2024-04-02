@@ -1,10 +1,10 @@
-import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {DARK_GREY, RED} from '../../lib/styles';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {defineMessages, useIntl} from 'react-intl';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {useDeleteObservation} from '../../hooks/server/observations';
-import {Text} from '../../sharedComponents/Text';
+import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { DARK_GREY, RED } from '../../lib/styles'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import { defineMessages, useIntl } from 'react-intl'
+import { useNavigationFromRoot } from '../../hooks/useNavigationWithTypes'
+import { useDeleteObservation } from '../../hooks/server/observations'
+import { Text } from '../../sharedComponents/Text'
 
 const m = defineMessages({
   delete: {
@@ -33,18 +33,18 @@ const m = defineMessages({
     defaultMessage: 'Delete observation?',
     description: 'Title of dialog asking confirmation to delete an observation',
   },
-});
+})
 
 export const ButtonFields = ({
   isMine,
   observationId,
 }: {
-  isMine: boolean;
-  observationId: string;
+  isMine: boolean
+  observationId: string
 }) => {
-  const {formatMessage: t} = useIntl();
-  const navigation = useNavigationFromRoot();
-  const deleteObservationMutation = useDeleteObservation();
+  const { formatMessage: t } = useIntl()
+  const navigation = useNavigationFromRoot()
+  const deleteObservationMutation = useDeleteObservation()
 
   function handlePressDelete() {
     Alert.alert(t(m.deleteTitle), undefined, [
@@ -55,11 +55,11 @@ export const ButtonFields = ({
       {
         text: t(m.confirm),
         onPress: () => {
-          deleteObservationMutation.mutate({id: observationId});
-          navigation.pop();
+          deleteObservationMutation.mutate({ id: observationId })
+          navigation.pop()
         },
       },
-    ]);
+    ])
   }
 
   return (
@@ -73,18 +73,18 @@ export const ButtonFields = ({
         />
       )}
     </View>
-  );
-};
+  )
+}
 
 type ButtonProps = {
-  onPress: () => any;
-  color: string;
-  iconName: 'delete' | 'share';
-  title: string;
-};
+  onPress: () => any
+  color: string
+  iconName: 'delete' | 'share'
+  title: string
+}
 
-const Button = ({onPress, color, iconName, title}: ButtonProps) => (
-  <TouchableOpacity onPress={onPress} style={{flex: 1}}>
+const Button = ({ onPress, color, iconName, title }: ButtonProps) => (
+  <TouchableOpacity onPress={onPress} style={{ flex: 1 }}>
     <View style={styles.button}>
       <MaterialIcons
         size={30}
@@ -95,7 +95,7 @@ const Button = ({onPress, color, iconName, title}: ButtonProps) => (
       <Text style={styles.buttonText}>{title}</Text>
     </View>
   </TouchableOpacity>
-);
+)
 
 const styles = StyleSheet.create({
   button: {
@@ -112,4 +112,4 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
-});
+})

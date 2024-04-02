@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from 'react'
 import {
   Control,
   Controller,
@@ -8,29 +8,29 @@ import {
   ValidationRule,
   useFormState,
   UseControllerProps,
-} from 'react-hook-form';
-import {TextInput as RNTextInput, StyleSheet, View} from 'react-native';
-import {BLACK, LIGHT_GREY, RED} from '../lib/styles';
-import {ErrorIcon} from './icons';
-import {ViewStyleProp} from '../sharedTypes';
-import {Text} from './Text';
+} from 'react-hook-form'
+import { TextInput as RNTextInput, StyleSheet, View } from 'react-native'
+import { BLACK, LIGHT_GREY, RED } from '../lib/styles'
+import { ErrorIcon } from './icons'
+import { ViewStyleProp } from '../sharedTypes'
+import { Text } from './Text'
 
 type TextInputProps<InputFields extends FieldValues> = {
-  containerStyle?: ViewStyleProp;
-  showCharacterCount?: boolean;
-  control: Control<InputFields>;
+  containerStyle?: ViewStyleProp
+  showCharacterCount?: boolean
+  control: Control<InputFields>
 } & Omit<
   React.ComponentProps<typeof RNTextInput>,
   'value' | 'onBlur' | 'onChange'
 > &
-  Omit<UseControllerProps<InputFields>, 'control'>;
+  Omit<UseControllerProps<InputFields>, 'control'>
 
 type CounterProps<InputFields extends FieldValues> = {
-  name: Path<InputFields>;
-  control: Control<InputFields>;
-  maxLength: ValidationRule<number>;
-  isMaxLengthError: boolean;
-};
+  name: Path<InputFields>
+  control: Control<InputFields>
+  maxLength: ValidationRule<number>
+  isMaxLengthError: boolean
+}
 
 /**
  *
@@ -44,12 +44,12 @@ export const HookFormTextInput = <InputFields extends FieldValues>({
   showCharacterCount,
   ...RNInputProp
 }: TextInputProps<InputFields>) => {
-  const error = useFormState({control}).errors[name];
+  const error = useFormState({ control }).errors[name]
 
-  const maxLengthRule = rules ? rules['maxLength'] : undefined;
+  const maxLengthRule = rules ? rules.maxLength : undefined
   const maxLength =
-    typeof maxLengthRule === 'number' ? maxLengthRule : maxLengthRule?.value;
-  const errorMessage = error?.message;
+    typeof maxLengthRule === 'number' ? maxLengthRule : maxLengthRule?.value
+  const errorMessage = error?.message
 
   return (
     <View>
@@ -58,9 +58,9 @@ export const HookFormTextInput = <InputFields extends FieldValues>({
           name={name}
           control={control}
           rules={rules}
-          render={({field: {value, onChange, onBlur}}) => (
+          render={({ field: { value, onChange, onBlur } }) => (
             <RNTextInput
-              style={[{flex: 1, color: BLACK}]}
+              style={[{ flex: 1, color: BLACK }]}
               value={value}
               onBlur={onBlur}
               onChangeText={onChange}
@@ -68,12 +68,12 @@ export const HookFormTextInput = <InputFields extends FieldValues>({
             />
           )}
         />
-        {error && <ErrorIcon style={{position: undefined}} color={RED} />}
+        {error && <ErrorIcon style={{ position: undefined }} color={RED} />}
       </View>
       <View style={styles.underContainer}>
         <View>
           {errorMessage && (
-            <Text style={{color: RED}}>{errorMessage.toString()}</Text>
+            <Text style={{ color: RED }}>{errorMessage.toString()}</Text>
           )}
         </View>
         <View>
@@ -88,8 +88,8 @@ export const HookFormTextInput = <InputFields extends FieldValues>({
         </View>
       </View>
     </View>
-  );
-};
+  )
+}
 
 const Counter = <InputFields extends FieldValues>({
   maxLength,
@@ -97,16 +97,15 @@ const Counter = <InputFields extends FieldValues>({
   name,
   isMaxLengthError,
 }: CounterProps<InputFields>) => {
-  const watcher = useWatch({control, name});
-  const inputCount = watcher?.length || 0;
+  const watcher = useWatch({ control, name })
+  const inputCount = watcher?.length || 0
 
   return (
     <Text
-      style={[
-        {color: isMaxLengthError ? RED : LIGHT_GREY},
-      ]}>{`${inputCount}/${maxLength}`}</Text>
-  );
-};
+      style={[{ color: isMaxLengthError ? RED : LIGHT_GREY }]}
+    >{`${inputCount}/${maxLength}`}</Text>
+  )
+}
 
 const styles = StyleSheet.create({
   input: {
@@ -130,4 +129,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-});
+})

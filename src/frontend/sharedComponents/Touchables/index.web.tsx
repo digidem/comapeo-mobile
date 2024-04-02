@@ -1,12 +1,12 @@
-import React from 'react';
-import {TouchableHighlight, TouchableHighlightProps} from 'react-native';
+import React from 'react'
+import { TouchableHighlight, TouchableHighlightProps } from 'react-native'
 
-export {Touchable, TouchableHighlight, TouchableOpacity} from 'react-native';
+export { Touchable, TouchableHighlight, TouchableOpacity } from 'react-native'
 
 const TouchableNativeFeedback = (props: TouchableHighlightProps) => (
   <TouchableHighlight {...props} />
-);
+)
 
-TouchableNativeFeedback.Ripple = () => {};
+TouchableNativeFeedback.Ripple = () => {}
 
-export {TouchableNativeFeedback};
+export { TouchableNativeFeedback }

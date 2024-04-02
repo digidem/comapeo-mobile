@@ -1,29 +1,29 @@
-import {StyleSheet, View} from 'react-native';
-import DeviceMobile from '../images/DeviceMobile.svg';
-import DeviceDesktop from '../images/DeviceDesktop.svg';
-import {Text} from './Text';
-import {LIGHT_GREY, MEDIUM_GREY} from '../lib/styles';
-import {DeviceType, ViewStyleProp} from '../sharedTypes';
-import {defineMessages, useIntl} from 'react-intl';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {DeviceNameWithIcon} from './DeviceNameWithIcon';
+import { StyleSheet, View } from 'react-native'
+import DeviceMobile from '../images/DeviceMobile.svg'
+import DeviceDesktop from '../images/DeviceDesktop.svg'
+import { Text } from './Text'
+import { LIGHT_GREY, MEDIUM_GREY } from '../lib/styles'
+import { DeviceType, ViewStyleProp } from '../sharedTypes'
+import { defineMessages, useIntl } from 'react-intl'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import { DeviceNameWithIcon } from './DeviceNameWithIcon'
 
 const m = defineMessages({
   thisDevice: {
     id: 'sharedComponents.DeviceCard.ThisDevice',
     defaultMessage: 'This Device!',
   },
-});
+})
 
 type DeviceCardProps = {
-  deviceType: DeviceType;
-  name: string;
-  thisDevice?: boolean;
-  deviceId?: string;
-  dateAdded?: Date;
-  style?: ViewStyleProp;
-  onPress?: () => void;
-};
+  deviceType: DeviceType
+  name: string
+  thisDevice?: boolean
+  deviceId?: string
+  dateAdded?: Date
+  style?: ViewStyleProp
+  onPress?: () => void
+}
 
 export const DeviceCard = ({
   deviceType,
@@ -34,13 +34,14 @@ export const DeviceCard = ({
   dateAdded,
   onPress,
 }: DeviceCardProps) => {
-  const {formatMessage} = useIntl();
+  const { formatMessage } = useIntl()
 
   return (
     <TouchableOpacity
       disabled={!onPress}
       onPress={() => (onPress ? onPress() : {})}
-      style={[styles.container, style]}>
+      style={[styles.container, style]}
+    >
       <DeviceNameWithIcon
         name={name}
         thisDevice={thisDevice}
@@ -49,8 +50,8 @@ export const DeviceCard = ({
         iconSize={75}
       />
     </TouchableOpacity>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -61,4 +62,4 @@ const styles = StyleSheet.create({
     borderColor: LIGHT_GREY,
     borderRadius: 3,
   },
-});
+})

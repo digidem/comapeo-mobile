@@ -1,13 +1,13 @@
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {Text} from '../Text';
-import {TextStyleProp} from '../../sharedTypes';
+import React from 'react'
+import { StyleSheet, View } from 'react-native'
+import { Text } from '../Text'
+import { TextStyleProp } from '../../sharedTypes'
 
 interface ListItemTextProp {
-  style?: TextStyleProp;
-  inset?: boolean;
-  primary: string | React.ReactNode;
-  secondary?: string | React.ReactNode;
+  style?: TextStyleProp
+  inset?: boolean
+  primary: string | React.ReactNode
+  secondary?: string | React.ReactNode
 }
 
 export const ListItemText = ({
@@ -24,12 +24,13 @@ export const ListItemText = ({
         inset && styles.inset,
         primary && secondary ? styles.multiline : undefined,
       ]}
-      {...other}>
+      {...other}
+    >
       <Text style={[styles.primary, style]}>{primary}</Text>
       {secondary && <Text style={styles.secondary}>{secondary}</Text>}
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   /* Styles applied to the root element. */
@@ -57,4 +58,4 @@ const styles = StyleSheet.create({
     lineHeight: 1.43 * 14,
     color: 'rgba(0, 0, 0, 0.54)',
   },
-});
+})

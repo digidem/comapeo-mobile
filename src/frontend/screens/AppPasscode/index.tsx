@@ -1,38 +1,38 @@
-import * as React from 'react';
-import {defineMessages} from 'react-intl';
-import {StyleSheet, View} from 'react-native';
+import * as React from 'react'
+import { defineMessages } from 'react-intl'
+import { StyleSheet, View } from 'react-native'
 
-import {WHITE} from '../../lib/styles';
-import {NativeNavigationComponent} from '../../sharedTypes';
-import {PasscodeIntro} from './PasscodeIntro';
-import {useSecurityContext} from '../../contexts/SecurityContext';
+import { WHITE } from '../../lib/styles'
+import { NativeNavigationComponent } from '../../sharedTypes'
+import { PasscodeIntro } from './PasscodeIntro'
+import { useSecurityContext } from '../../contexts/SecurityContext'
 
 const m = defineMessages({
   title: {
     id: 'screens.AppPasscode',
     defaultMessage: 'App Passcode',
   },
-});
+})
 
 export const AppPasscode: NativeNavigationComponent<'AppPasscode'> = ({
   navigation,
 }) => {
-  const {authState} = useSecurityContext();
+  const { authState } = useSecurityContext()
 
   React.useLayoutEffect(() => {
     if (authState === 'obscured') {
-      navigation.navigate('Settings');
+      navigation.navigate('Settings')
     }
-  }, [navigation, authState]);
+  }, [navigation, authState])
 
   return (
     <View style={styles.pageContainer}>
       <PasscodeIntro />
     </View>
-  );
-};
+  )
+}
 
-AppPasscode.navTitle = m.title;
+AppPasscode.navTitle = m.title
 
 const styles = StyleSheet.create({
   pageContainer: {
@@ -41,4 +41,4 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: WHITE,
   },
-});
+})

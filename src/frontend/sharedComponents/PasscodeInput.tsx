@@ -1,5 +1,5 @@
-import * as React from 'react';
-import {Text, StyleSheet, StyleProp, ViewStyle, TextInput} from 'react-native';
+import * as React from 'react'
+import { Text, StyleSheet, StyleProp, ViewStyle, TextInput } from 'react-native'
 
 import {
   CodeField,
@@ -8,18 +8,18 @@ import {
   MaskSymbol,
   isLastFilledCell,
   RenderCellOptions,
-} from 'react-native-confirmation-code-field';
-import {MEDIUM_GREY, DARK_GREY, RED, BLACK} from '../lib/styles';
+} from 'react-native-confirmation-code-field'
+import { MEDIUM_GREY, DARK_GREY, RED, BLACK } from '../lib/styles'
 
-export const CELL_COUNT = 5;
-const onlyNumRegEx = new RegExp('^[0-9]+$');
+export const CELL_COUNT = 5
+const onlyNumRegEx = new RegExp('^[0-9]+$')
 
 interface PasscodeInputProps {
-  stylesProps?: StyleProp<ViewStyle>;
-  inputValue: string;
-  onChangeTextWithValidation: (newVal: string) => void;
-  maskValues?: boolean;
-  error: boolean;
+  stylesProps?: StyleProp<ViewStyle>
+  inputValue: string
+  onChangeTextWithValidation: (newVal: string) => void
+  maskValues?: boolean
+  error: boolean
 }
 
 export const PasscodeInput = React.forwardRef<TextInput, PasscodeInputProps>(
@@ -36,28 +36,29 @@ export const PasscodeInput = React.forwardRef<TextInput, PasscodeInputProps>(
     const [codeFieldProps, getCellOnLayoutHandler] = useClearByFocusCell({
       value: inputValue,
       setValue: onChangeTextWithValidation,
-    });
+    })
 
     function validateAndSetInput(text: string) {
-      if (!text) onChangeTextWithValidation('');
+      if (!text) onChangeTextWithValidation('')
       if (onlyNumRegEx.test(text)) {
-        onChangeTextWithValidation(text);
+        onChangeTextWithValidation(text)
       }
     }
 
-    function renderCell({index, symbol, isFocused}: RenderCellOptions) {
-      let textChild;
+    function renderCell({ index, symbol, isFocused }: RenderCellOptions) {
+      let textChild
 
       if (symbol) {
         textChild = (
           <MaskSymbol
             maskSymbol={maskValues ? '*' : symbol}
-            isLastFilledCell={isLastFilledCell({index, value: inputValue})}>
+            isLastFilledCell={isLastFilledCell({ index, value: inputValue })}
+          >
             {symbol}
           </MaskSymbol>
-        );
+        )
       } else if (isFocused) {
-        textChild = <Cursor />;
+        textChild = <Cursor />
       }
 
       return (
@@ -66,12 +67,13 @@ export const PasscodeInput = React.forwardRef<TextInput, PasscodeInputProps>(
           style={[
             styles.cell,
             isFocused && styles.focusCell,
-            error ? {borderColor: RED} : undefined,
+            error ? { borderColor: RED } : undefined,
           ]}
-          onLayout={getCellOnLayoutHandler(index)}>
+          onLayout={getCellOnLayoutHandler(index)}
+        >
           {textChild}
         </Text>
-      );
+      )
     }
 
     return (
@@ -87,11 +89,11 @@ export const PasscodeInput = React.forwardRef<TextInput, PasscodeInputProps>(
         textContentType="oneTimeCode"
         renderCell={renderCell}
       />
-    );
+    )
   },
-);
+)
 
-const FONT_SIZE = 24;
+const FONT_SIZE = 24
 
 const styles = StyleSheet.create({
   cell: {
@@ -114,4 +116,4 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
   },
-});
+})

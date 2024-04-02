@@ -1,14 +1,14 @@
-import {BackHandler, StyleSheet, View} from 'react-native';
-import GreenCheck from '../../../../images/GreenCheck.svg';
-import {Text} from '../../../../sharedComponents/Text';
-import {defineMessages, useIntl} from 'react-intl';
-import React from 'react';
-import {NativeRootNavigationProps} from '../../../../sharedTypes';
-import {DeviceNameWithIcon} from '../../../../sharedComponents/DeviceNameWithIcon';
-import {RoleWithIcon} from '../../../../sharedComponents/RoleWithIcon';
-import {Button} from '../../../../sharedComponents/Button';
-import {useFocusEffect} from '@react-navigation/native';
-import {COORDINATOR_ROLE_ID} from '../../../../sharedTypes';
+import { BackHandler, StyleSheet, View } from 'react-native'
+import GreenCheck from '../../../../images/GreenCheck.svg'
+import { Text } from '../../../../sharedComponents/Text'
+import { defineMessages, useIntl } from 'react-intl'
+import React from 'react'
+import { NativeRootNavigationProps } from '../../../../sharedTypes'
+import { DeviceNameWithIcon } from '../../../../sharedComponents/DeviceNameWithIcon'
+import { RoleWithIcon } from '../../../../sharedComponents/RoleWithIcon'
+import { Button } from '../../../../sharedComponents/Button'
+import { useFocusEffect } from '@react-navigation/native'
+import { COORDINATOR_ROLE_ID } from '../../../../sharedTypes'
 
 const m = defineMessages({
   inviteAccepted: {
@@ -23,60 +23,62 @@ const m = defineMessages({
     id: 'screens.Setting.ProjectSettings.YourTeam.InviteAccepted.close',
     defaultMessage: 'Close',
   },
-});
+})
 
 export const InviteAccepted = ({
   navigation,
   route,
 }: NativeRootNavigationProps<'InviteAccepted'>) => {
-  const {formatMessage: t} = useIntl();
-  const {role, ...deviceInfo} = route.params;
+  const { formatMessage: t } = useIntl()
+  const { role, ...deviceInfo } = route.params
 
   useFocusEffect(
     React.useCallback(() => {
       const subscription = BackHandler.addEventListener(
         'hardwareBackPress',
         () => true,
-      );
+      )
 
-      return () => subscription.remove();
+      return () => subscription.remove()
     }, []),
-  );
+  )
 
   return (
     <View style={styles.container}>
-      <View style={{alignItems: 'center'}}>
+      <View style={{ alignItems: 'center' }}>
         <GreenCheck />
-        <Text style={{marginTop: 10, fontSize: 20, fontWeight: 'bold'}}>
+        <Text style={{ marginTop: 10, fontSize: 20, fontWeight: 'bold' }}>
           {t(m.inviteAccepted)}
         </Text>
-        <DeviceNameWithIcon {...deviceInfo} style={{marginTop: 10}} />
+        <DeviceNameWithIcon {...deviceInfo} style={{ marginTop: 10 }} />
         <RoleWithIcon
-          style={{marginTop: 20}}
+          style={{ marginTop: 20 }}
           role={role === COORDINATOR_ROLE_ID ? 'coordinator' : 'participant'}
         />
       </View>
-      <View style={{width: '100%'}}>
+      <View style={{ width: '100%' }}>
         <Button
           fullWidth
           variant="outlined"
           onPress={() => {
-            navigation.navigate('SelectDevice');
-          }}>
+            navigation.navigate('SelectDevice')
+          }}
+        >
           {t(m.addAnotherDevice)}
         </Button>
         <Button
-          style={{marginTop: 10}}
+          style={{ marginTop: 10 }}
           fullWidth
           onPress={() => {
-            navigation.navigate('YourTeam');
-          }}>
+            navigation.navigate('YourTeam')
+          }}
+        >
           {t(m.close)}
         </Button>
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -86,4 +88,4 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flex: 1,
   },
-});
+})

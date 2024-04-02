@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   ActivityIndicator,
   GestureResponderEvent,
@@ -8,16 +8,16 @@ import {
   TouchableOpacity,
   View,
   ViewStyle,
-} from 'react-native';
-import {Loading} from './Loading';
-import {BLACK, DARK_MANGO, DARK_ORANGE, COMAPEO_BLUE} from '../lib/styles';
+} from 'react-native'
+import { Loading } from './Loading'
+import { BLACK, DARK_MANGO, DARK_ORANGE, COMAPEO_BLUE } from '../lib/styles'
 
 interface AddButtonProps {
-  style?: StyleProp<ViewStyle>;
-  testID?: string;
-  disabled?: boolean;
-  onPress: ((event: GestureResponderEvent) => void) & (() => void);
-  isLoading?: boolean;
+  style?: StyleProp<ViewStyle>
+  testID?: string
+  disabled?: boolean
+  onPress: ((event: GestureResponderEvent) => void) & (() => void)
+  isLoading?: boolean
 }
 
 const AddButtonNoMemo = ({
@@ -29,7 +29,8 @@ const AddButtonNoMemo = ({
 }: AddButtonProps) => (
   <View
     testID={testID}
-    style={[styles.container, {bottom: isLoading ? 75 : 25}, style]}>
+    style={[styles.container, { bottom: isLoading ? 75 : 25 }, style]}
+  >
     <TouchableOpacity disabled={disabled || isLoading} onPress={onPress}>
       {!isLoading ? (
         <Image
@@ -41,12 +42,12 @@ const AddButtonNoMemo = ({
       )}
     </TouchableOpacity>
   </View>
-);
+)
 
 /**
  * Button used on main map and camera mode to take observation
  */
-export const AddButton = React.memo(AddButtonNoMemo);
+export const AddButton = React.memo(AddButtonNoMemo)
 
 const styles = StyleSheet.create({
   container: {
@@ -57,4 +58,4 @@ const styles = StyleSheet.create({
     width: 125,
     height: 125,
   },
-});
+})

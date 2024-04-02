@@ -1,16 +1,16 @@
-import * as React from 'react';
-import {View, StyleSheet, Image, ActivityIndicator} from 'react-native';
+import * as React from 'react'
+import { View, StyleSheet, Image, ActivityIndicator } from 'react-native'
 
-import {AlertIcon} from './icons';
-import type {Attachment, PhotoVariant, ViewStyleProp} from '../sharedTypes';
-import {useObservationAttachmentUrl} from '../hooks/server/media';
+import { AlertIcon } from './icons'
+import type { Attachment, PhotoVariant, ViewStyleProp } from '../sharedTypes'
+import { useObservationAttachmentUrl } from '../hooks/server/media'
 
 type Props = {
-  attachment: Attachment;
-  variant: PhotoVariant;
-  style?: ViewStyleProp;
-  resizeMode?: 'cover' | 'contain' | 'stretch' | 'center';
-};
+  attachment: Attachment
+  variant: PhotoVariant
+  style?: ViewStyleProp
+  resizeMode?: 'cover' | 'contain' | 'stretch' | 'center'
+}
 
 const PhotoViewComponent = ({
   attachment,
@@ -18,10 +18,10 @@ const PhotoViewComponent = ({
   resizeMode = 'contain',
   style,
 }: Props) => {
-  const {data, isLoading, isError} = useObservationAttachmentUrl(
+  const { data, isLoading, isError } = useObservationAttachmentUrl(
     attachment,
     variant,
-  );
+  )
   return (
     <View style={[styles.container, style]}>
       {isLoading ? (
@@ -38,10 +38,10 @@ const PhotoViewComponent = ({
         />
       )}
     </View>
-  );
-};
+  )
+}
 
-export const PhotoView = React.memo<Props>(PhotoViewComponent);
+export const PhotoView = React.memo<Props>(PhotoViewComponent)
 
 const styles = StyleSheet.create({
   container: {
@@ -55,4 +55,4 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: 'black',
   },
-});
+})

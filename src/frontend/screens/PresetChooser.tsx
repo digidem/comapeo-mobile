@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   View,
   TouchableHighlight,
@@ -6,17 +6,17 @@ import {
   Dimensions,
   FlatList,
   Text,
-} from 'react-native';
-import {defineMessages, FormattedMessage} from 'react-intl';
+} from 'react-native'
+import { defineMessages, FormattedMessage } from 'react-intl'
 
-import {useDraftObservation} from '../hooks/useDraftObservation';
-import {CategoryCircleIcon} from '../sharedComponents/icons/CategoryIcon';
-import {WHITE} from '../lib/styles';
-import {NativeNavigationComponent} from '../sharedTypes';
-import {CustomHeaderLeftClose} from '../sharedComponents/CustomHeaderLeftClose';
-import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
-import {Preset} from '@mapeo/schema';
-import {usePresetsQuery} from '../hooks/server/presets';
+import { useDraftObservation } from '../hooks/useDraftObservation'
+import { CategoryCircleIcon } from '../sharedComponents/icons/CategoryIcon'
+import { WHITE } from '../lib/styles'
+import { NativeNavigationComponent } from '../sharedTypes'
+import { CustomHeaderLeftClose } from '../sharedComponents/CustomHeaderLeftClose'
+import { CustomHeaderLeft } from '../sharedComponents/CustomHeaderLeft'
+import { Preset } from '@mapeo/schema'
+import { usePresetsQuery } from '../hooks/server/presets'
 
 const m = defineMessages({
   categoryTitle: {
@@ -24,56 +24,56 @@ const m = defineMessages({
     defaultMessage: 'Choose what is happening',
     description: 'Title for category chooser screen',
   },
-});
+})
 
 // Used to skip static message extraction for messages without a static ID
-const DynFormattedMessage = FormattedMessage;
+const DynFormattedMessage = FormattedMessage
 
-const ROW_HEIGHT = 120;
-const MIN_COL_WIDTH = 100;
+const ROW_HEIGHT = 120
+const MIN_COL_WIDTH = 100
 
 export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
   navigation,
 }) => {
-  const {updatePreset} = useDraftObservation();
-  const {data: presets} = usePresetsQuery();
-  const state = navigation.getState();
-  const currentIndex = state.index;
-  const routes = state.routes;
+  const { updatePreset } = useDraftObservation()
+  const { data: presets } = usePresetsQuery()
+  const state = navigation.getState()
+  const currentIndex = state.index
+  const routes = state.routes
   const prevRouteNameInStack = !routes[currentIndex - 1]
     ? undefined
-    : routes[currentIndex - 1].name;
+    : routes[currentIndex - 1].name
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerLeft: props =>
+      headerLeft: (props) =>
         prevRouteNameInStack === 'ObservationEdit' ? (
           <CustomHeaderLeft headerBackButtonProps={props} />
         ) : (
           <CustomHeaderLeftClose headerBackButtonProps={props} />
         ),
-    });
-  }, [prevRouteNameInStack, CustomHeaderLeft, CustomHeaderLeftClose]);
+    })
+  }, [prevRouteNameInStack, CustomHeaderLeft, CustomHeaderLeftClose])
 
   const presetsList = !presets
     ? null
     : Array.from(presets)
         // Only show presets where the geometry property includes "point"
-        .filter(p => p.geometry.includes('point'))
+        .filter((p) => p.geometry.includes('point'))
         // Sort presets by sort property and then by name, then filter only point presets
         .sort((a, b) => {
-          return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
-        });
+          return a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+        })
 
   const handleSelectPreset = (selectedPreset: Preset) => {
-    updatePreset(selectedPreset);
-    navigation.navigate('ObservationEdit');
-  };
+    updatePreset(selectedPreset)
+    navigation.navigate('ObservationEdit')
+  }
 
   const rowsPerWindow = Math.ceil(
     (Dimensions.get('window').height - 65) / ROW_HEIGHT,
-  );
-  const numColumns = Math.floor(Dimensions.get('window').width / MIN_COL_WIDTH);
+  )
+  const numColumns = Math.floor(Dimensions.get('window').width / MIN_COL_WIDTH)
 
   return (
     <View style={styles.container}>
@@ -84,8 +84,8 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
         windowSize={1}
         maxToRenderPerBatch={numColumns}
         removeClippedSubviews
-        style={{width: Dimensions.get('window').width}}
-        renderItem={({item}) => (
+        style={{ width: Dimensions.get('window').width }}
+        renderItem={({ item }) => (
           <Item
             key={keyExtractor(item)}
             item={item}
@@ -96,29 +96,36 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
         numColumns={numColumns}
       />
     </View>
-  );
-};
+  )
+}
 
 function getItemLayout(_data: unknown, index: number) {
   return {
     length: ROW_HEIGHT,
     offset: ROW_HEIGHT * index,
     index,
-  };
+  }
 }
 
-function keyExtractor(item: {docId: string}) {
-  return item.docId;
+function keyExtractor(item: { docId: string }) {
+  return item.docId
 }
 
 const Item = React.memo(
-  ({item, onSelect}: {item: Preset; onSelect: (preset: Preset) => void}) => (
+  ({
+    item,
+    onSelect,
+  }: {
+    item: Preset
+    onSelect: (preset: Preset) => void
+  }) => (
     <TouchableHighlight
       style={styles.cellTouchable}
       onPress={() => onSelect(item)}
       activeOpacity={1}
       underlayColor="#000033"
-      testID={`${item.docId}CategoryButton`}>
+      testID={`${item.docId}CategoryButton`}
+    >
       <View style={styles.cellContainer}>
         <CategoryCircleIcon size="medium" />
         <Text numberOfLines={3} style={styles.categoryName}>
@@ -130,9 +137,9 @@ const Item = React.memo(
       </View>
     </TouchableHighlight>
   ),
-);
+)
 
-PresetChooser.navTitle = m.categoryTitle;
+PresetChooser.navTitle = m.categoryTitle
 
 const styles = StyleSheet.create({
   container: {
@@ -164,4 +171,4 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     paddingRight: 5,
   },
-});
+})

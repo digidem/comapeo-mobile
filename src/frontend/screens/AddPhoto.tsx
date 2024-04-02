@@ -1,57 +1,58 @@
-import React from 'react';
+import React from 'react'
 import {
   View,
   StyleSheet,
   GestureResponderEvent,
   TouchableNativeFeedback,
-} from 'react-native';
-import {Text} from '../sharedComponents/Text';
-import debug from 'debug';
-import {defineMessages, FormattedMessage} from 'react-intl';
+} from 'react-native'
+import { Text } from '../sharedComponents/Text'
+import debug from 'debug'
+import { defineMessages, FormattedMessage } from 'react-intl'
 
-import {CameraView} from '../sharedComponents/CameraView';
-import {useDraftObservation} from '../hooks/useDraftObservation';
-import {NativeRootNavigationProps} from '../sharedTypes';
-import {CapturedPictureMM} from '../contexts/PhotoPromiseContext/types';
+import { CameraView } from '../sharedComponents/CameraView'
+import { useDraftObservation } from '../hooks/useDraftObservation'
+import { NativeRootNavigationProps } from '../sharedTypes'
+import { CapturedPictureMM } from '../contexts/PhotoPromiseContext/types'
 
 const m = defineMessages({
   cancel: {
     id: 'screens.AddPhoto.cancel',
     defaultMessage: 'Cancel',
   },
-});
+})
 
-const log = debug('AddPhotoScreen');
+const log = debug('AddPhotoScreen')
 
 export const AddPhotoScreen = ({
   navigation,
 }: NativeRootNavigationProps<'AddPhoto'>) => {
-  const {addPhoto} = useDraftObservation();
+  const { addPhoto } = useDraftObservation()
 
   const handleAddPress = (capture: Promise<CapturedPictureMM>) => {
-    log('pressed add button');
-    addPhoto(capture);
-    navigation.pop();
-  };
+    log('pressed add button')
+    addPhoto(capture)
+    navigation.pop()
+  }
 
   const handleCancelPress = (e: GestureResponderEvent) => {
-    log('cancelled');
-    navigation.pop();
-  };
+    log('cancelled')
+    navigation.pop()
+  }
 
   return (
     <View style={styles.container}>
       <CameraView onAddPress={handleAddPress} />
       <TouchableNativeFeedback
         style={styles.cancelButton}
-        onPress={handleCancelPress}>
+        onPress={handleCancelPress}
+      >
         <Text style={styles.cancelButtonLabel}>
           <FormattedMessage {...m.cancel} />
         </Text>
       </TouchableNativeFeedback>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -71,4 +72,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-});
+})

@@ -1,13 +1,13 @@
-import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {defineMessages, FormattedMessage} from 'react-intl';
-import DeviceInfo from 'react-native-device-info';
-import OpenSettings from 'react-native-android-open-settings';
+import * as React from 'react'
+import { StyleSheet, View } from 'react-native'
+import { defineMessages, FormattedMessage } from 'react-intl'
+import DeviceInfo from 'react-native-device-info'
+import OpenSettings from 'react-native-android-open-settings'
 
-import {TouchableNativeFeedback} from './Touchables';
+import { TouchableNativeFeedback } from './Touchables'
 
-import {WifiIcon, WifiOffIcon} from './icons';
-import {Text} from './Text';
+import { WifiIcon, WifiOffIcon } from './icons'
+import { Text } from './Text'
 
 const m = defineMessages({
   wifi: {
@@ -19,12 +19,12 @@ const m = defineMessages({
     id: 'sharedComponents.WifiBar.noWifi',
     defaultMessage: 'No Internet',
   },
-});
+})
 
 interface Props {
-  deviceName: string;
-  onPress?: () => void;
-  ssid?: string | null;
+  deviceName: string
+  onPress?: () => void
+  ssid?: string | null
 }
 
 export const WifiBar = ({
@@ -51,7 +51,7 @@ export const WifiBar = ({
       )}
     </View>
   </TouchableNativeFeedback>
-);
+)
 
 const styles = StyleSheet.create({
   bold: {
@@ -84,4 +84,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
-});
+})

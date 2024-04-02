@@ -1,17 +1,17 @@
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native'
 import {
   NativeNavigationComponent,
   ViewStyleProp,
-} from '../../../../sharedTypes';
-import {defineMessages, useIntl} from 'react-intl';
-import {Text} from '../../../../sharedComponents/Text';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {DARK_GREY, LIGHT_GREY} from '../../../../lib/styles';
-import React from 'react';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {DeviceNameWithIcon} from '../../../../sharedComponents/DeviceNameWithIcon';
-import {RoleWithIcon} from '../../../../sharedComponents/RoleWithIcon';
-import {COORDINATOR_ROLE_ID, MEMBER_ROLE_ID} from '../../../../sharedTypes';
+} from '../../../../sharedTypes'
+import { defineMessages, useIntl } from 'react-intl'
+import { Text } from '../../../../sharedComponents/Text'
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
+import { DARK_GREY, LIGHT_GREY } from '../../../../lib/styles'
+import React from 'react'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import { DeviceNameWithIcon } from '../../../../sharedComponents/DeviceNameWithIcon'
+import { RoleWithIcon } from '../../../../sharedComponents/RoleWithIcon'
+import { COORDINATOR_ROLE_ID, MEMBER_ROLE_ID } from '../../../../sharedTypes'
 
 const m = defineMessages({
   title: {
@@ -32,20 +32,20 @@ const m = defineMessages({
     defaultMessage:
       'As a Coordinator this device can invite and remove users, and manage project details.',
   },
-});
+})
 
 export const SelectInviteeRole: NativeNavigationComponent<
   'SelectInviteeRole'
-> = ({route, navigation}) => {
-  const {formatMessage: t} = useIntl();
+> = ({ route, navigation }) => {
+  const { formatMessage: t } = useIntl()
   return (
     <View style={styles.container}>
-      <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+      <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
         {t(m.selectingDevice)}
       </Text>
-      <DeviceNameWithIcon {...route.params} style={{marginTop: 10}} />
+      <DeviceNameWithIcon {...route.params} style={{ marginTop: 10 }} />
       <RoleCard
-        style={{marginTop: 20}}
+        style={{ marginTop: 20 }}
         role="participant"
         onPress={() =>
           navigation.navigate('ReviewAndInvite', {
@@ -55,7 +55,7 @@ export const SelectInviteeRole: NativeNavigationComponent<
         }
       />
       <RoleCard
-        style={{marginTop: 10}}
+        style={{ marginTop: 10 }}
         role="coordinator"
         onPress={() =>
           navigation.navigate('ReviewAndInvite', {
@@ -65,23 +65,24 @@ export const SelectInviteeRole: NativeNavigationComponent<
         }
       />
     </View>
-  );
-};
+  )
+}
 
 type RoleCardProps = {
-  role: 'participant' | 'coordinator';
-  onPress: () => void;
-  style?: ViewStyleProp;
-};
+  role: 'participant' | 'coordinator'
+  onPress: () => void
+  style?: ViewStyleProp
+}
 
-export const RoleCard = ({role, style, onPress}: RoleCardProps) => {
-  const {formatMessage} = useIntl();
+export const RoleCard = ({ role, style, onPress }: RoleCardProps) => {
+  const { formatMessage } = useIntl()
   return (
     <TouchableOpacity
       style={[styles.flexRow, styles.cardContainer, style]}
-      onPress={onPress}>
+      onPress={onPress}
+    >
       <MaterialIcon name="radio-button-off" size={25} color={DARK_GREY} />
-      <View style={{marginLeft: 10}}>
+      <View style={{ marginLeft: 10 }}>
         <RoleWithIcon role={role} />
         <Text>
           {formatMessage(
@@ -92,10 +93,10 @@ export const RoleCard = ({role, style, onPress}: RoleCardProps) => {
         </Text>
       </View>
     </TouchableOpacity>
-  );
-};
+  )
+}
 
-SelectInviteeRole.navTitle = m.title;
+SelectInviteeRole.navTitle = m.title
 
 const styles = StyleSheet.create({
   container: {
@@ -113,4 +114,4 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
   },
-});
+})

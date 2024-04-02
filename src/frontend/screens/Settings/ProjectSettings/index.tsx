@@ -1,7 +1,7 @@
-import {ScrollView} from 'react-native';
-import {List, ListItem, ListItemText} from '../../../sharedComponents/List';
-import {FormattedMessage, defineMessages} from 'react-intl';
-import {NativeNavigationComponent} from '../../../sharedTypes';
+import { ScrollView } from 'react-native'
+import { List, ListItem, ListItemText } from '../../../sharedComponents/List'
+import { FormattedMessage, defineMessages } from 'react-intl'
+import { NativeNavigationComponent } from '../../../sharedTypes'
 
 const m = defineMessages({
   title: {
@@ -20,7 +20,7 @@ const m = defineMessages({
     id: 'Screens.Settings.ProjectSettings.yourTeam',
     defaultMessage: 'Your Team',
   },
-});
+})
 
 export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
   navigation,
@@ -30,8 +30,9 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
       <List>
         <ListItem
           onPress={() => {
-            navigation.navigate('DeviceNameDisplay');
-          }}>
+            navigation.navigate('DeviceNameDisplay')
+          }}
+        >
           <ListItemText primary={<FormattedMessage {...m.deviceName} />} />
         </ListItem>
         <ListItem onPress={() => {}}>
@@ -39,13 +40,14 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
         </ListItem>
         <ListItem
           onPress={() => {
-            navigation.navigate('YourTeam');
-          }}>
+            navigation.navigate('YourTeam')
+          }}
+        >
           <ListItemText primary={<FormattedMessage {...m.yourTeam} />} />
         </ListItem>
       </List>
     </ScrollView>
-  );
-};
+  )
+}
 
-ProjectSettings.navTitle = m.title;
+ProjectSettings.navTitle = m.title

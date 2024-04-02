@@ -1,16 +1,16 @@
-import * as React from 'react';
-import {defineMessages, useIntl} from 'react-intl';
-import {StyleSheet} from 'react-native';
-import {RED} from '../../lib/styles';
+import * as React from 'react'
+import { defineMessages, useIntl } from 'react-intl'
+import { StyleSheet } from 'react-native'
+import { RED } from '../../lib/styles'
 import {
   BottomSheetContent,
   BottomSheetModal,
-} from '../../sharedComponents/BottomSheetModal';
-import {ErrorIcon} from '../../sharedComponents/icons';
-import {NativeRootNavigationProps} from '../../sharedTypes';
-import {usePersistedPasscode} from '../../hooks/persistedState/usePersistedPasscode';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
+} from '../../sharedComponents/BottomSheetModal'
+import { ErrorIcon } from '../../sharedComponents/icons'
+import { NativeRootNavigationProps } from '../../sharedTypes'
+import { usePersistedPasscode } from '../../hooks/persistedState/usePersistedPasscode'
+import { useNavigationFromRoot } from '../../hooks/useNavigationWithTypes'
+import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types'
 
 const m = defineMessages({
   title: {
@@ -31,24 +31,24 @@ const m = defineMessages({
     defaultMessage: 'Passcode',
     description: 'used to indicate to the user what the new passcode will be.',
   },
-});
+})
 
 type ConfirmPasscodeSheetProps = {
-  inputtedPasscode: string;
-  isOpen: boolean;
-};
+  inputtedPasscode: string
+  isOpen: boolean
+}
 
 export const ConfirmPasscodeSheet = React.forwardRef<
   BottomSheetModalMethods,
   ConfirmPasscodeSheetProps
->(({inputtedPasscode, isOpen}, sheetRef) => {
-  const {formatMessage: t} = useIntl();
-  const setPasscode = usePersistedPasscode(store => store.setPasscode);
-  const navigation = useNavigationFromRoot();
+>(({ inputtedPasscode, isOpen }, sheetRef) => {
+  const { formatMessage: t } = useIntl()
+  const setPasscode = usePersistedPasscode((store) => store.setPasscode)
+  const navigation = useNavigationFromRoot()
 
   function setPasscodeAndNavigateBack() {
-    setPasscode(inputtedPasscode);
-    navigation.navigate('Security');
+    setPasscode(inputtedPasscode)
+    navigation.navigate('Security')
   }
 
   return (
@@ -62,7 +62,7 @@ export const ConfirmPasscodeSheet = React.forwardRef<
           {
             text: t(m.cancel),
             onPress: () => {
-              navigation.navigate('Security');
+              navigation.navigate('Security')
             },
             variation: 'outlined',
           },
@@ -73,15 +73,15 @@ export const ConfirmPasscodeSheet = React.forwardRef<
           },
         ]}
         icon={
-          <ErrorIcon style={{position: 'relative'}} size={90} color={RED} />
+          <ErrorIcon style={{ position: 'relative' }} size={90} color={RED} />
         }
       />
     </BottomSheetModal>
-  );
-});
+  )
+})
 
 const styles = StyleSheet.create({
   text: {
     fontSize: 16,
   },
-});
+})

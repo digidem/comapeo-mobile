@@ -1,7 +1,7 @@
 // import { Alert } from "react-native";
-import {fromLatLon} from 'utm';
-import {SelectOptions, LabeledSelectOption} from '../sharedTypes/PresetTypes';
-import {Preset, Observation} from '@mapeo/schema';
+import { fromLatLon } from 'utm'
+import { SelectOptions, LabeledSelectOption } from '../sharedTypes/PresetTypes'
+import { Preset, Observation } from '@mapeo/schema'
 
 // import type {
 //   ObservationValue,
@@ -27,7 +27,7 @@ import {Preset, Observation} from '@mapeo/schema';
 // // position" and we change the UI accordingly
 // const GOOD_PRECISION = 10; // 10 meters
 
-export type LocationStatus = 'searching' | 'improving' | 'good' | 'error';
+export type LocationStatus = 'searching' | 'improving' | 'good' | 'error'
 
 // Little helper to timeout a promise
 // export function promiseTimeout<T>(
@@ -114,16 +114,16 @@ export type LocationStatus = 'searching' | 'improving' | 'good' | 'error';
 
 // // Coordinates conversions
 export function toDegreesMinutesAndSeconds(coordinate: number) {
-  const absolute = Math.abs(coordinate);
-  const degrees = Math.floor(absolute);
-  const minutesNotTruncated = (absolute - degrees) * 60;
-  const minutes = Math.floor(minutesNotTruncated);
-  const seconds = (minutesNotTruncated - minutes) * 60;
+  const absolute = Math.abs(coordinate)
+  const degrees = Math.floor(absolute)
+  const minutesNotTruncated = (absolute - degrees) * 60
+  const minutes = Math.floor(minutesNotTruncated)
+  const seconds = (minutesNotTruncated - minutes) * 60
   return {
     degrees,
     minutes,
     seconds,
-  };
+  }
 }
 
 export function convertDmsToDd({
@@ -131,46 +131,46 @@ export function convertDmsToDd({
   minutes,
   seconds,
 }: {
-  degrees: number;
-  minutes: number;
-  seconds: number;
+  degrees: number
+  minutes: number
+  seconds: number
 }) {
-  return degrees + minutes / 60 + seconds / 3600;
+  return degrees + minutes / 60 + seconds / 3600
 }
 
 // Style from National Geographic style guide
 // https://sites.google.com/a/ngs.org/ngs-style-manual/home/L/latitude-and-longitude
-function convertToDMS({lat, lon}: {lat: number; lon: number}) {
-  const latitude = formatDms(toDegreesMinutesAndSeconds(lat));
-  const latitudeCardinal = lat >= 0 ? 'N' : 'S';
+function convertToDMS({ lat, lon }: { lat: number; lon: number }) {
+  const latitude = formatDms(toDegreesMinutesAndSeconds(lat))
+  const latitudeCardinal = lat >= 0 ? 'N' : 'S'
 
-  const longitude = formatDms(toDegreesMinutesAndSeconds(lon));
-  const longitudeCardinal = lon >= 0 ? 'E' : 'W';
-  return `${latitude} ${latitudeCardinal}, ${longitude} ${longitudeCardinal}`;
+  const longitude = formatDms(toDegreesMinutesAndSeconds(lon))
+  const longitudeCardinal = lon >= 0 ? 'E' : 'W'
+  return `${latitude} ${latitudeCardinal}, ${longitude} ${longitudeCardinal}`
 }
 
-export function convertToUTM({lat, lon}: {lat: number; lon: number}) {
+export function convertToUTM({ lat, lon }: { lat: number; lon: number }) {
   try {
-    let {easting, northing, zoneNum, zoneLetter} = fromLatLon(lat, lon);
-    easting = +leftPad(easting.toFixed(), 6, '0');
-    northing = +leftPad(northing.toFixed(), 6, '0');
-    return `UTM ${zoneNum}${zoneLetter} ${easting} ${northing}`;
+    let { easting, northing, zoneNum, zoneLetter } = fromLatLon(lat, lon)
+    easting = +leftPad(easting.toFixed(), 6, '0')
+    northing = +leftPad(northing.toFixed(), 6, '0')
+    return `UTM ${zoneNum}${zoneLetter} ${easting} ${northing}`
   } catch (e) {
     // Some coordinates (e.g. < 80S or 84N) cannot be formatted as UTM
     return `${lat >= 0 ? '+' : ''}${lat.toFixed(6)}°, ${
       lon >= 0 ? '+' : ''
-    }${lon.toFixed(6)}°`;
+    }${lon.toFixed(6)}°`
   }
 }
 
 // Style from National Geographic style guide
 // https://sites.google.com/a/ngs.org/ngs-style-manual/home/L/latitude-and-longitude
-function formatDD({lat, lon}: {lat: number; lon: number}) {
-  const formattedLat = Math.abs(lat).toFixed(6);
-  const formattedLon = Math.abs(lon).toFixed(6);
-  const latCardinal = lat >= 0 ? 'N' : 'S';
-  const lonCardinal = lon >= 0 ? 'E' : 'W';
-  return `${formattedLat}° ${latCardinal}, ${formattedLon}° ${lonCardinal}`;
+function formatDD({ lat, lon }: { lat: number; lon: number }) {
+  const formattedLat = Math.abs(lat).toFixed(6)
+  const formattedLon = Math.abs(lon).toFixed(6)
+  const latCardinal = lat >= 0 ? 'N' : 'S'
+  const lonCardinal = lon >= 0 ? 'E' : 'W'
+  return `${formattedLat}° ${latCardinal}, ${formattedLon}° ${lonCardinal}`
 }
 
 function formatDms({
@@ -178,11 +178,11 @@ function formatDms({
   minutes,
   seconds,
 }: {
-  degrees: number;
-  minutes: number;
-  seconds: number;
+  degrees: number
+  minutes: number
+  seconds: number
 }) {
-  return `${degrees}° ${minutes}' ${seconds.toFixed(3)}"`;
+  return `${degrees}° ${minutes}' ${seconds.toFixed(3)}"`
 }
 
 export function formatCoords({
@@ -190,19 +190,19 @@ export function formatCoords({
   lat,
   format = 'utm',
 }: {
-  lon: number;
-  lat: number;
-  format?: 'utm' | 'dd' | 'dms';
+  lon: number
+  lat: number
+  format?: 'utm' | 'dd' | 'dms'
 }): string {
   switch (format) {
     case 'dd':
-      return formatDD({lat, lon});
+      return formatDD({ lat, lon })
     case 'utm':
-      return convertToUTM({lat, lon});
+      return convertToUTM({ lat, lon })
     case 'dms':
-      return convertToDMS({lat, lon});
+      return convertToDMS({ lat, lon })
     default:
-      return convertToUTM({lat, lon});
+      return convertToUTM({ lat, lon })
   }
 }
 
@@ -222,32 +222,32 @@ export function formatCoords({
 export function convertSelectOptionsToLabeled(
   options: SelectOptions,
 ): LabeledSelectOption[] {
-  return options.map(option => {
+  return options.map((option) => {
     if (option === null) {
-      return {label: 'NULL', value: option};
+      return { label: 'NULL', value: option }
     } else if (typeof option === 'boolean') {
-      return {label: option ? 'TRUE' : 'FALSE', value: option};
+      return { label: option ? 'TRUE' : 'FALSE', value: option }
     } else if (typeof option === 'string' || typeof option === 'number') {
-      return {label: option + '', value: option};
+      return { label: option + '', value: option }
     } else {
-      return option;
+      return option
     }
-  });
+  })
 }
 
 function leftPad(str: string, len: number, char: string): string {
   // doesn't need to pad
-  len = len - str.length;
-  if (len <= 0) return str;
+  len = len - str.length
+  if (len <= 0) return str
 
-  var pad = '';
+  var pad = ''
   while (true) {
-    if (len & 1) pad += char;
-    len >>= 1;
-    if (len) char += char;
-    else break;
+    if (len & 1) pad += char
+    len >>= 1
+    if (len) char += char
+    else break
   }
-  return pad + str;
+  return pad + str
 }
 
 // // This is a helper function to force the type definition
@@ -281,40 +281,40 @@ export function matchPreset(
   availableTags: Observation['tags'],
   presets: Preset[],
 ): Preset | undefined {
-  let bestMatch: Preset | undefined;
-  let bestMatchScore = 0;
+  let bestMatch: Preset | undefined
+  let bestMatchScore = 0
 
-  presets.forEach(preset => {
-    let score = 0;
-    let presetTagsCount = Object.keys(preset.tags).length;
-    let matchedTagsCount = 0;
+  presets.forEach((preset) => {
+    let score = 0
+    let presetTagsCount = Object.keys(preset.tags).length
+    let matchedTagsCount = 0
 
     for (const key in preset.tags) {
       if (preset.tags.hasOwnProperty(key)) {
-        const presetTag = preset.tags[key];
-        const availableTag = availableTags[key];
+        const presetTag = preset.tags[key]
+        const availableTag = availableTags[key]
         if (presetTag === availableTag) {
-          score++;
-          matchedTagsCount++;
+          score++
+          matchedTagsCount++
         } else if (
           Array.isArray(presetTag) &&
           presetTag.includes(availableTag as boolean | number | string | null)
         ) {
-          score++;
-          matchedTagsCount++;
+          score++
+          matchedTagsCount++
         }
       }
     }
 
     // Calculate a score based on how many tags matched
-    score = (score / presetTagsCount) * 100;
+    score = (score / presetTagsCount) * 100
 
     // Update the best match if the current preset's score is higher
     if (score > bestMatchScore) {
-      bestMatchScore = score;
-      bestMatch = preset;
+      bestMatchScore = score
+      bestMatch = preset
     }
-  });
+  })
 
-  return bestMatch;
+  return bestMatch
 }

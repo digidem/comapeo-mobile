@@ -1,16 +1,16 @@
-import * as React from 'react';
+import * as React from 'react'
 
-import {List, ListItem, ListItemText, ListItemIcon} from './List';
+import { List, ListItem, ListItemText, ListItemIcon } from './List'
 
 type SelectOneProps<T> = {
-  value: T;
-  onChange: (value: T) => T | void;
+  value: T
+  onChange: (value: T) => T | void
   options: Array<{
-    value: T;
-    label: string;
-    hint?: string;
-  }>;
-};
+    value: T
+    label: string
+    hint?: string
+  }>
+}
 
 export const SelectOne = <T,>({
   value,
@@ -26,7 +26,8 @@ export const SelectOne = <T,>({
             : index
         }
         testID={`${item.value}LanguageButton`}
-        onPress={() => value !== item.value && onChange(item.value)}>
+        onPress={() => value !== item.value && onChange(item.value)}
+      >
         <ListItemIcon
           iconName={
             item.value === value
@@ -34,8 +35,8 @@ export const SelectOne = <T,>({
               : 'radio-button-unchecked'
           }
         />
-        <ListItemText primary={item.label} secondary={item.hint}></ListItemText>
+        <ListItemText primary={item.label} secondary={item.hint} />
       </ListItem>
     ))}
   </List>
-);
+)

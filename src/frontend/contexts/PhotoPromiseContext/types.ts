@@ -1,14 +1,14 @@
-export const THUMBNAIL_SIZE = 400;
-export const THUMBNAIL_QUALITY = 30;
-export const PREVIEW_SIZE = 1200;
-export const PREVIEW_QUALITY = 30;
+export const THUMBNAIL_SIZE = 400
+export const THUMBNAIL_QUALITY = 30
+export const PREVIEW_SIZE = 1200
+export const PREVIEW_QUALITY = 30
 
 export interface SavedPhoto {
   // id of the photo in the Mapeo database
-  id: string;
-  type?: 'photo';
+  id: string
+  type?: 'photo'
   // If an image is to be deleted
-  deleted?: boolean;
+  deleted?: boolean
 }
 
 // Photo added to a draft observation, that has not yet been saved
@@ -16,18 +16,18 @@ export interface SavedPhoto {
 // does not yet have any image associated with it
 export interface DraftPhoto {
   // If the photo is still being captured
-  capturing: boolean;
-  draftPhotoId: string;
+  capturing: boolean
+  draftPhotoId: string
   // uri to a local full-resolution image (this is uploaded to Mapeo server)
-  originalUri?: string;
+  originalUri?: string
   // uri to a local thumbnail image (this is uploaded to Mapeo server)
-  thumbnailUri?: string;
+  thumbnailUri?: string
   // uri to a local preview image
-  previewUri?: string;
+  previewUri?: string
   // If an image is to be deleted
-  deleted?: boolean;
+  deleted?: boolean
   // If there was any kind of error on image capture
-  error?: boolean;
+  error?: boolean
 }
 
 /**
@@ -36,15 +36,15 @@ export interface DraftPhoto {
  * cancellation of any edits. During photo capture a preview is available to
  * show in the UI while the full-res photo is saved.
  */
-export type Photo = SavedPhoto | DraftPhoto;
+export type Photo = SavedPhoto | DraftPhoto
 
 export type CapturedPictureMM = {
-  uri: string;
-  rotate?: number;
-};
-
-export interface Signal {
-  didCancel?: boolean;
+  uri: string
+  rotate?: number
 }
 
-export type CancellablePhotoPromise = Promise<DraftPhoto> & {signal?: Signal};
+export interface Signal {
+  didCancel?: boolean
+}
+
+export type CancellablePhotoPromise = Promise<DraftPhoto> & { signal?: Signal }

@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 
-export const ListContext = React.createContext({});
+export const ListContext = React.createContext({})
 
 if (process.env.NODE_ENV !== 'production') {
-  ListContext.displayName = 'ListContext';
+  ListContext.displayName = 'ListContext'
 }

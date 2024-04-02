@@ -1,9 +1,9 @@
-import * as React from 'react';
-import {IntlProvider as IntlProviderOrig, CustomFormats} from 'react-intl';
+import * as React from 'react'
+import { IntlProvider as IntlProviderOrig, CustomFormats } from 'react-intl'
 
-import messages from '../../../translations/messages.json';
-import languages from '../languages.json';
-import {usePersistedLocale} from '../hooks/persistedState/usePersistedLocale';
+import messages from '../../../translations/messages.json'
+import languages from '../languages.json'
+import { usePersistedLocale } from '../hooks/persistedState/usePersistedLocale'
 
 export const formats: CustomFormats = {
   date: {
@@ -15,54 +15,54 @@ export const formats: CustomFormats = {
       minute: '2-digit',
     },
   },
-};
+}
 
-type TranslatedLocales = keyof typeof messages;
-type SupportedLanguageLocales = keyof typeof languages;
+type TranslatedLocales = keyof typeof messages
+type SupportedLanguageLocales = keyof typeof languages
 
 interface LanguageName {
   /** IETF BCP 47 langauge tag with region code. */
-  locale: SupportedLanguageLocales;
+  locale: SupportedLanguageLocales
   /** Localized name for language */
-  nativeName: string;
+  nativeName: string
   /** English name for language */
-  englishName: string;
+  englishName: string
 }
 
-const translatedLocales = Object.keys(messages) as Array<TranslatedLocales>;
+const translatedLocales = Object.keys(messages) as Array<TranslatedLocales>
 
 export const supportedLanguages: LanguageName[] = translatedLocales
-  .filter(locale => {
+  .filter((locale) => {
     const hasAtLeastOneTranslatedString =
-      Object.keys(messages[locale]).length > 0;
+      Object.keys(messages[locale]).length > 0
     // This will show a typescript error if the language name does not exist
-    const hasTranslatedLanguageName = languages[locale];
+    const hasTranslatedLanguageName = languages[locale]
     if (!hasTranslatedLanguageName) {
       console.warn(
         `Locale "${locale}" is not available in Mapeo because we do not have
 a language name and translations in \`src/frontend/languages.json\``,
-      );
+      )
     }
-    return hasAtLeastOneTranslatedString && hasTranslatedLanguageName;
+    return hasAtLeastOneTranslatedString && hasTranslatedLanguageName
   })
-  .map(locale => ({
+  .map((locale) => ({
     locale,
     ...languages[locale],
   }))
   .sort((a, b) => {
-    return a.englishName.localeCompare(b.englishName);
-  });
+    return a.englishName.localeCompare(b.englishName)
+  })
 
-export const IntlProvider = ({children}: {children: React.ReactNode}) => {
-  const appLocale = usePersistedLocale(store => store.locale);
+export const IntlProvider = ({ children }: { children: React.ReactNode }) => {
+  const appLocale = usePersistedLocale((store) => store.locale)
 
-  const languageCode = appLocale.split('-')[0];
+  const languageCode = appLocale.split('-')[0]
 
   // Add fallbacks for non-regional locales (e.g. "en" for "en-GB")
   const localeMessages = {
     ...messages[languageCode as TranslatedLocales],
     ...(messages[appLocale as TranslatedLocales] || {}),
-  };
+  }
 
   return (
     <IntlProviderOrig
@@ -71,14 +71,15 @@ export const IntlProvider = ({children}: {children: React.ReactNode}) => {
       messages={localeMessages}
       formats={formats}
       onError={onError}
-      wrapRichTextChunksInFragment>
+      wrapRichTextChunksInFragment
+    >
       {children}
     </IntlProviderOrig>
-  );
-};
+  )
+}
 
 function onError(e: Error) {
-  console.log(e);
+  console.log(e)
 }
 
 // Device locale can be regional e.g. `en-US` but we might only have
@@ -88,9 +89,9 @@ function onError(e: Error) {
 export function getSupportedLocale(
   locale: string,
 ): keyof typeof languages | undefined {
-  if (supportedLanguages.find(lang => lang.locale === locale))
-    return locale as keyof typeof languages;
-  const nonRegionalLocale = locale.split('-')[0];
-  if (supportedLanguages.find(({locale}) => locale === nonRegionalLocale))
-    return nonRegionalLocale as keyof typeof languages;
+  if (supportedLanguages.find((lang) => lang.locale === locale))
+    return locale as keyof typeof languages
+  const nonRegionalLocale = locale.split('-')[0]
+  if (supportedLanguages.find(({ locale }) => locale === nonRegionalLocale))
+    return nonRegionalLocale as keyof typeof languages
 }

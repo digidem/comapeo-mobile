@@ -1,12 +1,15 @@
-import MapboxGL from '@rnmapbox/maps';
-import * as React from 'react';
+import MapboxGL from '@rnmapbox/maps'
+import * as React from 'react'
 // import {useExperiments} from '../../hooks/useExperiments';
 interface UserLocationProps {
-  visible: boolean;
-  minDisplacement: number;
+  visible: boolean
+  minDisplacement: number
 }
 
-export const UserLocation = ({visible, minDisplacement}: UserLocationProps) => {
+export const UserLocation = ({
+  visible,
+  minDisplacement,
+}: UserLocationProps) => {
   // const [{directionalArrow}] = useExperiments();
 
   return (
@@ -15,5 +18,5 @@ export const UserLocation = ({visible, minDisplacement}: UserLocationProps) => {
       minDisplacement={minDisplacement}
       // showsUserHeadingIndicator={directionalArrow}
     />
-  );
-};
+  )
+}

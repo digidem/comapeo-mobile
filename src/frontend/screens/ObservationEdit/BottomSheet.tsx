@@ -1,12 +1,12 @@
-import * as React from 'react';
+import * as React from 'react'
 import {
   Keyboard,
   View,
   StyleSheet,
   TouchableNativeFeedback,
-} from 'react-native';
-import {Text} from '../../sharedComponents/Text';
-import {defineMessages, FormattedMessage} from 'react-intl';
+} from 'react-native'
+import { Text } from '../../sharedComponents/Text'
+import { defineMessages, FormattedMessage } from 'react-intl'
 
 const m = defineMessages({
   addLabel: {
@@ -15,55 +15,55 @@ const m = defineMessages({
     description:
       'Label above keyboard that expands into bottom sheet of options to add (photo, details etc)',
   },
-});
+})
 
 type Props = {
-  icon: React.ReactNode;
-  label: string;
-  onPress: () => any;
-};
+  icon: React.ReactNode
+  label: string
+  onPress: () => any
+}
 
 type BottomSheepProps = {
-  items: Props[];
-};
+  items: Props[]
+}
 
-export const BottomSheet = ({items}: BottomSheepProps) => {
-  const [keyboardVisible, setKeyboardVisible] = React.useState(false);
+export const BottomSheet = ({ items }: BottomSheepProps) => {
+  const [keyboardVisible, setKeyboardVisible] = React.useState(false)
 
   React.useEffect(() => {
     const keyboardHideUnsub = Keyboard.addListener('keyboardDidHide', () =>
       setKeyboardVisible(false),
-    );
+    )
 
     const keyboardShowUnsub = Keyboard.addListener('keyboardDidShow', () =>
       setKeyboardVisible(true),
-    );
+    )
 
     return () => {
-      keyboardHideUnsub.remove();
-      keyboardShowUnsub.remove();
-    };
-  }, []);
+      keyboardHideUnsub.remove()
+      keyboardShowUnsub.remove()
+    }
+  }, [])
 
   return (
     <View style={[styles.container]}>
       {keyboardVisible ? (
         <KeyboardAccessory
-          icons={items.map(i => i.icon)}
+          icons={items.map((i) => i.icon)}
           onPress={() => Keyboard.dismiss()}
         />
       ) : (
         <>
-          {items.map(item => (
+          {items.map((item) => (
             <ItemButton key={item.label} {...item} />
           ))}
         </>
       )}
     </View>
-  );
-};
+  )
+}
 
-const ItemButton = ({onPress, icon, label}: Props) => (
+const ItemButton = ({ onPress, icon, label }: Props) => (
   <TouchableNativeFeedback onPress={onPress}>
     <View style={styles.itemContainer}>
       <View style={styles.itemIcon}>{icon}</View>
@@ -72,14 +72,14 @@ const ItemButton = ({onPress, icon, label}: Props) => (
       </Text>
     </View>
   </TouchableNativeFeedback>
-);
+)
 
 const KeyboardAccessory = ({
   onPress,
   icons,
 }: {
-  icons: React.ReactNode[];
-  onPress: () => any;
+  icons: React.ReactNode[]
+  onPress: () => any
 }) => (
   <TouchableNativeFeedback onPress={onPress}>
     <View style={styles.accessoryContainer}>
@@ -95,7 +95,7 @@ const KeyboardAccessory = ({
       </View>
     </View>
   </TouchableNativeFeedback>
-);
+)
 
 const styles = StyleSheet.create({
   container: {
@@ -149,4 +149,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
   },
-});
+})

@@ -1,14 +1,14 @@
-import * as React from 'react';
-import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
-import {Text} from '../../../sharedComponents/Text';
-import {NativeNavigationComponent, ViewStyleProp} from '../../../sharedTypes';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {LIGHT_GREY} from '../../../lib/styles';
-import Warning from '../../../images/Warning.svg';
-import {useAllProjects} from '../../../hooks/server/projects';
-import {CenteredView} from '../../../sharedComponents/CenteredView';
-import {Loading} from '../../../sharedComponents/Loading';
+import * as React from 'react'
+import { MessageDescriptor, defineMessages, useIntl } from 'react-intl'
+import { Text } from '../../../sharedComponents/Text'
+import { NativeNavigationComponent, ViewStyleProp } from '../../../sharedTypes'
+import { ScrollView, StyleSheet, View } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import { LIGHT_GREY } from '../../../lib/styles'
+import Warning from '../../../images/Warning.svg'
+import { useAllProjects } from '../../../hooks/server/projects'
+import { CenteredView } from '../../../sharedComponents/CenteredView'
+import { Loading } from '../../../sharedComponents/Loading'
 
 const m = defineMessages({
   title: {
@@ -45,32 +45,33 @@ const m = defineMessages({
     defaultMessage:
       'You are already on a project. To create a new Project you must uninstall and reininstall CoMapeo.',
   },
-});
+})
 
 export const CreateOrJoinProject: NativeNavigationComponent<
   'CreateOrJoinProject'
-> = ({navigation}) => {
-  const {formatMessage: t} = useIntl();
-  const projects = useAllProjects();
+> = ({ navigation }) => {
+  const { formatMessage: t } = useIntl()
+  const projects = useAllProjects()
 
   if (projects.data) {
     return (
       <ScrollView style={styles.container}>
         <View style={styles.greyBox}>
-          <Text style={{fontWeight: 'bold'}}>{t(m.whatIsAProject)}</Text>
+          <Text style={{ fontWeight: 'bold' }}>{t(m.whatIsAProject)}</Text>
           <Text>{t(m.projectDescription)}</Text>
         </View>
         {projects.data.length > 1 ? (
-          <View style={[styles.greyBox, {marginTop: 10}]}>
+          <View style={[styles.greyBox, { marginTop: 10 }]}>
             <View
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-              }}>
-              <Warning style={{marginRight: 20}} />
-              <View style={{flex: 1}}>
-                <Text style={{fontWeight: 'bold'}}>{t(m.createProject)}</Text>
+              }}
+            >
+              <Warning style={{ marginRight: 20 }} />
+              <View style={{ flex: 1 }}>
+                <Text style={{ fontWeight: 'bold' }}>{t(m.createProject)}</Text>
                 <Text style={{}}>{t(m.alreadyOnProject)}</Text>
               </View>
             </View>
@@ -79,57 +80,57 @@ export const CreateOrJoinProject: NativeNavigationComponent<
           <CardButton
             header={m.createProject}
             subHeader={m.startProject}
-            style={{marginTop: 10}}
+            style={{ marginTop: 10 }}
             isLoading={projects.isLoading}
             onPress={() => {
-              navigation.navigate('CreateProject');
+              navigation.navigate('CreateProject')
             }}
           />
         )}
         <CardButton
           header={m.joinProject}
           subHeader={m.joinExisting}
-          style={{marginTop: 10}}
+          style={{ marginTop: 10 }}
           onPress={() => {
-            navigation.navigate('JoinExistingProject');
+            navigation.navigate('JoinExistingProject')
           }}
         />
       </ScrollView>
-    );
+    )
   }
 
   return (
     <CenteredView>
       <Loading />
     </CenteredView>
-  );
-};
+  )
+}
 
-CreateOrJoinProject.navTitle = m.title;
+CreateOrJoinProject.navTitle = m.title
 
 type CardButtonProps = {
-  header: MessageDescriptor;
-  subHeader: MessageDescriptor;
-  style?: ViewStyleProp;
-  isLoading?: boolean;
-  onPress: () => void;
-};
+  header: MessageDescriptor
+  subHeader: MessageDescriptor
+  style?: ViewStyleProp
+  isLoading?: boolean
+  onPress: () => void
+}
 
-function CardButton({header, subHeader, style, onPress}: CardButtonProps) {
-  const {formatMessage: t} = useIntl();
+function CardButton({ header, subHeader, style, onPress }: CardButtonProps) {
+  const { formatMessage: t } = useIntl()
 
   return (
     <TouchableOpacity style={[styles.cardButton, style]} onPress={onPress}>
       <React.Fragment>
-        <Text style={{fontSize: 24, fontWeight: 'bold', textAlign: 'center'}}>
+        <Text style={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center' }}>
           {t(header)}
         </Text>
-        <Text style={{fontSize: 16, marginTop: 10, textAlign: 'center'}}>
+        <Text style={{ fontSize: 16, marginTop: 10, textAlign: 'center' }}>
           {t(subHeader)}
         </Text>
       </React.Fragment>
     </TouchableOpacity>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -153,4 +154,4 @@ const styles = StyleSheet.create({
     borderColor: LIGHT_GREY,
     borderWidth: 1,
   },
-});
+})

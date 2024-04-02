@@ -1,9 +1,9 @@
-import {StyleSheet, View} from 'react-native';
-import {Text} from '../../../sharedComponents/Text';
-import {defineMessages, useIntl} from 'react-intl';
-import {Button} from '../../../sharedComponents/Button';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {AppStackList} from '../../../Navigation/AppStack';
+import { StyleSheet, View } from 'react-native'
+import { Text } from '../../../sharedComponents/Text'
+import { defineMessages, useIntl } from 'react-intl'
+import { Button } from '../../../sharedComponents/Button'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { AppStackList } from '../../../Navigation/AppStack'
 
 const m = defineMessages({
   howTo: {
@@ -19,19 +19,19 @@ const m = defineMessages({
     id: 'screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack',
     defaultMessage: 'Go back',
   },
-});
+})
 
 export const JoinExistingProject = ({
   navigation,
 }: NativeStackScreenProps<AppStackList, 'JoinExistingProject'>) => {
-  const {formatMessage} = useIntl();
+  const { formatMessage } = useIntl()
   return (
     <View style={styles.container}>
       <View>
-        <Text style={[styles.text, {fontSize: 20}]}>
+        <Text style={[styles.text, { fontSize: 20 }]}>
           {formatMessage(m.howTo)}
         </Text>
-        <Text style={[styles.text, {marginTop: 20}]}>
+        <Text style={[styles.text, { marginTop: 20 }]}>
           {formatMessage(m.instructions)}
         </Text>
       </View>
@@ -39,13 +39,14 @@ export const JoinExistingProject = ({
         fullWidth
         variant="outlined"
         onPress={() => {
-          navigation.goBack();
-        }}>
+          navigation.goBack()
+        }}
+      >
         {formatMessage(m.goBack)}
       </Button>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -57,4 +58,4 @@ const styles = StyleSheet.create({
   text: {
     textAlign: 'center',
   },
-});
+})

@@ -1,15 +1,15 @@
-import * as React from 'react';
-import {defineMessages, useIntl} from 'react-intl';
-import {StyleSheet, View} from 'react-native';
+import * as React from 'react'
+import { defineMessages, useIntl } from 'react-intl'
+import { StyleSheet, View } from 'react-native'
 
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {OBSCURE_PASSCODE} from '../constants';
-import {LIGHT_GREY} from '../lib/styles';
-import {Text} from '../sharedComponents/Text';
-import {NativeNavigationComponent} from '../sharedTypes';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import {useSecurityContext} from '../contexts/SecurityContext';
-import {usePersistedPasscode} from '../hooks/persistedState/usePersistedPasscode';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
+import { OBSCURE_PASSCODE } from '../constants'
+import { LIGHT_GREY } from '../lib/styles'
+import { Text } from '../sharedComponents/Text'
+import { NativeNavigationComponent } from '../sharedTypes'
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
+import { useSecurityContext } from '../contexts/SecurityContext'
+import { usePersistedPasscode } from '../hooks/persistedState/usePersistedPasscode'
 
 const m = defineMessages({
   title: {
@@ -34,35 +34,36 @@ const m = defineMessages({
     defaultMessage:
       'Obscure Passcode is a security feature that allows you to open Mapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of Mapeo which allows you to create demonstration observations that are not saved to the Mapeo database.',
   },
-});
+})
 
 export const ObscurePasscode: NativeNavigationComponent<'ObscurePasscode'> = ({
   navigation,
 }) => {
-  const {authValuesSet, authState} = useSecurityContext();
-  const setObscureCode = usePersistedPasscode(state => state.setObscureCode);
+  const { authValuesSet, authState } = useSecurityContext()
+  const setObscureCode = usePersistedPasscode((state) => state.setObscureCode)
 
-  const {formatMessage: t} = useIntl();
+  const { formatMessage: t } = useIntl()
 
   React.useEffect(() => {
     if (authState === 'obscured') {
-      navigation.navigate('Settings');
+      navigation.navigate('Settings')
     }
-  }, [navigation, authState]);
+  }, [navigation, authState])
 
   return (
     <ScrollView style={styles.container}>
       <Text style={[styles.title]}>{t(m.whatIsObscure)}</Text>
 
-      <Text style={{fontSize: 16}}>{t(m.description)}</Text>
+      <Text style={{ fontSize: 16 }}>{t(m.description)}</Text>
 
       <TouchableOpacity
         style={styles.switch}
         onPress={() =>
           setObscureCode(authValuesSet.obscureSet ? null : undefined)
-        }>
+        }
+      >
         <React.Fragment>
-          <Text style={{fontSize: 16}}>{t(m.toggleMessage)}</Text>
+          <Text style={{ fontSize: 16 }}>{t(m.toggleMessage)}</Text>
 
           <MaterialIcon
             name={
@@ -76,17 +77,17 @@ export const ObscurePasscode: NativeNavigationComponent<'ObscurePasscode'> = ({
 
       {authValuesSet.obscureSet && (
         <View style={styles.passbox}>
-          <Text style={{textAlign: 'center', marginBottom: 10, fontSize: 20}}>
+          <Text style={{ textAlign: 'center', marginBottom: 10, fontSize: 20 }}>
             {OBSCURE_PASSCODE}
           </Text>
-          <Text style={{fontSize: 16}}>{t(m.instructions)}</Text>
+          <Text style={{ fontSize: 16 }}>{t(m.instructions)}</Text>
         </View>
       )}
     </ScrollView>
-  );
-};
+  )
+}
 
-ObscurePasscode.navTitle = m.title;
+ObscurePasscode.navTitle = m.title
 
 const styles = StyleSheet.create({
   container: {
@@ -121,4 +122,4 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-});
+})

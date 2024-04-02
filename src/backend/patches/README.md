@@ -8,3 +8,9 @@ These patches use [patch-package](https://github.com/ds300/patch-package) to upd
 
 - Rollup complains about the dynamic require of `quickbit-universal` in this file. Easier to just simplify the import
 - Temporary workaround for peer discovery issues. To be "properly" solved by @mapeo/core soon.
+
+## `@electron/asar`
+
+### [Remove conditional `original-fs` import](./@electron+asar+3.2.9+001+remove-original-fs-require.patch)
+
+`original-fs` is conditionally imported (based on Electron-specific checks) but Rollup is not smart enough to lazily require the module in the bundled output. This causes errors at runtime because an import of a non-existent module occurs.

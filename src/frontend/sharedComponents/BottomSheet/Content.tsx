@@ -70,8 +70,8 @@ export const Content = ({
                   config.variation === 'outlined'
                     ? WHITE
                     : config.dangerous
-                    ? RED
-                    : LIGHT_BLUE
+                      ? RED
+                      : LIGHT_BLUE
                 }
               />
             )}
@@ -81,8 +81,8 @@ export const Content = ({
                 config.variation === 'outlined'
                   ? WHITE
                   : config.dangerous
-                  ? MAGENTA
-                  : COMAPEO_BLUE,
+                    ? MAGENTA
+                    : COMAPEO_BLUE,
               marginTop: index > 0 ? 20 : undefined,
             }}
             variant={config.variation === 'outlined' ? 'outlined' : undefined}>

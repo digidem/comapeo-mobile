@@ -61,6 +61,10 @@ import {
   SyncScreen,
   createNavigationOptions as createSyncNavOptions,
 } from '../../screens/Sync';
+import {
+  ManualGpsScreen,
+  createNavigationOptions as createManualGpsNavigationOptions,
+} from '../../screens/ManualGpsScreen';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -374,6 +378,11 @@ export const createDefaultScreenGroup = (
       name="Sync"
       component={SyncScreen}
       options={createSyncNavOptions()}
+    />
+    <RootStack.Screen
+      name="ManualGpsScreen"
+      component={ManualGpsScreen}
+      options={createManualGpsNavigationOptions({intl})}
     />
   </RootStack.Group>
 );

@@ -195,7 +195,7 @@ export const SaveButton = ({
     },
     {
       text: t(m.manualEntry),
-      onPress: () => {},
+      onPress: () => navigation.navigate('ManualGpsScreen'),
       style: 'cancel',
     },
     {
@@ -213,11 +213,12 @@ export const SaveButton = ({
       return;
     }
 
-    const hasLocation = value.lat && value.lon;
+    const hasLocation = value.lat !== undefined && value.lon !== undefined;
     const locationSetManually = value.metadata.manualLocation;
     if (
-      locationSetManually ||
-      (hasLocation && isGpsAccurate(value.metadata.position?.coords?.accuracy))
+      hasLocation &&
+      (locationSetManually ||
+        isGpsAccurate(value.metadata.position?.coords?.accuracy))
     ) {
       // Observation has a location, which is either from an accurate GPS
       // reading, or is manually entered

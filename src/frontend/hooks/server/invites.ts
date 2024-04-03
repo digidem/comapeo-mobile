@@ -33,9 +33,5 @@ export function useRejectInvite(inviteId?: string) {
       if (!inviteId) return;
       mapeoApi.invite.reject({inviteId});
     },
-    onSuccess: () => {
-      //clears all pending invites after user accepts an invite
-      Promise.allSettled(invites.map(inv => mapeoApi.invite.reject(inv)));
-    },
   });
 }

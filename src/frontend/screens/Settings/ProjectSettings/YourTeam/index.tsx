@@ -13,10 +13,16 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {Text} from '../../../../sharedComponents/Text';
 import {BLACK} from '../../../../lib/styles';
 import {DeviceCard} from '../../../../sharedComponents/DeviceCard';
-import {useProjectMembers} from '../../../../hooks/server/projects';
+import {
+  useProjectMembers,
+  useProjectSettings,
+} from '../../../../hooks/server/projects';
 import {Loading} from '../../../../sharedComponents/Loading';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {useDeviceInfo} from '../../../../hooks/server/deviceInfo';
+import {projectSettings} from '@mapeo/schema/dist/validations';
+import {CenteredView} from '../../../../sharedComponents/CenteredView';
+import {NotOnProject} from './NotOnProject';
 
 const m = defineMessages({
   title: {
@@ -61,6 +67,8 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
   const {formatMessage: t} = useIntl();
   const membersQuery = useProjectMembers();
   const deviceInfo = useDeviceInfo();
+  const projectSettings = useProjectSettings();
+
   const coordinators = !membersQuery.data
     ? []
     : membersQuery.data.filter(
@@ -72,6 +80,18 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
   const participants = !membersQuery.data
     ? []
     : membersQuery.data.filter(member => member.role.roleId === MEMBER_ROLE_ID);
+
+  if (projectSettings.isLoading) {
+    return (
+      <CenteredView>
+        <Loading />
+      </CenteredView>
+    );
+  }
+
+  if (projectSettings.data && !projectSettings.data.name) {
+    return <NotOnProject />;
+  }
 
   return (
     <ScrollView style={styles.container}>

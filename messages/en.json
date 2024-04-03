@@ -459,6 +459,12 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
   },
+  "screens.Setting.ProjectSettings.YourTeam.NotOnProject.createOrJoin": {
+    "message": "Create or Join Project"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.NotOnProject.projectNecessary": {
+    "message": "Create or Join a Project to invite devices"
+  },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Review Invitation"
   },

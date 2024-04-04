@@ -4,7 +4,7 @@ import {ScrollView, StyleSheet, View} from 'react-native';
 import WifiIcon from '../../../../images/WifiIcon.svg';
 import {Text} from '../../../../sharedComponents/Text';
 import {DeviceCard} from '../../../../sharedComponents/DeviceCard';
-import {useLocalDiscoveryState} from '../../../../hooks/useLocalDiscoveryState';
+import {useWifiState} from '../../../../hooks/useWifiState';
 import {useLocalPeers} from '../../../../hooks/useLocalPeers';
 
 const m = defineMessages({
@@ -29,7 +29,7 @@ const m = defineMessages({
 export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
   navigation,
 }) => {
-  const ssid = useLocalDiscoveryState(state => state.ssid);
+  const {ssid} = useWifiState();
   const {formatMessage: t} = useIntl();
 
   const devices = useLocalPeers();

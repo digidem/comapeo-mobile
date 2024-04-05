@@ -306,7 +306,7 @@ export function matchPreset(
   return bestMatch;
 }
 
-export function isEdittingScreen(
+export function isEditingScreen(
   routes: NavigationState['routes'],
   index: number | undefined,
 ) {

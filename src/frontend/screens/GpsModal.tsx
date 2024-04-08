@@ -74,7 +74,7 @@ const GpsModalRow = ({label, value}: {label: string; value: string}) => (
 );
 
 export const GpsModal = () => {
-  const {location} = useLocation({maxDistanceInterval: 15});
+  const {location} = useLocation({maxDistanceInterval: 0});
   const lastKnownLocationQuery = useLastKnownLocation();
   const provider = useLocationProviderStatus();
   const {coordinateFormat} = usePersistedSettings();

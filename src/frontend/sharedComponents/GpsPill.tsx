@@ -59,7 +59,7 @@ const MemoizedGpsPill = React.memo<Props>(
 );
 
 export const GpsPill = ({onPress}: Pick<Props, 'onPress'>) => {
-  const locationState = useLocation({maxDistanceInterval: 15});
+  const locationState = useLocation({maxDistanceInterval: 0});
   const [permissions] = useForegroundPermissions();
   const locationProviderStatus = useLocationProviderStatus();
 

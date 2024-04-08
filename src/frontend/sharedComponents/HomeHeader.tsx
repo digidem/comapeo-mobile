@@ -5,8 +5,14 @@ import {IconButton} from './IconButton';
 import {ObservationListIcon} from './icons';
 import {useNavigationFromHomeTabs} from '../hooks/useNavigationWithTypes';
 import {GpsPill} from './GpsPill';
+import {LocationStatus} from '../lib/utils';
 
-export const HomeHeader = () => {
+interface Props {
+  locationStatus: LocationStatus;
+  precision?: number;
+}
+
+export const HomeHeader = ({locationStatus, precision}: Props) => {
   const navigation = useNavigationFromHomeTabs();
 
   return (
@@ -17,6 +23,8 @@ export const HomeHeader = () => {
       />
       <View style={styles.leftButton}>{/* Placeholder for left button */}</View>
       <GpsPill
+        variant={locationStatus}
+        precision={precision}
         onPress={() => {
           navigation.navigate('GpsModal');
         }}

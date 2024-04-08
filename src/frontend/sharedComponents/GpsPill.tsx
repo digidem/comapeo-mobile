@@ -3,12 +3,8 @@ import {View, StyleSheet} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {useIsFocused} from '@react-navigation/native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useForegroundPermissions} from 'expo-location';
 
 import {BLACK, WHITE} from '../lib/styles';
-import {useLocationProviderStatus} from '../hooks/useLocationProviderStatus';
-import {useLocation} from '../hooks/useLocation';
-import {getLocationStatus} from '../lib/utils';
 import type {LocationStatus} from '../lib/utils';
 import {Text} from './Text';
 import {GpsIcon} from './icons';
@@ -24,13 +20,13 @@ const m = defineMessages({
   },
 });
 
-type Props = {
+interface Props {
   onPress?: () => void;
   precision?: number;
   variant: LocationStatus;
-};
+}
 
-const MemoizedGpsPill = React.memo<Props>(
+export const GpsPill = React.memo<Props>(
   ({onPress, variant, precision}: Props) => {
     const isFocused = useIsFocused();
     const {formatMessage: t} = useIntl();
@@ -57,32 +53,6 @@ const MemoizedGpsPill = React.memo<Props>(
     );
   },
 );
-
-export const GpsPill = ({onPress}: Pick<Props, 'onPress'>) => {
-  const locationState = useLocation({maxDistanceInterval: 0});
-  const [permissions] = useForegroundPermissions();
-  const locationProviderStatus = useLocationProviderStatus();
-
-  const precision = locationState?.location?.coords.accuracy;
-
-  const locationStatus =
-    !!locationState.error || !permissions?.granted
-      ? 'error'
-      : getLocationStatus({
-          location: locationState.location,
-          providerStatus: locationProviderStatus,
-        });
-
-  return (
-    <MemoizedGpsPill
-      onPress={onPress}
-      precision={
-        typeof precision === 'number' ? Math.round(precision) : undefined
-      }
-      variant={locationStatus}
-    />
-  );
-};
 
 const styles = StyleSheet.create({
   container: {

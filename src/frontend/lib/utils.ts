@@ -62,10 +62,10 @@ export function getLocationStatus({
   location?: LocationObject;
   providerStatus?: LocationProviderStatus;
 }): LocationStatus {
-  const gpsNotAvailable = !providerStatus?.gpsAvailable;
-  const locationServicesDisabled = !providerStatus?.locationServicesEnabled;
+  const gpsAvailable = !!providerStatus?.gpsAvailable;
+  const locationServicesEnabled = !!providerStatus?.locationServicesEnabled;
 
-  if (gpsNotAvailable || locationServicesDisabled) return 'error';
+  if (!gpsAvailable || !locationServicesEnabled) return 'error';
 
   const positionStale =
     location && Date.now() - location.timestamp > STALE_TIMEOUT;

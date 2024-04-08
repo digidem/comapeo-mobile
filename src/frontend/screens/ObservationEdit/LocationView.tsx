@@ -4,11 +4,11 @@ import {View, Text, StyleSheet} from 'react-native';
 import Location from '../../images/Location.svg';
 import {BLACK} from '../../lib/styles';
 
-import {useMostAccurateLocationForObservation} from './useMostAccurateLocationForObservation';
 import {FormattedCoords} from '../../sharedComponents/FormattedData';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings';
 import {Divider} from '../../sharedComponents/Divider';
+import {useLocation} from '../../hooks/useLocation';
 
 const m = defineMessages({
   searching: {
@@ -19,7 +19,7 @@ const m = defineMessages({
 });
 
 export const LocationView = () => {
-  const liveLocation = useMostAccurateLocationForObservation();
+  const {location} = useLocation();
   const observationValue = usePersistedDraftObservation(
     observationValueSelector,
   );
@@ -29,12 +29,12 @@ export const LocationView = () => {
     ? {
         lat: observationValue.lat,
         lon: observationValue.lon,
-        accuracy: liveLocation?.coords?.accuracy,
+        accuracy: location?.coords?.accuracy,
       }
     : {
-        lat: liveLocation?.coords?.latitude,
-        lon: liveLocation?.coords?.longitude,
-        accuracy: liveLocation?.coords?.accuracy,
+        lat: location?.coords?.latitude,
+        lon: location?.coords?.longitude,
+        accuracy: location?.coords?.accuracy,
       };
 
   return (
@@ -56,7 +56,7 @@ export const LocationView = () => {
                 lon={coordinateInfo.lon}
               />
             </Text>
-            {coordinateInfo.accuracy === undefined ? null : (
+            {typeof coordinateInfo.accuracy === 'number' && (
               <Text style={styles.accuracy}>
                 {' ±' + coordinateInfo.accuracy.toFixed(2) + 'm'}
               </Text>

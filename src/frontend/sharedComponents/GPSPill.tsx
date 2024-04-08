@@ -6,9 +6,9 @@ import {useLocationProviderStatus} from '../hooks/useLocationProviderStatus';
 import {getLocationStatus} from '../lib/utils';
 import {defineMessages, useIntl} from 'react-intl';
 import {GpsIcon} from './icons';
-import {useSharedLocationContext} from '../contexts/SharedLocationContext';
 import {BLACK, WHITE} from '../lib/styles';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
+import {useLocation} from '../hooks/useLocation';
 
 const m = defineMessages({
   noGps: {
@@ -28,26 +28,19 @@ interface GPSPill {
 export const GPSPill: FC<GPSPill> = ({navigation}) => {
   const isFocused = useIsFocused();
   const {formatMessage: t} = useIntl();
-  const {locationState, fgPermissions} = useSharedLocationContext();
   const locationProviderStatus = useLocationProviderStatus();
+  const locationState = useLocation();
 
   const precision = locationState?.location?.coords.accuracy;
 
   const status = useMemo(() => {
-    const isError = !!locationState.error || !fgPermissions;
-
-    return isError
+    return locationState.error
       ? 'error'
       : getLocationStatus({
-          location: locationState.location,
+          location: locationState.location || undefined,
           providerStatus: locationProviderStatus,
         });
-  }, [
-    locationProviderStatus,
-    locationState.error,
-    locationState.location,
-    fgPermissions,
-  ]);
+  }, [locationProviderStatus, locationState.error, locationState.location]);
 
   const text = useMemo(() => {
     if (status === 'error') return t(m.noGps);

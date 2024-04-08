@@ -3,11 +3,11 @@ import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {usePersistedTrack} from '../../../hooks/persistedState/usePersistedTrack';
 import {useTrackTimerContext} from '../../../contexts/TrackTimerContext';
-import {useSharedLocationContext} from '../../../contexts/SharedLocationContext';
+import {useLocation} from '../../../hooks/useLocation';
 
 export const UserTooltipMarker = () => {
   const {timer} = useTrackTimerContext();
-  const {locationState} = useSharedLocationContext();
+  const locationState = useLocation();
   const totalDistance = usePersistedTrack(state => state.distance);
 
   return (

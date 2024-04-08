@@ -1,15 +1,16 @@
 import * as React from 'react';
+import {PermissionsAndroid} from 'react-native';
 import {createMapeoClient} from '@mapeo/ipc';
+import * as SplashScreen from 'expo-splash-screen';
+import * as TaskManager from 'expo-task-manager';
+import * as Sentry from '@sentry/react-native';
+
 import {AppNavigator} from './AppNavigator';
 import {IntlProvider} from './contexts/IntlContext';
 import {MessagePortLike} from './lib/MessagePortLike';
 import {initializeNodejs} from './initializeNodejs';
-import {PermissionsAndroid} from 'react-native';
 import {AppProviders} from './contexts/AppProviders';
 import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
-import * as SplashScreen from 'expo-splash-screen';
-import * as Sentry from '@sentry/react-native';
-import * as TaskManager from 'expo-task-manager';
 import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
 import {tracksStore} from './hooks/persistedState/usePersistedTrack';
 

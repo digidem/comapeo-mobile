@@ -8,7 +8,6 @@ import {
 } from 'react-intl';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 
-import {useLocation} from '../hooks/useLocation';
 import {useLastKnownLocation} from '../hooks/useLastSavedLocation';
 import {useLocationProviderStatus} from '../hooks/useLocationProviderStatus';
 import {usePersistedSettings} from '../hooks/persistedState/usePersistedSettings';
@@ -17,6 +16,7 @@ import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 import {DateDistance} from '../sharedComponents/DateDistance';
 import {FormattedCoords} from '../sharedComponents/FormattedData';
 import {Text} from '../sharedComponents/Text';
+import {useLocation} from '../hooks/useLocation';
 
 const m = defineMessages({
   gpsHeader: {
@@ -74,7 +74,8 @@ const InfoRow = ({label, value}: {label: string; value: string}) => (
 );
 
 export const LocationInfoScreen = () => {
-  const {location} = useLocation({maxDistanceInterval: 0});
+  // const {location} = useLocation({maxDistanceInterval: 0});
+  const {location} = useLocation();
   const lastKnownLocationQuery = useLastKnownLocation();
   const provider = useLocationProviderStatus();
   const {coordinateFormat} = usePersistedSettings();

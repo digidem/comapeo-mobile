@@ -3,13 +3,13 @@ import {usePersistedTrack} from '../../../hooks/persistedState/usePersistedTrack
 import * as React from 'react';
 import {StyleSheet} from 'react-native';
 import {LineString} from 'geojson';
-import {useLocation} from '../../../hooks/useLocation';
 import {LocationHistoryPoint} from '../../../sharedTypes/location';
+import {useLocation} from '../../../hooks/useLocation';
 
 export const TrackPathLayer = () => {
   const locationHistory = usePersistedTrack(state => state.locationHistory);
   const isTracking = usePersistedTrack(state => state.isTracking);
-  const {location} = useLocation({maxDistanceInterval: 3});
+  const {location} = useLocation();
   const finalLocationHistory = location?.coords
     ? [
         ...locationHistory,

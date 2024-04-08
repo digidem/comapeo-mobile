@@ -41,7 +41,6 @@ import {
 } from '../../screens/LocationInfoScreen';
 import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/InviteDeclined';
 import {UnableToCancelInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/UnableToCancelInvite';
-import {SharedLocationContextProvider} from '../../contexts/SharedLocationContext';
 import {
   SyncScreen,
   createNavigationOptions as createSyncNavOptions,
@@ -71,12 +70,9 @@ export const createDefaultScreenGroup = ({
       name="Home"
       options={{headerShown: false}}
       children={() => (
-        <SharedLocationContextProvider>
-          {/* This provider allows the bottoms sheet used by tracks to open up behind the drawers */}
-          <BottomSheetModalProvider>
-            <HomeTabs />
-          </BottomSheetModalProvider>
-        </SharedLocationContextProvider>
+        <BottomSheetModalProvider>
+          <HomeTabs />
+        </BottomSheetModalProvider>
       )}
     />
     <RootStack.Screen

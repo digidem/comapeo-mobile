@@ -80,7 +80,6 @@ type InviteProps = {
 export type AppList = {
   Home: NavigatorScreenParams<HomeTabsList>;
   GpsModal: undefined;
-  SyncModal: undefined;
   Settings: undefined;
   ProjectConfig: undefined;
   AboutMapeo: undefined;

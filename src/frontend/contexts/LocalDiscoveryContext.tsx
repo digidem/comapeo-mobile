@@ -6,6 +6,8 @@ import NetInfo, {
   type NetInfoDisconnectedStates,
 } from '@react-native-community/netinfo';
 import StateMachine from 'start-stop-state-machine';
+import Zeroconf, {type Service as ZeroconfService} from 'react-native-zeroconf';
+import {type MapeoClientApi} from '@mapeo/ipc';
 
 type LocalDiscoveryController = ReturnType<
   typeof createLocalDiscoveryController
@@ -27,6 +29,9 @@ export type LocalDiscoveryState = {
 
 // Poll wifi state every 2 seconds
 const POLL_WIFI_STATE_INTERVAL_MS = 2000;
+const ZEROCONF_SERVICE_TYPE = 'mapeo';
+const ZEROCONF_PROTOCOL = 'tcp';
+const ZEROCONF_DOMAIN = 'local.';
 
 const LocalDiscoveryContext = React.createContext<
   LocalDiscoveryController | undefined
@@ -71,14 +76,8 @@ export function useLocalDiscoveryController() {
  * network.
  *
  * Subscribe to changes in the state with subscribe(listener).
- *
- * @param opts.startLocalPeerDiscovery Function to start local peer discovery
- * @param opts.stopLocalPeerDiscovery Function to stop local peer discovery
  */
-export function createLocalDiscoveryController(opts: {
-  startLocalPeerDiscovery: () => Promise<void>;
-  stopLocalPeerDiscovery: () => Promise<void>;
-}) {
+export function createLocalDiscoveryController(mapeoApi: MapeoClientApi) {
   let appState = AppState.currentState;
   let netInfo: NetInfoWifiState | NetInfoDisconnectedStates | null = null;
   let unsubscribeInternal: undefined | (() => void);
@@ -90,13 +89,27 @@ export function createLocalDiscoveryController(opts: {
     wifiLinkSpeed: null,
   };
   let cancelNetInfoFetch: undefined | (() => void);
+  const zeroconf = new Zeroconf();
 
   const sm = new StateMachine({
-    start() {
-      return opts.startLocalPeerDiscovery();
+    async start() {
+      const [{name, port}] = await Promise.all([
+        mapeoApi.startLocalPeerDiscoveryServer(),
+        startZeroconf(zeroconf),
+      ]);
+      zeroconf.publishService(
+        ZEROCONF_SERVICE_TYPE,
+        ZEROCONF_PROTOCOL,
+        ZEROCONF_DOMAIN,
+        name,
+        port,
+      );
     },
-    stop() {
-      return opts.stopLocalPeerDiscovery();
+    async stop() {
+      await Promise.all([
+        mapeoApi.stopLocalPeerDiscoveryServer(),
+        stopZeroconf(zeroconf),
+      ]);
     },
   });
   sm.on('state', state => {
@@ -121,10 +134,16 @@ export function createLocalDiscoveryController(opts: {
       'change',
       onAppState,
     );
+    const onZeroconfResolved = (service: ZeroconfService) => {
+      const peer = zeroconfServiceToMapeoPeer(service);
+      if (peer) mapeoApi.connectPeer(peer);
+    };
+    zeroconf.on('resolved', onZeroconfResolved);
     unsubscribeInternal = function unsubscribe() {
       clearInterval(interval);
       removeNetInfoSub();
       removeAppStateSub();
+      zeroconf.off('resolved', onZeroconfResolved);
     };
   }
 
@@ -258,6 +277,62 @@ export function createLocalDiscoveryController(opts: {
 }
 
 function noop() {}
+
+function startZeroconf(zeroconf: Zeroconf): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const cleanup = () => {
+      zeroconf.off('start', onStart);
+      zeroconf.off('error', onError);
+    };
+    const onStart = () => {
+      cleanup();
+      resolve();
+    };
+    const onError = (err: Error) => {
+      cleanup();
+      reject(err);
+    };
+    zeroconf.on('start', onStart);
+    zeroconf.on('error', onError);
+
+    zeroconf.scan(ZEROCONF_SERVICE_TYPE, ZEROCONF_PROTOCOL, ZEROCONF_DOMAIN);
+  });
+}
+
+function stopZeroconf(zeroconf: Zeroconf): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const cleanup = () => {
+      zeroconf.off('stop', onStop);
+      zeroconf.off('error', onError);
+    };
+    const onStop = () => {
+      cleanup();
+      resolve();
+    };
+    const onError = (err: Error) => {
+      cleanup();
+      reject(err);
+    };
+    zeroconf.on('stop', onStop);
+    zeroconf.on('error', onError);
+
+    zeroconf.stop();
+  });
+}
+
+function zeroconfServiceToMapeoPeer({
+  addresses,
+  port,
+  name,
+}: Readonly<ZeroconfService>): null | {
+  address: string;
+  port: number;
+  name: string;
+} {
+  // TODO: Should this filter out loopbacks or other IP addresses?
+  const address = addresses[0];
+  return address ? {address, port, name} : null;
+}
 
 function shallowPartialEqual<T extends {[k: string]: any}>(
   object: T,

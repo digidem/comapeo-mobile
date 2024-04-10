@@ -13,13 +13,18 @@ import {openWiFiSettings} from '../../lib/linking';
 import {ProjectSyncDisplay} from './ProjectSyncDisplay';
 import {Loading} from '../../sharedComponents/Loading';
 
-export function createNavigationOptions(): () => NativeStackNavigationOptions {
-  return () => {
+export function createNavigationOptions() {
+  return ({
+    navigation,
+  }: NativeRootNavigationProps<'Sync'>): NativeStackNavigationOptions => {
     return {
       headerTitleAlign: 'center',
       headerTitle: () => <HeaderTitle />,
       headerRight: () => (
-        <IconButton onPress={() => {}}>
+        <IconButton
+          onPress={() => {
+            navigation.navigate('ProjectSettings');
+          }}>
           <SettingsIcon />
         </IconButton>
       ),

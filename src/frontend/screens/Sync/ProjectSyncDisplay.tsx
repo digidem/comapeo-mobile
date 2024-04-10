@@ -22,9 +22,6 @@ import {Text} from '../../sharedComponents/Text';
 import {Loading} from '../../sharedComponents/Loading';
 import {StopIcon, SyncIcon, WifiIcon} from '../../sharedComponents/icons';
 
-// Size used for project icon in header
-const PROJECT_ICON_SIZE = 50;
-
 const m = defineMessages({
   deviceName: {
     id: 'screens.Sync.ProjectSyncDisplay.deviceName',

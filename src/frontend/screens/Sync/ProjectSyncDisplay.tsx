@@ -3,7 +3,6 @@ import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 import {Bar as ProgressBar} from 'react-native-progress';
 
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {useProject, useProjectSettings} from '../../hooks/server/projects';
 import {useSyncState} from '../../hooks/useSyncState';
@@ -73,8 +72,6 @@ const m = defineMessages({
 });
 
 export const ProjectSyncDisplay = () => {
-  const navigation = useNavigationFromRoot();
-
   const {formatMessage: t} = useIntl();
 
   const project = useProject();
@@ -82,16 +79,6 @@ export const ProjectSyncDisplay = () => {
   const projectSettingsQuery = useProjectSettings();
 
   const syncState = useSyncState();
-
-  // Disables project sync when leaving screen containing this view
-  React.useEffect(() => {
-    // TODO: Add listener when going out of focus too?
-    const unsubscribe = navigation.addListener('beforeRemove', () => {
-      project.$sync.stop();
-    });
-
-    return () => unsubscribe();
-  }, [navigation, project]);
 
   if (!syncState || !projectSettingsQuery.data || !deviceInfoQuery.data) {
     return <Loading />;

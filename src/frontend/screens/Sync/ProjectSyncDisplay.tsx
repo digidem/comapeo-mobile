@@ -7,6 +7,7 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {useProject, useProjectSettings} from '../../hooks/server/projects';
 import {useSyncState} from '../../hooks/useSyncState';
+import ObservationsProjectImage from '../../images/ObservationsProject.svg';
 import {
   BLACK,
   COMAPEO_BLUE,
@@ -19,12 +20,7 @@ import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDoc
 import {Button} from '../../sharedComponents/Button';
 import {Text} from '../../sharedComponents/Text';
 import {Loading} from '../../sharedComponents/Loading';
-import {
-  ObservationListIcon,
-  StopIcon,
-  SyncIcon,
-  WifiIcon,
-} from '../../sharedComponents/icons';
+import {StopIcon, SyncIcon, WifiIcon} from '../../sharedComponents/icons';
 
 // Size used for project icon in header
 const PROJECT_ICON_SIZE = 50;
@@ -168,10 +164,7 @@ export const ProjectSyncDisplay = () => {
         )
       }>
       <View style={styles.projectInfoContainer}>
-        <View style={styles.projectIconContainer}>
-          {/* TODO: Use SVG variant and change color to black */}
-          <ObservationListIcon size={PROJECT_ICON_SIZE} />
-        </View>
+        <ObservationsProjectImage />
         {projectName && <Text style={styles.projectName}>{projectName}</Text>}
         {deviceName && (
           <Text style={styles.deviceName}>
@@ -219,14 +212,6 @@ const styles = StyleSheet.create({
   projectInfoContainer: {
     alignItems: 'center',
     gap: 8,
-  },
-  projectIconContainer: {
-    borderRadius: PROJECT_ICON_SIZE,
-    width: PROJECT_ICON_SIZE * 2,
-    height: PROJECT_ICON_SIZE * 2,
-    backgroundColor: '#CCE0FF',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   connectedDevicesInfo: {
     flexDirection: 'row',

@@ -1,7 +1,12 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {NavigatorScreenParams, useNavigation} from '@react-navigation/native';
+import {
+  EventArg,
+  getFocusedRouteNameFromRoute,
+  NavigatorScreenParams,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import * as React from 'react';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {RootStack} from '../AppStack';
@@ -46,6 +51,10 @@ import {
   createNavigationOptions as createDeviceNameEditNavOptions,
 } from '../../screens/Settings/ProjectSettings/DeviceName/EditScreen';
 import {useNavigationStore} from '../../hooks/useNavigationStore';
+import {TabBarLabel} from './TabBar/TabBarLabel';
+import {TabBarIcon} from './TabBar/TabBarIcon';
+
+export type TabName = keyof HomeTabsList;
 
 export type HomeTabsList = {
   Map: undefined;
@@ -128,45 +137,83 @@ export type AppList = {
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
 const HomeTabs = () => {
-  const navigationStore = useNavigationStore();
+  const {setCurrentTab, currentTab} = useNavigationStore();
+  const navigation = useNavigation();
+  const route = useRoute();
+
+  const handleTabPress = ({
+    target,
+    preventDefault,
+  }: EventArg<'tabPress', true, undefined>) => {
+    if (target?.split('-')[0] === 'Tracking') {
+      preventDefault();
+      const currentTab = getFocusedRouteNameFromRoute(route);
+      if (currentTab === 'Camera') {
+        navigation.navigate('Map');
+      }
+    }
+    setCurrentTab((target?.split('-')[0] || 'Map') as unknown as TabName);
+  };
+
   return (
     <Tab.Navigator
       screenListeners={{
-        tabPress: ({target, defaultPrevented, preventDefault}) => {
-          if (defaultPrevented) {
-            return;
-          }
-          navigationStore.setCurrentTab(target?.split('-')[0] || 'Map');
-        },
+        tabPress: handleTabPress,
       }}
       screenOptions={({route}) => ({
-        tabBarIcon: ({color}) => {
-          const icons = {
-            Map: 'map',
-            Camera: 'photo-camera',
-            Tracking: 'nordic-walking',
-          };
-          console.log(navigationStore.currentTab);
-          return (
-            <MaterialIcons name={icons[route.name]} size={30} color={color} />
-          );
-        },
         header: () => <HomeHeader />,
         headerTransparent: true,
         tabBarTestID: 'tabBarButton' + route.name,
       })}
       initialRouteName="Map"
       backBehavior="initialRoute">
-      <Tab.Screen name="Map" component={MapScreen} />
-      <Tab.Screen name="Camera" component={CameraScreen} />
+      <Tab.Screen
+        name="Map"
+        component={MapScreen}
+        options={{
+          tabBarIcon: params => (
+            <TabBarIcon
+              {...params}
+              isFocused={currentTab === 'Map'}
+              iconName="map"
+            />
+          ),
+          tabBarLabel: params => (
+            <TabBarLabel {...params} isFocused={currentTab === 'Map'} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Camera"
+        component={CameraScreen}
+        options={{
+          tabBarIcon: params => (
+            <TabBarIcon
+              {...params}
+              isFocused={currentTab === 'Camera'}
+              iconName="photo-camera"
+            />
+          ),
+          tabBarLabel: params => (
+            <TabBarLabel {...params} isFocused={currentTab === 'Camera'} />
+          ),
+        }}
+      />
       <Tab.Screen
         name="Tracking"
+        options={{
+          tabBarIcon: params => (
+            <TabBarIcon
+              {...params}
+              isFocused={currentTab === 'Tracking'}
+              iconName="nordic-walking"
+            />
+          ),
+          tabBarLabel: params => (
+            <TabBarLabel {...params} isFocused={currentTab === 'Tracking'} />
+          ),
+        }}
         children={() => <></>}
-        listeners={({navigation}) => ({
-          tabPress: e => {
-            navigation.navigate('Map');
-          },
-        })}
       />
     </Tab.Navigator>
   );

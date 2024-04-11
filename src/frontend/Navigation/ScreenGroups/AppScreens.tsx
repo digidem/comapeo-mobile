@@ -1,5 +1,5 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {NavigatorScreenParams} from '@react-navigation/native';
+import {NavigatorScreenParams, useNavigation} from '@react-navigation/native';
 import * as React from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
@@ -45,10 +45,12 @@ import {
   EditScreen as DeviceNameEditScreen,
   createNavigationOptions as createDeviceNameEditNavOptions,
 } from '../../screens/Settings/ProjectSettings/DeviceName/EditScreen';
+import {useNavigationStore} from '../../hooks/useNavigationStore';
 
 export type HomeTabsList = {
   Map: undefined;
   Camera: undefined;
+  Tracking: undefined;
 };
 
 export type AppList = {
@@ -125,24 +127,50 @@ export type AppList = {
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
-
-const HomeTabs = () => (
-  <Tab.Navigator
-    screenOptions={({route}) => ({
-      tabBarIcon: ({color}) => {
-        const iconName = route.name === 'Map' ? 'map' : 'photo-camera';
-        return <MaterialIcons name={iconName} size={30} color={color} />;
-      },
-      header: () => <HomeHeader />,
-      headerTransparent: true,
-      tabBarTestID: 'tabBarButton' + route.name,
-    })}
-    initialRouteName="Map"
-    backBehavior="initialRoute">
-    <Tab.Screen name="Map" component={MapScreen} />
-    <Tab.Screen name="Camera" component={CameraScreen} />
-  </Tab.Navigator>
-);
+const HomeTabs = () => {
+  const navigationStore = useNavigationStore();
+  return (
+    <Tab.Navigator
+      screenListeners={{
+        tabPress: ({target, defaultPrevented, preventDefault}) => {
+          if (defaultPrevented) {
+            return;
+          }
+          navigationStore.setCurrentTab(target?.split('-')[0] || 'Map');
+        },
+      }}
+      screenOptions={({route}) => ({
+        tabBarIcon: ({color}) => {
+          const icons = {
+            Map: 'map',
+            Camera: 'photo-camera',
+            Tracking: 'nordic-walking',
+          };
+          console.log(navigationStore.currentTab);
+          return (
+            <MaterialIcons name={icons[route.name]} size={30} color={color} />
+          );
+        },
+        header: () => <HomeHeader />,
+        headerTransparent: true,
+        tabBarTestID: 'tabBarButton' + route.name,
+      })}
+      initialRouteName="Map"
+      backBehavior="initialRoute">
+      <Tab.Screen name="Map" component={MapScreen} />
+      <Tab.Screen name="Camera" component={CameraScreen} />
+      <Tab.Screen
+        name="Tracking"
+        children={() => <></>}
+        listeners={({navigation}) => ({
+          tabPress: e => {
+            navigation.navigate('Map');
+          },
+        })}
+      />
+    </Tab.Navigator>
+  );
+};
 
 // **NOTE**: No hooks allowed here (this is not a component, it is a function
 // that returns a react element)

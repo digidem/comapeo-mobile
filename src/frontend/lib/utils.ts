@@ -151,10 +151,8 @@ function convertToDMS({lat, lon}: {lat: number; lon: number}) {
 
 export function convertToUTM({lat, lon}: {lat: number; lon: number}) {
   try {
-    let {easting, northing, zoneNum, zoneLetter} = fromLatLon(lat, lon);
-    easting = +leftPad(easting.toFixed(), 6, '0');
-    northing = +leftPad(northing.toFixed(), 6, '0');
-    return `UTM ${zoneNum}${zoneLetter} ${easting} ${northing}`;
+    const {easting, northing, zoneNum, zoneLetter} = fromLatLon(lat, lon);
+    return `UTM ${zoneNum}${zoneLetter} ${Math.round(easting)} ${Math.round(northing)}`;
   } catch (e) {
     // Some coordinates (e.g. < 80S or 84N) cannot be formatted as UTM
     return `${lat >= 0 ? '+' : ''}${lat.toFixed(6)}°, ${
@@ -233,21 +231,6 @@ export function convertSelectOptionsToLabeled(
       return option;
     }
   });
-}
-
-function leftPad(str: string, len: number, char: string): string {
-  // doesn't need to pad
-  len = len - str.length;
-  if (len <= 0) return str;
-
-  var pad = '';
-  while (true) {
-    if (len & 1) pad += char;
-    len >>= 1;
-    if (len) char += char;
-    else break;
-  }
-  return pad + str;
 }
 
 // // This is a helper function to force the type definition

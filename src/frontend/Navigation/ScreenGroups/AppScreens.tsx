@@ -53,6 +53,7 @@ import {
 import {useNavigationStore} from '../../hooks/useNavigationStore';
 import {TabBarLabel} from './TabBar/TabBarLabel';
 import {TabBarIcon} from './TabBar/TabBarIcon';
+import {useGPSModalContext} from '../../contexts/GPSModalContext';
 
 export type TabName = keyof HomeTabsList;
 
@@ -140,17 +141,22 @@ const HomeTabs = () => {
   const {setCurrentTab, currentTab} = useNavigationStore();
   const navigation = useNavigation();
   const route = useRoute();
+  const {setDisplayModal} = useGPSModalContext();
 
   const handleTabPress = ({
     target,
     preventDefault,
   }: EventArg<'tabPress', true, undefined>) => {
-    if (target?.split('-')[0] === 'Tracking') {
+    const targetTab = target?.split('-')[0];
+    if (targetTab === 'Tracking') {
       preventDefault();
-      const currentTab = getFocusedRouteNameFromRoute(route);
-      if (currentTab === 'Camera') {
-        navigation.navigate('Map');
-      }
+      setDisplayModal(true);
+    } else {
+      setDisplayModal(false);
+    }
+    const currentTab = getFocusedRouteNameFromRoute(route);
+    if (currentTab === 'Camera') {
+      navigation.navigate('Map');
     }
     setCurrentTab((target?.split('-')[0] || 'Map') as unknown as TabName);
   };

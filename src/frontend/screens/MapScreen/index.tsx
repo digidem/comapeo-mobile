@@ -17,6 +17,7 @@ import {getCoords, useLocation} from '../../hooks/useLocation';
 import {useIsFullyFocused} from '../../hooks/useIsFullyFocused';
 import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
 import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
+import {GPSModal} from './gps/GPSModal';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -123,6 +124,8 @@ export const MapScreen = () => {
         onPress={handleAddPress}
         isLoading={!isFinishedLoading}
       />
+
+      <GPSModal locationServicesEnabled={locationServicesEnabled} />
     </View>
   );
 };

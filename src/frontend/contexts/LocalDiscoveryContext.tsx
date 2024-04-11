@@ -329,7 +329,6 @@ function zeroconfServiceToMapeoPeer({
   port: number;
   name: string;
 } {
-  // TODO: Should this filter out loopbacks or other IP addresses?
   const address = addresses[0];
   return address ? {address, port, name} : null;
 }

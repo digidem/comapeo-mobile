@@ -70,7 +70,7 @@ export const PhotoPromiseProvider = ({
     const newPhotoPromiseArray = photoPromises.map(async photo => {
       const resolvedPhoto = await photo;
       if (resolvedPhoto.originalUri === uri) {
-        const deletedPhoto: Promise<DraftPhoto> = new Promise((res, rej) => {
+        const deletedPhoto: Promise<DraftPhoto> = new Promise(res => {
           resolvedPhoto.deleted = true;
           res(resolvedPhoto);
         });

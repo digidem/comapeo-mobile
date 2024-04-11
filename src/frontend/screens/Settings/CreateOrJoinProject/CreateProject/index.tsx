@@ -9,13 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native-gesture-handler';
 import {Button} from '../../../../sharedComponents/Button';
-import {
-  BLACK,
-  LIGHT_GREY,
-  MEDIUM_GREY,
-  RED,
-  WHITE,
-} from '../../../../lib/styles';
+import {BLACK, LIGHT_GREY} from '../../../../lib/styles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
 import {useCreateProject} from '../../../../hooks/server/projects';
@@ -70,7 +64,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
     mutate(val.projectName, {
       onSuccess: () =>
         navigation.navigate('ProjectCreated', {name: val.projectName}),
-      onError: err => {
+      onError: () => {
         openSheet();
       },
     });

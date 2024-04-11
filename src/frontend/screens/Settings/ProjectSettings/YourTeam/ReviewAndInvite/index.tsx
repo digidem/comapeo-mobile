@@ -41,7 +41,7 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
           return;
         }
       })
-      .catch(err => {
+      .catch(() => {
         openSheet();
       });
   }

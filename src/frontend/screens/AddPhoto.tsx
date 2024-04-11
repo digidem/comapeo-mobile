@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  GestureResponderEvent,
-  TouchableNativeFeedback,
-} from 'react-native';
+import {View, StyleSheet, TouchableNativeFeedback} from 'react-native';
 import {Text} from '../sharedComponents/Text';
 import debug from 'debug';
 import {defineMessages, FormattedMessage} from 'react-intl';
@@ -34,7 +29,7 @@ export const AddPhotoScreen = ({
     navigation.pop();
   };
 
-  const handleCancelPress = (e: GestureResponderEvent) => {
+  const handleCancelPress = () => {
     log('cancelled');
     navigation.pop();
   };

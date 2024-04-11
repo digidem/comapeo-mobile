@@ -66,7 +66,7 @@ export const CameraView = ({onAddPress}: Props) => {
       isCancelled = true;
       if (deviceMotionSub) deviceMotionSub.remove();
     };
-  }, [Accelerometer]);
+  }, []);
 
   const handleAddPress = React.useCallback(() => {
     if (!ref.current) {

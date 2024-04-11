@@ -29,7 +29,7 @@ export type LocalDiscoveryState = {
 
 // Poll wifi state every 2 seconds
 const POLL_WIFI_STATE_INTERVAL_MS = 2000;
-const ZEROCONF_SERVICE_TYPE = 'mapeo';
+const ZEROCONF_SERVICE_TYPE = 'comapeo';
 const ZEROCONF_PROTOCOL = 'tcp';
 const ZEROCONF_DOMAIN = 'local.';
 

@@ -6,6 +6,8 @@
  * @module
  */
 
+/* eslint-disable no-bitwise */
+
 /** @type {undefined | Uint32Array} */
 let crcTable
 

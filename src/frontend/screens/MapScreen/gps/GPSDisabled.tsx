@@ -1,13 +1,8 @@
 import * as React from 'react';
-import {Image, Linking, StyleSheet} from 'react-native';
+import {Image, Linking, StyleSheet, View} from 'react-native';
 import {Button} from '../../../sharedComponents/Button';
 import {Text} from '../../../sharedComponents/Text';
 import * as Location from 'expo-location';
-import Animated, {
-  Easing,
-  FadeInDown,
-  FadeOutDown,
-} from 'react-native-reanimated';
 
 const handleOpenSettings = () => {
   Linking.sendIntent('android.settings.LOCATION_SOURCE_SETTINGS');
@@ -33,15 +28,7 @@ export const GPSDisabled: React.FC<GPSDisabled> = ({setIsGranted}) => {
   };
 
   return (
-    <Animated.View
-      entering={FadeInDown.delay(50)
-        .duration(550)
-        .delay(500)
-        .easing(Easing.inOut(Easing.ease))}
-      exiting={FadeOutDown.delay(50)
-        .duration(150)
-        .easing(Easing.inOut(Easing.ease))}
-      style={styles.wrapper}>
+    <View style={styles.wrapper}>
       <Image
         source={require('../../../images/alert-icon.png')}
         width={60}
@@ -59,7 +46,7 @@ export const GPSDisabled: React.FC<GPSDisabled> = ({setIsGranted}) => {
         style={styles.button}>
         <Text style={styles.buttonText}>Enable</Text>
       </Button>
-    </Animated.View>
+    </View>
   );
 };
 

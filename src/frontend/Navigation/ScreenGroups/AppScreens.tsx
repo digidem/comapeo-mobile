@@ -141,7 +141,7 @@ const HomeTabs = () => {
   const {setCurrentTab, currentTab} = useNavigationStore();
   const navigation = useNavigation();
   const route = useRoute();
-  const {setDisplayModal} = useGPSModalContext();
+  const {bottomSheetRef} = useGPSModalContext();
 
   const handleTabPress = ({
     target,
@@ -150,9 +150,9 @@ const HomeTabs = () => {
     const targetTab = target?.split('-')[0];
     if (targetTab === 'Tracking') {
       preventDefault();
-      setDisplayModal(true);
+      bottomSheetRef.current?.present();
     } else {
-      setDisplayModal(false);
+      bottomSheetRef.current?.close();
     }
     const currentTab = getFocusedRouteNameFromRoute(route);
     if (currentTab === 'Camera') {

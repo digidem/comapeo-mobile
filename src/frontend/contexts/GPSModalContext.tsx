@@ -1,23 +1,18 @@
-import React, {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useState,
-} from 'react';
+import {BottomSheetModal} from '@gorhom/bottom-sheet';
+import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
+import React, {createContext, useContext, useRef} from 'react';
 
 interface GPSModalContext {
-  displayModal: boolean;
-  setDisplayModal: Dispatch<SetStateAction<boolean>>;
+  bottomSheetRef: React.RefObject<BottomSheetModalMethods>;
 }
 
 const GPSModalContext = createContext<GPSModalContext | null>(null);
 
 const GPSModalContextProvider = ({children}: {children: React.ReactNode}) => {
-  const [displayModal, setDisplayModal] = useState(false);
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
 
   return (
-    <GPSModalContext.Provider value={{displayModal, setDisplayModal}}>
+    <GPSModalContext.Provider value={{bottomSheetRef}}>
       {children}
     </GPSModalContext.Provider>
   );

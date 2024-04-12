@@ -3,11 +3,6 @@ import {StyleSheet, View} from 'react-native';
 import {Button} from '../../../sharedComponents/Button';
 import {Text} from '../../../sharedComponents/Text';
 import {useTracking} from '../../../hooks/tracks/useTracking';
-import Animated, {
-  Easing,
-  FadeInDown,
-  FadeOutDown,
-} from 'react-native-reanimated';
 
 export const GPSEnabled = () => {
   const {isTracking, cancelTracking, startTracking, loading} = useTracking();
@@ -23,16 +18,13 @@ export const GPSEnabled = () => {
   };
 
   return (
-    <Animated.View
-      entering={FadeInDown.delay(100).duration(550).easing(Easing.elastic(1))}
-      exiting={FadeOutDown.delay(100).duration(450).easing(Easing.elastic(1))}
-      style={styles.wrapper}>
+    <View style={styles.wrapper}>
       <Button fullWidth onPress={handleTracking}>
         <Text style={styles.buttonText} disabled={loading}>
           {getButtonTitle()}
         </Text>
       </Button>
-    </Animated.View>
+    </View>
   );
 };
 

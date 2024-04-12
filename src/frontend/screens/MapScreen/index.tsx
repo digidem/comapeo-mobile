@@ -122,6 +122,7 @@ export const MapScreen = () => {
             <ShapeSource id="routeSource" shape={toRoute(locationHistory)}>
               <LineLayer
                 id="routeFill"
+                belowLayerID="circles"
                 style={{
                   lineColor: '#000000',
                   lineWidth: 5,

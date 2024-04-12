@@ -29,6 +29,7 @@ import {
   FullLocationData,
   useTracksStore,
 } from '../../hooks/tracks/useTracksStore';
+import {useGPSModalContext} from '../../contexts/GPSModalContext';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -41,6 +42,7 @@ const MIN_DISPLACEMENT = 15;
 export const MAP_STYLE = Mapbox.StyleURL.Outdoors;
 
 export const MapScreen = () => {
+  const {displayModal} = useGPSModalContext();
   const [zoom, setZoom] = React.useState(DEFAULT_ZOOM);
 
   const isFocused = useIsFullyFocused();
@@ -155,7 +157,7 @@ export const MapScreen = () => {
         isLoading={!isFinishedLoading}
       />
 
-      <GPSModal />
+      {displayModal && <GPSModal />}
     </View>
   );
 };

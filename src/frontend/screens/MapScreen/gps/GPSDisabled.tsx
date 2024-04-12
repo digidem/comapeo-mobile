@@ -1,39 +1,79 @@
 import * as React from 'react';
-import {View, Image} from 'react-native';
+import {Image, Linking, StyleSheet} from 'react-native';
 import {Button} from '../../../sharedComponents/Button';
 import {Text} from '../../../sharedComponents/Text';
 import * as Location from 'expo-location';
+import Animated, {
+  Easing,
+  FadeInDown,
+  FadeOutDown,
+} from 'react-native-reanimated';
 
-export const GPSDisabled = () => {
-  const [status, requestPermission] = Location.useBackgroundPermissions();
+const handleOpenSettings = () => {
+  Linking.sendIntent('android.settings.LOCATION_SOURCE_SETTINGS');
+};
+
+interface GPSDisabled {
+  setIsGranted: React.Dispatch<React.SetStateAction<boolean | null>>;
+}
+export const GPSDisabled: React.FC<GPSDisabled> = ({setIsGranted}) => {
+  const requestForLocationPermissions = async () => {
+    const [foregroundPermission, backgroundPermission] = await Promise.all([
+      Location.requestForegroundPermissionsAsync(),
+      Location.requestBackgroundPermissionsAsync(),
+    ]);
+    if (foregroundPermission.granted && backgroundPermission.granted) {
+      setIsGranted(true);
+    } else if (
+      !foregroundPermission.canAskAgain ||
+      !backgroundPermission.canAskAgain
+    ) {
+      handleOpenSettings();
+    }
+  };
+
   return (
-    <View
-      style={{
-        padding: 30,
-        zIndex: 11,
-        alignItems: 'center',
-        display: 'flex',
-        justifyContent: 'center',
-      }}>
+    <Animated.View
+      entering={FadeInDown.delay(50)
+        .duration(550)
+        .delay(500)
+        .easing(Easing.inOut(Easing.ease))}
+      exiting={FadeOutDown.delay(50)
+        .duration(150)
+        .easing(Easing.inOut(Easing.ease))}
+      style={styles.wrapper}>
       <Image
         source={require('../../../images/alert-icon.png')}
         width={60}
         height={60}
-        style={{marginBottom: 30}}
+        style={styles.image}
       />
 
-      <Text style={{fontSize: 24, fontWeight: 'bold', textAlign: 'center'}}>
-        GPS Disabled
-      </Text>
-      <Text style={{fontSize: 20, textAlign: 'center', marginBottom: 30}}>
+      <Text style={styles.title}>GPS Disabled</Text>
+      <Text style={styles.description}>
         To create a Track CoMapeo needs access to your location and GPS.
       </Text>
       <Button
         fullWidth
-        onPress={() => requestPermission().then(res => console.log(res))}
-        style={{marginBottom: 20, marginVertical: 8.5}}>
-        <Text style={{fontWeight: '500', color: '#fff'}}>Enable</Text>
+        onPress={requestForLocationPermissions}
+        style={styles.button}>
+        <Text style={styles.buttonText}>Enable</Text>
       </Button>
-    </View>
+    </Animated.View>
   );
 };
+
+const styles = StyleSheet.create({
+  wrapper: {
+    padding: 30,
+    zIndex: 11,
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  image: {marginBottom: 30},
+  title: {fontSize: 24, fontWeight: 'bold', textAlign: 'center'},
+  description: {fontSize: 20, textAlign: 'center', marginBottom: 30},
+  button: {marginBottom: 20, marginVertical: 8.5},
+  buttonText: {fontWeight: '500', color: '#fff'},
+});

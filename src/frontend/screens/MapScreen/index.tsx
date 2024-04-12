@@ -1,11 +1,18 @@
 import * as React from 'react';
-import Mapbox, {UserLocation} from '@rnmapbox/maps';
+import Mapbox, {
+  LineJoin,
+  LineLayer,
+  ShapeSource,
+  UserLocation,
+} from '@rnmapbox/maps';
 import config from '../../../config.json';
 import {IconButton} from '../../sharedComponents/IconButton';
 import {
   LocationFollowingIcon,
   LocationNoFollowIcon,
 } from '../../sharedComponents/icons';
+import {LineString} from 'geojson';
+
 import {View, StyleSheet} from 'react-native';
 import {ObservationMapLayer} from './ObsevationMapLayer';
 import {AddButton} from '../../sharedComponents/AddButton';
@@ -18,6 +25,10 @@ import {useIsFullyFocused} from '../../hooks/useIsFullyFocused';
 import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
 import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
 import {GPSModal} from './gps/GPSModal';
+import {
+  FullLocationData,
+  useTracksStore,
+} from '../../hooks/tracks/useTracksStore';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -43,6 +54,8 @@ export const MapScreen = () => {
   const locationProviderStatus = useLocationProviderStatus();
   const locationServicesEnabled =
     !!locationProviderStatus?.locationServicesEnabled;
+
+  const tracksStore = useTracksStore();
 
   const handleAddPress = () => {
     newDraft();
@@ -105,6 +118,23 @@ export const MapScreen = () => {
             minDisplacement={MIN_DISPLACEMENT}
           />
         )}
+        {tracksStore.locationHistory.length > 1 && (
+          <>
+            <ShapeSource
+              id="routeSource"
+              shape={toRoute(tracksStore.locationHistory)}>
+              <LineLayer
+                id="routeFill"
+                style={{
+                  lineColor: '#ff0000',
+                  lineWidth: 5,
+                  lineCap: LineJoin.Round,
+                  lineOpacity: 1.84,
+                }}
+              />
+            </ShapeSource>
+          </>
+        )}
       </Mapbox.MapView>
 
       <ScaleBar
@@ -137,3 +167,12 @@ const styles = StyleSheet.create({
     bottom: 20,
   },
 });
+function toRoute(locations: FullLocationData[]): LineString {
+  return {
+    type: 'LineString',
+    coordinates: locations.map(location => [
+      location.coords.longitude,
+      location.coords.latitude,
+    ]),
+  };
+}

@@ -1,4 +1,14 @@
 {
   "name": "CoMapeo",
-  "plugins": ["expo-localization", "expo-secure-store"]
+  "plugins": [
+    "expo-localization",
+    "expo-secure-store",
+    [
+      "expo-location",
+      {
+        "isIosBackgroundLocationEnabled": true,
+        "isAndroidBackgroundLocationEnabled": true
+      }
+    ]
+  ]
 }

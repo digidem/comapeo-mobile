@@ -1,28 +1,23 @@
-import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {GPSDisabled} from './GPSDisabled';
 import {GPSEnabled} from './GPSEnabled';
-import {useGPSModalContext} from '../../../contexts/GPSModalContext';
 import {useForegroundPermissions} from 'expo-location';
 
 export const GPSModal = () => {
-  const {displayModal} = useGPSModalContext();
   const [permissions] = useForegroundPermissions();
+  const [isGranted, setIsGranted] = useState<boolean | null>(null);
 
-  console.log(permissions, 'permissions');
+  useEffect(() => {
+    if (permissions && isGranted === null) {
+      setIsGranted(permissions!.granted);
+    }
+  }, [permissions]);
 
   return (
-    <>
-      {displayModal && (
-        <View style={styles.wrapper}>
-          {permissions && !!permissions.granted ? (
-            <GPSEnabled />
-          ) : (
-            <GPSDisabled />
-          )}
-        </View>
-      )}
-    </>
+    <View style={styles.wrapper}>
+      {isGranted ? <GPSEnabled /> : <GPSDisabled setIsGranted={setIsGranted} />}
+    </View>
   );
 };
 

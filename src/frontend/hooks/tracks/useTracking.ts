@@ -10,6 +10,7 @@ type LocationCallbackInfo = {
   error: TaskManager.TaskManagerError | null;
 };
 export function useTracking() {
+  const [loading, setLoading] = useState(false);
   const tracksStore = useTracksStore();
   const isTracking = useTracksStore(state => state.isTracking);
   const addNewTrackLocations = useCallback(
@@ -25,10 +26,12 @@ export function useTracking() {
   );
 
   const startTracking = useCallback(async () => {
+    setLoading(true);
     TaskManager.defineTask(LOCATION_TASK_NAME, addNewTrackLocations);
 
     if (isTracking) {
       console.warn('Start tracking attempt while tracking already enabled');
+      setLoading(false);
       return;
     }
     const requestForeground = Location.requestForegroundPermissionsAsync;
@@ -45,11 +48,12 @@ export function useTracking() {
         tracksStore.setTracking(true);
       }
     }
+    setLoading(false);
   }, []);
 
   const cancelTracking = useCallback(async () => {
     await TaskManager.unregisterTaskAsync(LOCATION_TASK_NAME);
     tracksStore.setTracking(false);
   }, []);
-  return {isTracking, startTracking, cancelTracking};
+  return {isTracking, startTracking, cancelTracking, loading};
 }

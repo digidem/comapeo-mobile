@@ -34,20 +34,13 @@ export function useTracking() {
       setLoading(false);
       return;
     }
-    const requestForeground = Location.requestForegroundPermissionsAsync;
-    const requestBackground = Location.requestBackgroundPermissionsAsync;
 
-    const foregroundRequest = await requestForeground();
-    if (foregroundRequest.granted) {
-      const backgroundRequest = await requestBackground();
-      if (backgroundRequest.granted) {
-        await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
-          accuracy: Location.Accuracy.Highest,
-          activityType: Location.LocationActivityType.Fitness,
-        });
-        tracksStore.setTracking(true);
-      }
-    }
+    await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
+      accuracy: Location.Accuracy.Highest,
+      activityType: Location.LocationActivityType.Fitness,
+    });
+
+    tracksStore.setTracking(true);
     setLoading(false);
   }, [addNewTrackLocations, isTracking, tracksStore]);
 
@@ -55,5 +48,6 @@ export function useTracking() {
     await TaskManager.unregisterTaskAsync(LOCATION_TASK_NAME);
     tracksStore.setTracking(false);
   }, [tracksStore]);
+
   return {isTracking, startTracking, cancelTracking, loading};
 }

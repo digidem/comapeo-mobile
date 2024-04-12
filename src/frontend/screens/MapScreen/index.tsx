@@ -155,7 +155,7 @@ export const MapScreen = () => {
         isLoading={!isFinishedLoading}
       />
 
-      <GPSModal locationServicesEnabled={locationServicesEnabled} />
+      <GPSModal />
     </View>
   );
 };

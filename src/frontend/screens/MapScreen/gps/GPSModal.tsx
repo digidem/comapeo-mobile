@@ -1,20 +1,25 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {GPSDisabled} from './GPSDisabled';
 import {GPSEnabled} from './GPSEnabled';
 import {useGPSModalContext} from '../../../contexts/GPSModalContext';
+import {useForegroundPermissions} from 'expo-location';
 
-interface GPSModal {
-  locationServicesEnabled: boolean;
-}
-export const GPSModal: FC<GPSModal> = ({locationServicesEnabled}) => {
+export const GPSModal = () => {
   const {displayModal} = useGPSModalContext();
+  const [permissions] = useForegroundPermissions();
+
+  console.log(permissions, 'permissions');
 
   return (
     <>
       {displayModal && (
         <View style={styles.wrapper}>
-          {locationServicesEnabled ? <GPSEnabled /> : <GPSDisabled />}
+          {permissions && !!permissions.granted ? (
+            <GPSEnabled />
+          ) : (
+            <GPSDisabled />
+          )}
         </View>
       )}
     </>

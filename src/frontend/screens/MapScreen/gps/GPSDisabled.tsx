@@ -2,8 +2,10 @@ import * as React from 'react';
 import {View, Image} from 'react-native';
 import {Button} from '../../../sharedComponents/Button';
 import {Text} from '../../../sharedComponents/Text';
+import * as Location from 'expo-location';
 
 export const GPSDisabled = () => {
+  const [status, requestPermission] = Location.useBackgroundPermissions();
   return (
     <View
       style={{
@@ -28,7 +30,7 @@ export const GPSDisabled = () => {
       </Text>
       <Button
         fullWidth
-        onPress={() => console.log('pres')}
+        onPress={() => requestPermission().then(res => console.log(res))}
         style={{marginBottom: 20, marginVertical: 8.5}}>
         <Text style={{fontWeight: '500', color: '#fff'}}>Enable</Text>
       </Button>

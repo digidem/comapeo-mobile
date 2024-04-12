@@ -36,7 +36,11 @@ export const ObservationMapLayer = () => {
       onPress={handlePressEvent}
       id="observations-source"
       shape={featureCollection}>
-      <MapboxGL.CircleLayer id="circles" style={layerStyles} />
+      <MapboxGL.CircleLayer
+        aboveLayerID="routeFill"
+        id="circles"
+        style={layerStyles}
+      />
     </MapboxGL.ShapeSource>
   );
 };

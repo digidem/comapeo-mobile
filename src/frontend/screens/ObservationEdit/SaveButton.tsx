@@ -13,6 +13,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import {useCreateBlobMutation} from '../../hooks/server/media';
 import {DraftPhoto, Photo} from '../../contexts/PhotoPromiseContext/types';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
+import {useTracksStore} from '../../hooks/tracks/useTracksStore';
 
 const m = defineMessages({
   noGpsTitle: {
@@ -73,7 +74,7 @@ export const SaveButton = ({
   const createObservationMutation = useCreateObservation();
   const editObservationMutation = useEditObservation();
   const createBlobMutation = useCreateBlobMutation();
-
+  const addNewTrackLocation = useTracksStore(state => state.addNewLocations);
   function createObservation() {
     if (!value) throw new Error('no observation saved in persisted state ');
 
@@ -151,6 +152,23 @@ export const SaveButton = ({
         onSuccess: () => {
           clearDraft();
           navigation.pop();
+          if (value.lat && value.lon) {
+            addNewTrackLocation([
+              {
+                timestamp: new Date().getTime(),
+                coords: {
+                  accuracy: 0,
+                  altitude: 0,
+                  latitude: value.lat || 0,
+                  longitude: value.lon || 0,
+                  altitudeAccuracy: 0,
+                  heading: 0,
+                  speed: 0,
+                },
+              },
+            ]);
+            console.log(observationId);
+          }
         },
       },
     );

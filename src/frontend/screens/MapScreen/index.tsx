@@ -111,7 +111,6 @@ export const MapScreen = () => {
           followUserLocation={false}
         />
 
-        {isFinishedLoading && <ObservationMapLayer />}
         {coords !== undefined && locationServicesEnabled && (
           <UserLocation
             visible={isFocused}
@@ -124,7 +123,7 @@ export const MapScreen = () => {
               <LineLayer
                 id="routeFill"
                 style={{
-                  lineColor: '#ff0000',
+                  lineColor: '#000000',
                   lineWidth: 5,
                   lineCap: LineJoin.Round,
                   lineOpacity: 1.84,
@@ -133,6 +132,7 @@ export const MapScreen = () => {
             </ShapeSource>
           </>
         )}
+        {isFinishedLoading && <ObservationMapLayer />}
       </Mapbox.MapView>
 
       <ScaleBar

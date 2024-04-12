@@ -55,7 +55,7 @@ export const MapScreen = () => {
   const locationServicesEnabled =
     !!locationProviderStatus?.locationServicesEnabled;
 
-  const tracksStore = useTracksStore();
+  const locationHistory = useTracksStore(state => state.locationHistory);
 
   const handleAddPress = () => {
     newDraft();
@@ -118,11 +118,9 @@ export const MapScreen = () => {
             minDisplacement={MIN_DISPLACEMENT}
           />
         )}
-        {tracksStore.locationHistory.length > 1 && (
+        {locationHistory.length > 1 && (
           <>
-            <ShapeSource
-              id="routeSource"
-              shape={toRoute(tracksStore.locationHistory)}>
+            <ShapeSource id="routeSource" shape={toRoute(locationHistory)}>
               <LineLayer
                 id="routeFill"
                 style={{

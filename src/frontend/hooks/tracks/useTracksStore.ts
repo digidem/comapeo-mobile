@@ -35,5 +35,5 @@ export const useTracksStore = create<TracksStoreState>(set => ({
   addNewLocations: data =>
     set(state => ({locationHistory: [...state.locationHistory, ...data]})),
   clearLocationHistory: () => set(() => ({locationHistory: []})),
-  setTracking: (val: boolean) => set(state => ({isTracking: val})),
+  setTracking: (val: boolean) => set(() => ({isTracking: val})),
 }));

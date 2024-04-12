@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Button} from '../../../sharedComponents/Button';
 import {Text} from '../../../sharedComponents/Text';
 import {useTracking} from '../../../hooks/tracks/useTracking';

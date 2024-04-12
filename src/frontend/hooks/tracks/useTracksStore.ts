@@ -23,6 +23,8 @@ export type FullLocationData = {
 type TracksStoreState = {
   isTracking: boolean;
   locationHistory: FullLocationData[];
+  observations: string[];
+  addNewObservation: (observationId: string) => void;
   addNewLocations: (locationData: FullLocationData[]) => void;
   clearLocationHistory: () => void;
   setTracking: (val: boolean) => void;
@@ -31,7 +33,9 @@ type TracksStoreState = {
 export const useTracksStore = create<TracksStoreState>(set => ({
   isTracking: false,
   locationHistory: [],
-  dupa: [],
+  observations: [],
+  addNewObservation: (id: string) =>
+    set(state => ({observations: [...state.observations, id]})),
   addNewLocations: data =>
     set(state => ({locationHistory: [...state.locationHistory, ...data]})),
   clearLocationHistory: () => set(() => ({locationHistory: []})),

@@ -75,6 +75,10 @@ export const SaveButton = ({
   const editObservationMutation = useEditObservation();
   const createBlobMutation = useCreateBlobMutation();
   const addNewTrackLocation = useTracksStore(state => state.addNewLocations);
+  const addNewTrackObservation = useTracksStore(
+    state => state.addNewObservation,
+  );
+
   function createObservation() {
     if (!value) throw new Error('no observation saved in persisted state ');
 
@@ -128,9 +132,28 @@ export const SaveButton = ({
             onError: () => {
               if (openErrorModal) openErrorModal();
             },
-            onSuccess: () => {
+            onSuccess: data => {
               clearDraft();
               navigation.navigate('Home', {screen: 'Map'});
+              if (value.lat && value.lon) {
+                addNewTrackLocation([
+                  {
+                    timestamp: new Date().getTime(),
+                    coords: {
+                      accuracy: 0,
+                      altitude: 0,
+                      latitude: value.lat || 0,
+                      longitude: value.lon || 0,
+                      altitudeAccuracy: 0,
+                      heading: 0,
+                      speed: 0,
+                    },
+                  },
+                ]);
+              }
+              if (data.docId) {
+                addNewTrackObservation(data.docId);
+              }
             },
           },
         );
@@ -167,8 +190,8 @@ export const SaveButton = ({
                 },
               },
             ]);
-            console.log(observationId);
           }
+          addNewTrackObservation(observationId);
         },
       },
     );

@@ -2,8 +2,8 @@ import {Observation} from '@mapeo/schema';
 import React from 'react';
 import MapboxGL from '@rnmapbox/maps';
 import {useAllObservations} from '../../hooks/useAllObservations';
-import {OnPressEvent} from '@rnmapbox/maps/lib/typescript/types/OnPressEvent';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
+import {OnPressEvent} from '@rnmapbox/maps/lib/typescript/src/types/OnPressEvent';
 
 const DEFAULT_MARKER_COLOR = '#F29D4B';
 
@@ -24,7 +24,7 @@ export const ObservationMapLayer = () => {
   };
 
   function handlePressEvent(event: OnPressEvent) {
-    const properties = event.features[0].properties;
+    const properties = event.features[0]?.properties;
     if (!properties) return;
     if (!('id' in properties)) return;
 

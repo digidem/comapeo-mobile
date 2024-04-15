@@ -24,16 +24,7 @@ import {Loading} from './sharedComponents/Loading';
 const queryClient = new QueryClient();
 const messagePort = new MessagePortLike();
 const mapeoApi = createMapeoClient(messagePort, {timeout: Infinity});
-const localDiscoveryController = createLocalDiscoveryController({
-  startLocalPeerDiscovery() {
-    return mapeoApi.startLocalPeerDiscovery();
-  },
-  stopLocalPeerDiscovery() {
-    // TODO: Wait for sync to finish. Currently will disconnect all peers
-    // immediately, even if they are currently syncing
-    return mapeoApi.stopLocalPeerDiscovery({force: true});
-  },
-});
+const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();
 initializeNodejs();
 

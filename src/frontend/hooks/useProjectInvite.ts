@@ -5,7 +5,6 @@ import {
   useRejectInvite,
 } from './server/invites';
 import {useApi} from '../contexts/ApiContext';
-import {useCallback} from 'react';
 
 export function useProjectInvite() {
   const invites = usePendingInvites().data;

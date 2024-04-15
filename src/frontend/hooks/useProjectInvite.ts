@@ -1,5 +1,6 @@
 import {
   useAcceptInvite,
+  useClearAllPendingInvites,
   usePendingInvites,
   useRejectInvite,
 } from './server/invites';
@@ -12,6 +13,7 @@ export function useProjectInvite() {
   const invite = invites[0];
   const acceptMutation = useAcceptInvite();
   const rejectMutation = useRejectInvite();
+  const clearAllInvites = useClearAllPendingInvites();
   const mapeoApi = useApi();
 
   const resetState = () => {
@@ -19,18 +21,13 @@ export function useProjectInvite() {
     rejectMutation.reset();
   };
 
-  const clearAllInvites = useCallback(() => {
-    invites.forEach(inv => {
-      mapeoApi.invite.reject(inv);
-    });
-  }, [invites, mapeoApi]);
-
   return {
     accept: acceptMutation,
     reject: rejectMutation,
     resetState,
     invite: invite,
     numberOfInvites: invites.length,
-    clearAllInvites: clearAllInvites,
+    clearAllInvites: () =>
+      clearAllInvites.mutate({inviteIds: invites.map(inv => inv.inviteId)}),
   };
 }

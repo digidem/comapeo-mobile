@@ -43,3 +43,21 @@ export function useRejectInvite() {
     },
   });
 }
+
+export function useClearAllPendingInvites() {
+  const queryClient = useQueryClient();
+  const mapeoApi = useApi();
+
+  return useMutation({
+    mutationFn: ({inviteIds}: {inviteIds: Array<string>}) => {
+      return Promise.all(
+        inviteIds.map(id => mapeoApi.invite.reject({inviteId: id})),
+      );
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [INVITE_KEY],
+      });
+    },
+  });
+}

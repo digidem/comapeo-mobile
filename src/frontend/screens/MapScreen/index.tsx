@@ -29,6 +29,7 @@ import {
   FullLocationData,
   useTracksStore,
 } from '../../hooks/tracks/useTracksStore';
+import {GPSIndicator} from './gps/GPSIndicator';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -136,7 +137,7 @@ export const MapScreen = () => {
           </>
         )}
       </Mapbox.MapView>
-
+      <GPSIndicator />
       <ScaleBar
         zoom={zoom || 10}
         latitude={coords ? coords[1] : undefined}
@@ -166,6 +167,7 @@ const styles = StyleSheet.create({
     bottom: 20,
   },
 });
+
 function toRoute(locations: FullLocationData[]): LineString {
   return {
     type: 'LineString',

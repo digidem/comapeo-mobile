@@ -156,7 +156,7 @@ const HomeTabs = () => {
     }
     const currentTab = getFocusedRouteNameFromRoute(route);
     if (currentTab === 'Camera') {
-      navigation.navigate('Map');
+      navigation.navigate('Map' as never);
     }
     setCurrentTab((target?.split('-')[0] || 'Map') as unknown as TabName);
   };

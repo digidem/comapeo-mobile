@@ -12,7 +12,7 @@ import {View} from 'react-native';
 import {useProjectInvite} from '../hooks/useProjectInvite';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import {useNavigationState} from '@react-navigation/native';
-import {isEdittingScreen} from '../lib/utils';
+import {isEditingScreen} from '../lib/utils';
 
 const m = defineMessages({
   declineInvite: {
@@ -56,7 +56,7 @@ export const ProjectInviteBottomSheet = () => {
   const routes = useNavigationState(state => (!state ? [] : state.routes));
   const index = useNavigationState(state => (!state ? undefined : state.index));
 
-  const isEditScreen = isEdittingScreen(routes, index);
+  const isEditScreen = isEditingScreen(routes, index);
 
   if (invite && !isOpen && !isEditScreen) {
     openSheet();
@@ -90,7 +90,7 @@ export const ProjectInviteBottomSheet = () => {
             {
               variation: 'outlined',
               onPress: () => {
-                reject.mutate(undefined, {
+                reject.mutate(invite, {
                   onSuccess: () => {
                     if (numberOfInvites <= 1) {
                       closeSheet();
@@ -103,7 +103,7 @@ export const ProjectInviteBottomSheet = () => {
             {
               variation: 'filled',
               onPress: () => {
-                accept.mutate(undefined, {
+                accept.mutate(invite, {
                   onSuccess: () => {
                     clearAllInvites();
                   },

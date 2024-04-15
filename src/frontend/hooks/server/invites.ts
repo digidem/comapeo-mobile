@@ -17,32 +17,29 @@ export function usePendingInvites() {
   });
 }
 
-export function useAcceptInvite(inviteId?: string) {
+export function useAcceptInvite() {
   const mapeoApi = useApi();
   const queryClient = useQueryClient();
   return useMutation({
-    mutationKey: [INVITE_KEY, inviteId],
-    mutationFn: async () => {
+    mutationFn: async ({inviteId}: {inviteId: string}) => {
       if (!inviteId) return;
       mapeoApi.invite.accept({inviteId});
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [INVITE_KEY, inviteId]});
+      queryClient.invalidateQueries({queryKey: [INVITE_KEY]});
     },
   });
 }
 
-export function useRejectInvite(inviteId?: string) {
+export function useRejectInvite() {
   const mapeoApi = useApi();
   const queryClient = useQueryClient();
   return useMutation({
-    mutationKey: [INVITE_KEY, inviteId],
-    mutationFn: async () => {
-      if (!inviteId) return;
+    mutationFn: async ({inviteId}: {inviteId: string}) => {
       mapeoApi.invite.reject({inviteId});
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [INVITE_KEY, inviteId]});
+      queryClient.invalidateQueries({queryKey: [INVITE_KEY]});
     },
   });
 }

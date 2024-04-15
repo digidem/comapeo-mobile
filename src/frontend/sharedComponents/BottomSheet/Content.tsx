@@ -5,6 +5,7 @@ import {TouchableHighlight} from '@gorhom/bottom-sheet';
 import {LIGHT_BLUE, MAGENTA, COMAPEO_BLUE, RED, WHITE} from '../../lib/styles';
 import {Button} from '../Button';
 import {Text} from '../Text';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 interface BaseActionButtonConfig {
   onPress: () => void;
@@ -33,6 +34,7 @@ export interface Props extends React.PropsWithChildren<{}> {
   title: React.ReactNode;
   titleStyle?: TextStyle;
   descriptionStyle?: TextStyle;
+  loading?: boolean;
 }
 
 export const Content = ({
@@ -43,6 +45,7 @@ export const Content = ({
   title,
   titleStyle,
   descriptionStyle,
+  loading,
 }: Props) => (
   <View style={styles.container}>
     <View>
@@ -57,70 +60,77 @@ export const Content = ({
       </View>
       {!!children && <View style={{flex: 1}}>{children}</View>}
     </View>
-    <View style={styles.buttonsContainer}>
-      {buttonConfigs.map((config, index) => {
-        return (
-          <Button
-            fullWidth
-            key={index}
-            TouchableComponent={props => (
-              <TouchableHighlight
-                {...props}
-                underlayColor={
+    {loading ? (
+      <UIActivityIndicator size={30} style={{margin: 20}} />
+    ) : (
+      <View style={styles.buttonsContainer}>
+        {buttonConfigs.map((config, index) => {
+          return (
+            <Button
+              fullWidth
+              key={index}
+              TouchableComponent={props => (
+                <TouchableHighlight
+                  {...props}
+                  underlayColor={
+                    config.variation === 'outlined'
+                      ? WHITE
+                      : config.dangerous
+                        ? RED
+                        : LIGHT_BLUE
+                  }
+                />
+              )}
+              onPress={config.onPress}
+              style={{
+                backgroundColor:
                   config.variation === 'outlined'
                     ? WHITE
                     : config.dangerous
-                      ? RED
-                      : LIGHT_BLUE
-                }
-              />
-            )}
-            onPress={config.onPress}
-            style={{
-              backgroundColor:
-                config.variation === 'outlined'
-                  ? WHITE
-                  : config.dangerous
-                    ? MAGENTA
-                    : COMAPEO_BLUE,
-              marginTop: index > 0 ? 20 : undefined,
-            }}
-            variant={config.variation === 'outlined' ? 'outlined' : undefined}>
-            <View style={styles.buttonTextContainer}>
-              {config.icon ? (
-                <View style={styles.buttonTextIconContainer}>
-                  {config.icon}
-                </View>
-              ) : null}
-              <Text
-                style={[
-                  styles.buttonText,
-                  styles.bold,
-                  {
-                    color:
-                      config.variation === 'outlined' ? COMAPEO_BLUE : WHITE,
-                  },
-                ]}>
-                {config.text}
-              </Text>
-            </View>
-          </Button>
-        );
-      })}
-    </View>
+                      ? MAGENTA
+                      : COMAPEO_BLUE,
+                marginTop: index > 0 ? 20 : undefined,
+              }}
+              variant={
+                config.variation === 'outlined' ? 'outlined' : undefined
+              }>
+              <View style={styles.buttonTextContainer}>
+                {config.icon ? (
+                  <View style={styles.buttonTextIconContainer}>
+                    {config.icon}
+                  </View>
+                ) : null}
+                <Text
+                  style={[
+                    styles.buttonText,
+                    styles.bold,
+                    {
+                      color:
+                        config.variation === 'outlined' ? COMAPEO_BLUE : WHITE,
+                    },
+                  ]}>
+                  {config.text}
+                </Text>
+              </View>
+            </Button>
+          );
+        })}
+      </View>
+    )}
   </View>
 );
 
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'space-evenly',
+    padding: 20,
+    paddingTop: 30,
   },
   iconContainer: {
     alignItems: 'center',
   },
   textContainer: {
-    marginVertical: 20,
-    paddingHorizontal: 20,
+    marginBottom: 30,
   },
   title: {
     textAlign: 'center',

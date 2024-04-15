@@ -459,6 +459,12 @@
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
   },
+  "screens.Setting.ProjectSettings.YourTeam.NotOnProject.createOrJoin": {
+    "message": "Create or Join Project"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.NotOnProject.projectNecessary": {
+    "message": "Create or Join a Project to invite devices"
+  },
   "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
     "message": "Review Invitation"
   },
@@ -610,6 +616,27 @@
   },
   "sharedComponents.GpsPill.searching": {
     "message": "Searching…"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.acceptInvite": {
+    "message": "Accept Invite"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.declineInvite": {
+    "message": "Decline Invite"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.goToMap": {
+    "message": "Go To Map"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.invitedToJoin": {
+    "message": "You've been invited to join {projName}"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.joinProject": {
+    "message": "Join Project {projName}"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.success": {
+    "message": "Success"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.youHaveJoined": {
+    "message": "You have joined {projName}"
   },
   "sharedComponents.RoleWithIcon.coordinator": {
     "message": "Coordinator"

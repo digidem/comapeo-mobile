@@ -7,7 +7,7 @@ import {useApi} from '../../contexts/ApiContext';
 
 export const INVITE_KEY = 'invites';
 
-export function useInvites() {
+export function usePendingInvites() {
   const mapeoApi = useApi();
   return useSuspenseQuery({
     queryKey: [INVITE_KEY],

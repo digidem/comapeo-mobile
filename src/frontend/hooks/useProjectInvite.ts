@@ -1,10 +1,14 @@
 import {Invite} from '@mapeo/core/dist/invite-api';
-import {useAcceptInvite, useInvites, useRejectInvite} from './server/invites';
+import {
+  useAcceptInvite,
+  usePendingInvites,
+  useRejectInvite,
+} from './server/invites';
 import {useApi} from '../contexts/ApiContext';
 import {useCallback} from 'react';
 
 export function useProjectInvite() {
-  const invites = useInvites().data;
+  const invites = usePendingInvites().data;
   // this will eventually sort invite by date
   const invite = invites[0];
   const acceptMutation = useAcceptInvite(invite?.inviteId);

@@ -6,15 +6,19 @@ import {
 import * as React from 'react';
 import {StyleSheet} from 'react-native';
 import {LineString} from 'geojson';
+import {useLocation} from '../../hooks/useLocation';
 export const TrackPathLayer = () => {
   const locationHistory = useCurrentTrackStore(state => state.locationHistory);
-
+  const {location} = useLocation({maxDistanceInterval: 3});
+  const finalLocationHistory = location?.coords
+    ? [...locationHistory, location as any]
+    : locationHistory;
   return (
     locationHistory.length > 1 && (
       <ShapeSource
         onPress={() => console.log('display bottom sheet')}
         id="routeSource"
-        shape={toRoute(locationHistory)}>
+        shape={toRoute(finalLocationHistory)}>
         <LineLayer
           id="routeFill"
           belowLayerID="circles"

@@ -20,6 +20,8 @@ import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
 import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
 import {GPSModal} from './gps/GPSModal';
 import {TrackPathLayer} from './TrackPathLayer';
+import {useTracking} from '../../hooks/tracks/useTracking';
+import {UserTooltipMarker} from './track/UserTooltipMarker';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -27,7 +29,7 @@ import {TrackPathLayer} from './TrackPathLayer';
 const DEFAULT_ZOOM = 12;
 
 Mapbox.setAccessToken(config.mapboxAccessToken);
-const MIN_DISPLACEMENT = 15;
+const MIN_DISPLACEMENT = 3;
 
 export const MAP_STYLE = Mapbox.StyleURL.Outdoors;
 
@@ -45,6 +47,8 @@ export const MapScreen = () => {
   const locationProviderStatus = useLocationProviderStatus();
   const locationServicesEnabled =
     !!locationProviderStatus?.locationServicesEnabled;
+
+  const {isTracking} = useTracking();
 
   const handleAddPress = () => {
     newDraft();
@@ -101,10 +105,13 @@ export const MapScreen = () => {
         />
 
         {coords !== undefined && locationServicesEnabled && (
-          <UserLocation
-            visible={isFocused}
-            minDisplacement={MIN_DISPLACEMENT}
-          />
+          <>
+            <UserLocation
+              visible={isFocused}
+              minDisplacement={MIN_DISPLACEMENT}
+            />
+            {isTracking && <UserTooltipMarker />}
+          </>
         )}
         {isFinishedLoading && <ObservationMapLayer />}
         {isFinishedLoading && <TrackPathLayer />}

@@ -617,6 +617,27 @@
   "sharedComponents.GpsPill.searching": {
     "message": "Searching…"
   },
+  "sharedComponents.ProjectInviteBottomSheet.acceptInvite": {
+    "message": "Accept Invite"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.declineInvite": {
+    "message": "Decline Invite"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.goToMap": {
+    "message": "Go To Map"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.invitedToJoin": {
+    "message": "You've been invited to join {projName}"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.joinProject": {
+    "message": "Join Project {projName}"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.success": {
+    "message": "Success"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.youHaveJoined": {
+    "message": "You have joined {projName}"
+  },
   "sharedComponents.RoleWithIcon.coordinator": {
     "message": "Coordinator"
   },

@@ -126,7 +126,7 @@ export const GpsModal = () => {
               <GpsModalRow
                 key={key}
                 label={key}
-                value={value != null ? t(m.yes) : t(m.no)}
+                value={t(value ? m.yes : m.no)}
               />
             ))}
           </>

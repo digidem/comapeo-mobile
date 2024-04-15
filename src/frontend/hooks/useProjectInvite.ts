@@ -4,7 +4,6 @@ import {
   usePendingInvites,
   useRejectInvite,
 } from './server/invites';
-import {useApi} from '../contexts/ApiContext';
 
 export function useProjectInvite() {
   const invites = usePendingInvites().data;
@@ -13,7 +12,6 @@ export function useProjectInvite() {
   const acceptMutation = useAcceptInvite();
   const rejectMutation = useRejectInvite();
   const clearAllInvites = useClearAllPendingInvites();
-  const mapeoApi = useApi();
 
   const resetState = () => {
     acceptMutation.reset();

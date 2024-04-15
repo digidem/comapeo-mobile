@@ -167,7 +167,7 @@ const HomeTabs = () => {
         tabPress: handleTabPress,
       }}
       screenOptions={({route}) => ({
-        header: () => <HomeHeader />,
+        header: () => <></>,
         headerTransparent: true,
         tabBarTestID: 'tabBarButton' + route.name,
       })}
@@ -177,6 +177,7 @@ const HomeTabs = () => {
         name="Map"
         component={MapScreen}
         options={{
+          header: () => <HomeHeader />,
           tabBarIcon: params => (
             <TabBarIcon
               {...params}

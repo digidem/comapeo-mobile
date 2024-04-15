@@ -22,7 +22,7 @@ export function useTracking() {
         tracksStore.addNewLocations(data.locations);
       }
     },
-    [],
+    [tracksStore],
   );
 
   const startTracking = useCallback(async () => {
@@ -49,11 +49,11 @@ export function useTracking() {
       }
     }
     setLoading(false);
-  }, []);
+  }, [addNewTrackLocations, isTracking, tracksStore]);
 
   const cancelTracking = useCallback(async () => {
     await TaskManager.unregisterTaskAsync(LOCATION_TASK_NAME);
     tracksStore.setTracking(false);
-  }, []);
+  }, [tracksStore]);
   return {isTracking, startTracking, cancelTracking, loading};
 }

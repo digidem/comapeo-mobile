@@ -1,4 +1,8 @@
-import {useMutation, useSuspenseQuery} from '@tanstack/react-query';
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 import {useApi} from '../../contexts/ApiContext';
 
 export const INVITE_KEY = 'invites';
@@ -15,23 +19,30 @@ export function useInvites() {
 
 export function useAcceptInvite(inviteId?: string) {
   const mapeoApi = useApi();
+  const queryClient = useQueryClient();
   return useMutation({
     mutationKey: [INVITE_KEY, inviteId],
     mutationFn: async () => {
       if (!inviteId) return;
       mapeoApi.invite.accept({inviteId});
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: [INVITE_KEY, inviteId]});
+    },
   });
 }
 
 export function useRejectInvite(inviteId?: string) {
   const mapeoApi = useApi();
-  const invites = useInvites().data;
+  const queryClient = useQueryClient();
   return useMutation({
     mutationKey: [INVITE_KEY, inviteId],
     mutationFn: async () => {
       if (!inviteId) return;
       mapeoApi.invite.reject({inviteId});
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: [INVITE_KEY, inviteId]});
     },
   });
 }

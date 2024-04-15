@@ -20,7 +20,6 @@ import {
 import {Loading} from '../../../../sharedComponents/Loading';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {useDeviceInfo} from '../../../../hooks/server/deviceInfo';
-import {projectSettings} from '@mapeo/schema/dist/validations';
 import {CenteredView} from '../../../../sharedComponents/CenteredView';
 import {NotOnProject} from './NotOnProject';
 

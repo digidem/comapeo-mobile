@@ -1,17 +1,11 @@
 import * as React from 'react';
-import Mapbox, {
-  LineJoin,
-  LineLayer,
-  ShapeSource,
-  UserLocation,
-} from '@rnmapbox/maps';
+import Mapbox, {UserLocation} from '@rnmapbox/maps';
 import config from '../../../config.json';
 import {IconButton} from '../../sharedComponents/IconButton';
 import {
   LocationFollowingIcon,
   LocationNoFollowIcon,
 } from '../../sharedComponents/icons';
-import {LineString} from 'geojson';
 
 import {View, StyleSheet} from 'react-native';
 import {ObservationMapLayer} from './ObsevationMapLayer';
@@ -25,10 +19,7 @@ import {useIsFullyFocused} from '../../hooks/useIsFullyFocused';
 import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
 import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
 import {GPSModal} from './gps/GPSModal';
-import {
-  FullLocationData,
-  useCurrentTrackStore,
-} from '../../hooks/tracks/useCurrentTrackStore';
+import {TrackPathLayer} from './TrackPathLayer';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -54,8 +45,6 @@ export const MapScreen = () => {
   const locationProviderStatus = useLocationProviderStatus();
   const locationServicesEnabled =
     !!locationProviderStatus?.locationServicesEnabled;
-
-  const locationHistory = useCurrentTrackStore(state => state.locationHistory);
 
   const handleAddPress = () => {
     newDraft();
@@ -117,26 +106,8 @@ export const MapScreen = () => {
             minDisplacement={MIN_DISPLACEMENT}
           />
         )}
-        {locationHistory.length > 1 && (
-          <>
-            <ShapeSource
-              onPress={() => console.log('display bottom sheet')}
-              id="routeSource"
-              shape={toRoute(locationHistory)}>
-              <LineLayer
-                id="routeFill"
-                belowLayerID="circles"
-                style={{
-                  lineColor: '#000000',
-                  lineWidth: 5,
-                  lineCap: LineJoin.Round,
-                  lineOpacity: 1.84,
-                }}
-              />
-            </ShapeSource>
-          </>
-        )}
         {isFinishedLoading && <ObservationMapLayer />}
+        {isFinishedLoading && <TrackPathLayer />}
       </Mapbox.MapView>
       <ScaleBar
         zoom={zoom || 10}
@@ -167,13 +138,3 @@ const styles = StyleSheet.create({
     bottom: 20,
   },
 });
-
-function toRoute(locations: FullLocationData[]): LineString {
-  return {
-    type: 'LineString',
-    coordinates: locations.map(location => [
-      location.coords.longitude,
-      location.coords.latitude,
-    ]),
-  };
-}

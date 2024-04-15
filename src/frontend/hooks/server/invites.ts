@@ -5,7 +5,7 @@ import {
 } from '@tanstack/react-query';
 import {useApi} from '../../contexts/ApiContext';
 
-export const INVITE_KEY = 'invites';
+export const INVITE_KEY = 'pending_invites';
 
 export function usePendingInvites() {
   const mapeoApi = useApi();

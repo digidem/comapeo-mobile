@@ -37,7 +37,7 @@ export const GPSModal = () => {
       </TouchableWithoutFeedback>
       <BottomSheetModal
         bottomInset={48}
-        style={{borderBottomLeftRadius: 0, borderBottomRightRadius: 0}}
+        style={styles.modal}
         ref={bottomSheetRef}
         onChange={setCurrentIndex}
         enableDynamicSizing
@@ -64,4 +64,5 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'transparent',
   },
+  modal: {borderBottomLeftRadius: 0, borderBottomRightRadius: 0},
 });

@@ -4,7 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {IconButton} from './IconButton';
 import {ObservationListIcon} from './icons';
 import {useNavigationFromHomeTabs} from '../hooks/useNavigationWithTypes';
-import {Text} from './Text';
+import {GPSIndicator} from '../screens/MapScreen/gps/GPSIndicator';
 
 export const HomeHeader = () => {
   const navigation = useNavigationFromHomeTabs();
@@ -16,9 +16,10 @@ export const HomeHeader = () => {
         colors={['#0006', '#0000']}
       />
       {/* Stand in for styling,  */}
-      <Text>""</Text>
+      <View style={{width: 60}} />
+      <GPSIndicator />
+
       <IconButton
-        style={styles.rightButton}
         onPress={() => {
           navigation.navigate('ObservationList');
         }}
@@ -35,11 +36,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: 'transparent',
-  },
-  rightButton: {},
-  leftButton: {
-    width: 60,
-    height: 60,
   },
   linearGradient: {
     height: 60,

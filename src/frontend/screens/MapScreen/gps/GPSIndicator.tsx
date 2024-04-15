@@ -4,8 +4,10 @@ import {Text} from '../../../sharedComponents/Text';
 import NoGPSSignalImage from '../../../images/NoGPSSignal.svg';
 import ActiveGPSSignalImage from '../../../images/ActiveGPSSignal.svg';
 import * as Location from 'expo-location';
+import {useLocation} from '../../../hooks/useLocation';
 
 export const GPSIndicator = () => {
+  const {location} = useLocation({maxDistanceInterval: 15});
   const [backgroundStatus] = Location.useBackgroundPermissions();
   const [foregroundStatus] = Location.useForegroundPermissions();
 
@@ -15,7 +17,9 @@ export const GPSIndicator = () => {
         {backgroundStatus?.granted && foregroundStatus?.granted ? (
           <>
             <ActiveGPSSignalImage width={12} height={12} />
-            <Text style={styles.text}>GPS</Text>
+            <Text style={styles.text}>
+              GPS ± {Math.floor(location?.coords.accuracy || 0)}
+            </Text>
           </>
         ) : (
           <>
@@ -32,9 +36,7 @@ const styles = StyleSheet.create({
   indicatorWrapper: {
     backgroundColor: '#333333',
     borderRadius: 20,
-    position: 'absolute',
     padding: 14.5,
-    top: 20,
   },
   wrapper: {flexDirection: 'row', alignItems: 'center'},
   text: {marginLeft: 5, color: '#fff', fontSize: 15},

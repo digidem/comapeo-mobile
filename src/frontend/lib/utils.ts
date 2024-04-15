@@ -152,7 +152,7 @@ function convertToDMS({lat, lon}: {lat: number; lon: number}) {
 export function convertToUTM({lat, lon}: {lat: number; lon: number}) {
   try {
     const {easting, northing, zoneNum, zoneLetter} = fromLatLon(lat, lon);
-    return `UTM ${zoneNum}${zoneLetter} ${Math.round(easting)} ${Math.round(northing)}`;
+    return `UTM ${zoneNum}${zoneLetter} ${easting.toFixed()} ${northing.toFixed()}`;
   } catch (e) {
     // Some coordinates (e.g. < 80S or 84N) cannot be formatted as UTM
     return `${lat >= 0 ? '+' : ''}${lat.toFixed(6)}°, ${

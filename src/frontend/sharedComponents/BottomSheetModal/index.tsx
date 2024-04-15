@@ -91,7 +91,7 @@ export const BottomSheetModal = React.forwardRef<RNBottomSheetModal, Props>(
           />
         );
       },
-      [BottomSheetBackdrop],
+      [],
     );
 
     return (

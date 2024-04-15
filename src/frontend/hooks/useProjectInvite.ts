@@ -1,4 +1,3 @@
-import {Invite} from '@mapeo/core/dist/invite-api';
 import {
   useAcceptInvite,
   usePendingInvites,

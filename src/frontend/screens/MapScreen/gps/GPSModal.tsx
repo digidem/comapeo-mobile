@@ -19,7 +19,7 @@ export const GPSModal = () => {
     if (backgroundStatus && foregroundStatus && isGranted === null) {
       setIsGranted(backgroundStatus.granted && foregroundStatus.granted);
     }
-  }, [backgroundStatus, foregroundStatus]);
+  }, [backgroundStatus, foregroundStatus, isGranted]);
 
   const onBottomSheetDismiss = () => {
     setCurrentTab('Map');
@@ -36,3 +36,12 @@ export const GPSModal = () => {
     </CustomBottomSheetModal>
   );
 };
+
+const styles = StyleSheet.create({
+  wrapper: {
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    backgroundColor: 'transparent',
+  },
+});

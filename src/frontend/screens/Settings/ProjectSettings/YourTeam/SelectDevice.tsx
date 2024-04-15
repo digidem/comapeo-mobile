@@ -34,14 +34,14 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
   const {formatMessage: t} = useIntl();
   const projectMembers = useProjectMembers();
   const devices = useLocalPeers();
-  const nonMemberDevices = !projectMembers.data
-    ? devices
-    : devices.filter(
+  const nonMemberDevices = projectMembers.data
+    ? devices.filter(
         device =>
           !projectMembers.data.some(
             member => member.deviceId === device.deviceId,
           ),
-      );
+      )
+    : devices;
 
   return (
     <ScrollView style={styles.container}>

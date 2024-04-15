@@ -30,7 +30,7 @@ type TracksStoreState = {
   setTracking: (val: boolean) => void;
 };
 
-export const useTracksStore = create<TracksStoreState>(set => ({
+export const useCurrentTrackStore = create<TracksStoreState>(set => ({
   isTracking: false,
   locationHistory: [],
   observations: [],

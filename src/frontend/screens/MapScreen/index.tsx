@@ -27,8 +27,8 @@ import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
 import {GPSModal} from './gps/GPSModal';
 import {
   FullLocationData,
-  useTracksStore,
-} from '../../hooks/tracks/useTracksStore';
+  useCurrentTrackStore,
+} from '../../hooks/tracks/useCurrentTrackStore';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -55,7 +55,7 @@ export const MapScreen = () => {
   const locationServicesEnabled =
     !!locationProviderStatus?.locationServicesEnabled;
 
-  const locationHistory = useTracksStore(state => state.locationHistory);
+  const locationHistory = useCurrentTrackStore(state => state.locationHistory);
 
   const handleAddPress = () => {
     newDraft();
@@ -119,7 +119,10 @@ export const MapScreen = () => {
         )}
         {locationHistory.length > 1 && (
           <>
-            <ShapeSource id="routeSource" shape={toRoute(locationHistory)}>
+            <ShapeSource
+              onPress={() => console.log('display bottom sheet')}
+              id="routeSource"
+              shape={toRoute(locationHistory)}>
               <LineLayer
                 id="routeFill"
                 belowLayerID="circles"

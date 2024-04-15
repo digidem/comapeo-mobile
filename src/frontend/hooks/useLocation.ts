@@ -19,7 +19,7 @@ interface LocationOptions {
   maxTimeInterval?: number;
 }
 
-interface LocationState {
+export interface LocationState {
   location: LocationObject | undefined;
   error: Error | undefined;
 }

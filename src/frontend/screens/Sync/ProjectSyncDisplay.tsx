@@ -5,7 +5,7 @@ import {Bar as ProgressBar} from 'react-native-progress';
 
 import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {useProject, useProjectSettings} from '../../hooks/server/projects';
-import {useSyncState} from '../../hooks/useSyncState';
+import {useSyncProgress, useSyncState} from '../../hooks/useSyncState';
 import ObservationsProjectImage from '../../images/ObservationsProject.svg';
 import {
   BLACK,
@@ -84,8 +84,7 @@ export const ProjectSyncDisplay = () => {
     return <Loading />;
   }
 
-  // TODO: Default project shouldn't end up in this screen
-  const projectName = projectSettingsQuery.data.name || 'Default Project';
+  const projectName = projectSettingsQuery.data.name;
   const deviceName = deviceInfoQuery.data.name;
 
   const {connectedPeers, data, initial} = syncState;
@@ -161,33 +160,48 @@ export const ProjectSyncDisplay = () => {
         </View>
       </View>
       <Text style={styles.titleText}>{devicesSyncingText}</Text>
-      {!isSyncDone && isDataSyncEnabled && (
-        <View style={styles.syncProgressContainer}>
-          <View style={styles.syncProgressTextContainer}>
-            <SyncIcon color={COMAPEO_BLUE} size={20} />
-            <Text style={styles.syncProgressTitleText}>{t(m.syncing)}</Text>
-          </View>
-          <ProgressBar
-            indeterminate
-            indeterminateAnimationDuration={2000}
-            // TODO: How to measure progress?
-            // progress={progress}
-            height={10}
-            width={null}
-            borderRadius={0}
-            color={COMAPEO_BLUE}
-            unfilledColor={LIGHT_GREY}
-            borderColor={WHITE}
-          />
-          {/* TODO: Uncomment when progress is figured out */}
-          {/* <Text style={styles.syncProgressText}>
-            {t(m.syncProgress, {value: Math.round(progress * 100)})}
-          </Text> */}
-        </View>
-      )}
+      {!isSyncDone && isDataSyncEnabled && <SyncProgress />}
     </ScreenContentWithDock>
   );
 };
+
+function SyncProgress() {
+  const {formatMessage: t} = useIntl();
+
+  const progress = useSyncProgress();
+
+  const dynamicProgressBarProps =
+    progress === null
+      ? {indeterminate: true, indeterminateAnimationDuration: 2000}
+      : {
+          progress,
+          indeterminate: false,
+        };
+
+  return (
+    <View style={styles.syncProgressContainer}>
+      <View style={styles.syncProgressTextContainer}>
+        <SyncIcon color={COMAPEO_BLUE} size={20} />
+        <Text style={styles.syncProgressTitleText}>{t(m.syncing)}</Text>
+      </View>
+      <ProgressBar
+        {...dynamicProgressBarProps}
+        height={10}
+        width={null}
+        borderRadius={0}
+        color={COMAPEO_BLUE}
+        unfilledColor={LIGHT_GREY}
+        borderColor={WHITE}
+      />
+
+      {progress !== null && (
+        <Text style={styles.syncProgressText}>
+          {t(m.syncProgress, {value: Math.round(progress * 100)})}
+        </Text>
+      )}
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
   contentContainer: {

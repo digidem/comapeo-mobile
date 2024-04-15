@@ -4,7 +4,7 @@ import MaterialCommunity from 'react-native-vector-icons/MaterialCommunityIcons'
 import {defineMessages, useIntl} from 'react-intl';
 import {Text} from './Text';
 import {BLACK} from '../lib/styles';
-import {DeviceRole, ViewStyleProp} from '../sharedTypes';
+import {ViewStyleProp} from '../sharedTypes';
 
 const m = defineMessages({
   coordinator: {

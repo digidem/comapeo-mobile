@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {View, StyleSheet, Easing} from 'react-native';
 import {DotIndicator} from 'react-native-indicators';
-import {WHITE} from '../lib/styles';
 import {ViewStyleProp} from '../sharedTypes';
 
 export const Loading = ({

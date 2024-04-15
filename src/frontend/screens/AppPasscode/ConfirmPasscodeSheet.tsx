@@ -7,7 +7,6 @@ import {
   BottomSheetModal,
 } from '../../sharedComponents/BottomSheetModal';
 import {ErrorIcon} from '../../sharedComponents/icons';
-import {NativeRootNavigationProps} from '../../sharedTypes';
 import {usePersistedPasscode} from '../../hooks/persistedState/usePersistedPasscode';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';

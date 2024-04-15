@@ -58,7 +58,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
       }, defaultAcc);
 
   const deviceId = '';
-  const {lat, lon, createdBy, attachments} = observation;
+  const {lat, lon, createdBy} = observation;
   const isMine = deviceId === createdBy;
   // Currently only show photo attachments
   const photos = [];

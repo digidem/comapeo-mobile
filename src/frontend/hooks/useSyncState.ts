@@ -56,8 +56,8 @@ function createSyncState(project: MapeoProjectApi) {
   const listeners = new Set<() => void>();
   let error: Error | undefined;
 
-  function onSyncState(state: SyncState) {
-    state = state;
+  function onSyncState(newState: SyncState) {
+    state = newState;
     error = undefined;
     listeners.forEach(listener => listener());
   }

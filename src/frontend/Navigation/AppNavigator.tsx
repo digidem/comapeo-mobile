@@ -69,7 +69,7 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
       screenOptions={NavigatorScreenOptions}>
       {deviceInfo.data?.name
         ? createDefaultScreenGroup(formatMessage)
-        : createDeviceNamingScreens(formatMessage)}
+        : createDeviceNamingScreens()}
     </RootStack.Navigator>
   );
 };

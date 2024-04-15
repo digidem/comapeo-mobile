@@ -2,10 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {GPSDisabled} from './GPSDisabled';
 import {GPSEnabled} from './GPSEnabled';
 import * as Location from 'expo-location';
-import {BottomSheetModal, BottomSheetView} from '@gorhom/bottom-sheet';
 import {useGPSModalContext} from '../../../contexts/GPSModalContext';
 import {useNavigationStore} from '../../../hooks/useNavigationStore';
-import {TouchableWithoutFeedback, View, StyleSheet} from 'react-native';
+import {CustomBottomSheetModal} from '../../../sharedComponents/BottomSheetModal/CustomBottomSheetModal';
 
 export const GPSModal = () => {
   const {setCurrentTab} = useNavigationStore();
@@ -28,41 +27,12 @@ export const GPSModal = () => {
   };
 
   return (
-    <>
-      <TouchableWithoutFeedback onPress={onBottomSheetDismiss}>
-        <View
-          pointerEvents={currentIndex === 0 ? 'auto' : 'none'}
-          style={styles.wrapper}
-        />
-      </TouchableWithoutFeedback>
-      <BottomSheetModal
-        bottomInset={48}
-        style={styles.modal}
-        ref={bottomSheetRef}
-        onChange={setCurrentIndex}
-        enableDynamicSizing
-        enableDismissOnClose
-        enableContentPanningGesture={false}
-        enableHandlePanningGesture={false}
-        handleComponent={() => null}>
-        <BottomSheetView>
-          {isGranted ? (
-            <GPSEnabled />
-          ) : (
-            <GPSDisabled setIsGranted={setIsGranted} />
-          )}
-        </BottomSheetView>
-      </BottomSheetModal>
-    </>
+    <CustomBottomSheetModal
+      currentIndex={currentIndex}
+      setCurrentIndex={setCurrentIndex}
+      dismiss={onBottomSheetDismiss}
+      bottomSheetRef={bottomSheetRef}>
+      {isGranted ? <GPSEnabled /> : <GPSDisabled setIsGranted={setIsGranted} />}
+    </CustomBottomSheetModal>
   );
 };
-
-const styles = StyleSheet.create({
-  wrapper: {
-    position: 'absolute',
-    height: '100%',
-    width: '100%',
-    backgroundColor: 'transparent',
-  },
-  modal: {borderBottomLeftRadius: 0, borderBottomRightRadius: 0},
-});

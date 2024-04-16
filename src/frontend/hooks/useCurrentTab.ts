@@ -16,11 +16,11 @@ export const useCurrentTab = () => {
     if (targetTab === TabName.Tracking) {
       preventDefault();
       bottomSheetRef.current?.present();
-      navigation.navigate('Map' as never);
+      navigation.navigate(TabName.Map as never);
     } else {
       bottomSheetRef.current?.close();
     }
-    setCurrentTab((target?.split('-')[0] || 'Map') as unknown as TabName);
+    setCurrentTab((targetTab || 'Map') as TabName);
   };
 
   return {handleTabPress};

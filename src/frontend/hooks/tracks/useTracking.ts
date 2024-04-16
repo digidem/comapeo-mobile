@@ -19,7 +19,13 @@ export function useTracking() {
         console.error('Error while processing location update callback', error);
       }
       if (data?.locations) {
-        tracksStore.addNewLocations(data.locations);
+        tracksStore.addNewLocations(
+          data.locations.map(loc => ({
+            latitude: loc.coords.latitude,
+            longitude: loc.coords.longitude,
+            timestamp: loc.timestamp,
+          })),
+        );
       }
     },
     [tracksStore],

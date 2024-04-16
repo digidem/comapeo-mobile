@@ -141,15 +141,8 @@ export const SaveButton = ({
                 addNewTrackLocation([
                   {
                     timestamp: new Date().getTime(),
-                    coords: {
-                      accuracy: 0,
-                      altitude: 0,
-                      latitude: value.lat || 0,
-                      longitude: value.lon || 0,
-                      altitudeAccuracy: 0,
-                      heading: 0,
-                      speed: 0,
-                    },
+                    latitude: value.lat,
+                    longitude: value.lon,
                   },
                 ]);
               }
@@ -181,15 +174,8 @@ export const SaveButton = ({
             addNewTrackLocation([
               {
                 timestamp: new Date().getTime(),
-                coords: {
-                  accuracy: 0,
-                  altitude: 0,
-                  latitude: value.lat || 0,
-                  longitude: value.lon || 0,
-                  altitudeAccuracy: 0,
-                  heading: 0,
-                  speed: 0,
-                },
+                latitude: value.lat,
+                longitude: value.lon,
               },
             ]);
           }

@@ -21,14 +21,24 @@ export type FullLocationData = {
   };
   timestamp: number;
 };
+
+export type LocationHistoryPoint = {
+  timestamp: number;
+} & LonLatData;
+
+export type LonLatData = {
+  longitude: number;
+  latitude: number;
+};
+
 type TracksStoreState = {
   isTracking: boolean;
-  locationHistory: FullLocationData[];
+  locationHistory: LocationHistoryPoint[];
   observations: string[];
   distance: number;
   trackingSince: Date;
   addNewObservation: (observationId: string) => void;
-  addNewLocations: (locationData: FullLocationData[]) => void;
+  addNewLocations: (locationData: LocationHistoryPoint[]) => void;
   clearLocationHistory: () => void;
   setTracking: (val: boolean) => void;
 };

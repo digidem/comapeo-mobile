@@ -19,7 +19,7 @@ import {useIsFullyFocused} from '../../hooks/useIsFullyFocused';
 import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
 import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
 import {GPSModal} from './gps/GPSModal';
-import {TrackPathLayer} from './TrackPathLayer';
+import {TrackPathLayer} from './track/TrackPathLayer';
 import {useTracking} from '../../hooks/tracks/useTracking';
 import {UserTooltipMarker} from './track/UserTooltipMarker';
 

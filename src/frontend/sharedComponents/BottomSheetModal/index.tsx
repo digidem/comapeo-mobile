@@ -8,7 +8,7 @@ import {
 } from '@gorhom/bottom-sheet';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 
-import {DARK_GREY, LIGHT_GREY} from '../../lib/styles';
+import {DARK_GREY} from '../../lib/styles';
 
 export const MODAL_NAVIGATION_OPTIONS: NativeStackNavigationOptions = {
   presentation: 'transparentModal',
@@ -91,7 +91,7 @@ export const BottomSheetModal = React.forwardRef<RNBottomSheetModal, Props>(
           />
         );
       },
-      [BottomSheetBackdrop],
+      [],
     );
 
     return (

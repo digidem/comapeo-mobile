@@ -1,6 +1,6 @@
 // @ts-check
 
-import {FieldValue, Observation, Preset, PresetValue} from '@mapeo/schema';
+import {FieldValue, Observation, PresetValue} from '@mapeo/schema';
 
 export const mockObservations: Observation[] = [
   {

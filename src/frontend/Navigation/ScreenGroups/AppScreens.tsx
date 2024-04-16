@@ -7,7 +7,6 @@ import {
   useRoute,
 } from '@react-navigation/native';
 import * as React from 'react';
-
 import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {RootStack} from '../AppStack';
 import {MessageDescriptor} from 'react-intl';
@@ -54,6 +53,14 @@ import {useNavigationStore} from '../../hooks/useNavigationStore';
 import {TabBarLabel} from './TabBar/TabBarLabel';
 import {TabBarIcon} from './TabBar/TabBarIcon';
 import {useGPSModalContext} from '../../contexts/GPSModalContext';
+import {useLocation} from '../../hooks/useLocation';
+import {useForegroundPermissions} from 'expo-location';
+import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
+import {getLocationStatus} from '../../lib/utils';
+import {
+  GpsModal,
+  createNavigationOptions as createGpsModalNavigationOptions,
+} from '../../screens/GpsModal';
 
 export type TabName = keyof HomeTabsList;
 
@@ -137,11 +144,25 @@ export type AppList = {
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
+
 const HomeTabs = () => {
   const {setCurrentTab, currentTab} = useNavigationStore();
   const navigation = useNavigation();
   const route = useRoute();
   const {bottomSheetRef} = useGPSModalContext();
+  const locationState = useLocation({maxDistanceInterval: 0});
+  const [permissions] = useForegroundPermissions();
+  const locationProviderStatus = useLocationProviderStatus();
+
+  const precision = locationState.location?.coords.accuracy;
+
+  const locationStatus =
+    !!locationState.error || !permissions?.granted
+      ? 'error'
+      : getLocationStatus({
+          location: locationState.location,
+          providerStatus: locationProviderStatus,
+        });
 
   const handleTabPress = ({
     target,
@@ -160,14 +181,20 @@ const HomeTabs = () => {
     }
     setCurrentTab((target?.split('-')[0] || 'Map') as unknown as TabName);
   };
-
   return (
     <Tab.Navigator
       screenListeners={{
         tabPress: handleTabPress,
       }}
       screenOptions={({route}) => ({
-        header: () => <></>,
+        header: () => (
+          <HomeHeader
+            locationStatus={locationStatus}
+            precision={
+              typeof precision === 'number' ? Math.round(precision) : undefined
+            }
+          />
+        ),
         headerTransparent: true,
         tabBarTestID: 'tabBarButton' + route.name,
       })}
@@ -177,7 +204,6 @@ const HomeTabs = () => {
         name="Map"
         component={MapScreen}
         options={{
-          header: () => <HomeHeader />,
           tabBarIcon: params => (
             <TabBarIcon
               {...params}
@@ -248,9 +274,9 @@ export const createDefaultScreenGroup = (
       options={props => {
         const observationId = props.route.params?.observationId;
         return {
-          headerLeft: props => (
+          headerLeft: params => (
             <CustomHeaderLeftClose
-              headerBackButtonProps={props}
+              headerBackButtonProps={params}
               observationId={observationId}
             />
           ),
@@ -381,6 +407,11 @@ export const createDefaultScreenGroup = (
       name="DeviceNameEdit"
       component={DeviceNameEditScreen}
       options={createDeviceNameEditNavOptions({intl})}
+    />
+    <RootStack.Screen
+      name="GpsModal"
+      component={GpsModal}
+      options={createGpsModalNavigationOptions({intl})}
     />
   </RootStack.Group>
 );

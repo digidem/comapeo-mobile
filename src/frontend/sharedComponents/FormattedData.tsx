@@ -5,11 +5,10 @@ import {
   defineMessages,
   useIntl,
 } from 'react-intl';
-import {Field, Observation, Preset} from '@mapeo/schema';
+import {Field, Preset} from '@mapeo/schema';
 
 import {formatCoords, convertSelectOptionsToLabeled} from '../lib/utils';
 import {DateDistance} from './DateDistance';
-import {formats} from '../contexts/IntlContext';
 import {CoordinateFormat} from '../sharedTypes';
 
 const m = defineMessages({

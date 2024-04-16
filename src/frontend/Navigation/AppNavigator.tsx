@@ -22,6 +22,8 @@ import {Observation, Preset} from '@mapeo/schema';
 import {matchPreset} from '../lib/utils';
 import {AppList} from './ScreenGroups/AppScreens';
 import {usePresetsQuery} from '../hooks/server/presets';
+import {initializeInviteListener} from '../initializeInviteListener';
+import {ProjectInviteBottomSheet} from '../sharedComponents/ProjectInviteBottomSheet';
 
 // import {devExperiments} from '../lib/DevExperiments';
 
@@ -49,6 +51,7 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   const {data: presets} = usePresetsQuery();
   const deviceInfo = useDeviceInfo();
   usePrefetchLastKnownLocation();
+  initializeInviteListener();
 
   if (permissionAsked && !deviceInfo.isPending) {
     BootSplash.hide();
@@ -60,17 +63,20 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   }
 
   return (
-    <RootStack.Navigator
-      initialRouteName={getInitialRouteName({
-        hasDeviceName: !!deviceInfo.data?.name,
-        existingObservation,
-        presets,
-      })}
-      screenOptions={NavigatorScreenOptions}>
-      {deviceInfo.data?.name
-        ? createDefaultScreenGroup(formatMessage)
-        : createDeviceNamingScreens(formatMessage)}
-    </RootStack.Navigator>
+    <React.Fragment>
+      <RootStack.Navigator
+        initialRouteName={getInitialRouteName({
+          hasDeviceName: !!deviceInfo.data?.name,
+          existingObservation,
+          presets,
+        })}
+        screenOptions={NavigatorScreenOptions}>
+        {deviceInfo.data?.name
+          ? createDefaultScreenGroup(formatMessage)
+          : createDeviceNamingScreens()}
+      </RootStack.Navigator>
+      <ProjectInviteBottomSheet />
+    </React.Fragment>
   );
 };
 

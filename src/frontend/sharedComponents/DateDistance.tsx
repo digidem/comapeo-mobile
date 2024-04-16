@@ -17,7 +17,7 @@ const MINUTE = 60;
 const HOUR = 60 * 60;
 const DAY = 60 * 60 * 24;
 
-export const DateDistance = ({date = new Date(), style}: Props) => {
+export const DateDistance = ({date, style}: Props) => {
   // Round distance to nearest 10 seconds
   const distanceInSeconds =
     Math.floor((Date.now() - date.getTime()) / 10000) * 10;

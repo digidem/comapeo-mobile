@@ -2,6 +2,9 @@
 import {fromLatLon} from 'utm';
 import {SelectOptions, LabeledSelectOption} from '../sharedTypes/PresetTypes';
 import {Preset, Observation} from '@mapeo/schema';
+import {LocationObject, LocationProviderStatus} from 'expo-location';
+import {NavigationState} from '@react-navigation/native';
+import {EDITING_SCREEN_NAMES} from '../constants';
 
 // import type {
 //   ObservationValue,
@@ -19,15 +22,6 @@ import {Preset, Observation} from '@mapeo/schema';
 // export function getDisplayName(WrappedComponent: any) {
 //   return WrappedComponent.displayName || WrappedComponent.name || "Component";
 // }
-
-// // If the current position on the app state is more than 60 seconds old then we
-// // consider it stale and show that the GPS is searching for a new position
-// const STALE_TIMEOUT = 60 * 1000; // 60 seconds
-// // If the precision is less than 10 meters then we consider this to be a "good
-// // position" and we change the UI accordingly
-// const GOOD_PRECISION = 10; // 10 meters
-
-export type LocationStatus = 'searching' | 'improving' | 'good' | 'error';
 
 // Little helper to timeout a promise
 // export function promiseTimeout<T>(
@@ -50,30 +44,40 @@ export type LocationStatus = 'searching' | 'improving' | 'good' | 'error';
 //   return isNaN(major) ? 0 : major;
 // }
 
-// export function getLocationStatus({
-//   position,
-//   provider,
-//   permission,
-//   error,
-// }: Type): LocationStatus {
-//   const precision = position && position.coords.accuracy;
-//   const gpsUnavailable = provider && !provider.gpsAvailable;
-//   const locationServicesDisabled =
-//     provider && !provider.locationServicesEnabled;
-//   const noPermission = permission && permission !== "granted";
-//   const positionStale =
-//     position && Date.now() - position.timestamp > STALE_TIMEOUT;
-//   if (error || gpsUnavailable || locationServicesDisabled || noPermission)
-//     return "error";
-//   else if (positionStale) return "searching";
-//   else if (
-//     typeof precision === "number" &&
-//     Math.round(precision) <= GOOD_PRECISION
-//   )
-//     return "good";
-//   else if (typeof precision === "number") return "improving";
-//   return "searching";
-// }
+// If the current position on the app state is more than 60 seconds old then we
+// consider it stale and show that the GPS is searching for a new position
+const STALE_TIMEOUT = 60 * 1000; // 60 seconds
+// // If the precision is less than 10 meters then we consider this to be a "good
+// // position" and we change the UI accordingly
+const GOOD_PRECISION = 10; // 10 meters
+
+export type LocationStatus = 'searching' | 'improving' | 'good' | 'error';
+
+export function getLocationStatus({
+  location,
+  providerStatus,
+}: {
+  location?: LocationObject;
+  providerStatus?: LocationProviderStatus;
+}): LocationStatus {
+  const gpsAvailable = !!providerStatus?.gpsAvailable;
+  const locationServicesEnabled = !!providerStatus?.locationServicesEnabled;
+
+  if (!gpsAvailable || !locationServicesEnabled) return 'error';
+
+  const positionStale =
+    location && Date.now() - location.timestamp > STALE_TIMEOUT;
+
+  if (positionStale) return 'searching';
+
+  const precision = location?.coords.accuracy;
+
+  if (typeof precision === 'number') {
+    return Math.round(precision) <= GOOD_PRECISION ? 'good' : 'improving';
+  }
+
+  return 'searching';
+}
 
 // export function addFieldDefinitions(
 //   preset: Preset,
@@ -151,10 +155,8 @@ function convertToDMS({lat, lon}: {lat: number; lon: number}) {
 
 export function convertToUTM({lat, lon}: {lat: number; lon: number}) {
   try {
-    let {easting, northing, zoneNum, zoneLetter} = fromLatLon(lat, lon);
-    easting = +leftPad(easting.toFixed(), 6, '0');
-    northing = +leftPad(northing.toFixed(), 6, '0');
-    return `UTM ${zoneNum}${zoneLetter} ${easting} ${northing}`;
+    const {easting, northing, zoneNum, zoneLetter} = fromLatLon(lat, lon);
+    return `UTM ${zoneNum}${zoneLetter} ${easting.toFixed()} ${northing.toFixed()}`;
   } catch (e) {
     // Some coordinates (e.g. < 80S or 84N) cannot be formatted as UTM
     return `${lat >= 0 ? '+' : ''}${lat.toFixed(6)}°, ${
@@ -235,21 +237,6 @@ export function convertSelectOptionsToLabeled(
   });
 }
 
-function leftPad(str: string, len: number, char: string): string {
-  // doesn't need to pad
-  len = len - str.length;
-  if (len <= 0) return str;
-
-  var pad = '';
-  while (true) {
-    if (len & 1) pad += char;
-    len >>= 1;
-    if (len) char += char;
-    else break;
-  }
-  return pad + str;
-}
-
 // // This is a helper function to force the type definition
 // // It filters an array to remove any falsy values
 // function filterFalsy<T>(arr: Array<T | void>): Array<T> {
@@ -317,4 +304,19 @@ export function matchPreset(
   });
 
   return bestMatch;
+}
+
+export function isEditingScreen(
+  routes: NavigationState['routes'],
+  index: number | undefined,
+) {
+  const parentRoute = routes[index || 0];
+
+  const routeName = !parentRoute
+    ? undefined
+    : !parentRoute.state
+      ? parentRoute.name
+      : parentRoute.state.routes[parentRoute.state.index || 0].name;
+
+  return !!EDITING_SCREEN_NAMES.find(val => val === routeName);
 }

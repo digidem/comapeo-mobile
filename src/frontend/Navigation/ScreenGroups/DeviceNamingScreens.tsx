@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {MessageDescriptor} from 'react-intl';
 import {RootStack} from '../AppStack';
 import {IntroToCoMapeo} from '../../screens/IntroToCoMapeo';
 import {DeviceNaming} from '../../screens/DeviceNaming';
@@ -11,9 +10,7 @@ export type DeviceNamingSceens = {
   Success: {deviceName: string};
 };
 
-export const createDeviceNamingScreens = (
-  intl: (title: MessageDescriptor) => string,
-) => (
+export const createDeviceNamingScreens = () => (
   <RootStack.Group key="deviceNaming">
     <RootStack.Screen
       name="IntroToCoMapeo"

@@ -2,13 +2,7 @@ import * as React from 'react';
 import {FormattedMessage, MessageDescriptor} from 'react-intl';
 import {View, Text, StyleSheet} from 'react-native';
 
-import {
-  LIGHT_BLUE,
-  LIGHT_GREY,
-  COMAPEO_BLUE,
-  MEDIUM_BLUE,
-  WHITE,
-} from '../lib/styles';
+import {LIGHT_GREY, COMAPEO_BLUE, WHITE} from '../lib/styles';
 import {TextStyleProp, ViewStyleProp} from '../sharedTypes';
 
 interface PillProps {

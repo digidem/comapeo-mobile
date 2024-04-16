@@ -43,7 +43,6 @@ import {
   EditScreen as DeviceNameEditScreen,
   createNavigationOptions as createDeviceNameEditNavOptions,
 } from '../../screens/Settings/ProjectSettings/DeviceName/EditScreen';
-import {TabBarLabel} from './TabBar/TabBarLabel';
 import {TabBarIcon} from './TabBar/TabBarIcon';
 import {useLocation} from '../../hooks/useLocation';
 import {useForegroundPermissions} from 'expo-location';
@@ -55,7 +54,8 @@ import {
 } from '../../screens/GpsModal';
 import {useCurrentTab} from '../../hooks/useCurrentTab';
 import {TrackingTabBarIcon} from './TabBar/TrackingTabBarIcon';
-import {TrackingLabel} from './TabBar/TabBarTrackingLabel';
+
+export const TAB_BAR_HEIGHT = 70;
 
 export type HomeTabsList = {
   Map: undefined;
@@ -158,6 +158,10 @@ const HomeTabs = () => {
     <Tab.Navigator
       screenListeners={{tabPress: handleTabPress}}
       screenOptions={({route}) => ({
+        tabBarStyle: {
+          height: TAB_BAR_HEIGHT,
+        },
+        tabBarShowLabel: false,
         header: () => (
           <HomeHeader
             locationStatus={locationStatus}
@@ -178,7 +182,6 @@ const HomeTabs = () => {
           tabBarIcon: params => (
             <TabBarIcon {...params} tabName={'Map'} iconName="map" />
           ),
-          tabBarLabel: params => <TabBarLabel {...params} tabName={'Map'} />,
         }}
       />
       <Tab.Screen
@@ -192,15 +195,11 @@ const HomeTabs = () => {
               iconName="photo-camera"
             />
           ),
-          tabBarLabel: params => <TabBarLabel {...params} tabName={'Camera'} />,
         }}
       />
       <Tab.Screen
         name="Tracking"
-        options={{
-          tabBarIcon: TrackingTabBarIcon,
-          tabBarLabel: TrackingLabel,
-        }}
+        options={{tabBarIcon: TrackingTabBarIcon}}
         children={() => <></>}
       />
     </Tab.Navigator>

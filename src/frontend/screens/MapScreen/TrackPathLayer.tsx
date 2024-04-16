@@ -7,6 +7,7 @@ import * as React from 'react';
 import {StyleSheet} from 'react-native';
 import {LineString} from 'geojson';
 import {useLocation} from '../../hooks/useLocation';
+
 export const TrackPathLayer = () => {
   const locationHistory = useCurrentTrackStore(state => state.locationHistory);
   const isTracking = useCurrentTrackStore(state => state.isTracking);

@@ -2,6 +2,7 @@ import React, {FC} from 'react';
 import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
 import {BottomSheetModal, BottomSheetView} from '@gorhom/bottom-sheet';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
+import {TAB_BAR_HEIGHT} from '../../Navigation/ScreenGroups/AppScreens';
 
 interface CustomBottomSheetModal {
   dismiss: () => void;
@@ -27,7 +28,7 @@ export const CustomBottomSheetModal: FC<CustomBottomSheetModal> = ({
         />
       </TouchableWithoutFeedback>
       <BottomSheetModal
-        bottomInset={48}
+        bottomInset={TAB_BAR_HEIGHT}
         style={styles.modal}
         ref={bottomSheetRef}
         onChange={setCurrentIndex}

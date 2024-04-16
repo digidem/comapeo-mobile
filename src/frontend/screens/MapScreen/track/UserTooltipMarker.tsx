@@ -6,7 +6,7 @@ import {useCurrentTrackStore} from '../../../hooks/tracks/useCurrentTrackStore';
 import {useFormattedTimeSince} from '../../../hooks/useFormattedTimeSince';
 
 export const UserTooltipMarker = () => {
-  const {location} = useLocation({maxDistanceInterval: 2});
+  const {location} = useLocation({maxDistanceInterval: 0});
   const totalDistance = useCurrentTrackStore(state => state.distance);
   const trackingSince = useCurrentTrackStore(state => state.trackingSince);
   const timer = useFormattedTimeSince(trackingSince, 1000);

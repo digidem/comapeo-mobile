@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Mapbox, {UserLocation} from '@rnmapbox/maps';
+import Mapbox from '@rnmapbox/maps';
 import config from '../../../config.json';
 import {IconButton} from '../../sharedComponents/IconButton';
 import {
@@ -15,13 +15,11 @@ import {useDraftObservation} from '../../hooks/useDraftObservation';
 // @ts-ignore
 import ScaleBar from 'react-native-scale-bar';
 import {getCoords, useLocation} from '../../hooks/useLocation';
-import {useIsFullyFocused} from '../../hooks/useIsFullyFocused';
 import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
 import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
 import {GPSModal} from './gps/GPSModal';
 import {TrackPathLayer} from './track/TrackPathLayer';
-import {useTracking} from '../../hooks/tracks/useTracking';
-import {UserTooltipMarker} from './track/UserTooltipMarker';
+import {UserLocation} from './UserLocation';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -36,7 +34,6 @@ export const MAP_STYLE = Mapbox.StyleURL.Outdoors;
 export const MapScreen = () => {
   const [zoom, setZoom] = React.useState(DEFAULT_ZOOM);
 
-  const isFocused = useIsFullyFocused();
   const [isFinishedLoading, setIsFinishedLoading] = React.useState(false);
   const [following, setFollowing] = React.useState(true);
   const {newDraft} = useDraftObservation();
@@ -47,8 +44,6 @@ export const MapScreen = () => {
   const locationProviderStatus = useLocationProviderStatus();
   const locationServicesEnabled =
     !!locationProviderStatus?.locationServicesEnabled;
-
-  const {isTracking} = useTracking();
 
   const handleAddPress = () => {
     newDraft();
@@ -104,14 +99,8 @@ export const MapScreen = () => {
           followUserLocation={false}
         />
 
-        {coords !== undefined && locationServicesEnabled && (
-          <>
-            <UserLocation
-              visible={isFocused}
-              minDisplacement={MIN_DISPLACEMENT}
-            />
-            {isTracking && <UserTooltipMarker />}
-          </>
+        {coords && locationServicesEnabled && (
+          <UserLocation minDisplacement={MIN_DISPLACEMENT} />
         )}
         {isFinishedLoading && <ObservationMapLayer />}
         {isFinishedLoading && <TrackPathLayer />}
@@ -121,7 +110,7 @@ export const MapScreen = () => {
         latitude={coords ? coords[1] : undefined}
         bottom={20}
       />
-      {coords !== undefined && locationServicesEnabled && (
+      {coords && locationServicesEnabled && (
         <View style={styles.locationButton}>
           <IconButton onPress={handleLocationPress}>
             {following ? <LocationFollowingIcon /> : <LocationNoFollowIcon />}

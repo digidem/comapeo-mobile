@@ -23,28 +23,28 @@ export const useCurrentTrackStore = create<TracksStoreState>(set => ({
   addNewObservation: (id: string) =>
     set(state => ({observations: [...state.observations, id]})),
   addNewLocations: data =>
-    set(state => {
-      const {locationHistory} = state;
-
+    set(({locationHistory, distance}) => {
       if (data.length > 1) {
         return {
           locationHistory: [...locationHistory, ...data],
-          distance: state.distance + calculateTotalDistance(data),
+          distance: distance + calculateTotalDistance(data),
         };
       }
+
       if (locationHistory.length < 1) {
         return {
           locationHistory: [...locationHistory, ...data],
         };
       }
+
       const lastLocation = locationHistory[locationHistory.length - 1];
       if (!lastLocation) {
         throw Error('No lastLocation for state.locationHistory.length > 1');
       }
+
       return {
-        locationHistory: [...state.locationHistory, ...data],
-        distance:
-          state.distance + calculateTotalDistance([lastLocation, ...data]),
+        locationHistory: [...locationHistory, ...data],
+        distance: distance + calculateTotalDistance([lastLocation, ...data]),
       };
     }),
   clearLocationHistory: () => set(() => ({locationHistory: []})),

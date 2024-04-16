@@ -3,11 +3,11 @@ import {
   FullLocationData,
   LocationHistoryPoint,
   useCurrentTrackStore,
-} from '../../hooks/tracks/useCurrentTrackStore';
+} from '../../../hooks/tracks/useCurrentTrackStore';
 import * as React from 'react';
 import {StyleSheet} from 'react-native';
 import {LineString} from 'geojson';
-import {useLocation} from '../../hooks/useLocation';
+import {useLocation} from '../../../hooks/useLocation';
 
 export const TrackPathLayer = () => {
   const locationHistory = useCurrentTrackStore(state => state.locationHistory);

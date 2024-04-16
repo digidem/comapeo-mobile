@@ -18,6 +18,7 @@ module.exports = {
         'no-undef': 'off',
         'react-native/no-inline-styles': 'off',
         'react/no-unstable-nested-components': [
+          'warn',
           {
             allowAsProps: true,
           },

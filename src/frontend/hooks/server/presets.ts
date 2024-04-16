@@ -6,7 +6,6 @@ import {
 
 import {useProject} from './projects';
 import {PresetValue} from '@mapeo/schema';
-import {MockPreset, mockFields} from '../../mockdata';
 
 export function usePresetsQuery() {
   const project = useProject();
@@ -16,13 +15,14 @@ export function usePresetsQuery() {
     queryFn: async () => {
       if (!project) throw new Error('Project instance does not exist');
       const presets = await project.preset.getMany();
-      if (presets.length === 0) {
-        await Promise.all([
-          ...MockPreset.map(val => project.preset.create(val)),
-          ...mockFields.map(val => project.field.create(val)),
-        ]);
-        return await project.preset.getMany();
-      }
+      // if (presets.length === 0) {
+      //   await Promise.all([
+      //     ...MockPreset.map(val => project.preset.create(val)),
+      //     ...mockFields.map(val => project.field.create(val)),
+      //   ]);
+      //   return await project.preset.getMany();
+      // }
+      console.log({presets});
       return presets;
     },
   });

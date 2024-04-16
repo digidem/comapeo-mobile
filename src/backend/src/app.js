@@ -75,6 +75,8 @@ export async function init({
     clientMigrationsFolder: join(migrationsFolderPath, 'client'),
     projectMigrationsFolder: join(migrationsFolderPath, 'project'),
     fastify,
+    defaultConfigPath:
+      '../node_modules/@mapeo/default-config/dist/mapeo-default-config-v4.0.0-alpha.0.mapeoconfig',
   })
 
   // Don't await, methods that use the server will await this internally

@@ -9,19 +9,22 @@ import {LineString} from 'geojson';
 import {useLocation} from '../../hooks/useLocation';
 export const TrackPathLayer = () => {
   const locationHistory = useCurrentTrackStore(state => state.locationHistory);
+  const isTracking = useCurrentTrackStore(state => state.isTracking);
   const {location} = useLocation({maxDistanceInterval: 3});
   const finalLocationHistory = location?.coords
     ? [...locationHistory, location as any]
     : locationHistory;
+
   return (
-    locationHistory.length > 1 && (
+    locationHistory.length > 1 &&
+    isTracking && (
       <ShapeSource
         onPress={() => console.log('display bottom sheet')}
         id="routeSource"
         shape={toRoute(finalLocationHistory)}>
         <LineLayer
           id="routeFill"
-          belowLayerID="circles"
+          // belowLayerID="circles"
           style={styles.lineLayer}
         />
       </ShapeSource>

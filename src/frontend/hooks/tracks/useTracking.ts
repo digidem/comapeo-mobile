@@ -45,7 +45,7 @@ export function useTracking() {
   }, [addNewTrackLocations, isTracking, tracksStore]);
 
   const cancelTracking = useCallback(async () => {
-    await TaskManager.unregisterTaskAsync(LOCATION_TASK_NAME);
+    await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
     tracksStore.setTracking(false);
   }, [tracksStore]);
 

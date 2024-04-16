@@ -1,35 +1,6 @@
 import {create} from 'zustand';
 import {calculateTotalDistance} from '../../utils/distance';
-
-export type LocationData = {
-  coords: {
-    latitude: number;
-    accuracy: number;
-    longitude: number;
-  };
-  timestamp: number;
-};
-export type FullLocationData = {
-  coords: {
-    altitude: number;
-    altitudeAccuracy: number;
-    latitude: number;
-    accuracy: number;
-    longitude: number;
-    heading: number;
-    speed: number;
-  };
-  timestamp: number;
-};
-
-export type LocationHistoryPoint = {
-  timestamp: number;
-} & LonLatData;
-
-export type LonLatData = {
-  longitude: number;
-  latitude: number;
-};
+import {LocationHistoryPoint} from '../../sharedTypes/location';
 
 type TracksStoreState = {
   isTracking: boolean;

@@ -1,8 +1,9 @@
 import * as Location from 'expo-location';
 import * as TaskManager from 'expo-task-manager';
 import {useCallback, useState} from 'react';
-import {FullLocationData, useCurrentTrackStore} from './useCurrentTrackStore';
+import {useCurrentTrackStore} from './useCurrentTrackStore';
 import React from 'react';
+import {FullLocationData} from '../../sharedTypes/location';
 
 export const LOCATION_TASK_NAME = 'background-location-task';
 
@@ -10,6 +11,7 @@ type LocationCallbackInfo = {
   data: {locations: FullLocationData[]} | null;
   error: TaskManager.TaskManagerError | null;
 };
+
 export function useTracking() {
   const [loading, setLoading] = useState(false);
   const tracksStore = useCurrentTrackStore();

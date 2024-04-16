@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {TabBarIcon} from './TabBarIcon';
 import {useTracking} from '../../../hooks/tracks/useTracking';
 import {Text} from '../../../sharedComponents/Text';
-import {TabBarIconProps} from '../../types';
+import {TabBarIconProps, TabName} from '../../types';
 import {useTrackTimerContext} from '../../../contexts/TrackTimerContext';
 
 export const TrackingTabBarIcon: FC<TabBarIconProps> = props => {
@@ -18,7 +18,11 @@ export const TrackingTabBarIcon: FC<TabBarIconProps> = props => {
           <Text style={styles.timer}>{timer}</Text>
         </View>
       )}
-      <TabBarIcon {...props} tabName={'Tracking'} iconName="nordic-walking" />
+      <TabBarIcon
+        {...props}
+        tabName={TabName.Tracking}
+        iconName="nordic-walking"
+      />
     </>
   );
 };

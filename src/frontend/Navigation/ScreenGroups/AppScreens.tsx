@@ -50,6 +50,7 @@ import {
 } from '../../screens/GpsModal';
 import {useCurrentTab} from '../../hooks/useCurrentTab';
 import {TrackingTabBarIcon} from './TabBar/TrackingTabBarIcon';
+import {TabName} from '../types';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -156,7 +157,7 @@ const HomeTabs = () => {
         options={{
           header: () => <HomeHeader />,
           tabBarIcon: params => (
-            <TabBarIcon {...params} tabName="Map" iconName="map" />
+            <TabBarIcon {...params} tabName={TabName.Map} iconName="map" />
           ),
         }}
       />
@@ -166,7 +167,11 @@ const HomeTabs = () => {
         options={{
           headerShown: false,
           tabBarIcon: params => (
-            <TabBarIcon {...params} tabName="Camera" iconName="photo-camera" />
+            <TabBarIcon
+              {...params}
+              tabName={TabName.Camera}
+              iconName="photo-camera"
+            />
           ),
         }}
       />

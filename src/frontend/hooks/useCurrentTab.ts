@@ -1,9 +1,4 @@
-import {
-  useNavigation,
-  useRoute,
-  EventArg,
-  getFocusedRouteNameFromRoute,
-} from '@react-navigation/native';
+import {useNavigation, EventArg} from '@react-navigation/native';
 import {useGPSModalContext} from '../contexts/GPSModalContext';
 import {useNavigationStore} from './useNavigationStore';
 import {TabName} from '../Navigation/types';
@@ -11,7 +6,6 @@ import {TabName} from '../Navigation/types';
 export const useCurrentTab = () => {
   const {setCurrentTab} = useNavigationStore();
   const navigation = useNavigation();
-  const route = useRoute();
   const {bottomSheetRef} = useGPSModalContext();
 
   const handleTabPress = ({
@@ -19,15 +13,12 @@ export const useCurrentTab = () => {
     preventDefault,
   }: EventArg<'tabPress', true, undefined>) => {
     const targetTab = target?.split('-')[0];
-    if (targetTab === 'Tracking') {
+    if (targetTab === TabName.Tracking) {
       preventDefault();
       bottomSheetRef.current?.present();
+      navigation.navigate('Map' as never);
     } else {
       bottomSheetRef.current?.close();
-    }
-    const currentTab = getFocusedRouteNameFromRoute(route);
-    if (currentTab === 'Camera') {
-      navigation.navigate('Map' as never);
     }
     setCurrentTab((target?.split('-')[0] || 'Map') as unknown as TabName);
   };

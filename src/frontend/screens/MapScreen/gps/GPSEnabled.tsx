@@ -6,8 +6,29 @@ import {useTracking} from '../../../hooks/tracks/useTracking';
 import StartTrackingIcon from '../../../images/StartTracking.svg';
 import StopTrackingIcon from '../../../images/StopTracking.svg';
 import {useTrackTimerContext} from '../../../contexts/TrackTimerContext';
+import {defineMessages, useIntl} from 'react-intl';
+
+const m = defineMessages({
+  defaultButtonText: {
+    id: 'Modal.GPSEnable.button.default',
+    defaultMessage: 'Start Tracks',
+  },
+  stopButtonText: {
+    id: 'Modal.GPSEnable.button.stop',
+    defaultMessage: 'Stop Tracks',
+  },
+  loadingButtonText: {
+    id: 'Modal.GPSEnable.button.loading',
+    defaultMessage: 'Loading...',
+  },
+  trackingDescription: {
+    id: 'Modal.GPSEnable.trackingDescription',
+    defaultMessage: 'You’ve been recording for',
+  },
+});
 
 export const GPSEnabled = () => {
+  const {formatMessage} = useIntl();
   const {isTracking, cancelTracking, startTracking, loading} = useTracking();
   const {timer} = useTrackTimerContext();
 
@@ -18,9 +39,9 @@ export const GPSEnabled = () => {
   }, [cancelTracking, isTracking, startTracking]);
 
   const getButtonTitle = () => {
-    if (loading) return 'Loading...';
-    if (isTracking) return 'Stop Tracks';
-    return 'Start Tracks';
+    if (loading) return m.loadingButtonText;
+    if (isTracking) return m.stopButtonText;
+    return m.defaultButtonText;
   };
 
   return (
@@ -32,13 +53,17 @@ export const GPSEnabled = () => {
         style={styles.button}>
         <View style={styles.buttonWrapper}>
           {isTracking ? <StopTrackingIcon /> : <StartTrackingIcon />}
-          <Text style={styles.buttonText}>{getButtonTitle()}</Text>
+          <Text style={styles.buttonText}>
+            {formatMessage(getButtonTitle())}
+          </Text>
         </View>
       </Button>
       {isTracking && (
         <View style={styles.runtimeWrapper}>
           <View style={styles.indicator} />
-          <Text style={styles.text}>You’ve been recording for</Text>
+          <Text style={styles.text}>
+            {formatMessage(m.trackingDescription)}
+          </Text>
           <Text style={styles.timer}>{timer}</Text>
         </View>
       )}

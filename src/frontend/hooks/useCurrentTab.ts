@@ -5,8 +5,8 @@ import {
   getFocusedRouteNameFromRoute,
 } from '@react-navigation/native';
 import {useGPSModalContext} from '../contexts/GPSModalContext';
-import {TabName} from '../Navigation/ScreenGroups/AppScreens';
 import {useNavigationStore} from './useNavigationStore';
+import {TabName} from '../Navigation/types';
 
 export const useCurrentTab = () => {
   const {setCurrentTab} = useNavigationStore();

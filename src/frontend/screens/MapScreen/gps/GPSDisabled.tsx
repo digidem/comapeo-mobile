@@ -3,15 +3,33 @@ import {Image, Linking, StyleSheet, View} from 'react-native';
 import {Button} from '../../../sharedComponents/Button';
 import {Text} from '../../../sharedComponents/Text';
 import * as Location from 'expo-location';
+import {defineMessages, useIntl} from 'react-intl';
 
 const handleOpenSettings = () => {
   Linking.sendIntent('android.settings.LOCATION_SOURCE_SETTINGS');
 };
 
+const m = defineMessages({
+  gpsDisabledTitle: {
+    id: 'Modal.GPSDisable.title',
+    defaultMessage: 'GPS Disabled',
+  },
+  gpsDisabledDescription: {
+    id: 'Modal.GPSDisable.description',
+    defaultMessage:
+      'To create a Track CoMapeo needs access to your location and GPS.',
+  },
+  gpsDisabledButtonText: {
+    id: 'Modal.GPSDisable.button',
+    defaultMessage: 'Enable',
+  },
+});
+
 interface GPSDisabled {
   setIsGranted: React.Dispatch<React.SetStateAction<boolean | null>>;
 }
 export const GPSDisabled: React.FC<GPSDisabled> = ({setIsGranted}) => {
+  const {formatMessage} = useIntl();
   const requestForLocationPermissions = async () => {
     const [foregroundPermission, backgroundPermission] = await Promise.all([
       Location.requestForegroundPermissionsAsync(),
@@ -36,15 +54,17 @@ export const GPSDisabled: React.FC<GPSDisabled> = ({setIsGranted}) => {
         style={styles.image}
       />
 
-      <Text style={styles.title}>GPS Disabled</Text>
+      <Text style={styles.title}>{formatMessage(m.gpsDisabledTitle)}</Text>
       <Text style={styles.description}>
-        To create a Track CoMapeo needs access to your location and GPS.
+        {formatMessage(m.gpsDisabledDescription)}
       </Text>
       <Button
         fullWidth
         onPress={requestForLocationPermissions}
         style={styles.button}>
-        <Text style={styles.buttonText}>Enable</Text>
+        <Text style={styles.buttonText}>
+          {formatMessage(m.gpsDisabledButtonText)}
+        </Text>
       </Button>
     </View>
   );

@@ -180,7 +180,7 @@ const HomeTabs = () => {
         component={MapScreen}
         options={{
           tabBarIcon: params => (
-            <TabBarIcon {...params} tabName={'Map'} iconName="map" />
+            <TabBarIcon {...params} tabName="Map" iconName="map" />
           ),
         }}
       />
@@ -189,11 +189,7 @@ const HomeTabs = () => {
         component={CameraScreen}
         options={{
           tabBarIcon: params => (
-            <TabBarIcon
-              {...params}
-              tabName={'Camera'}
-              iconName="photo-camera"
-            />
+            <TabBarIcon {...params} tabName="Camera" iconName="photo-camera" />
           ),
         }}
       />

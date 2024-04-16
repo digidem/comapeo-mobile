@@ -14,7 +14,7 @@ export const TextArea = React.memo<{field: Field}>(({field}) => {
       <QuestionLabel field={field} />
       <TextInput
         value={typeof value === 'string' ? value : ''}
-        onChangeText={newVal => updateTags({[field.tagKey]: newVal})}
+        onChangeText={newVal => updateTags(field.tagKey, newVal)}
         style={styles.textInput}
         underlineColorAndroid="transparent"
         multiline

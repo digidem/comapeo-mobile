@@ -51,7 +51,7 @@ export const SelectMultiple = React.memo<Props>(({field}) => {
     const updatedValue = valueAsArray.includes(itemValue)
       ? valueAsArray.filter(d => d !== itemValue)
       : [...valueAsArray, itemValue];
-    updateTags({[field.tagKey]: updatedValue});
+    updateTags(field.tagKey, updatedValue);
   };
 
   return (
@@ -70,9 +70,11 @@ export const SelectMultiple = React.memo<Props>(({field}) => {
   );
 });
 
-function toArray<T>(value?: Observation['tags'][0]) {
+function toArray(value?: Observation['tags'][0]) {
   // null or undefined
-  if (!value) return [];
+  if (!value) {
+    return [];
+  }
   return Array.isArray(value) ? value : [value];
 }
 

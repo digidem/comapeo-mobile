@@ -52,7 +52,7 @@ export const SelectOne = React.memo<Props>(({field}) => {
       {convertSelectOptionsToLabeled(field.options).map((item, index) => (
         <RadioItem
           key={item.label}
-          onPress={() => updateTags({[field.tagKey]: item.value})}
+          onPress={() => updateTags(field.tagKey, item.value)}
           checked={tags && item.value === tags[field.tagKey] ? true : false}
           label={t({
             id: `fields.${field.docId}.options.${JSON.stringify(item.value)}`,

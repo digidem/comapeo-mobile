@@ -60,7 +60,7 @@ export const ObservationFields = ({
       headerTitle: () => <DetailsTitle questionNumber={current} />,
       headerRight: () => <DetailsHeaderRight questionNumber={current} />,
     });
-  }, [navigation, current]);
+  }, [navigation, current, onBackPress]);
 
   // if (
   //   !preset ||
@@ -79,13 +79,14 @@ export const ObservationFields = ({
     return null;
   }
 
-  const fieldId = preset.fieldIds[current - 1];
+  const fieldId = preset?.fieldIds[current - 1];
   const field = fields.data?.find(val => val.docId === fieldId);
 
-  // if (!field) {
-  //   navigation.pop(current);
-  //   return null;
-  // }
+  console.log({field: fields.data});
+
+  if (!field) {
+    return null;
+  }
 
   return (
     <ScrollView style={{flex: 1}}>
@@ -101,7 +102,7 @@ const DetailsHeaderRight = ({questionNumber}: {questionNumber: number}) => {
   const preset = usePreset();
 
   const isLastQuestion =
-    questionNumber >= (!!preset ? preset.fieldIds.length : 0);
+    questionNumber >= (preset ? preset.fieldIds.length : 0);
   const buttonText = isLastQuestion ? t(m.done) : t(m.nextQuestion);
 
   const onPress = () =>

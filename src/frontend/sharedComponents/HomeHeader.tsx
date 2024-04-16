@@ -21,7 +21,7 @@ export const HomeHeader = ({locationStatus, precision}: Props) => {
         style={styles.linearGradient}
         colors={['#0006', '#0000']}
       />
-      <View>{/* Placeholder for left button */}</View>
+      <View style={styles.leftButton}>{/* Placeholder for left button */}</View>
       <GpsPill
         variant={locationStatus}
         precision={precision}
@@ -46,6 +46,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: 'transparent',
+  },
+  leftButton: {
+    width: 60,
+    height: 60,
   },
   linearGradient: {
     height: 60,

@@ -1,11 +1,5 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {
-  EventArg,
-  getFocusedRouteNameFromRoute,
-  NavigatorScreenParams,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
+import {NavigatorScreenParams} from '@react-navigation/native';
 import * as React from 'react';
 import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {RootStack} from '../AppStack';
@@ -49,10 +43,8 @@ import {
   EditScreen as DeviceNameEditScreen,
   createNavigationOptions as createDeviceNameEditNavOptions,
 } from '../../screens/Settings/ProjectSettings/DeviceName/EditScreen';
-import {useNavigationStore} from '../../hooks/useNavigationStore';
 import {TabBarLabel} from './TabBar/TabBarLabel';
 import {TabBarIcon} from './TabBar/TabBarIcon';
-import {useGPSModalContext} from '../../contexts/GPSModalContext';
 import {useLocation} from '../../hooks/useLocation';
 import {useForegroundPermissions} from 'expo-location';
 import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
@@ -61,8 +53,9 @@ import {
   GpsModal,
   createNavigationOptions as createGpsModalNavigationOptions,
 } from '../../screens/GpsModal';
-
-export type TabName = keyof HomeTabsList;
+import {useCurrentTab} from '../../hooks/useCurrentTab';
+import {TrackingTabBarIcon} from './TabBar/TrackingTabBarIcon';
+import {TrackingLabel} from './TabBar/TabBarTrackingLabel';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -146,10 +139,7 @@ export type AppList = {
 const Tab = createBottomTabNavigator<HomeTabsList>();
 
 const HomeTabs = () => {
-  const {setCurrentTab, currentTab} = useNavigationStore();
-  const navigation = useNavigation();
-  const route = useRoute();
-  const {bottomSheetRef} = useGPSModalContext();
+  const {handleTabPress} = useCurrentTab();
   const locationState = useLocation({maxDistanceInterval: 0});
   const [permissions] = useForegroundPermissions();
   const locationProviderStatus = useLocationProviderStatus();
@@ -164,28 +154,9 @@ const HomeTabs = () => {
           providerStatus: locationProviderStatus,
         });
 
-  const handleTabPress = ({
-    target,
-    preventDefault,
-  }: EventArg<'tabPress', true, undefined>) => {
-    const targetTab = target?.split('-')[0];
-    if (targetTab === 'Tracking') {
-      preventDefault();
-      bottomSheetRef.current?.present();
-    } else {
-      bottomSheetRef.current?.close();
-    }
-    const currentTab = getFocusedRouteNameFromRoute(route);
-    if (currentTab === 'Camera') {
-      navigation.navigate('Map' as never);
-    }
-    setCurrentTab((target?.split('-')[0] || 'Map') as unknown as TabName);
-  };
   return (
     <Tab.Navigator
-      screenListeners={{
-        tabPress: handleTabPress,
-      }}
+      screenListeners={{tabPress: handleTabPress}}
       screenOptions={({route}) => ({
         header: () => (
           <HomeHeader
@@ -205,15 +176,9 @@ const HomeTabs = () => {
         component={MapScreen}
         options={{
           tabBarIcon: params => (
-            <TabBarIcon
-              {...params}
-              isFocused={currentTab === 'Map'}
-              iconName="map"
-            />
+            <TabBarIcon {...params} tabName={'Map'} iconName="map" />
           ),
-          tabBarLabel: params => (
-            <TabBarLabel {...params} isFocused={currentTab === 'Map'} />
-          ),
+          tabBarLabel: params => <TabBarLabel {...params} tabName={'Map'} />,
         }}
       />
       <Tab.Screen
@@ -223,28 +188,18 @@ const HomeTabs = () => {
           tabBarIcon: params => (
             <TabBarIcon
               {...params}
-              isFocused={currentTab === 'Camera'}
+              tabName={'Camera'}
               iconName="photo-camera"
             />
           ),
-          tabBarLabel: params => (
-            <TabBarLabel {...params} isFocused={currentTab === 'Camera'} />
-          ),
+          tabBarLabel: params => <TabBarLabel {...params} tabName={'Camera'} />,
         }}
       />
       <Tab.Screen
         name="Tracking"
         options={{
-          tabBarIcon: params => (
-            <TabBarIcon
-              {...params}
-              isFocused={currentTab === 'Tracking'}
-              iconName="nordic-walking"
-            />
-          ),
-          tabBarLabel: params => (
-            <TabBarLabel {...params} isFocused={currentTab === 'Tracking'} />
-          ),
+          tabBarIcon: TrackingTabBarIcon,
+          tabBarLabel: TrackingLabel,
         }}
         children={() => <></>}
       />

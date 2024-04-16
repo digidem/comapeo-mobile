@@ -1,22 +1,23 @@
-import * as React from 'react';
+import React, {FC} from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {FC} from 'react';
+import {useNavigationStore} from '../../../hooks/useNavigationStore';
+import {TabBarIconProps, TabName} from '../../types';
 
-export interface TabBarIcon {
-  size: number;
-  focused: boolean;
-  color: string;
-  isFocused: boolean;
+export interface TabBarIcon extends TabBarIconProps {
+  tabName: TabName;
   iconName: string;
 }
-export const TabBarIcon: FC<TabBarIcon> = ({size, isFocused, iconName}) => {
+
+export const TabBarIcon: FC<TabBarIcon> = ({size, tabName, iconName}) => {
+  const {currentTab} = useNavigationStore();
+
   const color1 = 'rgb(0, 122, 255)';
   const color2 = '#8E8E8F';
   return (
     <MaterialIcons
       name={iconName}
       size={size}
-      color={isFocused ? color1 : color2}
+      color={currentTab === tabName ? color1 : color2}
     />
   );
 };

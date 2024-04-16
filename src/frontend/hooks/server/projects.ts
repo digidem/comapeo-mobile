@@ -47,3 +47,13 @@ export function useProjectMembers() {
     queryKey: ['projectMembers'],
   });
 }
+
+export function useProjectSettings() {
+  const project = useProject();
+  return useQuery({
+    queryFn: async () => {
+      return await project.$getProjectSettings();
+    },
+    queryKey: ['projectSettings'],
+  });
+}

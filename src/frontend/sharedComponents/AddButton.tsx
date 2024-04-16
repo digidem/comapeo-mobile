@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  ActivityIndicator,
   GestureResponderEvent,
   Image,
   StyleProp,
@@ -10,7 +9,6 @@ import {
   ViewStyle,
 } from 'react-native';
 import {Loading} from './Loading';
-import {BLACK, DARK_MANGO, DARK_ORANGE, COMAPEO_BLUE} from '../lib/styles';
 
 interface AddButtonProps {
   style?: StyleProp<ViewStyle>;

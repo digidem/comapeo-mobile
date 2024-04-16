@@ -40,7 +40,7 @@ export const ActiveProjectProvider = ({
         if (cancelled) return;
         setActiveProject(project);
       })
-      .catch(error => {
+      .catch(() => {
         if (cancelled) return;
 
         setActiveProjectId(undefined);

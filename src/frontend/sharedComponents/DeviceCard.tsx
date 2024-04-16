@@ -1,8 +1,5 @@
-import {StyleSheet, View} from 'react-native';
-import DeviceMobile from '../images/DeviceMobile.svg';
-import DeviceDesktop from '../images/DeviceDesktop.svg';
-import {Text} from './Text';
-import {LIGHT_GREY, MEDIUM_GREY} from '../lib/styles';
+import {StyleSheet} from 'react-native';
+import {LIGHT_GREY} from '../lib/styles';
 import {DeviceType, ViewStyleProp} from '../sharedTypes';
 import {defineMessages, useIntl} from 'react-intl';
 import {TouchableOpacity} from 'react-native-gesture-handler';

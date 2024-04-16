@@ -52,7 +52,7 @@ export const ObservationsList: NativeNavigationComponent<'ObservationList'> = ({
     navigation.setOptions({
       headerRight: () => <SettingsButton />,
     });
-  }, [SettingsButton, navigation]);
+  }, [navigation]);
 
   const rowsPerWindow = Math.ceil(
     (Dimensions.get('window').height - 65) / OBSERVATION_CELL_HEIGHT,

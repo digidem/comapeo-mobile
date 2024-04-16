@@ -1,8 +1,11 @@
 import * as React from 'react';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {
+  CREATOR_ROLE_ID,
+  COORDINATOR_ROLE_ID,
   NativeNavigationComponent,
   ViewStyleProp,
+  MEMBER_ROLE_ID,
 } from '../../../../sharedTypes';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {Button} from '../../../../sharedComponents/Button';
@@ -10,14 +13,15 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {Text} from '../../../../sharedComponents/Text';
 import {BLACK} from '../../../../lib/styles';
 import {DeviceCard} from '../../../../sharedComponents/DeviceCard';
-import {useProjectMembers} from '../../../../hooks/server/projects';
-import {Loading} from '../../../../sharedComponents/Loading';
-import {useDeviceInfo} from '../../../../hooks/server/deviceInfo';
 import {
-  COORDINATOR_ROLE_ID,
-  CREATOR_ROLE_ID,
-  MEMBER_ROLE_ID,
-} from '../../../../sharedTypes';
+  useProjectMembers,
+  useProjectSettings,
+} from '../../../../hooks/server/projects';
+import {Loading} from '../../../../sharedComponents/Loading';
+import {UIActivityIndicator} from 'react-native-indicators';
+import {useDeviceInfo} from '../../../../hooks/server/deviceInfo';
+import {CenteredView} from '../../../../sharedComponents/CenteredView';
+import {NotOnProject} from './NotOnProject';
 
 const m = defineMessages({
   title: {
@@ -62,43 +66,65 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
   const {formatMessage: t} = useIntl();
   const membersQuery = useProjectMembers();
   const deviceInfo = useDeviceInfo();
+  const projectSettings = useProjectSettings();
+
   const coordinators = !membersQuery.data
     ? []
     : membersQuery.data.filter(
         member =>
-          member.role.roleId === CREATOR_ROLE_ID ||
-          member.role.roleId === COORDINATOR_ROLE_ID,
+          member.role.roleId === COORDINATOR_ROLE_ID ||
+          member.role.roleId === CREATOR_ROLE_ID,
       );
 
   const participants = !membersQuery.data
     ? []
     : membersQuery.data.filter(member => member.role.roleId === MEMBER_ROLE_ID);
 
+  if (projectSettings.isLoading) {
+    return (
+      <CenteredView>
+        <Loading />
+      </CenteredView>
+    );
+  }
+
+  if (projectSettings.data && !projectSettings.data.name) {
+    return <NotOnProject />;
+  }
+
   return (
     <ScrollView style={styles.container}>
-      <Button
-        fullWidth
-        variant="outlined"
-        onPress={() => {
-          navigation.navigate('SelectDevice');
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
+      {deviceInfo.isLoading ? (
+        <UIActivityIndicator size={30} />
+      ) : !deviceInfo.data ||
+        !coordinators.some(
+          coordinator => coordinator.deviceId === deviceInfo.data.deviceId,
+        ) ? null : (
+        <Button
+          fullWidth
+          style={{marginTop: 20}}
+          variant="outlined"
+          onPress={() => {
+            navigation.navigate('SelectDevice');
           }}>
-          <MaterialIcon
-            color={BLACK}
-            size={32}
-            name="person-add"
-            style={{marginRight: 10}}
-          />
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-            {t(m.inviteDevice)}
-          </Text>
-        </View>
-      </Button>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <MaterialIcon
+              color={BLACK}
+              size={32}
+              name="person-add"
+              style={{marginRight: 10}}
+            />
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+              {t(m.inviteDevice)}
+            </Text>
+          </View>
+        </Button>
+      )}
       <IconHeader
         iconName="manage-accounts"
         messageDescriptor={m.coordinators}
@@ -126,10 +152,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
           name={coordinator.name || ''}
           deviceId={coordinator.deviceId}
           deviceType="mobile"
-          // This is a weak check. We should be using deviceIds, but those are not exposed
-          thisDevice={
-            deviceInfo.data && deviceInfo.data.name === coordinator.name
-          }
+          thisDevice={deviceInfo.data?.deviceId === coordinator.deviceId}
         />
       ))}
 
@@ -155,6 +178,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
           }
         />
       ))}
+      <View style={{marginBottom: 40}} />
     </ScrollView>
   );
 };
@@ -196,6 +220,5 @@ const IconHeader = ({
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    paddingTop: 40,
   },
 });

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {Image} from 'react-native';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {Circle} from './Circle';
 import {IconSize} from '../../sharedTypes';

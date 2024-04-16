@@ -34,14 +34,6 @@ const plugins = [
         find: '@node-rs/crc32',
         replacement: path.join(__dirname, '..', 'src', 'node-rs-crc32-shim.js'),
       },
-      // @electron/asar is using 'original-fs' which is breaking mapeo-mobile. @electron/asar 
-      // is being used for map-server which is not currently being used. Merging this in and 
-      // creating an issue to unblock other developers waiting for the @mapeo/core update 
-      // issue: https://github.com/digidem/CoMapeo-mobile/issues/204
-      {
-        find:"@electron/asar",
-        replacement:path.join(__dirname, '..', 'src', 'node-rs-crc32-shim.js')
-      }
     ],
   }),
   nativePaths(),

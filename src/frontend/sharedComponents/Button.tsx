@@ -94,8 +94,8 @@ function getButtonStyle(variant?: Variant) {
     return variant === 'contained'
       ? styles.buttonContained
       : variant === 'outlined'
-      ? styles.buttonOutlined
-      : undefined;
+        ? styles.buttonOutlined
+        : undefined;
   }
 }
 

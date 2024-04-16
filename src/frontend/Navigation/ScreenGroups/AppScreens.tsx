@@ -2,6 +2,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigatorScreenParams} from '@react-navigation/native';
 import * as React from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {useForegroundPermissions} from 'expo-location';
 
 import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {RootStack} from '../AppStack';
@@ -46,6 +47,13 @@ import {
   createNavigationOptions as createDeviceNameEditNavOptions,
 } from '../../screens/Settings/ProjectSettings/DeviceName/EditScreen';
 import {ObservationFields} from '../../screens/ObservationFields';
+import {
+  GpsModal,
+  createNavigationOptions as createGpsModalNavigationOptions,
+} from '../../screens/GpsModal';
+import {useLocation} from '../../hooks/useLocation';
+import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
+import {getLocationStatus} from '../../lib/utils';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -128,23 +136,46 @@ export type AppList = {
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
 
-const HomeTabs = () => (
-  <Tab.Navigator
-    screenOptions={({route}) => ({
-      tabBarIcon: ({color}) => {
-        const iconName = route.name === 'Map' ? 'map' : 'photo-camera';
-        return <MaterialIcons name={iconName} size={30} color={color} />;
-      },
-      header: () => <HomeHeader />,
-      headerTransparent: true,
-      tabBarTestID: 'tabBarButton' + route.name,
-    })}
-    initialRouteName="Map"
-    backBehavior="initialRoute">
-    <Tab.Screen name="Map" component={MapScreen} />
-    <Tab.Screen name="Camera" component={CameraScreen} />
-  </Tab.Navigator>
-);
+const HomeTabs = () => {
+  const locationState = useLocation({maxDistanceInterval: 0});
+  const [permissions] = useForegroundPermissions();
+  const locationProviderStatus = useLocationProviderStatus();
+
+  const precision = locationState.location?.coords.accuracy;
+
+  const locationStatus =
+    !!locationState.error || !permissions?.granted
+      ? 'error'
+      : getLocationStatus({
+          location: locationState.location,
+          providerStatus: locationProviderStatus,
+        });
+
+  return (
+    <Tab.Navigator
+      screenOptions={({route}) => ({
+        tabBarIcon: ({color}) => {
+          const iconName = route.name === 'Map' ? 'map' : 'photo-camera';
+          return <MaterialIcons name={iconName} size={30} color={color} />;
+        },
+        header: () => (
+          <HomeHeader
+            locationStatus={locationStatus}
+            precision={
+              typeof precision === 'number' ? Math.round(precision) : undefined
+            }
+          />
+        ),
+        headerTransparent: true,
+        tabBarTestID: 'tabBarButton' + route.name,
+      })}
+      initialRouteName="Map"
+      backBehavior="initialRoute">
+      <Tab.Screen name="Map" component={MapScreen} />
+      <Tab.Screen name="Camera" component={CameraScreen} />
+    </Tab.Navigator>
+  );
+};
 
 // **NOTE**: No hooks allowed here (this is not a component, it is a function
 // that returns a react element)
@@ -303,5 +334,10 @@ export const createDefaultScreenGroup = (
       options={createDeviceNameEditNavOptions({intl})}
     />
     <RootStack.Screen name="ObservationFields" component={ObservationFields} />
+    <RootStack.Screen
+      name="GpsModal"
+      component={GpsModal}
+      options={createGpsModalNavigationOptions({intl})}
+    />
   </RootStack.Group>
 );

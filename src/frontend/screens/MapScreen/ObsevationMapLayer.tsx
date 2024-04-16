@@ -4,6 +4,8 @@ import MapboxGL from '@rnmapbox/maps';
 import {useAllObservations} from '../../hooks/useAllObservations';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import {OnPressEvent} from '@rnmapbox/maps/lib/typescript/src/types/OnPressEvent';
+import {useTracking} from '../../hooks/tracks/useTracking';
+import {useCurrentTrackStore} from '../../hooks/tracks/useCurrentTrackStore';
 
 const DEFAULT_MARKER_COLOR = '#F29D4B';
 
@@ -17,7 +19,7 @@ const layerStyles = {
 export const ObservationMapLayer = () => {
   const observations = useAllObservations();
   const {navigate} = useNavigationFromHomeTabs();
-
+  const isTracking = useCurrentTrackStore(state => state.isTracking);
   const featureCollection: GeoJSON.FeatureCollection = {
     type: 'FeatureCollection',
     features: mapObservationsToFeatures(observations),
@@ -36,7 +38,11 @@ export const ObservationMapLayer = () => {
       onPress={handlePressEvent}
       id="observations-source"
       shape={featureCollection}>
-      <MapboxGL.CircleLayer id="circles" style={layerStyles} />
+      <MapboxGL.CircleLayer
+        aboveLayerID={isTracking ? 'routeFill' : undefined}
+        id="circles"
+        style={layerStyles}
+      />
     </MapboxGL.ShapeSource>
   );
 };

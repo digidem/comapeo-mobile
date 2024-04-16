@@ -33,7 +33,7 @@ export const TrackPathLayer = () => {
         shape={toRoute(finalLocationHistory)}>
         <LineLayer
           id="routeFill"
-          // belowLayerID="circles"
+          belowLayerID="mapboxUserLocationPulseCircle"
           style={styles.lineLayer}
         />
       </ShapeSource>

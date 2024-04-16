@@ -22,7 +22,7 @@ function useGPSModalContext() {
   const context = useContext(GPSModalContext);
   if (!context) {
     throw new Error(
-      'useBottomSheetContext must be used within a BottomSheetContextProvider',
+      'useGPSModalContext must be used within a GPSModalContextProvider',
     );
   }
   return context;

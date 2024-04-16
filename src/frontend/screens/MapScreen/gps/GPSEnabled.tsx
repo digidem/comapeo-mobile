@@ -5,13 +5,12 @@ import {Text} from '../../../sharedComponents/Text';
 import {useTracking} from '../../../hooks/tracks/useTracking';
 import StartTrackingIcon from '../../../images/StartTracking.svg';
 import StopTrackingIcon from '../../../images/StopTracking.svg';
-import {useFormattedTimeSince} from '../../../hooks/useFormattedTimeSince';
-import {useCurrentTrackStore} from '../../../hooks/tracks/useCurrentTrackStore';
+import {useTrackTimerContext} from '../../../contexts/TrackTimerContext';
 
 export const GPSEnabled = () => {
   const {isTracking, cancelTracking, startTracking, loading} = useTracking();
-  const trackingSince = useCurrentTrackStore(state => state.trackingSince);
-  const timer = useFormattedTimeSince(trackingSince, 1000);
+  const {timer} = useTrackTimerContext();
+
   const styles = getStyles(isTracking);
 
   const handleTracking = useCallback(() => {

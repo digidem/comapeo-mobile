@@ -12,6 +12,7 @@ import {
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {AppStackList} from '../Navigation/AppStack';
 import {GPSModalContextProvider} from './GPSModalContext';
+import {TrackTimerContextProvider} from './TrackTimerContext';
 
 type ExternalProvidersProp = {
   children: React.ReactNode;
@@ -28,9 +29,11 @@ export const ExternalProviders = ({
     <QueryClientProvider client={queryClient}>
       <GestureHandlerRootView style={{flex: 1}}>
         <GPSModalContextProvider>
-          <BottomSheetModalProvider>
-            <NavigationContainer ref={navRef}>{children}</NavigationContainer>
-          </BottomSheetModalProvider>
+          <TrackTimerContextProvider>
+            <BottomSheetModalProvider>
+              <NavigationContainer ref={navRef}>{children}</NavigationContainer>
+            </BottomSheetModalProvider>
+          </TrackTimerContextProvider>
         </GPSModalContextProvider>
       </GestureHandlerRootView>
     </QueryClientProvider>

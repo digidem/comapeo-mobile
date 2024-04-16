@@ -2,15 +2,13 @@ import React, {FC} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {TabBarIcon} from './TabBarIcon';
 import {useTracking} from '../../../hooks/tracks/useTracking';
-import {useCurrentTrackStore} from '../../../hooks/tracks/useCurrentTrackStore';
-import {useFormattedTimeSince} from '../../../hooks/useFormattedTimeSince';
 import {Text} from '../../../sharedComponents/Text';
 import {TabBarIconProps} from '../../types';
+import {useTrackTimerContext} from '../../../contexts/TrackTimerContext';
 
 export const TrackingTabBarIcon: FC<TabBarIconProps> = props => {
   const {isTracking} = useTracking();
-  const trackingSince = useCurrentTrackStore(state => state.trackingSince);
-  const timer = useFormattedTimeSince(trackingSince, 1000);
+  const {timer} = useTrackTimerContext();
 
   return (
     <>

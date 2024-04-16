@@ -3,13 +3,13 @@ import {StyleSheet, Text, View} from 'react-native';
 import {useLocation} from '../../../hooks/useLocation';
 import React from 'react';
 import {useCurrentTrackStore} from '../../../hooks/tracks/useCurrentTrackStore';
-import {useFormattedTimeSince} from '../../../hooks/useFormattedTimeSince';
+import {useTrackTimerContext} from '../../../contexts/TrackTimerContext';
 
 export const UserTooltipMarker = () => {
+  const {timer} = useTrackTimerContext();
   const {location} = useLocation({maxDistanceInterval: 0});
   const totalDistance = useCurrentTrackStore(state => state.distance);
-  const trackingSince = useCurrentTrackStore(state => state.trackingSince);
-  const timer = useFormattedTimeSince(trackingSince, 1000);
+
   return (
     location?.coords && (
       <MarkerView

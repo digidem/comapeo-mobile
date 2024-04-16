@@ -1,20 +1,17 @@
-import {LonLatData} from '../hooks/tracks/useCurrentTrackStore';
+import {LonLatData} from '../sharedTypes/location';
 
 const EARTH_RADIUS = 6371; // Radius of the earth in km
 
 const degreesToRadians = (degrees: number): number => degrees * (Math.PI / 180);
 
+// Based on https://en.wikipedia.org/wiki/Haversine_formula
 export const calculateTotalDistance = (points: LonLatData[]): number =>
   points.reduce((previousValue, currentValue, i, arr) => {
     if (i === 0) {
       return previousValue;
     }
 
-    const pointA = arr[i - 1];
-    if (!pointA) {
-      throw Error('No point A for i=' + i);
-    }
-
+    const pointA = arr[i - 1]!!;
     const pointB = currentValue;
 
     const dLat = degreesToRadians(pointB.latitude - pointA.latitude);

@@ -1,8 +1,9 @@
 import * as Location from 'expo-location';
 import * as TaskManager from 'expo-task-manager';
 import {useCallback, useState} from 'react';
-import {FullLocationData, useCurrentTrackStore} from './useCurrentTrackStore';
+import {useCurrentTrackStore} from './useCurrentTrackStore';
 import React from 'react';
+import {FullLocationData} from '../../sharedTypes/location';
 
 export const LOCATION_TASK_NAME = 'background-location-task';
 
@@ -10,9 +11,11 @@ type LocationCallbackInfo = {
   data: {locations: FullLocationData[]} | null;
   error: TaskManager.TaskManagerError | null;
 };
+
 export function useTracking() {
   const [loading, setLoading] = useState(false);
-  const tracksStore = useCurrentTrackStore();
+  const addNewLocations = useCurrentTrackStore(state => state.addNewLocations);
+  const setTracking = useCurrentTrackStore(state => state.setTracking);
   const isTracking = useCurrentTrackStore(state => state.isTracking);
 
   React.useEffect(() => {
@@ -25,7 +28,7 @@ export function useTracking() {
         console.error('Error while processing location update callback', error);
       }
       if (data?.locations) {
-        tracksStore.addNewLocations(
+        addNewLocations(
           data.locations.map(loc => ({
             latitude: loc.coords.latitude,
             longitude: loc.coords.longitude,
@@ -34,7 +37,7 @@ export function useTracking() {
         );
       }
     },
-    [tracksStore],
+    [addNewLocations],
   );
 
   const startTracking = useCallback(async () => {
@@ -51,14 +54,14 @@ export function useTracking() {
       activityType: Location.LocationActivityType.Fitness,
     });
 
-    tracksStore.setTracking(true);
+    setTracking(true);
     setLoading(false);
-  }, [addNewTrackLocations, isTracking, tracksStore]);
+  }, [addNewTrackLocations, isTracking, setTracking]);
 
   const cancelTracking = useCallback(async () => {
     await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
-    tracksStore.setTracking(false);
-  }, [tracksStore]);
+    setTracking(false);
+  }, [setTracking]);
 
   return {isTracking, startTracking, cancelTracking, loading};
 }

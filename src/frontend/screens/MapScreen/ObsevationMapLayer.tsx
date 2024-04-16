@@ -4,7 +4,6 @@ import MapboxGL from '@rnmapbox/maps';
 import {useAllObservations} from '../../hooks/useAllObservations';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import {OnPressEvent} from '@rnmapbox/maps/lib/typescript/src/types/OnPressEvent';
-import {useTracking} from '../../hooks/tracks/useTracking';
 import {useCurrentTrackStore} from '../../hooks/tracks/useCurrentTrackStore';
 
 const DEFAULT_MARKER_COLOR = '#F29D4B';

@@ -44,10 +44,6 @@ import {
   createNavigationOptions as createDeviceNameEditNavOptions,
 } from '../../screens/Settings/ProjectSettings/DeviceName/EditScreen';
 import {TabBarIcon} from './TabBar/TabBarIcon';
-import {useLocation} from '../../hooks/useLocation';
-import {useForegroundPermissions} from 'expo-location';
-import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
-import {getLocationStatus} from '../../lib/utils';
 import {
   GpsModal,
   createNavigationOptions as createGpsModalNavigationOptions,
@@ -140,19 +136,6 @@ const Tab = createBottomTabNavigator<HomeTabsList>();
 
 const HomeTabs = () => {
   const {handleTabPress} = useCurrentTab();
-  const locationState = useLocation({maxDistanceInterval: 0});
-  const [permissions] = useForegroundPermissions();
-  const locationProviderStatus = useLocationProviderStatus();
-
-  const precision = locationState.location?.coords.accuracy;
-
-  const locationStatus =
-    !!locationState.error || !permissions?.granted
-      ? 'error'
-      : getLocationStatus({
-          location: locationState.location,
-          providerStatus: locationProviderStatus,
-        });
 
   return (
     <Tab.Navigator
@@ -162,14 +145,6 @@ const HomeTabs = () => {
           height: TAB_BAR_HEIGHT,
         },
         tabBarShowLabel: false,
-        header: () => (
-          <HomeHeader
-            locationStatus={locationStatus}
-            precision={
-              typeof precision === 'number' ? Math.round(precision) : undefined
-            }
-          />
-        ),
         headerTransparent: true,
         tabBarTestID: 'tabBarButton' + route.name,
       })}
@@ -179,6 +154,7 @@ const HomeTabs = () => {
         name="Map"
         component={MapScreen}
         options={{
+          header: () => <HomeHeader />,
           tabBarIcon: params => (
             <TabBarIcon {...params} tabName="Map" iconName="map" />
           ),
@@ -188,6 +164,7 @@ const HomeTabs = () => {
         name="Camera"
         component={CameraScreen}
         options={{
+          headerShown: false,
           tabBarIcon: params => (
             <TabBarIcon {...params} tabName="Camera" iconName="photo-camera" />
           ),
@@ -195,7 +172,10 @@ const HomeTabs = () => {
       />
       <Tab.Screen
         name="Tracking"
-        options={{tabBarIcon: TrackingTabBarIcon}}
+        options={{
+          tabBarIcon: TrackingTabBarIcon,
+          headerShown: false,
+        }}
         children={() => <></>}
       />
     </Tab.Navigator>

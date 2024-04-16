@@ -1,13 +1,10 @@
 import {LineJoin, LineLayer, ShapeSource} from '@rnmapbox/maps';
-import {
-  FullLocationData,
-  LocationHistoryPoint,
-  useCurrentTrackStore,
-} from '../../../hooks/tracks/useCurrentTrackStore';
+import {useCurrentTrackStore} from '../../../hooks/tracks/useCurrentTrackStore';
 import * as React from 'react';
 import {StyleSheet} from 'react-native';
 import {LineString} from 'geojson';
 import {useLocation} from '../../../hooks/useLocation';
+import {LocationHistoryPoint} from '../../../sharedTypes/location';
 
 export const TrackPathLayer = () => {
   const locationHistory = useCurrentTrackStore(state => state.locationHistory);

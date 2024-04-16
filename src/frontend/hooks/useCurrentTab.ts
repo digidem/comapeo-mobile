@@ -14,7 +14,7 @@ export const useCurrentTab = () => {
     } else {
       bottomSheetRef.current?.close();
     }
-    setCurrentTab(targetTab as unknown as TabName);
+    setCurrentTab(targetTab as TabName);
   };
 
   return {handleTabPress};

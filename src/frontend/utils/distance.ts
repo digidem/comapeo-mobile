@@ -33,32 +33,6 @@ function calculateHaversine(
   return haversine;
 }
 
-//   deltaLatitude: number,
-//   deltaLongitude: number,
-//   pointA: LonLatData,
-//   pointB: LonLatData,
-// ): number {
-//   const deltaLatitudeHalfSineSquared = Math.pow(Math.sin(deltaLatitude / 2), 2);
-//   const pointALatitudeRadianCosine = Math.cos(
-//     degreesToRadians(pointA.latitude),
-//   );
-//   const pointBLatitudeRadianCosine = Math.cos(
-//     degreesToRadians(pointB.latitude),
-//   );
-//   const deltaLongitudeHalfSineSquared = Math.pow(
-//     Math.sin(deltaLongitude / 2),
-//     2,
-//   );
-
-//   const cosineProduct =
-//     pointALatitudeRadianCosine *
-//     pointBLatitudeRadianCosine *
-//     deltaLongitudeHalfSineSquared;
-//   const haversine = deltaLatitudeHalfSineSquared + cosineProduct;
-
-//   return haversine;
-// }
-
 // Based on https://en.wikipedia.org/wiki/Haversine_formula
 export const calculateTotalDistance = (points: LonLatData[]): number =>
   points.reduce((previousValue, currentValue, i, arr) => {

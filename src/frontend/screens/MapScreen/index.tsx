@@ -21,6 +21,7 @@ import {GPSPermissionsModal} from './GPSPermissions/GPSPermissionsModal';
 import {TrackPathLayer} from './track/TrackPathLayer';
 import {UserLocation} from './UserLocation';
 import {useSharedLocationContext} from '../../contexts/SharedLocationContext';
+import {useMapStyleUrl} from '../../hooks/server/mapStyleUrl';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -44,6 +45,8 @@ export const MapScreen = () => {
   const locationProviderStatus = useLocationProviderStatus();
   const locationServicesEnabled =
     !!locationProviderStatus?.locationServicesEnabled;
+
+  const mapStyleUrlQuery = useMapStyleUrl();
 
   const handleAddPress = () => {
     newDraft();
@@ -75,7 +78,7 @@ export const MapScreen = () => {
         attributionPosition={{right: 8, bottom: 8}}
         compassEnabled={false}
         scaleBarEnabled={false}
-        styleURL={MAP_STYLE}
+        styleURL={mapStyleUrlQuery?.data}
         onDidFinishLoadingStyle={handleDidFinishLoadingStyle}
         onMoveShouldSetResponder={() => {
           if (following) setFollowing(false);

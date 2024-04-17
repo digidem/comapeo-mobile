@@ -71,7 +71,8 @@ const styles = StyleSheet.create({
   indicatorWrapper: {
     backgroundColor: '#333333',
     borderRadius: 20,
-    padding: 14.5,
+    paddingVertical: 14,
+    paddingHorizontal: 10,
   },
   wrapper: {flexDirection: 'row', alignItems: 'center'},
   text: {marginLeft: 5, color: '#fff', fontSize: 15},

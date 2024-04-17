@@ -1,14 +1,14 @@
 import {create} from 'zustand';
-import {HomeTabsList} from '../Navigation/ScreenGroups/AppScreens';
-
-type TabName = keyof HomeTabsList;
+import {TabName} from '../Navigation/types';
 
 type NavigationStoreState = {
   currentTab: TabName;
+  initialRouteName: TabName.Map;
   setCurrentTab: (tab: TabName) => void;
 };
 
 export const useNavigationStore = create<NavigationStoreState>(set => ({
-  currentTab: 'Map' as TabName,
+  initialRouteName: TabName.Map,
+  currentTab: TabName.Map,
   setCurrentTab: (tab: TabName) => set(() => ({currentTab: tab})),
 }));

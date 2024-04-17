@@ -43,7 +43,6 @@ import {
   EditScreen as DeviceNameEditScreen,
   createNavigationOptions as createDeviceNameEditNavOptions,
 } from '../../screens/Settings/ProjectSettings/DeviceName/EditScreen';
-import {TabBarIcon} from './TabBar/TabBarIcon';
 import {
   GpsModal,
   createNavigationOptions as createGpsModalNavigationOptions,
@@ -51,6 +50,8 @@ import {
 import {useCurrentTab} from '../../hooks/useCurrentTab';
 import {TrackingTabBarIcon} from './TabBar/TrackingTabBarIcon';
 import {TabName} from '../types';
+import {CameraTabBarIcon} from './TabBar/CameraTabBarIcon';
+import {MapTabBarIcon} from './TabBar/MapTabBarIcon';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -142,41 +143,31 @@ const HomeTabs = () => {
     <Tab.Navigator
       screenListeners={{tabPress: handleTabPress}}
       screenOptions={({route}) => ({
-        tabBarStyle: {
-          height: TAB_BAR_HEIGHT,
-        },
+        tabBarStyle: {height: TAB_BAR_HEIGHT},
         tabBarShowLabel: false,
         headerTransparent: true,
         tabBarTestID: 'tabBarButton' + route.name,
       })}
-      initialRouteName="Map"
+      initialRouteName={TabName.Map}
       backBehavior="initialRoute">
       <Tab.Screen
-        name="Map"
+        name={TabName.Map}
         component={MapScreen}
         options={{
-          header: () => <HomeHeader />,
-          tabBarIcon: params => (
-            <TabBarIcon {...params} tabName={TabName.Map} iconName="map" />
-          ),
+          header: HomeHeader,
+          tabBarIcon: MapTabBarIcon,
         }}
       />
       <Tab.Screen
-        name="Camera"
+        name={TabName.Camera}
         component={CameraScreen}
         options={{
           headerShown: false,
-          tabBarIcon: params => (
-            <TabBarIcon
-              {...params}
-              tabName={TabName.Camera}
-              iconName="photo-camera"
-            />
-          ),
+          tabBarIcon: CameraTabBarIcon,
         }}
       />
       <Tab.Screen
-        name="Tracking"
+        name={TabName.Tracking}
         options={{
           tabBarIcon: TrackingTabBarIcon,
           headerShown: false,

@@ -65,11 +65,12 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   return (
     <React.Fragment>
       <RootStack.Navigator
-        initialRouteName={getInitialRouteName({
-          hasDeviceName: !!deviceInfo.data?.name,
-          existingObservation,
-          presets,
-        })}
+        initialRouteName={'SaveTrackScreen'}
+        // initialRouteName={getInitialRouteName({
+        //   hasDeviceName: !!deviceInfo.data?.name,
+        //   existingObservation,
+        //   presets,
+        // })}
         screenOptions={NavigatorScreenOptions}>
         {deviceInfo.data?.name
           ? createDefaultScreenGroup(formatMessage)

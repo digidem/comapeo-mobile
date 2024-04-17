@@ -4,6 +4,7 @@ import {useCallback, useState} from 'react';
 import {useCurrentTrackStore} from './useCurrentTrackStore';
 import React from 'react';
 import {FullLocationData} from '../../sharedTypes/location';
+import {useGPSModalContext} from '../../contexts/GPSModalContext';
 
 export const LOCATION_TASK_NAME = 'background-location-task';
 
@@ -13,6 +14,7 @@ type LocationCallbackInfo = {
 };
 
 export function useTracking() {
+  const {bottomSheetRef} = useGPSModalContext();
   const [loading, setLoading] = useState(false);
   const addNewLocations = useCurrentTrackStore(state => state.addNewLocations);
   const setTracking = useCurrentTrackStore(state => state.setTracking);
@@ -56,10 +58,11 @@ export function useTracking() {
 
     setTracking(true);
     setLoading(false);
-  }, [addNewTrackLocations, isTracking, setTracking]);
+  }, [isTracking, setTracking]);
 
   const cancelTracking = useCallback(async () => {
     await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
+    bottomSheetRef.current?.close();
     setTracking(false);
   }, [setTracking]);
 

@@ -52,6 +52,7 @@ import {TrackingTabBarIcon} from './TabBar/TrackingTabBarIcon';
 import {TabName} from '../types';
 import {CameraTabBarIcon} from './TabBar/CameraTabBarIcon';
 import {MapTabBarIcon} from './TabBar/MapTabBarIcon';
+import {SaveTrackScreen} from '../../screens/MapScreen/track/SaveTrackScreen';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -132,6 +133,7 @@ export type AppList = {
   };
   DeviceNameDisplay: undefined;
   DeviceNameEdit: undefined;
+  SaveTrackScreen: undefined;
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
@@ -338,6 +340,13 @@ export const createDefaultScreenGroup = (
       name="GpsModal"
       component={GpsModal}
       options={createGpsModalNavigationOptions({intl})}
+    />
+    <RootStack.Screen
+      name="SaveTrackScreen"
+      component={SaveTrackScreen}
+      options={{
+        headerShown: false,
+      }}
     />
   </RootStack.Group>
 );

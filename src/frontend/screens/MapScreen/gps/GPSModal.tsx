@@ -5,6 +5,7 @@ import * as Location from 'expo-location';
 import {useGPSModalContext} from '../../../contexts/GPSModalContext';
 import {useNavigationStore} from '../../../hooks/useNavigationStore';
 import {CustomBottomSheetModal} from '../../../sharedComponents/BottomSheetModal/CustomBottomSheetModal';
+import {TabName} from '../../../Navigation/types';
 
 export const GPSModal = () => {
   const {setCurrentTab} = useNavigationStore();
@@ -22,7 +23,7 @@ export const GPSModal = () => {
   }, [backgroundStatus, foregroundStatus, isGranted]);
 
   const onBottomSheetDismiss = () => {
-    setCurrentTab('Map');
+    setCurrentTab(TabName.Map);
     bottomSheetRef.current?.close();
   };
 

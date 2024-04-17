@@ -2,7 +2,36 @@ import {LonLatData} from '../sharedTypes/location';
 
 const EARTH_RADIUS = 6371; // Radius of the earth in km
 
-const degreesToRadians = (degrees: number): number => degrees * (Math.PI / 180);
+function degreesToRadians(degrees: number): number {
+  return degrees * (Math.PI / 180);
+}
+
+function calculateHaversine(
+  deltaLatitude: number,
+  deltaLongitude: number,
+  pointA: LonLatData,
+  pointB: LonLatData,
+): number {
+  const deltaLatitudeHalfSineSquared = Math.pow(Math.sin(deltaLatitude / 2), 2);
+  const pointALatitudeRadianCosine = Math.cos(
+    degreesToRadians(pointA.latitude),
+  );
+  const pointBLatitudeRadianCosine = Math.cos(
+    degreesToRadians(pointB.latitude),
+  );
+  const deltaLongitudeHalfSineSquared = Math.pow(
+    Math.sin(deltaLongitude / 2),
+    2,
+  );
+
+  const cosineProduct =
+    pointALatitudeRadianCosine *
+    pointBLatitudeRadianCosine *
+    deltaLongitudeHalfSineSquared;
+  const haversine = deltaLatitudeHalfSineSquared + cosineProduct;
+
+  return haversine;
+}
 
 // Based on https://en.wikipedia.org/wiki/Haversine_formula
 export const calculateTotalDistance = (points: LonLatData[]): number =>
@@ -14,16 +43,20 @@ export const calculateTotalDistance = (points: LonLatData[]): number =>
     const pointA = arr[i - 1]!!;
     const pointB = currentValue;
 
-    const dLat = degreesToRadians(pointB.latitude - pointA.latitude);
-    const dLon = degreesToRadians(pointB.longitude - pointA.longitude);
+    const deltaLatitude = degreesToRadians(pointB.latitude - pointA.latitude);
+    const deltaLongitude = degreesToRadians(
+      pointB.longitude - pointA.longitude,
+    );
 
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(degreesToRadians(pointA.latitude)) *
-        Math.cos(degreesToRadians(pointB.latitude)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const haversine = calculateHaversine(
+      deltaLatitude,
+      deltaLongitude,
+      pointA,
+      pointB,
+    );
 
-    return previousValue + EARTH_RADIUS * c;
+    const distanceFactor =
+      2 * Math.atan2(Math.sqrt(haversine), Math.sqrt(1 - haversine));
+
+    return previousValue + EARTH_RADIUS * distanceFactor;
   }, 0);

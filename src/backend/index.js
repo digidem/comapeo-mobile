@@ -10,6 +10,11 @@ const MIGRATIONS_FOLDER_PATH = new URL(
   import.meta.url,
 ).pathname
 
+const DEFAULT_CONFIG_PATH = new URL(
+  './node_modules/@mapeo/default-config/dist/mapeo-default-config-v4.0.0-alpha.0.mapeoconfig',
+  import.meta.url,
+).pathname
+
 try {
   const { values } = parseArgs({
     options: {
@@ -35,6 +40,7 @@ try {
     rootKey: Buffer.from(values.rootKey, 'hex'),
     migrationsFolderPath: MIGRATIONS_FOLDER_PATH,
     sharedStoragePath: values.sharedStoragePath,
+    defaultConfigPath: DEFAULT_CONFIG_PATH,
   }).catch((err) => {
     console.error('Server startup error:', err)
   })

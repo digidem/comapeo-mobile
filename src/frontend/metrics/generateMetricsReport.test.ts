@@ -70,7 +70,6 @@ describe('generateMetricsReport', () => {
 
   it('includes countries where observations are found', () => {
     const report = generateMetricsReport(defaultOptions);
-
     expect(report.countries).toHaveLength(new Set(report.countries).size);
     expect(new Set(report.countries)).toEqual(new Set(['MEX', 'CAN', 'USA']));
   });

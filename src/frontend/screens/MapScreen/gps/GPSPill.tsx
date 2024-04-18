@@ -48,7 +48,7 @@ export const GPSPill = () => {
     if (status === 'error') return t(m.noGps);
     else if (status === 'searching' || typeof precision === 'undefined') {
       return t(m.searching);
-    } else return `± ${precision!} m`;
+    } else return `± ${Math.round(precision!)} m`;
   }, [precision, status, t]);
 
   const navigation = useNavigationFromHomeTabs();

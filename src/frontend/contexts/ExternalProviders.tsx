@@ -13,6 +13,7 @@ import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {AppStackList} from '../Navigation/AppStack';
 import {GPSModalContextProvider} from './GPSModalContext';
 import {TrackTimerContextProvider} from './TrackTimerContext';
+import {SharedLocationContextProvider} from './SharedLocationContext';
 
 type ExternalProvidersProp = {
   children: React.ReactNode;
@@ -28,13 +29,17 @@ export const ExternalProviders = ({
   return (
     <QueryClientProvider client={queryClient}>
       <GestureHandlerRootView style={{flex: 1}}>
-        <GPSModalContextProvider>
-          <TrackTimerContextProvider>
-            <BottomSheetModalProvider>
-              <NavigationContainer ref={navRef}>{children}</NavigationContainer>
-            </BottomSheetModalProvider>
-          </TrackTimerContextProvider>
-        </GPSModalContextProvider>
+        <SharedLocationContextProvider>
+          <GPSModalContextProvider>
+            <TrackTimerContextProvider>
+              <BottomSheetModalProvider>
+                <NavigationContainer ref={navRef}>
+                  {children}
+                </NavigationContainer>
+              </BottomSheetModalProvider>
+            </TrackTimerContextProvider>
+          </GPSModalContextProvider>
+        </SharedLocationContextProvider>
       </GestureHandlerRootView>
     </QueryClientProvider>
   );

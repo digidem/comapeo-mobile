@@ -133,7 +133,7 @@ export type AppList = {
   };
   DeviceNameDisplay: undefined;
   DeviceNameEdit: undefined;
-  SaveTrackScreen: undefined;
+  SaveTrack: undefined;
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
@@ -348,7 +348,7 @@ export const createDefaultScreenGroup = (
       options={createGpsModalNavigationOptions({intl})}
     />
     <RootStack.Screen
-      name="SaveTrackScreen"
+      name="SaveTrack"
       component={SaveTrackScreen}
       options={{
         headerShown: false,

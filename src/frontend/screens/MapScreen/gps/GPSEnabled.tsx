@@ -7,6 +7,7 @@ import StartTrackingIcon from '../../../images/StartTracking.svg';
 import StopTrackingIcon from '../../../images/StopTracking.svg';
 import {useTrackTimerContext} from '../../../contexts/TrackTimerContext';
 import {defineMessages, useIntl} from 'react-intl';
+import {useNavigation} from '@react-navigation/native';
 
 const m = defineMessages({
   defaultButtonText: {
@@ -23,7 +24,7 @@ const m = defineMessages({
   },
   trackingDescription: {
     id: 'Modal.GPSEnable.trackingDescription',
-    defaultMessage: 'You’ve been recording for',
+    defaultMessage: 'aYou’ve been recording for',
   },
 });
 
@@ -31,12 +32,18 @@ export const GPSEnabled = () => {
   const {formatMessage} = useIntl();
   const {isTracking, cancelTracking, startTracking, loading} = useTracking();
   const {timer} = useTrackTimerContext();
-
   const styles = getStyles(isTracking);
+  const navigation = useNavigation();
 
   const handleTracking = useCallback(() => {
+    if (isTracking) {
+      cancelTracking();
+      navigation.navigate('SaveTrack' as never);
+      return;
+    }
+    startTracking();
     isTracking ? cancelTracking() : startTracking();
-  }, [cancelTracking, isTracking, startTracking]);
+  }, [cancelTracking, isTracking, startTracking, navigation]);
 
   const getButtonTitle = () => {
     if (loading) return m.loadingButtonText;

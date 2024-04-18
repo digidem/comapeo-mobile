@@ -32,11 +32,9 @@ export const ExternalProviders = ({
         <SharedLocationContextProvider>
           <GPSModalContextProvider>
             <TrackTimerContextProvider>
-              <BottomSheetModalProvider>
-                <NavigationContainer ref={navRef}>
-                  {children}
-                </NavigationContainer>
-              </BottomSheetModalProvider>
+              <NavigationContainer ref={navRef}>
+                <BottomSheetModalProvider>{children}</BottomSheetModalProvider>
+              </NavigationContainer>
             </TrackTimerContextProvider>
           </GPSModalContextProvider>
         </SharedLocationContextProvider>

@@ -3,11 +3,43 @@ import {View, Image, StyleSheet, Pressable} from 'react-native';
 import {Text} from '../../../../sharedComponents/Text';
 import Close from '../../../../images/close.svg';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
-
+import {useCreateTrack} from '../../../../hooks/server/track';
+import {useCurrentTrackStore} from '../../../../hooks/tracks/useCurrentTrackStore';
+import {DateTime} from 'luxon';
 export interface SaveTrackHeader {
   bottomSheetRef: React.RefObject<BottomSheetModalMethods>;
 }
 export const SaveTrackHeader: FC<SaveTrackHeader> = ({bottomSheetRef}) => {
+  const saveTrack = useCreateTrack();
+  const currentTrack = useCurrentTrackStore();
+  const handleSaveClick = () => {
+    saveTrack.mutate(
+      {
+        schemaName: 'track',
+        attachments: [],
+        refs: [],
+        tags: {},
+        locations: currentTrack.locationHistory.map(loc => {
+          return {
+            coords: {
+              latitude: loc.latitude,
+              longitude: loc.longitude,
+            },
+            mocked: false,
+            timestamp: DateTime.fromMillis(loc.timestamp).toISO()!,
+          };
+        }),
+      },
+      {
+        onSuccess: res => {
+          console.log(res);
+        },
+        onError: res => {
+          console.error(res);
+        },
+      },
+    );
+  };
   return (
     <View style={styles.container}>
       <View style={styles.closeWrapper}>
@@ -18,10 +50,12 @@ export const SaveTrackHeader: FC<SaveTrackHeader> = ({bottomSheetRef}) => {
         </Pressable>
         <Text style={styles.text}>New Observation</Text>
       </View>
-      <Image
-        style={styles.completeIcon}
-        source={require('../../../../images/completed/checkComplete.png')}
-      />
+      <Pressable onPress={handleSaveClick}>
+        <Image
+          style={styles.completeIcon}
+          source={require('../../../../images/completed/checkComplete.png')}
+        />
+      </Pressable>
     </View>
   );
 };

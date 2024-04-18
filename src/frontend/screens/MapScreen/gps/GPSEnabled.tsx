@@ -74,7 +74,7 @@ export const GPSEnabled = () => {
 const getStyles = (isTracking: boolean) => {
   return StyleSheet.create({
     button: {backgroundColor: isTracking ? '#D92222' : '#0066FF'},
-    container: {paddingHorizontal: 20, paddingVertical: 30},
+    container: {paddingHorizontal: 20, paddingVertical: 30, height: 140},
     buttonWrapper: {
       flexDirection: 'row',
       display: 'flex',

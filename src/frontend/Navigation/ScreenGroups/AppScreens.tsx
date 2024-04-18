@@ -172,6 +172,12 @@ const HomeTabs = () => {
           tabBarIcon: TrackingTabBarIcon,
           headerShown: false,
         }}
+        listeners={({navigation}) => ({
+          tabPress: e => {
+            e.preventDefault();
+            navigation.navigate(TabName.Map);
+          },
+        })}
         children={() => <></>}
       />
     </Tab.Navigator>

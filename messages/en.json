@@ -374,6 +374,14 @@
     "description": "Button label for adding photo",
     "message": "Add Photo"
   },
+  "screens.ObservationEdit.ObservationEditView.saveTrackCamera": {
+    "description": "Button label for adding photo",
+    "message": "Camera"
+  },
+  "screens.ObservationEdit.ObservationEditView.saveTrackDetails": {
+    "description": "Button label for check details",
+    "message": "Details"
+  },
   "screens.ObservationEdit.ObservationEditView.searching": {
     "description": "Shown in new observation screen whilst looking for GPS",
     "message": "Searching…"

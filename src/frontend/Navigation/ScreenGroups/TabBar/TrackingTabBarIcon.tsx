@@ -5,10 +5,12 @@ import {useTracking} from '../../../hooks/tracks/useTracking';
 import {Text} from '../../../sharedComponents/Text';
 import {TabBarIconProps, TabName} from '../../types';
 import {useTrackTimerContext} from '../../../contexts/TrackTimerContext';
+import {useNavigationStore} from '../../../hooks/useNavigationStore';
 
 export const TrackingTabBarIcon: FC<TabBarIconProps> = props => {
   const {isTracking} = useTracking();
   const {timer} = useTrackTimerContext();
+  const {currentTab} = useNavigationStore();
 
   return (
     <>
@@ -20,7 +22,7 @@ export const TrackingTabBarIcon: FC<TabBarIconProps> = props => {
       )}
       <TabBarIcon
         {...props}
-        tabName={TabName.Tracking}
+        isFocused={currentTab === TabName.Tracking}
         iconName="nordic-walking"
       />
     </>

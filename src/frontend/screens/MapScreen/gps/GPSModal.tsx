@@ -4,15 +4,17 @@ import {GPSEnabled} from './GPSEnabled';
 import * as Location from 'expo-location';
 import {useGPSModalContext} from '../../../contexts/GPSModalContext';
 import {useNavigationStore} from '../../../hooks/useNavigationStore';
-import {CustomBottomSheetModal} from '../../../sharedComponents/BottomSheetModal/CustomBottomSheetModal';
+import {BottomSheetModal, BottomSheetView} from '@gorhom/bottom-sheet';
+import {TAB_BAR_HEIGHT} from '../../../Navigation/ScreenGroups/AppScreens';
+import {StyleSheet} from 'react-native';
 import {TabName} from '../../../Navigation/types';
+import {useFocusEffect} from '@react-navigation/native';
 
 export const GPSModal = () => {
   const {setCurrentTab} = useNavigationStore();
   const [backgroundStatus] = Location.useBackgroundPermissions();
   const [foregroundStatus] = Location.useForegroundPermissions();
 
-  const [currentIndex, setCurrentIndex] = useState<number>(-1);
   const [isGranted, setIsGranted] = useState<boolean | null>(null);
   const {bottomSheetRef} = useGPSModalContext();
 
@@ -24,16 +26,34 @@ export const GPSModal = () => {
 
   const onBottomSheetDismiss = () => {
     setCurrentTab(TabName.Map);
-    bottomSheetRef.current?.close();
   };
+  useFocusEffect(() => {
+    return () => bottomSheetRef?.current?.close();
+  });
 
   return (
-    <CustomBottomSheetModal
-      currentIndex={currentIndex}
-      setCurrentIndex={setCurrentIndex}
-      dismiss={onBottomSheetDismiss}
-      bottomSheetRef={bottomSheetRef}>
-      {isGranted ? <GPSEnabled /> : <GPSDisabled setIsGranted={setIsGranted} />}
-    </CustomBottomSheetModal>
+    <BottomSheetModal
+      bottomInset={TAB_BAR_HEIGHT}
+      style={styles.modal}
+      ref={bottomSheetRef}
+      enableDynamicSizing
+      onDismiss={onBottomSheetDismiss}
+      handleComponent={() => null}>
+      <BottomSheetView>
+        {isGranted ? (
+          <GPSEnabled />
+        ) : (
+          <GPSDisabled setIsGranted={setIsGranted} />
+        )}
+      </BottomSheetView>
+    </BottomSheetModal>
   );
 };
+
+const styles = StyleSheet.create({
+  modal: {
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    minHeight: 140,
+  },
+});

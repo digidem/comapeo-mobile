@@ -20,6 +20,7 @@ import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
 import {GPSModal} from './gps/GPSModal';
 import {TrackPathLayer} from './track/TrackPathLayer';
 import {UserLocation} from './UserLocation';
+import {useSharedLocationContext} from '../../contexts/SharedLocationContext';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -38,7 +39,7 @@ export const MapScreen = () => {
   const [following, setFollowing] = React.useState(true);
   const {newDraft} = useDraftObservation();
   const {navigate} = useNavigationFromHomeTabs();
-  const {location} = useLocation({maxDistanceInterval: MIN_DISPLACEMENT});
+  const {location} = useSharedLocationContext();
   const savedLocation = useLastKnownLocation();
   const coords = location && getCoords(location);
   const locationProviderStatus = useLocationProviderStatus();

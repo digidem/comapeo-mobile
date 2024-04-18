@@ -12,8 +12,8 @@ import {Button} from '../../../../sharedComponents/Button';
 import {defineMessages, useIntl} from 'react-intl';
 import ErrorIcon from '../../../../images/Error.svg';
 import {COMAPEO_BLUE, MAGENTA, WHITE} from '../../../../lib/styles';
-import {TabName} from '../../../../Navigation/types';
 import {useNavigationFromHomeTabs} from '../../../../hooks/useNavigationWithTypes';
+import DiscardIcon from '../../../../images/delete.svg';
 
 export interface DiscardTrackModal {
   bottomSheetRef: React.RefObject<BottomSheetModalMethods>;
@@ -79,9 +79,12 @@ export const DiscardTrackModal: FC<DiscardTrackModal> = ({bottomSheetRef}) => {
               onClose();
             }}
             style={styles.discardButton}>
-            <Text style={[styles.buttonText, styles.discardButtonText]}>
-              {formatMessage(m.discardTrackDiscardButton)}
-            </Text>
+            <View style={styles.discardButtonWrapper}>
+              <DiscardIcon />
+              <Text style={[styles.buttonText, styles.discardButtonText]}>
+                {formatMessage(m.discardTrackDiscardButton)}
+              </Text>
+            </View>
           </Button>
           <Button fullWidth onPress={onClose} style={styles.defaultButton}>
             <Text style={[styles.buttonText, styles.defaultButtonText]}>
@@ -107,8 +110,15 @@ export const styles = StyleSheet.create({
   image: {marginBottom: 15},
   title: {fontSize: 24, fontWeight: 'bold', textAlign: 'center'},
   description: {fontSize: 16, textAlign: 'center', marginVertical: 10},
-  discardButton: {backgroundColor: MAGENTA, marginBottom: 20},
+  discardButton: {
+    backgroundColor: MAGENTA,
+    marginBottom: 20,
+  },
+  discardButtonWrapper: {
+    flexDirection: 'row',
+  },
   discardButtonText: {
+    marginLeft: 10,
     color: WHITE,
   },
   buttonText: {

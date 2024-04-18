@@ -10,7 +10,7 @@ import {StyleSheet} from 'react-native';
 import {TabName} from '../../../Navigation/types';
 import {useFocusEffect} from '@react-navigation/native';
 
-export const GPSModal = () => {
+export const GPSModal = React.memo(() => {
   const {setCurrentTab} = useNavigationStore();
   const [backgroundStatus] = Location.useBackgroundPermissions();
   const [foregroundStatus] = Location.useForegroundPermissions();
@@ -48,7 +48,7 @@ export const GPSModal = () => {
       </BottomSheetView>
     </BottomSheetModal>
   );
-};
+});
 
 const styles = StyleSheet.create({
   modal: {

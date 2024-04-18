@@ -14,12 +14,13 @@ import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 // @ts-ignore
 import ScaleBar from 'react-native-scale-bar';
-import {getCoords, useLocation} from '../../hooks/useLocation';
+import {getCoords} from '../../hooks/useLocation';
 import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
 import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
 import {GPSModal} from './gps/GPSModal';
 import {TrackPathLayer} from './track/TrackPathLayer';
 import {UserLocation} from './UserLocation';
+import {useSharedLocationContext} from '../../contexts/SharedLocationContext';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -38,9 +39,9 @@ export const MapScreen = () => {
   const [following, setFollowing] = React.useState(true);
   const {newDraft} = useDraftObservation();
   const {navigate} = useNavigationFromHomeTabs();
-  const {location} = useLocation({maxDistanceInterval: MIN_DISPLACEMENT});
+  const {locationState} = useSharedLocationContext();
   const savedLocation = useLastKnownLocation();
-  const coords = location && getCoords(location);
+  const coords = locationState.location && getCoords(locationState.location);
   const locationProviderStatus = useLocationProviderStatus();
   const locationServicesEnabled =
     !!locationProviderStatus?.locationServicesEnabled;

@@ -43,7 +43,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingHorizontal: 20,
     color: 'black',
-    // backgroundColor: 'red',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     textAlignVertical: 'top',

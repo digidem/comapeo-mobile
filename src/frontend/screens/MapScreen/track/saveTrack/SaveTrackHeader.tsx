@@ -27,6 +27,8 @@ export const SaveTrackHeader: FC<SaveTrackHeader> = ({bottomSheetRef}) => {
 };
 const styles = StyleSheet.create({
   container: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#EDEDED',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

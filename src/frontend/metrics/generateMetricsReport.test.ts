@@ -5,6 +5,7 @@ describe('generateMetricsReport', () => {
     packageJson: {version: '1.2.3'},
     os: 'android',
     osVersion: 123,
+    screen: {width: 12, height: 34},
   };
 
   it('can be serialized and deserialized as JSON', () => {
@@ -42,6 +43,11 @@ describe('generateMetricsReport', () => {
     const report = generateMetricsReport(options);
     expect(report.os).toBe('win32');
     expect(report.osVersion).toBe('1.2.3');
+  });
+
+  it('includes screen dimensions', () => {
+    const report = generateMetricsReport(defaultOptions);
+    expect(report.screen).toEqual({width: 12, height: 34});
   });
 });
 

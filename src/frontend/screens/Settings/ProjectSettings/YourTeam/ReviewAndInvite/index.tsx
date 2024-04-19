@@ -35,7 +35,6 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
     project.$member
       .invite(deviceId, {roleId: role})
       .then(val => {
-        console.log({val});
         if (val === 'ACCEPT') {
           queryClient.invalidateQueries({queryKey: ['projectMembers']});
           navigation.navigate('InviteAccepted', {...route.params});
@@ -47,8 +46,7 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
           return;
         }
       })
-      .catch((err: unknown) => {
-        console.log(err);
+      .catch(() => {
         openSheet();
       });
   }

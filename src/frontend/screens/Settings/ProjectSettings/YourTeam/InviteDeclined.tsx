@@ -49,7 +49,7 @@ export const InviteDeclined = ({
         <Text style={{marginTop: 10, fontSize: 20, fontWeight: 'bold'}}>
           {formatMessage(m.inviteDeclined)}
         </Text>
-        <Text style={{marginTop: 10}}>
+        <Text style={{marginTop: 10, textAlign: 'center'}}>
           {formatMessage(m.inviteDeclinedDes)}
         </Text>
         <DeviceNameWithIcon {...deviceInfo} style={{marginTop: 10}} />

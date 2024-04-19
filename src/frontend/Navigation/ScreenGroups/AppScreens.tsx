@@ -196,9 +196,9 @@ export const createDefaultScreenGroup = (
       options={props => {
         const observationId = props.route.params?.observationId;
         return {
-          headerLeft: headerProp => (
+          headerLeft: headerProps => (
             <CustomHeaderLeftClose
-              headerBackButtonProps={headerProp}
+              headerBackButtonProps={headerProps}
               observationId={observationId}
             />
           ),

@@ -2,11 +2,10 @@ import * as React from 'react';
 import {NativeNavigationComponent} from '../../../../../sharedTypes';
 import {defineMessages} from 'react-intl';
 import {useBottomSheetModal} from '../../../../../sharedComponents/BottomSheetModal';
-import {useQueryClient} from '@tanstack/react-query';
-import {useProject} from '../../../../../hooks/server/projects';
 import {ErrorModal} from '../../../../../sharedComponents/ErrorModal';
 import {ReviewInvitation} from './ReviewInvitation';
 import {WaitingForInviteAccept} from './WaitingForInviteAccept';
+import {useSendInvite} from '../../../../../hooks/server/invites';
 
 const m = defineMessages({
   title: {
@@ -19,41 +18,39 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
   route,
   navigation,
 }) => {
-  const [inviteStatus, setInviteStatus] = React.useState<
-    'reviewing' | 'waiting'
-  >('reviewing');
   const {role, deviceId, deviceType, name} = route.params;
 
   const {openSheet, sheetRef, closeSheet, isOpen} = useBottomSheetModal({
     openOnMount: false,
   });
-  const project = useProject();
-  const queryClient = useQueryClient();
+  const sendInviteMutation = useSendInvite();
 
   function sendInvite() {
-    setInviteStatus('waiting');
-    project.$member
-      .invite(deviceId, {roleId: role})
-      .then(val => {
-        if (val === 'ACCEPT') {
-          queryClient.invalidateQueries({queryKey: ['projectMembers']});
-          navigation.navigate('InviteAccepted', route.params);
-          return;
-        }
+    sendInviteMutation.mutate(
+      // @ts-ignore
+      {deviceId, role: {roleId: role}},
+      {
+        onSuccess: val => {
+          if (val === 'ACCEPT') {
+            navigation.navigate('InviteAccepted', route.params);
+            return;
+          }
 
-        if (val === 'REJECT') {
-          navigation.navigate('InviteDeclined', route.params);
-          return;
-        }
-      })
-      .catch(() => {
-        openSheet();
-      });
+          if (val === 'REJECT') {
+            navigation.navigate('InviteDeclined', route.params);
+            return;
+          }
+        },
+        onError: () => {
+          openSheet();
+        },
+      },
+    );
   }
 
   return (
     <React.Fragment>
-      {inviteStatus === 'reviewing' ? (
+      {sendInviteMutation.isIdle ? (
         <ReviewInvitation
           sendInvite={sendInvite}
           deviceId={deviceId}

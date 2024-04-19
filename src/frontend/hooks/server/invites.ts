@@ -4,6 +4,7 @@ import {
   useSuspenseQuery,
 } from '@tanstack/react-query';
 import {useApi} from '../../contexts/ApiContext';
+import {useProject} from './projects';
 
 export const INVITE_KEY = 'pending_invites';
 
@@ -58,6 +59,24 @@ export function useClearAllPendingInvites() {
       queryClient.invalidateQueries({
         queryKey: [INVITE_KEY],
       });
+    },
+  });
+}
+
+export function useSendInvite() {
+  const queryClient = useQueryClient();
+  const project = useProject();
+  type InviteParams = Parameters<typeof project.$member.invite>;
+  return useMutation({
+    mutationFn: ({
+      deviceId,
+      role,
+    }: {
+      deviceId: InviteParams[0];
+      role: InviteParams[1];
+    }) => project.$member.invite(deviceId, role),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: [INVITE_KEY]});
     },
   });
 }

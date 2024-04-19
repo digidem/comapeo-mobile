@@ -1,15 +1,16 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Button} from '../../../../sharedComponents/Button';
+import {Button} from '../../../../../sharedComponents/Button';
 import ErrorIcon from '../../../../images/Error.svg';
 import {defineMessages, useIntl} from 'react-intl';
-import {Text} from '../../../../sharedComponents/Text';
-import {DeviceNameWithIcon} from '../../../../sharedComponents/DeviceNameWithIcon';
-import {RoleWithIcon} from '../../../../sharedComponents/RoleWithIcon';
+import {Text} from '../../../../../sharedComponents/Text';
+import {DeviceNameWithIcon} from '../../../../../sharedComponents/DeviceNameWithIcon';
+import {RoleWithIcon} from '../../../../../sharedComponents/RoleWithIcon';
 import {
   COORDINATOR_ROLE_ID,
   NativeRootNavigationProps,
-} from '../../../../sharedTypes';
+} from '../../../../../sharedTypes';
+import {useProjectSettings} from '../../../../../hooks/server/projects';
 
 const m = defineMessages({
   unableToCancel: {
@@ -31,7 +32,8 @@ export const UnableToCancelInvite = ({
   route,
 }: NativeRootNavigationProps<'UnableToCancelInvite'>) => {
   const {formatMessage} = useIntl();
-  const {role, projectName, ...deviceInfo} = route.params;
+  const {role, ...deviceInfo} = route.params;
+  const {data} = useProjectSettings();
 
   return (
     <View style={styles.container}>
@@ -40,9 +42,11 @@ export const UnableToCancelInvite = ({
         <Text style={{marginTop: 10, fontSize: 20, fontWeight: 'bold'}}>
           {formatMessage(m.unableToCancel)}
         </Text>
-        <Text>
-          {formatMessage(m.deviceHasJoined, {projectName: projectName})}
-        </Text>
+        {data?.name && (
+          <Text style={{marginTop: 10}}>
+            {formatMessage(m.deviceHasJoined, {projectName: data.name})}
+          </Text>
+        )}
         <DeviceNameWithIcon {...deviceInfo} style={{marginTop: 10}} />
         <RoleWithIcon
           style={{marginTop: 20}}

@@ -80,3 +80,15 @@ export function useSendInvite() {
     },
   });
 }
+
+export function useRequestCancelInvite() {
+  const queryClient = useQueryClient();
+  const project = useProject();
+  return useMutation({
+    mutationFn: (deviceId: string) =>
+      project.$member.requestCancelInvite(deviceId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: [INVITE_KEY]});
+    },
+  });
+}

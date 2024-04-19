@@ -24,7 +24,7 @@ const m = defineMessages({
   },
   trackingDescription: {
     id: 'Modal.GPSEnable.trackingDescription',
-    defaultMessage: 'aYou’ve been recording for',
+    defaultMessage: 'You’ve been recording for',
   },
 });
 

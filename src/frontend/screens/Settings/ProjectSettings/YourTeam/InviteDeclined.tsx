@@ -1,15 +1,12 @@
 import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {BackHandler, StyleSheet, View} from 'react-native';
 import {Button} from '../../../../sharedComponents/Button';
 import ErrorIcon from '../../../../images/Error.svg';
 import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../../../sharedComponents/Text';
 import {DeviceNameWithIcon} from '../../../../sharedComponents/DeviceNameWithIcon';
-import {RoleWithIcon} from '../../../../sharedComponents/RoleWithIcon';
-import {
-  COORDINATOR_ROLE_ID,
-  NativeRootNavigationProps,
-} from '../../../../sharedTypes';
+import {NativeRootNavigationProps} from '../../../../sharedTypes';
+import {useFocusEffect} from '@react-navigation/native';
 
 const m = defineMessages({
   inviteDeclined: {
@@ -18,7 +15,8 @@ const m = defineMessages({
   },
   inviteDeclinedDes: {
     id: 'screens.Settings.YourTeam.inviteDeclinedDes',
-    defaultMessage: 'Invitation Declined',
+    defaultMessage:
+      'This device has declined your invitation. They have not joined the project.',
   },
   close: {
     id: 'screens.Settings.YourTeam.close',
@@ -33,6 +31,17 @@ export const InviteDeclined = ({
   const {formatMessage} = useIntl();
   const {role, ...deviceInfo} = route.params;
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const subscription = BackHandler.addEventListener(
+        'hardwareBackPress',
+        () => true,
+      );
+
+      return () => subscription.remove();
+    }, []),
+  );
+
   return (
     <View style={styles.container}>
       <View style={{alignItems: 'center'}}>
@@ -40,12 +49,10 @@ export const InviteDeclined = ({
         <Text style={{marginTop: 10, fontSize: 20, fontWeight: 'bold'}}>
           {formatMessage(m.inviteDeclined)}
         </Text>
-        <Text>{formatMessage(m.inviteDeclinedDes)}</Text>
+        <Text style={{marginTop: 10}}>
+          {formatMessage(m.inviteDeclinedDes)}
+        </Text>
         <DeviceNameWithIcon {...deviceInfo} style={{marginTop: 10}} />
-        <RoleWithIcon
-          style={{marginTop: 20}}
-          role={role === COORDINATOR_ROLE_ID ? 'coordinator' : 'participant'}
-        />
       </View>
       <Button
         style={{marginTop: 10}}

@@ -7,14 +7,17 @@ import {useSharedLocationContext} from '../../../contexts/SharedLocationContext'
 
 export const UserTooltipMarker = () => {
   const {timer} = useTrackTimerContext();
-  const {location} = useSharedLocationContext();
+  const {locationState} = useSharedLocationContext();
   const totalDistance = useCurrentTrackStore(state => state.distance);
 
   return (
-    location?.coords && (
+    locationState.location?.coords && (
       <MarkerView
         id="locationView"
-        coordinate={[location.coords.longitude, location.coords.latitude]}
+        coordinate={[
+          locationState.location.coords.longitude,
+          locationState.location.coords.latitude,
+        ]}
         anchor={{x: 0.5, y: 1}}>
         <View style={styles.container}>
           <View style={styles.wrapper}>

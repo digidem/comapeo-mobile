@@ -1,14 +1,13 @@
 import React, {useMemo} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Text} from '../../../sharedComponents/Text';
-import * as Location from 'expo-location';
-import {useLocation} from '../../../hooks/useLocation';
 import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes';
 import {useIsFocused} from '@react-navigation/native';
 import {useLocationProviderStatus} from '../../../hooks/useLocationProviderStatus';
 import {getLocationStatus} from '../../../lib/utils';
 import {defineMessages, useIntl} from 'react-intl';
 import {GpsIcon} from '../../../sharedComponents/icons';
+import {useSharedLocationContext} from '../../../contexts/SharedLocationContext';
 
 const m = defineMessages({
   noGps: {
@@ -24,14 +23,13 @@ const m = defineMessages({
 export const GPSPill = () => {
   const isFocused = useIsFocused();
   const {formatMessage: t} = useIntl();
-  const locationState = useLocation({maxDistanceInterval: 0});
-  const [permissions] = Location.useForegroundPermissions();
+  const {locationState, fgPermissions} = useSharedLocationContext();
   const locationProviderStatus = useLocationProviderStatus();
 
-  const precision = locationState.location?.coords.accuracy;
+  const precision = locationState?.location?.coords.accuracy;
 
   const status = useMemo(() => {
-    const isError = !!locationState.error || !permissions?.granted;
+    const isError = !!locationState.error || !fgPermissions;
 
     return isError
       ? 'error'
@@ -43,7 +41,7 @@ export const GPSPill = () => {
     locationProviderStatus,
     locationState.error,
     locationState.location,
-    permissions?.granted,
+    fgPermissions,
   ]);
 
   const text = useMemo(() => {

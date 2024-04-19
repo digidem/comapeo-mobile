@@ -8,7 +8,7 @@ import {
 import {AppState} from 'react-native';
 
 interface SharedLocationContext {
-  location: LocationState;
+  locationState: LocationState;
   bgPermissions: boolean | null;
   fgPermissions: boolean | null;
 }
@@ -26,6 +26,12 @@ const SharedLocationContextProvider = ({
   const [fgPermissions, setFgPermissions] = useState<boolean | null>(null);
 
   useEffect(() => {
+    getBackgroundPermissionsAsync().then(({granted}) =>
+      setBgPermissions(granted),
+    );
+    getForegroundPermissionsAsync().then(({granted}) =>
+      setFgPermissions(granted),
+    );
     const sub = AppState.addEventListener('change', newState => {
       if (
         appState.current.match(/inactive|background/) &&
@@ -47,7 +53,7 @@ const SharedLocationContextProvider = ({
   return (
     <SharedLocationContext.Provider
       value={{
-        location,
+        locationState: location,
         bgPermissions,
         fgPermissions,
       }}>
@@ -63,7 +69,7 @@ function useSharedLocationContext() {
       'useSharedLocationContext must be used within a SharedLocationContextProvider',
     );
   }
-  return context.location;
+  return context;
 }
 
 export {SharedLocationContextProvider, useSharedLocationContext};

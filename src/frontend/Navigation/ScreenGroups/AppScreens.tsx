@@ -54,7 +54,6 @@ import {useLocation} from '../../hooks/useLocation';
 import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
 import {getLocationStatus} from '../../lib/utils';
 import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/InviteDeclined';
-import {UnableToCancelInvite} from '../../screens/Settings/ProjectSettings/YourTeam/UnableToCancelInvite';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -197,9 +196,9 @@ export const createDefaultScreenGroup = (
       options={props => {
         const observationId = props.route.params?.observationId;
         return {
-          headerLeft: props => (
+          headerLeft: headerProp => (
             <CustomHeaderLeftClose
-              headerBackButtonProps={props}
+              headerBackButtonProps={headerProp}
               observationId={observationId}
             />
           ),

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import TopoBackground from '../images/TopoLogo.svg';
 import CoMapeoTextAsSVG from '../images/CoMapeoText.svg';
 import {StyleSheet, View, Image} from 'react-native';

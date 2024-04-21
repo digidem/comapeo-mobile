@@ -1,4 +1,3 @@
-import React from 'react';
 import {Circle, CircleSnail} from 'react-native-progress';
 
 type Props = {

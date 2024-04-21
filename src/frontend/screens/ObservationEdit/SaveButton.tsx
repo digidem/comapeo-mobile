@@ -1,4 +1,3 @@
-import React from 'react';
 import {Alert, AlertButton, View} from 'react-native';
 import debug from 'debug';
 import {defineMessages, useIntl} from 'react-intl';

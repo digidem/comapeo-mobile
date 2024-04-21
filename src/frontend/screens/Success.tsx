@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 

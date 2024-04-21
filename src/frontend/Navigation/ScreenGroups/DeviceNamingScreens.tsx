@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {RootStack} from '../AppStack';
 import {IntroToCoMapeo} from '../../screens/IntroToCoMapeo';
 import {DeviceNaming} from '../../screens/DeviceNaming';

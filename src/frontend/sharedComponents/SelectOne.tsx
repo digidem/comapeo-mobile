@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import {List, ListItem, ListItemText, ListItemIcon} from './List';
 
 type SelectOneProps<T> = {

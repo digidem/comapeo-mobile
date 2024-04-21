@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {BottomSheetModal, useBottomSheetModal} from './BottomSheetModal';
 import {Button} from './Button';
 import {StyleSheet, View} from 'react-native';

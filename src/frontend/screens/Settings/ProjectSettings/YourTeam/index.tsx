@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {
   CREATOR_ROLE_ID,

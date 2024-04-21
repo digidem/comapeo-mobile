@@ -1,4 +1,3 @@
-import React from 'react';
 import {SettingsIcon} from '../../sharedComponents/icons';
 
 import {IconButton} from '../../sharedComponents/IconButton';

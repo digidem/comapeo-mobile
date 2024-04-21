@@ -1,4 +1,3 @@
-import React from 'react';
 import {View, StyleSheet, TouchableNativeFeedback} from 'react-native';
 import {Text} from '../sharedComponents/Text';
 import debug from 'debug';

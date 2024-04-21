@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';

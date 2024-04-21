@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {FormattedMessage, MessageDescriptor} from 'react-intl';
 import {View, Text, StyleSheet} from 'react-native';
 

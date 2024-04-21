@@ -1,9 +1,9 @@
 import {UserLocation as MBUserLocation} from '@rnmapbox/maps';
-import * as React from 'react';
 import {useCurrentTrackStore} from '../../hooks/tracks/useCurrentTrackStore';
 import {useIsFullyFocused} from '../../hooks/useIsFullyFocused';
 import {UserTooltipMarker} from './track/UserTooltipMarker';
 
+// import {useExperiments} from '../../hooks/useExperiments';
 interface UserLocationProps {
   minDisplacement: number;
 }

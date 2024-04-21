@@ -7,7 +7,6 @@ import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../../../sharedComponents/Text';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {DARK_GREY, LIGHT_GREY} from '../../../../lib/styles';
-import React from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {DeviceNameWithIcon} from '../../../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../../../sharedComponents/RoleWithIcon';

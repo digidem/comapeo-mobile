@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, FormattedMessage} from 'react-intl';
 import DeviceInfo from 'react-native-device-info';

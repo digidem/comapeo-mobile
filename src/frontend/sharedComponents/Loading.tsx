@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {View, StyleSheet, Easing} from 'react-native';
 import {DotIndicator} from 'react-native-indicators';
 import {ViewStyleProp} from '../sharedTypes';

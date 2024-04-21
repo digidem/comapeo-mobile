@@ -3,7 +3,9 @@ import {
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 import {NavigatorScreenParams} from '@react-navigation/native';
-import * as React from 'react';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {useForegroundPermissions} from 'expo-location';
+
 import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {RootStack} from '../AppStack';
 import {MessageDescriptor} from 'react-intl';

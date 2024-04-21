@@ -1,5 +1,4 @@
 import {Observation} from '@mapeo/schema';
-import React from 'react';
 import MapboxGL from '@rnmapbox/maps';
 import {useAllObservations} from '../../hooks/useAllObservations';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';

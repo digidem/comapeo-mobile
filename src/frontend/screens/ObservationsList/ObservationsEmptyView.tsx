@@ -1,4 +1,3 @@
-import React from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import {Text} from '../../sharedComponents/Text';
 import {defineMessages, useIntl} from 'react-intl';

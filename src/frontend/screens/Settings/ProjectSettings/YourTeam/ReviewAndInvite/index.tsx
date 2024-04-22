@@ -31,11 +31,10 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
 
   function sendInvite() {
     sendInviteMutation.mutate(
-      // @ts-ignore
       {deviceId, role: {roleId: role}},
       {
         onSuccess: val => {
-          // If user has attempted to cancel and invite, but an invite has been accepted, let user know their cancellation was unsuccessfuly
+          // If user has attempted to cancel an invite, but an invite has already been accepted, let user know their cancellation was unsuccessful
           if (val === 'ACCEPT' && requestCancelInviteMutation.isPending) {
             navigation.navigate('UnableToCancelInvite', {...route.params});
             return;

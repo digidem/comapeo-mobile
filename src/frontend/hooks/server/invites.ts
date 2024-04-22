@@ -29,6 +29,7 @@ export function useAcceptInvite(projectId?: string) {
       mapeoApi.invite.accept({inviteId});
     },
     onSuccess: () => {
+      // This is a workaround. There is a race condition where the project in not available when the invite is accepted. This is temporary and is currently being worked on.
       setTimeout(() => {
         queryClient
           .invalidateQueries({queryKey: [INVITE_KEY, PROJECTS_KEY]})

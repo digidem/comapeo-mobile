@@ -7,15 +7,15 @@
   "main": "index.js",
   "scripts": {
     "build": "node ./scripts/bundle-backend.mjs --entry=index.js --output=index.bundle.js",
-    "lint": "tsc",
+    "lint:types": "tsc --noEmit",
     "postinstall": "patch-package"
   },
   "author": "Digital Democracy",
   "license": "MIT",
   "dependencies": {
-    "@mapeo/core": "^9.0.0-alpha.6",
+    "@mapeo/core": "9.0.0-alpha.7",
     "@mapeo/default-config": "^4.0.0-alpha.0",
-    "@mapeo/ipc": "^0.2.0",
+    "@mapeo/ipc": "0.3.0",
     "debug": "^4.3.4"
   },
   "devDependencies": {

@@ -3,7 +3,7 @@ import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {SaveTrackHeader} from './saveTrack/SaveTrackHeader';
 import {DiscardTrackModal} from './saveTrack/DiscardTrackModal';
-import {BottomSheet} from '../../ObservationEdit/BottomSheet';
+import {BottomSheet} from '../../../sharedComponents/BottomSheet/BottomSheet';
 import PhotoIcon from '../../../images/camera.svg';
 import DetailsIcon from '../../../images/details.svg';
 import TrackIcon from '../../../images/Track.svg';

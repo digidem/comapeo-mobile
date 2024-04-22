@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Button} from '../../../../../sharedComponents/Button';
-import ErrorIcon from '../../../../images/Error.svg';
+import ErrorIcon from '../../../../../images/Error.svg';
 import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../../../../sharedComponents/Text';
 import {DeviceNameWithIcon} from '../../../../../sharedComponents/DeviceNameWithIcon';
@@ -39,7 +39,7 @@ export const UnableToCancelInvite = ({
     <View style={styles.container}>
       <View style={{alignItems: 'center'}}>
         <ErrorIcon />
-        <Text style={{marginTop: 10, fontSize: 20, fontWeight: 'bold'}}>
+        <Text style={{marginTop: 20, fontSize: 20, fontWeight: 'bold'}}>
           {formatMessage(m.unableToCancel)}
         </Text>
         {data?.name && (

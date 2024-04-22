@@ -147,6 +147,7 @@ const HomeTabs = () => {
         tabBarShowLabel: false,
         headerTransparent: true,
         tabBarTestID: 'tabBarButton' + route.name,
+        header: HomeHeader,
       })}
       initialRouteName={TabName.Map}
       backBehavior="initialRoute">
@@ -154,7 +155,6 @@ const HomeTabs = () => {
         name={TabName.Map}
         component={MapScreen}
         options={{
-          header: HomeHeader,
           tabBarIcon: MapTabBarIcon,
         }}
       />
@@ -162,7 +162,6 @@ const HomeTabs = () => {
         name={TabName.Camera}
         component={CameraScreen}
         options={{
-          headerShown: false,
           tabBarIcon: CameraTabBarIcon,
         }}
       />

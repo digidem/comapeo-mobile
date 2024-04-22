@@ -637,6 +637,9 @@
     "description": "Title of settings screen",
     "message": "Settings"
   },
+  "screens.Track.trackHeader": {
+    "message": "Observation"
+  },
   "sharedComponents.DeviceCard.ThisDevice": {
     "message": "This Device!"
   },

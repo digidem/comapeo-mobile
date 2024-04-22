@@ -10,7 +10,7 @@ import TrackIcon from '../../../images/Track.svg';
 import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../../sharedComponents/Text';
 import {TrackDescriptionField} from './saveTrack/TrackDescriptionField';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {NavigationProp} from '@react-navigation/native';
 
 const m = defineMessages({
   editTitle: {
@@ -40,7 +40,6 @@ export const SaveTrackScreen: React.FC<{navigation: NavigationProp<any>}> = ({
 }) => {
   const {formatMessage: t} = useIntl();
   const [description, setDescription] = useState('');
-  useNavigation;
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
   const handleCameraPress = React.useCallback(() => {

@@ -65,15 +65,7 @@ export const SaveTrackScreen: React.FC<{navigation: NavigationProp<any>}> = ({
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.scrollViewContent}>
-        <View
-          style={{
-            marginTop: 20,
-            borderRadius: 6,
-            borderWidth: 1,
-            borderColor: '#EDEDED',
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
+        <View style={styles.titleWrapper}>
           <TrackIcon style={{width: 30, height: 30}} />
           <Text style={{fontSize: 20, fontWeight: '700'}}>Track</Text>
         </View>
@@ -93,6 +85,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignContent: 'stretch',
+  },
+  titleWrapper: {
+    marginTop: 20,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#EDEDED',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   scrollViewContent: {
     paddingHorizontal: 20,

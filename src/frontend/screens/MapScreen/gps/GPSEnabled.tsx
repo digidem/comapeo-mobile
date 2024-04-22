@@ -41,17 +41,19 @@ export const GPSEnabled = () => {
   const navigation = useNavigation();
 
   const handleTracking = useCallback(() => {
-    if (isTracking) {
-      cancelTracking();
-      if (locationHistory.length <= 1) {
-        clearCurrentTrack();
-        return;
-      }
-      navigation.navigate('SaveTrack' as never);
+    if (!isTracking) {
+      startTracking();
       return;
     }
-    startTracking();
-    isTracking ? cancelTracking() : startTracking();
+
+    cancelTracking();
+
+    if (locationHistory.length <= 1) {
+      clearCurrentTrack();
+      navigation.navigate('Home' as never);
+    } else {
+      navigation.navigate('SaveTrack' as never);
+    }
   }, [
     cancelTracking,
     clearCurrentTrack,

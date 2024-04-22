@@ -46,7 +46,15 @@ export const DiscardTrackModal: FC<DiscardTrackModal> = ({bottomSheetRef}) => {
   const clearCurrentTrack = useCurrentTrackStore(
     state => state.clearCurrentTrack,
   );
-  const onClose = () => bottomSheetRef.current?.close();
+  const handleDiscard = () => {
+    bottomSheetRef.current?.close();
+    navigation.navigate(TabName.Map);
+    clearCurrentTrack();
+  };
+
+  const handleContinue = () => {
+    bottomSheetRef.current?.close();
+  };
 
   const renderBackdrop = useCallback(
     (props: BottomSheetBackdropProps) => (
@@ -78,11 +86,7 @@ export const DiscardTrackModal: FC<DiscardTrackModal> = ({bottomSheetRef}) => {
           </Text>
           <Button
             fullWidth
-            onPress={() => {
-              navigation.navigate(TabName.Map);
-              clearCurrentTrack();
-              onClose();
-            }}
+            onPress={handleDiscard}
             style={styles.discardButton}>
             <View style={styles.discardButtonWrapper}>
               <DiscardIcon />
@@ -91,7 +95,10 @@ export const DiscardTrackModal: FC<DiscardTrackModal> = ({bottomSheetRef}) => {
               </Text>
             </View>
           </Button>
-          <Button fullWidth onPress={onClose} style={styles.defaultButton}>
+          <Button
+            fullWidth
+            onPress={handleContinue}
+            style={styles.defaultButton}>
             <Text style={[styles.buttonText, styles.defaultButtonText]}>
               {formatMessage(m.discardTrackDefaultButton)}
             </Text>

@@ -4,8 +4,8 @@ on:
   push:
     branches: [main]
   pull_request:
-    # By default, a workflow only runs when a pull_request 's activity type is
-    # opened , synchronize , or reopened. Adding ready_for_review here ensures
+    # By default, a workflow only runs when a pull_request's activity type is
+    # opened, synchronize, or reopened. Adding ready_for_review here ensures
     # that CI runs when a PR is marked as not a draft, since we skip CI when a
     # PR is draft
     types: [opened, synchronize, reopened, ready_for_review]

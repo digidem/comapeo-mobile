@@ -7,7 +7,6 @@
         "./node_modules/@digidem/types/vendor/*/index.d.ts"
       ]
     },
-    "resolveJsonModule": true,
     "allowJs": true,
     "checkJs": true,
     "noEmit": true,

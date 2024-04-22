@@ -564,6 +564,15 @@
   "screens.Settings.CreateOrJoinProject.whatIsAProject": {
     "message": "What is a Project"
   },
+  "screens.Settings.YourTeam.InviteDeclined": {
+    "message": "Invitation Declined"
+  },
+  "screens.Settings.YourTeam.close": {
+    "message": "Close"
+  },
+  "screens.Settings.YourTeam.inviteDeclinedDes": {
+    "message": "This device has declined your invitation. They have not joined the project."
+  },
   "screens.Settings.aboutMapeo": {
     "description": "Primary text for 'About Mapeo' link (version info)",
     "message": "About Mapeo"

@@ -54,6 +54,7 @@ import {useLocation} from '../../hooks/useLocation';
 import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
 import {getLocationStatus} from '../../lib/utils';
 import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/InviteDeclined';
+import {UnableToCancelInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/UnableToCancelInvite';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -127,6 +128,7 @@ export type AppList = {
   ReviewAndInvite: InviteProps;
   InviteAccepted: InviteProps;
   InviteDeclined: InviteProps;
+  UnableToCancelInvite: InviteProps;
   DeviceNameDisplay: undefined;
   DeviceNameEdit: undefined;
 };
@@ -338,6 +340,11 @@ export const createDefaultScreenGroup = (
     <RootStack.Screen
       name="InviteDeclined"
       component={InviteDeclined}
+      options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="UnableToCancelInvite"
+      component={UnableToCancelInvite}
       options={{headerShown: false}}
     />
   </RootStack.Group>

@@ -11,6 +11,22 @@ on:
     types: [opened, synchronize, reopened, ready_for_review]
 
 jobs:
+  all:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+      - name: Install deps
+        run: npm ci
+      - name: Check formatting
+        run: npm run lint:prettier
+
   backend:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -49,7 +65,5 @@ jobs:
         run: npm run build:translations
       - name: Build Intl polyfills
         run: npm run build:intl-polyfills
-      - name: Check formatting
-        run: npm run lint:prettier
       - name: Run unit tests
         run: npm test

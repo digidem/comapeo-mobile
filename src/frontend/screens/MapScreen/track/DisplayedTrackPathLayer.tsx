@@ -18,11 +18,7 @@ export const DisplayedTrackPathLayer: FC<DisplayedTrackPathLayer> = ({
       onPress={onPress}
       id="routeSource"
       shape={toRoute(locationHistory)}>
-      <LineLayer
-        id="routeFill"
-        belowLayerID="mapboxUserLocationPulseCircle"
-        style={styles.lineLayer}
-      />
+      <LineLayer id="routeFill" style={styles.lineLayer} />
     </ShapeSource>
   );
 };

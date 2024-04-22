@@ -1,20 +1,16 @@
 import React from 'react';
-import {StyleSheet, View, Dimensions, Image, SafeAreaView} from 'react-native';
-import {Text} from '../../../sharedComponents/Text';
-import {WHITE} from '../../../lib/styles';
-import TrackIcon from '../../../images/Track.svg';
+import {StyleSheet, View, Dimensions, Text} from 'react-native';
+import {BLACK, WHITE} from '../../../lib/styles';
 import DeleteIcon from '../../../images/DeleteTrack.svg';
 import ShareIcon from '../../../images/Share.svg';
-import {TrackObservation} from './TrackObservations';
 import MapboxGL from '@rnmapbox/maps';
 import {MAP_STYLE} from '..';
-import {ActionsButton} from './actions/ActionsButton';
-import {TrackPathLayer} from './TrackPathLayer';
 import {DisplayedTrackPathLayer} from './DisplayedTrackPathLayer';
+import {TrackObservation} from './TrackObservations';
+import {ActionsButton} from './actions/ActionsButton';
+import TrackIcon from '../../../images/Track.svg';
 
 export const TrackScreen = () => {
-  const [isFinishedLoading, setIsFinishedLoading] = React.useState(false);
-
   const actions = [
     {
       icon: DeleteIcon,
@@ -28,140 +24,182 @@ export const TrackScreen = () => {
     },
   ];
 
-  function handleDidFinishLoadingStyle() {
-    setIsFinishedLoading(true);
-  }
-  console.log(isFinishedLoading, 'isFinishedLoading');
   return (
     <>
-      <SafeAreaView style={styles.root}>
-        <View>
-          <Image
-            style={styles.mapIcon}
-            source={require('../../../images/observation-icon.png')}
+      <View>
+        <MapboxGL.MapView
+          style={styles.map}
+          zoomEnabled={false}
+          logoEnabled={false}
+          scrollEnabled={false}
+          pitchEnabled={false}
+          rotateEnabled={false}
+          compassEnabled={false}
+          scaleBarEnabled={false}
+          styleURL={MAP_STYLE}>
+          <MapboxGL.Camera
+            centerCoordinate={[19.93656, 50.06472]}
+            zoomLevel={12}
+            animationMode="none"
           />
-          <MapboxGL.MapView
-            style={styles.map}
-            zoomEnabled={false}
-            logoEnabled={false}
-            scrollEnabled={false}
-            pitchEnabled={false}
-            rotateEnabled={false}
-            compassEnabled={false}
-            scaleBarEnabled={false}
-            onDidFinishLoadingStyle={handleDidFinishLoadingStyle}
-            styleURL={MAP_STYLE}>
-            <MapboxGL.Camera
-              centerCoordinate={[52, 22]}
-              zoomLevel={12}
-              animationMode="none"
-            />
-            {isFinishedLoading && (
-              <DisplayedTrackPathLayer
-                onPress={() => {}}
-                locationHistory={[
-                  {
-                    latitude: 52.0,
-                    longitude: 22.0,
-                    timestamp: 1647289200,
-                  },
-                  {
-                    latitude: 52.001,
-                    longitude: 22.001,
-                    timestamp: 1647292800,
-                  },
-                  {
-                    latitude: 52.002,
-                    longitude: 22.002,
-                    timestamp: 1647296400,
-                  },
-                  {
-                    latitude: 52.003,
-                    longitude: 22.003,
-                    timestamp: 1647300000,
-                  },
-                  {
-                    latitude: 52.004,
-                    longitude: 22.004,
-                    timestamp: 1647303600,
-                  },
-                  {
-                    latitude: 52.005,
-                    longitude: 22.005,
-                    timestamp: 1647307200,
-                  },
-                  {
-                    latitude: 52.006,
-                    longitude: 22.006,
-                    timestamp: 1647310800,
-                  },
-                  {
-                    latitude: 52.007,
-                    longitude: 22.007,
-                    timestamp: 1647314400,
-                  },
-                  {
-                    latitude: 52.008,
-                    longitude: 22.008,
-                    timestamp: 1647318000,
-                  },
-                  {
-                    latitude: 52.009,
-                    longitude: 22.009,
-                    timestamp: 1647321600,
-                  },
-                ]}
-              />
-            )}
-          </MapboxGL.MapView>
-        </View>
-        <View style={styles.trackTitle}>
-          <TrackIcon style={{marginRight: 10}} />
-          <Text style={{fontSize: 20, fontWeight: '700'}}>Tracks</Text>
-        </View>
-        <TrackObservation
-          observationsAmount={4}
-          observations={[
-            {
-              attachments: [],
-              createdAt: '2024-04-19T07:37:42.271Z',
-              createdBy:
-                'b4e82acc88024d5481b2949e771227ee744b32014e2e7465966c8ba52ecba630',
-              deleted: false,
-              docId:
-                '968d05026e6e20e997ea80abcf4dc027362fd7ec3a3113025ddc15bb7dba77bd',
-              forks: [
-                'b4e82acc88024d5481b2949e771227ee744b32014e2e7465966c8ba52ecba630/0',
-                'b4e82acc88024d5481b2949e771227ee744b32014e2e7465966c8ba52ecba630/0',
-                'b4e82acc88024d5481b2949e771227ee744b32014e2e7465966c8ba52ecba630/0',
-                'b4e82acc88024d5481b2949e771227ee744b32014e2e7465966c8ba52ecba630/0',
-                'b4e82acc88024d5481b2949e771227ee744b32014e2e7465966c8ba52ecba630/0',
-                'b4e82acc88024d5481b2949e771227ee744b32014e2e7465966c8ba52ecba630/0',
-                'b4e82acc88024d5481b2949e771227ee744b32014e2e7465966c8ba52ecba630/0',
-                'b4e82acc88024d5481b2949e771227ee744b32014e2e7465966c8ba52ecba630/0',
-                'b4e82acc88024d5481b2949e771227ee744b32014e2e7465966c8ba52ecba630/0',
-                'b4e82acc88024d5481b2949e771227ee744b32014e2e7465966c8ba52ecba630/0',
-              ],
-              lat: 50.0590383,
-              links: [],
-              lon: 19.9399929,
-              metadata: {
-                position: {
-                  coords: [{latitude: 22, longitude: 44}],
-                  mocked: false,
-                  timestamp: '1970-01-01T00:00:00.000Z',
-                },
+          <DisplayedTrackPathLayer
+            onPress={() => {}}
+            locationHistory={[
+              {
+                latitude: 50.06279,
+                longitude: 19.93688,
+                timestamp: 1713776455589,
               },
-              refs: [],
-              schemaName: 'observation',
-              tags: {aeroway: 'airstrip', type: 'aeroway'},
-              updatedAt: '2024-04-19T07:37:42.271Z',
-              versionId:
-                'b4e82acc88024d5481b2949e771227ee744b32014e2e7465966c8ba52ecba630/0',
+              {
+                latitude: 50.0629127,
+                longitude: 19.9365866,
+                timestamp: 1713776463925,
+              },
+              {
+                latitude: 50.0630497,
+                longitude: 19.9362622,
+                timestamp: 1713776472948,
+              },
+              {
+                latitude: 50.0631868,
+                longitude: 19.9359375,
+                timestamp: 1713776481975,
+              },
+              {
+                latitude: 50.063322,
+                longitude: 19.9356318,
+                timestamp: 1713776491000,
+              },
+              {
+                latitude: 50.0635501,
+                longitude: 19.9357714,
+                timestamp: 1713776502927,
+              },
+              {
+                latitude: 50.063752,
+                longitude: 19.9359579,
+                timestamp: 1713776512933,
+              },
+              {
+                latitude: 50.0639543,
+                longitude: 19.9361445,
+                timestamp: 1713776522928,
+              },
+              {
+                latitude: 50.0640681,
+                longitude: 19.9358108,
+                timestamp: 1713776535146,
+              },
+              {
+                latitude: 50.0641695,
+                longitude: 19.9354987,
+                timestamp: 1713776545191,
+              },
+              {
+                latitude: 50.0644038,
+                longitude: 19.9356067,
+                timestamp: 1713776564253,
+              },
+              {
+                latitude: 50.0645096,
+                longitude: 19.9359267,
+                timestamp: 1713776571291,
+              },
+              {
+                latitude: 50.0646138,
+                longitude: 19.9362404,
+                timestamp: 1713776578326,
+              },
+              {
+                latitude: 50.06472,
+                longitude: 19.93656,
+                timestamp: 1713776585347,
+              },
+              {
+                latitude: 50.0648397,
+                longitude: 19.9368859,
+                timestamp: 1713776591980,
+              },
+              {
+                latitude: 50.0646521,
+                longitude: 19.9370786,
+                timestamp: 1713776599947,
+              },
+              {
+                latitude: 50.0645045,
+                longitude: 19.9373671,
+                timestamp: 1713776608427,
+              },
+              {
+                latitude: 50.064395,
+                longitude: 19.9376829,
+                timestamp: 1713776615429,
+              },
+              {
+                latitude: 50.0642964,
+                longitude: 19.9380234,
+                timestamp: 1713776623435,
+              },
+              {
+                latitude: 50.0642002,
+                longitude: 19.9383574,
+                timestamp: 1713776631455,
+              },
+              {
+                latitude: 50.0641016,
+                longitude: 19.9387055,
+                timestamp: 1713776639483,
+              },
+            ]}
+          />
+        </MapboxGL.MapView>
+      </View>
+      <View style={styles.trackTitle}>
+        <TrackIcon style={{marginRight: 10}} />
+        <Text style={{fontSize: 20, fontWeight: '700'}}>Tracks</Text>
+      </View>
+      <TrackObservation
+        observationsAmount={4}
+        observations={[
+          {
+            attachments: [],
+            createdAt: '2024-04-19T07:37:42.271Z',
+            createdBy:
+              'b4e82acc88024d5481b2949e771227ee744b32014e2e7465966c8ba52ecba630',
+            deleted: false,
+            docId:
+              '968d05026e6e20e997ea80abcf4dc027362fd7ec3a3113025ddc15bb7dba77bd',
+            forks: [
+              'b4e82acc88024d5481b2949e771227ee744b32014e2e7465966c8ba52ecba630/0',
+              'b4e82acc88024d5481b2949e771227ee744b32014e2e7465966c8ba52ecba630/0',
+              'b4e82acc88024d5481b2949e771227ee744b32014e2e7465966c8ba52ecba630/0',
+              'b4e82acc88024d5481b2949e771227ee744b32014e2e7465966c8ba52ecba630/0',
+              'b4e82acc88024d5481b2949e771227ee744b32014e2e7465966c8ba52ecba630/0',
+              'b4e82acc88024d5481b2949e771227ee744b32014e2e7465966c8ba52ecba630/0',
+              'b4e82acc88024d5481b2949e771227ee744b32014e2e7465966c8ba52ecba630/0',
+              'b4e82acc88024d5481b2949e771227ee744b32014e2e7465966c8ba52ecba630/0',
+              'b4e82acc88024d5481b2949e771227ee744b32014e2e7465966c8ba52ecba630/0',
+              'b4e82acc88024d5481b2949e771227ee744b32014e2e7465966c8ba52ecba630/0',
+            ],
+            lat: 50.0590383,
+            links: [],
+            lon: 19.9399929,
+            metadata: {
+              position: {
+                coords: [{latitude: 22, longitude: 44}],
+                mocked: false,
+                timestamp: '1970-01-01T00:00:00.000Z',
+              },
             },
-          ]}
-        />
-      </SafeAreaView>
+            refs: [],
+            schemaName: 'observation',
+            tags: {aeroway: 'airstrip', type: 'aeroway'},
+            updatedAt: '2024-04-19T07:37:42.271Z',
+            versionId:
+              'b4e82acc88024d5481b2949e771227ee744b32014e2e7465966c8ba52ecba630/0',
+          },
+        ]}
+      />
       <ActionsButton actions={actions} />
     </>
   );
@@ -172,6 +210,11 @@ const MAP_HEIGHT = 250;
 const ICON_OFFSET = {x: 22, y: 21};
 
 export const styles = StyleSheet.create({
+  positionText: {
+    fontSize: 12,
+    color: BLACK,
+    fontWeight: '700',
+  },
   root: {
     backgroundColor: WHITE,
     flex: 1,

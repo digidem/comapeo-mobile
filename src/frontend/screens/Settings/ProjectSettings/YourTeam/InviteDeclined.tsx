@@ -46,13 +46,13 @@ export const InviteDeclined = ({
     <View style={styles.container}>
       <View style={{alignItems: 'center'}}>
         <ErrorIcon />
-        <Text style={{marginTop: 10, fontSize: 20, fontWeight: 'bold'}}>
+        <Text style={{marginTop: 20, fontSize: 20, fontWeight: 'bold'}}>
           {formatMessage(m.inviteDeclined)}
         </Text>
         <Text style={{marginTop: 10, textAlign: 'center'}}>
           {formatMessage(m.inviteDeclinedDes)}
         </Text>
-        <DeviceNameWithIcon {...deviceInfo} style={{marginTop: 10}} />
+        <DeviceNameWithIcon {...deviceInfo} style={{marginTop: 20}} />
       </View>
       <Button
         style={{marginTop: 10}}

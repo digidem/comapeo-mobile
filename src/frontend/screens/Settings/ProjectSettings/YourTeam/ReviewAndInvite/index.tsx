@@ -37,12 +37,12 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
       .then(val => {
         if (val === 'ACCEPT') {
           queryClient.invalidateQueries({queryKey: ['projectMembers']});
-          navigation.navigate('InviteAccepted', {...route.params});
+          navigation.navigate('InviteAccepted', route.params);
           return;
         }
 
         if (val === 'REJECT') {
-          navigation.navigate('InviteDeclined', {...route.params});
+          navigation.navigate('InviteDeclined', route.params);
           return;
         }
       })

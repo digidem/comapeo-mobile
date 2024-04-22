@@ -53,7 +53,10 @@ import {TabName} from '../types';
 import {CameraTabBarIcon} from './TabBar/CameraTabBarIcon';
 import {MapTabBarIcon} from './TabBar/MapTabBarIcon';
 import {SaveTrackScreen} from '../../screens/MapScreen/track/SaveTrackScreen';
-import {TrackScreen} from '../../screens/MapScreen/track/TrackScreen';
+import {
+  createTrackNavigationOptions,
+  TrackScreen,
+} from '../../screens/MapScreen/track/TrackScreen';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -359,9 +362,7 @@ export const createDefaultScreenGroup = (
     <RootStack.Screen
       name="Track"
       component={TrackScreen}
-      options={{
-        headerShown: false,
-      }}
+      options={createTrackNavigationOptions({intl})}
     />
   </RootStack.Group>
 );

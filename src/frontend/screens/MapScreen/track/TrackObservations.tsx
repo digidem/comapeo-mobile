@@ -10,7 +10,7 @@ import {Text} from '../../../sharedComponents/Text';
 import ChainIcon from '../../../images/Chain.svg';
 import Chevrondown from '../../../images/chevrondown.svg';
 import ChevrondownDefault from '../../../images/chevrondown-expanded.svg';
-import {ObservationListItem} from '../../ObservationsList/ObservationListItem';
+import {TrackListItem} from './TrackObservationItem';
 
 interface TrackObservation {
   observations: any[];
@@ -34,22 +34,22 @@ export function TrackObservation({
         style={[styles.wrapper, styles.elementWrapper]}>
         <View style={styles.wrapper}>
           <Text style={styles.text}>{observationsAmount}</Text>
-          <ChainIcon style={{marginRight: 10}} />
+          <ChainIcon style={{marginRight: 10, marginLeft: 2}} />
           <Text style={styles.text}>Observations</Text>
         </View>
         <Icon />
       </Pressable>
-      <Animated.ScrollView entering={FadeInUp} exiting={FadeOutUp}>
+      <Animated.View entering={FadeInUp} exiting={FadeOutUp}>
         {expanded &&
           observations.map((observation, index) => (
-            <ObservationListItem
+            <TrackListItem
               key={index}
               observation={observation}
               onPress={() => {}}
-              testID="id"
+              testID={'id' + index}
             />
           ))}
-      </Animated.ScrollView>
+      </Animated.View>
     </Animated.View>
   );
 }
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   elementWrapper: {
     justifyContent: 'space-between',
     marginVertical: 10,
-    marginHorizontal: 20,
+    marginHorizontal: 15,
   },
   text: {
     fontSize: 16,

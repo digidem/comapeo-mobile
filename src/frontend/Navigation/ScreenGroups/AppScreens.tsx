@@ -53,10 +53,18 @@ import {
 import {useLocation} from '../../hooks/useLocation';
 import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
 import {getLocationStatus} from '../../lib/utils';
+import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/InviteDeclined';
 
 export type HomeTabsList = {
   Map: undefined;
   Camera: undefined;
+};
+
+type InviteProps = {
+  name: string;
+  deviceType: DeviceType;
+  deviceId: string;
+  role: DeviceRole;
 };
 
 export type AppList = {
@@ -116,18 +124,9 @@ export type AppList = {
   YourTeam: undefined;
   SelectDevice: undefined;
   SelectInviteeRole: {name: string; deviceType: DeviceType; deviceId: string};
-  ReviewAndInvite: {
-    name: string;
-    deviceType: DeviceType;
-    deviceId: string;
-    role: DeviceRole;
-  };
-  InviteAccepted: {
-    name: string;
-    deviceType: DeviceType;
-    deviceId: string;
-    role: DeviceRole;
-  };
+  ReviewAndInvite: InviteProps;
+  InviteAccepted: InviteProps;
+  InviteDeclined: InviteProps;
   DeviceNameDisplay: undefined;
   DeviceNameEdit: undefined;
 };
@@ -197,9 +196,9 @@ export const createDefaultScreenGroup = (
       options={props => {
         const observationId = props.route.params?.observationId;
         return {
-          headerLeft: props => (
+          headerLeft: headerProp => (
             <CustomHeaderLeftClose
-              headerBackButtonProps={props}
+              headerBackButtonProps={headerProp}
               observationId={observationId}
             />
           ),
@@ -335,6 +334,11 @@ export const createDefaultScreenGroup = (
       name="GpsModal"
       component={GpsModal}
       options={createGpsModalNavigationOptions({intl})}
+    />
+    <RootStack.Screen
+      name="InviteDeclined"
+      component={InviteDeclined}
+      options={{headerShown: false}}
     />
   </RootStack.Group>
 );

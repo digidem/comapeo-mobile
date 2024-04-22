@@ -11,7 +11,7 @@ const MIGRATIONS_FOLDER_PATH = new URL(
 ).pathname
 
 const DEFAULT_CONFIG_PATH = new URL(
-  './node_modules/@mapeo/default-config/dist/mapeo-default-config-v4.0.0-alpha.0.mapeoconfig',
+  './node_modules/@mapeo/default-config/dist/mapeo-default-config.mapeoconfig',
   import.meta.url,
 ).pathname
 

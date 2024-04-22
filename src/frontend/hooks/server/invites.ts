@@ -4,7 +4,7 @@ import {
   useSuspenseQuery,
 } from '@tanstack/react-query';
 import {useApi} from '../../contexts/ApiContext';
-import {useProject} from './projects';
+import {PROJECTS_KEY, useProject, useUpdateActiveProjectId} from './projects';
 
 export const INVITE_KEY = 'pending_invites';
 
@@ -18,16 +18,26 @@ export function usePendingInvites() {
   });
 }
 
-export function useAcceptInvite() {
+export function useAcceptInvite(projectId?: string) {
   const mapeoApi = useApi();
   const queryClient = useQueryClient();
+  const switchActiveProject = useUpdateActiveProjectId();
+  console.log({projectId});
   return useMutation({
     mutationFn: async ({inviteId}: {inviteId: string}) => {
       if (!inviteId) return;
       mapeoApi.invite.accept({inviteId});
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [INVITE_KEY]});
+      setTimeout(() => {
+        queryClient
+          .invalidateQueries({queryKey: [INVITE_KEY, PROJECTS_KEY]})
+          .then(() => {
+            if (projectId) {
+              switchActiveProject(projectId);
+            }
+          });
+      }, 5000);
     },
   });
 }

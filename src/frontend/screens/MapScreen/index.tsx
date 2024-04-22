@@ -17,7 +17,7 @@ import ScaleBar from 'react-native-scale-bar';
 import {getCoords} from '../../hooks/useLocation';
 import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
 import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
-import {GPSModal} from './gps/GPSModal';
+import {GPSModal} from './GPSPermissions/GPSPermissionsModal';
 import {TrackPathLayer} from './track/TrackPathLayer';
 import {UserLocation} from './UserLocation';
 import {useSharedLocationContext} from '../../contexts/SharedLocationContext';

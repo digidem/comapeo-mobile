@@ -1,13 +1,13 @@
 import React, {useMemo} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Text} from '../../../sharedComponents/Text';
-import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes';
+import {Text} from './Text';
+import {useNavigationFromHomeTabs} from '../hooks/useNavigationWithTypes';
 import {useIsFocused} from '@react-navigation/native';
-import {useLocationProviderStatus} from '../../../hooks/useLocationProviderStatus';
-import {getLocationStatus} from '../../../lib/utils';
+import {useLocationProviderStatus} from '../hooks/useLocationProviderStatus';
+import {getLocationStatus} from '../lib/utils';
 import {defineMessages, useIntl} from 'react-intl';
-import {GpsIcon} from '../../../sharedComponents/icons';
-import {useSharedLocationContext} from '../../../contexts/SharedLocationContext';
+import {GpsIcon} from './icons';
+import {useSharedLocationContext} from '../contexts/SharedLocationContext';
 
 const m = defineMessages({
   noGps: {

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {GPSDisabled} from './GPSDisabled';
-import {GPSEnabled} from './GPSEnabled';
+import {GPSDisabled} from './GPSPermissionsDisabled';
+import {GPSEnabled} from './GPSPermissionsEnabled';
 import * as Location from 'expo-location';
 import {useGPSModalContext} from '../../../contexts/GPSModalContext';
 import {useNavigationStore} from '../../../hooks/useNavigationStore';

@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {IconButton} from './IconButton';
 import {ObservationListIcon} from './icons';
-import {GPSPill} from '../screens/MapScreen/gps/GPSPill';
+import {GPSPill} from './GPSPill';
 
 export const HomeHeader = ({navigation}) => {
   return (

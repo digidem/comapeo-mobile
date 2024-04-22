@@ -14,6 +14,8 @@ import ErrorIcon from '../../../../images/Error.svg';
 import {COMAPEO_BLUE, MAGENTA, WHITE} from '../../../../lib/styles';
 import {useNavigationFromHomeTabs} from '../../../../hooks/useNavigationWithTypes';
 import DiscardIcon from '../../../../images/delete.svg';
+import {useCurrentTrackStore} from '../../../../hooks/tracks/useCurrentTrackStore';
+import {TabName} from '../../../../Navigation/types';
 
 export interface DiscardTrackModal {
   bottomSheetRef: React.RefObject<BottomSheetModalMethods>;
@@ -41,7 +43,9 @@ const m = defineMessages({
 export const DiscardTrackModal: FC<DiscardTrackModal> = ({bottomSheetRef}) => {
   const {formatMessage} = useIntl();
   const navigation = useNavigationFromHomeTabs();
-
+  const clearCurrentTrack = useCurrentTrackStore(
+    state => state.clearCurrentTrack,
+  );
   const onClose = () => bottomSheetRef.current?.close();
 
   const renderBackdrop = useCallback(
@@ -75,7 +79,8 @@ export const DiscardTrackModal: FC<DiscardTrackModal> = ({bottomSheetRef}) => {
           <Button
             fullWidth
             onPress={() => {
-              navigation.navigate('Home');
+              navigation.navigate(TabName.Map);
+              clearCurrentTrack();
               onClose();
             }}
             style={styles.discardButton}>

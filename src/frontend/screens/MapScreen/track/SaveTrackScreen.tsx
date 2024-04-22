@@ -3,7 +3,6 @@ import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {SaveTrackHeader} from './saveTrack/SaveTrackHeader';
 import {DiscardTrackModal} from './saveTrack/DiscardTrackModal';
-import {DescriptionField} from '../../ObservationEdit/DescriptionField';
 import {BottomSheet} from '../../ObservationEdit/BottomSheet';
 import PhotoIcon from '../../../images/camera.svg';
 import DetailsIcon from '../../../images/details.svg';
@@ -11,6 +10,7 @@ import TrackIcon from '../../../images/Track.svg';
 import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../../sharedComponents/Text';
 import {TrackDescriptionField} from './saveTrack/TrackDescriptionField';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 
 const m = defineMessages({
   editTitle: {
@@ -35,9 +35,12 @@ const m = defineMessages({
   },
 });
 
-export const SaveTrackScreen = ({navigation}) => {
+export const SaveTrackScreen: React.FC<{navigation: NavigationProp<any>}> = ({
+  navigation,
+}) => {
   const {formatMessage: t} = useIntl();
   const [description, setDescription] = useState('');
+  useNavigation;
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
   const handleCameraPress = React.useCallback(() => {

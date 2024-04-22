@@ -33,7 +33,7 @@ import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateP
 import {JoinExistingProject} from '../../screens/Settings/CreateOrJoinProject/JoinExistingProject';
 import {YourTeam} from '../../screens/Settings/ProjectSettings/YourTeam';
 import {SelectDevice} from '../../screens/Settings/ProjectSettings/YourTeam/SelectDevice';
-import {DeviceRole, DeviceType} from '../../sharedTypes';
+import {DeviceType, DeviceRoleForNewInvite} from '../../sharedTypes';
 import {SelectInviteeRole} from '../../screens/Settings/ProjectSettings/YourTeam/SelectInviteeRole';
 import {ReviewInvitation} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/ReviewInvitation';
 import {InviteAccepted} from '../../screens/Settings/ProjectSettings/YourTeam/InviteAccepted';
@@ -64,7 +64,7 @@ type InviteProps = {
   name: string;
   deviceType: DeviceType;
   deviceId: string;
-  role: DeviceRole;
+  role: DeviceRoleForNewInvite;
 };
 
 export type AppList = {

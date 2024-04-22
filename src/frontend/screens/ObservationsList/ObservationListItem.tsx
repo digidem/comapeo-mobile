@@ -34,7 +34,7 @@ function ObservationListItemNotMemoized({
   onPress = () => {},
 }: ObservationListItemProps) {
   const {preset} = useObservationWithPreset(observation.docId);
-  const deviceId = '';
+  // const deviceId = '';
   //const iconId = preset && preset.icon;
   const iconId = '';
   // const iconColor = preset && preset.color;
@@ -44,14 +44,18 @@ function ObservationListItemNotMemoized({
   //   observationQuery.data && observationQuery.data.attachments
   // ).slice(0, 3);
   const photos = [];
-  const isMine = observation.createdBy === deviceId;
+  // const isMine = observation.createdBy === deviceId;
   return (
     <TouchableHighlight
       onPress={() => onPress(observation.docId)}
       testID={testID}
       style={{flex: 1, height: 80}}>
       <View
-        style={[styles.container, style, !isMine && styles.syncedObservation]}>
+        style={[
+          styles.container,
+          style,
+          // !isMine && styles.syncedObservation
+        ]}>
         <View style={styles.text}>
           {preset && (
             <Text style={styles.title}>
@@ -118,10 +122,10 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 80,
   },
-  syncedObservation: {
-    borderLeftWidth: 5,
-    borderLeftColor: '#3C69F6',
-  },
+  // syncedObservation: {
+  //   borderLeftWidth: 5,
+  //   borderLeftColor: '#3C69F6',
+  // },
   text: {
     flex: 1,
     flexDirection: 'column',

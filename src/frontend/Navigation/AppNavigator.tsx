@@ -65,7 +65,7 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   return (
     <React.Fragment>
       <RootStack.Navigator
-        initialRouteName={'SaveTrackScreen'}
+        initialRouteName={'Track'}
         // initialRouteName={getInitialRouteName({
         //   hasDeviceName: !!deviceInfo.data?.name,
         //   existingObservation,

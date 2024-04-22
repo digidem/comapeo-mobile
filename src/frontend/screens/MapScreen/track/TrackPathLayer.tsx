@@ -38,7 +38,7 @@ export const TrackPathLayer = () => {
   );
 };
 
-const toRoute = (locations: LocationHistoryPoint[]): LineString => {
+export const toRoute = (locations: LocationHistoryPoint[]): LineString => {
   return {
     type: 'LineString',
     coordinates: locations.map(location => [

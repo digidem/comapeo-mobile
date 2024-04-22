@@ -53,6 +53,7 @@ import {TabName} from '../types';
 import {CameraTabBarIcon} from './TabBar/CameraTabBarIcon';
 import {MapTabBarIcon} from './TabBar/MapTabBarIcon';
 import {SaveTrackScreen} from '../../screens/MapScreen/track/SaveTrackScreen';
+import {TrackScreen} from '../../screens/MapScreen/track/TrackScreen';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -134,6 +135,7 @@ export type AppList = {
   DeviceNameDisplay: undefined;
   DeviceNameEdit: undefined;
   SaveTrack: undefined;
+  Track: undefined;
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
@@ -350,6 +352,13 @@ export const createDefaultScreenGroup = (
     <RootStack.Screen
       name="SaveTrack"
       component={SaveTrackScreen}
+      options={{
+        headerShown: false,
+      }}
+    />
+    <RootStack.Screen
+      name="Track"
+      component={TrackScreen}
       options={{
         headerShown: false,
       }}

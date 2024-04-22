@@ -22,7 +22,7 @@ export function useAcceptInvite(projectId?: string) {
   const mapeoApi = useApi();
   const queryClient = useQueryClient();
   const switchActiveProject = useUpdateActiveProjectId();
-  console.log({projectId});
+
   return useMutation({
     mutationFn: async ({inviteId}: {inviteId: string}) => {
       if (!inviteId) return;

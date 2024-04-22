@@ -30,7 +30,7 @@ jobs:
           npm ci --ignore-scripts
           npm run postinstall
       - name: Check types
-        run: npm run types
+        run: npm run lint:types
 
   frontend:
     runs-on: ubuntu-latest

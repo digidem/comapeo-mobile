@@ -279,6 +279,18 @@
     "description": "v is short for version. the translation for version can be used instead",
     "message": "V"
   },
+  "screens.InviteSuccess.goToMap": {
+    "message": "Go To Map"
+  },
+  "screens.InviteSuccess.goToSync": {
+    "message": "Go To Sync"
+  },
+  "screens.InviteSuccess.newProject": {
+    "message": "You have joined {projectName}"
+  },
+  "screens.InviteSuccess.success": {
+    "message": "Success"
+  },
   "screens.LeaveProject.AlreadyOnProject.leaveProj": {
     "message": "Leave Current Project"
   },
@@ -296,6 +308,9 @@
   },
   "screens.LeaveProject.leaveProj": {
     "message": "Leave Project"
+  },
+  "screens.LeaveProject.leavingProject": {
+    "message": "Leaving Project {projectName}"
   },
   "screens.LeaveProject.removeFromProjWithName": {
     "message": "This will remove all Project {projectName}'s data from your device."

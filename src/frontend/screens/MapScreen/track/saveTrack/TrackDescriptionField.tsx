@@ -4,7 +4,7 @@ import {StyleSheet, TextInput} from 'react-native';
 
 const m = defineMessages({
   descriptionPlaceholder: {
-    id: 'screens.ObservationEdit.ObservationEditView.descriptionPlaceholder',
+    id: 'screens.SaveTrack.TrackEditView.descriptionPlaceholder',
     defaultMessage: 'What is happening here?',
     description: 'Placeholder for description/notes field',
   },
@@ -31,7 +31,7 @@ export const TrackDescriptionField: React.FC<DescriptionField> = ({
       value={description}
       scrollEnabled={false}
       textContentType="none"
-      testID="observationDescriptionField"
+      testID="trackDescriptionField"
     />
   );
 };

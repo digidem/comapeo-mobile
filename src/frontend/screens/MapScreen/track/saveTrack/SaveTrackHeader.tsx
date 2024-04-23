@@ -8,13 +8,27 @@ import {useCurrentTrackStore} from '../../../../hooks/tracks/useCurrentTrackStor
 import {DateTime} from 'luxon';
 import {TabName} from '../../../../Navigation/types';
 import {useNavigationFromHomeTabs} from '../../../../hooks/useNavigationWithTypes';
+import {defineMessages, useIntl} from 'react-intl';
+
+const m = defineMessages({
+  trackEditScreenTitle: {
+    id: 'screens.SaveTrack.TrackEditView.title',
+    defaultMessage: 'New Track',
+    description: 'Title for new track screen',
+  },
+});
+
 export interface SaveTrackHeader {
   bottomSheetRef: React.RefObject<BottomSheetModalMethods>;
 }
+
 export const SaveTrackHeader: FC<SaveTrackHeader> = ({bottomSheetRef}) => {
   const saveTrack = useCreateTrack();
   const currentTrack = useCurrentTrackStore();
   const navigation = useNavigationFromHomeTabs();
+
+  const {formatMessage: t} = useIntl();
+
   const handleSaveClick = () => {
     saveTrack.mutate(
       {
@@ -52,7 +66,7 @@ export const SaveTrackHeader: FC<SaveTrackHeader> = ({bottomSheetRef}) => {
           onPress={() => bottomSheetRef.current?.present()}>
           <Close style={styles.closeIcon} />
         </Pressable>
-        <Text style={styles.text}>New Observation</Text>
+        <Text style={styles.text}>{t(m.trackEditScreenTitle)}</Text>
       </View>
       <Pressable disabled={saveTrack.isPending} onPress={handleSaveClick}>
         <Image
@@ -63,6 +77,7 @@ export const SaveTrackHeader: FC<SaveTrackHeader> = ({bottomSheetRef}) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     borderBottomWidth: 1,

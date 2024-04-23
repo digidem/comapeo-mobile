@@ -13,23 +13,18 @@ import {TrackDescriptionField} from './saveTrack/TrackDescriptionField';
 import {NavigationProp} from '@react-navigation/native';
 
 const m = defineMessages({
-  editTitle: {
-    id: 'screens.ObservationEdit.editTitle',
-    defaultMessage: 'Edit Observation',
-    description: 'screen title for edit observation screen',
-  },
   newTitle: {
-    id: 'screens.ObservationEdit.newTitle',
-    defaultMessage: 'New Observation',
-    description: 'screen title for new observation screen',
+    id: 'screens.SaveTrack.track',
+    defaultMessage: 'Track',
+    description: 'Category title for new track screen',
   },
   detailsButton: {
-    id: 'screens.ObservationEdit.ObservationEditView.saveTrackDetails',
+    id: 'screens.SaveTrack.TrackEditView.saveTrackDetails',
     defaultMessage: 'Details',
     description: 'Button label for check details',
   },
   photoButton: {
-    id: 'screens.ObservationEdit.ObservationEditView.saveTrackCamera',
+    id: 'screens.SaveTrack.TrackEditView.saveTrackCamera',
     defaultMessage: 'Camera',
     description: 'Button label for adding photo',
   },
@@ -66,7 +61,7 @@ export const SaveTrackScreen: React.FC<{navigation: NavigationProp<any>}> = ({
         contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.titleWrapper}>
           <TrackIcon style={styles.icon} />
-          <Text style={styles.titleText}>Track</Text>
+          <Text style={styles.titleText}>{t(m.newTitle)}</Text>
         </View>
         <TrackDescriptionField
           description={description}

@@ -3,23 +3,30 @@ import {calculateTotalDistance} from '../../utils/distance';
 import {LocationHistoryPoint} from '../../sharedTypes/location';
 
 type TracksStoreState = {
-  isTracking: boolean;
   locationHistory: LocationHistoryPoint[];
   observations: string[];
   distance: number;
-  trackingSince: Date;
   addNewObservation: (observationId: string) => void;
   addNewLocations: (locationData: LocationHistoryPoint[]) => void;
   clearLocationHistory: () => void;
   setTracking: (val: boolean) => void;
-};
+} & (
+  | {
+      isTracking: true;
+      trackingSince: Date;
+    }
+  | {
+      isTracking: false;
+      trackingSince: null;
+    }
+);
 
 export const useCurrentTrackStore = create<TracksStoreState>(set => ({
   isTracking: false,
   locationHistory: [],
   observations: [],
   distance: 0,
-  trackingSince: new Date(0),
+  trackingSince: null,
   addNewObservation: (id: string) =>
     set(state => ({observations: [...state.observations, id]})),
   addNewLocations: data =>
@@ -49,8 +56,9 @@ export const useCurrentTrackStore = create<TracksStoreState>(set => ({
     }),
   clearLocationHistory: () => set(() => ({locationHistory: []})),
   setTracking: (val: boolean) =>
-    set(() => ({
-      isTracking: val,
-      trackingSince: val ? new Date() : new Date(0),
-    })),
+    set(() =>
+      val
+        ? {isTracking: true, trackingSince: new Date()}
+        : {isTracking: false, trackingSince: null},
+    ),
 }));

@@ -664,8 +664,12 @@
     "description": "Title of settings screen",
     "message": "Settings"
   },
+  "screens.Track.title": {
+    "description": "Title of track screen showing (non-editable) view of observation with map",
+    "message": "Track"
+  },
   "screens.Track.trackHeader": {
-    "message": "Observation"
+    "message": "Track"
   },
   "sharedComponents.DeviceCard.ThisDevice": {
     "message": "This Device!"

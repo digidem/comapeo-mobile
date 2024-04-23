@@ -20,10 +20,6 @@ export function useTracking() {
   const setTracking = useCurrentTrackStore(state => state.setTracking);
   const isTracking = useCurrentTrackStore(state => state.isTracking);
 
-  React.useEffect(() => {
-    TaskManager.defineTask(LOCATION_TASK_NAME, addNewTrackLocations);
-  }, []);
-
   const addNewTrackLocations = useCallback(
     ({data, error}: LocationCallbackInfo) => {
       if (error) {
@@ -42,14 +38,18 @@ export function useTracking() {
     [addNewLocations],
   );
 
-  const startTracking = useCallback(async () => {
-    setLoading(true);
+  React.useEffect(() => {
+    TaskManager.defineTask(LOCATION_TASK_NAME, addNewTrackLocations);
+  }, [addNewTrackLocations]);
 
+  const startTracking = useCallback(async () => {
     if (isTracking) {
       console.warn('Start tracking attempt while tracking already enabled');
       setLoading(false);
       return;
     }
+
+    setLoading(true);
 
     await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
       accuracy: Location.Accuracy.Highest,

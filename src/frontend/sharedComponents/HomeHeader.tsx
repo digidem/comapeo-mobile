@@ -3,12 +3,11 @@ import {View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {IconButton} from './IconButton';
 import {ObservationListIcon} from './icons';
+import {GPSPill} from './GPSPill';
 import {useNavigationFromHomeTabs} from '../hooks/useNavigationWithTypes';
-import {GPSPill} from '../screens/MapScreen/gps/GPSPill';
 
 export const HomeHeader = () => {
   const navigation = useNavigationFromHomeTabs();
-
   return (
     <View style={[styles.header]}>
       <LinearGradient

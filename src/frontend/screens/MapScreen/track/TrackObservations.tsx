@@ -13,6 +13,7 @@ import ChevrondownDefault from '../../../images/chevrondown-expanded.svg';
 import {TrackListItem} from './TrackListItem';
 import {Observation} from '@mapeo/schema';
 import {ObservationListItem} from '../../ObservationsList/ObservationListItem.tsx';
+import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes.ts';
 
 interface TrackObservation {
   observations: Observation[];
@@ -21,7 +22,7 @@ interface TrackObservation {
 export function TrackObservationList({observations}: TrackObservation) {
   const [expanded, setExpanded] = useState(false);
   const onPress = () => setExpanded(!expanded);
-
+  const navigation = useNavigationFromHomeTabs();
   const Icon = expanded ? Chevrondown : ChevrondownDefault;
 
   return (
@@ -43,7 +44,11 @@ export function TrackObservationList({observations}: TrackObservation) {
             <ObservationListItem
               key={index}
               observation={observation}
-              onPress={() => {}}
+              onPress={() => {
+                navigation.navigate('Observation', {
+                  observationId: observation.docId,
+                });
+              }}
               testID={'id' + index}
             />
           ))}

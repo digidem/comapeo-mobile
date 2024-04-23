@@ -7,8 +7,8 @@ import StartTrackingIcon from '../../../images/StartTracking.svg';
 import StopTrackingIcon from '../../../images/StopTracking.svg';
 import {useTrackTimerContext} from '../../../contexts/TrackTimerContext';
 import {defineMessages, useIntl} from 'react-intl';
-import {useNavigation} from '@react-navigation/native';
 import {useCurrentTrackStore} from '../../../hooks/tracks/useCurrentTrackStore';
+import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes';
 
 const m = defineMessages({
   defaultButtonText: {
@@ -38,7 +38,7 @@ export const GPSPermissionsEnabled = () => {
   );
   const {timer} = useTrackTimerContext();
   const styles = getStyles(isTracking);
-  const navigation = useNavigation();
+  const navigation = useNavigationFromHomeTabs();
 
   const handleTracking = useCallback(() => {
     if (!isTracking) {
@@ -50,9 +50,9 @@ export const GPSPermissionsEnabled = () => {
 
     if (locationHistory.length <= 1) {
       clearCurrentTrack();
-      navigation.navigate('Home' as never);
+      navigation.navigate('Map');
     } else {
-      navigation.navigate('SaveTrack' as never);
+      navigation.navigate('SaveTrack');
     }
   }, [
     cancelTracking,

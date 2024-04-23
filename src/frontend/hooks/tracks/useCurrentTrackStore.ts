@@ -57,7 +57,8 @@ export const useCurrentTrackStore = create<TracksStoreState>(set => ({
   clearCurrentTrack: () =>
     set(() => ({
       locationHistory: [],
-      trackingSince: new Date(0),
+      trackingSince: null,
+      distance: 0,
       isTracking: false,
       observations: [],
     })),

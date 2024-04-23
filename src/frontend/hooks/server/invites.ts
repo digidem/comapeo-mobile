@@ -4,6 +4,7 @@ import {
   useSuspenseQuery,
 } from '@tanstack/react-query';
 import {useApi} from '../../contexts/ApiContext';
+import {PROJECTS_KEY, useProject, useUpdateActiveProjectId} from './projects';
 
 export const INVITE_KEY = 'pending_invites';
 
@@ -17,16 +18,27 @@ export function usePendingInvites() {
   });
 }
 
-export function useAcceptInvite() {
+export function useAcceptInvite(projectId?: string) {
   const mapeoApi = useApi();
   const queryClient = useQueryClient();
+  const switchActiveProject = useUpdateActiveProjectId();
+
   return useMutation({
     mutationFn: async ({inviteId}: {inviteId: string}) => {
       if (!inviteId) return;
       mapeoApi.invite.accept({inviteId});
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [INVITE_KEY]});
+      // This is a workaround. There is a race condition where the project in not available when the invite is accepted. This is temporary and is currently being worked on.
+      setTimeout(() => {
+        queryClient
+          .invalidateQueries({queryKey: [INVITE_KEY, PROJECTS_KEY]})
+          .then(() => {
+            if (projectId) {
+              switchActiveProject(projectId);
+            }
+          });
+      }, 5000);
     },
   });
 }
@@ -58,6 +70,36 @@ export function useClearAllPendingInvites() {
       queryClient.invalidateQueries({
         queryKey: [INVITE_KEY],
       });
+    },
+  });
+}
+
+export function useSendInvite() {
+  const queryClient = useQueryClient();
+  const project = useProject();
+  type InviteParams = Parameters<typeof project.$member.invite>;
+  return useMutation({
+    mutationFn: ({
+      deviceId,
+      role,
+    }: {
+      deviceId: InviteParams[0];
+      role: InviteParams[1];
+    }) => project.$member.invite(deviceId, role),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: [INVITE_KEY]});
+    },
+  });
+}
+
+export function useRequestCancelInvite() {
+  const queryClient = useQueryClient();
+  const project = useProject();
+  return useMutation({
+    mutationFn: (deviceId: string) =>
+      project.$member.requestCancelInvite(deviceId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: [INVITE_KEY]});
     },
   });
 }

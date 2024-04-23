@@ -1,0 +1,49 @@
+diff --git a/node_modules/@rollup/plugin-esm-shim/dist/es/index.js b/node_modules/@rollup/plugin-esm-shim/dist/es/index.js
+index 162763c..6e70fd8 100644
+--- a/node_modules/@rollup/plugin-esm-shim/dist/es/index.js
++++ b/node_modules/@rollup/plugin-esm-shim/dist/es/index.js
+@@ -28,22 +28,34 @@ function matchAllPolyfill(input, pattern) {
+     }
+     return output;
+ }
+-function findPositionToInsertShim(input, pattern) {
+-    let lastImport;
+-    // mimicking behavior of `String.matchAll` as it returns an iterator, not an array
+-    for (const match of matchAllPolyfill(input, pattern)) {
+-        lastImport = match;
++function findPositionToInsertShim(input) {
++    // Workaround for <https://github.com/rollup/plugins/issues/1709>.
++    // Finds the first index after the `import`s at the top of the file.
++    let result = 0;
++
++    let hasSeenImport = false;
++
++    // Doesn't handle CRLF newlines, but that shouldn't affect the result.
++    const lines = input.split(/\n/g);
++
++    for (const line of lines) {
++      const trimmed = line.trim();
++
++      const isImportOrBlankOrComment = !trimmed || trimmed.startsWith('import ') || trimmed.startsWith('//');
++
++      if (hasSeenImport && !isImportOrBlankOrComment) break;
++
++      result += line.length + 1; // add 1 for newline
++      hasSeenImport = hasSeenImport || isImportOrBlankOrComment;
+     }
+-    if (!lastImport) {
+-        return 0;
+-    }
+-    return (lastImport.index || 0) + lastImport[0].length;
++
++    return result;
+ }
+ function provideCJSSyntax(code) {
+     if (code.includes(ESMShim) || !CJSyntaxRegex.test(code)) {
+         return null;
+     }
+-    const indexToAppend = findPositionToInsertShim(code, ESMStaticImportRegex);
++    const indexToAppend = findPositionToInsertShim(code);
+     const s = new MagicString(code);
+     s.appendRight(indexToAppend, ESMShim);
+     const sourceMap = s.generateMap({

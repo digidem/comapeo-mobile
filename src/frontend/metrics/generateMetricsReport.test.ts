@@ -1,8 +1,12 @@
+import * as path from 'node:path';
+import * as fs from 'node:fs';
 import generateMetricsReport from './generateMetricsReport';
 
 describe('generateMetricsReport', () => {
+  const packageJson = readPackageJson();
+
   const defaultOptions: Parameters<typeof generateMetricsReport>[0] = {
-    packageJson: {version: '1.2.3'},
+    packageJson,
     os: 'android',
     osVersion: 123,
     screen: {width: 12, height: 34},
@@ -34,7 +38,7 @@ describe('generateMetricsReport', () => {
 
   it('includes the app version', () => {
     const report = generateMetricsReport(defaultOptions);
-    expect(report.appVersion).toBe('1.2.3');
+    expect(report.appVersion).toBe(packageJson.version);
   });
 
   it('includes the OS (Android style)', () => {
@@ -74,6 +78,18 @@ describe('generateMetricsReport', () => {
     expect(new Set(report.countries)).toEqual(new Set(['MEX', 'CAN', 'USA']));
   });
 });
+
+function readPackageJson() {
+  const packageJsonPath = path.resolve(
+    __dirname,
+    '..',
+    '..',
+    '..',
+    'package.json',
+  );
+  const packageJsonData = fs.readFileSync(packageJsonPath, 'utf8');
+  return JSON.parse(packageJsonData);
+}
 
 function removeUndefinedEntries(
   obj: Record<string, unknown>,

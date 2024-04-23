@@ -29,7 +29,7 @@ const m = defineMessages({
   },
 });
 
-export const GPSEnabled = () => {
+export const GPSPermissionsEnabled = () => {
   const {formatMessage} = useIntl();
   const {isTracking, cancelTracking, startTracking, loading} = useTracking();
   const locationHistory = useCurrentTrackStore(state => state.locationHistory);

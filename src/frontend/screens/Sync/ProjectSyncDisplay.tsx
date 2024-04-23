@@ -2,10 +2,8 @@ import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 import {Bar as ProgressBar} from 'react-native-progress';
-
-import {useDeviceInfo} from '../../hooks/server/deviceInfo';
-import {useProject, useProjectSettings} from '../../hooks/server/projects';
-import {useSyncProgress, useSyncState} from '../../hooks/useSyncState';
+import {useProject} from '../../hooks/server/projects';
+import {SyncState, useSyncProgress} from '../../hooks/useSyncState';
 import ObservationsProjectImage from '../../images/ObservationsProject.svg';
 import {
   BLACK,
@@ -18,8 +16,9 @@ import {
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {Button} from '../../sharedComponents/Button';
 import {Text} from '../../sharedComponents/Text';
-import {Loading} from '../../sharedComponents/Loading';
 import {StopIcon, SyncIcon, WifiIcon} from '../../sharedComponents/icons';
+import {useQueryClient} from '@tanstack/react-query';
+import {OBSERVATION_KEY} from '../../hooks/server/observations';
 
 const m = defineMessages({
   deviceName: {
@@ -71,26 +70,31 @@ const m = defineMessages({
   },
 });
 
-export const ProjectSyncDisplay = () => {
+export const ProjectSyncDisplay = ({
+  syncState,
+  projectName,
+  deviceName,
+}: {
+  syncState: SyncState;
+  projectName: string;
+  deviceName: string;
+}) => {
   const {formatMessage: t} = useIntl();
 
   const project = useProject();
-  const deviceInfoQuery = useDeviceInfo();
-  const projectSettingsQuery = useProjectSettings();
-
-  const syncState = useSyncState();
-
-  if (!syncState || !projectSettingsQuery.data || !deviceInfoQuery.data) {
-    return <Loading />;
-  }
-
-  const projectName = projectSettingsQuery.data.name;
-  const deviceName = deviceInfoQuery.data.name;
+  const queryClient = useQueryClient();
 
   const {connectedPeers, data, initial} = syncState;
+  const isSyncDone = !initial.dataToSync && !data.dataToSync;
+
+  React.useEffect(() => {
+    if (isSyncDone) {
+      project.$sync.stop();
+      queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY]});
+    }
+  }, [isSyncDone, project, queryClient]);
 
   const isDataSyncEnabled = data.syncing;
-  const isSyncDone = !initial.dataToSync && !data.dataToSync;
 
   const devicesSyncingText = isSyncDone
     ? t(m.upToDate)

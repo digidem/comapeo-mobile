@@ -3,7 +3,9 @@ import {useCallback, useSyncExternalStore} from 'react';
 
 import {useProject} from './server/projects';
 
-type SyncState = Awaited<ReturnType<MapeoProjectApi['$sync']['getState']>>;
+export type SyncState = Awaited<
+  ReturnType<MapeoProjectApi['$sync']['getState']>
+>;
 
 const projectSyncStoreMap = new WeakMap<MapeoProjectApi, SyncStore>();
 
@@ -120,6 +122,7 @@ class SyncStore {
   }
 
   #onSyncState = (state: SyncState) => {
+    console.log({from: 'listener', ...state});
     // Indicates whether data syncing went from enabled to disabled
     const isDataSyncStopped = this.#state?.data.syncing && !state.data.syncing;
 

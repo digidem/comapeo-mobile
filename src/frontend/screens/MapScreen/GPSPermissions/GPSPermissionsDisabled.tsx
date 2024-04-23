@@ -25,10 +25,12 @@ const m = defineMessages({
   },
 });
 
-interface GPSDisabled {
+interface GPSPermissionsDisabled {
   setIsGranted: React.Dispatch<React.SetStateAction<boolean | null>>;
 }
-export const GPSDisabled: React.FC<GPSDisabled> = ({setIsGranted}) => {
+export const GPSPermissionsDisabled: React.FC<GPSPermissionsDisabled> = ({
+  setIsGranted,
+}) => {
   const {formatMessage} = useIntl();
   const requestForLocationPermissions = async () => {
     const [foregroundPermission, backgroundPermission] = await Promise.all([

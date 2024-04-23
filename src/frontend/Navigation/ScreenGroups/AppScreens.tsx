@@ -62,6 +62,7 @@ import {
 } from '../../screens/MapScreen/track/TrackScreen';
 import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/InviteDeclined';
 import {UnableToCancelInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/UnableToCancelInvite';
+import {SharedLocationContextProvider} from '../../contexts/SharedLocationContext';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -209,7 +210,11 @@ export const createDefaultScreenGroup = (
     <RootStack.Screen
       name="Home"
       options={{headerShown: false}}
-      component={HomeTabs}
+      children={() => (
+        <SharedLocationContextProvider>
+          <HomeTabs />
+        </SharedLocationContextProvider>
+      )}
     />
     <RootStack.Screen
       name="AuthScreen"

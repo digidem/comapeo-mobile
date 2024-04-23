@@ -22,7 +22,11 @@ const m = defineMessages({
   },
 });
 
-export const WaitingForInviteAccept = () => {
+export const WaitingForInviteAccept = ({
+  cancelInvite,
+}: {
+  cancelInvite: () => void;
+}) => {
   const {formatMessage: t} = useIntl();
   const [time, setTime] = React.useState(0);
   const navigation = useNavigationFromRoot();
@@ -53,12 +57,7 @@ export const WaitingForInviteAccept = () => {
       <InviteSent />
       <Text style={{marginTop: 10}}>{t(m.waitingMessage)}</Text>
       <Text style={{marginTop: 20}}>{t(m.timerMessage, {seconds: time})}</Text>
-      <TextButton
-        title={t(m.cancelInvite)}
-        onPress={() => {
-          navigation.navigate('YourTeam');
-        }}
-      />
+      <TextButton title={t(m.cancelInvite)} onPress={cancelInvite} />
     </View>
   );
 };

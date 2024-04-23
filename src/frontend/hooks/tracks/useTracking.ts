@@ -41,13 +41,13 @@ export function useTracking() {
   }, [addNewTrackLocations]);
 
   const startTracking = useCallback(async () => {
-    setLoading(true);
-
     if (isTracking) {
       console.warn('Start tracking attempt while tracking already enabled');
       setLoading(false);
       return;
     }
+
+    setLoading(true);
 
     await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
       accuracy: Location.Accuracy.Highest,

@@ -8,18 +8,7 @@ export const calculateTotalDistance = (points: LonLatData[]): number => {
 
   const ruler = new CheapRuler(points[0]!.latitude, 'kilometers');
 
-  return points.reduce((previousValue, currentValue, i, arr) => {
-    if (i === 0) {
-      return previousValue;
-    }
-
-    const pointA = arr[i - 1]!!;
-    const pointB = currentValue;
-    const distance = ruler.distance(
-      [pointA.longitude, pointA.latitude],
-      [pointB.longitude, pointB.latitude],
-    );
-
-    return previousValue + distance;
-  }, 0);
+  return ruler.lineDistance(
+    points.map(point => [point.longitude, point.latitude]),
+  );
 };

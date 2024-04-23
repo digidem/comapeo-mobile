@@ -1,4 +1,7 @@
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {
+  BottomTabNavigationProp,
+  createBottomTabNavigator,
+} from '@react-navigation/bottom-tabs';
 import {NavigatorScreenParams} from '@react-navigation/native';
 import * as React from 'react';
 import {HomeHeader} from '../../sharedComponents/HomeHeader';
@@ -144,7 +147,9 @@ const HomeTabs = () => {
 
   return (
     <Tab.Navigator
-      screenListeners={{tabPress: handleTabPress}}
+      screenListeners={{
+        tabPress: handleTabPress,
+      }}
       screenOptions={({route}) => ({
         tabBarStyle: {height: TAB_BAR_HEIGHT},
         tabBarShowLabel: false,
@@ -174,7 +179,11 @@ const HomeTabs = () => {
           tabBarIcon: TrackingTabBarIcon,
           headerShown: false,
         }}
-        listeners={({navigation}) => ({
+        listeners={({
+          navigation,
+        }: {
+          navigation: BottomTabNavigationProp<HomeTabsList>;
+        }) => ({
           tabPress: e => {
             e.preventDefault();
             navigation.navigate(TabName.Map);

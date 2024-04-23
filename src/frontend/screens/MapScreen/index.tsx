@@ -34,7 +34,6 @@ export const MAP_STYLE = Mapbox.StyleURL.Outdoors;
 
 export const MapScreen = () => {
   const [zoom, setZoom] = React.useState(DEFAULT_ZOOM);
-
   const [isFinishedLoading, setIsFinishedLoading] = React.useState(false);
   const [following, setFollowing] = React.useState(true);
   const {newDraft} = useDraftObservation();

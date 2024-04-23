@@ -79,7 +79,7 @@ export const LeaveProject = ({
   }
   return (
     <View style={styles.container}>
-      {false ? (
+      {accept.isPending ? (
         <LeavingProjectProgress />
       ) : (
         <>
@@ -99,7 +99,7 @@ export const LeaveProject = ({
                   })
                 : formatMessage(m.removeFromProjWithoutName)}
             </Text>
-            <View>
+            <View style={{padding: 20}}>
               <TouchableOpacity
                 style={styles.check}
                 onPress={() => setIsChecked(val => !val)}>
@@ -116,7 +116,7 @@ export const LeaveProject = ({
                 </Text>
               </TouchableOpacity>
               {error && !isChecked && (
-                <Text style={{color: RED}}>
+                <Text style={{color: RED, marginTop: 20}}>
                   {formatMessage(m.checkToConfirm)}
                 </Text>
               )}
@@ -178,7 +178,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   check: {
-    padding: 20,
     marginTop: 30,
     width: '100%',
     display: 'flex',

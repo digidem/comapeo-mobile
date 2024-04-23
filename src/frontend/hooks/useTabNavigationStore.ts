@@ -7,7 +7,7 @@ type NavigationStoreState = {
   setCurrentTab: (tab: TabName) => void;
 };
 
-export const useNavigationStore = create<NavigationStoreState>(set => ({
+export const useTabNavigationStore = create<NavigationStoreState>(set => ({
   initialRouteName: TabName.Map,
   currentTab: TabName.Map,
   setCurrentTab: (tab: TabName) => set(() => ({currentTab: tab})),

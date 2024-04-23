@@ -17,7 +17,7 @@ import ScaleBar from 'react-native-scale-bar';
 import {getCoords} from '../../hooks/useLocation';
 import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
 import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
-import {GPSModal} from './gps/GPSModal';
+import {GPSPermissionsModal} from './GPSPermissions/GPSPermissionsModal';
 import {TrackPathLayer} from './track/TrackPathLayer';
 import {UserLocation} from './UserLocation';
 import {useSharedLocationContext} from '../../contexts/SharedLocationContext';
@@ -34,7 +34,6 @@ export const MAP_STYLE = Mapbox.StyleURL.Outdoors;
 
 export const MapScreen = () => {
   const [zoom, setZoom] = React.useState(DEFAULT_ZOOM);
-
   const [isFinishedLoading, setIsFinishedLoading] = React.useState(false);
   const [following, setFollowing] = React.useState(true);
   const {newDraft} = useDraftObservation();
@@ -123,7 +122,7 @@ export const MapScreen = () => {
         onPress={handleAddPress}
         isLoading={!isFinishedLoading}
       />
-      <GPSModal />
+      <GPSPermissionsModal />
     </View>
   );
 };

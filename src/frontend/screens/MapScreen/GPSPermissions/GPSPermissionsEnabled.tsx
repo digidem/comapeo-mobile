@@ -7,7 +7,8 @@ import StartTrackingIcon from '../../../images/StartTracking.svg';
 import StopTrackingIcon from '../../../images/StopTracking.svg';
 import {useTrackTimerContext} from '../../../contexts/TrackTimerContext';
 import {defineMessages, useIntl} from 'react-intl';
-import {useNavigation} from '@react-navigation/native';
+import {useCurrentTrackStore} from '../../../hooks/tracks/useCurrentTrackStore';
+import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes';
 
 const m = defineMessages({
   defaultButtonText: {
@@ -20,7 +21,7 @@ const m = defineMessages({
   },
   loadingButtonText: {
     id: 'Modal.GPSEnable.button.loading',
-    defaultMessage: 'Loading...',
+    defaultMessage: 'Loading…',
   },
   trackingDescription: {
     id: 'Modal.GPSEnable.trackingDescription',
@@ -28,22 +29,39 @@ const m = defineMessages({
   },
 });
 
-export const GPSEnabled = () => {
+export const GPSPermissionsEnabled = () => {
   const {formatMessage} = useIntl();
   const {isTracking, cancelTracking, startTracking, loading} = useTracking();
+  const locationHistory = useCurrentTrackStore(state => state.locationHistory);
+  const clearCurrentTrack = useCurrentTrackStore(
+    state => state.clearCurrentTrack,
+  );
   const {timer} = useTrackTimerContext();
   const styles = getStyles(isTracking);
-  const navigation = useNavigation();
+  const navigation = useNavigationFromHomeTabs();
 
   const handleTracking = useCallback(() => {
-    if (isTracking) {
-      cancelTracking();
-      navigation.navigate('SaveTrack' as never);
+    if (!isTracking) {
+      startTracking();
       return;
     }
-    startTracking();
-    isTracking ? cancelTracking() : startTracking();
-  }, [cancelTracking, isTracking, startTracking, navigation]);
+
+    cancelTracking();
+
+    if (locationHistory.length <= 1) {
+      clearCurrentTrack();
+      navigation.navigate('Map');
+    } else {
+      navigation.navigate('SaveTrack');
+    }
+  }, [
+    cancelTracking,
+    clearCurrentTrack,
+    locationHistory,
+    isTracking,
+    startTracking,
+    navigation,
+  ]);
 
   const getButtonTitle = () => {
     if (loading) return m.loadingButtonText;

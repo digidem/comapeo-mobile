@@ -16,7 +16,7 @@ let crcTable
  * @param {number | undefined | null} [initialState]
  * @returns {number}
  */
-function crc32(input, initialState = 0) {
+function crc32(input, initialState) {
   if (typeof input === 'string') return crc32(Buffer.from(input), initialState)
 
   if (!crcTable) {
@@ -30,7 +30,7 @@ function crc32(input, initialState = 0) {
     }
   }
 
-  let crc = ~~initialState ^ -1
+  let crc = ~~(initialState || 0) ^ -1
   for (let i = 0; i < input.length; i++) {
     crc = crcTable[(crc ^ input[i]) & 0xff] ^ (crc >>> 8)
   }

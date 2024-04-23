@@ -2,6 +2,8 @@ import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {useApi} from '../../contexts/ApiContext';
 import {useActiveProjectContext} from '../../contexts/ProjectContext';
 
+export const PROJECTS_KEY = 'all_projects';
+
 export function useUpdateActiveProjectId() {
   const projectContext = useActiveProjectContext();
   return projectContext.switchProject;
@@ -17,7 +19,7 @@ export function useAllProjects() {
 
   return useQuery({
     queryFn: async () => await api.listProjects(),
-    queryKey: ['projects'],
+    queryKey: [PROJECTS_KEY],
   });
 }
 

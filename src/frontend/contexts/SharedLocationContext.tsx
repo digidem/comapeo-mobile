@@ -25,29 +25,28 @@ const SharedLocationContextProvider = ({
   const [bgPermissions, setBgPermissions] = useState<boolean | null>(null);
   const [fgPermissions, setFgPermissions] = useState<boolean | null>(null);
 
-  useEffect(() => {
+  const refreshPermissionState = () => {
     getBackgroundPermissionsAsync().then(({granted}) =>
       setBgPermissions(granted),
     );
     getForegroundPermissionsAsync().then(({granted}) =>
       setFgPermissions(granted),
     );
-    const sub = AppState.addEventListener('change', newState => {
+  };
+
+  useEffect(refreshPermissionState, []);
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', newState => {
       if (
         appState.current.match(/inactive|background/) &&
         newState === 'active'
       ) {
-        getBackgroundPermissionsAsync().then(({granted}) =>
-          setBgPermissions(granted),
-        );
-        getForegroundPermissionsAsync().then(({granted}) =>
-          setFgPermissions(granted),
-        );
+        refreshPermissionState();
       }
       appState.current = newState;
     });
 
-    return () => sub.remove();
+    return () => subscription.remove();
   }, []);
 
   return (

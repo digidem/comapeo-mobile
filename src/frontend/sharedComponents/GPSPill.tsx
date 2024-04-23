@@ -1,13 +1,13 @@
 import React, {useMemo} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Text} from '../../../sharedComponents/Text';
-import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes';
+import {Text} from './Text';
 import {useIsFocused} from '@react-navigation/native';
-import {useLocationProviderStatus} from '../../../hooks/useLocationProviderStatus';
-import {getLocationStatus} from '../../../lib/utils';
+import {useLocationProviderStatus} from '../hooks/useLocationProviderStatus';
+import {getLocationStatus} from '../lib/utils';
 import {defineMessages, useIntl} from 'react-intl';
-import {GpsIcon} from '../../../sharedComponents/icons';
-import {useSharedLocationContext} from '../../../contexts/SharedLocationContext';
+import {GpsIcon} from './icons';
+import {useSharedLocationContext} from '../contexts/SharedLocationContext';
+import {BLACK, WHITE} from '../lib/styles';
 
 const m = defineMessages({
   noGps: {
@@ -20,7 +20,7 @@ const m = defineMessages({
   },
 });
 
-export const GPSPill = () => {
+export const GPSPill = ({navigation}) => {
   const isFocused = useIsFocused();
   const {formatMessage: t} = useIntl();
   const {locationState, fgPermissions} = useSharedLocationContext();
@@ -51,27 +51,43 @@ export const GPSPill = () => {
     } else return `± ${Math.round(precision!)} m`;
   }, [precision, status, t]);
 
-  const navigation = useNavigationFromHomeTabs();
-
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('GpsModal')}>
-      <View style={styles.indicatorWrapper}>
-        <View style={styles.wrapper}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate('GPSModal' as never)}
+      testID="gpsPillButton">
+      <View
+        style={[
+          styles.container,
+          status === 'error' ? styles.error : undefined,
+        ]}>
+        <View style={styles.icon}>
           {isFocused && <GpsIcon variant={status} />}
-          <Text style={styles.text}>{text}</Text>
         </View>
+        <Text style={styles.text} numberOfLines={1}>
+          {text}
+        </Text>
       </View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  indicatorWrapper: {
-    backgroundColor: '#333333',
-    borderRadius: 20,
-    paddingVertical: 14,
-    paddingHorizontal: 10,
+  container: {
+    flex: 0,
+    minWidth: 100,
+    maxWidth: 200,
+    borderRadius: 18,
+    height: 36,
+    paddingLeft: 32,
+    paddingRight: 20,
+    borderWidth: 3,
+    borderColor: '#33333366',
+    backgroundColor: BLACK,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
-  wrapper: {flexDirection: 'row', alignItems: 'center'},
-  text: {marginLeft: 5, color: '#fff', fontSize: 15},
+  error: {backgroundColor: '#FF0000'},
+  text: {color: WHITE},
+  icon: {position: 'absolute', left: 6},
 });

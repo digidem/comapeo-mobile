@@ -3,7 +3,6 @@ import React from 'react';
 import MapboxGL from '@rnmapbox/maps';
 import {useAllObservations} from '../../hooks/useAllObservations';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
-import {OnPressEvent} from '@rnmapbox/maps/lib/typescript/src/types/OnPressEvent';
 import {useCurrentTrackStore} from '../../hooks/tracks/useCurrentTrackStore';
 
 const DEFAULT_MARKER_COLOR = '#F29D4B';
@@ -24,17 +23,15 @@ export const ObservationMapLayer = () => {
     features: mapObservationsToFeatures(observations),
   };
 
-  function handlePressEvent(event: OnPressEvent) {
-    const properties = event.features[0]?.properties;
-    if (!properties) return;
-    if (!('id' in properties)) return;
-
-    navigate('Observation', {observationId: properties.id});
-  }
-
   return (
     <MapboxGL.ShapeSource
-      onPress={handlePressEvent}
+      onPress={event => {
+        const properties = event.features[0]?.properties;
+        if (!properties) return;
+        if (!('id' in properties)) return;
+
+        navigate('Observation', {observationId: properties.id});
+      }}
       id="observations-source"
       shape={featureCollection}>
       <MapboxGL.CircleLayer

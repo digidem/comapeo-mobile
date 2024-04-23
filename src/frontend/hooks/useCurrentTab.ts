@@ -1,10 +1,10 @@
 import {EventArg} from '@react-navigation/native';
 import {useGPSModalContext} from '../contexts/GPSModalContext';
-import {useNavigationStore} from './useNavigationStore';
+import {useTabNavigationStore} from './useTabNavigationStore.ts';
 import {TabName} from '../Navigation/types';
 
 export const useCurrentTab = () => {
-  const {setCurrentTab} = useNavigationStore();
+  const {setCurrentTab} = useTabNavigationStore();
   const {bottomSheetRef} = useGPSModalContext();
 
   const handleTabPress = ({target}: EventArg<'tabPress', true, undefined>) => {

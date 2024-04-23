@@ -55,6 +55,8 @@ import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
 import {getLocationStatus} from '../../lib/utils';
 import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/InviteDeclined';
 import {UnableToCancelInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/UnableToCancelInvite';
+import {AlreadyOnProject} from '../../screens/LeaveProject/AlreadyOnProject';
+import {LeaveProject} from '../../screens/LeaveProject';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -91,8 +93,7 @@ export type AppList = {
   ObservationEdit: {observationId?: string} | undefined;
   ManualGpsScreen: undefined;
   ObservationDetails: {question: number};
-  LeaveProjectScreen: undefined;
-  AlreadyOnProj: undefined;
+  LeaveProject: undefined;
   AddToProjectScreen: undefined;
   UnableToLinkScreen: undefined;
   ConnectingToDeviceScreen: {task: () => Promise<void>};
@@ -131,6 +132,7 @@ export type AppList = {
   UnableToCancelInvite: InviteProps;
   DeviceNameDisplay: undefined;
   DeviceNameEdit: undefined;
+  AlreadyOnProject: undefined;
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
@@ -181,171 +183,179 @@ const HomeTabs = () => {
 export const createDefaultScreenGroup = (
   intl: (title: MessageDescriptor) => string,
 ) => (
-  <RootStack.Group key="default">
-    <RootStack.Screen
-      name="Home"
-      options={{headerShown: false}}
-      component={HomeTabs}
-    />
-    <RootStack.Screen
-      name="AuthScreen"
-      component={AuthScreen}
-      options={{headerShown: false}}
-    />
-    <RootStack.Screen
-      name="ObservationEdit"
-      component={ObservationEdit}
-      options={props => {
-        const observationId = props.route.params?.observationId;
-        return {
-          headerLeft: headerProp => (
-            <CustomHeaderLeftClose
-              headerBackButtonProps={headerProp}
-              observationId={observationId}
-            />
-          ),
-          headerRight: () => <SaveButton observationId={observationId} />,
-          headerTitle: observationId
-            ? intl(ObservationEdit.editTitle)
-            : intl(ObservationEdit.navTitle),
-        };
-      }}
-    />
-    <RootStack.Screen
-      name="AddPhoto"
-      component={AddPhotoScreen}
-      options={{headerShown: false}}
-    />
-    <RootStack.Screen
-      name="Security"
-      component={Security}
-      options={{headerTitle: intl(Security.navTitle)}}
-    />
-    <RootStack.Screen
-      name="AppPasscode"
-      component={AppPasscode}
-      options={{headerTitle: intl(AppPasscode.navTitle)}}
-    />
-    <RootStack.Screen
-      name="DisablePasscode"
-      component={TurnOffPasscode}
-      options={{headerTitle: intl(TurnOffPasscode.navTitle)}}
-    />
-    <RootStack.Screen
-      name="SetPasscode"
-      component={SetPasscode}
-      options={{headerTitle: intl(SetPasscode.navTitle)}}
-    />
-    <RootStack.Screen
-      name="EnterPassToTurnOff"
-      component={EnterPassToTurnOff}
-      options={{headerTitle: intl(EnterPassToTurnOff.navTitle)}}
-    />
-    <RootStack.Screen
-      name="ObscurePasscode"
-      component={ObscurePasscode}
-      options={{headerTitle: intl(ObscurePasscode.navTitle)}}
-    />
-    <RootStack.Screen name="Settings" component={Settings} />
-    <RootStack.Screen
-      name="PresetChooser"
-      component={PresetChooser}
-      options={{headerTitle: intl(PresetChooser.navTitle)}}
-    />
-    <RootStack.Screen
-      name="ObservationList"
-      component={ObservationsList}
-      options={{headerTitle: intl(ObservationsList.navTitle)}}
-    />
-    <RootStack.Screen
-      name="Observation"
-      component={ObservationScreen}
-      options={{headerTitle: intl(ObservationScreen.navTitle)}}
-    />
-    <RootStack.Screen
-      name="AppSettings"
-      component={AppSettings}
-      options={{headerTitle: intl(AppSettings.navTitle)}}
-    />
-    <RootStack.Screen
-      name="ProjectSettings"
-      component={ProjectSettings}
-      options={{headerTitle: intl(ProjectSettings.navTitle)}}
-    />
-    <RootStack.Screen
-      name="CoordinateFormat"
-      component={CoordinateFormat}
-      options={{headerTitle: intl(CoordinateFormat.navTitle)}}
-    />
-    <RootStack.Screen
-      name="CreateOrJoinProject"
-      component={CreateOrJoinProject}
-      options={{headerTitle: intl(CreateOrJoinProject.navTitle)}}
-    />
-    <RootStack.Screen
-      name="CreateProject"
-      component={CreateProject}
-      options={{headerTitle: intl(CreateProject.navTitle)}}
-    />
-    <RootStack.Screen
-      name="ProjectCreated"
-      component={ProjectCreated}
-      options={{headerShown: false}}
-    />
-    <RootStack.Screen
-      name="JoinExistingProject"
-      component={JoinExistingProject}
-      options={{headerShown: false}}
-    />
-    <RootStack.Screen
-      name="YourTeam"
-      component={YourTeam}
-      options={{headerTitle: intl(YourTeam.navTitle)}}
-    />
-    <RootStack.Screen
-      name="SelectDevice"
-      component={SelectDevice}
-      options={{headerTitle: intl(SelectDevice.navTitle)}}
-    />
-    <RootStack.Screen
-      name="SelectInviteeRole"
-      component={SelectInviteeRole}
-      options={{headerTitle: intl(SelectInviteeRole.navTitle)}}
-    />
-    <RootStack.Screen
-      name="ReviewAndInvite"
-      component={ReviewAndInvite}
-      options={{headerTitle: intl(ReviewInvitation.navTitle)}}
-    />
-    <RootStack.Screen
-      name="InviteAccepted"
-      component={InviteAccepted}
-      options={{headerShown: false}}
-    />
-    <RootStack.Screen
-      name="DeviceNameDisplay"
-      component={DeviceNameDisplayScreen}
-      options={createDeviceNameDisplayNavOptions({intl})}
-    />
-    <RootStack.Screen
-      name="DeviceNameEdit"
-      component={DeviceNameEditScreen}
-      options={createDeviceNameEditNavOptions({intl})}
-    />
-    <RootStack.Screen
-      name="GpsModal"
-      component={GpsModal}
-      options={createGpsModalNavigationOptions({intl})}
-    />
-    <RootStack.Screen
-      name="InviteDeclined"
-      component={InviteDeclined}
-      options={{headerShown: false}}
-    />
-    <RootStack.Screen
-      name="UnableToCancelInvite"
-      component={UnableToCancelInvite}
-      options={{headerShown: false}}
-    />
-  </RootStack.Group>
+  <>
+    <RootStack.Group key="default">
+      <RootStack.Screen
+        name="Home"
+        options={{headerShown: false}}
+        component={HomeTabs}
+      />
+      <RootStack.Screen
+        name="AuthScreen"
+        component={AuthScreen}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="ObservationEdit"
+        component={ObservationEdit}
+        options={props => {
+          const observationId = props.route.params?.observationId;
+          return {
+            headerLeft: headerProp => (
+              <CustomHeaderLeftClose
+                headerBackButtonProps={headerProp}
+                observationId={observationId}
+              />
+            ),
+            headerRight: () => <SaveButton observationId={observationId} />,
+            headerTitle: observationId
+              ? intl(ObservationEdit.editTitle)
+              : intl(ObservationEdit.navTitle),
+          };
+        }}
+      />
+      <RootStack.Screen
+        name="AddPhoto"
+        component={AddPhotoScreen}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="Security"
+        component={Security}
+        options={{headerTitle: intl(Security.navTitle)}}
+      />
+      <RootStack.Screen
+        name="AppPasscode"
+        component={AppPasscode}
+        options={{headerTitle: intl(AppPasscode.navTitle)}}
+      />
+      <RootStack.Screen
+        name="DisablePasscode"
+        component={TurnOffPasscode}
+        options={{headerTitle: intl(TurnOffPasscode.navTitle)}}
+      />
+      <RootStack.Screen
+        name="SetPasscode"
+        component={SetPasscode}
+        options={{headerTitle: intl(SetPasscode.navTitle)}}
+      />
+      <RootStack.Screen
+        name="EnterPassToTurnOff"
+        component={EnterPassToTurnOff}
+        options={{headerTitle: intl(EnterPassToTurnOff.navTitle)}}
+      />
+      <RootStack.Screen
+        name="ObscurePasscode"
+        component={ObscurePasscode}
+        options={{headerTitle: intl(ObscurePasscode.navTitle)}}
+      />
+      <RootStack.Screen name="Settings" component={Settings} />
+      <RootStack.Screen
+        name="PresetChooser"
+        component={PresetChooser}
+        options={{headerTitle: intl(PresetChooser.navTitle)}}
+      />
+      <RootStack.Screen
+        name="ObservationList"
+        component={ObservationsList}
+        options={{headerTitle: intl(ObservationsList.navTitle)}}
+      />
+      <RootStack.Screen
+        name="Observation"
+        component={ObservationScreen}
+        options={{headerTitle: intl(ObservationScreen.navTitle)}}
+      />
+      <RootStack.Screen
+        name="AppSettings"
+        component={AppSettings}
+        options={{headerTitle: intl(AppSettings.navTitle)}}
+      />
+      <RootStack.Screen
+        name="ProjectSettings"
+        component={ProjectSettings}
+        options={{headerTitle: intl(ProjectSettings.navTitle)}}
+      />
+      <RootStack.Screen
+        name="CoordinateFormat"
+        component={CoordinateFormat}
+        options={{headerTitle: intl(CoordinateFormat.navTitle)}}
+      />
+      <RootStack.Screen
+        name="CreateOrJoinProject"
+        component={CreateOrJoinProject}
+        options={{headerTitle: intl(CreateOrJoinProject.navTitle)}}
+      />
+      <RootStack.Screen
+        name="CreateProject"
+        component={CreateProject}
+        options={{headerTitle: intl(CreateProject.navTitle)}}
+      />
+      <RootStack.Screen
+        name="ProjectCreated"
+        component={ProjectCreated}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="JoinExistingProject"
+        component={JoinExistingProject}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="YourTeam"
+        component={YourTeam}
+        options={{headerTitle: intl(YourTeam.navTitle)}}
+      />
+      <RootStack.Screen
+        name="SelectDevice"
+        component={SelectDevice}
+        options={{headerTitle: intl(SelectDevice.navTitle)}}
+      />
+      <RootStack.Screen
+        name="SelectInviteeRole"
+        component={SelectInviteeRole}
+        options={{headerTitle: intl(SelectInviteeRole.navTitle)}}
+      />
+      <RootStack.Screen
+        name="ReviewAndInvite"
+        component={ReviewAndInvite}
+        options={{headerTitle: intl(ReviewInvitation.navTitle)}}
+      />
+      <RootStack.Screen
+        name="InviteAccepted"
+        component={InviteAccepted}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="DeviceNameDisplay"
+        component={DeviceNameDisplayScreen}
+        options={createDeviceNameDisplayNavOptions({intl})}
+      />
+      <RootStack.Screen
+        name="DeviceNameEdit"
+        component={DeviceNameEditScreen}
+        options={createDeviceNameEditNavOptions({intl})}
+      />
+      <RootStack.Screen
+        name="GpsModal"
+        component={GpsModal}
+        options={createGpsModalNavigationOptions({intl})}
+      />
+      <RootStack.Screen
+        name="InviteDeclined"
+        component={InviteDeclined}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="UnableToCancelInvite"
+        component={UnableToCancelInvite}
+        options={{headerShown: false}}
+      />
+    </RootStack.Group>
+    {/* Modals here */}
+    <RootStack.Group
+      screenOptions={{presentation: 'modal', headerShown: false}}>
+      <RootStack.Screen name="AlreadyOnProject" component={AlreadyOnProject} />
+      <RootStack.Screen name="LeaveProject" component={LeaveProject} />
+    </RootStack.Group>
+  </>
 );

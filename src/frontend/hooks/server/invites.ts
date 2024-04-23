@@ -24,8 +24,8 @@ export function useAcceptInvite(projectId?: string) {
   const switchActiveProject = useUpdateActiveProjectId();
 
   return useMutation({
-    mutationFn: async ({inviteId}: {inviteId: string}) => {
-      if (!inviteId) return;
+    mutationFn: async ({inviteId}: {inviteId?: string}) => {
+      if (!inviteId) throw new Error('Invite does not exist');
       mapeoApi.invite.accept({inviteId});
     },
     onSuccess: () => {
@@ -47,7 +47,8 @@ export function useRejectInvite() {
   const mapeoApi = useApi();
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async ({inviteId}: {inviteId: string}) => {
+    mutationFn: async ({inviteId}: {inviteId?: string}) => {
+      if (!inviteId) throw new Error('Invite does not exist');
       mapeoApi.invite.reject({inviteId});
     },
     onSuccess: () => {

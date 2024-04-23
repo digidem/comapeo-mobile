@@ -45,7 +45,7 @@ export const MapScreen = () => {
 
   const handleAddPress = () => {
     newDraft();
-    navigate('PresetChooser');
+    navigate('AlreadyOnProject');
   };
 
   React.useEffect(() => {

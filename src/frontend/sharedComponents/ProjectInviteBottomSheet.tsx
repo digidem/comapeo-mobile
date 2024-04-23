@@ -90,24 +90,31 @@ export const ProjectInviteBottomSheet = () => {
             {
               variation: 'outlined',
               onPress: () => {
-                reject.mutate(invite, {
-                  onSuccess: () => {
-                    if (numberOfInvites <= 1) {
-                      closeSheet();
-                    }
+                reject.mutate(
+                  {inviteId: invite?.inviteId},
+                  {
+                    onSuccess: () => {
+                      if (numberOfInvites <= 1) {
+                        closeSheet();
+                      }
+                    },
                   },
-                });
+                );
               },
               text: formatMessage(m.declineInvite),
             },
             {
               variation: 'filled',
               onPress: () => {
-                accept.mutate(invite, {
-                  onSuccess: () => {
-                    clearAllInvites();
-                  },
-                });
+                navigation.navigate('AlreadyOnProject');
+                // accept.mutate(
+                //   {inviteId: invite?.inviteId},
+                //   {
+                //     onSuccess: () => {
+                //       clearAllInvites();
+                //     },
+                //   },
+                // );
               },
               text: formatMessage(m.acceptInvite),
             },

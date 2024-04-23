@@ -44,87 +44,121 @@ const m = defineMessages({
     id: 'screens.LeaveProject.checkToConfirm',
     defaultMessage: 'Please check the box to confirm',
   },
+  leavingProject: {
+    id: 'screens.LeaveProject.leavingProject',
+    defaultMessage: 'Leaving Project {projectName}',
+  },
 });
 
 export const LeaveProject = ({
   navigation,
+  route,
 }: NativeStackScreenProps<AppStackList, 'LeaveProject'>) => {
   const {formatMessage} = useIntl();
   const {data} = useProjectSettings();
   const [error, setError] = React.useState(false);
   const [isChecked, setIsChecked] = React.useState(false);
-  const {accept, invite} = useProjectInvite();
+  const {accept} = useProjectInvite();
+
+  console.log({accept: accept.status});
 
   function handleLeavePress() {
     if (!isChecked) {
       setError(true);
       return;
     }
-    if (invite) {
-      accept.mutate({inviteId: invite.inviteId});
-    }
+
+    accept.mutate(
+      {inviteId: route.params.inviteId},
+      {
+        onSuccess: () => {
+          navigation.navigate('InviteSuccess');
+        },
+      },
+    );
   }
   return (
     <View style={styles.container}>
-      <View style={styles.textContainer}>
-        <ErrorIcon />
-        <Text
-          style={[
-            styles.text,
-            {marginTop: 20, fontSize: 32, fontWeight: 'bold'},
-          ]}>
-          {formatMessage(m.leaveProj)}
-        </Text>
-        <Text style={[styles.text, {marginTop: 10}]}>
-          {data?.name
-            ? formatMessage(m.removeFromProjWithName, {
-                projectName: data.name,
-              })
-            : formatMessage(m.removeFromProjWithoutName)}
-        </Text>
-        <View>
-          <TouchableOpacity
-            style={styles.check}
-            onPress={() => setIsChecked(val => !val)}>
-            <MaterialIcons
-              size={32}
-              name={isChecked ? 'check-box' : 'check-box-outline-blank'}
-            />
-            <Text style={{marginLeft: 10}}>
-              {data?.name
-                ? formatMessage(m.deleteConsentWithName, {
-                    projectName: data.name,
-                  })
-                : formatMessage(m.deleteConsentWithoutName)}
-            </Text>
-          </TouchableOpacity>
-          {error && !isChecked && (
-            <Text style={{color: RED}}>{formatMessage(m.checkToConfirm)}</Text>
-          )}
-        </View>
-      </View>
-      <View style={{width: '100%'}}>
-        {accept.isPending ? (
-          <UIActivityIndicator style={{marginBottom: 20}} />
-        ) : (
-          <>
-            <Button
-              fullWidth
-              style={{backgroundColor: RED}}
-              variant="contained"
-              onPress={handleLeavePress}>
+      {false ? (
+        <LeavingProjectProgress />
+      ) : (
+        <>
+          <View style={styles.textContainer}>
+            <ErrorIcon />
+            <Text
+              style={[
+                styles.text,
+                {marginTop: 20, fontSize: 32, fontWeight: 'bold'},
+              ]}>
               {formatMessage(m.leaveProj)}
-            </Button>
-            <Button
-              style={{marginTop: 20}}
-              fullWidth
-              variant="outlined"
-              onPress={() => navigation.pop(2)}>
-              {formatMessage(m.cancel)}
-            </Button>
-          </>
-        )}
-      </View>
+            </Text>
+            <Text style={[styles.text, {marginTop: 10}]}>
+              {data?.name
+                ? formatMessage(m.removeFromProjWithName, {
+                    projectName: data?.name,
+                  })
+                : formatMessage(m.removeFromProjWithoutName)}
+            </Text>
+            <View>
+              <TouchableOpacity
+                style={styles.check}
+                onPress={() => setIsChecked(val => !val)}>
+                <MaterialIcons
+                  size={32}
+                  name={isChecked ? 'check-box' : 'check-box-outline-blank'}
+                />
+                <Text style={{marginLeft: 10}}>
+                  {data?.name
+                    ? formatMessage(m.deleteConsentWithName, {
+                        projectName: data?.name,
+                      })
+                    : formatMessage(m.deleteConsentWithoutName)}
+                </Text>
+              </TouchableOpacity>
+              {error && !isChecked && (
+                <Text style={{color: RED}}>
+                  {formatMessage(m.checkToConfirm)}
+                </Text>
+              )}
+            </View>
+          </View>
+          <View style={{width: '100%'}}>
+            {accept.isPending ? (
+              <UIActivityIndicator style={{marginBottom: 20}} />
+            ) : (
+              <>
+                <Button
+                  fullWidth
+                  style={{backgroundColor: RED}}
+                  variant="contained"
+                  onPress={handleLeavePress}>
+                  {formatMessage(m.leaveProj)}
+                </Button>
+                <Button
+                  style={{marginTop: 20}}
+                  fullWidth
+                  variant="outlined"
+                  onPress={() => navigation.pop(2)}>
+                  {formatMessage(m.cancel)}
+                </Button>
+              </>
+            )}
+          </View>
+        </>
+      )}
+    </View>
+  );
+};
+
+const LeavingProjectProgress = ({projectName}: {projectName?: string}) => {
+  const {formatMessage} = useIntl();
+  return (
+    <View>
+      <Text style={{fontSize: 32, textAlign: 'center'}}>
+        {formatMessage(m.leavingProject, {projectName: projectName || ''})}
+      </Text>
+
+      <UIActivityIndicator style={{marginTop: 40}} />
     </View>
   );
 };
@@ -133,13 +167,12 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'space-between',
     flex: 1,
-    alignItems: 'center',
     width: '100%',
     padding: 20,
+    paddingTop: 80,
   },
   textContainer: {
     alignItems: 'center',
-    marginTop: 80,
   },
   text: {
     textAlign: 'center',

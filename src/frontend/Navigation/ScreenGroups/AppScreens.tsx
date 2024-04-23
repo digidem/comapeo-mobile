@@ -57,6 +57,7 @@ import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/In
 import {UnableToCancelInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/UnableToCancelInvite';
 import {AlreadyOnProject} from '../../screens/LeaveProject/AlreadyOnProject';
 import {LeaveProject} from '../../screens/LeaveProject';
+import {InviteSuccess} from '../../screens/InviteSuccess';
 
 export type HomeTabsList = {
   Map: undefined;
@@ -93,7 +94,7 @@ export type AppList = {
   ObservationEdit: {observationId?: string} | undefined;
   ManualGpsScreen: undefined;
   ObservationDetails: {question: number};
-  LeaveProject: undefined;
+  LeaveProject: {inviteId: string};
   AddToProjectScreen: undefined;
   UnableToLinkScreen: undefined;
   ConnectingToDeviceScreen: {task: () => Promise<void>};
@@ -132,7 +133,8 @@ export type AppList = {
   UnableToCancelInvite: InviteProps;
   DeviceNameDisplay: undefined;
   DeviceNameEdit: undefined;
-  AlreadyOnProject: undefined;
+  AlreadyOnProject: {inviteId: string};
+  InviteSuccess: undefined;
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
@@ -356,6 +358,7 @@ export const createDefaultScreenGroup = (
       screenOptions={{presentation: 'modal', headerShown: false}}>
       <RootStack.Screen name="AlreadyOnProject" component={AlreadyOnProject} />
       <RootStack.Screen name="LeaveProject" component={LeaveProject} />
+      <RootStack.Screen name="InviteSuccess" component={InviteSuccess} />
     </RootStack.Group>
   </>
 );

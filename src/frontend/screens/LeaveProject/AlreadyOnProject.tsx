@@ -8,6 +8,8 @@ import {AppStackList} from '../../Navigation/AppStack';
 import {Text} from '../../sharedComponents/Text';
 import {useProjectSettings} from '../../hooks/server/projects';
 import {RED} from '../../lib/styles';
+import {useQueryClient} from '@tanstack/react-query';
+import {INVITE_KEY} from '../../hooks/server/invites';
 
 const m = defineMessages({
   leaveProj: {
@@ -34,9 +36,12 @@ const m = defineMessages({
 
 export const AlreadyOnProject = ({
   navigation,
+  route,
 }: NativeStackScreenProps<AppStackList, 'AlreadyOnProject'>) => {
   const {formatMessage} = useIntl();
   const {data} = useProjectSettings();
+  const queryClient = useQueryClient();
+
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
@@ -62,14 +67,17 @@ export const AlreadyOnProject = ({
           fullWidth
           style={{backgroundColor: RED}}
           variant="contained"
-          onPress={() => navigation.navigate('LeaveProject')}>
+          onPress={() => navigation.navigate('LeaveProject', route.params)}>
           {formatMessage(m.leaveProj)}
         </Button>
         <Button
           style={{marginTop: 20}}
           fullWidth
           variant="outlined"
-          onPress={() => navigation.goBack()}>
+          onPress={() => {
+            navigation.goBack();
+            queryClient.invalidateQueries({queryKey: [INVITE_KEY]});
+          }}>
           {formatMessage(m.goBack)}
         </Button>
       </View>

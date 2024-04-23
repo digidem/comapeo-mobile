@@ -5,7 +5,6 @@ import {
   useBottomSheetModal,
 } from './BottomSheetModal';
 import InviteIcon from '../images/AddPersonCircle.svg';
-import GreenCheck from '../images/GreenCheck.svg';
 import {defineMessages, useIntl} from 'react-intl';
 import {LIGHT_GREY} from '../lib/styles';
 import {View} from 'react-native';
@@ -50,8 +49,7 @@ export const ProjectInviteBottomSheet = () => {
   const {sheetRef, isOpen, closeSheet, openSheet} = useBottomSheetModal({
     openOnMount: false,
   });
-  const {accept, invite, reject, resetState, numberOfInvites, clearAllInvites} =
-    useProjectInvite();
+  const {invite, reject, resetState, numberOfInvites} = useProjectInvite();
   const navigation = useNavigationFromRoot();
   const routes = useNavigationState(state => (!state ? [] : state.routes));
   const index = useNavigationState(state => (!state ? undefined : state.index));
@@ -64,89 +62,65 @@ export const ProjectInviteBottomSheet = () => {
 
   return (
     <BottomSheetModal ref={sheetRef} isOpen={isOpen} onDismiss={resetState}>
-      {accept.isSuccess ? (
-        <BottomSheetContent
-          loading={false}
-          buttonConfigs={[
-            {
-              variation: 'outlined',
-              onPress: () => {
-                navigation.navigate('Home', {screen: 'Map'});
-                closeSheet();
-              },
-              text: formatMessage(m.goToMap),
-            },
-          ]}
-          title={formatMessage(m.success)}
-          description={formatMessage(m.youHaveJoined, {
-            projName: invite?.projectName || '',
-          })}
-          icon={<GreenCheck />}
-        />
-      ) : (
-        <BottomSheetContent
-          loading={accept.isPending || reject.isPending}
-          buttonConfigs={[
-            {
-              variation: 'outlined',
-              onPress: () => {
-                reject.mutate(
-                  {inviteId: invite?.inviteId},
-                  {
-                    onSuccess: () => {
-                      if (numberOfInvites <= 1) {
-                        closeSheet();
-                      }
-                    },
+      <BottomSheetContent
+        loading={reject.isPending}
+        buttonConfigs={[
+          {
+            variation: 'outlined',
+            onPress: () => {
+              reject.mutate(
+                {inviteId: invite?.inviteId},
+                {
+                  onSuccess: () => {
+                    if (numberOfInvites <= 1) {
+                      closeSheet();
+                    }
                   },
-                );
-              },
-              text: formatMessage(m.declineInvite),
+                },
+              );
             },
-            {
-              variation: 'filled',
-              onPress: () => {
-                navigation.navigate('AlreadyOnProject');
-                // accept.mutate(
-                //   {inviteId: invite?.inviteId},
-                //   {
-                //     onSuccess: () => {
-                //       clearAllInvites();
-                //     },
-                //   },
-                // );
-              },
-              text: formatMessage(m.acceptInvite),
+            text: formatMessage(m.declineInvite),
+          },
+          {
+            variation: 'filled',
+            onPress: () => {
+              closeSheet();
+              if (invite?.inviteId) {
+                navigation.navigate('AlreadyOnProject', {
+                  inviteId: invite.inviteId,
+                });
+              }
             },
-          ]}
-          title={formatMessage(m.joinProject, {
-            projName: invite?.projectName || '',
-          })}
-          description={formatMessage(m.invitedToJoin, {
-            projName: invite?.projectName || '',
-          })}
-          icon={
-            <View
-              style={{
-                borderColor: LIGHT_GREY,
-                borderWidth: 1,
-                borderRadius: 100,
-                alignItems: 'center',
-                shadowColor: '#171717',
-                shadowOffset: {width: -2, height: 4},
-                shadowOpacity: 0.2,
-                shadowRadius: 3,
-              }}>
-              <InviteIcon
-                style={{borderWidth: 1, borderColor: LIGHT_GREY}}
-                fill={LIGHT_GREY}
-                width={60}
-                height={60}
-              />
-            </View>
-          }
-        />
-      )}
+            text: formatMessage(m.acceptInvite),
+          },
+        ]}
+        title={formatMessage(m.joinProject, {
+          projName: invite?.projectName || '',
+        })}
+        description={formatMessage(m.invitedToJoin, {
+          projName: invite?.projectName || '',
+        })}
+        icon={
+          <View
+            style={{
+              borderColor: LIGHT_GREY,
+              borderWidth: 1,
+              borderRadius: 100,
+              alignItems: 'center',
+              shadowColor: '#171717',
+              shadowOffset: {width: -2, height: 4},
+              shadowOpacity: 0.2,
+              shadowRadius: 3,
+            }}>
+            <InviteIcon
+              style={{borderWidth: 1, borderColor: LIGHT_GREY}}
+              fill={LIGHT_GREY}
+              width={60}
+              height={60}
+            />
+          </View>
+        }
+      />
     </BottomSheetModal>
   );
 };

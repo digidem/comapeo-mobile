@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
     alignContent: 'stretch',
   },
   titleWrapper: {
+    padding: 10,
     marginTop: 20,
     borderRadius: 6,
     borderWidth: 1,

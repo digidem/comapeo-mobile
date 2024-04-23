@@ -64,7 +64,7 @@ export function useTracking() {
     await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
     bottomSheetRef.current?.close();
     setTracking(false);
-  }, [setTracking]);
+  }, [bottomSheetRef, setTracking]);
 
   return {isTracking, startTracking, cancelTracking, loading};
 }

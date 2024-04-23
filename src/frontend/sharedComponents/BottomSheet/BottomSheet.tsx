@@ -5,7 +5,7 @@ import {
   StyleSheet,
   TouchableNativeFeedback,
 } from 'react-native';
-import {Text} from '../../sharedComponents/Text';
+import {Text} from '../Text';
 import {defineMessages, FormattedMessage} from 'react-intl';
 
 const m = defineMessages({

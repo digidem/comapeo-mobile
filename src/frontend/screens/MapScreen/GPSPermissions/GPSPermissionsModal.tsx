@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {GPSDisabled} from './GPSDisabled';
-import {GPSEnabled} from './GPSEnabled';
+import {GPSPermissionsDisabled} from './GPSPermissionsDisabled';
+import {GPSPermissionsEnabled} from './GPSPermissionsEnabled';
 import * as Location from 'expo-location';
 import {useGPSModalContext} from '../../../contexts/GPSModalContext';
-import {useNavigationStore} from '../../../hooks/useNavigationStore';
+import {useTabNavigationStore} from '../../../hooks/useTabNavigationStore.ts';
 import {BottomSheetModal, BottomSheetView} from '@gorhom/bottom-sheet';
 import {TAB_BAR_HEIGHT} from '../../../Navigation/ScreenGroups/AppScreens';
 import {StyleSheet} from 'react-native';
 import {TabName} from '../../../Navigation/types';
 import {useFocusEffect} from '@react-navigation/native';
 
-export const GPSModal = React.memo(() => {
-  const {setCurrentTab} = useNavigationStore();
+export const GPSPermissionsModal = React.memo(() => {
+  const {setCurrentTab} = useTabNavigationStore();
   const [backgroundStatus] = Location.useBackgroundPermissions();
   const [foregroundStatus] = Location.useForegroundPermissions();
 
@@ -41,9 +41,9 @@ export const GPSModal = React.memo(() => {
       handleComponent={() => null}>
       <BottomSheetView>
         {isGranted ? (
-          <GPSEnabled />
+          <GPSPermissionsEnabled />
         ) : (
-          <GPSDisabled setIsGranted={setIsGranted} />
+          <GPSPermissionsDisabled setIsGranted={setIsGranted} />
         )}
       </BottomSheetView>
     </BottomSheetModal>

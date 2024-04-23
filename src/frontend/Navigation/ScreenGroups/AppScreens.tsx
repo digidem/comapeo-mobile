@@ -1,4 +1,7 @@
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {
+  BottomTabNavigationProp,
+  createBottomTabNavigator,
+} from '@react-navigation/bottom-tabs';
 import {NavigatorScreenParams} from '@react-navigation/native';
 import * as React from 'react';
 import {HomeHeader} from '../../sharedComponents/HomeHeader';
@@ -30,7 +33,7 @@ import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateP
 import {JoinExistingProject} from '../../screens/Settings/CreateOrJoinProject/JoinExistingProject';
 import {YourTeam} from '../../screens/Settings/ProjectSettings/YourTeam';
 import {SelectDevice} from '../../screens/Settings/ProjectSettings/YourTeam/SelectDevice';
-import {DeviceRole, DeviceType} from '../../sharedTypes';
+import {DeviceType, DeviceRoleForNewInvite} from '../../sharedTypes';
 import {SelectInviteeRole} from '../../screens/Settings/ProjectSettings/YourTeam/SelectInviteeRole';
 import {ReviewInvitation} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/ReviewInvitation';
 import {InviteAccepted} from '../../screens/Settings/ProjectSettings/YourTeam/InviteAccepted';
@@ -57,6 +60,8 @@ import {
   createTrackNavigationOptions,
   TrackScreen,
 } from '../../screens/MapScreen/track/TrackScreen';
+import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/InviteDeclined';
+import {UnableToCancelInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/UnableToCancelInvite';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -64,6 +69,13 @@ export type HomeTabsList = {
   Map: undefined;
   Camera: undefined;
   Tracking: undefined;
+};
+
+type InviteProps = {
+  name: string;
+  deviceType: DeviceType;
+  deviceId: string;
+  role: DeviceRoleForNewInvite;
 };
 
 export type AppList = {
@@ -123,18 +135,10 @@ export type AppList = {
   YourTeam: undefined;
   SelectDevice: undefined;
   SelectInviteeRole: {name: string; deviceType: DeviceType; deviceId: string};
-  ReviewAndInvite: {
-    name: string;
-    deviceType: DeviceType;
-    deviceId: string;
-    role: DeviceRole;
-  };
-  InviteAccepted: {
-    name: string;
-    deviceType: DeviceType;
-    deviceId: string;
-    role: DeviceRole;
-  };
+  ReviewAndInvite: InviteProps;
+  InviteAccepted: InviteProps;
+  InviteDeclined: InviteProps;
+  UnableToCancelInvite: InviteProps;
   DeviceNameDisplay: undefined;
   DeviceNameEdit: undefined;
   SaveTrack: undefined;
@@ -148,12 +152,15 @@ const HomeTabs = () => {
 
   return (
     <Tab.Navigator
-      screenListeners={{tabPress: handleTabPress}}
+      screenListeners={{
+        tabPress: handleTabPress,
+      }}
       screenOptions={({route}) => ({
         tabBarStyle: {height: TAB_BAR_HEIGHT},
         tabBarShowLabel: false,
         headerTransparent: true,
         tabBarTestID: 'tabBarButton' + route.name,
+        header: HomeHeader,
       })}
       initialRouteName={TabName.Map}
       backBehavior="initialRoute">
@@ -161,7 +168,6 @@ const HomeTabs = () => {
         name={TabName.Map}
         component={MapScreen}
         options={{
-          header: HomeHeader,
           tabBarIcon: MapTabBarIcon,
         }}
       />
@@ -169,7 +175,6 @@ const HomeTabs = () => {
         name={TabName.Camera}
         component={CameraScreen}
         options={{
-          headerShown: false,
           tabBarIcon: CameraTabBarIcon,
         }}
       />
@@ -179,7 +184,11 @@ const HomeTabs = () => {
           tabBarIcon: TrackingTabBarIcon,
           headerShown: false,
         }}
-        listeners={({navigation}) => ({
+        listeners={({
+          navigation,
+        }: {
+          navigation: BottomTabNavigationProp<HomeTabsList>;
+        }) => ({
           tabPress: e => {
             e.preventDefault();
             navigation.navigate(TabName.Map);
@@ -213,9 +222,9 @@ export const createDefaultScreenGroup = (
       options={props => {
         const observationId = props.route.params?.observationId;
         return {
-          headerLeft: params => (
+          headerLeft: headerProp => (
             <CustomHeaderLeftClose
-              headerBackButtonProps={params}
+              headerBackButtonProps={headerProp}
               observationId={observationId}
             />
           ),
@@ -363,6 +372,16 @@ export const createDefaultScreenGroup = (
       name="Track"
       component={TrackScreen}
       options={createTrackNavigationOptions({intl})}
+    />
+    <RootStack.Screen
+      name="InviteDeclined"
+      component={InviteDeclined}
+      options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="UnableToCancelInvite"
+      component={UnableToCancelInvite}
+      options={{headerShown: false}}
     />
   </RootStack.Group>
 );

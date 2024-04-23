@@ -1,14 +1,16 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {IconButton} from './IconButton';
 import {ObservationListIcon} from './icons';
-import {useNavigationFromHomeTabs} from '../hooks/useNavigationWithTypes';
-import {GPSPill} from '../screens/MapScreen/gps/GPSPill';
+import {GPSPill} from './GPSPill';
+import {NavigationProp} from '@react-navigation/native';
 
-export const HomeHeader = () => {
-  const navigation = useNavigationFromHomeTabs();
+interface HomeHeader {
+  navigation: NavigationProp<ReactNavigation.RootParamList>;
+}
 
+export const HomeHeader: FC<HomeHeader> = ({navigation}) => {
   return (
     <View style={[styles.header]}>
       <LinearGradient
@@ -16,10 +18,10 @@ export const HomeHeader = () => {
         colors={['#0006', '#0000']}
       />
       <View style={styles.leftButton}>{/* Placeholder for left button */}</View>
-      <GPSPill />
+      <GPSPill navigation={navigation} />
       <IconButton
         onPress={() => {
-          navigation.navigate('ObservationList');
+          navigation.navigate('ObservationList' as never);
         }}
         testID="observationListButton">
         <ObservationListIcon />

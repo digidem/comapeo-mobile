@@ -3,7 +3,7 @@ import {GPSDisabled} from './GPSPermissionsDisabled';
 import {GPSEnabled} from './GPSPermissionsEnabled';
 import * as Location from 'expo-location';
 import {useGPSModalContext} from '../../../contexts/GPSModalContext';
-import {useNavigationStore} from '../../../hooks/useNavigationStore';
+import {useTabNavigationStore} from '../../../hooks/useTabNavigationStore.ts';
 import {BottomSheetModal, BottomSheetView} from '@gorhom/bottom-sheet';
 import {TAB_BAR_HEIGHT} from '../../../Navigation/ScreenGroups/AppScreens';
 import {StyleSheet} from 'react-native';
@@ -11,7 +11,7 @@ import {TabName} from '../../../Navigation/types';
 import {useFocusEffect} from '@react-navigation/native';
 
 export const GPSModal = React.memo(() => {
-  const {setCurrentTab} = useNavigationStore();
+  const {setCurrentTab} = useTabNavigationStore();
   const [backgroundStatus] = Location.useBackgroundPermissions();
   const [foregroundStatus] = Location.useForegroundPermissions();
 

@@ -6,7 +6,7 @@ import {
 import {useProject} from './projects';
 import {TrackValue} from '@mapeo/schema';
 
-export const TRACK_KEY = 'track';
+export const TRACK_KEY = 'tracks';
 
 export function useCreateTrack() {
   const queryClient = useQueryClient();
@@ -25,7 +25,7 @@ export function useCreateTrack() {
 export function useTracksQuery() {
   const project = useProject();
   return useSuspenseQuery({
-    queryKey: ['tracks'],
+    queryKey: [TRACK_KEY],
     queryFn: async () => {
       if (!project) throw new Error('Project instance does not exist');
       return project.track.getMany();
@@ -36,7 +36,7 @@ export function useTracksQuery() {
 export function useTrackQuery(docId: string) {
   const project = useProject();
   return useSuspenseQuery({
-    queryKey: ['tracks', docId],
+    queryKey: [TRACK_KEY, docId],
     queryFn: async () => {
       if (!project) throw new Error('Project instance does not exist');
       return project.track.getByDocId(docId);

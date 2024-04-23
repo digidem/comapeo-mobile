@@ -10,7 +10,7 @@ export default function generateMetricsReport({
   observations,
 }: ReadonlyDeep<{
   packageJson: {version: string};
-  os: string;
+  os: 'android' | 'ios' | NodeJS.Platform;
   osVersion: number | string;
   screen: {width: number; height: number};
   observations: ReadonlyArray<Pick<Observation, 'lat' | 'lon'>>;

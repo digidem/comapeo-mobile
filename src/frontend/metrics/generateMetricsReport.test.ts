@@ -48,14 +48,18 @@ describe('generateMetricsReport', () => {
   });
 
   it('includes the OS (iOS style)', () => {
-    const options = {...defaultOptions, os: 'ios', osVersion: '1.2.3'};
+    const options = {...defaultOptions, os: 'ios' as const, osVersion: '1.2.3'};
     const report = generateMetricsReport(options);
     expect(report.os).toBe('ios');
     expect(report.osVersion).toBe('1.2.3');
   });
 
   it('includes the OS (desktop style)', () => {
-    const options = {...defaultOptions, os: 'win32', osVersion: '1.2.3'};
+    const options = {
+      ...defaultOptions,
+      os: 'win32' as const,
+      osVersion: '1.2.3',
+    };
     const report = generateMetricsReport(options);
     expect(report.os).toBe('win32');
     expect(report.osVersion).toBe('1.2.3');

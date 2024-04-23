@@ -21,7 +21,6 @@ import {GPSModal} from './GPSPermissions/GPSPermissionsModal';
 import {TrackPathLayer} from './track/TrackPathLayer';
 import {UserLocation} from './UserLocation';
 import {useSharedLocationContext} from '../../contexts/SharedLocationContext';
-import {useNavigation} from '@react-navigation/native';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -35,7 +34,6 @@ export const MAP_STYLE = Mapbox.StyleURL.Outdoors;
 
 export const MapScreen = () => {
   const [zoom, setZoom] = React.useState(DEFAULT_ZOOM);
-  const navigation = useNavigation();
   const [isFinishedLoading, setIsFinishedLoading] = React.useState(false);
   const [following, setFollowing] = React.useState(true);
   const {newDraft} = useDraftObservation();
@@ -64,15 +62,6 @@ export const MapScreen = () => {
   function handleDidFinishLoadingStyle() {
     setIsFinishedLoading(true);
   }
-
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', e => {
-      // Prevent default action
-      console.log(e, 'e');
-      // e.preventDefault();
-    });
-    return () => unsubscribe();
-  }, []);
 
   return (
     <View style={{flex: 1}}>

@@ -1,9 +1,9 @@
 import {Observation} from '@mapeo/schema';
 import React from 'react';
 import MapboxGL from '@rnmapbox/maps';
-import {useAllObservations} from '../../hooks/useAllObservations';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import {useCurrentTrackStore} from '../../hooks/tracks/useCurrentTrackStore';
+import {useObservations} from '../../hooks/server/observations';
 
 const DEFAULT_MARKER_COLOR = '#F29D4B';
 
@@ -15,7 +15,7 @@ const layerStyles = {
 };
 
 export const ObservationMapLayer = () => {
-  const observations = useAllObservations();
+  const {data: observations} = useObservations();
   const {navigate} = useNavigationFromHomeTabs();
   const isTracking = useCurrentTrackStore(state => state.isTracking);
   const featureCollection: GeoJSON.FeatureCollection = {

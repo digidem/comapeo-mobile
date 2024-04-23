@@ -10,159 +10,31 @@ import {
 import {BLACK, WHITE, DARK_GREY} from '../../../lib/styles';
 import DeleteIcon from '../../../images/DeleteTrack.svg';
 import ShareIcon from '../../../images/Share.svg';
-import {TrackObservation} from './TrackObservations';
+import {TrackObservationList} from './TrackObservations';
 import {ActionsButton} from './actions/ActionsButton';
 import TrackIcon from '../../../images/Track.svg';
 import {TrackMap} from './TrackMap';
 import {TrackDescriptionField} from './saveTrack/TrackDescriptionField';
 import EditIcon from '../../../images/Edit.svg';
-import {useNavigation} from '@react-navigation/native';
 import {CustomHeaderLeft} from '../../../sharedComponents/CustomHeaderLeft';
 import {defineMessages, MessageDescriptor} from 'react-intl';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
+import {NativeNavigationComponent} from '../../../sharedTypes.ts';
+import {useTrackQuery} from '../../../hooks/server/track.ts';
+import {useObservations} from '../../../hooks/server/observations.ts';
 
 const m = defineMessages({
+  title: {
+    id: 'screens.Track.title',
+    defaultMessage: 'Track',
+    description:
+      'Title of track screen showing (non-editable) view of observation with map',
+  },
   trackHeader: {
     id: 'screens.Track.trackHeader',
-    defaultMessage: 'Observation',
+    defaultMessage: 'Track',
   },
 });
-
-const data = [
-  {
-    attachments: [],
-    createdAt: '2024-04-22T12:17:13.523Z',
-    createdBy:
-      'bd5b49edc8f0b4546776cbc4a6b50b0dae02b4496e08f4e23a93fc2afee9ebc4',
-    deleted: false,
-    docId: '5c41c56e239a2e73b3906b7339b0adc9dabfdd2e5ebb10f2947bae8af10f29bd',
-    forks: [],
-    lat: 50.0590383,
-    links: [],
-    lon: 19.9401073,
-    metadata: {
-      position: {
-        coords: [],
-        mocked: false,
-        timestamp: '1970-01-01T00:00:00.000Z',
-      },
-    },
-    refs: [],
-    schemaName: 'observation',
-    tags: {notes: 'bla bla', place: 'village'},
-    updatedAt: '2024-04-22T12:17:13.523Z',
-    versionId:
-      'bd5b49edc8f0b4546776cbc4a6b50b0dae02b4496e08f4e23a93fc2afee9ebc4/0',
-  },
-];
-
-const locationHistory = [
-  {
-    latitude: 50.06279,
-    longitude: 19.93688,
-    timestamp: 1713776455589,
-  },
-  {
-    latitude: 50.0629127,
-    longitude: 19.9365866,
-    timestamp: 1713776463925,
-  },
-  {
-    latitude: 50.0630497,
-    longitude: 19.9362622,
-    timestamp: 1713776472948,
-  },
-  {
-    latitude: 50.0631868,
-    longitude: 19.9359375,
-    timestamp: 1713776481975,
-  },
-  {
-    latitude: 50.063322,
-    longitude: 19.9356318,
-    timestamp: 1713776491000,
-  },
-  {
-    latitude: 50.0635501,
-    longitude: 19.9357714,
-    timestamp: 1713776502927,
-  },
-  {
-    latitude: 50.063752,
-    longitude: 19.9359579,
-    timestamp: 1713776512933,
-  },
-  {
-    latitude: 50.0639543,
-    longitude: 19.9361445,
-    timestamp: 1713776522928,
-  },
-  {
-    latitude: 50.0640681,
-    longitude: 19.9358108,
-    timestamp: 1713776535146,
-  },
-  {
-    latitude: 50.0641695,
-    longitude: 19.9354987,
-    timestamp: 1713776545191,
-  },
-  {
-    latitude: 50.0644038,
-    longitude: 19.9356067,
-    timestamp: 1713776564253,
-  },
-  {
-    latitude: 50.0645096,
-    longitude: 19.9359267,
-    timestamp: 1713776571291,
-  },
-  {
-    latitude: 50.0646138,
-    longitude: 19.9362404,
-    timestamp: 1713776578326,
-  },
-  {
-    latitude: 50.06472,
-    longitude: 19.93656,
-    timestamp: 1713776585347,
-  },
-  {
-    latitude: 50.0648397,
-    longitude: 19.9368859,
-    timestamp: 1713776591980,
-  },
-  {
-    latitude: 50.0646521,
-    longitude: 19.9370786,
-    timestamp: 1713776599947,
-  },
-  {
-    latitude: 50.0645045,
-    longitude: 19.9373671,
-    timestamp: 1713776608427,
-  },
-  {
-    latitude: 50.064395,
-    longitude: 19.9376829,
-    timestamp: 1713776615429,
-  },
-  {
-    latitude: 50.0642964,
-    longitude: 19.9380234,
-    timestamp: 1713776623435,
-  },
-  {
-    latitude: 50.0642002,
-    longitude: 19.9383574,
-    timestamp: 1713776631455,
-  },
-  {
-    latitude: 50.0641016,
-    longitude: 19.9387055,
-    timestamp: 1713776639483,
-  },
-];
 
 const actions = [
   {
@@ -177,16 +49,17 @@ const actions = [
   },
 ];
 
-export const TrackScreen = () => {
-  const navigation = useNavigation();
+export const TrackScreen: NativeNavigationComponent<'Track'> = ({
+  route,
+  navigation,
+}) => {
   const [description, setDescription] = useState('');
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerLeft: (props: any) =>
-        navigation.canGoBack() && (
-          <CustomHeaderLeft headerBackButtonProps={props} tintColor={BLACK} />
-        ),
+      headerLeft: (props: any) => (
+        <CustomHeaderLeft headerBackButtonProps={props} tintColor={BLACK} />
+      ),
       headerRight: () => (
         <Pressable>
           <EditIcon />
@@ -195,12 +68,27 @@ export const TrackScreen = () => {
     });
   }, [navigation]);
 
+  const {data: track} = useTrackQuery(route.params.trackId);
+  const {data: observations} = useObservations();
+  const trackObservations = observations.filter(observation =>
+    track.refs.some(ref => ref.id === observation.docId),
+  );
+  const len = track.locations.length;
+  const latitudes = track.locations.map(loc => loc.coords.latitude);
+  const longitudes = track.locations.map(loc => loc.coords.longitude);
+  let centerLat = (Math.min(...latitudes) + Math.max(...latitudes)) / 2;
+  let centerLng = (Math.min(...longitudes) + Math.max(...longitudes)) / 2;
+  let center = [centerLng, centerLat];
   return (
     <SafeAreaView style={styles.root}>
       <View>
         <TrackMap
-          coords={[19.93656, 50.06472]}
-          locationHistory={locationHistory}
+          coords={center}
+          locationHistory={track.locations.map(({timestamp, coords}) => ({
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+            timestamp: parseInt(timestamp),
+          }))}
         />
         <View style={styles.trackTitleWrapper}>
           <TrackIcon style={{marginRight: 10}} />
@@ -208,7 +96,7 @@ export const TrackScreen = () => {
         </View>
         <View style={styles.divider} />
         <ScrollView>
-          <TrackObservation observationsAmount={4} observations={data} />
+          <TrackObservationList observations={trackObservations} />
           <View style={styles.divider} />
           <TrackDescriptionField
             description={description}
@@ -238,6 +126,8 @@ export const createTrackNavigationOptions = ({
     };
   };
 };
+
+TrackScreen.navTitle = m.title;
 
 export const styles = StyleSheet.create({
   positionText: {

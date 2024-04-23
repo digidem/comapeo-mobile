@@ -10,17 +10,15 @@ import {Text} from '../../../sharedComponents/Text';
 import ChainIcon from '../../../images/Chain.svg';
 import Chevrondown from '../../../images/chevrondown.svg';
 import ChevrondownDefault from '../../../images/chevrondown-expanded.svg';
-import {TrackListItem} from './TrackObservationItem';
+import {TrackListItem} from './TrackListItem';
+import {Observation} from '@mapeo/schema';
+import {ObservationListItem} from '../../ObservationsList/ObservationListItem.tsx';
 
 interface TrackObservation {
-  observations: any[];
-  observationsAmount: number;
+  observations: Observation[];
 }
 
-export function TrackObservation({
-  observations,
-  observationsAmount,
-}: TrackObservation) {
+export function TrackObservationList({observations}: TrackObservation) {
   const [expanded, setExpanded] = useState(false);
   const onPress = () => setExpanded(!expanded);
 
@@ -33,7 +31,7 @@ export function TrackObservation({
         onPress={onPress}
         style={[styles.wrapper, styles.elementWrapper]}>
         <View style={styles.wrapper}>
-          <Text style={styles.text}>{observationsAmount}</Text>
+          <Text style={styles.text}>{observations.length}</Text>
           <ChainIcon style={{marginRight: 10, marginLeft: 2}} />
           <Text style={styles.text}>Observations</Text>
         </View>
@@ -42,7 +40,7 @@ export function TrackObservation({
       <Animated.View entering={FadeInUp} exiting={FadeOutUp}>
         {expanded &&
           observations.map((observation, index) => (
-            <TrackListItem
+            <ObservationListItem
               key={index}
               observation={observation}
               onPress={() => {}}

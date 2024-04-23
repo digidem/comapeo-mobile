@@ -1,13 +1,14 @@
 import * as React from 'react';
-import {View, FlatList, Dimensions, StyleSheet} from 'react-native';
+import {View, FlatList, Dimensions, StyleSheet, Text} from 'react-native';
 import {defineMessages} from 'react-intl';
 import {ObservationListItem} from './ObservationListItem';
 import ObservationEmptyView from './ObservationsEmptyView';
 
-import {Observation} from '@mapeo/schema';
+import {Observation, Track} from '@mapeo/schema';
 import {NativeNavigationComponent} from '../../sharedTypes';
 import {SettingsButton} from './SettingsButton';
 import {useAllObservations} from '../../hooks/useAllObservations';
+import {TrackListItem} from '../MapScreen/track/TrackListItem';
 
 const m = defineMessages({
   loading: {
@@ -32,16 +33,18 @@ const m = defineMessages({
 
 const OBSERVATION_CELL_HEIGHT = 80;
 
-const getItemLayout = (
-  data: Observation[] | null | undefined,
+function getItemLayout(
+  data: ArrayLike<Observation | Track> | null | undefined,
   index: number,
-) => ({
-  length: OBSERVATION_CELL_HEIGHT,
-  offset: OBSERVATION_CELL_HEIGHT * index,
-  index,
-});
+) {
+  return {
+    length: OBSERVATION_CELL_HEIGHT,
+    offset: OBSERVATION_CELL_HEIGHT * index,
+    index,
+  };
+}
 
-const keyExtractor = (item: Observation) => item.docId;
+const keyExtractor = (item: Observation | Track) => item.docId;
 
 export const ObservationsList: NativeNavigationComponent<'ObservationList'> = ({
   navigation,
@@ -76,17 +79,35 @@ export const ObservationsList: NativeNavigationComponent<'ObservationList'> = ({
         windowSize={3}
         removeClippedSubviews
         renderItem={({item, index}) => {
-          return (
-            <ObservationListItem
-              key={item.docId}
-              testID={`observationListItem:${index}`}
-              observation={item}
-              style={styles.listItem}
-              onPress={() =>
-                navigation.navigate('Observation', {observationId: item.docId})
-              }
-            />
-          );
+          switch (item.schemaName) {
+            case 'observation':
+              return (
+                <ObservationListItem
+                  key={item.docId}
+                  testID={`observationListItem:${index}`}
+                  observation={item as Observation}
+                  style={styles.listItem}
+                  onPress={() =>
+                    navigation.navigate('Observation', {
+                      observationId: item.docId,
+                    })
+                  }
+                />
+              );
+            case 'track':
+              return (
+                <TrackListItem
+                  testID={`trackListItem:${index}`}
+                  track={item as Track}
+                  style={styles.listItem}
+                  onPress={() => {
+                    navigation.navigate('Track', {
+                      trackId: item.docId,
+                    });
+                  }}
+                />
+              );
+          }
         }}
         data={observations}
       />

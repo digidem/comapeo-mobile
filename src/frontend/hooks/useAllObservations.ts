@@ -1,17 +1,17 @@
 import {useMemo} from 'react';
 
 import {useObservations} from './server/observations';
+import {useTracksQuery} from './server/track';
 
 export function useAllObservations() {
   const {data: observations} = useObservations();
+  const {data: tracks} = useTracksQuery();
 
-  const observationsArray = useMemo(
+  return useMemo(
     () =>
-      Array.from(observations.values()).sort((a, b) =>
+      [...observations, ...tracks].sort((a, b) =>
         a.createdAt < b.createdAt ? 1 : -1,
       ),
-    [observations],
+    [tracks, observations],
   );
-
-  return observationsArray;
 }

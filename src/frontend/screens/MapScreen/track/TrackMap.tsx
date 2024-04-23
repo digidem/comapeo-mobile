@@ -4,13 +4,21 @@ import MapboxGL from '@rnmapbox/maps';
 import {MAP_STYLE} from '..';
 import {DisplayedTrackPathLayer} from './DisplayedTrackPathLayer';
 import {LocationHistoryPoint} from '../../../sharedTypes/location';
+import CheapRuler from 'cheap-ruler';
 
 interface TrackMap {
   locationHistory: LocationHistoryPoint[];
   coords: number[];
 }
 
+const slope = -0.044;
+const baseZoom = 16;
+
 export const TrackMap: FC<TrackMap> = ({coords, locationHistory}) => {
+  const ruler = new CheapRuler(locationHistory[0]!.latitude);
+  const distance = ruler.lineDistance(
+    locationHistory.map(point => [point.longitude, point.latitude]),
+  );
   return (
     <MapboxGL.MapView
       style={styles.map}
@@ -24,7 +32,7 @@ export const TrackMap: FC<TrackMap> = ({coords, locationHistory}) => {
       styleURL={MAP_STYLE}>
       <MapboxGL.Camera
         centerCoordinate={coords}
-        zoomLevel={12}
+        zoomLevel={slope * distance + baseZoom + Math.abs(slope)}
         animationMode="none"
       />
       <DisplayedTrackPathLayer

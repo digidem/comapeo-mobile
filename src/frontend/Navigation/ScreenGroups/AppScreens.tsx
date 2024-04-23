@@ -142,7 +142,7 @@ export type AppList = {
   DeviceNameDisplay: undefined;
   DeviceNameEdit: undefined;
   SaveTrack: undefined;
-  Track: undefined;
+  Track: {trackId: string};
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();

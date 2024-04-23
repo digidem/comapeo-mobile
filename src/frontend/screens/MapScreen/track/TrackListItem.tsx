@@ -1,47 +1,40 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableHighlight, View} from 'react-native';
-import {
-  FormattedObservationDate,
-  FormattedPresetName,
-} from '../../../sharedComponents/FormattedData';
+import {FormattedObservationDate} from '../../../sharedComponents/FormattedData';
 import {ViewStyleProp} from '../../../sharedTypes';
-import {Observation} from '@mapeo/schema';
-import {useObservationWithPreset} from '../../../hooks/useObservationWithPreset';
+import {Track} from '@mapeo/schema';
 import {CategoryCircleIcon} from '../../../sharedComponents/icons/CategoryIcon';
 import {BLACK} from '../../../lib/styles';
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;
-  observation: Observation;
+  track: Track;
   testID: string;
   onPress: (id: string) => void;
 }
 
 const TrackObservationItemNotMemoized = ({
   style,
-  observation,
+  track,
   testID,
   onPress = () => {},
 }: ObservationListItemProps) => {
-  const {preset} = useObservationWithPreset(observation.docId);
   const iconId = '';
   const iconColor = BLACK;
 
   return (
     <TouchableHighlight
-      onPress={() => onPress(observation.docId)}
+      onPress={() => onPress(track.docId)}
       testID={testID}
       style={{flex: 1, height: 80}}>
       <View style={[styles.container, style]}>
         <View style={styles.text}>
-          {preset && (
-            <Text style={styles.title}>
-              <FormattedPresetName preset={preset} />
-            </Text>
-          )}
+          <Text style={styles.title}>
+            <Text>Track</Text>
+          </Text>
           <Text>
             <FormattedObservationDate
-              createdDate={observation.createdAt}
+              createdDate={track.createdAt}
               variant="relative"
             />
           </Text>

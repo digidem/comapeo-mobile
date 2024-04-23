@@ -3,7 +3,7 @@ import {useCurrentTrackStore} from '../hooks/tracks/useCurrentTrackStore';
 import {useFormattedTimeSince} from '../hooks/useFormattedTimeSince';
 
 interface TrackTimerContext {
-  timer?: string;
+  timer: string;
 }
 
 const TrackTimerContext = createContext<TrackTimerContext | null>(null);

@@ -65,8 +65,8 @@ export const SaveTrackScreen: React.FC<{navigation: NavigationProp<any>}> = ({
         style={styles.container}
         contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.titleWrapper}>
-          <TrackIcon style={{width: 30, height: 30}} />
-          <Text style={{fontSize: 20, fontWeight: '700'}}>Track</Text>
+          <TrackIcon style={styles.icon} />
+          <Text style={styles.titleText}>Track</Text>
         </View>
         <TrackDescriptionField
           description={description}
@@ -80,6 +80,8 @@ export const SaveTrackScreen: React.FC<{navigation: NavigationProp<any>}> = ({
 };
 
 const styles = StyleSheet.create({
+  icon: {width: 30, height: 30},
+  titleText: {fontSize: 20, fontWeight: '700'},
   container: {
     flex: 1,
     flexDirection: 'column',

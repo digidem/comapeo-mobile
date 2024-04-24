@@ -44,7 +44,7 @@ const m = defineMessages({
     defaultMessage: 'You have joined {projName}',
   },
   goToSync: {
-    id: 'sharedComponents.ProjectInviteBottomSheet.youHaveJoined',
+    id: 'sharedComponents.ProjectInviteBottomSheet.goToSync',
     defaultMessage: 'Go To Sync',
   },
 });

@@ -77,7 +77,9 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
   const trackObservations = observations.filter(observation =>
     track.refs.some(ref => ref.id === observation.docId),
   );
-  const [description, setDescription] = useState(track.tags['notes'] || '');
+  const [description, setDescription] = useState(
+    (track.tags['notes'] as string) || '',
+  );
   const latitudes = track.locations.map(loc => loc.coords.latitude);
   const longitudes = track.locations.map(loc => loc.coords.longitude);
   let centerLat = (Math.min(...latitudes) + Math.max(...latitudes)) / 2;
@@ -137,10 +139,7 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
         <ScrollView>
           <TrackObservationList observations={trackObservations} />
           <View style={styles.divider} />
-          <TrackEditDescriptionField
-            description={description}
-            setDescription={setDescription}
-          />
+          <TrackEditDescriptionField description={description} />
         </ScrollView>
       </View>
       <ActionButtons actions={actions} />

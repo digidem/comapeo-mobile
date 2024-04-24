@@ -12,7 +12,7 @@ const m = defineMessages({
 
 interface DescriptionField {
   description: string;
-  setDescription: React.Dispatch<React.SetStateAction<string>>;
+  setDescription?: React.Dispatch<React.SetStateAction<string>> | undefined;
 }
 
 export const TrackEditDescriptionField: React.FC<DescriptionField> = ({
@@ -25,11 +25,11 @@ export const TrackEditDescriptionField: React.FC<DescriptionField> = ({
     <TextInput
       style={styles.textInput}
       onChangeText={setDescription}
-      placeholder={t(m.descriptionPlaceholder)}
+      placeholder={setDescription && t(m.descriptionPlaceholder)}
       placeholderTextColor="silver"
       underlineColorAndroid="transparent"
       multiline
-      editable={false}
+      editable={!!setDescription}
       value={description}
       scrollEnabled={false}
       textContentType="none"

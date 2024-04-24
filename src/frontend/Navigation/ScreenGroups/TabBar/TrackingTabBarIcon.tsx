@@ -22,7 +22,7 @@ export const TrackingTabBarIcon: FC<TabBarIconProps> = props => {
       )}
       <TabBarIcon
         {...props}
-        isFocused={currentTab === TabName.Tracking}
+        focused={currentTab === TabName.Tracking}
         iconName="nordic-walking"
       />
     </>

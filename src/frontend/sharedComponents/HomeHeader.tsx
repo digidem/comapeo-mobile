@@ -4,13 +4,9 @@ import LinearGradient from 'react-native-linear-gradient';
 import {IconButton} from './IconButton';
 import {ObservationListIcon} from './icons';
 import {GPSPill} from './GPSPill';
-import {NavigationProp} from '@react-navigation/native';
+import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
 
-interface HomeHeader {
-  navigation: NavigationProp<ReactNavigation.RootParamList>;
-}
-
-export const HomeHeader: FC<HomeHeader> = ({navigation}) => {
+export const HomeHeader: FC<BottomTabHeaderProps> = ({navigation}) => {
   return (
     <View style={[styles.header]}>
       <LinearGradient
@@ -20,9 +16,7 @@ export const HomeHeader: FC<HomeHeader> = ({navigation}) => {
       <View style={styles.leftButton}>{/* Placeholder for left button */}</View>
       <GPSPill navigation={navigation} />
       <IconButton
-        onPress={() => {
-          navigation.navigate('ObservationList' as never);
-        }}
+        onPress={() => navigation.navigate('ObservationList')}
         testID="observationListButton">
         <ObservationListIcon />
       </IconButton>

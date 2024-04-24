@@ -122,7 +122,6 @@ class SyncStore {
   }
 
   #onSyncState = (state: SyncState) => {
-    console.log({from: 'listener', ...state});
     // Indicates whether data syncing went from enabled to disabled
     const isDataSyncStopped = this.#state?.data.syncing && !state.data.syncing;
 

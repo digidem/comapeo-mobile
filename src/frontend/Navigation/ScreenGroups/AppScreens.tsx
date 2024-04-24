@@ -142,7 +142,7 @@ export type AppList = {
   UnableToCancelInvite: InviteProps;
   DeviceNameDisplay: undefined;
   DeviceNameEdit: undefined;
-  SaveTrack: undefined;
+  TrackEdit: {trackId: string | null};
   Track: {trackId: string};
 };
 
@@ -367,7 +367,7 @@ export const createDefaultScreenGroup = (
       options={createGpsModalNavigationOptions({intl})}
     />
     <RootStack.Screen
-      name="SaveTrack"
+      name="TrackEdit"
       component={TrackEditScreen}
       options={{
         headerShown: false,

@@ -65,7 +65,10 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
         <CustomHeaderLeft headerBackButtonProps={props} tintColor={BLACK} />
       ),
       headerRight: () => (
-        <Pressable>
+        <Pressable
+          onPress={() =>
+            navigation.navigate('TrackEdit', {trackId: route.params.trackId})
+          }>
           <EditIcon />
         </Pressable>
       ),

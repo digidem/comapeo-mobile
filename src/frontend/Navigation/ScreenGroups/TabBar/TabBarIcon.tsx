@@ -4,16 +4,15 @@ import {TabBarIconProps} from '../../types';
 import {COMAPEO_BLUE, MEDIUM_GREY} from '../../../lib/styles';
 
 export interface TabBarIcon extends TabBarIconProps {
-  isFocused: boolean;
   iconName: string;
 }
 
-export const TabBarIcon: FC<TabBarIcon> = ({size, iconName, isFocused}) => {
+export const TabBarIcon: FC<TabBarIcon> = ({size, iconName, focused}) => {
   return (
     <MaterialIcons
       name={iconName}
       size={size}
-      color={isFocused ? COMAPEO_BLUE : MEDIUM_GREY}
+      color={focused ? COMAPEO_BLUE : MEDIUM_GREY}
     />
   );
 };

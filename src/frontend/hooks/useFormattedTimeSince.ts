@@ -1,8 +1,8 @@
 import {useEffect, useState} from 'react';
 import {Duration} from 'luxon';
 
-export const useFormattedTimeSince = (start: Date | null, interval: number) => {
-  const [currentTime, setCurrentTime] = useState<Date>(new Date());
+export const useFormattedTimeSince = (start: Date, interval: number) => {
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -14,8 +14,6 @@ export const useFormattedTimeSince = (start: Date | null, interval: number) => {
     }
     return () => clearInterval(timer);
   }, [start, interval]);
-
-  if (!start) return 'Unknown';
 
   const millisPassed = Math.abs(currentTime.getTime() - start.getTime());
   return Duration.fromMillis(millisPassed).toFormat('hh:mm:ss');

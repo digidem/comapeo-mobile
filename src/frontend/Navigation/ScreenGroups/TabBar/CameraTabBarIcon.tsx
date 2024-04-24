@@ -9,7 +9,7 @@ export const CameraTabBarIcon: FC<TabBarIconProps> = props => {
   return (
     <TabBarIcon
       {...props}
-      isFocused={props.focused && currentTab !== TabName.Tracking}
+      focused={props.focused && currentTab !== TabName.Tracking}
       iconName="photo-camera"
     />
   );

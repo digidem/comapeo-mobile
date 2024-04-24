@@ -178,24 +178,26 @@ const HomeTabs = () => {
           tabBarIcon: CameraTabBarIcon,
         }}
       />
-      <Tab.Screen
-        name={TabName.Tracking}
-        options={{
-          tabBarIcon: TrackingTabBarIcon,
-          headerShown: false,
-        }}
-        listeners={({
-          navigation,
-        }: {
-          navigation: BottomTabNavigationProp<HomeTabsList>;
-        }) => ({
-          tabPress: e => {
-            e.preventDefault();
-            navigation.navigate(TabName.Map);
-          },
-        })}
-        children={() => <></>}
-      />
+      {process.env.FEATURE_TRACKS && (
+        <Tab.Screen
+          name={TabName.Tracking}
+          options={{
+            tabBarIcon: TrackingTabBarIcon,
+            headerShown: false,
+          }}
+          listeners={({
+            navigation,
+          }: {
+            navigation: BottomTabNavigationProp<HomeTabsList>;
+          }) => ({
+            tabPress: e => {
+              e.preventDefault();
+              navigation.navigate(TabName.Map);
+            },
+          })}
+          children={() => <></>}
+        />
+      )}
     </Tab.Navigator>
   );
 };

@@ -133,9 +133,7 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
         <ScrollView>
           <TrackObservationList observations={trackObservations} />
           <View style={styles.divider} />
-          <TrackEditDescriptionField
-            description={track.tags.notes as string}
-          />
+          <TrackEditDescriptionField description={track.tags.notes as string} />
         </ScrollView>
       </View>
       <ActionButtons actions={actions} />

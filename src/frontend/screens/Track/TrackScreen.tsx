@@ -59,8 +59,6 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
   route,
   navigation,
 }) => {
-  const [description, setDescription] = useState('');
-
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: (props: any) => (
@@ -79,7 +77,7 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
   const trackObservations = observations.filter(observation =>
     track.refs.some(ref => ref.id === observation.docId),
   );
-  const len = track.locations.length;
+  const [description, setDescription] = useState(track.tags['notes'] || '');
   const latitudes = track.locations.map(loc => loc.coords.latitude);
   const longitudes = track.locations.map(loc => loc.coords.longitude);
   let centerLat = (Math.min(...latitudes) + Math.max(...latitudes)) / 2;

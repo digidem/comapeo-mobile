@@ -3,5 +3,6 @@ module.exports = {
   plugins: [
     // react-native-reanimated/plugin has to be last
     'react-native-reanimated/plugin',
+    'transform-inline-environment-variables',
   ],
 };

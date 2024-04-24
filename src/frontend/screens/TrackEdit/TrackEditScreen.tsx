@@ -1,7 +1,6 @@
 import React, {useRef, useState} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
-import {TrackEditScreenHeader} from './TrackEditScreenHeader.tsx';
 import {BottomSheet} from '../../sharedComponents/BottomSheet/BottomSheet.tsx';
 import PhotoIcon from '../../images/camera.svg';
 import DetailsIcon from '../../images/details.svg';
@@ -9,6 +8,7 @@ import TrackIcon from '../../images/Track.svg';
 import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../sharedComponents/Text.tsx';
 import {TrackEditDescriptionField} from './TrackEditDescriptionField.tsx';
+import {TrackEditScreenHeader} from './TrackEditScreenHeader.tsx';
 import {NavigationProp} from '@react-navigation/native';
 import {TrackDiscardModal} from './TrackDiscardModal.tsx';
 
@@ -51,7 +51,10 @@ export const TrackEditScreen: React.FC<{navigation: NavigationProp<any>}> = ({
   ];
   return (
     <SafeAreaView style={styles.container}>
-      <TrackEditScreenHeader bottomSheetRef={bottomSheetRef} />
+      <TrackEditScreenHeader
+        bottomSheetRef={bottomSheetRef}
+        description={description}
+      />
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.scrollViewContent}>

@@ -20,10 +20,12 @@ const m = defineMessages({
 
 export interface TrackEditScreenHeader {
   bottomSheetRef: React.RefObject<BottomSheetModalMethods>;
+  description: string;
 }
 
 export const TrackEditScreenHeader: FC<TrackEditScreenHeader> = ({
   bottomSheetRef,
+  description,
 }) => {
   const saveTrack = useCreateTrack();
   const currentTrack = useCurrentTrackStore();
@@ -40,7 +42,9 @@ export const TrackEditScreenHeader: FC<TrackEditScreenHeader> = ({
           id: observationId,
           type: 'observation',
         })),
-        tags: {},
+        tags: {
+          notes: description,
+        },
         locations: currentTrack.locationHistory.map(loc => {
           return {
             coords: {

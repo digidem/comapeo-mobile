@@ -723,7 +723,7 @@
     "message": "Success"
   },
   "sharedComponents.ProjectInviteBottomSheet.youHaveJoined": {
-    "message": "You have joined {projName}"
+    "message": "Go To Sync"
   },
   "sharedComponents.RoleWithIcon.coordinator": {
     "message": "Coordinator"

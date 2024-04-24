@@ -17,6 +17,7 @@ const DB_DIR_NAME = 'sqlite-dbs'
 const CORE_STORAGE_DIR_NAME = 'core-storage'
 
 const log = debug('mapeo:app')
+debug.enable('*')
 
 // Set these up as soon as possible (e.g. before the init function)
 const serverStatus = new ServerStatus()
@@ -47,7 +48,7 @@ process.on('exit', (code) => {
  * @param {Buffer} options.rootKey
  * @param {string} options.migrationsFolderPath
  * @param {string} options.sharedStoragePath Path to app-specific external file storage folder
- * @param {string} options.defaultConfigPath
+ * @param {string} [options.defaultConfigPath]
  */
 export async function init({
   version,
@@ -76,7 +77,7 @@ export async function init({
     clientMigrationsFolder: join(migrationsFolderPath, 'client'),
     projectMigrationsFolder: join(migrationsFolderPath, 'project'),
     fastify,
-    defaultConfigPath: defaultConfigPath,
+    defaultConfigPath,
   })
 
   // Don't await, methods that use the server will await this internally

@@ -6,6 +6,7 @@ import {
 
 import {useProject} from './projects';
 import {PresetValue} from '@mapeo/schema';
+import {MockPreset} from '../../mockdata';
 
 export function usePresetsQuery() {
   const project = useProject();
@@ -18,11 +19,9 @@ export function usePresetsQuery() {
       // if (presets.length === 0) {
       //   await Promise.all([
       //     ...MockPreset.map(val => project.preset.create(val)),
-      //     ...mockFields.map(val => project.field.create(val)),
       //   ]);
       //   return await project.preset.getMany();
       // }
-      console.log({presets});
       return presets;
     },
   });

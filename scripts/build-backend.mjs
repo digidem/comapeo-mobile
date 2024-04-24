@@ -74,7 +74,7 @@ const KEEP_THESE = [
   'loader.js',
   // Static folders referenced by @mapeo/core code
   'node_modules/@mapeo/core/drizzle',
-  'node_modules/@mapeo/default-config/dist/mapeo-default-config.mapeoconfig'
+  'node_modules/@mapeo/default-config'
 ];
 
 for (const name of KEEP_THESE) {

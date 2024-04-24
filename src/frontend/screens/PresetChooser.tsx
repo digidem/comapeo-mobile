@@ -44,6 +44,8 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
     ? undefined
     : routes[currentIndex - 1].name;
 
+  console.log({presets});
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: props =>

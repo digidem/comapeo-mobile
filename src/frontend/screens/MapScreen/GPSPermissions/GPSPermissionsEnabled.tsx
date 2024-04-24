@@ -52,7 +52,7 @@ export const GPSPermissionsEnabled = () => {
       clearCurrentTrack();
       navigation.navigate('Map');
     } else {
-      navigation.navigate('SaveTrack');
+      navigation.navigate('TrackEdit', {trackId: null});
     }
   }, [
     cancelTracking,

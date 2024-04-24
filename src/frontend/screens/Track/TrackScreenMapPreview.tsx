@@ -8,20 +8,12 @@ import CheapRuler from 'cheap-ruler';
 
 interface TrackScreenMapPreview {
   locationHistory: LocationHistoryPoint[];
-  coords: number[];
 }
 
-const slope = -0.044;
-const baseZoom = 16;
-
 export const TrackScreenMapPreview: FC<TrackScreenMapPreview> = ({
-  coords,
   locationHistory,
 }) => {
-  const ruler = new CheapRuler(locationHistory[0]!.latitude);
-  const distance = ruler.lineDistance(
-    locationHistory.map(point => [point.longitude, point.latitude]),
-  );
+  const [swBoundary, neBoundary] = getBounds(locationHistory);
   return (
     <MapboxGL.MapView
       style={styles.map}
@@ -34,9 +26,16 @@ export const TrackScreenMapPreview: FC<TrackScreenMapPreview> = ({
       scaleBarEnabled={false}
       styleURL={MAP_STYLE}>
       <MapboxGL.Camera
-        centerCoordinate={coords}
-        zoomLevel={slope * distance + baseZoom + Math.abs(slope)}
         animationMode="none"
+        zoomLevel={12}
+        bounds={{
+          ne: neBoundary!,
+          sw: swBoundary!,
+          paddingTop: 25,
+          paddingRight: 25,
+          paddingLeft: 25,
+          paddingBottom: 25,
+        }}
       />
       <DisplayedTrackPathLayer
         onPress={() => {}}
@@ -47,6 +46,25 @@ export const TrackScreenMapPreview: FC<TrackScreenMapPreview> = ({
 };
 
 const MAP_HEIGHT = 250;
+
+const getBounds = (locationHistory: LocationHistoryPoint[]) => {
+  let minLat = Infinity;
+  let maxLat = -Infinity;
+  let minLng = Infinity;
+  let maxLng = -Infinity;
+
+  locationHistory.forEach(point => {
+    minLat = Math.min(minLat, point.latitude);
+    maxLat = Math.max(maxLat, point.latitude);
+    minLng = Math.min(minLng, point.longitude);
+    maxLng = Math.max(maxLng, point.longitude);
+  });
+
+  return [
+    [minLng, minLat], // southWest
+    [maxLng, maxLat], // northEast
+  ];
+};
 
 export const styles = StyleSheet.create({
   map: {

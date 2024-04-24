@@ -83,11 +83,6 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
   const [description, setDescription] = useState(
     (track.tags['notes'] as string) || '',
   );
-  const latitudes = track.locations.map(loc => loc.coords.latitude);
-  const longitudes = track.locations.map(loc => loc.coords.longitude);
-  let centerLat = (Math.min(...latitudes) + Math.max(...latitudes)) / 2;
-  let centerLng = (Math.min(...longitudes) + Math.max(...longitudes)) / 2;
-  let center = [centerLng, centerLat];
 
   const deleteTrackMutation = useDeleteTrackMutation();
   const {formatMessage: t} = useIntl();
@@ -127,7 +122,6 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
     <SafeAreaView style={styles.root}>
       <View>
         <TrackScreenMapPreview
-          coords={center}
           locationHistory={track.locations.map(({timestamp, coords}) => ({
             latitude: coords.latitude,
             longitude: coords.longitude,

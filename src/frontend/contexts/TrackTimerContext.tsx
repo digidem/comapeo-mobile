@@ -10,7 +10,7 @@ const TrackTimerContext = createContext<TrackTimerContext | null>(null);
 
 const TrackTimerContextProvider = ({children}: {children: React.ReactNode}) => {
   const trackingSince = useCurrentTrackStore(state => state.trackingSince);
-  const timer = useFormattedTimeSince(trackingSince ?? new Date(), 1000);
+  const timer = useFormattedTimeSince(trackingSince, 1000);
 
   return (
     <TrackTimerContext.Provider value={{timer}}>

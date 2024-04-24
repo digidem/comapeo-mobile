@@ -11,7 +11,7 @@ import {LIGHT_GREY} from '../lib/styles';
 import {View} from 'react-native';
 import {useProjectInvite} from '../hooks/useProjectInvite';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
-import {useNavigationState} from '@react-navigation/native';
+import {CommonActions, useNavigationState} from '@react-navigation/native';
 import {isEditingScreen} from '../lib/utils';
 
 const m = defineMessages({
@@ -66,6 +66,15 @@ export const ProjectInviteBottomSheet = () => {
     openSheet();
   }
 
+  function handleGoToSync() {
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{name: 'Home'}, {name: 'Sync'}],
+      }),
+    );
+  }
+
   return (
     <BottomSheetModal ref={sheetRef} isOpen={isOpen} onDismiss={resetState}>
       {accept.isSuccess ? (
@@ -82,7 +91,7 @@ export const ProjectInviteBottomSheet = () => {
             },
             {
               onPress: () => {
-                navigation.navigate('Sync');
+                handleGoToSync();
                 closeSheet();
               },
               text: formatMessage(m.goToSync),

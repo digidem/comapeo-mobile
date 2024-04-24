@@ -20,27 +20,28 @@ export function useTracking() {
   const setTracking = useCurrentTrackStore(state => state.setTracking);
   const isTracking = useCurrentTrackStore(state => state.isTracking);
 
-  const addNewTrackLocations = useCallback(
-    ({data, error}: LocationCallbackInfo) => {
-      if (error) {
-        console.error('Error while processing location update callback', error);
-      }
-      if (data?.locations) {
-        addNewLocations(
-          data.locations.map(loc => ({
-            latitude: loc.coords.latitude,
-            longitude: loc.coords.longitude,
-            timestamp: loc.timestamp,
-          })),
-        );
-      }
-    },
-    [addNewLocations],
-  );
-
   React.useEffect(() => {
-    TaskManager.defineTask(LOCATION_TASK_NAME, addNewTrackLocations);
-  }, [addNewTrackLocations]);
+    TaskManager.defineTask(
+      LOCATION_TASK_NAME,
+      ({data, error}: LocationCallbackInfo) => {
+        if (error) {
+          console.error(
+            'Error while processing location update callback',
+            error,
+          );
+        }
+        if (data?.locations) {
+          addNewLocations(
+            data.locations.map(loc => ({
+              latitude: loc.coords.latitude,
+              longitude: loc.coords.longitude,
+              timestamp: loc.timestamp,
+            })),
+          );
+        }
+      },
+    );
+  }, []);
 
   const startTracking = useCallback(async () => {
     if (isTracking) {

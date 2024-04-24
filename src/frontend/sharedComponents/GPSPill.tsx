@@ -1,13 +1,14 @@
-import React, {useMemo} from 'react';
+import React, {FC, useMemo} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Text} from './Text';
-import {useIsFocused} from '@react-navigation/native';
+import {ParamListBase, useIsFocused} from '@react-navigation/native';
 import {useLocationProviderStatus} from '../hooks/useLocationProviderStatus';
 import {getLocationStatus} from '../lib/utils';
 import {defineMessages, useIntl} from 'react-intl';
 import {GpsIcon} from './icons';
 import {useSharedLocationContext} from '../contexts/SharedLocationContext';
 import {BLACK, WHITE} from '../lib/styles';
+import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 
 const m = defineMessages({
   noGps: {
@@ -20,7 +21,11 @@ const m = defineMessages({
   },
 });
 
-export const GPSPill = ({navigation}) => {
+interface GPSPill {
+  navigation: BottomTabNavigationProp<ParamListBase, string, undefined>;
+}
+
+export const GPSPill: FC<GPSPill> = ({navigation}) => {
   const isFocused = useIsFocused();
   const {formatMessage: t} = useIntl();
   const {locationState, fgPermissions} = useSharedLocationContext();
@@ -53,7 +58,7 @@ export const GPSPill = ({navigation}) => {
 
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('GPSModal' as never)}
+      onPress={() => navigation.navigate('GpsModal')}
       testID="gpsPillButton">
       <View
         style={[

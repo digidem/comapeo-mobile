@@ -438,6 +438,10 @@
     "description": "message shown whilst observations are loading",
     "message": "Loading… this can take a while after synchronizing with a new device"
   },
+  "screens.SaveTrack.TrackEditView.CreateTrackTitle": {
+    "description": "Title for new track screen",
+    "message": "New Track"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "What is happening here?"
@@ -450,9 +454,9 @@
     "description": "Button label for check details",
     "message": "Details"
   },
-  "screens.SaveTrack.TrackEditView.title": {
-    "description": "Title for new track screen",
-    "message": "New Track"
+  "screens.SaveTrack.TrackEditView.trackEditTitle": {
+    "description": "Edit track",
+    "message": "Edit track"
   },
   "screens.SaveTrack.track": {
     "description": "Category title for new track screen",

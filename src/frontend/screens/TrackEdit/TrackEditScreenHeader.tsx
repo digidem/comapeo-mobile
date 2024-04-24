@@ -3,37 +3,47 @@ import {View, Image, StyleSheet, Pressable} from 'react-native';
 import {Text} from '../../sharedComponents/Text.tsx';
 import Close from '../../images/close.svg';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
-import {useCreateTrack} from '../../hooks/server/track.ts';
+import {useCreateTrack, useUpdateTrack} from '../../hooks/server/track.ts';
 import {useCurrentTrackStore} from '../../hooks/tracks/useCurrentTrackStore.ts';
 import {DateTime} from 'luxon';
 import {TabName} from '../../Navigation/types.ts';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes.ts';
 import {defineMessages, useIntl} from 'react-intl';
+import {Track} from '@mapeo/schema';
 
 const m = defineMessages({
-  trackEditScreenTitle: {
-    id: 'screens.SaveTrack.TrackEditView.title',
+  trackCreateScreenTitle: {
+    id: 'screens.SaveTrack.CreateTrackTitle',
     defaultMessage: 'New Track',
     description: 'Title for new track screen',
+  },
+  trackEditScreenTitle: {
+    id: 'screens.SaveTrack.trackEditTitle',
+    defaultMessage: 'Edit track',
+    description: 'Edit track',
   },
 });
 
 export interface TrackEditScreenHeader {
   bottomSheetRef: React.RefObject<BottomSheetModalMethods>;
   description: string;
+  isEdit: boolean;
+  track?: Track;
 }
 
 export const TrackEditScreenHeader: FC<TrackEditScreenHeader> = ({
   bottomSheetRef,
+  isEdit,
+  track,
   description,
 }) => {
+  const {formatMessage: t} = useIntl();
   const saveTrack = useCreateTrack();
+  const updateTrack = useUpdateTrack(track?.versionId);
   const currentTrack = useCurrentTrackStore();
   const navigation = useNavigationFromHomeTabs();
 
-  const {formatMessage: t} = useIntl();
-
-  const handleSaveClick = () => {
+  const saveTrackClick = () => {
     saveTrack.mutate(
       {
         schemaName: 'track',
@@ -64,6 +74,27 @@ export const TrackEditScreenHeader: FC<TrackEditScreenHeader> = ({
       },
     );
   };
+
+  const updateCurrentTrack = () => {
+    updateTrack.mutate(
+      {
+        ...track!,
+        tags: {
+          notes: description,
+        },
+      },
+      {
+        onSuccess: () => {
+          navigation.pop();
+        },
+      },
+    );
+  };
+
+  const handleClick = () => {
+    isEdit ? updateCurrentTrack() : saveTrackClick();
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.closeWrapper}>
@@ -72,9 +103,11 @@ export const TrackEditScreenHeader: FC<TrackEditScreenHeader> = ({
           onPress={() => bottomSheetRef.current?.present()}>
           <Close style={styles.closeIcon} />
         </Pressable>
-        <Text style={styles.text}>{t(m.trackEditScreenTitle)}</Text>
+        <Text style={styles.text}>
+          {t(isEdit ? m.trackEditScreenTitle : m.trackCreateScreenTitle)}
+        </Text>
       </View>
-      <Pressable disabled={saveTrack.isPending} onPress={handleSaveClick}>
+      <Pressable disabled={saveTrack.isPending} onPress={handleClick}>
         <Image
           style={styles.completeIcon}
           source={require('../../images/completed/checkComplete.png')}

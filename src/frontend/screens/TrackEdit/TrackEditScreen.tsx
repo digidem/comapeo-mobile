@@ -9,8 +9,9 @@ import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../sharedComponents/Text.tsx';
 import {TrackEditDescriptionField} from './TrackEditDescriptionField.tsx';
 import {TrackEditScreenHeader} from './TrackEditScreenHeader.tsx';
-import {NavigationProp} from '@react-navigation/native';
 import {TrackDiscardModal} from './TrackDiscardModal.tsx';
+import {NativeNavigationComponent} from '../../sharedTypes.ts';
+import {useTrackWithEnableOptionQuery} from '../../hooks/server/track.ts';
 
 const m = defineMessages({
   newTitle: {
@@ -30,12 +31,17 @@ const m = defineMessages({
   },
 });
 
-export const TrackEditScreen: React.FC<{navigation: NavigationProp<any>}> = ({
-  navigation,
+export const TrackEditScreen: NativeNavigationComponent<'TrackEdit'> = ({
+  route,
 }) => {
   const {formatMessage: t} = useIntl();
-  const [description, setDescription] = useState('');
   const bottomSheetRef = useRef<BottomSheetModal>(null);
+  const {trackId} = route.params;
+
+  const {data: track} = useTrackWithEnableOptionQuery(trackId);
+  const [description, setDescription] = useState<string>(
+    track?.tags['notes'] ? (track.tags['notes'] as string) : '',
+  );
 
   const bottomSheetItems = [
     {
@@ -49,11 +55,14 @@ export const TrackEditScreen: React.FC<{navigation: NavigationProp<any>}> = ({
       onPress: () => {},
     },
   ];
+
   return (
     <SafeAreaView style={styles.container}>
       <TrackEditScreenHeader
+        isEdit={!!trackId}
         bottomSheetRef={bottomSheetRef}
         description={description}
+        track={track}
       />
       <ScrollView
         style={styles.container}
@@ -72,6 +81,8 @@ export const TrackEditScreen: React.FC<{navigation: NavigationProp<any>}> = ({
     </SafeAreaView>
   );
 };
+
+TrackEditScreen.navTitle = m.newTitle;
 
 const styles = StyleSheet.create({
   icon: {width: 30, height: 30},

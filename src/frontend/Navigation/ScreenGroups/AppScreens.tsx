@@ -142,7 +142,7 @@ export type AppList = {
   UnableToCancelInvite: InviteProps;
   DeviceNameDisplay: undefined;
   DeviceNameEdit: undefined;
-  TrackEdit: {trackId: string | null};
+  TrackEdit: {trackId?: string};
   Track: {trackId: string};
 };
 

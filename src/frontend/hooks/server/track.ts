@@ -23,6 +23,22 @@ export function useCreateTrack() {
   });
 }
 
+export function useUpdateTrack(versionId?: string) {
+  const project = useProject();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (params: TrackValue) => {
+      if (!project) throw new Error('Project instance does not exist');
+      return project.track.update(versionId!, params);
+    },
+    onSuccess: data => {
+      queryClient.invalidateQueries({
+        queryKey: [TRACK_KEY, data.docId],
+      });
+    },
+  });
+}
+
 export function useTracksQuery() {
   const project = useProject();
   return useSuspenseQuery({
@@ -37,7 +53,7 @@ export function useTracksQuery() {
 export function useTrackWithEnableOptionQuery(docId?: string) {
   const project = useProject();
   return useQuery({
-    queryKey: [TRACK_KEY],
+    queryKey: [TRACK_KEY, docId],
     enabled: !!docId,
     queryFn: async () => {
       if (!docId) return;

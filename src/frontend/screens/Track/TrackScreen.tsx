@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -80,9 +80,6 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
   const trackObservations = observations.filter(observation =>
     track.refs.some(ref => ref.id === observation.docId),
   );
-  const [description, setDescription] = useState(
-    (track.tags['notes'] as string) || '',
-  );
 
   const deleteTrackMutation = useDeleteTrackMutation();
   const {formatMessage: t} = useIntl();
@@ -136,7 +133,9 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
         <ScrollView>
           <TrackObservationList observations={trackObservations} />
           <View style={styles.divider} />
-          <TrackEditDescriptionField description={description} />
+          <TrackEditDescriptionField
+            description={track.tags.notes as string}
+          />
         </ScrollView>
       </View>
       <ActionButtons actions={actions} />

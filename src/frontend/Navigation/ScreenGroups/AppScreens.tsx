@@ -57,6 +57,10 @@ import {CameraTabBarIcon} from './TabBar/CameraTabBarIcon';
 import {MapTabBarIcon} from './TabBar/MapTabBarIcon';
 import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/InviteDeclined';
 import {UnableToCancelInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/UnableToCancelInvite';
+import {
+  SyncScreen,
+  createNavigationOptions as createSyncNavOptions,
+} from '../../screens/Sync';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -76,7 +80,6 @@ type InviteProps = {
 export type AppList = {
   Home: NavigatorScreenParams<HomeTabsList>;
   GpsModal: undefined;
-  SyncModal: undefined;
   Settings: undefined;
   ProjectConfig: undefined;
   AboutMapeo: undefined;
@@ -136,6 +139,7 @@ export type AppList = {
   UnableToCancelInvite: InviteProps;
   DeviceNameDisplay: undefined;
   DeviceNameEdit: undefined;
+  Sync: undefined;
 };
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
@@ -365,6 +369,11 @@ export const createDefaultScreenGroup = (
       name="UnableToCancelInvite"
       component={UnableToCancelInvite}
       options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="Sync"
+      component={SyncScreen}
+      options={createSyncNavOptions()}
     />
   </RootStack.Group>
 );

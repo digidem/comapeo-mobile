@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   ScrollView,
   Pressable,
+  Alert,
 } from 'react-native';
 import {BLACK, WHITE, DARK_GREY} from '../../lib/styles.ts';
 import DeleteIcon from '../../images/DeleteTrack.svg';
@@ -17,10 +18,13 @@ import {TrackScreenMapPreview} from './TrackScreenMapPreview.tsx';
 import {TrackEditDescriptionField} from '../TrackEdit/TrackEditDescriptionField.tsx';
 import EditIcon from '../../images/Edit.svg';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
-import {defineMessages, MessageDescriptor} from 'react-intl';
+import {defineMessages, MessageDescriptor, useIntl} from 'react-intl';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {NativeNavigationComponent} from '../../sharedTypes.ts';
-import {useTrackQuery} from '../../hooks/server/track.ts';
+import {
+  useDeleteTrackMutation,
+  useTrackQuery,
+} from '../../hooks/server/track.ts';
 import {useObservations} from '../../hooks/server/observations.ts';
 
 const m = defineMessages({
@@ -34,20 +38,22 @@ const m = defineMessages({
     id: 'screens.Track.trackHeader',
     defaultMessage: 'Track',
   },
+  cancel: {
+    id: 'screens.Track.cancel',
+    defaultMessage: 'Cancel',
+    description: 'Button to cancel delete of track',
+  },
+  confirm: {
+    id: 'screens.Track.confirm',
+    defaultMessage: 'Yes, delete',
+    description: 'Button to confirm delete of track',
+  },
+  deleteTitle: {
+    id: 'screens.Track.deleteTitle',
+    defaultMessage: 'Delete track?',
+    description: 'Title of dialog asking confirmation to delete a track',
+  },
 });
-
-const actions = [
-  {
-    icon: DeleteIcon,
-    text: 'Delete',
-    onPress: () => {},
-  },
-  {
-    icon: ShareIcon,
-    text: 'Share',
-    onPress: () => {},
-  },
-];
 
 export const TrackScreen: NativeNavigationComponent<'Track'> = ({
   route,
@@ -79,6 +85,41 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
   let centerLat = (Math.min(...latitudes) + Math.max(...latitudes)) / 2;
   let centerLng = (Math.min(...longitudes) + Math.max(...longitudes)) / 2;
   let center = [centerLng, centerLat];
+
+  const deleteTrackMutation = useDeleteTrackMutation();
+  const {formatMessage: t} = useIntl();
+
+  const actions = [
+    {
+      icon: DeleteIcon,
+      text: 'Delete',
+      onPress: () => {
+        Alert.alert(t(m.deleteTitle), undefined, [
+          {
+            text: t(m.cancel),
+            onPress: () => {},
+          },
+          {
+            text: t(m.confirm),
+            onPress: () => {
+              deleteTrackMutation.mutate(track.docId, {
+                onSuccess: () => {
+                  navigation.navigate('Home', {screen: 'Map'});
+                },
+              });
+              navigation.pop();
+            },
+          },
+        ]);
+      },
+    },
+    {
+      icon: ShareIcon,
+      text: 'Share',
+      onPress: () => {},
+    },
+  ];
+
   return (
     <SafeAreaView style={styles.root}>
       <View>

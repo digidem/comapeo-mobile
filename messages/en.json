@@ -664,6 +664,18 @@
     "description": "Title of settings screen",
     "message": "Settings"
   },
+  "screens.Track.cancel": {
+    "description": "Button to cancel delete of track",
+    "message": "Cancel"
+  },
+  "screens.Track.confirm": {
+    "description": "Button to confirm delete of track",
+    "message": "Yes, delete"
+  },
+  "screens.Track.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete a track",
+    "message": "Delete track?"
+  },
   "screens.Track.title": {
     "description": "Title of track screen showing (non-editable) view of observation with map",
     "message": "Track"

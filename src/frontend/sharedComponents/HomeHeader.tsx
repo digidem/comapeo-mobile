@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {IconButton} from './IconButton';
 import {ObservationListIcon, SyncIconCircle} from './icons';
-import {GPSPill} from './GpsPill';
+import {GPSPill} from './GPSPill';
 import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
 
 export const HomeHeader: FC<BottomTabHeaderProps> = ({navigation}) => {

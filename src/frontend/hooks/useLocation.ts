@@ -1,4 +1,3 @@
-import {useFocusEffect} from '@react-navigation/native';
 import CheapRuler from 'cheap-ruler';
 import {
   watchPositionAsync,
@@ -6,7 +5,7 @@ import {
   type LocationObject,
   Accuracy,
 } from 'expo-location';
-import React from 'react';
+import React, {useEffect} from 'react';
 
 interface LocationOptions {
   /** Only update location if it has changed by at least this distance in meters (or maxTimeInterval has passed) */
@@ -37,46 +36,44 @@ export function useLocation({
 
   const [permissions] = useForegroundPermissions();
 
-  useFocusEffect(
-    React.useCallback(() => {
-      if (!permissions || !permissions.granted) return;
+  useEffect(() => {
+    if (!permissions || !permissions.granted) return;
 
-      let ignore = false;
-      const locationSubscriptionProm = watchPositionAsync(
-        {
-          accuracy: Accuracy.BestForNavigation,
-          distanceInterval,
-        },
-        debounceLocation({
-          minTimeInterval,
-          maxTimeInterval,
-          maxDistanceInterval,
-        })(location => {
-          if (ignore) return;
-          setLocation({location, error: undefined});
-        }),
-      );
-
-      // Should not happen because we are checking permissions above, but just in case
-      locationSubscriptionProm.catch(error => {
+    let ignore = false;
+    const locationSubscriptionProm = watchPositionAsync(
+      {
+        accuracy: Accuracy.BestForNavigation,
+        distanceInterval,
+      },
+      debounceLocation({
+        minTimeInterval,
+        maxTimeInterval,
+        maxDistanceInterval,
+      })(location => {
         if (ignore) return;
-        setLocation(({location}) => {
-          return {location, error};
-        });
-      });
+        setLocation({location, error: undefined});
+      }),
+    );
 
-      return () => {
-        ignore = true;
-        locationSubscriptionProm.then(sub => sub.remove());
-      };
-    }, [
-      permissions,
-      distanceInterval,
-      minTimeInterval,
-      maxTimeInterval,
-      maxDistanceInterval,
-    ]),
-  );
+    // Should not happen because we are checking permissions above, but just in case
+    locationSubscriptionProm.catch(error => {
+      if (ignore) return;
+      setLocation(({location}) => {
+        return {location, error};
+      });
+    });
+
+    return () => {
+      ignore = true;
+      locationSubscriptionProm.then(sub => sub.remove());
+    };
+  }, [
+    distanceInterval,
+    maxDistanceInterval,
+    maxTimeInterval,
+    minTimeInterval,
+    permissions,
+  ]);
 
   return location;
 }

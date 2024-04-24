@@ -13,6 +13,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import {useCreateBlobMutation} from '../../hooks/server/media';
 import {DraftPhoto, Photo} from '../../contexts/PhotoPromiseContext/types';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
+import {useCurrentTrackStore} from '../../hooks/tracks/useCurrentTrackStore';
 
 const m = defineMessages({
   noGpsTitle: {
@@ -73,6 +74,12 @@ export const SaveButton = ({
   const createObservationMutation = useCreateObservation();
   const editObservationMutation = useEditObservation();
   const createBlobMutation = useCreateBlobMutation();
+  const addNewTrackLocation = useCurrentTrackStore(
+    state => state.addNewLocations,
+  );
+  const addNewTrackObservation = useCurrentTrackStore(
+    state => state.addNewObservation,
+  );
 
   function createObservation() {
     if (!value) throw new Error('no observation saved in persisted state ');
@@ -127,9 +134,21 @@ export const SaveButton = ({
             onError: () => {
               if (openErrorModal) openErrorModal();
             },
-            onSuccess: () => {
+            onSuccess: data => {
               clearDraft();
               navigation.navigate('Home', {screen: 'Map'});
+              if (value.lat && value.lon) {
+                addNewTrackLocation([
+                  {
+                    timestamp: new Date().getTime(),
+                    latitude: value.lat,
+                    longitude: value.lon,
+                  },
+                ]);
+              }
+              if (data.docId) {
+                addNewTrackObservation(data.docId);
+              }
             },
           },
         );
@@ -151,6 +170,16 @@ export const SaveButton = ({
         onSuccess: () => {
           clearDraft();
           navigation.pop();
+          if (value.lat && value.lon) {
+            addNewTrackLocation([
+              {
+                timestamp: new Date().getTime(),
+                latitude: value.lat,
+                longitude: value.lon,
+              },
+            ]);
+          }
+          addNewTrackObservation(observationId);
         },
       },
     );

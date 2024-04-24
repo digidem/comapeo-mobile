@@ -1,20 +1,12 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {IconButton} from './IconButton';
 import {ObservationListIcon} from './icons';
-import {useNavigationFromHomeTabs} from '../hooks/useNavigationWithTypes';
-import {GpsPill} from './GpsPill';
-import {LocationStatus} from '../lib/utils';
+import {GPSPill} from './GPSPill';
+import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
 
-interface Props {
-  locationStatus: LocationStatus;
-  precision?: number;
-}
-
-export const HomeHeader = ({locationStatus, precision}: Props) => {
-  const navigation = useNavigationFromHomeTabs();
-
+export const HomeHeader: FC<BottomTabHeaderProps> = ({navigation}) => {
   return (
     <View style={[styles.header]}>
       <LinearGradient
@@ -22,18 +14,9 @@ export const HomeHeader = ({locationStatus, precision}: Props) => {
         colors={['#0006', '#0000']}
       />
       <View style={styles.leftButton}>{/* Placeholder for left button */}</View>
-      <GpsPill
-        variant={locationStatus}
-        precision={precision}
-        onPress={() => {
-          navigation.navigate('GpsModal');
-        }}
-      />
+      <GPSPill navigation={navigation} />
       <IconButton
-        style={styles.rightButton}
-        onPress={() => {
-          navigation.navigate('ObservationList');
-        }}
+        onPress={() => navigation.navigate('ObservationList')}
         testID="observationListButton">
         <ObservationListIcon />
       </IconButton>
@@ -48,7 +31,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'transparent',
   },
-  rightButton: {},
   leftButton: {
     width: 60,
     height: 60,

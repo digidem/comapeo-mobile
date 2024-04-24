@@ -1,9 +1,9 @@
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {
+  BottomTabNavigationProp,
+  createBottomTabNavigator,
+} from '@react-navigation/bottom-tabs';
 import {NavigatorScreenParams} from '@react-navigation/native';
 import * as React from 'react';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {useForegroundPermissions} from 'expo-location';
-
 import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {RootStack} from '../AppStack';
 import {MessageDescriptor} from 'react-intl';
@@ -50,15 +50,20 @@ import {
   GpsModal,
   createNavigationOptions as createGpsModalNavigationOptions,
 } from '../../screens/GpsModal';
-import {useLocation} from '../../hooks/useLocation';
-import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
-import {getLocationStatus} from '../../lib/utils';
+import {useCurrentTab} from '../../hooks/useCurrentTab';
+import {TrackingTabBarIcon} from './TabBar/TrackingTabBarIcon';
+import {TabName} from '../types';
+import {CameraTabBarIcon} from './TabBar/CameraTabBarIcon';
+import {MapTabBarIcon} from './TabBar/MapTabBarIcon';
 import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/InviteDeclined';
 import {UnableToCancelInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/UnableToCancelInvite';
+
+export const TAB_BAR_HEIGHT = 70;
 
 export type HomeTabsList = {
   Map: undefined;
   Camera: undefined;
+  Tracking: undefined;
 };
 
 type InviteProps = {
@@ -136,42 +141,56 @@ export type AppList = {
 const Tab = createBottomTabNavigator<HomeTabsList>();
 
 const HomeTabs = () => {
-  const locationState = useLocation({maxDistanceInterval: 0});
-  const [permissions] = useForegroundPermissions();
-  const locationProviderStatus = useLocationProviderStatus();
-
-  const precision = locationState.location?.coords.accuracy;
-
-  const locationStatus =
-    !!locationState.error || !permissions?.granted
-      ? 'error'
-      : getLocationStatus({
-          location: locationState.location,
-          providerStatus: locationProviderStatus,
-        });
+  const {handleTabPress} = useCurrentTab();
 
   return (
     <Tab.Navigator
+      screenListeners={{
+        tabPress: handleTabPress,
+      }}
       screenOptions={({route}) => ({
-        tabBarIcon: ({color}) => {
-          const iconName = route.name === 'Map' ? 'map' : 'photo-camera';
-          return <MaterialIcons name={iconName} size={30} color={color} />;
-        },
-        header: () => (
-          <HomeHeader
-            locationStatus={locationStatus}
-            precision={
-              typeof precision === 'number' ? Math.round(precision) : undefined
-            }
-          />
-        ),
+        tabBarStyle: {height: TAB_BAR_HEIGHT},
+        tabBarShowLabel: false,
         headerTransparent: true,
         tabBarTestID: 'tabBarButton' + route.name,
+        header: HomeHeader,
       })}
-      initialRouteName="Map"
+      initialRouteName={TabName.Map}
       backBehavior="initialRoute">
-      <Tab.Screen name="Map" component={MapScreen} />
-      <Tab.Screen name="Camera" component={CameraScreen} />
+      <Tab.Screen
+        name={TabName.Map}
+        component={MapScreen}
+        options={{
+          tabBarIcon: MapTabBarIcon,
+        }}
+      />
+      <Tab.Screen
+        name={TabName.Camera}
+        component={CameraScreen}
+        options={{
+          tabBarIcon: CameraTabBarIcon,
+        }}
+      />
+      {process.env.FEATURE_TRACKS && (
+        <Tab.Screen
+          name={TabName.Tracking}
+          options={{
+            tabBarIcon: TrackingTabBarIcon,
+            headerShown: false,
+          }}
+          listeners={({
+            navigation,
+          }: {
+            navigation: BottomTabNavigationProp<HomeTabsList>;
+          }) => ({
+            tabPress: e => {
+              e.preventDefault();
+              navigation.navigate(TabName.Map);
+            },
+          })}
+          children={() => <></>}
+        />
+      )}
     </Tab.Navigator>
   );
 };

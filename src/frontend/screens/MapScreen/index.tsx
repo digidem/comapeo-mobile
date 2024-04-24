@@ -78,7 +78,8 @@ export const MapScreen = () => {
         attributionPosition={{right: 8, bottom: 8}}
         compassEnabled={false}
         scaleBarEnabled={false}
-        styleURL={mapStyleUrlQuery?.data}
+        // TODO: Add a nonce as query param to bust the cache when network state changes?
+        styleURL={mapStyleUrlQuery.data}
         onDidFinishLoadingStyle={handleDidFinishLoadingStyle}
         onMoveShouldSetResponder={() => {
           if (following) setFollowing(false);

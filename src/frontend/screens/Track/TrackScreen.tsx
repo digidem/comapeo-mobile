@@ -13,7 +13,7 @@ import ShareIcon from '../../images/Share.svg';
 import {TrackObservationList} from './TrackScreenObservationsList.tsx';
 import {ActionButtons} from './TrackActionButtons.tsx';
 import TrackIcon from '../../images/Track.svg';
-import {TrackMap} from './TrackScreenMapPreview.tsx';
+import {TrackScreenMapPreview} from './TrackScreenMapPreview.tsx';
 import {TrackEditDescriptionField} from '../TrackEdit/TrackEditDescriptionField.tsx';
 import EditIcon from '../../images/Edit.svg';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
@@ -82,7 +82,7 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
   return (
     <SafeAreaView style={styles.root}>
       <View>
-        <TrackMap
+        <TrackScreenMapPreview
           coords={center}
           locationHistory={track.locations.map(({timestamp, coords}) => ({
             latitude: coords.latitude,

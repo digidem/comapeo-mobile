@@ -14,7 +14,7 @@ interface TrackScreenMapPreview {
 const slope = -0.044;
 const baseZoom = 16;
 
-export const TrackMap: FC<TrackScreenMapPreview> = ({
+export const TrackScreenMapPreview: FC<TrackScreenMapPreview> = ({
   coords,
   locationHistory,
 }) => {

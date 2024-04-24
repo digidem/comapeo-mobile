@@ -43,6 +43,10 @@ const m = defineMessages({
     id: 'sharedComponents.ProjectInviteBottomSheet.youHaveJoined',
     defaultMessage: 'You have joined {projName}',
   },
+  goToSync: {
+    id: 'sharedComponents.ProjectInviteBottomSheet.youHaveJoined',
+    defaultMessage: 'Go To Sync',
+  },
 });
 
 export const ProjectInviteBottomSheet = () => {
@@ -75,6 +79,14 @@ export const ProjectInviteBottomSheet = () => {
                 closeSheet();
               },
               text: formatMessage(m.goToMap),
+            },
+            {
+              onPress: () => {
+                navigation.navigate('Sync');
+                closeSheet();
+              },
+              text: formatMessage(m.goToSync),
+              variation: 'filled',
             },
           ]}
           title={formatMessage(m.success)}

@@ -35,7 +35,6 @@ export function createNavigationOptions() {
 }
 
 export const SyncScreen = ({navigation}: NativeRootNavigationProps<'Sync'>) => {
-  // TODO: Is this the right field to use?
   const wifiStatus = useLocalDiscoveryState(state => state.wifiStatus);
 
   // TODO: Handle error case

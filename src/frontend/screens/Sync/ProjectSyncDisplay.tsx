@@ -19,6 +19,7 @@ import {Text} from '../../sharedComponents/Text';
 import {StopIcon, SyncIcon, WifiIcon} from '../../sharedComponents/icons';
 import {useQueryClient} from '@tanstack/react-query';
 import {OBSERVATION_KEY} from '../../hooks/server/observations';
+import {useFocusEffect} from '@react-navigation/native';
 
 const m = defineMessages({
   deviceName: {
@@ -87,12 +88,15 @@ export const ProjectSyncDisplay = ({
   const {connectedPeers, data, initial} = syncState;
   const isSyncDone = !initial.dataToSync && !data.dataToSync;
 
-  React.useEffect(() => {
-    if (isSyncDone) {
-      project.$sync.stop();
-      queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY]});
-    }
-  }, [isSyncDone, project, queryClient]);
+  // stops sync when user leaves sync screen. The api allows us to continue syncing even if the user is not on the sync screen, but for simplicity we are only allowing sync while on the sync screen. In the future we can easily enable background sync, there are just some UI questions that need to answered before we do that.
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        project.$sync.stop();
+        queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY]});
+      };
+    }, [project, queryClient]),
+  );
 
   const isDataSyncEnabled = data.syncing;
 

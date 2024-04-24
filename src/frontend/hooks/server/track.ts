@@ -2,6 +2,7 @@ import {
   useQueryClient,
   useMutation,
   useSuspenseQuery,
+  useQuery,
 } from '@tanstack/react-query';
 import {useProject} from './projects';
 import {TrackValue} from '@mapeo/schema';
@@ -29,6 +30,19 @@ export function useTracksQuery() {
     queryFn: async () => {
       if (!project) throw new Error('Project instance does not exist');
       return project.track.getMany();
+    },
+  });
+}
+
+export function useTrackWithEnableOptionQuery(docId?: string) {
+  const project = useProject();
+  return useQuery({
+    queryKey: [TRACK_KEY],
+    enabled: !!docId,
+    queryFn: async () => {
+      if (!docId) return;
+      if (!project) throw new Error('Project instance does not exist');
+      return project.track.getByDocId(docId);
     },
   });
 }

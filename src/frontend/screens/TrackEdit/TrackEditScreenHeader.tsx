@@ -1,13 +1,13 @@
 import React, {FC} from 'react';
 import {View, Image, StyleSheet, Pressable} from 'react-native';
-import {Text} from '../../../../sharedComponents/Text';
-import Close from '../../../../images/close.svg';
+import {Text} from '../../sharedComponents/Text.tsx';
+import Close from '../../images/close.svg';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
-import {useCreateTrack} from '../../../../hooks/server/track';
-import {useCurrentTrackStore} from '../../../../hooks/tracks/useCurrentTrackStore';
+import {useCreateTrack} from '../../hooks/server/track.ts';
+import {useCurrentTrackStore} from '../../hooks/tracks/useCurrentTrackStore.ts';
 import {DateTime} from 'luxon';
-import {TabName} from '../../../../Navigation/types';
-import {useNavigationFromHomeTabs} from '../../../../hooks/useNavigationWithTypes';
+import {TabName} from '../../Navigation/types.ts';
+import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes.ts';
 import {defineMessages, useIntl} from 'react-intl';
 
 const m = defineMessages({
@@ -18,11 +18,13 @@ const m = defineMessages({
   },
 });
 
-export interface SaveTrackHeader {
+export interface TrackEditScreenHeader {
   bottomSheetRef: React.RefObject<BottomSheetModalMethods>;
 }
 
-export const SaveTrackHeader: FC<SaveTrackHeader> = ({bottomSheetRef}) => {
+export const TrackEditScreenHeader: FC<TrackEditScreenHeader> = ({
+  bottomSheetRef,
+}) => {
   const saveTrack = useCreateTrack();
   const currentTrack = useCurrentTrackStore();
   const navigation = useNavigationFromHomeTabs();
@@ -71,7 +73,7 @@ export const SaveTrackHeader: FC<SaveTrackHeader> = ({bottomSheetRef}) => {
       <Pressable disabled={saveTrack.isPending} onPress={handleSaveClick}>
         <Image
           style={styles.completeIcon}
-          source={require('../../../../images/completed/checkComplete.png')}
+          source={require('../../images/completed/checkComplete.png')}
         />
       </Pressable>
     </View>

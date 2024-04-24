@@ -1,10 +1,10 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableHighlight, View} from 'react-native';
-import {FormattedObservationDate} from '../../../sharedComponents/FormattedData';
-import {ViewStyleProp} from '../../../sharedTypes';
+import {FormattedObservationDate} from '../../sharedComponents/FormattedData.tsx';
+import {ViewStyleProp} from '../../sharedTypes.ts';
 import {Track} from '@mapeo/schema';
-import {CategoryCircleIcon} from '../../../sharedComponents/icons/CategoryIcon';
-import {BLACK} from '../../../lib/styles';
+import {CategoryCircleIcon} from '../../sharedComponents/icons/CategoryIcon.tsx';
+import {BLACK} from '../../lib/styles.ts';
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;

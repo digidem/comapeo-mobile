@@ -14,7 +14,8 @@ interface DescriptionField {
   description: string;
   setDescription: React.Dispatch<React.SetStateAction<string>>;
 }
-export const TrackDescriptionField: React.FC<DescriptionField> = ({
+
+export const TrackEditDescriptionField: React.FC<DescriptionField> = ({
   description,
   setDescription,
 }) => {
@@ -28,6 +29,7 @@ export const TrackDescriptionField: React.FC<DescriptionField> = ({
       placeholderTextColor="silver"
       underlineColorAndroid="transparent"
       multiline
+      editable={false}
       value={description}
       scrollEnabled={false}
       textContentType="none"

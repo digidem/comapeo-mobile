@@ -8,7 +8,7 @@ import {Observation, Track} from '@mapeo/schema';
 import {NativeNavigationComponent} from '../../sharedTypes';
 import {SettingsButton} from './SettingsButton';
 import {useAllObservations} from '../../hooks/useAllObservations';
-import {TrackListItem} from '../MapScreen/track/TrackListItem';
+import {TrackListItem} from './TrackListItem.tsx';
 
 const m = defineMessages({
   loading: {

@@ -6,14 +6,14 @@ import Animated, {
   FadeOutUp,
   LinearTransition,
 } from 'react-native-reanimated';
-import {Text} from '../../../sharedComponents/Text';
-import ChainIcon from '../../../images/Chain.svg';
-import Chevrondown from '../../../images/chevrondown.svg';
-import ChevrondownDefault from '../../../images/chevrondown-expanded.svg';
-import {TrackListItem} from './TrackListItem';
+import {Text} from '../../sharedComponents/Text.tsx';
+import ChainIcon from '../../images/Chain.svg';
+import Chevrondown from '../../images/chevrondown.svg';
+import ChevrondownDefault from '../../images/chevrondown-expanded.svg';
+import {TrackListItem} from '../ObservationsList/TrackListItem.tsx';
 import {Observation} from '@mapeo/schema';
-import {ObservationListItem} from '../../ObservationsList/ObservationListItem.tsx';
-import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes.ts';
+import {ObservationListItem} from '../ObservationsList/ObservationListItem.tsx';
+import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes.ts';
 
 interface TrackObservation {
   observations: Observation[];

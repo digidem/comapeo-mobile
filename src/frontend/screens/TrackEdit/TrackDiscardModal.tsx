@@ -7,17 +7,17 @@ import {
 } from '@gorhom/bottom-sheet';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import {StyleSheet, View} from 'react-native';
-import {Text} from '../../../../sharedComponents/Text';
-import {Button} from '../../../../sharedComponents/Button';
+import {Text} from '../../sharedComponents/Text.tsx';
+import {Button} from '../../sharedComponents/Button.tsx';
 import {defineMessages, useIntl} from 'react-intl';
-import ErrorIcon from '../../../../images/Error.svg';
-import {COMAPEO_BLUE, MAGENTA, WHITE} from '../../../../lib/styles';
-import {useNavigationFromHomeTabs} from '../../../../hooks/useNavigationWithTypes';
-import DiscardIcon from '../../../../images/delete.svg';
-import {useCurrentTrackStore} from '../../../../hooks/tracks/useCurrentTrackStore';
-import {TabName} from '../../../../Navigation/types';
+import ErrorIcon from '../../images/Error.svg';
+import {COMAPEO_BLUE, MAGENTA, WHITE} from '../../lib/styles.ts';
+import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes.ts';
+import DiscardIcon from '../../images/delete.svg';
+import {useCurrentTrackStore} from '../../hooks/tracks/useCurrentTrackStore.ts';
+import {TabName} from '../../Navigation/types.ts';
 
-export interface DiscardTrackModal {
+export interface TrackDiscardModal {
   bottomSheetRef: React.RefObject<BottomSheetModalMethods>;
 }
 
@@ -40,7 +40,7 @@ const m = defineMessages({
   },
 });
 
-export const DiscardTrackModal: FC<DiscardTrackModal> = ({bottomSheetRef}) => {
+export const TrackDiscardModal: FC<TrackDiscardModal> = ({bottomSheetRef}) => {
   const {formatMessage} = useIntl();
   const navigation = useNavigationFromHomeTabs();
   const clearCurrentTrack = useCurrentTrackStore(

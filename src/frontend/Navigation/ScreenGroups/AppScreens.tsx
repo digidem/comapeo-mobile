@@ -55,11 +55,11 @@ import {TrackingTabBarIcon} from './TabBar/TrackingTabBarIcon';
 import {TabName} from '../types';
 import {CameraTabBarIcon} from './TabBar/CameraTabBarIcon';
 import {MapTabBarIcon} from './TabBar/MapTabBarIcon';
-import {SaveTrackScreen} from '../../screens/MapScreen/track/SaveTrackScreen';
+import {TrackEditScreen} from '../../screens/TrackEdit/TrackEditScreen.tsx';
 import {
   createTrackNavigationOptions,
   TrackScreen,
-} from '../../screens/MapScreen/track/TrackScreen';
+} from '../../screens/Track/TrackScreen.tsx';
 import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/InviteDeclined';
 import {UnableToCancelInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/UnableToCancelInvite';
 import {SharedLocationContextProvider} from '../../contexts/SharedLocationContext';
@@ -368,7 +368,7 @@ export const createDefaultScreenGroup = (
     />
     <RootStack.Screen
       name="SaveTrack"
-      component={SaveTrackScreen}
+      component={TrackEditScreen}
       options={{
         headerShown: false,
       }}

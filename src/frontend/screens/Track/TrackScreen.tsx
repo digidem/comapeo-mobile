@@ -7,21 +7,21 @@ import {
   ScrollView,
   Pressable,
 } from 'react-native';
-import {BLACK, WHITE, DARK_GREY} from '../../../lib/styles';
-import DeleteIcon from '../../../images/DeleteTrack.svg';
-import ShareIcon from '../../../images/Share.svg';
-import {TrackObservationList} from './TrackObservations';
-import {ActionsButton} from './actions/ActionsButton';
-import TrackIcon from '../../../images/Track.svg';
-import {TrackMap} from './TrackMap';
-import {TrackDescriptionField} from './saveTrack/TrackDescriptionField';
-import EditIcon from '../../../images/Edit.svg';
-import {CustomHeaderLeft} from '../../../sharedComponents/CustomHeaderLeft';
+import {BLACK, WHITE, DARK_GREY} from '../../lib/styles.ts';
+import DeleteIcon from '../../images/DeleteTrack.svg';
+import ShareIcon from '../../images/Share.svg';
+import {TrackObservationList} from './TrackScreenObservationsList.tsx';
+import {ActionButtons} from './TrackActionButtons.tsx';
+import TrackIcon from '../../images/Track.svg';
+import {TrackMap} from './TrackScreenMapPreview.tsx';
+import {TrackEditDescriptionField} from '../TrackEdit/TrackEditDescriptionField.tsx';
+import EditIcon from '../../images/Edit.svg';
+import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
 import {defineMessages, MessageDescriptor} from 'react-intl';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import {NativeNavigationComponent} from '../../../sharedTypes.ts';
-import {useTrackQuery} from '../../../hooks/server/track.ts';
-import {useObservations} from '../../../hooks/server/observations.ts';
+import {NativeNavigationComponent} from '../../sharedTypes.ts';
+import {useTrackQuery} from '../../hooks/server/track.ts';
+import {useObservations} from '../../hooks/server/observations.ts';
 
 const m = defineMessages({
   title: {
@@ -98,13 +98,13 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
         <ScrollView>
           <TrackObservationList observations={trackObservations} />
           <View style={styles.divider} />
-          <TrackDescriptionField
+          <TrackEditDescriptionField
             description={description}
             setDescription={setDescription}
           />
         </ScrollView>
       </View>
-      <ActionsButton actions={actions} />
+      <ActionButtons actions={actions} />
     </SafeAreaView>
   );
 };

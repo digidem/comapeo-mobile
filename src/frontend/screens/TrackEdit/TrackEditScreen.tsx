@@ -1,16 +1,16 @@
 import React, {useRef, useState} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
-import {SaveTrackHeader} from './saveTrack/SaveTrackHeader';
-import {DiscardTrackModal} from './saveTrack/DiscardTrackModal';
-import {BottomSheet} from '../../../sharedComponents/BottomSheet/BottomSheet';
-import PhotoIcon from '../../../images/camera.svg';
-import DetailsIcon from '../../../images/details.svg';
-import TrackIcon from '../../../images/Track.svg';
+import {TrackEditScreenHeader} from './TrackEditScreenHeader.tsx';
+import {BottomSheet} from '../../sharedComponents/BottomSheet/BottomSheet.tsx';
+import PhotoIcon from '../../images/camera.svg';
+import DetailsIcon from '../../images/details.svg';
+import TrackIcon from '../../images/Track.svg';
 import {defineMessages, useIntl} from 'react-intl';
-import {Text} from '../../../sharedComponents/Text';
-import {TrackDescriptionField} from './saveTrack/TrackDescriptionField';
+import {Text} from '../../sharedComponents/Text.tsx';
+import {TrackEditDescriptionField} from './TrackEditDescriptionField.tsx';
 import {NavigationProp} from '@react-navigation/native';
+import {TrackDiscardModal} from './TrackDiscardModal.tsx';
 
 const m = defineMessages({
   newTitle: {
@@ -30,7 +30,7 @@ const m = defineMessages({
   },
 });
 
-export const SaveTrackScreen: React.FC<{navigation: NavigationProp<any>}> = ({
+export const TrackEditScreen: React.FC<{navigation: NavigationProp<any>}> = ({
   navigation,
 }) => {
   const {formatMessage: t} = useIntl();
@@ -55,7 +55,7 @@ export const SaveTrackScreen: React.FC<{navigation: NavigationProp<any>}> = ({
   ];
   return (
     <SafeAreaView style={styles.container}>
-      <SaveTrackHeader bottomSheetRef={bottomSheetRef} />
+      <TrackEditScreenHeader bottomSheetRef={bottomSheetRef} />
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.scrollViewContent}>
@@ -63,11 +63,11 @@ export const SaveTrackScreen: React.FC<{navigation: NavigationProp<any>}> = ({
           <TrackIcon style={styles.icon} />
           <Text style={styles.titleText}>{t(m.newTitle)}</Text>
         </View>
-        <TrackDescriptionField
+        <TrackEditDescriptionField
           description={description}
           setDescription={setDescription}
         />
-        <DiscardTrackModal bottomSheetRef={bottomSheetRef} />
+        <TrackDiscardModal bottomSheetRef={bottomSheetRef} />
       </ScrollView>
       <BottomSheet items={bottomSheetItems} />
     </SafeAreaView>

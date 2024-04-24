@@ -1,12 +1,12 @@
 import React, {FC} from 'react';
 import {StyleSheet} from 'react-native';
 import MapboxGL from '@rnmapbox/maps';
-import {MAP_STYLE} from '..';
-import {DisplayedTrackPathLayer} from './DisplayedTrackPathLayer';
-import {LocationHistoryPoint} from '../../../sharedTypes/location';
+import {MAP_STYLE} from '../MapScreen';
+import {DisplayedTrackPathLayer} from '../MapScreen/track/DisplayedTrackPathLayer.tsx';
+import {LocationHistoryPoint} from '../../sharedTypes/location.ts';
 import CheapRuler from 'cheap-ruler';
 
-interface TrackMap {
+interface TrackScreenMapPreview {
   locationHistory: LocationHistoryPoint[];
   coords: number[];
 }
@@ -14,7 +14,10 @@ interface TrackMap {
 const slope = -0.044;
 const baseZoom = 16;
 
-export const TrackMap: FC<TrackMap> = ({coords, locationHistory}) => {
+export const TrackMap: FC<TrackScreenMapPreview> = ({
+  coords,
+  locationHistory,
+}) => {
   const ruler = new CheapRuler(locationHistory[0]!.latitude);
   const distance = ruler.lineDistance(
     locationHistory.map(point => [point.longitude, point.latitude]),

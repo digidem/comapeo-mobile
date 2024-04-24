@@ -37,15 +37,11 @@ export const TrackEditScreen: React.FC<{navigation: NavigationProp<any>}> = ({
   const [description, setDescription] = useState('');
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
-  const handleCameraPress = React.useCallback(() => {
-    navigation.navigate('AddPhoto');
-  }, [navigation]);
-
   const bottomSheetItems = [
     {
       icon: <PhotoIcon />,
       label: t(m.photoButton),
-      onPress: handleCameraPress,
+      onPress: () => {},
     },
     {
       icon: <DetailsIcon />,

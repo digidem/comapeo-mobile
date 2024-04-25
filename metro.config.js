@@ -1,26 +1,25 @@
-const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
+// Learn more https://docs.expo.dev/guides/monorepos
+const {getDefaultConfig} = require('expo/metro-config');
+const path = require('path');
 
-const defaultConfig = getDefaultConfig(__dirname);
-const {assetExts, sourceExts} = defaultConfig.resolver;
+// Find the project and workspace directories
+const projectRoot = __dirname;
+// This can be replaced with `find-yarn-workspace-root`
+const workspaceRoot = path.resolve(projectRoot);
+let config = getDefaultConfig(projectRoot);
 
-/**
- * Metro configuration
- * https://facebook.github.io/metro/docs/configuration
- *
- * @type {import('metro-config').MetroConfig}
- */
-const config = {
-  transformer: {
-    // For https://github.com/kristerkari/react-native-svg-transformer
-    babelTransformerPath: require.resolve('react-native-svg-transformer'),
-  },
-  resolver: {
-    // For nodejs-mobile
-    blockList: [/nodejs-assets\/.*/],
-    // For https://github.com/kristerkari/react-native-svg-transformer
-    assetExts: assetExts.filter(ext => ext !== 'svg'),
-    sourceExts: [...sourceExts, 'svg'],
-  },
-};
+config.watchFolders = [workspaceRoot];
+console.log(config.resolver, 'config');
+config.resolver.assetExts = config.resolver.assetExts.filter(
+  ext => ext !== 'svg',
+);
+config.resolver.sourceExts = [...config.resolver.sourceExts, 'svg'];
+// 2. Let Metro know where to resolve packages and in what order
+config.resolver.nodeModulesPaths = [
+  path.resolve(projectRoot, 'node_modules'),
+  path.resolve(workspaceRoot, 'node_modules'),
+];
+// 3. Force Metro to resolve (sub)dependencies only from the `nodeModulesPaths`
+config.resolver.disableHierarchicalLookup = true;
 
-module.exports = mergeConfig(defaultConfig, config);
+module.exports = config;

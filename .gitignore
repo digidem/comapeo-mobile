@@ -80,3 +80,7 @@ ios/*.env*.local
 *.p12
 *.key
 *.mobileprovision
+
+# Expo
+android/
+ios/

@@ -28,7 +28,7 @@ const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();
 initializeNodejs();
 
-const App = () => {
+export default function App() {
   const navRef = useNavigationContainerRef<AppStackList>();
   const [permissionsAsked, setPermissionsAsked] = React.useState(false);
   React.useEffect(() => {
@@ -60,6 +60,4 @@ const App = () => {
       </ExternalProviders>
     </IntlProvider>
   );
-};
-
-export default App;
+}

@@ -1,8 +1,7 @@
 module.exports = {
-  presets: ['module:@react-native/babel-preset'],
+  presets: ['babel-preset-expo'],
   plugins: [
     'transform-inline-environment-variables',
-    // react-native-reanimated/plugin has to be last
     'react-native-reanimated/plugin',
   ],
 };

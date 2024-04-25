@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import {View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {IconButton} from './IconButton';
-import {ObservationListIcon} from './icons';
+import {ObservationListIcon, SyncIconCircle} from './icons';
 import {GPSPill} from './GPSPill';
 import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
 
@@ -13,7 +13,13 @@ export const HomeHeader: FC<BottomTabHeaderProps> = ({navigation}) => {
         style={styles.linearGradient}
         colors={['#0006', '#0000']}
       />
-      <View style={styles.leftButton}>{/* Placeholder for left button */}</View>
+      <IconButton
+        style={styles.leftButton}
+        onPress={() => {
+          navigation.navigate('Sync');
+        }}>
+        <SyncIconCircle />
+      </IconButton>
       <GPSPill navigation={navigation} />
       <IconButton
         onPress={() => navigation.navigate('ObservationList')}

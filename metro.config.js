@@ -9,7 +9,6 @@ const workspaceRoot = path.resolve(projectRoot);
 let config = getDefaultConfig(projectRoot);
 
 config.watchFolders = [workspaceRoot];
-console.log(config.resolver, 'config');
 config.resolver.assetExts = config.resolver.assetExts.filter(
   ext => ext !== 'svg',
 );

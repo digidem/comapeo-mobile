@@ -1,19 +1,21 @@
-import MapboxGL from '@rnmapbox/maps';
+import {UserLocation as MBUserLocation} from '@rnmapbox/maps';
 import * as React from 'react';
-// import {useExperiments} from '../../hooks/useExperiments';
+import {useCurrentTrackStore} from '../../hooks/tracks/useCurrentTrackStore';
+import {useIsFullyFocused} from '../../hooks/useIsFullyFocused';
+import {UserTooltipMarker} from './track/UserTooltipMarker';
+
 interface UserLocationProps {
-  visible: boolean;
   minDisplacement: number;
 }
 
-export const UserLocation = ({visible, minDisplacement}: UserLocationProps) => {
-  // const [{directionalArrow}] = useExperiments();
+export const UserLocation = ({minDisplacement}: UserLocationProps) => {
+  const isTracking = useCurrentTrackStore(state => state.isTracking);
+  const isFocused = useIsFullyFocused();
 
   return (
-    <MapboxGL.UserLocation
-      visible={visible}
-      minDisplacement={minDisplacement}
-      // showsUserHeadingIndicator={directionalArrow}
-    />
+    <>
+      <MBUserLocation visible={isFocused} minDisplacement={minDisplacement} />
+      {isTracking && <UserTooltipMarker />}
+    </>
   );
 };

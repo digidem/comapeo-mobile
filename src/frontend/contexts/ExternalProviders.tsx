@@ -11,6 +11,9 @@ import {
 // See https://github.com/gorhom/react-native-bottom-sheet/issues/1157
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {AppStackList} from '../Navigation/AppStack';
+import {GPSModalContextProvider} from './GPSModalContext';
+import {TrackTimerContextProvider} from './TrackTimerContext';
+import {SharedLocationContextProvider} from './SharedLocationContext';
 
 type ExternalProvidersProp = {
   children: React.ReactNode;
@@ -26,9 +29,17 @@ export const ExternalProviders = ({
   return (
     <QueryClientProvider client={queryClient}>
       <GestureHandlerRootView style={{flex: 1}}>
-        <BottomSheetModalProvider>
-          <NavigationContainer ref={navRef}>{children}</NavigationContainer>
-        </BottomSheetModalProvider>
+        <SharedLocationContextProvider>
+          <GPSModalContextProvider>
+            <TrackTimerContextProvider>
+              <BottomSheetModalProvider>
+                <NavigationContainer ref={navRef}>
+                  {children}
+                </NavigationContainer>
+              </BottomSheetModalProvider>
+            </TrackTimerContextProvider>
+          </GPSModalContextProvider>
+        </SharedLocationContextProvider>
       </GestureHandlerRootView>
     </QueryClientProvider>
   );

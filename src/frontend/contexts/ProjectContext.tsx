@@ -67,7 +67,7 @@ export const ActiveProjectProvider = ({
     return () => {
       cancelled = true;
     };
-  }, [activeProjectId, setActiveProjectId]);
+  }, [activeProjectId, setActiveProjectId, mapeoApi]);
 
   if (!activeProject) {
     return <Loading />;

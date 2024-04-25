@@ -1,16 +1,25 @@
 import {MapeoProjectApi} from '@mapeo/ipc';
-import React from 'react';
+import {useCallback, useSyncExternalStore} from 'react';
+
 import {useProject} from './server/projects';
 
-type SyncState = Awaited<ReturnType<MapeoProjectApi['$sync']['getState']>>;
+export type SyncState = Awaited<
+  ReturnType<MapeoProjectApi['$sync']['getState']>
+>;
 
-const projectStateMap = new WeakMap<
-  MapeoProjectApi,
-  ReturnType<typeof createSyncState>
->();
+const projectSyncStoreMap = new WeakMap<MapeoProjectApi, SyncStore>();
 
-function identity(state: SyncState | undefined) {
-  return state;
+function useSyncStore() {
+  const project = useProject();
+
+  let syncStore = projectSyncStoreMap.get(project);
+
+  if (!syncStore) {
+    syncStore = new SyncStore(project);
+    projectSyncStoreMap.set(project, syncStore);
+  }
+
+  return syncStore;
 }
 
 /**
@@ -29,68 +38,131 @@ function identity(state: SyncState | undefined) {
  * @param selector Select a subset of the state to subscribe to. Defaults to return the entire state.
  * @returns
  */
-export function useSyncState<S = SyncState | undefined>(
-  selector: (state: SyncState | undefined) => S = identity as any,
+export function useSyncState<S = SyncState | null>(
+  selector: (state: SyncState | null) => S = identity as any,
 ): S {
-  const project = useProject();
+  const syncStore = useSyncStore();
 
-  let state = projectStateMap.get(project);
-  if (!state) {
-    state = createSyncState(project);
-    projectStateMap.set(project, state);
-  }
+  const {subscribe, getStateSnapshot} = syncStore;
 
-  const {subscribe, getSnapshot} = state;
-
-  const getSelectorSnapshot = React.useCallback(
-    () => selector(getSnapshot()),
-    [selector, getSnapshot],
+  const getSelectorSnapshot = useCallback(
+    () => selector(getStateSnapshot()),
+    [selector, getStateSnapshot],
   );
 
-  return React.useSyncExternalStore(subscribe, getSelectorSnapshot);
+  return useSyncExternalStore(subscribe, getSelectorSnapshot);
 }
 
-function createSyncState(project: MapeoProjectApi) {
-  let state: SyncState | undefined;
-  let isSubscribedInternal = false;
-  const listeners = new Set<() => void>();
-  let error: Error | undefined;
+/**
+ * Calculates progress of *data* sync based on sync state.
+ *
+ * @returns A number between 0 and 1 when data sync is enabled. `null` otherwise.
+ */
+export function useSyncProgress() {
+  const {subscribe, getProgressSnapshot} = useSyncStore();
+  return useSyncExternalStore(subscribe, getProgressSnapshot);
+}
 
-  function onSyncState(newState: SyncState) {
-    state = newState;
-    error = undefined;
-    listeners.forEach(listener => listener());
+class SyncStore {
+  #project: MapeoProjectApi;
+
+  #listeners = new Set<() => void>();
+  #isSubscribedInternal = false;
+  #error: Error | null = null;
+  #state: SyncState | null = null;
+
+  /**
+   * Represents maximum value of `#state.data.want + #state.data.wanted` while data syncing is enabled.
+   * Resets to null when data syncing goes from enabled to disabled.
+   */
+  #maxDataSyncCount: number | null = null;
+
+  constructor(project: MapeoProjectApi) {
+    this.#project = project;
   }
 
-  function subscribeInternal() {
-    project.$sync.on('sync-state', onSyncState);
-    isSubscribedInternal = true;
-    project.$sync
-      .getState()
-      .then(onSyncState)
-      .catch(e => {
-        error = e;
-        listeners.forEach(listener => listener());
-      });
-  }
-
-  function unsubscribeInternal() {
-    isSubscribedInternal = false;
-    project.$sync.off('sync-state', onSyncState);
-  }
-
-  return {
-    subscribe: (listener: () => void) => {
-      listeners.add(listener);
-      if (!isSubscribedInternal) subscribeInternal();
-      return () => {
-        listeners.delete(listener);
-        if (listeners.size === 0) unsubscribeInternal();
-      };
-    },
-    getSnapshot: () => {
-      if (error) throw error;
-      return state;
-    },
+  subscribe = (listener: () => void) => {
+    this.#listeners.add(listener);
+    if (!this.#isSubscribedInternal) this.#startSubscription();
+    return () => {
+      this.#listeners.delete(listener);
+      if (this.#listeners.size === 0) this.#stopSubscription();
+    };
   };
+
+  getStateSnapshot = () => {
+    if (this.#error) throw this.#error;
+    return this.#state;
+  };
+
+  getProgressSnapshot = () => {
+    if (this.#maxDataSyncCount === null || this.#state === null) {
+      return null;
+    }
+
+    if (this.#maxDataSyncCount === 0) {
+      return 1;
+    }
+
+    const currentCount = this.#state.data.want + this.#state.data.wanted;
+
+    const ratio =
+      (this.#maxDataSyncCount - currentCount) / this.#maxDataSyncCount;
+
+    if (ratio <= 0) return 0;
+    if (ratio >= 1) return 1;
+
+    return clamp(ratio, 0.01, 0.99);
+  };
+
+  #notifyListeners() {
+    for (const listener of this.#listeners) {
+      listener();
+    }
+  }
+
+  #onSyncState = (state: SyncState) => {
+    // Indicates whether data syncing went from enabled to disabled
+    const isDataSyncStopped = this.#state?.data.syncing && !state.data.syncing;
+
+    if (isDataSyncStopped) {
+      this.#maxDataSyncCount = null;
+    } else {
+      const newSyncCount = state.data.want + state.data.wanted;
+
+      this.#maxDataSyncCount =
+        this.#maxDataSyncCount === null
+          ? newSyncCount
+          : Math.max(this.#maxDataSyncCount, newSyncCount);
+    }
+
+    this.#state = state;
+    this.#error = null;
+    this.#notifyListeners();
+  };
+
+  #startSubscription = () => {
+    this.#project.$sync.on('sync-state', this.#onSyncState);
+    this.#isSubscribedInternal = true;
+    this.#project.$sync
+      .getState()
+      .then(this.#onSyncState)
+      .catch(e => {
+        this.#error = e;
+        this.#notifyListeners();
+      });
+  };
+
+  #stopSubscription = () => {
+    this.#isSubscribedInternal = false;
+    this.#project.$sync.off('sync-state', this.#onSyncState);
+  };
+}
+
+function clamp(value: number, min: number, max: number): number {
+  return Math.max(min, Math.min(value, max));
+}
+
+function identity(state: SyncState | undefined) {
+  return state;
 }

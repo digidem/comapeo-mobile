@@ -9,7 +9,7 @@ export function useProjectInvite() {
   const invites = usePendingInvites().data;
   // this will eventually sort invite by date
   const invite = invites[0];
-  const acceptMutation = useAcceptInvite();
+  const acceptMutation = useAcceptInvite(invite?.projectPublicId);
   const rejectMutation = useRejectInvite();
   const clearAllInvites = useClearAllPendingInvites();
 

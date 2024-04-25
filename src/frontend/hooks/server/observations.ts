@@ -8,6 +8,8 @@ import {
 import {useProject} from './projects';
 import {ClientGeneratedObservation} from '../../sharedTypes';
 
+export const OBSERVATION_KEY = 'observations';
+
 export function useObservations() {
   const project = useProject();
 
@@ -24,7 +26,7 @@ export function useObservation(observationId: string) {
   const project = useProject();
 
   return useSuspenseQuery({
-    queryKey: ['observations', observationId],
+    queryKey: [OBSERVATION_KEY, observationId],
     queryFn: async () => {
       if (!project) throw new Error('Project instance does not exist');
       return project.observation.getByDocId(observationId);
@@ -46,7 +48,7 @@ export function useCreateObservation() {
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: ['observations']});
+      queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY]});
     },
   });
 }
@@ -67,7 +69,7 @@ export function useEditObservation() {
       return project.observation.update(id, value);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: ['observations']});
+      queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY]});
     },
   });
 }
@@ -82,7 +84,7 @@ export function useDeleteObservation() {
       return project.observation.delete(id);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: ['observations']});
+      queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY]});
     },
   });
 }

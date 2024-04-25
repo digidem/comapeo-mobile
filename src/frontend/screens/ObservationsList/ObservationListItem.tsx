@@ -4,10 +4,7 @@ import {Text} from '../../sharedComponents/Text';
 
 import {TouchableHighlight} from '../../sharedComponents/Touchables';
 import {CategoryCircleIcon} from '../../sharedComponents/icons/CategoryIcon';
-//import PhotoView from "../../sharedComponents/PhotoView";
-// import useDeviceId from "../../hooks/useDeviceId";
 import {Attachment, ViewStyleProp} from '../../sharedTypes';
-import {filterPhotosFromAttachments} from '../../hooks/persistedState/usePersistedDraftObservation/photosMethods';
 import {BLACK} from '../../lib/styles';
 import {Observation} from '@mapeo/schema';
 import {

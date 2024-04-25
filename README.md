@@ -45,11 +45,13 @@ The next version of Mapeo Mobile
         npm install
         ```
 
-   2. (optional) Start the Metro bundler process
+   2. Start the Metro bundler process
 
       ```sh
       npm start
       ```
+
+      Leave this running in a separate terminal window.
 
    3. Build and run the app (Android)
 

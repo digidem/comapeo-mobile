@@ -2,11 +2,13 @@ import * as React from 'react';
 import {NativeNavigationComponent} from '../../../../../sharedTypes';
 import {defineMessages} from 'react-intl';
 import {useBottomSheetModal} from '../../../../../sharedComponents/BottomSheetModal';
-import {useQueryClient} from '@tanstack/react-query';
-import {useProject} from '../../../../../hooks/server/projects';
 import {ErrorModal} from '../../../../../sharedComponents/ErrorModal';
 import {ReviewInvitation} from './ReviewInvitation';
 import {WaitingForInviteAccept} from './WaitingForInviteAccept';
+import {
+  useRequestCancelInvite,
+  useSendInvite,
+} from '../../../../../hooks/server/invites';
 
 const m = defineMessages({
   title: {
@@ -19,36 +21,55 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
   route,
   navigation,
 }) => {
-  const [inviteStatus, setInviteStatus] = React.useState<
-    'reviewing' | 'waiting'
-  >('reviewing');
   const {role, deviceId, deviceType, name} = route.params;
 
   const {openSheet, sheetRef, closeSheet, isOpen} = useBottomSheetModal({
     openOnMount: false,
   });
-  const project = useProject();
-  const queryClient = useQueryClient();
+  const sendInviteMutation = useSendInvite();
+  const requestCancelInviteMutation = useRequestCancelInvite();
 
   function sendInvite() {
-    setInviteStatus('waiting');
-    project.$member
-      .invite(deviceId, {roleId: role})
-      .then(val => {
-        if (val === 'ACCEPT') {
-          queryClient.invalidateQueries({queryKey: ['projectMembers']});
-          navigation.navigate('InviteAccepted', {...route.params});
-          return;
-        }
-      })
-      .catch(err => {
+    sendInviteMutation.mutate(
+      {deviceId, role: {roleId: role}},
+      {
+        onSuccess: val => {
+          // If user has attempted to cancel an invite, but an invite has already been accepted, let user know their cancellation was unsuccessful
+          if (val === 'ACCEPT' && requestCancelInviteMutation.isPending) {
+            navigation.navigate('UnableToCancelInvite', {...route.params});
+            return;
+          }
+          if (val === 'ACCEPT') {
+            navigation.navigate('InviteAccepted', route.params);
+            return;
+          }
+
+          if (val === 'REJECT') {
+            navigation.navigate('InviteDeclined', route.params);
+            return;
+          }
+        },
+        onError: () => {
+          openSheet();
+        },
+      },
+    );
+  }
+
+  function cancelInvite() {
+    requestCancelInviteMutation.mutate(deviceId, {
+      onSuccess: () => {
+        navigation.navigate('YourTeam');
+      },
+      onError: () => {
         openSheet();
-      });
+      },
+    });
   }
 
   return (
     <React.Fragment>
-      {inviteStatus === 'reviewing' ? (
+      {sendInviteMutation.isIdle ? (
         <ReviewInvitation
           sendInvite={sendInvite}
           deviceId={deviceId}
@@ -57,7 +78,7 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
           role={role}
         />
       ) : (
-        <WaitingForInviteAccept />
+        <WaitingForInviteAccept cancelInvite={cancelInvite} />
       )}
       <ErrorModal
         sheetRef={sheetRef}

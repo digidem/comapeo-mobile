@@ -88,9 +88,9 @@ function onError(e: Error) {
 export function getSupportedLocale(
   locale: string,
 ): keyof typeof languages | undefined {
-  if (supportedLanguages.find(lang => lang.locale === locale))
+  if (supportedLanguages?.find(lang => lang.locale === locale))
     return locale as keyof typeof languages;
   const nonRegionalLocale = locale.split('-')[0];
-  if (supportedLanguages.find(({locale}) => locale === nonRegionalLocale))
+  if (supportedLanguages?.find(({locale}) => locale === nonRegionalLocale))
     return nonRegionalLocale as keyof typeof languages;
 }

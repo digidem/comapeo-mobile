@@ -19,6 +19,27 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "Hủy bỏ quan sát?"
   },
+  "Modal.GPSDisable.button": {
+    "message": "Enable"
+  },
+  "Modal.GPSDisable.description": {
+    "message": "To create a Track CoMapeo needs access to your location and GPS."
+  },
+  "Modal.GPSDisable.title": {
+    "message": "GPS Disabled"
+  },
+  "Modal.GPSEnable.button.default": {
+    "message": "Start Tracks"
+  },
+  "Modal.GPSEnable.button.loading": {
+    "message": "Loading..."
+  },
+  "Modal.GPSEnable.button.stop": {
+    "message": "Stop Tracks"
+  },
+  "Modal.GPSEnable.trackingDescription": {
+    "message": "You’ve been recording for"
+  },
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Coordinate System"
   },
@@ -610,6 +631,57 @@
   "screens.Settings.title": {
     "description": "Title of settings screen",
     "message": "Cài đặt"
+  },
+  "screens.Sync.CreateOrJoinProjectDisplay.buttonText": {
+    "message": "Create or Join Project"
+  },
+  "screens.Sync.CreateOrJoinProjectDisplay.description": {
+    "message": "Create or Join a Project to sync with other devices"
+  },
+  "screens.Sync.HeaderTitle.noWiFi": {
+    "message": "No WiFi"
+  },
+  "screens.Sync.NoWifiDisplay.buttonText": {
+    "message": "Open Settings"
+  },
+  "screens.Sync.NoWifiDisplay.description": {
+    "message": "Open your phone settings and connect to a WiFi network to synchronize"
+  },
+  "screens.Sync.NoWifiDisplay.title": {
+    "message": "No WiFi"
+  },
+  "screens.Sync.ProjectSyncDisplay.buttonTextDone": {
+    "message": "You're all caught up"
+  },
+  "screens.Sync.ProjectSyncDisplay.buttonTextStop": {
+    "message": "Stop"
+  },
+  "screens.Sync.ProjectSyncDisplay.buttonTextSync": {
+    "message": "Sync"
+  },
+  "screens.Sync.ProjectSyncDisplay.deviceName": {
+    "message": "Your device name is {name}"
+  },
+  "screens.Sync.ProjectSyncDisplay.devicesNearby": {
+    "message": "{count} {count, plural, one {device} other {devices}} nearby/connected"
+  },
+  "screens.Sync.ProjectSyncDisplay.devicesSyncing": {
+    "message": "Syncing with {count} {count, plural, one {Device} other {Devices}}"
+  },
+  "screens.Sync.ProjectSyncDisplay.devicesWaitingToSync": {
+    "message": "{count} {count, plural, one {Device} other {Devices}} Waiting to Sync with you"
+  },
+  "screens.Sync.ProjectSyncDisplay.noDevicesSyncing": {
+    "message": "No Devices are Syncing"
+  },
+  "screens.Sync.ProjectSyncDisplay.syncProgress": {
+    "message": "{value}%"
+  },
+  "screens.Sync.ProjectSyncDisplay.syncing": {
+    "message": "Syncing…"
+  },
+  "screens.Sync.ProjectSyncDisplay.upToDate": {
+    "message": "Up to Date! No data to Sync"
   },
   "sharedComponents.DeviceCard.ThisDevice": {
     "message": "This Device!"

@@ -20,9 +20,13 @@ const m = defineMessages({
 
 export interface SaveTrackHeader {
   bottomSheetRef: React.RefObject<BottomSheetModalMethods>;
+  description: string;
 }
 
-export const SaveTrackHeader: FC<SaveTrackHeader> = ({bottomSheetRef}) => {
+export const SaveTrackHeader: FC<SaveTrackHeader> = ({
+  bottomSheetRef,
+  description,
+}) => {
   const saveTrack = useCreateTrack();
   const currentTrack = useCurrentTrackStore();
   const navigation = useNavigationFromHomeTabs();
@@ -38,7 +42,9 @@ export const SaveTrackHeader: FC<SaveTrackHeader> = ({bottomSheetRef}) => {
           id: observationId,
           type: 'observation',
         })),
-        tags: {},
+        tags: {
+          notes: description,
+        },
         locations: currentTrack.locationHistory.map(loc => {
           return {
             coords: {

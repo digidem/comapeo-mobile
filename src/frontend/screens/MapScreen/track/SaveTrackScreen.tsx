@@ -55,7 +55,10 @@ export const SaveTrackScreen: React.FC<{navigation: NavigationProp<any>}> = ({
   ];
   return (
     <SafeAreaView style={styles.container}>
-      <SaveTrackHeader bottomSheetRef={bottomSheetRef} />
+      <SaveTrackHeader
+        bottomSheetRef={bottomSheetRef}
+        description={description}
+      />
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.scrollViewContent}>

@@ -2,8 +2,9 @@
   "name": "comapeo-mobile",
   "version": "0.0.1",
   "private": true,
+  "main": "index.js",
   "scripts": {
-    "build:backend": "node ./scripts/build-backend.mjs",
+    "build:backend": "sudo node ./scripts/build-backend.mjs",
     "android": "npm run build:backend && npm run android-no-backend-rebuild",
     "android-no-backend-rebuild": "expo run:android",
     "ios": "expo run:ios",

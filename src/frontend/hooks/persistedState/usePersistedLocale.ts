@@ -9,7 +9,7 @@ type LocaleSlice = {
 };
 
 const localeSlice: StateCreator<LocaleSlice> = (set, get) => ({
-  locale: getSupportedLocale(getLocales()[0].languageTag) || 'en',
+  locale: getSupportedLocale(getLocales()[0]?.languageTag!) || 'en',
   setLocale: newlocale => set({locale: newlocale}),
 });
 

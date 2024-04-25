@@ -1,0 +1,20 @@
+diff --git a/node_modules/@mapeo/ipc/dist/client.js b/node_modules/@mapeo/ipc/dist/client.js
+index 6ccb1e9..561ab9d 100644
+--- a/node_modules/@mapeo/ipc/dist/client.js
++++ b/node_modules/@mapeo/ipc/dist/client.js
+@@ -1,4 +1,4 @@
+-import { createClient } from 'rpc-reflector';
++import createClient from 'rpc-reflector/client.js';
+ import pDefer from 'p-defer';
+ import { MANAGER_CHANNEL_ID, MAPEO_RPC_ID, SubChannel, } from './lib/sub-channel.js';
+ /**
+diff --git a/node_modules/@mapeo/ipc/dist/server.js b/node_modules/@mapeo/ipc/dist/server.js
+index 164f9a7..5b3f4d5 100644
+--- a/node_modules/@mapeo/ipc/dist/server.js
++++ b/node_modules/@mapeo/ipc/dist/server.js
+@@ -1,4 +1,4 @@
+-import { createServer } from 'rpc-reflector';
++import createServer from 'rpc-reflector/server.js';
+ import { MANAGER_CHANNEL_ID, MAPEO_RPC_ID, SubChannel, } from './lib/sub-channel.js';
+ import { extractMessageEventData } from './lib/utils.js';
+ /**

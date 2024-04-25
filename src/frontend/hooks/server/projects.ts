@@ -52,10 +52,11 @@ export function useProjectMembers() {
 
 export function useProjectSettings() {
   const project = useProject();
+
   return useQuery({
-    queryFn: async () => {
-      return await project.$getProjectSettings();
-    },
     queryKey: ['projectSettings'],
+    queryFn: () => {
+      return project.$getProjectSettings();
+    },
   });
 }

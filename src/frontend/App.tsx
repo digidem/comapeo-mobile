@@ -31,13 +31,14 @@ initializeNodejs();
 export default function App() {
   const navRef = useNavigationContainerRef<AppStackList>();
   const [permissionsAsked, setPermissionsAsked] = React.useState(false);
-  React.useEffect(() => {
-    PermissionsAndroid.requestMultiple([
-      'android.permission.CAMERA',
-      'android.permission.ACCESS_FINE_LOCATION',
-      'android.permission.ACCESS_COARSE_LOCATION',
-    ]).then(() => setPermissionsAsked(true));
-  }, []);
+
+  // React.useEffect(() => {
+  //   PermissionsAndroid.requestMultiple([
+  //     'android.permission.CAMERA',
+  //     'android.permission.ACCESS_FINE_LOCATION',
+  //     'android.permission.ACCESS_COARSE_LOCATION',
+  //   ]).then(() => setPermissionsAsked(true));
+  // }, []);
 
   return (
     <IntlProvider>
@@ -49,7 +50,7 @@ export default function App() {
                 <PhotoPromiseProvider>
                   <SecurityProvider>
                     <React.Suspense fallback={<Loading />}>
-                      <AppNavigator permissionAsked={permissionsAsked} />
+                      <AppNavigator permissionAsked={true} />
                     </React.Suspense>
                   </SecurityProvider>
                 </PhotoPromiseProvider>

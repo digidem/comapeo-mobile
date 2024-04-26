@@ -9,7 +9,7 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/icon.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
@@ -23,7 +23,7 @@
         {
           "RNMapboxMapsImpl": "mapbox",
           "RNMapboxMapsVersion": "11.1.0",
-          "RNMapboxMapsDownloadToken": "sk.eyJ1IjoiYnN0ZWZhbmN6eWsiLCJhIjoiY2x1dXV1NHNlMGU5dzJqcnh1Zno4YW4xcyJ9.P_LsVHh_HWTh25x5rRdrQg"
+          "RNMapboxMapsDownloadToken":"sk.eyJ1IjoiYnN0ZWZhbmN6eWsiLCJhIjoiY2x1dXV1NHNlMGU5dzJqcnh1Zno4YW4xcyJ9.P_LsVHh_HWTh25x5rRdrQg"
         }
       ],
       [
@@ -59,7 +59,9 @@
       "package": "com.comapeo"
     },
     "ios": {
-      "bundleIdentifier": "com.comapeo"
+      "bundleIdentifier": "com.comapeo",
+    "buildNumber": "1",
+    "supportsTablet": true
     }
   }
 }

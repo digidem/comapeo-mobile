@@ -8,13 +8,10 @@ type LocaleSlice = {
   setLocale: (locale: string) => void;
 };
 
-const localeSlice: StateCreator<LocaleSlice> = set => {
-  console.log(getLocales()[0]?.languageTag, 'getLocales()[0]?.languageTag!');
-  return {
-    locale: getSupportedLocale(getLocales()[0]?.languageTag!) || 'en-US',
-    setLocale: newlocale => set({locale: newlocale}),
-  };
-};
+const localeSlice: StateCreator<LocaleSlice> = set => ({
+  locale: getSupportedLocale(getLocales()[0]?.languageTag!) || 'en-US',
+  setLocale: newlocale => set({locale: newlocale}),
+});
 
 export const usePersistedLocale = createPersistedState(
   localeSlice,

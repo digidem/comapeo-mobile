@@ -2,7 +2,7 @@
   "expo": {
     "jsEngine": "hermes",
     "name": "CoMapeo",
-    "slug": "CoMapeo",
+    "slug": "comapeo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -23,7 +23,7 @@
         {
           "RNMapboxMapsImpl": "mapbox",
           "RNMapboxMapsVersion": "11.1.0",
-          "RNMapboxMapsDownloadToken":"sk.eyJ1IjoiYnN0ZWZhbmN6eWsiLCJhIjoiY2x1dXV1NHNlMGU5dzJqcnh1Zno4YW4xcyJ9.P_LsVHh_HWTh25x5rRdrQg"
+          "RNMapboxMapsDownloadToken": "sk.eyJ1IjoiYnN0ZWZhbmN6eWsiLCJhIjoiY2x1dXV1NHNlMGU5dzJqcnh1Zno4YW4xcyJ9.P_LsVHh_HWTh25x5rRdrQg"
         }
       ],
       [
@@ -54,14 +54,20 @@
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.ACCESS_BACKGROUND_LOCATION",
         "android.permission.FOREGROUND_SERVICE",
-        "android.permission.FOREGROUND_SERVICE_LOCATION"
+        "android.permission.FOREGROUND_SERVICE_LOCATION",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
       ],
       "package": "com.comapeo"
     },
     "ios": {
-      "bundleIdentifier": "com.comapeo",
-    "buildNumber": "1",
-    "supportsTablet": true
-    }
+      "bundleIdentifier": "com.comapeo"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2d5b8137-12ec-45aa-9c23-56b6a1c522b7"
+      }
+    },
+    "owner": "digidem"
   }
 }

@@ -15,7 +15,7 @@
     "lint:eslint": "eslint . --ext .js,.jsx,.ts,.tsx --cache --ignore-path .gitignore",
     "lint:types": "tsc --noEmit",
     "lint": "npm run lint:prettier && npm run lint:eslint && npm run lint:types",
-    "postinstall": "patch-package",
+    "postinstall": "patch-package && npm run prestart",
     "prepare": "husky install",
     "format": "prettier \"src/**/*.{js,ts,jsx,tsx}\" --write",
     "deep-clean": "./scripts/deep-clean.sh",

@@ -32,10 +32,7 @@ const m = defineMessages({
 
 const OBSERVATION_CELL_HEIGHT = 80;
 
-const getItemLayout = (
-  data: Observation[] | null | undefined,
-  index: number,
-) => ({
+const getItemLayout = (_data: unknown, index: number) => ({
   length: OBSERVATION_CELL_HEIGHT,
   offset: OBSERVATION_CELL_HEIGHT * index,
   index,

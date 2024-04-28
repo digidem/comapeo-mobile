@@ -11,7 +11,7 @@ import {LIGHT_GREY} from '../lib/styles';
 import {View} from 'react-native';
 import {useProjectInvite} from '../hooks/useProjectInvite';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
-import {useNavigationState} from '@react-navigation/native';
+import {CommonActions, useNavigationState} from '@react-navigation/native';
 import {isEditingScreen} from '../lib/utils';
 
 const m = defineMessages({
@@ -43,6 +43,10 @@ const m = defineMessages({
     id: 'sharedComponents.ProjectInviteBottomSheet.youHaveJoined',
     defaultMessage: 'You have joined {projName}',
   },
+  goToSync: {
+    id: 'sharedComponents.ProjectInviteBottomSheet.goToSync',
+    defaultMessage: 'Go To Sync',
+  },
 });
 
 export const ProjectInviteBottomSheet = () => {
@@ -62,6 +66,15 @@ export const ProjectInviteBottomSheet = () => {
     openSheet();
   }
 
+  function handleGoToSync() {
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{name: 'Home'}, {name: 'Sync'}],
+      }),
+    );
+  }
+
   return (
     <BottomSheetModal ref={sheetRef} isOpen={isOpen} onDismiss={resetState}>
       {accept.isSuccess ? (
@@ -75,6 +88,14 @@ export const ProjectInviteBottomSheet = () => {
                 closeSheet();
               },
               text: formatMessage(m.goToMap),
+            },
+            {
+              onPress: () => {
+                handleGoToSync();
+                closeSheet();
+              },
+              text: formatMessage(m.goToSync),
+              variation: 'filled',
             },
           ]}
           title={formatMessage(m.success)}

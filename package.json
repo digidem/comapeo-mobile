@@ -30,7 +30,7 @@
     "@formatjs/intl-pluralrules": "^5.2.4",
     "@formatjs/intl-relativetimeformat": "^11.2.4",
     "@gorhom/bottom-sheet": "^4.5.1",
-    "@mapeo/ipc": "^0.3.0",
+    "@mapeo/ipc": "0.3.0",
     "@osm_borders/maritime_10000m": "^1.1.0",
     "@react-native-community/hooks": "^2.8.0",
     "@react-native-community/netinfo": "11.1.0",

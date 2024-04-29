@@ -201,6 +201,8 @@ function dmsValuesAreValid(field: CoordinateField, coordinate: DmsData) {
   if (parsedDms) {
     const {degrees, minutes, seconds} = parsedDms;
 
+    if (degrees < 0 || minutes < 0 || seconds < 0) return false;
+
     const degreeMaximum = field === 'lat' ? 90 : 180;
 
     return degrees <= degreeMaximum && minutes < 60 && seconds < 60;

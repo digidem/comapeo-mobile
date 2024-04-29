@@ -87,7 +87,7 @@ export const ManualGpsScreen = ({
   const {setManualCoordinateEntryFormat} = usePersistedSettingsAction();
   const {updateObservationPosition} = useDraftObservation();
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     function handleSavePress() {
       if (convertedData.error) {
         return ToastAndroid.showWithGravity(

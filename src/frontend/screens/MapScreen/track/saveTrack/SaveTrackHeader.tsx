@@ -2,7 +2,6 @@ import React, {FC} from 'react';
 import {View, Image, StyleSheet, Pressable} from 'react-native';
 import {Text} from '../../../../sharedComponents/Text';
 import Close from '../../../../images/close.svg';
-import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import {useCreateTrack} from '../../../../hooks/server/track';
 import {useCurrentTrackStore} from '../../../../hooks/tracks/useCurrentTrackStore';
 import {DateTime} from 'luxon';
@@ -19,12 +18,12 @@ const m = defineMessages({
 });
 
 export interface SaveTrackHeader {
-  bottomSheetRef: React.RefObject<BottomSheetModalMethods>;
+  openSheet: () => void;
   description: string;
 }
 
 export const SaveTrackHeader: FC<SaveTrackHeader> = ({
-  bottomSheetRef,
+  openSheet,
   description,
 }) => {
   const saveTrack = useCreateTrack();
@@ -67,9 +66,7 @@ export const SaveTrackHeader: FC<SaveTrackHeader> = ({
   return (
     <View style={styles.container}>
       <View style={styles.closeWrapper}>
-        <Pressable
-          hitSlop={10}
-          onPress={() => bottomSheetRef.current?.present()}>
+        <Pressable hitSlop={10} onPress={openSheet}>
           <Close style={styles.closeIcon} />
         </Pressable>
         <Text style={styles.text}>{t(m.trackEditScreenTitle)}</Text>

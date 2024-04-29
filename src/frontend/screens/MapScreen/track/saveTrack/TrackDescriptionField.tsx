@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
     flex: 1,
     minHeight: 100,
     fontSize: 20,
-    paddingHorizontal: 20,
     color: 'black',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',

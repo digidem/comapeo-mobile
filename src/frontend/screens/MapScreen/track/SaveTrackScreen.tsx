@@ -1,6 +1,5 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
-import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {SaveTrackHeader} from './saveTrack/SaveTrackHeader';
 import {DiscardTrackModal} from './saveTrack/DiscardTrackModal';
 import {BottomSheet} from '../../../sharedComponents/BottomSheet/BottomSheet';
@@ -11,6 +10,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../../sharedComponents/Text';
 import {TrackDescriptionField} from './saveTrack/TrackDescriptionField';
 import {NavigationProp} from '@react-navigation/native';
+import {useBottomSheetModal} from '../../../sharedComponents/BottomSheetModal';
 
 const m = defineMessages({
   newTitle: {
@@ -35,7 +35,9 @@ export const SaveTrackScreen: React.FC<{navigation: NavigationProp<any>}> = ({
 }) => {
   const {formatMessage: t} = useIntl();
   const [description, setDescription] = useState('');
-  const bottomSheetRef = useRef<BottomSheetModal>(null);
+  const {sheetRef, isOpen, openSheet} = useBottomSheetModal({
+    openOnMount: false,
+  });
 
   const handleCameraPress = React.useCallback(() => {
     navigation.navigate('AddPhoto');
@@ -55,10 +57,7 @@ export const SaveTrackScreen: React.FC<{navigation: NavigationProp<any>}> = ({
   ];
   return (
     <SafeAreaView style={styles.container}>
-      <SaveTrackHeader
-        bottomSheetRef={bottomSheetRef}
-        description={description}
-      />
+      <SaveTrackHeader openSheet={openSheet} description={description} />
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.scrollViewContent}>
@@ -70,7 +69,7 @@ export const SaveTrackScreen: React.FC<{navigation: NavigationProp<any>}> = ({
           description={description}
           setDescription={setDescription}
         />
-        <DiscardTrackModal bottomSheetRef={bottomSheetRef} />
+        <DiscardTrackModal bottomSheetRef={sheetRef} isOpen={isOpen} />
       </ScrollView>
       <BottomSheet items={bottomSheetItems} />
     </SafeAreaView>

@@ -50,7 +50,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
         <SaveButton observationId={observationId} openErrorModal={openSheet} />
       ),
     });
-  }, [navigation, openSheet]);
+  }, [navigation, openSheet, observationId]);
 
   const handleCameraPress = React.useCallback(() => {
     navigation.navigate('AddPhoto');

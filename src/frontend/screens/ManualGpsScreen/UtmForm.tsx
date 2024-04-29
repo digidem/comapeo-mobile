@@ -235,9 +235,21 @@ function toLatLon({
     }
   }
 
-  const numericEasting = parseNumber(easting) as number;
-  const numericNorthing = parseNumber(northing) as number;
-  const numericZoneNum = parseNumber(zoneNum) as number;
+  const numericEasting = parseNumber(easting);
+  const numericNorthing = parseNumber(northing);
+  const numericZoneNum = parseNumber(zoneNum);
+
+  if (numericEasting === undefined) {
+    throw new Error('Invalid Easting value');
+  }
+
+  if (numericNorthing === undefined) {
+    throw new Error('Invalid Northing value');
+  }
+
+  if (numericZoneNum === undefined) {
+    throw new Error('Invalid Zone Number');
+  }
 
   // If northern defined, then don't use the zoneLetter.
   if (northern !== undefined) {

@@ -96,10 +96,10 @@ export const DdForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
   const [longitudeDegrees, setLongitudeDegrees] = React.useState<string>('');
 
   const [selectedLatCardinality, setSelectedLatCardinality] = React.useState(
-    getInitialCardinality('lat', initialCoordinates),
+    () => getInitialCardinality('lat', initialCoordinates),
   );
   const [selectedLonCardinality, setSelectedLonCardinality] = React.useState(
-    getInitialCardinality('lon', initialCoordinates),
+    () => getInitialCardinality('lon', initialCoordinates),
   );
 
   const parsedLat = parseNumber(latitudeDegrees);

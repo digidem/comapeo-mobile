@@ -99,10 +99,10 @@ export const DmsForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
   const [longitude, setLongitude] =
     React.useState<DmsData>(INITIAL_UNIT_VALUES);
 
-  const [latCardinality, setLatCardinality] = React.useState(
+  const [latCardinality, setLatCardinality] = React.useState(() =>
     getInitialCardinality('lat', initialCoordinates),
   );
-  const [lonCardinality, setLonCardinality] = React.useState(
+  const [lonCardinality, setLonCardinality] = React.useState(() =>
     getInitialCardinality('lon', initialCoordinates),
   );
 

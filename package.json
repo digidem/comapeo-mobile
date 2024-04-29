@@ -7,7 +7,7 @@
     "android": "npm run build:backend && npm run android-no-backend-rebuild",
     "android-no-backend-rebuild": "expo run:android",
     "ios": "expo run:ios",
-    "prestart": "npm run build:translations && npm run build:intl-polyfills",
+    "prestart": "npm run build:translations && npm run build:intl-polyfills && npm run build:backend",
     "start": "expo start",
     "test": "jest",
     "lint:prettier": "prettier \"src/**/*.{js,ts,jsx,tsx}\" --check",
@@ -27,7 +27,6 @@
   "dependencies": {
     "@bam.tech/react-native-image-resizer": "^3.0.7",
     "@dr.pogodin/react-native-fs": "^2.24.1",
-    "@expo/config-plugins": "^7.9.1",
     "@formatjs/intl-getcanonicallocales": "^2.3.0",
     "@formatjs/intl-locale": "^3.3.2",
     "@formatjs/intl-pluralrules": "^5.2.4",

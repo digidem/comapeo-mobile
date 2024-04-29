@@ -1,3 +1,13 @@
+const SUFFIX =
+  {development: '.dev', production: '', test: '.test'}[
+    process.env.APP_VARIANT
+  ] ?? '';
+
+const NAME =
+  {development: ' (DEV)', production: '', test: ' (TEST)'}[
+    process.env.APP_VARIANT
+  ] ?? '';
+
 module.exports = ({config}) => ({
   ...config,
   extra: {
@@ -6,5 +16,14 @@ module.exports = ({config}) => ({
       projectId: '2d5b8137-12ec-45aa-9c23-56b6a1c522b7',
     },
   },
-  name: 'CoMapeo',
+  name: 'CoMapeo' + NAME,
+  ios: {
+    ...config.ios,
+    bundleIdentifier: 'com.comapeo' + SUFFIX,
+  },
+  android: {
+    ...config.android,
+    package: 'com.comapeo' + SUFFIX,
+    googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
+  },
 });

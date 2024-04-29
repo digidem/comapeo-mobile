@@ -30,7 +30,6 @@ import {
 } from '../../sharedTypes';
 
 import {
-  Coordinates,
   latitudeIsValid,
   longitudeIsValid,
   type ConvertedCoordinateData,

@@ -68,22 +68,3 @@ The next version of Mapeo Mobile
         ```sh
         npm run android-no-backend-rebuild
         ```
-
-## app: 
-  
-  you have to options on running the application: 
-
-### prebuild: 
-  run: ``` yarn ```
-
-  run: ``` npx expo prebuild ```
-
-  and then ``` npm android ``` depeding on witch platform you want to develop 
-
-### dev-cient: 
-  run: ``` npm i ```
-
-  run: 
-  ``` npx eas build --profile development --platform <platform> ```
-
-  and then: ```npm start``` 

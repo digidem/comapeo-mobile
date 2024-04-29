@@ -180,7 +180,7 @@ export const UtmForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
   );
 };
 
-function toLatLon({
+export function toLatLon({
   easting,
   northing,
   zoneLetter,

@@ -177,7 +177,7 @@ export const DmsForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
   );
 };
 
-function getParsedDmsValues({degrees, minutes, seconds}: DmsData) {
+export function getParsedDmsValues({degrees, minutes, seconds}: DmsData) {
   const degreesParsed = parseNumber(degrees);
   const minutesParsed = parseNumber(minutes);
   const secondsParsed = parseNumber(seconds);
@@ -195,7 +195,7 @@ function getParsedDmsValues({degrees, minutes, seconds}: DmsData) {
   }
 }
 
-function dmsValuesAreValid(field: CoordinateField, coordinate: DmsData) {
+export function dmsValuesAreValid(field: CoordinateField, coordinate: DmsData) {
   const parsedDms = getParsedDmsValues(coordinate);
 
   if (parsedDms) {

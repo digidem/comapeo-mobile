@@ -7,8 +7,7 @@ import {
 } from './AppStack';
 import {useIntl} from 'react-intl';
 // import {SecurityContext} from '../context/SecurityContext';
-
-import BootSplash from 'react-native-bootsplash';
+import * as SplashScreen from 'expo-splash-screen';
 import {useDeviceInfo} from '../hooks/server/deviceInfo';
 import {Loading} from '../sharedComponents/Loading';
 import {
@@ -24,7 +23,6 @@ import {AppList} from './ScreenGroups/AppScreens';
 import {usePresetsQuery} from '../hooks/server/presets';
 import {initializeInviteListener} from '../initializeInviteListener';
 import {ProjectInviteBottomSheet} from '../sharedComponents/ProjectInviteBottomSheet';
-
 // import {devExperiments} from '../lib/DevExperiments';
 
 // React Navigation expects children of the Navigator to be a `Screen`, `Group`
@@ -54,7 +52,7 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   initializeInviteListener();
 
   if (permissionAsked && !deviceInfo.isPending) {
-    BootSplash.hide();
+    SplashScreen.hideAsync();
   }
 
   // the user should never actually see this because the splash screen is visible, so this is to appease typescript

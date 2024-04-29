@@ -17,7 +17,7 @@ const m = defineMessages({
   gpsDisabledDescription: {
     id: 'Modal.GPSDisable.description',
     defaultMessage:
-      'To create a Track CoMapeo needs access to your location and GPS.',
+      'To create a Track CoMapeo needs access to your location (also while running in background) and GPS.',
   },
   gpsDisabledButtonText: {
     id: 'Modal.GPSDisable.button',

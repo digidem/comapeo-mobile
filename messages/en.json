@@ -23,7 +23,7 @@
     "message": "Enable"
   },
   "Modal.GPSDisable.description": {
-    "message": "To create a Track CoMapeo needs access to your location and GPS."
+    "message": "To create a Track CoMapeo needs access to your location (also while running in background) and GPS."
   },
   "Modal.GPSDisable.title": {
     "message": "GPS Disabled"

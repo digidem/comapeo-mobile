@@ -175,7 +175,7 @@ const HomeTabs = () => {
           tabBarIcon: CameraTabBarIcon,
         }}
       />
-      {process.env.FEATURE_TRACKS && (
+      {true && (
         <Tab.Screen
           name={TabName.Tracking}
           options={{

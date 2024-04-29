@@ -1,6 +1,6 @@
 export type CoordinateField = 'lat' | 'lon';
 
-type Coordinates = {lat?: number; lon?: number};
+export type Coordinates = {lat?: number; lon?: number};
 
 export type ConvertedCoordinateData = {
   coords?: Coordinates;
@@ -37,4 +37,12 @@ export function getInitialCardinality(
     }
     return coords.lon >= 0 ? 'E' : 'W';
   }
+}
+
+export function latitudeIsValid(value: number) {
+  return Math.abs(value) <= 90;
+}
+
+export function longitudeIsValid(value: number) {
+  return Math.abs(value) <= 180;
 }

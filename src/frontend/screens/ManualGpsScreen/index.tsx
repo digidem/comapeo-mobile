@@ -29,7 +29,12 @@ import {
   type CoordinateFormat,
 } from '../../sharedTypes';
 
-import {type ConvertedCoordinateData} from './shared';
+import {
+  Coordinates,
+  latitudeIsValid,
+  longitudeIsValid,
+  type ConvertedCoordinateData,
+} from './shared';
 import {DdForm} from './DdForm';
 import {DmsForm} from './DmsForm';
 import {UtmForm} from './UtmForm';
@@ -56,6 +61,11 @@ const m = defineMessages({
   universalTransverseMercator: {
     id: 'screens.ManualGpsScreen.universalTransverseMercator',
     defaultMessage: 'Universal Transverse Mercator (UTM)',
+  },
+  invalidCoordinates: {
+    id: 'screens.ManualGpsScreen.invalidCoordinates',
+    defaultMessage:
+      'Invalid coordinates. Latitude must be between -90 and 90. Longitude must be between -180 and 180',
   },
 });
 
@@ -97,6 +107,21 @@ export const ManualGpsScreen = ({
         );
       }
 
+      if (convertedData.coords) {
+        const {lon, lat} = convertedData.coords;
+
+        const lonIsValid = lon !== undefined && longitudeIsValid(lon);
+        const latIsValid = lat !== undefined && latitudeIsValid(lat);
+
+        if (!lonIsValid || !latIsValid) {
+          return ToastAndroid.showWithGravity(
+            t(m.invalidCoordinates),
+            ToastAndroid.LONG,
+            ToastAndroid.TOP,
+          );
+        }
+      }
+
       updateObservationPosition({
         position: {
           mocked: false,
@@ -118,7 +143,7 @@ export const ManualGpsScreen = ({
         </IconButton>
       ),
     });
-  }, [navigation, convertedData, updateObservationPosition]);
+  }, [navigation, convertedData, updateObservationPosition, t]);
 
   const locationCoordinates =
     observationValue &&

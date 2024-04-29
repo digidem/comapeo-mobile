@@ -16,6 +16,8 @@ import {
   FormProps,
   getInitialCardinality,
   parseNumber,
+  longitudeIsValid,
+  latitudeIsValid,
 } from './shared';
 
 const MAX_COORDINATE_INPUT_LENGTH = 11;
@@ -117,9 +119,9 @@ export const DdForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
   React.useEffect(() => {
     try {
       const latIsValidRange =
-        signedLat !== undefined && Math.abs(signedLat) <= 90;
+        signedLat !== undefined && latitudeIsValid(signedLat);
       const lonIsValidRange =
-        signedLon !== undefined && Math.abs(signedLon) <= 180;
+        signedLon !== undefined && longitudeIsValid(signedLon);
 
       if (latIsValidRange && lonIsValidRange) {
         onValueUpdate({

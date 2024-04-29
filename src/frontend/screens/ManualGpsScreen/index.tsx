@@ -142,7 +142,7 @@ export const ManualGpsScreen = ({
             <Select
               containerStyles={styles.selectContainer}
               onChange={value => {
-                if (typeof value === 'number' || !isCoordinateFormat(value)) {
+                if (!isCoordinateFormat(value)) {
                   return;
                 }
 

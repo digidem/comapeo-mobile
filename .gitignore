@@ -9,6 +9,7 @@
 #
 build/
 .idea
+.vscode
 .gradle
 local.properties
 *.iml

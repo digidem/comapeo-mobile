@@ -30,10 +30,9 @@ localDiscoveryController.start();
 initializeNodejs();
 SplashScreen.preventAutoHideAsync();
 
-export default function App() {
+const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();
   const [permissionsAsked, setPermissionsAsked] = React.useState(false);
-
   React.useEffect(() => {
     PermissionsAndroid.requestMultiple([
       'android.permission.CAMERA',
@@ -63,4 +62,6 @@ export default function App() {
       </ExternalProviders>
     </IntlProvider>
   );
-}
+};
+
+export default App;

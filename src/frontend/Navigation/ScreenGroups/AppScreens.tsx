@@ -55,8 +55,10 @@ import {TrackingTabBarIcon} from './TabBar/TrackingTabBarIcon';
 import {TabName} from '../types';
 import {CameraTabBarIcon} from './TabBar/CameraTabBarIcon';
 import {MapTabBarIcon} from './TabBar/MapTabBarIcon';
+import {SaveTrackScreen} from '../../screens/MapScreen/track/SaveTrackScreen';
 import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/InviteDeclined';
 import {UnableToCancelInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/UnableToCancelInvite';
+import {SharedLocationContextProvider} from '../../contexts/SharedLocationContext';
 import {
   SyncScreen,
   createNavigationOptions as createSyncNavOptions,
@@ -143,6 +145,7 @@ export type AppList = {
   UnableToCancelInvite: InviteProps;
   DeviceNameDisplay: undefined;
   DeviceNameEdit: undefined;
+  SaveTrack: undefined;
   Sync: undefined;
 };
 
@@ -212,7 +215,11 @@ export const createDefaultScreenGroup = (
     <RootStack.Screen
       name="Home"
       options={{headerShown: false}}
-      component={HomeTabs}
+      children={() => (
+        <SharedLocationContextProvider>
+          <HomeTabs />
+        </SharedLocationContextProvider>
+      )}
     />
     <RootStack.Screen
       name="AuthScreen"
@@ -364,6 +371,7 @@ export const createDefaultScreenGroup = (
       component={GpsModal}
       options={createGpsModalNavigationOptions({intl})}
     />
+    <RootStack.Screen name="SaveTrack" component={SaveTrackScreen} />
     <RootStack.Screen
       name="InviteDeclined"
       component={InviteDeclined}

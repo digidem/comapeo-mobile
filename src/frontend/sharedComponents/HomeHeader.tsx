@@ -8,7 +8,7 @@ import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
 
 export const HomeHeader: FC<BottomTabHeaderProps> = ({navigation}) => {
   return (
-    <View style={[styles.header]}>
+    <View style={[styles.header, {paddingTop: 10}]}>
       <LinearGradient
         style={styles.linearGradient}
         colors={['#0006', '#0000']}

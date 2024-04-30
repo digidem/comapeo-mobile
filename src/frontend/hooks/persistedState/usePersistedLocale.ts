@@ -8,7 +8,6 @@ type LocaleSlice = {
   setLocale: (locale: string) => void;
 };
 
-
 const localeSlice: StateCreator<LocaleSlice> = (set, get) => ({
   // We can use this non-null assertion with `getLocales()` because, according
   // to [the docs][1], the result is "guaranteed to contain at least 1 element."

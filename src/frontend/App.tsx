@@ -31,7 +31,6 @@ initializeNodejs();
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();
   const [permissionsAsked, setPermissionsAsked] = React.useState(false);
-
   React.useEffect(() => {
     PermissionsAndroid.requestMultiple([
       'android.permission.CAMERA',

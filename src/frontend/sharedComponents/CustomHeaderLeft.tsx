@@ -5,6 +5,7 @@ import {HeaderBackButtonProps} from '@react-navigation/native-stack/lib/typescri
 import {BackIcon} from './icons';
 import {BLACK} from '../lib/styles';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
+import {ViewStyle} from 'react-native';
 
 // We use a slightly larger back icon, to improve accessibility
 // TODO iOS: This should probably be a chevron not an arrow
@@ -16,19 +17,21 @@ interface CustomHeaderLeftProps {
   tintColor?: string;
   headerBackButtonProps: HeaderBackButtonProps;
   onPress?: () => void;
+  style?: ViewStyle;
 }
 
 export const CustomHeaderLeft = ({
   tintColor,
   headerBackButtonProps,
   onPress,
+  style,
 }: CustomHeaderLeftProps) => {
   const navigation = useNavigationFromRoot();
   return (
     <HeaderBackButton
       {...headerBackButtonProps}
       onPress={onPress || (() => navigation.goBack())}
-      style={{marginLeft: 0, marginRight: 15}}
+      style={{marginLeft: 0, marginRight: 15, ...style}}
       backImage={() => <HeaderBackIcon tintColor={tintColor || BLACK} />}
     />
   );

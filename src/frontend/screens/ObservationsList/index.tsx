@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {View, FlatList, Dimensions, StyleSheet} from 'react-native';
-import {defineMessages} from 'react-intl';
+// import {defineMessages} from 'react-intl';
 import {ObservationListItem} from './ObservationListItem';
 import ObservationEmptyView from './ObservationsEmptyView';
 
 import {Observation} from '@mapeo/schema';
-import {NativeNavigationComponent} from '../../sharedTypes';
-import {SettingsButton} from './SettingsButton';
+import {NativeHomeTabsNavigationProps} from '../../sharedTypes';
 import {useAllObservations} from '../../hooks/useAllObservations';
+import {MessageDescriptor, defineMessages} from 'react-intl';
 
 const m = defineMessages({
   loading: {
@@ -40,16 +40,12 @@ const getItemLayout = (_data: unknown, index: number) => ({
 
 const keyExtractor = (item: Observation) => item.docId;
 
-export const ObservationsList: NativeNavigationComponent<'ObservationList'> = ({
-  navigation,
-}) => {
+export const ObservationsList: React.FC<
+  NativeHomeTabsNavigationProps<'ObservationList'>
+> & {
+  navTitle: MessageDescriptor;
+} = ({navigation}: NativeHomeTabsNavigationProps<'ObservationList'>) => {
   const observations = useAllObservations();
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => <SettingsButton />,
-    });
-  }, [navigation]);
 
   const rowsPerWindow = Math.ceil(
     (Dimensions.get('window').height - 65) / OBSERVATION_CELL_HEIGHT,

@@ -6,7 +6,7 @@ import {NavigatorScreenParams} from '@react-navigation/native';
 import * as React from 'react';
 import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {RootStack} from '../AppStack';
-import {MessageDescriptor} from 'react-intl';
+import {MessageDescriptor, useIntl} from 'react-intl';
 import {MapScreen} from '../../screens/MapScreen';
 import {CameraScreen} from '../../screens/CameraScreen';
 import {ObservationEdit} from '../../screens/ObservationEdit';
@@ -33,7 +33,7 @@ import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateP
 import {JoinExistingProject} from '../../screens/Settings/CreateOrJoinProject/JoinExistingProject';
 import {YourTeam} from '../../screens/Settings/ProjectSettings/YourTeam';
 import {SelectDevice} from '../../screens/Settings/ProjectSettings/YourTeam/SelectDevice';
-import {DeviceType, DeviceRoleForNewInvite} from '../../sharedTypes';
+import {DeviceType} from '../../sharedTypes';
 import {SelectInviteeRole} from '../../screens/Settings/ProjectSettings/YourTeam/SelectInviteeRole';
 import {ReviewInvitation} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/ReviewInvitation';
 import {InviteAccepted} from '../../screens/Settings/ProjectSettings/YourTeam/InviteAccepted';
@@ -52,7 +52,7 @@ import {
 } from '../../screens/GpsModal';
 import {useCurrentTab} from '../../hooks/useCurrentTab';
 import {TrackingTabBarIcon} from './TabBar/TrackingTabBarIcon';
-import {TabName} from '../types';
+import {InviteProps} from '../types';
 import {CameraTabBarIcon} from './TabBar/CameraTabBarIcon';
 import {MapTabBarIcon} from './TabBar/MapTabBarIcon';
 import {SaveTrackScreen} from '../../screens/MapScreen/track/SaveTrackScreen';
@@ -63,6 +63,9 @@ import {
   SyncScreen,
   createNavigationOptions as createSyncNavOptions,
 } from '../../screens/Sync';
+// import {ObservationListIcon} from '../../sharedComponents/icons';
+import {ObservationsListBarIcon} from './TabBar/ObservationsListTabBarIcon';
+import {ObservationListHeader} from '../../screens/ObservationsList/ObservationListHeader';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -70,13 +73,7 @@ export type HomeTabsList = {
   Map: undefined;
   Camera: undefined;
   Tracking: undefined;
-};
-
-type InviteProps = {
-  name: string;
-  deviceType: DeviceType;
-  deviceId: string;
-  role: DeviceRoleForNewInvite;
+  ObservationList: undefined;
 };
 
 export type AppList = {
@@ -96,7 +93,6 @@ export type AppList = {
   PhotoView: undefined;
   PresetChooser: undefined;
   AddPhoto: undefined;
-  ObservationList: undefined;
   Observation: {observationId: string};
   ObservationEdit: {observationId?: string} | undefined;
   ManualGpsScreen: undefined;
@@ -149,6 +145,7 @@ const Tab = createBottomTabNavigator<HomeTabsList>();
 
 const HomeTabs = () => {
   const {handleTabPress} = useCurrentTab();
+  const {formatMessage} = useIntl();
 
   return (
     <Tab.Navigator
@@ -160,27 +157,45 @@ const HomeTabs = () => {
         tabBarShowLabel: false,
         headerTransparent: true,
         tabBarTestID: 'tabBarButton' + route.name,
-        header: HomeHeader,
       })}
-      initialRouteName={TabName.Map}
+      initialRouteName={'Map'}
       backBehavior="initialRoute">
       <Tab.Screen
-        name={TabName.Map}
+        name="ObservationList"
+        component={ObservationsList}
+        options={{
+          tabBarIcon: ObservationsListBarIcon,
+          headerLeft: ObservationListHeader,
+          headerTransparent: false,
+          headerTitle: formatMessage(ObservationsList.navTitle),
+          headerShadowVisible: true,
+          headerStyle: {
+            elevation: 15,
+            shadowOpacity: 0,
+            borderBottomWidth: 1,
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Map"
         component={MapScreen}
         options={{
           tabBarIcon: MapTabBarIcon,
+          header: HomeHeader,
         }}
       />
       <Tab.Screen
-        name={TabName.Camera}
+        name="Camera"
         component={CameraScreen}
         options={{
           tabBarIcon: CameraTabBarIcon,
+          header: HomeHeader,
         }}
       />
+
       {process.env.FEATURE_TRACKS && (
         <Tab.Screen
-          name={TabName.Tracking}
+          name="Tracking"
           options={{
             tabBarIcon: TrackingTabBarIcon,
             headerShown: false,
@@ -192,7 +207,7 @@ const HomeTabs = () => {
           }) => ({
             tabPress: e => {
               e.preventDefault();
-              navigation.navigate(TabName.Map);
+              navigation.navigate('Map');
             },
           })}
           children={() => <></>}
@@ -281,11 +296,6 @@ export const createDefaultScreenGroup = (
       name="PresetChooser"
       component={PresetChooser}
       options={{headerTitle: intl(PresetChooser.navTitle)}}
-    />
-    <RootStack.Screen
-      name="ObservationList"
-      component={ObservationsList}
-      options={{headerTitle: intl(ObservationsList.navTitle)}}
     />
     <RootStack.Screen
       name="Observation"

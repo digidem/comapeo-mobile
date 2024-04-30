@@ -379,13 +379,6 @@ export const createDefaultScreenGroup = (
     />
     <RootStack.Screen name="SaveTrack" component={SaveTrackScreen} />
     <RootStack.Screen
-      name="SaveTrack"
-      component={SaveTrackScreen}
-      options={{
-        headerShown: false,
-      }}
-    />
-    <RootStack.Screen
       name="InviteDeclined"
       component={InviteDeclined}
       options={{headerShown: false}}

@@ -19,7 +19,7 @@ const m = defineMessages({
   },
   loadingButtonText: {
     id: 'Modal.GPSEnable.button.loading',
-    defaultMessage: 'Loading...',
+    defaultMessage: 'Loading…',
   },
   trackingDescription: {
     id: 'Modal.GPSEnable.trackingDescription',

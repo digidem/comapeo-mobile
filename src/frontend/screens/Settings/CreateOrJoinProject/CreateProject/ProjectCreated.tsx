@@ -49,6 +49,24 @@ export const ProjectCreated = ({
     );
   }
 
+  //This resets the navigation so the user cannot press back and return to this screen
+  function handleGoToInviteScreen() {
+    navigation.dispatch(state => {
+      const index = state.routes.findIndex(r => r.name === 'Settings');
+      const routes = [
+        ...state.routes.slice(0, index + 1),
+        {name: 'YourTeam'},
+        {name: 'SelectDevice'},
+      ];
+
+      return CommonActions.reset({
+        ...state,
+        routes,
+        index: routes.length - 1,
+      });
+    });
+  }
+
   return (
     <View style={styles.container}>
       <View style={{alignItems: 'center'}}>
@@ -64,7 +82,7 @@ export const ProjectCreated = ({
         </Text>
       </View>
       <View style={{width: '100%'}}>
-        <Button fullWidth variant="outlined" onPress={() => {}}>
+        <Button fullWidth variant="outlined" onPress={handleGoToInviteScreen}>
           {t(m.inviteDevice)}
         </Button>
         <Button style={{marginTop: 20}} fullWidth onPress={handleGoToMap}>

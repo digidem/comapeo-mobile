@@ -40,9 +40,7 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
   const state = navigation.getState();
   const currentIndex = state.index;
   const routes = state.routes;
-  const prevRouteNameInStack = !routes[currentIndex - 1]
-    ? undefined
-    : routes[currentIndex - 1].name;
+  const prevRouteNameInStack = routes[currentIndex - 1]?.name;
 
   console.log({presets});
 

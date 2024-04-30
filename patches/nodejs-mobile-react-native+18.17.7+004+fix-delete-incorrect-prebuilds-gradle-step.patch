@@ -1,8 +1,8 @@
 diff --git a/node_modules/nodejs-mobile-react-native/android/build.gradle b/node_modules/nodejs-mobile-react-native/android/build.gradle
-index a6fac6f..423cb52 100644
+index b1957a5..2933b3d 100644
 --- a/node_modules/nodejs-mobile-react-native/android/build.gradle
 +++ b/node_modules/nodejs-mobile-react-native/android/build.gradle
-@@ -377,6 +377,7 @@ if ("1".equals(shouldRebuildNativeModules)) {
+@@ -371,6 +371,7 @@ if ("1".equals(shouldRebuildNativeModules)) {
              delete fileTree(dir: "${rootProject.buildDir}/nodejs-native-assets-temp-build/nodejs-native-assets-${abi_name}/nodejs-project/node_modules/").matching {
                  include "**/*.node" // Look for all .node files
                  exclude "**/prebuilds/android-${temp_arch}/*" // Don't touch the correct prebuilds
@@ -10,3 +10,29 @@ index a6fac6f..423cb52 100644
              }
          }
  
+diff --git a/node_modules/nodejs-mobile-react-native/scripts/ios-build-native-modules.sh b/node_modules/nodejs-mobile-react-native/scripts/ios-build-native-modules.sh
+index e743704..fc0c898 100644
+--- a/node_modules/nodejs-mobile-react-native/scripts/ios-build-native-modules.sh
++++ b/node_modules/nodejs-mobile-react-native/scripts/ios-build-native-modules.sh
+@@ -8,7 +8,7 @@ if [ -f ./.xcode.env.local ]; then
+   source "./.xcode.env.local";
+ fi
+ 
+-DESIRED_NODE_VERSION="18"
++DESIRED_NODE_VERSION="$(node -p "process.versions.node.split('.')[0]")"
+ CURRENT_NODE_VERSION="$(node -p "process.versions.node.split('.')[0]")"
+ if [ "$CURRENT_NODE_VERSION" -ne "$DESIRED_NODE_VERSION" ]; then
+   echo "nodejs-mobile-react-native requires Node.js version \
+diff --git a/node_modules/nodejs-mobile-react-native/scripts/ios-sign-native-modules.sh b/node_modules/nodejs-mobile-react-native/scripts/ios-sign-native-modules.sh
+index 81c033b..96bf544 100644
+--- a/node_modules/nodejs-mobile-react-native/scripts/ios-sign-native-modules.sh
++++ b/node_modules/nodejs-mobile-react-native/scripts/ios-sign-native-modules.sh
+@@ -8,7 +8,7 @@ if [ -f ./.xcode.env.local ]; then
+   source "./.xcode.env.local";
+ fi
+ 
+-DESIRED_NODE_VERSION="18"
++DESIRED_NODE_VERSION="$(node -p "process.versions.node.split('.')[0]")"
+ CURRENT_NODE_VERSION="$(node -p "process.versions.node.split('.')[0]")"
+ if [ "$CURRENT_NODE_VERSION" -ne "$DESIRED_NODE_VERSION" ]; then
+   echo "nodejs-mobile-react-native's ios-build-native-modules script requires \

@@ -6,7 +6,7 @@
   "scripts": {
     "android": "npm run build:backend && npm run android-no-backend-rebuild",
     "android-no-backend-rebuild": "expo run:android",
-    "ios": "expo run:ios",
+    "ios": "expo run:ios && npm run android-no-backend-rebuild",
     "prestart": "npm run build:translations && npm run build:intl-polyfills && npm run build:backend",
     "start": "expo start",
     "test": "jest",

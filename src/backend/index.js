@@ -1,9 +1,6 @@
 import { parseArgs } from 'util'
 
 import { init } from './src/app.js'
-import { createRequire } from 'node:module'
-const require = createRequire(import.meta.url)
-export const defaultConfigPath = require.resolve('@mapeo/default-config')
 
 // We define this here so we don't need to do additional bundling adjustments to get the path correct when running on the device
 // This assumes that we keep the relevant directory as part of the built assets when building for nodejs mobile
@@ -13,10 +10,10 @@ const MIGRATIONS_FOLDER_PATH = new URL(
   import.meta.url,
 ).pathname
 
-// const DEFAULT_CONFIG_PATH = new URL(
-//   './node_modules/@mapeo/default-config/dist/mapeo-default-config.mapeoconfig',
-//   import.meta.url,
-// ).pathname
+const DEFAULT_CONFIG_PATH = new URL(
+  './node_modules/@mapeo/default-config/dist/mapeo-default-config.mapeoconfig',
+  import.meta.url,
+).pathname
 
 try {
   const { values } = parseArgs({
@@ -43,7 +40,7 @@ try {
     rootKey: Buffer.from(values.rootKey, 'hex'),
     migrationsFolderPath: MIGRATIONS_FOLDER_PATH,
     sharedStoragePath: values.sharedStoragePath,
-    defaultConfigPath: defaultConfigPath,
+    defaultConfigPath: DEFAULT_CONFIG_PATH,
   }).catch((err) => {
     console.error('Server startup error:', err)
   })

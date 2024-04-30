@@ -24,7 +24,6 @@ import {AppList} from './ScreenGroups/AppScreens';
 import {usePresetsQuery} from '../hooks/server/presets';
 import {initializeInviteListener} from '../initializeInviteListener';
 import {ProjectInviteBottomSheet} from '../sharedComponents/ProjectInviteBottomSheet';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {StatusBar} from 'expo-status-bar';
 
 // import {devExperiments} from '../lib/DevExperiments';
@@ -67,19 +66,17 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   return (
     <React.Fragment>
       <StatusBar style="auto" />
-      <SafeAreaProvider>
-        <RootStack.Navigator
-          initialRouteName={getInitialRouteName({
-            hasDeviceName: !!deviceInfo.data?.name,
-            existingObservation,
-            presets,
-          })}
-          screenOptions={NavigatorScreenOptions}>
-          {deviceInfo.data?.name
-            ? createDefaultScreenGroup(formatMessage)
-            : createDeviceNamingScreens()}
-        </RootStack.Navigator>
-      </SafeAreaProvider>
+      <RootStack.Navigator
+        initialRouteName={getInitialRouteName({
+          hasDeviceName: !!deviceInfo.data?.name,
+          existingObservation,
+          presets,
+        })}
+        screenOptions={NavigatorScreenOptions}>
+        {deviceInfo.data?.name
+          ? createDefaultScreenGroup(formatMessage)
+          : createDeviceNamingScreens()}
+      </RootStack.Navigator>
       <ProjectInviteBottomSheet />
     </React.Fragment>
   );

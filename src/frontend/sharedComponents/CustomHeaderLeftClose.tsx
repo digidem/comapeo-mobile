@@ -178,7 +178,7 @@ const HeaderBackEditObservation = ({
     });
 
     return () => unsubscribe();
-  }, [observation, photos, draftObservation, navigation, clearDraft]);
+  }, [observation, photos, draftObservation, navigation, clearDraft, t]);
 
   return (
     <SharedBackButton

@@ -50,9 +50,9 @@ import {
   createNavigationOptions as createDeviceNameEditNavOptions,
 } from '../../screens/Settings/ProjectSettings/DeviceName/EditScreen';
 import {
-  GpsModal,
-  createNavigationOptions as createGpsModalNavigationOptions,
-} from '../../screens/GpsModal';
+  LocationInfoScreen,
+  createNavigationOptions as createLocationInfoNavOptions,
+} from '../../screens/LocationInfoScreen';
 import {useCurrentTab} from '../../hooks/useCurrentTab';
 import {TrackingTabBarIcon} from './TabBar/TrackingTabBarIcon';
 import {InviteProps} from '../types';
@@ -366,8 +366,8 @@ export const createDefaultScreenGroup = (
     />
     <RootStack.Screen
       name="GpsModal"
-      component={GpsModal}
-      options={createGpsModalNavigationOptions({intl})}
+      component={LocationInfoScreen}
+      options={createLocationInfoNavOptions({intl})}
     />
     <RootStack.Screen name="SaveTrack" component={SaveTrackScreen} />
     <RootStack.Screen

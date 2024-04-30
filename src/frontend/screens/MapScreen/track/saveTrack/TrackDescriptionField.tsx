@@ -39,6 +39,7 @@ export const TrackDescriptionField: React.FC<DescriptionField> = ({
 const styles = StyleSheet.create({
   textInput: {
     flex: 1,
+    paddingVertical: 20,
     minHeight: 100,
     fontSize: 20,
     color: 'black',

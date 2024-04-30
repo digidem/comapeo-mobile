@@ -402,6 +402,10 @@
     "description": "screen title for new observation screen",
     "message": "New Observation"
   },
+  "screens.ObservationList.observationListTitle": {
+    "description": "Title of screen with list of observations",
+    "message": "Observations"
+  },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
     "description": "Back button on observation list screen when no observations are yet recorded",
     "message": "Go To Map"
@@ -413,6 +417,14 @@
   "screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
     "description": "Title of observation list view when the user has not yet recorded observations",
     "message": "Add Observations"
+  },
+  "screens.ObservationsList.error": {
+    "description": "message shown when there is an unexpected error when loading observations",
+    "message": "Error loading observations. Try quitting and restarting Mapeo."
+  },
+  "screens.ObservationsList.loading": {
+    "description": "message shown whilst observations are loading",
+    "message": "Loading… this can take a while after synchronizing with a new device"
   },
   "screens.Security.obscurePassDescriptonPassNotSet": {
     "message": "To use, enable App Passcode"

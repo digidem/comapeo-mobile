@@ -9,9 +9,8 @@ export const ObservationListHeader = (props: {
   pressOpacity?: number | undefined;
   labelVisible?: boolean | undefined;
 }) => {
-  const {goBack, getState} = useNavigationFromHomeTabs();
+  const {goBack} = useNavigationFromHomeTabs();
 
-  console.log(getState().history);
   return (
     <TouchableOpacity>
       <CustomHeaderLeft

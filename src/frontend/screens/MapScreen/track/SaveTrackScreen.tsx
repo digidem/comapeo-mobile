@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   BackHandler,
+  Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   View,
 } from 'react-native';
-import {SaveTrackHeader} from './saveTrack/SaveTrackHeader';
 import {DiscardModal} from '../../../sharedComponents/DiscardModal.tsx';
 import {BottomSheet} from '../../../sharedComponents/BottomSheet/BottomSheet';
 import PhotoIcon from '../../../images/camera.svg';
@@ -22,6 +22,8 @@ import {TabName} from '../../../Navigation/types.ts';
 import {useCurrentTrackStore} from '../../../hooks/tracks/useCurrentTrackStore.ts';
 import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes.ts';
 import {useFocusEffect} from '@react-navigation/native';
+import {SaveTrackButton} from './saveTrack/SaveTrackButton.tsx';
+import Close from '../../../images/close.svg';
 
 export const SaveTrackScreen = () => {
   const navigation = useNavigationFromHomeTabs();
@@ -57,9 +59,22 @@ export const SaveTrackScreen = () => {
     clearCurrentTrack();
   };
 
+  useFocusEffect(
+    useCallback(() => {
+      navigation.setOptions({
+        headerLeft: () => (
+          <Pressable hitSlop={10} onPress={openSheet} style={{marginRight: 20}}>
+            <Close />
+          </Pressable>
+        ),
+        headerRight: () => <SaveTrackButton description={description} />,
+      });
+    }, [description, navigation, openSheet]),
+  );
+
   // disables back button
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       const disableBack = () => {
         openSheet();
       };
@@ -77,7 +92,6 @@ export const SaveTrackScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <SaveTrackHeader openSheet={openSheet} description={description} />
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.scrollViewContent}>
@@ -141,7 +155,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const m = defineMessages({
+export const m = defineMessages({
+  trackEditScreenTitle: {
+    id: 'screens.SaveTrack.TrackEditView.title',
+    defaultMessage: 'New Track',
+    description: 'Title for new track screen',
+  },
   newTitle: {
     id: 'screens.SaveTrack.track',
     defaultMessage: 'Track',

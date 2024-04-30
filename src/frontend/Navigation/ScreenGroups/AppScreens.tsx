@@ -377,6 +377,7 @@ export const createDefaultScreenGroup = (
       component={GpsModal}
       options={createGpsModalNavigationOptions({intl})}
     />
+    <RootStack.Screen name="SaveTrack" component={SaveTrackScreen} />
     <RootStack.Screen
       name="SaveTrack"
       component={SaveTrackScreen}

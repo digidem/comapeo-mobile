@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
+import {
+  BackHandler,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {SaveTrackHeader} from './saveTrack/SaveTrackHeader';
 import {DiscardModal} from '../../../sharedComponents/DiscardModal.tsx';
 import {BottomSheet} from '../../../sharedComponents/BottomSheet/BottomSheet';
@@ -15,6 +21,7 @@ import ErrorIcon from '../../../images/Error.svg';
 import {TabName} from '../../../Navigation/types.ts';
 import {useCurrentTrackStore} from '../../../hooks/tracks/useCurrentTrackStore.ts';
 import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes.ts';
+import {useFocusEffect} from '@react-navigation/native';
 
 export const SaveTrackScreen = () => {
   const navigation = useNavigationFromHomeTabs();
@@ -23,7 +30,7 @@ export const SaveTrackScreen = () => {
   );
   const {formatMessage: t} = useIntl();
   const [description, setDescription] = useState('');
-  const {sheetRef, isOpen, openSheet} = useBottomSheetModal({
+  const {sheetRef, isOpen, openSheet, closeSheet} = useBottomSheetModal({
     openOnMount: false,
   });
 
@@ -45,10 +52,28 @@ export const SaveTrackScreen = () => {
   ];
 
   const handleDiscard = () => {
-    sheetRef.current?.close();
+    closeSheet();
     navigation.navigate(TabName.Map);
     clearCurrentTrack();
   };
+
+  // disables back button
+  useFocusEffect(
+    React.useCallback(() => {
+      const disableBack = () => {
+        openSheet();
+      };
+      const subscription = BackHandler.addEventListener(
+        'hardwareBackPress',
+        () => {
+          disableBack();
+          return true;
+        },
+      );
+
+      return () => subscription.remove();
+    }, [openSheet]),
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -76,7 +101,7 @@ export const SaveTrackScreen = () => {
               icon: <DiscardIcon />,
             },
             {
-              onPress: () => sheetRef.current?.close(),
+              onPress: closeSheet,
               text: t(m.discardTrackDefaultButton),
               variation: 'outlined',
             },

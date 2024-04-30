@@ -23,7 +23,7 @@ interface SecondaryActionButtonConfig extends BaseActionButtonConfig {
   variation: 'outlined';
 }
 
-type ActionButtonConfig =
+export type ActionButtonConfig =
   | PrimaryActionButtonConfig
   | SecondaryActionButtonConfig;
 

@@ -72,6 +72,7 @@ export const CustomHeaderLeftClose = ({
     return (
       <HeaderBackEditObservation
         tintColor={tintColor}
+        openDiscardModal={() => {}}
         headerBackButtonProps={headerBackButtonProps}
         observationId={observationId}
       />
@@ -136,18 +137,16 @@ const HeaderBackNewObservation = ({
 
 type HeaderBackEditObservationProps = {
   observationId: string;
+  openDiscardModal: () => void;
 } & SharedBackButtonProps;
 
 const HeaderBackEditObservation = ({
   headerBackButtonProps,
   tintColor,
-
+  openDiscardModal,
   observationId,
 }: HeaderBackEditObservationProps) => {
   const navigation = useNavigationFromRoot();
-  const {formatMessage: t} = useIntl();
-
-  const {clearDraft} = useDraftObservation();
   const {observation} = useObservationWithPreset(observationId);
   const photos = usePersistedDraftObservation(store => store.photos);
   const draftObservation = usePersistedDraftObservation(store => store.value);
@@ -165,20 +164,11 @@ const HeaderBackEditObservation = ({
 
       e.preventDefault();
 
-      Alert.alert(t(m.discardChangesTitle), undefined, [
-        {
-          text: t(m.discardChangesConfirm),
-          onPress: () => {
-            clearDraft();
-            navigation.dispatch(e.data.action);
-          },
-        },
-        {text: t(m.discardCancel), onPress: () => {}},
-      ]);
+      openDiscardModal();
     });
 
     return () => unsubscribe();
-  }, [observation, photos, draftObservation, navigation, clearDraft, t]);
+  }, [observation, photos, draftObservation, openDiscardModal, navigation]);
 
   return (
     <SharedBackButton

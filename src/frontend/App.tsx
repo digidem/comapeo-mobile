@@ -20,6 +20,7 @@ import {
   createLocalDiscoveryController,
 } from './contexts/LocalDiscoveryContext';
 import {Loading} from './sharedComponents/Loading';
+import 'react-native-gesture-handler';
 
 const queryClient = new QueryClient();
 const messagePort = new MessagePortLike();

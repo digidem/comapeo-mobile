@@ -7,7 +7,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {DiscardModal} from '../../../sharedComponents/DiscardModal.tsx';
+import {DiscardModal} from '../../../sharedComponents/CustomHeaderLeftClose/DiscardModal.tsx';
 import {BottomSheet} from '../../../sharedComponents/BottomSheet/BottomSheet';
 import PhotoIcon from '../../../images/camera.svg';
 import DetailsIcon from '../../../images/details.svg';

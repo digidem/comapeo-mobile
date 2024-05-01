@@ -12,7 +12,7 @@ import {PresetView} from './PresetView';
 import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
 import {ErrorModal} from '../../sharedComponents/ErrorModal';
 import {SaveButton} from './SaveButton';
-import {DiscardModal} from '../../sharedComponents/DiscardModal';
+import {DiscardModal} from '../../sharedComponents/CustomHeaderLeftClose/DiscardModal';
 import {CustomHeaderLeftClose} from '../../sharedComponents/CustomHeaderLeftClose';
 
 const m = defineMessages({
@@ -118,7 +118,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
       </ScrollView>
       <BottomSheet items={bottomSheetItems} />
       <ErrorModal sheetRef={sheetRef} closeSheet={closeSheet} isOpen={isOpen} />
-      <DiscardModal
+      {/* <DiscardModal
         bottomSheetRef={sheetRef}
         isOpen={isOpen}
         closeSheet={closeSheet}
@@ -126,7 +126,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
         description={deleteObservationMessages.discardObservationDescription}
         discardButtonText={deleteObservationMessages.discardObservationButton}
         handleDiscard={handleDiscard}
-      />
+      /> */}
     </View>
   );
 };

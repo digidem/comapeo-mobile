@@ -17,8 +17,8 @@ import {CustomHeaderLeftClose} from '../sharedComponents/CustomHeaderLeftClose';
 import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 import {Preset} from '@mapeo/schema';
 import {usePresetsQuery} from '../hooks/server/presets';
-import {DiscardModal} from '../sharedComponents/DiscardModal';
-import {deleteObservationMessages} from './ObservationEdit';
+// import {DiscardModal} from '../sharedComponents/DiscardModal';
+// import {deleteObservationMessages} from './ObservationEdit';
 import {useBottomSheetModal} from '../sharedComponents/BottomSheetModal';
 
 const m = defineMessages({
@@ -44,7 +44,7 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
   const currentIndex = state.index;
   const routes = state.routes;
   const prevRouteNameInStack = routes[currentIndex - 1]?.name;
-  const {openSheet, sheetRef, isOpen, closeSheet} = useBottomSheetModal({
+  const {openSheet} = useBottomSheetModal({
     openOnMount: false,
   });
   React.useLayoutEffect(() => {
@@ -81,10 +81,10 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
   );
   const numColumns = Math.floor(Dimensions.get('window').width / MIN_COL_WIDTH);
 
-  const handleDiscard = React.useCallback(() => {
-    closeSheet();
-    navigation.reset({index: 0, routes: [{name: 'Home'}]});
-  }, [navigation, closeSheet]);
+  // const handleDiscard = React.useCallback(() => {
+  //   closeSheet();
+  //   navigation.reset({index: 0, routes: [{name: 'Home'}]});
+  // }, [navigation, closeSheet]);
 
   return (
     <>
@@ -108,7 +108,7 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
           numColumns={numColumns}
         />
       </View>
-      <DiscardModal
+      {/* <DiscardModal
         bottomSheetRef={sheetRef}
         isOpen={isOpen}
         closeSheet={closeSheet}
@@ -116,7 +116,7 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
         description={deleteObservationMessages.discardObservationDescription}
         discardButtonText={deleteObservationMessages.discardObservationButton}
         handleDiscard={handleDiscard}
-      />
+      /> */}
     </>
   );
 };

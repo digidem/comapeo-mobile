@@ -16,8 +16,6 @@ import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../../sharedComponents/Text';
 import {TrackDescriptionField} from './saveTrack/TrackDescriptionField';
 import {useBottomSheetModal} from '../../../sharedComponents/BottomSheetModal';
-import DiscardIcon from '../../../images/delete.svg';
-import ErrorIcon from '../../../images/Error.svg';
 import {TabName} from '../../../Navigation/types.ts';
 import {useCurrentTrackStore} from '../../../hooks/tracks/useCurrentTrackStore.ts';
 import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes.ts';
@@ -106,23 +104,11 @@ export const SaveTrackScreen = () => {
         <DiscardModal
           bottomSheetRef={sheetRef}
           isOpen={isOpen}
-          buttonConfigs={[
-            {
-              variation: 'filled',
-              dangerous: true,
-              onPress: handleDiscard,
-              text: t(m.discardTrackDiscardButton),
-              icon: <DiscardIcon />,
-            },
-            {
-              onPress: closeSheet,
-              text: t(m.discardTrackDefaultButton),
-              variation: 'outlined',
-            },
-          ]}
+          closeSheet={closeSheet}
+          discardButtonText={m.discardTrackDiscardButton}
+          handleDiscard={handleDiscard}
           title={t(m.discardTrackTitle)}
           description={t(m.discardTrackDescription)}
-          icon={<ErrorIcon width={60} height={60} style={styles.image} />}
         />
       </ScrollView>
       <BottomSheet items={bottomSheetItems} />
@@ -132,7 +118,6 @@ export const SaveTrackScreen = () => {
 
 const styles = StyleSheet.create({
   icon: {width: 30, height: 30},
-  image: {marginBottom: 15},
   titleText: {fontSize: 20, fontWeight: '700'},
   container: {
     flex: 1,
@@ -187,9 +172,5 @@ export const m = defineMessages({
   discardTrackDiscardButton: {
     id: 'Modal.GPSDisable.discardButton',
     defaultMessage: 'Discard Track',
-  },
-  discardTrackDefaultButton: {
-    id: 'Modal.GPSDisable.defaultButton',
-    defaultMessage: 'Continue Editing',
   },
 });

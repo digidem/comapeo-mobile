@@ -51,7 +51,7 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
           <CustomHeaderLeftClose headerBackButtonProps={props} />
         ),
     });
-  }, [prevRouteNameInStack, CustomHeaderLeft, CustomHeaderLeftClose]);
+  }, [prevRouteNameInStack, navigation]);
 
   const presetsList = !presets
     ? null

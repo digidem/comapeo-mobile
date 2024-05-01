@@ -6,7 +6,10 @@ import ObservationEmptyView from './ObservationsEmptyView';
 import {Observation} from '@mapeo/schema';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes';
 import {useAllObservations} from '../../hooks/useAllObservations';
-import {MessageDescriptor, defineMessages} from 'react-intl';
+import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
+import {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs';
+import {ObservationsListBarIcon} from '../../Navigation/ScreenGroups/TabBar/ObservationsListTabBarIcon';
+import {ObservationListHeaderLeft} from './ObservationListHeaderLeft';
 
 const m = defineMessages({
   loading: {
@@ -85,6 +88,22 @@ export const ObservationsList: React.FC<
     </View>
   );
 };
+
+export function CreateNavigationOptions(): BottomTabNavigationOptions {
+  const {formatMessage} = useIntl();
+  return {
+    tabBarIcon: ObservationsListBarIcon,
+    headerLeft: ObservationListHeaderLeft,
+    headerTransparent: false,
+    headerTitle: formatMessage(ObservationsList.navTitle),
+    headerShadowVisible: true,
+    headerStyle: {
+      elevation: 15,
+      shadowOpacity: 0,
+      borderBottomWidth: 1,
+    },
+  };
+}
 
 ObservationsList.navTitle = m.observationListTitle;
 

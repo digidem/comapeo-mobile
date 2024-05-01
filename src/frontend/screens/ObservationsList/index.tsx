@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {View, FlatList, Dimensions, StyleSheet} from 'react-native';
-// import {defineMessages} from 'react-intl';
 import {ObservationListItem} from './ObservationListItem';
 import ObservationEmptyView from './ObservationsEmptyView';
 
@@ -41,10 +40,10 @@ const getItemLayout = (_data: unknown, index: number) => ({
 const keyExtractor = (item: Observation) => item.docId;
 
 export const ObservationsList: React.FC<
-  NativeHomeTabsNavigationProps<'ObservationList'>
+  NativeHomeTabsNavigationProps<'ObservationsList'>
 > & {
   navTitle: MessageDescriptor;
-} = ({navigation}: NativeHomeTabsNavigationProps<'ObservationList'>) => {
+} = ({navigation}) => {
   const observations = useAllObservations();
 
   const rowsPerWindow = Math.ceil(

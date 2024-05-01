@@ -63,9 +63,8 @@ import {
   SyncScreen,
   createNavigationOptions as createSyncNavOptions,
 } from '../../screens/Sync';
-// import {ObservationListIcon} from '../../sharedComponents/icons';
 import {ObservationsListBarIcon} from './TabBar/ObservationsListTabBarIcon';
-import {ObservationListHeader} from '../../screens/ObservationsList/ObservationListHeader';
+import {ObservationListHeaderLeft} from '../../screens/ObservationsList/ObservationListHeaderLeft';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -73,7 +72,7 @@ export type HomeTabsList = {
   Map: undefined;
   Camera: undefined;
   Tracking: undefined;
-  ObservationList: undefined;
+  ObservationsList: undefined;
 };
 
 export type AppList = {
@@ -161,11 +160,11 @@ const HomeTabs = () => {
       initialRouteName={'Map'}
       backBehavior="initialRoute">
       <Tab.Screen
-        name="ObservationList"
+        name="ObservationsList"
         component={ObservationsList}
         options={{
           tabBarIcon: ObservationsListBarIcon,
-          headerLeft: ObservationListHeader,
+          headerLeft: ObservationListHeaderLeft,
           headerTransparent: false,
           headerTitle: formatMessage(ObservationsList.navTitle),
           headerShadowVisible: true,

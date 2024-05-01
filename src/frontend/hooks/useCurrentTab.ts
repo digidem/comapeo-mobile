@@ -3,11 +3,15 @@ import {useGPSModalContext} from '../contexts/GPSModalContext';
 import {useTabNavigationStore} from './useTabNavigationStore.ts';
 import {TabName} from '../Navigation/types';
 
-const tabNames: TabName[] = ['Map', 'Camera', 'Tracking', 'ObservationList'];
+const tabNames: Set<TabName> = new Set([
+  'Map',
+  'Camera',
+  'Tracking',
+  'ObservationsList',
+]);
 
-// Function to check if a given string is a valid TabName
 const isTabName = (name: string | undefined): name is TabName => {
-  return tabNames.includes(name as TabName);
+  return tabNames.has(name as TabName);
 };
 
 export const useCurrentTab = () => {

@@ -56,9 +56,9 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
     navigation.navigate('AddPhoto');
   }, [navigation]);
 
-  const handleDetailsPress = React.useCallback(() => {
-    navigation.navigate('ObservationDetails', {question: 1});
-  }, [navigation]);
+  // const handleDetailsPress = React.useCallback(() => {
+  //   navigation.navigate('ObservationDetails', {question: 1});
+  // }, [navigation]);
 
   const bottomSheetItems = [
     {

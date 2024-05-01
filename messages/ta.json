@@ -19,11 +19,23 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "அவதானிப்புகளை நீக்கவா?"
   },
+  "Modal.DiscardTrack.description": {
+    "message": "Your Track will not be saved. This cannot be undone."
+  },
+  "Modal.DiscardTrack.title": {
+    "message": "Discard Track?"
+  },
   "Modal.GPSDisable.button": {
     "message": "Enable"
   },
+  "Modal.GPSDisable.defaultButton": {
+    "message": "Continue Editing"
+  },
   "Modal.GPSDisable.description": {
     "message": "To create a Track CoMapeo needs access to your location and GPS."
+  },
+  "Modal.GPSDisable.discardButton": {
+    "message": "Discard Track"
   },
   "Modal.GPSDisable.title": {
     "message": "GPS Disabled"
@@ -425,6 +437,26 @@
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
     "message": "ஏற்றுகிறது... புதிய சாதனத்துடன் ஒத்திசைத்த பிறகு இதற்கு சிறிது நேரம் ஆகலாம்"
+  },
+  "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "What is happening here?"
+  },
+  "screens.SaveTrack.TrackEditView.saveTrackCamera": {
+    "description": "Button label for adding photo",
+    "message": "Camera"
+  },
+  "screens.SaveTrack.TrackEditView.saveTrackDetails": {
+    "description": "Button label for check details",
+    "message": "Details"
+  },
+  "screens.SaveTrack.TrackEditView.title": {
+    "description": "Title for new track screen",
+    "message": "New Track"
+  },
+  "screens.SaveTrack.track": {
+    "description": "Category title for new track screen",
+    "message": "Track"
   },
   "screens.Security.obscurePassDescriptonPassNotSet": {
     "message": "பயன்படுத்த, பயன்பாட்டு கடவுக்குறியீட்டை இயக்கவும்"

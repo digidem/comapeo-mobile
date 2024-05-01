@@ -12,6 +12,8 @@ import {PresetView} from './PresetView';
 import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
 import {ErrorModal} from '../../sharedComponents/ErrorModal';
 import {SaveButton} from './SaveButton';
+import {DiscardModal} from '../../sharedComponents/DiscardModal';
+import {CustomHeaderLeftClose} from '../../sharedComponents/CustomHeaderLeftClose';
 
 const m = defineMessages({
   editTitle: {
@@ -28,6 +30,22 @@ const m = defineMessages({
     id: 'screens.ObservationEdit.ObservationEditView.photoButton',
     defaultMessage: 'Add Photo',
     description: 'Button label for adding photo',
+  },
+});
+
+export const deleteObservationMessages = defineMessages({
+  discardObservation: {
+    id: 'screens.ObservationEdit.ObservationEditView.discardObservation',
+    defaultMessage: 'Discard Observation?',
+  },
+  discardObservationButton: {
+    id: 'screens.ObservationEdit.ObservationEditView.discardObservation',
+    defaultMessage: 'Discard Observation',
+  },
+  discardObservationDescription: {
+    id: 'screens.ObservationEdit.ObservationEditView.discardObservationDescription',
+    defaultMessage:
+      'Your observation will not be saved. This cannot be undone.',
   },
 });
 
@@ -49,16 +67,28 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
       headerRight: () => (
         <SaveButton observationId={observationId} openErrorModal={openSheet} />
       ),
+      headerLeft: headerBackButtonProps => (
+        <CustomHeaderLeftClose
+          headerBackButtonProps={headerBackButtonProps}
+          observationId={observationId}
+          openDiscardModal={openSheet}
+        />
+      ),
     });
   }, [navigation, openSheet, observationId]);
+
+  const handleDiscard = React.useCallback(() => {
+    closeSheet();
+    navigation.reset({index: 0, routes: [{name: 'Home'}]});
+  }, [navigation, closeSheet]);
 
   const handleCameraPress = React.useCallback(() => {
     navigation.navigate('AddPhoto');
   }, [navigation]);
 
-  const handleDetailsPress = React.useCallback(() => {
-    navigation.navigate('ObservationDetails', {question: 1});
-  }, [navigation]);
+  // const handleDetailsPress = React.useCallback(() => {
+  //   navigation.navigate('ObservationDetails', {question: 1});
+  // }, [navigation]);
 
   const bottomSheetItems = [
     {
@@ -88,6 +118,15 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
       </ScrollView>
       <BottomSheet items={bottomSheetItems} />
       <ErrorModal sheetRef={sheetRef} closeSheet={closeSheet} isOpen={isOpen} />
+      <DiscardModal
+        bottomSheetRef={sheetRef}
+        isOpen={isOpen}
+        closeSheet={closeSheet}
+        title={deleteObservationMessages.discardObservation}
+        description={deleteObservationMessages.discardObservationDescription}
+        discardButtonText={deleteObservationMessages.discardObservationButton}
+        handleDiscard={handleDiscard}
+      />
     </View>
   );
 };

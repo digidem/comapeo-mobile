@@ -232,6 +232,7 @@ export const createDefaultScreenGroup = (
             <CustomHeaderLeftClose
               headerBackButtonProps={headerProp}
               observationId={observationId}
+              openDiscardModal={() => {}}
             />
           ),
           headerRight: () => <SaveButton observationId={observationId} />,

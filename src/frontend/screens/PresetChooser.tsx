@@ -17,6 +17,9 @@ import {CustomHeaderLeftClose} from '../sharedComponents/CustomHeaderLeftClose';
 import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 import {Preset} from '@mapeo/schema';
 import {usePresetsQuery} from '../hooks/server/presets';
+import {DiscardModal} from '../sharedComponents/DiscardModal';
+import {deleteObservationMessages} from './ObservationEdit';
+import {useBottomSheetModal} from '../sharedComponents/BottomSheetModal';
 
 const m = defineMessages({
   categoryTitle: {
@@ -41,17 +44,22 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
   const currentIndex = state.index;
   const routes = state.routes;
   const prevRouteNameInStack = routes[currentIndex - 1]?.name;
-
+  const {openSheet, sheetRef, isOpen, closeSheet} = useBottomSheetModal({
+    openOnMount: false,
+  });
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: props =>
         prevRouteNameInStack === 'ObservationEdit' ? (
           <CustomHeaderLeft headerBackButtonProps={props} />
         ) : (
-          <CustomHeaderLeftClose headerBackButtonProps={props} />
+          <CustomHeaderLeftClose
+            openDiscardModal={openSheet}
+            headerBackButtonProps={props}
+          />
         ),
     });
-  }, [prevRouteNameInStack, CustomHeaderLeft, CustomHeaderLeftClose]);
+  }, [prevRouteNameInStack, openSheet, navigation]);
 
   const presetsList = !presets
     ? null
@@ -73,27 +81,43 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
   );
   const numColumns = Math.floor(Dimensions.get('window').width / MIN_COL_WIDTH);
 
+  const handleDiscard = React.useCallback(() => {
+    closeSheet();
+    navigation.reset({index: 0, routes: [{name: 'Home'}]});
+  }, [navigation, closeSheet]);
+
   return (
-    <View style={styles.container}>
-      <FlatList
-        initialNumToRender={rowsPerWindow}
-        keyExtractor={keyExtractor}
-        getItemLayout={getItemLayout}
-        windowSize={1}
-        maxToRenderPerBatch={numColumns}
-        removeClippedSubviews
-        style={{width: Dimensions.get('window').width}}
-        renderItem={({item}) => (
-          <Item
-            key={keyExtractor(item)}
-            item={item}
-            onSelect={handleSelectPreset}
-          />
-        )}
-        data={presetsList}
-        numColumns={numColumns}
+    <>
+      <View style={styles.container}>
+        <FlatList
+          initialNumToRender={rowsPerWindow}
+          keyExtractor={keyExtractor}
+          getItemLayout={getItemLayout}
+          windowSize={1}
+          maxToRenderPerBatch={numColumns}
+          removeClippedSubviews
+          style={{width: Dimensions.get('window').width}}
+          renderItem={({item}) => (
+            <Item
+              key={keyExtractor(item)}
+              item={item}
+              onSelect={handleSelectPreset}
+            />
+          )}
+          data={presetsList}
+          numColumns={numColumns}
+        />
+      </View>
+      <DiscardModal
+        bottomSheetRef={sheetRef}
+        isOpen={isOpen}
+        closeSheet={closeSheet}
+        title={deleteObservationMessages.discardObservation}
+        description={deleteObservationMessages.discardObservationDescription}
+        discardButtonText={deleteObservationMessages.discardObservationButton}
+        handleDiscard={handleDiscard}
       />
-    </View>
+    </>
   );
 };
 

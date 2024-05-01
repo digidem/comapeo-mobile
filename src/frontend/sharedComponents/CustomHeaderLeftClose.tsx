@@ -1,51 +1,17 @@
 import React from 'react';
 import {HeaderBackButton} from '@react-navigation/elements';
 import {HeaderBackButtonProps} from '@react-navigation/native-stack/lib/typescript/src/types';
-import {Alert, BackHandler} from 'react-native';
+import {BackHandler} from 'react-native';
 import isEqual from 'lodash.isequal';
 
 import {CloseIcon} from './icons';
 import {BLACK} from '../lib/styles';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
-import {useDraftObservation} from '../hooks/useDraftObservation';
-import {defineMessages, useIntl} from 'react-intl';
 import {useObservationWithPreset} from '../hooks/useObservationWithPreset';
 import {ClientGeneratedObservation} from '../sharedTypes';
 import {Observation} from '@mapeo/schema';
 import {usePersistedDraftObservation} from '../hooks/persistedState/usePersistedDraftObservation';
-import {
-  CommonActions,
-  useFocusEffect,
-  useNavigation,
-} from '@react-navigation/native';
-
-const m = defineMessages({
-  discardTitle: {
-    id: 'AppContainer.EditHeader.discardTitle',
-    defaultMessage: 'Discard observation?',
-    description: 'Title of dialog that shows when cancelling a new observation',
-  },
-  discardConfirm: {
-    id: 'AppContainer.EditHeader.discardContent',
-    defaultMessage: 'Discard without saving',
-    description: 'Button on dialog to cancel a new observation',
-  },
-  discardChangesTitle: {
-    id: 'AppContainer.EditHeader.discardChangesTitle',
-    defaultMessage: 'Discard changes?',
-    description: 'Title of dialog that shows when cancelling observation edits',
-  },
-  discardChangesConfirm: {
-    id: 'AppContainer.EditHeader.discardChangesContent',
-    defaultMessage: 'Discard changes',
-    description: 'Button on dialog to cancel observation edits',
-  },
-  discardCancel: {
-    id: 'AppContainer.EditHeader.discardCancel',
-    defaultMessage: 'Continue editing',
-    description: 'Button on dialog to keep editing (cancelling close action)',
-  },
-});
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 
 // We use a slightly larger back icon, to improve accessibility
 // TODO iOS: This should probably be a chevron not an arrow
@@ -61,18 +27,20 @@ interface SharedBackButtonProps {
 
 type CustomHeaderLeftCloseProps = {
   observationId?: string;
+  openDiscardModal: () => void;
 } & SharedBackButtonProps;
 
 export const CustomHeaderLeftClose = ({
   tintColor,
   headerBackButtonProps,
   observationId,
+  openDiscardModal,
 }: CustomHeaderLeftCloseProps) => {
   if (observationId) {
     return (
       <HeaderBackEditObservation
         tintColor={tintColor}
-        openDiscardModal={() => {}}
+        openDiscardModal={openDiscardModal}
         headerBackButtonProps={headerBackButtonProps}
         observationId={observationId}
       />
@@ -81,6 +49,7 @@ export const CustomHeaderLeftClose = ({
 
   return (
     <HeaderBackNewObservation
+      openDiscardModal={openDiscardModal}
       tintColor={tintColor}
       headerBackButtonProps={headerBackButtonProps}
     />
@@ -90,30 +59,12 @@ export const CustomHeaderLeftClose = ({
 const HeaderBackNewObservation = ({
   tintColor,
   headerBackButtonProps,
-}: SharedBackButtonProps) => {
-  const navigation = useNavigationFromRoot();
-  const {formatMessage: t} = useIntl();
-  const {clearDraft} = useDraftObservation();
-
-  const onGoBack = React.useCallback(() => {
-    Alert.alert(t(m.discardTitle), undefined, [
-      {
-        text: t(m.discardConfirm),
-        onPress: () => {
-          clearDraft();
-          navigation.dispatch(
-            CommonActions.reset({index: 0, routes: [{name: 'Home'}]}),
-          );
-        },
-      },
-      {text: t(m.discardCancel), onPress: () => {}},
-    ]);
-  }, [navigation, clearDraft, t]);
-
+  openDiscardModal,
+}: SharedBackButtonProps & {openDiscardModal: () => void}) => {
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
-        onGoBack();
+        openDiscardModal();
         return true;
       };
 
@@ -123,14 +74,14 @@ const HeaderBackNewObservation = ({
       );
 
       return () => subscription.remove();
-    }, [onGoBack]),
+    }, [openDiscardModal]),
   );
 
   return (
     <SharedBackButton
       headerBackButtonProps={headerBackButtonProps}
       tintColor={tintColor}
-      onPress={onGoBack}
+      onPress={openDiscardModal}
     />
   );
 };

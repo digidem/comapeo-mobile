@@ -1,24 +1,4 @@
 {
-  "AppContainer.EditHeader.discardCancel": {
-    "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Continue editing"
-  },
-  "AppContainer.EditHeader.discardChangesContent": {
-    "description": "Button on dialog to cancel observation edits",
-    "message": "Discard changes"
-  },
-  "AppContainer.EditHeader.discardChangesTitle": {
-    "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes?"
-  },
-  "AppContainer.EditHeader.discardContent": {
-    "description": "Button on dialog to cancel a new observation",
-    "message": "Discard without saving"
-  },
-  "AppContainer.EditHeader.discardTitle": {
-    "description": "Title of dialog that shows when cancelling a new observation",
-    "message": "Discard observation?"
-  },
   "Modal.DiscardTrack.description": {
     "message": "Your Track will not be saved. This cannot be undone."
   },
@@ -27,9 +7,6 @@
   },
   "Modal.GPSDisable.button": {
     "message": "Enable"
-  },
-  "Modal.GPSDisable.defaultButton": {
-    "message": "Continue Editing"
   },
   "Modal.GPSDisable.description": {
     "message": "To create a Track CoMapeo needs access to your location and GPS."
@@ -369,6 +346,12 @@
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "What is happening here?"
+  },
+  "screens.ObservationEdit.ObservationEditView.discardObservation": {
+    "message": "Discard Observation"
+  },
+  "screens.ObservationEdit.ObservationEditView.discardObservationDescription": {
+    "message": "Your observation will not be saved. This cannot be undone."
   },
   "screens.ObservationEdit.ObservationEditView.photoButton": {
     "description": "Button label for adding photo",
@@ -720,6 +703,9 @@
   },
   "sharedComponents.DeviceIconWithName.thisDevice": {
     "message": "This Device!"
+  },
+  "sharedComponents.DiscardModal.defaultButton": {
+    "message": "Continue Editing"
   },
   "sharedComponents.ErrorModal.goBack": {
     "message": "Go Back"

@@ -8,6 +8,9 @@
   "Modal.GPSDisable.button": {
     "message": "Enable"
   },
+  "Modal.GPSDisable.defaultButton": {
+    "message": "Continue Editing"
+  },
   "Modal.GPSDisable.description": {
     "message": "To create a Track CoMapeo needs access to your location and GPS."
   },
@@ -346,12 +349,6 @@
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "What is happening here?"
-  },
-  "screens.ObservationEdit.ObservationEditView.discardObservation": {
-    "message": "Discard Observation"
-  },
-  "screens.ObservationEdit.ObservationEditView.discardObservationDescription": {
-    "message": "Your observation will not be saved. This cannot be undone."
   },
   "screens.ObservationEdit.ObservationEditView.photoButton": {
     "description": "Button label for adding photo",
@@ -698,14 +695,23 @@
   "screens.Sync.ProjectSyncDisplay.upToDate": {
     "message": "Up to Date! No data to Sync"
   },
+  "sharedComponents.BottomSheet.ContentVariants.ObservationDiscard.cancleButtonText": {
+    "message": "Continue Editing"
+  },
+  "sharedComponents.BottomSheet.ContentVariants.ObservationDiscard.description": {
+    "message": "Your observation will not be saved. This cannot be undone."
+  },
+  "sharedComponents.BottomSheet.ContentVariants.ObservationDiscard.discardButtonText": {
+    "message": "Discard Observation"
+  },
+  "sharedComponents.BottomSheet.ContentVariants.ObservationDiscard.title": {
+    "message": "Discard Observation?"
+  },
   "sharedComponents.DeviceCard.ThisDevice": {
     "message": "This Device!"
   },
   "sharedComponents.DeviceIconWithName.thisDevice": {
     "message": "This Device!"
-  },
-  "sharedComponents.DiscardModal.defaultButton": {
-    "message": "Continue Editing"
   },
   "sharedComponents.ErrorModal.goBack": {
     "message": "Go Back"

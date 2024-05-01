@@ -7,7 +7,6 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {DiscardModal} from '../../../sharedComponents/DiscardModal.tsx';
 import {BottomSheet} from '../../../sharedComponents/BottomSheet/BottomSheet';
 import PhotoIcon from '../../../images/camera.svg';
 import DetailsIcon from '../../../images/details.svg';
@@ -15,13 +14,17 @@ import TrackIcon from '../../../images/Track.svg';
 import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../../sharedComponents/Text';
 import {TrackDescriptionField} from './saveTrack/TrackDescriptionField';
-import {useBottomSheetModal} from '../../../sharedComponents/BottomSheetModal';
+import {
+  BottomSheetModal,
+  useBottomSheetModal,
+} from '../../../sharedComponents/BottomSheetModal';
 import {TabName} from '../../../Navigation/types.ts';
 import {useCurrentTrackStore} from '../../../hooks/tracks/useCurrentTrackStore.ts';
 import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes.ts';
 import {useFocusEffect} from '@react-navigation/native';
 import {SaveTrackButton} from './saveTrack/SaveTrackButton.tsx';
 import Close from '../../../images/close.svg';
+import {Destructive} from '../../../sharedComponents/BottomSheet/contentVariants/Destructive.tsx';
 
 export const SaveTrackScreen = () => {
   const navigation = useNavigationFromHomeTabs();
@@ -101,15 +104,16 @@ export const SaveTrackScreen = () => {
           description={description}
           setDescription={setDescription}
         />
-        <DiscardModal
-          bottomSheetRef={sheetRef}
-          isOpen={isOpen}
-          closeSheet={closeSheet}
-          discardButtonText={m.discardTrackDiscardButton}
-          handleDiscard={handleDiscard}
-          title={t(m.discardTrackTitle)}
-          description={t(m.discardTrackDescription)}
-        />
+        <BottomSheetModal ref={sheetRef} isOpen={isOpen}>
+          <Destructive
+            title={t(m.discardTrackTitle)}
+            description={t(m.discardTrackDescription)}
+            cancelButtonText={t(m.discardTrackDefaultButton)}
+            onCancel={closeSheet}
+            destructiveButtonText={t(m.discardTrackDiscardButton)}
+            onDestructivePress={handleDiscard}
+          />
+        </BottomSheetModal>
       </ScrollView>
       <BottomSheet items={bottomSheetItems} />
     </SafeAreaView>
@@ -172,5 +176,9 @@ export const m = defineMessages({
   discardTrackDiscardButton: {
     id: 'Modal.GPSDisable.discardButton',
     defaultMessage: 'Discard Track',
+  },
+  discardTrackDefaultButton: {
+    id: 'Modal.GPSDisable.defaultButton',
+    defaultMessage: 'Continue Editing',
   },
 });

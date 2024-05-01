@@ -17,9 +17,11 @@ import {CustomHeaderLeftClose} from '../sharedComponents/CustomHeaderLeftClose';
 import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 import {Preset} from '@mapeo/schema';
 import {usePresetsQuery} from '../hooks/server/presets';
-import {DiscardModal} from '../sharedComponents/DiscardModal';
-import {deleteObservationMessages} from './ObservationEdit';
-import {useBottomSheetModal} from '../sharedComponents/BottomSheetModal';
+import {
+  BottomSheetModal,
+  useBottomSheetModal,
+} from '../sharedComponents/BottomSheetModal';
+import {ObservationDiscard} from '../sharedComponents/BottomSheet/contentVariants/ObservationDiscard';
 
 const m = defineMessages({
   categoryTitle: {
@@ -108,15 +110,9 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
           numColumns={numColumns}
         />
       </View>
-      <DiscardModal
-        bottomSheetRef={sheetRef}
-        isOpen={isOpen}
-        closeSheet={closeSheet}
-        title={deleteObservationMessages.discardObservation}
-        description={deleteObservationMessages.discardObservationDescription}
-        discardButtonText={deleteObservationMessages.discardObservationButton}
-        handleDiscard={handleDiscard}
-      />
+      <BottomSheetModal ref={sheetRef} isOpen={isOpen}>
+        <ObservationDiscard onDiscard={handleDiscard} onCancel={closeSheet} />
+      </BottomSheetModal>
     </>
   );
 };

@@ -9,11 +9,14 @@ import {DescriptionField} from './DescriptionField';
 import {BottomSheet} from '../../sharedComponents/BottomSheet/BottomSheet';
 import {ThumbnailScrollView} from '../../sharedComponents/ThumbnailScrollView';
 import {PresetView} from './PresetView';
-import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
+import {
+  BottomSheetModal,
+  useBottomSheetModal,
+} from '../../sharedComponents/BottomSheetModal';
 import {ErrorModal} from '../../sharedComponents/ErrorModal';
 import {SaveButton} from './SaveButton';
-import {DiscardModal} from '../../sharedComponents/DiscardModal';
 import {CustomHeaderLeftClose} from '../../sharedComponents/CustomHeaderLeftClose';
+import {ObservationDiscard} from '../../sharedComponents/BottomSheet/contentVariants/ObservationDiscard';
 
 const m = defineMessages({
   editTitle: {
@@ -30,22 +33,6 @@ const m = defineMessages({
     id: 'screens.ObservationEdit.ObservationEditView.photoButton',
     defaultMessage: 'Add Photo',
     description: 'Button label for adding photo',
-  },
-});
-
-export const deleteObservationMessages = defineMessages({
-  discardObservation: {
-    id: 'screens.ObservationEdit.ObservationEditView.discardObservation',
-    defaultMessage: 'Discard Observation?',
-  },
-  discardObservationButton: {
-    id: 'screens.ObservationEdit.ObservationEditView.discardObservation',
-    defaultMessage: 'Discard Observation',
-  },
-  discardObservationDescription: {
-    id: 'screens.ObservationEdit.ObservationEditView.discardObservationDescription',
-    defaultMessage:
-      'Your observation will not be saved. This cannot be undone.',
   },
 });
 
@@ -118,15 +105,9 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
       </ScrollView>
       <BottomSheet items={bottomSheetItems} />
       <ErrorModal sheetRef={sheetRef} closeSheet={closeSheet} isOpen={isOpen} />
-      <DiscardModal
-        bottomSheetRef={sheetRef}
-        isOpen={isOpen}
-        closeSheet={closeSheet}
-        title={deleteObservationMessages.discardObservation}
-        description={deleteObservationMessages.discardObservationDescription}
-        discardButtonText={deleteObservationMessages.discardObservationButton}
-        handleDiscard={handleDiscard}
-      />
+      <BottomSheetModal ref={sheetRef} isOpen={isOpen}>
+        <ObservationDiscard onDiscard={handleDiscard} onCancel={closeSheet} />
+      </BottomSheetModal>
     </View>
   );
 };

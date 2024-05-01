@@ -10,6 +10,7 @@ export const ObservationsListBarIcon: FC<TabBarIconProps> = props => {
   return (
     <ObservationListIcon
       {...props}
+      height={25}
       stroke={
         props.focused && currentTab !== 'Tracking' ? COMAPEO_BLUE : MEDIUM_GREY
       }

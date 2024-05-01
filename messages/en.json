@@ -3,17 +3,23 @@
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "Continue editing"
   },
-  "AppContainer.EditHeader.discardChangesContent": {
-    "description": "Button on dialog to cancel observation edits",
+  "AppContainer.EditHeader.discardChangesButton": {
+    "description": "Title of dialog that shows when cancelling observation edits",
     "message": "Discard changes"
+  },
+  "AppContainer.EditHeader.discardChangesDescription": {
+    "message": "Your changes will not be saved. This cannot be undone."
   },
   "AppContainer.EditHeader.discardChangesTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "Discard changes?"
   },
-  "AppContainer.EditHeader.discardContent": {
-    "description": "Button on dialog to cancel a new observation",
-    "message": "Discard without saving"
+  "AppContainer.EditHeader.discardObservationButton": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Discard Observation"
+  },
+  "AppContainer.EditHeader.discardObservationDescription": {
+    "message": "Your Observation will not be saved. This cannot be undone."
   },
   "AppContainer.EditHeader.discardTitle": {
     "description": "Title of dialog that shows when cancelling a new observation",

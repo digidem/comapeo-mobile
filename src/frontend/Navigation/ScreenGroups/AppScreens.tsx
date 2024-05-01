@@ -6,7 +6,7 @@ import {NavigatorScreenParams} from '@react-navigation/native';
 import * as React from 'react';
 import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {RootStack} from '../AppStack';
-import {MessageDescriptor} from 'react-intl';
+import {MessageDescriptor, useIntl} from 'react-intl';
 import {MapScreen} from '../../screens/MapScreen';
 import {CameraScreen} from '../../screens/CameraScreen';
 import {ObservationEdit} from '../../screens/ObservationEdit';
@@ -21,7 +21,7 @@ import {ObscurePasscode} from '../../screens/ObscurePasscode';
 import {Settings} from '../../screens/Settings';
 import {PresetChooser} from '../../screens/PresetChooser';
 import {
-  CreateNavigationOptions as CreateObservationsListNavOptions,
+  createNavigationOptions as CreateObservationsListNavOptions,
   ObservationsList,
 } from '../../screens/ObservationsList';
 import {ObservationScreen} from '../../screens/Observation';
@@ -145,7 +145,7 @@ const Tab = createBottomTabNavigator<HomeTabsList>();
 
 const HomeTabs = () => {
   const {handleTabPress} = useCurrentTab();
-
+  const {formatMessage} = useIntl();
   return (
     <Tab.Navigator
       screenListeners={{
@@ -162,7 +162,7 @@ const HomeTabs = () => {
       <Tab.Screen
         name="ObservationsList"
         component={ObservationsList}
-        options={CreateObservationsListNavOptions()}
+        options={CreateObservationsListNavOptions(formatMessage)}
       />
       <Tab.Screen
         name="Map"

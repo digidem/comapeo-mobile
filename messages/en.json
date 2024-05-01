@@ -268,42 +268,6 @@
   "screens.FatalError.somethingWrong": {
     "message": "Something Went Wrong"
   },
-  "screens.GpsModal.details": {
-    "description": "Section title for details about current position",
-    "message": "Details"
-  },
-  "screens.GpsModal.gpsHeader": {
-    "description": "Header for GPS screen",
-    "message": "Current GPS Location"
-  },
-  "screens.GpsModal.lastUpdate": {
-    "description": "Section title for time of last GPS update",
-    "message": "Last update"
-  },
-  "screens.GpsModal.locationDD": {
-    "description": "Section title for DD coordinates",
-    "message": "Coordinates Decimal Degrees"
-  },
-  "screens.GpsModal.locationDMS": {
-    "description": "Section title for DMS coordinates",
-    "message": "Coordinates DMS"
-  },
-  "screens.GpsModal.locationSensors": {
-    "description": "Heading for section about location sensor status",
-    "message": "Sensor Status"
-  },
-  "screens.GpsModal.locationUTM": {
-    "description": "Section title for UTM coordinates",
-    "message": "Coordinates UTM"
-  },
-  "screens.GpsModal.no": {
-    "description": "if a location sensor is active yes/no",
-    "message": "No"
-  },
-  "screens.GpsModal.yes": {
-    "description": "if a location sensor is active yes/no",
-    "message": "Yes"
-  },
   "screens.IntroToCoMapeo.collaborate": {
     "message": "Collaborate on mapping and monitoring projects"
   },
@@ -317,6 +281,42 @@
   "screens.IntroToCoMapeo.version": {
     "description": "v is short for version. the translation for version can be used instead",
     "message": "V"
+  },
+  "screens.LocationInfoScreen.details": {
+    "description": "Section title for details about current position",
+    "message": "Details"
+  },
+  "screens.LocationInfoScreen.gpsHeader": {
+    "description": "Header for GPS screen",
+    "message": "Current GPS Location"
+  },
+  "screens.LocationInfoScreen.lastUpdate": {
+    "description": "Section title for time of last GPS update",
+    "message": "Last update"
+  },
+  "screens.LocationInfoScreen.locationDD": {
+    "description": "Section title for DD coordinates",
+    "message": "Coordinates Decimal Degrees"
+  },
+  "screens.LocationInfoScreen.locationDMS": {
+    "description": "Section title for DMS coordinates",
+    "message": "Coordinates DMS"
+  },
+  "screens.LocationInfoScreen.locationSensors": {
+    "description": "Heading for section about location sensor status",
+    "message": "Sensor Status"
+  },
+  "screens.LocationInfoScreen.locationUTM": {
+    "description": "Section title for UTM coordinates",
+    "message": "Coordinates UTM"
+  },
+  "screens.LocationInfoScreen.no": {
+    "description": "if a location sensor is active yes/no",
+    "message": "No"
+  },
+  "screens.LocationInfoScreen.yes": {
+    "description": "if a location sensor is active yes/no",
+    "message": "Yes"
   },
   "screens.ManualGpsScreen.DdForm.east": {
     "message": "East"

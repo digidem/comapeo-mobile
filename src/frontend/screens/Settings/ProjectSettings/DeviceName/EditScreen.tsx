@@ -13,7 +13,7 @@ import {
 import {BLACK} from '../../../../lib/styles';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
 import {IconButton} from '../../../../sharedComponents/IconButton';
-import {SaveIcon} from '../../../../sharedComponents/icons';
+import SaveIcon from '../../../../images/CheckMark.svg';
 import {useBottomSheetModal} from '../../../../sharedComponents/BottomSheetModal';
 import {ErrorModal} from '../../../../sharedComponents/ErrorModal';
 import {FieldRow} from './FieldRow';
@@ -147,10 +147,9 @@ export const EditScreen = ({
     [
       handleSubmit,
       navigation,
-      editDeviceInfoMutation.mutate,
-      editDeviceInfoMutation.isPending,
+      editDeviceInfoMutation,
       nameHasChanges,
-      errorModal.openSheet,
+      errorModal,
     ],
   );
 

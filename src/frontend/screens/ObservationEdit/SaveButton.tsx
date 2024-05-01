@@ -4,7 +4,6 @@ import debug from 'debug';
 import {defineMessages, useIntl} from 'react-intl';
 
 import {IconButton} from '../../sharedComponents/IconButton';
-import {SaveIcon} from '../../sharedComponents/icons/SaveIcon';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useCreateObservation} from '../../hooks/server/observations';
@@ -14,6 +13,7 @@ import {useCreateBlobMutation} from '../../hooks/server/media';
 import {DraftPhoto, Photo} from '../../contexts/PhotoPromiseContext/types';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {useCurrentTrackStore} from '../../hooks/tracks/useCurrentTrackStore';
+import SaveCheck from '../../images/CheckMark.svg';
 
 const m = defineMessages({
   noGpsTitle: {
@@ -241,7 +241,7 @@ export const SaveButton = ({
     </View>
   ) : (
     <IconButton onPress={handleSavePress} testID="saveButton">
-      <SaveIcon inprogress={false} />
+      <SaveCheck />
     </IconButton>
   );
 };

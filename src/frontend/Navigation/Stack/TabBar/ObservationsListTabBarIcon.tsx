@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {TabBarIconProps} from '../../types';
+import {TabBarIconProps} from '../../types.ts';
 import {useTabNavigationStore} from '../../../hooks/useTabNavigationStore.ts';
 import ObservationListIcon from '../../../images/ObservationList.svg';
 import {COMAPEO_BLUE, MEDIUM_GREY} from '../../../lib/styles.ts';

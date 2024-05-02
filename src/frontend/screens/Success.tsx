@@ -8,7 +8,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {Text} from '../sharedComponents/Text';
 import {Button} from '../sharedComponents/Button';
 import {defineMessages, useIntl} from 'react-intl';
-import {DeviceNamingSceens} from '../Navigation/ScreenGroups/DeviceNamingScreens';
+import {DeviceNamingSceens} from '../Navigation/Stack/DeviceNamingScreens';
 import {useEditDeviceInfo} from '../hooks/server/deviceInfo';
 import {Loading} from '../sharedComponents/Loading';
 import {WHITE} from '../lib/styles';

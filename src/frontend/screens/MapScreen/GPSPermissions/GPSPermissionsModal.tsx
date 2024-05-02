@@ -5,7 +5,7 @@ import * as Location from 'expo-location';
 import {useGPSModalContext} from '../../../contexts/GPSModalContext';
 import {useTabNavigationStore} from '../../../hooks/useTabNavigationStore.ts';
 import {BottomSheetModal, BottomSheetView} from '@gorhom/bottom-sheet';
-import {TAB_BAR_HEIGHT} from '../../../Navigation/ScreenGroups/AppScreens';
+import {TAB_BAR_HEIGHT} from '../../../Navigation/Stack/AppScreens.tsx';
 import {StyleSheet} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 

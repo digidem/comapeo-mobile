@@ -1,10 +1,10 @@
 import React, {FC} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {TabBarIcon} from './TabBarIcon';
-import {useTracking} from '../../../hooks/tracks/useTracking';
-import {Text} from '../../../sharedComponents/Text';
-import {TabBarIconProps} from '../../types';
-import {useTrackTimerContext} from '../../../contexts/TrackTimerContext';
+import {TabBarIcon} from './TabBarIcon.tsx';
+import {useTracking} from '../../../hooks/tracks/useTracking.ts';
+import {Text} from '../../../sharedComponents/Text.tsx';
+import {TabBarIconProps} from '../../types.ts';
+import {useTrackTimerContext} from '../../../contexts/TrackTimerContext.tsx';
 import {useTabNavigationStore} from '../../../hooks/useTabNavigationStore.ts';
 
 export const TrackingTabBarIcon: FC<TabBarIconProps> = props => {

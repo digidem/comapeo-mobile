@@ -54,10 +54,10 @@ import {
   createNavigationOptions as createLocationInfoNavOptions,
 } from '../../screens/LocationInfoScreen';
 import {useCurrentTab} from '../../hooks/useCurrentTab';
-import {TrackingTabBarIcon} from './TabBar/TrackingTabBarIcon';
+import {TrackingTabBarIcon} from '../Tab/TabBar/TrackingTabBarIcon';
 import {InviteProps} from '../types';
-import {CameraTabBarIcon} from './TabBar/CameraTabBarIcon';
-import {MapTabBarIcon} from './TabBar/MapTabBarIcon';
+import {CameraTabBarIcon} from '../Tab/TabBar/CameraTabBarIcon';
+import {MapTabBarIcon} from '../Tab/TabBar/MapTabBarIcon';
 import {SaveTrackScreen} from '../../screens/MapScreen/track/SaveTrackScreen';
 import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/InviteDeclined';
 import {UnableToCancelInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/UnableToCancelInvite';

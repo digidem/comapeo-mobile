@@ -5,7 +5,7 @@
   },
   "AppContainer.EditHeader.discardChangesContent": {
     "description": "Button on dialog to cancel observation edits",
-    "message": "ပြောင်းလဲမှုများကို ဖျက်ခြင်း"
+    "message": "Discard changes"
   },
   "AppContainer.EditHeader.discardChangesTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",

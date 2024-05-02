@@ -147,7 +147,7 @@ export type AppList = {
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
 
-const HomeTabs = () => {
+const HomeTabs = ({toggleDrawer}: {toggleDrawer: () => void}) => {
   const {handleTabPress} = useCurrentTab();
   const {formatMessage} = useIntl();
   return (
@@ -173,7 +173,9 @@ const HomeTabs = () => {
         component={MapScreen}
         options={{
           tabBarIcon: MapTabBarIcon,
-          header: HomeHeader,
+          header: props => (
+            <HomeHeader {...props} toggleDrawer={toggleDrawer} />
+          ),
         }}
       />
       <Tab.Screen
@@ -181,7 +183,9 @@ const HomeTabs = () => {
         component={CameraScreen}
         options={{
           tabBarIcon: CameraTabBarIcon,
-          header: HomeHeader,
+          header: props => (
+            <HomeHeader {...props} toggleDrawer={toggleDrawer} />
+          ),
         }}
       />
 
@@ -213,6 +217,7 @@ const HomeTabs = () => {
 // that returns a react element)
 export const createDefaultScreenGroup = (
   intl: (title: MessageDescriptor) => string,
+  toggleDrawer: () => void,
 ) => (
   <RootStack.Group key="default">
     <RootStack.Screen
@@ -220,7 +225,7 @@ export const createDefaultScreenGroup = (
       options={{headerShown: false}}
       children={() => (
         <SharedLocationContextProvider>
-          <HomeTabs />
+          <HomeTabs toggleDrawer={toggleDrawer} />
         </SharedLocationContextProvider>
       )}
     />

@@ -8,7 +8,6 @@ import {
   ListItemText,
   ListItemIcon,
 } from '../../sharedComponents/List';
-import {NativeNavigationComponent} from '../../sharedTypes';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const m = defineMessages({
@@ -55,7 +54,7 @@ const m = defineMessages({
   },
 });
 
-export const Settings: NativeNavigationComponent<'Settings'> = () => {
+export const Settings = () => {
   const {navigate} = useNavigationFromRoot();
 
   return (
@@ -74,33 +73,21 @@ export const Settings: NativeNavigationComponent<'Settings'> = () => {
               />
             }
           />
-          <ListItemText
-            primary={<FormattedMessage {...m.createOrJoin} />}
-            secondary={
-              <FormattedMessage {...m.createOrJoinDesc} />
-            }></ListItemText>
+          <ListItemText primary={<FormattedMessage {...m.createOrJoin} />} />
         </ListItem>
         <ListItem
           onPress={() => {
             navigate('ProjectSettings');
           }}>
           <ListItemIcon iconName="assignment" />
-          <ListItemText
-            primary={<FormattedMessage {...m.projectSettings} />}
-            secondary={
-              <FormattedMessage {...m.projectSettingsDesc} />
-            }></ListItemText>
+          <ListItemText primary={<FormattedMessage {...m.projectSettings} />} />
         </ListItem>
         <ListItem
           onPress={() => {
             navigate('AppSettings');
           }}>
           <ListItemIcon iconName="settings-suggest" />
-          <ListItemText
-            primary={<FormattedMessage {...m.appSettings} />}
-            secondary={
-              <FormattedMessage {...m.appSettingsDesc} />
-            }></ListItemText>
+          <ListItemText primary={<FormattedMessage {...m.appSettings} />} />
         </ListItem>
         {/* this requires the use of `react-native-device-info` which takes some android level configuration. Im going to leave it out of the MVP for the sake of time */}
         {/* <ListItem onPress={() => {}} testID="settingsAboutButton">

@@ -1,8 +1,6 @@
 import * as React from 'react';
 import {useNavigationContainerRef} from '@react-navigation/native';
 import {createMapeoClient} from '@mapeo/ipc';
-
-import {AppNavigator} from './Navigation/AppNavigator';
 import {AppStackList} from './Navigation/AppStack';
 import {IntlProvider} from './contexts/IntlContext';
 import {ApiProvider} from './contexts/ApiContext';
@@ -21,6 +19,7 @@ import {
 } from './contexts/LocalDiscoveryContext';
 import {Loading} from './sharedComponents/Loading';
 import 'react-native-gesture-handler';
+import {DrawerNavigator} from './Navigation/ScreenGroups/DrawerScreens';
 
 const queryClient = new QueryClient();
 const messagePort = new MessagePortLike();
@@ -50,7 +49,7 @@ const App = () => {
                 <PhotoPromiseProvider>
                   <SecurityProvider>
                     <React.Suspense fallback={<Loading />}>
-                      <AppNavigator permissionAsked={permissionsAsked} />
+                      <DrawerNavigator permissionAsked={permissionsAsked} />
                     </React.Suspense>
                   </SecurityProvider>
                 </PhotoPromiseProvider>

@@ -7,8 +7,6 @@ import {
 } from './AppStack';
 import {useIntl} from 'react-intl';
 // import {SecurityContext} from '../context/SecurityContext';
-
-import BootSplash from 'react-native-bootsplash';
 import {useDeviceInfo} from '../hooks/server/deviceInfo';
 import {Loading} from '../sharedComponents/Loading';
 import {
@@ -24,6 +22,8 @@ import {AppList} from './ScreenGroups/AppScreens';
 import {usePresetsQuery} from '../hooks/server/presets';
 import {initializeInviteListener} from '../initializeInviteListener';
 import {ProjectInviteBottomSheet} from '../sharedComponents/ProjectInviteBottomSheet';
+import {DrawerScreenProps} from '@react-navigation/drawer';
+import {DrawerScreens} from './ScreenGroups/DrawerScreens';
 
 // import {devExperiments} from '../lib/DevExperiments';
 
@@ -43,7 +43,9 @@ import {ProjectInviteBottomSheet} from '../sharedComponents/ProjectInviteBottomS
 // Note that screen groups should have a `key` prop, so that React knows how to
 // update them efficiently.
 
-export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
+export const AppNavigator = ({
+  navigation,
+}: DrawerScreenProps<DrawerScreens, 'DrawerHome'>) => {
   const {formatMessage} = useIntl();
   const existingObservation = usePersistedDraftObservation(
     store => store.value,
@@ -52,10 +54,6 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   const deviceInfo = useDeviceInfo();
   usePrefetchLastKnownLocation();
   initializeInviteListener();
-
-  if (permissionAsked && !deviceInfo.isPending) {
-    BootSplash.hide();
-  }
 
   // the user should never actually see this because the splash screen is visible, so this is to appease typescript
   if (deviceInfo.isLoading) {
@@ -72,7 +70,7 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
         })}
         screenOptions={NavigatorScreenOptions}>
         {deviceInfo.data?.name
-          ? createDefaultScreenGroup(formatMessage)
+          ? createDefaultScreenGroup(formatMessage, navigation.toggleDrawer)
           : createDeviceNamingScreens()}
       </RootStack.Navigator>
       <ProjectInviteBottomSheet />

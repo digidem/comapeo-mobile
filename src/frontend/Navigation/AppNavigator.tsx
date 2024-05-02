@@ -14,13 +14,13 @@ import {Loading} from '../sharedComponents/Loading';
 import {
   DeviceNamingSceens,
   createDeviceNamingScreens,
-} from './ScreenGroups/DeviceNamingScreens';
+} from './Stack/DeviceNamingScreens';
 import {usePrefetchLastKnownLocation} from '../hooks/useLastSavedLocation';
 import {usePersistedDraftObservation} from '../hooks/persistedState/usePersistedDraftObservation';
 import {ClientGeneratedObservation} from '../sharedTypes';
 import {Observation, Preset} from '@mapeo/schema';
 import {matchPreset} from '../lib/utils';
-import {AppList} from './ScreenGroups/AppScreens';
+import {AppList} from './Stack/AppScreens';
 import {usePresetsQuery} from '../hooks/server/presets';
 import {initializeInviteListener} from '../initializeInviteListener';
 import {ProjectInviteBottomSheet} from '../sharedComponents/ProjectInviteBottomSheet';

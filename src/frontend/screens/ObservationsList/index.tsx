@@ -8,7 +8,7 @@ import {NativeHomeTabsNavigationProps} from '../../sharedTypes';
 import {useAllObservations} from '../../hooks/useAllObservations';
 import {MessageDescriptor, defineMessages} from 'react-intl';
 import {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs';
-import {ObservationsListBarIcon} from '../../Navigation/Stack/TabBar/ObservationsListTabBarIcon';
+import {ObservationsListBarIcon} from '../../Navigation/Tab/TabBar/ObservationsListTabBarIcon';
 import {ObservationListHeaderLeft} from './ObservationListHeaderLeft';
 
 const m = defineMessages({

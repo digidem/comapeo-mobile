@@ -1,14 +1,7 @@
-import {
-  BottomTabNavigationProp,
-  createBottomTabNavigator,
-} from '@react-navigation/bottom-tabs';
 import {NavigatorScreenParams} from '@react-navigation/native';
 import * as React from 'react';
-import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {RootStack} from '../AppStack';
-import {MessageDescriptor, useIntl} from 'react-intl';
-import {MapScreen} from '../../screens/MapScreen';
-import {CameraScreen} from '../../screens/CameraScreen';
+import {MessageDescriptor} from 'react-intl';
 import {ObservationEdit} from '../../screens/ObservationEdit';
 import {AddPhotoScreen} from '../../screens/AddPhoto';
 import {AppPasscode} from '../../screens/AppPasscode';
@@ -20,10 +13,6 @@ import {AuthScreen} from '../../screens/AuthScreen';
 import {ObscurePasscode} from '../../screens/ObscurePasscode';
 import {Settings} from '../../screens/Settings';
 import {PresetChooser} from '../../screens/PresetChooser';
-import {
-  createNavigationOptions as CreateObservationsListNavOptions,
-  ObservationsList,
-} from '../../screens/ObservationsList';
 import {ObservationScreen} from '../../screens/Observation';
 import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
@@ -53,11 +42,7 @@ import {
   LocationInfoScreen,
   createNavigationOptions as createLocationInfoNavOptions,
 } from '../../screens/LocationInfoScreen';
-import {useCurrentTab} from '../../hooks/useCurrentTab';
-import {TrackingTabBarIcon} from '../Tab/TabBar/TrackingTabBarIcon';
 import {InviteProps} from '../types';
-import {CameraTabBarIcon} from '../Tab/TabBar/CameraTabBarIcon';
-import {MapTabBarIcon} from '../Tab/TabBar/MapTabBarIcon';
 import {SaveTrackScreen} from '../../screens/MapScreen/track/SaveTrackScreen';
 import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/InviteDeclined';
 import {UnableToCancelInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/UnableToCancelInvite';
@@ -70,7 +55,7 @@ import {
   ManualGpsScreen,
   createNavigationOptions as createManualGpsNavigationOptions,
 } from '../../screens/ManualGpsScreen';
-import {type HomeTabsList} from '../Tab';
+import {HomeTabs, type HomeTabsList} from '../Tab';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -137,70 +122,6 @@ export type AppList = {
   DeviceNameEdit: undefined;
   SaveTrack: undefined;
   Sync: undefined;
-};
-
-const Tab = createBottomTabNavigator<HomeTabsList>();
-
-const HomeTabs = () => {
-  const {handleTabPress} = useCurrentTab();
-  const {formatMessage} = useIntl();
-  return (
-    <Tab.Navigator
-      screenListeners={{
-        tabPress: handleTabPress,
-      }}
-      screenOptions={({route}) => ({
-        tabBarStyle: {height: TAB_BAR_HEIGHT},
-        tabBarShowLabel: false,
-        headerTransparent: true,
-        tabBarTestID: 'tabBarButton' + route.name,
-      })}
-      initialRouteName={'Map'}
-      backBehavior="initialRoute">
-      <Tab.Screen
-        name="ObservationsList"
-        component={ObservationsList}
-        options={CreateObservationsListNavOptions(formatMessage)}
-      />
-      <Tab.Screen
-        name="Map"
-        component={MapScreen}
-        options={{
-          tabBarIcon: MapTabBarIcon,
-          header: HomeHeader,
-        }}
-      />
-      <Tab.Screen
-        name="Camera"
-        component={CameraScreen}
-        options={{
-          tabBarIcon: CameraTabBarIcon,
-          header: HomeHeader,
-        }}
-      />
-
-      {process.env.FEATURE_TRACKS && (
-        <Tab.Screen
-          name="Tracking"
-          options={{
-            tabBarIcon: TrackingTabBarIcon,
-            headerShown: false,
-          }}
-          listeners={({
-            navigation,
-          }: {
-            navigation: BottomTabNavigationProp<HomeTabsList>;
-          }) => ({
-            tabPress: e => {
-              e.preventDefault();
-              navigation.navigate('Map');
-            },
-          })}
-          children={() => <></>}
-        />
-      )}
-    </Tab.Navigator>
-  );
 };
 
 // **NOTE**: No hooks allowed here (this is not a component, it is a function

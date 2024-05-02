@@ -9,6 +9,7 @@
     "ios": "react-native run-ios",
     "prestart": "npm run build:translations && npm run build:intl-polyfills",
     "start": "react-native start",
+    "start:tracks":"FEATURE_TRACKS=true npm start -- --reset-cache",
     "test": "jest",
     "lint:prettier": "prettier \"src/**/*.{js,ts,jsx,tsx}\" --check",
     "lint:eslint": "eslint . --ext .js,.jsx,.ts,.tsx --cache --ignore-path .gitignore",

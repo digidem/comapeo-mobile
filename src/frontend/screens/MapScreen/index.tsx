@@ -22,6 +22,7 @@ import {TrackPathLayer} from './track/TrackPathLayer';
 import {UserLocation} from './UserLocation';
 import {useSharedLocationContext} from '../../contexts/SharedLocationContext';
 import {useMapStyleUrl} from '../../hooks/server/mapStyleUrl';
+import {useNetInfo} from '@react-native-community/netinfo';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -47,6 +48,16 @@ export const MapScreen = () => {
     !!locationProviderStatus?.locationServicesEnabled;
 
   const mapStyleUrlQuery = useMapStyleUrl();
+
+  const {isInternetReachable} = useNetInfo();
+
+  const styleUrl = React.useMemo(() => {
+    if (!mapStyleUrlQuery.data) return undefined;
+    // TODO: Is it worth pulling in URL polyfill?
+    // TODO: Should this be a proper nonce?
+    if (!isInternetReachable) return mapStyleUrlQuery.data + '?offline=true';
+    return mapStyleUrlQuery.data;
+  }, [mapStyleUrlQuery.data, isInternetReachable]);
 
   const handleAddPress = () => {
     newDraft();
@@ -78,8 +89,7 @@ export const MapScreen = () => {
         attributionPosition={{right: 8, bottom: 8}}
         compassEnabled={false}
         scaleBarEnabled={false}
-        // TODO: Add a nonce as query param to bust the cache when network state changes?
-        styleURL={mapStyleUrlQuery.data}
+        styleURL={styleUrl}
         onDidFinishLoadingStyle={handleDidFinishLoadingStyle}
         onMoveShouldSetResponder={() => {
           if (following) setFollowing(false);

@@ -1,6 +1,6 @@
 import {DeviceType} from 'react-native-device-info';
 import {DeviceRoleForNewInvite} from '../sharedTypes';
-import {HomeTabsList} from './Stack/AppScreens';
+import {type HomeTabsList} from './Tab';
 export interface TabBarIconProps {
   size: number;
   focused: boolean;

@@ -70,15 +70,9 @@ import {
   ManualGpsScreen,
   createNavigationOptions as createManualGpsNavigationOptions,
 } from '../../screens/ManualGpsScreen';
+import {HomeTabsList} from '../Tab';
 
 export const TAB_BAR_HEIGHT = 70;
-
-export type HomeTabsList = {
-  Map: undefined;
-  Camera: undefined;
-  Tracking: undefined;
-  ObservationsList: undefined;
-};
 
 export type AppList = {
   Home: NavigatorScreenParams<HomeTabsList>;

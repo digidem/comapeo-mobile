@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {RootStack} from '../AppStack';
+import {RootStack} from '.';
 import {IntroToCoMapeo} from '../../screens/IntroToCoMapeo';
 import {DeviceNaming} from '../../screens/DeviceNaming';
 import {Success} from '../../screens/Success';

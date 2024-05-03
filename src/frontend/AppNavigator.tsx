@@ -1,10 +1,5 @@
 import * as React from 'react';
-import {
-  NavigatorScreenOptions,
-  RootStack,
-  createDefaultScreenGroup,
-  // createOnboardingScreenGroup,
-} from './Navigation/AppStack';
+import {NavigatorScreenOptions, RootStack} from './Navigation/Stack';
 import {useIntl} from 'react-intl';
 // import {SecurityContext} from '../context/SecurityContext';
 
@@ -18,6 +13,7 @@ import {usePresetsQuery} from './hooks/server/presets';
 import {initializeInviteListener} from './initializeInviteListener';
 import {ProjectInviteBottomSheet} from './sharedComponents/ProjectInviteBottomSheet';
 import {getInitialRouteName} from './utils/navigation';
+import {createDefaultScreenGroup} from './Navigation/Stack/AppScreens';
 
 // Note that this does the same things as the strange syntax found in
 // https://github.com/react-navigation/react-navigation/issues/9578#issuecomment-1022991270

@@ -1,10 +1,9 @@
 import {Image, Pressable, StyleSheet} from 'react-native';
 import React, {FC} from 'react';
 import {DateTime} from 'luxon';
-import {TabName} from '../../../../Navigation/types.ts';
-import {useCreateTrack} from '../../../../hooks/server/track.ts';
-import {useCurrentTrackStore} from '../../../../hooks/tracks/useCurrentTrackStore.ts';
-import {useNavigationFromHomeTabs} from '../../../../hooks/useNavigationWithTypes.ts';
+import {useCreateTrack} from '../../../../hooks/server/track';
+import {useCurrentTrackStore} from '../../../../hooks/tracks/useCurrentTrackStore';
+import {useNavigationFromHomeTabs} from '../../../../hooks/useNavigationWithTypes';
 
 interface SaveTrackButton {
   description: string;
@@ -40,7 +39,7 @@ export const SaveTrackButton: FC<SaveTrackButton> = ({description}) => {
       },
       {
         onSuccess: () => {
-          navigation.navigate(TabName.Map);
+          navigation.navigate('Map');
           currentTrack.clearCurrentTrack();
         },
       },

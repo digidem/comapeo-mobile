@@ -6,9 +6,23 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 import {MessageDescriptor} from 'react-intl';
 import {AppStackList} from '../Navigation/AppStack';
-import {type HomeTabsList} from '../Navigation/Tab';
 import {Observation, ObservationValue} from '@mapeo/schema';
 import type {RoleId, RoleIdForNewInvite} from '@mapeo/core/dist/roles';
+import {type HomeTabsList} from '../Navigation/Tab';
+export interface TabBarIconProps {
+  size: number;
+  focused: boolean;
+  color: string;
+}
+
+export type TabName = keyof HomeTabsList;
+
+export type InviteProps = {
+  name: string;
+  deviceType: DeviceType;
+  deviceId: string;
+  role: DeviceRoleForNewInvite;
+};
 
 export type ViewStyleProp = StyleProp<ViewStyle>;
 export type TextStyleProp = StyleProp<TextStyle>;

@@ -1,6 +1,6 @@
 import {NavigatorScreenParams} from '@react-navigation/native';
 import * as React from 'react';
-import {RootStack} from '../AppStack';
+import {RootStack} from '.';
 import {MessageDescriptor} from 'react-intl';
 import {ObservationEdit} from '../../screens/ObservationEdit';
 import {AddPhotoScreen} from '../../screens/AddPhoto';

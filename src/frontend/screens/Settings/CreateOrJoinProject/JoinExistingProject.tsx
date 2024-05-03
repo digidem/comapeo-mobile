@@ -3,7 +3,7 @@ import {Text} from '../../../sharedComponents/Text';
 import {defineMessages, useIntl} from 'react-intl';
 import {Button} from '../../../sharedComponents/Button';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {AppStackList} from '../../../Navigation/AppStack';
+import {AppStackList} from '../../../Navigation/Stack';
 
 const m = defineMessages({
   howTo: {

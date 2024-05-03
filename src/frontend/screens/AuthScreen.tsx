@@ -11,7 +11,7 @@ import {
 import {DARK_BLUE, RED, WHITE} from '../lib/styles';
 import {PasscodeInput} from '../sharedComponents/PasscodeInput';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {AppStackList} from '../Navigation/AppStack';
+import {AppStackList} from '../Navigation/Stack';
 import {useSecurityContext} from '../contexts/SecurityContext';
 
 const m = defineMessages({

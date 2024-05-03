@@ -1,4 +1,4 @@
-import {AppStackList} from './Navigation/AppStack';
+import {AppStackList} from './Navigation/Stack';
 import {type HomeTabsList} from './Navigation/Tab';
 
 // this has to be a string because js does not recognize 00000 as being 5 digits

@@ -1,14 +1,11 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack/lib/typescript/src/types';
-import {WHITE} from '../lib/styles';
-import {AppList} from './Stack/AppScreens';
-import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
-import {DeviceNamingSceens} from './Stack/DeviceNamingScreens';
+import {WHITE} from '../../lib/styles';
+import {AppList} from './AppScreens';
+import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
+import {DeviceNamingSceens} from './DeviceNamingScreens';
 
-export {createDefaultScreenGroup} from './Stack/AppScreens';
-
-// export type AppStackList = AppList & OnboardingStackList & IccaStackList;
 export type AppStackList = AppList & DeviceNamingSceens;
 
 export const RootStack = createNativeStackNavigator<AppStackList>();

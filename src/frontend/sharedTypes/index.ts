@@ -5,8 +5,8 @@ import {CompositeScreenProps} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 import {MessageDescriptor} from 'react-intl';
-import {AppStackList} from './Navigation/AppStack';
-import {type HomeTabsList} from './Navigation//Tab';
+import {AppStackList} from '../Navigation/AppStack';
+import {type HomeTabsList} from '../Navigation/Tab';
 import {Observation, ObservationValue} from '@mapeo/schema';
 import type {RoleId, RoleIdForNewInvite} from '@mapeo/core/dist/roles';
 

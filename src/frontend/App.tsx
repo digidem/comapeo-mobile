@@ -4,7 +4,7 @@ import {
   useNavigationContainerRef,
 } from '@react-navigation/native';
 import {createMapeoClient} from '@mapeo/ipc';
-import {AppNavigator} from './Navigation/AppNavigator';
+import {AppNavigator} from './AppNavigator';
 import {AppStackList} from './Navigation/AppStack';
 import {IntlProvider} from './contexts/IntlContext';
 import {MessagePortLike} from './lib/MessagePortLike';

@@ -14,6 +14,7 @@ import {AppProviders} from './contexts/AppProviders';
 import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
 import {Loading} from './sharedComponents/Loading';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import 'react-native-gesture-handler';
 
 const messagePort = new MessagePortLike();
 const mapeoApi = createMapeoClient(messagePort, {timeout: Infinity});

@@ -1,7 +1,7 @@
 import React, {FC, ReactNode, RefObject} from 'react';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import {BottomSheetContent, BottomSheetModal} from './BottomSheetModal';
-import {ActionButtonConfig} from './BottomSheet/Content.tsx';
+import {ActionButtonConfig} from './BottomSheet/Content';
 
 export interface DiscardModal {
   bottomSheetRef: RefObject<BottomSheetModalMethods>;

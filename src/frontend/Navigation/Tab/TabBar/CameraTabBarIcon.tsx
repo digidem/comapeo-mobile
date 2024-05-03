@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
-import {TabBarIconProps} from '../../types.ts';
-import {TabBarIcon} from './TabBarIcon.tsx';
-import {useTabNavigationStore} from '../../../hooks/useTabNavigationStore.ts';
+import {TabBarIconProps} from '../../../sharedTypes';
+import {TabBarIcon} from './TabBarIcon';
+import {useTabNavigationStore} from '../../../hooks/useTabNavigationStore';
 
 export const CameraTabBarIcon: FC<TabBarIconProps> = props => {
   const {currentTab} = useTabNavigationStore();

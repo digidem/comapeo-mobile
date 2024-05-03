@@ -7,7 +7,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {DiscardModal} from '../../../sharedComponents/DiscardModal.tsx';
+import {DiscardModal} from '../../../sharedComponents/DiscardModal';
 import {BottomSheet} from '../../../sharedComponents/BottomSheet/BottomSheet';
 import PhotoIcon from '../../../images/camera.svg';
 import DetailsIcon from '../../../images/details.svg';
@@ -18,11 +18,10 @@ import {TrackDescriptionField} from './saveTrack/TrackDescriptionField';
 import {useBottomSheetModal} from '../../../sharedComponents/BottomSheetModal';
 import DiscardIcon from '../../../images/delete.svg';
 import ErrorIcon from '../../../images/Error.svg';
-import {TabName} from '../../../Navigation/types.ts';
-import {useCurrentTrackStore} from '../../../hooks/tracks/useCurrentTrackStore.ts';
-import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes.ts';
+import {useCurrentTrackStore} from '../../../hooks/tracks/useCurrentTrackStore';
+import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes';
 import {useFocusEffect} from '@react-navigation/native';
-import {SaveTrackButton} from './saveTrack/SaveTrackButton.tsx';
+import {SaveTrackButton} from './saveTrack/SaveTrackButton';
 import Close from '../../../images/close.svg';
 
 export const SaveTrackScreen = () => {
@@ -55,7 +54,7 @@ export const SaveTrackScreen = () => {
 
   const handleDiscard = () => {
     closeSheet();
-    navigation.navigate(TabName.Map);
+    navigation.navigate('Map');
     clearCurrentTrack();
   };
 

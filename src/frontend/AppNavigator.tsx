@@ -26,7 +26,6 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   return (
     <React.Fragment>
       <DrawerNavigator permissionAsked={permissionAsked} />
-      <ProjectInviteBottomSheet />
     </React.Fragment>
   );
 };

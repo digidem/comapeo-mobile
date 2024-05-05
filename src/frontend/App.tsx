@@ -13,7 +13,6 @@ import {PermissionsAndroid} from 'react-native';
 import {AppProviders} from './contexts/AppProviders';
 import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
 import {Loading} from './sharedComponents/Loading';
-import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import 'react-native-gesture-handler';
 
 const messagePort = new MessagePortLike();
@@ -41,9 +40,7 @@ const App = () => {
         mapeoApi={mapeoApi}>
         <React.Suspense fallback={<Loading />}>
           <NavigationContainer ref={navRef}>
-            <BottomSheetModalProvider>
-              <AppNavigator permissionAsked={permissionsAsked} />
-            </BottomSheetModalProvider>
+            <AppNavigator permissionAsked={permissionsAsked} />
           </NavigationContainer>
         </React.Suspense>
       </AppProviders>

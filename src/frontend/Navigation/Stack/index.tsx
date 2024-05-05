@@ -19,6 +19,8 @@ import {usePresetsQuery} from '../../hooks/server/presets';
 import {getInitialRouteName} from '../../utils/navigation';
 import {WHITE} from '../../lib/styles';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import {ProjectInviteBottomSheet} from '../../sharedComponents/ProjectInviteBottomSheet';
 
 export type AppStackList = AppList & DeviceNamingSceens;
 
@@ -28,9 +30,13 @@ export const RootStackNavigator = ({
   navigation,
 }: DrawerScreenProps<DrawerScreens, 'DrawerHome'>) => {
   return (
-    <Suspense fallback={<Loading />}>
-      <RootStackNavigatorChild openDrawer={navigation.openDrawer} />
-    </Suspense>
+    // This provider must be inside the drawer. Otherwise it is always rendered on top of the drawer
+    <BottomSheetModalProvider>
+      <Suspense fallback={<Loading />}>
+        <RootStackNavigatorChild openDrawer={navigation.openDrawer} />
+        <ProjectInviteBottomSheet />
+      </Suspense>
+    </BottomSheetModalProvider>
   );
 };
 

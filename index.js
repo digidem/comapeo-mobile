@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import './src/frontend/polyfills';
 
 import {AppRegistry} from 'react-native';

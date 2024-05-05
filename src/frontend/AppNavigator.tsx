@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import BootSplash from 'react-native-bootsplash';
+// import BootSplash from 'react-native-bootsplash';
 import {useDeviceInfo} from './hooks/server/deviceInfo';
 import {Loading} from './sharedComponents/Loading';
 import {usePrefetchLastKnownLocation} from './hooks/useLastSavedLocation';
@@ -18,18 +18,14 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   usePrefetchLastKnownLocation();
   initializeInviteListener();
 
-  if (permissionAsked && !deviceInfo.isPending) {
-    BootSplash.hide();
-  }
-
   // the user should never actually see this because the splash screen is visible, so this is to appease typescript
-  if (deviceInfo.isLoading) {
+  if (deviceInfo.isLoading || !permissionAsked) {
     return <Loading />;
   }
 
   return (
     <React.Fragment>
-      <DrawerNavigator />
+      <DrawerNavigator permissionAsked={permissionAsked} />
       <ProjectInviteBottomSheet />
     </React.Fragment>
   );

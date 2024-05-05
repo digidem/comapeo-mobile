@@ -1,22 +1,38 @@
-import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {NativeStackNavigationOptions} from '@react-navigation/native-stack/lib/typescript/src/types';
-import {WHITE} from '../../lib/styles';
+import React, {Suspense} from 'react';
+import {
+  NativeStackNavigationOptions,
+  createNativeStackNavigator,
+} from '@react-navigation/native-stack';
 import {AppList, createDefaultScreenGroup} from './AppScreens';
-import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {
   DeviceNamingSceens,
   createDeviceNamingScreens,
 } from './DeviceNamingScreens';
-import {getInitialRouteName} from '../../utils/navigation';
+import {DrawerScreenProps} from '@react-navigation/drawer';
+
+import {Loading} from '../../sharedComponents/Loading';
+import {DrawerScreens} from '../Drawer';
 import {useIntl} from 'react-intl';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {usePresetsQuery} from '../../hooks/server/presets';
+import {getInitialRouteName} from '../../utils/navigation';
+import {WHITE} from '../../lib/styles';
+import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 
 export type AppStackList = AppList & DeviceNamingSceens;
 
 export const RootStack = createNativeStackNavigator<AppStackList>();
+
+export const RootStackNavigator = ({
+  navigation,
+}: DrawerScreenProps<DrawerScreens, 'DrawerHome'>) => {
+  return (
+    <Suspense fallback={<Loading />}>
+      <RootStackNavigatorChild openDrawer={navigation.openDrawer} />
+    </Suspense>
+  );
+};
 
 const NavigatorScreenOptions: NativeStackNavigationOptions = {
   presentation: 'card',
@@ -28,7 +44,11 @@ const NavigatorScreenOptions: NativeStackNavigationOptions = {
   headerBackVisible: false,
 };
 
-export const RootStackNavigator = () => {
+export function RootStackNavigatorChild({
+  openDrawer,
+}: {
+  openDrawer: () => void;
+}) {
   const {formatMessage} = useIntl();
   const existingObservation = usePersistedDraftObservation(
     store => store.value,
@@ -45,8 +65,8 @@ export const RootStackNavigator = () => {
       })}
       screenOptions={NavigatorScreenOptions}>
       {deviceInfo.data?.name
-        ? createDefaultScreenGroup(formatMessage)
+        ? createDefaultScreenGroup({intl: formatMessage, openDrawer})
         : createDeviceNamingScreens()}
     </RootStack.Navigator>
   );
-};
+}

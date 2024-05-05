@@ -5,7 +5,6 @@ import {useDeviceInfo} from './hooks/server/deviceInfo';
 import {Loading} from './sharedComponents/Loading';
 import {usePrefetchLastKnownLocation} from './hooks/useLastSavedLocation';
 import {initializeInviteListener} from './initializeInviteListener';
-import {ProjectInviteBottomSheet} from './sharedComponents/ProjectInviteBottomSheet';
 import {DrawerNavigator} from './Navigation/Drawer';
 
 // Note that this does the same things as the strange syntax found in
@@ -23,9 +22,5 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
     return <Loading />;
   }
 
-  return (
-    <React.Fragment>
-      <DrawerNavigator permissionAsked={permissionAsked} />
-    </React.Fragment>
-  );
+  return <DrawerNavigator permissionAsked={permissionAsked} />;
 };

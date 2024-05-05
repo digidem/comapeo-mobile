@@ -79,6 +79,12 @@
   "Navigation.Drawer.createOrJoinDesc": {
     "message": "Create a new project or join existing one"
   },
+  "Navigation.Drawer.createOrJoinToSync": {
+    "message": "Create or Join a Project to sync with other devices"
+  },
+  "Navigation.Drawer.projName": {
+    "message": "Project {projectName}"
+  },
   "Navigation.Drawer.projectSettings": {
     "message": "Project Settings"
   },

@@ -5,7 +5,7 @@ import {
   DrawerContentScrollView,
 } from '@react-navigation/drawer';
 import {AppStackList, RootStackNavigator} from './Stack';
-import {FormattedMessage, defineMessages} from 'react-intl';
+import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 import {
   List,
   ListItem,
@@ -18,6 +18,10 @@ import {NavigatorScreenParams} from '@react-navigation/native';
 import {IconButton} from '../sharedComponents/IconButton';
 import {useDeviceInfo} from '../hooks/server/deviceInfo';
 import BootSplash from 'react-native-bootsplash';
+import {View} from 'react-native';
+import {Text} from '../sharedComponents/Text';
+import {LIGHT_GREY} from '../lib/styles';
+import {useProjectSettings} from '../hooks/server/projects';
 
 const m = defineMessages({
   settingsTitle: {
@@ -61,6 +65,14 @@ const m = defineMessages({
     defaultMessage: 'Language, Security, Coordinates',
     description: 'list of avaialable app settings',
   },
+  projName: {
+    id: 'Navigation.Drawer.projName',
+    defaultMessage: 'Project {projectName}',
+  },
+  createOrJoinToSync: {
+    id: 'Navigation.Drawer.createOrJoinToSync',
+    defaultMessage: 'Create or Join a Project to sync with other devices',
+  },
 });
 
 export type DrawerScreens = {
@@ -75,13 +87,17 @@ export const DrawerNavigator = ({
   permissionAsked: boolean;
 }) => {
   const deviceInfo = useDeviceInfo();
-
   if (permissionAsked && !deviceInfo.isPending) {
     BootSplash.hide();
   }
+
   return (
     <Drawer.Navigator
-      screenOptions={{drawerPosition: 'right', headerShown: false}}
+      screenOptions={{
+        drawerPosition: 'right',
+        headerShown: false,
+        swipeEnabled: false,
+      }}
       drawerContent={DrawerContent}
       initialRouteName="DrawerHome">
       <Drawer.Screen name="DrawerHome" component={RootStackNavigator} />
@@ -91,11 +107,37 @@ export const DrawerNavigator = ({
 
 const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
   const {navigate} = navigation;
+  const {formatMessage} = useIntl();
+  const {data} = useProjectSettings();
   return (
-    <DrawerContentScrollView>
-      <IconButton onPress={navigation.closeDrawer}>
-        <MaterialIcon style={{alignSelf: 'flex-end'}} name="menu" size={32} />
-      </IconButton>
+    <DrawerContentScrollView style={{}}>
+      {/* There is a gap at the top which is not accounted for by padding or margin . This was the most elegant way to cover it up */}
+      <View
+        style={{
+          backgroundColor: LIGHT_GREY,
+          top: 0,
+          right: 0,
+          width: '100%',
+          position: 'absolute',
+          height: 5,
+        }}
+      />
+      <View
+        style={{
+          backgroundColor: LIGHT_GREY,
+          paddingBottom: 40,
+        }}>
+        <IconButton
+          style={{alignSelf: 'flex-end'}}
+          onPress={navigation.closeDrawer}>
+          <MaterialIcon name="menu" size={32} />
+        </IconButton>
+        <Text style={{alignSelf: 'center', textAlign: 'center'}}>
+          {data?.name
+            ? formatMessage(m.projName, {projectName: data.name})
+            : formatMessage(m.createOrJoinToSync)}
+        </Text>
+      </View>
       <List>
         <ListItem
           onPress={() => {

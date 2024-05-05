@@ -27,7 +27,6 @@ export function useCreateProject() {
   const api = useApi();
   const queryClient = useQueryClient();
   const updateProject = useUpdateActiveProjectId();
-
   return useMutation({
     mutationKey: ['createProject'],
     mutationFn: async (name: string) => {
@@ -35,7 +34,9 @@ export function useCreateProject() {
     },
     onSuccess: async data => {
       updateProject(data);
-      return await queryClient.invalidateQueries({queryKey: ['projects']});
+      queryClient.invalidateQueries({
+        queryKey: ['projectSettings'],
+      });
     },
   });
 }
@@ -55,8 +56,8 @@ export function useProjectSettings() {
 
   return useQuery({
     queryKey: ['projectSettings'],
-    queryFn: () => {
-      return project.$getProjectSettings();
+    queryFn: async () => {
+      return await project.$getProjectSettings();
     },
   });
 }

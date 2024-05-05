@@ -58,6 +58,38 @@
   "Modal.GPSEnable.trackingDescription": {
     "message": "You’ve been recording for"
   },
+  "Navigation.Drawer.aboutMapeo": {
+    "description": "Primary text for 'About Mapeo' link (version info)",
+    "message": "About Mapeo"
+  },
+  "Navigation.Drawer.aboutMapeoDesc": {
+    "description": "Description of the 'About Mapeo' page",
+    "message": "Version and build number"
+  },
+  "Navigation.Drawer.appSettings": {
+    "message": "App Settings"
+  },
+  "Navigation.Drawer.appSettingsDesc": {
+    "description": "list of avaialable app settings",
+    "message": "Language, Security, Coordinates"
+  },
+  "Navigation.Drawer.createOrJoin": {
+    "message": "Create or Join Project"
+  },
+  "Navigation.Drawer.createOrJoinDesc": {
+    "message": "Create a new project or join existing one"
+  },
+  "Navigation.Drawer.projectSettings": {
+    "message": "Project Settings"
+  },
+  "Navigation.Drawer.projectSettingsDesc": {
+    "description": "list of avaialable project settings",
+    "message": "Categories, Config, Team"
+  },
+  "Navigation.Drawer.title": {
+    "description": "Title of settings screen",
+    "message": "Settings"
+  },
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Coordinate System"
   },

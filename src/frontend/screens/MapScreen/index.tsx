@@ -1,5 +1,7 @@
 import * as React from 'react';
 import Mapbox from '@rnmapbox/maps';
+import {useNetInfo} from '@react-native-community/netinfo';
+
 import config from '../../../config.json';
 import {IconButton} from '../../sharedComponents/IconButton';
 import {
@@ -22,7 +24,6 @@ import {TrackPathLayer} from './track/TrackPathLayer';
 import {UserLocation} from './UserLocation';
 import {useSharedLocationContext} from '../../contexts/SharedLocationContext';
 import {useMapStyleUrl} from '../../hooks/server/mapStyleUrl';
-import {useNetInfo} from '@react-native-community/netinfo';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -47,17 +48,7 @@ export const MapScreen = () => {
   const locationServicesEnabled =
     !!locationProviderStatus?.locationServicesEnabled;
 
-  const mapStyleUrlQuery = useMapStyleUrl();
-
-  const {isInternetReachable} = useNetInfo();
-
-  const styleUrl = React.useMemo(() => {
-    if (!mapStyleUrlQuery.data) return undefined;
-    // TODO: Is it worth pulling in URL polyfill?
-    // TODO: Should this be a proper nonce?
-    if (!isInternetReachable) return mapStyleUrlQuery.data + '?offline=true';
-    return mapStyleUrlQuery.data;
-  }, [mapStyleUrlQuery.data, isInternetReachable]);
+  const styleUrl = useMapStyle();
 
   const handleAddPress = () => {
     newDraft();
@@ -148,3 +139,15 @@ const styles = StyleSheet.create({
     bottom: 20,
   },
 });
+
+function useMapStyle() {
+  const mapStyleUrlQuery = useMapStyleUrl();
+  const {isInternetReachable} = useNetInfo();
+
+  if (!mapStyleUrlQuery.data) return undefined;
+
+  // TODO: Should this be a proper nonce? i.e. do we always want to bust HTTP caching?
+  if (!isInternetReachable) return mapStyleUrlQuery.data + '?offline=true';
+
+  return mapStyleUrlQuery.data;
+}

@@ -55,7 +55,7 @@ export const SaveTrackScreen = () => {
 
   const handleDiscard = () => {
     closeSheet();
-    navigation.navigate(TabName.Map);
+    navigation.navigate('Map');
     clearCurrentTrack();
   };
 

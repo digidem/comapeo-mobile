@@ -4,7 +4,10 @@ import {DateTime} from 'luxon';
 import {TabName} from '../../../../Navigation/types.ts';
 import {useCreateTrack} from '../../../../hooks/server/track.ts';
 import {useCurrentTrackStore} from '../../../../hooks/tracks/useCurrentTrackStore.ts';
-import {useNavigationFromHomeTabs} from '../../../../hooks/useNavigationWithTypes.ts';
+import {
+  useNavigationFromHomeTabs,
+  useNavigationFromRoot,
+} from '../../../../hooks/useNavigationWithTypes.ts';
 
 interface SaveTrackButton {
   description: string;
@@ -12,7 +15,7 @@ interface SaveTrackButton {
 
 export const SaveTrackButton: FC<SaveTrackButton> = ({description}) => {
   const saveTrack = useCreateTrack();
-  const navigation = useNavigationFromHomeTabs();
+  const navigation = useNavigationFromRoot();
   const currentTrack = useCurrentTrackStore();
 
   const handleSaveClick = () => {
@@ -40,7 +43,7 @@ export const SaveTrackButton: FC<SaveTrackButton> = ({description}) => {
       },
       {
         onSuccess: () => {
-          navigation.navigate(TabName.Map);
+          navigation.navigate('Home', {screen: 'Map'});
           currentTrack.clearCurrentTrack();
         },
       },

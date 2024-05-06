@@ -24,6 +24,7 @@ import {AppList} from './ScreenGroups/AppScreens';
 import {usePresetsQuery} from '../hooks/server/presets';
 import {initializeInviteListener} from '../initializeInviteListener';
 import {ProjectInviteBottomSheet} from '../sharedComponents/ProjectInviteBottomSheet';
+import {useCurrentTrackStore} from '../hooks/tracks/useCurrentTrackStore.ts';
 
 // import {devExperiments} from '../lib/DevExperiments';
 
@@ -48,6 +49,7 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   const existingObservation = usePersistedDraftObservation(
     store => store.value,
   );
+  const existingTrack = useCurrentTrackStore();
   const {data: presets} = usePresetsQuery();
   const deviceInfo = useDeviceInfo();
   usePrefetchLastKnownLocation();
@@ -66,6 +68,9 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
     <React.Fragment>
       <RootStack.Navigator
         initialRouteName={getInitialRouteName({
+          hasUnsavedTrack:
+            !existingTrack.isTracking &&
+            existingTrack.locationHistory.length > 1,
           hasDeviceName: !!deviceInfo.data?.name,
           existingObservation,
           presets,
@@ -84,6 +89,7 @@ function getInitialRouteName(
   initialInfo:
     | {hasDeviceName: false}
     | {
+        hasUnsavedTrack: boolean;
         hasDeviceName: true;
         existingObservation: null | ClientGeneratedObservation | Observation;
         presets: Preset[];
@@ -92,6 +98,11 @@ function getInitialRouteName(
   // if user has not set a name, navigate to intro screen where they will be prompted to set a name
   if (!initialInfo.hasDeviceName) {
     return 'IntroToCoMapeo';
+  }
+
+  // if there's unsaved track, navigate to save track screen
+  if (initialInfo.hasUnsavedTrack) {
+    return 'SaveTrack';
   }
 
   // if no exisiting observation, navigate to home

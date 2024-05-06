@@ -1,6 +1,7 @@
 import {create} from 'zustand';
 import {calculateTotalDistance} from '../../utils/distance';
 import {LocationHistoryPoint} from '../../sharedTypes/location';
+import {createPersistedState} from '../persistedState/createPersistedState.ts';
 
 type TracksStoreState = {
   locationHistory: LocationHistoryPoint[];
@@ -21,51 +22,54 @@ type TracksStoreState = {
     }
 );
 
-export const useCurrentTrackStore = create<TracksStoreState>(set => ({
-  isTracking: false,
-  locationHistory: [],
-  observations: [],
-  distance: 0,
-  trackingSince: null,
-  addNewObservation: (id: string) =>
-    set(state => ({observations: [...state.observations, id]})),
-  addNewLocations: data =>
-    set(({locationHistory, distance}) => {
-      if (data.length > 1) {
+export const useCurrentTrackStore = createPersistedState<TracksStoreState>(
+  set => ({
+    isTracking: false,
+    locationHistory: [],
+    observations: [],
+    distance: 0,
+    trackingSince: null,
+    addNewObservation: (id: string) =>
+      set(state => ({observations: [...state.observations, id]})),
+    addNewLocations: data =>
+      set(({locationHistory, distance}) => {
+        if (data.length > 1) {
+          return {
+            locationHistory: [...locationHistory, ...data],
+            distance: distance + calculateTotalDistance(data),
+          };
+        }
+
+        if (locationHistory.length < 1) {
+          return {
+            locationHistory: [...locationHistory, ...data],
+          };
+        }
+
+        const lastLocation = locationHistory[locationHistory.length - 1];
+        if (!lastLocation) {
+          throw Error('No lastLocation for state.locationHistory.length > 1');
+        }
+
         return {
           locationHistory: [...locationHistory, ...data],
-          distance: distance + calculateTotalDistance(data),
+          distance: distance + calculateTotalDistance([lastLocation, ...data]),
         };
-      }
-
-      if (locationHistory.length < 1) {
-        return {
-          locationHistory: [...locationHistory, ...data],
-        };
-      }
-
-      const lastLocation = locationHistory[locationHistory.length - 1];
-      if (!lastLocation) {
-        throw Error('No lastLocation for state.locationHistory.length > 1');
-      }
-
-      return {
-        locationHistory: [...locationHistory, ...data],
-        distance: distance + calculateTotalDistance([lastLocation, ...data]),
-      };
-    }),
-  clearCurrentTrack: () =>
-    set(() => ({
-      locationHistory: [],
-      trackingSince: null,
-      distance: 0,
-      isTracking: false,
-      observations: [],
-    })),
-  setTracking: (val: boolean) =>
-    set(() =>
-      val
-        ? {isTracking: true, trackingSince: new Date()}
-        : {isTracking: false, trackingSince: null},
-    ),
-}));
+      }),
+    clearCurrentTrack: () =>
+      set(() => ({
+        locationHistory: [],
+        trackingSince: null,
+        distance: 0,
+        isTracking: false,
+        observations: [],
+      })),
+    setTracking: (val: boolean) =>
+      set(() =>
+        val
+          ? {isTracking: true, trackingSince: new Date()}
+          : {isTracking: false, trackingSince: null},
+      ),
+  }),
+  'MapeoTrack',
+);

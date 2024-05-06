@@ -41,7 +41,7 @@ export function useTracking() {
         }
       },
     );
-  }, []);
+  }, [addNewLocations]);
 
   const startTracking = useCallback(async () => {
     if (isTracking) {

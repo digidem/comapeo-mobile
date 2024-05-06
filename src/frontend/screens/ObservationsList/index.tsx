@@ -1,14 +1,16 @@
 import * as React from 'react';
-import {View, FlatList, Dimensions, StyleSheet, Text} from 'react-native';
-import {defineMessages} from 'react-intl';
+import {View, FlatList, Dimensions, StyleSheet} from 'react-native';
 import {ObservationListItem} from './ObservationListItem';
 import ObservationEmptyView from './ObservationsEmptyView';
 
 import {Observation, Track} from '@mapeo/schema';
-import {NativeNavigationComponent} from '../../sharedTypes';
-import {SettingsButton} from './SettingsButton';
-import {useAllObservations} from '../../hooks/useAllObservations';
 import {TrackListItem} from './TrackListItem.tsx';
+import {NativeHomeTabsNavigationProps} from '../../sharedTypes';
+import {useAllObservations} from '../../hooks/useAllObservations';
+import {MessageDescriptor, defineMessages} from 'react-intl';
+import {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs';
+import {ObservationsListBarIcon} from '../../Navigation/ScreenGroups/TabBar/ObservationsListTabBarIcon';
+import {ObservationListHeaderLeft} from './ObservationListHeaderLeft';
 
 const m = defineMessages({
   loading: {
@@ -46,16 +48,12 @@ function getItemLayout(
 
 const keyExtractor = (item: Observation | Track) => item.docId;
 
-export const ObservationsList: NativeNavigationComponent<'ObservationList'> = ({
-  navigation,
-}) => {
+export const ObservationsList: React.FC<
+  NativeHomeTabsNavigationProps<'ObservationsList'>
+> & {
+  navTitle: MessageDescriptor;
+} = ({navigation}) => {
   const observations = useAllObservations();
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => <SettingsButton />,
-    });
-  }, [navigation]);
 
   const rowsPerWindow = Math.ceil(
     (Dimensions.get('window').height - 65) / OBSERVATION_CELL_HEIGHT,
@@ -114,6 +112,23 @@ export const ObservationsList: NativeNavigationComponent<'ObservationList'> = ({
     </View>
   );
 };
+
+export function createNavigationOptions(
+  formatMessage: (title: MessageDescriptor) => string,
+): BottomTabNavigationOptions {
+  return {
+    tabBarIcon: ObservationsListBarIcon,
+    headerLeft: ObservationListHeaderLeft,
+    headerTransparent: false,
+    headerTitle: formatMessage(ObservationsList.navTitle),
+    headerShadowVisible: true,
+    headerStyle: {
+      elevation: 15,
+      shadowOpacity: 0,
+      borderBottomWidth: 1,
+    },
+  };
+}
 
 ObservationsList.navTitle = m.observationListTitle;
 

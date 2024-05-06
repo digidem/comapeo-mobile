@@ -14,7 +14,6 @@ export function useCreateTrack() {
   const project = useProject();
   return useMutation({
     mutationFn: async (params: TrackValue) => {
-      if (!project) throw new Error('Project instance does not exist');
       return project.track.create(params);
     },
     onSuccess: () => {
@@ -44,7 +43,6 @@ export function useTracksQuery() {
   return useSuspenseQuery({
     queryKey: [TRACK_KEY],
     queryFn: async () => {
-      if (!project) throw new Error('Project instance does not exist');
       return project.track.getMany();
     },
   });
@@ -68,7 +66,6 @@ export function useTrackQuery(docId: string) {
   return useSuspenseQuery({
     queryKey: [TRACK_KEY, docId],
     queryFn: async () => {
-      if (!project) throw new Error('Project instance does not exist');
       return project.track.getByDocId(docId);
     },
   });
@@ -79,7 +76,6 @@ export function useDeleteTrackMutation() {
   const project = useProject();
   return useMutation({
     mutationFn: async (docId: string) => {
-      if (!project) throw new Error('Project instance does not exist');
       return project.track.delete(docId);
     },
     onSuccess: () => {

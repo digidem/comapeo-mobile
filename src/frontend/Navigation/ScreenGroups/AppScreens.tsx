@@ -6,7 +6,7 @@ import {NavigatorScreenParams} from '@react-navigation/native';
 import * as React from 'react';
 import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {RootStack} from '../AppStack';
-import {MessageDescriptor} from 'react-intl';
+import {MessageDescriptor, useIntl} from 'react-intl';
 import {MapScreen} from '../../screens/MapScreen';
 import {CameraScreen} from '../../screens/CameraScreen';
 import {ObservationEdit} from '../../screens/ObservationEdit';
@@ -20,7 +20,10 @@ import {AuthScreen} from '../../screens/AuthScreen';
 import {ObscurePasscode} from '../../screens/ObscurePasscode';
 import {Settings} from '../../screens/Settings';
 import {PresetChooser} from '../../screens/PresetChooser';
-import {ObservationsList} from '../../screens/ObservationsList';
+import {
+  createNavigationOptions as CreateObservationsListNavOptions,
+  ObservationsList,
+} from '../../screens/ObservationsList';
 import {ObservationScreen} from '../../screens/Observation';
 import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
@@ -33,7 +36,7 @@ import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateP
 import {JoinExistingProject} from '../../screens/Settings/CreateOrJoinProject/JoinExistingProject';
 import {YourTeam} from '../../screens/Settings/ProjectSettings/YourTeam';
 import {SelectDevice} from '../../screens/Settings/ProjectSettings/YourTeam/SelectDevice';
-import {DeviceType, DeviceRoleForNewInvite} from '../../sharedTypes';
+import {DeviceType} from '../../sharedTypes';
 import {SelectInviteeRole} from '../../screens/Settings/ProjectSettings/YourTeam/SelectInviteeRole';
 import {ReviewInvitation} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/ReviewInvitation';
 import {InviteAccepted} from '../../screens/Settings/ProjectSettings/YourTeam/InviteAccepted';
@@ -47,12 +50,12 @@ import {
   createNavigationOptions as createDeviceNameEditNavOptions,
 } from '../../screens/Settings/ProjectSettings/DeviceName/EditScreen';
 import {
-  GpsModal,
-  createNavigationOptions as createGpsModalNavigationOptions,
-} from '../../screens/GpsModal';
+  LocationInfoScreen,
+  createNavigationOptions as createLocationInfoNavOptions,
+} from '../../screens/LocationInfoScreen';
 import {useCurrentTab} from '../../hooks/useCurrentTab';
 import {TrackingTabBarIcon} from './TabBar/TrackingTabBarIcon';
-import {TabName} from '../types';
+import {InviteProps} from '../types';
 import {CameraTabBarIcon} from './TabBar/CameraTabBarIcon';
 import {MapTabBarIcon} from './TabBar/MapTabBarIcon';
 import {TrackEditScreen} from '../../screens/TrackEdit/TrackEditScreen.tsx';
@@ -60,6 +63,7 @@ import {
   createTrackNavigationOptions,
   TrackScreen,
 } from '../../screens/Track/TrackScreen.tsx';
+import {SaveTrackScreen} from '../../screens/MapScreen/track/SaveTrackScreen';
 import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/InviteDeclined';
 import {UnableToCancelInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/UnableToCancelInvite';
 import {SharedLocationContextProvider} from '../../contexts/SharedLocationContext';
@@ -67,6 +71,10 @@ import {
   SyncScreen,
   createNavigationOptions as createSyncNavOptions,
 } from '../../screens/Sync';
+import {
+  ManualGpsScreen,
+  createNavigationOptions as createManualGpsNavigationOptions,
+} from '../../screens/ManualGpsScreen';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -74,13 +82,7 @@ export type HomeTabsList = {
   Map: undefined;
   Camera: undefined;
   Tracking: undefined;
-};
-
-type InviteProps = {
-  name: string;
-  deviceType: DeviceType;
-  deviceId: string;
-  role: DeviceRoleForNewInvite;
+  ObservationsList: undefined;
 };
 
 export type AppList = {
@@ -100,7 +102,6 @@ export type AppList = {
   PhotoView: undefined;
   PresetChooser: undefined;
   AddPhoto: undefined;
-  ObservationList: undefined;
   Observation: {observationId: string};
   ObservationEdit: {observationId?: string} | undefined;
   ManualGpsScreen: undefined;
@@ -155,7 +156,7 @@ const Tab = createBottomTabNavigator<HomeTabsList>();
 
 const HomeTabs = () => {
   const {handleTabPress} = useCurrentTab();
-
+  const {formatMessage} = useIntl();
   return (
     <Tab.Navigator
       screenListeners={{
@@ -166,42 +167,51 @@ const HomeTabs = () => {
         tabBarShowLabel: false,
         headerTransparent: true,
         tabBarTestID: 'tabBarButton' + route.name,
-        header: HomeHeader,
       })}
-      initialRouteName={TabName.Map}
+      initialRouteName={'Map'}
       backBehavior="initialRoute">
       <Tab.Screen
-        name={TabName.Map}
+        name="ObservationsList"
+        component={ObservationsList}
+        options={CreateObservationsListNavOptions(formatMessage)}
+      />
+      <Tab.Screen
+        name="Map"
         component={MapScreen}
         options={{
           tabBarIcon: MapTabBarIcon,
+          header: HomeHeader,
         }}
       />
       <Tab.Screen
-        name={TabName.Camera}
+        name="Camera"
         component={CameraScreen}
         options={{
           tabBarIcon: CameraTabBarIcon,
+          header: HomeHeader,
         }}
       />
-      <Tab.Screen
-        name={TabName.Tracking}
-        options={{
-          tabBarIcon: TrackingTabBarIcon,
-          headerShown: false,
-        }}
-        listeners={({
-          navigation,
-        }: {
-          navigation: BottomTabNavigationProp<HomeTabsList>;
-        }) => ({
-          tabPress: e => {
-            e.preventDefault();
-            navigation.navigate(TabName.Map);
-          },
-        })}
-        children={() => <></>}
-      />
+
+      {process.env.FEATURE_TRACKS && (
+        <Tab.Screen
+          name="Tracking"
+          options={{
+            tabBarIcon: TrackingTabBarIcon,
+            headerShown: false,
+          }}
+          listeners={({
+            navigation,
+          }: {
+            navigation: BottomTabNavigationProp<HomeTabsList>;
+          }) => ({
+            tabPress: e => {
+              e.preventDefault();
+              navigation.navigate('Map');
+            },
+          })}
+          children={() => <></>}
+        />
+      )}
     </Tab.Navigator>
   );
 };
@@ -287,11 +297,6 @@ export const createDefaultScreenGroup = (
       options={{headerTitle: intl(PresetChooser.navTitle)}}
     />
     <RootStack.Screen
-      name="ObservationList"
-      component={ObservationsList}
-      options={{headerTitle: intl(ObservationsList.navTitle)}}
-    />
-    <RootStack.Screen
       name="Observation"
       component={ObservationScreen}
       options={{headerTitle: intl(ObservationScreen.navTitle)}}
@@ -368,9 +373,10 @@ export const createDefaultScreenGroup = (
     />
     <RootStack.Screen
       name="GpsModal"
-      component={GpsModal}
-      options={createGpsModalNavigationOptions({intl})}
+      component={LocationInfoScreen}
+      options={createLocationInfoNavOptions({intl})}
     />
+    <RootStack.Screen name="SaveTrack" component={SaveTrackScreen} />
     <RootStack.Screen
       name="TrackEdit"
       component={TrackEditScreen}
@@ -397,6 +403,11 @@ export const createDefaultScreenGroup = (
       name="Sync"
       component={SyncScreen}
       options={createSyncNavOptions()}
+    />
+    <RootStack.Screen
+      name="ManualGpsScreen"
+      component={ManualGpsScreen}
+      options={createManualGpsNavigationOptions({intl})}
     />
   </RootStack.Group>
 );

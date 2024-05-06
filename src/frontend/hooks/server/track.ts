@@ -27,7 +27,6 @@ export function useUpdateTrack(versionId?: string) {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (params: TrackValue) => {
-      if (!project) throw new Error('Project instance does not exist');
       return project.track.update(versionId!, params);
     },
     onSuccess: data => {
@@ -55,7 +54,6 @@ export function useTrackWithEnableOptionQuery(docId?: string) {
     enabled: !!docId,
     queryFn: async () => {
       if (!docId) return;
-      if (!project) throw new Error('Project instance does not exist');
       return project.track.getByDocId(docId);
     },
   });

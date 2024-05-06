@@ -25,11 +25,11 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "Discard observation?"
   },
-  "Modal.DiscardTrack.title": {
-    "message": "Discard Track?"
-  },
   "Modal.DiscardTrack.description": {
     "message": "Your Track will not be saved. This cannot be undone."
+  },
+  "Modal.DiscardTrack.title": {
+    "message": "Discard Track?"
   },
   "Modal.GPSDisable.button": {
     "message": "Enable"
@@ -575,6 +575,10 @@
     "description": "Button label for check details",
     "message": "Details"
   },
+  "screens.SaveTrack.TrackEditView.title": {
+    "description": "Title for new track screen",
+    "message": "New Track"
+  },
   "screens.SaveTrack.track": {
     "description": "Category title for new track screen",
     "message": "Track"
@@ -789,23 +793,6 @@
     "description": "Title of settings screen",
     "message": "Settings"
   },
-  "screens.Track.cancel": {
-    "description": "Button to cancel delete of track",
-    "message": "Cancel"
-  },
-  "screens.Track.confirm": {
-    "description": "Button to confirm delete of track",
-    "message": "Yes, delete"
-  },
-  "screens.Track.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete a track",
-    "message": "Delete track?"
-  },
-  "screens.Track.title": {
-    "description": "Title of track screen showing (non-editable) view of observation with map",
-    "message": "Track"
-  },
-
   "screens.Sync.CreateOrJoinProjectDisplay.buttonText": {
     "message": "Create or Join Project"
   },
@@ -856,6 +843,25 @@
   },
   "screens.Sync.ProjectSyncDisplay.upToDate": {
     "message": "Up to Date! No data to Sync"
+  },
+  "screens.Track.cancel": {
+    "description": "Button to cancel delete of track",
+    "message": "Cancel"
+  },
+  "screens.Track.confirm": {
+    "description": "Button to confirm delete of track",
+    "message": "Yes, delete"
+  },
+  "screens.Track.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete a track",
+    "message": "Delete track?"
+  },
+  "screens.Track.title": {
+    "description": "Title of track screen showing (non-editable) view of observation with map",
+    "message": "Track"
+  },
+  "screens.Track.trackHeader": {
+    "message": "Track"
   },
   "sharedComponents.DeviceCard.ThisDevice": {
     "message": "This Device!"

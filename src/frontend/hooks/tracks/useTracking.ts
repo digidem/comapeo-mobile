@@ -1,8 +1,7 @@
 import * as Location from 'expo-location';
 import * as TaskManager from 'expo-task-manager';
-import {useCallback, useState} from 'react';
+import {useCallback, useState, useEffect} from 'react';
 import {useCurrentTrackStore} from './useCurrentTrackStore';
-import React from 'react';
 import {FullLocationData} from '../../sharedTypes/location';
 import {useGPSModalContext} from '../../contexts/GPSModalContext';
 
@@ -20,7 +19,7 @@ export function useTracking() {
   const setTracking = useCurrentTrackStore(state => state.setTracking);
   const isTracking = useCurrentTrackStore(state => state.isTracking);
 
-  React.useEffect(() => {
+  useEffect(() => {
     TaskManager.defineTask(
       LOCATION_TASK_NAME,
       ({data, error}: LocationCallbackInfo) => {

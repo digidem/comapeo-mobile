@@ -8,7 +8,7 @@ import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
 
 export const HomeHeader: FC<BottomTabHeaderProps> = ({navigation}) => {
   return (
-    <View style={[styles.header, {paddingTop: 10}]}>
+    <View style={[styles.header]}>
       <LinearGradient
         style={styles.linearGradient}
         colors={['#0006', '#0000']}
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: 'transparent',
+    paddingTop: 10,
   },
   leftButton: {
     width: 60,

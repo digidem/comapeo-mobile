@@ -6,8 +6,9 @@
   "scripts": {
     "android": "npm run build:backend && npm run android-no-backend-rebuild",
     "android-no-backend-rebuild": "expo run:android",
-    "ios": "expo run:ios && npm run android-no-backend-rebuild",
-    "prestart": "npm run build:translations && npm run build:intl-polyfills && npm run build:backend",
+    "ios": "npm run build:backend && npm run ios-no-backend-rebuild",
+    "ios-no-backend-rebuild": "expo run:ios",
+    "prestart": "npm run build:translations && npm run build:intl-polyfills",
     "start": "expo start",
     "test": "jest",
     "lint:prettier": "prettier \"src/**/*.{js,ts,jsx,tsx}\" --check",

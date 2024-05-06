@@ -24,10 +24,7 @@ export const TrackPathLayer = () => {
   return (
     locationHistory.length > 1 &&
     isTracking && (
-      <ShapeSource
-        onPress={() => console.log('display bottom sheet')}
-        id="routeSource"
-        shape={toRoute(finalLocationHistory)}>
+      <ShapeSource id="routeSource" shape={toRoute(finalLocationHistory)}>
         <LineLayer
           id="routeFill"
           belowLayerID="mapboxUserLocationPulseCircle"

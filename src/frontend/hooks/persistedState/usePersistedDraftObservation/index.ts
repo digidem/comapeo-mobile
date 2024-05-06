@@ -76,6 +76,7 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
           metadata: {
             ...prevValue.metadata,
             position: props.position,
+            manualLocation: props.manualLocation,
           },
         },
       });

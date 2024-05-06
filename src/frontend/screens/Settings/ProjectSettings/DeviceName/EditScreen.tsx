@@ -13,7 +13,7 @@ import {
 import {BLACK} from '../../../../lib/styles';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
 import {IconButton} from '../../../../sharedComponents/IconButton';
-import {SaveIcon} from '../../../../sharedComponents/icons';
+import SaveIcon from '../../../../images/CheckMark.svg';
 import {useBottomSheetModal} from '../../../../sharedComponents/BottomSheetModal';
 import {ErrorModal} from '../../../../sharedComponents/ErrorModal';
 import {FieldRow} from './FieldRow';
@@ -72,14 +72,16 @@ export const EditScreen = ({
     deviceName: string;
   }>({defaultValues: {deviceName}});
 
-  const editDeviceInfoMutation = useEditDeviceInfo();
+  const {isPending, mutate} = useEditDeviceInfo();
 
   const {isDirty: nameHasChanges} = control.getFieldState(
     'deviceName',
     formState,
   );
 
-  const errorModal = useBottomSheetModal({openOnMount: false});
+  const {openSheet, sheetRef, closeSheet, isOpen} = useBottomSheetModal({
+    openOnMount: false,
+  });
 
   React.useEffect(
     function showDiscardChangesAlert() {
@@ -117,7 +119,7 @@ export const EditScreen = ({
           return (
             <IconButton
               onPress={
-                editDeviceInfoMutation.isPending
+                isPending
                   ? () => {}
                   : handleSubmit(async value => {
                       if (!nameHasChanges) {
@@ -125,33 +127,22 @@ export const EditScreen = ({
                         return;
                       }
 
-                      editDeviceInfoMutation.mutate(value.deviceName, {
+                      mutate(value.deviceName, {
                         onSuccess: () =>
                           navigation.navigate('DeviceNameDisplay'),
                         onError: () => {
-                          errorModal.openSheet();
+                          openSheet();
                         },
                       });
                     })
               }>
-              {editDeviceInfoMutation.isPending ? (
-                <UIActivityIndicator size={30} />
-              ) : (
-                <SaveIcon />
-              )}
+              {isPending ? <UIActivityIndicator size={30} /> : <SaveIcon />}
             </IconButton>
           );
         },
       });
     },
-    [
-      handleSubmit,
-      navigation,
-      editDeviceInfoMutation.mutate,
-      editDeviceInfoMutation.isPending,
-      nameHasChanges,
-      errorModal.openSheet,
-    ],
+    [handleSubmit, navigation, isPending, mutate, nameHasChanges, openSheet],
   );
 
   return (
@@ -168,15 +159,11 @@ export const EditScreen = ({
             style={{flex: 1, color: BLACK, fontSize: 16}}
             showCharacterCount
             autoFocus
-            editable={!editDeviceInfoMutation.isPending}
+            editable={isPending}
           />
         </FieldRow>
       </ScrollView>
-      <ErrorModal
-        sheetRef={errorModal.sheetRef}
-        closeSheet={errorModal.closeSheet}
-        isOpen={errorModal.isOpen}
-      />
+      <ErrorModal sheetRef={sheetRef} closeSheet={closeSheet} isOpen={isOpen} />
     </>
   );
 };

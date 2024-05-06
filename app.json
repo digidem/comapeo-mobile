@@ -10,7 +10,10 @@
     "splash": {
       "image": "./assets/splash.png",
       "backgroundColor": "#050F77",
-      "resizeMode": "cover"
+      /*resizeMode - native work only for android
+      https://docs.expo.dev/develop/user-interface/splash-screen/#custom-configuration-for-android-and-ios
+      **/
+      "resizeMode": "native"
     },
     "assetBundlePatterns": ["**/*"],
     "plugins": [
@@ -44,7 +47,7 @@
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
-        "backgroundColor": "#0033CC"
+        "backgroundColor": "#050F77"
       },
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
@@ -58,6 +61,9 @@
       "package": "com.comapeo"
     },
     "ios": {
+      "splash": {
+        "resizeMode": "contain"
+      },
       "bundleIdentifier": "com.comapeo"
     },
     "extra": {

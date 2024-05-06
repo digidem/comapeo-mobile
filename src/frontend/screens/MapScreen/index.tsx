@@ -18,7 +18,7 @@ import {getCoords} from '../../hooks/useLocation';
 import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
 import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
 import {GPSPermissionsModal} from './GPSPermissions/GPSPermissionsModal';
-import {TrackPathLayer} from './track/TrackPathLayer';
+import {TrackPathLayer} from './path/TrackPathLayer';
 import {UserLocation} from './UserLocation';
 import {useSharedLocationContext} from '../../contexts/SharedLocationContext';
 

@@ -1,9 +1,9 @@
 import {MarkerView} from '@rnmapbox/maps';
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {useCurrentTrackStore} from '../../../hooks/tracks/useCurrentTrackStore';
-import {useTrackTimerContext} from '../../../contexts/TrackTimerContext';
-import {useSharedLocationContext} from '../../../contexts/SharedLocationContext';
+import {useCurrentTrackStore} from '../../hooks/tracks/useCurrentTrackStore';
+import {useTrackTimerContext} from '../../contexts/TrackTimerContext';
+import {useSharedLocationContext} from '../../contexts/SharedLocationContext';
 
 export const UserTooltipMarker = () => {
   const {timer} = useTrackTimerContext();

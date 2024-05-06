@@ -73,7 +73,7 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
         </Pressable>
       ),
     });
-  }, [navigation]);
+  }, [navigation, route.params.trackId]);
 
   const {data: track} = useTrackQuery(route.params.trackId);
   const {data: observations} = useObservations();

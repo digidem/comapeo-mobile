@@ -63,7 +63,6 @@ import {
   createTrackNavigationOptions,
   TrackScreen,
 } from '../../screens/Track/TrackScreen.tsx';
-import {SaveTrackScreen} from '../../screens/MapScreen/track/SaveTrackScreen';
 import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/InviteDeclined';
 import {UnableToCancelInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/UnableToCancelInvite';
 import {SharedLocationContextProvider} from '../../contexts/SharedLocationContext';
@@ -75,6 +74,7 @@ import {
   ManualGpsScreen,
   createNavigationOptions as createManualGpsNavigationOptions,
 } from '../../screens/ManualGpsScreen';
+import {DARK_GREY} from '../../lib/styles.ts';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -192,7 +192,7 @@ const HomeTabs = () => {
         }}
       />
 
-      {process.env.FEATURE_TRACKS && (
+      {true && (
         <Tab.Screen
           name="Tracking"
           options={{
@@ -376,12 +376,17 @@ export const createDefaultScreenGroup = (
       component={LocationInfoScreen}
       options={createLocationInfoNavOptions({intl})}
     />
-    <RootStack.Screen name="SaveTrack" component={SaveTrackScreen} />
     <RootStack.Screen
       name="TrackEdit"
       component={TrackEditScreen}
-      options={{
-        headerShown: false,
+      options={({route}) => {
+        const trackId = route.params?.trackId;
+        return {
+          headerTitle: trackId
+            ? intl(TrackEditScreen.editTitle)
+            : intl(TrackEditScreen.navTitle),
+          headerTintColor: DARK_GREY,
+        };
       }}
     />
     <RootStack.Screen

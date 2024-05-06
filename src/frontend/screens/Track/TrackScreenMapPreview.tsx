@@ -2,9 +2,8 @@ import React, {FC} from 'react';
 import {StyleSheet} from 'react-native';
 import MapboxGL from '@rnmapbox/maps';
 import {MAP_STYLE} from '../MapScreen';
-import {DisplayedTrackPathLayer} from '../MapScreen/track/DisplayedTrackPathLayer.tsx';
+import {PathLayer} from '../MapScreen/path/PathLayer.tsx';
 import {LocationHistoryPoint} from '../../sharedTypes/location.ts';
-import CheapRuler from 'cheap-ruler';
 
 interface TrackScreenMapPreview {
   locationHistory: LocationHistoryPoint[];
@@ -37,10 +36,7 @@ export const TrackScreenMapPreview: FC<TrackScreenMapPreview> = ({
           paddingBottom: 25,
         }}
       />
-      <DisplayedTrackPathLayer
-        onPress={() => {}}
-        locationHistory={locationHistory}
-      />
+      <PathLayer onPress={() => {}} locationHistory={locationHistory} />
     </MapboxGL.MapView>
   );
 };

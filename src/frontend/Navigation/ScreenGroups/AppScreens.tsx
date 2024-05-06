@@ -192,7 +192,7 @@ const HomeTabs = () => {
         }}
       />
 
-      {true && (
+      {process.env.FEATURE_TRACKS && (
         <Tab.Screen
           name="Tracking"
           options={{

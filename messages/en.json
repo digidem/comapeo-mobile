@@ -25,8 +25,14 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "Discard observation?"
   },
+  "Modal.DiscardTrack.defaultButton": {
+    "message": "Continue Editing"
+  },
   "Modal.DiscardTrack.description": {
     "message": "Your Track will not be saved. This cannot be undone."
+  },
+  "Modal.DiscardTrack.discardButton": {
+    "message": "Discard Track"
   },
   "Modal.DiscardTrack.title": {
     "message": "Discard Track?"
@@ -563,6 +569,10 @@
     "description": "Title for new track screen",
     "message": "New Track"
   },
+  "screens.SaveTrack.TrackCreateView.title": {
+    "description": "Title for new track screen",
+    "message": "New Track"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "What is happening here?"
@@ -576,8 +586,8 @@
     "message": "Details"
   },
   "screens.SaveTrack.TrackEditView.title": {
-    "description": "Title for new track screen",
-    "message": "New Track"
+    "description": "Title for edit track screen",
+    "message": "Edit Track"
   },
   "screens.SaveTrack.track": {
     "description": "Category title for new track screen",

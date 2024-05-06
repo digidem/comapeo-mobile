@@ -8,6 +8,12 @@ const NAME =
     process.env.APP_VARIANT
   ] ?? '';
 
+/**
+ * @param {object} opts
+ * @param {import('@expo/config-types').ExpoConfig} opts.config
+ *
+ * @returns {import('@expo/config-types').ExpoConfig}
+ */
 module.exports = ({config}) => ({
   ...config,
   extra: {

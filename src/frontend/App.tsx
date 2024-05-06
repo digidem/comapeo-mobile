@@ -20,6 +20,14 @@ import {
   createLocalDiscoveryController,
 } from './contexts/LocalDiscoveryContext';
 import {Loading} from './sharedComponents/Loading';
+import * as Sentry from '@sentry/react-native';
+
+Sentry.init({
+  dsn: 'https://e0e02907e05dc72a6da64c3483ed88a6@o4507148235702272.ingest.us.sentry.io/4507170965618688',
+  debug:
+    process.env.APP_VARIANT === 'development' ||
+    process.env.APP_VARIANT === 'test', // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
+});
 
 const queryClient = new QueryClient();
 const messagePort = new MessagePortLike();
@@ -62,4 +70,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Sentry.wrap(App);

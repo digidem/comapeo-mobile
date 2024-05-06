@@ -75,7 +75,7 @@ export async function init({
   const privateStorageDir = rnBridge.app.datadir()
   const dbDir = join(privateStorageDir, DB_DIR_NAME)
   const indexDir = join(privateStorageDir, CORE_STORAGE_DIR_NAME)
-  const staticStylesDir = join(sharedStoragePath, 'styles', 'default')
+  const staticStylesDir = join(sharedStoragePath, 'styles')
 
   mkdirSync(dbDir, { recursive: true })
   mkdirSync(indexDir, { recursive: true })

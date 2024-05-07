@@ -27,6 +27,8 @@ export type HomeTabsList = {
   ObservationsList: undefined;
 };
 
+export type TabName = keyof HomeTabsList;
+
 export type AppList = {
   Home: NavigatorScreenParams<HomeTabsList>;
   GpsModal: undefined;

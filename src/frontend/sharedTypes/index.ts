@@ -1,13 +1,10 @@
 import {ImageStyle, StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {Observation, ObservationValue} from '@mapeo/schema';
-import {HomeTabsList} from './navigation';
 export interface TabBarIconProps {
   size: number;
   focused: boolean;
   color: string;
 }
-
-export type TabName = keyof HomeTabsList;
 
 export type ViewStyleProp = StyleProp<ViewStyle>;
 export type TextStyleProp = StyleProp<TextStyle>;

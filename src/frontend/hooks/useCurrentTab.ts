@@ -1,7 +1,7 @@
 import {EventArg} from '@react-navigation/native';
 import {useGPSModalContext} from '../contexts/GPSModalContext';
 import {useTabNavigationStore} from './useTabNavigationStore';
-import {TabName} from '../sharedTypes';
+import {TabName} from '../sharedTypes/navigation';
 
 const tabNames: Set<TabName> = new Set([
   'Map',

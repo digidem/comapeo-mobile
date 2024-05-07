@@ -24,7 +24,7 @@ import {AppList} from './ScreenGroups/AppScreens';
 import {usePresetsQuery} from '../hooks/server/presets';
 import {initializeInviteListener} from '../initializeInviteListener';
 import {ProjectInviteBottomSheet} from '../sharedComponents/ProjectInviteBottomSheet';
-import {useCurrentTrackStore} from '../hooks/tracks/useCurrentTrackStore.ts';
+import {usePersistedTrack} from '../hooks/persistedState/usePersistedTrack.ts';
 
 // import {devExperiments} from '../lib/DevExperiments';
 
@@ -49,7 +49,7 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   const existingObservation = usePersistedDraftObservation(
     store => store.value,
   );
-  const existingTrack = useCurrentTrackStore();
+  const existingTrack = usePersistedTrack();
   const {data: presets} = usePresetsQuery();
   const deviceInfo = useDeviceInfo();
   usePrefetchLastKnownLocation();

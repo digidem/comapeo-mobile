@@ -3,7 +3,7 @@ import React, {FC} from 'react';
 import {DateTime} from 'luxon';
 import {TabName} from '../../../../Navigation/types.ts';
 import {useCreateTrack} from '../../../../hooks/server/track.ts';
-import {useCurrentTrackStore} from '../../../../hooks/tracks/useCurrentTrackStore.ts';
+import {usePersistedTrack} from '../../../../hooks/persistedState/usePersistedTrack.ts';
 import {
   useNavigationFromHomeTabs,
   useNavigationFromRoot,
@@ -16,7 +16,7 @@ interface SaveTrackButton {
 export const SaveTrackButton: FC<SaveTrackButton> = ({description}) => {
   const saveTrack = useCreateTrack();
   const navigation = useNavigationFromRoot();
-  const currentTrack = useCurrentTrackStore();
+  const currentTrack = usePersistedTrack();
 
   const handleSaveClick = () => {
     saveTrack.mutate(

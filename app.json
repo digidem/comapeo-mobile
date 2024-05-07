@@ -38,7 +38,8 @@
           "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
           "recordAudioAndroid": true
         }
-      ]
+      ],
+      ["./plugins/removeExpoInputStyles.js"]
     ],
     "android": {
       "versionCode": 1,

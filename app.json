@@ -41,7 +41,8 @@
           "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
           "recordAudioAndroid": true
         }
-      ]
+      ],
+      ["./expo-config-plugins/removeExpoInputStyles.js"]
     ],
     "android": {
       "versionCode": 1,

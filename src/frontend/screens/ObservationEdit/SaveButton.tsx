@@ -4,7 +4,6 @@ import debug from 'debug';
 import {defineMessages, useIntl} from 'react-intl';
 
 import {IconButton} from '../../sharedComponents/IconButton';
-import {SaveIcon} from '../../sharedComponents/icons/SaveIcon';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useCreateObservation} from '../../hooks/server/observations';
@@ -14,6 +13,7 @@ import {useCreateBlobMutation} from '../../hooks/server/media';
 import {DraftPhoto, Photo} from '../../contexts/PhotoPromiseContext/types';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {useCurrentTrackStore} from '../../hooks/tracks/useCurrentTrackStore';
+import SaveCheck from '../../images/CheckMark.svg';
 
 const m = defineMessages({
   noGpsTitle: {
@@ -195,7 +195,7 @@ export const SaveButton = ({
     },
     {
       text: t(m.manualEntry),
-      onPress: () => {},
+      onPress: () => navigation.navigate('ManualGpsScreen'),
       style: 'cancel',
     },
     {
@@ -213,11 +213,12 @@ export const SaveButton = ({
       return;
     }
 
-    const hasLocation = value.lat && value.lon;
+    const hasLocation = value.lat !== undefined && value.lon !== undefined;
     const locationSetManually = value.metadata.manualLocation;
     if (
-      locationSetManually ||
-      (hasLocation && isGpsAccurate(value.metadata.position?.coords?.accuracy))
+      hasLocation &&
+      (locationSetManually ||
+        isGpsAccurate(value.metadata.position?.coords?.accuracy))
     ) {
       // Observation has a location, which is either from an accurate GPS
       // reading, or is manually entered
@@ -241,7 +242,7 @@ export const SaveButton = ({
     </View>
   ) : (
     <IconButton onPress={handleSavePress} testID="saveButton">
-      <SaveIcon inprogress={false} />
+      <SaveCheck />
     </IconButton>
   );
 };

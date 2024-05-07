@@ -7,7 +7,6 @@ import {useTabNavigationStore} from '../../../hooks/useTabNavigationStore.ts';
 import {BottomSheetModal, BottomSheetView} from '@gorhom/bottom-sheet';
 import {TAB_BAR_HEIGHT} from '../../../Navigation/ScreenGroups/AppScreens';
 import {StyleSheet} from 'react-native';
-import {TabName} from '../../../Navigation/types';
 import {useFocusEffect} from '@react-navigation/native';
 
 export const GPSPermissionsModal = React.memo(() => {
@@ -25,7 +24,7 @@ export const GPSPermissionsModal = React.memo(() => {
   }, [backgroundStatus, foregroundStatus, isGranted]);
 
   const onBottomSheetDismiss = () => {
-    setCurrentTab(TabName.Map);
+    setCurrentTab('Map');
   };
   useFocusEffect(() => {
     return () => bottomSheetRef?.current?.close();

@@ -1,11 +1,17 @@
+import {DeviceType} from 'react-native-device-info';
+import {DeviceRoleForNewInvite} from '../sharedTypes';
+import {HomeTabsList} from './ScreenGroups/AppScreens';
 export interface TabBarIconProps {
   size: number;
   focused: boolean;
   color: string;
 }
 
-export enum TabName {
-  Map = 'Map',
-  Camera = 'Camera',
-  Tracking = 'Tracking',
-}
+export type TabName = keyof HomeTabsList;
+
+export type InviteProps = {
+  name: string;
+  deviceType: DeviceType;
+  deviceId: string;
+  role: DeviceRoleForNewInvite;
+};

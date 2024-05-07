@@ -5,7 +5,7 @@ import {
   StyleSheet,
   TouchableNativeFeedback,
 } from 'react-native';
-import {Text} from '../../sharedComponents/Text';
+import {Text} from '../Text';
 import {defineMessages, FormattedMessage} from 'react-intl';
 
 const m = defineMessages({
@@ -107,7 +107,8 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     flex: 0,
-    height: 60,
+    paddingVertical: 24,
+    paddingHorizontal: 20,
     flexDirection: 'row',
     alignItems: 'center',
     borderTopWidth: 1,
@@ -117,8 +118,7 @@ const styles = StyleSheet.create({
     flex: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft: 30,
-    paddingRight: 30,
+    paddingRight: 10,
   },
   itemLabel: {
     flex: 1,

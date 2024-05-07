@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {TabBarIconProps, TabName} from '../../types';
+import {TabBarIconProps} from '../../types';
 import {TabBarIcon} from './TabBarIcon';
 import {useTabNavigationStore} from '../../../hooks/useTabNavigationStore.ts';
 
@@ -9,7 +9,7 @@ export const CameraTabBarIcon: FC<TabBarIconProps> = props => {
   return (
     <TabBarIcon
       {...props}
-      focused={props.focused && currentTab !== TabName.Tracking}
+      focused={props.focused && currentTab !== 'Tracking'}
       iconName="photo-camera"
     />
   );

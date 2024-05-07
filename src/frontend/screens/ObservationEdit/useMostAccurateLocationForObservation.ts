@@ -20,13 +20,21 @@ export function useMostAccurateLocationForObservation() {
   const locationServicesTurnedOff =
     providerStatus && !providerStatus.locationServicesEnabled;
 
-  if (locationServicesTurnedOff && !value?.metadata.position) {
+  const isLocationManuallySet = !!value?.metadata.manualLocation;
+
+  // If location services are turned off (and the observation location is not manually set),
+  // we want to immediately update the draft so that this hook does not return a stale position
+  if (
+    locationServicesTurnedOff &&
+    value?.metadata.position &&
+    !isLocationManuallySet
+  ) {
     updateObservationPosition({position: undefined, manualLocation: false});
   }
 
   useFocusEffect(
     useCallback(() => {
-      if (!permissions || !permissions.granted) return;
+      if (!permissions || !permissions.granted || isLocationManuallySet) return;
 
       let ignore = false;
       const locationSubscriptionProm = watchPositionAsync(
@@ -61,7 +69,7 @@ export function useMostAccurateLocationForObservation() {
         ignore = true;
         locationSubscriptionProm.then(sub => sub.remove());
       };
-    }, [permissions, updateObservationPosition]),
+    }, [permissions, updateObservationPosition, isLocationManuallySet]),
   );
 
   return value?.metadata.position;

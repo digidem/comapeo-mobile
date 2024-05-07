@@ -73,26 +73,12 @@ interface Props extends React.PropsWithChildren<{}> {
   onDismiss?: () => void;
   // Triggered by: Android hardware back press and gesture back swipe
   onBack?: () => void;
-  disableBackrop?: boolean;
   fullHeight?: boolean;
 }
 
 export const BottomSheetModal = React.forwardRef<RNBottomSheetModal, Props>(
-  ({children, isOpen, onBack, disableBackrop, fullHeight}, ref) => {
+  ({children, isOpen, onBack, fullHeight}, ref) => {
     useBackHandler(isOpen, onBack);
-
-    const renderBackdrop = React.useCallback(
-      (props: BottomSheetBackdropProps) => {
-        return (
-          <BottomSheetBackdrop
-            {...props}
-            pressBehavior="none"
-            disappearsOnIndex={-1}
-          />
-        );
-      },
-      [],
-    );
 
     return (
       <RNBottomSheetModal
@@ -102,7 +88,7 @@ export const BottomSheetModal = React.forwardRef<RNBottomSheetModal, Props>(
             ? {borderRadius: 0}
             : {borderColor: DARK_GREY, borderWidth: 1},
         ]}
-        backdropComponent={disableBackrop ? null : renderBackdrop}
+        backdropComponent={DefaultBackdrop}
         enableContentPanningGesture={false}
         enableHandlePanningGesture={false}
         snapPoints={!fullHeight ? undefined : ['100%']}
@@ -113,5 +99,15 @@ export const BottomSheetModal = React.forwardRef<RNBottomSheetModal, Props>(
     );
   },
 );
+
+function DefaultBackdrop(props: BottomSheetBackdropProps) {
+  return (
+    <BottomSheetBackdrop
+      {...props}
+      pressBehavior="none"
+      disappearsOnIndex={-1}
+    />
+  );
+}
 
 export {BottomSheetContent} from '../BottomSheet';

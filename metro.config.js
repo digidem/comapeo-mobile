@@ -1,29 +1,31 @@
 const {getDefaultConfig} = require('expo/metro-config');
 const path = require('path');
 
-module.exports = (() => {
-  const projectRoot = __dirname;
-  const workspaceRoot = path.resolve(projectRoot);
-  const config = getDefaultConfig(__dirname);
+const projectRoot = __dirname;
+const workspaceRoot = path.resolve(projectRoot);
 
-  const {transformer, resolver} = config;
+/** @type {import('expo/metro-config').MetroConfig} */
+const config = getDefaultConfig(__dirname);
 
-  config.transformer = {
-    ...transformer,
+module.exports = {
+  ...config,
+  transformer: {
+    ...config.transformer,
+    // For https://github.com/kristerkari/react-native-svg-transformer
     babelTransformerPath: require.resolve('react-native-svg-transformer'),
-  };
-  config.resolver = {
-    ...resolver,
-    assetExts: resolver.assetExts.filter(ext => ext !== 'svg'),
-    sourceExts: [...resolver.sourceExts, 'svg'],
-  };
-
-  config.resolver.nodeModulesPaths = [
-    path.resolve(projectRoot, 'node_modules'),
-    path.resolve(workspaceRoot, 'node_modules'),
-  ];
-  // 3. Force Metro to resolve (sub)dependencies only from the `nodeModulesPaths`
-  config.resolver.disableHierarchicalLookup = true;
-
-  return config;
-})();
+  },
+  resolver: {
+    ...config.resolver,
+    // For nodejs-mobile
+    blockList: [/nodejs-assets\/.*/],
+    // For https://github.com/kristerkari/react-native-svg-transformer
+    assetExts: config.resolver.assetExts.filter(ext => ext !== 'svg'),
+    sourceExts: [...config.resolver.sourceExts, 'svg'],
+    nodeModulesPaths: [
+      path.resolve(projectRoot, 'node_modules'),
+      path.resolve(workspaceRoot, 'node_modules'),
+    ],
+    // 3. Force Metro to resolve (sub)dependencies only from the `nodeModulesPaths`
+    disableHierarchicalLookup: true,
+  },
+};

@@ -29,30 +29,6 @@ interface LanguageName {
   englishName: string;
 }
 
-const translatedLocales = Object.keys(messages) as Array<TranslatedLocales>;
-
-export const supportedLanguages: LanguageName[] = translatedLocales
-  .filter(locale => {
-    const hasAtLeastOneTranslatedString =
-      Object.keys(messages[locale]).length > 0;
-    // This will show a typescript error if the language name does not exist
-    const hasTranslatedLanguageName = languages[locale];
-    if (!hasTranslatedLanguageName) {
-      console.warn(
-        `Locale "${locale}" is not available in Mapeo because we do not have
-a language name and translations in \`src/frontend/languages.json\``,
-      );
-    }
-    return hasAtLeastOneTranslatedString && hasTranslatedLanguageName;
-  })
-  .map(locale => ({
-    locale,
-    ...languages[locale],
-  }))
-  .sort((a, b) => {
-    return a.englishName.localeCompare(b.englishName);
-  });
-
 export const IntlProvider = ({children}: {children: React.ReactNode}) => {
   const appLocale = usePersistedLocale(store => store.locale);
 
@@ -88,7 +64,30 @@ function onError(e: Error) {
 export function getSupportedLocale(
   locale: string,
 ): keyof typeof languages | undefined {
-  if (supportedLanguages?.find(lang => lang.locale === locale))
+  const translatedLocales = Object.keys(messages) as Array<TranslatedLocales>;
+  const supportedLanguages: LanguageName[] = translatedLocales
+    .filter(locale => {
+      const hasAtLeastOneTranslatedString =
+        Object.keys(messages[locale]).length > 0;
+      // This will show a typescript error if the language name does not exist
+      const hasTranslatedLanguageName = languages[locale];
+      if (!hasTranslatedLanguageName) {
+        console.warn(
+          `Locale "${locale}" is not available in Mapeo because we do not have
+a language name and translations in \`src/frontend/languages.json\``,
+        );
+      }
+      return hasAtLeastOneTranslatedString && hasTranslatedLanguageName;
+    })
+    .map(locale => ({
+      locale,
+      ...languages[locale],
+    }))
+    .sort((a, b) => {
+      return a.englishName.localeCompare(b.englishName);
+    });
+
+  if (supportedLanguages.find(lang => lang.locale === locale))
     return locale as keyof typeof languages;
   const nonRegionalLocale = locale.split('-')[0];
   if (supportedLanguages?.find(({locale}) => locale === nonRegionalLocale))

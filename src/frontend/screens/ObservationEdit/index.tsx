@@ -6,7 +6,7 @@ import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersis
 import {View, ScrollView, StyleSheet} from 'react-native';
 import {LocationView} from './LocationView';
 import {DescriptionField} from './DescriptionField';
-import {BottomSheet} from './BottomSheet';
+import {BottomSheet} from '../../sharedComponents/BottomSheet/BottomSheet';
 import {ThumbnailScrollView} from '../../sharedComponents/ThumbnailScrollView';
 import {PresetView} from './PresetView';
 import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
@@ -50,15 +50,15 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
         <SaveButton observationId={observationId} openErrorModal={openSheet} />
       ),
     });
-  }, [navigation, openSheet]);
+  }, [navigation, openSheet, observationId]);
 
   const handleCameraPress = React.useCallback(() => {
     navigation.navigate('AddPhoto');
   }, [navigation]);
 
-  const handleDetailsPress = React.useCallback(() => {
-    navigation.navigate('ObservationDetails', {question: 1});
-  }, [navigation]);
+  // const handleDetailsPress = React.useCallback(() => {
+  //   navigation.navigate('ObservationDetails', {question: 1});
+  // }, [navigation]);
 
   const bottomSheetItems = [
     {

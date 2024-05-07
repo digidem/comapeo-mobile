@@ -20,60 +20,60 @@ import {Text} from '../sharedComponents/Text';
 
 const m = defineMessages({
   gpsHeader: {
-    id: 'screens.GpsModal.gpsHeader',
+    id: 'screens.LocationInfoScreen.gpsHeader',
     defaultMessage: 'Current GPS Location',
     description: 'Header for GPS screen',
   },
   lastUpdate: {
-    id: 'screens.GpsModal.lastUpdate',
+    id: 'screens.LocationInfoScreen.lastUpdate',
     defaultMessage: 'Last update',
     description: 'Section title for time of last GPS update',
   },
   utm: {
-    id: 'screens.GpsModal.locationUTM',
+    id: 'screens.LocationInfoScreen.locationUTM',
     defaultMessage: 'Coordinates UTM',
     description: 'Section title for UTM coordinates',
   },
   dms: {
-    id: 'screens.GpsModal.locationDMS',
+    id: 'screens.LocationInfoScreen.locationDMS',
     defaultMessage: 'Coordinates DMS',
     description: 'Section title for DMS coordinates',
   },
   dd: {
-    id: 'screens.GpsModal.locationDD',
+    id: 'screens.LocationInfoScreen.locationDD',
     defaultMessage: 'Coordinates Decimal Degrees',
     description: 'Section title for DD coordinates',
   },
   details: {
-    id: 'screens.GpsModal.details',
+    id: 'screens.LocationInfoScreen.details',
     defaultMessage: 'Details',
     description: 'Section title for details about current position',
   },
   yes: {
-    id: 'screens.GpsModal.yes',
+    id: 'screens.LocationInfoScreen.yes',
     defaultMessage: 'Yes',
     description: 'if a location sensor is active yes/no',
   },
   no: {
-    id: 'screens.GpsModal.no',
+    id: 'screens.LocationInfoScreen.no',
     defaultMessage: 'No',
     description: 'if a location sensor is active yes/no',
   },
   locationSensors: {
-    id: 'screens.GpsModal.locationSensors',
+    id: 'screens.LocationInfoScreen.locationSensors',
     defaultMessage: 'Sensor Status',
     description: 'Heading for section about location sensor status',
   },
 });
 
-const GpsModalRow = ({label, value}: {label: string; value: string}) => (
+const InfoRow = ({label, value}: {label: string; value: string}) => (
   <View style={styles.row}>
     <Text style={styles.rowLabel}>{label}</Text>
     <Text style={styles.rowValue}>{value}</Text>
   </View>
 );
 
-export const GpsModal = () => {
+export const LocationInfoScreen = () => {
   const {location} = useLocation({maxDistanceInterval: 0});
   const lastKnownLocationQuery = useLastKnownLocation();
   const provider = useLocationProviderStatus();
@@ -109,7 +109,7 @@ export const GpsModal = () => {
               <FormattedMessage {...m.details} />
             </Text>
             {Object.entries(location.coords).map(([key, value]) => (
-              <GpsModalRow
+              <InfoRow
                 key={key}
                 label={key}
                 value={typeof value === 'number' ? value.toFixed(5) : ''}
@@ -123,11 +123,7 @@ export const GpsModal = () => {
               <FormattedMessage {...m.locationSensors} />
             </Text>
             {Object.entries(provider).map(([key, value]) => (
-              <GpsModalRow
-                key={key}
-                label={key}
-                value={t(value ? m.yes : m.no)}
-              />
+              <InfoRow key={key} label={key} value={t(value ? m.yes : m.no)} />
             ))}
           </>
         )}

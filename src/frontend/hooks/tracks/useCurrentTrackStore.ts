@@ -8,7 +8,7 @@ type TracksStoreState = {
   distance: number;
   addNewObservation: (observationId: string) => void;
   addNewLocations: (locationData: LocationHistoryPoint[]) => void;
-  clearLocationHistory: () => void;
+  clearCurrentTrack: () => void;
   setTracking: (val: boolean) => void;
 } & (
   | {
@@ -54,7 +54,14 @@ export const useCurrentTrackStore = create<TracksStoreState>(set => ({
         distance: distance + calculateTotalDistance([lastLocation, ...data]),
       };
     }),
-  clearLocationHistory: () => set(() => ({locationHistory: []})),
+  clearCurrentTrack: () =>
+    set(() => ({
+      locationHistory: [],
+      trackingSince: null,
+      distance: 0,
+      isTracking: false,
+      observations: [],
+    })),
   setTracking: (val: boolean) =>
     set(() =>
       val

@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {TabBarIcon} from './TabBarIcon';
 import {useTracking} from '../../../hooks/tracks/useTracking';
 import {Text} from '../../../sharedComponents/Text';
-import {TabBarIconProps, TabName} from '../../types';
+import {TabBarIconProps} from '../../types';
 import {useTrackTimerContext} from '../../../contexts/TrackTimerContext';
 import {useTabNavigationStore} from '../../../hooks/useTabNavigationStore.ts';
 
@@ -22,7 +22,7 @@ export const TrackingTabBarIcon: FC<TabBarIconProps> = props => {
       )}
       <TabBarIcon
         {...props}
-        focused={currentTab === TabName.Tracking}
+        focused={currentTab === 'Tracking'}
         iconName="nordic-walking"
       />
     </>

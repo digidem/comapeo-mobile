@@ -1,38 +1,24 @@
 diff --git a/node_modules/nodejs-mobile-react-native/android/build.gradle b/node_modules/nodejs-mobile-react-native/android/build.gradle
-index b1957a5..724c377 100644
+index f60139f..a6fac6f 100644
 --- a/node_modules/nodejs-mobile-react-native/android/build.gradle
 +++ b/node_modules/nodejs-mobile-react-native/android/build.gradle
-@@ -371,6 +371,7 @@ if ("1".equals(shouldRebuildNativeModules)) {
-             delete fileTree(dir: "${rootProject.buildDir}/nodejs-native-assets-temp-build/nodejs-native-assets-${abi_name}/nodejs-project/node_modules/").matching {
-                 include "**/*.node" // Look for all .node files
-                 exclude "**/prebuilds/android-${temp_arch}/*" // Don't touch the correct prebuilds
-+                exclude "**/build/Release/*" // Don't touch the prebuilds moved here from previous run of DetectCorrectPrebuilds step
-             }
+@@ -411,6 +411,8 @@ if ("1".equals(shouldRebuildNativeModules)) {
          }
  
-@@ -417,9 +418,9 @@ if ("1".equals(shouldRebuildNativeModules)) {
-             if (nodeVersionResult.exitValue != 0) {
-                 throw new GradleException("Failed to get node version: ${nodeVersionResult.errorOutput}")
-             }
--            if (nodeVersionStdout.toString().trim() != "${_nodeVersionRequired}") {
--                throw new GradleException("nodejs-mobile-react-native requires Node.js version ${_nodeVersionRequired}, but found ${nodeVersionStdout.toString().trim()}")
--            }
-+            // if (nodeVersionStdout.toString().trim() != "${_nodeVersionRequired}") {
-+            //     throw new GradleException("nodejs-mobile-react-native requires Node.js version ${_nodeVersionRequired}, but found ${nodeVersionStdout.toString().trim()}")
-+            // }
-             inputs.file "${rootProject.buildDir}/nodejs-native-assets-temp-build/nodejs-native-assets-${abi_name}/copy.timestamp"
-             outputs.dir "${rootProject.buildDir}/nodejs-native-assets-temp-build/nodejs-native-assets-${abi_name}/nodejs-project/"
-             workingDir "${rootProject.buildDir}/nodejs-native-assets-temp-build/nodejs-native-assets-${abi_name}/nodejs-project/"
-diff --git a/node_modules/nodejs-mobile-react-native/scripts/ios-build-native-modules.sh b/node_modules/nodejs-mobile-react-native/scripts/ios-build-native-modules.sh
-index e743704..2a058d7 100644
---- a/node_modules/nodejs-mobile-react-native/scripts/ios-build-native-modules.sh
-+++ b/node_modules/nodejs-mobile-react-native/scripts/ios-build-native-modules.sh
-@@ -14,7 +14,7 @@ if [ "$CURRENT_NODE_VERSION" -ne "$DESIRED_NODE_VERSION" ]; then
-   echo "nodejs-mobile-react-native requires Node.js version \
- $DESIRED_NODE_VERSION accessible from Xcode, but found \
- $(node -p 'process.versions.node')"
--  exit 1
-+  # exit 1
- fi
+         task "BuildNpmModules${abi_name}" (type:Exec) {
++            // We don't need this because we solely rely on using prebuilds
++            enabled = false
+             dependsOn "DetectCorrectPrebuilds${abi_name}"
+             description = "Building native modules for ${abi_name}."
+             def nodeVersionStdout = new ByteArrayOutputStream()
+@@ -467,7 +469,9 @@ if ("1".equals(shouldRebuildNativeModules)) {
+         }
  
- # This is our nodejs-project folder that was copied to the Xcode build folder
+         task "CopyBuiltNpmAssets${abi_name}" (type:Sync) {
+-            dependsOn "BuildNpmModules${abi_name}"
++            // We disabled the BuildNpmModules task above
++            // dependsOn "BuildNpmModules${abi_name}"
++            dependsOn "DetectCorrectPrebuilds${abi_name}"
+             description = "Copying node assets with build native modules for ${abi_name}."
+             from "${rootProject.buildDir}/nodejs-native-assets-temp-build/nodejs-native-assets-${abi_name}/nodejs-project/"
+             into "${rootProject.buildDir}/nodejs-native-assets/nodejs-native-assets-${abi_name}/"

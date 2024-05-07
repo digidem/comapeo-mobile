@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {NativeNavigationComponent} from '../../../../../sharedTypes';
+import {NativeNavigationComponent} from '../../../../../sharedTypes/navigation';
 import {defineMessages} from 'react-intl';
 import {useBottomSheetModal} from '../../../../../sharedComponents/BottomSheetModal';
 import {ErrorModal} from '../../../../../sharedComponents/ErrorModal';

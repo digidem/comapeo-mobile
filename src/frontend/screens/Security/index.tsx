@@ -4,7 +4,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {FormattedMessage, defineMessages} from 'react-intl';
 
 import {List, ListItem, ListItemText} from '../../sharedComponents/List';
-import {NativeNavigationComponent} from '../../sharedTypes';
+import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {MEDIUM_GREY, RED} from '../../lib/styles';
 import {Text} from 'react-native';
 import {useSecurityContext} from '../../contexts/SecurityContext';

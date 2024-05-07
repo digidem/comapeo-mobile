@@ -6,10 +6,10 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {OBSCURE_PASSCODE} from '../constants';
 import {LIGHT_GREY} from '../lib/styles';
 import {Text} from '../sharedComponents/Text';
-import {NativeNavigationComponent} from '../sharedTypes';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {useSecurityContext} from '../contexts/SecurityContext';
 import {usePersistedPasscode} from '../hooks/persistedState/usePersistedPasscode';
+import {NativeNavigationComponent} from '../sharedTypes/navigation';
 
 const m = defineMessages({
   title: {

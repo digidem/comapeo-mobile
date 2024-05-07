@@ -6,7 +6,7 @@ import {
   ListItemIcon,
 } from '../../../sharedComponents/List';
 import {FormattedMessage, defineMessages} from 'react-intl';
-import {NativeNavigationComponent} from '../../../sharedTypes';
+import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
 
 const m = defineMessages({
   title: {

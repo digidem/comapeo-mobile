@@ -1,6 +1,5 @@
 import {ImageStyle, StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {MessageDescriptor} from 'react-intl';
 import {Observation, ObservationValue} from '@mapeo/schema';
 import {AppStackList, HomeTabsList} from './navigation';
 export interface TabBarIconProps {
@@ -19,11 +18,6 @@ export type IconSize = 'small' | 'medium' | 'large';
 
 export type NativeRootNavigationProps<ScreenName extends keyof AppStackList> =
   NativeStackScreenProps<AppStackList, ScreenName>;
-
-export type NativeNavigationComponent<ScreenName extends keyof AppStackList> =
-  React.FC<NativeRootNavigationProps<ScreenName>> & {
-    navTitle: MessageDescriptor;
-  };
 
 export type Status = 'idle' | 'loading' | 'error' | 'success' | void;
 

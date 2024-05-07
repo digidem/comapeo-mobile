@@ -94,7 +94,6 @@
     "utm": "^1.1.1",
     "validate-color": "^2.2.4",
     "zustand": "^4.4.6",
-    "expo-dev-client": "~3.3.11",
     "expo-splash-screen": "~0.26.5"
   },
   "devDependencies": {

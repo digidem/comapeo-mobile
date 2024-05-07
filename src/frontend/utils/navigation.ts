@@ -1,8 +1,8 @@
-import {DeviceNamingSceens} from '../Navigation/Stack/DeviceNamingScreens';
 import {ClientGeneratedObservation} from '../sharedTypes';
 import {Observation, Preset} from '@mapeo/schema';
 import {AppList} from '../Navigation/Stack/AppScreens';
 import {matchPreset} from '../lib/utils';
+import {DeviceNamingSceens} from '../sharedTypes/navigation';
 
 export function getInitialRouteName(
   initialInfo:

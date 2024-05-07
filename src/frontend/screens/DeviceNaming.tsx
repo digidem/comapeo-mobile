@@ -13,7 +13,7 @@ import {Text} from '../sharedComponents/Text';
 import {Button} from '../sharedComponents/Button';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {defineMessages, useIntl} from 'react-intl';
-import {DeviceNamingSceens} from '../Navigation/Stack/DeviceNamingScreens';
+import {DeviceNamingSceens} from '../sharedTypes/navigation';
 
 const m = defineMessages({
   header: {

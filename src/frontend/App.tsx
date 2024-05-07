@@ -5,7 +5,6 @@ import {
 } from '@react-navigation/native';
 import {createMapeoClient} from '@mapeo/ipc';
 import {AppNavigator} from './AppNavigator';
-import {AppStackList} from './Navigation/Stack';
 import {IntlProvider} from './contexts/IntlContext';
 import {MessagePortLike} from './lib/MessagePortLike';
 import {initializeNodejs} from './initializeNodejs';
@@ -14,6 +13,7 @@ import {AppProviders} from './contexts/AppProviders';
 import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
 import {Loading} from './sharedComponents/Loading';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import {AppStackList} from './sharedTypes/navigation';
 
 const messagePort = new MessagePortLike();
 const mapeoApi = createMapeoClient(messagePort, {timeout: Infinity});

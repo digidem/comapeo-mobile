@@ -1,5 +1,11 @@
-import {NavigatorScreenParams} from '@react-navigation/native';
+import {
+  CompositeScreenProps,
+  NavigatorScreenParams,
+} from '@react-navigation/native';
 import type {RoleId, RoleIdForNewInvite} from '@mapeo/core/dist/roles';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {MessageDescriptor} from 'react-intl';
+import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 
 export type InviteProps = {
   name: string;
@@ -85,3 +91,33 @@ export type AppList = {
   SaveTrack: undefined;
   Sync: undefined;
 };
+
+export type DeviceNamingSceens = {
+  IntroToCoMapeo: undefined;
+  DeviceNaming: undefined;
+  Success: {deviceName: string};
+};
+
+export type AppStackList = AppList & DeviceNamingSceens;
+
+export type NativeRootNavigationProps<ScreenName extends keyof AppStackList> =
+  NativeStackScreenProps<AppStackList, ScreenName>;
+
+export type NativeNavigationComponent<ScreenName extends keyof AppStackList> =
+  React.FC<NativeRootNavigationProps<ScreenName>> & {
+    navTitle: MessageDescriptor;
+  };
+
+export type NativeNavigationScreenWithProps<
+  ScreenName extends keyof AppStackList,
+  T,
+> = React.FC<NativeStackScreenProps<AppStackList, ScreenName> & T> & {
+  navTitle: MessageDescriptor;
+};
+
+export type NativeHomeTabsNavigationProps<
+  ScreenName extends keyof HomeTabsList,
+> = CompositeScreenProps<
+  BottomTabScreenProps<HomeTabsList, ScreenName>,
+  NativeStackScreenProps<AppStackList>
+>;

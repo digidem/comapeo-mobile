@@ -51,6 +51,7 @@ export default ({config}) => {
           recordAudioAndroid: true,
         },
       ],
+      ['./expo-config-plugins/removeExpoInputStyles.js'],
     ],
     android: {
       versionCode: 1,

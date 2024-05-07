@@ -23,7 +23,7 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   usePrefetchLastKnownLocation();
   initializeInviteListener();
 
-  if (permissionAsked) {
+  if (permissionAsked && !deviceInfo.isPending) {
     BootSplash.hide();
   }
 
@@ -37,7 +37,7 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
         })}
         screenOptions={NavigatorScreenOptions}>
         {/*  Note that this does the same things as the strange syntax found in https://github.com/react-navigation/react-navigation/issues/9578#issuecomment-1022991270 `{createScreens()}` is equivalent to `{(() => createScreens())()}` Note that screen groups should have a `key` prop, so that React knows how to update them efficiently. */}
-        {deviceInfo.data.name
+        {deviceInfo.data?.name
           ? createDefaultScreenGroup(formatMessage)
           : createDeviceNamingScreens()}
       </RootStack.Navigator>

@@ -1,14 +1,10 @@
-import {
-  useMutation,
-  useSuspenseQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {useApi} from '../../contexts/ApiContext';
 
 export const useDeviceInfo = () => {
   const mapeoApi = useApi();
 
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: ['deviceInfo'],
     queryFn: async () => {
       return await mapeoApi.getDeviceInfo();

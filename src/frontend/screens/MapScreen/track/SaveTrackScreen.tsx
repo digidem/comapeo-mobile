@@ -18,7 +18,6 @@ import {TrackDescriptionField} from './saveTrack/TrackDescriptionField';
 import {useBottomSheetModal} from '../../../sharedComponents/BottomSheetModal';
 import DiscardIcon from '../../../images/delete.svg';
 import ErrorIcon from '../../../images/Error.svg';
-import {TabName} from '../../../Navigation/types.ts';
 import {usePersistedTrack} from '../../../hooks/persistedState/usePersistedTrack.ts';
 import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes.ts';
 import {useFocusEffect} from '@react-navigation/native';

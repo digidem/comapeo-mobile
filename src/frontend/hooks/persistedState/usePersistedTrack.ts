@@ -1,4 +1,3 @@
-import {create} from 'zustand';
 import {calculateTotalDistance} from '../../utils/distance.ts';
 import {LocationHistoryPoint} from '../../sharedTypes/location.ts';
 import {createPersistedState} from './createPersistedState.ts';

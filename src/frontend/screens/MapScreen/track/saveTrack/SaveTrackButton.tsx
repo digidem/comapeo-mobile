@@ -1,13 +1,9 @@
 import {Image, Pressable, StyleSheet} from 'react-native';
 import React, {FC} from 'react';
 import {DateTime} from 'luxon';
-import {TabName} from '../../../../Navigation/types.ts';
 import {useCreateTrack} from '../../../../hooks/server/track.ts';
 import {usePersistedTrack} from '../../../../hooks/persistedState/usePersistedTrack.ts';
-import {
-  useNavigationFromHomeTabs,
-  useNavigationFromRoot,
-} from '../../../../hooks/useNavigationWithTypes.ts';
+import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes.ts';
 
 interface SaveTrackButton {
   description: string;

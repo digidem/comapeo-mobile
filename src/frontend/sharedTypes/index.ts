@@ -1,8 +1,5 @@
 import {ImageStyle, StyleProp, TextStyle, ViewStyle} from 'react-native';
-import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
-import {CompositeScreenProps} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-
 import {MessageDescriptor} from 'react-intl';
 import {Observation, ObservationValue} from '@mapeo/schema';
 import {AppStackList, HomeTabsList} from './navigation';
@@ -34,13 +31,6 @@ export type NativeNavigationScreenWithProps<
 > = React.FC<NativeStackScreenProps<AppStackList, ScreenName> & T> & {
   navTitle: MessageDescriptor;
 };
-
-export type NativeHomeTabsNavigationProps<
-  ScreenName extends keyof HomeTabsList,
-> = CompositeScreenProps<
-  BottomTabScreenProps<HomeTabsList, ScreenName>,
-  NativeStackScreenProps<AppStackList>
->;
 
 export type Status = 'idle' | 'loading' | 'error' | 'success' | void;
 

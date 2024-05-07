@@ -15,13 +15,6 @@ export interface TabBarIconProps {
 
 export type TabName = keyof HomeTabsList;
 
-export type InviteProps = {
-  name: string;
-  deviceType: DeviceType;
-  deviceId: string;
-  role: DeviceRoleForNewInvite;
-};
-
 export type ViewStyleProp = StyleProp<ViewStyle>;
 export type TextStyleProp = StyleProp<TextStyle>;
 export type ImageStyleProp = StyleProp<ImageStyle>;

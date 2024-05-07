@@ -7,18 +7,18 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MessageDescriptor} from 'react-intl';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 
+export type DeviceType = 'mobile' | 'desktop';
+
+export type DeviceRole = RoleId;
+
+export type DeviceRoleForNewInvite = RoleIdForNewInvite;
+
 export type InviteProps = {
   name: string;
   deviceType: DeviceType;
   deviceId: string;
   role: DeviceRoleForNewInvite;
 };
-
-export type DeviceType = 'mobile' | 'desktop';
-
-export type DeviceRole = RoleId;
-
-export type DeviceRoleForNewInvite = RoleIdForNewInvite;
 
 export type HomeTabsList = {
   Map: undefined;

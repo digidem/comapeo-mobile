@@ -1,9 +1,10 @@
 import {StyleSheet} from 'react-native';
 import {LIGHT_GREY} from '../lib/styles';
-import {DeviceType, ViewStyleProp} from '../sharedTypes';
+import {ViewStyleProp} from '../sharedTypes';
 import {defineMessages, useIntl} from 'react-intl';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {DeviceNameWithIcon} from './DeviceNameWithIcon';
+import {DeviceType} from '../sharedTypes/navigation';
 
 const m = defineMessages({
   thisDevice: {

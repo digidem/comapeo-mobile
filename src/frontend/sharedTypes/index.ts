@@ -55,7 +55,6 @@ export type Attachment = Observation['attachments'][0];
 export type PhotoVariant = 'original' | 'thumbnail' | 'preview';
 
 export type CoordinateFormat = 'utm' | 'dd' | 'dms';
-export type DeviceType = 'mobile' | 'desktop';
 
 // Copied form /@mapeo/core/src/roles.js. Created an issue to eventuall expose this: https://github.com/digidem/mapeo-core-next/issues/532
 export const CREATOR_ROLE_ID = 'a12a6702b93bd7ff';

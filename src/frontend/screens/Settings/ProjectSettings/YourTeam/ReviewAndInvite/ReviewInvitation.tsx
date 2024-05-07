@@ -7,9 +7,8 @@ import {WHITE} from '../../../../../lib/styles';
 import {Button} from '../../../../../sharedComponents/Button';
 import {DeviceNameWithIcon} from '../../../../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../../../../sharedComponents/RoleWithIcon';
-import {DeviceType} from '../../../../../sharedTypes';
 import {MEMBER_ROLE_ID} from '../../../../../sharedTypes';
-import {DeviceRole} from '../../../../../sharedTypes/navigation';
+import {DeviceRole, DeviceType} from '../../../../../sharedTypes/navigation';
 
 const m = defineMessages({
   title: {

@@ -5,7 +5,6 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 import {MessageDescriptor} from 'react-intl';
 import {Observation, ObservationValue} from '@mapeo/schema';
-import type {RoleId} from '@mapeo/core/dist/roles';
 import {AppStackList, HomeTabsList} from './navigation';
 export interface TabBarIconProps {
   size: number;
@@ -57,8 +56,6 @@ export type PhotoVariant = 'original' | 'thumbnail' | 'preview';
 
 export type CoordinateFormat = 'utm' | 'dd' | 'dms';
 export type DeviceType = 'mobile' | 'desktop';
-
-export type DeviceRole = RoleId;
 
 // Copied form /@mapeo/core/src/roles.js. Created an issue to eventuall expose this: https://github.com/digidem/mapeo-core-next/issues/532
 export const CREATOR_ROLE_ID = 'a12a6702b93bd7ff';

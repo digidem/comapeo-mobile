@@ -47,7 +47,8 @@
           "project": "comapeo",
           "organization": "awana-digital"
         }
-      ]
+      ],
+      ["./expo-config-plugins/removeExpoInputStyles.js"]
     ],
     "android": {
       "versionCode": 1,

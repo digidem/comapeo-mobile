@@ -1,7 +1,6 @@
 import {ImageStyle, StyleProp, TextStyle, ViewStyle} from 'react-native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {Observation, ObservationValue} from '@mapeo/schema';
-import {AppStackList, HomeTabsList} from './navigation';
+import {HomeTabsList} from './navigation';
 export interface TabBarIconProps {
   size: number;
   focused: boolean;
@@ -15,9 +14,6 @@ export type TextStyleProp = StyleProp<TextStyle>;
 export type ImageStyleProp = StyleProp<ImageStyle>;
 
 export type IconSize = 'small' | 'medium' | 'large';
-
-export type NativeRootNavigationProps<ScreenName extends keyof AppStackList> =
-  NativeStackScreenProps<AppStackList, ScreenName>;
 
 export type Status = 'idle' | 'loading' | 'error' | 'success' | void;
 

@@ -25,13 +25,6 @@ export type NativeNavigationComponent<ScreenName extends keyof AppStackList> =
     navTitle: MessageDescriptor;
   };
 
-export type NativeNavigationScreenWithProps<
-  ScreenName extends keyof AppStackList,
-  T,
-> = React.FC<NativeStackScreenProps<AppStackList, ScreenName> & T> & {
-  navTitle: MessageDescriptor;
-};
-
 export type Status = 'idle' | 'loading' | 'error' | 'success' | void;
 
 export type Position = Observation['metadata']['position'];

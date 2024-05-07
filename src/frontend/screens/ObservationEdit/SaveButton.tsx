@@ -74,6 +74,7 @@ export const SaveButton = ({
   const createObservationMutation = useCreateObservation();
   const editObservationMutation = useEditObservation();
   const createBlobMutation = useCreateBlobMutation();
+  const isTracking = usePersistedTrack(state => state.isTracking);
   const addNewTrackLocation = usePersistedTrack(state => state.addNewLocations);
   const addNewTrackObservation = usePersistedTrack(
     state => state.addNewObservation,
@@ -135,7 +136,7 @@ export const SaveButton = ({
             onSuccess: data => {
               clearDraft();
               navigation.navigate('Home', {screen: 'Map'});
-              if (value.lat && value.lon) {
+              if (value.lat && value.lon && isTracking) {
                 addNewTrackLocation([
                   {
                     timestamp: new Date().getTime(),
@@ -144,7 +145,7 @@ export const SaveButton = ({
                   },
                 ]);
               }
-              if (data.docId) {
+              if (data.docId && isTracking) {
                 addNewTrackObservation(data.docId);
               }
             },
@@ -168,16 +169,18 @@ export const SaveButton = ({
         onSuccess: () => {
           clearDraft();
           navigation.pop();
-          if (value.lat && value.lon) {
-            addNewTrackLocation([
-              {
-                timestamp: new Date().getTime(),
-                latitude: value.lat,
-                longitude: value.lon,
-              },
-            ]);
+          if (isTracking) {
+            addNewTrackObservation(observationId);
+            if (value.lat && value.lon && isTracking) {
+              addNewTrackLocation([
+                {
+                  timestamp: new Date().getTime(),
+                  latitude: value.lat,
+                  longitude: value.lon,
+                },
+              ]);
+            }
           }
-          addNewTrackObservation(observationId);
         },
       },
     );

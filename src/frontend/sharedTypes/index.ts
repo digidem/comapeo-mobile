@@ -1,4 +1,3 @@
-// TS port of /src/frontend/types.js
 import {ImageStyle, StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {CompositeScreenProps} from '@react-navigation/native';

@@ -39,7 +39,7 @@
           "recordAudioAndroid": true
         }
       ],
-      ["./plugins/removeExpoInputStyles.js"]
+      ["./expo-config-plugins/removeExpoInputStyles.js"]
     ],
     "android": {
       "versionCode": 1,

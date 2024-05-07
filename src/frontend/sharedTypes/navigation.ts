@@ -7,6 +7,12 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MessageDescriptor} from 'react-intl';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 
+export interface TabBarIconProps {
+  size: number;
+  focused: boolean;
+  color: string;
+}
+
 export type DeviceType = 'mobile' | 'desktop';
 
 export type DeviceRole = RoleId;

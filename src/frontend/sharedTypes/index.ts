@@ -1,10 +1,5 @@
 import {ImageStyle, StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {Observation, ObservationValue} from '@mapeo/schema';
-export interface TabBarIconProps {
-  size: number;
-  focused: boolean;
-  color: string;
-}
 
 export type ViewStyleProp = StyleProp<ViewStyle>;
 export type TextStyleProp = StyleProp<TextStyle>;

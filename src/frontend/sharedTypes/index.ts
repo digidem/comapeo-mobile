@@ -6,8 +6,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MessageDescriptor} from 'react-intl';
 import {Observation, ObservationValue} from '@mapeo/schema';
 import type {RoleId, RoleIdForNewInvite} from '@mapeo/core/dist/roles';
-import {type HomeTabsList} from '../Navigation/Tab';
-import {AppStackList} from './navigation';
+import {AppStackList, HomeTabsList} from './navigation';
 export interface TabBarIconProps {
   size: number;
   focused: boolean;

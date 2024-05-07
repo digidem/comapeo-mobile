@@ -16,13 +16,7 @@ import {TAB_BAR_HEIGHT} from '../Stack/AppScreens';
 import {CameraTabBarIcon} from './TabBar/CameraTabBarIcon';
 import {MapTabBarIcon} from './TabBar/MapTabBarIcon';
 import {TrackingTabBarIcon} from './TabBar/TrackingTabBarIcon';
-
-export type HomeTabsList = {
-  Map: undefined;
-  Camera: undefined;
-  Tracking: undefined;
-  ObservationsList: undefined;
-};
+import {HomeTabsList} from '../../sharedTypes/navigation';
 
 const Tab = createBottomTabNavigator<HomeTabsList>();
 

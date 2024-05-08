@@ -66,6 +66,7 @@ export const usePersistedTrack = createPersistedState<TracksStoreState>(
         distance: 0,
         isTracking: false,
         observations: [],
+        description: '',
       })),
     setTracking: (val: boolean) =>
       set(() =>

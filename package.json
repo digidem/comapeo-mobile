@@ -57,6 +57,7 @@
     "expo-location": "~16.5.5",
     "expo-secure-store": "~12.8.1",
     "expo-sensors": "~12.9.1",
+    "expo-splash-screen": "~0.26.5",
     "expo-status-bar": "~1.11.1",
     "expo-system-ui": "^2.9.4",
     "expo-task-manager": "~11.7.3",
@@ -95,8 +96,7 @@
     "uint8array-extras": "^0.5.0",
     "utm": "^1.1.1",
     "validate-color": "^2.2.4",
-    "zustand": "^4.4.6",
-    "expo-splash-screen": "~0.26.5"
+    "zustand": "^4.4.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

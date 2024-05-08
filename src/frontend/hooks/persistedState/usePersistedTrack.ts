@@ -1,4 +1,3 @@
-import {create} from 'zustand';
 import {calculateTotalDistance} from '../../utils/distance.ts';
 import {LocationHistoryPoint} from '../../sharedTypes/location.ts';
 import {createPersistedState} from './createPersistedState.ts';
@@ -7,6 +6,8 @@ type TracksStoreState = {
   locationHistory: LocationHistoryPoint[];
   observations: string[];
   distance: number;
+  description: string;
+  setDescription: (val: string) => void;
   addNewObservation: (observationId: string) => void;
   addNewLocations: (locationData: LocationHistoryPoint[]) => void;
   clearCurrentTrack: () => void;
@@ -28,7 +29,9 @@ export const usePersistedTrack = createPersistedState<TracksStoreState>(
     locationHistory: [],
     observations: [],
     distance: 0,
+    description: '',
     trackingSince: null,
+    setDescription: (val: string) => set(state => ({description: val})),
     addNewObservation: (id: string) =>
       set(state => ({observations: [...state.observations, id]})),
     addNewLocations: data =>

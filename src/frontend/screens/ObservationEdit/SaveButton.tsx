@@ -136,16 +136,16 @@ export const SaveButton = ({
             onSuccess: data => {
               clearDraft();
               navigation.navigate('Home', {screen: 'Map'});
-              if (value.lat && value.lon && isTracking) {
-                addNewTrackLocation([
-                  {
-                    timestamp: new Date().getTime(),
-                    latitude: value.lat,
-                    longitude: value.lon,
-                  },
-                ]);
-              }
-              if (data.docId && isTracking) {
+              if (isTracking) {
+                if (value.lat && value.lon) {
+                  addNewTrackLocation([
+                    {
+                      timestamp: new Date().getTime(),
+                      latitude: value.lat,
+                      longitude: value.lon,
+                    },
+                  ]);
+                }
                 addNewTrackObservation(data.docId);
               }
             },
@@ -171,7 +171,7 @@ export const SaveButton = ({
           navigation.pop();
           if (isTracking) {
             addNewTrackObservation(observationId);
-            if (value.lat && value.lon && isTracking) {
+            if (value.lat && value.lon) {
               addNewTrackLocation([
                 {
                   timestamp: new Date().getTime(),

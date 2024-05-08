@@ -3,8 +3,8 @@ import * as TaskManager from 'expo-task-manager';
 import {useCallback, useState} from 'react';
 import {usePersistedTrack} from './persistedState/usePersistedTrack';
 import React from 'react';
-import {FullLocationData} from '../sharedTypes/location.ts';
-import {useGPSModalContext} from '../contexts/GPSModalContext.tsx';
+import {FullLocationData} from '../sharedTypes/location';
+import {useGPSModalContext} from '../contexts/GPSModalContext';
 
 export const LOCATION_TASK_NAME = 'background-location-task';
 

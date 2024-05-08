@@ -7,7 +7,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {DiscardModal} from '../../../sharedComponents/DiscardModal.tsx';
+import {DiscardModal} from '../../../sharedComponents/DiscardModal';
 import {BottomSheet} from '../../../sharedComponents/BottomSheet/BottomSheet';
 import PhotoIcon from '../../../images/camera.svg';
 import DetailsIcon from '../../../images/details.svg';
@@ -19,16 +19,15 @@ import {useBottomSheetModal} from '../../../sharedComponents/BottomSheetModal';
 import DiscardIcon from '../../../images/delete.svg';
 import ErrorIcon from '../../../images/Error.svg';
 import {usePersistedTrack} from '../../../hooks/persistedState/usePersistedTrack';
-import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes.ts';
+import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes';
 import {useFocusEffect} from '@react-navigation/native';
-import {SaveTrackButton} from './saveTrack/SaveTrackButton.tsx';
+import {SaveTrackButton} from './saveTrack/SaveTrackButton';
 import Close from '../../../images/close.svg';
 
 export const SaveTrackScreen = () => {
   const navigation = useNavigationFromHomeTabs();
   const clearCurrentTrack = usePersistedTrack(state => state.clearCurrentTrack);
   const {formatMessage: t} = useIntl();
-  const [description, setDescription] = useState('');
   const {sheetRef, isOpen, openSheet, closeSheet} = useBottomSheetModal({
     openOnMount: false,
   });
@@ -64,9 +63,9 @@ export const SaveTrackScreen = () => {
             <Close />
           </Pressable>
         ),
-        headerRight: () => <SaveTrackButton description={description} />,
+        headerRight: () => <SaveTrackButton />,
       });
-    }, [description, navigation, openSheet]),
+    }, [navigation, openSheet]),
   );
 
   // disables back button
@@ -96,10 +95,7 @@ export const SaveTrackScreen = () => {
           <TrackIcon style={styles.icon} />
           <Text style={styles.titleText}>{t(m.newTitle)}</Text>
         </View>
-        <TrackDescriptionField
-          description={description}
-          setDescription={setDescription}
-        />
+        <TrackDescriptionField />
         <DiscardModal
           bottomSheetRef={sheetRef}
           isOpen={isOpen}

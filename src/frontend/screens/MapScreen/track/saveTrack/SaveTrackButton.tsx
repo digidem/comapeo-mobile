@@ -5,14 +5,11 @@ import {useCreateTrack} from '../../../../hooks/server/track.ts';
 import {usePersistedTrack} from '../../../../hooks/persistedState/usePersistedTrack';
 import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes.ts';
 
-interface SaveTrackButton {
-  description: string;
-}
-
-export const SaveTrackButton: FC<SaveTrackButton> = ({description}) => {
+export const SaveTrackButton: FC = () => {
   const saveTrack = useCreateTrack();
   const navigation = useNavigationFromRoot();
   const currentTrack = usePersistedTrack();
+  const description = usePersistedTrack(state => state.description);
 
   const handleSaveClick = () => {
     saveTrack.mutate(

@@ -1,5 +1,5 @@
 import React, {createContext, useContext} from 'react';
-import {usePersistedTrack} from '../hooks/persistedState/usePersistedTrack.ts';
+import {usePersistedTrack} from '../hooks/persistedState/usePersistedTrack';
 import {useFormattedTimeSince} from '../hooks/useFormattedTimeSince';
 
 interface TrackTimerContext {

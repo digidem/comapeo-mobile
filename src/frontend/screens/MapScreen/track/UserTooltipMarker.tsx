@@ -1,7 +1,7 @@
 import {MarkerView} from '@rnmapbox/maps';
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {usePersistedTrack} from '../../../hooks/persistedState/usePersistedTrack.ts';
+import {usePersistedTrack} from '../../../hooks/persistedState/usePersistedTrack';
 import {useTrackTimerContext} from '../../../contexts/TrackTimerContext';
 import {useSharedLocationContext} from '../../../contexts/SharedLocationContext';
 

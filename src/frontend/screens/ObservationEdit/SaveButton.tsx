@@ -12,7 +12,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import {useCreateBlobMutation} from '../../hooks/server/media';
 import {DraftPhoto, Photo} from '../../contexts/PhotoPromiseContext/types';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack.ts';
+import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import SaveCheck from '../../images/CheckMark.svg';
 
 const m = defineMessages({

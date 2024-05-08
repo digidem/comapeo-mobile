@@ -1,5 +1,5 @@
 import {LineJoin, LineLayer, ShapeSource} from '@rnmapbox/maps';
-import {usePersistedTrack} from '../../../hooks/persistedState/usePersistedTrack.ts';
+import {usePersistedTrack} from '../../../hooks/persistedState/usePersistedTrack';
 import * as React from 'react';
 import {StyleSheet} from 'react-native';
 import {LineString} from 'geojson';

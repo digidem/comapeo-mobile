@@ -3,7 +3,7 @@ import React from 'react';
 import MapboxGL from '@rnmapbox/maps';
 import {useAllObservations} from '../../hooks/useAllObservations';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
-import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack.ts';
+import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 
 const DEFAULT_MARKER_COLOR = '#F29D4B';
 

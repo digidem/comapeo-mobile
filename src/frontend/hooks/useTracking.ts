@@ -1,7 +1,7 @@
 import * as Location from 'expo-location';
 import * as TaskManager from 'expo-task-manager';
 import {useCallback, useState} from 'react';
-import {usePersistedTrack} from './persistedState/usePersistedTrack.ts';
+import {usePersistedTrack} from './persistedState/usePersistedTrack';
 import React from 'react';
 import {FullLocationData} from '../sharedTypes/location.ts';
 import {useGPSModalContext} from '../contexts/GPSModalContext.tsx';

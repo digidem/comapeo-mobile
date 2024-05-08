@@ -24,7 +24,7 @@ import {AppList} from './ScreenGroups/AppScreens';
 import {usePresetsQuery} from '../hooks/server/presets';
 import {initializeInviteListener} from '../initializeInviteListener';
 import {ProjectInviteBottomSheet} from '../sharedComponents/ProjectInviteBottomSheet';
-import {usePersistedTrack} from '../hooks/persistedState/usePersistedTrack.ts';
+import {usePersistedTrack} from '../hooks/persistedState/usePersistedTrack';
 
 // import {devExperiments} from '../lib/DevExperiments';
 

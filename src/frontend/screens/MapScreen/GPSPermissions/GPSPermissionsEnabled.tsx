@@ -7,7 +7,7 @@ import StartTrackingIcon from '../../../images/StartTracking.svg';
 import StopTrackingIcon from '../../../images/StopTracking.svg';
 import {useTrackTimerContext} from '../../../contexts/TrackTimerContext';
 import {defineMessages, useIntl} from 'react-intl';
-import {usePersistedTrack} from '../../../hooks/persistedState/usePersistedTrack.ts';
+import {usePersistedTrack} from '../../../hooks/persistedState/usePersistedTrack';
 import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes';
 
 const m = defineMessages({

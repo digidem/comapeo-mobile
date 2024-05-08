@@ -2,7 +2,7 @@ import {Image, Pressable, StyleSheet} from 'react-native';
 import React, {FC} from 'react';
 import {DateTime} from 'luxon';
 import {useCreateTrack} from '../../../../hooks/server/track.ts';
-import {usePersistedTrack} from '../../../../hooks/persistedState/usePersistedTrack.ts';
+import {usePersistedTrack} from '../../../../hooks/persistedState/usePersistedTrack';
 import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes.ts';
 
 interface SaveTrackButton {

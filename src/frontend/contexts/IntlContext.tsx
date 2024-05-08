@@ -90,6 +90,6 @@ a language name and translations in \`src/frontend/languages.json\``,
   if (supportedLanguages.find(lang => lang.locale === locale))
     return locale as keyof typeof languages;
   const nonRegionalLocale = locale.split('-')[0];
-  if (supportedLanguages?.find(({locale}) => locale === nonRegionalLocale))
+  if (supportedLanguages.find(({locale}) => locale === nonRegionalLocale))
     return nonRegionalLocale as keyof typeof languages;
 }

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, TextInput} from 'react-native';
-import {usePersistedTrack} from '../../../../hooks/persistedState/usePersistedTrack.ts';
+import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 
 const m = defineMessages({
   descriptionPlaceholder: {

@@ -1,9 +1,9 @@
 import {Image, Pressable, StyleSheet} from 'react-native';
 import React, {FC} from 'react';
 import {DateTime} from 'luxon';
-import {useCreateTrack} from '../../../../hooks/server/track.ts';
-import {usePersistedTrack} from '../../../../hooks/persistedState/usePersistedTrack';
-import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes.ts';
+import {useCreateTrack} from '../../hooks/server/track';
+import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {CommonActions} from '@react-navigation/native';
 
 export const SaveTrackButton: FC = () => {
@@ -53,7 +53,7 @@ export const SaveTrackButton: FC = () => {
     <Pressable disabled={saveTrack.isPending} onPress={handleSaveClick}>
       <Image
         style={styles.completeIcon}
-        source={require('../../../../images/completed/checkComplete.png')}
+        source={require('../../images/completed/checkComplete.png')}
       />
     </Pressable>
   );

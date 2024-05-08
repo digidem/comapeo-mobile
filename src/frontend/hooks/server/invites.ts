@@ -26,19 +26,16 @@ export function useAcceptInvite(projectId?: string) {
   return useMutation({
     mutationFn: async ({inviteId}: {inviteId: string}) => {
       if (!inviteId) return;
-      mapeoApi.invite.accept({inviteId});
+      await mapeoApi.invite.accept({inviteId});
     },
     onSuccess: () => {
-      // This is a workaround. There is a race condition where the project in not available when the invite is accepted. This is temporary and is currently being worked on.
-      setTimeout(() => {
-        queryClient
-          .invalidateQueries({queryKey: [INVITE_KEY, PROJECTS_KEY]})
-          .then(() => {
-            if (projectId) {
-              switchActiveProject(projectId);
-            }
-          });
-      }, 5000);
+      queryClient
+        .invalidateQueries({queryKey: [INVITE_KEY, PROJECTS_KEY]})
+        .then(() => {
+          if (projectId) {
+            switchActiveProject(projectId);
+          }
+        });
     },
   });
 }
@@ -48,7 +45,7 @@ export function useRejectInvite() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({inviteId}: {inviteId: string}) => {
-      mapeoApi.invite.reject({inviteId});
+      await mapeoApi.invite.reject({inviteId});
     },
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [INVITE_KEY]});

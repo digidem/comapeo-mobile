@@ -64,7 +64,7 @@ export const SaveButton = ({
   openErrorModal,
 }: {
   observationId?: string;
-  openErrorModal?: () => void;
+  openErrorModal?: (err?: string) => void;
 }) => {
   const value = usePersistedDraftObservation(store => store.value);
   const photos = usePersistedDraftObservation(store => store.photos);
@@ -90,8 +90,8 @@ export const SaveButton = ({
       createObservationMutation.mutate(
         {value},
         {
-          onError: () => {
-            if (openErrorModal) openErrorModal();
+          onError: err => {
+            if (openErrorModal) openErrorModal(err.message);
           },
           onSuccess: () => {
             clearDraft();

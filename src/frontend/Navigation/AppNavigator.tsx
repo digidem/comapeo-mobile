@@ -7,7 +7,8 @@ import {
 } from './AppStack';
 import {useIntl} from 'react-intl';
 // import {SecurityContext} from '../context/SecurityContext';
-import * as SplashScreen from 'expo-splash-screen';
+
+import BootSplash from 'react-native-bootsplash';
 import {useDeviceInfo} from '../hooks/server/deviceInfo';
 import {Loading} from '../sharedComponents/Loading';
 import {
@@ -54,7 +55,7 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   initializeInviteListener();
 
   if (permissionAsked && !deviceInfo.isPending) {
-    SplashScreen.hideAsync();
+    BootSplash.hide();
   }
 
   // the user should never actually see this because the splash screen is visible, so this is to appease typescript

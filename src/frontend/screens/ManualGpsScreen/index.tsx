@@ -21,7 +21,7 @@ import {
 } from '../../hooks/persistedState/usePersistedSettings';
 import {BLACK} from '../../lib/styles';
 import {IconButton} from '../../sharedComponents/IconButton';
-import {SaveIcon} from '../../sharedComponents/icons';
+import SaveCheck from '../../images/CheckMark.svg';
 import {Select} from '../../sharedComponents/Select';
 import {Text} from '../../sharedComponents/Text';
 import {
@@ -138,7 +138,7 @@ export const ManualGpsScreen = ({
     navigation.setOptions({
       headerRight: () => (
         <IconButton onPress={handleSavePress}>
-          <SaveIcon inprogress={false} />
+          <SaveCheck />
         </IconButton>
       ),
     });
@@ -211,7 +211,7 @@ export function createNavigationOptions({
       headerTitle: intl(m.title),
       headerRight: () => (
         <IconButton>
-          <SaveIcon inprogress={false} />
+          <SaveCheck />
         </IconButton>
       ),
     };

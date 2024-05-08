@@ -59,6 +59,7 @@
     "expo-status-bar": "~1.11.1",
     "expo-system-ui": "^2.9.4",
     "expo-task-manager": "~11.7.3",
+    "expo-updates": "^0.25.9",
     "geojson": "^0.5.0",
     "geojson-geometries-lookup": "^0.5.0",
     "lodash.isequal": "^4.5.0",
@@ -94,8 +95,7 @@
     "uint8array-extras": "^0.5.0",
     "utm": "^1.1.1",
     "validate-color": "^2.2.4",
-    "zustand": "^4.4.6",
-    "expo-updates": "~0.24.12"
+    "zustand": "^4.4.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

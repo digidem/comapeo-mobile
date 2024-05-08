@@ -4,6 +4,7 @@ import {DateTime} from 'luxon';
 import {useCreateTrack} from '../../../../hooks/server/track.ts';
 import {usePersistedTrack} from '../../../../hooks/persistedState/usePersistedTrack';
 import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes.ts';
+import {CommonActions} from '@react-navigation/native';
 
 export const SaveTrackButton: FC = () => {
   const saveTrack = useCreateTrack();
@@ -36,7 +37,12 @@ export const SaveTrackButton: FC = () => {
       },
       {
         onSuccess: () => {
-          navigation.navigate('Home', {screen: 'Map'});
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{name: 'Home', params: {screen: 'Map'}}],
+            }),
+          );
           currentTrack.clearCurrentTrack();
         },
       },

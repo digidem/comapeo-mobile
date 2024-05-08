@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
 import {
   BackHandler,
   Pressable,
@@ -19,13 +19,13 @@ import {useBottomSheetModal} from '../../../sharedComponents/BottomSheetModal';
 import DiscardIcon from '../../../images/delete.svg';
 import ErrorIcon from '../../../images/Error.svg';
 import {usePersistedTrack} from '../../../hooks/persistedState/usePersistedTrack';
-import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes';
-import {useFocusEffect} from '@react-navigation/native';
+import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
+import {CommonActions, useFocusEffect} from '@react-navigation/native';
 import {SaveTrackButton} from './saveTrack/SaveTrackButton';
 import Close from '../../../images/close.svg';
 
 export const SaveTrackScreen = () => {
-  const navigation = useNavigationFromHomeTabs();
+  const navigation = useNavigationFromRoot();
   const clearCurrentTrack = usePersistedTrack(state => state.clearCurrentTrack);
   const {formatMessage: t} = useIntl();
   const {sheetRef, isOpen, openSheet, closeSheet} = useBottomSheetModal({
@@ -51,7 +51,12 @@ export const SaveTrackScreen = () => {
 
   const handleDiscard = () => {
     closeSheet();
-    navigation.navigate('Map');
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{name: 'Home', params: {screen: 'Map'}}],
+      }),
+    );
     clearCurrentTrack();
   };
 

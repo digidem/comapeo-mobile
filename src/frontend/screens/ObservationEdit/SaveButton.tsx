@@ -169,18 +169,6 @@ export const SaveButton = ({
         onSuccess: () => {
           clearDraft();
           navigation.pop();
-          if (isTracking) {
-            addNewTrackObservation(observationId);
-            if (value.lat && value.lon) {
-              addNewTrackLocation([
-                {
-                  timestamp: new Date().getTime(),
-                  latitude: value.lat,
-                  longitude: value.lon,
-                },
-              ]);
-            }
-          }
         },
       },
     );

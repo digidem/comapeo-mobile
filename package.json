@@ -23,7 +23,8 @@
     "build:translations": "node ./scripts/build-translations.js ",
     "build:intl-polyfills": "node ./scripts/build-intl-polyfills.mjs",
     "build:backend": "node ./scripts/build-backend.mjs",
-    "extract-messages": "formatjs extract 'src/frontend/**/*.{ts,tsx}' --ignore='**/*.d.ts' --format crowdin --out-file ./messages/en.json"
+    "extract-messages": "formatjs extract 'src/frontend/**/*.{ts,tsx}' --ignore='**/*.d.ts' --format crowdin --out-file ./messages/en.json",
+    "eas-build-post-install": "npm run build:backend && npm run build:translations && npm run build:intl-polyfills"
   },
   "dependencies": {
     "@bam.tech/react-native-image-resizer": "^3.0.7",
@@ -59,6 +60,7 @@
     "expo-status-bar": "~1.11.1",
     "expo-system-ui": "^2.9.4",
     "expo-task-manager": "~11.7.3",
+    "expo-updates": "^0.25.9",
     "geojson": "^0.5.0",
     "geojson-geometries-lookup": "^0.5.0",
     "lodash.isequal": "^4.5.0",

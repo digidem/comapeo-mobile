@@ -1,6 +1,6 @@
 import * as React from 'react';
 import nodejs from 'nodejs-mobile-react-native';
-import BootSplash from 'react-native-bootsplash';
+import * as SplashScreen from 'expo-splash-screen';
 
 import type {StatusMessage} from '../backend/src/status';
 import {MessagePortLike} from './lib/MessagePortLike.js';
@@ -29,7 +29,7 @@ export const ServerLoading = ({
 
     // @ts-ignore - incorrect types on nodejs.channel
     return () => subscription.remove();
-  }, [setServerStatus]);
+  }, [messagePort, setServerStatus]);
 
   // Don't render any children while the backend is starting - this avoids
   // timeouts from API methods if server startup takes more than 5 seconds - all
@@ -39,7 +39,7 @@ export const ServerLoading = ({
   }
 
   if (serverStatus.value === 'ERROR') {
-    BootSplash.hide();
+    SplashScreen.hideAsync();
     return <FatalError />;
   }
 

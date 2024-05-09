@@ -29,7 +29,7 @@ export type HomeTabsParamsList = {
 
 export type TabName = keyof HomeTabsParamsList;
 
-export type RootStackParamList = {
+export type RootStackParamsList = {
   Home: NavigatorScreenParams<HomeTabsParamsList>;
   GpsModal: undefined;
   Settings: undefined;
@@ -100,7 +100,7 @@ export type DeviceNamingParamsList = {
   Success: {deviceName: string};
 };
 
-export type AppStackList = RootStackParamList & DeviceNamingParamsList;
+export type AppStackList = RootStackParamsList & DeviceNamingParamsList;
 
 export type NativeRootNavigationProps<ScreenName extends keyof AppStackList> =
   NativeStackScreenProps<AppStackList, ScreenName>;

@@ -2,7 +2,7 @@ import * as React from 'react';
 import {NavigatorScreenOptions, RootStack} from './Navigation/Stack';
 import {useIntl} from 'react-intl';
 
-import BootSplash from 'react-native-bootsplash';
+import * as SplashScreen from 'expo-splash-screen';
 import {DEVICE_INFO_KEY} from './hooks/server/deviceInfo';
 import {createDeviceNamingScreens} from './Navigation/Stack/DeviceNamingScreens';
 import {usePrefetchLastKnownLocation} from './hooks/useLastSavedLocation';
@@ -32,7 +32,7 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   initializeInviteListener();
 
   if (permissionAsked) {
-    BootSplash.hide();
+    SplashScreen.hideAsync();
   }
 
   return (

@@ -1,26 +1,31 @@
-const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
+const {getDefaultConfig} = require('expo/metro-config');
+const path = require('path');
 
-const defaultConfig = getDefaultConfig(__dirname);
-const {assetExts, sourceExts} = defaultConfig.resolver;
+const projectRoot = __dirname;
+const workspaceRoot = path.resolve(projectRoot);
 
-/**
- * Metro configuration
- * https://facebook.github.io/metro/docs/configuration
- *
- * @type {import('metro-config').MetroConfig}
- */
-const config = {
+/** @type {import('expo/metro-config').MetroConfig} */
+const config = getDefaultConfig(__dirname);
+
+module.exports = {
+  ...config,
   transformer: {
+    ...config.transformer,
     // For https://github.com/kristerkari/react-native-svg-transformer
     babelTransformerPath: require.resolve('react-native-svg-transformer'),
   },
   resolver: {
+    ...config.resolver,
     // For nodejs-mobile
     blockList: [/nodejs-assets\/.*/],
     // For https://github.com/kristerkari/react-native-svg-transformer
-    assetExts: assetExts.filter(ext => ext !== 'svg'),
-    sourceExts: [...sourceExts, 'svg'],
+    assetExts: config.resolver.assetExts.filter(ext => ext !== 'svg'),
+    sourceExts: [...config.resolver.sourceExts, 'svg'],
+    nodeModulesPaths: [
+      path.resolve(projectRoot, 'node_modules'),
+      path.resolve(workspaceRoot, 'node_modules'),
+    ],
+    // 3. Force Metro to resolve (sub)dependencies only from the `nodeModulesPaths`
+    disableHierarchicalLookup: true,
   },
 };
-
-module.exports = mergeConfig(defaultConfig, config);

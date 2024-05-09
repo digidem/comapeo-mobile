@@ -9,6 +9,7 @@
 #
 build/
 .idea
+.vscode
 .gradle
 local.properties
 *.iml
@@ -80,3 +81,7 @@ ios/*.env*.local
 *.p12
 *.key
 *.mobileprovision
+
+# Expo
+android/
+ios/

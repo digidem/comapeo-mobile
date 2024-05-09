@@ -49,6 +49,7 @@ async function compile() {
       translations[lang][key] = msgs[key].message;
     });
   }
+  fs.mkdirSync(path.join(__dirname, 'translations'));
   const output = path.join(__dirname, '../translations/messages.json');
   await writeJson(output, translations);
 }

@@ -24,6 +24,7 @@ import {AppList} from './ScreenGroups/AppScreens';
 import {usePresetsQuery} from '../hooks/server/presets';
 import {initializeInviteListener} from '../initializeInviteListener';
 import {ProjectInviteBottomSheet} from '../sharedComponents/ProjectInviteBottomSheet';
+import {StatusBar} from 'expo-status-bar';
 
 // import {devExperiments} from '../lib/DevExperiments';
 
@@ -64,6 +65,7 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
 
   return (
     <React.Fragment>
+      <StatusBar style="auto" />
       <RootStack.Navigator
         initialRouteName={getInitialRouteName({
           hasDeviceName: !!deviceInfo.data?.name,

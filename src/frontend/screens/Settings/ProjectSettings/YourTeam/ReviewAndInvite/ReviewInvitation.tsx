@@ -8,7 +8,7 @@ import {Button} from '../../../../../sharedComponents/Button';
 import {DeviceNameWithIcon} from '../../../../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../../../../sharedComponents/RoleWithIcon';
 import {DeviceType, MEMBER_ROLE_ID} from '../../../../../sharedTypes';
-import {DeviceRole} from '../../../../../sharedTypes/navigation';
+import {DeviceRole} from '../../../../../sharedTypes';
 
 const m = defineMessages({
   title: {

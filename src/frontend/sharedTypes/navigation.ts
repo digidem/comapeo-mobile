@@ -2,21 +2,16 @@ import {
   CompositeScreenProps,
   NavigatorScreenParams,
 } from '@react-navigation/native';
-import type {RoleId, RoleIdForNewInvite} from '@mapeo/core/dist/roles';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MessageDescriptor} from 'react-intl';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
-import {DeviceType} from '.';
+import {DeviceRoleForNewInvite, DeviceType} from '.';
 
 export interface TabBarIconProps {
   size: number;
   focused: boolean;
   color: string;
 }
-
-export type DeviceRole = RoleId;
-
-export type DeviceRoleForNewInvite = RoleIdForNewInvite;
 
 export type InviteProps = {
   name: string;

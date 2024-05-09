@@ -1,7 +1,12 @@
 import {ImageStyle, StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {Observation, ObservationValue} from '@mapeo/schema';
+import type {RoleId, RoleIdForNewInvite} from '@mapeo/core/dist/roles';
 
 export type DeviceType = 'mobile' | 'desktop';
+
+export type DeviceRole = RoleId;
+
+export type DeviceRoleForNewInvite = RoleIdForNewInvite;
 
 export type ViewStyleProp = StyleProp<ViewStyle>;
 export type TextStyleProp = StyleProp<TextStyle>;

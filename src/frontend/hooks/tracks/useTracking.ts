@@ -1,17 +1,9 @@
 import * as Location from 'expo-location';
-import * as TaskManager from 'expo-task-manager';
 import {useCallback, useState} from 'react';
 import {useCurrentTrackStore} from './useCurrentTrackStore';
-import React from 'react';
-import {FullLocationData} from '../../sharedTypes/location';
 import {useGPSModalContext} from '../../contexts/GPSModalContext';
-
-export const LOCATION_TASK_NAME = 'background-location-task';
-
-type LocationCallbackInfo = {
-  data: {locations: FullLocationData[]} | null;
-  error: TaskManager.TaskManagerError | null;
-};
+import {getData, LOCATION_TASK_NAME} from '../../lib/trackLocationsStorage';
+import {useInterval} from 'react-native-confirmation-code-field/esm/useTimer';
 
 export function useTracking() {
   const {bottomSheetRef} = useGPSModalContext();
@@ -20,28 +12,18 @@ export function useTracking() {
   const setTracking = useCurrentTrackStore(state => state.setTracking);
   const isTracking = useCurrentTrackStore(state => state.isTracking);
 
-  React.useEffect(() => {
-    TaskManager.defineTask(
-      LOCATION_TASK_NAME,
-      ({data, error}: LocationCallbackInfo) => {
-        if (error) {
-          console.error(
-            'Error while processing location update callback',
-            error,
-          );
+  useInterval(
+    useCallback(() => {
+      async function update() {
+        const newLocations = await getData();
+        if (newLocations !== null) {
+          addNewLocations(newLocations);
         }
-        if (data?.locations) {
-          addNewLocations(
-            data.locations.map(loc => ({
-              latitude: loc.coords.latitude,
-              longitude: loc.coords.longitude,
-              timestamp: loc.timestamp,
-            })),
-          );
-        }
-      },
-    );
-  }, [addNewLocations]);
+      }
+      update();
+    }, []),
+    250,
+  );
 
   const startTracking = useCallback(async () => {
     if (isTracking) {

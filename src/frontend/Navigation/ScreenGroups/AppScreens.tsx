@@ -185,7 +185,7 @@ const HomeTabs = () => {
         }}
       />
 
-      {process.env.FEATURE_TRACKS && (
+      {process.env.EXPO_PUBLIC_FEATURE_TRACKS && (
         <Tab.Screen
           name="Tracking"
           options={{

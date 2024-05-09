@@ -20,6 +20,8 @@ import {
   createLocalDiscoveryController,
 } from './contexts/LocalDiscoveryContext';
 import {Loading} from './sharedComponents/Loading';
+import * as TaskManager from 'expo-task-manager';
+import {LOCATION_TASK_NAME, locationTask} from './lib/trackLocationsStorage';
 
 const queryClient = new QueryClient();
 const messagePort = new MessagePortLike();
@@ -27,6 +29,9 @@ const mapeoApi = createMapeoClient(messagePort, {timeout: Infinity});
 const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();
 initializeNodejs();
+
+// Defines task that handles background location updates for tracks feature
+TaskManager.defineTask(LOCATION_TASK_NAME, locationTask);
 
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();

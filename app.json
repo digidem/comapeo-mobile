@@ -7,11 +7,6 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#050F77"
-    },
     "assetBundlePatterns": ["**/*"],
     "plugins": [
       "expo-localization",
@@ -45,7 +40,12 @@
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
-        "backgroundColor": "#0033CC"
+        "backgroundColor": "#050F77"
+      },
+      "splash": {
+        "image": "./assets/splash.png",
+        "backgroundColor": "#050F77",
+        "resizeMode": "contain"
       },
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
@@ -59,6 +59,11 @@
       "package": "com.comapeo"
     },
     "ios": {
+      "splash": {
+        "image": "./assets/splash.png",
+        "backgroundColor": "#050F77",
+        "resizeMode": "contain"
+      },
       "bundleIdentifier": "com.comapeo"
     },
     "extra": {

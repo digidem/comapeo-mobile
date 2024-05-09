@@ -1,6 +1,8 @@
 import {ImageStyle, StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {Observation, ObservationValue} from '@mapeo/schema';
 
+export type DeviceType = 'mobile' | 'desktop';
+
 export type ViewStyleProp = StyleProp<ViewStyle>;
 export type TextStyleProp = StyleProp<TextStyle>;
 export type ImageStyleProp = StyleProp<ImageStyle>;

@@ -6,14 +6,13 @@ import type {RoleId, RoleIdForNewInvite} from '@mapeo/core/dist/roles';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MessageDescriptor} from 'react-intl';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
+import {DeviceType} from '.';
 
 export interface TabBarIconProps {
   size: number;
   focused: boolean;
   color: string;
 }
-
-export type DeviceType = 'mobile' | 'desktop';
 
 export type DeviceRole = RoleId;
 

@@ -6,7 +6,7 @@ import {ViewStyleProp} from '../sharedTypes';
 import {defineMessages, useIntl} from 'react-intl';
 import {Text} from './Text';
 import {MEDIUM_GREY} from '../lib/styles';
-import {DeviceType} from '../sharedTypes/navigation';
+import {DeviceType} from '../sharedTypes';
 
 const m = defineMessages({
   thisDevice: {

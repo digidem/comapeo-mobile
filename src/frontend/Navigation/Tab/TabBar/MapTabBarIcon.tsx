@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {TabBarIconProps} from '../../../sharedTypes';
+import {TabBarIconProps} from '../../../sharedTypes/navigation';
 import {TabBarIcon} from './TabBarIcon';
 import {useTabNavigationStore} from '../../../hooks/useTabNavigationStore';
 

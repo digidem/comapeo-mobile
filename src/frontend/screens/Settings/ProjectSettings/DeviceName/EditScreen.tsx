@@ -5,7 +5,7 @@ import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {useForm} from 'react-hook-form';
 import {UIActivityIndicator} from 'react-native-indicators';
 
-import {NativeRootNavigationProps} from '../../../../sharedTypes';
+import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
 import {
   useDeviceInfo,
   useEditDeviceInfo,

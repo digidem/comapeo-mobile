@@ -3,7 +3,7 @@ import {Text} from '../../../sharedComponents/Text';
 import {defineMessages, useIntl} from 'react-intl';
 import {Button} from '../../../sharedComponents/Button';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {AppStackList} from '../../../Navigation/Stack';
+import {AppStackParamsList} from '../../../sharedTypes/navigation';
 
 const m = defineMessages({
   howTo: {
@@ -23,7 +23,7 @@ const m = defineMessages({
 
 export const JoinExistingProject = ({
   navigation,
-}: NativeStackScreenProps<AppStackList, 'JoinExistingProject'>) => {
+}: NativeStackScreenProps<AppStackParamsList, 'JoinExistingProject'>) => {
   const {formatMessage} = useIntl();
   return (
     <View style={styles.container}>

@@ -5,7 +5,6 @@ import {
 } from '@react-navigation/native';
 import {createMapeoClient} from '@mapeo/ipc';
 import {AppNavigator} from './AppNavigator';
-import {AppStackList} from './Navigation/Stack';
 import {IntlProvider} from './contexts/IntlContext';
 import {MessagePortLike} from './lib/MessagePortLike';
 import {initializeNodejs} from './initializeNodejs';
@@ -14,6 +13,7 @@ import {AppProviders} from './contexts/AppProviders';
 import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
 import {Loading} from './sharedComponents/Loading';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import {AppStackParamsList} from './sharedTypes/navigation';
 
 const messagePort = new MessagePortLike();
 const mapeoApi = createMapeoClient(messagePort, {timeout: Infinity});
@@ -22,7 +22,7 @@ localDiscoveryController.start();
 initializeNodejs();
 
 const App = () => {
-  const navRef = useNavigationContainerRef<AppStackList>();
+  const navRef = useNavigationContainerRef<AppStackParamsList>();
   const [permissionsAsked, setPermissionsAsked] = React.useState(false);
   React.useEffect(() => {
     PermissionsAndroid.requestMultiple([

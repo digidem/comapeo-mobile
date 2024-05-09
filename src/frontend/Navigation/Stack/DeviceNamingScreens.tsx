@@ -4,12 +4,6 @@ import {IntroToCoMapeo} from '../../screens/IntroToCoMapeo';
 import {DeviceNaming} from '../../screens/DeviceNaming';
 import {Success} from '../../screens/Success';
 
-export type DeviceNamingSceens = {
-  IntroToCoMapeo: undefined;
-  DeviceNaming: undefined;
-  Success: {deviceName: string};
-};
-
 export const createDeviceNamingScreens = () => (
   <RootStack.Group key="deviceNaming">
     <RootStack.Screen

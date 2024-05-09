@@ -1,5 +1,5 @@
 import {defineMessages, useIntl} from 'react-intl';
-import {NativeNavigationComponent} from '../../../../sharedTypes';
+import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 import {Keyboard, KeyboardAvoidingView, StyleSheet, View} from 'react-native';
 import {useForm} from 'react-hook-form';
 import {Text} from '../../../../sharedComponents/Text';

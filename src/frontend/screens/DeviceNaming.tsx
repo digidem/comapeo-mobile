@@ -13,7 +13,7 @@ import {Text} from '../sharedComponents/Text';
 import {Button} from '../sharedComponents/Button';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {defineMessages, useIntl} from 'react-intl';
-import {DeviceNamingSceens} from '../Navigation/Stack/DeviceNamingScreens';
+import {DeviceNamingParamsList} from '../sharedTypes/navigation';
 
 const m = defineMessages({
   header: {
@@ -33,7 +33,7 @@ const m = defineMessages({
 
 export const DeviceNaming = ({
   navigation,
-}: NativeStackScreenProps<DeviceNamingSceens, 'DeviceNaming'>) => {
+}: NativeStackScreenProps<DeviceNamingParamsList, 'DeviceNaming'>) => {
   const [name, setName] = React.useState('');
   const [errorTimeout, setErrorTimeout] = useTemporaryError();
   const invalidName = name.length === 0 || name.length > 60;

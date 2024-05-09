@@ -2,7 +2,7 @@ import * as React from 'react';
 import {InputPasscode} from './InputPasscode';
 import {defineMessages} from 'react-intl';
 import {OBSCURE_PASSCODE} from '../../constants';
-import {NativeNavigationComponent} from '../../sharedTypes';
+import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
   titleSet: {

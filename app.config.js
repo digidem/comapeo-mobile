@@ -32,4 +32,10 @@ module.exports = ({config}) => ({
     package: 'com.comapeo' + SUFFIX,
     googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
   },
+  updates: {
+    url: 'https://u.expo.dev/2d5b8137-12ec-45aa-9c23-56b6a1c522b7',
+  },
+  runtimeVersion: {
+    policy: 'appVersion',
+  },
 });

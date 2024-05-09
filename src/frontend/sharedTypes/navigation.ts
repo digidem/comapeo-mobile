@@ -100,13 +100,13 @@ export type AppList = {
   Sync: undefined;
 };
 
-export type DeviceNamingSceens = {
+export type DeviceNamingParamList = {
   IntroToCoMapeo: undefined;
   DeviceNaming: undefined;
   Success: {deviceName: string};
 };
 
-export type AppStackList = AppList & DeviceNamingSceens;
+export type AppStackList = AppList & DeviceNamingParamList;
 
 export type NativeRootNavigationProps<ScreenName extends keyof AppStackList> =
   NativeStackScreenProps<AppStackList, ScreenName>;

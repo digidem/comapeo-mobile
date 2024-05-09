@@ -1,7 +1,7 @@
 import {ClientGeneratedObservation} from '../sharedTypes';
 import {Observation, Preset} from '@mapeo/schema';
 import {matchPreset} from '../lib/utils';
-import {AppList, DeviceNamingSceens} from '../sharedTypes/navigation';
+import {AppList, DeviceNamingParamList} from '../sharedTypes/navigation';
 
 export function getInitialRouteName(
   initialInfo:
@@ -11,7 +11,7 @@ export function getInitialRouteName(
         existingObservation: null | ClientGeneratedObservation | Observation;
         presets: Preset[];
       },
-): keyof AppList | keyof DeviceNamingSceens {
+): keyof AppList | keyof DeviceNamingParamList {
   // if user has not set a name, navigate to intro screen where they will be prompted to set a name
   if (!initialInfo.hasDeviceName) {
     return 'IntroToCoMapeo';

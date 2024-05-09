@@ -11,7 +11,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {useEditDeviceInfo} from '../hooks/server/deviceInfo';
 import {Loading} from '../sharedComponents/Loading';
 import {WHITE} from '../lib/styles';
-import {DeviceNamingSceens} from '../sharedTypes/navigation';
+import {DeviceNamingParamList} from '../sharedTypes/navigation';
 
 const m = defineMessages({
   success: {
@@ -30,7 +30,7 @@ const m = defineMessages({
 
 export const Success = ({
   route,
-}: NativeStackScreenProps<DeviceNamingSceens, 'Success'>) => {
+}: NativeStackScreenProps<DeviceNamingParamList, 'Success'>) => {
   const setDeviceName = useEditDeviceInfo();
   const deviceName = route.params.deviceName;
   const {formatMessage: t} = useIntl();

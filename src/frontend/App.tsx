@@ -13,7 +13,7 @@ import {AppProviders} from './contexts/AppProviders';
 import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
 import {Loading} from './sharedComponents/Loading';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
-import {AppStackList} from './sharedTypes/navigation';
+import {AppStackParamsList} from './sharedTypes/navigation';
 
 const messagePort = new MessagePortLike();
 const mapeoApi = createMapeoClient(messagePort, {timeout: Infinity});
@@ -22,7 +22,7 @@ localDiscoveryController.start();
 initializeNodejs();
 
 const App = () => {
-  const navRef = useNavigationContainerRef<AppStackList>();
+  const navRef = useNavigationContainerRef<AppStackParamsList>();
   const [permissionsAsked, setPermissionsAsked] = React.useState(false);
   React.useEffect(() => {
     PermissionsAndroid.requestMultiple([

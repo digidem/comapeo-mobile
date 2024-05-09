@@ -100,19 +100,21 @@ export type DeviceNamingParamsList = {
   Success: {deviceName: string};
 };
 
-export type AppStackList = RootStackParamsList & DeviceNamingParamsList;
+export type AppStackParamsList = RootStackParamsList & DeviceNamingParamsList;
 
-export type NativeRootNavigationProps<ScreenName extends keyof AppStackList> =
-  NativeStackScreenProps<AppStackList, ScreenName>;
+export type NativeRootNavigationProps<
+  ScreenName extends keyof AppStackParamsList,
+> = NativeStackScreenProps<AppStackParamsList, ScreenName>;
 
-export type NativeNavigationComponent<ScreenName extends keyof AppStackList> =
-  React.FC<NativeRootNavigationProps<ScreenName>> & {
-    navTitle: MessageDescriptor;
-  };
+export type NativeNavigationComponent<
+  ScreenName extends keyof AppStackParamsList,
+> = React.FC<NativeRootNavigationProps<ScreenName>> & {
+  navTitle: MessageDescriptor;
+};
 
 export type NativeHomeTabsNavigationProps<
   ScreenName extends keyof HomeTabsParamsList,
 > = CompositeScreenProps<
   BottomTabScreenProps<HomeTabsParamsList, ScreenName>,
-  NativeStackScreenProps<AppStackList>
+  NativeStackScreenProps<AppStackParamsList>
 >;

@@ -12,7 +12,7 @@ import {DARK_BLUE, RED, WHITE} from '../lib/styles';
 import {PasscodeInput} from '../sharedComponents/PasscodeInput';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useSecurityContext} from '../contexts/SecurityContext';
-import {AppStackList} from '../sharedTypes/navigation';
+import {AppStackParamsList} from '../sharedTypes/navigation';
 
 const m = defineMessages({
   enterPass: {
@@ -27,7 +27,7 @@ const m = defineMessages({
 
 export const AuthScreen = ({
   navigation,
-}: NativeStackScreenProps<AppStackList, 'AuthScreen'>) => {
+}: NativeStackScreenProps<AppStackParamsList, 'AuthScreen'>) => {
   const [error, setError] = React.useState(false);
   const {authenticate, authState} = useSecurityContext();
   const [inputtedPass, setInputtedPass] = React.useState('');

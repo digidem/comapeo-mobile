@@ -45,7 +45,7 @@
       "splash": {
         "image": "./assets/splash.png",
         "backgroundColor": "#050F77",
-        "resizeMode": "contain"
+        "resizeMode": "native"
       },
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",

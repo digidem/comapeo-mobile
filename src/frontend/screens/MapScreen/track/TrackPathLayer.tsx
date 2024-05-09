@@ -1,5 +1,5 @@
 import {LineJoin, LineLayer, ShapeSource} from '@rnmapbox/maps';
-import {useCurrentTrackStore} from '../../../hooks/tracks/useCurrentTrackStore';
+import {usePersistedTrack} from '../../../hooks/persistedState/usePersistedTrack';
 import * as React from 'react';
 import {StyleSheet} from 'react-native';
 import {LineString} from 'geojson';
@@ -7,8 +7,8 @@ import {useLocation} from '../../../hooks/useLocation';
 import {LocationHistoryPoint} from '../../../sharedTypes/location';
 
 export const TrackPathLayer = () => {
-  const locationHistory = useCurrentTrackStore(state => state.locationHistory);
-  const isTracking = useCurrentTrackStore(state => state.isTracking);
+  const locationHistory = usePersistedTrack(state => state.locationHistory);
+  const isTracking = usePersistedTrack(state => state.isTracking);
   const {location} = useLocation({maxDistanceInterval: 3});
   const finalLocationHistory = location?.coords
     ? [

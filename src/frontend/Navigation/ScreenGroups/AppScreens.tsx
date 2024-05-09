@@ -58,7 +58,7 @@ import {TrackingTabBarIcon} from './TabBar/TrackingTabBarIcon';
 import {InviteProps} from '../types';
 import {CameraTabBarIcon} from './TabBar/CameraTabBarIcon';
 import {MapTabBarIcon} from './TabBar/MapTabBarIcon';
-import {SaveTrackScreen} from '../../screens/MapScreen/track/SaveTrackScreen';
+import {SaveTrackScreen} from '../../screens/SaveTrack/SaveTrackScreen';
 import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/InviteDeclined';
 import {UnableToCancelInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/UnableToCancelInvite';
 import {SharedLocationContextProvider} from '../../contexts/SharedLocationContext';
@@ -185,7 +185,7 @@ const HomeTabs = () => {
         }}
       />
 
-      {process.env.FEATURE_TRACKS && (
+      {process.env.EXPO_PUBLIC_FEATURE_TRACKS && (
         <Tab.Screen
           name="Tracking"
           options={{

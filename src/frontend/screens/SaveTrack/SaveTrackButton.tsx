@@ -1,18 +1,16 @@
 import {Image, Pressable, StyleSheet} from 'react-native';
 import React, {FC} from 'react';
 import {DateTime} from 'luxon';
-import {useCreateTrack} from '../../../../hooks/server/track';
-import {useCurrentTrackStore} from '../../../../hooks/tracks/useCurrentTrackStore';
-import {useNavigationFromHomeTabs} from '../../../../hooks/useNavigationWithTypes';
+import {useCreateTrack} from '../../hooks/server/track';
+import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {CommonActions} from '@react-navigation/native';
 
-interface SaveTrackButton {
-  description: string;
-}
-
-export const SaveTrackButton: FC<SaveTrackButton> = ({description}) => {
+export const SaveTrackButton: FC = () => {
   const saveTrack = useCreateTrack();
-  const navigation = useNavigationFromHomeTabs();
-  const currentTrack = useCurrentTrackStore();
+  const navigation = useNavigationFromRoot();
+  const currentTrack = usePersistedTrack();
+  const description = usePersistedTrack(state => state.description);
 
   const handleSaveClick = () => {
     saveTrack.mutate(
@@ -39,7 +37,12 @@ export const SaveTrackButton: FC<SaveTrackButton> = ({description}) => {
       },
       {
         onSuccess: () => {
-          navigation.navigate('Map');
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{name: 'Home', params: {screen: 'Map'}}],
+            }),
+          );
           currentTrack.clearCurrentTrack();
         },
       },
@@ -50,7 +53,7 @@ export const SaveTrackButton: FC<SaveTrackButton> = ({description}) => {
     <Pressable disabled={saveTrack.isPending} onPress={handleSaveClick}>
       <Image
         style={styles.completeIcon}
-        source={require('../../../../images/completed/checkComplete.png')}
+        source={require('../../images/completed/checkComplete.png')}
       />
     </Pressable>
   );

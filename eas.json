@@ -7,9 +7,11 @@
       "developmentClient": true,
       "distribution": "internal",
       "ios": {
+        "image": "latest",
         "simulator": true
       },
       "android": {
+        "image": "latest",
         "buildType": "apk"
       },
       "env": {
@@ -23,10 +25,20 @@
         "APP_VARIANT": "test"
       },
       "android": {
+        "image": "latest",
         "buildType": "apk"
+      },
+      "ios": {
+        "image": "latest"
       }
     },
     "production": {
+      "android": {
+        "image": "latest"
+      },
+      "ios": {
+        "image": "latest"
+      },
       "channel": "production",
       "env": {
         "APP_VARIANT": "production"

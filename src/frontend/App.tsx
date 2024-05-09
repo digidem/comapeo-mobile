@@ -14,12 +14,14 @@ import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
 import {Loading} from './sharedComponents/Loading';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {AppStackParamsList} from './sharedTypes/navigation';
+import * as SplashScreen from 'expo-splash-screen';
 
 const messagePort = new MessagePortLike();
 const mapeoApi = createMapeoClient(messagePort, {timeout: Infinity});
 const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();
 initializeNodejs();
+SplashScreen.preventAutoHideAsync();
 
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackParamsList>();

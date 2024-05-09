@@ -40,7 +40,6 @@ import {
   LocationInfoScreen,
   createNavigationOptions as createLocationInfoNavOptions,
 } from '../../screens/LocationInfoScreen';
-import {SaveTrackScreen} from '../../screens/MapScreen/track/SaveTrackScreen';
 import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/InviteDeclined';
 import {UnableToCancelInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/UnableToCancelInvite';
 import {SharedLocationContextProvider} from '../../contexts/SharedLocationContext';
@@ -53,6 +52,7 @@ import {
   createNavigationOptions as createManualGpsNavigationOptions,
 } from '../../screens/ManualGpsScreen';
 import {HomeTabs} from '../Tab';
+import {SaveTrackScreen} from '../../screens/SaveTrack/SaveTrackScreen';
 
 export const TAB_BAR_HEIGHT = 70;
 

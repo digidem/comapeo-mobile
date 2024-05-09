@@ -16,9 +16,9 @@ import {TAB_BAR_HEIGHT} from '../Stack/AppScreens';
 import {CameraTabBarIcon} from './TabBar/CameraTabBarIcon';
 import {MapTabBarIcon} from './TabBar/MapTabBarIcon';
 import {TrackingTabBarIcon} from './TabBar/TrackingTabBarIcon';
-import {HomeTabsList} from '../../sharedTypes/navigation';
+import {HomeTabsParamsList} from '../../sharedTypes/navigation';
 
-const Tab = createBottomTabNavigator<HomeTabsList>();
+const Tab = createBottomTabNavigator<HomeTabsParamsList>();
 
 export const HomeTabs = () => {
   const {handleTabPress} = useCurrentTab();
@@ -68,7 +68,7 @@ export const HomeTabs = () => {
           listeners={({
             navigation,
           }: {
-            navigation: BottomTabNavigationProp<HomeTabsList>;
+            navigation: BottomTabNavigationProp<HomeTabsParamsList>;
           }) => ({
             tabPress: e => {
               e.preventDefault();

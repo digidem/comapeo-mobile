@@ -26,17 +26,17 @@ export type InviteProps = {
   role: DeviceRoleForNewInvite;
 };
 
-export type HomeTabsList = {
+export type HomeTabsParamsList = {
   Map: undefined;
   Camera: undefined;
   Tracking: undefined;
   ObservationsList: undefined;
 };
 
-export type TabName = keyof HomeTabsList;
+export type TabName = keyof HomeTabsParamsList;
 
 export type RootStackParamList = {
-  Home: NavigatorScreenParams<HomeTabsList>;
+  Home: NavigatorScreenParams<HomeTabsParamsList>;
   GpsModal: undefined;
   Settings: undefined;
   ProjectConfig: undefined;
@@ -117,8 +117,8 @@ export type NativeNavigationComponent<ScreenName extends keyof AppStackList> =
   };
 
 export type NativeHomeTabsNavigationProps<
-  ScreenName extends keyof HomeTabsList,
+  ScreenName extends keyof HomeTabsParamsList,
 > = CompositeScreenProps<
-  BottomTabScreenProps<HomeTabsList, ScreenName>,
+  BottomTabScreenProps<HomeTabsParamsList, ScreenName>,
   NativeStackScreenProps<AppStackList>
 >;

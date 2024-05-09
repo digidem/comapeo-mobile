@@ -6,7 +6,7 @@ import {defineMessages, FormattedMessage} from 'react-intl';
 
 import {CameraView} from '../sharedComponents/CameraView';
 import {useDraftObservation} from '../hooks/useDraftObservation';
-import {NativeRootNavigationProps} from '../sharedTypes';
+import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 import {CapturedPictureMM} from '../contexts/PhotoPromiseContext/types';
 
 const m = defineMessages({

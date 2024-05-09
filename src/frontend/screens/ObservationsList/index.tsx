@@ -4,12 +4,12 @@ import {ObservationListItem} from './ObservationListItem';
 import ObservationEmptyView from './ObservationsEmptyView';
 
 import {Observation} from '@mapeo/schema';
-import {NativeHomeTabsNavigationProps} from '../../sharedTypes';
 import {useAllObservations} from '../../hooks/useAllObservations';
 import {MessageDescriptor, defineMessages} from 'react-intl';
 import {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs';
-import {ObservationsListBarIcon} from '../../Navigation/ScreenGroups/TabBar/ObservationsListTabBarIcon';
+import {ObservationsListBarIcon} from '../../Navigation/Tab/TabBar/ObservationsListTabBarIcon';
 import {ObservationListHeaderLeft} from './ObservationListHeaderLeft';
+import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
   loading: {

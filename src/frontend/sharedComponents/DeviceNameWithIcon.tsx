@@ -2,10 +2,11 @@ import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 import DeviceMobile from '../images/DeviceMobile.svg';
 import DeviceDesktop from '../images/DeviceDesktop.svg';
-import {DeviceType, ViewStyleProp} from '../sharedTypes';
+import {ViewStyleProp} from '../sharedTypes';
 import {defineMessages, useIntl} from 'react-intl';
 import {Text} from './Text';
 import {MEDIUM_GREY} from '../lib/styles';
+import {DeviceType} from '../sharedTypes';
 
 const m = defineMessages({
   thisDevice: {

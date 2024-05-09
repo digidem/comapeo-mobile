@@ -12,7 +12,7 @@ import {useFieldsQuery} from '../../hooks/server/fields';
 import {FieldDetails} from './FieldDetails';
 import {InsetMapView} from './InsetMapView';
 import {ButtonFields} from './Buttons';
-import {NativeNavigationComponent} from '../../sharedTypes';
+import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
 
 const m = defineMessages({

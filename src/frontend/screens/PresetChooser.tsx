@@ -12,7 +12,7 @@ import {defineMessages, FormattedMessage} from 'react-intl';
 import {useDraftObservation} from '../hooks/useDraftObservation';
 import {CategoryCircleIcon} from '../sharedComponents/icons/CategoryIcon';
 import {WHITE} from '../lib/styles';
-import {NativeNavigationComponent} from '../sharedTypes';
+import {NativeNavigationComponent} from '../sharedTypes/navigation';
 import {CustomHeaderLeftClose} from '../sharedComponents/CustomHeaderLeftClose';
 import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 import {Preset} from '@mapeo/schema';

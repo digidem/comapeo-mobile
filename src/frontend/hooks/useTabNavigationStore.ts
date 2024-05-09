@@ -1,5 +1,5 @@
 import {create} from 'zustand';
-import {TabName} from '../Navigation/types';
+import {TabName} from '../sharedTypes/navigation';
 
 type NavigationStoreState = {
   currentTab: TabName;

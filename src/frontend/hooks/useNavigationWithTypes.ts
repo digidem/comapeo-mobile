@@ -1,17 +1,19 @@
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {CompositeNavigationProp, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {AppStackList} from '../Navigation/AppStack';
-import {HomeTabsList} from '../Navigation/ScreenGroups/AppScreens';
+import {
+  AppStackParamsList,
+  HomeTabsParamsList,
+} from '../sharedTypes/navigation';
 
 export const useNavigationFromRoot = () =>
-  useNavigation<NativeStackNavigationProp<AppStackList>>();
+  useNavigation<NativeStackNavigationProp<AppStackParamsList>>();
 
 export function useNavigationFromHomeTabs() {
   return useNavigation<
     CompositeNavigationProp<
-      BottomTabNavigationProp<HomeTabsList>,
-      NativeStackNavigationProp<AppStackList>
+      BottomTabNavigationProp<HomeTabsParamsList>,
+      NativeStackNavigationProp<AppStackParamsList>
     >
   >();
 }

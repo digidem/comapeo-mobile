@@ -5,12 +5,21 @@ import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useDeleteObservation} from '../../hooks/server/observations';
 import {Text} from '../../sharedComponents/Text';
+import Share from 'react-native-share';
+import {Buffer} from 'buffer';
+import {useAttachmentUrlQueries} from '../../hooks/server/media.ts';
+import {useObservationWithPreset} from '../../hooks/useObservationWithPreset.ts';
 
 const m = defineMessages({
   delete: {
     id: 'screens.Observation.ObservationView.delete',
     defaultMessage: 'Delete',
     description: 'Button to delete an observation',
+  },
+  share: {
+    id: 'screens.Observation.ObservationView.share',
+    defaultMessage: 'Share',
+    description: 'Button to share an observation',
   },
   cancel: {
     id: 'screens.Observation.cancel',
@@ -33,6 +42,19 @@ const m = defineMessages({
     defaultMessage: 'Delete observation?',
     description: 'Title of dialog asking confirmation to delete an observation',
   },
+  shareTitle: {
+    id: 'screens.Observation.shareTitle',
+    defaultMessage: 'Sharing observation',
+    description: 'Title of dialog to share an observation',
+  },
+  shareMessage: {
+    id: 'screens.Observation.shareMessage',
+    defaultMessage:
+      'Mapeo Alert — {category_name}\n' +
+      '{date, date, full} {time, time, long}\n' +
+      '{coordinates}',
+    description: 'Message that will be shared along with image',
+  },
 });
 
 export const ButtonFields = ({
@@ -45,6 +67,11 @@ export const ButtonFields = ({
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
   const deleteObservationMutation = useDeleteObservation();
+  const {observation, preset} = useObservationWithPreset(observationId);
+  const attachmentUrlQueries = useAttachmentUrlQueries(
+    observation.attachments,
+    'original',
+  ).map(q => q.data);
 
   function handlePressDelete() {
     Alert.alert(t(m.deleteTitle), undefined, [
@@ -62,6 +89,31 @@ export const ButtonFields = ({
     ]);
   }
 
+  async function handlePressShare() {
+    const attachments = attachmentUrlQueries.filter(url => !!url) as string[];
+    const base64Urls = await Promise.all(
+      attachments.map(async attachment => {
+        const imageResponse = await fetch(attachment);
+        const imageType = imageResponse.headers.get('content-type')!;
+
+        const arrayBuffer = await imageResponse.arrayBuffer();
+        const base64 = Buffer.from(arrayBuffer).toString('base64');
+        return `data:${imageType};base64,${base64}`;
+      }),
+    );
+
+    await Share.open({
+      title: t(m.shareTitle),
+      urls: base64Urls,
+      message: t(m.shareMessage, {
+        category_name: preset.name,
+        date: Date.now(),
+        time: Date.now(),
+        coordinates: `Lon ${observation.lon}, Lat ${observation.lat}`,
+      }),
+    });
+  }
+
   return (
     <View style={styles.buttonContainer}>
       {isMine && (
@@ -72,6 +124,12 @@ export const ButtonFields = ({
           onPress={handlePressDelete}
         />
       )}
+      <Button
+        iconName="share"
+        title={t(m.share)}
+        color={RED}
+        onPress={handlePressShare}
+      />
     </View>
   );
 };

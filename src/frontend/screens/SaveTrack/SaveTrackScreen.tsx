@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
 import {
   BackHandler,
   Pressable,
@@ -7,31 +7,27 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {DiscardModal} from '../../../sharedComponents/DiscardModal.tsx';
-import {BottomSheet} from '../../../sharedComponents/BottomSheet/BottomSheet';
-import PhotoIcon from '../../../images/camera.svg';
-import DetailsIcon from '../../../images/details.svg';
-import TrackIcon from '../../../images/Track.svg';
+import {DiscardModal} from '../../sharedComponents/DiscardModal';
+import {BottomSheet} from '../../sharedComponents/BottomSheet/BottomSheet';
+import PhotoIcon from '../../images/camera.svg';
+import DetailsIcon from '../../images/details.svg';
+import TrackIcon from '../../images/Track.svg';
 import {defineMessages, useIntl} from 'react-intl';
-import {Text} from '../../../sharedComponents/Text';
-import {TrackDescriptionField} from './saveTrack/TrackDescriptionField';
-import {useBottomSheetModal} from '../../../sharedComponents/BottomSheetModal';
-import DiscardIcon from '../../../images/delete.svg';
-import ErrorIcon from '../../../images/Error.svg';
-import {TabName} from '../../../Navigation/types.ts';
-import {useCurrentTrackStore} from '../../../hooks/tracks/useCurrentTrackStore.ts';
-import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes.ts';
-import {useFocusEffect} from '@react-navigation/native';
-import {SaveTrackButton} from './saveTrack/SaveTrackButton.tsx';
-import Close from '../../../images/close.svg';
+import {Text} from '../../sharedComponents/Text';
+import {TrackDescriptionField} from './TrackDescriptionField';
+import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
+import DiscardIcon from '../../images/delete.svg';
+import ErrorIcon from '../../images/Error.svg';
+import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {CommonActions, useFocusEffect} from '@react-navigation/native';
+import {SaveTrackButton} from './SaveTrackButton';
+import Close from '../../images/close.svg';
 
 export const SaveTrackScreen = () => {
-  const navigation = useNavigationFromHomeTabs();
-  const clearCurrentTrack = useCurrentTrackStore(
-    state => state.clearCurrentTrack,
-  );
+  const navigation = useNavigationFromRoot();
+  const clearCurrentTrack = usePersistedTrack(state => state.clearCurrentTrack);
   const {formatMessage: t} = useIntl();
-  const [description, setDescription] = useState('');
   const {sheetRef, isOpen, openSheet, closeSheet} = useBottomSheetModal({
     openOnMount: false,
   });
@@ -55,7 +51,12 @@ export const SaveTrackScreen = () => {
 
   const handleDiscard = () => {
     closeSheet();
-    navigation.navigate(TabName.Map);
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{name: 'Home', params: {screen: 'Map'}}],
+      }),
+    );
     clearCurrentTrack();
   };
 
@@ -67,9 +68,9 @@ export const SaveTrackScreen = () => {
             <Close />
           </Pressable>
         ),
-        headerRight: () => <SaveTrackButton description={description} />,
+        headerRight: () => <SaveTrackButton />,
       });
-    }, [description, navigation, openSheet]),
+    }, [navigation, openSheet]),
   );
 
   // disables back button
@@ -99,10 +100,7 @@ export const SaveTrackScreen = () => {
           <TrackIcon style={styles.icon} />
           <Text style={styles.titleText}>{t(m.newTitle)}</Text>
         </View>
-        <TrackDescriptionField
-          description={description}
-          setDescription={setDescription}
-        />
+        <TrackDescriptionField />
         <DiscardModal
           bottomSheetRef={sheetRef}
           isOpen={isOpen}

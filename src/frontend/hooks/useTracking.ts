@@ -1,16 +1,23 @@
 import * as Location from 'expo-location';
+import * as TaskManager from 'expo-task-manager';
 import {useCallback, useState} from 'react';
-import {useCurrentTrackStore} from './useCurrentTrackStore';
+import {usePersistedTrack} from './persistedState/usePersistedTrack';
+import {FullLocationData} from '../sharedTypes/location';
 import {useGPSModalContext} from '../../contexts/GPSModalContext';
 import {getData, LOCATION_TASK_NAME} from '../../lib/trackLocationsStorage';
 import {useInterval} from 'react-native-confirmation-code-field/esm/useTimer';
 
+type LocationCallbackInfo = {
+  data: {locations: FullLocationData[]} | null;
+  error: TaskManager.TaskManagerError | null;
+};
+
 export function useTracking() {
   const {bottomSheetRef} = useGPSModalContext();
   const [loading, setLoading] = useState(false);
-  const addNewLocations = useCurrentTrackStore(state => state.addNewLocations);
-  const setTracking = useCurrentTrackStore(state => state.setTracking);
-  const isTracking = useCurrentTrackStore(state => state.isTracking);
+  const addNewLocations = usePersistedTrack(state => state.addNewLocations);
+  const setTracking = usePersistedTrack(state => state.setTracking);
+  const isTracking = usePersistedTrack(state => state.isTracking);
 
   useInterval(
     useCallback(() => {
@@ -20,6 +27,7 @@ export function useTracking() {
           addNewLocations(newLocations);
         }
       }
+
       update();
     }, []),
     250,

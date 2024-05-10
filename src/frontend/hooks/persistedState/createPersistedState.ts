@@ -12,6 +12,7 @@ export const storage = new MMKV();
 type PersistedStoreKey =
   | 'MapeoLocale'
   | '@MapeoDraft'
+  | 'MapeoTrack'
   | 'Passcode'
   | 'ActiveProjectId'
   | 'Settings';

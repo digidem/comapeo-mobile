@@ -539,6 +539,9 @@
     "description": "Title of screen with list of observations",
     "message": "Pengamatan"
   },
+  "screens.ObservationsList.NoProjectWarning": {
+    "message": "You won’t be able to share observations collected yet."
+  },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
     "description": "Back button on observation list screen when no observations are yet recorded",
     "message": "Pergi ke Peta"
@@ -551,6 +554,10 @@
     "description": "Title of observation list view when the user has not yet recorded observations",
     "message": "Tambahkan Pengamatan"
   },
+  "screens.ObservationsList.createOrJoin": {
+    "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
+    "message": "Create or Join a Project."
+  },
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",
     "message": "Terjadi kesalahan saat memuat pengamatan. Coba keluar dan mulai ulang Mapeo."
@@ -558,6 +565,10 @@
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
     "message": "Memuat… ini bisa memakan waktu cukup lama setelah menyinkronkan perangkat baru"
+  },
+  "screens.ObservationsList.toSync": {
+    "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
+    "message": "To sync and share with other devices,"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",

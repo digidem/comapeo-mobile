@@ -42,10 +42,15 @@ const m = defineMessages({
     defaultMessage: 'Delete observation?',
     description: 'Title of dialog asking confirmation to delete an observation',
   },
-  shareTitle: {
-    id: 'screens.Observation.shareTitle',
-    defaultMessage: 'Sharing observation',
-    description: 'Title of dialog to share an observation',
+  shareTextTitle: {
+    id: 'screens.Observation.shareTextTitle',
+    defaultMessage: 'Sharing text',
+    description: 'Title of dialog to share an observation without media',
+  },
+  shareMediaTitle: {
+    id: 'screens.Observation.shareMediaTitle',
+    defaultMessage: 'Sharing image',
+    description: 'Title of dialog to share an observation with media',
   },
   shareMessage: {
     id: 'screens.Observation.shareMessage',
@@ -103,7 +108,7 @@ export const ButtonFields = ({
     );
 
     await Share.open({
-      title: t(m.shareTitle),
+      title: base64Urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),
       urls: base64Urls,
       message: t(m.shareMessage, {
         category_name: preset.name,

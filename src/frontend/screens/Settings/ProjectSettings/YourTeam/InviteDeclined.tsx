@@ -5,7 +5,7 @@ import ErrorIcon from '../../../../images/Error.svg';
 import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../../../sharedComponents/Text';
 import {DeviceNameWithIcon} from '../../../../sharedComponents/DeviceNameWithIcon';
-import {NativeRootNavigationProps} from '../../../../sharedTypes';
+import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
 
 const m = defineMessages({

@@ -3,9 +3,9 @@ import {GPSPermissionsDisabled} from './GPSPermissionsDisabled';
 import {GPSPermissionsEnabled} from './GPSPermissionsEnabled';
 import * as Location from 'expo-location';
 import {useGPSModalContext} from '../../../contexts/GPSModalContext';
-import {useTabNavigationStore} from '../../../hooks/useTabNavigationStore.ts';
+import {useTabNavigationStore} from '../../../hooks/useTabNavigationStore';
 import {BottomSheetModal, BottomSheetView} from '@gorhom/bottom-sheet';
-import {TAB_BAR_HEIGHT} from '../../../Navigation/ScreenGroups/AppScreens';
+import {TAB_BAR_HEIGHT} from '../../../Navigation/Stack/AppScreens';
 import {StyleSheet} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 

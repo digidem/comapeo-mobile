@@ -3,7 +3,7 @@ import {ScrollView, StyleSheet} from 'react-native';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 
-import {NativeRootNavigationProps} from '../../../../sharedTypes';
+import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
 import {useDeviceInfo} from '../../../../hooks/server/deviceInfo';
 import {Text} from '../../../../sharedComponents/Text';
 import {IconButton} from '../../../../sharedComponents/IconButton';

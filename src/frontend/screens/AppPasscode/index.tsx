@@ -3,7 +3,7 @@ import {defineMessages} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 
 import {WHITE} from '../../lib/styles';
-import {NativeNavigationComponent} from '../../sharedTypes';
+import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {PasscodeIntro} from './PasscodeIntro';
 import {useSecurityContext} from '../../contexts/SecurityContext';
 

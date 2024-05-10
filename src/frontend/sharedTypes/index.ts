@@ -1,42 +1,18 @@
-// TS port of /src/frontend/types.js
 import {ImageStyle, StyleProp, TextStyle, ViewStyle} from 'react-native';
-import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
-import {CompositeScreenProps} from '@react-navigation/native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-
-import {MessageDescriptor} from 'react-intl';
-import {AppStackList} from './Navigation/AppStack';
-import {HomeTabsList} from './Navigation/ScreenGroups/AppScreens';
 import {Observation, ObservationValue} from '@mapeo/schema';
 import type {RoleId, RoleIdForNewInvite} from '@mapeo/core/dist/roles';
+
+export type DeviceType = 'mobile' | 'desktop';
+
+export type DeviceRole = RoleId;
+
+export type DeviceRoleForNewInvite = RoleIdForNewInvite;
 
 export type ViewStyleProp = StyleProp<ViewStyle>;
 export type TextStyleProp = StyleProp<TextStyle>;
 export type ImageStyleProp = StyleProp<ImageStyle>;
 
 export type IconSize = 'small' | 'medium' | 'large';
-
-export type NativeRootNavigationProps<ScreenName extends keyof AppStackList> =
-  NativeStackScreenProps<AppStackList, ScreenName>;
-
-export type NativeNavigationComponent<ScreenName extends keyof AppStackList> =
-  React.FC<NativeRootNavigationProps<ScreenName>> & {
-    navTitle: MessageDescriptor;
-  };
-
-export type NativeNavigationScreenWithProps<
-  ScreenName extends keyof AppStackList,
-  T,
-> = React.FC<NativeStackScreenProps<AppStackList, ScreenName> & T> & {
-  navTitle: MessageDescriptor;
-};
-
-export type NativeHomeTabsNavigationProps<
-  ScreenName extends keyof HomeTabsList,
-> = CompositeScreenProps<
-  BottomTabScreenProps<HomeTabsList, ScreenName>,
-  NativeStackScreenProps<AppStackList>
->;
 
 export type Status = 'idle' | 'loading' | 'error' | 'success' | void;
 
@@ -51,10 +27,6 @@ export type Attachment = Observation['attachments'][0];
 export type PhotoVariant = 'original' | 'thumbnail' | 'preview';
 
 export type CoordinateFormat = 'utm' | 'dd' | 'dms';
-export type DeviceType = 'mobile' | 'desktop';
-
-export type DeviceRole = RoleId;
-export type DeviceRoleForNewInvite = RoleIdForNewInvite;
 
 // Copied form /@mapeo/core/src/roles.js. Created an issue to eventuall expose this: https://github.com/digidem/mapeo-core-next/issues/532
 export const CREATOR_ROLE_ID = 'a12a6702b93bd7ff';

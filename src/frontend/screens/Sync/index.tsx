@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 
-import {NativeRootNavigationProps} from '../../sharedTypes';
+import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {IconButton} from '../../sharedComponents/IconButton';
 import {SettingsIcon} from '../../sharedComponents/icons';
 import {useAllProjects, useProjectSettings} from '../../hooks/server/projects';

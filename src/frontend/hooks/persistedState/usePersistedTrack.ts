@@ -38,7 +38,8 @@ export const usePersistedTrack = createPersistedState<TracksStoreState>(
     addNewObservation: (id: string) =>
       set(state => ({observations: [...state.observations, id]})),
     addNewLocations: (locations: LocationHistoryPoint[]) =>
-      set(({locationHistory: currentHistory}) => ({
+      set(({locationHistory: currentHistory, distance: currentDistance}) => ({
+        distance: currentDistance + calculateTotalDistance(locations),
         locationHistory: [...currentHistory, ...locations],
       })),
     setLocations: data =>

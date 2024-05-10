@@ -5,7 +5,7 @@ import {
 } from '../sharedTypes/location.ts';
 import * as TaskManager from 'expo-task-manager';
 
-const LOCATION_DATA_KEY = 'comapeo/track_locations';
+export const LOCATION_DATA_KEY = 'comapeo/track_locations';
 const STORE_LAST_N = 5000;
 
 type StoredLocationData = {
@@ -20,6 +20,7 @@ export type LocationCallbackInfo = {
 };
 
 export const LOCATION_TASK_NAME = 'background-location-task';
+
 export const locationTask = async ({data, error}: LocationCallbackInfo) => {
   if (error) {
     console.error('Error while processing location update callback', error);
@@ -39,10 +40,10 @@ export async function appendData(locations: LocationHistoryPoint[]) {
   try {
     const data = (await getData()) ?? [];
 
-    const appended = removeDuplicates(
-      [...toStored(data), ...toStored(locations)].slice(-STORE_LAST_N),
+    const newData = [...toStored(data), ...toStored(locations)].slice(
+      -STORE_LAST_N,
     );
-    await AsyncStorage.setItem(LOCATION_DATA_KEY, JSON.stringify(appended));
+    await AsyncStorage.setItem(LOCATION_DATA_KEY, JSON.stringify(newData));
   } catch (error) {
     return null;
   }

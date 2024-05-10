@@ -13,11 +13,11 @@ export const TrackPathLayer = () => {
   const finalLocationHistory = location?.coords
     ? [
         ...locationHistory,
-        {
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-          timestamp: new Date().getTime(),
-        },
+        // {
+        //   latitude: location.coords.latitude,
+        //   longitude: location.coords.longitude,
+        //   timestamp: new Date().getTime(),
+        // },
       ]
     : locationHistory;
 

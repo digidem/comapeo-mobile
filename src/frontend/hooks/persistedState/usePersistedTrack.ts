@@ -1,6 +1,8 @@
 import {calculateTotalDistance} from '../../utils/distance.ts';
 import {LocationHistoryPoint} from '../../sharedTypes/location.ts';
 import {createPersistedState} from './createPersistedState.ts';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {LOCATION_DATA_KEY} from '../../lib/trackLocationsStorage.ts';
 
 type TracksStoreState = {
   locationHistory: LocationHistoryPoint[];
@@ -9,6 +11,7 @@ type TracksStoreState = {
   description: string;
   setDescription: (val: string) => void;
   addNewObservation: (observationId: string) => void;
+  setLocations: (locationData: LocationHistoryPoint[]) => void;
   addNewLocations: (locationData: LocationHistoryPoint[]) => void;
   clearCurrentTrack: () => void;
   setTracking: (val: boolean) => void;
@@ -34,12 +37,16 @@ export const usePersistedTrack = createPersistedState<TracksStoreState>(
     setDescription: (val: string) => set(state => ({description: val})),
     addNewObservation: (id: string) =>
       set(state => ({observations: [...state.observations, id]})),
-    addNewLocations: data =>
+    addNewLocations: (locations: LocationHistoryPoint[]) =>
+      set(({locationHistory: currentHistory}) => ({
+        locationHistory: [...currentHistory, ...locations],
+      })),
+    setLocations: data =>
       set(({locationHistory, distance}) => {
         if (data.length > 1) {
           return {
-            locationHistory: [...locationHistory, ...data],
-            distance: distance + calculateTotalDistance(data),
+            locationHistory: data,
+            distance: calculateTotalDistance(data),
           };
         }
 
@@ -60,14 +67,17 @@ export const usePersistedTrack = createPersistedState<TracksStoreState>(
         };
       }),
     clearCurrentTrack: () =>
-      set(() => ({
-        locationHistory: [],
-        trackingSince: null,
-        distance: 0,
-        isTracking: false,
-        observations: [],
-        description: '',
-      })),
+      set(() => {
+        AsyncStorage.removeItem(LOCATION_DATA_KEY);
+        return {
+          locationHistory: [],
+          trackingSince: null,
+          distance: 0,
+          isTracking: false,
+          observations: [],
+          description: '',
+        };
+      }),
     setTracking: (val: boolean) =>
       set(() =>
         val

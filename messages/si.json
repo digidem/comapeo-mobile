@@ -539,6 +539,9 @@
     "description": "Title of screen with list of observations",
     "message": "නිරීක්ෂණය"
   },
+  "screens.ObservationsList.NoProjectWarning": {
+    "message": "You won’t be able to share observations collected yet."
+  },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
     "description": "Back button on observation list screen when no observations are yet recorded",
     "message": "සිතියම වෙත යන්න"
@@ -551,6 +554,10 @@
     "description": "Title of observation list view when the user has not yet recorded observations",
     "message": "නිරීක්ෂණය එකතු කරන්න"
   },
+  "screens.ObservationsList.createOrJoin": {
+    "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
+    "message": "Create or Join a Project."
+  },
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",
     "message": "නිරීක්ෂණ පූරණය කිරීමේ දෝෂයකි. Mapeo වෙතින් ඉවත් වී නැවත ආරම්භ කිරීමට උත්සාහ කරන්න."
@@ -558,6 +565,10 @@
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
     "message": "පූරණය වෙමින් පවතී... මෙය නව උපාංගයක් සමඟ සමමුහුර්ත කිරීමෙන් පසු යම් කාලයක් ගත විය හැක"
+  },
+  "screens.ObservationsList.toSync": {
+    "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
+    "message": "To sync and share with other devices,"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",

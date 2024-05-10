@@ -49,27 +49,6 @@ export async function appendData(locations: LocationHistoryPoint[]) {
   }
 }
 
-function removeDuplicates(locations: StoredLocationData[]) {
-  if (locations.length === 0) {
-    return [];
-  }
-
-  const first = locations[0]!;
-  const filtered = [first];
-
-  let lastValue = first;
-  for (const location of locations) {
-    const sameCoords =
-      location.lat === lastValue.lat && location.lon === lastValue.lon;
-
-    if (!sameCoords) {
-      lastValue = location;
-      filtered.push(location);
-    }
-  }
-  return filtered;
-}
-
 export async function getData(): Promise<LocationHistoryPoint[] | null> {
   try {
     const jsonValue = await AsyncStorage.getItem(LOCATION_DATA_KEY);

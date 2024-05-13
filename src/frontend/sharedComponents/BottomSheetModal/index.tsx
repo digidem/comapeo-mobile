@@ -28,15 +28,13 @@ export const useBottomSheetModal = ({openOnMount}: {openOnMount: boolean}) => {
     }
   }, []);
 
-  const openSheet = useCallback((err?: string) => {
+  const openSheet = useCallback(() => {
     if (sheetRef.current) {
       setIsOpen(true);
       if (Keyboard.isVisible()) {
         Keyboard.dismiss();
       }
       sheetRef.current.present();
-      // sentry.dupa(err)
-      console.error(err);
     }
   }, []);
 

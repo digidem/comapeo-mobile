@@ -21,6 +21,7 @@ import {
 } from './contexts/LocalDiscoveryContext';
 import {Loading} from './sharedComponents/Loading';
 import * as Sentry from '@sentry/react-native';
+import * as SplashScreen from 'expo-splash-screen';
 
 Sentry.init({
   dsn: 'https://e0e02907e05dc72a6da64c3483ed88a6@o4507148235702272.ingest.us.sentry.io/4507170965618688',
@@ -35,6 +36,7 @@ const mapeoApi = createMapeoClient(messagePort, {timeout: Infinity});
 const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();
 initializeNodejs();
+SplashScreen.preventAutoHideAsync();
 
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();

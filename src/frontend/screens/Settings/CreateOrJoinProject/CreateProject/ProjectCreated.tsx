@@ -2,7 +2,7 @@ import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {BackHandler, StyleSheet, View} from 'react-native';
 import GreenCheck from '../../../../images/GreenCheck.svg';
-import {NativeRootNavigationProps} from '../../../../sharedTypes';
+import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
 import {Text} from '../../../../sharedComponents/Text';
 import {Button} from '../../../../sharedComponents/Button';
 import {CommonActions, useFocusEffect} from '@react-navigation/native';

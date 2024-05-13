@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
-import {TabBarIconProps} from '../../types';
+import {TabBarIconProps} from '../../../sharedTypes/navigation';
 import {TabBarIcon} from './TabBarIcon';
-import {useTabNavigationStore} from '../../../hooks/useTabNavigationStore.ts';
+import {useTabNavigationStore} from '../../../hooks/useTabNavigationStore';
 
 export const MapTabBarIcon: FC<TabBarIconProps> = props => {
   const {currentTab} = useTabNavigationStore();

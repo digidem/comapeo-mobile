@@ -72,6 +72,8 @@
     },
     "ios": {
       "splash": {
+        "image": "./assets/splash.png",
+        "backgroundColor": "#050F77",
         "resizeMode": "contain"
       },
       "bundleIdentifier": "com.comapeo"

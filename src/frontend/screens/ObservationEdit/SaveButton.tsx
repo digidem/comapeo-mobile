@@ -12,7 +12,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import {useCreateBlobMutation} from '../../hooks/server/media';
 import {DraftPhoto, Photo} from '../../contexts/PhotoPromiseContext/types';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {useCurrentTrackStore} from '../../hooks/tracks/useCurrentTrackStore';
+import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import SaveCheck from '../../images/CheckMark.svg';
 
 const m = defineMessages({
@@ -74,10 +74,9 @@ export const SaveButton = ({
   const createObservationMutation = useCreateObservation();
   const editObservationMutation = useEditObservation();
   const createBlobMutation = useCreateBlobMutation();
-  const addNewTrackLocation = useCurrentTrackStore(
-    state => state.addNewLocations,
-  );
-  const addNewTrackObservation = useCurrentTrackStore(
+  const isTracking = usePersistedTrack(state => state.isTracking);
+  const addNewTrackLocation = usePersistedTrack(state => state.addNewLocations);
+  const addNewTrackObservation = usePersistedTrack(
     state => state.addNewObservation,
   );
 
@@ -137,16 +136,16 @@ export const SaveButton = ({
             onSuccess: data => {
               clearDraft();
               navigation.navigate('Home', {screen: 'Map'});
-              if (value.lat && value.lon) {
-                addNewTrackLocation([
-                  {
-                    timestamp: new Date().getTime(),
-                    latitude: value.lat,
-                    longitude: value.lon,
-                  },
-                ]);
-              }
-              if (data.docId) {
+              if (isTracking) {
+                if (value.lat && value.lon) {
+                  addNewTrackLocation([
+                    {
+                      timestamp: new Date().getTime(),
+                      latitude: value.lat,
+                      longitude: value.lon,
+                    },
+                  ]);
+                }
                 addNewTrackObservation(data.docId);
               }
             },
@@ -170,16 +169,6 @@ export const SaveButton = ({
         onSuccess: () => {
           clearDraft();
           navigation.pop();
-          if (value.lat && value.lon) {
-            addNewTrackLocation([
-              {
-                timestamp: new Date().getTime(),
-                latitude: value.lat,
-                longitude: value.lon,
-              },
-            ]);
-          }
-          addNewTrackObservation(observationId);
         },
       },
     );

@@ -2,12 +2,12 @@ import React, {useCallback} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Button} from '../../../sharedComponents/Button';
 import {Text} from '../../../sharedComponents/Text';
-import {useTracking} from '../../../hooks/tracks/useTracking';
+import {useTracking} from '../../../hooks/useTracking.ts';
 import StartTrackingIcon from '../../../images/StartTracking.svg';
 import StopTrackingIcon from '../../../images/StopTracking.svg';
 import {useTrackTimerContext} from '../../../contexts/TrackTimerContext';
 import {defineMessages, useIntl} from 'react-intl';
-import {useCurrentTrackStore} from '../../../hooks/tracks/useCurrentTrackStore';
+import {usePersistedTrack} from '../../../hooks/persistedState/usePersistedTrack';
 import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes';
 
 const m = defineMessages({
@@ -32,10 +32,8 @@ const m = defineMessages({
 export const GPSPermissionsEnabled = () => {
   const {formatMessage} = useIntl();
   const {isTracking, cancelTracking, startTracking, loading} = useTracking();
-  const locationHistory = useCurrentTrackStore(state => state.locationHistory);
-  const clearCurrentTrack = useCurrentTrackStore(
-    state => state.clearCurrentTrack,
-  );
+  const locationHistory = usePersistedTrack(state => state.locationHistory);
+  const clearCurrentTrack = usePersistedTrack(state => state.clearCurrentTrack);
   const {timer} = useTrackTimerContext();
   const styles = getStyles(isTracking);
   const navigation = useNavigationFromHomeTabs();

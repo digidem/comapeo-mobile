@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 
-import {NativeNavigationComponent} from '../../sharedTypes';
+import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {View, ScrollView, StyleSheet} from 'react-native';
 import {LocationView} from './LocationView';

@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
-import {TabBarIconProps} from '../../types';
-import {useTabNavigationStore} from '../../../hooks/useTabNavigationStore.ts';
+import {TabBarIconProps} from '../../../sharedTypes/navigation';
+import {useTabNavigationStore} from '../../../hooks/useTabNavigationStore';
 import ObservationListIcon from '../../../images/ObservationList.svg';
-import {COMAPEO_BLUE, MEDIUM_GREY} from '../../../lib/styles.ts';
+import {COMAPEO_BLUE, MEDIUM_GREY} from '../../../lib/styles';
 
 export const ObservationsListBarIcon: FC<TabBarIconProps> = props => {
   const {currentTab} = useTabNavigationStore();

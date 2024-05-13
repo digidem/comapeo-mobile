@@ -50,7 +50,7 @@
     "message": "Start Tracks"
   },
   "Modal.GPSEnable.button.loading": {
-    "message": "Loading..."
+    "message": "Loading…"
   },
   "Modal.GPSEnable.button.stop": {
     "message": "Stop Tracks"

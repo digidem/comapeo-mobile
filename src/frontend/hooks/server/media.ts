@@ -7,6 +7,7 @@ import {URL} from 'react-native-url-polyfill';
 import {DraftPhoto} from '../../contexts/PhotoPromiseContext/types';
 import {useProject} from './projects';
 import {Buffer} from 'buffer';
+import {convertUrlToBase64} from '../../utils/base64.ts';
 
 type SavablePhoto = SetRequired<
   Pick<DraftPhoto, 'originalUri' | 'previewUri' | 'thumbnailUri'>,
@@ -102,12 +103,8 @@ export function useAttachmentsBase64Query(
       return {
         queryKey: ['blobAsBase64', attachment.hash],
         queryFn: async () => {
-          const imageResponse = await fetch(attachment.url);
-          const imageType = imageResponse.headers.get('content-type');
-          const arrayBuffer = await imageResponse.arrayBuffer();
-          const base64 = Buffer.from(arrayBuffer).toString('base64');
-
-          return `data:${imageType};base64,${base64}`;
+          const base64Uri = await convertUrlToBase64(attachment.url);
+          return {...attachment, base64Uri};
         },
       };
     }),

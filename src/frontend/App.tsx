@@ -21,7 +21,11 @@ import {
 } from './contexts/LocalDiscoveryContext';
 import {Loading} from './sharedComponents/Loading';
 import * as TaskManager from 'expo-task-manager';
-import {LOCATION_TASK_NAME, locationTask} from './lib/trackLocationsStorage';
+import {
+  LOCATION_TASK_NAME,
+  LocationCallbackInfo,
+} from './lib/trackLocationsStorage';
+import {tracksStore} from './hooks/persistedState/usePersistedTrack';
 
 const queryClient = new QueryClient();
 const messagePort = new MessagePortLike();
@@ -31,7 +35,26 @@ localDiscoveryController.start();
 initializeNodejs();
 
 // Defines task that handles background location updates for tracks feature
-TaskManager.defineTask(LOCATION_TASK_NAME, locationTask);
+TaskManager.defineTask(
+  LOCATION_TASK_NAME,
+  async ({data, error}: LocationCallbackInfo) => {
+    if (error) {
+      console.error('Error while processing location update callback', error);
+    }
+
+    if (data?.locations) {
+      const {setLocations} = tracksStore.getState();
+
+      setLocations(
+        data.locations.map(loc => ({
+          latitude: loc.coords.latitude,
+          longitude: loc.coords.longitude,
+          timestamp: loc.timestamp,
+        })),
+      );
+    }
+  },
+);
 
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackList>();

@@ -140,6 +140,9 @@ const styles = StyleSheet.create({
   },
 });
 
+// We need a way for the MapView to internally re-request the StyleJSON from the backend when the internet connection changes.
+// There's no user-facing API from the mapping library to do this, so the solution is to use a benign search parameter to indicate
+// to the mapping library that the style URL has changed and should thus re-fetch. The backend does not use the search parameter for the route of interest.
 function useMapStyle() {
   const mapStyleUrlQuery = useMapStyleUrl();
   const {isInternetReachable} = useNetInfo();

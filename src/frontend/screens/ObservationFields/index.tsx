@@ -62,16 +62,7 @@ export const ObservationFields = ({
     });
   }, [navigation, current, onBackPress]);
 
-  // if (
-  //   !preset ||
-  //   preset.fieldIds.length < 1 ||
-  //   current > preset.fieldIds.length
-  // ) {
-  //   navigation.pop(current);
-  //   return null;
-  // }
-
-  if (fields.isLoading) {
+  if (fields.isPending) {
     return <Loading />;
   }
 
@@ -81,8 +72,6 @@ export const ObservationFields = ({
 
   const fieldId = preset?.fieldIds[current - 1];
   const field = fields.data?.find(val => val.docId === fieldId);
-
-  console.log({field: fields.data});
 
   if (!field) {
     return null;

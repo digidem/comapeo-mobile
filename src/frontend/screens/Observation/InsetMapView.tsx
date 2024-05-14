@@ -4,7 +4,7 @@ import {View, Text, StyleSheet, Dimensions, Image} from 'react-native';
 import {BLACK, WHITE} from '../../lib/styles';
 import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings';
 import {FormattedCoords} from '../../sharedComponents/FormattedData';
-import {MAP_STYLE} from '../MapScreen';
+import {useMapStyleUrl} from '../../hooks/server/mapStyleUrl';
 
 const MAP_HEIGHT = 175;
 const ICON_OFFSET = {x: 22, y: 21};
@@ -16,6 +16,8 @@ type MapProps = {
 
 export const InsetMapView = React.memo<MapProps>(({lon, lat}: MapProps) => {
   const format = usePersistedSettings(store => store.coordinateFormat);
+  const styleUrlQuery = useMapStyleUrl();
+
   return (
     <View>
       <Image
@@ -37,7 +39,7 @@ export const InsetMapView = React.memo<MapProps>(({lon, lat}: MapProps) => {
         rotateEnabled={false}
         compassEnabled={false}
         scaleBarEnabled={false}
-        styleURL={MAP_STYLE}>
+        styleURL={styleUrlQuery.data}>
         <MapboxGL.Camera
           centerCoordinate={[lon, lat]}
           zoomLevel={12}

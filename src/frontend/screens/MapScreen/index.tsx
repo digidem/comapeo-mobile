@@ -32,8 +32,6 @@ const DEFAULT_ZOOM = 12;
 Mapbox.setAccessToken(config.mapboxAccessToken);
 const MIN_DISPLACEMENT = 3;
 
-export const MAP_STYLE = Mapbox.StyleURL.Outdoors;
-
 export const MapScreen = () => {
   const [zoom, setZoom] = React.useState(DEFAULT_ZOOM);
   const [isFinishedLoading, setIsFinishedLoading] = React.useState(false);

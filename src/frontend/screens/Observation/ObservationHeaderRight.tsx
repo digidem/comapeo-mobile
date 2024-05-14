@@ -8,6 +8,8 @@ import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {EditIcon} from '../../sharedComponents/icons';
 import {SyncIcon} from '../../sharedComponents/icons/SyncIconCircle';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {useDeviceInfo} from '../../hooks/server/deviceInfo';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 export const ObservationHeaderRight = ({
   observationId,
@@ -15,7 +17,7 @@ export const ObservationHeaderRight = ({
   observationId: string;
 }) => {
   const observationWithPreset = useObservationWithPreset(observationId);
-  const deviceId = '';
+  const {data, isLoading} = useDeviceInfo();
   const {editSavedObservation} = useDraftObservation();
   const navigation = useNavigationFromRoot();
 
@@ -23,8 +25,16 @@ export const ObservationHeaderRight = ({
     editSavedObservation(observationWithPreset);
     navigation.navigate('ObservationEdit', {observationId});
   }
+  if (isLoading) {
+    return (
+      <UIActivityIndicator
+        size={20}
+        style={{alignItems: 'flex-end', marginRight: 20}}
+      />
+    );
+  }
 
-  const isMine = observationWithPreset.observation.createdBy === deviceId;
+  const isMine = observationWithPreset.observation.createdBy === data?.deviceId;
   return isMine ? (
     <IconButton onPress={handlePress} testID="editButton">
       <EditIcon />

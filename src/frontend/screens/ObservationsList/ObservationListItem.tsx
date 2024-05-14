@@ -13,7 +13,6 @@ import {
 } from '../../sharedComponents/FormattedData';
 import {PhotoView} from '../../sharedComponents/PhotoView';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
-import {useProject} from '../../hooks/server/projects';
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;

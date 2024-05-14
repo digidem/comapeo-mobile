@@ -6,6 +6,7 @@ import {IconSize} from '../../sharedTypes';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {useGetPresetIcon} from '../../hooks/server/presets';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import {useProject} from '../../hooks/server/projects';
 
 interface CategoryIconProps {
   size?: IconSize;
@@ -26,9 +27,15 @@ const radii = {
 
 export const PresetIcon = React.memo<CategoryIconProps>(
   ({size = 'medium', iconId}) => {
+    const project = useProject();
+
     const {data, isLoading} = useGetPresetIcon(iconId);
     const [error, setError] = React.useState(false);
     const iconSize = iconSizes[size] || 35;
+
+    React.useEffect(() => {
+      project.preset.getMany().then(res => console.log(res, 'res'));
+    }, [project]);
 
     if (isLoading) return <UIActivityIndicator size={30} />;
 

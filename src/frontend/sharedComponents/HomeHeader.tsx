@@ -18,7 +18,7 @@ export const HomeHeader: FC<
   const queryClient = useQueryClient();
   const project = useProject();
 
-  //This is to fix a bug. After a project is created, we invalidate the PROJECT_SETTINGS_KEY cache. This should refetch this query, and re-render any consuming component with the new name. But the drawer (which displays the prject name) is not responding to the cache being invalidated. I tested the hook in other components, and it is properly being invalidated. So on opening of the drawer im manually refetching which seems to fix the problem
+  //This is to fix a bug. After a project is created, we invalidate the PROJECT_SETTINGS_KEY cache. This should refetch this query, and re-render any consuming component with the new name. But the drawer (which displays the project name) is not responding to the cache being invalidated. I tested the hook in other components, and it is properly being invalidated. So on opening of the drawer this is imperatively refetching which seems to fix the problem
   function prefetchProjectSettings() {
     queryClient.prefetchQuery({
       queryKey: [PROJECT_SETTINGS_KEY],

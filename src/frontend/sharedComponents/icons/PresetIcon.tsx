@@ -29,6 +29,7 @@ export const PresetIcon = React.memo<CategoryIconProps>(
     const {data, isLoading} = useGetPresetIcon(iconId);
     const [error, setError] = React.useState(false);
     const iconSize = iconSizes[size] || 35;
+
     if (isLoading) return <UIActivityIndicator size={30} />;
 
     // Fallback to a default icon if we can't load the icon from mapeo-server
@@ -38,10 +39,7 @@ export const PresetIcon = React.memo<CategoryIconProps>(
       <Image
         style={{width: iconSize, height: iconSize}}
         source={{uri: data}}
-        onError={r => {
-          console.log(r);
-          setError(true);
-        }}
+        onError={() => setError(true)}
       />
     );
   },

@@ -10,7 +10,7 @@ const MIGRATIONS_FOLDER_PATH = new URL(
   import.meta.url,
 ).pathname
 const FALLBACK_MAP_PATH = new URL(
-  '../../node_modules/mapeo-offline-map',
+  './node_modules/mapeo-offline-map',
   import.meta.url,
 ).pathname
 

@@ -75,7 +75,9 @@ const KEEP_THESE = [
   // Static folders referenced by @mapeo/core code
   'node_modules/@mapeo/core/drizzle',
   // zip file that is the default config
-  'node_modules/@mapeo/default-config/dist/mapeo-default-config.mapeoconfig'
+  'node_modules/@mapeo/default-config/dist/mapeo-default-config.mapeoconfig',
+  // Offline fallback map
+  'node_modules/mapeo-offline-map',
 ];
 
 for (const name of KEEP_THESE) {

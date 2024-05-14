@@ -5,7 +5,13 @@ import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
 /** @type {import('../types/rn-bridge.js')} */
 const rnBridge = require('rn-bridge')
-import { MapeoManager, FastifyController } from '@mapeo/core'
+import {
+  MapeoManager,
+  FastifyController,
+  MapeoMapsFastifyPlugin,
+  MapeoStaticMapsFastifyPlugin,
+  MapeoOfflineFallbackMapFastifyPlugin,
+} from '@mapeo/core'
 import { createMapeoServer } from '@mapeo/ipc'
 import Fastify from 'fastify'
 
@@ -15,6 +21,10 @@ import { ServerStatus } from './status.js'
 // Do not touch these!
 const DB_DIR_NAME = 'sqlite-dbs'
 const CORE_STORAGE_DIR_NAME = 'core-storage'
+
+const MAPBOX_ACCESS_TOKEN =
+  'pk.eyJ1IjoiZGlnaWRlbSIsImEiOiJjbHRyaGh3cm0wN3l4Mmpsam95NDI3c2xiIn0.daq2iZFZXQ08BD0VZWAGUw'
+const DEFAULT_ONLINE_MAP_STYLE_URL = `https://api.mapbox.com/styles/v1/mapbox/outdoors-v11?access_token=${MAPBOX_ACCESS_TOKEN}`
 
 const log = debug('mapeo:app')
 
@@ -48,6 +58,7 @@ process.on('exit', (code) => {
  * @param {string} options.migrationsFolderPath
  * @param {string} options.sharedStoragePath Path to app-specific external file storage folder
  * @param {string} options.defaultConfigPath
+ * @param {string} options.fallbackMapPath Path to app-specific external file storage folder
  *
  */
 export async function init({
@@ -56,6 +67,7 @@ export async function init({
   migrationsFolderPath,
   sharedStoragePath,
   defaultConfigPath,
+  fallbackMapPath,
 }) {
   log('Starting app...')
   log(`Device version is ${version}`)
@@ -63,12 +75,29 @@ export async function init({
   const privateStorageDir = rnBridge.app.datadir()
   const dbDir = join(privateStorageDir, DB_DIR_NAME)
   const indexDir = join(privateStorageDir, CORE_STORAGE_DIR_NAME)
+  const staticStylesDir = join(sharedStoragePath, 'styles')
 
   mkdirSync(dbDir, { recursive: true })
   mkdirSync(indexDir, { recursive: true })
+  mkdirSync(staticStylesDir, { recursive: true })
 
   const fastify = Fastify()
   const fastifyController = new FastifyController({ fastify })
+
+  // Register maps plugins
+  fastify.register(MapeoStaticMapsFastifyPlugin, {
+    prefix: 'static',
+    staticRootDir: staticStylesDir,
+  })
+  fastify.register(MapeoOfflineFallbackMapFastifyPlugin, {
+    prefix: 'fallback',
+    styleJsonPath: join(fallbackMapPath, 'style.json'),
+    sourcesDir: join(fallbackMapPath, 'dist'),
+  })
+  fastify.register(MapeoMapsFastifyPlugin, {
+    prefix: 'maps',
+    defaultOnlineStyleUrl: DEFAULT_ONLINE_MAP_STYLE_URL,
+  })
 
   const manager = new MapeoManager({
     rootKey,

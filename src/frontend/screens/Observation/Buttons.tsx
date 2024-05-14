@@ -103,7 +103,7 @@ export const ButtonFields = ({
     const base64Urls = attachmentBase64Queries
       .filter(q => !!q.data)
       .map(q => q.data!);
-    await Share.open({
+    Share.open({
       title: base64Urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),
       urls: base64Urls,
       message: t(m.shareMessage, {
@@ -112,7 +112,7 @@ export const ButtonFields = ({
         time: Date.now(),
         coordinates: `Lon ${observation.lon}, Lat ${observation.lat}`,
       }),
-    });
+    }).catch(() => {});
   }
 
   return (

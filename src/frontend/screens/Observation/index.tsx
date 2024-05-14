@@ -14,6 +14,11 @@ import {InsetMapView} from './InsetMapView';
 import {ButtonFields} from './Buttons';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
+import {ThumbnailScrollView} from '../../sharedComponents/ThumbnailScrollView.tsx';
+import {
+  useAttachmentsBase64Query,
+  useAttachmentUrlQueries,
+} from '../../hooks/server/media.ts';
 
 const m = defineMessages({
   deleteTitle: {
@@ -61,7 +66,13 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   const {lat, lon, createdBy} = observation;
   const isMine = deviceId === createdBy;
   // Currently only show photo attachments
-  const photos = [];
+  const attachmentUrls = useAttachmentUrlQueries(
+    observation.attachments,
+    'original',
+  );
+  const base64Uris = useAttachmentsBase64Query(
+    attachmentUrls.filter(r => !!r.data).map(r => r.data!),
+  );
 
   return (
     <ScrollView
@@ -86,15 +97,16 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
               <Text style={styles.textNotes}>{observation.tags.notes}</Text>
             </View>
           ) : null}
-
-          {/* {!!photos.length && (
-            <ThumbnailScrollView
-              photos={
-                photos
-              }
-              onPressPhoto={() => {}}
-            />
-          )} */}
+          <ThumbnailScrollView
+            photos={base64Uris
+              .filter(uri => !!uri.data)
+              .map(({data}) => {
+                return {
+                  thumbnailUri: data!.base64Uri,
+                  id: data!.driveDiscoveryId,
+                };
+              })}
+          />
         </View>
         {fields && fields.length > 0 && <FieldDetails fields={fields} />}
         <View style={styles.divider}></View>
@@ -112,7 +124,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
   },
-  scrollContent: {minHeight: '100%'},
+  scrollContent: {
+    minHeight: '100%',
+  },
   divider: {
     backgroundColor: LIGHT_GREY,
     paddingVertical: 15,

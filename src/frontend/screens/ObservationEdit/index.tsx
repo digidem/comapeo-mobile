@@ -43,6 +43,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
   const {openSheet, sheetRef, isOpen, closeSheet} = useBottomSheetModal({
     openOnMount: false,
   });
+  const photos = usePersistedDraftObservation(store => store.photos);
 
   React.useEffect(() => {
     navigation.setOptions({
@@ -84,7 +85,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
         {isNew && <LocationView />}
         <PresetView />
         <DescriptionField />
-        <ThumbnailScrollView />
+        <ThumbnailScrollView photos={photos} />
       </ScrollView>
       <BottomSheet items={bottomSheetItems} />
       <ErrorModal sheetRef={sheetRef} closeSheet={closeSheet} isOpen={isOpen} />

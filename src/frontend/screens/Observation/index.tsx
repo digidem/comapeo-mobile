@@ -44,15 +44,13 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   }, [navigation, observationId]);
 
   const {observation, preset} = useObservationWithPreset(observationId);
-  const fieldsQuery = useFieldsQuery();
+  const {data} = useFieldsQuery();
 
   const defaultAcc: Field[] = [];
-  const fields = !fieldsQuery.data
-    ? undefined
+  const fields = !data
+    ? []
     : preset.fieldIds.reduce((acc, pres) => {
-        const fieldToAdd = fieldsQuery.data.find(
-          field => field.tagKey === pres,
-        );
+        const fieldToAdd = data.find(field => field.docId === pres);
         if (!fieldToAdd) return acc;
         return [...acc, fieldToAdd];
       }, defaultAcc);
@@ -61,7 +59,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   const {lat, lon, createdBy} = observation;
   const isMine = deviceId === createdBy;
   // Currently only show photo attachments
-  const photos = [];
+  // const photos = [];
 
   return (
     <ScrollView
@@ -96,8 +94,10 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
             />
           )} */}
         </View>
-        {fields && fields.length > 0 && <FieldDetails fields={fields} />}
-        <View style={styles.divider}></View>
+        {fields.length > 0 && (
+          <FieldDetails observation={observation} fields={fields} />
+        )}
+        <View style={styles.divider} />
         <ButtonFields isMine={isMine} observationId={observationId} />
       </>
     </ScrollView>

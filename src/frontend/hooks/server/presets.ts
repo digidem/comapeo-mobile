@@ -2,6 +2,7 @@ import {
   useSuspenseQuery,
   useMutation,
   useQueryClient,
+  useQuery,
 } from '@tanstack/react-query';
 
 import {useProject} from './projects';
@@ -30,6 +31,22 @@ export function usePresetsMutation() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ['presets']});
+    },
+  });
+}
+
+export function useGetPresetIcon(iconId?: string) {
+  const project = useProject();
+
+  return useQuery({
+    queryKey: ['PresetIcon', iconId],
+    enabled: !!iconId,
+    queryFn: async () => {
+      return await project.$icons.getIconUrl(iconId!, {
+        mimeType: 'image/png',
+        size: 'small',
+        pixelDensity: 3,
+      });
     },
   });
 }

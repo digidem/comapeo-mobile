@@ -3,14 +3,13 @@ import {Image} from 'react-native';
 
 import {Circle} from './Circle';
 import {IconSize} from '../../sharedTypes';
+import {UIActivityIndicator} from 'react-native-indicators';
+import {useGetPresetIcon} from '../../hooks/server/presets';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 interface CategoryIconProps {
   size?: IconSize;
   iconId?: string;
-}
-
-interface CategoryCircleIconProps extends CategoryIconProps {
-  color?: string;
 }
 
 const iconSizes = {
@@ -25,29 +24,33 @@ const radii = {
   large: 35,
 };
 
-export const CategoryIcon = React.memo<CategoryIconProps>(
+export const PresetIcon = React.memo<CategoryIconProps>(
   ({size = 'medium', iconId}) => {
+    const {data, isLoading} = useGetPresetIcon(iconId);
     const [error, setError] = React.useState(false);
     const iconSize = iconSizes[size] || 35;
+    if (isLoading) return <UIActivityIndicator size={30} />;
+
     // Fallback to a default icon if we can't load the icon from mapeo-server
-    // if (error || !iconId) {
-    //   return <MaterialIcon name="place" size={iconSize} />;
-    // }
+    if (error || !iconId) return <MaterialIcon name="place" size={iconSize} />;
+
     return (
       <Image
         style={{width: iconSize, height: iconSize}}
-        source={require('../../images/icon_mapeo_pin.png')}
-        onError={() => setError(true)}
+        source={{uri: data}}
+        onError={r => {
+          console.log(r);
+          setError(true);
+        }}
       />
     );
   },
 );
 
-export const CategoryCircleIcon = ({
-  color,
+export const PresetCircleIcon = ({
   iconId,
   size = 'medium',
-}: CategoryCircleIconProps) => {
+}: CategoryIconProps) => {
   // const [{ presets }] = React.useContext(ConfigContext);
 
   // If the preset defines a "color" field for *any* point-based category
@@ -58,12 +61,11 @@ export const CategoryCircleIcon = ({
 
   return (
     <Circle
-      color={color}
       radius={radii[size]}
       style={undefined}
       //style={presetsUseColors ? { borderWidth: 3 } : undefined}
     >
-      <CategoryIcon iconId={iconId} size={size} />
+      <PresetIcon iconId={iconId} size={size} />
     </Circle>
   );
 };

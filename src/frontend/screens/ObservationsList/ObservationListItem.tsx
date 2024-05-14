@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {Text} from '../../sharedComponents/Text';
 
 import {TouchableHighlight} from '../../sharedComponents/Touchables';
-import {CategoryCircleIcon} from '../../sharedComponents/icons/CategoryIcon';
+import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {Attachment, ViewStyleProp} from '../../sharedTypes';
 import {BLACK} from '../../lib/styles';
 import {Observation} from '@mapeo/schema';
@@ -13,6 +13,7 @@ import {
 } from '../../sharedComponents/FormattedData';
 import {PhotoView} from '../../sharedComponents/PhotoView';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
+import {useProject} from '../../hooks/server/projects';
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;
@@ -35,10 +36,6 @@ function ObservationListItemNotMemoized({
 }: ObservationListItemProps) {
   const {preset} = useObservationWithPreset(observation.docId);
   const deviceId = '';
-  //const iconId = preset && preset.icon;
-  const iconId = '';
-  // const iconColor = preset && preset.color;
-  const iconColor = BLACK;
 
   // const photos = !observationQuery.data ? [] : filterPhotosFromAttachments(
   //   observationQuery.data && observationQuery.data.attachments
@@ -69,15 +66,11 @@ function ObservationListItemNotMemoized({
           <View style={styles.photoContainer}>
             <PhotoStack attachments={observation.attachments} />
             <View style={styles.smallIconContainer}>
-              <CategoryCircleIcon
-                iconId={iconId}
-                color={iconColor}
-                size="small"
-              />
+              <PresetCircleIcon iconId={preset.name} size="small" />
             </View>
           </View>
         ) : (
-          <CategoryCircleIcon iconId={iconId} color={iconColor} size="medium" />
+          <PresetCircleIcon iconId={preset.name} size="medium" />
         )}
       </View>
     </TouchableHighlight>

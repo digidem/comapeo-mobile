@@ -67,7 +67,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   const isMine = deviceId === createdBy;
   // Currently only show photo attachments
   const attachmentUrls = useAttachmentUrlQueries(
-    observation.attachments,
+    observation.attachments.filter(attachment => attachment.type === 'photo'),
     'thumbnail',
   );
   const base64Uris = useAttachmentsBase64Query(

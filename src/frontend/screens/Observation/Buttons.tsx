@@ -57,7 +57,7 @@ const m = defineMessages({
   shareMessage: {
     id: 'screens.Observation.shareMessage',
     defaultMessage:
-      'Mapeo Alert — {category_name}\n' +
+      'Mapeo Alert — _*{category_name}*_\n' +
       '{date, date, full} {time, time, long}\n' +
       '{coordinates}',
     description: 'Message that will be shared along with image',
@@ -105,7 +105,7 @@ export const ButtonFields = ({
       .map(q => q.data!);
     Share.open({
       title: base64Urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),
-      urls: base64Urls.map(url => url.url),
+      urls: base64Urls.map(url => url.base64Uri),
       message: t(m.shareMessage, {
         category_name: preset.name,
         date: Date.now(),

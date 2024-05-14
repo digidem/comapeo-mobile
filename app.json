@@ -7,14 +7,6 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "backgroundColor": "#050F77",
-      /*resizeMode - native work only for android
-      https://docs.expo.dev/develop/user-interface/splash-screen/#custom-configuration-for-android-and-ios
-      **/
-      "resizeMode": "native"
-    },
     "assetBundlePatterns": ["**/*"],
     "plugins": [
       "expo-localization",
@@ -58,6 +50,11 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#050F77"
+      },
+      "splash": {
+        "image": "./assets/splash.png",
+        "backgroundColor": "#050F77",
+        "resizeMode": "contain"
       },
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",

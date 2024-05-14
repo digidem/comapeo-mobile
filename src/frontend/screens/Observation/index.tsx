@@ -97,16 +97,18 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
               <Text style={styles.textNotes}>{observation.tags.notes}</Text>
             </View>
           ) : null}
-          <ThumbnailScrollView
-            photos={base64Uris
-              .filter(uri => !!uri.data)
-              .map(({data}) => {
-                return {
-                  thumbnailUri: data!.base64Uri,
-                  id: data!.driveDiscoveryId,
-                };
-              })}
-          />
+          {base64Uris.length > 0 && (
+            <ThumbnailScrollView
+              photos={base64Uris
+                .filter(uri => !!uri.data)
+                .map(({data}) => {
+                  return {
+                    thumbnailUri: data!.base64Uri,
+                    id: data!.driveDiscoveryId,
+                  };
+                })}
+            />
+          )}
         </View>
         {fields && fields.length > 0 && <FieldDetails fields={fields} />}
         <View style={styles.divider}></View>

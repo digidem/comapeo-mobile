@@ -68,6 +68,7 @@ export type RootStackParamsList = {
     styleUrl: string;
     name: string;
   };
+  ObservationFields: {question: number};
   BGMapsSettings: undefined;
   AuthScreen: undefined;
   AppPasscode: undefined;

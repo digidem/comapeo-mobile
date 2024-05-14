@@ -47,6 +47,7 @@ process.on('exit', (code) => {
  * @param {Buffer} options.rootKey
  * @param {string} options.migrationsFolderPath
  * @param {string} options.sharedStoragePath Path to app-specific external file storage folder
+ * @param {string} options.defaultConfigPath
  *
  */
 export async function init({
@@ -54,6 +55,7 @@ export async function init({
   rootKey,
   migrationsFolderPath,
   sharedStoragePath,
+  defaultConfigPath,
 }) {
   log('Starting app...')
   log(`Device version is ${version}`)
@@ -75,6 +77,7 @@ export async function init({
     clientMigrationsFolder: join(migrationsFolderPath, 'client'),
     projectMigrationsFolder: join(migrationsFolderPath, 'project'),
     fastify,
+    defaultConfigPath,
   })
 
   // Don't await, methods that use the server will await this internally

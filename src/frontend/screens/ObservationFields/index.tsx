@@ -40,7 +40,6 @@ export const ObservationFields = ({
   const preset = usePreset();
   const current = route.params.question;
   const fields = useFieldsQuery();
-  console.log({fromobservationedit: fields.data});
 
   const onBackPress = React.useCallback(() => {
     if (current === 1) {

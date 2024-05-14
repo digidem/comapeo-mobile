@@ -38,6 +38,7 @@ export const Thumbnail = ({photo, style, size, onPress}: ThumbnailProps) => {
     log('Error loading image:\n', e.nativeEvent && e.nativeEvent.error);
     setError(true);
   }
+
   return (
     <TouchableOpacity
       style={[styles.thumbnailContainer, {width: size, height: size}, style]}
@@ -60,6 +61,7 @@ export const Thumbnail = ({photo, style, size, onPress}: ThumbnailProps) => {
 export const ThumbnailScrollView = (props: {photos: Photo[]}) => {
   const scrollViewRef = React.useRef<ScrollView>(null);
   const {photos} = props;
+
   React.useLayoutEffect(() => {
     scrollViewRef.current && scrollViewRef.current.scrollToEnd();
   }, [photos.length]);

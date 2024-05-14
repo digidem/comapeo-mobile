@@ -105,7 +105,7 @@ export const ButtonFields = ({
       .map(q => q.data!);
     Share.open({
       title: base64Urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),
-      urls: base64Urls,
+      urls: base64Urls.map(url => url.url),
       message: t(m.shareMessage, {
         category_name: preset.name,
         date: Date.now(),

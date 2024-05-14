@@ -74,6 +74,7 @@ export const createDefaultScreenGroup = ({
       options={{headerShown: false}}
       children={() => (
         <SharedLocationContextProvider>
+          {/* This provider needs to be inside the navigator as it needs access to navigator state (aka it cant just use the one at the app level) */}
           <BottomSheetModalProvider>
             <HomeTabs openDrawer={openDrawer} />
           </BottomSheetModalProvider>

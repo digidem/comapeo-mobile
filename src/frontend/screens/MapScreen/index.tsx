@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Mapbox from '@rnmapbox/maps';
-import {useNetInfo} from '@react-native-community/netinfo';
 
 import config from '../../../config.json';
 import {IconButton} from '../../sharedComponents/IconButton';
@@ -48,7 +47,7 @@ export const MapScreen = () => {
   const locationServicesEnabled =
     !!locationProviderStatus?.locationServicesEnabled;
 
-  const styleUrl = useMapStyle();
+  const styleUrlQuery = useMapStyleUrl();
 
   const handleAddPress = () => {
     newDraft();
@@ -80,7 +79,7 @@ export const MapScreen = () => {
         attributionPosition={{right: 8, bottom: 8}}
         compassEnabled={false}
         scaleBarEnabled={false}
-        styleURL={styleUrl}
+        styleURL={styleUrlQuery.data}
         onDidFinishLoadingStyle={handleDidFinishLoadingStyle}
         onMoveShouldSetResponder={() => {
           if (following) setFollowing(false);
@@ -139,18 +138,3 @@ const styles = StyleSheet.create({
     bottom: 20,
   },
 });
-
-// We need a way for the MapView to internally re-request the StyleJSON from the backend when the internet connection changes.
-// There's no user-facing API from the mapping library to do this, so the solution is to use a benign search parameter to indicate
-// to the mapping library that the style URL has changed and should thus re-fetch. The backend does not use the search parameter for the route of interest.
-function useMapStyle() {
-  const mapStyleUrlQuery = useMapStyleUrl();
-  const {isInternetReachable} = useNetInfo();
-
-  if (!mapStyleUrlQuery.data) return undefined;
-
-  // TODO: Should this be a proper nonce? i.e. do we always want to bust HTTP caching?
-  if (!isInternetReachable) return mapStyleUrlQuery.data + '?offline=true';
-
-  return mapStyleUrlQuery.data;
-}

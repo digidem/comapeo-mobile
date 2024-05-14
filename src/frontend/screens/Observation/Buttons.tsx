@@ -11,6 +11,7 @@ import {
   useAttachmentUrlQueries,
 } from '../../hooks/server/media.ts';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset.ts';
+import {formatCoords} from '../../lib/utils.ts';
 
 const m = defineMessages({
   delete: {
@@ -103,6 +104,8 @@ export const ButtonFields = ({
     const base64Urls = attachmentBase64Queries
       .filter(q => !!q.data)
       .map(q => q.data!);
+    const {lon, lat} = observation;
+
     Share.open({
       title: base64Urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),
       urls: base64Urls.map(url => url.base64Uri),
@@ -110,7 +113,7 @@ export const ButtonFields = ({
         category_name: preset.name,
         date: Date.now(),
         time: Date.now(),
-        coordinates: `Lon ${observation.lon}, Lat ${observation.lat}`,
+        coordinates: lon && lat ? formatCoords({lon, lat}) : '',
       }),
     }).catch(() => {});
   }

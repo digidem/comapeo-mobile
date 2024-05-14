@@ -15,6 +15,7 @@ import {createDefaultScreenGroup} from './AppScreens';
 import {createDeviceNamingScreens} from './DeviceNamingScreens';
 import {useSuspenseQuery} from '@tanstack/react-query';
 import {useApi} from '../../contexts/ApiContext';
+import {Loading} from '../../sharedComponents/Loading';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
 
@@ -22,7 +23,7 @@ export function RootStackNavigator({
   navigation,
 }: DrawerScreenProps<DrawerScreens, 'DrawerHome'>) {
   return (
-    <React.Suspense>
+    <React.Suspense fallback={<Loading />}>
       <RootStackNavigatorChild openDrawer={navigation.openDrawer} />
     </React.Suspense>
   );

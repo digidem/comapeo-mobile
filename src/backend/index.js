@@ -1,6 +1,6 @@
-import {parseArgs} from 'util';
+import { parseArgs } from 'util'
 
-import {init} from './src/app.js';
+import { init } from './src/app.js'
 
 // We define this here so we don't need to do additional bundling adjustments to get the path correct when running on the device
 // This assumes that we keep the relevant directory as part of the built assets when building for nodejs mobile
@@ -8,34 +8,34 @@ import {init} from './src/app.js';
 const MIGRATIONS_FOLDER_PATH = new URL(
   './node_modules/@mapeo/core/drizzle',
   import.meta.url,
-).pathname;
+).pathname
 const FALLBACK_MAP_PATH = new URL(
-  './node_modules/mapeo-offline-map',
+  '../../node_modules/mapeo-offline-map',
   import.meta.url,
-).pathname;
+).pathname
 
 const DEFAULT_CONFIG_PATH = new URL(
   './node_modules/@mapeo/default-config/dist/mapeo-default-config.mapeoconfig',
   import.meta.url,
-).pathname;
+).pathname
 
 try {
-  const {values} = parseArgs({
+  const { values } = parseArgs({
     options: {
-      version: {type: 'string'},
-      rootKey: {type: 'string'},
-      sharedStoragePath: {type: 'string'},
+      version: { type: 'string' },
+      rootKey: { type: 'string' },
+      sharedStoragePath: { type: 'string' },
     },
-  });
+  })
 
   if (typeof values.rootKey !== 'string') {
-    throw new Error('backend did not receive root key from front end');
+    throw new Error('backend did not receive root key from front end')
   }
 
   if (typeof values.sharedStoragePath !== 'string') {
     throw new Error(
       'backend did not receive shared storage path from front end',
-    );
+    )
   }
 
   // Do not await this as we want this to run indefinitely
@@ -46,9 +46,9 @@ try {
     sharedStoragePath: values.sharedStoragePath,
     defaultConfigPath: DEFAULT_CONFIG_PATH,
     fallbackMapPath: FALLBACK_MAP_PATH,
-  }).catch(err => {
-    console.error('Server startup error:', err);
-  });
+  }).catch((err) => {
+    console.error('Server startup error:', err)
+  })
 } catch (err) {
-  console.error('Server startup error:', err);
+  console.error('Server startup error:', err)
 }

@@ -6,8 +6,10 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useDeleteObservation} from '../../hooks/server/observations';
 import {Text} from '../../sharedComponents/Text';
 import Share from 'react-native-share';
-import {Buffer} from 'buffer';
-import {useAttachmentUrlQueries} from '../../hooks/server/media.ts';
+import {
+  useAttachmentsBase64Query,
+  useAttachmentUrlQueries,
+} from '../../hooks/server/media.ts';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset.ts';
 
 const m = defineMessages({
@@ -76,7 +78,10 @@ export const ButtonFields = ({
   const attachmentUrlQueries = useAttachmentUrlQueries(
     observation.attachments,
     'original',
-  ).map(q => q.data);
+  );
+  const attachmentBase64Queries = useAttachmentsBase64Query(
+    attachmentUrlQueries.filter(res => !!res.data).map(res => res.data!),
+  );
 
   function handlePressDelete() {
     Alert.alert(t(m.deleteTitle), undefined, [
@@ -95,18 +100,9 @@ export const ButtonFields = ({
   }
 
   async function handlePressShare() {
-    const attachments = attachmentUrlQueries.filter(url => !!url) as string[];
-    const base64Urls = await Promise.all(
-      attachments.map(async attachment => {
-        const imageResponse = await fetch(attachment);
-        const imageType = imageResponse.headers.get('content-type')!;
-
-        const arrayBuffer = await imageResponse.arrayBuffer();
-        const base64 = Buffer.from(arrayBuffer).toString('base64');
-        return `data:${imageType};base64,${base64}`;
-      }),
-    );
-
+    const base64Urls = attachmentBase64Queries
+      .filter(q => !!q.data)
+      .map(q => q.data!);
     await Share.open({
       title: base64Urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),
       urls: base64Urls,

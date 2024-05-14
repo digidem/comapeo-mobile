@@ -6,6 +6,7 @@ import {URL} from 'react-native-url-polyfill';
 
 import {DraftPhoto} from '../../contexts/PhotoPromiseContext/types';
 import {useProject} from './projects';
+import {Buffer} from 'buffer';
 
 type SavablePhoto = SetRequired<
   Pick<DraftPhoto, 'originalUri' | 'previewUri' | 'thumbnailUri'>,
@@ -65,22 +66,48 @@ export function useAttachmentUrlQueries(
                 throw new Error('Cannot get URL of attachment for variant');
               }
 
-              return project.$blobs.getUrl({
-                driveId: attachment.driveDiscoveryId,
-                name: attachment.name,
-                type: attachment.type,
-                variant,
-              });
+              return {
+                ...attachment,
+                url: await project.$blobs.getUrl({
+                  driveId: attachment.driveDiscoveryId,
+                  name: attachment.name,
+                  type: attachment.type,
+                  variant,
+                }),
+              };
             }
             case 'photo': {
-              return project.$blobs.getUrl({
-                driveId: attachment.driveDiscoveryId,
-                name: attachment.name,
-                type: attachment.type,
-                variant,
-              });
+              return {
+                ...attachment,
+                url: await project.$blobs.getUrl({
+                  driveId: attachment.driveDiscoveryId,
+                  name: attachment.name,
+                  type: attachment.type,
+                  variant,
+                }),
+              };
             }
           }
+        },
+      };
+    }),
+  });
+}
+
+export function useAttachmentsBase64Query(
+  attachmentsWithUrl: (Observation['attachments'][0] & {url: string})[],
+) {
+  return useQueries({
+    queries: attachmentsWithUrl.map(attachment => {
+      return {
+        queryKey: ['blobAsBase64', attachment.hash],
+        queryFn: async () => {
+          const imageResponse = await fetch(attachment.url);
+          const imageType = imageResponse.headers.get('content-type');
+          const arrayBuffer = await imageResponse.arrayBuffer();
+          const base64 = Buffer.from(arrayBuffer).toString('base64');
+
+          return `data:${imageType};base64,${base64}`;
         },
       };
     }),

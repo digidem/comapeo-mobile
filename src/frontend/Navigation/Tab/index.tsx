@@ -20,7 +20,7 @@ import {HomeTabsParamsList} from '../../sharedTypes/navigation';
 
 const Tab = createBottomTabNavigator<HomeTabsParamsList>();
 
-export const HomeTabs = () => {
+export const HomeTabs = ({openDrawer}: {openDrawer: () => void}) => {
   const {handleTabPress} = useCurrentTab();
   const {formatMessage} = useIntl();
   return (
@@ -46,7 +46,7 @@ export const HomeTabs = () => {
         component={MapScreen}
         options={{
           tabBarIcon: MapTabBarIcon,
-          header: HomeHeader,
+          header: props => <HomeHeader {...props} openDrawer={openDrawer} />,
         }}
       />
       <Tab.Screen
@@ -54,7 +54,7 @@ export const HomeTabs = () => {
         component={CameraScreen}
         options={{
           tabBarIcon: CameraTabBarIcon,
-          header: HomeHeader,
+          header: props => <HomeHeader {...props} openDrawer={openDrawer} />,
         }}
       />
 

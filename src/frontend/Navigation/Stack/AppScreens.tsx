@@ -55,21 +55,28 @@ import {HomeTabs} from '../Tab';
 import {SaveTrackScreen} from '../../screens/SaveTrack/SaveTrackScreen';
 import {ObservationFields} from '../../screens/ObservationFields';
 import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSettings';
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 
 export const TAB_BAR_HEIGHT = 70;
 
 // **NOTE**: No hooks allowed here (this is not a component, it is a function
 // that returns a react element)
-export const createDefaultScreenGroup = (
-  intl: (title: MessageDescriptor) => string,
-) => (
+export const createDefaultScreenGroup = ({
+  intl,
+  openDrawer,
+}: {
+  intl: (title: MessageDescriptor) => string;
+  openDrawer: () => void;
+}) => (
   <RootStack.Group key="default">
     <RootStack.Screen
       name="Home"
       options={{headerShown: false}}
       children={() => (
         <SharedLocationContextProvider>
-          <HomeTabs />
+          <BottomSheetModalProvider>
+            <HomeTabs openDrawer={openDrawer} />
+          </BottomSheetModalProvider>
         </SharedLocationContextProvider>
       )}
     />

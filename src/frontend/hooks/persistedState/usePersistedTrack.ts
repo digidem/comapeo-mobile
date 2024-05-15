@@ -1,8 +1,6 @@
 import {calculateTotalDistance} from '../../utils/distance.ts';
 import {LocationHistoryPoint} from '../../sharedTypes/location.ts';
 import {createPersistedStore} from './createPersistedState.ts';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {LOCATION_DATA_KEY} from '../../lib/trackLocationsStorage.ts';
 import {useStore} from 'zustand';
 
 type TracksStoreState = {
@@ -70,7 +68,6 @@ export const tracksStore = createPersistedStore<TracksStoreState>(
       }),
     clearCurrentTrack: () =>
       set(() => {
-        AsyncStorage.removeItem(LOCATION_DATA_KEY);
         return {
           locationHistory: [],
           trackingSince: null,

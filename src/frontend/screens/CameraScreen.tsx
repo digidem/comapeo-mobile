@@ -3,9 +3,9 @@ import {View, StyleSheet} from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 
 import {CameraView} from '../sharedComponents/CameraView';
-import {NativeHomeTabsNavigationProps} from '../sharedTypes';
 import {CapturedPictureMM} from '../contexts/PhotoPromiseContext/types';
 import {useDraftObservation} from '../hooks/useDraftObservation';
+import {NativeHomeTabsNavigationProps} from '../sharedTypes/navigation';
 
 export const CameraScreen = ({
   navigation,

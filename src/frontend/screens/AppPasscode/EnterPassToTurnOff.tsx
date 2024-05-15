@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {defineMessages} from 'react-intl';
 
-import {NativeNavigationComponent} from '../../sharedTypes';
+import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {InputPasscode} from './InputPasscode';
 import {useSecurityContext} from '../../contexts/SecurityContext';
 

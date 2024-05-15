@@ -1,11 +1,13 @@
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {useApi} from '../../contexts/ApiContext';
 
+export const DEVICE_INFO_KEY = 'deviceInfo';
+
 export const useDeviceInfo = () => {
   const mapeoApi = useApi();
 
   return useQuery({
-    queryKey: ['deviceInfo'],
+    queryKey: [DEVICE_INFO_KEY],
     queryFn: async () => {
       return await mapeoApi.getDeviceInfo();
     },
@@ -22,7 +24,7 @@ export const useEditDeviceInfo = () => {
       return mapeoApi.setDeviceInfo({name});
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: ['deviceInfo']});
+      queryClient.invalidateQueries({queryKey: [DEVICE_INFO_KEY]});
     },
   });
 };

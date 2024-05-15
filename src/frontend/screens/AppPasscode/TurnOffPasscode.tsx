@@ -15,7 +15,7 @@ import {
 import {MEDIUM_GREY, RED, WHITE} from '../../lib/styles';
 import {ErrorIcon} from '../../sharedComponents/icons';
 import {Button} from '../../sharedComponents/Button';
-import {NativeNavigationComponent} from '../../sharedTypes';
+import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {useFocusEffect, StackActions} from '@react-navigation/native';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {HeaderButtonProps} from '@react-navigation/native-stack/lib/typescript/src/types';

@@ -6,11 +6,9 @@ import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../../../../sharedComponents/Text';
 import {DeviceNameWithIcon} from '../../../../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../../../../sharedComponents/RoleWithIcon';
-import {
-  COORDINATOR_ROLE_ID,
-  NativeRootNavigationProps,
-} from '../../../../../sharedTypes';
+import {COORDINATOR_ROLE_ID} from '../../../../../sharedTypes';
 import {useProjectSettings} from '../../../../../hooks/server/projects';
+import {NativeRootNavigationProps} from '../../../../../sharedTypes/navigation';
 
 const m = defineMessages({
   unableToCancel: {

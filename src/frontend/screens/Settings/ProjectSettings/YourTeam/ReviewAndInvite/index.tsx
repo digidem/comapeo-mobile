@@ -1,8 +1,7 @@
 import * as React from 'react';
 import {NativeNavigationComponent} from '../../../../../sharedTypes/navigation';
 import {defineMessages} from 'react-intl';
-import {useBottomSheetModal} from '../../../../../sharedComponents/BottomSheetModal';
-import {ErrorModal} from '../../../../../sharedComponents/ErrorModal';
+import {ErrorBottomSheet} from '../../../../../sharedComponents/ErrorBottomSheet';
 import {ReviewInvitation} from './ReviewInvitation';
 import {WaitingForInviteAccept} from './WaitingForInviteAccept';
 import {
@@ -23,9 +22,6 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
 }) => {
   const {role, deviceId, deviceType, name} = route.params;
 
-  const {openSheet, sheetRef, closeSheet, isOpen} = useBottomSheetModal({
-    openOnMount: false,
-  });
   const sendInviteMutation = useSendInvite();
   const requestCancelInviteMutation = useRequestCancelInvite();
 
@@ -49,9 +45,6 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
             return;
           }
         },
-        onError: () => {
-          openSheet();
-        },
       },
     );
   }
@@ -60,9 +53,6 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
     requestCancelInviteMutation.mutate(deviceId, {
       onSuccess: () => {
         navigation.navigate('YourTeam');
-      },
-      onError: () => {
-        openSheet();
       },
     });
   }
@@ -80,10 +70,8 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
       ) : (
         <WaitingForInviteAccept cancelInvite={cancelInvite} />
       )}
-      <ErrorModal
-        sheetRef={sheetRef}
-        closeSheet={closeSheet}
-        isOpen={isOpen}
+      <ErrorBottomSheet
+        error={sendInviteMutation.error ?? requestCancelInviteMutation.error}
         clearError={() => navigation.navigate('YourTeam')}
       />
     </React.Fragment>

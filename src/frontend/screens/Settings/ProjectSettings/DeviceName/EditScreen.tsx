@@ -14,8 +14,7 @@ import {BLACK} from '../../../../lib/styles';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
 import {IconButton} from '../../../../sharedComponents/IconButton';
 import SaveIcon from '../../../../images/CheckMark.svg';
-import {useBottomSheetModal} from '../../../../sharedComponents/BottomSheetModal';
-import {ErrorModal} from '../../../../sharedComponents/ErrorModal';
+import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
 import {FieldRow} from './FieldRow';
 
 const m = defineMessages({
@@ -72,16 +71,12 @@ export const EditScreen = ({
     deviceName: string;
   }>({defaultValues: {deviceName}});
 
-  const {isPending, mutate} = useEditDeviceInfo();
+  const {isPending, mutate, error} = useEditDeviceInfo();
 
   const {isDirty: nameHasChanges} = control.getFieldState(
     'deviceName',
     formState,
   );
-
-  const {openSheet, sheetRef, closeSheet, isOpen} = useBottomSheetModal({
-    openOnMount: false,
-  });
 
   React.useEffect(
     function showDiscardChangesAlert() {
@@ -130,9 +125,6 @@ export const EditScreen = ({
                       mutate(value.deviceName, {
                         onSuccess: () =>
                           navigation.navigate('DeviceNameDisplay'),
-                        onError: () => {
-                          openSheet();
-                        },
                       });
                     })
               }>
@@ -142,7 +134,7 @@ export const EditScreen = ({
         },
       });
     },
-    [handleSubmit, navigation, isPending, mutate, nameHasChanges, openSheet],
+    [handleSubmit, navigation, isPending, mutate, nameHasChanges],
   );
 
   return (
@@ -163,7 +155,7 @@ export const EditScreen = ({
           />
         </FieldRow>
       </ScrollView>
-      <ErrorModal sheetRef={sheetRef} closeSheet={closeSheet} isOpen={isOpen} />
+      <ErrorBottomSheet error={error} />
     </>
   );
 };

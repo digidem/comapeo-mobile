@@ -857,10 +857,10 @@
     "message": "Go Back"
   },
   "sharedComponents.ErrorModal.somethingWrong": {
-    "message": "Something Went Wrong"
+    "message": "Something\n Went Wrong"
   },
   "sharedComponents.ErrorModal.tryAgain": {
-    "message": "Please go back and try again"
+    "message": "Try Again"
   },
   "sharedComponents.GpsPill.noGps": {
     "message": "No GPS"

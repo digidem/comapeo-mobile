@@ -9,9 +9,9 @@ import {DescriptionField} from './DescriptionField';
 import {BottomSheet} from '../../sharedComponents/BottomSheet/BottomSheet';
 import {ThumbnailScrollView} from '../../sharedComponents/ThumbnailScrollView';
 import {PresetView} from './PresetView';
-import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
-import {ErrorModal} from '../../sharedComponents/ErrorModal';
+import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {SaveButton} from './SaveButton';
+import {useState} from 'react';
 
 const m = defineMessages({
   editTitle: {
@@ -34,23 +34,21 @@ const m = defineMessages({
 export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
   editTitle: MessageDescriptor;
 } = ({navigation}) => {
+  const [error, setError] = useState<Error | null>(null);
   const observationId = usePersistedDraftObservation(
     store => store.observationId,
   );
 
   const isNew = !observationId;
   const {formatMessage: t} = useIntl();
-  const {openSheet, sheetRef, isOpen, closeSheet} = useBottomSheetModal({
-    openOnMount: false,
-  });
 
   React.useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <SaveButton observationId={observationId} openErrorModal={openSheet} />
+        <SaveButton observationId={observationId} setError={setError} />
       ),
     });
-  }, [navigation, openSheet, observationId]);
+  }, [navigation, observationId]);
 
   const handleCameraPress = React.useCallback(() => {
     navigation.navigate('AddPhoto');
@@ -87,7 +85,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
         <ThumbnailScrollView />
       </ScrollView>
       <BottomSheet items={bottomSheetItems} />
-      <ErrorModal sheetRef={sheetRef} closeSheet={closeSheet} isOpen={isOpen} />
+      <ErrorBottomSheet error={error} clearError={() => setError(null)} />
     </View>
   );
 };

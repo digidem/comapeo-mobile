@@ -21,10 +21,7 @@ import {
 } from './contexts/LocalDiscoveryContext';
 import {Loading} from './sharedComponents/Loading';
 import * as TaskManager from 'expo-task-manager';
-import {
-  LOCATION_TASK_NAME,
-  LocationCallbackInfo,
-} from './lib/trackLocationsStorage';
+import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes';
 import {tracksStore} from './hooks/persistedState/usePersistedTrack';
 
 const queryClient = new QueryClient();

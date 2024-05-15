@@ -4,7 +4,7 @@ These patches use [patch-package](https://github.com/ds300/patch-package) to upd
 
 ## `@mapeo/core`
 
-### [Fix quickbit dynamic require](./@mapeo+core+9.0.0-alpha.7+001+fix-quickbit-dynamic-require.patch)
+### [Fix quickbit dynamic require](./@mapeo+core+9.0.0-alpha.9+001+fix-quickbit-dynamic-require.patch)
 
 - Rollup complains about the dynamic require of `quickbit-universal` in this file. Easier to just simplify the import
 

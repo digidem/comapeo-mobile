@@ -43,9 +43,9 @@ TaskManager.defineTask(
     }
 
     if (data?.locations) {
-      const {setLocations} = tracksStore.getState();
+      const {addNewLocations} = tracksStore.getState();
 
-      setLocations(
+      addNewLocations(
         data.locations.map(loc => ({
           latitude: loc.coords.latitude,
           longitude: loc.coords.longitude,

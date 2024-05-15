@@ -10,7 +10,6 @@ type TracksStoreState = {
   description: string;
   setDescription: (val: string) => void;
   addNewObservation: (observationId: string) => void;
-  setLocations: (locationData: LocationHistoryPoint[]) => void;
   addNewLocations: (locationData: LocationHistoryPoint[]) => void;
   clearCurrentTrack: () => void;
   setTracking: (val: boolean) => void;
@@ -36,17 +35,12 @@ export const tracksStore = createPersistedStore<TracksStoreState>(
     setDescription: (val: string) => set(() => ({description: val})),
     addNewObservation: (id: string) =>
       set(state => ({observations: [...state.observations, id]})),
-    addNewLocations: (locations: LocationHistoryPoint[]) =>
-      set(({locationHistory: currentHistory, distance: currentDistance}) => ({
-        distance: currentDistance + calculateTotalDistance(locations),
-        locationHistory: [...currentHistory, ...locations],
-      })),
-    setLocations: data =>
+    addNewLocations: data =>
       set(({locationHistory, distance}) => {
         if (data.length > 1) {
           return {
-            locationHistory: data,
-            distance: calculateTotalDistance(data),
+            locationHistory: [...locationHistory, ...data],
+            distance: distance + calculateTotalDistance(data),
           };
         }
 

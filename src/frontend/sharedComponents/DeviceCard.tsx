@@ -1,20 +1,15 @@
+import React from 'react';
 import {StyleSheet} from 'react-native';
 import {LIGHT_GREY} from '../lib/styles';
 import {DeviceType, ViewStyleProp} from '../sharedTypes';
-import {defineMessages, useIntl} from 'react-intl';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {DeviceNameWithIcon} from './DeviceNameWithIcon';
 
-const m = defineMessages({
-  thisDevice: {
-    id: 'sharedComponents.DeviceCard.ThisDevice',
-    defaultMessage: 'This Device!',
-  },
-});
-
+export type DeviceStatus = 'connected' | 'disconnected';
 type DeviceCardProps = {
   deviceType: DeviceType;
   name: string;
+  status: DeviceStatus;
   thisDevice?: boolean;
   deviceId?: string;
   dateAdded?: Date;
@@ -30,16 +25,16 @@ export const DeviceCard = ({
   deviceId,
   dateAdded,
   onPress,
+  status,
 }: DeviceCardProps) => {
-  const {formatMessage} = useIntl();
-
   return (
     <TouchableOpacity
-      disabled={!onPress}
+      disabled={!onPress || status !== 'connected'}
       onPress={() => (onPress ? onPress() : {})}
       style={[styles.container, style]}>
       <DeviceNameWithIcon
         name={name}
+        status={status}
         thisDevice={thisDevice}
         deviceType={deviceType}
         deviceId={deviceId}

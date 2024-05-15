@@ -7,6 +7,7 @@ import {
 
 import {useProject} from './projects';
 import {PresetValue} from '@mapeo/schema';
+import {IconSize} from '../../sharedTypes';
 
 export function usePresetsQuery() {
   const project = useProject();
@@ -35,16 +36,20 @@ export function usePresetsMutation() {
   });
 }
 
-export function useGetPresetIcon(iconId?: string) {
+export function useGetPresetIcon(size: IconSize, name?: string) {
   const project = useProject();
 
   return useQuery({
-    queryKey: ['PresetIcon', iconId],
-    enabled: !!iconId,
+    queryKey: ['presetIcon', name],
+    enabled: !!name,
     queryFn: async () => {
-      return await project.$icons.getIconUrl(iconId!, {
+      const currentPreset = await project.preset
+        .getMany()
+        .then(res => res.find(p => p.name === name));
+
+      return await project.$icons.getIconUrl(currentPreset?.iconId!, {
         mimeType: 'image/png',
-        size: 'small',
+        size: size,
         pixelDensity: 3,
       });
     },

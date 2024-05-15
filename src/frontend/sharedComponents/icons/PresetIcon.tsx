@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {memo} from 'react';
 import {Image} from 'react-native';
 
 import {Circle} from './Circle';
@@ -6,11 +6,10 @@ import {IconSize} from '../../sharedTypes';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {useGetPresetIcon} from '../../hooks/server/presets';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {useProject} from '../../hooks/server/projects';
 
 interface CategoryIconProps {
   size?: IconSize;
-  iconId?: string;
+  name?: string;
 }
 
 const iconSizes = {
@@ -25,52 +24,33 @@ const radii = {
   large: 35,
 };
 
-export const PresetIcon = React.memo<CategoryIconProps>(
-  ({size = 'medium', iconId}) => {
-    const project = useProject();
+export const PresetIcon = memo<CategoryIconProps>(({size = 'medium', name}) => {
+  const iconSize = iconSizes[size] || 35;
+  const {data, isLoading} = useGetPresetIcon(size, name);
+  const [error, setError] = React.useState(false);
 
-    const {data, isLoading} = useGetPresetIcon(iconId);
-    const [error, setError] = React.useState(false);
-    const iconSize = iconSizes[size] || 35;
+  if (isLoading) return <UIActivityIndicator size={30} />;
 
-    React.useEffect(() => {
-      project.preset.getMany().then(res => console.log(res, 'res'));
-    }, [project]);
-
-    if (isLoading) return <UIActivityIndicator size={30} />;
-
-    // Fallback to a default icon if we can't load the icon from mapeo-server
-    if (error || !iconId) return <MaterialIcon name="place" size={iconSize} />;
-
-    return (
-      <Image
-        style={{width: iconSize, height: iconSize}}
-        source={{uri: data}}
-        onError={() => setError(true)}
-      />
-    );
-  },
-);
-
-export const PresetCircleIcon = ({
-  iconId,
-  size = 'medium',
-}: CategoryIconProps) => {
-  // const [{ presets }] = React.useContext(ConfigContext);
-
-  // If the preset defines a "color" field for *any* point-based category
-  // we want to render a thicker border, even if not all categories have a color defined
-  // const presetsUseColors = Array.from(presets.values()).some(
-  //   p => p.geometry.includes("point") && !!p.color
-  // );
+  // Fallback to a default icon if we can't load the icon from mapeo-server
+  if (error || !name) return <MaterialIcon name="place" size={iconSize} />;
 
   return (
-    <Circle
-      radius={radii[size]}
-      style={undefined}
-      //style={presetsUseColors ? { borderWidth: 3 } : undefined}
-    >
-      <PresetIcon iconId={iconId} size={size} />
+    <Image
+      style={{width: iconSize, height: iconSize}}
+      resizeMode="contain"
+      source={{uri: data}}
+      onError={() => setError(true)}
+    />
+  );
+});
+
+export const PresetCircleIcon = ({
+  name,
+  size = 'medium',
+}: CategoryIconProps) => {
+  return (
+    <Circle radius={radii[size]}>
+      <PresetIcon name={name} size={size} />
     </Circle>
   );
 };

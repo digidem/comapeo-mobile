@@ -118,7 +118,7 @@ const Item = React.memo(
       underlayColor="#000033"
       testID={`${item.docId}CategoryButton`}>
       <View style={styles.cellContainer}>
-        <PresetCircleIcon size="medium" />
+        <PresetCircleIcon size="medium" name={item.name} />
         <Text numberOfLines={3} style={styles.categoryName}>
           <DynFormattedMessage
             id={`presets.${item.docId}.name`}

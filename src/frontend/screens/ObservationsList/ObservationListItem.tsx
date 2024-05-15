@@ -5,7 +5,6 @@ import {Text} from '../../sharedComponents/Text';
 import {TouchableHighlight} from '../../sharedComponents/Touchables';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {Attachment, ViewStyleProp} from '../../sharedTypes';
-import {BLACK} from '../../lib/styles';
 import {Observation} from '@mapeo/schema';
 import {
   FormattedObservationDate,
@@ -65,11 +64,11 @@ function ObservationListItemNotMemoized({
           <View style={styles.photoContainer}>
             <PhotoStack attachments={observation.attachments} />
             <View style={styles.smallIconContainer}>
-              <PresetCircleIcon iconId={preset.name} size="small" />
+              <PresetCircleIcon name={preset.name} size="small" />
             </View>
           </View>
         ) : (
-          <PresetCircleIcon iconId={preset.name} size="medium" />
+          <PresetCircleIcon name={preset.name} size="medium" />
         )}
       </View>
     </TouchableHighlight>

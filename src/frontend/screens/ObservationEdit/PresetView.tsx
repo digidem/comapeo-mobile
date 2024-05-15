@@ -32,7 +32,7 @@ export const PresetView = () => {
   return (
     <View style={styles.categoryContainer}>
       <View style={styles.categoryIcon}>
-        <PresetCircleIcon />
+        <PresetCircleIcon name={preset?.name} />
       </View>
       <Text style={styles.categoryName}>{name}</Text>
       <TextButton

@@ -75,7 +75,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
       onPress: handleCameraPress,
     },
   ];
-  if (preset?.fieldIds && preset.fieldIds.length) {
+  if (preset?.fieldIds.length) {
     // Only show the option to add details if preset fields are defined.
     bottomSheetItems.push({
       icon: <DetailsIcon />,

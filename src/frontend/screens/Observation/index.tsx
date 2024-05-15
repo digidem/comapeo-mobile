@@ -47,19 +47,17 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   const {data} = useFieldsQuery();
 
   const defaultAcc: Field[] = [];
-  const fields = !data
-    ? []
-    : preset.fieldIds.reduce((acc, pres) => {
+  const fields = data
+    ? preset.fieldIds.reduce((acc, pres) => {
         const fieldToAdd = data.find(field => field.docId === pres);
         if (!fieldToAdd) return acc;
         return [...acc, fieldToAdd];
-      }, defaultAcc);
+      }, defaultAcc)
+    : [];
 
   const deviceId = '';
   const {lat, lon, createdBy} = observation;
   const isMine = deviceId === createdBy;
-  // Currently only show photo attachments
-  // const photos = [];
 
   return (
     <ScrollView

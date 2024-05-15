@@ -120,7 +120,7 @@ const DetailsTitle = ({questionNumber}: {questionNumber: number}) => {
         {...m.title}
         values={{
           current: questionNumber,
-          total: !preset ? 0 : preset.fieldIds.length,
+          total: preset?.fieldIds.length || 0,
         }}
       />
     </Text>

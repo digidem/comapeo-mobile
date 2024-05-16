@@ -249,7 +249,8 @@ function checkEqual(
     numberOfPhotos?: number;
   },
 ) {
-  if (!editted || !('docId' in editted)) return false;
+  // It work in wrong way, because we cleaned draft data, in that case it doesn't work
+  if (!editted || !('docId' in editted)) return true;
   // attachments are created right before an observation is made, so we need to check # photos that are about to be saved
   const {attachments: originalAtts, ...orignalNoPhotos} = original;
 

@@ -160,7 +160,7 @@ export const SaveButton = ({
   }
 
   async function editObservation() {
-    if (!value) throw new Error('no observation saved in persisted state ');
+    if (!value) throw new Error('no observation saved in persisted state');
     if (!observationId) throw new Error('Need an observation Id to edit');
     if (!('versionId' in value))
       throw new Error('Cannot update a unsaved observation (must create one)');
@@ -170,7 +170,7 @@ export const SaveButton = ({
       {
         onSuccess: () => {
           clearDraft();
-          navigation.pop();
+          navigation.navigate('Home', {screen: 'Map'});
         },
       },
     );

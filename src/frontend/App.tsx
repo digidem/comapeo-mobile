@@ -17,7 +17,7 @@ import {AppStackParamsList} from './sharedTypes/navigation';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Sentry from '@sentry/react-native';
 import * as TaskManager from 'expo-task-manager';
-import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes';
+import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
 import {tracksStore} from './hooks/persistedState/usePersistedTrack';
 
 Sentry.init({

@@ -72,7 +72,14 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
       )}
       <ErrorBottomSheet
         error={sendInviteMutation.error ?? requestCancelInviteMutation.error}
-        clearError={() => navigation.navigate('YourTeam')}
+        goBack={() => navigation.navigate('YourTeam')}
+        clearError={() => {
+          if (sendInviteMutation) {
+            sendInviteMutation.reset();
+          } else {
+            requestCancelInviteMutation.reset();
+          }
+        }}
       />
     </React.Fragment>
   );

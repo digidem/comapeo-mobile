@@ -6,7 +6,6 @@ import {LogoWithErrorIcon} from './LogoWithErrorIcon';
 import {Text} from './Text';
 import {defineMessages, useIntl} from 'react-intl';
 import {useEffect} from 'react';
-import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
@@ -27,11 +26,13 @@ const m = defineMessages({
 type ErrorModalProps = {
   error: Error | null;
   clearError?: () => void;
+  goBack: () => void;
 };
 
-export const ErrorBottomSheet = ({error, clearError}: ErrorModalProps) => {
+export const ErrorBottomSheet = (props: ErrorModalProps) => {
+  const {error, clearError, goBack} = props;
+
   const {formatMessage} = useIntl();
-  const navigation = useNavigationFromRoot();
   const {openSheet, sheetRef, isOpen, closeSheet} = useBottomSheetModal({
     openOnMount: false,
   });
@@ -44,19 +45,22 @@ export const ErrorBottomSheet = ({error, clearError}: ErrorModalProps) => {
   }, [error, isOpen, openSheet]);
 
   function handleGoBack() {
+    closeSheet();
+    goBack();
+  }
+
+  function handleTryAgain() {
     if (clearError) {
       clearError();
-    } else {
-      navigation.goBack();
+      closeSheet();
     }
-    closeSheet();
   }
 
   return (
     <BottomSheetModal
       ref={sheetRef}
       fullHeight
-      onDismiss={handleGoBack}
+      onDismiss={closeSheet}
       isOpen={isOpen}>
       <>
         <View style={styles.container}>
@@ -80,9 +84,11 @@ export const ErrorBottomSheet = ({error, clearError}: ErrorModalProps) => {
               color="ComapeoBlue">
               {formatMessage(m.goBack)}
             </Button>
-            <Button fullWidth onPress={handleGoBack}>
-              {formatMessage(m.tryAgain)}
-            </Button>
+            {clearError && (
+              <Button fullWidth onPress={handleTryAgain}>
+                {formatMessage(m.tryAgain)}
+              </Button>
+            )}
           </View>
         </View>
       </>

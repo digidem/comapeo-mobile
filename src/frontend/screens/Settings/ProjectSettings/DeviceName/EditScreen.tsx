@@ -71,7 +71,7 @@ export const EditScreen = ({
     deviceName: string;
   }>({defaultValues: {deviceName}});
 
-  const {isPending, mutate, error} = useEditDeviceInfo();
+  const {isPending, mutate, error, reset} = useEditDeviceInfo();
 
   const {isDirty: nameHasChanges} = control.getFieldState(
     'deviceName',
@@ -155,7 +155,11 @@ export const EditScreen = ({
           />
         </FieldRow>
       </ScrollView>
-      <ErrorBottomSheet error={error} />
+      <ErrorBottomSheet
+        error={error}
+        goBack={() => navigation.goBack()}
+        clearError={reset}
+      />
     </>
   );
 };

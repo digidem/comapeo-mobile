@@ -114,7 +114,11 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
-      <ErrorBottomSheet error={error} clearError={reset} />
+      <ErrorBottomSheet
+        error={error}
+        clearError={reset}
+        goBack={() => navigation.goBack()}
+      />
     </React.Fragment>
   );
 };

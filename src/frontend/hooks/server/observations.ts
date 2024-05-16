@@ -1,10 +1,9 @@
-import type {MapeoProject} from '@mapeo/core/dist/mapeo-project';
 import {
   useMutation,
   useSuspenseQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-
+import {ObservationValue} from '@mapeo/schema';
 import {useProject} from './projects';
 import {ClientGeneratedObservation} from '../../sharedTypes';
 
@@ -59,17 +58,19 @@ export function useEditObservation() {
 
   return useMutation({
     mutationFn: async ({
-      id,
+      versionId,
       value,
     }: {
-      id: Parameters<MapeoProject['observation']['update']>[0];
-      value: Parameters<MapeoProject['observation']['update']>[1];
+      versionId: string;
+      value: ObservationValue;
     }) => {
-      if (!project) throw new Error('Project instance does not exist');
-      return project.observation.update(id, value);
+      return project.observation.update(versionId, value);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY]});
+    },
+    onError: error => {
+      console.log(error);
     },
   });
 }

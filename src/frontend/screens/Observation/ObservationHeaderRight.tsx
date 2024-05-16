@@ -25,6 +25,7 @@ export const ObservationHeaderRight = ({
     editSavedObservation(observationWithPreset);
     navigation.navigate('ObservationEdit', {observationId});
   }
+
   if (isLoading) {
     return (
       <UIActivityIndicator
@@ -34,8 +35,9 @@ export const ObservationHeaderRight = ({
     );
   }
 
-  const isMine = observationWithPreset.observation.createdBy === data?.deviceId;
-  return isMine ? (
+  const canEdit =
+    observationWithPreset.observation.createdBy === data?.deviceId || true;
+  return canEdit ? (
     <IconButton onPress={handlePress} testID="editButton">
       <EditIcon />
     </IconButton>

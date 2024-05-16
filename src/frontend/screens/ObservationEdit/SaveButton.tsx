@@ -14,6 +14,7 @@ import {DraftPhoto, Photo} from '../../contexts/PhotoPromiseContext/types';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import SaveCheck from '../../images/CheckMark.svg';
+import {useProject} from '../../hooks/server/projects';
 
 const m = defineMessages({
   noGpsTitle: {
@@ -79,6 +80,7 @@ export const SaveButton = ({
   const addNewTrackObservation = usePersistedTrack(
     state => state.addNewObservation,
   );
+  const project = useProject();
 
   function createObservation() {
     if (!value) throw new Error('no observation saved in persisted state ');
@@ -157,14 +159,14 @@ export const SaveButton = ({
       });
   }
 
-  function editObservation() {
+  async function editObservation() {
     if (!value) throw new Error('no observation saved in persisted state ');
     if (!observationId) throw new Error('Need an observation Id to edit');
     if (!('versionId' in value))
       throw new Error('Cannot update a unsaved observation (must create one)');
+    const {versionId} = await project.observation.getByDocId(observationId);
     editObservationMutation.mutate(
-      // @ts-expect-error
-      {id: observationId, value},
+      {versionId: versionId!, value},
       {
         onSuccess: () => {
           clearDraft();
@@ -201,6 +203,7 @@ export const SaveButton = ({
       editObservation();
       return;
     }
+    console.log('dupa');
 
     const hasLocation = value.lat !== undefined && value.lon !== undefined;
     const locationSetManually = value.metadata.manualLocation;

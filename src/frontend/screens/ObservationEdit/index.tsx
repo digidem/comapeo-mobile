@@ -14,6 +14,7 @@ import {ErrorModal} from '../../sharedComponents/ErrorModal';
 import {SaveButton} from './SaveButton';
 import {DetailsIcon} from '../../sharedComponents/icons';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
+import {observation} from '@mapeo/schema/dist/validations';
 
 const m = defineMessages({
   editTitle: {
@@ -89,7 +90,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.scrollViewContent}>
-        {isNew && <LocationView />}
+        {/* {isNew && <LocationView />} */}
         <PresetView />
         <DescriptionField />
         <ThumbnailScrollView />

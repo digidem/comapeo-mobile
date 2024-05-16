@@ -6,7 +6,6 @@ import {URL} from 'react-native-url-polyfill';
 
 import {DraftPhoto} from '../../contexts/PhotoPromiseContext/types';
 import {useProject} from './projects';
-import {Buffer} from 'buffer';
 import {convertUrlToBase64} from '../../utils/base64.ts';
 
 type SavablePhoto = SetRequired<

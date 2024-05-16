@@ -9,6 +9,7 @@ import {
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 
 import {DARK_GREY} from '../../lib/styles';
+import {useCallback} from 'react';
 
 export const MODAL_NAVIGATION_OPTIONS: NativeStackNavigationOptions = {
   presentation: 'transparentModal',
@@ -27,7 +28,7 @@ export const useBottomSheetModal = ({openOnMount}: {openOnMount: boolean}) => {
     }
   }, []);
 
-  const openSheet = React.useCallback(() => {
+  const openSheet = useCallback(() => {
     if (sheetRef.current) {
       setIsOpen(true);
       if (Keyboard.isVisible()) {

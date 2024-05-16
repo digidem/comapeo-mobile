@@ -34,6 +34,15 @@
           "recordAudioAndroid": true
         }
       ],
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "note": "Use SENTRY_AUTH_TOKEN env to authenticate with Sentry.",
+          "project": "comapeo",
+          "organization": "awana-digital"
+        }
+      ],
       ["./expo-config-plugins/removeExpoInputStyles.js"]
     ],
     "android": {

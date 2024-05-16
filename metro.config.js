@@ -1,11 +1,11 @@
-const {getDefaultConfig} = require('expo/metro-config');
+const {getSentryExpoConfig} = require('@sentry/react-native/metro');
 const path = require('path');
 
 const projectRoot = __dirname;
 const workspaceRoot = path.resolve(projectRoot);
 
 /** @type {import('expo/metro-config').MetroConfig} */
-const config = getDefaultConfig(__dirname);
+const config = getSentryExpoConfig(__dirname);
 
 module.exports = {
   ...config,

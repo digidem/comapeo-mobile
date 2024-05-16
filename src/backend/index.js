@@ -9,6 +9,15 @@ const MIGRATIONS_FOLDER_PATH = new URL(
   './node_modules/@mapeo/core/drizzle',
   import.meta.url,
 ).pathname
+const FALLBACK_MAP_PATH = new URL(
+  './node_modules/mapeo-offline-map',
+  import.meta.url,
+).pathname
+
+const DEFAULT_CONFIG_PATH = new URL(
+  './node_modules/@mapeo/default-config/dist/mapeo-default-config.mapeoconfig',
+  import.meta.url,
+).pathname
 
 try {
   const { values } = parseArgs({
@@ -35,6 +44,8 @@ try {
     rootKey: Buffer.from(values.rootKey, 'hex'),
     migrationsFolderPath: MIGRATIONS_FOLDER_PATH,
     sharedStoragePath: values.sharedStoragePath,
+    defaultConfigPath: DEFAULT_CONFIG_PATH,
+    fallbackMapPath: FALLBACK_MAP_PATH,
   }).catch((err) => {
     console.error('Server startup error:', err)
   })

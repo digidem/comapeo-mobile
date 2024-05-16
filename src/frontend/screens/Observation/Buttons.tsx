@@ -12,6 +12,7 @@ import {
 } from '../../hooks/server/media.ts';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset.ts';
 import {formatCoords} from '../../lib/utils.ts';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 const m = defineMessages({
   delete: {
@@ -130,6 +131,10 @@ export const ButtonFields = ({
       )}
       <Button
         iconName="share"
+        isLoading={
+          attachmentBase64Queries.filter(q => q.isSuccess).length !==
+          attachmentBase64Queries.length
+        }
         title={t(m.share)}
         color={RED}
         onPress={handlePressShare}
@@ -143,17 +148,22 @@ type ButtonProps = {
   color: string;
   iconName: 'delete' | 'share';
   title: string;
+  isLoading?: boolean;
 };
 
-const Button = ({onPress, color, iconName, title}: ButtonProps) => (
-  <TouchableOpacity onPress={onPress} style={{flex: 1}}>
+const Button = ({onPress, isLoading, iconName, title}: ButtonProps) => (
+  <TouchableOpacity onPress={onPress} style={{flex: 1}} disabled={isLoading}>
     <View style={styles.button}>
-      <MaterialIcons
-        size={30}
-        name={iconName}
-        color={DARK_GREY}
-        style={styles.buttonIcon}
-      />
+      {isLoading ? (
+        <UIActivityIndicator />
+      ) : (
+        <MaterialIcons
+          size={30}
+          name={iconName}
+          color={DARK_GREY}
+          style={styles.buttonIcon}
+        />
+      )}
       <Text style={styles.buttonText}>{title}</Text>
     </View>
   </TouchableOpacity>

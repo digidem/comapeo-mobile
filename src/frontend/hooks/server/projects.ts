@@ -1,7 +1,7 @@
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 
 import {useApi} from '../../contexts/ApiContext';
-import {useActiveProject} from '../../contexts/ProjectContext';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
 
 export const ALL_PROJECTS_KEY = 'all_projects';
 export const PROJECT_SETTINGS_KEY = 'project_settings';

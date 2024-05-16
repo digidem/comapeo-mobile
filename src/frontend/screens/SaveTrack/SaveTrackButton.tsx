@@ -37,13 +37,13 @@ export const SaveTrackButton: FC = () => {
       },
       {
         onSuccess: () => {
+          currentTrack.clearCurrentTrack();
           navigation.dispatch(
             CommonActions.reset({
               index: 0,
               routes: [{name: 'Home', params: {screen: 'Map'}}],
             }),
           );
-          currentTrack.clearCurrentTrack();
         },
       },
     );

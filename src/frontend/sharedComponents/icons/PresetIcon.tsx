@@ -7,7 +7,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import {useGetPresetIcon} from '../../hooks/server/presets';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-interface CategoryIconProps {
+interface PresetIconProps {
   size?: IconSize;
   name?: string;
 }
@@ -24,7 +24,7 @@ const radii = {
   large: 35,
 };
 
-export const PresetIcon = memo<CategoryIconProps>(({size = 'medium', name}) => {
+export const PresetIcon = memo<PresetIconProps>(({size = 'medium', name}) => {
   const iconSize = iconSizes[size] || 35;
   const {data, isLoading} = useGetPresetIcon(size, name);
   const [error, setError] = React.useState(false);
@@ -44,10 +44,7 @@ export const PresetIcon = memo<CategoryIconProps>(({size = 'medium', name}) => {
   );
 });
 
-export const PresetCircleIcon = ({
-  name,
-  size = 'medium',
-}: CategoryIconProps) => {
+export const PresetCircleIcon = ({name, size = 'medium'}: PresetIconProps) => {
   return (
     <Circle radius={radii[size]}>
       <PresetIcon name={name} size={size} />

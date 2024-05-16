@@ -1,60 +1,71 @@
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+
 import {useApi} from '../../contexts/ApiContext';
-import {useActiveProjectContext} from '../../contexts/ProjectContext';
+import {useActiveProject} from '../../contexts/ProjectContext';
 
-export const PROJECTS_KEY = 'all_projects';
+export const ALL_PROJECTS_KEY = 'all_projects';
+export const PROJECT_SETTINGS_KEY = 'project_settings';
+export const CREATE_PROJECT_KEY = 'create_project';
+export const PROJECT_KEY = 'project';
+export const PROJECT_MEMBERS_KEY = 'project_members';
 
-export function useUpdateActiveProjectId() {
-  const projectContext = useActiveProjectContext();
-  return projectContext.switchProject;
-}
+export function useProject(projectId?: string) {
+  const api = useApi();
 
-export function useProject() {
-  const projectContext = useActiveProjectContext();
-  return projectContext.project;
+  return useQuery({
+    queryKey: [PROJECT_KEY, projectId],
+    queryFn: async () => {
+      if (!projectId) throw new Error('Active project ID must exist');
+      return api.getProject(projectId);
+    },
+    enabled: !!projectId,
+  });
 }
 
 export function useAllProjects() {
   const api = useApi();
 
   return useQuery({
-    queryFn: async () => await api.listProjects(),
-    queryKey: [PROJECTS_KEY],
+    queryKey: [ALL_PROJECTS_KEY],
+    queryFn: () => {
+      return api.listProjects();
+    },
   });
 }
 
 export function useCreateProject() {
   const api = useApi();
   const queryClient = useQueryClient();
-  const updateProject = useUpdateActiveProjectId();
 
   return useMutation({
-    mutationKey: ['createProject'],
-    mutationFn: async (name: string) => {
-      return await api.createProject({name});
+    mutationKey: [CREATE_PROJECT_KEY],
+    mutationFn: (name?: string) => {
+      return api.createProject({name});
     },
-    onSuccess: async data => {
-      updateProject(data);
-      return await queryClient.invalidateQueries({queryKey: ['projects']});
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [ALL_PROJECTS_KEY],
+      });
     },
   });
 }
 
 export function useProjectMembers() {
-  const project = useProject();
+  const project = useActiveProject();
+
   return useQuery({
-    queryFn: async () => {
-      return await project.$member.getMany();
+    queryKey: [PROJECT_MEMBERS_KEY],
+    queryFn: () => {
+      return project.$member.getMany();
     },
-    queryKey: ['projectMembers'],
   });
 }
 
 export function useProjectSettings() {
-  const project = useProject();
+  const project = useActiveProject();
 
   return useQuery({
-    queryKey: ['projectSettings'],
+    queryKey: [PROJECT_SETTINGS_KEY],
     queryFn: () => {
       return project.$getProjectSettings();
     },

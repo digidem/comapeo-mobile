@@ -66,13 +66,14 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   const {lat, lon, createdBy} = observation;
   const isMine = deviceId === createdBy;
   // Currently only show photo attachments
+  const photoAttachments = observation.attachments.filter(
+    attachment => attachment.type === 'photo',
+  );
   const attachmentUrls = useAttachmentUrlQueries(
-    observation.attachments.filter(attachment => attachment.type === 'photo'),
+    photoAttachments,
     'thumbnail',
-  );
-  const base64Uris = useAttachmentsBase64Query(
-    attachmentUrls.filter(r => !!r.data).map(r => r.data!),
-  );
+  ).map(query => query.data);
+  const base64Uris = useAttachmentsBase64Query(attachmentUrls);
 
   return (
     <ScrollView

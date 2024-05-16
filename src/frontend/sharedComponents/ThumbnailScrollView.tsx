@@ -23,7 +23,7 @@ const minSize = 150;
 const log = debug('Thumbnail');
 
 type ThumbnailProps = {
-  photo?: Photo;
+  photo?: Partial<Photo>;
   onPress: () => any;
   style?: StyleProp<ViewStyle>;
   size?: number;
@@ -64,7 +64,9 @@ export const Thumbnail = ({photo, style, size, onPress}: ThumbnailProps) => {
   );
 };
 
-export const ThumbnailScrollView = (props: {photos: (Photo | undefined)[]}) => {
+export const ThumbnailScrollView = (props: {
+  photos: (Partial<Photo> | undefined)[];
+}) => {
   const scrollViewRef = React.useRef<ScrollView>(null);
   const {photos} = props;
   React.useLayoutEffect(() => {

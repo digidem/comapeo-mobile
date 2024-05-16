@@ -1,8 +1,6 @@
 import {ImageStyle, StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {Observation, ObservationValue} from '@mapeo/schema';
 import type {RoleId, RoleIdForNewInvite} from '@mapeo/core/dist/roles';
-import {FullLocationData} from './sharedTypes/location.ts';
-import * as TaskManager from 'expo-task-manager';
 
 export type DeviceType = 'mobile' | 'desktop';
 
@@ -37,10 +35,3 @@ export const MEMBER_ROLE_ID = '012fd2d431c0bf60';
 export const BLOCKED_ROLE_ID = '9e6d29263cba36c9';
 export const LEFT_ROLE_ID = '8ced989b1904606b';
 export const NO_ROLE_ID = '08e4251e36f6e7ed';
-
-export type LocationCallbackInfo = {
-  data: {locations: FullLocationData[]} | null;
-  error: TaskManager.TaskManagerError | null;
-};
-
-export const LOCATION_TASK_NAME = 'background-location-task';

@@ -1,3 +1,5 @@
+import {type TaskManagerError} from 'expo-task-manager';
+
 export type FullLocationData = {
   coords: {
     altitude: number;
@@ -19,3 +21,10 @@ export type LonLatData = {
   longitude: number;
   latitude: number;
 };
+
+export type LocationCallbackInfo = {
+  data: {locations: FullLocationData[]} | null;
+  error: TaskManagerError | null;
+};
+
+export const LOCATION_TASK_NAME = 'background-location-task';

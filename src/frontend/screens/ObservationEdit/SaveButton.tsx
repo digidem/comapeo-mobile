@@ -203,7 +203,6 @@ export const SaveButton = ({
       editObservation();
       return;
     }
-    console.log('dupa');
 
     const hasLocation = value.lat !== undefined && value.lon !== undefined;
     const locationSetManually = value.metadata.manualLocation;

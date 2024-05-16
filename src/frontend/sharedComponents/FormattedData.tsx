@@ -88,20 +88,23 @@ export const FormattedFieldValue = ({
 }) => {
   const {formatMessage: t} = useIntl();
   // Select multiple answers are an array, so we join them with commas
-  const formattedValue = (Array.isArray(value) ? value : [value])
+  const formattedValues = (Array.isArray(value) ? value : [value])
     // Filter any undefined values or empty strings (an empty string can come
     // from a user deleting an answer) TODO: Values that are just spaces
-    .filter(value => typeof value !== 'undefined' && value !== '')
-    .map(value =>
+    .filter(
+      formattedValue =>
+        typeof formattedValue !== 'undefined' && formattedValue !== '',
+    )
+    .map(formattedValue =>
       t({
-        id: `fields.${field.docId}.options.${JSON.stringify(value)}`,
-        defaultMessage: getValueLabel(value, field),
+        id: `fields.${field.docId}.options.${JSON.stringify(formattedValue)}`,
+        defaultMessage: getValueLabel(formattedValue, field),
       }).trim(),
     )
     .join(', ');
   // This will return a noAnswer string if formattedValue is undefined or an
   // empty string
-  return <>{formattedValue || t(m.noAnswer)}</>;
+  return <>{formattedValues || t(m.noAnswer)}</>;
 };
 
 // Format the created_at date of an observation as either a datetime, or a

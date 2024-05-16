@@ -96,14 +96,18 @@ export function useAttachmentUrlQueries(
 }
 
 export function useAttachmentsBase64Query(
-  attachmentsWithUrl: (Observation['attachments'][0] & {url: string})[],
+  attachmentsWithUrl: (
+    | (Observation['attachments'][0] & {url: string})
+    | undefined
+  )[],
 ) {
   return useQueries({
     queries: attachmentsWithUrl.map(attachment => {
       return {
-        queryKey: ['blobAsBase64', attachment.hash],
+        enabled: !!attachment,
+        queryKey: ['blobAsBase64', attachment?.hash],
         queryFn: async () => {
-          const base64Uri = await convertUrlToBase64(attachment.url);
+          const base64Uri = await convertUrlToBase64(attachment!.url);
           return {...attachment, base64Uri};
         },
       };

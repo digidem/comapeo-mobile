@@ -14,6 +14,11 @@ import {InsetMapView} from './InsetMapView';
 import {ButtonFields} from './Buttons';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
+import {ThumbnailScrollView} from '../../sharedComponents/ThumbnailScrollView.tsx';
+import {
+  useAttachmentsBase64Query,
+  useAttachmentUrlQueries,
+} from '../../hooks/server/media.ts';
 
 const m = defineMessages({
   deleteTitle: {
@@ -61,7 +66,14 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   const {lat, lon, createdBy} = observation;
   const isMine = deviceId === createdBy;
   // Currently only show photo attachments
-  const photos = [];
+  const photoAttachments = observation.attachments.filter(
+    attachment => attachment.type === 'photo',
+  );
+  const attachmentUrls = useAttachmentUrlQueries(
+    photoAttachments,
+    'thumbnail',
+  ).map(query => query.data);
+  const base64Uris = useAttachmentsBase64Query(attachmentUrls);
 
   return (
     <ScrollView
@@ -86,15 +98,18 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
               <Text style={styles.textNotes}>{observation.tags.notes}</Text>
             </View>
           ) : null}
-
-          {/* {!!photos.length && (
+          {base64Uris.length > 0 && (
             <ThumbnailScrollView
-              photos={
-                photos
-              }
-              onPressPhoto={() => {}}
+              photos={base64Uris.map(({data}) => {
+                return !data
+                  ? undefined
+                  : {
+                      thumbnailUri: data.base64Uri,
+                      id: data.driveDiscoveryId,
+                    };
+              })}
             />
-          )} */}
+          )}
         </View>
         {fields && fields.length > 0 && <FieldDetails fields={fields} />}
         <View style={styles.divider}></View>

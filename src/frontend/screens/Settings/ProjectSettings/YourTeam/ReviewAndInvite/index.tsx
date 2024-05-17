@@ -57,6 +57,22 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
     });
   }
 
+  function clearError() {
+    if (sendInviteMutation.isIdle) {
+      sendInviteMutation.reset();
+    } else {
+      requestCancelInviteMutation.reset();
+    }
+  }
+
+  function tryAgain() {
+    if (sendInviteMutation.isIdle) {
+      sendInvite();
+    } else {
+      cancelInvite();
+    }
+  }
+
   return (
     <React.Fragment>
       {sendInviteMutation.isIdle ? (
@@ -71,15 +87,13 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
         <WaitingForInviteAccept cancelInvite={cancelInvite} />
       )}
       <ErrorBottomSheet
-        error={sendInviteMutation.error ?? requestCancelInviteMutation.error}
-        goBack={() => navigation.navigate('YourTeam')}
-        clearError={() => {
-          if (sendInviteMutation) {
-            sendInviteMutation.reset();
-          } else {
-            requestCancelInviteMutation.reset();
-          }
-        }}
+        error={
+          sendInviteMutation.isIdle
+            ? sendInviteMutation.error
+            : requestCancelInviteMutation.error
+        }
+        clearError={clearError}
+        tryAgain={tryAgain}
       />
     </React.Fragment>
   );

@@ -5,7 +5,6 @@ import {StyleSheet, View} from 'react-native';
 import {LogoWithErrorIcon} from './LogoWithErrorIcon';
 import {Text} from './Text';
 import {defineMessages, useIntl} from 'react-intl';
-import {useEffect} from 'react';
 import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
@@ -25,35 +24,32 @@ const m = defineMessages({
 
 type ErrorModalProps = {
   error: Error | null;
-  clearError?: () => void;
-  goBack: () => void;
+  clearError: () => void;
+  tryAgain?: () => unknown;
 };
 
 export const ErrorBottomSheet = (props: ErrorModalProps) => {
-  const {error, clearError, goBack} = props;
+  const {error, clearError, tryAgain} = props;
 
   const {formatMessage} = useIntl();
   const {openSheet, sheetRef, isOpen, closeSheet} = useBottomSheetModal({
     openOnMount: false,
   });
 
-  useEffect(() => {
-    if (error && !isOpen) {
-      Sentry.captureMessage(error.message, 'error');
-      openSheet();
-    }
-  }, [error, isOpen, openSheet]);
+  if (error && !isOpen) {
+    Sentry.captureMessage(error.message, 'error');
+    openSheet();
+  }
 
   function handleGoBack() {
+    clearError();
     closeSheet();
-    goBack();
   }
 
   function handleTryAgain() {
-    if (clearError) {
-      clearError();
-      closeSheet();
-    }
+    clearError();
+    closeSheet();
+    tryAgain!();
   }
 
   return (
@@ -84,7 +80,7 @@ export const ErrorBottomSheet = (props: ErrorModalProps) => {
               color="ComapeoBlue">
               {formatMessage(m.goBack)}
             </Button>
-            {clearError && (
+            {tryAgain && (
               <Button fullWidth onPress={handleTryAgain}>
                 {formatMessage(m.tryAgain)}
               </Button>

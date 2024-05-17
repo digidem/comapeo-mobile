@@ -92,7 +92,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
         <ThumbnailScrollView />
       </ScrollView>
       <BottomSheet items={bottomSheetItems} />
-      <ErrorBottomSheet error={error} goBack={() => navigation.goBack()} />
+      <ErrorBottomSheet error={error} clearError={() => setError(null)} />
     </View>
   );
 };

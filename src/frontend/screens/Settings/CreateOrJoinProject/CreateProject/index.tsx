@@ -50,11 +50,9 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
   const [advancedSettingOpen, setAdvancedSettingOpen] = React.useState(false);
   const {mutate, isPending, reset, error} = useCreateProject();
 
-  const {
-    control,
-    handleSubmit,
-    formState: {errors},
-  } = useForm<ProjectFormType>({defaultValues: {projectName: ''}});
+  const {control, handleSubmit} = useForm<ProjectFormType>({
+    defaultValues: {projectName: ''},
+  });
 
   function handleCreateProject(val: ProjectFormType) {
     mutate(val.projectName, {
@@ -117,7 +115,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
       <ErrorBottomSheet
         error={error}
         clearError={reset}
-        goBack={() => navigation.goBack()}
+        tryAgain={handleSubmit(handleCreateProject)}
       />
     </React.Fragment>
   );

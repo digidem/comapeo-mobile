@@ -75,7 +75,9 @@ export const SaveButton = ({
   const editObservationMutation = useEditObservation();
   const createBlobMutation = useCreateBlobMutation();
   const isTracking = usePersistedTrack(state => state.isTracking);
-  const addNewTrackLocation = usePersistedTrack(state => state.addNewLocations);
+  const addNewTrackLocations = usePersistedTrack(
+    state => state.addNewLocations,
+  );
   const addNewTrackObservation = usePersistedTrack(
     state => state.addNewObservation,
   );
@@ -134,7 +136,7 @@ export const SaveButton = ({
               navigation.navigate('Home', {screen: 'Map'});
               if (isTracking) {
                 if (value.lat && value.lon) {
-                  addNewTrackLocation([
+                  addNewTrackLocations([
                     {
                       timestamp: new Date().getTime(),
                       latitude: value.lat,

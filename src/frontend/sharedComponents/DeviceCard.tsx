@@ -5,11 +5,10 @@ import {DeviceType, ViewStyleProp} from '../sharedTypes';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {DeviceNameWithIcon} from './DeviceNameWithIcon';
 
-export type DeviceStatus = 'connected' | 'disconnected';
 type DeviceCardProps = {
   deviceType: DeviceType;
   name: string;
-  status: DeviceStatus;
+  isConnected?: boolean;
   thisDevice?: boolean;
   deviceId?: string;
   dateAdded?: Date;
@@ -25,16 +24,16 @@ export const DeviceCard = ({
   deviceId,
   dateAdded,
   onPress,
-  status,
+  isConnected,
 }: DeviceCardProps) => {
   return (
     <TouchableOpacity
-      disabled={!onPress || status !== 'connected'}
+      disabled={!onPress || !isConnected}
       onPress={() => (onPress ? onPress() : {})}
       style={[styles.container, style]}>
       <DeviceNameWithIcon
         name={name}
-        status={status}
+        isConnected={isConnected}
         thisDevice={thisDevice}
         deviceType={deviceType}
         deviceId={deviceId}

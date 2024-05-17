@@ -67,7 +67,7 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
             key={deviceId}
             style={{marginBottom: 10}}
             name={name || ''}
-            status={device.status}
+            isConnected={device.status === 'connected'}
             deviceType={deviceType}
             deviceId={deviceId}
             onPress={() =>

@@ -8,7 +8,6 @@ import {Text} from './Text';
 import {MEDIUM_GREY} from '../lib/styles';
 import {DeviceType} from '../sharedTypes';
 import Caution from '../images/caution.svg';
-import {DeviceStatus} from './DeviceCard';
 
 const m = defineMessages({
   thisDevice: {
@@ -28,13 +27,13 @@ type DeviceNameWithIconProps = {
   thisDevice?: boolean;
   iconSize?: number;
   style?: ViewStyleProp;
-  status?: DeviceStatus;
+  isConnected?: boolean;
 };
 
 export const DeviceNameWithIcon = ({
   deviceType,
   name,
-  status,
+  isConnected,
   deviceId,
   thisDevice,
   iconSize,
@@ -60,7 +59,7 @@ export const DeviceNameWithIcon = ({
             {formatMessage(m.thisDevice)}
           </Text>
         )}
-        {status && status !== 'connected' && (
+        {isConnected && (
           <View style={[styles.flexRow, {marginTop: 4.4}]}>
             <Caution />
             <Text style={styles.deviceStatusText}>

@@ -10,7 +10,7 @@ import {
 import {defineMessages, FormattedMessage} from 'react-intl';
 
 import {useDraftObservation} from '../hooks/useDraftObservation';
-import {CategoryCircleIcon} from '../sharedComponents/icons/CategoryIcon';
+import {PresetCircleIcon} from '../sharedComponents/icons/PresetIcon';
 import {WHITE} from '../lib/styles';
 import {NativeNavigationComponent} from '../sharedTypes/navigation';
 import {CustomHeaderLeftClose} from '../sharedComponents/CustomHeaderLeftClose';
@@ -118,7 +118,7 @@ const Item = React.memo(
       underlayColor="#000033"
       testID={`${item.docId}CategoryButton`}>
       <View style={styles.cellContainer}>
-        <CategoryCircleIcon size="medium" />
+        <PresetCircleIcon size="medium" name={item.name} />
         <Text numberOfLines={3} style={styles.categoryName}>
           <DynFormattedMessage
             id={`presets.${item.docId}.name`}

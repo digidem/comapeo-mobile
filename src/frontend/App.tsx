@@ -16,6 +16,9 @@ import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {AppStackParamsList} from './sharedTypes/navigation';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Sentry from '@sentry/react-native';
+import * as TaskManager from 'expo-task-manager';
+import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
+import {tracksStore} from './hooks/persistedState/usePersistedTrack';
 
 Sentry.init({
   dsn: 'https://e0e02907e05dc72a6da64c3483ed88a6@o4507148235702272.ingest.us.sentry.io/4507170965618688',
@@ -30,6 +33,28 @@ const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();
 initializeNodejs();
 SplashScreen.preventAutoHideAsync();
+
+// Defines task that handles background location updates for tracks feature
+TaskManager.defineTask(
+  LOCATION_TASK_NAME,
+  async ({data, error}: LocationCallbackInfo) => {
+    if (error) {
+      console.error('Error while processing location update callback', error);
+    }
+
+    if (data?.locations) {
+      const {addNewLocations} = tracksStore.getState();
+
+      addNewLocations(
+        data.locations.map(loc => ({
+          latitude: loc.coords.latitude,
+          longitude: loc.coords.longitude,
+          timestamp: loc.timestamp,
+        })),
+      );
+    }
+  },
+);
 
 const App = () => {
   const navRef = useNavigationContainerRef<AppStackParamsList>();

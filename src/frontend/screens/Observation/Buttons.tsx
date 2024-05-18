@@ -6,10 +6,7 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useDeleteObservation} from '../../hooks/server/observations';
 import {Text} from '../../sharedComponents/Text';
 import Share from 'react-native-share';
-import {
-  useAttachmentsBase64Query,
-  useAttachmentUrlQueries,
-} from '../../hooks/server/media.ts';
+import {useAttachmentUrlQueries} from '../../hooks/server/media.ts';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset.ts';
 import {formatCoords} from '../../lib/utils.ts';
 import {UIActivityIndicator} from 'react-native-indicators';
@@ -81,9 +78,6 @@ export const ButtonFields = ({
     observation.attachments,
     'original',
   );
-  const attachmentBase64Queries = useAttachmentsBase64Query(
-    attachmentUrlQueries.filter(res => !!res.data).map(res => res.data!),
-  );
 
   function handlePressDelete() {
     Alert.alert(t(m.deleteTitle), undefined, [
@@ -102,14 +96,13 @@ export const ButtonFields = ({
   }
 
   async function handlePressShare() {
-    const base64Urls = attachmentBase64Queries
-      .filter(q => !!q.data)
-      .map(q => q.data!);
+    // We can safely assume that the data is there (queries have been resolved) as button is disabled until then
+    const urls = attachmentUrlQueries.map(q => q.data!.url);
     const {lon, lat} = observation;
 
     Share.open({
-      title: base64Urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),
-      urls: base64Urls.map(url => url.base64Uri),
+      title: urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),
+      urls,
       message: t(m.shareMessage, {
         category_name: preset.name,
         date: Date.now(),
@@ -131,10 +124,7 @@ export const ButtonFields = ({
       )}
       <Button
         iconName="share"
-        isLoading={
-          attachmentBase64Queries.filter(q => q.isSuccess).length !==
-          attachmentBase64Queries.length
-        }
+        isLoading={attachmentUrlQueries.some(q => q.isLoading)}
         title={t(m.share)}
         color={RED}
         onPress={handlePressShare}

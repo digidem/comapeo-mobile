@@ -15,10 +15,7 @@ import {ButtonFields} from './Buttons';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
 import {ThumbnailScrollView} from '../../sharedComponents/ThumbnailScrollView.tsx';
-import {
-  useAttachmentsBase64Query,
-  useAttachmentUrlQueries,
-} from '../../hooks/server/media.ts';
+import {useAttachmentUrlQueries} from '../../hooks/server/media.ts';
 
 const m = defineMessages({
   deleteTitle: {
@@ -72,7 +69,6 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
     photoAttachments,
     'thumbnail',
   ).map(query => query.data);
-  const base64Uris = useAttachmentsBase64Query(attachmentUrls);
 
 
   return (
@@ -98,13 +94,13 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
               <Text style={styles.textNotes}>{observation.tags.notes}</Text>
             </View>
           ) : null}
-          {base64Uris.length > 0 && (
+          {attachmentUrls.length > 0 && (
             <ThumbnailScrollView
-              photos={base64Uris.map(({data}) => {
+              photos={attachmentUrls.map(data => {
                 return !data
                   ? undefined
                   : {
-                      thumbnailUri: data.base64Uri,
+                      thumbnailUri: data.url,
                       id: data.driveDiscoveryId,
                     };
               })}

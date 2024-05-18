@@ -76,16 +76,13 @@ or [this](https://github.com/facebook/react-native/pull/43756) is merged.
 
 ## @mapeo/ipc
 
-### [Change imports to avoid calling unavailable code](./@mapeo+ipc+0.3.0.patch)
+### [Change imports to avoid calling unavailable code](./@mapeo+ipc+0.5.0.patch)
 
-There was an error while running app via Expo because of exports in `rpc-reflector` package.
-To remove this patch, `rpc-reflector` would need to be updated not to use `encode-decode.js` file which 
-indirect usage results in errors. 
+There was an error while running app via Expo because of exports in `rpc-reflector` package. To remove this patch, `rpc-reflector` would need to be updated not to use `encode-decode.js` file which indirect usage results in errors.
 
 ## rpc-reflector
 
 ### [Change imports to avoid calling unavailable code](./rpc-reflector+1.3.11.patch)
 
 There was an error while running app via Expo because of `duplex` method call in `rpc-reflector` package.
-As this feature is not used in CoMapeo, this can be safely hardcoded to `false`.
-To remove this patch, `rpc-reflector` would need to be updated to account for this bug.
+As this feature is not used in CoMapeo, this can be safely hardcoded to `false`. To remove this patch, `rpc-reflector` would need to be updated to account for this bug.

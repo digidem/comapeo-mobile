@@ -15,10 +15,7 @@ import {ButtonFields} from './Buttons';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
 import {ThumbnailScrollView} from '../../sharedComponents/ThumbnailScrollView.tsx';
-import {
-  useAttachmentsBase64Query,
-  useAttachmentUrlQueries,
-} from '../../hooks/server/media.ts';
+import {useAttachmentUrlQueries} from '../../hooks/server/media.ts';
 
 const m = defineMessages({
   deleteTitle: {
@@ -49,22 +46,21 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   }, [navigation, observationId]);
 
   const {observation, preset} = useObservationWithPreset(observationId);
-  const fieldsQuery = useFieldsQuery();
+  const {data} = useFieldsQuery();
 
   const defaultAcc: Field[] = [];
-  const fields = !fieldsQuery.data
-    ? undefined
-    : preset.fieldIds.reduce((acc, pres) => {
-        const fieldToAdd = fieldsQuery.data.find(
-          field => field.tagKey === pres,
-        );
+  const fields = data
+    ? preset.fieldIds.reduce((acc, pres) => {
+        const fieldToAdd = data.find(field => field.docId === pres);
         if (!fieldToAdd) return acc;
         return [...acc, fieldToAdd];
-      }, defaultAcc);
+      }, defaultAcc)
+    : [];
 
   const deviceId = '';
   const {lat, lon, createdBy} = observation;
   const isMine = deviceId === createdBy;
+
   // Currently only show photo attachments
   const photoAttachments = observation.attachments.filter(
     attachment => attachment.type === 'photo',
@@ -73,7 +69,6 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
     photoAttachments,
     'thumbnail',
   ).map(query => query.data);
-  const base64Uris = useAttachmentsBase64Query(attachmentUrls);
 
   return (
     <ScrollView
@@ -98,21 +93,23 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
               <Text style={styles.textNotes}>{observation.tags.notes}</Text>
             </View>
           ) : null}
-          {base64Uris.length > 0 && (
+          {attachmentUrls.length > 0 && (
             <ThumbnailScrollView
-              photos={base64Uris.map(({data}) => {
-                return !data
+              photos={attachmentUrls.map(attachmentData => {
+                return !attachmentData
                   ? undefined
                   : {
-                      thumbnailUri: data.base64Uri,
-                      id: data.driveDiscoveryId,
+                      thumbnailUri: attachmentData.url,
+                      id: attachmentData.driveDiscoveryId,
                     };
               })}
             />
           )}
         </View>
-        {fields && fields.length > 0 && <FieldDetails fields={fields} />}
-        <View style={styles.divider}></View>
+        {fields.length > 0 && (
+          <FieldDetails observation={observation} fields={fields} />
+        )}
+        <View style={styles.divider} />
         <ButtonFields isMine={isMine} observationId={observationId} />
       </>
     </ScrollView>
@@ -127,9 +124,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
   },
-  scrollContent: {
-    minHeight: '100%',
-  },
+  scrollContent: {minHeight: '100%'},
   divider: {
     backgroundColor: LIGHT_GREY,
     paddingVertical: 15,

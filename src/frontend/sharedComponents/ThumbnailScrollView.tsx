@@ -69,6 +69,7 @@ export const ThumbnailScrollView = (props: {
 }) => {
   const scrollViewRef = React.useRef<ScrollView>(null);
   const {photos} = props;
+
   React.useLayoutEffect(() => {
     scrollViewRef.current && scrollViewRef.current.scrollToEnd();
   }, [photos.length]);

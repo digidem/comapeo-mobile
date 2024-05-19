@@ -316,7 +316,7 @@ export function isEditingScreen(
     ? undefined
     : !parentRoute.state
       ? parentRoute.name
-      : parentRoute.state.routes[parentRoute.state.index || 0].name;
+      : parentRoute.state.routes[parentRoute.state.index || 0]?.name;
 
   return !!EDITING_SCREEN_NAMES.find(val => val === routeName);
 }

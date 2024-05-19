@@ -950,23 +950,32 @@
   "sharedComponents.GpsPill.searching": {
     "message": "Searching…"
   },
-  "sharedComponents.ProjectInviteBottomSheet.acceptInvite": {
+  "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.canceled": {
+    "message": "Invite Canceled"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.close": {
+    "message": "Close"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.projectInviteCanceled": {
+    "message": "Your invitation to {projName} has been canceled."
+  },
+  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.acceptInvite": {
     "message": "Accept Invite"
   },
-  "sharedComponents.ProjectInviteBottomSheet.declineInvite": {
+  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.declineInvite": {
     "message": "Decline Invite"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.invitedToJoin": {
+    "message": "You've been invited to join {projName}"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.joinProject": {
+    "message": "Join Project {projName}"
   },
   "sharedComponents.ProjectInviteBottomSheet.goToMap": {
     "message": "Go To Map"
   },
   "sharedComponents.ProjectInviteBottomSheet.goToSync": {
     "message": "Go To Sync"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.invitedToJoin": {
-    "message": "You've been invited to join {projName}"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.joinProject": {
-    "message": "Join Project {projName}"
   },
   "sharedComponents.ProjectInviteBottomSheet.success": {
     "message": "Success"

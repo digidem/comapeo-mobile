@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {BottomSheetContent} from '../BottomSheetModal';
 import {defineMessages, useIntl} from 'react-intl';
-import GreenCheck from '../images/GreenCheck.svg';
+import GreenCheck from '../../images/GreenCheck.svg';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {CommonActions} from '@react-navigation/native';
 

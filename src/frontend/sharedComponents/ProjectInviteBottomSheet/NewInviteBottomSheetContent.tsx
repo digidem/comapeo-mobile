@@ -2,7 +2,7 @@ import * as React from 'react';
 import {BottomSheetContent} from '../BottomSheetModal';
 import {View} from 'react-native';
 import {LIGHT_GREY} from '../../lib/styles';
-import InviteIcon from '../images/AddPersonCircle.svg';
+import InviteIcon from '../../images/AddPersonCircle.svg';
 import {defineMessages, useIntl} from 'react-intl';
 
 const m = defineMessages({

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {BottomSheetContent} from '../BottomSheetModal';
 import {defineMessages, useIntl} from 'react-intl';
-import GreenCheck from '../images/GreenCheck.svg';
+import Error from '../../images/Error.svg';
 
 const m = defineMessages({
   close: {
@@ -46,7 +46,7 @@ export const InviteCanceledBottomSheetContent = ({
             })
           : undefined
       }
-      icon={<GreenCheck />}
+      icon={<Error />}
     />
   );
 };

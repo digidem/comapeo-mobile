@@ -42,7 +42,7 @@
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
     "@rnmapbox/maps": "^10.1.19",
-    "@sentry/react-native": "~5.20.0",
+    "@sentry/react-native": "^5.22.2",
     "@tanstack/react-query": "^5.12.2",
     "@types/luxon": "^3.4.2",
     "assert": "^2.0.0",

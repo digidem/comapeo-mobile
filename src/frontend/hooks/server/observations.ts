@@ -66,8 +66,8 @@ export function useEditObservation() {
     }) => {
       return project.observation.update(versionId, value);
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY]});
+    onSuccess: data => {
+      queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY, data.docId]});
     },
   });
 }

@@ -86,7 +86,8 @@ export const ThumbnailScrollView = () => {
     <ScrollView
       ref={scrollViewRef}
       horizontal
-      showsHorizontalScrollIndicator={true}
+      scrollEnabled={size * photos.length > windowWidth}
+      showsHorizontalScrollIndicator={false}
       contentInset={{top: 5, right: 5, bottom: 5, left: 5}}
       style={styles.photosContainer}>
       {photos
@@ -106,10 +107,10 @@ export const ThumbnailScrollView = () => {
 
 const styles = StyleSheet.create({
   photosContainer: {
-    flex: 1,
+    margin: 10,
   },
   thumbnail: {
-    margin: 5,
+    marginHorizontal: 5,
   },
   thumbnailContainer: {
     borderRadius: 5,

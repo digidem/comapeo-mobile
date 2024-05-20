@@ -3,7 +3,7 @@ import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
-import {View, ScrollView, StyleSheet, TextInput} from 'react-native';
+import {View, ScrollView, StyleSheet} from 'react-native';
 import {DescriptionField} from './DescriptionField';
 import {ThumbnailScrollView} from '../../sharedComponents/ThumbnailScrollView';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
@@ -96,13 +96,11 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
 
   return (
     <View style={styles.container}>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.scrollViewContent}>
+      <ScrollView style={{flex: 1}}>
         <PresetInformation isNew={isNew} />
         <DescriptionField />
-        <ThumbnailScrollView />
       </ScrollView>
+      <ThumbnailScrollView />
       <ActionTab items={bottomSheetItems} />
       <ErrorBottomSheet error={error} clearError={() => setError(null)} />
     </View>
@@ -114,13 +112,9 @@ ObservationEdit.editTitle = m.editTitle;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: WHITE,
     flexDirection: 'column',
-    alignContent: 'stretch',
+    flex: 1,
   },
-  scrollViewContent: {
-    flexDirection: 'column',
-    alignContent: 'stretch',
-  },
+  bottomContainer: {},
 });

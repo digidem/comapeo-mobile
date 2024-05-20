@@ -14,8 +14,7 @@ import {BLACK} from '../../../../lib/styles';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
 import {IconButton} from '../../../../sharedComponents/IconButton';
 import SaveIcon from '../../../../images/CheckMark.svg';
-import {useBottomSheetModal} from '../../../../sharedComponents/BottomSheetModal';
-import {ErrorModal} from '../../../../sharedComponents/ErrorModal';
+import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
 import {FieldRow} from './FieldRow';
 
 const m = defineMessages({
@@ -72,16 +71,12 @@ export const EditScreen = ({
     deviceName: string;
   }>({defaultValues: {deviceName}});
 
-  const {isPending, mutate} = useEditDeviceInfo();
+  const {isPending, mutate, error, reset} = useEditDeviceInfo();
 
   const {isDirty: nameHasChanges} = control.getFieldState(
     'deviceName',
     formState,
   );
-
-  const {openSheet, sheetRef, closeSheet, isOpen} = useBottomSheetModal({
-    openOnMount: false,
-  });
 
   React.useEffect(
     function showDiscardChangesAlert() {
@@ -112,37 +107,34 @@ export const EditScreen = ({
     [t, navigation, getValues, nameHasChanges],
   );
 
+  const onPress = React.useCallback(() => {
+    if (isPending) return;
+
+    handleSubmit(async value => {
+      if (!nameHasChanges) {
+        navigation.navigate('DeviceNameDisplay');
+        return;
+      }
+
+      mutate(value.deviceName, {
+        onSuccess: () => navigation.navigate('DeviceNameDisplay'),
+      });
+    });
+  }, [handleSubmit, isPending, mutate, nameHasChanges, navigation]);
+
   React.useEffect(
     function updateNavigationOptions() {
       navigation.setOptions({
         headerRight: () => {
           return (
-            <IconButton
-              onPress={
-                isPending
-                  ? () => {}
-                  : handleSubmit(async value => {
-                      if (!nameHasChanges) {
-                        navigation.navigate('DeviceNameDisplay');
-                        return;
-                      }
-
-                      mutate(value.deviceName, {
-                        onSuccess: () =>
-                          navigation.navigate('DeviceNameDisplay'),
-                        onError: () => {
-                          openSheet();
-                        },
-                      });
-                    })
-              }>
+            <IconButton onPress={onPress}>
               {isPending ? <UIActivityIndicator size={30} /> : <SaveIcon />}
             </IconButton>
           );
         },
       });
     },
-    [handleSubmit, navigation, isPending, mutate, nameHasChanges, openSheet],
+    [handleSubmit, navigation, isPending, mutate, nameHasChanges, onPress],
   );
 
   return (
@@ -163,7 +155,7 @@ export const EditScreen = ({
           />
         </FieldRow>
       </ScrollView>
-      <ErrorModal sheetRef={sheetRef} closeSheet={closeSheet} isOpen={isOpen} />
+      <ErrorBottomSheet error={error} clearError={reset} tryAgain={onPress} />
     </>
   );
 };

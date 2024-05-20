@@ -3,7 +3,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {View, Text, StyleSheet} from 'react-native';
 import {BLACK, LIGHT_BLUE} from '../../lib/styles';
 import {TextButton} from '../../sharedComponents/TextButton';
-import {CategoryCircleIcon} from '../../sharedComponents/icons/CategoryIcon';
+import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 
@@ -32,7 +32,7 @@ export const PresetView = () => {
   return (
     <View style={styles.categoryContainer}>
       <View style={styles.categoryIcon}>
-        <CategoryCircleIcon />
+        <PresetCircleIcon name={preset?.name} />
       </View>
       <Text style={styles.categoryName}>{name}</Text>
       <TextButton

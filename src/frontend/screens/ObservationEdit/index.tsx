@@ -28,7 +28,7 @@ const m = defineMessages({
     description: 'screen title for new observation screen',
   },
   audioButton: {
-    id: 'screens.ObservationEdit.ObservationEditView.photoButton',
+    id: 'screens.ObservationEdit.ObservationEditView.audioButton',
     defaultMessage: 'Audio',
     description: 'Button label for adding audio',
   },

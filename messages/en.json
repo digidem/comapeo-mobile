@@ -499,6 +499,10 @@
     "description": "Label above keyboard that expands into bottom sheet of options to add (photo, details etc)",
     "message": "Add…"
   },
+  "screens.ObservationEdit.ObservationEditView.audioButton": {
+    "description": "Button label for adding audio",
+    "message": "Audio"
+  },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "What is happening here?"

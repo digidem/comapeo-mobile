@@ -10,6 +10,7 @@ import {useAttachmentUrlQueries} from '../../hooks/server/media.ts';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset.ts';
 import {formatCoords} from '../../lib/utils.ts';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {convertUrlToBase64} from '../../utils/base64.ts';
 
 const m = defineMessages({
   delete: {
@@ -100,9 +101,13 @@ export const ButtonFields = ({
     const urls = attachmentUrlQueries.map(q => q.data!.url);
     const {lon, lat} = observation;
 
+    const base64Urls = await Promise.all(
+      urls.map(async url => await convertUrlToBase64(url)),
+    );
+
     Share.open({
-      title: urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),
-      urls,
+      title: base64Urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),
+      urls: base64Urls,
       message: t(m.shareMessage, {
         category_name: preset.name,
         date: Date.now(),

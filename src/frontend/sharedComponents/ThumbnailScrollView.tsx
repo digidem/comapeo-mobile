@@ -68,7 +68,7 @@ export const ThumbnailScrollView = (props: {
   const {photos} = props;
   React.useLayoutEffect(() => {
     scrollViewRef.current && scrollViewRef.current.scrollToEnd();
-  }, [photos.length]);
+  }, [photos?.length]);
 
   function handlePhotoPress(photoIndex: number) {
     // navigation.navigate('PhotosModal', {
@@ -79,7 +79,7 @@ export const ThumbnailScrollView = (props: {
     return;
   }
 
-  if (photos.length === 0) return null;
+  if (photos?.length === 0) return null;
   const windowWidth = Dimensions.get('window').width;
   // Get a thumbnail size so there is always 1/2 of a thumbnail off the right of
   // the screen.
@@ -94,8 +94,8 @@ export const ThumbnailScrollView = (props: {
       contentInset={{top: 5, right: 5, bottom: 5, left: 5}}
       style={styles.photosContainer}>
       {photos
-        .filter(photo => photo?.deleted == null)
-        .map((photo, index) => (
+        ?.filter(photo => photo?.deleted == null)
+        ?.map((photo, index) => (
           <Thumbnail
             key={index}
             photo={photo}

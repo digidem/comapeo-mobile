@@ -48,13 +48,9 @@ export const DescriptionField = () => {
         onChangeText={newVal => {
           updateTags('notes', newVal);
         }}
+        multiline
         placeholder={keyboardVisible ? '' : t(m.descriptionPlaceholder)}
         placeholderTextColor={BLUE_GREY}
-        underlineColorAndroid="transparent"
-        multiline
-        contextMenuHidden
-        scrollEnabled={false}
-        textContentType="none"
         testID="observationDescriptionField"
       />
     </View>
@@ -72,7 +68,7 @@ const styles = StyleSheet.create({
     top: -15,
     left: 35,
     padding: 5,
-    zIndex: 50,
+    zIndex: 5,
   },
   labelText: {
     fontSize: 14,
@@ -81,16 +77,14 @@ const styles = StyleSheet.create({
   },
 
   textInput: {
+    minHeight: 56,
     flex: 1,
     borderWidth: 1,
     borderColor: BLUE_GREY,
     marginHorizontal: 20,
+    padding: 10,
     borderRadius: 4,
     fontSize: 20,
-    padding: 16,
     color: BLACK,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    textAlignVertical: 'top',
   },
 });

@@ -1,8 +1,8 @@
 import React from 'react';
-import {Keyboard, StyleSheet, View} from 'react-native';
+import {Keyboard} from 'react-native';
 import {Divider} from '../Divider';
-import {ItemButton} from './ItemButton';
 import {KeyboardAccessory} from './KeyboardAccessory';
+import {Actions} from './Actions';
 
 export interface ActionTabItems {
   icon: React.ReactNode;
@@ -10,11 +10,11 @@ export interface ActionTabItems {
   onPress: () => void;
 }
 
-interface ActionTab {
+export interface ActionProps {
   items: ActionTabItems[];
 }
 
-export default function ActionTab({items}: ActionTab) {
+export default function ActionTab({items}: ActionProps) {
   const [keyboardVisible, setKeyboardVisible] = React.useState(false);
 
   React.useEffect(() => {
@@ -36,25 +36,10 @@ export default function ActionTab({items}: ActionTab) {
     <>
       <Divider />
       {!keyboardVisible ? (
-        <View style={[styles.container, styles.containerPadding]}>
-          {items.map(item => (
-            <ItemButton key={item.label} {...item} />
-          ))}
-        </View>
+        <Actions items={items} />
       ) : (
         <KeyboardAccessory items={items} onPress={() => Keyboard.dismiss()} />
       )}
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    flexDirection: 'row',
-  },
-  containerPadding: {
-    paddingHorizontal: 20,
-    paddingVertical: 18,
-  },
-});

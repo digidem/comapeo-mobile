@@ -35,7 +35,7 @@ export type RootStackParamsList = {
   Settings: undefined;
   ProjectConfig: undefined;
   AboutMapeo: undefined;
-  LanguageSettings: undefined;
+  Languages: undefined;
   CoordinateFormat: undefined;
   Experiments: undefined;
   PhotosModal: {

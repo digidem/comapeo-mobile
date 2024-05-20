@@ -1,3 +1,4 @@
+import React from 'react';
 import {ScrollView} from 'react-native';
 import {
   List,
@@ -37,11 +38,15 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
   return (
     <ScrollView>
       <List>
-        <ListItem onPress={() => {}}>
+        <ListItem
+          onPress={() => {
+            navigation.navigate('Languages');
+          }}>
           <ListItemIcon iconName="language" />
           <ListItemText
             primary={<FormattedMessage {...m.language} />}
-            secondary={<FormattedMessage {...m.languageDesc} />}></ListItemText>
+            secondary={<FormattedMessage {...m.languageDesc} />}
+          />
         </ListItem>
         <ListItem
           onPress={() => navigation.navigate('CoordinateFormat')}
@@ -49,9 +54,8 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
           <ListItemIcon iconName="explore" />
           <ListItemText
             primary={<FormattedMessage {...m.coordinateSystem} />}
-            secondary={
-              <FormattedMessage {...m.coordinateSystemDesc} />
-            }></ListItemText>
+            secondary={<FormattedMessage {...m.coordinateSystemDesc} />}
+          />
         </ListItem>
       </List>
     </ScrollView>

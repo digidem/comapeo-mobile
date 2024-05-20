@@ -61,10 +61,10 @@ const log = debug('SaveButton');
 
 export const SaveButton = ({
   observationId,
-  openErrorModal,
+  setError,
 }: {
   observationId?: string;
-  openErrorModal?: () => void;
+  setError: React.Dispatch<React.SetStateAction<Error | null>>;
 }) => {
   const value = usePersistedDraftObservation(store => store.value);
   const photos = usePersistedDraftObservation(store => store.photos);
@@ -91,9 +91,7 @@ export const SaveButton = ({
       createObservationMutation.mutate(
         {value},
         {
-          onError: () => {
-            if (openErrorModal) openErrorModal();
-          },
+          onError: setError,
           onSuccess: () => {
             clearDraft();
             navigation.navigate('Home', {screen: 'Map'});
@@ -132,9 +130,7 @@ export const SaveButton = ({
             },
           },
           {
-            onError: () => {
-              if (openErrorModal) openErrorModal();
-            },
+            onError: setError,
             onSuccess: data => {
               clearDraft();
               navigation.navigate('Home', {screen: 'Map'});
@@ -154,9 +150,7 @@ export const SaveButton = ({
           },
         );
       })
-      .catch(() => {
-        if (openErrorModal) openErrorModal();
-      });
+      .catch(setError);
   }
 
   function editObservation() {
@@ -168,6 +162,7 @@ export const SaveButton = ({
       // @ts-expect-error
       {id: observationId, value},
       {
+        onError: setError,
         onSuccess: () => {
           clearDraft();
           navigation.pop();

@@ -6,8 +6,7 @@ import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersis
 import {View, ScrollView, StyleSheet} from 'react-native';
 import {DescriptionField} from './DescriptionField';
 import {ThumbnailScrollView} from '../../sharedComponents/ThumbnailScrollView';
-import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
-import {ErrorModal} from '../../sharedComponents/ErrorModal';
+import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {SaveButton} from './SaveButton';
 import {PresetInformation} from './PresetInformation';
 import {WHITE} from '../../lib/styles';
@@ -48,6 +47,7 @@ const m = defineMessages({
 export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
   editTitle: MessageDescriptor;
 } = ({navigation}) => {
+  const [error, setError] = React.useState<Error | null>(null);
   const observationId = usePersistedDraftObservation(
     store => store.observationId,
   );
@@ -55,17 +55,14 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
   const preset = usePreset();
   const isNew = !observationId;
   const {formatMessage: t} = useIntl();
-  const {openSheet, sheetRef, isOpen, closeSheet} = useBottomSheetModal({
-    openOnMount: false,
-  });
 
   React.useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <SaveButton observationId={observationId} openErrorModal={openSheet} />
+        <SaveButton observationId={observationId} setError={setError} />
       ),
     });
-  }, [navigation, openSheet, observationId]);
+  }, [navigation, observationId]);
 
   const handleCameraPress = useCallback(() => {
     navigation.navigate('AddPhoto');
@@ -107,7 +104,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
         <ThumbnailScrollView />
       </ScrollView>
       <ActionTab items={bottomSheetItems} />
-      <ErrorModal sheetRef={sheetRef} closeSheet={closeSheet} isOpen={isOpen} />
+      <ErrorBottomSheet error={error} clearError={() => setError(null)} />
     </View>
   );
 };

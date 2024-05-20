@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {GestureResponderEvent, StyleSheet, View, ViewStyle} from 'react-native';
 
-import {BLACK, VERY_LIGHT_BLUE} from '../lib/styles';
+import {BLACK, COMAPEO_BLUE, VERY_LIGHT_BLUE} from '../lib/styles';
 import {Text} from './Text';
 import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 
 import {ViewStyleProp} from '../sharedTypes';
 
-type ColorScheme = 'dark' | 'light';
+type ColorScheme = 'dark' | 'light' | 'ComapeoBlue';
 type Variant = 'contained' | 'outlined' | 'text';
 type Size = 'medium' | 'large';
 
@@ -161,6 +161,9 @@ const styles = StyleSheet.create({
   },
   textOutlinedDark: {
     color: BLACK,
+  },
+  textOutlinedComapeoBlue: {
+    color: COMAPEO_BLUE,
   },
   textOutlinedLightDisabled: {
     color: '#666666',

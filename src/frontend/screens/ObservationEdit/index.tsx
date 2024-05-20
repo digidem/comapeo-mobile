@@ -3,7 +3,7 @@ import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
-import {View, ScrollView, StyleSheet, TextInput} from 'react-native';
+import {View, ScrollView, StyleSheet} from 'react-native';
 import {DescriptionField} from './DescriptionField';
 import {ThumbnailScrollView} from '../../sharedComponents/ThumbnailScrollView';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';

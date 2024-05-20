@@ -14,8 +14,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
 import {useCreateProject} from '../../../../hooks/server/projects';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {ErrorModal} from '../../../../sharedComponents/ErrorModal';
-import {useBottomSheetModal} from '../../../../sharedComponents/BottomSheetModal';
+import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
 
 const m = defineMessages({
   title: {
@@ -49,24 +48,16 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
 }) => {
   const {formatMessage: t} = useIntl();
   const [advancedSettingOpen, setAdvancedSettingOpen] = React.useState(false);
-  const {mutate, isPending, reset} = useCreateProject();
-  const {openSheet, isOpen, closeSheet, sheetRef} = useBottomSheetModal({
-    openOnMount: false,
-  });
+  const {mutate, isPending, reset, error} = useCreateProject();
 
-  const {
-    control,
-    handleSubmit,
-    formState: {errors},
-  } = useForm<ProjectFormType>({defaultValues: {projectName: ''}});
+  const {control, handleSubmit} = useForm<ProjectFormType>({
+    defaultValues: {projectName: ''},
+  });
 
   function handleCreateProject(val: ProjectFormType) {
     mutate(val.projectName, {
       onSuccess: () =>
         navigation.navigate('ProjectCreated', {name: val.projectName}),
-      onError: () => {
-        openSheet();
-      },
     });
   }
 
@@ -121,11 +112,10 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
-      <ErrorModal
-        isOpen={isOpen}
-        closeSheet={closeSheet}
-        sheetRef={sheetRef}
+      <ErrorBottomSheet
+        error={error}
         clearError={reset}
+        tryAgain={handleSubmit(handleCreateProject)}
       />
     </React.Fragment>
   );

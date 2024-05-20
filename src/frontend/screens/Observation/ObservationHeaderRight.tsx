@@ -25,7 +25,7 @@ export const ObservationHeaderRight = ({
   }
 
   const isMine = observationWithPreset.observation.createdBy === deviceId;
-  return isMine ? (
+  return true ? (
     <IconButton onPress={handlePress} testID="editButton">
       <EditIcon />
     </IconButton>

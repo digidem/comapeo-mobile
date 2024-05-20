@@ -54,6 +54,7 @@ import {
 import {HomeTabs} from '../Tab';
 import {SaveTrackScreen} from '../../screens/SaveTrack/SaveTrackScreen';
 import {ObservationFields} from '../../screens/ObservationFields';
+import {LIGHT_GREY} from '../../lib/styles';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -83,6 +84,11 @@ export const createDefaultScreenGroup = (
       options={props => {
         const observationId = props.route.params?.observationId;
         return {
+          headerShadowVisible: false,
+          contentStyle: {
+            borderTopColor: LIGHT_GREY,
+            borderTopWidth: 1,
+          },
           headerLeft: headerProp => (
             <CustomHeaderLeftClose
               headerBackButtonProps={headerProp}

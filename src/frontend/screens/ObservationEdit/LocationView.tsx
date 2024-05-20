@@ -1,8 +1,8 @@
 import React from 'react';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import {View, Text, StyleSheet} from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {BLACK, LIGHT_GREY} from '../../lib/styles';
+import Location from '../../images/Location.svg';
+import {BLACK} from '../../lib/styles';
 
 import {useMostAccurateLocationForObservation} from './useMostAccurateLocationForObservation';
 import {FormattedCoords} from '../../sharedComponents/FormattedData';
@@ -38,18 +38,13 @@ export const LocationView = () => {
 
   return (
     <View style={styles.locationContainer}>
-      {coordinateInfo.lat === undefined || coordinateInfo.lon === undefined ? (
+      {!coordinateInfo.lat || !coordinateInfo.lon ? (
         <Text>
           <FormattedMessage {...m.searching} />
         </Text>
       ) : (
         <React.Fragment>
-          <MaterialIcons
-            size={14}
-            name="location-on"
-            color="orange"
-            style={{marginRight: 5}}
-          />
+          <Location style={{marginRight: 10}} />
           <Text style={styles.locationText}>
             <FormattedCoords
               format={coordinateFormat}
@@ -82,20 +77,18 @@ function coordinateFormatSelector(
 
 const styles = StyleSheet.create({
   locationContainer: {
-    flex: 0,
-    backgroundColor: LIGHT_GREY,
-    minHeight: 48,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 5,
-    paddingBottom: 5,
+    justifyContent: 'flex-start',
+    paddingLeft: 10,
+    paddingVertical: 13,
   },
   locationText: {
     color: BLACK,
-    fontWeight: 'bold',
+    fontSize: 12,
   },
   accuracy: {
-    fontWeight: 'bold',
+    color: BLACK,
+    fontSize: 12,
   },
 });

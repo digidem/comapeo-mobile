@@ -1,18 +1,20 @@
-import * as React from 'react';
+import React, {useCallback} from 'react';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {View, ScrollView, StyleSheet} from 'react-native';
-import {LocationView} from './LocationView';
 import {DescriptionField} from './DescriptionField';
-import {BottomSheet} from '../../sharedComponents/BottomSheet/BottomSheet';
 import {ThumbnailScrollView} from '../../sharedComponents/ThumbnailScrollView';
-import {PresetView} from './PresetView';
 import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
 import {ErrorModal} from '../../sharedComponents/ErrorModal';
 import {SaveButton} from './SaveButton';
-import {DetailsIcon} from '../../sharedComponents/icons';
+import {PresetInformation} from './PresetInformation';
+import {WHITE} from '../../lib/styles';
+import Photo from '../../images/Photo.svg';
+import Audio from '../../images/Audio.svg';
+import Details from '../../images/DetailsGroup.svg';
+import ActionTab from '../../sharedComponents/ActionTab/ActionTab';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 
 const m = defineMessages({
@@ -28,12 +30,17 @@ const m = defineMessages({
   },
   photoButton: {
     id: 'screens.ObservationEdit.ObservationEditView.photoButton',
-    defaultMessage: 'Add Photo',
+    defaultMessage: 'Photo',
+    description: 'Button label for adding photo',
+  },
+  audioButton: {
+    id: 'screens.ObservationEdit.ObservationEditView.photoButton',
+    defaultMessage: 'Audio',
     description: 'Button label for adding photo',
   },
   detailsButton: {
     id: 'screens.ObservationEdit.ObservationEditView.detailsButton',
-    defaultMessage: 'Add Details',
+    defaultMessage: 'Details',
     description: 'Button label to add details',
   },
 });
@@ -60,25 +67,31 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
     });
   }, [navigation, openSheet, observationId]);
 
-  const handleCameraPress = React.useCallback(() => {
+  const handleCameraPress = useCallback(() => {
     navigation.navigate('AddPhoto');
   }, [navigation]);
 
-  const handleDetailsPress = React.useCallback(() => {
+  const handleDetailsPress = useCallback(() => {
     navigation.navigate('ObservationFields', {question: 1});
   }, [navigation]);
 
   const bottomSheetItems = [
     {
-      icon: <></>,
+      icon: <Audio />,
+      label: t(m.audioButton),
+      onPress: () => {},
+    },
+    {
+      icon: <Photo />,
       label: t(m.photoButton),
       onPress: handleCameraPress,
     },
   ];
+
   if (preset?.fieldIds.length) {
     // Only show the option to add details if preset fields are defined.
     bottomSheetItems.push({
-      icon: <DetailsIcon />,
+      icon: <Details />,
       label: t(m.detailsButton),
       onPress: handleDetailsPress,
     });
@@ -89,12 +102,11 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.scrollViewContent}>
-        {isNew && <LocationView />}
-        <PresetView />
+        <PresetInformation isNew={isNew} />
         <DescriptionField />
         <ThumbnailScrollView />
       </ScrollView>
-      <BottomSheet items={bottomSheetItems} />
+      <ActionTab items={bottomSheetItems} />
       <ErrorModal sheetRef={sheetRef} closeSheet={closeSheet} isOpen={isOpen} />
     </View>
   );
@@ -106,6 +118,7 @@ ObservationEdit.editTitle = m.editTitle;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: WHITE,
     flexDirection: 'column',
     alignContent: 'stretch',
   },

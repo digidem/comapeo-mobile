@@ -69,9 +69,6 @@ export function useEditObservation() {
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY]});
     },
-    onError: error => {
-      console.log(error);
-    },
   });
 }
 

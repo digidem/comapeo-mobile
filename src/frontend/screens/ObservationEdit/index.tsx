@@ -10,9 +10,9 @@ import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {SaveButton} from './SaveButton';
 import {PresetInformation} from './PresetInformation';
 import {WHITE} from '../../lib/styles';
-import Photo from '../../images/Photo.svg';
-import Audio from '../../images/Audio.svg';
-import Details from '../../images/DetailsGroup.svg';
+import Photo from '../../images/redesign/Photo.svg';
+import Audio from '../../images/redesign/Audio.svg';
+import Details from '../../images/redesign/Details.svg';
 import ActionTab from '../../sharedComponents/ActionTab/ActionTab';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 
@@ -27,14 +27,14 @@ const m = defineMessages({
     defaultMessage: 'New Observation',
     description: 'screen title for new observation screen',
   },
-  photoButton: {
-    id: 'screens.ObservationEdit.ObservationEditView.photoButton',
-    defaultMessage: 'Photo',
-    description: 'Button label for adding photo',
-  },
   audioButton: {
     id: 'screens.ObservationEdit.ObservationEditView.photoButton',
     defaultMessage: 'Audio',
+    description: 'Button label for adding audio',
+  },
+  photoButton: {
+    id: 'screens.ObservationEdit.ObservationEditView.photoButton',
+    defaultMessage: 'Photo',
     description: 'Button label for adding photo',
   },
   detailsButton: {
@@ -74,12 +74,12 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
 
   const bottomSheetItems = [
     {
-      icon: <Audio />,
+      icon: <Audio width={30} height={30} />,
       label: t(m.audioButton),
       onPress: () => {},
     },
     {
-      icon: <Photo />,
+      icon: <Photo width={30} height={30} />,
       label: t(m.photoButton),
       onPress: handleCameraPress,
     },
@@ -88,7 +88,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
   if (preset?.fieldIds.length) {
     // Only show the option to add details if preset fields are defined.
     bottomSheetItems.push({
-      icon: <Details />,
+      icon: <Details width={30} height={30} />,
       label: t(m.detailsButton),
       onPress: handleDetailsPress,
     });

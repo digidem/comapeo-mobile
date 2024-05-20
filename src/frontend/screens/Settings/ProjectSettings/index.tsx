@@ -1,7 +1,7 @@
 import {ScrollView} from 'react-native';
 import {List, ListItem, ListItemText} from '../../../sharedComponents/List';
 import {FormattedMessage, defineMessages} from 'react-intl';
-import {NativeNavigationComponent} from '../../../sharedTypes';
+import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
 
 const m = defineMessages({
   title: {
@@ -22,19 +22,25 @@ const m = defineMessages({
   },
 });
 
-export const ProjectSettings: NativeNavigationComponent<
-  'ProjectSettings'
-> = () => {
+export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
+  navigation,
+}) => {
   return (
     <ScrollView>
       <List>
-        <ListItem onPress={() => {}}>
+        <ListItem
+          onPress={() => {
+            navigation.navigate('DeviceNameDisplay');
+          }}>
           <ListItemText primary={<FormattedMessage {...m.deviceName} />} />
         </ListItem>
         <ListItem onPress={() => {}}>
           <ListItemText primary={<FormattedMessage {...m.configuration} />} />
         </ListItem>
-        <ListItem onPress={() => {}}>
+        <ListItem
+          onPress={() => {
+            navigation.navigate('YourTeam');
+          }}>
           <ListItemText primary={<FormattedMessage {...m.yourTeam} />} />
         </ListItem>
       </List>

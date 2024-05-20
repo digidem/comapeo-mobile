@@ -3,9 +3,11 @@ import {FormattedMessage, defineMessages} from 'react-intl';
 import {View, Text, StyleSheet} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {BLACK, LIGHT_GREY} from '../../lib/styles';
-import {convertToUTM} from '../../lib/utils';
 
+import {useMostAccurateLocationForObservation} from './useMostAccurateLocationForObservation';
+import {FormattedCoords} from '../../sharedComponents/FormattedData';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
+import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings';
 
 const m = defineMessages({
   searching: {
@@ -16,16 +18,27 @@ const m = defineMessages({
 });
 
 export const LocationView = () => {
-  const value = usePersistedDraftObservation(store => store.value);
-  const lat = value && value.lat ? value.lat : undefined;
-  const lon = value && value.lon ? value.lon : undefined;
-  const accuracy =
-    value && value.metadata.position && value.metadata.position.coords
-      ? value.metadata.position?.coords.accuracy
-      : undefined;
+  const liveLocation = useMostAccurateLocationForObservation();
+  const observationValue = usePersistedDraftObservation(
+    observationValueSelector,
+  );
+  const coordinateFormat = usePersistedSettings(coordinateFormatSelector);
+
+  const coordinateInfo = observationValue?.metadata.manualLocation
+    ? {
+        lat: observationValue.lat,
+        lon: observationValue.lon,
+        accuracy: liveLocation?.coords?.accuracy,
+      }
+    : {
+        lat: liveLocation?.coords?.latitude,
+        lon: liveLocation?.coords?.longitude,
+        accuracy: liveLocation?.coords?.accuracy,
+      };
+
   return (
     <View style={styles.locationContainer}>
-      {!lat || !lon ? (
+      {coordinateInfo.lat === undefined || coordinateInfo.lon === undefined ? (
         <Text>
           <FormattedMessage {...m.searching} />
         </Text>
@@ -38,14 +51,15 @@ export const LocationView = () => {
             style={{marginRight: 5}}
           />
           <Text style={styles.locationText}>
-            {
-              // This needs to be changed to a formatted coord eventually
-              convertToUTM({lat, lon})
-            }
+            <FormattedCoords
+              format={coordinateFormat}
+              lat={coordinateInfo.lat}
+              lon={coordinateInfo.lon}
+            />
           </Text>
-          {!accuracy ? null : (
+          {coordinateInfo.accuracy === undefined ? null : (
             <Text style={styles.accuracy}>
-              {' ±' + accuracy.toFixed(2) + 'm'}
+              {' ±' + coordinateInfo.accuracy.toFixed(2) + 'm'}
             </Text>
           )}
         </React.Fragment>
@@ -53,6 +67,18 @@ export const LocationView = () => {
     </View>
   );
 };
+
+function observationValueSelector(
+  state: Parameters<Parameters<typeof usePersistedDraftObservation>[0]>[0],
+) {
+  return state.value;
+}
+
+function coordinateFormatSelector(
+  state: Parameters<Parameters<typeof usePersistedSettings>[0]>[0],
+) {
+  return state.coordinateFormat;
+}
 
 const styles = StyleSheet.create({
   locationContainer: {

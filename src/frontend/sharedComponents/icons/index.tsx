@@ -5,7 +5,7 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import {Image} from 'react-native';
 
 import {Circle} from './Circle';
-import {RED, DARK_GREY, MANGO, MEDIUM_GREY} from '../../lib/styles';
+import {RED, DARK_GREY, MANGO, MEDIUM_GREY, WHITE} from '../../lib/styles';
 import type {TextStyleProp, ImageStyleProp} from '../../sharedTypes';
 
 type FontIconProps = {
@@ -21,7 +21,6 @@ type ImageIconProps = {
 
 export {GpsIcon} from './GpsIcon';
 // export { CategoryIcon, CategoryCircleIcon } from "./CategoryIcon";
-export {SaveIcon} from './SaveIcon';
 export {SyncIconCircle} from './SyncIconCircle';
 
 export const AlertIcon = ({size = 30, color = RED, style}: FontIconProps) => (
@@ -136,15 +135,11 @@ export const WifiIcon = ({
 }: FontIconProps) => (
   <MaterialIcon color={color} style={style} name="wifi" size={size} />
 );
-export const SyncIcon = ({
-  size = 30,
-  color = 'white',
-  style,
-}: FontIconProps) => (
+export const SyncIcon = ({size = 20, color = WHITE}: FontIconProps) => (
   <FontAwesomeIcon
-    color="white"
+    color={color}
     name="bolt"
-    size={20}
+    size={size}
     style={{transform: [{rotate: '15deg'}]}}
   />
 );
@@ -197,4 +192,8 @@ export const LocationFollowingIcon = ({
   <Circle radius={25}>
     <MaterialIcon color={color} name="my-location" size={size} />
   </Circle>
+);
+
+export const StopIcon = ({color = WHITE, size = 30}: FontIconProps) => (
+  <FontAwesomeIcon color={color} name="stop" size={size} />
 );

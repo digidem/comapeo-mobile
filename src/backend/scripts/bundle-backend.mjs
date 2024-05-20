@@ -1,40 +1,62 @@
 #!/usr/bin/env node
+import { parseArgs } from 'util'
+import * as path from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { rollup } from 'rollup'
+import alias from '@rollup/plugin-alias'
+import commonjs from '@rollup/plugin-commonjs'
+import json from '@rollup/plugin-json'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
+import esmShim from '@rollup/plugin-esm-shim'
+import { minify } from 'rollup-plugin-esbuild'
+import nativePaths from './rollup-plugin-native-paths.mjs'
 
-// @ts-check
-import {rollup} from 'rollup';
-import alias from '@rollup/plugin-alias';
-import commonjs from '@rollup/plugin-commonjs';
-import json from '@rollup/plugin-json';
-import {nodeResolve} from '@rollup/plugin-node-resolve';
-import typescript from '@rollup/plugin-typescript';
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
-const [entry, outfile] = process.argv.slice(2);
+const { values } = parseArgs({
+  options: {
+    entry: { type: 'string' },
+    output: { type: 'string' },
+    minify: { type: 'boolean' },
+  },
+})
 
-/** @type {import('rollup').RollupOptions} */
-const inputOptions = {
-  external: ['rn-bridge'],
-  input: entry,
-  plugins: [
-    commonjs(),
-    nodeResolve({
-      preferBuiltins: true,
-    }),
-    json(),
-    alias(),
-    typescript(),
-  ],
-};
+const { entry, output, minify: shouldMinify } = values
 
-/** @type {import('rollup').OutputOptions} */
-const outputOptions = {
-  file: outfile,
-  format: 'cjs',
-};
+/** @type {import('rollup').RollupOptions['plugins']} */
+const plugins = [
+  alias({
+    entries: [
+      // @mapeo/core (indirectly) depends on @node-rs/crc32, which can't be rolled up.
+      // Replace it with a pure JavaScript implementation.
+      {
+        find: '@node-rs/crc32',
+        replacement: path.join(__dirname, '..', 'src', 'node-rs-crc32-shim.js'),
+      },
+    ],
+  }),
+  nativePaths(),
+  commonjs({
+    ignoreDynamicRequires: true,
+  }),
+  esmShim(),
+  nodeResolve({ preferBuiltins: true }),
+  json(),
+]
 
-async function build() {
-  const bundle = await rollup(inputOptions);
-  await bundle.write(outputOptions);
-  await bundle.close();
+if (shouldMinify) {
+  plugins.push(minify())
 }
 
-build();
+async function build() {
+  const bundle = await rollup({
+    external: ['rn-bridge'],
+    input: entry,
+    plugins,
+  })
+  await bundle.write({ file: output, format: 'esm' })
+  await bundle.close()
+}
+
+build()

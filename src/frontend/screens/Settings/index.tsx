@@ -8,7 +8,7 @@ import {
   ListItemText,
   ListItemIcon,
 } from '../../sharedComponents/List';
-import {NativeNavigationComponent} from '../../sharedTypes';
+import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const m = defineMessages({
@@ -61,7 +61,10 @@ export const Settings: NativeNavigationComponent<'Settings'> = () => {
   return (
     <ScrollView>
       <List>
-        <ListItem onPress={() => {}}>
+        <ListItem
+          onPress={() => {
+            navigate('CreateOrJoinProject');
+          }}>
           <ListItemIcon
             icon={
               <MaterialCommunityIcons

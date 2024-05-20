@@ -1,34 +1,15 @@
 # Environment variables and secrets
 .env
 
-# OSX
-#
+# macOS
 .DS_Store
-
-# Xcode
-#
-build/
-*.pbxuser
-!default.pbxuser
-*.mode1v3
-!default.mode1v3
-*.mode2v3
-!default.mode2v3
-*.perspectivev3
-!default.perspectivev3
-xcuserdata
-*.xccheckout
-*.moved-aside
-DerivedData
-*.hmap
-*.ipa
-*.xcuserstate
-ios/.xcode.env.local
+*.pem
 
 # Android/IntelliJ
 #
 build/
 .idea
+.vscode
 .gradle
 local.properties
 *.iml
@@ -69,11 +50,38 @@ yarn.lock
 # nodejs-mobile
 /nodejs-assets
 
-# Temporary files created by Metro to check the health of the file watcher
+# Metro
 .metro-health-check*
 
 # Translation files
 /translations
 
-# Intl polyfills (generated via /scripts/build-intl-polyfill.js)
-/src/frontend/polyfills/intl-relativetimeformat.ts
+# Intl polyfills (generated via /scripts/build-intl-polyfills.mjs)
+/src/frontend/polyfills/intl.ts
+
+# Expo
+.expo/
+dist/
+web-build/
+
+# local env files
+.env*.local
+ios/*.env*.local
+
+# typescript
+*.tsbuildinfo
+
+# ESLint
+.eslintcache
+
+# Native
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Expo
+android/
+ios/

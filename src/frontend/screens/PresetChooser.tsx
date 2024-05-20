@@ -10,13 +10,13 @@ import {
 import {defineMessages, FormattedMessage} from 'react-intl';
 
 import {useDraftObservation} from '../hooks/useDraftObservation';
-import {CategoryCircleIcon} from '../sharedComponents/icons/CategoryIcon';
+import {PresetCircleIcon} from '../sharedComponents/icons/PresetIcon';
 import {WHITE} from '../lib/styles';
-import {NativeNavigationComponent} from '../sharedTypes';
+import {NativeNavigationComponent} from '../sharedTypes/navigation';
 import {CustomHeaderLeftClose} from '../sharedComponents/CustomHeaderLeftClose';
 import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 import {Preset} from '@mapeo/schema';
-import {useObservationContext} from '../contexts/ObservationsContext';
+import {usePresetsQuery} from '../hooks/server/presets';
 
 const m = defineMessages({
   categoryTitle: {
@@ -36,24 +36,22 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
   navigation,
 }) => {
   const {updatePreset} = useDraftObservation();
-  const {presets} = useObservationContext();
+  const {data: presets} = usePresetsQuery();
   const state = navigation.getState();
   const currentIndex = state.index;
   const routes = state.routes;
-  const prevRouteNameInStack = !routes[currentIndex - 1]
-    ? undefined
-    : routes[currentIndex - 1].name;
+  const prevRouteNameInStack = routes[currentIndex - 1]?.name;
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: props =>
-        prevRouteNameInStack === 'Home' ? (
-          <CustomHeaderLeftClose headerBackButtonProps={props} />
-        ) : (
+        prevRouteNameInStack === 'ObservationEdit' ? (
           <CustomHeaderLeft headerBackButtonProps={props} />
+        ) : (
+          <CustomHeaderLeftClose headerBackButtonProps={props} />
         ),
     });
-  }, [prevRouteNameInStack, CustomHeaderLeft, CustomHeaderLeftClose]);
+  }, [prevRouteNameInStack, navigation]);
 
   const presetsList = !presets
     ? null
@@ -120,7 +118,7 @@ const Item = React.memo(
       underlayColor="#000033"
       testID={`${item.docId}CategoryButton`}>
       <View style={styles.cellContainer}>
-        <CategoryCircleIcon size="medium" />
+        <PresetCircleIcon size="medium" name={item.name} />
         <Text numberOfLines={3} style={styles.categoryName}>
           <DynFormattedMessage
             id={`presets.${item.docId}.name`}

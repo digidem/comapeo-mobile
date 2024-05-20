@@ -94,8 +94,3 @@ export const SecurityProvider = ({children}: {children: React.ReactNode}) => {
     </SecurityContext.Provider>
   );
 };
-
-function validPasscode(passcode: string | null): boolean {
-  if (passcode === null) return true;
-  return passcode.length === 5 && !isNaN(parseInt(passcode, 10));
-}

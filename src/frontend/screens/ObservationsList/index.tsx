@@ -1,13 +1,19 @@
 import * as React from 'react';
 import {View, FlatList, Dimensions, StyleSheet} from 'react-native';
-import {defineMessages} from 'react-intl';
 import {ObservationListItem} from './ObservationListItem';
 import ObservationEmptyView from './ObservationsEmptyView';
 
 import {Observation} from '@mapeo/schema';
-import {NativeNavigationComponent} from '../../sharedTypes';
-import {SettingsButton} from './SettingsButton';
 import {useAllObservations} from '../../hooks/useAllObservations';
+import {MessageDescriptor, defineMessages} from 'react-intl';
+import {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs';
+import {ObservationsListBarIcon} from '../../Navigation/Tab/TabBar/ObservationsListTabBarIcon';
+import {ObservationListHeaderLeft} from './ObservationListHeaderLeft';
+import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
+import {NoProjectWarning} from './NoProjectWarning';
+import {LIGHT_GREY, WHITE} from '../../lib/styles';
+import {useAllProjects} from '../../hooks/server/projects';
+import {Loading} from '../../sharedComponents/Loading';
 
 const m = defineMessages({
   loading: {
@@ -32,10 +38,7 @@ const m = defineMessages({
 
 const OBSERVATION_CELL_HEIGHT = 80;
 
-const getItemLayout = (
-  data: Observation[] | null | undefined,
-  index: number,
-) => ({
+const getItemLayout = (_data: unknown, index: number) => ({
   length: OBSERVATION_CELL_HEIGHT,
   offset: OBSERVATION_CELL_HEIGHT * index,
   index,
@@ -43,16 +46,13 @@ const getItemLayout = (
 
 const keyExtractor = (item: Observation) => item.docId;
 
-export const ObservationsList: NativeNavigationComponent<'ObservationList'> = ({
-  navigation,
-}) => {
+export const ObservationsList: React.FC<
+  NativeHomeTabsNavigationProps<'ObservationsList'>
+> & {
+  navTitle: MessageDescriptor;
+} = ({navigation}) => {
   const observations = useAllObservations();
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => <SettingsButton />,
-    });
-  }, [SettingsButton, navigation]);
+  const {data, isLoading} = useAllProjects();
 
   const rowsPerWindow = Math.ceil(
     (Dimensions.get('window').height - 65) / OBSERVATION_CELL_HEIGHT,
@@ -68,11 +68,19 @@ export const ObservationsList: NativeNavigationComponent<'ObservationList'> = ({
 
   return (
     <View style={styles.container} testID="observationsListView">
+      {isLoading ? (
+        <Loading />
+      ) : data && data.length <= 1 ? (
+        <NoProjectWarning style={{margin: 20}} />
+      ) : null}
       <FlatList
         initialNumToRender={rowsPerWindow}
         getItemLayout={getItemLayout}
         keyExtractor={keyExtractor}
-        style={styles.container}
+        style={[
+          styles.container,
+          {borderTopColor: LIGHT_GREY, borderTopWidth: 1},
+        ]}
         windowSize={3}
         removeClippedSubviews
         renderItem={({item, index}) => {
@@ -94,11 +102,29 @@ export const ObservationsList: NativeNavigationComponent<'ObservationList'> = ({
   );
 };
 
+export function createNavigationOptions(
+  formatMessage: (title: MessageDescriptor) => string,
+): BottomTabNavigationOptions {
+  return {
+    tabBarIcon: ObservationsListBarIcon,
+    headerLeft: ObservationListHeaderLeft,
+    headerTransparent: false,
+    headerTitle: formatMessage(ObservationsList.navTitle),
+    headerShadowVisible: true,
+    headerStyle: {
+      elevation: 15,
+      shadowOpacity: 0,
+      borderBottomWidth: 1,
+    },
+  };
+}
+
 ObservationsList.navTitle = m.observationListTitle;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: WHITE,
   },
   messageContainer: {
     flex: 1,

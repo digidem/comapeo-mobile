@@ -11,7 +11,6 @@ import {Accelerometer, AccelerometerMeasurement} from 'expo-sensors';
 
 import {AddButton} from './AddButton';
 import {FormattedMessage, defineMessages} from 'react-intl';
-import {usePermissionContext} from '../contexts/PermissionsContext';
 import {Subscription} from 'expo-sensors/build/DeviceSensor';
 import {CapturedPictureMM} from '../contexts/PhotoPromiseContext/types';
 
@@ -42,14 +41,9 @@ type Props = {
 export const CameraView = ({onAddPress}: Props) => {
   const [capturing, setCapturing] = React.useState(false);
   const [cameraReady, setCameraReady] = React.useState(false);
-  const {permissions, requestPermissions} = usePermissionContext();
   const ref = React.useRef<Camera>(null);
   const accelerometerMeasurement = React.useRef<AccelerometerMeasurement>();
-
-  React.useEffect(() => {
-    // in mapeo 5 this was done in the loading screen, and can be moved back there when loading screen is made
-    requestPermissions('android.permission.CAMERA');
-  }, [requestPermissions]);
+  const [permissionsResponse] = Camera.useCameraPermissions();
 
   React.useEffect(() => {
     let isCancelled = false;
@@ -72,7 +66,7 @@ export const CameraView = ({onAddPress}: Props) => {
       isCancelled = true;
       if (deviceMotionSub) deviceMotionSub.remove();
     };
-  }, [Accelerometer]);
+  }, []);
 
   const handleAddPress = React.useCallback(() => {
     if (!ref.current) {
@@ -101,12 +95,11 @@ export const CameraView = ({onAddPress}: Props) => {
   }, [capturing, setCapturing, onAddPress]);
 
   const disableButton = capturing || !cameraReady;
-  const cameraPermissions =
-    permissions['android.permission.CAMERA'] === 'granted';
+  const permissionGranted = permissionsResponse?.status === 'granted';
 
   return (
     <View style={styles.container}>
-      {!cameraPermissions ? (
+      {!permissionGranted ? (
         <View style={styles.noPermissionContainer}>
           <Text style={{marginBottom: 10}}>
             <FormattedMessage {...m.noCameraAccess} />

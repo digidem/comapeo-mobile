@@ -2,10 +2,7 @@ import * as React from 'react';
 import {InputPasscode} from './InputPasscode';
 import {defineMessages} from 'react-intl';
 import {OBSCURE_PASSCODE} from '../../constants';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {NativeNavigationComponent} from '../../sharedTypes';
-import {ConfirmPasscodeSheet} from './ConfirmPasscodeSheet';
-import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
+import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
   titleSet: {
@@ -33,7 +30,7 @@ const m = defineMessages({
     defaultMessage: 'Cannot be used as a Passcode',
   },
   title: {
-    id: 'screens.AppPasscode.NewPasscode.InputPasscodeScreen.title',
+    id: 'screens.AppPasscode.NewPasscode.SetPasscodeScreen.title',
     defaultMessage: 'Set Passcode',
   },
 });

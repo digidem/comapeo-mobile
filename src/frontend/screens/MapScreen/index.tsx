@@ -1,36 +1,138 @@
 import * as React from 'react';
-import debug from 'debug';
+import Mapbox from '@rnmapbox/maps';
 
-import {MapViewMemoized} from './MapViewMemoized';
-import {useLocationContext} from '../../contexts/LocationContext';
-import {useIsFullyFocused} from '../../hooks/useIsFullyFocused';
+import config from '../../../config.json';
+import {IconButton} from '../../sharedComponents/IconButton';
+import {
+  LocationFollowingIcon,
+  LocationNoFollowIcon,
+} from '../../sharedComponents/icons';
 
-const log = debug('mapeo:MapScreen');
+import {View, StyleSheet} from 'react-native';
+import {ObservationMapLayer} from './ObsevationMapLayer';
+import {AddButton} from '../../sharedComponents/AddButton';
+import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
+import {useDraftObservation} from '../../hooks/useDraftObservation';
+// @ts-ignore
+import ScaleBar from 'react-native-scale-bar';
+import {getCoords} from '../../hooks/useLocation';
+import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
+import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
+import {GPSPermissionsModal} from './GPSPermissions/GPSPermissionsModal';
+import {TrackPathLayer} from './track/TrackPathLayer';
+import {UserLocation} from './UserLocation';
+import {useSharedLocationContext} from '../../contexts/SharedLocationContext';
+import {useMapStyleUrl} from '../../hooks/server/mapStyleUrl';
+
+// This is the default zoom used when the map first loads, and also the zoom
+// that the map will zoom to if the user clicks the "Locate" button and the
+// current zoom is < 12.
+const DEFAULT_ZOOM = 12;
+
+Mapbox.setAccessToken(config.mapboxAccessToken);
+const MIN_DISPLACEMENT = 3;
 
 export const MapScreen = () => {
-  const {position, provider, savedPosition} = useLocationContext();
-  const isFocused = useIsFullyFocused();
+  const [zoom, setZoom] = React.useState(DEFAULT_ZOOM);
+  const [isFinishedLoading, setIsFinishedLoading] = React.useState(false);
+  const [following, setFollowing] = React.useState(true);
+  const {newDraft} = useDraftObservation();
+  const {navigate} = useNavigationFromHomeTabs();
+  const {locationState} = useSharedLocationContext();
+  const savedLocation = useLastKnownLocation();
+  const coords = locationState.location && getCoords(locationState.location);
+  const locationProviderStatus = useLocationProviderStatus();
+  const locationServicesEnabled =
+    !!locationProviderStatus?.locationServicesEnabled;
 
-  const coords = React.useMemo(() => {
-    if (!position?.coords?.latitude) return undefined;
-    if (!position?.coords?.longitude) return undefined;
+  const styleUrlQuery = useMapStyleUrl();
 
-    return [position.coords.longitude, position.coords.latitude];
-  }, [position]);
+  const handleAddPress = () => {
+    newDraft();
+    navigate('PresetChooser');
+  };
 
-  const savedCoords = React.useMemo(() => {
-    if (!savedPosition?.coords?.latitude) return undefined;
-    if (!savedPosition?.coords?.longitude) return undefined;
+  React.useEffect(() => {
+    Mapbox.setTelemetryEnabled(false);
+  }, []);
 
-    return [savedPosition.coords.longitude, savedPosition.coords.latitude];
-  }, [savedPosition]);
+  function handleLocationPress() {
+    setZoom(DEFAULT_ZOOM);
+    setFollowing(prev => !prev);
+  }
+
+  function handleDidFinishLoadingStyle() {
+    setIsFinishedLoading(true);
+  }
 
   return (
-    <MapViewMemoized
-      coords={coords}
-      isFocused={isFocused}
-      savedCoords={savedCoords}
-      locationServiceEnabled={provider && provider.locationServicesEnabled}
-    />
+    <View style={{flex: 1}}>
+      <Mapbox.MapView
+        testID="mapboxMapView"
+        style={{flex: 1}}
+        logoEnabled={false}
+        pitchEnabled={false}
+        rotateEnabled={false}
+        surfaceView={true}
+        attributionPosition={{right: 8, bottom: 8}}
+        compassEnabled={false}
+        scaleBarEnabled={false}
+        styleURL={styleUrlQuery.data}
+        onDidFinishLoadingStyle={handleDidFinishLoadingStyle}
+        onMoveShouldSetResponder={() => {
+          if (following) setFollowing(false);
+          return true;
+        }}>
+        <Mapbox.Camera
+          defaultSettings={{
+            centerCoordinate: coords
+              ? coords
+              : savedLocation.data
+                ? getCoords(savedLocation.data)
+                : undefined,
+            zoomLevel: zoom,
+          }}
+          centerCoordinate={
+            locationServicesEnabled && following ? coords : undefined
+          }
+          zoomLevel={following ? zoom : undefined}
+          animationDuration={1000}
+          animationMode="flyTo"
+          followUserLocation={false}
+        />
+
+        {coords && locationServicesEnabled && (
+          <UserLocation minDisplacement={MIN_DISPLACEMENT} />
+        )}
+        {isFinishedLoading && <ObservationMapLayer />}
+        {isFinishedLoading && <TrackPathLayer />}
+      </Mapbox.MapView>
+      <ScaleBar
+        zoom={zoom || 10}
+        latitude={coords ? coords[1] : undefined}
+        bottom={20}
+      />
+      {coords && locationServicesEnabled && (
+        <View style={styles.locationButton}>
+          <IconButton onPress={handleLocationPress}>
+            {following ? <LocationFollowingIcon /> : <LocationNoFollowIcon />}
+          </IconButton>
+        </View>
+      )}
+      <AddButton
+        testID="addButtonMap"
+        onPress={handleAddPress}
+        isLoading={!isFinishedLoading}
+      />
+      <GPSPermissionsModal />
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  locationButton: {
+    position: 'absolute',
+    right: 20,
+    bottom: 20,
+  },
+});

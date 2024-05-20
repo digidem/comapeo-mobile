@@ -1,7 +1,7 @@
 import React from 'react';
 import {HeaderBackButton} from '@react-navigation/elements';
 import {HeaderBackButtonProps} from '@react-navigation/native-stack/lib/typescript/src/types';
-import {Alert, BackHandler} from 'react-native';
+import {BackHandler} from 'react-native';
 import isEqual from 'lodash.isequal';
 
 import {CloseIcon} from './icons';
@@ -18,6 +18,14 @@ import {
   useFocusEffect,
   useNavigation,
 } from '@react-navigation/native';
+import {
+  BottomSheetContent,
+  BottomSheetModal,
+  useBottomSheetModal,
+} from './BottomSheetModal';
+
+import ErrorIcon from '../images/Error.svg';
+import DiscardIcon from '../images/delete.svg';
 
 const m = defineMessages({
   discardTitle: {
@@ -25,25 +33,34 @@ const m = defineMessages({
     defaultMessage: 'Discard observation?',
     description: 'Title of dialog that shows when cancelling a new observation',
   },
-  discardConfirm: {
-    id: 'AppContainer.EditHeader.discardContent',
-    defaultMessage: 'Discard without saving',
-    description: 'Button on dialog to cancel a new observation',
+  discardObservationDescription: {
+    id: 'AppContainer.EditHeader.discardObservationDescription',
+    defaultMessage:
+      'Your Observation will not be saved. This cannot be undone. ',
   },
   discardChangesTitle: {
     id: 'AppContainer.EditHeader.discardChangesTitle',
     defaultMessage: 'Discard changes?',
     description: 'Title of dialog that shows when cancelling observation edits',
   },
-  discardChangesConfirm: {
-    id: 'AppContainer.EditHeader.discardChangesContent',
-    defaultMessage: 'Discard changes',
-    description: 'Button on dialog to cancel observation edits',
+  discardChangesDescription: {
+    id: 'AppContainer.EditHeader.discardChangesDescription',
+    defaultMessage: 'Your changes will not be saved. This cannot be undone. ',
   },
   discardCancel: {
     id: 'AppContainer.EditHeader.discardCancel',
     defaultMessage: 'Continue editing',
     description: 'Button on dialog to keep editing (cancelling close action)',
+  },
+  discardObservationButton: {
+    id: 'AppContainer.EditHeader.discardObservationButton',
+    defaultMessage: 'Discard Observation',
+    description: 'Title of dialog that shows when cancelling observation edits',
+  },
+  discardChangesButton: {
+    id: 'AppContainer.EditHeader.discardChangesButton',
+    defaultMessage: 'Discard changes',
+    description: 'Title of dialog that shows when cancelling observation edits',
   },
 });
 
@@ -56,6 +73,7 @@ export const HeaderCloseIcon = ({tintColor}: {tintColor: string}) => {
 interface SharedBackButtonProps {
   tintColor?: string;
   headerBackButtonProps: HeaderBackButtonProps;
+  onPress?: () => void;
 }
 
 type CustomHeaderLeftCloseProps = {
@@ -67,47 +85,80 @@ export const CustomHeaderLeftClose = ({
   headerBackButtonProps,
   observationId,
 }: CustomHeaderLeftCloseProps) => {
-  if (observationId) {
-    return (
-      <HeaderBackEditObservation
-        tintColor={tintColor}
-        headerBackButtonProps={headerBackButtonProps}
-        observationId={observationId}
-      />
+  const {isOpen, sheetRef, closeSheet, openSheet} = useBottomSheetModal({
+    openOnMount: false,
+  });
+  const {formatMessage} = useIntl();
+  const {clearDraft} = useDraftObservation();
+  const navigation = useNavigationFromRoot();
+
+  const handleDiscard = React.useCallback(() => {
+    clearDraft();
+    navigation.dispatch(
+      CommonActions.reset({index: 0, routes: [{name: 'Home'}]}),
     );
-  }
+  }, [clearDraft, navigation]);
 
   return (
-    <HeaderBackNewObservation
-      tintColor={tintColor}
-      headerBackButtonProps={headerBackButtonProps}
-    />
+    <>
+      {observationId ? (
+        <HeaderBackEditObservation
+          tintColor={tintColor}
+          headerBackButtonProps={headerBackButtonProps}
+          observationId={observationId}
+          openBottomSheet={openSheet}
+        />
+      ) : (
+        <HeaderBackNewObservation
+          tintColor={tintColor}
+          headerBackButtonProps={headerBackButtonProps}
+          openBottomSheet={openSheet}
+        />
+      )}
+      <BottomSheetModal isOpen={isOpen} ref={sheetRef}>
+        <BottomSheetContent
+          title={
+            observationId
+              ? formatMessage(m.discardChangesTitle)
+              : formatMessage(m.discardTitle)
+          }
+          description={
+            observationId
+              ? formatMessage(m.discardChangesDescription)
+              : formatMessage(m.discardObservationDescription)
+          }
+          buttonConfigs={[
+            {
+              variation: 'filled',
+              dangerous: true,
+              onPress: handleDiscard,
+              text: observationId
+                ? formatMessage(m.discardChangesButton)
+                : formatMessage(m.discardObservationButton),
+              icon: <DiscardIcon />,
+            },
+            {
+              onPress: closeSheet,
+              text: formatMessage(m.discardCancel),
+              variation: 'outlined',
+            },
+          ]}
+          icon={<ErrorIcon width={60} height={60} style={{marginBottom: 15}} />}
+        />
+      </BottomSheetModal>
+    </>
   );
 };
 
 const HeaderBackNewObservation = ({
   tintColor,
   headerBackButtonProps,
-}: SharedBackButtonProps) => {
-  const navigation = useNavigationFromRoot();
-  const {formatMessage: t} = useIntl();
-  const {clearDraft} = useDraftObservation();
-
+  openBottomSheet,
+}: SharedBackButtonProps & {openBottomSheet: () => void}) => {
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
-        Alert.alert(t(m.discardTitle), undefined, [
-          {
-            text: t(m.discardConfirm),
-            onPress: () => {
-              clearDraft();
-              navigation.dispatch(
-                CommonActions.navigate('Home', {screen: 'map'}),
-              );
-            },
-          },
-          {text: t(m.discardCancel), onPress: () => {}},
-        ]);
+        openBottomSheet();
         return true;
       };
 
@@ -117,31 +168,30 @@ const HeaderBackNewObservation = ({
       );
 
       return () => subscription.remove();
-    }, [clearDraft, navigation, t]),
+    }, [openBottomSheet]),
   );
 
   return (
     <SharedBackButton
       headerBackButtonProps={headerBackButtonProps}
       tintColor={tintColor}
+      onPress={openBottomSheet}
     />
   );
 };
 
 type HeaderBackEditObservationProps = {
   observationId: string;
+  openBottomSheet: () => void;
 } & SharedBackButtonProps;
 
 const HeaderBackEditObservation = ({
   headerBackButtonProps,
   tintColor,
-
+  openBottomSheet,
   observationId,
 }: HeaderBackEditObservationProps) => {
   const navigation = useNavigationFromRoot();
-  const {formatMessage: t} = useIntl();
-
-  const {clearDraft} = useDraftObservation();
   const {observation} = useObservationWithPreset(observationId);
   const photos = usePersistedDraftObservation(store => store.photos);
   const draftObservation = usePersistedDraftObservation(store => store.value);
@@ -159,20 +209,11 @@ const HeaderBackEditObservation = ({
 
       e.preventDefault();
 
-      Alert.alert(t(m.discardChangesTitle), undefined, [
-        {
-          text: t(m.discardChangesConfirm),
-          onPress: () => {
-            clearDraft();
-            navigation.dispatch(e.data.action);
-          },
-        },
-        {text: t(m.discardCancel), onPress: () => {}},
-      ]);
+      openBottomSheet();
     });
 
     return () => unsubscribe();
-  }, [observation, photos, draftObservation, navigation, clearDraft]);
+  }, [observation, photos, draftObservation, openBottomSheet, navigation]);
 
   return (
     <SharedBackButton
@@ -185,15 +226,14 @@ const HeaderBackEditObservation = ({
 const SharedBackButton = ({
   headerBackButtonProps,
   tintColor,
+  onPress,
 }: SharedBackButtonProps) => {
   const navigation = useNavigation();
   return (
     <HeaderBackButton
       {...headerBackButtonProps}
       style={{marginLeft: 0, marginRight: 15}}
-      onPress={() => {
-        navigation.goBack();
-      }}
+      onPress={onPress ? onPress : () => navigation.goBack()}
       backImage={() => <HeaderCloseIcon tintColor={tintColor || BLACK} />}
     />
   );

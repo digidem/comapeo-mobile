@@ -1,1 +1,1 @@
-import('./intl-relativetimeformat');
+import './intl';

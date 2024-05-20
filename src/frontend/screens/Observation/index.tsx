@@ -8,11 +8,11 @@ import {FormattedObservationDate} from '../../sharedComponents/FormattedData';
 import {Field} from '@mapeo/schema';
 import {PresetHeader} from './PresetHeader';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
-import {useFieldsQuery} from '../../hooks/server/useFieldsQuery';
+import {useFieldsQuery} from '../../hooks/server/fields';
 import {FieldDetails} from './FieldDetails';
 import {InsetMapView} from './InsetMapView';
 import {ButtonFields} from './Buttons';
-import {NativeNavigationComponent} from '../../sharedTypes';
+import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
 
 const m = defineMessages({
@@ -44,24 +44,20 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   }, [navigation, observationId]);
 
   const {observation, preset} = useObservationWithPreset(observationId);
-  const fieldsQuery = useFieldsQuery();
+  const {data} = useFieldsQuery();
 
   const defaultAcc: Field[] = [];
-  const fields = !fieldsQuery.data
-    ? undefined
-    : preset.fieldIds.reduce((acc, pres) => {
-        const fieldToAdd = fieldsQuery.data.find(
-          field => field.tagKey === pres,
-        );
+  const fields = data
+    ? preset.fieldIds.reduce((acc, pres) => {
+        const fieldToAdd = data.find(field => field.docId === pres);
         if (!fieldToAdd) return acc;
         return [...acc, fieldToAdd];
-      }, defaultAcc);
+      }, defaultAcc)
+    : [];
 
   const deviceId = '';
-  const {lat, lon, createdBy, attachments} = observation;
+  const {lat, lon, createdBy} = observation;
   const isMine = deviceId === createdBy;
-  // Currently only show photo attachments
-  const photos = [];
 
   return (
     <ScrollView
@@ -96,8 +92,10 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
             />
           )} */}
         </View>
-        {fields && fields.length > 0 && <FieldDetails fields={fields} />}
-        <View style={styles.divider}></View>
+        {fields.length > 0 && (
+          <FieldDetails observation={observation} fields={fields} />
+        )}
+        <View style={styles.divider} />
         <ButtonFields isMine={isMine} observationId={observationId} />
       </>
     </ScrollView>

@@ -16,7 +16,6 @@ import debug from 'debug';
 import {LIGHT_GREY} from '../lib/styles';
 import {AlertIcon} from './icons';
 import {Photo} from '../contexts/PhotoPromiseContext/types';
-import {api} from '../api';
 import {usePersistedDraftObservation} from '../hooks/persistedState/usePersistedDraftObservation';
 
 const spacing = 10;

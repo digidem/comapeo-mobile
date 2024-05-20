@@ -5,14 +5,11 @@ import {
   defineMessages,
   useIntl,
 } from 'react-intl';
-import {Field, Observation, Preset} from '@mapeo/schema';
+import {Field, Preset} from '@mapeo/schema';
 
 import {formatCoords, convertSelectOptionsToLabeled} from '../lib/utils';
 import {DateDistance} from './DateDistance';
-import {formats} from '../contexts/IntlContext';
-// import { CoordinateFormat } from "../context/SettingsContext";
-
-type CoordinateFormat = 'utm' | 'dd' | 'dms';
+import {CoordinateFormat} from '../sharedTypes';
 
 const m = defineMessages({
   noAnswer: {
@@ -67,9 +64,9 @@ export const FormattedFieldProp = ({
         defaultMessage: field[propName],
       })
     : // Never show a blank label, fall back to field.key, otherwise return null
-    propName === 'label'
-    ? fieldKey
-    : undefined;
+      propName === 'label'
+      ? fieldKey
+      : undefined;
   if (!value) return null;
   return <>{value}</>;
 };
@@ -91,20 +88,23 @@ export const FormattedFieldValue = ({
 }) => {
   const {formatMessage: t} = useIntl();
   // Select multiple answers are an array, so we join them with commas
-  const formattedValue = (Array.isArray(value) ? value : [value])
+  const formattedValues = (Array.isArray(value) ? value : [value])
     // Filter any undefined values or empty strings (an empty string can come
     // from a user deleting an answer) TODO: Values that are just spaces
-    .filter(value => typeof value !== 'undefined' && value !== '')
-    .map(value =>
+    .filter(
+      formattedValue =>
+        typeof formattedValue !== 'undefined' && formattedValue !== '',
+    )
+    .map(formattedValue =>
       t({
-        id: `fields.${field.docId}.options.${JSON.stringify(value)}`,
-        defaultMessage: getValueLabel(value, field),
+        id: `fields.${field.docId}.options.${JSON.stringify(formattedValue)}`,
+        defaultMessage: getValueLabel(formattedValue, field),
       }).trim(),
     )
     .join(', ');
   // This will return a noAnswer string if formattedValue is undefined or an
   // empty string
-  return <>{formattedValue || t(m.noAnswer)}</>;
+  return <>{formattedValues || t(m.noAnswer)}</>;
 };
 
 // Format the created_at date of an observation as either a datetime, or a

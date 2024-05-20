@@ -1,17 +1,12 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  GestureResponderEvent,
-  TouchableNativeFeedback,
-} from 'react-native';
+import {View, StyleSheet, TouchableNativeFeedback} from 'react-native';
 import {Text} from '../sharedComponents/Text';
 import debug from 'debug';
 import {defineMessages, FormattedMessage} from 'react-intl';
 
 import {CameraView} from '../sharedComponents/CameraView';
 import {useDraftObservation} from '../hooks/useDraftObservation';
-import {NativeRootNavigationProps} from '../sharedTypes';
+import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 import {CapturedPictureMM} from '../contexts/PhotoPromiseContext/types';
 
 const m = defineMessages({
@@ -34,7 +29,7 @@ export const AddPhotoScreen = ({
     navigation.pop();
   };
 
-  const handleCancelPress = (e: GestureResponderEvent) => {
+  const handleCancelPress = () => {
     log('cancelled');
     navigation.pop();
   };

@@ -3,54 +3,86 @@ import {
   NavigationContainer,
   useNavigationContainerRef,
 } from '@react-navigation/native';
-// We need to wrap the app with this provider to fix an issue with the bottom sheet modal backdrop
-// not overlaying the navigation header. Without this, the header is accessible even when
-// the modal is open, which we don't want (e.g. header back button shouldn't be reachable).
-// See https://github.com/gorhom/react-native-bottom-sheet/issues/1157
-import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
-
-import {AppNavigator} from './Navigation/AppNavigator';
-import {AppStackList} from './Navigation/AppStack';
+import {createMapeoClient} from '@mapeo/ipc';
+import {AppNavigator} from './AppNavigator';
 import {IntlProvider} from './contexts/IntlContext';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {Loading} from './sharedComponents/ApiLoading';
-import {PermissionsProvider} from './contexts/PermissionsContext';
-import {PhotoPromiseProvider} from './contexts/PhotoPromiseContext';
-import {SecurityProvider} from './contexts/SecurityContext';
-import {LocationProvider} from './contexts/LocationContext';
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import {ObservationProvider} from './contexts/ObservationsContext';
+import {MessagePortLike} from './lib/MessagePortLike';
+import {initializeNodejs} from './initializeNodejs';
+import {PermissionsAndroid} from 'react-native';
+import {AppProviders} from './contexts/AppProviders';
+import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
+import {Loading} from './sharedComponents/Loading';
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import {AppStackParamsList} from './sharedTypes/navigation';
+import * as SplashScreen from 'expo-splash-screen';
+import * as Sentry from '@sentry/react-native';
+import * as TaskManager from 'expo-task-manager';
+import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
+import {tracksStore} from './hooks/persistedState/usePersistedTrack';
 
-const queryClient = new QueryClient();
+Sentry.init({
+  dsn: 'https://e0e02907e05dc72a6da64c3483ed88a6@o4507148235702272.ingest.us.sentry.io/4507170965618688',
+  debug:
+    process.env.APP_VARIANT === 'development' ||
+    process.env.APP_VARIANT === 'test', // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
+});
+
+const messagePort = new MessagePortLike();
+const mapeoApi = createMapeoClient(messagePort, {timeout: Infinity});
+const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
+localDiscoveryController.start();
+initializeNodejs();
+SplashScreen.preventAutoHideAsync();
+
+// Defines task that handles background location updates for tracks feature
+TaskManager.defineTask(
+  LOCATION_TASK_NAME,
+  async ({data, error}: LocationCallbackInfo) => {
+    if (error) {
+      console.error('Error while processing location update callback', error);
+    }
+
+    if (data?.locations) {
+      const {addNewLocations} = tracksStore.getState();
+
+      addNewLocations(
+        data.locations.map(loc => ({
+          latitude: loc.coords.latitude,
+          longitude: loc.coords.longitude,
+          timestamp: loc.timestamp,
+        })),
+      );
+    }
+  },
+);
 
 const App = () => {
-  const navRef = useNavigationContainerRef<AppStackList>();
+  const navRef = useNavigationContainerRef<AppStackParamsList>();
+  const [permissionsAsked, setPermissionsAsked] = React.useState(false);
+  React.useEffect(() => {
+    PermissionsAndroid.requestMultiple([
+      'android.permission.CAMERA',
+      'android.permission.ACCESS_FINE_LOCATION',
+      'android.permission.ACCESS_COARSE_LOCATION',
+    ]).then(() => setPermissionsAsked(true));
+  }, []);
 
   return (
-    <Loading>
-      <IntlProvider>
-        <QueryClientProvider client={queryClient}>
-          <PermissionsProvider>
-            <GestureHandlerRootView style={{flex: 1}}>
-              <BottomSheetModalProvider>
-                <ObservationProvider>
-                  <NavigationContainer ref={navRef}>
-                    <PhotoPromiseProvider>
-                      <LocationProvider>
-                        <SecurityProvider>
-                          <AppNavigator />
-                        </SecurityProvider>
-                      </LocationProvider>
-                    </PhotoPromiseProvider>
-                  </NavigationContainer>
-                </ObservationProvider>
-              </BottomSheetModalProvider>
-            </GestureHandlerRootView>
-          </PermissionsProvider>
-        </QueryClientProvider>
-      </IntlProvider>
-    </Loading>
+    <IntlProvider>
+      <AppProviders
+        messagePort={messagePort}
+        localDiscoveryController={localDiscoveryController}
+        mapeoApi={mapeoApi}>
+        <React.Suspense fallback={<Loading />}>
+          <NavigationContainer ref={navRef}>
+            <BottomSheetModalProvider>
+              <AppNavigator permissionAsked={permissionsAsked} />
+            </BottomSheetModalProvider>
+          </NavigationContainer>
+        </React.Suspense>
+      </AppProviders>
+    </IntlProvider>
   );
 };
 
-export default App;
+export default Sentry.wrap(App);

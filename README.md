@@ -1,44 +1,70 @@
-# React Native + Mapeo Core Next Example
+# CoMapeo Mobile
 
-> Minimal(ish) example of integrating [Mapeo Core Next](https://github.com/digidem/mapeo-core-next) into React Native
+The next version of Mapeo Mobile
 
-## How to run on Android
+## Getting started
 
-1. Pre-requisites needed:
+1. Clone repository
 
-   - Install [Node](https://nodejs.org), ideally through a proper node version manager such as [nvm](https://github.com/nvm-sh/nvm), [fnm](https://github.com/Schniz/fnm), or [asdf](https://asdf-vm.com/)
-     - This project currently uses Node v16 with npm v8
-   - Follow instructions for setting up dev environment: https://reactnative.dev/docs/environment-setup
+   ```sh
+   git clone https://github.com/digidem/comapeo-mobile.git
+   ```
 
-2. Install deps: `npm install`
+2. Set up the development environment
 
-3. Build the backend that's loaded into the app using nodejs-mobile: `scripts/build-backend.sh`
+   1. Install [Node](https://nodejs.org), ideally through a proper node version manager such as [nvm](https://github.com/nvm-sh/nvm), [fnm](https://github.com/Schniz/fnm), [asdf](https://asdf-vm.com/), or [mise](https://mise.jdx.dev/)
 
-4. (optional) Start the React Native process: `npm run start`
+      - This project uses **Node v20** with **npm v10**
 
-5. Build and run the Android app: `npm run android`
+   2. Follow the React Native instructions for setting up the development environment: https://reactnative.dev/docs/environment-setup
 
-   - This will start the React Native process if step (4) was skipped
-   - **IMPORTANT**: JDK 11 is required to build the app. If your JDK 11 installation isn't the default (can check by seeing the output of `java -version`) there are a few options (ordered by convenience):
+      - Note that **Java 17** is the minimum version required for this project.
 
-     1. Set up JDK 11 to be the default JDK version used.
+      - When setting up the Android-specific tooling, you will also need to install the [Android NDK](https://developer.android.com/ndk/). This can be installed using Android Studio by going to the `SDK Tools` tab in the `SDK Manager`. This project uses **NDK 25.1.8937393**.
 
-        - Pro: Convenient. Never have to worry about specific files or specifying environment variables.
+   3. Create a `.env` file at the root of the project with the following content:
 
-        - Con: If you work on other projects on the same machine that need a different version as the default.
+      ```
+      MAPBOX_DOWNLOAD_TOKEN=<your_token_here>
+      ```
 
-     2. Add the following to `android/gradle.properties`:
+      Replace `<your_token_here>` with a [Mapbox secret token](https://docs.mapbox.com/android/maps/guides/install/#configure-credentials). This is unfortunately required to install the necessary Mapbox Android SDK components used by `@rnmapbox/maps@10` when building the app (more info [here](https://github.com/rnmapbox/maps/blob/v10.0/android/install.md#mapbox-maps-sdk-v10)). If you do not have access to a Mapbox account, reach out to the maintainers about getting access to a secret token.
 
-        ```gradle
-        org.gradle.java.home=/path/to/your/jdk/home
+3. Run the app locally
+
+   1. Install dependencies
+
+      - This project requires the following system dependencies. Make sure they are available on your `PATH`.
+
+        - curl
+        - tar
+
+      - Install NPM-based project dependencies
+
+        ```sh
+        npm install
         ```
 
-        - Pro: Any Gradle command for this project will pick this up, so no need to specify an environment variable each time.
+   2. Start the Metro bundler process
 
-        - Con: If this project is shared and used by other people, the path you specify may very likely differ for them and thus affect their usage.
+      ```sh
+      npm start
+      ```
 
-     3. Specify the `JAVA_HOME` environment variable when running the command i.e. `JAVA_HOME=/path/to/your/jdk/home npm run android`.
+      Leave this running in a separate terminal window.
 
-        - Pro: Least disruptive.
+   3. Build and run the app (Android)
 
-        - Con: Have to manually specify this each time a Gradle command for this project is ran (or export it for the shell process)
+      - For this project, using a physical device is more convenient and reliable to work with. It is recommended that you follow React Native's [setup instructions](https://reactnative.dev/docs/running-on-device) for running an app on a device.
+
+      - Run the following command to build the backend and then build and run the Android app:
+
+        ```sh
+        npm run android
+        ```
+
+        If you do not need to rebuild the backend on subsequent runs (e.g. no changes in the `src/backend/` directory), you can use the following command instead:
+
+        ```sh
+        npm run android-no-backend-rebuild
+        ```

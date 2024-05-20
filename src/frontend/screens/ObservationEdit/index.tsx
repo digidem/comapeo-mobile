@@ -1,16 +1,18 @@
 import * as React from 'react';
-import {defineMessages, useIntl} from 'react-intl';
+import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 
-import {SaveButton} from './SaveButton';
-import {NativeNavigationComponent} from '../../sharedTypes';
+import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {View, ScrollView, StyleSheet} from 'react-native';
 import {LocationView} from './LocationView';
 import {DescriptionField} from './DescriptionField';
-import {BottomSheet} from './BottomSheet';
+import {BottomSheet} from '../../sharedComponents/BottomSheet/BottomSheet';
 import {ThumbnailScrollView} from '../../sharedComponents/ThumbnailScrollView';
-import {CustomHeaderLeftClose} from '../../sharedComponents/CustomHeaderLeftClose';
 import {PresetView} from './PresetView';
+import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
+import {SaveButton} from './SaveButton';
+import {DetailsIcon} from '../../sharedComponents/icons';
+import {useDraftObservation} from '../../hooks/useDraftObservation';
 
 const m = defineMessages({
   editTitle: {
@@ -28,35 +30,39 @@ const m = defineMessages({
     defaultMessage: 'Add Photo',
     description: 'Button label for adding photo',
   },
+  detailsButton: {
+    id: 'screens.ObservationEdit.ObservationEditView.detailsButton',
+    defaultMessage: 'Add Details',
+    description: 'Button label to add details',
+  },
 });
 
-export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
-  navigation,
-}) => {
+export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
+  editTitle: MessageDescriptor;
+} = ({navigation}) => {
+  const [error, setError] = React.useState<Error | null>(null);
   const observationId = usePersistedDraftObservation(
     store => store.observationId,
   );
+  const {usePreset} = useDraftObservation();
+  const preset = usePreset();
   const isNew = !observationId;
   const {formatMessage: t} = useIntl();
-  React.useLayoutEffect(() => {
+
+  React.useEffect(() => {
     navigation.setOptions({
-      headerTitle: observationId ? t(m.editTitle) : t(m.newTitle),
-      headerLeft: props => (
-        <CustomHeaderLeftClose
-          headerBackButtonProps={props}
-          observationId={observationId}
-        />
+      headerRight: () => (
+        <SaveButton observationId={observationId} setError={setError} />
       ),
-      headerRight: () => <SaveButton observationId={observationId} />,
     });
-  }, [navigation, observationId, CustomHeaderLeftClose, SaveButton]);
+  }, [navigation, observationId]);
 
   const handleCameraPress = React.useCallback(() => {
     navigation.navigate('AddPhoto');
   }, [navigation]);
 
   const handleDetailsPress = React.useCallback(() => {
-    navigation.navigate('ObservationDetails', {question: 1});
+    navigation.navigate('ObservationFields', {question: 1});
   }, [navigation]);
 
   const bottomSheetItems = [
@@ -66,14 +72,14 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       onPress: handleCameraPress,
     },
   ];
-  // if (preset && preset.fields && preset.fields.length) {
-  //   // Only show the option to add details if preset fields are defined.
-  //   bottomSheetItems.push({
-  //     icon: <DetailsIcon />,
-  //     label: t(m.detailsButton),
-  //     onPress: handleDetailsPress,
-  //   });
-  // }
+  if (preset?.fieldIds.length) {
+    // Only show the option to add details if preset fields are defined.
+    bottomSheetItems.push({
+      icon: <DetailsIcon />,
+      label: t(m.detailsButton),
+      onPress: handleDetailsPress,
+    });
+  }
 
   return (
     <View style={styles.container}>
@@ -86,11 +92,13 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         <ThumbnailScrollView />
       </ScrollView>
       <BottomSheet items={bottomSheetItems} />
+      <ErrorBottomSheet error={error} clearError={() => setError(null)} />
     </View>
   );
 };
 
 ObservationEdit.navTitle = m.newTitle;
+ObservationEdit.editTitle = m.editTitle;
 
 const styles = StyleSheet.create({
   container: {

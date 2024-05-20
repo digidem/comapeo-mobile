@@ -8,6 +8,8 @@ import {
 } from './photosMethods';
 import {ClientGeneratedObservation, Position} from '../../../sharedTypes';
 import {Observation, Preset} from '@mapeo/schema';
+import {usePresetsQuery} from '../../server/presets';
+import {matchPreset} from '../../../lib/utils';
 
 type newDraftProps = {observation: Observation; preset: Preset};
 const emptyObservation: ClientGeneratedObservation = {
@@ -16,13 +18,13 @@ const emptyObservation: ClientGeneratedObservation = {
   tags: {
     notes: '',
   },
+  attachments: [],
 };
 
 export type DraftObservationSlice = {
   photos: Photo[];
   value: Observation | null | ClientGeneratedObservation;
   observationId?: string;
-  preset?: Preset;
   actions: {
     addPhotoPlaceholder: (draftPhotoId: string) => void;
     replacePhotoPlaceholderWithPhoto: (photo: DraftPhoto) => void;
@@ -31,15 +33,12 @@ export type DraftObservationSlice = {
     // Create a new draft observation
     newDraft: (observation?: newDraftProps) => void;
     deletePhoto: (id: string) => void;
-    updateObservationPosition: ({
-      position,
-      manualLocation,
-    }: {
-      position?: Position;
-      manualLocation?: boolean;
+    updateObservationPosition: (props: {
+      position: Position | undefined;
+      manualLocation: boolean;
     }) => void;
+    updateTags: (tagKey: string, value: Observation['tags'][0]) => void;
     updatePreset: (preset: Preset) => void;
-    updateObservationNotes: (notes: string) => void;
   };
 };
 
@@ -59,37 +58,28 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
       set({
         photos: [],
         value: null,
-        preset: undefined,
         observationId: undefined,
       });
     },
-    updateObservationPosition: ({position, manualLocation}) => {
-      if (!position || !position.coords) return;
+    updateObservationPosition: props => {
       const prevValue = get().value;
+      if (!prevValue)
+        throw new Error(
+          'cannot update the draft position until a draft has been initialized',
+        );
 
-      // if there is no draft observation initialized, ignore update
-      // if user is editting a saved observation, ignore update
-      if (!prevValue || 'docId' in prevValue) return;
-      // if the location has been manually set it cannot be overwritten unless there is a new manual location
-      if (prevValue.metadata.manualLocation && !manualLocation) return;
-      const prevAccuracy = prevValue.metadata.position?.coords?.accuracy;
-      const newAccuracy = position.coords?.accuracy;
-      if (!newAccuracy) return;
-      if (!prevAccuracy || newAccuracy < prevAccuracy) {
-        set({
-          value: {
-            ...prevValue,
-            lon: position.coords.longitude,
-            lat: position.coords.latitude,
-            metadata: {
-              ...prevValue.metadata,
-              position: position,
-              manualLocation,
-            },
+      set({
+        value: {
+          ...prevValue,
+          lon: props?.position?.coords?.longitude,
+          lat: props?.position?.coords?.latitude,
+          metadata: {
+            ...prevValue.metadata,
+            position: props.position,
+            manualLocation: props.manualLocation,
           },
-        });
-        return;
-      }
+        },
+      });
     },
     newDraft: draftProps => {
       get().actions.clearDraft();
@@ -102,7 +92,6 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
 
       set({
         value: draftProps.observation,
-        preset: draftProps.preset,
         observationId: draftProps.observation.docId,
         photos:
           draftProps.observation.attachments.length > 0
@@ -110,42 +99,51 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
             : [],
       });
     },
-    updatePreset: preset => {
-      const prevValue = get().value;
-      if (prevValue) {
-        set({
-          value: {
-            ...prevValue,
-            tags: {
-              ...prevValue.tags,
-              categoryId: preset.docId,
-            },
-          },
-          preset: preset,
-        });
-        return;
-      }
-      set({
-        value: {
-          refs: [],
-          tags: {categoryId: preset.docId},
-          metadata: {},
-        },
-        preset: preset,
-      });
-    },
-    updateObservationNotes: notes => {
+    updateTags: (tagKey, tagValue) => {
       const prevValue = get().value;
       if (!prevValue)
         throw new Error(
-          'Cannot set notes if observation does not already exist (aka if the user has not chosen a category)',
+          'cannot update the tags until a draft has been initialized and a preset has been chosem',
         );
+
       set({
         value: {
           ...prevValue,
           tags: {
             ...prevValue.tags,
-            notes,
+            [tagKey]: tagValue,
+          },
+        },
+      });
+      return;
+    },
+    updatePreset: ({tags, fieldIds}) => {
+      const prevValue = get().value;
+      if (!prevValue) {
+        set({
+          value: {
+            refs: [],
+            tags: tags,
+            metadata: {},
+            attachments: [],
+          },
+        });
+        return;
+      }
+      // we want to keep any field tags that are the same from the previous preset
+      const savedFieldTags = Object.fromEntries(
+        Object.entries(prevValue.tags).filter(([key]) =>
+          fieldIds.includes(key),
+        ),
+      );
+
+      set({
+        value: {
+          ...prevValue,
+          tags: {
+            ...tags,
+            ...savedFieldTags,
+            ...(prevValue.tags.notes ? {notes: prevValue.tags.notes} : {}),
           },
         },
       });
@@ -157,6 +155,12 @@ export const usePersistedDraftObservation = createPersistedState(
   draftObservationSlice,
   '@MapeoDraft',
 );
+
+export const usePreset = () => {
+  const {data: presets} = usePresetsQuery();
+  const tags = usePersistedDraftObservation(store => store.value?.tags);
+  return !tags ? undefined : matchPreset(tags, presets);
+};
 
 export const _usePersistedDraftObservationActions = () =>
   usePersistedDraftObservation(state => state.actions);

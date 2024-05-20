@@ -1,0 +1,20 @@
+diff --git a/node_modules/nodejs-mobile-react-native/android/build.gradle b/node_modules/nodejs-mobile-react-native/android/build.gradle
+index d572527..76df601 100644
+--- a/node_modules/nodejs-mobile-react-native/android/build.gradle
++++ b/node_modules/nodejs-mobile-react-native/android/build.gradle
+@@ -394,10 +394,11 @@ if ("1".equals(shouldRebuildNativeModules)) {
+                         from "${dotNode.getAbsoluteFile()}"
+                         into "${moduleRoot}/build/Release/"
+                     }
+-                    exec {
+-                        workingDir moduleRoot
+-                        commandLine 'sed', '-i.bak', 's/"install"/"dontinstall"/g; s/"rebuild"/"dontrebuild"/g; s/"gypfile"/"dontgypfile"/g', 'package.json'
+-                    }
++                    // Breaks because we don't include a package.json (not needed as a result)
++                    // exec {
++                    //     workingDir moduleRoot
++                    //     commandLine 'sed', '-i.bak', 's/"install"/"dontinstall"/g; s/"rebuild"/"dontrebuild"/g; s/"gypfile"/"dontgypfile"/g', 'package.json'
++                    // }
+                     delete "${moduleRoot}/binding.gyp"
+                     delete "${moduleRoot}/prebuilds"
+                 }

@@ -1,12 +1,11 @@
-import {useObservationContext} from '../contexts/ObservationsContext';
+import {matchPreset} from '../lib/utils';
+import {useObservation} from './server/observations';
+import {usePresetsQuery} from './server/presets';
 
 export const useObservationWithPreset = (observationId: string) => {
-  const {observations, presets} = useObservationContext();
-  const observation = observations.get(observationId);
-  const preset =
-    observation && typeof observation.tags['categoryId'] === 'string'
-      ? presets.find(pres => pres.docId === observation.tags['categoryId'])
-      : undefined;
+  const {data: observation} = useObservation(observationId);
+  const {data: presets} = usePresetsQuery();
+  const preset = matchPreset(observation.tags, presets);
 
   if (!observation) {
     throw new Error('Observation does not exist');

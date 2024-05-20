@@ -1,61 +1,54 @@
-// @ts-check
-import debug from 'debug';
-import rn_bridge from 'rn-bridge';
-import {createServer} from 'rpc-reflector';
-import {MapeoClient} from './mapeo-core/index';
-import MessagePortLike from './message-port-like.js';
-import {MockPreset, mockObservations} from './mockData.js';
+import { parseArgs } from 'util'
 
-/** @typedef {Object} State
- *
- * @property {import('./types/api').Status} State.status
- */
+import { init } from './src/app.js'
 
-// TODO: Account for args passed from node.startWithArgs
-debug.enable('*');
+// We define this here so we don't need to do additional bundling adjustments to get the path correct when running on the device
+// This assumes that we keep the relevant directory as part of the built assets when building for nodejs mobile
+// (see `KEEP_THESE` variable in build-backend.mjs)
+const MIGRATIONS_FOLDER_PATH = new URL(
+  './node_modules/@mapeo/core/drizzle',
+  import.meta.url,
+).pathname
+const FALLBACK_MAP_PATH = new URL(
+  './node_modules/mapeo-offline-map',
+  import.meta.url,
+).pathname
 
-const log = debug('mapeo:index');
+const DEFAULT_CONFIG_PATH = new URL(
+  './node_modules/@mapeo/default-config/dist/mapeo-default-config.mapeoconfig',
+  import.meta.url,
+).pathname
 
-log('Starting Node...');
+try {
+  const { values } = parseArgs({
+    options: {
+      version: { type: 'string' },
+      rootKey: { type: 'string' },
+      sharedStoragePath: { type: 'string' },
+    },
+  })
 
-// 1. Initialize server state
-/** @type {State} */
-const state = {
-  status: 'idle',
-};
+  if (typeof values.rootKey !== 'string') {
+    throw new Error('backend did not receive root key from front end')
+  }
 
-// 2. Initialize Mapeo API server
-const mapeoClient = new MapeoClient();
+  if (typeof values.sharedStoragePath !== 'string') {
+    throw new Error(
+      'backend did not receive shared storage path from front end',
+    )
+  }
 
-MockPreset.forEach(doc => {
-  mapeoClient.preset.create(doc);
-});
-
-mockObservations.forEach(doc => {
-  mapeoClient.observation.create(doc);
-});
-
-const channel = new MessagePortLike();
-
-const {close} = createServer(mapeoClient, channel);
-
-channel.start();
-
-// 3. Initialize event listeners
-rn_bridge.channel.on('get-status', () => {
-  rn_bridge.channel.post('status', state.status);
-});
-
-rn_bridge.channel.on('close', () => {
-  close();
-});
-
-process.on('exit', () => {
-  close();
-});
-
-// 4. Send initial status message to client
-state.status = 'listening';
-rn_bridge.channel.post('status', {value: state.status});
-
-log('Node was initialized!');
+  // Do not await this as we want this to run indefinitely
+  init({
+    version: values.version,
+    rootKey: Buffer.from(values.rootKey, 'hex'),
+    migrationsFolderPath: MIGRATIONS_FOLDER_PATH,
+    sharedStoragePath: values.sharedStoragePath,
+    defaultConfigPath: DEFAULT_CONFIG_PATH,
+    fallbackMapPath: FALLBACK_MAP_PATH,
+  }).catch((err) => {
+    console.error('Server startup error:', err)
+  })
+} catch (err) {
+  console.error('Server startup error:', err)
+}

@@ -1,52 +1,56 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {IconButton} from './IconButton';
-import {ObservationListIcon} from './icons';
-import {useNavigationFromHomeTabs} from '../hooks/useNavigationWithTypes';
-import {Text} from './Text';
+import {ObservationListIcon, SyncIconCircle} from './icons';
+import {GPSPill} from './GPSPill';
+import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
+import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
 
-export const HomeHeader = () => {
-  const navigation = useNavigationFromHomeTabs();
+export const HomeHeader: FC<BottomTabHeaderProps> = ({navigation}) => {
+  const insets = useSafeAreaInsets();
+  const styles = createStyles(insets);
 
   return (
-    <View style={[styles.header]}>
+    <View style={styles.header}>
       <LinearGradient
         style={styles.linearGradient}
         colors={['#0006', '#0000']}
       />
-      {/* Stand in for styling,  */}
-      <Text>""</Text>
       <IconButton
-        style={styles.rightButton}
+        style={styles.leftButton}
         onPress={() => {
-          navigation.navigate('ObservationList');
-        }}
-        testID="observationListButton">
+          navigation.navigate('Sync');
+        }}>
+        <SyncIconCircle />
+      </IconButton>
+      <GPSPill navigation={navigation} />
+      <IconButton onPress={() => {}} testID="observationListButton">
         <ObservationListIcon />
       </IconButton>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: 'transparent',
-  },
-  rightButton: {},
-  leftButton: {
-    width: 60,
-    height: 60,
-  },
-  linearGradient: {
-    height: 60,
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    left: 0,
-    backgroundColor: 'transparent',
-  },
-});
+const createStyles = (insets: EdgeInsets) =>
+  StyleSheet.create({
+    header: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      backgroundColor: 'transparent',
+      paddingTop: insets.top,
+    },
+    leftButton: {
+      width: 60,
+      height: 60,
+    },
+    linearGradient: {
+      height: 60,
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      left: 0,
+      backgroundColor: 'transparent',
+    },
+  });

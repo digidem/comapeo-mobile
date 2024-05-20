@@ -1,0 +1,13 @@
+diff --git a/node_modules/rpc-reflector/client.js b/node_modules/rpc-reflector/client.js
+index b2f3161..6ea75c0 100644
+--- a/node_modules/rpc-reflector/client.js
++++ b/node_modules/rpc-reflector/client.js
+@@ -48,7 +48,7 @@ module.exports = createClient
+  * @returns {ClientApi<ApiType>}
+  */
+ function createClient(channel, { timeout = 5000 } = {}) {
+-  const channelIsStream = isStream.duplex(channel)
++  const channelIsStream = false
+   invariant(
+     isMessagePortLike(channel) || channelIsStream,
+     'Must pass a Duplex Stream or a browser MessagePort, node worker.MessagePort, or MessagePort-like object'

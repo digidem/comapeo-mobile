@@ -1,7 +1,85 @@
 {
-  "name": "MapeoNext",
-  "displayName": "MapeoNext",
-  "plugins": [
-    "expo-localization"
-  ]
+  "expo": {
+    "jsEngine": "hermes",
+    "name": "CoMapeo",
+    "slug": "comapeo",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "assetBundlePatterns": ["**/*"],
+    "plugins": [
+      "expo-localization",
+      "expo-secure-store",
+      [
+        "@rnmapbox/maps",
+        {
+          "RNMapboxMapsImpl": "mapbox",
+          "RNMapboxMapsVersion": "11.1.0",
+          "RNMapboxMapsDownloadToken": "sk.eyJ1IjoiYnN0ZWZhbmN6eWsiLCJhIjoiY2x1dXV1NHNlMGU5dzJqcnh1Zno4YW4xcyJ9.P_LsVHh_HWTh25x5rRdrQg"
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "isIosBackgroundLocationEnabled": true,
+          "isAndroidBackgroundLocationEnabled": true
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
+          "recordAudioAndroid": true
+        }
+      ],
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "note": "Use SENTRY_AUTH_TOKEN env to authenticate with Sentry.",
+          "project": "comapeo",
+          "organization": "awana-digital"
+        }
+      ],
+      ["./expo-config-plugins/removeExpoInputStyles.js"]
+    ],
+    "android": {
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#050F77"
+      },
+      "splash": {
+        "image": "./assets/splash.png",
+        "backgroundColor": "#050F77",
+        "resizeMode": "contain"
+      },
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_BACKGROUND_LOCATION",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_LOCATION",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.comapeo"
+    },
+    "ios": {
+      "splash": {
+        "image": "./assets/splash.png",
+        "backgroundColor": "#050F77",
+        "resizeMode": "contain"
+      },
+      "bundleIdentifier": "com.comapeo"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2d5b8137-12ec-45aa-9c23-56b6a1c522b7"
+      }
+    },
+    "owner": "digidem"
+  }
 }

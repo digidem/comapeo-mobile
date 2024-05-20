@@ -53,6 +53,7 @@ import {
 } from '../../screens/ManualGpsScreen';
 import {HomeTabs} from '../Tab';
 import {SaveTrackScreen} from '../../screens/SaveTrack/SaveTrackScreen';
+import {ObservationFields} from '../../screens/ObservationFields';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -237,5 +238,6 @@ export const createDefaultScreenGroup = (
       component={ManualGpsScreen}
       options={createManualGpsNavigationOptions({intl})}
     />
+    <RootStack.Screen name="ObservationFields" component={ObservationFields} />
   </RootStack.Group>
 );

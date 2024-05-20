@@ -16,6 +16,7 @@ import debug from 'debug';
 import {LIGHT_GREY} from '../lib/styles';
 import {AlertIcon} from './icons';
 import {Photo} from '../contexts/PhotoPromiseContext/types';
+import * as Progress from 'react-native-progress';
 
 const spacing = 10;
 const minSize = 150;
@@ -48,6 +49,8 @@ export const Thumbnail = ({photo, style, size, onPress}: ThumbnailProps) => {
       onPress={onPress}>
       {isCapturing && !error ? (
         <ActivityIndicator />
+      ) : uri === undefined ? (
+        <Progress.Circle size={30} indeterminate={true} />
       ) : error || typeof uri !== 'string' ? (
         <AlertIcon />
       ) : (
@@ -66,6 +69,7 @@ export const ThumbnailScrollView = (props: {
 }) => {
   const scrollViewRef = React.useRef<ScrollView>(null);
   const {photos} = props;
+
   React.useLayoutEffect(() => {
     scrollViewRef.current && scrollViewRef.current.scrollToEnd();
   }, [photos?.length]);

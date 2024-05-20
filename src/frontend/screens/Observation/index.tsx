@@ -95,12 +95,12 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
           ) : null}
           {attachmentUrls.length > 0 && (
             <ThumbnailScrollView
-              photos={attachmentUrls.map(data => {
-                return !data
+              photos={attachmentUrls.map(attachmentData => {
+                return !attachmentData
                   ? undefined
                   : {
-                      thumbnailUri: data.url,
-                      id: data.driveDiscoveryId,
+                      thumbnailUri: attachmentData.url,
+                      id: attachmentData.driveDiscoveryId,
                     };
               })}
             />

@@ -58,17 +58,22 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
   }
 
   function clearError() {
-    if (sendInviteMutation.isIdle) {
+    if (sendInviteMutation.isError) {
       sendInviteMutation.reset();
-    } else {
+    }
+    if (requestCancelInviteMutation.isError) {
       requestCancelInviteMutation.reset();
     }
   }
 
   function tryAgain() {
-    if (sendInviteMutation.isIdle) {
+    if (sendInviteMutation.isError) {
+      sendInviteMutation.reset();
       sendInvite();
-    } else {
+      return;
+    }
+    if (requestCancelInviteMutation.isError) {
+      requestCancelInviteMutation.reset();
       cancelInvite();
     }
   }
@@ -87,11 +92,7 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
         <WaitingForInviteAccept cancelInvite={cancelInvite} />
       )}
       <ErrorBottomSheet
-        error={
-          sendInviteMutation.isIdle
-            ? sendInviteMutation.error
-            : requestCancelInviteMutation.error
-        }
+        error={sendInviteMutation.error || requestCancelInviteMutation.error}
         clearError={clearError}
         tryAgain={tryAgain}
       />

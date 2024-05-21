@@ -80,12 +80,13 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
     },
   ];
 
-  process.env.EXPO_PUBLIC_FEATURE_AUDIO &&
+  if (process.env.EXPO_PUBLIC_FEATURE_AUDIO) {
     bottomSheetItems.unshift({
       icon: <Audio width={30} height={30} />,
       label: t(m.audioButton),
       onPress: () => {},
     });
+  }
 
   if (preset?.fieldIds.length) {
     // Only show the option to add details if preset fields are defined.

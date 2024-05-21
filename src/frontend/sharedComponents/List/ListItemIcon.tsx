@@ -1,19 +1,21 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import {ViewStyleProp} from '../../sharedTypes';
 
-type ListItemIconProps =
+type ListItemIconProps = {style?: ViewStyleProp} & (
   | {
       iconName: string;
     }
-  | {icon: React.ReactNode};
+  | {icon: React.ReactNode}
+);
 
 /**
  * A simple wrapper to apply `List` styles to an `Icon` or `SvgIcon`.
  */
 export const ListItemIcon = (props: ListItemIconProps) => {
   return (
-    <View style={styles.root}>
+    <View style={[styles.root, props.style]}>
       {'icon' in props ? (
         props.icon
       ) : (

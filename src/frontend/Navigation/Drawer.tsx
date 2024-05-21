@@ -127,7 +127,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
           onPress={() => {
             navigate('DrawerHome', {screen: 'CreateOrJoinProject'});
           }}>
-          <ListItemIcon
+          <DrawerListItemIcon
             icon={
               <MaterialCommunityIcons
                 name="shape-square-rounded-plus"
@@ -142,17 +142,21 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
           onPress={() => {
             navigate('DrawerHome', {screen: 'ProjectSettings'});
           }}>
-          <ListItemIcon iconName="assignment" />
+          <DrawerListItemIcon iconName="assignment" />
           <ListItemText primary={<FormattedMessage {...m.projectSettings} />} />
         </ListItem>
         <ListItem
           onPress={() => {
             navigate('DrawerHome', {screen: 'AppSettings'});
           }}>
-          <ListItemIcon iconName="settings-suggest" />
+          <DrawerListItemIcon iconName="settings-suggest" />
           <ListItemText primary={<FormattedMessage {...m.appSettings} />} />
         </ListItem>
       </List>
     </DrawerContentScrollView>
   );
 };
+
+function DrawerListItemIcon(props: React.ComponentProps<typeof ListItemIcon>) {
+  return <ListItemIcon {...props} style={{minWidth: 0, marginRight: 10}} />;
+}

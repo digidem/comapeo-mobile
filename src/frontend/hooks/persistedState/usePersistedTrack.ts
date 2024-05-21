@@ -1,6 +1,7 @@
 import {calculateTotalDistance} from '../../utils/distance.ts';
 import {LocationHistoryPoint} from '../../sharedTypes/location.ts';
-import {createPersistedState} from './createPersistedState.ts';
+import {createPersistedStore} from './createPersistedState.ts';
+import {useStore} from 'zustand';
 
 type TracksStoreState = {
   locationHistory: LocationHistoryPoint[];
@@ -23,7 +24,7 @@ type TracksStoreState = {
     }
 );
 
-export const usePersistedTrack = createPersistedState<TracksStoreState>(
+export const tracksStore = createPersistedStore<TracksStoreState>(
   set => ({
     isTracking: false,
     locationHistory: [],
@@ -31,7 +32,7 @@ export const usePersistedTrack = createPersistedState<TracksStoreState>(
     distance: 0,
     description: '',
     trackingSince: null,
-    setDescription: (val: string) => set(state => ({description: val})),
+    setDescription: (val: string) => set(() => ({description: val})),
     addNewObservation: (id: string) =>
       set(state => ({observations: [...state.observations, id]})),
     addNewLocations: data =>
@@ -60,14 +61,16 @@ export const usePersistedTrack = createPersistedState<TracksStoreState>(
         };
       }),
     clearCurrentTrack: () =>
-      set(() => ({
-        locationHistory: [],
-        trackingSince: null,
-        distance: 0,
-        isTracking: false,
-        observations: [],
-        description: '',
-      })),
+      set(() => {
+        return {
+          locationHistory: [],
+          trackingSince: null,
+          distance: 0,
+          isTracking: false,
+          observations: [],
+          description: '',
+        };
+      }),
     setTracking: (val: boolean) =>
       set(() =>
         val
@@ -77,3 +80,14 @@ export const usePersistedTrack = createPersistedState<TracksStoreState>(
   }),
   'MapeoTrack',
 );
+
+// Taken from https://github.com/pmndrs/zustand/blob/main/docs/guides/typescript.md#bounded-usestore-hook-for-vanilla-stores
+export function usePersistedTrack(): TracksStoreState;
+export function usePersistedTrack<T>(
+  selector: (state: TracksStoreState) => T,
+): T;
+export function usePersistedTrack<T>(
+  selector?: (state: TracksStoreState) => T,
+) {
+  return useStore(tracksStore, selector!);
+}

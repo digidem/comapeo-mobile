@@ -1,13 +1,14 @@
+import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {BLACK} from '../../lib/styles';
 import {FormattedPresetName} from '../../sharedComponents/FormattedData';
-import {CategoryCircleIcon} from '../../sharedComponents/icons/CategoryIcon';
+import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {Preset} from '@mapeo/schema';
 
 export const PresetHeader = ({preset}: {preset: Preset}) => {
   return (
     <View style={styles.categoryIconContainer}>
-      <CategoryCircleIcon color={BLACK} size="medium" />
+      <PresetCircleIcon size="medium" name={preset.name} />
       <Text style={styles.categoryLabel} numberOfLines={1}>
         <FormattedPresetName preset={preset} />
       </Text>

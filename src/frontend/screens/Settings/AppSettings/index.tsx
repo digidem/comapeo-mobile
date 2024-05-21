@@ -40,7 +40,7 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
       <List>
         <ListItem
           onPress={() => {
-            navigation.navigate('Languages');
+            navigation.navigate('LanguageSettings');
           }}>
           <ListItemIcon iconName="language" />
           <ListItemText

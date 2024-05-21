@@ -14,11 +14,11 @@ const m = defineMessages({
   },
 });
 
-export const Languages: NativeNavigationComponent<'Languages'> = () => {
-  const [locale, setLocale] = usePersistedLocale(store => [
-    store.locale,
-    store.setLocale,
-  ]);
+export const LanguageSettings: NativeNavigationComponent<
+  'LanguageSettings'
+> = () => {
+  const locale = usePersistedLocale(store => store.locale);
+  const setLocale = usePersistedLocale(store => store.setLocale);
 
   const options = supportedLanguages.map(
     ({locale: supportedLocale, nativeName, englishName}) => ({
@@ -39,4 +39,4 @@ export const Languages: NativeNavigationComponent<'Languages'> = () => {
   );
 };
 
-Languages.navTitle = m.title;
+LanguageSettings.navTitle = m.title;

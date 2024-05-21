@@ -112,6 +112,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
             alignSelf: 'center',
             textAlign: 'center',
             paddingHorizontal: 40,
+            fontSize: 20,
           }}>
           {data?.name
             ? formatMessage(m.projName, {projectName: data.name})

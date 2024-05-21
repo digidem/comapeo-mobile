@@ -16,14 +16,14 @@ import debug from 'debug';
 import {LIGHT_GREY} from '../lib/styles';
 import {AlertIcon} from './icons';
 import {Photo} from '../contexts/PhotoPromiseContext/types';
-import {usePersistedDraftObservation} from '../hooks/persistedState/usePersistedDraftObservation';
+import * as Progress from 'react-native-progress';
 
 const spacing = 10;
 const minSize = 150;
 const log = debug('Thumbnail');
 
 type ThumbnailProps = {
-  photo: Photo;
+  photo?: Partial<Photo>;
   onPress: () => any;
   style?: StyleProp<ViewStyle>;
   size?: number;
@@ -32,7 +32,11 @@ type ThumbnailProps = {
 export const Thumbnail = ({photo, style, size, onPress}: ThumbnailProps) => {
   const [error, setError] = React.useState(false);
 
-  const uri = 'thumbnailUri' in photo ? photo.thumbnailUri : undefined;
+  const uri =
+    (photo && 'thumbnailUri' in photo && photo.thumbnailUri) || undefined;
+  const isCapturing =
+    (photo && 'capturing' in photo && (photo.capturing as boolean)) ||
+    undefined;
 
   function handleImageError(e: NativeSyntheticEvent<ImageErrorEventData>) {
     log('Error loading image:\n', e.nativeEvent && e.nativeEvent.error);
@@ -43,8 +47,10 @@ export const Thumbnail = ({photo, style, size, onPress}: ThumbnailProps) => {
     <TouchableOpacity
       style={[styles.thumbnailContainer, {width: size, height: size}, style]}
       onPress={onPress}>
-      {'capturing' in photo && photo.capturing === true && !error ? (
+      {isCapturing && !error ? (
         <ActivityIndicator />
+      ) : uri === undefined ? (
+        <Progress.Circle size={30} indeterminate={true} />
       ) : error || typeof uri !== 'string' ? (
         <AlertIcon />
       ) : (
@@ -58,13 +64,15 @@ export const Thumbnail = ({photo, style, size, onPress}: ThumbnailProps) => {
   );
 };
 
-export const ThumbnailScrollView = () => {
+export const ThumbnailScrollView = (props: {
+  photos: (Partial<Photo> | undefined)[];
+}) => {
   const scrollViewRef = React.useRef<ScrollView>(null);
-  const photos = usePersistedDraftObservation(store => store.photos);
+  const {photos} = props;
 
   React.useLayoutEffect(() => {
     scrollViewRef.current && scrollViewRef.current.scrollToEnd();
-  }, [photos.length]);
+  }, [photos?.length]);
 
   function handlePhotoPress(photoIndex: number) {
     // navigation.navigate('PhotosModal', {
@@ -75,7 +83,7 @@ export const ThumbnailScrollView = () => {
     return;
   }
 
-  if (photos.length === 0) return null;
+  if (photos?.length === 0) return null;
   const windowWidth = Dimensions.get('window').width;
   // Get a thumbnail size so there is always 1/2 of a thumbnail off the right of
   // the screen.
@@ -91,14 +99,14 @@ export const ThumbnailScrollView = () => {
       contentInset={{top: 5, right: 5, bottom: 5, left: 5}}
       style={styles.photosContainer}>
       {photos
-        .filter(photo => photo.deleted == null)
-        .map((photo, index) => (
+        ?.filter(photo => photo?.deleted == null)
+        ?.map((photo, index) => (
           <Thumbnail
             key={index}
             photo={photo}
             style={styles.thumbnail}
             size={size}
-            onPress={() => handlePhotoPress(photos.indexOf(photo))}
+            onPress={() => photo && handlePhotoPress(photos.indexOf(photo))}
           />
         ))}
     </ScrollView>

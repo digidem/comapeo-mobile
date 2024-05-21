@@ -6,6 +6,7 @@ import {URL} from 'react-native-url-polyfill';
 
 import {DraftPhoto} from '../../contexts/PhotoPromiseContext/types';
 import {useProject} from './projects';
+import {convertUrlToBase64} from '../../utils/base64.ts';
 
 type SavablePhoto = SetRequired<
   Pick<DraftPhoto, 'originalUri' | 'previewUri' | 'thumbnailUri'>,
@@ -65,20 +66,26 @@ export function useAttachmentUrlQueries(
                 throw new Error('Cannot get URL of attachment for variant');
               }
 
-              return project.$blobs.getUrl({
-                driveId: attachment.driveDiscoveryId,
-                name: attachment.name,
-                type: attachment.type,
-                variant,
-              });
+              return {
+                ...attachment,
+                url: await project.$blobs.getUrl({
+                  driveId: attachment.driveDiscoveryId,
+                  name: attachment.name,
+                  type: attachment.type,
+                  variant,
+                }),
+              };
             }
             case 'photo': {
-              return project.$blobs.getUrl({
-                driveId: attachment.driveDiscoveryId,
-                name: attachment.name,
-                type: attachment.type,
-                variant,
-              });
+              return {
+                ...attachment,
+                url: await project.$blobs.getUrl({
+                  driveId: attachment.driveDiscoveryId,
+                  name: attachment.name,
+                  type: attachment.type,
+                  variant,
+                }),
+              };
             }
           }
         },

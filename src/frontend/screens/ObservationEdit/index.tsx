@@ -55,6 +55,10 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
   const preset = usePreset();
   const isNew = !observationId;
   const {formatMessage: t} = useIntl();
+  const {openSheet, sheetRef, isOpen, closeSheet} = useBottomSheetModal({
+    openOnMount: false,
+  });
+  const photos = usePersistedDraftObservation(store => store.photos);
 
   React.useEffect(() => {
     navigation.setOptions({
@@ -102,8 +106,8 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <PresetAndLocationHeader isNew={isNew} />
         <DescriptionField />
+        <ThumbnailScrollView photos={photos} />
       </ScrollView>
-      <ThumbnailScrollView />
       <ActionTab items={bottomSheetItems} />
       <ErrorBottomSheet error={error} clearError={() => setError(null)} />
     </View>

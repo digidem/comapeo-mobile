@@ -1,3 +1,4 @@
+import React from 'react';
 import {ScrollView} from 'react-native';
 import {List, ListItem, ListItemText} from '../../../sharedComponents/List';
 import {FormattedMessage, defineMessages} from 'react-intl';
@@ -34,7 +35,10 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
           }}>
           <ListItemText primary={<FormattedMessage {...m.deviceName} />} />
         </ListItem>
-        <ListItem onPress={() => {}}>
+        <ListItem
+          onPress={() => {
+            navigation.navigate('ProjectConfiguration');
+          }}>
           <ListItemText primary={<FormattedMessage {...m.configuration} />} />
         </ListItem>
         <ListItem

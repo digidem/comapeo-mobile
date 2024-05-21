@@ -93,6 +93,7 @@ export type RootStackParamsList = {
   DeviceNameEdit: undefined;
   SaveTrack: undefined;
   Sync: undefined;
+  ProjectConfiguration: undefined;
 };
 
 export type DeviceNamingParamsList = {

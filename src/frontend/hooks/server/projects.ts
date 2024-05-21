@@ -2,7 +2,9 @@ import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {useApi} from '../../contexts/ApiContext';
 import {useActiveProjectContext} from '../../contexts/ProjectContext';
 
-export const PROJECTS_KEY = 'all_projects';
+export const PROJECT_KEY = 'project';
+export const ALL_PROJECTS_KEY = 'all_projects';
+export const PROJECT_SETTINGS_KEY = 'project_settings';
 
 export function useUpdateActiveProjectId() {
   const projectContext = useActiveProjectContext();
@@ -19,7 +21,7 @@ export function useAllProjects() {
 
   return useQuery({
     queryFn: async () => await api.listProjects(),
-    queryKey: [PROJECTS_KEY],
+    queryKey: [ALL_PROJECTS_KEY],
   });
 }
 
@@ -35,7 +37,9 @@ export function useCreateProject() {
     },
     onSuccess: async data => {
       updateProject(data);
-      return await queryClient.invalidateQueries({queryKey: ['projects']});
+      return await queryClient.invalidateQueries({
+        queryKey: [ALL_PROJECTS_KEY],
+      });
     },
   });
 }
@@ -54,9 +58,24 @@ export function useProjectSettings() {
   const project = useProject();
 
   return useQuery({
-    queryKey: ['projectSettings'],
+    queryKey: [PROJECT_SETTINGS_KEY],
     queryFn: () => {
       return project.$getProjectSettings();
+    },
+  });
+}
+
+export function useImportProjectConfig() {
+  const queryClient = useQueryClient();
+  const project = useProject();
+
+  return useMutation({
+    mutationFn: (configPath: string) => {
+      return project.importConfig({configPath});
+    },
+    onSuccess: () => {
+      // TODO: Invalidate project query too (easier to do when https://github.com/digidem/comapeo-mobile/pull/363 is merged)
+      return queryClient.invalidateQueries({queryKey: [PROJECT_SETTINGS_KEY]});
     },
   });
 }

@@ -4,7 +4,11 @@ import {
   useSuspenseQuery,
 } from '@tanstack/react-query';
 import {useApi} from '../../contexts/ApiContext';
-import {PROJECTS_KEY, useProject, useUpdateActiveProjectId} from './projects';
+import {
+  ALL_PROJECTS_KEY,
+  useProject,
+  useUpdateActiveProjectId,
+} from './projects';
 
 export const INVITE_KEY = 'pending_invites';
 
@@ -32,7 +36,7 @@ export function useAcceptInvite(projectId?: string) {
       // This is a workaround. There is a race condition where the project in not available when the invite is accepted. This is temporary and is currently being worked on.
       setTimeout(() => {
         queryClient
-          .invalidateQueries({queryKey: [INVITE_KEY, PROJECTS_KEY]})
+          .invalidateQueries({queryKey: [INVITE_KEY, ALL_PROJECTS_KEY]})
           .then(() => {
             if (projectId) {
               switchActiveProject(projectId);

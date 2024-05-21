@@ -54,6 +54,10 @@ import {
 import {HomeTabs} from '../Tab';
 import {SaveTrackScreen} from '../../screens/SaveTrack/SaveTrackScreen';
 import {ObservationFields} from '../../screens/ObservationFields';
+import {
+  ProjectConfigurationScreen,
+  createNavigationOptions as createProjectConfigurationNavOptions,
+} from '../../screens/Settings/ProjectSettings/ProjectConfiguration';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -239,5 +243,10 @@ export const createDefaultScreenGroup = (
       options={createManualGpsNavigationOptions({intl})}
     />
     <RootStack.Screen name="ObservationFields" component={ObservationFields} />
+    <RootStack.Screen
+      name="ProjectConfiguration"
+      component={ProjectConfigurationScreen}
+      options={createProjectConfigurationNavOptions({intl})}
+    />
   </RootStack.Group>
 );

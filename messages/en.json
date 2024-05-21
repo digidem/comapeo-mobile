@@ -765,6 +765,30 @@
   "screens.Settings.CreateOrJoinProject.whatIsAProject": {
     "message": "What is a Project"
   },
+  "screens.Settings.ProjectSettings.ProjectConfiguration.alertOkButton": {
+    "description": "Button to dismiss alert after attempting to import a config file",
+    "message": "OK"
+  },
+  "screens.Settings.ProjectSettings.ProjectConfiguration.configErrorTitle": {
+    "description": "Title of error dialog when there is an error importing a config file",
+    "message": "Import Error"
+  },
+  "screens.Settings.ProjectSettings.ProjectConfiguration.configImportAlertSuccessMessage": {
+    "description": "Message for alert after successful config import",
+    "message": "Successfully imported config"
+  },
+  "screens.Settings.ProjectSettings.ProjectConfiguration.configImportErrorMessage": {
+    "description": "Description of error dialog when there is an error importing a config file",
+    "message": "There was an error trying to import this config file"
+  },
+  "screens.Settings.ProjectSettings.ProjectConfiguration.importConfigButtonText": {
+    "description": "Button to import Mapeo config file",
+    "message": "Import Config"
+  },
+  "screens.Settings.ProjectSettings.ProjectConfiguration.screenTitle": {
+    "description": "Title of project configuration screen",
+    "message": "Project Configuration"
+  },
   "screens.Settings.YourTeam.InviteDeclined": {
     "message": "Invitation Declined"
   },
@@ -873,7 +897,7 @@
     "message": "Go Back"
   },
   "sharedComponents.ErrorModal.somethingWrong": {
-    "message": "Something\n Went Wrong"
+    "message": "Something Went Wrong"
   },
   "sharedComponents.ErrorModal.tryAgain": {
     "message": "Try Again"

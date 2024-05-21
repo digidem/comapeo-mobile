@@ -17,7 +17,6 @@ import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
 import {CoordinateFormat} from '../../screens/Settings/AppSettings/CoordinateFormat';
 import {CustomHeaderLeftClose} from '../../sharedComponents/CustomHeaderLeftClose';
-import {SaveButton} from '../../screens/ObservationEdit/SaveButton';
 import {CreateOrJoinProject} from '../../screens/Settings/CreateOrJoinProject';
 import {CreateProject} from '../../screens/Settings/CreateOrJoinProject/CreateProject';
 import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateProject/ProjectCreated';
@@ -96,7 +95,6 @@ export const createDefaultScreenGroup = (
               observationId={observationId}
             />
           ),
-          headerRight: () => <SaveButton observationId={observationId} />,
           headerTitle: observationId
             ? intl(ObservationEdit.editTitle)
             : intl(ObservationEdit.navTitle),

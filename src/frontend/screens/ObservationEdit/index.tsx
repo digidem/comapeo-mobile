@@ -8,12 +8,12 @@ import {DescriptionField} from './DescriptionField';
 import {ThumbnailScrollView} from '../../sharedComponents/ThumbnailScrollView';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {SaveButton} from './SaveButton';
-import {PresetInformation} from './PresetInformation';
+import {PresetAndLocationHeader} from './PresetAndLocationHeader';
 import {WHITE} from '../../lib/styles';
 import Photo from '../../images/redesign/Photo.svg';
 import Audio from '../../images/redesign/Audio.svg';
 import Details from '../../images/redesign/Details.svg';
-import ActionTab from '../../sharedComponents/ActionTab/ActionTab';
+import {ActionTab} from '../../sharedComponents/ActionTab';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 
 const m = defineMessages({
@@ -74,16 +74,19 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
 
   const bottomSheetItems = [
     {
-      icon: <Audio width={30} height={30} />,
-      label: t(m.audioButton),
-      onPress: () => {},
-    },
-    {
       icon: <Photo width={30} height={30} />,
       label: t(m.photoButton),
       onPress: handleCameraPress,
     },
   ];
+
+  if (process.env.EXPO_PUBLIC_FEATURE_AUDIO) {
+    bottomSheetItems.unshift({
+      icon: <Audio width={30} height={30} />,
+      label: t(m.audioButton),
+      onPress: () => {},
+    });
+  }
 
   if (preset?.fieldIds.length) {
     // Only show the option to add details if preset fields are defined.
@@ -96,8 +99,8 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={{flex: 1}}>
-        <PresetInformation isNew={isNew} />
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <PresetAndLocationHeader isNew={isNew} />
         <DescriptionField />
       </ScrollView>
       <ThumbnailScrollView />
@@ -114,7 +117,11 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: WHITE,
     flexDirection: 'column',
-    flex: 1,
+    alignContent: 'stretch',
   },
-  bottomContainer: {},
+  scrollViewContent: {
+    flex: 1,
+    flexDirection: 'column',
+    alignContent: 'stretch',
+  },
 });

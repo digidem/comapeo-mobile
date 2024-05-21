@@ -1,7 +1,7 @@
 {
   "AppContainer.EditHeader.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Continue editing"
+    "message": "සංස්කරණය කරගෙන යන්න"
   },
   "AppContainer.EditHeader.discardChangesButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
@@ -12,7 +12,7 @@
   },
   "AppContainer.EditHeader.discardChangesTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes?"
+    "message": "වෙනස්කම් ඉවතලන්න?"
   },
   "AppContainer.EditHeader.discardObservationButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
@@ -23,7 +23,7 @@
   },
   "AppContainer.EditHeader.discardTitle": {
     "description": "Title of dialog that shows when cancelling a new observation",
-    "message": "Discard observation?"
+    "message": "නිරීක්ෂණය ඉවතලන්නද?"
   },
   "Modal.DiscardTrack.description": {
     "message": "Your Track will not be saved. This cannot be undone."
@@ -65,7 +65,7 @@
     "message": "UTM,Lat/Lon,DMS"
   },
   "Screens.Settings.AppSettings.language": {
-    "message": "Language"
+    "message": "භාෂාව"
   },
   "Screens.Settings.AppSettings.languageDesc": {
     "message": "Display language for app"
@@ -77,7 +77,7 @@
     "message": "Configuration"
   },
   "Screens.Settings.ProjectSettings.deviceName": {
-    "message": "Device Name"
+    "message": "උපාංගයේ නම"
   },
   "Screens.Settings.ProjectSettings.title": {
     "message": "Project Setttings"
@@ -119,56 +119,56 @@
     "message": "Select a Role"
   },
   "screens.AddPhoto.cancel": {
-    "message": "Cancel"
+    "message": "අවලංගු කරන්න"
   },
   "screens.AppPasscode": {
-    "message": "App Passcode"
+    "message": "යෙදුම් මුර කේතය"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.cancel": {
-    "message": "Cancel"
+    "message": "අවලංගු කරන්න"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
     "description": "used to indicate to the user what the new passcode will be.",
-    "message": "Passcode"
+    "message": "මුරකේතය"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
-    "message": "Save App Passcode"
+    "message": "යෙදුම් මුර කේතය සුරකින්න"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.title": {
-    "message": "App Passcodes can never be recovered if lost or forgotten! Make sure to note your passcode in a secure location before saving."
+    "message": "යෙදුම් මුරකේත නැති වුවහොත් හෝ අමතක වූවා නම් කිසිවිටෙක ආපසු ලබාගත නොහැක! සුරැකීමට පෙර ඔබේ මුර කේතය ආරක්ෂිත ස්ථානයක සටහන් කිරීමට වග බලා ගන්න."
   },
   "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
-    "message": "Please Enter Passcode"
+    "message": "කරුණාකර මුර කේතය ඇතුලත් කරන්න"
   },
   "screens.AppPasscode.EnterPassToTurnOff.titleEnter": {
-    "message": "Enter Passcode"
+    "message": "මුරකේතය ඇතුල්කරන්න"
   },
   "screens.AppPasscode.InputPasscodeScreen.cancel": {
-    "message": "Cancel"
+    "message": "අවලංගු කරන්න"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleConfirm": {
-    "message": "Re-enter Passcode"
+    "message": "මුරකේතය නැවත ඇතුල්කරන්න"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleSet": {
-    "message": "Set App Passcode"
+    "message": "යෙදුම් මුර කේතය සකසන්න"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.button": {
-    "message": "Next"
+    "message": "ඊළඟ"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.initialPassError": {
-    "message": "Password must be 5 numbers"
+    "message": "මුරපදය අංක 5ක් විය යුතුය"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.obscurePasscodeError": {
-    "message": "Cannot be used as a Passcode"
+    "message": "මුර කේතයක් ලෙස භාවිතා කළ නොහැක"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordDoesNotMatch": {
-    "message": "Password does not match"
+    "message": "මුරපදය නොගැලපේ"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordError": {
-    "message": "Incorrect Passcode"
+    "message": "වැරදි මුර කේතය"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet": {
-    "message": "This passcode will be required to open the Mapeo App"
+    "message": "Mapeo යෙදුම විවෘත කිරීමට මෙම මුර කේතය අවශ්‍ය වනු ඇත"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
     "message": "Confirm Passcode"
@@ -177,31 +177,31 @@
     "message": "Set Passcode"
   },
   "screens.AppPasscode.NewPasscode.Splash.continue": {
-    "message": "Continue"
+    "message": "ඉදිරියට යන්න"
   },
   "screens.AppPasscode.NewPasscode.Splash.title": {
-    "message": "What is App Passcode?"
+    "message": "යෙදුම් මුර කේතය යනු කුමක්ද?"
   },
   "screens.AppPasscode.PasscodeIntro.description": {
-    "message": "App Passcode allows you to add an additional layer of security by requiring that you enter a passcode in order to open the Mapeo app. You can define your own 5-digit passcode by turning on the feature below."
+    "message": "Mapeo යෙදුම විවෘත කිරීම සඳහා ඔබට මුරකේතයක් ඇතුළත් කිරීම අවශ්‍ය කිරීමෙන් අමතර ආරක්ෂක ස්ථරයක් එක් කිරීමට යෙදුම් මුරකේතය ඔබට ඉඩ සලසයි. පහත විශේෂාංගය ක්‍රියාත්මක කිරීමෙන් ඔබට ඔබේම ඉලක්කම් 5ක මුරකේතය අර්ථ දැක්විය හැක."
   },
   "screens.AppPasscode.PasscodeIntro.warning": {
     "message": "**Please note that forgotten passcodes cannot be recovered!** Once this feature is enabled, if you forget or lose your passcode, you will not be able to open Mapeo and will lose access to any Mapeo data that has not been synced with other project participants."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
-    "message": "Cancel"
+    "message": "අවලංගු කරන්න"
   },
   "screens.AppPasscode.TurnOffPasscode.changePasscode": {
-    "message": "Change App Passcode"
+    "message": "මුර කේතය වෙනස් කරන්න"
   },
   "screens.AppPasscode.TurnOffPasscode.currentlyUsing": {
-    "message": "You are currently using App Passcode. See below to stop using or change your passcode."
+    "message": "ඔබ දැනට යෙදුම් මුරකේතය භාවිතා කරයි. ඔබගේ මුර කේතය භාවිතා කිරීම නැවැත්වීමට හෝ වෙනස් කිරීමට පහත බලන්න."
   },
   "screens.AppPasscode.TurnOffPasscode.description": {
     "message": "App Passcode adds an additional layer of security by requiring that you enter a passcode in order to open the Mapeo app."
   },
   "screens.AppPasscode.TurnOffPasscode.title": {
-    "message": "App Passcode"
+    "message": "යෙදුම් මුර කේතය"
   },
   "screens.AppPasscode.TurnOffPasscode.turnOff": {
     "message": "Turn Off"
@@ -220,7 +220,7 @@
   },
   "screens.CategoryChooser.categoryTitle": {
     "description": "Title for category chooser screen",
-    "message": "Choose what is happening"
+    "message": "සිදුවන්නේ කුමක්ද යන්න තෝරන්න"
   },
   "screens.CoordinateFormat.dd": {
     "description": "Decimal Degrees coordinate format",
@@ -449,39 +449,39 @@
     "message": "What is Obscure Passcode?"
   },
   "screens.Observation.ObservationEdit.CategoryView.changePreset": {
-    "message": "Change"
+    "message": "වෙනස් කරන්න"
   },
   "screens.Observation.ObservationEdit.CategoryView.observation": {
     "description": "Default name of observation with no matching preset",
-    "message": "Observation"
+    "message": "නිරීක්ෂණ"
   },
   "screens.Observation.ObservationView.delete": {
     "description": "Button to delete an observation",
-    "message": "Delete"
+    "message": "මකන්න"
   },
   "screens.Observation.ObservationView.noAnswer": {
     "description": "Placeholder text for fields on an observation which are not answered",
-    "message": "No answer"
+    "message": "පිළිතුරක් නැත"
   },
   "screens.Observation.ObservationView.observation": {
     "description": "Default name of observation with no matching preset",
-    "message": "Observation"
+    "message": "නිරීක්ෂණ"
   },
   "screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
-    "message": "Cancel"
+    "message": "අවලංගු කරන්න"
   },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
-    "message": "Yes, delete"
+    "message": "ඔව්, මකන්න"
   },
   "screens.Observation.deleteTitle": {
     "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "Delete observation?"
+    "message": "නිරීක්ෂණය මකන්නද?"
   },
   "screens.Observation.title": {
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
-    "message": "Observation"
+    "message": "නිරීක්ෂණ"
   },
   "screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
@@ -497,82 +497,78 @@
   },
   "screens.ObservationEdit.BottomSheet.addLabel": {
     "description": "Label above keyboard that expands into bottom sheet of options to add (photo, details etc)",
-    "message": "Add…"
-  },
-  "screens.ObservationEdit.ObservationEditView.audioButton": {
-    "description": "Button label for adding audio",
-    "message": "Audio"
+    "message": "එකතු කරන්න…"
   },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
-    "message": "What is happening here?"
+    "message": "මෙතන මොකද වෙන්නේ?"
   },
   "screens.ObservationEdit.ObservationEditView.detailsButton": {
     "description": "Button label to add details",
-    "message": "Details"
+    "message": "Add Details"
   },
   "screens.ObservationEdit.ObservationEditView.photoButton": {
     "description": "Button label for adding photo",
-    "message": "Photo"
+    "message": "ඡායාරූපය එක් කරන්න"
   },
   "screens.ObservationEdit.ObservationEditView.searching": {
     "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "Searching…"
+    "message": "සොයමින්…"
   },
   "screens.ObservationEdit.SaveButton.keepWaiting": {
     "description": "Button to cancel save and continue waiting for GPS",
-    "message": "Continue waiting"
+    "message": "දිගටම බලා සිටින්න"
   },
   "screens.ObservationEdit.SaveButton.manualEntry": {
     "description": "Button to manually enter GPS coordinates",
-    "message": "Manual Coords"
+    "message": "ඛණ්ඩාංක අතින් ඇතුල් කරන්න"
   },
   "screens.ObservationEdit.SaveButton.noGpsDesc": {
     "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "This observation does not have a location. You can continue waiting for a GPS signal, save the observation without a location, or enter coordinates manually"
+    "message": "මෙම නිරීක්ෂණයට ස්ථානයක් නොමැත. ඔබට GPS සංඥාවක් සඳහා රැඳී සිටිය හැක, ස්ථානයක් නොමැතිව නිරීක්ෂණ සුරකින්න, හෝ ඛණ්ඩාංක අතින් ඇතුල් කරන්න"
   },
   "screens.ObservationEdit.SaveButton.noGpsTitle": {
     "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "No GPS signal"
+    "message": "GPS සංඥා නැත"
   },
   "screens.ObservationEdit.SaveButton.saveAnyway": {
     "description": "Button to save regardless of GPS state",
-    "message": "Save"
+    "message": "සුරකින්න"
   },
   "screens.ObservationEdit.SaveButton.weakGpsDesc": {
     "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "GPS accuracy is low. You can continue waiting for better accuracy, save the observation with low accuracy, or enter coordinates manually"
+    "message": "GPS නිරවද්‍යතාවය අඩුයි. වඩා හොඳ නිරවද්‍යතාවයක් සඳහා ඔබට දිගටම බලා සිටිය හැක, අඩු නිරවද්‍යතාවයකින් නිරීක්ෂණය සුරකින්න, හෝ ඛණ්ඩාංක අතින් ඇතුල් කරන්න"
   },
   "screens.ObservationEdit.SaveButton.weakGpsTitle": {
     "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "Weak GPS signal"
+    "message": "දුර්වල GPS සංඥා"
   },
   "screens.ObservationEdit.editTitle": {
     "description": "screen title for edit observation screen",
-    "message": "Edit Observation"
+    "message": "නිරීක්ෂණ සංස්කරණය කරන්න"
   },
   "screens.ObservationEdit.newTitle": {
     "description": "screen title for new observation screen",
-    "message": "New Observation"
+    "message": "නව නිරීක්ෂණයක්"
   },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",
-    "message": "Observations"
+    "message": "නිරීක්ෂණය"
   },
   "screens.ObservationsList.NoProjectWarning": {
     "message": "You won’t be able to share observations collected yet."
   },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
     "description": "Back button on observation list screen when no observations are yet recorded",
-    "message": "Go To Map"
+    "message": "සිතියම වෙත යන්න"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
     "description": "Description of observation list view when the user has not yet recorded observations",
-    "message": "Start from map or camera view to record your first observation."
+    "message": "ඔබගේ පළමු නිරීක්ෂණය වාර්තා කිරීමට සිතියමෙන් හෝ කැමරා දර්ශනයෙන් ආරම්භ කරන්න."
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
     "description": "Title of observation list view when the user has not yet recorded observations",
-    "message": "Add Observations"
+    "message": "නිරීක්ෂණය එකතු කරන්න"
   },
   "screens.ObservationsList.createOrJoin": {
     "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
@@ -580,11 +576,11 @@
   },
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",
-    "message": "Error loading observations. Try quitting and restarting Mapeo."
+    "message": "නිරීක්ෂණ පූරණය කිරීමේ දෝෂයකි. Mapeo වෙතින් ඉවත් වී නැවත ආරම්භ කිරීමට උත්සාහ කරන්න."
   },
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
-    "message": "Loading… this can take a while after synchronizing with a new device"
+    "message": "පූරණය වෙමින් පවතී... මෙය නව උපාංගයක් සමඟ සමමුහුර්ත කිරීමෙන් පසු යම් කාලයක් ගත විය හැක"
   },
   "screens.ObservationsList.toSync": {
     "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
@@ -611,28 +607,28 @@
     "message": "Track"
   },
   "screens.Security.obscurePassDescriptonPassNotSet": {
-    "message": "To use, enable App Passcode"
+    "message": "භාවිතා කිරීමට, යෙදුම් මුරකේතය සබල කරන්න"
   },
   "screens.Security.obscurePassDescriptonPassSet": {
-    "message": "Protect your device against seizure"
+    "message": "අල්ලා ගැනීමෙන් ඔබේ උපාංගය ආරක්ෂා කරන්න"
   },
   "screens.Security.obscurePasscodeHeader": {
     "message": "Obscure Passcode"
   },
   "screens.Security.passDesriptionPassNotSet": {
-    "message": "Passcode not set"
+    "message": "මුර කේතය සකසා නැත"
   },
   "screens.Security.passDesriptionPassSet": {
-    "message": "Passcode is set"
+    "message": "මුර කේතය සකසා ඇත"
   },
   "screens.Security.passcodeHeader": {
-    "message": "App Passcode"
+    "message": "යෙදුම් මුර කේතය"
   },
   "screens.Security.securitySubheader": {
-    "message": "Device Security"
+    "message": "උපාංග ආරක්ෂාව"
   },
   "screens.Security.title": {
-    "message": "Security"
+    "message": "ආරක්ෂාව"
   },
   "screens.Setting.ProjectSettings.DeviceName.DisplayScreen.deviceNameLabel": {
     "message": "Your Device Name"
@@ -786,11 +782,11 @@
   },
   "screens.Settings.aboutMapeo": {
     "description": "Primary text for 'About Mapeo' link (version info)",
-    "message": "About Mapeo"
+    "message": "Mapeo ගැන"
   },
   "screens.Settings.aboutMapeoDesc": {
     "description": "Description of the 'About Mapeo' page",
-    "message": "Version and build number"
+    "message": "අනුවාදය සහ ගොඩනැගීමේ අංකය"
   },
   "screens.Settings.appSettings": {
     "message": "App Settings"
@@ -814,7 +810,7 @@
   },
   "screens.Settings.title": {
     "description": "Title of settings screen",
-    "message": "Settings"
+    "message": "සැකසුම්"
   },
   "screens.Sync.CreateOrJoinProjectDisplay.buttonText": {
     "message": "Create or Join Project"
@@ -867,10 +863,6 @@
   "screens.Sync.ProjectSyncDisplay.upToDate": {
     "message": "Up to Date! No data to Sync"
   },
-  "shareComponent.KeyboardAccessory.showOptions": {
-    "description": "title for observation options",
-    "message": "Show Options"
-  },
   "sharedComponents.DeviceCard.ThisDevice": {
     "message": "This Device!"
   },
@@ -881,7 +873,7 @@
     "message": "Go Back"
   },
   "sharedComponents.ErrorModal.somethingWrong": {
-    "message": "Something Went Wrong"
+    "message": "Something\n Went Wrong"
   },
   "sharedComponents.ErrorModal.tryAgain": {
     "message": "Try Again"
@@ -923,10 +915,10 @@
     "message": "Participant"
   },
   "sharedComponents.WifiBar.noWifi": {
-    "message": "No Internet"
+    "message": "අන්තර්ජාලය නොමැත"
   },
   "sharedComponents.WifiBar.wifi": {
     "description": "Label for wifi network name",
-    "message": "WiFi:"
+    "message": "වයිෆයි:"
   }
 }

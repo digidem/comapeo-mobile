@@ -38,7 +38,7 @@ export const LocationView = () => {
 
   return (
     <View style={styles.locationContainer}>
-      {!coordinateInfo.lat || !coordinateInfo.lon ? (
+      {coordinateInfo.lat === undefined || coordinateInfo.lon === undefined ? (
         <Text>
           <FormattedMessage {...m.searching} />
         </Text>

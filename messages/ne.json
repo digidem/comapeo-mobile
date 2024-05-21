@@ -1,7 +1,7 @@
 {
   "AppContainer.EditHeader.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Continue editing"
+    "message": "निरन्तर सम्पादन"
   },
   "AppContainer.EditHeader.discardChangesButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
@@ -12,7 +12,7 @@
   },
   "AppContainer.EditHeader.discardChangesTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes?"
+    "message": "परिवर्तन रद्द?"
   },
   "AppContainer.EditHeader.discardObservationButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
@@ -23,7 +23,7 @@
   },
   "AppContainer.EditHeader.discardTitle": {
     "description": "Title of dialog that shows when cancelling a new observation",
-    "message": "Discard observation?"
+    "message": "अवलाेकन हटाउने?"
   },
   "Modal.DiscardTrack.description": {
     "message": "Your Track will not be saved. This cannot be undone."
@@ -65,7 +65,7 @@
     "message": "UTM,Lat/Lon,DMS"
   },
   "Screens.Settings.AppSettings.language": {
-    "message": "Language"
+    "message": "भाषा"
   },
   "Screens.Settings.AppSettings.languageDesc": {
     "message": "Display language for app"
@@ -119,23 +119,23 @@
     "message": "Select a Role"
   },
   "screens.AddPhoto.cancel": {
-    "message": "Cancel"
+    "message": "रद्द"
   },
   "screens.AppPasscode": {
-    "message": "App Passcode"
+    "message": "एपकाे पासकाेड प्रयाेग गर्नु"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.cancel": {
-    "message": "Cancel"
+    "message": "रद्द"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
     "description": "used to indicate to the user what the new passcode will be.",
-    "message": "Passcode"
+    "message": "पासकाेड"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
-    "message": "Save App Passcode"
+    "message": "एपकाे पासकाेड संग्रह गर्नुहाेस"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.title": {
-    "message": "App Passcodes can never be recovered if lost or forgotten! Make sure to note your passcode in a secure location before saving."
+    "message": "एपकाे पासकाेड हराएकाे वा बिर्सिएकाे खण्डमा पछि रिकभर गर्न सकिन्दैन । तपाइकाे पासकाेड सुरक्षित रूपले नाेट गरेर संग्रह गर्नु हाेला."
   },
   "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
     "message": "Please Enter Passcode"
@@ -144,31 +144,31 @@
     "message": "Enter Passcode"
   },
   "screens.AppPasscode.InputPasscodeScreen.cancel": {
-    "message": "Cancel"
+    "message": "रद्द"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleConfirm": {
-    "message": "Re-enter Passcode"
+    "message": "पुनः पासकोड प्रविष्ट गर्नुहोस्"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleSet": {
-    "message": "Set App Passcode"
+    "message": "एपकाे पासकाेड बनाउनु हाेस"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.button": {
-    "message": "Next"
+    "message": "अर्काे"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.initialPassError": {
-    "message": "Password must be 5 numbers"
+    "message": "पासवर्ड अनिवार्य रूपमा ५ वटा नम्बरकाे हुनु पर्छ"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.obscurePasscodeError": {
-    "message": "Cannot be used as a Passcode"
+    "message": "पासकोडको रूपमा प्रयोग गर्न सकिँदैन"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordDoesNotMatch": {
-    "message": "Password does not match"
+    "message": "पासवर्ड मिलेन"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordError": {
     "message": "Incorrect Passcode"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet": {
-    "message": "This passcode will be required to open the Mapeo App"
+    "message": "याे पासकाेड Mapeo App खाेल्न चाहिन्छ"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
     "message": "Confirm Passcode"
@@ -177,10 +177,10 @@
     "message": "Set Passcode"
   },
   "screens.AppPasscode.NewPasscode.Splash.continue": {
-    "message": "Continue"
+    "message": "जारी राख्ने"
   },
   "screens.AppPasscode.NewPasscode.Splash.title": {
-    "message": "What is App Passcode?"
+    "message": "एपकाे पासकोड के हाे?"
   },
   "screens.AppPasscode.PasscodeIntro.description": {
     "message": "App Passcode allows you to add an additional layer of security by requiring that you enter a passcode in order to open the Mapeo app. You can define your own 5-digit passcode by turning on the feature below."
@@ -189,10 +189,10 @@
     "message": "**Please note that forgotten passcodes cannot be recovered!** Once this feature is enabled, if you forget or lose your passcode, you will not be able to open Mapeo and will lose access to any Mapeo data that has not been synced with other project participants."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
-    "message": "Cancel"
+    "message": "रद्द"
   },
   "screens.AppPasscode.TurnOffPasscode.changePasscode": {
-    "message": "Change App Passcode"
+    "message": "एपकाे पासकोड परिवर्तन गर्नुहोस्"
   },
   "screens.AppPasscode.TurnOffPasscode.currentlyUsing": {
     "message": "You are currently using App Passcode. See below to stop using or change your passcode."
@@ -201,16 +201,16 @@
     "message": "App Passcode adds an additional layer of security by requiring that you enter a passcode in order to open the Mapeo app."
   },
   "screens.AppPasscode.TurnOffPasscode.title": {
-    "message": "App Passcode"
+    "message": "एपकाे पासकाेड प्रयाेग गर्नु"
   },
   "screens.AppPasscode.TurnOffPasscode.turnOff": {
-    "message": "Turn Off"
+    "message": "बन्द गर्नु"
   },
   "screens.AppPasscode.TurnOffPasscode.turnOffConfirmation": {
-    "message": "Turn Off App Passcode?"
+    "message": "एपकाे पासकाेड बन्द गर्नु?"
   },
   "screens.AppPasscode.TurnOffPasscode.usePasscode": {
-    "message": "Use App Passcode"
+    "message": "एपकाे पासकाेड प्रयाेग गर्नु"
   },
   "screens.CameraScreen.goToSettings": {
     "message": "Go to Settings"
@@ -220,7 +220,7 @@
   },
   "screens.CategoryChooser.categoryTitle": {
     "description": "Title for category chooser screen",
-    "message": "Choose what is happening"
+    "message": "के भइ रहेकाे छ छान्नुहाेस"
   },
   "screens.CoordinateFormat.dd": {
     "description": "Decimal Degrees coordinate format",
@@ -449,39 +449,39 @@
     "message": "What is Obscure Passcode?"
   },
   "screens.Observation.ObservationEdit.CategoryView.changePreset": {
-    "message": "Change"
+    "message": "परिवर्तन"
   },
   "screens.Observation.ObservationEdit.CategoryView.observation": {
     "description": "Default name of observation with no matching preset",
-    "message": "Observation"
+    "message": "अवलाेकन"
   },
   "screens.Observation.ObservationView.delete": {
     "description": "Button to delete an observation",
-    "message": "Delete"
+    "message": "मेटाउने"
   },
   "screens.Observation.ObservationView.noAnswer": {
     "description": "Placeholder text for fields on an observation which are not answered",
-    "message": "No answer"
+    "message": "उत्तर छैन"
   },
   "screens.Observation.ObservationView.observation": {
     "description": "Default name of observation with no matching preset",
-    "message": "Observation"
+    "message": "अवलाेकन"
   },
   "screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
-    "message": "Cancel"
+    "message": "रद्द"
   },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
-    "message": "Yes, delete"
+    "message": "हुन्छ, मेट्नु"
   },
   "screens.Observation.deleteTitle": {
     "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "Delete observation?"
+    "message": "अवलाेकन हटाउने?"
   },
   "screens.Observation.title": {
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
-    "message": "Observation"
+    "message": "अवलाेकन"
   },
   "screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
@@ -497,82 +497,78 @@
   },
   "screens.ObservationEdit.BottomSheet.addLabel": {
     "description": "Label above keyboard that expands into bottom sheet of options to add (photo, details etc)",
-    "message": "Add…"
-  },
-  "screens.ObservationEdit.ObservationEditView.audioButton": {
-    "description": "Button label for adding audio",
-    "message": "Audio"
+    "message": "थप…"
   },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
-    "message": "What is happening here?"
+    "message": "यहाँ के भइ राखेकाे छ?"
   },
   "screens.ObservationEdit.ObservationEditView.detailsButton": {
     "description": "Button label to add details",
-    "message": "Details"
+    "message": "Add Details"
   },
   "screens.ObservationEdit.ObservationEditView.photoButton": {
     "description": "Button label for adding photo",
-    "message": "Photo"
+    "message": "फाेटाे थप्नु"
   },
   "screens.ObservationEdit.ObservationEditView.searching": {
     "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "Searching…"
+    "message": "खाेजी जारी …"
   },
   "screens.ObservationEdit.SaveButton.keepWaiting": {
     "description": "Button to cancel save and continue waiting for GPS",
-    "message": "Continue waiting"
+    "message": "पर्खाइ निरन्तर"
   },
   "screens.ObservationEdit.SaveButton.manualEntry": {
     "description": "Button to manually enter GPS coordinates",
-    "message": "Manual Coords"
+    "message": "म्यानुअल काेर्डस्"
   },
   "screens.ObservationEdit.SaveButton.noGpsDesc": {
     "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "This observation does not have a location. You can continue waiting for a GPS signal, save the observation without a location, or enter coordinates manually"
+    "message": "याे अवलाेकनकाे लाेकेसन छैन । तपाइले GPS संकेत निरन्तर कुर्न सक्नु हुनेछ, अवलाेकनलाइ लाेकेसन बेगर संग्रह गर्न सक्नुहुन्छ, वा निर्देशलाइ अाफैले राख्नु"
   },
   "screens.ObservationEdit.SaveButton.noGpsTitle": {
     "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "No GPS signal"
+    "message": "GPS संकेत छैन"
   },
   "screens.ObservationEdit.SaveButton.saveAnyway": {
     "description": "Button to save regardless of GPS state",
-    "message": "Save"
+    "message": "संग्रह"
   },
   "screens.ObservationEdit.SaveButton.weakGpsDesc": {
     "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "GPS accuracy is low. You can continue waiting for better accuracy, save the observation with low accuracy, or enter coordinates manually"
+    "message": "GPS यथार्थता न्यून छ, दुरूस्त GPS काे लागि कुर्न सक्नु हुन्छ, न्यून GPS यथार्थतामा संग्रह गर्न सक्नु हुन्छ, वा अाफैले निर्देश गर्न सक्नुहुन्छ"
   },
   "screens.ObservationEdit.SaveButton.weakGpsTitle": {
     "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "Weak GPS signal"
+    "message": "कमजाेर GPS संकेत"
   },
   "screens.ObservationEdit.editTitle": {
     "description": "screen title for edit observation screen",
-    "message": "Edit Observation"
+    "message": "अवलाेकन सम्पादन"
   },
   "screens.ObservationEdit.newTitle": {
     "description": "screen title for new observation screen",
-    "message": "New Observation"
+    "message": "नया अवलाेकन"
   },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",
-    "message": "Observations"
+    "message": "अवलाेकनहरू"
   },
   "screens.ObservationsList.NoProjectWarning": {
     "message": "You won’t be able to share observations collected yet."
   },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
     "description": "Back button on observation list screen when no observations are yet recorded",
-    "message": "Go To Map"
+    "message": "नक्सामा जानु हाेला"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
     "description": "Description of observation list view when the user has not yet recorded observations",
-    "message": "Start from map or camera view to record your first observation."
+    "message": "पहिलो अवलोकन रेकर्ड गर्न नक्सा वा क्यामेरा दृश्यबाट सुरू गर्नु."
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
     "description": "Title of observation list view when the user has not yet recorded observations",
-    "message": "Add Observations"
+    "message": "अवलोकन थप्नुहोस"
   },
   "screens.ObservationsList.createOrJoin": {
     "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
@@ -580,11 +576,11 @@
   },
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",
-    "message": "Error loading observations. Try quitting and restarting Mapeo."
+    "message": "अवलाेकन लाेड गर्नमा समस्या । Mapeo बाट बाहिरिने र पुन शुरू गर्ने."
   },
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
-    "message": "Loading… this can take a while after synchronizing with a new device"
+    "message": "लाेड हुँदै... नयाँ उपकरणसँग सिंक्राेनाइज हुन केहि समय लाग्न सक्छ"
   },
   "screens.ObservationsList.toSync": {
     "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
@@ -611,10 +607,10 @@
     "message": "Track"
   },
   "screens.Security.obscurePassDescriptonPassNotSet": {
-    "message": "To use, enable App Passcode"
+    "message": "प्रयोग गर्न, एप पासकोड सक्षम गर्नुहोस्"
   },
   "screens.Security.obscurePassDescriptonPassSet": {
-    "message": "Protect your device against seizure"
+    "message": "आफ्नो यन्त्रलाई आक्रमणबाट सुरक्षित गर्नुहोस्"
   },
   "screens.Security.obscurePasscodeHeader": {
     "message": "Obscure Passcode"
@@ -626,7 +622,7 @@
     "message": "Passcode is set"
   },
   "screens.Security.passcodeHeader": {
-    "message": "App Passcode"
+    "message": "एपकाे पासकाेड प्रयाेग गर्नु"
   },
   "screens.Security.securitySubheader": {
     "message": "Device Security"
@@ -786,7 +782,7 @@
   },
   "screens.Settings.aboutMapeo": {
     "description": "Primary text for 'About Mapeo' link (version info)",
-    "message": "About Mapeo"
+    "message": "Mapeo काे बारेमा"
   },
   "screens.Settings.aboutMapeoDesc": {
     "description": "Description of the 'About Mapeo' page",
@@ -814,7 +810,7 @@
   },
   "screens.Settings.title": {
     "description": "Title of settings screen",
-    "message": "Settings"
+    "message": "सेटिङ"
   },
   "screens.Sync.CreateOrJoinProjectDisplay.buttonText": {
     "message": "Create or Join Project"
@@ -867,10 +863,6 @@
   "screens.Sync.ProjectSyncDisplay.upToDate": {
     "message": "Up to Date! No data to Sync"
   },
-  "shareComponent.KeyboardAccessory.showOptions": {
-    "description": "title for observation options",
-    "message": "Show Options"
-  },
   "sharedComponents.DeviceCard.ThisDevice": {
     "message": "This Device!"
   },
@@ -881,7 +873,7 @@
     "message": "Go Back"
   },
   "sharedComponents.ErrorModal.somethingWrong": {
-    "message": "Something Went Wrong"
+    "message": "Something\n Went Wrong"
   },
   "sharedComponents.ErrorModal.tryAgain": {
     "message": "Try Again"
@@ -927,6 +919,6 @@
   },
   "sharedComponents.WifiBar.wifi": {
     "description": "Label for wifi network name",
-    "message": "WiFi:"
+    "message": "WiFi"
   }
 }

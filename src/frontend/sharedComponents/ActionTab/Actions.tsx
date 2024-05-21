@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {ItemButton} from './ItemButton';
-import {ActionProps} from './ActionTab';
+import {ActionProps} from '.';
 
 export function Actions({items}: ActionProps) {
   return (

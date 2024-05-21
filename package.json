@@ -96,7 +96,9 @@
     "uint8array-extras": "^0.5.0",
     "utm": "^1.1.1",
     "validate-color": "^2.2.4",
-    "zustand": "^4.4.6"
+    "zustand": "^4.4.6",
+    "expo-file-system": "~16.0.9",
+    "expo-document-picker": "~11.10.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

@@ -5,7 +5,7 @@ import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {View, ScrollView, StyleSheet} from 'react-native';
 import {DescriptionField} from './DescriptionField';
-import {ThumbnailScrollView} from '../../sharedComponents/Thumbnail/ThumbnailScrollView';
+import {ThumbnailScrollView} from '../../sharedComponents/Thumbnail';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {SaveButton} from './SaveButton';
 import {PresetAndLocationHeader} from './PresetAndLocationHeader';

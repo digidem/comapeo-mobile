@@ -867,6 +867,10 @@
   "screens.Sync.ProjectSyncDisplay.upToDate": {
     "message": "Up to Date! No data to Sync"
   },
+  "shareComponent.KeyboardAccessory.showOptions": {
+    "description": "title for observation options",
+    "message": "Show Options"
+  },
   "sharedComponents.DeviceCard.ThisDevice": {
     "message": "This Device!"
   },

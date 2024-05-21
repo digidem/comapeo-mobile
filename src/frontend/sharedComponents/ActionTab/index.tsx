@@ -3,6 +3,7 @@ import {Keyboard} from 'react-native';
 import {Divider} from '../Divider';
 import {KeyboardAccessory} from './KeyboardAccessory';
 import {Actions} from './Actions';
+import {useKeyboardListener} from '../../hooks/useKeyboardListener';
 
 export interface ActionTabItems {
   icon: React.ReactNode;
@@ -14,23 +15,8 @@ export interface ActionProps {
   items: ActionTabItems[];
 }
 
-export default function ActionTab({items}: ActionProps) {
-  const [keyboardVisible, setKeyboardVisible] = React.useState(false);
-
-  React.useEffect(() => {
-    const keyboardHideUnsub = Keyboard.addListener('keyboardDidHide', () =>
-      setKeyboardVisible(false),
-    );
-
-    const keyboardShowUnsub = Keyboard.addListener('keyboardDidShow', () =>
-      setKeyboardVisible(true),
-    );
-
-    return () => {
-      keyboardHideUnsub.remove();
-      keyboardShowUnsub.remove();
-    };
-  }, []);
+export function ActionTab({items}: ActionProps) {
+  const {keyboardVisible} = useKeyboardListener();
 
   return (
     <>

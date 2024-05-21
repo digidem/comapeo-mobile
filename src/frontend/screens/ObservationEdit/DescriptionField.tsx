@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {Keyboard, StyleSheet, Text, TextInput, View} from 'react-native';
+import {StyleSheet, Text, TextInput, View} from 'react-native';
 
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {BLACK, BLUE_GREY, NEW_DARK_GREY} from '../../lib/styles';
+import {useKeyboardListener} from '../../hooks/useKeyboardListener';
 
 const m = defineMessages({
   descriptionPlaceholder: {
@@ -16,24 +17,9 @@ const m = defineMessages({
 
 export const DescriptionField = () => {
   const {formatMessage: t} = useIntl();
-  const [keyboardVisible, setKeyboardVisible] = useState(false);
+  const {keyboardVisible} = useKeyboardListener();
   const notes = usePersistedDraftObservation(store => store.value?.tags.notes);
   const {updateTags} = useDraftObservation();
-
-  useEffect(() => {
-    const keyboardHideUnsub = Keyboard.addListener('keyboardDidHide', () =>
-      setKeyboardVisible(false),
-    );
-
-    const keyboardShowUnsub = Keyboard.addListener('keyboardDidShow', () =>
-      setKeyboardVisible(true),
-    );
-
-    return () => {
-      keyboardHideUnsub.remove();
-      keyboardShowUnsub.remove();
-    };
-  }, []);
 
   return (
     <View style={styles.container}>

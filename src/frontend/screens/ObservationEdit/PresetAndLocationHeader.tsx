@@ -9,7 +9,7 @@ interface PresetInformation {
   isNew: boolean;
 }
 
-export function PresetInformation({isNew}: PresetInformation) {
+export function PresetAndLocationHeader({isNew}: PresetInformation) {
   return (
     <View style={styles.container}>
       <PresetView />

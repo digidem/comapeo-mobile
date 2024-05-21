@@ -1,17 +1,17 @@
 import React, {FC} from 'react';
-import {ActionTabItems} from './ActionTab';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {ActionTabItems} from '.';
+import {TouchableOpacity, StyleSheet, Text, View} from 'react-native';
 import {CustomCircleIcon} from './CustomCircleIcon';
 
 export const ItemButton: FC<ActionTabItems> = ({onPress, icon, label}) => (
-  <Pressable onPress={onPress} style={styles.itemContainer}>
+  <TouchableOpacity onPress={onPress} style={styles.itemContainer}>
     <View style={styles.itemIcon}>
       <CustomCircleIcon icon={icon} />
     </View>
     <Text numberOfLines={1} style={styles.itemLabel}>
       {label}
     </Text>
-  </Pressable>
+  </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({

@@ -282,6 +282,10 @@
     "description": "v is short for version. the translation for version can be used instead",
     "message": "V"
   },
+  "screens.LanguageSettings.title": {
+    "description": "Title language settings screen",
+    "message": "Language"
+  },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
     "message": "Details"
@@ -873,7 +877,7 @@
     "message": "Go Back"
   },
   "sharedComponents.ErrorModal.somethingWrong": {
-    "message": "Something\n Went Wrong"
+    "message": "Something Went Wrong"
   },
   "sharedComponents.ErrorModal.tryAgain": {
     "message": "Try Again"

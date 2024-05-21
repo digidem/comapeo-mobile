@@ -12,15 +12,14 @@ import {
   ListItemIcon,
 } from '../sharedComponents/List';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {NavigatorScreenParams} from '@react-navigation/native';
-import {IconButton} from '../sharedComponents/IconButton';
 import {View} from 'react-native';
 import {Text} from '../sharedComponents/Text';
-import {LIGHT_GREY, WHITE} from '../lib/styles';
+import {VERY_LIGHT_GREY, WHITE} from '../lib/styles';
 import {useProjectSettings} from '../hooks/server/projects';
 import {AppStackParamsList} from '../sharedTypes/navigation';
 import {RootStackNavigator} from './Stack';
+import {DrawerMenuIcon} from '../sharedComponents/icons/DrawerMenuIcon';
 
 const m = defineMessages({
   settingsTitle: {
@@ -100,18 +99,20 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
   const {formatMessage} = useIntl();
   const {data} = useProjectSettings();
   return (
-    <DrawerContentScrollView style={{}}>
+    <DrawerContentScrollView
+      contentContainerStyle={{flexGrow: 1}}
+      style={{backgroundColor: VERY_LIGHT_GREY, flex: 1}}>
       <View
         style={{
-          backgroundColor: LIGHT_GREY,
           paddingBottom: 40,
         }}>
-        <IconButton
-          style={{alignSelf: 'flex-end'}}
-          onPress={navigation.closeDrawer}>
-          <MaterialIcon name="menu" size={32} />
-        </IconButton>
-        <Text style={{alignSelf: 'center', textAlign: 'center'}}>
+        <DrawerMenuIcon onPress={navigation.closeDrawer} />
+        <Text
+          style={{
+            alignSelf: 'center',
+            textAlign: 'center',
+            paddingHorizontal: 40,
+          }}>
           {data?.name
             ? formatMessage(m.projName, {projectName: data.name})
             : formatMessage(m.createOrJoinToSync)}

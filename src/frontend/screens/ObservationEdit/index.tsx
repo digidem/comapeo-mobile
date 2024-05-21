@@ -10,9 +10,9 @@ import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {SaveButton} from './SaveButton';
 import {PresetAndLocationHeader} from './PresetAndLocationHeader';
 import {WHITE} from '../../lib/styles';
-import Photo from '../../images/redesign/Photo.svg';
-import Audio from '../../images/redesign/Audio.svg';
-import Details from '../../images/redesign/Details.svg';
+import Photo from '../../images/observationEdit/Photo.svg';
+import Audio from '../../images/observationEdit/Audio.svg';
+import Details from '../../images/observationEdit/Details.svg';
 import {ActionTab} from '../../sharedComponents/ActionTab';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 

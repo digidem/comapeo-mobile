@@ -9,12 +9,14 @@ import {ThumbnailScrollView} from '../../sharedComponents/ThumbnailScrollView';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {SaveButton} from './SaveButton';
 import {PresetAndLocationHeader} from './PresetAndLocationHeader';
-import {WHITE} from '../../lib/styles';
+import {DARK_GREY, WHITE} from '../../lib/styles';
 import Photo from '../../images/observationEdit/Photo.svg';
 import Audio from '../../images/observationEdit/Audio.svg';
 import Details from '../../images/observationEdit/Details.svg';
 import {ActionTab} from '../../sharedComponents/ActionTab';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
+import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
+import {PermissionAudio} from '../../sharedComponents/PermissionAudio';
 
 const m = defineMessages({
   editTitle: {
@@ -55,6 +57,9 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
   const preset = usePreset();
   const isNew = !observationId;
   const {formatMessage: t} = useIntl();
+  const {openSheet, sheetRef, isOpen, closeSheet} = useBottomSheetModal({
+    openOnMount: false,
+  });
 
   React.useEffect(() => {
     navigation.setOptions({
@@ -82,9 +87,18 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
 
   if (process.env.EXPO_PUBLIC_FEATURE_AUDIO) {
     bottomSheetItems.unshift({
-      icon: <Audio width={30} height={30} />,
+      icon: (
+        <Audio
+          style={{
+            //@ts-expect-error
+            color: DARK_GREY,
+          }}
+          width={30}
+          height={30}
+        />
+      ),
       label: t(m.audioButton),
-      onPress: () => {},
+      onPress: openSheet,
     });
   }
 
@@ -105,6 +119,11 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
         <ThumbnailScrollView />
       </ScrollView>
       <ActionTab items={bottomSheetItems} />
+      <PermissionAudio
+        closeSheet={closeSheet}
+        isOpen={isOpen}
+        sheetRef={sheetRef}
+      />
       <ErrorBottomSheet error={error} clearError={() => setError(null)} />
     </View>
   );

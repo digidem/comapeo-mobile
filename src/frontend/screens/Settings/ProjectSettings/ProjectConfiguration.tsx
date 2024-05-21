@@ -101,7 +101,12 @@ export const ProjectConfigurationScreen = ({
 
         Alert.alert('', t(m.configImportAlertSuccessMessage));
       },
-      onError: () => {
+      onError: async () => {
+        await FileSystem.deleteAsync(asset.uri).catch((err: unknown) => {
+          // TODO: might be okay for this to just be a no-op?
+          console.log(err);
+        });
+
         Alert.alert(t(m.configErrorTitle), t(m.configImportErrorMessage), [
           {text: t(m.alertOkButton)},
         ]);

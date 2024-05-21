@@ -36,7 +36,7 @@ export const ObservationHeaderRight = ({
   }
 
   const canEdit =
-    observationWithPreset.observation.createdBy === data?.deviceId || true;
+    observationWithPreset.observation.createdBy === data?.deviceId || false;
   return canEdit ? (
     <IconButton onPress={handlePress} testID="editButton">
       <EditIcon />

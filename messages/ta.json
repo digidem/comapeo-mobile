@@ -1,7 +1,7 @@
 {
   "AppContainer.EditHeader.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Continue editing"
+    "message": "தொடர்ந்து திருத்தவும்"
   },
   "AppContainer.EditHeader.discardChangesButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
@@ -12,7 +12,7 @@
   },
   "AppContainer.EditHeader.discardChangesTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes?"
+    "message": "மாற்றங்களை அகற்றவா?"
   },
   "AppContainer.EditHeader.discardObservationButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
@@ -23,7 +23,7 @@
   },
   "AppContainer.EditHeader.discardTitle": {
     "description": "Title of dialog that shows when cancelling a new observation",
-    "message": "Discard observation?"
+    "message": "அவதானிப்புகளை நீக்கவா?"
   },
   "Modal.DiscardTrack.description": {
     "message": "Your Track will not be saved. This cannot be undone."
@@ -65,7 +65,7 @@
     "message": "UTM,Lat/Lon,DMS"
   },
   "Screens.Settings.AppSettings.language": {
-    "message": "Language"
+    "message": "மொழி"
   },
   "Screens.Settings.AppSettings.languageDesc": {
     "message": "Display language for app"
@@ -77,7 +77,7 @@
     "message": "Configuration"
   },
   "Screens.Settings.ProjectSettings.deviceName": {
-    "message": "Device Name"
+    "message": "சாதனத்தின் பெயர்"
   },
   "Screens.Settings.ProjectSettings.title": {
     "message": "Project Setttings"
@@ -119,13 +119,13 @@
     "message": "Select a Role"
   },
   "screens.AddPhoto.cancel": {
-    "message": "Cancel"
+    "message": "ரத்து செய்க"
   },
   "screens.AppPasscode": {
-    "message": "App Passcode"
+    "message": "App கடவுக்குறியீடு"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.cancel": {
-    "message": "Cancel"
+    "message": "ரத்து செய்க"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
     "description": "used to indicate to the user what the new passcode will be.",
@@ -144,7 +144,7 @@
     "message": "Enter Passcode"
   },
   "screens.AppPasscode.InputPasscodeScreen.cancel": {
-    "message": "Cancel"
+    "message": "ரத்து செய்க"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleConfirm": {
     "message": "Re-enter Passcode"
@@ -153,7 +153,7 @@
     "message": "Set App Passcode"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.button": {
-    "message": "Next"
+    "message": "அடுத்து"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.initialPassError": {
     "message": "Password must be 5 numbers"
@@ -177,10 +177,10 @@
     "message": "Set Passcode"
   },
   "screens.AppPasscode.NewPasscode.Splash.continue": {
-    "message": "Continue"
+    "message": "தொடரவும்"
   },
   "screens.AppPasscode.NewPasscode.Splash.title": {
-    "message": "What is App Passcode?"
+    "message": " App கடவுக்குறியீடு என்றால் என்ன?"
   },
   "screens.AppPasscode.PasscodeIntro.description": {
     "message": "App Passcode allows you to add an additional layer of security by requiring that you enter a passcode in order to open the Mapeo app. You can define your own 5-digit passcode by turning on the feature below."
@@ -189,7 +189,7 @@
     "message": "**Please note that forgotten passcodes cannot be recovered!** Once this feature is enabled, if you forget or lose your passcode, you will not be able to open Mapeo and will lose access to any Mapeo data that has not been synced with other project participants."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
-    "message": "Cancel"
+    "message": "ரத்து செய்க"
   },
   "screens.AppPasscode.TurnOffPasscode.changePasscode": {
     "message": "Change App Passcode"
@@ -201,7 +201,7 @@
     "message": "App Passcode adds an additional layer of security by requiring that you enter a passcode in order to open the Mapeo app."
   },
   "screens.AppPasscode.TurnOffPasscode.title": {
-    "message": "App Passcode"
+    "message": "App கடவுக்குறியீடு"
   },
   "screens.AppPasscode.TurnOffPasscode.turnOff": {
     "message": "Turn Off"
@@ -220,7 +220,7 @@
   },
   "screens.CategoryChooser.categoryTitle": {
     "description": "Title for category chooser screen",
-    "message": "Choose what is happening"
+    "message": "என்ன நடக்கிறது என்பதைத் தேர்ந்தெடுக்கவும்"
   },
   "screens.CoordinateFormat.dd": {
     "description": "Decimal Degrees coordinate format",
@@ -281,10 +281,6 @@
   "screens.IntroToCoMapeo.version": {
     "description": "v is short for version. the translation for version can be used instead",
     "message": "V"
-  },
-  "screens.LanguageSettings.title": {
-    "description": "Title language settings screen",
-    "message": "Language"
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
@@ -453,39 +449,39 @@
     "message": "What is Obscure Passcode?"
   },
   "screens.Observation.ObservationEdit.CategoryView.changePreset": {
-    "message": "Change"
+    "message": "மாற்றுக"
   },
   "screens.Observation.ObservationEdit.CategoryView.observation": {
     "description": "Default name of observation with no matching preset",
-    "message": "Observation"
+    "message": "அவதானிப்புகள்"
   },
   "screens.Observation.ObservationView.delete": {
     "description": "Button to delete an observation",
-    "message": "Delete"
+    "message": "அழி"
   },
   "screens.Observation.ObservationView.noAnswer": {
     "description": "Placeholder text for fields on an observation which are not answered",
-    "message": "No answer"
+    "message": "பதில் இல்லை"
   },
   "screens.Observation.ObservationView.observation": {
     "description": "Default name of observation with no matching preset",
-    "message": "Observation"
+    "message": "அவதானிப்புகள்"
   },
   "screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
-    "message": "Cancel"
+    "message": "ரத்து செய்க"
   },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
-    "message": "Yes, delete"
+    "message": "ஆம், நீக்குக"
   },
   "screens.Observation.deleteTitle": {
     "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "Delete observation?"
+    "message": "அவதானிப்புகளை நீக்கவா?"
   },
   "screens.Observation.title": {
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
-    "message": "Observation"
+    "message": "அவதானிப்புகள்"
   },
   "screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
@@ -501,11 +497,11 @@
   },
   "screens.ObservationEdit.BottomSheet.addLabel": {
     "description": "Label above keyboard that expands into bottom sheet of options to add (photo, details etc)",
-    "message": "Add…"
+    "message": "சேர்க்க…"
   },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
-    "message": "What is happening here?"
+    "message": "இங்கே என்ன நடக்கிறது?"
   },
   "screens.ObservationEdit.ObservationEditView.detailsButton": {
     "description": "Button label to add details",
@@ -513,66 +509,66 @@
   },
   "screens.ObservationEdit.ObservationEditView.photoButton": {
     "description": "Button label for adding photo",
-    "message": "Add Photo"
+    "message": "போட்டோவைச் சேர்க்கவும்"
   },
   "screens.ObservationEdit.ObservationEditView.searching": {
     "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "Searching…"
+    "message": "தேடு…"
   },
   "screens.ObservationEdit.SaveButton.keepWaiting": {
     "description": "Button to cancel save and continue waiting for GPS",
-    "message": "Continue waiting"
+    "message": "தொடர்ந்து காத்திருக்கவும்"
   },
   "screens.ObservationEdit.SaveButton.manualEntry": {
     "description": "Button to manually enter GPS coordinates",
-    "message": "Manual Coords"
+    "message": "கையேடு இணைப்புகள்"
   },
   "screens.ObservationEdit.SaveButton.noGpsDesc": {
     "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "This observation does not have a location. You can continue waiting for a GPS signal, save the observation without a location, or enter coordinates manually"
+    "message": "இந்தக் கவனிப்புக்கு இடம் இல்லை. ஜிபிஎஸ் சிக்னலுக்காக நீங்கள் தொடர்ந்து காத்திருக்கலாம், இருப்பிடம் இல்லாமல் கண்காணிப்பைச் சேமிக்கலாம் அல்லது ஆயங்களை கைமுறையாக உள்ளிடலாம்"
   },
   "screens.ObservationEdit.SaveButton.noGpsTitle": {
     "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "No GPS signal"
+    "message": "GPS சமிக்ஞை இல்லை"
   },
   "screens.ObservationEdit.SaveButton.saveAnyway": {
     "description": "Button to save regardless of GPS state",
-    "message": "Save"
+    "message": "சேமிக்கவும்"
   },
   "screens.ObservationEdit.SaveButton.weakGpsDesc": {
     "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "GPS accuracy is low. You can continue waiting for better accuracy, save the observation with low accuracy, or enter coordinates manually"
+    "message": "GPS துல்லியம் குறைவாக உள்ளது. சிறந்த துல்லியத்திற்காக நீங்கள் தொடர்ந்து காத்திருக்கலாம், குறைந்த துல்லியத்துடன் கண்காணிப்பைச் சேமிக்கலாம் அல்லது ஆயங்களை கைமுறையாக உள்ளிடலாம்"
   },
   "screens.ObservationEdit.SaveButton.weakGpsTitle": {
     "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "Weak GPS signal"
+    "message": "பலவீனமான GPS சிக்னல்"
   },
   "screens.ObservationEdit.editTitle": {
     "description": "screen title for edit observation screen",
-    "message": "Edit Observation"
+    "message": "கவனிப்பைத் திருத்து"
   },
   "screens.ObservationEdit.newTitle": {
     "description": "screen title for new observation screen",
-    "message": "New Observation"
+    "message": "புதிய கவனிப்பு"
   },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",
-    "message": "Observations"
+    "message": "அவதானிப்புகள்"
   },
   "screens.ObservationsList.NoProjectWarning": {
     "message": "You won’t be able to share observations collected yet."
   },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
     "description": "Back button on observation list screen when no observations are yet recorded",
-    "message": "Go To Map"
+    "message": "வரைபடத்திற்குச் செல்லவும்"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
     "description": "Description of observation list view when the user has not yet recorded observations",
-    "message": "Start from map or camera view to record your first observation."
+    "message": "உங்கள் முதல் கண்காணிப்பைப் பதிவு செய்ய வரைபடம் அல்லது கேமரா காட்சியிலிருந்து தொடங்கவும்."
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
     "description": "Title of observation list view when the user has not yet recorded observations",
-    "message": "Add Observations"
+    "message": "அவதானிப்புகளைச் சேர்க்கவும்"
   },
   "screens.ObservationsList.createOrJoin": {
     "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
@@ -580,11 +576,11 @@
   },
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",
-    "message": "Error loading observations. Try quitting and restarting Mapeo."
+    "message": "அவதானிப்புகளை ஏற்றுவதில் பிழை. Mapeo ஐ விட்டுவிட்டு மீண்டும் தொடங்க முயற்சிக்கவும்."
   },
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
-    "message": "Loading… this can take a while after synchronizing with a new device"
+    "message": "ஏற்றுகிறது... புதிய சாதனத்துடன் ஒத்திசைத்த பிறகு இதற்கு சிறிது நேரம் ஆகலாம்"
   },
   "screens.ObservationsList.toSync": {
     "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
@@ -611,28 +607,28 @@
     "message": "Track"
   },
   "screens.Security.obscurePassDescriptonPassNotSet": {
-    "message": "To use, enable App Passcode"
+    "message": "பயன்படுத்த, பயன்பாட்டு கடவுக்குறியீட்டை இயக்கவும்"
   },
   "screens.Security.obscurePassDescriptonPassSet": {
-    "message": "Protect your device against seizure"
+    "message": "வலிப்புத்தாக்கத்திலிருந்து உங்கள் சாதனத்தைப் பாதுகாக்கவும்"
   },
   "screens.Security.obscurePasscodeHeader": {
     "message": "Obscure Passcode"
   },
   "screens.Security.passDesriptionPassNotSet": {
-    "message": "Passcode not set"
+    "message": "கடவுக்குறியீடு அமைக்கப்படவில்லை"
   },
   "screens.Security.passDesriptionPassSet": {
-    "message": "Passcode is set"
+    "message": "பாஸ்கோடு அமைக்கப்பட்டது"
   },
   "screens.Security.passcodeHeader": {
-    "message": "App Passcode"
+    "message": "App கடவுக்குறியீடு"
   },
   "screens.Security.securitySubheader": {
-    "message": "Device Security"
+    "message": "சாதனப் பாதுகாப்பு"
   },
   "screens.Security.title": {
-    "message": "Security"
+    "message": "பாதுகாப்பு"
   },
   "screens.Setting.ProjectSettings.DeviceName.DisplayScreen.deviceNameLabel": {
     "message": "Your Device Name"
@@ -786,11 +782,11 @@
   },
   "screens.Settings.aboutMapeo": {
     "description": "Primary text for 'About Mapeo' link (version info)",
-    "message": "About Mapeo"
+    "message": "மேபியோ பற்றி"
   },
   "screens.Settings.aboutMapeoDesc": {
     "description": "Description of the 'About Mapeo' page",
-    "message": "Version and build number"
+    "message": "பதிப்பு மற்றும் உருவாக்க எண்"
   },
   "screens.Settings.appSettings": {
     "message": "App Settings"
@@ -814,7 +810,7 @@
   },
   "screens.Settings.title": {
     "description": "Title of settings screen",
-    "message": "Settings"
+    "message": "அமைப்புகள்"
   },
   "screens.Sync.CreateOrJoinProjectDisplay.buttonText": {
     "message": "Create or Join Project"
@@ -877,7 +873,7 @@
     "message": "Go Back"
   },
   "sharedComponents.ErrorModal.somethingWrong": {
-    "message": "Something Went Wrong"
+    "message": "Something\n Went Wrong"
   },
   "sharedComponents.ErrorModal.tryAgain": {
     "message": "Try Again"
@@ -919,10 +915,10 @@
     "message": "Participant"
   },
   "sharedComponents.WifiBar.noWifi": {
-    "message": "No Internet"
+    "message": "இணைய இணைப்பில்லை"
   },
   "sharedComponents.WifiBar.wifi": {
     "description": "Label for wifi network name",
-    "message": "WiFi:"
+    "message": "WiFi"
   }
 }

@@ -1,7 +1,7 @@
 {
   "AppContainer.EditHeader.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Continue editing"
+    "message": "編集を続ける"
   },
   "AppContainer.EditHeader.discardChangesButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
@@ -12,7 +12,7 @@
   },
   "AppContainer.EditHeader.discardChangesTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes?"
+    "message": "変更を破棄してよろしいですか？"
   },
   "AppContainer.EditHeader.discardObservationButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
@@ -65,7 +65,7 @@
     "message": "UTM,Lat/Lon,DMS"
   },
   "Screens.Settings.AppSettings.language": {
-    "message": "Language"
+    "message": "言語"
   },
   "Screens.Settings.AppSettings.languageDesc": {
     "message": "Display language for app"
@@ -119,13 +119,13 @@
     "message": "Select a Role"
   },
   "screens.AddPhoto.cancel": {
-    "message": "Cancel"
+    "message": "取消"
   },
   "screens.AppPasscode": {
     "message": "App Passcode"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.cancel": {
-    "message": "Cancel"
+    "message": "取消"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
     "description": "used to indicate to the user what the new passcode will be.",
@@ -144,7 +144,7 @@
     "message": "Enter Passcode"
   },
   "screens.AppPasscode.InputPasscodeScreen.cancel": {
-    "message": "Cancel"
+    "message": "取消"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleConfirm": {
     "message": "Re-enter Passcode"
@@ -189,7 +189,7 @@
     "message": "**Please note that forgotten passcodes cannot be recovered!** Once this feature is enabled, if you forget or lose your passcode, you will not be able to open Mapeo and will lose access to any Mapeo data that has not been synced with other project participants."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
-    "message": "Cancel"
+    "message": "取消"
   },
   "screens.AppPasscode.TurnOffPasscode.changePasscode": {
     "message": "Change App Passcode"
@@ -281,10 +281,6 @@
   "screens.IntroToCoMapeo.version": {
     "description": "v is short for version. the translation for version can be used instead",
     "message": "V"
-  },
-  "screens.LanguageSettings.title": {
-    "description": "Title language settings screen",
-    "message": "Language"
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
@@ -461,7 +457,7 @@
   },
   "screens.Observation.ObservationView.delete": {
     "description": "Button to delete an observation",
-    "message": "Delete"
+    "message": "削除"
   },
   "screens.Observation.ObservationView.noAnswer": {
     "description": "Placeholder text for fields on an observation which are not answered",
@@ -473,11 +469,11 @@
   },
   "screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
-    "message": "Cancel"
+    "message": "取消"
   },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
-    "message": "Yes, delete"
+    "message": "はい、削除します"
   },
   "screens.Observation.deleteTitle": {
     "description": "Title of dialog asking confirmation to delete an observation",
@@ -517,7 +513,7 @@
   },
   "screens.ObservationEdit.ObservationEditView.searching": {
     "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "Searching…"
+    "message": "検索中…"
   },
   "screens.ObservationEdit.SaveButton.keepWaiting": {
     "description": "Button to cancel save and continue waiting for GPS",
@@ -533,19 +529,19 @@
   },
   "screens.ObservationEdit.SaveButton.noGpsTitle": {
     "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "No GPS signal"
+    "message": "GPS信号がありません"
   },
   "screens.ObservationEdit.SaveButton.saveAnyway": {
     "description": "Button to save regardless of GPS state",
-    "message": "Save"
+    "message": "保存"
   },
   "screens.ObservationEdit.SaveButton.weakGpsDesc": {
     "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "GPS accuracy is low. You can continue waiting for better accuracy, save the observation with low accuracy, or enter coordinates manually"
+    "message": "GPSの精度が低くなっています。精度改善を待つか、低い精度で観察を保存するか、手動で座標を入力することができます。"
   },
   "screens.ObservationEdit.SaveButton.weakGpsTitle": {
     "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "Weak GPS signal"
+    "message": "GPS信号が弱い"
   },
   "screens.ObservationEdit.editTitle": {
     "description": "screen title for edit observation screen",
@@ -564,11 +560,11 @@
   },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
     "description": "Back button on observation list screen when no observations are yet recorded",
-    "message": "Go To Map"
+    "message": "マップに移動"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
     "description": "Description of observation list view when the user has not yet recorded observations",
-    "message": "Start from map or camera view to record your first observation."
+    "message": "最初の観察記録を記録するには、マップまたはカメラビューから開始します。"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
     "description": "Title of observation list view when the user has not yet recorded observations",
@@ -786,11 +782,11 @@
   },
   "screens.Settings.aboutMapeo": {
     "description": "Primary text for 'About Mapeo' link (version info)",
-    "message": "About Mapeo"
+    "message": "Mapeoについて"
   },
   "screens.Settings.aboutMapeoDesc": {
     "description": "Description of the 'About Mapeo' page",
-    "message": "Version and build number"
+    "message": "バージョンとビルド番号"
   },
   "screens.Settings.appSettings": {
     "message": "App Settings"
@@ -814,7 +810,7 @@
   },
   "screens.Settings.title": {
     "description": "Title of settings screen",
-    "message": "Settings"
+    "message": "設定"
   },
   "screens.Sync.CreateOrJoinProjectDisplay.buttonText": {
     "message": "Create or Join Project"
@@ -877,7 +873,7 @@
     "message": "Go Back"
   },
   "sharedComponents.ErrorModal.somethingWrong": {
-    "message": "Something Went Wrong"
+    "message": "Something\n Went Wrong"
   },
   "sharedComponents.ErrorModal.tryAgain": {
     "message": "Try Again"
@@ -923,6 +919,6 @@
   },
   "sharedComponents.WifiBar.wifi": {
     "description": "Label for wifi network name",
-    "message": "WiFi:"
+    "message": "Wifi:"
   }
 }

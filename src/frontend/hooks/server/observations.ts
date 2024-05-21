@@ -4,16 +4,16 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import {ObservationValue} from '@mapeo/schema';
-import {useProject} from './projects';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {ClientGeneratedObservation} from '../../sharedTypes';
 
 export const OBSERVATION_KEY = 'observations';
 
 export function useObservations() {
-  const project = useProject();
+  const project = useActiveProject();
 
   return useSuspenseQuery({
-    queryKey: ['observations'],
+    queryKey: [OBSERVATION_KEY],
     queryFn: async () => {
       if (!project) throw new Error('Project instance does not exist');
       return project.observation.getMany();
@@ -22,7 +22,7 @@ export function useObservations() {
 }
 
 export function useObservation(observationId: string) {
-  const project = useProject();
+  const project = useActiveProject();
 
   return useSuspenseQuery({
     queryKey: [OBSERVATION_KEY, observationId],
@@ -35,7 +35,7 @@ export function useObservation(observationId: string) {
 
 export function useCreateObservation() {
   const queryClient = useQueryClient();
-  const project = useProject();
+  const project = useActiveProject();
 
   return useMutation({
     mutationFn: async ({value}: {value: ClientGeneratedObservation}) => {
@@ -54,7 +54,7 @@ export function useCreateObservation() {
 
 export function useEditObservation() {
   const queryClient = useQueryClient();
-  const project = useProject();
+  const project = useActiveProject();
 
   return useMutation({
     mutationFn: async ({
@@ -74,7 +74,7 @@ export function useEditObservation() {
 
 export function useDeleteObservation() {
   const queryClient = useQueryClient();
-  const project = useProject();
+  const project = useActiveProject();
 
   return useMutation({
     mutationFn: async ({id}: {id: string}) => {

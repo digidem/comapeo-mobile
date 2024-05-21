@@ -1,7 +1,7 @@
 {
   "AppContainer.EditHeader.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
-    "message": "Continue editing"
+    "message": "Seguir editando"
   },
   "AppContainer.EditHeader.discardChangesButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
@@ -12,7 +12,7 @@
   },
   "AppContainer.EditHeader.discardChangesTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes?"
+    "message": "¿Descartar cambios?"
   },
   "AppContainer.EditHeader.discardObservationButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
@@ -23,7 +23,7 @@
   },
   "AppContainer.EditHeader.discardTitle": {
     "description": "Title of dialog that shows when cancelling a new observation",
-    "message": "Discard observation?"
+    "message": "¿Quieres descartar la observación?"
   },
   "Modal.DiscardTrack.description": {
     "message": "Your Track will not be saved. This cannot be undone."
@@ -65,7 +65,7 @@
     "message": "UTM,Lat/Lon,DMS"
   },
   "Screens.Settings.AppSettings.language": {
-    "message": "Language"
+    "message": "Idioma"
   },
   "Screens.Settings.AppSettings.languageDesc": {
     "message": "Display language for app"
@@ -77,7 +77,7 @@
     "message": "Configuration"
   },
   "Screens.Settings.ProjectSettings.deviceName": {
-    "message": "Device Name"
+    "message": "Nombre del dispositivo"
   },
   "Screens.Settings.ProjectSettings.title": {
     "message": "Project Setttings"
@@ -119,56 +119,56 @@
     "message": "Select a Role"
   },
   "screens.AddPhoto.cancel": {
-    "message": "Cancel"
+    "message": "Cancelar"
   },
   "screens.AppPasscode": {
-    "message": "App Passcode"
+    "message": "Contraseña de la aplicación"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.cancel": {
-    "message": "Cancel"
+    "message": "Cancelar"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
     "description": "used to indicate to the user what the new passcode will be.",
-    "message": "Passcode"
+    "message": "Contraseña"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
-    "message": "Save App Passcode"
+    "message": "Guardar Contraseña de la aplicación"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.title": {
-    "message": "App Passcodes can never be recovered if lost or forgotten! Make sure to note your passcode in a secure location before saving."
+    "message": "¡Si pierde u olvida la Contraseña de la aplicación, no va a poder recuperarla! Asegúrese de anotar su contraseña en un lugar seguro antes de guardar."
   },
   "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
-    "message": "Please Enter Passcode"
+    "message": "Por favor, introduzca su contraseña"
   },
   "screens.AppPasscode.EnterPassToTurnOff.titleEnter": {
-    "message": "Enter Passcode"
+    "message": "Introduzca su contraseña"
   },
   "screens.AppPasscode.InputPasscodeScreen.cancel": {
-    "message": "Cancel"
+    "message": "Cancelar"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleConfirm": {
-    "message": "Re-enter Passcode"
+    "message": "Vuelva a introducir la contraseña"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleSet": {
-    "message": "Set App Passcode"
+    "message": "Establecer la Contraseña de la aplicación"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.button": {
-    "message": "Next"
+    "message": "Siguiente"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.initialPassError": {
-    "message": "Password must be 5 numbers"
+    "message": "La contraseña debe consistir en 5 números"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.obscurePasscodeError": {
-    "message": "Cannot be used as a Passcode"
+    "message": "No se puede utilizar como contraseña"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordDoesNotMatch": {
-    "message": "Password does not match"
+    "message": "La contraseña no coincide"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordError": {
-    "message": "Incorrect Passcode"
+    "message": "Contraseña incorrecta"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet": {
-    "message": "This passcode will be required to open the Mapeo App"
+    "message": "Esta contraseña será necesaria para abrir la aplicación de Mapeo"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
     "message": "Confirm Passcode"
@@ -177,40 +177,40 @@
     "message": "Set Passcode"
   },
   "screens.AppPasscode.NewPasscode.Splash.continue": {
-    "message": "Continue"
+    "message": "Continuar"
   },
   "screens.AppPasscode.NewPasscode.Splash.title": {
-    "message": "What is App Passcode?"
+    "message": "¿Qué es la Contraseña de la aplicación?"
   },
   "screens.AppPasscode.PasscodeIntro.description": {
-    "message": "App Passcode allows you to add an additional layer of security by requiring that you enter a passcode in order to open the Mapeo app. You can define your own 5-digit passcode by turning on the feature below."
+    "message": "La Contraseña de la aplicación le permite añadir una capa adicional de seguridad, requiriendo introducir una contraseña para abrir la aplicación de Mapeo. Puede definir su propio código de acceso de 5 dígitos activando la siguiente característica."
   },
   "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "**Please note that forgotten passcodes cannot be recovered!** Once this feature is enabled, if you forget or lose your passcode, you will not be able to open Mapeo and will lose access to any Mapeo data that has not been synced with other project participants."
+    "message": "**AVISO: ¡Las contraseñas olvidadas no pueden ser recuperadas!** Una vez que esta funcionalidad está activada, si olvida o pierde su contraseña, no podrá abrir Mapeo y perderá el acceso a cualquier dato de Mapeo que no haya sido sincronizado con otros participantes del proyecto."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
-    "message": "Cancel"
+    "message": "Cancelar"
   },
   "screens.AppPasscode.TurnOffPasscode.changePasscode": {
-    "message": "Change App Passcode"
+    "message": "Cambiar Contraseña de la aplicación"
   },
   "screens.AppPasscode.TurnOffPasscode.currentlyUsing": {
-    "message": "You are currently using App Passcode. See below to stop using or change your passcode."
+    "message": "Actualmente usted está usando la Contraseña de la aplicación. Consulte abajo para dejar de usar o cambiar la contraseña."
   },
   "screens.AppPasscode.TurnOffPasscode.description": {
-    "message": "App Passcode adds an additional layer of security by requiring that you enter a passcode in order to open the Mapeo app."
+    "message": "La Contraseña de la aplicación añade una capa adicional de seguridad, requiriendo que introduzca un código de acceso para abrir la aplicación de Mapeo."
   },
   "screens.AppPasscode.TurnOffPasscode.title": {
-    "message": "App Passcode"
+    "message": "Contraseña de la aplicación"
   },
   "screens.AppPasscode.TurnOffPasscode.turnOff": {
-    "message": "Turn Off"
+    "message": "Desactivar"
   },
   "screens.AppPasscode.TurnOffPasscode.turnOffConfirmation": {
-    "message": "Turn Off App Passcode?"
+    "message": "¿Desactivar la Contraseña de la aplicación?"
   },
   "screens.AppPasscode.TurnOffPasscode.usePasscode": {
-    "message": "Use App Passcode"
+    "message": "Usar la Contraseña de la apliación"
   },
   "screens.CameraScreen.goToSettings": {
     "message": "Go to Settings"
@@ -220,7 +220,7 @@
   },
   "screens.CategoryChooser.categoryTitle": {
     "description": "Title for category chooser screen",
-    "message": "Choose what is happening"
+    "message": "Elegir qué está pasando"
   },
   "screens.CoordinateFormat.dd": {
     "description": "Decimal Degrees coordinate format",
@@ -239,28 +239,28 @@
     "message": "Universal Transverse Mercator (UTM)"
   },
   "screens.DeviceNaming.Success.description": {
-    "message": "You named your device"
+    "message": "Nombraste tu dispositivo"
   },
   "screens.DeviceNaming.Success.goToMap": {
-    "message": "Go to Map"
+    "message": "Ir al mapa"
   },
   "screens.DeviceNaming.Success.success": {
-    "message": "Success!"
+    "message": "¡Éxito!"
   },
   "screens.DeviceNaming.addName": {
-    "message": "Add Name"
+    "message": "Agregar nombre"
   },
   "screens.DeviceNaming.description": {
-    "message": "To create or join a new project you will have to name your device. In a future version of CoMapeo, you will be able to manage the projects you created by changing devices roles, deleting devices and much more."
+    "message": "Para crear o unirte a un nuevo proyecto tendrás que nombrar tu dispositivo. En una futura versión de CoMapeo, podrás gestionar los proyectos que hayas creado cambiando los roles de los dispositivos, eliminando dispositivos y mucho más."
   },
   "screens.DeviceNaming.header": {
-    "message": "Add a name for your device"
+    "message": "Agrega un nombre para tu dispositivo"
   },
   "screens.EnterPassword.enterPass": {
-    "message": "Enter your passcode"
+    "message": "Introduzca su contraseña"
   },
   "screens.EnterPassword.wrongPass": {
-    "message": "Incorrect passcode, please try again"
+    "message": "Contraseña incorrecta, inténtelo de nuevo"
   },
   "screens.FatalError.restart": {
     "message": "Restart App"
@@ -269,22 +269,18 @@
     "message": "Something Went Wrong"
   },
   "screens.IntroToCoMapeo.collaborate": {
-    "message": "Collaborate on mapping and monitoring projects"
+    "message": "Colabora con proyectos de mapeo y monitoreo"
   },
   "screens.IntroToCoMapeo.getStarted": {
-    "message": "Get Started"
+    "message": "¡Comienza ya!"
   },
   "screens.IntroToCoMapeo.isNow": {
     "description": "The full sentence is mapeo 'is now' comapeo. ",
-    "message": "is now"
+    "message": "ahora es"
   },
   "screens.IntroToCoMapeo.version": {
     "description": "v is short for version. the translation for version can be used instead",
     "message": "V"
-  },
-  "screens.LanguageSettings.title": {
-    "description": "Title language settings screen",
-    "message": "Language"
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
@@ -438,54 +434,54 @@
     "message": "Zone Number"
   },
   "screens.ObscurePasscode.description": {
-    "message": "Obscure Passcode is a security feature that allows you to open Mapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of Mapeo which allows you to create demonstration observations that are not saved to the Mapeo database."
+    "message": "La Contraseña oscura es una funcionalidad de seguridad que le permite abrir Mapeo en un modo que oculta todos sus datos. Introduciendo la Constraseña oscura en la pantalla de introducción se mostrará una versión vacía de Mapeo que le permite crear observaciones de demostración que no se guardan en la base de datos de Mapeo."
   },
   "screens.ObscurePasscode.instructions": {
-    "message": "Enter the code above to hide your data in Mapeo"
+    "message": "Introduzca la constraseña anterior para ocultar sus datos en Mapeo"
   },
   "screens.ObscurePasscode.title": {
-    "message": "Obscure Passcode"
+    "message": "Contraseña oscura"
   },
   "screens.ObscurePasscode.toggleMessage": {
-    "message": "Use Obscure Passcode"
+    "message": "Usar la Contraseña oscura"
   },
   "screens.ObscurePasscode.whatIsObscure": {
-    "message": "What is Obscure Passcode?"
+    "message": "¿Qué es la Contraseña oscura?"
   },
   "screens.Observation.ObservationEdit.CategoryView.changePreset": {
-    "message": "Change"
+    "message": "Cambiar"
   },
   "screens.Observation.ObservationEdit.CategoryView.observation": {
     "description": "Default name of observation with no matching preset",
-    "message": "Observation"
+    "message": "Observación"
   },
   "screens.Observation.ObservationView.delete": {
     "description": "Button to delete an observation",
-    "message": "Delete"
+    "message": "Borrar"
   },
   "screens.Observation.ObservationView.noAnswer": {
     "description": "Placeholder text for fields on an observation which are not answered",
-    "message": "No answer"
+    "message": "Sin respuesta"
   },
   "screens.Observation.ObservationView.observation": {
     "description": "Default name of observation with no matching preset",
-    "message": "Observation"
+    "message": "Observación"
   },
   "screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
-    "message": "Cancel"
+    "message": "Cancelar"
   },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
-    "message": "Yes, delete"
+    "message": "Si, borrar"
   },
   "screens.Observation.deleteTitle": {
     "description": "Title of dialog asking confirmation to delete an observation",
-    "message": "Delete observation?"
+    "message": "¿Quieres borrar la observación?"
   },
   "screens.Observation.title": {
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
-    "message": "Observation"
+    "message": "Observación"
   },
   "screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
@@ -501,11 +497,11 @@
   },
   "screens.ObservationEdit.BottomSheet.addLabel": {
     "description": "Label above keyboard that expands into bottom sheet of options to add (photo, details etc)",
-    "message": "Add…"
+    "message": "Agregar…"
   },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
-    "message": "What is happening here?"
+    "message": "¿Qué está pasando aquí?"
   },
   "screens.ObservationEdit.ObservationEditView.detailsButton": {
     "description": "Button label to add details",
@@ -513,66 +509,66 @@
   },
   "screens.ObservationEdit.ObservationEditView.photoButton": {
     "description": "Button label for adding photo",
-    "message": "Add Photo"
+    "message": "Agregar foto"
   },
   "screens.ObservationEdit.ObservationEditView.searching": {
     "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "Searching…"
+    "message": "Buscando…"
   },
   "screens.ObservationEdit.SaveButton.keepWaiting": {
     "description": "Button to cancel save and continue waiting for GPS",
-    "message": "Continue waiting"
+    "message": "Seguir esperando"
   },
   "screens.ObservationEdit.SaveButton.manualEntry": {
     "description": "Button to manually enter GPS coordinates",
-    "message": "Manual Coords"
+    "message": "Ingresar manualmente"
   },
   "screens.ObservationEdit.SaveButton.noGpsDesc": {
     "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "This observation does not have a location. You can continue waiting for a GPS signal, save the observation without a location, or enter coordinates manually"
+    "message": "Esta observación no tiene ubicación. Puedes seguir esperando el GPS, o guardarlo sin ubicación o ingresar las coordenadas manualmente"
   },
   "screens.ObservationEdit.SaveButton.noGpsTitle": {
     "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "No GPS signal"
+    "message": "Sin señal del GPS"
   },
   "screens.ObservationEdit.SaveButton.saveAnyway": {
     "description": "Button to save regardless of GPS state",
-    "message": "Save"
+    "message": "Guardar"
   },
   "screens.ObservationEdit.SaveButton.weakGpsDesc": {
     "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "GPS accuracy is low. You can continue waiting for better accuracy, save the observation with low accuracy, or enter coordinates manually"
+    "message": "La precisión del GPS está baja. Puedes seguir esperando que la precisión mejore, o guardar como está o ingresar las coordenadas manualmente"
   },
   "screens.ObservationEdit.SaveButton.weakGpsTitle": {
     "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "Weak GPS signal"
+    "message": "Señal débil del GPS"
   },
   "screens.ObservationEdit.editTitle": {
     "description": "screen title for edit observation screen",
-    "message": "Edit Observation"
+    "message": "Editar observación"
   },
   "screens.ObservationEdit.newTitle": {
     "description": "screen title for new observation screen",
-    "message": "New Observation"
+    "message": "Observación nueva"
   },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",
-    "message": "Observations"
+    "message": "Observaciones"
   },
   "screens.ObservationsList.NoProjectWarning": {
     "message": "You won’t be able to share observations collected yet."
   },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
     "description": "Back button on observation list screen when no observations are yet recorded",
-    "message": "Go To Map"
+    "message": "Ir al mapa"
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
     "description": "Description of observation list view when the user has not yet recorded observations",
-    "message": "Start from map or camera view to record your first observation."
+    "message": "Comience desde la vista de mapa o cámara para grabar su primera observación."
   },
   "screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
     "description": "Title of observation list view when the user has not yet recorded observations",
-    "message": "Add Observations"
+    "message": "Añadir observaciones"
   },
   "screens.ObservationsList.createOrJoin": {
     "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
@@ -580,11 +576,11 @@
   },
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",
-    "message": "Error loading observations. Try quitting and restarting Mapeo."
+    "message": "Error a cargar observaciones, volver a abrir Mapeo para ver si lo corrige."
   },
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
-    "message": "Loading… this can take a while after synchronizing with a new device"
+    "message": "Cargando… esto puede tomar un tiempo después de sincronizar con un nuevo dispositivo"
   },
   "screens.ObservationsList.toSync": {
     "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
@@ -611,28 +607,28 @@
     "message": "Track"
   },
   "screens.Security.obscurePassDescriptonPassNotSet": {
-    "message": "To use, enable App Passcode"
+    "message": "Para usarla, active la Contraseña de la aplicación"
   },
   "screens.Security.obscurePassDescriptonPassSet": {
-    "message": "Protect your device against seizure"
+    "message": "Proteja su dispositivo contra la incautación"
   },
   "screens.Security.obscurePasscodeHeader": {
-    "message": "Obscure Passcode"
+    "message": "Contraseña oscura"
   },
   "screens.Security.passDesriptionPassNotSet": {
-    "message": "Passcode not set"
+    "message": "Contraseña no establecida"
   },
   "screens.Security.passDesriptionPassSet": {
-    "message": "Passcode is set"
+    "message": "Contraseña establecida"
   },
   "screens.Security.passcodeHeader": {
-    "message": "App Passcode"
+    "message": "Contraseña de la aplicación"
   },
   "screens.Security.securitySubheader": {
-    "message": "Device Security"
+    "message": "Seguridad del dispositivo"
   },
   "screens.Security.title": {
-    "message": "Security"
+    "message": "Seguridad"
   },
   "screens.Setting.ProjectSettings.DeviceName.DisplayScreen.deviceNameLabel": {
     "message": "Your Device Name"
@@ -725,7 +721,7 @@
     "message": "To join a project find a Coordinator of the project you wish to join. Tell them your device name and the Coordinator will send you an invite."
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.goToMap": {
-    "message": "Go to Map"
+    "message": "Ir al mapa"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.invitedDevice": {
     "message": "Invite Device"
@@ -786,11 +782,11 @@
   },
   "screens.Settings.aboutMapeo": {
     "description": "Primary text for 'About Mapeo' link (version info)",
-    "message": "About Mapeo"
+    "message": "Acerca de Mapeo"
   },
   "screens.Settings.aboutMapeoDesc": {
     "description": "Description of the 'About Mapeo' page",
-    "message": "Version and build number"
+    "message": "Versión y número de compilación"
   },
   "screens.Settings.appSettings": {
     "message": "App Settings"
@@ -814,7 +810,7 @@
   },
   "screens.Settings.title": {
     "description": "Title of settings screen",
-    "message": "Settings"
+    "message": "Ajustes"
   },
   "screens.Sync.CreateOrJoinProjectDisplay.buttonText": {
     "message": "Create or Join Project"
@@ -867,8 +863,8 @@
   "screens.Sync.ProjectSyncDisplay.upToDate": {
     "message": "Up to Date! No data to Sync"
   },
-  "sharedComponents.DeviceIconWithName.Disconnected": {
-    "message": "Disconnected"
+  "sharedComponents.DeviceCard.ThisDevice": {
+    "message": "This Device!"
   },
   "sharedComponents.DeviceIconWithName.thisDevice": {
     "message": "This Device!"
@@ -877,7 +873,7 @@
     "message": "Go Back"
   },
   "sharedComponents.ErrorModal.somethingWrong": {
-    "message": "Something Went Wrong"
+    "message": "Something\n Went Wrong"
   },
   "sharedComponents.ErrorModal.tryAgain": {
     "message": "Try Again"
@@ -919,7 +915,7 @@
     "message": "Participant"
   },
   "sharedComponents.WifiBar.noWifi": {
-    "message": "No Internet"
+    "message": "Sin internet"
   },
   "sharedComponents.WifiBar.wifi": {
     "description": "Label for wifi network name",

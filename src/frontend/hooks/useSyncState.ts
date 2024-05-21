@@ -1,7 +1,7 @@
 import {MapeoProjectApi} from '@mapeo/ipc';
 import {useCallback, useSyncExternalStore} from 'react';
 
-import {useProject} from './server/projects';
+import {useActiveProject} from '../contexts/ActiveProjectContext';
 
 export type SyncState = Awaited<
   ReturnType<MapeoProjectApi['$sync']['getState']>
@@ -10,7 +10,7 @@ export type SyncState = Awaited<
 const projectSyncStoreMap = new WeakMap<MapeoProjectApi, SyncStore>();
 
 function useSyncStore() {
-  const project = useProject();
+  const project = useActiveProject();
 
   let syncStore = projectSyncStoreMap.get(project);
 

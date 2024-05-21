@@ -1,0 +1,924 @@
+{
+  "AppContainer.EditHeader.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Tiếp tục chỉnh sửa"
+  },
+  "AppContainer.EditHeader.discardChangesButton": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Discard changes"
+  },
+  "AppContainer.EditHeader.discardChangesDescription": {
+    "message": "Your changes will not be saved. This cannot be undone."
+  },
+  "AppContainer.EditHeader.discardChangesTitle": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Hủy bỏ thay đổi?"
+  },
+  "AppContainer.EditHeader.discardObservationButton": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Discard Observation"
+  },
+  "AppContainer.EditHeader.discardObservationDescription": {
+    "message": "Your Observation will not be saved. This cannot be undone."
+  },
+  "AppContainer.EditHeader.discardTitle": {
+    "description": "Title of dialog that shows when cancelling a new observation",
+    "message": "Hủy bỏ quan sát?"
+  },
+  "Modal.DiscardTrack.description": {
+    "message": "Your Track will not be saved. This cannot be undone."
+  },
+  "Modal.DiscardTrack.title": {
+    "message": "Discard Track?"
+  },
+  "Modal.GPSDisable.button": {
+    "message": "Enable"
+  },
+  "Modal.GPSDisable.defaultButton": {
+    "message": "Continue Editing"
+  },
+  "Modal.GPSDisable.description": {
+    "message": "To create a Track CoMapeo needs access to your location and GPS."
+  },
+  "Modal.GPSDisable.discardButton": {
+    "message": "Discard Track"
+  },
+  "Modal.GPSDisable.title": {
+    "message": "GPS Disabled"
+  },
+  "Modal.GPSEnable.button.default": {
+    "message": "Start Tracks"
+  },
+  "Modal.GPSEnable.button.loading": {
+    "message": "Loading…"
+  },
+  "Modal.GPSEnable.button.stop": {
+    "message": "Stop Tracks"
+  },
+  "Modal.GPSEnable.trackingDescription": {
+    "message": "You’ve been recording for"
+  },
+  "Screens.Settings.AppSettings.coordinateSystem": {
+    "message": "Coordinate System"
+  },
+  "Screens.Settings.AppSettings.coordinateSystemDesc": {
+    "message": "UTM,Lat/Lon,DMS"
+  },
+  "Screens.Settings.AppSettings.language": {
+    "message": "Language"
+  },
+  "Screens.Settings.AppSettings.languageDesc": {
+    "message": "Display language for app"
+  },
+  "Screens.Settings.AppSettings.title": {
+    "message": "App Setttings"
+  },
+  "Screens.Settings.ProjectSettings.configuration": {
+    "message": "Configuration"
+  },
+  "Screens.Settings.ProjectSettings.deviceName": {
+    "message": "Tên thiết bị"
+  },
+  "Screens.Settings.ProjectSettings.title": {
+    "message": "Project Setttings"
+  },
+  "Screens.Settings.ProjectSettings.yourTeam": {
+    "message": "Your Team"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
+    "message": "Coordinator"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.participant": {
+    "message": "Participant"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.sendInvite": {
+    "message": "Send Invite"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.notSeeingDevice": {
+    "message": "Not seeing a Device?"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameVersion": {
+    "message": "Make sure both devices are on the same version of Mapeo"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameWifi": {
+    "message": "Make sure both devices are on the same wifi network"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
+    "message": "Select Device to Invite"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.coordinatorDescription": {
+    "message": "As a Coordinator this device can invite and remove users, and manage project details."
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.participantDescription": {
+    "message": "As a Participant this device can take and share observations. They cannot manage users or project details."
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.selectingDevice": {
+    "message": "You are selecting a role for this device:"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title": {
+    "message": "Select a Role"
+  },
+  "screens.AddPhoto.cancel": {
+    "message": "Hủy"
+  },
+  "screens.AppPasscode": {
+    "message": "Mật khẩu Ứng dụng"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.cancel": {
+    "message": "Hủy"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
+    "description": "used to indicate to the user what the new passcode will be.",
+    "message": "Mật khẩu"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
+    "message": "Lưu mật khẩu ứng dụng"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.title": {
+    "message": "Mật khẩu ứng dụng không thể được phục hồi nếu bị mất hoặc bị quên! Hãy nhớ ghi lại mật khẩu của bạn ở một nơi an toàn trước khi lưu để dùng."
+  },
+  "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
+    "message": "Vui lòng nhập mật khẩu"
+  },
+  "screens.AppPasscode.EnterPassToTurnOff.titleEnter": {
+    "message": "Nhập mật khẩu"
+  },
+  "screens.AppPasscode.InputPasscodeScreen.cancel": {
+    "message": "Hủy"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleConfirm": {
+    "message": "Nhập lại mật khẩu"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleSet": {
+    "message": "Thiết lập mật khauar ứng dụng"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.button": {
+    "message": "Tiếp theo"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.initialPassError": {
+    "message": "Mật khẩu phải có 5 số"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.obscurePasscodeError": {
+    "message": "Không thể sử dụng làm mật khẩu"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordDoesNotMatch": {
+    "message": "Mật khẩu không khớp"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordError": {
+    "message": "Mật khẩu không đúng"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet": {
+    "message": "Mật khẩu này sẽ được yêu cầu để mở ứng dụng Mapeo"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
+    "message": "Confirm Passcode"
+  },
+  "screens.AppPasscode.NewPasscode.SetPasscodeScreen.title": {
+    "message": "Set Passcode"
+  },
+  "screens.AppPasscode.NewPasscode.Splash.continue": {
+    "message": "Tiếp tục"
+  },
+  "screens.AppPasscode.NewPasscode.Splash.title": {
+    "message": "Mật khẩu Ứng dụng là gì?"
+  },
+  "screens.AppPasscode.PasscodeIntro.description": {
+    "message": "Mật khẩu ứng dụng cho phép bạn thêm một lớp bảo mật bổ sung bằng cách yêu cầu bạn nhập mật khẩu để mở ứng dụng Mapeo. Bạn có thể xác định mật khẩu gồm 5 chữ số của riêng mình bằng cách bật tính năng bên dưới."
+  },
+  "screens.AppPasscode.PasscodeIntro.warning": {
+    "message": "**Xin lưu ý rằng mật khẩu đã quên không thể khôi phục được!** Khi tính năng này được bật, nếu bạn quên hoặc mất mật khẩu, bạn sẽ không thể mở Mapeo và sẽ mất quyền truy cập vào mọi dữ liệu Mapeo chưa được đồng bộ hóa với những người tham gia dự án khác."
+  },
+  "screens.AppPasscode.TurnOffPasscode.cancel": {
+    "message": "Hủy"
+  },
+  "screens.AppPasscode.TurnOffPasscode.changePasscode": {
+    "message": "Đổi mật khẩu ứng dụng"
+  },
+  "screens.AppPasscode.TurnOffPasscode.currentlyUsing": {
+    "message": "Bạn đang sử dụng Mật khẩu ứng dụng. Xem bên dưới để ngừng sử dụng hoặc thay đổi mật khẩu của bạn."
+  },
+  "screens.AppPasscode.TurnOffPasscode.description": {
+    "message": "Mật khẩu ứng dụng bổ sung thêm một lớp bảo mật bằng cách yêu cầu bạn nhập mật khẩu để mở ứng dụng Mapeo."
+  },
+  "screens.AppPasscode.TurnOffPasscode.title": {
+    "message": "Mật khẩu Ứng dụng"
+  },
+  "screens.AppPasscode.TurnOffPasscode.turnOff": {
+    "message": "Tắt"
+  },
+  "screens.AppPasscode.TurnOffPasscode.turnOffConfirmation": {
+    "message": "Tắt mật khẩu ứng dụng?"
+  },
+  "screens.AppPasscode.TurnOffPasscode.usePasscode": {
+    "message": "Sử dụng mật khẩu ứng dụng"
+  },
+  "screens.CameraScreen.goToSettings": {
+    "message": "Go to Settings"
+  },
+  "screens.CameraScreen.noCameraAccess": {
+    "message": "No access to camera. Please Allow access in setting"
+  },
+  "screens.CategoryChooser.categoryTitle": {
+    "description": "Title for category chooser screen",
+    "message": "Chọn những gì đang diễn ra"
+  },
+  "screens.CoordinateFormat.dd": {
+    "description": "Decimal Degrees coordinate format",
+    "message": "Decimal Degrees (DD)"
+  },
+  "screens.CoordinateFormat.dms": {
+    "description": "Degrees/Minutes/Seconds coordinate format",
+    "message": "Degrees/Minutes/Seconds (DMS)"
+  },
+  "screens.CoordinateFormat.title": {
+    "description": "Title coordinate format screen",
+    "message": "Coordinate Format"
+  },
+  "screens.CoordinateFormat.utm": {
+    "description": "Universal Transverse Mercator coordinate format",
+    "message": "Universal Transverse Mercator (UTM)"
+  },
+  "screens.DeviceNaming.Success.description": {
+    "message": "You named your device"
+  },
+  "screens.DeviceNaming.Success.goToMap": {
+    "message": "Go to Map"
+  },
+  "screens.DeviceNaming.Success.success": {
+    "message": "Success!"
+  },
+  "screens.DeviceNaming.addName": {
+    "message": "Add Name"
+  },
+  "screens.DeviceNaming.description": {
+    "message": "To create or join a new project you will have to name your device. In a future version of CoMapeo, you will be able to manage the projects you created by changing devices roles, deleting devices and much more."
+  },
+  "screens.DeviceNaming.header": {
+    "message": "Add a name for your device"
+  },
+  "screens.EnterPassword.enterPass": {
+    "message": "Nhập mật khẩu"
+  },
+  "screens.EnterPassword.wrongPass": {
+    "message": "Mật khẩu không đúng, vui lòng thử lại"
+  },
+  "screens.FatalError.restart": {
+    "message": "Restart App"
+  },
+  "screens.FatalError.somethingWrong": {
+    "message": "Something Went Wrong"
+  },
+  "screens.IntroToCoMapeo.collaborate": {
+    "message": "Collaborate on mapping and monitoring projects"
+  },
+  "screens.IntroToCoMapeo.getStarted": {
+    "message": "Get Started"
+  },
+  "screens.IntroToCoMapeo.isNow": {
+    "description": "The full sentence is mapeo 'is now' comapeo. ",
+    "message": "is now"
+  },
+  "screens.IntroToCoMapeo.version": {
+    "description": "v is short for version. the translation for version can be used instead",
+    "message": "V"
+  },
+  "screens.LocationInfoScreen.details": {
+    "description": "Section title for details about current position",
+    "message": "Details"
+  },
+  "screens.LocationInfoScreen.gpsHeader": {
+    "description": "Header for GPS screen",
+    "message": "Current GPS Location"
+  },
+  "screens.LocationInfoScreen.lastUpdate": {
+    "description": "Section title for time of last GPS update",
+    "message": "Last update"
+  },
+  "screens.LocationInfoScreen.locationDD": {
+    "description": "Section title for DD coordinates",
+    "message": "Coordinates Decimal Degrees"
+  },
+  "screens.LocationInfoScreen.locationDMS": {
+    "description": "Section title for DMS coordinates",
+    "message": "Coordinates DMS"
+  },
+  "screens.LocationInfoScreen.locationSensors": {
+    "description": "Heading for section about location sensor status",
+    "message": "Sensor Status"
+  },
+  "screens.LocationInfoScreen.locationUTM": {
+    "description": "Section title for UTM coordinates",
+    "message": "Coordinates UTM"
+  },
+  "screens.LocationInfoScreen.no": {
+    "description": "if a location sensor is active yes/no",
+    "message": "No"
+  },
+  "screens.LocationInfoScreen.yes": {
+    "description": "if a location sensor is active yes/no",
+    "message": "Yes"
+  },
+  "screens.ManualGpsScreen.DdForm.east": {
+    "message": "East"
+  },
+  "screens.ManualGpsScreen.DdForm.invalidCoordinates": {
+    "message": "Invalid coordinates"
+  },
+  "screens.ManualGpsScreen.DdForm.latInputLabel": {
+    "message": "Latitude value"
+  },
+  "screens.ManualGpsScreen.DdForm.latitude": {
+    "message": "Latitude"
+  },
+  "screens.ManualGpsScreen.DdForm.lonInputLabel": {
+    "message": "Longitude value"
+  },
+  "screens.ManualGpsScreen.DdForm.longitude": {
+    "message": "Longitude"
+  },
+  "screens.ManualGpsScreen.DdForm.north": {
+    "message": "North"
+  },
+  "screens.ManualGpsScreen.DdForm.selectLatCardinality": {
+    "message": "Select latitude cardinality"
+  },
+  "screens.ManualGpsScreen.DdForm.selectLonCardinality": {
+    "message": "Select longitude cardinality"
+  },
+  "screens.ManualGpsScreen.DdForm.south": {
+    "message": "South"
+  },
+  "screens.ManualGpsScreen.DdForm.west": {
+    "message": "West"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.MinutesInputLabel": {
+    "message": "{field} minutes input"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.SecondsInputLabel": {
+    "message": "{field} seconds input"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.degrees": {
+    "message": "Degrees"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.degreesInputLabel": {
+    "message": "{field} degrees input"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.direction": {
+    "message": "Direction"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.minutes": {
+    "message": "Minutes"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.seconds": {
+    "message": "Seconds"
+  },
+  "screens.ManualGpsScreen.DmsForm.east": {
+    "message": "East"
+  },
+  "screens.ManualGpsScreen.DmsForm.invalidCoordinates": {
+    "message": "Invalid coordinates"
+  },
+  "screens.ManualGpsScreen.DmsForm.latitude": {
+    "message": "Latitude"
+  },
+  "screens.ManualGpsScreen.DmsForm.longitude": {
+    "message": "Longitude"
+  },
+  "screens.ManualGpsScreen.DmsForm.north": {
+    "message": "North"
+  },
+  "screens.ManualGpsScreen.DmsForm.selectLatCardinality": {
+    "message": "Select latitude cardinality"
+  },
+  "screens.ManualGpsScreen.DmsForm.south": {
+    "message": "South"
+  },
+  "screens.ManualGpsScreen.DmsForm.west": {
+    "message": "West"
+  },
+  "screens.ManualGpsScreen.coordinateFormat": {
+    "message": "Coordinate Format"
+  },
+  "screens.ManualGpsScreen.decimalDegrees": {
+    "message": "Decimal Degrees (DD)"
+  },
+  "screens.ManualGpsScreen.degreesMinutesSeconds": {
+    "message": "Degrees/Minutes/Seconds (DMS)"
+  },
+  "screens.ManualGpsScreen.easting": {
+    "message": "East"
+  },
+  "screens.ManualGpsScreen.eastingSuffix": {
+    "message": "mE"
+  },
+  "screens.ManualGpsScreen.invalidCoordinates": {
+    "message": "Invalid coordinates. Latitude must be between -90 and 90. Longitude must be between -180 and 180"
+  },
+  "screens.ManualGpsScreen.northing": {
+    "message": "North"
+  },
+  "screens.ManualGpsScreen.northingSuffix": {
+    "message": "mN"
+  },
+  "screens.ManualGpsScreen.title": {
+    "description": "title of manual GPS screen",
+    "message": "Enter coordinates"
+  },
+  "screens.ManualGpsScreen.universalTransverseMercator": {
+    "message": "Universal Transverse Mercator (UTM)"
+  },
+  "screens.ManualGpsScreen.zoneLetter": {
+    "message": "Zone Letter"
+  },
+  "screens.ManualGpsScreen.zoneNumber": {
+    "message": "Zone Number"
+  },
+  "screens.ObscurePasscode.description": {
+    "message": "Obscure Passcode is a security feature that allows you to open Mapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of Mapeo which allows you to create demonstration observations that are not saved to the Mapeo database."
+  },
+  "screens.ObscurePasscode.instructions": {
+    "message": "Enter the code above to hide your data in Mapeo"
+  },
+  "screens.ObscurePasscode.title": {
+    "message": "Obscure Passcode"
+  },
+  "screens.ObscurePasscode.toggleMessage": {
+    "message": "Use Obscure Passcode"
+  },
+  "screens.ObscurePasscode.whatIsObscure": {
+    "message": "What is Obscure Passcode?"
+  },
+  "screens.Observation.ObservationEdit.CategoryView.changePreset": {
+    "message": "Thay đổi"
+  },
+  "screens.Observation.ObservationEdit.CategoryView.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Quan sát"
+  },
+  "screens.Observation.ObservationView.delete": {
+    "description": "Button to delete an observation",
+    "message": "Xóa"
+  },
+  "screens.Observation.ObservationView.noAnswer": {
+    "description": "Placeholder text for fields on an observation which are not answered",
+    "message": "Không có câu trả lời"
+  },
+  "screens.Observation.ObservationView.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Quan sát"
+  },
+  "screens.Observation.cancel": {
+    "description": "Button to cancel delete of observation",
+    "message": "Hủy"
+  },
+  "screens.Observation.confirm": {
+    "description": "Button to confirm delete of observation",
+    "message": "Có, xóa"
+  },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "Xóa quan sát?"
+  },
+  "screens.Observation.title": {
+    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
+    "message": "Quan sát"
+  },
+  "screens.ObservationDetails.done": {
+    "description": "Button text when all questions are complete",
+    "message": "Done"
+  },
+  "screens.ObservationDetails.nextQuestion": {
+    "description": "Button text to navigate to next question",
+    "message": "Next"
+  },
+  "screens.ObservationDetails.title": {
+    "description": "Title of observation details screen showing question number and total",
+    "message": "Question {current} of {total}"
+  },
+  "screens.ObservationEdit.BottomSheet.addLabel": {
+    "description": "Label above keyboard that expands into bottom sheet of options to add (photo, details etc)",
+    "message": "Thêm vào…"
+  },
+  "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "Có điều gì đang diễn ra ở đây?"
+  },
+  "screens.ObservationEdit.ObservationEditView.detailsButton": {
+    "description": "Button label to add details",
+    "message": "Add Details"
+  },
+  "screens.ObservationEdit.ObservationEditView.photoButton": {
+    "description": "Button label for adding photo",
+    "message": "Thêm ảnh"
+  },
+  "screens.ObservationEdit.ObservationEditView.searching": {
+    "description": "Shown in new observation screen whilst looking for GPS",
+    "message": "Tìm kiếm…"
+  },
+  "screens.ObservationEdit.SaveButton.keepWaiting": {
+    "description": "Button to cancel save and continue waiting for GPS",
+    "message": "Tiếp tục chờ"
+  },
+  "screens.ObservationEdit.SaveButton.manualEntry": {
+    "description": "Button to manually enter GPS coordinates",
+    "message": "Tọa độ thủ công"
+  },
+  "screens.ObservationEdit.SaveButton.noGpsDesc": {
+    "description": "Description in dialog when trying to save with no GPS coords",
+    "message": "Quan sát này không có vị trí. Bạn có thể tiếp tục chờ tín hiệu GPS, lưu quan sát mà không có vị trí, hoặc nhập tọa độ thủ công"
+  },
+  "screens.ObservationEdit.SaveButton.noGpsTitle": {
+    "description": "Title of dialog when trying to save with no GPS coords",
+    "message": "Không có tín hiệu GPS"
+  },
+  "screens.ObservationEdit.SaveButton.saveAnyway": {
+    "description": "Button to save regardless of GPS state",
+    "message": "Lưu"
+  },
+  "screens.ObservationEdit.SaveButton.weakGpsDesc": {
+    "description": "Description in dialog when trying to save with low GPS accuracy.",
+    "message": "Độ chính xác của GPS thấp. Bạn có thể tiếp tục đợi để có độ chính xác cao hơn, lưu quan sát với độ chính xác thấp, hoặc nhập tọa độ thủ công"
+  },
+  "screens.ObservationEdit.SaveButton.weakGpsTitle": {
+    "description": "Title of dialog when trying to save with low GPS accuracy.",
+    "message": "Tín hiệu GPS yếu"
+  },
+  "screens.ObservationEdit.editTitle": {
+    "description": "screen title for edit observation screen",
+    "message": "Chỉnh sửa quan sát"
+  },
+  "screens.ObservationEdit.newTitle": {
+    "description": "screen title for new observation screen",
+    "message": "Quan sát mới"
+  },
+  "screens.ObservationList.observationListTitle": {
+    "description": "Title of screen with list of observations",
+    "message": "Các quan sát"
+  },
+  "screens.ObservationsList.NoProjectWarning": {
+    "message": "You won’t be able to share observations collected yet."
+  },
+  "screens.ObservationsList.ObservationsEmptyView.backButton": {
+    "description": "Back button on observation list screen when no observations are yet recorded",
+    "message": "Đến Bản đồ"
+  },
+  "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
+    "description": "Description of observation list view when the user has not yet recorded observations",
+    "message": "Bắt đầu từ chế độ xem bản đồ hoặc máy ảnh để ghi lại quan sát đầu tiên của bạn."
+  },
+  "screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
+    "description": "Title of observation list view when the user has not yet recorded observations",
+    "message": "Thêm Quan sát"
+  },
+  "screens.ObservationsList.createOrJoin": {
+    "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
+    "message": "Create or Join a Project."
+  },
+  "screens.ObservationsList.error": {
+    "description": "message shown when there is an unexpected error when loading observations",
+    "message": "Lỗi tải các quan sát. Hãy thử rời bỏ và khởi động lại Mapeo."
+  },
+  "screens.ObservationsList.loading": {
+    "description": "message shown whilst observations are loading",
+    "message": "Đang tải... việc này có thể càn một chút thời gian sau khi đồng bộ hóa với thiết bị mới"
+  },
+  "screens.ObservationsList.toSync": {
+    "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
+    "message": "To sync and share with other devices,"
+  },
+  "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "What is happening here?"
+  },
+  "screens.SaveTrack.TrackEditView.saveTrackCamera": {
+    "description": "Button label for adding photo",
+    "message": "Camera"
+  },
+  "screens.SaveTrack.TrackEditView.saveTrackDetails": {
+    "description": "Button label for check details",
+    "message": "Details"
+  },
+  "screens.SaveTrack.TrackEditView.title": {
+    "description": "Title for new track screen",
+    "message": "New Track"
+  },
+  "screens.SaveTrack.track": {
+    "description": "Category title for new track screen",
+    "message": "Track"
+  },
+  "screens.Security.obscurePassDescriptonPassNotSet": {
+    "message": "Để sử dụng, bật Mật khẩu ứng dụng"
+  },
+  "screens.Security.obscurePassDescriptonPassSet": {
+    "message": "Bảo vệ thiế bị của bạn khỏi bị tịch thu"
+  },
+  "screens.Security.obscurePasscodeHeader": {
+    "message": "Obscure Passcode"
+  },
+  "screens.Security.passDesriptionPassNotSet": {
+    "message": "Mật khẩu chưa được đặt"
+  },
+  "screens.Security.passDesriptionPassSet": {
+    "message": "Mật khẩu đã được đặt"
+  },
+  "screens.Security.passcodeHeader": {
+    "message": "Mật khẩu Ứng dụng"
+  },
+  "screens.Security.securitySubheader": {
+    "message": "Bảo mật thiết bị"
+  },
+  "screens.Security.title": {
+    "message": "Bảo mật"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.DisplayScreen.deviceNameLabel": {
+    "message": "Your Device Name"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.DisplayScreen.title": {
+    "message": "Device Name"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.EditScreen.deviceNameLabel": {
+    "message": "Edit Device Name"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertCancelText": {
+    "message": "Continue Editing"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertConfirmText": {
+    "message": "Discard Changes"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertTitle": {
+    "message": "Discard changes?"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.EditScreen.title": {
+    "message": "Device Name"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
+    "message": "Add Another Device"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.close": {
+    "message": "Close"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
+    "message": "Invite Accepted"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.NotOnProject.createOrJoin": {
+    "message": "Create or Join Project"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.NotOnProject.projectNecessary": {
+    "message": "Create or Join a Project to invite devices"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
+    "message": "Review Invitation"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.youAreInviting": {
+    "message": "You are inviting:"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.title": {
+    "message": "Review Invitation"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.cancelInvite": {
+    "message": "Cancel Invite"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.timerMessage": {
+    "message": "Invite sent {seconds}s ago"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.waitingMessage": {
+    "message": "Waiting for Device to Accept Invite"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.coordinatorDescription": {
+    "message": "Coordinators can invite devices, edit and delete data, and manage project details."
+  },
+  "screens.Setting.ProjectSettings.YourTeam.coordinators": {
+    "message": "Coordinators"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.dateAdded": {
+    "message": "Date Added"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.deviceName": {
+    "message": "Device Name"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
+    "message": "Invite Device"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.participantDescription": {
+    "message": "Participants can take and share observations. They cannot manage users or project details."
+  },
+  "screens.Setting.ProjectSettings.YourTeam.participants": {
+    "message": "Participants"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.title": {
+    "message": "Your Team"
+  },
+  "screens.Settings.CreateOrJoinProject.CreateProject.title": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
+    "message": "Go back"
+  },
+  "screens.Settings.CreateOrJoinProject.JoinExistingProject.howTo": {
+    "message": "How to Join a Project"
+  },
+  "screens.Settings.CreateOrJoinProject.JoinExistingProject.instructions": {
+    "message": "To join a project find a Coordinator of the project you wish to join. Tell them your device name and the Coordinator will send you an invite."
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.goToMap": {
+    "message": "Go to Map"
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.invitedDevice": {
+    "message": "Invite Device"
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.projectCreated": {
+    "message": "{projectName} Created!"
+  },
+  "screens.Settings.CreateOrJoinProject.advancedSettings": {
+    "message": "Advanced Project Settings"
+  },
+  "screens.Settings.CreateOrJoinProject.alreadyOnProject": {
+    "message": "You are already on a project. To create a new Project you must uninstall and reininstall CoMapeo."
+  },
+  "screens.Settings.CreateOrJoinProject.createProject": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.CreateOrJoinProject.createProjectButton": {
+    "message": "Create Project"
+  },
+  "screens.Settings.CreateOrJoinProject.enterName": {
+    "message": "Enter a name for the Project"
+  },
+  "screens.Settings.CreateOrJoinProject.importConfig": {
+    "message": "Import Config"
+  },
+  "screens.Settings.CreateOrJoinProject.joinExisting": {
+    "message": "Join an existing Mapeo Project"
+  },
+  "screens.Settings.CreateOrJoinProject.joinProject": {
+    "message": "Join a Project"
+  },
+  "screens.Settings.CreateOrJoinProject.projectDescription": {
+    "message": "A project is a secure container for your data. Only devices you invite can enter and share data with you. Create or Join a project in order to share data with other devices."
+  },
+  "screens.Settings.CreateOrJoinProject.startProject": {
+    "message": "Start a CoMapeo Project"
+  },
+  "screens.Settings.CreateOrJoinProject.title": {
+    "message": "Create or Join"
+  },
+  "screens.Settings.CreateOrJoinProject.whatIsAProject": {
+    "message": "What is a Project"
+  },
+  "screens.Settings.YourTeam.InviteDeclined": {
+    "message": "Invitation Declined"
+  },
+  "screens.Settings.YourTeam.close": {
+    "message": "Close"
+  },
+  "screens.Settings.YourTeam.deviceHasJoined": {
+    "message": "Device Has Joined {projectName}"
+  },
+  "screens.Settings.YourTeam.inviteDeclinedDes": {
+    "message": "This device has declined your invitation. They have not joined the project."
+  },
+  "screens.Settings.YourTeam.unableToCancel": {
+    "message": "Unable to Cancel Invitation"
+  },
+  "screens.Settings.aboutMapeo": {
+    "description": "Primary text for 'About Mapeo' link (version info)",
+    "message": "Giới thiệu về Mapeo"
+  },
+  "screens.Settings.aboutMapeoDesc": {
+    "description": "Description of the 'About Mapeo' page",
+    "message": "Phiên bản và số hiệu bản tạo"
+  },
+  "screens.Settings.appSettings": {
+    "message": "App Settings"
+  },
+  "screens.Settings.appSettingsDesc": {
+    "description": "list of avaialable app settings",
+    "message": "Language, Security, Coordinates"
+  },
+  "screens.Settings.createOrJoin": {
+    "message": "Create or Join Project"
+  },
+  "screens.Settings.createOrJoinDesc": {
+    "message": "Create a new project or join existing one"
+  },
+  "screens.Settings.projectSettings": {
+    "message": "Project Settings"
+  },
+  "screens.Settings.projectSettingsDesc": {
+    "description": "list of avaialable project settings",
+    "message": "Categories, Config, Team"
+  },
+  "screens.Settings.title": {
+    "description": "Title of settings screen",
+    "message": "Cài đặt"
+  },
+  "screens.Sync.CreateOrJoinProjectDisplay.buttonText": {
+    "message": "Create or Join Project"
+  },
+  "screens.Sync.CreateOrJoinProjectDisplay.description": {
+    "message": "Create or Join a Project to sync with other devices"
+  },
+  "screens.Sync.HeaderTitle.noWiFi": {
+    "message": "No WiFi"
+  },
+  "screens.Sync.NoWifiDisplay.buttonText": {
+    "message": "Open Settings"
+  },
+  "screens.Sync.NoWifiDisplay.description": {
+    "message": "Open your phone settings and connect to a WiFi network to synchronize"
+  },
+  "screens.Sync.NoWifiDisplay.title": {
+    "message": "No WiFi"
+  },
+  "screens.Sync.ProjectSyncDisplay.buttonTextDone": {
+    "message": "You're all caught up"
+  },
+  "screens.Sync.ProjectSyncDisplay.buttonTextStop": {
+    "message": "Stop"
+  },
+  "screens.Sync.ProjectSyncDisplay.buttonTextSync": {
+    "message": "Sync"
+  },
+  "screens.Sync.ProjectSyncDisplay.deviceName": {
+    "message": "Your device name is {name}"
+  },
+  "screens.Sync.ProjectSyncDisplay.devicesNearby": {
+    "message": "{count} {count, plural, one {device} other {devices}} nearby/connected"
+  },
+  "screens.Sync.ProjectSyncDisplay.devicesSyncing": {
+    "message": "Syncing with {count} {count, plural, one {Device} other {Devices}}"
+  },
+  "screens.Sync.ProjectSyncDisplay.devicesWaitingToSync": {
+    "message": "{count} {count, plural, one {Device} other {Devices}} Waiting to Sync with you"
+  },
+  "screens.Sync.ProjectSyncDisplay.noDevicesSyncing": {
+    "message": "No Devices are Syncing"
+  },
+  "screens.Sync.ProjectSyncDisplay.syncProgress": {
+    "message": "{value}%"
+  },
+  "screens.Sync.ProjectSyncDisplay.syncing": {
+    "message": "Syncing…"
+  },
+  "screens.Sync.ProjectSyncDisplay.upToDate": {
+    "message": "Up to Date! No data to Sync"
+  },
+  "sharedComponents.DeviceCard.ThisDevice": {
+    "message": "This Device!"
+  },
+  "sharedComponents.DeviceIconWithName.thisDevice": {
+    "message": "This Device!"
+  },
+  "sharedComponents.ErrorModal.goBack": {
+    "message": "Go Back"
+  },
+  "sharedComponents.ErrorModal.somethingWrong": {
+    "message": "Something\n Went Wrong"
+  },
+  "sharedComponents.ErrorModal.tryAgain": {
+    "message": "Try Again"
+  },
+  "sharedComponents.GpsPill.noGps": {
+    "message": "No GPS"
+  },
+  "sharedComponents.GpsPill.searching": {
+    "message": "Searching…"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.acceptInvite": {
+    "message": "Accept Invite"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.declineInvite": {
+    "message": "Decline Invite"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.goToMap": {
+    "message": "Go To Map"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.goToSync": {
+    "message": "Go To Sync"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.invitedToJoin": {
+    "message": "You've been invited to join {projName}"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.joinProject": {
+    "message": "Join Project {projName}"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.success": {
+    "message": "Success"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.youHaveJoined": {
+    "message": "You have joined {projName}"
+  },
+  "sharedComponents.RoleWithIcon.coordinator": {
+    "message": "Coordinator"
+  },
+  "sharedComponents.RoleWithIcon.participant": {
+    "message": "Participant"
+  },
+  "sharedComponents.WifiBar.noWifi": {
+    "message": "Không có kết nối Internet"
+  },
+  "sharedComponents.WifiBar.wifi": {
+    "description": "Label for wifi network name",
+    "message": "WiFi:"
+  }
+}

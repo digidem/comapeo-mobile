@@ -1,0 +1,924 @@
+{
+  "AppContainer.EditHeader.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Үргэлжлүүлэн засварлах"
+  },
+  "AppContainer.EditHeader.discardChangesButton": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Discard changes"
+  },
+  "AppContainer.EditHeader.discardChangesDescription": {
+    "message": "Your changes will not be saved. This cannot be undone."
+  },
+  "AppContainer.EditHeader.discardChangesTitle": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Өөрчлөлтийг цуцлах уу? "
+  },
+  "AppContainer.EditHeader.discardObservationButton": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Discard Observation"
+  },
+  "AppContainer.EditHeader.discardObservationDescription": {
+    "message": "Your Observation will not be saved. This cannot be undone."
+  },
+  "AppContainer.EditHeader.discardTitle": {
+    "description": "Title of dialog that shows when cancelling a new observation",
+    "message": "Сануулгаас татгалзах уу?"
+  },
+  "Modal.DiscardTrack.description": {
+    "message": "Your Track will not be saved. This cannot be undone."
+  },
+  "Modal.DiscardTrack.title": {
+    "message": "Discard Track?"
+  },
+  "Modal.GPSDisable.button": {
+    "message": "Enable"
+  },
+  "Modal.GPSDisable.defaultButton": {
+    "message": "Continue Editing"
+  },
+  "Modal.GPSDisable.description": {
+    "message": "To create a Track CoMapeo needs access to your location and GPS."
+  },
+  "Modal.GPSDisable.discardButton": {
+    "message": "Discard Track"
+  },
+  "Modal.GPSDisable.title": {
+    "message": "GPS Disabled"
+  },
+  "Modal.GPSEnable.button.default": {
+    "message": "Start Tracks"
+  },
+  "Modal.GPSEnable.button.loading": {
+    "message": "Loading…"
+  },
+  "Modal.GPSEnable.button.stop": {
+    "message": "Stop Tracks"
+  },
+  "Modal.GPSEnable.trackingDescription": {
+    "message": "You’ve been recording for"
+  },
+  "Screens.Settings.AppSettings.coordinateSystem": {
+    "message": "Coordinate System"
+  },
+  "Screens.Settings.AppSettings.coordinateSystemDesc": {
+    "message": "UTM,Lat/Lon,DMS"
+  },
+  "Screens.Settings.AppSettings.language": {
+    "message": "Хэл"
+  },
+  "Screens.Settings.AppSettings.languageDesc": {
+    "message": "Display language for app"
+  },
+  "Screens.Settings.AppSettings.title": {
+    "message": "App Setttings"
+  },
+  "Screens.Settings.ProjectSettings.configuration": {
+    "message": "Configuration"
+  },
+  "Screens.Settings.ProjectSettings.deviceName": {
+    "message": "Төхөөрөмжний нэр"
+  },
+  "Screens.Settings.ProjectSettings.title": {
+    "message": "Project Setttings"
+  },
+  "Screens.Settings.ProjectSettings.yourTeam": {
+    "message": "Your Team"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
+    "message": "Coordinator"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.participant": {
+    "message": "Participant"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.sendInvite": {
+    "message": "Send Invite"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.notSeeingDevice": {
+    "message": "Not seeing a Device?"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameVersion": {
+    "message": "Make sure both devices are on the same version of Mapeo"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameWifi": {
+    "message": "Make sure both devices are on the same wifi network"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
+    "message": "Select Device to Invite"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.coordinatorDescription": {
+    "message": "As a Coordinator this device can invite and remove users, and manage project details."
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.participantDescription": {
+    "message": "As a Participant this device can take and share observations. They cannot manage users or project details."
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.selectingDevice": {
+    "message": "You are selecting a role for this device:"
+  },
+  "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title": {
+    "message": "Select a Role"
+  },
+  "screens.AddPhoto.cancel": {
+    "message": "Цуцлах"
+  },
+  "screens.AppPasscode": {
+    "message": "Аппликэшний нууц үг"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.cancel": {
+    "message": "Цуцлах"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
+    "description": "used to indicate to the user what the new passcode will be.",
+    "message": "Нууц үг"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
+    "message": "Аппликэйшний нууц үгийг хадгалах"
+  },
+  "screens.AppPasscode.ConfirmPasscodeSheet.title": {
+    "message": "Аппликэйшний нууц үгийг алдсан эсвэл мартсан тохиолдолд хэзээ ч сэргээх боломжгүй! Хадгалахаасаа өмнө нууц үгээ аюулгүй газар тэмдэглэнэ үү."
+  },
+  "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
+    "message": "Нууц үгийг оруулна уу"
+  },
+  "screens.AppPasscode.EnterPassToTurnOff.titleEnter": {
+    "message": "Нууц үг оруулах"
+  },
+  "screens.AppPasscode.InputPasscodeScreen.cancel": {
+    "message": "Цуцлах"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleConfirm": {
+    "message": "Нууц үг дахин оруулах"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.TitleSet": {
+    "message": "Нууц үг тохируулах"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.button": {
+    "message": "Дараагийнх"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.initialPassError": {
+    "message": "Нууц үг 5 оронтой тоо байх ёстой"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.obscurePasscodeError": {
+    "message": "Нууц үг болгон ашиглах боломжгүй"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordDoesNotMatch": {
+    "message": "Нууц үг тохирохгүй байна"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordError": {
+    "message": "Нууц үг буруу"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet": {
+    "message": "Mapeo програмыг нээхэд энэ нууц үг шаардлагатай болно"
+  },
+  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
+    "message": "Confirm Passcode"
+  },
+  "screens.AppPasscode.NewPasscode.SetPasscodeScreen.title": {
+    "message": "Set Passcode"
+  },
+  "screens.AppPasscode.NewPasscode.Splash.continue": {
+    "message": "Үргэлжлүүлэх"
+  },
+  "screens.AppPasscode.NewPasscode.Splash.title": {
+    "message": "Аппликэйшний нууц үг гэж юу вэ?"
+  },
+  "screens.AppPasscode.PasscodeIntro.description": {
+    "message": "Аппликэйшний нууц үг нь Mapeo програмыг нээхийн тулд нууц үг оруулах шаардлагатай тул хамгаалалтын нэмэлт давхарга нэмэх боломжийг танд олгоно. Та доорх функцийг идэвхжүүлснээр өөрийн 5 оронтой нууц үгийг тодорхойлж болно."
+  },
+  "screens.AppPasscode.PasscodeIntro.warning": {
+    "message": "**Мартагдсан нууц үгийг сэргээх боломжгүй гэдгийг анхаарна уу!** Энэ функцийг идэвхжүүлсний дараа, хэрэв та нууц үгээ мартсан эсвэл алдсан тохиолдолд Mapeo-г нээх боломжгүй бөгөөд бусад төсөлд оролцогчидтой синк хийгээгүй Mapeo өгөгдөлд хандах эрхээ алдах болно. "
+  },
+  "screens.AppPasscode.TurnOffPasscode.cancel": {
+    "message": "Цуцлах"
+  },
+  "screens.AppPasscode.TurnOffPasscode.changePasscode": {
+    "message": "Аппликэйшний нууц үгийг өөрчлөх"
+  },
+  "screens.AppPasscode.TurnOffPasscode.currentlyUsing": {
+    "message": "Та одоогоор Аппликэйшний нууц үгийг ашиглаж байна. Нууц үгээ ашиглахаа зогсоох эсвэл өөрчлөхийн тулд доороос үзнэ үү."
+  },
+  "screens.AppPasscode.TurnOffPasscode.description": {
+    "message": "Аппликэйшний нууц үг нь Mapeo програмыг нээхийн тулд нууц үг оруулах шаардлагатай тул аюулгүй байдлын нэмэлт давхаргыг нэмдэг."
+  },
+  "screens.AppPasscode.TurnOffPasscode.title": {
+    "message": "Аппликэшний нууц үг"
+  },
+  "screens.AppPasscode.TurnOffPasscode.turnOff": {
+    "message": "Унтраах"
+  },
+  "screens.AppPasscode.TurnOffPasscode.turnOffConfirmation": {
+    "message": "Аппликэйшний нууц үгийг унтраах"
+  },
+  "screens.AppPasscode.TurnOffPasscode.usePasscode": {
+    "message": "Аппликэйшний нууц үгийг ашиглах"
+  },
+  "screens.CameraScreen.goToSettings": {
+    "message": "Go to Settings"
+  },
+  "screens.CameraScreen.noCameraAccess": {
+    "message": "No access to camera. Please Allow access in setting"
+  },
+  "screens.CategoryChooser.categoryTitle": {
+    "description": "Title for category chooser screen",
+    "message": "Юу болж байгааг сонгох"
+  },
+  "screens.CoordinateFormat.dd": {
+    "description": "Decimal Degrees coordinate format",
+    "message": "Decimal Degrees (DD)"
+  },
+  "screens.CoordinateFormat.dms": {
+    "description": "Degrees/Minutes/Seconds coordinate format",
+    "message": "Degrees/Minutes/Seconds (DMS)"
+  },
+  "screens.CoordinateFormat.title": {
+    "description": "Title coordinate format screen",
+    "message": "Coordinate Format"
+  },
+  "screens.CoordinateFormat.utm": {
+    "description": "Universal Transverse Mercator coordinate format",
+    "message": "Universal Transverse Mercator (UTM)"
+  },
+  "screens.DeviceNaming.Success.description": {
+    "message": "You named your device"
+  },
+  "screens.DeviceNaming.Success.goToMap": {
+    "message": "Go to Map"
+  },
+  "screens.DeviceNaming.Success.success": {
+    "message": "Success!"
+  },
+  "screens.DeviceNaming.addName": {
+    "message": "Add Name"
+  },
+  "screens.DeviceNaming.description": {
+    "message": "To create or join a new project you will have to name your device. In a future version of CoMapeo, you will be able to manage the projects you created by changing devices roles, deleting devices and much more."
+  },
+  "screens.DeviceNaming.header": {
+    "message": "Add a name for your device"
+  },
+  "screens.EnterPassword.enterPass": {
+    "message": "Нууц үгээ оруулах"
+  },
+  "screens.EnterPassword.wrongPass": {
+    "message": "Нууц үг буруу байна, дахин оролдоно уу"
+  },
+  "screens.FatalError.restart": {
+    "message": "Restart App"
+  },
+  "screens.FatalError.somethingWrong": {
+    "message": "Something Went Wrong"
+  },
+  "screens.IntroToCoMapeo.collaborate": {
+    "message": "Collaborate on mapping and monitoring projects"
+  },
+  "screens.IntroToCoMapeo.getStarted": {
+    "message": "Get Started"
+  },
+  "screens.IntroToCoMapeo.isNow": {
+    "description": "The full sentence is mapeo 'is now' comapeo. ",
+    "message": "is now"
+  },
+  "screens.IntroToCoMapeo.version": {
+    "description": "v is short for version. the translation for version can be used instead",
+    "message": "V"
+  },
+  "screens.LocationInfoScreen.details": {
+    "description": "Section title for details about current position",
+    "message": "Details"
+  },
+  "screens.LocationInfoScreen.gpsHeader": {
+    "description": "Header for GPS screen",
+    "message": "Current GPS Location"
+  },
+  "screens.LocationInfoScreen.lastUpdate": {
+    "description": "Section title for time of last GPS update",
+    "message": "Last update"
+  },
+  "screens.LocationInfoScreen.locationDD": {
+    "description": "Section title for DD coordinates",
+    "message": "Coordinates Decimal Degrees"
+  },
+  "screens.LocationInfoScreen.locationDMS": {
+    "description": "Section title for DMS coordinates",
+    "message": "Coordinates DMS"
+  },
+  "screens.LocationInfoScreen.locationSensors": {
+    "description": "Heading for section about location sensor status",
+    "message": "Sensor Status"
+  },
+  "screens.LocationInfoScreen.locationUTM": {
+    "description": "Section title for UTM coordinates",
+    "message": "Coordinates UTM"
+  },
+  "screens.LocationInfoScreen.no": {
+    "description": "if a location sensor is active yes/no",
+    "message": "No"
+  },
+  "screens.LocationInfoScreen.yes": {
+    "description": "if a location sensor is active yes/no",
+    "message": "Yes"
+  },
+  "screens.ManualGpsScreen.DdForm.east": {
+    "message": "East"
+  },
+  "screens.ManualGpsScreen.DdForm.invalidCoordinates": {
+    "message": "Invalid coordinates"
+  },
+  "screens.ManualGpsScreen.DdForm.latInputLabel": {
+    "message": "Latitude value"
+  },
+  "screens.ManualGpsScreen.DdForm.latitude": {
+    "message": "Latitude"
+  },
+  "screens.ManualGpsScreen.DdForm.lonInputLabel": {
+    "message": "Longitude value"
+  },
+  "screens.ManualGpsScreen.DdForm.longitude": {
+    "message": "Longitude"
+  },
+  "screens.ManualGpsScreen.DdForm.north": {
+    "message": "North"
+  },
+  "screens.ManualGpsScreen.DdForm.selectLatCardinality": {
+    "message": "Select latitude cardinality"
+  },
+  "screens.ManualGpsScreen.DdForm.selectLonCardinality": {
+    "message": "Select longitude cardinality"
+  },
+  "screens.ManualGpsScreen.DdForm.south": {
+    "message": "South"
+  },
+  "screens.ManualGpsScreen.DdForm.west": {
+    "message": "West"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.MinutesInputLabel": {
+    "message": "{field} minutes input"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.SecondsInputLabel": {
+    "message": "{field} seconds input"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.degrees": {
+    "message": "Degrees"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.degreesInputLabel": {
+    "message": "{field} degrees input"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.direction": {
+    "message": "Direction"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.minutes": {
+    "message": "Minutes"
+  },
+  "screens.ManualGpsScreen.DmsForm.DmsInputGroup.seconds": {
+    "message": "Seconds"
+  },
+  "screens.ManualGpsScreen.DmsForm.east": {
+    "message": "East"
+  },
+  "screens.ManualGpsScreen.DmsForm.invalidCoordinates": {
+    "message": "Invalid coordinates"
+  },
+  "screens.ManualGpsScreen.DmsForm.latitude": {
+    "message": "Latitude"
+  },
+  "screens.ManualGpsScreen.DmsForm.longitude": {
+    "message": "Longitude"
+  },
+  "screens.ManualGpsScreen.DmsForm.north": {
+    "message": "North"
+  },
+  "screens.ManualGpsScreen.DmsForm.selectLatCardinality": {
+    "message": "Select latitude cardinality"
+  },
+  "screens.ManualGpsScreen.DmsForm.south": {
+    "message": "South"
+  },
+  "screens.ManualGpsScreen.DmsForm.west": {
+    "message": "West"
+  },
+  "screens.ManualGpsScreen.coordinateFormat": {
+    "message": "Coordinate Format"
+  },
+  "screens.ManualGpsScreen.decimalDegrees": {
+    "message": "Decimal Degrees (DD)"
+  },
+  "screens.ManualGpsScreen.degreesMinutesSeconds": {
+    "message": "Degrees/Minutes/Seconds (DMS)"
+  },
+  "screens.ManualGpsScreen.easting": {
+    "message": "East"
+  },
+  "screens.ManualGpsScreen.eastingSuffix": {
+    "message": "mE"
+  },
+  "screens.ManualGpsScreen.invalidCoordinates": {
+    "message": "Invalid coordinates. Latitude must be between -90 and 90. Longitude must be between -180 and 180"
+  },
+  "screens.ManualGpsScreen.northing": {
+    "message": "North"
+  },
+  "screens.ManualGpsScreen.northingSuffix": {
+    "message": "mN"
+  },
+  "screens.ManualGpsScreen.title": {
+    "description": "title of manual GPS screen",
+    "message": "Enter coordinates"
+  },
+  "screens.ManualGpsScreen.universalTransverseMercator": {
+    "message": "Universal Transverse Mercator (UTM)"
+  },
+  "screens.ManualGpsScreen.zoneLetter": {
+    "message": "Zone Letter"
+  },
+  "screens.ManualGpsScreen.zoneNumber": {
+    "message": "Zone Number"
+  },
+  "screens.ObscurePasscode.description": {
+    "message": "Бүрхэг нууц үг нь Mapeo-г төөрөгдүүлэх горимд нээх боломжийг олгодог хамгаалалтын функц бөгөөд таны бүх өгөгдлийг нуудаг. Танилцуулгын дэлгэцэн дээр тодорхойгүй нууц үгийг оруулснаар Mapeo-ийн хоосон хувилбар гарч ирэх бөгөөд энэ нь танд Mapeo мэдээллийн санд хадгалагдаагүй үзүүлэх ажиглалт үүсгэх боломжийг олгоно."
+  },
+  "screens.ObscurePasscode.instructions": {
+    "message": "Mapeo дээрх өгөгдлөө нуухын тулд дээрх кодыг оруулна уу"
+  },
+  "screens.ObscurePasscode.title": {
+    "message": "Тодорхой бус нууц үг"
+  },
+  "screens.ObscurePasscode.toggleMessage": {
+    "message": "Тодорхой бус нууц үгийг ашиглах"
+  },
+  "screens.ObscurePasscode.whatIsObscure": {
+    "message": "Тодорхой бус нууц үг юу вэ?"
+  },
+  "screens.Observation.ObservationEdit.CategoryView.changePreset": {
+    "message": "Өөрчлөх"
+  },
+  "screens.Observation.ObservationEdit.CategoryView.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Сануулга"
+  },
+  "screens.Observation.ObservationView.delete": {
+    "description": "Button to delete an observation",
+    "message": "Устгах"
+  },
+  "screens.Observation.ObservationView.noAnswer": {
+    "description": "Placeholder text for fields on an observation which are not answered",
+    "message": "Хариулт алга"
+  },
+  "screens.Observation.ObservationView.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Сануулга"
+  },
+  "screens.Observation.cancel": {
+    "description": "Button to cancel delete of observation",
+    "message": "Цуцлах"
+  },
+  "screens.Observation.confirm": {
+    "description": "Button to confirm delete of observation",
+    "message": "Тийм, устгах"
+  },
+  "screens.Observation.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete an observation",
+    "message": "Сануулгыг устгах уу?"
+  },
+  "screens.Observation.title": {
+    "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
+    "message": "Сануулга"
+  },
+  "screens.ObservationDetails.done": {
+    "description": "Button text when all questions are complete",
+    "message": "Done"
+  },
+  "screens.ObservationDetails.nextQuestion": {
+    "description": "Button text to navigate to next question",
+    "message": "Next"
+  },
+  "screens.ObservationDetails.title": {
+    "description": "Title of observation details screen showing question number and total",
+    "message": "Question {current} of {total}"
+  },
+  "screens.ObservationEdit.BottomSheet.addLabel": {
+    "description": "Label above keyboard that expands into bottom sheet of options to add (photo, details etc)",
+    "message": "Нэмэх…"
+  },
+  "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "Энд юу болоод байгаа юм бэ?"
+  },
+  "screens.ObservationEdit.ObservationEditView.detailsButton": {
+    "description": "Button label to add details",
+    "message": "Add Details"
+  },
+  "screens.ObservationEdit.ObservationEditView.photoButton": {
+    "description": "Button label for adding photo",
+    "message": "Фото зураг нэмэх"
+  },
+  "screens.ObservationEdit.ObservationEditView.searching": {
+    "description": "Shown in new observation screen whilst looking for GPS",
+    "message": "Хайлт хийж байна..."
+  },
+  "screens.ObservationEdit.SaveButton.keepWaiting": {
+    "description": "Button to cancel save and continue waiting for GPS",
+    "message": "Үргэлжлүүлэн хүлээж байна"
+  },
+  "screens.ObservationEdit.SaveButton.manualEntry": {
+    "description": "Button to manually enter GPS coordinates",
+    "message": "Гар ажиллагаатай солбицолууд"
+  },
+  "screens.ObservationEdit.SaveButton.noGpsDesc": {
+    "description": "Description in dialog when trying to save with no GPS coords",
+    "message": "Энэ сануулга нь байршилгүй. Та GPS дохиог үргэлжлүүлэн хүлээх, сануулгыг байршилгүйгээр хадгалах эсвэл солбицолуудыг гараар оруулах боломжтой"
+  },
+  "screens.ObservationEdit.SaveButton.noGpsTitle": {
+    "description": "Title of dialog when trying to save with no GPS coords",
+    "message": "GPS-ийн дохио байхгүй"
+  },
+  "screens.ObservationEdit.SaveButton.saveAnyway": {
+    "description": "Button to save regardless of GPS state",
+    "message": "Хадгалах"
+  },
+  "screens.ObservationEdit.SaveButton.weakGpsDesc": {
+    "description": "Description in dialog when trying to save with low GPS accuracy.",
+    "message": "GPS-ийн нарийвчлал бага байна. Та илүү нарийвчлалтай байхыг үргэлжлүүлэн хүлээх, ажиглалтыг бага нарийвчлалтайгаар хадгалах эсвэл солбицолыг гараар оруулах боломжтой."
+  },
+  "screens.ObservationEdit.SaveButton.weakGpsTitle": {
+    "description": "Title of dialog when trying to save with low GPS accuracy.",
+    "message": "GPS-ийн дохио сул байна"
+  },
+  "screens.ObservationEdit.editTitle": {
+    "description": "screen title for edit observation screen",
+    "message": "Сануулга засах"
+  },
+  "screens.ObservationEdit.newTitle": {
+    "description": "screen title for new observation screen",
+    "message": "Шинэ сануулга"
+  },
+  "screens.ObservationList.observationListTitle": {
+    "description": "Title of screen with list of observations",
+    "message": "Сануулгууд"
+  },
+  "screens.ObservationsList.NoProjectWarning": {
+    "message": "You won’t be able to share observations collected yet."
+  },
+  "screens.ObservationsList.ObservationsEmptyView.backButton": {
+    "description": "Back button on observation list screen when no observations are yet recorded",
+    "message": "Газрын зураг руу очих"
+  },
+  "screens.ObservationsList.ObservationsEmptyView.noObservationsDesc": {
+    "description": "Description of observation list view when the user has not yet recorded observations",
+    "message": "Анхны сануулгаа бичхийн тулд газрын зураг эсвэл камерын харагдацаас эхэл."
+  },
+  "screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
+    "description": "Title of observation list view when the user has not yet recorded observations",
+    "message": "Сануулгууд нэмэх"
+  },
+  "screens.ObservationsList.createOrJoin": {
+    "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
+    "message": "Create or Join a Project."
+  },
+  "screens.ObservationsList.error": {
+    "description": "message shown when there is an unexpected error when loading observations",
+    "message": "Сануулгыг ачаалахад алдаа гарлаа. Mapeo-г орхиж, дахин эхлүүлээд үзээрэй."
+  },
+  "screens.ObservationsList.loading": {
+    "description": "message shown whilst observations are loading",
+    "message": "Ачаалж байна... шинэ төхөөрөмжтэй зэрэгцүүлэлт хийсний дараа хэсэг хугацаа шаардагдах болно"
+  },
+  "screens.ObservationsList.toSync": {
+    "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
+    "message": "To sync and share with other devices,"
+  },
+  "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "What is happening here?"
+  },
+  "screens.SaveTrack.TrackEditView.saveTrackCamera": {
+    "description": "Button label for adding photo",
+    "message": "Camera"
+  },
+  "screens.SaveTrack.TrackEditView.saveTrackDetails": {
+    "description": "Button label for check details",
+    "message": "Details"
+  },
+  "screens.SaveTrack.TrackEditView.title": {
+    "description": "Title for new track screen",
+    "message": "New Track"
+  },
+  "screens.SaveTrack.track": {
+    "description": "Category title for new track screen",
+    "message": "Track"
+  },
+  "screens.Security.obscurePassDescriptonPassNotSet": {
+    "message": "Ашиглахын тулд Аппликэшний нууц үгийг тааруулах"
+  },
+  "screens.Security.obscurePassDescriptonPassSet": {
+    "message": "Төхөөрөмжөө хураахаас хамгаалаарай"
+  },
+  "screens.Security.obscurePasscodeHeader": {
+    "message": "Тодорхой бус нууц үг"
+  },
+  "screens.Security.passDesriptionPassNotSet": {
+    "message": "Нууц үгийг тохируулаагүй байна"
+  },
+  "screens.Security.passDesriptionPassSet": {
+    "message": "Нууц үгийг тохируулсан байна"
+  },
+  "screens.Security.passcodeHeader": {
+    "message": "Аппликэшний нууц үг"
+  },
+  "screens.Security.securitySubheader": {
+    "message": "Төхөөрөмжийн аюулгүй байдал"
+  },
+  "screens.Security.title": {
+    "message": "Аюулгүй байдал"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.DisplayScreen.deviceNameLabel": {
+    "message": "Your Device Name"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.DisplayScreen.title": {
+    "message": "Device Name"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.EditScreen.deviceNameLabel": {
+    "message": "Edit Device Name"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertCancelText": {
+    "message": "Continue Editing"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertConfirmText": {
+    "message": "Discard Changes"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertTitle": {
+    "message": "Discard changes?"
+  },
+  "screens.Setting.ProjectSettings.DeviceName.EditScreen.title": {
+    "message": "Device Name"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
+    "message": "Add Another Device"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.close": {
+    "message": "Close"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
+    "message": "Invite Accepted"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.NotOnProject.createOrJoin": {
+    "message": "Create or Join Project"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.NotOnProject.projectNecessary": {
+    "message": "Create or Join a Project to invite devices"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.title": {
+    "message": "Review Invitation"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.youAreInviting": {
+    "message": "You are inviting:"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.ReviewAndInvite.title": {
+    "message": "Review Invitation"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.cancelInvite": {
+    "message": "Cancel Invite"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.timerMessage": {
+    "message": "Invite sent {seconds}s ago"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.waitingMessage": {
+    "message": "Waiting for Device to Accept Invite"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.coordinatorDescription": {
+    "message": "Coordinators can invite devices, edit and delete data, and manage project details."
+  },
+  "screens.Setting.ProjectSettings.YourTeam.coordinators": {
+    "message": "Coordinators"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.dateAdded": {
+    "message": "Date Added"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.deviceName": {
+    "message": "Device Name"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
+    "message": "Invite Device"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.participantDescription": {
+    "message": "Participants can take and share observations. They cannot manage users or project details."
+  },
+  "screens.Setting.ProjectSettings.YourTeam.participants": {
+    "message": "Participants"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.title": {
+    "message": "Your Team"
+  },
+  "screens.Settings.CreateOrJoinProject.CreateProject.title": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
+    "message": "Go back"
+  },
+  "screens.Settings.CreateOrJoinProject.JoinExistingProject.howTo": {
+    "message": "How to Join a Project"
+  },
+  "screens.Settings.CreateOrJoinProject.JoinExistingProject.instructions": {
+    "message": "To join a project find a Coordinator of the project you wish to join. Tell them your device name and the Coordinator will send you an invite."
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.goToMap": {
+    "message": "Go to Map"
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.invitedDevice": {
+    "message": "Invite Device"
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.projectCreated": {
+    "message": "{projectName} Created!"
+  },
+  "screens.Settings.CreateOrJoinProject.advancedSettings": {
+    "message": "Advanced Project Settings"
+  },
+  "screens.Settings.CreateOrJoinProject.alreadyOnProject": {
+    "message": "You are already on a project. To create a new Project you must uninstall and reininstall CoMapeo."
+  },
+  "screens.Settings.CreateOrJoinProject.createProject": {
+    "message": "Create a Project"
+  },
+  "screens.Settings.CreateOrJoinProject.createProjectButton": {
+    "message": "Create Project"
+  },
+  "screens.Settings.CreateOrJoinProject.enterName": {
+    "message": "Enter a name for the Project"
+  },
+  "screens.Settings.CreateOrJoinProject.importConfig": {
+    "message": "Import Config"
+  },
+  "screens.Settings.CreateOrJoinProject.joinExisting": {
+    "message": "Join an existing Mapeo Project"
+  },
+  "screens.Settings.CreateOrJoinProject.joinProject": {
+    "message": "Join a Project"
+  },
+  "screens.Settings.CreateOrJoinProject.projectDescription": {
+    "message": "A project is a secure container for your data. Only devices you invite can enter and share data with you. Create or Join a project in order to share data with other devices."
+  },
+  "screens.Settings.CreateOrJoinProject.startProject": {
+    "message": "Start a CoMapeo Project"
+  },
+  "screens.Settings.CreateOrJoinProject.title": {
+    "message": "Create or Join"
+  },
+  "screens.Settings.CreateOrJoinProject.whatIsAProject": {
+    "message": "What is a Project"
+  },
+  "screens.Settings.YourTeam.InviteDeclined": {
+    "message": "Invitation Declined"
+  },
+  "screens.Settings.YourTeam.close": {
+    "message": "Close"
+  },
+  "screens.Settings.YourTeam.deviceHasJoined": {
+    "message": "Device Has Joined {projectName}"
+  },
+  "screens.Settings.YourTeam.inviteDeclinedDes": {
+    "message": "This device has declined your invitation. They have not joined the project."
+  },
+  "screens.Settings.YourTeam.unableToCancel": {
+    "message": "Unable to Cancel Invitation"
+  },
+  "screens.Settings.aboutMapeo": {
+    "description": "Primary text for 'About Mapeo' link (version info)",
+    "message": "Mapeo-гийн тухай"
+  },
+  "screens.Settings.aboutMapeoDesc": {
+    "description": "Description of the 'About Mapeo' page",
+    "message": "Хувилбар ба барилгын дугаар"
+  },
+  "screens.Settings.appSettings": {
+    "message": "App Settings"
+  },
+  "screens.Settings.appSettingsDesc": {
+    "description": "list of avaialable app settings",
+    "message": "Language, Security, Coordinates"
+  },
+  "screens.Settings.createOrJoin": {
+    "message": "Create or Join Project"
+  },
+  "screens.Settings.createOrJoinDesc": {
+    "message": "Create a new project or join existing one"
+  },
+  "screens.Settings.projectSettings": {
+    "message": "Project Settings"
+  },
+  "screens.Settings.projectSettingsDesc": {
+    "description": "list of avaialable project settings",
+    "message": "Categories, Config, Team"
+  },
+  "screens.Settings.title": {
+    "description": "Title of settings screen",
+    "message": "Тохиргоо"
+  },
+  "screens.Sync.CreateOrJoinProjectDisplay.buttonText": {
+    "message": "Create or Join Project"
+  },
+  "screens.Sync.CreateOrJoinProjectDisplay.description": {
+    "message": "Create or Join a Project to sync with other devices"
+  },
+  "screens.Sync.HeaderTitle.noWiFi": {
+    "message": "No WiFi"
+  },
+  "screens.Sync.NoWifiDisplay.buttonText": {
+    "message": "Open Settings"
+  },
+  "screens.Sync.NoWifiDisplay.description": {
+    "message": "Open your phone settings and connect to a WiFi network to synchronize"
+  },
+  "screens.Sync.NoWifiDisplay.title": {
+    "message": "No WiFi"
+  },
+  "screens.Sync.ProjectSyncDisplay.buttonTextDone": {
+    "message": "You're all caught up"
+  },
+  "screens.Sync.ProjectSyncDisplay.buttonTextStop": {
+    "message": "Stop"
+  },
+  "screens.Sync.ProjectSyncDisplay.buttonTextSync": {
+    "message": "Sync"
+  },
+  "screens.Sync.ProjectSyncDisplay.deviceName": {
+    "message": "Your device name is {name}"
+  },
+  "screens.Sync.ProjectSyncDisplay.devicesNearby": {
+    "message": "{count} {count, plural, one {device} other {devices}} nearby/connected"
+  },
+  "screens.Sync.ProjectSyncDisplay.devicesSyncing": {
+    "message": "Syncing with {count} {count, plural, one {Device} other {Devices}}"
+  },
+  "screens.Sync.ProjectSyncDisplay.devicesWaitingToSync": {
+    "message": "{count} {count, plural, one {Device} other {Devices}} Waiting to Sync with you"
+  },
+  "screens.Sync.ProjectSyncDisplay.noDevicesSyncing": {
+    "message": "No Devices are Syncing"
+  },
+  "screens.Sync.ProjectSyncDisplay.syncProgress": {
+    "message": "{value}%"
+  },
+  "screens.Sync.ProjectSyncDisplay.syncing": {
+    "message": "Syncing…"
+  },
+  "screens.Sync.ProjectSyncDisplay.upToDate": {
+    "message": "Up to Date! No data to Sync"
+  },
+  "sharedComponents.DeviceCard.ThisDevice": {
+    "message": "This Device!"
+  },
+  "sharedComponents.DeviceIconWithName.thisDevice": {
+    "message": "This Device!"
+  },
+  "sharedComponents.ErrorModal.goBack": {
+    "message": "Go Back"
+  },
+  "sharedComponents.ErrorModal.somethingWrong": {
+    "message": "Something\n Went Wrong"
+  },
+  "sharedComponents.ErrorModal.tryAgain": {
+    "message": "Try Again"
+  },
+  "sharedComponents.GpsPill.noGps": {
+    "message": "No GPS"
+  },
+  "sharedComponents.GpsPill.searching": {
+    "message": "Searching…"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.acceptInvite": {
+    "message": "Accept Invite"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.declineInvite": {
+    "message": "Decline Invite"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.goToMap": {
+    "message": "Go To Map"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.goToSync": {
+    "message": "Go To Sync"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.invitedToJoin": {
+    "message": "You've been invited to join {projName}"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.joinProject": {
+    "message": "Join Project {projName}"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.success": {
+    "message": "Success"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.youHaveJoined": {
+    "message": "You have joined {projName}"
+  },
+  "sharedComponents.RoleWithIcon.coordinator": {
+    "message": "Coordinator"
+  },
+  "sharedComponents.RoleWithIcon.participant": {
+    "message": "Participant"
+  },
+  "sharedComponents.WifiBar.noWifi": {
+    "message": "Интернетгүй байна"
+  },
+  "sharedComponents.WifiBar.wifi": {
+    "description": "Label for wifi network name",
+    "message": "WiFi"
+  }
+}

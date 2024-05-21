@@ -282,6 +282,10 @@
     "description": "v is short for version. the translation for version can be used instead",
     "message": "V"
   },
+  "screens.LanguageSettings.title": {
+    "description": "Title language settings screen",
+    "message": "Language"
+  },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
     "message": "Details"
@@ -499,17 +503,21 @@
     "description": "Label above keyboard that expands into bottom sheet of options to add (photo, details etc)",
     "message": "เพิ่มเติม..."
   },
+  "screens.ObservationEdit.ObservationEditView.audioButton": {
+    "description": "Button label for adding audio",
+    "message": "Audio"
+  },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "เกิดอะไรขึ้นที่นี่?"
   },
   "screens.ObservationEdit.ObservationEditView.detailsButton": {
     "description": "Button label to add details",
-    "message": "Add Details"
+    "message": "Details"
   },
   "screens.ObservationEdit.ObservationEditView.photoButton": {
     "description": "Button label for adding photo",
-    "message": "เพิ่มรูปภาพ"
+    "message": "Photo"
   },
   "screens.ObservationEdit.ObservationEditView.searching": {
     "description": "Shown in new observation screen whilst looking for GPS",
@@ -863,6 +871,10 @@
   "screens.Sync.ProjectSyncDisplay.upToDate": {
     "message": "Up to Date! No data to Sync"
   },
+  "shareComponent.KeyboardAccessory.showOptions": {
+    "description": "title for observation options",
+    "message": "Show Options"
+  },
   "sharedComponents.DeviceCard.ThisDevice": {
     "message": "This Device!"
   },
@@ -873,7 +885,7 @@
     "message": "Go Back"
   },
   "sharedComponents.ErrorModal.somethingWrong": {
-    "message": "Something\n Went Wrong"
+    "message": "Something Went Wrong"
   },
   "sharedComponents.ErrorModal.tryAgain": {
     "message": "Try Again"

@@ -115,6 +115,7 @@ ObservationEdit.editTitle = m.editTitle;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: WHITE,
     flexDirection: 'column',
     alignContent: 'stretch',

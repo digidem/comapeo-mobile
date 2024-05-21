@@ -24,7 +24,7 @@ export const DeviceCard = ({
   deviceId,
   dateAdded,
   onPress,
-  isConnected,
+  isConnected = true,
 }: DeviceCardProps) => {
   return (
     <TouchableOpacity

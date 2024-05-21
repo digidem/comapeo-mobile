@@ -59,7 +59,7 @@ export const DeviceNameWithIcon = ({
             {formatMessage(m.thisDevice)}
           </Text>
         )}
-        {isConnected && (
+        {!isConnected && (
           <View style={[styles.flexRow, {marginTop: 4.4}]}>
             <Caution />
             <Text style={styles.deviceStatusText}>

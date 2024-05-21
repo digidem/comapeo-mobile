@@ -847,8 +847,8 @@
   "screens.Sync.ProjectSyncDisplay.upToDate": {
     "message": "Up to Date! No data to Sync"
   },
-  "sharedComponents.DeviceCard.ThisDevice": {
-    "message": "This Device!"
+  "sharedComponents.DeviceIconWithName.Disconnected": {
+    "message": "Disconnected"
   },
   "sharedComponents.DeviceIconWithName.thisDevice": {
     "message": "This Device!"

@@ -12,8 +12,7 @@ import {FormattedRelativeTime} from 'react-intl';
 import {Duration} from 'luxon';
 
 interface Record {
-  duration: number;
-  timeSinceCreated: number;
+  createdAt: Date;
 }
 interface AudioThumbnail {
   onPress: () => unknown;
@@ -34,11 +33,11 @@ export const AudioThumbnail: FC<AudioThumbnail> = ({
       onPress={onPress}>
       <Play />
       <Text style={styles.duration}>
-        {Duration.fromMillis(record.duration).toFormat('mm:ss')}
+        {Duration.fromMillis(record.createdAt.getTime()).toFormat('mm:ss')}
       </Text>
       <Text style={styles.timeSince}>
         <FormattedRelativeTime
-          value={(Date.now() - record.timeSinceCreated) / 1000}
+          value={(Date.now() - record.createdAt.getTime()) / 1000}
           numeric="auto"
           updateIntervalInSeconds={1}
         />

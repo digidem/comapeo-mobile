@@ -43,7 +43,7 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
   const {formatMessage: t} = useIntl();
   const {usePreset} = useDraftObservation();
   const preset = usePreset();
-  const {photos, audioRecordings} = usePersistedDraftObservation(
+  const {photos, audioRecordings, observationId} = usePersistedDraftObservation(
     store => store,
   );
   const handleCameraPress = useCallback(() => {
@@ -81,7 +81,11 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
 
   return (
     <View>
-      <ThumbnailScrollView photos={photos} audioRecordings={audioRecordings} />
+      <ThumbnailScrollView
+        photos={photos}
+        audioRecordings={audioRecordings}
+        observationId={observationId}
+      />
       <ActionTab items={bottomSheetItems} />
     </View>
   );

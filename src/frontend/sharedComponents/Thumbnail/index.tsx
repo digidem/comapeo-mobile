@@ -4,6 +4,7 @@ import {Dimensions, ScrollView, StyleSheet} from 'react-native';
 import {Photo} from '../../contexts/PhotoPromiseContext/types';
 import {Thumbnail} from './Thumbnail';
 import {AudioThumbnail} from './AudioThumbnail';
+// import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 
 const spacing = 10;
 const minSize = 150;
@@ -11,12 +12,15 @@ const minSize = 150;
 interface ThumbnailScrollView {
   photos: (Partial<Photo> | undefined)[];
   audioRecordings: any[];
+  observationId?: string;
 }
 
 export const ThumbnailScrollView: FC<ThumbnailScrollView> = props => {
   const {photos, audioRecordings = []} = props;
+  // const navigation = useNavigationFromHomeTabs();
   const scrollViewRef = React.useRef<ScrollView>(null);
-  const length = props.photos.length + props.audioRecordings.length;
+  const length =
+    props?.photos?.length ?? 0 + props?.audioRecordings?.length ?? 0;
 
   React.useLayoutEffect(() => {
     scrollViewRef.current && scrollViewRef.current.scrollToEnd();

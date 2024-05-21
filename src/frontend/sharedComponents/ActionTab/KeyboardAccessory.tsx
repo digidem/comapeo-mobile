@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import {View, Text, Pressable, StyleSheet} from 'react-native';
 import {NEW_DARK_GREY} from '../../lib/styles';
-import Plus from '../../images/redesign/Plus.svg';
+import Plus from '../../images/observationEdit/Plus.svg';
 import {defineMessages, FormattedMessage} from 'react-intl';
 import {ActionTabItems} from '.';
 

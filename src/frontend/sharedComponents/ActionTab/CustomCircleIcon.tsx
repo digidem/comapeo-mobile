@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {StyleSheet, View} from 'react-native';
-import Plus from '../../images/redesign/Plus.svg';
+import Plus from '../../images/observationEdit/Plus.svg';
 import {BLUE_GREY} from '../../lib/styles';
 
 interface CustomCircleIcon {

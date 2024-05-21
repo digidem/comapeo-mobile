@@ -3,6 +3,7 @@ import {Dimensions, ScrollView, StyleSheet} from 'react-native';
 
 import {Photo} from '../../contexts/PhotoPromiseContext/types';
 import {Thumbnail} from './Thumbnail';
+import {AudioThumbnail} from './AudioThumbnail';
 
 const spacing = 10;
 const minSize = 150;
@@ -15,6 +16,7 @@ interface ThumbnailScrollView {
 export const ThumbnailScrollView: FC<ThumbnailScrollView> = props => {
   const {photos, audioRecordings = []} = props;
   const scrollViewRef = React.useRef<ScrollView>(null);
+  const length = props.photos.length + props.audioRecordings.length;
 
   React.useLayoutEffect(() => {
     scrollViewRef.current && scrollViewRef.current.scrollToEnd();
@@ -40,10 +42,18 @@ export const ThumbnailScrollView: FC<ThumbnailScrollView> = props => {
     <ScrollView
       ref={scrollViewRef}
       horizontal
-      scrollEnabled={size * photos.length > windowWidth}
+      scrollEnabled={size * length > windowWidth}
       showsHorizontalScrollIndicator={false}
       contentInset={{top: 5, right: 5, bottom: 5, left: 5}}
       style={styles.photosContainer}>
+      {audioRecordings.map(record => (
+        <AudioThumbnail
+          record={record}
+          size={size}
+          onPress={() => {}}
+          style={styles.thumbnail}
+        />
+      ))}
       {photos
         ?.filter(photo => photo?.deleted == null)
         ?.map((photo, index) => (

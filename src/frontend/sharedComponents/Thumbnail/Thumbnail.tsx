@@ -62,7 +62,7 @@ export const Thumbnail: FC<ThumbnailProps> = props => {
 
 const styles = StyleSheet.create({
   thumbnailContainer: {
-    borderRadius: 5,
+    borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: LIGHT_GREY,

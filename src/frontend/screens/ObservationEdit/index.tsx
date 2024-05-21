@@ -5,7 +5,7 @@ import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {View, ScrollView, StyleSheet} from 'react-native';
 import {DescriptionField} from './DescriptionField';
-import {ThumbnailScrollView} from '../../sharedComponents/ThumbnailScrollView';
+import {ThumbnailScrollView} from '../../sharedComponents/Thumbnail/ThumbnailScrollView';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {SaveButton} from './SaveButton';
 import {PresetAndLocationHeader} from './PresetAndLocationHeader';
@@ -48,17 +48,13 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
   editTitle: MessageDescriptor;
 } = ({navigation}) => {
   const [error, setError] = React.useState<Error | null>(null);
-  const observationId = usePersistedDraftObservation(
-    store => store.observationId,
+  const {observationId, photos, audioRecordings} = usePersistedDraftObservation(
+    store => store,
   );
   const {usePreset} = useDraftObservation();
   const preset = usePreset();
   const isNew = !observationId;
   const {formatMessage: t} = useIntl();
-  const {openSheet, sheetRef, isOpen, closeSheet} = useBottomSheetModal({
-    openOnMount: false,
-  });
-  const photos = usePersistedDraftObservation(store => store.photos);
 
   React.useEffect(() => {
     navigation.setOptions({
@@ -106,9 +102,14 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <PresetAndLocationHeader isNew={isNew} />
         <DescriptionField />
-        <ThumbnailScrollView photos={photos} />
       </ScrollView>
-      <ActionTab items={bottomSheetItems} />
+      <View>
+        <ThumbnailScrollView
+          photos={photos}
+          audioRecordings={['bla bla', 'bla bla']}
+        />
+        <ActionTab items={bottomSheetItems} />
+      </View>
       <ErrorBottomSheet error={error} clearError={() => setError(null)} />
     </View>
   );

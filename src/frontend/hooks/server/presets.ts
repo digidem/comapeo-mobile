@@ -39,7 +39,7 @@ export function usePresetsMutation() {
 }
 
 export function useGetPresetIcon(size: IconSize, name?: string) {
-  const project = useProject();
+  const project = useActiveProject();
 
   return useQuery({
     queryKey: ['presetIcon', name],

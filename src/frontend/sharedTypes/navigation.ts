@@ -93,6 +93,9 @@ export type RootStackParamsList = {
   DeviceNameEdit: undefined;
   SaveTrack: undefined;
   Sync: undefined;
+  AudioPrepareRecording: undefined;
+  AudioRecording: undefined;
+  AudioPlayback: undefined;
 };
 
 export type DeviceNamingParamsList = {

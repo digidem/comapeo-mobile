@@ -20,3 +20,7 @@ export const RED = '#BC271A';
 export const DARK_ORANGE = '#E86826';
 export const SYNC_BACKGROUND = '#2348B2';
 export const GPS_MODAL_TEXT = 'rgb(40,40,40)';
+export const AUDIO_BLACK = '#333333';
+export const AUDIO_DARK_GRAY = '#757575';
+export const AUDIO_RED = '#D92222';
+export const AUDIO_BLUE_GRAY = '#CCCCD6';

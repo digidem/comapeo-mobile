@@ -54,6 +54,11 @@ import {
 import {HomeTabs} from '../Tab';
 import {SaveTrackScreen} from '../../screens/SaveTrack/SaveTrackScreen';
 import {ObservationFields} from '../../screens/ObservationFields';
+import {AudioPrepareRecordingScreen} from '../../screens/Audio/AudioPrepareRecordingScreen.tsx';
+import NavigationBackButton from '../../images/navigationBackButton.svg';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
+import {AudioRecordingScreen} from '../../screens/Audio/AudioRecordingScreen.tsx';
+import {AudioPlaybackScreen} from '../../screens/Audio/AudioPlaybackScreen.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -239,5 +244,42 @@ export const createDefaultScreenGroup = (
       options={createManualGpsNavigationOptions({intl})}
     />
     <RootStack.Screen name="ObservationFields" component={ObservationFields} />
+    <RootStack.Screen
+      name="AudioPrepareRecording"
+      component={AudioPrepareRecordingScreen}
+      options={{
+        headerLeft: () => {
+          // eslint-disable-next-line react-hooks/rules-of-hooks -- this is in fact a component, so we can use hook here
+          const navigation = useNavigationFromRoot();
+          return <NavigationBackButton onPress={() => navigation.goBack()} />;
+        },
+        headerTransparent: true,
+        headerTitle: '',
+      }}
+    />
+    <RootStack.Screen
+      name="AudioRecording"
+      component={AudioRecordingScreen}
+      options={{
+        headerLeft: () => <></>,
+        headerTransparent: true,
+        headerTitle: '',
+        animation: 'none',
+      }}
+    />
+    <RootStack.Screen
+      name="AudioPlayback"
+      component={AudioPlaybackScreen}
+      options={{
+        headerLeft: () => {
+          // eslint-disable-next-line react-hooks/rules-of-hooks -- this is in fact a component, so we can use hook here
+          const {} = useNavigationFromRoot();
+          return <NavigationBackButton onPress={() => console.log('quit')} />;
+        },
+        headerTransparent: true,
+        headerTitle: '',
+        animation: 'none',
+      }}
+    />
   </RootStack.Group>
 );

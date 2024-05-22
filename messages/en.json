@@ -216,6 +216,10 @@
     "description": "Screen button text for allow the audio permission",
     "message": "Allow"
   },
+  "screens.AudioPermission.Button.goToSettings": {
+    "description": "Screen button text for navigate user to settings when audio permission was denied",
+    "message": "Go to Settings"
+  },
   "screens.AudioPermission.Button.notNow": {
     "description": "Screen button text for not allowed audio permission",
     "message": "Not Now"

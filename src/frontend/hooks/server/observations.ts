@@ -1,20 +1,19 @@
-import type {MapeoProject} from '@mapeo/core/dist/mapeo-project';
 import {
   useMutation,
   useSuspenseQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-
-import {useProject} from './projects';
+import {ObservationValue} from '@mapeo/schema';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {ClientGeneratedObservation} from '../../sharedTypes';
 
 export const OBSERVATION_KEY = 'observations';
 
 export function useObservations() {
-  const project = useProject();
+  const project = useActiveProject();
 
   return useSuspenseQuery({
-    queryKey: ['observations'],
+    queryKey: [OBSERVATION_KEY],
     queryFn: async () => {
       if (!project) throw new Error('Project instance does not exist');
       return project.observation.getMany();
@@ -23,7 +22,7 @@ export function useObservations() {
 }
 
 export function useObservation(observationId: string) {
-  const project = useProject();
+  const project = useActiveProject();
 
   return useSuspenseQuery({
     queryKey: [OBSERVATION_KEY, observationId],
@@ -36,7 +35,7 @@ export function useObservation(observationId: string) {
 
 export function useCreateObservation() {
   const queryClient = useQueryClient();
-  const project = useProject();
+  const project = useActiveProject();
 
   return useMutation({
     mutationFn: async ({value}: {value: ClientGeneratedObservation}) => {
@@ -55,28 +54,27 @@ export function useCreateObservation() {
 
 export function useEditObservation() {
   const queryClient = useQueryClient();
-  const project = useProject();
+  const project = useActiveProject();
 
   return useMutation({
     mutationFn: async ({
-      id,
+      versionId,
       value,
     }: {
-      id: Parameters<MapeoProject['observation']['update']>[0];
-      value: Parameters<MapeoProject['observation']['update']>[1];
+      versionId: string;
+      value: ObservationValue;
     }) => {
-      if (!project) throw new Error('Project instance does not exist');
-      return project.observation.update(id, value);
+      return project.observation.update(versionId, value);
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY]});
+    onSuccess: data => {
+      queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY, data.docId]});
     },
   });
 }
 
 export function useDeleteObservation() {
   const queryClient = useQueryClient();
-  const project = useProject();
+  const project = useActiveProject();
 
   return useMutation({
     mutationFn: async ({id}: {id: string}) => {

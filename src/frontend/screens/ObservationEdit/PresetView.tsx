@@ -1,7 +1,7 @@
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {View, Text, StyleSheet} from 'react-native';
-import {BLACK, LIGHT_BLUE} from '../../lib/styles';
+import {BLACK, COMAPEO_BLUE} from '../../lib/styles';
 import {TextButton} from '../../sharedComponents/TextButton';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
@@ -31,9 +31,7 @@ export const PresetView = () => {
 
   return (
     <View style={styles.categoryContainer}>
-      <View style={styles.categoryIcon}>
-        <PresetCircleIcon name={preset?.name} />
-      </View>
+      <PresetCircleIcon name={preset?.name} />
       <Text style={styles.categoryName}>{name}</Text>
       <TextButton
         containerStyle={styles.changeButton}
@@ -52,17 +50,11 @@ export const PresetView = () => {
 
 const styles = StyleSheet.create({
   categoryContainer: {
-    flex: 0,
     flexDirection: 'row',
     alignItems: 'center',
     alignContent: 'stretch',
-    paddingLeft: 15,
-    paddingRight: 15,
-    marginTop: 10,
-    marginBottom: 10,
-  },
-  categoryIcon: {
-    flex: 0,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
   },
   categoryName: {
     color: BLACK,
@@ -75,9 +67,8 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   changeButtonText: {
-    color: LIGHT_BLUE,
-    paddingTop: 5,
-    fontSize: 12,
+    color: COMAPEO_BLUE,
+    fontSize: 14,
     fontWeight: '500',
   },
 });

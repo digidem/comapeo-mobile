@@ -8,7 +8,7 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {GPSModalContextProvider} from './GPSModalContext';
 import {TrackTimerContextProvider} from './TrackTimerContext';
 import {PhotoPromiseProvider} from './PhotoPromiseContext';
-import {ActiveProjectProvider} from './ProjectContext';
+import {ActiveProjectProvider} from './ActiveProjectContext';
 import {SecurityProvider} from './SecurityContext';
 import {
   LocalDiscoveryProvider,

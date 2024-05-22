@@ -3,13 +3,16 @@ import {View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {ThumbnailScrollView} from '../../sharedComponents/Thumbnail';
 import {ActionTab} from '../../sharedComponents/ActionTab';
-import Photo from '../../images/observationEdit/Photo.svg';
-import Audio from '../../images/observationEdit/Audio.svg';
-import Details from '../../images/observationEdit/Details.svg';
+import PhotoIcon from '../../images/observationEdit/Photo.svg';
+import AudioIcon from '../../images/observationEdit/Audio.svg';
+import DetailsIcon from '../../images/observationEdit/Details.svg';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AppStackParamsList} from '../../sharedTypes/navigation';
+import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
+import {PermissionAudio} from '../../sharedComponents/PermissionAudio';
+import {Audio} from 'expo-av';
 
 const m = defineMessages({
   audioButton: {
@@ -46,6 +49,11 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
   const {photos, audioRecordings, observationId} = usePersistedDraftObservation(
     store => store,
   );
+  const {openSheet, sheetRef, isOpen, closeSheet} = useBottomSheetModal({
+    openOnMount: false,
+  });
+  const [permissionResponse] = Audio.usePermissions({request: false});
+
   const handleCameraPress = useCallback(() => {
     navigation.navigate('AddPhoto');
   }, [navigation]);
@@ -54,9 +62,17 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
     navigation.navigate('ObservationFields', {question: 1});
   }, [navigation]);
 
+  const handleAudioPress = useCallback(() => {
+    if (permissionResponse?.granted) {
+      return navigation.navigate('Home', {screen: 'Map'});
+    } else {
+      openSheet();
+    }
+  }, [navigation, openSheet, permissionResponse?.granted]);
+
   const bottomSheetItems = [
     {
-      icon: <Photo width={30} height={30} />,
+      icon: <PhotoIcon width={30} height={30} />,
       label: t(m.photoButton),
       onPress: handleCameraPress,
     },
@@ -64,29 +80,36 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
 
   if (process.env.EXPO_PUBLIC_FEATURE_AUDIO) {
     bottomSheetItems.unshift({
-      icon: <Audio width={30} height={30} />,
+      icon: <AudioIcon width={30} height={30} />,
       label: t(m.audioButton),
-      onPress: () => {},
+      onPress: handleAudioPress,
     });
   }
 
   if (preset?.fieldIds.length) {
     // Only show the option to add details if preset fields are defined.
     bottomSheetItems.push({
-      icon: <Details width={30} height={30} />,
+      icon: <DetailsIcon width={30} height={30} />,
       label: t(m.detailsButton),
       onPress: handleDetailsPress,
     });
   }
 
   return (
-    <View>
-      <ThumbnailScrollView
-        photos={photos}
-        audioRecordings={audioRecordings}
-        observationId={observationId}
+    <>
+      <View>
+        <ThumbnailScrollView
+          photos={photos}
+          audioRecordings={audioRecordings}
+          observationId={observationId}
+        />
+        <ActionTab items={bottomSheetItems} />
+      </View>
+      <PermissionAudio
+        closeSheet={closeSheet}
+        isOpen={isOpen}
+        sheetRef={sheetRef}
       />
-      <ActionTab items={bottomSheetItems} />
-    </View>
+    </>
   );
 };

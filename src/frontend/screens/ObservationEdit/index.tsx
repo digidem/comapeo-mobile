@@ -9,8 +9,7 @@ import {SaveButton} from './SaveButton';
 import {PresetAndLocationHeader} from './PresetAndLocationHeader';
 import {WHITE} from '../../lib/styles';
 import {ThumbnailAndActionTab} from './ThumbnailAndActionTab';
-import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
-import {PermissionAudio} from '../../sharedComponents/PermissionAudio';
+
 const m = defineMessages({
   editTitle: {
     id: 'screens.ObservationEdit.editTitle',
@@ -30,9 +29,6 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
   const [error, setError] = React.useState<Error | null>(null);
   const {observationId} = usePersistedDraftObservation(store => store);
   const isNew = !observationId;
-  const {openSheet, sheetRef, isOpen, closeSheet} = useBottomSheetModal({
-    openOnMount: false,
-  });
 
   React.useEffect(() => {
     navigation.setOptions({
@@ -49,11 +45,6 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
         <DescriptionField />
       </ScrollView>
       <ThumbnailAndActionTab navigation={navigation} />
-      <PermissionAudio
-        closeSheet={closeSheet}
-        isOpen={isOpen}
-        sheetRef={sheetRef}
-      />
       <ErrorBottomSheet error={error} clearError={() => setError(null)} />
     </View>
   );

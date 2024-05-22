@@ -8,6 +8,7 @@ import {useMostAccurateLocationForObservation} from './useMostAccurateLocationFo
 import {FormattedCoords} from '../../sharedComponents/FormattedData';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings';
+import {Divider} from '../../sharedComponents/Divider';
 
 const m = defineMessages({
   searching: {
@@ -37,29 +38,33 @@ export const LocationView = () => {
       };
 
   return (
-    <View style={styles.locationContainer}>
-      {coordinateInfo.lat === undefined || coordinateInfo.lon === undefined ? (
-        <Text>
-          <FormattedMessage {...m.searching} />
-        </Text>
-      ) : (
-        <React.Fragment>
-          <Location style={{marginRight: 10}} />
-          <Text style={styles.locationText}>
-            <FormattedCoords
-              format={coordinateFormat}
-              lat={coordinateInfo.lat}
-              lon={coordinateInfo.lon}
-            />
+    <>
+      <Divider />
+      <View style={styles.locationContainer}>
+        {coordinateInfo.lat === undefined ||
+        coordinateInfo.lon === undefined ? (
+          <Text>
+            <FormattedMessage {...m.searching} />
           </Text>
-          {coordinateInfo.accuracy === undefined ? null : (
-            <Text style={styles.accuracy}>
-              {' ±' + coordinateInfo.accuracy.toFixed(2) + 'm'}
+        ) : (
+          <React.Fragment>
+            <Location style={{marginRight: 10}} />
+            <Text style={styles.locationText}>
+              <FormattedCoords
+                format={coordinateFormat}
+                lat={coordinateInfo.lat}
+                lon={coordinateInfo.lon}
+              />
             </Text>
-          )}
-        </React.Fragment>
-      )}
-    </View>
+            {coordinateInfo.accuracy === undefined ? null : (
+              <Text style={styles.accuracy}>
+                {' ±' + coordinateInfo.accuracy.toFixed(2) + 'm'}
+              </Text>
+            )}
+          </React.Fragment>
+        )}
+      </View>
+    </>
   );
 };
 

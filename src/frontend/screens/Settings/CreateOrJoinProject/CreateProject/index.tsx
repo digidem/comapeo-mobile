@@ -15,6 +15,7 @@ import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput'
 import {useCreateProject} from '../../../../hooks/server/projects';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
+import {usePersistedProjectId} from '../../../../hooks/persistedState/usePersistedProjectId';
 
 const m = defineMessages({
   title: {
@@ -48,6 +49,10 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
 }) => {
   const {formatMessage: t} = useIntl();
   const [advancedSettingOpen, setAdvancedSettingOpen] = React.useState(false);
+
+  const updateActiveProjectId = usePersistedProjectId(
+    state => state.setProjectId,
+  );
   const {mutate, isPending, reset, error} = useCreateProject();
 
   const {control, handleSubmit} = useForm<ProjectFormType>({
@@ -56,8 +61,10 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
 
   function handleCreateProject(val: ProjectFormType) {
     mutate(val.projectName, {
-      onSuccess: () =>
-        navigation.navigate('ProjectCreated', {name: val.projectName}),
+      onSuccess: projectId => {
+        updateActiveProjectId(projectId);
+        navigation.navigate('ProjectCreated', {name: val.projectName});
+      },
     });
   }
 

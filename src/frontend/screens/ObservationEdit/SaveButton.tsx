@@ -14,6 +14,8 @@ import {DraftPhoto, Photo} from '../../contexts/PhotoPromiseContext/types';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import SaveCheck from '../../images/CheckMark.svg';
+import {useProject} from '../../hooks/server/projects';
+import {CommonActions} from '@react-navigation/native';
 
 const m = defineMessages({
   noGpsTitle: {
@@ -81,6 +83,7 @@ export const SaveButton = ({
   const addNewTrackObservation = usePersistedTrack(
     state => state.addNewObservation,
   );
+  const project = useProject();
 
   function createObservation() {
     if (!value) throw new Error('no observation saved in persisted state ');
@@ -94,7 +97,16 @@ export const SaveButton = ({
           onError: setError,
           onSuccess: () => {
             clearDraft();
-            navigation.navigate('Home', {screen: 'Map'});
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 1,
+                routes: [
+                  {name: 'Home', params: {screen: 'Map'}},
+                  {name: 'Home', params: {screen: 'ObservationsList'}},
+                  {name: 'Observation', params: {observationId: observationId}},
+                ],
+              }),
+            );
           },
         },
       );
@@ -153,19 +165,19 @@ export const SaveButton = ({
       .catch(setError);
   }
 
-  function editObservation() {
-    if (!value) throw new Error('no observation saved in persisted state ');
+  async function editObservation() {
+    if (!value) throw new Error('no observation saved in persisted state');
     if (!observationId) throw new Error('Need an observation Id to edit');
     if (!('versionId' in value))
       throw new Error('Cannot update a unsaved observation (must create one)');
+    const {versionId} = await project.observation.getByDocId(observationId);
     editObservationMutation.mutate(
-      // @ts-expect-error
-      {id: observationId, value},
+      {versionId, value},
       {
         onError: setError,
         onSuccess: () => {
           clearDraft();
-          navigation.pop();
+          navigation.navigate('Home', {screen: 'Map'});
         },
       },
     );

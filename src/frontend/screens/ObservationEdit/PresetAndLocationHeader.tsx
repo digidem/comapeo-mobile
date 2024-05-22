@@ -2,7 +2,6 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {LIGHT_GREY, WHITE} from '../../lib/styles';
 import {PresetView} from './PresetView';
-import {Divider} from '../../sharedComponents/Divider';
 import {LocationView} from './LocationView';
 
 interface PresetInformation {
@@ -13,7 +12,6 @@ export function PresetAndLocationHeader({isNew}: PresetInformation) {
   return (
     <View style={styles.container}>
       <PresetView />
-      <Divider />
       {isNew && <LocationView />}
     </View>
   );

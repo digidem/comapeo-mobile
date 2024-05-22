@@ -11,6 +11,7 @@ import {useObservationWithPreset} from '../../hooks/useObservationWithPreset.ts'
 import {formatCoords} from '../../lib/utils.ts';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {convertUrlToBase64} from '../../utils/base64.ts';
+import {useState} from 'react';
 
 const m = defineMessages({
   delete: {
@@ -79,6 +80,7 @@ export const ButtonFields = ({
     observation.attachments,
     'original',
   );
+  const [isShareButtonLoading, setShareButtonLoading] = useState(false);
 
   function handlePressDelete() {
     Alert.alert(t(m.deleteTitle), undefined, [
@@ -100,7 +102,7 @@ export const ButtonFields = ({
     // We can safely assume that the data is there (queries have been resolved) as button is disabled until then
     const urls = attachmentUrlQueries.map(q => q.data!.url);
     const {lon, lat} = observation;
-
+    setShareButtonLoading(true);
     const base64Urls = await Promise.all(
       urls.map(async url => await convertUrlToBase64(url)),
     );
@@ -114,7 +116,9 @@ export const ButtonFields = ({
         time: Date.now(),
         coordinates: lon && lat ? formatCoords({lon, lat}) : '',
       }),
-    }).catch(() => {});
+    })
+      .catch(() => {})
+      .finally(() => setShareButtonLoading(false));
   }
 
   return (
@@ -129,7 +133,9 @@ export const ButtonFields = ({
       )}
       <Button
         iconName="share"
-        isLoading={attachmentUrlQueries.some(q => q.isLoading)}
+        isLoading={
+          attachmentUrlQueries.some(q => q.isLoading) || isShareButtonLoading
+        }
         title={t(m.share)}
         color={RED}
         onPress={handlePressShare}

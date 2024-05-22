@@ -2,7 +2,11 @@ import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 import {Bar as ProgressBar} from 'react-native-progress';
-import {useProject} from '../../hooks/server/projects';
+import {useQueryClient} from '@tanstack/react-query';
+
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {OBSERVATION_KEY} from '../../hooks/server/observations';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {SyncState, useSyncProgress} from '../../hooks/useSyncState';
 import ObservationsProjectImage from '../../images/ObservationsProject.svg';
 import {
@@ -13,13 +17,10 @@ import {
   MEDIUM_GREY,
   WHITE,
 } from '../../lib/styles';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {Button} from '../../sharedComponents/Button';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {Text} from '../../sharedComponents/Text';
 import {StopIcon, SyncIcon, WifiIcon} from '../../sharedComponents/icons';
-import {useQueryClient} from '@tanstack/react-query';
-import {OBSERVATION_KEY} from '../../hooks/server/observations';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 
 const m = defineMessages({
   deviceName: {
@@ -82,7 +83,7 @@ export const ProjectSyncDisplay = ({
 }) => {
   const {formatMessage: t} = useIntl();
 
-  const project = useProject();
+  const project = useActiveProject();
   const queryClient = useQueryClient();
   const navigation = useNavigationFromRoot();
   const {connectedPeers, data, initial} = syncState;

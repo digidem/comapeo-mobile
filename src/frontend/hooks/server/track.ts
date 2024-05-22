@@ -3,14 +3,16 @@ import {
   useMutation,
   useSuspenseQuery,
 } from '@tanstack/react-query';
-import {useProject} from './projects';
 import {TrackValue} from '@mapeo/schema';
+
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
 
 export const TRACK_KEY = 'tracks';
 
 export function useCreateTrack() {
   const queryClient = useQueryClient();
-  const project = useProject();
+  const project = useActiveProject();
+
   return useMutation({
     mutationFn: async (params: TrackValue) => {
       return project.track.create(params);
@@ -22,7 +24,8 @@ export function useCreateTrack() {
 }
 
 export function useTracksQuery() {
-  const project = useProject();
+  const project = useActiveProject();
+
   return useSuspenseQuery({
     queryKey: [TRACK_KEY],
     queryFn: async () => {
@@ -32,7 +35,7 @@ export function useTracksQuery() {
 }
 
 export function useTrackQuery(docId: string) {
-  const project = useProject();
+  const project = useActiveProject();
   return useSuspenseQuery({
     queryKey: [TRACK_KEY, docId],
     queryFn: async () => {
@@ -43,7 +46,8 @@ export function useTrackQuery(docId: string) {
 
 export function useDeleteTrackMutation() {
   const queryClient = useQueryClient();
-  const project = useProject();
+  const project = useActiveProject();
+
   return useMutation({
     mutationFn: async (docId: string) => {
       return project.track.delete(docId);

@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
+    flex: 1,
     fontFamily: 'Rubik',
     color: NEW_DARK_GREY,
   },

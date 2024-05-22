@@ -4,8 +4,8 @@ import {useMutation, useQueries} from '@tanstack/react-query';
 import {SetRequired} from 'type-fest';
 import {URL} from 'react-native-url-polyfill';
 
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {DraftPhoto} from '../../contexts/PhotoPromiseContext/types';
-import {useProject} from './projects';
 
 type SavablePhoto = SetRequired<
   Pick<DraftPhoto, 'originalUri' | 'previewUri' | 'thumbnailUri'>,
@@ -13,7 +13,7 @@ type SavablePhoto = SetRequired<
 >;
 
 export function useCreateBlobMutation(opts: {retry?: number} = {}) {
-  const project = useProject();
+  const project = useActiveProject();
 
   return useMutation({
     retry: opts.retry,
@@ -40,7 +40,7 @@ export function useAttachmentUrlQueries(
     Exclude<Observation['attachments'][number]['type'], 'UNRECOGNIZED'>
   >,
 ) {
-  const project = useProject();
+  const project = useActiveProject();
 
   return useQueries({
     queries: attachments.map(attachment => {
@@ -65,20 +65,26 @@ export function useAttachmentUrlQueries(
                 throw new Error('Cannot get URL of attachment for variant');
               }
 
-              return project.$blobs.getUrl({
-                driveId: attachment.driveDiscoveryId,
-                name: attachment.name,
-                type: attachment.type,
-                variant,
-              });
+              return {
+                ...attachment,
+                url: await project.$blobs.getUrl({
+                  driveId: attachment.driveDiscoveryId,
+                  name: attachment.name,
+                  type: attachment.type,
+                  variant,
+                }),
+              };
             }
             case 'photo': {
-              return project.$blobs.getUrl({
-                driveId: attachment.driveDiscoveryId,
-                name: attachment.name,
-                type: attachment.type,
-                variant,
-              });
+              return {
+                ...attachment,
+                url: await project.$blobs.getUrl({
+                  driveId: attachment.driveDiscoveryId,
+                  name: attachment.name,
+                  type: attachment.type,
+                  variant,
+                }),
+              };
             }
           }
         },

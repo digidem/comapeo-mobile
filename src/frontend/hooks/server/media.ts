@@ -4,9 +4,8 @@ import {useMutation, useQueries} from '@tanstack/react-query';
 import {SetRequired} from 'type-fest';
 import {URL} from 'react-native-url-polyfill';
 
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {DraftPhoto} from '../../contexts/PhotoPromiseContext/types';
-import {useProject} from './projects';
-import {convertUrlToBase64} from '../../utils/base64.ts';
 
 type SavablePhoto = SetRequired<
   Pick<DraftPhoto, 'originalUri' | 'previewUri' | 'thumbnailUri'>,
@@ -14,7 +13,7 @@ type SavablePhoto = SetRequired<
 >;
 
 export function useCreateBlobMutation(opts: {retry?: number} = {}) {
-  const project = useProject();
+  const project = useActiveProject();
 
   return useMutation({
     retry: opts.retry,
@@ -42,7 +41,7 @@ export function useAttachmentUrlQueries(
   >,
   enabledByDefault: boolean = true,
 ) {
-  const project = useProject();
+  const project = useActiveProject();
 
   return useQueries({
     queries: attachments.map(attachment => {

@@ -46,7 +46,7 @@ export const PresetIcon = memo<PresetIconProps>(({size = 'medium', name}) => {
 
 export const PresetCircleIcon = ({name, size = 'medium'}: PresetIconProps) => {
   return (
-    <Circle radius={radii[size]}>
+    <Circle radius={radii[size]} style={{elevation: 5}}>
       <PresetIcon name={name} size={size} />
     </Circle>
   );

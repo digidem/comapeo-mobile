@@ -17,7 +17,6 @@ import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
 import {CoordinateFormat} from '../../screens/Settings/AppSettings/CoordinateFormat';
 import {CustomHeaderLeftClose} from '../../sharedComponents/CustomHeaderLeftClose';
-import {SaveButton} from '../../screens/ObservationEdit/SaveButton';
 import {CreateOrJoinProject} from '../../screens/Settings/CreateOrJoinProject';
 import {CreateProject} from '../../screens/Settings/CreateOrJoinProject/CreateProject';
 import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateProject/ProjectCreated';
@@ -54,6 +53,8 @@ import {
 import {HomeTabs} from '../Tab';
 import {SaveTrackScreen} from '../../screens/SaveTrack/SaveTrackScreen';
 import {ObservationFields} from '../../screens/ObservationFields';
+import {LIGHT_GREY} from '../../lib/styles';
+import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSettings';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -83,13 +84,17 @@ export const createDefaultScreenGroup = (
       options={props => {
         const observationId = props.route.params?.observationId;
         return {
+          headerShadowVisible: false,
+          contentStyle: {
+            borderTopColor: LIGHT_GREY,
+            borderTopWidth: 1,
+          },
           headerLeft: headerProp => (
             <CustomHeaderLeftClose
               headerBackButtonProps={headerProp}
               observationId={observationId}
             />
           ),
-          headerRight: () => <SaveButton observationId={observationId} />,
           headerTitle: observationId
             ? intl(ObservationEdit.editTitle)
             : intl(ObservationEdit.navTitle),
@@ -239,5 +244,10 @@ export const createDefaultScreenGroup = (
       options={createManualGpsNavigationOptions({intl})}
     />
     <RootStack.Screen name="ObservationFields" component={ObservationFields} />
+    <RootStack.Screen
+      name="LanguageSettings"
+      component={LanguageSettings}
+      options={{headerTitle: intl(LanguageSettings.navTitle)}}
+    />
   </RootStack.Group>
 );

@@ -25,7 +25,11 @@ export const HomeHeader: FC<BottomTabHeaderProps> = ({navigation}) => {
         <SyncIconCircle />
       </IconButton>
       <GPSPill navigation={navigation} />
-      <IconButton onPress={() => {}} testID="observationListButton">
+      <IconButton
+        onPress={() => {
+          navigation.navigate('Settings');
+        }}
+        testID="observationListButton">
         <ObservationListIcon />
       </IconButton>
     </View>

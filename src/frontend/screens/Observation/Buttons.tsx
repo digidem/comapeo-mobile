@@ -79,6 +79,7 @@ export const ButtonFields = ({
   const attachmentUrlQueries = useAttachmentUrlQueries(
     observation.attachments,
     'original',
+    false,
   );
   const [isShareButtonLoading, setShareButtonLoading] = useState(false);
 
@@ -99,12 +100,16 @@ export const ButtonFields = ({
   }
 
   async function handlePressShare() {
-    // We can safely assume that the data is there (queries have been resolved) as button is disabled until then
-    const urls = attachmentUrlQueries.map(q => q.data!.url);
     const {lon, lat} = observation;
     setShareButtonLoading(true);
+
+    // We can safely assume that the data is there (queries have been resolved) as button is disabled until then
+    const urlsQueries = await Promise.all(
+      attachmentUrlQueries.map(q => q.refetch()),
+    );
+    const urls = urlsQueries.map(query => query.data!.url);
     const base64Urls = await Promise.all(
-      urls.map(async url => await convertUrlToBase64(url)),
+      urls.map(url => convertUrlToBase64(url)),
     );
 
     Share.open({
@@ -133,9 +138,7 @@ export const ButtonFields = ({
       )}
       <Button
         iconName="share"
-        isLoading={
-          attachmentUrlQueries.some(q => q.isLoading) || isShareButtonLoading
-        }
+        isLoading={isShareButtonLoading}
         title={t(m.share)}
         color={RED}
         onPress={handlePressShare}

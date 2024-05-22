@@ -33,15 +33,11 @@ export const AudioRecordingScreen = () => {
       <View style={styles.container}>
         <Text style={styles.timerStyle}>{formattedElapsedTime}</Text>
         <Text style={styles.textStyle}>Less than 5 minutes left</Text>
-        <View>
-          <Pressable
-            onPress={() => navigator.navigate('AudioPlayback')}
-            style={styles.buttonWrapperStyle}>
-            <View style={styles.buttonStopStyle} />
-          </Pressable>
-          <MaterialIcons size={30} name={'share'} color={DARK_GREY} />
-        </View>
-
+        <Pressable
+          onPress={() => navigator.navigate('AudioPlayback')}
+          style={styles.buttonWrapperStyle}>
+          <View style={styles.buttonStopStyle} />
+        </Pressable>
         <View
           style={[
             styles.fill,

@@ -63,10 +63,8 @@ export const TAB_BAR_HEIGHT = 70;
 // that returns a react element)
 export const createDefaultScreenGroup = ({
   intl,
-  openDrawer,
 }: {
   intl: (title: MessageDescriptor) => string;
-  openDrawer: () => void;
 }) => (
   <RootStack.Group key="default">
     <RootStack.Screen
@@ -76,7 +74,7 @@ export const createDefaultScreenGroup = ({
         <SharedLocationContextProvider>
           {/* This provider allows the bottoms sheet used by tracks to open up behind the drawers */}
           <BottomSheetModalProvider>
-            <HomeTabs openDrawer={openDrawer} />
+            <HomeTabs />
           </BottomSheetModalProvider>
         </SharedLocationContextProvider>
       )}

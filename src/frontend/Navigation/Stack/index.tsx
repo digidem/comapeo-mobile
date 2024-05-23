@@ -4,7 +4,10 @@ import {NativeStackNavigationOptions} from '@react-navigation/native-stack/lib/t
 import {WHITE} from '../../lib/styles';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {AppStackParamsList} from '../../sharedTypes/navigation';
-import {DrawerScreenProps} from '@react-navigation/drawer';
+import {
+  DrawerNavigationProp,
+  DrawerScreenProps,
+} from '@react-navigation/drawer';
 import {DrawerScreens} from '../Drawer';
 import {useIntl} from 'react-intl';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
@@ -19,17 +22,40 @@ import {Loading} from '../../sharedComponents/Loading';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
 
+type DrawerNavigationContextType = DrawerNavigationProp<
+  DrawerScreens,
+  'DrawerHome',
+  undefined
+>;
+
+const DrawerNavigationContext = React.createContext<
+  DrawerNavigationContextType | undefined
+>(undefined);
+
+export function useDrawerNavigation() {
+  const navigation = React.useContext(DrawerNavigationContext);
+
+  if (!navigation)
+    throw new Error(
+      'Make sure you have DrawerNavigationContext provider set up',
+    );
+
+  return navigation;
+}
+
 export function RootStackNavigator({
   navigation,
 }: DrawerScreenProps<DrawerScreens, 'DrawerHome'>) {
   return (
-    <React.Suspense fallback={<Loading />}>
-      <RootStackNavigatorChild openDrawer={navigation.openDrawer} />
-    </React.Suspense>
+    <DrawerNavigationContext.Provider value={navigation}>
+      <React.Suspense fallback={<Loading />}>
+        <RootStackNavigatorChild />
+      </React.Suspense>
+    </DrawerNavigationContext.Provider>
   );
 }
 
-function RootStackNavigatorChild({openDrawer}: {openDrawer: () => void}) {
+function RootStackNavigatorChild() {
   const {formatMessage} = useIntl();
   const existingObservation = usePersistedDraftObservation(
     store => store.value,
@@ -55,7 +81,6 @@ function RootStackNavigatorChild({openDrawer}: {openDrawer: () => void}) {
       {deviceInfo.data?.name
         ? createDefaultScreenGroup({
             intl: formatMessage,
-            openDrawer: openDrawer,
           })
         : createDeviceNamingScreens()}
     </RootStack.Navigator>

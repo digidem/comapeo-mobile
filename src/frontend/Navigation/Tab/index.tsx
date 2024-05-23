@@ -17,12 +17,14 @@ import {CameraTabBarIcon} from './TabBar/CameraTabBarIcon';
 import {MapTabBarIcon} from './TabBar/MapTabBarIcon';
 import {TrackingTabBarIcon} from './TabBar/TrackingTabBarIcon';
 import {HomeTabsParamsList} from '../../sharedTypes/navigation';
+import {useDrawerNavigation} from '../Stack';
 
 const Tab = createBottomTabNavigator<HomeTabsParamsList>();
 
-export const HomeTabs = ({openDrawer}: {openDrawer: () => void}) => {
+export const HomeTabs = () => {
   const {handleTabPress} = useCurrentTab();
   const {formatMessage} = useIntl();
+  const {openDrawer} = useDrawerNavigation();
   return (
     <Tab.Navigator
       screenListeners={{

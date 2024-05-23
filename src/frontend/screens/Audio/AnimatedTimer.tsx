@@ -10,7 +10,7 @@ interface AnimatedTimer {
   elapsedTime: SharedValue<number>;
 }
 
-function convertMsToTime(ms: number) {
+export function convertMsToTime(ms: number) {
   'worklet';
   let minutes = Math.floor(ms / 60000);
   let seconds = Number(((ms % 60000) / 1000).toFixed(0));

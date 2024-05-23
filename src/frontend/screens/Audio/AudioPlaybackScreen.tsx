@@ -1,11 +1,4 @@
-import {
-  Dimensions,
-  Pressable,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Pressable, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {AUDIO_BLACK, AUDIO_RED, WHITE} from '../../lib/styles.ts';
 import {StatusBar} from 'expo-status-bar';
 import React from 'react';
@@ -17,8 +10,8 @@ import {useAudioPlayback} from '../../hooks/useAudioPlayback.ts';
 import {useFocusEffect} from '@react-navigation/native';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-
-const {width} = Dimensions.get('window');
+import {AnimatedTimer} from './AnimatedTimer.tsx';
+import {AnimatedProgressBar} from './AnimatedProgressBar.tsx';
 
 export const AudioPlaybackScreen: React.FC<
   NativeRootNavigationProps<'AudioPlayback'>
@@ -56,26 +49,17 @@ export const AudioPlaybackScreen: React.FC<
   const formattedDuration = isReady
     ? Duration.fromMillis(duration).toFormat('mm:ss')
     : '00:00';
-  const formattedElapsed = isReady
-    ? Duration.fromMillis(elapsed).toFormat('mm:ss')
-    : '00:00';
-
-  const fillPercentage = isReady ? elapsed * (1 / duration) : 0;
 
   return (
     <>
       <StatusBar style="light" />
       <SafeAreaView style={styles.container}>
-        <Text style={styles.timerStyle}>{formattedElapsed}</Text>
-        <View style={styles.progressBarWrapper}>
-          <View style={[styles.progressBar, {width: width - 60}]} />
-          <View
-            style={[
-              styles.progressBar,
-              {width: fillPercentage * (width - 60), backgroundColor: WHITE},
-            ]}
-          />
-        </View>
+        <AnimatedTimer elapsedTime={elapsed} />
+        <AnimatedProgressBar
+          isReady={isReady}
+          elapsed={elapsed}
+          duration={duration}
+        />
         <Text style={styles.textStyle}>Total length: {formattedDuration}</Text>
         <View style={styles.bottomBar}>
           <MaterialIcons size={35} name="delete" color={WHITE} />

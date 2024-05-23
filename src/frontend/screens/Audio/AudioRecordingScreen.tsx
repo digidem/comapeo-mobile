@@ -1,17 +1,12 @@
 import {Pressable, StyleSheet, Text, View, TextInput} from 'react-native';
 import {AUDIO_BLACK, AUDIO_RED, WHITE} from '../../lib/styles.ts';
 import {StatusBar} from 'expo-status-bar';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Duration} from 'luxon';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation.ts';
-import Animated, {
-  runOnJS,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated, {useDerivedValue, withTiming} from 'react-native-reanimated';
 import {AnimatedBackground} from './AnimatedBackground.tsx';
-import {useFocusEffect} from '@react-navigation/native';
 
 export const MAX_DURATION = 300_000;
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
@@ -22,31 +17,12 @@ export const AudioRecordingScreen: React.FC<
   const {recording} = params.route.params;
   const navigator = useNavigationFromRoot();
 
-  const [elapsedTime, setElapsedTime] = useState(200000);
-  const formattedElapsedTime =
-    Duration.fromMillis(elapsedTime).toFormat('mm:ss');
-  const elapsedTimeValue = useSharedValue(200000);
+  const [elapsed, setElapsed] = useState(0);
+  const elapsedTimeValue = useDerivedValue(() => {
+    return withTiming(elapsed, {duration: 500});
+  }, [elapsed]);
 
-  useFocusEffect(() => {
-    navigator.setOptions({
-      headerStyle: {
-        backgroundColor: AUDIO_BLACK,
-      },
-    });
-  });
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      elapsedTimeValue.value = withTiming(
-        elapsedTimeValue.value + 1000,
-        {
-          duration: 1000,
-        },
-        () => runOnJS(setElapsedTime)(elapsedTimeValue.value + 1000),
-      );
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [elapsedTimeValue]);
+  const formattedElapsedTime = Duration.fromMillis(elapsed).toFormat('mm:ss');
 
   return (
     <>

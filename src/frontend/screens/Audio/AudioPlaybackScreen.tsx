@@ -16,6 +16,7 @@ import {NativeRootNavigationProps} from '../../sharedTypes/navigation.ts';
 import {useAudioPlayback} from '../../hooks/useAudioPlayback.ts';
 import {useFocusEffect} from '@react-navigation/native';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 const {width} = Dimensions.get('window');
 
@@ -36,9 +37,15 @@ export const AudioPlaybackScreen: React.FC<
 
   useFocusEffect(() => {
     navigation.setOptions({
-      headerStyle: {
-        backgroundColor: AUDIO_BLACK,
-      },
+      // eslint-disable-next-line react/no-unstable-nested-components -- it's supported way to do it like that
+      headerLeft: () => (
+        <MaterialIcon
+          name="close"
+          size={25}
+          color={WHITE}
+          onPress={() => console.log('quit')}
+        />
+      ),
     });
   });
 

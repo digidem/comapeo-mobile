@@ -263,6 +263,7 @@ export const createDefaultScreenGroup = (
           const navigation = useNavigationFromRoot();
           return <NavigationBackButton onPress={() => navigation.goBack()} />;
         },
+        headerStyle: {backgroundColor: 'transparent'},
         headerTransparent: true,
         headerTitle: '',
       }}
@@ -272,6 +273,7 @@ export const createDefaultScreenGroup = (
       component={AudioRecordingScreen}
       options={{
         headerLeft: () => <></>,
+        headerStyle: {backgroundColor: 'transparent'},
         headerTransparent: true,
         headerTitle: '',
         animation: 'none',
@@ -281,11 +283,7 @@ export const createDefaultScreenGroup = (
       name="AudioPlayback"
       component={AudioPlaybackScreen}
       options={{
-        headerLeft: () => {
-          // eslint-disable-next-line react-hooks/rules-of-hooks -- this is in fact a component, so we can use hook here
-          const {} = useNavigationFromRoot();
-          return <NavigationBackButton onPress={() => console.log('quit')} />;
-        },
+        headerStyle: {backgroundColor: 'transparent'},
         headerTransparent: true,
         headerTitle: '',
         animation: 'none',

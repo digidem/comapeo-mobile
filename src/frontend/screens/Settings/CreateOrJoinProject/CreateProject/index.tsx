@@ -1,21 +1,25 @@
-import {defineMessages, useIntl} from 'react-intl';
-import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
-import {Keyboard, KeyboardAvoidingView, StyleSheet, View} from 'react-native';
-import {useForm} from 'react-hook-form';
-import {Text} from '../../../../sharedComponents/Text';
 import * as React from 'react';
+import * as DocumentPicker from 'expo-document-picker';
+import * as FileSystem from 'expo-file-system';
+import {useForm} from 'react-hook-form';
+import {defineMessages, useIntl} from 'react-intl';
+import {Keyboard, KeyboardAvoidingView, StyleSheet, View} from 'react-native';
 import {
-  TouchableWithoutFeedback,
   TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
-import {Button} from '../../../../sharedComponents/Button';
-import {BLACK, LIGHT_GREY} from '../../../../lib/styles';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
-import {useCreateProject} from '../../../../hooks/server/projects';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+
+import {Text} from '../../../../sharedComponents/Text';
+import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 import {usePersistedProjectId} from '../../../../hooks/persistedState/usePersistedProjectId';
+import {useCreateProject} from '../../../../hooks/server/projects';
+import {convertFileUriToPosixPath} from '../../../../lib/file-system';
+import {BLACK, LIGHT_GREY} from '../../../../lib/styles';
+import {Button} from '../../../../sharedComponents/Button';
+import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
+import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
 
 const m = defineMessages({
   title: {
@@ -49,6 +53,8 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
 }) => {
   const {formatMessage: t} = useIntl();
   const [advancedSettingOpen, setAdvancedSettingOpen] = React.useState(false);
+  const [configFile, setConfigFile] =
+    React.useState<DocumentPicker.DocumentPickerAsset | null>(null);
 
   const updateActiveProjectId = usePersistedProjectId(
     state => state.setProjectId,
@@ -60,12 +66,54 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
   });
 
   function handleCreateProject(val: ProjectFormType) {
-    mutate(val.projectName, {
-      onSuccess: projectId => {
-        updateActiveProjectId(projectId);
-        navigation.navigate('ProjectCreated', {name: val.projectName});
+    mutate(
+      {
+        name: val.projectName,
+        configPath: configFile
+          ? convertFileUriToPosixPath(configFile.uri)
+          : undefined,
       },
-    });
+      {
+        onSuccess: projectId => {
+          if (configFile) {
+            // No need to block UI on this
+            FileSystem.deleteAsync(configFile.uri).catch(() => {
+              // no-op if something fails here. caches can eventually get cleared by the OS automatically.
+            });
+          }
+
+          updateActiveProjectId(projectId);
+
+          navigation.navigate('ProjectCreated', {name: val.projectName});
+        },
+      },
+    );
+  }
+
+  async function importConfigFile() {
+    let result;
+    try {
+      result = await DocumentPicker.getDocumentAsync({
+        copyToCacheDirectory: true,
+        multiple: false,
+      });
+    } catch (_err) {
+      // TODO: Surface error
+      return;
+    }
+
+    if (result.canceled) return;
+
+    const asset = result.assets[0];
+
+    // Shouldn't happen based on how the library works
+    if (!asset) return;
+
+    // Only allow importing files with the desired extension
+    // TODO: Surface error
+    if (!asset.name.endsWith('.mapeoconfig')) return;
+
+    setConfigFile(asset);
   }
 
   return (
@@ -100,10 +148,19 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
                 />
               </TouchableOpacity>
               {advancedSettingOpen && (
-                <View style={{padding: 20}}>
-                  <Button fullWidth variant="outlined" onPress={() => {}}>
+                <View style={styles.importConfigContainer}>
+                  <Button
+                    fullWidth
+                    variant="outlined"
+                    onPress={() => {
+                      importConfigFile();
+                    }}>
                     {t(m.importConfig)}
                   </Button>
+
+                  {configFile && (
+                    <Text style={styles.configFileName}>{configFile.name}</Text>
+                  )}
                 </View>
               )}
             </View>
@@ -145,5 +202,12 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderColor: LIGHT_GREY,
+  },
+  importConfigContainer: {
+    padding: 20,
+    gap: 20,
+  },
+  configFileName: {
+    textAlign: 'center',
   },
 });

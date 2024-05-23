@@ -39,8 +39,8 @@ export function useCreateProject() {
 
   return useMutation({
     mutationKey: [CREATE_PROJECT_KEY],
-    mutationFn: (name?: string) => {
-      return api.createProject({name});
+    mutationFn: (opts?: {name?: string; configPath?: string}) => {
+      return api.createProject(opts);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({

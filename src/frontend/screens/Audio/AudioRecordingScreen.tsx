@@ -1,14 +1,19 @@
-import {Dimensions, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Pressable, StyleSheet, Text, View, TextInput} from 'react-native';
 import {AUDIO_BLACK, AUDIO_RED, WHITE} from '../../lib/styles.ts';
 import {StatusBar} from 'expo-status-bar';
 import React, {useEffect, useState} from 'react';
 import {Duration} from 'luxon';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation.ts';
-import {useStopwatch} from 'react-timer-hook';
+import Animated, {
+  runOnJS,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+import {AnimatedBackground} from './AnimatedBackground.tsx';
 
-const MAX_DURATION = 300_000;
+export const MAX_DURATION = 300_000;
+const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
 export const AudioRecordingScreen: React.FC<
   NativeRootNavigationProps<'AudioRecording'>
@@ -16,21 +21,34 @@ export const AudioRecordingScreen: React.FC<
   const {recording} = params.route.params;
   const navigator = useNavigationFromRoot();
 
-  const stopwatch = useStopwatch({autoStart: true});
-  const formattedElapsedTime = Duration.fromMillis(
-    stopwatch.totalSeconds * 1000,
-  ).toFormat('mm:ss');
+  const [elapsedTime, setElapsedTime] = useState(200000);
+  const formattedElapsedTime =
+    Duration.fromMillis(elapsedTime).toFormat('mm:ss');
+  const elapsedTimeValue = useSharedValue(200000);
 
-  const {top: topInset} = useSafeAreaInsets();
-  const {height: windowHeight} = Dimensions.get('window');
-
-  const fillPercentage = stopwatch.totalSeconds * 1000 * (1 / MAX_DURATION);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      elapsedTimeValue.value = withTiming(
+        elapsedTimeValue.value + 1000,
+        {
+          duration: 1000,
+        },
+        () => runOnJS(setElapsedTime)(elapsedTimeValue.value + 1000),
+      );
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [elapsedTimeValue]);
 
   return (
     <>
       <StatusBar style="light" />
       <View style={styles.container}>
-        <Text style={styles.timerStyle}>{formattedElapsedTime}</Text>
+        <AnimatedTextInput
+          style={styles.timerStyle}
+          editable={false}
+          value={formattedElapsedTime}
+          underlineColorAndroid="transparent"
+        />
         <Text style={styles.textStyle}>Less than 5 minutes left</Text>
         <Pressable
           onPress={async () => {
@@ -38,21 +56,11 @@ export const AudioRecordingScreen: React.FC<
             navigator.navigate('AudioPlayback', {
               recordingUri: recording.getURI()!,
             });
-            stopwatch.reset();
           }}
           style={styles.buttonWrapperStyle}>
           <View style={styles.buttonStopStyle} />
         </Pressable>
-        <View
-          style={[
-            styles.fill,
-            {
-              height: (windowHeight + topInset) * fillPercentage,
-              // 50% is max lightness from designs, hence `fillPercentage * 50`
-              backgroundColor: `hsl(216, 100%, ${fillPercentage * 50}%)`,
-            },
-          ]}
-        />
+        <AnimatedBackground elapsedTimeValue={elapsedTimeValue} />
       </View>
     </>
   );

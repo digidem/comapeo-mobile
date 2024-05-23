@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {AUDIO_BLACK, AUDIO_RED, WHITE} from '../../lib/styles.ts';
 import {StatusBar} from 'expo-status-bar';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Duration} from 'luxon';
 import PlayArrow from '../../images/playArrow.svg';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';

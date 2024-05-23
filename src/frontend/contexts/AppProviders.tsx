@@ -19,6 +19,7 @@ import {ServerLoading} from '../ServerLoading';
 import {ApiProvider} from './ApiContext';
 import {MessagePortLike} from '../lib/MessagePortLike';
 import {IntlProvider} from './IntlContext';
+import {AudioRecordingContextProvider} from './AudioRecordingContext.tsx';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -46,7 +47,9 @@ export const AppProviders = ({
                   <ApiProvider api={mapeoApi}>
                     <ActiveProjectProvider>
                       <PhotoPromiseProvider>
-                        <SecurityProvider>{children}</SecurityProvider>
+                        <AudioRecordingContextProvider>
+                          <SecurityProvider>{children}</SecurityProvider>
+                        </AudioRecordingContextProvider>
                       </PhotoPromiseProvider>
                     </ActiveProjectProvider>
                   </ApiProvider>

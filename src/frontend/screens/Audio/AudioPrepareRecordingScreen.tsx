@@ -9,9 +9,8 @@ import {StatusBar} from 'expo-status-bar';
 import React from 'react';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
 import {LogBox} from 'react-native';
-import {Audio} from 'expo-av';
-import {RecordingOptionsPresets} from 'expo-av/src/Audio/RecordingConstants.ts';
 import {useFocusEffect} from '@react-navigation/native';
+import {useAudioRecordingContext} from '../../contexts/AudioRecordingContext.tsx';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
@@ -19,10 +18,10 @@ LogBox.ignoreLogs([
 
 export const AudioPrepareRecordingScreen = () => {
   const navigator = useNavigationFromRoot();
+  const {startRecording} = useAudioRecordingContext();
   const handlePress = async () => {
-    Audio.Recording.createAsync(RecordingOptionsPresets.HIGH_QUALITY).then(
-      rec => navigator.navigate('AudioRecording', {recording: rec.recording}),
-    );
+    await startRecording();
+    navigator.navigate('AudioRecording');
   };
 
   useFocusEffect(() => {

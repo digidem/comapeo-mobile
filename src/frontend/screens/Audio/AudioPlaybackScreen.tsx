@@ -49,16 +49,18 @@ export const AudioPlaybackScreen: React.FC<
     });
   });
 
-  if (!isReady) return null;
-
   const handleControlButtonPress = async () => {
     isPlaying ? await stopPlayback() : await startPlayback();
   };
 
-  const formattedDuration = Duration.fromMillis(duration).toFormat('mm:ss');
-  const formattedElapsed = Duration.fromMillis(elapsed).toFormat('mm:ss');
+  const formattedDuration = isReady
+    ? Duration.fromMillis(duration).toFormat('mm:ss')
+    : '00:00';
+  const formattedElapsed = isReady
+    ? Duration.fromMillis(elapsed).toFormat('mm:ss')
+    : '00:00';
 
-  const fillPercentage = elapsed * (1 / duration);
+  const fillPercentage = isReady ? elapsed * (1 / duration) : 0;
 
   return (
     <>

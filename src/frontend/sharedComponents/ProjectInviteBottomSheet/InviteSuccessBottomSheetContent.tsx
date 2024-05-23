@@ -16,7 +16,7 @@ const m = defineMessages({
   },
   youHaveJoined: {
     id: 'sharedComponents.ProjectInviteBottomSheet.youHaveJoined',
-    defaultMessage: 'You have joined {projName}',
+    defaultMessage: 'You have joined {projectName}',
   },
   goToSync: {
     id: 'sharedComponents.ProjectInviteBottomSheet.goToSync',
@@ -67,7 +67,7 @@ export const InviteSuccessBottomSheetContent = ({
       ]}
       title={formatMessage(m.success)}
       description={formatMessage(m.youHaveJoined, {
-        projName: projectName,
+        projectName,
       })}
       icon={<GreenCheck />}
     />

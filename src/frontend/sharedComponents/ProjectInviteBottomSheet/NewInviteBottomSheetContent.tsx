@@ -4,6 +4,7 @@ import {View} from 'react-native';
 import {LIGHT_GREY} from '../../lib/styles';
 import InviteIcon from '../../images/AddPersonCircle.svg';
 import {defineMessages, useIntl} from 'react-intl';
+import {StyleSheet} from 'react-native';
 
 const m = defineMessages({
   declineInvite: {
@@ -16,11 +17,11 @@ const m = defineMessages({
   },
   joinProject: {
     id: 'sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.joinProject',
-    defaultMessage: 'Join Project {projName}',
+    defaultMessage: 'Join Project {projectName}',
   },
   invitedToJoin: {
     id: 'sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.invitedToJoin',
-    defaultMessage: "You've been invited to join {projName}",
+    defaultMessage: "You've been invited to join {projectName}",
   },
 });
 
@@ -54,23 +55,13 @@ export const NewInviteBottomSheetContent = ({
         },
       ]}
       title={formatMessage(m.joinProject, {
-        projName: projectName || '',
+        projectName: projectName || '',
       })}
       description={formatMessage(m.invitedToJoin, {
-        projName: projectName || '',
+        projectName: projectName || '',
       })}
       icon={
-        <View
-          style={{
-            borderColor: LIGHT_GREY,
-            borderWidth: 1,
-            borderRadius: 100,
-            alignItems: 'center',
-            shadowColor: '#171717',
-            shadowOffset: {width: -2, height: 4},
-            shadowOpacity: 0.2,
-            shadowRadius: 3,
-          }}>
+        <View style={styles.inviteIcon}>
           <InviteIcon
             style={{borderWidth: 1, borderColor: LIGHT_GREY}}
             fill={LIGHT_GREY}
@@ -82,3 +73,16 @@ export const NewInviteBottomSheetContent = ({
     />
   );
 };
+
+const styles = StyleSheet.create({
+  inviteIcon: {
+    borderColor: LIGHT_GREY,
+    borderWidth: 1,
+    borderRadius: 100,
+    alignItems: 'center',
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+  },
+});

@@ -14,7 +14,7 @@ const m = defineMessages({
   },
   projectInviteCanceled: {
     id: 'sharedComponents.ProjectInviteBottomSheet.InviteCancelled.projectInviteCanceled',
-    defaultMessage: 'Your invitation to {projName} has been canceled.',
+    defaultMessage: 'Your invitation to {projectName} has been canceled.',
   },
 });
 
@@ -42,7 +42,7 @@ export const InviteCanceledBottomSheetContent = ({
       description={
         projectName
           ? formatMessage(m.projectInviteCanceled, {
-              projName: projectName,
+              projectName,
             })
           : undefined
       }

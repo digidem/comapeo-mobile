@@ -957,7 +957,7 @@
     "message": "Close"
   },
   "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.projectInviteCanceled": {
-    "message": "Your invitation to {projName} has been canceled."
+    "message": "Your invitation to {projectName} has been canceled."
   },
   "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.acceptInvite": {
     "message": "Accept Invite"
@@ -966,10 +966,10 @@
     "message": "Decline Invite"
   },
   "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.invitedToJoin": {
-    "message": "You've been invited to join {projName}"
+    "message": "You've been invited to join {projectName}"
   },
   "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.joinProject": {
-    "message": "Join Project {projName}"
+    "message": "Join Project {projectName}"
   },
   "sharedComponents.ProjectInviteBottomSheet.goToMap": {
     "message": "Go To Map"
@@ -981,7 +981,7 @@
     "message": "Success"
   },
   "sharedComponents.ProjectInviteBottomSheet.youHaveJoined": {
-    "message": "You have joined {projName}"
+    "message": "You have joined {projectName}"
   },
   "sharedComponents.RoleWithIcon.coordinator": {
     "message": "Coordinator"

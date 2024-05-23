@@ -74,7 +74,7 @@ export const createDefaultScreenGroup = ({
       options={{headerShown: false}}
       children={() => (
         <SharedLocationContextProvider>
-          {/* This provider needs to be inside the navigator as it needs access to navigator state (aka it cant just use the one at the app level) */}
+          {/* This provider allows the bottoms sheet used by tracks to open up behind the drawers */}
           <BottomSheetModalProvider>
             <HomeTabs openDrawer={openDrawer} />
           </BottomSheetModalProvider>

@@ -6,7 +6,6 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MessageDescriptor} from 'react-intl';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {DeviceRoleForNewInvite, DeviceType} from '.';
-import {Recording} from 'expo-av/build/Audio/Recording';
 
 export interface TabBarIconProps {
   size: number;
@@ -95,9 +94,7 @@ export type RootStackParamsList = {
   SaveTrack: undefined;
   Sync: undefined;
   AudioPrepareRecording: undefined;
-  AudioRecording: {
-    recording: Recording;
-  };
+  AudioRecording: undefined;
   AudioPlayback: {
     recordingUri: string;
   };

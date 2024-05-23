@@ -1,28 +1,43 @@
 import {Pressable, StyleSheet, Text, View, TextInput} from 'react-native';
 import {AUDIO_BLACK, AUDIO_RED, WHITE} from '../../lib/styles.ts';
 import {StatusBar} from 'expo-status-bar';
-import React, {useState} from 'react';
+import React from 'react';
 import {Duration} from 'luxon';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation.ts';
 import Animated, {useDerivedValue, withTiming} from 'react-native-reanimated';
 import {AnimatedBackground} from './AnimatedBackground.tsx';
+import {useAudioRecordingContext} from '../../contexts/AudioRecordingContext.tsx';
+import {useFocusEffect} from '@react-navigation/native';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 export const MAX_DURATION = 300_000;
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
 export const AudioRecordingScreen: React.FC<
   NativeRootNavigationProps<'AudioRecording'>
-> = params => {
-  const {recording} = params.route.params;
+> = ({navigation}) => {
   const navigator = useNavigationFromRoot();
-
-  const [elapsed, setElapsed] = useState(0);
+  const {stopRecording, recording, timeElapsed} = useAudioRecordingContext();
   const elapsedTimeValue = useDerivedValue(() => {
-    return withTiming(elapsed, {duration: 500});
-  }, [elapsed]);
+    return withTiming(timeElapsed, {duration: 500});
+  }, [timeElapsed]);
 
-  const formattedElapsedTime = Duration.fromMillis(elapsed).toFormat('mm:ss');
+  const formattedElapsedTime =
+    Duration.fromMillis(timeElapsed).toFormat('mm:ss');
+  useFocusEffect(() => {
+    navigation.setOptions({
+      // eslint-disable-next-line react/no-unstable-nested-components -- it's supported way to do it like that
+      headerLeft: () => (
+        <MaterialIcon
+          name="close"
+          size={25}
+          color={WHITE}
+          onPress={() => console.log('quit')}
+        />
+      ),
+    });
+  });
 
   return (
     <>
@@ -37,9 +52,9 @@ export const AudioRecordingScreen: React.FC<
         <Text style={styles.textStyle}>Less than 5 minutes left</Text>
         <Pressable
           onPress={async () => {
-            await recording.stopAndUnloadAsync();
+            await stopRecording();
             navigator.navigate('AudioPlayback', {
-              recordingUri: recording.getURI()!,
+              recordingUri: recording?.getURI()!,
             });
           }}
           style={styles.buttonWrapperStyle}>
@@ -70,7 +85,7 @@ const styles = StyleSheet.create({
     color: WHITE,
     marginTop: 'auto',
     textAlign: 'center',
-    marginBottom: 120,
+    marginBottom: 109,
   },
   textStyle: {
     textAlign: 'center',

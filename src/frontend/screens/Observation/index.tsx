@@ -95,6 +95,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
           ) : null}
           {attachmentUrls.length > 0 && (
             <ThumbnailScrollView
+              audioRecordings={[]}
               photos={attachmentUrls.map(attachmentData => {
                 return !attachmentData
                   ? undefined

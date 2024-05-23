@@ -8,18 +8,29 @@ import {
 import {StatusBar} from 'expo-status-bar';
 import React from 'react';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
+import {LogBox} from 'react-native';
+import {Audio} from 'expo-av';
+import {RecordingOptionsPresets} from 'expo-av/src/Audio/RecordingConstants.ts';
+
+LogBox.ignoreLogs([
+  'Non-serializable values were found in the navigation state',
+]);
 
 export const AudioPrepareRecordingScreen = () => {
   const navigator = useNavigationFromRoot();
+  const handlePress = async () => {
+    Audio.Recording.createAsync(RecordingOptionsPresets.HIGH_QUALITY).then(
+      rec => navigator.navigate('AudioRecording', {recording: rec.recording}),
+    );
+  };
+
   return (
     <>
       <StatusBar style="light" />
       <SafeAreaView style={styles.container}>
         <Text style={styles.timerStyle}>00:00</Text>
         <Text style={styles.textStyle}>Record up to 5 minutes</Text>
-        <Pressable
-          onPress={() => navigator.navigate('AudioRecording')}
-          style={styles.buttonWrapperStyle}>
+        <Pressable onPress={handlePress} style={styles.buttonWrapperStyle}>
           <View style={styles.buttonStartStyle} />
         </Pressable>
       </SafeAreaView>

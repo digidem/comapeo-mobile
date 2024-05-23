@@ -8,24 +8,70 @@ import {
 } from 'react-native';
 import {AUDIO_BLACK, AUDIO_RED, WHITE} from '../../lib/styles.ts';
 import {StatusBar} from 'expo-status-bar';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Duration} from 'luxon';
 import PlayArrow from '../../images/playArrow.svg';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {NativeRootNavigationProps} from '../../sharedTypes/navigation.ts';
+import {Audio, AVPlaybackStatus, AVPlaybackStatusSuccess} from 'expo-av';
+import {Sound} from 'expo-av/build/Audio/Sound';
 
-export const AudioPlaybackScreen = () => {
-  const audioLength = 162402;
+export const AudioPlaybackScreen: React.FC<
+  NativeRootNavigationProps<'AudioPlayback'>
+> = params => {
+  const {recordingUri} = params.route.params;
+  const [recordedSound, setRecordedSound] = useState<Sound | null>(null);
+  const [soundInitialStatus, setSoundInitialStatus] =
+    useState<AVPlaybackStatusSuccess | null>();
+  const [isPlaying, setPlaying] = useState(false);
+  const [currentPositionMillis, setCurrentPositionMillis] = useState(0);
+
+  useEffect(() => {
+    Audio.Sound.createAsync({
+      uri: recordingUri,
+    }).then(sound => {
+      setRecordedSound(sound.sound);
+      setSoundInitialStatus(sound.status as AVPlaybackStatusSuccess);
+    });
+  }, [recordingUri]);
+
+  if (!recordedSound || !soundInitialStatus) return null;
+
+  const audioCallbackHandler = (status: AVPlaybackStatus) => {
+    const update = status as AVPlaybackStatusSuccess;
+    if (update.didJustFinish) {
+      setPlaying(false);
+      setCurrentPositionMillis(0);
+      recordedSound.stopAsync();
+    } else {
+      setPlaying(update.isPlaying);
+      if (update.isPlaying) {
+        setCurrentPositionMillis(update.positionMillis);
+      }
+    }
+  };
+
+  const handleControlButtonPress = async () => {
+    // State handling is done in callback handler, so we're not setting isPlaying to true
+    // after starting playback or handling current position in recording via own stopwatch.
+    if (isPlaying) {
+      await recordedSound.stopAsync();
+    } else {
+      await recordedSound.playAsync();
+      recordedSound.setOnPlaybackStatusUpdate(audioCallbackHandler);
+    }
+  };
+
+  const audioLength = soundInitialStatus.durationMillis!;
+
   const formattedAudioLength =
     Duration.fromMillis(audioLength).toFormat('mm:ss');
-
-  const [elapsedTime] = useState(160000);
-  const formattedElapsedTime =
-    Duration.fromMillis(elapsedTime).toFormat('mm:ss');
-
-  const [isPlaying, setIsPlaying] = useState(false);
+  const formattedElapsedTime = Duration.fromMillis(
+    currentPositionMillis,
+  ).toFormat('mm:ss');
 
   const {width} = Dimensions.get('window');
-  const fillPercentage = elapsedTime * (1 / audioLength);
+  const fillPercentage = currentPositionMillis * (1 / audioLength);
 
   return (
     <>
@@ -47,7 +93,8 @@ export const AudioPlaybackScreen = () => {
         <View style={styles.bottomBar}>
           <MaterialIcons size={35} name="delete" color={WHITE} />
           <Pressable
-            onPress={() => setIsPlaying(!isPlaying)}
+            disabled={!recordedSound}
+            onPress={handleControlButtonPress}
             style={styles.buttonWrapperStyle}>
             {isPlaying ? (
               <View style={styles.buttonStopStyle} />

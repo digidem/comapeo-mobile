@@ -1,31 +1,30 @@
 import {Dimensions, Pressable, StyleSheet, Text, View} from 'react-native';
-import {AUDIO_BLACK, AUDIO_RED, DARK_GREY, WHITE} from '../../lib/styles.ts';
+import {AUDIO_BLACK, AUDIO_RED, WHITE} from '../../lib/styles.ts';
 import {StatusBar} from 'expo-status-bar';
 import React, {useEffect, useState} from 'react';
 import {Duration} from 'luxon';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {NativeRootNavigationProps} from '../../sharedTypes/navigation.ts';
+import {useStopwatch} from 'react-timer-hook';
 
 const MAX_DURATION = 300_000;
 
-export const AudioRecordingScreen = () => {
+export const AudioRecordingScreen: React.FC<
+  NativeRootNavigationProps<'AudioRecording'>
+> = params => {
+  const {recording} = params.route.params;
   const navigator = useNavigationFromRoot();
-  const [elapsedTime, setElapsedTime] = useState(290000);
-  const formattedElapsedTime =
-    Duration.fromMillis(elapsedTime).toFormat('mm:ss');
+
+  const stopwatch = useStopwatch({autoStart: true});
+  const formattedElapsedTime = Duration.fromMillis(
+    stopwatch.totalSeconds * 1000,
+  ).toFormat('mm:ss');
+
   const {top: topInset} = useSafeAreaInsets();
   const {height: windowHeight} = Dimensions.get('window');
 
-  const fillPercentage = elapsedTime * (1 / MAX_DURATION);
-
-  useEffect(() => {
-    const interval = setInterval(
-      () => setElapsedTime(elapsedTime + 1000),
-      1000,
-    );
-    return () => clearInterval(interval);
-  }, [elapsedTime]);
+  const fillPercentage = stopwatch.totalSeconds * 1000 * (1 / MAX_DURATION);
 
   return (
     <>
@@ -34,7 +33,13 @@ export const AudioRecordingScreen = () => {
         <Text style={styles.timerStyle}>{formattedElapsedTime}</Text>
         <Text style={styles.textStyle}>Less than 5 minutes left</Text>
         <Pressable
-          onPress={() => navigator.navigate('AudioPlayback')}
+          onPress={async () => {
+            await recording.stopAndUnloadAsync();
+            navigator.navigate('AudioPlayback', {
+              recordingUri: recording.getURI()!,
+            });
+            stopwatch.reset();
+          }}
           style={styles.buttonWrapperStyle}>
           <View style={styles.buttonStopStyle} />
         </Pressable>

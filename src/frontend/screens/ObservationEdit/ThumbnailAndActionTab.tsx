@@ -64,7 +64,7 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
 
   const handleAudioPress = useCallback(() => {
     if (permissionResponse?.granted) {
-      return navigation.navigate('Home', {screen: 'Map'});
+      navigation.navigate('AudioPrepareRecording');
     } else {
       openSheet();
     }
@@ -78,7 +78,7 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
     },
   ];
 
-  if (process.env.EXPO_PUBLIC_FEATURE_AUDIO) {
+  if (!process.env.EXPO_PUBLIC_FEATURE_AUDIO) {
     bottomSheetItems.unshift({
       icon: <AudioIcon width={30} height={30} />,
       label: t(m.audioButton),

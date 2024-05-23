@@ -11,6 +11,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {AnimatedBackground} from './AnimatedBackground.tsx';
+import {useFocusEffect} from '@react-navigation/native';
 
 export const MAX_DURATION = 300_000;
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
@@ -25,6 +26,14 @@ export const AudioRecordingScreen: React.FC<
   const formattedElapsedTime =
     Duration.fromMillis(elapsedTime).toFormat('mm:ss');
   const elapsedTimeValue = useSharedValue(200000);
+
+  useFocusEffect(() => {
+    navigator.setOptions({
+      headerStyle: {
+        backgroundColor: AUDIO_BLACK,
+      },
+    });
+  });
 
   useEffect(() => {
     const interval = setInterval(() => {

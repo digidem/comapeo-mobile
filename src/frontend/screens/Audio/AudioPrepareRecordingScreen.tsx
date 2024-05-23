@@ -11,6 +11,7 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
 import {LogBox} from 'react-native';
 import {Audio} from 'expo-av';
 import {RecordingOptionsPresets} from 'expo-av/src/Audio/RecordingConstants.ts';
+import {useFocusEffect} from '@react-navigation/native';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
@@ -23,6 +24,14 @@ export const AudioPrepareRecordingScreen = () => {
       rec => navigator.navigate('AudioRecording', {recording: rec.recording}),
     );
   };
+
+  useFocusEffect(() => {
+    navigator.setOptions({
+      headerStyle: {
+        backgroundColor: AUDIO_BLACK,
+      },
+    });
+  });
 
   return (
     <>

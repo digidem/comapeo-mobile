@@ -14,12 +14,15 @@ import PlayArrow from '../../images/playArrow.svg';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation.ts';
 import {useAudioPlayback} from '../../hooks/useAudioPlayback.ts';
+import {useFocusEffect} from '@react-navigation/native';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
 
 const {width} = Dimensions.get('window');
 
 export const AudioPlaybackScreen: React.FC<
   NativeRootNavigationProps<'AudioPlayback'>
 > = params => {
+  const navigation = useNavigationFromRoot();
   const {recordingUri} = params.route.params;
 
   const {
@@ -30,6 +33,14 @@ export const AudioPlaybackScreen: React.FC<
     startPlayback,
     stopPlayback,
   } = useAudioPlayback(recordingUri);
+
+  useFocusEffect(() => {
+    navigation.setOptions({
+      headerStyle: {
+        backgroundColor: AUDIO_BLACK,
+      },
+    });
+  });
 
   if (!isReady) return null;
 

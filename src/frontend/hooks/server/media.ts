@@ -39,12 +39,14 @@ export function useAttachmentUrlQueries(
   variant: BlobVariant<
     Exclude<Observation['attachments'][number]['type'], 'UNRECOGNIZED'>
   >,
+  enabledByDefault: boolean = true,
 ) {
   const project = useActiveProject();
 
   return useQueries({
     queries: attachments.map(attachment => {
       return {
+        enabled: enabledByDefault,
         queryKey: [
           'attachmentUrl',
           attachment.driveDiscoveryId,
@@ -65,20 +67,26 @@ export function useAttachmentUrlQueries(
                 throw new Error('Cannot get URL of attachment for variant');
               }
 
-              return project.$blobs.getUrl({
-                driveId: attachment.driveDiscoveryId,
-                name: attachment.name,
-                type: attachment.type,
-                variant,
-              });
+              return {
+                ...attachment,
+                url: await project.$blobs.getUrl({
+                  driveId: attachment.driveDiscoveryId,
+                  name: attachment.name,
+                  type: attachment.type,
+                  variant,
+                }),
+              };
             }
             case 'photo': {
-              return project.$blobs.getUrl({
-                driveId: attachment.driveDiscoveryId,
-                name: attachment.name,
-                type: attachment.type,
-                variant,
-              });
+              return {
+                ...attachment,
+                url: await project.$blobs.getUrl({
+                  driveId: attachment.driveDiscoveryId,
+                  name: attachment.name,
+                  type: attachment.type,
+                  variant,
+                }),
+              };
             }
           }
         },

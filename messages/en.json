@@ -471,6 +471,10 @@
     "description": "Default name of observation with no matching preset",
     "message": "Observation"
   },
+  "screens.Observation.ObservationView.share": {
+    "description": "Button to share an observation",
+    "message": "Share"
+  },
   "screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
     "message": "Cancel"
@@ -482,6 +486,18 @@
   "screens.Observation.deleteTitle": {
     "description": "Title of dialog asking confirmation to delete an observation",
     "message": "Delete observation?"
+  },
+  "screens.Observation.shareMediaTitle": {
+    "description": "Title of dialog to share an observation with media",
+    "message": "Sharing image"
+  },
+  "screens.Observation.shareMessage": {
+    "description": "Message that will be shared along with image",
+    "message": "Mapeo Alert — _*{category_name}*_ {date, date, full} {time, time, long} {coordinates}"
+  },
+  "screens.Observation.shareTextTitle": {
+    "description": "Title of dialog to share an observation without media",
+    "message": "Sharing text"
   },
   "screens.Observation.title": {
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
@@ -503,17 +519,21 @@
     "description": "Label above keyboard that expands into bottom sheet of options to add (photo, details etc)",
     "message": "Add…"
   },
+  "screens.ObservationEdit.ObservationEditView.audioButton": {
+    "description": "Button label for adding audio",
+    "message": "Audio"
+  },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "What is happening here?"
   },
   "screens.ObservationEdit.ObservationEditView.detailsButton": {
     "description": "Button label to add details",
-    "message": "Add Details"
+    "message": "Details"
   },
   "screens.ObservationEdit.ObservationEditView.photoButton": {
     "description": "Button label for adding photo",
-    "message": "Add Photo"
+    "message": "Photo"
   },
   "screens.ObservationEdit.ObservationEditView.searching": {
     "description": "Shown in new observation screen whilst looking for GPS",
@@ -869,6 +889,13 @@
   },
   "sharedComponents.DeviceIconWithName.Disconnected": {
     "message": "Disconnected"
+  },
+  "shareComponent.KeyboardAccessory.showOptions": {
+    "description": "title for observation options",
+    "message": "Show Options"
+  },
+  "sharedComponents.DeviceCard.ThisDevice": {
+    "message": "This Device!"
   },
   "sharedComponents.DeviceIconWithName.thisDevice": {
     "message": "This Device!"

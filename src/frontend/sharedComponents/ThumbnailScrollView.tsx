@@ -47,10 +47,8 @@ export const Thumbnail = ({photo, style, size, onPress}: ThumbnailProps) => {
     <TouchableOpacity
       style={[styles.thumbnailContainer, {width: size, height: size}, style]}
       onPress={onPress}>
-      {isCapturing && !error ? (
+      {isCapturing || uri === undefined ? (
         <ActivityIndicator />
-      ) : uri === undefined ? (
-        <Progress.Circle size={30} indeterminate={true} />
       ) : error || typeof uri !== 'string' ? (
         <AlertIcon />
       ) : (

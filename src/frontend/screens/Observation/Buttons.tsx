@@ -1,5 +1,5 @@
 import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {DARK_GREY, RED} from '../../lib/styles';
+import {DARK_GREY} from '../../lib/styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
@@ -12,6 +12,7 @@ import {formatCoords} from '../../lib/utils.ts';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {convertUrlToBase64} from '../../utils/base64.ts';
 import {useState} from 'react';
+import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings.ts';
 
 const m = defineMessages({
   delete: {
@@ -76,6 +77,7 @@ export const ButtonFields = ({
   const navigation = useNavigationFromRoot();
   const deleteObservationMutation = useDeleteObservation();
   const {observation, preset} = useObservationWithPreset(observationId);
+  const format = usePersistedSettings(store => store.coordinateFormat);
   const attachmentUrlQueries = useAttachmentUrlQueries(
     observation.attachments,
     'original',
@@ -103,7 +105,6 @@ export const ButtonFields = ({
     const {lon, lat} = observation;
     setShareButtonLoading(true);
 
-    // We can safely assume that the data is there (queries have been resolved) as button is disabled until then
     const urlsQueries = await Promise.all(
       attachmentUrlQueries.map(q => q.refetch()),
     );
@@ -119,7 +120,7 @@ export const ButtonFields = ({
         category_name: preset.name,
         date: Date.now(),
         time: Date.now(),
-        coordinates: lon && lat ? formatCoords({lon, lat}) : '',
+        coordinates: lon && lat ? formatCoords({lon, lat, format}) : '',
       }),
     })
       .catch(() => {})
@@ -132,7 +133,6 @@ export const ButtonFields = ({
         <Button
           iconName="delete"
           title={t(m.delete)}
-          color={RED}
           onPress={handlePressDelete}
         />
       )}
@@ -140,7 +140,6 @@ export const ButtonFields = ({
         iconName="share"
         isLoading={isShareButtonLoading}
         title={t(m.share)}
-        color={RED}
         onPress={handlePressShare}
       />
     </View>
@@ -149,7 +148,6 @@ export const ButtonFields = ({
 
 type ButtonProps = {
   onPress: () => any;
-  color: string;
   iconName: 'delete' | 'share';
   title: string;
   isLoading?: boolean;

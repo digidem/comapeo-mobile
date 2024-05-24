@@ -55,9 +55,6 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
   const preset = usePreset();
   const isNew = !observationId;
   const {formatMessage: t} = useIntl();
-  const {openSheet, sheetRef, isOpen, closeSheet} = useBottomSheetModal({
-    openOnMount: false,
-  });
   const photos = usePersistedDraftObservation(store => store.photos);
 
   React.useEffect(() => {

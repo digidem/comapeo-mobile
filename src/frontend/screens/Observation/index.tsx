@@ -14,7 +14,7 @@ import {InsetMapView} from './InsetMapView';
 import {ButtonFields} from './Buttons';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
-
+import {ThumbnailScrollView} from '../../sharedComponents/Thumbnail';
 import {useAttachmentUrlQueries} from '../../hooks/server/media.ts';
 import {ThumbnailScrollView} from '../../sharedComponents/Thumbnail';
 

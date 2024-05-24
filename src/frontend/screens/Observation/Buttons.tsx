@@ -1,5 +1,5 @@
 import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {DARK_GREY, RED} from '../../lib/styles';
+import {DARK_GREY} from '../../lib/styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
@@ -11,6 +11,8 @@ import {useObservationWithPreset} from '../../hooks/useObservationWithPreset.ts'
 import {formatCoords} from '../../lib/utils.ts';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {convertUrlToBase64} from '../../utils/base64.ts';
+import {useState} from 'react';
+import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings.ts';
 
 const m = defineMessages({
   delete: {
@@ -75,10 +77,13 @@ export const ButtonFields = ({
   const navigation = useNavigationFromRoot();
   const deleteObservationMutation = useDeleteObservation();
   const {observation, preset} = useObservationWithPreset(observationId);
+  const format = usePersistedSettings(store => store.coordinateFormat);
   const attachmentUrlQueries = useAttachmentUrlQueries(
     observation.attachments,
     'original',
+    false,
   );
+  const [isShareButtonLoading, setShareButtonLoading] = useState(false);
 
   function handlePressDelete() {
     Alert.alert(t(m.deleteTitle), undefined, [
@@ -97,12 +102,15 @@ export const ButtonFields = ({
   }
 
   async function handlePressShare() {
-    // We can safely assume that the data is there (queries have been resolved) as button is disabled until then
-    const urls = attachmentUrlQueries.map(q => q.data!.url);
     const {lon, lat} = observation;
+    setShareButtonLoading(true);
 
+    const urlsQueries = await Promise.all(
+      attachmentUrlQueries.map(q => q.refetch()),
+    );
+    const urls = urlsQueries.map(query => query.data!.url);
     const base64Urls = await Promise.all(
-      urls.map(async url => await convertUrlToBase64(url)),
+      urls.map(url => convertUrlToBase64(url)),
     );
 
     Share.open({
@@ -112,9 +120,11 @@ export const ButtonFields = ({
         category_name: preset.name,
         date: Date.now(),
         time: Date.now(),
-        coordinates: lon && lat ? formatCoords({lon, lat}) : '',
+        coordinates: lon && lat ? formatCoords({lon, lat, format}) : '',
       }),
-    }).catch(() => {});
+    })
+      .catch(() => {})
+      .finally(() => setShareButtonLoading(false));
   }
 
   return (
@@ -123,15 +133,13 @@ export const ButtonFields = ({
         <Button
           iconName="delete"
           title={t(m.delete)}
-          color={RED}
           onPress={handlePressDelete}
         />
       )}
       <Button
         iconName="share"
-        isLoading={attachmentUrlQueries.some(q => q.isLoading)}
+        isLoading={isShareButtonLoading}
         title={t(m.share)}
-        color={RED}
         onPress={handlePressShare}
       />
     </View>
@@ -140,7 +148,6 @@ export const ButtonFields = ({
 
 type ButtonProps = {
   onPress: () => any;
-  color: string;
   iconName: 'delete' | 'share';
   title: string;
   isLoading?: boolean;

@@ -7,25 +7,27 @@ import {
 } from '../../lib/styles.ts';
 import {StatusBar} from 'expo-status-bar';
 import React from 'react';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
 import {LogBox} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import {useAudioRecordingContext} from '../../contexts/AudioRecordingContext.tsx';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {AudioStackParamList} from '../../sharedTypes/navigation.ts';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
 ]);
 
-export const AudioPrepareRecordingScreen = () => {
-  const navigator = useNavigationFromRoot();
+export const AudioPrepareRecordingScreen: React.FC<
+  NativeStackScreenProps<AudioStackParamList, 'PrepareRecording'>
+> = ({navigation}) => {
   const {startRecording} = useAudioRecordingContext();
   const handlePress = async () => {
     await startRecording();
-    navigator.navigate('AudioRecording');
+    navigation.navigate('Recording');
   };
 
   useFocusEffect(() => {
-    navigator.setOptions({
+    navigation.setOptions({
       headerStyle: {
         backgroundColor: AUDIO_BLACK,
       },

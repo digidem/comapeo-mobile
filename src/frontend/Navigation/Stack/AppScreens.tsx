@@ -55,11 +55,8 @@ import {SaveTrackScreen} from '../../screens/SaveTrack/SaveTrackScreen';
 import {ObservationFields} from '../../screens/ObservationFields';
 import {LIGHT_GREY} from '../../lib/styles';
 import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSettings';
-import {AudioPrepareRecordingScreen} from '../../screens/Audio/AudioPrepareRecordingScreen.tsx';
-import NavigationBackButton from '../../images/navigationBackButton.svg';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
-import {AudioRecordingScreen} from '../../screens/Audio/AudioRecordingScreen.tsx';
-import {AudioPlaybackScreen} from '../../screens/Audio/AudioPlaybackScreen.tsx';
+import {AudioStack} from './AudioStack.tsx';
+import {AudioRecordingContextProvider} from '../../contexts/AudioRecordingContext.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -255,52 +252,13 @@ export const createDefaultScreenGroup = (
       options={{headerTitle: intl(LanguageSettings.navTitle)}}
     />
     <RootStack.Screen
-      name="AudioStack"
-      component={AudioStack}
+      name="Audio"
       options={{headerShown: false}}
+      children={() => (
+        <AudioRecordingContextProvider>
+          <AudioStack />
+        </AudioRecordingContextProvider>
+      )}
     />
   </RootStack.Group>
 );
-
-const AudioStack = () => {
-  return (
-    <RootStack.Navigator>
-      <RootStack.Screen
-        name="AudioPrepareRecording"
-        component={AudioPrepareRecordingScreen}
-        options={{
-          // eslint-disable-next-line react/no-unstable-nested-components
-          headerLeft: () => {
-            // eslint-disable-next-line react-hooks/rules-of-hooks -- this is in fact a component, so we can use hook here
-            const navigation = useNavigationFromRoot();
-            return <NavigationBackButton onPress={() => navigation.goBack()} />;
-          },
-          headerStyle: {backgroundColor: 'transparent'},
-          headerTransparent: true,
-          headerTitle: '',
-        }}
-      />
-      <RootStack.Screen
-        name="AudioRecording"
-        component={AudioRecordingScreen}
-        options={{
-          headerLeft: () => <></>,
-          headerStyle: {backgroundColor: 'transparent'},
-          headerTransparent: true,
-          headerTitle: '',
-          animation: 'none',
-        }}
-      />
-      <RootStack.Screen
-        name="AudioPlayback"
-        component={AudioPlaybackScreen}
-        options={{
-          headerStyle: {backgroundColor: 'transparent'},
-          headerTransparent: true,
-          headerTitle: '',
-          animation: 'none',
-        }}
-      />
-    </RootStack.Navigator>
-  );
-};

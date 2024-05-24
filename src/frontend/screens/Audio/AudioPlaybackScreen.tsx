@@ -5,7 +5,7 @@ import React from 'react';
 import {Duration} from 'luxon';
 import PlayArrow from '../../images/playArrow.svg';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {NativeRootNavigationProps} from '../../sharedTypes/navigation.ts';
+import {AudioStackParamList} from '../../sharedTypes/navigation.ts';
 import {useAudioPlayback} from '../../hooks/useAudioPlayback.ts';
 import {useFocusEffect} from '@react-navigation/native';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
@@ -13,9 +13,10 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {AnimatedTimer} from './AnimatedTimer.tsx';
 import {AnimatedProgressBar} from './AnimatedProgressBar.tsx';
 import {useDerivedValue, withTiming} from 'react-native-reanimated';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 export const AudioPlaybackScreen: React.FC<
-  NativeRootNavigationProps<'AudioPlayback'>
+  NativeStackScreenProps<AudioStackParamList, 'Playback'>
 > = params => {
   const navigation = useNavigationFromRoot();
   const {recordingUri} = params.route.params;

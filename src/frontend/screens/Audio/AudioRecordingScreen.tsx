@@ -2,21 +2,20 @@ import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {AUDIO_BLACK, AUDIO_RED, WHITE} from '../../lib/styles.ts';
 import {StatusBar} from 'expo-status-bar';
 import React, {useEffect} from 'react';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
-import {NativeRootNavigationProps} from '../../sharedTypes/navigation.ts';
+import {AudioStackParamList} from '../../sharedTypes/navigation.ts';
 import {useDerivedValue, withTiming} from 'react-native-reanimated';
 import {AnimatedBackground} from './AnimatedBackground.tsx';
 import {useAudioRecordingContext} from '../../contexts/AudioRecordingContext.tsx';
 import {useFocusEffect} from '@react-navigation/native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {AnimatedTimer} from './AnimatedTimer.tsx';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 export const MAX_DURATION = 300_000;
 
 export const AudioRecordingScreen: React.FC<
-  NativeRootNavigationProps<'AudioRecording'>
+  NativeStackScreenProps<AudioStackParamList, 'Recording'>
 > = ({navigation}) => {
-  const navigator = useNavigationFromRoot();
   const {stopRecording, recording, timeElapsed} = useAudioRecordingContext();
   const elapsedTimeValue = useDerivedValue(() => {
     return withTiming(timeElapsed, {duration: 500});
@@ -28,11 +27,11 @@ export const AudioRecordingScreen: React.FC<
       return;
     }
     stopRecording().then(() => {
-      navigator.navigate('AudioPlayback', {
+      navigation.navigate('Playback', {
         recordingUri: recording?.getURI()!,
       });
     });
-  }, [navigator, stopRecording, recording, timeElapsed]);
+  }, [navigation, stopRecording, recording, timeElapsed]);
 
   useFocusEffect(() => {
     navigation.setOptions({
@@ -57,7 +56,7 @@ export const AudioRecordingScreen: React.FC<
         <Pressable
           onPress={async () => {
             await stopRecording();
-            navigator.navigate('AudioPlayback', {
+            navigation.navigate('Playback', {
               recordingUri: recording?.getURI()!,
             });
           }}

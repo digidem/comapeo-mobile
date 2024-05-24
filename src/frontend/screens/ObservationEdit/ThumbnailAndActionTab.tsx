@@ -64,7 +64,7 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
 
   const handleAudioPress = useCallback(() => {
     if (permissionResponse?.granted) {
-      navigation.navigate('AudioStack');
+      navigation.navigate('Audio', {screen: 'PrepareRecording'});
     } else {
       openSheet();
     }

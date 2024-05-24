@@ -12,6 +12,7 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {AnimatedTimer} from './AnimatedTimer.tsx';
 import {AnimatedProgressBar} from './AnimatedProgressBar.tsx';
+import {useDerivedValue, withTiming} from 'react-native-reanimated';
 
 export const AudioPlaybackScreen: React.FC<
   NativeRootNavigationProps<'AudioPlayback'>
@@ -22,7 +23,7 @@ export const AudioPlaybackScreen: React.FC<
   const {
     isReady,
     isPlaying,
-    currentPosition: elapsed,
+    currentPosition,
     duration,
     startPlayback,
     stopPlayback,
@@ -50,14 +51,18 @@ export const AudioPlaybackScreen: React.FC<
     ? Duration.fromMillis(duration).toFormat('mm:ss')
     : '00:00';
 
+  const elapsedTimeValue = useDerivedValue(() => {
+    return withTiming(currentPosition, {duration: 500});
+  }, [currentPosition]);
+
   return (
     <>
       <StatusBar style="light" />
       <SafeAreaView style={styles.container}>
-        <AnimatedTimer elapsedTime={elapsed} />
+        <AnimatedTimer elapsedTime={elapsedTimeValue} />
         <AnimatedProgressBar
           isReady={isReady}
-          elapsed={elapsed}
+          elapsed={elapsedTimeValue}
           duration={duration}
         />
         <Text style={styles.textStyle}>Total length: {formattedDuration}</Text>

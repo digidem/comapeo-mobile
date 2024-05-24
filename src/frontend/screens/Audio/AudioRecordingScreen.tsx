@@ -1,7 +1,7 @@
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {AUDIO_BLACK, AUDIO_RED, WHITE} from '../../lib/styles.ts';
 import {StatusBar} from 'expo-status-bar';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation.ts';
 import {useDerivedValue, withTiming} from 'react-native-reanimated';
@@ -21,6 +21,18 @@ export const AudioRecordingScreen: React.FC<
   const elapsedTimeValue = useDerivedValue(() => {
     return withTiming(timeElapsed, {duration: 500});
   }, [timeElapsed]);
+
+  // Stop recording when time runs out (MAX_DURATION)
+  useEffect(() => {
+    if (timeElapsed <= MAX_DURATION) {
+      return;
+    }
+    stopRecording().then(() => {
+      navigator.navigate('AudioPlayback', {
+        recordingUri: recording?.getURI()!,
+      });
+    });
+  }, [navigator, stopRecording, recording, timeElapsed]);
 
   useFocusEffect(() => {
     navigation.setOptions({

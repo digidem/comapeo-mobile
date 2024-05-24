@@ -47,9 +47,7 @@ export const AppProviders = ({
                   <ApiProvider api={mapeoApi}>
                     <ActiveProjectProvider>
                       <PhotoPromiseProvider>
-                        <AudioRecordingContextProvider>
-                          <SecurityProvider>{children}</SecurityProvider>
-                        </AudioRecordingContextProvider>
+                        <SecurityProvider>{children}</SecurityProvider>
                       </PhotoPromiseProvider>
                     </ActiveProjectProvider>
                   </ApiProvider>

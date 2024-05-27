@@ -45,6 +45,7 @@ export const AudioRecordingDeleteBottomSheet: FC<
             {...m.deleteModalDescription}
             values={{
               audioRecording: 'Audio Recording',
+              // eslint-disable-next-line react/no-unstable-nested-components
               bold: message => <Text style={styles.textBold}>{message}</Text>,
             }}
           />

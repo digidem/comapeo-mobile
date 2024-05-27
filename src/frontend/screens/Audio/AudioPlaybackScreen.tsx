@@ -1,5 +1,11 @@
 import {Pressable, SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import {AUDIO_BLACK, AUDIO_RED, WHITE} from '../../lib/styles.ts';
+import {
+  AUDIO_BLACK,
+  AUDIO_BLUE_GRAY,
+  AUDIO_RED,
+  NEW_DARK_GREY,
+  WHITE,
+} from '../../lib/styles.ts';
 import {StatusBar} from 'expo-status-bar';
 import React from 'react';
 import {Duration} from 'luxon';
@@ -16,15 +22,24 @@ import {useDerivedValue, withTiming} from 'react-native-reanimated';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal/index.tsx';
 import {AudioRecordingDeleteBottomSheet} from './AudioRecordingDeleteBottomSheet.tsx';
+import {AudioRecordingSuccessBottomSheet} from './AudioRecordingSuccessBottomSheet.tsx';
 
 export const AudioPlaybackScreen: React.FC<
   NativeStackScreenProps<AudioStackParamList, 'Playback'>
 > = params => {
   const {
-    sheetRef: audioSheetRef,
-    isOpen,
-    closeSheet,
-    openSheet,
+    sheetRef: deleteAudioSheetRef,
+    isOpen: isOpenDeleteBottomSheet,
+    closeSheet: closeDeleteBottomSheet,
+    openSheet: openDeleteBottomSheet,
+  } = useBottomSheetModal({
+    openOnMount: false,
+  });
+
+  const {
+    sheetRef: successSheetRef,
+    isOpen: isOpenSuccessSheet,
+    openSheet: openSuccessSheet,
   } = useBottomSheetModal({
     openOnMount: false,
   });
@@ -78,7 +93,7 @@ export const AudioPlaybackScreen: React.FC<
         />
         <Text style={styles.textStyle}>Total length: {formattedDuration}</Text>
         <View style={styles.bottomBar}>
-          <Pressable onPress={openSheet}>
+          <Pressable onPress={openDeleteBottomSheet}>
             <MaterialIcons size={35} name="delete" color={WHITE} />
           </Pressable>
           <Pressable
@@ -94,9 +109,13 @@ export const AudioPlaybackScreen: React.FC<
           <MaterialIcons size={35} name="share" color={WHITE} />
         </View>
         <AudioRecordingDeleteBottomSheet
-          isOpen={isOpen}
-          closeSheet={closeSheet}
-          sheetRef={audioSheetRef}
+          isOpen={isOpenDeleteBottomSheet}
+          closeSheet={closeDeleteBottomSheet}
+          sheetRef={deleteAudioSheetRef}
+        />
+        <AudioRecordingSuccessBottomSheet
+          isOpen={isOpenSuccessSheet}
+          sheetRef={successSheetRef}
         />
       </SafeAreaView>
     </>
@@ -124,14 +143,14 @@ const styles = StyleSheet.create({
     bottom: 82,
     marginLeft: 30,
     height: 4,
-    backgroundColor: '#757575',
+    backgroundColor: NEW_DARK_GREY,
     position: 'absolute',
   },
   textStyle: {
     textAlign: 'center',
     marginBottom: 50,
     fontSize: 20,
-    color: '#CCCCD6',
+    color: AUDIO_BLUE_GRAY,
   },
 
   bottomBar: {

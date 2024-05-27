@@ -37,6 +37,18 @@
   "AudioPlaybackScreen.DeleteAudioRecordingModal.deleteTitle": {
     "message": "Delete?"
   },
+  "AudioPlaybackScreen.DeleteAudioRecordingModal.recordAnother": {
+    "message": "Record Another"
+  },
+  "AudioPlaybackScreen.DeleteAudioRecordingModal.returnToEditor": {
+    "message": "Return to Editor"
+  },
+  "AudioPlaybackScreen.DeleteAudioRecordingModal.successDescription": {
+    "message": "Your <bold>{audioRecording}</bold> was added."
+  },
+  "AudioPlaybackScreen.DeleteAudioRecordingModal.successTitle": {
+    "message": "Success!"
+  },
   "Modal.DiscardTrack.description": {
     "message": "Your Track will not be saved. This cannot be undone."
   },

@@ -88,7 +88,7 @@ export const TrackEditScreen: NativeNavigationComponent<'TrackEdit'> & {
 
   const {data: track} = useTrackWithEnableOptionQuery(trackId);
   const [description, setDescription] = useState<string>(
-    track?.tags['notes'] ? (track.tags['notes'] as string) : '',
+    track?.tags.notes ? (track.tags.notes as string) : '',
   );
 
   const bottomSheetItems = [
@@ -113,11 +113,13 @@ export const TrackEditScreen: NativeNavigationComponent<'TrackEdit'> & {
   useFocusEffect(
     useCallback(() => {
       navigation.setOptions({
+        // eslint-disable-next-line react/no-unstable-nested-components
         headerLeft: () => (
           <Pressable hitSlop={10} onPress={openSheet} style={{marginRight: 20}}>
             <Close />
           </Pressable>
         ),
+        // eslint-disable-next-line react/no-unstable-nested-components
         headerRight: () => <SaveTrackButton description={description} />,
       });
     }, [description, navigation, openSheet]),

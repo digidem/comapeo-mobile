@@ -20,12 +20,12 @@ import EditIcon from '../../images/Edit.svg';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
 import {defineMessages, MessageDescriptor, useIntl} from 'react-intl';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import {NativeNavigationComponent} from '../../sharedTypes.ts';
 import {
   useDeleteTrackMutation,
   useTrackQuery,
 } from '../../hooks/server/track.ts';
 import {useObservations} from '../../hooks/server/observations.ts';
+import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
   title: {
@@ -61,9 +61,11 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
 }) => {
   React.useLayoutEffect(() => {
     navigation.setOptions({
+      // eslint-disable-next-line react/no-unstable-nested-components
       headerLeft: (props: any) => (
         <CustomHeaderLeft headerBackButtonProps={props} tintColor={BLACK} />
       ),
+      // eslint-disable-next-line react/no-unstable-nested-components
       headerRight: () => (
         <Pressable
           onPress={() =>

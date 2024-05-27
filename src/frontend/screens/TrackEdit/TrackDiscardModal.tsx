@@ -12,10 +12,9 @@ import {Button} from '../../sharedComponents/Button.tsx';
 import {defineMessages, useIntl} from 'react-intl';
 import ErrorIcon from '../../images/Error.svg';
 import {COMAPEO_BLUE, MAGENTA, WHITE} from '../../lib/styles.ts';
-import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes.ts';
 import DiscardIcon from '../../images/delete.svg';
-import {useCurrentTrackStore} from '../../hooks/tracks/useCurrentTrackStore.ts';
-import {TabName} from '../../Navigation/types.ts';
+import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
+import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 
 export interface TrackDiscardModal {
   bottomSheetRef: React.RefObject<BottomSheetModalMethods>;
@@ -43,12 +42,10 @@ const m = defineMessages({
 export const TrackDiscardModal: FC<TrackDiscardModal> = ({bottomSheetRef}) => {
   const {formatMessage} = useIntl();
   const navigation = useNavigationFromHomeTabs();
-  const clearCurrentTrack = useCurrentTrackStore(
-    state => state.clearCurrentTrack,
-  );
+  const clearCurrentTrack = usePersistedTrack(state => state.clearCurrentTrack);
   const handleDiscard = () => {
     bottomSheetRef.current?.close();
-    navigation.navigate(TabName.Map);
+    navigation.navigate('Home', {screen: 'Map'});
     clearCurrentTrack();
   };
 

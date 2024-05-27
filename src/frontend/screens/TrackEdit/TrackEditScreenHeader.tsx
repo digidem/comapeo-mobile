@@ -4,12 +4,11 @@ import {Text} from '../../sharedComponents/Text.tsx';
 import Close from '../../images/close.svg';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import {useCreateTrack, useUpdateTrack} from '../../hooks/server/track.ts';
-import {useCurrentTrackStore} from '../../hooks/tracks/useCurrentTrackStore.ts';
 import {DateTime} from 'luxon';
-import {TabName} from '../../Navigation/types.ts';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes.ts';
 import {defineMessages, useIntl} from 'react-intl';
 import {Track} from '@mapeo/schema';
+import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack.ts';
 
 const m = defineMessages({
   trackCreateScreenTitle: {
@@ -40,7 +39,7 @@ export const TrackEditScreenHeader: FC<TrackEditScreenHeader> = ({
   const {formatMessage: t} = useIntl();
   const saveTrack = useCreateTrack();
   const updateTrack = useUpdateTrack(track?.versionId);
-  const currentTrack = useCurrentTrackStore();
+  const currentTrack = usePersistedTrack();
   const navigation = useNavigationFromHomeTabs();
 
   const saveTrackClick = () => {
@@ -68,7 +67,7 @@ export const TrackEditScreenHeader: FC<TrackEditScreenHeader> = ({
       },
       {
         onSuccess: () => {
-          navigation.navigate(TabName.Map);
+          navigation.navigate('Home', {screen: 'Map'});
           currentTrack.clearCurrentTrack();
         },
       },

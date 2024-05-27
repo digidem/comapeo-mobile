@@ -1,13 +1,15 @@
 import React, {FC} from 'react';
 import {StyleSheet} from 'react-native';
 import MapboxGL from '@rnmapbox/maps';
-import {MAP_STYLE} from '../MapScreen';
 import {PathLayer} from '../MapScreen/path/PathLayer.tsx';
 import {LocationHistoryPoint} from '../../sharedTypes/location.ts';
+import Mapbox from '@rnmapbox/maps';
 
 interface TrackScreenMapPreview {
   locationHistory: LocationHistoryPoint[];
 }
+
+const MAP_STYLE = Mapbox.StyleURL.Outdoors;
 
 export const TrackScreenMapPreview: FC<TrackScreenMapPreview> = ({
   locationHistory,

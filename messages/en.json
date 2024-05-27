@@ -612,6 +612,10 @@
     "description": "message shown whilst observations are loading",
     "message": "Loading… this can take a while after synchronizing with a new device"
   },
+  "screens.ObservationsList.toSync": {
+    "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
+    "message": "To sync and share with other devices,"
+  },
   "screens.SaveTrack.CreateTrackTitle": {
     "description": "Title for new track screen",
     "message": "New Track"
@@ -619,10 +623,6 @@
   "screens.SaveTrack.TrackCreateView.title": {
     "description": "Title for new track screen",
     "message": "New Track"
-  },
-  "screens.ObservationsList.toSync": {
-    "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
-    "message": "To sync and share with other devices,"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",

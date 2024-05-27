@@ -14,7 +14,7 @@ import {InsetMapView} from './InsetMapView';
 import {ButtonFields} from './Buttons';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
-import {ThumbnailScrollView} from '../../sharedComponents/Thumbnail';
+import {MediaScrollView} from '../../sharedComponents/Thumbnail/MediaScrollView';
 import {useAttachmentUrlQueries} from '../../hooks/server/media.ts';
 
 const m = defineMessages({
@@ -94,7 +94,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
             </View>
           ) : null}
           {attachmentUrls.length > 0 && (
-            <ThumbnailScrollView
+            <MediaScrollView
               photos={attachmentUrls.map(attachmentData => {
                 return !attachmentData
                   ? undefined
@@ -103,6 +103,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
                       id: attachmentData.driveDiscoveryId,
                     };
               })}
+              audioRecordings={[]}
             />
           )}
         </View>

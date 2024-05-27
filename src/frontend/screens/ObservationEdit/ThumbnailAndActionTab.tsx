@@ -1,7 +1,7 @@
-import React, {FC, useCallback} from 'react';
+import React, {FC} from 'react';
 import {View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
-import {ThumbnailScrollView} from '../../sharedComponents/Thumbnail';
+import {MediaScrollView} from '../../sharedComponents/Thumbnail/MediaScrollView';
 import {ActionTab} from '../../sharedComponents/ActionTab';
 import Photo from '../../images/observationEdit/Photo.svg';
 import Audio from '../../images/observationEdit/Audio.svg';
@@ -46,13 +46,13 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
   const {photos, audioRecordings, observationId} = usePersistedDraftObservation(
     store => store,
   );
-  const handleCameraPress = useCallback(() => {
+  const handleCameraPress = () => {
     navigation.navigate('AddPhoto');
-  }, [navigation]);
+  };
 
-  const handleDetailsPress = useCallback(() => {
+  const handleDetailsPress = () => {
     navigation.navigate('ObservationFields', {question: 1});
-  }, [navigation]);
+  };
 
   const bottomSheetItems = [
     {
@@ -81,7 +81,7 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
 
   return (
     <View>
-      <ThumbnailScrollView
+      <MediaScrollView
         photos={photos}
         audioRecordings={audioRecordings}
         observationId={observationId}

@@ -17,14 +17,14 @@ import {LIGHT_GREY} from '../../lib/styles';
 
 const log = debug('Thumbnail');
 
-type ThumbnailProps = {
+type PhotoThumbnailProps = {
   photo?: Partial<Photo>;
   onPress: () => any;
   style?: StyleProp<ViewStyle>;
   size?: number;
 };
 
-export const Thumbnail: FC<ThumbnailProps> = props => {
+export const PhotoThumbnail: FC<PhotoThumbnailProps> = props => {
   const {photo, style, size, onPress} = props;
   const [error, setError] = React.useState(false);
 

@@ -2,20 +2,20 @@ import React, {FC} from 'react';
 import {Dimensions, ScrollView, StyleSheet} from 'react-native';
 
 import {Photo} from '../../contexts/PhotoPromiseContext/types';
-import {Thumbnail} from './Thumbnail';
+import {PhotoThumbnail} from './PhotoThumbnail';
 import {AudioThumbnail} from './AudioThumbnail';
 // import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 
 const spacing = 10;
 const minSize = 150;
 
-interface ThumbnailScrollView {
+interface MediaScrollView {
   photos: (Partial<Photo> | undefined)[];
   audioRecordings: any[];
   observationId?: string;
 }
 
-export const ThumbnailScrollView: FC<ThumbnailScrollView> = props => {
+export const MediaScrollView: FC<MediaScrollView> = props => {
   const {photos, audioRecordings = []} = props;
   // const navigation = useNavigationFromHomeTabs();
   const scrollViewRef = React.useRef<ScrollView>(null);
@@ -61,7 +61,7 @@ export const ThumbnailScrollView: FC<ThumbnailScrollView> = props => {
       {photos
         ?.filter(photo => photo?.deleted == null)
         ?.map((photo, index) => (
-          <Thumbnail
+          <PhotoThumbnail
             key={index}
             photo={photo}
             style={styles.thumbnail}

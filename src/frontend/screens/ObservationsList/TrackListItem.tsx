@@ -1,10 +1,9 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableHighlight, View} from 'react-native';
 import {FormattedObservationDate} from '../../sharedComponents/FormattedData.tsx';
-import {ViewStyleProp} from '../../sharedTypes.ts';
 import {Track} from '@mapeo/schema';
-import {CategoryCircleIcon} from '../../sharedComponents/icons/CategoryIcon.tsx';
-import {BLACK} from '../../lib/styles.ts';
+import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon.tsx';
+import {ViewStyleProp} from '../../sharedTypes/index';
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;
@@ -19,9 +18,6 @@ const TrackObservationItemNotMemoized = ({
   testID,
   onPress = () => {},
 }: ObservationListItemProps) => {
-  const iconId = '';
-  const iconColor = BLACK;
-
   return (
     <TouchableHighlight
       onPress={() => onPress(track.docId)}
@@ -39,7 +35,7 @@ const TrackObservationItemNotMemoized = ({
             />
           </Text>
         </View>
-        <CategoryCircleIcon iconId={iconId} color={iconColor} size="medium" />
+        <PresetCircleIcon name={track.schemaName} size="medium" />
       </View>
     </TouchableHighlight>
   );

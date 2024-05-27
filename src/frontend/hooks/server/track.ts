@@ -25,7 +25,7 @@ export function useCreateTrack() {
 }
 
 export function useUpdateTrack(versionId?: string) {
-  const project = useProject();
+  const project = useActiveProject();
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (params: TrackValue) => {
@@ -51,7 +51,7 @@ export function useTracksQuery() {
 }
 
 export function useTrackWithEnableOptionQuery(docId?: string) {
-  const project = useProject();
+  const project = useActiveProject();
   return useQuery({
     queryKey: [TRACK_KEY, docId],
     enabled: !!docId,

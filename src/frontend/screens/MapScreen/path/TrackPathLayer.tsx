@@ -1,11 +1,11 @@
-import {useCurrentTrackStore} from '../../../hooks/tracks/useCurrentTrackStore';
 import * as React from 'react';
 import {useLocation} from '../../../hooks/useLocation';
 import {PathLayer} from './PathLayer';
+import {usePersistedTrack} from '../../../hooks/persistedState/usePersistedTrack';
 
 export const TrackPathLayer = () => {
-  const locationHistory = useCurrentTrackStore(state => state.locationHistory);
-  const isTracking = useCurrentTrackStore(state => state.isTracking);
+  const locationHistory = usePersistedTrack(state => state.locationHistory);
+  const isTracking = usePersistedTrack(state => state.isTracking);
   const {location} = useLocation({maxDistanceInterval: 3});
   const finalLocationHistory = location?.coords
     ? [

@@ -51,7 +51,6 @@ import {
   createNavigationOptions as createManualGpsNavigationOptions,
 } from '../../screens/ManualGpsScreen';
 import {HomeTabs} from '../Tab';
-import {TrackEditScreen} from '../../screens/SaveTrack/SaveTrackScreen';
 import {ObservationFields} from '../../screens/ObservationFields';
 import {DARK_GREY, LIGHT_GREY} from '../../lib/styles';
 import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSettings';
@@ -59,6 +58,7 @@ import {
   createTrackNavigationOptions,
   TrackScreen,
 } from '../../screens/Track/TrackScreen';
+import {TrackEditScreen} from '../../screens/TrackEdit/TrackEditScreen';
 
 export const TAB_BAR_HEIGHT = 70;
 

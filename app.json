@@ -43,7 +43,8 @@
           "organization": "awana-digital"
         }
       ],
-      ["./expo-config-plugins/removeExpoInputStyles.js"]
+      ["./expo-config-plugins/removeExpoInputStyles.js"],
+      ["./expo-config-plugins/extra-queries.js"]
     ],
     "android": {
       "versionCode": 1,

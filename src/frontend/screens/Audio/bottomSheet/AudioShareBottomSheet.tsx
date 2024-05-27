@@ -32,7 +32,9 @@ export const AudioShareBottomSheet: FC<AudioShareBottomSheet> = ({
       title: formatMessage(m.audioRecording),
       url: base64Url,
       message: 'message',
+      filename: 'recording', // only for base64 file in Android
     }).catch(() => {});
+    closeShareSheet();
   }
 
   const handleSingleShare = async (
@@ -40,14 +42,25 @@ export const AudioShareBottomSheet: FC<AudioShareBottomSheet> = ({
     url: string,
   ) => {
     const base64Url = await convertUrlToBase64(url);
-    const shareOptions: ShareSingleOptions = {
+    Share.isPackageInstalled('com.whatsapp.android')
+      .then(response => {
+        console.log(response);
+        // { isInstalled: true/false, message: 'Package is Installed' }
+      })
+      .catch(error => {
+        console.log(error);
+        // { error }
+      });
+    const shareOptions: any = {
       title: formatMessage(m.title),
       url: base64Url,
+      recipient: '',
+      whatsAppNumber: '',
       social: social,
-      filename: 'recording.mp4', // only for base64 file in Android
+      filename: 'recording', // only for base64 file in Android
     };
 
-    await Share.shareSingle(shareOptions).catch(() => {});
+    await Share.shareSingle(shareOptions).catch(e => console.error(e, 'e'));
     closeShareSheet();
   };
 
@@ -55,13 +68,14 @@ export const AudioShareBottomSheet: FC<AudioShareBottomSheet> = ({
     {
       icon: <MessagesIcon />,
       label: formatMessage(m.messages),
-      onPress: closeShareSheet,
+      onPress: async () => await handleSingleShare(Social.Sms, recordingUri),
       withCircle: false,
     },
     {
       icon: <WhatsAppIcon />,
       label: formatMessage(m.whatsApp),
-      onPress: () => handleSingleShare(Social.Whatsapp, recordingUri),
+      onPress: async () =>
+        await handleSingleShare(Social.Whatsapp, recordingUri),
       withCircle: false,
     },
     {

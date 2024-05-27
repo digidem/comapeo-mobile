@@ -9,13 +9,16 @@ import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersis
 import {useCreateObservation} from '../../hooks/server/observations';
 import {useEditObservation} from '../../hooks/server/observations';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {useCreateBlobMutation} from '../../hooks/server/media';
+import {
+  useCreateAudioRecordingBlobMutation,
+  useCreatePhotoBlobMutation,
+} from '../../hooks/server/media';
 import {DraftPhoto, Photo} from '../../contexts/PhotoPromiseContext/types';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import SaveCheck from '../../images/CheckMark.svg';
-import {useProject} from '../../hooks/server/projects';
 import {CommonActions} from '@react-navigation/native';
+import {useActiveProject} from '../../contexts/ActiveProjectContext.tsx';
 
 const m = defineMessages({
   noGpsTitle: {
@@ -70,12 +73,16 @@ export const SaveButton = ({
 }) => {
   const value = usePersistedDraftObservation(store => store.value);
   const photos = usePersistedDraftObservation(store => store.photos);
+  const audioRecordings = usePersistedDraftObservation(
+    store => store.audioRecordings,
+  );
   const {clearDraft} = useDraftObservation();
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
   const createObservationMutation = useCreateObservation();
   const editObservationMutation = useEditObservation();
-  const createBlobMutation = useCreateBlobMutation();
+  const createPhotoBlobMutation = useCreatePhotoBlobMutation();
+  const createAudioBlobMutation = useCreateAudioRecordingBlobMutation();
   const isTracking = usePersistedTrack(state => state.isTracking);
   const addNewTrackLocations = usePersistedTrack(
     state => state.addNewLocations,
@@ -83,7 +90,7 @@ export const SaveButton = ({
   const addNewTrackObservation = usePersistedTrack(
     state => state.addNewObservation,
   );
-  const project = useProject();
+  const project = useActiveProject();
 
   function createObservation() {
     if (!value) throw new Error('no observation saved in persisted state ');
@@ -114,16 +121,15 @@ export const SaveButton = ({
       return;
     }
 
-    // Currently, we abort the process of saving an observation if saving any number of photos fails to save,
+    // Currently, we abort the process of saving an observation if saving any number of photos or recordings fails to save,
     // but this approach is prone to creating "orphaned" blobs.
     // The alternative is to save the observation but excluding photos that failed to save, which is prone to an odd UX of an observation "missing" some attachments.
     // This could potentially be alleviated by a more granular and informative UI about the photo-saving state, but currently there is nothing in place.
     // Basically, which is worse: orphaned attachments or saving observations that seem to be missing attachments?
-    Promise.all(
-      savablePhotos.map(photo => {
-        return createBlobMutation.mutateAsync(photo);
-      }),
-    )
+    Promise.all([
+      ...audioRecordings.map(rec => createAudioBlobMutation.mutateAsync(rec)),
+      ...savablePhotos.map(photo => createPhotoBlobMutation.mutateAsync(photo)),
+    ])
       .then(results => {
         const newAttachments = results.map(
           ({driveId: driveDiscoveryId, type, name, hash}) => ({
@@ -232,7 +238,7 @@ export const SaveButton = ({
     Alert.alert(t(m.weakGpsTitle), t(m.weakGpsDesc), confirmationOptions);
   };
 
-  return createBlobMutation.isPending ||
+  return createPhotoBlobMutation.isPending ||
     createObservationMutation.isPending ||
     editObservationMutation.isPending ? (
     <View style={{marginRight: 10}}>

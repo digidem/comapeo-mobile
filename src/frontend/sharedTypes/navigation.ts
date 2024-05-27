@@ -31,6 +31,7 @@ export type AudioStackParamList = {
   PrepareRecording: undefined;
   Recording: undefined;
   Playback: {
+    previewOnly?: boolean;
     recordingUri: string;
   };
 };

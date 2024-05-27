@@ -46,7 +46,7 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
   const {formatMessage: t} = useIntl();
   const {usePreset} = useDraftObservation();
   const preset = usePreset();
-  const {photos, audioRecordings, observationId} = usePersistedDraftObservation(
+  const {photos, audioRecordings} = usePersistedDraftObservation(
     store => store,
   );
   const {openSheet, sheetRef, isOpen, closeSheet} = useBottomSheetModal({
@@ -101,7 +101,6 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
         <ThumbnailScrollView
           photos={photos}
           audioRecordings={audioRecordings}
-          observationId={observationId}
         />
         <ActionTab items={bottomSheetItems} />
       </View>

@@ -10,6 +10,7 @@ import {ClientGeneratedObservation, Position} from '../../../sharedTypes';
 import {Observation, Preset} from '@mapeo/schema';
 import {usePresetsQuery} from '../../server/presets';
 import {matchPreset} from '../../../lib/utils';
+import {AudioRecording} from '../../../sharedTypes/audio.ts';
 
 type newDraftProps = {observation: Observation; preset: Preset};
 const emptyObservation: ClientGeneratedObservation = {
@@ -23,12 +24,14 @@ const emptyObservation: ClientGeneratedObservation = {
 
 export type DraftObservationSlice = {
   photos: Photo[];
-  audioRecordings: [];
+  audioRecordings: AudioRecording[];
   value: Observation | null | ClientGeneratedObservation;
   observationId?: string;
   actions: {
     addPhotoPlaceholder: (draftPhotoId: string) => void;
     replacePhotoPlaceholderWithPhoto: (photo: DraftPhoto) => void;
+    addAudioRecording: (audioRecording: AudioRecording) => void;
+    removeAudioRecording: (uri: string) => void;
     // Clear the current draft
     clearDraft: () => void;
     // Create a new draft observation
@@ -56,6 +59,14 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
       set({photos: [...get().photos, {draftPhotoId, capturing: true}]}),
     replacePhotoPlaceholderWithPhoto: draftPhoto =>
       replaceDraftPhotos(set, get, draftPhoto),
+    addAudioRecording: recording =>
+      set({
+        audioRecordings: [...get().audioRecordings, recording],
+      }),
+    removeAudioRecording: uri =>
+      set({
+        audioRecordings: get().audioRecordings.filter(rec => rec.uri !== uri),
+      }),
     clearDraft: () => {
       set({
         photos: [],

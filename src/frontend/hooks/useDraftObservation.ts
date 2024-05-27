@@ -25,6 +25,8 @@ export const useDraftObservation = () => {
     deletePhoto: deletePersistedPhoto,
     updateTags,
     updatePreset,
+    addAudioRecording,
+    removeAudioRecording,
   } = _usePersistedDraftObservationActions();
 
   const addPhoto = useCallback(
@@ -91,7 +93,9 @@ export const useDraftObservation = () => {
 
   return {
     addPhoto,
+    addAudioRecording,
     clearDraft,
+    removeAudioRecording,
     newDraft,
     deletePhoto,
     updateObservationPosition,

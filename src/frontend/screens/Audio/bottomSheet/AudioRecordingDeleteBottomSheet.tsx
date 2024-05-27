@@ -9,17 +9,24 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Error from '../../../images/Error.svg';
 import {WHITE} from '../../../lib/styles';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
+import * as RNFS from '@dr.pogodin/react-native-fs';
+import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes.ts';
+import {useDraftObservation} from '../../../hooks/useDraftObservation.ts';
 
 interface AudioRecordingDeleteBottomSheet {
   sheetRef: React.RefObject<BottomSheetModalMethods>;
   isOpen: boolean;
+  recordingUri: string;
+  previewOnly?: boolean;
   closeSheet: () => void;
 }
 
 export const AudioRecordingDeleteBottomSheet: FC<
   AudioRecordingDeleteBottomSheet
-> = ({sheetRef, isOpen, closeSheet}) => {
+> = ({sheetRef, isOpen, closeSheet, recordingUri, previewOnly}) => {
   const {formatMessage} = useIntl();
+  const navigation = useNavigationFromRoot();
+  const observation = useDraftObservation();
   return (
     <BottomSheetModal ref={sheetRef} isOpen={isOpen}>
       <BottomSheetContent
@@ -28,7 +35,16 @@ export const AudioRecordingDeleteBottomSheet: FC<
           {
             variation: 'filled',
             dangerous: true,
-            onPress: () => {},
+            onPress: async () => {
+              closeSheet();
+              if (previewOnly) {
+                observation.removeAudioRecording(recordingUri);
+                navigation.goBack();
+              } else {
+                await RNFS.unlink(new URL(recordingUri).pathname);
+                navigation.replace('ObservationEdit');
+              }
+            },
             text: formatMessage(m.deleteButtonText),
             icon: <MaterialIcons size={35} name="delete" color={WHITE} />,
           },

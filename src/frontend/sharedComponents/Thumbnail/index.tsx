@@ -4,23 +4,23 @@ import {Dimensions, ScrollView, StyleSheet} from 'react-native';
 import {Photo} from '../../contexts/PhotoPromiseContext/types';
 import {Thumbnail} from './Thumbnail';
 import {AudioThumbnail} from './AudioThumbnail';
-// import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
+import {AudioRecording} from '../../sharedTypes/audio.ts';
 
 const spacing = 10;
 const minSize = 150;
 
 interface ThumbnailScrollView {
   photos: (Partial<Photo> | undefined)[];
-  audioRecordings: any[];
-  observationId?: string;
+  audioRecordings: (AudioRecording | undefined)[];
 }
 
 export const ThumbnailScrollView: FC<ThumbnailScrollView> = props => {
   const {photos, audioRecordings = []} = props;
-  // const navigation = useNavigationFromHomeTabs();
   const scrollViewRef = React.useRef<ScrollView>(null);
   const length =
-    props?.photos?.length ?? 0 + props?.audioRecordings?.length ?? 0;
+    (props?.photos?.length || 0) + (props?.audioRecordings?.length || 0);
+  const navigation = useNavigationFromRoot();
 
   React.useLayoutEffect(() => {
     scrollViewRef.current && scrollViewRef.current.scrollToEnd();
@@ -35,7 +35,6 @@ export const ThumbnailScrollView: FC<ThumbnailScrollView> = props => {
     return;
   }
 
-  if (photos?.length === 0) return null;
   const windowWidth = Dimensions.get('window').width;
   // Get a thumbnail size so there is always 1/2 of a thumbnail off the right of
   // the screen.
@@ -50,17 +49,32 @@ export const ThumbnailScrollView: FC<ThumbnailScrollView> = props => {
       showsHorizontalScrollIndicator={false}
       contentInset={{top: 5, right: 5, bottom: 5, left: 5}}
       style={styles.photosContainer}>
-      {audioRecordings.map(record => (
+      {audioRecordings.map((recording, index) => (
         <AudioThumbnail
-          record={record}
+          key={index}
+          recording={recording}
           size={size}
-          onPress={() => {}}
+          onPress={() => {
+            if (!recording?.uri) {
+              console.warn(
+                'Tried to press recording without URI (recording may not have been loaded)',
+              );
+              return;
+            }
+            navigation.navigate('Audio', {
+              screen: 'Playback',
+              params: {
+                recordingUri: recording.uri,
+                previewOnly: true,
+              },
+            });
+          }}
           style={styles.thumbnail}
         />
       ))}
       {photos
-        ?.filter(photo => photo?.deleted == null)
-        ?.map((photo, index) => (
+        .filter(photo => photo?.deleted == null)
+        .map((photo, index) => (
           <Thumbnail
             key={index}
             photo={photo}

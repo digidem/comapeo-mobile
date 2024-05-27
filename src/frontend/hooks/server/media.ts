@@ -6,13 +6,14 @@ import {URL} from 'react-native-url-polyfill';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {DraftPhoto} from '../../contexts/PhotoPromiseContext/types';
+import {AudioRecording} from '../../sharedTypes/audio.ts';
 
 type SavablePhoto = SetRequired<
   Pick<DraftPhoto, 'originalUri' | 'previewUri' | 'thumbnailUri'>,
   'originalUri'
 >;
 
-export function useCreateBlobMutation(opts: {retry?: number} = {}) {
+export function useCreatePhotoBlobMutation(opts: {retry?: number} = {}) {
   const project = useActiveProject();
 
   return useMutation({
@@ -29,6 +30,24 @@ export function useCreateBlobMutation(opts: {retry?: number} = {}) {
         // TODO: DraftPhoto type should probably carry MIME type info that feeds this
         // although backend currently only uses first part of path
         {mimeType: 'image/jpeg'},
+      );
+    },
+  });
+}
+
+export function useCreateAudioRecordingBlobMutation(
+  opts: {retry?: number} = {},
+) {
+  const project = useActiveProject();
+
+  return useMutation({
+    retry: opts.retry,
+    mutationFn: async (recording: AudioRecording) => {
+      return project.$blobs.create(
+        {
+          original: new URL(recording.uri).pathname,
+        },
+        {mimeType: 'audio/mp4'},
       );
     },
   });

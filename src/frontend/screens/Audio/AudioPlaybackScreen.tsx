@@ -23,6 +23,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal/index.tsx';
 import {AudioRecordingDeleteBottomSheet} from './bottomSheet/AudioRecordingDeleteBottomSheet.tsx';
 import {AudioRecordingSuccessBottomSheet} from './bottomSheet/AudioRecordingSuccessBottomSheet.tsx';
+import {useDraftObservation} from '../../hooks/useDraftObservation.ts';
 import {AudioShareBottomSheet} from './bottomSheet/AudioShareBottomSheet.tsx';
 
 export const AudioPlaybackScreen: React.FC<
@@ -54,7 +55,8 @@ export const AudioPlaybackScreen: React.FC<
   });
 
   const navigation = useNavigationFromRoot();
-  const {recordingUri} = params.route.params;
+  const {recordingUri, previewOnly} = params.route.params;
+  const observation = useDraftObservation();
 
   const {
     isReady,
@@ -73,7 +75,18 @@ export const AudioPlaybackScreen: React.FC<
           name="close"
           size={25}
           color={WHITE}
-          onPress={() => console.log('quit')}
+          onPress={() => {
+            if (previewOnly) {
+              navigation.goBack();
+            } else {
+              observation.addAudioRecording({
+                duration,
+                uri: recordingUri,
+                createdAt: new Date().getTime(),
+              });
+              openSuccessSheet();
+            }
+          }}
         />
       ),
     });
@@ -124,6 +137,8 @@ export const AudioPlaybackScreen: React.FC<
           isOpen={isOpenDeleteBottomSheet}
           closeSheet={closeDeleteBottomSheet}
           sheetRef={deleteAudioSheetRef}
+          recordingUri={recordingUri}
+          previewOnly={previewOnly}
         />
         <AudioRecordingSuccessBottomSheet
           isOpen={isOpenSuccessSheet}
@@ -170,7 +185,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: AUDIO_BLUE_GRAY,
   },
-
   bottomBar: {
     flexDirection: 'row',
     marginBottom: 30,

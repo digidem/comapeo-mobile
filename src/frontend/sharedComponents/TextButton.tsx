@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, TextStyle} from 'react-native';
 import {Text} from './Text';
 import {TouchableNativeFeedback} from '../sharedComponents/Touchables';
 
@@ -9,7 +9,7 @@ import type {ViewStyleProp} from '../sharedTypes';
 type Props = {
   onPress: () => void;
   containerStyle?: ViewStyleProp;
-  textStyle?: ViewStyleProp;
+  textStyle?: TextStyle;
   title: string;
   testID?: string;
   style?: ViewStyleProp;

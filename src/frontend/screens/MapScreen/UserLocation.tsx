@@ -1,6 +1,6 @@
 import {UserLocation as MBUserLocation} from '@rnmapbox/maps';
 import * as React from 'react';
-import {useCurrentTrackStore} from '../../hooks/tracks/useCurrentTrackStore';
+import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import {useIsFullyFocused} from '../../hooks/useIsFullyFocused';
 import {UserTooltipMarker} from './UserTooltipMarker';
 
@@ -9,7 +9,7 @@ interface UserLocationProps {
 }
 
 export const UserLocation = ({minDisplacement}: UserLocationProps) => {
-  const isTracking = useCurrentTrackStore(state => state.isTracking);
+  const isTracking = usePersistedTrack(state => state.isTracking);
   const isFocused = useIsFullyFocused();
 
   return (

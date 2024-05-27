@@ -2,31 +2,29 @@ import {
   useSuspenseQuery,
   useMutation,
   useQueryClient,
+  useQuery,
 } from '@tanstack/react-query';
-
-import {useProject} from './projects';
 import {PresetValue} from '@mapeo/schema';
-import {MockPreset} from '../../mockdata';
+import {IconSize} from '../../sharedTypes';
+
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
+
+export const PRESETS_KEY = 'presets';
 
 export function usePresetsQuery() {
-  const project = useProject();
+  const project = useActiveProject();
 
   return useSuspenseQuery({
-    queryKey: ['presets'],
+    queryKey: [PRESETS_KEY],
     queryFn: async () => {
       if (!project) throw new Error('Project instance does not exist');
-      const presets = await project.preset.getMany();
-      if (presets.length === 0) {
-        await Promise.all(MockPreset.map(val => project.preset.create(val)));
-        return await project.preset.getMany();
-      }
-      return presets;
+      return await project.preset.getMany();
     },
   });
 }
 
 export function usePresetsMutation() {
-  const project = useProject();
+  const project = useActiveProject();
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -35,7 +33,27 @@ export function usePresetsMutation() {
       return await project.preset.create(preset);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: ['presets']});
+      queryClient.invalidateQueries({queryKey: [PRESETS_KEY]});
+    },
+  });
+}
+
+export function useGetPresetIcon(size: IconSize, name?: string) {
+  const project = useActiveProject();
+
+  return useQuery({
+    queryKey: ['presetIcon', name],
+    enabled: !!name,
+    queryFn: async () => {
+      const currentPreset = await project.preset
+        .getMany()
+        .then(res => res.find(p => p.name === name));
+
+      return await project.$icons.getIconUrl(currentPreset?.iconId!, {
+        mimeType: 'image/png',
+        size: size,
+        pixelDensity: 3,
+      });
     },
   });
 }

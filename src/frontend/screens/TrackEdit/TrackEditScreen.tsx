@@ -14,12 +14,10 @@ import TrackIcon from '../../images/Track.svg';
 import {defineMessages, MessageDescriptor, useIntl} from 'react-intl';
 import {Text} from '../../sharedComponents/Text.tsx';
 import {TrackEditDescriptionField} from './TrackEditDescriptionField.tsx';
-import {NativeNavigationComponent} from '../../sharedTypes.ts';
 import {useTrackWithEnableOptionQuery} from '../../hooks/server/track.ts';
 import {DiscardModal} from '../../sharedComponents/DiscardModal.tsx';
 import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal/index.tsx';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes.ts';
-import {useCurrentTrackStore} from '../../hooks/tracks/useCurrentTrackStore.ts';
 import {RouteProp, useFocusEffect} from '@react-navigation/native';
 import {SaveTrackButton} from './SaveTrackButton.tsx';
 import DiscardIcon from '../../images/delete.svg';
@@ -27,7 +25,11 @@ import ErrorIcon from '../../images/Error.svg';
 import Close from '../../images/close.svg';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {DARK_GREY} from '../../lib/styles.ts';
-import {AppStackList} from '../../Navigation/AppStack.tsx';
+import {
+  NativeNavigationComponent,
+  RootStackParamsList,
+} from '../../sharedTypes/navigation';
+import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack.ts';
 
 const m = defineMessages({
   createTrackScreenTitle: {
@@ -78,9 +80,7 @@ export const TrackEditScreen: NativeNavigationComponent<'TrackEdit'> & {
 } = ({route}) => {
   const {trackId} = route.params;
   const navigation = useNavigationFromHomeTabs();
-  const clearCurrentTrack = useCurrentTrackStore(
-    state => state.clearCurrentTrack,
-  );
+  const clearCurrentTrack = usePersistedTrack(state => state.clearCurrentTrack);
   const {formatMessage: t} = useIntl();
   const {sheetRef, isOpen, openSheet, closeSheet} = useBottomSheetModal({
     openOnMount: false,
@@ -189,7 +189,7 @@ export const trackEditNavigationOptions = ({
   route,
 }: {
   intl: (title: MessageDescriptor) => string;
-  route: RouteProp<AppStackList, 'TrackEdit'>;
+  route: RouteProp<RootStackParamsList, 'TrackEdit'>;
 }) => {
   return (): NativeStackNavigationOptions => {
     const trackId = route.params?.trackId;

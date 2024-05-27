@@ -3,7 +3,7 @@ import GreenCheck from '../../../../images/GreenCheck.svg';
 import {Text} from '../../../../sharedComponents/Text';
 import {defineMessages, useIntl} from 'react-intl';
 import React from 'react';
-import {NativeRootNavigationProps} from '../../../../sharedTypes';
+import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
 import {DeviceNameWithIcon} from '../../../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../../../sharedComponents/RoleWithIcon';
 import {Button} from '../../../../sharedComponents/Button';

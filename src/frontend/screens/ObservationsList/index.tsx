@@ -4,13 +4,17 @@ import {ObservationListItem} from './ObservationListItem';
 import ObservationEmptyView from './ObservationsEmptyView';
 
 import {Observation, Track} from '@mapeo/schema';
-import {TrackListItem} from './TrackListItem.tsx';
-import {NativeHomeTabsNavigationProps} from '../../sharedTypes';
 import {useAllObservations} from '../../hooks/useAllObservations';
 import {MessageDescriptor, defineMessages} from 'react-intl';
 import {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs';
-import {ObservationsListBarIcon} from '../../Navigation/ScreenGroups/TabBar/ObservationsListTabBarIcon';
+import {ObservationsListBarIcon} from '../../Navigation/Tab/TabBar/ObservationsListTabBarIcon';
 import {ObservationListHeaderLeft} from './ObservationListHeaderLeft';
+import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
+import {NoProjectWarning} from './NoProjectWarning';
+import {LIGHT_GREY, WHITE} from '../../lib/styles';
+import {useAllProjects} from '../../hooks/server/projects';
+import {Loading} from '../../sharedComponents/Loading';
+import {TrackListItem} from './TrackListItem';
 
 const m = defineMessages({
   loading: {
@@ -54,6 +58,7 @@ export const ObservationsList: React.FC<
   navTitle: MessageDescriptor;
 } = ({navigation}) => {
   const observations = useAllObservations();
+  const {data, isLoading} = useAllProjects();
 
   const rowsPerWindow = Math.ceil(
     (Dimensions.get('window').height - 65) / OBSERVATION_CELL_HEIGHT,
@@ -69,11 +74,19 @@ export const ObservationsList: React.FC<
 
   return (
     <View style={styles.container} testID="observationsListView">
+      {isLoading ? (
+        <Loading />
+      ) : data && data.length <= 1 ? (
+        <NoProjectWarning style={{margin: 20}} />
+      ) : null}
       <FlatList
         initialNumToRender={rowsPerWindow}
         getItemLayout={getItemLayout}
         keyExtractor={keyExtractor}
-        style={styles.container}
+        style={[
+          styles.container,
+          {borderTopColor: LIGHT_GREY, borderTopWidth: 1},
+        ]}
         windowSize={3}
         removeClippedSubviews
         renderItem={({item, index}) => {
@@ -135,6 +148,7 @@ ObservationsList.navTitle = m.observationListTitle;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: WHITE,
   },
   messageContainer: {
     flex: 1,

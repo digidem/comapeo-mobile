@@ -1,9 +1,8 @@
 import {useQuery} from '@tanstack/react-query';
-
-import {useProject} from './projects';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
 
 export const useFieldsQuery = () => {
-  const project = useProject();
+  const project = useActiveProject();
 
   return useQuery({
     queryKey: ['fields'],
@@ -11,6 +10,5 @@ export const useFieldsQuery = () => {
       if (!project) throw new Error('Project instance does not exist');
       return project.field.getMany();
     },
-    enabled: !!project,
   });
 };

@@ -12,8 +12,10 @@ import {useFieldsQuery} from '../../hooks/server/fields';
 import {FieldDetails} from './FieldDetails';
 import {InsetMapView} from './InsetMapView';
 import {ButtonFields} from './Buttons';
-import {NativeNavigationComponent} from '../../sharedTypes';
+import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
+import {ThumbnailScrollView} from '../../sharedComponents/ThumbnailScrollView.tsx';
+import {useAttachmentUrlQueries} from '../../hooks/server/media.ts';
 
 const m = defineMessages({
   deleteTitle: {
@@ -44,24 +46,29 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   }, [navigation, observationId]);
 
   const {observation, preset} = useObservationWithPreset(observationId);
-  const fieldsQuery = useFieldsQuery();
+  const {data: fieldData} = useFieldsQuery();
 
   const defaultAcc: Field[] = [];
-  const fields = !fieldsQuery.data
-    ? undefined
-    : preset.fieldIds.reduce((acc, pres) => {
-        const fieldToAdd = fieldsQuery.data.find(
-          field => field.tagKey === pres,
-        );
+  const fields = fieldData
+    ? preset.fieldIds.reduce((acc, pres) => {
+        const fieldToAdd = fieldData.find(field => field.docId === pres);
         if (!fieldToAdd) return acc;
         return [...acc, fieldToAdd];
-      }, defaultAcc);
+      }, defaultAcc)
+    : [];
 
   const deviceId = '';
   const {lat, lon, createdBy} = observation;
   const isMine = deviceId === createdBy;
+
   // Currently only show photo attachments
-  const photos = [];
+  const photoAttachments = observation.attachments.filter(
+    attachment => attachment.type === 'photo',
+  );
+  const attachmentUrls = useAttachmentUrlQueries(
+    photoAttachments,
+    'thumbnail',
+  ).map(query => query.data);
 
   return (
     <ScrollView
@@ -86,18 +93,23 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
               <Text style={styles.textNotes}>{observation.tags.notes}</Text>
             </View>
           ) : null}
-
-          {/* {!!photos.length && (
+          {attachmentUrls.length > 0 && (
             <ThumbnailScrollView
-              photos={
-                photos
-              }
-              onPressPhoto={() => {}}
+              photos={attachmentUrls.map(attachmentData => {
+                return !attachmentData
+                  ? undefined
+                  : {
+                      thumbnailUri: attachmentData.url,
+                      id: attachmentData.driveDiscoveryId,
+                    };
+              })}
             />
-          )} */}
+          )}
         </View>
-        {fields && fields.length > 0 && <FieldDetails fields={fields} />}
-        <View style={styles.divider}></View>
+        {fields.length > 0 && (
+          <FieldDetails observation={observation} fields={fields} />
+        )}
+        <View style={styles.divider} />
         <ButtonFields isMine={isMine} observationId={observationId} />
       </>
     </ScrollView>

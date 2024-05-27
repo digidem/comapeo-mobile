@@ -1,5 +1,5 @@
 import {defineMessages, useIntl} from 'react-intl';
-import {NativeNavigationComponent} from '../../../../sharedTypes';
+import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import WifiIcon from '../../../../images/WifiIcon.svg';
 import {Text} from '../../../../sharedComponents/Text';

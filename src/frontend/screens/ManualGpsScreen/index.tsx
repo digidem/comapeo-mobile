@@ -24,10 +24,7 @@ import {IconButton} from '../../sharedComponents/IconButton';
 import SaveCheck from '../../images/CheckMark.svg';
 import {Select} from '../../sharedComponents/Select';
 import {Text} from '../../sharedComponents/Text';
-import {
-  type NativeRootNavigationProps,
-  type CoordinateFormat,
-} from '../../sharedTypes';
+import {type CoordinateFormat} from '../../sharedTypes';
 
 import {
   latitudeIsValid,
@@ -38,6 +35,7 @@ import {DdForm} from './DdForm';
 import {DmsForm} from './DmsForm';
 import {UtmForm} from './UtmForm';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
+import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
   title: {

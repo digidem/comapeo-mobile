@@ -288,6 +288,10 @@
     "description": "v is short for version. the translation for version can be used instead",
     "message": "V"
   },
+  "screens.LanguageSettings.title": {
+    "description": "Title language settings screen",
+    "message": "Language"
+  },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
     "message": "Details"
@@ -473,6 +477,10 @@
     "description": "Default name of observation with no matching preset",
     "message": "Observation"
   },
+  "screens.Observation.ObservationView.share": {
+    "description": "Button to share an observation",
+    "message": "Share"
+  },
   "screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
     "message": "Cancel"
@@ -485,21 +493,53 @@
     "description": "Title of dialog asking confirmation to delete an observation",
     "message": "Delete observation?"
   },
+  "screens.Observation.shareMediaTitle": {
+    "description": "Title of dialog to share an observation with media",
+    "message": "Sharing image"
+  },
+  "screens.Observation.shareMessage": {
+    "description": "Message that will be shared along with image",
+    "message": "Mapeo Alert — _*{category_name}*_ {date, date, full} {time, time, long} {coordinates}"
+  },
+  "screens.Observation.shareTextTitle": {
+    "description": "Title of dialog to share an observation without media",
+    "message": "Sharing text"
+  },
   "screens.Observation.title": {
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
     "message": "Observation"
+  },
+  "screens.ObservationDetails.done": {
+    "description": "Button text when all questions are complete",
+    "message": "Done"
+  },
+  "screens.ObservationDetails.nextQuestion": {
+    "description": "Button text to navigate to next question",
+    "message": "Next"
+  },
+  "screens.ObservationDetails.title": {
+    "description": "Title of observation details screen showing question number and total",
+    "message": "Question {current} of {total}"
   },
   "screens.ObservationEdit.BottomSheet.addLabel": {
     "description": "Label above keyboard that expands into bottom sheet of options to add (photo, details etc)",
     "message": "Add…"
   },
+  "screens.ObservationEdit.ObservationEditView.audioButton": {
+    "description": "Button label for adding audio",
+    "message": "Audio"
+  },
   "screens.ObservationEdit.ObservationEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "What is happening here?"
   },
+  "screens.ObservationEdit.ObservationEditView.detailsButton": {
+    "description": "Button label to add details",
+    "message": "Details"
+  },
   "screens.ObservationEdit.ObservationEditView.photoButton": {
     "description": "Button label for adding photo",
-    "message": "Add Photo"
+    "message": "Photo"
   },
   "screens.ObservationEdit.ObservationEditView.searching": {
     "description": "Shown in new observation screen whilst looking for GPS",
@@ -545,6 +585,9 @@
     "description": "Title of screen with list of observations",
     "message": "Observations"
   },
+  "screens.ObservationsList.NoProjectWarning": {
+    "message": "You won’t be able to share observations collected yet."
+  },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
     "description": "Back button on observation list screen when no observations are yet recorded",
     "message": "Go To Map"
@@ -556,6 +599,10 @@
   "screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
     "description": "Title of observation list view when the user has not yet recorded observations",
     "message": "Add Observations"
+  },
+  "screens.ObservationsList.createOrJoin": {
+    "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
+    "message": "Create or Join a Project."
   },
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",
@@ -572,6 +619,10 @@
   "screens.SaveTrack.TrackCreateView.title": {
     "description": "Title for new track screen",
     "message": "New Track"
+  },
+  "screens.ObservationsList.toSync": {
+    "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
+    "message": "To sync and share with other devices,"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
@@ -873,6 +924,10 @@
   "screens.Track.trackHeader": {
     "message": "Track"
   },
+  "shareComponent.KeyboardAccessory.showOptions": {
+    "description": "title for observation options",
+    "message": "Show Options"
+  },
   "sharedComponents.DeviceCard.ThisDevice": {
     "message": "This Device!"
   },
@@ -886,7 +941,7 @@
     "message": "Something Went Wrong"
   },
   "sharedComponents.ErrorModal.tryAgain": {
-    "message": "Please go back and try again"
+    "message": "Try Again"
   },
   "sharedComponents.GpsPill.noGps": {
     "message": "No GPS"

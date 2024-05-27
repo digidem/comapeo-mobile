@@ -12,8 +12,10 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import {useCreateBlobMutation} from '../../hooks/server/media';
 import {DraftPhoto, Photo} from '../../contexts/PhotoPromiseContext/types';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {useCurrentTrackStore} from '../../hooks/tracks/useCurrentTrackStore';
+import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import SaveCheck from '../../images/CheckMark.svg';
+import {useProject} from '../../hooks/server/projects';
+import {CommonActions} from '@react-navigation/native';
 
 const m = defineMessages({
   noGpsTitle: {
@@ -61,10 +63,10 @@ const log = debug('SaveButton');
 
 export const SaveButton = ({
   observationId,
-  openErrorModal,
+  setError,
 }: {
   observationId?: string;
-  openErrorModal?: () => void;
+  setError: React.Dispatch<React.SetStateAction<Error | null>>;
 }) => {
   const value = usePersistedDraftObservation(store => store.value);
   const photos = usePersistedDraftObservation(store => store.photos);
@@ -74,12 +76,14 @@ export const SaveButton = ({
   const createObservationMutation = useCreateObservation();
   const editObservationMutation = useEditObservation();
   const createBlobMutation = useCreateBlobMutation();
-  const addNewTrackLocation = useCurrentTrackStore(
+  const isTracking = usePersistedTrack(state => state.isTracking);
+  const addNewTrackLocations = usePersistedTrack(
     state => state.addNewLocations,
   );
-  const addNewTrackObservation = useCurrentTrackStore(
+  const addNewTrackObservation = usePersistedTrack(
     state => state.addNewObservation,
   );
+  const project = useProject();
 
   function createObservation() {
     if (!value) throw new Error('no observation saved in persisted state ');
@@ -90,12 +94,19 @@ export const SaveButton = ({
       createObservationMutation.mutate(
         {value},
         {
-          onError: () => {
-            if (openErrorModal) openErrorModal();
-          },
+          onError: setError,
           onSuccess: () => {
             clearDraft();
-            navigation.navigate('Home', {screen: 'Map'});
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 1,
+                routes: [
+                  {name: 'Home', params: {screen: 'Map'}},
+                  {name: 'Home', params: {screen: 'ObservationsList'}},
+                  {name: 'Observation', params: {observationId: observationId}},
+                ],
+              }),
+            );
           },
         },
       );
@@ -131,55 +142,42 @@ export const SaveButton = ({
             },
           },
           {
-            onError: () => {
-              if (openErrorModal) openErrorModal();
-            },
+            onError: setError,
             onSuccess: data => {
               clearDraft();
               navigation.navigate('Home', {screen: 'Map'});
-              if (value.lat && value.lon) {
-                addNewTrackLocation([
-                  {
-                    timestamp: new Date().getTime(),
-                    latitude: value.lat,
-                    longitude: value.lon,
-                  },
-                ]);
-              }
-              if (data.docId) {
+              if (isTracking) {
+                if (value.lat && value.lon) {
+                  addNewTrackLocations([
+                    {
+                      timestamp: new Date().getTime(),
+                      latitude: value.lat,
+                      longitude: value.lon,
+                    },
+                  ]);
+                }
                 addNewTrackObservation(data.docId);
               }
             },
           },
         );
       })
-      .catch(() => {
-        if (openErrorModal) openErrorModal();
-      });
+      .catch(setError);
   }
 
-  function editObservation() {
-    if (!value) throw new Error('no observation saved in persisted state ');
+  async function editObservation() {
+    if (!value) throw new Error('no observation saved in persisted state');
     if (!observationId) throw new Error('Need an observation Id to edit');
     if (!('versionId' in value))
       throw new Error('Cannot update a unsaved observation (must create one)');
+    const {versionId} = await project.observation.getByDocId(observationId);
     editObservationMutation.mutate(
-      // @ts-expect-error
-      {id: observationId, value},
+      {versionId, value},
       {
+        onError: setError,
         onSuccess: () => {
           clearDraft();
-          navigation.pop();
-          if (value.lat && value.lon) {
-            addNewTrackLocation([
-              {
-                timestamp: new Date().getTime(),
-                latitude: value.lat,
-                longitude: value.lon,
-              },
-            ]);
-          }
-          addNewTrackObservation(observationId);
+          navigation.navigate('Home', {screen: 'Map'});
         },
       },
     );

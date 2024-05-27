@@ -1,4 +1,4 @@
-import {StateCreator, create} from 'zustand';
+import {StateCreator, create, createStore} from 'zustand';
 import {
   StateStorage,
   persist,
@@ -12,6 +12,7 @@ export const storage = new MMKV();
 type PersistedStoreKey =
   | 'MapeoLocale'
   | '@MapeoDraft'
+  | 'MapeoTrack'
   | 'Passcode'
   | 'ActiveProjectId'
   | 'Settings';
@@ -34,26 +35,36 @@ type MigrationOpt<T> =
   | {version: number};
 
 export function createPersistedState<T>(
-  slice: StateCreator<T>,
-  persistedStoreKey: PersistedStoreKey,
-  migrationOpt?: MigrationOpt<T>,
+  ...args: Parameters<typeof createPersistMiddleware<T>>
 ) {
-  return create<T>()(
-    persist(slice, {
-      name: persistedStoreKey,
-      storage: createJSONStorage(() => MMKVZustandStorage),
-      version: migrationOpt?.version,
-      partialize: state => {
-        if (typeof state === 'object' && state && 'actions' in state) {
-          const {actions, ...other} = state;
-          return other;
-        }
-        return state;
-      },
-      migrate:
-        migrationOpt && 'migrateFn' in migrationOpt
-          ? migrationOpt.migrateFn
-          : undefined,
-    }),
-  );
+  return create<T>()(createPersistMiddleware(...args));
+}
+
+export function createPersistedStore<T>(
+  ...args: Parameters<typeof createPersistMiddleware<T>>
+) {
+  return createStore<T>()(createPersistMiddleware(...args));
+}
+
+function createPersistMiddleware<State>(
+  slice: StateCreator<State>,
+  persistedStoreKey: PersistedStoreKey,
+  migrationOpt?: MigrationOpt<State>,
+) {
+  return persist(slice, {
+    name: persistedStoreKey,
+    storage: createJSONStorage(() => MMKVZustandStorage),
+    version: migrationOpt?.version,
+    partialize: state => {
+      if (typeof state === 'object' && state && 'actions' in state) {
+        const {actions, ...other} = state;
+        return other;
+      }
+      return state;
+    },
+    migrate:
+      migrationOpt && 'migrateFn' in migrationOpt
+        ? migrationOpt.migrateFn
+        : undefined,
+  });
 }

@@ -1,21 +1,10 @@
 const {
-  AndroidConfig,
   withAndroidManifest,
   createRunOncePlugin,
 } = require('expo/config-plugins');
 
 /**
  * @type {import('./types').ManifestQueries}
- * what we are trying to add:
- * <queries>
-    <package android:name="com.apple.android.music"/>
-    <package android:name="com.spotify.music"/>
-    <intent></intent>
-      <action android:name="android.intent.action.VIEW"/>
-      <category android:name="android.intent.category.BROWSABLE"/>
-      <data android:scheme="https"/>
-    </intent>
-  </queries>
  */
 
 const queries = {

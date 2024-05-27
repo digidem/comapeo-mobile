@@ -14,10 +14,20 @@ import {AnimatedTimer} from './AnimatedTimer.tsx';
 import {AnimatedProgressBar} from './AnimatedProgressBar.tsx';
 import {useDerivedValue, withTiming} from 'react-native-reanimated';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal/index.tsx';
+import {AudioRecordingDeleteBottomSheet} from './AudioRecordingDeleteBottomSheet.tsx';
 
 export const AudioPlaybackScreen: React.FC<
   NativeStackScreenProps<AudioStackParamList, 'Playback'>
 > = params => {
+  const {
+    sheetRef: audioSheetRef,
+    isOpen,
+    closeSheet,
+    openSheet,
+  } = useBottomSheetModal({
+    openOnMount: false,
+  });
   const navigation = useNavigationFromRoot();
   const {recordingUri} = params.route.params;
 
@@ -68,7 +78,9 @@ export const AudioPlaybackScreen: React.FC<
         />
         <Text style={styles.textStyle}>Total length: {formattedDuration}</Text>
         <View style={styles.bottomBar}>
-          <MaterialIcons size={35} name="delete" color={WHITE} />
+          <Pressable onPress={openSheet}>
+            <MaterialIcons size={35} name="delete" color={WHITE} />
+          </Pressable>
           <Pressable
             disabled={!isReady}
             onPress={handleControlButtonPress}
@@ -81,6 +93,11 @@ export const AudioPlaybackScreen: React.FC<
           </Pressable>
           <MaterialIcons size={35} name="share" color={WHITE} />
         </View>
+        <AudioRecordingDeleteBottomSheet
+          isOpen={isOpen}
+          closeSheet={closeSheet}
+          sheetRef={audioSheetRef}
+        />
       </SafeAreaView>
     </>
   );
@@ -116,6 +133,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#CCCCD6',
   },
+
   bottomBar: {
     flexDirection: 'row',
     marginBottom: 30,

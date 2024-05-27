@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 import Animated, {SharedValue, useAnimatedStyle} from 'react-native-reanimated';
-import {WHITE} from '../../lib/styles';
+import {NEW_DARK_GREY, WHITE} from '../../lib/styles';
 
 const {width} = Dimensions.get('window');
 
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     bottom: 82,
     marginLeft: 30,
     height: 4,
-    backgroundColor: '#757575',
+    backgroundColor: NEW_DARK_GREY,
     position: 'absolute',
   },
   progressBarFill: {

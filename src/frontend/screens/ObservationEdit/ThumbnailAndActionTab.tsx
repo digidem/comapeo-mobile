@@ -49,7 +49,12 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
   const {photos, audioRecordings, observationId} = usePersistedDraftObservation(
     store => store,
   );
-  const {openSheet, sheetRef, isOpen, closeSheet} = useBottomSheetModal({
+  const {
+    openSheet: openAudioPermissionSheet,
+    sheetRef: audioPermissionSheetRef,
+    isOpen: isAudioPermissionSheetOpen,
+    closeSheet: closeAudioPermissionSheet,
+  } = useBottomSheetModal({
     openOnMount: false,
   });
   const [permissionResponse] = Audio.usePermissions({request: false});
@@ -64,11 +69,11 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
 
   const handleAudioPress = useCallback(() => {
     if (permissionResponse?.granted) {
-      return navigation.navigate('Home', {screen: 'Map'});
+      navigation.navigate('Home', {screen: 'Map'});
     } else {
-      openSheet();
+      openAudioPermissionSheet();
     }
-  }, [navigation, openSheet, permissionResponse?.granted]);
+  }, [navigation, openAudioPermissionSheet, permissionResponse?.granted]);
 
   const bottomSheetItems = [
     {
@@ -106,9 +111,9 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
         <ActionTab items={bottomSheetItems} />
       </View>
       <PermissionAudio
-        closeSheet={closeSheet}
-        isOpen={isOpen}
-        sheetRef={sheetRef}
+        closeSheet={closeAudioPermissionSheet}
+        isOpen={isAudioPermissionSheetOpen}
+        sheetRef={audioPermissionSheetRef}
       />
     </>
   );

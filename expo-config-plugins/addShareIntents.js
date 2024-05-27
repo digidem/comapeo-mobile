@@ -22,12 +22,26 @@ const queries = {
   package: [
     {
       $: {
-        'android:name': 'com.whatsapp.android',
+        'android:name': 'com.whatsapp',
       },
     },
     {
       $: {
-        'android:name': 'com.google.android.messages',
+        'android:name': 'com.google.android.apps.messaging',
+      },
+    },
+  ],
+  intent: [
+    {
+      action: {
+        $: {
+          'android:name': 'android.intent.action.VIEW',
+        },
+      },
+      category: {
+        $: {
+          'android:name': 'android.intent.category.BROWSABLE',
+        },
       },
     },
   ],

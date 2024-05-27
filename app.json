@@ -44,7 +44,7 @@
         }
       ],
       ["./expo-config-plugins/removeExpoInputStyles.js"],
-      ["./expo-config-plugins/extra-queries.js"]
+      ["./expo-config-plugins/addShareIntents.js"]
     ],
     "android": {
       "versionCode": 1,

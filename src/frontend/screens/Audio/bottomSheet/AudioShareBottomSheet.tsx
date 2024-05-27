@@ -42,25 +42,15 @@ export const AudioShareBottomSheet: FC<AudioShareBottomSheet> = ({
     url: string,
   ) => {
     const base64Url = await convertUrlToBase64(url);
-    Share.isPackageInstalled('com.whatsapp.android')
-      .then(response => {
-        console.log(response);
-        // { isInstalled: true/false, message: 'Package is Installed' }
-      })
-      .catch(error => {
-        console.log(error);
-        // { error }
-      });
-    const shareOptions: any = {
+    const shareOptions = {
       title: formatMessage(m.title),
       url: base64Url,
-      recipient: '',
       whatsAppNumber: '',
       social: social,
-      filename: 'recording', // only for base64 file in Android
+      filename: 'recording',
     };
 
-    await Share.shareSingle(shareOptions).catch(e => console.error(e, 'e'));
+    await Share.shareSingle(shareOptions).catch(() => {});
     closeShareSheet();
   };
 

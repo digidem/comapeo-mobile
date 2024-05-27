@@ -21,8 +21,8 @@ import {AnimatedProgressBar} from './AnimatedProgressBar.tsx';
 import {useDerivedValue, withTiming} from 'react-native-reanimated';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal/index.tsx';
-import {AudioRecordingDeleteBottomSheet} from './AudioRecordingDeleteBottomSheet.tsx';
-import {AudioRecordingSuccessBottomSheet} from './AudioRecordingSuccessBottomSheet.tsx';
+import {AudioRecordingDeleteBottomSheet} from './bottomSheet/AudioRecordingDeleteBottomSheet.tsx';
+import {AudioRecordingSuccessBottomSheet} from './bottomSheet/AudioRecordingSuccessBottomSheet.tsx';
 
 export const AudioPlaybackScreen: React.FC<
   NativeStackScreenProps<AudioStackParamList, 'Playback'>

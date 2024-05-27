@@ -4,10 +4,10 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {
   BottomSheetContent,
   BottomSheetModal,
-} from '../../sharedComponents/BottomSheetModal';
+} from '../../../sharedComponents/BottomSheetModal';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Error from '../../images/Error.svg';
-import {WHITE} from '../../lib/styles';
+import Error from '../../../images/Error.svg';
+import {WHITE} from '../../../lib/styles';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 
 interface AudioRecordingDeleteBottomSheet {

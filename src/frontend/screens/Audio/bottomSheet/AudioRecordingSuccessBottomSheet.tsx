@@ -1,11 +1,11 @@
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import React, {FC} from 'react';
-import {BottomSheetModal} from '../../sharedComponents/BottomSheetModal';
+import {BottomSheetModal} from '../../../sharedComponents/BottomSheetModal';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {StyleSheet, Text, View} from 'react-native';
-import SuccessIcon from '../../images/GreenCheck.svg';
-import {Button} from '../../sharedComponents/Button';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import SuccessIcon from '../../../images/GreenCheck.svg';
+import {Button} from '../../../sharedComponents/Button';
+import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
 
 interface AudioRecordingSuccessBottomSheet {
   sheetRef: React.RefObject<BottomSheetModalMethods>;

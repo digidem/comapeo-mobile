@@ -23,6 +23,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal/index.tsx';
 import {AudioRecordingDeleteBottomSheet} from './bottomSheet/AudioRecordingDeleteBottomSheet.tsx';
 import {AudioRecordingSuccessBottomSheet} from './bottomSheet/AudioRecordingSuccessBottomSheet.tsx';
+import {AudioShareBottomSheet} from './bottomSheet/AudioShareBottomSheet.tsx';
 
 export const AudioPlaybackScreen: React.FC<
   NativeStackScreenProps<AudioStackParamList, 'Playback'>
@@ -43,6 +44,15 @@ export const AudioPlaybackScreen: React.FC<
   } = useBottomSheetModal({
     openOnMount: false,
   });
+  const {
+    sheetRef: shareSheetRef,
+    isOpen: isOpenShareSheet,
+    openSheet: openShareSheet,
+    closeSheet: closeShareSheet,
+  } = useBottomSheetModal({
+    openOnMount: false,
+  });
+
   const navigation = useNavigationFromRoot();
   const {recordingUri} = params.route.params;
 
@@ -106,7 +116,9 @@ export const AudioPlaybackScreen: React.FC<
               <PlayArrow />
             )}
           </Pressable>
-          <MaterialIcons size={35} name="share" color={WHITE} />
+          <Pressable onPress={openShareSheet}>
+            <MaterialIcons size={35} name="share" color={WHITE} />
+          </Pressable>
         </View>
         <AudioRecordingDeleteBottomSheet
           isOpen={isOpenDeleteBottomSheet}
@@ -116,6 +128,12 @@ export const AudioPlaybackScreen: React.FC<
         <AudioRecordingSuccessBottomSheet
           isOpen={isOpenSuccessSheet}
           sheetRef={successSheetRef}
+        />
+        <AudioShareBottomSheet
+          sheetRef={shareSheetRef}
+          isOpen={isOpenShareSheet}
+          closeShareSheet={closeShareSheet}
+          recordingUri={recordingUri}
         />
       </SafeAreaView>
     </>

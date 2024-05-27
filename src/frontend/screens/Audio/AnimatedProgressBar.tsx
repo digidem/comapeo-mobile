@@ -3,8 +3,6 @@ import {Dimensions, StyleSheet, View} from 'react-native';
 import Animated, {SharedValue, useAnimatedStyle} from 'react-native-reanimated';
 import {NEW_DARK_GREY, WHITE} from '../../lib/styles';
 
-const {width} = Dimensions.get('window');
-
 interface AnimatedProgressBar {
   isReady: boolean;
   elapsed: SharedValue<number>;
@@ -15,6 +13,8 @@ export const AnimatedProgressBar: FC<AnimatedProgressBar> = ({
   elapsed,
   duration,
 }) => {
+  const {width} = Dimensions.get('window');
+
   const animatedStyles = useAnimatedStyle(() => {
     const fillPercentage = isReady ? elapsed.value * (1 / duration) : 0;
     return {

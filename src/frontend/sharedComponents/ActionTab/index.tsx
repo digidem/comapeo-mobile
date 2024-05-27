@@ -9,6 +9,7 @@ export interface ActionTabItems {
   icon: React.ReactNode;
   label: string;
   onPress: () => void;
+  withCircle?: boolean;
 }
 
 export interface ActionProps {

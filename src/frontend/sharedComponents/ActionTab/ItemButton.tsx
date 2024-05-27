@@ -3,10 +3,15 @@ import {ActionTabItems} from '.';
 import {TouchableOpacity, StyleSheet, Text, View} from 'react-native';
 import {CustomCircleIcon} from './CustomCircleIcon';
 
-export const ItemButton: FC<ActionTabItems> = ({onPress, icon, label}) => (
+export const ItemButton: FC<ActionTabItems> = ({
+  onPress,
+  icon,
+  label,
+  withCircle = true,
+}) => (
   <TouchableOpacity onPress={onPress} style={styles.itemContainer}>
     <View style={styles.itemIcon}>
-      <CustomCircleIcon icon={icon} />
+      {withCircle ? <CustomCircleIcon icon={icon} /> : <>{icon}</>}
     </View>
     <Text numberOfLines={1} style={styles.itemLabel}>
       {label}

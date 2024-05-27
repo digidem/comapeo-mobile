@@ -49,6 +49,21 @@
   "AudioPlaybackScreen.DeleteAudioRecordingModal.successTitle": {
     "message": "Success!"
   },
+  "AudioPlaybackScreen.ShareAudioRecording.Options.messages": {
+    "message": "Messages"
+  },
+  "AudioPlaybackScreen.ShareAudioRecording.Options.more": {
+    "message": "More"
+  },
+  "AudioPlaybackScreen.ShareAudioRecording.Options.whatsApp": {
+    "message": "WhatsApp"
+  },
+  "AudioPlaybackScreen.ShareAudioRecording.Share.title": {
+    "message": "Audio recording"
+  },
+  "AudioPlaybackScreen.ShareAudioRecording.title": {
+    "message": "Share via"
+  },
   "Modal.DiscardTrack.description": {
     "message": "Your Track will not be saved. This cannot be undone."
   },

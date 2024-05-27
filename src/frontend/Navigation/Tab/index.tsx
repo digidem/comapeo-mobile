@@ -17,12 +17,14 @@ import {CameraTabBarIcon} from './TabBar/CameraTabBarIcon';
 import {MapTabBarIcon} from './TabBar/MapTabBarIcon';
 import {TrackingTabBarIcon} from './TabBar/TrackingTabBarIcon';
 import {HomeTabsParamsList} from '../../sharedTypes/navigation';
+import {useDrawerNavigation} from '../Stack';
 
 const Tab = createBottomTabNavigator<HomeTabsParamsList>();
 
 export const HomeTabs = () => {
   const {handleTabPress} = useCurrentTab();
   const {formatMessage} = useIntl();
+  const {openDrawer} = useDrawerNavigation();
   return (
     <Tab.Navigator
       screenListeners={{
@@ -46,7 +48,7 @@ export const HomeTabs = () => {
         component={MapScreen}
         options={{
           tabBarIcon: MapTabBarIcon,
-          header: HomeHeader,
+          header: props => <HomeHeader {...props} openDrawer={openDrawer} />,
         }}
       />
       <Tab.Screen
@@ -54,7 +56,7 @@ export const HomeTabs = () => {
         component={CameraScreen}
         options={{
           tabBarIcon: CameraTabBarIcon,
-          header: HomeHeader,
+          header: props => <HomeHeader {...props} openDrawer={openDrawer} />,
         }}
       />
 

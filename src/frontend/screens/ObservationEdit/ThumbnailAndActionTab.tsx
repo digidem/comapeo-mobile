@@ -1,7 +1,7 @@
 import React, {FC, useCallback} from 'react';
 import {View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
-import {ThumbnailScrollView} from '../../sharedComponents/Thumbnail';
+import {MediaScrollView} from '../../sharedComponents/Thumbnail/MediaScrollView';
 import {ActionTab} from '../../sharedComponents/ActionTab';
 import PhotoIcon from '../../images/observationEdit/Photo.svg';
 import AudioIcon from '../../images/observationEdit/Audio.svg';
@@ -59,13 +59,13 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
   });
   const [permissionResponse] = Audio.usePermissions({request: false});
 
-  const handleCameraPress = useCallback(() => {
+  const handleCameraPress = () => {
     navigation.navigate('AddPhoto');
-  }, [navigation]);
+  };
 
-  const handleDetailsPress = useCallback(() => {
+  const handleDetailsPress = () => {
     navigation.navigate('ObservationFields', {question: 1});
-  }, [navigation]);
+  };
 
   const handleAudioPress = useCallback(() => {
     if (permissionResponse?.granted) {
@@ -103,7 +103,7 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
   return (
     <>
       <View>
-        <ThumbnailScrollView
+        <MediaScrollView
           photos={photos}
           audioRecordings={audioRecordings}
           observationId={observationId}

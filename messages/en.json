@@ -25,6 +25,18 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "Discard observation?"
   },
+  "AudioPlaybackScreen.DeleteAudioRecordingModal.cancelButtonText": {
+    "message": "Cancel"
+  },
+  "AudioPlaybackScreen.DeleteAudioRecordingModal.deleteButtonText": {
+    "message": "Delete"
+  },
+  "AudioPlaybackScreen.DeleteAudioRecordingModal.deleteDescription": {
+    "message": "Your <bold>{audioRecording}</bold> will be permanently deleted. This cannot be undone."
+  },
+  "AudioPlaybackScreen.DeleteAudioRecordingModal.deleteTitle": {
+    "message": "Delete?"
+  },
   "Modal.DiscardTrack.description": {
     "message": "Your Track will not be saved. This cannot be undone."
   },

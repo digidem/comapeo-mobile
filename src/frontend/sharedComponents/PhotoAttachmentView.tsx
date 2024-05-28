@@ -3,7 +3,7 @@ import {View, StyleSheet, Image, ActivityIndicator} from 'react-native';
 
 import {AlertIcon} from './icons';
 import type {Attachment, PhotoVariant, ViewStyleProp} from '../sharedTypes';
-import {useObservationAttachmentUrl} from '../hooks/server/media';
+import {useAttachmentUrlQuery} from '../hooks/server/media';
 
 type Props = {
   attachment: Attachment;
@@ -18,10 +18,7 @@ const PhotoViewComponent = ({
   resizeMode = 'contain',
   style,
 }: Props) => {
-  const {data, isLoading, isError} = useObservationAttachmentUrl(
-    attachment,
-    variant,
-  );
+  const {data, isLoading, isError} = useAttachmentUrlQuery(attachment, variant);
   return (
     <View style={[styles.container, style]}>
       {isLoading ? (
@@ -41,7 +38,7 @@ const PhotoViewComponent = ({
   );
 };
 
-export const PhotoView = React.memo<Props>(PhotoViewComponent);
+export const PhotoAttachmentView = React.memo<Props>(PhotoViewComponent);
 
 const styles = StyleSheet.create({
   container: {

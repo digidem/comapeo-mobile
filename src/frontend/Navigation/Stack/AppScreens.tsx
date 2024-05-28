@@ -56,6 +56,7 @@ import {ObservationFields} from '../../screens/ObservationFields';
 import {LIGHT_GREY} from '../../lib/styles';
 import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSettings';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import {PhotoPreviewModal} from '../../screens/Observation/PhotoPreviewModal.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -112,6 +113,7 @@ export const createDefaultScreenGroup = ({
       component={AddPhotoScreen}
       options={{headerShown: false}}
     />
+    <RootStack.Screen name="PhotoPreviewModal" component={PhotoPreviewModal} />
     <RootStack.Screen
       name="Security"
       component={Security}

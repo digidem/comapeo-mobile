@@ -250,6 +250,26 @@
   "screens.AppPasscode.TurnOffPasscode.usePasscode": {
     "message": "Use App Passcode"
   },
+  "screens.AudioPermission.Button.allow": {
+    "description": "Screen button text for allow the audio permission",
+    "message": "Allow"
+  },
+  "screens.AudioPermission.Button.goToSettings": {
+    "description": "Screen button text for navigate user to settings when audio permission was denied",
+    "message": "Go to Settings"
+  },
+  "screens.AudioPermission.Button.notNow": {
+    "description": "Screen button text for not allowed audio permission",
+    "message": "Not Now"
+  },
+  "screens.AudioPermission.description": {
+    "description": "Screen description for audio permission screen",
+    "message": "To record audio while using the app and in the background CoMapeo needs to access your microphone."
+  },
+  "screens.AudioPermission.title": {
+    "description": "Screen title for audio permission screen",
+    "message": "Recording Audio with CoMapeo"
+  },
   "screens.CameraScreen.goToSettings": {
     "message": "Go to Settings"
   },

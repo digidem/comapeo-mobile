@@ -58,6 +58,44 @@
   "Modal.GPSEnable.trackingDescription": {
     "message": "You’ve been recording for"
   },
+  "Navigation.Drawer.aboutMapeo": {
+    "description": "Primary text for 'About Mapeo' link (version info)",
+    "message": "About Mapeo"
+  },
+  "Navigation.Drawer.aboutMapeoDesc": {
+    "description": "Description of the 'About Mapeo' page",
+    "message": "Version and build number"
+  },
+  "Navigation.Drawer.appSettings": {
+    "message": "App Settings"
+  },
+  "Navigation.Drawer.appSettingsDesc": {
+    "description": "list of avaialable app settings",
+    "message": "Language, Security, Coordinates"
+  },
+  "Navigation.Drawer.createOrJoin": {
+    "message": "Create or Join Project"
+  },
+  "Navigation.Drawer.createOrJoinDesc": {
+    "message": "Create a new project or join existing one"
+  },
+  "Navigation.Drawer.createOrJoinToSync": {
+    "message": "Create or Join a Project to sync with other devices"
+  },
+  "Navigation.Drawer.projName": {
+    "message": "Project {projectName}"
+  },
+  "Navigation.Drawer.projectSettings": {
+    "message": "Project Settings"
+  },
+  "Navigation.Drawer.projectSettingsDesc": {
+    "description": "list of avaialable project settings",
+    "message": "Categories, Config, Team"
+  },
+  "Navigation.Drawer.title": {
+    "description": "Title of settings screen",
+    "message": "Settings"
+  },
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Coordinate System"
   },
@@ -211,6 +249,26 @@
   },
   "screens.AppPasscode.TurnOffPasscode.usePasscode": {
     "message": "Usar la Contraseña de la apliación"
+  },
+  "screens.AudioPermission.Button.allow": {
+    "description": "Screen button text for allow the audio permission",
+    "message": "Allow"
+  },
+  "screens.AudioPermission.Button.goToSettings": {
+    "description": "Screen button text for navigate user to settings when audio permission was denied",
+    "message": "Go to Settings"
+  },
+  "screens.AudioPermission.Button.notNow": {
+    "description": "Screen button text for not allowed audio permission",
+    "message": "Not Now"
+  },
+  "screens.AudioPermission.description": {
+    "description": "Screen description for audio permission screen",
+    "message": "To record audio while using the app and in the background CoMapeo needs to access your microphone."
+  },
+  "screens.AudioPermission.title": {
+    "description": "Screen title for audio permission screen",
+    "message": "Recording Audio with CoMapeo"
   },
   "screens.CameraScreen.goToSettings": {
     "message": "Go to Settings"
@@ -887,6 +945,9 @@
   "screens.Sync.ProjectSyncDisplay.upToDate": {
     "message": "Up to Date! No data to Sync"
   },
+  "sharedComponents.DeviceIconWithName.Disconnected": {
+    "message": "Disconnected"
+  },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",
     "message": "Show Options"
@@ -912,11 +973,26 @@
   "sharedComponents.GpsPill.searching": {
     "message": "Searching…"
   },
-  "sharedComponents.ProjectInviteBottomSheet.acceptInvite": {
+  "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.canceled": {
+    "message": "Invite Canceled"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.close": {
+    "message": "Close"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.projectInviteCanceled": {
+    "message": "Your invitation to {projectName} has been canceled."
+  },
+  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.acceptInvite": {
     "message": "Accept Invite"
   },
-  "sharedComponents.ProjectInviteBottomSheet.declineInvite": {
+  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.declineInvite": {
     "message": "Decline Invite"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.invitedToJoin": {
+    "message": "You've been invited to join {projectName}"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.joinProject": {
+    "message": "Join Project {projectName}"
   },
   "sharedComponents.ProjectInviteBottomSheet.goToMap": {
     "message": "Go To Map"
@@ -924,17 +1000,11 @@
   "sharedComponents.ProjectInviteBottomSheet.goToSync": {
     "message": "Go To Sync"
   },
-  "sharedComponents.ProjectInviteBottomSheet.invitedToJoin": {
-    "message": "You've been invited to join {projName}"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.joinProject": {
-    "message": "Join Project {projName}"
-  },
   "sharedComponents.ProjectInviteBottomSheet.success": {
     "message": "Success"
   },
   "sharedComponents.ProjectInviteBottomSheet.youHaveJoined": {
-    "message": "You have joined {projName}"
+    "message": "You have joined {projectName}"
   },
   "sharedComponents.RoleWithIcon.coordinator": {
     "message": "Coordinator"

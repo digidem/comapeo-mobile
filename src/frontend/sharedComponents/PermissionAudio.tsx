@@ -32,14 +32,15 @@ export const PermissionAudio: FC<PermissionAudio> = props => {
 
   const handlePermissionGranted = useCallback(() => {
     closeSheet();
-    navigation.navigate('Home', {screen: 'Map'});
+    //TODO:Navigate to specific screen
+    // navigation.navigate('Home', {screen: 'Map'});
   }, [closeSheet, navigation]);
 
   const isPermissionGranted = Boolean(permissionResponse?.granted);
 
   useEffect(() => {
-    if (isPermissionGranted) handlePermissionGranted();
-  }, [isPermissionGranted, handlePermissionGranted]);
+    if (isPermissionGranted && isOpen) handlePermissionGranted();
+  }, [isPermissionGranted, handlePermissionGranted, isOpen]);
 
   let onPressActionButton: () => void;
   let actionButtonText: string;

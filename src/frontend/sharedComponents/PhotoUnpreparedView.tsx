@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, StyleSheet, Image, ActivityIndicator} from 'react-native';
+import {StyleSheet, Image, ActivityIndicator, Pressable} from 'react-native';
 
 import {AlertIcon} from './icons';
 import type {PhotoVariant, ViewStyleProp} from '../sharedTypes';
@@ -12,6 +12,7 @@ type Props = {
   variant: PhotoVariant;
   style?: ViewStyleProp;
   resizeMode?: 'cover' | 'contain' | 'stretch' | 'center';
+  onPress?: () => void;
 };
 
 const PhotoUnpreparedComponent = ({
@@ -20,6 +21,7 @@ const PhotoUnpreparedComponent = ({
   variant,
   resizeMode = 'contain',
   style,
+  onPress,
 }: Props) => {
   const {
     data: observation,
@@ -40,7 +42,7 @@ const PhotoUnpreparedComponent = ({
   const isError = observationError || attachmentError;
 
   return (
-    <View style={[styles.container, style]}>
+    <Pressable onPress={onPress} style={[styles.container, style]}>
       {isLoading ? (
         <ActivityIndicator />
       ) : isError ? (
@@ -54,7 +56,7 @@ const PhotoUnpreparedComponent = ({
           resizeMode={resizeMode}
         />
       )}
-    </View>
+    </Pressable>
   );
 };
 

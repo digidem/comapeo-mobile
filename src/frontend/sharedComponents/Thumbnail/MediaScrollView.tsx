@@ -13,7 +13,7 @@ const minSize = 150;
 interface MediaScrollView {
   photos: (Partial<Photo> | undefined)[];
   audioRecordings: any[];
-  observationId: string;
+  observationId?: string;
 }
 
 export const MediaScrollView: FC<MediaScrollView> = props => {
@@ -28,14 +28,21 @@ export const MediaScrollView: FC<MediaScrollView> = props => {
   }, [photos?.length]);
 
   function handlePhotoPress(photo: Partial<Photo>) {
-    if (!('id' in photo)) {
+    if ('id' in photo) {
+      navigation.navigate('PhotoPreviewModal', {
+        attachmentId: photo.id,
+        observationId: props.observationId,
+        deletable: false,
+      });
       return;
     }
-    navigation.navigate('PhotoPreviewModal', {
-      attachmentId: photo.id!,
-      observationId: props.observationId,
-    });
-    return;
+    if ('originalUri' in photo) {
+      navigation.navigate('PhotoPreviewModal', {
+        deletable: true,
+        originalPhotoUri: photo.originalUri,
+      });
+      return;
+    }
   }
 
   if (photos?.length === 0) return null;

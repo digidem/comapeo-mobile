@@ -5,7 +5,6 @@ import {ObservationValue} from '@mapeo/schema';
 
 type Setter = StoreApi<DraftObservationSlice>['setState'];
 type Getter = StoreApi<DraftObservationSlice>['getState'];
-
 export interface SavedPhoto {
   // id of the photo in the Mapeo database
   id: string;
@@ -20,25 +19,6 @@ export function deletePhoto(set: Setter, get: Getter, uri: string) {
   );
 
   set({photos: newPhotosArray});
-}
-
-export function deletePhotoByAttachmentId(
-  set: Setter,
-  get: Getter,
-  id: string,
-) {
-  const newPhotosArray = get().photos.filter(
-    photo => 'id' in photo && photo.id !== id,
-  );
-  set({
-    photos: newPhotosArray,
-    value: {
-      ...get().value!,
-      attachments: get().value!.attachments.filter(
-        attachment => attachment.driveDiscoveryId !== id,
-      ),
-    },
-  });
 }
 
 export function replaceDraftPhotos(

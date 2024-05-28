@@ -5,6 +5,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {WHITE} from '../../lib/styles.ts';
+import {StatusBar} from 'expo-status-bar';
 
 export const PhotoPreviewModal: FC<
   NativeRootNavigationProps<'PhotoPreviewModal'>
@@ -30,10 +31,13 @@ export const PhotoPreviewModal: FC<
   });
 
   return (
-    <PhotoUnpreparedView
-      observationId={observationId}
-      attachmentId={attachmentId}
-      variant={'original'}
-    />
+    <>
+      <StatusBar style="light" />
+      <PhotoUnpreparedView
+        observationId={observationId}
+        attachmentId={attachmentId}
+        variant={'original'}
+      />
+    </>
   );
 };

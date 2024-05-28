@@ -44,6 +44,13 @@ const m = defineMessages({
   },
 });
 
+type ConfigFileImportResult =
+  | {
+      type: 'success';
+      file: DocumentPicker.DocumentPickerAsset;
+    }
+  | {type: 'error'; error: Error};
+
 type ProjectFormType = {
   projectName: string;
 };
@@ -53,13 +60,18 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
 }) => {
   const {formatMessage: t} = useIntl();
   const [advancedSettingOpen, setAdvancedSettingOpen] = React.useState(false);
-  const [configFile, setConfigFile] =
-    React.useState<DocumentPicker.DocumentPickerAsset | null>(null);
+  const [configFileResult, setConfigFileResult] =
+    React.useState<ConfigFileImportResult | null>(null);
 
   const updateActiveProjectId = usePersistedProjectId(
     state => state.setProjectId,
   );
-  const {mutate, isPending, reset, error} = useCreateProject();
+  const {
+    mutate,
+    isPending,
+    reset,
+    error: projectCreationError,
+  } = useCreateProject();
 
   const {control, handleSubmit} = useForm<ProjectFormType>({
     defaultValues: {projectName: ''},
@@ -69,15 +81,16 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
     mutate(
       {
         name: val.projectName,
-        configPath: configFile
-          ? convertFileUriToPosixPath(configFile.uri)
-          : undefined,
+        configPath:
+          configFileResult?.type === 'success'
+            ? convertFileUriToPosixPath(configFileResult.file.uri)
+            : undefined,
       },
       {
         onSuccess: projectId => {
-          if (configFile) {
+          if (configFileResult?.type === 'success') {
             // No need to block UI on this
-            FileSystem.deleteAsync(configFile.uri).catch(() => {
+            FileSystem.deleteAsync(configFileResult.file.uri).catch(() => {
               // no-op if something fails here. caches can eventually get cleared by the OS automatically.
             });
           }
@@ -97,8 +110,11 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
         copyToCacheDirectory: true,
         multiple: false,
       });
-    } catch (_err) {
-      // TODO: Surface error
+    } catch (err) {
+      if (err instanceof Error) {
+        setConfigFileResult({type: 'error', error: err});
+      }
+
       return;
     }
 
@@ -110,11 +126,32 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
     if (!asset) return;
 
     // Only allow importing files with the desired extension
-    // TODO: Surface error
-    if (!asset.name.endsWith('.mapeoconfig')) return;
-
-    setConfigFile(asset);
+    if (asset.name.endsWith('.mapeoconfig')) {
+      setConfigFileResult({type: 'success', file: asset});
+    } else {
+      setConfigFileResult({
+        type: 'error',
+        error: new Error('File extension should be .mapeoconfig'),
+      });
+    }
   }
+
+  const errorSheetProps =
+    configFileResult?.type === 'error'
+      ? {
+          error: configFileResult.error,
+          clearError: () => setConfigFileResult(null),
+        }
+      : projectCreationError
+        ? {
+            error: projectCreationError,
+            clearError: reset,
+            tryAgain: handleSubmit(handleCreateProject),
+          }
+        : {
+            error: null,
+            clearError: () => {},
+          };
 
   return (
     <React.Fragment>
@@ -158,8 +195,10 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
                     {t(m.importConfig)}
                   </Button>
 
-                  {configFile && (
-                    <Text style={styles.configFileName}>{configFile.name}</Text>
+                  {configFileResult?.type === 'success' && (
+                    <Text style={styles.configFileName}>
+                      {configFileResult.file.name}
+                    </Text>
                   )}
                 </View>
               )}
@@ -176,11 +215,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
-      <ErrorBottomSheet
-        error={error}
-        clearError={reset}
-        tryAgain={handleSubmit(handleCreateProject)}
-      />
+      <ErrorBottomSheet {...errorSheetProps} />
     </React.Fragment>
   );
 };

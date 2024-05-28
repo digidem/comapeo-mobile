@@ -23,6 +23,7 @@ const emptyObservation: ClientGeneratedObservation = {
 
 export type DraftObservationSlice = {
   photos: Photo[];
+  audioRecordings: [];
   value: Observation | null | ClientGeneratedObservation;
   observationId?: string;
   actions: {
@@ -47,6 +48,7 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
   get,
 ) => ({
   photos: [],
+  audioRecordings: [],
   value: null,
   actions: {
     deletePhoto: id => deletePhoto(set, get, id),
@@ -57,6 +59,7 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
     clearDraft: () => {
       set({
         photos: [],
+        audioRecordings: [],
         value: null,
         observationId: undefined,
       });

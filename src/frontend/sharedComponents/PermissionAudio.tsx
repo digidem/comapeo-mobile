@@ -1,5 +1,5 @@
-import React, {FC, useCallback, useEffect} from 'react';
-import {View, Text, StyleSheet, Linking} from 'react-native';
+import React, {FC, useCallback, useEffect, useState} from 'react';
+import {View, Text, StyleSheet, Linking, AppState} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import AudioPermission from '../images/observationEdit/AudioPermission.svg';
@@ -8,11 +8,7 @@ import {BottomSheetModal} from './BottomSheetModal';
 import {Button} from './Button';
 import {Audio} from 'expo-av';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
-import {PermissionStatus} from 'expo-av/build/Audio';
-
-const handleRequestPermissions = (): void => {
-  Audio.requestPermissionsAsync().catch(() => {});
-};
+import {PermissionResponse, PermissionStatus} from 'expo-av/build/Audio';
 
 const handleOpenSettings = () => {
   Linking.openSettings();
@@ -28,7 +24,7 @@ export const PermissionAudio: FC<PermissionAudio> = props => {
   const {sheetRef, closeSheet, isOpen} = props;
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
-  const [permissionResponse] = Audio.usePermissions({request: false});
+  const [permissionData, setPermissionData] = useState<PermissionResponse>();
 
   const handlePermissionGranted = useCallback(() => {
     closeSheet();
@@ -36,36 +32,33 @@ export const PermissionAudio: FC<PermissionAudio> = props => {
     // navigation.navigate('Home', {screen: 'Map'});
   }, [closeSheet, navigation]);
 
-  const isPermissionGranted = Boolean(permissionResponse?.granted);
+  const handlePermissionNotGranted = useCallback(async () => {
+    const response = await Audio.requestPermissionsAsync();
+    setPermissionData(response);
+    if (response.granted) {
+      handlePermissionGranted();
+    }
+  }, [handlePermissionGranted]);
+
+  const handlePermission = useCallback(async () => {
+    if (permissionData?.granted) {
+      handlePermissionGranted();
+    } else if (
+      permissionData?.status === PermissionStatus.DENIED &&
+      !permissionData.canAskAgain
+    ) {
+      handleOpenSettings();
+    } else if (permissionData?.status !== PermissionStatus.GRANTED) {
+      handlePermissionNotGranted();
+    }
+  }, [handlePermissionGranted, handlePermissionNotGranted, permissionData]);
 
   useEffect(() => {
-    if (isPermissionGranted && isOpen) handlePermissionGranted();
-  }, [isPermissionGranted, handlePermissionGranted, isOpen]);
-
-  let onPressActionButton: () => void;
-  let actionButtonText: string;
-  switch (permissionResponse?.status) {
-    case undefined:
-    case PermissionStatus.UNDETERMINED:
-      onPressActionButton = handleOpenSettings;
-      actionButtonText = t(m.allowButtonText);
-      break;
-    case PermissionStatus.DENIED:
-      if (permissionResponse.canAskAgain) {
-        onPressActionButton = handleOpenSettings;
-        actionButtonText = t(m.allowButtonText);
-      } else {
-        onPressActionButton = handleRequestPermissions;
-        actionButtonText = t(m.goToSettingsButtonText);
-      }
-      break;
-    case PermissionStatus.GRANTED:
-      onPressActionButton = handlePermissionGranted;
-      actionButtonText = t(m.allowButtonText);
-      break;
-    default:
-      throw new Error('Unexpected permission response');
-  }
+    const subscription = AppState.addEventListener('focus', () =>
+      Audio.getPermissionsAsync().then(setPermissionData),
+    );
+    return () => subscription.remove();
+  }, []);
 
   return (
     <BottomSheetModal
@@ -83,9 +76,12 @@ export const PermissionAudio: FC<PermissionAudio> = props => {
           <Button onPress={closeSheet} variant="outlined" fullWidth>
             <Text style={styles.notNowButtonText}>{t(m.notNowButtonText)}</Text>
           </Button>
-          <Button onPress={onPressActionButton} fullWidth>
+          <Button onPress={handlePermission} fullWidth>
             <Text style={styles.allowPermissionButtonText}>
-              {actionButtonText}
+              {permissionData?.status === 'denied' &&
+              !permissionData.canAskAgain
+                ? t(m.goToSettingsButtonText)
+                : t(m.allowButtonText)}
             </Text>
           </Button>
         </View>

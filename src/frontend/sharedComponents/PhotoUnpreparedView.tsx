@@ -27,6 +27,7 @@ const PhotoUnpreparedComponent = ({
     data: observation,
     isError: observationError,
     isLoading: observationLoading,
+    isPending: observationPending,
   } = useObservation(observationId);
   const {
     data: attachmentUrl,
@@ -37,6 +38,7 @@ const PhotoUnpreparedComponent = ({
       attachment => attachment.driveDiscoveryId === attachmentId,
     )!,
     variant,
+    !observationPending,
   );
   const isLoading = observationLoading || attachmentUrlLoading;
   const isError = observationError || attachmentError;

@@ -5,7 +5,6 @@ import {Photo} from '../../contexts/PhotoPromiseContext/types';
 import {PhotoThumbnail} from './PhotoThumbnail';
 import {AudioThumbnail} from './AudioThumbnail';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
-// import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 
 const spacing = 10;
 const minSize = 150;
@@ -18,7 +17,6 @@ interface MediaScrollView {
 
 export const MediaScrollView: FC<MediaScrollView> = props => {
   const {photos, audioRecordings = []} = props;
-  // const navigation = useNavigationFromHomeTabs();
   const scrollViewRef = React.useRef<ScrollView>(null);
   const length =
     props?.photos?.length ?? 0 + props?.audioRecordings?.length ?? 0;

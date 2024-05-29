@@ -5,7 +5,6 @@ import {useFocusEffect} from '@react-navigation/native';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {WHITE} from '../../lib/styles.ts';
-import {StatusBar} from 'expo-status-bar';
 import {Pressable, StyleSheet, Text} from 'react-native';
 import {
   BottomSheetContent,
@@ -59,18 +58,6 @@ export const PhotoPreviewModal: FC<
   useFocusEffect(() => {
     navigation.setOptions({
       headerShown: showHeader,
-      headerTitle: '',
-      headerTransparent: true,
-      headerStyle: {backgroundColor: 'transparent'},
-      // eslint-disable-next-line react/no-unstable-nested-components -- it's correct syntax
-      headerLeft: () => (
-        <MaterialIcons
-          name={'west'}
-          size={24}
-          color={WHITE}
-          onPress={() => navigation.goBack()}
-        />
-      ),
       // eslint-disable-next-line react/no-unstable-nested-components -- it's correct syntax
       headerRight: () =>
         deletable ? (
@@ -88,7 +75,6 @@ export const PhotoPreviewModal: FC<
 
   return (
     <>
-      <StatusBar style="light" />
       {observationId && attachmentId ? (
         <PhotoUnpreparedView
           onPress={() => setShowHeader(!showHeader)}
@@ -97,7 +83,10 @@ export const PhotoPreviewModal: FC<
           variant={'original'}
         />
       ) : originalPhotoUri ? (
-        <PhotoPreparedView photoUri={originalPhotoUri} />
+        <PhotoPreparedView
+          onPress={() => setShowHeader(!showHeader)}
+          photoUri={originalPhotoUri}
+        />
       ) : (
         <></>
       )}

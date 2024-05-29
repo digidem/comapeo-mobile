@@ -48,13 +48,7 @@ const resolveAttachmentUrlQueryOptions = (
     Exclude<Observation['attachments'][number]['type'], 'UNRECOGNIZED'>
   >,
   enabledByDefault: boolean = true,
-): UseQueryOptions<{
-  url: string;
-  driveDiscoveryId: string;
-  name: string;
-  type: 'photo' | 'video' | 'audio' | 'UNRECOGNIZED';
-  hash: string;
-}> => {
+) => {
   return {
     enabled: enabledByDefault,
     queryKey: [

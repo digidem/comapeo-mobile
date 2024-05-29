@@ -15,7 +15,7 @@ import {AlertIcon} from '../icons';
 import debug from 'debug';
 import {LIGHT_GREY} from '../../lib/styles';
 
-const log = debug('Thumbnail');
+const log = debug('PhotoThumbnail');
 
 type PhotoThumbnailProps = {
   photo?: Partial<Photo>;

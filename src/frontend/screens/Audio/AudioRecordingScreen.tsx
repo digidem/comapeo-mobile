@@ -1,6 +1,5 @@
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {AUDIO_BLACK, AUDIO_RED, WHITE} from '../../lib/styles.ts';
-import {StatusBar} from 'expo-status-bar';
 import React, {useEffect} from 'react';
 import {AudioStackParamList} from '../../sharedTypes/navigation.ts';
 import {useDerivedValue, withTiming} from 'react-native-reanimated';
@@ -39,19 +38,16 @@ export const AudioRecordingScreen: React.FC<
   };
 
   return (
-    <>
-      <StatusBar style="light" />
-      <View style={styles.container}>
-        <AnimatedTimer elapsedTime={elapsedTimeValue} />
-        <Text style={styles.textStyle}>Less than 5 minutes left</Text>
-        <Pressable
-          onPress={handleStopRecordingButtonPress}
-          style={styles.buttonWrapperStyle}>
-          <View style={styles.buttonStopStyle} />
-        </Pressable>
-        <AnimatedBackground elapsedTimeValue={elapsedTimeValue} />
-      </View>
-    </>
+    <View style={styles.container}>
+      <AnimatedTimer elapsedTime={elapsedTimeValue} />
+      <Text style={styles.textStyle}>Less than 5 minutes left</Text>
+      <Pressable
+        onPress={handleStopRecordingButtonPress}
+        style={styles.buttonWrapperStyle}>
+        <View style={styles.buttonStopStyle} />
+      </Pressable>
+      <AnimatedBackground elapsedTimeValue={elapsedTimeValue} />
+    </View>
   );
 };
 

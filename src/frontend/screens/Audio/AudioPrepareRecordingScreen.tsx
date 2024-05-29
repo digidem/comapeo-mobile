@@ -5,7 +5,6 @@ import {
   AUDIO_RED,
   WHITE,
 } from '../../lib/styles.ts';
-import {StatusBar} from 'expo-status-bar';
 import React from 'react';
 import {useAudioRecordingContext} from '../../contexts/AudioRecordingContext.tsx';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -33,16 +32,13 @@ export const AudioPrepareRecordingScreen: React.FC<
   };
   const {formatMessage: t} = useIntl();
   return (
-    <>
-      <StatusBar style="light" />
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.timerStyle}>{t(m.defaultTimerState)}</Text>
-        <Text style={styles.textStyle}>{t(m.subTimerMessage)}</Text>
-        <Pressable onPress={handlePress} style={styles.buttonWrapperStyle}>
-          <View style={styles.buttonStartStyle} />
-        </Pressable>
-      </SafeAreaView>
-    </>
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.timerStyle}>{t(m.defaultTimerState)}</Text>
+      <Text style={styles.textStyle}>{t(m.subTimerMessage)}</Text>
+      <Pressable onPress={handlePress} style={styles.buttonWrapperStyle}>
+        <View style={styles.buttonStartStyle} />
+      </Pressable>
+    </SafeAreaView>
   );
 };
 

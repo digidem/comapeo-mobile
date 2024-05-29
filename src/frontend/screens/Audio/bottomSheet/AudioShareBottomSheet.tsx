@@ -32,7 +32,7 @@ export const AudioShareBottomSheet: FC<AudioShareBottomSheet> = ({
       title: formatMessage(m.audioRecording),
       url: base64Url,
       message: 'message',
-      filename: 'recording', // only for base64 file in Android
+      filename: 'recording',
     }).catch(() => {});
     closeShareSheet();
   }

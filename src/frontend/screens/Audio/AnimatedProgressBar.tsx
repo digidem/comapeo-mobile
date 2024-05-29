@@ -8,6 +8,7 @@ interface AnimatedProgressBar {
   elapsed: SharedValue<number>;
   duration: number;
 }
+
 export const AnimatedProgressBar: FC<AnimatedProgressBar> = ({
   isReady,
   elapsed,
@@ -21,6 +22,7 @@ export const AnimatedProgressBar: FC<AnimatedProgressBar> = ({
       width: fillPercentage * (width - 60),
     };
   });
+
   return (
     <View style={styles.progressBarWrapper}>
       <View style={[styles.progressBar, {width: width - 60}]} />

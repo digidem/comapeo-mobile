@@ -289,6 +289,12 @@
   "screens.AppPasscode.TurnOffPasscode.usePasscode": {
     "message": "Use App Passcode"
   },
+  "screens.Audio.PrepareRecording.defaultTimerState": {
+    "message": "00:00"
+  },
+  "screens.Audio.PrepareRecording.subTimerMessage": {
+    "message": "Record up to 5 minutes"
+  },
   "screens.AudioPermission.Button.allow": {
     "description": "Screen button text for allow the audio permission",
     "message": "Allow"
@@ -984,15 +990,12 @@
   "screens.Sync.ProjectSyncDisplay.upToDate": {
     "message": "Up to Date! No data to Sync"
   },
-  "sharedComponents.DeviceIconWithName.Disconnected": {
-    "message": "Disconnected"
-  },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",
     "message": "Show Options"
   },
-  "sharedComponents.DeviceCard.ThisDevice": {
-    "message": "This Device!"
+  "sharedComponents.DeviceIconWithName.Disconnected": {
+    "message": "Disconnected"
   },
   "sharedComponents.DeviceIconWithName.thisDevice": {
     "message": "This Device!"

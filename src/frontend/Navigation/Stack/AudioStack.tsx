@@ -1,12 +1,12 @@
 import {AudioPrepareRecordingScreen} from '../../screens/Audio/AudioPrepareRecordingScreen.tsx';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
-import NavigationBackButton from '../../images/navigationBackButton.svg';
 import {AudioRecordingScreen} from '../../screens/Audio/AudioRecordingScreen.tsx';
 import {AudioPlaybackScreen} from '../../screens/Audio/AudioPlaybackScreen.tsx';
 import * as React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {AudioStackParamList} from '../../sharedTypes/navigation.ts';
-import {AUDIO_BLACK} from '../../lib/styles.ts';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {WHITE} from '../../lib/styles.ts';
+import {useNavigation} from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator<AudioStackParamList>();
 
@@ -17,7 +17,19 @@ export const AudioStack = () => {
         name="PrepareRecording"
         component={AudioPrepareRecordingScreen}
         options={{
-          headerStyle: {backgroundColor: AUDIO_BLACK},
+          headerStyle: {backgroundColor: 'transparent'},
+          headerLeft: () => {
+            // eslint-disable-next-line react-hooks/rules-of-hooks -- it is a component
+            const navigation = useNavigation();
+            return (
+              <MaterialIcons
+                name="west"
+                size={24}
+                color={WHITE}
+                onPress={navigation.goBack}
+              />
+            );
+          },
           headerTransparent: true,
           headerTitle: '',
         }}

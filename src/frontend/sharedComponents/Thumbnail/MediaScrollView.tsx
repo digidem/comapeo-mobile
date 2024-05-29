@@ -5,8 +5,6 @@ import {Photo} from '../../contexts/PhotoPromiseContext/types';
 import {PhotoThumbnail} from './PhotoThumbnail';
 import {AudioThumbnail} from './AudioThumbnail';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
-import {Thumbnail} from './Thumbnail.tsx';
-// import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 
 const spacing = 10;
 const minSize = 150;
@@ -77,7 +75,7 @@ export const MediaScrollView: FC<MediaScrollView> = props => {
       {photos
         .filter(photo => photo?.deleted == null)
         .map((photo, index) => (
-          <Thumbnail
+          <PhotoThumbnail
             key={index}
             photo={photo}
             style={styles.thumbnail}

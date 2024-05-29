@@ -107,53 +107,46 @@ export const AudioPlaybackScreen: React.FC<
   }, [currentPosition]);
 
   return (
-    <>
-      <StatusBar style="light" />
-      <SafeAreaView style={styles.container}>
-        <AnimatedTimer elapsedTime={elapsedTimeValue} />
-        <AnimatedProgressBar
-          isReady={isReady}
-          elapsed={elapsedTimeValue}
-          duration={duration}
-        />
-        <Text style={styles.textStyle}>Total length: {formattedDuration}</Text>
-        <View style={styles.bottomBar}>
-          <Pressable onPress={openDeleteBottomSheet}>
-            <MaterialIcons size={35} name="delete" color={WHITE} />
-          </Pressable>
-          <Pressable
-            disabled={!isReady}
-            onPress={handleControlButtonPress}
-            style={styles.buttonWrapperStyle}>
-            {isPlaying ? (
-              <View style={styles.buttonStopStyle} />
-            ) : (
-              <PlayArrow />
-            )}
-          </Pressable>
-          <Pressable onPress={openShareSheet}>
-            <MaterialIcons size={35} name="share" color={WHITE} />
-          </Pressable>
-        </View>
-        <AudioRecordingDeleteBottomSheet
-          isOpen={isOpenDeleteBottomSheet}
-          closeSheet={closeDeleteBottomSheet}
-          sheetRef={deleteAudioSheetRef}
-          recordingUri={recordingUri}
-          previewOnly={previewOnly}
-        />
-        <AudioRecordingSuccessBottomSheet
-          isOpen={isOpenSuccessSheet}
-          sheetRef={successSheetRef}
-        />
-        <AudioShareBottomSheet
-          sheetRef={shareSheetRef}
-          isOpen={isOpenShareSheet}
-          closeShareSheet={closeShareSheet}
-          recordingUri={recordingUri}
-        />
-      </SafeAreaView>
-    </>
+    <SafeAreaView style={styles.container}>
+      <AnimatedTimer elapsedTime={elapsedTimeValue} />
+      <AnimatedProgressBar
+        isReady={isReady}
+        elapsed={elapsedTimeValue}
+        duration={duration}
+      />
+      <Text style={styles.textStyle}>Total length: {formattedDuration}</Text>
+      <View style={styles.bottomBar}>
+        <Pressable onPress={openDeleteBottomSheet}>
+          <MaterialIcons size={35} name="delete" color={WHITE} />
+        </Pressable>
+        <Pressable
+          disabled={!isReady}
+          onPress={handleControlButtonPress}
+          style={styles.buttonWrapperStyle}>
+          {isPlaying ? <View style={styles.buttonStopStyle} /> : <PlayArrow />}
+        </Pressable>
+        <Pressable onPress={openShareSheet}>
+          <MaterialIcons size={35} name="share" color={WHITE} />
+        </Pressable>
+      </View>
+      <AudioRecordingDeleteBottomSheet
+        isOpen={isOpenDeleteBottomSheet}
+        closeSheet={closeDeleteBottomSheet}
+        sheetRef={deleteAudioSheetRef}
+        recordingUri={recordingUri}
+        previewOnly={previewOnly}
+      />
+      <AudioRecordingSuccessBottomSheet
+        isOpen={isOpenSuccessSheet}
+        sheetRef={successSheetRef}
+      />
+      <AudioShareBottomSheet
+        sheetRef={shareSheetRef}
+        isOpen={isOpenShareSheet}
+        closeShareSheet={closeShareSheet}
+        recordingUri={recordingUri}
+      />
+    </SafeAreaView>
   );
 };
 

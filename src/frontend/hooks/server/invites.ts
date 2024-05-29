@@ -1,8 +1,4 @@
-import {
-  useMutation,
-  useQueryClient,
-  useSuspenseQuery,
-} from '@tanstack/react-query';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 
 import {useApi} from '../../contexts/ApiContext';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
@@ -13,7 +9,7 @@ export const INVITE_KEY = 'pending_invites';
 
 export function usePendingInvites() {
   const mapeoApi = useApi();
-  return useSuspenseQuery({
+  return useQuery({
     queryKey: [INVITE_KEY],
     queryFn: async () => {
       return await mapeoApi.invite.getPending();

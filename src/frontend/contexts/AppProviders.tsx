@@ -23,6 +23,7 @@ import {ApiProvider} from './ApiContext';
 import {MessagePortLike} from '../lib/MessagePortLike';
 import {IntlProvider} from './IntlContext';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import {SessionInvitesProvider} from './SessionInvitesContext';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -50,11 +51,13 @@ export const AppProviders = ({
                   <LocalDiscoveryProvider value={localDiscoveryController}>
                     <ApiProvider api={mapeoApi}>
                       <ActiveProjectProvider>
-                        <BottomSheetModalProvider>
-                          <PhotoPromiseProvider>
-                            <SecurityProvider>{children}</SecurityProvider>
-                          </PhotoPromiseProvider>
-                        </BottomSheetModalProvider>
+                        <SessionInvitesProvider>
+                          <BottomSheetModalProvider>
+                            <PhotoPromiseProvider>
+                              <SecurityProvider>{children}</SecurityProvider>
+                            </PhotoPromiseProvider>
+                          </BottomSheetModalProvider>
+                        </SessionInvitesProvider>
                       </ActiveProjectProvider>
                     </ApiProvider>
                   </LocalDiscoveryProvider>

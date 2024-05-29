@@ -1,145 +1,65 @@
 import * as React from 'react';
-import {BottomSheetModal, useBottomSheetModal} from '../BottomSheetModal';
-import {
-  useAcceptInvite,
-  usePendingInvites,
-  useRejectInvite,
-} from '../../hooks/server/invites';
-import {useProjectInvitesListener} from '../../hooks/useProjectInvitesListener';
-import {NewInviteBottomSheetContent} from './NewInviteBottomSheetContent';
-import {InviteSuccessBottomSheetContent} from './InviteSuccessBottomSheetContent';
-import {InviteCanceledBottomSheetContent} from './InviteCanceledBottomSheetContent';
-import {useAllProjects} from '../../hooks/server/projects';
-import {LeaveProjectModalContent} from '../LeaveProjectModalContent';
+import {View} from 'react-native';
 
-export type LeaveProjectModalState = 'AlreadyOnProj' | 'LeaveProj';
+import {useSessionInvites} from '../../contexts/SessionInvitesContext';
+import {BottomSheetModal, useBottomSheetModal} from '../BottomSheetModal';
+import {InviteBottomSheetContent} from './InviteBottomSheetContent';
 
 export const ProjectInviteBottomSheet = ({
   enabledForCurrentScreen,
 }: {
   enabledForCurrentScreen: boolean;
 }) => {
-  const {
-    sheetRef: inviteRef,
-    isOpen: inviteIsOpen,
-    closeSheet: closeInviteSheet,
-    openSheet: openInviteSheet,
-  } = useBottomSheetModal({
-    openOnMount: false,
-  });
+  const sessionInvites = useSessionInvites();
 
-  const {
-    sheetRef: leaveRef,
-    isOpen: leaveIsOpen,
-    closeSheet: closeLeaveSheet,
-    openSheet: openLeaveSheet,
-  } = useBottomSheetModal({
-    openOnMount: false,
-  });
-  const invites = usePendingInvites().data.sort(
-    (a, b) => a.receivedAt - b.receivedAt,
+  const [currentInviteId, setCurrentInviteId] = React.useState(
+    () =>
+      sessionInvites.find(({status}) => status === 'pending')?.invite
+        .inviteId || null,
   );
 
-  const projects = useAllProjects();
+  const {sheetRef, isOpen, closeSheet, openSheet} = useBottomSheetModal({
+    openOnMount: false,
+  });
 
-  const [leaveModalState, setLeaveModalState] =
-    React.useState<LeaveProjectModalState>('AlreadyOnProj');
-
-  const invite = invites[0];
-
-  const {currentInviteCanceled, resetCacheAndClearCanceled} =
-    useProjectInvitesListener({
-      inviteId: invite?.inviteId,
-      bottomSheetIsOpen: inviteIsOpen,
-    });
-  const accept = useAcceptInvite();
-  const reject = useRejectInvite();
-
-  if (invite && !inviteIsOpen && enabledForCurrentScreen) {
-    openInviteSheet();
-  }
-
-  if (currentInviteCanceled && leaveIsOpen) {
-    closeLeaveSheet();
-  }
-
-  function handleReject() {
-    if (invite) {
-      reject.mutate(invite, {
-        onSuccess: () => {
-          if (invites.length <= 1) {
-            closeInviteSheet();
-          }
-        },
-      });
-    }
-    if (invites.length <= 1) {
-      closeInviteSheet();
+  if (!currentInviteId) {
+    const nextPending = sessionInvites.find(({status}) => status === 'pending');
+    if (nextPending) {
+      setCurrentInviteId(nextPending.invite.inviteId);
     }
   }
 
-  function handleCanceledInvite() {
-    resetCacheAndClearCanceled();
-    if (invites.length <= 1) {
-      closeInviteSheet();
-    }
-  }
+  const showableInvite = currentInviteId
+    ? sessionInvites.find(
+        ({invite: {inviteId}}) => inviteId === currentInviteId,
+      )
+    : null;
 
-  function handleAccept() {
-    if (invite) {
-      // the accept button will be in a loading state until projects.data is available. So user will not be able to get here until the projects have loaded
-      if (projects.data && projects.data.length > 1) {
-        openLeaveSheet();
-        return;
-      }
-
-      accept.mutate({inviteId: invite.inviteId});
-    }
+  // TODO: Causing issues in the following sequence:
+  // 1. Receive invite
+  // 2. Reject
+  // 3. Receive
+  // Expected: sheet opens up again
+  if (showableInvite && !isOpen && enabledForCurrentScreen) {
+    openSheet();
   }
 
   return (
-    <>
-      <BottomSheetModal
-        ref={inviteRef}
-        isOpen={inviteIsOpen}
-        onDismiss={() => {
-          accept.reset();
-          reject.reset();
-        }}>
-        {currentInviteCanceled ? (
-          <InviteCanceledBottomSheetContent
-            handleClose={handleCanceledInvite}
-            projectName={invite?.projectName}
-          />
-        ) : accept.isSuccess ? (
-          <InviteSuccessBottomSheetContent
-            closeSheet={closeInviteSheet}
-            projectName={invite?.projectName}
-          />
-        ) : (
-          <NewInviteBottomSheetContent
-            handleAccept={handleAccept}
-            isLoading={
-              accept.isPending || reject.isPending || projects.isPending
-            }
-            handleReject={handleReject}
-            projectName={invite?.projectName}
-          />
-        )}
-      </BottomSheetModal>
-      <BottomSheetModal
-        onDismiss={() => setLeaveModalState('AlreadyOnProj')}
-        fullScreen
-        ref={leaveRef}
-        isOpen={leaveIsOpen}>
-        <LeaveProjectModalContent
-          closeSheet={closeLeaveSheet}
-          leaveModalState={leaveModalState}
-          setToLeaveProject={() => setLeaveModalState('LeaveProj')}
-          inviteId={invite?.inviteId || ''}
-          accept={accept}
+    <BottomSheetModal
+      ref={sheetRef}
+      isOpen={isOpen}
+      onDismiss={() => {
+        setCurrentInviteId(null);
+      }}>
+      {showableInvite ? (
+        <InviteBottomSheetContent
+          sessionInvite={showableInvite}
+          totalSessionInvites={sessionInvites.length}
+          onClose={closeSheet}
         />
-      </BottomSheetModal>
-    </>
+      ) : (
+        <View style={{height: 100}} />
+      )}
+    </BottomSheetModal>
   );
 };

@@ -27,6 +27,18 @@ export const AudioRecordingDeleteBottomSheet: FC<
   const {formatMessage} = useIntl();
   const navigation = useNavigationFromRoot();
   const observation = useDraftObservation();
+
+  const handleRecordingDelete = async () => {
+    closeSheet();
+    if (previewOnly) {
+      observation.removeAudioRecording(recordingUri);
+      navigation.goBack();
+    } else {
+      await RNFS.unlink(new URL(recordingUri).pathname);
+      navigation.replace('ObservationEdit');
+    }
+  };
+
   return (
     <BottomSheetModal ref={sheetRef} isOpen={isOpen}>
       <BottomSheetContent
@@ -35,16 +47,7 @@ export const AudioRecordingDeleteBottomSheet: FC<
           {
             variation: 'filled',
             dangerous: true,
-            onPress: async () => {
-              closeSheet();
-              if (previewOnly) {
-                observation.removeAudioRecording(recordingUri);
-                navigation.goBack();
-              } else {
-                await RNFS.unlink(new URL(recordingUri).pathname);
-                navigation.replace('ObservationEdit');
-              }
-            },
+            onPress: handleRecordingDelete,
             text: formatMessage(m.deleteButtonText),
             icon: <MaterialIcons size={35} name="delete" color={WHITE} />,
           },
@@ -62,7 +65,7 @@ export const AudioRecordingDeleteBottomSheet: FC<
             values={{
               audioRecording: 'Audio Recording',
               // eslint-disable-next-line react/no-unstable-nested-components
-              bold: message => <Text style={styles.textBold}>{message}</Text>,
+              bold: msg => <Text style={styles.textBold} children={msg} />,
             }}
           />
         }

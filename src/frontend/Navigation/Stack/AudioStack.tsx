@@ -6,6 +6,7 @@ import {AudioPlaybackScreen} from '../../screens/Audio/AudioPlaybackScreen.tsx';
 import * as React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {AudioStackParamList} from '../../sharedTypes/navigation.ts';
+import {AUDIO_BLACK} from '../../lib/styles.ts';
 
 const Stack = createNativeStackNavigator<AudioStackParamList>();
 
@@ -16,13 +17,7 @@ export const AudioStack = () => {
         name="PrepareRecording"
         component={AudioPrepareRecordingScreen}
         options={{
-          // eslint-disable-next-line react/no-unstable-nested-components
-          headerLeft: () => {
-            // eslint-disable-next-line react-hooks/rules-of-hooks -- this is in fact a component, so we can use hook here
-            const navigation = useNavigationFromRoot();
-            return <NavigationBackButton onPress={() => navigation.goBack()} />;
-          },
-          headerStyle: {backgroundColor: 'transparent'},
+          headerStyle: {backgroundColor: AUDIO_BLACK},
           headerTransparent: true,
           headerTitle: '',
         }}

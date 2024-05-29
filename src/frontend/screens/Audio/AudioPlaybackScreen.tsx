@@ -67,6 +67,19 @@ export const AudioPlaybackScreen: React.FC<
     stopPlayback,
   } = useAudioPlayback(recordingUri);
 
+  const handleExitButton = () => {
+    if (previewOnly) {
+      navigation.goBack();
+    } else {
+      observation.addAudioRecording({
+        duration,
+        uri: recordingUri,
+        createdAt: new Date().getTime(),
+      });
+      openSuccessSheet();
+    }
+  };
+
   useFocusEffect(() => {
     navigation.setOptions({
       // eslint-disable-next-line react/no-unstable-nested-components -- it's supported way to do it like that
@@ -75,18 +88,7 @@ export const AudioPlaybackScreen: React.FC<
           name="close"
           size={25}
           color={WHITE}
-          onPress={() => {
-            if (previewOnly) {
-              navigation.goBack();
-            } else {
-              observation.addAudioRecording({
-                duration,
-                uri: recordingUri,
-                createdAt: new Date().getTime(),
-              });
-              openSuccessSheet();
-            }
-          }}
+          onPress={handleExitButton}
         />
       ),
     });

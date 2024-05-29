@@ -6,8 +6,6 @@ import {AudioStackParamList} from '../../sharedTypes/navigation.ts';
 import {useDerivedValue, withTiming} from 'react-native-reanimated';
 import {AnimatedBackground} from './AnimatedBackground.tsx';
 import {useAudioRecordingContext} from '../../contexts/AudioRecordingContext.tsx';
-import {useFocusEffect} from '@react-navigation/native';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {AnimatedTimer} from './AnimatedTimer.tsx';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
@@ -33,19 +31,12 @@ export const AudioRecordingScreen: React.FC<
     });
   }, [navigation, stopRecording, recording, timeElapsed]);
 
-  useFocusEffect(() => {
-    navigation.setOptions({
-      // eslint-disable-next-line react/no-unstable-nested-components -- it's supported way to do it like that
-      headerLeft: () => (
-        <MaterialIcon
-          name="close"
-          size={25}
-          color={WHITE}
-          onPress={() => console.log('quit')}
-        />
-      ),
+  const handleStopRecordingButtonPress = async () => {
+    await stopRecording();
+    navigation.navigate('Playback', {
+      recordingUri: recording?.getURI()!,
     });
-  });
+  };
 
   return (
     <>
@@ -54,12 +45,7 @@ export const AudioRecordingScreen: React.FC<
         <AnimatedTimer elapsedTime={elapsedTimeValue} />
         <Text style={styles.textStyle}>Less than 5 minutes left</Text>
         <Pressable
-          onPress={async () => {
-            await stopRecording();
-            navigation.navigate('Playback', {
-              recordingUri: recording?.getURI()!,
-            });
-          }}
+          onPress={handleStopRecordingButtonPress}
           style={styles.buttonWrapperStyle}>
           <View style={styles.buttonStopStyle} />
         </Pressable>

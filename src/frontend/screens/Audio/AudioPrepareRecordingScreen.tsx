@@ -7,15 +7,21 @@ import {
 } from '../../lib/styles.ts';
 import {StatusBar} from 'expo-status-bar';
 import React from 'react';
-import {LogBox} from 'react-native';
-import {useFocusEffect} from '@react-navigation/native';
 import {useAudioRecordingContext} from '../../contexts/AudioRecordingContext.tsx';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AudioStackParamList} from '../../sharedTypes/navigation.ts';
+import {defineMessages, useIntl} from 'react-intl';
 
-LogBox.ignoreLogs([
-  'Non-serializable values were found in the navigation state',
-]);
+const m = defineMessages({
+  defaultTimerState: {
+    id: 'screens.Audio.PrepareRecording.defaultTimerState',
+    defaultMessage: '00:00',
+  },
+  subTimerMessage: {
+    id: 'screens.Audio.PrepareRecording.subTimerMessage',
+    defaultMessage: 'Record up to 5 minutes',
+  },
+});
 
 export const AudioPrepareRecordingScreen: React.FC<
   NativeStackScreenProps<AudioStackParamList, 'PrepareRecording'>
@@ -25,21 +31,13 @@ export const AudioPrepareRecordingScreen: React.FC<
     await startRecording();
     navigation.navigate('Recording');
   };
-
-  useFocusEffect(() => {
-    navigation.setOptions({
-      headerStyle: {
-        backgroundColor: AUDIO_BLACK,
-      },
-    });
-  });
-
+  const {formatMessage: t} = useIntl();
   return (
     <>
       <StatusBar style="light" />
       <SafeAreaView style={styles.container}>
-        <Text style={styles.timerStyle}>00:00</Text>
-        <Text style={styles.textStyle}>Record up to 5 minutes</Text>
+        <Text style={styles.timerStyle}>{t(m.defaultTimerState)}</Text>
+        <Text style={styles.textStyle}>{t(m.subTimerMessage)}</Text>
         <Pressable onPress={handlePress} style={styles.buttonWrapperStyle}>
           <View style={styles.buttonStartStyle} />
         </Pressable>

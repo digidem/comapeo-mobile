@@ -301,6 +301,9 @@
   "screens.Audio.PrepareRecording.subTimerMessage": {
     "message": "Record up to 5 minutes"
   },
+  "screens.Audio.Recording.timeLeft": {
+    "message": "Less than {minutes} minutes left"
+  },
   "screens.AudioPermission.Button.allow": {
     "description": "Screen button text for allow the audio permission",
     "message": "Allow"

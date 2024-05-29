@@ -29,7 +29,7 @@ export const AudioRecordingSuccessBottomSheet: FC<
             <FormattedMessage
               {...m.successDescription}
               values={{
-                audioRecording: 'Audio Recording',
+                audioRecording: formatMessage(m.audioRecording),
                 // eslint-disable-next-line react/no-unstable-nested-components
                 bold: message => <Text style={styles.textBold}>{message}</Text>,
               }}
@@ -73,12 +73,16 @@ const m = defineMessages({
     defaultMessage: 'Your <bold>{audioRecording}</bold> was added.',
   },
   returnToEditorButtonText: {
-    id: 'AudioPlaybackScreen.DeleteAudioRecordingModal.returnToEditor',
+    id: 'AudioPlaybackScreen.SuccessAudioRecordingModal.returnToEditor',
     defaultMessage: 'Return to Editor',
   },
   recordAnotherButtonText: {
-    id: 'AudioPlaybackScreen.DeleteAudioRecordingModal.recordAnother',
+    id: 'AudioPlaybackScreen.SuccessAudioRecordingModal.recordAnother',
     defaultMessage: 'Record Another',
+  },
+  audioRecording: {
+    id: 'AudioPlaybackScreen.SuccessAudioRecordingModal.audioRecording',
+    defaultMessage: 'Audio Recording',
   },
 });
 

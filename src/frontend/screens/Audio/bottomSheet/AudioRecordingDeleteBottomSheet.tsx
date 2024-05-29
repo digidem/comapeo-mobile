@@ -63,7 +63,7 @@ export const AudioRecordingDeleteBottomSheet: FC<
           <FormattedMessage
             {...m.deleteModalDescription}
             values={{
-              audioRecording: 'Audio Recording',
+              audioRecording: formatMessage(m.audioRecording),
               // eslint-disable-next-line react/no-unstable-nested-components
               bold: msg => <Text style={styles.textBold} children={msg} />,
             }}
@@ -93,6 +93,10 @@ const m = defineMessages({
   cancelButtonText: {
     id: 'AudioPlaybackScreen.DeleteAudioRecordingModal.cancelButtonText',
     defaultMessage: 'Cancel',
+  },
+  audioRecording: {
+    id: 'AudioPlaybackScreen.DeleteAudioRecordingModal.audioRecording',
+    defaultMessage: 'Audio Recording',
   },
 });
 

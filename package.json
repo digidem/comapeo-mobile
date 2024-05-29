@@ -57,6 +57,7 @@
     "expo-crypto": "~12.8.1",
     "expo-dev-client": "~3.3.11",
     "expo-file-system": "~16.0.9",
+    "expo-font": "~11.10.3",
     "expo-localization": "~14.8.4",
     "expo-location": "~16.5.5",
     "expo-secure-store": "~12.8.1",

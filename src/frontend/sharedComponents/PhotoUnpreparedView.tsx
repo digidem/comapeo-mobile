@@ -24,13 +24,12 @@ const PhotoUnpreparedComponent = ({
   const {
     data: observation,
     isError: observationError,
-    isLoading: observationLoading,
     isPending: observationPending,
   } = useObservation(observationId);
   const {
     data: attachmentUrl,
     isError: attachmentError,
-    isLoading: attachmentUrlLoading,
+    isPending: attachmentUrlPending,
   } = useAttachmentUrlQuery(
     observation.attachments.find(
       attachment => attachment.driveDiscoveryId === attachmentId,
@@ -38,7 +37,7 @@ const PhotoUnpreparedComponent = ({
     variant,
     !observationPending,
   );
-  const isLoading = observationLoading || attachmentUrlLoading;
+  const isLoading = observationPending || attachmentUrlPending;
   const isError = observationError || attachmentError;
 
   return (
@@ -49,8 +48,7 @@ const PhotoUnpreparedComponent = ({
         <AlertIcon size={96} />
       ) : (
         <Image
-          // @ts-ignore
-          src={attachmentUrl?.url}
+          src={attachmentUrl.url}
           style={styles.image}
           resizeMethod="scale"
           resizeMode={resizeMode}

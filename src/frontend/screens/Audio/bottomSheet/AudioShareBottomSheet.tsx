@@ -56,12 +56,6 @@ export const AudioShareBottomSheet: FC<AudioShareBottomSheet> = ({
 
   const bottomSheetItems = [
     {
-      icon: <MessagesIcon />,
-      label: formatMessage(m.messages),
-      onPress: async () => await handleSingleShare(Social.Sms, recordingUri),
-      withCircle: false,
-    },
-    {
       icon: <WhatsAppIcon />,
       label: formatMessage(m.whatsApp),
       onPress: async () =>

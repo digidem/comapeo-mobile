@@ -26,6 +26,7 @@ import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {MetricsProvider} from './MetricsContext';
 import {AppDiagnosticMetrics} from '../metrics/AppDiagnosticMetrics';
 import {DeviceDiagnosticMetrics} from '../metrics/DeviceDiagnosticMetrics';
+import {SessionInvitesProvider} from './SessionInvitesContext';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -60,11 +61,13 @@ export const AppProviders = ({
                         appMetrics={appMetrics}
                         deviceMetrics={deviceMetrics}>
                         <ActiveProjectProvider>
-                          <BottomSheetModalProvider>
-                            <PhotoPromiseProvider>
-                              <SecurityProvider>{children}</SecurityProvider>
-                            </PhotoPromiseProvider>
-                          </BottomSheetModalProvider>
+                          <SessionInvitesProvider>
+                            <BottomSheetModalProvider>
+                              <PhotoPromiseProvider>
+                                <SecurityProvider>{children}</SecurityProvider>
+                              </PhotoPromiseProvider>
+                            </BottomSheetModalProvider>
+                          </SessionInvitesProvider>
                         </ActiveProjectProvider>
                       </MetricsProvider>
                     </ApiProvider>

@@ -1272,38 +1272,38 @@
   "sharedComponents.GpsPill.searching": {
     "message": "Searching…"
   },
-  "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.canceled": {
-    "message": "Invite Canceled"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.close": {
-    "message": "Close"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.projectInviteCanceled": {
-    "message": "Your invitation to {projectName} has been canceled."
-  },
-  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.acceptInvite": {
-    "message": "Accept Invite"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.declineInvite": {
-    "message": "Decline Invite"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.invitedToJoin": {
-    "message": "You've been invited to join {projectName}"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.joinProject": {
-    "message": "Join Project {projectName}"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.goToMap": {
+  "sharedComponents.ProjectInviteBottomSheet.InviteAcceptedContent.goToMap": {
     "message": "Go To Map"
   },
-  "sharedComponents.ProjectInviteBottomSheet.goToSync": {
+  "sharedComponents.ProjectInviteBottomSheet.InviteAcceptedContent.goToSync": {
     "message": "Go To Sync"
   },
-  "sharedComponents.ProjectInviteBottomSheet.success": {
+  "sharedComponents.ProjectInviteBottomSheet.InviteAcceptedContent.success": {
     "message": "Success"
   },
-  "sharedComponents.ProjectInviteBottomSheet.youHaveJoined": {
+  "sharedComponents.ProjectInviteBottomSheet.InviteAcceptedContent.youHaveJoined": {
     "message": "You have joined {projectName}"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.InviteCancelledContent.canceled": {
+    "message": "Invite Canceled"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.InviteCancelledContent.close": {
+    "message": "Close"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.InviteCancelledContent.projectInviteCanceled": {
+    "message": "Your invitation to {projectName} has been canceled."
+  },
+  "sharedComponents.ProjectInviteBottomSheet.PendingInviteContent.acceptInvite": {
+    "message": "Accept Invite"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.PendingInviteContent.declineInvite": {
+    "message": "Decline Invite"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.PendingInviteContent.invitedToJoin": {
+    "message": "You've been invited to join {projectName}"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.PendingInviteContent.joinProject": {
+    "message": "Join Project {projectName}"
   },
   "sharedComponents.RoleWithIcon.coordinator": {
     "message": "Coordinator"

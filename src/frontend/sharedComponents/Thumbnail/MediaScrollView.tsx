@@ -5,7 +5,6 @@ import {Photo} from '../../contexts/PhotoPromiseContext/types';
 import {PhotoThumbnail} from './PhotoThumbnail';
 import {AudioThumbnail} from './AudioThumbnail';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
-import {Recording} from 'expo-av/build/Audio/Recording';
 import {AudioRecording} from '../../sharedTypes/audio.ts';
 
 const spacing = 10;
@@ -13,7 +12,7 @@ const minSize = 150;
 
 interface MediaScrollView {
   photos: (Partial<Photo> | undefined)[];
-  audioRecordings: any[];
+  audioRecordings: (AudioRecording | undefined)[];
   observationId?: string;
 }
 
@@ -48,6 +47,8 @@ export const MediaScrollView: FC<MediaScrollView> = props => {
       screen: 'Playback',
       params: {
         recordingUri: recording.uri,
+        observationId: recording.observationId,
+        attachmentId: recording.attachmentId,
         previewOnly: true,
       },
     });

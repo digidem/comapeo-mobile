@@ -107,6 +107,8 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
                       uri: attachmentData.url,
                       createdAt: 0,
                       duration: 0,
+                      attachmentId: attachmentData.driveDiscoveryId,
+                      observationId: observationId,
                     };
               })}
               photos={photoAttachmentsUrls.map(attachmentData => {

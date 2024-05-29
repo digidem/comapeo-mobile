@@ -2,6 +2,7 @@ import {
   useMutation,
   useSuspenseQuery,
   useQueryClient,
+  useQuery,
 } from '@tanstack/react-query';
 import {ObservationValue} from '@mapeo/schema';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
@@ -30,6 +31,19 @@ export function useObservation(observationId: string) {
       if (!project) throw new Error('Project instance does not exist');
       return project.observation.getByDocId(observationId);
     },
+  });
+}
+
+export function useMaybeObservation(observationId?: string) {
+  const project = useActiveProject();
+
+  return useQuery({
+    queryKey: [OBSERVATION_KEY, observationId],
+    queryFn: async () => {
+      if (!project) throw new Error('Project instance does not exist');
+      return project.observation.getByDocId(observationId!);
+    },
+    enabled: !!observationId,
   });
 }
 

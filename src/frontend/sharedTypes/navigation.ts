@@ -33,6 +33,8 @@ export type AudioStackParamList = {
   Playback: {
     previewOnly?: boolean;
     recordingUri: string;
+    attachmentId?: string;
+    observationId?: string;
   };
 };
 

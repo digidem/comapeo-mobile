@@ -6,7 +6,6 @@ import {
   NEW_DARK_GREY,
   WHITE,
 } from '../../lib/styles.ts';
-import {StatusBar} from 'expo-status-bar';
 import React from 'react';
 import {Duration} from 'luxon';
 import PlayArrow from '../../images/playArrow.svg';
@@ -55,7 +54,8 @@ export const AudioPlaybackScreen: React.FC<
   });
 
   const navigation = useNavigationFromRoot();
-  const {recordingUri, previewOnly} = params.route.params;
+  const {recordingUri, previewOnly, attachmentId, observationId} =
+    params.route.params;
   const observation = useDraftObservation();
 
   const {
@@ -133,6 +133,8 @@ export const AudioPlaybackScreen: React.FC<
         isOpen={isOpenDeleteBottomSheet}
         closeSheet={closeDeleteBottomSheet}
         sheetRef={deleteAudioSheetRef}
+        observationId={observationId}
+        attachmentId={attachmentId}
         recordingUri={recordingUri}
         previewOnly={previewOnly}
       />

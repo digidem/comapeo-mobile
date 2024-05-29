@@ -12,37 +12,71 @@ import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types
 import * as RNFS from '@dr.pogodin/react-native-fs';
 import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes.ts';
 import {useDraftObservation} from '../../../hooks/useDraftObservation.ts';
+import {
+  useEditObservation,
+  useMaybeObservation,
+} from '../../../hooks/server/observations.ts';
 
 interface AudioRecordingDeleteBottomSheet {
   sheetRef: React.RefObject<BottomSheetModalMethods>;
   isOpen: boolean;
   recordingUri: string;
   previewOnly?: boolean;
+  attachmentId?: string;
+  observationId?: string;
   closeSheet: () => void;
 }
 
 export const AudioRecordingDeleteBottomSheet: FC<
   AudioRecordingDeleteBottomSheet
-> = ({sheetRef, isOpen, closeSheet, recordingUri, previewOnly}) => {
+> = ({
+  sheetRef,
+  isOpen,
+  closeSheet,
+  recordingUri,
+  attachmentId,
+  observationId,
+  previewOnly,
+}) => {
   const {formatMessage} = useIntl();
   const navigation = useNavigationFromRoot();
-  const observation = useDraftObservation();
+  const draftObservation = useDraftObservation();
+  const {data: observation, isPending: observationPending} =
+    useMaybeObservation(observationId);
+  const editObservation = useEditObservation();
 
   const handleRecordingDelete = async () => {
     closeSheet();
-    if (previewOnly) {
-      observation.removeAudioRecording(recordingUri);
+    if (attachmentId && observationId) {
+      console.log(observation);
+      console.log(attachmentId);
+      editObservation.mutate({
+        versionId: observation!.versionId,
+        value: {
+          ...observation!,
+          attachments: observation!.attachments.filter(
+            attachment => attachment.driveDiscoveryId !== attachmentId,
+          ),
+        },
+      });
       navigation.goBack();
-    } else {
-      await RNFS.unlink(new URL(recordingUri).pathname);
-      navigation.replace('ObservationEdit');
+      return;
     }
+    if (previewOnly) {
+      draftObservation.removeAudioRecording(recordingUri);
+      navigation.goBack();
+      return;
+    }
+    await RNFS.unlink(new URL(recordingUri).pathname);
+    navigation.replace('ObservationEdit');
   };
 
   return (
     <BottomSheetModal ref={sheetRef} isOpen={isOpen}>
       <BottomSheetContent
-        loading={false}
+        loading={
+          !!attachmentId && (observationPending || editObservation.isPending)
+        }
         buttonConfigs={[
           {
             variation: 'filled',

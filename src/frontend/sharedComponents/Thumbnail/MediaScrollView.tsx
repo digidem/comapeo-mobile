@@ -5,6 +5,8 @@ import {Photo} from '../../contexts/PhotoPromiseContext/types';
 import {PhotoThumbnail} from './PhotoThumbnail';
 import {AudioThumbnail} from './AudioThumbnail';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
+import {Recording} from 'expo-av/build/Audio/Recording';
+import {AudioRecording} from '../../sharedTypes/audio.ts';
 
 const spacing = 10;
 const minSize = 150;
@@ -35,6 +37,22 @@ export const MediaScrollView: FC<MediaScrollView> = props => {
     return;
   }
 
+  const handleAudioPress = (recording?: AudioRecording) => {
+    if (!recording?.uri) {
+      console.warn(
+        'Tried to press recording without URI (recording may not have been loaded)',
+      );
+      return;
+    }
+    navigation.navigate('Audio', {
+      screen: 'Playback',
+      params: {
+        recordingUri: recording.uri,
+        previewOnly: true,
+      },
+    });
+  };
+
   const windowWidth = Dimensions.get('window').width;
   // Get a thumbnail size so there is always 1/2 of a thumbnail off the right of
   // the screen.
@@ -54,21 +72,7 @@ export const MediaScrollView: FC<MediaScrollView> = props => {
           key={index}
           recording={recording}
           size={size}
-          onPress={() => {
-            if (!recording?.uri) {
-              console.warn(
-                'Tried to press recording without URI (recording may not have been loaded)',
-              );
-              return;
-            }
-            navigation.navigate('Audio', {
-              screen: 'Playback',
-              params: {
-                recordingUri: recording.uri,
-                previewOnly: true,
-              },
-            });
-          }}
+          onPress={() => handleAudioPress(recording)}
           style={styles.thumbnail}
         />
       ))}

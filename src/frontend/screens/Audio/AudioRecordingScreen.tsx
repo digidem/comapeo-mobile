@@ -7,8 +7,18 @@ import {AnimatedBackground} from './AnimatedBackground.tsx';
 import {useAudioRecordingContext} from '../../contexts/AudioRecordingContext.tsx';
 import {AnimatedTimer} from './AnimatedTimer.tsx';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {defineMessages, useIntl} from 'react-intl';
+import {DateTime, Duration} from 'luxon';
+import {time} from 'expo-updates/build-cli/utils/log';
 
 export const MAX_DURATION = 300_000;
+
+const m = defineMessages({
+  timeLeft: {
+    id: 'screens.Audio.Recording.timeLeft',
+    defaultMessage: 'Less than {minutes} minutes left ',
+  },
+});
 
 export const AudioRecordingScreen: React.FC<
   NativeStackScreenProps<AudioStackParamList, 'Recording'>
@@ -36,11 +46,18 @@ export const AudioRecordingScreen: React.FC<
       recordingUri: recording?.getURI()!,
     });
   };
+  const {formatMessage} = useIntl();
+
+  const minutesLeft = Duration.fromMillis(MAX_DURATION)
+    .minus({millisecond: timeElapsed})
+    .as('minutes');
 
   return (
     <View style={styles.container}>
       <AnimatedTimer elapsedTime={elapsedTimeValue} />
-      <Text style={styles.textStyle}>Less than 5 minutes left</Text>
+      <Text style={styles.textStyle}>
+        {formatMessage(m.timeLeft, {minutes: Math.floor(minutesLeft + 1)})}
+      </Text>
       <Pressable
         onPress={handleStopRecordingButtonPress}
         style={styles.buttonWrapperStyle}>

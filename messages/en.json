@@ -25,6 +25,9 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "Discard observation?"
   },
+  "AudioPlaybackScreen.DeleteAudioRecordingModal.audioRecording": {
+    "message": "Audio Recording"
+  },
   "AudioPlaybackScreen.DeleteAudioRecordingModal.cancelButtonText": {
     "message": "Cancel"
   },
@@ -36,12 +39,6 @@
   },
   "AudioPlaybackScreen.DeleteAudioRecordingModal.deleteTitle": {
     "message": "Delete?"
-  },
-  "AudioPlaybackScreen.DeleteAudioRecordingModal.recordAnother": {
-    "message": "Record Another"
-  },
-  "AudioPlaybackScreen.DeleteAudioRecordingModal.returnToEditor": {
-    "message": "Return to Editor"
   },
   "AudioPlaybackScreen.DeleteAudioRecordingModal.successDescription": {
     "message": "Your <bold>{audioRecording}</bold> was added."
@@ -63,6 +60,15 @@
   },
   "AudioPlaybackScreen.ShareAudioRecording.title": {
     "message": "Share via"
+  },
+  "AudioPlaybackScreen.SuccessAudioRecordingModal.audioRecording": {
+    "message": "Audio Recording"
+  },
+  "AudioPlaybackScreen.SuccessAudioRecordingModal.recordAnother": {
+    "message": "Record Another"
+  },
+  "AudioPlaybackScreen.SuccessAudioRecordingModal.returnToEditor": {
+    "message": "Return to Editor"
   },
   "Modal.DiscardTrack.description": {
     "message": "Your Track will not be saved. This cannot be undone."

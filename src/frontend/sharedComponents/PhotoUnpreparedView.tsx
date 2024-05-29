@@ -46,9 +46,9 @@ const PhotoUnpreparedComponent = ({
   return (
     <Pressable onPress={onPress} style={[styles.container, style]}>
       {isLoading ? (
-        <ActivityIndicator />
+        <ActivityIndicator size="large" />
       ) : isError ? (
-        <AlertIcon />
+        <AlertIcon size={96} />
       ) : (
         <Image
           // @ts-ignore

@@ -945,15 +945,12 @@
   "screens.Sync.ProjectSyncDisplay.upToDate": {
     "message": "Up to Date! No data to Sync"
   },
-  "sharedComponents.DeviceIconWithName.Disconnected": {
-    "message": "Disconnected"
-  },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",
     "message": "Show Options"
   },
-  "sharedComponents.DeviceCard.ThisDevice": {
-    "message": "This Device!"
+  "sharedComponents.DeviceIconWithName.Disconnected": {
+    "message": "Disconnected"
   },
   "sharedComponents.DeviceIconWithName.thisDevice": {
     "message": "This Device!"

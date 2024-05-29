@@ -35,7 +35,6 @@ export const MediaScrollView: FC<MediaScrollView> = props => {
       attachmentId: photo.id!,
       observationId: props.observationId,
     });
-    return;
   }
 
   if (photos?.length === 0) return null;

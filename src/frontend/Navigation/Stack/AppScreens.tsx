@@ -53,10 +53,12 @@ import {
 import {HomeTabs} from '../Tab';
 import {SaveTrackScreen} from '../../screens/SaveTrack/SaveTrackScreen';
 import {ObservationFields} from '../../screens/ObservationFields';
-import {LIGHT_GREY} from '../../lib/styles';
+import {LIGHT_GREY, WHITE} from '../../lib/styles';
 import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSettings';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {PhotoPreviewModal} from '../../screens/Observation/PhotoPreviewModal.tsx';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -113,7 +115,27 @@ export const createDefaultScreenGroup = ({
       component={AddPhotoScreen}
       options={{headerShown: false}}
     />
-    <RootStack.Screen name="PhotoPreviewModal" component={PhotoPreviewModal} />
+    <RootStack.Screen
+      name="PhotoPreviewModal"
+      component={PhotoPreviewModal}
+      options={{
+        headerTitle: '',
+        headerTransparent: true,
+        headerStyle: {backgroundColor: 'transparent'},
+        headerLeft: () => {
+          // eslint-disable-next-line react-hooks/rules-of-hooks -- it's component in fact
+          const navigation = useNavigationFromRoot();
+          return (
+            <MaterialIcons
+              name={'west'}
+              size={24}
+              color={WHITE}
+              onPress={() => navigation.goBack()}
+            />
+          );
+        },
+      }}
+    />
     <RootStack.Screen
       name="Security"
       component={Security}

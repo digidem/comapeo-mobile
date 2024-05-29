@@ -57,21 +57,27 @@ import {LIGHT_GREY} from '../../lib/styles';
 import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSettings';
 import {AudioStack} from './AudioStack.tsx';
 import {AudioRecordingContextProvider} from '../../contexts/AudioRecordingContext.tsx';
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 
 export const TAB_BAR_HEIGHT = 70;
 
 // **NOTE**: No hooks allowed here (this is not a component, it is a function
 // that returns a react element)
-export const createDefaultScreenGroup = (
-  intl: (title: MessageDescriptor) => string,
-) => (
+export const createDefaultScreenGroup = ({
+  intl,
+}: {
+  intl: (title: MessageDescriptor) => string;
+}) => (
   <RootStack.Group key="default">
     <RootStack.Screen
       name="Home"
       options={{headerShown: false}}
       children={() => (
         <SharedLocationContextProvider>
-          <HomeTabs />
+          {/* This provider allows the bottoms sheet used by tracks to open up behind the drawers */}
+          <BottomSheetModalProvider>
+            <HomeTabs />
+          </BottomSheetModalProvider>
         </SharedLocationContextProvider>
       )}
     />

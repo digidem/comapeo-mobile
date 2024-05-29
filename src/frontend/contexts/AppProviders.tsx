@@ -19,7 +19,7 @@ import {ServerLoading} from '../ServerLoading';
 import {ApiProvider} from './ApiContext';
 import {MessagePortLike} from '../lib/MessagePortLike';
 import {IntlProvider} from './IntlContext';
-import {AudioRecordingContextProvider} from './AudioRecordingContext.tsx';
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -46,9 +46,11 @@ export const AppProviders = ({
                 <LocalDiscoveryProvider value={localDiscoveryController}>
                   <ApiProvider api={mapeoApi}>
                     <ActiveProjectProvider>
-                      <PhotoPromiseProvider>
-                        <SecurityProvider>{children}</SecurityProvider>
-                      </PhotoPromiseProvider>
+                      <BottomSheetModalProvider>
+                        <PhotoPromiseProvider>
+                          <SecurityProvider>{children}</SecurityProvider>
+                        </PhotoPromiseProvider>
+                      </BottomSheetModalProvider>
                     </ActiveProjectProvider>
                   </ApiProvider>
                 </LocalDiscoveryProvider>

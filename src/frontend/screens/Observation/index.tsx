@@ -14,7 +14,7 @@ import {InsetMapView} from './InsetMapView';
 import {ButtonFields} from './Buttons';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
-import {ThumbnailScrollView} from '../../sharedComponents/Thumbnail/index.tsx';
+import {MediaScrollView} from '../../sharedComponents/Thumbnail/MediaScrollView';
 import {useAttachmentUrlQueries} from '../../hooks/server/media.ts';
 
 const m = defineMessages({
@@ -61,7 +61,6 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   const {lat, lon, createdBy} = observation;
   const isMine = deviceId === createdBy;
 
-  // Currently only show photo attachments
   const photoAttachments = observation.attachments.filter(
     attachment => attachment.type === 'photo',
   );
@@ -100,7 +99,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
             </View>
           ) : null}
           {(photoAttachmentsUrls.length > 0 || recordings.length > 0) && (
-            <ThumbnailScrollView
+            <MediaScrollView
               audioRecordings={audioUrls.map(attachmentData => {
                 return !attachmentData
                   ? undefined

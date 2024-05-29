@@ -2,12 +2,15 @@ import React, {FC} from 'react';
 import {View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {IconButton} from './IconButton';
-import {ObservationListIcon, SyncIconCircle} from './icons';
+import {SyncIconCircle} from './icons';
 import {GPSPill} from './GPSPill';
 import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
 import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
+import {DrawerMenuIcon} from './icons/DrawerMenuIcon';
 
-export const HomeHeader: FC<BottomTabHeaderProps> = ({navigation}) => {
+export const HomeHeader: FC<
+  BottomTabHeaderProps & {openDrawer: () => void}
+> = ({navigation, openDrawer}) => {
   const insets = useSafeAreaInsets();
   const styles = createStyles(insets);
 
@@ -25,13 +28,7 @@ export const HomeHeader: FC<BottomTabHeaderProps> = ({navigation}) => {
         <SyncIconCircle />
       </IconButton>
       <GPSPill navigation={navigation} />
-      <IconButton
-        onPress={() => {
-          navigation.navigate('Settings');
-        }}
-        testID="observationListButton">
-        <ObservationListIcon />
-      </IconButton>
+      <DrawerMenuIcon onPress={openDrawer} />
     </View>
   );
 };

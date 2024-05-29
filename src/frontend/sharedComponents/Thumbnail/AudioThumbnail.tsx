@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ViewStyle,
 } from 'react-native';
-import {BLACK, NEW_DARK_GREY, NEW_LIGHT_GREY, WHITE} from '../../lib/styles';
+import {BLACK, NEW_DARK_GREY, VERY_LIGHT_GREY, WHITE} from '../../lib/styles';
 import Play from '../../images/observationEdit/Play.svg';
 import {FormattedRelativeTime} from 'react-intl';
 import {Duration} from 'luxon';
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: WHITE,
-    borderColor: NEW_LIGHT_GREY,
+    borderColor: VERY_LIGHT_GREY,
     borderWidth: 1,
     overflow: 'hidden',
   },

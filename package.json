@@ -39,10 +39,11 @@
     "@react-native-community/netinfo": "11.1.0",
     "@react-native-picker/picker": "2.6.1",
     "@react-navigation/bottom-tabs": "^6.3.1",
+    "@react-navigation/drawer": "^6.6.15",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
     "@rnmapbox/maps": "^10.1.19",
-    "@sentry/react-native": "^5.22.2",
+    "@sentry/react-native": "~5.20.0",
     "@tanstack/react-query": "^5.12.2",
     "@types/luxon": "^3.4.2",
     "assert": "^2.0.0",
@@ -99,7 +100,8 @@
     "uint8array-extras": "^0.5.0",
     "utm": "^1.1.1",
     "validate-color": "^2.2.4",
-    "zustand": "^4.4.6"
+    "zustand": "^4.4.6",
+    "expo-av": "^13.10.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

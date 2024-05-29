@@ -1,7 +1,7 @@
 import React, {FC, useCallback} from 'react';
 import {View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
-import {ThumbnailScrollView} from '../../sharedComponents/Thumbnail';
+import {MediaScrollView} from '../../sharedComponents/Thumbnail/MediaScrollView';
 import {ActionTab} from '../../sharedComponents/ActionTab';
 import PhotoIcon from '../../images/observationEdit/Photo.svg';
 import AudioIcon from '../../images/observationEdit/Audio.svg';
@@ -46,29 +46,34 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
   const {formatMessage: t} = useIntl();
   const {usePreset} = useDraftObservation();
   const preset = usePreset();
-  const {photos, audioRecordings} = usePersistedDraftObservation(
+  const {photos, audioRecordings, observationId} = usePersistedDraftObservation(
     store => store,
   );
-  const {openSheet, sheetRef, isOpen, closeSheet} = useBottomSheetModal({
+  const {
+    openSheet: openAudioPermissionSheet,
+    sheetRef: audioPermissionSheetRef,
+    isOpen: isAudioPermissionSheetOpen,
+    closeSheet: closeAudioPermissionSheet,
+  } = useBottomSheetModal({
     openOnMount: false,
   });
   const [permissionResponse] = Audio.usePermissions({request: false});
 
-  const handleCameraPress = useCallback(() => {
+  const handleCameraPress = () => {
     navigation.navigate('AddPhoto');
-  }, [navigation]);
+  };
 
-  const handleDetailsPress = useCallback(() => {
+  const handleDetailsPress = () => {
     navigation.navigate('ObservationFields', {question: 1});
-  }, [navigation]);
+  };
 
   const handleAudioPress = useCallback(() => {
     if (permissionResponse?.granted) {
       navigation.navigate('Audio', {screen: 'PrepareRecording'});
     } else {
-      openSheet();
+      openAudioPermissionSheet();
     }
-  }, [navigation, openSheet, permissionResponse?.granted]);
+  }, [navigation, openAudioPermissionSheet, permissionResponse?.granted]);
 
   const bottomSheetItems = [
     {
@@ -98,16 +103,17 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
   return (
     <>
       <View>
-        <ThumbnailScrollView
+        <MediaScrollView
           photos={photos}
           audioRecordings={audioRecordings}
+          observationId={observationId}
         />
         <ActionTab items={bottomSheetItems} />
       </View>
       <PermissionAudio
-        closeSheet={closeSheet}
-        isOpen={isOpen}
-        sheetRef={sheetRef}
+        closeSheet={closeAudioPermissionSheet}
+        isOpen={isAudioPermissionSheetOpen}
+        sheetRef={audioPermissionSheetRef}
       />
     </>
   );

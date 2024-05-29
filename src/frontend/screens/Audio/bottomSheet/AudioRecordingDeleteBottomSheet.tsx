@@ -48,8 +48,6 @@ export const AudioRecordingDeleteBottomSheet: FC<
   const handleRecordingDelete = async () => {
     closeSheet();
     if (attachmentId && observationId) {
-      console.log(observation);
-      console.log(attachmentId);
       editObservation.mutate({
         versionId: observation!.versionId,
         value: {

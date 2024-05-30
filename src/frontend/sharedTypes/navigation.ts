@@ -38,12 +38,10 @@ export type RootStackParamsList = {
   LanguageSettings: undefined;
   CoordinateFormat: undefined;
   Experiments: undefined;
-  PhotosModal: {
-    photoIndex: number;
-    observationId?: string;
-    editing: boolean;
+  PhotoPreviewModal: {
+    attachmentId: string;
+    observationId: string;
   };
-  PhotoView: undefined;
   PresetChooser: undefined;
   AddPhoto: undefined;
   Observation: {observationId: string};

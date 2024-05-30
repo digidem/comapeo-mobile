@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import {View, Text, StyleSheet} from 'react-native';
 import Location from '../../images/Location.svg';
@@ -9,6 +9,7 @@ import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersis
 import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings';
 import {Divider} from '../../sharedComponents/Divider';
 import {useLocation} from '../../hooks/useLocation';
+import {useDraftObservation} from '../../hooks/useDraftObservation';
 
 const m = defineMessages({
   searching: {
@@ -19,11 +20,38 @@ const m = defineMessages({
 });
 
 export const LocationView = () => {
-  const {location} = useLocation();
   const observationValue = usePersistedDraftObservation(
     observationValueSelector,
   );
+  const observationId = usePersistedDraftObservation(
+    store => store.observationId,
+  );
+  const {location} = useLocation(({accuracy}) => {
+    // if an observationId exists, the user is editting and already save observation so we do not want to update
+    // if the manual location has been set, we also do not want to update
+    if (observationId || observationValue?.metadata.manualLocation)
+      return false;
+    return accuracy === 'better';
+  });
   const coordinateFormat = usePersistedSettings(coordinateFormatSelector);
+  const {updateObservationPosition} = useDraftObservation();
+
+  useEffect(() => {
+    const newCoord = !location
+      ? undefined
+      : Object.entries(location.coords).map(
+          ([key, val]) => [key, val === null ? undefined : val] as const,
+        );
+
+    updateObservationPosition({
+      position: {
+        mocked: false,
+        coords: !newCoord ? undefined : Object.fromEntries(newCoord),
+        timestamp: location?.timestamp.toString(),
+      },
+      manualLocation: false,
+    });
+  }, [location, updateObservationPosition]);
 
   const coordinateInfo = observationValue?.metadata.manualLocation
     ? {

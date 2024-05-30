@@ -59,6 +59,7 @@ import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {PhotoPreviewModal} from '../../screens/Observation/PhotoPreviewModal.tsx';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
+import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -122,18 +123,9 @@ export const createDefaultScreenGroup = ({
         headerTitle: '',
         headerTransparent: true,
         headerStyle: {backgroundColor: 'transparent'},
-        headerLeft: () => {
-          // eslint-disable-next-line react-hooks/rules-of-hooks -- it's component in fact
-          const navigation = useNavigationFromRoot();
-          return (
-            <MaterialIcons
-              name={'west'}
-              size={24}
-              color={WHITE}
-              onPress={() => navigation.goBack()}
-            />
-          );
-        },
+        headerLeft: props => (
+          <CustomHeaderLeft tintColor={WHITE} headerBackButtonProps={props} />
+        ),
       }}
     />
     <RootStack.Screen

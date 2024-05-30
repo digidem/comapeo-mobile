@@ -5,6 +5,8 @@ import {AlertIcon} from './icons';
 import type {PhotoVariant, ViewStyleProp} from '../sharedTypes';
 import {useAttachmentUrlQuery} from '../hooks/server/media';
 import {useObservation} from '../hooks/server/observations.ts';
+import {UIActivityIndicator} from 'react-native-indicators';
+import {BLACK, WHITE} from '../lib/styles.ts';
 
 type Props = {
   observationId: string;
@@ -43,7 +45,7 @@ const PhotoUnpreparedComponent = ({
   return (
     <View style={[styles.container, style]}>
       {isLoading ? (
-        <ActivityIndicator size="large" />
+        <UIActivityIndicator color={WHITE} />
       ) : isError ? (
         <AlertIcon size={96} />
       ) : (
@@ -65,6 +67,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: BLACK,
   },
   image: {
     flex: 1,

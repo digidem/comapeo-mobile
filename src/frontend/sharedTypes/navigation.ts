@@ -39,8 +39,10 @@ export type RootStackParamsList = {
   CoordinateFormat: undefined;
   Experiments: undefined;
   PhotoPreviewModal: {
-    attachmentId: string;
-    observationId: string;
+    attachmentId?: string;
+    observationId?: string;
+    originalPhotoUri?: string;
+    deletable?: boolean;
   };
   PresetChooser: undefined;
   AddPhoto: undefined;

@@ -1,18 +1,18 @@
-import {NativeRootNavigationProps} from '../../sharedTypes/navigation.ts';
+import {NativeRootNavigationProps} from '../sharedTypes/navigation.ts';
 import React, {FC, useEffect, useState} from 'react';
-import {PhotoUnpreparedView} from '../../sharedComponents/PhotoUnpreparedView.tsx';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
+import {PhotoUnpreparedView} from '../sharedComponents/PhotoUnpreparedView.tsx';
+import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes.ts';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {WHITE} from '../../lib/styles.ts';
+import {WHITE} from '../lib/styles.ts';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {
   BottomSheetContent,
   BottomSheetModal,
   useBottomSheetModal,
-} from '../../sharedComponents/BottomSheetModal';
+} from '../sharedComponents/BottomSheetModal';
 import {defineMessages, useIntl} from 'react-intl';
-import {useDraftObservation} from '../../hooks/useDraftObservation.ts';
-import {PhotoPreparedView} from '../../sharedComponents/PhotoPreparedView.tsx';
+import {useDraftObservation} from '../hooks/useDraftObservation.ts';
+import {PhotoPreparedView} from '../sharedComponents/PhotoPreparedView.tsx';
 
 const m = defineMessages({
   headerDeleteButtonText: {

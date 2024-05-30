@@ -1,11 +1,10 @@
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation.ts';
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {PhotoUnpreparedView} from '../../sharedComponents/PhotoUnpreparedView.tsx';
-import {useFocusEffect} from '@react-navigation/native';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {WHITE} from '../../lib/styles.ts';
-import {Pressable, StyleSheet, Text} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {
   BottomSheetContent,
   BottomSheetModal,
@@ -55,23 +54,25 @@ export const PhotoPreviewModal: FC<
     closeSheet();
   };
 
-  useFocusEffect(() => {
+  useEffect(() => {
     navigation.setOptions({
       headerShown: showHeader,
       // eslint-disable-next-line react/no-unstable-nested-components -- it's correct syntax
       headerRight: () =>
         deletable ? (
-          <Pressable onPress={openSheet} style={styles.deleteButtonWrapper}>
+          <TouchableOpacity
+            onPress={openSheet}
+            style={styles.deleteButtonWrapper}>
             <MaterialIcons name="delete" size={18} color={WHITE} />
             <Text style={styles.deleteButtonText}>
               {t(m.headerDeleteButtonText)}
             </Text>
-          </Pressable>
+          </TouchableOpacity>
         ) : (
           <></>
         ),
     });
-  });
+  }, [deletable, navigation, openSheet, showHeader, t]);
 
   return (
     <>
@@ -119,11 +120,11 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 1,
     borderColor: WHITE,
-    borderRadius: 3,
+    borderRadius: 24,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 4,
+    paddingHorizontal: 8,
     paddingVertical: 6,
   },
   deleteButtonText: {

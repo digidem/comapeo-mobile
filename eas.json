@@ -22,7 +22,9 @@
       "distribution": "internal",
       "channel": "preview",
       "env": {
-        "APP_VARIANT": "test"
+        "APP_VARIANT": "test",
+        "METRICS_URL": "http://localhost:4567/test-metrics",
+        "METRICS_API_KEY_ENCODED": "246_255_255_242_241_2"
       },
       "android": {
         "image": "latest",
@@ -41,7 +43,9 @@
       },
       "channel": "production",
       "env": {
-        "APP_VARIANT": "production"
+        "APP_VARIANT": "production",
+        "METRICS_URL": "https://mapeo-metrics.ehahn.workers.dev/metrics",
+        "METRICS_API_KEY_ENCODED": "242_224_234_198_247_216_245_0_209_199_215_209_241_3_216_198_2_229_199_209_194_225_205_205"
       }
     }
   },

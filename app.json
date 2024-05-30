@@ -43,6 +43,12 @@
           "organization": "awana-digital"
         }
       ],
+      [
+        "expo-font",
+        {
+          "fonts": ["./public/Rubik-Regular.ttf", "./public/Rubik-Medium.ttf"]
+        }
+      ],
       ["./expo-config-plugins/removeExpoInputStyles.js"]
     ],
     "android": {

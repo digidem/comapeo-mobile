@@ -1,4 +1,4 @@
-import React, {FC, useCallback} from 'react';
+import React, {FC, useCallback, useEffect, useState} from 'react';
 import {View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {MediaScrollView} from '../../sharedComponents/Thumbnail/MediaScrollView';
@@ -13,6 +13,7 @@ import {AppStackParamsList} from '../../sharedTypes/navigation';
 import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
 import {PermissionAudio} from '../../sharedComponents/PermissionAudio';
 import {Audio} from 'expo-av';
+import {PermissionResponse} from 'expo-av/build/Audio';
 
 const m = defineMessages({
   audioButton: {
@@ -45,7 +46,11 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
 }) => {
   const {formatMessage: t} = useIntl();
   const {usePreset} = useDraftObservation();
+  const [permissionResponse] = Audio.usePermissions({request: false});
   const preset = usePreset();
+
+  const [permissionData, setPermissionData] =
+    useState<PermissionResponse | null>(null);
   const {photos, audioRecordings, observationId} = usePersistedDraftObservation(
     store => store,
   );
@@ -57,7 +62,6 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
   } = useBottomSheetModal({
     openOnMount: false,
   });
-  const [permissionResponse] = Audio.usePermissions({request: false});
 
   const handleCameraPress = () => {
     navigation.navigate('AddPhoto');
@@ -68,13 +72,13 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
   };
 
   const handleAudioPress = useCallback(() => {
-    if (permissionResponse?.granted) {
+    if (permissionData?.granted) {
       //TODO: Navigate to specific screen
       // navigation.navigate('Home', {screen: 'Map'});
     } else {
       openAudioPermissionSheet();
     }
-  }, [navigation, openAudioPermissionSheet, permissionResponse?.granted]);
+  }, [openAudioPermissionSheet, permissionData]);
 
   const bottomSheetItems = [
     {
@@ -101,6 +105,10 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
     });
   }
 
+  useEffect(() => {
+    setPermissionData(permissionResponse);
+  }, [permissionResponse]);
+
   return (
     <>
       <View>
@@ -115,6 +123,8 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
         closeSheet={closeAudioPermissionSheet}
         isOpen={isAudioPermissionSheetOpen}
         sheetRef={audioPermissionSheetRef}
+        permissionData={permissionData}
+        setPermissionData={setPermissionData}
       />
     </>
   );

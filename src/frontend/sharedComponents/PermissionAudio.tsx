@@ -1,4 +1,10 @@
-import React, {FC, useCallback, useEffect, useState} from 'react';
+import React, {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useCallback,
+  useEffect,
+} from 'react';
 import {View, Text, StyleSheet, Linking, AppState} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
@@ -7,8 +13,7 @@ import {BLACK, COMAPEO_BLUE, WHITE} from '../lib/styles';
 import {BottomSheetModal} from './BottomSheetModal';
 import {Button} from './Button';
 import {Audio} from 'expo-av';
-import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
-import {PermissionResponse, PermissionStatus} from 'expo-av/build/Audio';
+import {PermissionStatus, PermissionResponse} from 'expo-av/build/Audio';
 
 const handleOpenSettings = () => {
   Linking.openSettings();
@@ -18,19 +23,20 @@ interface PermissionAudio {
   sheetRef: React.RefObject<BottomSheetModalMethods>;
   closeSheet: () => void;
   isOpen: boolean;
+  permissionData: PermissionResponse | null;
+  setPermissionData: Dispatch<SetStateAction<Audio.PermissionResponse | null>>;
 }
 
 export const PermissionAudio: FC<PermissionAudio> = props => {
-  const {sheetRef, closeSheet, isOpen} = props;
+  const {sheetRef, closeSheet, isOpen, permissionData, setPermissionData} =
+    props;
   const {formatMessage: t} = useIntl();
-  const navigation = useNavigationFromRoot();
-  const [permissionData, setPermissionData] = useState<PermissionResponse>();
 
   const handlePermissionGranted = useCallback(() => {
     closeSheet();
     //TODO:Navigate to specific screen
     // navigation.navigate('Home', {screen: 'Map'});
-  }, [closeSheet, navigation]);
+  }, [closeSheet]);
 
   const handlePermissionNotGranted = useCallback(async () => {
     const response = await Audio.requestPermissionsAsync();
@@ -38,7 +44,7 @@ export const PermissionAudio: FC<PermissionAudio> = props => {
     if (response.granted) {
       handlePermissionGranted();
     }
-  }, [handlePermissionGranted]);
+  }, [handlePermissionGranted, setPermissionData]);
 
   const handlePermission = useCallback(async () => {
     if (permissionData?.granted) {
@@ -55,10 +61,13 @@ export const PermissionAudio: FC<PermissionAudio> = props => {
 
   useEffect(() => {
     const subscription = AppState.addEventListener('focus', () =>
-      Audio.getPermissionsAsync().then(setPermissionData),
+      Audio.getPermissionsAsync().then(permission => {
+        setPermissionData(permission);
+        if (permission.granted) handlePermissionGranted();
+      }),
     );
     return () => subscription.remove();
-  }, []);
+  }, [handlePermissionGranted, setPermissionData]);
 
   return (
     <BottomSheetModal

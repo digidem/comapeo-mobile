@@ -40,7 +40,13 @@ export function useCreateProject() {
   return useMutation({
     mutationKey: [CREATE_PROJECT_KEY],
     mutationFn: (opts?: {name?: string; configPath?: string}) => {
-      return api.createProject(opts);
+      if (opts) {
+        return api.createProject(opts);
+      } else {
+        // Have to avoid passing `undefined` explicitly
+        // See https://github.com/digidem/comapeo-mobile/issues/392
+        return api.createProject();
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({

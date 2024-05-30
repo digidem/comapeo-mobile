@@ -61,7 +61,6 @@ export class LocationStore {
       this.#locationSubscription = await watchPositionAsync(
         {accuracy: Accuracy.BestForNavigation},
         location => {
-          console.log('---SUBSCRIPTION FIRED---');
           this.#state = {error: null, location};
 
           for (const s of this.#subscribers) {

@@ -46,7 +46,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
         <PresetAndLocationHeader isNew={isNew} />
         <DescriptionField />
       </ScrollView>
-      <ThumbnailAndActionTab navigation={navigation} />
+      {/* <ThumbnailAndActionTab navigation={navigation} /> */}
       <ErrorBottomSheet error={error} clearError={() => setError(null)} />
     </View>
   );

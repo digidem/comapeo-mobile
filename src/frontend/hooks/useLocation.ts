@@ -3,8 +3,9 @@ import CheapRuler from 'cheap-ruler';
 import {type LocationObject} from 'expo-location';
 
 import {useLocationStore} from '../contexts/LocationStoreContext';
+import {useLocationProviderStatus} from './useLocationProviderStatus';
 
-type Accuracy = 'better' | 'worse' | 'unchanged';
+type Accuracy = 'better' | 'worse' | 'unchanged' | 'stale';
 
 /**
  * Represents the changes in relevant location information since the last time the _hook subscriber_ accepted a new location update
@@ -19,7 +20,7 @@ export interface ParameterChanges {
    */
   time: number;
   /**
-   * Amount of time elapsed in milliseconds
+   * Whether the accuracy has improved, become worse, or remained the same
    */
   accuracy: Accuracy;
 }
@@ -48,6 +49,9 @@ export function useLocation(
   shouldAcceptUpdate: ShouldAcceptUpdateCheck = DEFAULT_SHOULD_ACCEPT_UPDATE,
 ) {
   const locationStore = useLocationStore();
+  const locationProviderStatus = useLocationProviderStatus();
+  const locationServicesEnabled =
+    !!locationProviderStatus?.locationServicesEnabled;
 
   const prevState = useRef(locationStore.getSnapshot());
 
@@ -67,17 +71,16 @@ export function useLocation(
       prevState.current = newState;
       return newState;
     }
+    const distanceChange = getDistance(
+      prevState.current.location,
+      newState.location,
+    );
 
     const previousAccuracy = prevState.current.location.coords.accuracy;
 
     const newAccuracy = newState.location.coords.accuracy;
 
-    const accuracy = getAccuracy(previousAccuracy, newAccuracy);
-
-    const distanceChange = getDistance(
-      prevState.current.location,
-      newState.location,
-    );
+    const accuracy = getAccuracy(previousAccuracy, newAccuracy, distanceChange);
 
     const timeElapsed =
       newState.location.timestamp - prevState.current.location.timestamp;
@@ -128,10 +131,16 @@ export function getCoords(location: LocationObject): [number, number] {
 export function getAccuracy(
   previousAccuracy: number | null,
   newAccuracy: number | null,
+  distance: number,
 ): Accuracy {
   if (previousAccuracy === null) {
     return newAccuracy === null ? 'unchanged' : 'better';
   }
+
+  if (distance > previousAccuracy) {
+    return 'stale';
+  }
+
   if (newAccuracy === null) {
     return 'worse';
   }

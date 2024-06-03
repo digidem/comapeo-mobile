@@ -1,8 +1,4 @@
 import * as React from 'react';
-import {
-  NavigationContainer,
-  useNavigationContainerRef,
-} from '@react-navigation/native';
 import {createMapeoClient} from '@mapeo/ipc';
 import {AppNavigator} from './AppNavigator';
 import {IntlProvider} from './contexts/IntlContext';
@@ -11,9 +7,6 @@ import {initializeNodejs} from './initializeNodejs';
 import {PermissionsAndroid} from 'react-native';
 import {AppProviders} from './contexts/AppProviders';
 import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
-import {Loading} from './sharedComponents/Loading';
-import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
-import {AppStackParamsList} from './sharedTypes/navigation';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Sentry from '@sentry/react-native';
 import * as TaskManager from 'expo-task-manager';
@@ -57,7 +50,6 @@ TaskManager.defineTask(
 );
 
 const App = () => {
-  const navRef = useNavigationContainerRef<AppStackParamsList>();
   const [permissionsAsked, setPermissionsAsked] = React.useState(false);
   React.useEffect(() => {
     PermissionsAndroid.requestMultiple([
@@ -73,13 +65,7 @@ const App = () => {
         messagePort={messagePort}
         localDiscoveryController={localDiscoveryController}
         mapeoApi={mapeoApi}>
-        <React.Suspense fallback={<Loading />}>
-          <NavigationContainer ref={navRef}>
-            <BottomSheetModalProvider>
-              <AppNavigator permissionAsked={permissionsAsked} />
-            </BottomSheetModalProvider>
-          </NavigationContainer>
-        </React.Suspense>
+        <AppNavigator permissionAsked={permissionsAsked} />
       </AppProviders>
     </IntlProvider>
   );

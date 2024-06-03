@@ -58,19 +58,34 @@ export function useLocation(
   const getSnapshot = useCallback(() => {
     const newState = locationStore.getSnapshot();
 
-    // 1. If `error` field value is different, apply new state
+    // If `error` field value is different, apply new state
     if (prevState.current?.error !== newState.error) {
       prevState.current = newState;
       return newState;
     }
 
-    // 2. If `location` field is non-existent for previous or new state, apply new state
+    // If `location` field is non-existent for previous or new state, apply new state
     // Former can technically happen on initialization (although unlikely)
     // Latter should not ever happen (but to make TypeScript happy)
     if (!(prevState.current.location && newState.location)) {
       prevState.current = newState;
       return newState;
     }
+
+    // If location is null, location services has been turned off.
+    // We do not want to return a stale location so we return null
+    if (!newState.location) {
+      prevState.current = newState;
+      return newState;
+    }
+
+    // if the location was previously null and the new state has a value
+    // the location service was turned back on so we want to return the new value
+    if (!prevState.current.location && newState.location) {
+      prevState.current = newState;
+      return newState;
+    }
+
     const distanceChange = getDistance(
       prevState.current.location,
       newState.location,

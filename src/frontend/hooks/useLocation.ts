@@ -3,7 +3,6 @@ import CheapRuler from 'cheap-ruler';
 import {type LocationObject} from 'expo-location';
 
 import {useLocationStore} from '../contexts/LocationStoreContext';
-import {useLocationProviderStatus} from './useLocationProviderStatus';
 
 type Accuracy = 'better' | 'worse' | 'unchanged' | 'newBounds';
 
@@ -49,7 +48,6 @@ export function useLocation(
   shouldAcceptUpdate: ShouldAcceptUpdateCheck = DEFAULT_SHOULD_ACCEPT_UPDATE,
 ) {
   const locationStore = useLocationStore();
-  const thing = 2;
   const prevState = useRef(locationStore.getSnapshot());
 
   const getSnapshot = useCallback(() => {

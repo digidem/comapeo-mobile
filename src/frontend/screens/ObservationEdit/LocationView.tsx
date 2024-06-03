@@ -44,7 +44,7 @@ const LocationViewUpdatePosition = () => {
   const observationValue = usePersistedDraftObservation(store => store.value);
   //only update the location if the accuracy increases OR the user has moved outside of the accuracy's radius of uncertainty.
   const {location} = useLocation(
-    ({accuracy}) => accuracy === 'better' || accuracy === 'stale',
+    ({accuracy}) => accuracy === 'better' || accuracy === 'newBounds',
   );
   const {updateObservationPosition} = useDraftObservation();
   const locationProviderStatus = useLocationProviderStatus();

@@ -17,11 +17,6 @@ module.exports = {
         'no-shadow': 'off',
         'no-undef': 'off',
         'react-native/no-inline-styles': 'off',
-        'react/no-unstable-nested-components': [
-          {
-            allowAsProps: true,
-          },
-        ],
       },
     },
   ],

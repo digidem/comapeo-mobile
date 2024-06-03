@@ -5,7 +5,7 @@ import {type LocationObject} from 'expo-location';
 import {useLocationStore} from '../contexts/LocationStoreContext';
 import {useLocationProviderStatus} from './useLocationProviderStatus';
 
-type Accuracy = 'better' | 'worse' | 'unchanged' | 'stale';
+type Accuracy = 'better' | 'worse' | 'unchanged' | 'newBounds';
 
 /**
  * Represents the changes in relevant location information since the last time the _hook subscriber_ accepted a new location update
@@ -49,10 +49,7 @@ export function useLocation(
   shouldAcceptUpdate: ShouldAcceptUpdateCheck = DEFAULT_SHOULD_ACCEPT_UPDATE,
 ) {
   const locationStore = useLocationStore();
-  const locationProviderStatus = useLocationProviderStatus();
-  const locationServicesEnabled =
-    !!locationProviderStatus?.locationServicesEnabled;
-
+  const thing = 2;
   const prevState = useRef(locationStore.getSnapshot());
 
   const getSnapshot = useCallback(() => {
@@ -138,7 +135,7 @@ export function getAccuracy(
   }
 
   if (distance > previousAccuracy) {
-    return 'stale';
+    return 'newBounds';
   }
 
   if (newAccuracy === null) {

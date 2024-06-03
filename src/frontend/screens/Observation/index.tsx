@@ -103,6 +103,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
                       id: attachmentData.driveDiscoveryId,
                     };
               })}
+              observationId={observationId}
               audioRecordings={[]}
             />
           )}

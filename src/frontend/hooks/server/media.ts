@@ -1,10 +1,6 @@
 import {Observation} from '@mapeo/schema';
 import {BlobVariant} from '@mapeo/core/dist/types';
-import {
-  useMutation,
-  useQueries,
-  useQuery,
-} from '@tanstack/react-query';
+import {useMutation, useQueries, useQuery} from '@tanstack/react-query';
 import {SetRequired} from 'type-fest';
 import {URL} from 'react-native-url-polyfill';
 

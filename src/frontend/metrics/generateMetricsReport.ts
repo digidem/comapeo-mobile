@@ -28,7 +28,7 @@ export default function generateMetricsReport({
     appVersion: packageJson.version,
     os,
     osVersion,
-    screen,
+    screen: {width: screen.width, height: screen.height},
     ...(countries.size ? {countries: Array.from(countries)} : {}),
   };
 }

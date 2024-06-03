@@ -25,8 +25,14 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "Discard observation?"
   },
+  "Modal.DiscardTrack.defaultButton": {
+    "message": "Continue Editing"
+  },
   "Modal.DiscardTrack.description": {
     "message": "Your Track will not be saved. This cannot be undone."
+  },
+  "Modal.DiscardTrack.discardButton": {
+    "message": "Discard Track"
   },
   "Modal.DiscardTrack.title": {
     "message": "Discard Track?"
@@ -680,6 +686,14 @@
   "screens.PhotoPreviewModal.DeletePhoto.headerButtonText": {
     "message": "Delete Photo"
   },
+  "screens.SaveTrack.CreateTrackTitle": {
+    "description": "Title for new track screen",
+    "message": "New Track"
+  },
+  "screens.SaveTrack.TrackCreateView.title": {
+    "description": "Title for new track screen",
+    "message": "New Track"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "What is happening here?"
@@ -693,12 +707,16 @@
     "message": "Details"
   },
   "screens.SaveTrack.TrackEditView.title": {
-    "description": "Title for new track screen",
-    "message": "New Track"
+    "description": "Title for edit track screen",
+    "message": "Edit Track"
   },
   "screens.SaveTrack.track": {
     "description": "Category title for new track screen",
     "message": "Track"
+  },
+  "screens.SaveTrack.trackEditTitle": {
+    "description": "Edit track",
+    "message": "Edit track"
   },
   "screens.Security.obscurePassDescriptonPassNotSet": {
     "message": "To use, enable App Passcode"
@@ -956,6 +974,25 @@
   },
   "screens.Sync.ProjectSyncDisplay.upToDate": {
     "message": "Up to Date! No data to Sync"
+  },
+  "screens.Track.cancel": {
+    "description": "Button to cancel delete of track",
+    "message": "Cancel"
+  },
+  "screens.Track.confirm": {
+    "description": "Button to confirm delete of track",
+    "message": "Yes, delete"
+  },
+  "screens.Track.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete a track",
+    "message": "Delete track?"
+  },
+  "screens.Track.title": {
+    "description": "Title of track screen showing (non-editable) view of observation with map",
+    "message": "Track"
+  },
+  "screens.Track.trackHeader": {
+    "message": "Track"
   },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",

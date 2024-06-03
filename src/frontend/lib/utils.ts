@@ -320,5 +320,3 @@ export function isEditingScreen(
 
   return !!EDITING_SCREEN_NAMES.find(val => val === routeName);
 }
-
-export function noop() {}

@@ -15,7 +15,7 @@ import {usePersistedProjectId} from '../../../../hooks/persistedState/usePersist
 import {useCreateProject} from '../../../../hooks/server/projects';
 import {convertFileUriToPosixPath} from '../../../../lib/file-system';
 import {BLACK, LIGHT_GREY} from '../../../../lib/styles';
-import {noop} from '../../../../lib/utils';
+import noop from '../../../../lib/noop';
 import {Button} from '../../../../sharedComponents/Button';
 import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';

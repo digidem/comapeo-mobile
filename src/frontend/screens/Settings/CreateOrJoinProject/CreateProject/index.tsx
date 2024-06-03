@@ -11,15 +11,16 @@ import {
 import {UIActivityIndicator} from 'react-native-indicators';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import {Text} from '../../../../sharedComponents/Text';
-import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 import {usePersistedProjectId} from '../../../../hooks/persistedState/usePersistedProjectId';
 import {useCreateProject} from '../../../../hooks/server/projects';
 import {convertFileUriToPosixPath} from '../../../../lib/file-system';
 import {BLACK, LIGHT_GREY} from '../../../../lib/styles';
+import {noop} from '../../../../lib/utils';
 import {Button} from '../../../../sharedComponents/Button';
 import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
+import {Text} from '../../../../sharedComponents/Text';
+import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 
 const m = defineMessages({
   title: {
@@ -94,9 +95,8 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
         onSuccess: projectId => {
           if (configFileResult?.type === 'success') {
             // No need to block UI on this
-            FileSystem.deleteAsync(configFileResult.file.uri).catch(() => {
-              // no-op if something fails here. caches can eventually get cleared by the OS automatically.
-            });
+            // no-op if something fails here. caches can eventually get cleared by the OS automatically.
+            FileSystem.deleteAsync(configFileResult.file.uri).catch(noop);
           }
 
           updateActiveProjectId(projectId);
@@ -138,9 +138,8 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
         error: new Error(t(m.importConfigFileError)),
       });
       // No need to block UI on this
-      FileSystem.deleteAsync(asset.uri).catch(() => {
-        // no-op if something fails here. caches can eventually get cleared by the OS automatically.
-      });
+      // no-op if something fails here. caches can eventually get cleared by the OS automatically.
+      FileSystem.deleteAsync(asset.uri).catch(noop);
     }
   }
 

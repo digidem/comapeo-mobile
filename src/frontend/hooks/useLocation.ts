@@ -2,7 +2,10 @@ import {useCallback, useRef, useSyncExternalStore} from 'react';
 import CheapRuler from 'cheap-ruler';
 import {type LocationObject} from 'expo-location';
 
-import {useLocationStore} from '../contexts/LocationStoreContext';
+import {
+  LocationState,
+  useLocationStore,
+} from '../contexts/LocationStoreContext';
 
 type Accuracy = 'better' | 'worse' | 'unchanged' | 'newBounds';
 
@@ -48,13 +51,15 @@ export function useLocation(
   shouldAcceptUpdate: ShouldAcceptUpdateCheck = DEFAULT_SHOULD_ACCEPT_UPDATE,
 ) {
   const locationStore = useLocationStore();
-  const prevState = useRef(locationStore.getSnapshot());
+  const prevState = useRef<LocationState | undefined>(
+    locationStore.getSnapshot(),
+  );
 
   const getSnapshot = useCallback(() => {
     const newState = locationStore.getSnapshot();
 
     // 1. If `error` field value is different, apply new state
-    if (prevState.current.error !== newState.error) {
+    if (prevState.current?.error !== newState.error) {
       prevState.current = newState;
       return newState;
     }

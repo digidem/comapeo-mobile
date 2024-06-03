@@ -9,7 +9,6 @@ import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersis
 import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings';
 import {useLocation} from '../../hooks/useLocation';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
 
 const m = defineMessages({
   searching: {
@@ -47,9 +46,6 @@ const LocationViewUpdatePosition = () => {
     ({accuracy}) => accuracy === 'better' || accuracy === 'newBounds',
   );
   const {updateObservationPosition} = useDraftObservation();
-  const locationProviderStatus = useLocationProviderStatus();
-  const locationServicesEnabled =
-    !!locationProviderStatus?.locationServicesEnabled;
 
   useEffect(() => {
     const newCoord = !location
@@ -61,16 +57,12 @@ const LocationViewUpdatePosition = () => {
     updateObservationPosition({
       position: {
         mocked: false,
-        coords:
-          // We do not want to serve a stale position. So show coordinates as undefined if location services is not enabled.
-          !newCoord || !locationServicesEnabled
-            ? undefined
-            : Object.fromEntries(newCoord),
+        coords: !newCoord ? undefined : Object.fromEntries(newCoord),
         timestamp: location?.timestamp.toString(),
       },
       manualLocation: false,
     });
-  }, [location, updateObservationPosition, locationServicesEnabled]);
+  }, [location, updateObservationPosition]);
 
   return (
     <LocationViewInner

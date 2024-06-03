@@ -16,7 +16,6 @@ import {useDraftObservation} from '../../hooks/useDraftObservation';
 // @ts-ignore
 import ScaleBar from 'react-native-scale-bar';
 import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
-import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
 import {GPSPermissionsModal} from './GPSPermissions/GPSPermissionsModal';
 import {TrackPathLayer} from './track/TrackPathLayer';
 import {UserLocation} from './UserLocation';
@@ -52,9 +51,6 @@ export const MapScreen = () => {
     locationState.location === null
       ? undefined
       : getCoords(locationState.location);
-  const locationProviderStatus = useLocationProviderStatus();
-  const locationServicesEnabled =
-    !!locationProviderStatus?.locationServicesEnabled;
 
   const styleUrlQuery = useMapStyleUrl();
 
@@ -103,18 +99,14 @@ export const MapScreen = () => {
                 : undefined,
             zoomLevel: zoom,
           }}
-          centerCoordinate={
-            locationServicesEnabled && following ? coords : undefined
-          }
+          centerCoordinate={following ? coords : undefined}
           zoomLevel={following ? zoom : undefined}
           animationDuration={1000}
           animationMode="flyTo"
           followUserLocation={false}
         />
 
-        {coords && locationServicesEnabled && (
-          <UserLocation minDisplacement={MIN_DISPLACEMENT} />
-        )}
+        {coords && <UserLocation minDisplacement={MIN_DISPLACEMENT} />}
         {isFinishedLoading && <ObservationMapLayer />}
         {isFinishedLoading && <TrackPathLayer />}
       </Mapbox.MapView>
@@ -123,7 +115,7 @@ export const MapScreen = () => {
         latitude={coords ? coords[1] : undefined}
         bottom={20}
       />
-      {coords && locationServicesEnabled && (
+      {coords && (
         <View style={styles.locationButton}>
           <IconButton onPress={handleLocationPress}>
             {following ? <LocationFollowingIcon /> : <LocationNoFollowIcon />}

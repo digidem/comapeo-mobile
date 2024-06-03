@@ -78,7 +78,7 @@ interface Props extends React.PropsWithChildren<{}> {
 }
 
 export const BottomSheetModal = React.forwardRef<RNBottomSheetModal, Props>(
-  ({children, isOpen, onBack, fullHeight}, ref) => {
+  ({children, isOpen, onBack, fullHeight, onDismiss}, ref) => {
     useBackHandler(isOpen, onBack);
 
     return (
@@ -90,6 +90,7 @@ export const BottomSheetModal = React.forwardRef<RNBottomSheetModal, Props>(
             : {borderColor: DARK_GREY, borderWidth: 1},
         ]}
         backdropComponent={DefaultBackdrop}
+        onDismiss={onDismiss}
         enableContentPanningGesture={false}
         enableHandlePanningGesture={false}
         snapPoints={!fullHeight ? undefined : ['100%']}

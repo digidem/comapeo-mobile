@@ -2,7 +2,6 @@ import React, {FC, useMemo} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Text} from './Text';
 import {ParamListBase, useIsFocused} from '@react-navigation/native';
-import {useLocationProviderStatus} from '../hooks/useLocationProviderStatus';
 import {getLocationStatus} from '../lib/utils';
 import {defineMessages, useIntl} from 'react-intl';
 import {GpsIcon} from './icons';
@@ -28,26 +27,21 @@ interface GPSPill {
 export const GPSPill: FC<GPSPill> = ({navigation}) => {
   const isFocused = useIsFocused();
   const {formatMessage: t} = useIntl();
-  const locationProviderStatus = useLocationProviderStatus();
   const locationState = useLocation();
 
   const precision = locationState?.location?.coords.accuracy;
 
-  const status = useMemo(() => {
-    return locationState.error
-      ? 'error'
-      : getLocationStatus({
-          location: locationState.location || undefined,
-          providerStatus: locationProviderStatus,
-        });
-  }, [locationProviderStatus, locationState.error, locationState.location]);
+  const status = getLocationStatus({locationState});
 
-  const text = useMemo(() => {
-    if (status === 'error') return t(m.noGps);
-    else if (status === 'searching' || typeof precision === 'undefined') {
-      return t(m.searching);
-    } else return `± ${Math.round(precision!)} m`;
-  }, [precision, status, t]);
+  const text = useMemo(
+    () =>
+      status === 'error'
+        ? t(m.noGps)
+        : status === 'searching'
+          ? t(m.searching)
+          : `± ${Math.round(precision!)} m`,
+    [precision, status, t],
+  );
 
   return (
     <TouchableOpacity

@@ -2,9 +2,9 @@
 import {fromLatLon} from 'utm';
 import {SelectOptions, LabeledSelectOption} from '../sharedTypes/PresetTypes';
 import {Preset, Observation} from '@mapeo/schema';
-import {LocationObject, LocationProviderStatus} from 'expo-location';
 import {NavigationState} from '@react-navigation/native';
 import {EDITING_SCREEN_NAMES} from '../constants';
+import {LocationState} from '../contexts/LocationStoreContext';
 
 // import type {
 //   ObservationValue,
@@ -54,23 +54,20 @@ const GOOD_PRECISION = 10; // 10 meters
 export type LocationStatus = 'searching' | 'improving' | 'good' | 'error';
 
 export function getLocationStatus({
-  location,
-  providerStatus,
+  locationState,
 }: {
-  location?: LocationObject;
-  providerStatus?: LocationProviderStatus;
+  locationState?: LocationState;
 }): LocationStatus {
-  const gpsAvailable = !!providerStatus?.gpsAvailable;
-  const locationServicesEnabled = !!providerStatus?.locationServicesEnabled;
-
-  if (!gpsAvailable || !locationServicesEnabled) return 'error';
+  if (!locationState?.location || locationState.error) return 'error';
 
   const positionStale =
-    location && Date.now() - location.timestamp > STALE_TIMEOUT;
+    locationState &&
+    Date.now() - locationState.location.timestamp > STALE_TIMEOUT;
 
-  if (positionStale) return 'searching';
+  if (positionStale || !locationState.location.coords.accuracy)
+    return 'searching';
 
-  const precision = location?.coords.accuracy;
+  const precision = locationState.location.coords.accuracy;
 
   if (typeof precision === 'number') {
     return Math.round(precision) <= GOOD_PRECISION ? 'good' : 'improving';

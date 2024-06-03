@@ -42,6 +42,10 @@ const m = defineMessages({
     id: 'screens.Settings.CreateOrJoinProject.importConfig',
     defaultMessage: 'Import Config',
   },
+  importConfigFileError: {
+    id: 'screens.Settings.CreateOrJoinProject.importConfigFileError',
+    defaultMessage: 'File name should end with .mapeoconfig',
+  },
 });
 
 type ConfigFileImportResult =
@@ -131,7 +135,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
     } else {
       setConfigFileResult({
         type: 'error',
-        error: new Error('File extension should be .mapeoconfig'),
+        error: new Error(t(m.importConfigFileError)),
       });
     }
   }

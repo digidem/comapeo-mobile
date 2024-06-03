@@ -137,6 +137,10 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
         type: 'error',
         error: new Error(t(m.importConfigFileError)),
       });
+      // No need to block UI on this
+      FileSystem.deleteAsync(asset.uri).catch(() => {
+        // no-op if something fails here. caches can eventually get cleared by the OS automatically.
+      });
     }
   }
 

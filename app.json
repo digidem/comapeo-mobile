@@ -44,7 +44,13 @@
         }
       ],
       ["./expo-config-plugins/removeExpoInputStyles.js"],
-      ["./expo-config-plugins/addShareIntents.js"]
+      ["./expo-config-plugins/addShareIntents.js"],
+      [
+        "expo-font",
+        {
+          "fonts": ["./public/Rubik-Regular.ttf", "./public/Rubik-Medium.ttf"]
+        }
+      ]
     ],
     "android": {
       "versionCode": 1,

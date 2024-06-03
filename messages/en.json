@@ -722,6 +722,18 @@
     "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
     "message": "To sync and share with other devices,"
   },
+  "screens.PhotoPreviewModal.DeletePhoto.cancelButton": {
+    "message": "Cancel"
+  },
+  "screens.PhotoPreviewModal.DeletePhoto.deleteModalDeleteButton": {
+    "message": "Delete Image"
+  },
+  "screens.PhotoPreviewModal.DeletePhoto.deleteModalTitle": {
+    "message": "Delete this photo?"
+  },
+  "screens.PhotoPreviewModal.DeletePhoto.headerButtonText": {
+    "message": "Delete Photo"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "What is happening here?"

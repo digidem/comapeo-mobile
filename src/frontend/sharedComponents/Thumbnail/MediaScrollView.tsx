@@ -5,7 +5,6 @@ import {Photo} from '../../contexts/PhotoPromiseContext/types';
 import {PhotoThumbnail} from './PhotoThumbnail';
 import {AudioThumbnail} from './AudioThumbnail';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
-import {Recording} from 'expo-av/build/Audio/Recording';
 import {AudioRecording} from '../../sharedTypes/audio.ts';
 
 const spacing = 10;
@@ -28,13 +27,22 @@ export const MediaScrollView: FC<MediaScrollView> = props => {
     scrollViewRef.current && scrollViewRef.current.scrollToEnd();
   }, [photos?.length]);
 
-  function handlePhotoPress(photoIndex: number) {
-    // navigation.navigate('PhotosModal', {
-    //   photoIndex: photoIndex,
-    //   observationId: observationId,
-    //   editing: true,
-    // });
-    return;
+  function handlePhotoPress(photo: Partial<Photo>) {
+    if ('id' in photo) {
+      navigation.navigate('PhotoPreviewModal', {
+        attachmentId: photo.id,
+        observationId: props.observationId,
+        deletable: false,
+      });
+      return;
+    }
+    if ('originalUri' in photo) {
+      navigation.navigate('PhotoPreviewModal', {
+        deletable: true,
+        originalPhotoUri: photo.originalUri,
+      });
+      return;
+    }
   }
 
   const handleAudioPress = (recording?: AudioRecording) => {
@@ -84,7 +92,7 @@ export const MediaScrollView: FC<MediaScrollView> = props => {
             photo={photo}
             style={styles.thumbnail}
             size={size}
-            onPress={() => photo && handlePhotoPress(photos.indexOf(photo))}
+            onPress={() => photo && handlePhotoPress(photo)}
           />
         ))}
     </ScrollView>

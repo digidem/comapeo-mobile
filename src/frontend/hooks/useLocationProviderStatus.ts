@@ -5,6 +5,7 @@ import {
   useForegroundPermissions,
 } from 'expo-location';
 import {useQueryClient} from '@tanstack/react-query';
+import noop from '../lib/noop';
 
 // How frequently to poll the location provider status
 const POLL_PROVIDER_STATUS_INTERVAL = 10_000; // 10 seconds
@@ -43,5 +44,3 @@ export function useLocationProviderStatus() {
 
   return providerStatus;
 }
-
-function noop() {}

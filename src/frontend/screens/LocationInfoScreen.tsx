@@ -74,7 +74,6 @@ const InfoRow = ({label, value}: {label: string; value: string}) => (
 );
 
 export const LocationInfoScreen = () => {
-  // const {location} = useLocation({maxDistanceInterval: 0});
   const {location} = useLocation();
   const lastKnownLocationQuery = useLastKnownLocation();
   const provider = useLocationProviderStatus();

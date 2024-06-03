@@ -25,14 +25,8 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "Discard observation?"
   },
-  "Modal.DiscardTrack.defaultButton": {
-    "message": "Continue Editing"
-  },
   "Modal.DiscardTrack.description": {
     "message": "Your Track will not be saved. This cannot be undone."
-  },
-  "Modal.DiscardTrack.discardButton": {
-    "message": "Discard Track"
   },
   "Modal.DiscardTrack.title": {
     "message": "Discard Track?"
@@ -674,13 +668,17 @@
     "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
     "message": "To sync and share with other devices,"
   },
-  "screens.SaveTrack.CreateTrackTitle": {
-    "description": "Title for new track screen",
-    "message": "New Track"
+  "screens.PhotoPreviewModal.DeletePhoto.cancelButton": {
+    "message": "Cancel"
   },
-  "screens.SaveTrack.TrackCreateView.title": {
-    "description": "Title for new track screen",
-    "message": "New Track"
+  "screens.PhotoPreviewModal.DeletePhoto.deleteModalDeleteButton": {
+    "message": "Delete Image"
+  },
+  "screens.PhotoPreviewModal.DeletePhoto.deleteModalTitle": {
+    "message": "Delete this photo?"
+  },
+  "screens.PhotoPreviewModal.DeletePhoto.headerButtonText": {
+    "message": "Delete Photo"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
@@ -695,16 +693,12 @@
     "message": "Details"
   },
   "screens.SaveTrack.TrackEditView.title": {
-    "description": "Title for edit track screen",
-    "message": "Edit Track"
+    "description": "Title for new track screen",
+    "message": "New Track"
   },
   "screens.SaveTrack.track": {
     "description": "Category title for new track screen",
     "message": "Track"
-  },
-  "screens.SaveTrack.trackEditTitle": {
-    "description": "Edit track",
-    "message": "Edit track"
   },
   "screens.Security.obscurePassDescriptonPassNotSet": {
     "message": "To use, enable App Passcode"
@@ -962,25 +956,6 @@
   },
   "screens.Sync.ProjectSyncDisplay.upToDate": {
     "message": "Up to Date! No data to Sync"
-  },
-  "screens.Track.cancel": {
-    "description": "Button to cancel delete of track",
-    "message": "Cancel"
-  },
-  "screens.Track.confirm": {
-    "description": "Button to confirm delete of track",
-    "message": "Yes, delete"
-  },
-  "screens.Track.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete a track",
-    "message": "Delete track?"
-  },
-  "screens.Track.title": {
-    "description": "Title of track screen showing (non-editable) view of observation with map",
-    "message": "Track"
-  },
-  "screens.Track.trackHeader": {
-    "message": "Track"
   },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",

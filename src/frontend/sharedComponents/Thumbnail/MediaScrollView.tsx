@@ -4,7 +4,7 @@ import {Dimensions, ScrollView, StyleSheet} from 'react-native';
 import {Photo} from '../../contexts/PhotoPromiseContext/types';
 import {PhotoThumbnail} from './PhotoThumbnail';
 import {AudioThumbnail} from './AudioThumbnail';
-// import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
 
 const spacing = 10;
 const minSize = 150;
@@ -17,22 +17,30 @@ interface MediaScrollView {
 
 export const MediaScrollView: FC<MediaScrollView> = props => {
   const {photos, audioRecordings = []} = props;
-  // const navigation = useNavigationFromHomeTabs();
   const scrollViewRef = React.useRef<ScrollView>(null);
   const length =
     props?.photos?.length ?? 0 + props?.audioRecordings?.length ?? 0;
-
+  const navigation = useNavigationFromRoot();
   React.useLayoutEffect(() => {
     scrollViewRef.current && scrollViewRef.current.scrollToEnd();
   }, [photos?.length]);
 
-  function handlePhotoPress(photoIndex: number) {
-    // navigation.navigate('PhotosModal', {
-    //   photoIndex: photoIndex,
-    //   observationId: observationId,
-    //   editing: true,
-    // });
-    return;
+  function handlePhotoPress(photo: Partial<Photo>) {
+    if ('id' in photo) {
+      navigation.navigate('PhotoPreviewModal', {
+        attachmentId: photo.id,
+        observationId: props.observationId,
+        deletable: false,
+      });
+      return;
+    }
+    if ('originalUri' in photo) {
+      navigation.navigate('PhotoPreviewModal', {
+        deletable: true,
+        originalPhotoUri: photo.originalUri,
+      });
+      return;
+    }
   }
 
   if (photos?.length === 0) return null;
@@ -66,7 +74,7 @@ export const MediaScrollView: FC<MediaScrollView> = props => {
             photo={photo}
             style={styles.thumbnail}
             size={size}
-            onPress={() => photo && handlePhotoPress(photos.indexOf(photo))}
+            onPress={() => photo && handlePhotoPress(photo)}
           />
         ))}
     </ScrollView>

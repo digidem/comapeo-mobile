@@ -52,7 +52,7 @@ import {
 } from '../../screens/ManualGpsScreen';
 import {HomeTabs} from '../Tab';
 import {ObservationFields} from '../../screens/ObservationFields';
-import {DARK_GREY, LIGHT_GREY} from '../../lib/styles';
+import {DARK_GREY, LIGHT_GREY, WHITE} from '../../lib/styles';
 import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSettings';
 import {
   createTrackNavigationOptions,
@@ -60,6 +60,8 @@ import {
 } from '../../screens/Track/TrackScreen';
 import {TrackEditScreen} from '../../screens/TrackEdit/TrackEditScreen';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import {PhotoPreviewModal} from '../../screens/PhotoPreviewModal.tsx';
+import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -115,6 +117,18 @@ export const createDefaultScreenGroup = ({
       name="AddPhoto"
       component={AddPhotoScreen}
       options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="PhotoPreviewModal"
+      component={PhotoPreviewModal}
+      options={{
+        headerTitle: '',
+        headerTransparent: true,
+        headerStyle: {backgroundColor: 'transparent'},
+        headerLeft: props => (
+          <CustomHeaderLeft tintColor={WHITE} headerBackButtonProps={props} />
+        ),
+      }}
     />
     <RootStack.Screen
       name="Security"

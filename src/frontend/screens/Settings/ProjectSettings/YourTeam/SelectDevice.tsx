@@ -1,3 +1,4 @@
+import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 import {ScrollView, StyleSheet, View} from 'react-native';
@@ -53,7 +54,7 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
       <Text style={{marginLeft: 10}}>{`\u2022 ${t(m.sameWifi)}`}</Text>
       <Text style={{marginLeft: 10}}>{`\u2022 ${t(m.sameVersion)}`}</Text>
       {/* Divider */}
-      <View style={{marginTop: 20}}></View>
+      <View style={{marginTop: 20}} />
 
       {/* List available devices here */}
       {nonMemberDevices.map(device => {
@@ -66,6 +67,7 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
             key={deviceId}
             style={{marginBottom: 10}}
             name={name || ''}
+            isConnected={device.status === 'connected'}
             deviceType={deviceType}
             deviceId={deviceId}
             onPress={() =>

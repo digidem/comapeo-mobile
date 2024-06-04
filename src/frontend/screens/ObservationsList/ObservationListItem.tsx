@@ -10,7 +10,7 @@ import {
   FormattedObservationDate,
   FormattedPresetName,
 } from '../../sharedComponents/FormattedData';
-import {PhotoView} from '../../sharedComponents/PhotoView';
+import {PhotoAttachmentView} from '../../sharedComponents/PhotoAttachmentView.tsx';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
 
 interface ObservationListItemProps {
@@ -84,7 +84,7 @@ function PhotoStack({attachments}: {attachments: Attachment[]}) {
         backgroundColor: 'aqua',
       }}>
       {attachments.map((attachment, idx) => (
-        <PhotoView
+        <PhotoAttachmentView
           key={`${attachment.driveDiscoveryId}/${attachment.type}/${attachment.name}`}
           attachment={attachment}
           variant="thumbnail"

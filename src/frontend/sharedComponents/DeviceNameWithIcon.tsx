@@ -7,11 +7,16 @@ import {defineMessages, useIntl} from 'react-intl';
 import {Text} from './Text';
 import {MEDIUM_GREY} from '../lib/styles';
 import {DeviceType} from '../sharedTypes';
+import Caution from '../images/caution.svg';
 
 const m = defineMessages({
   thisDevice: {
     id: 'sharedComponents.DeviceIconWithName.thisDevice',
     defaultMessage: 'This Device!',
+  },
+  disconnected: {
+    id: 'sharedComponents.DeviceIconWithName.Disconnected',
+    defaultMessage: 'Disconnected',
   },
 });
 
@@ -22,11 +27,13 @@ type DeviceNameWithIconProps = {
   thisDevice?: boolean;
   iconSize?: number;
   style?: ViewStyleProp;
+  isConnected?: boolean;
 };
 
 export const DeviceNameWithIcon = ({
   deviceType,
   name,
+  isConnected,
   deviceId,
   thisDevice,
   iconSize,
@@ -52,6 +59,14 @@ export const DeviceNameWithIcon = ({
             {formatMessage(m.thisDevice)}
           </Text>
         )}
+        {!isConnected && (
+          <View style={[styles.flexRow, {marginTop: 4.4}]}>
+            <Caution />
+            <Text style={styles.deviceStatusText}>
+              {formatMessage(m.disconnected)}
+            </Text>
+          </View>
+        )}
       </View>
     </View>
   );
@@ -61,5 +76,11 @@ const styles = StyleSheet.create({
   flexRow: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  deviceStatusText: {
+    flex: 1,
+    fontSize: 12,
+    color: MEDIUM_GREY,
+    marginLeft: 5,
   },
 });

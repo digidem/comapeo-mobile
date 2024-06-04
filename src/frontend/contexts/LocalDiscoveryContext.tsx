@@ -8,6 +8,7 @@ import NetInfo, {
 import StateMachine from 'start-stop-state-machine';
 import Zeroconf, {type Service as ZeroconfService} from 'react-native-zeroconf';
 import {type MapeoClientApi} from '@mapeo/ipc';
+import noop from '../lib/noop';
 
 type LocalDiscoveryController = ReturnType<
   typeof createLocalDiscoveryController
@@ -275,8 +276,6 @@ export function createLocalDiscoveryController(mapeoApi: MapeoClientApi) {
     stop,
   };
 }
-
-function noop() {}
 
 function startZeroconf(zeroconf: Zeroconf): Promise<void> {
   return new Promise((resolve, reject) => {

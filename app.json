@@ -43,10 +43,17 @@
           "organization": "awana-digital"
         }
       ],
+      [
+        "expo-font",
+        {
+          "fonts": ["./public/Rubik-Regular.ttf", "./public/Rubik-Medium.ttf"]
+        }
+      ],
       ["./expo-config-plugins/removeExpoInputStyles.js"]
     ],
     "android": {
       "versionCode": 1,
+      "allowBackup": false,
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#050F77"

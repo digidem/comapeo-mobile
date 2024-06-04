@@ -27,9 +27,9 @@ export interface ParameterChanges {
   accuracy: Accuracy;
 }
 
-type ShouldAcceptUpdateCheck = (changes: ParameterChanges) => boolean;
+export type ShouldAcceptUpdateCheck = (changes: ParameterChanges) => boolean;
 
-const DEFAULT_SHOULD_ACCEPT_UPDATE: ShouldAcceptUpdateCheck = () => true;
+export const DEFAULT_SHOULD_ACCEPT_UPDATE: ShouldAcceptUpdateCheck = () => true;
 
 /**
  * Hook for subscribing to location updates and optionally providing a callback to control the frequency of stateful updates received by the hook subscriber
@@ -143,7 +143,7 @@ export function getCoords(location: LocationObject): [number, number] {
   return [longitude, latitude];
 }
 
-export function getAccuracy(
+function getAccuracy(
   previousAccuracy: number | null,
   newAccuracy: number | null,
   distance: number,

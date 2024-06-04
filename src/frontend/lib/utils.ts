@@ -317,3 +317,15 @@ export function isEditingScreen(
 
   return !!EDITING_SCREEN_NAMES.find(val => val === routeName);
 }
+
+export function shallowEqual(a: any, b: any) {
+  if (a === b) return true;
+  if (typeof a !== 'object' || typeof b !== 'object') return false;
+  for (const key in a) {
+    if (!(key in b) || a[key] !== b[key]) return false;
+  }
+  for (const key in b) {
+    if (!(key in a)) return false;
+  }
+  return true;
+}

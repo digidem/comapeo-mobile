@@ -21,6 +21,7 @@ import {MessagePortLike} from '../lib/MessagePortLike';
 import {IntlProvider} from './IntlContext';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {LocationStoreProvider} from './LocationStoreContext';
+import {LocationProviderStatusStoreProvider} from './LocationProviderStatusContext';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -42,23 +43,25 @@ export const AppProviders = ({
       <QueryClientProvider client={queryClient}>
         <GestureHandlerRootView style={{flex: 1}}>
           <LocationStoreProvider>
-            <TrackTimerContextProvider>
-              <GPSModalContextProvider>
-                <ServerLoading messagePort={messagePort}>
-                  <LocalDiscoveryProvider value={localDiscoveryController}>
-                    <ApiProvider api={mapeoApi}>
-                      <ActiveProjectProvider>
-                        <BottomSheetModalProvider>
-                          <PhotoPromiseProvider>
-                            <SecurityProvider>{children}</SecurityProvider>
-                          </PhotoPromiseProvider>
-                        </BottomSheetModalProvider>
-                      </ActiveProjectProvider>
-                    </ApiProvider>
-                  </LocalDiscoveryProvider>
-                </ServerLoading>
-              </GPSModalContextProvider>
-            </TrackTimerContextProvider>
+            <LocationProviderStatusStoreProvider>
+              <TrackTimerContextProvider>
+                <GPSModalContextProvider>
+                  <ServerLoading messagePort={messagePort}>
+                    <LocalDiscoveryProvider value={localDiscoveryController}>
+                      <ApiProvider api={mapeoApi}>
+                        <ActiveProjectProvider>
+                          <BottomSheetModalProvider>
+                            <PhotoPromiseProvider>
+                              <SecurityProvider>{children}</SecurityProvider>
+                            </PhotoPromiseProvider>
+                          </BottomSheetModalProvider>
+                        </ActiveProjectProvider>
+                      </ApiProvider>
+                    </LocalDiscoveryProvider>
+                  </ServerLoading>
+                </GPSModalContextProvider>
+              </TrackTimerContextProvider>
+            </LocationProviderStatusStoreProvider>
           </LocationStoreProvider>
         </GestureHandlerRootView>
       </QueryClientProvider>

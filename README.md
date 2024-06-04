@@ -26,6 +26,8 @@ The next version of Mapeo Mobile
 
       ```
       MAPBOX_DOWNLOAD_TOKEN=<your_token_here>
+      EXPO_PUBLIC_METRICS_URL=<metrics URL>
+      EXPO_PUBLIC_METRICS_API_KEY=<metrics API key>
       ```
 
       Replace `<your_token_here>` with a [Mapbox secret token](https://docs.mapbox.com/android/maps/guides/install/#configure-credentials). This is unfortunately required to install the necessary Mapbox Android SDK components used by `@rnmapbox/maps@10` when building the app (more info [here](https://github.com/rnmapbox/maps/blob/v10.0/android/install.md#mapbox-maps-sdk-v10)). If you do not have access to a Mapbox account, reach out to the maintainers about getting access to a secret token.

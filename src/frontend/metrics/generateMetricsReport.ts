@@ -1,4 +1,5 @@
 import type {ReadonlyDeep} from 'type-fest';
+import type {Platform} from 'react-native';
 import type {Observation} from '@mapeo/schema';
 import positionToCountries from './positionToCountries';
 
@@ -10,7 +11,7 @@ export default function generateMetricsReport({
   observations,
 }: ReadonlyDeep<{
   packageJson: {version: string};
-  os: 'android' | 'ios' | NodeJS.Platform;
+  os: Platform['OS'] | NodeJS.Platform;
   osVersion: number | string;
   screen: {width: number; height: number};
   observations: ReadonlyArray<Pick<Observation, 'lat' | 'lon'>>;

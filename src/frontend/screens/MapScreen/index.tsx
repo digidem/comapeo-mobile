@@ -20,11 +20,8 @@ import {GPSPermissionsModal} from './GPSPermissions/GPSPermissionsModal';
 import {TrackPathLayer} from './track/TrackPathLayer';
 import {UserLocation} from './UserLocation';
 import {useMapStyleUrl} from '../../hooks/server/mapStyleUrl';
-import {
-  ParameterChanges,
-  getCoords,
-  useLocation,
-} from '../../hooks/useLocation';
+import {ParameterChanges, getCoords} from '../../hooks/useLocation';
+import {useLocationWithProviderStatus} from '../../hooks/useLocationWithProviderStatus';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -44,13 +41,13 @@ export const MapScreen = () => {
   const [following, setFollowing] = React.useState(true);
   const {newDraft} = useDraftObservation();
   const {navigate} = useNavigationFromHomeTabs();
-  const locationState = useLocation(locationFilter);
+  const locationAndProviderState =
+    useLocationWithProviderStatus(locationFilter);
 
   const savedLocation = useLastKnownLocation();
-  const coords =
-    locationState.location === null
-      ? undefined
-      : getCoords(locationState.location);
+  const coords = !locationAndProviderState.locationState?.location
+    ? undefined
+    : getCoords(locationAndProviderState.locationState.location);
 
   const styleUrlQuery = useMapStyleUrl();
 

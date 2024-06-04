@@ -56,7 +56,7 @@ export type LocationStatus = 'searching' | 'improving' | 'good' | 'error';
 export function getLocationStatus({
   locationState,
 }: {
-  locationState?: LocationState;
+  locationState: LocationState | null;
 }): LocationStatus {
   if (!locationState?.location || locationState.error) return 'error';
 

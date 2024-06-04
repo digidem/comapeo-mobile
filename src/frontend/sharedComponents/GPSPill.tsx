@@ -7,7 +7,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {GpsIcon} from './icons';
 import {BLACK, WHITE} from '../lib/styles';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
-import {useLocation} from '../hooks/useLocation';
+import {useLocationWithProviderStatus} from '../hooks/useLocationWithProviderStatus';
 
 const m = defineMessages({
   noGps: {
@@ -27,11 +27,14 @@ interface GPSPill {
 export const GPSPill: FC<GPSPill> = ({navigation}) => {
   const isFocused = useIsFocused();
   const {formatMessage: t} = useIntl();
-  const locationState = useLocation();
+  const locationWithProviderStatus = useLocationWithProviderStatus();
 
-  const precision = locationState?.location?.coords.accuracy;
+  const precision =
+    locationWithProviderStatus.locationState?.location?.coords.accuracy;
 
-  const status = getLocationStatus({locationState});
+  const status = getLocationStatus({
+    locationState: locationWithProviderStatus.locationState,
+  });
 
   const text = useMemo(
     () =>

@@ -7,8 +7,8 @@ import {BLACK} from '../../lib/styles';
 import {FormattedCoords} from '../../sharedComponents/FormattedData';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings';
-import {useLocation} from '../../hooks/useLocation';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
+import {useLocationWithProviderStatus} from '../../hooks/useLocationWithProviderStatus';
 
 const m = defineMessages({
   searching: {
@@ -42,15 +42,15 @@ const LocationViewManualPosition = () => {
 const LocationViewUpdatePosition = () => {
   const observationValue = usePersistedDraftObservation(store => store.value);
   //only update the location if the accuracy increases OR the user has moved outside of the accuracy's radius of uncertainty.
-  const {location} = useLocation(
+  const {locationState} = useLocationWithProviderStatus(
     ({accuracy}) => accuracy === 'better' || accuracy === 'newBounds',
   );
   const {updateObservationPosition} = useDraftObservation();
 
   useEffect(() => {
-    const newCoord = !location
+    const newCoord = !locationState?.location
       ? undefined
-      : Object.entries(location.coords).map(
+      : Object.entries(locationState.location.coords).map(
           ([key, val]) => [key, val === null ? undefined : val] as const,
         );
 
@@ -58,17 +58,17 @@ const LocationViewUpdatePosition = () => {
       position: {
         mocked: false,
         coords: !newCoord ? undefined : Object.fromEntries(newCoord),
-        timestamp: location?.timestamp.toString(),
+        timestamp: locationState?.location?.timestamp.toString(),
       },
       manualLocation: false,
     });
-  }, [location, updateObservationPosition]);
+  }, [locationState, updateObservationPosition]);
 
   return (
     <LocationViewInner
       lat={observationValue?.lat}
       lon={observationValue?.lon}
-      accuracy={location?.coords.accuracy}
+      accuracy={locationState?.location?.coords.accuracy}
     />
   );
 };

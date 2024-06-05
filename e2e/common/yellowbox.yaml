@@ -1,0 +1,12 @@
+appId: com.comapeo
+---
+- runFlow:
+    when:
+      visible: '!'
+    commands:
+      - tapOn: '!'
+- runFlow:
+    when:
+      visible: 'Dismiss'
+    commands:
+      - tapOn: 'Dismiss'

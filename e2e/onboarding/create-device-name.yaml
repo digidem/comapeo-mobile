@@ -1,0 +1,26 @@
+appId: com.comapeo
+onFlowStart:
+  - runFlow: ../common/launchapp.yaml
+---
+- assertVisible:
+    label: 'Input for device name is visible'
+    id: 'device-name-input'
+- tapOn:
+    id: 'device-name-input'
+- inputText:
+    label: 'Can input a device name'
+    text: ${output.names.device}
+- assertVisible:
+    label: 'Button to add a device name is visible'
+    id: 'add-name-button'
+- tapOn:
+    id: 'add-name-button'
+- assertVisible:
+    label: 'The success message is visible on the screen'
+    text: '.*Success.*'
+- assertVisible:
+    label: 'Device name that was added is visible'
+    text: ${output.names.device}
+- assertVisible:
+    label: 'Go to map button is visible'
+    id: 'go-to-map-button'

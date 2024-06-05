@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {LogBox} from 'react-native';
 import {createMapeoClient} from '@mapeo/ipc';
 import {AppNavigator} from './AppNavigator';
 import {IntlProvider} from './contexts/IntlContext';
@@ -12,6 +13,8 @@ import * as Sentry from '@sentry/react-native';
 import * as TaskManager from 'expo-task-manager';
 import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
 import {tracksStore} from './hooks/persistedState/usePersistedTrack';
+
+LogBox.ignoreAllLogs();
 
 Sentry.init({
   dsn: 'https://e0e02907e05dc72a6da64c3483ed88a6@o4507148235702272.ingest.us.sentry.io/4507170965618688',

@@ -62,7 +62,6 @@ export const DeviceNaming = ({
         onPress={Keyboard.dismiss}>
         <View>
           <CoMapeoText style={{alignSelf: 'center'}} />
-
           <View
             style={{flexDirection: 'row', alignItems: 'center', marginTop: 20}}>
             <Text style={{fontWeight: '500'}}>{t(m.header)}</Text>
@@ -77,6 +76,7 @@ export const DeviceNaming = ({
             onChangeText={setNameWithValidation}
             placeholderTextColor={LIGHT_GREY}
             placeholder="Device Name"
+            testID="device-name-input"
           />
           <Text
             style={{
@@ -89,8 +89,7 @@ export const DeviceNaming = ({
             <Text>{t(m.description)}</Text>
           </View>
         </View>
-
-        <Button fullWidth onPress={handleAddNamePress}>
+        <Button testID="add-name-button" fullWidth onPress={handleAddNamePress}>
           {t(m.addName)}
         </Button>
       </TouchableWithoutFeedback>

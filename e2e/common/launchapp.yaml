@@ -1,0 +1,7 @@
+appId: com.comapeo
+onFlowStart:
+  - runFlow: setup.yaml
+---
+- runFlow: yellowbox.yaml
+- tapOn:
+    id: 'get-started-button'

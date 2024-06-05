@@ -320,7 +320,13 @@ export function isEditingScreen(
 
 export function shallowEqual(a: any, b: any) {
   if (a === b) return true;
-  if (typeof a !== 'object' || typeof b !== 'object') return false;
+  if (
+    a === null ||
+    b === null ||
+    typeof a !== 'object' ||
+    typeof b !== 'object'
+  )
+    return false;
   for (const key in a) {
     if (!(key in b) || a[key] !== b[key]) return false;
   }

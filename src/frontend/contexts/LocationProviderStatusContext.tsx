@@ -1,5 +1,4 @@
 import React, {createContext, useContext, useState} from 'react';
-import {noop} from '@mapeo/core/dist/utils';
 import {
   type LocationProviderStatus,
   getProviderStatusAsync,
@@ -60,7 +59,8 @@ class LocationProviderStatusStore {
 
   init = async () => {
     try {
-      if (!this.#locationProviderStatusSubscription) return;
+      if (this.#locationProviderStatusSubscription) return;
+      this.checkProviderStatus();
       this.#locationProviderStatusSubscription = setInterval(
         this.checkProviderStatus,
         POLL_PROVIDER_STATUS_INTERVAL,
@@ -117,3 +117,5 @@ class LocationProviderStatusStore {
     };
   };
 }
+
+function noop() {}

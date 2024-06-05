@@ -3,6 +3,7 @@ import {FormattedMessage, defineMessages} from 'react-intl';
 import {View, Text, StyleSheet} from 'react-native';
 import Location from '../../images/Location.svg';
 import {BLACK} from '../../lib/styles';
+import mapObject from 'map-obj';
 
 import {FormattedCoords} from '../../sharedComponents/FormattedData';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
@@ -50,14 +51,15 @@ const LocationViewUpdatePosition = () => {
   useEffect(() => {
     const newCoord = !locationState?.location
       ? undefined
-      : Object.entries(locationState.location.coords).map(
-          ([key, val]) => [key, val === null ? undefined : val] as const,
+      : // replaces null with undefined
+        mapObject(locationState.location.coords, (key, val) =>
+          val === null ? [key, undefined] : [key, val],
         );
 
     updateObservationPosition({
       position: {
         mocked: false,
-        coords: !newCoord ? undefined : Object.fromEntries(newCoord),
+        coords: newCoord,
         timestamp: locationState?.location?.timestamp.toString(),
       },
       manualLocation: false,

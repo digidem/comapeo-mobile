@@ -54,9 +54,9 @@ export class LocationStore {
   /**
    * Initialize position watching. Permissions handling should be done before calling this.
    */
-  init = async () => {
+  async init() {
     try {
-      if (!this.#locationSubscription) return;
+      if (this.#locationSubscription) return;
       this.#locationSubscription = await watchPositionAsync(
         {accuracy: Accuracy.BestForNavigation},
         location => {
@@ -76,7 +76,7 @@ export class LocationStore {
         s();
       }
     }
-  };
+  }
 
   getSnapshot = (): LocationState => {
     return this.#state;

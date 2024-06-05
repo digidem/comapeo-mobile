@@ -30,9 +30,7 @@ export function useLocationWithProviderStatus(
   }
 
   return {
-    locationState: !providerStatus.locationProviderStatus?.gpsAvailable
-      ? null
-      : location,
+    locationState: location,
     providerStatusState: providerStatus,
   };
 }

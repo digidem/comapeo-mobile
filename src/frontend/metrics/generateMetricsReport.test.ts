@@ -2,14 +2,16 @@ import * as path from 'node:path';
 import * as fs from 'node:fs';
 import generateMetricsReport from './generateMetricsReport';
 
+type MetricsReportOptions = Parameters<typeof generateMetricsReport>[0];
+
 describe('generateMetricsReport', () => {
   const packageJson = readPackageJson();
 
-  const defaultOptions: Parameters<typeof generateMetricsReport>[0] = {
+  const defaultOptions = {
     packageJson,
     os: 'android',
     osVersion: 123,
-    screen: {width: 12, height: 34},
+    screen: {width: 12, height: 34, ignoredValue: 56},
     observations: [
       // Middle of the Atlantic
       {lat: 10, lon: -33},
@@ -22,7 +24,7 @@ describe('generateMetricsReport', () => {
       {lat: 12},
       {lon: 34},
     ],
-  };
+  } as MetricsReportOptions;
 
   it('can be serialized and deserialized as JSON', () => {
     const report = generateMetricsReport(defaultOptions);

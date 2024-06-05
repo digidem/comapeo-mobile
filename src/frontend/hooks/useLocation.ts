@@ -66,6 +66,9 @@ export function useLocation(
     // Former can technically happen on initialization (although unlikely)
     // Latter should not ever happen (but to make TypeScript happy)
     if (!(prevState.current.location && newState.location)) {
+      if (!prevState.current.location && !newState.location) {
+        return prevState.current;
+      }
       prevState.current = newState;
       return newState;
     }

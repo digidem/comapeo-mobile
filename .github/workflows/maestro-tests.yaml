@@ -118,8 +118,8 @@ jobs:
             adb install app-release.apk # install app
 
             # Run e2e
-            maestro test .maestro/onboarding/create-device-name.yaml
-            #./run_matrix_e2e.sh
+            maestro test e2e/create-device-name.yaml
+            #./run_maestro_e2e.sh
             # ^^^ Will debug files: report*.xml, video_record.mp4, last_img.png
 
       - name: Upload report

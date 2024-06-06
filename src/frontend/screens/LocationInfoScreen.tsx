@@ -86,13 +86,17 @@ export const LocationInfoScreen = () => {
   return (
     <ScrollView style={styles.container} testID="gpsScreenScrollView">
       <View style={styles.infoArea}>
-        <Text style={styles.sectionTitle}>
-          <FormattedMessage {...m.lastUpdate} />
-        </Text>
-        <DateDistance
-          style={styles.rowValue}
-          date={locationTimestamp ? new Date(locationTimestamp) : new Date()}
-        />
+        {locationTimestamp && (
+          <>
+            <Text style={styles.sectionTitle}>
+              <FormattedMessage {...m.lastUpdate} />
+            </Text>
+            <DateDistance
+              style={styles.rowValue}
+              date={new Date(locationTimestamp)}
+            />
+          </>
+        )}
         {location && provider?.locationServicesEnabled && (
           <>
             <Text style={styles.sectionTitle}>

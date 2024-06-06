@@ -2,9 +2,7 @@ import React, {createContext, useContext, useState} from 'react';
 import {
   type LocationProviderStatus,
   getProviderStatusAsync,
-  useForegroundPermissions,
 } from 'expo-location';
-import {shallowEqual} from '../lib/utils';
 
 // How frequently to poll the location provider status
 const POLL_PROVIDER_STATUS_INTERVAL = 10_000; // 10 seconds
@@ -18,12 +16,6 @@ export function LocationProviderStatusStoreProvider({
   children: React.ReactNode;
 }) {
   const [store] = useState(() => new LocationProviderStatusStore());
-
-  const [locationPermissions] = useForegroundPermissions();
-
-  if (locationPermissions?.granted) {
-    store.init();
-  }
 
   return (
     <LocationProviderStatusStoreContext.Provider value={store}>
@@ -57,7 +49,12 @@ class LocationProviderStatusStore {
     error: null,
   };
 
-  init = async () => {
+  constructor() {
+    this.checkProviderStatus = this.checkProviderStatus.bind(this);
+    this.init();
+  }
+
+  async init() {
     try {
       if (this.#locationProviderStatusSubscription) return;
       this.checkProviderStatus();
@@ -77,20 +74,24 @@ class LocationProviderStatusStore {
         s();
       }
     }
-  };
+  }
+
+  updateSubscribers() {
+    for (const s of this.#subscribers) {
+      s();
+    }
+  }
 
   checkProviderStatus() {
     getProviderStatusAsync()
       .then(status => {
-        if (!shallowEqual(this.#state.locationProviderStatus, status)) {
-          this.#state = {locationProviderStatus: status, error: null};
-          for (const s of this.#subscribers) {
-            s();
-          }
-        }
+        this.#state = {locationProviderStatus: status, error: null};
+        this.updateSubscribers();
       })
-      // Shouldn't happen because we check permissions.granted above, but just in case
-      .catch(noop);
+      .catch(error => {
+        this.#state.error = error;
+        this.updateSubscribers();
+      });
   }
 
   getSnapshot = (): LocationProviderStatusState => {
@@ -117,5 +118,3 @@ class LocationProviderStatusStore {
     };
   };
 }
-
-function noop() {}

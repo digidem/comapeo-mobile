@@ -9,14 +9,13 @@ import {
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 
 import {useLastKnownLocation} from '../hooks/useLastSavedLocation';
-import {useLocationProviderStatus} from '../hooks/useLocationProviderStatus';
 import {usePersistedSettings} from '../hooks/persistedState/usePersistedSettings';
 import {GPS_MODAL_TEXT, WHITE} from '../lib/styles';
 import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 import {DateDistance} from '../sharedComponents/DateDistance';
 import {FormattedCoords} from '../sharedComponents/FormattedData';
 import {Text} from '../sharedComponents/Text';
-import {useLocation} from '../hooks/useLocation';
+import {useLocationWithProviderStatus} from '../hooks/useLocationWithProviderStatus';
 
 const m = defineMessages({
   gpsHeader: {
@@ -74,12 +73,13 @@ const InfoRow = ({label, value}: {label: string; value: string}) => (
 );
 
 export const LocationInfoScreen = () => {
-  const {location} = useLocation();
+  const {locationState, providerStatusState} = useLocationWithProviderStatus();
   const lastKnownLocationQuery = useLastKnownLocation();
-  const provider = useLocationProviderStatus();
   const {coordinateFormat} = usePersistedSettings();
   const {formatMessage: t} = useIntl();
 
+  const location = locationState.location;
+  const provider = providerStatusState.locationProviderStatus;
   const locationTimestamp =
     location?.timestamp || lastKnownLocationQuery.data?.timestamp;
 
@@ -93,7 +93,7 @@ export const LocationInfoScreen = () => {
           style={styles.rowValue}
           date={locationTimestamp ? new Date(locationTimestamp) : new Date()}
         />
-        {location && (
+        {location && provider?.locationServicesEnabled && (
           <>
             <Text style={styles.sectionTitle}>
               <FormattedMessage {...m[coordinateFormat]} />

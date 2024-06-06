@@ -41,13 +41,12 @@ export const MapScreen = () => {
   const [following, setFollowing] = React.useState(true);
   const {newDraft} = useDraftObservation();
   const {navigate} = useNavigationFromHomeTabs();
-  const locationAndProviderState =
+  const {locationState, providerStatusState} =
     useLocationWithProviderStatus(locationFilter);
-
+  const coords = locationState.location && getCoords(locationState.location);
   const savedLocation = useLastKnownLocation();
-  const coords = !locationAndProviderState.locationState?.location
-    ? undefined
-    : getCoords(locationAndProviderState.locationState.location);
+  const locationServicesEnabled =
+    providerStatusState.locationProviderStatus?.locationServicesEnabled;
 
   const styleUrlQuery = useMapStyleUrl();
 
@@ -96,14 +95,18 @@ export const MapScreen = () => {
                 : undefined,
             zoomLevel: zoom,
           }}
-          centerCoordinate={following ? coords : undefined}
+          centerCoordinate={
+            locationServicesEnabled && following && coords ? coords : undefined
+          }
           zoomLevel={following ? zoom : undefined}
           animationDuration={1000}
           animationMode="flyTo"
           followUserLocation={false}
         />
 
-        {coords && <UserLocation minDisplacement={MIN_DISPLACEMENT} />}
+        {coords && locationServicesEnabled && (
+          <UserLocation minDisplacement={MIN_DISPLACEMENT} />
+        )}
         {isFinishedLoading && <ObservationMapLayer />}
         {isFinishedLoading && <TrackPathLayer />}
       </Mapbox.MapView>
@@ -112,7 +115,7 @@ export const MapScreen = () => {
         latitude={coords ? coords[1] : undefined}
         bottom={20}
       />
-      {coords && (
+      {coords && locationServicesEnabled && (
         <View style={styles.locationButton}>
           <IconButton onPress={handleLocationPress}>
             {following ? <LocationFollowingIcon /> : <LocationNoFollowIcon />}

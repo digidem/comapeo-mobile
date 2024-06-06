@@ -29,7 +29,10 @@ export interface ParameterChanges {
 
 export type ShouldAcceptUpdateCheck = (changes: ParameterChanges) => boolean;
 
-export const DEFAULT_SHOULD_ACCEPT_UPDATE: ShouldAcceptUpdateCheck = () => true;
+export const DEFAULT_SHOULD_ACCEPT_UPDATE: ShouldAcceptUpdateCheck = ({
+  distance,
+  time,
+}) => distance > 3 || time > 3000;
 
 /**
  * Hook for subscribing to location updates and optionally providing a callback to control the frequency of stateful updates received by the hook subscriber

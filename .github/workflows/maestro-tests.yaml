@@ -1,0 +1,134 @@
+name: Android E2E With Maestro
+
+on:
+  push:
+    branches:
+      - feat/e2e-maestro-start
+
+env:
+  MAESTRO_VERSION: 1.30.4
+
+jobs:
+  run_android_e2e:
+    timeout-minutes: 30
+    runs-on: macos-latest
+
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        arch: [x86, x86_64]
+        # ^^^ `runs-on: macos-*` doesn't support `arm64-v8a`
+
+        api-level: [30, 31, 32, 33, 34]
+        # ^^^ `21`  is the minimum API level supported by React Native
+        # [21, 22, 23, 24, 25,] - didn't work with Maestro
+
+        target: [default, google_apis, google_apis_playstore]
+
+        exclude:
+          # Exclude combinations that are not supported by the Android SDK
+          # Print all available Android emulators: `sdkmanager --list --verbose | grep system-images`
+
+          # x85
+          - arch: x86
+            api-level: 31
+          - arch: x86
+            api-level: 32
+          - arch: x86
+            api-level: 33
+          - arch: x86
+            api-level: 34
+
+          # default
+          - target: default
+            api-level: 30
+            arch: x86
+          - target: default
+            api-level: 31
+            arch: x86
+          - target: default
+            api-level: 32
+          - target: default
+            api-level: 33
+          - target: default
+            api-level: 34
+
+          # google_apis
+          - target: google_apis
+            api-level: 27
+            arch: x86_64
+
+          # google_apis_playstore
+          - target: google_apis_playstore
+            api-level: 21
+          - target: google_apis_playstore
+            api-level: 22
+          - target: google_apis_playstore
+            api-level: 23
+          - target: google_apis_playstore
+            api-level: 24
+            arch: x86_64
+          - target: google_apis_playstore
+            api-level: 25
+            arch: x86_64
+          - target: google_apis_playstore
+            api-level: 26
+            arch: x86_64
+          - target: google_apis_playstore
+            api-level: 27
+            arch: x86_64
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - run: npx envinfo
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 11
+
+      - name: Install Maestro
+        run: curl -Ls 'https://get.maestro.mobile.dev' | bash
+
+      - name: Run Maestro E2E tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          target: ${{ matrix.target }}
+          arch: ${{ matrix.arch }}
+          cores: 2
+          ram-size: 2048M
+          force-avd-creation: false
+          emulator-boot-timeout: 600 # 10min
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          pre-emulator-launch-script: |
+            echo "Running pre emulator launch script. Printing the working directory now:"
+            pwd
+          script: |
+            npx envinfo                 # check memory usage
+
+            adb devices                 # verify emulator is running
+
+            adb install app-release.apk # install app
+
+            # Run e2e
+            maestro test .maestro/onboarding/create-device-name.yaml
+            #./run_matrix_e2e.sh
+            # ^^^ Will debug files: report*.xml, video_record.mp4, last_img.png
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: E2E Report (${{ matrix.arch }}, ${{ matrix.api-level }}, ${{ matrix.target }})
+          path: |
+            ${{ github.workspace }}/*.mp4
+            ${{ github.workspace }}/*.png
+            ${{ github.workspace }}/report*.xml
+            ~/e2e/tests/**/*

@@ -27,7 +27,9 @@ interface GPSPill {
 export const GPSPill: FC<GPSPill> = ({navigation}) => {
   const isFocused = useIsFocused();
   const {formatMessage: t} = useIntl();
-  const {locationState, providerStatusState} = useLocationWithProviderStatus();
+  const {locationState, providerStatusState} = useLocationWithProviderStatus(
+    ({accuracy}) => accuracy !== 'unchanged',
+  );
 
   const precision = locationState?.location?.coords.accuracy;
 

@@ -4,7 +4,7 @@ import {SelectOptions, LabeledSelectOption} from '../sharedTypes/PresetTypes';
 import {Preset, Observation} from '@mapeo/schema';
 import {NavigationState} from '@react-navigation/native';
 import {EDITING_SCREEN_NAMES} from '../constants';
-import {LocationState} from '../contexts/LocationStoreContext';
+import {LocationObject, LocationProviderStatus} from 'expo-location';
 
 // import type {
 //   ObservationValue,
@@ -54,20 +54,23 @@ const GOOD_PRECISION = 10; // 10 meters
 export type LocationStatus = 'searching' | 'improving' | 'good' | 'error';
 
 export function getLocationStatus({
-  locationState,
+  location,
+  providerStatus,
 }: {
-  locationState: LocationState | null;
+  location: LocationObject | null;
+  providerStatus?: LocationProviderStatus | null;
 }): LocationStatus {
-  if (!locationState?.location || locationState.error) return 'error';
+  const gpsAvailable = !!providerStatus?.gpsAvailable;
+  const locationServicesEnabled = !!providerStatus?.locationServicesEnabled;
+
+  if (!gpsAvailable || !locationServicesEnabled) return 'error';
 
   const positionStale =
-    locationState &&
-    Date.now() - locationState.location.timestamp > STALE_TIMEOUT;
+    location && Date.now() - location.timestamp > STALE_TIMEOUT;
 
-  if (positionStale || !locationState.location.coords.accuracy)
-    return 'searching';
+  if (positionStale) return 'searching';
 
-  const precision = locationState.location.coords.accuracy;
+  const precision = location?.coords.accuracy;
 
   if (typeof precision === 'number') {
     return Math.round(precision) <= GOOD_PRECISION ? 'good' : 'improving';
@@ -319,6 +322,7 @@ export function isEditingScreen(
 }
 
 export function shallowEqual(a: any, b: any) {
+  console.log('in function');
   if (a === b) return true;
   if (
     a === null ||

@@ -27,24 +27,27 @@ interface GPSPill {
 export const GPSPill: FC<GPSPill> = ({navigation}) => {
   const isFocused = useIsFocused();
   const {formatMessage: t} = useIntl();
-  const locationWithProviderStatus = useLocationWithProviderStatus();
+  const {locationState, providerStatusState} = useLocationWithProviderStatus();
 
-  const precision =
-    locationWithProviderStatus.locationState?.location?.coords.accuracy;
+  const precision = locationState?.location?.coords.accuracy;
 
-  const status = getLocationStatus({
-    locationState: locationWithProviderStatus.locationState,
-  });
+  const status = useMemo(() => {
+    const isError = !!locationState.error;
 
-  const text = useMemo(
-    () =>
-      status === 'error'
-        ? t(m.noGps)
-        : status === 'searching'
-          ? t(m.searching)
-          : `± ${Math.round(precision!)} m`,
-    [precision, status, t],
-  );
+    return isError
+      ? 'error'
+      : getLocationStatus({
+          location: locationState.location,
+          providerStatus: providerStatusState.locationProviderStatus,
+        });
+  }, [locationState, providerStatusState]);
+
+  const text = useMemo(() => {
+    if (status === 'error') return t(m.noGps);
+    else if (status === 'searching' || typeof precision === 'undefined') {
+      return t(m.searching);
+    } else return `± ${Math.round(precision!)} m`;
+  }, [precision, status, t]);
 
   return (
     <TouchableOpacity

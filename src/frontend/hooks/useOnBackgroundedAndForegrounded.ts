@@ -2,9 +2,7 @@ import {type MapeoClientApi} from '@mapeo/ipc';
 import {useEffect} from 'react';
 import {useAppState} from '@react-native-community/hooks';
 
-export default function useOnBackgroundedAndForegrounded(
-  api: MapeoClientApi,
-): void {
+export const useOnBackgroundedAndForegrounded = (api: MapeoClientApi): void => {
   const isAppActive = useAppState() === 'active';
   useEffect(() => {
     if (isAppActive) {
@@ -13,4 +11,4 @@ export default function useOnBackgroundedAndForegrounded(
       api.onBackgrounded();
     }
   }, [isAppActive]);
-}
+};

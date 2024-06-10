@@ -1,4 +1,4 @@
-import sleep from './sleep';
+import {sleep} from './sleep';
 
 type PromiseStatus = 'pending' | 'resolved' | 'rejected';
 

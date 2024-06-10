@@ -1,4 +1,4 @@
-export default function assert(
+export function assert(
   condition: unknown,
   message = 'Assertion failed',
 ): asserts condition {

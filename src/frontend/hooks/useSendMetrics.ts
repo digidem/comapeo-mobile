@@ -5,12 +5,12 @@ import {useEffect} from 'react';
 import {Dimensions, Platform} from 'react-native';
 import {type StateCreator} from 'zustand';
 import packageJson from '../../../package.json';
-import assert from '../lib/assert';
+import {assert} from '../lib/assert';
 import noop from '../lib/noop';
-import sleep from '../lib/sleep';
-import throwIfAborted from '../lib/throwIfAborted';
+import {sleep} from '../lib/sleep';
+import {throwIfAborted} from '../lib/throwIfAborted';
 import generateMetricsReport from '../metrics/generateMetricsReport';
-import sendMetricsReport from '../metrics/sendMetricsReport';
+import {sendMetricsReport} from '../metrics/sendMetricsReport';
 import {createPersistedState} from './persistedState/createPersistedState';
 
 const ONE_SECOND = 1000;
@@ -76,7 +76,7 @@ const getAllObservations = async (
   ).flat();
 };
 
-export default function useSendMetrics(api: MapeoClientApi): void {
+export function useSendMetrics(api: MapeoClientApi): void {
   const lastMetricsReportSentAt = useLastMetricsReportSentAt(
     store => store.lastMetricsReportSentAt,
   );

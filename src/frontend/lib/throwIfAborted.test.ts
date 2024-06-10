@@ -1,4 +1,4 @@
-import throwIfAborted from './throwIfAborted';
+import {throwIfAborted} from './throwIfAborted';
 
 describe('throwIfAborted', () => {
   it('is a no-op if not aborted', () => {

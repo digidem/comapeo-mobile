@@ -1,6 +1,6 @@
-import throwIfAborted from './throwIfAborted';
+import {throwIfAborted} from './throwIfAborted';
 
-export default function sleep(
+export function sleep(
   ms: number,
   options?: Readonly<{signal?: AbortSignal}>,
 ): Promise<void> {

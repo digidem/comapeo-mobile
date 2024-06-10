@@ -1,7 +1,7 @@
 import * as http from 'node:http';
 import {buffer} from 'node:stream/consumers';
 import {promisify} from 'node:util';
-import sendMetricsReport from './sendMetricsReport';
+import {sendMetricsReport} from './sendMetricsReport';
 
 describe('sendMetricsReport', () => {
   let teardowns: Array<() => unknown>;

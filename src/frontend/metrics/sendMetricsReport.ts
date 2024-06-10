@@ -19,7 +19,7 @@ class SendMetricsReportHttpError extends Error {
  * Throws if the request fails due to a network error (e.g., no connection) or
  * an HTTP error (e.g., a 403 status code).
  */
-export default async function sendMetricsReport({
+export async function sendMetricsReport({
   metricsUrl,
   metricsApiKey,
   metricsReport,

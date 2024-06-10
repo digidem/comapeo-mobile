@@ -1,10 +1,9 @@
 import type {ReadonlyDeep} from 'type-fest';
 import type {Observation} from '@mapeo/schema';
 import positionToCountries from './positionToCountries';
-import {getPercentageOfNetworkAvailability} from './getPercentageOfNetworkAvailability';
 import {addToSet} from './utils';
 
-export default function generateMetricsReport({
+export function generateMetricsReport({
   packageJson,
   os,
   osVersion,
@@ -34,4 +33,14 @@ export default function generateMetricsReport({
     percentageOfNetworkAvailability:
       getPercentageOfNetworkAvailability(observations),
   };
+}
+
+export function getPercentageOfNetworkAvailability(
+  observations: ReadonlyArray<Observation>,
+) {
+  const networkAvailability = observations
+    .map(obs => obs.metadata?.positionProvider?.networkAvailable)
+    .filter(networkAvailable => networkAvailable !== undefined);
+  const networkIsAvailable = networkAvailability.filter(Boolean);
+  return (networkIsAvailable.length / networkAvailability.length) * 100;
 }

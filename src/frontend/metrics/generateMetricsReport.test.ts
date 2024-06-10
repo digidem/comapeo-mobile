@@ -1,10 +1,12 @@
 import * as path from 'node:path';
 import * as fs from 'node:fs';
-import generateMetricsReport from './generateMetricsReport';
+import {
+  generateMetricsReport,
+  getPercentageOfNetworkAvailability,
+} from './generateMetricsReport';
 import {generate} from '@mapeo/mock-data';
 import positionToCountries from './positionToCountries';
 import type {Observation} from '@mapeo/schema';
-import {getPercentageOfNetworkAvailability} from './getPercentageOfNetworkAvailability';
 import {addToSet} from './utils';
 
 type MetricsReportOptions = Parameters<typeof generateMetricsReport>[0];

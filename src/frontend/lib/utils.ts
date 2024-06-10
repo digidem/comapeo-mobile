@@ -305,18 +305,3 @@ export function matchPreset(
 
   return bestMatch;
 }
-
-export function isEditingScreen(
-  routes: NavigationState['routes'],
-  index: number | undefined,
-) {
-  const parentRoute = routes[index || 0];
-
-  const routeName = !parentRoute
-    ? undefined
-    : !parentRoute.state
-      ? parentRoute.name
-      : parentRoute.state.routes[parentRoute.state.index || 0]?.name;
-
-  return !!EDITING_SCREEN_NAMES.find(val => val === routeName);
-}

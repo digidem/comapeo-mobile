@@ -3,7 +3,6 @@ import {type ObservationValue} from '@mapeo/schema';
 import {useAppState} from '@react-native-community/hooks';
 import {useEffect} from 'react';
 import {Dimensions, Platform} from 'react-native';
-import {type StateCreator} from 'zustand';
 import packageJson from '../../../package.json';
 import {assert} from '../lib/assert';
 import noop from '../lib/noop';
@@ -11,7 +10,7 @@ import {sleep} from '../lib/sleep';
 import {throwIfAborted} from '../lib/throwIfAborted';
 import generateMetricsReport from '../metrics/generateMetricsReport';
 import {sendMetricsReport} from '../metrics/sendMetricsReport';
-import {createPersistedState} from './persistedState/createPersistedState';
+import {useLastMetricsReportSentAt} from './persistedState/useLastMetricsReportSentAt';
 
 const ONE_SECOND = 1000;
 const ONE_MINUTE = ONE_SECOND * 60;
@@ -24,24 +23,6 @@ const getEnv = (name: string): string => {
   assert(result, `${name} environment variable should be set`);
   return result;
 };
-
-type LastMetricsReportSentAtSlice = {
-  lastMetricsReportSentAt: null | number;
-  setLastMetricsReportSentAt: (lastMetricsReportSentAt: number) => void;
-};
-
-const lastMetricsReportSentAtSlice: StateCreator<
-  LastMetricsReportSentAtSlice
-> = set => ({
-  lastMetricsReportSentAt: null,
-  setLastMetricsReportSentAt: lastMetricsReportSentAt =>
-    set({lastMetricsReportSentAt}),
-});
-
-const useLastMetricsReportSentAt = createPersistedState(
-  lastMetricsReportSentAtSlice,
-  'LastMetricsReportSentAt',
-);
 
 /**
  * Sleep until we can send metrics again.

@@ -15,7 +15,6 @@ export default function generateMetricsReport({
   osVersion: number | string;
   screen: {width: number; height: number};
   observations: ReadonlyArray<Observation>;
-  percentageOfNetworkAvailability: number;
 }>) {
   const countries = new Set<string>();
 

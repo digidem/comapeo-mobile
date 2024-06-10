@@ -4,7 +4,6 @@ import generateMetricsReport, {addToSet} from './generateMetricsReport';
 import {generate} from '@mapeo/mock-data';
 import positionToCountries from './positionToCountries';
 import type {Observation} from '@mapeo/schema';
-import {getPercentageOfNetworkAvailability} from './getPercentageOfNetworkAvailability';
 
 type MetricsReportOptions = Parameters<typeof generateMetricsReport>[0];
 
@@ -28,8 +27,6 @@ describe('generateMetricsReport', () => {
     osVersion: 123,
     screen: {width: 12, height: 34, ignoredValue: 56},
     observations,
-    percentageOfNetworkAvailability:
-      getPercentageOfNetworkAvailability(observations),
   } as MetricsReportOptions;
 
   it('includes a report type', () => {

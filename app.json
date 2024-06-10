@@ -11,6 +11,7 @@
     "plugins": [
       "expo-localization",
       "expo-secure-store",
+      "expo-document-picker",
       [
         "@rnmapbox/maps",
         {
@@ -53,6 +54,7 @@
     ],
     "android": {
       "versionCode": 1,
+      "allowBackup": false,
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#050F77"

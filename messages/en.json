@@ -859,6 +859,9 @@
   "screens.Settings.CreateOrJoinProject.importConfig": {
     "message": "Import Config"
   },
+  "screens.Settings.CreateOrJoinProject.importConfigFileError": {
+    "message": "File name should end with .mapeoconfig"
+  },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
     "message": "Join an existing Mapeo Project"
   },

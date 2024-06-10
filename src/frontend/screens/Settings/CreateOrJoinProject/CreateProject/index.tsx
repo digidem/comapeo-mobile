@@ -1,21 +1,26 @@
-import {defineMessages, useIntl} from 'react-intl';
-import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
-import {Keyboard, KeyboardAvoidingView, StyleSheet, View} from 'react-native';
-import {useForm} from 'react-hook-form';
-import {Text} from '../../../../sharedComponents/Text';
 import * as React from 'react';
+import * as DocumentPicker from 'expo-document-picker';
+import * as FileSystem from 'expo-file-system';
+import {useForm} from 'react-hook-form';
+import {defineMessages, useIntl} from 'react-intl';
+import {Keyboard, KeyboardAvoidingView, StyleSheet, View} from 'react-native';
 import {
-  TouchableWithoutFeedback,
   TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
-import {Button} from '../../../../sharedComponents/Button';
-import {BLACK, LIGHT_GREY} from '../../../../lib/styles';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
-import {useCreateProject} from '../../../../hooks/server/projects';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+
 import {usePersistedProjectId} from '../../../../hooks/persistedState/usePersistedProjectId';
+import {useCreateProject} from '../../../../hooks/server/projects';
+import {convertFileUriToPosixPath} from '../../../../lib/file-system';
+import {BLACK, LIGHT_GREY} from '../../../../lib/styles';
+import noop from '../../../../lib/noop';
+import {Button} from '../../../../sharedComponents/Button';
+import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
+import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
+import {Text} from '../../../../sharedComponents/Text';
+import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 
 const m = defineMessages({
   title: {
@@ -38,7 +43,18 @@ const m = defineMessages({
     id: 'screens.Settings.CreateOrJoinProject.importConfig',
     defaultMessage: 'Import Config',
   },
+  importConfigFileError: {
+    id: 'screens.Settings.CreateOrJoinProject.importConfigFileError',
+    defaultMessage: 'File name should end with .mapeoconfig',
+  },
 });
+
+type ConfigFileImportResult =
+  | {
+      type: 'success';
+      file: DocumentPicker.DocumentPickerAsset;
+    }
+  | {type: 'error'; error: Error};
 
 type ProjectFormType = {
   projectName: string;
@@ -49,24 +65,100 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
 }) => {
   const {formatMessage: t} = useIntl();
   const [advancedSettingOpen, setAdvancedSettingOpen] = React.useState(false);
+  const [configFileResult, setConfigFileResult] =
+    React.useState<ConfigFileImportResult | null>(null);
 
   const updateActiveProjectId = usePersistedProjectId(
     state => state.setProjectId,
   );
-  const {mutate, isPending, reset, error} = useCreateProject();
+  const {
+    mutate,
+    isPending,
+    reset,
+    error: projectCreationError,
+  } = useCreateProject();
 
   const {control, handleSubmit} = useForm<ProjectFormType>({
     defaultValues: {projectName: ''},
   });
 
   function handleCreateProject(val: ProjectFormType) {
-    mutate(val.projectName, {
-      onSuccess: projectId => {
-        updateActiveProjectId(projectId);
-        navigation.navigate('ProjectCreated', {name: val.projectName});
+    mutate(
+      {
+        name: val.projectName,
+        configPath:
+          configFileResult?.type === 'success'
+            ? convertFileUriToPosixPath(configFileResult.file.uri)
+            : undefined,
       },
-    });
+      {
+        onSuccess: projectId => {
+          if (configFileResult?.type === 'success') {
+            // No need to block UI on this
+            // no-op if something fails here. caches can eventually get cleared by the OS automatically.
+            FileSystem.deleteAsync(configFileResult.file.uri).catch(noop);
+          }
+
+          updateActiveProjectId(projectId);
+
+          navigation.navigate('ProjectCreated', {name: val.projectName});
+        },
+      },
+    );
   }
+
+  async function importConfigFile() {
+    let result;
+    try {
+      result = await DocumentPicker.getDocumentAsync({
+        copyToCacheDirectory: true,
+        multiple: false,
+      });
+    } catch (err) {
+      if (err instanceof Error) {
+        setConfigFileResult({type: 'error', error: err});
+      }
+
+      return;
+    }
+
+    if (result.canceled) return;
+
+    const asset = result.assets[0];
+
+    // Shouldn't happen based on how the library works
+    if (!asset) return;
+
+    // Only allow importing files with the desired extension
+    if (asset.name.endsWith('.mapeoconfig')) {
+      setConfigFileResult({type: 'success', file: asset});
+    } else {
+      setConfigFileResult({
+        type: 'error',
+        error: new Error(t(m.importConfigFileError)),
+      });
+      // No need to block UI on this
+      // no-op if something fails here. caches can eventually get cleared by the OS automatically.
+      FileSystem.deleteAsync(asset.uri).catch(noop);
+    }
+  }
+
+  const errorSheetProps =
+    configFileResult?.type === 'error'
+      ? {
+          error: configFileResult.error,
+          clearError: () => setConfigFileResult(null),
+        }
+      : projectCreationError
+        ? {
+            error: projectCreationError,
+            clearError: reset,
+            tryAgain: handleSubmit(handleCreateProject),
+          }
+        : {
+            error: null,
+            clearError: () => {},
+          };
 
   return (
     <React.Fragment>
@@ -100,10 +192,21 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
                 />
               </TouchableOpacity>
               {advancedSettingOpen && (
-                <View style={{padding: 20}}>
-                  <Button fullWidth variant="outlined" onPress={() => {}}>
+                <View style={styles.importConfigContainer}>
+                  <Button
+                    fullWidth
+                    variant="outlined"
+                    onPress={() => {
+                      importConfigFile();
+                    }}>
                     {t(m.importConfig)}
                   </Button>
+
+                  {configFileResult?.type === 'success' && (
+                    <Text style={styles.configFileName}>
+                      {configFileResult.file.name}
+                    </Text>
+                  )}
                 </View>
               )}
             </View>
@@ -119,11 +222,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
-      <ErrorBottomSheet
-        error={error}
-        clearError={reset}
-        tryAgain={handleSubmit(handleCreateProject)}
-      />
+      <ErrorBottomSheet {...errorSheetProps} />
     </React.Fragment>
   );
 };
@@ -145,5 +244,12 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderColor: LIGHT_GREY,
+  },
+  importConfigContainer: {
+    padding: 20,
+    gap: 20,
+  },
+  configFileName: {
+    textAlign: 'center',
   },
 });

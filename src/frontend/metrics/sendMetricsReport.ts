@@ -30,16 +30,13 @@ export async function sendMetricsReport({
   metricsReport: Jsonifiable;
   signal: AbortSignal;
 }>): Promise<void> {
-  const body = new Blob([JSON.stringify({data: metricsReport})]);
-
   const response = await fetch(metricsUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Content-Length': body.size.toString(),
       Authorization: metricsApiKey,
     },
-    body,
+    body: JSON.stringify({data: metricsReport}),
     credentials: 'omit',
     signal,
   });

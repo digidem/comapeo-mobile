@@ -15,7 +15,15 @@ describe('sendMetricsReport', () => {
   const createTestServer = async (
     requestHandler: http.RequestListener,
   ): Promise<string> => {
-    const server = http.createServer(requestHandler);
+    const server = http.createServer(async (req, res) => {
+      try {
+        await requestHandler(req, res);
+      } catch (err) {
+        console.error(err);
+        res.statusCode = 500;
+        res.end(String(err));
+      }
+    });
 
     const listen = promisify(server.listen.bind(server));
     await listen();
@@ -58,6 +66,33 @@ describe('sendMetricsReport', () => {
       metricsUrl,
       metricsApiKey: 'foo123',
       metricsReport: {foo: 'bar'},
+      signal: new AbortController().signal,
+    });
+
+    expect(requestCount).toBe(1);
+  });
+
+  it('correctly handles non-ASCII in request body', async () => {
+    let requestCount = 0;
+    const serverOrigin = await createTestServer(async (req, res) => {
+      const rawBody = await buffer(req);
+      const body = JSON.parse(rawBody.toString());
+
+      expect(req.headers['content-length']).toBe(rawBody.byteLength.toString());
+      expect(body).toEqual({data: {unicode: '👩🏾‍🌾'}});
+
+      res.statusCode = 204;
+      res.end();
+
+      requestCount++;
+    });
+
+    const metricsUrl = new URL('/metrics', serverOrigin).href;
+
+    await sendMetricsReport({
+      metricsUrl,
+      metricsApiKey: 'foo123',
+      metricsReport: {unicode: '👩🏾‍🌾'},
       signal: new AbortController().signal,
     });
 

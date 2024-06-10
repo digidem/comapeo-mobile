@@ -1,7 +1,5 @@
 import * as React from 'react';
 import {BottomSheetModal, useBottomSheetModal} from '../BottomSheetModal';
-import {useNavigationState} from '@react-navigation/native';
-import {isEditingScreen} from '../../lib/utils';
 import {
   useAcceptInvite,
   usePendingInvites,
@@ -12,14 +10,14 @@ import {NewInviteBottomSheetContent} from './NewInviteBottomSheetContent';
 import {InviteSuccessBottomSheetContent} from './InviteSuccessBottomSheetContent';
 import {InviteCanceledBottomSheetContent} from './InviteCanceledBottomSheetContent';
 
-export const ProjectInviteBottomSheet = () => {
+export const ProjectInviteBottomSheet = ({
+  enabledForCurrentScreen,
+}: {
+  enabledForCurrentScreen: boolean;
+}) => {
   const {sheetRef, isOpen, closeSheet, openSheet} = useBottomSheetModal({
     openOnMount: false,
   });
-  const routes = useNavigationState(state => (!state ? [] : state.routes));
-  const index = useNavigationState(state => (!state ? undefined : state.index));
-
-  const isEditScreen = isEditingScreen(routes, index);
   const invites = usePendingInvites().data.sort(
     (a, b) => a.receivedAt - b.receivedAt,
   );
@@ -32,7 +30,7 @@ export const ProjectInviteBottomSheet = () => {
   const accept = useAcceptInvite(invite?.projectPublicId);
   const reject = useRejectInvite();
 
-  if (invite && !isOpen && !isEditScreen) {
+  if (invite && !isOpen && enabledForCurrentScreen) {
     openSheet();
   }
 

@@ -2,6 +2,7 @@ import type {ReadonlyDeep} from 'type-fest';
 import type {Observation} from '@mapeo/schema';
 import positionToCountries from './positionToCountries';
 import {getPercentageOfNetworkAvailability} from './getPercentageOfNetworkAvailability';
+import {addToSet} from './utils';
 
 export default function generateMetricsReport({
   packageJson,
@@ -33,8 +34,4 @@ export default function generateMetricsReport({
     percentageOfNetworkAvailability:
       getPercentageOfNetworkAvailability(observations),
   };
-}
-
-export function addToSet<T>(set: Set<T>, toAdd: Iterable<T>): void {
-  for (const item of toAdd) set.add(item);
 }

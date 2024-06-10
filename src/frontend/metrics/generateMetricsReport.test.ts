@@ -1,17 +1,23 @@
 import * as path from 'node:path';
 import * as fs from 'node:fs';
-import generateMetricsReport, {addToSet} from './generateMetricsReport';
+import generateMetricsReport from './generateMetricsReport';
 import {generate} from '@mapeo/mock-data';
 import positionToCountries from './positionToCountries';
 import type {Observation} from '@mapeo/schema';
 import {getPercentageOfNetworkAvailability} from './getPercentageOfNetworkAvailability';
+import {addToSet} from './utils';
 
 type MetricsReportOptions = Parameters<typeof generateMetricsReport>[0];
 
 describe('generateMetricsReport', () => {
   const packageJson = readPackageJson();
+  const count = 10;
+  const n = Math.floor(Math.random() * count);
   const observations: ReadonlyArray<Observation | Record<string, never>> = [
-    ...generate('observation', {count: 10}),
+    ...generate('observation', {count}).map((obs, idx) =>
+      // Manually add Machias Seal Island, disputed territory
+      idx === n ? {...obs, lat: 44.5, lon: -67.101111} : obs,
+    ),
     {},
   ];
   const generatedCountries = new Set<string>();

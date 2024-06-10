@@ -1,11 +1,11 @@
 import {type MapeoClientApi} from '@mapeo/ipc';
 import {type ObservationValue} from '@mapeo/schema';
 import {useAppState} from '@react-native-community/hooks';
+import * as Sentry from '@sentry/react-native';
 import {useEffect} from 'react';
 import {Dimensions, Platform} from 'react-native';
 import packageJson from '../../../package.json';
 import {assert} from '../lib/assert';
-import noop from '../lib/noop';
 import {sleep} from '../lib/sleep';
 import {throwIfAborted} from '../lib/throwIfAborted';
 import generateMetricsReport from '../metrics/generateMetricsReport';
@@ -17,6 +17,7 @@ const ONE_MINUTE = ONE_SECOND * 60;
 const ONE_HOUR = ONE_MINUTE * 60;
 const ONE_DAY = ONE_HOUR * 24;
 const SEND_METRICS_INTERVAL = ONE_DAY;
+const EFFECT_CANCELED_REASON = 'effect canceled';
 
 const getEnv = (name: string): string => {
   const result = process.env[name];
@@ -101,10 +102,13 @@ export function useSendMetrics(api: MapeoClientApi): void {
       }
 
       setLastMetricsReportSentAt(Date.now());
-    })().catch(noop);
+    })().catch(err => {
+      if (err === EFFECT_CANCELED_REASON) return;
+      Sentry.captureException(err);
+    });
 
     return () => {
-      abortController.abort();
+      abortController.abort(EFFECT_CANCELED_REASON);
     };
   }, [isAppActive, lastMetricsReportSentAt, setLastMetricsReportSentAt, api]);
 }

@@ -10,8 +10,7 @@ import {Loading} from './sharedComponents/Loading';
 import {AppStackParamsList} from './sharedTypes/navigation';
 import {EDITING_SCREEN_NAMES} from './constants';
 
-export const rootNavigationRef =
-  createNavigationContainerRef<AppStackParamsList>();
+const rootNavigationRef = createNavigationContainerRef<AppStackParamsList>();
 
 export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   if (permissionAsked) {

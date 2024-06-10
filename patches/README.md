@@ -94,4 +94,4 @@ As this feature is not used in CoMapeo, this can be safely hardcoded to `false`.
 This library includes an `AbortController` test mock, which doesn't work in places that expect a real one.
 Because `AbortController` is supported in our environments, we don't need this mock.
 
-[This patch has been submitted upstream.](https://github.com/rnmapbox/maps/pull/3506)
+[This patch has been merged upstream](https://github.com/rnmapbox/maps/pull/3506) but not yet deployed.

@@ -1,6 +1,7 @@
 import type {ReadonlyDeep} from 'type-fest';
 import type {Observation} from '@mapeo/schema';
 import positionToCountries from './positionToCountries';
+import getPercentageOfNetworkAvailability from './getPercentageOfNetworkAvailability';
 
 export default function generateMetricsReport({
   packageJson,
@@ -13,7 +14,8 @@ export default function generateMetricsReport({
   os: 'android' | 'ios' | NodeJS.Platform;
   osVersion: number | string;
   screen: {width: number; height: number};
-  observations: ReadonlyArray<Pick<Observation, 'lat' | 'lon'>>;
+  observations: ReadonlyArray<Observation>;
+  percentageOfNetworkAvailability: number;
 }>) {
   const countries = new Set<string>();
 
@@ -22,7 +24,6 @@ export default function generateMetricsReport({
       addToSet(countries, positionToCountries(lat, lon));
     }
   }
-
   return {
     type: 'metrics-v1',
     appVersion: packageJson.version,
@@ -30,9 +31,11 @@ export default function generateMetricsReport({
     osVersion,
     screen: {width: screen.width, height: screen.height},
     ...(countries.size ? {countries: Array.from(countries)} : {}),
+    percentageOfNetworkAvailability:
+      getPercentageOfNetworkAvailability(observations),
   };
 }
 
-function addToSet<T>(set: Set<T>, toAdd: Iterable<T>): void {
+export function addToSet<T>(set: Set<T>, toAdd: Iterable<T>): void {
   for (const item of toAdd) set.add(item);
 }

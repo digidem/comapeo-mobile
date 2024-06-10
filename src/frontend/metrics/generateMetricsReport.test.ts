@@ -1,29 +1,32 @@
 import * as path from 'node:path';
 import * as fs from 'node:fs';
-import generateMetricsReport from './generateMetricsReport';
+import generateMetricsReport, {addToSet} from './generateMetricsReport';
+import {generate} from '@mapeo/mock-data';
+import positionToCountries from './positionToCountries';
+import type {Observation} from '@mapeo/schema';
 
 type MetricsReportOptions = Parameters<typeof generateMetricsReport>[0];
 
 describe('generateMetricsReport', () => {
   const packageJson = readPackageJson();
+  const observations: ReadonlyArray<Observation | Record<string, never>> = [
+    ...generate('observation', {count: 10}),
+    {},
+  ];
+  const countries = new Set<string>();
+
+  for (const {lat, lon} of observations) {
+    if (typeof lat === 'number' && typeof lon === 'number') {
+      addToSet(countries, positionToCountries(lat, lon));
+    }
+  }
 
   const defaultOptions = {
     packageJson,
     os: 'android',
     osVersion: 123,
     screen: {width: 12, height: 34, ignoredValue: 56},
-    observations: [
-      // Middle of the Atlantic
-      {lat: 10, lon: -33},
-      // Mexico City
-      {lat: 19.419914, lon: -99.088059},
-      // Machias Seal Island, disputed territory
-      {lat: 44.5, lon: -67.101111},
-      // To be ignored
-      {},
-      {lat: 12},
-      {lon: 34},
-    ],
+    observations,
   } as MetricsReportOptions;
 
   it('can be serialized and deserialized as JSON', () => {
@@ -81,7 +84,7 @@ describe('generateMetricsReport', () => {
   it('includes countries where observations are found', () => {
     const report = generateMetricsReport(defaultOptions);
     expect(report.countries).toHaveLength(new Set(report.countries).size);
-    expect(new Set(report.countries)).toEqual(new Set(['MEX', 'CAN', 'USA']));
+    expect(new Set(report.countries)).toEqual(countries);
   });
 });
 

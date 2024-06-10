@@ -1,7 +1,7 @@
 import type {ReadonlyDeep} from 'type-fest';
 import type {Observation} from '@mapeo/schema';
 import positionToCountries from './positionToCountries';
-import getPercentageOfNetworkAvailability from './getPercentageOfNetworkAvailability';
+import {getPercentageOfNetworkAvailability} from './getPercentageOfNetworkAvailability';
 
 export default function generateMetricsReport({
   packageJson,

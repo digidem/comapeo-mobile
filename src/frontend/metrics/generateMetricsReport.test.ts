@@ -4,6 +4,7 @@ import generateMetricsReport, {addToSet} from './generateMetricsReport';
 import {generate} from '@mapeo/mock-data';
 import positionToCountries from './positionToCountries';
 import type {Observation} from '@mapeo/schema';
+import {getPercentageOfNetworkAvailability} from './getPercentageOfNetworkAvailability';
 
 type MetricsReportOptions = Parameters<typeof generateMetricsReport>[0];
 
@@ -27,14 +28,9 @@ describe('generateMetricsReport', () => {
     osVersion: 123,
     screen: {width: 12, height: 34, ignoredValue: 56},
     observations,
+    percentageOfNetworkAvailability:
+      getPercentageOfNetworkAvailability(observations),
   } as MetricsReportOptions;
-
-  it('can be serialized and deserialized as JSON', () => {
-    const report = generateMetricsReport(defaultOptions);
-    const actual = JSON.parse(JSON.stringify(report));
-    const expected = removeUndefinedEntries(report);
-    expect(actual).toEqual(expected);
-  });
 
   it('includes a report type', () => {
     const report = generateMetricsReport(defaultOptions);

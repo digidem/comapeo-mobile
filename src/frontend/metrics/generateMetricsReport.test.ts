@@ -4,6 +4,7 @@ import generateMetricsReport, {addToSet} from './generateMetricsReport';
 import {generate} from '@mapeo/mock-data';
 import positionToCountries from './positionToCountries';
 import type {Observation} from '@mapeo/schema';
+import {getPercentageOfNetworkAvailability} from './getPercentageOfNetworkAvailability';
 
 type MetricsReportOptions = Parameters<typeof generateMetricsReport>[0];
 
@@ -13,13 +14,16 @@ describe('generateMetricsReport', () => {
     ...generate('observation', {count: 10}),
     {},
   ];
-  const countries = new Set<string>();
+  const generatedCountries = new Set<string>();
 
   for (const {lat, lon} of observations) {
     if (typeof lat === 'number' && typeof lon === 'number') {
-      addToSet(countries, positionToCountries(lat, lon));
+      addToSet(generatedCountries, positionToCountries(lat, lon));
     }
   }
+
+  const generatedNetworkAvailabilityPercentage =
+    getPercentageOfNetworkAvailability(observations);
 
   const defaultOptions = {
     packageJson,
@@ -77,7 +81,14 @@ describe('generateMetricsReport', () => {
   it('includes countries where observations are found', () => {
     const report = generateMetricsReport(defaultOptions);
     expect(report.countries).toHaveLength(new Set(report.countries).size);
-    expect(new Set(report.countries)).toEqual(countries);
+    expect(new Set(report.countries)).toEqual(generatedCountries);
+  });
+
+  it('includes network availability data', () => {
+    const report = generateMetricsReport(defaultOptions);
+    expect(report.percentageOfNetworkAvailability).toBe(
+      generatedNetworkAvailabilityPercentage,
+    );
   });
 });
 

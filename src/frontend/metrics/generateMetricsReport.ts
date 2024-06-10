@@ -42,5 +42,6 @@ export function getPercentageOfNetworkAvailability(
     .map(obs => obs.metadata?.positionProvider?.networkAvailable)
     .filter(networkAvailable => networkAvailable !== undefined);
   const networkIsAvailable = networkAvailability.filter(Boolean);
+  if (networkAvailability.length === 0) return 0;
   return (networkIsAvailable.length / networkAvailability.length) * 100;
 }

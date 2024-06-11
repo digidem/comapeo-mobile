@@ -4,29 +4,38 @@ import {FormattedObservationDate} from '../../sharedComponents/FormattedData.tsx
 import {Track} from '@mapeo/schema';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon.tsx';
 import {ViewStyleProp} from '../../sharedTypes/index';
+import {defineMessages, useIntl} from 'react-intl';
+
+const m = defineMessages({
+  track: {
+    id: 'screens.ObservationList.TrackListItem.Track',
+    defaultMessage: 'Track',
+  },
+});
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;
   track: Track;
   testID: string;
-  onPress: (id: string) => void;
+  onPress: () => void;
 }
 
 const TrackObservationItemNotMemoized = ({
   style,
   track,
   testID,
-  onPress = () => {},
+  onPress,
 }: ObservationListItemProps) => {
+  const {formatMessage} = useIntl();
   return (
     <TouchableHighlight
-      onPress={() => onPress(track.docId)}
+      onPress={onPress}
       testID={testID}
       style={{flex: 1, height: 80}}>
       <View style={[styles.container, style]}>
         <View style={styles.text}>
           <Text style={styles.title}>
-            <Text>Track</Text>
+            <Text>{formatMessage(m.track)}</Text>
           </Text>
           <Text>
             <FormattedObservationDate

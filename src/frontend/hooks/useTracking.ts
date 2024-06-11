@@ -2,7 +2,7 @@ import * as Location from 'expo-location';
 import {useCallback, useState} from 'react';
 import {usePersistedTrack} from './persistedState/usePersistedTrack';
 import {useGPSModalContext} from '../contexts/GPSModalContext.tsx';
-import {LOCATION_TASK_NAME} from '../sharedTypes';
+import {LOCATION_TASK_NAME} from '../sharedTypes/location.ts';
 
 export function useTracking() {
   const {bottomSheetRef} = useGPSModalContext();

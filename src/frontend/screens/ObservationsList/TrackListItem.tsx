@@ -2,9 +2,9 @@ import React from 'react';
 import {StyleSheet, Text, TouchableHighlight, View} from 'react-native';
 import {FormattedObservationDate} from '../../sharedComponents/FormattedData.tsx';
 import {Track} from '@mapeo/schema';
-import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon.tsx';
 import {ViewStyleProp} from '../../sharedTypes/index';
 import {defineMessages, useIntl} from 'react-intl';
+import TrackIcon from '../../images/Track.svg';
 
 const m = defineMessages({
   track: {
@@ -44,7 +44,7 @@ const TrackObservationItemNotMemoized = ({
             />
           </Text>
         </View>
-        <PresetCircleIcon name={track.schemaName} size="medium" />
+        <TrackIcon />
       </View>
     </TouchableHighlight>
   );

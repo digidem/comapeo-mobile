@@ -20,6 +20,7 @@ export function usePendingInvites() {
 export function useAcceptInvite() {
   const mapeoApi = useApi();
   const queryClient = useQueryClient();
+
   const switchActiveProject = usePersistedProjectId(
     state => state.setProjectId,
   );
@@ -45,7 +46,7 @@ export function useRejectInvite() {
   const mapeoApi = useApi();
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async ({inviteId}: {inviteId: string}) => {
+    mutationFn: ({inviteId}: {inviteId: string}) => {
       return mapeoApi.invite.reject({inviteId});
     },
     onSuccess: () => {

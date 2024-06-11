@@ -3,6 +3,7 @@ import {CommonActions} from '@react-navigation/native';
 
 import {rootNavigationRef} from '../../AppNavigator';
 import {SessionInvite} from '../../contexts/SessionInvitesContext';
+import {usePersistedProjectId} from '../../hooks/persistedState/usePersistedProjectId';
 import {InviteAcceptedContent} from './InviteAcceptedContent';
 import {InviteCancelledContent} from './InviteCancelledContent';
 import {InvitePendingContent} from './InvitePendingContent';
@@ -18,14 +19,16 @@ export function InviteBottomSheetContent({
 }) {
   const {projectName, projectPublicId, inviteId} = sessionInvite.invite;
 
+  const switchActiveProject = usePersistedProjectId(
+    state => state.setProjectId,
+  );
+
   if (sessionInvite.status === 'pending') {
     return (
       <InvitePendingContent
         inviteId={inviteId}
         projectName={projectName}
-        projectPublicId={projectPublicId}
         onReject={() => {
-          // TODO: Set invite id to next pending?
           if (totalSessionInvites === 1) {
             onClose();
           }
@@ -41,6 +44,7 @@ export function InviteBottomSheetContent({
         if (rootNavigationRef.isReady()) {
           rootNavigationRef.navigate('Home', {screen: 'Map'});
           onClose();
+          switchActiveProject(projectPublicId);
         }
       }}
       onGoToSync={() => {
@@ -52,6 +56,7 @@ export function InviteBottomSheetContent({
             }),
           );
           onClose();
+          switchActiveProject(projectPublicId);
         }
       }}
     />

@@ -28,21 +28,19 @@ const m = defineMessages({
 
 export function InvitePendingContent({
   projectName,
-  projectPublicId,
   inviteId,
   onReject,
 }: {
   projectName: string;
-  projectPublicId: string;
   inviteId: string;
   onReject: () => void;
 }) {
   const {formatMessage: t} = useIntl();
 
-  const accept = useAcceptInvite(projectPublicId);
+  const accept = useAcceptInvite();
   const reject = useRejectInvite();
 
-  const isLoading = accept.isPaused || reject.isPending;
+  const isLoading = accept.isPending || reject.isPending;
 
   return (
     <BottomSheetContent

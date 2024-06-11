@@ -9,7 +9,7 @@ import {
 } from '../../sharedComponents/icons';
 
 import {View, StyleSheet} from 'react-native';
-import {ObservationMapLayer} from './ObsevationMapLayer';
+import {ObservationMapLayer} from './ObservationMapLayer';
 import {AddButton} from '../../sharedComponents/AddButton';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import {useDraftObservation} from '../../hooks/useDraftObservation';

@@ -2,7 +2,6 @@ import {
   useQueryClient,
   useMutation,
   useSuspenseQuery,
-  useQuery,
 } from '@tanstack/react-query';
 import {TrackValue} from '@mapeo/schema';
 
@@ -24,21 +23,6 @@ export function useCreateTrack() {
   });
 }
 
-export function useUpdateTrack(versionId?: string) {
-  const project = useActiveProject();
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: async (params: TrackValue) => {
-      return project.track.update(versionId!, params);
-    },
-    onSuccess: data => {
-      queryClient.invalidateQueries({
-        queryKey: [TRACK_KEY, data.docId],
-      });
-    },
-  });
-}
-
 export function useTracksQuery() {
   const project = useActiveProject();
 
@@ -46,18 +30,6 @@ export function useTracksQuery() {
     queryKey: [TRACK_KEY],
     queryFn: async () => {
       return project.track.getMany();
-    },
-  });
-}
-
-export function useTrackWithEnableOptionQuery(docId?: string) {
-  const project = useActiveProject();
-  return useQuery({
-    queryKey: [TRACK_KEY, docId],
-    enabled: !!docId,
-    queryFn: async () => {
-      if (!docId) return;
-      return project.track.getByDocId(docId);
     },
   });
 }

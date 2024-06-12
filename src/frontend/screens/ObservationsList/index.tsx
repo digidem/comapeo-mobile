@@ -14,7 +14,8 @@ import {LIGHT_GREY, WHITE} from '../../lib/styles';
 import {useAllProjects} from '../../hooks/server/projects';
 import {Loading} from '../../sharedComponents/Loading';
 import {TrackListItem} from './TrackListItem';
-import {useObservationsAndTracks} from '../../hooks/useObservationsAndTracks';
+import {useObservations} from '../../hooks/server/observations';
+import {useTracks} from '../../hooks/server/track';
 
 const m = defineMessages({
   loading: {
@@ -39,10 +40,7 @@ const m = defineMessages({
 
 const OBSERVATION_CELL_HEIGHT = 80;
 
-function getItemLayout(
-  data: ArrayLike<Observation | Track> | null | undefined,
-  index: number,
-) {
+function getItemLayout(data: unknown, index: number) {
   return {
     length: OBSERVATION_CELL_HEIGHT,
     offset: OBSERVATION_CELL_HEIGHT * index,
@@ -57,14 +55,15 @@ export const ObservationsList: React.FC<
 > & {
   navTitle: MessageDescriptor;
 } = ({navigation}) => {
-  const observationsAndTracks = useObservationsAndTracks();
-  const {data, isLoading} = useAllProjects();
+  const {data: observations} = useObservations();
+  const {data: tracks} = useTracks();
+  const {data, isPending} = useAllProjects();
 
   const rowsPerWindow = Math.ceil(
     (Dimensions.get('window').height - 65) / OBSERVATION_CELL_HEIGHT,
   );
 
-  if (!observationsAndTracks.length) {
+  if (!observations.length && !tracks.length) {
     return (
       <ObservationEmptyView
         onPressBack={() => navigation.navigate('Home', {screen: 'Map'})}
@@ -74,7 +73,7 @@ export const ObservationsList: React.FC<
 
   return (
     <View style={styles.container} testID="observationsListView">
-      {isLoading ? (
+      {isPending ? (
         <Loading />
       ) : data && data.length <= 1 ? (
         <NoProjectWarning style={{margin: 20}} />
@@ -116,7 +115,7 @@ export const ObservationsList: React.FC<
               );
           }
         }}
-        data={observationsAndTracks}
+        data={[...observations, ...tracks]}
       />
     </View>
   );

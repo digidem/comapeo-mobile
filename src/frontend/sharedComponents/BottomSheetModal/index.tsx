@@ -1,5 +1,11 @@
 import * as React from 'react';
-import {BackHandler, NativeEventSubscription, Keyboard} from 'react-native';
+import {
+  BackHandler,
+  NativeEventSubscription,
+  Keyboard,
+  StyleSheet,
+  useWindowDimensions,
+} from 'react-native';
 import {
   BottomSheetModal as RNBottomSheetModal,
   BottomSheetView,
@@ -10,11 +16,14 @@ import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 
 import {DARK_GREY} from '../../lib/styles';
 import {useCallback} from 'react';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 export const MODAL_NAVIGATION_OPTIONS: NativeStackNavigationOptions = {
   presentation: 'transparentModal',
   animation: 'none',
 };
+
+const MINIMUM_SHEET_HEIGHT = 400;
 
 export const useBottomSheetModal = ({openOnMount}: {openOnMount: boolean}) => {
   const initiallyOpenedRef = React.useRef(false);
@@ -81,6 +90,13 @@ export const BottomSheetModal = React.forwardRef<RNBottomSheetModal, Props>(
   ({children, isOpen, onBack, fullHeight, onDismiss}, ref) => {
     useBackHandler(isOpen, onBack);
 
+    const {top: insetTop} = useSafeAreaInsets();
+    const {height: windowHeight} = useWindowDimensions();
+
+    const snapPoints = fullHeight
+      ? ['100%']
+      : [Math.max(MINIMUM_SHEET_HEIGHT, windowHeight * 0.75)];
+
     return (
       <RNBottomSheetModal
         ref={ref}
@@ -93,14 +109,23 @@ export const BottomSheetModal = React.forwardRef<RNBottomSheetModal, Props>(
         onDismiss={onDismiss}
         enableContentPanningGesture={false}
         enableHandlePanningGesture={false}
-        snapPoints={!fullHeight ? undefined : ['100%']}
-        enableDynamicSizing={!fullHeight}
+        snapPoints={snapPoints}
         handleComponent={() => null}>
-        <BottomSheetView>{children}</BottomSheetView>
+        <BottomSheetView
+          style={[
+            styles.bottomSheetViewContainer,
+            fullHeight ? {paddingTop: insetTop} : null,
+          ]}>
+          {children}
+        </BottomSheetView>
       </RNBottomSheetModal>
     );
   },
 );
+
+const styles = StyleSheet.create({
+  bottomSheetViewContainer: {flex: 1},
+});
 
 function DefaultBackdrop(props: BottomSheetBackdropProps) {
   return (

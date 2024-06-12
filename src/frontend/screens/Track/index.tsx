@@ -16,10 +16,7 @@ import EditIcon from '../../images/Edit.svg';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
 import {defineMessages, MessageDescriptor, useIntl} from 'react-intl';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import {
-  useDeleteTrackMutation,
-  useTrackQuery,
-} from '../../hooks/server/track.ts';
+import {useDeleteTrackMutation, useTrack} from '../../hooks/server/track.ts';
 import {useObservations} from '../../hooks/server/observations.ts';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {MapPreview} from './MapPreview.tsx';
@@ -73,7 +70,7 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
     });
   }, [navigation]);
 
-  const {data: track} = useTrackQuery(route.params.trackId);
+  const {data: track} = useTrack(route.params.trackId);
   const {data: observations} = useObservations();
   const trackObservations = observations.filter(observation =>
     track.refs.some(ref => ref.id === observation.docId),

@@ -7,16 +7,18 @@ import {BLACK} from '../../lib/styles';
 import {useTracks} from '../../hooks/server/track';
 import {Track} from '@mapeo/schema';
 import {OnPressEvent} from '@rnmapbox/maps/lib/typescript/src/types/OnPressEvent';
+import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 
 export const TracksMapLayer = () => {
   const {data: tracks} = useTracks();
+  const {navigate} = useNavigationFromHomeTabs();
 
   function handlePress(event: OnPressEvent) {
     const properties = event.features[0]?.properties;
     if (!properties) return;
     if (!('id' in properties)) return;
 
-    // To do navigate to track on press
+    navigate('Track', {trackId: properties.id});
   }
 
   return (

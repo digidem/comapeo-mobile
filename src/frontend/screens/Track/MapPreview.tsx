@@ -42,7 +42,8 @@ export const MapPreview: FC<TrackScreenMapPreview> = ({locationHistory}) => {
 };
 
 const MAP_HEIGHT = 250;
-const MIN_BOUND_SIZE = 0.01; // Minimum bound size to ensure sufficient map detail
+// Minimum bound size to ensure sufficient map detail
+const MIN_BOUND_SIZE = 0.0003;
 
 const getAdjustedBounds = (locationHistory: LocationHistoryPoint[]) => {
   let minLat = Infinity;

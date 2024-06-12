@@ -36,7 +36,7 @@ export function useTracks() {
   });
 }
 
-export function useTrackQuery(docId: string) {
+export function useTrack(docId: string) {
   const project = useActiveProject();
   return useSuspenseQuery({
     queryKey: [TRACK_KEY, docId],

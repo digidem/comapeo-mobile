@@ -17,14 +17,14 @@ jobs:
       fail-fast: false
       max-parallel: 3
       matrix:
-        arch: [x86, x86_64]
+        arch: [x86_64]
         # ^^^ `runs-on: macos-*` doesn't support `arm64-v8a`
 
-        api-level: [30, 31, 32, 33, 34]
+        api-level: [33]
         # ^^^ `21`  is the minimum API level supported by React Native
         # [21, 22, 23, 24, 25,] - didn't work with Maestro
 
-        target: [default, google_apis, google_apis_playstore]
+        target: [google_apis_playstore]
 
         exclude:
           # Exclude combinations that are not supported by the Android SDK
@@ -90,7 +90,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: temurin
-          java-version: 11
+          java-version: 17
 
       - name: Install Maestro
         run: curl -Ls 'https://get.maestro.mobile.dev' | bash

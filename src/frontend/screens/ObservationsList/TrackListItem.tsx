@@ -31,7 +31,7 @@ const TrackObservationItemNotMemoized = ({
     <TouchableHighlight
       onPress={onPress}
       testID={testID}
-      style={{flex: 1, height: 80}}>
+      style={styles.touchable}>
       <View style={[styles.container, style]}>
         <View style={styles.text}>
           <Text style={styles.title}>
@@ -90,4 +90,8 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
   },
   smallIconContainer: {position: 'absolute', right: -3, bottom: -3},
+  touchable: {
+    flex: 1,
+    height: 80,
+  },
 });

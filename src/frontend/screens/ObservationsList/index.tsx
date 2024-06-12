@@ -95,7 +95,7 @@ export const ObservationsList: React.FC<
                 <ObservationListItem
                   key={item.docId}
                   testID={`observationListItem:${index}`}
-                  observation={item as Observation}
+                  observation={item}
                   style={styles.listItem}
                   onPress={() =>
                     navigation.navigate('Observation', {
@@ -108,7 +108,7 @@ export const ObservationsList: React.FC<
               return (
                 <TrackListItem
                   testID={`trackListItem:${index}`}
-                  track={item as Track}
+                  track={item}
                   style={styles.listItem}
                   onPress={() => {}}
                 />

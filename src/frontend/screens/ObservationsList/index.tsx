@@ -115,7 +115,9 @@ export const ObservationsList: React.FC<
               );
           }
         }}
-        data={[...observations, ...tracks]}
+        data={[...observations, ...tracks].sort((a, b) =>
+          a.createdAt < b.createdAt ? 1 : -1,
+        )}
       />
     </View>
   );

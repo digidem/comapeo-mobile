@@ -963,6 +963,9 @@
   "screens.Sync.ProjectSyncDisplay.upToDate": {
     "message": "Up to Date! No data to Sync"
   },
+  "screens.Track.ObservationList.observations": {
+    "message": "Observations"
+  },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",
     "message": "Show Options"

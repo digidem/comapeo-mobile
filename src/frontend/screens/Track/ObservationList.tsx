@@ -26,7 +26,7 @@ const m = defineMessages({
   },
 });
 
-export function TrackObservationList({observations}: TrackObservation) {
+export function ObservationList({observations}: TrackObservation) {
   const [expanded, setExpanded] = useState(false);
   const navigation = useNavigationFromRoot();
   const {formatMessage} = useIntl();

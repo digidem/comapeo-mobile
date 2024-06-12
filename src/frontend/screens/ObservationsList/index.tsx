@@ -110,7 +110,9 @@ export const ObservationsList: React.FC<
                   testID={`trackListItem:${index}`}
                   track={item}
                   style={styles.listItem}
-                  onPress={() => {}}
+                  onPress={() => {
+                    // TODO: navigate to track
+                  }}
                 />
               );
           }

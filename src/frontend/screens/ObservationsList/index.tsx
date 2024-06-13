@@ -107,6 +107,7 @@ export const ObservationsList: React.FC<
             case 'track':
               return (
                 <TrackListItem
+                  key={item.docId}
                   testID={`trackListItem:${index}`}
                   track={item}
                   style={styles.listItem}

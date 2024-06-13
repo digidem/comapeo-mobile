@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {BottomSheetContent} from '../BottomSheetModal';
-import {defineMessages, useIntl} from 'react-intl';
-import GreenCheck from '../../images/GreenCheck.svg';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {CommonActions} from '@react-navigation/native';
+import {defineMessages, useIntl} from 'react-intl';
+
+import {rootNavigationRef} from '../../AppNavigator';
+import GreenCheck from '../../images/GreenCheck.svg';
+import {BottomSheetContent} from '../BottomSheetModal';
 
 const m = defineMessages({
   goToMap: {
@@ -34,14 +35,10 @@ export const InviteSuccessBottomSheetContent = ({
   projectName,
 }: InviteSuccessBottomSheetContentProps) => {
   const {formatMessage} = useIntl();
-  const navigation = useNavigationFromRoot();
 
   function handleGoToSync() {
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 1,
-        routes: [{name: 'Home'}, {name: 'Sync'}],
-      }),
+    rootNavigationRef.dispatch(
+      CommonActions.reset({index: 1, routes: [{name: 'Home'}, {name: 'Sync'}]}),
     );
   }
 
@@ -51,7 +48,7 @@ export const InviteSuccessBottomSheetContent = ({
         {
           variation: 'outlined',
           onPress: () => {
-            navigation.navigate('Home', {screen: 'Map'});
+            rootNavigationRef.navigate('Home', {screen: 'Map'});
             closeSheet();
           },
           text: formatMessage(m.goToMap),

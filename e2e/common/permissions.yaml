@@ -1,0 +1,12 @@
+appId: com.comapeo
+---
+- runFlow:
+    when:
+      visible: 'Allow CoMapeo to take pictures and record video?'
+    commands:
+      - tapOn: 'While using the app'
+- runFlow:
+    when:
+      visible: "Allow CoMapeo to access this device's location?"
+    commands:
+      - tapOn: 'While using the app'

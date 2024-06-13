@@ -1,0 +1,9 @@
+appId: com.comapeo
+onFlowStart:
+  - launchApp:
+      clearState: true
+  - runScript: naming.js
+---
+- runFlow: permissions.yaml
+- tapOn:
+    id: 'ONBOARDING.get-started-btn'

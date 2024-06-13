@@ -77,6 +77,7 @@ export const DeviceNaming = ({
             onChangeText={setNameWithValidation}
             placeholderTextColor={LIGHT_GREY}
             placeholder="Device Name"
+            testID="ONBOARDING.device-name-inp"
           />
           <Text
             style={{
@@ -90,7 +91,10 @@ export const DeviceNaming = ({
           </View>
         </View>
 
-        <Button fullWidth onPress={handleAddNamePress}>
+        <Button
+          testID="ONBOARDING.add-name-btn"
+          fullWidth
+          onPress={handleAddNamePress}>
           {t(m.addName)}
         </Button>
       </TouchableWithoutFeedback>

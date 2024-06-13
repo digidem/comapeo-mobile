@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import {BLACK, WHITE, DARK_GREY} from '../../lib/styles.ts';
 import DeleteIcon from '../../images/DeleteTrack.svg';
-import ShareIcon from '../../images/Share.svg';
 import TrackIcon from '../../images/Track.svg';
 import EditIcon from '../../images/Edit.svg';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
@@ -101,11 +100,6 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
           },
         ]);
       },
-    },
-    {
-      icon: ShareIcon,
-      text: 'Share',
-      onPress: () => {},
     },
   ];
 

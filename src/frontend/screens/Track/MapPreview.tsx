@@ -4,21 +4,13 @@ import MapboxGL from '@rnmapbox/maps';
 import {LocationHistoryPoint} from '../../sharedTypes/location.ts';
 import Mapbox from '@rnmapbox/maps';
 import {TrackMapLayer} from '../../sharedComponents/TrackMapLayer.tsx';
-import {Observation} from '@mapeo/schema';
-import {convertObservationsToFeatures} from '../../lib/utils.ts';
-
-const DEFAULT_MARKER_COLOR = '#F29D4B';
 interface TrackScreenMapPreview {
   locationHistory: LocationHistoryPoint[];
-  observations: Observation[];
 }
 
 const MAP_STYLE = Mapbox.StyleURL.Outdoors;
 
-export const MapPreview: FC<TrackScreenMapPreview> = ({
-  locationHistory,
-  observations,
-}) => {
+export const MapPreview: FC<TrackScreenMapPreview> = ({locationHistory}) => {
   const [swBoundary, neBoundary] = getAdjustedBounds(locationHistory);
   return (
     <MapboxGL.MapView
@@ -44,32 +36,9 @@ export const MapPreview: FC<TrackScreenMapPreview> = ({
         }}
       />
       <TrackMapLayer locationHistory={locationHistory} />
-      <ObservationMapLayer observations={observations} />
     </MapboxGL.MapView>
   );
 };
-
-const layerStyles = {
-  circleColor: DEFAULT_MARKER_COLOR,
-  circleRadius: 5,
-  circleStrokeColor: '#fff',
-  circleStrokeWidth: 2,
-};
-
-function ObservationMapLayer({observations}: {observations: Observation[]}) {
-  const featureCollection: GeoJSON.FeatureCollection = {
-    type: 'FeatureCollection',
-    features: convertObservationsToFeatures(observations),
-  };
-
-  console.log({observations});
-
-  return (
-    <MapboxGL.ShapeSource shape={featureCollection}>
-      <MapboxGL.CircleLayer id="circles" style={layerStyles} />
-    </MapboxGL.ShapeSource>
-  );
-}
 
 const MAP_HEIGHT = 250;
 // Minimum bound size to ensure sufficient map detail

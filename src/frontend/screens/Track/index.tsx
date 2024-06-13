@@ -114,7 +114,6 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
     <SafeAreaView style={styles.root}>
       <View>
         <MapPreview
-          observations={trackObservations}
           locationHistory={track.locations.map(({timestamp, coords}) => ({
             latitude: coords.latitude,
             longitude: coords.longitude,

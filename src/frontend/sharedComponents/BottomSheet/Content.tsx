@@ -60,7 +60,11 @@ export const Content = ({
       </View>
       {children ? (
         <ScrollView style={styles.scrollView}>{children}</ScrollView>
-      ) : null}
+      ) : (
+        <ScrollView style={styles.scrollView}>
+          {/* <View style={{backgroundColor: 'cyan', height: 400}} /> */}
+        </ScrollView>
+      )}
     </View>
     <View style={styles.buttonsContainer}>
       {loading ? (

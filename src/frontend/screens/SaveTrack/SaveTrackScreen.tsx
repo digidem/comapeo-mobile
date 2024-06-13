@@ -7,7 +7,6 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {DiscardModal} from '../../sharedComponents/DiscardModal';
 import {BottomSheet} from '../../sharedComponents/BottomSheet/BottomSheet';
 import PhotoIcon from '../../images/camera.svg';
 import DetailsIcon from '../../images/details.svg';
@@ -15,7 +14,11 @@ import TrackIcon from '../../images/Track.svg';
 import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../sharedComponents/Text';
 import {TrackDescriptionField} from './TrackDescriptionField';
-import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
+import {
+  BottomSheetContent,
+  BottomSheetModal,
+  useBottomSheetModal,
+} from '../../sharedComponents/BottomSheetModal';
 import DiscardIcon from '../../images/delete.svg';
 import ErrorIcon from '../../images/Error.svg';
 import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
@@ -92,18 +95,21 @@ export const SaveTrackScreen = () => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.scrollViewContent}>
-        <View style={styles.titleWrapper}>
-          <TrackIcon style={styles.icon} />
-          <Text style={styles.titleText}>{t(m.newTitle)}</Text>
-        </View>
-        <TrackDescriptionField />
-        <DiscardModal
-          bottomSheetRef={sheetRef}
-          isOpen={isOpen}
+    <>
+      <SafeAreaView style={styles.container}>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.scrollViewContent}>
+          <View style={styles.titleWrapper}>
+            <TrackIcon style={styles.icon} />
+            <Text style={styles.titleText}>{t(m.newTitle)}</Text>
+          </View>
+          <TrackDescriptionField />
+        </ScrollView>
+        <BottomSheet items={bottomSheetItems} />
+      </SafeAreaView>
+      <BottomSheetModal ref={sheetRef} isOpen={isOpen}>
+        <BottomSheetContent
           buttonConfigs={[
             {
               variation: 'filled',
@@ -120,17 +126,15 @@ export const SaveTrackScreen = () => {
           ]}
           title={t(m.discardTrackTitle)}
           description={t(m.discardTrackDescription)}
-          icon={<ErrorIcon width={60} height={60} style={styles.image} />}
+          icon={<ErrorIcon width={60} height={60} />}
         />
-      </ScrollView>
-      <BottomSheet items={bottomSheetItems} />
-    </SafeAreaView>
+      </BottomSheetModal>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   icon: {width: 30, height: 30},
-  image: {marginBottom: 15},
   titleText: {fontSize: 20, fontWeight: '700'},
   container: {
     flex: 1,

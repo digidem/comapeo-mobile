@@ -23,13 +23,15 @@ export function useCreateTrack() {
   });
 }
 
-export function useTracksQuery() {
+export function useTracks() {
   const project = useActiveProject();
 
   return useSuspenseQuery({
     queryKey: [TRACK_KEY],
     queryFn: async () => {
-      return project.track.getMany();
+      return process.env.EXPO_PUBLIC_FEATURE_TRACKS
+        ? project.track.getMany()
+        : [];
     },
   });
 }

@@ -9,7 +9,7 @@ import {
 } from '../../sharedComponents/icons';
 
 import {View, StyleSheet} from 'react-native';
-import {ObservationMapLayer} from './ObsevationMapLayer';
+import {ObservationMapLayer} from './ObservationMapLayer';
 import {AddButton} from '../../sharedComponents/AddButton';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
@@ -19,10 +19,11 @@ import {getCoords} from '../../hooks/useLocation';
 import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
 import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
 import {GPSPermissionsModal} from './GPSPermissions/GPSPermissionsModal';
-import {TrackPathLayer} from './track/TrackPathLayer';
+import {CurrentTrackMapLayer} from './CurrentTrack/CurrrentTrackMapLayer';
 import {UserLocation} from './UserLocation';
 import {useSharedLocationContext} from '../../contexts/SharedLocationContext';
 import {useMapStyleUrl} from '../../hooks/server/mapStyleUrl';
+import {TracksMapLayer} from './TracksMapLayer';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -104,8 +105,14 @@ export const MapScreen = () => {
         {coords && locationServicesEnabled && (
           <UserLocation minDisplacement={MIN_DISPLACEMENT} />
         )}
+
         {isFinishedLoading && <ObservationMapLayer />}
-        {isFinishedLoading && <TrackPathLayer />}
+        {isFinishedLoading && process.env.EXPO_PUBLIC_FEATURE_TRACKS && (
+          <>
+            <CurrentTrackMapLayer />
+            <TracksMapLayer />
+          </>
+        )}
       </Mapbox.MapView>
       <ScaleBar
         zoom={zoom || 10}

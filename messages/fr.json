@@ -633,6 +633,9 @@
     "description": "screen title for new observation screen",
     "message": "Nouvelle observation"
   },
+  "screens.ObservationList.TrackListItem.Track": {
+    "message": "Track"
+  },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",
     "message": "Observations"

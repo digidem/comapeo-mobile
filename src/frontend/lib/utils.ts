@@ -305,3 +305,29 @@ export function matchPreset(
 
   return bestMatch;
 }
+
+export function convertObservationsToFeatures(
+  observations: Observation[],
+): GeoJSON.Feature[] {
+  const accDefault: GeoJSON.Feature[] = [];
+  const features: GeoJSON.Feature[] = observations.reduce((acc, obs) => {
+    if (typeof obs.lon === 'number' && typeof obs.lat === 'number') {
+      return [
+        ...acc,
+        {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [obs.lon, obs.lat],
+          },
+          properties: {
+            id: obs.docId,
+          },
+        },
+      ];
+    }
+    return acc;
+  }, accDefault);
+
+  return features;
+}

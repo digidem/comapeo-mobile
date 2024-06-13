@@ -1,9 +1,9 @@
-import {Observation} from '@mapeo/schema';
 import React from 'react';
 import MapboxGL from '@rnmapbox/maps';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import {useObservations} from '../../hooks/server/observations';
+import {convertObservationsToFeatures} from '../../lib/utils';
 
 const DEFAULT_MARKER_COLOR = '#F29D4B';
 
@@ -20,7 +20,7 @@ export const ObservationMapLayer = () => {
   const isTracking = usePersistedTrack(state => state.isTracking);
   const featureCollection: GeoJSON.FeatureCollection = {
     type: 'FeatureCollection',
-    features: mapObservationsToFeatures(observations),
+    features: convertObservationsToFeatures(observations),
   };
 
   return (
@@ -42,29 +42,3 @@ export const ObservationMapLayer = () => {
     </MapboxGL.ShapeSource>
   );
 };
-
-function mapObservationsToFeatures(
-  observations: Observation[],
-): GeoJSON.Feature[] {
-  const accDefault: GeoJSON.Feature[] = [];
-  const features: GeoJSON.Feature[] = observations.reduce((acc, obs) => {
-    if (typeof obs.lon === 'number' && typeof obs.lat === 'number') {
-      return [
-        ...acc,
-        {
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: [obs.lon, obs.lat],
-          },
-          properties: {
-            id: obs.docId,
-          },
-        },
-      ];
-    }
-    return acc;
-  }, accDefault);
-
-  return features;
-}

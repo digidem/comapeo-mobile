@@ -15,8 +15,7 @@ export const TracksMapLayer = () => {
 
   function handlePress(event: OnPressEvent) {
     const properties = event.features[0]?.properties;
-    if (!properties) return;
-    if (!('id' in properties)) return;
+    if (!properties || !('id' in properties)) return;
 
     navigate('Track', {trackId: properties.id});
   }
@@ -55,6 +54,7 @@ function convertTracksToFeatures(tracks: Track[]): FeatureCollection {
       properties: {
         timestamps: track.locations.map(location => location.timestamp),
         mocked: track.locations.map(location => location.mocked),
+        id: track.docId,
       },
     })),
   };

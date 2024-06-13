@@ -14,8 +14,7 @@ import ShareIcon from '../../images/Share.svg';
 import TrackIcon from '../../images/Track.svg';
 import EditIcon from '../../images/Edit.svg';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
-import {defineMessages, MessageDescriptor, useIntl} from 'react-intl';
-import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
+import {defineMessages, useIntl} from 'react-intl';
 import {useDeleteTrackMutation, useTrack} from '../../hooks/server/track.ts';
 import {useObservations} from '../../hooks/server/observations.ts';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
@@ -135,25 +134,6 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
     </SafeAreaView>
   );
 };
-
-export const createTrackNavigationOptions = ({
-  intl,
-}: {
-  intl: (title: MessageDescriptor) => string;
-}) => {
-  return (): NativeStackNavigationOptions => {
-    return {
-      headerTitle: intl(m.trackHeader),
-      headerTransparent: true,
-      headerTintColor: DARK_GREY,
-      headerTitleAlign: 'center',
-      headerStyle: {
-        backgroundColor: 'transparent',
-      },
-    };
-  };
-};
-
 TrackScreen.navTitle = m.title;
 
 export const styles = StyleSheet.create({

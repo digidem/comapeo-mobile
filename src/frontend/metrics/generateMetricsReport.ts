@@ -1,6 +1,6 @@
 import type {ReadonlyDeep} from 'type-fest';
 import type {Observation} from '@mapeo/schema';
-import positionToCountries from './positionToCountries';
+import {positionToCountries} from './positionToCountries';
 import {getPercentageOfNetworkAvailability} from './networkAvailability';
 import {addToSet} from './../lib/addToSet';
 

@@ -1,27 +1,24 @@
 import * as path from 'node:path';
 import * as fs from 'node:fs';
-import {
-  generateMetricsReport,
-  getPercentageOfNetworkAvailability,
-} from './generateMetricsReport';
+import {generateMetricsReport} from './generateMetricsReport';
 import {generate} from '@mapeo/mock-data';
 import positionToCountries from './positionToCountries';
+import {getPercentageOfNetworkAvailability} from './networkAvailability';
 import type {Observation} from '@mapeo/schema';
-import {addToSet} from './utils';
+import {addToSet} from '../lib/addToSet';
 
 type MetricsReportOptions = Parameters<typeof generateMetricsReport>[0];
 
 describe('generateMetricsReport', () => {
   const packageJson = readPackageJson();
   const count = 10;
-  const n = Math.floor(Math.random() * count);
-  const observations: ReadonlyArray<Observation | Record<string, never>> = [
-    ...generate('observation', {count}).map((obs, idx) =>
-      // Manually add Machias Seal Island, disputed territory
-      idx === n ? {...obs, lat: 44.5, lon: -67.101111} : obs,
-    ),
+  const observations: ReadonlyArray<Partial<Observation>> = [
+    ...generate('observation', {count}),
+    // Manually add Machias Seal Island, disputed territory
+    {lat: 44.5, lon: -67.101111},
     {},
   ];
+
   const generatedCountries = new Set<string>();
 
   for (const {lat, lon} of observations) {
@@ -110,13 +107,4 @@ function readPackageJson() {
   );
   const packageJsonData = fs.readFileSync(packageJsonPath, 'utf8');
   return JSON.parse(packageJsonData);
-}
-
-function removeUndefinedEntries(
-  obj: Record<string, unknown>,
-): Record<string, unknown> {
-  const definedEntries = Object.entries(obj).filter(
-    entry => entry[1] !== undefined,
-  );
-  return Object.fromEntries(definedEntries);
 }

@@ -2,7 +2,7 @@ import * as path from 'node:path';
 import * as fs from 'node:fs';
 import {generateMetricsReport} from './generateMetricsReport';
 import {generate} from '@mapeo/mock-data';
-import positionToCountries from './positionToCountries';
+import {positionToCountries} from './positionToCountries';
 import {getPercentageOfNetworkAvailability} from './networkAvailability';
 import type {Observation} from '@mapeo/schema';
 import {addToSet} from '../lib/addToSet';

@@ -6,20 +6,20 @@ import {
   SafeAreaView,
   ScrollView,
   Pressable,
-  Alert,
 } from 'react-native';
 import {BLACK, WHITE, DARK_GREY} from '../../lib/styles.ts';
-import DeleteIcon from '../../images/DeleteTrack.svg';
+
 import TrackIcon from '../../images/Track.svg';
 import EditIcon from '../../images/Edit.svg';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
-import {defineMessages, useIntl} from 'react-intl';
+import {defineMessages} from 'react-intl';
 import {useDeleteTrackMutation, useTrack} from '../../hooks/server/track.ts';
 import {useObservations} from '../../hooks/server/observations.ts';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {MapPreview} from './MapPreview.tsx';
 import {ObservationList} from './ObservationList.tsx';
-import {ActionButtons} from './ActionButtons.tsx';
+import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
+import {ActionButtons} from '../../sharedComponents/ActionButtons.tsx';
 
 const m = defineMessages({
   title: {
@@ -27,20 +27,6 @@ const m = defineMessages({
     defaultMessage: 'Track',
     description:
       'Title of track screen showing (non-editable) view of observation with map',
-  },
-  trackHeader: {
-    id: 'screens.Track.trackHeader',
-    defaultMessage: 'Track',
-  },
-  cancel: {
-    id: 'screens.Track.cancel',
-    defaultMessage: 'Cancel',
-    description: 'Button to cancel delete of track',
-  },
-  confirm: {
-    id: 'screens.Track.confirm',
-    defaultMessage: 'Yes, delete',
-    description: 'Button to confirm delete of track',
   },
   deleteTitle: {
     id: 'screens.Track.deleteTitle',
@@ -75,33 +61,15 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
   );
 
   const deleteTrackMutation = useDeleteTrackMutation();
-  const {formatMessage: t} = useIntl();
 
-  const actions = [
-    {
-      icon: DeleteIcon,
-      text: 'Delete',
-      onPress: () => {
-        Alert.alert(t(m.deleteTitle), undefined, [
-          {
-            text: t(m.cancel),
-            onPress: () => {},
-          },
-          {
-            text: t(m.confirm),
-            onPress: () => {
-              deleteTrackMutation.mutate(track.docId, {
-                onSuccess: () => {
-                  navigation.navigate('Home', {screen: 'Map'});
-                },
-              });
-              navigation.pop();
-            },
-          },
-        ]);
+  function deleteTrack() {
+    deleteTrackMutation.mutate(track.docId, {
+      onSuccess: () => {
+        navigation.navigate('Home', {screen: 'Map'});
       },
-    },
-  ];
+    });
+    navigation.pop();
+  }
 
   return (
     <SafeAreaView style={styles.root}>
@@ -121,10 +89,19 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
         <ScrollView>
           <ObservationList observations={trackObservations} />
           <View style={styles.divider} />
-          {/* <TrackEditDescriptionField description={track.tags.notes as string} /> */}
         </ScrollView>
+        <Text style={styles.text}>{track.tags.notes as string}</Text>
       </View>
-      <ActionButtons actions={actions} />
+      <ActionButtons
+        handleDelete={deleteTrack}
+        isMine={true}
+        deleteMessage={m.deleteTitle}
+      />
+      <ErrorBottomSheet
+        error={deleteTrackMutation.error}
+        clearError={deleteTrackMutation.reset}
+        tryAgain={deleteTrack}
+      />
     </SafeAreaView>
   );
 };
@@ -150,4 +127,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   trackTitle: {fontSize: 20, fontWeight: '700', color: DARK_GREY},
+  text: {
+    margin: 10,
+    fontSize: 22,
+  },
 });

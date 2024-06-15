@@ -123,6 +123,22 @@
   "Screens.Settings.ProjectSettings.yourTeam": {
     "message": "Your Team"
   },
+  "SharedComponents.ActionButtons.cancel": {
+    "description": "Button to cancel delete of observation",
+    "message": "Cancel"
+  },
+  "SharedComponents.ActionButtons.confirm": {
+    "description": "Button to confirm delete of observation",
+    "message": "Yes, delete"
+  },
+  "SharedComponents.ActionButtons.delete": {
+    "description": "Button to delete an observation",
+    "message": "Delete"
+  },
+  "SharedComponents.ActionButtons.share": {
+    "description": "Button to share an observation",
+    "message": "Share"
+  },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Coordinator"
   },
@@ -517,10 +533,6 @@
     "description": "Default name of observation with no matching preset",
     "message": "Observation"
   },
-  "screens.Observation.ObservationView.delete": {
-    "description": "Button to delete an observation",
-    "message": "Delete"
-  },
   "screens.Observation.ObservationView.noAnswer": {
     "description": "Placeholder text for fields on an observation which are not answered",
     "message": "No answer"
@@ -528,18 +540,6 @@
   "screens.Observation.ObservationView.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "Observation"
-  },
-  "screens.Observation.ObservationView.share": {
-    "description": "Button to share an observation",
-    "message": "Share"
-  },
-  "screens.Observation.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "Cancel"
-  },
-  "screens.Observation.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "Yes, delete"
   },
   "screens.Observation.deleteTitle": {
     "description": "Title of dialog asking confirmation to delete an observation",

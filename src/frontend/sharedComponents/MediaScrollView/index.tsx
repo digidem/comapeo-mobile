@@ -1,9 +1,9 @@
 import React, {FC} from 'react';
 import {Dimensions, ScrollView, StyleSheet} from 'react-native';
 
-import {Photo} from '../../contexts/PhotoPromiseContext/types';
-import {PhotoThumbnail} from './PhotoThumbnail';
-import {AudioThumbnail} from './AudioThumbnail';
+import {Photo} from '../../contexts/PhotoPromiseContext/types.ts';
+import {PhotoThumbnail} from './PhotoThumbnail.tsx';
+import {AudioThumbnail} from './AudioThumbnail.tsx';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
 
 const spacing = 10;

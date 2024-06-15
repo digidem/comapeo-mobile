@@ -1,10 +1,8 @@
-import React, {FC, useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {View, Text, StyleSheet, Linking} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
-import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import AudioPermission from '../images/observationEdit/AudioPermission.svg';
 import {BLACK, COMAPEO_BLUE, WHITE} from '../lib/styles';
-import {BottomSheetModal} from './BottomSheetModal';
 import {Button} from './Button';
 import {Audio} from 'expo-av';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
@@ -18,14 +16,11 @@ const handleOpenSettings = () => {
   Linking.openSettings();
 };
 
-interface PermissionAudio {
-  sheetRef: React.RefObject<BottomSheetModalMethods>;
+interface PermissionAudioProps {
   closeSheet: () => void;
-  isOpen: boolean;
 }
 
-export const PermissionAudio: FC<PermissionAudio> = props => {
-  const {sheetRef, closeSheet, isOpen} = props;
+export const PermissionAudio = ({closeSheet}: PermissionAudioProps) => {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
   const [permissionResponse] = Audio.usePermissions({request: false});
@@ -67,29 +62,23 @@ export const PermissionAudio: FC<PermissionAudio> = props => {
   }
 
   return (
-    <BottomSheetModal
-      ref={sheetRef}
-      fullHeight
-      onDismiss={closeSheet}
-      isOpen={isOpen}>
-      <View style={styles.container}>
-        <View style={styles.mainWrapper}>
-          <AudioPermission />
-          <Text style={styles.title}>{t(m.title)}</Text>
-          <Text style={styles.description}>{t(m.description)}</Text>
-        </View>
-        <View style={styles.buttonsWrapper}>
-          <Button onPress={closeSheet} variant="outlined" fullWidth>
-            <Text style={styles.notNowButtonText}>{t(m.notNowButtonText)}</Text>
-          </Button>
-          <Button onPress={onPressActionButton} fullWidth>
-            <Text style={styles.allowPermissionButtonText}>
-              {actionButtonText}
-            </Text>
-          </Button>
-        </View>
+    <View style={styles.container}>
+      <View style={styles.mainWrapper}>
+        <AudioPermission />
+        <Text style={styles.title}>{t(m.title)}</Text>
+        <Text style={styles.description}>{t(m.description)}</Text>
       </View>
-    </BottomSheetModal>
+      <View style={styles.buttonsWrapper}>
+        <Button onPress={closeSheet} variant="outlined" fullWidth>
+          <Text style={styles.notNowButtonText}>{t(m.notNowButtonText)}</Text>
+        </Button>
+        <Button onPress={onPressActionButton} fullWidth>
+          <Text style={styles.allowPermissionButtonText}>
+            {actionButtonText}
+          </Text>
+        </Button>
+      </View>
+    </View>
   );
 };
 

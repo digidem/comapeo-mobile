@@ -107,8 +107,14 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   );
 
   function handleDelete() {
-    deleteObservationMutation.mutate({id: observationId});
-    navigation.pop();
+    deleteObservationMutation.mutate(
+      {id: observationId},
+      {
+        onSuccess: () => {
+          navigation.pop();
+        },
+      },
+    );
   }
 
   async function handlePressShare() {

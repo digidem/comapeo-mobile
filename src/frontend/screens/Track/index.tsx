@@ -65,10 +65,9 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
   function deleteTrack() {
     deleteTrackMutation.mutate(track.docId, {
       onSuccess: () => {
-        navigation.navigate('Home', {screen: 'Map'});
+        navigation.pop();
       },
     });
-    navigation.pop();
   }
 
   return (

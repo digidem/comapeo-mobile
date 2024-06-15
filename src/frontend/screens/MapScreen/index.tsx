@@ -105,11 +105,12 @@ export const MapScreen = () => {
         {coords && locationServicesEnabled && (
           <UserLocation minDisplacement={MIN_DISPLACEMENT} />
         )}
-        {isFinishedLoading && (
+
+        {isFinishedLoading && <ObservationMapLayer />}
+        {isFinishedLoading && process.env.EXPO_PUBLIC_FEATURE_TRACKS && (
           <>
-            <ObservationMapLayer />
-            <TracksMapLayer />
             <CurrentTrackMapLayer />
+            <TracksMapLayer />
           </>
         )}
       </Mapbox.MapView>

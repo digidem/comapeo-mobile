@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {LIGHT_GREY, WHITE} from '../../lib/styles';
-import {PresetView} from './PresetView';
+import {PresetView} from '../../sharedComponents/EditScreen/PresetView';
 import {LocationView} from './LocationView';
 
 interface PresetInformation {

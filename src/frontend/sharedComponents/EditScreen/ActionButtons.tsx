@@ -1,18 +1,13 @@
-import React, {FC, useCallback} from 'react';
-import {View} from 'react-native';
+import React, {useCallback} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {MediaScrollView} from '../../sharedComponents/Thumbnail/MediaScrollView';
-import {ActionTab} from '../../sharedComponents/ActionTab';
+import {ActionTab} from '../ActionTab';
 import PhotoIcon from '../../images/observationEdit/Photo.svg';
 import AudioIcon from '../../images/observationEdit/Audio.svg';
 import DetailsIcon from '../../images/observationEdit/Details.svg';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {AppStackParamsList} from '../../sharedTypes/navigation';
-import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
-import {PermissionAudio} from '../../sharedComponents/PermissionAudio';
+import {BottomSheetModal, useBottomSheetModal} from '../BottomSheetModal';
+import {PermissionAudio} from '../PermissionAudio';
 import {Audio} from 'expo-av';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 
 const m = defineMessages({
   audioButton: {
@@ -32,23 +27,15 @@ const m = defineMessages({
   },
 });
 
-interface ThumbnailAndActionTab {
-  navigation: NativeStackNavigationProp<
-    AppStackParamsList,
-    'ObservationEdit',
-    undefined
-  >;
+interface ActionButtonsProps {
+  showAudio: boolean;
+  fieldIds?: string[];
 }
 
-export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
-  navigation,
-}) => {
+export const ActionButtons = ({showAudio, fieldIds}: ActionButtonsProps) => {
   const {formatMessage: t} = useIntl();
-  const {usePreset} = useDraftObservation();
-  const preset = usePreset();
-  const {photos, audioRecordings, observationId} = usePersistedDraftObservation(
-    store => store,
-  );
+  const navigation = useNavigationFromRoot();
+  const shouldShowAudio = process.env.EXPO_PUBLIC_FEATURE_AUDIO && showAudio;
   const {
     openSheet: openAudioPermissionSheet,
     sheetRef: audioPermissionSheetRef,
@@ -68,12 +55,18 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
   };
 
   const handleAudioPress = useCallback(() => {
+    if (!shouldShowAudio) return;
     if (permissionResponse?.granted) {
       navigation.navigate('Home', {screen: 'Map'});
     } else {
       openAudioPermissionSheet();
     }
-  }, [navigation, openAudioPermissionSheet, permissionResponse?.granted]);
+  }, [
+    navigation,
+    openAudioPermissionSheet,
+    permissionResponse?.granted,
+    shouldShowAudio,
+  ]);
 
   const bottomSheetItems = [
     {
@@ -83,7 +76,7 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
     },
   ];
 
-  if (process.env.EXPO_PUBLIC_FEATURE_AUDIO) {
+  if (shouldShowAudio) {
     bottomSheetItems.unshift({
       icon: <AudioIcon width={30} height={30} />,
       label: t(m.audioButton),
@@ -91,7 +84,7 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
     });
   }
 
-  if (preset?.fieldIds.length) {
+  if (fieldIds?.length) {
     // Only show the option to add details if preset fields are defined.
     bottomSheetItems.push({
       icon: <DetailsIcon width={30} height={30} />,
@@ -102,19 +95,16 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
 
   return (
     <>
-      <View>
-        <MediaScrollView
-          photos={photos}
-          audioRecordings={audioRecordings}
-          observationId={observationId}
-        />
-        <ActionTab items={bottomSheetItems} />
-      </View>
-      <PermissionAudio
-        closeSheet={closeAudioPermissionSheet}
-        isOpen={isAudioPermissionSheetOpen}
-        sheetRef={audioPermissionSheetRef}
-      />
+      <ActionTab items={bottomSheetItems} />
+      {shouldShowAudio && (
+        <BottomSheetModal
+          ref={audioPermissionSheetRef}
+          fullHeight
+          onDismiss={closeAudioPermissionSheet}
+          isOpen={isAudioPermissionSheetOpen}>
+          <PermissionAudio closeSheet={closeAudioPermissionSheet} />
+        </BottomSheetModal>
+      )}
     </>
   );
 };

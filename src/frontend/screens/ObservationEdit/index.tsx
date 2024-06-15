@@ -3,11 +3,10 @@ import {MessageDescriptor, defineMessages} from 'react-intl';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {View, ScrollView, StyleSheet} from 'react-native';
-import {DescriptionField} from './DescriptionField';
+import {DescriptionField} from '../../sharedComponents/EditScreen/DescriptionField';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {SaveButton} from './SaveButton';
-import {PresetAndLocationHeader} from './PresetAndLocationHeader';
-import {WHITE} from '../../lib/styles';
+import {LIGHT_GREY, WHITE} from '../../lib/styles';
 import {ThumbnailAndActionTab} from './ThumbnailAndActionTab';
 
 const m = defineMessages({
@@ -28,7 +27,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
 } = ({navigation}) => {
   const [error, setError] = React.useState<Error | null>(null);
   const {observationId} = usePersistedDraftObservation(store => store);
-  const isNew = !observationId;
+  // const isNew = !observationId;
 
   React.useEffect(() => {
     navigation.setOptions({
@@ -41,7 +40,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> & {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <PresetAndLocationHeader isNew={isNew} />
+        <View style={styles.presetAndLocation}></View>
         <DescriptionField />
       </ScrollView>
       <ThumbnailAndActionTab navigation={navigation} />
@@ -64,5 +63,12 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignContent: 'stretch',
+  },
+  presetAndLocation: {
+    margin: 20,
+    backgroundColor: WHITE,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: LIGHT_GREY,
   },
 });

@@ -1,9 +1,6 @@
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
-
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {BLACK, BLUE_GREY, NEW_DARK_GREY} from '../../lib/styles';
 import {useKeyboardListener} from '../../hooks/useKeyboardListener';
 
@@ -15,11 +12,15 @@ const m = defineMessages({
   },
 });
 
-export const DescriptionField = () => {
+export const DescriptionField = ({
+  notes,
+  updateNotes,
+}: {
+  notes: string;
+  updateNotes: (newNotes: string) => void;
+}) => {
   const {formatMessage: t} = useIntl();
   const {keyboardVisible} = useKeyboardListener();
-  const notes = usePersistedDraftObservation(store => store.value?.tags.notes);
-  const {updateTags} = useDraftObservation();
 
   return (
     <View style={styles.container}>
@@ -31,9 +32,7 @@ export const DescriptionField = () => {
       <TextInput
         style={styles.textInput}
         value={!notes || typeof notes !== 'string' ? '' : notes}
-        onChangeText={newVal => {
-          updateTags('notes', newVal);
-        }}
+        onChangeText={updateNotes}
         multiline
         placeholder={keyboardVisible ? '' : t(m.descriptionPlaceholder)}
         placeholderTextColor={BLUE_GREY}

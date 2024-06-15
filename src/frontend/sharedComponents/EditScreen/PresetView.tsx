@@ -2,8 +2,8 @@ import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {View, Text, StyleSheet} from 'react-native';
 import {BLACK, COMAPEO_BLUE} from '../../lib/styles';
-import {TextButton} from '../../sharedComponents/TextButton';
-import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
+import {TextButton} from '../TextButton';
+import {PresetCircleIcon} from '../icons/PresetIcon';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 

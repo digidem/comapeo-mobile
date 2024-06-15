@@ -14,7 +14,7 @@ import {InsetMapView} from './InsetMapView';
 import {ButtonFields} from './Buttons';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
-import {MediaScrollView} from '../../sharedComponents/Thumbnail/MediaScrollView';
+import {MediaScrollView} from '../../sharedComponents/MediaScrollView/MediaScrollView.ts';
 import {useAttachmentUrlQueries} from '../../hooks/server/media.ts';
 
 const m = defineMessages({

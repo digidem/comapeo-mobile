@@ -8,6 +8,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Photo} from '../../contexts/PhotoPromiseContext/types';
 import {DescriptionField} from './DescriptionField';
 import {ActionButtons} from './ActionButtons';
+import {MediaScrollView} from '../MediaScrollView';
 
 type EditScreenProps = {
   presetName: string;
@@ -31,6 +32,8 @@ export const EditScreen = ({
   clearError,
   notes,
   updateNotes,
+  photos,
+  audioRecordings,
 }: EditScreenProps) => {
   return (
     <View style={styles.container}>
@@ -44,7 +47,7 @@ export const EditScreen = ({
         </TouchableOpacity>
         <DescriptionField notes={notes} updateNotes={updateNotes} />
       </ScrollView>
-      {/* <MediaScrollView photos={photos} audioRecordings={audioRecordings} /> */}
+      <MediaScrollView photos={photos} audioRecordings={audioRecordings} />
       <ActionButtons showAudio={!!showAudio} />
       <ErrorBottomSheet error={error} clearError={clearError} />
     </View>

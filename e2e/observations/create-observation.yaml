@@ -22,3 +22,7 @@ appId: com.comapeo
 - tapOn:
     id: 'Animal'
 - tapOn: 'saveButton'
+- tapOn:
+    id: 'tabBarButtonObservationsList'
+- assertVisible:
+    id: 'observationListItem:0'

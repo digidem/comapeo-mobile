@@ -16,7 +16,7 @@ import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
 interface ObservationListItemProps {
   style?: ViewStyleProp;
   observation: Observation;
-  testID: string;
+  testID?: string;
   onPress: (id: string) => void;
 }
 
@@ -46,7 +46,8 @@ function ObservationListItemNotMemoized({
       testID={testID}
       style={{flex: 1, height: 80}}>
       <View
-        style={[styles.container, style, !isMine && styles.syncedObservation]}>
+        style={[styles.container, style, !isMine && styles.syncedObservation]}
+        testID={testID}>
         <View style={styles.text}>
           {preset && (
             <Text style={styles.title}>

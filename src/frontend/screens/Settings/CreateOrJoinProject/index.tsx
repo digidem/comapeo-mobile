@@ -84,6 +84,7 @@ export const CreateOrJoinProject: NativeNavigationComponent<
             onPress={() => {
               navigation.navigate('CreateProject');
             }}
+            testID="PROJECT.create-card"
           />
         )}
         <CardButton
@@ -113,13 +114,22 @@ type CardButtonProps = {
   style?: ViewStyleProp;
   isLoading?: boolean;
   onPress: () => void;
+  testID?: string;
 };
 
-function CardButton({header, subHeader, style, onPress}: CardButtonProps) {
+function CardButton({
+  header,
+  subHeader,
+  style,
+  onPress,
+  testID,
+}: CardButtonProps) {
   const {formatMessage: t} = useIntl();
-
   return (
-    <TouchableOpacity style={[styles.cardButton, style]} onPress={onPress}>
+    <TouchableOpacity
+      style={[styles.cardButton, style]}
+      onPress={onPress}
+      accessibilityLabel={testID}>
       <React.Fragment>
         <Text style={{fontSize: 24, fontWeight: 'bold', textAlign: 'center'}}>
           {t(header)}

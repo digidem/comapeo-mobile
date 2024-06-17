@@ -42,6 +42,7 @@ export const HookFormTextInput = <InputFields extends FieldValues>({
   rules,
   containerStyle,
   showCharacterCount,
+  testID,
   ...RNInputProp
 }: TextInputProps<InputFields>) => {
   const error = useFormState({control}).errors[name];
@@ -64,11 +65,18 @@ export const HookFormTextInput = <InputFields extends FieldValues>({
               value={value}
               onBlur={onBlur}
               onChangeText={onChange}
+              testID={testID}
               {...RNInputProp}
             />
           )}
         />
-        {error && <ErrorIcon style={{position: undefined}} color={RED} />}
+        {error && (
+          <ErrorIcon
+            style={{position: undefined}}
+            color={RED}
+            testID="error-icon"
+          />
+        )}
       </View>
       <View style={styles.underContainer}>
         <View>

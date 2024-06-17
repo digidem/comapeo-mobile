@@ -27,7 +27,10 @@ export const CreateOrJoinProjectDisplay = ({
   return (
     <ScreenContentWithDock
       dockContent={
-        <Button fullWidth onPress={onCreateOrJoinProject}>
+        <Button
+          fullWidth
+          onPress={onCreateOrJoinProject}
+          testID="PROJECT.create-join-btn">
           <Text style={styles.buttonText}>{t(m.buttonText)}</Text>
         </Button>
       }>

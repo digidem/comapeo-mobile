@@ -174,6 +174,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
                 name="projectName"
                 rules={{maxLength: 100, required: true, minLength: 1}}
                 showCharacterCount
+                testID="PROJECT.name-inp"
               />
             </View>
             <View style={{marginTop: 20}}>
@@ -215,7 +216,10 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
             {isPending ? (
               <UIActivityIndicator size={30} style={{marginBottom: 20}} />
             ) : (
-              <Button fullWidth onPress={handleSubmit(handleCreateProject)}>
+              <Button
+                testID="PROJECT.create-btn"
+                fullWidth
+                onPress={handleSubmit(handleCreateProject)}>
                 {t(m.createProjectButton)}
               </Button>
             )}

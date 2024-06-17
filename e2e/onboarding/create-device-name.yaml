@@ -7,6 +7,14 @@ env:
 - assertVisible:
     label: 'Input for device name is visible'
     id: '${CATEGORY}.device-name-inp'
+- assertVisible:
+    label: 'Button to add a device name is visible'
+    id: '${CATEGORY}.add-name-btn'
+- tapOn:
+    id: '${CATEGORY}.add-name-btn'
+- assertNotVisible:
+    label: 'No success if no name'
+    text: '.*Success.*'
 - tapOn:
     id: '${CATEGORY}.device-name-inp'
 - inputText:
@@ -26,3 +34,8 @@ env:
 - assertVisible:
     label: 'Go to map btn is visible'
     id: '${CATEGORY}.go-to-map-btn'
+- tapOn:
+    id: '${CATEGORY}.go-to-map-btn'
+- setLocation:
+    latitude: -22.9020
+    longitude: -43.1882

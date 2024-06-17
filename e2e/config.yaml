@@ -1,3 +1,8 @@
 flows:
-  - common/*
-  - onboarding/create-device-name.yaml
+  - 'common/*'
+  - 'onboarding/*'
+executionOrder:
+  continueOnFailure: false
+  flowsOrder:
+    - 'create-device-name'
+    - 'create-project-name'

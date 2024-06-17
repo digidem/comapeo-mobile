@@ -4,6 +4,6 @@ import {IconButton} from '../IconButton';
 
 export const DrawerMenuIcon = ({onPress}: {onPress: () => void}) => (
   <IconButton style={{alignSelf: 'flex-end'}} onPress={onPress}>
-    <IonIcon name="menu" size={32} />
+    <IonIcon name="menu" size={32} testID="MAIN.drawer-icon" />
   </IconButton>
 );

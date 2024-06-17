@@ -1,0 +1,24 @@
+appId: com.comapeo
+---
+- tapOn:
+    id: 'addButtonMap'
+- back
+- assertVisible:
+    label: 'Discard observation confirmation visible after pressing back button'
+    text: '.*Discard observation.*'
+- tapOn:
+    id: 'OBS.bottom-sheet-button'
+- tapOn:
+    id: 'tabBarButtonObservationsList'
+- assertVisible:
+    label: 'Observation discarded; no observations have been created'
+    id: 'observationsEmptyView'
+- back
+- setLocation:
+    latitude: -22.9020
+    longitude: -43.1882
+- tapOn:
+    id: 'addButtonMap'
+- tapOn:
+    id: 'Animal'
+- tapOn: 'saveButton'

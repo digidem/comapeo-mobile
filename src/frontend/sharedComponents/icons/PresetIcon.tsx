@@ -40,6 +40,7 @@ export const PresetIcon = memo<PresetIconProps>(({size = 'medium', name}) => {
       resizeMode="contain"
       source={{uri: data}}
       onError={() => setError(true)}
+      testID={name}
     />
   );
 });

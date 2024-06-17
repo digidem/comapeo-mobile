@@ -12,6 +12,7 @@ interface BaseActionButtonConfig {
   text: React.ReactNode;
   variation: 'filled' | 'outlined';
   icon?: React.ReactNode;
+  testID?: string;
 }
 
 interface PrimaryActionButtonConfig extends BaseActionButtonConfig {
@@ -69,6 +70,7 @@ export const Content = ({
             <Button
               fullWidth
               key={index}
+              testID={config.testID}
               TouchableComponent={props => (
                 <TouchableHighlight
                   {...props}

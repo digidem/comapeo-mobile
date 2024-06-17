@@ -36,6 +36,3 @@ env:
     id: '${CATEGORY}.go-to-map-btn'
 - tapOn:
     id: '${CATEGORY}.go-to-map-btn'
-- setLocation:
-    latitude: -22.9020
-    longitude: -43.1882

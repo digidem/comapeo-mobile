@@ -17,7 +17,9 @@ const IconButtonNotMemoized = ({children, onPress, style, testID}: Props) => (
     testID={testID}
     onPress={onPress}
     background={TouchableNativeFeedback.Ripple(VERY_LIGHT_BLUE, true)}>
-    <View style={[styles.container, style]}>{children}</View>
+    <View style={[styles.container, style]} testID={testID}>
+      {children}
+    </View>
   </TouchableNativeFeedback>
 );
 

@@ -1,0 +1,6 @@
+appId: com/comapeo
+---
+- tapOn:
+    id: 'tabBarButtonObservationsList'
+- tapOn:
+    id: 'observationListItem:0'

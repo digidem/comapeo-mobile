@@ -1,5 +1,6 @@
 appId: com.comapeo
 ---
+- startRecording: observation-recording
 - tapOn:
     id: 'addButtonMap'
 - back
@@ -21,7 +22,9 @@ appId: com.comapeo
     id: 'addButtonMap'
 - tapOn:
     id: 'Animal'
-- tapOn: 'saveButton'
+- tapOn:
+    id: 'saveButton'
+- stopRecording
 - tapOn:
     id: 'tabBarButtonObservationsList'
 - assertVisible:

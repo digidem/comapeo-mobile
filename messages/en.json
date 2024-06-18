@@ -971,6 +971,10 @@
     "description": "title for observation options",
     "message": "Show Options"
   },
+  "sharedComponents.ConfirmDiscard.cancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Continue editing"
+  },
   "sharedComponents.DeviceIconWithName.Disconnected": {
     "message": "Disconnected"
   },

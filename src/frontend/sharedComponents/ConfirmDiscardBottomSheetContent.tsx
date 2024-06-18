@@ -38,7 +38,7 @@ export const ConfirmDiscardBottomSheetContent = ({
           variation: 'outlined',
         },
       ]}
-      icon={<ErrorIcon width={60} height={60} style={{marginBottom: 15}} />}
+      icon={<ErrorIcon width={80} height={80} style={{marginBottom: 15}} />}
     />
   );
 };

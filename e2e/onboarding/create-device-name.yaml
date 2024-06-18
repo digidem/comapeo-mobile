@@ -1,6 +1,4 @@
 appId: com.comapeo
-onFlowStart:
-  - runFlow: ../common/launchapp.yaml
 env:
   CATEGORY: ONBOARDING
 ---

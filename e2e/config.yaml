@@ -1,10 +1,2 @@
 flows:
-  - 'common/*'
-  - 'onboarding/*'
-  - 'observations/*'
-executionOrder:
-  continueOnFailure: false
-  flowsOrder:
-    - 'create-device-name.yaml'
-    - 'create-project-name.yaml'
-    - 'create-observation.yaml'
+  - 'main/*'

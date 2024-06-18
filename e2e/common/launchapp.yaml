@@ -5,5 +5,6 @@ onFlowStart:
   - runScript: naming.js
 ---
 - runFlow: permissions.yaml
+- runFlow: local-dev-setup.yaml
 - tapOn:
     id: 'ONBOARDING.get-started-btn'

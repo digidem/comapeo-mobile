@@ -1,11 +1,14 @@
 import * as React from 'react';
-import {BottomSheetModal, useBottomSheetModal} from './BottomSheetModal';
-import {Button} from './Button';
-import {StyleSheet, View} from 'react-native';
-import {LogoWithErrorIcon} from './LogoWithErrorIcon';
-import {Text} from './Text';
-import {defineMessages, useIntl} from 'react-intl';
 import * as Sentry from '@sentry/react-native';
+import {defineMessages, useIntl} from 'react-intl';
+
+import {ActionButtonConfig} from './BottomSheet/Content';
+import {
+  BottomSheetContent,
+  BottomSheetModal,
+  useBottomSheetModal,
+} from './BottomSheetModal';
+import {LogoWithErrorIcon} from './LogoWithErrorIcon';
 
 const m = defineMessages({
   somethingWrong: {
@@ -46,69 +49,39 @@ export const ErrorBottomSheet = (props: ErrorModalProps) => {
     closeSheet();
   }
 
-  function handleTryAgain() {
-    clearError();
-    closeSheet();
-    tryAgain!();
-  }
+  const buttonConfigs: Array<ActionButtonConfig> = tryAgain
+    ? [
+        {
+          variation: 'outlined',
+          onPress: handleGoBack,
+          text: formatMessage(m.goBack),
+        },
+        {
+          variation: 'filled',
+          onPress: () => {
+            clearError();
+            closeSheet();
+            tryAgain();
+          },
+          text: formatMessage(m.tryAgain),
+        },
+      ]
+    : [
+        {
+          variation: 'filled',
+          onPress: handleGoBack,
+          text: formatMessage(m.goBack),
+        },
+      ];
 
   return (
-    <BottomSheetModal
-      ref={sheetRef}
-      fullHeight
-      onDismiss={closeSheet}
-      isOpen={isOpen}>
-      <>
-        <View style={styles.container}>
-          <View style={styles.wrapper}>
-            <LogoWithErrorIcon />
-            <Text style={styles.headerText}>
-              {formatMessage(m.somethingWrong)}
-            </Text>
-          </View>
-          <View
-            style={{
-              width: '100%',
-              justifyContent: 'flex-end',
-              flex: 1,
-              gap: 15,
-            }}>
-            <Button
-              fullWidth
-              onPress={handleGoBack}
-              variant="outlined"
-              color="ComapeoBlue">
-              {formatMessage(m.goBack)}
-            </Button>
-            {tryAgain && (
-              <Button fullWidth onPress={handleTryAgain}>
-                {formatMessage(m.tryAgain)}
-              </Button>
-            )}
-          </View>
-        </View>
-      </>
+    <BottomSheetModal ref={sheetRef} onDismiss={closeSheet} isOpen={isOpen}>
+      <BottomSheetContent
+        fullScreen
+        icon={<LogoWithErrorIcon />}
+        title={formatMessage(m.somethingWrong)}
+        buttonConfigs={buttonConfigs}
+      />
     </BottomSheetModal>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100%',
-    padding: 20,
-    paddingTop: 80,
-  },
-  wrapper: {
-    alignItems: 'center',
-    flex: 2,
-    justifyContent: 'center',
-  },
-  headerText: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginTop: 30,
-  },
-});

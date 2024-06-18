@@ -71,9 +71,7 @@ export const ConfirmPasscodeSheet = React.forwardRef<
             onPress: setPasscodeAndNavigateBack,
           },
         ]}
-        icon={
-          <ErrorIcon style={{position: 'relative'}} size={90} color={RED} />
-        }
+        icon={<ErrorIcon size={90} color={RED} />}
       />
     </BottomSheetModal>
   );

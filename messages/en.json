@@ -629,6 +629,10 @@
     "description": "screen title for edit observation screen",
     "message": "Edit Observation"
   },
+  "screens.ObservationEdit.navTitle": {
+    "description": "screen title for new observation screen",
+    "message": "New Observation"
+  },
   "screens.ObservationEdit.newTitle": {
     "description": "screen title for new observation screen",
     "message": "New Observation"
@@ -972,6 +976,10 @@
   },
   "sharedComponents.DeviceIconWithName.thisDevice": {
     "message": "This Device!"
+  },
+  "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
+    "description": "Shown in new observation screen whilst looking for GPS",
+    "message": "Searching…"
   },
   "sharedComponents.ErrorModal.goBack": {
     "message": "Go Back"

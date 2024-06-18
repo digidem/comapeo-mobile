@@ -60,6 +60,7 @@ import {PhotoPreviewModal} from '../../screens/PhotoPreviewModal';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {ObservationCreate} from '../../screens/ObservationCreate';
 import {SaveButton} from '../../sharedComponents/SaveButton';
+import {HeaderLeft} from '../../screens/ObservationCreate/HeaderLeft';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -277,6 +278,7 @@ export const createDefaultScreenGroup = ({
       options={{
         headerTitle: intl(ObservationCreate.navTitle),
         headerRight: () => <SaveButton onPress={() => {}} isLoading={false} />,
+        headerLeft: props => <HeaderLeft headerBackButtonProps={props} />,
       }}
     />
   </RootStack.Group>

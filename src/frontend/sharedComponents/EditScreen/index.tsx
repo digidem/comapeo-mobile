@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
     flexDirection: 'column',
     alignContent: 'stretch',
-    padding: 20,
   },
   scrollViewContent: {
     flex: 1,

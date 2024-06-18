@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     borderColor: LIGHT_GREY,
+    margin: 20,
   },
   locationContainer: {
     flexDirection: 'row',

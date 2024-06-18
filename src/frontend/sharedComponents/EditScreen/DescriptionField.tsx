@@ -46,7 +46,8 @@ const styles = StyleSheet.create({
   container: {
     minHeight: 56,
     position: 'relative',
-    marginTop: 20,
+    margin: 20,
+    marginTop: 0,
   },
   labelContainer: {
     position: 'absolute',

@@ -56,10 +56,10 @@ import {ObservationFields} from '../../screens/ObservationFields';
 import {LIGHT_GREY, WHITE} from '../../lib/styles';
 import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSettings';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
-import {PhotoPreviewModal} from '../../screens/PhotoPreviewModal.tsx';
-import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
-import {ObservationCreate} from '../../screens/ObservationCreate.tsx';
-import {SaveButton} from '../../sharedComponents/SaveButton.tsx';
+import {PhotoPreviewModal} from '../../screens/PhotoPreviewModal';
+import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
+import {ObservationCreate} from '../../screens/ObservationCreate';
+import {SaveButton} from '../../sharedComponents/SaveButton';
 
 export const TAB_BAR_HEIGHT = 70;
 

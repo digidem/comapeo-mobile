@@ -1,17 +1,17 @@
 import * as React from 'react';
-import {useDraftObservation} from '../hooks/useDraftObservation';
+import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {defineMessages, useIntl} from 'react-intl';
-import {EditScreen} from '../sharedComponents/EditScreen';
-import {PresetCircleIcon} from '../sharedComponents/icons/PresetIcon';
-import {usePersistedDraftObservation} from '../hooks/persistedState/usePersistedDraftObservation';
-import {NativeNavigationComponent} from '../sharedTypes/navigation';
-import {useCreateObservation} from '../hooks/server/observations';
+import {EditScreen} from '../../sharedComponents/EditScreen';
+import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
+import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
+import {NativeNavigationComponent} from '../../sharedTypes/navigation';
+import {useCreateObservation} from '../../hooks/server/observations';
 import {CommonActions} from '@react-navigation/native';
-import {Photo, DraftPhoto} from '../contexts/PhotoPromiseContext/types';
-import {useCreateBlobMutation} from '../hooks/server/media';
-import {usePersistedTrack} from '../hooks/persistedState/usePersistedTrack';
-import {SaveButton} from '../sharedComponents/SaveButton';
-import {useMostAccurateLocationForObservation} from './ObservationEdit/useMostAccurateLocationForObservation';
+import {Photo, DraftPhoto} from '../../contexts/PhotoPromiseContext/types';
+import {useCreateBlobMutation} from '../../hooks/server/media';
+import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
+import {SaveButton} from '../../sharedComponents/SaveButton';
+import {useMostAccurateLocationForObservation} from '../ObservationEdit/useMostAccurateLocationForObservation';
 
 const m = defineMessages({
   observation: {

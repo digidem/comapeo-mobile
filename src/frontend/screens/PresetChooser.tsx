@@ -65,7 +65,7 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
 
   const handleSelectPreset = (selectedPreset: Preset) => {
     updatePreset(selectedPreset);
-    navigation.navigate('ObservationEdit');
+    navigation.navigate('ObservationCreate');
   };
 
   const rowsPerWindow = Math.ceil(

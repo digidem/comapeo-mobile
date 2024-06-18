@@ -58,6 +58,8 @@ import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSetti
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {PhotoPreviewModal} from '../../screens/PhotoPreviewModal.tsx';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
+import {ObservationCreate} from '../../screens/ObservationCreate.tsx';
+import {SaveButton} from '../../sharedComponents/SaveButton.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -268,6 +270,14 @@ export const createDefaultScreenGroup = ({
       name="LanguageSettings"
       component={LanguageSettings}
       options={{headerTitle: intl(LanguageSettings.navTitle)}}
+    />
+    <RootStack.Screen
+      name="ObservationCreate"
+      component={ObservationCreate}
+      options={{
+        headerTitle: intl(ObservationCreate.navTitle),
+        headerRight: () => <SaveButton onPress={() => {}} isLoading={false} />,
+      }}
     />
   </RootStack.Group>
 );

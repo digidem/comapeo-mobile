@@ -1,18 +1,15 @@
 import * as React from 'react';
-import {
-  StyleSheet,
-  TextStyle,
-  ScrollView,
-  View,
-  Dimensions,
-} from 'react-native';
+import {StyleSheet, TextStyle, ScrollView, View} from 'react-native';
 import {TouchableHighlight} from '@gorhom/bottom-sheet';
+import {useDimensions} from '@react-native-community/hooks';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {LIGHT_BLUE, MAGENTA, COMAPEO_BLUE, RED, WHITE} from '../../lib/styles';
 import {Button} from '../Button';
 import {Text} from '../Text';
+
+const MINIMUM_SHEET_HEIGHT = 400;
+const LOADING_INDICATOR_HEIGHT = 40;
 
 interface BaseActionButtonConfig {
   onPress: () => void;
@@ -56,15 +53,12 @@ export const Content = ({
   title,
   titleStyle,
 }: Props) => {
-  const {top: insetTop} = useSafeAreaInsets();
-
+  const {window} = useDimensions();
   return (
     <View
       style={[
         styles.container,
-        fullScreen
-          ? {height: '100%', paddingTop: insetTop}
-          : {maxHeight: Dimensions.get('window').height * 0.75},
+        fullScreen ? {height: '100%'} : {maxHeight: window.height * 0.8},
       ]}>
       <View style={[styles.infoContainer, fullScreen && {flex: 1}]}>
         {icon ? <View style={styles.iconContainer}>{icon}</View> : null}
@@ -77,14 +71,17 @@ export const Content = ({
           ) : null}
         </View>
         {children ? (
-          <ScrollView style={fullScreen ? {flex: 1} : {maxHeight: 300}}>
+          <ScrollView
+            style={fullScreen ? {flex: 1} : {maxHeight: window.height * 0.2}}>
             {children}
           </ScrollView>
         ) : null}
       </View>
       <View style={styles.buttonsContainer}>
         {loading ? (
-          <UIActivityIndicator />
+          <View style={styles.loadingContainer}>
+            <UIActivityIndicator size={LOADING_INDICATOR_HEIGHT} />
+          </View>
         ) : (
           buttonConfigs.map((config, index) => {
             return (
@@ -143,20 +140,17 @@ export const Content = ({
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'space-between',
-    minHeight: 400,
+    minHeight: MINIMUM_SHEET_HEIGHT,
   },
-  infoContainer: {
-    gap: 20,
-    paddingTop: 20,
-  },
+  infoContainer: {gap: 20, paddingTop: 20},
   iconContainer: {alignItems: 'center', justifyContent: 'center'},
   textContainer: {gap: 20, paddingHorizontal: 20},
   title: {textAlign: 'center', fontSize: 24},
-  buttonsContainer: {gap: 20, padding: 20},
   description: {fontSize: 20, textAlign: 'center'},
+  loadingContainer: {height: LOADING_INDICATOR_HEIGHT},
+  buttonsContainer: {gap: 20, padding: 20},
   buttonTextContainer: {
     flexDirection: 'row',
-    alignContent: 'center',
     alignItems: 'center',
     gap: 4,
   },

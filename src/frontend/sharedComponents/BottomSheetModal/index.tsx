@@ -1,5 +1,10 @@
 import * as React from 'react';
-import {BackHandler, NativeEventSubscription, Keyboard} from 'react-native';
+import {
+  BackHandler,
+  NativeEventSubscription,
+  Keyboard,
+  StyleSheet,
+} from 'react-native';
 import {
   BottomSheetModal as RNBottomSheetModal,
   BottomSheetView,
@@ -7,6 +12,9 @@ import {
   BottomSheetBackdropProps,
 } from '@gorhom/bottom-sheet';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
+import {DARK_GREY} from '../../lib/styles';
 
 export const MODAL_NAVIGATION_OPTIONS: NativeStackNavigationOptions = {
   presentation: 'transparentModal',
@@ -71,26 +79,39 @@ interface Props extends React.PropsWithChildren<{}> {
   onDismiss?: () => void;
   // Triggered by: Android hardware back press and gesture back swipe
   onBack?: () => void;
+  fullScreen?: boolean;
 }
 
 export const BottomSheetModal = React.forwardRef<RNBottomSheetModal, Props>(
-  ({children, isOpen, onBack, onDismiss}, ref) => {
+  ({children, isOpen, onBack, onDismiss, fullScreen}, ref) => {
     useBackHandler(isOpen, onBack);
+
+    const {top} = useSafeAreaInsets();
 
     return (
       <RNBottomSheetModal
         enableDynamicSizing
         ref={ref}
+        backgroundStyle={
+          fullScreen ? styles.backgroundFullScreen : styles.backgroundDynamic
+        }
         backdropComponent={DefaultBackdrop}
         onDismiss={onDismiss}
         enableContentPanningGesture={false}
         enableHandlePanningGesture={false}
         handleComponent={() => null}>
-        <BottomSheetView>{children}</BottomSheetView>
+        <BottomSheetView style={fullScreen ? {paddingTop: top} : undefined}>
+          {children}
+        </BottomSheetView>
       </RNBottomSheetModal>
     );
   },
 );
+
+const styles = StyleSheet.create({
+  backgroundDynamic: {borderWidth: 1, borderColor: DARK_GREY},
+  backgroundFullScreen: {borderRadius: 0},
+});
 
 function DefaultBackdrop(props: BottomSheetBackdropProps) {
   return (

@@ -4,7 +4,7 @@ import {PhotoUnpreparedView} from '../sharedComponents/PhotoUnpreparedView.tsx';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes.ts';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {WHITE} from '../lib/styles.ts';
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {
   BottomSheetContent,
   BottomSheetModal,

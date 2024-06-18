@@ -44,38 +44,35 @@ export const ErrorBottomSheet = (props: ErrorModalProps) => {
     openSheet();
   }
 
-  function handleGoBack() {
-    clearError();
-    closeSheet();
+  const buttonConfigs: Array<ActionButtonConfig> = [
+    {
+      variation: 'outlined',
+      onPress: () => {
+        clearError();
+        closeSheet();
+      },
+      text: formatMessage(m.goBack),
+    },
+  ];
+
+  if (tryAgain) {
+    buttonConfigs.push({
+      variation: 'filled',
+      onPress: () => {
+        clearError();
+        closeSheet();
+        tryAgain();
+      },
+      text: formatMessage(m.tryAgain),
+    });
   }
 
-  const buttonConfigs: Array<ActionButtonConfig> = tryAgain
-    ? [
-        {
-          variation: 'outlined',
-          onPress: handleGoBack,
-          text: formatMessage(m.goBack),
-        },
-        {
-          variation: 'filled',
-          onPress: () => {
-            clearError();
-            closeSheet();
-            tryAgain();
-          },
-          text: formatMessage(m.tryAgain),
-        },
-      ]
-    : [
-        {
-          variation: 'filled',
-          onPress: handleGoBack,
-          text: formatMessage(m.goBack),
-        },
-      ];
-
   return (
-    <BottomSheetModal ref={sheetRef} onDismiss={closeSheet} isOpen={isOpen}>
+    <BottomSheetModal
+      fullScreen
+      ref={sheetRef}
+      onDismiss={closeSheet}
+      isOpen={isOpen}>
       <BottomSheetContent
         fullScreen
         icon={<LogoWithErrorIcon />}

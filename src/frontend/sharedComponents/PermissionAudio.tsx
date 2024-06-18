@@ -65,7 +65,11 @@ export const PermissionAudio: FC<PermissionAudio> = props => {
   }
 
   return (
-    <BottomSheetModal ref={sheetRef} onDismiss={closeSheet} isOpen={isOpen}>
+    <BottomSheetModal
+      fullScreen
+      ref={sheetRef}
+      onDismiss={closeSheet}
+      isOpen={isOpen}>
       <BottomSheetContent
         fullScreen
         icon={<AudioPermission />}

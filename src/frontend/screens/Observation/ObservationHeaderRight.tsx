@@ -10,6 +10,7 @@ import {SyncIcon} from '../../sharedComponents/icons/SyncIconCircle';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {DetectMaestro} from 'react-native-detect-maestro';
 
 export const ObservationHeaderRight = ({
   observationId,
@@ -36,7 +37,9 @@ export const ObservationHeaderRight = ({
   }
 
   const canEdit =
-    observationWithPreset.observation.createdBy === data?.deviceId || false;
+    observationWithPreset.observation.createdBy === data?.deviceId ||
+    DetectMaestro.isMaestro() ||
+    false;
   return canEdit ? (
     <IconButton onPress={handlePress} testID="editButton">
       <EditIcon />

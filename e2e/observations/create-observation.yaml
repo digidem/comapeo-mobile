@@ -1,6 +1,5 @@
 appId: com.comapeo
 ---
-- startRecording: observation-recording
 - tapOn:
     id: 'addButtonMap'
 - back
@@ -15,16 +14,12 @@ appId: com.comapeo
     label: 'Observation discarded; no observations have been created'
     id: 'observationsEmptyView'
 - back
-- setLocation:
-    latitude: -22.9020
-    longitude: -43.1882
 - tapOn:
     id: 'addButtonMap'
 - tapOn:
     id: 'Animal'
 - tapOn:
     id: 'saveButton'
-- stopRecording
 - tapOn:
     id: 'tabBarButtonObservationsList'
 - assertVisible:

@@ -4,3 +4,20 @@ appId: com/comapeo
     id: 'tabBarButtonObservationsList'
 - tapOn:
     id: 'observationListItem:0'
+- tapOn:
+    id: 'editButton'
+- assertVisible:
+    label: 'Observation description field is visible'
+    id: 'observationDescriptionField'
+- tapOn:
+    id: 'observationDescriptionField'
+- inputText:
+    label: 'Can input a description'
+    text: 'Test Description'
+- back
+- back
+- assertVisible:
+    label: 'Warning to Discard Changes is visible'
+    text: 'Discard changes?'
+- tapOn:
+    text: 'Discard Changes'

@@ -23,7 +23,8 @@
     "build:intl-polyfills": "node ./scripts/build-intl-polyfills.mjs",
     "build:backend": "node ./scripts/build-backend.mjs",
     "extract-messages": "formatjs extract 'src/frontend/**/*.{ts,tsx}' --ignore='**/*.d.ts' --format crowdin --out-file ./messages/en.json",
-    "eas-build-post-install": "npm run build:backend && npm run build:translations && npm run build:intl-polyfills"
+    "eas-build-post-install": "npm run build:backend && npm run build:translations && npm run build:intl-polyfills",
+    "tests": "maestro start-device --platform android && npm run android && maestro test e2e"
   },
   "dependencies": {
     "@bam.tech/react-native-image-resizer": "^3.0.7",

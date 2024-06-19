@@ -1,0 +1,9 @@
+appId: com.comapeo
+onFlowStart:
+  - launchApp:
+      clearState: true
+      permissions: {all: allow}
+---
+- runFlow: 'local-dev-setup.yaml'
+- tapOn:
+    id: 'ONBOARDING.get-started-btn'

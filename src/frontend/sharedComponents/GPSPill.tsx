@@ -59,7 +59,7 @@ export const GPSPill: FC<GPSPill> = ({navigation}) => {
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate('GpsModal')}
-      testID="MAIN.gps-pill-btn">
+      testID="gpsPillButton">
       <View
         style={[
           styles.container,

@@ -3,7 +3,7 @@ import GeojsonGeometriesLookup from 'geojson-geometries-lookup';
 
 let lookup: undefined | GeojsonGeometriesLookup;
 
-export default function positionToCountries(
+export function positionToCountries(
   latitude: number,
   longitude: number,
 ): Set<string> {

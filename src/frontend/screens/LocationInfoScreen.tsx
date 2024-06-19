@@ -84,7 +84,7 @@ export const LocationInfoScreen = () => {
     location?.timestamp || lastKnownLocationQuery.data?.timestamp;
 
   return (
-    <ScrollView style={styles.container} testID="gpsScreenScrollView">
+    <ScrollView style={styles.container} testID="GPS.main-screen">
       <View style={styles.infoArea}>
         <Text style={styles.sectionTitle}>
           <FormattedMessage {...m.lastUpdate} />

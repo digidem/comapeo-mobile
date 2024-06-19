@@ -1,0 +1,10 @@
+appId: com.comapeo
+---
+- tapOn:
+    id: 'MAIN.gps-pill-btn'
+- assertVisible:
+    label: 'Clicking GPS pill shows GPS screen'
+    text: '.*Current GPS Location.*'
+- assertVisible:
+    id: 'GPS.main-screen'
+- back

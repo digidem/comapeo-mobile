@@ -41,7 +41,8 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
         <ListItem
           onPress={() => {
             navigation.navigate('LanguageSettings');
-          }}>
+          }}
+          testID="SETTINGS.language-list-item">
           <ListItemIcon iconName="language" />
           <ListItemText
             primary={<FormattedMessage {...m.language} />}

@@ -7,12 +7,12 @@ appId: com/comapeo
 - tapOn:
     id: 'editButton'
 - assertVisible:
-    label: 'Observation description field is visible'
+    label: 'When editing, observation description field is visible'
     id: 'observationDescriptionField'
 - tapOn:
     id: 'observationDescriptionField'
 - inputText:
-    label: 'Can input a description'
+    label: 'When editing, can input a description'
     text: 'Test Description'
 - tapOn:
     id: 'OBS.close-edit'

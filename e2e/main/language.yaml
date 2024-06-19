@@ -1,0 +1,25 @@
+appId: com.comapeo
+---
+- tapOn:
+    id: 'MAIN.drawer-icon'
+- assertVisible:
+    label: 'App Settings are available in the main drawer menu'
+    text: '.*App Settings.*'
+- tapOn:
+    id: 'DRAWER.app-settings-icon'
+- assertVisible:
+    label: 'Language menu item available in app settings'
+    text: '.*Language.*'
+- tapOn:
+    id: 'SETTINGS.language-list-item'
+- scrollUntilVisible:
+    element: '.*Spanish.*'
+    direction: DOWN
+    visibilityPercentage: 100
+- tapOn: '.*Spanish.*'
+- tapOn:
+    id: 'tabBarButtonObservationsList'
+- assertVisible:
+    label: 'Changing language to Spanish in settings changes app language'
+    text: '.*Observaciones.*'
+- back

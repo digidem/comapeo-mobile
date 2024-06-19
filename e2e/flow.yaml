@@ -1,9 +1,10 @@
 appId: com.comapeo
 onFlowStart:
-  - runScript: './common/naming.js'
-  # - runFlow: './common/launchapp.yaml'
+  - runFlow: './common/launchapp.yaml'
 ---
 - runFlow: './onboarding/create-device-name.yaml'
 - runFlow: './onboarding/create-project-name.yaml'
 - runFlow: './observations/create-observation.yaml'
 - runFlow: './observations/edit-observation.yaml'
+- runFlow: './main/gps.yaml'
+- runFlow: './main/language.yaml'

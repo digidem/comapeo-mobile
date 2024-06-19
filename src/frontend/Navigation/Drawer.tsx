@@ -149,7 +149,8 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
         <ListItem
           onPress={() => {
             navigate('DrawerHome', {screen: 'AppSettings'});
-          }}>
+          }}
+          testID="DRAWER.app-settings-icon">
           <DrawerListItemIcon iconName="settings-suggest" />
           <ListItemText primary={<FormattedMessage {...m.appSettings} />} />
         </ListItem>

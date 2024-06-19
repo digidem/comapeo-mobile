@@ -1,4 +1,8 @@
 appId: com.comapeo
+onFlowStart:
+  - setLocation:
+      latitude: -25.9020
+      longitude: -43.1882
 ---
 - tapOn:
     id: 'addButtonMap'
@@ -17,10 +21,14 @@ appId: com.comapeo
 - tapOn:
     id: 'addButtonMap'
 - tapOn:
-    id: 'Animal'
+    id: ${output.names.preset}
 - tapOn:
     id: 'saveButton'
 - tapOn:
     id: 'tabBarButtonObservationsList'
 - assertVisible:
     id: 'observationListItem:0'
+- assertVisible:
+    label: 'Preset that was added for observation is visible in observation list'
+    text: ${output.names.preset}
+- back

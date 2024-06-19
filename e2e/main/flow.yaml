@@ -1,7 +1,0 @@
-appId: com.comapeo
-onFlowStart:
-  - runFlow: ../common/launchapp.yaml
----
-- runFlow: '../onboarding/create-device-name.yaml'
-- runFlow: '../onboarding/create-project-name.yaml'
-- runFlow: '../observations/create-observation.yaml'

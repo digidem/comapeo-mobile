@@ -1,6 +1,8 @@
 appId: com.comapeo
 env:
   CATEGORY: ONBOARDING
+onFlowStart:
+  - runScript: '../common/naming.js'
 ---
 - assertVisible:
     label: 'Input for device name is visible'

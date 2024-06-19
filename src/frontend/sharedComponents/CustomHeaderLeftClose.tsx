@@ -232,6 +232,7 @@ const SharedBackButton = ({
   const navigation = useNavigation();
   return (
     <HeaderBackButton
+      testID="OBS.close-edit"
       {...headerBackButtonProps}
       style={{marginLeft: 0, marginRight: 15}}
       onPress={onPress ? onPress : () => navigation.goBack()}

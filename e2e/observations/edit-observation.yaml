@@ -14,10 +14,12 @@ appId: com/comapeo
 - inputText:
     label: 'Can input a description'
     text: 'Test Description'
-- back
-- back
+- tapOn:
+    id: 'OBS.close-edit'
 - assertVisible:
     label: 'Warning to Discard Changes is visible'
     text: 'Discard changes?'
+- tapOn:
+    text: 'Discard Changes'
 - tapOn:
     text: 'Discard Changes'

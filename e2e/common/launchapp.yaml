@@ -2,12 +2,8 @@ appId: com.comapeo
 onFlowStart:
   - launchApp:
       clearState: true
+      permissions: {all: allow}
   - runScript: naming.js
 ---
-- runFlow: local-dev-setup.yaml
-- runFlow: permissions.yaml
-- setLocation:
-    latitude: -25.9020
-    longitude: -43.1882
 - tapOn:
     id: 'ONBOARDING.get-started-btn'

@@ -22,4 +22,37 @@ env:
     label: 'Can input a device name'
     text: ${output.names.editdevice}
 - tapOn:
+    id: '${CAT}.header-back-btn'
+- assertVisible:
+    label: 'If User makes changes to the name field but attempts to go back an alert message appears'
+    text: '.*Discard changes?.*'
+- tapOn:
+    text: '.*Discard changes?.*'
+- alertVisible:
+    label: 'Changes are discarded if user taps discard changes and original device name appears'
+    text: ${output.names.device}
+- tapOn:
+    id: 'edit-icon'
+- tapOn:
+    id: '${CAT}.edit-device-name'
+- inputText:
+    label: 'Can input a device name'
+    text: ${output.names.editdevice}
+- tapOn:
+    id: '${CAT}.header-back-btn'
+- assertVisible:
+    label: 'If User makes changes to the name field but attempts to go back an alert message appears'
+    text: '.*DISCARD CHANGES.*'
+- tapOn:
+    label: 'User can choose to continue editing'
+    text: '.*CONTINUE EDITING.*'
+- assertVisible:
+    label: 'Device name as input is still visible'
+    text: ${output.names.editdevice}
+- tapOn:
     id: 'save-icon'
+- assertVisible:
+    label: 'Edited device name is now visible'
+    text: ${output.names.editdevice}
+- back
+- back

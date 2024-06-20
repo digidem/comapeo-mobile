@@ -137,8 +137,6 @@ export const EditScreen = ({
     [handleSubmit, navigation, isPending, mutate, nameHasChanges, onPress],
   );
 
-  console.log('is pending ', isPending);
-
   return (
     <>
       <ScrollView contentContainerStyle={styles.container}>
@@ -154,7 +152,7 @@ export const EditScreen = ({
             style={{flex: 1, color: BLACK, fontSize: 16}}
             showCharacterCount
             autoFocus
-            editable={isPending}
+            editable={!isPending}
           />
         </FieldRow>
       </ScrollView>

@@ -50,7 +50,7 @@ export function createNavigationOptions({
       headerTitle: intl(m.title),
       animation: 'none',
       headerRight: () => (
-        <IconButton onPress={() => {}}>
+        <IconButton testID="save-icon" onPress={() => {}}>
           <SaveIcon />
         </IconButton>
       ),
@@ -127,7 +127,7 @@ export const EditScreen = ({
       navigation.setOptions({
         headerRight: () => {
           return (
-            <IconButton onPress={onPress}>
+            <IconButton testID="save-icon" onPress={onPress}>
               {isPending ? <UIActivityIndicator size={30} /> : <SaveIcon />}
             </IconButton>
           );
@@ -137,11 +137,14 @@ export const EditScreen = ({
     [handleSubmit, navigation, isPending, mutate, nameHasChanges, onPress],
   );
 
+  console.log('is pending ', isPending);
+
   return (
     <>
       <ScrollView contentContainerStyle={styles.container}>
         <FieldRow label={t(m.deviceNameLabel)}>
           <HookFormTextInput
+            testID="MAIN.edit-device-name"
             control={control}
             name="deviceName"
             rules={{maxLength: 60, required: true, minLength: 1}}

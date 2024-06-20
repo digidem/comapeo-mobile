@@ -1,0 +1,25 @@
+appId: com.comapeo
+env:
+  CAT: MAIN
+---
+- tapOn:
+    id: '${CAT}.drawer-icon'
+- assertVisible:
+    label: 'Project Settings are visible within the settings menu'
+    id: '${CAT}.project-stg-list-item'
+- tapOn:
+    id: '${CAT}.project-stg-list-item'
+- tapOn:
+    id: '${CAT}.device-name-list-item'
+- assertVisible:
+    label: 'Pencil icon is visible to allow editing of device name'
+    id: 'edit-icon'
+- tapOn:
+    id: 'edit-icon'
+- tapOn:
+    id: '${CAT}.edit-device-name'
+- inputText:
+    label: 'Can input a device name'
+    text: ${output.names.editdevice}
+- tapOn:
+    id: 'save-icon'

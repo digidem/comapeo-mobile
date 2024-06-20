@@ -49,18 +49,17 @@ We chose Maestro for our end-to-end testing for several reasons:
 - **Simplicity**: Maestro provides a straightforward way to write and execute tests using YAML, making it accessible to all team members. Configuration is super simple and requires almost no modification of our app.
 - **CLI**: No code CLI where one can easily visually select elements to add to testing flows. To open, run `maestro studio`.
 
-- **Integration**: Easy integration with our CI/CD pipeline, allowing for automated testing and continuous integration.
-
 ### Test Structure
 
 Our test files are stored in the `e2e` directory at the root of the project. Each test scenario is written in a separate YAML file to maintain modularity and readability.
 
 File folders are set up to group tests pertaining to various features.
+
 Tests are called sequentially from the `main/flow.yaml` file.
 
 ### Test IDs
 
-The best way for tests to find certain elements is to add Test IDs. There are many Test IDs already in CoMapeo that were ported over from Mapeo. However, we are ammending these to follow the best naming practices for Test IDs as outlined in the [following document:](https://wix.github.io/Detox/docs/guide/test-id#test-id-naming---best-practices) as we build tests that use them. The folder in which the test resides provides the prefix, which is in all caps (eg. MAIN) and then the specific element gets kebab case. We are using suffixes like btn, icon, scrn etc to identify type of element as well.
+The best way for tests to find certain elements is to add Test IDs. There are many Test IDs already in CoMapeo that were ported over from Mapeo. However, we are ammending these to follow the best naming practices for Test IDs as outlined in the [following document](https://wix.github.io/Detox/docs/guide/test-id#test-id-naming---best-practices) as we build tests that use them. The folder in which the test resides provides the prefix, which is in all caps (eg. MAIN) and then the specific element gets kebab case. We are using suffixes like btn, icon, scrn etc to identify type of element as well.
 
 ### Variables
 

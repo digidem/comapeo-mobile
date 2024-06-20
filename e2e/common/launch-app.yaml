@@ -3,6 +3,7 @@ onFlowStart:
   - launchApp:
       clearState: true
       permissions: {all: allow}
+  - runScript: naming.js
 ---
 - runFlow: 'local-dev-setup.yaml'
 - tapOn:

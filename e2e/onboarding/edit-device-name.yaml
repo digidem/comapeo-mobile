@@ -18,6 +18,7 @@ env:
     id: 'edit-icon'
 - tapOn:
     id: '${CAT}.edit-device-name'
+- eraseText
 - inputText:
     label: 'Can input a device name'
     text: ${output.names.editdevice}
@@ -28,13 +29,14 @@ env:
     text: '.*Discard changes?.*'
 - tapOn:
     text: '.*Discard changes?.*'
-- alertVisible:
+- assertVisible:
     label: 'Changes are discarded if user taps discard changes and original device name appears'
     text: ${output.names.device}
 - tapOn:
     id: 'edit-icon'
 - tapOn:
     id: '${CAT}.edit-device-name'
+- eraseText
 - inputText:
     label: 'Can input a device name'
     text: ${output.names.editdevice}

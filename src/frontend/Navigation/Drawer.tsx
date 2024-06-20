@@ -153,6 +153,14 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
           <DrawerListItemIcon iconName="settings-suggest" />
           <ListItemText primary={<FormattedMessage {...m.appSettings} />} />
         </ListItem>
+        <ListItem
+          onPress={() => {
+            navigate('AboutSettings');
+          }}
+          testID="settingsAboutButton">
+          <DrawerListItemIcon iconName="info-outline" />
+          <ListItemText primary={<FormattedMessage {...m.aboutMapeo} />} />
+        </ListItem>
       </List>
     </DrawerContentScrollView>
   );

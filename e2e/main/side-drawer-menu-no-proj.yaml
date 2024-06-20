@@ -1,0 +1,19 @@
+appId: com.comapeo
+env:
+  CAT: MAIN
+---
+- assertVisible:
+    label: 'Hamburger drawer menu visible from main screen'
+    id: '${CAT}.drawer-icon'
+- tapOn:
+    id: '${CAT}.drawer-icon'
+- tapOn:
+    id: '${CAT}.drawer-create-join-txt'
+- assertVisible:
+    label: 'Menu cannot be closed by clicking anywhere else on the menu screen'
+    text: '.*Create or Join a Project to sync with other devices.*'
+- assertVisible:
+    label: 'Menu items are all visible in the drawer menu'
+    text: '.*Create or Join project.*'
+- assertVisible: '.*Project Settings.*'
+- assertVisible: '.*App Settings.*'

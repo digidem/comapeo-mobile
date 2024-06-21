@@ -1,6 +1,4 @@
 appId: com.comapeo
-onFlowStart:
-  - runScript: '../common/naming.js'
 env:
   CAT: PROJECT
   SUBCAT: MAIN

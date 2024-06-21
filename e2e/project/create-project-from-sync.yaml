@@ -1,0 +1,41 @@
+appId: com.comapeo
+env:
+  CATEGORY: PROJECT
+  SUBCAT: MAIN
+---
+- assertVisible:
+    label: 'Sync icon is visible'
+    id: '${SUBCAT}.sync-icon'
+- tapOn:
+    id: '${SUBCAT}.sync-icon'
+- assertVisible:
+    label: 'Text displaying options regarding project are visible'
+    text: '.*Create or Join a project.*'
+- assertVisible:
+    label: 'Button to join project visible'
+    id: '${CATEGORY}.create-join-btn'
+- tapOn:
+    id: '${CATEGORY}.create-join-btn'
+- assertVisible:
+    text: '${CATEGORY}.create-card'
+    label: 'Button to create project visible'
+- tapOn:
+    text: '${CATEGORY}.create-card'
+- tapOn:
+    id: '${CATEGORY}.create-btn'
+- assertVisible:
+    label: 'Error message if create button pressed no project name'
+    id: 'error-icon'
+- tapOn:
+    id: '${CATEGORY}.name-inp'
+- inputText:
+    label: 'Can input a project name'
+    text: ${output.names.project}
+- tapOn:
+    id: '${CATEGORY}.create-btn'
+- tapOn:
+    id: '${SUBCAT}.drawer-icon'
+- assertVisible:
+    text: 'Project ${output.names.project}'
+- tapOn:
+    id: '${SUBCAT}.drawer-icon'

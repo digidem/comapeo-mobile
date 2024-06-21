@@ -7,6 +7,9 @@ env:
     id: '${CAT}.drawer-icon'
 - tapOn:
     id: '${CAT}.drawer-icon'
+- assertVisible:
+    label: 'User sees the header stating the following "Create or join a project to sync with other devices"'
+    text: '.*Create or Join a Project.*'
 - tapOn:
     id: '${CAT}.drawer-create-join-txt'
 - assertVisible:

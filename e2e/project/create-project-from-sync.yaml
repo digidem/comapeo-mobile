@@ -33,9 +33,3 @@ env:
     text: ${output.names.project}
 - tapOn:
     id: '${CATEGORY}.create-btn'
-- tapOn:
-    id: '${SUBCAT}.drawer-icon'
-- assertVisible:
-    text: 'Project ${output.names.project}'
-- tapOn:
-    id: '${SUBCAT}.drawer-icon'

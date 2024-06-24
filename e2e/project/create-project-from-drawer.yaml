@@ -35,7 +35,7 @@ env:
 - tapOn:
     id: '${SUBCAT}.drawer-icon'
 - tapOn:
-    id: '${CAT}.project-stg-list-item'
+    id: '${SUBCAT}.project-stg-list-item'
 - tapOn:
     id: '${SUBCAT}.team-list-item'
 - assertVisible:

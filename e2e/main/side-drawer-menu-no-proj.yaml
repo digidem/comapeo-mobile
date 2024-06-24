@@ -20,3 +20,5 @@ env:
     text: '.*Create or Join project.*'
 - assertVisible: '.*Project Settings.*'
 - assertVisible: '.*App Settings.*'
+- tapOn:
+    id: '${CAT}.drawer-icon'

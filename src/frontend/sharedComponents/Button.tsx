@@ -39,6 +39,7 @@ export const Button = ({
   size = 'medium',
   style,
   variant = 'contained',
+  testID = '',
 }: Props) => {
   const buttonStyle = getButtonStyle(variant);
   const textStyle = getTextStyle({color, variant, disabled});
@@ -50,7 +51,7 @@ export const Button = ({
   };
 
   const buttonContent = (
-    <View style={touchableStyle as ViewStyle}>
+    <View style={touchableStyle as ViewStyle} testID={testID}>
       {
         typeof children === 'string' ? (
           <Text style={[styles.textBase, textStyle]}>{children}</Text>

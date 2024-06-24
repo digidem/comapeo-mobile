@@ -1,4 +1,4 @@
-import positionToCountries from './positionToCountries';
+import {positionToCountries} from './positionToCountries';
 
 describe('positionToCountries', () => {
   it('returns nothing for invalid values', () => {

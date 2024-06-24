@@ -1,0 +1,47 @@
+appId: com.comapeo
+env:
+  CAT: MAIN
+---
+- setLocation:
+    latitude: -.8
+    longitude: -76.9
+- assertVisible:
+    id: ${CAT}.mapbox-map-view
+- assertVisible:
+    label: 'On home Map screen, GPS details button shows current device status'
+    text: '.*\d m|Searching.*'
+- tapOn:
+    id: 'tabBarButtonCamera'
+- assertVisible: '.*\d m|Searching.*'
+- tapOn:
+    id: 'tabBarButtonMap'
+- assertVisible:
+    id: ${CAT}.mapbox-map-view
+- tapOn:
+    id: '${CAT}.gps-pill-btn'
+- assertVisible:
+    text: '.*Current GPS Location.*'
+- assertVisible:
+    label: 'Clicking GPS pill from Home Map screen shows GPS screen'
+    id: '${CAT}.gps-details-scrn'
+- tapOn:
+    id: '${CAT}.header-back-btn'
+- assertVisible:
+    label: 'Clicking on the Back button returns to last home screen - map'
+    id: ${CAT}.mapbox-map-view
+- tapOn:
+    id: 'tabBarButtonCamera'
+- tapOn:
+    id: '${CAT}.gps-pill-btn'
+- assertVisible:
+    text: '.*Current GPS Location.*'
+- assertVisible:
+    label: 'Clicking GPS pill from Camera screen shows GPS screen'
+    id: '${CAT}.gps-details-scrn'
+- assertVisible:
+    text: '.*latitude.*'
+- tapOn:
+    id: '${CAT}.header-back-btn'
+- assertVisible:
+    label: 'Clicking on the Back button returns to last home screen - camera'
+    id: ${CAT}.camera-scrn

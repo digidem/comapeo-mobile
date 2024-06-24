@@ -1,0 +1,24 @@
+appId: com.comapeo
+env:
+  CAT: MAIN
+---
+- setLocation:
+    latitude: 48.8530
+    longitude: 2.3499
+- tapOn:
+    id: 'tabBarButtonMap'
+- assertVisible:
+    id: '${CAT}.sync-icon'
+- assertVisible:
+    id: '${CAT}.drawer-icon'
+- assertVisible:
+    label: 'Sync button, drawer icon, and plus button all appear on the map'
+    id: '${CAT}.add-observation-btn'
+- tapOn:
+    id: '${CAT}.add-observation-btn'
+- assertVisible:
+    id: '${CAT}.categories-scrn'
+    label: 'Create observation button goes to categories screen from Home map screen'
+- back
+- tapOn:
+    id: 'OBS.discard-obs'

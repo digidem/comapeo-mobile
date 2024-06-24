@@ -1,0 +1,3 @@
+appId: com.comapeo
+---
+- runFlow: '../common/launch-app.yaml'

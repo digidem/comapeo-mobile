@@ -1,8 +1,11 @@
 import type {ReadonlyDeep} from 'type-fest';
+import type {Platform} from 'react-native';
 import type {Observation} from '@mapeo/schema';
-import positionToCountries from './positionToCountries';
+import {positionToCountries} from './positionToCountries';
+import {getPercentageOfNetworkAvailability} from './networkAvailability';
+import {addToSet} from './../lib/addToSet';
 
-export default function generateMetricsReport({
+export function generateMetricsReport({
   packageJson,
   os,
   osVersion,
@@ -10,10 +13,10 @@ export default function generateMetricsReport({
   observations,
 }: ReadonlyDeep<{
   packageJson: {version: string};
-  os: 'android' | 'ios' | NodeJS.Platform;
+  os: Platform['OS'] | NodeJS.Platform;
   osVersion: number | string;
   screen: {width: number; height: number};
-  observations: ReadonlyArray<Pick<Observation, 'lat' | 'lon'>>;
+  observations: ReadonlyDeep<Array<Partial<Observation>>>;
 }>) {
   const countries = new Set<string>();
 
@@ -22,17 +25,14 @@ export default function generateMetricsReport({
       addToSet(countries, positionToCountries(lat, lon));
     }
   }
-
   return {
     type: 'metrics-v1',
     appVersion: packageJson.version,
     os,
     osVersion,
-    screen,
+    screen: {width: screen.width, height: screen.height},
     ...(countries.size ? {countries: Array.from(countries)} : {}),
+    percentageOfNetworkAvailability:
+      getPercentageOfNetworkAvailability(observations),
   };
-}
-
-function addToSet<T>(set: Set<T>, toAdd: Iterable<T>): void {
-  for (const item of toAdd) set.add(item);
 }

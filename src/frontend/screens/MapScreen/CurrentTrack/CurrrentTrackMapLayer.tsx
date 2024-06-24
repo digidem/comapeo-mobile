@@ -6,7 +6,7 @@ import {LineString} from 'geojson';
 import {useLocation} from '../../../hooks/useLocation';
 import {LocationHistoryPoint} from '../../../sharedTypes/location';
 
-export const TrackPathLayer = () => {
+export const CurrentTrackMapLayer = () => {
   const locationHistory = usePersistedTrack(state => state.locationHistory);
   const isTracking = usePersistedTrack(state => state.isTracking);
   const {location} = useLocation({maxDistanceInterval: 3});

@@ -13,6 +13,7 @@ import * as TaskManager from 'expo-task-manager';
 import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
 import {tracksStore} from './hooks/persistedState/usePersistedTrack';
 import {useOnBackgroundedAndForegrounded} from './hooks/useOnBackgroundedAndForegrounded';
+import {useSendMetrics} from './hooks/useSendMetrics';
 
 Sentry.init({
   dsn: 'https://e0e02907e05dc72a6da64c3483ed88a6@o4507148235702272.ingest.us.sentry.io/4507170965618688',
@@ -61,6 +62,7 @@ const App = () => {
   }, []);
 
   useOnBackgroundedAndForegrounded(mapeoApi);
+  useSendMetrics(mapeoApi);
 
   return (
     <IntlProvider>

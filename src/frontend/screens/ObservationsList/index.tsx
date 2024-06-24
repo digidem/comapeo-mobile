@@ -3,8 +3,7 @@ import {View, FlatList, Dimensions, StyleSheet} from 'react-native';
 import {ObservationListItem} from './ObservationListItem';
 import ObservationEmptyView from './ObservationsEmptyView';
 
-import {Observation} from '@mapeo/schema';
-import {useAllObservations} from '../../hooks/useAllObservations';
+import {Observation, Track} from '@mapeo/schema';
 import {MessageDescriptor, defineMessages} from 'react-intl';
 import {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs';
 import {ObservationsListBarIcon} from '../../Navigation/Tab/TabBar/ObservationsListTabBarIcon';
@@ -14,6 +13,9 @@ import {NoProjectWarning} from './NoProjectWarning';
 import {LIGHT_GREY, WHITE} from '../../lib/styles';
 import {useAllProjects} from '../../hooks/server/projects';
 import {Loading} from '../../sharedComponents/Loading';
+import {TrackListItem} from './TrackListItem';
+import {useObservations} from '../../hooks/server/observations';
+import {useTracks} from '../../hooks/server/track';
 
 const m = defineMessages({
   loading: {
@@ -38,27 +40,30 @@ const m = defineMessages({
 
 const OBSERVATION_CELL_HEIGHT = 80;
 
-const getItemLayout = (_data: unknown, index: number) => ({
-  length: OBSERVATION_CELL_HEIGHT,
-  offset: OBSERVATION_CELL_HEIGHT * index,
-  index,
-});
+function getItemLayout(data: unknown, index: number) {
+  return {
+    length: OBSERVATION_CELL_HEIGHT,
+    offset: OBSERVATION_CELL_HEIGHT * index,
+    index,
+  };
+}
 
-const keyExtractor = (item: Observation) => item.docId;
+const keyExtractor = (item: Observation | Track) => item.docId;
 
 export const ObservationsList: React.FC<
   NativeHomeTabsNavigationProps<'ObservationsList'>
 > & {
   navTitle: MessageDescriptor;
 } = ({navigation}) => {
-  const observations = useAllObservations();
-  const {data, isLoading} = useAllProjects();
+  const {data: observations} = useObservations();
+  const {data: tracks} = useTracks();
+  const {data, isPending} = useAllProjects();
 
   const rowsPerWindow = Math.ceil(
     (Dimensions.get('window').height - 65) / OBSERVATION_CELL_HEIGHT,
   );
 
-  if (!observations.length) {
+  if (!observations.length && !tracks.length) {
     return (
       <ObservationEmptyView
         onPressBack={() => navigation.navigate('Home', {screen: 'Map'})}
@@ -68,7 +73,7 @@ export const ObservationsList: React.FC<
 
   return (
     <View style={styles.container} testID="observationsListView">
-      {isLoading ? (
+      {isPending ? (
         <Loading />
       ) : data && data.length <= 1 ? (
         <NoProjectWarning style={{margin: 20}} />
@@ -84,19 +89,38 @@ export const ObservationsList: React.FC<
         windowSize={3}
         removeClippedSubviews
         renderItem={({item, index}) => {
-          return (
-            <ObservationListItem
-              key={item.docId}
-              testID={`observationListItem:${index}`}
-              observation={item}
-              style={styles.listItem}
-              onPress={() =>
-                navigation.navigate('Observation', {observationId: item.docId})
-              }
-            />
-          );
+          switch (item.schemaName) {
+            case 'observation':
+              return (
+                <ObservationListItem
+                  key={item.docId}
+                  testID={`observationListItem:${index}`}
+                  observation={item}
+                  style={styles.listItem}
+                  onPress={() =>
+                    navigation.navigate('Observation', {
+                      observationId: item.docId,
+                    })
+                  }
+                />
+              );
+            case 'track':
+              return (
+                <TrackListItem
+                  key={item.docId}
+                  testID={`trackListItem:${index}`}
+                  track={item}
+                  style={styles.listItem}
+                  onPress={() => {
+                    // TODO: navigate to track
+                  }}
+                />
+              );
+          }
         }}
-        data={observations}
+        data={[...observations, ...tracks].sort((a, b) =>
+          a.createdAt < b.createdAt ? 1 : -1,
+        )}
       />
     </View>
   );

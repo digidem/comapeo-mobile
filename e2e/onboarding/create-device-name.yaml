@@ -18,6 +18,7 @@ env:
 - inputText:
     label: 'Can input a device name'
     text: ${output.names.device}
+- hideKeyboard
 - assertVisible:
     label: 'Button to add a device name is visible'
     id: '${CATEGORY}.add-name-btn'

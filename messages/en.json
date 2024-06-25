@@ -302,6 +302,33 @@
     "description": "Screen title for audio permission screen",
     "message": "Recording Audio with CoMapeo"
   },
+  "screens.AudioScreen.CreateRecording.RecordingActive.description": {
+    "message": "Less than {length} {length, plural, one {minute} other {minutes}} left"
+  },
+  "screens.AudioScreen.CreateRecording.RecordingDone.deleteBottomSheetPrimaryButtonText": {
+    "message": "Delete"
+  },
+  "screens.AudioScreen.CreateRecording.RecordingDone.deleteBottomSheetSecondaryButtonText": {
+    "message": "Cancel"
+  },
+  "screens.AudioScreen.CreateRecording.RecordingDone.deleteBottomSheetTitle": {
+    "message": "Your Audio Recording will be permanently deleted. This cannot be undone."
+  },
+  "screens.AudioScreen.CreateRecording.RecordingIdle.description": {
+    "message": "Record up to {length} {length, plural, one {minute} other {minutes}}"
+  },
+  "screens.AudioScreen.ExistingRecording.deleteBottomSheetPrimaryButtonText": {
+    "message": "Delete"
+  },
+  "screens.AudioScreen.ExistingRecording.deleteBottomSheetSecondaryButtonText": {
+    "message": "Cancel"
+  },
+  "screens.AudioScreen.ExistingRecording.deleteBottomSheetTitle": {
+    "message": "Your Audio Recording will be permanently deleted. This cannot be undone."
+  },
+  "screens.AudioScreen.Playback.description": {
+    "message": "Total length: {length}"
+  },
   "screens.CameraScreen.goToSettings": {
     "message": "Go to Settings"
   },

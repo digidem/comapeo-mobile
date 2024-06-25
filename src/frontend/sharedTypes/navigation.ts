@@ -27,6 +27,15 @@ export type HomeTabsParamsList = {
   ObservationsList: undefined;
 };
 
+export type AudioStackParamList = {
+  PrepareRecording: undefined;
+  Recording: undefined;
+  Playback: {
+    previewOnly?: boolean;
+    recordingUri: string;
+  };
+};
+
 export type TabName = keyof HomeTabsParamsList;
 
 export type RootStackParamsList = {
@@ -93,6 +102,7 @@ export type RootStackParamsList = {
   DeviceNameEdit: undefined;
   SaveTrack: undefined;
   Sync: undefined;
+  Audio: {existingUri: string} | undefined;
 };
 
 export type DeviceNamingParamsList = {

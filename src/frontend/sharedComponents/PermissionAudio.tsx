@@ -8,10 +8,6 @@ import {Audio} from 'expo-av';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import {PermissionStatus} from 'expo-av/build/Audio';
 
-const handleRequestPermissions = (): void => {
-  Audio.requestPermissionsAsync().catch(() => {});
-};
-
 const handleOpenSettings = () => {
   Linking.openSettings();
 };
@@ -26,18 +22,14 @@ export const PermissionAudio: FC<PermissionAudio> = props => {
   const {sheetRef, closeSheet, isOpen} = props;
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
-  const [permissionResponse] = Audio.usePermissions({request: false});
+  const [permissionResponse, requestPermission] = Audio.usePermissions({
+    request: false,
+  });
 
   const handlePermissionGranted = useCallback(() => {
     closeSheet();
-    navigation.navigate('Home', {screen: 'Map'});
+    navigation.navigate('Audio');
   }, [closeSheet, navigation]);
-
-  const isPermissionGranted = Boolean(permissionResponse?.granted);
-
-  useEffect(() => {
-    if (isPermissionGranted) handlePermissionGranted();
-  }, [isPermissionGranted, handlePermissionGranted]);
 
   let onPressActionButton: () => void;
   let actionButtonText: string;
@@ -52,7 +44,9 @@ export const PermissionAudio: FC<PermissionAudio> = props => {
         onPressActionButton = handleOpenSettings;
         actionButtonText = t(m.allowButtonText);
       } else {
-        onPressActionButton = handleRequestPermissions;
+        onPressActionButton = async () => {
+          const response = await requestPermission();
+        };
         actionButtonText = t(m.goToSettingsButtonText);
       }
       break;

@@ -69,7 +69,7 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
 
   const handleAudioPress = useCallback(() => {
     if (permissionResponse?.granted) {
-      navigation.navigate('Home', {screen: 'Map'});
+      navigation.navigate('Audio');
     } else {
       openAudioPermissionSheet();
     }

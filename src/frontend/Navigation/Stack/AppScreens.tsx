@@ -59,6 +59,10 @@ import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {PhotoPreviewModal} from '../../screens/PhotoPreviewModal.tsx';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
 import {AboutSettings} from '../../screens/Settings/About.tsx';
+import {
+  AudioScreen,
+  navigationOptions as audioNavigationOptions,
+} from '../../screens/AudioScreen';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -274,6 +278,11 @@ export const createDefaultScreenGroup = ({
       name="AboutSettings"
       component={AboutSettings}
       options={{headerTitle: intl(AboutSettings.navTitle)}}
+    />
+    <RootStack.Screen
+      name="Audio"
+      options={audioNavigationOptions}
+      component={AudioScreen}
     />
   </RootStack.Group>
 );

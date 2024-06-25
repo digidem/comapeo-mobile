@@ -7,7 +7,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {BottomSheet} from '../../sharedComponents/BottomSheet/BottomSheet';
+import {BottomSheet} from '../../sharedComponents/BottomSheet';
 import PhotoIcon from '../../images/camera.svg';
 import DetailsIcon from '../../images/details.svg';
 import TrackIcon from '../../images/Track.svg';
@@ -15,7 +15,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../sharedComponents/Text';
 import {TrackDescriptionField} from './TrackDescriptionField';
 import {
-  BottomSheetContent,
+  BottomSheetModalContent,
   BottomSheetModal,
   useBottomSheetModal,
 } from '../../sharedComponents/BottomSheetModal';
@@ -109,7 +109,7 @@ export const SaveTrackScreen = () => {
         <BottomSheet items={bottomSheetItems} />
       </SafeAreaView>
       <BottomSheetModal ref={sheetRef} isOpen={isOpen}>
-        <BottomSheetContent
+        <BottomSheetModalContent
           buttonConfigs={[
             {
               variation: 'filled',

@@ -3,7 +3,7 @@ import {Linking} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import AudioPermission from '../images/observationEdit/AudioPermission.svg';
-import {BottomSheetContent, BottomSheetModal} from './BottomSheetModal';
+import {BottomSheetModalContent, BottomSheetModal} from './BottomSheetModal';
 import {Audio} from 'expo-av';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import {PermissionStatus} from 'expo-av/build/Audio';
@@ -70,8 +70,7 @@ export const PermissionAudio: FC<PermissionAudio> = props => {
       ref={sheetRef}
       onDismiss={closeSheet}
       isOpen={isOpen}>
-      <BottomSheetContent
-        fullScreen
+      <BottomSheetModalContent
         icon={<AudioPermission />}
         title={t(m.title)}
         description={t(m.description)}

@@ -7,6 +7,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import {LIGHT_BLUE, MAGENTA, COMAPEO_BLUE, RED, WHITE} from '../../lib/styles';
 import {Button} from '../Button';
 import {Text} from '../Text';
+import {useBottomSheetModalProperties} from './BottomSheetModalPropertiesContext';
 
 const MINIMUM_SHEET_HEIGHT = 400;
 const LOADING_INDICATOR_HEIGHT = 40;
@@ -35,7 +36,6 @@ export interface Props extends React.PropsWithChildren {
   buttonConfigs: ActionButtonConfig[];
   description?: React.ReactNode;
   descriptionStyle?: TextStyle;
-  fullScreen?: boolean;
   icon?: React.ReactNode;
   loading?: boolean;
   title: React.ReactNode;
@@ -47,13 +47,14 @@ export const Content = ({
   children,
   description,
   descriptionStyle,
-  fullScreen,
   icon,
   loading,
   title,
   titleStyle,
 }: Props) => {
   const {window} = useDimensions();
+  const {fullScreen} = useBottomSheetModalProperties();
+
   return (
     <View
       style={[

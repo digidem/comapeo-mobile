@@ -2,9 +2,9 @@ import * as React from 'react';
 import * as Sentry from '@sentry/react-native';
 import {defineMessages, useIntl} from 'react-intl';
 
-import {ActionButtonConfig} from './BottomSheet/Content';
+import {ActionButtonConfig} from './BottomSheetModal/Content';
 import {
-  BottomSheetContent,
+  BottomSheetModalContent,
   BottomSheetModal,
   useBottomSheetModal,
 } from './BottomSheetModal';
@@ -73,8 +73,7 @@ export const ErrorBottomSheet = (props: ErrorModalProps) => {
       ref={sheetRef}
       onDismiss={closeSheet}
       isOpen={isOpen}>
-      <BottomSheetContent
-        fullScreen
+      <BottomSheetModalContent
         icon={<LogoWithErrorIcon />}
         title={formatMessage(m.somethingWrong)}
         buttonConfigs={buttonConfigs}

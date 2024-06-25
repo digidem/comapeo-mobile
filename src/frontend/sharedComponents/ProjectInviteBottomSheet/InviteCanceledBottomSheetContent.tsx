@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {BottomSheetContent} from '../BottomSheetModal';
+import {BottomSheetModalContent} from '../BottomSheetModal';
 import {defineMessages, useIntl} from 'react-intl';
 import Error from '../../images/Error.svg';
 
@@ -30,7 +30,7 @@ export const InviteCanceledBottomSheetContent = ({
   const {formatMessage} = useIntl();
 
   return (
-    <BottomSheetContent
+    <BottomSheetModalContent
       buttonConfigs={[
         {
           variation: 'outlined',

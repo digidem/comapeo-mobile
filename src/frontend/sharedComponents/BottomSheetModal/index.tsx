@@ -15,6 +15,7 @@ import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {DARK_GREY} from '../../lib/styles';
+import {BottomSheetModalPropertiesContext} from './BottomSheetModalPropertiesContext';
 
 export const MODAL_NAVIGATION_OPTIONS: NativeStackNavigationOptions = {
   presentation: 'transparentModal',
@@ -88,6 +89,10 @@ export const BottomSheetModal = React.forwardRef<RNBottomSheetModal, Props>(
 
     const {top} = useSafeAreaInsets();
 
+    const contentContextValue = React.useMemo(() => {
+      return {fullScreen: !!fullScreen};
+    }, [fullScreen]);
+
     return (
       <RNBottomSheetModal
         enableDynamicSizing
@@ -101,7 +106,10 @@ export const BottomSheetModal = React.forwardRef<RNBottomSheetModal, Props>(
         enableHandlePanningGesture={false}
         handleComponent={() => null}>
         <BottomSheetView style={fullScreen ? {paddingTop: top} : undefined}>
-          {children}
+          <BottomSheetModalPropertiesContext.Provider
+            value={contentContextValue}>
+            {children}
+          </BottomSheetModalPropertiesContext.Provider>
         </BottomSheetView>
       </RNBottomSheetModal>
     );
@@ -123,4 +131,4 @@ function DefaultBackdrop(props: BottomSheetBackdropProps) {
   );
 }
 
-export {BottomSheetContent} from '../BottomSheet';
+export {Content as BottomSheetModalContent} from './Content';

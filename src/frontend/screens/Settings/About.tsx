@@ -8,43 +8,43 @@ import {UIActivityIndicator} from 'react-native-indicators';
 
 const m = defineMessages({
   aboutCoMapeoTitle: {
-    id: 'screens.AboutMapeo.title',
+    id: 'screens.AboutSettings.title',
     defaultMessage: 'About CoMapeo',
     description: "Title of 'About CoMapeo' screen",
   },
   mapeoVersion: {
-    id: 'screens.AboutMapeo.mapeoVersion',
+    id: 'screens.AboutSettings.CoMapeoVersion',
     defaultMessage: 'CoMapeo version',
     description: 'Label for CoMapeo version',
   },
   mapeoBuild: {
-    id: 'screens.AboutMapeo.mapeoBuild',
+    id: 'screens.AboutSettings.CoMapeoBuild',
     defaultMessage: 'CoMapeo build',
     description: 'Label for CoMapeo build number',
   },
   mapeoType: {
-    id: 'screens.AboutMapeo.mapeoType',
+    id: 'screens.AboutSettings.CoMapeoType',
     defaultMessage: 'CoMapeo variant',
     description:
       'Label for CoMapeo type/variant (e.g. QA for testing vs normal version of app)',
   },
   androidVersion: {
-    id: 'screens.AboutMapeo.androidVersion',
+    id: 'screens.AboutSettings.androidVersion',
     defaultMessage: 'Android version',
     description: 'Label for Android version',
   },
   androidBuild: {
-    id: 'screens.AboutMapeo.androidBuild',
+    id: 'screens.AboutSettings.androidBuild',
     defaultMessage: 'Android build number',
     description: 'Label for Android build number',
   },
   phoneModel: {
-    id: 'screens.AboutMapeo.phoneModel',
+    id: 'screens.AboutSettings.phoneModel',
     defaultMessage: 'Phone model',
     description: 'Label for phone model',
   },
   unknown: {
-    id: 'screens.AboutMapeo.unknownValue',
+    id: 'screens.AboutSettings.unknownValue',
     defaultMessage: 'Unknown',
     description: 'Shown when a device info (e.g. version number) is unknown',
   },

@@ -27,15 +27,15 @@ const m = defineMessages({
     defaultMessage: 'Settings',
     description: 'Title of settings screen',
   },
-  aboutMapeo: {
-    id: 'Navigation.Drawer.aboutMapeo',
+  aboutCoMapeo: {
+    id: 'Navigation.Drawer.aboutCoMapeo',
     defaultMessage: 'About CoMapeo',
     description: "Primary text for 'About Mapeo' link (version info)",
   },
-  aboutMapeoDesc: {
-    id: 'Navigation.Drawer.aboutMapeoDesc',
+  aboutCoMapeoDesc: {
+    id: 'Navigation.Drawer.aboutCoMapeoDesc',
     defaultMessage: 'Version and build number',
-    description: "Description of the 'About Mapeo' page",
+    description: "Description of the 'About CoMapeo' page",
   },
   createOrJoin: {
     id: 'Navigation.Drawer.createOrJoin',
@@ -159,7 +159,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
           }}
           testID="settingsAboutButton">
           <DrawerListItemIcon iconName="info-outline" />
-          <ListItemText primary={<FormattedMessage {...m.aboutMapeo} />} />
+          <ListItemText primary={<FormattedMessage {...m.aboutCoMapeo} />} />
         </ListItem>
       </List>
     </DrawerContentScrollView>

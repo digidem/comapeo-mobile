@@ -12,12 +12,12 @@ const m = defineMessages({
     defaultMessage: 'About CoMapeo',
     description: "Title of 'About CoMapeo' screen",
   },
-  mapeoVersion: {
+  coMapeoVersion: {
     id: 'screens.AboutSettings.CoMapeoVersion',
     defaultMessage: 'CoMapeo version',
     description: 'Label for CoMapeo version',
   },
-  mapeoBuild: {
+  coMapeoBuild: {
     id: 'screens.AboutSettings.CoMapeoBuild',
     defaultMessage: 'CoMapeo build',
     description: 'Label for CoMapeo build number',
@@ -85,11 +85,11 @@ export const AboutSettings = () => {
     <ScrollView>
       <List>
         <DeviceInfoListItem
-          label={t(m.mapeoVersion)}
+          label={t(m.coMapeoVersion)}
           deviceInfoMethod="getVersion"
         />
         <DeviceInfoListItem
-          label={t(m.mapeoBuild)}
+          label={t(m.coMapeoBuild)}
           deviceInfoMethod="getBuildNumber"
         />
         <DeviceInfoListItem

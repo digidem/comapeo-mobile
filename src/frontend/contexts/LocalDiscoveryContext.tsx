@@ -137,7 +137,7 @@ export function createLocalDiscoveryController(mapeoApi: MapeoClientApi) {
     );
     const onZeroconfResolved = (service: ZeroconfService) => {
       const peer = zeroconfServiceToMapeoPeer(service);
-      if (peer) mapeoApi.connectPeer(peer);
+      if (peer) mapeoApi.connectLocalPeer(peer);
     };
     zeroconf.on('resolved', onZeroconfResolved);
     unsubscribeInternal = function unsubscribe() {

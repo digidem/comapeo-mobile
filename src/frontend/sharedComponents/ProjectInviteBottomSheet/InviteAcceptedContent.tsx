@@ -2,7 +2,7 @@ import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
 import GreenCheck from '../../images/GreenCheck.svg';
-import {BottomSheetContent} from '../BottomSheet';
+import {BottomSheetModalContent} from '../BottomSheetModal';
 
 const m = defineMessages({
   goToMap: {
@@ -34,7 +34,7 @@ export function InviteAcceptedContent({
 }) {
   const {formatMessage: t} = useIntl();
   return (
-    <BottomSheetContent
+    <BottomSheetModalContent
       buttonConfigs={[
         {
           variation: 'outlined',

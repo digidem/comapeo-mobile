@@ -60,7 +60,7 @@
   },
   "Navigation.Drawer.aboutMapeo": {
     "description": "Primary text for 'About Mapeo' link (version info)",
-    "message": "About Mapeo"
+    "message": "About CoMapeo"
   },
   "Navigation.Drawer.aboutMapeoDesc": {
     "description": "Description of the 'About Mapeo' page",
@@ -165,24 +165,24 @@
     "message": "Android version"
   },
   "screens.AboutMapeo.mapeoBuild": {
-    "description": "Label for Mapeo build number",
-    "message": "Mapeo build"
+    "description": "Label for CoMapeo build number",
+    "message": "CoMapeo build"
   },
   "screens.AboutMapeo.mapeoType": {
-    "description": "Label for Mapeo type/variant (e.g. QA for testing vs normal version of app)",
-    "message": "Mapeo variant"
+    "description": "Label for CoMapeo type/variant (e.g. QA for testing vs normal version of app)",
+    "message": "CoMapeo variant"
   },
   "screens.AboutMapeo.mapeoVersion": {
-    "description": "Label for Mapeo version",
-    "message": "Mapeo version"
+    "description": "Label for CoMapeo version",
+    "message": "CoMapeo version"
   },
   "screens.AboutMapeo.phoneModel": {
     "description": "Label for phone model",
     "message": "Phone model"
   },
   "screens.AboutMapeo.title": {
-    "description": "Title of 'About Mapeo' screen",
-    "message": "About Mapeo"
+    "description": "Title of 'About CoMapeo' screen",
+    "message": "About CoMapeo"
   },
   "screens.AboutMapeo.unknownValue": {
     "description": "Shown when a device info (e.g. version number) is unknown",

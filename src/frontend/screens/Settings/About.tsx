@@ -7,26 +7,26 @@ import {MethodName, useDeviceInfo} from '../../hooks/useDeviceInfo';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 const m = defineMessages({
-  aboutMapeoTitle: {
+  aboutCoMapeoTitle: {
     id: 'screens.AboutMapeo.title',
-    defaultMessage: 'About Mapeo',
-    description: "Title of 'About Mapeo' screen",
+    defaultMessage: 'About CoMapeo',
+    description: "Title of 'About CoMapeo' screen",
   },
   mapeoVersion: {
     id: 'screens.AboutMapeo.mapeoVersion',
-    defaultMessage: 'Mapeo version',
-    description: 'Label for Mapeo version',
+    defaultMessage: 'CoMapeo version',
+    description: 'Label for CoMapeo version',
   },
   mapeoBuild: {
     id: 'screens.AboutMapeo.mapeoBuild',
-    defaultMessage: 'Mapeo build',
-    description: 'Label for Mapeo build number',
+    defaultMessage: 'CoMapeo build',
+    description: 'Label for CoMapeo build number',
   },
   mapeoType: {
     id: 'screens.AboutMapeo.mapeoType',
-    defaultMessage: 'Mapeo variant',
+    defaultMessage: 'CoMapeo variant',
     description:
-      'Label for Mapeo type/variant (e.g. QA for testing vs normal version of app)',
+      'Label for CoMapeo type/variant (e.g. QA for testing vs normal version of app)',
   },
   androidVersion: {
     id: 'screens.AboutMapeo.androidVersion',
@@ -113,4 +113,4 @@ export const AboutSettings = () => {
   );
 };
 
-AboutSettings.navTitle = m.aboutMapeoTitle;
+AboutSettings.navTitle = m.aboutCoMapeoTitle;

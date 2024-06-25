@@ -89,10 +89,6 @@ export const BottomSheetModal = React.forwardRef<RNBottomSheetModal, Props>(
 
     const {top} = useSafeAreaInsets();
 
-    const contentContextValue = React.useMemo(() => {
-      return {fullScreen: !!fullScreen};
-    }, [fullScreen]);
-
     return (
       <RNBottomSheetModal
         enableDynamicSizing
@@ -107,7 +103,7 @@ export const BottomSheetModal = React.forwardRef<RNBottomSheetModal, Props>(
         handleComponent={() => null}>
         <BottomSheetView style={fullScreen ? {paddingTop: top} : undefined}>
           <BottomSheetModalPropertiesContext.Provider
-            value={contentContextValue}>
+            value={{fullScreen: !!fullScreen}}>
             {children}
           </BottomSheetModalPropertiesContext.Provider>
         </BottomSheetView>

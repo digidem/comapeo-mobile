@@ -25,7 +25,6 @@ export const MapPreview: FC<TrackScreenMapPreview> = ({locationHistory}) => {
       styleURL={MAP_STYLE}>
       <MapboxGL.Camera
         animationMode="none"
-        zoomLevel={12}
         bounds={{
           ne: neBoundary!,
           sw: swBoundary!,

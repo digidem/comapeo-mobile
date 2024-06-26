@@ -974,6 +974,9 @@
     "description": "Title of track screen showing (non-editable) view of observation with map",
     "message": "Track"
   },
+  "screens.Track.tracks": {
+    "message": "Tracks"
+  },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",
     "message": "Show Options"

@@ -10,7 +10,6 @@ import {BLACK, DARK_GREY} from '../../lib/styles.ts';
 
 import TrackIcon from '../../images/Track.svg';
 import EditIcon from '../../images/Edit.svg';
-// import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
 import {FormattedMessage, MessageDescriptor, defineMessages} from 'react-intl';
 import {useDeleteTrackMutation, useTrack} from '../../hooks/server/track.ts';
 import {useObservations} from '../../hooks/server/observations.ts';

@@ -1,0 +1,38 @@
+diff --git a/node_modules/nodejs-mobile-react-native/android/build.gradle b/node_modules/nodejs-mobile-react-native/android/build.gradle
+index 724c377..705e4c8 100644
+--- a/node_modules/nodejs-mobile-react-native/android/build.gradle
++++ b/node_modules/nodejs-mobile-react-native/android/build.gradle
+@@ -370,7 +370,15 @@ if ("1".equals(shouldRebuildNativeModules)) {
+ 
+             delete fileTree(dir: "${rootProject.buildDir}/nodejs-native-assets-temp-build/nodejs-native-assets-${abi_name}/nodejs-project/node_modules/").matching {
+                 include "**/*.node" // Look for all .node files
+-                exclude "**/prebuilds/android-${temp_arch}/*" // Don't touch the correct prebuilds
++                /*  
++                For Intel-based architectures, `temp_arch` represents the extended name e.g. `x86_64`,
++                but we need to reference the abbreviated name (`x64`) used by the [prebuilds template](https://github.com/digidem/nodejs-mobile-prebuilds-template), 
++                (which is transitively due to naming used by https://github.com/nodejs-mobile/prebuild-for-nodejs-mobile/).
++
++                Instead, we use `temp_dest_cpu`, which represents the corresponding abbreviated name.
++                */
++                // exclude "**/prebuilds/android-${temp_arch}/*" // Don't touch the correct prebuilds
++                exclude "**/prebuilds/android-${temp_dest_cpu}/*" // Don't touch the correct prebuilds
+                 exclude "**/build/Release/*" // Don't touch the prebuilds moved here from previous run of DetectCorrectPrebuilds step
+             }
+         }
+@@ -383,7 +391,15 @@ if ("1".equals(shouldRebuildNativeModules)) {
+ 
+             doLast {
+                 def correctDotNodes = fileTree(dir: "${rootProject.buildDir}/nodejs-native-assets-temp-build/nodejs-native-assets-${abi_name}/nodejs-project/node_modules/").matching {
+-                    include "**/prebuilds/android-${temp_arch}/*.node"
++                    /*  
++                    For Intel-based architectures, `temp_arch` represents the extended name e.g. `x86_64`,
++                    but we need to reference the abbreviated name (`x64`) used by the [prebuilds template](https://github.com/digidem/nodejs-mobile-prebuilds-template), 
++                    (which is transitively due to naming used by https://github.com/nodejs-mobile/prebuild-for-nodejs-mobile/).
++
++                    Instead, we use `temp_dest_cpu`, which represents the corresponding abbreviated name.
++                    */
++                    // include "**/prebuilds/android-${temp_arch}/*.node"
++                    include "**/prebuilds/android-${temp_dest_cpu}/*.node"
+                 }
+                 for (dotNode in correctDotNodes) {
+                     def moduleRoot = file("${dotNode.getAbsoluteFile()}/../../..")

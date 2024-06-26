@@ -1,11 +1,17 @@
 import React from 'react';
-import {StyleSheet, View, Text, SafeAreaView, Pressable} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  SafeAreaView,
+  TouchableOpacity,
+} from 'react-native';
 import {BLACK, DARK_GREY} from '../../lib/styles.ts';
 
 import TrackIcon from '../../images/Track.svg';
 import EditIcon from '../../images/Edit.svg';
-import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
-import {FormattedMessage, defineMessages} from 'react-intl';
+// import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
+import {FormattedMessage, MessageDescriptor, defineMessages} from 'react-intl';
 import {useDeleteTrackMutation, useTrack} from '../../hooks/server/track.ts';
 import {useObservations} from '../../hooks/server/observations.ts';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
@@ -14,6 +20,7 @@ import {ObservationList} from './ObservationList.tsx';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {ActionButtons} from '../../sharedComponents/ActionButtons.tsx';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock.tsx';
+import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 
 const m = defineMessages({
   title: {
@@ -37,20 +44,22 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
   route,
   navigation,
 }) => {
+  const isMine = false;
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      // eslint-disable-next-line react/no-unstable-nested-components
-      headerLeft: (props: any) => (
-        <CustomHeaderLeft headerBackButtonProps={props} tintColor={BLACK} />
-      ),
-      // eslint-disable-next-line react/no-unstable-nested-components
-      headerRight: () => (
-        <Pressable onPress={() => {}}>
-          <EditIcon />
-        </Pressable>
-      ),
+      headerRight: isMine
+        ? () => (
+            <TouchableOpacity
+              hitSlop={{top: 16, right: 16, bottom: 16, left: 16}}
+              onPress={() => {
+                // TODO: navigate to edit track screen
+              }}>
+              <EditIcon />
+            </TouchableOpacity>
+          )
+        : undefined,
     });
-  }, [navigation]);
+  }, [navigation, isMine]);
 
   const {data: track} = useTrack(route.params.trackId);
   const {data: observations} = useObservations();
@@ -109,6 +118,20 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
   );
 };
 TrackScreen.navTitle = m.title;
+
+export function createNavigationOptions({
+  intl,
+}: {
+  intl: (title: MessageDescriptor) => string;
+}): NativeStackNavigationOptions {
+  return {
+    headerTitle: intl(m.title),
+    headerShadowVisible: false,
+    headerStyle: {backgroundColor: 'transparent'},
+    headerTitleAlign: 'center',
+    headerTransparent: true,
+  };
+}
 
 export const styles = StyleSheet.create({
   positionText: {

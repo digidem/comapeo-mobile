@@ -73,8 +73,8 @@ const styles = StyleSheet.create({
   },
   elementWrapper: {
     justifyContent: 'space-between',
-    marginVertical: 10,
-    marginHorizontal: 15,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
   },
   text: {
     fontSize: 16,

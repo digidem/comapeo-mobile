@@ -58,12 +58,12 @@
   "Modal.GPSEnable.trackingDescription": {
     "message": "You’ve been recording for"
   },
-  "Navigation.Drawer.aboutMapeo": {
+  "Navigation.Drawer.aboutCoMapeo": {
     "description": "Primary text for 'About Mapeo' link (version info)",
-    "message": "About Mapeo"
+    "message": "About CoMapeo"
   },
-  "Navigation.Drawer.aboutMapeoDesc": {
-    "description": "Description of the 'About Mapeo' page",
+  "Navigation.Drawer.aboutCoMapeoDesc": {
+    "description": "Description of the 'About CoMapeo' page",
     "message": "Version and build number"
   },
   "Navigation.Drawer.appSettings": {
@@ -155,6 +155,38 @@
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title": {
     "message": "Select a Role"
+  },
+  "screens.AboutSettings.CoMapeoBuild": {
+    "description": "Label for CoMapeo build number",
+    "message": "CoMapeo build"
+  },
+  "screens.AboutSettings.CoMapeoType": {
+    "description": "Label for CoMapeo type/variant (e.g. QA for testing vs normal version of app)",
+    "message": "CoMapeo variant"
+  },
+  "screens.AboutSettings.CoMapeoVersion": {
+    "description": "Label for CoMapeo version",
+    "message": "CoMapeo version"
+  },
+  "screens.AboutSettings.androidBuild": {
+    "description": "Label for Android build number",
+    "message": "Android build number"
+  },
+  "screens.AboutSettings.androidVersion": {
+    "description": "Label for Android version",
+    "message": "Android version"
+  },
+  "screens.AboutSettings.phoneModel": {
+    "description": "Label for phone model",
+    "message": "Phone model"
+  },
+  "screens.AboutSettings.title": {
+    "description": "Title of 'About CoMapeo' screen",
+    "message": "About CoMapeo"
+  },
+  "screens.AboutSettings.unknownValue": {
+    "description": "Shown when a device info (e.g. version number) is unknown",
+    "message": "Unknown"
   },
   "screens.AddPhoto.cancel": {
     "message": "取消"

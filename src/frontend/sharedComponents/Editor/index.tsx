@@ -1,9 +1,6 @@
 import * as React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {WHITE} from '../../lib/styles';
-
-import {ErrorBottomSheet} from '../ErrorBottomSheet';
-
 import {Photo} from '../../contexts/PhotoPromiseContext/types';
 import {DescriptionField} from './DescriptionField';
 import {ActionButtons} from './ActionButtons';
@@ -15,8 +12,6 @@ type EditorProps = {
   onPressPreset?: () => void;
   PresetIcon: React.ReactNode;
   showAudio?: boolean;
-  error: Error | null;
-  clearError: () => void;
   notes: string;
   updateNotes: (newNotes: string) => void;
   photos: (Partial<Photo> | undefined)[];
@@ -34,8 +29,6 @@ export const Editor = ({
   onPressPreset,
   PresetIcon,
   showAudio,
-  error,
-  clearError,
   notes,
   updateNotes,
   photos,
@@ -56,7 +49,6 @@ export const Editor = ({
       </ScrollView>
       <MediaScrollView photos={photos} audioRecordings={audioRecordings} />
       <ActionButtons fieldIds={fieldIds} showAudio={!!showAudio} />
-      <ErrorBottomSheet error={error} clearError={clearError} />
     </View>
   );
 };

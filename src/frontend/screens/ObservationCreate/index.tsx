@@ -12,6 +12,7 @@ import {useCreateBlobMutation} from '../../hooks/server/media';
 import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import {SaveButton} from '../../sharedComponents/SaveButton';
 import {useMostAccurateLocationForObservation} from '../ObservationEdit/useMostAccurateLocationForObservation';
+import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 
 const m = defineMessages({
   observation: {
@@ -184,30 +185,35 @@ export const ObservationCreate: NativeNavigationComponent<
   ]);
 
   return (
-    <Editor
-      presetName={presetName}
-      PresetIcon={<PresetCircleIcon name={preset?.name} />}
-      onPressPreset={() =>
-        navigation.navigate({
-          key: 'fromObservationEdit',
-          name: 'PresetChooser',
-        })
-      }
-      notes={!notes || typeof notes !== 'string' ? '' : notes}
-      updateNotes={newVal => {
-        updateTags('notes', newVal);
-      }}
-      photos={photos}
-      error={createObservationMutation.error || createBlobMutation.error}
-      clearError={() => {
-        createObservationMutation.reset();
-        createBlobMutation.reset();
-      }}
-      showAudio
-      audioRecordings={audioRecording}
-      location={coordinateInfo}
-      fieldIds={preset?.fieldIds}
-    />
+    <>
+      <Editor
+        presetName={presetName}
+        PresetIcon={<PresetCircleIcon name={preset?.name} />}
+        onPressPreset={() =>
+          navigation.navigate({
+            key: 'fromObservationEdit',
+            name: 'PresetChooser',
+          })
+        }
+        notes={!notes || typeof notes !== 'string' ? '' : notes}
+        updateNotes={newVal => {
+          updateTags('notes', newVal);
+        }}
+        photos={photos}
+        showAudio
+        audioRecordings={audioRecording}
+        location={coordinateInfo}
+        fieldIds={preset?.fieldIds}
+      />
+      <ErrorBottomSheet
+        error={createObservationMutation.error || createBlobMutation.error}
+        clearError={() => {
+          createObservationMutation.reset();
+          createBlobMutation.reset();
+        }}
+        tryAgain={createObservation}
+      />
+    </>
   );
 };
 

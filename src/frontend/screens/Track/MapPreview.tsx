@@ -25,13 +25,15 @@ export const MapPreview: FC<TrackScreenMapPreview> = ({locationHistory}) => {
       styleURL={MAP_STYLE}>
       <MapboxGL.Camera
         animationMode="none"
-        bounds={{
-          ne: neBoundary!,
-          sw: swBoundary!,
+        padding={{
           paddingTop: 25,
           paddingRight: 25,
           paddingLeft: 25,
           paddingBottom: 25,
+        }}
+        bounds={{
+          ne: neBoundary!,
+          sw: swBoundary!,
         }}
       />
       <TrackMapLayer locationHistory={locationHistory} />

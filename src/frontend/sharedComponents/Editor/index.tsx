@@ -10,7 +10,7 @@ import {ActionButtons} from './ActionButtons';
 import {MediaScrollView} from '../MediaScrollView';
 import {PresetAndLocationView} from './PresetAndLocationView';
 
-type EditScreenProps = {
+type EditorProps = {
   presetName: string;
   onPressPreset?: () => void;
   PresetIcon: React.ReactNode;
@@ -29,7 +29,7 @@ type EditScreenProps = {
   fieldIds?: string[];
 };
 
-export const EditScreen = ({
+export const Editor = ({
   presetName,
   onPressPreset,
   PresetIcon,
@@ -42,7 +42,7 @@ export const EditScreen = ({
   audioRecordings,
   location,
   fieldIds,
-}: EditScreenProps) => {
+}: EditorProps) => {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>

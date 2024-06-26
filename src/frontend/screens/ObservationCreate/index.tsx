@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {defineMessages, useIntl} from 'react-intl';
-import {EditScreen} from '../../sharedComponents/EditScreen';
+import {Editor} from '../../sharedComponents/Editor';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
@@ -184,7 +184,7 @@ export const ObservationCreate: NativeNavigationComponent<
   ]);
 
   return (
-    <EditScreen
+    <Editor
       presetName={presetName}
       PresetIcon={<PresetCircleIcon name={preset?.name} />}
       onPressPreset={() =>

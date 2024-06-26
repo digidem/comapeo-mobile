@@ -3,7 +3,7 @@ import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Text} from './Text';
-import {DARK_GREY} from '../lib/styles';
+import {DARK_GREY, LIGHT_GREY} from '../lib/styles';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 
 const m = defineMessages({
@@ -116,8 +116,10 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   buttonContainer: {
-    paddingVertical: 20,
+    paddingVertical: 10,
     flexDirection: 'row',
     justifyContent: 'space-around',
+    borderTopColor: LIGHT_GREY,
+    borderTopWidth: 1,
   },
 });

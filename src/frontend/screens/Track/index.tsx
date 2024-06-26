@@ -1,18 +1,11 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  SafeAreaView,
-  ScrollView,
-  Pressable,
-} from 'react-native';
-import {BLACK, WHITE, DARK_GREY} from '../../lib/styles.ts';
+import {StyleSheet, View, Text, SafeAreaView, Pressable} from 'react-native';
+import {BLACK, DARK_GREY} from '../../lib/styles.ts';
 
 import TrackIcon from '../../images/Track.svg';
 import EditIcon from '../../images/Edit.svg';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
-import {defineMessages} from 'react-intl';
+import {FormattedMessage, defineMessages} from 'react-intl';
 import {useDeleteTrackMutation, useTrack} from '../../hooks/server/track.ts';
 import {useObservations} from '../../hooks/server/observations.ts';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
@@ -20,6 +13,7 @@ import {MapPreview} from './MapPreview.tsx';
 import {ObservationList} from './ObservationList.tsx';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {ActionButtons} from '../../sharedComponents/ActionButtons.tsx';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock.tsx';
 
 const m = defineMessages({
   title: {
@@ -32,6 +26,10 @@ const m = defineMessages({
     id: 'screens.Track.deleteTitle',
     defaultMessage: 'Delete track?',
     description: 'Title of dialog asking confirmation to delete a track',
+  },
+  tracks: {
+    id: 'screens.Track.tracks',
+    defaultMessage: 'Tracks',
   },
 });
 
@@ -72,30 +70,36 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
 
   return (
     <SafeAreaView style={styles.root}>
-      <View>
-        <MapPreview
-          locationHistory={track.locations.map(({timestamp, coords}) => ({
-            latitude: coords.latitude,
-            longitude: coords.longitude,
-            timestamp: parseInt(timestamp, 10),
-          }))}
-        />
-        <View style={styles.trackTitleWrapper}>
-          <TrackIcon style={{marginRight: 10}} />
-          <Text style={styles.trackTitle}>Tracks</Text>
-        </View>
-        <View style={styles.divider} />
-        <ScrollView>
+      <ScreenContentWithDock
+        contentContainerStyle={{padding: 0}}
+        dockContainerStyle={{padding: 0}}
+        dockContent={
+          <ActionButtons
+            handleDelete={deleteTrack}
+            isMine={true}
+            deleteMessage={m.deleteTitle}
+          />
+        }>
+        <View>
+          <MapPreview
+            locationHistory={track.locations.map(({timestamp, coords}) => ({
+              latitude: coords.latitude,
+              longitude: coords.longitude,
+              timestamp: parseInt(timestamp, 10),
+            }))}
+          />
+          <View style={styles.trackTitleWrapper}>
+            <TrackIcon />
+            <Text style={styles.trackTitle}>
+              <FormattedMessage {...m.tracks} />
+            </Text>
+          </View>
+          <View style={styles.divider} />
           <ObservationList observations={trackObservations} />
           <View style={styles.divider} />
-        </ScrollView>
-        <Text style={styles.text}>{track.tags.notes as string}</Text>
-      </View>
-      <ActionButtons
-        handleDelete={deleteTrack}
-        isMine={true}
-        deleteMessage={m.deleteTitle}
-      />
+          <Text style={styles.text}>{track.tags.notes}</Text>
+        </View>
+      </ScreenContentWithDock>
       <ErrorBottomSheet
         error={deleteTrackMutation.error}
         clearError={deleteTrackMutation.reset}
@@ -113,7 +117,6 @@ export const styles = StyleSheet.create({
     fontWeight: '700',
   },
   root: {
-    backgroundColor: WHITE,
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -124,6 +127,7 @@ export const styles = StyleSheet.create({
     marginHorizontal: 15,
     flexDirection: 'row',
     alignItems: 'center',
+    gap: 10,
   },
   trackTitle: {fontSize: 20, fontWeight: '700', color: DARK_GREY},
   text: {

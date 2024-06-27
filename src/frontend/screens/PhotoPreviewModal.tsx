@@ -6,13 +6,14 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {WHITE} from '../lib/styles.ts';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {
-  BottomSheetContent,
+  BottomSheetModalContent,
   BottomSheetModal,
   useBottomSheetModal,
 } from '../sharedComponents/BottomSheetModal';
 import {defineMessages, useIntl} from 'react-intl';
 import {useDraftObservation} from '../hooks/useDraftObservation.ts';
 import {PhotoPreparedView} from '../sharedComponents/PhotoPreparedView.tsx';
+import ErrorIcon from '../images/Error.svg';
 
 const m = defineMessages({
   headerDeleteButtonText: {
@@ -93,7 +94,7 @@ export const PhotoPreviewModal: FC<
       )}
 
       <BottomSheetModal ref={sheetRef} isOpen={isOpen}>
-        <BottomSheetContent
+        <BottomSheetModalContent
           title={t(m.deleteModalTitle)}
           buttonConfigs={[
             {
@@ -109,6 +110,7 @@ export const PhotoPreviewModal: FC<
               variation: 'outlined',
             },
           ]}
+          icon={<ErrorIcon width={60} height={60} />}
         />
       </BottomSheetModal>
     </>

@@ -76,9 +76,8 @@ export const Settings: NativeNavigationComponent<'Settings'> = () => {
           />
           <ListItemText
             primary={<FormattedMessage {...m.createOrJoin} />}
-            secondary={
-              <FormattedMessage {...m.createOrJoinDesc} />
-            }></ListItemText>
+            secondary={<FormattedMessage {...m.createOrJoinDesc} />}
+          />
         </ListItem>
         <ListItem
           onPress={() => {
@@ -87,9 +86,8 @@ export const Settings: NativeNavigationComponent<'Settings'> = () => {
           <ListItemIcon iconName="assignment" />
           <ListItemText
             primary={<FormattedMessage {...m.projectSettings} />}
-            secondary={
-              <FormattedMessage {...m.projectSettingsDesc} />
-            }></ListItemText>
+            secondary={<FormattedMessage {...m.projectSettingsDesc} />}
+          />
         </ListItem>
         <ListItem
           onPress={() => {
@@ -98,19 +96,20 @@ export const Settings: NativeNavigationComponent<'Settings'> = () => {
           <ListItemIcon iconName="settings-suggest" />
           <ListItemText
             primary={<FormattedMessage {...m.appSettings} />}
-            secondary={
-              <FormattedMessage {...m.appSettingsDesc} />
-            }></ListItemText>
+            secondary={<FormattedMessage {...m.appSettingsDesc} />}
+          />
         </ListItem>
-        {/* this requires the use of `react-native-device-info` which takes some android level configuration. Im going to leave it out of the MVP for the sake of time */}
-        {/* <ListItem onPress={() => {}} testID="settingsAboutButton">
+        <ListItem
+          onPress={() => {
+            navigate('AboutSettings');
+          }}
+          testID="settingsAboutButton">
           <ListItemIcon iconName="info-outline" />
           <ListItemText
             primary={<FormattedMessage {...m.aboutMapeo} />}
-            secondary={
-              <FormattedMessage {...m.aboutMapeoDesc} />
-            }></ListItemText>
-        </ListItem> */}
+            secondary={<FormattedMessage {...m.aboutMapeoDesc} />}
+          />
+        </ListItem>
       </List>
     </ScrollView>
   );

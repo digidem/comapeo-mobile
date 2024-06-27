@@ -62,6 +62,7 @@ import {
   TrackScreen,
   createNavigationOptions as TrackNavigationOptions,
 } from '../../screens/Track/index.tsx';
+import {AboutSettings} from '../../screens/Settings/About.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -277,6 +278,11 @@ export const createDefaultScreenGroup = ({
       name="Track"
       component={TrackScreen}
       options={TrackNavigationOptions({intl})}
+    />
+    <RootStack.Screen
+      name="AboutSettings"
+      component={AboutSettings}
+      options={{headerTitle: intl(AboutSettings.navTitle)}}
     />
   </RootStack.Group>
 );

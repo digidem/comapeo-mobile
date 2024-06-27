@@ -4,7 +4,7 @@ import {defineMessages, useIntl} from 'react-intl';
 
 import {rootNavigationRef} from '../../AppNavigator';
 import GreenCheck from '../../images/GreenCheck.svg';
-import {BottomSheetContent} from '../BottomSheetModal';
+import {BottomSheetModalContent} from '../BottomSheetModal';
 
 const m = defineMessages({
   goToMap: {
@@ -43,7 +43,7 @@ export const InviteSuccessBottomSheetContent = ({
   }
 
   return (
-    <BottomSheetContent
+    <BottomSheetModalContent
       buttonConfigs={[
         {
           variation: 'outlined',

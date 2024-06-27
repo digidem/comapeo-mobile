@@ -70,7 +70,7 @@ export const ErrorIcon = ({
   size = 30,
   color = '#660000',
   style,
-  testID = '',
+  testID,
 }: FontIconProps) => (
   <MaterialIcon
     testID={testID}

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {BottomSheetContent} from '../BottomSheetModal';
+import {BottomSheetModalContent} from '../BottomSheetModal';
 import {View} from 'react-native';
 import {LIGHT_GREY} from '../../lib/styles';
 import InviteIcon from '../../images/AddPersonCircle.svg';
@@ -40,7 +40,7 @@ export const NewInviteBottomSheetContent = ({
 }: NewInviteBottomSheetContentProp) => {
   const {formatMessage} = useIntl();
   return (
-    <BottomSheetContent
+    <BottomSheetModalContent
       loading={isLoading}
       buttonConfigs={[
         {

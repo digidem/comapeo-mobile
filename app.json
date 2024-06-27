@@ -50,7 +50,12 @@
           "fonts": ["./public/Rubik-Regular.ttf", "./public/Rubik-Medium.ttf"]
         }
       ],
-      ["./expo-config-plugins/removeExpoInputStyles.js"]
+      ["./expo-config-plugins/removeExpoInputStyles.js"],
+      ["expo-build-properties",{
+        "android":{
+          "usesCleartextTraffic":true
+        }
+      }]
     ],
     "android": {
       "versionCode": 1,

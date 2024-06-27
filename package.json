@@ -104,7 +104,8 @@
     "uint8array-extras": "^0.5.0",
     "utm": "^1.1.1",
     "validate-color": "^2.2.4",
-    "zustand": "^4.4.6"
+    "zustand": "^4.4.6",
+    "expo-build-properties": "~0.11.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

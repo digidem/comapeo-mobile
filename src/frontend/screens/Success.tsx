@@ -47,6 +47,7 @@ export const Success = ({
         </View>
       </View>
       <Button
+        testID="ONBOARDING.go-to-map-btn"
         fullWidth
         onPress={() => {
           setDeviceName.mutate(deviceName);

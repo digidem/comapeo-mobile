@@ -12,6 +12,7 @@ type FontIconProps = {
   size?: number;
   color?: string;
   style?: TextStyleProp;
+  testID?: string;
 };
 
 type ImageIconProps = {
@@ -69,8 +70,10 @@ export const ErrorIcon = ({
   size = 30,
   color = '#660000',
   style,
+  testID,
 }: FontIconProps) => (
   <MaterialIcon
+    testID={testID}
     name="error"
     color={color}
     size={size}
@@ -82,8 +85,15 @@ export const EditIcon = ({
   size = 30,
   color = DARK_GREY,
   style,
+  testID = '',
 }: FontIconProps) => (
-  <MaterialIcon color={color} style={style} name="edit" size={size} />
+  <MaterialIcon
+    testID={testID}
+    color={color}
+    style={style}
+    name="edit"
+    size={size}
+  />
 );
 
 export const DetailsIcon = ({

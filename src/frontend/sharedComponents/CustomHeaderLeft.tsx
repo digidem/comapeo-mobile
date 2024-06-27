@@ -27,6 +27,7 @@ export const CustomHeaderLeft = ({
   return (
     <HeaderBackButton
       {...headerBackButtonProps}
+      testID="MAIN.header-back-btn"
       onPress={onPress || (() => navigation.goBack())}
       style={{marginLeft: 0, marginRight: 15}}
       backImage={() => <HeaderBackIcon tintColor={tintColor || BLACK} />}

@@ -33,7 +33,7 @@ export function createNavigationOptions({
       headerTitle: intl(m.title),
       headerRight: () => (
         <IconButton onPress={() => navigation.navigate('DeviceNameEdit')}>
-          <EditIcon />
+          <EditIcon testID="edit-icon" />
         </IconButton>
       ),
     };

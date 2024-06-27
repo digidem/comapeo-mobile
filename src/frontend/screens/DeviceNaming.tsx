@@ -69,6 +69,7 @@ export const DeviceNaming = ({
             <Text style={{color: RED}}>*</Text>
           </View>
           <TextInput
+            testID="ONBOARDING.device-name-inp"
             style={[
               styles.textInput,
               {borderColor: !errorTimeout ? LIGHT_GREY : RED},
@@ -90,7 +91,10 @@ export const DeviceNaming = ({
           </View>
         </View>
 
-        <Button fullWidth onPress={handleAddNamePress}>
+        <Button
+          testID="ONBOARDING.add-name-btn"
+          fullWidth
+          onPress={handleAddNamePress}>
           {t(m.addName)}
         </Button>
       </TouchableWithoutFeedback>

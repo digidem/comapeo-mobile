@@ -29,7 +29,7 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
     <ScrollView>
       <List>
         <ListItem
-          testID="MAIN.device-name-list-item"
+          testID="PROJECT.device-name-list-item"
           onPress={() => {
             navigation.navigate('DeviceNameDisplay');
           }}>

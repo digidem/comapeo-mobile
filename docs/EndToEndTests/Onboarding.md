@@ -2,6 +2,7 @@
 
 - [Onboarding](#onboarding)
   - [Overview](#overview)
+- [Creating a Device Name](#creating-a-device-name)
   - [Test Objectives](#test-objectives)
   - [Special Considerations](#special-considerations)
 
@@ -9,7 +10,11 @@
 
 ### Overview
 
-Onboarding e2e tests test the user's inital interaction with the app. Users are required to name their device.
+Onboarding e2e tests test the user's inital interaction with the app.
+
+## Creating a Device Name
+
+- Users are required to name their device.
 
 ### Test Objectives
 

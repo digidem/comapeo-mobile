@@ -1,14 +1,16 @@
 appId: com.comapeo
 env:
-  CAT: MAIN
+  CAT: PROJECT
+  SUBCAT: MAIN
+
 ---
 - tapOn:
-    id: '${CAT}.drawer-icon'
+    id: '${SUBCAT}.drawer-icon'
 - assertVisible:
     label: 'Project Settings are visible within the settings menu'
-    id: '${CAT}.project-stg-list-item'
+    id: '${SUBCAT}.project-stg-list-item'
 - tapOn:
-    id: '${CAT}.project-stg-list-item'
+    id: '${SUBCAT}.project-stg-list-item'
 - tapOn:
     id: '${CAT}.device-name-list-item'
 - assertVisible:
@@ -23,7 +25,7 @@ env:
     label: 'Can input a device name'
     text: ${output.names.editdevice}
 - tapOn:
-    id: '${CAT}.header-back-btn'
+    id: '${SUBCAT}.header-back-btn'
 - assertVisible:
     label: 'If User makes changes to the name field but attempts to go back an alert message appears'
     text: '.*Discard changes?.*'
@@ -41,7 +43,7 @@ env:
     label: 'Can input a device name'
     text: ${output.names.editdevice}
 - tapOn:
-    id: '${CAT}.header-back-btn'
+    id: '${SUBCAT}.header-back-btn'
 - assertVisible:
     label: 'If User makes changes to the name field but attempts to go back an alert message appears'
     text: '.*DISCARD CHANGES.*'

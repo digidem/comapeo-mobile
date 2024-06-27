@@ -4,14 +4,24 @@ import MapboxGL from '@rnmapbox/maps';
 import {LocationHistoryPoint} from '../../sharedTypes/location.ts';
 import Mapbox from '@rnmapbox/maps';
 import {TrackMapLayer} from '../../sharedComponents/TrackMapLayer.tsx';
+import {convertObservationsToFeatures} from '../../lib/utils.ts';
+import {Observation} from '@mapeo/schema';
+import {BLACK} from '../../lib/styles.ts';
+import {useHeaderHeight} from '@react-navigation/elements';
 interface TrackScreenMapPreview {
   locationHistory: LocationHistoryPoint[];
+  observations: Observation[];
 }
 
 const MAP_STYLE = Mapbox.StyleURL.Outdoors;
 
-export const MapPreview: FC<TrackScreenMapPreview> = ({locationHistory}) => {
+export const MapPreview: FC<TrackScreenMapPreview> = ({
+  locationHistory,
+  observations,
+}) => {
   const [swBoundary, neBoundary] = getAdjustedBounds(locationHistory);
+  const headerHeight = useHeaderHeight();
+
   return (
     <MapboxGL.MapView
       style={styles.map}
@@ -26,7 +36,8 @@ export const MapPreview: FC<TrackScreenMapPreview> = ({locationHistory}) => {
       <MapboxGL.Camera
         animationMode="none"
         padding={{
-          paddingTop: 25,
+          // with a transparent header, we want to make sure the title does not sit on top of the track by using this header height.
+          paddingTop: headerHeight + 25,
           paddingRight: 25,
           paddingLeft: 25,
           paddingBottom: 25,
@@ -37,8 +48,29 @@ export const MapPreview: FC<TrackScreenMapPreview> = ({locationHistory}) => {
         }}
       />
       <TrackMapLayer locationHistory={locationHistory} />
+      <ObservationMapLayer observations={observations} />
     </MapboxGL.MapView>
   );
+};
+
+function ObservationMapLayer({observations}: {observations: Observation[]}) {
+  const featureCollection: GeoJSON.FeatureCollection = {
+    type: 'FeatureCollection',
+    features: convertObservationsToFeatures(observations),
+  };
+
+  return (
+    <MapboxGL.ShapeSource id="observations-source" shape={featureCollection}>
+      <MapboxGL.CircleLayer id="circles" style={layerStyles} />
+    </MapboxGL.ShapeSource>
+  );
+}
+
+const layerStyles = {
+  circleColor: BLACK,
+  circleRadius: 5,
+  circleStrokeColor: '#fff',
+  circleStrokeWidth: 2,
 };
 
 const MAP_HEIGHT = 250;

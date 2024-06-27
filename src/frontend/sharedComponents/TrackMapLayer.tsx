@@ -27,7 +27,7 @@ export const TrackMapLayer = ({
 const styles = StyleSheet.create({
   lineLayer: {
     lineColor: BLACK,
-    lineWidth: 5,
+    lineWidth: 3,
     lineCap: LineJoin.Round,
     lineOpacity: 1.84,
   } as LineLayerStyle,

@@ -95,6 +95,7 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
               longitude: coords.longitude,
               timestamp: parseInt(timestamp, 10),
             }))}
+            observations={trackObservations}
           />
           <View style={styles.trackTitleWrapper}>
             <TrackIcon />

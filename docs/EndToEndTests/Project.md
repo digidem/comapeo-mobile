@@ -1,7 +1,8 @@
 ### Table of Contents
 
-- [Projects and Project Settings](#projects-and-project-settings)
-  - [Overview](#overview)
+[Projects and Project Settings](#projects-and-project-settings)
+
+- [Overview](#overview)
 - [Creating a project from the side drawer menu](#creating-a-project-from-the-side-drawer-menu)
   - [Test Objectives](#test-objectives)
   - [Special Considerations](#special-considerations)
@@ -11,6 +12,9 @@
 - [Unjoining a project](#unjoining-a-project)
   - [Test Objectives](#test-objectives-2)
   - [Special Considerations](#special-considerations-2)
+- [Editing a Device Name](#editing-a-device-name)
+  - [Test Objectives](#test-objectives-3)
+  - [Special Considerations](#special-considerations-3)
 
 ## Projects and Project Settings
 
@@ -58,3 +62,18 @@ These tests deal with projects, such as creating a project from the side drawer,
 ### Special Considerations
 
 - This test relies on test(s) to create a device name and join a project
+
+## Editing a Device Name
+
+- This tests a user changing their device name.
+
+### Test Objectives
+
+- Ensures that a user can see their device name in project settings
+- Ensures that a user can edit their device name
+- Checks that if a user starts editing and decides to leave the page, a warning is shown
+- Checks that a user can leave the page without saving and the device name doesn't change
+
+### Special Considerations
+
+- This test does not test the save button as it is not working. An issue has been created.

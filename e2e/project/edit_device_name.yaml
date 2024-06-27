@@ -1,0 +1,58 @@
+appId: com.comapeo
+env:
+  CAT: PROJECT
+  SUBCAT: MAIN
+
+---
+- tapOn:
+    id: '${SUBCAT}.drawer-icon'
+- assertVisible:
+    label: 'Project Settings are visible within the settings menu'
+    id: '${SUBCAT}.project-stg-list-item'
+- tapOn:
+    id: '${SUBCAT}.project-stg-list-item'
+- tapOn:
+    id: '${CAT}.device-name-list-item'
+- assertVisible:
+    label: 'Pencil icon is visible to allow editing of device name'
+    id: 'edit-icon'
+- tapOn:
+    id: 'edit-icon'
+- tapOn:
+    id: '${CAT}.edit-device-name'
+- eraseText
+- inputText:
+    label: 'Can input a device name'
+    text: ${output.names.editdevice}
+- tapOn:
+    id: '${SUBCAT}.header-back-btn'
+- assertVisible:
+    label: 'If User makes changes to the name field but attempts to go back an alert message appears'
+    text: '.*Discard changes?.*'
+- tapOn:
+    text: '.*Discard changes?.*'
+- assertVisible:
+    label: 'Changes are discarded if user taps discard changes and original device name appears'
+    text: ${output.names.device}
+- tapOn:
+    id: 'edit-icon'
+- tapOn:
+    id: '${CAT}.edit-device-name'
+- eraseText
+- inputText:
+    label: 'Can input a device name'
+    text: ${output.names.editdevice}
+- tapOn:
+    id: '${SUBCAT}.header-back-btn'
+- assertVisible:
+    label: 'If User makes changes to the name field but attempts to go back an alert message appears'
+    text: '.*DISCARD CHANGES.*'
+- tapOn:
+    label: 'User can choose to continue editing'
+    text: '.*CONTINUE EDITING.*'
+- assertVisible:
+    label: 'Device name as input is still visible'
+    text: ${output.names.editdevice}
+- back
+- tapOn:
+    text: '.*Discard changes?.*'

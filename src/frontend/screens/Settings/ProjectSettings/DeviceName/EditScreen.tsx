@@ -58,6 +58,7 @@ export function createNavigationOptions({
   };
 }
 
+// TODO: Add the test for editing a device name to the end to end tests once the save button works correctly https://github.com/digidem/comapeo-mobile/issues/434
 export const EditScreen = ({
   navigation,
 }: NativeRootNavigationProps<'DeviceNameEdit'>) => {

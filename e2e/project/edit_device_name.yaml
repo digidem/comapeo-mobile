@@ -53,6 +53,11 @@ env:
 - assertVisible:
     label: 'Device name as input is still visible'
     text: ${output.names.editdevice}
-- back
+- tapOn:
+    id: 'save-icon'
+- tapOn:
+    id: '${SUBCAT}.header-back-btn'
 - tapOn:
     text: '.*Discard changes?.*'
+- back
+- back

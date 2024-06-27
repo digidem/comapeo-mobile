@@ -1,6 +1,6 @@
 appId: com.comapeo
 env:
-  CATEGORY: PROJECT
+  CAT: PROJECT
   SUBCAT: MAIN
 ---
 - assertVisible:
@@ -13,23 +13,23 @@ env:
     text: '.*Create or Join a project.*'
 - assertVisible:
     label: 'Button to join project visible'
-    id: '${CATEGORY}.create-join-btn'
+    id: '${CAT}.create-join-btn'
 - tapOn:
-    id: '${CATEGORY}.create-join-btn'
+    id: '${CAT}.create-join-btn'
 - assertVisible:
-    text: '${CATEGORY}.create-card'
+    text: '${CAT}.create-card'
     label: 'Button to create project visible'
 - tapOn:
-    text: '${CATEGORY}.create-card'
+    text: '${CAT}.create-card'
 - tapOn:
-    id: '${CATEGORY}.create-btn'
+    id: '${CAT}.create-btn'
 - assertVisible:
     label: 'Error message if create button pressed no project name'
     id: 'error-icon'
 - tapOn:
-    id: '${CATEGORY}.name-inp'
+    id: '${CAT}.name-inp'
 - inputText:
     label: 'Can input a project name'
     text: ${output.names.project}
 - tapOn:
-    id: '${CATEGORY}.create-btn'
+    id: '${CAT}.create-btn'

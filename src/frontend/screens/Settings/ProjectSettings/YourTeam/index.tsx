@@ -101,6 +101,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
           coordinator => coordinator.deviceId === deviceInfo.data.deviceId,
         ) ? null : (
         <Button
+          testID="PROJECT.invite-device-btn"
           fullWidth
           style={{marginTop: 20}}
           variant="outlined"

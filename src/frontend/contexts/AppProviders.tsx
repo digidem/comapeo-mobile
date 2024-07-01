@@ -1,6 +1,9 @@
 import * as React from 'react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import {StyleSheet} from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+
 // We need to wrap the app with this provider to fix an issue with the bottom sheet modal backdrop
 // not overlaying the navigation header. Without this, the header is accessible even when
 // the modal is open, which we don't want (e.g. header back button shouldn't be reachable).
@@ -39,26 +42,32 @@ export const AppProviders = ({
   return (
     <IntlProvider>
       <QueryClientProvider client={queryClient}>
-        <GestureHandlerRootView style={{flex: 1}}>
-          <TrackTimerContextProvider>
-            <GPSModalContextProvider>
-              <ServerLoading messagePort={messagePort}>
-                <LocalDiscoveryProvider value={localDiscoveryController}>
-                  <ApiProvider api={mapeoApi}>
-                    <ActiveProjectProvider>
-                      <BottomSheetModalProvider>
-                        <PhotoPromiseProvider>
-                          <SecurityProvider>{children}</SecurityProvider>
-                        </PhotoPromiseProvider>
-                      </BottomSheetModalProvider>
-                    </ActiveProjectProvider>
-                  </ApiProvider>
-                </LocalDiscoveryProvider>
-              </ServerLoading>
-            </GPSModalContextProvider>
-          </TrackTimerContextProvider>
-        </GestureHandlerRootView>
+        <SafeAreaProvider>
+          <GestureHandlerRootView style={styles.flex}>
+            <TrackTimerContextProvider>
+              <GPSModalContextProvider>
+                <ServerLoading messagePort={messagePort}>
+                  <LocalDiscoveryProvider value={localDiscoveryController}>
+                    <ApiProvider api={mapeoApi}>
+                      <ActiveProjectProvider>
+                        <BottomSheetModalProvider>
+                          <PhotoPromiseProvider>
+                            <SecurityProvider>{children}</SecurityProvider>
+                          </PhotoPromiseProvider>
+                        </BottomSheetModalProvider>
+                      </ActiveProjectProvider>
+                    </ApiProvider>
+                  </LocalDiscoveryProvider>
+                </ServerLoading>
+              </GPSModalContextProvider>
+            </TrackTimerContextProvider>
+          </GestureHandlerRootView>
+        </SafeAreaProvider>
       </QueryClientProvider>
     </IntlProvider>
   );
 };
+
+const styles = StyleSheet.create({
+  flex: {flex: 1},
+});

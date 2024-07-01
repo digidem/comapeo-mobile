@@ -19,7 +19,7 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import {
-  BottomSheetContent,
+  BottomSheetModalContent,
   BottomSheetModal,
   useBottomSheetModal,
 } from './BottomSheetModal';
@@ -116,7 +116,7 @@ export const CustomHeaderLeftClose = ({
         />
       )}
       <BottomSheetModal isOpen={isOpen} ref={sheetRef}>
-        <BottomSheetContent
+        <BottomSheetModalContent
           title={
             observationId
               ? formatMessage(m.discardChangesTitle)
@@ -144,7 +144,7 @@ export const CustomHeaderLeftClose = ({
               variation: 'outlined',
             },
           ]}
-          icon={<ErrorIcon width={60} height={60} style={{marginBottom: 15}} />}
+          icon={<ErrorIcon width={60} height={60} />}
         />
       </BottomSheetModal>
     </>

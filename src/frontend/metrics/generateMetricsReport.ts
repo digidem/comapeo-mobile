@@ -31,7 +31,7 @@ export function generateMetricsReport({
     os,
     osVersion,
     screen: {width: screen.width, height: screen.height},
-    ...(countries.size ? {countries: Array.from(countries)} : {}),
+    ...(countries.size ? {countries: Array.from(countries).sort()} : {}),
     percentageOfNetworkAvailability:
       getPercentageOfNetworkAvailability(observations),
   };

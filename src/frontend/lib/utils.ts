@@ -1,6 +1,5 @@
 // import { Alert } from "react-native";
 import {fromLatLon} from 'utm';
-import {SelectOptions, LabeledSelectOption} from '../sharedTypes/PresetTypes';
 import {Preset, Observation} from '@mapeo/schema';
 import {LocationObject, LocationProviderStatus} from 'expo-location';
 import {NavigationState} from '@react-navigation/native';
@@ -214,28 +213,6 @@ export function formatCoords({
 //   const tagValue = tags[shallowKey];
 //   return typeof tagValue === "undefined" ? defaultValue : tagValue;
 // }
-
-// /**
-//  * Convert a select option which could either be a string or an object with
-//  * label and value props, to an object with label and value props TODO: Show
-//  * meaningful translated values for null and boolean, but these types are not
-//  * used widely in presets yet
-//  */
-export function convertSelectOptionsToLabeled(
-  options: SelectOptions,
-): LabeledSelectOption[] {
-  return options.map(option => {
-    if (option === null) {
-      return {label: 'NULL', value: option};
-    } else if (typeof option === 'boolean') {
-      return {label: option ? 'TRUE' : 'FALSE', value: option};
-    } else if (typeof option === 'string' || typeof option === 'number') {
-      return {label: option + '', value: option};
-    } else {
-      return option;
-    }
-  });
-}
 
 // // This is a helper function to force the type definition
 // // It filters an array to remove any falsy values

@@ -46,9 +46,6 @@ export const ObservationCreate: NativeNavigationComponent<
   const value = usePersistedDraftObservation(store => store.value);
   const {updateTags, clearDraft} = useDraftObservation();
   const photos = usePersistedDraftObservation(store => store.photos);
-  const audioRecording = usePersistedDraftObservation(
-    store => store.audioRecordings,
-  );
   const createObservationMutation = useCreateObservation();
   const createBlobMutation = useCreateBlobMutation();
   const isTracking = usePersistedTrack(state => state.isTracking);
@@ -195,13 +192,11 @@ export const ObservationCreate: NativeNavigationComponent<
             name: 'PresetChooser',
           })
         }
-        notes={!notes || typeof notes !== 'string' ? '' : notes}
+        notes={typeof notes !== 'string' ? '' : notes}
         updateNotes={newVal => {
           updateTags('notes', newVal);
         }}
         photos={photos}
-        showAudio
-        audioRecordings={audioRecording}
         location={coordinateInfo}
         fieldIds={preset?.fieldIds}
       />

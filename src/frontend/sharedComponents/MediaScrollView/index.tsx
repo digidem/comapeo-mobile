@@ -3,7 +3,6 @@ import {Dimensions, ScrollView, StyleSheet} from 'react-native';
 
 import {Photo} from '../../contexts/PhotoPromiseContext/types.ts';
 import {PhotoThumbnail} from './PhotoThumbnail.tsx';
-import {AudioThumbnail} from './AudioThumbnail.tsx';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
 
 const spacing = 10;
@@ -11,15 +10,15 @@ const minSize = 150;
 
 interface MediaScrollView {
   photos: (Partial<Photo> | undefined)[];
-  audioRecordings: any[];
   observationId?: string;
 }
 
-export const MediaScrollView: FC<MediaScrollView> = props => {
-  const {photos, audioRecordings = []} = props;
+export const MediaScrollView: FC<MediaScrollView> = ({
+  photos,
+  observationId,
+}) => {
   const scrollViewRef = React.useRef<ScrollView>(null);
-  const length =
-    props?.photos?.length ?? 0 + props?.audioRecordings?.length ?? 0;
+  const length = photos?.length ?? 0;
   const navigation = useNavigationFromRoot();
   React.useLayoutEffect(() => {
     scrollViewRef.current && scrollViewRef.current.scrollToEnd();
@@ -29,7 +28,7 @@ export const MediaScrollView: FC<MediaScrollView> = props => {
     if ('id' in photo) {
       navigation.navigate('PhotoPreviewModal', {
         attachmentId: photo.id,
-        observationId: props.observationId,
+        observationId: observationId,
         deletable: false,
       });
       return;
@@ -58,14 +57,6 @@ export const MediaScrollView: FC<MediaScrollView> = props => {
       showsHorizontalScrollIndicator={false}
       contentInset={{top: 5, right: 5, bottom: 5, left: 5}}
       style={styles.photosContainer}>
-      {audioRecordings.map(record => (
-        <AudioThumbnail
-          record={record}
-          size={size}
-          onPress={() => {}}
-          style={styles.thumbnail}
-        />
-      ))}
       {photos
         ?.filter(photo => photo?.deleted == null)
         ?.map((photo, index) => (

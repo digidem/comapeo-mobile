@@ -20,6 +20,6 @@ env:
     text: '.*Create or Join project.*'
 - assertVisible: '.*Project Settings.*'
 - assertVisible: '.*App Settings.*'
-- assertVisible: '*.About CoMapeo.*'
+- assertVisible: '.*About CoMapeo.*'
 - tapOn:
     id: '${CAT}.drawer-icon'

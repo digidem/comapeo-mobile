@@ -4,6 +4,7 @@ import {useAppState} from '@react-native-community/hooks';
 import * as Sentry from '@sentry/react-native';
 import {useEffect} from 'react';
 import {Dimensions, Platform} from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 import packageJson from '../../../package.json';
 import {assert} from '../lib/assert';
 import {sleep} from '../lib/sleep';
@@ -80,11 +81,14 @@ export function useSendMetrics(api: MapeoClientApi): void {
 
       await sleepUntilWeCanSendMetrics(lastMetricsReportSentAt, {signal});
 
+      const supportedAbis = await DeviceInfo.supportedAbis();
+
       const metricsReport = generateMetricsReport({
         packageJson,
         os: Platform.OS,
         osVersion: Platform.Version,
         screen: Dimensions.get('screen'),
+        supportedAbis,
         observations: await getAllObservations(api),
       });
 

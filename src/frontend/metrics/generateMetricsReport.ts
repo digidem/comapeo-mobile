@@ -10,14 +10,18 @@ export function generateMetricsReport({
   os,
   osVersion,
   screen,
+  supportedAbis,
   observations,
 }: ReadonlyDeep<{
   packageJson: {version: string};
   os: Platform['OS'] | NodeJS.Platform;
   osVersion: number | string;
   screen: {width: number; height: number};
+  supportedAbis: string[];
   observations: ReadonlyDeep<Array<Partial<Observation>>>;
 }>) {
+  const [arch] = supportedAbis;
+
   const countries = new Set<string>();
 
   for (const {lat, lon} of observations) {
@@ -31,6 +35,7 @@ export function generateMetricsReport({
     os,
     osVersion,
     screen: {width: screen.width, height: screen.height},
+    ...(arch ? {arch} : {}),
     ...(countries.size ? {countries: Array.from(countries)} : {}),
     percentageOfNetworkAvailability:
       getPercentageOfNetworkAvailability(observations),

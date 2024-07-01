@@ -35,6 +35,7 @@ describe('generateMetricsReport', () => {
     os: 'android',
     osVersion: 123,
     screen: {width: 12, height: 34, ignoredValue: 56},
+    supportedAbis: ['test64'],
     observations,
   } as MetricsReportOptions;
 
@@ -75,6 +76,17 @@ describe('generateMetricsReport', () => {
   it('includes screen dimensions', () => {
     const report = generateMetricsReport(defaultOptions);
     expect(report.screen).toEqual({width: 12, height: 34});
+  });
+
+  it('includes the architecture', () => {
+    const report = generateMetricsReport(defaultOptions);
+    expect(report.arch).toBe('test64');
+  });
+
+  it("doesn't include the architecture if there are no supported ABIs", () => {
+    const options = {...defaultOptions, supportedAbis: []};
+    const report = generateMetricsReport(options);
+    expect(report.arch).toBe(undefined);
   });
 
   it("doesn't include countries if no observations are provided", () => {

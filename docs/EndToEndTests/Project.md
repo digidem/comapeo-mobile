@@ -39,7 +39,7 @@ These tests deal with projects, such as creating a project from the side drawer,
 
 ## Creating a project from the sync button
 
-- This test tests an alternate way to create a project for the first time
+- This tests creating a project from the sync screen
 
 ### Test Objectives
 
@@ -52,12 +52,12 @@ These tests deal with projects, such as creating a project from the side drawer,
 
 ## Unjoining a project
 
-- This test primarily checks for the wording about needing to uninstall the app in order to create or join a new project.
+- This tests the presence of a warning message indicating that the user will need to uninstall the app in order to create or join a new project, if they are already part of a project.
 
 ### Test Objectives
 
 - Checks for correct wording
-- Clear the app and run a new flow (see above) to create a new project
+- Clears the state of the app, by removing all app-related data from the device (shared preferences, databases, accounts, etc.), uninstalls the app, and runs a new flow (see above) to create a new project
 
 ### Special Considerations
 
@@ -76,4 +76,4 @@ These tests deal with projects, such as creating a project from the side drawer,
 
 ### Special Considerations
 
-- This test does not test the save button as it is not working. An issue has been created.
+- This test does not test the save button as it is not working. An [issue](https://github.com/digidem/comapeo-mobile/issues/434) has been created.

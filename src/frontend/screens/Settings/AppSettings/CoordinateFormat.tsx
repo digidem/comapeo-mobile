@@ -8,10 +8,8 @@ import {
   usePersistedSettingsAction,
 } from '../../../hooks/persistedState/usePersistedSettings';
 import {SelectOne} from '../../../sharedComponents/SelectOne';
-import {
-  NativeNavigationComponent,
-  CoordinateFormat as CoordinateFormatType,
-} from '../../../sharedTypes';
+import type {CoordinateFormat as CoordinateFormatType} from '../../../sharedTypes';
+import type {NativeNavigationComponent} from '../../../sharedTypes/navigation';
 import {useLastKnownLocation} from '../../../hooks/useLastSavedLocation';
 
 const m = defineMessages({

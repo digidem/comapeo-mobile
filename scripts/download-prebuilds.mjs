@@ -4,7 +4,8 @@ import {$} from 'execa';
 import fs from 'node:fs';
 import path from 'node:path';
 
-const TARGETS = ['android-arm', 'android-arm64', 'android-x64'];
+// NOTE: we currently don't support building for intel arch (android-x64)
+const TARGETS = ['android-arm', 'android-arm64'];
 
 // TODO: Figure out how to know if module uses N-API at runtime
 const NATIVE_MODULES = [

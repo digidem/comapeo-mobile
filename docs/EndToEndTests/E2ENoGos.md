@@ -8,11 +8,15 @@ This document outlines the tests that will need to be run by hand for QA and can
 
 ### Map
 
-1. **Navigation Centering Button**:
+1. **Scale Bar**:
 
-- [On click] Navigation centering button [to turn on] shows blue dot in crosshairs and centers position.
+- Scale bar appears and behaves as it should
+
+2. **Navigation Centering Button**:
+
+- Navigation centering button [to turn on] shows blue dot in crosshairs and centers position.
 - While device is moving, blue dot on map remains centered and map tracks movement
-- [On click] Navigation centering button [to turn off] shows empty crosshairs
+- Navigation centering button [to turn off] shows empty crosshairs
 
 2. **Connectivity**:
 

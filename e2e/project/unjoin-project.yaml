@@ -1,0 +1,15 @@
+appId: com.comapeo
+env:
+  CAT: PROJECT
+  SUBCAT: MAIN
+---
+- tapOn:
+    id: '${SUBCAT}.drawer-icon'
+- tapOn:
+    id: '${SUBCAT}.create-join-list-item'
+- assertVisible:
+    label: 'User is already on a project, the screen invites them to uninstall and reininstall CoMapeo if they would like to create a new project.'
+    text: '.*You are already on a project.*'
+- runFlow: '../common/launch-app.yaml'
+- runFlow: '../onboarding/create-device-name.yaml'
+- runFlow: 'create-project-from-sync.yaml'

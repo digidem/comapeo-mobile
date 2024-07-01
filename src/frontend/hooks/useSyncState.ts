@@ -123,7 +123,8 @@ class SyncStore {
 
   #onSyncState = (state: SyncState) => {
     // Indicates whether data syncing went from enabled to disabled
-    const isDataSyncStopped = this.#state?.data.syncing && !state.data.syncing;
+    const isDataSyncStopped =
+      this.#state?.data.isSyncEnabled && !state.data.isSyncEnabled;
 
     if (isDataSyncStopped) {
       this.#maxDataSyncCount = null;

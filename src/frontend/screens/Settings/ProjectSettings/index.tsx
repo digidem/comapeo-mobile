@@ -39,6 +39,7 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
           <ListItemText primary={<FormattedMessage {...m.configuration} />} />
         </ListItem>
         <ListItem
+          testID="MAIN.team-list-item"
           onPress={() => {
             navigation.navigate('YourTeam');
           }}>

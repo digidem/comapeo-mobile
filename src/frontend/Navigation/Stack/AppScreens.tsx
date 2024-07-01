@@ -58,9 +58,10 @@ import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSetti
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {PhotoPreviewModal} from '../../screens/PhotoPreviewModal';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
-import {ObservationCreate} from '../../screens/ObservationCreate';
-import {SaveButton} from '../../sharedComponents/SaveButton';
-import {HeaderLeft} from '../../screens/ObservationCreate/HeaderLeft';
+import {
+  ObservationCreate,
+  createNavigationOptions as createObservationCreateNavigationOptions,
+} from '../../screens/ObservationCreate';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -275,11 +276,7 @@ export const createDefaultScreenGroup = ({
     <RootStack.Screen
       name="ObservationCreate"
       component={ObservationCreate}
-      options={{
-        headerTitle: intl(ObservationCreate.navTitle),
-        headerRight: () => <SaveButton onPress={() => {}} isLoading={false} />,
-        headerLeft: props => <HeaderLeft headerBackButtonProps={props} />,
-      }}
+      options={createObservationCreateNavigationOptions({intl})}
     />
   </RootStack.Group>
 );

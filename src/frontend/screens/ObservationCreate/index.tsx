@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {defineMessages, useIntl} from 'react-intl';
+import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {Editor} from '../../sharedComponents/Editor';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
-import {NativeNavigationComponent} from '../../sharedTypes/navigation';
+import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {useCreateObservation} from '../../hooks/server/observations';
 import {CommonActions} from '@react-navigation/native';
 import {Photo, DraftPhoto} from '../../contexts/PhotoPromiseContext/types';
@@ -13,6 +13,8 @@ import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import {SaveButton} from '../../sharedComponents/SaveButton';
 import {useMostAccurateLocationForObservation} from '../ObservationEdit/useMostAccurateLocationForObservation';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
+import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
+import {HeaderLeft} from './HeaderLeft';
 
 const m = defineMessages({
   observation: {
@@ -37,9 +39,9 @@ const m = defineMessages({
   },
 });
 
-export const ObservationCreate: NativeNavigationComponent<
-  'ObservationCreate'
-> = ({navigation}) => {
+export const ObservationCreate = ({
+  navigation,
+}: NativeRootNavigationProps<'ObservationCreate'>) => {
   const {formatMessage} = useIntl();
   const {usePreset} = useDraftObservation();
   const preset = usePreset();
@@ -212,7 +214,19 @@ export const ObservationCreate: NativeNavigationComponent<
   );
 };
 
-ObservationCreate.navTitle = m.navTitle;
+export function createNavigationOptions({
+  intl,
+}: {
+  intl: (title: MessageDescriptor) => string;
+}) {
+  return (): NativeStackNavigationOptions => {
+    return {
+      headerTitle: intl(m.navTitle),
+      headerRight: () => <SaveButton onPress={() => {}} isLoading={false} />,
+      headerLeft: props => <HeaderLeft headerBackButtonProps={props} />,
+    };
+  };
+}
 
 function isSavablePhoto(
   photo: Photo,

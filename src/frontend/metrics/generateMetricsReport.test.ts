@@ -89,6 +89,12 @@ describe('generateMetricsReport', () => {
     expect(new Set(report.countries)).toEqual(generatedCountries);
   });
 
+  it('sorts countries', () => {
+    const report = generateMetricsReport(defaultOptions);
+    const sortedCountries = report.countries?.toSorted();
+    expect(report.countries).toEqual(sortedCountries);
+  });
+
   it('includes network availability data', () => {
     const report = generateMetricsReport(defaultOptions);
     expect(report.percentageOfNetworkAvailability).toBe(

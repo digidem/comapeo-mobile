@@ -8,7 +8,7 @@ import packageJson from '../../../package.json';
 import {assert} from '../lib/assert';
 import {sleep} from '../lib/sleep';
 import {throwIfAborted} from '../lib/throwIfAborted';
-import generateMetricsReport from '../metrics/generateMetricsReport';
+import {generateMetricsReport} from '../metrics/generateMetricsReport';
 import {sendMetricsReport} from '../metrics/sendMetricsReport';
 import {useLastMetricsReportSentAt} from './persistedState/useLastMetricsReportSentAt';
 

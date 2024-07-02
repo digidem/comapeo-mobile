@@ -1,0 +1,37 @@
+appId: com.comapeo
+env:
+  CAT: ONBOARDING
+---
+- assertVisible:
+    label: 'Input for device name is visible'
+    id: '${CAT}.device-name-inp'
+- assertVisible:
+    label: 'Button to add a device name is visible'
+    id: '${CAT}.add-name-btn'
+- tapOn:
+    id: '${CAT}.add-name-btn'
+- assertNotVisible:
+    label: 'No success if no name'
+    text: '.*Success.*'
+- tapOn:
+    id: '${CAT}.device-name-inp'
+- inputText:
+    label: 'Can input a device name'
+    text: ${output.names.device}
+- hideKeyboard
+- assertVisible:
+    label: 'Button to add a device name is visible'
+    id: '${CAT}.add-name-btn'
+- tapOn:
+    id: '${CAT}.add-name-btn'
+- assertVisible:
+    label: 'The success message is visible on the screen'
+    text: '.*Success.*'
+- assertVisible:
+    label: 'Device name that was added is visible'
+    text: ${output.names.device}
+- assertVisible:
+    label: 'Go to map btn is visible'
+    id: '${CAT}.go-to-map-btn'
+- tapOn:
+    id: '${CAT}.go-to-map-btn'

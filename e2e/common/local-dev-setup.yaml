@@ -1,0 +1,20 @@
+appId: com.comapeo
+---
+- runFlow:
+    when:
+      visible: 'http://10.0.2.2:8081'
+    commands:
+      - tapOn: 'http://10.0.2.2:8081'
+- runFlow:
+    when:
+      visible: 'Continue'
+    commands:
+      - tapOn: 'Continue'
+- runFlow:
+    when:
+      visible: 'Toggle Performance Monitor'
+    commands:
+      - swipe:
+          from:
+            text: 'CoMapeo'
+          direction: DOWN

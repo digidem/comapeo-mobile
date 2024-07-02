@@ -62,6 +62,7 @@ import {
   ObservationCreate,
   createNavigationOptions as createObservationCreateNavigationOptions,
 } from '../../screens/ObservationCreate';
+import {AboutSettings} from '../../screens/Settings/About';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -277,6 +278,12 @@ export const createDefaultScreenGroup = ({
       name="ObservationCreate"
       component={ObservationCreate}
       options={createObservationCreateNavigationOptions({intl})}
+    />
+
+    <RootStack.Screen
+      name="AboutSettings"
+      component={AboutSettings}
+      options={{headerTitle: intl(AboutSettings.navTitle)}}
     />
   </RootStack.Group>
 );

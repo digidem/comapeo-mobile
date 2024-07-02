@@ -3,7 +3,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet} from 'react-native';
 import {RED} from '../../lib/styles';
 import {
-  BottomSheetContent,
+  BottomSheetModalContent,
   BottomSheetModal,
 } from '../../sharedComponents/BottomSheetModal';
 import {ErrorIcon} from '../../sharedComponents/icons';
@@ -52,7 +52,7 @@ export const ConfirmPasscodeSheet = React.forwardRef<
 
   return (
     <BottomSheetModal isOpen={isOpen} ref={sheetRef} onDismiss={() => {}}>
-      <BottomSheetContent
+      <BottomSheetModalContent
         titleStyle={styles.text}
         descriptionStyle={styles.text}
         title={t(m.title)}
@@ -71,9 +71,7 @@ export const ConfirmPasscodeSheet = React.forwardRef<
             onPress: setPasscodeAndNavigateBack,
           },
         ]}
-        icon={
-          <ErrorIcon style={{position: 'relative'}} size={90} color={RED} />
-        }
+        icon={<ErrorIcon size={90} color={RED} />}
       />
     </BottomSheetModal>
   );

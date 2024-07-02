@@ -99,7 +99,7 @@ export const ProjectSyncDisplay = ({
     return unsubscribe;
   }, [navigation, project, queryClient]);
 
-  const isDataSyncEnabled = data.syncing;
+  const isDataSyncEnabled = data.isSyncEnabled;
 
   const devicesSyncingText = isSyncDone
     ? t(m.upToDate)

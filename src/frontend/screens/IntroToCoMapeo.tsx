@@ -66,6 +66,7 @@ export const IntroToCoMapeo = ({
             {formatMessage(m.collaborate)}
           </Text>
           <Button
+            testID="ONBOARDING.get-started-btn"
             fullWidth
             onPress={() => {
               navigation.navigate('DeviceNaming');

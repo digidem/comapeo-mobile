@@ -1,9 +1,9 @@
-import React, {useCallback, useEffect} from 'react';
-import {View, Text, StyleSheet, Linking} from 'react-native';
+import React, {FC, useCallback, useEffect} from 'react';
+import {Linking} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
+import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import AudioPermission from '../images/observationEdit/AudioPermission.svg';
-import {BLACK, COMAPEO_BLUE, WHITE} from '../lib/styles';
-import {Button} from './Button';
+import {BottomSheetModalContent, BottomSheetModal} from './BottomSheetModal';
 import {Audio} from 'expo-av';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import {PermissionStatus} from 'expo-av/build/Audio';
@@ -16,11 +16,14 @@ const handleOpenSettings = () => {
   Linking.openSettings();
 };
 
-interface PermissionAudioProps {
+interface PermissionAudio {
+  sheetRef: React.RefObject<BottomSheetModalMethods>;
   closeSheet: () => void;
+  isOpen: boolean;
 }
 
-export const PermissionAudio = ({closeSheet}: PermissionAudioProps) => {
+export const PermissionAudio: FC<PermissionAudio> = props => {
+  const {sheetRef, closeSheet, isOpen} = props;
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
   const [permissionResponse] = Audio.usePermissions({request: false});
@@ -62,23 +65,29 @@ export const PermissionAudio = ({closeSheet}: PermissionAudioProps) => {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.mainWrapper}>
-        <AudioPermission />
-        <Text style={styles.title}>{t(m.title)}</Text>
-        <Text style={styles.description}>{t(m.description)}</Text>
-      </View>
-      <View style={styles.buttonsWrapper}>
-        <Button onPress={closeSheet} variant="outlined" fullWidth>
-          <Text style={styles.notNowButtonText}>{t(m.notNowButtonText)}</Text>
-        </Button>
-        <Button onPress={onPressActionButton} fullWidth>
-          <Text style={styles.allowPermissionButtonText}>
-            {actionButtonText}
-          </Text>
-        </Button>
-      </View>
-    </View>
+    <BottomSheetModal
+      fullScreen
+      ref={sheetRef}
+      onDismiss={closeSheet}
+      isOpen={isOpen}>
+      <BottomSheetModalContent
+        icon={<AudioPermission />}
+        title={t(m.title)}
+        description={t(m.description)}
+        buttonConfigs={[
+          {
+            variation: 'outlined',
+            onPress: closeSheet,
+            text: t(m.notNowButtonText),
+          },
+          {
+            variation: 'filled',
+            onPress: onPressActionButton,
+            text: actionButtonText,
+          },
+        ]}
+      />
+    </BottomSheetModal>
   );
 };
 
@@ -109,50 +118,5 @@ const m = defineMessages({
     defaultMessage: 'Go to Settings',
     description:
       'Screen button text for navigate user to settings when audio permission was denied',
-  },
-});
-
-const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-    justifyContent: 'space-between',
-  },
-  mainWrapper: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-  },
-  title: {
-    color: BLACK,
-    fontSize: 24,
-    fontWeight: 'bold',
-    alignSelf: 'center',
-    width: '65%',
-    textAlign: 'center',
-    marginTop: 20,
-  },
-  description: {
-    fontSize: 16,
-    color: BLACK,
-    alignSelf: 'center',
-    marginTop: 40,
-    textAlign: 'center',
-    paddingHorizontal: 40,
-  },
-  buttonsWrapper: {
-    gap: 20,
-    paddingHorizontal: 40,
-    marginBottom: 20,
-    justifyContent: 'flex-end',
-  },
-  notNowButtonText: {
-    fontWeight: '600',
-    fontSize: 16,
-    color: COMAPEO_BLUE,
-  },
-  allowPermissionButtonText: {
-    fontWeight: '600',
-    fontSize: 16,
-    color: WHITE,
   },
 });

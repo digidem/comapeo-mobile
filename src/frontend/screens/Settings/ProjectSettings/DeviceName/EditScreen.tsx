@@ -50,7 +50,7 @@ export function createNavigationOptions({
       headerTitle: intl(m.title),
       animation: 'none',
       headerRight: () => (
-        <IconButton onPress={() => {}}>
+        <IconButton testID="save-icon" onPress={() => {}}>
           <SaveIcon />
         </IconButton>
       ),
@@ -58,6 +58,7 @@ export function createNavigationOptions({
   };
 }
 
+// TODO: Add the test for saving an edited device name to the end to end test once the save button works correctly https://github.com/digidem/comapeo-mobile/issues/434
 export const EditScreen = ({
   navigation,
 }: NativeRootNavigationProps<'DeviceNameEdit'>) => {
@@ -127,7 +128,7 @@ export const EditScreen = ({
       navigation.setOptions({
         headerRight: () => {
           return (
-            <IconButton onPress={onPress}>
+            <IconButton testID="save-icon" onPress={onPress}>
               {isPending ? <UIActivityIndicator size={30} /> : <SaveIcon />}
             </IconButton>
           );
@@ -142,6 +143,7 @@ export const EditScreen = ({
       <ScrollView contentContainerStyle={styles.container}>
         <FieldRow label={t(m.deviceNameLabel)}>
           <HookFormTextInput
+            testID="PROJECT.edit-device-name"
             control={control}
             name="deviceName"
             rules={{maxLength: 60, required: true, minLength: 1}}
@@ -151,7 +153,7 @@ export const EditScreen = ({
             style={{flex: 1, color: BLACK, fontSize: 16}}
             showCharacterCount
             autoFocus
-            editable={isPending}
+            editable={!isPending}
           />
         </FieldRow>
       </ScrollView>

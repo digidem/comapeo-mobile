@@ -27,15 +27,15 @@ const m = defineMessages({
     defaultMessage: 'Settings',
     description: 'Title of settings screen',
   },
-  aboutMapeo: {
-    id: 'Navigation.Drawer.aboutMapeo',
-    defaultMessage: 'About Mapeo',
+  aboutCoMapeo: {
+    id: 'Navigation.Drawer.aboutCoMapeo',
+    defaultMessage: 'About CoMapeo',
     description: "Primary text for 'About Mapeo' link (version info)",
   },
-  aboutMapeoDesc: {
-    id: 'Navigation.Drawer.aboutMapeoDesc',
+  aboutCoMapeoDesc: {
+    id: 'Navigation.Drawer.aboutCoMapeoDesc',
     defaultMessage: 'Version and build number',
-    description: "Description of the 'About Mapeo' page",
+    description: "Description of the 'About CoMapeo' page",
   },
   createOrJoin: {
     id: 'Navigation.Drawer.createOrJoin',
@@ -108,6 +108,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
         }}>
         <DrawerMenuIcon onPress={navigation.closeDrawer} />
         <Text
+          testID="MAIN.drawer-create-join-txt"
           style={{
             alignSelf: 'center',
             textAlign: 'center',
@@ -125,6 +126,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
           height: '100%',
         }}>
         <ListItem
+          testID="MAIN.create-join-list-item"
           onPress={() => {
             navigate('DrawerHome', {screen: 'CreateOrJoinProject'});
           }}>
@@ -140,6 +142,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
           <ListItemText primary={<FormattedMessage {...m.createOrJoin} />} />
         </ListItem>
         <ListItem
+          testID="MAIN.project-stg-list-item"
           onPress={() => {
             navigate('DrawerHome', {screen: 'ProjectSettings'});
           }}>
@@ -152,6 +155,14 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
           }}>
           <DrawerListItemIcon iconName="settings-suggest" />
           <ListItemText primary={<FormattedMessage {...m.appSettings} />} />
+        </ListItem>
+        <ListItem
+          onPress={() => {
+            navigate('AboutSettings');
+          }}
+          testID="settingsAboutButton">
+          <DrawerListItemIcon iconName="info-outline" />
+          <ListItemText primary={<FormattedMessage {...m.aboutCoMapeo} />} />
         </ListItem>
       </List>
     </DrawerContentScrollView>

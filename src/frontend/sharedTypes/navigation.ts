@@ -34,7 +34,7 @@ export type RootStackParamsList = {
   GpsModal: undefined;
   Settings: undefined;
   ProjectConfig: undefined;
-  AboutMapeo: undefined;
+  AboutSettings: undefined;
   LanguageSettings: undefined;
   CoordinateFormat: undefined;
   Experiments: undefined;

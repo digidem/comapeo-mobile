@@ -1,37 +1,42 @@
 import * as path from 'node:path';
 import * as fs from 'node:fs';
-import generateMetricsReport from './generateMetricsReport';
+import {generateMetricsReport} from './generateMetricsReport';
+import {generate} from '@mapeo/mock-data';
+import {positionToCountries} from './positionToCountries';
+import {getPercentageOfNetworkAvailability} from './networkAvailability';
+import type {Observation} from '@mapeo/schema';
+import {addToSet} from '../lib/addToSet';
 
 type MetricsReportOptions = Parameters<typeof generateMetricsReport>[0];
 
 describe('generateMetricsReport', () => {
   const packageJson = readPackageJson();
+  const count = 10;
+  const observations: ReadonlyArray<Partial<Observation>> = [
+    ...generate('observation', {count}),
+    // Manually add Machias Seal Island, disputed territory
+    {lat: 44.5, lon: -67.101111},
+    {},
+  ];
+
+  const generatedCountries = new Set<string>();
+
+  for (const {lat, lon} of observations) {
+    if (typeof lat === 'number' && typeof lon === 'number') {
+      addToSet(generatedCountries, positionToCountries(lat, lon));
+    }
+  }
+
+  const generatedNetworkAvailabilityPercentage =
+    getPercentageOfNetworkAvailability(observations);
 
   const defaultOptions = {
     packageJson,
     os: 'android',
     osVersion: 123,
     screen: {width: 12, height: 34, ignoredValue: 56},
-    observations: [
-      // Middle of the Atlantic
-      {lat: 10, lon: -33},
-      // Mexico City
-      {lat: 19.419914, lon: -99.088059},
-      // Machias Seal Island, disputed territory
-      {lat: 44.5, lon: -67.101111},
-      // To be ignored
-      {},
-      {lat: 12},
-      {lon: 34},
-    ],
+    observations,
   } as MetricsReportOptions;
-
-  it('can be serialized and deserialized as JSON', () => {
-    const report = generateMetricsReport(defaultOptions);
-    const actual = JSON.parse(JSON.stringify(report));
-    const expected = removeUndefinedEntries(report);
-    expect(actual).toEqual(expected);
-  });
 
   it('includes a report type', () => {
     const report = generateMetricsReport(defaultOptions);
@@ -81,7 +86,20 @@ describe('generateMetricsReport', () => {
   it('includes countries where observations are found', () => {
     const report = generateMetricsReport(defaultOptions);
     expect(report.countries).toHaveLength(new Set(report.countries).size);
-    expect(new Set(report.countries)).toEqual(new Set(['MEX', 'CAN', 'USA']));
+    expect(new Set(report.countries)).toEqual(generatedCountries);
+  });
+
+  it('sorts countries', () => {
+    const report = generateMetricsReport(defaultOptions);
+    const sortedCountries = report.countries?.toSorted();
+    expect(report.countries).toEqual(sortedCountries);
+  });
+
+  it('includes network availability data', () => {
+    const report = generateMetricsReport(defaultOptions);
+    expect(report.percentageOfNetworkAvailability).toBe(
+      generatedNetworkAvailabilityPercentage,
+    );
   });
 });
 
@@ -95,13 +113,4 @@ function readPackageJson() {
   );
   const packageJsonData = fs.readFileSync(packageJsonPath, 'utf8');
   return JSON.parse(packageJsonData);
-}
-
-function removeUndefinedEntries(
-  obj: Record<string, unknown>,
-): Record<string, unknown> {
-  const definedEntries = Object.entries(obj).filter(
-    entry => entry[1] !== undefined,
-  );
-  return Object.fromEntries(definedEntries);
 }

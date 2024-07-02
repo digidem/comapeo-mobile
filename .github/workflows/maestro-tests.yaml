@@ -41,6 +41,8 @@ jobs:
         run: echo "EXPO_TOKEN=${{ secrets.EXPO_TOKEN }}" >> $GITHUB_ENV
 
       - name: Build Android app locally with EAS
+        env:
+          SENTRY_DISABLE_AUTO_UPLOAD: true
         run: eas build --platform android --profile test --local
 
       - name: Find APK

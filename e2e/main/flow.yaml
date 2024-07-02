@@ -1,4 +1,4 @@
-appId: com.comapeo
+appId: com.comapeo.test
 ---
 - runFlow: '../common/launch-app.yaml'
 - runFlow: '../onboarding/create-device-name.yaml'

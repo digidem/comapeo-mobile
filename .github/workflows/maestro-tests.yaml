@@ -1,0 +1,59 @@
+name: E2E CI
+
+on:
+  push:
+    branches:
+      - chore/e2e-ci
+
+jobs:
+  e2e-ci:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install EAS CLI
+        run: npm install -g eas-cli
+
+      - name: Authenticate with EAS
+        run: eas login --token ${{ secrets.EAS_TOKEN }}
+
+      - name: Build Android app with EAS
+        run: eas build --platform android --profile test
+
+      - name: Download build artifact
+        run: |
+          BUILD_ID=$(eas build:list --platform android --status finished --limit 1 --json | jq -r '.[0].id')
+          eas build:download --platform android --id $BUILD_ID --path app.apk
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v2
+        with:
+          api-level: 30
+          emulator: true
+          channel: stable
+
+      - name: Start Android Emulator
+        run: |
+          echo "no" | avdmanager create avd -n test -k "system-images;android-30;google_apis;arm64-v8a"
+          $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window &
+
+      - name: Wait for Emulator
+        run: |
+          adb wait-for-device
+          adb shell input keyevent 82
+
+      - name: Install APK on Emulator
+        run: adb install app.apk
+
+      - name: Install Maestro CLI
+        run: curl -Ls "https://get.maestro.mobile.dev" | bash
+
+      - name: Run Maestro tests
+        run: maestro test e2e

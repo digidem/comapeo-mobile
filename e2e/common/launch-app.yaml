@@ -1,4 +1,4 @@
-appId: com.comapeo
+appId: com.comapeo.test
 onFlowStart:
   - launchApp:
       clearState: true

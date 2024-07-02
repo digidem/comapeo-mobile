@@ -10,12 +10,12 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      # - name: Check for EAS_TOKEN
-      #   run: |
-      #     if [ -z "${{ secrets.EAS_TOKEN }}" ]; then
-      #       echo "You must provide an EAS_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
-      #       exit 1
-      #     fi
+      - name: Check for EAS_TOKEN
+        run: |
+          if [ -z "${{ secrets.EAS_TOKEN }}" ]; then
+            echo "You must provide an EAS_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
+            exit 1
+          fi
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -28,8 +28,8 @@ jobs:
       - name: Install EAS CLI
         run: npm install -g eas-cli
 
-      # - name: Authenticate with EAS
-      #   run: echo "EAS_TOKEN=${{ secrets.EAS_TOKEN }}" >> $GITHUB_ENV
+      - name: Authenticate with EAS
+        run: echo "EAS_TOKEN=${{ secrets.EAS_TOKEN }}" >> $GITHUB_ENV
 
       - name: Build Android app locally with EAS
         run: eas build --platform android --profile test --local

@@ -24,7 +24,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18.x
-          cache: yarn
 
       - name: Install EAS CLI
         run: npm install -g eas-cli

@@ -1,7 +1,7 @@
 import * as http from 'node:http';
 import {buffer} from 'node:stream/consumers';
 import {promisify} from 'node:util';
-import {sendMetricsReport} from './sendMetricsReport';
+import {sendMetricsData} from './sendMetricsData';
 
 describe('sendMetricsReport', () => {
   let teardowns: Array<() => unknown>;
@@ -41,6 +41,22 @@ describe('sendMetricsReport', () => {
     return `http://[${address.address}]:${address.port}`;
   };
 
+  it("doesn't send data in development", async () => {
+    const serverOrigin = await createTestServer(() => {
+      throw new Error('Unexpected request');
+    });
+
+    const metricsUrl = new URL('/metrics', serverOrigin).href;
+
+    await sendMetricsData({
+      isDevelopment: true,
+      metricsUrl,
+      metricsApiKey: 'foo123',
+      dataToSend: {foo: 'bar'},
+      signal: new AbortController().signal,
+    });
+  });
+
   it('makes a request to the metrics server', async () => {
     let requestCount = 0;
     const serverOrigin = await createTestServer(async (req, res) => {
@@ -62,10 +78,11 @@ describe('sendMetricsReport', () => {
 
     const metricsUrl = new URL('/metrics', serverOrigin).href;
 
-    await sendMetricsReport({
+    await sendMetricsData({
+      isDevelopment: false,
       metricsUrl,
       metricsApiKey: 'foo123',
-      metricsReport: {foo: 'bar'},
+      dataToSend: {foo: 'bar'},
       signal: new AbortController().signal,
     });
 
@@ -89,10 +106,11 @@ describe('sendMetricsReport', () => {
 
     const metricsUrl = new URL('/metrics', serverOrigin).href;
 
-    await sendMetricsReport({
+    await sendMetricsData({
+      isDevelopment: false,
       metricsUrl,
       metricsApiKey: 'foo123',
-      metricsReport: {unicode: '👩🏾‍🌾'},
+      dataToSend: {unicode: '👩🏾‍🌾'},
       signal: new AbortController().signal,
     });
 
@@ -105,10 +123,11 @@ describe('sendMetricsReport', () => {
       res.end('sample failure');
     });
 
-    const promise = sendMetricsReport({
+    const promise = sendMetricsData({
+      isDevelopment: false,
       metricsUrl,
       metricsApiKey: 'foo123',
-      metricsReport: {foo: 'bar'},
+      dataToSend: {foo: 'bar'},
       signal: new AbortController().signal,
     });
     await expect(promise).rejects.toThrow();

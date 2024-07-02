@@ -1,6 +1,6 @@
 import type {Jsonifiable, ReadonlyDeep} from 'type-fest';
 
-class SendMetricsReportHttpError extends Error {
+class SendMetricsHttpError extends Error {
   readonly status: number;
   readonly errorBody: string;
   constructor({
@@ -14,35 +14,39 @@ class SendMetricsReportHttpError extends Error {
 }
 
 /**
- * Send a metrics report to the metrics server.
+ * Send some metrics data to the metrics server.
  *
  * Throws if the request fails due to a network error (e.g., no connection) or
  * an HTTP error (e.g., a 403 status code).
  */
-export async function sendMetricsReport({
+export async function sendMetricsData({
+  isDevelopment,
   metricsUrl,
   metricsApiKey,
-  metricsReport,
+  dataToSend,
   signal,
 }: ReadonlyDeep<{
+  isDevelopment: boolean;
   metricsUrl: string;
   metricsApiKey: string;
-  metricsReport: Jsonifiable;
+  dataToSend: Jsonifiable;
   signal: AbortSignal;
 }>): Promise<void> {
+  if (isDevelopment) return;
+
   const response = await fetch(metricsUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: metricsApiKey,
     },
-    body: JSON.stringify({data: metricsReport}),
+    body: JSON.stringify({data: dataToSend}),
     credentials: 'omit',
     signal,
   });
 
   if (!response.ok) {
-    throw new SendMetricsReportHttpError({
+    throw new SendMetricsHttpError({
       status: response.status,
       errorBody: await response.text(),
     });

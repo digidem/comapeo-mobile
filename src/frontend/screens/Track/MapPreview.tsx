@@ -3,8 +3,10 @@ import {StyleSheet} from 'react-native';
 import MapboxGL from '@rnmapbox/maps';
 import {LocationHistoryPoint} from '../../sharedTypes/location.ts';
 import Mapbox from '@rnmapbox/maps';
-import {TrackMapLayer} from '../../sharedComponents/TrackMapLayer.tsx';
-import {convertObservationsToFeatures} from '../../lib/utils.ts';
+import {
+  convertObservationsToFeatures,
+  convertToLineString,
+} from '../../lib/utils.ts';
 import {Observation} from '@mapeo/schema';
 import {BLACK} from '../../lib/styles.ts';
 interface TrackScreenMapPreview {
@@ -63,6 +65,27 @@ function ObservationMapLayer({observations}: {observations: Observation[]}) {
     </MapboxGL.ShapeSource>
   );
 }
+
+function TrackMapLayer({
+  locationHistory,
+}: {
+  locationHistory: LocationHistoryPoint[];
+}) {
+  return (
+    <MapboxGL.ShapeSource
+      id="trackShapeSource"
+      shape={convertToLineString(locationHistory)}>
+      <MapboxGL.LineLayer id="trackLineLayer" style={lineLayer} />
+    </MapboxGL.ShapeSource>
+  );
+}
+
+const lineLayer: MapboxGL.LineLayerStyle = {
+  lineColor: BLACK,
+  lineWidth: 3,
+  lineCap: MapboxGL.LineJoin.Round,
+  lineOpacity: 1.84,
+};
 
 const layerStyles = {
   circleColor: BLACK,

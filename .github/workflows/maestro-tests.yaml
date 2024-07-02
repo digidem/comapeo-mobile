@@ -58,10 +58,17 @@ jobs:
           emulator: true
           channel: stable
 
+      - name: Update SDK repositories
+        run: sdkmanager --update
+
+      - name: Install Android system image
+        run: sdkmanager "system-images;android-30;google_apis;arm64-v8a"
+
+      - name: Create Android Emulator
+        run: echo "no" | avdmanager create avd -n test -k "system-images;android-30;google_apis;arm64-v8a"
+
       - name: Start Android Emulator
-        run: |
-          echo "no" | avdmanager create avd -n test -k "system-images;android-30;google_apis;arm64-v8a"
-          $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window &
+        run: $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window &
 
       - name: Wait for Emulator
         run: |

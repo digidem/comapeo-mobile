@@ -68,12 +68,14 @@ jobs:
         run: echo "no" | avdmanager create avd -n test -k "system-images;android-30;google_apis;arm64-v8a"
 
       - name: Start Android Emulator
-        run: $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window &
-
-      - name: Wait for Emulator
         run: |
+          $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window -delay-adb &
+          EMULATOR_PID=$!
+          sleep 60
+          adb devices
           adb wait-for-device
           adb shell input keyevent 82
+          kill $EMULATOR_PID
 
       - name: Install APK on Emulator
         run: adb install ${{ steps.find_apk.outputs.apk_path }}

@@ -31,6 +31,12 @@ jobs:
       - name: Install EAS CLI
         run: npm install -g eas-cli
 
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
       - name: Authenticate with Expo
         run: echo "EXPO_TOKEN=${{ secrets.EXPO_TOKEN }}" >> $GITHUB_ENV
 

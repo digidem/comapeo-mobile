@@ -10,27 +10,36 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      # - name: Check for EAS_TOKEN
+      #   run: |
+      #     if [ -z "${{ secrets.EAS_TOKEN }}" ]; then
+      #       echo "You must provide an EAS_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
+      #       exit 1
+      #     fi
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: 18.x
+          cache: yarn
 
       - name: Install EAS CLI
         run: npm install -g eas-cli
 
-      - name: Authenticate with EAS
-        run: eas login --token ${{ secrets.EAS_TOKEN }}
+      # - name: Authenticate with EAS
+      #   run: echo "EAS_TOKEN=${{ secrets.EAS_TOKEN }}" >> $GITHUB_ENV
 
-      - name: Build Android app with EAS
-        run: eas build --platform android --profile test
+      - name: Build Android app locally with EAS
+        run: eas build --platform android --profile test --local
 
-      - name: Download build artifact
+      - name: Find APK
+        id: find_apk
         run: |
-          BUILD_ID=$(eas build:list --platform android --status finished --limit 1 --json | jq -r '.[0].id')
-          eas build:download --platform android --id $BUILD_ID --path app.apk
+          APK_PATH=$(find . -type f -name "*.apk" | head -n 1)
+          echo "::set-output name=apk_path::$APK_PATH"
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v2
@@ -50,7 +59,7 @@ jobs:
           adb shell input keyevent 82
 
       - name: Install APK on Emulator
-        run: adb install app.apk
+        run: adb install ${{ steps.find_apk.outputs.apk_path }}
 
       - name: Install Maestro CLI
         run: curl -Ls "https://get.maestro.mobile.dev" | bash

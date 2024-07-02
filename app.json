@@ -50,12 +50,16 @@
           "fonts": ["./public/Rubik-Regular.ttf", "./public/Rubik-Medium.ttf"]
         }
       ],
-      ["./expo-config-plugins/removeExpoInputStyles.js"],
-      ["expo-build-properties",{
-        "android":{
-          "usesCleartextTraffic":true
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
         }
-      }]
+      ],
+      ["./expo-config-plugins/removeExpoInputStyles.js"],
+      ["./expo-config-plugins/targetArmArchsOnly.js"]
     ],
     "android": {
       "versionCode": 1,

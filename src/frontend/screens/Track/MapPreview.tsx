@@ -7,20 +7,19 @@ import {TrackMapLayer} from '../../sharedComponents/TrackMapLayer.tsx';
 import {convertObservationsToFeatures} from '../../lib/utils.ts';
 import {Observation} from '@mapeo/schema';
 import {BLACK} from '../../lib/styles.ts';
-import {useHeaderHeight} from '@react-navigation/elements';
 interface TrackScreenMapPreview {
   locationHistory: LocationHistoryPoint[];
   observations: Observation[];
 }
 
 const MAP_STYLE = Mapbox.StyleURL.Outdoors;
+const MAP_PADDING = 25;
 
 export const MapPreview: FC<TrackScreenMapPreview> = ({
   locationHistory,
   observations,
 }) => {
   const [swBoundary, neBoundary] = getAdjustedBounds(locationHistory);
-  const headerHeight = useHeaderHeight();
 
   return (
     <MapboxGL.MapView
@@ -36,11 +35,10 @@ export const MapPreview: FC<TrackScreenMapPreview> = ({
       <MapboxGL.Camera
         animationMode="none"
         padding={{
-          // with a transparent header, we want to make sure the title does not sit on top of the track by using this header height.
-          paddingTop: headerHeight + 25,
-          paddingRight: 25,
-          paddingLeft: 25,
-          paddingBottom: 25,
+          paddingTop: MAP_PADDING,
+          paddingRight: MAP_PADDING,
+          paddingLeft: MAP_PADDING,
+          paddingBottom: MAP_PADDING,
         }}
         bounds={{
           ne: neBoundary!,

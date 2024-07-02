@@ -38,6 +38,8 @@ const m = defineMessages({
   },
 });
 
+const HIT_SLOP_PADDING = 16;
+
 export const TrackScreen: NativeNavigationComponent<'Track'> = ({
   route,
   navigation,
@@ -48,7 +50,12 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
       headerRight: isMine
         ? () => (
             <TouchableOpacity
-              hitSlop={{top: 16, right: 16, bottom: 16, left: 16}}
+              hitSlop={{
+                top: HIT_SLOP_PADDING,
+                right: HIT_SLOP_PADDING,
+                bottom: HIT_SLOP_PADDING,
+                left: HIT_SLOP_PADDING,
+              }}
               onPress={() => {
                 // TODO: navigate to edit track screen
               }}>

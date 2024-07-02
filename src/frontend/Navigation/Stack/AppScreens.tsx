@@ -58,10 +58,7 @@ import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSetti
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {PhotoPreviewModal} from '../../screens/PhotoPreviewModal.tsx';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
-import {
-  TrackScreen,
-  createNavigationOptions as TrackNavigationOptions,
-} from '../../screens/Track/index.tsx';
+import {TrackScreen} from '../../screens/Track/index.tsx';
 import {AboutSettings} from '../../screens/Settings/About.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
@@ -277,7 +274,7 @@ export const createDefaultScreenGroup = ({
     <RootStack.Screen
       name="Track"
       component={TrackScreen}
-      options={TrackNavigationOptions({intl})}
+      options={{headerTitle: intl(TrackScreen.navTitle)}}
     />
     <RootStack.Screen
       name="AboutSettings"

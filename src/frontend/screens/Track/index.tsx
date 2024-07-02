@@ -10,7 +10,7 @@ import {BLACK, DARK_GREY} from '../../lib/styles.ts';
 
 import TrackIcon from '../../images/Track.svg';
 import EditIcon from '../../images/Edit.svg';
-import {FormattedMessage, MessageDescriptor, defineMessages} from 'react-intl';
+import {FormattedMessage, defineMessages} from 'react-intl';
 import {useDeleteTrackMutation, useTrack} from '../../hooks/server/track.ts';
 import {useObservations} from '../../hooks/server/observations.ts';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
@@ -19,7 +19,6 @@ import {ObservationList} from './ObservationList.tsx';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {ActionButtons} from '../../sharedComponents/ActionButtons.tsx';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock.tsx';
-import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 
 const m = defineMessages({
   title: {
@@ -118,20 +117,6 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
   );
 };
 TrackScreen.navTitle = m.title;
-
-export function createNavigationOptions({
-  intl,
-}: {
-  intl: (title: MessageDescriptor) => string;
-}): NativeStackNavigationOptions {
-  return {
-    headerTitle: intl(m.title),
-    headerShadowVisible: false,
-    headerStyle: {backgroundColor: 'transparent'},
-    headerTitleAlign: 'center',
-    headerTransparent: true,
-  };
-}
 
 export const styles = StyleSheet.create({
   positionText: {

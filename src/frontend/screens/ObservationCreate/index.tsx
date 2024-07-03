@@ -15,6 +15,7 @@ import {useMostAccurateLocationForObservation} from '../ObservationEdit/useMostA
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';
+import {ActionsRow} from '../../sharedComponents/ActionRow';
 
 const m = defineMessages({
   observation: {
@@ -200,7 +201,7 @@ export const ObservationCreate = ({
         }}
         photos={photos}
         location={coordinateInfo}
-        fieldIds={preset?.fieldIds}
+        actionsRow={<ActionsRow fieldIds={preset?.fieldIds} />}
       />
       <ErrorBottomSheet
         error={createObservationMutation.error || createBlobMutation.error}

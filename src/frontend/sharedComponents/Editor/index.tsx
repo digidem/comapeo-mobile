@@ -4,7 +4,6 @@ import {DescriptionField} from './DescriptionField';
 import {MediaScrollView} from '../MediaScrollView';
 import {PresetAndLocationView} from './PresetAndLocationView';
 import {ScreenContentWithDock} from '../ScreenContentWithDock';
-import {ActionButtons} from './ActionButtons';
 
 type EditorProps = {
   presetName: string;
@@ -18,8 +17,7 @@ type EditorProps = {
     lon: number | undefined;
     accuracy: number | undefined;
   };
-  actionButtonChildren?: React.ReactNode;
-  fieldIds?: string[];
+  actionsRow?: React.ReactNode;
 };
 
 export const Editor = ({
@@ -30,15 +28,12 @@ export const Editor = ({
   updateNotes,
   photos,
   location,
-  fieldIds,
-  actionButtonChildren,
+  actionsRow,
 }: EditorProps) => {
   return (
     <ScreenContentWithDock
       dockContainerStyle={{padding: 0}}
-      dockContent={
-        actionButtonChildren || <ActionButtons fieldIds={fieldIds} />
-      }>
+      dockContent={actionsRow}>
       <PresetAndLocationView
         onPressPreset={onPressPreset}
         presetName={presetName}

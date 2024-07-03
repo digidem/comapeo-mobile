@@ -1,9 +1,9 @@
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {ActionTab} from '../ActionTab';
+import {ActionTab} from './ActionTab';
 import PhotoIcon from '../../images/observationEdit/Photo.svg';
 import DetailsIcon from '../../images/observationEdit/Details.svg';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 
 const m = defineMessages({
   audioButton: {
@@ -27,7 +27,7 @@ interface ActionButtonsProps {
   fieldIds?: string[];
 }
 
-export const ActionButtons = ({fieldIds}: ActionButtonsProps) => {
+export const ActionsRow = ({fieldIds}: ActionButtonsProps) => {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
 

@@ -50,9 +50,12 @@ jobs:
         run: |
           echo "org.gradle.jvmargs=-Xmx4096m" >> gradle.properties
 
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v2
+
       - name: Install Android NDK
         run: |
-          sdkmanager --install "ndk;25.1.8937393"
+          yes | sdkmanager --install "ndk;25.1.8937393"
 
       - name: Build Android app locally with EAS
         env:

@@ -65,7 +65,7 @@ jobs:
           arch: arm64-v8a
           profile: Nexus 6
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          emulator-options: -no-window -gpu software -no-snapshot -noaudio -no-boot-anim
           script: |
             adb install ${{ steps.find_apk.outputs.apk_path }}
             curl -Ls "https://get.maestro.mobile.dev" | bash

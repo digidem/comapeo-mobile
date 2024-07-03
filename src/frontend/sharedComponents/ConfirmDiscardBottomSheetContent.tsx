@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {BottomSheetContent} from './BottomSheet';
 import ErrorIcon from '../images/Error.svg';
 import DiscardIcon from '../images/delete.svg';
+import {BottomSheetModalContent} from './BottomSheetModal';
 
 type ConfirmDiscardBottomSheetContentProps = {
   header: string;
@@ -21,7 +21,7 @@ export const ConfirmDiscardBottomSheetContent = ({
   discardButtonCancel,
 }: ConfirmDiscardBottomSheetContentProps) => {
   return (
-    <BottomSheetContent
+    <BottomSheetModalContent
       title={header}
       description={subHeader}
       buttonConfigs={[
@@ -38,7 +38,7 @@ export const ConfirmDiscardBottomSheetContent = ({
           variation: 'outlined',
         },
       ]}
-      icon={<ErrorIcon width={80} height={80} style={{marginBottom: 15}} />}
+      icon={<ErrorIcon width={80} height={80} />}
     />
   );
 };

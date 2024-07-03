@@ -23,7 +23,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '20.14.0'
           cache: 'npm'
 
       - name: Ensure npm is at v10.x

@@ -40,6 +40,10 @@ jobs:
       - name: Authenticate with Expo
         run: echo "EXPO_TOKEN=${{ secrets.EXPO_TOKEN }}" >> $GITHUB_ENV
 
+      - name: Set Gradle properties
+        run: |
+          echo "org.gradle.jvmargs=-Xmx4096m" >> gradle.properties
+
       - name: Build Android app locally with EAS
         env:
           SENTRY_DISABLE_AUTO_UPLOAD: true

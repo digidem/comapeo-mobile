@@ -20,10 +20,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Ensure npm is at v10.x
+        run: npm install -g npm@10
 
       - name: Clean install dependencies
         run: |
@@ -45,6 +49,10 @@ jobs:
       - name: Set Gradle properties
         run: |
           echo "org.gradle.jvmargs=-Xmx4096m" >> gradle.properties
+
+      - name: Install Android NDK
+        run: |
+          sdkmanager --install "ndk;25.1.8937393"
 
       - name: Build Android app locally with EAS
         env:

@@ -1,8 +1,6 @@
 import {StyleSheet, View} from 'react-native';
-import {
-  NativeNavigationComponent,
-  ViewStyleProp,
-} from '../../../../sharedTypes';
+import type {ViewStyleProp} from '../../../../sharedTypes';
+import type {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../../../sharedComponents/Text';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';

@@ -55,36 +55,15 @@ jobs:
           APK_PATH=$(find . -type f -name "*.apk" | head -n 1)
           echo "::set-output name=apk_path::$APK_PATH"
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v2
+      - name: Set up Android Emulator
+      uses: ReactiveCircus/android-emulator-runner@v2
         with:
           api-level: 30
-          emulator: true
-          channel: stable
-
-      - name: Update SDK repositories
-        run: sdkmanager --update
-
-      - name: Install Android system image
-        run: sdkmanager "system-images;android-30;google_apis;arm64-v8a"
-
-      - name: Create Android Emulator
-        run: echo "no" | avdmanager create avd -n test -k "system-images;android-30;google_apis;arm64-v8a"
-
-      - name: Start Android Emulator
-        run: |
-          $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window -gpu swiftshader_indirect &
-          EMULATOR_PID=$!
-          sleep 60
-          adb devices
-          adb wait-for-device
-          adb shell input keyevent 82
-
-      - name: Install APK on Emulator
-        run: adb install ${{ steps.find_apk.outputs.apk_path }}
-
-      - name: Install Maestro CLI
-        run: curl -Ls "https://get.maestro.mobile.dev" | bash
-
-      - name: Run Maestro tests
-        run: maestro test e2e
+          target: google_apis
+          arch: arm64-v8a
+          profile: Nexus 6
+          disable-animations: true
+          script: |
+            adb install ${{ steps.find_apk.outputs.apk_path }}
+            curl -Ls "https://get.maestro.mobile.dev" | bash
+            maestro test e2e

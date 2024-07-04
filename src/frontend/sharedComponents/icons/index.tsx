@@ -85,7 +85,7 @@ export const EditIcon = ({
   size = 30,
   color = DARK_GREY,
   style,
-  testID = '',
+  testID,
 }: FontIconProps) => (
   <MaterialIcon
     testID={testID}

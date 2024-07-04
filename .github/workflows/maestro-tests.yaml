@@ -114,4 +114,18 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: maestro-test-results
-          path: $HOME/.maestro/tests/*
+          path: /home/runner/.maestro/tests/*/
+
+      - name: Capture Logcat
+        if: failure()
+        run: adb logcat -d > $GITHUB_WORKSPACE/logcat.txt
+
+      - name: Upload Logcat
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: logcat
+          path: $GITHUB_WORKSPACE/logcat.txt
+
+      - name: Terminate Emulator
+        run: adb -s emulator-5554 emu kill

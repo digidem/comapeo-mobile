@@ -661,6 +661,10 @@
     "description": "screen title for edit observation screen",
     "message": "නිරීක්ෂණ සංස්කරණය කරන්න"
   },
+  "screens.ObservationEdit.navTitle": {
+    "description": "screen title for new observation screen",
+    "message": "New Observation"
+  },
   "screens.ObservationEdit.newTitle": {
     "description": "screen title for new observation screen",
     "message": "නව නිරීක්ෂණයක්"
@@ -1004,6 +1008,13 @@
   },
   "sharedComponents.DeviceIconWithName.thisDevice": {
     "message": "This Device!"
+  },
+  "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
+    "description": "Shown in new observation screen whilst looking for GPS",
+    "message": "Searching…"
+  },
+  "sharedComponents.Editor.PresetView.Change": {
+    "message": "Change"
   },
   "sharedComponents.ErrorModal.goBack": {
     "message": "Go Back"

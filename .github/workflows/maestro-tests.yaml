@@ -80,6 +80,7 @@ jobs:
           script: |
             adb install ${{ steps.find_apk.outputs.apk_path }}
             curl -Ls "https://get.maestro.mobile.dev" | bash
+            export PATH="$PATH:$HOME/.maestro/bin"
             maestro test e2e
 
       - name: Wait for emulator to start

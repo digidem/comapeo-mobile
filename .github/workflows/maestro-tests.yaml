@@ -85,9 +85,13 @@ jobs:
           profile: Nexus 6
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          pre-emulator-launch-script: |
+            echo "Running pre emulator launch script. Printing the working directory now:"
+            pwd
           script: |
             adb wait-for-device
             until adb shell getprop sys.boot_completed | grep -m 1 '1'; do echo "Waiting for device to boot..."; sleep 10; done
+            adb devices
             adb shell input keyevent 82
             adb install ${{ env.APK_PATH }}
             curl -Ls "https://get.maestro.mobile.dev" | bash
@@ -98,7 +102,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: maestro-test-results
-          path: $HOME/.maestro/tests/
-
-      - name: Terminate Emulator
-        run: adb -s emulator-5554 emu kill
+          path: $HOME/.maestro/tests/*/

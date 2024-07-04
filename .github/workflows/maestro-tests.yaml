@@ -26,6 +26,14 @@ jobs:
           node-version: '20.14.0'
           cache: 'npm'
 
+      - name: Cache npm dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Ensure npm is at v10.x
         run: npm install -g npm@10
 
@@ -49,6 +57,17 @@ jobs:
       - name: Set Gradle properties
         run: |
           echo "org.gradle.jvmargs=-Xmx4096m" >> gradle.properties
+          echo "org.gradle.caching=true" >> gradle.properties
+
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Build Android app locally with EAS
         env:
@@ -59,7 +78,7 @@ jobs:
         id: find_apk
         run: |
           APK_PATH=$(find . -type f -name "*.apk" | head -n 1)
-          echo "::set-output name=apk_path::$APK_PATH"
+          echo "APK_PATH=$APK_PATH" >> $GITHUB_ENV
 
       - name: Enable KVM
         run: |
@@ -77,10 +96,7 @@ jobs:
           profile: Nexus 6
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
-          script: |
-            curl -Ls "https://get.maestro.mobile.dev" | bash
-            adb install ${{ steps.find_apk.outputs.apk_path }}
-            $HOME/.maestro/bin/maestro test e2e || true
+          script: echo "Android Emulator is ready"
 
       - name: Wait for emulator to start
         run: |
@@ -91,6 +107,12 @@ jobs:
 
       - name: Unlock screen
         run: adb shell input keyevent 82
+
+      - name: Run Maestro tests
+        run: |
+          curl -Ls "https://get.maestro.mobile.dev" | bash
+          adb install ${{ steps.find_apk.outputs.apk_path }}
+          $HOME/.maestro/bin/maestro test e2e || true
 
       - name: Upload Maestro test artifacts
         if: failure()

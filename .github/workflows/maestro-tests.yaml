@@ -57,17 +57,6 @@ jobs:
       - name: Set Gradle properties
         run: |
           echo "org.gradle.jvmargs=-Xmx4096m" >> gradle.properties
-          echo "org.gradle.caching=true" >> gradle.properties
-
-      - name: Cache Gradle dependencies
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
 
       - name: Build Android app locally with EAS
         env:
@@ -98,13 +87,18 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
           script: |
             adb wait-for-device
+            until adb shell getprop sys.boot_completed | grep -m 1 '1'; do echo "Waiting for device to boot..."; sleep 10; done
+            adb shell input keyevent 82
             adb install ${{ env.APK_PATH }}
             curl -Ls "https://get.maestro.mobile.dev" | bash
-            $HOME/.maestro/bin/maestro test e2e || true
+            $HOME/.maestro/bin/maestro test e2e
 
       - name: Upload Maestro test artifacts
-        if: failure()
+        if: always()
         uses: actions/upload-artifact@v3
         with:
           name: maestro-test-results
           path: $HOME/.maestro/tests/
+
+      - name: Terminate Emulator
+        run: adb -s emulator-5554 emu kill

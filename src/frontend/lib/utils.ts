@@ -1,10 +1,12 @@
 // import { Alert } from "react-native";
 import {fromLatLon} from 'utm';
 import {SelectOptions, LabeledSelectOption} from '../sharedTypes/PresetTypes';
-import {Preset, Observation} from '@mapeo/schema';
+import {Preset, Observation, Track} from '@mapeo/schema';
 import {LocationObject, LocationProviderStatus} from 'expo-location';
 import {NavigationState} from '@react-navigation/native';
 import {EDITING_SCREEN_NAMES} from '../constants';
+import {FeatureCollection, LineString} from 'geojson';
+import {LocationHistoryPoint} from '../sharedTypes/location';
 
 // import type {
 //   ObservationValue,
@@ -305,3 +307,62 @@ export function matchPreset(
 
   return bestMatch;
 }
+
+export function convertObservationsToFeatures(
+  observations: Observation[],
+): GeoJSON.Feature[] {
+  const accDefault: GeoJSON.Feature[] = [];
+  const features: GeoJSON.Feature[] = observations.reduce((acc, obs) => {
+    if (typeof obs.lon === 'number' && typeof obs.lat === 'number') {
+      return [
+        ...acc,
+        {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [obs.lon, obs.lat],
+          },
+          properties: {
+            id: obs.docId,
+          },
+        },
+      ];
+    }
+    return acc;
+  }, accDefault);
+
+  return features;
+}
+
+export function convertTracksToFeatures(tracks: Track[]): FeatureCollection {
+  return {
+    type: 'FeatureCollection',
+    features: tracks.map(track => ({
+      type: 'Feature',
+      geometry: {
+        type: 'LineString',
+        coordinates: track.locations.map(location => [
+          location.coords.longitude,
+          location.coords.latitude,
+        ]),
+      },
+      properties: {
+        timestamps: track.locations.map(location => location.timestamp),
+        mocked: track.locations.map(location => location.mocked),
+        id: track.docId,
+      },
+    })),
+  };
+}
+
+export const convertToLineString = (
+  locations: LocationHistoryPoint[],
+): LineString => {
+  return {
+    type: 'LineString',
+    coordinates: locations.map(location => [
+      location.longitude,
+      location.latitude,
+    ]),
+  };
+};

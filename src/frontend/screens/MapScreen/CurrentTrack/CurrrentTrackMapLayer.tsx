@@ -2,9 +2,8 @@ import {LineJoin, LineLayer, ShapeSource} from '@rnmapbox/maps';
 import {usePersistedTrack} from '../../../hooks/persistedState/usePersistedTrack';
 import * as React from 'react';
 import {StyleSheet} from 'react-native';
-import {LineString} from 'geojson';
 import {useLocation} from '../../../hooks/useLocation';
-import {LocationHistoryPoint} from '../../../sharedTypes/location';
+import {convertToLineString} from '../../../lib/utils';
 
 export const CurrentTrackMapLayer = () => {
   const locationHistory = usePersistedTrack(state => state.locationHistory);
@@ -24,7 +23,9 @@ export const CurrentTrackMapLayer = () => {
   return (
     locationHistory.length > 1 &&
     isTracking && (
-      <ShapeSource id="routeSource" shape={toRoute(finalLocationHistory)}>
+      <ShapeSource
+        id="routeSource"
+        shape={convertToLineString(finalLocationHistory)}>
         <LineLayer
           id="routeFill"
           belowLayerID="mapboxUserLocationPulseCircle"
@@ -33,16 +34,6 @@ export const CurrentTrackMapLayer = () => {
       </ShapeSource>
     )
   );
-};
-
-const toRoute = (locations: LocationHistoryPoint[]): LineString => {
-  return {
-    type: 'LineString',
-    coordinates: locations.map(location => [
-      location.longitude,
-      location.latitude,
-    ]),
-  };
 };
 
 const styles = StyleSheet.create({

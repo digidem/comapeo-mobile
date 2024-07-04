@@ -107,7 +107,7 @@ jobs:
             adb shell settings put global transition_animation_scale 0.0
             adb shell settings put global animator_duration_scale 0.0
             echo "Installing the APK..."
-            adb install ${{ env.APK_PATH }} || || (adb kill-server && adb start-server && adb devices && adb install ${{ env.APK_PATH }})
+            adb install ${{ env.APK_PATH }} || (adb kill-server && adb start-server && adb devices && adb install ${{ env.APK_PATH }})
             echo "Running Maestro tests..."
             ./run_android_e2e.sh
 

@@ -1013,6 +1013,9 @@
     "description": "Shown in new observation screen whilst looking for GPS",
     "message": "Searching…"
   },
+  "sharedComponents.Editor.PresetView.Change": {
+    "message": "Change"
+  },
   "sharedComponents.ErrorModal.goBack": {
     "message": "Go Back"
   },

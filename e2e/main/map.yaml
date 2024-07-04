@@ -17,8 +17,8 @@ env:
 - tapOn:
     id: '${CAT}.add-observation-btn'
 - assertVisible:
-    id: '${CAT}.categories-scrn'
     label: 'Create observation button goes to categories screen from Home map screen'
+    id: '${CAT}.categories-scrn'
 - back
 - tapOn:
     id: 'OBS.discard-obs'

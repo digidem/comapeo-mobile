@@ -10,9 +10,9 @@ This document outlines the tests that will need to be run by hand for QA and can
 
 1. **Scale Bar**:
 
-- Scale bar appears and behaves as it should
+- Scale bar appears and shows proper measurements based on the zoom of the map
 
-2. **Navigation Centering Button**:
+1. **Navigation Centering Button**:
 
 - Navigation centering button [to turn on] shows blue dot in crosshairs and centers position.
 - While device is moving, blue dot on map remains centered and map tracks movement

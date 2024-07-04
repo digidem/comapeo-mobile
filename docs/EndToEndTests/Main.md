@@ -44,7 +44,7 @@ This tests the GPS pill that is on the main map screen and the main camera scree
 
 ### Special Considerations
 
-- This test sets the location to x before the test
+- This test sets the location to Ecuador before the test
 
 ## Map
 

@@ -96,23 +96,11 @@ jobs:
           profile: Nexus 6
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
-          script: echo "Android Emulator is ready"
-
-      - name: Wait for emulator to start
-        run: |
-          adb wait-for-device
-          for i in {1..30}; do
-            adb shell getprop sys.boot_completed && break || sleep 10
-          done
-
-      - name: Unlock screen
-        run: adb shell input keyevent 82
-
-      - name: Run Maestro tests
-        run: |
-          curl -Ls "https://get.maestro.mobile.dev" | bash
-          adb install ${{ steps.find_apk.outputs.apk_path }}
-          $HOME/.maestro/bin/maestro test e2e || true
+          script: |
+            adb wait-for-device
+            adb install ${{ env.APK_PATH }}
+            curl -Ls "https://get.maestro.mobile.dev" | bash
+            $HOME/.maestro/bin/maestro test e2e || true
 
       - name: Upload Maestro test artifacts
         if: failure()

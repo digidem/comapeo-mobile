@@ -1,7 +1,7 @@
 import React, {FC, useCallback} from 'react';
 import {View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
-import {MediaScrollView} from '../../sharedComponents/Thumbnail/MediaScrollView';
+import {MediaScrollView} from '../../sharedComponents/MediaScrollView';
 import {ActionTab} from '../../sharedComponents/ActionTab';
 import PhotoIcon from '../../images/observationEdit/Photo.svg';
 import AudioIcon from '../../images/observationEdit/Audio.svg';

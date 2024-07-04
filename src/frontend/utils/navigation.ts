@@ -30,6 +30,10 @@ export function getInitialRouteName(
     return 'PresetChooser';
   }
 
-  // if existing observation and preset match, navigate to observation edit
-  return 'ObservationEdit';
+  // if existing observation, preset match, and docId exists, navigate to Observation Edit Screen
+  if ('docId' in initialInfo.existingObservation) {
+    return 'ObservationEdit';
+  }
+
+  return 'ObservationCreate';
 }

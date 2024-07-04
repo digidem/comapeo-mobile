@@ -75,6 +75,9 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
+      - name: Install Maestro
+        run: curl -Ls 'https://get.maestro.mobile.dev' | bash
+
       - name: Set up Android Emulator
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
@@ -83,6 +86,10 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: Nexus 6
+          cores: 2
+          ram-size: 2048M
+          force-avd-creation: false
+          emulator-boot-timeout: 900
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
           pre-emulator-launch-script: |
@@ -100,11 +107,9 @@ jobs:
             adb shell settings put global transition_animation_scale 0.0
             adb shell settings put global animator_duration_scale 0.0
             echo "Installing the APK..."
-            adb install ${{ env.APK_PATH }}
-            echo "Installing Maestro..."
-            curl -Ls "https://get.maestro.mobile.dev" | bash
+            adb install ${{ env.APK_PATH }} || || (adb kill-server && adb start-server && adb devices && adb install ${{ env.APK_PATH }})
             echo "Running Maestro tests..."
-            $HOME/.maestro/bin/maestro test e2e
+            ./run_android_e2e.sh
 
       - name: List Maestro Test Results Directory
         run: ls -la $HOME/.maestro/tests/
@@ -116,16 +121,13 @@ jobs:
           name: maestro-test-results
           path: /home/runner/.maestro/tests/*/
 
-      - name: Capture Logcat
-        if: failure()
-        run: adb logcat -d > $GITHUB_WORKSPACE/logcat.txt
-
-      - name: Upload Logcat
-        if: failure()
+      - name: Upload report
+        if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: logcat
-          path: $GITHUB_WORKSPACE/logcat.txt
-
-      - name: Terminate Emulator
-        run: adb -s emulator-5554 emu kill
+          name: E2E Report (${{ matrix.arch }}, ${{ matrix.api-level }}, ${{ matrix.target }})
+          path: |
+            ${{ github.workspace }}/*.mp4
+            ${{ github.workspace }}/*.png
+            ${{ github.workspace }}/report*.xml
+            ~/.maestro/tests/**/*

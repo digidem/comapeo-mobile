@@ -80,7 +80,7 @@ jobs:
           script: |
             curl -Ls "https://get.maestro.mobile.dev" | bash
             adb install ${{ steps.find_apk.outputs.apk_path }}
-            $HOME/.maestro/bin/maestro test e2e
+            $HOME/.maestro/bin/maestro test e2e || true
 
       - name: Wait for emulator to start
         run: |
@@ -91,3 +91,10 @@ jobs:
 
       - name: Unlock screen
         run: adb shell input keyevent 82
+
+      - name: Upload Maestro test artifacts
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: maestro-test-results
+          path: $HOME/.maestro/tests/

@@ -24,13 +24,11 @@ export async function sendMetricsData({
   metricsUrl,
   metricsApiKey,
   dataToSend,
-  signal,
 }: ReadonlyDeep<{
   isDevelopment: boolean;
   metricsUrl: string;
   metricsApiKey: string;
   dataToSend: Jsonifiable;
-  signal: AbortSignal;
 }>): Promise<void> {
   if (isDevelopment) return;
 
@@ -42,7 +40,6 @@ export async function sendMetricsData({
     },
     body: JSON.stringify({data: dataToSend}),
     credentials: 'omit',
-    signal,
   });
 
   if (!response.ok) {

@@ -53,7 +53,6 @@ describe('sendMetricsReport', () => {
       metricsUrl,
       metricsApiKey: 'foo123',
       dataToSend: {foo: 'bar'},
-      signal: new AbortController().signal,
     });
   });
 
@@ -83,7 +82,6 @@ describe('sendMetricsReport', () => {
       metricsUrl,
       metricsApiKey: 'foo123',
       dataToSend: {foo: 'bar'},
-      signal: new AbortController().signal,
     });
 
     expect(requestCount).toBe(1);
@@ -111,7 +109,6 @@ describe('sendMetricsReport', () => {
       metricsUrl,
       metricsApiKey: 'foo123',
       dataToSend: {unicode: '👩🏾‍🌾'},
-      signal: new AbortController().signal,
     });
 
     expect(requestCount).toBe(1);
@@ -128,7 +125,6 @@ describe('sendMetricsReport', () => {
       metricsUrl,
       metricsApiKey: 'foo123',
       dataToSend: {foo: 'bar'},
-      signal: new AbortController().signal,
     });
     await expect(promise).rejects.toThrow();
   });

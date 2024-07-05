@@ -7,3 +7,5 @@ appId: com.comapeo
 - runFlow: '../project/create-project-from-drawer.yaml'
 - runFlow: '../project/unjoin-project.yaml'
 - runFlow: '../main/side-drawer-menu-project.yaml'
+- runFlow: '../main/gps.yaml'
+- runFlow: '../main/map.yaml'

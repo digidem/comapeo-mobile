@@ -113,12 +113,42 @@ export class DeviceDiagnosticMetrics {
 
   setEnabled(isEnabled: boolean): void {
     this.#isEnabled = isEnabled;
+
+    if (isEnabled) {
+      this.#addListenersIfNecessary();
+    } else {
+      this.#removeListeners();
+    }
+
     this.#update();
   }
 
-  async #update(): Promise<void> {
-    this.#updateSubscriptions();
+  #addListenersIfNecessary(): void {
+    if (this.#subscriptionCleanupFns) return;
 
+    const subscriptionCleanupFns: (() => void)[] = [];
+
+    subscriptionCleanupFns.push(
+      NetInfo.addEventListener(state => {
+        this.#isOnline = Boolean(state.isInternetReachable);
+        this.#update();
+      }),
+    );
+
+    const appStateSubscription = AppState.addEventListener('change', () => {
+      this.#update();
+    });
+    subscriptionCleanupFns.push(() => appStateSubscription.remove());
+
+    this.#subscriptionCleanupFns = subscriptionCleanupFns;
+  }
+
+  #removeListeners(): void {
+    const subscriptionCleanupFns = this.#subscriptionCleanupFns ?? [];
+    for (const fn of subscriptionCleanupFns) fn();
+  }
+
+  async #update(): Promise<void> {
     const shouldSendMetrics =
       this.#isEnabled &&
       this.#isOnline &&
@@ -139,31 +169,6 @@ export class DeviceDiagnosticMetrics {
       Sentry.captureException(err);
     } finally {
       this.#isCurrentlySendingMetrics = false;
-    }
-  }
-
-  #updateSubscriptions(): void {
-    if (this.#isEnabled) {
-      if (this.#subscriptionCleanupFns) return;
-
-      const subscriptionCleanupFns: (() => void)[] = [];
-
-      subscriptionCleanupFns.push(
-        NetInfo.addEventListener(state => {
-          this.#isOnline = Boolean(state.isInternetReachable);
-          this.#update();
-        }),
-      );
-
-      const appStateSubscription = AppState.addEventListener('change', () => {
-        this.#update();
-      });
-      subscriptionCleanupFns.push(() => appStateSubscription.remove());
-
-      this.#subscriptionCleanupFns = subscriptionCleanupFns;
-    } else {
-      const subscriptionCleanupFns = this.#subscriptionCleanupFns ?? [];
-      for (const fn of subscriptionCleanupFns) fn();
     }
   }
 }

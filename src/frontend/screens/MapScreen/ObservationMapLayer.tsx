@@ -20,10 +20,9 @@ export const ObservationMapLayer = () => {
 
   const {data: presets} = usePresetsQuery();
 
-  const displayedFeatures = observationsToFeatureCollection(
-    observations,
-    presets,
-  );
+  const displayedFeatures = React.useMemo(() => {
+    return observationsToFeatureCollection(observations, presets);
+  }, [observations, presets]);
 
   // Based on example implementation:
   // https://github.com/rnmapbox/maps/blob/0c37ee88bd4b16efac93417a47ab4b474396b318/example/src/examples/SymbolCircleLayer/DataDrivenCircleColors.js

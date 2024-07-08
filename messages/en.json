@@ -111,9 +111,6 @@
   "Screens.Settings.AppSettings.title": {
     "message": "App Setttings"
   },
-  "Screens.Settings.ProjectSettings.configuration": {
-    "message": "Configuration"
-  },
   "Screens.Settings.ProjectSettings.deviceName": {
     "message": "Device Name"
   },

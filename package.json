@@ -44,7 +44,7 @@
     "@react-navigation/drawer": "^6.6.15",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
-    "@rnmapbox/maps": "^10.1.19",
+    "@rnmapbox/maps": "^10.1.27",
     "@sentry/react-native": "~5.20.0",
     "@tanstack/react-query": "^5.12.2",
     "@types/luxon": "^3.4.2",

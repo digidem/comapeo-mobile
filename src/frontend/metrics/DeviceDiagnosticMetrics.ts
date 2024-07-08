@@ -1,11 +1,5 @@
 import * as Sentry from '@sentry/react-native';
-import {
-  AppState,
-  Dimensions,
-  PixelRatio,
-  Platform,
-  type AppStateStatus,
-} from 'react-native';
+import {AppState, Dimensions, PixelRatio, Platform} from 'react-native';
 import {getRandomBytes} from 'expo-crypto';
 import {uint8ArrayToHex} from 'uint8array-extras';
 import * as NetInfo from '@react-native-community/netinfo';

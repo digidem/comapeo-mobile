@@ -90,12 +90,3 @@ There was an error while running app via Expo because of exports in `rpc-reflect
 
 There was an error while running app via Expo because of `duplex` method call in `rpc-reflector` package.
 As this feature is not used in CoMapeo, this can be safely hardcoded to `false`. To remove this patch, `rpc-reflector` would need to be updated to account for this bug.
-
-## @rnmapbox/maps
-
-### [Remove AbortController test mock](./@rnmapbox+maps+10.1.19.patch)
-
-This library includes an `AbortController` test mock, which doesn't work in places that expect a real one.
-Because `AbortController` is supported in our environments, we don't need this mock.
-
-[This patch has been merged upstream](https://github.com/rnmapbox/maps/pull/3506) but not yet deployed.

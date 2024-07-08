@@ -1,4 +1,6 @@
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {isTablet} from 'react-native-device-info';
+
 import {useApi} from '../../contexts/ApiContext';
 
 export const DEVICE_INFO_KEY = 'deviceInfo';
@@ -21,7 +23,10 @@ export const useEditDeviceInfo = () => {
   return useMutation({
     mutationKey: ['device'],
     mutationFn: async (name: string) => {
-      return mapeoApi.setDeviceInfo({name});
+      return mapeoApi.setDeviceInfo({
+        name,
+        deviceType: isTablet() ? 'tablet' : 'mobile',
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [DEVICE_INFO_KEY]});

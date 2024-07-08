@@ -101,9 +101,6 @@ async function generateDeviceDiagnosticMetricsData(): Promise<DeviceDiagnosticMe
   return result;
 }
 
-const isAppActive = (appState: AppStateStatus): boolean =>
-  appState === 'active';
-
 const hasEnoughTimeElapsed = (): boolean => {
   const lastSentAtMs = storage.getNumber(STORAGE_KEY) ?? -Infinity;
   const lastSentAtDate = new Date(lastSentAtMs);
@@ -116,7 +113,6 @@ const hasEnoughTimeElapsed = (): boolean => {
 export class DeviceDiagnosticMetrics {
   #isEnabled = false;
   #isOnline = false;
-  #isAppActive = isAppActive(AppState.currentState);
   #isCurrentlySendingMetrics = false;
 
   #subscriptionCleanupFns: null | (() => void)[] = null;
@@ -132,7 +128,7 @@ export class DeviceDiagnosticMetrics {
     const shouldSendMetrics =
       this.#isEnabled &&
       this.#isOnline &&
-      this.#isAppActive &&
+      AppState.currentState === 'active' &&
       !this.#isCurrentlySendingMetrics &&
       hasEnoughTimeElapsed();
     if (!shouldSendMetrics) return;
@@ -165,13 +161,9 @@ export class DeviceDiagnosticMetrics {
         }),
       );
 
-      const appStateSubscription = AppState.addEventListener(
-        'change',
-        appState => {
-          this.#isAppActive = isAppActive(appState);
-          this.#update();
-        },
-      );
+      const appStateSubscription = AppState.addEventListener('change', () => {
+        this.#update();
+      });
       subscriptionCleanupFns.push(() => appStateSubscription.remove());
 
       this.#subscriptionCleanupFns = subscriptionCleanupFns;

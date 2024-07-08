@@ -1,5 +1,6 @@
+import {DeviceInfo} from '@mapeo/schema';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
-import {isTablet} from 'react-native-device-info';
+import {deviceType, DeviceType} from 'expo-device';
 
 import {useApi} from '../../contexts/ApiContext';
 
@@ -25,7 +26,7 @@ export const useEditDeviceInfo = () => {
     mutationFn: async (name: string) => {
       return mapeoApi.setDeviceInfo({
         name,
-        deviceType: isTablet() ? 'tablet' : 'mobile',
+        deviceType: deviceType ? expoToCoreDeviceType(deviceType) : undefined,
       });
     },
     onSuccess: () => {
@@ -33,3 +34,23 @@ export const useEditDeviceInfo = () => {
     },
   });
 };
+
+function expoToCoreDeviceType(d: DeviceType): DeviceInfo['deviceType'] {
+  switch (d) {
+    case DeviceType.PHONE: {
+      return 'mobile';
+    }
+    case DeviceType.TABLET: {
+      return 'tablet';
+    }
+    case DeviceType.TV: {
+      return undefined;
+    }
+    case DeviceType.DESKTOP: {
+      return 'desktop';
+    }
+    case DeviceType.UNKNOWN: {
+      return 'UNRECOGNIZED';
+    }
+  }
+}

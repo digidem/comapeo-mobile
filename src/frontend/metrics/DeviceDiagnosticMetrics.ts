@@ -14,12 +14,7 @@ import {getMonthlyHash} from './getMonthlyHash';
 import {sendMetricsData} from './sendMetricsData';
 import {getMetricsRequestInfo} from './getMetricsRequestInfo';
 import {storage} from '../hooks/persistedState/createPersistedState';
-import {
-  isDateValid,
-  isSameUtcMonthAndYear,
-  beginningOfNextMonthUtc,
-} from '../lib/date';
-import {setLongTimeout, clearLongTimeout} from '../lib/longTimeout';
+import {isDateValid, isSameUtcMonthAndYear} from '../lib/date';
 
 const STORAGE_KEY = 'DeviceDiagnosticMetricsLastSentAt';
 
@@ -118,11 +113,6 @@ const hasEnoughTimeElapsed = (): boolean => {
   );
 };
 
-const getMillisecondsUntilNextMonth = (): number => {
-  const now = new Date();
-  return beginningOfNextMonthUtc(now).valueOf() - now.valueOf();
-};
-
 export class DeviceDiagnosticMetrics {
   #isEnabled = false;
   #isOnline = false;
@@ -183,11 +173,6 @@ export class DeviceDiagnosticMetrics {
         },
       );
       subscriptionCleanupFns.push(() => appStateSubscription.remove());
-
-      const nextMonthTimeout = setLongTimeout(() => {
-        this.#update();
-      }, getMillisecondsUntilNextMonth());
-      subscriptionCleanupFns.push(() => clearLongTimeout(nextMonthTimeout));
 
       this.#subscriptionCleanupFns = subscriptionCleanupFns;
     } else {

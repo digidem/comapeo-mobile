@@ -1,8 +1,4 @@
-import {
-  isDateValid,
-  isSameUtcMonthAndYear,
-  beginningOfNextMonthUtc,
-} from './date';
+import {isDateValid, isSameUtcMonthAndYear} from './date';
 import {parseISO} from 'date-fns';
 
 describe('isDateValid', () => {
@@ -31,19 +27,5 @@ describe('isSameUtcMonthAndYear', () => {
   it('returns false for dates not in the same month and year', () => {
     expect(isSameUtcMonthAndYear(day1, day3)).toBe(false);
     expect(isSameUtcMonthAndYear(day1, day4)).toBe(false);
-  });
-});
-
-describe('beginningOfNextMonthUtc', () => {
-  it('returns the first moment of the next month when in the same year', () => {
-    const input = parseISO('2000-06-06T06:06:00Z');
-    const expected = parseISO('2000-07-01T00:00:00Z');
-    expect(beginningOfNextMonthUtc(input)).toEqual(expected);
-  });
-
-  it('returns the first moment of the next year when in December', () => {
-    const input = parseISO('2002-12-06T06:06:00Z');
-    const expected = parseISO('2003-01-01T00:00:00Z');
-    expect(beginningOfNextMonthUtc(input)).toEqual(expected);
   });
 });

@@ -27,7 +27,7 @@ export const ProjectInviteBottomSheet = ({
       inviteId: invite?.inviteId,
       bottomSheetIsOpen: isOpen,
     });
-  const accept = useAcceptInvite(invite?.projectPublicId);
+  const accept = useAcceptInvite();
   const reject = useRejectInvite();
 
   if (invite && !isOpen && enabledForCurrentScreen) {

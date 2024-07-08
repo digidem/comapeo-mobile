@@ -125,11 +125,13 @@ export const EditScreen = ({
     function updateNavigationOptions() {
       navigation.setOptions({
         headerRight: () => {
-          return (
-            <IconButton
-              testID="save-icon"
-              onPress={isPending ? undefined : onSubmit}>
-              {isPending ? <UIActivityIndicator size={30} /> : <SaveIcon />}
+          return isPending ? (
+            <IconButton testID="save-icon">
+              <UIActivityIndicator size={30} />
+            </IconButton>
+          ) : (
+            <IconButton testID="save-icon" onPress={onSubmit}>
+              <SaveIcon />
             </IconButton>
           );
         },

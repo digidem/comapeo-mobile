@@ -1,4 +1,8 @@
 appId: com.comapeo.test
+onFlowStart:
+  - startRecording: recording-e2e-flow
+onFlowComplete:
+  - stopRecording
 ---
 - runFlow: '../common/launch-app.yaml'
 - runFlow: '../onboarding/create-device-name.yaml'

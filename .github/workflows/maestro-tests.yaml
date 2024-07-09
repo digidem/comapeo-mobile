@@ -113,35 +113,11 @@ jobs:
             adb install ${{ env.APK_PATH }} || (adb kill-server && adb start-server && adb devices && adb install ${{ env.APK_PATH }})
 
             echo "Running Maestro tests..."
-            set -x
-            TMP_FILE=_fail_proccess
-            $ANDROID_HOME/platform-tools/adb shell screenrecord /sdcard/video_record.mp4 & echo $! > video_record.pid
-            sleep 3
             APP_ID=com.comapeo.tests
-            (echo "===== Run E2E Attempt:  1 ====" &&             $HOME/.maestro/bin/maestro test e2e --env=APP_ID="$APP_ID" --format=junit --output report1.xml) || \
-            (echo "===== Run E2E Attempt:  2 ====" && sleep 20 && $HOME/.maestro/bin/maestro test e2e --env=APP_ID="$APP_ID" --format=junit --output report2.xml) || \
-            (echo "===== Run E2E Attempt:  3 ====" && sleep 60 && $HOME/.maestro/bin/maestro test e2e --env=APP_ID="$APP_ID" --format=junit --output report3.xml) || \
-            (echo "===== Run E2E Step Failed ====" && touch "$TMP_FILE")
-            kill -SIGINT "$(cat video_record.pid)"
-            sleep 3
-            rm -rf video_record.pid
-            $ANDROID_HOME/platform-tools/adb shell screencap -p /sdcard/last_img.png
-            $ANDROID_HOME/platform-tools/adb pull /sdcard/last_img.png
-            $ANDROID_HOME/platform-tools/adb pull /sdcard/video_record.mp4
-            $ANDROID_HOME/platform-tools/adb shell rm /sdcard/video_record.mp4
+            echo "===== Run E2E Attempt:  1 ====" && $HOME/.maestro/bin/maestro test e2e --env=APP_ID="$APP_ID" --format=junit --output report1.xml
             echo "::group::Maestro hierarchy"
             $HOME/.maestro/bin/maestro hierarchy
             echo "::endgroup::"
-            if [ -f "$TMP_FILE" ]; then
-              rm -rf "$TMP_FILE"
-              echo "3 tries have failed..."
-              exit 1
-            else
-              echo "Success..."
-            fi
-
-      - name: List Maestro Test Results Directory
-        run: ls -la $HOME/.maestro/tests/
 
       - name: Upload Maestro test artifacts
         if: always()
@@ -150,13 +126,9 @@ jobs:
           name: maestro-test-results
           path: /home/runner/.maestro/tests/*/
 
-      - name: Upload report
+      - name: Upload Screen Recording
         if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: E2E Report (${{ matrix.arch }}, ${{ matrix.api-level }}, ${{ matrix.target }})
-          path: |
-            ${{ github.workspace }}/*.mp4
-            ${{ github.workspace }}/*.png
-            ${{ github.workspace }}/report*.xml
-            ~/.maestro/tests/**/*
+          name: E2E Screen Recording
+          path: ${{ github.workspace }}/recording-e2e-flow.*

@@ -73,7 +73,4 @@ These tests deal with projects, such as creating a project from the side drawer,
 - Ensures that a user can edit their device name
 - Checks that if a user starts editing and decides to leave the page, a warning is shown
 - Checks that a user can leave the page without saving and the device name doesn't change
-
-### Special Considerations
-
-- This test does not test the save button as it is not working. An [issue](https://github.com/digidem/comapeo-mobile/issues/434) has been created.
+- Checks that once a user saves the new device name, it appears on the screen

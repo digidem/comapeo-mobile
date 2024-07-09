@@ -55,9 +55,19 @@ env:
     text: ${output.names.editdevice}
 - tapOn:
     id: 'save-icon'
+- assertVisible:
+    label: 'New device name appears on the screen'
+    text: ${output.names.editdevice}
+- back
+- back
 - tapOn:
-    id: '${SUBCAT}.header-back-btn'
+    id: '${SUBCAT}.drawer-icon'
 - tapOn:
-    text: '.*Discard changes?.*'
+    id: '${SUBCAT}.project-stg-list-item'
+- tapOn:
+    id: '${CAT}.device-name-list-item'
+- assertVisible:
+    label: 'New device name appears on the screen demonstrating its persistance'
+    text: ${output.names.editdevice}
 - back
 - back

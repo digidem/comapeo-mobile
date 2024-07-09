@@ -67,7 +67,7 @@ env:
 - tapOn:
     id: '${CAT}.device-name-list-item'
 - assertVisible:
-    label: 'New device name appears on the screen'
+    label: 'New device name appears on the screen demonstrating its persistance'
     text: ${output.names.editdevice}
 - back
 - back

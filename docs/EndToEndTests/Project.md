@@ -74,3 +74,4 @@ These tests deal with projects, such as creating a project from the side drawer,
 - Checks that if a user starts editing and decides to leave the page, a warning is shown
 - Checks that a user can leave the page without saving and the device name doesn't change
 - Checks that once a user saves the new device name, it appears on the screen
+- Exits device name editing page and reenters it to make sure edited device name is persisted

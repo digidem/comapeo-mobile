@@ -97,19 +97,12 @@ jobs:
             pwd
           script: |
             echo "Waiting for the emulator to boot up..."
-            - name: Wait for Android Emulator
-              timeout-minutes: 10
-              continue-on-error: true
-              run: |
-                adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
-                adb devices
-
+            adb wait-for-device
+            until adb shell getprop sys.boot_completed | grep -m 1 '1'; do echo "Waiting for device to boot..."; sleep 10; done
             echo "Device booted. Listing connected devices:"
+            adb devices
+            adb shell input keyevent 82
 
-            echo "Disabling animations..."
-            adb shell settings put global window_animation_scale 0.0
-            adb shell settings put global transition_animation_scale 0.0
-            adb shell settings put global animator_duration_scale 0.0
 
             echo "Installing the APK..."
             adb install ${{ env.APK_PATH }} || (adb kill-server && adb start-server && adb devices && adb install ${{ env.APK_PATH }})

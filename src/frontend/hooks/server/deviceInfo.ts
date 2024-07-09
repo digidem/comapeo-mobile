@@ -1,4 +1,4 @@
-import {DeviceInfo} from '@mapeo/schema';
+import {type DeviceInfo} from '@mapeo/schema';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {deviceType, DeviceType} from 'expo-device';
 

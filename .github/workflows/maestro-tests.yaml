@@ -40,7 +40,7 @@ jobs:
       - name: Clean install dependencies
         run: |
           rm -rf node_modules
-          npm install
+          npm ci --ignore-scripts
 
       - name: Install EAS CLI
         run: npm install -g eas-cli
@@ -91,18 +91,20 @@ jobs:
           force-avd-creation: false
           emulator-boot-timeout: 900
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back emulated
           pre-emulator-launch-script: |
             echo "Running pre emulator launch script. Printing the working directory now:"
             pwd
           script: |
             echo "Waiting for the emulator to boot up..."
-            adb wait-for-device
-            until adb shell getprop sys.boot_completed | grep -m 1 '1'; do echo "Waiting for device to boot..."; sleep 10; done
+            - name: Wait for Android Emulator
+              timeout-minutes: 10
+              continue-on-error: true
+              run: |
+                adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
+                adb devices
 
             echo "Device booted. Listing connected devices:"
-            adb devices
-            adb shell input keyevent 82
 
             echo "Disabling animations..."
             adb shell settings put global window_animation_scale 0.0
@@ -113,11 +115,7 @@ jobs:
             adb install ${{ env.APK_PATH }} || (adb kill-server && adb start-server && adb devices && adb install ${{ env.APK_PATH }})
 
             echo "Running Maestro tests..."
-            APP_ID=com.comapeo.tests
-            echo "===== Run E2E Attempt:  1 ====" && $HOME/.maestro/bin/maestro test e2e --env=APP_ID="$APP_ID" --format=junit --output report1.xml
-            echo "::group::Maestro hierarchy"
-            $HOME/.maestro/bin/maestro hierarchy
-            echo "::endgroup::"
+            $HOME/.maestro/bin/maestro test e2e
 
       - name: Upload Maestro test artifacts
         if: always()

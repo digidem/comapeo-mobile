@@ -52,5 +52,8 @@ function expoToCoreDeviceType(d: DeviceType): DeviceInfo['deviceType'] {
     case DeviceType.UNKNOWN: {
       return 'UNRECOGNIZED';
     }
+    default: {
+      throw new Error(`Invalid device type ${d}`);
+    }
   }
 }

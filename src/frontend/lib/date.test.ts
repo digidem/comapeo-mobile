@@ -1,5 +1,17 @@
-import {isDateValid, isSameUtcMonthAndYear} from './date';
+import {
+  formatIsoUtc,
+  isDateValid,
+  isSameUtcMonthAndYear,
+  subDays,
+} from './date';
 import {parseISO} from 'date-fns';
+
+describe('formatIsoUtc', () => {
+  it('formats dates (without times)', () => {
+    const date = parseISO('2012-03-04T06:09:42.0Z');
+    expect(formatIsoUtc(date)).toBe('2012-03-04');
+  });
+});
 
 describe('isDateValid', () => {
   it('returns true for valid dates', () => {
@@ -27,5 +39,25 @@ describe('isSameUtcMonthAndYear', () => {
   it('returns false for dates not in the same month and year', () => {
     expect(isSameUtcMonthAndYear(day1, day3)).toBe(false);
     expect(isSameUtcMonthAndYear(day1, day4)).toBe(false);
+  });
+});
+
+describe('subDays', () => {
+  it('subtracts days', () => {
+    const date = parseISO('2012-03-04T06:09:42.0Z');
+
+    expect(subDays(date, 0)).toEqual(date);
+    expect(subDays(date, 1)).toEqual(parseISO('2012-03-03T06:09:42.0Z'));
+    expect(subDays(date, 10)).toEqual(parseISO('2012-02-23T06:09:42.0Z'));
+  });
+
+  it("doesn't modify the input", () => {
+    const date = parseISO('2012-03-04T06:09:42.0Z');
+    const before = date.valueOf();
+
+    subDays(date, 123);
+
+    const after = date.valueOf();
+    expect(before).toBe(after);
   });
 });

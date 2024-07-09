@@ -13,6 +13,7 @@ import * as TaskManager from 'expo-task-manager';
 import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
 import {tracksStore} from './hooks/persistedState/usePersistedTrack';
 import {useOnBackgroundedAndForegrounded} from './hooks/useOnBackgroundedAndForegrounded';
+import {AppDiagnosticMetrics} from './metrics/AppDiagnosticMetrics';
 import {DeviceDiagnosticMetrics} from './metrics/DeviceDiagnosticMetrics';
 
 Sentry.init({
@@ -25,6 +26,7 @@ Sentry.init({
 const messagePort = new MessagePortLike();
 const mapeoApi = createMapeoClient(messagePort, {timeout: Infinity});
 const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
+const appDiagnosticMetrics = new AppDiagnosticMetrics();
 const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
 localDiscoveryController.start();
 initializeNodejs();
@@ -63,6 +65,11 @@ const App = () => {
   }, []);
 
   useOnBackgroundedAndForegrounded(mapeoApi);
+
+  React.useEffect(() => {
+    // TODO: Set this conditionally based on consent.
+    appDiagnosticMetrics.setEnabled(true);
+  }, []);
 
   React.useEffect(() => {
     // TODO: Set this conditionally based on consent.

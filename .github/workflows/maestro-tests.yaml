@@ -40,7 +40,7 @@ jobs:
       - name: Clean install dependencies
         run: |
           rm -rf node_modules
-          npm ci --ignore-scripts
+          npm install
 
       - name: Install EAS CLI
         run: npm install -g eas-cli

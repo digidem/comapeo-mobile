@@ -1,5 +1,5 @@
 import {Observation} from '@mapeo/schema';
-import {BlobVariant} from '@mapeo/core/dist/types';
+import {BlobId, BlobVariant} from '@mapeo/core/dist/types';
 import {
   useMutation,
   useQueries,
@@ -131,5 +131,22 @@ export function useAttachmentUrlQueries(
         enabledByDefault,
       ),
     ),
+  });
+}
+
+export function useBlobUrl(blobId: BlobId) {
+  const project = useActiveProject();
+
+  return useQuery({
+    queryKey: [
+      'blob_url',
+      blobId.driveId,
+      blobId.type,
+      blobId.variant,
+      blobId.name,
+    ],
+    queryFn: () => {
+      return project.$blobs.getUrl(blobId);
+    },
   });
 }

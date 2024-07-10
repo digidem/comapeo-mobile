@@ -14,8 +14,7 @@ import {InsetMapView} from './InsetMapView';
 import {ButtonFields} from './Buttons';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
-import {MediaScrollView} from '../../sharedComponents/MediaScrollView/index.tsx';
-import {useAttachmentUrlQueries} from '../../hooks/server/media.ts';
+import {DisplayedAttachments} from './DisplayedAttachments.tsx';
 
 const m = defineMessages({
   deleteTitle: {
@@ -62,13 +61,13 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   const isMine = deviceId === createdBy;
 
   // Currently only show photo attachments
-  const photoAttachments = observation.attachments.filter(
-    attachment => attachment.type === 'photo',
-  );
-  const attachmentUrls = useAttachmentUrlQueries(
-    photoAttachments,
-    'thumbnail',
-  ).map(query => query.data);
+  // const photoAttachments = observation.attachments.filter(
+  //   attachment => attachment.type === 'photo',
+  // );
+  // const attachmentUrls = useAttachmentUrlQueries(
+  //   photoAttachments,
+  //   'thumbnail',
+  // ).map(query => query.data);
 
   return (
     <ScrollView
@@ -93,18 +92,11 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
               <Text style={styles.textNotes}>{observation.tags.notes}</Text>
             </View>
           ) : null}
-          {attachmentUrls.length > 0 && (
-            <MediaScrollView
-              photos={attachmentUrls.map(attachmentData => {
-                return !attachmentData
-                  ? undefined
-                  : {
-                      thumbnailUri: attachmentData.url,
-                      id: attachmentData.driveDiscoveryId,
-                    };
-              })}
+
+          {observation.attachments.length > 0 && (
+            <DisplayedAttachments
+              attachments={observation.attachments}
               observationId={observationId}
-              audioRecordings={[]}
             />
           )}
         </View>

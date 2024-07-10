@@ -78,6 +78,15 @@ jobs:
       - name: Install Maestro
         run: curl -Ls 'https://get.maestro.mobile.dev' | bash
 
+      - name: List Available Devices
+        run: avdmanager list device > available_devices.txt
+
+      - name: Upload Available Devices List
+        uses: actions/upload-artifact@v3
+        with:
+          name: available-devices
+          path: available_devices.txt
+
       - name: Set up Android Emulator
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
@@ -85,7 +94,7 @@ jobs:
           ndk: 25.1.8937393
           target: google_apis
           arch: x86_64
-          profile: Pixel_3
+          profile: Pixel_3a
           cores: 4
           ram-size: 4096M
           force-avd-creation: false

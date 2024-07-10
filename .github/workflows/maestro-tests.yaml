@@ -33,12 +33,10 @@ jobs:
           wget -q https://dl.google.com/android/repository/commandlinetools-linux-6609375_latest.zip -O android_cmdline_tools.zip
           sudo mkdir -p /usr/local/lib/android/sdk/cmdline-tools/latest
           sudo unzip -q android_cmdline_tools.zip -d /usr/local/lib/android/sdk/cmdline-tools/latest
-          echo 'export ANDROID_SDK_ROOT=/usr/local/lib/android/sdk' >> $GITHUB_ENV
-          echo 'export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH' >> $GITHUB_ENV
-          echo 'export PATH=$ANDROID_SDK_ROOT/platform-tools:$PATH' >> $GITHUB_ENV
+          echo "ANDROID_SDK_ROOT=/usr/local/lib/android/sdk" >> $GITHUB_ENV
+          echo "PATH=/usr/local/lib/android/sdk/cmdline-tools/latest/bin:/usr/local/lib/android/sdk/platform-tools:\$PATH" >> $GITHUB_ENV
           export ANDROID_SDK_ROOT=/usr/local/lib/android/sdk
-          export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
-          export PATH=$ANDROID_SDK_ROOT/platform-tools:$PATH
+          export PATH=/usr/local/lib/android/sdk/cmdline-tools/latest/bin:/usr/local/lib/android/sdk/platform-tools:$PATH
           yes | sdkmanager --licenses
           sdkmanager "platform-tools" "emulator" "platforms;android-30" "system-images;android-30;google_apis;x86_64"
 

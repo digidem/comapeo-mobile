@@ -85,13 +85,13 @@ jobs:
           ndk: 25.1.8937393
           target: google_apis
           arch: x86_64
-          profile: Nexus 6
-          cores: 2
-          ram-size: 2048M
+          profile: Pixel_3
+          cores: 4
+          ram-size: 4096M
           force-avd-creation: false
           emulator-boot-timeout: 900
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back emulated
+          emulator-options: -no-window -gpu off -no-snapshot -noaudio -no-boot-anim -camera-back emulated
           pre-emulator-launch-script: |
             echo "Running pre emulator launch script. Printing the working directory now:"
             pwd
@@ -102,13 +102,24 @@ jobs:
             echo "Device booted. Listing connected devices:"
             adb devices
             adb shell input keyevent 82
-
-
             echo "Installing the APK..."
             adb install ${{ env.APK_PATH }} || (adb kill-server && adb start-server && adb devices && adb install ${{ env.APK_PATH }})
-
+            echo "Waiting for the emulator to fully boot..."
+            adb wait-for-device
+            adb shell 'while [[ $(getprop sys.boot_completed) -ne 1 ]]; do sleep 1; done'
+            adb shell 'while [[ $(pm list packages -3) != *"com.comapeo"* ]]; do sleep 1; done'
+            echo "Emulator fully booted."
             echo "Running Maestro tests..."
             $HOME/.maestro/bin/maestro test e2e
+
+      - name: Capture Logcat Output
+        run: adb logcat -d > logcat_output.txt
+
+      - name: Upload Logcat Output
+        uses: actions/upload-artifact@v3
+        with:
+          name: logcat-output
+          path: logcat_output.txt
 
       - name: Upload Maestro test artifacts
         if: always()

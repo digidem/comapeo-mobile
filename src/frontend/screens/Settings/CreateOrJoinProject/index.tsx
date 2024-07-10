@@ -1,7 +1,8 @@
 import * as React from 'react';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../../sharedComponents/Text';
-import {NativeNavigationComponent, ViewStyleProp} from '../../../sharedTypes';
+import type {ViewStyleProp} from '../../../sharedTypes';
+import type {NativeNavigationComponent} from '../../../sharedTypes/navigation';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {LIGHT_GREY} from '../../../lib/styles';

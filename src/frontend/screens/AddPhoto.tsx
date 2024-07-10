@@ -37,12 +37,12 @@ export const AddPhotoScreen = ({
   return (
     <View style={styles.container}>
       <CameraView onAddPress={handleAddPress} />
-      <TouchableNativeFeedback
-        style={styles.cancelButton}
-        onPress={handleCancelPress}>
-        <Text style={styles.cancelButtonLabel}>
-          <FormattedMessage {...m.cancel} />
-        </Text>
+      <TouchableNativeFeedback onPress={handleCancelPress}>
+        <View style={styles.cancelButton}>
+          <Text style={styles.cancelButtonLabel}>
+            <FormattedMessage {...m.cancel} />
+          </Text>
+        </View>
       </TouchableNativeFeedback>
     </View>
   );
@@ -54,11 +54,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   cancelButton: {
-    flex: 0,
     height: 60,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'row',
     backgroundColor: 'red',
   },
   cancelButtonLabel: {

@@ -108,10 +108,8 @@ export const EditScreen = ({
     [t, navigation, getValues, nameHasChanges],
   );
 
-  const onPress = React.useCallback(() => {
-    if (isPending) return;
-
-    handleSubmit(async value => {
+  const onSubmit = React.useMemo(() => {
+    return handleSubmit(value => {
       if (!nameHasChanges) {
         navigation.navigate('DeviceNameDisplay');
         return;
@@ -121,21 +119,25 @@ export const EditScreen = ({
         onSuccess: () => navigation.navigate('DeviceNameDisplay'),
       });
     });
-  }, [handleSubmit, isPending, mutate, nameHasChanges, navigation]);
+  }, [handleSubmit, mutate, nameHasChanges, navigation]);
 
   React.useEffect(
     function updateNavigationOptions() {
       navigation.setOptions({
         headerRight: () => {
-          return (
-            <IconButton testID="save-icon" onPress={onPress}>
-              {isPending ? <UIActivityIndicator size={30} /> : <SaveIcon />}
+          return isPending ? (
+            <IconButton testID="save-icon">
+              <UIActivityIndicator size={30} />
+            </IconButton>
+          ) : (
+            <IconButton testID="save-icon" onPress={onSubmit}>
+              <SaveIcon />
             </IconButton>
           );
         },
       });
     },
-    [handleSubmit, navigation, isPending, mutate, nameHasChanges, onPress],
+    [navigation, isPending, onSubmit],
   );
 
   return (
@@ -157,7 +159,7 @@ export const EditScreen = ({
           />
         </FieldRow>
       </ScrollView>
-      <ErrorBottomSheet error={error} clearError={reset} tryAgain={onPress} />
+      <ErrorBottomSheet error={error} clearError={reset} tryAgain={onSubmit} />
     </>
   );
 };

@@ -58,7 +58,7 @@ export function useRejectInvite() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({inviteId}: {inviteId: string}) => {
-      mapeoApi.invite.reject({inviteId});
+      return mapeoApi.invite.reject({inviteId});
     },
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [INVITE_KEY]});

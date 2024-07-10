@@ -69,7 +69,7 @@ export const MapScreen = () => {
   return (
     <View style={{flex: 1}}>
       <Mapbox.MapView
-        testID="mapboxMapView"
+        testID="MAIN.mapbox-map-view"
         style={{flex: 1}}
         logoEnabled={false}
         pitchEnabled={false}
@@ -127,7 +127,7 @@ export const MapScreen = () => {
         </View>
       )}
       <AddButton
-        testID="addButtonMap"
+        testID="MAIN.add-observation-btn"
         onPress={handleAddPress}
         isLoading={!isFinishedLoading}
       />

@@ -12,10 +12,6 @@ const m = defineMessages({
     id: 'Screens.Settings.ProjectSettings.deviceName',
     defaultMessage: 'Device Name',
   },
-  configuration: {
-    id: 'Screens.Settings.ProjectSettings.configuration',
-    defaultMessage: 'Configuration',
-  },
   yourTeam: {
     id: 'Screens.Settings.ProjectSettings.yourTeam',
     defaultMessage: 'Your Team',
@@ -34,9 +30,6 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
             navigation.navigate('DeviceNameDisplay');
           }}>
           <ListItemText primary={<FormattedMessage {...m.deviceName} />} />
-        </ListItem>
-        <ListItem onPress={() => {}}>
-          <ListItemText primary={<FormattedMessage {...m.configuration} />} />
         </ListItem>
         <ListItem
           testID="MAIN.team-list-item"

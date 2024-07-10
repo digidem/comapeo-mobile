@@ -65,7 +65,7 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
 
   const handleSelectPreset = (selectedPreset: Preset) => {
     updatePreset(selectedPreset);
-    navigation.navigate('ObservationEdit');
+    navigation.navigate('ObservationCreate');
   };
 
   const rowsPerWindow = Math.ceil(
@@ -74,7 +74,7 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
   const numColumns = Math.floor(Dimensions.get('window').width / MIN_COL_WIDTH);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="MAIN.categories-scrn">
       <FlatList
         initialNumToRender={rowsPerWindow}
         keyExtractor={keyExtractor}

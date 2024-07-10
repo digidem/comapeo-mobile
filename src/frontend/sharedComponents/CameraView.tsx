@@ -98,7 +98,7 @@ export const CameraView = ({onAddPress}: Props) => {
   const permissionGranted = permissionsResponse?.status === 'granted';
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="MAIN.camera-scrn">
       {!permissionGranted ? (
         <View style={styles.noPermissionContainer}>
           <Text style={{marginBottom: 10}}>

@@ -14,7 +14,8 @@ import {InsetMapView} from './InsetMapView';
 import {ButtonFields} from './Buttons';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
-import {DisplayedAttachments} from './DisplayedAttachments.tsx';
+import {HorizontalFlatList} from '../../sharedComponents/HorizontalFlatList';
+import {ObservationAttachment} from '../../sharedComponents/MediaThumbnails/ObservationAttachment';
 
 const m = defineMessages({
   deleteTitle: {
@@ -60,15 +61,6 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   const {lat, lon, createdBy} = observation;
   const isMine = deviceId === createdBy;
 
-  // Currently only show photo attachments
-  // const photoAttachments = observation.attachments.filter(
-  //   attachment => attachment.type === 'photo',
-  // );
-  // const attachmentUrls = useAttachmentUrlQueries(
-  //   photoAttachments,
-  //   'thumbnail',
-  // ).map(query => query.data);
-
   return (
     <ScrollView
       style={styles.root}
@@ -94,9 +86,28 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
           ) : null}
 
           {observation.attachments.length > 0 && (
-            <DisplayedAttachments
-              attachments={observation.attachments}
-              observationId={observationId}
+            <HorizontalFlatList
+              contentContainerStyle={styles.attachmentsThumbnailsContainer}
+              data={observation.attachments}
+              renderItem={({item}) => {
+                return (
+                  <ObservationAttachment
+                    key={item.driveDiscoveryId}
+                    attachment={item}
+                    onPress={
+                      item.type === 'photo'
+                        ? () => {
+                            navigation.navigate('PhotoPreviewModal', {
+                              attachmentId: item.driveDiscoveryId,
+                              observationId,
+                              deletable: false,
+                            });
+                          }
+                        : undefined
+                    }
+                  />
+                );
+              }}
             />
           )}
         </View>
@@ -119,6 +130,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   scrollContent: {minHeight: '100%'},
+  attachmentsThumbnailsContainer: {
+    gap: 12,
+    alignItems: 'center',
+  },
   divider: {
     backgroundColor: LIGHT_GREY,
     paddingVertical: 15,

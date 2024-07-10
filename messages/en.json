@@ -1028,6 +1028,15 @@
   "sharedComponents.GpsPill.searching": {
     "message": "Searching…"
   },
+  "sharedComponents.MediaThumbnails.ObservationAttachment.cannotDisplay": {
+    "message": "Cannot display {attachmentType}"
+  },
+  "sharedComponents.MediaThumbnails.ObservationAttachment.unknown": {
+    "message": "Unknown attachment type: {attachmentType}"
+  },
+  "sharedComponents.MediaThumbnails.ObservationAttachment.unrecognized": {
+    "message": "Unrecognized attachment type"
+  },
   "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.canceled": {
     "message": "Invite Canceled"
   },

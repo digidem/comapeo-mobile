@@ -58,17 +58,6 @@ jobs:
         run: |
           echo "org.gradle.jvmargs=-Xmx4096m" >> gradle.properties
 
-      - name: Build Android app locally with EAS
-        env:
-          SENTRY_DISABLE_AUTO_UPLOAD: true
-        run: eas build --platform android --profile test --local
-
-      - name: Find APK
-        id: find_apk
-        run: |
-          APK_PATH=$(find . -type f -name "*.apk" | head -n 1)
-          echo "APK_PATH=$APK_PATH" >> $GITHUB_ENV
-
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -83,8 +72,9 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -yqq wget tar unzip
           wget -q https://dl.google.com/android/repository/commandlinetools-linux-6609375_latest.zip -O android_cmdline_tools.zip
-          sudo unzip -q android_cmdline_tools.zip -d /usr/local/lib/android/sdk/cmdline-tools
-          sudo mv /usr/local/lib/android/sdk/cmdline-tools/cmdline-tools /usr/local/lib/android/sdk/cmdline-tools/latest
+          sudo unzip -q android_cmdline_tools.zip -d /usr/local/lib/android/sdk
+          sudo mkdir -p /usr/local/lib/android/sdk/cmdline-tools/latest
+          sudo mv /usr/local/lib/android/sdk/cmdline-tools/* /usr/local/lib/android/sdk/cmdline-tools/latest
           echo 'export ANDROID_SDK_ROOT=/usr/local/lib/android/sdk' >> $GITHUB_ENV
           echo 'export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH' >> $GITHUB_ENV
           echo 'export PATH=$ANDROID_SDK_ROOT/platform-tools:$PATH' >> $GITHUB_ENV
@@ -102,6 +92,17 @@ jobs:
         with:
           name: available-devices
           path: available_devices.txt
+
+      - name: Build Android app locally with EAS
+        env:
+          SENTRY_DISABLE_AUTO_UPLOAD: true
+        run: eas build --platform android --profile test --local
+
+      - name: Find APK
+        id: find_apk
+        run: |
+          APK_PATH=$(find . -type f -name "*.apk" | head -n 1)
+          echo "APK_PATH=$APK_PATH" >> $GITHUB_ENV
 
       - name: Set up Android Emulator
         uses: ReactiveCircus/android-emulator-runner@v2

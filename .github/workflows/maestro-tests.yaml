@@ -68,6 +68,7 @@ jobs:
         run: |
           sudo apt-get clean
           sudo rm -rf /usr/local/lib/android/sdk/.temp
+          sudo rm -rf /usr/local/lib/android/sdk/system-images/android-*/google_apis/x86_64/
 
       - name: Install Maestro
         run: curl -Ls 'https://get.maestro.mobile.dev' | bash
@@ -88,16 +89,16 @@ jobs:
         with:
           api-level: 33
           ndk: 25.1.8937393
-          target: google_apis
+          target: default
           arch: x86_64
           profile: pixel_5
           cores: 4
           ram-size: 2048M
-          disk-size: 6G
+          disk-size: 4G
           force-avd-creation: false
           emulator-boot-timeout: 900
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back emulated
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back emulated -partition-size 4096
           pre-emulator-launch-script: |
             echo "Running pre emulator launch script. Printing the working directory now:"
             pwd

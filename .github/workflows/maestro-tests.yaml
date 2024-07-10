@@ -91,7 +91,7 @@ jobs:
           force-avd-creation: false
           emulator-boot-timeout: 900
           disable-animations: true
-          emulator-options: -no-window -gpu off swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back emulated
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back emulated
           pre-emulator-launch-script: |
             echo "Running pre emulator launch script. Printing the working directory now:"
             pwd

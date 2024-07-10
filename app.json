@@ -54,7 +54,13 @@
         "expo-build-properties",
         {
           "android": {
-            "usesCleartextTraffic": true
+            "usesCleartextTraffic": true,
+            "compileSdkVersion": 30,
+            "targetSdkVersion": 30,
+            "buildToolsVersion": "30.0.3",
+            "packagingOptions": {
+              "pickFirst": ["**/*.so"]
+            }
           }
         }
       ],

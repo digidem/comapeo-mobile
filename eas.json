@@ -22,16 +22,14 @@
       "distribution": "internal",
       "channel": "preview",
       "env": {
-        "APP_VARIANT": "test"
+        "APP_VARIANT": "test",
+        "EXPO_APP_TARGET_ARCHITECTURE": "arm64-v8a"
       },
       "node": "20.14.0",
       "android": {
         "image": "latest",
         "buildType": "apk",
-        "gradleCommand": ":app:assembleRelease",
-        "env": {
-          "EXPO_APP_TARGET_ARCHITECTURE": "arm64-v8a"
-        }
+        "gradleCommand": ":app:assembleRelease"
       },
       "ios": {
         "image": "latest"

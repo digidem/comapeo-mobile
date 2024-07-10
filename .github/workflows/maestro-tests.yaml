@@ -64,6 +64,11 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
+      - name: Clean up space
+        run: |
+          sudo apt-get clean
+          sudo rm -rf /usr/local/lib/android/sdk/.temp
+
       - name: Install Maestro
         run: curl -Ls 'https://get.maestro.mobile.dev' | bash
 
@@ -88,7 +93,7 @@ jobs:
           profile: pixel_5
           cores: 4
           ram-size: 2048M
-          disk-size: 8G
+          disk-size: 6G
           force-avd-creation: false
           emulator-boot-timeout: 900
           disable-animations: true

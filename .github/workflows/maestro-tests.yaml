@@ -20,6 +20,37 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set up Android SDK
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -yqq wget tar unzip
+          wget -q https://dl.google.com/android/repository/commandlinetools-linux-6609375_latest.zip -O android_cmdline_tools.zip
+          sudo mkdir -p /usr/local/lib/android/sdk/cmdline-tools/latest
+          sudo unzip -q android_cmdline_tools.zip -d /usr/local/lib/android/sdk/cmdline-tools/latest
+          echo 'export ANDROID_SDK_ROOT=/usr/local/lib/android/sdk' >> $GITHUB_ENV
+          echo 'export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/cmdline-tools/bin:$PATH' >> $GITHUB_ENV
+          echo 'export PATH=$ANDROID_SDK_ROOT/platform-tools:$PATH' >> $GITHUB_ENV
+
+      - name: Install Android Emulator
+        run: |
+          yes | sdkmanager --licenses
+          sdkmanager "platform-tools" "emulator" "platforms;android-30" "system-images;android-30;google_apis;x86_64"
+
+      - name: List Available Devices
+        run: avdmanager list device > available_devices.txt
+
+      - name: Upload Available Devices List
+        uses: actions/upload-artifact@v3
+        with:
+          name: available-devices
+          path: available_devices.txt
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -45,12 +76,6 @@ jobs:
       - name: Install EAS CLI
         run: npm install -g eas-cli
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
       - name: Authenticate with Expo
         run: echo "EXPO_TOKEN=${{ secrets.EXPO_TOKEN }}" >> $GITHUB_ENV
 
@@ -66,32 +91,6 @@ jobs:
 
       - name: Install Maestro
         run: curl -Ls 'https://get.maestro.mobile.dev' | bash
-
-      - name: Set up Android SDK
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -yqq wget tar unzip
-          wget -q https://dl.google.com/android/repository/commandlinetools-linux-6609375_latest.zip -O android_cmdline_tools.zip
-          sudo unzip -q android_cmdline_tools.zip -d /usr/local/lib/android/sdk/cmdline-tools
-          sudo mkdir -p /usr/local/lib/android/sdk/cmdline-tools/latest
-          sudo mv /usr/local/lib/android/sdk/cmdline-tools/cmdline-tools/* /usr/local/lib/android/sdk/cmdline-tools/latest/
-          echo 'export ANDROID_SDK_ROOT=/usr/local/lib/android/sdk' >> $GITHUB_ENV
-          echo 'export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH' >> $GITHUB_ENV
-          echo 'export PATH=$ANDROID_SDK_ROOT/platform-tools:$PATH' >> $GITHUB_ENV
-
-      - name: Install Android Emulator
-        run: |
-          yes | sdkmanager --licenses
-          sdkmanager "platform-tools" "emulator" "platforms;android-30" "system-images;android-30;google_apis;x86_64"
-
-      - name: List Available Devices
-        run: avdmanager list device > available_devices.txt
-
-      - name: Upload Available Devices List
-        uses: actions/upload-artifact@v3
-        with:
-          name: available-devices
-          path: available_devices.txt
 
       - name: Build Android app locally with EAS
         env:

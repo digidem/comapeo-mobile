@@ -81,7 +81,7 @@ jobs:
       - name: Set up Android Emulator
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
-          api-level: 31
+          api-level: 33
           ndk: 25.1.8937393
           target: google_apis
           arch: x86_64

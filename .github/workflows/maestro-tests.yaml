@@ -34,10 +34,10 @@ jobs:
           sudo mkdir -p /usr/local/lib/android/sdk/cmdline-tools/latest
           sudo unzip -q android_cmdline_tools.zip -d /usr/local/lib/android/sdk/cmdline-tools/latest
           echo 'export ANDROID_SDK_ROOT=/usr/local/lib/android/sdk' >> $GITHUB_ENV
-          echo 'export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/cmdline-tools/bin:$PATH' >> $GITHUB_ENV
+          echo 'export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH' >> $GITHUB_ENV
           echo 'export PATH=$ANDROID_SDK_ROOT/platform-tools:$PATH' >> $GITHUB_ENV
           export ANDROID_SDK_ROOT=/usr/local/lib/android/sdk
-          export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/cmdline-tools/bin:$PATH
+          export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
           export PATH=$ANDROID_SDK_ROOT/platform-tools:$PATH
           yes | sdkmanager --licenses
           sdkmanager "platform-tools" "emulator" "platforms;android-30" "system-images;android-30;google_apis;x86_64"

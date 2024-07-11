@@ -33,7 +33,7 @@ type DeviceNameWithIconProps = {
 export const DeviceNameWithIcon = ({
   deviceType,
   name,
-  isConnected,
+  isConnected = true,
   deviceId,
   thisDevice,
   iconSize,

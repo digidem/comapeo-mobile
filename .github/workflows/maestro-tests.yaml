@@ -89,12 +89,13 @@ jobs:
       - name: Set up Android Emulator
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
-          api-level: 30
+          api-level: 34
           ndk: 25.1.8937393
           target: google_apis_playstore
           arch: x86_64
           profile: pixel_4
           cores: 4
+          disk-size: 2048M
           ram-size: 2048M
           force-avd-creation: false
           emulator-boot-timeout: 900

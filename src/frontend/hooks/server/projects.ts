@@ -2,6 +2,7 @@ import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 
 import {useApi} from '../../contexts/ApiContext';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {usePersistedProjectId} from '../persistedState/usePersistedProjectId';
 
 export const ALL_PROJECTS_KEY = 'all_projects';
 export const PROJECT_SETTINGS_KEY = 'project_settings';
@@ -75,6 +76,24 @@ export function useProjectSettings() {
     queryKey: [PROJECT_SETTINGS_KEY],
     queryFn: () => {
       return project.$getProjectSettings();
+    },
+  });
+}
+
+export function useLeaveProject() {
+  const mapeoApi = useApi();
+  const projectId = usePersistedProjectId(store => store.projectId);
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: () => {
+      if (!projectId) throw new Error('project Id does not exist');
+      return mapeoApi.leaveProject(projectId);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [ALL_PROJECTS_KEY],
+      });
     },
   });
 }

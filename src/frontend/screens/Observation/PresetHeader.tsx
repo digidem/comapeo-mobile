@@ -8,7 +8,7 @@ import {Preset} from '@mapeo/schema';
 export const PresetHeader = ({preset}: {preset: Preset}) => {
   return (
     <View style={styles.categoryIconContainer}>
-      <PresetCircleIcon size="medium" name={preset.name} />
+      <PresetCircleIcon size="medium" name={preset.name} testID={preset.name} />
       <Text style={styles.categoryLabel} numberOfLines={1}>
         <FormattedPresetName preset={preset} />
       </Text>

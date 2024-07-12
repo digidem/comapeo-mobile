@@ -44,6 +44,7 @@ export const ActionsRow = ({fieldIds}: ActionButtonsProps) => {
       icon: <PhotoIcon width={30} height={30} />,
       label: t(m.photoButton),
       onPress: handleCameraPress,
+      testID: 'OBS.add-photo-btn',
     },
   ];
 
@@ -53,6 +54,7 @@ export const ActionsRow = ({fieldIds}: ActionButtonsProps) => {
       icon: <DetailsIcon width={30} height={30} />,
       label: t(m.detailsButton),
       onPress: handleDetailsPress,
+      testID: 'OBS.add-details-btn',
     });
   }
 

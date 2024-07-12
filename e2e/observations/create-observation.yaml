@@ -1,0 +1,87 @@
+appId: com.comapeo
+env:
+  CAT: OBS
+  SUBCAT: MAIN
+---
+- setLocation:
+    latitude: 48.8530
+    longitude: 2.3499
+- tapOn:
+    id: '${SUBCAT}.add-observation-btn'
+- assertVisible:
+    label: 'Categories screen heading displays prompt'
+    text: '.*Choose what is happening.*'
+- assertVisible:
+    label: 'Icon graphics are clearly visible'
+    id: '${CAT}.Airstrip-category-button'
+- assertVisible:
+    label: 'Category names are fully visible'
+    text: '.*Airstrip.*'
+- tapOn:
+    id: 'close-icon'
+- assertVisible:
+    label: 'After tapping close icon, discard observation prompt appears'
+    text: '.*Discard observation.*'
+- tapOn:
+    text: '.*Continue editing.*'
+- assertNotVisible:
+    label: 'Continue editing returns to Categories screen'
+    text: '.*Discard observation.*'
+- tapOn:
+    id: 'close-icon'
+- tapOn:
+    id: '${CAT}.discard-obs'
+- assertVisible:
+    label: 'Discard without saving button returns to returns to map screen'
+    id: '${SUBCAT}.mapbox-map-view'
+- tapOn:
+    id: '${SUBCAT}.add-observation-btn'
+- tapOn:
+    id: '${CAT}.Camp-category-button'
+- assertVisible:
+    label: 'Tapping any category button goes to new observation screen'
+    text: '.*New Observation.*'
+- assertVisible:
+    label: 'Close icon is visible'
+    id: 'close-icon'
+- assertVisible:
+    label: 'Save checkmark is visible'
+    id: '${CAT}.edit-save-btn'
+- assertVisible:
+    label: 'Change category is visible'
+    text: '.*Change.*'
+- assertVisible:
+    label: 'Add photo is visible'
+    id: '${CAT}.add-photo-btn'
+- assertVisible:
+    label: 'Add details is visible'
+    id: '${CAT}.add-details-btn'
+- assertVisible:
+    label: 'Description field states correct message and is visible'
+    text: '.*What is happening here?.*'
+- assertVisible:
+    label: 'GPS bar displays active GPS precision data'
+    text: '.*UTM 31U 452310.*'
+- assertVisible:
+    label: 'Category icon and name display correctly'
+    id: '${CAT}.Camp-icon'
+- assertVisible:
+    text: '.*Camp.*'
+- tapOn:
+    text: 'Change'
+- assertVisible:
+    label: 'CHANGE button goes to Categories screen'
+    id: '${SUBCAT}.categories-scrn'
+- tapOn:
+    id: ${CAT}.Threat-category-button
+- tapOn:
+    label: 'Description field appears with curser and text can be entered'
+    id: '${CAT}.description-inp'
+- inputText:
+    label: 'Can input description'
+    text: 'Sample description'
+- assertVisible:
+    label: 'Add bar with icons appears above keyboard'
+    id: '${CAT}.Photo-icon'
+- tapOn:
+    above: '.*Show Options.*'

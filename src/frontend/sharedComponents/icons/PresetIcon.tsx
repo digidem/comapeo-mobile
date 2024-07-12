@@ -10,6 +10,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 interface PresetIconProps {
   size?: IconSize;
   name?: string;
+  testID?: string;
 }
 
 const iconSizes = {
@@ -24,30 +25,37 @@ const radii = {
   large: 35,
 };
 
-export const PresetIcon = memo<PresetIconProps>(({size = 'medium', name}) => {
-  const iconSize = iconSizes[size] || 35;
-  const {data, isLoading} = useGetPresetIcon(size, name);
-  const [error, setError] = React.useState(false);
+export const PresetIcon = memo<PresetIconProps>(
+  ({size = 'medium', name, testID}) => {
+    const iconSize = iconSizes[size] || 35;
+    const {data, isLoading} = useGetPresetIcon(size, name);
+    const [error, setError] = React.useState(false);
 
-  if (isLoading) return <UIActivityIndicator size={30} />;
+    if (isLoading) return <UIActivityIndicator size={30} />;
 
-  // Fallback to a default icon if we can't load the icon from mapeo-server
-  if (error || !name) return <MaterialIcon name="place" size={iconSize} />;
+    // Fallback to a default icon if we can't load the icon from mapeo-server
+    if (error || !name) return <MaterialIcon name="place" size={iconSize} />;
 
-  return (
-    <Image
-      style={{width: iconSize, height: iconSize}}
-      resizeMode="contain"
-      source={{uri: data}}
-      onError={() => setError(true)}
-    />
-  );
-});
+    return (
+      <Image
+        style={{width: iconSize, height: iconSize}}
+        resizeMode="contain"
+        source={{uri: data}}
+        onError={() => setError(true)}
+        testID={testID}
+      />
+    );
+  },
+);
 
-export const PresetCircleIcon = ({name, size = 'medium'}: PresetIconProps) => {
+export const PresetCircleIcon = ({
+  name,
+  size = 'medium',
+  testID,
+}: PresetIconProps) => {
   return (
     <Circle radius={radii[size]} style={{elevation: 5}}>
-      <PresetIcon name={name} size={size} />
+      <PresetIcon name={name} size={size} testID={testID} />
     </Circle>
   );
 };

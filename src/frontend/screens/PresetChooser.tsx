@@ -116,7 +116,7 @@ const Item = React.memo(
       onPress={() => onSelect(item)}
       activeOpacity={1}
       underlayColor="#000033"
-      testID={`${item.docId}CategoryButton`}>
+      testID={`OBS.${item.name}-category-button`}>
       <View style={styles.cellContainer}>
         <PresetCircleIcon size="medium" name={item.name} />
         <Text numberOfLines={3} style={styles.categoryName}>

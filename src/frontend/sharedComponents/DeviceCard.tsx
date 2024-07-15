@@ -1,14 +1,19 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {LIGHT_GREY} from '../lib/styles';
-import {DeviceType, ViewStyleProp} from '../sharedTypes';
+import {ExhaustivenessError} from '../lib/ExhaustivenessError';
+import type {
+  DeviceConnectionStatus,
+  DeviceType,
+  ViewStyleProp,
+} from '../sharedTypes';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {DeviceNameWithIcon} from './DeviceNameWithIcon';
 
 type DeviceCardProps = {
   deviceType: DeviceType;
   name: string;
-  isConnected?: boolean;
+  deviceConnectionStatus?: DeviceConnectionStatus;
   thisDevice?: boolean;
   deviceId?: string;
   dateAdded?: Date;
@@ -24,16 +29,29 @@ export const DeviceCard = ({
   deviceId,
   dateAdded,
   onPress,
-  isConnected = true,
+  deviceConnectionStatus,
 }: DeviceCardProps) => {
+  let isDisconnected: boolean;
+  switch (deviceConnectionStatus) {
+    case undefined:
+    case 'connected':
+      isDisconnected = false;
+      break;
+    case 'disconnected':
+      isDisconnected = true;
+      break;
+    default:
+      throw new ExhaustivenessError(deviceConnectionStatus);
+  }
+
   return (
     <TouchableOpacity
-      disabled={!onPress || !isConnected}
+      disabled={!onPress || isDisconnected}
       onPress={() => (onPress ? onPress() : {})}
       style={[styles.container, style]}>
       <DeviceNameWithIcon
         name={name}
-        isConnected={isConnected}
+        deviceConnectionStatus={deviceConnectionStatus}
         thisDevice={thisDevice}
         deviceType={deviceType}
         deviceId={deviceId}

@@ -1,4 +1,8 @@
-import {createHash, type BinaryToTextEncoding} from 'node:crypto';
+import {
+  createHash,
+  type BinaryToTextEncoding,
+  randomBytes as nodeRandomBytes,
+} from 'node:crypto';
 
 export enum CryptoDigestAlgorithm {
   SHA512 = 'sha512',
@@ -8,6 +12,12 @@ export enum CryptoEncoding {
   HEX = 'hex',
   BASE64 = 'base64',
 }
+
+export const getRandomBytes = (byteCount: number): Uint8Array =>
+  // Though Node `Buffer`s are `Uint8Array` subclasses, their behavior is
+  // [subtly different][0], so convert the result to be safe.
+  // [0]: https://nodejs.org/docs/latest-v22.x/api/buffer.html#buffers-and-typedarrays
+  new Uint8Array(nodeRandomBytes(byteCount));
 
 type CryptoDigestOptions = {
   encoding: CryptoEncoding;

@@ -11,8 +11,10 @@ import * as SplashScreen from 'expo-splash-screen';
 import * as Sentry from '@sentry/react-native';
 import * as TaskManager from 'expo-task-manager';
 import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
+import {storage} from './hooks/persistedState/createPersistedState';
 import {tracksStore} from './hooks/persistedState/usePersistedTrack';
 import {useOnBackgroundedAndForegrounded} from './hooks/useOnBackgroundedAndForegrounded';
+import {getSentryUserId} from './metrics/getSentryUserId';
 import {DeviceDiagnosticMetrics} from './metrics/DeviceDiagnosticMetrics';
 
 Sentry.init({
@@ -21,6 +23,11 @@ Sentry.init({
   debug:
     process.env.APP_VARIANT === 'development' ||
     process.env.APP_VARIANT === 'test', // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
+  initialScope: {
+    user: {
+      id: getSentryUserId({now: new Date(), storage}),
+    },
+  },
 });
 
 const messagePort = new MessagePortLike();

@@ -2,11 +2,15 @@ import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 import DeviceMobile from '../images/DeviceMobile.svg';
 import DeviceDesktop from '../images/DeviceDesktop.svg';
-import {ViewStyleProp} from '../sharedTypes';
+import type {
+  ViewStyleProp,
+  DeviceConnectionStatus,
+  DeviceType,
+} from '../sharedTypes';
 import {defineMessages, useIntl} from 'react-intl';
 import {Text} from './Text';
 import {MEDIUM_GREY} from '../lib/styles';
-import {DeviceType} from '../sharedTypes';
+import {ExhaustivenessError} from '../lib/ExhaustivenessError';
 import Caution from '../images/caution.svg';
 
 const m = defineMessages({
@@ -27,19 +31,33 @@ type DeviceNameWithIconProps = {
   thisDevice?: boolean;
   iconSize?: number;
   style?: ViewStyleProp;
-  isConnected?: boolean;
+  deviceConnectionStatus?: DeviceConnectionStatus;
 };
 
 export const DeviceNameWithIcon = ({
   deviceType,
   name,
-  isConnected,
+  deviceConnectionStatus,
   deviceId,
   thisDevice,
   iconSize,
   style,
 }: DeviceNameWithIconProps) => {
   const {formatMessage} = useIntl();
+
+  let isDisconnected: boolean;
+  switch (deviceConnectionStatus) {
+    case undefined:
+    case 'connected':
+      isDisconnected = false;
+      break;
+    case 'disconnected':
+      isDisconnected = true;
+      break;
+    default:
+      throw new ExhaustivenessError(deviceConnectionStatus);
+  }
+
   return (
     <View style={[styles.flexRow, style]}>
       {deviceType === 'mobile' ? (
@@ -59,7 +77,7 @@ export const DeviceNameWithIcon = ({
             {formatMessage(m.thisDevice)}
           </Text>
         )}
-        {!isConnected && (
+        {isDisconnected && (
           <View style={[styles.flexRow, {marginTop: 4.4}]}>
             <Caution />
             <Text style={styles.deviceStatusText}>

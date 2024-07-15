@@ -14,8 +14,8 @@ import {DraftPhoto, Photo} from '../../contexts/PhotoPromiseContext/types';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import SaveCheck from '../../images/CheckMark.svg';
-import {useProject} from '../../hooks/server/projects';
 import {CommonActions} from '@react-navigation/native';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
 
 const m = defineMessages({
   noGpsTitle: {
@@ -83,7 +83,7 @@ export const SaveButton = ({
   const addNewTrackObservation = usePersistedTrack(
     state => state.addNewObservation,
   );
-  const project = useProject();
+  const project = useActiveProject();
 
   function createObservation() {
     if (!value) throw new Error('no observation saved in persisted state ');

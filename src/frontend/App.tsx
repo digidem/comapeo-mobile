@@ -14,9 +14,7 @@ import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
 import {tracksStore} from './hooks/persistedState/usePersistedTrack';
 import {useOnBackgroundedAndForegrounded} from './hooks/useOnBackgroundedAndForegrounded';
 import {DeviceDiagnosticMetrics} from './metrics/DeviceDiagnosticMetrics';
-import {LogBox} from 'react-native';
 
-LogBox.ignoreAllLogs();
 Sentry.init({
   dsn: 'https://e0e02907e05dc72a6da64c3483ed88a6@o4507148235702272.ingest.us.sentry.io/4507170965618688',
   tracesSampleRate: 1.0,

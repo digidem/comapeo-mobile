@@ -25,13 +25,32 @@ This document outlines the tests that will need to be run by hand for QA and can
 
 ### Observations
 
-**Camera related**
+#### Camera related
+
 Camera does not work on emulator, see "Platform Compatibility" at the top. https://docs.expo.dev/versions/v50.0.0/sdk/camera/. Should work if we upgrade to Expo 51 at some point.
 
 - Screen shows view from the device rear camera
 - Create observation button goes to Categories screen from home Camera screen
 
-**Other**
+##### Adding Photos
+
+- Capture button on camera from adding observation makes shutter sound, takes photo, adds photo thumbnails (in the orientation taken) to **New observation** screen
+- After 3+ photos are added, thumbnail bar scrolls right and scroll bar appears and functions
+- [On click] thumbnail photo goes to **View image** screen and photo appears in the orientation taken
+- [On click] **X Close** returns to **New observation** screen
+
+##### Deleting Photos
+
+- When photo is opened in View image screen, X (Close) and Delete Image buttons appear on the top of the screen
+- Anywhere on the screen (except button areas) hides X (Close) and Delete Image buttons
+- Anywhere on the screen shows X (Close) and Delete Image buttons again
+- [On click] X Delete Image shows bottom bottom sheet with deletion confirmation prompt in selected app language
+- [On click] Cancel closes bottom sheet and photo is still visible in View image screen
+- [On click] confirmation (Delete Image) returns to New observation screen
+- Deleted image is not present on New observation screen
+- After saving observation and re-opening, deleted image is not present on View observation screen
+
+#### Other
 
 - If category names are long, text wraps using hyphenation at expected points (none are long enough to wrap)
 - Circular color border is visible for each icon in default config (this kind of visibility is not possible within testing)

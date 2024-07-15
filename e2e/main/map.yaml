@@ -21,4 +21,4 @@ env:
     id: '${CAT}.categories-scrn'
 - back
 - tapOn:
-    id: 'OBS.discard-obs'
+    id: 'OBS.discard-obs-left'

@@ -136,7 +136,7 @@ export const CustomHeaderLeftClose = ({
                 ? formatMessage(m.discardChangesButton)
                 : formatMessage(m.discardObservationButton),
               icon: <DiscardIcon />,
-              testID: 'OBS.discard-obs',
+              testID: 'OBS.discard-obs-left',
             },
             {
               onPress: closeSheet,

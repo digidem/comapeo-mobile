@@ -37,7 +37,9 @@ export const AddPhotoScreen = ({
   return (
     <View style={styles.container}>
       <CameraView onAddPress={handleAddPress} />
-      <TouchableNativeFeedback onPress={handleCancelPress}>
+      <TouchableNativeFeedback
+        onPress={handleCancelPress}
+        testID="OBS.photo-cancel-btn">
         <View style={styles.cancelButton}>
           <Text style={styles.cancelButtonLabel}>
             <FormattedMessage {...m.cancel} />

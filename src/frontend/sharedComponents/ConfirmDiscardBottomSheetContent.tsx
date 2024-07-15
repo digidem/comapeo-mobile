@@ -26,6 +26,7 @@ export const ConfirmDiscardBottomSheetContent = ({
       description={subHeader}
       buttonConfigs={[
         {
+          testID: 'OBS.discard-obs-bottom',
           variation: 'filled',
           dangerous: true,
           onPress: handleDiscard,

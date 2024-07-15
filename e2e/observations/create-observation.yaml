@@ -30,7 +30,7 @@ env:
 - tapOn:
     id: 'close-icon'
 - tapOn:
-    id: '${CAT}.discard-obs'
+    id: '${CAT}.discard-obs-left'
 - assertVisible:
     label: 'Discard without saving button returns to returns to map screen'
     id: '${SUBCAT}.mapbox-map-view'
@@ -72,6 +72,11 @@ env:
 - assertVisible:
     label: 'CHANGE button goes to Categories screen'
     id: '${SUBCAT}.categories-scrn'
+- scrollUntilVisible:
+    element:
+      id: ${CAT}.Threat-category-button
+    direction: DOWN
+    visibilityPercentage: 100
 - tapOn:
     id: ${CAT}.Threat-category-button
 - tapOn:
@@ -85,3 +90,20 @@ env:
     id: '${CAT}.Photo-icon'
 - tapOn:
     above: '.*Show Options.*'
+- assertNotVisible:
+    label: 'Add bar with icons appears has collapsed'
+    id: '${CAT}.Photo-icon'
+- tapOn:
+    id: '${CAT}.add-photo-btn'
+- assertVisible:
+    label: 'Add Photo button opens Camera screen'
+    id: ${SUBCAT}.camera-scrn
+- tapOn:
+    id: '${CAT}.photo-cancel-btn'
+- assertVisible:
+    label: 'Cancel button returns to New observation screen without adding photo'
+    text: '.*New Observation.*'
+- tapOn:
+    id: 'close-icon'
+- tapOn:
+    id: '${CAT}.discard-obs-bottom'

@@ -56,9 +56,13 @@ import {ObservationFields} from '../../screens/ObservationFields';
 import {LIGHT_GREY, WHITE} from '../../lib/styles';
 import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSettings';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
-import {PhotoPreviewModal} from '../../screens/PhotoPreviewModal.tsx';
-import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
-import {AboutSettings} from '../../screens/Settings/About.tsx';
+import {PhotoPreviewModal} from '../../screens/PhotoPreviewModal';
+import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
+import {
+  ObservationCreate,
+  createNavigationOptions as createObservationCreateNavigationOptions,
+} from '../../screens/ObservationCreate';
+import {AboutSettings} from '../../screens/Settings/About';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -270,6 +274,12 @@ export const createDefaultScreenGroup = ({
       component={LanguageSettings}
       options={{headerTitle: intl(LanguageSettings.navTitle)}}
     />
+    <RootStack.Screen
+      name="ObservationCreate"
+      component={ObservationCreate}
+      options={createObservationCreateNavigationOptions({intl})}
+    />
+
     <RootStack.Screen
       name="AboutSettings"
       component={AboutSettings}

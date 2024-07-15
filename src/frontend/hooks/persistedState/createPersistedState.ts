@@ -15,8 +15,7 @@ type PersistedStoreKey =
   | 'MapeoTrack'
   | 'Passcode'
   | 'ActiveProjectId'
-  | 'Settings'
-  | 'LastMetricsReportSentAt';
+  | 'Settings';
 
 const MMKVZustandStorage: StateStorage = {
   setItem: (name, value) => {

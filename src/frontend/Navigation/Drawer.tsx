@@ -106,8 +106,12 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
         style={{
           paddingBottom: 40,
         }}>
-        <DrawerMenuIcon onPress={navigation.closeDrawer} />
+        <DrawerMenuIcon
+          style={{alignSelf: 'flex-end', marginRight: 20}}
+          onPress={navigation.closeDrawer}
+        />
         <Text
+          testID="MAIN.drawer-create-join-txt"
           style={{
             alignSelf: 'center',
             textAlign: 'center',
@@ -125,6 +129,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
           height: '100%',
         }}>
         <ListItem
+          testID="MAIN.create-join-list-item"
           onPress={() => {
             navigate('DrawerHome', {screen: 'CreateOrJoinProject'});
           }}>

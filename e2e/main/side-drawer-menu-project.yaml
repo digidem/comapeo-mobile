@@ -1,0 +1,11 @@
+appId: com.comapeo
+env:
+  CAT: MAIN
+---
+- tapOn:
+    id: '${CAT}.drawer-icon'
+- assertVisible:
+    label: 'Project name is now visible in the drawer menu'
+    text: 'Project ${output.names.project}'
+- tapOn:
+    id: '${CAT}.drawer-icon'

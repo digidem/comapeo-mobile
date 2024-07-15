@@ -47,7 +47,17 @@ The next version of Mapeo Mobile
         npm install
         ```
 
-   2. Start the Metro bundler process
+   2. Generate the native code
+
+      - This project uses [Expo Prebuild](https://docs.expo.dev/workflow/prebuild/) for generating the relevant native code. If you update [`app.json`](./app.json) or [`app.config.js`](./app.config.js), or install/update any dependencies that provide native code, you should run the following command to make sure the project is up-to-date:
+
+      ```sh
+      npx expo prebuild
+      ```
+
+      If you have made any manual changes to the generated directories (e.g. `android/` or `ios/`), you may need to specify the `--clean` flag with the command.
+
+   3. Start the Metro bundler process
 
       ```sh
       npm start
@@ -55,7 +65,7 @@ The next version of Mapeo Mobile
 
       Leave this running in a separate terminal window.
 
-   3. Build and run the app (Android)
+   4. Build and run the app (Android)
 
       - For this project, using a physical device is more convenient and reliable to work with. It is recommended that you follow React Native's [setup instructions](https://reactnative.dev/docs/running-on-device) for running an app on a device.
 

@@ -54,4 +54,6 @@ Camera does not work on emulator, see "Platform Compatibility" at the top. https
 
 - If category names are long, text wraps using hyphenation at expected points (none are long enough to wrap)
 - Circular color border is visible for each icon in default config (this kind of visibility is not possible within testing)
--
+- When adding details, there is no mock data with more than one question, so we cannot automatically test the functionality of going to the next question or hitting the back arrow to return to the previous question
+- When adding details, there is no mock data with a multi select so there is no way to automatically test that functionality
+- When selecting a detail with select one radial, visual confirmation is required to check that clicking on a radial adds a dot to it

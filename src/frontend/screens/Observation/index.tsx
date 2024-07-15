@@ -104,7 +104,6 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
                     };
               })}
               observationId={observationId}
-              audioRecordings={[]}
             />
           )}
         </View>

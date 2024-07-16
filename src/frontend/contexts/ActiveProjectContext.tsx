@@ -20,16 +20,26 @@ export const ActiveProjectProvider = ({
 
   const activeProjectQuery = useProject(activeProjectId);
   const [currentProject, setCurrentProject] = React.useState<MapeoProjectApi>();
+  const [previousProject, setPreviousProject] =
+    React.useState<MapeoProjectApi>();
   const {mutate: createProject} = useCreateProject();
 
-  // This guarantees that a project is always mounted in between creation of a new project
-  // Otherwise, a new project is created, the cache is reset, activeProjectQuery.data becomes undefined
-  // and unmounts the entire navContainer
+  // This is not ideal. But in order for the user to never have an undefined project, we need to load the previous project as the current project initially. That way when current project is reset, previous project will have a value to return.
+  if (!previousProject && currentProject) {
+    setPreviousProject(currentProject);
+  }
+
   React.useEffect(() => {
-    if (activeProjectQuery.data) {
+    if (!activeProjectQuery.isPending && activeProjectQuery.data) {
+      setPreviousProject(currentProject);
       setCurrentProject(activeProjectQuery.data);
     }
-  }, [activeProjectQuery.data, setCurrentProject]);
+  }, [
+    activeProjectQuery.isPending,
+    activeProjectQuery.data,
+    setCurrentProject,
+    currentProject,
+  ]);
 
   // The persisted active project ID may be missing in the following scenarios:
   //
@@ -69,12 +79,12 @@ export const ActiveProjectProvider = ({
       });
   }, [activeProjectId, setActiveProjectId, createProject, mapeoApi]);
 
-  if (!currentProject) {
+  if (!currentProject && !previousProject) {
     return <Loading />;
   }
 
   return (
-    <ActiveProjectContext.Provider value={currentProject}>
+    <ActiveProjectContext.Provider value={currentProject || previousProject}>
       {children}
     </ActiveProjectContext.Provider>
   );

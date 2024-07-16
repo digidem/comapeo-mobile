@@ -1,15 +1,15 @@
 import * as React from 'react';
+import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import {defineMessages, useIntl} from 'react-intl';
-import {StyleSheet} from 'react-native';
-import {RED} from '../../lib/styles';
-import {
-  BottomSheetModalContent,
-  BottomSheetModal,
-} from '../../sharedComponents/BottomSheetModal';
-import {ErrorIcon} from '../../sharedComponents/icons';
+
 import {usePersistedPasscode} from '../../hooks/persistedState/usePersistedPasscode';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
+import ErrorIcon from '../../images/Error.svg';
+import {RED} from '../../lib/styles';
+import {
+  BottomSheetModal,
+  BottomSheetModalContent,
+} from '../../sharedComponents/BottomSheetModal';
 
 const m = defineMessages({
   title: {
@@ -53,8 +53,6 @@ export const ConfirmPasscodeSheet = React.forwardRef<
   return (
     <BottomSheetModal isOpen={isOpen} ref={sheetRef} onDismiss={() => {}}>
       <BottomSheetModalContent
-        titleStyle={styles.text}
-        descriptionStyle={styles.text}
         title={t(m.title)}
         description={`${t(m.passcode)}: ${inputtedPasscode}`}
         buttonConfigs={[
@@ -71,14 +69,8 @@ export const ConfirmPasscodeSheet = React.forwardRef<
             onPress: setPasscodeAndNavigateBack,
           },
         ]}
-        icon={<ErrorIcon size={90} color={RED} />}
+        icon={<ErrorIcon width={60} height={60} color={RED} />}
       />
     </BottomSheetModal>
   );
-});
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 16,
-  },
 });

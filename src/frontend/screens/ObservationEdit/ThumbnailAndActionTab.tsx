@@ -46,9 +46,7 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
   const {formatMessage: t} = useIntl();
   const {usePreset} = useDraftObservation();
   const preset = usePreset();
-  const {photos, audioRecordings, observationId} = usePersistedDraftObservation(
-    store => store,
-  );
+  const {photos, observationId} = usePersistedDraftObservation(store => store);
   const {
     openSheet: openAudioPermissionSheet,
     sheetRef: audioPermissionSheetRef,
@@ -103,11 +101,7 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
   return (
     <>
       <View>
-        <MediaScrollView
-          photos={photos}
-          audioRecordings={audioRecordings}
-          observationId={observationId}
-        />
+        <MediaScrollView photos={photos} observationId={observationId} />
         <ActionTab items={bottomSheetItems} />
       </View>
       <PermissionAudio

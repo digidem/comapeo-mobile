@@ -2,6 +2,8 @@ import {ImageStyle, StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {Observation, ObservationValue} from '@mapeo/schema';
 import type {RoleId, RoleIdForNewInvite} from '@mapeo/core/dist/roles';
 
+export type DeviceConnectionStatus = 'connected' | 'disconnected';
+
 export type DeviceType = 'mobile' | 'desktop';
 
 export type DeviceRole = RoleId;

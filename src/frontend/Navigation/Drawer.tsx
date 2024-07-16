@@ -106,7 +106,10 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
         style={{
           paddingBottom: 40,
         }}>
-        <DrawerMenuIcon onPress={navigation.closeDrawer} />
+        <DrawerMenuIcon
+          style={{alignSelf: 'flex-end', marginRight: 20}}
+          onPress={navigation.closeDrawer}
+        />
         <Text
           testID="MAIN.drawer-create-join-txt"
           style={{

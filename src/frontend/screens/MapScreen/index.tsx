@@ -79,6 +79,9 @@ export const MapScreen = () => {
         compassEnabled={false}
         scaleBarEnabled={false}
         styleURL={styleUrlQuery.data}
+        onMapIdle={event => {
+          setZoom(event.properties.zoom);
+        }}
         onDidFinishLoadingStyle={handleDidFinishLoadingStyle}
         onMoveShouldSetResponder={() => {
           if (following) setFollowing(false);

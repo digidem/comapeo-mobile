@@ -50,6 +50,19 @@ Camera does not work on emulator, see "Platform Compatibility" at the top. https
 - Deleted image is not present on New observation screen
 - After saving observation and re-opening, deleted image is not present on View observation screen
 
+#### Weak GPS signal
+
+Unfortunately this can't be mocked either through the android settings on the emulator or through Maestro tests.
+
+- If precision is greater than 10m or GPS is off
+  - No GPS Signal or Weak GPS Signal warning dialogue appears with descriptive text and 3 clickable options in selected app language
+  - [On click] CONTINUE WAITING returns to New observation screen
+  - GPS bar displays active GPS precision data
+  - [On click] MANUAL COORDS goes to Enter Coordinates screen
+  - Enter coordinates heading displays in selected app language
+  - [On click] Coordinate Format input field opens coordinate format selection window
+  - [On click] SAVE saves data and returns to Home screen most recently used (Map or Camera)
+
 #### Other
 
 - If category names are long, text wraps using hyphenation at expected points (none are long enough to wrap)

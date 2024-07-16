@@ -13,6 +13,7 @@ These tests deal with all issues related to the main screens of the app.
 - In a new observation, checks that all buttons, including: x close, check save, change, add photo, add details, add description, GPS bar with data, category icon, and category name are there
 - Checks that the change button goes back to the categories screen and category can be changed
 - Checks that a description can be added and when doing so, the add bar appears above the keyboard and collapses when click above the keyboard
+- Saves the observation
 
 ### Special Considerations
 
@@ -25,13 +26,14 @@ These tests deal with all issues related to the main screens of the app.
 ### Test Objectives
 
 - Checks that the details screen has the back arrow, question number out of number, and done or next, the detail name, the and the placeholder.
+- Checks that the back arrow returns to the new observation screen
 - Checks that the text field input is open by default
 - Checks that text can be input into that text field
 - Checks that if it is question 1 or 1, that done appears
+- Checks that if hitting done, returns to the new observation screen
+- Saves the observation
 
 ### Special Considerations
 
 - There is no mock data with two questions, so functionality for advancing forward or backward through questions is not there.
 - There is no mock data with a multi select, so functionality for doing that is not testable
-- There is a bug in that hitting the back arrow does not return to "New Observation" as it should
-- Adding details doesn't work right now and causes the new observation to be lost

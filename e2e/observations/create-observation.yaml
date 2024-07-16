@@ -104,6 +104,4 @@ env:
     label: 'Cancel button returns to New observation screen without adding photo'
     text: '.*New Observation.*'
 - tapOn:
-    id: 'close-icon'
-- tapOn:
-    id: '${CAT}.discard-obs-bottom'
+    id: '${CAT}.edit-save-btn'

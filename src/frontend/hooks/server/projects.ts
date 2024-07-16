@@ -19,6 +19,7 @@ export function useProject(projectId?: string) {
       return api.getProject(projectId);
     },
     enabled: !!projectId,
+    placeholderData: previousData => previousData,
   });
 }
 

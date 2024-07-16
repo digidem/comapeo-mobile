@@ -6,8 +6,8 @@ on:
       - chore/e2e-ci
 
 jobs:
-  e2e-ci:
-    runs-on: ubuntu-24.04
+  build-apk:
+    runs-on: ubuntu-latest
 
     steps:
       - name: Check for EXPO_TOKEN
@@ -54,6 +54,38 @@ jobs:
       - name: Authenticate with Expo
         run: echo "EXPO_TOKEN=${{ secrets.EXPO_TOKEN }}" >> $GITHUB_ENV
 
+      - name: Build Android app locally with EAS
+        env:
+          SENTRY_DISABLE_AUTO_UPLOAD: true
+        run: eas build --platform android --profile test --local
+
+      - name: Find APK
+        id: find_apk
+        run: |
+          APK_PATH=$(find . -type f -name "*.apk" | head -n 1)
+          echo "APK_PATH=$APK_PATH" >> $GITHUB_ENV
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk
+          path: ${{ env.APK_PATH }}
+
+  run-tests:
+    runs-on: ubuntu-22.04-arm64-2cpu
+    needs: build-apk
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download APK
+        uses: actions/download-artifact@v4
+        with:
+          name: apk
+          path: ./
+
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -72,17 +104,6 @@ jobs:
       - name: Install Maestro
         run: curl -Ls 'https://get.maestro.mobile.dev' | bash
 
-      - name: Build Android app locally with EAS
-        env:
-          SENTRY_DISABLE_AUTO_UPLOAD: true
-        run: eas build --platform android --profile test --local
-
-      - name: Find APK
-        id: find_apk
-        run: |
-          APK_PATH=$(find . -type f -name "*.apk" | head -n 1)
-          echo "APK_PATH=$APK_PATH" >> $GITHUB_ENV
-
       - name: Set up Android Emulator
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
@@ -92,7 +113,7 @@ jobs:
           arch: x86_64
           force-avd-creation: false
           profile: pixel_4
-          cores: 4
+          cores: 2
           disk-size: 6000M
           ram-size: 2048M
           heap-size: 4096M
@@ -112,7 +133,7 @@ jobs:
             adb devices
             adb shell input keyevent 82
             echo "Installing the APK..."
-            adb install ${{ env.APK_PATH }} || (adb kill-server && adb start-server && adb devices && adb install ${{ env.APK_PATH }})
+            adb install ${{ github.workspace }}/*.apk || (adb kill-server && adb start-server && adb devices && adb install ${{ github.workspace }}/*.apk)
             echo "Waiting for the emulator to fully boot..."
             adb wait-for-device
             adb shell 'while [[ $(getprop sys.boot_completed) -ne 1 ]]; do sleep 1; done'
@@ -121,12 +142,6 @@ jobs:
             echo "Running Maestro tests..."
             $HOME/.maestro/bin/maestro test e2e || true
             adb logcat -d > logcat_output.txt
-
-      - name: Upload build outputs (APKs)
-        uses: actions/upload-artifact@v4
-        with:
-          name: APKs
-          path: '**/build/outputs/apk/**/*.apk'
 
       - name: Upload Logcat Output
         uses: actions/upload-artifact@v4

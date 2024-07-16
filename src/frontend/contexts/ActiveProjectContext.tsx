@@ -19,27 +19,7 @@ export const ActiveProjectProvider = ({
   const setActiveProjectId = usePersistedProjectId(store => store.setProjectId);
 
   const activeProjectQuery = useProject(activeProjectId);
-  const [currentProject, setCurrentProject] = React.useState<MapeoProjectApi>();
-  const [previousProject, setPreviousProject] =
-    React.useState<MapeoProjectApi>();
   const {mutate: createProject} = useCreateProject();
-
-  // This is not ideal. But in order for the user to never have an undefined project, we need to load the previous project as the current project initially. That way when current project is reset, previous project will have a value to return.
-  if (!previousProject && currentProject) {
-    setPreviousProject(currentProject);
-  }
-
-  React.useEffect(() => {
-    if (!activeProjectQuery.isPending && activeProjectQuery.data) {
-      setPreviousProject(currentProject);
-      setCurrentProject(activeProjectQuery.data);
-    }
-  }, [
-    activeProjectQuery.isPending,
-    activeProjectQuery.data,
-    setCurrentProject,
-    currentProject,
-  ]);
 
   // The persisted active project ID may be missing in the following scenarios:
   //
@@ -79,12 +59,12 @@ export const ActiveProjectProvider = ({
       });
   }, [activeProjectId, setActiveProjectId, createProject, mapeoApi]);
 
-  if (!currentProject && !previousProject) {
+  if (!activeProjectQuery.data) {
     return <Loading />;
   }
 
   return (
-    <ActiveProjectContext.Provider value={currentProject || previousProject}>
+    <ActiveProjectContext.Provider value={activeProjectQuery.data}>
       {children}
     </ActiveProjectContext.Provider>
   );

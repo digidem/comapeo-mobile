@@ -9,9 +9,8 @@ import {useProjectInvitesListener} from '../../hooks/useProjectInvitesListener';
 import {NewInviteBottomSheetContent} from './NewInviteBottomSheetContent';
 import {InviteSuccessBottomSheetContent} from './InviteSuccessBottomSheetContent';
 import {InviteCanceledBottomSheetContent} from './InviteCanceledBottomSheetContent';
-import {AlreadyOnProject} from '../LeaveProjectModalContent/AlreadyOnProject';
-import {LeaveProject} from '../LeaveProjectModalContent/LeaveProject';
 import {useAllProjects} from '../../hooks/server/projects';
+import {LeaveProjectModalContent} from '../LeaveProjectModalContent';
 
 export const ProjectInviteBottomSheet = ({
   enabledForCurrentScreen,
@@ -30,8 +29,8 @@ export const ProjectInviteBottomSheet = ({
   const {
     sheetRef: leaveRef,
     isOpen: leaveIsOpen,
-    closeSheet: closeleaveSheet,
-    openSheet: openleaveSheet,
+    closeSheet: closeLeaveSheet,
+    openSheet: openLeaveSheet,
   } = useBottomSheetModal({
     openOnMount: false,
   });
@@ -40,10 +39,9 @@ export const ProjectInviteBottomSheet = ({
   );
 
   const projects = useAllProjects();
-  const [leaveModalState, setLeaveModalState] = React.useState<
-    'AlreadyOnProj' | 'LeaveProj'
-  >('AlreadyOnProj');
+
   const invite = invites[0];
+
   const {currentInviteCanceled, resetCacheAndClearCanceled} =
     useProjectInvitesListener({
       inviteId: invite?.inviteId,
@@ -56,13 +54,8 @@ export const ProjectInviteBottomSheet = ({
     openInviteSheet();
   }
 
-  function resetLeaveModalState() {
-    setLeaveModalState('AlreadyOnProj');
-  }
-
-  function closeAndResetLeaveModal() {
-    closeleaveSheet();
-    resetLeaveModalState();
+  if (currentInviteCanceled && leaveIsOpen) {
+    closeLeaveSheet();
   }
 
   function handleReject() {
@@ -84,65 +77,55 @@ export const ProjectInviteBottomSheet = ({
     }
   }
 
+  function handleAccept() {
+    if (invite) {
+      // the accept button will be in a loading state until projects.data is available. So user will not be able to get here until the projects have loaded
+      if (projects.data && projects.data.length > 1) {
+        openLeaveSheet();
+        return;
+      }
+
+      accept.mutate({inviteId: invite.inviteId});
+    }
+  }
+
   return (
-    <BottomSheetModal
-      ref={inviteRef}
-      isOpen={inviteIsOpen}
-      onDismiss={() => {
-        accept.reset();
-        reject.reset();
-        resetLeaveModalState();
-      }}>
-      <>
+    <>
+      <BottomSheetModal
+        ref={inviteRef}
+        isOpen={inviteIsOpen}
+        onDismiss={() => {
+          accept.reset();
+          reject.reset();
+        }}>
         {currentInviteCanceled ? (
           <InviteCanceledBottomSheetContent
             handleClose={handleCanceledInvite}
             projectName={invite?.projectName}
           />
-        ) : !accept.isSuccess ? (
+        ) : accept.isSuccess ? (
+          <InviteSuccessBottomSheetContent
+            closeSheet={closeInviteSheet}
+            projectName={invite?.projectName}
+          />
+        ) : (
           <NewInviteBottomSheetContent
-            handleAccept={() => {
-              if (invite) {
-                if (projects.data && projects.data.length > 1) {
-                  openleaveSheet();
-                  return;
-                }
-                accept.mutate(invite);
-              }
-            }}
+            handleAccept={handleAccept}
             isLoading={
               accept.isPending || reject.isPending || projects.isPending
             }
             handleReject={handleReject}
             projectName={invite?.projectName}
           />
-        ) : (
-          <InviteSuccessBottomSheetContent
-            closeSheet={closeInviteSheet}
-            projectName={invite?.projectName}
-          />
         )}
-        <BottomSheetModal
-          isOpen={leaveIsOpen}
-          ref={leaveRef}
-          fullScreen
-          onDismiss={resetLeaveModalState}>
-          {leaveModalState === 'AlreadyOnProj' ? (
-            <AlreadyOnProject
-              moveToLeaveProjectModalContent={() => {
-                setLeaveModalState('LeaveProj');
-              }}
-              closeSheet={closeAndResetLeaveModal}
-            />
-          ) : (
-            <LeaveProject
-              closeSheet={closeAndResetLeaveModal}
-              inviteId={invite?.inviteId || ''}
-              accept={accept}
-            />
-          )}
-        </BottomSheetModal>
-      </>
-    </BottomSheetModal>
+      </BottomSheetModal>
+      <BottomSheetModal fullScreen ref={leaveRef} isOpen={leaveIsOpen}>
+        <LeaveProjectModalContent
+          cancel={closeLeaveSheet}
+          inviteId={invite?.inviteId || ''}
+          accept={accept}
+        />
+      </BottomSheetModal>
+    </>
   );
 };

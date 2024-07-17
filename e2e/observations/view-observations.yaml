@@ -8,8 +8,7 @@ env:
     longitude: 2.3529
 - tapOn:
     id: '${SUBCAT}.add-observation-btn'
-- tapOn:
-    id: '${CAT}.Lake-category-button'
+- tapOn: '.*Lake.*'
 - tapOn:
     id: '${CAT}.edit-save-btn'
 - setLocation:
@@ -17,8 +16,7 @@ env:
     longitude: 2.3544
 - tapOn:
     id: '${SUBCAT}.add-observation-btn'
-- tapOn:
-    id: '${CAT}.Clay-category-button'
+- tapOn: '.*Clay.*'
 - tapOn:
     id: '${CAT}.edit-save-btn'
 - takeScreenshot: ObservationDots

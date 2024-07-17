@@ -14,6 +14,9 @@ env:
 - assertVisible:
     label: 'Sync button, drawer icon, and plus button all appear on the map'
     id: '${CAT}.add-observation-btn'
+- assertVisible:
+    label: 'Scale bar at outset with default scaling'
+    text: '2km'
 - tapOn:
     id: '${CAT}.add-observation-btn'
 - assertVisible:

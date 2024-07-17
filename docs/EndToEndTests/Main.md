@@ -48,7 +48,7 @@ This tests the GPS pill that is on the main map screen and the main camera scree
 
 ## Map
 
-This tests that some of the buttons appear on the map and that an observation can be created from the map.
+This tests that some of the buttons appear on the map, that the scale bar appears, and that an observation can be created from the map.
 
 ### Test Objectives
 

@@ -10,7 +10,7 @@ This document outlines the tests that will need to be run by hand for QA and can
 
 1. **Scale Bar**:
 
-- Scale bar appears and shows proper measurements based on the zoom of the map
+- Scale bar appears and shows proper measurements based on the zoom of the map. It is not possible to use automated tests to test the pinch gesture, so that aspect of the scale bar needs to be tested manually.
 
 1. **Navigation Centering Button**:
 

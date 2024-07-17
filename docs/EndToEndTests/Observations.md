@@ -50,3 +50,7 @@ These tests deal with all issues related to the main screens of the app.
 - Checks that all of the back buttons work
 - Checks that the observations list button goes to the observations list screen from map and the camera screen
 - Checks that observation names, time captures, thumbnails and icons display as expected on the list screen and the show observation screen
+
+### Special Considerations
+
+- There is no way to automatically test the appearance of the dots, but it can be checked on a screenshot

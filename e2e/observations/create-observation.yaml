@@ -13,7 +13,7 @@ env:
     text: '.*Choose what is happening.*'
 - assertVisible:
     label: 'Icon graphics are clearly visible'
-    id: '${CAT}.Airstrip-category-button'
+    text: 'Airstrip'
 - assertVisible:
     label: 'Category names are fully visible'
     text: '.*Airstrip.*'
@@ -29,15 +29,13 @@ env:
     text: '.*Discard observation.*'
 - tapOn:
     id: 'close-icon'
-- tapOn:
-    id: '${CAT}.discard-obs-left'
+- tapOn: 'Discard Observation'
 - assertVisible:
     label: 'Discard without saving button returns to returns to map screen'
     id: '${SUBCAT}.mapbox-map-view'
 - tapOn:
     id: '${SUBCAT}.add-observation-btn'
-- tapOn:
-    id: '${CAT}.Camp-category-button'
+- tapOn: 'House'
 - assertVisible:
     label: 'Tapping any category button goes to new observation screen'
     text: '.*New Observation.*'
@@ -64,9 +62,9 @@ env:
     text: '.*UTM 31U 452310.*'
 - assertVisible:
     label: 'Category icon and name display correctly'
-    id: '${CAT}.Camp-icon'
+    id: '${CAT}.House-icon'
 - assertVisible:
-    text: '.*Camp.*'
+    text: '.*House.*'
 - tapOn:
     text: 'Change'
 - assertVisible:
@@ -74,11 +72,10 @@ env:
     id: '${SUBCAT}.categories-scrn'
 - scrollUntilVisible:
     element:
-      id: ${CAT}.Threat-category-button
+      text: 'Threat'
     direction: DOWN
     visibilityPercentage: 100
-- tapOn:
-    id: ${CAT}.Threat-category-button
+- tapOn: 'Threat'
 - tapOn:
     label: 'Description field appears with curser and text can be entered'
     id: '${CAT}.description-inp'
@@ -87,19 +84,18 @@ env:
     text: 'Sample description'
 - assertVisible:
     label: 'Add bar with icons appears above keyboard'
-    id: '${CAT}.Photo-icon'
+    id: '${CAT}.add-photo-btn-keyboard'
 - tapOn:
     above: '.*Show Options.*'
 - assertNotVisible:
     label: 'Add bar with icons appears has collapsed'
-    id: '${CAT}.Photo-icon'
+    id: '${CAT}.add-photo-btn-keyboard'
 - tapOn:
     id: '${CAT}.add-photo-btn'
 - assertVisible:
     label: 'Add Photo button opens Camera screen'
     id: ${SUBCAT}.camera-scrn
-- tapOn:
-    id: '${CAT}.photo-cancel-btn'
+- tapOn: '.*Cancel.*'
 - assertVisible:
     label: 'Cancel button returns to New observation screen without adding photo'
     text: '.*New Observation.*'

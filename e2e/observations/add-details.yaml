@@ -8,8 +8,7 @@ env:
     longitude: 2.3519
 - tapOn:
     id: '${SUBCAT}.add-observation-btn'
-- tapOn:
-    id: 'OBS.Gathering Site-category-button'
+- tapOn: '.*Gathering Site.*'
 - tapOn:
     id: 'OBS.add-details-btn'
 - assertVisible:

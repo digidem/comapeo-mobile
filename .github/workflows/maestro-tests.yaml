@@ -92,8 +92,11 @@ jobs:
           sudo adduser $(whoami) kvm
           sudo adduser $(whoami) libvirt
           sudo modprobe kvm
-          sudo modprobe kvm-arm64
-          egrep -c '(vmx|svm)' /proc/cpuinfo
+
+      - name: Verify KVM Installation
+        run: |
+          ls -l /dev/kvm
+          dmesg | grep -i kvm
 
       - name: Enable KVM
         run: |

@@ -86,13 +86,21 @@ jobs:
           name: apk
           path: ./
 
-      - name: Clean up space
+      - name: Install Android SDK
         run: |
-          sudo apt-get clean
-          sudo rm -rf /usr/local/lib/android/sdk/.temp
-          sudo rm -rf /usr/local/lib/android/sdk/system-images/android-*/google_apis/x86_64/
-          sudo rm -rf /usr/local/lib/android/sdk/system-images/android-*/default/x86_64/
-          sudo rm -rf /usr/local/lib/android/sdk/.android/avd/*.avd/*.img
+          sudo apt-get update
+          sudo apt-get install -y wget unzip
+          wget -q https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip -O android-sdk.zip
+          unzip -q android-sdk.zip -d android-sdk
+          sudo mv android-sdk /usr/local/android-sdk
+          sudo mkdir -p /usr/local/android-sdk/cmdline-tools
+          sudo mv /usr/local/android-sdk/cmdline-tools /usr/local/android-sdk/cmdline-tools/latest
+          echo 'export ANDROID_SDK_ROOT=/usr/local/android-sdk' >> $GITHUB_ENV
+          echo 'export PATH=$PATH:/usr/local/android-sdk/cmdline-tools/latest/bin' >> $GITHUB_ENV
+          echo 'export PATH=$PATH:/usr/local/android-sdk/platform-tools' >> $GITHUB_ENV
+          echo 'export PATH=$PATH:/usr/local/android-sdk/emulator' >> $GITHUB_ENV
+          source $GITHUB_ENV
+          sudo chown -R $USER:$USER /usr/local/android-sdk
 
       - name: Install Maestro
         run: curl -Ls 'https://get.maestro.mobile.dev' | bash

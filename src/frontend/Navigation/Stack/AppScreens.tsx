@@ -91,9 +91,7 @@ export const createDefaultScreenGroup = ({
       component={AuthScreen}
       options={{
         headerShown: false,
-        // TODO: These don't seem to work
-        presentation: 'fullScreenModal',
-        animation: 'slide_from_bottom',
+        animation: 'fade',
       }}
     />
     <RootStack.Screen

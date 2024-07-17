@@ -48,14 +48,6 @@ export function useDrawerNavigation() {
 export function RootStackNavigator({
   navigation,
 }: DrawerScreenProps<DrawerScreens, 'DrawerHome'>) {
-  const security = useSecurityContext();
-
-  React.useEffect(() => {
-    if (security.authState === 'unauthenticated') {
-      navigation.navigate('DrawerHome', {screen: 'AuthScreen'});
-    }
-  }, [security.authState, navigation]);
-
   return (
     <DrawerNavigationContext.Provider value={navigation}>
       <React.Suspense fallback={<Loading />}>
@@ -82,25 +74,21 @@ function RootStackNavigatorChild() {
 
   const security = useSecurityContext();
 
-  // const navigation = useNavigationFromRoot();
+  const {navigate} = useNavigationFromRoot();
 
-  // React.useEffect(() => {
-  //   if (security.authState === 'unauthenticated') {
-  //     navigation.navigate('AuthScreen');
-  //   }
-  // }, [security.authState, navigation]);
+  React.useEffect(() => {
+    if (security.authState === 'unauthenticated') {
+      navigate('AuthScreen');
+    }
+  }, [security.authState, navigate]);
 
   return (
     <RootStack.Navigator
-      initialRouteName={
-        security.authState === 'unauthenticated'
-          ? 'AuthScreen'
-          : getInitialRouteName({
-              hasDeviceName: !!deviceInfo.data.name,
-              existingObservation,
-              presets,
-            })
-      }
+      initialRouteName={getInitialRouteName({
+        hasDeviceName: !!deviceInfo.data.name,
+        existingObservation,
+        presets,
+      })}
       screenOptions={NavigatorScreenOptions}>
       {deviceInfo.data?.name
         ? createDefaultScreenGroup({

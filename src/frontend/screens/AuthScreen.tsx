@@ -45,7 +45,8 @@ export const AuthScreen = ({
 
   React.useEffect(() => {
     if (authState === 'unauthenticated') return;
-    // TODO: Not working as expected
+
+    console.log(JSON.stringify(navigation.getState(), null, 4));
     if (navigation.canGoBack()) {
       navigation.goBack();
     } else {

@@ -72,7 +72,7 @@ export const ObservationsList: React.FC<
   }
 
   return (
-    <View style={styles.container} testID="observationsListView">
+    <View style={styles.container} testID="OBS.list-scrn">
       {isPending ? (
         <Loading />
       ) : data && data.length <= 1 ? (

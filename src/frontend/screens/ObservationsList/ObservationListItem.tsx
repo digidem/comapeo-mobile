@@ -68,7 +68,11 @@ function ObservationListItemNotMemoized({
             </View>
           </View>
         ) : (
-          <PresetCircleIcon name={preset.name} size="medium" />
+          <PresetCircleIcon
+            name={preset.name}
+            size="medium"
+            testID={`OBS.${preset?.name}-list-icon`}
+          />
         )}
       </View>
     </TouchableHighlight>

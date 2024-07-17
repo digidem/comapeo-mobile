@@ -20,3 +20,55 @@ env:
 - tapOn:
     id: '${CAT}.edit-save-btn'
 - takeScreenshot: ObservationDots
+- tapOn:
+    point: '46%,47%'
+- assertVisible:
+    label: 'Point  goes to the View observation screen for that point'
+    text: 'Gathering Site'
+- tapOn:
+    id: '${SUBCAT}.header-back-btn'
+- assertVisible:
+    label: 'Back button returns to Home map screen'
+    id: '${SUBCAT}.mapbox-map-view'
+- tapOn:
+    id: 'tabBarButtonObservationsList'
+- assertVisible:
+    label: 'Observations list button goes to Observations list screen from Map screen'
+    id: '${CAT}.list-scrn'
+- tapOn:
+    id: 'tabBarButtonCamera'
+- tapOn:
+    id: 'tabBarButtonObservationsList'
+- assertVisible:
+    label: 'Observations list button goes to Observations list screen from Camera screen'
+    id: '${CAT}.list-scrn'
+- assertVisible: '^(?:[1-5]?[0-9] seconds ago|[1-5]?[0-9] minutes ago)$'
+- assertVisible: '.*Lake.*'
+- assertVisible: '.*Clay.*'
+- assertVisible: '.*Gathering Site.*'
+- assertVisible: '.*Threat.*'
+- assertVisible:
+    id: '${CAT}.Clay-list-icon'
+- assertVisible:
+    id: 'OBS.Gathering Site-list-icon'
+- assertVisible:
+    id: '${CAT}.Threat-list-icon'
+- assertVisible:
+    label: 'Observation names, time captures, thumbnails and icons display as expected'
+    id: '${CAT}.Lake-list-icon'
+- tapOn: '.*Clay.*'
+- assertVisible: '.*Clay.*'
+- assertVisible: '^[A-Z][a-z]{2} \d{1,2}, \d{4}, \d{1,2}:\d{2} (AM|PM)$'
+- assertVisible:
+    label: 'Observation names, time captures, thumbnails and icons display as expected'
+    id: '${CAT}.Clay-view-icon'
+- tapOn:
+    id: '${SUBCAT}.header-back-btn'
+- assertVisible:
+    label: 'Back button returns to Observations list screen'
+    id: '${CAT}.list-scrn'
+- tapOn:
+    id: '${SUBCAT}.header-back-btn'
+- assertVisible:
+    label: 'Back button returns to Map screen'
+    id: '${SUBCAT}.mapbox-map-view'

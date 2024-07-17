@@ -37,3 +37,16 @@ These tests deal with all issues related to the main screens of the app.
 
 - There is no mock data with two questions, so functionality for advancing forward or backward through questions is not there.
 - There is no mock data with a multi select, so functionality for doing that is not testable
+
+## Viewing Observations
+
+- This tests viewing observations on the map, from the home screen, on the list screen, and individually
+
+### Test Objectives
+
+- First the test changes locations slightly and adds observations with different preset categories
+- Takes a screenshot of the map so someone can check the dots if they want
+- Checks that clicking on a point on the map goes to that observation
+- Checks that all of the back buttons work
+- Checks that the observations list button goes to the observations list screen from map and the camera screen
+- Checks that observation names, time captures, thumbnails and icons display as expected on the list screen and the show observation screen

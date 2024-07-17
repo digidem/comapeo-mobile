@@ -23,7 +23,7 @@ env:
 - tapOn:
     point: '46%,47%'
 - assertVisible:
-    label: 'Point  goes to the View observation screen for that point'
+    label: 'Point goes to the View observation screen for that point'
     text: 'Gathering Site'
 - tapOn:
     id: '${SUBCAT}.header-back-btn'
@@ -54,13 +54,13 @@ env:
 - assertVisible:
     id: '${CAT}.Threat-list-icon'
 - assertVisible:
-    label: 'Observation names, time captures, thumbnails and icons display as expected'
+    label: 'Observation names, time captures, thumbnails and icons display as expected on the list screen'
     id: '${CAT}.Lake-list-icon'
 - tapOn: '.*Clay.*'
 - assertVisible: '.*Clay.*'
 - assertVisible: '^[A-Z][a-z]{2} \d{1,2}, \d{4}, \d{1,2}:\d{2} (AM|PM)$'
 - assertVisible:
-    label: 'Observation names, time captures, thumbnails and icons display as expected'
+    label: 'Observation names, time captures, thumbnails and icons display as expected on the show screen'
     id: '${CAT}.Clay-view-icon'
 - tapOn:
     id: '${SUBCAT}.header-back-btn'

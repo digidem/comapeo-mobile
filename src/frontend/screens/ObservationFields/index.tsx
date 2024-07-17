@@ -78,7 +78,7 @@ export const ObservationFields = ({
   }
 
   return (
-    <ScrollView style={{flex: 1}}>
+    <ScrollView style={{flex: 1}} testID="OBS.add-details-scrn">
       <Question field={field} />
     </ScrollView>
   );

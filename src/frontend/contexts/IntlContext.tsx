@@ -30,7 +30,6 @@ export const IntlProvider = ({children}: {children: React.ReactNode}) => {
 
   return (
     <IntlProviderOrig
-      key={appLocale}
       locale={appLocale}
       messages={localeMessages}
       formats={formats}

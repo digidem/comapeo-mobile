@@ -23,5 +23,4 @@ env:
     label: 'Create observation button goes to categories screen from Home map screen'
     id: '${CAT}.categories-scrn'
 - back
-- tapOn:
-    id: 'OBS.discard-obs'
+- tapOn: 'Discard Observation'

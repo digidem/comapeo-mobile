@@ -188,7 +188,12 @@ export const ObservationCreate = ({
     <>
       <Editor
         presetName={presetName}
-        PresetIcon={<PresetCircleIcon name={preset?.name} />}
+        PresetIcon={
+          <PresetCircleIcon
+            name={preset?.name}
+            testID={`OBS.${preset?.name}-icon`}
+          />
+        }
         onPressPreset={() =>
           navigation.navigate({
             key: 'fromObservationEdit',

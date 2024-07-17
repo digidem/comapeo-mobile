@@ -86,31 +86,13 @@ jobs:
           name: apk
           path: ./
 
-      - name: Check for KVM support
-        run: |
-          egrep -c '(vmx|svm)' /proc/cpuinfo || echo "No hardware virtualization support"
-          dmesg | grep -i kvm || echo "No KVM support in dmesg"
-
       - name: Install KVM and dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
           sudo adduser $(whoami) kvm
           sudo adduser $(whoami) libvirt
-          sudo modprobe kvm || echo "KVM module not found"
-
-      - name: Verify KVM Installation
-        run: |
-          if [ ! -e /dev/kvm ]; then
-            echo "KVM device not found, printing additional diagnostics"
-            uname -r
-            lsmod | grep kvm || echo "KVM module not loaded"
-            dmesg | grep -i kvm
-            exit 1
-          else
-            echo "KVM is available"
-            ls -l /dev/kvm
-          fi
+          sudo modprobe kvm
 
       - name: Enable KVM
         run: |

@@ -3,12 +3,12 @@ import {StyleSheet, View} from 'react-native';
 import ErrorIcon from '../../images/Error.svg';
 import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../sharedComponents/Text';
-import {useLeaveProject, useProjectSettings} from '../../hooks/server/projects';
+import {useLeaveProject} from '../../hooks/server/projects';
 import {RED} from '../../lib/styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {TouchableOpacity} from '../../sharedComponents/Touchables';
 
-// import {UIActivityIndicator} from 'react-native-indicators';
+import {UIActivityIndicator} from 'react-native-indicators';
 import {BottomSheetModalContent} from '../BottomSheetModal';
 import {useAcceptInvite} from '../../hooks/server/invites';
 import {ErrorBottomSheet} from '../ErrorBottomSheet';
@@ -53,16 +53,18 @@ const m = defineMessages({
 type LeaveProjectProps = {
   inviteId: string;
   accept: ReturnType<typeof useAcceptInvite>;
+
   closeSheet: () => void;
+  projectName?: string;
 };
 
 export const LeaveProject = ({
   inviteId,
   accept,
   closeSheet,
+  projectName,
 }: LeaveProjectProps) => {
   const {formatMessage} = useIntl();
-  const {data} = useProjectSettings();
   const [error, setError] = React.useState(false);
   const [isChecked, setIsChecked] = React.useState(false);
   const leaveProject = useLeaveProject();
@@ -74,78 +76,83 @@ export const LeaveProject = ({
       return;
     }
     setCombinedLoading(true);
-    leaveProject.mutate(undefined, {
-      onSuccess: () => {
-        accept.mutate(
-          {inviteId},
-          {
+    // we want to accept first because the invitor will be able to cancel. this avoids the user leaving a project, and then their invite being cancelled before they were able to join.
+    accept.mutate(
+      {inviteId},
+      {
+        onSuccess: () => {
+          leaveProject.mutate(undefined, {
             onSuccess: () => {
               closeSheet();
               setCombinedLoading(false);
             },
-            onError: () => {
+            onError: err => {
+              console.log(err);
               setCombinedLoading(false);
             },
-          },
-        );
+          });
+        },
+        onError: err => {
+          console.log(err);
+          setCombinedLoading(false);
+        },
       },
-      onError: () => {
-        setCombinedLoading(false);
-      },
-    });
+    );
   }
 
   return (
     <>
-      <BottomSheetModalContent
-        icon={<ErrorIcon />}
-        loading={combinedLoading}
-        buttonConfigs={[
-          {
-            onPress: handleLeavePress,
-            text: formatMessage(m.leaveProj),
-            variation: 'filled',
-            dangerous: true,
-          },
-          {
-            onPress: closeSheet,
-            text: formatMessage(m.cancel),
-            variation: 'outlined',
-          },
-        ]}
-        title={formatMessage(m.leaveProj)}
-        description={
-          data?.name
-            ? formatMessage(m.removeFromProjWithName, {
-                projectName: data?.name,
-              })
-            : formatMessage(m.removeFromProjWithoutName)
-        }>
-        <View style={{padding: 20}}>
-          <TouchableOpacity
-            style={styles.check}
-            disabled={combinedLoading}
-            onPress={() => setIsChecked(val => !val)}>
-            <MaterialIcons
-              size={32}
-              color={!isChecked && error ? RED : undefined}
-              name={isChecked ? 'check-box' : 'check-box-outline-blank'}
-            />
-            <Text style={{marginLeft: 10, marginRight: 10}}>
-              {data?.name
-                ? formatMessage(m.deleteConsentWithName, {
-                    projectName: data?.name,
-                  })
-                : formatMessage(m.deleteConsentWithoutName)}
-            </Text>
-          </TouchableOpacity>
-          {error && !isChecked && (
-            <Text style={{color: RED, marginTop: 20}}>
-              {formatMessage(m.checkToConfirm)}
-            </Text>
-          )}
-        </View>
-      </BottomSheetModalContent>
+      {combinedLoading ? (
+        <LeavingProjectProgress projectName={projectName} />
+      ) : (
+        <BottomSheetModalContent
+          icon={<ErrorIcon />}
+          buttonConfigs={[
+            {
+              onPress: handleLeavePress,
+              text: formatMessage(m.leaveProj),
+              variation: 'filled',
+              dangerous: true,
+            },
+            {
+              onPress: closeSheet,
+              text: formatMessage(m.cancel),
+              variation: 'outlined',
+            },
+          ]}
+          title={formatMessage(m.leaveProj)}
+          description={
+            projectName
+              ? formatMessage(m.removeFromProjWithName, {
+                  projectName: projectName,
+                })
+              : formatMessage(m.removeFromProjWithoutName)
+          }>
+          <View style={{padding: 20}}>
+            <TouchableOpacity
+              style={styles.check}
+              onPress={() => setIsChecked(val => !val)}>
+              <MaterialIcons
+                size={32}
+                color={!isChecked && error ? RED : undefined}
+                name={isChecked ? 'check-box' : 'check-box-outline-blank'}
+              />
+              <Text style={{marginLeft: 10, marginRight: 10}}>
+                {projectName
+                  ? formatMessage(m.deleteConsentWithName, {
+                      projectName: projectName,
+                    })
+                  : formatMessage(m.deleteConsentWithoutName)}
+              </Text>
+            </TouchableOpacity>
+            {error && !isChecked && (
+              <Text style={{color: RED, marginTop: 20}}>
+                {formatMessage(m.checkToConfirm)}
+              </Text>
+            )}
+          </View>
+        </BottomSheetModalContent>
+      )}
       <ErrorBottomSheet
         error={leaveProject.error || accept.error}
         clearError={() => {
@@ -158,18 +165,18 @@ export const LeaveProject = ({
   );
 };
 
-// const LeavingProjectProgress = ({projectName}: {projectName?: string}) => {
-//   const {formatMessage} = useIntl();
-//   return (
-//     <View>
-//       <Text style={{fontSize: 32, textAlign: 'center'}}>
-//         {formatMessage(m.leavingProject, {projectName: projectName || ''})}
-//       </Text>
-
-//       <UIActivityIndicator style={{marginTop: 40}} />
-//     </View>
-//   );
-// };
+const LeavingProjectProgress = ({projectName}: {projectName?: string}) => {
+  const {formatMessage} = useIntl();
+  return (
+    <BottomSheetModalContent
+      title={formatMessage(m.leavingProject, {
+        projectName: projectName || '',
+      })}
+      titleStyle={{marginTop: 80}}
+      description={<UIActivityIndicator />}
+    />
+  );
+};
 
 const styles = StyleSheet.create({
   check: {

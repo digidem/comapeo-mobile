@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import ErrorIcon from '../../images/Error.svg';
 import {defineMessages, useIntl} from 'react-intl';
-import {useProjectSettings} from '../../hooks/server/projects';
 import {BottomSheetModalContent} from '../BottomSheetModal';
 
 const m = defineMessages({
@@ -31,14 +30,15 @@ const m = defineMessages({
 type AlreadyOnProjectProps = {
   closeSheet: () => void;
   moveToLeaveProjectModalContent: () => void;
+  projectName?: string;
 };
 
 export const AlreadyOnProject = ({
   closeSheet,
   moveToLeaveProjectModalContent,
+  projectName,
 }: AlreadyOnProjectProps) => {
   const {formatMessage} = useIntl();
-  const {data} = useProjectSettings();
 
   return (
     <BottomSheetModalContent
@@ -58,8 +58,8 @@ export const AlreadyOnProject = ({
       icon={<ErrorIcon />}
       title={formatMessage(m.alreadyOnProject)}
       description={
-        data?.name
-          ? formatMessage(m.onProject, {projectName: data.name})
+        projectName
+          ? formatMessage(m.onProject, {projectName: projectName})
           : undefined
       }
     />

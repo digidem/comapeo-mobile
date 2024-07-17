@@ -84,12 +84,12 @@ env:
     text: 'Sample description'
 - assertVisible:
     label: 'Add bar with icons appears above keyboard'
-    id: '${CAT}.Photo-icon'
+    id: '${CAT}.add-photo-btn-keyboard'
 - tapOn:
     above: '.*Show Options.*'
 - assertNotVisible:
     label: 'Add bar with icons appears has collapsed'
-    id: '${CAT}.Photo-icon'
+    id: '${CAT}.add-photo-btn-keyboard'
 - tapOn:
     id: '${CAT}.add-photo-btn'
 - assertVisible:

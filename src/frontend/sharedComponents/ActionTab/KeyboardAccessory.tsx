@@ -33,7 +33,7 @@ export const KeyboardAccessory: FC<KeyboardAccessory> = ({onPress, items}) => {
             onPress={onPress}
             key={idx}
             style={styles.accessoryIcon}
-            testID={`OBS.${item?.label}-icon`}>
+            testID={`${item.testID}-keyboard`}>
             {item.icon}
           </Pressable>
         ))}

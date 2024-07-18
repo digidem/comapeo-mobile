@@ -1,14 +1,16 @@
 import * as React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {defineMessages, useIntl} from 'react-intl';
-import {Image, ScrollView, StyleSheet, Text} from 'react-native';
+import {ScrollView, StyleSheet, Text} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {useSecurityContext} from '../contexts/SecurityContext';
-import {COMAPEO_DARK_BLUE, RED} from '../lib/styles';
+import CoMapeoLogoSvg from '../images/CoMapeoLogo.svg';
+import {RED} from '../lib/styles';
 import {PasscodeInput} from '../sharedComponents/PasscodeInput';
 import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
 import {AppStackParamsList} from '../sharedTypes/navigation';
+import {useWindowDimensions} from 'react-native';
 
 const m = defineMessages({
   enterPass: {
@@ -77,15 +79,18 @@ export const AuthScreen = ({
   }
 
   const {top} = useSafeAreaInsets();
+  const window = useWindowDimensions();
 
   return (
     <ScreenContentWithDock
-      contentContainerStyle={[styles.contentContainer, {paddingTop: top}]}
+      contentContainerStyle={[
+        styles.contentContainer,
+        {paddingTop: top + 20, paddingBottom: 20},
+      ]}
       dockContent={
         error && <Text style={styles.wrongPass}>{t(m.wrongPass)}</Text>
       }>
-      <Image source={require('../images/icon_mapeo_pin.png')} />
-      <Text style={styles.title}>CoMapeo</Text>
+      <CoMapeoLogoSvg height={window.height / 3} />
       <Text style={styles.description}>{t(m.enterPass)}</Text>
       <PasscodeInput
         error={error}
@@ -100,11 +105,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     gap: 20,
     alignItems: 'center',
-  },
-  title: {
-    fontSize: 52.5,
-    color: COMAPEO_DARK_BLUE,
-    fontWeight: '500',
   },
   description: {
     fontSize: 16,

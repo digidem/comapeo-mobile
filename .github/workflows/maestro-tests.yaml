@@ -104,7 +104,7 @@ jobs:
           heap-size: 4096M
           emulator-boot-timeout: 900
           disable-animations: true
-          emulator-options: -writeable-system -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           pre-emulator-launch-script: |
             echo "Running pre emulator launch script. Printing the working directory now:"
             pwd

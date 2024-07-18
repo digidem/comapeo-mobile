@@ -29,7 +29,6 @@ jobs:
         run: |
           mkdir -p $HOME/lib/android/sdk
           echo "ANDROID_HOME=$HOME/lib/android/sdk" >> $GITHUB_ENV
-          mkdir -p $ANDROID_HOME/cmdline-tools/latest
           echo "PATH=$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_ENV
           source $GITHUB_ENV
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {defineMessages, MessageDescriptor, useIntl} from 'react-intl';
+import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 import {useBlurOnFulfill} from 'react-native-confirmation-code-field';
 
@@ -22,12 +22,11 @@ const m = defineMessages({
     defaultMessage: 'Cancel',
   },
 });
+
 interface InputPasscodeProps {
-  text: {
-    title: MessageDescriptor;
-    subtitle: MessageDescriptor;
-    errorMessage: MessageDescriptor;
-  };
+  title: string;
+  subtitle: string;
+  errorMessage: string;
   validate: (pass: string) => void | boolean;
   showPasscodeValues?: boolean;
   error: boolean;
@@ -37,7 +36,9 @@ interface InputPasscodeProps {
 
 export const InputPasscode = ({
   validate,
-  text,
+  title,
+  subtitle,
+  errorMessage,
   showPasscodeValues,
   error,
   hideError,
@@ -95,8 +96,8 @@ export const InputPasscode = ({
             )}
           </View>
         }>
-        <Text style={styles.header}>{t(text.title)}</Text>
-        <Text style={styles.subtext}>{t(text.subtitle)}</Text>
+        <Text style={styles.header}>{title}</Text>
+        <Text style={styles.subtext}>{subtitle}</Text>
 
         <PasscodeInput
           error={error}
@@ -106,7 +107,7 @@ export const InputPasscode = ({
           maskValues={!showPasscodeValues}
         />
 
-        {error && <Text style={styles.error}>{t(text.errorMessage)}</Text>}
+        {error && <Text style={styles.error}>{errorMessage}</Text>}
       </ScreenContentWithDock>
 
       <ConfirmPasscodeSheet

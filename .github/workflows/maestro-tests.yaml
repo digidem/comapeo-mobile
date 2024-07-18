@@ -19,12 +19,17 @@ jobs:
           mkdir -p dummy-apk
           echo "This is a dummy APK file." > dummy-apk/dummy.apk
 
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
       - name: Set up environment variables
         run: |
           mkdir -p $HOME/lib/android/sdk
           echo "ANDROID_HOME=$HOME/lib/android/sdk" >> $GITHUB_ENV
-          echo "PATH=$PATH:$ANDROID_HOME/emulator" >> $GITHUB_ENV
-          echo "PATH=$PATH:$ANDROID_HOME/platform-tools" >> $GITHUB_ENV
+          echo "PATH=$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_ENV
           source $GITHUB_ENV
 
       - name: Install Maestro
@@ -50,8 +55,6 @@ jobs:
           pre-emulator-launch-script: |
             echo "Running pre emulator launch script. Printing the working directory now:"
             pwd
-            echo "ANDROID_HOME: $ANDROID_HOME"
-            echo "PATH: $PATH"
           script: |
             echo "Waiting for the emulator to boot up..."
             adb wait-for-device

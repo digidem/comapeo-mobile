@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 
 import {CameraView} from '../sharedComponents/CameraView';
-import {CapturedPictureMM} from '../contexts/PhotoPromiseContext/types';
+import {PhotoPromiseWithMetadata} from '../contexts/PhotoPromiseContext/types';
 import {useDraftObservation} from '../hooks/useDraftObservation';
 import {NativeHomeTabsNavigationProps} from '../sharedTypes/navigation';
 
@@ -13,8 +13,8 @@ export const CameraScreen = ({
   const isFocused = useIsFocused();
   const {newDraft} = useDraftObservation();
 
-  function handleAddPress(photoPromise: Promise<CapturedPictureMM>) {
-    newDraft(photoPromise);
+  function handleAddPress(capture: PhotoPromiseWithMetadata) {
+    newDraft(capture);
     navigation.navigate('PresetChooser');
   }
 

@@ -6,85 +6,24 @@ on:
       - chore/e2e-ci
 
 jobs:
-  build-apk:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check for EXPO_TOKEN
-        run: |
-          if [ -z "${{ secrets.EXPO_TOKEN }}" ]; then
-            echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
-            exit 1
-          fi
-
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.14.0'
-          cache: 'npm'
-
-      - name: Cache npm dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Ensure npm is at v10.x
-        run: npm install -g npm@10
-
-      - name: Clean install dependencies
-        run: |
-          rm -rf node_modules
-          npm install
-
-      - name: Install EAS CLI
-        run: npm install -g eas-cli
-
-      - name: Authenticate with Expo
-        run: echo "EXPO_TOKEN=${{ secrets.EXPO_TOKEN }}" >> $GITHUB_ENV
-
-      - name: Build Android app locally with EAS
-        env:
-          SENTRY_DISABLE_AUTO_UPLOAD: true
-        run: eas build --platform android --profile test --local
-
-      - name: Find APK
-        id: find_apk
-        run: |
-          APK_PATH=$(find . -type f -name "*.apk" | head -n 1)
-          echo "APK_PATH=$APK_PATH" >> $GITHUB_ENV
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: apk
-          path: ${{ env.APK_PATH }}
-
   run-tests:
     runs-on: ubuntu-22.04-arm64-2cpu
-    needs: build-apk
     timeout-minutes: 30
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Create Dummy APK
+        run: |
+          mkdir -p dummy-apk
+          echo "This is a dummy APK file." > dummy-apk/dummy.apk
+
       - name: Download APK
         uses: actions/download-artifact@v4
         with:
           name: apk
-          path: ./
+          path: ./dummy-apk
 
       - name: Install Maestro
         run: curl -Ls 'https://get.maestro.mobile.dev' | bash
@@ -109,6 +48,8 @@ jobs:
           pre-emulator-launch-script: |
             echo "Running pre emulator launch script. Printing the working directory now:"
             pwd
+            echo "ANDROID_SDK_ROOT: $ANDROID_SDK_ROOT"
+            echo "PATH: $PATH"
           script: |
             echo "Waiting for the emulator to boot up..."
             adb wait-for-device

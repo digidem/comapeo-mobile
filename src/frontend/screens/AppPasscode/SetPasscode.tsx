@@ -106,20 +106,18 @@ const SetPasswordConfirm = ({initialPass}: {initialPass: string}) => {
   }
 
   return (
-    <React.Fragment>
-      <InputPasscode
-        text={{
-          title: m.titleConfirm,
-          errorMessage: m.passwordDoesNotMatch,
-          subtitle: m.subTitleSet,
-        }}
-        validate={validate}
-        error={error}
-        showPasscodeValues={true}
-        hideError={() => {
-          setError(false);
-        }}
-      />
-    </React.Fragment>
+    <InputPasscode
+      text={{
+        title: m.titleConfirm,
+        errorMessage: m.passwordDoesNotMatch,
+        subtitle: m.subTitleSet,
+      }}
+      validate={validate}
+      error={error}
+      showPasscodeValues={true}
+      hideError={() => {
+        setError(false);
+      }}
+    />
   );
 };

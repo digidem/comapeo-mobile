@@ -1,3 +1,5 @@
+import {LocationObject} from 'expo-location';
+
 export const THUMBNAIL_SIZE = 400;
 export const THUMBNAIL_QUALITY = 30;
 export const PREVIEW_SIZE = 1200;
@@ -48,3 +50,8 @@ export interface Signal {
 }
 
 export type CancellablePhotoPromise = Promise<DraftPhoto> & {signal?: Signal};
+
+export type MediaMetadata = {
+  location: LocationObject;
+  timestamp: number;
+};

@@ -7,7 +7,7 @@ import {
 import {useApi} from '../../contexts/ApiContext';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {usePersistedProjectId} from '../persistedState/usePersistedProjectId';
-import {ALL_PROJECTS_KEY} from './projects';
+import {ALL_PROJECTS_KEY, PROJECT_MEMBERS_KEY} from './projects';
 
 export const INVITE_KEY = 'pending_invites';
 
@@ -90,6 +90,7 @@ export function useSendInvite() {
     }) => project.$member.invite(deviceId, role),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [INVITE_KEY]});
+      queryClient.invalidateQueries({queryKey: [PROJECT_MEMBERS_KEY]});
     },
   });
 }

@@ -26,8 +26,6 @@ jobs:
           echo "ANDROID_SDK_ROOT=$HOME/android-sdk" >> $GITHUB_ENV
           echo "ANDROID_AVD_HOME=$HOME/.android/avd" >> $GITHUB_ENV
           source $GITHUB_ENV
-          SDKMANAGER=$HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager
-          echo "y" | ${SDKMANAGER} "tools"
 
       - name: Install Maestro
         run: curl -Ls 'https://get.maestro.mobile.dev' | bash

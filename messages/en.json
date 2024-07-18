@@ -739,15 +739,6 @@
     "description": "Category title for new track screen",
     "message": "Track"
   },
-  "screens.Security.obscurePassDescriptonPassNotSet": {
-    "message": "To use, enable App Passcode"
-  },
-  "screens.Security.obscurePassDescriptonPassSet": {
-    "message": "Protect your device against seizure"
-  },
-  "screens.Security.obscurePasscodeHeader": {
-    "message": "Obscure Passcode"
-  },
   "screens.Security.passDesriptionPassNotSet": {
     "message": "Passcode not set"
   },

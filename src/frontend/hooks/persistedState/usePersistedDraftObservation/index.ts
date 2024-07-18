@@ -22,7 +22,7 @@ const emptyObservation: ClientGeneratedObservation = {
 };
 
 export type DraftObservationSlice = {
-  photos: Photo[];
+  photos: (Photo | {draftPhotoId: string})[];
   audioRecordings: [];
   value: Observation | null | ClientGeneratedObservation;
   observationId?: string;
@@ -53,7 +53,7 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
   actions: {
     deletePhoto: uri => deletePhoto(set, get, uri),
     addPhotoPlaceholder: draftPhotoId =>
-      set({photos: [...get().photos, {draftPhotoId, capturing: true}]}),
+      set({photos: [...get().photos, {draftPhotoId}]}),
     replacePhotoPlaceholderWithPhoto: draftPhoto =>
       replaceDraftPhotos(set, get, draftPhoto),
     clearDraft: () => {

@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {defineMessages} from 'react-intl';
+import {defineMessages, useIntl} from 'react-intl';
 
+import {useSecurityContext} from '../../contexts/SecurityContext';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {InputPasscode} from './InputPasscode';
-import {useSecurityContext} from '../../contexts/SecurityContext';
 
 const m = defineMessages({
   titleEnter: {
@@ -27,6 +27,7 @@ const m = defineMessages({
 export const EnterPassToTurnOff: NativeNavigationComponent<
   'EnterPassToTurnOff'
 > = ({navigation}) => {
+  const {formatMessage: t} = useIntl();
   const {authenticate, authValuesSet} = useSecurityContext();
   const [error, setError] = React.useState(false);
   const {navigate} = navigation;
@@ -48,11 +49,9 @@ export const EnterPassToTurnOff: NativeNavigationComponent<
 
   return (
     <InputPasscode
-      text={{
-        errorMessage: m.passwordError,
-        subtitle: m.subTitleEnter,
-        title: m.titleEnter,
-      }}
+      title={t(m.titleEnter)}
+      subtitle={t(m.subTitleEnter)}
+      errorMessage={t(m.passwordError)}
       error={error}
       validate={validate}
       showNext={false}

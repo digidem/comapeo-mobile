@@ -95,7 +95,7 @@ jobs:
           api-level: 32
           ndk: 25.1.8937393
           target: google_apis
-          arch: x86_64
+          arch: arm64-v8a
           force-avd-creation: false
           profile: pixel_4
           cores: 2
@@ -104,7 +104,7 @@ jobs:
           heap-size: 4096M
           emulator-boot-timeout: 900
           disable-animations: true
-          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           pre-emulator-launch-script: |
             echo "Running pre emulator launch script. Printing the working directory now:"
             pwd

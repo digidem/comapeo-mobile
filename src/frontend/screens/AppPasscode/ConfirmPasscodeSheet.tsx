@@ -15,7 +15,12 @@ const m = defineMessages({
   title: {
     id: 'screens.AppPasscode.ConfirmPasscodeSheet.title',
     defaultMessage:
-      'App Passcodes can never be recovered if lost or forgotten! Make sure to note your passcode in a secure location before saving.',
+      'App Passcodes can never be recovered if lost or forgotten!',
+  },
+  suggestion: {
+    id: 'screens.AppPasscode.ConfirmPasscodeSheet.suggestion',
+    defaultMessage:
+      'Make sure to note your passcode in a secure location before saving.',
   },
   cancel: {
     id: 'screens.AppPasscode.ConfirmPasscodeSheet.cancel',
@@ -27,7 +32,7 @@ const m = defineMessages({
   },
   passcode: {
     id: 'screens.AppPasscode.ConfirmPasscodeSheet.passcode',
-    defaultMessage: 'Passcode',
+    defaultMessage: 'Passcode: {passcode}',
     description: 'used to indicate to the user what the new passcode will be.',
   },
 });
@@ -54,7 +59,9 @@ export const ConfirmPasscodeSheet = React.forwardRef<
     <BottomSheetModal isOpen={isOpen} ref={sheetRef} onDismiss={() => {}}>
       <BottomSheetModalContent
         title={t(m.title)}
-        description={`${t(m.passcode)}: ${inputtedPasscode}`}
+        description={
+          t(m.suggestion) + '\n\n' + t(m.passcode, {passcode: inputtedPasscode})
+        }
         buttonConfigs={[
           {
             text: t(m.cancel),

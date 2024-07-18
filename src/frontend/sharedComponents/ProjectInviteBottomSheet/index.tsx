@@ -73,6 +73,9 @@ export const ProjectInviteBottomSheet = ({
         },
       });
     }
+    if (invites.length <= 1) {
+      closeInviteSheet();
+    }
   }
 
   function handleCanceledInvite() {

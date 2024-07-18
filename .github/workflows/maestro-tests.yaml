@@ -25,6 +25,15 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Collect information about runner
+        run: |
+          lscpu
+          hostname
+          uname -a
+          free -mh
+          df -h
+          cat /proc/cpuinfo
+
       - name: Set up environment variables
         run: |
           mkdir -p $HOME/lib/android-sdk
@@ -36,16 +45,10 @@ jobs:
       - name: Install Maestro
         run: curl -Ls 'https://get.maestro.mobile.dev' | bash
 
-      - name: Enable KVM group perms
-        run: |
-          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
-          sudo udevadm control --reload-rules
-          sudo udevadm trigger --name-match=kvm
-
       - name: Set up Android Emulator
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
-          api-level: 34
+          api-level: 33
           ndk: 25.1.8937393
           target: google_apis
           arch: arm64-v8a

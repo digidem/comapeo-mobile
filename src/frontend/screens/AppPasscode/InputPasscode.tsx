@@ -77,6 +77,7 @@ export const InputPasscode = ({
             <Button
               fullWidth
               variant="outlined"
+              color="ComapeoBlue"
               onPress={() => {
                 navigate('Security');
               }}>

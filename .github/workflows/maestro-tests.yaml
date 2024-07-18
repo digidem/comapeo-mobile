@@ -32,7 +32,7 @@ jobs:
           echo "PATH=$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_ENV
           source $GITHUB_ENV
 
-      - name: Install Android SDK
+      - name: Install Android SDK Command Line Tools
         run: |
           mkdir -p $ANDROID_HOME/cmdline-tools
           cd $ANDROID_HOME/cmdline-tools
@@ -40,14 +40,19 @@ jobs:
           unzip commandlinetools.zip
           rm commandlinetools.zip
           mkdir -p $ANDROID_HOME/cmdline-tools/latest
-          mv cmdline-tools/* "$ANDROID_HOME/cmdline-tools/latest/"
+          mv cmdline-tools latest
+
+      - name: Accept SDK Licenses
+        run: |
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_HOME --licenses
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_HOME --update
 
-      - name: Install SDK components
+      - name: Install SDK Components
         run: |
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_HOME "platform-tools"
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_HOME "emulator" || echo "Failed to find package 'emulator'"
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_HOME "build-tools;34.0.0"
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_HOME "platforms;android-34"
+          for i in {1..5}; do yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_HOME "emulator" && break || sleep 15; done
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_HOME "system-images;android-34;google_apis;arm64-v8a"
 
       - name: Install Maestro

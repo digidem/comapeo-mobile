@@ -19,12 +19,6 @@ jobs:
           mkdir -p dummy-apk
           echo "This is a dummy APK file." > dummy-apk/dummy.apk
 
-      - name: Download APK
-        uses: actions/download-artifact@v4
-        with:
-          name: apk
-          path: ./dummy-apk
-
       - name: Install Maestro
         run: curl -Ls 'https://get.maestro.mobile.dev' | bash
 

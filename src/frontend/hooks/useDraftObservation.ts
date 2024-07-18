@@ -84,10 +84,13 @@ export const useDraftObservation = () => {
     [newPersistedDraft, cancelPhotoProcessing],
   );
 
-  const deletePhoto = useCallback((uri: string) => {
-    deletePersistedPhoto(uri);
-    deletePhotoPromise(uri);
-  }, []);
+  const deletePhoto = useCallback(
+    (uri: string) => {
+      deletePersistedPhoto(uri);
+      deletePhotoPromise(uri);
+    },
+    [deletePersistedPhoto, deletePhotoPromise],
+  );
 
   return {
     addPhoto,

@@ -41,8 +41,8 @@ jobs:
           rm commandlinetools.zip
           mkdir -p $ANDROID_HOME/cmdline-tools/latest
           mv cmdline-tools/* "$ANDROID_HOME/cmdline-tools/latest/"
-          echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_HOME --licenses
-          echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_HOME "platform-tools" "emulator"
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_HOME --licenses
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_HOME "platform-tools" "emulator" "system-images;android-34;google_apis;arm64-v8a"
 
       - name: Install Maestro
         run: curl -Ls 'https://get.maestro.mobile.dev' | bash

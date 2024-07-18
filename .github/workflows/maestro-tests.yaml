@@ -22,8 +22,19 @@ jobs:
       - name: Set up environment variables
         run: |
           echo "ANDROID_HOME=$HOME/android-sdk" >> $GITHUB_ENV
-          echo "PATH=$PATH:$HOME/android-sdk/emulator" >> $GITHUB_ENV
-          echo "PATH=$PATH:$HOME/android-sdk/platform-tools" >> $GITHUB_ENV
+          echo "PATH=$PATH:$HOME/android-sdk/emulator:$HOME/android-sdk/platform-tools:$HOME/android-sdk/cmdline-tools/latest/bin" >> $GITHUB_ENV
+          echo "ANDROID_SDK_ROOT=$HOME/android-sdk" >> $GITHUB_ENV
+          echo "ANDROID_AVD_HOME=$HOME/.android/avd" >> $GITHUB_ENV
+
+      - name: Install Android SDK
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget unzip
+          wget -q https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O commandlinetools.zip
+          unzip commandlinetools.zip -d $HOME/android-sdk/cmdline-tools
+          mv $HOME/android-sdk/cmdline-tools/cmdline-tools $HOME/android-sdk/cmdline-tools/latest
+          yes | $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --sdk_root=$HOME/android-sdk --licenses
+          $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --sdk_root=$HOME/android-sdk "platform-tools" "emulator" "platforms;android-34" "system-images;android-34;google_apis;arm64-v8a"
 
       - name: Install Maestro
         run: curl -Ls 'https://get.maestro.mobile.dev' | bash
@@ -58,7 +69,7 @@ jobs:
             adb devices
             adb shell input keyevent 82
             echo "Installing the APK..."
-            adb install ${{ github.workspace }}/*.apk || (adb kill-server && adb start-server && adb devices && adb install ${{ github.workspace }}/*.apk)
+            adb install ${{ github.workspace }}/dummy-apk/dummy.apk || (adb kill-server && adb start-server && adb devices && adb install ${{ github.workspace }}/dummy-apk/dummy.apk)
             echo "Waiting for the emulator to fully boot..."
             adb wait-for-device
             adb shell 'while [[ $(getprop sys.boot_completed) -ne 1 ]]; do sleep 1; done'

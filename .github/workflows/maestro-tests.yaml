@@ -40,11 +40,12 @@ jobs:
           unzip commandlinetools.zip
           rm commandlinetools.zip
           mkdir -p $ANDROID_HOME/cmdline-tools/latest
-          mv $ANDROID_HOME/cmdline-tools/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
+          mv cmdline-tools/* "$ANDROID_HOME/cmdline-tools/latest/"
           if [ ! -f "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" ]; then
             echo "sdkmanager not found"
             exit 1
           fi
+          chmod +x $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager
 
       - name: Accept SDK Licenses
         run: |

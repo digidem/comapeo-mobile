@@ -19,6 +19,12 @@ jobs:
           mkdir -p dummy-apk
           echo "This is a dummy APK file." > dummy-apk/dummy.apk
 
+      - name: Set up environment variables
+        run: |
+          echo "ANDROID_HOME=$HOME/android-sdk" >> $GITHUB_ENV
+          echo "PATH=$PATH:$HOME/android-sdk/emulator" >> $GITHUB_ENV
+          echo "PATH=$PATH:$HOME/android-sdk/platform-tools" >> $GITHUB_ENV
+
       - name: Install Maestro
         run: curl -Ls 'https://get.maestro.mobile.dev' | bash
 
@@ -42,7 +48,7 @@ jobs:
           pre-emulator-launch-script: |
             echo "Running pre emulator launch script. Printing the working directory now:"
             pwd
-            echo "ANDROID_SDK_ROOT: $ANDROID_SDK_ROOT"
+            echo "ANDROID_HOME: $ANDROID_HOME"
             echo "PATH: $PATH"
           script: |
             echo "Waiting for the emulator to boot up..."

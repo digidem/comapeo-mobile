@@ -29,8 +29,20 @@ jobs:
         run: |
           mkdir -p $HOME/lib/android/sdk
           echo "ANDROID_HOME=$HOME/lib/android/sdk" >> $GITHUB_ENV
+          mkdir -p $ANDROID_HOME/cmdline-tools/latest
           echo "PATH=$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_ENV
           source $GITHUB_ENV
+
+      - name: Install Android SDK
+        run: |
+          cd $ANDROID_HOME/cmdline-tools
+          wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip -O commandlinetools.zip
+          unzip commandlinetools.zip
+          rm commandlinetools.zip
+          mkdir -p $ANDROID_HOME/cmdline-tools/latest
+          mv cmdline-tools/* "$ANDROID_HOME/cmdline-tools/latest/"
+          echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_HOME --licenses
+          echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_HOME "platform-tools" "emulator"
 
       - name: Install Maestro
         run: curl -Ls 'https://get.maestro.mobile.dev' | bash

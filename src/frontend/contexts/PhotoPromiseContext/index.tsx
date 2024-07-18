@@ -66,24 +66,27 @@ export const PhotoPromiseProvider = ({
     setPhotoPromises([]);
   }, [photoPromises]);
 
-  const deletePhotoPromise = React.useCallback((uri: String) => {
-    const newPhotoPromiseArray = photoPromises.map(async photo => {
-      const resolvedPhoto = await photo;
-      if (resolvedPhoto.originalUri === uri) {
-        const deletedPhoto: Promise<DraftPhoto> = new Promise(res => {
-          resolvedPhoto.deleted = true;
-          res(resolvedPhoto);
-        });
-        const cancelPhoto = deletedPhoto as CancellablePhotoPromise;
-        cancelPhoto.signal = {didCancel: true};
-        return cancelPhoto;
-      }
+  const deletePhotoPromise = React.useCallback(
+    (uri: String) => {
+      const newPhotoPromiseArray = photoPromises.map(async photo => {
+        const resolvedPhoto = await photo;
+        if (resolvedPhoto.originalUri === uri) {
+          const deletedPhoto: Promise<DraftPhoto> = new Promise(res => {
+            resolvedPhoto.deleted = true;
+            res(resolvedPhoto);
+          });
+          const cancelPhoto = deletedPhoto as CancellablePhotoPromise;
+          cancelPhoto.signal = {didCancel: true};
+          return cancelPhoto;
+        }
 
-      return photo;
-    });
+        return photo;
+      });
 
-    setPhotoPromises(newPhotoPromiseArray);
-  }, []);
+      setPhotoPromises(newPhotoPromiseArray);
+    },
+    [photoPromises],
+  );
 
   const context: PhotoPromiseContextState = React.useMemo(
     () => ({

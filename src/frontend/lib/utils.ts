@@ -4,6 +4,7 @@ import {Preset, Observation} from '@mapeo/schema';
 import {LocationObject, LocationProviderStatus} from 'expo-location';
 import {NavigationState} from '@react-navigation/native';
 import {EDITING_SCREEN_NAMES} from '../constants';
+import {Photo, DraftPhoto} from '../contexts/PhotoPromiseContext/types';
 
 // import type {
 //   ObservationValue,
@@ -281,4 +282,20 @@ export function matchPreset(
   });
 
   return bestMatch;
+}
+
+export function isSavablePhoto(
+  photo: Photo | {draftPhotoId: string},
+): photo is DraftPhoto & {originalUri: string} {
+  if (!('draftPhotoId' in photo)) return false;
+
+  if ('deleted' in photo && photo.deleted) return false;
+
+  if ('error' in photo && photo.error) return false;
+
+  if ('originalUri' in photo) {
+    return !!photo.originalUri;
+  }
+
+  return false;
 }

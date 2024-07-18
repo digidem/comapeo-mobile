@@ -5,14 +5,17 @@ import {SetRequired} from 'type-fest';
 import {URL} from 'react-native-url-polyfill';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {DraftPhoto} from '../../contexts/PhotoPromiseContext/types';
+import {
+  DraftPhoto,
+  MediaMetadata,
+} from '../../contexts/PhotoPromiseContext/types';
 import {MapeoProjectApi} from '@mapeo/ipc';
 import {ClientApi} from 'rpc-reflector';
 
 type SavablePhoto = SetRequired<
   Pick<DraftPhoto, 'originalUri' | 'previewUri' | 'thumbnailUri'>,
   'originalUri'
->;
+> & {mediaMetadata: MediaMetadata};
 
 export function useCreateBlobMutation(opts: {retry?: number} = {}) {
   const project = useActiveProject();
@@ -21,6 +24,7 @@ export function useCreateBlobMutation(opts: {retry?: number} = {}) {
     retry: opts.retry,
     mutationFn: async (photo: SavablePhoto) => {
       const {originalUri, previewUri, thumbnailUri} = photo;
+      console.log({photo});
 
       return project.$blobs.create(
         {
@@ -30,7 +34,13 @@ export function useCreateBlobMutation(opts: {retry?: number} = {}) {
         },
         // TODO: DraftPhoto type should probably carry MIME type info that feeds this
         // although backend currently only uses first part of path
-        {mimeType: 'image/jpeg'},
+
+        {
+          mimeType: 'image/jpeg',
+          // @ts-expect-error
+          location: photo.mediaMetadata.location,
+          timestamp: photo.mediaMetadata.timestamp,
+        },
       );
     },
   });

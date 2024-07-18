@@ -10,12 +10,12 @@ import {useCreateObservation} from '../../hooks/server/observations';
 import {useEditObservation} from '../../hooks/server/observations';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {useCreateBlobMutation} from '../../hooks/server/media';
-import {DraftPhoto, Photo} from '../../contexts/PhotoPromiseContext/types';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import SaveCheck from '../../images/CheckMark.svg';
 import {CommonActions} from '@react-navigation/native';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {isSavablePhoto} from '../../lib/utils';
 
 const m = defineMessages({
   noGpsTitle: {
@@ -247,14 +247,4 @@ export const SaveButton = ({
 
 function isGpsAccurate(accuracy?: number): boolean {
   return typeof accuracy === 'number' ? accuracy < MINIMUM_ACCURACY : true;
-}
-
-function isSavablePhoto(
-  photo: Photo,
-): photo is DraftPhoto & {originalUri: string} {
-  if (!('draftPhotoId' in photo && !!photo.draftPhotoId)) return false;
-
-  if (photo.deleted || photo.error) return false;
-
-  return !!photo.originalUri;
 }

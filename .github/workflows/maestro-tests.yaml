@@ -86,21 +86,6 @@ jobs:
           name: apk
           path: ./
 
-      - name: Install Android SDK
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget unzip
-          wget -q https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip -O android-sdk.zip
-          unzip -q android-sdk.zip -d android-sdk
-          sudo mkdir -p /usr/local/android-sdk/cmdline-tools/latest
-          sudo mv android-sdk/cmdline-tools/* /usr/local/android-sdk/cmdline-tools/latest
-          echo 'export ANDROID_SDK_ROOT=/usr/local/android-sdk' >> $GITHUB_ENV
-          echo 'export PATH=$PATH:/usr/local/android-sdk/cmdline-tools/latest/bin' >> $GITHUB_ENV
-          echo 'export PATH=$PATH:/usr/local/android-sdk/platform-tools' >> $GITHUB_ENV
-          echo 'export PATH=$PATH:/usr/local/android-sdk/emulator' >> $GITHUB_ENV
-          source $GITHUB_ENV
-          sudo chown -R $USER:$USER /usr/local/android-sdk
-
       - name: Install Maestro
         run: curl -Ls 'https://get.maestro.mobile.dev' | bash
 
@@ -124,8 +109,6 @@ jobs:
             echo "Running pre emulator launch script. Printing the working directory now:"
             pwd
           script: |
-            adb root
-            adb remount
             echo "Waiting for the emulator to boot up..."
             adb wait-for-device
             until adb shell getprop sys.boot_completed | grep -m 1 '1'; do echo "Waiting for device to boot..."; sleep 10; done

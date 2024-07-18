@@ -12,6 +12,8 @@ import {InviteCanceledBottomSheetContent} from './InviteCanceledBottomSheetConte
 import {useAllProjects} from '../../hooks/server/projects';
 import {LeaveProjectModalContent} from '../LeaveProjectModalContent';
 
+export type LeaveProjectModalState = 'AlreadyOnProj' | 'LeaveProj';
+
 export const ProjectInviteBottomSheet = ({
   enabledForCurrentScreen,
 }: {
@@ -39,6 +41,9 @@ export const ProjectInviteBottomSheet = ({
   );
 
   const projects = useAllProjects();
+
+  const [leaveModalState, setLeaveModalState] =
+    React.useState<LeaveProjectModalState>('AlreadyOnProj');
 
   const invite = invites[0];
 
@@ -119,9 +124,15 @@ export const ProjectInviteBottomSheet = ({
           />
         )}
       </BottomSheetModal>
-      <BottomSheetModal fullScreen ref={leaveRef} isOpen={leaveIsOpen}>
+      <BottomSheetModal
+        onDismiss={() => setLeaveModalState('AlreadyOnProj')}
+        fullScreen
+        ref={leaveRef}
+        isOpen={leaveIsOpen}>
         <LeaveProjectModalContent
-          cancel={closeLeaveSheet}
+          closeSheet={closeLeaveSheet}
+          leaveModalState={leaveModalState}
+          setToLeaveProject={() => setLeaveModalState('LeaveProj')}
           inviteId={invite?.inviteId || ''}
           accept={accept}
         />

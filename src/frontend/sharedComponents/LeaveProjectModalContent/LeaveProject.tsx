@@ -81,17 +81,22 @@ export const LeaveProject = ({
       {inviteId},
       {
         onSuccess: () => {
-          leaveProject.mutate(undefined, {
-            onSuccess: () => {
-              closeSheet();
-              setCombinedLoading(false);
-            },
-            onError: err => {
-              console.log(err);
-              setCombinedLoading(false);
-            },
-          });
+          closeSheet();
+          setCombinedLoading(false);
         },
+        // This is commented out for now and issue created: https://github.com/digidem/comapeo-mobile/issues/525
+        // onSuccess: () => {
+        //   leaveProject.mutate(undefined, {
+        //     onSuccess: () => {
+        //       closeSheet();
+        //       setCombinedLoading(false);
+        //     },
+        //     onError: err => {
+        //       console.log(err);
+        //       setCombinedLoading(false);
+        //     },
+        //   });
+        // },
         onError: err => {
           console.log(err);
           setCombinedLoading(false);

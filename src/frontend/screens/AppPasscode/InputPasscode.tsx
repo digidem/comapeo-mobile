@@ -108,10 +108,8 @@ export const InputPasscode = ({
               <Button
                 fullWidth
                 onPress={() => {
-                  {
-                    if (validate(inputValue)) {
-                      openSheet();
-                    }
+                  if (validate(inputValue)) {
+                    openSheet();
                   }
                 }}>
                 <Text style={[styles.buttonText, {color: WHITE}]}>

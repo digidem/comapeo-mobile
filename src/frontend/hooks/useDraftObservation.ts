@@ -4,7 +4,7 @@ import {
   _usePersistedDraftObservationActions,
   usePreset,
 } from './persistedState/usePersistedDraftObservation';
-import {CapturedPictureMM} from '../contexts/PhotoPromiseContext/types';
+import {PhotoPromiseWithMetadata} from '../contexts/PhotoPromiseContext/types';
 // react native does not have a random bytes generator, `non-secure` does not require a random bytes generator.
 import {nanoid} from 'nanoid/non-secure';
 import {Observation, Preset} from '@mapeo/schema';
@@ -28,12 +28,16 @@ export const useDraftObservation = () => {
   } = _usePersistedDraftObservationActions();
 
   const addPhoto = useCallback(
-    async (capturePromise: Promise<CapturedPictureMM>) => {
+    async ({capturePromise, mediaMetadata}: PhotoPromiseWithMetadata) => {
       // creates an id, that is stored as a placeholder in persisted photots. This is associated with the processed photo, so when the photo is done processsing, we can replace the placeholder with the actual photo
       const draftPhotoId = nanoid();
       addPhotoPlaceholder(draftPhotoId);
       // creates a promise of the original photo. This promise resolves into a processed photo with the thumbnail, preview, and original photo
-      const photoPromise = addPhotoPromise(capturePromise, draftPhotoId);
+      const photoPromise = addPhotoPromise({
+        draftPhotoId,
+        mediaMetadata,
+        photo: capturePromise,
+      });
       try {
         // the promise is run
         const photo = await photoPromise;
@@ -46,6 +50,7 @@ export const useDraftObservation = () => {
           capturing: false,
           error: true,
           draftPhotoId,
+          mediaMetadata,
         };
         replacePhotoPlaceholderWithPhoto(photo);
 
@@ -68,10 +73,10 @@ export const useDraftObservation = () => {
   }, [cancelPhotoProcessing, clearPersistedDraft]);
 
   const newDraft = useCallback(
-    (capture?: Promise<CapturedPictureMM>) => {
+    (photoPromiseWithMetadata: PhotoPromiseWithMetadata | undefined) => {
       cancelPhotoProcessing();
       newPersistedDraft();
-      if (capture) addPhoto(capture);
+      if (photoPromiseWithMetadata) addPhoto(photoPromiseWithMetadata);
     },
     [cancelPhotoProcessing, newPersistedDraft, addPhoto],
   );

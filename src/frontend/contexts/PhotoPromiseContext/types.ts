@@ -30,6 +30,7 @@ export interface DraftPhoto {
   deleted?: boolean;
   // If there was any kind of error on image capture
   error?: boolean;
+  mediaMetadata: MediaMetadata;
 }
 
 /**
@@ -52,6 +53,11 @@ export interface Signal {
 export type CancellablePhotoPromise = Promise<DraftPhoto> & {signal?: Signal};
 
 export type MediaMetadata = {
-  location: LocationObject;
+  location?: LocationObject;
   timestamp: number;
+};
+
+export type PhotoPromiseWithMetadata = {
+  capturePromise: Promise<CapturedPictureMM>;
+  mediaMetadata: MediaMetadata;
 };

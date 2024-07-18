@@ -3,6 +3,7 @@ import {
   CancellablePhotoPromise,
   CapturedPictureMM,
   DraftPhoto,
+  MediaMetadata,
   PREVIEW_QUALITY,
   PREVIEW_SIZE,
   Signal,
@@ -11,11 +12,14 @@ import {
 } from './types';
 import ImageResizer from '@bam.tech/react-native-image-resizer';
 
+type AddPhotoPromiseProps = {
+  photo: Promise<CapturedPictureMM>;
+  mediaMetadata: MediaMetadata;
+  draftPhotoId: string;
+};
+
 type PhotoPromiseContextState = {
-  addPhotoPromise: (
-    photo: Promise<CapturedPictureMM>,
-    draftPhotoId: string,
-  ) => CancellablePhotoPromise;
+  addPhotoPromise: (props: AddPhotoPromiseProps) => CancellablePhotoPromise;
   cancelPhotoProcessing: () => void;
   deletePhotoPromise: (uri: string) => void;
 };
@@ -41,16 +45,17 @@ export const PhotoPromiseProvider = ({
   >([]);
 
   const addPhotoPromise = React.useCallback(
-    (photo: Promise<CapturedPictureMM>, draftPhotoId: string) => {
+    ({photo, draftPhotoId, mediaMetadata}: AddPhotoPromiseProps) => {
       // Use signal to cancel processing by setting signal.didCancel = true
       // Important because image resize/rotate is expensive
       const signal: Signal = {};
 
-      const photoPromise: CancellablePhotoPromise = processPhoto(
+      const photoPromise: CancellablePhotoPromise = processPhoto({
+        ...signal,
         photo,
         draftPhotoId,
-        signal,
-      );
+        mediaMetadata,
+      });
 
       photoPromise.signal = signal;
 
@@ -104,12 +109,14 @@ export const PhotoPromiseProvider = ({
   );
 };
 
-async function processPhoto(
-  photo: Promise<CapturedPictureMM>,
-  draftPhotoId: string,
-  {didCancel = false}: Signal,
-): Promise<DraftPhoto> {
+async function processPhoto({
+  photo,
+  draftPhotoId,
+  mediaMetadata,
+  ...signal
+}: AddPhotoPromiseProps & Signal): Promise<DraftPhoto> {
   const {uri: originalUri, rotate} = await photo;
+  const {didCancel} = signal;
 
   if (didCancel) throw new Error('Cancelled');
 
@@ -144,5 +151,6 @@ async function processPhoto(
     previewUri,
     thumbnailUri,
     capturing: false,
+    mediaMetadata,
   };
 }

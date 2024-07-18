@@ -13,3 +13,5 @@ onFlowComplete:
 - runFlow: '../main/side-drawer-menu-project.yaml'
 - runFlow: '../main/gps.yaml'
 - runFlow: '../main/map.yaml'
+- runFlow: '../observations/create-observation.yaml'
+- runFlow: '../observations/add-details.yaml'

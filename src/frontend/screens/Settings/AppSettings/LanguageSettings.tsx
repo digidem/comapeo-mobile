@@ -16,7 +16,7 @@ const m = defineMessages({
 
 export const LanguageSettings: NativeNavigationComponent<
   'LanguageSettings'
-> = () => {
+> = ({navigation}) => {
   const locale = usePersistedLocale(store => store.locale);
   const setLocale = usePersistedLocale(store => store.setLocale);
 
@@ -33,7 +33,10 @@ export const LanguageSettings: NativeNavigationComponent<
       <SelectOne
         value={locale}
         options={options}
-        onChange={selectedLocale => setLocale(selectedLocale)}
+        onChange={selectedLocale => {
+          setLocale(selectedLocale);
+          navigation.navigate('AppSettings');
+        }}
       />
     </ScrollView>
   );

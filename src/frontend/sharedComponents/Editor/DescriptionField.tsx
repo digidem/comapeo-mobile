@@ -36,7 +36,7 @@ export const DescriptionField = ({
         multiline
         placeholder={keyboardVisible ? '' : t(m.descriptionPlaceholder)}
         placeholderTextColor={BLUE_GREY}
-        testID="observationDescriptionField"
+        testID="OBS.description-inp"
       />
     </View>
   );

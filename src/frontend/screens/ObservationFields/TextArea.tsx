@@ -13,6 +13,7 @@ export const TextArea = React.memo<{field: Field}>(({field}) => {
     <React.Fragment>
       <QuestionLabel field={field} />
       <TextInput
+        testID="OBS.details-inp"
         value={typeof value === 'string' ? value : ''}
         onChangeText={newVal => updateTags(field.tagKey, newVal)}
         style={styles.textInput}

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {createMapeoClient} from '@mapeo/ipc';
 import {AppNavigator} from './AppNavigator';
-import {IntlProvider} from './contexts/IntlContext';
 import {MessagePortLike} from './lib/MessagePortLike';
 import {initializeNodejs} from './initializeNodejs';
 import {PermissionsAndroid} from 'react-native';
@@ -78,14 +77,12 @@ const App = () => {
   }, []);
 
   return (
-    <IntlProvider>
-      <AppProviders
-        messagePort={messagePort}
-        localDiscoveryController={localDiscoveryController}
-        mapeoApi={mapeoApi}>
-        <AppNavigator permissionAsked={permissionsAsked} />
-      </AppProviders>
-    </IntlProvider>
+    <AppProviders
+      messagePort={messagePort}
+      localDiscoveryController={localDiscoveryController}
+      mapeoApi={mapeoApi}>
+      <AppNavigator permissionAsked={permissionsAsked} />
+    </AppProviders>
   );
 };
 

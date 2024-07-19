@@ -92,6 +92,9 @@
     "description": "list of avaialable project settings",
     "message": "Categories, Config, Team"
   },
+  "Navigation.Drawer.security": {
+    "message": "Security"
+  },
   "Navigation.Drawer.title": {
     "description": "Title of settings screen",
     "message": "Settings"
@@ -110,9 +113,6 @@
   },
   "Screens.Settings.AppSettings.title": {
     "message": "App Setttings"
-  },
-  "Screens.Settings.ProjectSettings.configuration": {
-    "message": "Configuration"
   },
   "Screens.Settings.ProjectSettings.deviceName": {
     "message": "Nome do dispositivo"
@@ -199,13 +199,16 @@
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
     "description": "used to indicate to the user what the new passcode will be.",
-    "message": "Senha"
+    "message": "Passcode: {passcode}"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
     "message": "Salvar Senha do aplicativo"
   },
+  "screens.AppPasscode.ConfirmPasscodeSheet.suggestion": {
+    "message": "Make sure to note your passcode in a secure location before saving."
+  },
   "screens.AppPasscode.ConfirmPasscodeSheet.title": {
-    "message": "Se perder ou esquecer a Senha do aplicativo, ela nunca pode ser recuperada! Certifique-se de anotar sua senha em um local seguro antes de salvar."
+    "message": "App Passcodes can never be recovered if lost or forgotten!"
   },
   "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
     "message": "Por favor insira sua senha"
@@ -256,7 +259,7 @@
     "message": "A Senha do aplicativo permite que você adicione uma camada adicional de segurança, exigindo que você insira uma senha para abrir o aplicativo Mapeo. Você pode definir sua própria senha de 5 dígitos ativando o recurso abaixo."
   },
   "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "**AVISO: Senhas esquecidas não podem ser recuperadas!** Quando esse recurso estiver ativado, se você esquecer ou perder sua senha, não será capaz de abrir o Mapeo e perderá o acesso a quaisquer dados do Mapeo que não foram sincronizados com outros participantes do projeto."
+    "message": "<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open Mapeo and will lose access to any Mapeo data that has not been synced with other project participants."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Cancelar"
@@ -738,15 +741,6 @@
   "screens.SaveTrack.track": {
     "description": "Category title for new track screen",
     "message": "Track"
-  },
-  "screens.Security.obscurePassDescriptonPassNotSet": {
-    "message": "Para usar, ative a Senha do aplicativo"
-  },
-  "screens.Security.obscurePassDescriptonPassSet": {
-    "message": "Proteja seu dispositivo contra apreensão"
-  },
-  "screens.Security.obscurePasscodeHeader": {
-    "message": "Senha obscura"
   },
   "screens.Security.passDesriptionPassNotSet": {
     "message": "Senha não definida"

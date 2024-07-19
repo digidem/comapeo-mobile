@@ -92,6 +92,9 @@
     "description": "list of avaialable project settings",
     "message": "Categories, Config, Team"
   },
+  "Navigation.Drawer.security": {
+    "message": "Security"
+  },
   "Navigation.Drawer.title": {
     "description": "Title of settings screen",
     "message": "Settings"
@@ -110,9 +113,6 @@
   },
   "Screens.Settings.AppSettings.title": {
     "message": "App Setttings"
-  },
-  "Screens.Settings.ProjectSettings.configuration": {
-    "message": "Configuration"
   },
   "Screens.Settings.ProjectSettings.deviceName": {
     "message": "Jina la Kifaa"
@@ -199,13 +199,16 @@
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
     "description": "used to indicate to the user what the new passcode will be.",
-    "message": "Nambari ya siri"
+    "message": "Passcode: {passcode}"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
     "message": "Hifadhi Nambari ya siri ya Programu"
   },
+  "screens.AppPasscode.ConfirmPasscodeSheet.suggestion": {
+    "message": "Make sure to note your passcode in a secure location before saving."
+  },
   "screens.AppPasscode.ConfirmPasscodeSheet.title": {
-    "message": "Nambari za Siri za Programu haziwezi kurejeshwa ikiwa zimepotea au kusahaulika! Hakikisha umeandika nambari yako ya siri katika eneo salama kabla ya kuhifadhi."
+    "message": "App Passcodes can never be recovered if lost or forgotten!"
   },
   "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
     "message": "Tafadhali Weka Nambari ya siri"
@@ -256,7 +259,7 @@
     "message": "Nambari ya siri ya Programu hukuruhusu kuongeza safu ya ziada ya usalama kwa kukuhitaji uweke nambari ya siri ili ufungue programu ya Mapeo. Unaweza kufafanua nambari yako ya siri yenye tarakimu 5 kwa kuwasha kipengele kilicho hapa chini."
   },
   "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "**Tafadhali kumbuka kuwa nambari za siri zilizosahaulika haziwezi kurejeshwa!** Kipengele hiki kikiwashwa, ukisahau au kupoteza nambari yako ya siri, hutaweza kufungua Mapeo na utapoteza ufikiaji wa data yoyote ya Mapeo ambayo haijasawazishwa na washiriki wengine wa mradi."
+    "message": "<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open Mapeo and will lose access to any Mapeo data that has not been synced with other project participants."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Ghairi"
@@ -738,15 +741,6 @@
   "screens.SaveTrack.track": {
     "description": "Category title for new track screen",
     "message": "Track"
-  },
-  "screens.Security.obscurePassDescriptonPassNotSet": {
-    "message": "Ili kutumia, washa Msimbo wa siri wa Programu"
-  },
-  "screens.Security.obscurePassDescriptonPassSet": {
-    "message": "Linda kifaa chako ili kisipokonywe"
-  },
-  "screens.Security.obscurePasscodeHeader": {
-    "message": "Nambari ya siri Isiyojulikana"
   },
   "screens.Security.passDesriptionPassNotSet": {
     "message": "Nambari ya siri haijawekwa"

@@ -92,6 +92,9 @@
     "description": "list of avaialable project settings",
     "message": "Categories, Config, Team"
   },
+  "Navigation.Drawer.security": {
+    "message": "Security"
+  },
   "Navigation.Drawer.title": {
     "description": "Title of settings screen",
     "message": "Settings"
@@ -110,9 +113,6 @@
   },
   "Screens.Settings.AppSettings.title": {
     "message": "App Setttings"
-  },
-  "Screens.Settings.ProjectSettings.configuration": {
-    "message": "Configuration"
   },
   "Screens.Settings.ProjectSettings.deviceName": {
     "message": "Tên thiết bị"
@@ -199,13 +199,16 @@
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
     "description": "used to indicate to the user what the new passcode will be.",
-    "message": "Mật khẩu"
+    "message": "Passcode: {passcode}"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
     "message": "Lưu mật khẩu ứng dụng"
   },
+  "screens.AppPasscode.ConfirmPasscodeSheet.suggestion": {
+    "message": "Make sure to note your passcode in a secure location before saving."
+  },
   "screens.AppPasscode.ConfirmPasscodeSheet.title": {
-    "message": "Mật khẩu ứng dụng không thể được phục hồi nếu bị mất hoặc bị quên! Hãy nhớ ghi lại mật khẩu của bạn ở một nơi an toàn trước khi lưu để dùng."
+    "message": "App Passcodes can never be recovered if lost or forgotten!"
   },
   "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
     "message": "Vui lòng nhập mật khẩu"
@@ -256,7 +259,7 @@
     "message": "Mật khẩu ứng dụng cho phép bạn thêm một lớp bảo mật bổ sung bằng cách yêu cầu bạn nhập mật khẩu để mở ứng dụng Mapeo. Bạn có thể xác định mật khẩu gồm 5 chữ số của riêng mình bằng cách bật tính năng bên dưới."
   },
   "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "**Xin lưu ý rằng mật khẩu đã quên không thể khôi phục được!** Khi tính năng này được bật, nếu bạn quên hoặc mất mật khẩu, bạn sẽ không thể mở Mapeo và sẽ mất quyền truy cập vào mọi dữ liệu Mapeo chưa được đồng bộ hóa với những người tham gia dự án khác."
+    "message": "<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open Mapeo and will lose access to any Mapeo data that has not been synced with other project participants."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Hủy"
@@ -738,15 +741,6 @@
   "screens.SaveTrack.track": {
     "description": "Category title for new track screen",
     "message": "Track"
-  },
-  "screens.Security.obscurePassDescriptonPassNotSet": {
-    "message": "Để sử dụng, bật Mật khẩu ứng dụng"
-  },
-  "screens.Security.obscurePassDescriptonPassSet": {
-    "message": "Bảo vệ thiế bị của bạn khỏi bị tịch thu"
-  },
-  "screens.Security.obscurePasscodeHeader": {
-    "message": "Obscure Passcode"
   },
   "screens.Security.passDesriptionPassNotSet": {
     "message": "Mật khẩu chưa được đặt"

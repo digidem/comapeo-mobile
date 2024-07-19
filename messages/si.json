@@ -92,6 +92,9 @@
     "description": "list of avaialable project settings",
     "message": "Categories, Config, Team"
   },
+  "Navigation.Drawer.security": {
+    "message": "Security"
+  },
   "Navigation.Drawer.title": {
     "description": "Title of settings screen",
     "message": "Settings"
@@ -110,9 +113,6 @@
   },
   "Screens.Settings.AppSettings.title": {
     "message": "App Setttings"
-  },
-  "Screens.Settings.ProjectSettings.configuration": {
-    "message": "Configuration"
   },
   "Screens.Settings.ProjectSettings.deviceName": {
     "message": "උපාංගයේ නම"
@@ -199,13 +199,16 @@
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
     "description": "used to indicate to the user what the new passcode will be.",
-    "message": "මුරකේතය"
+    "message": "Passcode: {passcode}"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
     "message": "යෙදුම් මුර කේතය සුරකින්න"
   },
+  "screens.AppPasscode.ConfirmPasscodeSheet.suggestion": {
+    "message": "Make sure to note your passcode in a secure location before saving."
+  },
   "screens.AppPasscode.ConfirmPasscodeSheet.title": {
-    "message": "යෙදුම් මුරකේත නැති වුවහොත් හෝ අමතක වූවා නම් කිසිවිටෙක ආපසු ලබාගත නොහැක! සුරැකීමට පෙර ඔබේ මුර කේතය ආරක්ෂිත ස්ථානයක සටහන් කිරීමට වග බලා ගන්න."
+    "message": "App Passcodes can never be recovered if lost or forgotten!"
   },
   "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
     "message": "කරුණාකර මුර කේතය ඇතුලත් කරන්න"
@@ -256,7 +259,7 @@
     "message": "Mapeo යෙදුම විවෘත කිරීම සඳහා ඔබට මුරකේතයක් ඇතුළත් කිරීම අවශ්‍ය කිරීමෙන් අමතර ආරක්ෂක ස්ථරයක් එක් කිරීමට යෙදුම් මුරකේතය ඔබට ඉඩ සලසයි. පහත විශේෂාංගය ක්‍රියාත්මක කිරීමෙන් ඔබට ඔබේම ඉලක්කම් 5ක මුරකේතය අර්ථ දැක්විය හැක."
   },
   "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "**Please note that forgotten passcodes cannot be recovered!** Once this feature is enabled, if you forget or lose your passcode, you will not be able to open Mapeo and will lose access to any Mapeo data that has not been synced with other project participants."
+    "message": "<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open Mapeo and will lose access to any Mapeo data that has not been synced with other project participants."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "අවලංගු කරන්න"
@@ -738,15 +741,6 @@
   "screens.SaveTrack.track": {
     "description": "Category title for new track screen",
     "message": "Track"
-  },
-  "screens.Security.obscurePassDescriptonPassNotSet": {
-    "message": "භාවිතා කිරීමට, යෙදුම් මුරකේතය සබල කරන්න"
-  },
-  "screens.Security.obscurePassDescriptonPassSet": {
-    "message": "අල්ලා ගැනීමෙන් ඔබේ උපාංගය ආරක්ෂා කරන්න"
-  },
-  "screens.Security.obscurePasscodeHeader": {
-    "message": "Obscure Passcode"
   },
   "screens.Security.passDesriptionPassNotSet": {
     "message": "මුර කේතය සකසා නැත"

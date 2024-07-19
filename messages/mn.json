@@ -92,6 +92,9 @@
     "description": "list of avaialable project settings",
     "message": "Categories, Config, Team"
   },
+  "Navigation.Drawer.security": {
+    "message": "Security"
+  },
   "Navigation.Drawer.title": {
     "description": "Title of settings screen",
     "message": "Settings"
@@ -110,9 +113,6 @@
   },
   "Screens.Settings.AppSettings.title": {
     "message": "App Setttings"
-  },
-  "Screens.Settings.ProjectSettings.configuration": {
-    "message": "Configuration"
   },
   "Screens.Settings.ProjectSettings.deviceName": {
     "message": "Төхөөрөмжний нэр"
@@ -199,13 +199,16 @@
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
     "description": "used to indicate to the user what the new passcode will be.",
-    "message": "Нууц үг"
+    "message": "Passcode: {passcode}"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
     "message": "Аппликэйшний нууц үгийг хадгалах"
   },
+  "screens.AppPasscode.ConfirmPasscodeSheet.suggestion": {
+    "message": "Make sure to note your passcode in a secure location before saving."
+  },
   "screens.AppPasscode.ConfirmPasscodeSheet.title": {
-    "message": "Аппликэйшний нууц үгийг алдсан эсвэл мартсан тохиолдолд хэзээ ч сэргээх боломжгүй! Хадгалахаасаа өмнө нууц үгээ аюулгүй газар тэмдэглэнэ үү."
+    "message": "App Passcodes can never be recovered if lost or forgotten!"
   },
   "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
     "message": "Нууц үгийг оруулна уу"
@@ -256,7 +259,7 @@
     "message": "Аппликэйшний нууц үг нь Mapeo програмыг нээхийн тулд нууц үг оруулах шаардлагатай тул хамгаалалтын нэмэлт давхарга нэмэх боломжийг танд олгоно. Та доорх функцийг идэвхжүүлснээр өөрийн 5 оронтой нууц үгийг тодорхойлж болно."
   },
   "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "**Мартагдсан нууц үгийг сэргээх боломжгүй гэдгийг анхаарна уу!** Энэ функцийг идэвхжүүлсний дараа, хэрэв та нууц үгээ мартсан эсвэл алдсан тохиолдолд Mapeo-г нээх боломжгүй бөгөөд бусад төсөлд оролцогчидтой синк хийгээгүй Mapeo өгөгдөлд хандах эрхээ алдах болно. "
+    "message": "<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open Mapeo and will lose access to any Mapeo data that has not been synced with other project participants."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Цуцлах"
@@ -738,15 +741,6 @@
   "screens.SaveTrack.track": {
     "description": "Category title for new track screen",
     "message": "Track"
-  },
-  "screens.Security.obscurePassDescriptonPassNotSet": {
-    "message": "Ашиглахын тулд Аппликэшний нууц үгийг тааруулах"
-  },
-  "screens.Security.obscurePassDescriptonPassSet": {
-    "message": "Төхөөрөмжөө хураахаас хамгаалаарай"
-  },
-  "screens.Security.obscurePasscodeHeader": {
-    "message": "Тодорхой бус нууц үг"
   },
   "screens.Security.passDesriptionPassNotSet": {
     "message": "Нууц үгийг тохируулаагүй байна"

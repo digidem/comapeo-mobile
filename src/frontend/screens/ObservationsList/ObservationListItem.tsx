@@ -12,6 +12,10 @@ import {
 } from '../../sharedComponents/FormattedData';
 import {PhotoAttachmentView} from '../../sharedComponents/PhotoAttachmentView.tsx';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
+import {
+  useDeviceInfo,
+  useCreatedByToDeviceId,
+} from '../../hooks/server/deviceInfo';
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;
@@ -33,20 +37,25 @@ function ObservationListItemNotMemoized({
   onPress = () => {},
 }: ObservationListItemProps) {
   const {preset} = useObservationWithPreset(observation.docId);
-  const deviceId = '';
+  const {data: deviceInfo} = useDeviceInfo();
+  const {deviceId} = deviceInfo || {};
 
   // const photos = !observationQuery.data ? [] : filterPhotosFromAttachments(
   //   observationQuery.data && observationQuery.data.attachments
   // ).slice(0, 3);
   const photos = [];
-  const isMine = observation.createdBy === deviceId;
+  const {data: createdByDeviceId} = useCreatedByToDeviceId(
+    observation.createdBy,
+  );
+  const isMine = createdByDeviceId === deviceId;
+
   return (
     <TouchableHighlight
       onPress={() => onPress(observation.docId)}
       testID={testID}
       style={{flex: 1, height: 80}}>
       <View
-        style={[styles.container, style, !isMine && styles.syncedObservation]}>
+        style={[styles.container, style, isMine && styles.syncedObservation]}>
         <View style={styles.text}>
           {preset && (
             <Text style={styles.title}>

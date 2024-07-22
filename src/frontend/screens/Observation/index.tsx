@@ -16,6 +16,10 @@ import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
 import {MediaScrollView} from '../../sharedComponents/MediaScrollView/index.tsx';
 import {useAttachmentUrlQueries} from '../../hooks/server/media.ts';
+import {
+  useCreatedByToDeviceId,
+  useDeviceInfo,
+} from '../../hooks/server/deviceInfo';
 
 const m = defineMessages({
   deleteTitle: {
@@ -57,9 +61,15 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
       }, defaultAcc)
     : [];
 
-  const deviceId = '';
   const {lat, lon, createdBy} = observation;
-  const isMine = deviceId === createdBy;
+  const {data: deviceInfo, isPending: isDeviceInfoPending} = useDeviceInfo();
+  const {deviceId} = deviceInfo || {};
+  const {data: convertedDeviceId, isPending: isCreatedByDeviceIdPending} =
+    useCreatedByToDeviceId(createdBy);
+  const isMine =
+    !isDeviceInfoPending &&
+    !isCreatedByDeviceIdPending &&
+    deviceId === convertedDeviceId;
 
   // Currently only show photo attachments
   const photoAttachments = observation.attachments.filter(

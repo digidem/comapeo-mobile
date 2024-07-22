@@ -27,8 +27,15 @@ jobs:
 
       - name: Set up environment variables
         run: |
-          echo "ANDROID_HOME=/usr/local/lib/android/sdk" >> $GITHUB_ENV
+          mkdir -p $HOME/lib/android/sdk
+          echo "ANDROID_HOME=$HOME/lib/android/sdk" >> $GITHUB_ENV
           source $GITHUB_ENV
+          whoami
+          echo "----"
+          ls -la $GITHUB_ENV
+          echo "----"
+          ls -la $HOME
+          echo "----"
 
       - name: Install Maestro
         run: curl -Ls 'https://get.maestro.mobile.dev' | bash

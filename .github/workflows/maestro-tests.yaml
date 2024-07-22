@@ -27,7 +27,6 @@ jobs:
 
       - name: Set up environment variables
         run: |
-          mkdir -p /usr/local/lib/android/sdk
           echo "ANDROID_HOME=/usr/local/lib/android/sdk" >> $GITHUB_ENV
           source $GITHUB_ENV
 

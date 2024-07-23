@@ -10,19 +10,19 @@ const m = defineMessages({
     defaultMessage: 'Leave Current Project',
   },
   goBack: {
-    id: 'screens.goBackect.AlreadyOnProject.goBack',
+    id: 'screens.LeaveProject.AlreadyOnProject.goBack',
     defaultMessage: 'Go Back',
   },
   alreadyOnProject: {
-    id: 'screens.goBackect.AlreadyOnProject.alreadyOnProject',
+    id: 'screens.LeaveProject.AlreadyOnProject.alreadyOnProject',
     defaultMessage: 'You are already on a project',
   },
   onProject: {
-    id: 'screens.goBackect.AlreadyOnProject.onProject',
+    id: 'screens.LeaveProject.AlreadyOnProject.onProject',
     defaultMessage: 'You are on {projectName}',
   },
   leaveWarning: {
-    id: 'screens.goBackect.AlreadyOnProject.leaveWarning',
+    id: 'screens.LeaveProject.AlreadyOnProject.leaveWarning',
     defaultMessage: 'To join a new project you must leave your current one.',
   },
 });

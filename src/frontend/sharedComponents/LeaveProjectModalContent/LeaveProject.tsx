@@ -6,6 +6,8 @@ import {Text} from '../../sharedComponents/Text';
 import {useLeaveProject} from '../../hooks/server/projects';
 import {RED} from '../../lib/styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import * as Sentry from '@sentry/react-native';
+
 import {TouchableOpacity} from '../../sharedComponents/Touchables';
 
 import {UIActivityIndicator} from 'react-native-indicators';
@@ -92,13 +94,13 @@ export const LeaveProject = ({
         //       setCombinedLoading(false);
         //     },
         //     onError: err => {
-        //       console.log(err);
+        //       Sentry.captureException(err)
         //       setCombinedLoading(false);
         //     },
         //   });
         // },
         onError: err => {
-          console.log(err);
+          Sentry.captureException(err);
           setCombinedLoading(false);
         },
       },

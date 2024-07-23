@@ -8,11 +8,9 @@ import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {EditIcon} from '../../sharedComponents/icons';
 import {SyncIcon} from '../../sharedComponents/icons/SyncIconCircle';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {
-  useDeviceInfo,
-  useCreatedByToDeviceId,
-} from '../../hooks/server/deviceInfo';
+import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {useCreatedByToDeviceId} from '../../hooks/server/projects.ts';
 
 export const ObservationHeaderRight = ({
   observationId,
@@ -41,8 +39,7 @@ export const ObservationHeaderRight = ({
     );
   }
 
-  const {deviceId} = deviceInfo || {};
-  const canEdit = createdByDeviceId === deviceId || false;
+  const canEdit = createdByDeviceId === deviceInfo?.deviceId;
 
   return canEdit ? (
     <IconButton onPress={handlePress} testID="editButton">

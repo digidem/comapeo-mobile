@@ -26,6 +26,7 @@ export const LeaveProjectModalContent = ({
     <AlreadyOnProject
       moveToLeaveProjectModalContent={setToLeaveProject}
       closeSheet={closeSheet}
+      projectName={data?.name}
     />
   ) : (
     <LeaveProject

@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@bam.tech/react-native-image-resizer": "^3.0.7",
+    "@dev-plugins/react-navigation": "^0.0.6",
     "@dr.pogodin/react-native-fs": "^2.24.1",
     "@formatjs/intl-getcanonicallocales": "^2.3.0",
     "@formatjs/intl-locale": "^3.3.2",

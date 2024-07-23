@@ -35,10 +35,6 @@ function ObservationListItemNotMemoized({
   const {preset} = useObservationWithPreset(observation.docId);
   const deviceId = '';
 
-  // const photos = !observationQuery.data ? [] : filterPhotosFromAttachments(
-  //   observationQuery.data && observationQuery.data.attachments
-  // ).slice(0, 3);
-  const photos = [];
   const isMine = observation.createdBy === deviceId;
   return (
     <TouchableHighlight
@@ -60,7 +56,7 @@ function ObservationListItemNotMemoized({
             />
           </Text>
         </View>
-        {photos.length ? (
+        {observation.attachments.length ? (
           <View style={styles.photoContainer}>
             <PhotoStack attachments={observation.attachments} />
             <View style={styles.smallIconContainer}>
@@ -76,17 +72,18 @@ function ObservationListItemNotMemoized({
 }
 
 function PhotoStack({attachments}: {attachments: Attachment[]}) {
+  const photos = attachments.filter(photo => photo.type === 'photo');
+
   return (
     <View
       style={{
-        width: 60 + (attachments.length - 1) * photoOverlap,
+        width: 60 + (photos.length - 1) * photoOverlap,
         height: 60,
-        backgroundColor: 'aqua',
       }}>
-      {attachments.map((attachment, idx) => (
+      {photos.map((photo, idx) => (
         <PhotoAttachmentView
-          key={`${attachment.driveDiscoveryId}/${attachment.type}/${attachment.name}`}
-          attachment={attachment}
+          key={`${photo.driveDiscoveryId}/${photo.type}/${photo.name}`}
+          attachment={photo}
           variant="thumbnail"
           style={[styles.photo, {left: idx * photoOverlap}]}
           resizeMode="cover"

@@ -11,3 +11,4 @@ appId: com.comapeo
 - runFlow: '../main/map.yaml'
 - runFlow: '../observations/create-observation.yaml'
 - runFlow: '../observations/add-details.yaml'
+- runFlow: '../observations/view-observations.yaml'

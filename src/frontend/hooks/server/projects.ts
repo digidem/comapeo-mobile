@@ -90,3 +90,20 @@ export const useCreatedByToDeviceId = (createdBy: string) => {
     },
   });
 };
+
+export function useLeaveProject() {
+  const mapeoApi = useApi();
+
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (projectId: string) => {
+      return mapeoApi.leaveProject(projectId);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [ALL_PROJECTS_KEY],
+      });
+    },
+  });
+}

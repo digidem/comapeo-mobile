@@ -130,7 +130,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
     if (!asset) return;
 
     // Only allow importing files with the desired extension
-    if (asset.name.endsWith('.mapeoconfig')) {
+    if (asset.name.endsWith('.mapeosettings')) {
       setConfigFileResult({type: 'success', file: asset});
     } else {
       setConfigFileResult({

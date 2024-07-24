@@ -1,17 +1,8 @@
 import type {ReadonlyDeep} from 'type-fest';
-import {formatIsoUtc, subDays} from '../lib/date';
-import {mapGroupBy} from '../lib/mapGroupBy';
+import {beginningOfMonthUtc, formatIsoUtc} from '../lib/date';
 import {maxBy} from '../lib/maxBy';
 
-const MAX_REPORT_AGE_DAYS = 30;
-
-type AppDiagnosticMetricsRequestData = ReadonlyDeep<{
-  type: 'app diagnostics v1';
-  reports: AppDiagnosticMetricsReport[];
-}>;
-
 export type AppDiagnosticMetricsReport = ReadonlyDeep<{
-  monthlyDeviceHash: string;
   dateGenerated: string;
   os: string;
   osVersion: string | number;
@@ -53,38 +44,16 @@ export function hasReportForToday({
 
 export function truncateReportsByTime(
   queue: AppDiagnosticMetricsQueue,
+  now: Readonly<Date>,
 ): AppDiagnosticMetricsQueue {
-  const today = todayUtc();
-  const oldest = formatIsoUtc(subDays(new Date(), MAX_REPORT_AGE_DAYS));
-
+  const today = formatIsoUtc(now);
+  const oldest = formatIsoUtc(beginningOfMonthUtc(now));
   return {
     ...queue,
-    reports: queue.reports.filter(({dateGenerated}) => {
-      const isTooOld = dateGenerated < oldest;
-      if (isTooOld) return false;
-
-      const isTooNew = dateGenerated > today;
-      if (isTooNew) return false;
-
-      return true;
-    }),
+    reports: queue.reports.filter(
+      ({dateGenerated}) => dateGenerated >= oldest && dateGenerated <= today,
+    ),
   };
-}
-
-export function getRequestDatas(
-  queue: Readonly<AppDiagnosticMetricsQueue>,
-): AppDiagnosticMetricsRequestData[] {
-  const grouped = mapGroupBy(queue.reports, report => report.monthlyDeviceHash);
-
-  const result: AppDiagnosticMetricsRequestData[] = [];
-  for (const group of grouped.values()) {
-    result.push({
-      type: 'app diagnostics v1',
-      reports: group,
-    });
-  }
-
-  return result;
 }
 
 export function updateQueueHighWatermark(

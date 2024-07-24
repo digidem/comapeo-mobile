@@ -1,10 +1,25 @@
+import {parseISO} from 'date-fns';
 import {
+  beginningOfMonthUtc,
   formatIsoUtc,
   isDateValid,
   isSameUtcMonthAndYear,
-  subDays,
+  parseIsoUtc,
 } from './date';
-import {parseISO} from 'date-fns';
+
+describe('beginningOfMonthUtc', () => {
+  it('returns the first day of the month (in UTC)', () => {
+    const input = parseISO('2012-03-04T06:09:42.0Z');
+    const result = beginningOfMonthUtc(input);
+    expect(result.getUTCFullYear()).toBe(2012);
+    expect(result.getUTCMonth()).toBe(2);
+    expect(result.getUTCDate()).toBe(1);
+    expect(result.getUTCHours()).toBe(0);
+    expect(result.getUTCMinutes()).toBe(0);
+    expect(result.getUTCSeconds()).toBe(0);
+    expect(result.getUTCMilliseconds()).toBe(0);
+  });
+});
 
 describe('formatIsoUtc', () => {
   it('formats dates (without times)', () => {
@@ -42,22 +57,84 @@ describe('isSameUtcMonthAndYear', () => {
   });
 });
 
-describe('subDays', () => {
-  it('subtracts days', () => {
-    const date = parseISO('2012-03-04T06:09:42.0Z');
-
-    expect(subDays(date, 0)).toEqual(date);
-    expect(subDays(date, 1)).toEqual(parseISO('2012-03-03T06:09:42.0Z'));
-    expect(subDays(date, 10)).toEqual(parseISO('2012-02-23T06:09:42.0Z'));
+describe('parseIsoUtc', () => {
+  it('returns null for invalid date strings', () => {
+    const testCases = [
+      '',
+      '1234',
+      '123-06-09',
+      '20000102',
+      '2000-13-01',
+      '2000-12-32',
+      '2001-02-29',
+      ' 2001-01-02 ',
+      new Date().toISOString(),
+    ];
+    for (const input of testCases) {
+      expect(parseIsoUtc(input)).toBeNull();
+    }
   });
 
-  it("doesn't modify the input", () => {
-    const date = parseISO('2012-03-04T06:09:42.0Z');
-    const before = date.valueOf();
+  it('parses every day in a leap year', () => {
+    const year = 2024;
+    for (let month = 1; month <= 12; month++) {
+      let daysInMonth = 31;
+      if (month === 2) {
+        daysInMonth = 29;
+      } else if ([4, 6, 9, 11].includes(month)) {
+        daysInMonth = 30;
+      }
+      for (let date = 1; date <= daysInMonth; date++) {
+        const str = `${year}-${month.toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`;
+        const parsed = parseIsoUtc(str);
+        expect(parsed?.getUTCFullYear()).toBe(year);
+        expect(parsed?.getUTCMonth()).toBe(month - 1);
+        expect(parsed?.getUTCDate()).toBe(date);
+        expect(parsed?.getUTCHours()).toBe(0);
+        expect(parsed?.getUTCMinutes()).toBe(0);
+        expect(parsed?.getUTCSeconds()).toBe(0);
+        expect(parsed?.getUTCMilliseconds()).toBe(0);
+      }
+    }
+  });
 
-    subDays(date, 123);
+  it('parses every day in a non-leap year', () => {
+    const year = 2023;
+    for (let month = 1; month <= 12; month++) {
+      let daysInMonth = 31;
+      if (month === 2) {
+        daysInMonth = 28;
+      } else if ([4, 6, 9, 11].includes(month)) {
+        daysInMonth = 30;
+      }
+      for (let date = 1; date <= daysInMonth; date++) {
+        const str = `${year}-${month.toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`;
+        const parsed = parseIsoUtc(str);
+        expect(parsed?.getUTCFullYear()).toBe(year);
+        expect(parsed?.getUTCMonth()).toBe(month - 1);
+        expect(parsed?.getUTCDate()).toBe(date);
+        expect(parsed?.getUTCHours()).toBe(0);
+        expect(parsed?.getUTCMinutes()).toBe(0);
+        expect(parsed?.getUTCSeconds()).toBe(0);
+        expect(parsed?.getUTCMilliseconds()).toBe(0);
+      }
+    }
+  });
 
-    const after = date.valueOf();
-    expect(before).toBe(after);
+  it("parses today's date", () => {
+    const today = new Date();
+    const parsed = parseIsoUtc(formatIsoUtc(today));
+    expect(parsed?.getUTCFullYear()).toBe(today.getUTCFullYear());
+    expect(parsed?.getUTCMonth()).toBe(today.getUTCMonth());
+    expect(parsed?.getUTCDate()).toBe(today.getUTCDate());
+    expect(parsed?.getUTCHours()).toBe(0);
+    expect(parsed?.getUTCMinutes()).toBe(0);
+    expect(parsed?.getUTCSeconds()).toBe(0);
+    expect(parsed?.getUTCMilliseconds()).toBe(0);
+  });
+
+  it('parses years far in the future', () => {
+    const parsed = parseIsoUtc('12345-02-03');
+    expect(parsed?.getUTCFullYear()).toBe(12345);
   });
 });

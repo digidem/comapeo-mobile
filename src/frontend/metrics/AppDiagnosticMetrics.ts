@@ -2,22 +2,22 @@ import * as NetInfo from '@react-native-community/netinfo';
 import * as Sentry from '@sentry/react-native';
 import * as Application from 'expo-application';
 import {getLastKnownPositionAsync} from 'expo-location';
-import pProps from 'p-props';
 import {AppState, Platform} from 'react-native';
 import {storage} from '../hooks/persistedState/createPersistedState';
 import {
   getDeviceLanguageTag,
   usePersistedLocale,
 } from '../hooks/persistedState/usePersistedLocale';
-import {MINUTE_MS, formatIsoUtc} from '../lib/date';
+import {assert} from '../lib/assert';
+import {MINUTE_MS, formatIsoUtc, parseIsoUtc} from '../lib/date';
 import {first} from '../lib/first';
+import {last} from '../lib/last';
 import {maybeJsonParse} from '../lib/maybeJsonParse';
 import {OneAtATimeQueue} from '../lib/OneAtATimeQueue';
 import {setIfNotNull} from '../lib/setIfNotNull';
 import {
   type AppDiagnosticMetricsQueue,
   type AppDiagnosticMetricsReport,
-  getRequestDatas,
   hasReportForToday,
   truncateReportsByTime,
   updateQueueHighWatermark,
@@ -56,14 +56,7 @@ async function generateAppDiagnosticMetricsData(): Promise<AppDiagnosticMetricsR
     osVersion: Platform.Version,
     deviceLocale: getDeviceLanguageTag(),
     appLocale: usePersistedLocale.getState().locale,
-    ...(await pProps({
-      monthlyDeviceHash: getMonthlyHash(
-        'app diagnostics',
-        getMetricsDeviceId(),
-        new Date(),
-      ),
-      country: getCountry(),
-    })),
+    country: await getCountry(),
   };
 
   setIfNotNull(result, 'appId', Application.applicationId);
@@ -154,8 +147,10 @@ export class AppDiagnosticMetrics {
 
     let queue = loadQueueFromStorage();
 
+    const now = new Date();
+
     const numberOfReportsBeforeTruncation = queue.reports.length;
-    queue = truncateReportsByTime(queue);
+    queue = truncateReportsByTime(queue, now);
     const numberOfReportsAfterTruncation = queue.reports.length;
     let hasChangedQueue =
       numberOfReportsBeforeTruncation !== numberOfReportsAfterTruncation;
@@ -170,26 +165,35 @@ export class AppDiagnosticMetrics {
 
     if (hasChangedQueue) saveQueueToStorage(queue);
 
-    const reportBatches = getRequestDatas(queue);
+    const newestReport = last(queue.reports);
 
     const shouldSendMetrics =
       this.#isEnabled &&
       this.#isOnline &&
       AppState.currentState === 'active' &&
-      reportBatches.length > 0;
+      !!newestReport;
     if (!shouldSendMetrics) return;
 
     try {
-      const metricsRequestInfo = getMetricsRequestInfo();
+      const newestReportDate = parseIsoUtc(newestReport.dateGenerated);
+      assert(newestReportDate, 'Expected report to be generated');
 
-      await Promise.all(
-        reportBatches.map(reportBatch =>
-          sendMetricsData({
-            ...metricsRequestInfo,
-            dataToSend: reportBatch,
-          }),
-        ),
-      );
+      await sendMetricsData({
+        ...getMetricsRequestInfo(),
+        dataToSend: {
+          type: 'app diagnostics v1',
+          monthlyDeviceHash: await getMonthlyHash(
+            'app diagnostics',
+            getMetricsDeviceId(),
+            // We prefer the date from the newest report, not `new Date()`.
+            // These will usually be the same, but it's possible for a user to
+            // send metrics right at the end of the month which would generate
+            // a new monthly hash, letting us track users across months.
+            newestReportDate,
+          ),
+          reports: queue.reports,
+        },
+      });
 
       queue = updateQueueHighWatermark(queue);
       saveQueueToStorage(queue);

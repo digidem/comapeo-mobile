@@ -79,7 +79,6 @@
     "luxon": "^3.4.4",
     "nanoid": "^5.0.1",
     "nodejs-mobile-react-native": "^18.17.7",
-    "p-props": "^6.0.0",
     "react": "18.2.0",
     "react-hook-form": "^7.49.2",
     "react-intl": "^6.6.5",

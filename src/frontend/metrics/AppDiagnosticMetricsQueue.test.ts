@@ -2,7 +2,6 @@ import {addDays, subDays} from 'date-fns';
 import {formatIsoUtc} from '../lib/date';
 import {
   type AppDiagnosticMetricsReport,
-  getRequestDatas,
   hasReportForToday,
   truncateReportsByTime,
   updateQueueHighWatermark,
@@ -15,7 +14,6 @@ const yesterday = formatIsoUtc(subDays(new Date(), 1));
 const report = (
   overrides: Partial<AppDiagnosticMetricsReport>,
 ): AppDiagnosticMetricsReport => ({
-  monthlyDeviceHash: 'abc123',
   dateGenerated: today,
   os: 'test',
   osVersion: 123,
@@ -62,75 +60,29 @@ describe('hasReportForToday', () => {
 describe('truncateReportsByTime', () => {
   it('does nothing to an empty queue', () => {
     const queue = {highWatermark: today, reports: []};
-    expect(truncateReportsByTime(queue)).toEqual(queue);
+    expect(truncateReportsByTime(queue, new Date())).toEqual(queue);
   });
 
-  it('removes reports >30 days old and reports from the future', () => {
-    const now = new Date();
+  it('removes reports from last month and reports from the future', () => {
+    const now = new Date(Date.UTC(2020, 3, 20));
     const queue = {
       reports: [
-        report({dateGenerated: formatIsoUtc(subDays(now, 31))}),
-        report({dateGenerated: formatIsoUtc(subDays(now, 30))}),
-        report({dateGenerated: yesterday}),
-        report({dateGenerated: today}),
-        report({dateGenerated: tomorrow}),
+        report({dateGenerated: '2020-01-20'}),
+        report({dateGenerated: '2020-02-20'}),
+        report({dateGenerated: '2020-03-31'}),
+        report({dateGenerated: '2020-04-01'}),
+        report({dateGenerated: '2020-04-19'}),
+        report({dateGenerated: '2020-04-20'}),
+        report({dateGenerated: '2020-04-21'}),
       ],
     };
-    expect(truncateReportsByTime(queue)).toEqual({
+    expect(truncateReportsByTime(queue, now)).toEqual({
       reports: [
-        report({dateGenerated: formatIsoUtc(subDays(now, 30))}),
-        report({dateGenerated: yesterday}),
-        report({dateGenerated: today}),
+        report({dateGenerated: '2020-04-01'}),
+        report({dateGenerated: '2020-04-19'}),
+        report({dateGenerated: '2020-04-20'}),
       ],
     });
-  });
-});
-
-describe('getRequestDatas', () => {
-  it('returns an empty array if passed no reports', () => {
-    const queue = {reports: []};
-    expect(getRequestDatas(queue)).toEqual([]);
-  });
-
-  it("doesn't split if there's just one report", () => {
-    const queue = {
-      reports: [
-        report({dateGenerated: yesterday}),
-        report({dateGenerated: today}),
-      ],
-    };
-    expect(getRequestDatas(queue)).toEqual([
-      {
-        type: 'app diagnostics v1',
-        reports: [
-          report({dateGenerated: yesterday}),
-          report({dateGenerated: today}),
-        ],
-      },
-    ]);
-  });
-
-  it('splits reports by monthly device hash', () => {
-    const queue = {
-      reports: [
-        report({monthlyDeviceHash: 'foo', dateGenerated: yesterday}),
-        report({monthlyDeviceHash: 'foo', dateGenerated: today}),
-        report({monthlyDeviceHash: 'bar', dateGenerated: tomorrow}),
-      ],
-    };
-    expect(getRequestDatas(queue)).toEqual([
-      {
-        type: 'app diagnostics v1',
-        reports: [
-          report({monthlyDeviceHash: 'foo', dateGenerated: yesterday}),
-          report({monthlyDeviceHash: 'foo', dateGenerated: today}),
-        ],
-      },
-      {
-        type: 'app diagnostics v1',
-        reports: [report({monthlyDeviceHash: 'bar', dateGenerated: tomorrow})],
-      },
-    ]);
   });
 });
 

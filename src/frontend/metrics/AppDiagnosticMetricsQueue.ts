@@ -21,13 +21,11 @@ export type AppDiagnosticMetricsQueue = ReadonlyDeep<{
   reports: AppDiagnosticMetricsReport[];
 }>;
 
-const todayUtc = () => formatIsoUtc(new Date());
-
 export function hasReportForToday({
   highWatermark,
   reports,
 }: AppDiagnosticMetricsQueue): boolean {
-  const today = todayUtc();
+  const today = formatIsoUtc(new Date());
 
   const hasAlreadySentForToday = !!highWatermark && highWatermark >= today;
   if (hasAlreadySentForToday) return true;

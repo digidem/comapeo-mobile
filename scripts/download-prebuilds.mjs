@@ -10,7 +10,7 @@ const TARGETS = ['android-arm', 'android-arm64'];
 // TODO: Figure out how to know if module uses N-API at runtime
 const NATIVE_MODULES = [
   {name: 'better-sqlite3', version: '8.7.0', usesNapi: false},
-  {name: 'crc-native', version: '1.0.7', usesNapi: true},
+  {name: 'crc-native', version: '1.0.11', usesNapi: true},
   {name: 'fs-native-extensions', version: '1.2.3', usesNapi: true},
   {name: 'quickbit-native', version: '2.2.0', usesNapi: true},
   {name: 'simdle-native', version: '1.2.0', usesNapi: true},

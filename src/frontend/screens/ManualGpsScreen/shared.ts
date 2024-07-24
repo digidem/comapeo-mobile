@@ -13,7 +13,7 @@ export type FormProps = {
 };
 
 // Adapted from https://stackoverflow.com/a/7708352
-export const POSITIVE_DECIMAL_REGEX = /^([\d]+(?:[\.][\d]*)?|\.[\d]+)$/;
+export const POSITIVE_DECIMAL_REGEX = /^([\d]+(?:\.[\d]*)?|\.[\d]+)$/;
 
 export const INTEGER_REGEX = /^[0-9]\d*$/;
 

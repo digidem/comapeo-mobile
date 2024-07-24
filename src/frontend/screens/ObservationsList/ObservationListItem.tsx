@@ -20,6 +20,8 @@ interface ObservationListItemProps {
   onPress: (id: string) => void;
 }
 
+type PhotoAttachment = Omit<Attachment, 'type'> & {type: 'photo'};
+
 const photoOverlap = 10;
 
 export const ObservationListItem = React.memo<ObservationListItemProps>(
@@ -36,6 +38,9 @@ function ObservationListItemNotMemoized({
   const deviceId = '';
 
   const isMine = observation.createdBy === deviceId;
+  const photos = observation.attachments.filter(
+    (attachment): attachment is PhotoAttachment => attachment.type === 'photo',
+  );
   return (
     <TouchableHighlight
       onPress={() => onPress(observation.docId)}
@@ -56,9 +61,9 @@ function ObservationListItemNotMemoized({
             />
           </Text>
         </View>
-        {observation.attachments.length ? (
+        {photos.length ? (
           <View style={styles.photoContainer}>
-            <PhotoStack attachments={observation.attachments} />
+            <PhotoStack photos={photos} />
             <View style={styles.smallIconContainer}>
               <PresetCircleIcon name={preset.name} size="small" />
             </View>
@@ -71,9 +76,7 @@ function ObservationListItemNotMemoized({
   );
 }
 
-function PhotoStack({attachments}: {attachments: Attachment[]}) {
-  const photos = attachments.filter(photo => photo.type === 'photo');
-
+function PhotoStack({photos}: {photos: PhotoAttachment[]}) {
   return (
     <View
       style={{

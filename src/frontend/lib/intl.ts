@@ -1,10 +1,10 @@
-import messages from '../../../translations/messages.json';
-import languages from '../languages.json';
+import MESSAGES from '../../../translations/messages.json';
+import LANGUAGES from '../languages.json';
 
-export type TranslatedLocale = keyof typeof messages;
-export type SupportedLanguageLocale = keyof typeof languages;
+export type TranslatedLocale = keyof typeof MESSAGES;
+type SupportedLanguageLocale = keyof typeof LANGUAGES;
 
-export interface LanguageName {
+interface Language {
   /** IETF BCP 47 langauge tag with region code. */
   locale: SupportedLanguageLocale;
   /** Localized name for language */
@@ -13,29 +13,45 @@ export interface LanguageName {
   englishName: string;
 }
 
-const translatedLocales = Object.keys(messages) as Array<TranslatedLocale>;
+export const SUPPORTED_LANGUAGES = deriveSupportedLanguages(
+  Object.keys(MESSAGES) as Array<TranslatedLocale>,
+);
 
-export const supportedLanguages: LanguageName[] = translatedLocales
-  .filter(translatedLocale => {
+function deriveSupportedLanguages(
+  translatedLocales: Array<TranslatedLocale>,
+): Array<Language> {
+  const result: Array<Language> = [];
+
+  for (const locale of translatedLocales) {
     const hasAtLeastOneTranslatedString =
-      Object.keys(messages[translatedLocale]).length > 0;
-    // This will show a typescript error if the language name does not exist
-    const hasTranslatedLanguageName = languages[translatedLocale];
-    if (!hasTranslatedLanguageName) {
-      console.warn(
-        `Locale "${translatedLocale}" is not available in Mapeo because we do not have
-a language name and translations in \`src/frontend/languages.json\``,
-      );
+      Object.keys(MESSAGES[locale]).length > 0;
+
+    if (!hasAtLeastOneTranslatedString) continue;
+
+    if (!isSupportedLanguageLocale(locale)) {
+      if (process.env.APP_VARIANT === 'development') {
+        console.warn(
+          `Locale "${locale}" is not available in CoMapeo (see \`src/frontend/languages.json\`)`,
+        );
+      }
+      continue;
     }
-    return hasAtLeastOneTranslatedString && hasTranslatedLanguageName;
-  })
-  .map(translatedLocale => ({
-    locale: translatedLocale,
-    ...languages[translatedLocale],
-  }))
-  .sort((a, b) => {
+
+    result.push({locale, ...LANGUAGES[locale]});
+  }
+
+  result.sort((a, b) => {
     return a.englishName.localeCompare(b.englishName);
   });
+
+  return result;
+}
+
+function isSupportedLanguageLocale(
+  locale: string,
+): locale is SupportedLanguageLocale {
+  return locale in LANGUAGES;
+}
 
 // Device locale can be regional e.g. `en-US` but we might only have
 // translations for `en`. If we don't have translations for a given device
@@ -43,10 +59,12 @@ a language name and translations in \`src/frontend/languages.json\``,
 // language for the app
 export function getSupportedLocale(
   locale: string,
-): keyof typeof languages | undefined {
-  if (supportedLanguages.find(lang => lang.locale === locale))
-    return locale as keyof typeof languages;
+): SupportedLanguageLocale | undefined {
+  if (SUPPORTED_LANGUAGES.find(lang => lang.locale === locale))
+    return locale as SupportedLanguageLocale;
+
   const nonRegionalLocale = locale.split('-')[0];
-  if (supportedLanguages.find(lang => lang.locale === nonRegionalLocale))
-    return nonRegionalLocale as keyof typeof languages;
+
+  if (SUPPORTED_LANGUAGES.find(lang => lang.locale === nonRegionalLocale))
+    return nonRegionalLocale as SupportedLanguageLocale;
 }

@@ -89,7 +89,10 @@ export const createDefaultScreenGroup = ({
     <RootStack.Screen
       name="AuthScreen"
       component={AuthScreen}
-      options={{headerShown: false}}
+      options={{
+        headerShown: false,
+        animation: 'fade',
+      }}
     />
     <RootStack.Screen
       name="ObservationEdit"

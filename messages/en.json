@@ -92,6 +92,9 @@
     "description": "list of avaialable project settings",
     "message": "Categories, Config, Team"
   },
+  "Navigation.Drawer.security": {
+    "message": "Security"
+  },
   "Navigation.Drawer.title": {
     "description": "Title of settings screen",
     "message": "Settings"
@@ -196,13 +199,16 @@
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
     "description": "used to indicate to the user what the new passcode will be.",
-    "message": "Passcode"
+    "message": "Passcode: {passcode}"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
     "message": "Save App Passcode"
   },
+  "screens.AppPasscode.ConfirmPasscodeSheet.suggestion": {
+    "message": "Make sure to note your passcode in a secure location before saving."
+  },
   "screens.AppPasscode.ConfirmPasscodeSheet.title": {
-    "message": "App Passcodes can never be recovered if lost or forgotten! Make sure to note your passcode in a secure location before saving."
+    "message": "App Passcodes can never be recovered if lost or forgotten!"
   },
   "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
     "message": "Please Enter Passcode"
@@ -253,7 +259,7 @@
     "message": "App Passcode allows you to add an additional layer of security by requiring that you enter a passcode in order to open the Mapeo app. You can define your own 5-digit passcode by turning on the feature below."
   },
   "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "**Please note that forgotten passcodes cannot be recovered!** Once this feature is enabled, if you forget or lose your passcode, you will not be able to open Mapeo and will lose access to any Mapeo data that has not been synced with other project participants."
+    "message": "<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open Mapeo and will lose access to any Mapeo data that has not been synced with other project participants."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Cancel"
@@ -372,6 +378,45 @@
   "screens.LanguageSettings.title": {
     "description": "Title language settings screen",
     "message": "Language"
+  },
+  "screens.LeaveProject.AlreadyOnProject.alreadyOnProject": {
+    "message": "You are already on a project"
+  },
+  "screens.LeaveProject.AlreadyOnProject.goBack": {
+    "message": "Go Back"
+  },
+  "screens.LeaveProject.AlreadyOnProject.leaveProj": {
+    "message": "Leave Current Project"
+  },
+  "screens.LeaveProject.AlreadyOnProject.leaveWarning": {
+    "message": "To join a new project you must leave your current one."
+  },
+  "screens.LeaveProject.AlreadyOnProject.onProject": {
+    "message": "You are on {projectName}"
+  },
+  "screens.LeaveProject.cancel": {
+    "message": "Cancel"
+  },
+  "screens.LeaveProject.checkToConfirm": {
+    "message": "Please check the box to confirm"
+  },
+  "screens.LeaveProject.deleteConsentWithName": {
+    "message": "I understand I will be deleting all data from Project {projectName} from my device."
+  },
+  "screens.LeaveProject.deleteConsentWithoutName": {
+    "message": "I understand I will be deleting all data from my device."
+  },
+  "screens.LeaveProject.leaveProj": {
+    "message": "Leave Project"
+  },
+  "screens.LeaveProject.leavingProject": {
+    "message": "Leaving Project {projectName}"
+  },
+  "screens.LeaveProject.removeFromProjWithName": {
+    "message": "This will remove all Project {projectName}'s data from your device."
+  },
+  "screens.LeaveProject.removeFromProjWithoutName": {
+    "message": "This will remove all of the data from your device."
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
@@ -735,15 +780,6 @@
   "screens.SaveTrack.track": {
     "description": "Category title for new track screen",
     "message": "Track"
-  },
-  "screens.Security.obscurePassDescriptonPassNotSet": {
-    "message": "To use, enable App Passcode"
-  },
-  "screens.Security.obscurePassDescriptonPassSet": {
-    "message": "Protect your device against seizure"
-  },
-  "screens.Security.obscurePasscodeHeader": {
-    "message": "Obscure Passcode"
   },
   "screens.Security.passDesriptionPassNotSet": {
     "message": "Passcode not set"

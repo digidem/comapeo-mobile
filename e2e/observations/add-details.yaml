@@ -1,0 +1,53 @@
+appId: com.comapeo
+env:
+  CAT: OBS
+  SUBCAT: MAIN
+---
+- setLocation:
+    latitude: 48.8550
+    longitude: 2.3519
+- tapOn:
+    id: '${SUBCAT}.add-observation-btn'
+- tapOn: '.*Gathering Site.*'
+- tapOn:
+    id: 'OBS.add-details-btn'
+- assertVisible:
+    label: 'Add details button opens Details screen'
+    id: 'OBS.add-details-scrn'
+- assertVisible:
+    label: 'Back button visible'
+    id: '${SUBCAT}.header-back-btn'
+- assertVisible:
+    text: '.*Question [0-9] of [0-9].*'
+- assertVisible:
+    text: '.*[Next | Done].*'
+- assertVisible:
+    text: '.*What is gathered here?.*'
+- assertVisible:
+    label: 'Prompt displays name of detail field with placeholder/help text below'
+    text: '.*firewood.*'
+- tapOn:
+    id: '${SUBCAT}.header-back-btn'
+- assertVisible:
+    label: 'Back arrow when on question 1 of 1 returns to new observation screen'
+    text: '.*New Observation.*'
+- tapOn:
+    id: 'OBS.add-details-btn'
+- assertVisible:
+    label: 'Cursor is visible and on-screen keyboard is open by default'
+    id: '${CAT}.details-inp'
+    focused: true
+- inputText:
+    label: 'Can input text into the text field'
+    text: 'Some details'
+- runFlow:
+    when:
+      visible: '.*Question 1 of 1.*'
+    commands:
+      - assertVisible: '.*Done.*'
+- tapOn: '.*Done.*'
+- assertVisible:
+    label: 'Tapping done returns to new observation screen'
+    text: '.*New Observation.*'
+- tapOn:
+    id: '${CAT}.edit-save-btn'

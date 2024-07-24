@@ -155,7 +155,13 @@ export const SyncIcon = ({size = 20, color = WHITE}: FontIconProps) => (
 );
 
 export const CloseIcon = ({size = 30, color, style}: FontIconProps) => (
-  <MaterialIcon name="close" size={size} color={color} style={style} />
+  <MaterialIcon
+    name="close"
+    size={size}
+    color={color}
+    style={style}
+    testID="close-icon"
+  />
 );
 
 export const CameraIcon = ({

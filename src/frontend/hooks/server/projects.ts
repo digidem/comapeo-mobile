@@ -19,6 +19,7 @@ export function useProject(projectId?: string) {
       return api.getProject(projectId);
     },
     enabled: !!projectId,
+    placeholderData: previousData => previousData,
   });
 }
 
@@ -74,6 +75,23 @@ export function useProjectSettings() {
     queryKey: [PROJECT_SETTINGS_KEY],
     queryFn: () => {
       return project.$getProjectSettings();
+    },
+  });
+}
+
+export function useLeaveProject() {
+  const mapeoApi = useApi();
+
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (projectId: string) => {
+      return mapeoApi.leaveProject(projectId);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [ALL_PROJECTS_KEY],
+      });
     },
   });
 }

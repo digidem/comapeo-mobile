@@ -20,6 +20,7 @@ import {useProjectSettings} from '../hooks/server/projects';
 import {AppStackParamsList} from '../sharedTypes/navigation';
 import {RootStackNavigator} from './Stack';
 import {DrawerMenuIcon} from '../sharedComponents/icons/DrawerMenuIcon';
+import {useSecurityContext} from '../contexts/SecurityContext';
 
 const m = defineMessages({
   settingsTitle: {
@@ -71,6 +72,10 @@ const m = defineMessages({
     id: 'Navigation.Drawer.createOrJoinToSync',
     defaultMessage: 'Create or Join a Project to sync with other devices',
   },
+  security: {
+    id: 'Navigation.Drawer.security',
+    defaultMessage: 'Security',
+  },
 });
 
 export type DrawerScreens = {
@@ -98,6 +103,8 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
   const {navigate} = navigation;
   const {formatMessage} = useIntl();
   const {data} = useProjectSettings();
+  const {authState} = useSecurityContext();
+
   return (
     <DrawerContentScrollView
       contentContainerStyle={{flexGrow: 1}}
@@ -106,7 +113,10 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
         style={{
           paddingBottom: 40,
         }}>
-        <DrawerMenuIcon onPress={navigation.closeDrawer} />
+        <DrawerMenuIcon
+          style={{alignSelf: 'flex-end', marginRight: 20}}
+          onPress={navigation.closeDrawer}
+        />
         <Text
           testID="MAIN.drawer-create-join-txt"
           style={{
@@ -156,6 +166,15 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
           <DrawerListItemIcon iconName="settings-suggest" />
           <ListItemText primary={<FormattedMessage {...m.appSettings} />} />
         </ListItem>
+        {authState !== 'obscured' && (
+          <ListItem
+            onPress={() => {
+              navigate('Security');
+            }}>
+            <DrawerListItemIcon iconName="security" />
+            <ListItemText primary={<FormattedMessage {...m.security} />} />
+          </ListItem>
+        )}
         <ListItem
           onPress={() => {
             navigate('AboutSettings');

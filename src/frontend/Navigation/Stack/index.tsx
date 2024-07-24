@@ -19,6 +19,8 @@ import {createDeviceNamingScreens} from './DeviceNamingScreens';
 import {useSuspenseQuery} from '@tanstack/react-query';
 import {useApi} from '../../contexts/ApiContext';
 import {Loading} from '../../sharedComponents/Loading';
+import {useSecurityContext} from '../../contexts/SecurityContext';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
 
@@ -69,6 +71,16 @@ function RootStackNavigatorChild() {
       return await mapeoApi.getDeviceInfo();
     },
   });
+
+  const security = useSecurityContext();
+
+  const {navigate} = useNavigationFromRoot();
+
+  React.useEffect(() => {
+    if (security.authState === 'unauthenticated') {
+      navigate('AuthScreen');
+    }
+  }, [security.authState, navigate]);
 
   return (
     <RootStack.Navigator

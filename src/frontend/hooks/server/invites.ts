@@ -7,7 +7,7 @@ import {
 import {useApi} from '../../contexts/ApiContext';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {usePersistedProjectId} from '../persistedState/usePersistedProjectId';
-import {ALL_PROJECTS_KEY} from './projects';
+import {ALL_PROJECTS_KEY, PROJECT_MEMBERS_KEY} from './projects';
 
 export const INVITE_KEY = 'pending_invites';
 
@@ -21,7 +21,7 @@ export function usePendingInvites() {
   });
 }
 
-export function useAcceptInvite(projectId?: string) {
+export function useAcceptInvite() {
   const mapeoApi = useApi();
   const queryClient = useQueryClient();
   const switchActiveProject = usePersistedProjectId(
@@ -30,25 +30,17 @@ export function useAcceptInvite(projectId?: string) {
 
   return useMutation({
     mutationFn: async ({inviteId}: {inviteId: string}) => {
-      if (!inviteId) return;
       return mapeoApi.invite.accept({inviteId});
     },
-    onSuccess: () => {
-      // This is a workaround. There is a race condition where the project in not available when the invite is accepted. This is temporary and is currently being worked on.
-      setTimeout(() => {
-        Promise.all([
-          queryClient.invalidateQueries({
-            queryKey: [INVITE_KEY],
-          }),
-          queryClient.invalidateQueries({
-            queryKey: [ALL_PROJECTS_KEY],
-          }),
-        ]).then(() => {
-          if (projectId) {
-            switchActiveProject(projectId);
-          }
-        });
-      }, 5000);
+    onSuccess: projectPublicId => {
+      queryClient.invalidateQueries({
+        queryKey: [INVITE_KEY],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [ALL_PROJECTS_KEY],
+      });
+
+      switchActiveProject(projectPublicId);
     },
   });
 }
@@ -98,6 +90,7 @@ export function useSendInvite() {
     }) => project.$member.invite(deviceId, role),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [INVITE_KEY]});
+      queryClient.invalidateQueries({queryKey: [PROJECT_MEMBERS_KEY]});
     },
   });
 }

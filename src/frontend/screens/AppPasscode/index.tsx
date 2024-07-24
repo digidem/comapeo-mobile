@@ -1,8 +1,6 @@
 import * as React from 'react';
 import {defineMessages} from 'react-intl';
-import {StyleSheet, View} from 'react-native';
 
-import {WHITE} from '../../lib/styles';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {PasscodeIntro} from './PasscodeIntro';
 import {useSecurityContext} from '../../contexts/SecurityContext';
@@ -25,20 +23,7 @@ export const AppPasscode: NativeNavigationComponent<'AppPasscode'> = ({
     }
   }, [navigation, authState]);
 
-  return (
-    <View style={styles.pageContainer}>
-      <PasscodeIntro />
-    </View>
-  );
+  return <PasscodeIntro />;
 };
 
 AppPasscode.navTitle = m.title;
-
-const styles = StyleSheet.create({
-  pageContainer: {
-    paddingBottom: 20,
-    paddingHorizontal: 20,
-    flex: 1,
-    backgroundColor: WHITE,
-  },
-});

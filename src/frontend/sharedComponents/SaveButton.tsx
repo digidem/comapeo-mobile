@@ -15,7 +15,7 @@ export const SaveButton = ({
       <UIActivityIndicator size={30} />
     </View>
   ) : (
-    <IconButton onPress={onPress} testID="saveButton">
+    <IconButton onPress={onPress} testID="OBS.edit-save-btn">
       <SaveCheck />
     </IconButton>
   );

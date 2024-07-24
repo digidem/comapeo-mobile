@@ -5,7 +5,6 @@ import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types
 import AudioPermission from '../images/observationEdit/AudioPermission.svg';
 import {BottomSheetModalContent, BottomSheetModal} from './BottomSheetModal';
 import {Audio} from 'expo-av';
-import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import {PermissionStatus} from 'expo-av/build/Audio';
 
 const handleRequestPermissions = (): void => {

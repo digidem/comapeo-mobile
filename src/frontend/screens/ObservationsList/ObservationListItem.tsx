@@ -20,6 +20,8 @@ interface ObservationListItemProps {
   onPress: (id: string) => void;
 }
 
+type PhotoAttachment = Omit<Attachment, 'type'> & {type: 'photo'};
+
 const photoOverlap = 10;
 
 export const ObservationListItem = React.memo<ObservationListItemProps>(
@@ -35,11 +37,10 @@ function ObservationListItemNotMemoized({
   const {preset} = useObservationWithPreset(observation.docId);
   const deviceId = '';
 
-  // const photos = !observationQuery.data ? [] : filterPhotosFromAttachments(
-  //   observationQuery.data && observationQuery.data.attachments
-  // ).slice(0, 3);
-  const photos = [];
   const isMine = observation.createdBy === deviceId;
+  const photos = observation.attachments.filter(
+    (attachment): attachment is PhotoAttachment => attachment.type === 'photo',
+  );
   return (
     <TouchableHighlight
       onPress={() => onPress(observation.docId)}
@@ -62,31 +63,34 @@ function ObservationListItemNotMemoized({
         </View>
         {photos.length ? (
           <View style={styles.photoContainer}>
-            <PhotoStack attachments={observation.attachments} />
+            <PhotoStack photos={photos} />
             <View style={styles.smallIconContainer}>
               <PresetCircleIcon name={preset.name} size="small" />
             </View>
           </View>
         ) : (
-          <PresetCircleIcon name={preset.name} size="medium" />
+          <PresetCircleIcon
+            name={preset.name}
+            size="medium"
+            testID={`OBS.${preset?.name}-list-icon`}
+          />
         )}
       </View>
     </TouchableHighlight>
   );
 }
 
-function PhotoStack({attachments}: {attachments: Attachment[]}) {
+function PhotoStack({photos}: {photos: PhotoAttachment[]}) {
   return (
     <View
       style={{
-        width: 60 + (attachments.length - 1) * photoOverlap,
+        width: 60 + (photos.length - 1) * photoOverlap,
         height: 60,
-        backgroundColor: 'aqua',
       }}>
-      {attachments.map((attachment, idx) => (
+      {photos.map((photo, idx) => (
         <PhotoAttachmentView
-          key={`${attachment.driveDiscoveryId}/${attachment.type}/${attachment.name}`}
-          attachment={attachment}
+          key={`${photo.driveDiscoveryId}/${photo.type}/${photo.name}`}
+          attachment={photo}
           variant="thumbnail"
           style={[styles.photo, {left: idx * photoOverlap}]}
           resizeMode="cover"

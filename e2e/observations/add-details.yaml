@@ -4,8 +4,8 @@ env:
   SUBCAT: MAIN
 ---
 - setLocation:
-    latitude: 48.8530
-    longitude: 2.3499
+    latitude: 48.8550
+    longitude: 2.3519
 - tapOn:
     id: '${SUBCAT}.add-observation-btn'
 - tapOn: '.*Gathering Site.*'

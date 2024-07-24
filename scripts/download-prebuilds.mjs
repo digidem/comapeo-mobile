@@ -98,10 +98,10 @@ function getNodeJsMobileNodeVersions() {
 
   const content = fs.readFileSync(nodeVersionFilePath, 'utf-8');
 
-  const major = content.match(/\#define NODE_MAJOR_VERSION (.+)/)[1];
-  const minor = content.match(/\#define NODE_MINOR_VERSION (.+)/)[1];
-  const patch = content.match(/\#define NODE_PATCH_VERSION (.+)/)[1];
-  const abi = content.match(/\#define NODE_MODULE_VERSION (.+)/)[1];
+  const major = content.match(/#define NODE_MAJOR_VERSION (.+)/)[1];
+  const minor = content.match(/#define NODE_MINOR_VERSION (.+)/)[1];
+  const patch = content.match(/#define NODE_PATCH_VERSION (.+)/)[1];
+  const abi = content.match(/#define NODE_MODULE_VERSION (.+)/)[1];
 
   return {
     major,

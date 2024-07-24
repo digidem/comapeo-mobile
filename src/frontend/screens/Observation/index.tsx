@@ -62,7 +62,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
 
   const {lat, lon, createdBy} = observation;
   const {data: deviceInfo, isPending: isDeviceInfoPending} = useDeviceInfo();
-  let {data: convertedDeviceId, isPending: isCreatedByDeviceIdPending} =
+  const {data: convertedDeviceId, isPending: isCreatedByDeviceIdPending} =
     useCreatedByToDeviceId(createdBy);
 
   const isMine =

@@ -13,6 +13,7 @@ import {AppStackParamsList} from '../../sharedTypes/navigation';
 import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
 import {PermissionAudio} from '../../sharedComponents/PermissionAudio';
 import {Audio} from 'expo-av';
+import {useAttachmentUrlQueries} from '../../hooks/server/media.ts';
 
 const m = defineMessages({
   audioButton: {
@@ -38,6 +39,13 @@ interface ThumbnailAndActionTab {
     'ObservationEdit',
     undefined
   >;
+}
+
+interface PhotoAttachment {
+  driveDiscoveryId: string;
+  name: string;
+  type: 'photo' | 'video' | 'audio' | 'UNRECOGNIZED';
+  hash: string;
 }
 
 export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
@@ -98,10 +106,35 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
     });
   }
 
+  const validateAndTransformPhotos = (photos: any[]): PhotoAttachment[] => {
+    return photos.map(photo => {
+      const {driveDiscoveryId, name, type, hash} = photo;
+      return {driveDiscoveryId, name, type, hash} as PhotoAttachment;
+    });
+  };
+
+  const photoAttachments: PhotoAttachment[] =
+    validateAndTransformPhotos(photos);
+
+  const attachmentUrls = useAttachmentUrlQueries(
+    photoAttachments,
+    'thumbnail',
+  ).map(query => query.data);
+
   return (
     <>
       <View>
-        <MediaScrollView photos={photos} observationId={observationId} />
+        <MediaScrollView
+          photos={attachmentUrls.map(attachmentData => {
+            return !attachmentData
+              ? undefined
+              : {
+                  thumbnailUri: attachmentData.url,
+                  id: attachmentData.driveDiscoveryId,
+                };
+          })}
+          observationId={observationId}
+        />
         <ActionTab items={bottomSheetItems} />
       </View>
       <PermissionAudio

@@ -19,20 +19,16 @@ interface PermissionAudio {
   sheetRef: React.RefObject<BottomSheetModalMethods>;
   closeSheet: () => void;
   isOpen: boolean;
-  onPermissionGranted?: () => void;
 }
 
 export const PermissionAudio: FC<PermissionAudio> = props => {
-  const {sheetRef, closeSheet, isOpen, onPermissionGranted} = props;
+  const {sheetRef, closeSheet, isOpen} = props;
   const {formatMessage: t} = useIntl();
   const [permissionResponse] = Audio.usePermissions({request: false});
 
   const handlePermissionGranted = useCallback(() => {
     closeSheet();
-    if (onPermissionGranted) {
-      onPermissionGranted();
-    }
-  }, [closeSheet, onPermissionGranted]);
+  }, [closeSheet]);
 
   const isPermissionGranted = Boolean(permissionResponse?.granted);
 

@@ -73,10 +73,6 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
     }
   }, [openAudioPermissionSheet, permissionResponse?.granted]);
 
-  const handleAudioPermissionGranted = useCallback(() => {
-    // handle audio recording start after permission is granted
-  }, []);
-
   const bottomSheetItems = [
     {
       icon: <PhotoIcon width={30} height={30} />,
@@ -112,7 +108,6 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
         closeSheet={closeAudioPermissionSheet}
         isOpen={isAudioPermissionSheetOpen}
         sheetRef={audioPermissionSheetRef}
-        onPermissionGranted={handleAudioPermissionGranted}
       />
     </>
   );

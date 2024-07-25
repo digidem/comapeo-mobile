@@ -699,17 +699,28 @@
     "description": "Title of dialog when trying to save with low GPS accuracy.",
     "message": "Weak GPS signal"
   },
+  "screens.ObservationEdit.changePreset": {
+    "message": "Change"
+  },
+  "screens.ObservationEdit.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "What is happening here?"
+  },
   "screens.ObservationEdit.editTitle": {
     "description": "screen title for edit observation screen",
     "message": "Edit Observation"
   },
   "screens.ObservationEdit.navTitle": {
     "description": "screen title for new observation screen",
-    "message": "New Observation"
+    "message": "Edit Observation"
   },
   "screens.ObservationEdit.newTitle": {
     "description": "screen title for new observation screen",
     "message": "New Observation"
+  },
+  "screens.ObservationEdit.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Observation"
   },
   "screens.ObservationList.TrackListItem.Track": {
     "message": "Track"

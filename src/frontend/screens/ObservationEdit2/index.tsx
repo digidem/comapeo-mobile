@@ -6,7 +6,6 @@ import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {useEditObservation} from '../../hooks/server/observations';
-import {Photo, DraftPhoto} from '../../contexts/PhotoPromiseContext/types';
 import {useCreateBlobMutation} from '../../hooks/server/media';
 import {SaveButton} from '../../sharedComponents/SaveButton';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
@@ -130,16 +129,16 @@ export const ObservationEdit = ({
           updateTags('notes', newVal);
         }}
         photos={photos}
-        location={coordinateInfo}
+        location={{lat: value.lat, lon: value.lon}}
         actionsRow={<ActionsRow fieldIds={preset?.fieldIds} />}
       />
       <ErrorBottomSheet
-        error={createObservationMutation.error || createBlobMutation.error}
+        error={editObservationMutation.error || createBlobMutation.error}
         clearError={() => {
-          createObservationMutation.reset();
+          editObservationMutation.reset();
           createBlobMutation.reset();
         }}
-        tryAgain={createObservation}
+        tryAgain={editObservation}
       />
     </>
   );
@@ -157,14 +156,4 @@ export function createNavigationOptions({
       headerLeft: props => <HeaderLeft headerBackButtonProps={props} />,
     };
   };
-}
-
-function isSavablePhoto(
-  photo: Photo,
-): photo is DraftPhoto & {originalUri: string} {
-  if (!('draftPhotoId' in photo && !!photo.draftPhotoId)) return false;
-
-  if (photo.deleted || photo.error) return false;
-
-  return !!photo.originalUri;
 }

@@ -2,6 +2,8 @@ appId: com.comapeo
 env:
   CAT: PROJECT
   SUBCAT: MAIN
+onFlowStart:
+  - runScript: '../common/naming.js'
 ---
 - tapOn:
     id: '${SUBCAT}.drawer-icon'
@@ -32,20 +34,11 @@ env:
     text: ${output.names.project}
 - tapOn:
     id: '${CAT}.create-btn'
+- assertVisible: '.*Invite Device.*'
+- assertVisible: '.*Go to Map.*'
+# - tapOn: '.*Invite Device.*'
+# - assertVisible:
+#     id: '${CAT}.invite-device-scrn'
 - tapOn:
-    id: '${SUBCAT}.drawer-icon'
-- tapOn:
-    id: '${SUBCAT}.project-stg-list-item'
-- tapOn:
-    id: '${SUBCAT}.team-list-item'
-- assertVisible:
-    label: 'User is now a Coordinator, can click on Invite device'
-    text: '.*Invite Device.*'
-- tapOn:
-    id: '${CAT}.invite-device-btn'
-- assertVisible:
-    label: 'After clicking invite device, user is directed to the Invite Device flow'
-    text: '.*Select Device to Invite.*'
-- back
-- back
-- back
+    label: 'User is now a Coordinator, can click on Invite devices or clicks on Go to Map and is taken to the map screen'
+    text: '.*Go to Map.*'

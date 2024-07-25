@@ -45,7 +45,7 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
     : devices;
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} testID="PROJECT.invite-device-scrn">
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <WifiIcon style={{marginRight: 10}} width={30} height={30} />
         <Text>{ssid}</Text>

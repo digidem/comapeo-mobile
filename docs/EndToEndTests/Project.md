@@ -31,11 +31,14 @@ These tests deal with projects, such as creating a project from the side drawer,
 - Ensures flow is present to Create a project through series of clicks
 - Ensures user cannot create a project without entering a name first
 - Checks for presence of Import Config Button
-- Checks that user is now a coordinator and can click on invite devices
+- Checks that user sees the 'success' screen and invite device and go to map buttons are present
+- Checks that user can go to the map
 
 ### Special Considerations
 
 - User can be taken to invite devices screen but no other devices will be present on an emulator
+- If the user goes to the invite devices screen and tries to back out it doesn't work
+- When the project is created, the name does not actually appear in the side drawer menu title
 
 ## Creating a project from the sync button
 

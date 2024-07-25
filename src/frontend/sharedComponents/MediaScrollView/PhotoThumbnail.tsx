@@ -10,7 +10,6 @@ import {
   TouchableOpacity,
   ViewStyle,
 } from 'react-native';
-import * as Progress from 'react-native-progress';
 import {AlertIcon} from '../icons';
 import debug from 'debug';
 import {LIGHT_GREY} from '../../lib/styles';
@@ -30,9 +29,8 @@ export const PhotoThumbnail: FC<PhotoThumbnailProps> = props => {
 
   const uri =
     (photo && 'thumbnailUri' in photo && photo.thumbnailUri) || undefined;
-  const isCapturing =
-    (photo && 'capturing' in photo && (photo.capturing as boolean)) ||
-    undefined;
+  const photoProcessingError = photo && 'error' in photo && !!photo.error;
+  const isCapturing = photo && photo.type === 'unprocessed';
 
   function handleImageError(e: NativeSyntheticEvent<ImageErrorEventData>) {
     log('Error loading image:\n', e.nativeEvent && e.nativeEvent.error);
@@ -43,12 +41,10 @@ export const PhotoThumbnail: FC<PhotoThumbnailProps> = props => {
     <TouchableOpacity
       style={[styles.thumbnailContainer, {width: size, height: size}, style]}
       onPress={onPress}>
-      {isCapturing && !error ? (
-        <ActivityIndicator />
-      ) : uri === undefined ? (
-        <Progress.Circle size={30} indeterminate={true} />
-      ) : error || typeof uri !== 'string' ? (
+      {error || photoProcessingError ? (
         <AlertIcon />
+      ) : isCapturing ? (
+        <ActivityIndicator />
       ) : (
         <Image
           onError={handleImageError}

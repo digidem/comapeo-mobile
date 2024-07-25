@@ -3,6 +3,7 @@ import * as React from 'react';
 import {Text, View, ScrollView, StyleSheet} from 'react-native';
 import {defineMessages} from 'react-intl';
 import {BLACK, WHITE, DARK_GREY, LIGHT_GREY} from '../../lib/styles';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 import {FormattedObservationDate} from '../../sharedComponents/FormattedData';
 import {Field} from '@mapeo/schema';
@@ -16,6 +17,8 @@ import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
 import {MediaScrollView} from '../../sharedComponents/MediaScrollView/index.tsx';
 import {useAttachmentUrlQueries} from '../../hooks/server/media.ts';
+import {useDeviceInfo} from '../../hooks/server/deviceInfo';
+import {useCreatedByToDeviceId} from '../../hooks/server/projects.ts';
 
 const m = defineMessages({
   deleteTitle: {
@@ -57,9 +60,15 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
       }, defaultAcc)
     : [];
 
-  const deviceId = '';
   const {lat, lon, createdBy} = observation;
-  const isMine = deviceId === createdBy;
+  const {data: deviceInfo, isPending: isDeviceInfoPending} = useDeviceInfo();
+  const {data: convertedDeviceId, isPending: isCreatedByDeviceIdPending} =
+    useCreatedByToDeviceId(createdBy);
+
+  const isMine =
+    deviceInfo?.deviceId !== undefined &&
+    convertedDeviceId !== undefined &&
+    deviceInfo.deviceId === convertedDeviceId;
 
   // Currently only show photo attachments
   const photoAttachments = observation.attachments.filter(
@@ -111,7 +120,11 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
           <FieldDetails observation={observation} fields={fields} />
         )}
         <View style={styles.divider} />
-        <ButtonFields isMine={isMine} observationId={observationId} />
+        {isDeviceInfoPending || isCreatedByDeviceIdPending ? (
+          <UIActivityIndicator size={20} />
+        ) : (
+          <ButtonFields isMine={isMine} observationId={observationId} />
+        )}
       </>
     </ScrollView>
   );

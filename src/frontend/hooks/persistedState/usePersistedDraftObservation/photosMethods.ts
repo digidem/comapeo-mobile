@@ -6,11 +6,8 @@ import {ObservationValue} from '@mapeo/schema';
 type Setter = StoreApi<DraftObservationSlice>['setState'];
 type Getter = StoreApi<DraftObservationSlice>['getState'];
 export interface SavedPhoto {
-  driveDiscoveryId: string;
-  hash: string;
   // id of the photo in the Mapeo database
   id: string;
-  name: string;
   type?: 'photo';
   // If an image is to be deleted
   deleted?: boolean;
@@ -53,10 +50,7 @@ export function filterPhotosFromAttachments(
       (att.type === undefined && /(\.jpg|\.jpeg)$/i.test(att.hash))
     )
       acc.push({
-        driveDiscoveryId: att.driveDiscoveryId,
-        hash: att.hash,
         id: `${att.driveDiscoveryId}/${att.type}/${att.name}`,
-        name: att.name,
         type: att.type,
       });
     return acc;

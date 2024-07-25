@@ -52,7 +52,7 @@ export const PhotoPromiseProvider = ({
       const signal: Signal = {};
 
       const photoPromise: CancellablePhotoPromise = processPhoto({
-        signal: signal,
+        signal,
         photo,
         draftPhotoId,
         mediaMetadata,

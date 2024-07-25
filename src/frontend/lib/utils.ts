@@ -283,19 +283,3 @@ export function matchPreset(
 
   return bestMatch;
 }
-
-export function isSavablePhoto(
-  photo: Photo | {draftPhotoId: string},
-): photo is DraftPhoto & {originalUri: string} {
-  if (!('draftPhotoId' in photo)) return false;
-
-  if ('deleted' in photo && photo.deleted) return false;
-
-  if ('error' in photo && photo.error) return false;
-
-  if ('originalUri' in photo) {
-    return !!photo.originalUri;
-  }
-
-  return false;
-}

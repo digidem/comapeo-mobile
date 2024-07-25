@@ -33,6 +33,7 @@ export type DraftObservationSlice = {
     clearDraft: () => void;
     // Create a new draft observation
     newDraft: (observation?: newDraftProps) => void;
+    existingObservationToDraft: (observation: Observation) => void;
     deletePhoto: (uri: string) => void;
     updateObservationPosition: (props: {
       position: Position | undefined;
@@ -62,6 +63,16 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
         audioRecordings: [],
         value: null,
         observationId: undefined,
+      });
+    },
+    existingObservationToDraft: observation => {
+      set({
+        value: observation,
+        observationId: observation.docId,
+        photos:
+          observation.attachments.length > 0
+            ? filterPhotosFromAttachments(observation.attachments)
+            : [],
       });
     },
     updateObservationPosition: props => {

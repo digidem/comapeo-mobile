@@ -19,7 +19,7 @@ type EditorProps = {
   location?: {
     lat: number | undefined;
     lon: number | undefined;
-    accuracy: number | undefined;
+    accuracy?: number | undefined;
   };
   actionsRow?: React.ReactNode;
 };

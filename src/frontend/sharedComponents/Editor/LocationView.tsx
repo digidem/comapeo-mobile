@@ -17,7 +17,7 @@ const m = defineMessages({
 type LocationViewProps = {
   lat: number | undefined;
   lon: number | undefined;
-  accuracy: number | undefined;
+  accuracy?: number | undefined;
 };
 
 export const LocationView = ({lat, lon, accuracy}: LocationViewProps) => {

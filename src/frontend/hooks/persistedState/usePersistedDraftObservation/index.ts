@@ -1,6 +1,6 @@
 import {StateCreator} from 'zustand';
 import {createPersistedState} from '../createPersistedState';
-import {Photo, DraftPhoto} from '../../../contexts/PhotoPromiseContext/types';
+import {DraftPhoto, Photo} from '../../../contexts/PhotoPromiseContext/types';
 import {
   deletePhoto,
   filterPhotosFromAttachments,
@@ -22,13 +22,13 @@ const emptyObservation: ClientGeneratedObservation = {
 };
 
 export type DraftObservationSlice = {
-  photos: (Photo | {draftPhotoId: string})[];
+  photos: Photo[];
   audioRecordings: [];
   value: Observation | null | ClientGeneratedObservation;
   observationId?: string;
   actions: {
     addPhotoPlaceholder: (draftPhotoId: string) => void;
-    replacePhotoPlaceholderWithPhoto: (photo: DraftPhoto) => void;
+    replacePhotoPlaceholderWithPhoto: (draftPhoto: DraftPhoto) => void;
     // Clear the current draft
     clearDraft: () => void;
     // Create a new draft observation
@@ -53,7 +53,7 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
   actions: {
     deletePhoto: uri => deletePhoto(set, get, uri),
     addPhotoPlaceholder: draftPhotoId =>
-      set({photos: [...get().photos, {draftPhotoId}]}),
+      set({photos: [...get().photos, {type: 'unprocessed', draftPhotoId}]}),
     replacePhotoPlaceholderWithPhoto: draftPhoto =>
       replaceDraftPhotos(set, get, draftPhoto),
     clearDraft: () => {

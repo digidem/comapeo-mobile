@@ -13,25 +13,47 @@ export interface SavedPhoto {
   deleted?: boolean;
 }
 
+export type UnprocessedDraftPhoto = {
+  // might need this for discriminated union to work
+  type: 'unprocessed';
+  draftPhotoId: string;
+  error?: Error;
+  deleted?: boolean;
+};
+
+// This would have the the URIs defined, for example
+export type ProcessedDraftPhoto = {
+  // might need this for discriminated union to work
+  type: 'processed';
+  draftPhotoId: string;
+  originalUri: string;
+  previewUri: string;
+  thumbnailUri: string;
+  mediaMetadata: MediaMetadata;
+  deleted?: boolean;
+};
+
+export type DraftPhoto = UnprocessedDraftPhoto | ProcessedDraftPhoto;
+
 // Photo added to a draft observation, that has not yet been saved
 // It is added to the draft observation as soon as capturing starts, when it
 // does not yet have any image associated with it
-export interface DraftPhoto {
-  // If the photo is still being captured
-  capturing: boolean;
-  draftPhotoId: string;
-  // uri to a local full-resolution image (this is uploaded to Mapeo server)
-  originalUri?: string;
-  // uri to a local thumbnail image (this is uploaded to Mapeo server)
-  thumbnailUri?: string;
-  // uri to a local preview image
-  previewUri?: string;
-  // If an image is to be deleted
-  deleted?: boolean;
-  // If there was any kind of error on image capture
-  error?: boolean;
-  mediaMetadata: MediaMetadata;
-}
+// export interface DraftPhoto {
+//   // If the photo is still being captured
+//   capturing: boolean;
+//   draftPhotoId: string;
+//   // uri to a local full-resolution image (this is uploaded to Mapeo server)
+//   originalUri?: string;
+//   // uri to a local thumbnail image (this is uploaded to Mapeo server)
+//   thumbnailUri?: string;
+//   // uri to a local preview image
+//   previewUri?: string;
+//   // If an image is to be deleted
+//   deleted?: boolean;
+//   // If there was any kind of error on image capture
+//   error?: boolean;
+//   mediaMetadata: MediaMetadata;
+// }
 
 /**
  * A Photo does not become an observation attachment until it is actually saved.
@@ -50,7 +72,9 @@ export interface Signal {
   didCancel?: boolean;
 }
 
-export type CancellablePhotoPromise = Promise<DraftPhoto> & {signal?: Signal};
+export type CancellablePhotoPromise = Promise<ProcessedDraftPhoto> & {
+  signal?: Signal;
+};
 
 export type MediaMetadata = {
   location?: LocationObject;

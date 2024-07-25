@@ -15,7 +15,6 @@ import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import SaveCheck from '../../images/CheckMark.svg';
 import {CommonActions} from '@react-navigation/native';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {isSavablePhoto} from '../../lib/utils';
 
 const m = defineMessages({
   noGpsTitle: {
@@ -88,7 +87,7 @@ export const SaveButton = ({
   function createObservation() {
     if (!value) throw new Error('no observation saved in persisted state ');
 
-    const savablePhotos = photos.filter(isSavablePhoto);
+    const savablePhotos = photos.filter(photo => photo.type === 'processed');
 
     if (!savablePhotos) {
       createObservationMutation.mutate(

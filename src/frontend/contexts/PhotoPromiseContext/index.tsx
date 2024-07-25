@@ -2,13 +2,14 @@ import * as React from 'react';
 import {
   CancellablePhotoPromise,
   CapturedPictureMM,
-  DraftPhoto,
   MediaMetadata,
   PREVIEW_QUALITY,
   PREVIEW_SIZE,
+  ProcessedDraftPhoto,
   Signal,
   THUMBNAIL_QUALITY,
   THUMBNAIL_SIZE,
+  DraftPhoto,
 } from './types';
 import ImageResizer from '@bam.tech/react-native-image-resizer';
 
@@ -51,7 +52,7 @@ export const PhotoPromiseProvider = ({
       const signal: Signal = {};
 
       const photoPromise: CancellablePhotoPromise = processPhoto({
-        ...signal,
+        signal: signal,
         photo,
         draftPhotoId,
         mediaMetadata,
@@ -75,7 +76,10 @@ export const PhotoPromiseProvider = ({
     (uri: String) => {
       const newPhotoPromiseArray = photoPromises.map(async photo => {
         const resolvedPhoto = await photo;
-        if (resolvedPhoto.originalUri === uri) {
+        if (
+          'originalUri' in resolvedPhoto &&
+          resolvedPhoto.originalUri === uri
+        ) {
           const deletedPhoto: Promise<DraftPhoto> = new Promise(res => {
             resolvedPhoto.deleted = true;
             res(resolvedPhoto);
@@ -113,8 +117,8 @@ async function processPhoto({
   photo,
   draftPhotoId,
   mediaMetadata,
-  ...signal
-}: AddPhotoPromiseProps & Signal): Promise<DraftPhoto> {
+  signal,
+}: AddPhotoPromiseProps & {signal: Signal}): Promise<ProcessedDraftPhoto> {
   const {uri: originalUri, rotate} = await photo;
   const {didCancel} = signal;
 
@@ -150,7 +154,7 @@ async function processPhoto({
     originalUri,
     previewUri,
     thumbnailUri,
-    capturing: false,
     mediaMetadata,
+    type: 'processed',
   };
 }

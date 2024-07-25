@@ -4,10 +4,14 @@ import {
   _usePersistedDraftObservationActions,
   usePreset,
 } from './persistedState/usePersistedDraftObservation';
-import {PhotoPromiseWithMetadata} from '../contexts/PhotoPromiseContext/types';
+import {
+  PhotoPromiseWithMetadata,
+  UnprocessedDraftPhoto,
+} from '../contexts/PhotoPromiseContext/types';
 // react native does not have a random bytes generator, `non-secure` does not require a random bytes generator.
 import {nanoid} from 'nanoid/non-secure';
 import {Observation, Preset} from '@mapeo/schema';
+import * as Sentry from '@sentry/react-native';
 
 // draft observation have 2 parts:
 // 1. All the information, except processed photos are saved to persisted state.
@@ -46,11 +50,10 @@ export const useDraftObservation = () => {
       } catch (err) {
         if (!(err instanceof Error)) return;
 
-        const photo = {
-          capturing: false,
-          error: true,
+        const photo: UnprocessedDraftPhoto = {
+          error: err,
           draftPhotoId,
-          mediaMetadata,
+          type: 'unprocessed',
         };
         replacePhotoPlaceholderWithPhoto(photo);
 
@@ -60,7 +63,7 @@ export const useDraftObservation = () => {
         )
           console.log('Cancelled photo');
         else {
-          console.log(err);
+          Sentry.captureException(err);
         }
       }
     },
@@ -73,7 +76,7 @@ export const useDraftObservation = () => {
   }, [cancelPhotoProcessing, clearPersistedDraft]);
 
   const newDraft = useCallback(
-    (photoPromiseWithMetadata: PhotoPromiseWithMetadata | undefined) => {
+    (photoPromiseWithMetadata?: PhotoPromiseWithMetadata) => {
       cancelPhotoProcessing();
       newPersistedDraft();
       if (photoPromiseWithMetadata) addPhoto(photoPromiseWithMetadata);

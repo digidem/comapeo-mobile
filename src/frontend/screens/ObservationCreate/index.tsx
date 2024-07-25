@@ -15,7 +15,6 @@ import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';
 import {ActionsRow} from '../../sharedComponents/ActionRow';
-import {isSavablePhoto} from '../../lib/utils';
 
 const m = defineMessages({
   observation: {
@@ -83,7 +82,7 @@ export const ObservationCreate = ({
   const createObservation = React.useCallback(() => {
     if (!value) throw new Error('no observation saved in persisted state ');
 
-    const savablePhotos = photos.filter(isSavablePhoto);
+    const savablePhotos = photos.filter(photo => photo.type === 'processed');
 
     if (!savablePhotos) {
       createObservationMutation.mutate(

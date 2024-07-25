@@ -12,7 +12,8 @@ import {Accelerometer, AccelerometerMeasurement} from 'expo-sensors';
 import {AddButton} from './AddButton';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import {Subscription} from 'expo-sensors/build/DeviceSensor';
-import {CapturedPictureMM} from '../contexts/PhotoPromiseContext/types';
+import {PhotoPromiseWithMetadata} from '../contexts/PhotoPromiseContext/types';
+import {useLocation} from '../hooks/useLocation';
 
 const m = defineMessages({
   noCameraAccess: {
@@ -35,7 +36,7 @@ const captureOptions: CameraPictureOptions = {
 
 type Props = {
   // Called when the user takes a picture.
-  onAddPress: (capture: Promise<CapturedPictureMM>) => void;
+  onAddPress: (capture: PhotoPromiseWithMetadata) => void;
 };
 
 export const CameraView = ({onAddPress}: Props) => {
@@ -44,6 +45,7 @@ export const CameraView = ({onAddPress}: Props) => {
   const ref = React.useRef<Camera>(null);
   const accelerometerMeasurement = React.useRef<AccelerometerMeasurement>();
   const [permissionsResponse] = Camera.useCameraPermissions();
+  const {location} = useLocation({maxDistanceInterval: 0});
 
   React.useEffect(() => {
     let isCancelled = false;
@@ -83,7 +85,10 @@ export const CameraView = ({onAddPress}: Props) => {
     ref.current
       .takePictureAsync(captureOptions)
       .then(pic => {
-        onAddPress(rotatePhoto(pic, accelerometerMeasurement.current));
+        onAddPress({
+          capturePromise: rotatePhoto(pic, accelerometerMeasurement.current),
+          mediaMetadata: {location, timestamp: Date.now()},
+        });
       })
       .catch(err => {
         console.log(err);
@@ -92,7 +97,7 @@ export const CameraView = ({onAddPress}: Props) => {
       .finally(() => {
         setCapturing(false);
       });
-  }, [capturing, setCapturing, onAddPress]);
+  }, [capturing, setCapturing, onAddPress, location]);
 
   const disableButton = capturing || !cameraReady;
   const permissionGranted = permissionsResponse?.status === 'granted';

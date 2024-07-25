@@ -7,7 +7,6 @@ import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersis
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {useCreateObservation} from '../../hooks/server/observations';
 import {CommonActions} from '@react-navigation/native';
-import {Photo, DraftPhoto} from '../../contexts/PhotoPromiseContext/types';
 import {useCreateBlobMutation} from '../../hooks/server/media';
 import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import {SaveButton} from '../../sharedComponents/SaveButton';
@@ -83,7 +82,7 @@ export const ObservationCreate = ({
   const createObservation = React.useCallback(() => {
     if (!value) throw new Error('no observation saved in persisted state ');
 
-    const savablePhotos = photos.filter(isSavablePhoto);
+    const savablePhotos = photos.filter(photo => photo.type === 'processed');
 
     if (!savablePhotos) {
       createObservationMutation.mutate(
@@ -114,7 +113,10 @@ export const ObservationCreate = ({
     // Basically, which is worse: orphaned attachments or saving observations that seem to be missing attachments?
     Promise.all(
       savablePhotos.map(photo => {
-        return createBlobMutation.mutateAsync(photo);
+        return createBlobMutation.mutateAsync(
+          // @ts-expect-error Due to TS array filtering limitations. Fixed in TS 5.5
+          photo,
+        );
       }),
     ).then(results => {
       const newAttachments = results.map(
@@ -232,14 +234,4 @@ export function createNavigationOptions({
       headerLeft: props => <HeaderLeft headerBackButtonProps={props} />,
     };
   };
-}
-
-function isSavablePhoto(
-  photo: Photo,
-): photo is DraftPhoto & {originalUri: string} {
-  if (!('draftPhotoId' in photo && !!photo.draftPhotoId)) return false;
-
-  if (photo.deleted || photo.error) return false;
-
-  return !!photo.originalUri;
 }

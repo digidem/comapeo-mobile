@@ -4,6 +4,7 @@ import {Preset, Observation} from '@mapeo/schema';
 import {LocationObject, LocationProviderStatus} from 'expo-location';
 import {NavigationState} from '@react-navigation/native';
 import {EDITING_SCREEN_NAMES} from '../constants';
+import {Photo, DraftPhoto} from '../contexts/PhotoPromiseContext/types';
 
 // import type {
 //   ObservationValue,

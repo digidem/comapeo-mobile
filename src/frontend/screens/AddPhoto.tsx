@@ -7,7 +7,7 @@ import {defineMessages, FormattedMessage} from 'react-intl';
 import {CameraView} from '../sharedComponents/CameraView';
 import {useDraftObservation} from '../hooks/useDraftObservation';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
-import {CapturedPictureMM} from '../contexts/PhotoPromiseContext/types';
+import {PhotoPromiseWithMetadata} from '../contexts/PhotoPromiseContext/types';
 
 const m = defineMessages({
   cancel: {
@@ -23,7 +23,7 @@ export const AddPhotoScreen = ({
 }: NativeRootNavigationProps<'AddPhoto'>) => {
   const {addPhoto} = useDraftObservation();
 
-  const handleAddPress = (capture: Promise<CapturedPictureMM>) => {
+  const handleAddPress = (capture: PhotoPromiseWithMetadata) => {
     log('pressed add button');
     addPhoto(capture);
     navigation.pop();

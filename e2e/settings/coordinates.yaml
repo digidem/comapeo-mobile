@@ -1,0 +1,26 @@
+appId: com.comapeo
+env:
+  CAT: MAIN
+---
+- setLocation:
+    latitude: 48.8530
+    longitude: 2.3499
+- tapOn:
+    id: '${CAT}.drawer-icon'
+- tapOn: '.*App Settings.*'
+- tapOn:
+    label: 'Coordinate System button goes to Coordinate System screen'
+    text: '.*Coordinate System.*'
+- assertVisible: '.*Degrees/Minutes/Seconds.*'
+- assertVisible: '.*Universal Transverse Mercator.*'
+- assertVisible:
+    label: 'Format options and subtext display in selected app language'
+    text: '.*Decimal Degrees.*'
+- tapOn: '.*Degrees/Minutes/Seconds.*'
+- tapOn:
+    id: '${CAT}.header-back-btn'
+- assertVisible:
+    label: 'Back returns to Settings screen'
+    text: '.*App Setttings.*'
+- tapOn:
+    id: '${CAT}.header-back-btn'

@@ -65,6 +65,10 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
 
   const handleSelectPreset = (selectedPreset: Preset) => {
     updatePreset(selectedPreset);
+    if (prevRouteNameInStack === 'ObservationEdit') {
+      navigation.goBack();
+      return;
+    }
     navigation.navigate('ObservationCreate');
   };
 

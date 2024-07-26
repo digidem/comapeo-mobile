@@ -13,6 +13,7 @@ import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {ActionsRow} from '../../sharedComponents/ActionRow';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {Loading} from '../../sharedComponents/Loading';
+import {HeaderLeft} from './HeaderLeft';
 
 const m = defineMessages({
   observation: {
@@ -83,16 +84,61 @@ export const ObservationEdit = ({
       throw new Error('Cannot update a unsaved observation (must create one)');
     }
 
-    editObservationMutation.mutate(
-      {versionId: value.versionId, value},
-      {
-        onSuccess: () => {
-          clearDraft();
-          navigation.navigate('Home', {screen: 'Map'});
+    const newPhotos = photos.filter(photo => photo.type === 'processed');
+
+    if (!newPhotos || !newPhotos.length) {
+      editObservationMutation.mutate(
+        {versionId: value.versionId, value},
+        {
+          onSuccess: () => {
+            clearDraft();
+            navigation.navigate('Home', {screen: 'Map'});
+          },
         },
-      },
-    );
-  }, [navigation, clearDraft, value, editObservationMutation]);
+      );
+      return;
+    }
+
+    Promise.all(
+      newPhotos.map(photo => {
+        return createBlobMutation.mutateAsync(
+          // @ts-expect-error Due to TS array filtering limitations. Fixed in TS 5.5
+          photo,
+        );
+      }),
+    ).then(results => {
+      const newAttachments = results.map(
+        ({driveId: driveDiscoveryId, type, name, hash}) => ({
+          driveDiscoveryId,
+          type,
+          name,
+          hash,
+        }),
+      );
+      editObservationMutation.mutate(
+        {
+          versionId: value.versionId,
+          value: {
+            ...value,
+            attachments: [...value.attachments, ...newAttachments],
+          },
+        },
+        {
+          onSuccess: data => {
+            clearDraft();
+            navigation.navigate('Observation', {observationId: data.docId});
+          },
+        },
+      );
+    });
+  }, [
+    navigation,
+    clearDraft,
+    value,
+    editObservationMutation,
+    photos,
+    createBlobMutation,
+  ]);
 
   React.useEffect(() => {
     navigation.setOptions({

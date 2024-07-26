@@ -69,10 +69,9 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
       set({
         value: observation,
         observationId: observation.docId,
-        photos:
-          observation.attachments.length > 0
-            ? filterPhotosFromAttachments(observation.attachments)
-            : [],
+        photos: observation.attachments.filter(
+          (att): att is SavedPhoto => att.type === 'photo',
+        ),
       });
     },
     updateObservationPosition: props => {

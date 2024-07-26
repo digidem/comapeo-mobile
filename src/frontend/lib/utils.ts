@@ -93,29 +93,6 @@ export function getLocationStatus({
 //   };
 // }
 
-// // Filter photos from an array of observation attachments (we could have videos
-// // and other media types)
-// export function filterPhotosFromAttachments(
-//   attachments?: Array<ObservationAttachment> = []
-// ): Array<SavedPhoto> {
-//   return attachments.reduce((acc, att) => {
-//     if (
-//       att.type === "image/jpeg" ||
-//       // This is needed for backwards compat, because early versions did not
-//       // save a type
-//       (att.type === undefined && /(\.jpg|\.jpeg)$/i.test(att.id))
-//     )
-//       acc.push({ id: att.id, type: att.type });
-//     return acc;
-//   }, []);
-// }
-
-// export function getLastPhotoAttachment(
-//   attachments?: Array<ObservationAttachment> = []
-// ): SavedPhoto | void {
-//   return filterPhotosFromAttachments(attachments).pop();
-// }
-
 // // Coordinates conversions
 export function toDegreesMinutesAndSeconds(coordinate: number) {
   const absolute = Math.abs(coordinate);

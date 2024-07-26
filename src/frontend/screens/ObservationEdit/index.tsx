@@ -62,6 +62,9 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
 
   React.useEffect(() => {
     if (!value) {
+      if (!route.params.observationId) {
+        return;
+      }
       project.observation
         .getByDocId(route.params.observationId)
         .then(observation => {
@@ -164,12 +167,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
             testID={`OBS.${preset?.name}-icon`}
           />
         }
-        onPressPreset={() =>
-          navigation.navigate({
-            key: 'fromObservationEdit',
-            name: 'PresetChooser',
-          })
-        }
+        onPressPreset={() => navigation.navigate('PresetChooser')}
         notes={typeof notes !== 'string' ? '' : notes}
         updateNotes={newVal => {
           updateTags('notes', newVal);

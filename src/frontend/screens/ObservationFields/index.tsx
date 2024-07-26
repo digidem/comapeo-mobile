@@ -12,6 +12,7 @@ import {Loading} from '../../sharedComponents/Loading';
 import {useFieldsQuery} from '../../hooks/server/fields';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
+import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 
 const m = defineMessages({
   nextQuestion: {
@@ -37,20 +38,27 @@ export const ObservationFields = ({
   route,
 }: NativeRootNavigationProps<'ObservationFields'>) => {
   const {usePreset} = useDraftObservation();
+  const observationId = usePersistedDraftObservation(
+    store => store.observationId,
+  );
   const preset = usePreset();
   const current = route.params.question;
   const fields = useFieldsQuery();
 
   const onBackPress = React.useCallback(() => {
     if (current === 1) {
-      navigation.navigate('ObservationEdit');
+      if (observationId) {
+        navigation.navigate('ObservationEdit', {observationId});
+        return;
+      }
+      navigation.navigate('ObservationCreate');
       return;
     }
 
     navigation.navigate('ObservationFields', {
       question: current - 1,
     });
-  }, [current, navigation]);
+  }, [current, navigation, observationId]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -88,6 +96,9 @@ const DetailsHeaderRight = ({questionNumber}: {questionNumber: number}) => {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
   const {usePreset} = useDraftObservation();
+  const observationId = usePersistedDraftObservation(
+    store => store.observationId,
+  );
   const preset = usePreset();
 
   const isLastQuestion =
@@ -96,7 +107,9 @@ const DetailsHeaderRight = ({questionNumber}: {questionNumber: number}) => {
 
   const onPress = () =>
     isLastQuestion
-      ? navigation.navigate('ObservationEdit')
+      ? observationId
+        ? navigation.navigate('ObservationEdit', {observationId})
+        : navigation.navigate('ObservationCreate')
       : navigation.navigate('ObservationFields', {
           question: questionNumber + 1,
         });

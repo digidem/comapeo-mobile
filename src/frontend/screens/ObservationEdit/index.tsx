@@ -4,7 +4,7 @@ import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {Editor} from '../../sharedComponents/Editor';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
-import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
+import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {useEditObservation} from '../../hooks/server/observations';
 import {useCreateBlobMutation} from '../../hooks/server/media';
 import {SaveButton} from '../../sharedComponents/SaveButton';
@@ -37,10 +37,10 @@ const m = defineMessages({
   },
 });
 
-export const ObservationEdit = ({
+export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   navigation,
   route,
-}: NativeRootNavigationProps<'ObservationEdit'>) => {
+}) => {
   const {formatMessage} = useIntl();
   const project = useActiveProject();
 
@@ -60,7 +60,7 @@ export const ObservationEdit = ({
       })
     : formatMessage(m.observation);
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     if (!value) {
       project.observation
         .getByDocId(route.params.observationId)
@@ -189,6 +189,8 @@ export const ObservationEdit = ({
     </>
   );
 };
+
+ObservationEdit.navTitle = m.navTitle;
 
 export function createNavigationOptions({
   intl,

@@ -10,7 +10,7 @@ import {CommonActions} from '@react-navigation/native';
 import {useCreateBlobMutation} from '../../hooks/server/media';
 import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import {SaveButton} from '../../sharedComponents/SaveButton';
-import {useMostAccurateLocationForObservation} from '../ObservationEdit/useMostAccurateLocationForObservation';
+import {useMostAccurateLocationForObservation} from './useMostAccurateLocationForObservation';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';

@@ -1,11 +1,11 @@
 import {StateCreator} from 'zustand';
 import {createPersistedState} from '../createPersistedState';
-import {DraftPhoto, Photo} from '../../../contexts/PhotoPromiseContext/types';
 import {
-  deletePhoto,
-  filterPhotosFromAttachments,
-  replaceDraftPhotos,
-} from './photosMethods';
+  DraftPhoto,
+  Photo,
+  SavedPhoto,
+} from '../../../contexts/PhotoPromiseContext/types';
+import {deletePhoto, replaceDraftPhotos} from './photosMethods';
 import {ClientGeneratedObservation, Position} from '../../../sharedTypes';
 import {Observation, Preset} from '@mapeo/schema';
 import {usePresetsQuery} from '../../server/presets';
@@ -96,10 +96,9 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
       set({
         value: draftProps.observation,
         observationId: draftProps.observation.docId,
-        photos:
-          draftProps.observation.attachments.length > 0
-            ? filterPhotosFromAttachments(draftProps.observation.attachments)
-            : [],
+        photos: draftProps.observation.attachments.filter(
+          (att): att is SavedPhoto => att.type === 'photo',
+        ),
       });
     },
     updateTags: (tagKey, tagValue) => {

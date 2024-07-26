@@ -25,9 +25,9 @@ export const MediaScrollView: FC<MediaScrollView> = ({
   }, [photos?.length]);
 
   function handlePhotoPress(photo: Partial<Photo>) {
-    if ('id' in photo) {
+    if ('driveDiscoveryId' in photo) {
       navigation.navigate('PhotoPreviewModal', {
-        attachmentId: photo.id,
+        attachmentId: photo.driveDiscoveryId,
         observationId: observationId,
         deletable: false,
       });

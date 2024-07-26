@@ -10,7 +10,6 @@ import {Photo, DraftPhoto} from '../contexts/PhotoPromiseContext/types';
 //   ObservationValue,
 //   ObservationAttachment,
 // } from "../context/ObservationsContext";
-// import type { SavedPhoto } from "../context/DraftObservationContext";
 // import type {
 //   Preset,
 //   PresetsMap,

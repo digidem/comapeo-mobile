@@ -9,7 +9,7 @@ const spacing = 10;
 const minSize = 150;
 
 interface MediaScrollView {
-  photos: (Partial<Photo> | undefined)[];
+  photos: Photo[];
   observationId?: string;
 }
 
@@ -65,7 +65,7 @@ export const MediaScrollView: FC<MediaScrollView> = ({
             photo={photo}
             style={styles.thumbnail}
             size={size}
-            onPress={() => photo && handlePhotoPress(photo)}
+            onPress={() => handlePhotoPress(photo)}
           />
         ))}
     </ScrollView>

@@ -16,9 +16,9 @@ import {ButtonFields} from './Buttons';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
 import {MediaScrollView} from '../../sharedComponents/MediaScrollView/index.tsx';
-import {useAttachmentUrlQueries} from '../../hooks/server/media.ts';
 import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {useCreatedByToDeviceId} from '../../hooks/server/projects.ts';
+import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types.ts';
 
 const m = defineMessages({
   deleteTitle: {
@@ -72,12 +72,8 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
 
   // Currently only show photo attachments
   const photoAttachments = observation.attachments.filter(
-    attachment => attachment.type === 'photo',
+    (attachment): attachment is SavedPhoto => attachment.type === 'photo',
   );
-  const attachmentUrls = useAttachmentUrlQueries(
-    photoAttachments,
-    'thumbnail',
-  ).map(query => query.data);
 
   return (
     <ScrollView
@@ -102,16 +98,9 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
               <Text style={styles.textNotes}>{observation.tags.notes}</Text>
             </View>
           ) : null}
-          {attachmentUrls.length > 0 && (
+          {photoAttachments.length > 0 && (
             <MediaScrollView
-              photos={attachmentUrls.map(attachmentData => {
-                return !attachmentData
-                  ? undefined
-                  : {
-                      thumbnailUri: attachmentData.url,
-                      id: attachmentData.driveDiscoveryId,
-                    };
-              })}
+              photos={photoAttachments}
               observationId={observationId}
             />
           )}

@@ -181,20 +181,8 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
           isLoading={editObservationMutation.isPending}
         />
       ),
-      // eslint-disable-next-line react/no-unstable-nested-components
-      headerLeft: props => (
-        <HeaderLeft
-          observationId={route.params.observationId}
-          headerBackButtonProps={props}
-        />
-      ),
     });
-  }, [
-    editObservation,
-    editObservationMutation,
-    navigation,
-    route.params.observationId,
-  ]);
+  }, [editObservation, editObservationMutation, navigation]);
 
   return !value ? (
     <Loading />
@@ -239,6 +227,7 @@ export function createNavigationOptions({
     return {
       headerTitle: intl(m.navTitle),
       headerRight: () => <SaveButton onPress={() => {}} isLoading={false} />,
+      headerLeft: props => <HeaderLeft headerBackButtonProps={props} />,
     };
   };
 }

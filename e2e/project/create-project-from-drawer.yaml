@@ -2,8 +2,6 @@ appId: com.comapeo
 env:
   CAT: PROJECT
   SUBCAT: MAIN
-onFlowStart:
-  - runScript: '../common/naming.js'
 ---
 - tapOn:
     id: '${SUBCAT}.drawer-icon'

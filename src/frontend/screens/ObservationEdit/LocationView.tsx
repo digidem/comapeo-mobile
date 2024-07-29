@@ -4,7 +4,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import Location from '../../images/Location.svg';
 import {BLACK} from '../../lib/styles';
 
-import {useMostAccurateLocationForObservation} from './useMostAccurateLocationForObservation';
+import {useMostAccurateLocationForObservation} from '../ObservationCreate/useMostAccurateLocationForObservation';
 import {FormattedCoords} from '../../sharedComponents/FormattedData';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings';

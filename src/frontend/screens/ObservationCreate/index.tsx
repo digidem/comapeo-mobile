@@ -10,7 +10,7 @@ import {CommonActions} from '@react-navigation/native';
 import {useCreateBlobMutation} from '../../hooks/server/media';
 import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import {SaveButton} from '../../sharedComponents/SaveButton';
-import {useMostAccurateLocationForObservation} from '../ObservationEdit/useMostAccurateLocationForObservation';
+import {useMostAccurateLocationForObservation} from './useMostAccurateLocationForObservation';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';
@@ -18,22 +18,21 @@ import {ActionsRow} from '../../sharedComponents/ActionRow';
 
 const m = defineMessages({
   observation: {
-    // Keep id stable for translations
-    id: 'screens.Observation.ObservationEdit.CategoryView.observation',
+    id: 'screens.ObservationCreate.observation',
     defaultMessage: 'Observation',
     description: 'Default name of observation with no matching preset',
   },
   navTitle: {
-    id: 'screens.ObservationEdit.navTitle',
+    id: 'screens.ObservationCreate.navTitle',
     defaultMessage: 'New Observation',
     description: 'screen title for new observation screen',
   },
   changePreset: {
-    id: 'screens.Observation.ObservationEdit.CategoryView.changePreset',
+    id: 'screens.ObservationCreate.changePreset',
     defaultMessage: 'Change',
   },
   descriptionPlaceholder: {
-    id: 'screens.ObservationEdit.ObservationEditView.descriptionPlaceholder',
+    id: 'screens.ObservationCreate.descriptionPlaceholder',
     defaultMessage: 'What is happening here?',
     description: 'Placeholder for description/notes field',
   },

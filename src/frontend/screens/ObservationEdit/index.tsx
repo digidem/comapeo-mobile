@@ -62,8 +62,9 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     : formatMessage(m.observation);
 
   React.useEffect(() => {
-    if (!value && !!route.params?.observationId) {
-      if (!route.params.observationId) {
+    if (!value) {
+      if (!route.params?.observationId) {
+        navigation.goBack();
         return;
       }
       project.observation
@@ -77,6 +78,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     existingObservationToDraft,
     route.params?.observationId,
     project.observation,
+    navigation,
   ]);
 
   const editObservation = React.useCallback(() => {

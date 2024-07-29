@@ -5,3 +5,4 @@ output.names = {
 };
 
 output.passcode = '12345';
+output.newpasscode = '23456';

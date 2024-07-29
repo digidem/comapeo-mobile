@@ -1,0 +1,7 @@
+appId: com.comapeo
+---
+- assertVisible:
+    label: 'Back button returns to the Security Screen'
+    id: '${CAT}.security-scrn'
+- tapOn: 'App Passcode'
+- inputText: ${output.passcode}

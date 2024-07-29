@@ -2,16 +2,17 @@ import * as React from 'react';
 import {StyleSheet, Image, Pressable} from 'react-native';
 
 import type {ViewStyleProp} from '../sharedTypes';
+import {ProcessedDraftPhoto} from '../contexts/PhotoPromiseContext/types';
 
 type Props = {
-  photoUri: string;
+  photo: ProcessedDraftPhoto;
   style?: ViewStyleProp;
   resizeMode?: 'cover' | 'contain' | 'stretch' | 'center';
   onPress?: () => void;
 };
 
 const PhotoPreparedComponent = ({
-  photoUri,
+  photo,
   resizeMode = 'contain',
   style,
   onPress,
@@ -19,7 +20,7 @@ const PhotoPreparedComponent = ({
   return (
     <Pressable onPress={onPress} style={[styles.container, style]}>
       <Image
-        src={photoUri}
+        src={photo.originalUri}
         style={styles.image}
         resizeMethod="scale"
         resizeMode={resizeMode}

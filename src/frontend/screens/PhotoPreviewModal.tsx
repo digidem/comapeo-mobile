@@ -37,8 +37,7 @@ const m = defineMessages({
 export const PhotoPreviewModal: FC<
   NativeRootNavigationProps<'PhotoPreviewModal'>
 > = ({route}) => {
-  const {originalPhotoUri, observationId, deletable, attachmentId} =
-    route.params;
+  const {photo} = route.params;
   const navigation = useNavigationFromRoot();
   const [showHeader, setShowHeader] = useState(true);
   const draftObservation = useDraftObservation();
@@ -47,11 +46,9 @@ export const PhotoPreviewModal: FC<
   });
   const {formatMessage: t} = useIntl();
 
-  console.log({observationId, attachmentId});
-
   const handlePhotoDelete = () => {
-    if (originalPhotoUri) {
-      draftObservation.deletePhoto(originalPhotoUri);
+    if ('originalUri' in photo) {
+      draftObservation.deletePhoto(photo.originalUri);
     }
     navigation.goBack();
     closeSheet();
@@ -62,7 +59,7 @@ export const PhotoPreviewModal: FC<
       headerShown: showHeader,
       // eslint-disable-next-line react/no-unstable-nested-components -- it's correct syntax
       headerRight: () =>
-        deletable ? (
+        photo.type === 'processed' ? (
           <TouchableOpacity
             onPress={openSheet}
             style={styles.deleteButtonWrapper}>
@@ -75,24 +72,21 @@ export const PhotoPreviewModal: FC<
           <></>
         ),
     });
-  }, [deletable, navigation, openSheet, showHeader, t]);
+  }, [navigation, openSheet, showHeader, t, photo.type]);
 
   return (
     <>
-      {observationId && attachmentId ? (
+      {photo.type === 'photo' ? (
         <PhotoUnpreparedView
           onPress={() => setShowHeader(!showHeader)}
-          observationId={observationId}
-          attachmentId={attachmentId}
+          photo={photo}
           variant={'original'}
         />
-      ) : originalPhotoUri ? (
+      ) : (
         <PhotoPreparedView
           onPress={() => setShowHeader(!showHeader)}
-          photoUri={originalPhotoUri}
+          photo={photo}
         />
-      ) : (
-        <></>
       )}
 
       <BottomSheetModal ref={sheetRef} isOpen={isOpen}>

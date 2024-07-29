@@ -34,6 +34,7 @@ export type DraftObservationSlice = {
     // Create a new draft observation
     newDraft: (observation?: newDraftProps) => void;
     deletePhoto: (uri: string) => void;
+    existingObservationToDraft: (observation: Observation) => void;
     updateObservationPosition: (props: {
       position: Position | undefined;
       manualLocation: boolean;
@@ -82,6 +83,15 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
             manualLocation: props.manualLocation,
           },
         },
+      });
+    },
+    existingObservationToDraft: observation => {
+      set({
+        value: observation,
+        observationId: observation.docId,
+        photos: observation.attachments.filter(
+          (att): att is SavedPhoto => att.type === 'photo',
+        ),
       });
     },
     newDraft: draftProps => {

@@ -102,7 +102,7 @@ const UnsavedPhotoThumbnail = ({photo}: {photo: DraftPhoto}) => {
 };
 
 type PhotoThumbnailContextProps = {
-  onPress: () => any;
+  onPress?: () => void;
   style?: StyleProp<ViewStyle>;
   size?: number;
 };

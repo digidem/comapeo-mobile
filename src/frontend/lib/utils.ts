@@ -2,15 +2,11 @@
 import {fromLatLon} from 'utm';
 import {Preset, Observation} from '@mapeo/schema';
 import {LocationObject, LocationProviderStatus} from 'expo-location';
-import {NavigationState} from '@react-navigation/native';
-import {EDITING_SCREEN_NAMES} from '../constants';
-import {Photo, DraftPhoto} from '../contexts/PhotoPromiseContext/types';
 
 // import type {
 //   ObservationValue,
 //   ObservationAttachment,
 // } from "../context/ObservationsContext";
-// import type { SavedPhoto } from "../context/DraftObservationContext";
 // import type {
 //   Preset,
 //   PresetsMap,
@@ -91,29 +87,6 @@ export function getLocationStatus({
 //     ...preset,
 //     fields: filterFalsy(fieldDefs),
 //   };
-// }
-
-// // Filter photos from an array of observation attachments (we could have videos
-// // and other media types)
-// export function filterPhotosFromAttachments(
-//   attachments?: Array<ObservationAttachment> = []
-// ): Array<SavedPhoto> {
-//   return attachments.reduce((acc, att) => {
-//     if (
-//       att.type === "image/jpeg" ||
-//       // This is needed for backwards compat, because early versions did not
-//       // save a type
-//       (att.type === undefined && /(\.jpg|\.jpeg)$/i.test(att.id))
-//     )
-//       acc.push({ id: att.id, type: att.type });
-//     return acc;
-//   }, []);
-// }
-
-// export function getLastPhotoAttachment(
-//   attachments?: Array<ObservationAttachment> = []
-// ): SavedPhoto | void {
-//   return filterPhotosFromAttachments(attachments).pop();
 // }
 
 // // Coordinates conversions

@@ -1,17 +1,15 @@
 import {LocationObject} from 'expo-location';
+import {Attachment} from '../../sharedTypes';
 
 export const THUMBNAIL_SIZE = 400;
 export const THUMBNAIL_QUALITY = 30;
 export const PREVIEW_SIZE = 1200;
 export const PREVIEW_QUALITY = 30;
 
-export interface SavedPhoto {
-  // id of the photo in the Mapeo database
-  id: string;
-  type?: 'photo';
-  // If an image is to be deleted
+export type SavedPhoto = Omit<Attachment, 'type'> & {
+  type: 'photo';
   deleted?: boolean;
-}
+};
 
 export type UnprocessedDraftPhoto = {
   type: 'unprocessed';

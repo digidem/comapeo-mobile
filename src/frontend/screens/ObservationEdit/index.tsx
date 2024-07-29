@@ -45,7 +45,6 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
 }) => {
   const {formatMessage} = useIntl();
   const project = useActiveProject();
-  console.log('EDIT');
 
   const value = usePersistedDraftObservation(store => store.value);
   const {updateTags, clearDraft, usePreset, existingObservationToDraft} =
@@ -173,7 +172,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     createBlobMutation,
   ]);
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     navigation.setOptions({
       // eslint-disable-next-line react/no-unstable-nested-components
       headerRight: () => (
@@ -182,8 +181,20 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
           isLoading={editObservationMutation.isPending}
         />
       ),
+      // eslint-disable-next-line react/no-unstable-nested-components
+      headerLeft: props => (
+        <HeaderLeft
+          observationId={route.params.observationId}
+          headerBackButtonProps={props}
+        />
+      ),
     });
-  }, [editObservation, editObservationMutation, navigation]);
+  }, [
+    editObservation,
+    editObservationMutation,
+    navigation,
+    route.params.observationId,
+  ]);
 
   return !value ? (
     <Loading />
@@ -228,7 +239,6 @@ export function createNavigationOptions({
     return {
       headerTitle: intl(m.navTitle),
       headerRight: () => <SaveButton onPress={() => {}} isLoading={false} />,
-      headerLeft: props => <HeaderLeft headerBackButtonProps={props} />,
     };
   };
 }

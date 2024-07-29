@@ -3,3 +3,5 @@ output.names = {
   editdevice: 'new test phone',
   project: 'test project',
 };
+
+output.passcode = '12345';

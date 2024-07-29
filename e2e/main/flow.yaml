@@ -15,3 +15,4 @@ appId: com.comapeo
 - runFlow: '../settings/coordinates.yaml'
 - runFlow: '../settings/language.yaml'
 - runFlow: '../settings/about-comapeo.yaml'
+- runFlow: '../settings/security.yaml'

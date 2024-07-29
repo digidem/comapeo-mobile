@@ -77,6 +77,7 @@ export const PasscodeInput = React.forwardRef<TextInput, PasscodeInputProps>(
     return (
       <CodeField
         {...codeFieldProps}
+        testID="SETTINGS.passcode-inp"
         ref={inputRef}
         autoFocus={true}
         value={inputValue}

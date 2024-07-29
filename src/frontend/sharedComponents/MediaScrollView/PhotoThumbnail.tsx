@@ -62,7 +62,7 @@ const PhotoThumbnailImage = ({
   return (
     <TouchableOpacity
       style={[styles.thumbnailContainer, {width: size, height: size}, style]}
-      disabled={isLoading || !!error}
+      disabled={isLoading || !!error || !onPress}
       onPress={onPress}>
       {isLoading ? (
         <ActivityIndicator />

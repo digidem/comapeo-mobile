@@ -15,6 +15,7 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {Loading} from '../../sharedComponents/Loading';
 import {HeaderLeft} from './HeaderLeft';
 import {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
+import {CommonActions} from '@react-navigation/native';
 
 const m = defineMessages({
   observation: {
@@ -44,6 +45,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
 }) => {
   const {formatMessage} = useIntl();
   const project = useActiveProject();
+  console.log('EDIT');
 
   const value = usePersistedDraftObservation(store => store.value);
   const {updateTags, clearDraft, usePreset, existingObservationToDraft} =
@@ -99,8 +101,21 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         {versionId: value.versionId, value},
         {
           onSuccess: () => {
+            if (navigation.canGoBack()) {
+              navigation.goBack();
+            } else {
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [
+                    {
+                      name: 'Home',
+                    },
+                  ],
+                }),
+              );
+            }
             clearDraft();
-            navigation.navigate('Home', {screen: 'Map'});
           },
         },
       );
@@ -129,9 +144,22 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
           },
         },
         {
-          onSuccess: data => {
+          onSuccess: () => {
+            if (navigation.canGoBack()) {
+              navigation.goBack();
+            } else {
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [
+                    {
+                      name: 'Home',
+                    },
+                  ],
+                }),
+              );
+            }
             clearDraft();
-            navigation.navigate('Observation', {observationId: data.docId});
           },
         },
       );

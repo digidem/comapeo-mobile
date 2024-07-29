@@ -47,6 +47,8 @@ export const PhotoPreviewModal: FC<
   });
   const {formatMessage: t} = useIntl();
 
+  console.log({observationId, attachmentId});
+
   const handlePhotoDelete = () => {
     if (originalPhotoUri) {
       draftObservation.deletePhoto(originalPhotoUri);

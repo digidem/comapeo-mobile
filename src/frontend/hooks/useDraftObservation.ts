@@ -10,7 +10,6 @@ import {
 } from '../contexts/PhotoPromiseContext/types';
 // react native does not have a random bytes generator, `non-secure` does not require a random bytes generator.
 import {nanoid} from 'nanoid/non-secure';
-import {Observation, Preset} from '@mapeo/schema';
 import * as Sentry from '@sentry/react-native';
 
 // draft observation have 2 parts:
@@ -85,14 +84,6 @@ export const useDraftObservation = () => {
     [cancelPhotoProcessing, newPersistedDraft, addPhoto],
   );
 
-  const editSavedObservation = useCallback(
-    ({observation, preset}: {observation: Observation; preset: Preset}) => {
-      cancelPhotoProcessing();
-      newPersistedDraft({observation, preset});
-    },
-    [newPersistedDraft, cancelPhotoProcessing],
-  );
-
   const deletePhoto = useCallback(
     (uri: string) => {
       deletePersistedPhoto(uri);
@@ -108,7 +99,6 @@ export const useDraftObservation = () => {
     deletePhoto,
     updateObservationPosition,
     updateTags,
-    editSavedObservation,
     updatePreset,
     usePreset,
     existingObservationToDraft,

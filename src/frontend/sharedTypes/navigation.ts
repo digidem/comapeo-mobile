@@ -47,7 +47,7 @@ export type RootStackParamsList = {
   PresetChooser: undefined;
   AddPhoto: undefined;
   Observation: {observationId: string};
-  ObservationEdit: {observationId?: string} | undefined;
+  ObservationEdit: {observationId: string} | undefined;
   ManualGpsScreen: undefined;
   ObservationDetails: {question: number};
   LeaveProjectScreen: undefined;

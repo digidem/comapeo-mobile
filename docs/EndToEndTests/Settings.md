@@ -1,8 +1,16 @@
 ## Settings
 
-### Overview
-
-Settings e2e tests test the user's interactions with many things within the side drawer/ settings menu.
+- [Settings](#settings)
+  - [Overview](#overview)
+- [Language](#language)
+  - [Test Objectives](#test-objectives)
+  - [Special Considerations](#special-considerations)
+- [Coordinates](#coordinates)
+  - [Test Objectives](#test-objectives-1)
+  - [Special Considerations](#special-considerations-1)
+- [About Screen](#about-screen)
+  - [Test Objectives](#test-objectives-2)
+  - [Special Considerations](#special-considerations-2)
 
 ## Language
 

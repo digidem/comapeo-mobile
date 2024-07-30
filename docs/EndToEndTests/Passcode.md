@@ -1,8 +1,19 @@
+- [Passcode/ Security](#passcode-security)
+  - [Overview](#overview)
+- [Set Passcode](#set-passcode)
+  - [Test Objectives](#test-objectives)
+  - [Special Considerations](#special-considerations)
+- [Check Passcode Requirements](#check-passcode-requirements)
+  - [Test Objectives](#test-objectives-1)
+  - [Special Considerations](#special-considerations-1)
+- [Post Passcode Setup](#post-passcode-setup)
+  - [Test Objectives](#test-objectives-2)
+
 ## Passcode/ Security
 
 ### Overview
 
-Security e2e tests test the user's interactions with the security button within the settings menu. The tests deal with all of the different aspects of the passcode as they currently stand.
+Passcode/ security e2e tests test the user's interactions with the security button within the settings menu. The tests deal with all of the different aspects of the passcode as they currently stand. I had to name the file and folders passcode instead of security because of VScode locks on files labeled 'security'.
 
 ## Set Passcode
 
@@ -10,14 +21,14 @@ Security e2e tests test the user's interactions with the security button within 
 
 ### Test Objectives
 
-- Tests that all cancel and back buttons take the user out of the passcode settings screens.
-- Tests that the full feature description of the app passcode is shown
-- Tests that number keyboard is displayed and that letters can't be entered
-- Tests that errors show appropriately when no passcode is entered, or if it is too short, or if it is 00000
-- Tests that there is a re-enter passcode screen with a number keyboard where letters can't be entered
-- Tests that matching passcodes must be entered
-- Tests that a warning message is shown that displays the passcode
-- Tests that when the passcode is saved, "passcode is set" is shown on the opening screen
+- All cancel and back buttons take the user out of the passcode settings screens
+- The full feature description of the app passcode is shown
+- Number keyboard is displayed and letters can't be entered
+- Errors show appropriately when no passcode is entered, or if it is too short, or if it is 00000
+- There is a re-enter passcode screen with a number keyboard where letters can't be entered
+- Matching passcodes must be entered
+- A warning message is shown that displays the passcode before setting it
+- When the passcode is saved, "passcode is set" is shown on the opening screen
 
 ### Special Considerations
 
@@ -30,11 +41,11 @@ Security e2e tests test the user's interactions with the security button within 
 
 ### Test Objectives
 
-- Tests that when CoMapeo is closed, passcode is required when it is reopened
-- Tests that when CoMapeo is left running in the background, another app is opened, and then CoMapeo reopened, passcode is required
-- Tests that when phone is turned off and back on, when reopening CoMapeo, passcode is required
-- Tests that number keyboard is displayed and that letters can't be entered
-- Tests that an error is displayed if the wrong passcode is entered
+- When CoMapeo is closed, passcode is required when it is reopened
+- When CoMapeo is left running in the background, another app is opened, and then CoMapeo reopened, passcode is required
+- When phone is turned off and back on, when reopening CoMapeo, passcode is required
+- Number keyboard is displayed and letters can't be entered
+- An error is displayed if the wrong passcode is entered
 
 ### Special Considerations
 
@@ -42,15 +53,15 @@ Security e2e tests test the user's interactions with the security button within 
 
 ## Post Passcode Setup
 
-- This tests interactions in the app that take place after a passcode has been set up.
+- This tests interactions in the app that take place after a passcode has been set up
 
 ### Test Objectives
 
-- Tests that passcode is required to enter the app passcode screen and that is a number keyboard and letters can't be input
-- Tests the back and cancel buttons take the user out of the passcode settings screens
-- Tests that appropriate warnings are displayed
-- Tests that incorrect passcodes display an error
-- Tests that correct passcode opens the app passcode screen
-- Tests that the use app passcode checkbox is checked
-- Tests that the app passcode can be changed
-- Tests that the use app passcode checkbox can be unchecked to turn off the passcode
+- Passcode is required to enter the app passcode screen and it is a number keyboard and letters can't be input
+- Back and cancel buttons take the user out of the passcode settings screens
+- Appropriate warnings are displayed
+- Incorrect passcodes display an error
+- Correct passcode opens the app passcode screen
+- Use app passcode checkbox is checked
+- App passcode can be changed
+- Use app passcode checkbox can be unchecked to turn off the passcode

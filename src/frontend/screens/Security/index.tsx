@@ -42,7 +42,7 @@ export const Security: NativeNavigationComponent<'Security'> = ({
   }, [navigation, authState]);
 
   return (
-    <ScrollView>
+    <ScrollView testID="MAIN.security-scrn">
       <List>
         <ListItem
           button={true}

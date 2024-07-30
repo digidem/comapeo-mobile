@@ -1,0 +1,40 @@
+appId: com.comapeo
+---
+- stopApp
+- launchApp:
+    appId: com.comapeo
+- assertVisible:
+    label: 'Passcode entry screen appears when user closes Mapeo app completely, and re-opens CoMapeo app'
+    text: 'Enter your passcode'
+- runFlow: './subflows/check-number-keyboard.yaml'
+- pressKey: Home
+- swipe:
+    direction: UP
+- tapOn: 'Clock'
+- pressKey: Home
+- swipe:
+    direction: UP
+- tapOn: '.*CoMapeo.*'
+- runFlow:
+    when:
+      visible: 'Reload'
+    commands:
+      - tapOn: 'Reload'
+- assertVisible:
+    label: 'Passcode entry screen appears when user opens another app, while leaving Mapeo running in the background, and then reopens CoMapeo'
+    text: 'Enter your passcode'
+- inputText: '54321'
+- assertVisible:
+    label: 'If the wrong passcode is entered, an error is displayed'
+    text: 'Incorrect passcode, please try again'
+- pressKey: power
+- pressKey: power
+- runFlow:
+    when:
+      visible: 'Reload'
+    commands:
+      - tapOn: 'Reload'
+- assertVisible:
+    label: 'Passcode screen appears when user turns on and off phone screen, while CoMapeo is running'
+    text: 'Enter your passcode'
+- inputText: '${output.passcode}'

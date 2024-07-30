@@ -1,0 +1,98 @@
+appId: com.comapeo
+env:
+  CAT: MAIN
+---
+- tapOn:
+    id: '${CAT}.drawer-icon'
+- tapOn: 'Security'
+- assertVisible:
+    label: 'Security button goes to Security screen'
+    id: '${CAT}.security-scrn'
+- assertVisible:
+    label: 'App Passcode subtitle displays as "Passcode not set"'
+    text: 'App Passcode'
+- assertVisible: 'Passcode not set'
+- tapOn: 'App Passcode'
+- assertVisible:
+    label: 'App Passcode button goes to App Passcode screen'
+    text: '.*What is App Passcode?.*'
+- tapOn:
+    id: '${CAT}.header-back-btn'
+- assertVisible:
+    label: 'Back returns to security screen'
+    id: '${CAT}.security-scrn'
+- tapOn: 'App Passcode'
+- assertVisible: '.*App Passcode allows you to add an additional layer of security by requiring that you enter a passcode.*'
+- assertVisible:
+    label: 'Screen displays full feature description and Continue button'
+    text: 'Continue'
+- tapOn: 'Continue'
+- assertVisible:
+    label: 'Continue button opens Set App Passcode screen'
+    text: 'Set App Passcode'
+- tapOn:
+    id: '${CAT}.header-back-btn'
+- assertVisible:
+    label: 'Back button returns to previous screen'
+    text: 'What is App Passcode?'
+- tapOn: 'Continue'
+- runFlow: './subflows/cancel-to-security.yaml'
+- runFlow: './subflows/open-passcode.yaml'
+- runFlow: './subflows/check-number-keyboard.yaml'
+- tapOn: 'Next'
+- assertVisible:
+    label: 'Next without entering a passcode displays an error'
+    text: 'Password must be 5 numbers'
+- inputText: '22'
+- tapOn: 'Next'
+- assertVisible:
+    label: 'Next when fewer than 5 numbers are entered displays an error'
+    text: 'Password must be 5 numbers'
+- eraseText
+- inputText: '00000'
+- tapOn: 'Next'
+- assertVisible:
+    label: 'Next when “00000” is entered displays an error'
+    text: 'Cannot be used as a Passcode'
+- inputText: ${output.passcode}
+- tapOn: 'Next'
+- assertVisible:
+    label: 'Next when a valid passcode is entered opens Re-enter Passcode screen'
+    text: 'Re-enter Passcode'
+- tapOn:
+    id: '${CAT}.header-back-btn'
+- assertVisible:
+    label: 'Back from the re-enter passcode screen returns to the app passcode descriptor screen'
+    text: 'What is App Passcode?'
+- tapOn: 'Continue'
+- inputText: ${output.passcode}
+- tapOn: 'Next'
+- runFlow: './subflows/cancel-to-security.yaml'
+- runFlow: './subflows/open-passcode.yaml'
+- inputText: ${output.passcode}
+- tapOn: 'Next'
+- runFlow: './subflows/check-number-keyboard.yaml'
+- inputText: '54321'
+- tapOn: 'Next'
+- assertVisible:
+    label: 'Next when a non-matching passcode is entered displays an error'
+    text: 'Password does not match'
+- inputText: ${output.passcode}
+- tapOn: 'Next'
+- assertVisible:
+    label: 'Next when a matching passcode is entered opens bottom sheet with warning message'
+    text: 'App Passcodes can never be recovered if lost or forgotten!'
+- assertVisible:
+    label: 'Confirmation of passcode is shown'
+    text: ${output.passcode}
+- runFlow: './subflows/cancel-to-security.yaml'
+- runFlow: './subflows/open-passcode.yaml'
+- inputText: ${output.passcode}
+- tapOn: 'Next'
+- inputText: ${output.passcode}
+- tapOn: 'Next'
+- tapOn: 'Save App Passcode'
+- assertVisible:
+    label: 'Save App Passcode returns to Settings screen and App Passcode subtitle displays as "Passcode is set"'
+    text: 'Passcode is set'
+- back

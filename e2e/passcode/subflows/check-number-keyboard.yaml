@@ -1,0 +1,19 @@
+appId: com.comapeo
+---
+- assertVisible:
+    label: 'Number keyboard is displayed by default'
+    id: 'SETTINGS.passcode-inp'
+- assertVisible: '1'
+- assertVisible: '2'
+- assertVisible: '3'
+- assertVisible: '4'
+- assertVisible: '5'
+- assertNotVisible: 'f'
+- assertNotVisible: 'g'
+- assertNotVisible: 'j'
+- assertNotVisible: 'k'
+- assertNotVisible: 'v'
+- assertNotVisible: 'x'
+- assertNotVisible:
+    label: 'Letters cannot be entered'
+    text: 'z'

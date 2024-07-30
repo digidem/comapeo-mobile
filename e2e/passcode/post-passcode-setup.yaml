@@ -1,0 +1,71 @@
+appId: com.comapeo
+env:
+  CAT: MAIN
+---
+- tapOn:
+    id: '${CAT}.drawer-icon'
+- tapOn: 'Security'
+- tapOn: 'App Passcode'
+- assertVisible:
+    label: 'From Security screen, [On click] App Passcode button prompts password entry'
+    text: 'Enter Passcode'
+- runFlow: './subflows/check-number-keyboard.yaml'
+- tapOn:
+    id: '${CAT}.header-back-btn'
+- assertVisible:
+    label: 'Back button returns to the Security Screen'
+    id: '${CAT}.security-scrn'
+- tapOn: 'App Passcode'
+- runFlow: './subflows/cancel-to-security.yaml'
+- tapOn: 'App Passcode'
+- inputText: ${output.newpasscode}
+- assertVisible:
+    label: 'Next with incorrect passcode displays error'
+    text: 'Incorrect Passcode'
+- inputText: ${output.passcode}
+- assertVisible:
+    label: 'Next with correct passcode opens app passcode screen'
+    text: 'App Passcode'
+- assertVisible:
+    label: 'Screen displays abbreviated feature description'
+    text: '.*App passcode adds an additional layer of security.*'
+- assertVisible:
+    label: 'Use App Passcode checkbox in checked state'
+    id: 'SETTINGS.passcode-checked'
+- assertVisible:
+    label: 'Screen displays Change App Passcode button'
+    text: 'Change App Passcode'
+- tapOn: 'Change App Passcode'
+- tapOn:
+    id: '${CAT}.header-back-btn'
+- assertVisible:
+    label: 'Cancelling the change password displays Change App Passcode button'
+    text: 'Change App Passcode'
+- tapOn: 'Change App Passcode'
+- runFlow: './subflows/cancel-to-security.yaml'
+- runFlow: './subflows/back-to-security-reenter.yaml'
+- tapOn: 'Change App Passcode'
+- inputText: ${output.newpasscode}
+- tapOn: 'Next'
+- inputText: ${output.newpasscode}
+- tapOn: 'Next'
+- tapOn: 'Save App Passcode'
+- tapOn: 'App Passcode'
+- inputText: ${output.newpasscode}
+- tapOn:
+    id: 'SETTINGS.passcode-checked'
+- assertVisible:
+    label: 'Use App Passcode checkbox to uncheck opens bottom sheet with warning'
+    text: 'Turn Off App Passcode?'
+- tapOn: 'Cancel'
+- assertNotVisible:
+    label: 'Cancel  returns to App Passcode screen'
+    text: 'Turn Off App Passcode?'
+- tapOn:
+    id: 'SETTINGS.passcode-checked'
+- tapOn: 'Turn Off'
+- assertVisible:
+    label: 'Turn off returns to Security screen and App Passcode subtitle displays as Passcode not set'
+    text: 'Passcode not set'
+- tapOn:
+    id: '${CAT}.header-back-btn'

@@ -1,4 +1,4 @@
-## Settings
+### Table of Contents
 
 - [Settings](#settings)
   - [Overview](#overview)
@@ -11,6 +11,12 @@
 - [About Screen](#about-screen)
   - [Test Objectives](#test-objectives-2)
   - [Special Considerations](#special-considerations-2)
+
+## Settings
+
+### Overview
+
+Settings e2e tests test the user's interactions with many things within the side drawer/ settings menu.
 
 ## Language
 
@@ -38,7 +44,7 @@
 
 ### Special Considerations
 
-- It is not possible within Maestro to test the functioning of the Radio buttons, although theoretically I should have been able to. Settings is spelled setttings in the screen...
+- It is not possible within Maestro to test the functioning of the Radio buttons, although theoretically I should have been able to.
 
 ## About Screen
 

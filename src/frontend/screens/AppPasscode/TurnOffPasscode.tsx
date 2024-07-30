@@ -130,9 +130,6 @@ export const TurnOffPasscode: NativeNavigationComponent<'DisablePasscode'> = ({
                   ? 'check-box'
                   : 'check-box-outline-blank'
               }
-              testID={
-                authValuesSet.passcodeSet ? 'SETTINGS.passcode-checked' : ''
-              }
               size={24}
               color={MEDIUM_GREY}
             />

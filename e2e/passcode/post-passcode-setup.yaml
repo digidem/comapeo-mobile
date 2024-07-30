@@ -7,8 +7,8 @@ env:
 - tapOn: 'Security'
 - tapOn: 'App Passcode'
 - assertVisible:
-  label: 'From Security screen, [On click] App Passcode button prompts password entry'
-  text: 'Enter Passcode'
+    label: 'From Security screen, [On click] App Passcode button prompts password entry'
+    text: 'Enter Passcode'
 - runFlow: './subflows/check-number-keyboard.yaml'
 - tapOn:
     id: '${CAT}.header-back-btn'
@@ -55,5 +55,5 @@ env:
     text: 'Turn Off App Passcode?'
 - tapOn: 'Turn Off'
 - assertVisible:
-    label: 'Turn off  returns to Security screen and App Passcode subtitle displays as Passcode not set'
+    label: 'Turn off returns to Security screen and App Passcode subtitle displays as Passcode not set'
     text: 'Passcode not set'

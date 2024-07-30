@@ -2,7 +2,6 @@ appId: com.comapeo
 env:
   CAT: PROJECT
   SUBCAT: MAIN
-
 ---
 - tapOn:
     id: '${SUBCAT}.drawer-icon'

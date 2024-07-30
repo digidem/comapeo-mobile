@@ -12,7 +12,7 @@ import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
 const m = defineMessages({
   title: {
     id: 'Screens.Settings.AppSettings.title',
-    defaultMessage: 'App Setttings',
+    defaultMessage: 'App Settings',
   },
   language: {
     id: 'Screens.Settings.AppSettings.language',

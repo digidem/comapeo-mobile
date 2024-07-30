@@ -12,3 +12,6 @@ appId: com.comapeo
 - runFlow: '../observations/create-observation.yaml'
 - runFlow: '../observations/add-details.yaml'
 - runFlow: '../observations/view-observations.yaml'
+- runFlow: '../settings/coordinates.yaml'
+- runFlow: '../settings/language.yaml'
+- runFlow: '../settings/about-comapeo.yaml'

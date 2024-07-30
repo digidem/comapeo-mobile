@@ -1,0 +1,33 @@
+appId: com.comapeo
+env:
+  CAT: MAIN
+---
+- tapOn:
+    id: '${CAT}.drawer-icon'
+- tapOn: '.*App Settings.*'
+- tapOn:
+    label: 'Language button goes to Language list'
+    text: '.*Language.*'
+- scrollUntilVisible:
+    element:
+      text: 'Spanish'
+    direction: DOWN
+    visibilityPercentage: 100
+- tapOn: '.*Spanish.*'
+- assertVisible: '.*Idioma.*'
+- tapOn:
+    id: '${CAT}.header-back-btn'
+- tapOn:
+    id: 'tabBarButtonObservationsList'
+- assertVisible:
+    label: 'Any Language option changes app language'
+    text: '.*Observaciones.*'
+- tapOn:
+    id: '${CAT}.header-back-btn'
+- tapOn:
+    id: '${CAT}.drawer-icon'
+- tapOn: '.*App Settings.*'
+- tapOn: '.*Idioma.*'
+- tapOn: '.*English.*'
+- tapOn:
+    id: '${CAT}.header-back-btn'

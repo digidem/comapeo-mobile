@@ -1,11 +1,11 @@
 import {StateCreator} from 'zustand';
 import {createPersistedState} from '../createPersistedState';
-import {Photo, DraftPhoto} from '../../../contexts/PhotoPromiseContext/types';
 import {
-  deletePhoto,
-  filterPhotosFromAttachments,
-  replaceDraftPhotos,
-} from './photosMethods';
+  DraftPhoto,
+  Photo,
+  SavedPhoto,
+} from '../../../contexts/PhotoPromiseContext/types';
+import {deletePhoto, replaceDraftPhotos} from './photosMethods';
 import {ClientGeneratedObservation, Position} from '../../../sharedTypes';
 import {Observation, Preset} from '@mapeo/schema';
 import {usePresetsQuery} from '../../server/presets';
@@ -28,7 +28,7 @@ export type DraftObservationSlice = {
   observationId?: string;
   actions: {
     addPhotoPlaceholder: (draftPhotoId: string) => void;
-    replacePhotoPlaceholderWithPhoto: (photo: DraftPhoto) => void;
+    replacePhotoPlaceholderWithPhoto: (draftPhoto: DraftPhoto) => void;
     // Clear the current draft
     clearDraft: () => void;
     // Create a new draft observation
@@ -53,7 +53,7 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
   actions: {
     deletePhoto: uri => deletePhoto(set, get, uri),
     addPhotoPlaceholder: draftPhotoId =>
-      set({photos: [...get().photos, {draftPhotoId, capturing: true}]}),
+      set({photos: [...get().photos, {type: 'unprocessed', draftPhotoId}]}),
     replacePhotoPlaceholderWithPhoto: draftPhoto =>
       replaceDraftPhotos(set, get, draftPhoto),
     clearDraft: () => {
@@ -96,10 +96,9 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
       set({
         value: draftProps.observation,
         observationId: draftProps.observation.docId,
-        photos:
-          draftProps.observation.attachments.length > 0
-            ? filterPhotosFromAttachments(draftProps.observation.attachments)
-            : [],
+        photos: draftProps.observation.attachments.filter(
+          (att): att is SavedPhoto => att.type === 'photo',
+        ),
       });
     },
     updateTags: (tagKey, tagValue) => {

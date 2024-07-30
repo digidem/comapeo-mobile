@@ -15,7 +15,7 @@ type EditorProps = {
   PresetIcon: React.ReactNode;
   notes: string;
   updateNotes: (newNotes: string) => void;
-  photos: (Partial<Photo> | undefined)[];
+  photos: Photo[];
   location?: {
     lat: number | undefined;
     lon: number | undefined;

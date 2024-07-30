@@ -4,10 +4,14 @@ import {
   _usePersistedDraftObservationActions,
   usePreset,
 } from './persistedState/usePersistedDraftObservation';
-import {CapturedPictureMM} from '../contexts/PhotoPromiseContext/types';
+import {
+  PhotoPromiseWithMetadata,
+  UnprocessedDraftPhoto,
+} from '../contexts/PhotoPromiseContext/types';
 // react native does not have a random bytes generator, `non-secure` does not require a random bytes generator.
 import {nanoid} from 'nanoid/non-secure';
 import {Observation, Preset} from '@mapeo/schema';
+import * as Sentry from '@sentry/react-native';
 
 // draft observation have 2 parts:
 // 1. All the information, except processed photos are saved to persisted state.
@@ -28,12 +32,16 @@ export const useDraftObservation = () => {
   } = _usePersistedDraftObservationActions();
 
   const addPhoto = useCallback(
-    async (capturePromise: Promise<CapturedPictureMM>) => {
+    async ({capturePromise, mediaMetadata}: PhotoPromiseWithMetadata) => {
       // creates an id, that is stored as a placeholder in persisted photots. This is associated with the processed photo, so when the photo is done processsing, we can replace the placeholder with the actual photo
       const draftPhotoId = nanoid();
       addPhotoPlaceholder(draftPhotoId);
       // creates a promise of the original photo. This promise resolves into a processed photo with the thumbnail, preview, and original photo
-      const photoPromise = addPhotoPromise(capturePromise, draftPhotoId);
+      const photoPromise = addPhotoPromise({
+        draftPhotoId,
+        mediaMetadata,
+        photo: capturePromise,
+      });
       try {
         // the promise is run
         const photo = await photoPromise;
@@ -42,10 +50,10 @@ export const useDraftObservation = () => {
       } catch (err) {
         if (!(err instanceof Error)) return;
 
-        const photo = {
-          capturing: false,
-          error: true,
+        const photo: UnprocessedDraftPhoto = {
+          error: err,
           draftPhotoId,
+          type: 'unprocessed',
         };
         replacePhotoPlaceholderWithPhoto(photo);
 
@@ -55,7 +63,7 @@ export const useDraftObservation = () => {
         )
           console.log('Cancelled photo');
         else {
-          console.log(err);
+          Sentry.captureException(err);
         }
       }
     },
@@ -68,10 +76,10 @@ export const useDraftObservation = () => {
   }, [cancelPhotoProcessing, clearPersistedDraft]);
 
   const newDraft = useCallback(
-    (capture?: Promise<CapturedPictureMM>) => {
+    (photoPromiseWithMetadata?: PhotoPromiseWithMetadata) => {
       cancelPhotoProcessing();
       newPersistedDraft();
-      if (capture) addPhoto(capture);
+      if (photoPromiseWithMetadata) addPhoto(photoPromiseWithMetadata);
     },
     [cancelPhotoProcessing, newPersistedDraft, addPhoto],
   );
@@ -84,10 +92,13 @@ export const useDraftObservation = () => {
     [newPersistedDraft, cancelPhotoProcessing],
   );
 
-  const deletePhoto = useCallback((uri: string) => {
-    deletePersistedPhoto(uri);
-    deletePhotoPromise(uri);
-  }, []);
+  const deletePhoto = useCallback(
+    (uri: string) => {
+      deletePersistedPhoto(uri);
+      deletePhotoPromise(uri);
+    },
+    [deletePersistedPhoto, deletePhotoPromise],
+  );
 
   return {
     addPhoto,

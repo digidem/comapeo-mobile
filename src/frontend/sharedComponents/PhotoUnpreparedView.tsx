@@ -46,7 +46,7 @@ const PhotoUnpreparedComponent = ({
 
   return (
     <Pressable onPress={onPress} style={[styles.container, style]}>
-      {isLoading ? (
+      {isLoading || !attachmentUrl ? (
         <UIActivityIndicator color={WHITE} />
       ) : isError ? (
         <AlertIcon size={96} />

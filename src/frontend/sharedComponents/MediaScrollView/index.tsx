@@ -9,7 +9,7 @@ const spacing = 10;
 const minSize = 150;
 
 interface MediaScrollView {
-  photos: (Partial<Photo> | undefined)[];
+  photos: Photo[];
   observationId?: string;
 }
 
@@ -23,24 +23,6 @@ export const MediaScrollView: FC<MediaScrollView> = ({
   React.useLayoutEffect(() => {
     scrollViewRef.current && scrollViewRef.current.scrollToEnd();
   }, [photos?.length]);
-
-  function handlePhotoPress(photo: Partial<Photo>) {
-    if ('id' in photo) {
-      navigation.navigate('PhotoPreviewModal', {
-        attachmentId: photo.id,
-        observationId: observationId,
-        deletable: false,
-      });
-      return;
-    }
-    if ('originalUri' in photo) {
-      navigation.navigate('PhotoPreviewModal', {
-        deletable: true,
-        originalPhotoUri: photo.originalUri,
-      });
-      return;
-    }
-  }
 
   if (photos?.length === 0) return null;
   const windowWidth = Dimensions.get('window').width;
@@ -59,15 +41,34 @@ export const MediaScrollView: FC<MediaScrollView> = ({
       style={styles.photosContainer}>
       {photos
         ?.filter(photo => photo?.deleted == null)
-        ?.map((photo, index) => (
-          <PhotoThumbnail
-            key={index}
-            photo={photo}
-            style={styles.thumbnail}
-            size={size}
-            onPress={() => photo && handlePhotoPress(photo)}
-          />
-        ))}
+        ?.map((photo, index) => {
+          const onPress =
+            photo.type === 'photo'
+              ? () => {
+                  navigation.navigate('PhotoPreviewModal', {
+                    attachmentId: photo.driveDiscoveryId,
+                    observationId: observationId,
+                    deletable: false,
+                  });
+                }
+              : photo.type === 'processed'
+                ? () => {
+                    navigation.navigate('PhotoPreviewModal', {
+                      deletable: true,
+                      originalPhotoUri: photo.originalUri,
+                    });
+                  }
+                : undefined;
+          return (
+            <PhotoThumbnail
+              key={index}
+              photo={photo}
+              style={styles.thumbnail}
+              size={size}
+              onPress={onPress}
+            />
+          );
+        })}
     </ScrollView>
   );
 };

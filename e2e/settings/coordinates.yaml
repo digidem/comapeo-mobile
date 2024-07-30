@@ -21,6 +21,6 @@ env:
     id: '${CAT}.header-back-btn'
 - assertVisible:
     label: 'Back returns to Settings screen'
-    text: '.*App Settings.*'
+    text: 'App Settings'
 - tapOn:
     id: '${CAT}.header-back-btn'

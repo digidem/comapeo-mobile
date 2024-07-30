@@ -1,3 +1,5 @@
+### Table of Contents
+
 - [Passcode/ Security](#passcode-security)
   - [Overview](#overview)
 - [Set Passcode](#set-passcode)

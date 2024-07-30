@@ -93,6 +93,7 @@ export const AuthScreen = ({
       <CoMapeoLogoSvg height={window.height / 3} />
       <Text style={styles.description}>{t(m.enterPass)}</Text>
       <PasscodeInput
+        testID="SETTINGS.auth-passcode-inp"
         error={error}
         inputValue={inputtedPass}
         onChangeTextWithValidation={setInputWithValidation}

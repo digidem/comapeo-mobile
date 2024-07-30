@@ -6,6 +6,9 @@ appId: com.comapeo
 - assertVisible:
     label: 'Passcode entry screen appears when user closes Mapeo app completely, and re-opens CoMapeo app'
     text: 'Enter your passcode'
+- assertVisible:
+    label: 'Number keyboard is displayed by default'
+    id: 'SETTINGS.auth-passcode-inp'
 - runFlow: './subflows/check-number-keyboard.yaml'
 - pressKey: Home
 - swipe:

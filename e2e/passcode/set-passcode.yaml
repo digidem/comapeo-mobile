@@ -7,7 +7,9 @@ env:
 - tapOn: 'Security'
 - assertVisible:
     label: 'Security button goes to Security screen'
-    id: '${CAT}.security-scrn'
+    text: 'Security'
+    rightOf:
+      id: '${CAT}.header-back-btn'
 - assertVisible:
     label: 'App Passcode subtitle displays as "Passcode not set"'
     text: 'App Passcode'
@@ -20,7 +22,9 @@ env:
     id: '${CAT}.header-back-btn'
 - assertVisible:
     label: 'Back returns to security screen'
-    id: '${CAT}.security-scrn'
+    text: 'Security'
+    rightOf:
+      id: '${CAT}.header-back-btn'
 - tapOn: 'App Passcode'
 - assertVisible: '.*App Passcode allows you to add an additional layer of security by requiring that you enter a passcode.*'
 - assertVisible:
@@ -38,6 +42,9 @@ env:
 - tapOn: 'Continue'
 - runFlow: './subflows/cancel-to-security.yaml'
 - runFlow: './subflows/open-passcode.yaml'
+- assertVisible:
+    label: 'Number keyboard is displayed by default'
+    id: 'SETTINGS.passcode-inp'
 - runFlow: './subflows/check-number-keyboard.yaml'
 - tapOn: 'Next'
 - assertVisible:
@@ -71,6 +78,9 @@ env:
 - runFlow: './subflows/open-passcode.yaml'
 - inputText: ${output.passcode}
 - tapOn: 'Next'
+- assertVisible:
+    label: 'Number keyboard is displayed by default'
+    id: 'SETTINGS.passcode-inp'
 - runFlow: './subflows/check-number-keyboard.yaml'
 - inputText: '54321'
 - tapOn: 'Next'

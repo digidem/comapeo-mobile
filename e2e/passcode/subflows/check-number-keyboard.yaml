@@ -1,8 +1,5 @@
 appId: com.comapeo
 ---
-- assertVisible:
-    label: 'Number keyboard is displayed by default'
-    id: 'SETTINGS.passcode-inp'
 - assertVisible: '1'
 - assertVisible: '2'
 - assertVisible: '3'

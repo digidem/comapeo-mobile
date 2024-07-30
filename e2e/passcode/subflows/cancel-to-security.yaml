@@ -3,4 +3,6 @@ appId: com.comapeo
 - tapOn: 'Cancel'
 - assertVisible:
     label: 'Cancel returns to the Security Screen'
-    id: '${CAT}.security-scrn'
+    text: 'Security'
+    rightOf:
+      id: '${SUBCAT}.header-back-btn'

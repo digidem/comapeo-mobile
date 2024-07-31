@@ -1,4 +1,4 @@
-appId: com.comapeo
+appId: com.comapeo.test
 env:
   CAT: PROJECT
   SUBCAT: MAIN

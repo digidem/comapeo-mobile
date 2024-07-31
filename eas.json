@@ -24,9 +24,11 @@
       "env": {
         "APP_VARIANT": "test"
       },
+      "node": "20.14.0",
       "android": {
         "image": "latest",
-        "buildType": "apk"
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleRelease"
       },
       "ios": {
         "image": "latest"

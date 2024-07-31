@@ -8,7 +8,7 @@ declare module 'react-native-scale-bar' {
     left: number;
   };
 
-  const ScaleBar: Component<Props>;
+  class ScaleBar extends Component<Props> {}
 
   export default ScaleBar;
 }

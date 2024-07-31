@@ -13,10 +13,7 @@ interface MediaScrollView {
   observationId?: string;
 }
 
-export const MediaScrollView: FC<MediaScrollView> = ({
-  photos,
-  observationId,
-}) => {
+export const MediaScrollView: FC<MediaScrollView> = ({photos}) => {
   const scrollViewRef = React.useRef<ScrollView>(null);
   const length = photos?.length ?? 0;
   const navigation = useNavigationFromRoot();
@@ -43,22 +40,11 @@ export const MediaScrollView: FC<MediaScrollView> = ({
         ?.filter(photo => photo?.deleted == null)
         ?.map((photo, index) => {
           const onPress =
-            photo.type === 'photo'
+            photo.type === 'photo' || photo.type === 'processed'
               ? () => {
-                  navigation.navigate('PhotoPreviewModal', {
-                    attachmentId: photo.driveDiscoveryId,
-                    observationId: observationId,
-                    deletable: false,
-                  });
+                  navigation.navigate('PhotoPreviewModal', {photo});
                 }
-              : photo.type === 'processed'
-                ? () => {
-                    navigation.navigate('PhotoPreviewModal', {
-                      deletable: true,
-                      originalPhotoUri: photo.originalUri,
-                    });
-                  }
-                : undefined;
+              : undefined;
           return (
             <PhotoThumbnail
               key={index}

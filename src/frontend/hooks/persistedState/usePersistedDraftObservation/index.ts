@@ -11,7 +11,6 @@ import {Observation, Preset} from '@mapeo/schema';
 import {usePresetsQuery} from '../../server/presets';
 import {matchPreset} from '../../../lib/utils';
 
-type newDraftProps = {observation: Observation; preset: Preset};
 const emptyObservation: ClientGeneratedObservation = {
   metadata: {},
   refs: [],
@@ -32,8 +31,9 @@ export type DraftObservationSlice = {
     // Clear the current draft
     clearDraft: () => void;
     // Create a new draft observation
-    newDraft: (observation?: newDraftProps) => void;
+    newDraft: () => void;
     deletePhoto: (uri: string) => void;
+    existingObservationToDraft: (observation: Observation) => void;
     updateObservationPosition: (props: {
       position: Position | undefined;
       manualLocation: boolean;
@@ -84,21 +84,19 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
         },
       });
     },
-    newDraft: draftProps => {
-      get().actions.clearDraft();
-      if (!draftProps) {
-        set({
-          value: emptyObservation,
-        });
-        return;
-      }
-
+    existingObservationToDraft: observation => {
       set({
-        value: draftProps.observation,
-        observationId: draftProps.observation.docId,
-        photos: draftProps.observation.attachments.filter(
+        value: observation,
+        observationId: observation.docId,
+        photos: observation.attachments.filter(
           (att): att is SavedPhoto => att.type === 'photo',
         ),
+      });
+    },
+    newDraft: () => {
+      get().actions.clearDraft();
+      set({
+        value: emptyObservation,
       });
     },
     updateTags: (tagKey, tagValue) => {

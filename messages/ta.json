@@ -99,6 +99,21 @@
     "description": "Title of settings screen",
     "message": "Settings"
   },
+  "ObservationEdit.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Continue editing"
+  },
+  "ObservationEdit.HeaderLeft.discardObservationButton": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Discard changes"
+  },
+  "ObservationEdit.HeaderLeft.discardObservationDescription": {
+    "message": "Your changes will not be saved. This cannot be undone."
+  },
+  "ObservationEdit.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Discard changes?"
+  },
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Coordinate System"
   },
@@ -112,7 +127,7 @@
     "message": "Display language for app"
   },
   "Screens.Settings.AppSettings.title": {
-    "message": "App Setttings"
+    "message": "App Settings"
   },
   "Screens.Settings.ProjectSettings.deviceName": {
     "message": "சாதனத்தின் பெயர்"
@@ -584,13 +599,6 @@
   "screens.ObscurePasscode.whatIsObscure": {
     "message": "What is Obscure Passcode?"
   },
-  "screens.Observation.ObservationEdit.CategoryView.changePreset": {
-    "message": "மாற்றுக"
-  },
-  "screens.Observation.ObservationEdit.CategoryView.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "அவதானிப்புகள்"
-  },
   "screens.Observation.ObservationView.delete": {
     "description": "Button to delete an observation",
     "message": "அழி"
@@ -635,6 +643,21 @@
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
     "message": "அவதானிப்புகள்"
   },
+  "screens.ObservationCreate.changePreset": {
+    "message": "Change"
+  },
+  "screens.ObservationCreate.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "What is happening here?"
+  },
+  "screens.ObservationCreate.navTitle": {
+    "description": "screen title for new observation screen",
+    "message": "New Observation"
+  },
+  "screens.ObservationCreate.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Observation"
+  },
   "screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
     "message": "Done"
@@ -667,49 +690,20 @@
     "description": "Button label for adding photo",
     "message": "Photo"
   },
-  "screens.ObservationEdit.ObservationEditView.searching": {
-    "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "தேடு…"
+  "screens.ObservationEdit.changePreset": {
+    "message": "Change"
   },
-  "screens.ObservationEdit.SaveButton.keepWaiting": {
-    "description": "Button to cancel save and continue waiting for GPS",
-    "message": "தொடர்ந்து காத்திருக்கவும்"
-  },
-  "screens.ObservationEdit.SaveButton.manualEntry": {
-    "description": "Button to manually enter GPS coordinates",
-    "message": "கையேடு இணைப்புகள்"
-  },
-  "screens.ObservationEdit.SaveButton.noGpsDesc": {
-    "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "இந்தக் கவனிப்புக்கு இடம் இல்லை. ஜிபிஎஸ் சிக்னலுக்காக நீங்கள் தொடர்ந்து காத்திருக்கலாம், இருப்பிடம் இல்லாமல் கண்காணிப்பைச் சேமிக்கலாம் அல்லது ஆயங்களை கைமுறையாக உள்ளிடலாம்"
-  },
-  "screens.ObservationEdit.SaveButton.noGpsTitle": {
-    "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "GPS சமிக்ஞை இல்லை"
-  },
-  "screens.ObservationEdit.SaveButton.saveAnyway": {
-    "description": "Button to save regardless of GPS state",
-    "message": "சேமிக்கவும்"
-  },
-  "screens.ObservationEdit.SaveButton.weakGpsDesc": {
-    "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "GPS துல்லியம் குறைவாக உள்ளது. சிறந்த துல்லியத்திற்காக நீங்கள் தொடர்ந்து காத்திருக்கலாம், குறைந்த துல்லியத்துடன் கண்காணிப்பைச் சேமிக்கலாம் அல்லது ஆயங்களை கைமுறையாக உள்ளிடலாம்"
-  },
-  "screens.ObservationEdit.SaveButton.weakGpsTitle": {
-    "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "பலவீனமான GPS சிக்னல்"
-  },
-  "screens.ObservationEdit.editTitle": {
-    "description": "screen title for edit observation screen",
-    "message": "கவனிப்பைத் திருத்து"
+  "screens.ObservationEdit.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "What is happening here?"
   },
   "screens.ObservationEdit.navTitle": {
     "description": "screen title for new observation screen",
-    "message": "New Observation"
+    "message": "Edit Observation"
   },
-  "screens.ObservationEdit.newTitle": {
-    "description": "screen title for new observation screen",
-    "message": "புதிய கவனிப்பு"
+  "screens.ObservationEdit.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Observation"
   },
   "screens.ObservationList.TrackListItem.Track": {
     "message": "Track"
@@ -1044,7 +1038,7 @@
   },
   "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
     "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "Searching…"
+    "message": "தேடு…"
   },
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Change"
@@ -1062,7 +1056,7 @@
     "message": "No GPS"
   },
   "sharedComponents.GpsPill.searching": {
-    "message": "Searching…"
+    "message": "தேடு…"
   },
   "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.canceled": {
     "message": "Invite Canceled"

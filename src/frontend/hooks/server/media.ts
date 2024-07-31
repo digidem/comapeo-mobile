@@ -26,7 +26,6 @@ export function useCreateBlobMutation(opts: {retry?: number} = {}) {
         // although backend currently only uses first part of path
         {
           mimeType: 'image/jpeg',
-          // @ts-expect-error
           location: photo.mediaMetadata.location,
           timestamp: photo.mediaMetadata.timestamp,
         },

@@ -101,6 +101,7 @@ export const InputPasscode = ({
         <Text style={styles.subtext}>{subtitle}</Text>
 
         <PasscodeInput
+          testID="SETTINGS.passcode-inp"
           error={error}
           ref={inputRef}
           inputValue={inputValue}

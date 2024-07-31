@@ -3,7 +3,6 @@ import {View, StyleSheet} from 'react-native';
 
 import {IconButton} from '../../sharedComponents/IconButton';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
 
 import {EditIcon} from '../../sharedComponents/icons';
 import {SyncIcon} from '../../sharedComponents/icons/SyncIconCircle';
@@ -22,13 +21,7 @@ export const ObservationHeaderRight = ({
     useCreatedByToDeviceId(observationWithPreset.observation.createdBy);
 
   const {data: deviceInfo, isPending: isDeviceInfoPending} = useDeviceInfo();
-  const {editSavedObservation} = useDraftObservation();
   const navigation = useNavigationFromRoot();
-
-  function handlePress() {
-    editSavedObservation(observationWithPreset);
-    navigation.navigate('ObservationEdit', {observationId});
-  }
 
   if (isDeviceInfoPending || isCreatedByDeviceIdPending) {
     return (
@@ -42,7 +35,9 @@ export const ObservationHeaderRight = ({
   const canEdit = createdByDeviceId === deviceInfo?.deviceId;
 
   return canEdit ? (
-    <IconButton onPress={handlePress} testID="editButton">
+    <IconButton
+      onPress={() => navigation.navigate('ObservationEdit', {observationId})}
+      testID="editButton">
       <EditIcon />
     </IconButton>
   ) : (

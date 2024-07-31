@@ -1,0 +1,4 @@
+appId: com.comapeo
+---
+- tapOn: 'App Passcode'
+- tapOn: 'Continue'

@@ -1,7 +1,10 @@
 import * as React from 'react';
 import {RootStack} from '.';
 import {MessageDescriptor} from 'react-intl';
-import {ObservationEdit} from '../../screens/ObservationEdit';
+import {
+  ObservationEdit,
+  createNavigationOptions as createObservationEditNavOptions,
+} from '../../screens/ObservationEdit';
 import {AddPhotoScreen} from '../../screens/AddPhoto';
 import {AppPasscode} from '../../screens/AppPasscode';
 import {EnterPassToTurnOff} from '../../screens/AppPasscode/EnterPassToTurnOff';
@@ -16,7 +19,6 @@ import {ObservationScreen} from '../../screens/Observation';
 import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
 import {CoordinateFormat} from '../../screens/Settings/AppSettings/CoordinateFormat';
-import {CustomHeaderLeftClose} from '../../sharedComponents/CustomHeaderLeftClose';
 import {CreateOrJoinProject} from '../../screens/Settings/CreateOrJoinProject';
 import {CreateProject} from '../../screens/Settings/CreateOrJoinProject/CreateProject';
 import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateProject/ProjectCreated';
@@ -53,7 +55,7 @@ import {
 import {HomeTabs} from '../Tab';
 import {SaveTrackScreen} from '../../screens/SaveTrack/SaveTrackScreen';
 import {ObservationFields} from '../../screens/ObservationFields';
-import {LIGHT_GREY, WHITE} from '../../lib/styles';
+import {WHITE} from '../../lib/styles';
 import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSettings';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {PhotoPreviewModal} from '../../screens/PhotoPreviewModal';
@@ -97,25 +99,7 @@ export const createDefaultScreenGroup = ({
     <RootStack.Screen
       name="ObservationEdit"
       component={ObservationEdit}
-      options={props => {
-        const observationId = props.route.params?.observationId;
-        return {
-          headerShadowVisible: false,
-          contentStyle: {
-            borderTopColor: LIGHT_GREY,
-            borderTopWidth: 1,
-          },
-          headerLeft: headerProp => (
-            <CustomHeaderLeftClose
-              headerBackButtonProps={headerProp}
-              observationId={observationId}
-            />
-          ),
-          headerTitle: observationId
-            ? intl(ObservationEdit.editTitle)
-            : intl(ObservationEdit.navTitle),
-        };
-      }}
+      options={createObservationEditNavOptions({intl})}
     />
     <RootStack.Screen
       name="AddPhoto"

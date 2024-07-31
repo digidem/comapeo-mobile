@@ -17,6 +17,8 @@ import {CustomHeaderLeftClose} from '../sharedComponents/CustomHeaderLeftClose';
 import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 import {Preset} from '@mapeo/schema';
 import {usePresetsQuery} from '../hooks/server/presets';
+import {usePersistedDraftObservation} from '../hooks/persistedState/usePersistedDraftObservation';
+import {CommonActions} from '@react-navigation/native';
 
 const m = defineMessages({
   categoryTitle: {
@@ -35,23 +37,56 @@ const MIN_COL_WIDTH = 100;
 export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
   navigation,
 }) => {
-  const {updatePreset} = useDraftObservation();
+  const {updatePreset, usePreset} = useDraftObservation();
   const {data: presets} = usePresetsQuery();
-  const state = navigation.getState();
-  const currentIndex = state.index;
-  const routes = state.routes;
-  const prevRouteNameInStack = routes[currentIndex - 1]?.name;
+  const observationId = usePersistedDraftObservation(
+    store => store.observationId,
+  );
+  const existingPreset = usePreset();
+
+  const handleGoBack = React.useCallback(() => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+      return;
+    }
+
+    // If the user closes the app while editing of creating an observations, we
+    if (observationId) {
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [
+            {name: 'Home'},
+            {name: 'ObservationEdit', params: {observationId}},
+          ],
+        }),
+      );
+      return;
+    }
+
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{name: 'Home'}, {name: 'ObservationCreate'}],
+      }),
+    );
+  }, [navigation, observationId]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
+      // eslint-disable-next-line react/no-unstable-nested-components
       headerLeft: props =>
-        prevRouteNameInStack === 'ObservationEdit' ? (
-          <CustomHeaderLeft headerBackButtonProps={props} />
+        // If a preset exists, the user is editting the preset, so they should just navigate BACK to the create or edit observation screen
+        existingPreset ? (
+          <CustomHeaderLeft
+            onPress={handleGoBack}
+            headerBackButtonProps={props}
+          />
         ) : (
           <CustomHeaderLeftClose headerBackButtonProps={props} />
         ),
     });
-  }, [prevRouteNameInStack, navigation]);
+  }, [navigation, existingPreset, handleGoBack]);
 
   const presetsList = !presets
     ? null
@@ -65,6 +100,10 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
 
   const handleSelectPreset = (selectedPreset: Preset) => {
     updatePreset(selectedPreset);
+    if (observationId) {
+      navigation.navigate('ObservationEdit', {observationId});
+      return;
+    }
     navigation.navigate('ObservationCreate');
   };
 

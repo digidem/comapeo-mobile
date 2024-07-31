@@ -1,0 +1,23 @@
+appId: com.comapeo
+env:
+  CAT: MAIN
+---
+- tapOn:
+    id: '${CAT}.drawer-icon'
+- tapOn: '.*About CoMapeo.*'
+- assertVisible:
+    label: 'About Mapeo button goes to About CoMapeo screen'
+    text: '.*About CoMapeo.*'
+- assertVisible:
+    label: 'Details show expected information'
+    text: '.*CoMapeo version.*'
+- assertVisible: '.*CoMapeo build.*'
+- assertVisible: '.*CoMapeo variant.*'
+- assertVisible: '.*Android version.*'
+- assertVisible: '.*Android build number.*'
+- assertVisible: '.*Phone model.*'
+- tapOn:
+    id: '${CAT}.header-back-btn'
+- assertVisible:
+    label: 'Back returns to map screen'
+    id: '${CAT}.mapbox-map-view'

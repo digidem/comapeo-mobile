@@ -10,7 +10,7 @@ const TARGETS = ['android-arm', 'android-arm64'];
 // TODO: Figure out how to know if module uses N-API at runtime
 const NATIVE_MODULES = [
   {name: 'better-sqlite3', version: '8.7.0', usesNapi: false},
-  {name: 'crc-native', version: '1.0.7', usesNapi: true},
+  {name: 'crc-native', version: '1.0.11', usesNapi: true},
   {name: 'fs-native-extensions', version: '1.2.3', usesNapi: true},
   {name: 'quickbit-native', version: '2.2.0', usesNapi: true},
   {name: 'simdle-native', version: '1.2.0', usesNapi: true},
@@ -98,10 +98,10 @@ function getNodeJsMobileNodeVersions() {
 
   const content = fs.readFileSync(nodeVersionFilePath, 'utf-8');
 
-  const major = content.match(/\#define NODE_MAJOR_VERSION (.+)/)[1];
-  const minor = content.match(/\#define NODE_MINOR_VERSION (.+)/)[1];
-  const patch = content.match(/\#define NODE_PATCH_VERSION (.+)/)[1];
-  const abi = content.match(/\#define NODE_MODULE_VERSION (.+)/)[1];
+  const major = content.match(/#define NODE_MAJOR_VERSION (.+)/)[1];
+  const minor = content.match(/#define NODE_MINOR_VERSION (.+)/)[1];
+  const patch = content.match(/#define NODE_PATCH_VERSION (.+)/)[1];
+  const abi = content.match(/#define NODE_MODULE_VERSION (.+)/)[1];
 
   return {
     major,

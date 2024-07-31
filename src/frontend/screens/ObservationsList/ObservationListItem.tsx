@@ -12,6 +12,8 @@ import {
 } from '../../sharedComponents/FormattedData';
 import {PhotoAttachmentView} from '../../sharedComponents/PhotoAttachmentView.tsx';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
+import {useDeviceInfo} from '../../hooks/server/deviceInfo';
+import {useCreatedByToDeviceId} from '../../hooks/server/projects.ts';
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;
@@ -19,6 +21,8 @@ interface ObservationListItemProps {
   testID: string;
   onPress: (id: string) => void;
 }
+
+type PhotoAttachment = Omit<Attachment, 'type'> & {type: 'photo'};
 
 const photoOverlap = 10;
 
@@ -33,20 +37,30 @@ function ObservationListItemNotMemoized({
   onPress = () => {},
 }: ObservationListItemProps) {
   const {preset} = useObservationWithPreset(observation.docId);
-  const deviceId = '';
+  const {data: deviceInfo, status: deviceInfoQueryStatus} = useDeviceInfo();
 
-  // const photos = !observationQuery.data ? [] : filterPhotosFromAttachments(
-  //   observationQuery.data && observationQuery.data.attachments
-  // ).slice(0, 3);
-  const photos = [];
-  const isMine = observation.createdBy === deviceId;
+  const photos = observation.attachments.filter(
+    (attachment): attachment is PhotoAttachment => attachment.type === 'photo',
+  );
+
+  const {data: createdByDeviceId, status: createdByToDeviceIdQueryStatus} =
+    useCreatedByToDeviceId(observation.createdBy);
+  const isMine = createdByDeviceId === deviceInfo?.deviceId;
+  const queriesSucceeded =
+    deviceInfoQueryStatus === 'success' &&
+    createdByToDeviceIdQueryStatus === 'success';
+
   return (
     <TouchableHighlight
       onPress={() => onPress(observation.docId)}
       testID={testID}
       style={{flex: 1, height: 80}}>
       <View
-        style={[styles.container, style, !isMine && styles.syncedObservation]}>
+        style={[
+          styles.container,
+          style,
+          queriesSucceeded && !isMine && styles.syncedObservation,
+        ]}>
         <View style={styles.text}>
           {preset && (
             <Text style={styles.title}>
@@ -62,31 +76,34 @@ function ObservationListItemNotMemoized({
         </View>
         {photos.length ? (
           <View style={styles.photoContainer}>
-            <PhotoStack attachments={observation.attachments} />
+            <PhotoStack photos={photos} />
             <View style={styles.smallIconContainer}>
               <PresetCircleIcon name={preset.name} size="small" />
             </View>
           </View>
         ) : (
-          <PresetCircleIcon name={preset.name} size="medium" />
+          <PresetCircleIcon
+            name={preset.name}
+            size="medium"
+            testID={`OBS.${preset?.name}-list-icon`}
+          />
         )}
       </View>
     </TouchableHighlight>
   );
 }
 
-function PhotoStack({attachments}: {attachments: Attachment[]}) {
+function PhotoStack({photos}: {photos: PhotoAttachment[]}) {
   return (
     <View
       style={{
-        width: 60 + (attachments.length - 1) * photoOverlap,
+        width: 60 + (photos.length - 1) * photoOverlap,
         height: 60,
-        backgroundColor: 'aqua',
       }}>
-      {attachments.map((attachment, idx) => (
+      {photos.map((photo, idx) => (
         <PhotoAttachmentView
-          key={`${attachment.driveDiscoveryId}/${attachment.type}/${attachment.name}`}
-          attachment={attachment}
+          key={`${photo.driveDiscoveryId}/${photo.type}/${photo.name}`}
+          attachment={photo}
           variant="thumbnail"
           style={[styles.photo, {left: idx * photoOverlap}]}
           resizeMode="cover"

@@ -80,3 +80,7 @@ The next version of Mapeo Mobile
         ```sh
         npm run android-no-backend-rebuild
         ```
+
+## E2E Testing
+
+This project is tested with BrowserStack.

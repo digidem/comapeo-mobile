@@ -4,13 +4,12 @@ env:
   SUBCAT: MAIN
 ---
 - setLocation:
-    latitude: 48.8530
-    longitude: 2.3499
+    latitude: 48.8550
+    longitude: 2.3519
 - tapOn:
     id: '${SUBCAT}.add-observation-btn'
 - tapOn: '.*Gathering Site.*'
-- tapOn:
-    id: 'OBS.add-details-btn'
+- tapOn: '.*Details.*'
 - assertVisible:
     label: 'Add details button opens Details screen'
     id: 'OBS.add-details-scrn'
@@ -26,17 +25,18 @@ env:
 - assertVisible:
     label: 'Prompt displays name of detail field with placeholder/help text below'
     text: '.*firewood.*'
+- assertVisible:
+    label: 'Cursor is visible and on-screen keyboard is open by default'
+    id: '${CAT}.details-inp'
+    focused: true
 - tapOn:
     id: '${SUBCAT}.header-back-btn'
 - assertVisible:
     label: 'Back arrow when on question 1 of 1 returns to new observation screen'
     text: '.*New Observation.*'
+- tapOn: '.*Details.*'
 - tapOn:
-    id: 'OBS.add-details-btn'
-- assertVisible:
-    label: 'Cursor is visible and on-screen keyboard is open by default'
     id: '${CAT}.details-inp'
-    focused: true
 - inputText:
     label: 'Can input text into the text field'
     text: 'Some details'
@@ -50,4 +50,4 @@ env:
     label: 'Tapping done returns to new observation screen'
     text: '.*New Observation.*'
 - tapOn:
-    id: '${CAT}.edit-save-btn'
+    id: '${CAT}.save-btn'

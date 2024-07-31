@@ -67,11 +67,11 @@ export const ThumbnailAndActionTab: FC<ThumbnailAndActionTab> = ({
 
   const handleAudioPress = useCallback(() => {
     if (permissionResponse?.granted) {
-      navigation.navigate('Home', {screen: 'Map'});
+      // handle audio recording start
     } else {
       openAudioPermissionSheet();
     }
-  }, [navigation, openAudioPermissionSheet, permissionResponse?.granted]);
+  }, [openAudioPermissionSheet, permissionResponse?.granted]);
 
   const bottomSheetItems = [
     {

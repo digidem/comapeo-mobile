@@ -1,9 +1,10 @@
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {StyleSheet, View, ScrollView} from 'react-native';
+import {StyleSheet} from 'react-native';
 
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {Button} from '../../sharedComponents/Button';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {Text} from '../../sharedComponents/Text';
 
 const m = defineMessages({
@@ -23,7 +24,7 @@ const m = defineMessages({
   warning: {
     id: 'screens.AppPasscode.PasscodeIntro.warning',
     defaultMessage:
-      '**Please note that forgotten passcodes cannot be recovered!** Once this feature is enabled, if you forget or lose your passcode, you will not be able to open Mapeo and will lose access to any Mapeo data that has not been synced with other project participants.',
+      '<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open Mapeo and will lose access to any Mapeo data that has not been synced with other project participants.',
   },
 });
 
@@ -32,48 +33,30 @@ export const PasscodeIntro = () => {
   const {navigate} = useNavigationFromRoot();
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View>
-          <Text style={[styles.title]}>{t(m.title)}</Text>
-          <Text style={[styles.description]}>{t(m.description)}</Text>
-          <Text style={[styles.description, {marginTop: 20}]}>
-            {t(m.warning)}
-          </Text>
-        </View>
-        <View>
-          <Button
-            style={[styles.button]}
-            onPress={() => navigate('SetPasscode')}>
-            {t(m.continue)}
-          </Button>
-        </View>
-      </View>
-    </ScrollView>
+    <ScreenContentWithDock
+      contentContainerStyle={styles.contentContainer}
+      dockContent={
+        <Button fullWidth onPress={() => navigate('SetPasscode')}>
+          {t(m.continue)}
+        </Button>
+      }>
+      <Text style={styles.title}>{t(m.title)}</Text>
+      <Text style={styles.description}>{t(m.description)}</Text>
+      <Text style={styles.description}>{t(m.warning)}</Text>
+    </ScreenContentWithDock>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flexBasis: '90%',
-    justifyContent: 'space-between',
-    paddingTop: 20,
+  contentContainer: {
+    gap: 20,
   },
   title: {
     fontSize: 32,
     textAlign: 'center',
-    paddingHorizontal: 30,
-    marginBottom: 20,
     fontWeight: 'bold',
   },
   description: {
     fontSize: 16,
-  },
-  button: {
-    marginTop: 20,
-    width: '100%',
-    minWidth: 90,
-    maxWidth: 280,
   },
 });

@@ -5,7 +5,7 @@
   },
   "AppContainer.EditHeader.discardChangesContent": {
     "description": "Button on dialog to cancel observation edits",
-    "message": "Descartar cambios"
+    "message": "Discard changes"
   },
   "AppContainer.EditHeader.discardChangesTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
@@ -93,7 +93,7 @@
     "message": "Esta contraseña será necesaria para abrir la aplicación de Mapeo"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
-    "message": "Establecer la Contraseña de la aplicación"
+    "message": "Set Passcode"
   },
   "screens.AppPasscode.NewPasscode.Splash.continue": {
     "message": "Continuar"
@@ -195,7 +195,7 @@
     "message": "¿Qué es la Contraseña oscura?"
   },
   "screens.Observation.ObservationEdit.CategoryView.changePreset": {
-    "message": "Cambiar"
+    "message": "Change"
   },
   "screens.Observation.ObservationEdit.CategoryView.observation": {
     "description": "Default name of observation with no matching preset",
@@ -275,11 +275,11 @@
   },
   "screens.ObservationEdit.editTitle": {
     "description": "screen title for edit observation screen",
-    "message": "Editar observación"
+    "message": "Edit Observation"
   },
   "screens.ObservationEdit.newTitle": {
     "description": "screen title for new observation screen",
-    "message": "Observación nueva"
+    "message": "New Observation"
   },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",

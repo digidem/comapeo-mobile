@@ -5,7 +5,7 @@
   },
   "AppContainer.EditHeader.discardChangesContent": {
     "description": "Button on dialog to cancel observation edits",
-    "message": "ပြောင်းလဲမှုများကို ဖျက်ခြင်း"
+    "message": "Discard changes"
   },
   "AppContainer.EditHeader.discardChangesTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
@@ -195,7 +195,7 @@
     "message": "What is Obscure Passcode?"
   },
   "screens.Observation.ObservationEdit.CategoryView.changePreset": {
-    "message": "ပြောင်းလဲသည်"
+    "message": "Change"
   },
   "screens.Observation.ObservationEdit.CategoryView.observation": {
     "description": "Default name of observation with no matching preset",

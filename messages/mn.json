@@ -5,7 +5,7 @@
   },
   "AppContainer.EditHeader.discardChangesContent": {
     "description": "Button on dialog to cancel observation edits",
-    "message": "Өөрчлөлтийг цуцлах"
+    "message": "Discard changes"
   },
   "AppContainer.EditHeader.discardChangesTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
@@ -93,7 +93,7 @@
     "message": "Mapeo програмыг нээхэд энэ нууц үг шаардлагатай болно"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
-    "message": "Нууц үг тохируулах"
+    "message": "Set Passcode"
   },
   "screens.AppPasscode.NewPasscode.Splash.continue": {
     "message": "Үргэлжлүүлэх"
@@ -195,7 +195,7 @@
     "message": "Тодорхой бус нууц үг юу вэ?"
   },
   "screens.Observation.ObservationEdit.CategoryView.changePreset": {
-    "message": "Өөрчлөх"
+    "message": "Change"
   },
   "screens.Observation.ObservationEdit.CategoryView.observation": {
     "description": "Default name of observation with no matching preset",
@@ -275,11 +275,11 @@
   },
   "screens.ObservationEdit.editTitle": {
     "description": "screen title for edit observation screen",
-    "message": "Сануулга засах"
+    "message": "Edit Observation"
   },
   "screens.ObservationEdit.newTitle": {
     "description": "screen title for new observation screen",
-    "message": "Шинэ сануулга"
+    "message": "New Observation"
   },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",

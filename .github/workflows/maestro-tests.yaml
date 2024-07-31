@@ -41,7 +41,7 @@ jobs:
           target: google_apis
           arch: arm64-v8a
           force-avd-creation: false
-          profile: pixel_6
+          profile: Nexus 6
           cores: 4
           disk-size: 6000M
           ram-size: 2048M

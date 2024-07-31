@@ -3,9 +3,9 @@ declare module 'react-native-scale-bar' {
 
   type Props = {
     zoom: number;
-    latitude: number;
-    bottom: number;
-    left: number;
+    latitude?: number;
+    bottom?: number;
+    left?: number;
   };
 
   class ScaleBar extends Component<Props> {}

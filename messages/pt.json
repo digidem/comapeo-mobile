@@ -195,7 +195,7 @@
     "message": "O que é Senha obscura?"
   },
   "screens.Observation.ObservationEdit.CategoryView.changePreset": {
-    "message": "Mudar"
+    "message": "Change"
   },
   "screens.Observation.ObservationEdit.CategoryView.observation": {
     "description": "Default name of observation with no matching preset",
@@ -275,11 +275,11 @@
   },
   "screens.ObservationEdit.editTitle": {
     "description": "screen title for edit observation screen",
-    "message": "Editar observação"
+    "message": "Edit Observation"
   },
   "screens.ObservationEdit.newTitle": {
     "description": "screen title for new observation screen",
-    "message": "Nova observação"
+    "message": "New Observation"
   },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",

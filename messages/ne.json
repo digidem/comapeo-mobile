@@ -99,6 +99,21 @@
     "description": "Title of settings screen",
     "message": "Settings"
   },
+  "ObservationEdit.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Continue editing"
+  },
+  "ObservationEdit.HeaderLeft.discardObservationButton": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Discard changes"
+  },
+  "ObservationEdit.HeaderLeft.discardObservationDescription": {
+    "message": "Your changes will not be saved. This cannot be undone."
+  },
+  "ObservationEdit.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Discard changes?"
+  },
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Coordinate System"
   },
@@ -112,7 +127,7 @@
     "message": "Display language for app"
   },
   "Screens.Settings.AppSettings.title": {
-    "message": "App Setttings"
+    "message": "App Settings"
   },
   "Screens.Settings.ProjectSettings.deviceName": {
     "message": "Device Name"
@@ -584,13 +599,6 @@
   "screens.ObscurePasscode.whatIsObscure": {
     "message": "What is Obscure Passcode?"
   },
-  "screens.Observation.ObservationEdit.CategoryView.changePreset": {
-    "message": "परिवर्तन"
-  },
-  "screens.Observation.ObservationEdit.CategoryView.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "अवलाेकन"
-  },
   "screens.Observation.ObservationView.delete": {
     "description": "Button to delete an observation",
     "message": "मेटाउने"
@@ -635,6 +643,21 @@
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
     "message": "अवलाेकन"
   },
+  "screens.ObservationCreate.changePreset": {
+    "message": "Change"
+  },
+  "screens.ObservationCreate.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "What is happening here?"
+  },
+  "screens.ObservationCreate.navTitle": {
+    "description": "screen title for new observation screen",
+    "message": "New Observation"
+  },
+  "screens.ObservationCreate.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Observation"
+  },
   "screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
     "message": "Done"
@@ -667,49 +690,20 @@
     "description": "Button label for adding photo",
     "message": "Photo"
   },
-  "screens.ObservationEdit.ObservationEditView.searching": {
-    "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "खाेजी जारी …"
+  "screens.ObservationEdit.changePreset": {
+    "message": "Change"
   },
-  "screens.ObservationEdit.SaveButton.keepWaiting": {
-    "description": "Button to cancel save and continue waiting for GPS",
-    "message": "पर्खाइ निरन्तर"
-  },
-  "screens.ObservationEdit.SaveButton.manualEntry": {
-    "description": "Button to manually enter GPS coordinates",
-    "message": "म्यानुअल काेर्डस्"
-  },
-  "screens.ObservationEdit.SaveButton.noGpsDesc": {
-    "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "याे अवलाेकनकाे लाेकेसन छैन । तपाइले GPS संकेत निरन्तर कुर्न सक्नु हुनेछ, अवलाेकनलाइ लाेकेसन बेगर संग्रह गर्न सक्नुहुन्छ, वा निर्देशलाइ अाफैले राख्नु"
-  },
-  "screens.ObservationEdit.SaveButton.noGpsTitle": {
-    "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "GPS संकेत छैन"
-  },
-  "screens.ObservationEdit.SaveButton.saveAnyway": {
-    "description": "Button to save regardless of GPS state",
-    "message": "संग्रह"
-  },
-  "screens.ObservationEdit.SaveButton.weakGpsDesc": {
-    "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "GPS यथार्थता न्यून छ, दुरूस्त GPS काे लागि कुर्न सक्नु हुन्छ, न्यून GPS यथार्थतामा संग्रह गर्न सक्नु हुन्छ, वा अाफैले निर्देश गर्न सक्नुहुन्छ"
-  },
-  "screens.ObservationEdit.SaveButton.weakGpsTitle": {
-    "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "कमजाेर GPS संकेत"
-  },
-  "screens.ObservationEdit.editTitle": {
-    "description": "screen title for edit observation screen",
-    "message": "अवलाेकन सम्पादन"
+  "screens.ObservationEdit.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "What is happening here?"
   },
   "screens.ObservationEdit.navTitle": {
     "description": "screen title for new observation screen",
-    "message": "New Observation"
+    "message": "Edit Observation"
   },
-  "screens.ObservationEdit.newTitle": {
-    "description": "screen title for new observation screen",
-    "message": "नया अवलाेकन"
+  "screens.ObservationEdit.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Observation"
   },
   "screens.ObservationList.TrackListItem.Track": {
     "message": "Track"
@@ -1044,7 +1038,7 @@
   },
   "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
     "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "Searching…"
+    "message": "खाेजी जारी …"
   },
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Change"
@@ -1062,7 +1056,7 @@
     "message": "No GPS"
   },
   "sharedComponents.GpsPill.searching": {
-    "message": "Searching…"
+    "message": "खाेजी जारी …"
   },
   "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.canceled": {
     "message": "Invite Canceled"

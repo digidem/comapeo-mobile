@@ -82,6 +82,9 @@
   "Navigation.Drawer.createOrJoinToSync": {
     "message": "Create or Join a Project to sync with other devices"
   },
+  "Navigation.Drawer.dataAndPrivacy": {
+    "message": "Data & Privacy"
+  },
   "Navigation.Drawer.projName": {
     "message": "Project {projectName}"
   },

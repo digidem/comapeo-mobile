@@ -85,7 +85,6 @@ jobs:
       - name: Environment
         run: |
           ls -al $ANDROID_SDK_ROOT
-          ls -al $ANDROID_SDK_ROOT/platform-tools
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Get available devices
@@ -111,6 +110,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+
+      # Installs ADB, which Detox checks for (even though we don't use it)
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
 
       - name: Install dependencies
         run: npm ci

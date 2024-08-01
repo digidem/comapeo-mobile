@@ -11,6 +11,9 @@
         "projectId": "3fbe750e-e825-470a-9fba-da211e8092e0"
       }
     },
+    "plugins": [
+      "@config-plugins/detox"
+    ],
     "android": {
       "package": "com.gmaclennan.comapeomobile"
     },

@@ -9,14 +9,14 @@ import {MapeoProjectApi} from '@mapeo/ipc';
 import {ClientApi} from 'rpc-reflector';
 
 export function useCreateBlobMutation(opts: {retry?: number} = {}) {
-  const project = useActiveProject();
+  const {project} = useActiveProject();
 
   return useMutation({
     retry: opts.retry,
     mutationFn: async (photo: ProcessedDraftPhoto) => {
       const {originalUri, previewUri, thumbnailUri} = photo;
 
-      return project.$blobs.create(
+      return project!.$blobs.create(
         {
           original: new URL(originalUri).pathname,
           preview: previewUri ? new URL(previewUri).pathname : undefined,
@@ -95,10 +95,10 @@ export function useAttachmentUrlQuery(
   >,
   enabledByDefault: boolean = true,
 ) {
-  const project = useActiveProject();
+  const {project} = useActiveProject();
   return useQuery(
     resolveAttachmentUrlQueryOptions(
-      project,
+      project!,
       attachment,
       variant,
       enabledByDefault,
@@ -113,12 +113,12 @@ export function useAttachmentUrlQueries(
   >,
   enabledByDefault: boolean = true,
 ) {
-  const project = useActiveProject();
+  const {project} = useActiveProject();
 
   return useQueries({
     queries: attachments.map(attachment =>
       resolveAttachmentUrlQueryOptions(
-        project,
+        project!,
         attachment,
         variant,
         enabledByDefault,

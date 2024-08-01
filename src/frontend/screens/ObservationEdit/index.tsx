@@ -44,7 +44,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   route,
 }) => {
   const {formatMessage} = useIntl();
-  const project = useActiveProject();
+  const {project} = useActiveProject();
 
   const value = usePersistedDraftObservation(store => store.value);
   const {updateTags, clearDraft, usePreset, existingObservationToDraft} =
@@ -68,7 +68,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         navigation.goBack();
         return;
       }
-      project.observation
+      project!.observation
         .getByDocId(route.params.observationId)
         .then(observation => {
           existingObservationToDraft(observation);
@@ -78,7 +78,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     value,
     existingObservationToDraft,
     route.params?.observationId,
-    project.observation,
+    project!.observation,
     navigation,
   ]);
 

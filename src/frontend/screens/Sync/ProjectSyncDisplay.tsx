@@ -83,7 +83,7 @@ export const ProjectSyncDisplay = ({
 }) => {
   const {formatMessage: t} = useIntl();
 
-  const project = useActiveProject();
+  const {project} = useActiveProject();
   const queryClient = useQueryClient();
   const navigation = useNavigationFromRoot();
   const {connectedPeers, data, initial} = syncState;
@@ -92,7 +92,7 @@ export const ProjectSyncDisplay = ({
   // stops sync when user leaves sync screen. The api allows us to continue syncing even if the user is not on the sync screen, but for simplicity we are only allowing sync while on the sync screen. In the future we can easily enable background sync, there are just some UI questions that need to answered before we do that.
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', () => {
-      project.$sync.stop();
+      project!.$sync.stop();
       queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY]});
     });
 
@@ -121,7 +121,7 @@ export const ProjectSyncDisplay = ({
             fullWidth
             variant="outlined"
             onPress={() => {
-              project.$sync.stop();
+              project!.$sync.stop();
             }}>
             <View style={styles.buttonContentContainer}>
               <StopIcon size={20} color={BLACK} />
@@ -136,7 +136,7 @@ export const ProjectSyncDisplay = ({
             variant="contained"
             onPress={() => {
               if (isSyncDone) return;
-              project.$sync.start();
+              project!.$sync.start();
             }}>
             <View style={styles.buttonContentContainer}>
               {isSyncDone ? (

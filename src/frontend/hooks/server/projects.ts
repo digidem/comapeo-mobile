@@ -59,35 +59,41 @@ export function useCreateProject() {
 }
 
 export function useProjectMembers() {
-  const project = useActiveProject();
+  const {project} = useActiveProject();
 
   return useQuery({
     queryKey: [PROJECT_MEMBERS_KEY],
     queryFn: () => {
-      return project.$member.getMany();
+      return project!.$member.getMany();
     },
+    enabled: !!project,
   });
 }
 
 export function useProjectSettings() {
-  const project = useActiveProject();
+  const {project, isPlaceholderData} = useActiveProject();
 
   return useQuery({
     queryKey: [PROJECT_SETTINGS_KEY],
-    queryFn: () => {
-      return project.$getProjectSettings();
+    queryFn: async () => {
+      if (!project) {
+        throw new Error('Project is not defined');
+      }
+      return await project.$getProjectSettings();
     },
+    enabled: !!project && !isPlaceholderData,
   });
 }
 
 export const useCreatedByToDeviceId = (createdBy: string) => {
-  const project = useActiveProject();
+  const {project} = useActiveProject();
 
   return useQuery({
     queryKey: [CREATED_BY_TO_DEVICE_ID_KEY, createdBy],
     queryFn: async () => {
-      return await project.$createdByToDeviceId(createdBy);
+      return await project!.$createdByToDeviceId(createdBy);
     },
+    enabled: !!project,
   });
 };
 

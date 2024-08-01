@@ -6,9 +6,13 @@ import {useProject, useCreateProject} from '../hooks/server/projects';
 import {Loading} from '../sharedComponents/Loading';
 import {useApi} from './ApiContext';
 
-const ActiveProjectContext = React.createContext<MapeoProjectApi | undefined>(
-  undefined,
-);
+const ActiveProjectContext = React.createContext<
+  | {
+      project: MapeoProjectApi | undefined;
+      isPlaceholderData: boolean;
+    }
+  | undefined
+>(undefined);
 
 export const ActiveProjectProvider = ({
   children,
@@ -18,7 +22,7 @@ export const ActiveProjectProvider = ({
   const activeProjectId = usePersistedProjectId(store => store.projectId);
   const setActiveProjectId = usePersistedProjectId(store => store.setProjectId);
 
-  const activeProjectQuery = useProject(activeProjectId);
+  const {data: project, isPlaceholderData} = useProject(activeProjectId);
   const {mutate: createProject} = useCreateProject();
 
   // The persisted active project ID may be missing in the following scenarios:
@@ -59,12 +63,17 @@ export const ActiveProjectProvider = ({
       });
   }, [activeProjectId, setActiveProjectId, createProject, mapeoApi]);
 
-  if (!activeProjectQuery.data) {
+  if (!project) {
     return <Loading />;
   }
 
+  const contextValue = {
+    project,
+    isPlaceholderData,
+  };
+
   return (
-    <ActiveProjectContext.Provider value={activeProjectQuery.data}>
+    <ActiveProjectContext.Provider value={contextValue}>
       {children}
     </ActiveProjectContext.Provider>
   );

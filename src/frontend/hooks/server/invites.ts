@@ -78,7 +78,11 @@ export function useClearAllPendingInvites() {
 
 export function useSendInvite() {
   const queryClient = useQueryClient();
-  const project = useActiveProject();
+  const {project} = useActiveProject();
+
+  if (!project) {
+    throw new Error('Project is not defined');
+  }
   type InviteParams = Parameters<typeof project.$member.invite>;
   return useMutation({
     mutationFn: ({
@@ -97,10 +101,15 @@ export function useSendInvite() {
 
 export function useRequestCancelInvite() {
   const queryClient = useQueryClient();
-  const project = useActiveProject();
+  const {project} = useActiveProject();
+
   return useMutation({
-    mutationFn: (deviceId: string) =>
-      project.$member.requestCancelInvite(deviceId),
+    mutationFn: (deviceId: string) => {
+      if (!project) {
+        throw new Error('Project is not defined');
+      }
+      return project.$member.requestCancelInvite(deviceId);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [INVITE_KEY]});
     },

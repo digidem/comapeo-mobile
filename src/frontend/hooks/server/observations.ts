@@ -10,7 +10,7 @@ import {ClientGeneratedObservation} from '../../sharedTypes';
 export const OBSERVATION_KEY = 'observations';
 
 export function useObservations() {
-  const project = useActiveProject();
+  const {project} = useActiveProject();
 
   return useSuspenseQuery({
     queryKey: [OBSERVATION_KEY],
@@ -22,7 +22,7 @@ export function useObservations() {
 }
 
 export function useObservation(observationId: string) {
-  const project = useActiveProject();
+  const {project} = useActiveProject();
 
   return useSuspenseQuery({
     queryKey: [OBSERVATION_KEY, observationId],
@@ -35,7 +35,7 @@ export function useObservation(observationId: string) {
 
 export function useCreateObservation() {
   const queryClient = useQueryClient();
-  const project = useActiveProject();
+  const {project} = useActiveProject();
 
   return useMutation({
     mutationFn: async ({value}: {value: ClientGeneratedObservation}) => {
@@ -54,7 +54,7 @@ export function useCreateObservation() {
 
 export function useEditObservation() {
   const queryClient = useQueryClient();
-  const project = useActiveProject();
+  const {project} = useActiveProject();
 
   return useMutation({
     mutationFn: async ({
@@ -64,7 +64,7 @@ export function useEditObservation() {
       versionId: string;
       value: ObservationValue;
     }) => {
-      return project.observation.update(versionId, value);
+      return project!.observation.update(versionId, value);
     },
     onSuccess: data => {
       queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY, data.docId]});
@@ -74,7 +74,7 @@ export function useEditObservation() {
 
 export function useDeleteObservation() {
   const queryClient = useQueryClient();
-  const project = useActiveProject();
+  const {project} = useActiveProject();
 
   return useMutation({
     mutationFn: async ({id}: {id: string}) => {

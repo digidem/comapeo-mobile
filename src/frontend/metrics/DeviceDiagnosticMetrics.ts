@@ -1,7 +1,5 @@
 import * as Sentry from '@sentry/react-native';
 import {AppState, Dimensions, PixelRatio, Platform} from 'react-native';
-import {getRandomBytes} from 'expo-crypto';
-import {uint8ArrayToHex} from 'uint8array-extras';
 import * as NetInfo from '@react-native-community/netinfo';
 import * as Device from 'expo-device';
 import {getMonthlyHash} from './getMonthlyHash';
@@ -9,6 +7,8 @@ import {sendMetricsData} from './sendMetricsData';
 import {getMetricsRequestInfo} from './getMetricsRequestInfo';
 import {storage} from '../hooks/persistedState/createPersistedState';
 import {isDateValid, isSameUtcMonthAndYear} from '../lib/date';
+import {setIfNotNull} from '../lib/setIfNotNull';
+import {getMetricsDeviceId} from './getMetricsDeviceId';
 
 const STORAGE_KEY = 'DeviceDiagnosticMetricsLastSentAt';
 
@@ -41,23 +41,6 @@ function deviceTypeToString(deviceType: null | Device.DeviceType): string {
     default:
       return 'UNKNOWN';
   }
-}
-
-function getMetricsDeviceId(): string {
-  const result = storage.getString('MetricsDeviceId');
-  if (result) return result;
-
-  const newId = uint8ArrayToHex(getRandomBytes(16));
-  storage.set('MetricsDeviceId', newId);
-  return newId;
-}
-
-function setIfNotNull<ObjT, KeyT extends keyof ObjT>(
-  obj: ObjT,
-  key: KeyT,
-  value: null | ObjT[KeyT],
-): void {
-  if (value !== null) obj[key] = value;
 }
 
 async function generateDeviceDiagnosticMetricsData(): Promise<DeviceDiagnosticMetricsData> {

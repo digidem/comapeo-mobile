@@ -80,6 +80,8 @@ jobs:
       devices: ${{ steps.get-devices.outputs.devices }}
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Get available devices
         id: get-devices
         run: cat e2e/devices.json >> $GITHUB_OUTPUT

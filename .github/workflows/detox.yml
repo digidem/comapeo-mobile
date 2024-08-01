@@ -9,6 +9,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    outputs:
+      app_url: ${{ steps.upload.outputs.app_url }}
+      app_client_url: ${{ steps.upload-client.outputs.app_client_url }}
+
+    env:
+      CREDENTIALS: '${{ secrets.BROWSERSTACK_USERNAME }}:${{ secrets.BROWSERSTACK_ACCESS_KEY }}'
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -33,8 +40,48 @@ jobs:
       - name: Build app for Detox
         run: npx detox build --configuration android.att.release
 
-      - name: Run Detox tests
-        run: node scripts/detox-browserstack.mjs
+      - name: Upload app to BrowserStack
+        id: upload
+        run: |
+          curl -u $CREDENTIALS \
+            -X POST $APP_UPLOAD_URL \
+            -F file=@APP_FILEPATH \
+            | '"app_url=\(.app_url)"' >> $GITHUB_OUTPUT
         env:
+          APP_UPLOAD_URL: 'https://api-cloud.browserstack.com/app-automate/detox/v2/android/app'
+          APP_FILEPATH: 'android/app/build/outputs/apk/release/app-release.apk'
+
+      - name: Upload app client to BrowserStack
+        id: upload-client
+        run: |
+          curl -u $CREDENTIALS \
+            -X POST $APP_UPLOAD_URL \
+            -F file=@APP_FILEPATH \
+            | '"app_client_url=\(.app_client_url)"' >> $GITHUB_OUTPUT
+        env:
+          APP_UPLOAD_URL: 'https://api-cloud.browserstack.com/app-automate/detox/v2/android/app-client'
+          APP_FILEPATH: 'android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk'
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Detox tests
+        run: npx detox test --configuration android.att.release
+        env:
+          BROWSERSTACK_APP_URL: ${{ needs.build.outputs.app_url }}
+          BROWSERSTACK_APP_CLIENT_URL: ${{ needs.build.outputs.app_client_url }}
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}

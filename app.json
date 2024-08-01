@@ -2,6 +2,11 @@
   "expo": {
     "name": "comapeo-mobile",
     "slug": "comapeo-mobile",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "extra": {
+      "eas": {
+        "projectId": "3fbe750e-e825-470a-9fba-da211e8092e0"
+      }
+    }
   }
 }

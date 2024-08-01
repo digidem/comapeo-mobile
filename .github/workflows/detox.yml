@@ -73,9 +73,26 @@ jobs:
           APP_UPLOAD_URL: 'https://api-cloud.browserstack.com/app-automate/detox/v2/android/app-client'
           APP_FILEPATH: 'android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk'
 
+  devices:
+    runs-on: ubuntu-latest
+
+    outputs:
+      devices: ${{ steps.get-devices.outputs.devices }}
+
+    steps:
+      - name: Get available devices
+        id: get-devices
+        run: cat e2e/devices.json >> $GITHUB_OUTPUT
+
   test:
     runs-on: ubuntu-latest
-    needs: build
+    needs:
+      - build
+      - devices
+
+    strategy:
+      matrix:
+        include: ${{ fromJson(needs.devices.outputs.devices) }}
 
     steps:
       - name: Checkout repository
@@ -97,3 +114,5 @@ jobs:
           BROWSERSTACK_APP_CLIENT_URL: ${{ needs.build.outputs.app_client_url }}
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+          DEVICE_NAME: ${{ matrix.device.name }}
+          DEVICE_OS_VERSION: ${{ matrix.device.osVersion }}

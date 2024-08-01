@@ -61,8 +61,8 @@ module.exports = {
     cloud: {
       type: 'android.cloud',
       device: {
-        name: 'OnePlus 8',
-        osVersion: '10.0'
+        name: process.env.DEVICE_NAME || 'OnePlus 8',
+        osVersion: process.env.DEVICE_OS_VERSION || '10.0'
       }
     }
   },

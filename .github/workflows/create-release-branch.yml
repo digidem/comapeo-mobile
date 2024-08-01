@@ -1,0 +1,33 @@
+name: Create Release Branch
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version number for the release (e.g., 1.2.3)'
+        required: true
+
+jobs:
+  create-release-branch:
+    runs-on: ubuntu-latest
+
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Get version input
+        id: get_version
+        run: echo "::set-output name=version::${{ github.event.inputs.version }}"
+
+      - name: Create release branch
+        run: |
+          version=${{ github.event.inputs.version }}
+          git checkout -b release/v$version
+
+      - name: Push release branch
+        run: |
+          version=${{ github.event.inputs.version }}
+          git push origin release/v$version

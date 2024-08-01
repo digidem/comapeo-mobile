@@ -9,6 +9,7 @@ export const EDITING_SCREEN_NAMES:
   'AddPhoto',
   'PresetChooser',
   'ManualGpsScreen',
+  'ObservationCreate',
   'ObservationDetails',
   'ObservationEdit',
   'Camera',

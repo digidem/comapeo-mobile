@@ -3,13 +3,13 @@ import {View, StyleSheet} from 'react-native';
 
 import {IconButton} from '../../sharedComponents/IconButton';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
 
 import {EditIcon} from '../../sharedComponents/icons';
 import {SyncIcon} from '../../sharedComponents/icons/SyncIconCircle';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {useCreatedByToDeviceId} from '../../hooks/server/projects.ts';
 
 export const ObservationHeaderRight = ({
   observationId,
@@ -17,16 +17,13 @@ export const ObservationHeaderRight = ({
   observationId: string;
 }) => {
   const observationWithPreset = useObservationWithPreset(observationId);
-  const {data, isLoading} = useDeviceInfo();
-  const {editSavedObservation} = useDraftObservation();
+  const {data: createdByDeviceId, isPending: isCreatedByDeviceIdPending} =
+    useCreatedByToDeviceId(observationWithPreset.observation.createdBy);
+
+  const {data: deviceInfo, isPending: isDeviceInfoPending} = useDeviceInfo();
   const navigation = useNavigationFromRoot();
 
-  function handlePress() {
-    editSavedObservation(observationWithPreset);
-    navigation.navigate('ObservationEdit', {observationId});
-  }
-
-  if (isLoading) {
+  if (isDeviceInfoPending || isCreatedByDeviceIdPending) {
     return (
       <UIActivityIndicator
         size={20}
@@ -35,10 +32,12 @@ export const ObservationHeaderRight = ({
     );
   }
 
-  const canEdit =
-    observationWithPreset.observation.createdBy === data?.deviceId || false;
+  const canEdit = createdByDeviceId === deviceInfo?.deviceId;
+
   return canEdit ? (
-    <IconButton onPress={handlePress} testID="editButton">
+    <IconButton
+      onPress={() => navigation.navigate('ObservationEdit', {observationId})}
+      testID="editButton">
       <EditIcon />
     </IconButton>
   ) : (

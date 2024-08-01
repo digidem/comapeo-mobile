@@ -2,20 +2,25 @@ import * as React from 'react';
 import {
   CancellablePhotoPromise,
   CapturedPictureMM,
-  DraftPhoto,
+  MediaMetadata,
   PREVIEW_QUALITY,
   PREVIEW_SIZE,
+  ProcessedDraftPhoto,
   Signal,
   THUMBNAIL_QUALITY,
   THUMBNAIL_SIZE,
+  DraftPhoto,
 } from './types';
 import ImageResizer from '@bam.tech/react-native-image-resizer';
 
+type AddPhotoPromiseProps = {
+  photo: Promise<CapturedPictureMM>;
+  mediaMetadata: MediaMetadata;
+  draftPhotoId: string;
+};
+
 type PhotoPromiseContextState = {
-  addPhotoPromise: (
-    photo: Promise<CapturedPictureMM>,
-    draftPhotoId: string,
-  ) => CancellablePhotoPromise;
+  addPhotoPromise: (props: AddPhotoPromiseProps) => CancellablePhotoPromise;
   cancelPhotoProcessing: () => void;
   deletePhotoPromise: (uri: string) => void;
 };
@@ -41,16 +46,17 @@ export const PhotoPromiseProvider = ({
   >([]);
 
   const addPhotoPromise = React.useCallback(
-    (photo: Promise<CapturedPictureMM>, draftPhotoId: string) => {
+    ({photo, draftPhotoId, mediaMetadata}: AddPhotoPromiseProps) => {
       // Use signal to cancel processing by setting signal.didCancel = true
       // Important because image resize/rotate is expensive
       const signal: Signal = {};
 
-      const photoPromise: CancellablePhotoPromise = processPhoto(
+      const photoPromise: CancellablePhotoPromise = processPhoto({
+        signal,
         photo,
         draftPhotoId,
-        signal,
-      );
+        mediaMetadata,
+      });
 
       photoPromise.signal = signal;
 
@@ -66,24 +72,30 @@ export const PhotoPromiseProvider = ({
     setPhotoPromises([]);
   }, [photoPromises]);
 
-  const deletePhotoPromise = React.useCallback((uri: String) => {
-    const newPhotoPromiseArray = photoPromises.map(async photo => {
-      const resolvedPhoto = await photo;
-      if (resolvedPhoto.originalUri === uri) {
-        const deletedPhoto: Promise<DraftPhoto> = new Promise(res => {
-          resolvedPhoto.deleted = true;
-          res(resolvedPhoto);
-        });
-        const cancelPhoto = deletedPhoto as CancellablePhotoPromise;
-        cancelPhoto.signal = {didCancel: true};
-        return cancelPhoto;
-      }
+  const deletePhotoPromise = React.useCallback(
+    (uri: String) => {
+      const newPhotoPromiseArray = photoPromises.map(async photo => {
+        const resolvedPhoto = await photo;
+        if (
+          'originalUri' in resolvedPhoto &&
+          resolvedPhoto.originalUri === uri
+        ) {
+          const deletedPhoto: Promise<DraftPhoto> = new Promise(res => {
+            resolvedPhoto.deleted = true;
+            res(resolvedPhoto);
+          });
+          const cancelPhoto = deletedPhoto as CancellablePhotoPromise;
+          cancelPhoto.signal = {didCancel: true};
+          return cancelPhoto;
+        }
 
-      return photo;
-    });
+        return photo;
+      });
 
-    setPhotoPromises(newPhotoPromiseArray);
-  }, []);
+      setPhotoPromises(newPhotoPromiseArray);
+    },
+    [photoPromises],
+  );
 
   const context: PhotoPromiseContextState = React.useMemo(
     () => ({
@@ -101,12 +113,14 @@ export const PhotoPromiseProvider = ({
   );
 };
 
-async function processPhoto(
-  photo: Promise<CapturedPictureMM>,
-  draftPhotoId: string,
-  {didCancel = false}: Signal,
-): Promise<DraftPhoto> {
+async function processPhoto({
+  photo,
+  draftPhotoId,
+  mediaMetadata,
+  signal,
+}: AddPhotoPromiseProps & {signal: Signal}): Promise<ProcessedDraftPhoto> {
   const {uri: originalUri, rotate} = await photo;
+  const {didCancel} = signal;
 
   if (didCancel) throw new Error('Cancelled');
 
@@ -140,6 +154,7 @@ async function processPhoto(
     originalUri,
     previewUri,
     thumbnailUri,
-    capturing: false,
+    mediaMetadata,
+    type: 'processed',
   };
 }

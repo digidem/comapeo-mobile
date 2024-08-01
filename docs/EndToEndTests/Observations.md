@@ -1,3 +1,13 @@
+- [Creating Observations](#creating-observations)
+  - [Test Objectives](#test-objectives)
+  - [Special Considerations](#special-considerations)
+- [Adding Details](#adding-details)
+  - [Test Objectives](#test-objectives-1)
+  - [Special Considerations](#special-considerations-1)
+- [Viewing Observations](#viewing-observations)
+  - [Test Objectives](#test-objectives-2)
+  - [Special Considerations](#special-considerations-2)
+
 ### Overview
 
 These tests deal with all issues related to the main screens of the app.

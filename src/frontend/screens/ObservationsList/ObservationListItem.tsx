@@ -12,6 +12,8 @@ import {
 } from '../../sharedComponents/FormattedData';
 import {PhotoAttachmentView} from '../../sharedComponents/PhotoAttachmentView.tsx';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
+import {useDeviceInfo} from '../../hooks/server/deviceInfo';
+import {useCreatedByToDeviceId} from '../../hooks/server/projects.ts';
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;
@@ -35,19 +37,30 @@ function ObservationListItemNotMemoized({
   onPress = () => {},
 }: ObservationListItemProps) {
   const {preset} = useObservationWithPreset(observation.docId);
-  const deviceId = '';
+  const {data: deviceInfo, status: deviceInfoQueryStatus} = useDeviceInfo();
 
-  const isMine = observation.createdBy === deviceId;
   const photos = observation.attachments.filter(
     (attachment): attachment is PhotoAttachment => attachment.type === 'photo',
   );
+
+  const {data: createdByDeviceId, status: createdByToDeviceIdQueryStatus} =
+    useCreatedByToDeviceId(observation.createdBy);
+  const isMine = createdByDeviceId === deviceInfo?.deviceId;
+  const queriesSucceeded =
+    deviceInfoQueryStatus === 'success' &&
+    createdByToDeviceIdQueryStatus === 'success';
+
   return (
     <TouchableHighlight
       onPress={() => onPress(observation.docId)}
       testID={testID}
       style={{flex: 1, height: 80}}>
       <View
-        style={[styles.container, style, !isMine && styles.syncedObservation]}>
+        style={[
+          styles.container,
+          style,
+          queriesSucceeded && !isMine && styles.syncedObservation,
+        ]}>
         <View style={styles.text}>
           {preset && (
             <Text style={styles.title}>

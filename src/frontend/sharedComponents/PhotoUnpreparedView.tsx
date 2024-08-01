@@ -4,13 +4,12 @@ import {StyleSheet, Image, Pressable} from 'react-native';
 import {AlertIcon} from './icons';
 import type {PhotoVariant, ViewStyleProp} from '../sharedTypes';
 import {useAttachmentUrlQuery} from '../hooks/server/media';
-import {useObservation} from '../hooks/server/observations.ts';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {BLACK, WHITE} from '../lib/styles.ts';
+import {SavedPhoto} from '../contexts/PhotoPromiseContext/types.ts';
 
 type Props = {
-  observationId: string;
-  attachmentId: string;
+  photo: SavedPhoto;
   variant: PhotoVariant;
   style?: ViewStyleProp;
   resizeMode?: 'cover' | 'contain' | 'stretch' | 'center';
@@ -18,37 +17,23 @@ type Props = {
 };
 
 const PhotoUnpreparedComponent = ({
-  observationId,
-  attachmentId,
+  photo,
   variant,
   resizeMode = 'contain',
   style,
   onPress,
 }: Props) => {
   const {
-    data: observation,
-    isError: observationError,
-    isPending: observationPending,
-  } = useObservation(observationId);
-  const {
     data: attachmentUrl,
-    isError: attachmentError,
-    isPending: attachmentUrlPending,
-  } = useAttachmentUrlQuery(
-    observation.attachments.find(
-      attachment => attachment.driveDiscoveryId === attachmentId,
-    )!,
-    variant,
-    !observationPending,
-  );
-  const isLoading = observationPending || attachmentUrlPending;
-  const isError = observationError || attachmentError;
+    isError,
+    isPending,
+  } = useAttachmentUrlQuery(photo, variant);
 
   return (
     <Pressable onPress={onPress} style={[styles.container, style]}>
-      {isLoading ? (
+      {isPending ? (
         <UIActivityIndicator color={WHITE} />
-      ) : isError ? (
+      ) : isError || !attachmentUrl ? (
         <AlertIcon size={96} />
       ) : (
         <Image

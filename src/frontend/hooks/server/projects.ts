@@ -8,6 +8,7 @@ export const PROJECT_SETTINGS_KEY = 'project_settings';
 export const CREATE_PROJECT_KEY = 'create_project';
 export const PROJECT_KEY = 'project';
 export const PROJECT_MEMBERS_KEY = 'project_members';
+export const CREATED_BY_TO_DEVICE_ID_KEY = 'createdByToDeviceId';
 
 export function useProject(projectId?: string) {
   const api = useApi();
@@ -78,6 +79,17 @@ export function useProjectSettings() {
     },
   });
 }
+
+export const useCreatedByToDeviceId = (createdBy: string) => {
+  const project = useActiveProject();
+
+  return useQuery({
+    queryKey: [CREATED_BY_TO_DEVICE_ID_KEY, createdBy],
+    queryFn: async () => {
+      return await project.$createdByToDeviceId(createdBy);
+    },
+  });
+};
 
 export function useLeaveProject() {
   const mapeoApi = useApi();

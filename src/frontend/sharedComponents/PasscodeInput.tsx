@@ -20,6 +20,7 @@ interface PasscodeInputProps {
   onChangeTextWithValidation: (newVal: string) => void;
   maskValues?: boolean;
   error: boolean;
+  testID?: string;
 }
 
 export const PasscodeInput = React.forwardRef<TextInput, PasscodeInputProps>(
@@ -30,6 +31,7 @@ export const PasscodeInput = React.forwardRef<TextInput, PasscodeInputProps>(
       onChangeTextWithValidation,
       maskValues = true,
       error,
+      testID,
     },
     inputRef,
   ) => {
@@ -77,6 +79,7 @@ export const PasscodeInput = React.forwardRef<TextInput, PasscodeInputProps>(
     return (
       <CodeField
         {...codeFieldProps}
+        testID={testID}
         ref={inputRef}
         autoFocus={true}
         value={inputValue}

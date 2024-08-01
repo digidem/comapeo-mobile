@@ -6,6 +6,10 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MessageDescriptor} from 'react-intl';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {DeviceRoleForNewInvite, DeviceType} from '.';
+import {
+  ProcessedDraftPhoto,
+  SavedPhoto,
+} from '../contexts/PhotoPromiseContext/types';
 
 export interface TabBarIconProps {
   size: number;
@@ -39,15 +43,12 @@ export type RootStackParamsList = {
   CoordinateFormat: undefined;
   Experiments: undefined;
   PhotoPreviewModal: {
-    attachmentId?: string;
-    observationId?: string;
-    originalPhotoUri?: string;
-    deletable?: boolean;
+    photo: SavedPhoto | ProcessedDraftPhoto;
   };
   PresetChooser: undefined;
   AddPhoto: undefined;
   Observation: {observationId: string};
-  ObservationEdit: {observationId?: string} | undefined;
+  ObservationEdit: {observationId: string} | undefined;
   ManualGpsScreen: undefined;
   ObservationDetails: {question: number};
   LeaveProjectScreen: undefined;

@@ -13,7 +13,6 @@ import {ObservationMapLayer} from './ObservationMapLayer';
 import {AddButton} from '../../sharedComponents/AddButton';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
-// @ts-ignore
 import ScaleBar from 'react-native-scale-bar';
 import {getCoords} from '../../hooks/useLocation';
 import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';

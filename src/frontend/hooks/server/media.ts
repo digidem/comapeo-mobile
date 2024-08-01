@@ -1,25 +1,19 @@
 import {Observation} from '@mapeo/schema';
 import {BlobVariant} from '@mapeo/core/dist/types';
 import {useMutation, useQueries, useQuery} from '@tanstack/react-query';
-import {SetRequired} from 'type-fest';
 import {URL} from 'react-native-url-polyfill';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {DraftPhoto} from '../../contexts/PhotoPromiseContext/types';
+import {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
 import {MapeoProjectApi} from '@mapeo/ipc';
 import {ClientApi} from 'rpc-reflector';
-
-type SavablePhoto = SetRequired<
-  Pick<DraftPhoto, 'originalUri' | 'previewUri' | 'thumbnailUri'>,
-  'originalUri'
->;
 
 export function useCreateBlobMutation(opts: {retry?: number} = {}) {
   const project = useActiveProject();
 
   return useMutation({
     retry: opts.retry,
-    mutationFn: async (photo: SavablePhoto) => {
+    mutationFn: async (photo: ProcessedDraftPhoto) => {
       const {originalUri, previewUri, thumbnailUri} = photo;
 
       return project.$blobs.create(
@@ -30,7 +24,11 @@ export function useCreateBlobMutation(opts: {retry?: number} = {}) {
         },
         // TODO: DraftPhoto type should probably carry MIME type info that feeds this
         // although backend currently only uses first part of path
-        {mimeType: 'image/jpeg'},
+        {
+          mimeType: 'image/jpeg',
+          location: photo.mediaMetadata.location,
+          timestamp: photo.mediaMetadata.timestamp,
+        },
       );
     },
   });

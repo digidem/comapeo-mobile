@@ -64,6 +64,10 @@ const m = defineMessages({
     defaultMessage: 'Language, Security, Coordinates',
     description: 'list of avaialable app settings',
   },
+  dataAndPrivacy: {
+    id: 'Navigation.Drawer.dataAndPrivacy',
+    defaultMessage: 'Data & Privacy',
+  },
   projName: {
     id: 'Navigation.Drawer.projName',
     defaultMessage: 'Project {projectName}',
@@ -165,6 +169,13 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
           }}>
           <DrawerListItemIcon iconName="settings-suggest" />
           <ListItemText primary={<FormattedMessage {...m.appSettings} />} />
+        </ListItem>
+        <ListItem
+          onPress={() => {
+            // TODO
+          }}>
+          <DrawerListItemIcon iconName="privacy-tip" />
+          <ListItemText primary={<FormattedMessage {...m.dataAndPrivacy} />} />
         </ListItem>
         {authState !== 'obscured' && (
           <ListItem

@@ -1,3 +1,6 @@
+const DEVICE_NAME = process.env.DEVICE_NAME || 'OnePlus 8'
+const DEVICE_OS_VERSION = process.env.DEVICE_OS_VERSION || '10.0'
+
 /** @type {Detox.DetoxConfig} */
 module.exports = {
   testRunner: {
@@ -61,8 +64,8 @@ module.exports = {
     cloud: {
       type: 'android.cloud',
       device: {
-        name: process.env.DEVICE_NAME || 'OnePlus 8',
-        osVersion: process.env.DEVICE_OS_VERSION || '10.0'
+        name: DEVICE_NAME,
+        osVersion: DEVICE_OS_VERSION
       }
     }
   },
@@ -100,9 +103,9 @@ module.exports = {
       },
       session: {
         server: 'wss://detox.browserstack.com/init',
-        name: 'OnePlus 8 v10.0',
+        name: `${DEVICE_NAME} v${DEVICE_OS_VERSION}`,
         build: 'Release',
-        project: 'detox-example'
+        project: 'Detox Example'
       }
     }
   }

@@ -83,7 +83,9 @@ jobs:
       # - name: Check adb location
       #   run: which adb
       - name: Environment
-        run: printenv
+        run: |
+          ls -al $ANDROID_SDK_ROOT
+          ls -al $ANDROID_SDK_ROOT/platform-tools
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Get available devices

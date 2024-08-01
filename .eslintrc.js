@@ -5,6 +5,8 @@ module.exports = {
   plugins: ['@typescript-eslint', '@tanstack/query'],
   rules: {
     '@tanstack/query/exhaustive-deps': 'error',
+    '@tanstack/query/no-rest-destructuring': 'error',
+    '@tanstack/query/stable-query-client': 'error',
   },
   overrides: [
     {

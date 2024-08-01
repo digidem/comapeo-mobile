@@ -100,17 +100,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Don't cache this because we install patched Detox
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
+      - name: Install Patched Detox for BrowserStack
+        run: npm install --no-save detox@npm:@avinashbharti97/detox@^20.1.2
+
       - name: Run Detox tests
-        run: npx detox test --configuration android.att.release
+        run: npx detox test --configuration android.cloud.release
         env:
           BROWSERSTACK_APP_URL: ${{ needs.build.outputs.app_url }}
           BROWSERSTACK_APP_CLIENT_URL: ${{ needs.build.outputs.app_client_url }}

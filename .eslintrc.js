@@ -2,7 +2,10 @@ module.exports = {
   root: true,
   extends: ['@react-native', 'prettier'],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', '@tanstack/query'],
+  rules: {
+    '@tanstack/query/exhaustive-deps': 'error',
+  },
   overrides: [
     {
       files: ['*.ts', '*.tsx'],

@@ -68,7 +68,7 @@ jobs:
           curl -u $CREDENTIALS \
             -X POST $APP_UPLOAD_URL \
             -F file=@APP_FILEPATH \
-            | '"app_client_url=\(.app_client_url)"' >> $GITHUB_OUTPUT
+            | jq -r '"app_client_url=\(.app_client_url)"' >> $GITHUB_OUTPUT
         env:
           APP_UPLOAD_URL: 'https://api-cloud.browserstack.com/app-automate/detox/v2/android/app-client'
           APP_FILEPATH: 'android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk'

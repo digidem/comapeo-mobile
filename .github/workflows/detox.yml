@@ -26,17 +26,18 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install Java
-        uses: actions/setup-java@v3
-        with:
-          java-version: 17
-          distribution: adopt
-
       - name: Install dependencies
         run: npm ci
 
       - name: Expo prebuild
         run: npx expo prebuild
+
+      - name: Install Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: adopt
+          cache: gradle
 
       - name: Build app for Detox
         run: npx detox build --configuration android.att.release

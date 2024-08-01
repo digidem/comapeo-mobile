@@ -32,6 +32,11 @@ module.exports = {
       type: 'android.apk',
       binaryPath: 'android/app/build/outputs/apk/release/app-release.apk',
       build: 'cd android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release'
+    },
+    'android.cloud.release': {
+      type: 'android.cloud',
+      app: process.env.BROWSERSTACK_APP_URL,
+      appClient: process.env.BROWSERSTACK_APP_CLIENT_URL
     }
   },
   devices: {
@@ -51,6 +56,13 @@ module.exports = {
       type: 'android.emulator',
       device: {
         avdName: 'Pixel_3a_API_30_x86'
+      }
+    },
+    cloud: {
+      type: 'android.cloud',
+      device: {
+        name: 'OnePlus 8',
+        osVersion: '10.0'
       }
     }
   },
@@ -78,6 +90,20 @@ module.exports = {
     'android.emu.release': {
       device: 'emulator',
       app: 'android.release'
+    },
+    'android.cloud.release': {
+      device: 'cloud',
+      app: 'android.cloud.release',
+      cloudAuthentication: {
+        username: process.env.BROWSERSTACK_USERNAME,
+        accessKey: process.env.BROWSERSTACK_ACCESS_KEY
+      },
+      session: {
+        server: 'wss://detox.browserstack.com/init',
+        name: 'OnePlus 8 v10.0',
+        build: 'Release',
+        project: 'detox-example'
+      }
     }
   }
-};
+}

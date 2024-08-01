@@ -12,7 +12,13 @@
       }
     },
     "plugins": [
-      "@config-plugins/detox"
+      [
+        "@config-plugins/detox",
+        {
+          "skipProguard": false,
+          "subdomains": ["10.0.2.2", "localhost", "127.0.0.1"]
+        }
+      ]
     ],
     "android": {
       "package": "com.gmaclennan.comapeomobile"

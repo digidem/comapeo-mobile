@@ -380,18 +380,22 @@
     "message": "Something Went Wrong"
   },
   "screens.IntroToCoMapeo.collaborate": {
-    "message": "Collaborate on mapping and monitoring projects"
+    "message": "Collaborate with others"
+  },
+  "screens.IntroToCoMapeo.designedFor": {
+    "message": "Designed with and for Indigenous peoples & frontline communities"
   },
   "screens.IntroToCoMapeo.getStarted": {
     "message": "Get Started"
   },
-  "screens.IntroToCoMapeo.isNow": {
-    "description": "The full sentence is mapeo 'is now' comapeo. ",
-    "message": "is now"
+  "screens.IntroToCoMapeo.mapAnywhere": {
+    "message": "Map anywhere and everywhere"
   },
-  "screens.IntroToCoMapeo.version": {
-    "description": "v is short for version. the translation for version can be used instead",
-    "message": "V"
+  "screens.IntroToCoMapeo.mapWorldTogether": {
+    "message": "Map your world, together"
+  },
+  "screens.IntroToCoMapeo.ownData": {
+    "message": "Own and control your data"
   },
   "screens.LanguageSettings.title": {
     "description": "Title language settings screen",

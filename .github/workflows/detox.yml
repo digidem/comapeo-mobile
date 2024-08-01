@@ -24,6 +24,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
       - name: Install Java
         uses: actions/setup-java@v3
@@ -32,7 +33,7 @@ jobs:
           distribution: adopt
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Expo prebuild
         run: npx expo prebuild
@@ -74,9 +75,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run Detox tests
         run: npx detox test --configuration android.att.release

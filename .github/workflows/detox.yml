@@ -80,8 +80,8 @@ jobs:
       devices: ${{ steps.get-devices.outputs.devices }}
 
     steps:
-      - name: Check adb location
-        run: which adb
+      # - name: Check adb location
+      #   run: which adb
       - name: Environment
         run: printenv
       - name: Checkout repository

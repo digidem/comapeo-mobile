@@ -20,25 +20,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Expo prebuild
-        run: npx expo prebuild
-
-      - name: Install Java
-        uses: actions/setup-java@v3
-        with:
-          java-version: 17
-          distribution: adopt
-          cache: gradle
-
       # Cache builds during dev to speed up actions
       - name: Cache builds
         id: cache-builds
@@ -46,6 +27,28 @@ jobs:
         with:
           path: android/app/build
           key: app-build-1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        if: steps.cache-builds.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Expo prebuild
+        if: steps.cache-builds.outputs.cache-hit != 'true'
+        run: npx expo prebuild
+
+      - name: Install Java
+        if: steps.cache-builds.outputs.cache-hit != 'true'
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: adopt
+          cache: gradle
 
       - name: Build app for Detox
         if: steps.cache-builds.outputs.cache-hit != 'true'
@@ -114,6 +117,9 @@ jobs:
       # Installs ADB, which Detox checks for (even though we don't use it)
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools'
+          cmdline-tools-version: '9477386'
 
       - name: Install dependencies
         run: npm ci

@@ -9,5 +9,5 @@
 ```
 npm install
 npx detox build --configuration android.att.release
-node scripts/detox-browserify.mjs
+node scripts/detox-browserstack.mjs
 ```

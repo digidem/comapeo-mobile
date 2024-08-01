@@ -1,0 +1,40 @@
+name: Detox BrowserStack
+
+on:
+  push:
+    branches:
+      - browserstack-testing
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: adopt
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Expo prebuild
+        run: npx expo prebuild
+
+      - name: Build app for Detox
+        run: npx detox build --configuration android.att.release
+
+      - name: Run Detox tests
+        run: node scripts/detox-browserstack.mjs
+        env:
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}

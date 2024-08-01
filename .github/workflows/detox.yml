@@ -39,7 +39,16 @@ jobs:
           distribution: adopt
           cache: gradle
 
+      # Cache builds during dev to speed up actions
+      - name: Cache builds
+        id: cache-builds
+        uses: actions/cache@v4
+        with:
+          path: android/app/build
+          key: app-build-1
+
       - name: Build app for Detox
+        if: steps.cache-builds.outputs.cache-hit != 'true'
         run: npx detox build --configuration android.att.release
 
       - name: Upload app to BrowserStack

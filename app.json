@@ -3,10 +3,19 @@
     "name": "comapeo-mobile",
     "slug": "comapeo-mobile",
     "version": "1.0.0",
+    "splash": {
+      "backgroundColor": "#ffffff"
+    },
     "extra": {
       "eas": {
         "projectId": "3fbe750e-e825-470a-9fba-da211e8092e0"
       }
+    },
+    "android": {
+      "package": "com.gmaclennan.comapeomobile"
+    },
+    "ios": {
+      "bundleIdentifier": "com.gmaclennan.comapeomobile"
     }
   }
 }

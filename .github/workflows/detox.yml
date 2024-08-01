@@ -83,11 +83,6 @@ jobs:
       devices: ${{ steps.get-devices.outputs.devices }}
 
     steps:
-      # - name: Check adb location
-      #   run: which adb
-      - name: Environment
-        run: |
-          ls -al $ANDROID_SDK_ROOT
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Get available devices
@@ -114,22 +109,11 @@ jobs:
         with:
           node-version: '20'
 
-      # Installs ADB, which Detox checks for (even though we don't use it)
-      # - name: Setup Android SDK
-      #   uses: android-actions/setup-android@v3
-      #   with:
-      #     packages: 'platform-tools'
-      #     # Matches version pre-installed on ubuntu-latest, to avoid re-installation
-      #     cmdline-tools-version: '9477386'
-
       - name: Fake adb to keep Detox happy
         run: |
           mkdir -p $ANDROID_SDK_ROOT/platform-tools
           echo '#!/bin/bash' > $ANDROID_SDK_ROOT/platform-tools/adb
           chmod +x $ANDROID_SDK_ROOT/platform-tools/adb
-
-      # - name: Install dependencies
-      #   run: npm ci
 
       - name: Install Patched Detox for BrowserStack
         run: npm install --no-save detox@npm:@avinashbharti97/detox@^20.1.2

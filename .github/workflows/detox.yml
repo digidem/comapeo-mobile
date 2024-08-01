@@ -55,23 +55,23 @@ jobs:
         id: upload
         run: |
           curl -u $CREDENTIALS \
-            -X POST $APP_UPLOAD_URL \
-            -F file=@APP_FILEPATH \
+            -X POST $UPLOAD_URL \
+            -F file=@$FILEPATH \
             | jq -r '"app_url=\(.app_url)"' >> $GITHUB_OUTPUT
         env:
-          APP_UPLOAD_URL: 'https://api-cloud.browserstack.com/app-automate/detox/v2/android/app'
-          APP_FILEPATH: 'android/app/build/outputs/apk/release/app-release.apk'
+          UPLOAD_URL: 'https://api-cloud.browserstack.com/app-automate/detox/v2/android/app'
+          FILEPATH: 'android/app/build/outputs/apk/release/app-release.apk'
 
       - name: Upload app client to BrowserStack
         id: upload-client
         run: |
           curl -u $CREDENTIALS \
-            -X POST $APP_UPLOAD_URL \
-            -F file=@APP_FILEPATH \
+            -X POST $UPLOAD_URL \
+            -F file=@$FILEPATH \
             | jq -r '"app_client_url=\(.app_client_url)"' >> $GITHUB_OUTPUT
         env:
-          APP_UPLOAD_URL: 'https://api-cloud.browserstack.com/app-automate/detox/v2/android/app-client'
-          APP_FILEPATH: 'android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk'
+          UPLOAD_URL: 'https://api-cloud.browserstack.com/app-automate/detox/v2/android/app-client'
+          FILEPATH: 'android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk'
 
   devices:
     runs-on: ubuntu-latest

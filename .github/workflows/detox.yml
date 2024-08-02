@@ -13,9 +13,6 @@ jobs:
       app_url: ${{ steps.upload.outputs.app_url }}
       app_client_url: ${{ steps.upload-client.outputs.app_client_url }}
 
-    env:
-      CREDENTIALS: '${{ secrets.BROWSERSTACK_USERNAME }}:${{ secrets.BROWSERSTACK_ACCESS_KEY }}'
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -56,25 +53,17 @@ jobs:
 
       - name: Upload app to BrowserStack
         id: upload
-        run: |
-          curl -u $CREDENTIALS \
-            -X POST $UPLOAD_URL \
-            -F file=@$FILEPATH \
-            | jq -r '"app_url=\(.app_url)"' >> $GITHUB_OUTPUT
+        run: (echo -n "app_url=" && scripts/upload-app.mjs) >> $GITHUB_OUTPUT
         env:
-          UPLOAD_URL: 'https://api-cloud.browserstack.com/app-automate/detox/v2/android/app'
-          FILEPATH: 'android/app/build/outputs/apk/release/app-release.apk'
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
 
       - name: Upload app client to BrowserStack
         id: upload-client
-        run: |
-          curl -u $CREDENTIALS \
-            -X POST $UPLOAD_URL \
-            -F file=@$FILEPATH \
-            | jq -r '"app_client_url=\(.app_client_url)"' >> $GITHUB_OUTPUT
+        run: (echo -n "app_client_url=" && scripts/upload-client-app.mjs) >> $GITHUB_OUTPUT
         env:
-          UPLOAD_URL: 'https://api-cloud.browserstack.com/app-automate/detox/v2/android/app-client'
-          FILEPATH: 'android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk'
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
 
   devices:
     runs-on: ubuntu-latest
@@ -117,6 +106,20 @@ jobs:
 
       - name: Install Patched Detox for BrowserStack
         run: npm install --no-save detox@npm:@avinashbharti97/detox@^20.1.2
+
+      - name: Get branch name
+        run: |
+          if [ "${{ github.event_name }}" == "push" ]; then
+            BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          elif [ "${{ github.event_name }}" == "pull_request" ]; then
+            BRANCH_NAME=${GITHUB_HEAD_REF}
+          else
+            BRANCH_NAME="unknown"
+          fi
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+
+      - name: Get build ID
+        run: echo "BUILD_ID=$BRANCH_NAME-${GITHUB_SHA::7}" >> $GITHUB_ENV
 
       - name: Run Detox tests
         run: npx detox test --configuration android.cloud.release

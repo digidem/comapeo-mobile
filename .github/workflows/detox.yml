@@ -32,7 +32,6 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        if: steps.cache-builds.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Expo prebuild

@@ -1,5 +1,6 @@
 const DEVICE_NAME = process.env.DEVICE_NAME || 'OnePlus 8'
 const DEVICE_OS_VERSION = process.env.DEVICE_OS_VERSION || '10.0'
+const BUILD_ID = process.env.BUILD_ID || 'Internal'
 
 /** @type {Detox.DetoxConfig} */
 module.exports = {
@@ -104,7 +105,7 @@ module.exports = {
       session: {
         server: 'wss://detox.browserstack.com/init',
         name: `${DEVICE_NAME} v${DEVICE_OS_VERSION}`,
-        build: 'Release',
+        build: BUILD_ID,
         project: 'Detox Example'
       }
     }

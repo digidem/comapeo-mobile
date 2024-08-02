@@ -50,4 +50,4 @@ env:
     label: 'Tapping done returns to new observation screen'
     text: '.*New Observation.*'
 - tapOn:
-    id: '${CAT}.save-btn'
+    id: '${CAT}.edit-save-btn'

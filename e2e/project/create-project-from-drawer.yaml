@@ -34,9 +34,6 @@ env:
     id: '${CAT}.create-btn'
 - assertVisible: '.*Invite Device.*'
 - assertVisible: '.*Go to Map.*'
-# - tapOn: '.*Invite Device.*'
-# - assertVisible:
-#     id: '${CAT}.invite-device-scrn'
 - tapOn:
     label: 'User is now a Coordinator, can click on Invite devices or clicks on Go to Map and is taken to the map screen'
     text: '.*Go to Map.*'

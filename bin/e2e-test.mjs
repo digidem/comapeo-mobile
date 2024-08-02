@@ -48,6 +48,7 @@ const response = await prompts([
     name: 'devices',
     message: 'Select devices to run tests on',
     min: 1,
+    optionsPerPage: 20,
     choices: deviceChoices
   }
 ])

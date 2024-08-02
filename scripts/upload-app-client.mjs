@@ -7,7 +7,7 @@ const APP_CLIENT_UPLOAD_URL = 'https://api-cloud.browserstack.com/app-automate/d
 const APP_CLIENT_FILEPATH = new URL('../android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk', import.meta.url).pathname
 
 if (isRunFromCli(import.meta.url)) {
-  const url = uploadAppClient(parseUploadArgs('app client'))
+  const url = await uploadAppClient(parseUploadArgs('app client'))
   process.stdout.write(url)
 }
 

@@ -12,7 +12,7 @@ const APP_FILEPATH = new URL(
 ).pathname
 
 if (isRunFromCli(import.meta.url)) {
-  const url = uploadApp(parseUploadArgs('app'))
+  const url = await uploadApp(parseUploadArgs('app'))
   process.stdout.write(url)
 }
 

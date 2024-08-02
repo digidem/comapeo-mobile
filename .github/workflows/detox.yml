@@ -84,6 +84,7 @@ jobs:
       - devices
 
     strategy:
+      max-parallel: 5
       matrix:
         include: ${{ fromJson(needs.devices.outputs.devices) }}
 

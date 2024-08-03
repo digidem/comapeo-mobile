@@ -53,6 +53,8 @@ const response = await prompts([
   }
 ])
 
+process.stdout.write('\n\n')
+
 if (response.testType === 'cloud') {
   const { username, accessKey } = getUser(response)
   response.username = username
@@ -99,7 +101,7 @@ const tasks = new Listr([
         {
           title: 'Build app',
           task: async (ctx, task) => {
-            const execute = execa`npm run e2e:build`
+            const execute = execa`npm run build:test`
             execute.stdout.pipe(task.stdout())
             await execute
           }
@@ -133,20 +135,22 @@ const tasks = new Listr([
   {
     title: 'Run tests on attached device/emulator',
     enabled: () => response.testType === 'local',
-    task: cliTask('npm run e2e:test-local'),
+    task: cliTask('npm run test:e2e-local'),
     rendererOptions: { persistentOutput: true, bottomBar: Infinity }
   },
   {
     title: 'Install patched version of detox',
     enabled: () => response.testType === 'cloud',
-    task: cliTask(
-      'npm i --no-save detox@npm:@avinashbharti97/detox@^20.1.2'
-    )
+    task: cliTask('npm i --no-save detox@npm:@avinashbharti97/detox@^20.1.2')
   },
   {
     title: 'Run tests on BrowserStack',
     enabled: () => response.testType === 'cloud',
-    task: async (ctx, task) => task.newListr(cloudTasks, { concurrent: 5 }),
+    task: async (ctx, task) =>
+      task.newListr(cloudTasks, {
+        concurrent: 5,
+        rendererOptions: { collapseSubtasks: false }
+      }),
     rollback: cliTask('npm install --no-save detox')
   },
   {

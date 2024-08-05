@@ -6,6 +6,7 @@ const defaultBlockList = Array.isArray(config.resolver.blockList)
   ? config.resolver.blockList
   : [config.resolver.blockList];
 
+/** @type {import('expo/metro-config').MetroConfig} */
 module.exports = {
   ...config,
   transformer: {

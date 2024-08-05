@@ -125,6 +125,7 @@
     "@eslint/eslintrc": "3.3.0",
     "@eslint/js": "9.21.0",
     "@formatjs/cli": "6.6.1",
+    "@formatjs/cli-lib": "6.6.6",
     "@mapeo/mock-data": "2.1.5",
     "@react-native/metro-babel-transformer": "0.76.6",
     "@react-native/metro-config": "0.76.6",

@@ -1,98 +1,70 @@
-#!/usr/bin/env node
+// @ts-check
 
-import path from 'node:path';
-import fs from 'node:fs';
-import {readFile, writeFile} from 'node:fs/promises';
+/**
+ * Uses @formatjs/cli-lib and its built-in CrowdIn messages formatter to compile extracted messages for usage in react-intl.
+ * The primary difference between this and using @format/cli directly is that this consolidates messages from all languages
+ * and compiles them to a single JSON file, which we load into memoryin its entirety into memory when the application starts.
+ *
+ * By contrast, the CLI creates a JSON file per language, which is done under the assumption that the application loads these files
+ * lazily based on the active language, which is usually the preferred approach and something we should eventually switch to
+ * (see https://github.com/digidem/mapeo-mobile/discussions/828).
+ */
+
+import {compile} from '@formatjs/cli-lib';
 import {glob} from 'glob';
+import {mkdirSync} from 'node:fs';
+import {writeFile} from 'node:fs/promises';
+import path from 'node:path';
 import {rimraf} from 'rimraf';
 
 import LANGUAGE_NAME_TRANSLATIONS from '../src/frontend/languages.json' assert {type: 'json'};
 
 const PROJECT_ROOT_DIR_PATH = new URL('../', import.meta.url).pathname;
 const TRANSLATIONS_DIR_PATH = path.join(PROJECT_ROOT_DIR_PATH, 'translations');
-
 const TRANSLATIONS_OUTPUT_PATH = path.join(
   TRANSLATIONS_DIR_PATH,
   'messages.json',
 );
+const CROWDIN_FORMATTER_PATH = new URL(
+  import.meta.resolve('@formatjs/cli-lib/src/formatters/crowdin.js'),
+).pathname;
 
-await run();
+// We want to preserve the translations/ directory
+await rimraf(`${TRANSLATIONS_DIR_PATH}/*`, {glob: true, preserveRoot: true});
 
-async function run() {
-  // We want to preserve the translations/ directory
-  await rimraf(`${TRANSLATIONS_DIR_PATH}/*`, {glob: true, preserveRoot: true});
-
-  try {
-    fs.mkdirSync(TRANSLATIONS_DIR_PATH);
-  } catch (_) {
-    // Translations directory already exists
-  }
-
-  const messages = await loadMessages();
-  const translations = convertMessagesToTranslations(messages);
-
-  await writeFile(
-    TRANSLATIONS_OUTPUT_PATH,
-    JSON.stringify(translations, null, 2),
-  );
-
-  console.log(`Successfully built translations to ${TRANSLATIONS_OUTPUT_PATH}`);
+try {
+  mkdirSync(TRANSLATIONS_DIR_PATH);
+} catch (_) {
+  // Translations directory already exists
 }
 
-////////////////////////////// Helpers //////////////////////////////
+const files = await glob(`${PROJECT_ROOT_DIR_PATH}/messages/**/*.json`);
 
-/**
- * @returns {Promise<{ [lang: string]: unknown }>}
- */
-async function loadMessages() {
-  const files = await glob(`${PROJECT_ROOT_DIR_PATH}/messages/**/*.json`);
-
-  /** @type {Array<[string, any]>} */
-  const loadedMessages = await Promise.all(
-    files.map(async file => {
-      const lang = path.parse(file).name;
-      const msgs = JSON.parse(await readFile(file));
-      return [lang, msgs];
-    }),
-  );
-
-  const result = {};
-
-  for (const [lang, msgs] of loadedMessages) {
-    // If a language is added to Crowdin, but has no translated messages,
-    // Crowdin still creates an empty file, so we just ignore it
-    if (Object.keys(msgs).length === 0) continue;
-
-    if (!result[lang]) {
-      result[lang] = msgs;
-    } else {
-      result[lang] = {...result[lang], ...msgs};
-    }
-  }
-
-  return result;
-}
-
-/**
- * @param {{ [lang: string]: unknown }} messages
- */
-function convertMessagesToTranslations(messages) {
-  const result = {};
-
-  for (const lang in messages) {
-    if (!LANGUAGE_NAME_TRANSLATIONS[lang]) {
-      console.warn(`Locale '${lang}' has no language name defined in \`src/frontend/languages.json\`,
-so it will not appear as a language option in CoMapeo.
-Add the language name in English and the native language to \`languages.json\`
-in order to allow users to select '${lang}' in CoMapeo`);
-    }
-    result[lang] = {};
-    const msgs = messages[lang];
-    Object.keys(msgs).forEach(key => {
-      if (!msgs[key].message) return;
-      result[lang][key] = msgs[key].message;
+const compiled = await Promise.all(
+  files.map(async f => {
+    const lang = path.parse(f).name;
+    const compiledMessages = await compile([f], {
+      ast: true,
+      format: CROWDIN_FORMATTER_PATH,
     });
+
+    return [lang, JSON.parse(compiledMessages)];
+  }),
+);
+
+const translations = {};
+
+for (const [lang, messages] of compiled) {
+  if (!LANGUAGE_NAME_TRANSLATIONS[lang]) {
+    console.warn(`Locale '${lang}' has no language name defined in \`src/frontend/languages.json\`,
+  so it will not appear as a language option in CoMapeo.
+  Add the language name in English and the native language to \`languages.json\`
+  in order to allow users to select '${lang}' in CoMapeo`);
   }
 
-  return result;
+  translations[lang] = messages;
 }
+
+await writeFile(TRANSLATIONS_OUTPUT_PATH, JSON.stringify(translations));
+
+console.log(`Successfully built translations to ${TRANSLATIONS_OUTPUT_PATH}\n`);

@@ -116,6 +116,7 @@
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
     "@formatjs/cli": "^6.2.0",
+    "@formatjs/cli-lib": "^6.4.2",
     "@mapeo/core": "9.0.0-alpha.14",
     "@mapeo/schema": "3.0.0-next.16",
     "@react-native-community/cli": "^12.3.6",

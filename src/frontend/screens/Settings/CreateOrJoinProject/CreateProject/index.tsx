@@ -78,6 +78,21 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
     error: projectCreationError,
   } = useCreateProject();
 
+  React.useEffect(() => {
+    // Prevent back navigation while project creation mutation is pending
+    const unsubscribe = navigation.addListener('beforeRemove', event => {
+      if (!isPending) {
+        return;
+      }
+
+      event.preventDefault();
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [navigation, isPending]);
+
   const {control, handleSubmit} = useForm<ProjectFormType>({
     defaultValues: {projectName: ''},
   });
@@ -159,7 +174,6 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
             error: null,
             clearError: () => {},
           };
-
   return (
     <React.Fragment>
       <KeyboardAvoidingView>

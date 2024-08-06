@@ -50,7 +50,7 @@ export function useCreateObservation() {
 
 export function useEditObservation() {
   const queryClient = useQueryClient();
-  const {projectApi} = useActiveProject();
+  const {projectId, projectApi} = useActiveProject();
 
   return useMutation({
     mutationFn: async ({
@@ -63,7 +63,9 @@ export function useEditObservation() {
       return projectApi.observation.update(versionId, value);
     },
     onSuccess: data => {
-      queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY, data.docId]});
+      queryClient.invalidateQueries({
+        queryKey: [OBSERVATION_KEY, projectId, data.docId],
+      });
     },
   });
 }

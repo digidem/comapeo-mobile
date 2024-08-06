@@ -78,8 +78,8 @@ export function useClearAllPendingInvites() {
 
 export function useSendInvite() {
   const queryClient = useQueryClient();
-  const project = useActiveProject();
-  type InviteParams = Parameters<typeof project.$member.invite>;
+  const {projectApi} = useActiveProject();
+  type InviteParams = Parameters<typeof projectApi.$member.invite>;
   return useMutation({
     mutationFn: ({
       deviceId,
@@ -87,7 +87,7 @@ export function useSendInvite() {
     }: {
       deviceId: InviteParams[0];
       role: InviteParams[1];
-    }) => project.$member.invite(deviceId, role),
+    }) => projectApi.$member.invite(deviceId, role),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [INVITE_KEY]});
       queryClient.invalidateQueries({queryKey: [PROJECT_MEMBERS_KEY]});
@@ -97,10 +97,10 @@ export function useSendInvite() {
 
 export function useRequestCancelInvite() {
   const queryClient = useQueryClient();
-  const project = useActiveProject();
+  const {projectApi} = useActiveProject();
   return useMutation({
     mutationFn: (deviceId: string) =>
-      project.$member.requestCancelInvite(deviceId),
+      projectApi.$member.requestCancelInvite(deviceId),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [INVITE_KEY]});
     },

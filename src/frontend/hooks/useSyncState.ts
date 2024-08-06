@@ -10,13 +10,13 @@ export type SyncState = Awaited<
 const projectSyncStoreMap = new WeakMap<MapeoProjectApi, SyncStore>();
 
 function useSyncStore() {
-  const project = useActiveProject();
+  const {projectApi} = useActiveProject();
 
-  let syncStore = projectSyncStoreMap.get(project);
+  let syncStore = projectSyncStoreMap.get(projectApi);
 
   if (!syncStore) {
-    syncStore = new SyncStore(project);
-    projectSyncStoreMap.set(project, syncStore);
+    syncStore = new SyncStore(projectApi);
+    projectSyncStoreMap.set(projectApi, syncStore);
   }
 
   return syncStore;

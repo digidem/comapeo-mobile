@@ -1,7 +1,9 @@
 import * as React from 'react';
-import {TouchableOpacity, View, Text, StyleSheet} from 'react-native';
-import {BLACK, COMAPEO_BLUE} from '../../lib/styles';
 import {defineMessages, useIntl} from 'react-intl';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
+
+import {COMAPEO_BLUE} from '../../lib/styles';
+import {Text} from '../Text';
 
 const m = defineMessages({
   change: {
@@ -10,48 +12,54 @@ const m = defineMessages({
   },
 });
 
-type PresetViewProps = {
-  onPressPreset?: () => void;
+export type PresetViewProps = {
+  onPress: () => void;
   presetName: string;
   PresetIcon: React.ReactNode;
 };
 
 export const PresetView = ({
-  onPressPreset,
+  onPress,
   presetName,
   PresetIcon,
 }: PresetViewProps) => {
-  const {formatMessage} = useIntl();
+  const {formatMessage: t} = useIntl();
+
   return (
-    <TouchableOpacity
-      disabled={!onPressPreset}
-      onPress={onPressPreset}
-      style={styles.preset}>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+    <View style={styles.container}>
+      <View style={styles.preset}>
         {PresetIcon}
         <Text style={styles.categoryName}>{presetName}</Text>
       </View>
-      <Text style={styles.changeButtonText}>{formatMessage(m.change)}</Text>
-    </TouchableOpacity>
+      <TouchableOpacity onPress={onPress}>
+        <Text style={styles.changeButtonText}>{t(m.change)}</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  changeButtonText: {
-    color: COMAPEO_BLUE,
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  preset: {
-    padding: 10,
+  container: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    padding: 12,
+    gap: 12,
+  },
+  preset: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+    gap: 10,
   },
   categoryName: {
-    color: BLACK,
+    flex: 1,
     fontSize: 20,
-    marginLeft: 10,
+    fontWeight: 'bold',
+  },
+  changeButtonText: {
+    color: COMAPEO_BLUE,
+    fontSize: 14,
     fontWeight: 'bold',
   },
 });

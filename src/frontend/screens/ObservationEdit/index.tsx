@@ -196,7 +196,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
             testID={`OBS.${preset?.name}-icon`}
           />
         }
-        onPressPreset={() => navigation.navigate('PresetChooser')}
+        onPress={() => navigation.navigate('PresetChooser')}
         notes={typeof notes !== 'string' ? '' : notes}
         updateNotes={newVal => {
           updateTags('notes', newVal);

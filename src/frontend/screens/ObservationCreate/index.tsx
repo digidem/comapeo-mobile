@@ -195,7 +195,7 @@ export const ObservationCreate = ({
             testID={`OBS.${preset?.name}-icon`}
           />
         }
-        onPressPreset={() =>
+        onPress={() =>
           navigation.navigate({
             key: 'fromObservationEdit',
             name: 'PresetChooser',

@@ -5,14 +5,11 @@ import {MediaScrollView} from '../MediaScrollView';
 import {ScreenContentWithDock} from '../ScreenContentWithDock';
 import {StyleSheet, View} from 'react-native';
 import {LIGHT_GREY} from '../../lib/styles';
-import {PresetView} from './PresetView';
+import {PresetView, PresetViewProps} from './PresetView';
 import {LocationView} from './LocationView';
 import {Divider} from '../Divider';
 
-type EditorProps = {
-  presetName: string;
-  onPressPreset?: () => void;
-  PresetIcon: React.ReactNode;
+type EditorProps = PresetViewProps & {
   notes: string;
   updateNotes: (newNotes: string) => void;
   photos: Photo[];

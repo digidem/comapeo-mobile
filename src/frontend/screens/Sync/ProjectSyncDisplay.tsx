@@ -83,7 +83,7 @@ export const ProjectSyncDisplay = ({
 }) => {
   const {formatMessage: t} = useIntl();
 
-  const {projectApi} = useActiveProject();
+  const {projectApi, projectId} = useActiveProject();
   const queryClient = useQueryClient();
   const navigation = useNavigationFromRoot();
   const {connectedPeers, data, initial} = syncState;
@@ -93,11 +93,11 @@ export const ProjectSyncDisplay = ({
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', () => {
       projectApi.$sync.stop();
-      queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY]});
+      queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY, projectId]});
     });
 
     return unsubscribe;
-  }, [navigation, projectApi, queryClient]);
+  }, [navigation, projectApi, queryClient, projectId]);
 
   const isDataSyncEnabled = data.isSyncEnabled;
 

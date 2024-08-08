@@ -3,25 +3,19 @@ import {CommonActions} from '@react-navigation/native';
 
 import {rootNavigationRef} from '../../AppNavigator';
 import {SessionInvite} from '../../contexts/SessionInvitesContext';
-import {usePersistedProjectId} from '../../hooks/persistedState/usePersistedProjectId';
 import {InviteAcceptedContent} from './InviteAcceptedContent';
-import {InviteCancelledContent} from './InviteCancelledContent';
+import {InviteCanceledContent} from './InviteCanceledContent';
 import {InvitePendingContent} from './InvitePendingContent';
+import {View} from 'react-native';
 
 export function InviteBottomSheetContent({
   sessionInvite,
-  totalSessionInvites,
-  onClose,
+  onAfterResponse,
 }: {
   sessionInvite: SessionInvite;
-  totalSessionInvites: number;
-  onClose: () => void;
+  onAfterResponse: (response: 'accept' | 'reject' | 'dismiss') => void;
 }) {
-  const {projectName, projectPublicId, inviteId} = sessionInvite.invite;
-
-  const switchActiveProject = usePersistedProjectId(
-    state => state.setProjectId,
-  );
+  const {projectName, inviteId} = sessionInvite.invite;
 
   if (sessionInvite.status === 'pending') {
     return (
@@ -29,38 +23,48 @@ export function InviteBottomSheetContent({
         inviteId={inviteId}
         projectName={projectName}
         onReject={() => {
-          if (totalSessionInvites === 1) {
-            onClose();
+          onAfterResponse('reject');
+        }}
+      />
+    );
+  }
+
+  if (sessionInvite.removalReason === 'accepted') {
+    return (
+      <InviteAcceptedContent
+        projectName={projectName}
+        onGoToMap={() => {
+          if (rootNavigationRef.isReady()) {
+            onAfterResponse('accept');
+            rootNavigationRef.navigate('Home', {screen: 'Map'});
+          }
+        }}
+        onGoToSync={() => {
+          if (rootNavigationRef.isReady()) {
+            onAfterResponse('accept');
+            rootNavigationRef.dispatch(
+              CommonActions.reset({
+                index: 1,
+                routes: [{name: 'Home'}, {name: 'Sync'}],
+              }),
+            );
           }
         }}
       />
     );
   }
 
-  return sessionInvite.removalReason === 'accepted' ? (
-    <InviteAcceptedContent
-      projectName={projectName}
-      onGoToMap={() => {
-        if (rootNavigationRef.isReady()) {
-          rootNavigationRef.navigate('Home', {screen: 'Map'});
-          onClose();
-          switchActiveProject(projectPublicId);
-        }
-      }}
-      onGoToSync={() => {
-        if (rootNavigationRef.isReady()) {
-          rootNavigationRef.dispatch(
-            CommonActions.reset({
-              index: 1,
-              routes: [{name: 'Home'}, {name: 'Sync'}],
-            }),
-          );
-          onClose();
-          switchActiveProject(projectPublicId);
-        }
-      }}
-    />
-  ) : (
-    <InviteCancelledContent projectName={projectName} onClose={onClose} />
-  );
+  if (sessionInvite.removalReason === 'canceled') {
+    return (
+      <InviteCanceledContent
+        projectName={projectName}
+        onClose={() => {
+          onAfterResponse('dismiss');
+        }}
+      />
+    );
+  }
+
+  // TODO: Needed to render a non-null child here to prevent a weird bottom sheet bug in the case of declining the invite
+  return <View style={{height: 100}} />;
 }

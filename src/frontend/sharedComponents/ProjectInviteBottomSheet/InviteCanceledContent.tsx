@@ -6,20 +6,20 @@ import {BottomSheetModalContent} from '../BottomSheetModal';
 
 const m = defineMessages({
   canceled: {
-    id: 'sharedComponents.ProjectInviteBottomSheet.InviteCancelledContent.canceled',
+    id: 'sharedComponents.ProjectInviteBottomSheet.InviteCanceledContent.canceled',
     defaultMessage: 'Invite Canceled',
   },
   close: {
-    id: 'sharedComponents.ProjectInviteBottomSheet.InviteCancelledContent.close',
+    id: 'sharedComponents.ProjectInviteBottomSheet.InviteCanceledContent.close',
     defaultMessage: 'Close',
   },
   projectInviteCanceled: {
-    id: 'sharedComponents.ProjectInviteBottomSheet.InviteCancelledContent.projectInviteCanceled',
+    id: 'sharedComponents.ProjectInviteBottomSheet.InviteCanceledContent.projectInviteCanceled',
     defaultMessage: 'Your invitation to {projectName} has been canceled.',
   },
 });
 
-export function InviteCancelledContent({
+export function InviteCanceledContent({
   projectName,
   onClose,
 }: {

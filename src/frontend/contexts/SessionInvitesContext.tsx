@@ -103,7 +103,7 @@ function useRemovedInvites() {
 }
 
 // Solely responsible for updating the invites query cache when a new invite event is received
-export function useInviteEventsListener() {
+function useInviteEventsListener() {
   const mapeoApi = useApi();
   const queryClient = useQueryClient();
 

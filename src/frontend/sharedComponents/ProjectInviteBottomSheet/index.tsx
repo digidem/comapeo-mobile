@@ -14,8 +14,7 @@ export const ProjectInviteBottomSheet = ({
 
   const [currentInviteId, setCurrentInviteId] = React.useState(
     () =>
-      sessionInvites.find(({status}) => status === 'pending')?.invite
-        .inviteId || null,
+      sessionInvites.find(({status}) => status === 'pending')?.invite.inviteId,
   );
 
   const {sheetRef, isOpen, closeSheet, openSheet} = useBottomSheetModal({
@@ -33,29 +32,46 @@ export const ProjectInviteBottomSheet = ({
     ? sessionInvites.find(
         ({invite: {inviteId}}) => inviteId === currentInviteId,
       )
-    : null;
+    : undefined;
 
-  // TODO: Causing issues in the following sequence:
-  // 1. Receive invite
-  // 2. Reject
-  // 3. Receive
-  // Expected: sheet opens up again
-  if (showableInvite && !isOpen && enabledForCurrentScreen) {
-    openSheet();
-  }
+  React.useEffect(() => {
+    if (showableInvite && !isOpen && enabledForCurrentScreen) {
+      openSheet();
+    }
+  }, [showableInvite, isOpen, enabledForCurrentScreen, openSheet]);
 
   return (
-    <BottomSheetModal
-      ref={sheetRef}
-      isOpen={isOpen}
-      onDismiss={() => {
-        setCurrentInviteId(null);
-      }}>
+    <BottomSheetModal ref={sheetRef} isOpen={isOpen}>
       {showableInvite ? (
         <InviteBottomSheetContent
           sessionInvite={showableInvite}
-          totalSessionInvites={sessionInvites.length}
-          onClose={closeSheet}
+          onAfterResponse={type => {
+            switch (type) {
+              case 'dismiss':
+              case 'accept': {
+                setCurrentInviteId(undefined);
+                closeSheet();
+                break;
+              }
+              case 'reject': {
+                const otherPendingInvites = sessionInvites
+                  .filter(i => i.invite.inviteId !== currentInviteId)
+                  .find(i => i.status === 'pending');
+
+                if (!otherPendingInvites) {
+                  setCurrentInviteId(undefined);
+                  closeSheet();
+                  return;
+                }
+
+                setCurrentInviteId(undefined);
+                break;
+              }
+              default: {
+                console.error(`Unknown response type ${type}`);
+              }
+            }
+          }}
         />
       ) : (
         <View style={{height: 100}} />

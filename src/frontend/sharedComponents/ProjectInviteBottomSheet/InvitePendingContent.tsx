@@ -5,7 +5,7 @@ import {StyleSheet, View} from 'react-native';
 import {useAcceptInvite, useRejectInvite} from '../../hooks/server/invites';
 import InviteIcon from '../../images/AddPersonCircle.svg';
 import {LIGHT_GREY} from '../../lib/styles';
-import {BottomSheetContent} from '../BottomSheetModal';
+import {BottomSheetModalContent} from '../BottomSheetModal';
 
 const m = defineMessages({
   declineInvite: {
@@ -36,14 +36,17 @@ export function InvitePendingContent({
   onReject: () => void;
 }) {
   const {formatMessage: t} = useIntl();
+  const [error, setError] = React.useState<Error | null>(null);
 
   const accept = useAcceptInvite();
   const reject = useRejectInvite();
 
   const isLoading = accept.isPending || reject.isPending;
 
+  // TODO: Display error state
+
   return (
-    <BottomSheetContent
+    <BottomSheetModalContent
       loading={isLoading}
       buttonConfigs={[
         {
@@ -55,6 +58,9 @@ export function InvitePendingContent({
                 onSuccess: () => {
                   onReject();
                 },
+                onError: err => {
+                  setError(err);
+                },
               },
             );
           },
@@ -63,7 +69,14 @@ export function InvitePendingContent({
         {
           variation: 'filled',
           onPress: () => {
-            accept.mutate({inviteId});
+            accept.mutate(
+              {inviteId},
+              {
+                onError: err => {
+                  setError(err);
+                },
+              },
+            );
           },
           text: t(m.acceptInvite),
         },

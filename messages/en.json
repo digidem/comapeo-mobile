@@ -1284,13 +1284,13 @@
   "sharedComponents.ProjectInviteBottomSheet.InviteAcceptedContent.youHaveJoined": {
     "message": "You have joined {projectName}"
   },
-  "sharedComponents.ProjectInviteBottomSheet.InviteCancelledContent.canceled": {
+  "sharedComponents.ProjectInviteBottomSheet.InviteCanceledContent.canceled": {
     "message": "Invite Canceled"
   },
-  "sharedComponents.ProjectInviteBottomSheet.InviteCancelledContent.close": {
+  "sharedComponents.ProjectInviteBottomSheet.InviteCanceledContent.close": {
     "message": "Close"
   },
-  "sharedComponents.ProjectInviteBottomSheet.InviteCancelledContent.projectInviteCanceled": {
+  "sharedComponents.ProjectInviteBottomSheet.InviteCanceledContent.projectInviteCanceled": {
     "message": "Your invitation to {projectName} has been canceled."
   },
   "sharedComponents.ProjectInviteBottomSheet.PendingInviteContent.acceptInvite": {

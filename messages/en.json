@@ -349,6 +349,30 @@
     "description": "Universal Transverse Mercator coordinate format",
     "message": "Universal Transverse Mercator (UTM)"
   },
+  "screens.DataPrivacy.description": {
+    "message": "CoMapeo allows you and your collaborators to map offline without needing servers."
+  },
+  "screens.DataPrivacy.diagnostic": {
+    "message": "Private by default — diagnostic information is fully anonymized and you can opt-out any time."
+  },
+  "screens.DataPrivacy.encrypted": {
+    "message": "All data stays fully encrypted."
+  },
+  "screens.DataPrivacy.learnMore": {
+    "message": "Learn More"
+  },
+  "screens.DataPrivacy.manageAndControl": {
+    "message": "Easily manage and control sharing and collaboration."
+  },
+  "screens.DataPrivacy.next": {
+    "message": "Next"
+  },
+  "screens.DataPrivacy.stays": {
+    "message": "Your data stays on your devices."
+  },
+  "screens.DataPrivacy.title": {
+    "message": "Data & Privacy"
+  },
   "screens.DeviceNaming.Success.description": {
     "message": "You named your device"
   },

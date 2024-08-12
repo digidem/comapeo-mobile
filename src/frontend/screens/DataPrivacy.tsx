@@ -5,6 +5,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {DeviceNamingParamsList} from '../sharedTypes/navigation';
 import CoMapeoShield from '../images/CoMapeoShield.svg';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {NEW_DARK_GREY, BLUE_GREY} from '../lib/styles';
 
 const {width, height} = Dimensions.get('window');
@@ -60,23 +61,54 @@ export const DataPrivacyScreen = ({
           {formatMessage(m.dataPrivacyDescription)}
         </Text>
         <View style={styles.bulletPoints}>
-          <Text style={styles.bulletPoint}>
-            • {formatMessage(m.dataPrivacyStays)}
-          </Text>
-          <Text style={styles.bulletPoint}>
-            • {formatMessage(m.dataPrivacyEncrypted)}
-          </Text>
-          <Text style={styles.bulletPoint}>
-            • {formatMessage(m.dataPrivacyManageAndControl)}
-          </Text>
-          <Text style={styles.bulletPoint}>
-            • {formatMessage(m.dataPrivacyDiagnostic)}
-          </Text>
+          <View style={styles.bulletPointContainer}>
+            <MaterialIcons
+              name="circle"
+              size={4}
+              color={NEW_DARK_GREY}
+              style={styles.bulletIcon}
+            />
+            <Text style={styles.bulletPointText}>
+              {formatMessage(m.dataPrivacyStays)}
+            </Text>
+          </View>
+          <View style={styles.bulletPointContainer}>
+            <MaterialIcons
+              name="circle"
+              size={4}
+              color={NEW_DARK_GREY}
+              style={styles.bulletIcon}
+            />
+            <Text style={styles.bulletPointText}>
+              {formatMessage(m.dataPrivacyEncrypted)}
+            </Text>
+          </View>
+          <View style={styles.bulletPointContainer}>
+            <MaterialIcons
+              name="circle"
+              size={4}
+              color={NEW_DARK_GREY}
+              style={styles.bulletIcon}
+            />
+            <Text style={styles.bulletPointText}>
+              {formatMessage(m.dataPrivacyManageAndControl)}
+            </Text>
+          </View>
+          <View style={styles.bulletPointContainer}>
+            <MaterialIcons
+              name="circle"
+              size={4}
+              color={NEW_DARK_GREY}
+              style={styles.bulletIcon}
+            />
+            <Text style={styles.bulletPointText}>
+              {formatMessage(m.dataPrivacyDiagnostic)}
+            </Text>
+          </View>
         </View>
       </View>
       <View style={styles.buttonContainer}>
         <Button
-          testID="ONBOARDING.learn-more-btn"
           fullWidth
           variant="outlined"
           color="dark"
@@ -85,7 +117,6 @@ export const DataPrivacyScreen = ({
           {formatMessage(m.learnMore)}
         </Button>
         <Button
-          testID="ONBOARDING.next-btn"
           fullWidth
           onPress={() => {
             navigation.navigate('DeviceNaming');
@@ -126,13 +157,22 @@ const styles = StyleSheet.create({
     marginBottom: height * 0.05,
     width: '80%',
   },
-  bulletPoint: {
-    fontSize: 14,
-    marginBottom: height * 0.0075,
+  bulletPointContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: height * 0.015,
+  },
+  bulletIcon: {
+    marginRight: 8,
+    marginTop: 8,
+  },
+  bulletPointText: {
+    flex: 1,
+    fontSize: width * 0.035,
     color: NEW_DARK_GREY,
   },
   buttonContainer: {
-    width: '100%',
+    width: '90%',
     alignItems: 'center',
   },
   learnMoreButton: {

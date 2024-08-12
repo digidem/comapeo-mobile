@@ -95,6 +95,7 @@ export type RootStackParamsList = {
   DeviceNameEdit: undefined;
   SaveTrack: undefined;
   Sync: undefined;
+  CreateTestData: undefined;
 };
 
 export type DeviceNamingParamsList = {

@@ -1,0 +1,305 @@
+import {Preset} from '@mapeo/schema';
+import {useMutation, useQueryClient} from '@tanstack/react-query';
+import {lengthToDegrees} from '@turf/helpers';
+import {randomPosition} from '@turf/random';
+import {LocationObject} from 'expo-location';
+import {type BBox} from 'geojson';
+import React, {forwardRef} from 'react';
+import {Controller, useForm} from 'react-hook-form';
+import {StyleSheet, TextInput, ToastAndroid, View} from 'react-native';
+import {UIActivityIndicator} from 'react-native-indicators';
+
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {useDeviceInfo} from '../../hooks/server/deviceInfo';
+import {OBSERVATION_KEY} from '../../hooks/server/observations';
+import {usePresetsQuery} from '../../hooks/server/presets';
+import {useLocation} from '../../hooks/useLocation';
+import {LIGHT_GREY, RED, WHITE} from '../../lib/styles';
+import {Button} from '../../sharedComponents/Button';
+import {LocationView} from '../../sharedComponents/Editor/LocationView';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {Text} from '../../sharedComponents/Text';
+
+const DISTANCE_BUFFER_KM = 50;
+
+const BASE_NUMBER_INPUT_RULES = {
+  min: 1,
+};
+
+export function CreateTestDataScreen() {
+  const presetsQuery = usePresetsQuery();
+  const locationState = useLocation({maxDistanceInterval: 0});
+  const deviceInfoQuery = useDeviceInfo();
+  const createFakeObservations = useCreateFakeObservationsMutation();
+
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<{count?: number; distance?: number}>({
+    mode: 'onBlur',
+    shouldFocusError: false,
+  });
+
+  return (
+    <ScreenContentWithDock
+      contentContainerStyle={styles.contentContainer}
+      dockContent={
+        deviceInfoQuery.data && presetsQuery.data ? (
+          <Button
+            fullWidth
+            disabled={createFakeObservations.status === 'pending'}
+            onPress={handleSubmit(data => {
+              if (data.count === undefined) return;
+              if (!locationState.location) {
+                ToastAndroid.show('Waiting for location', ToastAndroid.SHORT);
+                return;
+              }
+
+              createFakeObservations.mutate(
+                {
+                  count: data.count,
+                  location: locationState.location,
+                  deviceName: deviceInfoQuery.data.name,
+                  presets: presetsQuery.data,
+                  distance:
+                    data.distance === undefined
+                      ? DISTANCE_BUFFER_KM
+                      : data.distance,
+                },
+                {
+                  onSuccess: () => {
+                    ToastAndroid.show(
+                      'Observations created',
+                      ToastAndroid.SHORT,
+                    );
+                  },
+                  onError: () => {
+                    ToastAndroid.show(
+                      'Failed to create observations',
+                      ToastAndroid.SHORT,
+                    );
+                  },
+                },
+              );
+            })}>
+            {createFakeObservations.status === 'pending' ? (
+              <UIActivityIndicator
+                size={30}
+                color={WHITE}
+                style={{paddingVertical: 12}}
+              />
+            ) : (
+              'Create'
+            )}
+          </Button>
+        ) : (
+          <View style={{paddingVertical: 20}}>
+            <UIActivityIndicator size={30} />
+          </View>
+        )
+      }>
+      <View style={styles.field}>
+        <Text style={styles.labelText}>Number of observations (required):</Text>
+        <Controller
+          name="count"
+          control={control}
+          rules={{
+            ...BASE_NUMBER_INPUT_RULES,
+            required: true,
+          }}
+          render={({
+            field: {onBlur, onChange, ref, value},
+            fieldState: {error},
+          }) => {
+            return (
+              <NumberInput
+                error={!!error}
+                ref={ref}
+                value={value}
+                onChange={onChange}
+                onBlur={onBlur}
+              />
+            );
+          }}
+        />
+        <View>
+          {errors.count?.type === 'required' && (
+            <Text style={styles.errorText}>Required</Text>
+          )}
+          {errors.count?.type === 'min' && (
+            <Text style={styles.errorText}>Must be greater than 0</Text>
+          )}
+        </View>
+      </View>
+
+      <View style={styles.field}>
+        <Text style={styles.labelText}>
+          Maximum bounded distance in kilometers (optional, default is{' '}
+          {DISTANCE_BUFFER_KM}):
+        </Text>
+        <View>
+          <Text>Current location: </Text>
+          {locationState.location ? (
+            <LocationView
+              lat={locationState.location.coords.latitude}
+              lon={locationState.location.coords.longitude}
+              accuracy={locationState.location.coords.accuracy || undefined}
+            />
+          ) : (
+            <UIActivityIndicator size={20} />
+          )}
+        </View>
+        <Controller
+          name="distance"
+          control={control}
+          rules={BASE_NUMBER_INPUT_RULES}
+          render={({
+            field: {onBlur, onChange, ref, value},
+            fieldState: {error},
+          }) => {
+            return (
+              <NumberInput
+                error={!!error}
+                ref={ref}
+                value={value}
+                onChange={onChange}
+                onBlur={onBlur}
+              />
+            );
+          }}
+        />
+        <View>
+          {errors.distance?.type === 'min' && (
+            <Text style={styles.errorText}>Must be greater than 0</Text>
+          )}
+        </View>
+      </View>
+    </ScreenContentWithDock>
+  );
+}
+
+const NumberInput = forwardRef<
+  TextInput,
+  {
+    error?: boolean;
+    numberOfLines?: number;
+    onBlur?: () => void;
+    onChange?: (value: number | undefined) => void;
+    value?: number;
+  }
+>(({error, numberOfLines = 1, onChange, onBlur, value}, ref) => {
+  return (
+    <TextInput
+      ref={ref}
+      keyboardType="number-pad"
+      numberOfLines={numberOfLines}
+      onChangeText={
+        onChange
+          ? text => {
+              const result = parseInt(text, 10);
+              onChange(isNaN(result) ? undefined : result);
+            }
+          : undefined
+      }
+      onBlur={onBlur}
+      style={[styles.input, error ? {borderColor: RED} : undefined]}
+      value={value === undefined ? '' : value.toString(10)}
+    />
+  );
+});
+
+const styles = StyleSheet.create({
+  contentContainer: {
+    gap: 20,
+  },
+  field: {
+    gap: 12,
+  },
+  labelText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  submitButtonText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: WHITE,
+  },
+  input: {
+    flex: 1,
+    borderColor: LIGHT_GREY,
+    borderWidth: 1,
+    padding: 10,
+    fontSize: 20,
+  },
+  errorText: {
+    color: RED,
+  },
+});
+
+function useCreateFakeObservationsMutation() {
+  const queryClient = useQueryClient();
+  const {projectApi, projectId} = useActiveProject();
+
+  return useMutation({
+    mutationFn: ({
+      count,
+      deviceName,
+      location,
+      presets,
+      distance,
+    }: {
+      count: number;
+      deviceName?: string;
+      location: LocationObject;
+      presets: Array<Preset>;
+      distance: number;
+    }) => {
+      const distanceBufferDegrees = lengthToDegrees(distance, 'kilometers');
+
+      const {latitude, longitude} = location.coords;
+
+      const bbox = [
+        longitude - distanceBufferDegrees,
+        latitude - distanceBufferDegrees,
+        longitude + distanceBufferDegrees,
+        latitude + distanceBufferDegrees,
+      ] satisfies BBox;
+
+      const notes = deviceName ? `Created by ${deviceName}` : null;
+
+      const promises = [];
+
+      for (let i = 0; i < count; i++) {
+        const fakeCoordinates = randomPosition({
+          bbox,
+        });
+
+        const randomPreset = presets.at(
+          Math.floor(Math.random() * presets.length),
+        );
+
+        const value = {
+          attachments: [],
+          lon: fakeCoordinates[0],
+          lat: fakeCoordinates[1],
+          metadata: {
+            position: {
+              mocked: !!location.mocked,
+            },
+          },
+          refs: [],
+          schemaName: 'observation' as const,
+          tags: {...randomPreset!.tags, notes},
+        };
+
+        promises.push(projectApi.observation.create(value));
+      }
+
+      return Promise.all(promises);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY, projectId]});
+    },
+  });
+}

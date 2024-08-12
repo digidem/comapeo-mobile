@@ -110,6 +110,17 @@ export const Settings: NativeNavigationComponent<'Settings'> = () => {
             secondary={<FormattedMessage {...m.aboutMapeoDesc} />}
           />
         </ListItem>
+        {(process.env.APP_VARIANT === 'development' ||
+          process.env.APP_VARIANT === 'test') && (
+          <ListItem
+            onPress={() => {
+              navigate('CreateTestData');
+            }}
+            testID="settingsCreateTestDataButton">
+            <ListItemIcon iconName="auto-fix-high" />
+            <ListItemText primary="Create Test Data" />
+          </ListItem>
+        )}
       </List>
     </ScrollView>
   );

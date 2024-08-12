@@ -1,6 +1,10 @@
 import * as React from 'react';
 import TopoBackground from '../images/TopoLogo.svg';
 import CoMapeoTextAsSVG from '../images/CoMapeoText.svg';
+import WorldMap from '../images/WorldMap.svg';
+import MobilePhoneWithArrow from '../images/MobilePhoneWithArrow.svg';
+import LockedWithKey from '../images/LockedWithKey.svg';
+import RaisedFistMediumSkinTone from '../images/RaisedFistMediumSkinTone.svg';
 import {StyleSheet, View, Image} from 'react-native';
 import {COMAPEO_DARK_BLUE, WHITE} from '../lib/styles';
 import {defineMessages, useIntl} from 'react-intl';
@@ -49,29 +53,21 @@ export const IntroToCoMapeo = ({
         <Text style={styles.mainText}>{formatMessage(m.mapWorldTogether)}</Text>
         <View style={styles.textBox}>
           <View style={styles.textItem}>
-            <Image
-              source={require('../images/world-map-emoji.png')}
-              style={styles.icon}
-            />
+            <WorldMap width={24} height={24} style={styles.icon} />
             <Text style={styles.text}>{formatMessage(m.mapAnywhere)}</Text>
           </View>
           <View style={styles.textItem}>
-            <Image
-              source={require('../images/mobile-phone-with-arrow.png')}
-              style={styles.icon}
-            />
+            <MobilePhoneWithArrow width={24} height={24} style={styles.icon} />
             <Text style={styles.text}>{formatMessage(m.collaborate)}</Text>
           </View>
           <View style={styles.textItem}>
-            <Image
-              source={require('../images/locked-with-key.png')}
-              style={styles.icon}
-            />
+            <LockedWithKey width={24} height={24} style={styles.icon} />
             <Text style={styles.text}>{formatMessage(m.ownData)}</Text>
           </View>
           <View style={styles.textItem}>
-            <Image
-              source={require('../images/raised-fist-medium-skin-tone.png')}
+            <RaisedFistMediumSkinTone
+              width={24}
+              height={24}
               style={styles.icon}
             />
             <Text style={styles.text}>{formatMessage(m.designedFor)}</Text>
@@ -128,10 +124,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   icon: {
-    width: 24,
-    height: 24,
     marginRight: 10,
-    backgroundColor: 'transparent',
   },
   text: {
     color: WHITE,

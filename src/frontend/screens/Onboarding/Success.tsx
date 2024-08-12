@@ -2,16 +2,16 @@ import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import SuccessIcon from '../images/Success.svg';
-import NewDeviceLogo from '../images/NewDeviceLogo.svg';
+import SuccessIcon from '../../images/Success.svg';
+import NewDeviceLogo from '../../images/NewDeviceLogo.svg';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {Text} from '../sharedComponents/Text';
-import {Button} from '../sharedComponents/Button';
+import {Text} from '../../sharedComponents/Text';
+import {Button} from '../../sharedComponents/Button';
 import {defineMessages, useIntl} from 'react-intl';
-import {useEditDeviceInfo} from '../hooks/server/deviceInfo';
-import {Loading} from '../sharedComponents/Loading';
-import {WHITE} from '../lib/styles';
-import {DeviceNamingParamsList} from '../sharedTypes/navigation';
+import {useEditDeviceInfo} from '../../hooks/server/deviceInfo';
+import {Loading} from '../../sharedComponents/Loading';
+import {WHITE} from '../../lib/styles';
+import {DeviceNamingParamsList} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
   success: {

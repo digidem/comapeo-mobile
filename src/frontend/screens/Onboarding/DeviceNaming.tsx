@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import CoMapeoText from '../images/CoMapeoTextBlue.svg';
+import CoMapeoText from '../../images/CoMapeoTextBlue.svg';
 import {
   StyleSheet,
   View,
@@ -8,12 +8,12 @@ import {
   KeyboardAvoidingView,
   Keyboard,
 } from 'react-native';
-import {BLACK, LIGHT_GREY, MEDIUM_GREY, RED} from '../lib/styles';
-import {Text} from '../sharedComponents/Text';
-import {Button} from '../sharedComponents/Button';
+import {BLACK, LIGHT_GREY, MEDIUM_GREY, RED} from '../../lib/styles';
+import {Text} from '../../sharedComponents/Text';
+import {Button} from '../../sharedComponents/Button';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {defineMessages, useIntl} from 'react-intl';
-import {DeviceNamingParamsList} from '../sharedTypes/navigation';
+import {DeviceNamingParamsList} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
   header: {

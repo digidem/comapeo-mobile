@@ -1,17 +1,17 @@
 import * as React from 'react';
-import TopoBackground from '../images/TopoLogo.svg';
-import CoMapeoTextAsSVG from '../images/CoMapeoText.svg';
-import WorldMap from '../images/WorldMap.svg';
-import MobilePhoneWithArrow from '../images/MobilePhoneWithArrow.svg';
-import LockedWithKey from '../images/LockedWithKey.svg';
-import RaisedFistMediumSkinTone from '../images/RaisedFistMediumSkinTone.svg';
+import TopoBackground from '../../images/TopoLogo.svg';
+import CoMapeoTextAsSVG from '../../images/CoMapeoText.svg';
+import WorldMap from '../../images/WorldMap.svg';
+import MobilePhoneWithArrow from '../../images/MobilePhoneWithArrow.svg';
+import LockedWithKey from '../../images/LockedWithKey.svg';
+import RaisedFistMediumSkinTone from '../../images/RaisedFistMediumSkinTone.svg';
 import {StyleSheet, View, Dimensions} from 'react-native';
-import {COMAPEO_DARK_BLUE, WHITE} from '../lib/styles';
+import {COMAPEO_DARK_BLUE, WHITE} from '../../lib/styles';
 import {defineMessages, useIntl} from 'react-intl';
-import {Text} from '../sharedComponents/Text';
-import {Button} from '../sharedComponents/Button';
+import {Text} from '../../sharedComponents/Text';
+import {Button} from '../../sharedComponents/Button';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {DeviceNamingParamsList} from '../sharedTypes/navigation';
+import {DeviceNamingParamsList} from '../../sharedTypes/navigation';
 
 const {height} = Dimensions.get('window');
 

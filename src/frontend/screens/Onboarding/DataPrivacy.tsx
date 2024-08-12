@@ -1,16 +1,16 @@
 import * as React from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
-import {Button} from '../sharedComponents/Button';
+import {Button} from '../../sharedComponents/Button';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {DeviceNamingParamsList} from '../sharedTypes/navigation';
-import CoMapeoShield from '../images/CoMapeoShield.svg';
+import {DeviceNamingParamsList} from '../../sharedTypes/navigation';
+import CoMapeoShield from '../../images/CoMapeoShield.svg';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {NEW_DARK_GREY, BLUE_GREY} from '../lib/styles';
+import {NEW_DARK_GREY, BLUE_GREY} from '../../lib/styles';
 
 const {width, height} = Dimensions.get('window');
 
-export const DataPrivacyScreen = ({
+export const DataPrivacy = ({
   navigation,
 }: NativeStackScreenProps<DeviceNamingParamsList, 'DataPrivacy'>) => {
   const {formatMessage} = useIntl();
@@ -112,7 +112,9 @@ export const DataPrivacyScreen = ({
           fullWidth
           variant="outlined"
           color="dark"
-          onPress={() => {}}
+          onPress={() => {
+            navigation.navigate('PrivacyPolicy');
+          }}
           style={styles.learnMoreButton}>
           {formatMessage(m.learnMore)}
         </Button>

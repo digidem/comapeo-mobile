@@ -101,6 +101,7 @@ export type DeviceNamingParamsList = {
   IntroToCoMapeo: undefined;
   DataPrivacy: undefined;
   DeviceNaming: undefined;
+  PrivacyPolicy: undefined;
   Success: {deviceName: string};
 };
 

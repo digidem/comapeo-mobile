@@ -94,7 +94,7 @@ function RootStackNavigatorChild() {
         ? createDefaultScreenGroup({
             intl: formatMessage,
           })
-        : createDeviceNamingScreens()}
+        : createDeviceNamingScreens({intl: formatMessage})}
     </RootStack.Navigator>
   );
 }

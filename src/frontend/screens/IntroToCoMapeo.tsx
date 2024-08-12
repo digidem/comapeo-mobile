@@ -5,13 +5,15 @@ import WorldMap from '../images/WorldMap.svg';
 import MobilePhoneWithArrow from '../images/MobilePhoneWithArrow.svg';
 import LockedWithKey from '../images/LockedWithKey.svg';
 import RaisedFistMediumSkinTone from '../images/RaisedFistMediumSkinTone.svg';
-import {StyleSheet, View, Image} from 'react-native';
+import {StyleSheet, View, Dimensions} from 'react-native';
 import {COMAPEO_DARK_BLUE, WHITE} from '../lib/styles';
 import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../sharedComponents/Text';
 import {Button} from '../sharedComponents/Button';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {DeviceNamingParamsList} from '../sharedTypes/navigation';
+
+const {height} = Dimensions.get('window');
 
 const m = defineMessages({
   getStarted: {
@@ -49,27 +51,27 @@ export const IntroToCoMapeo = ({
     <View style={styles.container}>
       <TopoBackground style={styles.background} />
       <View style={styles.content}>
-        <CoMapeoTextAsSVG style={{marginTop: -30}} width={'90%'} />
-        <Text style={styles.mainText}>{formatMessage(m.mapWorldTogether)}</Text>
+        <CoMapeoTextAsSVG width={'95%'} height={height * 0.12} />
+        <View style={styles.mainTextContainer}>
+          <Text style={styles.mainText}>
+            {formatMessage(m.mapWorldTogether)}
+          </Text>
+        </View>
         <View style={styles.textBox}>
           <View style={styles.textItem}>
-            <WorldMap width={24} height={24} style={styles.icon} />
+            <WorldMap width={24} height={24} />
             <Text style={styles.text}>{formatMessage(m.mapAnywhere)}</Text>
           </View>
           <View style={styles.textItem}>
-            <MobilePhoneWithArrow width={24} height={24} style={styles.icon} />
+            <MobilePhoneWithArrow width={24} height={24} />
             <Text style={styles.text}>{formatMessage(m.collaborate)}</Text>
           </View>
           <View style={styles.textItem}>
-            <LockedWithKey width={24} height={24} style={styles.icon} />
+            <LockedWithKey width={24} height={24} />
             <Text style={styles.text}>{formatMessage(m.ownData)}</Text>
           </View>
           <View style={styles.textItem}>
-            <RaisedFistMediumSkinTone
-              width={24}
-              height={24}
-              style={styles.icon}
-            />
+            <RaisedFistMediumSkinTone width={24} height={24} />
             <Text style={styles.text}>{formatMessage(m.designedFor)}</Text>
           </View>
         </View>
@@ -93,45 +95,50 @@ const styles = StyleSheet.create({
     backgroundColor: COMAPEO_DARK_BLUE,
   },
   background: {
-    paddingTop: 80,
     position: 'absolute',
     width: '100%',
     height: '100%',
   },
   content: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    padding: 20,
+    paddingHorizontal: '5%',
+    paddingTop: height * 0.2,
+  },
+  mainTextContainer: {
+    width: '75%',
+    marginBottom: height * 0.04,
   },
   mainText: {
     color: WHITE,
     fontSize: 24,
     textAlign: 'center',
-    marginVertical: 20,
   },
   textBox: {
-    width: '90%',
+    width: '95%',
     padding: 20,
     borderWidth: 1,
     borderColor: WHITE,
     borderRadius: 10,
-    backgroundColor: '#123456',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    marginBottom: height * 0.04,
   },
   textItem: {
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 10,
-  },
-  icon: {
-    marginRight: 10,
+    gap: 16,
   },
   text: {
     color: WHITE,
     fontSize: 16,
     textAlign: 'left',
+    flexShrink: 1,
+    flex: 1,
   },
   getStartedButton: {
-    marginTop: 30,
+    marginTop: height * 0.04,
+    width: '85%',
   },
 });

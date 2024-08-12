@@ -117,7 +117,8 @@ const styles = StyleSheet.create({
   },
   textBox: {
     width: '95%',
-    padding: 20,
+    paddingVertical: height * 0.04,
+    paddingHorizontal: 20,
     borderWidth: 1,
     borderColor: WHITE,
     borderRadius: 10,
@@ -138,7 +139,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   getStartedButton: {
-    marginTop: height * 0.04,
     width: '85%',
   },
 });

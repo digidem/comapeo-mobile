@@ -79,7 +79,7 @@ export const IntroToCoMapeo = ({
           testID="ONBOARDING.get-started-btn"
           fullWidth
           onPress={() => {
-            navigation.navigate('DeviceNaming');
+            navigation.navigate('DataPrivacy');
           }}
           style={styles.getStartedButton}>
           {formatMessage(m.getStarted)}

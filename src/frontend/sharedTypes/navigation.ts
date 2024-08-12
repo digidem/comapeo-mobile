@@ -99,6 +99,7 @@ export type RootStackParamsList = {
 
 export type DeviceNamingParamsList = {
   IntroToCoMapeo: undefined;
+  DataPrivacy: undefined;
   DeviceNaming: undefined;
   Success: {deviceName: string};
 };

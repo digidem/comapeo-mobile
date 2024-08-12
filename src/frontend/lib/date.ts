@@ -11,7 +11,7 @@ export const formatIsoUtc = (date: Readonly<Date>): string =>
   [
     date.getUTCFullYear().toString().padStart(4, '0'),
     (date.getUTCMonth() + 1).toString().padStart(2, '0'),
-    date.getDate().toString().padStart(2, '0'),
+    date.getUTCDate().toString().padStart(2, '0'),
   ].join('-');
 
 export const isDateValid = (date: Readonly<Date>): boolean =>

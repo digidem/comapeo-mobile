@@ -110,8 +110,7 @@ export const Settings: NativeNavigationComponent<'Settings'> = () => {
             secondary={<FormattedMessage {...m.aboutMapeoDesc} />}
           />
         </ListItem>
-        {(process.env.APP_VARIANT === 'development' ||
-          process.env.APP_VARIANT === 'test') && (
+        {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
           <ListItem
             onPress={() => {
               navigate('CreateTestData');

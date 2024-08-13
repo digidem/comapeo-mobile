@@ -274,8 +274,7 @@ export const createDefaultScreenGroup = ({
       options={{headerTitle: intl(AboutSettings.navTitle)}}
     />
 
-    {(process.env.APP_VARIANT === 'development' ||
-      process.env.APP_VARIANT === 'test') && (
+    {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
       <RootStack.Screen
         name="CreateTestData"
         component={CreateTestDataScreen}

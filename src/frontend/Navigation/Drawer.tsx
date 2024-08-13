@@ -194,8 +194,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
           <DrawerListItemIcon iconName="info-outline" />
           <ListItemText primary={<FormattedMessage {...m.aboutCoMapeo} />} />
         </ListItem>
-        {(process.env.APP_VARIANT === 'development' ||
-          process.env.APP_VARIANT === 'test') && (
+        {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
           <ListItem
             onPress={() => {
               navigate('CreateTestData');

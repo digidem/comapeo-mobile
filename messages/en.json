@@ -786,6 +786,45 @@
   "screens.PhotoPreviewModal.DeletePhoto.headerButtonText": {
     "message": "Delete Photo"
   },
+  "screens.PrivacyPolicy.aboutAwana": {
+    "message": "About Awana Digital"
+  },
+  "screens.PrivacyPolicy.aboutAwanaContent": {
+    "message": "CoMapeo is developed by Awana Digital, a 501c3 non-profit organization registered in the United States. Awana digital works in solidarity with frontline communities to use technology to defend their rights and fight climate change."
+  },
+  "screens.PrivacyPolicy.control": {
+    "message": "You’re in control"
+  },
+  "screens.PrivacyPolicy.dataCollection": {
+    "message": "CoMapeo Data Collection"
+  },
+  "screens.PrivacyPolicy.navTitle": {
+    "message": "Privacy Policy"
+  },
+  "screens.PrivacyPolicy.noPII": {
+    "message": "No personally identifiable information"
+  },
+  "screens.PrivacyPolicy.openSource": {
+    "message": "Open Source and the \"Official\" Version"
+  },
+  "screens.PrivacyPolicy.openSourceContent": {
+    "message": "CoMapeo is an open-source application. This means that anyone can view the code that makes the app work and can verify the privact declarations in this document. It also means that anyone can adaptthe app to their own needs and release an alternative version."
+  },
+  "screens.PrivacyPolicy.overview": {
+    "message": "The following explains what information (or \"data\") is sent from CoMapeo to the application developer, Awana Digital, and how that information is used."
+  },
+  "screens.PrivacyPolicy.privateByDefault": {
+    "message": "Private by default"
+  },
+  "screens.PrivacyPolicy.thirdParty": {
+    "message": "Third-party access to data"
+  },
+  "screens.PrivacyPolicy.whatIsCollected": {
+    "message": "What is collected?"
+  },
+  "screens.PrivacyPolicy.whyCollected": {
+    "message": "Why is this data collected?"
+  },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "What is happening here?"

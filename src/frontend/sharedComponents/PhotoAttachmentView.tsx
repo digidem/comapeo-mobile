@@ -23,7 +23,7 @@ const PhotoViewComponent = ({
     <View style={[styles.container, style]}>
       {isPending ? (
         <ActivityIndicator />
-      ) : isError ? (
+      ) : isError || !data ? (
         <AlertIcon />
       ) : (
         <Image

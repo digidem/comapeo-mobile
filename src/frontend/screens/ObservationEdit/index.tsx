@@ -202,7 +202,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
           updateTags('notes', newVal);
         }}
         photos={photos}
-        actionsRow={<ActionsRow fieldIds={preset?.fieldIds} />}
+        actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
       />
       <ErrorBottomSheet
         error={editObservationMutation.error || createBlobMutation.error}

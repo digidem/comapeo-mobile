@@ -53,8 +53,8 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
 
   const defaultAcc: Field[] = [];
   const fields = fieldData
-    ? preset.fieldIds.reduce((acc, pres) => {
-        const fieldToAdd = fieldData.find(field => field.docId === pres);
+    ? preset.fieldRefs.reduce((acc, pres) => {
+        const fieldToAdd = fieldData.find(field => field.docId === pres.docId);
         if (!fieldToAdd) return acc;
         return [...acc, fieldToAdd];
       }, defaultAcc)

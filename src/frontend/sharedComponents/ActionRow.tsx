@@ -4,6 +4,7 @@ import {ActionTab} from './ActionTab';
 import PhotoIcon from '../images/observationEdit/Photo.svg';
 import DetailsIcon from '../images/observationEdit/Details.svg';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
+import {Preset} from '@mapeo/schema';
 
 const m = defineMessages({
   audioButton: {
@@ -24,10 +25,10 @@ const m = defineMessages({
 });
 
 interface ActionButtonsProps {
-  fieldIds?: string[];
+  fieldRefs?: Preset['fieldRefs'];
 }
 
-export const ActionsRow = ({fieldIds}: ActionButtonsProps) => {
+export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
 
@@ -48,7 +49,7 @@ export const ActionsRow = ({fieldIds}: ActionButtonsProps) => {
     },
   ];
 
-  if (fieldIds?.length) {
+  if (fieldRefs?.length) {
     // Only show the option to add details if preset fields are defined.
     bottomSheetItems.push({
       icon: <DetailsIcon width={30} height={30} />,

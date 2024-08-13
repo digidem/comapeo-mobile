@@ -17,10 +17,7 @@ export const SaveTrackButton: FC = () => {
       {
         schemaName: 'track',
         attachments: [],
-        refs: currentTrack.observations.map(observationId => ({
-          id: observationId,
-          type: 'observation',
-        })),
+        observationRefs: currentTrack.observationRefs,
         tags: {
           notes: description,
         },

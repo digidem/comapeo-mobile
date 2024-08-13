@@ -12,7 +12,12 @@ import LockedWithKey from '../../images/LockedWithKey.svg';
 import RaisedFistMediumSkinTone from '../../images/RaisedFistMediumSkinTone.svg';
 import ChevronDown from '../../images/chevrondown.svg';
 import ChevronUp from '../../images/chevrondown-expanded.svg';
-import {BLUE_GREY, COMAPEO_DARK_BLUE, VERY_LIGHT_GREY} from '../../lib/styles';
+import {
+  BLUE_GREY,
+  COMAPEO_DARK_BLUE,
+  NEW_DARK_GREY,
+  VERY_LIGHT_GREY,
+} from '../../lib/styles';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {DeviceNamingParamsList} from '../../sharedTypes/navigation';
 
@@ -35,6 +40,10 @@ const m = defineMessages({
     defaultMessage:
       'CoMapeo is developed by Awana Digital, a 501c3 non-profit organization registered in the United States. Awana digital works in solidarity with frontline communities to use technology to defend their rights and fight climate change.',
   },
+  privacyPolicyTitle: {
+    id: 'screens.PrivacyPolicy.privacyPolicyTitle',
+    defaultMessage: 'CoMapeo Data Privacy',
+  },
   openSource: {
     id: 'screens.PrivacyPolicy.openSource',
     defaultMessage: 'Open Source and the "Official" Version',
@@ -42,7 +51,7 @@ const m = defineMessages({
   openSourceContent: {
     id: 'screens.PrivacyPolicy.openSourceContent',
     defaultMessage:
-      'CoMapeo is an open-source application.\n\nThis means that anyone can view the code that makes the app work and can verify the privact declarations in this document. It also means that anyone can adaptthe app to their own needs and release an alternative version.\n\n  ',
+      'CoMapeo is an open-source application.\n\nThis means that anyone can view the code that makes the app work and can verify the privact declarations in this document. It also means that anyone can adapt the app to their own needs and release an alternative version.\n\nThis document refers to data collected by the official releases of CoMapeo, digitally signed by Awana Digital, available from the Google Play Store or the Awana Digital website.\n\nUnofficial releases of CoMapeo obtained from other channels are outside our control and may share additional information with other organizations.',
   },
   privateByDefault: {
     id: 'screens.PrivacyPolicy.privateByDefault',
@@ -89,7 +98,7 @@ export const PrivacyPolicy = ({
       <View style={styles.overviewBox}>
         <Text style={styles.overviewText}>{formatMessage(m.overview)}</Text>
       </View>
-      <View style={styles.toggleContainer}>
+      <View style={[styles.toggleContainer, styles.topToggleContainer]}>
         <TouchableOpacity
           onPress={toggleAboutAwana}
           style={styles.sectionHeader}>
@@ -102,13 +111,14 @@ export const PrivacyPolicy = ({
         </TouchableOpacity>
         {awanaExpanded && (
           <View style={styles.sectionContent}>
-            <Text>{formatMessage(m.aboutAwanaContent)}</Text>
+            <Text style={styles.sectionText}>
+              {formatMessage(m.aboutAwanaContent)}
+            </Text>
           </View>
         )}
       </View>
 
-      <View
-        style={[styles.toggleContainer, !awanaExpanded && styles.noTopBorder]}>
+      <View style={[styles.toggleContainer, styles.bottomToggleContainer]}>
         <TouchableOpacity
           onPress={toggleOpenSource}
           style={styles.sectionHeader}>
@@ -121,10 +131,13 @@ export const PrivacyPolicy = ({
         </TouchableOpacity>
         {openSourceExpanded && (
           <View style={styles.sectionContent}>
-            <Text>{formatMessage(m.openSourceContent)}</Text>
+            <Text style={styles.sectionText}>
+              {formatMessage(m.openSourceContent)}
+            </Text>
           </View>
         )}
       </View>
+      <Text style={styles.header}>{formatMessage(m.privacyPolicyTitle)}</Text>
 
       {/* Privacy Points */}
       <View style={styles.pointContainer}>
@@ -194,16 +207,29 @@ const styles = StyleSheet.create({
     borderColor: BLUE_GREY,
     borderRadius: 10,
     marginBottom: 0,
-    padding: 20,
+    paddingVertical: 20,
+    paddingHorizontal: 5,
+  },
+  topToggleContainer: {
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+  },
+  bottomToggleContainer: {
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+    borderTopWidth: 0,
+  },
+  header: {
+    marginTop: 50,
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 30,
   },
   introBox: {
     backgroundColor: '#f7f7f7',
     padding: 15,
     borderRadius: 5,
     marginBottom: 10,
-  },
-  noTopBorder: {
-    borderTopWidth: 0,
   },
   sectionHeader: {
     paddingVertical: 0,
@@ -221,8 +247,12 @@ const styles = StyleSheet.create({
   },
   sectionContent: {
     paddingHorizontal: 20,
-    paddingTop: 0,
+    paddingTop: 10,
     paddingBottom: 10,
+  },
+  sectionText: {
+    fontSize: 14,
+    color: NEW_DARK_GREY,
   },
   pointContainer: {
     flexDirection: 'row',

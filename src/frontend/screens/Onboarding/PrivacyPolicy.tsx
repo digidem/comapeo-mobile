@@ -7,12 +7,18 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import LockedWithKey from '../../images/LockedWithKey.svg';
 import RaisedFistMediumSkinTone from '../../images/RaisedFistMediumSkinTone.svg';
 import ChevronDown from '../../images/chevrondown.svg';
 import ChevronUp from '../../images/chevrondown-expanded.svg';
+import RedDot from '../../images/redDot.svg';
+import BustInSilhouette from '../../images/bustInSilhouette.svg';
+import BarChart from '../../images/barChart.svg';
+import Wrench from '../../images/wrench.svg';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 import {
+  BLACK,
   BLUE_GREY,
   COMAPEO_DARK_BLUE,
   NEW_DARK_GREY,
@@ -57,13 +63,28 @@ const m = defineMessages({
     id: 'screens.PrivacyPolicy.privateByDefault',
     defaultMessage: 'Private by default',
   },
+  privateByDefaultDescription: {
+    id: 'screens.PrivacyPolicy.privateByDefaultDescription',
+    defaultMessage:
+      "The data you collect and create with CoMapeo (locations, photos, video, audio, text) is only stored on your device by default, and is not stored or sent anywhere else.\n\nWhen you share data with collaborators by joining a project with them, it is sent encrypted, directly to your collaborators' device. This means that the data is not sent via Awana Digital, nor anyone else, on its way to your collaborator.\n\nAwana Digital never sees nor has access to any of the data you collect with CoMapeo unless you explicitly send it to us.",
+  },
   noPII: {
     id: 'screens.PrivacyPolicy.noPII',
     defaultMessage: 'No personally identifiable information',
   },
+  noPIIDescription: {
+    id: 'screens.PrivacyPolicy.noPIIDescription',
+    defaultMessage:
+      'Using CoMapeo does not require a user account.\n\nAwana Digital does not collect your name, email address or any other personal details.\n\nNo permanent user identifier or device identifier is ever shared with Awana Digital, and we take extra measures to ensure that no information you share can be used to track you: identifiers are randomized and rotated (changed) every month and we do not store IP addresses.',
+  },
   control: {
     id: 'screens.PrivacyPolicy.control',
-    defaultMessage: 'You’re in control',
+    defaultMessage: "You're in control",
+  },
+  controlDescription: {
+    id: 'screens.PrivacyPolicy.controlDescription',
+    defaultMessage:
+      'You can opt out of sending any information to Awana Digital.\n\nYou choose where your data is stored and who it is shared with. You may choose to share anonymized, summarized data about how you use CoMapeo with Awana Digital.\n\nWe will always be transparent about what information you choose to share for the purposed of improving the app, and this information will never include photos, videos, audio, text, or precise locations that you have entered into CoMapeo.',
   },
   dataCollection: {
     id: 'screens.PrivacyPolicy.dataCollection',
@@ -73,13 +94,28 @@ const m = defineMessages({
     id: 'screens.PrivacyPolicy.whatIsCollected',
     defaultMessage: 'What is collected?',
   },
+  whatIsCollectedDescription: {
+    id: 'screens.PrivacyPolicy.whatIsCollectedDescription',
+    defaultMessage:
+      'By default, anonymized diagnostic information about your device, app crashes, errors and performance is shared with Awana Digital.\n\nYou can opt-out of sharing this information at any time. This diagnostic information is completely anonymized and it never contains any of your data (the data you have collected with CoMapeo).',
+  },
   whyCollected: {
     id: 'screens.PrivacyPolicy.whyCollected',
     defaultMessage: 'Why is this data collected?',
   },
+  whyCollectedDescription: {
+    id: 'screens.PrivacyPolicy.whyCollectedDescription',
+    defaultMessage:
+      'Crash data and app errors together with the device and app info provide Awana Digital with the information we need to fix errors and bugs in the app.\n\nThe performance data helps us improve the responsiveness of the app and identify errors.\n\nThe country where CoMapeo is being used and the language of the UI helps us understand minimal information about CoMapeo users: “How many CoMapeo users are there in each country?',
+  },
   thirdParty: {
     id: 'screens.PrivacyPolicy.thirdParty',
     defaultMessage: 'Third-party access to data',
+  },
+  thirdPartyDescription: {
+    id: 'screens.PrivacyPolicy.thirdPartyDescription',
+    defaultMessage:
+      'A "third-party" is an organization other than Awana Digital.',
   },
 });
 
@@ -117,7 +153,6 @@ export const PrivacyPolicy = ({
           </View>
         )}
       </View>
-
       <View style={[styles.toggleContainer, styles.bottomToggleContainer]}>
         <TouchableOpacity
           onPress={toggleOpenSource}
@@ -138,45 +173,160 @@ export const PrivacyPolicy = ({
         )}
       </View>
       <Text style={styles.header}>{formatMessage(m.privacyPolicyTitle)}</Text>
-
-      {/* Privacy Points */}
       <View style={styles.pointContainer}>
-        <MaterialIcon name="privacy-tip" size={24} color={COMAPEO_DARK_BLUE} />
-        <Text style={styles.pointTitle}>
-          {formatMessage(m.privateByDefault)}
+        <View style={styles.pointHeader}>
+          <RedDot width={16} height={16} />
+          <Text style={styles.pointTitle}>
+            {formatMessage(m.privateByDefault)}
+          </Text>
+        </View>
+        <Text style={styles.pointDescription}>
+          {formatMessage(m.privateByDefaultDescription)}
         </Text>
-        <Text>{/* Detailed description here */}</Text>
       </View>
-
       <View style={styles.pointContainer}>
-        <MaterialIcon
-          name="person-outline"
-          size={24}
-          color={COMAPEO_DARK_BLUE}
-        />
-        <Text style={styles.pointTitle}>{formatMessage(m.noPII)}</Text>
-        <Text>{/* Detailed description here */}</Text>
+        <View style={styles.pointHeader}>
+          <BustInSilhouette width={16} height={16} />
+          <Text style={styles.pointTitle}>{formatMessage(m.noPII)}</Text>
+        </View>
+        <Text style={styles.pointDescription}>
+          {formatMessage(m.noPIIDescription)}
+        </Text>
       </View>
-
       <View style={styles.pointContainer}>
-        <LockedWithKey width={24} height={24} />
-        <Text style={styles.pointTitle}>{formatMessage(m.control)}</Text>
-        <Text>{/* Detailed description here */}</Text>
+        <View style={styles.pointHeader}>
+          <LockedWithKey width={16} height={16} />
+          <Text style={styles.pointTitle}>{formatMessage(m.control)}</Text>
+        </View>
+        <Text style={styles.pointDescription}>
+          {formatMessage(m.controlDescription)}
+        </Text>
       </View>
-
+      <View style={styles.horizontalLine} />
+      <Text style={styles.header}>{formatMessage(m.dataCollection)}</Text>
       <View style={styles.pointContainer}>
-        <MaterialIcon name="bar-chart" size={24} color={COMAPEO_DARK_BLUE} />
-        <Text style={styles.pointTitle}>{formatMessage(m.dataCollection)}</Text>
-        <Text>{/* Detailed description here */}</Text>
+        <View style={styles.pointHeader}>
+          <BarChart width={16} height={16} />
+          <Text style={styles.pointTitle}>
+            {formatMessage(m.whatIsCollected)}
+          </Text>
+        </View>
+        <Text style={styles.pointDescription}>
+          {formatMessage(m.whatIsCollectedDescription)}
+        </Text>
       </View>
-
+      <View style={styles.diagnosticsContainer}>
+        <Text style={[styles.pointTitle, {marginTop: 20}]}>Diagnostics</Text>
+        <View style={styles.diagnosticsContent}>
+          <View style={styles.diagnosticsItem}>
+            <MaterialIcons
+              name="circle"
+              size={4}
+              color={NEW_DARK_GREY}
+              style={styles.bulletIcon}
+            />
+            <View style={styles.textContainer}>
+              <Text style={styles.boldText}>Crash data:</Text>
+              <Text style={styles.diagnosticsDescription}>
+                Information about what caused the app to close unexpectedly
+              </Text>
+            </View>
+          </View>
+          <View style={styles.diagnosticsItem}>
+            <MaterialIcons
+              name="circle"
+              size={4}
+              color={NEW_DARK_GREY}
+              style={styles.bulletIcon}
+            />
+            <View style={styles.textContainer}>
+              <Text style={styles.boldText}>App Errors:</Text>
+              <Text style={styles.diagnosticsDescription}>
+                Information about internal errors that result in the app not
+                functioning as expected
+              </Text>
+            </View>
+          </View>
+          <View style={styles.diagnosticsItem}>
+            <MaterialIcons
+              name="circle"
+              size={4}
+              color={NEW_DARK_GREY}
+              style={styles.bulletIcon}
+            />
+            <View style={styles.textContainer}>
+              <Text style={styles.boldText}>Performance Data:</Text>
+              <Text style={styles.diagnosticsDescription}>
+                Such as launch time, energy usage, app freezes, and
+                responsiveness
+              </Text>
+            </View>
+          </View>
+          <View style={styles.diagnosticsItem}>
+            <MaterialIcons
+              name="circle"
+              size={4}
+              color={NEW_DARK_GREY}
+              style={styles.bulletIcon}
+            />
+            <View style={styles.textContainer}>
+              <Text style={styles.boldText}>Device Info:</Text>
+              <Text style={styles.diagnosticsDescription}>
+                Such as model and manufacturer of your device; device operating
+                system; screen size; device locale (language); device memory.
+              </Text>
+            </View>
+          </View>
+          <View style={styles.diagnosticsItem}>
+            <MaterialIcons
+              name="circle"
+              size={4}
+              color={NEW_DARK_GREY}
+              style={styles.bulletIcon}
+            />
+            <View style={styles.textContainer}>
+              <Text style={styles.boldText}>App Info:</Text>
+              <Text style={styles.diagnosticsDescription}>
+                The version and locale (language) of CoMapeo
+              </Text>
+            </View>
+          </View>
+          <View style={styles.horizontalLine} />
+          <Text style={styles.pointTitle}>App Usage</Text>
+          <View style={styles.diagnosticsItem}>
+            <MaterialIcons
+              name="circle"
+              size={4}
+              color={NEW_DARK_GREY}
+              style={styles.bulletIcon}
+            />
+            <View style={styles.textContainer}>
+              <Text style={styles.boldText}>Country:</Text>
+              <Text style={styles.diagnosticsDescription}>
+                The country where CoMapeo is being used
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
       <View style={styles.pointContainer}>
-        <RaisedFistMediumSkinTone width={24} height={24} />
-        <Text style={styles.pointTitle}>{formatMessage(m.thirdParty)}</Text>
-        <Text>{/* Detailed description here */}</Text>
+        <View style={styles.pointHeader}>
+          <Wrench width={16} height={16} />
+          <Text style={styles.pointTitle}>{formatMessage(m.whyCollected)}</Text>
+        </View>
+        <Text style={styles.pointDescription}>
+          {formatMessage(m.whyCollectedDescription)}
+        </Text>
       </View>
-
-      {/* Other content as needed */}
+      <View style={styles.pointContainer}>
+        <View style={styles.pointHeader}>
+          <RaisedFistMediumSkinTone width={16} height={16} />
+          <Text style={styles.pointTitle}>{formatMessage(m.thirdParty)}</Text>
+        </View>
+        <Text style={styles.pointDescription}>
+          {formatMessage(m.thirdPartyDescription)}
+        </Text>
+      </View>
     </ScrollView>
   );
 };
@@ -225,12 +375,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 30,
   },
-  introBox: {
-    backgroundColor: '#f7f7f7',
-    padding: 15,
-    borderRadius: 5,
-    marginBottom: 10,
-  },
   sectionHeader: {
     paddingVertical: 0,
     paddingHorizontal: 20,
@@ -241,8 +385,6 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 16,
-    fontWeight: '400',
-    lineHeight: 20.8,
     textAlign: 'left',
   },
   sectionContent: {
@@ -255,14 +397,62 @@ const styles = StyleSheet.create({
     color: NEW_DARK_GREY,
   },
   pointContainer: {
+    marginBottom: 20,
+    width: '95%',
+  },
+  pointHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 20,
   },
   pointTitle: {
     marginLeft: 10,
     fontSize: 16,
+    color: BLACK,
+  },
+  pointDescription: {
+    fontSize: 14,
+    color: NEW_DARK_GREY,
+  },
+  horizontalLine: {
+    borderBottomColor: '#CCCCD6',
+    borderBottomWidth: 1,
+    marginVertical: 20,
+    width: '100%',
+  },
+  diagnosticsContainer: {
+    width: '95%',
+    paddingLeft: 20,
+    borderWidth: 1,
+    borderColor: BLUE_GREY,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  diagnosticsContent: {
+    paddingHorizontal: 10,
+    marginTop: 16,
+  },
+  diagnosticsItem: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 10,
+    paddingLeft: 10,
+  },
+  textContainer: {
+    flex: 1,
+    marginLeft: 10,
+  },
+  bulletIcon: {
+    marginTop: 8,
+  },
+  boldText: {
     fontWeight: 'bold',
-    color: COMAPEO_DARK_BLUE,
+    color: NEW_DARK_GREY,
+  },
+  diagnosticsDescription: {
+    fontSize: 14,
+    color: NEW_DARK_GREY,
+    marginLeft: 5,
+    textAlign: 'left',
   },
 });

@@ -13,7 +13,6 @@ import {matchPreset} from '../../../lib/utils';
 
 const emptyObservation: ClientGeneratedObservation = {
   metadata: {},
-  refs: [],
   tags: {
     notes: '',
   },
@@ -117,12 +116,11 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
       });
       return;
     },
-    updatePreset: ({tags, fieldIds}) => {
+    updatePreset: ({tags, fieldRefs}) => {
       const prevValue = get().value;
       if (!prevValue) {
         set({
           value: {
-            refs: [],
             tags: tags,
             metadata: {},
             attachments: [],
@@ -130,6 +128,7 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
         });
         return;
       }
+      const fieldIds = fieldRefs.map(({docId}) => docId);
       // we want to keep any field tags that are the same from the previous preset
       const savedFieldTags = Object.fromEntries(
         Object.entries(prevValue.tags).filter(([key]) =>

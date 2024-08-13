@@ -793,7 +793,10 @@
     "message": "CoMapeo is developed by Awana Digital, a 501c3 non-profit organization registered in the United States. Awana digital works in solidarity with frontline communities to use technology to defend their rights and fight climate change."
   },
   "screens.PrivacyPolicy.control": {
-    "message": "You’re in control"
+    "message": "You're in control"
+  },
+  "screens.PrivacyPolicy.controlDescription": {
+    "message": "You can opt out of sending any information to Awana Digital. You choose where your data is stored and who it is shared with. You may choose to share anonymized, summarized data about how you use CoMapeo with Awana Digital. We will always be transparent about what information you choose to share for the purposed of improving the app, and this information will never include photos, videos, audio, text, or precise locations that you have entered into CoMapeo."
   },
   "screens.PrivacyPolicy.dataCollection": {
     "message": "CoMapeo Data Collection"
@@ -803,6 +806,9 @@
   },
   "screens.PrivacyPolicy.noPII": {
     "message": "No personally identifiable information"
+  },
+  "screens.PrivacyPolicy.noPIIDescription": {
+    "message": "Using CoMapeo does not require a user account. Awana Digital does not collect your name, email address or any other personal details. No permanent user identifier or device identifier is ever shared with Awana Digital, and we take extra measures to ensure that no information you share can be used to track you: identifiers are randomized and rotated (changed) every month and we do not store IP addresses."
   },
   "screens.PrivacyPolicy.openSource": {
     "message": "Open Source and the \"Official\" Version"
@@ -819,14 +825,26 @@
   "screens.PrivacyPolicy.privateByDefault": {
     "message": "Private by default"
   },
+  "screens.PrivacyPolicy.privateByDefaultDescription": {
+    "message": "The data you collect and create with CoMapeo (locations, photos, video, audio, text) is only stored on your device by default, and is not stored or sent anywhere else. When you share data with collaborators by joining a project with them, it is sent encrypted, directly to your collaborators' device. This means that the data is not sent via Awana Digital, nor anyone else, on its way to your collaborator. Awana Digital never sees nor has access to any of the data you collect with CoMapeo unless you explicitly send it to us."
+  },
   "screens.PrivacyPolicy.thirdParty": {
     "message": "Third-party access to data"
+  },
+  "screens.PrivacyPolicy.thirdPartyDescription": {
+    "message": "A \"third-party\" is an organization other than Awana Digital."
   },
   "screens.PrivacyPolicy.whatIsCollected": {
     "message": "What is collected?"
   },
+  "screens.PrivacyPolicy.whatIsCollectedDescription": {
+    "message": "By default, anonymized diagnostic information about your device, app crashes, errors and performance is shared with Awana Digital. You can opt-out of sharing this information at any time. This diagnostic information is completely anonymized and it never contains any of your data (the data you have collected with CoMapeo)."
+  },
   "screens.PrivacyPolicy.whyCollected": {
     "message": "Why is this data collected?"
+  },
+  "screens.PrivacyPolicy.whyCollectedDescription": {
+    "message": "Crash data and app errors together with the device and app info provide Awana Digital with the information we need to fix errors and bugs in the app. The performance data helps us improve the responsiveness of the app and identify errors. The country where CoMapeo is being used and the language of the UI helps us understand minimal information about CoMapeo users: “How many CoMapeo users are there in each country?"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",

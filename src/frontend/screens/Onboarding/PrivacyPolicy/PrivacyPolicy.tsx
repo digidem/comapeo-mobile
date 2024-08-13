@@ -1,32 +1,19 @@
 import * as React from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
-import LockedWithKey from '../../images/LockedWithKey.svg';
-import RaisedFistMediumSkinTone from '../../images/RaisedFistMediumSkinTone.svg';
-import ChevronDown from '../../images/chevrondown.svg';
-import ChevronUp from '../../images/chevrondown-expanded.svg';
-import RedDot from '../../images/redDot.svg';
-import BustInSilhouette from '../../images/bustInSilhouette.svg';
-import BarChart from '../../images/barChart.svg';
-import Wrench from '../../images/wrench.svg';
-
-import {
-  BLACK,
-  BLUE_GREY,
-  COMAPEO_DARK_BLUE,
-  NEW_DARK_GREY,
-  VERY_LIGHT_GREY,
-} from '../../lib/styles';
+import {PointContainer} from './PointContainer';
+import {DiagnosticItem} from './DiagnosticItem';
+import LockedWithKey from '../../../images/LockedWithKey.svg';
+import RaisedFistMediumSkinTone from '../../../images/RaisedFistMediumSkinTone.svg';
+import RedDot from '../../../images/redDot.svg';
+import BustInSilhouette from '../../../images/bustInSilhouette.svg';
+import BarChart from '../../../images/barChart.svg';
+import Wrench from '../../../images/wrench.svg';
+import ChevronDown from '../../../images/chevrondown.svg';
+import ChevronUp from '../../../images/chevrondown-expanded.svg';
+import {styles} from './styles';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {DeviceNamingParamsList} from '../../sharedTypes/navigation';
+import {DeviceNamingParamsList} from '../../../sharedTypes/navigation';
 
 const m = defineMessages({
   navTitle: {
@@ -234,302 +221,75 @@ export const PrivacyPolicy = ({
         )}
       </View>
       <Text style={styles.header}>{formatMessage(m.privacyPolicyTitle)}</Text>
-      <View style={styles.pointContainer}>
-        <View style={styles.pointHeader}>
-          <RedDot width={16} height={16} />
-          <Text style={styles.pointTitle}>
-            {formatMessage(m.privateByDefault)}
-          </Text>
-        </View>
-        <Text style={styles.pointDescription}>
-          {formatMessage(m.privateByDefaultDescription)}
-        </Text>
-      </View>
-      <View style={styles.pointContainer}>
-        <View style={styles.pointHeader}>
-          <BustInSilhouette width={16} height={16} />
-          <Text style={styles.pointTitle}>{formatMessage(m.noPII)}</Text>
-        </View>
-        <Text style={styles.pointDescription}>
-          {formatMessage(m.noPIIDescription)}
-        </Text>
-      </View>
-      <View style={styles.pointContainer}>
-        <View style={styles.pointHeader}>
-          <LockedWithKey width={16} height={16} />
-          <Text style={styles.pointTitle}>{formatMessage(m.control)}</Text>
-        </View>
-        <Text style={styles.pointDescription}>
-          {formatMessage(m.controlDescription)}
-        </Text>
-      </View>
+      <PointContainer
+        icon={RedDot}
+        title={formatMessage(m.privateByDefault)}
+        description={formatMessage(m.privateByDefaultDescription)}
+      />
+      <PointContainer
+        icon={BustInSilhouette}
+        title={formatMessage(m.noPII)}
+        description={formatMessage(m.noPIIDescription)}
+      />
+      <PointContainer
+        icon={LockedWithKey}
+        title={formatMessage(m.control)}
+        description={formatMessage(m.controlDescription)}
+      />
       <View style={styles.horizontalLine} />
       <Text style={styles.header}>{formatMessage(m.dataCollection)}</Text>
-      <View style={styles.pointContainer}>
-        <View style={styles.pointHeader}>
-          <BarChart width={16} height={16} />
-          <Text style={styles.pointTitle}>
-            {formatMessage(m.whatIsCollected)}
-          </Text>
-        </View>
-        <Text style={styles.pointDescription}>
-          {formatMessage(m.whatIsCollectedDescription)}
-        </Text>
-      </View>
+      <PointContainer
+        icon={BarChart}
+        title={formatMessage(m.whatIsCollected)}
+        description={formatMessage(m.whatIsCollectedDescription)}
+      />
       <View style={styles.diagnosticsContainer}>
         <Text style={[styles.pointTitle, {marginTop: 20}]}>
           {formatMessage(m.diagnosticsTitle)}
         </Text>
         <View style={styles.diagnosticsContent}>
-          <View style={styles.diagnosticsItem}>
-            <MaterialIcons
-              name="circle"
-              size={4}
-              color={NEW_DARK_GREY}
-              style={styles.bulletIcon}
-            />
-            <View style={styles.textContainer}>
-              <Text style={styles.boldText}>
-                {formatMessage(m.crashData)}:{' '}
-                <Text style={styles.diagnosticsDescription}>
-                  {formatMessage(m.crashDataDescription)}
-                </Text>
-              </Text>
-            </View>
-          </View>
-          <View style={styles.diagnosticsItem}>
-            <MaterialIcons
-              name="circle"
-              size={4}
-              color={NEW_DARK_GREY}
-              style={styles.bulletIcon}
-            />
-            <View style={styles.textContainer}>
-              <Text style={styles.boldText}>
-                {formatMessage(m.appErrors)}:{' '}
-                <Text style={styles.diagnosticsDescription}>
-                  {formatMessage(m.appErrorsDescription)}
-                </Text>
-              </Text>
-            </View>
-          </View>
-          <View style={styles.diagnosticsItem}>
-            <MaterialIcons
-              name="circle"
-              size={4}
-              color={NEW_DARK_GREY}
-              style={styles.bulletIcon}
-            />
-            <View style={styles.textContainer}>
-              <Text style={styles.boldText}>
-                {formatMessage(m.performanceData)}:{' '}
-                <Text style={styles.diagnosticsDescription}>
-                  {formatMessage(m.performanceDataDescription)}
-                </Text>
-              </Text>
-            </View>
-          </View>
-          <View style={styles.diagnosticsItem}>
-            <MaterialIcons
-              name="circle"
-              size={4}
-              color={NEW_DARK_GREY}
-              style={styles.bulletIcon}
-            />
-            <View style={styles.textContainer}>
-              <Text style={styles.boldText}>
-                {formatMessage(m.deviceInfo)}:{' '}
-                <Text style={styles.diagnosticsDescription}>
-                  {formatMessage(m.deviceInfoDescription)}
-                </Text>
-              </Text>
-            </View>
-          </View>
-          <View style={styles.diagnosticsItem}>
-            <MaterialIcons
-              name="circle"
-              size={4}
-              color={NEW_DARK_GREY}
-              style={styles.bulletIcon}
-            />
-            <View style={styles.textContainer}>
-              <Text style={styles.boldText}>
-                {formatMessage(m.appInfo)}:{' '}
-                <Text style={styles.diagnosticsDescription}>
-                  {formatMessage(m.appInfoDescription)}
-                </Text>
-              </Text>
-            </View>
-          </View>
+          <DiagnosticItem
+            title={formatMessage(m.crashData)}
+            description={formatMessage(m.crashDataDescription)}
+          />
+          <DiagnosticItem
+            title={formatMessage(m.appErrors)}
+            description={formatMessage(m.appErrorsDescription)}
+          />
+          <DiagnosticItem
+            title={formatMessage(m.performanceData)}
+            description={formatMessage(m.performanceDataDescription)}
+          />
+          <DiagnosticItem
+            title={formatMessage(m.deviceInfo)}
+            description={formatMessage(m.deviceInfoDescription)}
+          />
+          <DiagnosticItem
+            title={formatMessage(m.appInfo)}
+            description={formatMessage(m.appInfoDescription)}
+          />
           <View style={styles.horizontalLineSmall} />
           <Text style={[styles.pointTitle, {marginBottom: 20, marginLeft: 0}]}>
             {formatMessage(m.appUsageTitle)}
           </Text>
-          <View style={styles.diagnosticsItem}>
-            <MaterialIcons
-              name="circle"
-              size={4}
-              color={NEW_DARK_GREY}
-              style={styles.bulletIcon}
-            />
-            <View style={styles.textContainer}>
-              <Text style={styles.boldText}>
-                {formatMessage(m.country)}:{' '}
-                <Text style={styles.diagnosticsDescription}>
-                  {formatMessage(m.countryDescription)}
-                </Text>
-              </Text>
-            </View>
-          </View>
+          <DiagnosticItem
+            title={formatMessage(m.country)}
+            description={formatMessage(m.countryDescription)}
+          />
         </View>
       </View>
-      <View style={styles.pointContainer}>
-        <View style={styles.pointHeader}>
-          <Wrench width={16} height={16} />
-          <Text style={styles.pointTitle}>{formatMessage(m.whyCollected)}</Text>
-        </View>
-        <Text style={styles.pointDescription}>
-          {formatMessage(m.whyCollectedDescription)}
-        </Text>
-      </View>
-      <View style={styles.pointContainer}>
-        <View style={styles.pointHeader}>
-          <RaisedFistMediumSkinTone width={16} height={16} />
-          <Text style={styles.pointTitle}>{formatMessage(m.thirdParty)}</Text>
-        </View>
-        <Text style={styles.pointDescription}>
-          {formatMessage(m.thirdPartyDescription)}
-        </Text>
-      </View>
+      <PointContainer
+        icon={Wrench}
+        title={formatMessage(m.whyCollected)}
+        description={formatMessage(m.whyCollectedDescription)}
+      />
+      <PointContainer
+        icon={RaisedFistMediumSkinTone}
+        title={formatMessage(m.thirdParty)}
+        description={formatMessage(m.thirdPartyDescription)}
+      />
     </ScrollView>
   );
 };
 
 PrivacyPolicy.navTitle = m.navTitle;
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    backgroundColor: 'white',
-    marginHorizontal: 10,
-  },
-  overviewBox: {
-    padding: 20,
-    borderWidth: 1,
-    borderColor: BLUE_GREY,
-    borderRadius: 10,
-    backgroundColor: VERY_LIGHT_GREY,
-    marginBottom: 20,
-  },
-  overviewText: {
-    fontSize: 14,
-    marginBottom: 10,
-  },
-  toggleContainer: {
-    borderWidth: 1,
-    borderColor: BLUE_GREY,
-    borderRadius: 10,
-    marginBottom: 0,
-    paddingVertical: 20,
-    paddingHorizontal: 5,
-  },
-  topToggleContainer: {
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
-  },
-  bottomToggleContainer: {
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
-    borderTopWidth: 0,
-  },
-  header: {
-    marginTop: 50,
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 30,
-  },
-  sectionHeader: {
-    paddingVertical: 0,
-    paddingHorizontal: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderRadius: 10,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    textAlign: 'left',
-  },
-  sectionContent: {
-    paddingHorizontal: 20,
-    paddingTop: 10,
-    paddingBottom: 10,
-  },
-  sectionText: {
-    fontSize: 14,
-    color: NEW_DARK_GREY,
-  },
-  pointContainer: {
-    marginBottom: 20,
-  },
-  pointHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  pointTitle: {
-    marginLeft: 10,
-    fontSize: 16,
-    color: BLACK,
-  },
-  pointDescription: {
-    fontSize: 14,
-    color: NEW_DARK_GREY,
-  },
-  horizontalLine: {
-    borderBottomColor: BLUE_GREY,
-    borderBottomWidth: 1,
-    marginVertical: 20,
-  },
-  diagnosticsContainer: {
-    padding: 20,
-    borderWidth: 1,
-    borderColor: BLUE_GREY,
-    borderRadius: 10,
-    marginBottom: 20,
-  },
-  diagnosticsContent: {
-    paddingHorizontal: 10,
-    marginTop: 16,
-  },
-  diagnosticsItem: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginBottom: 10,
-    marginLeft: 10,
-  },
-  textContainer: {
-    marginLeft: 10,
-  },
-  bulletIcon: {
-    marginTop: 8,
-    marginRight: 5,
-  },
-  boldText: {
-    fontWeight: 'bold',
-    color: NEW_DARK_GREY,
-  },
-  diagnosticsDescription: {
-    fontSize: 14,
-    color: NEW_DARK_GREY,
-    marginLeft: 5,
-    textAlign: 'left',
-    fontWeight: 'normal',
-  },
-  horizontalLineSmall: {
-    borderBottomColor: BLUE_GREY,
-    borderBottomWidth: 1,
-    marginVertical: 20,
-    marginHorizontal: -30,
-  },
-});

@@ -242,7 +242,7 @@ function useCreateFakeObservationsMutation() {
         projectApi.preset.getMany(),
       ]);
 
-      const deviceName = deviceInfo.name;
+      const notes = deviceInfo.name ? `Created by ${deviceInfo.name}` : null;
 
       const distanceBufferDegrees = lengthToDegrees(distance, 'kilometers');
 
@@ -254,8 +254,6 @@ function useCreateFakeObservationsMutation() {
         longitude + distanceBufferDegrees,
         latitude + distanceBufferDegrees,
       ] satisfies BBox;
-
-      const notes = deviceName ? `Created by ${deviceName}` : null;
 
       const promises = [];
 

@@ -1,4 +1,3 @@
-import {Preset} from '@mapeo/schema';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {lengthToDegrees} from '@turf/helpers';
 import {randomPosition} from '@turf/random';
@@ -10,9 +9,8 @@ import {StyleSheet, TextInput, ToastAndroid, View} from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {useDeviceInfo} from '../../hooks/server/deviceInfo';
+import {useApi} from '../../contexts/ApiContext';
 import {OBSERVATION_KEY} from '../../hooks/server/observations';
-import {usePresetsQuery} from '../../hooks/server/presets';
 import {useLocation} from '../../hooks/useLocation';
 import {LIGHT_GREY, RED, WHITE} from '../../lib/styles';
 import {Button} from '../../sharedComponents/Button';
@@ -27,9 +25,7 @@ const BASE_NUMBER_INPUT_RULES = {
 };
 
 export function CreateTestDataScreen() {
-  const presetsQuery = usePresetsQuery();
   const locationState = useLocation({maxDistanceInterval: 0});
-  const deviceInfoQuery = useDeviceInfo();
   const createFakeObservations = useCreateFakeObservationsMutation();
 
   const {
@@ -45,59 +41,48 @@ export function CreateTestDataScreen() {
     <ScreenContentWithDock
       contentContainerStyle={styles.contentContainer}
       dockContent={
-        deviceInfoQuery.data && presetsQuery.data ? (
-          <Button
-            fullWidth
-            disabled={createFakeObservations.status === 'pending'}
-            onPress={handleSubmit(data => {
-              if (data.count === undefined) return;
-              if (!locationState.location) {
-                ToastAndroid.show('Waiting for location', ToastAndroid.SHORT);
-                return;
-              }
+        <Button
+          fullWidth
+          disabled={createFakeObservations.status === 'pending'}
+          onPress={handleSubmit(data => {
+            if (data.count === undefined) return;
+            if (!locationState.location) {
+              ToastAndroid.show('Waiting for location', ToastAndroid.SHORT);
+              return;
+            }
 
-              createFakeObservations.mutate(
-                {
-                  count: data.count,
-                  location: locationState.location,
-                  deviceName: deviceInfoQuery.data.name,
-                  presets: presetsQuery.data,
-                  distance:
-                    data.distance === undefined
-                      ? DISTANCE_BUFFER_KM
-                      : data.distance,
+            createFakeObservations.mutate(
+              {
+                count: data.count,
+                location: locationState.location,
+                distance:
+                  data.distance === undefined
+                    ? DISTANCE_BUFFER_KM
+                    : data.distance,
+              },
+              {
+                onSuccess: () => {
+                  ToastAndroid.show('Observations created', ToastAndroid.SHORT);
                 },
-                {
-                  onSuccess: () => {
-                    ToastAndroid.show(
-                      'Observations created',
-                      ToastAndroid.SHORT,
-                    );
-                  },
-                  onError: () => {
-                    ToastAndroid.show(
-                      'Failed to create observations',
-                      ToastAndroid.SHORT,
-                    );
-                  },
+                onError: () => {
+                  ToastAndroid.show(
+                    'Failed to create observations',
+                    ToastAndroid.SHORT,
+                  );
                 },
-              );
-            })}>
-            {createFakeObservations.status === 'pending' ? (
-              <UIActivityIndicator
-                size={30}
-                color={WHITE}
-                style={{paddingVertical: 12}}
-              />
-            ) : (
-              'Create'
-            )}
-          </Button>
-        ) : (
-          <View style={{paddingVertical: 20}}>
-            <UIActivityIndicator size={30} />
-          </View>
-        )
+              },
+            );
+          })}>
+          {createFakeObservations.status === 'pending' ? (
+            <UIActivityIndicator
+              size={30}
+              color={WHITE}
+              style={{paddingVertical: 12}}
+            />
+          ) : (
+            'Create'
+          )}
+        </Button>
       }>
       <View style={styles.field}>
         <Text style={styles.labelText}>Number of observations (required):</Text>
@@ -239,22 +224,26 @@ const styles = StyleSheet.create({
 
 function useCreateFakeObservationsMutation() {
   const queryClient = useQueryClient();
+  const mapeoApi = useApi();
   const {projectApi, projectId} = useActiveProject();
 
   return useMutation({
-    mutationFn: ({
+    mutationFn: async ({
       count,
-      deviceName,
       location,
-      presets,
       distance,
     }: {
       count: number;
-      deviceName?: string;
       location: LocationObject;
-      presets: Array<Preset>;
       distance: number;
     }) => {
+      const [deviceInfo, presets] = await Promise.all([
+        mapeoApi.getDeviceInfo(),
+        projectApi.preset.getMany(),
+      ]);
+
+      const deviceName = deviceInfo.name;
+
       const distanceBufferDegrees = lengthToDegrees(distance, 'kilometers');
 
       const {latitude, longitude} = location.coords;

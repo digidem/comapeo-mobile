@@ -194,6 +194,16 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
           <DrawerListItemIcon iconName="info-outline" />
           <ListItemText primary={<FormattedMessage {...m.aboutCoMapeo} />} />
         </ListItem>
+        {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
+          <ListItem
+            onPress={() => {
+              navigate('CreateTestData');
+            }}
+            testID="settingsCreateTestDataButton">
+            <DrawerListItemIcon iconName="auto-fix-high" />
+            <ListItemText primary="Create Test Data" />
+          </ListItem>
+        )}
       </List>
     </DrawerContentScrollView>
   );

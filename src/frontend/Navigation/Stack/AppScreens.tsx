@@ -65,6 +65,7 @@ import {
   createNavigationOptions as createObservationCreateNavigationOptions,
 } from '../../screens/ObservationCreate';
 import {AboutSettings} from '../../screens/Settings/About';
+import {CreateTestDataScreen} from '../../screens/Settings/CreateTestData';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -272,5 +273,13 @@ export const createDefaultScreenGroup = ({
       component={AboutSettings}
       options={{headerTitle: intl(AboutSettings.navTitle)}}
     />
+
+    {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
+      <RootStack.Screen
+        name="CreateTestData"
+        component={CreateTestDataScreen}
+        options={{headerTitle: 'Create Test Data'}}
+      />
+    )}
   </RootStack.Group>
 );

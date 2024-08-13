@@ -275,7 +275,6 @@ function useCreateFakeObservationsMutation() {
               mocked: !!location.mocked,
             },
           },
-          refs: [],
           schemaName: 'observation' as const,
           tags: {...randomPreset!.tags, notes},
         };

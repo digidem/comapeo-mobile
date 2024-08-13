@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 import LockedWithKey from '../../images/LockedWithKey.svg';
 import RaisedFistMediumSkinTone from '../../images/RaisedFistMediumSkinTone.svg';
 import ChevronDown from '../../images/chevrondown.svg';
@@ -15,7 +17,6 @@ import RedDot from '../../images/redDot.svg';
 import BustInSilhouette from '../../images/bustInSilhouette.svg';
 import BarChart from '../../images/barChart.svg';
 import Wrench from '../../images/wrench.svg';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import {
   BLACK,
@@ -57,7 +58,7 @@ const m = defineMessages({
   openSourceContent: {
     id: 'screens.PrivacyPolicy.openSourceContent',
     defaultMessage:
-      'CoMapeo is an open-source application.\n\nThis means that anyone can view the code that makes the app work and can verify the privact declarations in this document. It also means that anyone can adapt the app to their own needs and release an alternative version.\n\nThis document refers to data collected by the official releases of CoMapeo, digitally signed by Awana Digital, available from the Google Play Store or the Awana Digital website.\n\nUnofficial releases of CoMapeo obtained from other channels are outside our control and may share additional information with other organizations.',
+      'CoMapeo is an open-source application.\n\nThis means that anyone can view the code that makes the app work and can verify the privacy declarations in this document. It also means that anyone can adapt the app to their own needs and release an alternative version.\n\nThis document refers to data collected by the official releases of CoMapeo, digitally signed by Awana Digital, available from the Google Play Store or the Awana Digital website.\n\nUnofficial releases of CoMapeo obtained from other channels are outside our control and may share additional information with other organizations.',
   },
   privateByDefault: {
     id: 'screens.PrivacyPolicy.privateByDefault',
@@ -98,6 +99,66 @@ const m = defineMessages({
     id: 'screens.PrivacyPolicy.whatIsCollectedDescription',
     defaultMessage:
       'By default, anonymized diagnostic information about your device, app crashes, errors and performance is shared with Awana Digital.\n\nYou can opt-out of sharing this information at any time. This diagnostic information is completely anonymized and it never contains any of your data (the data you have collected with CoMapeo).',
+  },
+  diagnosticsTitle: {
+    id: 'screens.PrivacyPolicy.diagnosticsTitle',
+    defaultMessage: 'Diagnostics',
+  },
+  crashData: {
+    id: 'screens.PrivacyPolicy.crashData',
+    defaultMessage: 'Crash Data',
+  },
+  crashDataDescription: {
+    id: 'screens.PrivacyPolicy.crashDataDescription',
+    defaultMessage:
+      'Information about what caused the app to close unexpectedly',
+  },
+  appErrors: {
+    id: 'screens.PrivacyPolicy.appErrors',
+    defaultMessage: 'App Errors',
+  },
+  appErrorsDescription: {
+    id: 'screens.PrivacyPolicy.appErrorsDescription',
+    defaultMessage:
+      'Information about internal errors that result in the app not functioning as expected',
+  },
+  performanceData: {
+    id: 'screens.PrivacyPolicy.performanceData',
+    defaultMessage: 'Performance Data',
+  },
+  performanceDataDescription: {
+    id: 'screens.PrivacyPolicy.performanceDataDescription',
+    defaultMessage:
+      'Such as launch time, energy usage, app freezes, and responsiveness',
+  },
+  deviceInfo: {
+    id: 'screens.PrivacyPolicy.deviceInfo',
+    defaultMessage: 'Device Info',
+  },
+  deviceInfoDescription: {
+    id: 'screens.PrivacyPolicy.deviceInfoDescription',
+    defaultMessage:
+      'Such as model and manufacturer of your device; device operating system; screen size; device locale (language); device memory.',
+  },
+  appInfo: {
+    id: 'screens.PrivacyPolicy.appInfo',
+    defaultMessage: 'App Info',
+  },
+  appInfoDescription: {
+    id: 'screens.PrivacyPolicy.appInfoDescription',
+    defaultMessage: 'The version and locale (language) of CoMapeo',
+  },
+  appUsageTitle: {
+    id: 'screens.PrivacyPolicy.appUsageTitle',
+    defaultMessage: 'App Usage',
+  },
+  country: {
+    id: 'screens.PrivacyPolicy.country',
+    defaultMessage: 'Country',
+  },
+  countryDescription: {
+    id: 'screens.PrivacyPolicy.countryDescription',
+    defaultMessage: 'The country where CoMapeo is being used',
   },
   whyCollected: {
     id: 'screens.PrivacyPolicy.whyCollected',
@@ -216,7 +277,9 @@ export const PrivacyPolicy = ({
         </Text>
       </View>
       <View style={styles.diagnosticsContainer}>
-        <Text style={[styles.pointTitle, {marginTop: 20}]}>Diagnostics</Text>
+        <Text style={[styles.pointTitle, {marginTop: 20}]}>
+          {formatMessage(m.diagnosticsTitle)}
+        </Text>
         <View style={styles.diagnosticsContent}>
           <View style={styles.diagnosticsItem}>
             <MaterialIcons
@@ -226,9 +289,11 @@ export const PrivacyPolicy = ({
               style={styles.bulletIcon}
             />
             <View style={styles.textContainer}>
-              <Text style={styles.boldText}>Crash data:</Text>
-              <Text style={styles.diagnosticsDescription}>
-                Information about what caused the app to close unexpectedly
+              <Text style={styles.boldText}>
+                {formatMessage(m.crashData)}:{' '}
+                <Text style={styles.diagnosticsDescription}>
+                  {formatMessage(m.crashDataDescription)}
+                </Text>
               </Text>
             </View>
           </View>
@@ -240,10 +305,11 @@ export const PrivacyPolicy = ({
               style={styles.bulletIcon}
             />
             <View style={styles.textContainer}>
-              <Text style={styles.boldText}>App Errors:</Text>
-              <Text style={styles.diagnosticsDescription}>
-                Information about internal errors that result in the app not
-                functioning as expected
+              <Text style={styles.boldText}>
+                {formatMessage(m.appErrors)}:{' '}
+                <Text style={styles.diagnosticsDescription}>
+                  {formatMessage(m.appErrorsDescription)}
+                </Text>
               </Text>
             </View>
           </View>
@@ -255,10 +321,11 @@ export const PrivacyPolicy = ({
               style={styles.bulletIcon}
             />
             <View style={styles.textContainer}>
-              <Text style={styles.boldText}>Performance Data:</Text>
-              <Text style={styles.diagnosticsDescription}>
-                Such as launch time, energy usage, app freezes, and
-                responsiveness
+              <Text style={styles.boldText}>
+                {formatMessage(m.performanceData)}:{' '}
+                <Text style={styles.diagnosticsDescription}>
+                  {formatMessage(m.performanceDataDescription)}
+                </Text>
               </Text>
             </View>
           </View>
@@ -270,10 +337,11 @@ export const PrivacyPolicy = ({
               style={styles.bulletIcon}
             />
             <View style={styles.textContainer}>
-              <Text style={styles.boldText}>Device Info:</Text>
-              <Text style={styles.diagnosticsDescription}>
-                Such as model and manufacturer of your device; device operating
-                system; screen size; device locale (language); device memory.
+              <Text style={styles.boldText}>
+                {formatMessage(m.deviceInfo)}:{' '}
+                <Text style={styles.diagnosticsDescription}>
+                  {formatMessage(m.deviceInfoDescription)}
+                </Text>
               </Text>
             </View>
           </View>
@@ -285,14 +353,18 @@ export const PrivacyPolicy = ({
               style={styles.bulletIcon}
             />
             <View style={styles.textContainer}>
-              <Text style={styles.boldText}>App Info:</Text>
-              <Text style={styles.diagnosticsDescription}>
-                The version and locale (language) of CoMapeo
+              <Text style={styles.boldText}>
+                {formatMessage(m.appInfo)}:{' '}
+                <Text style={styles.diagnosticsDescription}>
+                  {formatMessage(m.appInfoDescription)}
+                </Text>
               </Text>
             </View>
           </View>
-          <View style={styles.horizontalLine} />
-          <Text style={styles.pointTitle}>App Usage</Text>
+          <View style={styles.horizontalLineSmall} />
+          <Text style={[styles.pointTitle, {marginBottom: 20, marginLeft: 0}]}>
+            {formatMessage(m.appUsageTitle)}
+          </Text>
           <View style={styles.diagnosticsItem}>
             <MaterialIcons
               name="circle"
@@ -301,9 +373,11 @@ export const PrivacyPolicy = ({
               style={styles.bulletIcon}
             />
             <View style={styles.textContainer}>
-              <Text style={styles.boldText}>Country:</Text>
-              <Text style={styles.diagnosticsDescription}>
-                The country where CoMapeo is being used
+              <Text style={styles.boldText}>
+                {formatMessage(m.country)}:{' '}
+                <Text style={styles.diagnosticsDescription}>
+                  {formatMessage(m.countryDescription)}
+                </Text>
               </Text>
             </View>
           </View>
@@ -337,9 +411,9 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     backgroundColor: 'white',
+    marginHorizontal: 10,
   },
   overviewBox: {
-    width: '95%',
     padding: 20,
     borderWidth: 1,
     borderColor: BLUE_GREY,
@@ -352,7 +426,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   toggleContainer: {
-    width: '95%',
     borderWidth: 1,
     borderColor: BLUE_GREY,
     borderRadius: 10,
@@ -398,7 +471,6 @@ const styles = StyleSheet.create({
   },
   pointContainer: {
     marginBottom: 20,
-    width: '95%',
   },
   pointHeader: {
     flexDirection: 'row',
@@ -415,14 +487,12 @@ const styles = StyleSheet.create({
     color: NEW_DARK_GREY,
   },
   horizontalLine: {
-    borderBottomColor: '#CCCCD6',
+    borderBottomColor: BLUE_GREY,
     borderBottomWidth: 1,
     marginVertical: 20,
-    width: '100%',
   },
   diagnosticsContainer: {
-    width: '95%',
-    paddingLeft: 20,
+    padding: 20,
     borderWidth: 1,
     borderColor: BLUE_GREY,
     borderRadius: 10,
@@ -436,14 +506,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     marginBottom: 10,
-    paddingLeft: 10,
+    marginLeft: 10,
   },
   textContainer: {
-    flex: 1,
     marginLeft: 10,
   },
   bulletIcon: {
     marginTop: 8,
+    marginRight: 5,
   },
   boldText: {
     fontWeight: 'bold',
@@ -454,5 +524,12 @@ const styles = StyleSheet.create({
     color: NEW_DARK_GREY,
     marginLeft: 5,
     textAlign: 'left',
+    fontWeight: 'normal',
+  },
+  horizontalLineSmall: {
+    borderBottomColor: BLUE_GREY,
+    borderBottomWidth: 1,
+    marginVertical: 20,
+    marginHorizontal: -30,
   },
 });

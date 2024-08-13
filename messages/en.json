@@ -792,14 +792,50 @@
   "screens.PrivacyPolicy.aboutAwanaContent": {
     "message": "CoMapeo is developed by Awana Digital, a 501c3 non-profit organization registered in the United States. Awana digital works in solidarity with frontline communities to use technology to defend their rights and fight climate change."
   },
+  "screens.PrivacyPolicy.appErrors": {
+    "message": "App Errors"
+  },
+  "screens.PrivacyPolicy.appErrorsDescription": {
+    "message": "Information about internal errors that result in the app not functioning as expected"
+  },
+  "screens.PrivacyPolicy.appInfo": {
+    "message": "App Info"
+  },
+  "screens.PrivacyPolicy.appInfoDescription": {
+    "message": "The version and locale (language) of CoMapeo"
+  },
+  "screens.PrivacyPolicy.appUsageTitle": {
+    "message": "App Usage"
+  },
   "screens.PrivacyPolicy.control": {
     "message": "You're in control"
   },
   "screens.PrivacyPolicy.controlDescription": {
     "message": "You can opt out of sending any information to Awana Digital. You choose where your data is stored and who it is shared with. You may choose to share anonymized, summarized data about how you use CoMapeo with Awana Digital. We will always be transparent about what information you choose to share for the purposed of improving the app, and this information will never include photos, videos, audio, text, or precise locations that you have entered into CoMapeo."
   },
+  "screens.PrivacyPolicy.country": {
+    "message": "Country"
+  },
+  "screens.PrivacyPolicy.countryDescription": {
+    "message": "The country where CoMapeo is being used"
+  },
+  "screens.PrivacyPolicy.crashData": {
+    "message": "Crash Data"
+  },
+  "screens.PrivacyPolicy.crashDataDescription": {
+    "message": "Information about what caused the app to close unexpectedly"
+  },
   "screens.PrivacyPolicy.dataCollection": {
     "message": "CoMapeo Data Collection"
+  },
+  "screens.PrivacyPolicy.deviceInfo": {
+    "message": "Device Info"
+  },
+  "screens.PrivacyPolicy.deviceInfoDescription": {
+    "message": "Such as model and manufacturer of your device; device operating system; screen size; device locale (language); device memory."
+  },
+  "screens.PrivacyPolicy.diagnosticsTitle": {
+    "message": "Diagnostics"
   },
   "screens.PrivacyPolicy.navTitle": {
     "message": "Privacy Policy"
@@ -814,10 +850,16 @@
     "message": "Open Source and the \"Official\" Version"
   },
   "screens.PrivacyPolicy.openSourceContent": {
-    "message": "CoMapeo is an open-source application. This means that anyone can view the code that makes the app work and can verify the privact declarations in this document. It also means that anyone can adapt the app to their own needs and release an alternative version. This document refers to data collected by the official releases of CoMapeo, digitally signed by Awana Digital, available from the Google Play Store or the Awana Digital website. Unofficial releases of CoMapeo obtained from other channels are outside our control and may share additional information with other organizations."
+    "message": "CoMapeo is an open-source application. This means that anyone can view the code that makes the app work and can verify the privacy declarations in this document. It also means that anyone can adapt the app to their own needs and release an alternative version. This document refers to data collected by the official releases of CoMapeo, digitally signed by Awana Digital, available from the Google Play Store or the Awana Digital website. Unofficial releases of CoMapeo obtained from other channels are outside our control and may share additional information with other organizations."
   },
   "screens.PrivacyPolicy.overview": {
     "message": "The following explains what information (or \"data\") is sent from CoMapeo to the application developer, Awana Digital, and how that information is used."
+  },
+  "screens.PrivacyPolicy.performanceData": {
+    "message": "Performance Data"
+  },
+  "screens.PrivacyPolicy.performanceDataDescription": {
+    "message": "Such as launch time, energy usage, app freezes, and responsiveness"
   },
   "screens.PrivacyPolicy.privacyPolicyTitle": {
     "message": "CoMapeo Data Privacy"

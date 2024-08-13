@@ -15,14 +15,14 @@
         "buildType": "apk"
       },
       "env": {
-        "APP_VARIANT": "development"
+        "EXPO_PUBLIC_APP_VARIANT": "development"
       }
     },
     "test": {
       "distribution": "internal",
       "channel": "preview",
       "env": {
-        "APP_VARIANT": "test"
+        "EXPO_PUBLIC_APP_VARIANT": "test"
       },
       "android": {
         "image": "latest",
@@ -41,7 +41,7 @@
       },
       "channel": "production",
       "env": {
-        "APP_VARIANT": "production"
+        "EXPO_PUBLIC_APP_VARIANT": "production"
       }
     }
   },

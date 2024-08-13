@@ -29,7 +29,7 @@ function deriveSupportedLanguages(
     if (!hasAtLeastOneTranslatedString) continue;
 
     if (!isSupportedLanguageLocale(locale)) {
-      if (process.env.APP_VARIANT === 'development') {
+      if (process.env.EXPO_PUBLIC_APP_VARIANT === 'development') {
         console.warn(
           `Locale "${locale}" is not available in CoMapeo (see \`src/frontend/languages.json\`)`,
         );

@@ -1,11 +1,11 @@
 const SUFFIX =
   {development: '.dev', production: '', test: '.test'}[
-    process.env.APP_VARIANT
+    process.env.EXPO_PUBLIC_APP_VARIANT
   ] ?? '';
 
 const NAME =
   {development: ' (DEV)', production: '', test: ' (TEST)'}[
-    process.env.APP_VARIANT
+    process.env.EXPO_PUBLIC_APP_VARIANT
   ] ?? '';
 
 /**

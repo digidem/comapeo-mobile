@@ -135,6 +135,9 @@
   "Screens.Settings.ProjectSettings.deviceName": {
     "message": "Device Name"
   },
+  "Screens.Settings.ProjectSettings.syncSettings": {
+    "message": "Sync Settings"
+  },
   "Screens.Settings.ProjectSettings.title": {
     "message": "Project Settings"
   },
@@ -1028,6 +1031,21 @@
   },
   "screens.Sync.ProjectSyncDisplay.upToDate": {
     "message": "Up to Date! No data to Sync"
+  },
+  "screens.SyncSettings.syncEverything": {
+    "message": "Sync Everything"
+  },
+  "screens.SyncSettings.syncEverythingDescription": {
+    "message": "Your device will sync all content at full size, including photos, audio, and videos. Note: This will use more storage."
+  },
+  "screens.SyncSettings.syncPreviews": {
+    "message": "Sync Previews (Photos Only)"
+  },
+  "screens.SyncSettings.syncPreviewsDescription": {
+    "message": "Photos will sync at a reduced smaller size. Device will not sync audio or video."
+  },
+  "screens.SyncSettings.title": {
+    "message": "Sync Settings"
   },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",

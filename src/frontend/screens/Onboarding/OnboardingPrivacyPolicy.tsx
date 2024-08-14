@@ -10,9 +10,7 @@ import {useIntl, defineMessages} from 'react-intl';
 import {PrivacyPolicy} from '../PrivacyPolicy';
 import {BLUE_GREY, WHITE, BLACK, COMAPEO_BLUE} from '../../lib/styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
-import {AppDiagnosticMetrics} from '../../metrics/AppDiagnosticMetrics';
-import {DeviceDiagnosticMetrics} from '../../metrics/DeviceDiagnosticMetrics';
+import {usePersistedPermission} from '../../hooks/persistedState/usePersistedPermission';
 
 const m = defineMessages({
   navTitle: {
@@ -30,19 +28,8 @@ const m = defineMessages({
 });
 
 export const OnboardingPrivacyPolicy = () => {
-  const appDiagnosticMetrics = new AppDiagnosticMetrics();
-  const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
   const {formatMessage} = useIntl();
-  const [isDiagnosticsEnabled, setIsDiagnosticsEnabled] = React.useState(false);
-
-  const toggleDiagnostics = () => {
-    setIsDiagnosticsEnabled(prev => !prev);
-  };
-
-  React.useEffect(() => {
-    appDiagnosticMetrics.setEnabled(isDiagnosticsEnabled);
-    deviceDiagnosticMetrics.setEnabled(isDiagnosticsEnabled);
-  }, [isDiagnosticsEnabled]);
+  const {isPermissionEnabled, togglePermission} = usePersistedPermission();
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -54,12 +41,12 @@ export const OnboardingPrivacyPolicy = () => {
           {formatMessage(m.shareDiagnostics)}
         </Text>
         <TouchableOpacity
-          onPress={toggleDiagnostics}
+          onPress={togglePermission}
           style={[
             styles.checkBox,
-            isDiagnosticsEnabled && styles.checkBoxChecked,
+            isPermissionEnabled && styles.checkBoxChecked,
           ]}>
-          {isDiagnosticsEnabled && (
+          {isPermissionEnabled && (
             <MaterialIcons name="check" size={18} color={WHITE} />
           )}
         </TouchableOpacity>

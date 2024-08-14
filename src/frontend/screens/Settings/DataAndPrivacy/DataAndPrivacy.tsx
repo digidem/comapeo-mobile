@@ -18,8 +18,7 @@ import {
 } from '../../../lib/styles';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AppStackParamsList} from '../../../sharedTypes/navigation';
-import {AppDiagnosticMetrics} from '../../../metrics/AppDiagnosticMetrics';
-import {DeviceDiagnosticMetrics} from '../../../metrics/DeviceDiagnosticMetrics';
+import {usePersistedPermission} from '../../../hooks/persistedState/usePersistedPermission';
 
 const m = defineMessages({
   navTitle: {
@@ -53,18 +52,7 @@ export const DataAndPrivacy = ({
   navigation,
 }: NativeStackScreenProps<AppStackParamsList, 'DataAndPrivacy'>) => {
   const {formatMessage} = useIntl();
-  const appDiagnosticMetrics = new AppDiagnosticMetrics();
-  const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
-  const [isDiagnosticsEnabled, setIsDiagnosticsEnabled] = React.useState(false);
-
-  const toggleDiagnostics = () => {
-    setIsDiagnosticsEnabled(prev => !prev);
-  };
-
-  React.useEffect(() => {
-    appDiagnosticMetrics.setEnabled(isDiagnosticsEnabled);
-    deviceDiagnosticMetrics.setEnabled(isDiagnosticsEnabled);
-  }, [isDiagnosticsEnabled]);
+  const {isPermissionEnabled, togglePermission} = usePersistedPermission();
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -116,12 +104,12 @@ export const DataAndPrivacy = ({
             {formatMessage(m.shareDiagnostics)}
           </Text>
           <TouchableOpacity
-            onPress={toggleDiagnostics}
+            onPress={togglePermission}
             style={[
               styles.checkBox,
-              isDiagnosticsEnabled && styles.checkBoxChecked,
+              isPermissionEnabled && styles.checkBoxChecked,
             ]}>
-            {isDiagnosticsEnabled && (
+            {isPermissionEnabled && (
               <MaterialIcons name="check" size={18} color={WHITE} />
             )}
           </TouchableOpacity>

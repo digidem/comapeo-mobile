@@ -148,7 +148,10 @@ export const ObservationCreate = ({
                   },
                 ]);
               }
-              addNewTrackObservation(data.docId);
+              addNewTrackObservation({
+                docId: data.docId,
+                versionId: data.versionId,
+              });
             }
           },
         },
@@ -207,7 +210,7 @@ export const ObservationCreate = ({
         }}
         photos={photos}
         location={coordinateInfo}
-        actionsRow={<ActionsRow fieldIds={preset?.fieldIds} />}
+        actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
       />
       <ErrorBottomSheet
         error={createObservationMutation.error || createBlobMutation.error}

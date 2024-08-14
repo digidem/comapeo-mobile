@@ -39,7 +39,10 @@ const resolveAttachmentUrlQueryOptions = (
   projectApi: ClientApi<MapeoProjectApi>,
   attachment: Observation['attachments'][0],
   variant: BlobVariant<
-    Exclude<Observation['attachments'][number]['type'], 'UNRECOGNIZED'>
+    Exclude<
+      Observation['attachments'][number]['type'],
+      'UNRECOGNIZED' | 'attachment_type_unspecified'
+    >
   >,
   enabledByDefault: boolean = true,
 ) => {
@@ -93,7 +96,10 @@ const resolveAttachmentUrlQueryOptions = (
 export function useAttachmentUrlQuery(
   attachment: Observation['attachments'][0],
   variant: BlobVariant<
-    Exclude<Observation['attachments'][number]['type'], 'UNRECOGNIZED'>
+    Exclude<
+      Observation['attachments'][number]['type'],
+      'UNRECOGNIZED' | 'attachment_type_unspecified'
+    >
   >,
   enabledByDefault: boolean = true,
 ) {
@@ -112,7 +118,10 @@ export function useAttachmentUrlQuery(
 export function useAttachmentUrlQueries(
   attachments: Observation['attachments'],
   variant: BlobVariant<
-    Exclude<Observation['attachments'][number]['type'], 'UNRECOGNIZED'>
+    Exclude<
+      Observation['attachments'][number]['type'],
+      'UNRECOGNIZED' | 'attachment_type_unspecified'
+    >
   >,
   enabledByDefault: boolean = true,
 ) {

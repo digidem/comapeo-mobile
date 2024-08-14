@@ -349,6 +349,21 @@
     "description": "Universal Transverse Mercator coordinate format",
     "message": "Universal Transverse Mercator (UTM)"
   },
+  "screens.DataAndPrivacy.diagnosticInfoText": {
+    "message": "Anonymized information about your device, app crashes, errors and performance helps Awana Digital improve the app and fix errors."
+  },
+  "screens.DataAndPrivacy.diagnosticInfoTitle": {
+    "message": "Diagnostic Information"
+  },
+  "screens.DataAndPrivacy.learnMore": {
+    "message": "Learn More"
+  },
+  "screens.DataAndPrivacy.navTitle": {
+    "message": "Data & Privacy"
+  },
+  "screens.DataAndPrivacy.respectsPrivacy": {
+    "message": "CoMapeo Respects Your Privacy & Autonomy"
+  },
   "screens.DataPrivacy.description": {
     "message": "CoMapeo allows you and your collaborators to map offline without needing servers."
   },

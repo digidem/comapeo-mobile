@@ -5,10 +5,11 @@ import {PointContainer} from './PointContainer';
 import {DiagnosticItem} from './DiagnosticItem';
 import LockedWithKey from '../../images/LockedWithKey.svg';
 import RaisedFistMediumSkinTone from '../../images/RaisedFistMediumSkinTone.svg';
-import RedDot from '../../images/redDot.svg';
-import BustInSilhouette from '../../images/bustInSilhouette.svg';
-import BarChart from '../../images/barChart.svg';
-import Wrench from '../../images/wrench.svg';
+import RaisedHandMediumSkinTone from '../../images/RaisedHandMediumSkinTone.svg';
+import RedDot from '../../images/RedDot.svg';
+import BustInSilhouette from '../../images/BustInSilhouette.svg';
+import BarChart from '../../images/BarChart.svg';
+import Wrench from '../../images/Wrench.svg';
 import ChevronDown from '../../images/chevrondown.svg';
 import ChevronUp from '../../images/chevrondown-expanded.svg';
 import {styles} from './styles';
@@ -174,10 +175,10 @@ const m = defineMessages({
 });
 
 type PrivacyPolicyProps = Partial<
-  NativeStackScreenProps<DeviceNamingParamsList, 'PrivacyPolicy'>
+  NativeStackScreenProps<DeviceNamingParamsList, 'OnboardingPrivacyPolicy'>
 >;
 
-export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({navigation}) => {
+export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = () => {
   const {formatMessage} = useIntl();
   const [awanaExpanded, setAwanaExpanded] = React.useState(false);
   const [openSourceExpanded, setOpenSourceExpanded] = React.useState(false);
@@ -292,7 +293,7 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({navigation}) => {
         description={formatMessage(m.whyCollectedDescription)}
       />
       <PointContainer
-        icon={Wrench}
+        icon={RaisedHandMediumSkinTone}
         title={formatMessage(m.notCollected)}
         description={formatMessage(m.notCollectedDescription)}
       />

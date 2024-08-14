@@ -7,7 +7,6 @@ import {useIntl} from 'react-intl';
 import {TouchableNativeFeedback} from '../../sharedComponents/Touchables';
 import {VERY_LIGHT_BLUE} from '../../lib/styles';
 import {QuestionLabel} from './QuestionLabel';
-import {convertSelectOptionsToLabeled} from '../../lib/utils';
 
 import type {QuestionProps} from './Question';
 import {ViewStyleProp} from '../../sharedTypes';
@@ -49,7 +48,7 @@ export const SelectOne = React.memo<Props>(({field}) => {
   return (
     <>
       <QuestionLabel field={field} />
-      {convertSelectOptionsToLabeled(field.options).map((item, index) => (
+      {field.options.map((item, index) => (
         <RadioItem
           key={item.label}
           onPress={() => updateTags(field.tagKey, item.value)}

@@ -17,6 +17,7 @@ interface BaseActionButtonConfig {
   text: React.ReactNode;
   variation: 'filled' | 'outlined';
   icon?: React.ReactNode;
+  testID?: string;
 }
 
 interface PrimaryActionButtonConfig extends BaseActionButtonConfig {
@@ -33,7 +34,7 @@ export type ActionButtonConfig =
   | SecondaryActionButtonConfig;
 
 export interface Props extends React.PropsWithChildren {
-  buttonConfigs: ActionButtonConfig[];
+  buttonConfigs?: ActionButtonConfig[];
   description?: React.ReactNode;
   descriptionStyle?: TextStyle;
   icon?: React.ReactNode;
@@ -78,62 +79,65 @@ export const Content = ({
           </ScrollView>
         ) : null}
       </View>
-      <View style={styles.buttonsContainer}>
-        {loading ? (
-          <View style={styles.loadingContainer}>
-            <UIActivityIndicator size={LOADING_INDICATOR_HEIGHT} />
-          </View>
-        ) : (
-          buttonConfigs.map((config, index) => {
-            return (
-              <Button
-                fullWidth
-                key={index}
-                TouchableComponent={props => (
-                  <TouchableHighlight
-                    {...props}
-                    underlayColor={
+      {buttonConfigs && (
+        <View style={styles.buttonsContainer}>
+          {loading ? (
+            <View style={styles.loadingContainer}>
+              <UIActivityIndicator size={LOADING_INDICATOR_HEIGHT} />
+            </View>
+          ) : (
+            buttonConfigs.map((config, index) => {
+              return (
+                <Button
+                  testID={config?.testID}
+                  fullWidth
+                  key={index}
+                  TouchableComponent={props => (
+                    <TouchableHighlight
+                      {...props}
+                      underlayColor={
+                        config.variation === 'outlined'
+                          ? WHITE
+                          : config.dangerous
+                            ? RED
+                            : LIGHT_BLUE
+                      }
+                    />
+                  )}
+                  onPress={config.onPress}
+                  style={{
+                    backgroundColor:
                       config.variation === 'outlined'
                         ? WHITE
                         : config.dangerous
-                          ? RED
-                          : LIGHT_BLUE
-                    }
-                  />
-                )}
-                onPress={config.onPress}
-                style={{
-                  backgroundColor:
-                    config.variation === 'outlined'
-                      ? WHITE
-                      : config.dangerous
-                        ? MAGENTA
-                        : COMAPEO_BLUE,
-                }}
-                variant={
-                  config.variation === 'outlined' ? 'outlined' : undefined
-                }>
-                <View style={styles.buttonTextContainer}>
-                  {config.icon ? <View>{config.icon}</View> : null}
-                  <Text
-                    style={[
-                      styles.buttonText,
-                      styles.bold,
-                      {
-                        color:
-                          config.variation === 'outlined'
-                            ? COMAPEO_BLUE
-                            : WHITE,
-                      },
-                    ]}>
-                    {config.text}
-                  </Text>
-                </View>
-              </Button>
-            );
-          })
-        )}
-      </View>
+                          ? MAGENTA
+                          : COMAPEO_BLUE,
+                  }}
+                  variant={
+                    config.variation === 'outlined' ? 'outlined' : undefined
+                  }>
+                  <View style={styles.buttonTextContainer}>
+                    {config.icon ? <View>{config.icon}</View> : null}
+                    <Text
+                      style={[
+                        styles.buttonText,
+                        styles.bold,
+                        {
+                          color:
+                            config.variation === 'outlined'
+                              ? COMAPEO_BLUE
+                              : WHITE,
+                        },
+                      ]}>
+                      {config.text}
+                    </Text>
+                  </View>
+                </Button>
+              );
+            })
+          )}
+        </View>
+      )}
     </View>
   );
 };

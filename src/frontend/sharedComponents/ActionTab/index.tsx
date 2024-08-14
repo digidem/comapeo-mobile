@@ -9,6 +9,7 @@ export interface ActionTabItems {
   icon: React.ReactNode;
   label: string;
   onPress: () => void;
+  testID?: string;
 }
 
 export interface ActionProps {

@@ -12,7 +12,6 @@ import {LocationHistoryPoint} from '../sharedTypes/location';
 //   ObservationValue,
 //   ObservationAttachment,
 // } from "../context/ObservationsContext";
-// import type { SavedPhoto } from "../context/DraftObservationContext";
 // import type {
 //   Preset,
 //   PresetsMap,
@@ -93,29 +92,6 @@ export function getLocationStatus({
 //     ...preset,
 //     fields: filterFalsy(fieldDefs),
 //   };
-// }
-
-// // Filter photos from an array of observation attachments (we could have videos
-// // and other media types)
-// export function filterPhotosFromAttachments(
-//   attachments?: Array<ObservationAttachment> = []
-// ): Array<SavedPhoto> {
-//   return attachments.reduce((acc, att) => {
-//     if (
-//       att.type === "image/jpeg" ||
-//       // This is needed for backwards compat, because early versions did not
-//       // save a type
-//       (att.type === undefined && /(\.jpg|\.jpeg)$/i.test(att.id))
-//     )
-//       acc.push({ id: att.id, type: att.type });
-//     return acc;
-//   }, []);
-// }
-
-// export function getLastPhotoAttachment(
-//   attachments?: Array<ObservationAttachment> = []
-// ): SavedPhoto | void {
-//   return filterPhotosFromAttachments(attachments).pop();
 // }
 
 // // Coordinates conversions
@@ -216,28 +192,6 @@ export function formatCoords({
 //   const tagValue = tags[shallowKey];
 //   return typeof tagValue === "undefined" ? defaultValue : tagValue;
 // }
-
-// /**
-//  * Convert a select option which could either be a string or an object with
-//  * label and value props, to an object with label and value props TODO: Show
-//  * meaningful translated values for null and boolean, but these types are not
-//  * used widely in presets yet
-//  */
-export function convertSelectOptionsToLabeled(
-  options: SelectOptions,
-): LabeledSelectOption[] {
-  return options.map(option => {
-    if (option === null) {
-      return {label: 'NULL', value: option};
-    } else if (typeof option === 'boolean') {
-      return {label: option ? 'TRUE' : 'FALSE', value: option};
-    } else if (typeof option === 'string' || typeof option === 'number') {
-      return {label: option + '', value: option};
-    } else {
-      return option;
-    }
-  });
-}
 
 // // This is a helper function to force the type definition
 // // It filters an array to remove any falsy values

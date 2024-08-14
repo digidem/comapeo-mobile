@@ -1,13 +1,10 @@
 import * as React from 'react';
-
+import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView} from 'react-native-gesture-handler';
-import {FormattedMessage, defineMessages} from 'react-intl';
 
+import {useSecurityContext} from '../../contexts/SecurityContext';
 import {List, ListItem, ListItemText} from '../../sharedComponents/List';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
-import {MEDIUM_GREY, RED} from '../../lib/styles';
-import {Text} from 'react-native';
-import {useSecurityContext} from '../../contexts/SecurityContext';
 
 const m = defineMessages({
   title: {
@@ -30,46 +27,19 @@ const m = defineMessages({
     id: 'screens.Security.passDesriptionPassSet',
     defaultMessage: 'Passcode is set',
   },
-  obscurePasscodeHeader: {
-    id: 'screens.Security.obscurePasscodeHeader',
-    defaultMessage: 'Obscure Passcode',
-  },
-  obscurePassDescriptonPassNotSet: {
-    id: 'screens.Security.obscurePassDescriptonPassNotSet',
-    defaultMessage: 'To use, enable App Passcode',
-  },
-  obscurePassDescriptonPassSet: {
-    id: 'screens.Security.obscurePassDescriptonPassSet',
-    defaultMessage: 'Protect your device against seizure',
-  },
 });
 
 export const Security: NativeNavigationComponent<'Security'> = ({
   navigation,
 }) => {
+  const {formatMessage: t} = useIntl();
   const {authState, authValuesSet} = useSecurityContext();
-  const [highlight, setHighlight] = React.useState(false);
 
   React.useEffect(() => {
     if (authState === 'obscured') {
       navigation.navigate('Settings');
     }
   }, [navigation, authState]);
-
-  const [passCodeDes, obscurePassCodeDes] = React.useMemo(
-    () =>
-      authValuesSet.passcodeSet
-        ? [m.passDesriptionPassSet, m.obscurePassDescriptonPassSet]
-        : [m.passDesriptionPassNotSet, m.obscurePassDescriptonPassNotSet],
-    [authValuesSet.passcodeSet],
-  );
-
-  function highlightError() {
-    setHighlight(true);
-    setTimeout(() => {
-      setHighlight(false);
-    }, 2000);
-  }
 
   return (
     <ScrollView>
@@ -78,30 +48,16 @@ export const Security: NativeNavigationComponent<'Security'> = ({
           button={true}
           onPress={() =>
             navigation.navigate(
-              !authValuesSet.passcodeSet ? 'AppPasscode' : 'EnterPassToTurnOff',
+              authValuesSet.passcodeSet ? 'EnterPassToTurnOff' : 'AppPasscode',
             )
           }>
           <ListItemText
-            primary={<FormattedMessage {...m.passcodeHeader} />}
-            secondary={<FormattedMessage {...passCodeDes} />}
-          />
-        </ListItem>
-
-        <ListItem
-          onPress={() => {
-            if (!authValuesSet.passcodeSet) {
-              highlightError();
-              return;
-            }
-            navigation.navigate('ObscurePasscode');
-          }}>
-          <ListItemText
-            primary={<FormattedMessage {...m.obscurePasscodeHeader} />}
-            secondary={
-              <Text style={{color: highlight ? RED : MEDIUM_GREY}}>
-                <FormattedMessage {...obscurePassCodeDes} />
-              </Text>
-            }
+            primary={t(m.passcodeHeader)}
+            secondary={t(
+              authValuesSet.passcodeSet
+                ? m.passDesriptionPassSet
+                : m.passDesriptionPassNotSet,
+            )}
           />
         </ListItem>
       </List>

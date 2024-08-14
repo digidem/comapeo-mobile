@@ -1,33 +1,22 @@
 import {Observation} from '@mapeo/schema';
 import {BlobVariant} from '@mapeo/core/dist/types';
-import {
-  useMutation,
-  useQueries,
-  useQuery,
-  UseQueryOptions,
-} from '@tanstack/react-query';
-import {SetRequired} from 'type-fest';
+import {useMutation, useQueries, useQuery} from '@tanstack/react-query';
 import {URL} from 'react-native-url-polyfill';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {DraftPhoto} from '../../contexts/PhotoPromiseContext/types';
+import {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
 import {MapeoProjectApi} from '@mapeo/ipc';
 import {ClientApi} from 'rpc-reflector';
 
-type SavablePhoto = SetRequired<
-  Pick<DraftPhoto, 'originalUri' | 'previewUri' | 'thumbnailUri'>,
-  'originalUri'
->;
-
 export function useCreateBlobMutation(opts: {retry?: number} = {}) {
-  const project = useActiveProject();
+  const {projectApi} = useActiveProject();
 
   return useMutation({
     retry: opts.retry,
-    mutationFn: async (photo: SavablePhoto) => {
+    mutationFn: async (photo: ProcessedDraftPhoto) => {
       const {originalUri, previewUri, thumbnailUri} = photo;
 
-      return project.$blobs.create(
+      return projectApi.$blobs.create(
         {
           original: new URL(originalUri).pathname,
           preview: previewUri ? new URL(previewUri).pathname : undefined,
@@ -35,17 +24,25 @@ export function useCreateBlobMutation(opts: {retry?: number} = {}) {
         },
         // TODO: DraftPhoto type should probably carry MIME type info that feeds this
         // although backend currently only uses first part of path
-        {mimeType: 'image/jpeg'},
+        {
+          mimeType: 'image/jpeg',
+          location: photo.mediaMetadata.location,
+          timestamp: photo.mediaMetadata.timestamp,
+        },
       );
     },
   });
 }
 
 const resolveAttachmentUrlQueryOptions = (
-  project: ClientApi<MapeoProjectApi>,
+  projectId: string,
+  projectApi: ClientApi<MapeoProjectApi>,
   attachment: Observation['attachments'][0],
   variant: BlobVariant<
-    Exclude<Observation['attachments'][number]['type'], 'UNRECOGNIZED'>
+    Exclude<
+      Observation['attachments'][number]['type'],
+      'UNRECOGNIZED' | 'attachment_type_unspecified'
+    >
   >,
   enabledByDefault: boolean = true,
 ) => {
@@ -53,6 +50,7 @@ const resolveAttachmentUrlQueryOptions = (
     enabled: enabledByDefault,
     queryKey: [
       'attachmentUrl',
+      projectId,
       attachment.driveDiscoveryId,
       attachment.type,
       variant,
@@ -71,7 +69,7 @@ const resolveAttachmentUrlQueryOptions = (
 
           return {
             ...attachment,
-            url: await project.$blobs.getUrl({
+            url: await projectApi.$blobs.getUrl({
               driveId: attachment.driveDiscoveryId,
               name: attachment.name,
               type: attachment.type,
@@ -82,7 +80,7 @@ const resolveAttachmentUrlQueryOptions = (
         case 'photo': {
           return {
             ...attachment,
-            url: await project.$blobs.getUrl({
+            url: await projectApi.$blobs.getUrl({
               driveId: attachment.driveDiscoveryId,
               name: attachment.name,
               type: attachment.type,
@@ -98,14 +96,18 @@ const resolveAttachmentUrlQueryOptions = (
 export function useAttachmentUrlQuery(
   attachment: Observation['attachments'][0],
   variant: BlobVariant<
-    Exclude<Observation['attachments'][number]['type'], 'UNRECOGNIZED'>
+    Exclude<
+      Observation['attachments'][number]['type'],
+      'UNRECOGNIZED' | 'attachment_type_unspecified'
+    >
   >,
   enabledByDefault: boolean = true,
 ) {
-  const project = useActiveProject();
+  const {projectId, projectApi} = useActiveProject();
   return useQuery(
     resolveAttachmentUrlQueryOptions(
-      project,
+      projectId,
+      projectApi,
       attachment,
       variant,
       enabledByDefault,
@@ -116,16 +118,20 @@ export function useAttachmentUrlQuery(
 export function useAttachmentUrlQueries(
   attachments: Observation['attachments'],
   variant: BlobVariant<
-    Exclude<Observation['attachments'][number]['type'], 'UNRECOGNIZED'>
+    Exclude<
+      Observation['attachments'][number]['type'],
+      'UNRECOGNIZED' | 'attachment_type_unspecified'
+    >
   >,
   enabledByDefault: boolean = true,
 ) {
-  const project = useActiveProject();
+  const {projectId, projectApi} = useActiveProject();
 
   return useQueries({
     queries: attachments.map(attachment =>
       resolveAttachmentUrlQueryOptions(
-        project,
+        projectId,
+        projectApi,
         attachment,
         variant,
         enabledByDefault,

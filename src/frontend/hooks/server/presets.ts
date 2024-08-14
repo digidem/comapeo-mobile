@@ -12,25 +12,23 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 export const PRESETS_KEY = 'presets';
 
 export function usePresetsQuery() {
-  const project = useActiveProject();
+  const {projectId, projectApi} = useActiveProject();
 
   return useSuspenseQuery({
-    queryKey: [PRESETS_KEY],
+    queryKey: [PRESETS_KEY, projectId],
     queryFn: async () => {
-      if (!project) throw new Error('Project instance does not exist');
-      return await project.preset.getMany();
+      return await projectApi.preset.getMany();
     },
   });
 }
 
 export function usePresetsMutation() {
-  const project = useActiveProject();
+  const {projectApi} = useActiveProject();
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (preset: PresetValue) => {
-      if (!project) throw new Error('Project instance does not exist');
-      return await project.preset.create(preset);
+      return await projectApi.preset.create(preset);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [PRESETS_KEY]});
@@ -39,21 +37,24 @@ export function usePresetsMutation() {
 }
 
 export function useGetPresetIcon(size: IconSize, name?: string) {
-  const project = useActiveProject();
+  const {projectId, projectApi} = useActiveProject();
 
   return useQuery({
-    queryKey: ['presetIcon', name],
+    queryKey: ['presetIcon', projectId, size, name],
     enabled: !!name,
     queryFn: async () => {
-      const currentPreset = await project.preset
+      const currentPreset = await projectApi.preset
         .getMany()
         .then(res => res.find(p => p.name === name));
 
-      return await project.$icons.getIconUrl(currentPreset?.iconId!, {
-        mimeType: 'image/png',
-        size: size,
-        pixelDensity: 3,
-      });
+      return await projectApi.$icons.getIconUrl(
+        currentPreset?.iconRef?.docId!,
+        {
+          mimeType: 'image/png',
+          size: size,
+          pixelDensity: 3,
+        },
+      );
     },
   });
 }

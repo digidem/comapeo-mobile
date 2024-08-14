@@ -20,6 +20,7 @@ import {useProjectSettings} from '../hooks/server/projects';
 import {AppStackParamsList} from '../sharedTypes/navigation';
 import {RootStackNavigator} from './Stack';
 import {DrawerMenuIcon} from '../sharedComponents/icons/DrawerMenuIcon';
+import {useSecurityContext} from '../contexts/SecurityContext';
 
 const m = defineMessages({
   settingsTitle: {
@@ -63,6 +64,10 @@ const m = defineMessages({
     defaultMessage: 'Language, Security, Coordinates',
     description: 'list of avaialable app settings',
   },
+  dataAndPrivacy: {
+    id: 'Navigation.Drawer.dataAndPrivacy',
+    defaultMessage: 'Data & Privacy',
+  },
   projName: {
     id: 'Navigation.Drawer.projName',
     defaultMessage: 'Project {projectName}',
@@ -70,6 +75,10 @@ const m = defineMessages({
   createOrJoinToSync: {
     id: 'Navigation.Drawer.createOrJoinToSync',
     defaultMessage: 'Create or Join a Project to sync with other devices',
+  },
+  security: {
+    id: 'Navigation.Drawer.security',
+    defaultMessage: 'Security',
   },
 });
 
@@ -98,6 +107,8 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
   const {navigate} = navigation;
   const {formatMessage} = useIntl();
   const {data} = useProjectSettings();
+  const {authState} = useSecurityContext();
+
   return (
     <DrawerContentScrollView
       contentContainerStyle={{flexGrow: 1}}
@@ -106,8 +117,12 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
         style={{
           paddingBottom: 40,
         }}>
-        <DrawerMenuIcon onPress={navigation.closeDrawer} />
+        <DrawerMenuIcon
+          style={{alignSelf: 'flex-end', marginRight: 20}}
+          onPress={navigation.closeDrawer}
+        />
         <Text
+          testID="MAIN.drawer-create-join-txt"
           style={{
             alignSelf: 'center',
             textAlign: 'center',
@@ -125,6 +140,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
           height: '100%',
         }}>
         <ListItem
+          testID="MAIN.create-join-list-item"
           onPress={() => {
             navigate('DrawerHome', {screen: 'CreateOrJoinProject'});
           }}>
@@ -140,6 +156,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
           <ListItemText primary={<FormattedMessage {...m.createOrJoin} />} />
         </ListItem>
         <ListItem
+          testID="MAIN.project-stg-list-item"
           onPress={() => {
             navigate('DrawerHome', {screen: 'ProjectSettings'});
           }}>
@@ -155,12 +172,38 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
         </ListItem>
         <ListItem
           onPress={() => {
+            // TODO
+          }}>
+          <DrawerListItemIcon iconName="privacy-tip" />
+          <ListItemText primary={<FormattedMessage {...m.dataAndPrivacy} />} />
+        </ListItem>
+        {authState !== 'obscured' && (
+          <ListItem
+            onPress={() => {
+              navigate('Security');
+            }}>
+            <DrawerListItemIcon iconName="security" />
+            <ListItemText primary={<FormattedMessage {...m.security} />} />
+          </ListItem>
+        )}
+        <ListItem
+          onPress={() => {
             navigate('AboutSettings');
           }}
           testID="settingsAboutButton">
           <DrawerListItemIcon iconName="info-outline" />
           <ListItemText primary={<FormattedMessage {...m.aboutCoMapeo} />} />
         </ListItem>
+        {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
+          <ListItem
+            onPress={() => {
+              navigate('CreateTestData');
+            }}
+            testID="settingsCreateTestDataButton">
+            <DrawerListItemIcon iconName="auto-fix-high" />
+            <ListItemText primary="Create Test Data" />
+          </ListItem>
+        )}
       </List>
     </DrawerContentScrollView>
   );

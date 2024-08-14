@@ -1,20 +1,18 @@
 import {StateCreator} from 'zustand';
 import {createPersistedState} from '../createPersistedState';
-import {Photo, DraftPhoto} from '../../../contexts/PhotoPromiseContext/types';
 import {
-  deletePhoto,
-  filterPhotosFromAttachments,
-  replaceDraftPhotos,
-} from './photosMethods';
+  DraftPhoto,
+  Photo,
+  SavedPhoto,
+} from '../../../contexts/PhotoPromiseContext/types';
+import {deletePhoto, replaceDraftPhotos} from './photosMethods';
 import {ClientGeneratedObservation, Position} from '../../../sharedTypes';
 import {Observation, Preset} from '@mapeo/schema';
 import {usePresetsQuery} from '../../server/presets';
 import {matchPreset} from '../../../lib/utils';
 
-type newDraftProps = {observation: Observation; preset: Preset};
 const emptyObservation: ClientGeneratedObservation = {
   metadata: {},
-  refs: [],
   tags: {
     notes: '',
   },
@@ -28,12 +26,13 @@ export type DraftObservationSlice = {
   observationId?: string;
   actions: {
     addPhotoPlaceholder: (draftPhotoId: string) => void;
-    replacePhotoPlaceholderWithPhoto: (photo: DraftPhoto) => void;
+    replacePhotoPlaceholderWithPhoto: (draftPhoto: DraftPhoto) => void;
     // Clear the current draft
     clearDraft: () => void;
     // Create a new draft observation
-    newDraft: (observation?: newDraftProps) => void;
+    newDraft: () => void;
     deletePhoto: (uri: string) => void;
+    existingObservationToDraft: (observation: Observation) => void;
     updateObservationPosition: (props: {
       position: Position | undefined;
       manualLocation: boolean;
@@ -53,7 +52,7 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
   actions: {
     deletePhoto: uri => deletePhoto(set, get, uri),
     addPhotoPlaceholder: draftPhotoId =>
-      set({photos: [...get().photos, {draftPhotoId, capturing: true}]}),
+      set({photos: [...get().photos, {type: 'unprocessed', draftPhotoId}]}),
     replacePhotoPlaceholderWithPhoto: draftPhoto =>
       replaceDraftPhotos(set, get, draftPhoto),
     clearDraft: () => {
@@ -84,22 +83,19 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
         },
       });
     },
-    newDraft: draftProps => {
-      get().actions.clearDraft();
-      if (!draftProps) {
-        set({
-          value: emptyObservation,
-        });
-        return;
-      }
-
+    existingObservationToDraft: observation => {
       set({
-        value: draftProps.observation,
-        observationId: draftProps.observation.docId,
-        photos:
-          draftProps.observation.attachments.length > 0
-            ? filterPhotosFromAttachments(draftProps.observation.attachments)
-            : [],
+        value: observation,
+        observationId: observation.docId,
+        photos: observation.attachments.filter(
+          (att): att is SavedPhoto => att.type === 'photo',
+        ),
+      });
+    },
+    newDraft: () => {
+      get().actions.clearDraft();
+      set({
+        value: emptyObservation,
       });
     },
     updateTags: (tagKey, tagValue) => {
@@ -120,12 +116,11 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
       });
       return;
     },
-    updatePreset: ({tags, fieldIds}) => {
+    updatePreset: ({tags, fieldRefs}) => {
       const prevValue = get().value;
       if (!prevValue) {
         set({
           value: {
-            refs: [],
             tags: tags,
             metadata: {},
             attachments: [],
@@ -133,6 +128,7 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
         });
         return;
       }
+      const fieldIds = fieldRefs.map(({docId}) => docId);
       // we want to keep any field tags that are the same from the previous preset
       const savedFieldTags = Object.fromEntries(
         Object.entries(prevValue.tags).filter(([key]) =>

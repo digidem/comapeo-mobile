@@ -2,7 +2,9 @@ appId: com.comapeo
 onFlowStart:
   - launchApp:
       clearState: true
+      stopApp: false
       permissions: {all: allow}
+  - runScript: naming.js
 ---
 - runFlow: 'local-dev-setup.yaml'
 - tapOn:

@@ -12,6 +12,7 @@ import {Loading} from '../../sharedComponents/Loading';
 import {useFieldsQuery} from '../../hooks/server/fields';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
+import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 
 const m = defineMessages({
   nextQuestion: {
@@ -40,17 +41,28 @@ export const ObservationFields = ({
   const preset = usePreset();
   const current = route.params.question;
   const fields = useFieldsQuery();
+  const observationId = usePersistedDraftObservation(
+    store => store.observationId,
+  );
 
   const onBackPress = React.useCallback(() => {
     if (current === 1) {
-      navigation.navigate('ObservationEdit');
-      return;
+      if (navigation.canGoBack()) {
+        navigation.goBack();
+        return;
+      }
+      if (observationId) {
+        navigation.navigate('ObservationEdit', {observationId});
+        return;
+      }
+
+      navigation.navigate('ObservationCreate');
     }
 
     navigation.navigate('ObservationFields', {
       question: current - 1,
     });
-  }, [current, navigation]);
+  }, [current, navigation, observationId]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -70,7 +82,7 @@ export const ObservationFields = ({
     return null;
   }
 
-  const fieldId = preset?.fieldIds[current - 1];
+  const fieldId = preset?.fieldRefs.map(({docId}) => docId)[current - 1];
   const field = fields.data?.find(val => val.docId === fieldId);
 
   if (!field) {
@@ -78,7 +90,7 @@ export const ObservationFields = ({
   }
 
   return (
-    <ScrollView style={{flex: 1}}>
+    <ScrollView style={{flex: 1}} testID="OBS.add-details-scrn">
       <Question field={field} />
     </ScrollView>
   );
@@ -89,17 +101,22 @@ const DetailsHeaderRight = ({questionNumber}: {questionNumber: number}) => {
   const navigation = useNavigationFromRoot();
   const {usePreset} = useDraftObservation();
   const preset = usePreset();
+  const observationId = usePersistedDraftObservation(
+    store => store.observationId,
+  );
 
   const isLastQuestion =
-    questionNumber >= (preset ? preset.fieldIds.length : 0);
+    questionNumber >= (preset ? preset.fieldRefs.length : 0);
   const buttonText = isLastQuestion ? t(m.done) : t(m.nextQuestion);
 
   const onPress = () =>
-    isLastQuestion
-      ? navigation.navigate('ObservationEdit')
-      : navigation.navigate('ObservationFields', {
+    !isLastQuestion
+      ? navigation.navigate('ObservationFields', {
           question: questionNumber + 1,
-        });
+        })
+      : observationId
+        ? navigation.navigate('ObservationEdit', {observationId})
+        : navigation.navigate('ObservationCreate');
 
   return (
     <TextButton
@@ -120,7 +137,7 @@ const DetailsTitle = ({questionNumber}: {questionNumber: number}) => {
         {...m.title}
         values={{
           current: questionNumber,
-          total: preset?.fieldIds.length || 0,
+          total: preset?.fieldRefs.length || 0,
         }}
       />
     </Text>

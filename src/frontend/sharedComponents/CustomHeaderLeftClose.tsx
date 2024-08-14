@@ -234,6 +234,7 @@ const SharedBackButton = ({
       {...headerBackButtonProps}
       style={{marginLeft: 0, marginRight: 15}}
       onPress={onPress ? onPress : () => navigation.goBack()}
+      testID="OBS.close-icon"
       backImage={() => <HeaderCloseIcon tintColor={tintColor || BLACK} />}
     />
   );

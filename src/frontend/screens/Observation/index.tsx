@@ -1,8 +1,9 @@
 import * as React from 'react';
 
 import {Text, View, ScrollView, StyleSheet} from 'react-native';
-import {defineMessages, useIntl} from 'react-intl';
+import {defineMessages} from 'react-intl';
 import {BLACK, WHITE, DARK_GREY, LIGHT_GREY} from '../../lib/styles';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 import {FormattedObservationDate} from '../../sharedComponents/FormattedData';
 import {Field} from '@mapeo/schema';
@@ -11,46 +12,25 @@ import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
 import {useFieldsQuery} from '../../hooks/server/fields';
 import {FieldDetails} from './FieldDetails';
 import {InsetMapView} from './InsetMapView';
+import {ButtonFields} from './Buttons';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
-import {MediaScrollView} from '../../sharedComponents/Thumbnail/MediaScrollView';
-import {useAttachmentUrlQueries} from '../../hooks/server/media.ts';
-import {ActionButtons} from '../../sharedComponents/ActionButtons.tsx';
-import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings.ts';
-import {convertUrlToBase64} from '../../utils/base64.ts';
-import Share from 'react-native-share';
-import {formatCoords} from '../../lib/utils.ts';
-import {useDeleteObservation} from '../../hooks/server/observations.ts';
+import {MediaScrollView} from '../../sharedComponents/MediaScrollView/index.tsx';
+import {useDeviceInfo} from '../../hooks/server/deviceInfo';
+import {useCreatedByToDeviceId} from '../../hooks/server/projects.ts';
+import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types.ts';
 
 const m = defineMessages({
-  title: {
-    id: 'screens.Observation.title',
-    defaultMessage: 'Observation',
-    description:
-      'Title of observation screen showing (non-editable) view of observation with map and answered questions',
-  },
   deleteTitle: {
     id: 'screens.Observation.deleteTitle',
     defaultMessage: 'Delete observation?',
     description: 'Title of dialog asking confirmation to delete an observation',
   },
-  shareTextTitle: {
-    id: 'screens.Observation.shareTextTitle',
-    defaultMessage: 'Sharing text',
-    description: 'Title of dialog to share an observation without media',
-  },
-  shareMediaTitle: {
-    id: 'screens.Observation.shareMediaTitle',
-    defaultMessage: 'Sharing image',
-    description: 'Title of dialog to share an observation with media',
-  },
-  shareMessage: {
-    id: 'screens.Observation.shareMessage',
-    defaultMessage:
-      'Mapeo Alert — _*{category_name}*_\n' +
-      '{date, date, full} {time, time, long}\n' +
-      '{coordinates}',
-    description: 'Message that will be shared along with image',
+  title: {
+    id: 'screens.Observation.title',
+    defaultMessage: 'Observation',
+    description:
+      'Title of observation screen showing (non-editable) view of observation with map and answered questions',
   },
 });
 
@@ -70,77 +50,30 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
 
   const {observation, preset} = useObservationWithPreset(observationId);
   const {data: fieldData} = useFieldsQuery();
-  const [isShareButtonLoading, setShareButtonLoading] = React.useState(false);
-  const format = usePersistedSettings(store => store.coordinateFormat);
-  const {formatMessage: t} = useIntl();
-  const deleteObservationMutation = useDeleteObservation();
 
   const defaultAcc: Field[] = [];
   const fields = fieldData
-    ? preset.fieldIds.reduce((acc, pres) => {
-        const fieldToAdd = fieldData.find(field => field.docId === pres);
+    ? preset.fieldRefs.reduce((acc, pres) => {
+        const fieldToAdd = fieldData.find(field => field.docId === pres.docId);
         if (!fieldToAdd) return acc;
         return [...acc, fieldToAdd];
       }, defaultAcc)
     : [];
 
-  const deviceId = '';
   const {lat, lon, createdBy} = observation;
-  const isMine = deviceId === createdBy;
+  const {data: deviceInfo, isPending: isDeviceInfoPending} = useDeviceInfo();
+  const {data: convertedDeviceId, isPending: isCreatedByDeviceIdPending} =
+    useCreatedByToDeviceId(createdBy);
+
+  const isMine =
+    deviceInfo?.deviceId !== undefined &&
+    convertedDeviceId !== undefined &&
+    deviceInfo.deviceId === convertedDeviceId;
 
   // Currently only show photo attachments
   const photoAttachments = observation.attachments.filter(
-    attachment => attachment.type === 'photo',
+    (attachment): attachment is SavedPhoto => attachment.type === 'photo',
   );
-
-  // thumbnail photos that are loaded and shown right away
-  const attachmentUrls = useAttachmentUrlQueries(
-    photoAttachments,
-    'thumbnail',
-  ).map(query => query.data);
-
-  // full size photos that are not fetched automatically
-  const attachmentUrlQueries = useAttachmentUrlQueries(
-    photoAttachments,
-    'original',
-    false,
-  );
-
-  function handleDelete() {
-    deleteObservationMutation.mutate(
-      {id: observationId},
-      {
-        onSuccess: () => {
-          navigation.pop();
-        },
-      },
-    );
-  }
-
-  async function handlePressShare() {
-    setShareButtonLoading(true);
-
-    const urlsQueries = await Promise.all(
-      attachmentUrlQueries.map(q => q.refetch()),
-    );
-    const urls = urlsQueries.map(query => query.data!.url);
-    const base64Urls = await Promise.all(
-      urls.map(url => convertUrlToBase64(url)),
-    );
-
-    Share.open({
-      title: base64Urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),
-      urls: base64Urls,
-      message: t(m.shareMessage, {
-        category_name: preset.name,
-        date: Date.now(),
-        time: Date.now(),
-        coordinates: lon && lat ? formatCoords({lon, lat, format}) : '',
-      }),
-    })
-      .catch(() => {})
-      .finally(() => setShareButtonLoading(false));
-  }
 
   return (
     <ScrollView
@@ -165,18 +98,10 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
               <Text style={styles.textNotes}>{observation.tags.notes}</Text>
             </View>
           ) : null}
-          {attachmentUrls.length > 0 && (
+          {photoAttachments.length > 0 && (
             <MediaScrollView
-              photos={attachmentUrls.map(attachmentData => {
-                return !attachmentData
-                  ? undefined
-                  : {
-                      thumbnailUri: attachmentData.url,
-                      id: attachmentData.driveDiscoveryId,
-                    };
-              })}
+              photos={photoAttachments}
               observationId={observationId}
-              audioRecordings={[]}
             />
           )}
         </View>
@@ -184,13 +109,11 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
           <FieldDetails observation={observation} fields={fields} />
         )}
         <View style={styles.divider} />
-        <ActionButtons
-          handlePressShare={handlePressShare}
-          handleDelete={handleDelete}
-          isMine={isMine}
-          isShareButtonLoading={isShareButtonLoading}
-          deleteMessage={m.deleteTitle}
-        />
+        {isDeviceInfoPending || isCreatedByDeviceIdPending ? (
+          <UIActivityIndicator size={20} />
+        ) : (
+          <ButtonFields isMine={isMine} observationId={observationId} />
+        )}
       </>
     </ScrollView>
   );

@@ -1,18 +1,16 @@
 import * as React from 'react';
-import {defineMessages, FormattedMessage} from 'react-intl';
-import {
-  Image,
-  Text,
-  StyleSheet,
-  ScrollView,
-  KeyboardAvoidingView,
-} from 'react-native';
-
-import {DARK_BLUE, RED, WHITE} from '../lib/styles';
-import {PasscodeInput} from '../sharedComponents/PasscodeInput';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {defineMessages, useIntl} from 'react-intl';
+import {ScrollView, StyleSheet, Text} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
 import {useSecurityContext} from '../contexts/SecurityContext';
+import CoMapeoLogoSvg from '../images/CoMapeoLogo.svg';
+import {RED} from '../lib/styles';
+import {PasscodeInput} from '../sharedComponents/PasscodeInput';
+import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
 import {AppStackParamsList} from '../sharedTypes/navigation';
+import {useWindowDimensions} from 'react-native';
 
 const m = defineMessages({
   enterPass: {
@@ -28,6 +26,7 @@ const m = defineMessages({
 export const AuthScreen = ({
   navigation,
 }: NativeStackScreenProps<AppStackParamsList, 'AuthScreen'>) => {
+  const {formatMessage: t} = useIntl();
   const [error, setError] = React.useState(false);
   const {authenticate, authState} = useSecurityContext();
   const [inputtedPass, setInputtedPass] = React.useState('');
@@ -48,7 +47,12 @@ export const AuthScreen = ({
 
   React.useEffect(() => {
     if (authState === 'unauthenticated') return;
-    navigation.goBack();
+
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    } else {
+      navigation.navigate('Home', {screen: 'Map'});
+    }
   }, [authState, navigation]);
 
   if (error) {
@@ -74,53 +78,41 @@ export const AuthScreen = ({
     }
   }
 
+  const {top} = useSafeAreaInsets();
+  const window = useWindowDimensions();
+
   return (
-    <ScrollView
-      ref={scrollViewRef}
-      style={{height: '100%', backgroundColor: WHITE}}>
-      <KeyboardAvoidingView behavior="padding" style={styles.container}>
-        <Image source={require('../images/icon_mapeo_pin.png')} />
-        <Text style={[styles.title]}>Mapeo</Text>
-
-        <Text style={[{marginBottom: 20, fontSize: 16}]}>
-          <FormattedMessage {...m.enterPass} />
-        </Text>
-
-        <PasscodeInput
-          error={error}
-          inputValue={inputtedPass}
-          onChangeTextWithValidation={setInputWithValidation}
-        />
-
-        {error && (
-          <Text style={[styles.wrongPass]}>
-            <FormattedMessage {...m.wrongPass} />
-          </Text>
-        )}
-      </KeyboardAvoidingView>
-    </ScrollView>
+    <ScreenContentWithDock
+      contentContainerStyle={[
+        styles.contentContainer,
+        {paddingTop: top + 20, paddingBottom: 20},
+      ]}
+      dockContent={
+        error && <Text style={styles.wrongPass}>{t(m.wrongPass)}</Text>
+      }>
+      <CoMapeoLogoSvg height={window.height / 3} />
+      <Text style={styles.description}>{t(m.enterPass)}</Text>
+      <PasscodeInput
+        testID="SETTINGS.auth-passcode-inp"
+        error={error}
+        inputValue={inputtedPass}
+        onChangeTextWithValidation={setInputWithValidation}
+      />
+    </ScreenContentWithDock>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    paddingHorizontal: 20,
+  contentContainer: {
+    gap: 20,
     alignItems: 'center',
-    paddingTop: 40,
-    backgroundColor: WHITE,
   },
-  title: {
-    fontSize: 52.5,
-    color: DARK_BLUE,
-    fontWeight: '500',
-    marginBottom: 40,
+  description: {
+    fontSize: 16,
   },
   wrongPass: {
-    marginTop: 20,
-    paddingBottom: 20,
     fontSize: 16,
     color: RED,
+    textAlign: 'center',
   },
 });

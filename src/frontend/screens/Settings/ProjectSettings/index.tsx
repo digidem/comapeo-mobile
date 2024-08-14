@@ -6,15 +6,11 @@ import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
 const m = defineMessages({
   title: {
     id: 'Screens.Settings.ProjectSettings.title',
-    defaultMessage: 'Project Setttings',
+    defaultMessage: 'Project Settings',
   },
   deviceName: {
     id: 'Screens.Settings.ProjectSettings.deviceName',
     defaultMessage: 'Device Name',
-  },
-  configuration: {
-    id: 'Screens.Settings.ProjectSettings.configuration',
-    defaultMessage: 'Configuration',
   },
   yourTeam: {
     id: 'Screens.Settings.ProjectSettings.yourTeam',
@@ -29,15 +25,14 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
     <ScrollView>
       <List>
         <ListItem
+          testID="PROJECT.device-name-list-item"
           onPress={() => {
             navigation.navigate('DeviceNameDisplay');
           }}>
           <ListItemText primary={<FormattedMessage {...m.deviceName} />} />
         </ListItem>
-        <ListItem onPress={() => {}}>
-          <ListItemText primary={<FormattedMessage {...m.configuration} />} />
-        </ListItem>
         <ListItem
+          testID="MAIN.team-list-item"
           onPress={() => {
             navigation.navigate('YourTeam');
           }}>

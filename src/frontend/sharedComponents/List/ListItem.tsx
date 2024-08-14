@@ -47,7 +47,9 @@ export const ListItem = ({
       disabled={disabled}
       {...otherProps}
       background={TouchableNativeFeedback.Ripple(VERY_LIGHT_BLUE, false)}>
-      <View style={componentStyle}>{children}</View>
+      <View testID={testID} style={componentStyle}>
+        {children}
+      </View>
     </TouchableNativeFeedback>
   );
 };

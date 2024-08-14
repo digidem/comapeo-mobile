@@ -1,7 +1,8 @@
 import * as React from 'react';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../../sharedComponents/Text';
-import {NativeNavigationComponent, ViewStyleProp} from '../../../sharedTypes';
+import type {ViewStyleProp} from '../../../sharedTypes';
+import type {NativeNavigationComponent} from '../../../sharedTypes/navigation';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {LIGHT_GREY} from '../../../lib/styles';
@@ -77,6 +78,7 @@ export const CreateOrJoinProject: NativeNavigationComponent<
           </View>
         ) : (
           <CardButton
+            testID="PROJECT.create-card"
             header={m.createProject}
             subHeader={m.startProject}
             style={{marginTop: 10}}
@@ -113,13 +115,23 @@ type CardButtonProps = {
   style?: ViewStyleProp;
   isLoading?: boolean;
   onPress: () => void;
+  testID?: string;
 };
 
-function CardButton({header, subHeader, style, onPress}: CardButtonProps) {
+function CardButton({
+  header,
+  subHeader,
+  style,
+  onPress,
+  testID,
+}: CardButtonProps) {
   const {formatMessage: t} = useIntl();
 
   return (
-    <TouchableOpacity style={[styles.cardButton, style]} onPress={onPress}>
+    <TouchableOpacity
+      style={[styles.cardButton, style]}
+      onPress={onPress}
+      accessibilityLabel={testID}>
       <React.Fragment>
         <Text style={{fontSize: 24, fontWeight: 'bold', textAlign: 'center'}}>
           {t(header)}

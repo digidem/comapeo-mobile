@@ -82,6 +82,9 @@
   "Navigation.Drawer.createOrJoinToSync": {
     "message": "Create or Join a Project to sync with other devices"
   },
+  "Navigation.Drawer.dataAndPrivacy": {
+    "message": "Data & Privacy"
+  },
   "Navigation.Drawer.projName": {
     "message": "Project {projectName}"
   },
@@ -92,9 +95,27 @@
     "description": "list of avaialable project settings",
     "message": "Categories, Config, Team"
   },
+  "Navigation.Drawer.security": {
+    "message": "Security"
+  },
   "Navigation.Drawer.title": {
     "description": "Title of settings screen",
     "message": "Settings"
+  },
+  "ObservationEdit.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Continue editing"
+  },
+  "ObservationEdit.HeaderLeft.discardObservationButton": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Discard changes"
+  },
+  "ObservationEdit.HeaderLeft.discardObservationDescription": {
+    "message": "Your changes will not be saved. This cannot be undone."
+  },
+  "ObservationEdit.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Discard changes?"
   },
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Coordinate System"
@@ -109,35 +130,16 @@
     "message": "Display language for app"
   },
   "Screens.Settings.AppSettings.title": {
-    "message": "App Setttings"
-  },
-  "Screens.Settings.ProjectSettings.configuration": {
-    "message": "Configuration"
+    "message": "App Settings"
   },
   "Screens.Settings.ProjectSettings.deviceName": {
     "message": "Device Name"
   },
   "Screens.Settings.ProjectSettings.title": {
-    "message": "Project Setttings"
+    "message": "Project Settings"
   },
   "Screens.Settings.ProjectSettings.yourTeam": {
     "message": "Your Team"
-  },
-  "SharedComponents.ActionButtons.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "Cancel"
-  },
-  "SharedComponents.ActionButtons.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "Yes, delete"
-  },
-  "SharedComponents.ActionButtons.delete": {
-    "description": "Button to delete an observation",
-    "message": "Delete"
-  },
-  "SharedComponents.ActionButtons.share": {
-    "description": "Button to share an observation",
-    "message": "Share"
   },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Coordinator"
@@ -215,13 +217,16 @@
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
     "description": "used to indicate to the user what the new passcode will be.",
-    "message": "Passcode"
+    "message": "Passcode: {passcode}"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
     "message": "Save App Passcode"
   },
+  "screens.AppPasscode.ConfirmPasscodeSheet.suggestion": {
+    "message": "Make sure to note your passcode in a secure location before saving."
+  },
   "screens.AppPasscode.ConfirmPasscodeSheet.title": {
-    "message": "App Passcodes can never be recovered if lost or forgotten! Make sure to note your passcode in a secure location before saving."
+    "message": "App Passcodes can never be recovered if lost or forgotten!"
   },
   "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
     "message": "Please Enter Passcode"
@@ -272,7 +277,7 @@
     "message": "App Passcode allows you to add an additional layer of security by requiring that you enter a passcode in order to open the Mapeo app. You can define your own 5-digit passcode by turning on the feature below."
   },
   "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "**Please note that forgotten passcodes cannot be recovered!** Once this feature is enabled, if you forget or lose your passcode, you will not be able to open Mapeo and will lose access to any Mapeo data that has not been synced with other project participants."
+    "message": "<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open Mapeo and will lose access to any Mapeo data that has not been synced with other project participants."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Cancel"
@@ -391,6 +396,45 @@
   "screens.LanguageSettings.title": {
     "description": "Title language settings screen",
     "message": "Language"
+  },
+  "screens.LeaveProject.AlreadyOnProject.alreadyOnProject": {
+    "message": "You are already on a project"
+  },
+  "screens.LeaveProject.AlreadyOnProject.goBack": {
+    "message": "Go Back"
+  },
+  "screens.LeaveProject.AlreadyOnProject.leaveProj": {
+    "message": "Leave Current Project"
+  },
+  "screens.LeaveProject.AlreadyOnProject.leaveWarning": {
+    "message": "To join a new project you must leave your current one."
+  },
+  "screens.LeaveProject.AlreadyOnProject.onProject": {
+    "message": "You are on {projectName}"
+  },
+  "screens.LeaveProject.cancel": {
+    "message": "Cancel"
+  },
+  "screens.LeaveProject.checkToConfirm": {
+    "message": "Please check the box to confirm"
+  },
+  "screens.LeaveProject.deleteConsentWithName": {
+    "message": "I understand I will be deleting all data from Project {projectName} from my device."
+  },
+  "screens.LeaveProject.deleteConsentWithoutName": {
+    "message": "I understand I will be deleting all data from my device."
+  },
+  "screens.LeaveProject.leaveProj": {
+    "message": "Leave Project"
+  },
+  "screens.LeaveProject.leavingProject": {
+    "message": "Leaving Project {projectName}"
+  },
+  "screens.LeaveProject.removeFromProjWithName": {
+    "message": "This will remove all Project {projectName}'s data from your device."
+  },
+  "screens.LeaveProject.removeFromProjWithoutName": {
+    "message": "This will remove all of the data from your device."
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
@@ -558,12 +602,9 @@
   "screens.ObscurePasscode.whatIsObscure": {
     "message": "What is Obscure Passcode?"
   },
-  "screens.Observation.ObservationEdit.CategoryView.changePreset": {
-    "message": "Change"
-  },
-  "screens.Observation.ObservationEdit.CategoryView.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "Observation"
+  "screens.Observation.ObservationView.delete": {
+    "description": "Button to delete an observation",
+    "message": "Delete"
   },
   "screens.Observation.ObservationView.noAnswer": {
     "description": "Placeholder text for fields on an observation which are not answered",
@@ -572,6 +613,18 @@
   "screens.Observation.ObservationView.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "Observation"
+  },
+  "screens.Observation.ObservationView.share": {
+    "description": "Button to share an observation",
+    "message": "Share"
+  },
+  "screens.Observation.cancel": {
+    "description": "Button to cancel delete of observation",
+    "message": "Cancel"
+  },
+  "screens.Observation.confirm": {
+    "description": "Button to confirm delete of observation",
+    "message": "Yes, delete"
   },
   "screens.Observation.deleteTitle": {
     "description": "Title of dialog asking confirmation to delete an observation",
@@ -591,6 +644,21 @@
   },
   "screens.Observation.title": {
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
+    "message": "Observation"
+  },
+  "screens.ObservationCreate.changePreset": {
+    "message": "Change"
+  },
+  "screens.ObservationCreate.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "What is happening here?"
+  },
+  "screens.ObservationCreate.navTitle": {
+    "description": "screen title for new observation screen",
+    "message": "New Observation"
+  },
+  "screens.ObservationCreate.observation": {
+    "description": "Default name of observation with no matching preset",
     "message": "Observation"
   },
   "screens.ObservationDetails.done": {
@@ -625,45 +693,20 @@
     "description": "Button label for adding photo",
     "message": "Photo"
   },
-  "screens.ObservationEdit.ObservationEditView.searching": {
-    "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "Searching…"
+  "screens.ObservationEdit.changePreset": {
+    "message": "Change"
   },
-  "screens.ObservationEdit.SaveButton.keepWaiting": {
-    "description": "Button to cancel save and continue waiting for GPS",
-    "message": "Continue waiting"
+  "screens.ObservationEdit.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "What is happening here?"
   },
-  "screens.ObservationEdit.SaveButton.manualEntry": {
-    "description": "Button to manually enter GPS coordinates",
-    "message": "Manual Coords"
-  },
-  "screens.ObservationEdit.SaveButton.noGpsDesc": {
-    "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "This observation does not have a location. You can continue waiting for a GPS signal, save the observation without a location, or enter coordinates manually"
-  },
-  "screens.ObservationEdit.SaveButton.noGpsTitle": {
-    "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "No GPS signal"
-  },
-  "screens.ObservationEdit.SaveButton.saveAnyway": {
-    "description": "Button to save regardless of GPS state",
-    "message": "Save"
-  },
-  "screens.ObservationEdit.SaveButton.weakGpsDesc": {
-    "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "GPS accuracy is low. You can continue waiting for better accuracy, save the observation with low accuracy, or enter coordinates manually"
-  },
-  "screens.ObservationEdit.SaveButton.weakGpsTitle": {
-    "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "Weak GPS signal"
-  },
-  "screens.ObservationEdit.editTitle": {
-    "description": "screen title for edit observation screen",
+  "screens.ObservationEdit.navTitle": {
+    "description": "screen title for new observation screen",
     "message": "Edit Observation"
   },
-  "screens.ObservationEdit.newTitle": {
-    "description": "screen title for new observation screen",
-    "message": "New Observation"
+  "screens.ObservationEdit.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Observation"
   },
   "screens.ObservationList.TrackListItem.Track": {
     "message": "Track"
@@ -734,15 +777,6 @@
   "screens.SaveTrack.track": {
     "description": "Category title for new track screen",
     "message": "Track"
-  },
-  "screens.Security.obscurePassDescriptonPassNotSet": {
-    "message": "To use, enable App Passcode"
-  },
-  "screens.Security.obscurePassDescriptonPassSet": {
-    "message": "Protect your device against seizure"
-  },
-  "screens.Security.obscurePasscodeHeader": {
-    "message": "Obscure Passcode"
   },
   "screens.Security.passDesriptionPassNotSet": {
     "message": "Passcode not set"
@@ -995,20 +1029,6 @@
   "screens.Sync.ProjectSyncDisplay.upToDate": {
     "message": "Up to Date! No data to Sync"
   },
-  "screens.Track.ObservationList.observations": {
-    "message": "Observations"
-  },
-  "screens.Track.deleteTitle": {
-    "description": "Title of dialog asking confirmation to delete a track",
-    "message": "Delete track?"
-  },
-  "screens.Track.title": {
-    "description": "Title of track screen showing (non-editable) view of observation with map",
-    "message": "Track"
-  },
-  "screens.Track.tracks": {
-    "message": "Tracks"
-  },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",
     "message": "Show Options"
@@ -1018,6 +1038,13 @@
   },
   "sharedComponents.DeviceIconWithName.thisDevice": {
     "message": "This Device!"
+  },
+  "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
+    "description": "Shown in new observation screen whilst looking for GPS",
+    "message": "Searching…"
+  },
+  "sharedComponents.Editor.PresetView.Change": {
+    "message": "Change"
   },
   "sharedComponents.ErrorModal.goBack": {
     "message": "Go Back"

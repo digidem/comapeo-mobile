@@ -50,7 +50,7 @@ export function createNavigationOptions({
       headerTitle: intl(m.title),
       animation: 'none',
       headerRight: () => (
-        <IconButton onPress={() => {}}>
+        <IconButton testID="save-icon" onPress={() => {}}>
           <SaveIcon />
         </IconButton>
       ),
@@ -58,6 +58,7 @@ export function createNavigationOptions({
   };
 }
 
+// TODO: Add the test for saving an edited device name to the end to end test once the save button works correctly https://github.com/digidem/comapeo-mobile/issues/434
 export const EditScreen = ({
   navigation,
 }: NativeRootNavigationProps<'DeviceNameEdit'>) => {
@@ -107,10 +108,8 @@ export const EditScreen = ({
     [t, navigation, getValues, nameHasChanges],
   );
 
-  const onPress = React.useCallback(() => {
-    if (isPending) return;
-
-    handleSubmit(async value => {
+  const onSubmit = React.useMemo(() => {
+    return handleSubmit(value => {
       if (!nameHasChanges) {
         navigation.navigate('DeviceNameDisplay');
         return;
@@ -120,21 +119,25 @@ export const EditScreen = ({
         onSuccess: () => navigation.navigate('DeviceNameDisplay'),
       });
     });
-  }, [handleSubmit, isPending, mutate, nameHasChanges, navigation]);
+  }, [handleSubmit, mutate, nameHasChanges, navigation]);
 
   React.useEffect(
     function updateNavigationOptions() {
       navigation.setOptions({
         headerRight: () => {
-          return (
-            <IconButton onPress={onPress}>
-              {isPending ? <UIActivityIndicator size={30} /> : <SaveIcon />}
+          return isPending ? (
+            <IconButton testID="save-icon">
+              <UIActivityIndicator size={30} />
+            </IconButton>
+          ) : (
+            <IconButton testID="save-icon" onPress={onSubmit}>
+              <SaveIcon />
             </IconButton>
           );
         },
       });
     },
-    [handleSubmit, navigation, isPending, mutate, nameHasChanges, onPress],
+    [navigation, isPending, onSubmit],
   );
 
   return (
@@ -142,6 +145,7 @@ export const EditScreen = ({
       <ScrollView contentContainerStyle={styles.container}>
         <FieldRow label={t(m.deviceNameLabel)}>
           <HookFormTextInput
+            testID="PROJECT.edit-device-name"
             control={control}
             name="deviceName"
             rules={{maxLength: 60, required: true, minLength: 1}}
@@ -151,11 +155,11 @@ export const EditScreen = ({
             style={{flex: 1, color: BLACK, fontSize: 16}}
             showCharacterCount
             autoFocus
-            editable={isPending}
+            editable={!isPending}
           />
         </FieldRow>
       </ScrollView>
-      <ErrorBottomSheet error={error} clearError={reset} tryAgain={onPress} />
+      <ErrorBottomSheet error={error} clearError={reset} tryAgain={onSubmit} />
     </>
   );
 };

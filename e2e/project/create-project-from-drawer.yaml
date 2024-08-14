@@ -1,0 +1,42 @@
+appId: com.comapeo
+env:
+  CAT: PROJECT
+  SUBCAT: MAIN
+---
+- tapOn:
+    id: '${SUBCAT}.drawer-icon'
+- tapOn:
+    id: '${SUBCAT}.create-join-list-item'
+- assertVisible:
+    label: 'User is not on a project and can click on Create a Project'
+    text: '.*Create a Project.*'
+- tapOn:
+    text: '${CAT}.create-card'
+    label: 'Button to create a project visible'
+- tapOn:
+    id: '${CAT}.create-btn'
+- assertVisible:
+    label: 'Error message if create button pressed no project name'
+    id: 'error-icon'
+- tapOn:
+    id: '${CAT}.advanced-settings-toggle'
+- assertVisible:
+    label: 'User can click on Advanced project settings and will see the Import config button displayed.'
+    text: '.*Import config.*'
+- tapOn:
+    id: '${CAT}.advanced-settings-toggle'
+- tapOn:
+    id: '${CAT}.name-inp'
+- inputText:
+    label: 'Can input a project name'
+    text: ${output.names.project}
+- tapOn:
+    id: '${CAT}.create-btn'
+- assertVisible: '.*Invite Device.*'
+- assertVisible: '.*Go to Map.*'
+# - tapOn: '.*Invite Device.*'
+# - assertVisible:
+#     id: '${CAT}.invite-device-scrn'
+- tapOn:
+    label: 'User is now a Coordinator, can click on Invite devices or clicks on Go to Map and is taken to the map screen'
+    text: '.*Go to Map.*'

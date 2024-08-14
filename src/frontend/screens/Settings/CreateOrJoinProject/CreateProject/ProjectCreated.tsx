@@ -51,16 +51,15 @@ export const ProjectCreated = ({
 
   //This resets the navigation so the user cannot press back and return to this screen
   function handleGoToInviteScreen() {
-    navigation.dispatch(state => {
-      const index = state.routes.findIndex(r => r.name === 'Settings');
+    navigation.dispatch(() => {
       const routes = [
-        ...state.routes.slice(0, index + 1),
+        {name: 'Home'},
+        {name: 'ProjectSettings'},
         {name: 'YourTeam'},
         {name: 'SelectDevice'},
       ];
 
       return CommonActions.reset({
-        ...state,
         routes,
         index: routes.length - 1,
       });

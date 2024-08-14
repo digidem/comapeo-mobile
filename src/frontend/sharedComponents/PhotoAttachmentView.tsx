@@ -18,17 +18,16 @@ const PhotoViewComponent = ({
   resizeMode = 'contain',
   style,
 }: Props) => {
-  const {data, isLoading, isError} = useAttachmentUrlQuery(attachment, variant);
+  const {data, isPending, isError} = useAttachmentUrlQuery(attachment, variant);
   return (
     <View style={[styles.container, style]}>
-      {isLoading ? (
+      {isPending ? (
         <ActivityIndicator />
-      ) : isError ? (
+      ) : isError || !data ? (
         <AlertIcon />
       ) : (
         <Image
-          // @ts-ignore
-          source={data}
+          source={{uri: data.url}}
           style={styles.image}
           resizeMethod="scale"
           resizeMode={resizeMode}

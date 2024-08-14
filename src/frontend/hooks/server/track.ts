@@ -11,11 +11,11 @@ export const TRACK_KEY = 'tracks';
 
 export function useCreateTrack() {
   const queryClient = useQueryClient();
-  const project = useActiveProject();
+  const {projectApi} = useActiveProject();
 
   return useMutation({
     mutationFn: async (params: TrackValue) => {
-      return project.track.create(params);
+      return projectApi.track.create(params);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [TRACK_KEY]});
@@ -24,35 +24,35 @@ export function useCreateTrack() {
 }
 
 export function useTracks() {
-  const project = useActiveProject();
+  const {projectId, projectApi} = useActiveProject();
 
   return useSuspenseQuery({
-    queryKey: [TRACK_KEY],
+    queryKey: [TRACK_KEY, projectId],
     queryFn: async () => {
       return process.env.EXPO_PUBLIC_FEATURE_TRACKS
-        ? project.track.getMany()
+        ? projectApi.track.getMany()
         : [];
     },
   });
 }
 
-export function useTrack(docId: string) {
-  const project = useActiveProject();
+export function useTrackQuery(docId: string) {
+  const {projectId, projectApi} = useActiveProject();
   return useSuspenseQuery({
-    queryKey: [TRACK_KEY, docId],
+    queryKey: [TRACK_KEY, projectId, docId],
     queryFn: async () => {
-      return project.track.getByDocId(docId);
+      return projectApi.track.getByDocId(docId);
     },
   });
 }
 
 export function useDeleteTrackMutation() {
   const queryClient = useQueryClient();
-  const project = useActiveProject();
+  const {projectApi} = useActiveProject();
 
   return useMutation({
     mutationFn: async (docId: string) => {
-      return project.track.delete(docId);
+      return projectApi.track.delete(docId);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [TRACK_KEY]});

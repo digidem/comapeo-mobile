@@ -1,7 +1,10 @@
 import * as React from 'react';
 import {RootStack} from '.';
 import {MessageDescriptor} from 'react-intl';
-import {ObservationEdit} from '../../screens/ObservationEdit';
+import {
+  ObservationEdit,
+  createNavigationOptions as createObservationEditNavOptions,
+} from '../../screens/ObservationEdit';
 import {AddPhotoScreen} from '../../screens/AddPhoto';
 import {AppPasscode} from '../../screens/AppPasscode';
 import {EnterPassToTurnOff} from '../../screens/AppPasscode/EnterPassToTurnOff';
@@ -16,7 +19,6 @@ import {ObservationScreen} from '../../screens/Observation';
 import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
 import {CoordinateFormat} from '../../screens/Settings/AppSettings/CoordinateFormat';
-import {CustomHeaderLeftClose} from '../../sharedComponents/CustomHeaderLeftClose';
 import {CreateOrJoinProject} from '../../screens/Settings/CreateOrJoinProject';
 import {CreateProject} from '../../screens/Settings/CreateOrJoinProject/CreateProject';
 import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateProject/ProjectCreated';
@@ -53,13 +55,18 @@ import {
 import {HomeTabs} from '../Tab';
 import {SaveTrackScreen} from '../../screens/SaveTrack/SaveTrackScreen';
 import {ObservationFields} from '../../screens/ObservationFields';
-import {LIGHT_GREY, WHITE} from '../../lib/styles';
+import {WHITE} from '../../lib/styles';
 import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSettings';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
-import {PhotoPreviewModal} from '../../screens/PhotoPreviewModal.tsx';
-import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
+import {PhotoPreviewModal} from '../../screens/PhotoPreviewModal';
+import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
+import {
+  ObservationCreate,
+  createNavigationOptions as createObservationCreateNavigationOptions,
+} from '../../screens/ObservationCreate';
+import {AboutSettings} from '../../screens/Settings/About';
+import {CreateTestDataScreen} from '../../screens/Settings/CreateTestData';
 import {TrackScreen} from '../../screens/Track/index.tsx';
-import {AboutSettings} from '../../screens/Settings/About.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -86,30 +93,15 @@ export const createDefaultScreenGroup = ({
     <RootStack.Screen
       name="AuthScreen"
       component={AuthScreen}
-      options={{headerShown: false}}
+      options={{
+        headerShown: false,
+        animation: 'fade',
+      }}
     />
     <RootStack.Screen
       name="ObservationEdit"
       component={ObservationEdit}
-      options={props => {
-        const observationId = props.route.params?.observationId;
-        return {
-          headerShadowVisible: false,
-          contentStyle: {
-            borderTopColor: LIGHT_GREY,
-            borderTopWidth: 1,
-          },
-          headerLeft: headerProp => (
-            <CustomHeaderLeftClose
-              headerBackButtonProps={headerProp}
-              observationId={observationId}
-            />
-          ),
-          headerTitle: observationId
-            ? intl(ObservationEdit.editTitle)
-            : intl(ObservationEdit.navTitle),
-        };
-      }}
+      options={createObservationEditNavOptions({intl})}
     />
     <RootStack.Screen
       name="AddPhoto"
@@ -276,10 +268,25 @@ export const createDefaultScreenGroup = ({
       component={TrackScreen}
       options={{headerTitle: intl(TrackScreen.navTitle)}}
     />
+
+    <RootStack.Screen
+      name="ObservationCreate"
+      component={ObservationCreate}
+      options={createObservationCreateNavigationOptions({intl})}
+    />
+
     <RootStack.Screen
       name="AboutSettings"
       component={AboutSettings}
       options={{headerTitle: intl(AboutSettings.navTitle)}}
     />
+
+    {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
+      <RootStack.Screen
+        name="CreateTestData"
+        component={CreateTestDataScreen}
+        options={{headerTitle: 'Create Test Data'}}
+      />
+    )}
   </RootStack.Group>
 );

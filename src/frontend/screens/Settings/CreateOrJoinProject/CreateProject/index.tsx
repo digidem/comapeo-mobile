@@ -78,6 +78,21 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
     error: projectCreationError,
   } = useCreateProject();
 
+  React.useEffect(() => {
+    // Prevent back navigation while project creation mutation is pending
+    const unsubscribe = navigation.addListener('beforeRemove', event => {
+      if (!isPending) {
+        return;
+      }
+
+      event.preventDefault();
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [navigation, isPending]);
+
   const {control, handleSubmit} = useForm<ProjectFormType>({
     defaultValues: {projectName: ''},
   });
@@ -130,7 +145,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
     if (!asset) return;
 
     // Only allow importing files with the desired extension
-    if (asset.name.endsWith('.mapeoconfig')) {
+    if (asset.name.endsWith('.mapeosettings')) {
       setConfigFileResult({type: 'success', file: asset});
     } else {
       setConfigFileResult({
@@ -159,7 +174,6 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
             error: null,
             clearError: () => {},
           };
-
   return (
     <React.Fragment>
       <KeyboardAvoidingView>
@@ -170,13 +184,16 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
             <Text style={{marginHorizontal: 20}}>{t(m.enterName)}</Text>
             <View style={{marginHorizontal: 20, marginTop: 10}}>
               <HookFormTextInput
+                testID="PROJECT.name-inp"
                 control={control}
                 name="projectName"
                 rules={{maxLength: 100, required: true, minLength: 1}}
                 showCharacterCount
               />
             </View>
-            <View style={{marginTop: 20}}>
+            <View
+              style={{marginTop: 20}}
+              testID="PROJECT.advanced-settings-toggle">
               <TouchableOpacity
                 onPress={() => setAdvancedSettingOpen(prev => !prev)}
                 style={styles.accordianHeader}>
@@ -215,7 +232,10 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
             {isPending ? (
               <UIActivityIndicator size={30} style={{marginBottom: 20}} />
             ) : (
-              <Button fullWidth onPress={handleSubmit(handleCreateProject)}>
+              <Button
+                testID="PROJECT.create-btn"
+                fullWidth
+                onPress={handleSubmit(handleCreateProject)}>
                 {t(m.createProjectButton)}
               </Button>
             )}

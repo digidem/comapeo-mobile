@@ -1,21 +1,26 @@
 import * as React from 'react';
+import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import {defineMessages, useIntl} from 'react-intl';
-import {StyleSheet} from 'react-native';
-import {RED} from '../../lib/styles';
-import {
-  BottomSheetModalContent,
-  BottomSheetModal,
-} from '../../sharedComponents/BottomSheetModal';
-import {ErrorIcon} from '../../sharedComponents/icons';
+
 import {usePersistedPasscode} from '../../hooks/persistedState/usePersistedPasscode';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
+import ErrorIcon from '../../images/Error.svg';
+import {RED} from '../../lib/styles';
+import {
+  BottomSheetModal,
+  BottomSheetModalContent,
+} from '../../sharedComponents/BottomSheetModal';
 
 const m = defineMessages({
   title: {
     id: 'screens.AppPasscode.ConfirmPasscodeSheet.title',
     defaultMessage:
-      'App Passcodes can never be recovered if lost or forgotten! Make sure to note your passcode in a secure location before saving.',
+      'App Passcodes can never be recovered if lost or forgotten!',
+  },
+  suggestion: {
+    id: 'screens.AppPasscode.ConfirmPasscodeSheet.suggestion',
+    defaultMessage:
+      'Make sure to note your passcode in a secure location before saving.',
   },
   cancel: {
     id: 'screens.AppPasscode.ConfirmPasscodeSheet.cancel',
@@ -27,7 +32,7 @@ const m = defineMessages({
   },
   passcode: {
     id: 'screens.AppPasscode.ConfirmPasscodeSheet.passcode',
-    defaultMessage: 'Passcode',
+    defaultMessage: 'Passcode: {passcode}',
     description: 'used to indicate to the user what the new passcode will be.',
   },
 });
@@ -53,10 +58,10 @@ export const ConfirmPasscodeSheet = React.forwardRef<
   return (
     <BottomSheetModal isOpen={isOpen} ref={sheetRef} onDismiss={() => {}}>
       <BottomSheetModalContent
-        titleStyle={styles.text}
-        descriptionStyle={styles.text}
         title={t(m.title)}
-        description={`${t(m.passcode)}: ${inputtedPasscode}`}
+        description={
+          t(m.suggestion) + '\n\n' + t(m.passcode, {passcode: inputtedPasscode})
+        }
         buttonConfigs={[
           {
             text: t(m.cancel),
@@ -71,14 +76,8 @@ export const ConfirmPasscodeSheet = React.forwardRef<
             onPress: setPasscodeAndNavigateBack,
           },
         ]}
-        icon={<ErrorIcon size={90} color={RED} />}
+        icon={<ErrorIcon width={60} height={60} color={RED} />}
       />
     </BottomSheetModal>
   );
-});
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 16,
-  },
 });

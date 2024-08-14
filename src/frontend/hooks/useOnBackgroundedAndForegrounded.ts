@@ -10,5 +10,5 @@ export const useOnBackgroundedAndForegrounded = (api: MapeoClientApi): void => {
     } else {
       api.onBackgrounded();
     }
-  }, [isAppActive]);
+  }, [api, isAppActive]);
 };

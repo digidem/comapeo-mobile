@@ -7,7 +7,7 @@ import {defineMessages, FormattedMessage} from 'react-intl';
 import {CameraView} from '../sharedComponents/CameraView';
 import {useDraftObservation} from '../hooks/useDraftObservation';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
-import {CapturedPictureMM} from '../contexts/PhotoPromiseContext/types';
+import {PhotoPromiseWithMetadata} from '../contexts/PhotoPromiseContext/types';
 
 const m = defineMessages({
   cancel: {
@@ -23,7 +23,7 @@ export const AddPhotoScreen = ({
 }: NativeRootNavigationProps<'AddPhoto'>) => {
   const {addPhoto} = useDraftObservation();
 
-  const handleAddPress = (capture: Promise<CapturedPictureMM>) => {
+  const handleAddPress = (capture: PhotoPromiseWithMetadata) => {
     log('pressed add button');
     addPhoto(capture);
     navigation.pop();
@@ -37,12 +37,12 @@ export const AddPhotoScreen = ({
   return (
     <View style={styles.container}>
       <CameraView onAddPress={handleAddPress} />
-      <TouchableNativeFeedback
-        style={styles.cancelButton}
-        onPress={handleCancelPress}>
-        <Text style={styles.cancelButtonLabel}>
-          <FormattedMessage {...m.cancel} />
-        </Text>
+      <TouchableNativeFeedback onPress={handleCancelPress}>
+        <View style={styles.cancelButton}>
+          <Text style={styles.cancelButtonLabel}>
+            <FormattedMessage {...m.cancel} />
+          </Text>
+        </View>
       </TouchableNativeFeedback>
     </View>
   );
@@ -54,11 +54,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   cancelButton: {
-    flex: 0,
     height: 60,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'row',
     backgroundColor: 'red',
   },
   cancelButtonLabel: {

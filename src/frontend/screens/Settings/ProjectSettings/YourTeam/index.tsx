@@ -3,10 +3,10 @@ import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {
   CREATOR_ROLE_ID,
   COORDINATOR_ROLE_ID,
-  NativeNavigationComponent,
   ViewStyleProp,
   MEMBER_ROLE_ID,
 } from '../../../../sharedTypes';
+import type {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {Button} from '../../../../sharedComponents/Button';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -101,6 +101,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
           coordinator => coordinator.deviceId === deviceInfo.data.deviceId,
         ) ? null : (
         <Button
+          testID="PROJECT.invite-device-btn"
           fullWidth
           style={{marginTop: 20}}
           variant="outlined"

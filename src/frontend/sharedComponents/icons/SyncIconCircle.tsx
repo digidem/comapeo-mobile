@@ -19,7 +19,7 @@ export const SyncIcon = ({color = 'white'}: {color?: string}) => (
 
 export const SyncIconCircle = ({inprogress}: Props) => (
   <View style={[styles.outerCircle, {opacity: inprogress ? 0.5 : 1}]}>
-    <View style={styles.innerCircle}>
+    <View testID="MAIN.sync-icon" style={styles.innerCircle}>
       <SyncIcon />
     </View>
   </View>

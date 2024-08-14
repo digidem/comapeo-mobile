@@ -2,7 +2,7 @@ import * as React from 'react';
 import {ScrollView} from 'react-native';
 import {defineMessages} from 'react-intl';
 import {usePersistedLocale} from '../../../hooks/persistedState/usePersistedLocale';
-import {supportedLanguages} from '../../../lib/intl';
+import {SUPPORTED_LANGUAGES} from '../../../lib/intl';
 import {SelectOne} from '../../../sharedComponents/SelectOne';
 import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
 
@@ -16,11 +16,11 @@ const m = defineMessages({
 
 export const LanguageSettings: NativeNavigationComponent<
   'LanguageSettings'
-> = () => {
+> = ({navigation}) => {
   const locale = usePersistedLocale(store => store.locale);
   const setLocale = usePersistedLocale(store => store.setLocale);
 
-  const options = supportedLanguages.map(
+  const options = SUPPORTED_LANGUAGES.map(
     ({locale: supportedLocale, nativeName, englishName}) => ({
       value: supportedLocale,
       label: nativeName,
@@ -33,7 +33,10 @@ export const LanguageSettings: NativeNavigationComponent<
       <SelectOne
         value={locale}
         options={options}
-        onChange={selectedLocale => setLocale(selectedLocale)}
+        onChange={selectedLocale => {
+          setLocale(selectedLocale);
+          navigation.navigate('AppSettings');
+        }}
       />
     </ScrollView>
   );

@@ -16,6 +16,7 @@ import {Loading} from '../../sharedComponents/Loading';
 import {TrackListItem} from './TrackListItem';
 import {useObservations} from '../../hooks/server/observations';
 import {useTracks} from '../../hooks/server/track';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 const m = defineMessages({
   loading: {
@@ -55,7 +56,7 @@ export const ObservationsList: React.FC<
 > & {
   navTitle: MessageDescriptor;
 } = ({navigation}) => {
-  const {data: observations} = useObservations();
+  const {data: observations, isFetching} = useObservations();
   const {data: tracks} = useTracks();
   const {data, isPending} = useAllProjects();
 
@@ -72,12 +73,14 @@ export const ObservationsList: React.FC<
   }
 
   return (
-    <View style={styles.container} testID="observationsListView">
+    <View style={styles.container} testID="OBS.list-scrn">
       {isPending ? (
         <Loading />
       ) : data && data.length <= 1 ? (
         <NoProjectWarning style={{margin: 20}} />
       ) : null}
+      {/* re: https://github.com/digidem/comapeo-mobile/issues/586  */}
+      {isFetching && <UIActivityIndicator style={{padding: 20, flex: 0}} />}
       <FlatList
         initialNumToRender={rowsPerWindow}
         getItemLayout={getItemLayout}

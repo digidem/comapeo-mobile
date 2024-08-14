@@ -8,6 +8,7 @@ export const PROJECT_SETTINGS_KEY = 'project_settings';
 export const CREATE_PROJECT_KEY = 'create_project';
 export const PROJECT_KEY = 'project';
 export const PROJECT_MEMBERS_KEY = 'project_members';
+export const CREATED_BY_TO_DEVICE_ID_KEY = 'createdByToDeviceId';
 
 export function useProject(projectId?: string) {
   const api = useApi();
@@ -16,9 +17,12 @@ export function useProject(projectId?: string) {
     queryKey: [PROJECT_KEY, projectId],
     queryFn: async () => {
       if (!projectId) throw new Error('Active project ID must exist');
-      return api.getProject(projectId);
+      const projectApi = await api.getProject(projectId);
+
+      return {projectId, projectApi};
     },
     enabled: !!projectId,
+    placeholderData: previousData => previousData,
   });
 }
 
@@ -57,23 +61,51 @@ export function useCreateProject() {
 }
 
 export function useProjectMembers() {
-  const project = useActiveProject();
+  const {projectId, projectApi} = useActiveProject();
 
   return useQuery({
-    queryKey: [PROJECT_MEMBERS_KEY],
+    queryKey: [PROJECT_MEMBERS_KEY, projectId],
     queryFn: () => {
-      return project.$member.getMany();
+      return projectApi.$member.getMany();
     },
   });
 }
 
 export function useProjectSettings() {
-  const project = useActiveProject();
+  const {projectId, projectApi} = useActiveProject();
 
   return useQuery({
-    queryKey: [PROJECT_SETTINGS_KEY],
+    queryKey: [PROJECT_SETTINGS_KEY, projectId],
     queryFn: () => {
-      return project.$getProjectSettings();
+      return projectApi.$getProjectSettings();
+    },
+  });
+}
+
+export const useCreatedByToDeviceId = (createdBy: string) => {
+  const {projectId, projectApi} = useActiveProject();
+
+  return useQuery({
+    queryKey: [CREATED_BY_TO_DEVICE_ID_KEY, projectId, createdBy],
+    queryFn: async () => {
+      return await projectApi.$createdByToDeviceId(createdBy);
+    },
+  });
+};
+
+export function useLeaveProject() {
+  const mapeoApi = useApi();
+
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (projectId: string) => {
+      return mapeoApi.leaveProject(projectId);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [ALL_PROJECTS_KEY],
+      });
     },
   });
 }

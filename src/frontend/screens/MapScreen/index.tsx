@@ -13,7 +13,6 @@ import {ObservationMapLayer} from './ObservationMapLayer';
 import {AddButton} from '../../sharedComponents/AddButton';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
-// @ts-ignore
 import ScaleBar from 'react-native-scale-bar';
 import {getCoords} from '../../hooks/useLocation';
 import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
@@ -69,7 +68,7 @@ export const MapScreen = () => {
   return (
     <View style={{flex: 1}}>
       <Mapbox.MapView
-        testID="mapboxMapView"
+        testID="MAIN.mapbox-map-view"
         style={{flex: 1}}
         logoEnabled={false}
         pitchEnabled={false}
@@ -79,6 +78,9 @@ export const MapScreen = () => {
         compassEnabled={false}
         scaleBarEnabled={false}
         styleURL={styleUrlQuery.data}
+        onMapIdle={event => {
+          setZoom(event.properties.zoom);
+        }}
         onDidFinishLoadingStyle={handleDidFinishLoadingStyle}
         onMoveShouldSetResponder={() => {
           if (following) setFollowing(false);
@@ -127,7 +129,7 @@ export const MapScreen = () => {
         </View>
       )}
       <AddButton
-        testID="addButtonMap"
+        testID="MAIN.add-observation-btn"
         onPress={handleAddPress}
         isLoading={!isFinishedLoading}
       />

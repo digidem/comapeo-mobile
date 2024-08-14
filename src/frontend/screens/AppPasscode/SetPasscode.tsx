@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {InputPasscode} from './InputPasscode';
-import {defineMessages} from 'react-intl';
+import {defineMessages, useIntl} from 'react-intl';
+
 import {OBSCURE_PASSCODE} from '../../constants';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
+import {InputPasscode} from './InputPasscode';
 
 const m = defineMessages({
   titleSet: {
@@ -43,6 +44,7 @@ type SetPasswordError =
   | {error: false; isObscurePassword: false};
 
 export const SetPasscode: NativeNavigationComponent<'SetPasscode'> = () => {
+  const {formatMessage: t} = useIntl();
   const [error, setError] = React.useState<SetPasswordError>({
     error: false,
     isObscurePassword: false,
@@ -73,13 +75,11 @@ export const SetPasscode: NativeNavigationComponent<'SetPasscode'> = () => {
   if (!isConfirming) {
     return (
       <InputPasscode
-        text={{
-          title: m.titleSet,
-          errorMessage: error.isObscurePassword
-            ? m.obscurePasscodeError
-            : m.initialPassError,
-          subtitle: m.subTitleSet,
-        }}
+        title={t(m.titleSet)}
+        subtitle={t(m.subTitleSet)}
+        errorMessage={t(
+          error.isObscurePassword ? m.obscurePasscodeError : m.initialPassError,
+        )}
         validate={validate}
         error={error.error}
         showPasscodeValues={true}
@@ -94,6 +94,8 @@ export const SetPasscode: NativeNavigationComponent<'SetPasscode'> = () => {
 SetPasscode.navTitle = m.title;
 
 const SetPasswordConfirm = ({initialPass}: {initialPass: string}) => {
+  const {formatMessage: t} = useIntl();
+
   const [error, setError] = React.useState(false);
 
   function validate(inputVal: string) {
@@ -106,20 +108,16 @@ const SetPasswordConfirm = ({initialPass}: {initialPass: string}) => {
   }
 
   return (
-    <React.Fragment>
-      <InputPasscode
-        text={{
-          title: m.titleConfirm,
-          errorMessage: m.passwordDoesNotMatch,
-          subtitle: m.subTitleSet,
-        }}
-        validate={validate}
-        error={error}
-        showPasscodeValues={true}
-        hideError={() => {
-          setError(false);
-        }}
-      />
-    </React.Fragment>
+    <InputPasscode
+      title={t(m.titleConfirm)}
+      subtitle={t(m.subTitleSet)}
+      errorMessage={t(m.passwordDoesNotMatch)}
+      validate={validate}
+      error={error}
+      showPasscodeValues={true}
+      hideError={() => {
+        setError(false);
+      }}
+    />
   );
 };

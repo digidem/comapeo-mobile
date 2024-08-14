@@ -859,7 +859,7 @@
     "message": "CoMapeo is an open-source application. This means that anyone can view the code that makes the app work and can verify the privacy declarations in this document. It also means that anyone can adapt the app to their own needs and release an alternative version. This document refers to data collected by the official releases of CoMapeo, digitally signed by Awana Digital, available from the Google Play Store or the Awana Digital website. Unofficial releases of CoMapeo obtained from other channels are outside our control and may share additional information with other organizations."
   },
   "screens.PrivacyPolicy.overview": {
-    "message": "This document describes what information (“data”) is sent from CoMapeo to the application developer, Awana Digital, and how that information is used."
+    "message": "This document describes what information (\"data\") is sent from CoMapeo to the application developer, Awana Digital, and how that information is used."
   },
   "screens.PrivacyPolicy.performanceData": {
     "message": "Performance Data"

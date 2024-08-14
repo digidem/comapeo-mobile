@@ -3,27 +3,23 @@ import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
 import {PointContainer} from './PointContainer';
 import {DiagnosticItem} from './DiagnosticItem';
-import LockedWithKey from '../../../images/LockedWithKey.svg';
-import RaisedFistMediumSkinTone from '../../../images/RaisedFistMediumSkinTone.svg';
-import RedDot from '../../../images/redDot.svg';
-import BustInSilhouette from '../../../images/bustInSilhouette.svg';
-import BarChart from '../../../images/barChart.svg';
-import Wrench from '../../../images/wrench.svg';
-import ChevronDown from '../../../images/chevrondown.svg';
-import ChevronUp from '../../../images/chevrondown-expanded.svg';
+import LockedWithKey from '../../images/LockedWithKey.svg';
+import RaisedFistMediumSkinTone from '../../images/RaisedFistMediumSkinTone.svg';
+import RedDot from '../../images/redDot.svg';
+import BustInSilhouette from '../../images/bustInSilhouette.svg';
+import BarChart from '../../images/barChart.svg';
+import Wrench from '../../images/wrench.svg';
+import ChevronDown from '../../images/chevrondown.svg';
+import ChevronUp from '../../images/chevrondown-expanded.svg';
 import {styles} from './styles';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {DeviceNamingParamsList} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
-  navTitle: {
-    id: 'screens.PrivacyPolicy.navTitle',
-    defaultMessage: 'Privacy Policy',
-  },
   overview: {
     id: 'screens.PrivacyPolicy.overview',
     defaultMessage:
-      'The following explains what information (or "data") is sent from CoMapeo to the application developer, Awana Digital, and how that information is used.',
+      'This document describes what information (“data”) is sent from CoMapeo to the application developer, Awana Digital, and how that information is used.',
   },
   aboutAwana: {
     id: 'screens.PrivacyPolicy.aboutAwana',
@@ -32,7 +28,7 @@ const m = defineMessages({
   aboutAwanaContent: {
     id: 'screens.PrivacyPolicy.aboutAwanaContent',
     defaultMessage:
-      'CoMapeo is developed by Awana Digital, a 501c3 non-profit organization registered in the United States. Awana digital works in solidarity with frontline communities to use technology to defend their rights and fight climate change.',
+      'CoMapeo is developed by Awana Digital, a 501c3 non-profit organization registered in the United States. Awana Digital works in solidarity with frontline communities to use technology to defend their rights and fight climate change.',
   },
   privacyPolicyTitle: {
     id: 'screens.PrivacyPolicy.privacyPolicyTitle',
@@ -139,13 +135,14 @@ const m = defineMessages({
     id: 'screens.PrivacyPolicy.appUsageTitle',
     defaultMessage: 'App Usage',
   },
-  country: {
-    id: 'screens.PrivacyPolicy.country',
-    defaultMessage: 'Country',
+  userCount: {
+    id: 'screens.PrivacyPolicy.userCount',
+    defaultMessage: 'User Counts',
   },
-  countryDescription: {
-    id: 'screens.PrivacyPolicy.countryDescription',
-    defaultMessage: 'The country where CoMapeo is being used',
+  userCountDescription: {
+    id: 'screens.PrivacyPolicy.userCountDescription',
+    defaultMessage:
+      'The number of users per country and per project. Aggregated and anonymized',
   },
   whyCollected: {
     id: 'screens.PrivacyPolicy.whyCollected',
@@ -154,7 +151,16 @@ const m = defineMessages({
   whyCollectedDescription: {
     id: 'screens.PrivacyPolicy.whyCollectedDescription',
     defaultMessage:
-      'Crash data and app errors together with the device and app info provide Awana Digital with the information we need to fix errors and bugs in the app.\n\nThe performance data helps us improve the responsiveness of the app and identify errors.\n\nThe country where CoMapeo is being used and the language of the UI helps us understand minimal information about CoMapeo users: “How many CoMapeo users are there in each country?',
+      'Crash data and app errors together with the device and app info provide Awana Digital with the information we need to fix errors and bugs in the app. The performance data helps us improve the responsiveness of the app and identify errors. User counts, including total users, users per country, and users per project, help justify ongoing investment in the development of CoMapeo.',
+  },
+  notCollected: {
+    id: 'screens.PrivacyPolicy.notCollected',
+    defaultMessage: 'What is not collected?',
+  },
+  notCollectedDescription: {
+    id: 'screens.PrivacyPolicy.notCollectedDescription',
+    defaultMessage:
+      'We do not collect any personal data or anything that can be used to identify or track a user or device. Device identifiers used to aggregate information are random, anonymous, and changed every month.\n\nDiagnostic information does not include data about how you use the app, and it never includes any of the data you have collected with the app. We do not collect your precise or coarse location, only the country where you are using CoMapeo.',
   },
   thirdParty: {
     id: 'screens.PrivacyPolicy.thirdParty',
@@ -167,9 +173,11 @@ const m = defineMessages({
   },
 });
 
-export const PrivacyPolicy = ({
-  navigation,
-}: NativeStackScreenProps<DeviceNamingParamsList, 'PrivacyPolicy'>) => {
+type PrivacyPolicyProps = Partial<
+  NativeStackScreenProps<DeviceNamingParamsList, 'PrivacyPolicy'>
+>;
+
+export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({navigation}) => {
   const {formatMessage} = useIntl();
   const [awanaExpanded, setAwanaExpanded] = React.useState(false);
   const [openSourceExpanded, setOpenSourceExpanded] = React.useState(false);
@@ -178,7 +186,7 @@ export const PrivacyPolicy = ({
   const toggleOpenSource = () => setOpenSourceExpanded(!openSourceExpanded);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView>
       <View style={styles.overviewBox}>
         <Text style={styles.overviewText}>{formatMessage(m.overview)}</Text>
       </View>
@@ -273,8 +281,8 @@ export const PrivacyPolicy = ({
             {formatMessage(m.appUsageTitle)}
           </Text>
           <DiagnosticItem
-            title={formatMessage(m.country)}
-            description={formatMessage(m.countryDescription)}
+            title={formatMessage(m.userCount)}
+            description={formatMessage(m.userCountDescription)}
           />
         </View>
       </View>
@@ -284,6 +292,11 @@ export const PrivacyPolicy = ({
         description={formatMessage(m.whyCollectedDescription)}
       />
       <PointContainer
+        icon={Wrench}
+        title={formatMessage(m.notCollected)}
+        description={formatMessage(m.notCollectedDescription)}
+      />
+      <PointContainer
         icon={RaisedFistMediumSkinTone}
         title={formatMessage(m.thirdParty)}
         description={formatMessage(m.thirdPartyDescription)}
@@ -291,5 +304,3 @@ export const PrivacyPolicy = ({
     </ScrollView>
   );
 };
-
-PrivacyPolicy.navTitle = m.navTitle;

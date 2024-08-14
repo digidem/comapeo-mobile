@@ -14,8 +14,6 @@ import {storage} from './hooks/persistedState/createPersistedState';
 import {tracksStore} from './hooks/persistedState/usePersistedTrack';
 import {useOnBackgroundedAndForegrounded} from './hooks/useOnBackgroundedAndForegrounded';
 import {getSentryUserId} from './metrics/getSentryUserId';
-import {AppDiagnosticMetrics} from './metrics/AppDiagnosticMetrics';
-import {DeviceDiagnosticMetrics} from './metrics/DeviceDiagnosticMetrics';
 
 Sentry.init({
   dsn: 'https://e0e02907e05dc72a6da64c3483ed88a6@o4507148235702272.ingest.us.sentry.io/4507170965618688',
@@ -33,8 +31,6 @@ Sentry.init({
 const messagePort = new MessagePortLike();
 const mapeoApi = createMapeoClient(messagePort, {timeout: Infinity});
 const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
-const appDiagnosticMetrics = new AppDiagnosticMetrics();
-const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
 localDiscoveryController.start();
 initializeNodejs();
 SplashScreen.preventAutoHideAsync();
@@ -72,16 +68,6 @@ const App = () => {
   }, []);
 
   useOnBackgroundedAndForegrounded(mapeoApi);
-
-  React.useEffect(() => {
-    // TODO: Set this conditionally based on consent.
-    appDiagnosticMetrics.setEnabled(true);
-  }, []);
-
-  React.useEffect(() => {
-    // TODO: Set this conditionally based on consent.
-    deviceDiagnosticMetrics.setEnabled(true);
-  }, []);
 
   return (
     <AppProviders

@@ -7,11 +7,6 @@ import {
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    backgroundColor: 'white',
-    marginHorizontal: 10,
-  },
   overviewBox: {
     padding: 20,
     borderWidth: 1,

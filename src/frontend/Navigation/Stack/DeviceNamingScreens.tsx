@@ -2,7 +2,7 @@ import * as React from 'react';
 import {RootStack} from '.';
 import {IntroToCoMapeo} from '../../screens/Onboarding/IntroToCoMapeo';
 import {DataPrivacy} from '../../screens/Onboarding/DataPrivacy';
-import {PrivacyPolicy} from '../../screens/PrivacyPolicy';
+import {OnboardingPrivacyPolicy} from '../../screens/Onboarding/OnboardingPrivacyPolicy';
 import {DeviceNaming} from '../../screens/Onboarding/DeviceNaming';
 import {Success} from '../../screens/Onboarding/Success';
 import {MessageDescriptor} from 'react-intl';
@@ -25,8 +25,8 @@ export const createDeviceNamingScreens = ({
     />
     <RootStack.Screen
       name="PrivacyPolicy"
-      component={PrivacyPolicy}
-      options={{headerTitle: intl(PrivacyPolicy.navTitle)}}
+      component={OnboardingPrivacyPolicy}
+      options={{headerTitle: intl(OnboardingPrivacyPolicy.navTitle)}}
     />
     <RootStack.Screen
       name="DeviceNaming"

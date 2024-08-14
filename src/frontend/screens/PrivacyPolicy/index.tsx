@@ -13,7 +13,7 @@ import ChevronDown from '../../../images/chevrondown.svg';
 import ChevronUp from '../../../images/chevrondown-expanded.svg';
 import {styles} from './styles';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {DeviceNamingParamsList} from '../../../sharedTypes/navigation';
+import {DeviceNamingParamsList} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
   navTitle: {

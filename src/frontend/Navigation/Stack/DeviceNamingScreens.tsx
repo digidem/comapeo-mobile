@@ -2,7 +2,7 @@ import * as React from 'react';
 import {RootStack} from '.';
 import {IntroToCoMapeo} from '../../screens/Onboarding/IntroToCoMapeo';
 import {DataPrivacy} from '../../screens/Onboarding/DataPrivacy';
-import {PrivacyPolicy} from '../../screens/Onboarding/PrivacyPolicy/PrivacyPolicy';
+import {PrivacyPolicy} from '../../screens/PrivacyPolicy';
 import {DeviceNaming} from '../../screens/Onboarding/DeviceNaming';
 import {Success} from '../../screens/Onboarding/Success';
 import {MessageDescriptor} from 'react-intl';

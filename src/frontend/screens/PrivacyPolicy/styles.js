@@ -3,7 +3,7 @@ import {
   BLUE_GREY,
   NEW_DARK_GREY,
   VERY_LIGHT_GREY,
-} from '../../../lib/styles';
+} from '../../lib/styles';
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({

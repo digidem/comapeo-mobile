@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {styles} from './styles';
-import {NEW_DARK_GREY} from '../../../lib/styles';
+import {NEW_DARK_GREY} from '../../lib/styles';
 
 interface DiagnosticItemProps {
   title: string;

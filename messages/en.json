@@ -356,7 +356,7 @@
     "message": "Private by default — diagnostic information is fully anonymized and you can opt-out any time."
   },
   "screens.DataPrivacy.encrypted": {
-    "message": "All data stays fully encrypted."
+    "message": "All data stays fully encrypted"
   },
   "screens.DataPrivacy.learnMore": {
     "message": "Learn More"

@@ -774,6 +774,15 @@
     "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
     "message": "To sync and share with other devices,"
   },
+  "screens.OnboardingPrivacyPolicy.navTitle": {
+    "message": "Privacy Policy"
+  },
+  "screens.OnboardingPrivacyPolicy.permissionsTitle": {
+    "message": "Current Permissions"
+  },
+  "screens.OnboardingPrivacyPolicy.shareDiagnostics": {
+    "message": "Share Diagnostic Information"
+  },
   "screens.PhotoPreviewModal.DeletePhoto.cancelButton": {
     "message": "Cancel"
   },
@@ -790,7 +799,7 @@
     "message": "About Awana Digital"
   },
   "screens.PrivacyPolicy.aboutAwanaContent": {
-    "message": "CoMapeo is developed by Awana Digital, a 501c3 non-profit organization registered in the United States. Awana digital works in solidarity with frontline communities to use technology to defend their rights and fight climate change."
+    "message": "CoMapeo is developed by Awana Digital, a 501c3 non-profit organization registered in the United States. Awana Digital works in solidarity with frontline communities to use technology to defend their rights and fight climate change."
   },
   "screens.PrivacyPolicy.appErrors": {
     "message": "App Errors"
@@ -813,12 +822,6 @@
   "screens.PrivacyPolicy.controlDescription": {
     "message": "You can opt out of sending any information to Awana Digital. You choose where your data is stored and who it is shared with. You may choose to share anonymized, summarized data about how you use CoMapeo with Awana Digital. We will always be transparent about what information you choose to share for the purposed of improving the app, and this information will never include photos, videos, audio, text, or precise locations that you have entered into CoMapeo."
   },
-  "screens.PrivacyPolicy.country": {
-    "message": "Country"
-  },
-  "screens.PrivacyPolicy.countryDescription": {
-    "message": "The country where CoMapeo is being used"
-  },
   "screens.PrivacyPolicy.crashData": {
     "message": "Crash Data"
   },
@@ -837,14 +840,17 @@
   "screens.PrivacyPolicy.diagnosticsTitle": {
     "message": "Diagnostics"
   },
-  "screens.PrivacyPolicy.navTitle": {
-    "message": "Privacy Policy"
-  },
   "screens.PrivacyPolicy.noPII": {
     "message": "No personally identifiable information"
   },
   "screens.PrivacyPolicy.noPIIDescription": {
     "message": "Using CoMapeo does not require a user account. Awana Digital does not collect your name, email address or any other personal details. No permanent user identifier or device identifier is ever shared with Awana Digital, and we take extra measures to ensure that no information you share can be used to track you: identifiers are randomized and rotated (changed) every month and we do not store IP addresses."
+  },
+  "screens.PrivacyPolicy.notCollected": {
+    "message": "What is not collected?"
+  },
+  "screens.PrivacyPolicy.notCollectedDescription": {
+    "message": "We do not collect any personal data or anything that can be used to identify or track a user or device. Device identifiers used to aggregate information are random, anonymous, and changed every month. Diagnostic information does not include data about how you use the app, and it never includes any of the data you have collected with the app. We do not collect your precise or coarse location, only the country where you are using CoMapeo."
   },
   "screens.PrivacyPolicy.openSource": {
     "message": "Open Source and the \"Official\" Version"
@@ -853,7 +859,7 @@
     "message": "CoMapeo is an open-source application. This means that anyone can view the code that makes the app work and can verify the privacy declarations in this document. It also means that anyone can adapt the app to their own needs and release an alternative version. This document refers to data collected by the official releases of CoMapeo, digitally signed by Awana Digital, available from the Google Play Store or the Awana Digital website. Unofficial releases of CoMapeo obtained from other channels are outside our control and may share additional information with other organizations."
   },
   "screens.PrivacyPolicy.overview": {
-    "message": "The following explains what information (or \"data\") is sent from CoMapeo to the application developer, Awana Digital, and how that information is used."
+    "message": "This document describes what information (“data”) is sent from CoMapeo to the application developer, Awana Digital, and how that information is used."
   },
   "screens.PrivacyPolicy.performanceData": {
     "message": "Performance Data"
@@ -876,6 +882,12 @@
   "screens.PrivacyPolicy.thirdPartyDescription": {
     "message": "A \"third-party\" is an organization other than Awana Digital."
   },
+  "screens.PrivacyPolicy.userCount": {
+    "message": "User Counts"
+  },
+  "screens.PrivacyPolicy.userCountDescription": {
+    "message": "The number of users per country and per project. Aggregated and anonymized"
+  },
   "screens.PrivacyPolicy.whatIsCollected": {
     "message": "What is collected?"
   },
@@ -886,7 +898,7 @@
     "message": "Why is this data collected?"
   },
   "screens.PrivacyPolicy.whyCollectedDescription": {
-    "message": "Crash data and app errors together with the device and app info provide Awana Digital with the information we need to fix errors and bugs in the app. The performance data helps us improve the responsiveness of the app and identify errors. The country where CoMapeo is being used and the language of the UI helps us understand minimal information about CoMapeo users: “How many CoMapeo users are there in each country?"
+    "message": "Crash data and app errors together with the device and app info provide Awana Digital with the information we need to fix errors and bugs in the app. The performance data helps us improve the responsiveness of the app and identify errors. User counts, including total users, users per country, and users per project, help justify ongoing investment in the development of CoMapeo."
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",

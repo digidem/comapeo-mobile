@@ -113,7 +113,7 @@ export const DataPrivacy = ({
           variant="outlined"
           color="dark"
           onPress={() => {
-            navigation.navigate('PrivacyPolicy');
+            navigation.navigate('OnboardingPrivacyPolicy');
           }}
           style={styles.learnMoreButton}>
           {formatMessage(m.learnMore)}

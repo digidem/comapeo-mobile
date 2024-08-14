@@ -24,7 +24,7 @@ export const createDeviceNamingScreens = ({
       options={{headerShown: false}}
     />
     <RootStack.Screen
-      name="PrivacyPolicy"
+      name="OnboardingPrivacyPolicy"
       component={OnboardingPrivacyPolicy}
       options={{headerTitle: intl(OnboardingPrivacyPolicy.navTitle)}}
     />

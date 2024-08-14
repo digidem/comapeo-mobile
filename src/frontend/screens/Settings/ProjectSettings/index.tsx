@@ -54,7 +54,10 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
             navigation.navigate('Config');
           }}
           testID="settingsConfigButton">
-          <ListItemIcon iconName="assignment" />
+          <ListItemIcon
+            style={{minWidth: 0, marginRight: 10}}
+            iconName="assignment"
+          />
           <ListItemText primary={<FormattedMessage {...m.config} />} />
         </ListItem>
       </List>

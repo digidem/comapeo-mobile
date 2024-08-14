@@ -56,6 +56,9 @@ export function useCreateProject() {
       queryClient.invalidateQueries({
         queryKey: [ALL_PROJECTS_KEY],
       });
+      queryClient.invalidateQueries({
+        queryKey: [PROJECT_SETTINGS_KEY],
+      });
     },
   });
 }
@@ -106,6 +109,20 @@ export function useLeaveProject() {
       queryClient.invalidateQueries({
         queryKey: [ALL_PROJECTS_KEY],
       });
+    },
+  });
+}
+
+export function useImportProjectConfig() {
+  const queryClient = useQueryClient();
+  const {projectApi} = useActiveProject();
+
+  return useMutation({
+    mutationFn: (configPath: string) => {
+      return projectApi.importConfig({configPath});
+    },
+    onSuccess: () => {
+      return queryClient.invalidateQueries({queryKey: [PROJECT_SETTINGS_KEY]});
     },
   });
 }

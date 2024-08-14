@@ -20,7 +20,7 @@ const m = defineMessages({
   overview: {
     id: 'screens.PrivacyPolicy.overview',
     defaultMessage:
-      'This document describes what information (“data”) is sent from CoMapeo to the application developer, Awana Digital, and how that information is used.',
+      'This document describes what information ("data") is sent from CoMapeo to the application developer, Awana Digital, and how that information is used.',
   },
   aboutAwana: {
     id: 'screens.PrivacyPolicy.aboutAwana',

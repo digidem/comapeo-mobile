@@ -67,6 +67,7 @@ import {
 import {AboutSettings} from '../../screens/Settings/About';
 import {CreateTestDataScreen} from '../../screens/Settings/CreateTestData';
 import {DataAndPrivacy} from '../../screens/Settings/DataAndPrivacy/DataAndPrivacy';
+import {SettingsPrivacyPolicy} from '../../screens/Settings/DataAndPrivacy/SettingsPrivacyPolicy';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -278,6 +279,11 @@ export const createDefaultScreenGroup = ({
       name="DataAndPrivacy"
       component={DataAndPrivacy}
       options={{headerTitle: intl(DataAndPrivacy.navTitle)}}
+    />
+    <RootStack.Screen
+      name="SettingsPrivacyPolicy"
+      component={SettingsPrivacyPolicy}
+      options={{headerTitle: intl(SettingsPrivacyPolicy.navTitle)}}
     />
     {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
       <RootStack.Screen

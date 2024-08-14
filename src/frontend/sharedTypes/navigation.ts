@@ -97,6 +97,7 @@ export type RootStackParamsList = {
   Sync: undefined;
   CreateTestData: undefined;
   DataAndPrivacy: undefined;
+  SettingsPrivacyPolicy: undefined;
 };
 
 export type DeviceNamingParamsList = {

@@ -75,7 +75,7 @@ export const DataAndPrivacy = ({
             {formatMessage(m.respectsPrivacy)}
           </Text>
           <TouchableOpacity
-            onPress={() => navigation.navigate('PrivacyPolicy')}>
+            onPress={() => navigation.navigate('SettingsPrivacyPolicy')}>
             <Text style={styles.learnMore}>{formatMessage(m.learnMore)}</Text>
           </TouchableOpacity>
         </View>

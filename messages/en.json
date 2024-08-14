@@ -618,6 +618,10 @@
   "screens.ObscurePasscode.whatIsObscure": {
     "message": "What is Obscure Passcode?"
   },
+  "screens.Observation.ObservationView.delete": {
+    "description": "Button to delete an observation",
+    "message": "Delete"
+  },
   "screens.Observation.ObservationView.noAnswer": {
     "description": "Placeholder text for fields on an observation which are not answered",
     "message": "No answer"
@@ -626,9 +630,33 @@
     "description": "Default name of observation with no matching preset",
     "message": "Observation"
   },
+  "screens.Observation.ObservationView.share": {
+    "description": "Button to share an observation",
+    "message": "Share"
+  },
+  "screens.Observation.cancel": {
+    "description": "Button to cancel delete of observation",
+    "message": "Cancel"
+  },
+  "screens.Observation.confirm": {
+    "description": "Button to confirm delete of observation",
+    "message": "Yes, delete"
+  },
   "screens.Observation.deleteTitle": {
     "description": "Title of dialog asking confirmation to delete an observation",
     "message": "Delete observation?"
+  },
+  "screens.Observation.shareMediaTitle": {
+    "description": "Title of dialog to share an observation with media",
+    "message": "Sharing image"
+  },
+  "screens.Observation.shareMessage": {
+    "description": "Message that will be shared along with image",
+    "message": "Mapeo Alert — _*{category_name}*_ {date, date, full} {time, time, long} {coordinates}"
+  },
+  "screens.Observation.shareTextTitle": {
+    "description": "Title of dialog to share an observation without media",
+    "message": "Sharing text"
   },
   "screens.Observation.title": {
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",

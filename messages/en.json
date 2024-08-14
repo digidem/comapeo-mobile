@@ -141,6 +141,22 @@
   "Screens.Settings.ProjectSettings.yourTeam": {
     "message": "Your Team"
   },
+  "SharedComponents.ActionButtons.cancel": {
+    "description": "Button to cancel delete of observation",
+    "message": "Cancel"
+  },
+  "SharedComponents.ActionButtons.confirm": {
+    "description": "Button to confirm delete of observation",
+    "message": "Yes, delete"
+  },
+  "SharedComponents.ActionButtons.delete": {
+    "description": "Button to delete an observation",
+    "message": "Delete"
+  },
+  "SharedComponents.ActionButtons.share": {
+    "description": "Button to share an observation",
+    "message": "Share"
+  },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Coordinator"
   },
@@ -602,10 +618,6 @@
   "screens.ObscurePasscode.whatIsObscure": {
     "message": "What is Obscure Passcode?"
   },
-  "screens.Observation.ObservationView.delete": {
-    "description": "Button to delete an observation",
-    "message": "Delete"
-  },
   "screens.Observation.ObservationView.noAnswer": {
     "description": "Placeholder text for fields on an observation which are not answered",
     "message": "No answer"
@@ -614,33 +626,9 @@
     "description": "Default name of observation with no matching preset",
     "message": "Observation"
   },
-  "screens.Observation.ObservationView.share": {
-    "description": "Button to share an observation",
-    "message": "Share"
-  },
-  "screens.Observation.cancel": {
-    "description": "Button to cancel delete of observation",
-    "message": "Cancel"
-  },
-  "screens.Observation.confirm": {
-    "description": "Button to confirm delete of observation",
-    "message": "Yes, delete"
-  },
   "screens.Observation.deleteTitle": {
     "description": "Title of dialog asking confirmation to delete an observation",
     "message": "Delete observation?"
-  },
-  "screens.Observation.shareMediaTitle": {
-    "description": "Title of dialog to share an observation with media",
-    "message": "Sharing image"
-  },
-  "screens.Observation.shareMessage": {
-    "description": "Message that will be shared along with image",
-    "message": "Mapeo Alert — _*{category_name}*_ {date, date, full} {time, time, long} {coordinates}"
-  },
-  "screens.Observation.shareTextTitle": {
-    "description": "Title of dialog to share an observation without media",
-    "message": "Sharing text"
   },
   "screens.Observation.title": {
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
@@ -1028,6 +1016,20 @@
   },
   "screens.Sync.ProjectSyncDisplay.upToDate": {
     "message": "Up to Date! No data to Sync"
+  },
+  "screens.Track.ObservationList.observations": {
+    "message": "Observations"
+  },
+  "screens.Track.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete a track",
+    "message": "Delete track?"
+  },
+  "screens.Track.title": {
+    "description": "Title of track screen showing (non-editable) view of observation with map",
+    "message": "Track"
+  },
+  "screens.Track.tracks": {
+    "message": "Tracks"
   },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",

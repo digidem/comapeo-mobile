@@ -9,14 +9,14 @@ import {MapeoProjectApi} from '@mapeo/ipc';
 import {ClientApi} from 'rpc-reflector';
 
 export function useCreateBlobMutation(opts: {retry?: number} = {}) {
-  const project = useActiveProject();
+  const {projectApi} = useActiveProject();
 
   return useMutation({
     retry: opts.retry,
     mutationFn: async (photo: ProcessedDraftPhoto) => {
       const {originalUri, previewUri, thumbnailUri} = photo;
 
-      return project.$blobs.create(
+      return projectApi.$blobs.create(
         {
           original: new URL(originalUri).pathname,
           preview: previewUri ? new URL(previewUri).pathname : undefined,
@@ -35,7 +35,8 @@ export function useCreateBlobMutation(opts: {retry?: number} = {}) {
 }
 
 const resolveAttachmentUrlQueryOptions = (
-  project: ClientApi<MapeoProjectApi>,
+  projectId: string,
+  projectApi: ClientApi<MapeoProjectApi>,
   attachment: Observation['attachments'][0],
   variant: BlobVariant<
     Exclude<Observation['attachments'][number]['type'], 'UNRECOGNIZED'>
@@ -46,6 +47,7 @@ const resolveAttachmentUrlQueryOptions = (
     enabled: enabledByDefault,
     queryKey: [
       'attachmentUrl',
+      projectId,
       attachment.driveDiscoveryId,
       attachment.type,
       variant,
@@ -64,7 +66,7 @@ const resolveAttachmentUrlQueryOptions = (
 
           return {
             ...attachment,
-            url: await project.$blobs.getUrl({
+            url: await projectApi.$blobs.getUrl({
               driveId: attachment.driveDiscoveryId,
               name: attachment.name,
               type: attachment.type,
@@ -75,7 +77,7 @@ const resolveAttachmentUrlQueryOptions = (
         case 'photo': {
           return {
             ...attachment,
-            url: await project.$blobs.getUrl({
+            url: await projectApi.$blobs.getUrl({
               driveId: attachment.driveDiscoveryId,
               name: attachment.name,
               type: attachment.type,
@@ -95,10 +97,11 @@ export function useAttachmentUrlQuery(
   >,
   enabledByDefault: boolean = true,
 ) {
-  const project = useActiveProject();
+  const {projectId, projectApi} = useActiveProject();
   return useQuery(
     resolveAttachmentUrlQueryOptions(
-      project,
+      projectId,
+      projectApi,
       attachment,
       variant,
       enabledByDefault,
@@ -113,12 +116,13 @@ export function useAttachmentUrlQueries(
   >,
   enabledByDefault: boolean = true,
 ) {
-  const project = useActiveProject();
+  const {projectId, projectApi} = useActiveProject();
 
   return useQueries({
     queries: attachments.map(attachment =>
       resolveAttachmentUrlQueryOptions(
-        project,
+        projectId,
+        projectApi,
         attachment,
         variant,
         enabledByDefault,

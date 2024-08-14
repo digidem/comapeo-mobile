@@ -67,14 +67,16 @@ function writePolyfillFile(locales, outputPath) {
 
   // Write lines to load base polyfills
   writer.write(
-    createImportStatement('@formatjs/intl-getcanonicallocales/polyfill'),
+    createImportStatement('@formatjs/intl-getcanonicallocales/polyfill-force'),
   );
-  writer.write(createImportStatement('@formatjs/intl-locale/polyfill'));
+  writer.write(createImportStatement('@formatjs/intl-locale/polyfill-force'));
 
   writer.write('\n');
 
   // Write lines to load plural rules polyfill
-  writer.write(createImportStatement('@formatjs/intl-pluralrules/polyfill'));
+  writer.write(
+    createImportStatement('@formatjs/intl-pluralrules/polyfill-force'),
+  );
   for (const locale of locales) {
     writer.write(
       createImportStatement(`@formatjs/intl-pluralrules/locale-data/${locale}`),
@@ -85,7 +87,7 @@ function writePolyfillFile(locales, outputPath) {
 
   // Write lines to load relative time format polyfill
   writer.write(
-    createImportStatement('@formatjs/intl-relativetimeformat/polyfill'),
+    createImportStatement('@formatjs/intl-relativetimeformat/polyfill-force'),
   );
   for (const locale of locales) {
     writer.write(

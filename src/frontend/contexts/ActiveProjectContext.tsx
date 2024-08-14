@@ -6,9 +6,9 @@ import {useProject, useCreateProject} from '../hooks/server/projects';
 import {Loading} from '../sharedComponents/Loading';
 import {useApi} from './ApiContext';
 
-const ActiveProjectContext = React.createContext<MapeoProjectApi | undefined>(
-  undefined,
-);
+const ActiveProjectContext = React.createContext<
+  {projectId: string; projectApi: MapeoProjectApi} | undefined
+>(undefined);
 
 export const ActiveProjectProvider = ({
   children,

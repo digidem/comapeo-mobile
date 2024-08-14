@@ -17,7 +17,9 @@ export function useProject(projectId?: string) {
     queryKey: [PROJECT_KEY, projectId],
     queryFn: async () => {
       if (!projectId) throw new Error('Active project ID must exist');
-      return api.getProject(projectId);
+      const projectApi = await api.getProject(projectId);
+
+      return {projectId, projectApi};
     },
     enabled: !!projectId,
     placeholderData: previousData => previousData,
@@ -59,34 +61,34 @@ export function useCreateProject() {
 }
 
 export function useProjectMembers() {
-  const project = useActiveProject();
+  const {projectId, projectApi} = useActiveProject();
 
   return useQuery({
-    queryKey: [PROJECT_MEMBERS_KEY],
+    queryKey: [PROJECT_MEMBERS_KEY, projectId],
     queryFn: () => {
-      return project.$member.getMany();
+      return projectApi.$member.getMany();
     },
   });
 }
 
 export function useProjectSettings() {
-  const project = useActiveProject();
+  const {projectId, projectApi} = useActiveProject();
 
   return useQuery({
-    queryKey: [PROJECT_SETTINGS_KEY],
+    queryKey: [PROJECT_SETTINGS_KEY, projectId],
     queryFn: () => {
-      return project.$getProjectSettings();
+      return projectApi.$getProjectSettings();
     },
   });
 }
 
 export const useCreatedByToDeviceId = (createdBy: string) => {
-  const project = useActiveProject();
+  const {projectId, projectApi} = useActiveProject();
 
   return useQuery({
-    queryKey: [CREATED_BY_TO_DEVICE_ID_KEY, createdBy],
+    queryKey: [CREATED_BY_TO_DEVICE_ID_KEY, projectId, createdBy],
     queryFn: async () => {
-      return await project.$createdByToDeviceId(createdBy);
+      return await projectApi.$createdByToDeviceId(createdBy);
     },
   });
 };

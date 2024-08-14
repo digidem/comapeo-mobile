@@ -10,38 +10,34 @@ import {ClientGeneratedObservation} from '../../sharedTypes';
 export const OBSERVATION_KEY = 'observations';
 
 export function useObservations() {
-  const project = useActiveProject();
+  const {projectId, projectApi} = useActiveProject();
 
   return useSuspenseQuery({
-    queryKey: [OBSERVATION_KEY],
+    queryKey: [OBSERVATION_KEY, projectId],
     queryFn: async () => {
-      if (!project) throw new Error('Project instance does not exist');
-      return project.observation.getMany();
+      return projectApi.observation.getMany();
     },
   });
 }
 
 export function useObservation(observationId: string) {
-  const project = useActiveProject();
+  const {projectId, projectApi} = useActiveProject();
 
   return useSuspenseQuery({
-    queryKey: [OBSERVATION_KEY, observationId],
+    queryKey: [OBSERVATION_KEY, projectId, observationId],
     queryFn: async () => {
-      if (!project) throw new Error('Project instance does not exist');
-      return project.observation.getByDocId(observationId);
+      return projectApi.observation.getByDocId(observationId);
     },
   });
 }
 
 export function useCreateObservation() {
   const queryClient = useQueryClient();
-  const project = useActiveProject();
+  const {projectApi} = useActiveProject();
 
   return useMutation({
     mutationFn: async ({value}: {value: ClientGeneratedObservation}) => {
-      if (!project) throw new Error('Project instance does not exist');
-
-      return project.observation.create({
+      return projectApi.observation.create({
         ...value,
         schemaName: 'observation',
       });
@@ -54,7 +50,7 @@ export function useCreateObservation() {
 
 export function useEditObservation() {
   const queryClient = useQueryClient();
-  const project = useActiveProject();
+  const {projectId, projectApi} = useActiveProject();
 
   return useMutation({
     mutationFn: async ({
@@ -64,22 +60,23 @@ export function useEditObservation() {
       versionId: string;
       value: ObservationValue;
     }) => {
-      return project.observation.update(versionId, value);
+      return projectApi.observation.update(versionId, value);
     },
     onSuccess: data => {
-      queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY, data.docId]});
+      queryClient.invalidateQueries({
+        queryKey: [OBSERVATION_KEY, projectId, data.docId],
+      });
     },
   });
 }
 
 export function useDeleteObservation() {
   const queryClient = useQueryClient();
-  const project = useActiveProject();
+  const {projectApi} = useActiveProject();
 
   return useMutation({
     mutationFn: async ({id}: {id: string}) => {
-      if (!project) throw new Error('Project instance does not exist');
-      return project.observation.delete(id);
+      return projectApi.observation.delete(id);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY]});

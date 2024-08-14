@@ -1135,6 +1135,9 @@
     "description": "Title of settings screen",
     "message": "Settings"
   },
+  "screens.SettingsPrivacyPolicy.navTitle": {
+    "message": "Privacy Policy"
+  },
   "screens.Sync.CreateOrJoinProjectDisplay.buttonText": {
     "message": "Create or Join Project"
   },

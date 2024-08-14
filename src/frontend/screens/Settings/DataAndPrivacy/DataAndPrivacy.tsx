@@ -69,7 +69,7 @@ export const DataAndPrivacy = ({
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.shieldContainer}>
-        <CoMapeoShield width={40} height={40} />
+        <CoMapeoShield width={24} height={30} />
         <View style={styles.shieldTextContainer}>
           <Text style={styles.respectsPrivacy}>
             {formatMessage(m.respectsPrivacy)}
@@ -169,7 +169,6 @@ const styles = StyleSheet.create({
   },
   diagnosticTitle: {
     fontSize: 16,
-    fontWeight: 'bold',
     color: BLACK,
     marginBottom: 10,
   },

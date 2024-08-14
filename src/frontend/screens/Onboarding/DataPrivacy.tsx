@@ -31,7 +31,7 @@ export const DataPrivacy = ({
     },
     dataPrivacyEncrypted: {
       id: 'screens.DataPrivacy.encrypted',
-      defaultMessage: 'All data stays fully encrypted.',
+      defaultMessage: 'All data stays fully encrypted',
     },
     dataPrivacyManageAndControl: {
       id: 'screens.DataPrivacy.manageAndControl',

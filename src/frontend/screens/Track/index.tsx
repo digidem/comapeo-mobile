@@ -11,7 +11,10 @@ import {BLACK, DARK_GREY} from '../../lib/styles.ts';
 import TrackIcon from '../../images/Track.svg';
 import EditIcon from '../../images/Edit.svg';
 import {FormattedMessage, defineMessages} from 'react-intl';
-import {useDeleteTrackMutation, useTrack} from '../../hooks/server/track.ts';
+import {
+  useDeleteTrackMutation,
+  useTrackQuery,
+} from '../../hooks/server/track.ts';
 import {useObservations} from '../../hooks/server/observations.ts';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {MapPreview} from './MapPreview.tsx';
@@ -66,10 +69,10 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
     });
   }, [navigation, isMine]);
 
-  const {data: track} = useTrack(route.params.trackId);
+  const {data: track} = useTrackQuery(route.params.trackId);
   const {data: observations} = useObservations();
   const trackObservations = observations.filter(observation =>
-    track.refs.some(ref => ref.id === observation.docId),
+    track.observationRefs.some(ref => ref.docId === observation.docId),
   );
 
   const deleteTrackMutation = useDeleteTrackMutation();

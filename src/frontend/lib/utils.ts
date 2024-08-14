@@ -1,10 +1,7 @@
 // import { Alert } from "react-native";
 import {fromLatLon} from 'utm';
-import {SelectOptions, LabeledSelectOption} from '../sharedTypes/PresetTypes';
 import {Preset, Observation, Track} from '@mapeo/schema';
 import {LocationObject, LocationProviderStatus} from 'expo-location';
-import {NavigationState} from '@react-navigation/native';
-import {EDITING_SCREEN_NAMES} from '../constants';
 import {FeatureCollection, LineString} from 'geojson';
 import {LocationHistoryPoint} from '../sharedTypes/location';
 
@@ -230,7 +227,6 @@ export function matchPreset(
   presets.forEach(preset => {
     let score = 0;
     let presetTagsCount = Object.keys(preset.tags).length;
-    let matchedTagsCount = 0;
 
     for (const key in preset.tags) {
       if (preset.tags.hasOwnProperty(key)) {
@@ -238,13 +234,11 @@ export function matchPreset(
         const availableTag = availableTags[key];
         if (presetTag === availableTag) {
           score++;
-          matchedTagsCount++;
         } else if (
           Array.isArray(presetTag) &&
           presetTag.includes(availableTag as boolean | number | string | null)
         ) {
           score++;
-          matchedTagsCount++;
         }
       }
     }

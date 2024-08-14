@@ -16,6 +16,10 @@ const m = defineMessages({
     id: 'Screens.Settings.ProjectSettings.yourTeam',
     defaultMessage: 'Your Team',
   },
+  syncSettings: {
+    id: 'Screens.Settings.ProjectSettings.syncSettings',
+    defaultMessage: 'Sync Settings',
+  },
 });
 
 export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
@@ -37,6 +41,13 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
             navigation.navigate('YourTeam');
           }}>
           <ListItemText primary={<FormattedMessage {...m.yourTeam} />} />
+        </ListItem>
+        <ListItem
+          testID="MAIN.sync-list-item"
+          onPress={() => {
+            navigation.navigate('SyncSettings');
+          }}>
+          <ListItemText primary={<FormattedMessage {...m.syncSettings} />} />
         </ListItem>
       </List>
     </ScrollView>

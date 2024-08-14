@@ -66,6 +66,7 @@ import {
 } from '../../screens/ObservationCreate';
 import {AboutSettings} from '../../screens/Settings/About';
 import {CreateTestDataScreen} from '../../screens/Settings/CreateTestData';
+import {SyncSettings} from '../../screens/Settings/ProjectSettings/SyncSettings';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -272,6 +273,11 @@ export const createDefaultScreenGroup = ({
       name="AboutSettings"
       component={AboutSettings}
       options={{headerTitle: intl(AboutSettings.navTitle)}}
+    />
+    <RootStack.Screen
+      name="SyncSettings"
+      component={SyncSettings}
+      options={{headerTitle: intl(SyncSettings.navTitle)}}
     />
 
     {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (

@@ -1059,6 +1059,9 @@
   "screens.Settings.Config.created": {
     "message": "Created {date} at {time}"
   },
+  "screens.Settings.Config.importConfig": {
+    "message": "Import Config"
+  },
   "screens.Settings.Config.name": {
     "message": "Config Name:"
   },

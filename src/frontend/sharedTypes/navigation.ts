@@ -37,7 +37,7 @@ export type RootStackParamsList = {
   Home: NavigatorScreenParams<HomeTabsParamsList>;
   GpsModal: undefined;
   Settings: undefined;
-  ProjectConfig: undefined;
+  Config: undefined;
   AboutSettings: undefined;
   LanguageSettings: undefined;
   CoordinateFormat: undefined;

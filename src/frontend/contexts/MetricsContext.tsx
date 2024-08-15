@@ -13,14 +13,15 @@ const MetricsContext = React.createContext<MetricsContextType | undefined>(
 
 export type MetricsProviderProps = {
   children?: React.ReactNode;
+  appMetrics: AppDiagnosticMetrics;
+  deviceMetrics: DeviceDiagnosticMetrics;
 };
 
 export const MetricsProvider = ({
   children,
+  appMetrics,
+  deviceMetrics,
 }: MetricsProviderProps): JSX.Element => {
-  const appMetrics = new AppDiagnosticMetrics();
-  const deviceMetrics = new DeviceDiagnosticMetrics();
-
   return (
     <MetricsContext.Provider value={{appMetrics, deviceMetrics}}>
       {children}

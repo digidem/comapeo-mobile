@@ -73,11 +73,11 @@ export function useSyncState<S = SyncState | null>(
 }
 
 /**
- * Calculates progress of *data* sync based on sync state.
+ * Provides the progress of initial + data sync for SYNC-ENABLED connected peers
  *
  * @returns A number between 0 and 1 when data sync is enabled. `null` otherwise.
  */
-export function useSyncProgress() {
+export function useSyncProgress(): number | null {
   const {subscribe, getProgressSnapshot} = useSyncStore();
   return useSyncExternalStore(subscribe, getProgressSnapshot);
 }
@@ -90,11 +90,7 @@ class SyncStore {
   #error: Error | null = null;
   #state: SyncState | null = null;
 
-  /**
-   * Represents maximum value of `#state.data.want + #state.data.wanted` while data syncing is enabled.
-   * Resets to null when data syncing goes from enabled to disabled.
-   */
-  #maxDataSyncCount: number | null = null;
+  #perDeviceMaxSyncCount = new Map<string, number>();
 
   constructor(project: MapeoProjectApi) {
     this.#project = project;
@@ -114,20 +110,32 @@ class SyncStore {
     return this.#state;
   };
 
+  // TODO: wondering if it would be easier for this to only return a number instead of number | null?
   getProgressSnapshot = () => {
-    if (this.#maxDataSyncCount === null || this.#state === null) {
+    if (this.#state === null) {
       return null;
     }
 
-    if (this.#maxDataSyncCount === 0) {
-      return 1;
+    let currentSyncCount = 0;
+    let totalMaxSyncCount = 0;
+
+    for (const [deviceId, deviceSyncState] of Object.entries(
+      this.#state.deviceSyncState,
+    )) {
+      const maxSyncCountForDevice = this.#perDeviceMaxSyncCount.get(deviceId);
+
+      if (!maxSyncCountForDevice) continue;
+
+      currentSyncCount = getTotalSyncCountForDevice(deviceSyncState);
+      totalMaxSyncCount += maxSyncCountForDevice;
     }
 
-    // const currentCount = this.#state.data.want + this.#state.data.wanted;
-    const currentCount = calculateSyncCount(this.#state.deviceSyncState);
+    // TODO: I think this is the right thing to do here???
+    if (totalMaxSyncCount === 0) {
+      return 0;
+    }
 
-    const ratio =
-      (this.#maxDataSyncCount - currentCount) / this.#maxDataSyncCount;
+    const ratio = (totalMaxSyncCount - currentSyncCount) / totalMaxSyncCount;
 
     if (ratio <= 0) return 0;
     if (ratio >= 1) return 1;
@@ -142,31 +150,60 @@ class SyncStore {
   }
 
   #onSyncState = (state: SyncStateOld) => {
-    console.log('#onSyncState - state', JSON.stringify(state, null, 2));
+    const dataSyncToggled =
+      this.#state?.data.isEnabled !== state.data.isSyncEnabled;
 
-    const convertedState = convertSyncState(state);
+    let convertedState = convertSyncState(state);
 
-    console.log(
-      '#onSyncState - converted state',
-      JSON.stringify(convertedState, null, 2),
-    );
+    // TODO: Temporary. only done for simulation purposes
+    if (dataSyncToggled && convertedState.data.isEnabled) {
+      convertedState = convertSyncState(state, {
+        peer_1: {
+          initial: {
+            want: state.initial.wanted,
+            wanted: state.initial.want,
+            isEnabled: true,
+          },
+          data: {
+            want: state.data.wanted,
+            wanted: state.data.want,
+            isEnabled: true,
+          },
+        },
+      });
+    }
 
-    // Indicates whether data syncing went from enabled to disabled
-    // const isDataSyncStopped =
-    //   this.#state?.data.isSyncEnabled && !state.data.isSyncEnabled;
-    const isDataSyncStopped =
-      this.#state?.data.isEnabled && !convertedState.data.isEnabled;
-
-    if (isDataSyncStopped) {
-      this.#maxDataSyncCount = null;
+    if (dataSyncToggled) {
+      this.#perDeviceMaxSyncCount.clear();
     } else {
-      // const newSyncCount = state.data.want + state.data.wanted;
-      const newSyncCount = calculateSyncCount(convertedState.deviceSyncState);
+      const connectedDevices = Object.keys(convertedState.deviceSyncState);
 
-      this.#maxDataSyncCount =
-        this.#maxDataSyncCount === null
-          ? newSyncCount
-          : Math.max(this.#maxDataSyncCount, newSyncCount);
+      // Remove devices from #perDeviceMaxSyncCount that are no longer found in the new sync state
+      for (const deviceId of this.#perDeviceMaxSyncCount.keys()) {
+        if (!connectedDevices.includes(deviceId)) {
+          this.#perDeviceMaxSyncCount.delete(deviceId);
+        }
+      }
+    }
+
+    // Add or update sync-enabled devices in #perDeviceMaxSyncCount based on new sync state
+    for (const [deviceId, stateForDevice] of Object.entries(
+      convertedState.deviceSyncState,
+    )) {
+      // Ignore devices that do not have data sync enabled
+      // TODO: Would it be worth checking initial and data sync? (initial is technically always enabled)
+      if (!stateForDevice.data.isEnabled) continue;
+
+      const existingCount = this.#perDeviceMaxSyncCount.get(deviceId);
+      const newCount = getTotalSyncCountForDevice(stateForDevice);
+
+      if (existingCount === undefined) {
+        this.#perDeviceMaxSyncCount.set(deviceId, newCount);
+      } else {
+        if (existingCount < newCount) {
+          this.#perDeviceMaxSyncCount.set(deviceId, newCount);
+        }
+      }
     }
 
     this.#state = convertedState;
@@ -200,16 +237,11 @@ function identity(state: SyncState | undefined) {
   return state;
 }
 
-export function calculateSyncCount(
-  deviceSyncState: SyncState['deviceSyncState'],
-): number {
-  let result = 0;
-
-  for (const {data, initial} of Object.values(deviceSyncState)) {
-    result += initial.want + initial.wanted + data.want + data.wanted;
-  }
-
-  return result;
+function getTotalSyncCountForDevice(
+  syncStateForDevice: SyncState['deviceSyncState'][string],
+) {
+  const {initial, data} = syncStateForDevice;
+  return initial.want + initial.wanted + data.want + data.wanted;
 }
 
 // TODO: Move to lib?
@@ -235,7 +267,10 @@ export function getSyncingPeersCount(
 }
 
 // TODO: Temporary. Remove when sync state api is updated
-function convertSyncState(state: SyncStateOld): SyncState {
+function convertSyncState(
+  state: SyncStateOld,
+  deviceSyncState: SyncState['deviceSyncState'] = {},
+): SyncState {
   const {initial, data} = state;
   return {
     initial: {
@@ -245,19 +280,6 @@ function convertSyncState(state: SyncStateOld): SyncState {
       isEnabled: data.isSyncEnabled,
     },
     // Currently just assumes one connected peer
-    deviceSyncState: {
-      peer_1: {
-        initial: {
-          want: initial.wanted,
-          wanted: initial.want,
-          isEnabled: true,
-        },
-        data: {
-          want: data.wanted,
-          wanted: data.want,
-          isEnabled: true,
-        },
-      },
-    },
+    deviceSyncState,
   };
 }

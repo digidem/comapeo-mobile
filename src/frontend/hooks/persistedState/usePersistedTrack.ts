@@ -2,14 +2,17 @@ import {calculateTotalDistance} from '../../utils/distance.ts';
 import {LocationHistoryPoint} from '../../sharedTypes/location.ts';
 import {createPersistedStore} from './createPersistedState.ts';
 import {useStore} from 'zustand';
+import {Track} from '@mapeo/schema';
+
+type ObservationRef = Track['observationRefs'][0];
 
 type TracksStoreState = {
   locationHistory: LocationHistoryPoint[];
-  observations: string[];
+  observationRefs: ObservationRef[];
   distance: number;
   description: string;
   setDescription: (val: string) => void;
-  addNewObservation: (observationId: string) => void;
+  addNewObservation: (observationRef: ObservationRef) => void;
   addNewLocations: (locationData: LocationHistoryPoint[]) => void;
   clearCurrentTrack: () => void;
   setTracking: (val: boolean) => void;
@@ -28,13 +31,15 @@ export const tracksStore = createPersistedStore<TracksStoreState>(
   set => ({
     isTracking: false,
     locationHistory: [],
-    observations: [],
+    observationRefs: [],
     distance: 0,
     description: '',
     trackingSince: null,
     setDescription: (val: string) => set(() => ({description: val})),
-    addNewObservation: (id: string) =>
-      set(state => ({observations: [...state.observations, id]})),
+    addNewObservation: observationRef =>
+      set(state => ({
+        observationRefs: [...state.observationRefs, observationRef],
+      })),
     addNewLocations: data =>
       set(({locationHistory, distance}) => {
         if (data.length > 1) {

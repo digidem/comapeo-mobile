@@ -47,11 +47,14 @@ export function useGetPresetIcon(size: IconSize, name?: string) {
         .getMany()
         .then(res => res.find(p => p.name === name));
 
-      return await projectApi.$icons.getIconUrl(currentPreset?.iconId!, {
-        mimeType: 'image/png',
-        size: size,
-        pixelDensity: 3,
-      });
+      return await projectApi.$icons.getIconUrl(
+        currentPreset?.iconRef?.docId!,
+        {
+          mimeType: 'image/png',
+          size: size,
+          pixelDensity: 3,
+        },
+      );
     },
   });
 }

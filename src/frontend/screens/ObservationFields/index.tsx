@@ -82,7 +82,7 @@ export const ObservationFields = ({
     return null;
   }
 
-  const fieldId = preset?.fieldIds[current - 1];
+  const fieldId = preset?.fieldRefs.map(({docId}) => docId)[current - 1];
   const field = fields.data?.find(val => val.docId === fieldId);
 
   if (!field) {
@@ -106,7 +106,7 @@ const DetailsHeaderRight = ({questionNumber}: {questionNumber: number}) => {
   );
 
   const isLastQuestion =
-    questionNumber >= (preset ? preset.fieldIds.length : 0);
+    questionNumber >= (preset ? preset.fieldRefs.length : 0);
   const buttonText = isLastQuestion ? t(m.done) : t(m.nextQuestion);
 
   const onPress = () =>
@@ -137,7 +137,7 @@ const DetailsTitle = ({questionNumber}: {questionNumber: number}) => {
         {...m.title}
         values={{
           current: questionNumber,
-          total: preset?.fieldIds.length || 0,
+          total: preset?.fieldRefs.length || 0,
         }}
       />
     </Text>

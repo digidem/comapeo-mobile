@@ -23,8 +23,7 @@ SettingsPrivacyPolicy.navTitle = m.navTitle;
 const styles = StyleSheet.create({
   scrollContent: {
     backgroundColor: 'white',
-    padding: 20,
-    marginHorizontal: 10,
-    paddingBottom: 50,
+    paddingVertical: 20,
+    paddingHorizontal: 30,
   },
 });

@@ -70,6 +70,7 @@ export const DataAndPrivacy = ({
     deviceMetrics,
   );
   const {isPermissionEnabled, togglePermission} = usePersistedPermission();
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.shieldContainer}>
@@ -135,6 +136,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     backgroundColor: WHITE,
+    gap: 20,
   },
   shieldContainer: {
     flexDirection: 'row',
@@ -144,17 +146,16 @@ const styles = StyleSheet.create({
     borderColor: BLUE_GREY,
     borderRadius: 10,
     backgroundColor: WHITE,
-    marginBottom: 20,
+    gap: 20,
   },
   shieldTextContainer: {
-    marginLeft: 15,
     flex: 1,
+    gap: 15,
   },
   respectsPrivacy: {
     fontSize: 16,
     fontWeight: 'bold',
     color: BLACK,
-    marginBottom: 5,
   },
   learnMore: {
     fontSize: 16,
@@ -166,25 +167,24 @@ const styles = StyleSheet.create({
     borderColor: BLUE_GREY,
     borderRadius: 10,
     backgroundColor: WHITE,
+    gap: 10,
   },
   diagnosticTitle: {
     fontSize: 16,
     color: BLACK,
-    marginBottom: 10,
   },
   diagnosticText: {
     fontSize: 14,
     color: NEW_DARK_GREY,
-    marginBottom: 10,
   },
   bulletContainer: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    marginBottom: 5,
+    columnGap: 10,
+    paddingLeft: 10,
   },
   bulletIcon: {
-    marginTop: 5,
-    marginRight: 10,
+    marginTop: 10,
   },
   bulletText: {
     fontSize: 14,
@@ -195,12 +195,12 @@ const styles = StyleSheet.create({
     borderBottomColor: BLUE_GREY,
     borderBottomWidth: 1,
     marginVertical: 20,
-    marginHorizontal: -20,
   },
   diagnosticPermissionContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: WHITE,
+    gap: 10,
   },
   permissionText: {
     fontSize: 16,

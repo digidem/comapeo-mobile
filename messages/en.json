@@ -361,6 +361,12 @@
   "screens.DataAndPrivacy.navTitle": {
     "message": "Data & Privacy"
   },
+  "screens.DataAndPrivacy.noPII": {
+    "message": "This never includes any of your data or personal information."
+  },
+  "screens.DataAndPrivacy.optOut": {
+    "message": "You can opt-out of sharing diagnostic information at any time."
+  },
   "screens.DataAndPrivacy.respectsPrivacy": {
     "message": "CoMapeo Respects Your Privacy & Autonomy"
   },

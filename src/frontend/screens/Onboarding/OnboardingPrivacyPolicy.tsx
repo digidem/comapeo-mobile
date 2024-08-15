@@ -10,9 +10,7 @@ import {useIntl, defineMessages} from 'react-intl';
 import {PrivacyPolicy} from '../PrivacyPolicy';
 import {BLUE_GREY, WHITE, BLACK, COMAPEO_BLUE} from '../../lib/styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
-import {AppDiagnosticMetrics} from '../../metrics/AppDiagnosticMetrics';
-import {DeviceDiagnosticMetrics} from '../../metrics/DeviceDiagnosticMetrics';
+import {useMetrics} from '../../contexts/MetricsContext';
 
 const m = defineMessages({
   navTitle: {
@@ -30,19 +28,9 @@ const m = defineMessages({
 });
 
 export const OnboardingPrivacyPolicy = () => {
-  const appDiagnosticMetrics = new AppDiagnosticMetrics();
-  const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
   const {formatMessage} = useIntl();
-  const [isDiagnosticsEnabled, setIsDiagnosticsEnabled] = React.useState(false);
-
-  const toggleDiagnostics = () => {
-    setIsDiagnosticsEnabled(prev => !prev);
-  };
-
-  React.useEffect(() => {
-    appDiagnosticMetrics.setEnabled(isDiagnosticsEnabled);
-    deviceDiagnosticMetrics.setEnabled(isDiagnosticsEnabled);
-  }, [isDiagnosticsEnabled]);
+  const {appMetrics, deviceMetrics} = useMetrics();
+  const [isPermissionsEnabled, setIsPermissionsEnabled] = React.useState(false);
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -54,12 +42,20 @@ export const OnboardingPrivacyPolicy = () => {
           {formatMessage(m.shareDiagnostics)}
         </Text>
         <TouchableOpacity
-          onPress={toggleDiagnostics}
+          onPress={() => {
+            setIsPermissionsEnabled(enabled => {
+              const newValue = !enabled;
+              appMetrics.setEnabled(newValue);
+              deviceMetrics.setEnabled(newValue);
+              return newValue;
+            });
+          }}
+          hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
           style={[
             styles.checkBox,
-            isDiagnosticsEnabled && styles.checkBoxChecked,
+            isPermissionsEnabled && styles.checkBoxChecked,
           ]}>
-          {isDiagnosticsEnabled && (
+          {isPermissionsEnabled && (
             <MaterialIcons name="check" size={18} color={WHITE} />
           )}
         </TouchableOpacity>
@@ -73,9 +69,8 @@ OnboardingPrivacyPolicy.navTitle = m.navTitle;
 const styles = StyleSheet.create({
   scrollContent: {
     backgroundColor: 'white',
-    padding: 20,
-    marginHorizontal: 10,
-    paddingBottom: 50,
+    paddingVertical: 20,
+    paddingHorizontal: 10,
   },
   horizontalLine: {
     borderBottomColor: BLUE_GREY,
@@ -86,7 +81,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    marginTop: 10,
   },
   permissionBox: {
     flexDirection: 'row',

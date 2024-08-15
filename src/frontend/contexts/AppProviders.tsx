@@ -23,6 +23,7 @@ import {ApiProvider} from './ApiContext';
 import {MessagePortLike} from '../lib/MessagePortLike';
 import {IntlProvider} from './IntlContext';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import {MetricsProvider} from './MetricsContext';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -52,7 +53,9 @@ export const AppProviders = ({
                       <ActiveProjectProvider>
                         <BottomSheetModalProvider>
                           <PhotoPromiseProvider>
-                            <SecurityProvider>{children}</SecurityProvider>
+                            <SecurityProvider>
+                              <MetricsProvider>{children} </MetricsProvider>
+                            </SecurityProvider>
                           </PhotoPromiseProvider>
                         </BottomSheetModalProvider>
                       </ActiveProjectProvider>

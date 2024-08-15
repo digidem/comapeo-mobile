@@ -5,16 +5,14 @@ import {DeviceDiagnosticMetrics} from '../../metrics/DeviceDiagnosticMetrics';
 interface PermissionState {
   isPermissionEnabled: boolean;
   togglePermission: () => void;
-  appDiagnosticMetrics: AppDiagnosticMetrics;
-  deviceDiagnosticMetrics: DeviceDiagnosticMetrics;
 }
 
-export const usePersistedPermission = createPersistedState<PermissionState>(
-  set => {
-    const appDiagnosticMetrics = new AppDiagnosticMetrics();
-    const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
-
-    return {
+export const createPersistedPermissionStore = (
+  appDiagnosticMetrics: AppDiagnosticMetrics,
+  deviceDiagnosticMetrics: DeviceDiagnosticMetrics,
+) => {
+  return createPersistedState<PermissionState>(
+    set => ({
       isPermissionEnabled: false,
       togglePermission: () => {
         set(state => {
@@ -24,9 +22,7 @@ export const usePersistedPermission = createPersistedState<PermissionState>(
           return {isPermissionEnabled: newValue};
         });
       },
-      appDiagnosticMetrics,
-      deviceDiagnosticMetrics,
-    };
-  },
-  'Permissions',
-);
+    }),
+    'Permissions',
+  );
+};

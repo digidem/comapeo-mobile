@@ -18,7 +18,8 @@ import {
 } from '../../../lib/styles';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AppStackParamsList} from '../../../sharedTypes/navigation';
-import {usePersistedPermission} from '../../../hooks/persistedState/usePersistedPermission';
+import {createPersistedPermissionStore} from '../../../hooks/persistedState/usePersistedPermission';
+import {useMetrics} from '../../../contexts/MetricsContext';
 
 const m = defineMessages({
   navTitle: {
@@ -46,14 +47,29 @@ const m = defineMessages({
     id: 'screens.OnboardingPrivacyPolicy.shareDiagnostics',
     defaultMessage: 'Share Diagnostic Information',
   },
+  noPII: {
+    id: 'screens.DataAndPrivacy.noPII',
+    defaultMessage:
+      'This never includes any of your data or personal information.',
+  },
+  optOut: {
+    id: 'screens.DataAndPrivacy.optOut',
+    defaultMessage:
+      'You can opt-out of sharing diagnostic information at any time.',
+  },
 });
 
 export const DataAndPrivacy = ({
   navigation,
 }: NativeStackScreenProps<AppStackParamsList, 'DataAndPrivacy'>) => {
   const {formatMessage} = useIntl();
-  const {isPermissionEnabled, togglePermission} = usePersistedPermission();
+  const {appMetrics, deviceMetrics} = useMetrics();
 
+  const usePersistedPermission = createPersistedPermissionStore(
+    appMetrics,
+    deviceMetrics,
+  );
+  const {isPermissionEnabled, togglePermission} = usePersistedPermission();
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.shieldContainer}>
@@ -83,9 +99,7 @@ export const DataAndPrivacy = ({
             color={NEW_DARK_GREY}
             style={styles.bulletIcon}
           />
-          <Text style={styles.bulletText}>
-            {`This never includes any of your data or personal information.`}
-          </Text>
+          <Text style={styles.bulletText}>{formatMessage(m.noPII)}</Text>
         </View>
         <View style={styles.bulletContainer}>
           <MaterialIcons
@@ -94,9 +108,7 @@ export const DataAndPrivacy = ({
             color={NEW_DARK_GREY}
             style={styles.bulletIcon}
           />
-          <Text style={styles.bulletText}>
-            {`You can opt-out of sharing diagnostic information at any time.`}
-          </Text>
+          <Text style={styles.bulletText}>{formatMessage(m.optOut)}</Text>
         </View>
         <View style={styles.horizontalLine} />
         <View style={styles.diagnosticPermissionContainer}>

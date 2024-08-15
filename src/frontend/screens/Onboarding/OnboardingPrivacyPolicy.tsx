@@ -10,7 +10,8 @@ import {useIntl, defineMessages} from 'react-intl';
 import {PrivacyPolicy} from '../PrivacyPolicy';
 import {BLUE_GREY, WHITE, BLACK, COMAPEO_BLUE} from '../../lib/styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {usePersistedPermission} from '../../hooks/persistedState/usePersistedPermission';
+import {createPersistedPermissionStore} from '../../hooks/persistedState/usePersistedPermission';
+import {useMetrics} from '../../contexts/MetricsContext';
 
 const m = defineMessages({
   navTitle: {
@@ -29,7 +30,12 @@ const m = defineMessages({
 
 export const OnboardingPrivacyPolicy = () => {
   const {formatMessage} = useIntl();
+  const {appMetrics, deviceMetrics} = useMetrics();
 
+  const usePersistedPermission = createPersistedPermissionStore(
+    appMetrics,
+    deviceMetrics,
+  );
   const {isPermissionEnabled, togglePermission} = usePersistedPermission();
 
   return (

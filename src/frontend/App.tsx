@@ -30,11 +30,11 @@ Sentry.init({
   },
 });
 
+const appDiagnosticMetrics = new AppDiagnosticMetrics();
+const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
 const messagePort = new MessagePortLike();
 const mapeoApi = createMapeoClient(messagePort, {timeout: Infinity});
 const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
-const appDiagnosticMetrics = new AppDiagnosticMetrics();
-const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
 localDiscoveryController.start();
 initializeNodejs();
 SplashScreen.preventAutoHideAsync();
@@ -73,21 +73,13 @@ const App = () => {
 
   useOnBackgroundedAndForegrounded(mapeoApi);
 
-  React.useEffect(() => {
-    // TODO: Set this conditionally based on consent.
-    appDiagnosticMetrics.setEnabled(true);
-  }, []);
-
-  React.useEffect(() => {
-    // TODO: Set this conditionally based on consent.
-    deviceDiagnosticMetrics.setEnabled(true);
-  }, []);
-
   return (
     <AppProviders
       messagePort={messagePort}
       localDiscoveryController={localDiscoveryController}
-      mapeoApi={mapeoApi}>
+      mapeoApi={mapeoApi}
+      appMetrics={appDiagnosticMetrics}
+      deviceMetrics={deviceDiagnosticMetrics}>
       <AppNavigator permissionAsked={permissionsAsked} />
     </AppProviders>
   );

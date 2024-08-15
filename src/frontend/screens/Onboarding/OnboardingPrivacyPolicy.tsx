@@ -29,6 +29,7 @@ const m = defineMessages({
 
 export const OnboardingPrivacyPolicy = () => {
   const {formatMessage} = useIntl();
+
   const {isPermissionEnabled, togglePermission} = usePersistedPermission();
 
   return (
@@ -42,6 +43,7 @@ export const OnboardingPrivacyPolicy = () => {
         </Text>
         <TouchableOpacity
           onPress={togglePermission}
+          hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
           style={[
             styles.checkBox,
             isPermissionEnabled && styles.checkBoxChecked,
@@ -60,9 +62,8 @@ OnboardingPrivacyPolicy.navTitle = m.navTitle;
 const styles = StyleSheet.create({
   scrollContent: {
     backgroundColor: 'white',
-    padding: 20,
-    marginHorizontal: 10,
-    paddingBottom: 50,
+    paddingVertical: 20,
+    paddingHorizontal: 30,
   },
   horizontalLine: {
     borderBottomColor: BLUE_GREY,
@@ -73,7 +74,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    marginTop: 10,
   },
   permissionBox: {
     flexDirection: 'row',

@@ -23,9 +23,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: BLUE_GREY,
     borderRadius: 10,
-    marginBottom: 0,
     paddingVertical: 20,
-    paddingHorizontal: 5,
   },
   topToggleContainer: {
     borderBottomLeftRadius: 0,
@@ -43,7 +41,6 @@ export const styles = StyleSheet.create({
     marginBottom: 30,
   },
   sectionHeader: {
-    paddingVertical: 0,
     paddingHorizontal: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -53,6 +50,7 @@ export const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     textAlign: 'left',
+    width: '75%',
   },
   sectionContent: {
     paddingHorizontal: 20,
@@ -64,15 +62,15 @@ export const styles = StyleSheet.create({
     color: NEW_DARK_GREY,
   },
   pointContainer: {
-    marginBottom: 20,
+    gap: 20,
+    paddingBottom: 20,
   },
   pointHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    gap: 10,
   },
   pointTitle: {
-    marginLeft: 10,
     fontSize: 16,
     color: BLACK,
   },
@@ -91,24 +89,20 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: BLUE_GREY,
     borderRadius: 10,
-    marginBottom: 20,
+    gap: 16,
+    marginBottom: 24,
   },
   diagnosticsContent: {
     paddingLeft: 10,
-    marginTop: 16,
+    gap: 16,
   },
   diagnosticsItem: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    marginBottom: 10,
-    marginLeft: 10,
-  },
-  textContainer: {
-    marginLeft: 10,
+    gap: 10,
   },
   bulletIcon: {
     marginTop: 8,
-    marginRight: 5,
   },
   boldText: {
     fontWeight: 'bold',
@@ -117,7 +111,6 @@ export const styles = StyleSheet.create({
   diagnosticsDescription: {
     fontSize: 14,
     color: NEW_DARK_GREY,
-    marginLeft: 5,
     textAlign: 'left',
     fontWeight: 'normal',
   },

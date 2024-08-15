@@ -7,12 +7,12 @@ import {DeviceNaming} from '../../screens/Onboarding/DeviceNaming';
 import {Success} from '../../screens/Onboarding/Success';
 import {MessageDescriptor} from 'react-intl';
 
-export const createDeviceNamingScreens = ({
+export const createOnboardingScreens = ({
   intl,
 }: {
   intl: (title: MessageDescriptor) => string;
 }) => (
-  <RootStack.Group key="deviceNaming">
+  <RootStack.Group key="onboarding">
     <RootStack.Screen
       name="IntroToCoMapeo"
       component={IntroToCoMapeo}

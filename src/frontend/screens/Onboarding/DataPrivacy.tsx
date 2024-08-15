@@ -1,59 +1,21 @@
 import * as React from 'react';
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {Button} from '../../sharedComponents/Button';
-import {defineMessages, useIntl} from 'react-intl';
+import {useIntl} from 'react-intl';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {DeviceNamingParamsList} from '../../sharedTypes/navigation';
+import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import CoMapeoShield from '../../images/CoMapeoShield.svg';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {NEW_DARK_GREY, BLUE_GREY} from '../../lib/styles';
-
-const {width, height} = Dimensions.get('window');
+import {m} from './DataPrivacyMessages';
 
 export const DataPrivacy = ({
   navigation,
-}: NativeStackScreenProps<DeviceNamingParamsList, 'DataPrivacy'>) => {
+}: NativeStackScreenProps<OnboardingParamsList, 'DataPrivacy'>) => {
   const {formatMessage} = useIntl();
 
-  const m = defineMessages({
-    dataPrivacyTitle: {
-      id: 'screens.DataPrivacy.title',
-      defaultMessage: 'Data & Privacy',
-    },
-    dataPrivacyDescription: {
-      id: 'screens.DataPrivacy.description',
-      defaultMessage:
-        'CoMapeo allows you and your collaborators to map offline without needing servers.',
-    },
-    dataPrivacyStays: {
-      id: 'screens.DataPrivacy.stays',
-      defaultMessage: 'Your data stays on your devices.',
-    },
-    dataPrivacyEncrypted: {
-      id: 'screens.DataPrivacy.encrypted',
-      defaultMessage: 'All data stays fully encrypted',
-    },
-    dataPrivacyManageAndControl: {
-      id: 'screens.DataPrivacy.manageAndControl',
-      defaultMessage: 'Easily manage and control sharing and collaboration.',
-    },
-    dataPrivacyDiagnostic: {
-      id: 'screens.DataPrivacy.diagnostic',
-      defaultMessage:
-        'Private by default — diagnostic information is fully anonymized and you can opt-out any time.',
-    },
-    learnMore: {
-      id: 'screens.DataPrivacy.learnMore',
-      defaultMessage: 'Learn More',
-    },
-    next: {
-      id: 'screens.DataPrivacy.next',
-      defaultMessage: 'Next',
-    },
-  });
-
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <CoMapeoShield width={64} height={80} style={styles.shieldIcon} />
       <Text style={styles.title}>{formatMessage(m.dataPrivacyTitle)}</Text>
       <View style={styles.descriptionContainer}>
@@ -122,67 +84,63 @@ export const DataPrivacy = ({
           fullWidth
           onPress={() => {
             navigation.navigate('DeviceNaming');
-          }}
-          style={styles.nextButton}>
+          }}>
           {formatMessage(m.next)}
         </Button>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
+const GAP = 16;
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: width * 0.05,
+    flexGrow: 1,
+    padding: 20,
     justifyContent: 'space-around',
     alignItems: 'center',
   },
   shieldIcon: {
-    marginTop: height * 0.05,
+    marginBottom: GAP,
   },
   title: {
     fontSize: 32,
     fontWeight: 'bold',
-    marginBottom: height * 0.02,
+    marginBottom: GAP,
   },
   descriptionContainer: {
     alignItems: 'center',
     width: '90%',
+    gap: GAP,
   },
   description: {
     fontSize: 16,
     textAlign: 'left',
-    marginBottom: height * 0.015,
   },
   bulletPoints: {
-    marginBottom: height * 0.05,
+    gap: 8,
+    paddingLeft: GAP,
     width: '80%',
   },
   bulletPointContainer: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginBottom: height * 0.015,
   },
   bulletIcon: {
     marginRight: 8,
-    marginTop: 8,
+    marginTop: 12,
   },
   bulletPointText: {
     flex: 1,
-    fontSize: width * 0.035,
+    fontSize: 14,
     color: NEW_DARK_GREY,
   },
   buttonContainer: {
     width: '90%',
     alignItems: 'center',
+    gap: GAP,
   },
   learnMoreButton: {
-    marginBottom: height * 0.025,
     borderColor: BLUE_GREY,
     borderWidth: 2,
-  },
-  nextButton: {
-    marginBottom: height * 0.015,
   },
 });

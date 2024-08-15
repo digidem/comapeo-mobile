@@ -1,19 +1,17 @@
 import * as React from 'react';
+import {StyleSheet, View, ScrollView} from 'react-native';
 import TopoBackground from '../../images/TopoLogo.svg';
 import CoMapeoTextAsSVG from '../../images/CoMapeoText.svg';
 import WorldMap from '../../images/WorldMap.svg';
 import MobilePhoneWithArrow from '../../images/MobilePhoneWithArrow.svg';
 import LockedWithKey from '../../images/LockedWithKey.svg';
 import RaisedFistMediumSkinTone from '../../images/RaisedFistMediumSkinTone.svg';
-import {StyleSheet, View, Dimensions} from 'react-native';
 import {COMAPEO_DARK_BLUE, WHITE} from '../../lib/styles';
 import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../sharedComponents/Text';
 import {Button} from '../../sharedComponents/Button';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {DeviceNamingParamsList} from '../../sharedTypes/navigation';
-
-const {height} = Dimensions.get('window');
+import {OnboardingParamsList} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
   getStarted: {
@@ -45,13 +43,14 @@ const m = defineMessages({
 
 export const IntroToCoMapeo = ({
   navigation,
-}: NativeStackScreenProps<DeviceNamingParamsList, 'IntroToCoMapeo'>) => {
+}: NativeStackScreenProps<OnboardingParamsList, 'IntroToCoMapeo'>) => {
   const {formatMessage} = useIntl();
+
   return (
     <View style={styles.container}>
       <TopoBackground style={styles.background} />
-      <View style={styles.content}>
-        <CoMapeoTextAsSVG width={'95%'} height={height * 0.12} />
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <CoMapeoTextAsSVG width={'95%'} height={48} style={styles.logo} />
         <View style={styles.mainTextContainer}>
           <Text style={styles.mainText}>
             {formatMessage(m.mapWorldTogether)}
@@ -84,7 +83,7 @@ export const IntroToCoMapeo = ({
           style={styles.getStartedButton}>
           {formatMessage(m.getStarted)}
         </Button>
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -99,16 +98,19 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  content: {
-    flex: 1,
-    justifyContent: 'flex-start',
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: '5%',
-    paddingTop: height * 0.2,
+    paddingHorizontal: 20,
+    paddingTop: 20,
+  },
+  logo: {
+    marginBottom: 16,
   },
   mainTextContainer: {
     width: '75%',
-    marginBottom: height * 0.04,
+    paddingBottom: 16,
   },
   mainText: {
     color: WHITE,
@@ -117,18 +119,18 @@ const styles = StyleSheet.create({
   },
   textBox: {
     width: '95%',
-    paddingVertical: height * 0.04,
+    paddingVertical: 16,
     paddingHorizontal: 20,
     borderWidth: 1,
     borderColor: WHITE,
     borderRadius: 10,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    marginBottom: height * 0.04,
+    marginBottom: 16,
   },
   textItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 10,
+    paddingVertical: 8,
     gap: 16,
   },
   text: {
@@ -140,5 +142,6 @@ const styles = StyleSheet.create({
   },
   getStartedButton: {
     width: '85%',
+    marginTop: 16,
   },
 });

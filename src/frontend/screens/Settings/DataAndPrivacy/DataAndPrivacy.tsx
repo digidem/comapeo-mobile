@@ -1,13 +1,11 @@
 import * as React from 'react';
 import {
   View,
-  Text,
   ScrollView,
   StyleSheet,
+  Text,
   TouchableOpacity,
 } from 'react-native';
-import {useIntl, defineMessages} from 'react-intl';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CoMapeoShield from '../../../images/CoMapeoShield.svg';
 import {
   BLUE_GREY,
@@ -18,8 +16,10 @@ import {
 } from '../../../lib/styles';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AppStackParamsList} from '../../../sharedTypes/navigation';
-import {createPersistedPermissionStore} from '../../../hooks/persistedState/usePersistedPermission';
-import {useMetrics} from '../../../contexts/MetricsContext';
+import {PermissionToggle} from '../../../sharedComponents/PermissionToggle';
+import {usePermissionToggle} from '../../../hooks/usePermissionToggle';
+import {useIntl, defineMessages} from 'react-intl';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const m = defineMessages({
   navTitle: {
@@ -43,10 +43,6 @@ const m = defineMessages({
     defaultMessage:
       'Anonymized information about your device, app crashes, errors and performance helps Awana Digital improve the app and fix errors.',
   },
-  shareDiagnostics: {
-    id: 'screens.OnboardingPrivacyPolicy.shareDiagnostics',
-    defaultMessage: 'Share Diagnostic Information',
-  },
   noPII: {
     id: 'screens.DataAndPrivacy.noPII',
     defaultMessage:
@@ -63,13 +59,7 @@ export const DataAndPrivacy = ({
   navigation,
 }: NativeStackScreenProps<AppStackParamsList, 'DataAndPrivacy'>) => {
   const {formatMessage} = useIntl();
-  const {appMetrics, deviceMetrics} = useMetrics();
-
-  const usePersistedPermission = createPersistedPermissionStore(
-    appMetrics,
-    deviceMetrics,
-  );
-  const {isPermissionEnabled, togglePermission} = usePersistedPermission();
+  const {isPermissionEnabled, togglePermission} = usePermissionToggle();
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -112,21 +102,10 @@ export const DataAndPrivacy = ({
           <Text style={styles.bulletText}>{formatMessage(m.optOut)}</Text>
         </View>
         <View style={styles.horizontalLine} />
-        <View style={styles.diagnosticPermissionContainer}>
-          <Text style={styles.permissionText}>
-            {formatMessage(m.shareDiagnostics)}
-          </Text>
-          <TouchableOpacity
-            onPress={togglePermission}
-            style={[
-              styles.checkBox,
-              isPermissionEnabled && styles.checkBoxChecked,
-            ]}>
-            {isPermissionEnabled && (
-              <MaterialIcons name="check" size={18} color={WHITE} />
-            )}
-          </TouchableOpacity>
-        </View>
+        <PermissionToggle
+          isPermissionEnabled={isPermissionEnabled}
+          togglePermission={togglePermission}
+        />
       </View>
     </ScrollView>
   );
@@ -195,30 +174,6 @@ const styles = StyleSheet.create({
     borderBottomColor: BLUE_GREY,
     borderBottomWidth: 1,
     marginVertical: 20,
-  },
-  diagnosticPermissionContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: WHITE,
-    gap: 10,
-  },
-  permissionText: {
-    fontSize: 16,
-    color: BLACK,
-    flex: 1,
-  },
-  checkBox: {
-    width: 20,
-    height: 20,
-    borderWidth: 1,
-    borderColor: BLUE_GREY,
-    borderRadius: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  checkBoxChecked: {
-    backgroundColor: COMAPEO_BLUE,
-    borderColor: COMAPEO_BLUE,
   },
 });
 

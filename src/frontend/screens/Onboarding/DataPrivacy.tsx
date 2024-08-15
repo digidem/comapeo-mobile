@@ -84,8 +84,7 @@ export const DataPrivacy = ({
           fullWidth
           onPress={() => {
             navigation.navigate('DeviceNaming');
-          }}
-          style={styles.nextButton}>
+          }}>
           {formatMessage(m.next)}
         </Button>
       </View>
@@ -98,7 +97,7 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 20,
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignItems: 'center',
   },
   shieldIcon: {
@@ -111,26 +110,24 @@ const styles = StyleSheet.create({
   },
   descriptionContainer: {
     alignItems: 'center',
-    width: '100%',
-    paddingHorizontal: 20,
+    width: '90%',
+    gap: GAP,
   },
   description: {
     fontSize: 16,
     textAlign: 'left',
-    marginBottom: GAP,
   },
   bulletPoints: {
-    marginBottom: GAP,
-    width: '100%',
+    gap: 8,
+    paddingLeft: GAP,
+    width: '80%',
   },
   bulletPointContainer: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginBottom: 8,
   },
   bulletIcon: {
     marginRight: 8,
-    marginTop: 4,
+    marginTop: 12,
   },
   bulletPointText: {
     flex: 1,
@@ -138,16 +135,12 @@ const styles = StyleSheet.create({
     color: NEW_DARK_GREY,
   },
   buttonContainer: {
-    width: '100%',
+    width: '90%',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    gap: GAP,
   },
   learnMoreButton: {
-    marginBottom: GAP,
     borderColor: BLUE_GREY,
     borderWidth: 2,
-  },
-  nextButton: {
-    marginBottom: GAP,
   },
 });

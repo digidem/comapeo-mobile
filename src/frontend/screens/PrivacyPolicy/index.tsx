@@ -14,7 +14,7 @@ import ChevronDown from '../../images/chevrondown.svg';
 import ChevronUp from '../../images/chevrondown-expanded.svg';
 import {styles} from './styles';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {DeviceNamingParamsList} from '../../sharedTypes/navigation';
+import {OnboardingParamsList} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
   overview: {
@@ -175,7 +175,7 @@ const m = defineMessages({
 });
 
 type PrivacyPolicyProps = Partial<
-  NativeStackScreenProps<DeviceNamingParamsList, 'OnboardingPrivacyPolicy'>
+  NativeStackScreenProps<OnboardingParamsList, 'OnboardingPrivacyPolicy'>
 >;
 
 export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = () => {

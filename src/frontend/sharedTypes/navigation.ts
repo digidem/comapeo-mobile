@@ -98,7 +98,7 @@ export type RootStackParamsList = {
   CreateTestData: undefined;
 };
 
-export type DeviceNamingParamsList = {
+export type OnboardingParamsList = {
   IntroToCoMapeo: undefined;
   DataPrivacy: undefined;
   DeviceNaming: undefined;
@@ -106,7 +106,7 @@ export type DeviceNamingParamsList = {
   Success: {deviceName: string};
 };
 
-export type AppStackParamsList = RootStackParamsList & DeviceNamingParamsList;
+export type AppStackParamsList = RootStackParamsList & OnboardingParamsList;
 
 export type NativeRootNavigationProps<
   ScreenName extends keyof AppStackParamsList,

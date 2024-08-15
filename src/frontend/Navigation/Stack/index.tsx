@@ -15,7 +15,7 @@ import {DEVICE_INFO_KEY} from '../../hooks/server/deviceInfo';
 import {usePresetsQuery} from '../../hooks/server/presets';
 import {getInitialRouteName} from '../../utils/navigation';
 import {createDefaultScreenGroup} from './AppScreens';
-import {createDeviceNamingScreens} from './DeviceNamingScreens';
+import {createOnboardingScreens} from './OnboardingScreens';
 import {useSuspenseQuery} from '@tanstack/react-query';
 import {useApi} from '../../contexts/ApiContext';
 import {Loading} from '../../sharedComponents/Loading';
@@ -94,7 +94,7 @@ function RootStackNavigatorChild() {
         ? createDefaultScreenGroup({
             intl: formatMessage,
           })
-        : createDeviceNamingScreens({intl: formatMessage})}
+        : createOnboardingScreens({intl: formatMessage})}
     </RootStack.Navigator>
   );
 }

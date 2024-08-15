@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   scrollContent: {
     backgroundColor: 'white',
     paddingVertical: 20,
-    paddingHorizontal: 10,
+    paddingHorizontal: 30,
   },
   horizontalLine: {
     borderBottomColor: BLUE_GREY,

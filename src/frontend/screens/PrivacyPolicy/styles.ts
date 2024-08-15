@@ -24,7 +24,6 @@ export const styles = StyleSheet.create({
     borderColor: BLUE_GREY,
     borderRadius: 10,
     paddingVertical: 20,
-    paddingHorizontal: 5,
   },
   topToggleContainer: {
     borderBottomLeftRadius: 0,
@@ -42,7 +41,6 @@ export const styles = StyleSheet.create({
     marginBottom: 30,
   },
   sectionHeader: {
-    paddingVertical: 0,
     paddingHorizontal: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -52,6 +50,7 @@ export const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     textAlign: 'left',
+    width: '75%',
   },
   sectionContent: {
     paddingHorizontal: 20,
@@ -91,6 +90,7 @@ export const styles = StyleSheet.create({
     borderColor: BLUE_GREY,
     borderRadius: 10,
     gap: 16,
+    marginBottom: 24,
   },
   diagnosticsContent: {
     paddingLeft: 10,
@@ -103,7 +103,6 @@ export const styles = StyleSheet.create({
   },
   bulletIcon: {
     marginTop: 8,
-    marginRight: 5,
   },
   boldText: {
     fontWeight: 'bold',

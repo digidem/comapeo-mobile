@@ -21,12 +21,10 @@ export const DiagnosticItem: React.FC<DiagnosticItemProps> = ({
         color={NEW_DARK_GREY}
         style={styles.bulletIcon}
       />
-      <View style={styles.textContainer}>
-        <Text style={styles.boldText}>
-          {title}:{' '}
-          <Text style={styles.diagnosticsDescription}>{description}</Text>
-        </Text>
-      </View>
+      <Text style={styles.boldText}>
+        {title}:{' '}
+        <Text style={styles.diagnosticsDescription}>{description}</Text>
+      </Text>
     </View>
   );
 };

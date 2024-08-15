@@ -54,7 +54,7 @@ export const AppProviders = ({
                         <BottomSheetModalProvider>
                           <PhotoPromiseProvider>
                             <SecurityProvider>
-                              <MetricsProvider>{children} </MetricsProvider>
+                              <MetricsProvider>{children}</MetricsProvider>
                             </SecurityProvider>
                           </PhotoPromiseProvider>
                         </BottomSheetModalProvider>

@@ -3,9 +3,28 @@ import {useCallback, useSyncExternalStore} from 'react';
 
 import {useActiveProject} from '../contexts/ActiveProjectContext';
 
-export type SyncState = Awaited<
-  ReturnType<MapeoProjectApi['$sync']['getState']>
->;
+// TODO: Temporary. Remove when sync api is updated
+type SyncStateOld = Awaited<ReturnType<MapeoProjectApi['$sync']['getState']>>;
+
+export type SyncState = {
+  data: {
+    isEnabled: boolean;
+  };
+  initial: {
+    isEnabled: boolean;
+  };
+  deviceSyncState: Record<
+    string,
+    {
+      data: Pick<SyncStateOld['data'], 'want' | 'wanted'> & {
+        isEnabled: boolean;
+      };
+      initial: Pick<SyncStateOld['initial'], 'want' | 'wanted'> & {
+        isEnabled: boolean;
+      };
+    }
+  >;
+};
 
 const projectSyncStoreMap = new WeakMap<MapeoProjectApi, SyncStore>();
 
@@ -104,7 +123,8 @@ class SyncStore {
       return 1;
     }
 
-    const currentCount = this.#state.data.want + this.#state.data.wanted;
+    // const currentCount = this.#state.data.want + this.#state.data.wanted;
+    const currentCount = calculateSyncCount(this.#state.deviceSyncState);
 
     const ratio =
       (this.#maxDataSyncCount - currentCount) / this.#maxDataSyncCount;
@@ -121,16 +141,27 @@ class SyncStore {
     }
   }
 
-  #onSyncState = (state: SyncState) => {
-    console.log('onSyncState', JSON.stringify(state, null, 2));
+  #onSyncState = (state: SyncStateOld) => {
+    console.log('#onSyncState - state', JSON.stringify(state, null, 2));
+
+    const convertedState = convertSyncState(state);
+
+    console.log(
+      '#onSyncState - converted state',
+      JSON.stringify(convertedState, null, 2),
+    );
+
     // Indicates whether data syncing went from enabled to disabled
+    // const isDataSyncStopped =
+    //   this.#state?.data.isSyncEnabled && !state.data.isSyncEnabled;
     const isDataSyncStopped =
-      this.#state?.data.isSyncEnabled && !state.data.isSyncEnabled;
+      this.#state?.data.isEnabled && !convertedState.data.isEnabled;
 
     if (isDataSyncStopped) {
       this.#maxDataSyncCount = null;
     } else {
-      const newSyncCount = state.data.want + state.data.wanted;
+      // const newSyncCount = state.data.want + state.data.wanted;
+      const newSyncCount = calculateSyncCount(convertedState.deviceSyncState);
 
       this.#maxDataSyncCount =
         this.#maxDataSyncCount === null
@@ -138,7 +169,7 @@ class SyncStore {
           : Math.max(this.#maxDataSyncCount, newSyncCount);
     }
 
-    this.#state = state;
+    this.#state = convertedState;
     this.#error = null;
     this.#notifyListeners();
   };
@@ -167,4 +198,66 @@ function clamp(value: number, min: number, max: number): number {
 
 function identity(state: SyncState | undefined) {
   return state;
+}
+
+export function calculateSyncCount(
+  deviceSyncState: SyncState['deviceSyncState'],
+): number {
+  let result = 0;
+
+  for (const {data, initial} of Object.values(deviceSyncState)) {
+    result += initial.want + initial.wanted + data.want + data.wanted;
+  }
+
+  return result;
+}
+
+// TODO: Move to lib?
+export function getConnectedPeersCount(
+  deviceSyncState: SyncState['deviceSyncState'],
+): number {
+  return Object.keys(deviceSyncState).length;
+}
+
+// TODO: Move to lib?
+export function getSyncingPeersCount(
+  deviceSyncState: SyncState['deviceSyncState'],
+): number {
+  let result = 0;
+
+  for (const {data} of Object.values(deviceSyncState)) {
+    if (data.isEnabled) {
+      result += 1;
+    }
+  }
+
+  return result;
+}
+
+// TODO: Temporary. Remove when sync state api is updated
+function convertSyncState(state: SyncStateOld): SyncState {
+  const {initial, data} = state;
+  return {
+    initial: {
+      isEnabled: initial.isSyncEnabled,
+    },
+    data: {
+      isEnabled: data.isSyncEnabled,
+    },
+    // Currently just assumes one connected peer
+    deviceSyncState: {
+      peer_1: {
+        initial: {
+          want: initial.wanted,
+          wanted: initial.want,
+          isEnabled: true,
+        },
+        data: {
+          want: data.wanted,
+          wanted: data.want,
+          isEnabled: true,
+        },
+      },
+    },
+  };
 }

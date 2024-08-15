@@ -10,10 +10,7 @@ import {CreateOrJoinProjectDisplay} from './CreateOrJoinProjectDisplay';
 import {HeaderTitle} from './HeaderTitle';
 import {NoWifiDisplay} from './NoWifiDisplay';
 import {openWiFiSettings} from '../../lib/linking';
-import {
-  ProjectSyncDisplay,
-  ProjectSyncDisplayAlternative,
-} from './ProjectSyncDisplay';
+import {ProjectSyncDisplay} from './ProjectSyncDisplay';
 import {Loading} from '../../sharedComponents/Loading';
 import {useSyncState} from '../../hooks/useSyncState';
 
@@ -71,8 +68,7 @@ export const SyncScreen = ({navigation}: NativeRootNavigationProps<'Sync'>) => {
   }
 
   return (
-    // <ProjectSyncDisplay
-    <ProjectSyncDisplayAlternative
+    <ProjectSyncDisplay
       syncState={syncState}
       projectName={projectSettingsQuery.data.name}
     />

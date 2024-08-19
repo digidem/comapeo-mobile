@@ -156,7 +156,7 @@ class SyncStore {
     let convertedState = convertSyncState(state);
 
     // TODO: Temporary. only done for simulation purposes
-    if (dataSyncToggled && convertedState.data.isEnabled) {
+    if (state.connectedPeers > 0) {
       convertedState = convertSyncState(state, {
         peer_1: {
           initial: {

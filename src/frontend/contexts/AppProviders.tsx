@@ -56,7 +56,9 @@ export const AppProviders = ({
                 <ServerLoading messagePort={messagePort}>
                   <LocalDiscoveryProvider value={localDiscoveryController}>
                     <ApiProvider api={mapeoApi}>
-                      <MetricsProvider>
+                      <MetricsProvider
+                        appMetrics={appMetrics}
+                        deviceMetrics={deviceMetrics}>
                         <ActiveProjectProvider>
                           <BottomSheetModalProvider>
                             <PhotoPromiseProvider>

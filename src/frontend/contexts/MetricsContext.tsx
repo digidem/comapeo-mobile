@@ -12,16 +12,21 @@ const MetricsContext = React.createContext<MetricsContextType | undefined>(
   undefined,
 );
 
-export const MetricsProvider = ({children}: {children: React.ReactNode}) => {
-  const appMetrics = React.useMemo(() => new AppDiagnosticMetrics(), []);
-  const deviceMetrics = React.useMemo(() => new DeviceDiagnosticMetrics(), []);
-
+export const MetricsProvider = ({
+  children,
+  appMetrics,
+  deviceMetrics,
+}: {
+  children: React.ReactNode;
+  appMetrics: AppDiagnosticMetrics;
+  deviceMetrics: DeviceDiagnosticMetrics;
+}) => {
   const {isEnabled} = usePersistedMetricDiagnosticsPermission();
 
   React.useEffect(() => {
     appMetrics.setEnabled(isEnabled);
     deviceMetrics.setEnabled(isEnabled);
-  }, [appMetrics, deviceMetrics, isEnabled]);
+  }, [isEnabled]);
 
   return (
     <MetricsContext.Provider value={{appMetrics, deviceMetrics}}>

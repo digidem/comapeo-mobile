@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useIntl, defineMessages} from 'react-intl';
 import {BLUE_GREY, WHITE, BLACK, COMAPEO_BLUE} from '../lib/styles';
-import {useMetricsDiagnosticsPermissionsToggle} from '../hooks/useMetricsDiagnosticsPermissionsToggle';
+import {usePersistedMetricDiagnosticsPermission} from '../hooks/persistedState/usePersistedMetricDiagnosticsPermission';
 
 const m = defineMessages({
   shareDiagnostics: {
@@ -14,8 +14,9 @@ const m = defineMessages({
 
 export const MetricsDiagnosticsPermissionToggle: React.FC = () => {
   const {formatMessage} = useIntl();
-  const {isPermissionEnabled, togglePermission} =
-    useMetricsDiagnosticsPermissionsToggle();
+  const {isEnabled, setIsEnabled} = usePersistedMetricDiagnosticsPermission();
+
+  const togglePermission = () => setIsEnabled(!isEnabled);
 
   return (
     <View style={styles.container}>
@@ -25,13 +26,8 @@ export const MetricsDiagnosticsPermissionToggle: React.FC = () => {
       <TouchableOpacity
         onPress={togglePermission}
         hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-        style={[
-          styles.checkBox,
-          isPermissionEnabled && styles.checkBoxChecked,
-        ]}>
-        {isPermissionEnabled && (
-          <MaterialIcons name="check" size={18} color={WHITE} />
-        )}
+        style={[styles.checkBox, isEnabled && styles.checkBoxChecked]}>
+        {isEnabled && <MaterialIcons name="check" size={18} color={WHITE} />}
       </TouchableOpacity>
     </View>
   );

@@ -117,39 +117,39 @@ const styles = StyleSheet.create({
 });
 
 /**
- * Applies specialized, context-specific behavior on top of `useLocalPeers()` in the following ways:
- *
- * - State is bound to the lifetime of the consuming component i.e. gets re-initialized during remounts
- * - Only connected peers are ever *added* to the state. However, subsequent updates to those peers (e.g. disconnecting) are still reflected in the state.
+ * Applies specialized, context-specific behavior on top of `useLocalPeers()`
+ * by only including peers that were *initially* connected from the point of view of the consuming component.
+ * If these included peers receive subsequent updates (e.g. disconnecting), they are still returned.
+ * This hook only prevents *initially* returning peers that are disconnected.
  */
 function useInitiallyConnectedPeers() {
   const peers = useLocalPeers();
-  const [result, setResult] = React.useState<Array<(typeof peers)[number]>>(
-    () => {
-      return peers.filter(p => p.status === 'connected');
-    },
-  );
+  const [relevantDeviceIds, setRelevantDeviceIds] = React.useState<
+    Array<string>
+  >(() => {
+    return peers.filter(p => p.status === 'connected').map(p => p.deviceId);
+  });
 
   React.useEffect(() => {
-    setResult(prev => {
+    setRelevantDeviceIds(prev => {
       const next = [];
 
       for (const p of peers) {
-        const existing = prev.find(({deviceId}) => deviceId === p.deviceId);
+        const included = prev.includes(p.deviceId);
 
-        // Use the most recent information for included peers
-        if (existing) {
-          next.push(p);
+        if (included) {
+          next.push(p.deviceId);
+          continue;
         }
-        // only initially include peer if they're connected
-        else if (!existing && p.status === 'connected') {
-          next.push(p);
+
+        if (!included && p.status === 'connected') {
+          next.push(p.deviceId);
         }
       }
 
       return next;
     });
-  }, [peers, setResult]);
+  }, [peers, setRelevantDeviceIds]);
 
-  return result;
+  return peers.filter(p => relevantDeviceIds.includes(p.deviceId));
 }

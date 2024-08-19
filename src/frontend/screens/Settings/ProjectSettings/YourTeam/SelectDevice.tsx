@@ -54,7 +54,7 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = () => {
 
 function InvitableDeviceList() {
   const navigation = useNavigationFromRoot();
-  const devices = usePeersConnectedDuringSession();
+  const devices = useInitiallyConnectedPeers();
   const projectMembersQuery = useProjectMembers();
 
   if (projectMembersQuery.status === 'pending') {
@@ -119,12 +119,10 @@ const styles = StyleSheet.create({
 /**
  * Applies specialized, context-specific behavior on top of `useLocalPeers()` in the following ways:
  *
- * - Resets to only connected peers when consuming component remounts
- * - Updates when either:
- *   1. A peer that hasn't been discovered during the session (i.e. lifetime of consuming component) appears
- *   2. A peer that has been discovered during the session has an updated state
+ * - State is bound to the lifetime of the consuming component i.e. gets re-initialized during remounts
+ * - Only connected peers are ever *added* to the state. However, subsequent updates to those peers (e.g. disconnecting) are still reflected in the state.
  */
-function usePeersConnectedDuringSession() {
+function useInitiallyConnectedPeers() {
   const peers = useLocalPeers();
   const [result, setResult] = React.useState<Array<(typeof peers)[number]>>(
     () => {

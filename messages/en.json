@@ -1193,14 +1193,17 @@
   "screens.Sync.ProjectSyncDisplay.noDevicesAvailableToSync": {
     "message": "No devices available to sync"
   },
-  "screens.Sync.ProjectSyncDisplay.progressSyncing": {
+  "screens.Sync.ProjectSyncDisplay.progressLabelComplete": {
+    "message": "{count} out of {count} {count, plural, one {device} other {devices}}"
+  },
+  "screens.Sync.ProjectSyncDisplay.progressLabelSyncing": {
     "message": "Syncing…"
   },
-  "screens.Sync.ProjectSyncDisplay.progressSyncingWithDeviceCount": {
-    "message": "{active} out of {total} {total, plural, one {device} other {devices}}…"
-  },
-  "screens.Sync.ProjectSyncDisplay.progressWaiting": {
+  "screens.Sync.ProjectSyncDisplay.progressLabelWaiting": {
     "message": "Waiting…"
+  },
+  "screens.Sync.ProjectSyncDisplay.progressLabelWithDeviceCount": {
+    "message": "{active} out of {total} {total, plural, one {device} other {devices}}…"
   },
   "screens.Sync.ProjectSyncDisplay.startSync": {
     "message": "Start Sync"

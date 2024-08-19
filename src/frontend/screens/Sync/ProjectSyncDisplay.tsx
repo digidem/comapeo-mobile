@@ -72,18 +72,23 @@ const m = defineMessages({
     defaultMessage: 'All data synced',
   },
 
-  progressWaiting: {
-    id: 'screens.Sync.ProjectSyncDisplay.progressWaiting',
+  progressLabelWaiting: {
+    id: 'screens.Sync.ProjectSyncDisplay.progressLabelWaiting',
     defaultMessage: 'Waiting…',
   },
-  progressSyncing: {
-    id: 'screens.Sync.ProjectSyncDisplay.progressSyncing',
+  progressLabelSyncing: {
+    id: 'screens.Sync.ProjectSyncDisplay.progressLabelSyncing',
     defaultMessage: 'Syncing…',
   },
-  progressSyncingWithDeviceCount: {
-    id: 'screens.Sync.ProjectSyncDisplay.progressSyncingWithDeviceCount',
+  progressLabelWithDeviceCount: {
+    id: 'screens.Sync.ProjectSyncDisplay.progressLabelWithDeviceCount',
     defaultMessage:
       '{active} out of {total} {total, plural, one {device} other {devices}}…',
+  },
+  progressLabelComplete: {
+    id: 'screens.Sync.ProjectSyncDisplay.progressLabelComplete',
+    defaultMessage:
+      '{count} out of {count} {count, plural, one {device} other {devices}}',
   },
   progressSyncPercentage: {
     id: 'screens.Sync.ProjectSyncDisplay.syncProgress',
@@ -284,28 +289,26 @@ function SyncProgress({
   const completelyDone =
     progress === 1 && syncingDeviceCount === totalDeviceCount;
 
+  const progressLabelTuple = getProgressLabelMessage({
+    progress,
+    syncingDevices: syncingDeviceCount,
+    totalDevices: totalDeviceCount,
+  });
+
   return (
     <View style={styles.syncProgressContainer}>
       <View style={styles.syncProgressTextContainer}>
         {completelyDone ? (
-          // TODO: use correct icon and color
           <DoneIcon color={DARK_GREEN} size={20} />
         ) : (
           <SyncIcon color={COMAPEO_BLUE} size={20} />
         )}
         <Text
           style={[
-            styles.syncProgressTitleText,
+            styles.syncProgressLabel,
             completelyDone && {color: DARK_GREEN},
           ]}>
-          {noProgress
-            ? t(m.progressWaiting)
-            : progress === 1
-              ? t(m.progressSyncingWithDeviceCount, {
-                  active: syncingDeviceCount,
-                  total: totalDeviceCount,
-                })
-              : t(m.progressSyncing)}
+          {t(progressLabelTuple[0], progressLabelTuple[1])}
         </Text>
       </View>
       <ProgressBar
@@ -325,6 +328,31 @@ function SyncProgress({
       )}
     </View>
   );
+}
+
+function getProgressLabelMessage({
+  progress,
+  syncingDevices,
+  totalDevices,
+}: {
+  progress: number | null;
+  syncingDevices: number;
+  totalDevices: number;
+}) {
+  if (progress === null || progress === 0) {
+    return [m.progressLabelWaiting, undefined] as const;
+  }
+
+  if (progress === 1) {
+    return syncingDevices === totalDevices
+      ? ([m.progressLabelComplete, {count: totalDevices}] as const)
+      : ([
+          m.progressLabelWithDeviceCount,
+          {active: syncingDevices, total: totalDevices},
+        ] as const);
+  }
+
+  return [m.progressLabelSyncing, undefined] as const;
 }
 
 const styles = StyleSheet.create({
@@ -374,7 +402,7 @@ const styles = StyleSheet.create({
     gap: 8,
     alignItems: 'center',
   },
-  syncProgressTitleText: {
+  syncProgressLabel: {
     fontSize: 20,
     color: COMAPEO_BLUE,
   },

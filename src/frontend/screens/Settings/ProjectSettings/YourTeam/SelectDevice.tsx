@@ -139,11 +139,10 @@ function useInitiallyConnectedPeers() {
 
         if (included) {
           next.push(p.deviceId);
-          continue;
-        }
-
-        if (!included && p.status === 'connected') {
-          next.push(p.deviceId);
+        } else {
+          if (p.status === 'connected') {
+            next.push(p.deviceId);
+          }
         }
       }
 

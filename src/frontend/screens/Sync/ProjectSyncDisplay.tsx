@@ -116,13 +116,11 @@ export const ProjectSyncDisplay = ({
   syncState: SyncState;
   projectName?: string;
 }) => {
-  const {projectApi, projectId} = useActiveProject();
+  const {formatMessage: t} = useIntl();
   const queryClient = useQueryClient();
   const navigation = useNavigationFromRoot();
-
-  // TODO: Need to fix how this is calculated
+  const {projectApi, projectId} = useActiveProject();
   const progress = useSyncProgress();
-  const {formatMessage: t} = useIntl();
 
   const noProgress = progress === 0 || progress === null;
 
@@ -281,18 +279,15 @@ function SyncProgress({
 
   const dynamicProgressBarProps = noProgress
     ? {indeterminate: true, indeterminateAnimationDuration: 2000}
-    : {
-        progress,
-        indeterminate: false,
-      };
+    : {progress, indeterminate: false};
 
   const completelyDone =
     progress === 1 && syncingDeviceCount === totalDeviceCount;
 
   const progressLabelTuple = getProgressLabelMessage({
     progress,
-    syncingDevices: syncingDeviceCount,
-    totalDevices: totalDeviceCount,
+    syncingDeviceCount,
+    totalDeviceCount,
   });
 
   return (
@@ -332,23 +327,23 @@ function SyncProgress({
 
 function getProgressLabelMessage({
   progress,
-  syncingDevices,
-  totalDevices,
+  syncingDeviceCount,
+  totalDeviceCount,
 }: {
   progress: number | null;
-  syncingDevices: number;
-  totalDevices: number;
+  syncingDeviceCount: number;
+  totalDeviceCount: number;
 }) {
   if (progress === null || progress === 0) {
     return [m.progressLabelWaiting, undefined] as const;
   }
 
   if (progress === 1) {
-    return syncingDevices === totalDevices
-      ? ([m.progressLabelComplete, {count: totalDevices}] as const)
+    return syncingDeviceCount === totalDeviceCount
+      ? ([m.progressLabelComplete, {count: totalDeviceCount}] as const)
       : ([
           m.progressLabelWithDeviceCount,
-          {active: syncingDevices, total: totalDevices},
+          {active: syncingDeviceCount, total: totalDeviceCount},
         ] as const);
   }
 

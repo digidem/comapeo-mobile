@@ -3,6 +3,7 @@ import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useIntl, defineMessages} from 'react-intl';
 import {BLUE_GREY, WHITE, BLACK, COMAPEO_BLUE} from '../lib/styles';
+import {useMetricsDiagnosticsPermissionsToggle} from '../hooks/useMetricsDiagnosticsPermissionsToggle';
 
 const m = defineMessages({
   shareDiagnostics: {
@@ -11,16 +12,10 @@ const m = defineMessages({
   },
 });
 
-type PermissionToggleProps = {
-  isPermissionEnabled: boolean;
-  togglePermission: () => void;
-};
-
-export const PermissionToggle: React.FC<PermissionToggleProps> = ({
-  isPermissionEnabled,
-  togglePermission,
-}) => {
+export const MetricsDiagnosticsPermissionToggle: React.FC = () => {
   const {formatMessage} = useIntl();
+  const {isPermissionEnabled, togglePermission} =
+    useMetricsDiagnosticsPermissionsToggle();
 
   return (
     <View style={styles.container}>

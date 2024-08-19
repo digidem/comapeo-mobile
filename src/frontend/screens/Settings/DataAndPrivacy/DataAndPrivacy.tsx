@@ -16,11 +16,9 @@ import {
 } from '../../../lib/styles';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AppStackParamsList} from '../../../sharedTypes/navigation';
-import {PermissionToggle} from '../../../sharedComponents/PermissionToggle';
-import {usePermissionToggle} from '../../../hooks/usePermissionToggle';
 import {useIntl, defineMessages} from 'react-intl';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
+import {MetricsDiagnosticsPermissionToggle} from '../../../sharedComponents/MetricsDiagnosticsPermissionToggle';
 const m = defineMessages({
   navTitle: {
     id: 'screens.DataAndPrivacy.navTitle',
@@ -59,7 +57,6 @@ export const DataAndPrivacy = ({
   navigation,
 }: NativeStackScreenProps<AppStackParamsList, 'DataAndPrivacy'>) => {
   const {formatMessage} = useIntl();
-  const {isPermissionEnabled, togglePermission} = usePermissionToggle();
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -102,10 +99,7 @@ export const DataAndPrivacy = ({
           <Text style={styles.bulletText}>{formatMessage(m.optOut)}</Text>
         </View>
         <View style={styles.horizontalLine} />
-        <PermissionToggle
-          isPermissionEnabled={isPermissionEnabled}
-          togglePermission={togglePermission}
-        />
+        <MetricsDiagnosticsPermissionToggle />
       </View>
     </ScrollView>
   );

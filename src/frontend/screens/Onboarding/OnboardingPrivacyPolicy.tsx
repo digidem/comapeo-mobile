@@ -3,8 +3,7 @@ import {View, Text, ScrollView, StyleSheet} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
 import {PrivacyPolicy} from '../PrivacyPolicy';
 import {BLUE_GREY, WHITE} from '../../lib/styles';
-import {PermissionToggle} from '../../sharedComponents/PermissionToggle';
-import {usePermissionToggle} from '../../hooks/usePermissionToggle';
+import {MetricsDiagnosticsPermissionToggle} from '../../sharedComponents/MetricsDiagnosticsPermissionToggle';
 
 const m = defineMessages({
   navTitle: {
@@ -19,7 +18,6 @@ const m = defineMessages({
 
 export const OnboardingPrivacyPolicy = () => {
   const {formatMessage} = useIntl();
-  const {isPermissionEnabled, togglePermission} = usePermissionToggle();
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -27,10 +25,7 @@ export const OnboardingPrivacyPolicy = () => {
       <View style={styles.horizontalLine} />
       <Text style={styles.header}>{formatMessage(m.permissionsTitle)}</Text>
       <View style={styles.permissionToggleContainer}>
-        <PermissionToggle
-          isPermissionEnabled={isPermissionEnabled}
-          togglePermission={togglePermission}
-        />
+        <MetricsDiagnosticsPermissionToggle />
       </View>
     </ScrollView>
   );

@@ -16,8 +16,7 @@ type PersistedStoreKey =
   | 'Passcode'
   | 'ActiveProjectId'
   | 'Settings'
-  | 'Permissions';
-
+  | 'MetricDiagnosticsPermission';
 const MMKVZustandStorage: StateStorage = {
   setItem: (name, value) => {
     return storage.set(name, value);

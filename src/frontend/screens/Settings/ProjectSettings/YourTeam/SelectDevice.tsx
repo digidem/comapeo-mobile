@@ -47,12 +47,12 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = () => {
       {/* Divider */}
       <View style={{marginTop: 20}} />
 
-      <InvitableDeviceList />
+      <InvitableDevicesList />
     </ScrollView>
   );
 };
 
-function InvitableDeviceList() {
+function InvitableDevicesList() {
   const navigation = useNavigationFromRoot();
   const devices = useInitiallyConnectedPeers();
   const projectMembersQuery = useProjectMembers();

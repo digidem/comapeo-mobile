@@ -119,14 +119,18 @@ const styles = StyleSheet.create({
 /**
  * Applies specialized, context-specific behavior on top of `useLocalPeers()` in the following ways:
  *
- * - Always initialized to be empty (i.e. state resets when remounted)
+ * - Resets to only connected peers when consuming component remounts
  * - Updates when either:
  *   1. A peer that hasn't been discovered during the session (i.e. lifetime of consuming component) appears
  *   2. A peer that has been discovered during the session has an updated state
  */
 function usePeersConnectedDuringSession() {
   const peers = useLocalPeers();
-  const [result, setResult] = React.useState<Array<(typeof peers)[number]>>([]);
+  const [result, setResult] = React.useState<Array<(typeof peers)[number]>>(
+    () => {
+      return peers.filter(p => p.status === 'connected');
+    },
+  );
 
   React.useEffect(() => {
     setResult(prev => {

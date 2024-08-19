@@ -1,13 +1,16 @@
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import WifiIcon from '../../../../images/WifiIcon.svg';
-import {Text} from '../../../../sharedComponents/Text';
-import {DeviceCard} from '../../../../sharedComponents/DeviceCard';
+
+import {useProjectMembers} from '../../../../hooks/server/projects';
 import {useLocalDiscoveryState} from '../../../../hooks/useLocalDiscoveryState';
 import {useLocalPeers} from '../../../../hooks/useLocalPeers';
-import {useProjectMembers} from '../../../../hooks/server/projects';
+import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
+import WifiIcon from '../../../../images/WifiIcon.svg';
+import {DeviceCard} from '../../../../sharedComponents/DeviceCard';
+import {Loading} from '../../../../sharedComponents/Loading';
+import {Text} from '../../../../sharedComponents/Text';
+import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 
 const m = defineMessages({
   title: {
@@ -28,21 +31,9 @@ const m = defineMessages({
   },
 });
 
-export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
-  navigation,
-}) => {
+export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = () => {
   const ssid = useLocalDiscoveryState(state => state.ssid);
   const {formatMessage: t} = useIntl();
-  const projectMembers = useProjectMembers();
-  const devices = useLocalPeers();
-  const nonMemberDevices = projectMembers.data
-    ? devices.filter(
-        device =>
-          !projectMembers.data.some(
-            member => member.deviceId === device.deviceId,
-          ),
-      )
-    : devices;
 
   return (
     <ScrollView style={styles.container} testID="PROJECT.invite-device-scrn">
@@ -56,18 +47,56 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
       {/* Divider */}
       <View style={{marginTop: 20}} />
 
-      {/* List available devices here */}
-      {nonMemberDevices.map(device => {
-        const name = device.name;
-        const deviceId = device.deviceId;
-        // this is not exposed yet
+      <InvitableDeviceList />
+    </ScrollView>
+  );
+};
+
+function InvitableDeviceList() {
+  const navigation = useNavigationFromRoot();
+  const devices = useLocalPeers();
+  const projectMembersQuery = useProjectMembers();
+
+  if (projectMembersQuery.status === 'pending') {
+    return <Loading />;
+  }
+
+  if (projectMembersQuery.status === 'error') {
+    // TODO: Provide more useful UI?
+    return null;
+  }
+
+  const memberDeviceIds = projectMembersQuery.data.map(
+    member => member.deviceId,
+  );
+
+  // Only include connected, non-member devices
+  const invitableDevices = devices.filter(device => {
+    if (device.status === 'disconnected') {
+      return false;
+    }
+
+    if (memberDeviceIds.includes(device.deviceId)) {
+      return false;
+    }
+
+    return true;
+  });
+
+  return (
+    <View style={styles.deviceListContainer}>
+      {invitableDevices.map(device => {
+        const {deviceId, status, name} = device;
+
+        // TODO: Use `device.deviceType`
         const deviceType = 'mobile';
+
+        // TODO: Update DeviceCard component to better handle potentially undefined fields
         return (
           <DeviceCard
             key={deviceId}
-            style={{marginBottom: 10}}
             name={name || ''}
-            deviceConnectionStatus={device.status}
+            deviceConnectionStatus={status}
             deviceType={deviceType}
             deviceId={deviceId}
             onPress={() =>
@@ -80,9 +109,9 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = ({
           />
         );
       })}
-    </ScrollView>
+    </View>
   );
-};
+}
 
 SelectDevice.navTitle = m.title;
 
@@ -91,4 +120,5 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 40,
   },
+  deviceListContainer: {gap: 10},
 });

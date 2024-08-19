@@ -54,7 +54,7 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = () => {
 
 function InvitableDeviceList() {
   const navigation = useNavigationFromRoot();
-  const devices = useLocalPeers();
+  const devices = usePeersConnectedDuringSession();
   const projectMembersQuery = useProjectMembers();
 
   if (projectMembersQuery.status === 'pending') {
@@ -70,17 +70,8 @@ function InvitableDeviceList() {
     member => member.deviceId,
   );
 
-  // Only include connected, non-member devices
   const invitableDevices = devices.filter(device => {
-    if (device.status === 'disconnected') {
-      return false;
-    }
-
-    if (memberDeviceIds.includes(device.deviceId)) {
-      return false;
-    }
-
-    return true;
+    return !memberDeviceIds.includes(device.deviceId);
   });
 
   return (
@@ -120,5 +111,43 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 40,
   },
-  deviceListContainer: {gap: 10},
+  deviceListContainer: {
+    gap: 10,
+  },
 });
+
+/**
+ * Applies specialized, context-specific behavior on top of `useLocalPeers()` in the following ways:
+ *
+ * - Always initialized to be empty (i.e. state resets when remounted)
+ * - Updates when either:
+ *   1. A peer that hasn't been discovered during the session (i.e. lifetime of consuming component) appears
+ *   2. A peer that has been discovered during the session has an updated state
+ */
+function usePeersConnectedDuringSession() {
+  const peers = useLocalPeers();
+  const [result, setResult] = React.useState<Array<(typeof peers)[number]>>([]);
+
+  React.useEffect(() => {
+    setResult(prev => {
+      const next = [];
+
+      for (const p of peers) {
+        const existing = prev.find(({deviceId}) => deviceId === p.deviceId);
+
+        // Use the most recent information for any peer discovered during lifetime of session
+        if (existing) {
+          next.push(p);
+        }
+        // only add newly discovered peers if they're connected
+        else if (!existing && p.status === 'connected') {
+          next.push(p);
+        }
+      }
+
+      return next;
+    });
+  }, [peers, setResult]);
+
+  return result;
+}

@@ -82,7 +82,7 @@ function InvitableDeviceList() {
         // TODO: Use `device.deviceType`
         const deviceType = 'mobile';
 
-        // TODO: Update DeviceCard component to better handle potentially undefined fields
+        // TODO: Update DeviceCard component to better handle potentially undefined fields, deviceType enum
         return (
           <DeviceCard
             key={deviceId}

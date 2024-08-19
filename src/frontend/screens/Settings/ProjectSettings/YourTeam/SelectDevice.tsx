@@ -137,11 +137,11 @@ function useInitiallyConnectedPeers() {
       for (const p of peers) {
         const existing = prev.find(({deviceId}) => deviceId === p.deviceId);
 
-        // Use the most recent information for any peer discovered during lifetime of session
+        // Use the most recent information for included peers
         if (existing) {
           next.push(p);
         }
-        // only add newly discovered peers if they're connected
+        // only initially include peer if they're connected
         else if (!existing && p.status === 'connected') {
           next.push(p);
         }

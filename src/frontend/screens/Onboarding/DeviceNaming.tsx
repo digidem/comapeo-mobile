@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import CoMapeoText from '../images/CoMapeoTextBlue.svg';
+import CoMapeoText from '../../images/CoMapeoTextBlue.svg';
 import {
   StyleSheet,
   View,
@@ -8,12 +8,12 @@ import {
   KeyboardAvoidingView,
   Keyboard,
 } from 'react-native';
-import {BLACK, LIGHT_GREY, MEDIUM_GREY, RED} from '../lib/styles';
-import {Text} from '../sharedComponents/Text';
-import {Button} from '../sharedComponents/Button';
+import {BLACK, LIGHT_GREY, MEDIUM_GREY, RED} from '../../lib/styles';
+import {Text} from '../../sharedComponents/Text';
+import {Button} from '../../sharedComponents/Button';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {defineMessages, useIntl} from 'react-intl';
-import {DeviceNamingParamsList} from '../sharedTypes/navigation';
+import {OnboardingParamsList} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
   header: {
@@ -33,7 +33,7 @@ const m = defineMessages({
 
 export const DeviceNaming = ({
   navigation,
-}: NativeStackScreenProps<DeviceNamingParamsList, 'DeviceNaming'>) => {
+}: NativeStackScreenProps<OnboardingParamsList, 'DeviceNaming'>) => {
   const [name, setName] = React.useState('');
   const [errorTimeout, setErrorTimeout] = useTemporaryError();
   const invalidName = name.length === 0 || name.length > 60;

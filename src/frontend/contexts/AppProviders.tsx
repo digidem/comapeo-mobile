@@ -23,12 +23,17 @@ import {ApiProvider} from './ApiContext';
 import {MessagePortLike} from '../lib/MessagePortLike';
 import {IntlProvider} from './IntlContext';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import {MetricsProvider} from './MetricsContext';
+import {AppDiagnosticMetrics} from '../metrics/AppDiagnosticMetrics';
+import {DeviceDiagnosticMetrics} from '../metrics/DeviceDiagnosticMetrics';
 
 type AppProvidersProps = {
   children: React.ReactNode;
   messagePort: MessagePortLike;
   localDiscoveryController: ReturnType<typeof createLocalDiscoveryController>;
   mapeoApi: MapeoClientApi;
+  appMetrics: AppDiagnosticMetrics;
+  deviceMetrics: DeviceDiagnosticMetrics;
 };
 
 const queryClient = new QueryClient();
@@ -38,6 +43,8 @@ export const AppProviders = ({
   messagePort,
   localDiscoveryController,
   mapeoApi,
+  appMetrics,
+  deviceMetrics,
 }: AppProvidersProps) => {
   return (
     <IntlProvider>
@@ -49,13 +56,17 @@ export const AppProviders = ({
                 <ServerLoading messagePort={messagePort}>
                   <LocalDiscoveryProvider value={localDiscoveryController}>
                     <ApiProvider api={mapeoApi}>
-                      <ActiveProjectProvider>
-                        <BottomSheetModalProvider>
-                          <PhotoPromiseProvider>
-                            <SecurityProvider>{children}</SecurityProvider>
-                          </PhotoPromiseProvider>
-                        </BottomSheetModalProvider>
-                      </ActiveProjectProvider>
+                      <MetricsProvider
+                        appMetrics={appMetrics}
+                        deviceMetrics={deviceMetrics}>
+                        <ActiveProjectProvider>
+                          <BottomSheetModalProvider>
+                            <PhotoPromiseProvider>
+                              <SecurityProvider>{children}</SecurityProvider>
+                            </PhotoPromiseProvider>
+                          </BottomSheetModalProvider>
+                        </ActiveProjectProvider>
+                      </MetricsProvider>
                     </ApiProvider>
                   </LocalDiscoveryProvider>
                 </ServerLoading>

@@ -1,39 +1,33 @@
 import * as React from 'react';
-import {useAcceptInvite} from '../../hooks/server/invites';
 import {AlreadyOnProject} from './AlreadyOnProject';
 import {LeaveProject} from './LeaveProject';
-import {useProjectSettings} from '../../hooks/server/projects';
-import {LeaveProjectModalState} from '../ProjectInviteBottomSheet';
-
-type LeaveProjectModalContentProps = {
-  closeSheet: () => void;
-  inviteId: string;
-  accept: ReturnType<typeof useAcceptInvite>;
-  leaveModalState: LeaveProjectModalState;
-  setToLeaveProject: () => void;
-};
 
 export const LeaveProjectModalContent = ({
-  closeSheet,
+  onClose,
   inviteId,
-  accept,
-  leaveModalState,
-  setToLeaveProject,
-}: LeaveProjectModalContentProps) => {
-  const {data} = useProjectSettings();
+  projectName,
+}: {
+  onClose: () => void;
+  inviteId: string;
+  projectName?: string;
+}) => {
+  const [display, setDisplay] = React.useState<'AlreadyOnProj' | 'Leave'>(
+    'AlreadyOnProj',
+  );
 
-  return leaveModalState === 'AlreadyOnProj' ? (
+  return display === 'AlreadyOnProj' ? (
     <AlreadyOnProject
-      moveToLeaveProjectModalContent={setToLeaveProject}
-      closeSheet={closeSheet}
-      projectName={data?.name}
+      moveToLeaveProjectModalContent={() => {
+        setDisplay('Leave');
+      }}
+      closeSheet={onClose}
+      projectName={projectName}
     />
   ) : (
     <LeaveProject
-      closeSheet={closeSheet}
+      closeSheet={onClose}
       inviteId={inviteId}
-      accept={accept}
-      projectName={data?.name}
+      projectName={projectName}
     />
   );
 };

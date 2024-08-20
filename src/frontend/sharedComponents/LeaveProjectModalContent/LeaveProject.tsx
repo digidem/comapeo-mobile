@@ -54,21 +54,19 @@ const m = defineMessages({
 
 type LeaveProjectProps = {
   inviteId: string;
-  accept: ReturnType<typeof useAcceptInvite>;
-
   closeSheet: () => void;
   projectName?: string;
 };
 
 export const LeaveProject = ({
   inviteId,
-  accept,
   closeSheet,
   projectName,
 }: LeaveProjectProps) => {
   const {formatMessage} = useIntl();
   const [error, setError] = React.useState(false);
   const [isChecked, setIsChecked] = React.useState(false);
+  const acceptInviteMutation = useAcceptInvite();
   const leaveProject = useLeaveProject();
   const [combinedLoading, setCombinedLoading] = React.useState(false);
 
@@ -79,7 +77,7 @@ export const LeaveProject = ({
     }
     setCombinedLoading(true);
     // we want to accept first because the invitor will be able to cancel. this avoids the user leaving a project, and then their invite being cancelled before they were able to join.
-    accept.mutate(
+    acceptInviteMutation.mutate(
       {inviteId},
       {
         onSuccess: () => {
@@ -161,10 +159,10 @@ export const LeaveProject = ({
         </BottomSheetModalContent>
       )}
       <ErrorBottomSheet
-        error={leaveProject.error || accept.error}
+        error={leaveProject.error || acceptInviteMutation.error}
         clearError={() => {
           leaveProject.reset();
-          accept.reset();
+          acceptInviteMutation.reset();
         }}
         tryAgain={handleLeavePress}
       />

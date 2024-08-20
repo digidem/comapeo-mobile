@@ -11,9 +11,11 @@ import {View} from 'react-native';
 export function InviteBottomSheetContent({
   sessionInvite,
   onAfterResponse,
+  startConfirmationFlow,
 }: {
   sessionInvite: SessionInvite;
   onAfterResponse: (response: 'accept' | 'reject' | 'dismiss') => void;
+  startConfirmationFlow: () => void;
 }) {
   const {projectName, inviteId} = sessionInvite.invite;
 
@@ -25,6 +27,7 @@ export function InviteBottomSheetContent({
         onReject={() => {
           onAfterResponse('reject');
         }}
+        startConfirmationFlow={startConfirmationFlow}
       />
     );
   }

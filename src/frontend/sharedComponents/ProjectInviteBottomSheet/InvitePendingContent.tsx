@@ -6,6 +6,7 @@ import {useAcceptInvite, useRejectInvite} from '../../hooks/server/invites';
 import InviteIcon from '../../images/AddPersonCircle.svg';
 import {LIGHT_GREY} from '../../lib/styles';
 import {BottomSheetModalContent} from '../BottomSheetModal';
+import {useAllProjects} from '../../hooks/server/projects';
 
 const m = defineMessages({
   declineInvite: {
@@ -30,18 +31,25 @@ export function InvitePendingContent({
   projectName,
   inviteId,
   onReject,
+  startConfirmationFlow,
 }: {
   projectName: string;
   inviteId: string;
   onReject: () => void;
+  startConfirmationFlow: () => void;
 }) {
   const {formatMessage: t} = useIntl();
   const [error, setError] = React.useState<Error | null>(null);
 
+  const allProjectsQuery = useAllProjects();
+
   const accept = useAcceptInvite();
   const reject = useRejectInvite();
 
-  const isLoading = accept.isPending || reject.isPending;
+  const isLoading =
+    allProjectsQuery.status === 'pending' ||
+    accept.isPending ||
+    reject.isPending;
 
   // TODO: Display error state
 
@@ -69,6 +77,11 @@ export function InvitePendingContent({
         {
           variation: 'filled',
           onPress: () => {
+            if (allProjectsQuery.data!.length > 1) {
+              startConfirmationFlow();
+              return;
+            }
+
             accept.mutate(
               {inviteId},
               {

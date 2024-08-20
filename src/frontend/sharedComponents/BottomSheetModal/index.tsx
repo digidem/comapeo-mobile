@@ -28,7 +28,10 @@ export const useBottomSheetModal = ({openOnMount}: {openOnMount: boolean}) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const closeSheet = React.useCallback(() => {
+    console.log(!!sheetRef.current);
     if (sheetRef.current) {
+      console.log('CLOSING FOR SURE');
+
       setIsOpen(false);
       sheetRef.current.close();
     }
@@ -51,6 +54,7 @@ export const useBottomSheetModal = ({openOnMount}: {openOnMount: boolean}) => {
     }
   }, [openOnMount, openSheet]);
 
+  console.log({isOpen});
   return {sheetRef, closeSheet, openSheet, isOpen};
 };
 

@@ -5,7 +5,7 @@
   },
   "AppContainer.EditHeader.discardChangesContent": {
     "description": "Button on dialog to cancel observation edits",
-    "message": "Batalkan perubahan"
+    "message": "Discard changes"
   },
   "AppContainer.EditHeader.discardChangesTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
@@ -195,7 +195,7 @@
     "message": "What is Obscure Passcode?"
   },
   "screens.Observation.ObservationEdit.CategoryView.changePreset": {
-    "message": "Ubah"
+    "message": "Change"
   },
   "screens.Observation.ObservationEdit.CategoryView.observation": {
     "description": "Default name of observation with no matching preset",
@@ -275,11 +275,11 @@
   },
   "screens.ObservationEdit.editTitle": {
     "description": "screen title for edit observation screen",
-    "message": "Sunting Pengamatan"
+    "message": "Edit Observation"
   },
   "screens.ObservationEdit.newTitle": {
     "description": "screen title for new observation screen",
-    "message": "Pengamatan Baru"
+    "message": "New Observation"
   },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",

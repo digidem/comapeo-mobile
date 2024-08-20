@@ -3,12 +3,14 @@ import {StyleSheet} from 'react-native';
 import MapboxGL from '@rnmapbox/maps';
 import {LocationHistoryPoint} from '../../sharedTypes/location.ts';
 import Mapbox from '@rnmapbox/maps';
-import {
-  convertObservationsToFeatures,
-  convertToLineString,
-} from '../../lib/utils.ts';
+import {convertToLineString} from '../../lib/utils.ts';
 import {Observation} from '@mapeo/schema';
 import {BLACK} from '../../lib/styles.ts';
+import {usePresetsQuery} from '../../hooks/server/presets.ts';
+import {
+  createObservationMapLayerStyle,
+  observationsToFeatureCollection,
+} from '../../lib/ObservationMapLayer.ts';
 interface TrackScreenMapPreview {
   locationHistory: LocationHistoryPoint[];
   observations: Observation[];
@@ -54,13 +56,18 @@ export const MapPreview: FC<TrackScreenMapPreview> = ({
 };
 
 function ObservationMapLayer({observations}: {observations: Observation[]}) {
-  const featureCollection: GeoJSON.FeatureCollection = {
-    type: 'FeatureCollection',
-    features: convertObservationsToFeatures(observations),
-  };
+  const {data: presets} = usePresetsQuery();
+
+  const displayedFeatures = React.useMemo(() => {
+    return observationsToFeatureCollection(observations, presets);
+  }, [observations, presets]);
+
+  const layerStyles = React.useMemo(() => {
+    return createObservationMapLayerStyle(presets);
+  }, [presets]);
 
   return (
-    <MapboxGL.ShapeSource id="observations-source" shape={featureCollection}>
+    <MapboxGL.ShapeSource id="observations-source" shape={displayedFeatures}>
       <MapboxGL.CircleLayer id="circles" style={layerStyles} />
     </MapboxGL.ShapeSource>
   );
@@ -85,13 +92,6 @@ const lineLayer: MapboxGL.LineLayerStyle = {
   lineWidth: 3,
   lineCap: MapboxGL.LineJoin.Round,
   lineOpacity: 1.84,
-};
-
-const layerStyles = {
-  circleColor: BLACK,
-  circleRadius: 5,
-  circleStrokeColor: '#fff',
-  circleStrokeWidth: 2,
 };
 
 const MAP_HEIGHT = 250;

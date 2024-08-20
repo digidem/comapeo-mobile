@@ -95,6 +95,7 @@ export type RootStackParamsList = {
   DeviceNameEdit: undefined;
   SaveTrack: undefined;
   Sync: undefined;
+  Track: {trackId: string};
   CreateTestData: undefined;
   DataAndPrivacy: undefined;
   SettingsPrivacyPolicy: undefined;

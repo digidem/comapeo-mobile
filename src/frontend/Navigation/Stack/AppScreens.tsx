@@ -66,6 +66,7 @@ import {
 } from '../../screens/ObservationCreate';
 import {AboutSettings} from '../../screens/Settings/About';
 import {CreateTestDataScreen} from '../../screens/Settings/CreateTestData';
+import {TrackScreen} from '../../screens/Track/index.tsx';
 import {DataAndPrivacy} from '../../screens/Settings/DataAndPrivacy/DataAndPrivacy';
 import {SettingsPrivacyPolicy} from '../../screens/Settings/DataAndPrivacy/SettingsPrivacyPolicy';
 
@@ -264,6 +265,12 @@ export const createDefaultScreenGroup = ({
       component={LanguageSettings}
       options={{headerTitle: intl(LanguageSettings.navTitle)}}
     />
+    <RootStack.Screen
+      name="Track"
+      component={TrackScreen}
+      options={{headerTitle: intl(TrackScreen.navTitle)}}
+    />
+
     <RootStack.Screen
       name="ObservationCreate"
       component={ObservationCreate}

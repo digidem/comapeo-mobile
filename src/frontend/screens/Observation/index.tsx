@@ -12,13 +12,14 @@ import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
 import {useFieldsQuery} from '../../hooks/server/fields';
 import {FieldDetails} from './FieldDetails';
 import {InsetMapView} from './InsetMapView';
-import {ButtonFields} from './Buttons';
+
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
 import {MediaScrollView} from '../../sharedComponents/MediaScrollView/index.tsx';
 import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {useCreatedByToDeviceId} from '../../hooks/server/projects.ts';
 import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types.ts';
+import {ButtonFields} from './Buttons.tsx';
 
 const m = defineMessages({
   deleteTitle: {

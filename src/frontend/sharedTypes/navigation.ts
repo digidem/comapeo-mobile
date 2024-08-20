@@ -96,6 +96,8 @@ export type RootStackParamsList = {
   SaveTrack: undefined;
   Sync: undefined;
   CreateTestData: undefined;
+  DataAndPrivacy: undefined;
+  SettingsPrivacyPolicy: undefined;
 };
 
 export type OnboardingParamsList = {

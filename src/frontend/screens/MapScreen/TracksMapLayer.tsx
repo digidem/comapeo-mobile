@@ -25,7 +25,7 @@ export const TracksMapLayer = () => {
       onPress={handlePress}
       id="tracks"
       shape={convertTracksToFeatures(tracks)}>
-      <LineLayer id="routeFill" style={styles.lineLayer} />
+      <LineLayer id="trackLines" style={styles.lineLayer} existing />
     </ShapeSource>
   );
 };

@@ -27,9 +27,10 @@ export const CurrentTrackMapLayer = () => {
         id="routeSource"
         shape={convertToLineString(finalLocationHistory)}>
         <LineLayer
-          id="routeFill"
+          id="currentTrack"
           belowLayerID="mapboxUserLocationPulseCircle"
           style={styles.lineLayer}
+          existing
         />
       </ShapeSource>
     )

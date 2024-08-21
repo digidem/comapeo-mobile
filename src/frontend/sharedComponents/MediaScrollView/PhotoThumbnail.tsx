@@ -19,7 +19,7 @@ import {
 } from '../../contexts/PhotoPromiseContext/types';
 import {useAttachmentUrlQuery} from '../../hooks/server/media';
 
-const log = debug('Thumbnail');
+// const log = debug('Thumbnail');
 
 type PhotoThumbnailProps = PhotoThumbnailContextProps & {
   photo: Photo;
@@ -50,14 +50,35 @@ const PhotoThumbnailImage = ({
   error,
   uri,
 }: PhotoThumbnailImageProps) => {
+  console.log('PhotoThumbnailImage - URI:', uri);
+  console.log('PhotoThumbnailImage - Error:', error);
+  console.log('PhotoThumbnailImage - Is Loading:', isLoading);
   const [nativeImageError, setNativeImageError] = React.useState(false);
+  const [retryCount, setRetryCount] = React.useState(0);
+  const maxRetries = 3;
 
   const {size, style, onPress} = usePhotoThumbnailContext();
 
   function handleImageError(e: NativeSyntheticEvent<ImageErrorEventData>) {
-    log('Error loading image:\n', e.nativeEvent && e.nativeEvent.error);
+    console.log('Error loading image:', e.nativeEvent.error);
+    console.log('Error event:', e.nativeEvent); // Log the entire event
+    console.log('URI that caused the error:', uri); // Log the URI that failed
     setNativeImageError(true);
+    console.log('RETRY COUNT:', retryCount);
+    if (retryCount < maxRetries) {
+      setRetryCount(retryCount + 1);
+      setNativeImageError(false);
+    } else {
+      console.log('Max retries reached, showing error.');
+    }
   }
+
+  React.useEffect(() => {
+    if (retryCount > 0 && retryCount <= maxRetries) {
+      const timeout = setTimeout(() => setNativeImageError(false), 1000);
+      return () => clearTimeout(timeout);
+    }
+  }, [retryCount]);
 
   return (
     <TouchableOpacity
@@ -81,7 +102,9 @@ const PhotoThumbnailImage = ({
 
 const SavedPhotoThumbnail = ({photo}: {photo: SavedPhoto}) => {
   const image = useAttachmentUrlQuery(photo, 'thumbnail');
-
+  if (image.error) {
+    console.log('Error loading image:\n', image.error);
+  }
   return (
     <PhotoThumbnailImage
       isLoading={image.isPending}

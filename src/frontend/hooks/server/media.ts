@@ -78,14 +78,18 @@ const resolveAttachmentUrlQueryOptions = (
           };
         }
         case 'photo': {
+          const url = await projectApi.$blobs.getUrl({
+            driveId: attachment.driveDiscoveryId,
+            name: attachment.name,
+            type: attachment.type,
+            variant,
+          });
+
+          const urlWithCacheBust = `${url}?cacheBust=${Date.now()}`;
+
           return {
             ...attachment,
-            url: await projectApi.$blobs.getUrl({
-              driveId: attachment.driveDiscoveryId,
-              name: attachment.name,
-              type: attachment.type,
-              variant,
-            }),
+            url: urlWithCacheBust,
           };
         }
       }

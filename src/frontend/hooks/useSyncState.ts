@@ -54,7 +54,7 @@ export function useSyncState<S = SyncState | null>(
 }
 
 /**
- * Provides the progress of initial + data sync for SYNC-ENABLED connected peers
+ * Provides the progress of data sync for SYNC-ENABLED connected peers
  *
  * @returns A number between 0 and 1 when data sync is enabled. `null` otherwise.
  */
@@ -99,21 +99,32 @@ class SyncStore {
 
     let currentSyncCount = 0;
     let totalMaxSyncCount = 0;
+    let areAnyOtherDevicesEnabled = false;
 
     for (const [deviceId, deviceSyncState] of Object.entries(
       this.#state.remoteDeviceSyncState,
     )) {
+      if (deviceSyncState.data.isSyncEnabled) {
+        areAnyOtherDevicesEnabled = true;
+      } else {
+        continue;
+      }
+
       const maxSyncCountForDevice = this.#perDeviceMaxSyncCount.get(deviceId);
 
+      if (maxSyncCountForDevice === undefined) continue;
       if (!maxSyncCountForDevice) continue;
 
       currentSyncCount = getTotalSyncCountForDevice(deviceSyncState);
       totalMaxSyncCount += maxSyncCountForDevice;
     }
 
-    // TODO: I think this is the right thing to do here???
+    if (!areAnyOtherDevicesEnabled) {
+      return null;
+    }
+
     if (totalMaxSyncCount === 0) {
-      return 0;
+      return 1;
     }
 
     const ratio = (totalMaxSyncCount - currentSyncCount) / totalMaxSyncCount;
@@ -132,7 +143,7 @@ class SyncStore {
 
   #onSyncState = (state: SyncState) => {
     const dataSyncToggled =
-      this.#state?.data.isSyncEnabled !== state.data.isSyncEnabled;
+      (this.#state?.data.isSyncEnabled || false) !== state.data.isSyncEnabled;
 
     if (dataSyncToggled) {
       this.#perDeviceMaxSyncCount.clear();
@@ -151,19 +162,11 @@ class SyncStore {
     for (const [deviceId, stateForDevice] of Object.entries(
       state.remoteDeviceSyncState,
     )) {
-      // Ignore devices that do not have data sync enabled
-      // TODO: Would it be worth checking initial and data sync? (initial is technically always enabled)
-      if (!stateForDevice.data.isSyncEnabled) continue;
-
       const existingCount = this.#perDeviceMaxSyncCount.get(deviceId);
       const newCount = getTotalSyncCountForDevice(stateForDevice);
 
-      if (existingCount === undefined) {
+      if (existingCount === undefined || existingCount < newCount) {
         this.#perDeviceMaxSyncCount.set(deviceId, newCount);
-      } else {
-        if (existingCount < newCount) {
-          this.#perDeviceMaxSyncCount.set(deviceId, newCount);
-        }
       }
     }
 
@@ -201,8 +204,8 @@ function identity(state: SyncState | undefined) {
 function getTotalSyncCountForDevice(
   syncStateForDevice: SyncState['remoteDeviceSyncState'][string],
 ) {
-  const {initial, data} = syncStateForDevice;
-  return initial.want + initial.wanted + data.want + data.wanted;
+  const {data} = syncStateForDevice;
+  return data.want + data.wanted;
 }
 
 // TODO: Move to lib?

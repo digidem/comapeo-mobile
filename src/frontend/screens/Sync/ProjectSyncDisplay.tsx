@@ -33,6 +33,36 @@ import {
   WifiIcon,
 } from '../../sharedComponents/icons';
 
+type SyncStatus =
+  | {
+      name: 'idle';
+      connectedPeersCount: number;
+      syncingPeersCount: number;
+    }
+  | {
+      name: 'waiting';
+      connectedPeersCount: number;
+      syncingPeersCount: number;
+    }
+  | {
+      name: 'syncing';
+      connectedPeersCount: number;
+      syncingPeersCount: number;
+      progress: number;
+    }
+  | {
+      name: 'complete-partial';
+      connectedPeersCount: number;
+      syncingPeersCount: number;
+      progress: number;
+    }
+  | {
+      name: 'complete-full';
+      connectedPeersCount: number;
+      syncingPeersCount: number;
+      progress: number;
+    };
+
 const m = defineMessages({
   devicesFound: {
     id: 'screens.Sync.ProjectSyncDisplay.devicesFound',
@@ -122,8 +152,6 @@ export const ProjectSyncDisplay = ({
   const {projectApi, projectId} = useActiveProject();
   const progress = useSyncProgress();
 
-  const noProgress = progress === 0 || progress === null;
-
   // TODO: Maybe memoize
   const connectedPeersCount = getConnectedPeersCount(
     syncState.remoteDeviceSyncState,
@@ -165,89 +193,151 @@ export const ProjectSyncDisplay = ({
   let dockContent: React.ReactNode;
   let syncInfoContent: React.ReactNode;
 
-  if (syncState.data.isSyncEnabled) {
-    dockContent = (
-      <Button
-        fullWidth
-        variant="outlined"
-        onPress={() => {
-          // TODO: Catch/surface error
-          projectApi.$sync.stop();
-        }}>
-        <View style={styles.buttonContentContainer}>
-          <StopIcon size={20} color={BLACK} />
-          <Text style={styles.buttonTextSecondary}>{t(m.stop)}</Text>
-        </View>
-      </Button>
-    );
+  const syncStatus = deriveSyncStatus({
+    progress,
+    connectedPeersCount,
+    syncingPeersCount,
+    dataSyncEnabled: syncState.data.isSyncEnabled,
+  });
 
-    syncInfoContent = (
-      <>
-        {isFullySynced ? (
+  switch (syncStatus.name) {
+    case 'idle': {
+      dockContent = (
+        <Button
+          fullWidth
+          variant="contained"
+          onPress={() => {
+            // TODO: Catch/surface error
+            projectApi.$sync.start();
+          }}>
+          <View style={styles.buttonContentContainer}>
+            <SyncIcon size={20} />
+            <Text style={styles.buttonTextPrimary}>{t(m.startSync)}</Text>
+          </View>
+        </Button>
+      );
+
+      syncInfoContent = (
+        <Text style={styles.titleText}>
+          {syncStatus.connectedPeersCount > 0
+            ? t(m.devicesAvailableToSync, {
+                count: syncStatus.connectedPeersCount,
+              })
+            : t(m.noDevicesAvailableToSync)}
+        </Text>
+      );
+      break;
+    }
+    case 'waiting': {
+      dockContent = (
+        <Button
+          fullWidth
+          variant="outlined"
+          onPress={() => {
+            // TODO: Catch/surface error
+            projectApi.$sync.stop();
+          }}>
+          <View style={styles.buttonContentContainer}>
+            <StopIcon size={20} color={BLACK} />
+            <Text style={styles.buttonTextSecondary}>{t(m.stop)}</Text>
+          </View>
+        </Button>
+      );
+
+      syncInfoContent = (
+        <>
+          <Text style={styles.titleText}>{t(m.waitingForDevices)}</Text>
+          <SyncProgress syncStatus={syncStatus} />
+        </>
+      );
+
+      break;
+    }
+    case 'syncing': {
+      dockContent = (
+        <Button
+          fullWidth
+          variant="outlined"
+          onPress={() => {
+            // TODO: Catch/surface error
+            projectApi.$sync.stop();
+          }}>
+          <View style={styles.buttonContentContainer}>
+            <StopIcon size={20} color={BLACK} />
+            <Text style={styles.buttonTextSecondary}>{t(m.stop)}</Text>
+          </View>
+        </Button>
+      );
+
+      syncInfoContent = (
+        <>
+          <Text style={styles.titleText}>
+            {syncStatus.progress === 0
+              ? t(m.waitingForDevices)
+              : t(m.syncingWithDevices, {
+                  active: syncingPeersCount,
+                  total: connectedPeersCount,
+                })}
+          </Text>
+          <SyncProgress syncStatus={syncStatus} />
+        </>
+      );
+
+      break;
+    }
+    case 'complete-partial': {
+      dockContent = (
+        <Button
+          fullWidth
+          variant="outlined"
+          onPress={() => {
+            // TODO: Catch/surface error
+            projectApi.$sync.stop();
+          }}>
+          <View style={styles.buttonContentContainer}>
+            <StopIcon size={20} color={BLACK} />
+            <Text style={styles.buttonTextSecondary}>{t(m.stop)}</Text>
+          </View>
+        </Button>
+      );
+
+      syncInfoContent = (
+        <>
+          <Text style={styles.titleText}>
+            {t(m.syncingCompleteButWaitingForOthers, {
+              count:
+                syncStatus.connectedPeersCount - syncStatus.syncingPeersCount,
+            })}
+          </Text>
+          <SyncProgress syncStatus={syncStatus} />
+        </>
+      );
+
+      break;
+    }
+    case 'complete-full': {
+      dockContent = (
+        <Button variant="text" disabled onPress={() => {}}>
+          <Text style={styles.buttonTextSecondary}>{t(m.allCaughtUp)}</Text>
+        </Button>
+      );
+
+      syncInfoContent = (
+        <>
           <View>
             <Text style={styles.titleText}>{t(m.syncingFullyComplete)}</Text>
             <Text style={styles.subtitleText}>{t(m.allDataSynced)}</Text>
           </View>
-        ) : (
-          <Text style={styles.titleText}>
-            {noProgress
-              ? t(m.waitingForDevices)
-              : progress === 1
-                ? t(m.syncingCompleteButWaitingForOthers, {
-                    count: connectedPeersCount - syncingPeersCount,
-                  })
-                : t(m.syncingWithDevices, {
-                    active: syncingPeersCount,
-                    total: connectedPeersCount,
-                  })}
-          </Text>
-        )}
+          <SyncProgress syncStatus={syncStatus} />
+        </>
+      );
 
-        <SyncProgress
-          progress={progress}
-          syncingDeviceCount={syncingPeersCount}
-          totalDeviceCount={connectedPeersCount}
-        />
-      </>
-    );
-  } else {
-    dockContent = isFullySynced ? (
-      <Button variant="text" disabled onPress={() => {}}>
-        <Text style={styles.buttonTextSecondary}>{t(m.allCaughtUp)}</Text>
-      </Button>
-    ) : (
-      <Button
-        fullWidth
-        variant="contained"
-        onPress={() => {
-          // TODO: Catch/surface error
-          projectApi.$sync.start();
-        }}>
-        <View style={styles.buttonContentContainer}>
-          <SyncIcon size={20} />
-          <Text style={styles.buttonTextPrimary}>{t(m.startSync)}</Text>
-        </View>
-      </Button>
-    );
-
-    syncInfoContent = isFullySynced ? (
-      <>
-        <Text style={styles.titleText}>{t(m.syncingFullyComplete)}</Text>
-        <Text style={styles.subtitleText}>{t(m.allDataSynced)}</Text>
-
-        <SyncProgress
-          progress={1}
-          syncingDeviceCount={connectedPeersCount}
-          totalDeviceCount={connectedPeersCount}
-        />
-      </>
-    ) : (
-      <Text style={styles.titleText}>
-        {connectedPeersCount > 0
-          ? t(m.devicesAvailableToSync, {count: connectedPeersCount})
-          : t(m.noDevicesAvailableToSync)}
-      </Text>
-    );
+      break;
+    }
+    default: {
+      // @ts-expect-error
+      throw new Error(`Invalid status: ${syncStatus.status}`);
+    }
   }
 
   return (
@@ -270,34 +360,45 @@ export const ProjectSyncDisplay = ({
 };
 
 function SyncProgress({
-  progress,
-  syncingDeviceCount,
-  totalDeviceCount,
+  syncStatus,
 }: {
-  progress: number | null;
-  syncingDeviceCount: number;
-  totalDeviceCount: number;
+  syncStatus: Extract<
+    SyncStatus,
+    {name: 'syncing' | 'waiting' | 'complete-partial' | 'complete-full'}
+  >;
 }) {
   const {formatMessage: t} = useIntl();
-  const noProgress = progress === null || progress === 0;
 
-  const dynamicProgressBarProps = noProgress
-    ? {indeterminate: true, indeterminateAnimationDuration: 2000}
-    : {progress, indeterminate: false};
+  let progressLabel: string;
 
-  const completelyDone =
-    progress === 1 && syncingDeviceCount === totalDeviceCount;
-
-  const progressLabelTuple = getProgressLabelMessage({
-    progress,
-    syncingDeviceCount,
-    totalDeviceCount,
-  });
+  switch (syncStatus.name) {
+    case 'waiting': {
+      progressLabel = t(m.progressLabelWaiting);
+      break;
+    }
+    case 'syncing': {
+      progressLabel = t(m.progressLabelSyncing);
+      break;
+    }
+    case 'complete-partial': {
+      progressLabel = t(m.progressLabelWithDeviceCount, {
+        active: syncStatus.syncingPeersCount,
+        total: syncStatus.connectedPeersCount,
+      });
+      break;
+    }
+    case 'complete-full': {
+      progressLabel = t(m.progressLabelComplete, {
+        count: syncStatus.connectedPeersCount,
+      });
+      break;
+    }
+  }
 
   return (
     <View style={styles.syncProgressContainer}>
       <View style={styles.syncProgressTextContainer}>
-        {completelyDone ? (
+        {syncStatus.name === 'complete-full' ? (
           <DoneIcon color={DARK_GREEN} size={20} />
         ) : (
           <SyncIcon color={COMAPEO_BLUE} size={20} />
@@ -305,53 +406,89 @@ function SyncProgress({
         <Text
           style={[
             styles.syncProgressLabel,
-            completelyDone && {color: DARK_GREEN},
+            syncStatus.name === 'complete-full' && {color: DARK_GREEN},
           ]}>
-          {t(progressLabelTuple[0], progressLabelTuple[1])}
+          {progressLabel}
         </Text>
       </View>
       <ProgressBar
-        {...dynamicProgressBarProps}
+        {...(syncStatus.name === 'waiting'
+          ? {indeterminate: true, indeterminateAnimationDuration: 2000}
+          : {progress: syncStatus.progress, indeterminate: false})}
         height={10}
         width={null}
         borderRadius={0}
-        color={completelyDone ? DARK_GREEN : COMAPEO_BLUE}
+        color={syncStatus.name === 'complete-full' ? DARK_GREEN : COMAPEO_BLUE}
         unfilledColor={LIGHT_GREY}
         borderColor={WHITE}
       />
 
-      {!noProgress && (
+      {syncStatus.name !== 'waiting' && (
         <Text style={styles.syncProgressText}>
-          {t(m.progressSyncPercentage, {value: Math.round(progress * 100)})}
+          {t(m.progressSyncPercentage, {
+            value: Math.round(syncStatus.progress * 100),
+          })}
         </Text>
       )}
     </View>
   );
 }
 
-function getProgressLabelMessage({
+function deriveSyncStatus({
   progress,
-  syncingDeviceCount,
-  totalDeviceCount,
+  connectedPeersCount,
+  syncingPeersCount,
+  dataSyncEnabled,
 }: {
   progress: number | null;
-  syncingDeviceCount: number;
-  totalDeviceCount: number;
-}) {
-  if (progress === null || progress === 0) {
-    return [m.progressLabelWaiting, undefined] as const;
-  }
+  connectedPeersCount: number;
+  syncingPeersCount: number;
+  dataSyncEnabled: boolean;
+}): SyncStatus {
+  if (dataSyncEnabled) {
+    if (progress === null || connectedPeersCount === 0) {
+      return {name: 'waiting', connectedPeersCount, syncingPeersCount};
+    }
 
-  if (progress === 1) {
-    return syncingDeviceCount === totalDeviceCount
-      ? ([m.progressLabelComplete, {count: totalDeviceCount}] as const)
-      : ([
-          m.progressLabelWithDeviceCount,
-          {active: syncingDeviceCount, total: totalDeviceCount},
-        ] as const);
+    if (progress === 1) {
+      if (connectedPeersCount === syncingPeersCount) {
+        return {
+          name: 'complete-full',
+          syncingPeersCount,
+          connectedPeersCount,
+          progress,
+        };
+      } else {
+        return {
+          name: 'complete-partial',
+          syncingPeersCount,
+          connectedPeersCount,
+          progress,
+        };
+      }
+    } else {
+      return {
+        name: 'syncing',
+        connectedPeersCount,
+        syncingPeersCount,
+        progress,
+      };
+    }
+  } else {
+    if (progress === 1) {
+      return {
+        name:
+          connectedPeersCount === syncingPeersCount
+            ? 'complete-full'
+            : 'complete-partial',
+        connectedPeersCount,
+        syncingPeersCount,
+        progress,
+      };
+    } else {
+      return {name: 'idle', connectedPeersCount, syncingPeersCount};
+    }
   }
-
-  return [m.progressLabelSyncing, undefined] as const;
 }
 
 const styles = StyleSheet.create({

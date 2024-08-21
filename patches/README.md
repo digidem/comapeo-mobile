@@ -68,12 +68,6 @@ skipping it does not seem to affect our ability to build the app and is thus (pr
 
 When targeting Intel-based architectures (i.e. `x86_64`), the affected Gradle build steps were attempting to find native prebuilds using the extended target architecture name i.e. in each directory for relevant native Node modules, it was looking for `prebuilds/android-x86_64/` instead of `prebuilds/android-x64/`. This naming discrepancy is due to how our [prebuild template](https://github.com/digidem/nodejs-mobile-prebuilds-template) publishes the output from https://github.com/nodejs-mobile/prebuild-for-nodejs-mobile/, which uses an abbreviated name of the architecture (e.g. `x86_64` is referred to as `x64`).
 
-### [Fix replces `jcenter` (deprecated) for `mavenCentral](./nodejs-mobile-react-native+18.17.7+007+jcenter-to-maven.patch)
-
-Uses `mavenCentral` instead of `jcenter` as [`jcenter` is now deprecated.](https://jfrog.com/blog/jcenter-sunset/)
-
-See https://github.com/nodejs-mobile/nodejs-mobile-react-native/issues/80
-
 ## @react-native/eslint-config
 
 ### [Disable prettier plugin rules](./@react-native+eslint-config+0.73.2.patch)

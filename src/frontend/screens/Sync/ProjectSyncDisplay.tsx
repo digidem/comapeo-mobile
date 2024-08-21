@@ -125,10 +125,14 @@ export const ProjectSyncDisplay = ({
   const noProgress = progress === 0 || progress === null;
 
   // TODO: Maybe memoize
-  const connectedPeersCount = getConnectedPeersCount(syncState.deviceSyncState);
+  const connectedPeersCount = getConnectedPeersCount(
+    syncState.remoteDeviceSyncState,
+  );
 
   // TODO: Maybe memoize
-  const syncingPeersCount = getSyncingPeersCount(syncState.deviceSyncState);
+  const syncingPeersCount = getSyncingPeersCount(
+    syncState.remoteDeviceSyncState,
+  );
 
   const isFullySynced =
     progress === 1 &&
@@ -149,19 +153,19 @@ export const ProjectSyncDisplay = ({
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', () => {
-      if (syncState.data.isEnabled && isFullySynced) {
+      if (syncState.data.isSyncEnabled && isFullySynced) {
         // TODO: Set the sync autostop timeout to 30 seconds
         // projectApi.$sync.setAutostopDataSyncTimeout(30_000)
       }
     });
 
     return unsubscribe;
-  }, [navigation, isFullySynced, projectApi, syncState.data.isEnabled]);
+  }, [navigation, isFullySynced, projectApi, syncState.data.isSyncEnabled]);
 
   let dockContent: React.ReactNode;
   let syncInfoContent: React.ReactNode;
 
-  if (syncState.data.isEnabled) {
+  if (syncState.data.isSyncEnabled) {
     dockContent = (
       <Button
         fullWidth

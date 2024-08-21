@@ -1,5 +1,6 @@
 import {MapeoProjectApi} from '@mapeo/ipc';
 import {useCallback, useSyncExternalStore} from 'react';
+import type {ReadonlyDeep} from 'type-fest';
 
 import {useActiveProject} from '../contexts/ActiveProjectContext';
 
@@ -104,7 +105,7 @@ class SyncStore {
       return 1;
     }
 
-    const currentCount = this.#state.data.want + this.#state.data.wanted;
+    const currentCount = getDataSyncCount(this.#state);
 
     const ratio =
       (this.#maxDataSyncCount - currentCount) / this.#maxDataSyncCount;
@@ -129,7 +130,7 @@ class SyncStore {
     if (isDataSyncStopped) {
       this.#maxDataSyncCount = null;
     } else {
-      const newSyncCount = state.data.want + state.data.wanted;
+      const newSyncCount = getDataSyncCount(state);
 
       this.#maxDataSyncCount =
         this.#maxDataSyncCount === null
@@ -158,6 +159,13 @@ class SyncStore {
     this.#isSubscribedInternal = false;
     this.#project.$sync.off('sync-state', this.#onSyncState);
   };
+}
+
+function getDataSyncCount(syncState: ReadonlyDeep<SyncState>): number {
+  return Object.values(syncState.remoteDeviceSyncState).reduce(
+    (result, {data}) => result + data.want + data.wanted,
+    0,
+  );
 }
 
 function clamp(value: number, min: number, max: number): number {

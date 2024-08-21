@@ -86,8 +86,20 @@ export const ProjectSyncDisplay = ({
   const {projectApi, projectId} = useActiveProject();
   const queryClient = useQueryClient();
   const navigation = useNavigationFromRoot();
-  const {connectedPeers, data, initial} = syncState;
-  const isSyncDone = !initial.dataToSync && !data.dataToSync;
+  const {remoteDeviceSyncState, data, initial} = syncState;
+
+  const connectedPeers = Object.keys(remoteDeviceSyncState).length;
+  const isSyncDone = React.useMemo(
+    () =>
+      Object.values(remoteDeviceSyncState).every(
+        remoteDevice =>
+          remoteDevice.initial.want === 0 &&
+          remoteDevice.initial.wanted === 0 &&
+          remoteDevice.data.want === 0 &&
+          remoteDevice.data.wanted === 0,
+      ),
+    [remoteDeviceSyncState],
+  );
 
   // stops sync when user leaves sync screen. The api allows us to continue syncing even if the user is not on the sync screen, but for simplicity we are only allowing sync while on the sync screen. In the future we can easily enable background sync, there are just some UI questions that need to answered before we do that.
   React.useEffect(() => {

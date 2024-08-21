@@ -19,7 +19,6 @@ const PhotoViewComponent = ({
   style,
 }: Props) => {
   const {data, isPending, isError} = useAttachmentUrlQuery(attachment, variant);
-  if (isError) console.log('is error in photo view', isError);
   return (
     <View style={[styles.container, style]}>
       {isPending ? (

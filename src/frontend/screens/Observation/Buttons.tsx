@@ -13,7 +13,6 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import {convertUrlToBase64} from '../../utils/base64.ts';
 import {useState} from 'react';
 import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings.ts';
-import throttle from 'lodash/throttle';
 
 const m = defineMessages({
   delete: {
@@ -105,34 +104,28 @@ export const ButtonFields = ({
   async function handlePressShare() {
     const {lon, lat} = observation;
     setShareButtonLoading(true);
-    try {
-      const urlsQueries = await Promise.all(
-        attachmentUrlQueries.map(q => q.refetch()),
-      );
-      const urls = urlsQueries.map(query => query.data!.url);
-      const base64Urls = await Promise.all(
-        urls.map(url => convertUrlToBase64(url)),
-      );
 
-      await Share.open({
-        title:
-          base64Urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),
-        urls: base64Urls,
-        message: t(m.shareMessage, {
-          category_name: preset.name,
-          date: Date.now(),
-          time: Date.now(),
-          coordinates: lon && lat ? formatCoords({lon, lat, format}) : '',
-        }),
-      });
-    } catch (error) {
-      console.log('handlePressShare: Error opening share modal', error);
-    } finally {
-      setShareButtonLoading(false);
-    }
+    const urls = await Promise.all(
+      attachmentUrlQueries.map(query => query.data!.url),
+    );
+    const base64Urls = await Promise.all(
+      urls.map(url => convertUrlToBase64(url)),
+    );
+
+    Share.open({
+      title: base64Urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),
+      urls: base64Urls,
+      message: t(m.shareMessage, {
+        category_name: preset.name,
+        date: Date.now(),
+        time: Date.now(),
+        coordinates: lon && lat ? formatCoords({lon, lat, format}) : '',
+      }),
+    })
+      .catch(() => {})
+      .finally(() => setShareButtonLoading(false));
   }
 
-  const throttledShare = throttle(handlePressShare, 2000);
   return (
     <View style={styles.buttonContainer}>
       {isMine && (
@@ -146,7 +139,7 @@ export const ButtonFields = ({
         iconName="share"
         isLoading={isShareButtonLoading}
         title={t(m.share)}
-        onPress={throttledShare}
+        onPress={handlePressShare}
       />
     </View>
   );

@@ -14,6 +14,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {useDraftObservation} from '../hooks/useDraftObservation.ts';
 import {PhotoPreparedView} from '../sharedComponents/PhotoPreparedView.tsx';
 import ErrorIcon from '../images/Error.svg';
+import {useAttachmentUrlQuery} from '../hooks/server/media';
 
 const m = defineMessages({
   headerDeleteButtonText: {
@@ -45,6 +46,13 @@ export const PhotoPreviewModal: FC<
     openOnMount: false,
   });
   const {formatMessage: t} = useIntl();
+  const {
+    data: attachmentUrl,
+    isError,
+    isPending,
+  } = photo.type === 'photo'
+    ? useAttachmentUrlQuery(photo, 'original')
+    : {data: undefined, isError: false, isPending: false};
 
   const handlePhotoDelete = () => {
     if ('originalUri' in photo) {
@@ -79,8 +87,9 @@ export const PhotoPreviewModal: FC<
       {photo.type === 'photo' ? (
         <PhotoUnpreparedView
           onPress={() => setShowHeader(!showHeader)}
-          photo={photo}
-          variant={'original'}
+          attachmentUrl={attachmentUrl?.url}
+          isError={isError}
+          isPending={isPending}
         />
       ) : (
         <PhotoPreparedView

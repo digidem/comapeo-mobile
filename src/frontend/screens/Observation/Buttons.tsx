@@ -104,10 +104,16 @@ export const ButtonFields = ({
   async function handlePressShare() {
     const {lon, lat} = observation;
     setShareButtonLoading(true);
-
-    const urls = await Promise.all(
-      attachmentUrlQueries.map(query => query.data!.url),
-    );
+    const needsRefetch = attachmentUrlQueries.some(query => !query.data);
+    let urls;
+    if (needsRefetch) {
+      const urlsQueries = await Promise.all(
+        attachmentUrlQueries.map(q => q.refetch()),
+      );
+      urls = urlsQueries.map(query => query.data!.url);
+    } else {
+      urls = attachmentUrlQueries.map(query => query.data!.url);
+    }
     const base64Urls = await Promise.all(
       urls.map(url => convertUrlToBase64(url)),
     );

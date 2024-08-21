@@ -8,10 +8,10 @@ const SUFFIX =
 
 const NAME =
   {
-    development: ' (DEV)',
+    development: ' Dev',
     production: '',
-    releaseCandidate: ' (RC)',
-    preRelease: '(PRE)',
+    releaseCandidate: ' Rc',
+    preRelease: ' Pre',
   }[process.env.APP_VARIANT] ?? '';
 
 /**

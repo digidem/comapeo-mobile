@@ -10,7 +10,7 @@ export function useSelectFileAndImportConfig() {
 
   return useMutation({
     mutationFn: async () => {
-      const asset = await selectFile(['mapeoconfig']);
+      const asset = await selectFile(['mapeoconfig', 'mapeosettings']);
       if (!asset) return;
 
       try {

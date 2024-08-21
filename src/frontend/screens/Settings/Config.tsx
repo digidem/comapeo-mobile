@@ -1,20 +1,15 @@
 import * as React from 'react';
-import * as DocumentPicker from 'expo-document-picker';
-import * as FileSystem from 'expo-file-system';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 import {Text} from '../../sharedComponents/Text';
-import {
-  useImportProjectConfig,
-  useProjectSettings,
-} from '../../hooks/server/projects';
+import {useProjectSettings} from '../../hooks/server/projects';
 import {Loading} from '../../sharedComponents/Loading';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {COMAPEO_BLUE, MEDIUM_GREY} from '../../lib/styles';
 import {Button} from '../../sharedComponents/Button';
-import {convertFileUriToPosixPath} from '../../lib/file-system';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
+import {useSelectFileAndImportConfig} from '../../hooks/useSelectFileAndImportConfig';
 
 const m = defineMessages({
   navTitle: {
@@ -42,14 +37,13 @@ const m = defineMessages({
 export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
   const {formatMessage} = useIntl();
   const {data, isPending} = useProjectSettings();
-  const [importError, setImportError] = React.useState<Error | null>(null);
 
-  const importProjectConfigMutation = useImportProjectConfig();
+  const selectAndImportConfigMutation = useSelectFileAndImportConfig();
 
   React.useEffect(() => {
     // Prevent back navigation while project creation mutation is pending
     const unsubscribe = navigation.addListener('beforeRemove', event => {
-      if (!importProjectConfigMutation.isPending) {
+      if (!selectAndImportConfigMutation.isPending) {
         return;
       }
 
@@ -59,41 +53,10 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
     return () => {
       unsubscribe();
     };
-  }, [navigation, importProjectConfigMutation.isPending]);
+  }, [navigation, selectAndImportConfigMutation.isPending]);
 
   async function importConfigFile() {
-    let result;
-    try {
-      result = await DocumentPicker.getDocumentAsync({
-        copyToCacheDirectory: true,
-        multiple: false,
-      });
-    } catch (_err) {
-      setImportError(_err as Error);
-      return;
-    }
-
-    if (result.canceled) {
-      return;
-    }
-
-    const asset = result.assets[0];
-
-    // Shouldn't happen based on how the library works
-    if (!asset) return;
-
-    importProjectConfigMutation.mutate(convertFileUriToPosixPath(asset.uri), {
-      onSuccess: async () => {
-        await FileSystem.deleteAsync(asset.uri).catch((err: unknown) => {
-          console.log(err);
-        });
-      },
-      onError: async () => {
-        await FileSystem.deleteAsync(asset.uri).catch((err: unknown) => {
-          console.log(err);
-        });
-      },
-    });
+    selectAndImportConfigMutation.mutate();
   }
 
   if (!data || isPending) {
@@ -120,7 +83,7 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
           <Text>{data.configMetadata.name}</Text>
         </>
       )}
-      {!importProjectConfigMutation.isPending ? (
+      {!selectAndImportConfigMutation.isPending ? (
         <Button
           style={{marginTop: 20}}
           fullWidth
@@ -134,10 +97,9 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
         <UIActivityIndicator style={{marginTop: 20, flex: 0}} />
       )}
       <ErrorBottomSheet
-        error={importProjectConfigMutation.error || importError}
+        error={selectAndImportConfigMutation.error}
         clearError={() => {
-          importProjectConfigMutation.reset();
-          setImportError(null);
+          selectAndImportConfigMutation.reset();
         }}
         tryAgain={importConfigFile}
       />

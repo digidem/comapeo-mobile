@@ -54,13 +54,13 @@ export function useSyncState<S = SyncState | null>(
 }
 
 /**
- * Provides the progress of data sync for SYNC-ENABLED connected peers
+ * Provides the progress of data sync for sync-enabled connected peers
  *
- * @returns A number between 0 and 1 when data sync is enabled. `null` otherwise.
+ * @returns `null` if no sync state events have been received. Otherwise returns a value between 0 and 1 (inclusive)
  */
-export function useSyncProgress(): number | null {
-  const {subscribe, getProgressSnapshot} = useSyncStore();
-  return useSyncExternalStore(subscribe, getProgressSnapshot);
+export function useDataSyncProgress(): number | null {
+  const {subscribe, getDataProgressSnapshot} = useSyncStore();
+  return useSyncExternalStore(subscribe, getDataProgressSnapshot);
 }
 
 class SyncStore {
@@ -71,6 +71,7 @@ class SyncStore {
   #error: Error | null = null;
   #state: SyncState | null = null;
 
+  // Used for calculating sync progress
   #perDeviceMaxSyncCount = new Map<string, number>();
 
   constructor(project: MapeoProjectApi) {
@@ -91,35 +92,33 @@ class SyncStore {
     return this.#state;
   };
 
-  // TODO: wondering if it would be easier for this to only return a number instead of number | null?
-  getProgressSnapshot = () => {
+  getDataProgressSnapshot = () => {
     if (this.#state === null) {
       return null;
     }
 
     let currentSyncCount = 0;
     let totalMaxSyncCount = 0;
-    let areAnyOtherDevicesEnabled = false;
+    let otherEnabledDevicesExist = false;
 
     for (const [deviceId, deviceSyncState] of Object.entries(
       this.#state.remoteDeviceSyncState,
     )) {
       if (deviceSyncState.data.isSyncEnabled) {
-        areAnyOtherDevicesEnabled = true;
+        otherEnabledDevicesExist = true;
       } else {
         continue;
       }
 
-      const maxSyncCountForDevice = this.#perDeviceMaxSyncCount.get(deviceId);
+      const existingMaxCount = this.#perDeviceMaxSyncCount.get(deviceId);
 
-      if (maxSyncCountForDevice === undefined) continue;
-      if (!maxSyncCountForDevice) continue;
-
-      currentSyncCount = getTotalSyncCountForDevice(deviceSyncState);
-      totalMaxSyncCount += maxSyncCountForDevice;
+      if (typeof existingMaxCount === 'number' && existingMaxCount > 0) {
+        currentSyncCount = getDataSyncCountForDevice(deviceSyncState);
+        totalMaxSyncCount += existingMaxCount;
+      }
     }
 
-    if (!areAnyOtherDevicesEnabled) {
+    if (!otherEnabledDevicesExist) {
       return null;
     }
 
@@ -142,10 +141,12 @@ class SyncStore {
   }
 
   #onSyncState = (state: SyncState) => {
-    const dataSyncToggled =
-      (this.#state?.data.isSyncEnabled || false) !== state.data.isSyncEnabled;
+    const dataSyncWasEnabled = this.#state
+      ? this.#state.data.isSyncEnabled
+      : false;
 
-    if (dataSyncToggled) {
+    // Reset map keeping track of counts used for progress if data sync is toggled
+    if (dataSyncWasEnabled !== state.data.isSyncEnabled) {
       this.#perDeviceMaxSyncCount.clear();
     } else {
       const connectedDevices = Object.keys(state.remoteDeviceSyncState);
@@ -158,12 +159,11 @@ class SyncStore {
       }
     }
 
-    // Add or update sync-enabled devices in #perDeviceMaxSyncCount based on new sync state
     for (const [deviceId, stateForDevice] of Object.entries(
       state.remoteDeviceSyncState,
     )) {
       const existingCount = this.#perDeviceMaxSyncCount.get(deviceId);
-      const newCount = getTotalSyncCountForDevice(stateForDevice);
+      const newCount = getDataSyncCountForDevice(stateForDevice);
 
       if (existingCount === undefined || existingCount < newCount) {
         this.#perDeviceMaxSyncCount.set(deviceId, newCount);
@@ -201,21 +201,19 @@ function identity(state: SyncState | undefined) {
   return state;
 }
 
-function getTotalSyncCountForDevice(
+function getDataSyncCountForDevice(
   syncStateForDevice: SyncState['remoteDeviceSyncState'][string],
 ) {
   const {data} = syncStateForDevice;
   return data.want + data.wanted;
 }
 
-// TODO: Move to lib?
 export function getConnectedPeersCount(
   deviceSyncState: SyncState['remoteDeviceSyncState'],
 ): number {
   return Object.keys(deviceSyncState).length;
 }
 
-// TODO: Move to lib?
 export function getSyncingPeersCount(
   deviceSyncState: SyncState['remoteDeviceSyncState'],
 ): number {

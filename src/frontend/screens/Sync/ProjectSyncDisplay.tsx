@@ -1,8 +1,8 @@
 import * as React from 'react';
+import {useQueryClient} from '@tanstack/react-query';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 import {Bar as ProgressBar} from 'react-native-progress';
-import {useQueryClient} from '@tanstack/react-query';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {OBSERVATION_KEY} from '../../hooks/server/observations';
@@ -11,7 +11,7 @@ import {
   SyncState,
   getConnectedPeersCount,
   getSyncingPeersCount,
-  useSyncProgress,
+  useDataSyncProgress,
 } from '../../hooks/useSyncState';
 import ObservationsProjectImage from '../../images/ObservationsProject.svg';
 import {
@@ -33,30 +33,35 @@ import {
   WifiIcon,
 } from '../../sharedComponents/icons';
 
-type SyncStatus =
+type SyncStage =
   | {
+      // Sync has not been enabled on our device
       name: 'idle';
       connectedPeersCount: number;
       syncingPeersCount: number;
     }
   | {
+      // Sync has been enabled on our device but none of the other connected devices
       name: 'waiting';
       connectedPeersCount: number;
       syncingPeersCount: number;
     }
   | {
+      // Sync is occurring between us and some other device(s)
       name: 'syncing';
       connectedPeersCount: number;
       syncingPeersCount: number;
       progress: number;
     }
   | {
+      // Sync has finished with some - but not all - connected devices
       name: 'complete-partial';
       connectedPeersCount: number;
       syncingPeersCount: number;
       progress: number;
     }
   | {
+      // Sync has finished with all connected devices
       name: 'complete-full';
       connectedPeersCount: number;
       syncingPeersCount: number;
@@ -150,22 +155,22 @@ export const ProjectSyncDisplay = ({
   const queryClient = useQueryClient();
   const navigation = useNavigationFromRoot();
   const {projectApi, projectId} = useActiveProject();
-  const progress = useSyncProgress();
+  const progress = useDataSyncProgress();
 
-  // TODO: Maybe memoize
   const connectedPeersCount = getConnectedPeersCount(
     syncState.remoteDeviceSyncState,
   );
 
-  // TODO: Maybe memoize
   const syncingPeersCount = getSyncingPeersCount(
     syncState.remoteDeviceSyncState,
   );
 
-  const isFullySynced =
-    progress === 1 &&
-    connectedPeersCount > 0 &&
-    connectedPeersCount === syncingPeersCount;
+  const syncStage = deriveSyncStage({
+    progress,
+    connectedPeersCount,
+    syncingPeersCount,
+    dataSyncEnabled: syncState.data.isSyncEnabled,
+  });
 
   // stops sync when user leaves sync screen.
   // The api allows us to continue syncing even if the user is not on the sync screen, but for simplicity we are only allowing sync while on the sync screen.
@@ -179,28 +184,20 @@ export const ProjectSyncDisplay = ({
     return unsubscribe;
   }, [navigation, projectApi, queryClient, projectId]);
 
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener('beforeRemove', () => {
-      if (syncState.data.isSyncEnabled && isFullySynced) {
-        // TODO: Set the sync autostop timeout to 30 seconds
-        // projectApi.$sync.setAutostopDataSyncTimeout(30_000)
-      }
-    });
+  // TODO: Autostop data sync upon leaving screen while in specific state
+  // const shouldAutostopSyncWhenLeavingScreen = syncState.data.isSyncEnabled && syncStage.name === 'complete-full';
+  // React.useEffect(() => {
+  //   const unsubscribe = navigation.addListener('beforeRemove', () => {
+  //     projectApi.$sync.setAutostopDataSyncTimeout(30_000);
+  //   });
 
-    return unsubscribe;
-  }, [navigation, isFullySynced, projectApi, syncState.data.isSyncEnabled]);
+  //   return unsubscribe;
+  // }, [navigation, projectApi, shouldAutostopSyncWhenLeavingScreen]);
 
   let dockContent: React.ReactNode;
   let syncInfoContent: React.ReactNode;
 
-  const syncStatus = deriveSyncStatus({
-    progress,
-    connectedPeersCount,
-    syncingPeersCount,
-    dataSyncEnabled: syncState.data.isSyncEnabled,
-  });
-
-  switch (syncStatus.name) {
+  switch (syncStage.name) {
     case 'idle': {
       dockContent = (
         <Button
@@ -219,9 +216,9 @@ export const ProjectSyncDisplay = ({
 
       syncInfoContent = (
         <Text style={styles.titleText}>
-          {syncStatus.connectedPeersCount > 0
+          {syncStage.connectedPeersCount > 0
             ? t(m.devicesAvailableToSync, {
-                count: syncStatus.connectedPeersCount,
+                count: syncStage.connectedPeersCount,
               })
             : t(m.noDevicesAvailableToSync)}
         </Text>
@@ -247,7 +244,7 @@ export const ProjectSyncDisplay = ({
       syncInfoContent = (
         <>
           <Text style={styles.titleText}>{t(m.waitingForDevices)}</Text>
-          <SyncProgress syncStatus={syncStatus} />
+          <SyncProgress stage={syncStage} />
         </>
       );
 
@@ -272,14 +269,14 @@ export const ProjectSyncDisplay = ({
       syncInfoContent = (
         <>
           <Text style={styles.titleText}>
-            {syncStatus.progress === 0
+            {syncStage.progress === 0
               ? t(m.waitingForDevices)
               : t(m.syncingWithDevices, {
                   active: syncingPeersCount,
                   total: connectedPeersCount,
                 })}
           </Text>
-          <SyncProgress syncStatus={syncStatus} />
+          <SyncProgress stage={syncStage} />
         </>
       );
 
@@ -306,10 +303,10 @@ export const ProjectSyncDisplay = ({
           <Text style={styles.titleText}>
             {t(m.syncingCompleteButWaitingForOthers, {
               count:
-                syncStatus.connectedPeersCount - syncStatus.syncingPeersCount,
+                syncStage.connectedPeersCount - syncStage.syncingPeersCount,
             })}
           </Text>
-          <SyncProgress syncStatus={syncStatus} />
+          <SyncProgress stage={syncStage} />
         </>
       );
 
@@ -328,7 +325,7 @@ export const ProjectSyncDisplay = ({
             <Text style={styles.titleText}>{t(m.syncingFullyComplete)}</Text>
             <Text style={styles.subtitleText}>{t(m.allDataSynced)}</Text>
           </View>
-          <SyncProgress syncStatus={syncStatus} />
+          <SyncProgress stage={syncStage} />
         </>
       );
 
@@ -336,7 +333,7 @@ export const ProjectSyncDisplay = ({
     }
     default: {
       // @ts-expect-error
-      throw new Error(`Invalid status: ${syncStatus.status}`);
+      throw new Error(`Invalid status: ${syncStage.status}`);
     }
   }
 
@@ -360,10 +357,10 @@ export const ProjectSyncDisplay = ({
 };
 
 function SyncProgress({
-  syncStatus,
+  stage,
 }: {
-  syncStatus: Extract<
-    SyncStatus,
+  stage: Extract<
+    SyncStage,
     {name: 'syncing' | 'waiting' | 'complete-partial' | 'complete-full'}
   >;
 }) {
@@ -371,7 +368,7 @@ function SyncProgress({
 
   let progressLabel: string;
 
-  switch (syncStatus.name) {
+  switch (stage.name) {
     case 'waiting': {
       progressLabel = t(m.progressLabelWaiting);
       break;
@@ -382,23 +379,27 @@ function SyncProgress({
     }
     case 'complete-partial': {
       progressLabel = t(m.progressLabelWithDeviceCount, {
-        active: syncStatus.syncingPeersCount,
-        total: syncStatus.connectedPeersCount,
+        active: stage.syncingPeersCount,
+        total: stage.connectedPeersCount,
       });
       break;
     }
     case 'complete-full': {
       progressLabel = t(m.progressLabelComplete, {
-        count: syncStatus.connectedPeersCount,
+        count: stage.connectedPeersCount,
       });
       break;
+    }
+    default: {
+      // @ts-expect-error
+      throw new Error(`Unknown sync status ${stage.name}`);
     }
   }
 
   return (
     <View style={styles.syncProgressContainer}>
       <View style={styles.syncProgressTextContainer}>
-        {syncStatus.name === 'complete-full' ? (
+        {stage.name === 'complete-full' ? (
           <DoneIcon color={DARK_GREEN} size={20} />
         ) : (
           <SyncIcon color={COMAPEO_BLUE} size={20} />
@@ -406,27 +407,27 @@ function SyncProgress({
         <Text
           style={[
             styles.syncProgressLabel,
-            syncStatus.name === 'complete-full' && {color: DARK_GREEN},
+            stage.name === 'complete-full' && {color: DARK_GREEN},
           ]}>
           {progressLabel}
         </Text>
       </View>
       <ProgressBar
-        {...(syncStatus.name === 'waiting'
+        {...(stage.name === 'waiting'
           ? {indeterminate: true, indeterminateAnimationDuration: 2000}
-          : {progress: syncStatus.progress, indeterminate: false})}
+          : {progress: stage.progress, indeterminate: false})}
         height={10}
         width={null}
         borderRadius={0}
-        color={syncStatus.name === 'complete-full' ? DARK_GREEN : COMAPEO_BLUE}
+        color={stage.name === 'complete-full' ? DARK_GREEN : COMAPEO_BLUE}
         unfilledColor={LIGHT_GREY}
         borderColor={WHITE}
       />
 
-      {syncStatus.name !== 'waiting' && (
+      {stage.name !== 'waiting' && (
         <Text style={styles.syncProgressText}>
           {t(m.progressSyncPercentage, {
-            value: Math.round(syncStatus.progress * 100),
+            value: Math.round(stage.progress * 100),
           })}
         </Text>
       )}
@@ -434,7 +435,7 @@ function SyncProgress({
   );
 }
 
-function deriveSyncStatus({
+function deriveSyncStage({
   progress,
   connectedPeersCount,
   syncingPeersCount,
@@ -444,10 +445,14 @@ function deriveSyncStatus({
   connectedPeersCount: number;
   syncingPeersCount: number;
   dataSyncEnabled: boolean;
-}): SyncStatus {
+}): SyncStage {
   if (dataSyncEnabled) {
     if (progress === null || connectedPeersCount === 0) {
-      return {name: 'waiting', connectedPeersCount, syncingPeersCount};
+      return {
+        name: 'waiting',
+        connectedPeersCount,
+        syncingPeersCount,
+      };
     }
 
     if (progress === 1) {
@@ -486,7 +491,11 @@ function deriveSyncStatus({
         progress,
       };
     } else {
-      return {name: 'idle', connectedPeersCount, syncingPeersCount};
+      return {
+        name: 'idle',
+        connectedPeersCount,
+        syncingPeersCount,
+      };
     }
   }
 }

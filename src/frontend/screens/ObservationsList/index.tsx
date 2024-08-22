@@ -115,7 +115,7 @@ export const ObservationsList: React.FC<
                   track={item}
                   style={styles.listItem}
                   onPress={() => {
-                    // TODO: navigate to track
+                    navigation.navigate('Track', {trackId: item.docId});
                   }}
                 />
               );

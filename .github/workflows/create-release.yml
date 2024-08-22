@@ -1,4 +1,4 @@
-name: Create Release Branch and Dispatches EAS Build
+name: Create Release Branch and Build RC
 
 on:
   workflow_dispatch:

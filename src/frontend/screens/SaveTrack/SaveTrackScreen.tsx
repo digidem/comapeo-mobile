@@ -1,19 +1,7 @@
 import React, {useCallback} from 'react';
-import {
-  BackHandler,
-  Pressable,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  View,
-} from 'react-native';
-import {BottomSheet} from '../../sharedComponents/BottomSheet';
-import PhotoIcon from '../../images/camera.svg';
-import DetailsIcon from '../../images/details.svg';
+import {BackHandler, Pressable, StyleSheet} from 'react-native';
 import TrackIcon from '../../images/Track.svg';
 import {defineMessages, useIntl} from 'react-intl';
-import {Text} from '../../sharedComponents/Text';
-import {TrackDescriptionField} from './TrackDescriptionField';
 import {
   BottomSheetModalContent,
   BottomSheetModal,
@@ -26,31 +14,18 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {CommonActions, useFocusEffect} from '@react-navigation/native';
 import {SaveTrackButton} from './SaveTrackButton';
 import Close from '../../images/close.svg';
+import {Editor} from '../../sharedComponents/Editor';
+import {TrackDescriptionField} from './TrackDescriptionField';
+import {ActionsRow} from '../../sharedComponents/ActionRow';
 
 export const SaveTrackScreen = () => {
   const navigation = useNavigationFromRoot();
   const clearCurrentTrack = usePersistedTrack(state => state.clearCurrentTrack);
+  const isTracking = usePersistedTrack(state => state.isTracking);
   const {formatMessage: t} = useIntl();
   const {sheetRef, isOpen, openSheet, closeSheet} = useBottomSheetModal({
     openOnMount: false,
   });
-
-  const handleCameraPress = React.useCallback(() => {
-    navigation.navigate('AddPhoto');
-  }, [navigation]);
-
-  const bottomSheetItems = [
-    {
-      icon: <PhotoIcon />,
-      label: t(m.photoButton),
-      onPress: handleCameraPress,
-    },
-    {
-      icon: <DetailsIcon />,
-      label: t(m.detailsButton),
-      onPress: () => {},
-    },
-  ];
 
   const handleDiscard = () => {
     closeSheet();
@@ -96,18 +71,15 @@ export const SaveTrackScreen = () => {
 
   return (
     <>
-      <SafeAreaView style={styles.container}>
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={styles.scrollViewContent}>
-          <View style={styles.titleWrapper}>
-            <TrackIcon style={styles.icon} />
-            <Text style={styles.titleText}>{t(m.newTitle)}</Text>
-          </View>
-          <TrackDescriptionField />
-        </ScrollView>
-        <BottomSheet items={bottomSheetItems} />
-      </SafeAreaView>
+      <Editor
+        photos={[]}
+        presetName={'Track'}
+        notesComponent={<TrackDescriptionField />}
+        PresetIcon={<TrackIcon style={styles.icon} />}
+        actionsRow={<ActionsRow />}
+        isTracking={isTracking}
+      />
+
       <BottomSheetModal ref={sheetRef} isOpen={isOpen}>
         <BottomSheetModalContent
           buttonConfigs={[
@@ -135,26 +107,6 @@ export const SaveTrackScreen = () => {
 
 const styles = StyleSheet.create({
   icon: {width: 30, height: 30},
-  titleText: {fontSize: 20, fontWeight: '700'},
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    alignContent: 'stretch',
-  },
-  titleWrapper: {
-    padding: 10,
-    marginTop: 20,
-    borderRadius: 6,
-    borderWidth: 1,
-    borderColor: '#EDEDED',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  scrollViewContent: {
-    paddingHorizontal: 20,
-    flexDirection: 'column',
-    alignContent: 'stretch',
-  },
 });
 
 export const m = defineMessages({

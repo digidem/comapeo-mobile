@@ -14,12 +14,14 @@ type PresetViewProps = {
   onPressPreset?: () => void;
   presetName: string;
   PresetIcon: React.ReactNode;
+  isTracking?: boolean;
 };
 
 export const PresetView = ({
   onPressPreset,
   presetName,
   PresetIcon,
+  isTracking = false,
 }: PresetViewProps) => {
   const {formatMessage} = useIntl();
   return (
@@ -31,7 +33,9 @@ export const PresetView = ({
         {PresetIcon}
         <Text style={styles.categoryName}>{presetName}</Text>
       </View>
-      <Text style={styles.changeButtonText}>{formatMessage(m.change)}</Text>
+      {!isTracking && (
+        <Text style={styles.changeButtonText}>{formatMessage(m.change)}</Text>
+      )}
     </TouchableOpacity>
   );
 };

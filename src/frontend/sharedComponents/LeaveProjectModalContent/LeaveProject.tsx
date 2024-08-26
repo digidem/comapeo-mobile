@@ -54,13 +54,15 @@ const m = defineMessages({
 
 type LeaveProjectProps = {
   inviteId: string;
-  closeSheet: () => void;
+  onCancel: () => void;
+  onSuccess: () => void;
   projectName?: string;
 };
 
 export const LeaveProject = ({
   inviteId,
-  closeSheet,
+  onCancel,
+  onSuccess,
   projectName,
 }: LeaveProjectProps) => {
   const {formatMessage} = useIntl();
@@ -81,7 +83,7 @@ export const LeaveProject = ({
       {inviteId},
       {
         onSuccess: () => {
-          closeSheet();
+          onSuccess();
           setCombinedLoading(false);
         },
         // This is commented out for now and issue created: https://github.com/digidem/comapeo-mobile/issues/525
@@ -121,8 +123,7 @@ export const LeaveProject = ({
             },
             {
               onPress: () => {
-                console.log('LEAVE PROJECT ON PRESS CLOSE');
-                closeSheet();
+                onCancel();
               },
               text: formatMessage(m.cancel),
               variation: 'outlined',

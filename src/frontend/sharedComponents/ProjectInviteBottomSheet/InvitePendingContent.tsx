@@ -77,7 +77,7 @@ export function InvitePendingContent({
         {
           variation: 'filled',
           onPress: () => {
-            if (allProjectsQuery.data!.length > 1) {
+            if (allProjectsQuery.data && allProjectsQuery.data.length > 1) {
               startConfirmationFlow();
               return;
             }

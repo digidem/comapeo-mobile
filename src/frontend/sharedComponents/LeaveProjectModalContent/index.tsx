@@ -3,11 +3,13 @@ import {AlreadyOnProject} from './AlreadyOnProject';
 import {LeaveProject} from './LeaveProject';
 
 export const LeaveProjectModalContent = ({
-  onClose,
+  onCancel,
+  onSuccess,
   inviteId,
   projectName,
 }: {
-  onClose: () => void;
+  onCancel: () => void;
+  onSuccess: () => void;
   inviteId: string;
   projectName?: string;
 }) => {
@@ -17,15 +19,16 @@ export const LeaveProjectModalContent = ({
 
   return display === 'AlreadyOnProj' ? (
     <AlreadyOnProject
-      moveToLeaveProjectModalContent={() => {
+      onProceed={() => {
         setDisplay('Leave');
       }}
-      closeSheet={onClose}
+      onCancel={onCancel}
       projectName={projectName}
     />
   ) : (
     <LeaveProject
-      closeSheet={onClose}
+      onCancel={onCancel}
+      onSuccess={onSuccess}
       inviteId={inviteId}
       projectName={projectName}
     />

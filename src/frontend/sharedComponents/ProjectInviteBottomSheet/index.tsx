@@ -6,7 +6,6 @@ import {BottomSheetModal, useBottomSheetModal} from '../BottomSheetModal';
 import {InviteBottomSheetContent} from './InviteBottomSheetContent';
 import {LeaveProjectModalContent} from '../LeaveProjectModalContent';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
-import {useDeviceName} from 'react-native-device-info';
 
 export const ProjectInviteBottomSheet = ({
   enabledForCurrentScreen,
@@ -41,84 +40,77 @@ export const ProjectInviteBottomSheet = ({
       )
     : undefined;
 
-  const {isOpen, openSheet} = inviteBottomSheet;
-
-  const device = useDeviceName();
-
   React.useEffect(() => {
-    if (showableInvite && !isOpen && enabledForCurrentScreen) {
-      console.log('OPENING');
-      openSheet();
+    if (
+      showableInvite &&
+      !inviteBottomSheet.isOpen &&
+      enabledForCurrentScreen
+    ) {
+      inviteBottomSheet.openSheet();
     }
-  }, [showableInvite, isOpen, openSheet, enabledForCurrentScreen]);
+  }, [showableInvite, inviteBottomSheet, enabledForCurrentScreen]);
 
-  console.log({
-    device,
-    showableInvite,
-    isOpen,
-  });
   return (
     <>
-      {showableInvite && (
-        <BottomSheetModalProvider>
-          <BottomSheetModal
-            ref={inviteBottomSheet.sheetRef}
-            isOpen={inviteBottomSheet.isOpen}
-            onDismiss={() => {}}>
+      <BottomSheetModalProvider>
+        <BottomSheetModal
+          ref={inviteBottomSheet.sheetRef}
+          isOpen={inviteBottomSheet.isOpen}>
+          {showableInvite ? (
             <InviteBottomSheetContent
               sessionInvite={showableInvite}
               startConfirmationFlow={() => {
                 inviteBottomSheet.closeSheet();
                 leaveProjectSheet.openSheet();
               }}
-              onAfterResponse={type => {
-                switch (type) {
-                  case 'dismiss':
-                  case 'accept': {
-                    setCurrentInviteId(undefined);
-                    inviteBottomSheet.closeSheet();
-                    break;
-                  }
-                  case 'reject': {
-                    const otherPendingInvites = sessionInvites
-                      .filter(i => i.invite.inviteId !== currentInviteId)
-                      .find(i => i.status === 'pending');
+              onAccept={() => {
+                setCurrentInviteId(undefined);
+                inviteBottomSheet.closeSheet();
+              }}
+              onDismiss={() => {
+                setCurrentInviteId(undefined);
+                inviteBottomSheet.closeSheet();
+              }}
+              onReject={() => {
+                setCurrentInviteId(undefined);
 
-                    if (!otherPendingInvites) {
-                      setCurrentInviteId(undefined);
-                      inviteBottomSheet.closeSheet();
-                      return;
-                    }
+                const otherPendingInvites = sessionInvites
+                  .filter(i => i.invite.inviteId !== currentInviteId)
+                  .find(i => i.status === 'pending');
 
-                    setCurrentInviteId(undefined);
-                    break;
-                  }
-                  default: {
-                    console.error(`Unknown response type ${type}`);
-                  }
+                if (!otherPendingInvites) {
+                  inviteBottomSheet.closeSheet();
                 }
               }}
             />
-          </BottomSheetModal>
-        </BottomSheetModalProvider>
-      )}
+          ) : (
+            <View style={{height: 100}} />
+          )}
+        </BottomSheetModal>
+      </BottomSheetModalProvider>
 
-      {showableInvite && (
-        <BottomSheetModalProvider>
-          <BottomSheetModal
-            fullScreen
-            ref={leaveProjectSheet.sheetRef}
-            isOpen={leaveProjectSheet.isOpen}>
+      <BottomSheetModalProvider>
+        <BottomSheetModal
+          fullScreen
+          ref={leaveProjectSheet.sheetRef}
+          isOpen={leaveProjectSheet.isOpen}>
+          {showableInvite ? (
             <LeaveProjectModalContent
-              onClose={() => {
+              onCancel={() => {
+                leaveProjectSheet.closeSheet();
+                inviteBottomSheet.openSheet();
+              }}
+              onSuccess={() => {
                 leaveProjectSheet.closeSheet();
               }}
               inviteId={showableInvite.invite.inviteId}
               projectName={showableInvite.invite.projectName}
             />
-          </BottomSheetModal>
-        </BottomSheetModalProvider>
-      )}
+          ) : (
+            <View style={{height: 100}} />
+          )}
+        </BottomSheetModal>
+      </BottomSheetModalProvider>
     </>
   );
 };

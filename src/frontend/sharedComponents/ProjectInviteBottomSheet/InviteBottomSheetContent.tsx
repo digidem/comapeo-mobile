@@ -6,15 +6,18 @@ import {SessionInvite} from '../../contexts/SessionInvitesContext';
 import {InviteAcceptedContent} from './InviteAcceptedContent';
 import {InviteCanceledContent} from './InviteCanceledContent';
 import {InvitePendingContent} from './InvitePendingContent';
-import {View} from 'react-native';
 
 export function InviteBottomSheetContent({
+  onAccept,
+  onDismiss,
+  onReject,
   sessionInvite,
-  onAfterResponse,
   startConfirmationFlow,
 }: {
+  onReject: () => void;
+  onDismiss: () => void;
+  onAccept: () => void;
   sessionInvite: SessionInvite;
-  onAfterResponse: (response: 'accept' | 'reject' | 'dismiss') => void;
   startConfirmationFlow: () => void;
 }) {
   const {projectName, inviteId} = sessionInvite.invite;
@@ -24,9 +27,7 @@ export function InviteBottomSheetContent({
       <InvitePendingContent
         inviteId={inviteId}
         projectName={projectName}
-        onReject={() => {
-          onAfterResponse('reject');
-        }}
+        onReject={onReject}
         startConfirmationFlow={startConfirmationFlow}
       />
     );
@@ -38,13 +39,13 @@ export function InviteBottomSheetContent({
         projectName={projectName}
         onGoToMap={() => {
           if (rootNavigationRef.isReady()) {
-            onAfterResponse('accept');
+            onAccept();
             rootNavigationRef.navigate('Home', {screen: 'Map'});
           }
         }}
         onGoToSync={() => {
           if (rootNavigationRef.isReady()) {
-            onAfterResponse('accept');
+            onAccept();
             rootNavigationRef.dispatch(
               CommonActions.reset({
                 index: 1,
@@ -59,15 +60,9 @@ export function InviteBottomSheetContent({
 
   if (sessionInvite.removalReason === 'canceled') {
     return (
-      <InviteCanceledContent
-        projectName={projectName}
-        onClose={() => {
-          onAfterResponse('dismiss');
-        }}
-      />
+      <InviteCanceledContent projectName={projectName} onClose={onDismiss} />
     );
   }
 
-  // TODO: Needed to render a non-null child here to prevent a weird bottom sheet bug in the case of declining the invite
-  return <View style={{height: 100}} />;
+  return null;
 }

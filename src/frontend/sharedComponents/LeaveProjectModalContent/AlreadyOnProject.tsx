@@ -28,14 +28,14 @@ const m = defineMessages({
 });
 
 type AlreadyOnProjectProps = {
-  closeSheet: () => void;
-  moveToLeaveProjectModalContent: () => void;
+  onCancel: () => void;
+  onProceed: () => void;
   projectName?: string;
 };
 
 export const AlreadyOnProject = ({
-  closeSheet,
-  moveToLeaveProjectModalContent,
+  onCancel,
+  onProceed,
   projectName,
 }: AlreadyOnProjectProps) => {
   const {formatMessage} = useIntl();
@@ -47,15 +47,12 @@ export const AlreadyOnProject = ({
           variation: 'filled',
           dangerous: true,
           text: formatMessage(m.leaveProj),
-          onPress: moveToLeaveProjectModalContent,
+          onPress: onProceed,
         },
         {
           variation: 'outlined',
           text: formatMessage(m.goBack),
-          onPress: () => {
-            console.log('ALREADY ON PROJECT CLOSE');
-            closeSheet();
-          },
+          onPress: onCancel,
         },
       ]}
       icon={<ErrorIcon />}

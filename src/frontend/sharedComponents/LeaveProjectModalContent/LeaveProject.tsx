@@ -120,7 +120,10 @@ export const LeaveProject = ({
               dangerous: true,
             },
             {
-              onPress: closeSheet,
+              onPress: () => {
+                console.log('LEAVE PROJECT ON PRESS CLOSE');
+                closeSheet();
+              },
               text: formatMessage(m.cancel),
               variation: 'outlined',
             },

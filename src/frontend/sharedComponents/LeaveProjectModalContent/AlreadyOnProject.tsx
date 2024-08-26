@@ -52,7 +52,10 @@ export const AlreadyOnProject = ({
         {
           variation: 'outlined',
           text: formatMessage(m.goBack),
-          onPress: closeSheet,
+          onPress: () => {
+            console.log('ALREADY ON PROJECT CLOSE');
+            closeSheet();
+          },
         },
       ]}
       icon={<ErrorIcon />}

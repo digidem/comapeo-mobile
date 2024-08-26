@@ -149,11 +149,9 @@ class SyncStore {
     if (dataSyncWasEnabled !== state.data.isSyncEnabled) {
       this.#perDeviceMaxSyncCount.clear();
     } else {
-      const connectedDevices = Object.keys(state.remoteDeviceSyncState);
-
       // Remove devices from #perDeviceMaxSyncCount that are no longer found in the new sync state
       for (const deviceId of this.#perDeviceMaxSyncCount.keys()) {
-        if (!connectedDevices.includes(deviceId)) {
+        if (!Object.hasOwn(state.remoteDeviceSyncState, deviceId)) {
           this.#perDeviceMaxSyncCount.delete(deviceId);
         }
       }

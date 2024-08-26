@@ -281,7 +281,20 @@ export const ProjectSyncDisplay = ({
       break;
     }
     case 'complete-full': {
-      dockContent = (
+      dockContent = syncState.data.isSyncEnabled ? (
+        <Button
+          fullWidth
+          variant="outlined"
+          onPress={() => {
+            // TODO: Catch/surface error
+            projectApi.$sync.stop();
+          }}>
+          <View style={styles.buttonContentContainer}>
+            <StopIcon size={20} color={BLACK} />
+            <Text style={styles.buttonTextSecondary}>{t(m.stop)}</Text>
+          </View>
+        </Button>
+      ) : (
         <Button variant="text" disabled onPress={() => {}}>
           <Text style={styles.buttonTextSecondary}>{t(m.allCaughtUp)}</Text>
         </Button>

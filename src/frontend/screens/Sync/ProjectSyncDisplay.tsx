@@ -14,6 +14,7 @@ import {
   useDataSyncProgress,
 } from '../../hooks/useSyncState';
 import ObservationsProjectImage from '../../images/ObservationsProject.svg';
+import {ExhaustivenessError} from '../../lib/ExhaustivenessError';
 import {
   BLACK,
   COMAPEO_BLUE,
@@ -332,8 +333,10 @@ export const ProjectSyncDisplay = ({
       break;
     }
     default: {
-      // @ts-expect-error
-      throw new Error(`Invalid status: ${syncStage.status}`);
+      throw new ExhaustivenessError(
+        // @ts-expect-error
+        syncState.status,
+      );
     }
   }
 
@@ -391,8 +394,10 @@ function SyncProgress({
       break;
     }
     default: {
-      // @ts-expect-error
-      throw new Error(`Unknown sync status ${stage.name}`);
+      throw new ExhaustivenessError(
+        // @ts-expect-error
+        stage.name,
+      );
     }
   }
 

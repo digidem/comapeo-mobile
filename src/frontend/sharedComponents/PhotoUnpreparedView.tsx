@@ -26,7 +26,6 @@ const PhotoUnpreparedComponent = ({
   const {
     data: attachmentUrl,
     isError,
-    error,
     isPending,
   } = useAttachmentUrlQuery(photo, variant);
 

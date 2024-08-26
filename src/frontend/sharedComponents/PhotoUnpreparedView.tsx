@@ -2,31 +2,34 @@ import * as React from 'react';
 import {StyleSheet, Image, Pressable} from 'react-native';
 
 import {AlertIcon} from './icons';
-import type {ViewStyleProp} from '../sharedTypes';
+import type {PhotoVariant, ViewStyleProp} from '../sharedTypes';
+import {useAttachmentUrlQuery} from '../hooks/server/media';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {BLACK, WHITE} from '../lib/styles.ts';
+import {SavedPhoto} from '../contexts/PhotoPromiseContext/types.ts';
 
 type Props = {
+  photo: SavedPhoto;
+  variant: PhotoVariant;
   style?: ViewStyleProp;
   resizeMode?: 'cover' | 'contain' | 'stretch' | 'center';
   onPress?: () => void;
-  attachmentUrl?: string;
-  isError?: boolean;
-  isPending?: boolean;
 };
 
 const PhotoUnpreparedComponent = ({
+  photo,
+  variant,
   resizeMode = 'contain',
   style,
   onPress,
-  attachmentUrl,
-  isError,
-  isPending,
-}: Props & {
-  attachmentUrl?: string;
-  isError?: boolean;
-  isPending?: boolean;
-}) => {
+}: Props) => {
+  const {
+    data: attachmentUrl,
+    isError,
+    error,
+    isPending,
+  } = useAttachmentUrlQuery(photo, variant);
+
   return (
     <Pressable onPress={onPress} style={[styles.container, style]}>
       {isPending ? (
@@ -35,7 +38,7 @@ const PhotoUnpreparedComponent = ({
         <AlertIcon size={96} />
       ) : (
         <Image
-          src={attachmentUrl}
+          src={attachmentUrl.url}
           style={styles.image}
           resizeMethod="scale"
           resizeMode={resizeMode}

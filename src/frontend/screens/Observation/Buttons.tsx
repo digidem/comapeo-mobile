@@ -59,7 +59,7 @@ const m = defineMessages({
   shareMessage: {
     id: 'screens.Observation.shareMessage',
     defaultMessage:
-      'Mapeo Alert — _*{category_name}*_\n' +
+      'CoMapeo Alert — _*{category_name}*_\n' +
       '{date, date, full} {time, time, long}\n' +
       '{coordinates}',
     description: 'Message that will be shared along with image',
@@ -102,34 +102,56 @@ export const ButtonFields = ({
   }
 
   async function handlePressShare() {
-    const {lon, lat} = observation;
+    const {lon, lat, attachments} = observation;
     setShareButtonLoading(true);
-    const needsRefetch = attachmentUrlQueries.some(query => !query.data);
-    let urls;
-    if (needsRefetch) {
-      const urlsQueries = await Promise.all(
-        attachmentUrlQueries.map(q => q.refetch()),
-      );
-      urls = urlsQueries.map(query => query.data!.url);
-    } else {
-      urls = attachmentUrlQueries.map(query => query.data!.url);
-    }
-    const base64Urls = await Promise.all(
-      urls.map(url => convertUrlToBase64(url)),
-    );
+    const getValidUrls = (queries: typeof attachmentUrlQueries) => {
+      const urls = queries
+        .map(query => query.data?.url)
+        .filter((url): url is string => url !== undefined && url !== null);
 
-    Share.open({
-      title: base64Urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),
-      urls: base64Urls,
-      message: t(m.shareMessage, {
-        category_name: preset.name,
-        date: Date.now(),
-        time: Date.now(),
-        coordinates: lon && lat ? formatCoords({lon, lat, format}) : '',
-      }),
-    })
-      .catch(() => {})
-      .finally(() => setShareButtonLoading(false));
+      return urls;
+    };
+
+    let urls: string[] = [];
+
+    if (attachments.length > 0) {
+      if (attachmentUrlQueries.some(query => !query.data)) {
+        const urlsQueries = await Promise.all(
+          attachmentUrlQueries.map(q => q.refetch()),
+        );
+        urls = getValidUrls(urlsQueries);
+      } else {
+        urls = getValidUrls(attachmentUrlQueries);
+      }
+
+      if (urls.length === 0) {
+        setShareButtonLoading(false);
+        Alert.alert('Error', 'Unable to share this observation.');
+        return;
+      }
+    }
+
+    try {
+      const base64Urls = await Promise.all(
+        urls.map(url => convertUrlToBase64(url as string)),
+      );
+
+      await Share.open({
+        title:
+          base64Urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),
+        urls: base64Urls,
+        message: t(m.shareMessage, {
+          category_name: preset.name,
+          date: Date.now(),
+          time: Date.now(),
+          coordinates: lon && lat ? formatCoords({lon, lat, format}) : '',
+        }),
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setShareButtonLoading(false);
+    }
   }
 
   return (

@@ -43,7 +43,7 @@ export function useCreateProject() {
 
   return useMutation({
     mutationKey: [CREATE_PROJECT_KEY],
-    mutationFn: (opts?: {name?: string; configPath?: string}) => {
+    mutationFn: (opts?: Parameters<typeof api.createProject>[0]) => {
       if (opts) {
         return api.createProject(opts);
       } else {

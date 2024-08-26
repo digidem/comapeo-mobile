@@ -1178,38 +1178,53 @@
   "screens.Sync.NoWifiDisplay.title": {
     "message": "No WiFi"
   },
-  "screens.Sync.ProjectSyncDisplay.buttonTextDone": {
-    "message": "You're all caught up"
+  "screens.Sync.ProjectSyncDisplay.allCaughtUp": {
+    "message": "You're all caught up!"
   },
-  "screens.Sync.ProjectSyncDisplay.buttonTextStop": {
+  "screens.Sync.ProjectSyncDisplay.allDataSynced": {
+    "message": "All data synced"
+  },
+  "screens.Sync.ProjectSyncDisplay.devicesAvailableToSync": {
+    "message": "{count} {count, plural, one {device} other {devices}} available"
+  },
+  "screens.Sync.ProjectSyncDisplay.devicesFound": {
+    "message": "{count} {count, plural, one {Device} other {Devices}} found"
+  },
+  "screens.Sync.ProjectSyncDisplay.noDevicesAvailableToSync": {
+    "message": "No devices available to sync"
+  },
+  "screens.Sync.ProjectSyncDisplay.progressLabelComplete": {
+    "message": "{count} out of {count} {count, plural, one {device} other {devices}}"
+  },
+  "screens.Sync.ProjectSyncDisplay.progressLabelSyncing": {
+    "message": "Syncing…"
+  },
+  "screens.Sync.ProjectSyncDisplay.progressLabelWaiting": {
+    "message": "Waiting…"
+  },
+  "screens.Sync.ProjectSyncDisplay.progressLabelWithDeviceCount": {
+    "message": "{active} out of {total} {total, plural, one {device} other {devices}}…"
+  },
+  "screens.Sync.ProjectSyncDisplay.startSync": {
+    "message": "Start Sync"
+  },
+  "screens.Sync.ProjectSyncDisplay.stop": {
     "message": "Stop"
-  },
-  "screens.Sync.ProjectSyncDisplay.buttonTextSync": {
-    "message": "Sync"
-  },
-  "screens.Sync.ProjectSyncDisplay.deviceName": {
-    "message": "Your device name is {name}"
-  },
-  "screens.Sync.ProjectSyncDisplay.devicesNearby": {
-    "message": "{count} {count, plural, one {device} other {devices}} nearby/connected"
-  },
-  "screens.Sync.ProjectSyncDisplay.devicesSyncing": {
-    "message": "Syncing with {count} {count, plural, one {Device} other {Devices}}"
-  },
-  "screens.Sync.ProjectSyncDisplay.devicesWaitingToSync": {
-    "message": "{count} {count, plural, one {Device} other {Devices}} Waiting to Sync with you"
-  },
-  "screens.Sync.ProjectSyncDisplay.noDevicesSyncing": {
-    "message": "No Devices are Syncing"
   },
   "screens.Sync.ProjectSyncDisplay.syncProgress": {
     "message": "{value}%"
   },
-  "screens.Sync.ProjectSyncDisplay.syncing": {
-    "message": "Syncing…"
+  "screens.Sync.ProjectSyncDisplay.syncingCompleteButWaitingForOthers": {
+    "message": "Complete! Waiting for {count} {count, plural, one {device} other {devices}}"
   },
-  "screens.Sync.ProjectSyncDisplay.upToDate": {
-    "message": "Up to Date! No data to Sync"
+  "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
+    "message": "Complete! You're up to date"
+  },
+  "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
+    "message": "Syncing with {active} out of {total} {total, plural, one {device} other {devices}}"
+  },
+  "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
+    "message": "Waiting for devices"
   },
   "screens.Track.ObservationList.observations": {
     "message": "Observations"

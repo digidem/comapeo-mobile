@@ -1,11 +1,8 @@
-import {MapeoProjectApi} from '@mapeo/ipc';
 import {useCallback, useSyncExternalStore} from 'react';
+import {MapeoProjectApi} from '@mapeo/ipc';
 
 import {useActiveProject} from '../contexts/ActiveProjectContext';
-
-export type SyncState = Awaited<
-  ReturnType<MapeoProjectApi['$sync']['getState']>
->;
+import {getDataSyncCountForDevice, type SyncState} from '../lib/sync';
 
 const projectSyncStoreMap = new WeakMap<MapeoProjectApi, SyncStore>();
 
@@ -197,31 +194,4 @@ function clamp(value: number, min: number, max: number): number {
 
 function identity(state: SyncState | undefined) {
   return state;
-}
-
-function getDataSyncCountForDevice(
-  syncStateForDevice: SyncState['remoteDeviceSyncState'][string],
-) {
-  const {data} = syncStateForDevice;
-  return data.want + data.wanted;
-}
-
-export function getConnectedPeersCount(
-  deviceSyncState: SyncState['remoteDeviceSyncState'],
-): number {
-  return Object.keys(deviceSyncState).length;
-}
-
-export function getSyncingPeersCount(
-  deviceSyncState: SyncState['remoteDeviceSyncState'],
-): number {
-  let result = 0;
-
-  for (const {data} of Object.values(deviceSyncState)) {
-    if (data.isSyncEnabled) {
-      result += 1;
-    }
-  }
-
-  return result;
 }

@@ -7,12 +7,7 @@ import {Bar as ProgressBar} from 'react-native-progress';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {OBSERVATION_KEY} from '../../hooks/server/observations';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {
-  SyncState,
-  getConnectedPeersCount,
-  getSyncingPeersCount,
-  useDataSyncProgress,
-} from '../../hooks/useSyncState';
+import {useDataSyncProgress} from '../../hooks/useSyncState';
 import ObservationsProjectImage from '../../images/ObservationsProject.svg';
 import {ExhaustivenessError} from '../../lib/ExhaustivenessError';
 import {
@@ -24,50 +19,22 @@ import {
   MEDIUM_GREY,
   WHITE,
 } from '../../lib/styles';
+import {
+  deriveSyncStage,
+  getConnectedPeersCount,
+  getSyncingPeersCount,
+  type SyncStage,
+  type SyncState,
+} from '../../lib/sync';
 import {Button} from '../../sharedComponents/Button';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
-import {Text} from '../../sharedComponents/Text';
 import {
   DoneIcon,
   StopIcon,
   SyncIcon,
   WifiIcon,
 } from '../../sharedComponents/icons';
-
-type SyncStage =
-  | {
-      // Sync has not been enabled on our device
-      name: 'idle';
-      connectedPeersCount: number;
-      syncingPeersCount: number;
-    }
-  | {
-      // Sync has been enabled on our device but none of the other connected devices
-      name: 'waiting';
-      connectedPeersCount: number;
-      syncingPeersCount: number;
-    }
-  | {
-      // Sync is occurring between us and some other device(s)
-      name: 'syncing';
-      connectedPeersCount: number;
-      syncingPeersCount: number;
-      progress: number;
-    }
-  | {
-      // Sync has finished with some - but not all - connected devices
-      name: 'complete-partial';
-      connectedPeersCount: number;
-      syncingPeersCount: number;
-      progress: number;
-    }
-  | {
-      // Sync has finished with all connected devices
-      name: 'complete-full';
-      connectedPeersCount: number;
-      syncingPeersCount: number;
-      progress: number;
-    };
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {Text} from '../../sharedComponents/Text';
 
 const m = defineMessages({
   devicesFound: {
@@ -438,71 +405,6 @@ function SyncProgress({
       )}
     </View>
   );
-}
-
-function deriveSyncStage({
-  progress,
-  connectedPeersCount,
-  syncingPeersCount,
-  dataSyncEnabled,
-}: {
-  progress: number | null;
-  connectedPeersCount: number;
-  syncingPeersCount: number;
-  dataSyncEnabled: boolean;
-}): SyncStage {
-  if (dataSyncEnabled) {
-    if (progress === null || connectedPeersCount === 0) {
-      return {
-        name: 'waiting',
-        connectedPeersCount,
-        syncingPeersCount,
-      };
-    }
-
-    if (progress === 1) {
-      if (connectedPeersCount === syncingPeersCount) {
-        return {
-          name: 'complete-full',
-          syncingPeersCount,
-          connectedPeersCount,
-          progress,
-        };
-      } else {
-        return {
-          name: 'complete-partial',
-          syncingPeersCount,
-          connectedPeersCount,
-          progress,
-        };
-      }
-    } else {
-      return {
-        name: 'syncing',
-        connectedPeersCount,
-        syncingPeersCount,
-        progress,
-      };
-    }
-  } else {
-    if (progress === 1) {
-      return {
-        name:
-          connectedPeersCount === syncingPeersCount
-            ? 'complete-full'
-            : 'complete-partial',
-        connectedPeersCount,
-        syncingPeersCount,
-        progress,
-      };
-    } else {
-      return {
-        name: 'idle',
-        connectedPeersCount,
-        syncingPeersCount,
-      };
-    }
-  }
 }
 
 const styles = StyleSheet.create({

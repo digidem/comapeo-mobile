@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useFocusEffect} from '@react-navigation/native';
 import {useQueryClient} from '@tanstack/react-query';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
@@ -140,27 +141,38 @@ export const ProjectSyncDisplay = ({
     dataSyncEnabled: syncState.data.isSyncEnabled,
   });
 
-  // stops sync when user leaves sync screen.
-  // The api allows us to continue syncing even if the user is not on the sync screen, but for simplicity we are only allowing sync while on the sync screen.
-  // In the future we can easily enable background sync, there are just some UI questions that need to answered before we do that.
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener('beforeRemove', () => {
-      projectApi.$sync.stop();
-      queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY, projectId]});
-    });
+  // Unset sync autostop when screen mounts
+  useFocusEffect(
+    React.useCallback(() => {
+      projectApi.$sync.setAutostopDataSyncTimeout(null);
+    }, [projectApi]),
+  );
 
-    return unsubscribe;
-  }, [navigation, projectApi, queryClient, projectId]);
+  const shouldAutostopSyncWhenLeavingScreen =
+    syncState.data.isSyncEnabled && syncStage.name === 'complete-full';
 
-  // TODO: Autostop data sync upon leaving screen while in specific state
-  // const shouldAutostopSyncWhenLeavingScreen = syncState.data.isSyncEnabled && syncStage.name === 'complete-full';
-  // React.useEffect(() => {
-  //   const unsubscribe = navigation.addListener('beforeRemove', () => {
-  //     projectApi.$sync.setAutostopDataSyncTimeout(30_000);
-  //   });
+  // Set up listener for autostopping sync (if applicable) and invalidating queries when navigating away from screen
+  useFocusEffect(
+    React.useCallback(() => {
+      const unsubscribe = navigation.addListener('beforeRemove', () => {
+        if (shouldAutostopSyncWhenLeavingScreen) {
+          projectApi.$sync.setAutostopDataSyncTimeout(30_000);
+        }
+        // TODO: All queries associated with project should be invalidated
+        queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY, projectId]});
+      });
 
-  //   return unsubscribe;
-  // }, [navigation, projectApi, shouldAutostopSyncWhenLeavingScreen]);
+      return () => {
+        unsubscribe();
+      };
+    }, [
+      navigation,
+      projectApi,
+      queryClient,
+      projectId,
+      shouldAutostopSyncWhenLeavingScreen,
+    ]),
+  );
 
   let dockContent: React.ReactNode;
   let syncInfoContent: React.ReactNode;

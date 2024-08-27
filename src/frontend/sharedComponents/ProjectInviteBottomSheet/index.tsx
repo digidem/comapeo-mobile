@@ -84,6 +84,7 @@ export const ProjectInviteBottomSheet = ({
               onReject={seeNextInviteOrClose}
             />
           ) : (
+            // Unfortunately needed in order to avoid rendering issues with the bottom sheet
             <View style={{height: 100}} />
           )}
         </BottomSheetModal>
@@ -108,6 +109,7 @@ export const ProjectInviteBottomSheet = ({
               projectName={showableInvite.invite.projectName}
             />
           ) : (
+            // Unfortunately needed in order to avoid rendering issues with the bottom sheet
             <View style={{height: 100}} />
           )}
         </BottomSheetModal>

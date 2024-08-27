@@ -22,7 +22,7 @@ export const formats: CustomFormats = {
 const DEFAULT_RICH_TEXT_MAPPINGS: NonNullable<
   React.ComponentProps<typeof ReactIntlProvider>['defaultRichTextElements']
 > = {
-  bold: chunk => <Text style={styles.bold}>{chunk}</Text>,
+  bold: chunk => <Text style={styles.richTextBold}>{chunk}</Text>,
 };
 
 export const IntlProvider = ({children}: {children: React.ReactNode}) => {
@@ -54,7 +54,8 @@ function onError(e: Error) {
 }
 
 const styles = StyleSheet.create({
-  bold: {
+  richTextBold: {
+    fontSize: undefined,
     fontWeight: 'bold',
   },
 });

@@ -9,7 +9,7 @@ import {SyncIcon} from '../../sharedComponents/icons/SyncIconCircle';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {useCreatedByToDeviceId} from '../../hooks/server/projects.ts';
+import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
 
 export const ObservationHeaderRight = ({
   observationId,
@@ -18,7 +18,9 @@ export const ObservationHeaderRight = ({
 }) => {
   const observationWithPreset = useObservationWithPreset(observationId);
   const {data: createdByDeviceId, isPending: isCreatedByDeviceIdPending} =
-    useCreatedByToDeviceId(observationWithPreset.observation.createdBy);
+    useOriginalVersionIdToDeviceId(
+      observationWithPreset.observation.originalVersionId,
+    );
 
   const {data: deviceInfo, isPending: isDeviceInfoPending} = useDeviceInfo();
   const navigation = useNavigationFromRoot();

@@ -12,7 +12,9 @@ import {usePresetsQuery} from '../../server/presets';
 import {matchPreset} from '../../../lib/utils';
 
 const emptyObservation: ClientGeneratedObservation = {
-  metadata: {},
+  lat: 0,
+  lon: 0,
+  metadata: {manualLocation: false},
   tags: {
     notes: '',
   },
@@ -121,9 +123,8 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
       if (!prevValue) {
         set({
           value: {
-            tags: tags,
-            metadata: {},
-            attachments: [],
+            ...emptyObservation,
+            tags,
           },
         });
         return;

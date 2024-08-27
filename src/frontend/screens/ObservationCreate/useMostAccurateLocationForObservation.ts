@@ -20,13 +20,13 @@ export function useMostAccurateLocationForObservation() {
   const locationServicesTurnedOff =
     providerStatus && !providerStatus.locationServicesEnabled;
 
-  const isLocationManuallySet = !!value?.metadata.manualLocation;
+  const isLocationManuallySet = !!value?.metadata?.manualLocation;
 
   // If location services are turned off (and the observation location is not manually set),
   // we want to immediately update the draft so that this hook does not return a stale position
   if (
     locationServicesTurnedOff &&
-    value?.metadata.position &&
+    value?.metadata?.position &&
     !isLocationManuallySet
   ) {
     updateObservationPosition({position: undefined, manualLocation: false});
@@ -72,7 +72,7 @@ export function useMostAccurateLocationForObservation() {
     }, [permissions, updateObservationPosition, isLocationManuallySet]),
   );
 
-  return value?.metadata.position;
+  return value?.metadata?.position;
 }
 
 function debounceLocation() {

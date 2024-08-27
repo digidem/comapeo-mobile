@@ -8,7 +8,8 @@ export const PROJECT_SETTINGS_KEY = 'project_settings';
 export const CREATE_PROJECT_KEY = 'create_project';
 export const PROJECT_KEY = 'project';
 export const PROJECT_MEMBERS_KEY = 'project_members';
-export const CREATED_BY_TO_DEVICE_ID_KEY = 'createdByToDeviceId';
+export const ORIGINAL_VERSION_ID_TO_DEVICE_ID_KEY =
+  'originalVersionIdToDeviceId';
 
 export function useProject(projectId?: string) {
   const api = useApi();
@@ -82,13 +83,17 @@ export function useProjectSettings() {
   });
 }
 
-export const useCreatedByToDeviceId = (createdBy: string) => {
+export const useOriginalVersionIdToDeviceId = (originalVersionId: string) => {
   const {projectId, projectApi} = useActiveProject();
 
   return useQuery({
-    queryKey: [CREATED_BY_TO_DEVICE_ID_KEY, projectId, createdBy],
+    queryKey: [
+      ORIGINAL_VERSION_ID_TO_DEVICE_ID_KEY,
+      projectId,
+      originalVersionId,
+    ],
     queryFn: async () => {
-      return await projectApi.$createdByToDeviceId(createdBy);
+      return await projectApi.$originalVersionIdToDeviceId(originalVersionId);
     },
   });
 };

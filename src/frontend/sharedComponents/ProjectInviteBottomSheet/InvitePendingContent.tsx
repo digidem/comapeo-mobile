@@ -80,6 +80,7 @@ export function InvitePendingContent({
         {
           variation: 'filled',
           onPress: () => {
+            // TODO: Do proper check that we are not on initial project
             if (allProjectsQuery.data && allProjectsQuery.data.length > 1) {
               startConfirmationFlow();
               return;

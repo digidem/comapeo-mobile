@@ -126,7 +126,7 @@ export const ButtonFields = ({
 
     try {
       const base64Urls = await Promise.all(
-        urls.map(url => convertUrlToBase64(url as string)),
+        urls.map(url => convertUrlToBase64(url)),
       );
 
       await Share.open({

@@ -13,6 +13,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import {convertUrlToBase64} from '../../utils/base64.ts';
 import {useState} from 'react';
 import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings.ts';
+import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
   delete: {
@@ -81,7 +82,6 @@ export const ButtonFields = ({
   const attachmentUrlQueries = useAttachmentUrlQueries(
     observation.attachments,
     'original',
-    false,
   );
   const [isShareButtonLoading, setShareButtonLoading] = useState(false);
 
@@ -115,14 +115,7 @@ export const ButtonFields = ({
     let urls: string[] = [];
 
     if (attachments.length > 0) {
-      if (attachmentUrlQueries.some(query => !query.data)) {
-        const urlsQueries = await Promise.all(
-          attachmentUrlQueries.map(q => q.refetch()),
-        );
-        urls = getValidUrls(urlsQueries);
-      } else {
-        urls = getValidUrls(attachmentUrlQueries);
-      }
+      urls = getValidUrls(attachmentUrlQueries);
 
       if (urls.length === 0) {
         setShareButtonLoading(false);
@@ -144,11 +137,14 @@ export const ButtonFields = ({
           category_name: preset.name,
           date: Date.now(),
           time: Date.now(),
-          coordinates: lon && lat ? formatCoords({lon, lat, format}) : '',
+          coordinates:
+            typeof lon === 'number' && typeof lat === 'number'
+              ? formatCoords({lon, lat, format})
+              : '',
         }),
       });
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      Sentry.captureException(err);
     } finally {
       setShareButtonLoading(false);
     }

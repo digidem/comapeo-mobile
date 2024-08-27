@@ -7,6 +7,7 @@ import InviteIcon from '../../images/AddPersonCircle.svg';
 import {LIGHT_GREY} from '../../lib/styles';
 import {BottomSheetModalContent} from '../BottomSheetModal';
 import {useAllProjects} from '../../hooks/server/projects';
+import {InviteErrorOccurredContent} from './InviteErrorOccurredContent';
 
 const m = defineMessages({
   declineInvite: {
@@ -19,23 +20,25 @@ const m = defineMessages({
   },
   joinProject: {
     id: 'sharedComponents.ProjectInviteBottomSheet.PendingInviteContent.joinProject',
-    defaultMessage: 'Join Project {projectName}',
+    defaultMessage: 'Join {projectName}',
   },
   invitedToJoin: {
     id: 'sharedComponents.ProjectInviteBottomSheet.PendingInviteContent.invitedToJoin',
-    defaultMessage: "You've been invited to join {projectName}",
+    defaultMessage: "You've been invited to join <bold>{projectName}</bold>",
   },
 });
 
 export function InvitePendingContent({
-  projectName,
   inviteId,
+  onClose,
   onReject,
+  projectName,
   startConfirmationFlow,
 }: {
-  projectName: string;
   inviteId: string;
+  onClose: () => void;
   onReject: () => void;
+  projectName: string;
   startConfirmationFlow: () => void;
 }) {
   const {formatMessage: t} = useIntl();
@@ -51,9 +54,9 @@ export function InvitePendingContent({
     accept.isPending ||
     reject.isPending;
 
-  // TODO: Display error state
-
-  return (
+  return error ? (
+    <InviteErrorOccurredContent projectName={projectName} onClose={onClose} />
+  ) : (
     <BottomSheetModalContent
       loading={isLoading}
       buttonConfigs={[

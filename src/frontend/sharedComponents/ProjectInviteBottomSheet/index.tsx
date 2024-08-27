@@ -84,7 +84,7 @@ export const ProjectInviteBottomSheet = ({
               onReject={seeNextInviteOrClose}
             />
           ) : (
-            // Unfortunately needed in order to avoid rendering issues with the bottom sheet
+            // Using null can sometimes cause a rendering issue with bottom sheet modal
             <View style={{height: 100}} />
           )}
         </BottomSheetModal>
@@ -109,7 +109,7 @@ export const ProjectInviteBottomSheet = ({
               projectName={showableInvite.invite.projectName}
             />
           ) : (
-            // Unfortunately needed in order to avoid rendering issues with the bottom sheet
+            // Using null can sometimes cause a rendering issue with bottom sheet modal
             <View style={{height: 100}} />
           )}
         </BottomSheetModal>

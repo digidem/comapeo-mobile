@@ -1285,13 +1285,22 @@
     "message": "You have joined <bold>{projectName}</bold>"
   },
   "sharedComponents.ProjectInviteBottomSheet.InviteCanceledContent.canceled": {
-    "message": "Invite Canceled"
+    "message": "Invite Canceled!"
   },
   "sharedComponents.ProjectInviteBottomSheet.InviteCanceledContent.close": {
     "message": "Close"
   },
   "sharedComponents.ProjectInviteBottomSheet.InviteCanceledContent.projectInviteCanceled": {
-    "message": "Your invitation to {projectName} has been canceled."
+    "message": "Your invitation to <bold>{projectName}</bold> has been canceled."
+  },
+  "sharedComponents.ProjectInviteBottomSheet.InviteErrorOccurredContent.close": {
+    "message": "Close"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.InviteErrorOccurredContent.couldNotJoin": {
+    "message": "Could not join <bold>{projectName}</bold> due to an error"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.InviteErrorOccurredContent.errorOccurred": {
+    "message": "Invite Error Occurred!"
   },
   "sharedComponents.ProjectInviteBottomSheet.PendingInviteContent.acceptInvite": {
     "message": "Accept Invite"
@@ -1300,10 +1309,10 @@
     "message": "Decline Invite"
   },
   "sharedComponents.ProjectInviteBottomSheet.PendingInviteContent.invitedToJoin": {
-    "message": "You've been invited to join {projectName}"
+    "message": "You've been invited to join <bold>{projectName}</bold>"
   },
   "sharedComponents.ProjectInviteBottomSheet.PendingInviteContent.joinProject": {
-    "message": "Join Project {projectName}"
+    "message": "Join {projectName}"
   },
   "sharedComponents.RoleWithIcon.coordinator": {
     "message": "Coordinator"

@@ -19,7 +19,7 @@ const m = defineMessages({
   },
   youHaveJoined: {
     id: 'sharedComponents.ProjectInviteBottomSheet.InviteAcceptedContent.youHaveJoined',
-    defaultMessage: 'You have joined {projectName}',
+    defaultMessage: 'You have joined <bold>{projectName}</bold>',
   },
 });
 

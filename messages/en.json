@@ -1282,7 +1282,7 @@
     "message": "Success"
   },
   "sharedComponents.ProjectInviteBottomSheet.InviteAcceptedContent.youHaveJoined": {
-    "message": "You have joined {projectName}"
+    "message": "You have joined <bold>{projectName}</bold>"
   },
   "sharedComponents.ProjectInviteBottomSheet.InviteCanceledContent.canceled": {
     "message": "Invite Canceled"

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {View} from 'react-native';
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 
 import {useSessionInvites} from '../../contexts/SessionInvitesContext';
 import {BottomSheetModal, useBottomSheetModal} from '../BottomSheetModal';
 import {InviteBottomSheetContent} from './InviteBottomSheetContent';
 import {LeaveProjectModalContent} from '../LeaveProjectModalContent';
-import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 
 export const ProjectInviteBottomSheet = ({
   enabledForCurrentScreen,
@@ -40,6 +40,19 @@ export const ProjectInviteBottomSheet = ({
       )
     : undefined;
 
+  const seeNextInviteOrClose = () => {
+    const nextPendingInvite = sessionInvites
+      .filter(i => i.invite.inviteId !== currentInviteId)
+      .find(i => i.status === 'pending');
+
+    if (nextPendingInvite) {
+      setCurrentInviteId(nextPendingInvite.invite.inviteId);
+    } else {
+      setCurrentInviteId(undefined);
+      inviteBottomSheet.closeSheet();
+    }
+  };
+
   React.useEffect(() => {
     if (
       showableInvite &&
@@ -67,21 +80,8 @@ export const ProjectInviteBottomSheet = ({
                 setCurrentInviteId(undefined);
                 inviteBottomSheet.closeSheet();
               }}
-              onDismiss={() => {
-                setCurrentInviteId(undefined);
-                inviteBottomSheet.closeSheet();
-              }}
-              onReject={() => {
-                setCurrentInviteId(undefined);
-
-                const otherPendingInvites = sessionInvites
-                  .filter(i => i.invite.inviteId !== currentInviteId)
-                  .find(i => i.status === 'pending');
-
-                if (!otherPendingInvites) {
-                  inviteBottomSheet.closeSheet();
-                }
-              }}
+              onDismiss={seeNextInviteOrClose}
+              onReject={seeNextInviteOrClose}
             />
           ) : (
             <View style={{height: 100}} />
@@ -102,6 +102,7 @@ export const ProjectInviteBottomSheet = ({
               }}
               onSuccess={() => {
                 leaveProjectSheet.closeSheet();
+                inviteBottomSheet.openSheet();
               }}
               inviteId={showableInvite.invite.inviteId}
               projectName={showableInvite.invite.projectName}

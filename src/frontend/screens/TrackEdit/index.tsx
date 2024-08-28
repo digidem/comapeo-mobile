@@ -1,14 +1,13 @@
-import React, {useEffect} from 'react';
-import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
+import React, {useEffect, useCallback} from 'react';
+import {defineMessages, useIntl} from 'react-intl';
+import {useFocusEffect} from '@react-navigation/native';
 import {Editor} from '../../sharedComponents/Editor';
 import {TrackDescriptionField} from '../SaveTrack/TrackDescriptionField';
 import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
-import TrackIcon from '../../images/Track.svg';
 import {HeaderLeft} from './HeaderLeft';
 import {SaveButton} from '../../sharedComponents/SaveButton';
-import {useFocusEffect} from '@react-navigation/native';
+import TrackIcon from '../../images/Track.svg';
 import {useTrackQuery, useEditTrackMutation} from '../../hooks/server/track';
 
 export const m = defineMessages({
@@ -16,6 +15,11 @@ export const m = defineMessages({
     id: 'screens.TrackEdit.title',
     defaultMessage: 'Edit Track',
     description: 'Title for editing track screen',
+  },
+  presetTitle: {
+    id: 'screens.TrackEdit.track',
+    defaultMessage: 'Track',
+    description: 'Preset title for new track screen',
   },
 });
 
@@ -29,7 +33,6 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
       navigation.goBack();
     }
   }, [route, navigation]);
-
   const {trackId} = route.params as {trackId: string};
 
   const {data: track} = useTrackQuery(trackId);
@@ -39,24 +42,20 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
   const clearCurrentTrack = usePersistedTrack(state => state.clearCurrentTrack);
 
   useEffect(() => {
-    if (
-      track &&
-      track.tags.description &&
-      typeof track.tags.description === 'string'
-    ) {
-      setDescription(track.tags.description);
+    if (track && typeof track.tags.notes === 'string') {
+      setDescription(track.tags.notes);
     }
   }, [track, setDescription]);
 
-  const saveTrack = () => {
+  const saveTrack = useCallback(() => {
     if (!track) return;
 
     editTrackMutation.mutate(
       {
-        docId: track.docId,
+        versionId: track.versionId,
         updatedTrack: {
           ...track,
-          tags: {...track.tags, description},
+          tags: {...track.tags, notes: description},
         },
       },
       {
@@ -66,12 +65,12 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
         },
       },
     );
-  };
+  }, [track, description, editTrackMutation, clearCurrentTrack, navigation]);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       navigation.setOptions({
-        title: formatMessage(m.trackEditScreenTitle),
+        title: formatMessage(m.presetTitle),
         headerLeft: props => <HeaderLeft headerBackButtonProps={props} />,
         headerRight: () => (
           <SaveButton
@@ -80,7 +79,7 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
           />
         ),
       });
-    }, [navigation, formatMessage, saveTrack, editTrackMutation]),
+    }, [navigation, formatMessage, saveTrack, editTrackMutation.isPending]),
   );
 
   return (
@@ -90,21 +89,10 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
       notesComponent={<TrackDescriptionField />}
       PresetIcon={<TrackIcon style={styles.icon} />}
       isTrack={true}
+      presetDisabled={true}
     />
   );
 };
-
-export function createNavigationOptions({
-  intl,
-}: {
-  intl: (title: MessageDescriptor) => string;
-}): NativeStackNavigationOptions {
-  return {
-    headerTitle: intl(m.trackEditScreenTitle),
-    headerRight: () => <SaveButton onPress={() => {}} isLoading={false} />,
-    headerLeft: props => <HeaderLeft headerBackButtonProps={props} />,
-  };
-}
 
 TrackEdit.navTitle = m.trackEditScreenTitle;
 

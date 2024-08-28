@@ -50,13 +50,13 @@ export function useEditTrackMutation() {
 
   return useMutation({
     mutationFn: async ({
-      docId,
+      versionId,
       updatedTrack,
     }: {
-      docId: string;
+      versionId: string;
       updatedTrack: TrackValue;
     }) => {
-      return projectApi.track.update(docId, updatedTrack);
+      return projectApi.track.update(versionId, updatedTrack);
     },
     onSuccess: data => {
       queryClient.invalidateQueries({

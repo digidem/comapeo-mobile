@@ -4,21 +4,14 @@ import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 
 import {useSessionInvites} from '../../contexts/SessionInvitesContext';
 import {BottomSheetModal, useBottomSheetModal} from '../BottomSheetModal';
-import {InviteBottomSheetContent} from './InviteBottomSheetContent';
 import {LeaveProjectModalContent} from '../LeaveProjectModalContent';
+import {InviteBottomSheetContent} from './InviteBottomSheetContent';
 
 export const ProjectInviteBottomSheet = ({
   enabledForCurrentScreen,
 }: {
   enabledForCurrentScreen: boolean;
 }) => {
-  const sessionInvites = useSessionInvites();
-
-  const [currentInviteId, setCurrentInviteId] = React.useState(
-    () =>
-      sessionInvites.find(({status}) => status === 'pending')?.invite.inviteId,
-  );
-
   const inviteBottomSheet = useBottomSheetModal({
     openOnMount: false,
   });
@@ -27,41 +20,59 @@ export const ProjectInviteBottomSheet = ({
     openOnMount: false,
   });
 
-  if (!currentInviteId) {
+  const sessionInvites = useSessionInvites();
+
+  const [displayedInviteId, setDisplayedInviteId] = React.useState(
+    () =>
+      sessionInvites.find(({status}) => status === 'pending')?.invite.inviteId,
+  );
+
+  if (!displayedInviteId) {
     const nextPending = sessionInvites.find(({status}) => status === 'pending');
     if (nextPending) {
-      setCurrentInviteId(nextPending.invite.inviteId);
+      setDisplayedInviteId(nextPending.invite.inviteId);
     }
   }
 
-  const showableInvite = currentInviteId
-    ? sessionInvites.find(
-        ({invite: {inviteId}}) => inviteId === currentInviteId,
-      )
-    : undefined;
+  const displayedInvite = React.useMemo(() => {
+    return displayedInviteId
+      ? sessionInvites.find(
+          s =>
+            s.invite.inviteId === displayedInviteId &&
+            // There's a race condition where after rejecting an invite, `sessionInvites` will update
+            // to reflect that before we unset `displayedInviteId` in `seeNextInviteOrClose()`.
+            // Without this check, `displayedInvite` is set to the rejected invite, which is currently not supported in the UI.
+            !(s.status === 'removed' && s.removalReason === 'rejected'),
+        )
+      : undefined;
+  }, [displayedInviteId, sessionInvites]);
 
   const seeNextInviteOrClose = () => {
     const nextPendingInvite = sessionInvites
-      .filter(i => i.invite.inviteId !== currentInviteId)
+      .filter(i => i.invite.inviteId !== displayedInviteId)
       .find(i => i.status === 'pending');
 
     if (nextPendingInvite) {
-      setCurrentInviteId(nextPendingInvite.invite.inviteId);
+      setDisplayedInviteId(nextPendingInvite.invite.inviteId);
     } else {
-      setCurrentInviteId(undefined);
+      setDisplayedInviteId(undefined);
       inviteBottomSheet.closeSheet();
     }
   };
 
+  // Open the invite sheet if there's a displayable invite and the sheet isn't already open
   React.useEffect(() => {
+    // TODO: Race condition where after rejecting an invite,
+    // this will sometimes call `openSheet()` with a stale `displayedInvite`,
+    // causing subsequent incoming pending invites to not automatically open the sheet
     if (
-      showableInvite &&
+      displayedInvite &&
       !inviteBottomSheet.isOpen &&
       enabledForCurrentScreen
     ) {
       inviteBottomSheet.openSheet();
     }
-  }, [showableInvite, inviteBottomSheet, enabledForCurrentScreen]);
+  }, [displayedInvite, inviteBottomSheet, enabledForCurrentScreen]);
 
   return (
     <>
@@ -69,15 +80,15 @@ export const ProjectInviteBottomSheet = ({
         <BottomSheetModal
           ref={inviteBottomSheet.sheetRef}
           isOpen={inviteBottomSheet.isOpen}>
-          {showableInvite ? (
+          {displayedInvite ? (
             <InviteBottomSheetContent
-              sessionInvite={showableInvite}
+              sessionInvite={displayedInvite}
               startConfirmationFlow={() => {
                 inviteBottomSheet.closeSheet();
                 leaveProjectSheet.openSheet();
               }}
               onAccept={() => {
-                setCurrentInviteId(undefined);
+                setDisplayedInviteId(undefined);
                 inviteBottomSheet.closeSheet();
               }}
               onDismiss={seeNextInviteOrClose}
@@ -95,7 +106,7 @@ export const ProjectInviteBottomSheet = ({
           fullScreen
           ref={leaveProjectSheet.sheetRef}
           isOpen={leaveProjectSheet.isOpen}>
-          {showableInvite ? (
+          {displayedInvite ? (
             <LeaveProjectModalContent
               onCancel={() => {
                 leaveProjectSheet.closeSheet();
@@ -105,8 +116,8 @@ export const ProjectInviteBottomSheet = ({
                 leaveProjectSheet.closeSheet();
                 inviteBottomSheet.openSheet();
               }}
-              inviteId={showableInvite.invite.inviteId}
-              projectName={showableInvite.invite.projectName}
+              inviteId={displayedInvite.invite.inviteId}
+              projectName={displayedInvite.invite.projectName}
             />
           ) : (
             // Using null can sometimes cause a rendering issue with bottom sheet modal

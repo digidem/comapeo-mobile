@@ -14,28 +14,26 @@ type PresetViewProps = {
   onPressPreset?: () => void;
   presetName: string;
   PresetIcon: React.ReactNode;
-  isTrack?: boolean;
+  presetDisabled?: boolean;
 };
 
 export const PresetView = ({
   onPressPreset,
   presetName,
   PresetIcon,
-  isTrack,
+  presetDisabled,
 }: PresetViewProps) => {
   const {formatMessage} = useIntl();
   return (
     <TouchableOpacity
-      disabled={!onPressPreset}
+      disabled={presetDisabled}
       onPress={onPressPreset}
       style={styles.preset}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         {PresetIcon}
         <Text style={styles.categoryName}>{presetName}</Text>
       </View>
-      {!isTrack && (
-        <Text style={styles.changeButtonText}>{formatMessage(m.change)}</Text>
-      )}
+      <Text style={styles.changeButtonText}>{formatMessage(m.change)}</Text>
     </TouchableOpacity>
   );
 };

@@ -24,15 +24,14 @@ export const SaveTrackScreen = () => {
   );
 
   return (
-    <>
-      <Editor
-        photos={[]}
-        presetName={t(m.newTitle)}
-        notesComponent={<TrackDescriptionField />}
-        PresetIcon={<TrackIcon style={styles.icon} />}
-        isTrack={true}
-      />
-    </>
+    <Editor
+      photos={[]}
+      presetName={t(m.newTitle)}
+      notesComponent={<TrackDescriptionField />}
+      PresetIcon={<TrackIcon style={styles.icon} />}
+      isTrack={true}
+      presetDisabled={true}
+    />
   );
 };
 

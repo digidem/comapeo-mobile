@@ -25,23 +25,11 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "Discard observation?"
   },
-  "Modal.DiscardTrack.description": {
-    "message": "Your Track will not be saved. This cannot be undone."
-  },
-  "Modal.DiscardTrack.title": {
-    "message": "Discard Track?"
-  },
   "Modal.GPSDisable.button": {
     "message": "Enable"
   },
-  "Modal.GPSDisable.defaultButton": {
-    "message": "Continue Editing"
-  },
   "Modal.GPSDisable.description": {
     "message": "To create a Track CoMapeo needs access to your location and GPS."
-  },
-  "Modal.GPSDisable.discardButton": {
-    "message": "Discard Track"
   },
   "Modal.GPSDisable.title": {
     "message": "GPS Disabled"
@@ -116,6 +104,21 @@
   "ObservationEdit.HeaderLeft.discardTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "Discard changes?"
+  },
+  "SaveTrack.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Continue editing"
+  },
+  "SaveTrack.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling track edits",
+    "message": "Discard Track?"
+  },
+  "SaveTrack.HeaderLeft.discardTrackButton": {
+    "description": "Button to confirm discarding the track",
+    "message": "Discard Track"
+  },
+  "SaveTrack.HeaderLeft.discardTrackDescription": {
+    "message": "Your Track will not be saved. This cannot be undone."
   },
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Coordinate System"
@@ -936,14 +939,6 @@
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
     "message": "What is happening here?"
-  },
-  "screens.SaveTrack.TrackEditView.saveTrackCamera": {
-    "description": "Button label for adding photo",
-    "message": "Camera"
-  },
-  "screens.SaveTrack.TrackEditView.saveTrackDetails": {
-    "description": "Button label for check details",
-    "message": "Details"
   },
   "screens.SaveTrack.TrackEditView.title": {
     "description": "Title for new track screen",

@@ -29,9 +29,7 @@ export function useTracks() {
   return useSuspenseQuery({
     queryKey: [TRACK_KEY, projectId],
     queryFn: async () => {
-      return process.env.EXPO_PUBLIC_FEATURE_TRACKS
-        ? projectApi.track.getMany()
-        : [];
+      return projectApi.track.getMany();
     },
   });
 }
@@ -42,6 +40,28 @@ export function useTrackQuery(docId: string) {
     queryKey: [TRACK_KEY, projectId, docId],
     queryFn: async () => {
       return projectApi.track.getByDocId(docId);
+    },
+  });
+}
+
+export function useEditTrackMutation() {
+  const queryClient = useQueryClient();
+  const {projectId, projectApi} = useActiveProject();
+
+  return useMutation({
+    mutationFn: async ({
+      docId,
+      updatedTrack,
+    }: {
+      docId: string;
+      updatedTrack: TrackValue;
+    }) => {
+      return projectApi.track.update(docId, updatedTrack);
+    },
+    onSuccess: data => {
+      queryClient.invalidateQueries({
+        queryKey: [TRACK_KEY, projectId, data.docId],
+      });
     },
   });
 }

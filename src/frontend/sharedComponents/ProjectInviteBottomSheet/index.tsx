@@ -74,6 +74,19 @@ export const ProjectInviteBottomSheet = ({
     }
   }, [displayedInvite, inviteBottomSheet, enabledForCurrentScreen]);
 
+  // If leave project sheet is open (but not yet actually initiated) and the displayed invite becomes cancelled,
+  // close the leave project sheet and open the invite sheet to display the cancelled state
+  React.useEffect(() => {
+    if (
+      displayedInvite?.status === 'removed' &&
+      displayedInvite.removalReason === 'canceled' &&
+      leaveProjectSheet.isOpen
+    ) {
+      leaveProjectSheet.closeSheet();
+      inviteBottomSheet.openSheet();
+    }
+  }, [displayedInvite, leaveProjectSheet, inviteBottomSheet]);
+
   return (
     <>
       <BottomSheetModalProvider>

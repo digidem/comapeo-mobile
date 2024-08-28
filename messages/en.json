@@ -160,6 +160,21 @@
     "description": "Button to share an observation",
     "message": "Share"
   },
+  "TrackEdit.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Continue editing"
+  },
+  "TrackEdit.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling track edits",
+    "message": "Discard changes?"
+  },
+  "TrackEdit.HeaderLeft.discardTrackButton": {
+    "description": "Button to confirm discarding the track",
+    "message": "Discard changes"
+  },
+  "TrackEdit.HeaderLeft.discardTrackDescription": {
+    "message": "Your changes will not be saved. This cannot be undone."
+  },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Coordinator"
   },
@@ -1215,6 +1230,10 @@
   },
   "screens.Track.tracks": {
     "message": "Tracks"
+  },
+  "screens.TrackEdit.title": {
+    "description": "Title for editing track screen",
+    "message": "Edit Track"
   },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",

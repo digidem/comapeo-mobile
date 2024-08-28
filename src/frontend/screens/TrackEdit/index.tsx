@@ -1,38 +1,63 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {Editor} from '../../sharedComponents/Editor';
 import {TrackDescriptionField} from '../SaveTrack/TrackDescriptionField';
 import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import TrackIcon from '../../images/Track.svg';
 import {HeaderLeft} from './HeaderLeft';
 import {SaveButton} from '../../sharedComponents/SaveButton';
 import {useFocusEffect} from '@react-navigation/native';
 import {useTrackQuery, useEditTrackMutation} from '../../hooks/server/track';
 
-export const TrackEdit = ({route}) => {
-  const navigation = useNavigationFromRoot();
+export const m = defineMessages({
+  trackEditScreenTitle: {
+    id: 'screens.TrackEdit.title',
+    defaultMessage: 'Edit Track',
+    description: 'Title for editing track screen',
+  },
+});
+
+export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
+  navigation,
+  route,
+}) => {
   const {formatMessage} = useIntl();
-  const {trackId} = route.params;
+  useEffect(() => {
+    if (!route.params || !route.params.trackId) {
+      navigation.goBack();
+    }
+  }, [route, navigation]);
+
+  const {trackId} = route.params as {trackId: string};
 
   const {data: track} = useTrackQuery(trackId);
   const editTrackMutation = useEditTrackMutation();
-  const {updateNotes, clearCurrentTrack} = usePersistedTrack();
+  const description = usePersistedTrack(state => state.description);
+  const setDescription = usePersistedTrack(state => state.setDescription);
+  const clearCurrentTrack = usePersistedTrack(state => state.clearCurrentTrack);
 
-  React.useEffect(() => {
-    if (track) {
-      updateNotes(track.tags.notes || '');
+  useEffect(() => {
+    if (
+      track &&
+      track.tags.description &&
+      typeof track.tags.description === 'string'
+    ) {
+      setDescription(track.tags.description);
     }
-  }, [track, updateNotes]);
+  }, [track, setDescription]);
 
   const saveTrack = () => {
     if (!track) return;
 
     editTrackMutation.mutate(
       {
-        trackId: track.docId,
-        updatedTrack: {notes: track.tags.notes},
+        docId: track.docId,
+        updatedTrack: {
+          ...track,
+          tags: {...track.tags, description},
+        },
       },
       {
         onSuccess: () => {
@@ -69,14 +94,6 @@ export const TrackEdit = ({route}) => {
   );
 };
 
-export const m = defineMessages({
-  trackEditScreenTitle: {
-    id: 'screens.TrackEdit.title',
-    defaultMessage: 'Edit Track',
-    description: 'Title for editing track screen',
-  },
-});
-
 export function createNavigationOptions({
   intl,
 }: {
@@ -88,6 +105,8 @@ export function createNavigationOptions({
     headerLeft: props => <HeaderLeft headerBackButtonProps={props} />,
   };
 }
+
+TrackEdit.navTitle = m.trackEditScreenTitle;
 
 const styles = {
   icon: {width: 30, height: 30},

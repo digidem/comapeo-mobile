@@ -20,14 +20,14 @@ export const SaveTrackScreen = () => {
         headerLeft: props => <HeaderLeft headerBackButtonProps={props} />,
         headerRight: () => <SaveTrackButton />,
       });
-    }, [navigation]),
+    }, [navigation, t]),
   );
 
   return (
     <>
       <Editor
         photos={[]}
-        presetName={'Track'}
+        presetName={t(m.newTitle)}
         notesComponent={<TrackDescriptionField />}
         PresetIcon={<TrackIcon style={styles.icon} />}
       />

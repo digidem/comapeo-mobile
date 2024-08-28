@@ -30,6 +30,7 @@ export const SaveTrackScreen = () => {
         presetName={t(m.newTitle)}
         notesComponent={<TrackDescriptionField />}
         PresetIcon={<TrackIcon style={styles.icon} />}
+        isTrack={true}
       />
     </>
   );

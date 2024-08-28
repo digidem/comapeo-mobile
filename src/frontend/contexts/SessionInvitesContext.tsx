@@ -67,11 +67,7 @@ function useDerivedSessionInvites(): Array<SessionInvite> {
 
   // Ordered by most recently received
   return [...removed, ...pending].sort((a, b) => {
-    const aReceivedAt = a.invite.receivedAt;
-    const bReceivedAt = b.invite.receivedAt;
-
-    // I think this does what I intend in terms of sort order...
-    return bReceivedAt - aReceivedAt;
+    return b.invite.receivedAt - a.invite.receivedAt;
   });
 }
 

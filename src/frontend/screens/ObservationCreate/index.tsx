@@ -15,6 +15,9 @@ import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';
 import {ActionsRow} from '../../sharedComponents/ActionRow';
+import {PresetView} from '../../sharedComponents/Editor/PresetView';
+import {DescriptionField} from '../../sharedComponents/Editor/DescriptionField';
+import {LocationView} from '../../sharedComponents/Editor/LocationView';
 
 const m = defineMessages({
   observation: {
@@ -191,25 +194,33 @@ export const ObservationCreate = ({
   return (
     <>
       <Editor
-        presetName={presetName}
-        PresetIcon={
-          <PresetCircleIcon
-            name={preset?.name}
-            testID={`OBS.${preset?.name}-icon`}
+        presetView={
+          <PresetView
+            presetName={presetName}
+            PresetIcon={
+              <PresetCircleIcon
+                name={preset?.name}
+                testID={`OBS.${preset?.name}-icon`}
+              />
+            }
+            onPressPreset={() => {
+              navigation.navigate({
+                key: 'fromObservationEdit',
+                name: 'PresetChooser',
+              });
+            }}
           />
         }
-        onPressPreset={() =>
-          navigation.navigate({
-            key: 'fromObservationEdit',
-            name: 'PresetChooser',
-          })
+        notesView={
+          <DescriptionField
+            notes={typeof notes !== 'string' ? '' : notes}
+            updateNotes={newVal => {
+              updateTags('notes', newVal);
+            }}
+          />
         }
-        notes={typeof notes !== 'string' ? '' : notes}
-        updateNotes={newVal => {
-          updateTags('notes', newVal);
-        }}
+        locationView={<LocationView {...coordinateInfo} />}
         photos={photos}
-        location={coordinateInfo}
         actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
       />
       <ErrorBottomSheet

@@ -8,6 +8,7 @@ import {SaveTrackButton} from './SaveTrackButton';
 import {Editor} from '../../sharedComponents/Editor';
 import {TrackDescriptionField} from './TrackDescriptionField';
 import {HeaderLeft} from './HeaderLeft';
+import {PresetView} from '../../sharedComponents/Editor/PresetView';
 
 export const SaveTrackScreen = () => {
   const navigation = useNavigationFromRoot();
@@ -26,11 +27,13 @@ export const SaveTrackScreen = () => {
   return (
     <>
       <Editor
-        photos={[]}
-        presetName={t(m.newTitle)}
-        notesComponent={<TrackDescriptionField />}
-        PresetIcon={<TrackIcon style={styles.icon} />}
-        isTrack={true}
+        presetView={
+          <PresetView
+            PresetIcon={<TrackIcon style={styles.icon} />}
+            presetName={t(m.newTitle)}
+          />
+        }
+        notesView={<TrackDescriptionField />}
       />
     </>
   );

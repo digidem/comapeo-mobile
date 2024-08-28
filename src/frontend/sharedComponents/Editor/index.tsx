@@ -1,60 +1,39 @@
 import * as React from 'react';
 import {Photo} from '../../contexts/PhotoPromiseContext/types';
-import {DescriptionField} from './DescriptionField';
 import {MediaScrollView} from '../MediaScrollView';
 import {ScreenContentWithDock} from '../ScreenContentWithDock';
 import {StyleSheet, View} from 'react-native';
 import {LIGHT_GREY} from '../../lib/styles';
-import {PresetView} from './PresetView';
-import {LocationView} from './LocationView';
 import {Divider} from '../Divider';
 
 type EditorProps = {
-  presetName: string;
-  onPressPreset?: () => void;
-  PresetIcon: React.ReactNode;
-  notes?: string;
-  updateNotes?: (newNotes: string) => void;
-  photos: Photo[];
-  location?: {
-    lat: number | undefined;
-    lon: number | undefined;
-    accuracy: number | undefined;
-  };
   actionsRow?: React.ReactNode;
-  notesComponent?: React.ReactNode;
-  isTrack?: boolean;
+  // TODO: Ideally there's a way to constrain the locationView, notesView, and presetView so that they require the correct component to be used
+  // e.g. presetView={<PresetView ... />} is valid, but presetView={<LocationView ... />} is not
+  locationView?: React.ReactElement;
+  notesView: React.ReactElement;
+  photos?: Photo[];
+  presetView: React.ReactElement;
 };
 
 export const Editor = ({
-  notes = '',
-  updateNotes = () => {},
-  photos,
-  location,
   actionsRow,
-  notesComponent,
-  isTrack = false,
-  ...presetProps
+  photos,
+  locationView,
+  notesView,
+  presetView,
 }: EditorProps) => {
   return (
     <ScreenContentWithDock
       dockContainerStyle={{padding: 0}}
       dockContent={actionsRow}>
       <View style={styles.container}>
-        <PresetView {...presetProps} isTrack={isTrack} />
-        {location && (
-          <>
-            <Divider />
-            <LocationView {...location} />
-          </>
-        )}
+        {presetView}
+        {locationView && <Divider />}
+        {locationView}
       </View>
-      {isTrack ? (
-        notesComponent
-      ) : (
-        <DescriptionField notes={notes} updateNotes={updateNotes} />
-      )}
-      <MediaScrollView photos={photos} />
+      {notesView}
+      {photos !== undefined && <MediaScrollView photos={photos} />}
     </ScreenContentWithDock>
   );
 };

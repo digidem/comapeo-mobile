@@ -16,6 +16,8 @@ import {Loading} from '../../sharedComponents/Loading';
 import {HeaderLeft} from './HeaderLeft';
 import {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
 import {CommonActions} from '@react-navigation/native';
+import {PresetView} from '../../sharedComponents/Editor/PresetView';
+import {DescriptionField} from '../../sharedComponents/Editor/DescriptionField';
 
 const m = defineMessages({
   observation: {
@@ -189,18 +191,26 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   ) : (
     <>
       <Editor
-        presetName={presetName}
-        PresetIcon={
-          <PresetCircleIcon
-            name={preset?.name}
-            testID={`OBS.${preset?.name}-icon`}
+        presetView={
+          <PresetView
+            presetName={presetName}
+            PresetIcon={
+              <PresetCircleIcon
+                name={preset?.name}
+                testID={`OBS.${preset?.name}-icon`}
+              />
+            }
+            onPressPreset={() => navigation.navigate('PresetChooser')}
           />
         }
-        onPressPreset={() => navigation.navigate('PresetChooser')}
-        notes={typeof notes !== 'string' ? '' : notes}
-        updateNotes={newVal => {
-          updateTags('notes', newVal);
-        }}
+        notesView={
+          <DescriptionField
+            notes={typeof notes !== 'string' ? '' : notes}
+            updateNotes={newVal => {
+              updateTags('notes', newVal);
+            }}
+          />
+        }
         photos={photos}
         actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
       />

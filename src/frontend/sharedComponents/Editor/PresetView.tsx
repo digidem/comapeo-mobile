@@ -14,17 +14,19 @@ type PresetViewProps = {
   onPressPreset?: () => void;
   presetName: string;
   PresetIcon: React.ReactNode;
+  presetDisabled?: boolean;
 };
 
 export const PresetView = ({
   onPressPreset,
   presetName,
   PresetIcon,
+  presetDisabled,
 }: PresetViewProps) => {
   const {formatMessage} = useIntl();
   return (
     <TouchableOpacity
-      disabled={!onPressPreset}
+      disabled={presetDisabled}
       onPress={onPressPreset}
       style={styles.preset}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>

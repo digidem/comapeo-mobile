@@ -13,8 +13,8 @@ type EditorProps = {
   presetName: string;
   onPressPreset?: () => void;
   PresetIcon: React.ReactNode;
-  notes: string;
-  updateNotes: (newNotes: string) => void;
+  notes?: string;
+  updateNotes?: (newNotes: string) => void;
   photos: Photo[];
   location?: {
     lat: number | undefined;
@@ -22,6 +22,9 @@ type EditorProps = {
     accuracy: number | undefined;
   };
   actionsRow?: React.ReactNode;
+  notesComponent?: React.ReactNode;
+  isTrack?: boolean;
+  presetDisabled?: boolean;
 };
 
 export const Editor = ({
@@ -30,6 +33,9 @@ export const Editor = ({
   photos,
   location,
   actionsRow,
+  notesComponent,
+  isTrack = false,
+  presetDisabled = false,
   ...presetProps
 }: EditorProps) => {
   return (
@@ -45,7 +51,11 @@ export const Editor = ({
           </>
         )}
       </View>
-      <DescriptionField notes={notes} updateNotes={updateNotes} />
+      {isTrack ? (
+        notesComponent
+      ) : (
+        <DescriptionField notes={notes} updateNotes={updateNotes} />
+      )}
       <MediaScrollView photos={photos} />
     </ScreenContentWithDock>
   );

@@ -21,7 +21,6 @@ export const PresetView = ({
   onPressPreset,
   presetName,
   PresetIcon,
-  isTracking = false,
 }: PresetViewProps) => {
   const {formatMessage} = useIntl();
   return (
@@ -33,7 +32,7 @@ export const PresetView = ({
         {PresetIcon}
         <Text style={styles.categoryName}>{presetName}</Text>
       </View>
-      {!isTracking && (
+      {presetName !== 'Track' && (
         <Text style={styles.changeButtonText}>{formatMessage(m.change)}</Text>
       )}
     </TouchableOpacity>

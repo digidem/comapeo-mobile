@@ -738,10 +738,6 @@
     "description": "Title of observation details screen showing question number and total",
     "message": "Question {current} of {total}"
   },
-  "screens.ObservationEdit.BottomSheet.addLabel": {
-    "description": "Label above keyboard that expands into bottom sheet of options to add (photo, details etc)",
-    "message": "Add…"
-  },
   "screens.ObservationEdit.ObservationEditView.audioButton": {
     "description": "Button label for adding audio",
     "message": "Audio"

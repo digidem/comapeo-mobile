@@ -21,7 +21,6 @@ import {ActionsRow} from '../../sharedComponents/ActionRow';
 export const SaveTrackScreen = () => {
   const navigation = useNavigationFromRoot();
   const clearCurrentTrack = usePersistedTrack(state => state.clearCurrentTrack);
-  const isTracking = usePersistedTrack(state => state.isTracking);
   const {formatMessage: t} = useIntl();
   const {sheetRef, isOpen, openSheet, closeSheet} = useBottomSheetModal({
     openOnMount: false,
@@ -77,7 +76,6 @@ export const SaveTrackScreen = () => {
         notesComponent={<TrackDescriptionField />}
         PresetIcon={<TrackIcon style={styles.icon} />}
         actionsRow={<ActionsRow />}
-        isTracking={isTracking}
       />
 
       <BottomSheetModal ref={sheetRef} isOpen={isOpen}>

@@ -23,7 +23,6 @@ type EditorProps = {
   };
   actionsRow?: React.ReactNode;
   notesComponent?: React.ReactNode;
-  isTracking: boolean;
 };
 
 export const Editor = ({
@@ -33,7 +32,6 @@ export const Editor = ({
   location,
   actionsRow,
   notesComponent,
-  isTracking = false,
   ...presetProps
 }: EditorProps) => {
   return (
@@ -41,7 +39,7 @@ export const Editor = ({
       dockContainerStyle={{padding: 0}}
       dockContent={actionsRow}>
       <View style={styles.container}>
-        <PresetView {...presetProps} isTracking={isTracking} />
+        <PresetView {...presetProps} />
         {location && (
           <>
             <Divider />
@@ -49,7 +47,7 @@ export const Editor = ({
           </>
         )}
       </View>
-      {isTracking ? (
+      {notesComponent ? (
         notesComponent
       ) : (
         <DescriptionField notes={notes} updateNotes={updateNotes} />

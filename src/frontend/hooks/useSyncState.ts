@@ -1,11 +1,8 @@
-import {MapeoProjectApi} from '@mapeo/ipc';
 import {useCallback, useSyncExternalStore} from 'react';
+import {MapeoProjectApi} from '@mapeo/ipc';
 
 import {useActiveProject} from '../contexts/ActiveProjectContext';
-
-export type SyncState = Awaited<
-  ReturnType<MapeoProjectApi['$sync']['getState']>
->;
+import {getDataSyncCountForDevice, type SyncState} from '../lib/sync';
 
 const projectSyncStoreMap = new WeakMap<MapeoProjectApi, SyncStore>();
 
@@ -54,13 +51,13 @@ export function useSyncState<S = SyncState | null>(
 }
 
 /**
- * Calculates progress of *data* sync based on sync state.
+ * Provides the progress of data sync for sync-enabled connected peers
  *
- * @returns A number between 0 and 1 when data sync is enabled. `null` otherwise.
+ * @returns `null` if no sync state events have been received. Otherwise returns a value between 0 and 1 (inclusive)
  */
-export function useSyncProgress() {
-  const {subscribe, getProgressSnapshot} = useSyncStore();
-  return useSyncExternalStore(subscribe, getProgressSnapshot);
+export function useDataSyncProgress(): number | null {
+  const {subscribe, getDataProgressSnapshot} = useSyncStore();
+  return useSyncExternalStore(subscribe, getDataProgressSnapshot);
 }
 
 class SyncStore {
@@ -71,11 +68,8 @@ class SyncStore {
   #error: Error | null = null;
   #state: SyncState | null = null;
 
-  /**
-   * Represents maximum value of `#state.data.want + #state.data.wanted` while data syncing is enabled.
-   * Resets to null when data syncing goes from enabled to disabled.
-   */
-  #maxDataSyncCount: number | null = null;
+  // Used for calculating sync progress
+  #perDeviceMaxSyncCount = new Map<string, number>();
 
   constructor(project: MapeoProjectApi) {
     this.#project = project;
@@ -95,19 +89,41 @@ class SyncStore {
     return this.#state;
   };
 
-  getProgressSnapshot = () => {
-    if (this.#maxDataSyncCount === null || this.#state === null) {
+  getDataProgressSnapshot = () => {
+    if (this.#state === null) {
       return null;
     }
 
-    if (this.#maxDataSyncCount === 0) {
+    let currentSyncCount = 0;
+    let totalMaxSyncCount = 0;
+    let otherEnabledDevicesExist = false;
+
+    for (const [deviceId, deviceSyncState] of Object.entries(
+      this.#state.remoteDeviceSyncState,
+    )) {
+      if (deviceSyncState.data.isSyncEnabled) {
+        otherEnabledDevicesExist = true;
+      } else {
+        continue;
+      }
+
+      const existingMaxCount = this.#perDeviceMaxSyncCount.get(deviceId);
+
+      if (typeof existingMaxCount === 'number' && existingMaxCount > 0) {
+        currentSyncCount = getDataSyncCountForDevice(deviceSyncState);
+        totalMaxSyncCount += existingMaxCount;
+      }
+    }
+
+    if (!otherEnabledDevicesExist) {
+      return null;
+    }
+
+    if (totalMaxSyncCount === 0) {
       return 1;
     }
 
-    const currentCount = this.#state.data.want + this.#state.data.wanted;
-
-    const ratio =
-      (this.#maxDataSyncCount - currentCount) / this.#maxDataSyncCount;
+    const ratio = (totalMaxSyncCount - currentSyncCount) / totalMaxSyncCount;
 
     if (ratio <= 0) return 0;
     if (ratio >= 1) return 1;
@@ -122,19 +138,31 @@ class SyncStore {
   }
 
   #onSyncState = (state: SyncState) => {
-    // Indicates whether data syncing went from enabled to disabled
-    const isDataSyncStopped =
-      this.#state?.data.isSyncEnabled && !state.data.isSyncEnabled;
+    const dataSyncWasEnabled = this.#state
+      ? this.#state.data.isSyncEnabled
+      : false;
 
-    if (isDataSyncStopped) {
-      this.#maxDataSyncCount = null;
+    // Reset map keeping track of counts used for progress if data sync is toggled
+    if (dataSyncWasEnabled !== state.data.isSyncEnabled) {
+      this.#perDeviceMaxSyncCount.clear();
     } else {
-      const newSyncCount = state.data.want + state.data.wanted;
+      // Remove devices from #perDeviceMaxSyncCount that are no longer found in the new sync state
+      for (const deviceId of this.#perDeviceMaxSyncCount.keys()) {
+        if (!Object.hasOwn(state.remoteDeviceSyncState, deviceId)) {
+          this.#perDeviceMaxSyncCount.delete(deviceId);
+        }
+      }
+    }
 
-      this.#maxDataSyncCount =
-        this.#maxDataSyncCount === null
-          ? newSyncCount
-          : Math.max(this.#maxDataSyncCount, newSyncCount);
+    for (const [deviceId, stateForDevice] of Object.entries(
+      state.remoteDeviceSyncState,
+    )) {
+      const existingCount = this.#perDeviceMaxSyncCount.get(deviceId);
+      const newCount = getDataSyncCountForDevice(stateForDevice);
+
+      if (existingCount === undefined || existingCount < newCount) {
+        this.#perDeviceMaxSyncCount.set(deviceId, newCount);
+      }
     }
 
     this.#state = state;

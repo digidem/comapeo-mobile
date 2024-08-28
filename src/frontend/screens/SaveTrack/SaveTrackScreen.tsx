@@ -9,19 +9,6 @@ import {Editor} from '../../sharedComponents/Editor';
 import {TrackDescriptionField} from './TrackDescriptionField';
 import {HeaderLeft} from './HeaderLeft';
 
-export const m = defineMessages({
-  trackEditScreenTitle: {
-    id: 'screens.SaveTrack.TrackEditView.title',
-    defaultMessage: 'New Track',
-    description: 'Title for new track screen',
-  },
-  newTitle: {
-    id: 'screens.SaveTrack.track',
-    defaultMessage: 'Track',
-    description: 'Category title for new track screen',
-  },
-});
-
 export const SaveTrackScreen = () => {
   const navigation = useNavigationFromRoot();
   const {formatMessage: t} = useIntl();
@@ -37,18 +24,30 @@ export const SaveTrackScreen = () => {
   );
 
   return (
-    <>
-      <Editor
-        photos={[]}
-        presetName={t(m.newTitle)}
-        notesComponent={<TrackDescriptionField />}
-        PresetIcon={<TrackIcon style={styles.icon} />}
-        isTrack={true}
-      />
-    </>
+    <Editor
+      photos={[]}
+      presetName={t(m.newTitle)}
+      notesComponent={<TrackDescriptionField />}
+      PresetIcon={<TrackIcon style={styles.icon} />}
+      isTrack={true}
+      presetDisabled={true}
+    />
   );
 };
 
 const styles = StyleSheet.create({
   icon: {width: 30, height: 30},
+});
+
+export const m = defineMessages({
+  trackEditScreenTitle: {
+    id: 'screens.SaveTrack.TrackEditView.title',
+    defaultMessage: 'New Track',
+    description: 'Title for new track screen',
+  },
+  newTitle: {
+    id: 'screens.SaveTrack.track',
+    defaultMessage: 'Track',
+    description: 'Category title for new track screen',
+  },
 });

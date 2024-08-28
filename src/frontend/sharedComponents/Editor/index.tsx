@@ -24,16 +24,18 @@ type EditorProps = {
   actionsRow?: React.ReactNode;
   notesComponent?: React.ReactNode;
   isTrack?: boolean;
+  presetDisabled?: boolean;
 };
 
 export const Editor = ({
-  notes = '',
-  updateNotes = () => {},
+  notes,
+  updateNotes,
   photos,
   location,
   actionsRow,
   notesComponent,
   isTrack = false,
+  presetDisabled = false,
   ...presetProps
 }: EditorProps) => {
   return (
@@ -41,7 +43,7 @@ export const Editor = ({
       dockContainerStyle={{padding: 0}}
       dockContent={actionsRow}>
       <View style={styles.container}>
-        <PresetView {...presetProps} isTrack={isTrack} />
+        <PresetView {...presetProps} />
         {location && (
           <>
             <Divider />

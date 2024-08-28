@@ -1,29 +1,29 @@
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
-import GreenCheck from '../../images/GreenCheck.svg';
-import {BottomSheetModalContent} from '../BottomSheetModal';
+import GreenCheck from '../../../images/GreenCheck.svg';
+import {BottomSheetModalContent} from '../../BottomSheetModal';
 
 const m = defineMessages({
   goToMap: {
-    id: 'sharedComponents.ProjectInviteBottomSheet.InviteAcceptedContent.goToMap',
+    id: 'sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.InviteAccepted.goToMap',
     defaultMessage: 'Go To Map',
   },
   goToSync: {
-    id: 'sharedComponents.ProjectInviteBottomSheet.InviteAcceptedContent.goToSync',
+    id: 'sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.InviteAccepted.goToSync',
     defaultMessage: 'Go To Sync',
   },
   success: {
-    id: 'sharedComponents.ProjectInviteBottomSheet.InviteAcceptedContent.success',
+    id: 'sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.InviteAccepted.success',
     defaultMessage: 'Success',
   },
   youHaveJoined: {
-    id: 'sharedComponents.ProjectInviteBottomSheet.InviteAcceptedContent.youHaveJoined',
+    id: 'sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.InviteAccepted.youHaveJoined',
     defaultMessage: 'You have joined <bold>{projectName}</bold>',
   },
 });
 
-export function InviteAcceptedContent({
+export function InviteAccepted({
   projectName,
   onGoToMap,
   onGoToSync,

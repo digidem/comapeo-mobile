@@ -1272,46 +1272,46 @@
   "sharedComponents.GpsPill.searching": {
     "message": "Searching…"
   },
-  "sharedComponents.ProjectInviteBottomSheet.InviteAcceptedContent.goToMap": {
+  "sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.InviteAccepted.goToMap": {
     "message": "Go To Map"
   },
-  "sharedComponents.ProjectInviteBottomSheet.InviteAcceptedContent.goToSync": {
+  "sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.InviteAccepted.goToSync": {
     "message": "Go To Sync"
   },
-  "sharedComponents.ProjectInviteBottomSheet.InviteAcceptedContent.success": {
+  "sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.InviteAccepted.success": {
     "message": "Success"
   },
-  "sharedComponents.ProjectInviteBottomSheet.InviteAcceptedContent.youHaveJoined": {
+  "sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.InviteAccepted.youHaveJoined": {
     "message": "You have joined <bold>{projectName}</bold>"
   },
-  "sharedComponents.ProjectInviteBottomSheet.InviteCanceledContent.canceled": {
+  "sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.InviteCanceled.canceled": {
     "message": "Invite Canceled!"
   },
-  "sharedComponents.ProjectInviteBottomSheet.InviteCanceledContent.close": {
+  "sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.InviteCanceled.close": {
     "message": "Close"
   },
-  "sharedComponents.ProjectInviteBottomSheet.InviteCanceledContent.projectInviteCanceled": {
+  "sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.InviteCanceled.projectInviteCanceled": {
     "message": "Your invitation to <bold>{projectName}</bold> has been canceled."
   },
-  "sharedComponents.ProjectInviteBottomSheet.InviteErrorOccurredContent.close": {
+  "sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.InviteErrorOccurred.close": {
     "message": "Close"
   },
-  "sharedComponents.ProjectInviteBottomSheet.InviteErrorOccurredContent.couldNotJoin": {
+  "sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.InviteErrorOccurred.couldNotJoin": {
     "message": "Could not join <bold>{projectName}</bold> due to an error"
   },
-  "sharedComponents.ProjectInviteBottomSheet.InviteErrorOccurredContent.errorOccurred": {
+  "sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.InviteErrorOccurred.errorOccurred": {
     "message": "Invite Error Occurred!"
   },
-  "sharedComponents.ProjectInviteBottomSheet.PendingInviteContent.acceptInvite": {
+  "sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.PendingInvite.acceptInvite": {
     "message": "Accept Invite"
   },
-  "sharedComponents.ProjectInviteBottomSheet.PendingInviteContent.declineInvite": {
+  "sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.PendingInvite.declineInvite": {
     "message": "Decline Invite"
   },
-  "sharedComponents.ProjectInviteBottomSheet.PendingInviteContent.invitedToJoin": {
+  "sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.PendingInvite.invitedToJoin": {
     "message": "You've been invited to join <bold>{projectName}</bold>"
   },
-  "sharedComponents.ProjectInviteBottomSheet.PendingInviteContent.joinProject": {
+  "sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.PendingInvite.joinProject": {
     "message": "Join {projectName}"
   },
   "sharedComponents.RoleWithIcon.coordinator": {

@@ -2,33 +2,33 @@ import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 
-import {useAcceptInvite, useRejectInvite} from '../../hooks/server/invites';
-import InviteIcon from '../../images/AddPersonCircle.svg';
-import {LIGHT_GREY} from '../../lib/styles';
-import {BottomSheetModalContent} from '../BottomSheetModal';
-import {useAllProjects} from '../../hooks/server/projects';
-import {InviteErrorOccurredContent} from './InviteErrorOccurredContent';
+import {useAcceptInvite, useRejectInvite} from '../../../hooks/server/invites';
+import {useAllProjects} from '../../../hooks/server/projects';
+import InviteIcon from '../../../images/AddPersonCircle.svg';
+import {LIGHT_GREY} from '../../../lib/styles';
+import {BottomSheetModalContent} from '../../BottomSheetModal';
+import {InviteErrorOccurred} from './InviteErrorOccurred';
 
 const m = defineMessages({
   declineInvite: {
-    id: 'sharedComponents.ProjectInviteBottomSheet.PendingInviteContent.declineInvite',
+    id: 'sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.PendingInvite.declineInvite',
     defaultMessage: 'Decline Invite',
   },
   acceptInvite: {
-    id: 'sharedComponents.ProjectInviteBottomSheet.PendingInviteContent.acceptInvite',
+    id: 'sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.PendingInvite.acceptInvite',
     defaultMessage: 'Accept Invite',
   },
   joinProject: {
-    id: 'sharedComponents.ProjectInviteBottomSheet.PendingInviteContent.joinProject',
+    id: 'sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.PendingInvite.joinProject',
     defaultMessage: 'Join {projectName}',
   },
   invitedToJoin: {
-    id: 'sharedComponents.ProjectInviteBottomSheet.PendingInviteContent.invitedToJoin',
+    id: 'sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.PendingInvite.invitedToJoin',
     defaultMessage: "You've been invited to join <bold>{projectName}</bold>",
   },
 });
 
-export function InvitePendingContent({
+export function InvitePending({
   inviteId,
   onClose,
   onReject,
@@ -55,7 +55,7 @@ export function InvitePendingContent({
     reject.isPending;
 
   return error ? (
-    <InviteErrorOccurredContent projectName={projectName} onClose={onClose} />
+    <InviteErrorOccurred projectName={projectName} onClose={onClose} />
   ) : (
     <BottomSheetModalContent
       loading={isLoading}

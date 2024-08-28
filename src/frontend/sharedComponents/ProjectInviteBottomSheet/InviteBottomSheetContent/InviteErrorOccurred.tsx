@@ -1,25 +1,25 @@
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
-import Error from '../../images/Error.svg';
-import {BottomSheetModalContent} from '../BottomSheetModal';
+import {BottomSheetModalContent} from '../../BottomSheetModal';
+import Error from '../../../images/Error.svg';
 
 const m = defineMessages({
   errorOccurred: {
-    id: 'sharedComponents.ProjectInviteBottomSheet.InviteErrorOccurredContent.errorOccurred',
+    id: 'sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.InviteErrorOccurred.errorOccurred',
     defaultMessage: 'Invite Error Occurred!',
   },
   close: {
-    id: 'sharedComponents.ProjectInviteBottomSheet.InviteErrorOccurredContent.close',
+    id: 'sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.InviteErrorOccurred.close',
     defaultMessage: 'Close',
   },
   couldNotJoin: {
-    id: 'sharedComponents.ProjectInviteBottomSheet.InviteErrorOccurredContent.couldNotJoin',
+    id: 'sharedComponents.ProjectInviteBottomSheet.InviteBottomSheetContent.InviteErrorOccurred.couldNotJoin',
     defaultMessage: 'Could not join <bold>{projectName}</bold> due to an error',
   },
 });
 
-export function InviteErrorOccurredContent({
+export function InviteErrorOccurred({
   onClose,
   projectName,
 }: {

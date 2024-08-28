@@ -2,12 +2,12 @@ import * as React from 'react';
 import {View} from 'react-native';
 import {CommonActions} from '@react-navigation/native';
 
-import {rootNavigationRef} from '../../AppNavigator';
-import {SessionInvite} from '../../contexts/SessionInvitesContext';
-import {InviteAcceptedContent} from './InviteAcceptedContent';
-import {InviteCanceledContent} from './InviteCanceledContent';
-import {InviteErrorOccurredContent} from './InviteErrorOccurredContent';
-import {InvitePendingContent} from './InvitePendingContent';
+import {rootNavigationRef} from '../../../AppNavigator';
+import {SessionInvite} from '../../../contexts/SessionInvitesContext';
+import {InviteAccepted} from './InviteAccepted';
+import {InviteCanceled} from './InviteCanceled';
+import {InviteErrorOccurred} from './InviteErrorOccurred';
+import {InvitePending} from './InvitePending';
 
 export function InviteBottomSheetContent({
   onAccept,
@@ -26,7 +26,7 @@ export function InviteBottomSheetContent({
 
   if (sessionInvite.status === 'pending') {
     return (
-      <InvitePendingContent
+      <InvitePending
         inviteId={inviteId}
         onClose={onDismiss}
         onReject={onReject}
@@ -39,7 +39,7 @@ export function InviteBottomSheetContent({
   switch (sessionInvite.removalReason) {
     case 'accepted': {
       return (
-        <InviteAcceptedContent
+        <InviteAccepted
           projectName={projectName}
           onGoToMap={() => {
             if (rootNavigationRef.isReady()) {
@@ -63,18 +63,13 @@ export function InviteBottomSheetContent({
     }
 
     case 'canceled': {
-      return (
-        <InviteCanceledContent projectName={projectName} onClose={onDismiss} />
-      );
+      return <InviteCanceled projectName={projectName} onClose={onDismiss} />;
     }
 
     case 'connection error':
     case 'internal error': {
       return (
-        <InviteErrorOccurredContent
-          projectName={projectName}
-          onClose={onDismiss}
-        />
+        <InviteErrorOccurred projectName={projectName} onClose={onDismiss} />
       );
     }
 

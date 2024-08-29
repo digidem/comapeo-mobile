@@ -46,7 +46,6 @@ export const DeviceNameWithIcon = ({
   style,
 }: DeviceNameWithIconProps) => {
   const {formatMessage} = useIntl();
-  console.log('joined at ', joinedAt);
 
   let isDisconnected: boolean;
   switch (deviceConnectionStatus) {
@@ -70,9 +69,9 @@ export const DeviceNameWithIcon = ({
       )}
       <View style={{paddingLeft: 10}}>
         <View style={styles.nameDateRow}>
-          <Text style={{fontWeight: 'bold'}}>{name}</Text>
+          <Text style={styles.nameText}>{name}</Text>
           {joinedAt && (
-            <Text>
+            <Text style={styles.dateJoinedText}>
               <FormattedDate
                 value={new Date(joinedAt)}
                 year="numeric"
@@ -114,6 +113,15 @@ const styles = StyleSheet.create({
     width: '80%',
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  nameText: {
+    fontWeight: 'bold',
+    flex: 1,
+  },
+  dateJoinedText: {
+    color: MEDIUM_GREY,
+    textAlign: 'right',
+    paddingLeft: 10,
   },
   deviceStatusText: {
     flex: 1,

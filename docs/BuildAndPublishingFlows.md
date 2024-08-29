@@ -16,7 +16,7 @@ This repo uses github actions to dispatch the creation of these builds. See [How
 
 CoMapeo uses [semantic versioning](https://semver.org/).
 
-The `develop` branch will always be one `minor` version ahead of the released version and have the suffix "-pre". (eg, if the latest released version is 1.3.2, the `devlop` branch version will be 1.4.0-pre).
+The `develop` branch will always be one `minor` version ahead of the released version and have the suffix "-pre". (eg, if the latest released version is 1.3.2, the `develop` branch version will be 1.4.0-pre).
 
 ### How To
 

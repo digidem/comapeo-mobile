@@ -21,7 +21,7 @@ export const PresetView = ({
   onPressPreset,
   presetName,
   PresetIcon,
-  presetDisabled,
+  presetDisabled = false,
 }: PresetViewProps) => {
   const {formatMessage} = useIntl();
   return (

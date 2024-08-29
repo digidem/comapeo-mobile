@@ -5,7 +5,7 @@ import {IconButton} from '../../sharedComponents/IconButton';
 import {useTrackQuery} from '../../hooks/server/track';
 import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {UIActivityIndicator} from 'react-native-indicators';
-import EditIcon from '../../images/Edit.svg';
+import {EditIcon} from '../../sharedComponents/icons';
 import {useCreatedByToDeviceId} from '../../hooks/server/projects.ts';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 

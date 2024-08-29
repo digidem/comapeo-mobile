@@ -12,5 +12,7 @@ export const EDITING_SCREEN_NAMES:
   'ObservationCreate',
   'ObservationDetails',
   'ObservationEdit',
+  'SaveTrackScreen',
+  'TrackEdit',
   'Camera',
 ];

@@ -15,7 +15,7 @@ import {ObservationList} from './ObservationList.tsx';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {ActionButtons} from '../../sharedComponents/ActionButtons.tsx';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock.tsx';
-import {TrackHeaderRight} from './TrackHeaderRight'; // Import the new component
+import {TrackHeaderRight} from './TrackHeaderRight';
 
 const m = defineMessages({
   title: {

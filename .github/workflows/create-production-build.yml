@@ -42,7 +42,6 @@ jobs:
           major=$(echo $version | cut -d. -f1)
           minor=$(echo $version | cut -d. -f2)
           patch=$(echo $version | cut -d. -f3 | cut -d- -f1)
-          new_version="${major}.${minor}.0"
           echo "VERSION=$version" >> $GITHUB_ENV
 
       - name: Setup EAS CLI

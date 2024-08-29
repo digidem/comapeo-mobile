@@ -60,12 +60,13 @@ export const ProjectInviteBottomSheet = ({
   }, [displayedInviteId, setDisplayedInviteId, sessionInvites]);
 
   const displayedInvite: SessionInvite | undefined = React.useMemo(() => {
-    const removed = displayedInviteId
-      ? sessionInvites.removed.find(
-          s =>
-            s.invite.inviteId === displayedInviteId && s.reason !== 'rejected',
-        )
-      : undefined;
+    if (!displayedInviteId) return undefined;
+
+    const removed =
+      sessionInvites.removed &&
+      sessionInvites.removed.invite.inviteId === displayedInviteId
+        ? sessionInvites.removed
+        : undefined;
 
     if (removed) {
       return {
@@ -75,11 +76,9 @@ export const ProjectInviteBottomSheet = ({
       };
     }
 
-    return displayedInviteId
-      ? sessionInvites.pending.find(
-          s => s.invite.inviteId === displayedInviteId,
-        )
-      : undefined;
+    return sessionInvites.pending.find(
+      s => s.invite.inviteId === displayedInviteId,
+    );
   }, [displayedInviteId, sessionInvites]);
 
   const seeNextInviteOrClose = () => {
@@ -108,7 +107,7 @@ export const ProjectInviteBottomSheet = ({
     }
   }, [displayedInvite, inviteBottomSheet, enabledForCurrentScreen]);
 
-  // If leave project sheet is open (but not yet actually initiated) and the displayed invite becomes cancelled,
+  // If leave project sheet is open and the displayed invite becomes cancelled,
   // close the leave project sheet and open the invite sheet to display the cancelled state
   React.useEffect(() => {
     if (
@@ -182,16 +181,10 @@ export const ProjectInviteBottomSheet = ({
 
 function useSessionInvites() {
   const pendingInvitesQuery = usePendingInvites();
+  const removedInvites = useRemovedInvite();
 
-  const removedInvites = useRemovedInvites();
   const pending = (pendingInvitesQuery.data || [])
-    // Potentially accounts for stale data resulting in an invite being in both pending and removed sources for a short period of time?
-    .filter(
-      invite =>
-        !removedInvites.data.find(
-          removedInvite => removedInvite.invite.inviteId === invite.inviteId,
-        ),
-    )
+    .filter(invite => removedInvites.data?.invite.inviteId !== invite.inviteId)
     .map(invite => ({
       status: 'pending' as const,
       invite,
@@ -204,19 +197,23 @@ function useSessionInvites() {
   };
 }
 
-function useRemovedInvites() {
+function useRemovedInvite() {
   const mapeoApi = useApi();
 
-  const [removedInvites, setRemovedInvites] = React.useState<
-    Array<{invite: MapBuffers<InviteInternal>; reason: InviteRemovalReason}>
-  >([]);
+  const [removedInvite, setRemovedInvite] = React.useState<{
+    invite: MapBuffers<InviteInternal>;
+    reason: InviteRemovalReason;
+  } | null>(null);
 
   React.useEffect(() => {
     function onInviteRemoved(
       invite: MapBuffers<InviteInternal>,
       reason: InviteRemovalReason,
     ) {
-      setRemovedInvites(prev => [...prev, {invite, reason}]);
+      setRemovedInvite(prev => {
+        if (prev) return prev;
+        return {invite, reason};
+      });
     }
 
     mapeoApi.invite.addListener('invite-removed', onInviteRemoved);
@@ -224,12 +221,12 @@ function useRemovedInvites() {
     return () => {
       mapeoApi.invite.removeListener('invite-removed', onInviteRemoved);
     };
-  }, [mapeoApi, setRemovedInvites]);
+  }, [mapeoApi, setRemovedInvite]);
 
   return {
-    data: removedInvites,
+    data: removedInvite,
     clear: () => {
-      setRemovedInvites([]);
+      setRemovedInvite(null);
     },
   };
 }

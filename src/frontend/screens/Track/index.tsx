@@ -3,13 +3,13 @@ import {StyleSheet, View, Text, SafeAreaView} from 'react-native';
 import {BLACK, DARK_GREY} from '../../lib/styles.ts';
 
 import TrackIcon from '../../images/Track.svg';
-import {FormattedMessage, defineMessages} from 'react-intl';
+import {FormattedMessage, MessageDescriptor, defineMessages} from 'react-intl';
 import {
   useDeleteTrackMutation,
   useTrackQuery,
 } from '../../hooks/server/track.ts';
 import {useObservations} from '../../hooks/server/observations.ts';
-import {NativeNavigationComponent} from '../../sharedTypes/navigation';
+import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {MapPreview} from './MapPreview.tsx';
 import {ObservationList} from './ObservationList.tsx';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
@@ -35,17 +35,11 @@ const m = defineMessages({
   },
 });
 
-export const TrackScreen: NativeNavigationComponent<'Track'> = ({
+export const TrackScreen = ({
   route,
   navigation,
-}) => {
+}: NativeRootNavigationProps<'Track'>) => {
   const {trackId} = route.params;
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => <TrackHeaderRight trackId={trackId} />,
-    });
-  }, [navigation, trackId]);
 
   const {data: track} = useTrackQuery(trackId);
   const {data: observations} = useObservations();
@@ -104,7 +98,21 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
     </SafeAreaView>
   );
 };
-TrackScreen.navTitle = m.title;
+
+export function createNavigationOptions({
+  intl,
+}: {
+  intl: (title: MessageDescriptor) => string;
+}) {
+  return (props: NativeRootNavigationProps<'Track'>) => {
+    return {
+      headerTitle: intl(m.title),
+      headerRight: () => (
+        <TrackHeaderRight trackId={props.route.params.trackId} />
+      ),
+    };
+  };
+}
 
 export const styles = StyleSheet.create({
   positionText: {

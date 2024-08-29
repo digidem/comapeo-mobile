@@ -16,8 +16,8 @@ export const DescriptionField = ({
   notes,
   updateNotes,
 }: {
-  notes: string;
-  updateNotes: (newNotes: string) => void;
+  notes?: string;
+  updateNotes?: (newNotes: string) => void;
 }) => {
   const {formatMessage: t} = useIntl();
   const {keyboardVisible} = useKeyboardListener();

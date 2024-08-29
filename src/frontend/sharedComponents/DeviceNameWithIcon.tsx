@@ -7,7 +7,7 @@ import type {
   DeviceConnectionStatus,
   DeviceType,
 } from '../sharedTypes';
-import {defineMessages, useIntl} from 'react-intl';
+import {defineMessages, useIntl, FormattedDate} from 'react-intl';
 import {Text} from './Text';
 import {MEDIUM_GREY} from '../lib/styles';
 import {ExhaustivenessError} from '../lib/ExhaustivenessError';
@@ -68,8 +68,20 @@ export const DeviceNameWithIcon = ({
       ) : (
         <DeviceDesktop width={iconSize || 35} height={iconSize || 35} />
       )}
-      <View style={{marginLeft: 10}}>
-        <Text style={{fontWeight: 'bold'}}>{name}</Text>
+      <View style={{paddingLeft: 10}}>
+        <View style={styles.nameDateRow}>
+          <Text style={{fontWeight: 'bold'}}>{name}</Text>
+          {joinedAt && (
+            <Text>
+              <FormattedDate
+                value={new Date(joinedAt)}
+                year="numeric"
+                month="short"
+                day="2-digit"
+              />
+            </Text>
+          )}
+        </View>
         {deviceId && (
           <Text style={{color: MEDIUM_GREY}} numberOfLines={1}>
             {`${deviceId.slice(0, 12)}...`}
@@ -97,6 +109,11 @@ const styles = StyleSheet.create({
   flexRow: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  nameDateRow: {
+    width: '80%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   deviceStatusText: {
     flex: 1,

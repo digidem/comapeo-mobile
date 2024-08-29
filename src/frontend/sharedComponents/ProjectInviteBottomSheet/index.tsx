@@ -183,7 +183,7 @@ function useSessionInvites() {
   const pendingInvitesQuery = usePendingInvites();
   const removedInvites = useRemovedInvite();
 
-  const pending = (pendingInvitesQuery.data || [])
+  const pending = pendingInvitesQuery.data
     .filter(invite => removedInvites.data?.invite.inviteId !== invite.inviteId)
     .map(invite => ({
       status: 'pending' as const,

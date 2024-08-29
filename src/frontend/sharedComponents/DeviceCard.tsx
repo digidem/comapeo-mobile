@@ -16,7 +16,7 @@ type DeviceCardProps = {
   deviceConnectionStatus?: DeviceConnectionStatus;
   thisDevice?: boolean;
   deviceId?: string;
-  dateAdded?: Date;
+  joinedAt?: string;
   style?: ViewStyleProp;
   onPress?: () => void;
 };
@@ -27,7 +27,7 @@ export const DeviceCard = ({
   style,
   thisDevice,
   deviceId,
-  dateAdded,
+  joinedAt,
   onPress,
   deviceConnectionStatus,
 }: DeviceCardProps) => {
@@ -55,6 +55,7 @@ export const DeviceCard = ({
         thisDevice={thisDevice}
         deviceType={deviceType}
         deviceId={deviceId}
+        joinedAt={joinedAt}
         iconSize={75}
       />
     </TouchableOpacity>

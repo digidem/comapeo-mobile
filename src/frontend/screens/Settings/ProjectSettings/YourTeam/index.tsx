@@ -152,6 +152,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
           style={{marginTop: 10}}
           name={coordinator.name || ''}
           deviceId={coordinator.deviceId}
+          joinedAt={coordinator.joinedAt}
           deviceType="mobile"
           thisDevice={deviceInfo.data?.deviceId === coordinator.deviceId}
         />
@@ -172,6 +173,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
           style={{marginTop: 10}}
           name={participant.name || ''}
           deviceId={participant.deviceId}
+          joinedAt={participant.joinedAt}
           deviceType="mobile"
           // This is a weak check. We should be using deviceIds, but those are not exposed
           thisDevice={

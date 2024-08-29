@@ -28,6 +28,7 @@ type DeviceNameWithIconProps = {
   deviceType: DeviceType;
   name: string;
   deviceId?: string;
+  joinedAt?: string;
   thisDevice?: boolean;
   iconSize?: number;
   style?: ViewStyleProp;
@@ -39,11 +40,13 @@ export const DeviceNameWithIcon = ({
   name,
   deviceConnectionStatus,
   deviceId,
+  joinedAt,
   thisDevice,
   iconSize,
   style,
 }: DeviceNameWithIconProps) => {
   const {formatMessage} = useIntl();
+  console.log('joined at ', joinedAt);
 
   let isDisconnected: boolean;
   switch (deviceConnectionStatus) {

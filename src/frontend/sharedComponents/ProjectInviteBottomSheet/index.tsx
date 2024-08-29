@@ -1,11 +1,25 @@
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import * as React from 'react';
 import {View} from 'react-native';
-import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import {InviteInternal, InviteRemovalReason} from '@mapeo/core/dist/invite-api';
+import {MapBuffers} from '@mapeo/core/dist/types';
 
-import {useSessionInvites} from '../../contexts/SessionInvitesContext';
+import {useApi} from '../../contexts/ApiContext';
+import {usePendingInvites} from '../../hooks/server/invites';
 import {BottomSheetModal, useBottomSheetModal} from '../BottomSheetModal';
 import {LeaveProjectModalContent} from '../LeaveProjectModalContent';
 import {InviteBottomSheetContent} from './InviteBottomSheetContent';
+
+export type SessionInvite =
+  | {
+      status: 'pending';
+      invite: MapBuffers<InviteInternal>;
+    }
+  | {
+      status: 'removed';
+      invite: MapBuffers<InviteInternal>;
+      removalReason: InviteRemovalReason;
+    };
 
 export const ProjectInviteBottomSheet = ({
   enabledForCurrentScreen,
@@ -20,37 +34,60 @@ export const ProjectInviteBottomSheet = ({
     openOnMount: false,
   });
 
+  // Ideally not needed but this is used for handling a state coordination complexity between the queried
+  // In the case of rejecting an invite, there's a moment in time where the pending invites query properly removes the rejected invite
+  // but the data from useRemovedInvites() does not yet have the corresponding data.
+  // Without this, the displayedInviteId will again be set to this rejected invite which is not desirable, as it will cause the invite bottom sheet
+  // to open again unintentionally and run into an (ideally) impossible state, resulting in subsequent invites not opening the sheet as expected.
+  const lastRejectedInviteIdRef = React.useRef<string | undefined>();
+
   const sessionInvites = useSessionInvites();
 
   const [displayedInviteId, setDisplayedInviteId] = React.useState(
-    () =>
-      sessionInvites.find(({status}) => status === 'pending')?.invite.inviteId,
+    () => sessionInvites.pending[0]?.invite.inviteId,
   );
 
-  if (!displayedInviteId) {
-    const nextPending = sessionInvites.find(({status}) => status === 'pending');
-    if (nextPending) {
-      setDisplayedInviteId(nextPending.invite.inviteId);
-    }
-  }
+  React.useEffect(() => {
+    if (!displayedInviteId) {
+      const nextPending = sessionInvites.pending.find(
+        ({invite}) => invite.inviteId !== lastRejectedInviteIdRef.current,
+      );
 
-  const displayedInvite = React.useMemo(() => {
-    return displayedInviteId
-      ? sessionInvites.find(
+      if (nextPending) {
+        setDisplayedInviteId(nextPending.invite.inviteId);
+      }
+    }
+  }, [displayedInviteId, setDisplayedInviteId, sessionInvites]);
+
+  const displayedInvite: SessionInvite | undefined = React.useMemo(() => {
+    const removed = displayedInviteId
+      ? sessionInvites.removed.find(
           s =>
-            s.invite.inviteId === displayedInviteId &&
-            // There's a race condition where after rejecting an invite, `sessionInvites` will update
-            // to reflect that before we unset `displayedInviteId` in `seeNextInviteOrClose()`.
-            // Without this check, `displayedInvite` is set to the rejected invite, which is currently not supported in the UI.
-            !(s.status === 'removed' && s.removalReason === 'rejected'),
+            s.invite.inviteId === displayedInviteId && s.reason !== 'rejected',
+        )
+      : undefined;
+
+    if (removed) {
+      return {
+        status: 'removed' as const,
+        removalReason: removed.reason,
+        invite: removed.invite,
+      };
+    }
+
+    return displayedInviteId
+      ? sessionInvites.pending.find(
+          s => s.invite.inviteId === displayedInviteId,
         )
       : undefined;
   }, [displayedInviteId, sessionInvites]);
 
   const seeNextInviteOrClose = () => {
-    const nextPendingInvite = sessionInvites
-      .filter(i => i.invite.inviteId !== displayedInviteId)
-      .find(i => i.status === 'pending');
+    sessionInvites.clearRemoved();
+
+    const nextPendingInvite = sessionInvites.pending.filter(
+      i => i.invite.inviteId !== displayedInviteId,
+    )[0];
 
     if (nextPendingInvite) {
       setDisplayedInviteId(nextPendingInvite.invite.inviteId);
@@ -62,9 +99,6 @@ export const ProjectInviteBottomSheet = ({
 
   // Open the invite sheet if there's a displayable invite and the sheet isn't already open
   React.useEffect(() => {
-    // TODO: Race condition where after rejecting an invite,
-    // this will sometimes call `openSheet()` with a stale `displayedInvite`,
-    // causing subsequent incoming pending invites to not automatically open the sheet
     if (
       displayedInvite &&
       !inviteBottomSheet.isOpen &&
@@ -105,7 +139,11 @@ export const ProjectInviteBottomSheet = ({
                 inviteBottomSheet.closeSheet();
               }}
               onDismiss={seeNextInviteOrClose}
-              onReject={seeNextInviteOrClose}
+              onReject={() => {
+                lastRejectedInviteIdRef.current =
+                  displayedInvite.invite.inviteId;
+                seeNextInviteOrClose();
+              }}
             />
           ) : (
             // Using null can sometimes cause a rendering issue with bottom sheet modal
@@ -141,3 +179,57 @@ export const ProjectInviteBottomSheet = ({
     </>
   );
 };
+
+function useSessionInvites() {
+  const pendingInvitesQuery = usePendingInvites();
+
+  const removedInvites = useRemovedInvites();
+  const pending = (pendingInvitesQuery.data || [])
+    // Potentially accounts for stale data resulting in an invite being in both pending and removed sources for a short period of time?
+    .filter(
+      invite =>
+        !removedInvites.data.find(
+          removedInvite => removedInvite.invite.inviteId === invite.inviteId,
+        ),
+    )
+    .map(invite => ({
+      status: 'pending' as const,
+      invite,
+    }));
+
+  return {
+    pending,
+    removed: removedInvites.data,
+    clearRemoved: removedInvites.clear,
+  };
+}
+
+function useRemovedInvites() {
+  const mapeoApi = useApi();
+
+  const [removedInvites, setRemovedInvites] = React.useState<
+    Array<{invite: MapBuffers<InviteInternal>; reason: InviteRemovalReason}>
+  >([]);
+
+  React.useEffect(() => {
+    function onInviteRemoved(
+      invite: MapBuffers<InviteInternal>,
+      reason: InviteRemovalReason,
+    ) {
+      setRemovedInvites(prev => [...prev, {invite, reason}]);
+    }
+
+    mapeoApi.invite.addListener('invite-removed', onInviteRemoved);
+
+    return () => {
+      mapeoApi.invite.removeListener('invite-removed', onInviteRemoved);
+    };
+  }, [mapeoApi, setRemovedInvites]);
+
+  return {
+    data: removedInvites,
+    clear: () => {
+      setRemovedInvites([]);
+    },
+  };
+}

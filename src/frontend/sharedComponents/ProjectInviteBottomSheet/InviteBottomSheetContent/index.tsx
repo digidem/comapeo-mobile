@@ -3,7 +3,7 @@ import {View} from 'react-native';
 import {CommonActions} from '@react-navigation/native';
 
 import {rootNavigationRef} from '../../../AppNavigator';
-import {SessionInvite} from '../../../contexts/SessionInvitesContext';
+import {SessionInvite} from '../';
 import {InviteAccepted} from './InviteAccepted';
 import {InviteCanceled} from './InviteCanceled';
 import {InviteErrorOccurred} from './InviteErrorOccurred';

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import {QueryClientProvider} from '@tanstack/react-query';
 import {StyleSheet} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
@@ -26,7 +26,7 @@ import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {MetricsProvider} from './MetricsContext';
 import {AppDiagnosticMetrics} from '../metrics/AppDiagnosticMetrics';
 import {DeviceDiagnosticMetrics} from '../metrics/DeviceDiagnosticMetrics';
-import {SessionInvitesProvider} from './SessionInvitesContext';
+import {queryClient} from '../App';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -36,8 +36,6 @@ type AppProvidersProps = {
   appMetrics: AppDiagnosticMetrics;
   deviceMetrics: DeviceDiagnosticMetrics;
 };
-
-const queryClient = new QueryClient();
 
 export const AppProviders = ({
   children,
@@ -61,13 +59,11 @@ export const AppProviders = ({
                         appMetrics={appMetrics}
                         deviceMetrics={deviceMetrics}>
                         <ActiveProjectProvider>
-                          <SessionInvitesProvider>
-                            <BottomSheetModalProvider>
-                              <PhotoPromiseProvider>
-                                <SecurityProvider>{children}</SecurityProvider>
-                              </PhotoPromiseProvider>
-                            </BottomSheetModalProvider>
-                          </SessionInvitesProvider>
+                          <BottomSheetModalProvider>
+                            <PhotoPromiseProvider>
+                              <SecurityProvider>{children}</SecurityProvider>
+                            </PhotoPromiseProvider>
+                          </BottomSheetModalProvider>
                         </ActiveProjectProvider>
                       </MetricsProvider>
                     </ApiProvider>

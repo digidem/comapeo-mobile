@@ -16,6 +16,8 @@ import {useOnBackgroundedAndForegrounded} from './hooks/useOnBackgroundedAndFore
 import {getSentryUserId} from './metrics/getSentryUserId';
 import {AppDiagnosticMetrics} from './metrics/AppDiagnosticMetrics';
 import {DeviceDiagnosticMetrics} from './metrics/DeviceDiagnosticMetrics';
+import {QueryClient} from '@tanstack/react-query';
+import {INVITE_KEY} from './hooks/server/invites';
 
 Sentry.init({
   dsn: 'https://e0e02907e05dc72a6da64c3483ed88a6@o4507148235702272.ingest.us.sentry.io/4507170965618688',
@@ -38,6 +40,15 @@ const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();
 initializeNodejs();
 SplashScreen.preventAutoHideAsync();
+
+export const queryClient = new QueryClient();
+
+function onInviteEvent() {
+  queryClient.invalidateQueries({queryKey: [INVITE_KEY]});
+}
+
+mapeoApi.invite.addListener('invite-received', onInviteEvent);
+mapeoApi.invite.addListener('invite-removed', onInviteEvent);
 
 // Defines task that handles background location updates for tracks feature
 TaskManager.defineTask(

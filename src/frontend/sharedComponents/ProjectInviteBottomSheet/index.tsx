@@ -34,10 +34,10 @@ export const ProjectInviteBottomSheet = ({
     openOnMount: false,
   });
 
-  // Ideally not needed but this is used for handling a state coordination complexity between the queried
-  // In the case of rejecting an invite, there's a moment in time where the pending invites query properly removes the rejected invite
-  // but the data from useRemovedInvites() does not yet have the corresponding data.
-  // Without this, the displayedInviteId will again be set to this rejected invite which is not desirable, as it will cause the invite bottom sheet
+  // Ideally not needed but this is used for handling a state coordination complexity after rejecting an invite.
+  // There's a moment in time where the pending invites query properly removes the rejected invite
+  // but the data from useRemovedInvites() does not yet have the invite that was rejected.
+  // Without this, the `displayedInviteId` will again be set to this rejected invite which is not desirable, as it will cause the invite bottom sheet
   // to open again unintentionally and run into an (ideally) impossible state, resulting in subsequent invites not opening the sheet as expected.
   const lastRejectedInviteIdRef = React.useRef<string | undefined>();
 
@@ -47,17 +47,15 @@ export const ProjectInviteBottomSheet = ({
     () => sessionInvites.pending[0]?.invite.inviteId,
   );
 
-  React.useEffect(() => {
-    if (!displayedInviteId) {
-      const nextPending = sessionInvites.pending.find(
-        ({invite}) => invite.inviteId !== lastRejectedInviteIdRef.current,
-      );
+  if (!displayedInviteId) {
+    const nextPending = sessionInvites.pending.find(
+      ({invite}) => invite.inviteId !== lastRejectedInviteIdRef.current,
+    );
 
-      if (nextPending) {
-        setDisplayedInviteId(nextPending.invite.inviteId);
-      }
+    if (nextPending) {
+      setDisplayedInviteId(nextPending.invite.inviteId);
     }
-  }, [displayedInviteId, setDisplayedInviteId, sessionInvites]);
+  }
 
   const displayedInvite: SessionInvite | undefined = React.useMemo(() => {
     if (!displayedInviteId) return undefined;

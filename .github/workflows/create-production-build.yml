@@ -1,4 +1,4 @@
-name: Build on Release Branch Merged into Deploy
+name: Create Production Build when Release Branch Merged into Deploy
 
 on:
   push:

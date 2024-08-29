@@ -10,7 +10,7 @@ We use [EAS](https://expo.dev/pricing) to build our app. There are different typ
 - Production: A Production build is an .aab that is used by the google play store to distribute CoMapeo. A production build should have been extensively tested and reflects the latest changes found in the `deploy` branch.
 - Pre: A pre build is an APK that is used for internal testing. It differs from a release candidate as it is typically not going to be used for a public release. This is most often used when there are features that want to be tested before they are ready to be QA's for an actual release
 
-This repo used github action to dispatch the creation of these builds. See [How To](#how-to) for instruction on building.
+This repo uses github actions to dispatch the creation of these builds. See [How To](#how-to) for instruction on building.
 
 ### Versioning
 

@@ -9,6 +9,7 @@ jobs:
 
     outputs:
       version: ${{ steps.read_version.outputs.VERSION }}
+      commit_sha: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}
 
     steps:
       - name: Checkout repository
@@ -28,7 +29,7 @@ jobs:
           major=$(echo $version | cut -d. -f1)
           minor=$(echo $version | cut -d. -f2)
           patch=$(echo $version | cut -d. -f3 | cut -d- -f1)
-          new_version="${major}.${minor}.0"
+          new_version="${major}.${minor}.0-RC.0"
           echo "VERSION=$new_version" >> $GITHUB_ENV
           echo "::set-output name=VERSION::$new_version"
 
@@ -43,6 +44,14 @@ jobs:
           echo "Creating and pushing new branch release/v$new_version"
           git checkout -b release/v$new_version || { echo "ERROR: Branch creation failed"; exit 1; }
           git push origin release/v$new_version --force || { echo "ERROR: Push failed"; exit 1; }
+
+      - name: Get latest commit SHA
+        id: get_commit_sha
+        run: |
+          commit_sha=$(git rev-parse HEAD)
+          echo "Commit SHA: $commit_sha"
+          echo "COMMIT_SHA=$commit_sha" >> $GITHUB_ENV
+          echo "::set-output name=COMMIT_SHA::$commit_sha"
 
       - name: Check if deploy branch exists
         id: check_deploy_branch
@@ -91,4 +100,7 @@ jobs:
         run: npm install
 
       - name: Build Release Candidate APK
+        env:
+          COMMIT_SHA: ${{ needs.create-release-branch.outputs.commit_sha }}
+          VERSION: ${{ needs.create-release-branch.outputs.version }}
         run: eas build --platform android --profile release-candidate

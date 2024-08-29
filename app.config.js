@@ -15,7 +15,7 @@ const NAME =
   }[process.env.APP_VARIANT] ?? '';
 
 const VERSION = process.env.VERSION ?? 'unknown';
-const LATEST_SHA = process.env.LATEST_SHA;
+const LATEST_SHA = process.env.COMMIT_SHA;
 
 /**
  * @param {object} opts

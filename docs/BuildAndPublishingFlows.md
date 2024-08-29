@@ -22,7 +22,7 @@ The `develop` branch will always be one `minor` version ahead of the released ve
 
 ## Release Candidate
 
-A Release Candidate can be built directly in the action tab on the the github repo. Click on the action "Create Release Branch and Build RC". This will automatically create a Pull Request from the latest develop, with its base pointing to Deploy. As well, it will dispatch a build with EAS that will build a `Release Candidate` apk. The version of this build will be the version of develop, with `pre` being replaced with `RC.0` plus the SHA number of the latest commit. (Eg. If the develop version is `1.4.0-pre`, this Release Candidate will be `1.4.0-Rc+{SHA#OfLatestCommit}').
+A Release Candidate can be built directly in the action tab on the the github repo. Click on the action "Create Release Branch and Build RC". This will automatically create a Pull Request from the latest develop, with its base pointing to Deploy. As well, it will dispatch a build with EAS that will build a `Release Candidate` apk. The version of this build will be the version of develop, with `pre` being replaced with `RC.0` plus the SHA number of the latest commit. (Eg. If the develop version is `1.4.0-pre`, this Release Candidate will be `1.4.0-RC+{SHA#OfLatestCommit}').
 
 ## Production
 

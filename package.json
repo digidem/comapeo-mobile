@@ -1,6 +1,6 @@
 {
   "name": "comapeo-mobile",
-  "version": "1.0.0-pre",
+  "version": "0.0.1",
   "private": true,
   "main": "index.js",
   "scripts": {

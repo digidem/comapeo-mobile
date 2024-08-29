@@ -69,10 +69,7 @@ import {CreateTestDataScreen} from '../../screens/Settings/CreateTestData';
 import {TrackScreen} from '../../screens/Track/index.tsx';
 import {DataAndPrivacy} from '../../screens/Settings/DataAndPrivacy/DataAndPrivacy';
 import {SettingsPrivacyPolicy} from '../../screens/Settings/DataAndPrivacy/SettingsPrivacyPolicy';
-import {
-  TrackEdit,
-  createNavigationOptions as createTrackEditNavOptions,
-} from '../../screens/TrackEdit/index.tsx';
+import {TrackEdit} from '../../screens/TrackEdit/index.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -299,7 +296,7 @@ export const createDefaultScreenGroup = ({
     <RootStack.Screen
       name="TrackEdit"
       component={TrackEdit}
-      options={createTrackEditNavOptions({intl})}
+      options={{headerTitle: intl(TrackEdit.navTitle)}}
     />
     {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
       <RootStack.Screen

@@ -1250,6 +1250,10 @@
     "description": "Title for editing track screen",
     "message": "Edit Track"
   },
+  "screens.TrackEdit.track": {
+    "description": "Preset title for new track screen",
+    "message": "Track"
+  },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",
     "message": "Show Options"

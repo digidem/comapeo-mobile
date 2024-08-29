@@ -29,7 +29,9 @@ export function useTracks() {
   return useSuspenseQuery({
     queryKey: [TRACK_KEY, projectId],
     queryFn: async () => {
-      return projectApi.track.getMany();
+      return process.env.EXPO_PUBLIC_FEATURE_TRACKS
+        ? projectApi.track.getMany()
+        : [];
     },
   });
 }

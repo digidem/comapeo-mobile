@@ -70,7 +70,7 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
   useFocusEffect(
     useCallback(() => {
       navigation.setOptions({
-        title: formatMessage(m.presetTitle),
+        title: formatMessage(m.trackEditScreenTitle),
         headerLeft: props => <HeaderLeft headerBackButtonProps={props} />,
         headerRight: () => (
           <SaveButton
@@ -85,7 +85,7 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
   return (
     <Editor
       photos={[]}
-      presetName={formatMessage(m.trackEditScreenTitle)}
+      presetName={formatMessage(m.presetTitle)}
       notesComponent={<TrackDescriptionField />}
       PresetIcon={<TrackIcon style={styles.icon} />}
       isTrack={true}

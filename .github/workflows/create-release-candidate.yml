@@ -9,6 +9,7 @@ jobs:
 
     outputs:
       version: ${{ steps.read_version.outputs.VERSION }}
+      branch_name: ${{ steps.read_version.outputs.BRANCH_NAME }}
       commit_sha: ${{ steps.get_commit_sha.outputs.COMMIT_SHA }}
 
     steps:
@@ -29,9 +30,12 @@ jobs:
           major=$(echo $version | cut -d. -f1)
           minor=$(echo $version | cut -d. -f2)
           patch=$(echo $version | cut -d. -f3 | cut -d- -f1)
-          new_version="${major}.${minor}.0-RC.0"
+          new_version="${major}.${minor}.${patch}-RC.0"
+          branch_name="release/v${major}.${minor}.${patch}"
           echo "VERSION=$new_version" >> $GITHUB_ENV
+          echo "BRANCH_NAME=$branch_name" >> $GITHUB_ENV
           echo "::set-output name=VERSION::$new_version"
+          echo "::set-output name=BRANCH_NAME::$branch_name"
 
       - name: Configure git
         run: |
@@ -40,10 +44,10 @@ jobs:
 
       - name: Create and push new branch
         run: |
-          new_version=${{ env.VERSION }}
-          echo "Creating and pushing new branch release/v$new_version"
-          git checkout -b release/v$new_version || { echo "ERROR: Branch creation failed"; exit 1; }
-          git push origin release/v$new_version --force || { echo "ERROR: Push failed"; exit 1; }
+          name=${{ env.BRANCH_NAME }}
+          echo "Creating and pushing new branch $name"
+          git checkout -b $name || { echo "ERROR: Branch creation failed"; exit 1; }
+          git push origin $name --force || { echo "ERROR: Push failed"; exit 1; }
 
       - name: Get latest commit SHA
         id: get_commit_sha
@@ -70,10 +74,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           new_version=${{ env.VERSION }}
+          branch_name=${{ env.BRANCH_NAME }}
           curl -X POST \
             -H "Accept: application/vnd.github.v3+json" \
             -H "Authorization: token $GITHUB_TOKEN" \
-            -d "{\"title\":\"Release v$new_version\",\"body\":\"This PR is for the release of version $new_version\",\"head\":\"release/v$new_version\",\"base\":\"deploy\"}" \
+            -d "{\"title\":\"$branch_name\",\"body\":\"This PR is for the release of version $new_version\",\"head\":\"$branch_name\",\"base\":\"deploy\"}" \
             https://api.github.com/repos/${{ github.repository }}/pulls
 
       - name: Notify if deploy branch is missing
@@ -94,7 +99,7 @@ jobs:
       - name: Checkout Release Branch
         uses: actions/checkout@v3
         with:
-          ref: release/v${{ needs.create-release-branch.outputs.version }}
+          ref: ${{ needs.create-release-branch.outputs.branch_name }}
 
       - name: 📦 Install dependencies
         run: npm install

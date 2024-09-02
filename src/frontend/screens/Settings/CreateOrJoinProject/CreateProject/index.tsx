@@ -125,7 +125,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
 
   async function importConfigFile() {
     try {
-      const asset = await selectFile(['mapeoconfig', 'mapeosettings']);
+      const asset = await selectFile(['comapeocat']);
       if (!asset) return;
       setConfigFileResult({type: 'success', file: asset});
     } catch (err) {

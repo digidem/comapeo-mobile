@@ -10,6 +10,7 @@ import {ClientGeneratedObservation, Position} from '../../../sharedTypes';
 import {Observation, Preset} from '@mapeo/schema';
 import {usePresetsQuery} from '../../server/presets';
 import {matchPreset} from '../../../lib/utils';
+import {LocationObject} from 'expo-location';
 
 const emptyObservation: ClientGeneratedObservation = {
   metadata: {},
@@ -34,7 +35,7 @@ export type DraftObservationSlice = {
     deletePhoto: (uri: string) => void;
     existingObservationToDraft: (observation: Observation) => void;
     updateObservationPosition: (props: {
-      position: Position | undefined;
+      position: Position | LocationObject | undefined;
       manualLocation: boolean;
     }) => void;
     updateTags: (tagKey: string, value: Observation['tags'][0]) => void;
@@ -77,7 +78,13 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
           lat: props?.position?.coords?.latitude,
           metadata: {
             ...prevValue.metadata,
-            position: props.position,
+            position: {
+              coords: convertLocationObjectCoordsToPositionCoords(
+                props.position?.coords,
+              ),
+              mocked: !!props.position?.mocked,
+              timestamp: props.position?.timestamp?.toString(),
+            },
             manualLocation: props.manualLocation,
           },
         },
@@ -163,3 +170,33 @@ export const usePreset = () => {
 
 export const _usePersistedDraftObservationActions = () =>
   usePersistedDraftObservation(state => state.actions);
+
+type PositionCoords = NonNullable<Position>['coords'];
+
+function convertLocationObjectCoordsToPositionCoords(
+  coords: PositionCoords | LocationObject['coords'] | undefined,
+): PositionCoords | undefined {
+  if (!coords) {
+    return undefined;
+  }
+
+  // If it's already a Position, return it as is
+  if (
+    typeof coords.latitude === 'number' &&
+    typeof coords.longitude === 'number'
+  ) {
+    return coords as PositionCoords;
+  }
+
+  // If it's a LocationObject, convert null to undefined
+  const converted: PositionCoords = {
+    latitude: coords.latitude ?? undefined,
+    longitude: coords.longitude ?? undefined,
+    altitude: coords.altitude ?? undefined,
+    heading: coords.heading ?? undefined,
+    speed: coords.speed ?? undefined,
+    accuracy: coords.accuracy ?? undefined,
+  };
+
+  return converted;
+}

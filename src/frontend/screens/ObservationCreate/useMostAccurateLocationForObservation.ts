@@ -43,17 +43,9 @@ export function useMostAccurateLocationForObservation() {
         },
         debounceLocation()(location => {
           if (ignore) return;
-          const newCoord = !location
-            ? undefined
-            : Object.entries(location.coords).map(
-                ([key, val]) => [key, val === null ? undefined : val] as const,
-              );
+
           updateObservationPosition({
-            position: {
-              mocked: false,
-              coords: !newCoord ? undefined : Object.fromEntries(newCoord),
-              timestamp: location?.timestamp.toString(),
-            },
+            position: location,
             manualLocation: false,
           });
         }),

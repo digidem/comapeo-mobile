@@ -1,15 +1,15 @@
-import React, {memo} from 'react';
+import React, {memo, useState, useEffect} from 'react';
 import {Image} from 'react-native';
-
 import {Circle} from './Circle';
 import {IconSize} from '../../sharedTypes';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {useGetPresetIcon} from '../../hooks/server/presets';
+import {useGetPresetIconFromPreset} from '../../hooks/server/presets';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import {PresetValue} from '@mapeo/schema';
 
 interface PresetIconProps {
+  preset?: PresetValue;
   size?: IconSize;
-  name?: string;
   testID?: string;
 }
 
@@ -26,22 +26,30 @@ const radii = {
 };
 
 export const PresetIcon = memo<PresetIconProps>(
-  ({size = 'medium', name, testID}) => {
+  ({preset, size = 'medium', testID}) => {
     const iconSize = iconSizes[size] || 35;
-    const {data, isLoading} = useGetPresetIcon(size, name);
-    const [error, setError] = React.useState(false);
+    if (!preset) {
+      return <MaterialIcon name="place" size={iconSize} />;
+    }
+    const [iconUrl, setIconUrl] = useState<string | null>(null);
+    const {data, isLoading, error} = useGetPresetIconFromPreset(preset!, size);
+    useEffect(() => {
+      if (data && !iconUrl) {
+        setIconUrl(data);
+      }
+    }, [data]);
+    if (isLoading && !iconUrl) return <UIActivityIndicator size={30} />;
 
-    if (isLoading) return <UIActivityIndicator size={30} />;
-
-    // Fallback to a default icon if we can't load the icon from mapeo-server
-    if (error || !name) return <MaterialIcon name="place" size={iconSize} />;
+    if (error || !iconUrl) {
+      return <MaterialIcon name="place" size={iconSize} />;
+    }
 
     return (
       <Image
         style={{width: iconSize, height: iconSize}}
         resizeMode="contain"
-        source={{uri: data}}
-        onError={() => setError(true)}
+        source={{uri: iconUrl}}
+        onError={() => setIconUrl(null)}
         testID={testID}
       />
     );
@@ -49,13 +57,13 @@ export const PresetIcon = memo<PresetIconProps>(
 );
 
 export const PresetCircleIcon = ({
-  name,
+  preset,
   size = 'medium',
   testID,
 }: PresetIconProps) => {
   return (
     <Circle radius={radii[size]} style={{elevation: 5}}>
-      <PresetIcon name={name} size={size} testID={testID} />
+      <PresetIcon preset={preset} size={size} testID={testID} />
     </Circle>
   );
 };

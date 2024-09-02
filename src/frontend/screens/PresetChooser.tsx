@@ -8,7 +8,6 @@ import {
   Text,
 } from 'react-native';
 import {defineMessages, FormattedMessage} from 'react-intl';
-
 import {useDraftObservation} from '../hooks/useDraftObservation';
 import {PresetCircleIcon} from '../sharedComponents/icons/PresetIcon';
 import {WHITE} from '../lib/styles';
@@ -89,16 +88,18 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
   }, [navigation, existingPreset, handleGoBack]);
 
   const presetsList = !presets
-    ? null
+    ? []
     : Array.from(presets)
         // Only show presets where the geometry property includes "point"
         .filter(p => p.geometry.includes('point'))
         // Sort presets by sort property and then by name, then filter only point presets
-        .sort((a, b) => {
-          return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
-        });
+        .sort((a, b) =>
+          a.name.toLowerCase().localeCompare(b.name.toLowerCase()),
+        );
 
   const handleSelectPreset = (selectedPreset: Preset) => {
+    if (!selectedPreset) return;
+
     updatePreset(selectedPreset);
     if (observationId) {
       navigation.navigate('ObservationEdit', {observationId});
@@ -156,7 +157,7 @@ const Item = React.memo(
       activeOpacity={1}
       underlayColor="#000033">
       <View style={styles.cellContainer}>
-        <PresetCircleIcon size="medium" name={item.name} />
+        <PresetCircleIcon preset={item} size="medium" />
         <Text numberOfLines={3} style={styles.categoryName}>
           <DynFormattedMessage
             id={`presets.${item.docId}.name`}

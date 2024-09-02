@@ -3,6 +3,7 @@ import {
   useMutation,
   useQueryClient,
   useQuery,
+  keepPreviousData,
 } from '@tanstack/react-query';
 import {PresetValue} from '@mapeo/schema';
 import {IconSize} from '../../sharedTypes';
@@ -36,25 +37,29 @@ export function usePresetsMutation() {
   });
 }
 
-export function useGetPresetIcon(size: IconSize, name?: string) {
-  const {projectId, projectApi} = useActiveProject();
+export function useGetPresetIconFromPreset(
+  preset: PresetValue,
+  size: IconSize,
+) {
+  const {projectApi} = useActiveProject();
 
-  return useQuery({
-    queryKey: ['presetIcon', projectId, size, name],
-    enabled: !!name,
+  return useQuery<string, Error>({
+    queryKey: ['presetIconFromPreset', preset.iconRef?.docId, size],
+    enabled: !!preset.iconRef?.docId,
     queryFn: async () => {
-      const currentPreset = await projectApi.preset
-        .getMany()
-        .then(res => res.find(p => p.name === name));
-
-      return await projectApi.$icons.getIconUrl(
-        currentPreset?.iconRef?.docId!,
-        {
-          mimeType: 'image/png',
-          size: size,
-          pixelDensity: 3,
-        },
-      );
+      if (!preset.iconRef?.docId) {
+        throw new Error('Preset icon reference not found');
+      }
+      return await projectApi.$icons.getIconUrl(preset.iconRef.docId, {
+        mimeType: 'image/png',
+        size: size,
+        pixelDensity: 3,
+      });
     },
+    retry: 2,
+    retryDelay: 2000,
+    staleTime: 60000,
+    gcTime: 300000,
+    placeholderData: keepPreviousData,
   });
 }

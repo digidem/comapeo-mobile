@@ -78,12 +78,12 @@ function ObservationListItemNotMemoized({
           <View style={styles.photoContainer}>
             <PhotoStack photos={photos} />
             <View style={styles.smallIconContainer}>
-              <PresetCircleIcon name={preset.name} size="small" />
+              <PresetCircleIcon preset={preset} size="small" />
             </View>
           </View>
         ) : (
           <PresetCircleIcon
-            name={preset.name}
+            preset={preset}
             size="medium"
             testID={`OBS.${preset?.name}-list-icon`}
           />

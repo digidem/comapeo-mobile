@@ -14,6 +14,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import {BottomSheetModalContent} from '../BottomSheetModal';
 import {useAcceptInvite} from '../../hooks/server/invites';
 import {ErrorBottomSheet} from '../ErrorBottomSheet';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
 
 const m = defineMessages({
   leaveProj: {
@@ -70,38 +71,30 @@ export const LeaveProject = ({
   const [error, setError] = React.useState(false);
   const [isChecked, setIsChecked] = React.useState(false);
   const leaveProject = useLeaveProject();
-  const [combinedLoading, setCombinedLoading] = React.useState(false);
+  const {projectId} = useActiveProject();
 
   function handleLeavePress() {
     if (!isChecked) {
       setError(true);
       return;
     }
-    setCombinedLoading(true);
-    // we want to accept first because the invitor will be able to cancel. this avoids the user leaving a project, and then their invite being cancelled before they were able to join.
+    // we want to accept first because the invitor will be able to cancel.
+    // this avoids the user leaving a project, and then their invite being cancelled before they were able to join.
     accept.mutate(
       {inviteId},
       {
         onSuccess: () => {
-          closeSheet();
-          setCombinedLoading(false);
+          leaveProject.mutate(projectId, {
+            onSuccess: () => {
+              closeSheet();
+            },
+            onError: err => {
+              Sentry.captureException(err);
+            },
+          });
         },
-        // This is commented out for now and issue created: https://github.com/digidem/comapeo-mobile/issues/525
-        // onSuccess: () => {
-        //   leaveProject.mutate(undefined, {
-        //     onSuccess: () => {
-        //       closeSheet();
-        //       setCombinedLoading(false);
-        //     },
-        //     onError: err => {
-        //       Sentry.captureException(err)
-        //       setCombinedLoading(false);
-        //     },
-        //   });
-        // },
         onError: err => {
           Sentry.captureException(err);
-          setCombinedLoading(false);
         },
       },
     );
@@ -109,7 +102,7 @@ export const LeaveProject = ({
 
   return (
     <>
-      {combinedLoading ? (
+      {accept.status === 'pending' || leaveProject.status === 'pending' ? (
         <LeavingProjectProgress projectName={projectName} />
       ) : (
         <BottomSheetModalContent

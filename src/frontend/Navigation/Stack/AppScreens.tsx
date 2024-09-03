@@ -66,10 +66,14 @@ import {
 } from '../../screens/ObservationCreate';
 import {AboutSettings} from '../../screens/Settings/About';
 import {CreateTestDataScreen} from '../../screens/Settings/CreateTestData';
+import {
+  TrackScreen,
+  createNavigationOptions as createTrackNavigationOptions,
+} from '../../screens/Track/index.tsx';
 import {SyncSettings} from '../../screens/Settings/ProjectSettings/SyncSettings';
-import {TrackScreen} from '../../screens/Track/index.tsx';
 import {DataAndPrivacy} from '../../screens/Settings/DataAndPrivacy/DataAndPrivacy';
 import {SettingsPrivacyPolicy} from '../../screens/Settings/DataAndPrivacy/SettingsPrivacyPolicy';
+import {TrackEdit} from '../../screens/TrackEdit/index.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -269,7 +273,7 @@ export const createDefaultScreenGroup = ({
     <RootStack.Screen
       name="Track"
       component={TrackScreen}
-      options={{headerTitle: intl(TrackScreen.navTitle)}}
+      options={createTrackNavigationOptions({intl})}
     />
 
     <RootStack.Screen
@@ -298,6 +302,11 @@ export const createDefaultScreenGroup = ({
       name="SettingsPrivacyPolicy"
       component={SettingsPrivacyPolicy}
       options={{headerTitle: intl(SettingsPrivacyPolicy.navTitle)}}
+    />
+    <RootStack.Screen
+      name="TrackEdit"
+      component={TrackEdit}
+      options={{headerTitle: intl(TrackEdit.navTitle)}}
     />
     {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
       <RootStack.Screen

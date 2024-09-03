@@ -46,6 +46,28 @@ export function useTrackQuery(docId: string) {
   });
 }
 
+export function useEditTrackMutation() {
+  const queryClient = useQueryClient();
+  const {projectId, projectApi} = useActiveProject();
+
+  return useMutation({
+    mutationFn: async ({
+      versionId,
+      updatedTrack,
+    }: {
+      versionId: string;
+      updatedTrack: TrackValue;
+    }) => {
+      return projectApi.track.update(versionId, updatedTrack);
+    },
+    onSuccess: data => {
+      queryClient.invalidateQueries({
+        queryKey: [TRACK_KEY, projectId, data.docId],
+      });
+    },
+  });
+}
+
 export function useDeleteTrackMutation() {
   const queryClient = useQueryClient();
   const {projectApi} = useActiveProject();

@@ -41,12 +41,6 @@ export const TrackScreen = ({
 }: NativeRootNavigationProps<'Track'>) => {
   const {trackId} = route.params;
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => <TrackHeaderRight trackId={trackId} />,
-    });
-  }, [navigation, trackId]);
-
   const {data: track} = useTrackQuery(trackId);
   const {data: observations} = useObservations();
   const trackObservations = observations.filter(observation =>

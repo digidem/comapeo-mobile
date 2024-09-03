@@ -6,18 +6,18 @@ import {useTrackQuery} from '../../hooks/server/track';
 import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {EditIcon} from '../../sharedComponents/icons';
-import {useCreatedByToDeviceId} from '../../hooks/server/projects.ts';
+import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 
 export const TrackHeaderRight = ({trackId}: {trackId: string}) => {
   const {data: track, isLoading: isTrackLoading} = useTrackQuery(trackId);
-  const {data: createdByDeviceId, isPending: isCreatedByDeviceIdPending} =
-    useCreatedByToDeviceId(track?.createdBy);
+  const {data: convertedDeviceId, isPending: isDeviceIdPending} =
+    useOriginalVersionIdToDeviceId(track?.originalVersionId);
 
   const {data: deviceInfo, isPending: isDeviceInfoPending} = useDeviceInfo();
   const navigation = useNavigationFromRoot();
 
-  if (isDeviceInfoPending || isCreatedByDeviceIdPending || isTrackLoading) {
+  if (isDeviceInfoPending || isDeviceIdPending || isTrackLoading) {
     return (
       <UIActivityIndicator
         size={20}
@@ -26,7 +26,7 @@ export const TrackHeaderRight = ({trackId}: {trackId: string}) => {
     );
   }
 
-  const canEdit = createdByDeviceId === deviceInfo?.deviceId;
+  const canEdit = convertedDeviceId === deviceInfo?.deviceId;
 
   return canEdit ? (
     <IconButton

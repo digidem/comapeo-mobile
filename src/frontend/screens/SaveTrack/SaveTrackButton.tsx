@@ -16,7 +16,6 @@ export const SaveTrackButton: FC = () => {
     saveTrack.mutate(
       {
         schemaName: 'track',
-        attachments: [],
         observationRefs: currentTrack.observationRefs,
         tags: {
           notes: description,

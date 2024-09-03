@@ -20,7 +20,7 @@ const m = defineMessages({
   syncPreviewsDescription: {
     id: 'screens.SyncSettings.syncPreviewsDescription',
     defaultMessage:
-      'Photos will sync at a reduced smaller size. Device will not sync audio or video.',
+      'Photos will sync at a reduced smaller size. Device will <bold>not</bold> sync audio or video.',
   },
   syncEverything: {
     id: 'screens.SyncSettings.syncEverything',
@@ -29,7 +29,7 @@ const m = defineMessages({
   syncEverythingDescription: {
     id: 'screens.SyncSettings.syncEverythingDescription',
     defaultMessage:
-      'Your device will sync all content at full size, including photos, audio, and videos.\n\nNote: This will use more storage.',
+      'Your device will sync <bold>all</bold> content at full size, including photos, audio, and videos.\n\nNote: This will use more storage.',
   },
 });
 

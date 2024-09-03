@@ -21,19 +21,21 @@ export const PresetView = ({
   onPressPreset,
   presetName,
   PresetIcon,
-  presetDisabled,
+  presetDisabled = false,
 }: PresetViewProps) => {
   const {formatMessage} = useIntl();
   return (
     <TouchableOpacity
       disabled={presetDisabled}
-      onPress={onPressPreset}
+      onPress={presetDisabled ? onPressPreset : undefined}
       style={styles.preset}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         {PresetIcon}
         <Text style={styles.categoryName}>{presetName}</Text>
       </View>
-      <Text style={styles.changeButtonText}>{formatMessage(m.change)}</Text>
+      {!presetDisabled && (
+        <Text style={styles.changeButtonText}>{formatMessage(m.change)}</Text>
+      )}
     </TouchableOpacity>
   );
 };

@@ -1,4 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
+import mapObject, {mapObjectSkip} from 'map-obj';
 import {useCallback} from 'react';
 import {
   watchPositionAsync,
@@ -9,6 +10,7 @@ import {
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
+import type {Position} from '../../sharedTypes';
 
 export function useMostAccurateLocationForObservation() {
   const value = usePersistedDraftObservation(store => store.value);
@@ -43,17 +45,17 @@ export function useMostAccurateLocationForObservation() {
         },
         debounceLocation()(location => {
           if (ignore) return;
-          const newCoord = !location
-            ? undefined
-            : Object.entries(location.coords).map(
-                ([key, val]) => [key, val === null ? undefined : val] as const,
-              );
+
+          const position: Position = {mocked: false};
+          if (location) {
+            position.coords = mapObject(location.coords, (key, val) =>
+              val == null ? mapObjectSkip : [key, val],
+            );
+            position.timestamp = new Date(location.timestamp).toISOString();
+          }
+
           updateObservationPosition({
-            position: {
-              mocked: false,
-              coords: !newCoord ? undefined : Object.fromEntries(newCoord),
-              timestamp: location?.timestamp.toString(),
-            },
+            position,
             manualLocation: false,
           });
         }),

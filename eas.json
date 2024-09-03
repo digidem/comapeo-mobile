@@ -1,6 +1,7 @@
 {
   "cli": {
-    "version": ">= 7.8.0"
+    "version": ">= 7.8.0",
+    "appVersionSource": "remote"
   },
   "build": {
     "development": {
@@ -18,11 +19,11 @@
         "APP_VARIANT": "development"
       }
     },
-    "test": {
+    "release-candidate": {
       "distribution": "internal",
       "channel": "preview",
       "env": {
-        "APP_VARIANT": "test"
+        "APP_VARIANT": "releaseCandidate"
       },
       "android": {
         "image": "latest",
@@ -42,6 +43,21 @@
       "channel": "production",
       "env": {
         "APP_VARIANT": "production"
+      },
+      "autoIncrement": true
+    },
+    "pre-release": {
+      "distribution": "internal",
+      "channel": "preview",
+      "env": {
+        "APP_VARIANT": "preRelease"
+      },
+      "android": {
+        "image": "latest",
+        "buildType": "apk"
+      },
+      "ios": {
+        "image": "latest"
       }
     }
   },

@@ -3,12 +3,11 @@ import {Image} from 'react-native';
 import {Circle} from './Circle';
 import {IconSize} from '../../sharedTypes';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {useGetPresetIconFromPreset} from '../../hooks/server/presets';
+import {useGetPresetIcon} from '../../hooks/server/presets';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {PresetValue} from '@mapeo/schema';
 
 interface PresetIconProps {
-  preset?: PresetValue;
+  presetDocId?: string;
   size?: IconSize;
   testID?: string;
 }
@@ -26,18 +25,16 @@ const radii = {
 };
 
 export const PresetIcon = memo<PresetIconProps>(
-  ({preset, size = 'medium', testID}) => {
+  ({presetDocId, size = 'medium', testID}) => {
     const iconSize = iconSizes[size] || 35;
-    if (!preset) {
+    if (!presetDocId) {
       return <MaterialIcon name="place" size={iconSize} />;
     }
-    const [iconUrl, setIconUrl] = useState<string | null>(null);
-    const {data, isLoading, error} = useGetPresetIconFromPreset(preset!, size);
-    useEffect(() => {
-      if (data && !iconUrl) {
-        setIconUrl(data);
-      }
-    }, [data]);
+    const {
+      data: iconUrl,
+      isLoading,
+      error,
+    } = useGetPresetIcon(presetDocId, size);
     if (isLoading && !iconUrl) return <UIActivityIndicator size={30} />;
 
     if (error || !iconUrl) {
@@ -49,7 +46,6 @@ export const PresetIcon = memo<PresetIconProps>(
         style={{width: iconSize, height: iconSize}}
         resizeMode="contain"
         source={{uri: iconUrl}}
-        onError={() => setIconUrl(null)}
         testID={testID}
       />
     );
@@ -57,13 +53,13 @@ export const PresetIcon = memo<PresetIconProps>(
 );
 
 export const PresetCircleIcon = ({
-  preset,
+  presetDocId,
   size = 'medium',
   testID,
 }: PresetIconProps) => {
   return (
     <Circle radius={radii[size]} style={{elevation: 5}}>
-      <PresetIcon preset={preset} size={size} testID={testID} />
+      <PresetIcon presetDocId={presetDocId} size={size} testID={testID} />
     </Circle>
   );
 };

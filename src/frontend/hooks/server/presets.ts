@@ -37,20 +37,17 @@ export function usePresetsMutation() {
   });
 }
 
-export function useGetPresetIconFromPreset(
-  preset: PresetValue,
-  size: IconSize,
-) {
-  const {projectApi} = useActiveProject();
+export function useGetPresetIcon(docId: string | undefined, size: IconSize) {
+  const {projectId, projectApi} = useActiveProject();
 
   return useQuery<string, Error>({
-    queryKey: ['presetIconFromPreset', preset.iconRef?.docId, size],
-    enabled: !!preset.iconRef?.docId,
+    queryKey: ['presetIconFromDocId', projectId, docId, size],
+    enabled: !!docId,
     queryFn: async () => {
-      if (!preset.iconRef?.docId) {
+      if (!docId) {
         throw new Error('Preset icon reference not found');
       }
-      return await projectApi.$icons.getIconUrl(preset.iconRef.docId, {
+      return await projectApi.$icons.getIconUrl(docId, {
         mimeType: 'image/png',
         size: size,
         pixelDensity: 3,

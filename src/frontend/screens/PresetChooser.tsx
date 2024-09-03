@@ -87,19 +87,13 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
     });
   }, [navigation, existingPreset, handleGoBack]);
 
-  const presetsList = !presets
-    ? []
-    : Array.from(presets)
-        // Only show presets where the geometry property includes "point"
-        .filter(p => p.geometry.includes('point'))
-        // Sort presets by sort property and then by name, then filter only point presets
-        .sort((a, b) =>
-          a.name.toLowerCase().localeCompare(b.name.toLowerCase()),
-        );
+  const presetsList = Array.from(presets)
+    // Only show presets where the geometry property includes "point"
+    .filter(p => p.geometry.includes('point'))
+    // Sort presets by sort property and then by name, then filter only point presets
+    .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
 
   const handleSelectPreset = (selectedPreset: Preset) => {
-    if (!selectedPreset) return;
-
     updatePreset(selectedPreset);
     if (observationId) {
       navigation.navigate('ObservationEdit', {observationId});
@@ -157,7 +151,7 @@ const Item = React.memo(
       activeOpacity={1}
       underlayColor="#000033">
       <View style={styles.cellContainer}>
-        <PresetCircleIcon preset={item} size="medium" />
+        <PresetCircleIcon presetDocId={item.iconRef?.docId} size="medium" />
         <Text numberOfLines={3} style={styles.categoryName}>
           <DynFormattedMessage
             id={`presets.${item.docId}.name`}

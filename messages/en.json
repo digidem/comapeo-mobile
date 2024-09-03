@@ -1235,6 +1235,21 @@
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
     "message": "Waiting for devices"
   },
+  "screens.SyncSettings.syncEverything": {
+    "message": "Sync Everything"
+  },
+  "screens.SyncSettings.syncEverythingDescription": {
+    "message": "Your device will sync <bold>all</bold> content at full size, including photos, audio, and videos. Note: This will use more storage."
+  },
+  "screens.SyncSettings.syncPreviews": {
+    "message": "Sync Previews (Photos Only)"
+  },
+  "screens.SyncSettings.syncPreviewsDescription": {
+    "message": "Photos will sync at a reduced smaller size. Device will <bold>not</bold> sync audio or video."
+  },
+  "screens.SyncSettings.title": {
+    "message": "Sync Settings"
+  },
   "screens.Track.ObservationList.observations": {
     "message": "Observations"
   },
@@ -1249,22 +1264,6 @@
   "screens.Track.tracks": {
     "message": "Tracks"
   },
-  "screens.SyncSettings.syncEverything": {
-    "message": "Sync Everything"
-  },
-  "screens.SyncSettings.syncEverythingDescription": {
-    "message": "Your device will sync all content at full size, including photos, audio, and videos. Note: This will use more storage."
-  },
-  "screens.SyncSettings.syncPreviews": {
-    "message": "Sync Previews (Photos Only)"
-  },
-  "screens.SyncSettings.syncPreviewsDescription": {
-    "message": "Photos will sync at a reduced smaller size. Device will not sync audio or video."
-  },
-  "screens.SyncSettings.title": {
-    "message": "Sync Settings"
-  },
-
   "screens.TrackEdit.title": {
     "description": "Title for editing track screen",
     "message": "Edit Track"

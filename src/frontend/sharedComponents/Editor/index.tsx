@@ -35,7 +35,6 @@ export const Editor = ({
   actionsRow,
   notesComponent,
   isTrack = false,
-  presetDisabled = false,
   ...presetProps
 }: EditorProps) => {
   return (

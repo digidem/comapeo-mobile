@@ -28,13 +28,7 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
   route,
 }) => {
   const {formatMessage} = useIntl();
-  useEffect(() => {
-    if (!route.params || !route.params.trackId) {
-      navigation.goBack();
-    }
-  }, [route, navigation]);
-  const {trackId} = route.params as {trackId: string};
-
+  const {trackId} = route.params;
   const {data: track} = useTrackQuery(trackId);
   const editTrackMutation = useEditTrackMutation();
   const description = usePersistedTrack(state => state.description);

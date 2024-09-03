@@ -7,16 +7,17 @@ import {BLACK} from '../../lib/styles';
 import {useTracks} from '../../hooks/server/track';
 import {Track} from '@mapeo/schema';
 import {OnPressEvent} from '@rnmapbox/maps/lib/typescript/src/types/OnPressEvent';
+import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 
 export const TracksMapLayer = () => {
   const {data: tracks} = useTracks();
+  const {navigate} = useNavigationFromHomeTabs();
 
   function handlePress(event: OnPressEvent) {
     const properties = event.features[0]?.properties;
-    if (!properties) return;
-    if (!('id' in properties)) return;
+    if (!properties || !('id' in properties)) return;
 
-    // To do navigate to track on press
+    navigate('Track', {trackId: properties.id});
   }
 
   return (
@@ -24,7 +25,7 @@ export const TracksMapLayer = () => {
       onPress={handlePress}
       id="tracks"
       shape={convertTracksToFeatures(tracks)}>
-      <LineLayer id="routeFill" style={styles.lineLayer} />
+      <LineLayer id="trackLines" style={styles.lineLayer} existing />
     </ShapeSource>
   );
 };
@@ -53,6 +54,7 @@ function convertTracksToFeatures(tracks: Track[]): FeatureCollection {
       properties: {
         timestamps: track.locations.map(location => location.timestamp),
         mocked: track.locations.map(location => location.mocked),
+        id: track.docId,
       },
     })),
   };

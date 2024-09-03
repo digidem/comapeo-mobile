@@ -1,7 +1,9 @@
 // import { Alert } from "react-native";
 import {fromLatLon} from 'utm';
-import {Preset, Observation} from '@mapeo/schema';
+import {Preset, Observation, Track} from '@mapeo/schema';
 import {LocationObject, LocationProviderStatus} from 'expo-location';
+import {FeatureCollection, LineString} from 'geojson';
+import {LocationHistoryPoint} from '../sharedTypes/location';
 
 // import type {
 //   ObservationValue,
@@ -225,7 +227,6 @@ export function matchPreset(
   presets.forEach(preset => {
     let score = 0;
     let presetTagsCount = Object.keys(preset.tags).length;
-    let matchedTagsCount = 0;
 
     for (const key in preset.tags) {
       if (preset.tags.hasOwnProperty(key)) {
@@ -233,13 +234,11 @@ export function matchPreset(
         const availableTag = availableTags[key];
         if (presetTag === availableTag) {
           score++;
-          matchedTagsCount++;
         } else if (
           Array.isArray(presetTag) &&
           presetTag.includes(availableTag as boolean | number | string | null)
         ) {
           score++;
-          matchedTagsCount++;
         }
       }
     }
@@ -256,3 +255,62 @@ export function matchPreset(
 
   return bestMatch;
 }
+
+export function convertObservationsToFeatures(
+  observations: Observation[],
+): GeoJSON.Feature[] {
+  const accDefault: GeoJSON.Feature[] = [];
+  const features: GeoJSON.Feature[] = observations.reduce((acc, obs) => {
+    if (typeof obs.lon === 'number' && typeof obs.lat === 'number') {
+      return [
+        ...acc,
+        {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [obs.lon, obs.lat],
+          },
+          properties: {
+            id: obs.docId,
+          },
+        },
+      ];
+    }
+    return acc;
+  }, accDefault);
+
+  return features;
+}
+
+export function convertTracksToFeatures(tracks: Track[]): FeatureCollection {
+  return {
+    type: 'FeatureCollection',
+    features: tracks.map(track => ({
+      type: 'Feature',
+      geometry: {
+        type: 'LineString',
+        coordinates: track.locations.map(location => [
+          location.coords.longitude,
+          location.coords.latitude,
+        ]),
+      },
+      properties: {
+        timestamps: track.locations.map(location => location.timestamp),
+        mocked: track.locations.map(location => location.mocked),
+        id: track.docId,
+      },
+    })),
+  };
+}
+
+export const convertToLineString = (
+  locations: LocationHistoryPoint[],
+): LineString => {
+  return {
+    type: 'LineString',
+    coordinates: locations.map(location => [
+      location.longitude,
+      location.latitude,
+    ]),
+  };
+};

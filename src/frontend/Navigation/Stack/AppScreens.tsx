@@ -67,6 +67,9 @@ import {
 import {AboutSettings} from '../../screens/Settings/About';
 import {CreateTestDataScreen} from '../../screens/Settings/CreateTestData';
 import {SyncSettings} from '../../screens/Settings/ProjectSettings/SyncSettings';
+import {TrackScreen} from '../../screens/Track/index.tsx';
+import {DataAndPrivacy} from '../../screens/Settings/DataAndPrivacy/DataAndPrivacy';
+import {SettingsPrivacyPolicy} from '../../screens/Settings/DataAndPrivacy/SettingsPrivacyPolicy';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -264,6 +267,12 @@ export const createDefaultScreenGroup = ({
       options={{headerTitle: intl(LanguageSettings.navTitle)}}
     />
     <RootStack.Screen
+      name="Track"
+      component={TrackScreen}
+      options={{headerTitle: intl(TrackScreen.navTitle)}}
+    />
+
+    <RootStack.Screen
       name="ObservationCreate"
       component={ObservationCreate}
       options={createObservationCreateNavigationOptions({intl})}
@@ -280,6 +289,16 @@ export const createDefaultScreenGroup = ({
       options={{headerTitle: intl(SyncSettings.navTitle)}}
     />
 
+    <RootStack.Screen
+      name="DataAndPrivacy"
+      component={DataAndPrivacy}
+      options={{headerTitle: intl(DataAndPrivacy.navTitle)}}
+    />
+    <RootStack.Screen
+      name="SettingsPrivacyPolicy"
+      component={SettingsPrivacyPolicy}
+      options={{headerTitle: intl(SettingsPrivacyPolicy.navTitle)}}
+    />
     {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
       <RootStack.Screen
         name="CreateTestData"

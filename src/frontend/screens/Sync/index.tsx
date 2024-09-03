@@ -13,7 +13,6 @@ import {openWiFiSettings} from '../../lib/linking';
 import {ProjectSyncDisplay} from './ProjectSyncDisplay';
 import {Loading} from '../../sharedComponents/Loading';
 import {useSyncState} from '../../hooks/useSyncState';
-import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 
 export function createNavigationOptions() {
   return ({
@@ -40,7 +39,6 @@ export const SyncScreen = ({navigation}: NativeRootNavigationProps<'Sync'>) => {
   // TODO: Handle error case
   const {isLoading, data} = useAllProjects();
   const syncState = useSyncState();
-  const deviceInfoQuery = useDeviceInfo();
   const projectSettingsQuery = useProjectSettings();
 
   if (wifiStatus === 'off') {
@@ -65,20 +63,14 @@ export const SyncScreen = ({navigation}: NativeRootNavigationProps<'Sync'>) => {
     );
   }
 
-  if (
-    isLoading ||
-    !syncState ||
-    !projectSettingsQuery.data ||
-    !deviceInfoQuery.data
-  ) {
+  if (isLoading || !syncState || !projectSettingsQuery.data) {
     return <Loading />;
   }
 
   return (
     <ProjectSyncDisplay
       syncState={syncState}
-      projectName={projectSettingsQuery.data.name || ''}
-      deviceName={deviceInfoQuery.data.name || ''}
+      projectName={projectSettingsQuery.data.name}
     />
   );
 };

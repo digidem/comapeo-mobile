@@ -95,17 +95,22 @@ export type RootStackParamsList = {
   DeviceNameEdit: undefined;
   SaveTrack: undefined;
   Sync: undefined;
+  Track: {trackId: string};
   CreateTestData: undefined;
   SyncSettings: undefined;
+  DataAndPrivacy: undefined;
+  SettingsPrivacyPolicy: undefined;
 };
 
-export type DeviceNamingParamsList = {
+export type OnboardingParamsList = {
   IntroToCoMapeo: undefined;
+  DataPrivacy: undefined;
   DeviceNaming: undefined;
+  OnboardingPrivacyPolicy: undefined;
   Success: {deviceName: string};
 };
 
-export type AppStackParamsList = RootStackParamsList & DeviceNamingParamsList;
+export type AppStackParamsList = RootStackParamsList & OnboardingParamsList;
 
 export type NativeRootNavigationProps<
   ScreenName extends keyof AppStackParamsList,

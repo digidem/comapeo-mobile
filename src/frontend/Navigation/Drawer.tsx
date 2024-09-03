@@ -172,7 +172,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
         </ListItem>
         <ListItem
           onPress={() => {
-            // TODO
+            navigate('DataAndPrivacy');
           }}>
           <DrawerListItemIcon iconName="privacy-tip" />
           <ListItemText primary={<FormattedMessage {...m.dataAndPrivacy} />} />

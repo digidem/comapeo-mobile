@@ -2,30 +2,22 @@ import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 
 import {IconButton} from '../../sharedComponents/IconButton';
-import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
-
-import {EditIcon} from '../../sharedComponents/icons';
-import {SyncIcon} from '../../sharedComponents/icons/SyncIconCircle';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {useTrackQuery} from '../../hooks/server/track';
 import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
+import {EditIcon} from '../../sharedComponents/icons';
+import {useCreatedByToDeviceId} from '../../hooks/server/projects.ts';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 
-export const ObservationHeaderRight = ({
-  observationId,
-}: {
-  observationId: string;
-}) => {
-  const observationWithPreset = useObservationWithPreset(observationId);
+export const TrackHeaderRight = ({trackId}: {trackId: string}) => {
+  const {data: track, isLoading: isTrackLoading} = useTrackQuery(trackId);
   const {data: createdByDeviceId, isPending: isCreatedByDeviceIdPending} =
-    useOriginalVersionIdToDeviceId(
-      observationWithPreset.observation.originalVersionId,
-    );
+    useCreatedByToDeviceId(track?.createdBy);
 
   const {data: deviceInfo, isPending: isDeviceInfoPending} = useDeviceInfo();
   const navigation = useNavigationFromRoot();
 
-  if (isDeviceInfoPending || isCreatedByDeviceIdPending) {
+  if (isDeviceInfoPending || isCreatedByDeviceIdPending || isTrackLoading) {
     return (
       <UIActivityIndicator
         size={20}
@@ -38,14 +30,12 @@ export const ObservationHeaderRight = ({
 
   return canEdit ? (
     <IconButton
-      onPress={() => navigation.navigate('ObservationEdit', {observationId})}
+      onPress={() => navigation.navigate('TrackEdit', {trackId})}
       testID="editButton">
       <EditIcon />
     </IconButton>
   ) : (
-    <View style={styles.syncIconContainer}>
-      <SyncIcon color="#3C69F6" />
-    </View>
+    <View style={styles.syncIconContainer} />
   );
 };
 

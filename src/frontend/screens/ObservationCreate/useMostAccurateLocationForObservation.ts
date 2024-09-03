@@ -1,4 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
+import mapObject, {mapObjectSkip} from 'map-obj';
 import {useCallback} from 'react';
 import {
   watchPositionAsync,
@@ -9,6 +10,7 @@ import {
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
+import type {Position} from '../../sharedTypes';
 
 export function useMostAccurateLocationForObservation() {
   const value = usePersistedDraftObservation(store => store.value);
@@ -20,13 +22,13 @@ export function useMostAccurateLocationForObservation() {
   const locationServicesTurnedOff =
     providerStatus && !providerStatus.locationServicesEnabled;
 
-  const isLocationManuallySet = !!value?.metadata.manualLocation;
+  const isLocationManuallySet = !!value?.metadata?.manualLocation;
 
   // If location services are turned off (and the observation location is not manually set),
   // we want to immediately update the draft so that this hook does not return a stale position
   if (
     locationServicesTurnedOff &&
-    value?.metadata.position &&
+    value?.metadata?.position &&
     !isLocationManuallySet
   ) {
     updateObservationPosition({position: undefined, manualLocation: false});
@@ -43,17 +45,17 @@ export function useMostAccurateLocationForObservation() {
         },
         debounceLocation()(location => {
           if (ignore) return;
-          const newCoord = !location
-            ? undefined
-            : Object.entries(location.coords).map(
-                ([key, val]) => [key, val === null ? undefined : val] as const,
-              );
+
+          const position: Position = {mocked: false};
+          if (location) {
+            position.coords = mapObject(location.coords, (key, val) =>
+              val == null ? mapObjectSkip : [key, val],
+            );
+            position.timestamp = new Date(location.timestamp).toISOString();
+          }
+
           updateObservationPosition({
-            position: {
-              mocked: false,
-              coords: !newCoord ? undefined : Object.fromEntries(newCoord),
-              timestamp: location?.timestamp.toString(),
-            },
+            position,
             manualLocation: false,
           });
         }),
@@ -72,7 +74,7 @@ export function useMostAccurateLocationForObservation() {
     }, [permissions, updateObservationPosition, isLocationManuallySet]),
   );
 
-  return value?.metadata.position;
+  return value?.metadata?.position;
 }
 
 function debounceLocation() {

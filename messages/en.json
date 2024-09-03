@@ -160,6 +160,21 @@
     "description": "Button to share an observation",
     "message": "Share"
   },
+  "TrackEdit.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Continue editing"
+  },
+  "TrackEdit.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling track edits",
+    "message": "Discard changes?"
+  },
+  "TrackEdit.HeaderLeft.discardTrackButton": {
+    "description": "Button to confirm discarding the track",
+    "message": "Discard changes"
+  },
+  "TrackEdit.HeaderLeft.discardTrackDescription": {
+    "message": "Your changes will not be saved. This cannot be undone."
+  },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Coordinator"
   },
@@ -1041,6 +1056,21 @@
   "screens.Setting.ProjectSettings.YourTeam.title": {
     "message": "Your Team"
   },
+  "screens.Settings.Config.created": {
+    "message": "Created {date} at {time}"
+  },
+  "screens.Settings.Config.importConfig": {
+    "message": "Import Config"
+  },
+  "screens.Settings.Config.name": {
+    "message": "Config Name:"
+  },
+  "screens.Settings.Config.navTitle": {
+    "message": "Configuration"
+  },
+  "screens.Settings.Config.projectName": {
+    "message": "Project Name:"
+  },
   "screens.Settings.CreateOrJoinProject.CreateProject.title": {
     "message": "Create a Project"
   },
@@ -1130,6 +1160,10 @@
   "screens.Settings.appSettingsDesc": {
     "description": "list of avaialable app settings",
     "message": "Language, Security, Coordinates"
+  },
+  "screens.Settings.config": {
+    "description": "Primary text for project config settings",
+    "message": "Project Configuration"
   },
   "screens.Settings.createOrJoin": {
     "message": "Create or Join Project"
@@ -1230,6 +1264,14 @@
   },
   "screens.Track.tracks": {
     "message": "Tracks"
+  },
+  "screens.TrackEdit.title": {
+    "description": "Title for editing track screen",
+    "message": "Edit Track"
+  },
+  "screens.TrackEdit.track": {
+    "description": "Preset title for new track screen",
+    "message": "Track"
   },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",

@@ -58,7 +58,7 @@ export const ObservationCreate = ({
   );
   const liveLocation = useMostAccurateLocationForObservation();
 
-  const coordinateInfo = value?.metadata.manualLocation
+  const coordinateInfo = value?.metadata?.manualLocation
     ? {
         lat: value.lat,
         lon: value.lon,

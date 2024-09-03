@@ -13,7 +13,7 @@ import {
 import {PhotoAttachmentView} from '../../sharedComponents/PhotoAttachmentView.tsx';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
 import {useDeviceInfo} from '../../hooks/server/deviceInfo';
-import {useCreatedByToDeviceId} from '../../hooks/server/projects.ts';
+import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;
@@ -43,12 +43,14 @@ function ObservationListItemNotMemoized({
     (attachment): attachment is PhotoAttachment => attachment.type === 'photo',
   );
 
-  const {data: createdByDeviceId, status: createdByToDeviceIdQueryStatus} =
-    useCreatedByToDeviceId(observation.createdBy);
+  const {
+    data: createdByDeviceId,
+    status: originalVersionIdToDeviceIdQueryStatus,
+  } = useOriginalVersionIdToDeviceId(observation.originalVersionId);
   const isMine = createdByDeviceId === deviceInfo?.deviceId;
   const queriesSucceeded =
     deviceInfoQueryStatus === 'success' &&
-    createdByToDeviceIdQueryStatus === 'success';
+    originalVersionIdToDeviceIdQueryStatus === 'success';
 
   return (
     <TouchableHighlight

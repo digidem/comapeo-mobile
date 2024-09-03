@@ -21,6 +21,7 @@ import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
 import {Text} from '../../../../sharedComponents/Text';
 import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
+import {selectFile} from '../../../../lib/selectFile';
 
 const m = defineMessages({
   title: {
@@ -123,38 +124,16 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
   }
 
   async function importConfigFile() {
-    let result;
     try {
-      result = await DocumentPicker.getDocumentAsync({
-        copyToCacheDirectory: true,
-        multiple: false,
-      });
+      const asset = await selectFile(['comapeocat']);
+      if (!asset) return;
+      setConfigFileResult({type: 'success', file: asset});
     } catch (err) {
       if (err instanceof Error) {
         setConfigFileResult({type: 'error', error: err});
       }
 
       return;
-    }
-
-    if (result.canceled) return;
-
-    const asset = result.assets[0];
-
-    // Shouldn't happen based on how the library works
-    if (!asset) return;
-
-    // Only allow importing files with the desired extension
-    if (asset.name.endsWith('.mapeosettings')) {
-      setConfigFileResult({type: 'success', file: asset});
-    } else {
-      setConfigFileResult({
-        type: 'error',
-        error: new Error(t(m.importConfigFileError)),
-      });
-      // No need to block UI on this
-      // no-op if something fails here. caches can eventually get cleared by the OS automatically.
-      FileSystem.deleteAsync(asset.uri).catch(noop);
     }
   }
 

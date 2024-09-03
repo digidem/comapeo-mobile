@@ -1,4 +1,3 @@
-import {type DeviceInfo} from '@mapeo/schema';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {deviceType, DeviceType} from 'expo-device';
 
@@ -35,7 +34,9 @@ export const useEditDeviceInfo = () => {
   });
 };
 
-function expoToCoreDeviceType(d: DeviceType): DeviceInfo['deviceType'] {
+function expoToCoreDeviceType(
+  d: Readonly<DeviceType>,
+): 'mobile' | 'tablet' | 'desktop' | 'UNRECOGNIZED' | undefined {
   switch (d) {
     case DeviceType.PHONE: {
       return 'mobile';

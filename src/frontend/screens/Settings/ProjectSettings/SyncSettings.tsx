@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ScrollView, View, Text, StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
 import {SelectOne} from '../../../sharedComponents/SelectOne';
 import {SYNC_BACKGROUND, NEW_DARK_GREY} from '../../../lib/styles';
@@ -61,6 +61,8 @@ export const SyncSettings = () => {
         value={syncSetting}
         onChange={setSyncSetting}
         options={options}
+        radioButtonPosition="right"
+        color={SYNC_BACKGROUND}
       />
     </ScrollView>
   );

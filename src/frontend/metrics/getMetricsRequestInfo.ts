@@ -1,11 +1,5 @@
 import {assert} from '../lib/assert';
 
-const getEnv = (name: string): string => {
-  const result = process.env[name];
-  assert(result, `${name} environment variable should be set`);
-  return result;
-};
-
 /**
  * Get the info to send a metrics request.
  *
@@ -14,8 +8,23 @@ const getEnv = (name: string): string => {
  *
  * @see {sendMetricsData}
  */
-export const getMetricsRequestInfo = () => ({
-  isDevelopment: __DEV__,
-  metricsUrl: getEnv('EXPO_PUBLIC_METRICS_URL'),
-  metricsApiKey: getEnv('EXPO_PUBLIC_METRICS_API_KEY'),
-});
+export function getMetricsRequestInfo(): {
+  isDevelopment: boolean;
+  metricsUrl: string;
+  metricsApiKey: string;
+} {
+  const isDevelopment = __DEV__;
+  const metricsUrl = process.env.EXPO_PUBLIC_METRICS_URL;
+  const metricsApiKey = process.env.EXPO_PUBLIC_METRICS_API_KEY;
+
+  assert(
+    metricsUrl,
+    'EXPO_PUBLICS_METRICS_URL environment variable should be set',
+  );
+  assert(
+    metricsApiKey,
+    'EXPO_PUBLICS_METRICS_API_KEY environment variable should be set',
+  );
+
+  return {isDevelopment, metricsUrl, metricsApiKey};
+}

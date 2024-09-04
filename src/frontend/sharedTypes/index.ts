@@ -18,9 +18,11 @@ export type IconSize = 'small' | 'medium' | 'large';
 
 export type Status = 'idle' | 'loading' | 'error' | 'success' | void;
 
-export type Position = Observation['metadata']['position'];
+export type Position = NonNullable<Observation['metadata']>['position'];
 
-export type Provider = Observation['metadata']['positionProvider'];
+export type PositionProvider = NonNullable<
+  Observation['metadata']
+>['positionProvider'];
 
 export type ClientGeneratedObservation = Omit<ObservationValue, 'schemaName'>;
 

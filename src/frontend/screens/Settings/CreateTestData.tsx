@@ -268,9 +268,10 @@ function useCreateFakeObservationsMutation() {
 
         const value = {
           attachments: [],
-          lon: fakeCoordinates[0],
-          lat: fakeCoordinates[1],
+          lon: fakeCoordinates[0] || 0,
+          lat: fakeCoordinates[1] || 0,
           metadata: {
+            manualLocation: !!location.mocked,
             position: {
               mocked: !!location.mocked,
             },

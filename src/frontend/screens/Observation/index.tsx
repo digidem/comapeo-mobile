@@ -2,7 +2,13 @@ import * as React from 'react';
 
 import {Text, View, ScrollView, StyleSheet} from 'react-native';
 import {defineMessages} from 'react-intl';
-import {BLACK, WHITE, DARK_GREY, LIGHT_GREY} from '../../lib/styles';
+import {
+  BLACK,
+  WHITE,
+  DARK_GREY,
+  LIGHT_GREY,
+  NEW_DARK_GREY,
+} from '../../lib/styles';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 import {FormattedObservationDate} from '../../sharedComponents/FormattedData';
@@ -20,6 +26,7 @@ import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
 import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types.ts';
 import {ButtonFields} from './Buttons.tsx';
+import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings';
 
 const m = defineMessages({
   deleteTitle: {
@@ -33,6 +40,14 @@ const m = defineMessages({
     description:
       'Title of observation screen showing (non-editable) view of observation with map and answered questions',
   },
+  labelFullSizePreviews: {
+    id: 'screens.Observation.labelFullSizePreviews',
+    defaultMessage: 'Full size and previews available',
+  },
+  labelPreviewsOnly: {
+    id: 'screens.Observation.labelPreviewsOnly',
+    defaultMessage: 'Only previews available',
+  },
 });
 
 export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
@@ -40,6 +55,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   navigation,
 }) => {
   const {observationId} = route.params;
+  const syncSetting = usePersistedSettings(store => store.syncSetting);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -76,6 +92,23 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
     (attachment): attachment is SavedPhoto => attachment.type === 'photo',
   );
 
+  const renderMediaLabel = () => {
+    if (syncSetting === 'everything') {
+      return (
+        <Text style={styles.mediaLabel}>
+          {m.labelFullSizePreviews.defaultMessage}
+        </Text>
+      );
+    } else if (syncSetting === 'previews') {
+      return (
+        <Text style={styles.mediaLabel}>
+          {m.labelPreviewsOnly.defaultMessage}
+        </Text>
+      );
+    }
+    return null;
+  };
+
   return (
     <ScrollView
       style={styles.root}
@@ -99,6 +132,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
               <Text style={styles.textNotes}>{observation.tags.notes}</Text>
             </View>
           ) : null}
+          {photoAttachments.length > 0 && renderMediaLabel()}
           {photoAttachments.length > 0 && (
             <MediaScrollView
               photos={photoAttachments}
@@ -150,5 +184,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingVertical: 10,
     textAlign: 'center',
+  },
+  mediaLabel: {
+    fontSize: 14,
+    color: NEW_DARK_GREY,
+    marginVertical: 20,
+    marginLeft: 10,
   },
 });

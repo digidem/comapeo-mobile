@@ -108,4 +108,7 @@ jobs:
         env:
           COMMIT_SHA: ${{ needs.create-release-branch.outputs.commit_sha }}
           VERSION: ${{ needs.create-release-branch.outputs.version }}
-        run: eas build --platform android --profile release-candidate
+        run: |
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+          echo "COMMIT_SHA=${COMMIT_SHA}" >> $GITHUB_ENV
+          npx eas build --platform android --profile release-candidate

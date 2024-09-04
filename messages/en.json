@@ -1264,7 +1264,7 @@
     "message": "Sync Everything?"
   },
   "screens.SyncSettings.syncEverythingDescription": {
-    "message": "Your device will sync <bold>all</bold> content at full size, including photos, audio, and videos. Note: This will use more storage."
+    "message": "Your device will sync <bold>all</bold> content at full size, including photos, audio, and videos.<newline/><newline/>Note: This will use more storage."
   },
   "screens.SyncSettings.syncEverythingDescriptionBottomSheet": {
     "message": "You are about to sync everything. This may increase the disk space used on your device."
@@ -1282,7 +1282,7 @@
     "message": "Photos will sync at a reduced smaller size. Device will <bold>not</bold> sync audio or video."
   },
   "screens.SyncSettings.syncPreviewsDescriptionBottomSheet": {
-    "message": "Your device will keep all existing data but new observations will sync in a smaller, preview size. You will no longer sync Audio or Video."
+    "message": "Your device will keep all existing data but new observations will sync in a smaller, preview size.<newline/><newline/>You will no longer sync Audio or Video."
   },
   "screens.SyncSettings.title": {
     "message": "Sync Settings"

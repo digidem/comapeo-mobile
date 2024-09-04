@@ -56,7 +56,6 @@ export function useGetPresetIcon(docId: string | undefined, size: IconSize) {
     retry: 2,
     retryDelay: 2000,
     staleTime: 60000,
-    gcTime: 300000,
     placeholderData: keepPreviousData,
   });
 }

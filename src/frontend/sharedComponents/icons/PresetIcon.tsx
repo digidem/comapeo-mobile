@@ -32,10 +32,10 @@ export const PresetIcon = memo<PresetIconProps>(
     }
     const {
       data: iconUrl,
-      isLoading,
+      isPending,
       error,
     } = useGetPresetIcon(presetDocId, size);
-    if (isLoading && !iconUrl) return <UIActivityIndicator size={30} />;
+    if (isPending) return <UIActivityIndicator size={30} />;
 
     if (error || !iconUrl) {
       return <MaterialIcon name="place" size={iconSize} />;

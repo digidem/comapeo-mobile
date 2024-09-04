@@ -17,7 +17,7 @@ import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
 import {MediaScrollView} from '../../sharedComponents/MediaScrollView/index.tsx';
 import {useDeviceInfo} from '../../hooks/server/deviceInfo';
-import {useCreatedByToDeviceId} from '../../hooks/server/projects.ts';
+import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
 import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types.ts';
 import {ButtonFields} from './Buttons.tsx';
 
@@ -61,10 +61,10 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
       }, defaultAcc)
     : [];
 
-  const {lat, lon, createdBy} = observation;
+  const {lat, lon, originalVersionId} = observation;
   const {data: deviceInfo, isPending: isDeviceInfoPending} = useDeviceInfo();
-  const {data: convertedDeviceId, isPending: isCreatedByDeviceIdPending} =
-    useCreatedByToDeviceId(createdBy);
+  const {data: convertedDeviceId, isPending: isDeviceIdPending} =
+    useOriginalVersionIdToDeviceId(originalVersionId);
 
   const isMine =
     deviceInfo?.deviceId !== undefined &&
@@ -110,7 +110,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
           <FieldDetails observation={observation} fields={fields} />
         )}
         <View style={styles.divider} />
-        {isDeviceInfoPending || isCreatedByDeviceIdPending ? (
+        {isDeviceInfoPending || isDeviceIdPending ? (
           <UIActivityIndicator size={20} />
         ) : (
           <ButtonFields isMine={isMine} observationId={observationId} />

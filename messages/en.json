@@ -1056,6 +1056,21 @@
   "screens.Setting.ProjectSettings.YourTeam.title": {
     "message": "Your Team"
   },
+  "screens.Settings.Config.created": {
+    "message": "Created {date} at {time}"
+  },
+  "screens.Settings.Config.importConfig": {
+    "message": "Import Config"
+  },
+  "screens.Settings.Config.name": {
+    "message": "Config Name:"
+  },
+  "screens.Settings.Config.navTitle": {
+    "message": "Configuration"
+  },
+  "screens.Settings.Config.projectName": {
+    "message": "Project Name:"
+  },
   "screens.Settings.CreateOrJoinProject.CreateProject.title": {
     "message": "Create a Project"
   },
@@ -1145,6 +1160,10 @@
   "screens.Settings.appSettingsDesc": {
     "description": "list of avaialable app settings",
     "message": "Language, Security, Coordinates"
+  },
+  "screens.Settings.config": {
+    "description": "Primary text for project config settings",
+    "message": "Project Configuration"
   },
   "screens.Settings.createOrJoin": {
     "message": "Create or Join Project"

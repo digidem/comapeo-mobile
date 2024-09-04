@@ -23,7 +23,8 @@
       "distribution": "internal",
       "channel": "preview",
       "env": {
-        "APP_VARIANT": "releaseCandidate"
+        "APP_VARIANT": "releaseCandidate",
+        "EXPO_PUBLIC_FEATURE_TEST_DATA_UI":"true"
       },
       "android": {
         "image": "latest",

@@ -62,36 +62,30 @@ export const SyncSettings = () => {
   const syncSetting = usePersistedSettings(store => store.syncSetting);
   const {setSyncSetting} = usePersistedSettingsAction();
 
-  const {
-    isOpen: isPreviewOpen,
-    openSheet: openPreviewSheet,
-    closeSheet: closePreviewSheet,
-    sheetRef: previewSheetRef,
-  } = useBottomSheetModal({openOnMount: false});
+  const [modalState, setModalState] = React.useState<{
+    type: 'previews' | 'everything' | null;
+    isOpen: boolean;
+  }>({
+    type: null,
+    isOpen: false,
+  });
 
-  const {
-    isOpen: isEverythingOpen,
-    openSheet: openEverythingSheet,
-    closeSheet: closeEverythingSheet,
-    sheetRef: everythingSheetRef,
-  } = useBottomSheetModal({openOnMount: false});
+  const {openSheet, closeSheet, sheetRef} = useBottomSheetModal({
+    openOnMount: false,
+  });
 
   const handleOptionChange = (value: 'previews' | 'everything') => {
-    if (value === 'previews') {
-      openPreviewSheet();
-    } else if (value === 'everything') {
-      openEverythingSheet();
+    setModalState({type: value, isOpen: true});
+    openSheet();
+  };
+
+  const handleConfirm = () => {
+    if (modalState.type === 'previews') {
+      setSyncSetting('previews');
+    } else if (modalState.type === 'everything') {
+      setSyncSetting('everything');
     }
-  };
-
-  const confirmPreviews = () => {
-    setSyncSetting('previews');
-    closePreviewSheet();
-  };
-
-  const confirmEverything = () => {
-    setSyncSetting('everything');
-    closeEverythingSheet();
+    closeSheet();
   };
 
   const options: {
@@ -121,22 +115,28 @@ export const SyncSettings = () => {
         color={SYNC_BACKGROUND}
       />
       <SyncActionSheet
-        title={t(m.syncPreviewsBottomSheet)}
-        description={t(m.syncPreviewsDescriptionBottomSheet)}
-        confirmActionText={t(m.syncPreviewsBottomSheetConfirm)}
-        confirmAction={confirmPreviews}
-        isOpen={isPreviewOpen}
-        onDismiss={closePreviewSheet}
-        ref={previewSheetRef}
-      />
-      <SyncActionSheet
-        title={t(m.syncEverythingBottomSheet)}
-        description={t(m.syncEverythingDescriptionBottomSheet)}
-        confirmActionText={t(m.syncEverything)}
-        confirmAction={confirmEverything}
-        isOpen={isEverythingOpen}
-        onDismiss={closeEverythingSheet}
-        ref={everythingSheetRef}
+        title={
+          modalState.type === 'previews'
+            ? t(m.syncPreviewsBottomSheet)
+            : t(m.syncEverythingBottomSheet)
+        }
+        description={
+          modalState.type === 'previews'
+            ? t(m.syncPreviewsDescriptionBottomSheet)
+            : t(m.syncEverythingDescriptionBottomSheet)
+        }
+        confirmActionText={
+          modalState.type === 'previews'
+            ? t(m.syncPreviewsBottomSheetConfirm)
+            : t(m.syncEverything)
+        }
+        confirmAction={handleConfirm}
+        isOpen={modalState.isOpen}
+        onDismiss={() => {
+          setModalState({type: null, isOpen: false});
+          closeSheet();
+        }}
+        ref={sheetRef}
       />
     </ScrollView>
   );

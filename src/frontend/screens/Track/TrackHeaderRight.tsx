@@ -11,13 +11,13 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 
 export const TrackHeaderRight = ({trackId}: {trackId: string}) => {
   const {data: track, isLoading: isTrackLoading} = useTrackQuery(trackId);
-  const {data: convertedDeviceId, isPending: isDeviceIdPending} =
+  const {data: createdByDeviceId, isPending: isCreatedByDeviceIdPending} =
     useOriginalVersionIdToDeviceId(track?.originalVersionId);
 
   const {data: deviceInfo, isPending: isDeviceInfoPending} = useDeviceInfo();
   const navigation = useNavigationFromRoot();
 
-  if (isDeviceInfoPending || isDeviceIdPending || isTrackLoading) {
+  if (isDeviceInfoPending || isCreatedByDeviceIdPending || isTrackLoading) {
     return (
       <UIActivityIndicator
         size={20}
@@ -26,7 +26,7 @@ export const TrackHeaderRight = ({trackId}: {trackId: string}) => {
     );
   }
 
-  const canEdit = convertedDeviceId === deviceInfo?.deviceId;
+  const canEdit = createdByDeviceId === deviceInfo?.deviceId;
 
   return canEdit ? (
     <IconButton

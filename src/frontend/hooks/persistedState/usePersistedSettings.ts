@@ -1,17 +1,17 @@
 import {type StateCreator} from 'zustand';
 import {createPersistedState} from './createPersistedState';
-import {CoordinateFormat} from '../../sharedTypes';
+import {CoordinateFormat, SyncSetting} from '../../sharedTypes';
 
 type SettingsSlice = {
   coordinateFormat: CoordinateFormat;
   manualCoordinateEntryFormat: CoordinateFormat;
-  syncSetting: 'previews' | 'everything';
+  syncSetting: SyncSetting;
   actions: {
     setCoordinateFormat: (coordinateFormat: CoordinateFormat) => void;
     setManualCoordinateEntryFormat: (
       coordinateFormat: CoordinateFormat,
     ) => void;
-    setSyncSetting: (syncSetting: 'previews' | 'everything') => void;
+    setSyncSetting: (syncSetting: SyncSetting) => void;
   };
 };
 

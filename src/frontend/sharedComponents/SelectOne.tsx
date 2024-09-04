@@ -32,18 +32,18 @@ export const SelectOne = <T,>({
         }
         testID={`${item.value}LanguageButton`}
         onPress={() => value !== item.value && onChange(item.value)}
-        style={[radioButtonPosition === 'right' && styles.rowReverse]}>
+        style={radioButtonPosition === 'right' ? styles.rowReverse : undefined}>
         <ListItemIcon
           iconName={
             item.value === value
               ? 'radio-button-checked'
               : 'radio-button-unchecked'
           }
-          style={[
+          style={
             radioButtonPosition === 'right'
               ? styles.alignRight
-              : styles.alignLeft,
-          ]}
+              : styles.alignLeft
+          }
           color={color}
         />
         <ListItemText primary={item.label} secondary={item.hint}></ListItemText>

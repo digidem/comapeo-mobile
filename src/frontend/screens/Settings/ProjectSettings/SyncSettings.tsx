@@ -7,8 +7,12 @@ import {
   usePersistedSettings,
   usePersistedSettingsAction,
 } from '../../../hooks/persistedState/usePersistedSettings';
-import {SyncActionSheet} from './SyncActionSheet';
-import {useBottomSheetModal} from '../../../sharedComponents/BottomSheetModal';
+import {SyncActionSheetContent} from './SyncActionSheetContent';
+import {
+  useBottomSheetModal,
+  BottomSheetModal,
+} from '../../../sharedComponents/BottomSheetModal';
+import {SyncSetting} from '../../../sharedTypes';
 
 const m = defineMessages({
   syncSettingsTitle: {
@@ -31,7 +35,7 @@ const m = defineMessages({
   syncEverythingDescription: {
     id: 'screens.SyncSettings.syncEverythingDescription',
     defaultMessage:
-      'Your device will sync <bold>all</bold> content at full size, including photos, audio, and videos.\n\nNote: This will use more storage.',
+      'Your device will sync <bold>all</bold> content at full size, including photos, audio, and videos.<newline/><newline/>Note: This will use more storage.',
   },
   syncPreviewsBottomSheet: {
     id: 'screens.SyncSettings.syncPreviewsButtonBottomSheet',
@@ -44,7 +48,7 @@ const m = defineMessages({
   syncPreviewsDescriptionBottomSheet: {
     id: 'screens.SyncSettings.syncPreviewsDescriptionBottomSheet',
     defaultMessage:
-      'Your device will keep all existing data but new observations will sync in a smaller, preview size.\n\nYou will no longer sync Audio or Video.',
+      'Your device will keep all existing data but new observations will sync in a smaller, preview size.<newline/><newline/>You will no longer sync Audio or Video.',
   },
   syncEverythingDescriptionBottomSheet: {
     id: 'screens.SyncSettings.syncEverythingDescriptionBottomSheet',
@@ -62,34 +66,26 @@ export const SyncSettings = () => {
   const syncSetting = usePersistedSettings(store => store.syncSetting);
   const {setSyncSetting} = usePersistedSettingsAction();
 
-  const [modalState, setModalState] = React.useState<{
-    type: 'previews' | 'everything' | null;
-    isOpen: boolean;
-  }>({
-    type: null,
-    isOpen: false,
-  });
+  const [modalType, setModalType] = React.useState<SyncSetting>(
+    () => syncSetting,
+  );
 
-  const {openSheet, closeSheet, sheetRef} = useBottomSheetModal({
+  const {isOpen, openSheet, closeSheet, sheetRef} = useBottomSheetModal({
     openOnMount: false,
   });
 
-  const handleOptionChange = (value: 'previews' | 'everything') => {
-    setModalState({type: value, isOpen: true});
+  const handleOptionChange = (value: SyncSetting) => {
+    setModalType(value);
     openSheet();
   };
 
   const handleConfirm = () => {
-    if (modalState.type === 'previews') {
-      setSyncSetting('previews');
-    } else if (modalState.type === 'everything') {
-      setSyncSetting('everything');
-    }
+    setSyncSetting(modalType);
     closeSheet();
   };
 
   const options: {
-    value: 'previews' | 'everything';
+    value: SyncSetting;
     label: string;
     hint?: string;
   }[] = [
@@ -114,30 +110,29 @@ export const SyncSettings = () => {
         radioButtonPosition="right"
         color={SYNC_BACKGROUND}
       />
-      <SyncActionSheet
-        title={
-          modalState.type === 'previews'
-            ? t(m.syncPreviewsBottomSheet)
-            : t(m.syncEverythingBottomSheet)
-        }
-        description={
-          modalState.type === 'previews'
-            ? t(m.syncPreviewsDescriptionBottomSheet)
-            : t(m.syncEverythingDescriptionBottomSheet)
-        }
-        confirmActionText={
-          modalState.type === 'previews'
-            ? t(m.syncPreviewsBottomSheetConfirm)
-            : t(m.syncEverything)
-        }
-        confirmAction={handleConfirm}
-        isOpen={modalState.isOpen}
-        onDismiss={() => {
-          setModalState({type: null, isOpen: false});
-          closeSheet();
-        }}
-        ref={sheetRef}
-      />
+      <BottomSheetModal ref={sheetRef} isOpen={isOpen}>
+        <SyncActionSheetContent
+          title={
+            modalType === 'previews'
+              ? t(m.syncPreviewsBottomSheet)
+              : t(m.syncEverythingBottomSheet)
+          }
+          description={
+            modalType === 'previews'
+              ? t(m.syncPreviewsDescriptionBottomSheet)
+              : t(m.syncEverythingDescriptionBottomSheet)
+          }
+          confirmActionText={
+            modalType === 'previews'
+              ? t(m.syncPreviewsBottomSheetConfirm)
+              : t(m.syncEverything)
+          }
+          confirmAction={handleConfirm}
+          onDismiss={() => {
+            closeSheet();
+          }}
+        />
+      </BottomSheetModal>
     </ScrollView>
   );
 };

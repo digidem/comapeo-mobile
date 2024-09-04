@@ -53,13 +53,16 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
           }}>
           <ListItemText primary={<FormattedMessage {...m.yourTeam} />} />
         </ListItem>
-        <ListItem
-          testID="MAIN.sync-list-item"
-          onPress={() => {
-            navigation.navigate('SyncSettings');
-          }}>
-          <ListItemText primary={<FormattedMessage {...m.syncSettings} />} />
-        </ListItem>
+        {process.env.EXPO_PUBLIC_FEATURE_MEDIA_MANAGER && (
+          <ListItem
+            testID="MAIN.sync-list-item"
+            onPress={() => {
+              navigation.navigate('SyncSettings');
+            }}>
+            <ListItemText primary={<FormattedMessage {...m.syncSettings} />} />
+          </ListItem>
+        )}
+
         <ListItem
           onPress={() => {
             navigation.navigate('Config');

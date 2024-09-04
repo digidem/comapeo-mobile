@@ -58,7 +58,7 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
           onPress={() => {
             navigation.navigate('SyncSettings');
           }}>
-          <ListItemText primary={<FormattedMessage {...m.syncSettings} />} />{' '}
+          <ListItemText primary={<FormattedMessage {...m.syncSettings} />} />
         </ListItem>
         <ListItem
           onPress={() => {

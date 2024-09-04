@@ -82,19 +82,16 @@ export const SyncSettings = () => {
     } else if (value === 'everything') {
       openEverythingSheet();
     }
-    setSyncSetting(value);
   };
 
-  const syncPreviewsAction = () => {
-    console.log('Sync Previews action triggered');
+  const confirmPreviews = () => {
+    setSyncSetting('previews');
     closePreviewSheet();
-    // for now
   };
 
-  const syncEverythingAction = () => {
-    console.log('Sync Everything action triggered');
+  const confirmEverything = () => {
+    setSyncSetting('everything');
     closeEverythingSheet();
-    // until I know what to do
   };
 
   const options: {
@@ -127,7 +124,7 @@ export const SyncSettings = () => {
         title={t(m.syncPreviewsBottomSheet)}
         description={t(m.syncPreviewsDescriptionBottomSheet)}
         confirmActionText={t(m.syncPreviewsBottomSheetConfirm)}
-        confirmAction={syncPreviewsAction}
+        confirmAction={confirmPreviews}
         isOpen={isPreviewOpen}
         onDismiss={closePreviewSheet}
         ref={previewSheetRef}
@@ -136,7 +133,7 @@ export const SyncSettings = () => {
         title={t(m.syncEverythingBottomSheet)}
         description={t(m.syncEverythingDescriptionBottomSheet)}
         confirmActionText={t(m.syncEverything)}
-        confirmAction={syncEverythingAction}
+        confirmAction={confirmEverything}
         isOpen={isEverythingOpen}
         onDismiss={closeEverythingSheet}
         ref={everythingSheetRef}

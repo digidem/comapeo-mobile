@@ -673,6 +673,9 @@
   "screens.ManualGpsScreen.zoneNumber": {
     "message": "Zone Number"
   },
+  "screens.MediaLabel.labelFullSizePreviews": {
+    "message": "Full size and previews available"
+  },
   "screens.ObscurePasscode.description": {
     "message": "Obscure Passcode is a security feature that allows you to open Mapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of Mapeo which allows you to create demonstration observations that are not saved to the Mapeo database."
   },
@@ -715,6 +718,15 @@
   "screens.Observation.deleteTitle": {
     "description": "Title of dialog asking confirmation to delete an observation",
     "message": "Delete observation?"
+  },
+  "screens.Observation.labelFullSizePreviews": {
+    "message": "Full size and previews available"
+  },
+  "screens.Observation.labelPreviewsOnly": {
+    "message": "Only previews available"
+  },
+  "screens.Observation.labelPreviewsOnlyObservation": {
+    "message": "Only previews are available"
   },
   "screens.Observation.shareMediaTitle": {
     "description": "Title of dialog to share an observation with media",
@@ -848,6 +860,9 @@
   },
   "screens.PhotoPreviewModal.DeletePhoto.headerButtonText": {
     "message": "Delete Photo"
+  },
+  "screens.PhotoPreviewModal.labelPreviewsOnlyOpenMedia": {
+    "message": "Only preview is available"
   },
   "screens.PrivacyPolicy.aboutAwana": {
     "message": "About Awana Digital"

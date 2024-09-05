@@ -26,7 +26,7 @@ import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
 import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types.ts';
 import {ButtonFields} from './Buttons.tsx';
-import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings';
+import {MediaLabel} from '../../sharedComponents/MediaLabel.tsx';
 
 const m = defineMessages({
   deleteTitle: {
@@ -55,7 +55,6 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   navigation,
 }) => {
   const {observationId} = route.params;
-  const syncSetting = usePersistedSettings(store => store.syncSetting);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -92,23 +91,6 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
     (attachment): attachment is SavedPhoto => attachment.type === 'photo',
   );
 
-  const renderMediaLabel = () => {
-    if (syncSetting === 'everything') {
-      return (
-        <Text style={styles.mediaLabel}>
-          {m.labelFullSizePreviews.defaultMessage}
-        </Text>
-      );
-    } else if (syncSetting === 'previews') {
-      return (
-        <Text style={styles.mediaLabel}>
-          {m.labelPreviewsOnly.defaultMessage}
-        </Text>
-      );
-    }
-    return null;
-  };
-
   return (
     <ScrollView
       style={styles.root}
@@ -132,7 +114,13 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
               <Text style={styles.textNotes}>{observation.tags.notes}</Text>
             </View>
           ) : null}
-          {photoAttachments.length > 0 && renderMediaLabel()}
+          {photoAttachments.length > 0 && (
+            <MediaLabel
+              textColor={NEW_DARK_GREY}
+              style={styles.mediaLabel}
+              context="observation"
+            />
+          )}
           {photoAttachments.length > 0 && (
             <MediaScrollView
               photos={photoAttachments}
@@ -186,8 +174,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   mediaLabel: {
-    fontSize: 14,
-    color: NEW_DARK_GREY,
     marginVertical: 20,
     marginLeft: 10,
   },

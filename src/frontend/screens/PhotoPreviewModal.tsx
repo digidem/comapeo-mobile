@@ -14,6 +14,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {useDraftObservation} from '../hooks/useDraftObservation.ts';
 import {PhotoPreparedView} from '../sharedComponents/PhotoPreparedView.tsx';
 import ErrorIcon from '../images/Error.svg';
+import {MediaLabel} from '../sharedComponents/MediaLabel.tsx';
 
 const m = defineMessages({
   headerDeleteButtonText: {
@@ -88,6 +89,11 @@ export const PhotoPreviewModal: FC<
           photo={photo}
         />
       )}
+      <MediaLabel
+        textColor={WHITE}
+        style={styles.mediaLabel}
+        context="openMedia"
+      />
 
       <BottomSheetModal ref={sheetRef} isOpen={isOpen}>
         <BottomSheetModalContent
@@ -129,5 +135,10 @@ const styles = StyleSheet.create({
     marginLeft: 4,
     color: WHITE,
     fontSize: 13,
+  },
+  mediaLabel: {
+    position: 'absolute',
+    bottom: 12,
+    left: 20,
   },
 });

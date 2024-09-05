@@ -70,7 +70,7 @@ import {
   TrackScreen,
   createNavigationOptions as createTrackNavigationOptions,
 } from '../../screens/Track/index.tsx';
-import {SyncSettings} from '../../screens/Settings/ProjectSettings/SyncSettings';
+import {MediaSyncSettings} from '../../screens/Settings/ProjectSettings/MediaSyncSettings.tsx';
 import {DataAndPrivacy} from '../../screens/Settings/DataAndPrivacy/DataAndPrivacy';
 import {SettingsPrivacyPolicy} from '../../screens/Settings/DataAndPrivacy/SettingsPrivacyPolicy';
 import {TrackEdit} from '../../screens/TrackEdit/index.tsx';
@@ -289,9 +289,9 @@ export const createDefaultScreenGroup = ({
       options={{headerTitle: intl(AboutSettings.navTitle)}}
     />
     <RootStack.Screen
-      name="SyncSettings"
-      component={SyncSettings}
-      options={{headerTitle: intl(SyncSettings.navTitle)}}
+      name="MediaSyncSettings"
+      component={MediaSyncSettings}
+      options={{headerTitle: intl(MediaSyncSettings.navTitle)}}
     />
 
     <RootStack.Screen

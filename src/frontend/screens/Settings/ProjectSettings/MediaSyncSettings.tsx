@@ -7,87 +7,97 @@ import {
   usePersistedSettings,
   usePersistedSettingsAction,
 } from '../../../hooks/persistedState/usePersistedSettings';
-import {SyncActionSheetContent} from './SyncActionSheetContent';
+import {MediaSyncActionSheetContent} from './MediaSyncActionSheetContent';
 import {
   useBottomSheetModal,
   BottomSheetModal,
 } from '../../../sharedComponents/BottomSheetModal';
-import {SyncSetting} from '../../../sharedTypes';
+import {MediaSyncSetting} from '../../../sharedTypes';
 
 const m = defineMessages({
   syncSettingsTitle: {
-    id: 'screens.SyncSettings.title',
+    id: 'screens.MediaSyncSettings.title',
     defaultMessage: 'Sync Settings',
   },
   syncPreviews: {
-    id: 'screens.SyncSettings.syncPreviews',
+    id: 'screens.MediaSyncSettings.syncPreviews',
     defaultMessage: 'Sync Previews (Photos Only)',
   },
   syncPreviewsDescription: {
-    id: 'screens.SyncSettings.syncPreviewsDescription',
+    id: 'screens.MediaSyncSettings.syncPreviewsDescription',
     defaultMessage:
       'Photos will sync at a reduced smaller size. Device will <bold>not</bold> sync audio or video.',
   },
   syncEverything: {
-    id: 'screens.SyncSettings.syncEverything',
+    id: 'screens.MediaSyncSettings.syncEverything',
     defaultMessage: 'Sync Everything',
   },
   syncEverythingDescription: {
-    id: 'screens.SyncSettings.syncEverythingDescription',
+    id: 'screens.MediaSyncSettings.syncEverythingDescription',
     defaultMessage:
-      'Your device will sync <bold>all</bold> content at full size, including photos, audio, and videos.<newline/><newline/>Note: This will use more storage.',
+      'Your device will sync <bold>all</bold> content at full size, including photos, audio, and videos.',
+  },
+  syncEverythingWarning: {
+    id: 'screens.MediaSyncSettings.syncEverythingWarning',
+    defaultMessage: 'Note: This will use more storage.',
   },
   syncPreviewsBottomSheet: {
-    id: 'screens.SyncSettings.syncPreviewsButtonBottomSheet',
+    id: 'screens.MediaSyncSettings.syncPreviewsButtonBottomSheet',
     defaultMessage: 'Sync Previews?',
   },
   syncEverythingBottomSheet: {
-    id: 'screens.SyncSettings.syncEverythingButtonBottomSheet',
+    id: 'screens.MediaSyncSettings.syncEverythingButtonBottomSheet',
     defaultMessage: 'Sync Everything?',
   },
   syncPreviewsDescriptionBottomSheet: {
-    id: 'screens.SyncSettings.syncPreviewsDescriptionBottomSheet',
+    id: 'screens.MediaSyncSettings.syncPreviewsDescriptionBottomSheet',
     defaultMessage:
-      'Your device will keep all existing data but new observations will sync in a smaller, preview size.<newline/><newline/>You will no longer sync Audio or Video.',
+      'Your device will keep all existing data but new observations will sync in a smaller, preview size.',
+  },
+  syncPreviewWarningBottomSheet: {
+    id: 'screens.MediaSyncSettings.syncPreviewWarningBottomSheet',
+    defaultMessage: 'You will no longer sync Audio or Video.',
   },
   syncEverythingDescriptionBottomSheet: {
-    id: 'screens.SyncSettings.syncEverythingDescriptionBottomSheet',
+    id: 'screens.MediaSyncSettings.syncEverythingDescriptionBottomSheet',
     defaultMessage:
       'You are about to sync everything. This may increase the disk space used on your device.',
   },
   syncPreviewsBottomSheetConfirm: {
-    id: 'screens.SyncSettings.syncPreviewsBottomSheetConfirm',
+    id: 'screens.MediaSyncSettings.syncPreviewsBottomSheetConfirm',
     defaultMessage: 'Sync Previews',
   },
 });
 
-export const SyncSettings = () => {
+export const MediaSyncSettings = () => {
   const {formatMessage: t} = useIntl();
-  const syncSetting = usePersistedSettings(store => store.syncSetting);
-  const {setSyncSetting} = usePersistedSettingsAction();
+  const mediaSyncSetting = usePersistedSettings(
+    store => store.mediaSyncSetting,
+  );
+  const {setMediaSyncSetting} = usePersistedSettingsAction();
 
-  const [modalType, setModalType] = React.useState<SyncSetting>(
-    () => syncSetting,
+  const [modalType, setModalType] = React.useState<MediaSyncSetting>(
+    () => mediaSyncSetting,
   );
 
   const {isOpen, openSheet, closeSheet, sheetRef} = useBottomSheetModal({
     openOnMount: false,
   });
 
-  const handleOptionChange = (value: SyncSetting) => {
+  const handleOptionChange = (value: MediaSyncSetting) => {
     setModalType(value);
     openSheet();
   };
 
   const handleConfirm = () => {
-    setSyncSetting(modalType);
+    setMediaSyncSetting(modalType);
     closeSheet();
   };
 
   const options: {
-    value: SyncSetting;
+    value: MediaSyncSetting;
     label: string;
-    hint?: string;
+    hint?: React.ReactNode;
   }[] = [
     {
       value: 'previews',
@@ -97,30 +107,42 @@ export const SyncSettings = () => {
     {
       value: 'everything',
       label: t(m.syncEverything),
-      hint: t(m.syncEverythingDescription),
+      hint: (
+        <>
+          {t(m.syncEverythingDescription)}
+          {'\n\n'}
+          {t(m.syncEverythingWarning)}
+        </>
+      ),
     },
   ];
 
   return (
     <ScrollView style={styles.container}>
       <SelectOne
-        value={syncSetting}
+        value={mediaSyncSetting}
         onChange={handleOptionChange}
         options={options}
         radioButtonPosition="right"
         color={SYNC_BACKGROUND}
       />
       <BottomSheetModal ref={sheetRef} isOpen={isOpen}>
-        <SyncActionSheetContent
+        <MediaSyncActionSheetContent
           title={
             modalType === 'previews'
               ? t(m.syncPreviewsBottomSheet)
               : t(m.syncEverythingBottomSheet)
           }
           description={
-            modalType === 'previews'
-              ? t(m.syncPreviewsDescriptionBottomSheet)
-              : t(m.syncEverythingDescriptionBottomSheet)
+            modalType === 'previews' ? (
+              <>
+                {t(m.syncPreviewsDescriptionBottomSheet)}
+                {'\n\n'}
+                {t(m.syncPreviewWarningBottomSheet)}
+              </>
+            ) : (
+              t(m.syncEverythingDescriptionBottomSheet)
+            )
           }
           confirmActionText={
             modalType === 'previews'
@@ -137,7 +159,7 @@ export const SyncSettings = () => {
   );
 };
 
-SyncSettings.navTitle = m.syncSettingsTitle;
+MediaSyncSettings.navTitle = m.syncSettingsTitle;
 
 const styles = StyleSheet.create({
   container: {

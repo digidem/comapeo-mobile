@@ -1,29 +1,29 @@
 import {type StateCreator} from 'zustand';
 import {createPersistedState} from './createPersistedState';
-import {CoordinateFormat, SyncSetting} from '../../sharedTypes';
+import {CoordinateFormat, MediaSyncSetting} from '../../sharedTypes';
 
 type SettingsSlice = {
   coordinateFormat: CoordinateFormat;
   manualCoordinateEntryFormat: CoordinateFormat;
-  syncSetting: SyncSetting;
+  mediaSyncSetting: MediaSyncSetting;
   actions: {
     setCoordinateFormat: (coordinateFormat: CoordinateFormat) => void;
     setManualCoordinateEntryFormat: (
       coordinateFormat: CoordinateFormat,
     ) => void;
-    setSyncSetting: (syncSetting: SyncSetting) => void;
+    setMediaSyncSetting: (mediaSyncSetting: MediaSyncSetting) => void;
   };
 };
 
 const settingsSlice: StateCreator<SettingsSlice> = (set, get) => ({
   coordinateFormat: 'utm',
   manualCoordinateEntryFormat: 'utm',
-  syncSetting: 'default',
+  mediaSyncSetting: 'default',
   actions: {
     setCoordinateFormat: coordinateFormat => set({coordinateFormat}),
     setManualCoordinateEntryFormat: coordinateFormat =>
       set({manualCoordinateEntryFormat: coordinateFormat}),
-    setSyncSetting: syncSetting => set({syncSetting}),
+    setMediaSyncSetting: mediaSyncSetting => set({mediaSyncSetting}),
   },
 });
 

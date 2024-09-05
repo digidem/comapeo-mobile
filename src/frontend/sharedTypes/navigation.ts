@@ -98,7 +98,7 @@ export type RootStackParamsList = {
   Track: {trackId: string};
   TrackEdit: {trackId: string};
   CreateTestData: undefined;
-  SyncSettings: undefined;
+  MediaSyncSettings: undefined;
   DataAndPrivacy: undefined;
   SettingsPrivacyPolicy: undefined;
 };

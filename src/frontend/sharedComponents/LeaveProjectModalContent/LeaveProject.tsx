@@ -102,7 +102,11 @@ export const LeaveProject = ({
 
   return (
     <>
-      {accept.status === 'pending' || leaveProject.status === 'pending' ? (
+      {accept.status === 'pending' ||
+      leaveProject.status === 'pending' ||
+      // Prevents a flicker back to non-pending UI while the sheet containing this component
+      // is being closed after both succeed
+      (accept.status === 'success' && leaveProject.status === 'success') ? (
         <LeavingProjectProgress projectName={projectName} />
       ) : (
         <BottomSheetModalContent

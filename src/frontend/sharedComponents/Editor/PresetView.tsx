@@ -27,7 +27,7 @@ export const PresetView = ({
   return (
     <TouchableOpacity
       disabled={presetDisabled}
-      onPress={presetDisabled ? onPressPreset : undefined}
+      onPress={presetDisabled ? undefined : onPressPreset}
       style={styles.preset}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         {PresetIcon}

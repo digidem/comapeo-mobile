@@ -31,11 +31,13 @@ export const MediaLabel: React.FC<MediaLabelProps> = ({
   context,
 }) => {
   const {formatMessage: t} = useIntl();
-  const syncSetting = usePersistedSettings(store => store.syncSetting);
+  const mediaSyncSetting = usePersistedSettings(
+    store => store.mediaSyncSetting,
+  );
   let labelText = '';
-  if (syncSetting === 'everything') {
+  if (mediaSyncSetting === 'everything') {
     labelText = t(m.labelFullSizePreviews);
-  } else if (syncSetting === 'previews') {
+  } else if (mediaSyncSetting === 'previews') {
     labelText =
       context === 'observation'
         ? t(m.labelPreviewsOnlyObservation)

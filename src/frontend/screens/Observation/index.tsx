@@ -40,14 +40,6 @@ const m = defineMessages({
     description:
       'Title of observation screen showing (non-editable) view of observation with map and answered questions',
   },
-  labelFullSizePreviews: {
-    id: 'screens.Observation.labelFullSizePreviews',
-    defaultMessage: 'Full size and previews available',
-  },
-  labelPreviewsOnly: {
-    id: 'screens.Observation.labelPreviewsOnly',
-    defaultMessage: 'Only previews available',
-  },
 });
 
 export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({

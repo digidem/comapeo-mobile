@@ -719,12 +719,6 @@
     "description": "Title of dialog asking confirmation to delete an observation",
     "message": "Delete observation?"
   },
-  "screens.Observation.labelFullSizePreviews": {
-    "message": "Full size and previews available"
-  },
-  "screens.Observation.labelPreviewsOnly": {
-    "message": "Only previews available"
-  },
   "screens.Observation.labelPreviewsOnlyObservation": {
     "message": "Only previews are available"
   },

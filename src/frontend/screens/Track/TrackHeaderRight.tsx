@@ -6,13 +6,13 @@ import {useTrackQuery} from '../../hooks/server/track';
 import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {EditIcon} from '../../sharedComponents/icons';
-import {useCreatedByToDeviceId} from '../../hooks/server/projects.ts';
+import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 
 export const TrackHeaderRight = ({trackId}: {trackId: string}) => {
   const {data: track, isLoading: isTrackLoading} = useTrackQuery(trackId);
   const {data: createdByDeviceId, isPending: isCreatedByDeviceIdPending} =
-    useCreatedByToDeviceId(track?.createdBy);
+    useOriginalVersionIdToDeviceId(track?.originalVersionId);
 
   const {data: deviceInfo, isPending: isDeviceInfoPending} = useDeviceInfo();
   const navigation = useNavigationFromRoot();

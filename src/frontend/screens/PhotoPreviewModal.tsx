@@ -89,12 +89,13 @@ export const PhotoPreviewModal: FC<
           photo={photo}
         />
       )}
-      <MediaLabel
-        textColor={WHITE}
-        style={styles.mediaLabel}
-        context="openMedia"
-      />
-
+      {process.env.EXPO_PUBLIC_FEATURE_MEDIA_MANAGER && (
+        <MediaLabel
+          textColor={WHITE}
+          style={styles.mediaLabel}
+          context="openMedia"
+        />
+      )}
       <BottomSheetModal ref={sheetRef} isOpen={isOpen}>
         <BottomSheetModalContent
           title={t(m.deleteModalTitle)}

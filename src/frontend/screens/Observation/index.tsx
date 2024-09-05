@@ -113,12 +113,13 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
               context="observation"
             />
           )}
-          {photoAttachments.length > 0 && (
-            <MediaScrollView
-              photos={photoAttachments}
-              observationId={observationId}
-            />
-          )}
+          {process.env.EXPO_PUBLIC_FEATURE_MEDIA_MANAGER &&
+            photoAttachments.length > 0 && (
+              <MediaScrollView
+                photos={photoAttachments}
+                observationId={observationId}
+              />
+            )}
         </View>
         {fields.length > 0 && (
           <FieldDetails observation={observation} fields={fields} />

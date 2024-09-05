@@ -9,7 +9,7 @@ type SelectOneProps<T> = {
   options: Array<{
     value: T;
     label: string;
-    hint?: string;
+    hint?: React.ReactNode;
   }>;
   radioButtonPosition?: 'left' | 'right';
   color?: string;

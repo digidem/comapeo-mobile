@@ -1,34 +1,30 @@
 import * as React from 'react';
-import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import {defineMessages, useIntl} from 'react-intl';
 import Warning from '../../../images/Warning.svg';
-import {
-  BottomSheetModal,
-  BottomSheetModalContent,
-} from '../../../sharedComponents/BottomSheetModal';
+import {BottomSheetModalContent} from '../../../sharedComponents/BottomSheetModal';
 
 const m = defineMessages({
   cancel: {
-    id: 'screens.SyncActionSheet.cancel',
+    id: 'screens.MediaSyncActionSheetContent.cancel',
     defaultMessage: 'Cancel',
   },
 });
 
-type SyncActionSheetContentProps = {
+type MediaSyncActionSheetContentProps = {
   title: string;
-  description: string;
+  description: React.ReactNode;
   confirmActionText: string;
   confirmAction: () => void;
   onDismiss: () => void;
 };
 
-export const SyncActionSheetContent = ({
+export const MediaSyncActionSheetContent = ({
   title,
   description,
   confirmActionText,
   confirmAction,
   onDismiss,
-}: SyncActionSheetContentProps) => {
+}: MediaSyncActionSheetContentProps) => {
   const {formatMessage: t} = useIntl();
 
   return (

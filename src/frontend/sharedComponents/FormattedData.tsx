@@ -146,7 +146,7 @@ export const FormattedPresetName = ({preset}: {preset?: Preset}) => {
 
 // TODO: Better hangling of boolean and null values (we don't create these
 // anywhere yet)
-function getValueLabel(
+export function getValueLabel(
   value: null | boolean | number | string,
   field: Field,
 ): string {

@@ -68,10 +68,16 @@ jobs:
             echo "DEPLOY_BRANCH_EXISTS=false" >> $GITHUB_ENV
           fi
 
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.PR_BOT_APP_ID }}
+          private-key: ${{ secrets.PR_BOT_PRIVATE_KEY }}
+
       - name: Create Pull Request to deploy
         if: env.DEPLOY_BRANCH_EXISTS == 'true'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           new_version=${{ env.VERSION }}
           branch_name=${{ env.BRANCH_NAME }}

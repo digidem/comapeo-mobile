@@ -152,6 +152,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
           style={{marginTop: 10}}
           name={coordinator.name || ''}
           deviceId={coordinator.deviceId}
+          dateAdded={coordinator.joinedAt}
           deviceType="mobile"
           thisDevice={deviceInfo.data?.deviceId === coordinator.deviceId}
         />

@@ -461,6 +461,18 @@
   "screens.FatalError.somethingWrong": {
     "message": "Something Went Wrong"
   },
+  "screens.HowToLeaveProject.goBack": {
+    "message": "Go back"
+  },
+  "screens.HowToLeaveProject.howTo": {
+    "message": "How to Leave Project"
+  },
+  "screens.HowToLeaveProject.instructions": {
+    "message": "To leave this project please uninstall and reinstall Mapeo. All project data will be removed from this device."
+  },
+  "screens.HowToLeaveProject.warning": {
+    "message": "If you are the only Coordinator on the project no one else will be able to edit project details or invite other devices!"
+  },
   "screens.IntroToCoMapeo.collaborate": {
     "message": "Collaborate with others"
   },
@@ -1318,6 +1330,9 @@
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",
     "message": "Show Options"
+  },
+  "sharedComponents.DeviceCard.leaveProject": {
+    "message": "Leave Project"
   },
   "sharedComponents.DeviceIconWithName.Disconnected": {
     "message": "Disconnected"

@@ -28,7 +28,7 @@ const m = defineMessages({
   error: {
     id: 'screens.ObservationsList.error',
     defaultMessage:
-      'Error loading observations. Try quitting and restarting Mapeo.',
+      'Error loading observations. Try quitting and restarting CoMapeo.',
     description:
       'message shown when there is an unexpected error when loading observations',
   },

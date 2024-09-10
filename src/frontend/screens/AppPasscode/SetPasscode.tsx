@@ -20,7 +20,7 @@ const m = defineMessages({
   },
   subTitleSet: {
     id: 'screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet',
-    defaultMessage: 'This passcode will be required to open the Mapeo App',
+    defaultMessage: 'This passcode will be required to open the CoMapeo App',
   },
   passwordDoesNotMatch: {
     id: 'screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordDoesNotMatch',

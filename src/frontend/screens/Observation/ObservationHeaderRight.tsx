@@ -2,7 +2,6 @@ import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 
 import {IconButton} from '../../sharedComponents/IconButton';
-import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
 
 import {EditIcon} from '../../sharedComponents/icons';
 import {SyncIcon} from '../../sharedComponents/icons/SyncIconCircle';
@@ -10,17 +9,16 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
+import {useObservation} from '../../hooks/server/observations.ts';
 
 export const ObservationHeaderRight = ({
   observationId,
 }: {
   observationId: string;
 }) => {
-  const observationWithPreset = useObservationWithPreset(observationId);
+  const {data: observation} = useObservation(observationId);
   const {data: createdByDeviceId, isPending: isCreatedByDeviceIdPending} =
-    useOriginalVersionIdToDeviceId(
-      observationWithPreset.observation.originalVersionId,
-    );
+    useOriginalVersionIdToDeviceId(observation.originalVersionId);
 
   const {data: deviceInfo, isPending: isDeviceInfoPending} = useDeviceInfo();
   const navigation = useNavigationFromRoot();

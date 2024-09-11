@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {LIGHT_GREY, RED} from '../lib/styles';
+import {LIGHT_GREY, MAGENTA, MEDIUM_GREY} from '../lib/styles';
 import {ExhaustivenessError} from '../lib/ExhaustivenessError';
 import type {
   DeviceConnectionStatus,
@@ -74,9 +74,9 @@ export const DeviceCard = ({
         />
         <View style={{alignSelf: 'flex-start'}}>
           {dateAdded && (
-            <Text style={{fontSize: 12, marginBottom: 10}}>
+            <Text style={{fontSize: 12, marginBottom: 10, color: MEDIUM_GREY}}>
               <FormattedDate
-                value={new Date(dateAdded)}
+                value={dateAdded}
                 year="numeric"
                 month="short"
                 day="2-digit"
@@ -88,7 +88,7 @@ export const DeviceCard = ({
               onPress={() => {
                 navigate('HowToLeaveProject');
               }}>
-              <Text style={{fontSize: 12, color: RED}}>
+              <Text style={{fontSize: 12, color: MAGENTA, fontWeight: 'bold'}}>
                 {formatMessage(m.leaveProject)}
               </Text>
             </TouchableOpacity>

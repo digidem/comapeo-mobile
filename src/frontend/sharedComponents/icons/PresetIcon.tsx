@@ -3,7 +3,7 @@ import {Image} from 'react-native';
 import {Circle} from './Circle';
 import {type IconSize} from '../../sharedTypes';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {useIconUrl} from '../../hooks/server/presets';
+import {useIconUrl} from '../../hooks/server/icons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 interface PresetIconProps {

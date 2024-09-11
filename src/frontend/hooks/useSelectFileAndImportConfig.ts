@@ -3,6 +3,8 @@ import {selectFile} from '../lib/selectFile';
 import * as FileSystem from 'expo-file-system';
 import {PROJECT_SETTINGS_KEY, useImportProjectConfig} from './server/projects';
 import {convertFileUriToPosixPath} from '../lib/file-system';
+import {FIELDS_KEY} from './server/fields';
+import {ICONS_KEY} from './server/icons';
 import {PRESETS_KEY} from './server/presets';
 
 export function useSelectFileAndImportConfig() {
@@ -26,6 +28,8 @@ export function useSelectFileAndImportConfig() {
     },
     onSuccess: () => {
       return Promise.all([
+        queryClient.invalidateQueries({queryKey: [FIELDS_KEY]}),
+        queryClient.invalidateQueries({queryKey: [ICONS_KEY]}),
         queryClient.invalidateQueries({queryKey: [PROJECT_SETTINGS_KEY]}),
         queryClient.invalidateQueries({queryKey: [PRESETS_KEY]}),
       ]);

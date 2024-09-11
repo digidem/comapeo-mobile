@@ -100,6 +100,7 @@ export type RootStackParamsList = {
   CreateTestData: undefined;
   DataAndPrivacy: undefined;
   SettingsPrivacyPolicy: undefined;
+  HowToLeaveProject: undefined;
 };
 
 export type OnboardingParamsList = {

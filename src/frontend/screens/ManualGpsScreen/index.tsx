@@ -24,7 +24,7 @@ import {IconButton} from '../../sharedComponents/IconButton';
 import SaveCheck from '../../images/CheckMark.svg';
 import {Select} from '../../sharedComponents/Select';
 import {Text} from '../../sharedComponents/Text';
-import type {Position, CoordinateFormat} from '../../sharedTypes';
+import type {CoordinateFormat} from '../../sharedTypes';
 
 import {
   latitudeIsValid,

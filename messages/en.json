@@ -67,11 +67,11 @@
   "Navigation.Drawer.createOrJoinDesc": {
     "message": "Create a new project or join existing one"
   },
-  "Navigation.Drawer.createOrJoinToSync": {
-    "message": "Create or Join a Project to sync with other devices"
-  },
   "Navigation.Drawer.dataAndPrivacy": {
     "message": "Data & Privacy"
+  },
+  "Navigation.Drawer.mappingOnOwn": {
+    "message": "You are currently mapping on your own"
   },
   "Navigation.Drawer.projName": {
     "message": "Project {projectName}"

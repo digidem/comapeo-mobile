@@ -258,9 +258,19 @@ function useCreateFakeObservationsMutation() {
       const promises = [];
 
       for (let i = 0; i < count; i++) {
-        const [lon = 0, lat = 0] = randomPosition({
+        const [lon, lat] = randomPosition({
           bbox,
         });
+
+        // `randomPosition`'s types are incorrect. We should be able to remove
+        // this check after [this types change][0] is merged.
+        //
+        // [0]: https://github.com/DefinitelyTyped/DefinitelyTyped/pull/70521
+        if (typeof lon !== 'number' || typeof lat !== 'number') {
+          throw new Error(
+            "randomPosition didn't return latitude and longitude",
+          );
+        }
 
         const randomPreset = presets.at(
           Math.floor(Math.random() * presets.length),

@@ -25,7 +25,7 @@ const m = defineMessages({
   subText: {
     id: 'screens.Sync.CreateOrJoinProjectDisplay.subText',
     defaultMessage:
-      'This action will delete observations you have collected so far. Consider sharing {icon} important observations to you email before proceeding.',
+      'This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding.',
   },
 });
 
@@ -48,9 +48,11 @@ export const CreateOrJoinProjectDisplay = ({
       }>
       <View style={styles.contentContainer}>
         <Text style={styles.descriptionText}>{t(m.title)}</Text>
-        <Text>{t(m.subTitle)}</Text>
-        <Text>
-          {t(m.subText, {icon: () => <MaterialIcons name="share" />})}
+        <Text style={{marginTop: 20, textAlign: 'center'}}>
+          {t(m.subTitle)}
+        </Text>
+        <Text style={{marginTop: 20, textAlign: 'center'}}>
+          {t(m.subText, {icon: <MaterialIcons name="share" />})}
         </Text>
       </View>
     </ScreenContentWithDock>

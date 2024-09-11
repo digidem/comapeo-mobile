@@ -858,8 +858,8 @@
     "message": "Add Observations"
   },
   "screens.ObservationsList.createOrJoin": {
-    "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
-    "message": "Create or Join a Project."
+    "description": "The full sentence is 'Create or Join a Project to collect data with a team. This action will delete observations you have collected so far. Consider sharing {icon} important observations to you email before proceeding.' The sentence needs to be seperated for styling purposes",
+    "message": "Create or Join a Project"
   },
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",
@@ -870,8 +870,8 @@
     "message": "Loading… this can take a while after synchronizing with a new device"
   },
   "screens.ObservationsList.toSync": {
-    "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
-    "message": "Create or join a project to collect data with a team. This action will delete observations you have collected so far. Consider sharing (ICON) important observations to you email before proceeding."
+    "description": "The full sentence is 'Create or Join a Project to collect data with a team. This action will delete observations you have collected so far. Consider sharing {icon} important observations to you email before proceeding.' The sentence needs to be seperated for styling purposes",
+    "message": "to collect data with a team. This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
   },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "Privacy Policy"
@@ -1168,7 +1168,7 @@
     "message": "Join a Project"
   },
   "screens.Settings.CreateOrJoinProject.projectDescription": {
-    "message": "A project is a secure container for your data. Only devices you invite can enter and share data with you. Create or Join a project in order to share data with other devices. This action will delete observations you have collected so far. Consider sharing {icon} important observations to you email before proceeding."
+    "message": "A project is a secure container for your data. Only devices you invite can enter and share data with you. Create or Join a project in order to share data with other devices. This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
   },
   "screens.Settings.CreateOrJoinProject.startProject": {
     "message": "Start a CoMapeo Project"
@@ -1237,7 +1237,7 @@
     "message": "Create or Join Project"
   },
   "screens.Sync.CreateOrJoinProjectDisplay.subText": {
-    "message": "This action will delete observations you have collected so far. Consider sharing {icon} important observations to you email before proceeding."
+    "message": "This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
   },
   "screens.Sync.CreateOrJoinProjectDisplay.subTitle": {
     "message": "You will be able to share data with devices that are part of the same project."

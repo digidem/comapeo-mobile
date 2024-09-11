@@ -55,7 +55,7 @@ export const Success = ({
           <NewDeviceLogo />
           <Text style={{marginLeft: 10}}>{deviceName}</Text>
         </View>
-        <Text>{t(m.startMappingInstructions)}</Text>
+        <Text style={{marginTop: 20}}>{t(m.startMappingInstructions)}</Text>
         <Text>{t(m.findSettings)}</Text>
       </View>
       <Button

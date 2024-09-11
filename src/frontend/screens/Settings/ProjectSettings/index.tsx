@@ -22,6 +22,10 @@ const m = defineMessages({
     id: 'Screens.Settings.ProjectSettings.yourTeam',
     defaultMessage: 'Your Team',
   },
+  mediaSyncSettings: {
+    id: 'Screens.Settings.ProjectSettings.mediaSyncSettings',
+    defaultMessage: 'Sync Settings',
+  },
   config: {
     id: 'screens.Settings.config',
     defaultMessage: 'Project Configuration',
@@ -49,6 +53,18 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
           }}>
           <ListItemText primary={<FormattedMessage {...m.yourTeam} />} />
         </ListItem>
+        {process.env.EXPO_PUBLIC_FEATURE_MEDIA_MANAGER && (
+          <ListItem
+            testID="MAIN.sync-list-item"
+            onPress={() => {
+              navigation.navigate('MediaSyncSettings');
+            }}>
+            <ListItemText
+              primary={<FormattedMessage {...m.mediaSyncSettings} />}
+            />
+          </ListItem>
+        )}
+
         <ListItem
           onPress={() => {
             navigation.navigate('Config');

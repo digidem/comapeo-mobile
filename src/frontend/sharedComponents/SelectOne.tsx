@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {StyleSheet} from 'react-native';
 
 import {List, ListItem, ListItemText, ListItemIcon} from './List';
 
@@ -8,14 +9,18 @@ type SelectOneProps<T> = {
   options: Array<{
     value: T;
     label: string;
-    hint?: string;
+    hint?: React.ReactNode;
   }>;
+  radioButtonPosition?: 'left' | 'right';
+  color?: string;
 };
 
 export const SelectOne = <T,>({
   value,
   options,
   onChange,
+  radioButtonPosition = 'left',
+  color,
 }: SelectOneProps<T>) => (
   <List dense>
     {options.map((item, index) => (
@@ -26,16 +31,35 @@ export const SelectOne = <T,>({
             : index
         }
         testID={`${item.value}LanguageButton`}
-        onPress={() => value !== item.value && onChange(item.value)}>
+        onPress={() => value !== item.value && onChange(item.value)}
+        style={radioButtonPosition === 'right' ? styles.rowReverse : undefined}>
         <ListItemIcon
           iconName={
             item.value === value
               ? 'radio-button-checked'
               : 'radio-button-unchecked'
           }
+          style={
+            radioButtonPosition === 'right'
+              ? styles.alignRight
+              : styles.alignLeft
+          }
+          color={color}
         />
         <ListItemText primary={item.label} secondary={item.hint}></ListItemText>
       </ListItem>
     ))}
   </List>
 );
+
+const styles = StyleSheet.create({
+  rowReverse: {
+    flexDirection: 'row-reverse',
+  },
+  alignRight: {
+    alignItems: 'flex-end',
+  },
+  alignLeft: {
+    alignItems: 'flex-start',
+  },
+});

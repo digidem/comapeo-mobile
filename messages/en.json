@@ -138,6 +138,9 @@
   "Screens.Settings.ProjectSettings.deviceName": {
     "message": "Device Name"
   },
+  "Screens.Settings.ProjectSettings.mediaSyncSettings": {
+    "message": "Sync Settings"
+  },
   "Screens.Settings.ProjectSettings.title": {
     "message": "Project Settings"
   },
@@ -669,6 +672,45 @@
   },
   "screens.ManualGpsScreen.zoneNumber": {
     "message": "Zone Number"
+  },
+  "screens.MediaSyncActionSheetContent.cancel": {
+    "message": "Cancel"
+  },
+  "screens.MediaSyncSettings.syncEverything": {
+    "message": "Sync Everything"
+  },
+  "screens.MediaSyncSettings.syncEverythingButtonBottomSheet": {
+    "message": "Sync Everything?"
+  },
+  "screens.MediaSyncSettings.syncEverythingDescription": {
+    "message": "Your device will sync <bold>all</bold> content at full size, including photos, audio, and videos."
+  },
+  "screens.MediaSyncSettings.syncEverythingDescriptionBottomSheet": {
+    "message": "You are about to sync everything. This may increase the disk space used on your device."
+  },
+  "screens.MediaSyncSettings.syncEverythingWarning": {
+    "message": "Note: This will use more storage."
+  },
+  "screens.MediaSyncSettings.syncPreviewWarningBottomSheet": {
+    "message": "You will no longer sync Audio or Video."
+  },
+  "screens.MediaSyncSettings.syncPreviews": {
+    "message": "Sync Previews (Photos Only)"
+  },
+  "screens.MediaSyncSettings.syncPreviewsBottomSheetConfirm": {
+    "message": "Sync Previews"
+  },
+  "screens.MediaSyncSettings.syncPreviewsButtonBottomSheet": {
+    "message": "Sync Previews?"
+  },
+  "screens.MediaSyncSettings.syncPreviewsDescription": {
+    "message": "Photos will sync at a reduced smaller size. Device will <bold>not</bold> sync audio or video."
+  },
+  "screens.MediaSyncSettings.syncPreviewsDescriptionBottomSheet": {
+    "message": "Your device will keep all existing data but new observations will sync in a smaller, preview size."
+  },
+  "screens.MediaSyncSettings.title": {
+    "message": "Sync Settings"
   },
   "screens.ObscurePasscode.description": {
     "message": "Obscure Passcode is a security feature that allows you to open Mapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of Mapeo which allows you to create demonstration observations that are not saved to the Mapeo database."

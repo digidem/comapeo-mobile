@@ -1,11 +1,10 @@
 import * as React from 'react';
 import {IntlProvider as ReactIntlProvider, CustomFormats} from 'react-intl';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 
 import messages from '../../../translations/messages.json';
 import {usePersistedLocale} from '../hooks/persistedState/usePersistedLocale';
 import {TranslatedLocale} from '../lib/intl';
-import {Text} from '../sharedComponents/Text';
 
 export const formats: CustomFormats = {
   date: {

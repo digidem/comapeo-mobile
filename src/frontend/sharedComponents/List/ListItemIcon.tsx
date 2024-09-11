@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {ViewStyleProp} from '../../sharedTypes';
 
-type ListItemIconProps = {style?: ViewStyleProp} & (
+type ListItemIconProps = {style?: ViewStyleProp; color?: string} & (
   | {
       iconName: string;
     }
@@ -22,7 +22,7 @@ export const ListItemIcon = (props: ListItemIconProps) => {
         <MaterialIcon
           name={props.iconName}
           size={24}
-          color="rgba(0, 0, 0, 0.54)"
+          color={props.color || 'rgba(0, 0, 0, 0.54)'}
         />
       )}
     </View>

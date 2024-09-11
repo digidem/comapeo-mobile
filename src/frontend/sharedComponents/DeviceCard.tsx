@@ -61,7 +61,7 @@ export const DeviceCard = ({
     <TouchableOpacity
       disabled={!onPress || isDisconnected}
       onPress={() => (onPress ? onPress() : {})}
-      style={[style]}>
+      style={style}>
       <View style={styles.container}>
         <DeviceNameWithIcon
           style={{flexShrink: 1}}

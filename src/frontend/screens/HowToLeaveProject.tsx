@@ -62,7 +62,7 @@ export const HowToLeaveProject = ({
           {formatMessage(m.goBack)}
         </Button>
       }>
-      <Text style={[styles.text, {fontSize: 32}]}>
+      <Text style={[styles.text, {fontSize: 32, fontWeight: 'bold'}]}>
         {formatMessage(m.howTo)}
       </Text>
       <Text style={[styles.text, {marginTop: 20}]}>

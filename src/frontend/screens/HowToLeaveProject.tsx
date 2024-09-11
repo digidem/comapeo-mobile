@@ -12,7 +12,6 @@ import {useProjectMembers} from '../hooks/server/projects';
 import {useDeviceInfo} from '../hooks/server/deviceInfo';
 import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../sharedTypes';
 import {UIActivityIndicator} from 'react-native-indicators';
-import QuestionIconCircle from '../images/QuestionIconCircle.svg';
 import {QuestionMarkWithShadow} from '../sharedComponents/icons/QuestionMarkWithShadow';
 
 const m = defineMessages({

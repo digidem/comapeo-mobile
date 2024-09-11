@@ -5,7 +5,7 @@
   },
   "AppContainer.EditHeader.discardChangesContent": {
     "description": "Button on dialog to cancel observation edits",
-    "message": "Discard changes"
+    "message": "Descartar alterações"
   },
   "AppContainer.EditHeader.discardChangesTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
@@ -23,22 +23,22 @@
     "message": "Idioma"
   },
   "Screens.Settings.AppSettings.languageDesc": {
-    "message": "Display language for app"
+    "message": "Idioma de exibição do aplicativo"
   },
   "Screens.Settings.AppSettings.title": {
-    "message": "App Setttings"
+    "message": "Configurações do aplicativo"
   },
   "Screens.Settings.ProjectSettings.configuration": {
-    "message": "Configuration"
+    "message": "Configurações"
   },
   "Screens.Settings.ProjectSettings.deviceName": {
     "message": "Nome do dispositivo"
   },
   "Screens.Settings.ProjectSettings.title": {
-    "message": "Project Setttings"
+    "message": "Configurações do projeto"
   },
   "Screens.Settings.ProjectSettings.yourTeam": {
-    "message": "Your Team"
+    "message": "Sua equipe"
   },
   "screens.AddPhoto.cancel": {
     "message": "Cancelar"
@@ -93,7 +93,7 @@
     "message": "Esta senha será necessária para abrir o Mapeo"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
-    "message": "Set Passcode"
+    "message": "Definir senha"
   },
   "screens.AppPasscode.NewPasscode.Splash.continue": {
     "message": "Continue"
@@ -132,32 +132,32 @@
     "message": "Usar Senha do aplicativo"
   },
   "screens.CameraScreen.goToSettings": {
-    "message": "Go to Settings"
+    "message": "Ir para Configurações"
   },
   "screens.CameraScreen.noCameraAccess": {
-    "message": "No access to camera. Please Allow access in setting"
+    "message": "Sem acesso à câmera. Por favor, permita o acesso em Configurações"
   },
   "screens.CategoryChooser.categoryTitle": {
     "description": "Title for category chooser screen",
     "message": "Escolha o que está acontecendo"
   },
   "screens.DeviceNaming.Success.description": {
-    "message": "You named your device"
+    "message": "Você nomeou seu dispositivo"
   },
   "screens.DeviceNaming.Success.goToMap": {
-    "message": "Go to Map"
+    "message": "Ir para Mapas"
   },
   "screens.DeviceNaming.Success.success": {
-    "message": "Success!"
+    "message": "Sucesso!"
   },
   "screens.DeviceNaming.addName": {
-    "message": "Add Name"
+    "message": "Adicionar Nome"
   },
   "screens.DeviceNaming.description": {
-    "message": "To create or join a new project you will have to name your device. In a future version of CoMapeo, you will be able to manage the projects you created by changing devices roles, deleting devices and much more."
+    "message": "Para criar ou entrar em um novo projeto, você terá que nomear o seu dispositivo. Em uma versão futura do CoMapeo, você poderá gerenciar os projetos que você criou alterando as funções de dispositivos, removendo dispositivos e muito mais."
   },
   "screens.DeviceNaming.header": {
-    "message": "Add a name for your device"
+    "message": "Adicione um nome para o seu dispositivo"
   },
   "screens.EnterPassword.enterPass": {
     "message": "Insira sua senha"
@@ -166,14 +166,14 @@
     "message": "Senha incorreta. Por favor, tente novamente."
   },
   "screens.IntroToCoMapeo.collaborate": {
-    "message": "Collaborate on mapping and monitoring projects"
+    "message": "Colabore em projetos de mapeamento e monitorando"
   },
   "screens.IntroToCoMapeo.getStarted": {
-    "message": "Get Started"
+    "message": "Vamos Começar"
   },
   "screens.IntroToCoMapeo.isNow": {
     "description": "The full sentence is mapeo 'is now' comapeo. ",
-    "message": "is now"
+    "message": "é agora"
   },
   "screens.IntroToCoMapeo.version": {
     "description": "v is short for version. the translation for version can be used instead",
@@ -195,7 +195,7 @@
     "message": "O que é Senha obscura?"
   },
   "screens.Observation.ObservationEdit.CategoryView.changePreset": {
-    "message": "Change"
+    "message": "Alterar"
   },
   "screens.Observation.ObservationEdit.CategoryView.observation": {
     "description": "Default name of observation with no matching preset",
@@ -275,11 +275,11 @@
   },
   "screens.ObservationEdit.editTitle": {
     "description": "screen title for edit observation screen",
-    "message": "Edit Observation"
+    "message": "Editar Observação"
   },
   "screens.ObservationEdit.newTitle": {
     "description": "screen title for new observation screen",
-    "message": "New Observation"
+    "message": "Nova observação"
   },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",
@@ -338,24 +338,24 @@
     "message": "Versão e número do build"
   },
   "screens.Settings.appSettings": {
-    "message": "App Settings"
+    "message": "Configurações do Aplicativo"
   },
   "screens.Settings.appSettingsDesc": {
     "description": "list of avaialable app settings",
-    "message": "Language, Security, Coordinates"
+    "message": "Idioma, Segurança, Coordenadas"
   },
   "screens.Settings.createOrJoin": {
-    "message": "Create or Join Project"
+    "message": "Criar ou Juntar-se a um Projeto"
   },
   "screens.Settings.createOrJoinDesc": {
-    "message": "Create a new project or join existing one"
+    "message": "Criar um novo projeto ou se juntar a um já existente"
   },
   "screens.Settings.projectSettings": {
-    "message": "Project Settings"
+    "message": "Configurações do Projeto"
   },
   "screens.Settings.projectSettingsDesc": {
     "description": "list of avaialable project settings",
-    "message": "Categories, Config, Team"
+    "message": "Categorias, Configurações, Equipe"
   },
   "screens.Settings.title": {
     "description": "Title of settings screen",

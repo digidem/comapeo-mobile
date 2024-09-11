@@ -1,13 +1,13 @@
-import React, {memo} from 'react';
+import React from 'react';
 import {Image} from 'react-native';
 import {Circle} from './Circle';
 import {type IconSize} from '../../sharedTypes';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {useGetPresetIcon} from '../../hooks/server/presets';
+import {useIconUrl} from '../../hooks/server/presets';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 interface PresetIconProps {
-  presetDocId?: string;
+  iconId?: string;
   size: IconSize;
   testID?: string;
 }
@@ -24,14 +24,19 @@ const radii = {
   large: 35,
 };
 
-const PresetIcon = memo<PresetIconProps>(({presetDocId, size, testID}) => {
-  const iconSize = iconSizes[size] || 35;
+const LoadedPresetIcon = ({
+  iconId,
+  size,
+  testID,
+}: PresetIconProps & {iconId: string}) => {
+  const iconSize = iconSizes[size];
 
-  const {data: iconUrl, isPending, error} = useGetPresetIcon(presetDocId, size);
+  const iconUrlQuery = useIconUrl(iconId, size);
 
-  if (isPending) return <UIActivityIndicator size={30} />;
+  if (iconUrlQuery.status === 'pending')
+    return <UIActivityIndicator size={iconSize} />;
 
-  if (error || !iconUrl) {
+  if (iconUrlQuery.status === 'error') {
     return <MaterialIcon name="place" size={iconSize} />;
   }
 
@@ -39,26 +44,24 @@ const PresetIcon = memo<PresetIconProps>(({presetDocId, size, testID}) => {
     <Image
       style={{width: iconSize, height: iconSize}}
       resizeMode="contain"
-      source={{uri: iconUrl}}
+      src={iconUrlQuery.data}
       testID={testID}
     />
   );
-});
+};
 
-export const PresetCircleIcon = ({
-  presetDocId,
-  size,
-  testID,
-}: PresetIconProps) => {
-  const iconSize = iconSizes[size] || 35;
+const PresetIcon = ({iconId, size, testID}: PresetIconProps) => {
+  return iconId ? (
+    <LoadedPresetIcon iconId={iconId} size={size} testID={testID} />
+  ) : (
+    <MaterialIcon name="place" size={iconSizes[size]} testID={testID} />
+  );
+};
 
+export const PresetCircleIcon = ({iconId, size, testID}: PresetIconProps) => {
   return (
     <Circle radius={radii[size]} style={{elevation: 5}}>
-      {presetDocId ? (
-        <PresetIcon presetDocId={presetDocId} size={size} testID={testID} />
-      ) : (
-        <MaterialIcon name="place" size={iconSize} />
-      )}
+      <PresetIcon iconId={iconId} size={size} testID={testID} />
     </Circle>
   );
 };

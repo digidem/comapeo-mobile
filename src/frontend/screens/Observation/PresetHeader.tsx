@@ -10,7 +10,7 @@ export const PresetHeader = ({preset}: {preset?: Preset}) => {
     <View style={styles.categoryIconContainer}>
       <PresetCircleIcon
         size="medium"
-        presetDocId={preset?.iconRef?.docId}
+        iconId={preset?.iconRef?.docId}
         testID={`OBS.${preset?.name}-view-icon`}
       />
       <Text style={styles.categoryLabel} numberOfLines={1}>

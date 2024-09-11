@@ -194,6 +194,7 @@ export const ObservationCreate = ({
         presetName={presetName}
         PresetIcon={
           <PresetCircleIcon
+            size="medium"
             presetDocId={preset?.iconRef?.docId}
             testID={`OBS.${preset?.name}-icon`}
           />

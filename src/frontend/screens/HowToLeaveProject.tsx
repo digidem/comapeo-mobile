@@ -21,7 +21,7 @@ const m = defineMessages({
   instructions: {
     id: 'screens.HowToLeaveProject.instructions',
     defaultMessage:
-      'To leave this project please uninstall and reinstall Mapeo. All project data will be removed from this device.',
+      'To leave this project please uninstall and reinstall CoMapeo. All project data will be removed from this device.',
   },
   goBack: {
     id: 'screens.HowToLeaveProject.goBack',

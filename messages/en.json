@@ -67,11 +67,11 @@
   "Navigation.Drawer.createOrJoinDesc": {
     "message": "Create a new project or join existing one"
   },
-  "Navigation.Drawer.createOrJoinToSync": {
-    "message": "Create or Join a Project to sync with other devices"
-  },
   "Navigation.Drawer.dataAndPrivacy": {
     "message": "Data & Privacy"
+  },
+  "Navigation.Drawer.mappingOnOwn": {
+    "message": "You are currently mapping on your own"
   },
   "Navigation.Drawer.projName": {
     "message": "Project {projectName}"
@@ -431,8 +431,14 @@
   "screens.DeviceNaming.Success.description": {
     "message": "You named your device"
   },
+  "screens.DeviceNaming.Success.findSettings": {
+    "message": "To find your project settings go to the main menu found on the map screen."
+  },
   "screens.DeviceNaming.Success.goToMap": {
     "message": "Go to Map"
+  },
+  "screens.DeviceNaming.Success.startMappingInstructions": {
+    "message": "You can start mapping alone or start mapping with a team. Create or join a project in order to share data with other devices that are part of the same project."
   },
   "screens.DeviceNaming.Success.success": {
     "message": "Success!"
@@ -441,7 +447,7 @@
     "message": "Add Name"
   },
   "screens.DeviceNaming.description": {
-    "message": "To create or join a new project you will have to name your device. In a future version of CoMapeo, you will be able to manage the projects you created by changing devices roles, deleting devices and much more."
+    "message": "You can start mapping alone or start mapping with a team. Create or join a project in order to share data with other devices that are part of the same project."
   },
   "screens.DeviceNaming.header": {
     "message": "Add a name for your device"
@@ -795,7 +801,7 @@
     "message": "Observations"
   },
   "screens.ObservationsList.NoProjectWarning": {
-    "message": "You won’t be able to share observations collected yet."
+    "message": "You are currently mapping on your own."
   },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
     "description": "Back button on observation list screen when no observations are yet recorded",
@@ -810,8 +816,8 @@
     "message": "Add Observations"
   },
   "screens.ObservationsList.createOrJoin": {
-    "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
-    "message": "Create or Join a Project."
+    "description": "The full sentence is 'Create or Join a Project to collect data with a team. This action will delete observations you have collected so far. Consider sharingimportant observations to you email before proceeding.' The sentence needs to be seperated for styling purposes",
+    "message": "Create or Join a Project"
   },
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",
@@ -822,8 +828,8 @@
     "message": "Loading… this can take a while after synchronizing with a new device"
   },
   "screens.ObservationsList.toSync": {
-    "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
-    "message": "To sync and share with other devices,"
+    "description": "The full sentence is 'Create or Join a Project to collect data with a team. This action will delete observations you have collected so far. Consider sharing important observations to you email before proceeding.' The sentence needs to be seperated for styling purposes",
+    "message": "to collect data with a team. This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
   },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "Privacy Policy"
@@ -1120,7 +1126,7 @@
     "message": "Join a Project"
   },
   "screens.Settings.CreateOrJoinProject.projectDescription": {
-    "message": "A project is a secure container for your data. Only devices you invite can enter and share data with you. Create or Join a project in order to share data with other devices."
+    "message": "A project is a secure container for your data. Only devices you invite can enter and share data with you. Create or Join a project in order to share data with other devices. This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
   },
   "screens.Settings.CreateOrJoinProject.startProject": {
     "message": "Start a CoMapeo Project"
@@ -1188,8 +1194,14 @@
   "screens.Sync.CreateOrJoinProjectDisplay.buttonText": {
     "message": "Create or Join Project"
   },
-  "screens.Sync.CreateOrJoinProjectDisplay.description": {
-    "message": "Create or Join a Project to sync with other devices"
+  "screens.Sync.CreateOrJoinProjectDisplay.subText": {
+    "message": "This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
+  },
+  "screens.Sync.CreateOrJoinProjectDisplay.subTitle": {
+    "message": "You will be able to share data with devices that are part of the same project."
+  },
+  "screens.Sync.CreateOrJoinProjectDisplay.title": {
+    "message": "Create or join a project to collect data with a team"
   },
   "screens.Sync.HeaderTitle.noWiFi": {
     "message": "No WiFi"

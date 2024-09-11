@@ -10,7 +10,6 @@ import {
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
-import type {Position} from '../../sharedTypes';
 
 export function useMostAccurateLocationForObservation() {
   const value = usePersistedDraftObservation(store => store.value);

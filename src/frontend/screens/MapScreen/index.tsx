@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Mapbox from '@rnmapbox/maps';
 
-import config from '../../../config.json';
 import {IconButton} from '../../sharedComponents/IconButton';
 import {
   LocationFollowingIcon,

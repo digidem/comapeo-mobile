@@ -11,7 +11,7 @@ import {ViewStyleProp} from '../../sharedTypes';
 const m = defineMessages({
   cantShare: {
     id: 'screens.ObservationsList.NoProjectWarning',
-    defaultMessage: 'You won’t be able to share observations collected yet.',
+    defaultMessage: 'You are currently mapping on your own',
   },
   createOrJoin: {
     id: 'screens.ObservationsList.createOrJoin',
@@ -21,7 +21,8 @@ const m = defineMessages({
   },
   toSync: {
     id: 'screens.ObservationsList.toSync',
-    defaultMessage: 'To sync and share with other devices,',
+    defaultMessage:
+      'Create or join a project to collect data with a team. This action will delete observations you have collected so far. Consider sharing (ICON) important observations to you email before proceeding.',
     description:
       "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
   },

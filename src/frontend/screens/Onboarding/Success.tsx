@@ -26,6 +26,16 @@ const m = defineMessages({
     id: 'screens.DeviceNaming.Success.goToMap',
     defaultMessage: 'Go to Map',
   },
+  startMappingInstructions: {
+    id: 'screens.DeviceNaming.Success.startMappingInstructions',
+    defaultMessage:
+      'You can start mapping alone or start mapping with a team. Create or join a project in order to share data with other devices that are part of the same project.',
+  },
+  findSettings: {
+    id: 'screens.DeviceNaming.Success.findSettings',
+    defaultMessage:
+      'To find your project settings go to the main menu found on the map screen.',
+  },
 });
 
 export const Success = ({
@@ -45,6 +55,8 @@ export const Success = ({
           <NewDeviceLogo />
           <Text style={{marginLeft: 10}}>{deviceName}</Text>
         </View>
+        <Text>{t(m.startMappingInstructions)}</Text>
+        <Text>{t(m.findSettings)}</Text>
       </View>
       <Button
         testID="ONBOARDING.go-to-map-btn"

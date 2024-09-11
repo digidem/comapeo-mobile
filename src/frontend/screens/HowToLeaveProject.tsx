@@ -89,7 +89,6 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     paddingTop: 80,
-    justifyContent: 'center',
     alignItems: 'center',
   },
   text: {

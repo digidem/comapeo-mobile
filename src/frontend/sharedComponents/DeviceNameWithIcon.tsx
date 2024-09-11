@@ -65,15 +65,20 @@ export const DeviceNameWithIcon = ({
       ) : (
         <DeviceDesktop width={iconSize || 35} height={iconSize || 35} />
       )}
-      <View style={{marginLeft: 10}}>
+      <View style={{marginLeft: 10, flex: 1}}>
         <Text style={{fontWeight: 'bold'}}>{name}</Text>
         {deviceId && (
-          <Text style={{color: MEDIUM_GREY}} numberOfLines={1}>
+          <Text
+            style={{color: MEDIUM_GREY, overflow: 'hidden', flexShrink: 1}}
+            numberOfLines={1}
+            ellipsizeMode="tail">
             {`${deviceId.slice(0, 12)}...`}
           </Text>
         )}
         {thisDevice && (
-          <Text style={{flex: 1, color: MEDIUM_GREY}}>
+          <Text
+            style={{flex: 1, color: MEDIUM_GREY, fontSize: 14}}
+            numberOfLines={1}>
             {formatMessage(m.thisDevice)}
           </Text>
         )}

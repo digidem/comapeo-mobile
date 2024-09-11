@@ -12,6 +12,8 @@ import {useProjectMembers} from '../hooks/server/projects';
 import {useDeviceInfo} from '../hooks/server/deviceInfo';
 import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../sharedTypes';
 import {UIActivityIndicator} from 'react-native-indicators';
+import QuestionIconCircle from '../images/QuestionIconCircle.svg';
+import {QuestionMarkWithShadow} from '../sharedComponents/icons/QuestionMarkWithShadow';
 
 const m = defineMessages({
   howTo: {
@@ -62,6 +64,7 @@ export const HowToLeaveProject = ({
           {formatMessage(m.goBack)}
         </Button>
       }>
+      <QuestionMarkWithShadow style={{marginBottom: 20}} />
       <Text style={[styles.text, {fontSize: 32, fontWeight: 'bold'}]}>
         {formatMessage(m.howTo)}
       </Text>
@@ -86,7 +89,9 @@ export const HowToLeaveProject = ({
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    paddingTop: 120,
+    paddingTop: 80,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   text: {
     textAlign: 'center',
@@ -101,5 +106,12 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  questionIcon: {
+    shadowColor: '#000',
+    backgroundColor: '#fff',
+    borderRadius: 100,
+    elevation: 20,
+    marginBottom: 20,
   },
 });

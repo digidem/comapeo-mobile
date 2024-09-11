@@ -843,7 +843,7 @@
     "message": "Observations"
   },
   "screens.ObservationsList.NoProjectWarning": {
-    "message": "You are currently mapping on your own"
+    "message": "You are currently mapping on your own."
   },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
     "description": "Back button on observation list screen when no observations are yet recorded",

@@ -12,7 +12,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 const m = defineMessages({
   cantShare: {
     id: 'screens.ObservationsList.NoProjectWarning',
-    defaultMessage: 'You are currently mapping on your own',
+    defaultMessage: 'You are currently mapping on your own.',
   },
   createOrJoin: {
     id: 'screens.ObservationsList.createOrJoin',

@@ -38,7 +38,7 @@ export const NoProjectWarning = ({style}: {style?: ViewStyleProp}) => {
       <View style={{flex: 1}}>
         <Text style={{flexShrink: 1}}>{formatMessage(m.cantShare)}</Text>
         <TouchableOpacity
-          style={{margin: 0, padding: 0}}
+          style={{marginTop: 10}}
           onPress={() => navigate('CreateOrJoinProject')}>
           <Text style={{flexShrink: 1}}>
             <Text

@@ -5,7 +5,7 @@ import {FormattedPresetName} from '../../sharedComponents/FormattedData';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {Preset} from '@mapeo/schema';
 
-export const PresetHeader = ({preset}: {preset: Preset}) => {
+export const PresetHeader = ({preset}: {preset?: Preset}) => {
   return (
     <View style={styles.categoryIconContainer}>
       <PresetCircleIcon

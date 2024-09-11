@@ -64,11 +64,9 @@ function ObservationListItemNotMemoized({
           queriesSucceeded && !isMine && styles.syncedObservation,
         ]}>
         <View style={styles.text}>
-          {preset && (
-            <Text style={styles.title}>
-              <FormattedPresetName preset={preset} />
-            </Text>
-          )}
+          <Text style={styles.title}>
+            <FormattedPresetName preset={preset} />
+          </Text>
           <Text>
             <FormattedObservationDate
               createdDate={observation.createdAt}

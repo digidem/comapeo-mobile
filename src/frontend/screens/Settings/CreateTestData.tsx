@@ -258,7 +258,7 @@ function useCreateFakeObservationsMutation() {
       const promises = [];
 
       for (let i = 0; i < count; i++) {
-        const fakeCoordinates = randomPosition({
+        const [lon = 0, lat = 0] = randomPosition({
           bbox,
         });
 
@@ -268,12 +268,14 @@ function useCreateFakeObservationsMutation() {
 
         const value = {
           attachments: [],
-          lon: fakeCoordinates[0] || 0,
-          lat: fakeCoordinates[1] || 0,
+          lon,
+          lat,
           metadata: {
             manualLocation: !!location.mocked,
             position: {
               mocked: !!location.mocked,
+              timestamp: new Date().toISOString(),
+              coords: {latitude: lat, longitude: lon},
             },
           },
           schemaName: 'observation' as const,

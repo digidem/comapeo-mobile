@@ -104,28 +104,26 @@ export const ManualGpsScreen = ({
         );
       }
 
-      const position: Position = {mocked: false};
-
-      if (convertedData.coords) {
-        const {lon: longitude, lat: latitude} = convertedData.coords;
-
-        const lonIsValid =
-          longitude !== undefined && longitudeIsValid(longitude);
-        const latIsValid = latitude !== undefined && latitudeIsValid(latitude);
-
-        if (!lonIsValid || !latIsValid) {
-          return ToastAndroid.showWithGravity(
-            t(m.invalidCoordinates),
-            ToastAndroid.LONG,
-            ToastAndroid.TOP,
-          );
-        }
-
-        position.coords = {latitude, longitude};
+      const {lat: latitude, lon: longitude} = convertedData.coords || {};
+      if (
+        longitude === undefined ||
+        latitude === undefined ||
+        !longitudeIsValid(longitude) ||
+        !latitudeIsValid(latitude)
+      ) {
+        return ToastAndroid.showWithGravity(
+          t(m.invalidCoordinates),
+          ToastAndroid.LONG,
+          ToastAndroid.TOP,
+        );
       }
 
       updateObservationPosition({
-        position,
+        position: {
+          mocked: false,
+          timestamp: new Date().toISOString(),
+          coords: {latitude, longitude},
+        },
         manualLocation: true,
       });
 

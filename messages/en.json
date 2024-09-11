@@ -858,7 +858,7 @@
     "message": "Add Observations"
   },
   "screens.ObservationsList.createOrJoin": {
-    "description": "The full sentence is 'Create or Join a Project to collect data with a team. This action will delete observations you have collected so far. Consider sharing {icon} important observations to you email before proceeding.' The sentence needs to be seperated for styling purposes",
+    "description": "The full sentence is 'Create or Join a Project to collect data with a team. This action will delete observations you have collected so far. Consider sharingimportant observations to you email before proceeding.' The sentence needs to be seperated for styling purposes",
     "message": "Create or Join a Project"
   },
   "screens.ObservationsList.error": {
@@ -870,7 +870,7 @@
     "message": "Loading… this can take a while after synchronizing with a new device"
   },
   "screens.ObservationsList.toSync": {
-    "description": "The full sentence is 'Create or Join a Project to collect data with a team. This action will delete observations you have collected so far. Consider sharing {icon} important observations to you email before proceeding.' The sentence needs to be seperated for styling purposes",
+    "description": "The full sentence is 'Create or Join a Project to collect data with a team. This action will delete observations you have collected so far. Consider sharing important observations to you email before proceeding.' The sentence needs to be seperated for styling purposes",
     "message": "to collect data with a team. This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
   },
   "screens.OnboardingPrivacyPolicy.navTitle": {

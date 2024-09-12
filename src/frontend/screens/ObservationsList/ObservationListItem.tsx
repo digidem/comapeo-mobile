@@ -64,11 +64,9 @@ function ObservationListItemNotMemoized({
           queriesSucceeded && !isMine && styles.syncedObservation,
         ]}>
         <View style={styles.text}>
-          {preset && (
-            <Text style={styles.title}>
-              <FormattedPresetName preset={preset} />
-            </Text>
-          )}
+          <Text style={styles.title}>
+            <FormattedPresetName preset={preset} />
+          </Text>
           <Text>
             <FormattedObservationDate
               createdDate={observation.createdAt}
@@ -80,15 +78,12 @@ function ObservationListItemNotMemoized({
           <View style={styles.photoContainer}>
             <PhotoStack photos={photos} />
             <View style={styles.smallIconContainer}>
-              <PresetCircleIcon
-                presetDocId={preset?.iconRef?.docId}
-                size="small"
-              />
+              <PresetCircleIcon iconId={preset?.iconRef?.docId} size="small" />
             </View>
           </View>
         ) : (
           <PresetCircleIcon
-            presetDocId={preset?.iconRef?.docId}
+            iconId={preset?.iconRef?.docId}
             size="medium"
             testID={`OBS.${preset?.name}-list-icon`}
           />

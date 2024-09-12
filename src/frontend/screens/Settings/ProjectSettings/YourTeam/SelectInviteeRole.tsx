@@ -1,15 +1,15 @@
-import {StyleSheet, View} from 'react-native';
-import type {ViewStyleProp} from '../../../../sharedTypes';
-import type {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
-import {defineMessages, useIntl} from 'react-intl';
-import {Text} from '../../../../sharedComponents/Text';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {DARK_GREY, LIGHT_GREY} from '../../../../lib/styles';
 import React from 'react';
+import {defineMessages, useIntl} from 'react-intl';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+
+import {LIGHT_GREY, MEDIUM_GREY} from '../../../../lib/styles';
 import {DeviceNameWithIcon} from '../../../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../../../sharedComponents/RoleWithIcon';
+import {Text} from '../../../../sharedComponents/Text';
 import {COORDINATOR_ROLE_ID, MEMBER_ROLE_ID} from '../../../../sharedTypes';
+import type {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 
 const m = defineMessages({
   title: {
@@ -36,58 +36,58 @@ export const SelectInviteeRole: NativeNavigationComponent<
   'SelectInviteeRole'
 > = ({route, navigation}) => {
   const {formatMessage: t} = useIntl();
+
   return (
-    <View style={styles.container}>
-      <Text style={{fontSize: 18, fontWeight: 'bold'}}>
-        {t(m.selectingDevice)}
-      </Text>
-      <DeviceNameWithIcon {...route.params} style={{marginTop: 10}} />
-      <RoleCard
-        style={{marginTop: 20}}
-        role="participant"
-        onPress={() =>
-          navigation.navigate('ReviewAndInvite', {
-            ...route.params,
-            role: MEMBER_ROLE_ID,
-          })
-        }
-      />
-      <RoleCard
-        style={{marginTop: 10}}
-        role="coordinator"
-        onPress={() =>
-          navigation.navigate('ReviewAndInvite', {
-            ...route.params,
-            role: COORDINATOR_ROLE_ID,
-          })
-        }
-      />
-    </View>
+    <ScrollView contentContainerStyle={styles.contentContainer}>
+      <Text style={styles.descriptionText}>{t(m.selectingDevice)}</Text>
+
+      <DeviceNameWithIcon {...route.params} />
+
+      <View style={styles.roleOptionsContainer}>
+        <RoleCard
+          role="participant"
+          onPress={() =>
+            navigation.navigate('ReviewAndInvite', {
+              ...route.params,
+              role: MEMBER_ROLE_ID,
+            })
+          }
+        />
+        <RoleCard
+          role="coordinator"
+          onPress={() =>
+            navigation.navigate('ReviewAndInvite', {
+              ...route.params,
+              role: COORDINATOR_ROLE_ID,
+            })
+          }
+        />
+      </View>
+    </ScrollView>
   );
 };
 
 type RoleCardProps = {
   role: 'participant' | 'coordinator';
   onPress: () => void;
-  style?: ViewStyleProp;
 };
 
-export const RoleCard = ({role, style, onPress}: RoleCardProps) => {
+const RoleCard = ({role, onPress}: RoleCardProps) => {
   const {formatMessage} = useIntl();
   return (
-    <TouchableOpacity
-      style={[styles.flexRow, styles.cardContainer, style]}
-      onPress={onPress}>
-      <MaterialIcon name="radio-button-off" size={25} color={DARK_GREY} />
-      <View style={{marginLeft: 10}}>
-        <RoleWithIcon role={role} />
-        <Text>
-          {formatMessage(
-            role === 'coordinator'
-              ? m.coordinatorDescription
-              : m.participantDescription,
-          )}
-        </Text>
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.roleCardContentContainer}>
+        <MaterialIcon name="radio-button-off" size={24} color={MEDIUM_GREY} />
+        <View style={styles.flex}>
+          <RoleWithIcon role={role} />
+          <Text>
+            {formatMessage(
+              role === 'coordinator'
+                ? m.coordinatorDescription
+                : m.participantDescription,
+            )}
+          </Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -96,19 +96,28 @@ export const RoleCard = ({role, style, onPress}: RoleCardProps) => {
 SelectInviteeRole.navTitle = m.title;
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    paddingTop: 40,
-    height: '100%',
+  contentContainer: {
+    paddingVertical: 40,
+    paddingHorizontal: 20,
+    gap: 40,
   },
-  flexRow: {
+  descriptionText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  roleOptionsContainer: {
+    gap: 20,
+  },
+  roleCardContentContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  cardContainer: {
+    gap: 20,
+    padding: 20,
     borderWidth: 1,
     borderColor: LIGHT_GREY,
-    padding: 10,
     borderRadius: 5,
+  },
+  flex: {
+    flex: 1,
   },
 });

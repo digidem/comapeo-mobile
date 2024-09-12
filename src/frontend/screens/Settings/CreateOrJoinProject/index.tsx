@@ -31,7 +31,7 @@ const m = defineMessages({
   },
   joinExisting: {
     id: 'screens.Settings.CreateOrJoinProject.joinExisting',
-    defaultMessage: 'Join an existing Mapeo Project',
+    defaultMessage: 'Join an existing CoMapeo Project',
   },
   whatIsAProject: {
     id: 'screens.Settings.CreateOrJoinProject.whatIsAProject',

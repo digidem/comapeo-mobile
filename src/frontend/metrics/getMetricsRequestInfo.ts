@@ -14,8 +14,8 @@ export function getMetricsRequestInfo(): {
   metricsApiKey: string;
 } {
   const isDevelopment = __DEV__;
-  const metricsUrl = process.env.EXPO_PUBLIC_METRICS_URL;
-  const metricsApiKey = process.env.EXPO_PUBLIC_METRICS_API_KEY;
+  const metricsUrl = process.env.COMAPEO_METRICS_URL;
+  const metricsApiKey = process.env.COMAPEO_METRICS_API_KEY;
 
   assert(
     metricsUrl,

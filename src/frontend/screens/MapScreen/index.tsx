@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Mapbox from '@rnmapbox/maps';
 
-import config from '../../../config.json';
 import {IconButton} from '../../sharedComponents/IconButton';
 import {
   LocationFollowingIcon,
@@ -23,13 +22,18 @@ import {UserLocation} from './UserLocation';
 import {useSharedLocationContext} from '../../contexts/SharedLocationContext';
 import {useMapStyleUrl} from '../../hooks/server/mapStyleUrl';
 import {TracksMapLayer} from './TracksMapLayer';
+import {assert} from '../../lib/assert.ts';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
 // current zoom is < 12.
 const DEFAULT_ZOOM = 12;
 
-Mapbox.setAccessToken(config.mapboxAccessToken);
+assert(
+  process.env.MAPBOX_ACCESS_TOKEN,
+  'MAPBOX_ACCESS_TOKEN environment variable should be set',
+);
+Mapbox.setAccessToken(process.env.MAPBOX_ACCESS_TOKEN);
 const MIN_DISPLACEMENT = 3;
 
 export const MapScreen = () => {

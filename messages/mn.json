@@ -98,7 +98,7 @@
     "message": "Not seeing a Device?"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameVersion": {
-    "message": "Make sure both devices are on the same version of CoMapeo"
+    "message": "Make sure both devices are on the same version of Mapeo"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameWifi": {
     "message": "Make sure both devices are on the same wifi network"
@@ -168,7 +168,7 @@
     "message": "Нууц үг буруу"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet": {
-    "message": "CoMapeo програмыг нээхэд энэ нууц үг шаардлагатай болно"
+    "message": "Mapeo програмыг нээхэд энэ нууц үг шаардлагатай болно"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
     "message": "Confirm Passcode"
@@ -183,10 +183,10 @@
     "message": "Аппликэйшний нууц үг гэж юу вэ?"
   },
   "screens.AppPasscode.PasscodeIntro.description": {
-    "message": "Аппликэйшний нууц үг нь CoMapeo програмыг нээхийн тулд нууц үг оруулах шаардлагатай тул хамгаалалтын нэмэлт давхарга нэмэх боломжийг танд олгоно. Та доорх функцийг идэвхжүүлснээр өөрийн 5 оронтой нууц үгийг тодорхойлж болно."
+    "message": "Аппликэйшний нууц үг нь Mapeo програмыг нээхийн тулд нууц үг оруулах шаардлагатай тул хамгаалалтын нэмэлт давхарга нэмэх боломжийг танд олгоно. Та доорх функцийг идэвхжүүлснээр өөрийн 5 оронтой нууц үгийг тодорхойлж болно."
   },
   "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "**Мартагдсан нууц үгийг сэргээх боломжгүй гэдгийг анхаарна уу!** Энэ функцийг идэвхжүүлсний дараа, хэрэв та нууц үгээ мартсан эсвэл алдсан тохиолдолд CoMapeo-г нээх боломжгүй бөгөөд бусад төсөлд оролцогчидтой синк хийгээгүй CoMapeo өгөгдөлд хандах эрхээ алдах болно. "
+    "message": "**Мартагдсан нууц үгийг сэргээх боломжгүй гэдгийг анхаарна уу!** Энэ функцийг идэвхжүүлсний дараа, хэрэв та нууц үгээ мартсан эсвэл алдсан тохиолдолд Mapeo-г нээх боломжгүй бөгөөд бусад төсөлд оролцогчидтой синк хийгээгүй Mapeo өгөгдөлд хандах эрхээ алдах болно. "
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Цуцлах"
@@ -198,7 +198,7 @@
     "message": "Та одоогоор Аппликэйшний нууц үгийг ашиглаж байна. Нууц үгээ ашиглахаа зогсоох эсвэл өөрчлөхийн тулд доороос үзнэ үү."
   },
   "screens.AppPasscode.TurnOffPasscode.description": {
-    "message": "Аппликэйшний нууц үг нь CoMapeo програмыг нээхийн тулд нууц үг оруулах шаардлагатай тул аюулгүй байдлын нэмэлт давхаргыг нэмдэг."
+    "message": "Аппликэйшний нууц үг нь Mapeo програмыг нээхийн тулд нууц үг оруулах шаардлагатай тул аюулгүй байдлын нэмэлт давхаргыг нэмдэг."
   },
   "screens.AppPasscode.TurnOffPasscode.title": {
     "message": "Аппликэшний нууц үг"
@@ -438,10 +438,10 @@
     "message": "Zone Number"
   },
   "screens.ObscurePasscode.description": {
-    "message": "Бүрхэг нууц үг нь CoMapeo-г төөрөгдүүлэх горимд нээх боломжийг олгодог хамгаалалтын функц бөгөөд таны бүх өгөгдлийг нуудаг. Танилцуулгын дэлгэцэн дээр тодорхойгүй нууц үгийг оруулснаар CoMapeo-ийн хоосон хувилбар гарч ирэх бөгөөд энэ нь танд CoMapeo мэдээллийн санд хадгалагдаагүй үзүүлэх ажиглалт үүсгэх боломжийг олгоно."
+    "message": "Бүрхэг нууц үг нь Mapeo-г төөрөгдүүлэх горимд нээх боломжийг олгодог хамгаалалтын функц бөгөөд таны бүх өгөгдлийг нуудаг. Танилцуулгын дэлгэцэн дээр тодорхойгүй нууц үгийг оруулснаар Mapeo-ийн хоосон хувилбар гарч ирэх бөгөөд энэ нь танд Mapeo мэдээллийн санд хадгалагдаагүй үзүүлэх ажиглалт үүсгэх боломжийг олгоно."
   },
   "screens.ObscurePasscode.instructions": {
-    "message": "CoMapeo дээрх өгөгдлөө нуухын тулд дээрх кодыг оруулна уу"
+    "message": "Mapeo дээрх өгөгдлөө нуухын тулд дээрх кодыг оруулна уу"
   },
   "screens.ObscurePasscode.title": {
     "message": "Тодорхой бус нууц үг"
@@ -584,7 +584,7 @@
   },
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",
-    "message": "Сануулгыг ачаалахад алдаа гарлаа. CoMapeo-г орхиж, дахин эхлүүлээд үзээрэй."
+    "message": "Сануулгыг ачаалахад алдаа гарлаа. Mapeo-г орхиж, дахин эхлүүлээд үзээрэй."
   },
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
@@ -756,7 +756,7 @@
     "message": "Import Config"
   },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
-    "message": "Join an existing CoMapeo Project"
+    "message": "Join an existing Mapeo Project"
   },
   "screens.Settings.CreateOrJoinProject.joinProject": {
     "message": "Join a Project"
@@ -789,11 +789,11 @@
     "message": "Unable to Cancel Invitation"
   },
   "screens.Settings.aboutMapeo": {
-    "description": "Primary text for 'About CoMapeo' link (version info)",
-    "message": "CoMapeo-гийн тухай"
+    "description": "Primary text for 'About Mapeo' link (version info)",
+    "message": "Mapeo-гийн тухай"
   },
   "screens.Settings.aboutMapeoDesc": {
-    "description": "Description of the 'About CoMapeo' page",
+    "description": "Description of the 'About Mapeo' page",
     "message": "Хувилбар ба барилгын дугаар"
   },
   "screens.Settings.appSettings": {

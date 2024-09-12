@@ -16,9 +16,9 @@ export function useIconUrl(iconId: string, size: IconSize) {
         pixelDensity: 3,
       });
     },
-    // already defaults to 3 if not specified
-    // but being explicit about needing a non-zero retry value
-    // due to https://github.com/digidem/comapeo-core/issues/821#issuecomment-2344231495
-    retry: 3,
+    // Defaults to 3 if not specified but due to an edge case when pausing and resuming the app
+    // (see https://github.com/digidem/comapeo-core/issues/821#issuecomment-2344231495),
+    // we reduce the retry count for the benefit of more immediate UI feedback in that scenario
+    retry: 2,
   });
 }

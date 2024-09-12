@@ -17,15 +17,15 @@ const m = defineMessages({
     defaultMessage: 'Settings',
     description: 'Title of settings screen',
   },
-  aboutMapeo: {
-    id: 'screens.Settings.aboutMapeo',
-    defaultMessage: 'About Mapeo',
-    description: "Primary text for 'About Mapeo' link (version info)",
+  aboutCoMapeo: {
+    id: 'screens.Settings.aboutCoMapeo',
+    defaultMessage: 'About CoMapeo',
+    description: "Primary text for 'About CoMapeo' link (version info)",
   },
-  aboutMapeoDesc: {
-    id: 'screens.Settings.aboutMapeoDesc',
+  aboutCoMapeoDesc: {
+    id: 'screens.Settings.aboutCoMapeoDesc',
     defaultMessage: 'Version and build number',
-    description: "Description of the 'About Mapeo' page",
+    description: "Description of the 'About CoMapeo' page",
   },
   createOrJoin: {
     id: 'screens.Settings.createOrJoin',
@@ -106,8 +106,8 @@ export const Settings: NativeNavigationComponent<'Settings'> = () => {
           testID="settingsAboutButton">
           <ListItemIcon iconName="info-outline" />
           <ListItemText
-            primary={<FormattedMessage {...m.aboutMapeo} />}
-            secondary={<FormattedMessage {...m.aboutMapeoDesc} />}
+            primary={<FormattedMessage {...m.aboutCoMapeo} />}
+            secondary={<FormattedMessage {...m.aboutCoMapeoDesc} />}
           />
         </ListItem>
         {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (

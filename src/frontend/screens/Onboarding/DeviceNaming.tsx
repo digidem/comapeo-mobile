@@ -23,7 +23,7 @@ const m = defineMessages({
   description: {
     id: 'screens.DeviceNaming.description',
     defaultMessage:
-      'To create or join a new project you will have to name your device. In a future version of CoMapeo, you will be able to manage the projects you created by changing devices roles, deleting devices and much more.',
+      'You can start mapping alone or start mapping with a team. Create or join a project in order to share data with other devices that are part of the same project.',
   },
   addName: {
     id: 'screens.DeviceNaming.addName',

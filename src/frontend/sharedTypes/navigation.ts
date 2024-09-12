@@ -101,6 +101,7 @@ export type RootStackParamsList = {
   MediaSyncSettings: undefined;
   DataAndPrivacy: undefined;
   SettingsPrivacyPolicy: undefined;
+  HowToLeaveProject: undefined;
 };
 
 export type OnboardingParamsList = {

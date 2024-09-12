@@ -1,5 +1,7 @@
+import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import {Button} from '../../sharedComponents/Button';
 import {Text} from '../../sharedComponents/Text';
@@ -7,13 +9,23 @@ import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDoc
 import {WHITE} from '../../lib/styles';
 
 const m = defineMessages({
-  description: {
-    id: 'screens.Sync.CreateOrJoinProjectDisplay.description',
-    defaultMessage: 'Create or Join a Project to sync with other devices',
+  title: {
+    id: 'screens.Sync.CreateOrJoinProjectDisplay.title',
+    defaultMessage: 'Create or join a project to collect data with a team',
   },
   buttonText: {
     id: 'screens.Sync.CreateOrJoinProjectDisplay.buttonText',
     defaultMessage: 'Create or Join Project',
+  },
+  subTitle: {
+    id: 'screens.Sync.CreateOrJoinProjectDisplay.subTitle',
+    defaultMessage:
+      'You will be able to share data with devices that are part of the same project.',
+  },
+  subText: {
+    id: 'screens.Sync.CreateOrJoinProjectDisplay.subText',
+    defaultMessage:
+      'This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding.',
   },
 });
 
@@ -35,7 +47,13 @@ export const CreateOrJoinProjectDisplay = ({
         </Button>
       }>
       <View style={styles.contentContainer}>
-        <Text style={styles.descriptionText}>{t(m.description)}</Text>
+        <Text style={styles.descriptionText}>{t(m.title)}</Text>
+        <Text style={{marginTop: 20, textAlign: 'center'}}>
+          {t(m.subTitle)}
+        </Text>
+        <Text style={{marginTop: 20, textAlign: 'center'}}>
+          {t(m.subText, {icon: <MaterialIcons name="share" />})}
+        </Text>
       </View>
     </ScreenContentWithDock>
   );

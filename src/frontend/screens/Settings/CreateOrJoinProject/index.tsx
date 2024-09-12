@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Text} from '../../../sharedComponents/Text';
 import type {ViewStyleProp} from '../../../sharedTypes';
 import type {NativeNavigationComponent} from '../../../sharedTypes/navigation';
@@ -39,7 +40,7 @@ const m = defineMessages({
   projectDescription: {
     id: 'screens.Settings.CreateOrJoinProject.projectDescription',
     defaultMessage:
-      'A project is a secure container for your data. Only devices you invite can enter and share data with you. Create or Join a project in order to share data with other devices.',
+      'A project is a secure container for your data. Only devices you invite can enter and share data with you. Create or Join a project in order to share data with other devices. This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding.',
   },
   alreadyOnProject: {
     id: 'screens.Settings.CreateOrJoinProject.alreadyOnProject',
@@ -59,7 +60,11 @@ export const CreateOrJoinProject: NativeNavigationComponent<
       <ScrollView style={styles.container}>
         <View style={styles.greyBox}>
           <Text style={{fontWeight: 'bold'}}>{t(m.whatIsAProject)}</Text>
-          <Text>{t(m.projectDescription)}</Text>
+          <Text>
+            {t(m.projectDescription, {
+              icon: <MaterialIcons name="share" />,
+            })}
+          </Text>
         </View>
         {projects.data.length > 1 ? (
           <View style={[styles.greyBox, {marginTop: 10}]}>

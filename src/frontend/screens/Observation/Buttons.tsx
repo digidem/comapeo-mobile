@@ -65,6 +65,12 @@ const m = defineMessages({
       '{coordinates}',
     description: 'Message that will be shared along with image',
   },
+  fallbackCategoryName: {
+    id: 'screens.Observation.fallbackCategoryName',
+    defaultMessage: 'Observation',
+    description:
+      'Fallback name used when category name cannot be determined for observation',
+  },
 });
 
 export const ButtonFields = ({
@@ -134,7 +140,7 @@ export const ButtonFields = ({
           base64Urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),
         urls: base64Urls,
         message: t(m.shareMessage, {
-          category_name: preset.name,
+          category_name: preset?.name || t(m.fallbackCategoryName),
           date: Date.now(),
           time: Date.now(),
           coordinates:

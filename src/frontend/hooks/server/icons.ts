@@ -16,5 +16,9 @@ export function useIconUrl(iconId: string, size: IconSize) {
         pixelDensity: 3,
       });
     },
+    // already defaults to 3 if not specified
+    // but being explicit about needing a non-zero retry value
+    // due to https://github.com/digidem/comapeo-core/issues/821#issuecomment-2344231495
+    retry: 3,
   });
 }

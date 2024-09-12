@@ -31,7 +31,7 @@ const m = defineMessages({
   aboutCoMapeo: {
     id: 'Navigation.Drawer.aboutCoMapeo',
     defaultMessage: 'About CoMapeo',
-    description: "Primary text for 'About Mapeo' link (version info)",
+    description: "Primary text for 'About CoMapeo' link (version info)",
   },
   aboutCoMapeoDesc: {
     id: 'Navigation.Drawer.aboutCoMapeoDesc',

@@ -731,6 +731,10 @@
     "description": "Title of dialog asking confirmation to delete an observation",
     "message": "Delete observation?"
   },
+  "screens.Observation.fallbackCategoryName": {
+    "description": "Fallback name used when category name cannot be determined for observation",
+    "message": "Observation"
+  },
   "screens.Observation.shareMediaTitle": {
     "description": "Title of dialog to share an observation with media",
     "message": "Sharing image"

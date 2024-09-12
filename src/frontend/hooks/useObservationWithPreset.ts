@@ -7,13 +7,5 @@ export const useObservationWithPreset = (observationId: string) => {
   const {data: presets} = usePresetsQuery();
   const preset = matchPreset(observation.tags, presets);
 
-  if (!observation) {
-    throw new Error('Observation does not exist');
-  }
-
-  if (!preset) {
-    throw new Error('Preset does not exist');
-  }
-
   return {observation, preset};
 };

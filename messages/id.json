@@ -47,7 +47,7 @@
     "message": "You’ve been recording for"
   },
   "Navigation.Drawer.aboutCoMapeo": {
-    "description": "Primary text for 'About Mapeo' link (version info)",
+    "description": "Primary text for 'About CoMapeo' link (version info)",
     "message": "About CoMapeo"
   },
   "Navigation.Drawer.aboutCoMapeoDesc": {
@@ -191,7 +191,7 @@
     "message": "Not seeing a Device?"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameVersion": {
-    "message": "Make sure both devices are on the same version of Mapeo"
+    "message": "Make sure both devices are on the same version of CoMapeo"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameWifi": {
     "message": "Make sure both devices are on the same wifi network"
@@ -296,7 +296,7 @@
     "message": "Incorrect Passcode"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet": {
-    "message": "This passcode will be required to open the Mapeo App"
+    "message": "This passcode will be required to open the CoMapeo App"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
     "message": "Confirm Passcode"
@@ -311,10 +311,10 @@
     "message": "What is App Passcode?"
   },
   "screens.AppPasscode.PasscodeIntro.description": {
-    "message": "App Passcode allows you to add an additional layer of security by requiring that you enter a passcode in order to open the Mapeo app. You can define your own 5-digit passcode by turning on the feature below."
+    "message": "App Passcode allows you to add an additional layer of security by requiring that you enter a passcode in order to open the CoMapeo app. You can define your own 5-digit passcode by turning on the feature below."
   },
   "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open Mapeo and will lose access to any Mapeo data that has not been synced with other project participants."
+    "message": "<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open CoMapeo and will lose access to any CoMapeo data that has not been synced with other project participants."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Batal"
@@ -326,7 +326,7 @@
     "message": "You are currently using App Passcode. See below to stop using or change your passcode."
   },
   "screens.AppPasscode.TurnOffPasscode.description": {
-    "message": "App Passcode adds an additional layer of security by requiring that you enter a passcode in order to open the Mapeo app."
+    "message": "App Passcode adds an additional layer of security by requiring that you enter a passcode in order to open the CoMapeo app."
   },
   "screens.AppPasscode.TurnOffPasscode.title": {
     "message": "App Passcode"
@@ -731,10 +731,10 @@
     "message": "Sync Settings"
   },
   "screens.ObscurePasscode.description": {
-    "message": "Obscure Passcode is a security feature that allows you to open Mapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of Mapeo which allows you to create demonstration observations that are not saved to the Mapeo database."
+    "message": "Obscure Passcode is a security feature that allows you to open CoMapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of CoMapeo which allows you to create demonstration observations that are not saved to the CoMapeo database."
   },
   "screens.ObscurePasscode.instructions": {
-    "message": "Enter the code above to hide your data in Mapeo"
+    "message": "Enter the code above to hide your data in CoMapeo"
   },
   "screens.ObscurePasscode.title": {
     "message": "Obscure Passcode"
@@ -772,6 +772,10 @@
   "screens.Observation.deleteTitle": {
     "description": "Title of dialog asking confirmation to delete an observation",
     "message": "Menghapus pengamatan?"
+  },
+  "screens.Observation.fallbackCategoryName": {
+    "description": "Fallback name used when category name cannot be determined for observation",
+    "message": "Pengamatan"
   },
   "screens.Observation.shareMediaTitle": {
     "description": "Title of dialog to share an observation with media",
@@ -875,7 +879,7 @@
   },
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",
-    "message": "Terjadi kesalahan saat memuat pengamatan. Coba keluar dan mulai ulang Mapeo."
+    "message": "Error loading observations. Try quitting and restarting CoMapeo."
   },
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
@@ -1174,7 +1178,7 @@
     "message": "File name should end with .mapeoconfig"
   },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
-    "message": "Join an existing Mapeo Project"
+    "message": "Join an existing CoMapeo Project"
   },
   "screens.Settings.CreateOrJoinProject.joinProject": {
     "message": "Join a Project"
@@ -1206,12 +1210,12 @@
   "screens.Settings.YourTeam.unableToCancel": {
     "message": "Unable to Cancel Invitation"
   },
-  "screens.Settings.aboutMapeo": {
-    "description": "Primary text for 'About Mapeo' link (version info)",
-    "message": "Tentang Mapeo"
+  "screens.Settings.aboutCoMapeo": {
+    "description": "Primary text for 'About CoMapeo' link (version info)",
+    "message": "About CoMapeo"
   },
-  "screens.Settings.aboutMapeoDesc": {
-    "description": "Description of the 'About Mapeo' page",
+  "screens.Settings.aboutCoMapeoDesc": {
+    "description": "Description of the 'About CoMapeo' page",
     "message": "Versi dan nomor pembuatan"
   },
   "screens.Settings.appSettings": {

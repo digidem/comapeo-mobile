@@ -15,7 +15,8 @@ import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';
 import {ActionsRow} from '../../sharedComponents/ActionRow';
-import {Alert, AlertButton} from 'react-native';
+import {Alert, type AlertButton} from 'react-native';
+import noop from '../../lib/noop';
 
 const m = defineMessages({
   observation: {
@@ -228,7 +229,15 @@ export const ObservationCreate = ({
       },
     ];
 
-    if (!value) throw new Error('no observation saved in persisted state ');
+    if (!value) {
+      noop();
+      return;
+    }
+
+    // If the user has already inputted a manual location, do not check if location is accurate
+    if (value.metadata?.manualLocation) {
+      createObservation();
+    }
 
     const accuracy = value.metadata?.position?.coords?.accuracy;
 
@@ -242,7 +251,11 @@ export const ObservationCreate = ({
     }
 
     // If we don't have accuracy, allow save anyway (this is a remnant from mapeo: https://github.com/digidem/mapeo-mobile/blob/0c0ebbb9ef2261e21cd1d1c8bd5ab2fe42017ea3/src/frontend/screens/ObservationEdit/SaveButton.js#L125C3-L125C50)
-    if (accuracy && !isGpsAccurate(accuracy)) {
+    if (
+      accuracy &&
+      typeof accuracy === 'number' &&
+      accuracy < MINIMUM_ACCURACY
+    ) {
       Alert.alert(
         formatMessage(m.weakGpsTitle),
         formatMessage(m.weakGpsDesc),
@@ -309,10 +322,6 @@ export const ObservationCreate = ({
     </>
   );
 };
-
-function isGpsAccurate(accuracy?: number): boolean {
-  return typeof accuracy === 'number' && accuracy < MINIMUM_ACCURACY;
-}
 
 export function createNavigationOptions({
   intl,

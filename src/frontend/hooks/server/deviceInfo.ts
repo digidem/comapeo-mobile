@@ -25,7 +25,7 @@ export const useEditDeviceInfo = () => {
     mutationFn: async (name: string) => {
       return mapeoApi.setDeviceInfo({
         name,
-        deviceType: deviceType ? expoToCoreDeviceType(deviceType) : undefined,
+        deviceType: expoToCoreDeviceType(deviceType),
       });
     },
     onSuccess: () => {
@@ -35,8 +35,8 @@ export const useEditDeviceInfo = () => {
 };
 
 function expoToCoreDeviceType(
-  d: Readonly<DeviceType>,
-): 'mobile' | 'tablet' | 'desktop' | 'UNRECOGNIZED' | undefined {
+  d: Readonly<null | DeviceType>,
+): 'mobile' | 'tablet' | 'desktop' | 'UNRECOGNIZED' {
   switch (d) {
     case DeviceType.PHONE: {
       return 'mobile';
@@ -44,12 +44,11 @@ function expoToCoreDeviceType(
     case DeviceType.TABLET: {
       return 'tablet';
     }
-    case DeviceType.TV: {
-      return undefined;
-    }
     case DeviceType.DESKTOP: {
       return 'desktop';
     }
+    case null:
+    case DeviceType.TV:
     case DeviceType.UNKNOWN: {
       return 'UNRECOGNIZED';
     }

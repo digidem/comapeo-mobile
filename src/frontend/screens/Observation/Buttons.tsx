@@ -281,7 +281,10 @@ function createObservationShareMessage({
         })
       : '';
 
-  const notes = `${observation.tags.notes}`;
+  const notes =
+    observation.tags.notes !== undefined && observation.tags.notes !== null
+      ? `${observation.tags.notes}`
+      : '';
 
   const displayedFields =
     fields.length > 0
@@ -294,17 +297,14 @@ function createObservationShareMessage({
 
   const footer = `— ${footerText} —`;
 
-  return (
-    header +
-    '\n' +
-    timestamp +
-    '\n' +
-    coordinates +
-    '\n\n' +
-    notes +
-    '\n\n' +
-    displayedFields +
-    '\n\n' +
-    footer
-  );
+  // No empty line between each item
+  const sectionTop = [header, timestamp, coordinates]
+    .filter(v => !!v)
+    .join('\n');
+
+  // One empty line between each item
+  const sectionMiddle = [notes, displayedFields].filter(v => !!v).join('\n\n');
+
+  // One empty line between each section
+  return [sectionTop, sectionMiddle, footer].filter(s => !!s).join('\n\n');
 }

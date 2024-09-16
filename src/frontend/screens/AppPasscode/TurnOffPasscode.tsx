@@ -49,7 +49,7 @@ const m = defineMessages({
   description: {
     id: 'screens.AppPasscode.TurnOffPasscode.description',
     defaultMessage:
-      'App Passcode adds an additional layer of security by requiring that you enter a passcode in order to open the Mapeo app.',
+      'App Passcode adds an additional layer of security by requiring that you enter a passcode in order to open the CoMapeo app.',
   },
   currentlyUsing: {
     id: 'screens.AppPasscode.TurnOffPasscode.currentlyUsing',

@@ -10,7 +10,6 @@ import {
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
-import type {Position} from '../../sharedTypes';
 
 export function useMostAccurateLocationForObservation() {
   const value = usePersistedDraftObservation(store => store.value);
@@ -45,17 +44,14 @@ export function useMostAccurateLocationForObservation() {
         },
         debounceLocation()(location => {
           if (ignore) return;
-
-          const position: Position = {mocked: false};
-          if (location) {
-            position.coords = mapObject(location.coords, (key, val) =>
-              val == null ? mapObjectSkip : [key, val],
-            );
-            position.timestamp = new Date(location.timestamp).toISOString();
-          }
-
           updateObservationPosition({
-            position,
+            position: {
+              mocked: location.mocked,
+              coords: mapObject(location.coords, (key, val) =>
+                val == null ? mapObjectSkip : [key, val],
+              ),
+              timestamp: new Date(location.timestamp).toISOString(),
+            },
             manualLocation: false,
           });
         }),
@@ -80,7 +76,7 @@ export function useMostAccurateLocationForObservation() {
 function debounceLocation() {
   let lastLocation: LocationObject | undefined;
 
-  return function (callback: (location: LocationObject | undefined) => any) {
+  return function (callback: (location: LocationObject) => unknown) {
     return function (location: LocationObject) {
       if (!lastLocation) {
         lastLocation = location;

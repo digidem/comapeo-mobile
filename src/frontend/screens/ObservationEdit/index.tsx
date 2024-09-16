@@ -192,7 +192,8 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         presetName={presetName}
         PresetIcon={
           <PresetCircleIcon
-            presetDocId={preset?.iconRef?.docId}
+            size="medium"
+            iconId={preset?.iconRef?.docId}
             testID={`OBS.${preset?.name}-icon`}
           />
         }

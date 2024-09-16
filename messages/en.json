@@ -765,6 +765,9 @@
     "description": "Button to cancel delete of observation",
     "message": "Cancel"
   },
+  "screens.Observation.comapeoAlert": {
+    "message": "CoMapeo Alert"
+  },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
     "message": "Yes, delete"

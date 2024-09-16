@@ -803,13 +803,41 @@
     "description": "Placeholder for description/notes field",
     "message": "What is happening here?"
   },
+  "screens.ObservationCreate.keepWaiting": {
+    "description": "Button to cancel save and continue waiting for GPS",
+    "message": "Continue waiting"
+  },
+  "screens.ObservationCreate.manualEntry": {
+    "description": "Button to manually enter GPS coordinates",
+    "message": "Manual Coords"
+  },
   "screens.ObservationCreate.navTitle": {
     "description": "screen title for new observation screen",
     "message": "New Observation"
   },
+  "screens.ObservationCreate.noGpsDesc": {
+    "description": "Description in dialog when trying to save with no GPS coords",
+    "message": "This observation does not have a location. You can continue waiting for a GPS signal, save the observation without a location, or enter coordinates manually"
+  },
+  "screens.ObservationCreate.noGpsTitle": {
+    "description": "Title of dialog when trying to save with no GPS coords",
+    "message": "No GPS signal"
+  },
   "screens.ObservationCreate.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "Observation"
+  },
+  "screens.ObservationCreate.saveAnyway": {
+    "description": "Button to save regardless of GPS state",
+    "message": "Save"
+  },
+  "screens.ObservationCreate.weakGpsDesc": {
+    "description": "Description in dialog when trying to save with low GPS accuracy.",
+    "message": "GPS accuracy is low. You can continue waiting for better accuracy, save the observation with low accuracy, or enter coordinates manually"
+  },
+  "screens.ObservationCreate.weakGpsTitle": {
+    "description": "Title of dialog when trying to save with low GPS accuracy.",
+    "message": "Weak GPS signal"
   },
   "screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",

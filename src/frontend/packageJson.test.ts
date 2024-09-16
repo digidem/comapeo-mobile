@@ -48,8 +48,9 @@ async function readMapeoDependencies(
     ...dependencies,
     ...devDependencies,
   };
-  const mapeoEntries = Object.entries(allDependencies).filter(([dependency]) =>
-    dependency.startsWith('@mapeo/'),
+  const mapeoEntries = Object.entries(allDependencies).filter(
+    ([dependency]) =>
+      dependency.startsWith('@mapeo/') || dependency.startsWith('@comapeo/'),
   );
   return Object.fromEntries(mapeoEntries);
 }

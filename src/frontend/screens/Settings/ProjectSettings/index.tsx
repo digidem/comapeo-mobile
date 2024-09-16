@@ -1,11 +1,6 @@
 import * as React from 'react';
 import {ScrollView} from 'react-native';
-import {
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-} from '../../../sharedComponents/List';
+import {List, ListItem, ListItemText} from '../../../sharedComponents/List';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
 
@@ -70,10 +65,6 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
             navigation.navigate('Config');
           }}
           testID="settingsConfigButton">
-          <ListItemIcon
-            style={{minWidth: 0, marginRight: 10}}
-            iconName="assignment"
-          />
           <ListItemText primary={<FormattedMessage {...m.config} />} />
         </ListItem>
       </List>

@@ -16,7 +16,6 @@ import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';
 import {ActionsRow} from '../../sharedComponents/ActionRow';
 import {Alert, type AlertButton} from 'react-native';
-import noop from '../../lib/noop';
 
 const m = defineMessages({
   observation: {
@@ -78,7 +77,7 @@ const m = defineMessages({
   },
 });
 
-const MINIMUM_ACCURACY = 10;
+const MAXIMUM_ACCURACY = 10;
 
 export const ObservationCreate = ({
   navigation,
@@ -230,13 +229,13 @@ export const ObservationCreate = ({
     ];
 
     if (!value) {
-      noop();
       return;
     }
 
     // If the user has already inputted a manual location, do not check if location is accurate
     if (value.metadata?.manualLocation) {
       createObservation();
+      return;
     }
 
     const accuracy = value.metadata?.position?.coords?.accuracy;
@@ -254,7 +253,7 @@ export const ObservationCreate = ({
     if (
       accuracy &&
       typeof accuracy === 'number' &&
-      accuracy < MINIMUM_ACCURACY
+      accuracy >= MAXIMUM_ACCURACY
     ) {
       Alert.alert(
         formatMessage(m.weakGpsTitle),

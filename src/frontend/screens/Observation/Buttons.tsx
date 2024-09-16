@@ -71,6 +71,10 @@ const m = defineMessages({
     description:
       'Fallback name used when category name cannot be determined for observation',
   },
+  comapeoAlert: {
+    id: 'screens.Observation.comapeoAlert',
+    defaultMessage: 'CoMapeo Alert',
+  },
 });
 
 export const ButtonFields = ({
@@ -80,7 +84,7 @@ export const ButtonFields = ({
   isMine: boolean;
   observationId: string;
 }) => {
-  const {formatMessage: t} = useIntl();
+  const {formatMessage: t, formatDate} = useIntl();
   const navigation = useNavigationFromRoot();
   const deleteObservationMutation = useDeleteObservation();
   const {observation, preset} = useObservationWithPreset(observationId);
@@ -136,6 +140,7 @@ export const ButtonFields = ({
       );
 
       await Share.open({
+        subject: `${t(m.comapeoAlert)} — _*${preset ? preset.name : t(m.fallbackCategoryName)}*_ — ${formatDate(observation.createdAt, {format: 'long'})}`,
         title:
           base64Urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),
         urls: base64Urls,

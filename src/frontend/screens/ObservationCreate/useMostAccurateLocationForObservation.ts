@@ -80,7 +80,7 @@ export function useMostAccurateLocationForObservation() {
 function debounceLocation() {
   let lastLocation: LocationObject | undefined;
 
-  return function (callback: (location: LocationObject | undefined) => any) {
+  return function (callback: (location: LocationObject) => unknown) {
     return function (location: LocationObject) {
       if (!lastLocation) {
         lastLocation = location;

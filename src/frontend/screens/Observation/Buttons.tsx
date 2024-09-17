@@ -69,12 +69,6 @@ const m = defineMessages({
     id: 'screens.Observation.shareMessageFooter',
     defaultMessage: 'Sent from CoMapeo',
   },
-  shareMessageFieldNoAnswer: {
-    id: 'screens.Observation.shareMessageFieldNoAnswer',
-    defaultMessage: 'No answer',
-    description:
-      'Placeholder text for fields on an observation which are not answered',
-  },
   fallbackCategoryName: {
     id: 'screens.Observation.fallbackCategoryName',
     defaultMessage: 'Observation',
@@ -160,12 +154,11 @@ export const ButtonFields = ({
           continue;
         }
 
-        const displayedValue =
-          (Array.isArray(value) ? value : [value])
-            .map(v => {
-              return getValueLabel(v, field).trim();
-            })
-            .join(', ') || t(m.shareMessageFieldNoAnswer);
+        const displayedValue = (Array.isArray(value) ? value : [value])
+          .map(v => {
+            return getValueLabel(v, field).trim();
+          })
+          .join(', ');
 
         completedFields.push({label: field.label, value: displayedValue});
       }

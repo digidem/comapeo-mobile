@@ -784,10 +784,6 @@
     "description": "Title of dialog to share an observation with media",
     "message": "Sharing image"
   },
-  "screens.Observation.shareMessageFieldNoAnswer": {
-    "description": "Placeholder text for fields on an observation which are not answered",
-    "message": "No answer"
-  },
   "screens.Observation.shareMessageFooter": {
     "message": "Sent from CoMapeo"
   },

@@ -14,6 +14,7 @@
       },
       "android": {
         "image": "latest",
+        "node": "20.17.0",
         "buildType": "apk"
       },
       "env": {
@@ -29,6 +30,7 @@
       },
       "android": {
         "image": "latest",
+        "node": "20.17.0",
         "buildType": "apk"
       },
       "ios": {
@@ -37,7 +39,8 @@
     },
     "production": {
       "android": {
-        "image": "latest"
+        "image": "latest",
+        "node": "20.17.0"
       },
       "ios": {
         "image": "latest"
@@ -56,6 +59,7 @@
       },
       "android": {
         "image": "latest",
+        "node": "20.17.0",
         "buildType": "apk"
       },
       "ios": {

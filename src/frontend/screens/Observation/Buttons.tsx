@@ -1,6 +1,6 @@
 import React from 'react';
 import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Field, Observation} from '@mapeo/schema';
+import {Field, Observation} from '@comapeo/schema';
 import {DARK_GREY} from '../../lib/styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {defineMessages, useIntl} from 'react-intl';

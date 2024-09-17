@@ -16,7 +16,7 @@ const APP_NAME_SUFFIX =
   {
     development: ' Dev',
     production: '',
-    releaseCandidate: ' Rc',
+    releaseCandidate: ' RC',
     preRelease: ' Pre',
   }[APP_VARIANT] ?? ' Dev';
 

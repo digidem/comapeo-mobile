@@ -765,6 +765,9 @@
     "description": "Button to cancel delete of observation",
     "message": "Ghairi"
   },
+  "screens.Observation.comapeoAlert": {
+    "message": "CoMapeo Alert"
+  },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
     "message": "Ndiyo, futa"
@@ -800,13 +803,41 @@
     "description": "Placeholder for description/notes field",
     "message": "Ni nini kinachofanyika hapa?"
   },
+  "screens.ObservationCreate.keepWaiting": {
+    "description": "Button to cancel save and continue waiting for GPS",
+    "message": "Endelea kusubiri"
+  },
+  "screens.ObservationCreate.manualEntry": {
+    "description": "Button to manually enter GPS coordinates",
+    "message": "Viratibu vya kuweka Wewe Mwenyewe"
+  },
   "screens.ObservationCreate.navTitle": {
     "description": "screen title for new observation screen",
     "message": "New Observation"
   },
+  "screens.ObservationCreate.noGpsDesc": {
+    "description": "Description in dialog when trying to save with no GPS coords",
+    "message": "Uchunguzi huu hauna eneo. Unaweza kuendelea kusubiri ishara ya GPS, kuhifadhi uchunguzi bila eneo, au kuweka viratibu wewe mwenyewe"
+  },
+  "screens.ObservationCreate.noGpsTitle": {
+    "description": "Title of dialog when trying to save with no GPS coords",
+    "message": "Hakuna ishara ya GPS"
+  },
   "screens.ObservationCreate.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "Uchunguzi"
+  },
+  "screens.ObservationCreate.saveAnyway": {
+    "description": "Button to save regardless of GPS state",
+    "message": "Hifadhi"
+  },
+  "screens.ObservationCreate.weakGpsDesc": {
+    "description": "Description in dialog when trying to save with low GPS accuracy.",
+    "message": "Usahihi wa GPS ni wa chini. Unaweza kuendelea kusubiri usahihi bora, kuhifadhi uchunguzi ulio na usahihi wa chini, au uweke viratibu wewe mwenyewe"
+  },
+  "screens.ObservationCreate.weakGpsTitle": {
+    "description": "Title of dialog when trying to save with low GPS accuracy.",
+    "message": "Ishara dhaifu ya GPS"
   },
   "screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
@@ -1175,7 +1206,7 @@
     "message": "Import Config"
   },
   "screens.Settings.CreateOrJoinProject.importConfigFileError": {
-    "message": "File name should end with .mapeoconfig"
+    "message": "File name should end with .comapeocat"
   },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
     "message": "Join an existing CoMapeo Project"

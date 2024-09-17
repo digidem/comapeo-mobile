@@ -5,7 +5,7 @@ import {
   defineMessages,
   useIntl,
 } from 'react-intl';
-import {Field, Preset} from '@mapeo/schema';
+import {Field, Preset} from '@comapeo/schema';
 
 import {formatCoords} from '../lib/utils';
 import {DateDistance} from './DateDistance';

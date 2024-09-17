@@ -11,7 +11,7 @@ import {useDraftObservation} from '../hooks/useDraftObservation';
 import {defineMessages, useIntl} from 'react-intl';
 import {useObservationWithPreset} from '../hooks/useObservationWithPreset';
 import {ClientGeneratedObservation} from '../sharedTypes';
-import {Observation} from '@mapeo/schema';
+import {Observation} from '@comapeo/schema';
 import {usePersistedDraftObservation} from '../hooks/persistedState/usePersistedDraftObservation';
 import {
   CommonActions,

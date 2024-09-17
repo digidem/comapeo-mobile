@@ -72,8 +72,8 @@ const KEEP_THESE = [
   'package.json',
   'index.bundle.js',
   'loader.js',
-  // Static folders referenced by @mapeo/core code
-  'node_modules/@mapeo/core/drizzle',
+  // Static folders referenced by @comapeo/core code
+  'node_modules/@comapeo/core/drizzle',
   // zip file that is the default config
   'node_modules/@mapeo/default-config/dist/mapeo-default-config.comapeocat',
   // Offline fallback map

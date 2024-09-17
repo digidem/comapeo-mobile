@@ -80,7 +80,7 @@ or [this](https://github.com/facebook/react-native/pull/43756) is merged.
 
 ## @comapeo/ipc
 
-### [Change imports to avoid calling unavailable code](./@comapeo+ipc+0.16.0.patch)
+### [Change imports to avoid calling unavailable code](./@comapeo+ipc+1.0.0.patch)
 
 There was an error while running app via Expo because of exports in `rpc-reflector` package. To remove this patch, `rpc-reflector` would need to be updated not to use `encode-decode.js` file which indirect usage results in errors.
 

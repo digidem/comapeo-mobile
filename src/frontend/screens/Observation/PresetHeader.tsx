@@ -3,7 +3,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import {BLACK} from '../../lib/styles';
 import {FormattedPresetName} from '../../sharedComponents/FormattedData';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
-import {Preset} from '@mapeo/schema';
+import {Preset} from '@comapeo/schema';
 
 export const PresetHeader = ({preset}: {preset?: Preset}) => {
   return (

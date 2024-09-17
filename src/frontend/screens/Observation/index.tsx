@@ -116,7 +116,11 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
         {isDeviceInfoPending || isDeviceIdPending ? (
           <UIActivityIndicator size={20} />
         ) : (
-          <ButtonFields isMine={isMine} observationId={observationId} />
+          <ButtonFields
+            isMine={isMine}
+            observationId={observationId}
+            fields={fields}
+          />
         )}
       </>
     </ScrollView>

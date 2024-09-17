@@ -1,4 +1,6 @@
+import React from 'react';
 import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Field, Observation} from '@mapeo/schema';
 import {DARK_GREY} from '../../lib/styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {defineMessages, useIntl} from 'react-intl';
@@ -14,6 +16,8 @@ import {convertUrlToBase64} from '../../utils/base64.ts';
 import {useState} from 'react';
 import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings.ts';
 import * as Sentry from '@sentry/react-native';
+import {CoordinateFormat} from '../../sharedTypes/index.ts';
+import {getValueLabel} from '../../sharedComponents/FormattedData.tsx';
 
 const m = defineMessages({
   delete: {
@@ -57,13 +61,13 @@ const m = defineMessages({
     defaultMessage: 'Sharing image',
     description: 'Title of dialog to share an observation with media',
   },
-  shareMessage: {
-    id: 'screens.Observation.shareMessage',
-    defaultMessage:
-      'CoMapeo Alert — _*{category_name}*_\n' +
-      '{date, date, full} {time, time, long}\n' +
-      '{coordinates}',
-    description: 'Message that will be shared along with image',
+  shareMessageTitle: {
+    id: 'screens.Observation.shareMessageTitle',
+    defaultMessage: 'CoMapeo Alert',
+  },
+  shareMessageFooter: {
+    id: 'screens.Observation.shareMessageFooter',
+    defaultMessage: 'Sent from CoMapeo',
   },
   fallbackCategoryName: {
     id: 'screens.Observation.fallbackCategoryName',
@@ -78,9 +82,11 @@ const m = defineMessages({
 });
 
 export const ButtonFields = ({
+  fields,
   isMine,
   observationId,
 }: {
+  fields: Array<Field>;
   isMine: boolean;
   observationId: string;
 }) => {
@@ -112,7 +118,7 @@ export const ButtonFields = ({
   }
 
   async function handlePressShare() {
-    const {lon, lat, attachments} = observation;
+    const {attachments} = observation;
     setShareButtonLoading(true);
     const getValidUrls = (queries: typeof attachmentUrlQueries) => {
       const urls = queries
@@ -139,19 +145,37 @@ export const ButtonFields = ({
         urls.map(url => convertUrlToBase64(url)),
       );
 
+      const completedFields: Array<{label: string; value: string}> = [];
+
+      for (const field of fields) {
+        const value = observation.tags[field.tagKey];
+
+        if (value === undefined || value === null || value === '') {
+          continue;
+        }
+
+        const displayedValue = (Array.isArray(value) ? value : [value])
+          .map(v => {
+            return getValueLabel(v, field).trim();
+          })
+          .join(', ');
+
+        completedFields.push({label: field.label, value: displayedValue});
+      }
+
       await Share.open({
         subject: `${t(m.comapeoAlert)} — _*${preset ? preset.name : t(m.fallbackCategoryName)}*_ — ${formatDate(observation.createdAt, {format: 'long'})}`,
         title:
           base64Urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),
         urls: base64Urls,
-        message: t(m.shareMessage, {
-          category_name: preset?.name || t(m.fallbackCategoryName),
-          date: Date.now(),
-          time: Date.now(),
-          coordinates:
-            typeof lon === 'number' && typeof lat === 'number'
-              ? formatCoords({lon, lat, format})
-              : '',
+        message: createObservationShareMessage({
+          categoryName: preset ? preset.name : t(m.fallbackCategoryName),
+          coordinateFormat: format,
+          completedFields,
+          footerText: t(m.shareMessageFooter),
+          observation,
+          timestamp: formatDate(observation.createdAt, {format: 'long'}),
+          titleText: t(m.shareMessageTitle),
         }),
       });
     } catch (err) {
@@ -221,3 +245,59 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
 });
+
+function createObservationShareMessage({
+  categoryName,
+  coordinateFormat,
+  completedFields,
+  footerText,
+  observation,
+  timestamp,
+  titleText,
+}: {
+  categoryName?: string;
+  coordinateFormat: CoordinateFormat;
+  completedFields: Array<{label: string; value: string}>;
+  footerText: string;
+  observation: Observation;
+  timestamp: string;
+  titleText: string;
+}): string {
+  const header = titleText + (categoryName ? ` — _*${categoryName}*_` : '');
+
+  const coordinates =
+    observation.lat !== undefined && observation.lon !== undefined
+      ? formatCoords({
+          lon: observation.lon,
+          lat: observation.lat,
+          format: coordinateFormat,
+        })
+      : '';
+
+  const notes =
+    observation.tags.notes !== undefined && observation.tags.notes !== null
+      ? `${observation.tags.notes}`
+      : '';
+
+  const displayedFields =
+    completedFields.length > 0
+      ? completedFields
+          .map(({label, value}) => {
+            return `*${label}*\n_${value}_`;
+          })
+          .join('\n\n')
+      : '';
+
+  const footer = `— ${footerText} —`;
+
+  // No empty line between each item
+  const sectionTop = [header, timestamp, coordinates]
+    .filter(v => !!v)
+    .join('\n');
+
+  // One empty line between each item
+  const sectionMiddle = [notes, displayedFields].filter(v => !!v).join('\n\n');
+
+  // One empty line between each section
+  return [sectionTop, sectionMiddle, footer].filter(s => !!s).join('\n\n');
+}

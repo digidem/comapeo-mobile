@@ -178,7 +178,7 @@ export const ButtonFields = ({
         message: createObservationShareMessage({
           categoryName: preset ? preset.name : t(m.fallbackCategoryName),
           coordinateFormat: format,
-          fields: completedFields,
+          completedFields,
           footerText: t(m.shareMessageFooter),
           observation,
           timestamp: formatDate(observation.createdAt, {format: 'long'}),
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
 function createObservationShareMessage({
   categoryName,
   coordinateFormat,
-  fields,
+  completedFields,
   footerText,
   observation,
   timestamp,
@@ -264,7 +264,7 @@ function createObservationShareMessage({
 }: {
   categoryName?: string;
   coordinateFormat: CoordinateFormat;
-  fields: Array<{label: string; value: string}>;
+  completedFields: Array<{label: string; value: string}>;
   footerText: string;
   observation: Observation;
   timestamp: string;
@@ -287,8 +287,8 @@ function createObservationShareMessage({
       : '';
 
   const displayedFields =
-    fields.length > 0
-      ? fields
+    completedFields.length > 0
+      ? completedFields
           .map(({label, value}) => {
             return `*${label}*\n_${value}_`;
           })

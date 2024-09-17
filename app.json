@@ -61,7 +61,6 @@
       ["./expo-config-plugins/targetArmArchsOnly.js"]
     ],
     "android": {
-      "versionCode": 1,
       "allowBackup": false,
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",

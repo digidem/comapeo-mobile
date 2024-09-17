@@ -7,7 +7,7 @@ import NetInfo, {
 } from '@react-native-community/netinfo';
 import StateMachine from 'start-stop-state-machine';
 import Zeroconf, {type Service as ZeroconfService} from 'react-native-zeroconf';
-import {type MapeoClientApi} from '@mapeo/ipc';
+import {type MapeoClientApi} from '@comapeo/ipc';
 import noop from '../lib/noop';
 
 type LocalDiscoveryController = ReturnType<

@@ -1206,7 +1206,7 @@
     "message": "Import Config"
   },
   "screens.Settings.CreateOrJoinProject.importConfigFileError": {
-    "message": "File name should end with .mapeoconfig"
+    "message": "File name should end with .comapeocat"
   },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
     "message": "Join an existing CoMapeo Project"

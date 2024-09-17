@@ -15,7 +15,7 @@ const FALLBACK_MAP_PATH = new URL(
 ).pathname
 
 const DEFAULT_CONFIG_PATH = new URL(
-  './node_modules/@mapeo/default-config/dist/mapeo-default-config.mapeoconfig',
+  './node_modules/@mapeo/default-config/dist/mapeo-default-config.comapeocat',
   import.meta.url,
 ).pathname
 

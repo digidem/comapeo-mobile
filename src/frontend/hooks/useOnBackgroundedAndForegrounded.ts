@@ -1,4 +1,4 @@
-import {type MapeoClientApi} from '@mapeo/ipc';
+import {type MapeoClientApi} from '@comapeo/ipc';
 import {useEffect} from 'react';
 import {useAppState} from '@react-native-community/hooks';
 

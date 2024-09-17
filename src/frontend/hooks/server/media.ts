@@ -5,7 +5,7 @@ import {URL} from 'react-native-url-polyfill';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
-import {MapeoProjectApi} from '@mapeo/ipc';
+import type {MapeoProjectApi} from '@comapeo/ipc';
 import {ClientApi} from 'rpc-reflector';
 
 export function useCreateBlobMutation(opts: {retry?: number} = {}) {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {type MapeoProjectApi} from '@mapeo/ipc';
+import {type MapeoProjectApi} from '@comapeo/ipc';
 
 import {usePersistedProjectId} from '../hooks/persistedState/usePersistedProjectId';
 import {useProject, useCreateProject} from '../hooks/server/projects';

@@ -17,7 +17,7 @@ import {
   LocalDiscoveryProvider,
   createLocalDiscoveryController,
 } from './LocalDiscoveryContext';
-import {type MapeoClientApi} from '@mapeo/ipc';
+import {type MapeoClientApi} from '@comapeo/ipc';
 import {ServerLoading} from '../ServerLoading';
 import {ApiProvider} from './ApiContext';
 import {MessagePortLike} from '../lib/MessagePortLike';

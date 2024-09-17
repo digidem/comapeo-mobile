@@ -13,9 +13,9 @@
   "author": "Digital Democracy",
   "license": "MIT",
   "dependencies": {
-    "@mapeo/core": "9.0.0-alpha.23",
-    "@mapeo/default-config": "^4.0.0-alpha.7",
-    "@mapeo/ipc": "0.15.0",
+    "@comapeo/ipc": "0.16.1",
+    "@mapeo/core": "9.0.0-alpha.25",
+    "@mapeo/default-config": "^4.0.1-alpha.0",
     "debug": "^4.3.4",
     "mapeo-offline-map": "^2.0.0"
   },

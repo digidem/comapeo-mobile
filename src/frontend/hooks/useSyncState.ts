@@ -1,5 +1,5 @@
 import {useCallback, useSyncExternalStore} from 'react';
-import {MapeoProjectApi} from '@mapeo/ipc';
+import type {MapeoProjectApi} from '@comapeo/ipc';
 
 import {useActiveProject} from '../contexts/ActiveProjectContext';
 import {getDataSyncCountForDevice, type SyncState} from '../lib/sync';

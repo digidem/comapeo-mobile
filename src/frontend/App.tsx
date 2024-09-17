@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {createMapeoClient} from '@mapeo/ipc';
+import {createMapeoClient} from '@comapeo/ipc';
 import {AppNavigator} from './AppNavigator';
 import {MessagePortLike} from './lib/MessagePortLike';
 import {initializeNodejs} from './initializeNodejs';

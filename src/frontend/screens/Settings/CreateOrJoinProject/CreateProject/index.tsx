@@ -46,7 +46,7 @@ const m = defineMessages({
   },
   importConfigFileError: {
     id: 'screens.Settings.CreateOrJoinProject.importConfigFileError',
-    defaultMessage: 'File name should end with .mapeoconfig',
+    defaultMessage: 'File name should end with .comapeocat',
   },
 });
 

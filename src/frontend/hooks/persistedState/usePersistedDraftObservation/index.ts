@@ -7,7 +7,7 @@ import {
 } from '../../../contexts/PhotoPromiseContext/types';
 import {deletePhoto, replaceDraftPhotos} from './photosMethods';
 import {ClientGeneratedObservation, Position} from '../../../sharedTypes';
-import {Observation, Preset} from '@mapeo/schema';
+import {Observation, Preset} from '@comapeo/schema';
 import {usePresetsQuery} from '../../server/presets';
 import {matchPreset} from '../../../lib/utils';
 

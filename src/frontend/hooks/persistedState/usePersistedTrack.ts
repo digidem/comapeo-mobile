@@ -2,7 +2,7 @@ import {calculateTotalDistance} from '../../utils/distance.ts';
 import {LocationHistoryPoint} from '../../sharedTypes/location.ts';
 import {createPersistedStore} from './createPersistedState.ts';
 import {useStore} from 'zustand';
-import {Track} from '@mapeo/schema';
+import {Track} from '@comapeo/schema';
 
 type ObservationRef = Track['observationRefs'][0];
 

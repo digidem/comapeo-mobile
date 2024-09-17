@@ -6,7 +6,7 @@ import {BLACK, WHITE, DARK_GREY, LIGHT_GREY} from '../../lib/styles';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 import {FormattedObservationDate} from '../../sharedComponents/FormattedData';
-import {Field} from '@mapeo/schema';
+import {Field} from '@comapeo/schema';
 import {PresetHeader} from './PresetHeader';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
 import {useFieldsQuery} from '../../hooks/server/fields';

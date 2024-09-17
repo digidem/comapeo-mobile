@@ -1,4 +1,4 @@
-import {Field} from '@mapeo/schema';
+import {Field} from '@comapeo/schema';
 
 export interface TextField extends Field {
   appearance: 'singleline' | 'multiline';

@@ -765,6 +765,9 @@
     "description": "Button to cancel delete of observation",
     "message": "रद्द"
   },
+  "screens.Observation.comapeoAlert": {
+    "message": "CoMapeo Alert"
+  },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
     "message": "हुन्छ, मेट्नु"
@@ -800,13 +803,41 @@
     "description": "Placeholder for description/notes field",
     "message": "यहाँ के भइ राखेकाे छ?"
   },
+  "screens.ObservationCreate.keepWaiting": {
+    "description": "Button to cancel save and continue waiting for GPS",
+    "message": "पर्खाइ निरन्तर"
+  },
+  "screens.ObservationCreate.manualEntry": {
+    "description": "Button to manually enter GPS coordinates",
+    "message": "म्यानुअल काेर्डस्"
+  },
   "screens.ObservationCreate.navTitle": {
     "description": "screen title for new observation screen",
     "message": "New Observation"
   },
+  "screens.ObservationCreate.noGpsDesc": {
+    "description": "Description in dialog when trying to save with no GPS coords",
+    "message": "याे अवलाेकनकाे लाेकेसन छैन । तपाइले GPS संकेत निरन्तर कुर्न सक्नु हुनेछ, अवलाेकनलाइ लाेकेसन बेगर संग्रह गर्न सक्नुहुन्छ, वा निर्देशलाइ अाफैले राख्नु"
+  },
+  "screens.ObservationCreate.noGpsTitle": {
+    "description": "Title of dialog when trying to save with no GPS coords",
+    "message": "GPS संकेत छैन"
+  },
   "screens.ObservationCreate.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "अवलाेकन"
+  },
+  "screens.ObservationCreate.saveAnyway": {
+    "description": "Button to save regardless of GPS state",
+    "message": "संग्रह"
+  },
+  "screens.ObservationCreate.weakGpsDesc": {
+    "description": "Description in dialog when trying to save with low GPS accuracy.",
+    "message": "GPS यथार्थता न्यून छ, दुरूस्त GPS काे लागि कुर्न सक्नु हुन्छ, न्यून GPS यथार्थतामा संग्रह गर्न सक्नु हुन्छ, वा अाफैले निर्देश गर्न सक्नुहुन्छ"
+  },
+  "screens.ObservationCreate.weakGpsTitle": {
+    "description": "Title of dialog when trying to save with low GPS accuracy.",
+    "message": "कमजाेर GPS संकेत"
   },
   "screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
@@ -1175,7 +1206,7 @@
     "message": "Import Config"
   },
   "screens.Settings.CreateOrJoinProject.importConfigFileError": {
-    "message": "File name should end with .mapeoconfig"
+    "message": "File name should end with .comapeocat"
   },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
     "message": "Join an existing CoMapeo Project"

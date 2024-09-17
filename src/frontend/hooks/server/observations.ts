@@ -3,7 +3,7 @@ import {
   useSuspenseQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-import {ObservationValue} from '@mapeo/schema';
+import {ObservationValue} from '@comapeo/schema';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {ClientGeneratedObservation} from '../../sharedTypes';
 

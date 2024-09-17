@@ -2,7 +2,7 @@ import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {FormattedFieldProp} from '../../sharedComponents/FormattedData';
 import {Text} from '../../sharedComponents/Text';
-import {Field} from '@mapeo/schema';
+import {Field} from '@comapeo/schema';
 
 interface Props {
   field: Field;

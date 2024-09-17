@@ -1,4 +1,4 @@
-import {Observation, Preset} from '@mapeo/schema';
+import {Observation, Preset} from '@comapeo/schema';
 import {validateHTMLColorHex} from 'validate-color';
 import {featureCollection as turfFeatureCollection, point} from '@turf/helpers';
 import {Feature, Point} from 'geojson';
@@ -13,7 +13,7 @@ export function createObservationMapLayerStyle(presets: Preset[]) {
   const categoryColorPairs: Array<string> = [];
 
   for (const {color, name} of presets) {
-    // @mapeo/schema only allows hex values for color field
+    // @comapeo/schema only allows hex values for color field
     // https://github.com/digidem/mapeo-schema/blob/f6d93ca456f1059d118dff2d094ceed312fcc2e9/schema/preset/v1.json#L100
     if (color && validateHTMLColorHex(color)) {
       categoryColorPairs.push(name, color);

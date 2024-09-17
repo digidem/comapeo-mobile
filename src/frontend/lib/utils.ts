@@ -1,6 +1,6 @@
 // import { Alert } from "react-native";
 import {fromLatLon} from 'utm';
-import {Preset, Observation, Track} from '@mapeo/schema';
+import {Preset, Observation, Track} from '@comapeo/schema';
 import {LocationObject, LocationProviderStatus} from 'expo-location';
 import {FeatureCollection, LineString} from 'geojson';
 import {LocationHistoryPoint} from '../sharedTypes/location';

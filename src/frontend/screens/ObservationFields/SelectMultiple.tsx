@@ -12,7 +12,7 @@ import {SelectMultipleField} from '../../sharedTypes/PresetTypes';
 import {ViewStyleProp} from '../../sharedTypes';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {Observation} from '@mapeo/schema';
+import {Observation} from '@comapeo/schema';
 
 interface Props extends QuestionProps {
   field: SelectMultipleField;

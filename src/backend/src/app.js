@@ -11,7 +11,7 @@ import {
   MapeoMapsFastifyPlugin,
   MapeoStaticMapsFastifyPlugin,
   MapeoOfflineFallbackMapFastifyPlugin,
-} from '@mapeo/core'
+} from '@comapeo/core'
 import { createMapeoServer } from '@comapeo/ipc'
 import Fastify from 'fastify'
 

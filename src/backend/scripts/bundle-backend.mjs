@@ -28,7 +28,7 @@ const { entry, output, minify: shouldMinify } = values
 const plugins = [
   alias({
     entries: [
-      // @mapeo/core (indirectly) depends on @node-rs/crc32, which can't be rolled up.
+      // @comapeo/core (indirectly) depends on @node-rs/crc32, which can't be rolled up.
       // Replace it with a pure JavaScript implementation.
       {
         find: '@node-rs/crc32',

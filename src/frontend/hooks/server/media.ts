@@ -1,5 +1,5 @@
-import {Observation} from '@mapeo/schema';
-import {BlobVariant} from '@mapeo/core/dist/types';
+import {Observation} from '@comapeo/schema';
+import {BlobVariant} from '@comapeo/core/dist/types';
 import {useMutation, useQueries, useQuery} from '@tanstack/react-query';
 import {URL} from 'react-native-url-polyfill';
 

@@ -1,6 +1,9 @@
 import * as React from 'react';
-import {MapBuffers} from '@mapeo/core/dist/types';
-import {InviteInternal, InviteRemovalReason} from '@mapeo/core/dist/invite-api';
+import {MapBuffers} from '@comapeo/core/dist/types';
+import {
+  InviteInternal,
+  InviteRemovalReason,
+} from '@comapeo/core/dist/invite-api';
 
 import {BottomSheetModal, useBottomSheetModal} from '../BottomSheetModal';
 import {

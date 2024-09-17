@@ -1,21 +1,51 @@
-const SUFFIX =
+const {execSync} = require('child_process');
+
+const APP_VARIANT = process.env.APP_VARIANT;
+
+/** @type {string} */
+const APP_ID_SUFFIX =
   {
     development: '.dev',
     production: '',
     releaseCandidate: '.rc',
-    preRelease: 'pre',
-  }[process.env.APP_VARIANT] ?? '';
+    preRelease: '.pre',
+  }[APP_VARIANT] ?? '.dev';
 
-const NAME =
+/** @type {string} */
+const APP_NAME_SUFFIX =
   {
     development: ' Dev',
     production: '',
-    releaseCandidate: ' Rc',
+    releaseCandidate: ' RC',
     preRelease: ' Pre',
-  }[process.env.APP_VARIANT] ?? '';
+  }[APP_VARIANT] ?? ' Dev';
 
-const VERSION = process.env.VERSION ?? 'unknown';
-const LATEST_SHA = process.env.COMMIT_SHA;
+const pkgVersion = require('./package.json').version;
+const pkgVersionBase = pkgVersion.replace(/-.*/, '');
+
+/** @type {string} */
+let appVersionSuffix =
+  {
+    development: '-dev',
+    production: '',
+    releaseCandidate: '-rc',
+    preRelease: '-pre',
+  }[APP_VARIANT] ?? '-dev';
+
+if (APP_VARIANT !== 'production') {
+  try {
+    // SHA of commit this version was built from
+    const commitSha =
+      process.env.EAS_BUILD_GIT_COMMIT_HASH ||
+      execSync('git rev-parse HEAD').toString().trim();
+    const commitShaShort = commitSha.slice(0, 7);
+    appVersionSuffix += `+${commitShaShort}`;
+  } catch (e) {
+    // Expo-doctor runs in a temp directory which is not a git repo, so this command will fail.
+  }
+}
+
+const versionName = `${pkgVersionBase}${appVersionSuffix}`;
 
 /**
  * @param {object} opts
@@ -25,21 +55,21 @@ const LATEST_SHA = process.env.COMMIT_SHA;
  */
 module.exports = ({config}) => ({
   ...config,
-  version: LATEST_SHA ? `${VERSION}+${LATEST_SHA}` : VERSION,
+  version: versionName,
   extra: {
     ...config.extra,
     eas: {
       projectId: '2d5b8137-12ec-45aa-9c23-56b6a1c522b7',
     },
   },
-  name: 'CoMapeo' + NAME,
+  name: 'CoMapeo' + APP_NAME_SUFFIX,
   ios: {
     ...config.ios,
-    bundleIdentifier: 'com.comapeo' + SUFFIX,
+    bundleIdentifier: 'com.comapeo' + APP_ID_SUFFIX,
   },
   android: {
     ...config.android,
-    package: 'com.comapeo' + SUFFIX,
+    package: 'com.comapeo' + APP_ID_SUFFIX,
     googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
   },
   updates: {

@@ -16,7 +16,12 @@ module.exports = {
   resolver: {
     ...config.resolver,
     // For nodejs-mobile
-    blockList: [...defaultBlockList, /nodejs-assets\/.*/],
+    blockList: [
+      ...defaultBlockList,
+      /nodejs-assets\/.*/,
+      // TODO: Update comapeo-schema to make ajv a dev-dep
+      /node_modules\/ajv\/.*/,
+    ],
     // For https://github.com/kristerkari/react-native-svg-transformer
     assetExts: config.resolver.assetExts.filter(ext => ext !== 'svg'),
     sourceExts: [...config.resolver.sourceExts, 'svg'],

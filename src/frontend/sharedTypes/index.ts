@@ -1,6 +1,6 @@
 import {ImageStyle, StyleProp, TextStyle, ViewStyle} from 'react-native';
-import {Observation, ObservationValue} from '@mapeo/schema';
-import type {RoleId, RoleIdForNewInvite} from '@mapeo/core/dist/roles';
+import {Observation, ObservationValue} from '@comapeo/schema';
+import type {RoleId, RoleIdForNewInvite} from '@comapeo/core/dist/roles';
 
 export type DeviceConnectionStatus = 'connected' | 'disconnected';
 
@@ -32,7 +32,7 @@ export type PhotoVariant = 'original' | 'thumbnail' | 'preview';
 
 export type CoordinateFormat = 'utm' | 'dd' | 'dms';
 
-// Copied form /@mapeo/core/src/roles.js. Created an issue to eventuall expose this: https://github.com/digidem/mapeo-core-next/issues/532
+// Copied from @comapeo/core/src/roles.js. Created an issue to eventually expose this: https://github.com/digidem/mapeo-core-next/issues/532
 export const CREATOR_ROLE_ID = 'a12a6702b93bd7ff';
 export const COORDINATOR_ROLE_ID = 'f7c150f5a3a9a855';
 export const MEMBER_ROLE_ID = '012fd2d431c0bf60';

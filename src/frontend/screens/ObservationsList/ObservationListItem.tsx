@@ -5,7 +5,7 @@ import {Text} from '../../sharedComponents/Text';
 import {TouchableHighlight} from '../../sharedComponents/Touchables';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {Attachment, ViewStyleProp} from '../../sharedTypes';
-import {Observation} from '@mapeo/schema';
+import {Observation} from '@comapeo/schema';
 import {
   FormattedObservationDate,
   FormattedPresetName,

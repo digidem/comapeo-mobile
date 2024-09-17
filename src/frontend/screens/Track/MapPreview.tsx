@@ -4,7 +4,7 @@ import MapboxGL from '@rnmapbox/maps';
 import {LocationHistoryPoint} from '../../sharedTypes/location.ts';
 import Mapbox from '@rnmapbox/maps';
 import {convertToLineString} from '../../lib/utils.ts';
-import {Observation} from '@mapeo/schema';
+import {Observation} from '@comapeo/schema';
 import {BLACK} from '../../lib/styles.ts';
 import {usePresetsQuery} from '../../hooks/server/presets.ts';
 import {

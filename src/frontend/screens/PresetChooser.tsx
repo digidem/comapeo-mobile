@@ -14,7 +14,7 @@ import {WHITE} from '../lib/styles';
 import {NativeNavigationComponent} from '../sharedTypes/navigation';
 import {CustomHeaderLeftClose} from '../sharedComponents/CustomHeaderLeftClose';
 import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
-import {Preset} from '@mapeo/schema';
+import {Preset} from '@comapeo/schema';
 import {usePresetsQuery} from '../hooks/server/presets';
 import {usePersistedDraftObservation} from '../hooks/persistedState/usePersistedDraftObservation';
 import {CommonActions} from '@react-navigation/native';

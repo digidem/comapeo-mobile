@@ -3,7 +3,7 @@ import {View, FlatList, Dimensions, StyleSheet} from 'react-native';
 import {ObservationListItem} from './ObservationListItem';
 import ObservationEmptyView from './ObservationsEmptyView';
 
-import {Observation, Track} from '@mapeo/schema';
+import {Observation, Track} from '@comapeo/schema';
 import {MessageDescriptor, defineMessages} from 'react-intl';
 import {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs';
 import {ObservationsListBarIcon} from '../../Navigation/Tab/TabBar/ObservationsListTabBarIcon';

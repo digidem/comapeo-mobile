@@ -3,7 +3,7 @@ import {
   useMutation,
   useSuspenseQuery,
 } from '@tanstack/react-query';
-import {TrackValue} from '@mapeo/schema';
+import {TrackValue} from '@comapeo/schema';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 

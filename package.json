@@ -144,6 +144,7 @@
     "babel-jest": "^29.6.3",
     "babel-plugin-transform-inline-environment-variables": "^0.4.4",
     "date-fns": "^3.6.0",
+    "dotenv": "^16.4.5",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^9.1.0",
     "execa": "^8.0.1",

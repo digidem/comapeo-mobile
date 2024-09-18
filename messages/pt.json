@@ -784,9 +784,11 @@
     "description": "Title of dialog to share an observation with media",
     "message": "Compartilhando imagem"
   },
-  "screens.Observation.shareMessage": {
-    "description": "Message that will be shared along with image",
-    "message": "Alerta CoMapeo — _*{category_name}*_ {date, date, full} {time, time, long} {coordinates}"
+  "screens.Observation.shareMessageFooter": {
+    "message": "Sent from CoMapeo"
+  },
+  "screens.Observation.shareMessageTitle": {
+    "message": "CoMapeo Alert"
   },
   "screens.Observation.shareTextTitle": {
     "description": "Title of dialog to share an observation without media",

@@ -76,6 +76,10 @@ import {SettingsPrivacyPolicy} from '../../screens/Settings/DataAndPrivacy/Setti
 import {TrackEdit} from '../../screens/TrackEdit/index.tsx';
 import {Config} from '../../screens/Settings/Config';
 import {HowToLeaveProject} from '../../screens/HowToLeaveProject.tsx';
+import {
+  Audio,
+  navigationOptions as audioNavigationOptions,
+} from '../../screens/Audio/index.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -322,7 +326,11 @@ export const createDefaultScreenGroup = ({
       component={HowToLeaveProject}
       options={{headerShown: false}}
     />
-
+    <RootStack.Screen
+      name="Audio"
+      options={audioNavigationOptions}
+      component={Audio}
+    />
     {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
       <RootStack.Screen
         name="CreateTestData"

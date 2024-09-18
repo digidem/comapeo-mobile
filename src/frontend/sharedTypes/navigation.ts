@@ -31,6 +31,11 @@ export type HomeTabsParamsList = {
   ObservationsList: undefined;
 };
 
+export type AudioStackParamList = {
+  PrepareRecording: undefined;
+  Recording: undefined;
+};
+
 export type TabName = keyof HomeTabsParamsList;
 
 export type RootStackParamsList = {
@@ -102,6 +107,7 @@ export type RootStackParamsList = {
   DataAndPrivacy: undefined;
   SettingsPrivacyPolicy: undefined;
   HowToLeaveProject: undefined;
+  Audio: {existingUri: string} | undefined;
 };
 
 export type OnboardingParamsList = {

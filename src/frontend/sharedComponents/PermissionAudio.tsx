@@ -1,15 +1,16 @@
-import React, {FC, useCallback, useEffect} from 'react';
+import React, {FC, useCallback} from 'react';
 import {Linking} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import AudioPermission from '../images/observationEdit/AudioPermission.svg';
 import {BottomSheetModalContent, BottomSheetModal} from './BottomSheetModal';
 import {Audio} from 'expo-av';
+import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import {PermissionStatus} from 'expo-av/build/Audio';
 
-const handleRequestPermissions = (): void => {
-  Audio.requestPermissionsAsync().catch(() => {});
-};
+// const handleRequestPermissions = (): void => {
+//   Audio.requestPermissionsAsync().catch(() => {});
+// };
 
 const handleOpenSettings = () => {
   Linking.openSettings();
@@ -24,17 +25,15 @@ interface PermissionAudio {
 export const PermissionAudio: FC<PermissionAudio> = props => {
   const {sheetRef, closeSheet, isOpen} = props;
   const {formatMessage: t} = useIntl();
-  const [permissionResponse] = Audio.usePermissions({request: false});
+  const navigation = useNavigationFromRoot();
+  const [permissionResponse, requestPermission] = Audio.usePermissions({
+    request: false,
+  });
 
   const handlePermissionGranted = useCallback(() => {
     closeSheet();
-  }, [closeSheet]);
-
-  const isPermissionGranted = Boolean(permissionResponse?.granted);
-
-  useEffect(() => {
-    if (isPermissionGranted) handlePermissionGranted();
-  }, [isPermissionGranted, handlePermissionGranted]);
+    navigation.navigate('Audio');
+  }, [closeSheet, navigation]);
 
   let onPressActionButton: () => void;
   let actionButtonText: string;
@@ -49,7 +48,9 @@ export const PermissionAudio: FC<PermissionAudio> = props => {
         onPressActionButton = handleOpenSettings;
         actionButtonText = t(m.allowButtonText);
       } else {
-        onPressActionButton = handleRequestPermissions;
+        onPressActionButton = async () => {
+          const response = await requestPermission();
+        };
         actionButtonText = t(m.goToSettingsButtonText);
       }
       break;

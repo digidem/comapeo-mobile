@@ -36,7 +36,6 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
 
-  const [permissionResponse] = Audio.usePermissions();
   const [hasNavigatedToAudio, setHasNavigatedToAudio] = useState(false);
   const {
     openSheet: openAudioPermissionSheet,
@@ -55,15 +54,15 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
     navigation.navigate('ObservationFields', {question: 1});
   };
 
-  const handleAudioPress = useCallback(() => {
-    if (permissionResponse?.status === 'granted') {
+  const handleAudioPress = useCallback(async () => {
+    const {status} = await Audio.getPermissionsAsync();
+
+    if (status === 'granted') {
       if (!hasNavigatedToAudio) {
-        setHasNavigatedToAudio(true); // Only set to true when actually navigating
-        console.log('should be navigating to audio');
+        setHasNavigatedToAudio(true);
         navigation.navigate('Audio');
       }
     } else {
-      console.log('openAudioPermissionSheet IS BEING CALLED');
       if (audioPermissionSheetRef.current) {
         audioPermissionSheetRef.current.present();
       } else {
@@ -72,7 +71,6 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
     }
   }, [
     navigation,
-    permissionResponse,
     hasNavigatedToAudio,
     openAudioPermissionSheet,
     audioPermissionSheetRef,
@@ -83,26 +81,19 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
   }, []);
 
   useEffect(() => {
-    // Optional: If you need to track specific navigation events, you could do so here
     const unsubscribe = navigation.addListener('blur', () => {
-      // Optionally reset on 'blur', when the screen is no longer focused
       setHasNavigatedToAudio(false);
     });
-
     return unsubscribe;
   }, [navigation]);
 
   const handlePermissionGranted = () => {
     if (audioPermissionSheetRef.current) {
-      console.log('calling handle permission granted');
       closeAudioPermissionSheet();
       audioPermissionSheetRef.current.close();
     }
     if (!hasNavigatedToAudio) {
-      console.log(
-        'setting hasNavigatedToAudio to true and then navigate to audio',
-      );
-      setHasNavigatedToAudio(true); // Only set to true when actually navigating
+      setHasNavigatedToAudio(true);
       navigation.navigate('Audio');
     }
   };
@@ -125,7 +116,6 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
     });
   }
   if (fieldRefs?.length) {
-    // Only show the option to add details if preset fields are defined.
     bottomSheetItems.push({
       icon: <DetailsIcon width={30} height={30} />,
       label: t(m.detailsButton),

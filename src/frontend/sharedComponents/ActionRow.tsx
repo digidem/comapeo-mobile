@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {ActionTab} from './ActionTab';
 import PhotoIcon from '../images/observationEdit/Photo.svg';
@@ -6,9 +6,9 @@ import AudioIcon from '../images/observationEdit/Audio.svg';
 import DetailsIcon from '../images/observationEdit/Details.svg';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import {Preset} from '@comapeo/schema';
-import {useBottomSheetModal} from '../sharedComponents/BottomSheetModal';
 import {PermissionAudio} from './PermissionAudio';
 import {Audio} from 'expo-av';
+import {useBottomSheetModal} from '../sharedComponents/BottomSheetModal';
 
 const m = defineMessages({
   audioButton: {
@@ -34,16 +34,18 @@ interface ActionButtonsProps {
 
 export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
   const {formatMessage: t} = useIntl();
+  const navigation = useNavigationFromRoot();
+
+  const [permissionResponse] = Audio.usePermissions();
+  const [hasNavigatedToAudio, setHasNavigatedToAudio] = useState(false);
   const {
     openSheet: openAudioPermissionSheet,
     sheetRef: audioPermissionSheetRef,
-    isOpen: isAudioPermissionSheetOpen,
     closeSheet: closeAudioPermissionSheet,
+    isOpen: isAudioPermissionSheetOpen,
   } = useBottomSheetModal({
     openOnMount: false,
   });
-  const [permissionResponse] = Audio.usePermissions({request: false});
-  const navigation = useNavigationFromRoot();
 
   const handleCameraPress = () => {
     navigation.navigate('AddPhoto');
@@ -54,12 +56,56 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
   };
 
   const handleAudioPress = useCallback(() => {
-    if (permissionResponse?.granted) {
-      navigation.navigate('Audio');
+    if (permissionResponse?.status === 'granted') {
+      if (!hasNavigatedToAudio) {
+        setHasNavigatedToAudio(true); // Only set to true when actually navigating
+        console.log('should be navigating to audio');
+        navigation.navigate('Audio');
+      }
     } else {
-      openAudioPermissionSheet();
+      console.log('openAudioPermissionSheet IS BEING CALLED');
+      if (audioPermissionSheetRef.current) {
+        audioPermissionSheetRef.current.present();
+      } else {
+        openAudioPermissionSheet();
+      }
     }
-  }, [navigation, openAudioPermissionSheet, permissionResponse?.granted]);
+  }, [
+    navigation,
+    permissionResponse,
+    hasNavigatedToAudio,
+    openAudioPermissionSheet,
+    audioPermissionSheetRef,
+  ]);
+
+  useEffect(() => {
+    setHasNavigatedToAudio(false);
+  }, []);
+
+  useEffect(() => {
+    // Optional: If you need to track specific navigation events, you could do so here
+    const unsubscribe = navigation.addListener('blur', () => {
+      // Optionally reset on 'blur', when the screen is no longer focused
+      setHasNavigatedToAudio(false);
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
+  const handlePermissionGranted = () => {
+    if (audioPermissionSheetRef.current) {
+      console.log('calling handle permission granted');
+      closeAudioPermissionSheet();
+      audioPermissionSheetRef.current.close();
+    }
+    if (!hasNavigatedToAudio) {
+      console.log(
+        'setting hasNavigatedToAudio to true and then navigate to audio',
+      );
+      setHasNavigatedToAudio(true); // Only set to true when actually navigating
+      navigation.navigate('Audio');
+    }
+  };
 
   const bottomSheetItems = [
     {
@@ -95,6 +141,7 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
         closeSheet={closeAudioPermissionSheet}
         isOpen={isAudioPermissionSheetOpen}
         sheetRef={audioPermissionSheetRef}
+        onPermissionGranted={handlePermissionGranted}
       />
     </>
   );

@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react';
 import {HeaderBackButton} from '@react-navigation/elements';
 import {defineMessages, useIntl} from 'react-intl';
-
+import {Pressable} from 'react-native';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
 import {WHITE} from '../../../lib/styles';
 import {
@@ -11,6 +12,7 @@ import {
 } from '../../../sharedComponents/BottomSheetModal';
 import {CloseIcon, DeleteIcon} from '../../../sharedComponents/icons';
 import ErrorIcon from '../../../images/Error.svg';
+import {Playback} from '../Playback';
 
 const m = defineMessages({
   deleteBottomSheetTitle: {
@@ -18,7 +20,7 @@ const m = defineMessages({
     defaultMessage: 'Delete?',
   },
   deleteBottomSheetDescription: {
-    id: 'screens.AudioScreen.CreateRecording.RecordingDone.deleteBottomSheetTitle',
+    id: 'screens.AudioScreen.CreateRecording.RecordingDone.deleteBottomSheetDescription',
     defaultMessage:
       'Your Audio Recording will be permanently deleted. This cannot be undone.',
   },
@@ -62,6 +64,14 @@ export function RecordingDone({
 
   return (
     <>
+      <Playback
+        uri={uri}
+        leftControl={
+          <Pressable onPress={openSheet}>
+            <MaterialIcon name="delete" color={WHITE} size={36} />
+          </Pressable>
+        }
+      />
       <BottomSheetModal ref={sheetRef} isOpen={isOpen}>
         <BottomSheetModalContent
           icon={<ErrorIcon />}

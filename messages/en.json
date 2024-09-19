@@ -363,6 +363,9 @@
   "screens.AudioScreen.CreateRecording.RecordingActive.description": {
     "message": "Less than {length} {length, plural, one {minute} other {minutes}} left"
   },
+  "screens.AudioScreen.CreateRecording.RecordingDone.deleteBottomSheetDescription": {
+    "message": "Your Audio Recording will be permanently deleted. This cannot be undone."
+  },
   "screens.AudioScreen.CreateRecording.RecordingDone.deleteBottomSheetPrimaryButtonText": {
     "message": "Delete"
   },
@@ -370,10 +373,13 @@
     "message": "Cancel"
   },
   "screens.AudioScreen.CreateRecording.RecordingDone.deleteBottomSheetTitle": {
-    "message": "Your Audio Recording will be permanently deleted. This cannot be undone."
+    "message": "Delete?"
   },
   "screens.AudioScreen.CreateRecording.RecordingIdle.description": {
     "message": "Record up to {length} {length, plural, one {minute} other {minutes}}"
+  },
+  "screens.AudioScreen.Playback.description": {
+    "message": "Total length: {length}"
   },
   "screens.CameraScreen.goToSettings": {
     "message": "Go to Settings"

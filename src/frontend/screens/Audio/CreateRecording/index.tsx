@@ -23,7 +23,9 @@ export function CreateRecording() {
     case 'done': {
       return (
         <RecordingDone
+          createdAt={recordingState.createdAt}
           uri={recordingState.uri}
+          duration={recordingState.duration}
           onDelete={async () => {
             await recordingState.deleteRecording().catch(err => {
               console.log(err);

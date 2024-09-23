@@ -3,7 +3,7 @@ import React, {FC} from 'react';
 import {BottomSheetModal} from '../../sharedComponents/BottomSheetModal';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {StyleSheet, Text, View} from 'react-native';
-import SuccessIcon from '../../../images/GreenCheck.svg';
+import SuccessIcon from '../../images/GreenCheck.svg';
 import {Button} from '../../sharedComponents/Button';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 
@@ -30,14 +30,15 @@ const m = defineMessages({
   },
 });
 
-interface AudioRecordingSuccessBottomSheet {
+interface RecordingSuccessModal {
   sheetRef: React.RefObject<BottomSheetModalMethods>;
   isOpen: boolean;
 }
 
-export const AudioRecordingSuccessBottomSheet: FC<
-  AudioRecordingSuccessBottomSheet
-> = ({sheetRef, isOpen}) => {
+export const RecordingSuccessModal: FC<RecordingSuccessModal> = ({
+  sheetRef,
+  isOpen,
+}) => {
   const navigation = useNavigationFromRoot();
 
   const {formatMessage} = useIntl();
@@ -53,7 +54,6 @@ export const AudioRecordingSuccessBottomSheet: FC<
               {...m.successDescription}
               values={{
                 audioRecording: formatMessage(m.audioRecording),
-                // eslint-disable-next-line react/no-unstable-nested-components
                 bold: message => <Text style={styles.textBold}>{message}</Text>,
               }}
             />

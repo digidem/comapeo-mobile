@@ -13,6 +13,8 @@ import {
 import {CloseIcon, DeleteIcon} from '../../../sharedComponents/icons';
 import ErrorIcon from '../../../images/Error.svg';
 import {Playback} from '../Playback';
+import {RecordingSuccessModal} from '../RecordingSuccessModal';
+import {useDraftObservation} from '../../../hooks/useDraftObservation';
 
 const m = defineMessages({
   deleteBottomSheetTitle: {
@@ -35,15 +37,34 @@ const m = defineMessages({
 });
 
 export function RecordingDone({
+  createdAt,
+  duration,
   uri,
   onDelete,
 }: {
+  createdAt: number;
+  duration: number;
   uri: string;
   onDelete: () => void;
 }) {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
-  const {sheetRef, isOpen, closeSheet, openSheet} = useBottomSheetModal({
+  const {addAudio} = useDraftObservation();
+  const {
+    sheetRef: deleteSheetRef,
+    isOpen: isDeleteSheetOpen,
+    openSheet: openDeleteSheet,
+    closeSheet: closeDeleteSheet,
+  } = useBottomSheetModal({
+    openOnMount: false,
+  });
+
+  const {
+    sheetRef: successSheetRef,
+    isOpen: isSuccessSheetOpen,
+    openSheet: openSuccessSheet,
+    closeSheet: closeSuccessSheet,
+  } = useBottomSheetModal({
     openOnMount: false,
   });
 
@@ -54,25 +75,31 @@ export function RecordingDone({
         <HeaderBackButton
           {...props}
           onPress={() => {
-            onDelete();
+            const audioRecording = {
+              createdAt,
+              duration,
+              uri,
+            };
+            addAudio(audioRecording);
+            openSuccessSheet();
           }}
           backImage={props => <CloseIcon color={props.tintColor} />}
         />
       ),
     });
-  }, [navigation, onDelete]);
+  }, [navigation, openSuccessSheet]);
 
   return (
     <>
       <Playback
         uri={uri}
         leftControl={
-          <Pressable onPress={openSheet}>
+          <Pressable onPress={openDeleteSheet}>
             <MaterialIcon name="delete" color={WHITE} size={36} />
           </Pressable>
         }
       />
-      <BottomSheetModal ref={sheetRef} isOpen={isOpen}>
+      <BottomSheetModal ref={deleteSheetRef} isOpen={isDeleteSheetOpen}>
         <BottomSheetModalContent
           icon={<ErrorIcon />}
           title={t(m.deleteBottomSheetTitle)}
@@ -83,7 +110,7 @@ export function RecordingDone({
               text: t(m.deleteBottomSheetPrimaryButtonText),
               icon: <DeleteIcon color={WHITE} />,
               onPress: () => {
-                closeSheet();
+                closeDeleteSheet();
                 onDelete();
               },
               variation: 'filled',
@@ -92,12 +119,16 @@ export function RecordingDone({
               variation: 'outlined',
               text: t(m.deleteBottomSheetSecondaryButtonText),
               onPress: () => {
-                closeSheet();
+                closeDeleteSheet();
               },
             },
           ]}
         />
       </BottomSheetModal>
+      <RecordingSuccessModal
+        sheetRef={successSheetRef}
+        isOpen={isSuccessSheetOpen}
+      />
     </>
   );
 }

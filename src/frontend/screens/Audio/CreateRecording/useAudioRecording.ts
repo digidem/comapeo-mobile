@@ -11,6 +11,7 @@ type AudioRecordingActive = {
    */
   duration: number;
   uri: string;
+  createdAt: number;
   stopRecording: () => Promise<void>;
 };
 
@@ -21,6 +22,7 @@ type AudioRecordingDone = {
    */
   duration: number;
   uri: string;
+  createdAt: number;
   deleteRecording: () => Promise<void>;
 };
 
@@ -31,6 +33,7 @@ type AudioRecordingState =
 
 export function useAudioRecording(): AudioRecordingState {
   const [state, setState] = useState<{
+    createdAt: number;
     recording: Audio.Recording;
     status: Audio.RecordingStatus;
     uri: string;
@@ -40,6 +43,7 @@ export function useAudioRecording(): AudioRecordingState {
     return {
       status: 'idle',
       startRecording: async () => {
+        const createdAt = Date.now();
         const {recording, status} = await Audio.Recording.createAsync(
           Audio.RecordingOptionsPresets.HIGH_QUALITY,
           status => {
@@ -61,7 +65,7 @@ export function useAudioRecording(): AudioRecordingState {
           throw new Error('Could not get URI for recording');
         }
 
-        setState({recording, status, uri});
+        setState({createdAt, recording, status, uri});
       },
     };
   }
@@ -71,6 +75,7 @@ export function useAudioRecording(): AudioRecordingState {
       status: 'done',
       duration: state.status.durationMillis,
       uri: state.uri,
+      createdAt: state.createdAt,
       deleteRecording: async () => {
         return unlink(state.uri);
       },
@@ -81,6 +86,7 @@ export function useAudioRecording(): AudioRecordingState {
     status: 'active',
     duration: state.status.durationMillis,
     uri: state.uri,
+    createdAt: state.createdAt,
     stopRecording: async () => {
       const status = await state.recording.stopAndUnloadAsync();
 

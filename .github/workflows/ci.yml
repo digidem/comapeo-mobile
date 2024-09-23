@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [develop]
+    branches: [develop, 'release/**']
   pull_request:
     # By default, a workflow only runs when a pull_request's activity type is
     # opened, synchronize, or reopened. Adding ready_for_review here ensures

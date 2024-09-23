@@ -25,6 +25,21 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "Discard observation?"
   },
+  "AudioPlaybackScreen.DeleteAudioRecordingModal.successDescription": {
+    "message": "Your <bold>{audioRecording}</bold> was added."
+  },
+  "AudioPlaybackScreen.DeleteAudioRecordingModal.successTitle": {
+    "message": "Success!"
+  },
+  "AudioPlaybackScreen.SuccessAudioRecordingModal.audioRecording": {
+    "message": "Audio Recording"
+  },
+  "AudioPlaybackScreen.SuccessAudioRecordingModal.recordAnother": {
+    "message": "Record Another"
+  },
+  "AudioPlaybackScreen.SuccessAudioRecordingModal.returnToEditor": {
+    "message": "Return to Editor"
+  },
   "Modal.GPSDisable.button": {
     "message": "Enable"
   },

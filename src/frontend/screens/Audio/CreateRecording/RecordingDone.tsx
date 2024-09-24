@@ -41,11 +41,13 @@ export function RecordingDone({
   duration,
   uri,
   onDelete,
+  onRecordAnother,
 }: {
   createdAt: number;
   duration: number;
   uri: string;
   onDelete: () => void;
+  onRecordAnother: () => void;
 }) {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
@@ -89,6 +91,17 @@ export function RecordingDone({
     });
   }, [navigation, openSuccessSheet]);
 
+  const handleReturnToEditor = () => {
+    closeSuccessSheet();
+    navigation.navigate('ObservationCreate');
+  };
+
+  const handleRecordAnother = () => {
+    closeSuccessSheet();
+    onRecordAnother();
+    navigation.navigate('Audio');
+  };
+
   return (
     <>
       <Playback
@@ -128,6 +141,8 @@ export function RecordingDone({
       <RecordingSuccessModal
         sheetRef={successSheetRef}
         isOpen={isSuccessSheetOpen}
+        onReturnToEditor={handleReturnToEditor}
+        onRecordAnother={handleRecordAnother}
       />
     </>
   );

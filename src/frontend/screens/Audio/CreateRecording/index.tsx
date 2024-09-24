@@ -1,3 +1,4 @@
+import React, {useEffect} from 'react';
 import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
 import {RecordingActive} from './RecordingActive';
 import {RecordingDone} from './RecordingDone';
@@ -7,6 +8,14 @@ import {useAudioRecording} from './useAudioRecording';
 export function CreateRecording() {
   const navigation = useNavigationFromRoot();
   const recordingState = useAudioRecording();
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      recordingState.reset();
+    });
+
+    return unsubscribe;
+  }, [navigation, recordingState]);
 
   switch (recordingState.status) {
     case 'idle': {
@@ -31,6 +40,9 @@ export function CreateRecording() {
               console.log(err);
             });
             navigation.goBack();
+          }}
+          onRecordAnother={() => {
+            recordingState.reset();
           }}
         />
       );

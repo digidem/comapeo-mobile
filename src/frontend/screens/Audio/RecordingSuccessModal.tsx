@@ -5,7 +5,6 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {StyleSheet, Text, View} from 'react-native';
 import SuccessIcon from '../../images/GreenCheck.svg';
 import {Button} from '../../sharedComponents/Button';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 
 const m = defineMessages({
   successTitle: {
@@ -33,14 +32,16 @@ const m = defineMessages({
 interface RecordingSuccessModal {
   sheetRef: React.RefObject<BottomSheetModalMethods>;
   isOpen: boolean;
+  onReturnToEditor: () => void;
+  onRecordAnother: () => void;
 }
 
 export const RecordingSuccessModal: FC<RecordingSuccessModal> = ({
   sheetRef,
   isOpen,
+  onReturnToEditor,
+  onRecordAnother,
 }) => {
-  const navigation = useNavigationFromRoot();
-
   const {formatMessage} = useIntl();
 
   return (
@@ -68,12 +69,12 @@ export const RecordingSuccessModal: FC<RecordingSuccessModal> = ({
           }}>
           <Button
             fullWidth
-            onPress={() => navigation.navigate('ObservationEdit')}
+            onPress={onReturnToEditor}
             variant="outlined"
             color="ComapeoBlue">
             {formatMessage(m.returnToEditorButtonText)}
           </Button>
-          <Button fullWidth onPress={() => navigation.navigate('Audio')}>
+          <Button fullWidth onPress={onRecordAnother}>
             {formatMessage(m.recordAnotherButtonText)}
           </Button>
         </View>

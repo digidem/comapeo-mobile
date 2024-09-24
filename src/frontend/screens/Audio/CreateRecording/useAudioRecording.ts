@@ -2,7 +2,11 @@ import {useState} from 'react';
 import {Audio} from 'expo-av';
 import {unlink} from '../../../lib/file-system';
 
-type AudioRecordingIdle = {status: 'idle'; startRecording: () => Promise<void>};
+type AudioRecordingIdle = {
+  status: 'idle';
+  startRecording: () => Promise<void>;
+  reset: () => void;
+};
 
 type AudioRecordingActive = {
   status: 'active';
@@ -13,6 +17,7 @@ type AudioRecordingActive = {
   uri: string;
   createdAt: number;
   stopRecording: () => Promise<void>;
+  reset: () => void;
 };
 
 type AudioRecordingDone = {
@@ -24,6 +29,7 @@ type AudioRecordingDone = {
   uri: string;
   createdAt: number;
   deleteRecording: () => Promise<void>;
+  reset: () => void;
 };
 
 type AudioRecordingState =
@@ -38,6 +44,10 @@ export function useAudioRecording(): AudioRecordingState {
     status: Audio.RecordingStatus;
     uri: string;
   } | null>(null);
+
+  const reset = () => {
+    setState(null);
+  };
 
   if (!state) {
     return {
@@ -67,6 +77,7 @@ export function useAudioRecording(): AudioRecordingState {
 
         setState({createdAt, recording, status, uri});
       },
+      reset,
     };
   }
 
@@ -79,6 +90,7 @@ export function useAudioRecording(): AudioRecordingState {
       deleteRecording: async () => {
         return unlink(state.uri);
       },
+      reset,
     };
   }
 
@@ -95,5 +107,6 @@ export function useAudioRecording(): AudioRecordingState {
         return {...prev, status};
       });
     },
+    reset,
   };
 }

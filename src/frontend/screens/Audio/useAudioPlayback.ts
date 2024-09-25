@@ -33,7 +33,12 @@ export const useAudioPlayback = (recordingUri: string) => {
       setReady(true);
       sound.setOnPlaybackStatusUpdate(audioCallbackHandler);
     });
-  }, [audioCallbackHandler, duration, recordingUri]);
+    return () => {
+      if (recordedSound) {
+        recordedSound.unloadAsync();
+      }
+    };
+  }, [audioCallbackHandler, duration, recordingUri, recordedSound]);
   const startPlayback = async () => {
     if (!isReady) {
       console.warn(

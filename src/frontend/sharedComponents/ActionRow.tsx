@@ -88,10 +88,7 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
   }, [navigation]);
 
   const handlePermissionGranted = () => {
-    if (audioPermissionSheetRef.current) {
-      closeAudioPermissionSheet();
-      audioPermissionSheetRef.current.close();
-    }
+    closeAudioPermissionSheet();
     if (!hasNavigatedToAudio) {
       setHasNavigatedToAudio(true);
       navigation.navigate('Audio');

@@ -2,10 +2,7 @@ import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 import {Text} from '../../sharedComponents/Text';
-import {
-  useProjectMembers,
-  useProjectSettings,
-} from '../../hooks/server/projects';
+import {useGetOwnRole, useProjectSettings} from '../../hooks/server/projects';
 import {Loading} from '../../sharedComponents/Loading';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {COMAPEO_BLUE, MEDIUM_GREY} from '../../lib/styles';
@@ -13,7 +10,6 @@ import {Button} from '../../sharedComponents/Button';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {useSelectFileAndImportConfig} from '../../hooks/useSelectFileAndImportConfig';
-import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../sharedTypes';
 
 const m = defineMessages({
@@ -42,21 +38,12 @@ const m = defineMessages({
 export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
   const {formatMessage} = useIntl();
   const {data, isPending} = useProjectSettings();
-  const deviceInfo = useDeviceInfo();
-  const membersQuery = useProjectMembers();
+  const deviceRole = useGetOwnRole();
   const selectAndImportConfigMutation = useSelectFileAndImportConfig();
 
-  const coordinators = !membersQuery.data
-    ? []
-    : membersQuery.data.filter(
-        member =>
-          member.role.roleId === COORDINATOR_ROLE_ID ||
-          member.role.roleId === CREATOR_ROLE_ID,
-      );
-
-  const isCoordinator = coordinators.some(
-    coordinator => coordinator.deviceId === deviceInfo.data?.deviceId,
-  );
+  const isCoordinator =
+    deviceRole.data?.roleId === COORDINATOR_ROLE_ID ||
+    deviceRole.data?.roleId === CREATOR_ROLE_ID;
 
   React.useEffect(() => {
     // Prevent back navigation while project creation mutation is pending
@@ -102,9 +89,7 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
           <Text>{data.configMetadata.name}</Text>
         </>
       )}
-      {deviceInfo.isPending ||
-      membersQuery.isPending ||
-      selectAndImportConfigMutation.isPending ? (
+      {deviceRole.isPending || selectAndImportConfigMutation.isPending ? (
         <UIActivityIndicator style={{marginTop: 20, flex: 0}} />
       ) : isCoordinator ? (
         <Button

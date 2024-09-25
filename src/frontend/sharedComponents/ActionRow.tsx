@@ -35,8 +35,6 @@ interface ActionButtonsProps {
 export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
-
-  const [hasNavigatedToAudio, setHasNavigatedToAudio] = useState(false);
   const {
     openSheet: openAudioPermissionSheet,
     sheetRef: audioPermissionSheetRef,
@@ -56,43 +54,16 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
 
   const handleAudioPress = useCallback(async () => {
     const {status} = await Audio.getPermissionsAsync();
-
     if (status === 'granted') {
-      if (!hasNavigatedToAudio) {
-        setHasNavigatedToAudio(true);
-        navigation.navigate('Audio');
-      }
+      navigation.navigate('Audio');
     } else {
-      if (audioPermissionSheetRef.current) {
-        audioPermissionSheetRef.current.present();
-      } else {
-        openAudioPermissionSheet();
-      }
+      openAudioPermissionSheet();
     }
-  }, [
-    navigation,
-    hasNavigatedToAudio,
-    openAudioPermissionSheet,
-    audioPermissionSheetRef,
-  ]);
-
-  useEffect(() => {
-    setHasNavigatedToAudio(false);
-  }, []);
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('blur', () => {
-      setHasNavigatedToAudio(false);
-    });
-    return unsubscribe;
-  }, [navigation]);
+  }, [navigation, openAudioPermissionSheet]);
 
   const handlePermissionGranted = () => {
     closeAudioPermissionSheet();
-    if (!hasNavigatedToAudio) {
-      setHasNavigatedToAudio(true);
-      navigation.navigate('Audio');
-    }
+    navigation.navigate('Audio');
   };
 
   const bottomSheetItems = [

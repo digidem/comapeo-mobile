@@ -1,10 +1,11 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useState} from 'react';
 import {Linking} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import AudioPermission from '../images/observationEdit/AudioPermission.svg';
 import {BottomSheetModalContent, BottomSheetModal} from './BottomSheetModal';
 import {Audio} from 'expo-av';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
+import {PermissionResponse} from 'expo-modules-core';
 
 const m = defineMessages({
   title: {
@@ -49,25 +50,23 @@ export const PermissionAudio: FC<PermissionAudioProps> = ({
   onPermissionGranted,
 }) => {
   const {formatMessage: t} = useIntl();
-  const [permissionResponse, requestPermission] = Audio.usePermissions({
-    request: false,
-  });
-
-  useEffect(() => {
-    if (isOpen && permissionResponse?.status === 'granted') {
-      onPermissionGranted();
-    }
-  }, [isOpen, permissionResponse, onPermissionGranted]);
+  const [permissionResponse, setPermissionResponse] =
+    useState<PermissionResponse | null>(null);
 
   const handleOpenSettings = () => {
     Linking.openSettings();
+    closeSheet();
   };
 
   const handleRequestPermission = async () => {
-    const response = await requestPermission();
+    const response = await Audio.requestPermissionsAsync();
+    setPermissionResponse(response);
     if (response.status === 'granted') {
+      closeSheet();
       onPermissionGranted();
-    } else if (!response.canAskAgain) {
+    } else if (response.status === 'denied' && response.canAskAgain) {
+      closeSheet();
+    } else if (response.status === 'denied' && !response.canAskAgain) {
       handleOpenSettings();
     }
   };
@@ -75,8 +74,11 @@ export const PermissionAudio: FC<PermissionAudioProps> = ({
   let onPressActionButton: () => void;
   let actionButtonText: string;
 
-  if (
-    permissionResponse?.status === 'denied' &&
+  if (!permissionResponse) {
+    onPressActionButton = handleRequestPermission;
+    actionButtonText = t(m.allowButtonText);
+  } else if (
+    permissionResponse.status === 'denied' &&
     !permissionResponse.canAskAgain
   ) {
     onPressActionButton = handleOpenSettings;

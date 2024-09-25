@@ -7,6 +7,7 @@ import {AnimatedBackground} from '../AnimatedBackground';
 import {ContentWithControls} from '../ContentWithControls';
 import * as Controls from '../Controls';
 import {MAX_RECORDING_DURATION_MS} from '../constants';
+import {useAutoStopRecording} from './useAutoStopRecording';
 
 const m = defineMessages({
   description: {
@@ -38,13 +39,7 @@ export function RecordingActive({
     navigation.setOptions({headerLeft: () => null});
   }, [navigation]);
 
-  // TODO: Maybe move this into the hook?
-  useEffect(() => {
-    if (minutesRemaining === 0) {
-      // stopRecording();
-      onPressStop();
-    }
-  }, [minutesRemaining, onPressStop]);
+  useAutoStopRecording(minutesRemaining, onPressStop);
 
   return (
     <>

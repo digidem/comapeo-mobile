@@ -18,7 +18,6 @@ const m = defineMessages({
 export function RecordingIdle({onPressRecord}: {onPressRecord: () => void}) {
   const navigation = useNavigationFromRoot();
   const {formatMessage: t} = useIntl();
-  // const {startRecording} = useAudioRecordingActions();
 
   useEffect(() => {
     navigation.setOptions({

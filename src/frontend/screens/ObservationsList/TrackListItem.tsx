@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableHighlight, View} from 'react-native';
 import {FormattedObservationDate} from '../../sharedComponents/FormattedData.tsx';
-import {Track} from '@mapeo/schema';
+import {Track} from '@comapeo/schema';
 import {ViewStyleProp} from '../../sharedTypes/index';
 import {defineMessages, useIntl} from 'react-intl';
 import TrackIcon from '../../images/Track.svg';

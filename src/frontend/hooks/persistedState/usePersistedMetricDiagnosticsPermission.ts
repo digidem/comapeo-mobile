@@ -9,7 +9,7 @@ type MetricDiagnosticsPermissionSlice = {
 const metricDiagnosticsPermissionSlice: StateCreator<
   MetricDiagnosticsPermissionSlice
 > = set => ({
-  isEnabled: false,
+  isEnabled: true,
   setIsEnabled: isEnabled => set({isEnabled}),
 });
 

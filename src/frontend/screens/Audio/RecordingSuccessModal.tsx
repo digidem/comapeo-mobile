@@ -74,7 +74,11 @@ export const RecordingSuccessModal: FC<RecordingSuccessModal> = ({
             color="ComapeoBlue">
             {formatMessage(m.returnToEditorButtonText)}
           </Button>
-          <Button fullWidth onPress={onRecordAnother}>
+          <Button
+            fullWidth
+            onPress={async () => {
+              await onRecordAnother();
+            }}>
             {formatMessage(m.recordAnotherButtonText)}
           </Button>
         </View>

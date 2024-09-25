@@ -96,9 +96,9 @@ export function RecordingDone({
     navigation.navigate('ObservationCreate');
   };
 
-  const handleRecordAnother = () => {
+  const handleRecordAnother = async () => {
     closeSuccessSheet();
-    onRecordAnother();
+    await onRecordAnother();
     navigation.navigate('Audio');
   };
 

@@ -11,7 +11,9 @@ export function CreateRecording() {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      recordingState.reset();
+      recordingState.reset().catch(error => {
+        console.error('Error resetting recording:', error);
+      });
     });
 
     return unsubscribe;
@@ -41,8 +43,8 @@ export function CreateRecording() {
             });
             navigation.goBack();
           }}
-          onRecordAnother={() => {
-            recordingState.reset();
+          onRecordAnother={async () => {
+            await recordingState.reset();
           }}
         />
       );

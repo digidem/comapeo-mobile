@@ -5,7 +5,7 @@ import {unlink} from '../../../lib/file-system';
 type AudioRecordingIdle = {
   status: 'idle';
   startRecording: () => Promise<void>;
-  reset: () => void;
+  reset: () => Promise<void>;
 };
 
 type AudioRecordingActive = {
@@ -17,7 +17,7 @@ type AudioRecordingActive = {
   uri: string;
   createdAt: number;
   stopRecording: () => Promise<void>;
-  reset: () => void;
+  reset: () => Promise<void>;
 };
 
 type AudioRecordingDone = {
@@ -29,7 +29,7 @@ type AudioRecordingDone = {
   uri: string;
   createdAt: number;
   deleteRecording: () => Promise<void>;
-  reset: () => void;
+  reset: () => Promise<void>;
 };
 
 type AudioRecordingState =
@@ -45,7 +45,12 @@ export function useAudioRecording(): AudioRecordingState {
     uri: string;
   } | null>(null);
 
-  const reset = () => {
+  const reset = async () => {
+    if (state) {
+      if (state.status.isRecording) {
+        await state.recording.stopAndUnloadAsync();
+      }
+    }
     setState(null);
   };
 

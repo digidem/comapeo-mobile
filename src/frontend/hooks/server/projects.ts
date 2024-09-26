@@ -13,7 +13,7 @@ export const PROJECT_KEY = 'project';
 export const PROJECT_MEMBERS_KEY = 'project_members';
 export const ORIGINAL_VERSION_ID_TO_DEVICE_ID_KEY =
   'originalVersionIdToDeviceId';
-export const OWN_ROLE = 'my_role';
+export const THIS_USERS_ROLE_KEY = 'my_role';
 
 export function useProject(projectId?: string) {
   const api = useApi();
@@ -153,7 +153,7 @@ export function useGetOwnRole() {
   const {projectId, projectApi} = useActiveProject();
 
   return useQuery({
-    queryKey: [OWN_ROLE, projectId],
+    queryKey: [THIS_USERS_ROLE_KEY, projectId],
     queryFn: () => {
       return projectApi.$getOwnRole();
     },

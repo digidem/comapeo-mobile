@@ -5,34 +5,34 @@ import {defineMessages, useIntl} from 'react-intl';
 
 const m = defineMessages({
   archiveOff: {
-    id: 'ProjectSetting.RemoteArchive.Particpants.archiveOff',
+    id: 'ProjectSettings.RemoteArchive.Particpants.archiveOff',
     defaultMessage: 'Remote Archive is Off',
   },
   dataNotShared: {
-    id: 'ProjectSetting.RemoteArchive.Particpants.dataNotShared',
+    id: 'ProjectSettings.RemoteArchive.Particpants.dataNotShared',
     defaultMessage:
       'The data in your project is not shared over the internet. Only people in your project can see your data.',
   },
   experimentalFeature: {
-    id: 'ProjectSetting.RemoteArchive.Particpants.experimentalFeature',
+    id: 'ProjectSettings.RemoteArchive.Particpants.experimentalFeature',
     defaultMessage:
       'This is an experimental feature. You need a Remote Archive URL to enable Remote Archive.',
   },
   noServers: {
-    id: 'ProjectSetting.RemoteArchive.Particpants.noServers',
+    id: 'ProjectSettings.RemoteArchive.Particpants.noServers',
     defaultMessage: 'No servers have been added to this project',
   },
   archiveOn: {
-    id: 'ProjectSetting.RemoteArchive.Particpants.archiveOn',
+    id: 'ProjectSettings.RemoteArchive.Particpants.archiveOn',
     defaultMessage: 'Remote Archive is On',
   },
   dataSyncing: {
-    id: 'ProjectSetting.RemoteArchive.Particpants.dataSyncing',
+    id: 'ProjectSettings.RemoteArchive.Particpants.dataSyncing',
     defaultMessage:
       'Your project data is syncing to the Remote Archive over the internet to the secure, encrypted server below. The server owner can view the data.',
   },
   coordinatorCanTurnOff: {
-    id: 'ProjectSetting.RemoteArchive.Particpants.coordinatorCanTurnOff',
+    id: 'ProjectSettings.RemoteArchive.Particpants.coordinatorCanTurnOff',
     defaultMessage: 'Only the Project Coordinator can turn off Remote Archive.',
   },
 });

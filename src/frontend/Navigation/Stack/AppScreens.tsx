@@ -76,6 +76,7 @@ import {SettingsPrivacyPolicy} from '../../screens/Settings/DataAndPrivacy/Setti
 import {TrackEdit} from '../../screens/TrackEdit/index.tsx';
 import {Config} from '../../screens/Settings/Config';
 import {HowToLeaveProject} from '../../screens/HowToLeaveProject.tsx';
+import {RemoteArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/index.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -321,6 +322,12 @@ export const createDefaultScreenGroup = ({
       name="HowToLeaveProject"
       component={HowToLeaveProject}
       options={{headerShown: false}}
+    />
+
+    <RootStack.Screen
+      name="RemoteArchive"
+      component={RemoteArchive}
+      options={{headerTitle: intl(RemoteArchive.navTitle)}}
     />
 
     {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (

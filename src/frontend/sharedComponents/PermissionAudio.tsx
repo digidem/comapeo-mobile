@@ -1,72 +1,100 @@
-import React, {FC, useCallback, useEffect} from 'react';
+import React, {FC, useState, useEffect} from 'react';
 import {Linking} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
-import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import AudioPermission from '../images/observationEdit/AudioPermission.svg';
 import {BottomSheetModalContent, BottomSheetModal} from './BottomSheetModal';
 import {Audio} from 'expo-av';
-import {PermissionStatus} from 'expo-av/build/Audio';
+import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
+import {PermissionResponse} from 'expo-modules-core';
+import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 
-const handleRequestPermissions = (): void => {
-  Audio.requestPermissionsAsync().catch(() => {});
-};
-
-const handleOpenSettings = () => {
-  Linking.openSettings();
-};
-
-interface PermissionAudio {
-  sheetRef: React.RefObject<BottomSheetModalMethods>;
+const m = defineMessages({
+  title: {
+    id: 'screens.AudioPermission.title',
+    defaultMessage: 'Recording Audio with CoMapeo',
+    description: 'Screen title for audio permission screen',
+  },
+  description: {
+    id: 'screens.AudioPermission.description',
+    defaultMessage:
+      'To record audio while using the app and in the background CoMapeo needs to access your microphone. Please enable microphone permissions in your app settings.',
+    description: 'Screen description for audio permission screen',
+  },
+  notNowButtonText: {
+    id: 'screens.AudioPermission.Button.notNow',
+    defaultMessage: 'Not Now',
+    description: 'Screen button text for not allowed audio permission',
+  },
+  allowButtonText: {
+    id: 'screens.AudioPermission.Button.allow',
+    defaultMessage: 'Allow',
+    description: 'Screen button text for allow the audio permission',
+  },
+  goToSettingsButtonText: {
+    id: 'screens.AudioPermission.Button.goToSettings',
+    defaultMessage: 'Go to Settings',
+    description:
+      'Screen button text for navigate user to settings when audio permission was denied',
+  },
+});
+interface PermissionAudioProps {
   closeSheet: () => void;
   isOpen: boolean;
+  sheetRef: React.RefObject<BottomSheetModalMethods>;
 }
 
-export const PermissionAudio: FC<PermissionAudio> = props => {
-  const {sheetRef, closeSheet, isOpen} = props;
+export const PermissionAudio: FC<PermissionAudioProps> = ({
+  closeSheet,
+  isOpen,
+  sheetRef,
+}) => {
   const {formatMessage: t} = useIntl();
-  const [permissionResponse] = Audio.usePermissions({request: false});
+  const navigation = useNavigationFromRoot();
+  const [permissionResponse, setPermissionResponse] =
+    useState<PermissionResponse | null>(null);
 
-  const handlePermissionGranted = useCallback(() => {
+  const handleOpenSettings = () => {
+    Linking.openSettings();
     closeSheet();
-  }, [closeSheet]);
+  };
 
-  const isPermissionGranted = Boolean(permissionResponse?.granted);
-
-  useEffect(() => {
-    if (isPermissionGranted) handlePermissionGranted();
-  }, [isPermissionGranted, handlePermissionGranted]);
+  const handleRequestPermission = async () => {
+    const response = await Audio.requestPermissionsAsync();
+    setPermissionResponse(response);
+    if (response.status === 'granted') {
+      closeSheet();
+      navigation.navigate('Audio');
+    } else if (response.status === 'denied' && response.canAskAgain) {
+      closeSheet();
+    } else if (response.status === 'denied' && !response.canAskAgain) {
+      handleOpenSettings();
+    }
+  };
 
   let onPressActionButton: () => void;
   let actionButtonText: string;
-  switch (permissionResponse?.status) {
-    case undefined:
-    case PermissionStatus.UNDETERMINED:
-      onPressActionButton = handleOpenSettings;
-      actionButtonText = t(m.allowButtonText);
-      break;
-    case PermissionStatus.DENIED:
-      if (permissionResponse.canAskAgain) {
-        onPressActionButton = handleOpenSettings;
-        actionButtonText = t(m.allowButtonText);
-      } else {
-        onPressActionButton = handleRequestPermissions;
-        actionButtonText = t(m.goToSettingsButtonText);
-      }
-      break;
-    case PermissionStatus.GRANTED:
-      onPressActionButton = handlePermissionGranted;
-      actionButtonText = t(m.allowButtonText);
-      break;
-    default:
-      throw new Error('Unexpected permission response');
+
+  if (!permissionResponse) {
+    onPressActionButton = async () => {
+      await handleRequestPermission();
+    };
+    actionButtonText = t(m.allowButtonText);
+  } else if (permissionResponse.status === 'denied') {
+    onPressActionButton = handleOpenSettings;
+    actionButtonText = t(m.goToSettingsButtonText);
+  } else {
+    onPressActionButton = async () => {
+      await handleRequestPermission();
+    };
+    actionButtonText = t(m.allowButtonText);
   }
 
   return (
     <BottomSheetModal
-      fullScreen
       ref={sheetRef}
+      isOpen={isOpen}
       onDismiss={closeSheet}
-      isOpen={isOpen}>
+      fullScreen>
       <BottomSheetModalContent
         icon={<AudioPermission />}
         title={t(m.title)}
@@ -87,33 +115,3 @@ export const PermissionAudio: FC<PermissionAudio> = props => {
     </BottomSheetModal>
   );
 };
-
-const m = defineMessages({
-  title: {
-    id: 'screens.AudioPermission.title',
-    defaultMessage: 'Recording Audio with CoMapeo',
-    description: 'Screen title for audio permission screen',
-  },
-  description: {
-    id: 'screens.AudioPermission.description',
-    defaultMessage:
-      'To record audio while using the app and in the background CoMapeo needs to access your microphone.',
-    description: 'Screen description for audio permission screen',
-  },
-  notNowButtonText: {
-    id: 'screens.AudioPermission.Button.notNow',
-    defaultMessage: 'Not Now',
-    description: 'Screen button text for not allowed audio permission',
-  },
-  allowButtonText: {
-    id: 'screens.AudioPermission.Button.allow',
-    defaultMessage: 'Allow',
-    description: 'Screen button text for allow the audio permission',
-  },
-  goToSettingsButtonText: {
-    id: 'screens.AudioPermission.Button.goToSettings',
-    defaultMessage: 'Go to Settings',
-    description:
-      'Screen button text for navigate user to settings when audio permission was denied',
-  },
-});

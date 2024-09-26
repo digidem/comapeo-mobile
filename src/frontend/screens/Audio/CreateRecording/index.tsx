@@ -1,40 +1,34 @@
 import React, {useEffect} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
-import {WHITE} from '../../../lib/styles';
-
 import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
-import {CustomHeaderLeft} from '../../../sharedComponents/CustomHeaderLeft';
+import {RecordingActive} from './RecordingActive';
+import {RecordingIdle} from './RecordingIdle';
+import {useAudioRecording} from './useAudioRecording';
 
 export function CreateRecording() {
   const navigation = useNavigationFromRoot();
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: props => (
-        <CustomHeaderLeft
-          tintColor={props.tintColor}
-          headerBackButtonProps={props}
-        />
-      ),
-    });
-  }, [navigation]);
-  return (
-    <View style={styles.contentContainer}>
-      <View style={styles.container}>
-        <Text style={styles.message}>Create Recording</Text>
-      </View>
-    </View>
-  );
-}
+  const recordingState = useAudioRecording();
 
-const styles = StyleSheet.create({
-  contentContainer: {flex: 1},
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  message: {
-    color: WHITE,
-    fontSize: 20,
-    textAlign: 'center',
-  },
-});
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      recordingState.reset().catch(error => {
+        console.error('Error resetting recording:', error);
+      });
+    });
+
+    return unsubscribe;
+  }, [navigation, recordingState]);
+
+  switch (recordingState.status) {
+    case 'idle': {
+      return <RecordingIdle onPressRecord={recordingState.startRecording} />;
+    }
+    case 'active': {
+      return (
+        <RecordingActive
+          duration={recordingState.duration}
+          onPressStop={recordingState.stopRecording}
+        />
+      );
+    }
+  }
+}

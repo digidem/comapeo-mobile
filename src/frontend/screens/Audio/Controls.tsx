@@ -1,6 +1,13 @@
 import React, {PropsWithChildren} from 'react';
-import {Pressable, PressableProps, StyleSheet, View} from 'react-native';
+import {
+  Dimensions,
+  Pressable,
+  PressableProps,
+  StyleSheet,
+  View,
+} from 'react-native';
 
+import PlayArrow from '../../images/PlayArrow.svg';
 import {MAGENTA, BLACK, LIGHT_GREY, WHITE} from '../../lib/styles';
 
 type BaseProps = PropsWithChildren<PressableProps>;
@@ -34,6 +41,33 @@ export function Stop(props: BaseProps) {
     <ControlButtonPrimaryBase {...props}>
       <View style={styles.stop} />
     </ControlButtonPrimaryBase>
+  );
+}
+
+export function Play(props: BaseProps) {
+  return (
+    <ControlButtonPrimaryBase {...props}>
+      <View style={styles.play}>
+        <PlayArrow />
+      </View>
+    </ControlButtonPrimaryBase>
+  );
+}
+
+export function Side({
+  children,
+  side,
+}: PropsWithChildren<{side: 'right' | 'left'}>) {
+  const {width} = Dimensions.get('window');
+
+  const midpoint = width / 2;
+
+  const sideControlOffset = Math.max(midpoint - 200, midpoint / 3);
+
+  return (
+    <View style={[styles.sideControl, {[side]: sideControlOffset}]}>
+      {children}
+    </View>
   );
 }
 

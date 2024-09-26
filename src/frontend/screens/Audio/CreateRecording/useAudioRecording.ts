@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {Audio} from 'expo-av';
+import {unlink} from '../../../lib/file-system';
 
 type AudioRecordingIdle = {
   status: 'idle';
@@ -13,16 +14,35 @@ type AudioRecordingActive = {
    * Time elapsed in milliseconds
    */
   duration: number;
+  uri: string;
+  createdAt: number;
   stopRecording: () => Promise<void>;
   reset: () => Promise<void>;
 };
 
-type AudioRecordingState = AudioRecordingIdle | AudioRecordingActive;
+type AudioRecordingDone = {
+  status: 'done';
+  /**
+   * Time elapsed in milliseconds
+   */
+  duration: number;
+  uri: string;
+  createdAt: number;
+  deleteRecording: () => Promise<void>;
+  reset: () => Promise<void>;
+};
+
+type AudioRecordingState =
+  | AudioRecordingIdle
+  | AudioRecordingActive
+  | AudioRecordingDone;
 
 export function useAudioRecording(): AudioRecordingState {
   const [state, setState] = useState<{
+    createdAt: number;
     recording: Audio.Recording;
     status: Audio.RecordingStatus;
+    uri: string;
   } | null>(null);
 
   const reset = async () => {
@@ -38,6 +58,7 @@ export function useAudioRecording(): AudioRecordingState {
     return {
       status: 'idle',
       startRecording: async () => {
+        const createdAt = Date.now();
         const {recording, status} = await Audio.Recording.createAsync(
           Audio.RecordingOptionsPresets.HIGH_QUALITY,
           status => {
@@ -52,7 +73,27 @@ export function useAudioRecording(): AudioRecordingState {
           1000,
         );
 
-        setState({recording, status});
+        const uri = recording.getURI();
+
+        // Should not happen
+        if (uri === null) {
+          throw new Error('Could not get URI for recording');
+        }
+
+        setState({createdAt, recording, status, uri});
+      },
+      reset,
+    };
+  }
+
+  if (state.status.isDoneRecording) {
+    return {
+      status: 'done',
+      duration: state.status.durationMillis,
+      uri: state.uri,
+      createdAt: state.createdAt,
+      deleteRecording: async () => {
+        return unlink(state.uri);
       },
       reset,
     };
@@ -61,6 +102,8 @@ export function useAudioRecording(): AudioRecordingState {
   return {
     status: 'active',
     duration: state.status.durationMillis,
+    uri: state.uri,
+    createdAt: state.createdAt,
     stopRecording: async () => {
       const status = await state.recording.stopAndUnloadAsync();
 

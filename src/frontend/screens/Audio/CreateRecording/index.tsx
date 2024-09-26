@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
 import {RecordingActive} from './RecordingActive';
+import {RecordingDone} from './RecordingDone';
 import {RecordingIdle} from './RecordingIdle';
 import {useAudioRecording} from './useAudioRecording';
 
@@ -27,6 +28,24 @@ export function CreateRecording() {
         <RecordingActive
           duration={recordingState.duration}
           onPressStop={recordingState.stopRecording}
+        />
+      );
+    }
+    case 'done': {
+      return (
+        <RecordingDone
+          createdAt={recordingState.createdAt}
+          uri={recordingState.uri}
+          duration={recordingState.duration}
+          onDelete={async () => {
+            await recordingState.deleteRecording().catch(err => {
+              console.log(err);
+            });
+            navigation.goBack();
+          }}
+          onRecordAnother={async () => {
+            await recordingState.reset();
+          }}
         />
       );
     }

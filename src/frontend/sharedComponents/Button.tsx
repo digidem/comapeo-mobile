@@ -13,7 +13,7 @@ type Size = 'medium' | 'large';
 
 interface SharedTouchableProps {
   disabled?: boolean;
-  onPress: (event: GestureResponderEvent) => void;
+  onPress: (event: GestureResponderEvent) => void | Promise<void>;
 }
 
 interface Props {
@@ -22,7 +22,7 @@ interface Props {
   color?: ColorScheme;
   disabled?: boolean;
   fullWidth?: boolean;
-  onPress: (event: GestureResponderEvent) => void;
+  onPress: (event: GestureResponderEvent) => void | Promise<void>;
   size?: Size;
   style?: ViewStyleProp;
   testID?: string;

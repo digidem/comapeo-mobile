@@ -105,6 +105,27 @@
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "Discard changes?"
   },
+  "ProjectSetting.RemoteArchive.Particpants.archiveOff": {
+    "message": "Remote Archive is Off"
+  },
+  "ProjectSetting.RemoteArchive.Particpants.archiveOn": {
+    "message": "Remote Archive is On"
+  },
+  "ProjectSetting.RemoteArchive.Particpants.coordinatorCanTurnOff": {
+    "message": "Only the Project Coordinator can turn off Remote Archive."
+  },
+  "ProjectSetting.RemoteArchive.Particpants.dataNotShared": {
+    "message": "The data in your project is not shared over the internet. Only people in your project can see your data."
+  },
+  "ProjectSetting.RemoteArchive.Particpants.dataSyncing": {
+    "message": "Your project data is syncing to the Remote Archive over the internet to the secure, encrypted server below. The server owner can view the data."
+  },
+  "ProjectSetting.RemoteArchive.Particpants.experimentalFeature": {
+    "message": "This is an experimental feature. You need a Remote Archive URL to enable Remote Archive."
+  },
+  "ProjectSetting.RemoteArchive.Particpants.noServers": {
+    "message": "No servers have been added to this project"
+  },
   "SaveTrack.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "Continue editing"

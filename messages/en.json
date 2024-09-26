@@ -120,11 +120,17 @@
   "ProjectSettings.RemoteArchive.Particpants.dataSyncing": {
     "message": "Your project data is syncing to the Remote Archive over the internet to the secure, encrypted server below. The server owner can view the data."
   },
+  "ProjectSettings.RemoteArchive.Particpants.dateAdded": {
+    "message": "Date Added"
+  },
   "ProjectSettings.RemoteArchive.Particpants.experimentalFeature": {
     "message": "This is an experimental feature. You need a Remote Archive URL to enable Remote Archive."
   },
   "ProjectSettings.RemoteArchive.Particpants.noServers": {
     "message": "No servers have been added to this project"
+  },
+  "ProjectSettings.RemoteArchive.Particpants.serverName": {
+    "message": "Server Name"
   },
   "ProjectSettings.RemoteArchive.navTitle": {
     "message": "Remote Archive"
@@ -1252,6 +1258,13 @@
   "screens.Settings.CreateOrJoinProject.whatIsAProject": {
     "message": "What is a Project"
   },
+  "screens.Settings.ProjectSettings.config": {
+    "description": "Primary text for project config settings",
+    "message": "Project Configuration"
+  },
+  "screens.Settings.ProjectSettings.remoteArchive": {
+    "message": "Remote Archive"
+  },
   "screens.Settings.YourTeam.InviteDeclined": {
     "message": "Invitation Declined"
   },
@@ -1281,10 +1294,6 @@
   "screens.Settings.appSettingsDesc": {
     "description": "list of avaialable app settings",
     "message": "Language, Security, Coordinates"
-  },
-  "screens.Settings.config": {
-    "description": "Primary text for project config settings",
-    "message": "Project Configuration"
   },
   "screens.Settings.createOrJoin": {
     "message": "Create or Join Project"

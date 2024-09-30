@@ -111,17 +111,17 @@ export function createLocalDiscoveryController(mapeoApi: MapeoClientApi) {
       // publishedName could be different from the name we requested, if there
       // was a conflict on the network (the conflict could come from the same
       // name still being registered on the network and not yet cleaned up)
-      const publishedName = await publishZeroconf(zeroconf, {name, port}).catch(
-        e => {
-          // Publishing could fail (timeout), but we don't want to throw the
-          // state machine start(), because that would leave the state machine
-          // in an "error" state and stop other things from working. By silently
-          // failing (with the report to Sentry), we are able to try again next
-          // time.
-          Sentry.captureException(e);
-        },
-      );
-      if (publishedName) publishedNames.add(publishedName);
+      try {
+        const publishedName = await publishZeroconf(zeroconf, {name, port});
+        publishedNames.add(publishedName);
+      } catch (e) {
+        // Publishing could fail (timeout), but we don't want to throw the
+        // state machine start(), because that would leave the state machine
+        // in an "error" state and stop other things from working. By silently
+        // failing (with the report to Sentry), we are able to try again next
+        // time.
+        Sentry.captureException(e);
+      }
       await startZeroconfPromise;
     },
     async stop() {

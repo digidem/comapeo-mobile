@@ -373,9 +373,9 @@ function stopZeroconf(zeroconf: Zeroconf): Promise<void> {
 
 function unpublishZeroconf(
   zeroconf: Zeroconf,
-  publishedNames: Set<string>,
+  publishedNamesToBeMutated: Set<string>,
 ): Promise<void> {
-  if (publishedNames.size === 0) return Promise.resolve();
+  if (publishedNamesToBeMutated.size === 0) return Promise.resolve();
   return new Promise((resolve, reject) => {
     const timeoutId = setTimeout(() => {
       cleanup();
@@ -387,14 +387,14 @@ function unpublishZeroconf(
       zeroconf.off('remove', onRemove);
     };
     const onRemove = (name: string) => {
-      publishedNames.delete(name);
-      if (publishedNames.size === 0) {
+      publishedNamesToBeMutated.delete(name);
+      if (publishedNamesToBeMutated.size === 0) {
         cleanup();
         resolve();
       }
     };
     zeroconf.on('remove', onRemove);
-    for (const name of publishedNames) {
+    for (const name of publishedNamesToBeMutated) {
       zeroconf.unpublishService(name);
     }
   });

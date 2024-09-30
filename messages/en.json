@@ -105,6 +105,9 @@
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "Discard changes?"
   },
+  "ProjectSettings.RemoteArchive.navTitle": {
+    "message": "Remote Archive"
+  },
   "SaveTrack.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "Continue editing"

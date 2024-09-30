@@ -26,6 +26,10 @@ const m = defineMessages({
     defaultMessage: 'Project Configuration',
     description: 'Primary text for project config settings',
   },
+  RemoteArchive: {
+    id: 'Screens.Settings.ProjectSettings.RemoteArchive',
+    defaultMessage: 'Remote Archive',
+  },
 });
 
 export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
@@ -66,6 +70,13 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
           }}
           testID="settingsConfigButton">
           <ListItemText primary={<FormattedMessage {...m.config} />} />
+        </ListItem>
+        <ListItem
+          onPress={() => {
+            navigation.navigate('RemoteArchive');
+          }}
+          testID="settingsConfigButton">
+          <ListItemText primary={<FormattedMessage {...m.RemoteArchive} />} />
         </ListItem>
       </List>
     </ScrollView>

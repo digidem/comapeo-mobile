@@ -326,11 +326,13 @@ export const createDefaultScreenGroup = ({
       component={HowToLeaveProject}
       options={{headerShown: false}}
     />
-    <RootStack.Screen
-      name="Audio"
-      options={audioNavigationOptions}
-      component={Audio}
-    />
+    {process.env.EXPO_PUBLIC_FEATURE_AUDIO && (
+      <RootStack.Screen
+        name="Audio"
+        options={audioNavigationOptions}
+        component={Audio}
+      />
+    )}
     {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
       <RootStack.Screen
         name="CreateTestData"

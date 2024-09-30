@@ -134,7 +134,7 @@
     "@types/react": "^18.2.58",
     "@types/react-native-indicators": "^0.16.2",
     "@types/react-native-vector-icons": "^6.4.8",
-    "@types/react-native-zeroconf": "^0.12.3",
+    "@types/react-native-zeroconf": "^0.13.1",
     "@types/react-test-renderer": "^18.0.0",
     "@types/semver": "^7.5.8",
     "@types/utm": "^1.1.2",

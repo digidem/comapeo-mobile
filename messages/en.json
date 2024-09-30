@@ -105,8 +105,14 @@
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "Discard changes?"
   },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.invalidUrl": {
+    "message": "Invalid URL"
+  },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.navTitle": {
     "message": "Add Remote Archive"
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.url": {
+    "message": "Url"
   },
   "ProjectSettings.RemoteArchive.Coordinator.addArchive": {
     "message": "+ Add Remote Archive"

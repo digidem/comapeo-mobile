@@ -31,9 +31,7 @@ export const AddRemoteArchive: NativeNavigationComponent<
     control,
     handleSubmit,
     formState: {errors},
-  } = useForm<{url: string}>({
-    defaultValues: {url: ''},
-  });
+  } = useForm<{url: string}>();
 
   const handleCreateProject = React.useCallback(
     ({url}: {url: string}) => {},
@@ -45,9 +43,7 @@ export const AddRemoteArchive: NativeNavigationComponent<
       // eslint-disable-next-line react/no-unstable-nested-components
       headerRight: () => (
         <SaveButton
-          onPress={() => {
-            handleSubmit(handleCreateProject);
-          }}
+          onPress={handleSubmit(handleCreateProject)}
           isLoading={false}
         />
       ),
@@ -56,7 +52,7 @@ export const AddRemoteArchive: NativeNavigationComponent<
 
   return (
     <View style={styles.container}>
-      <View style={{flexDirection: 'row'}}>
+      <View style={{flexDirection: 'row', marginBottom: 10}}>
         <Text>{formatMessage(m.url)}</Text>
         <Text style={{color: RED}}>*</Text>
       </View>
@@ -65,8 +61,10 @@ export const AddRemoteArchive: NativeNavigationComponent<
         name="url"
         rules={{required: true, minLength: 1}}
       />
-      {errors && (
-        <Text style={{color: RED}}>{formatMessage(m.invalidUrl)}</Text>
+      {errors.url && (
+        <Text style={{color: RED, marginTop: 10}}>
+          {formatMessage(m.invalidUrl)}
+        </Text>
       )}
     </View>
   );

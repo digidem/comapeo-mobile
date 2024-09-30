@@ -4,6 +4,7 @@ import {Text} from '../../../../sharedComponents/Text';
 import {defineMessages, useIntl} from 'react-intl';
 import {Button} from '../../../../sharedComponents/Button';
 import {MEDIUM_GREY} from '../../../../lib/styles';
+import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
 
 const m = defineMessages({
   remoteArchiveOff: {
@@ -36,6 +37,7 @@ export const Coordinator = () => {
 
 const RemoteArchiveOff = () => {
   const {formatMessage} = useIntl();
+  const {navigate} = useNavigationFromRoot();
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{formatMessage(m.remoteArchiveOff)} </Text>
@@ -44,7 +46,12 @@ const RemoteArchiveOff = () => {
         {formatMessage(m.experimentalFeature)}
       </Text>
       <Text style={styles.subtext}>{formatMessage(m.noServers)}</Text>
-      <Button variant="outlined" style={{marginTop: 20}} onPress={() => {}}>
+      <Button
+        variant="outlined"
+        style={{marginTop: 20}}
+        onPress={() => {
+          navigate('AddRemoteArchive');
+        }}>
         {formatMessage(m.addArchive)}
       </Button>
     </View>

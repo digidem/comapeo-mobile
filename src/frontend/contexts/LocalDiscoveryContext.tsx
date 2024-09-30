@@ -339,11 +339,7 @@ function publishZeroconf(
       resolve(publishedName);
     };
 
-    zeroconf.on(
-      // @ts-expect-error We can remove this when <https://github.com/DefinitelyTyped/DefinitelyTyped/pull/70693> is merged.
-      'published',
-      onPublish,
-    );
+    zeroconf.on('published', onPublish);
     zeroconf.publishService(
       ZEROCONF_SERVICE_TYPE,
       ZEROCONF_PROTOCOL,

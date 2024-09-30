@@ -75,6 +75,11 @@ import {DataAndPrivacy} from '../../screens/Settings/DataAndPrivacy/DataAndPriva
 import {SettingsPrivacyPolicy} from '../../screens/Settings/DataAndPrivacy/SettingsPrivacyPolicy';
 import {TrackEdit} from '../../screens/TrackEdit/index.tsx';
 import {Config} from '../../screens/Settings/Config';
+import {HowToLeaveProject} from '../../screens/HowToLeaveProject.tsx';
+import {
+  Audio,
+  navigationOptions as audioNavigationOptions,
+} from '../../screens/Audio/index.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -316,6 +321,18 @@ export const createDefaultScreenGroup = ({
       options={{headerTitle: intl(Config.navTitle)}}
     />
 
+    <RootStack.Screen
+      name="HowToLeaveProject"
+      component={HowToLeaveProject}
+      options={{headerShown: false}}
+    />
+    {process.env.EXPO_PUBLIC_FEATURE_AUDIO && (
+      <RootStack.Screen
+        name="Audio"
+        options={audioNavigationOptions}
+        component={Audio}
+      />
+    )}
     {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
       <RootStack.Screen
         name="CreateTestData"

@@ -1,11 +1,11 @@
-import {Observation} from '@mapeo/schema';
-import {BlobVariant} from '@mapeo/core/dist/types';
+import {Observation} from '@comapeo/schema';
+import {BlobVariant} from '@comapeo/core/dist/types';
 import {useMutation, useQueries, useQuery} from '@tanstack/react-query';
 import {URL} from 'react-native-url-polyfill';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
-import {MapeoProjectApi} from '@mapeo/ipc';
+import type {MapeoProjectApi} from '@comapeo/ipc';
 import {ClientApi} from 'rpc-reflector';
 
 export function useCreateBlobMutation(opts: {retry?: number} = {}) {

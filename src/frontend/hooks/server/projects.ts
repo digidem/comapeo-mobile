@@ -2,6 +2,9 @@ import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 
 import {useApi} from '../../contexts/ApiContext';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {PRESETS_KEY} from './presets';
+import {ICONS_KEY} from './icons';
+import {FIELDS_KEY} from './fields';
 
 export const ALL_PROJECTS_KEY = 'all_projects';
 export const PROJECT_SETTINGS_KEY = 'project_settings';
@@ -10,6 +13,7 @@ export const PROJECT_KEY = 'project';
 export const PROJECT_MEMBERS_KEY = 'project_members';
 export const ORIGINAL_VERSION_ID_TO_DEVICE_ID_KEY =
   'originalVersionIdToDeviceId';
+export const THIS_USERS_ROLE_KEY = 'my_role';
 
 export function useProject(projectId?: string) {
   const api = useApi();
@@ -127,7 +131,31 @@ export function useImportProjectConfig() {
       return projectApi.importConfig({configPath});
     },
     onSuccess: () => {
-      return queryClient.invalidateQueries({queryKey: [PROJECT_SETTINGS_KEY]});
+      return Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: [FIELDS_KEY],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: [ICONS_KEY],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: [PROJECT_SETTINGS_KEY],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: [PRESETS_KEY],
+        }),
+      ]);
+    },
+  });
+}
+
+export function useGetOwnRole() {
+  const {projectId, projectApi} = useActiveProject();
+
+  return useQuery({
+    queryKey: [THIS_USERS_ROLE_KEY, projectId],
+    queryFn: () => {
+      return projectApi.$getOwnRole();
     },
   });
 }

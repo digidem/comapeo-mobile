@@ -5,7 +5,7 @@ import {
   defineMessages,
   useIntl,
 } from 'react-intl';
-import {Field, Preset} from '@mapeo/schema';
+import {Field, Preset} from '@comapeo/schema';
 
 import {formatCoords} from '../lib/utils';
 import {DateDistance} from './DateDistance';
@@ -135,7 +135,7 @@ export const FormattedObservationDate = React.memo(
 
 // Format the translated preset name, with a fallback to "Observation" if no
 // preset is defined
-export const FormattedPresetName = ({preset}: {preset: Preset | void}) => {
+export const FormattedPresetName = ({preset}: {preset?: Preset}) => {
   const {formatMessage: t} = useIntl();
   const name = preset
     ? t({id: `presets.${preset.docId}.name`, defaultMessage: preset.name})
@@ -146,7 +146,7 @@ export const FormattedPresetName = ({preset}: {preset: Preset | void}) => {
 
 // TODO: Better hangling of boolean and null values (we don't create these
 // anywhere yet)
-function getValueLabel(
+export function getValueLabel(
   value: null | boolean | number | string,
   field: Field,
 ): string {

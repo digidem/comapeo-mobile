@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {StyleSheet, TextInput} from 'react-native';
 import {QuestionLabel} from './QuestionLabel';
-import {Field} from '@mapeo/schema';
+import {Field} from '@comapeo/schema';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 

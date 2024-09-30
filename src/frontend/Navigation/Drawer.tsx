@@ -31,7 +31,7 @@ const m = defineMessages({
   aboutCoMapeo: {
     id: 'Navigation.Drawer.aboutCoMapeo',
     defaultMessage: 'About CoMapeo',
-    description: "Primary text for 'About Mapeo' link (version info)",
+    description: "Primary text for 'About CoMapeo' link (version info)",
   },
   aboutCoMapeoDesc: {
     id: 'Navigation.Drawer.aboutCoMapeoDesc',
@@ -72,9 +72,9 @@ const m = defineMessages({
     id: 'Navigation.Drawer.projName',
     defaultMessage: 'Project {projectName}',
   },
-  createOrJoinToSync: {
-    id: 'Navigation.Drawer.createOrJoinToSync',
-    defaultMessage: 'Create or Join a Project to sync with other devices',
+  mappingOnOwn: {
+    id: 'Navigation.Drawer.mappingOnOwn',
+    defaultMessage: 'You are currently mapping on your own',
   },
   security: {
     id: 'Navigation.Drawer.security',
@@ -131,7 +131,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
           }}>
           {data?.name
             ? formatMessage(m.projName, {projectName: data.name})
-            : formatMessage(m.createOrJoinToSync)}
+            : formatMessage(m.mappingOnOwn)}
         </Text>
       </View>
       <List

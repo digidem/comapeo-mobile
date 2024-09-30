@@ -12,7 +12,7 @@ import {
 import {UIActivityIndicator} from 'react-native-indicators';
 
 import {FormattedObservationDate} from '../../sharedComponents/FormattedData';
-import {Field} from '@mapeo/schema';
+import {Field} from '@comapeo/schema';
 import {PresetHeader} from './PresetHeader';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
 import {useFieldsQuery} from '../../hooks/server/fields';
@@ -60,13 +60,16 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   const {data: fieldData} = useFieldsQuery();
 
   const defaultAcc: Field[] = [];
-  const fields = fieldData
-    ? preset.fieldRefs.reduce((acc, pres) => {
-        const fieldToAdd = fieldData.find(field => field.docId === pres.docId);
-        if (!fieldToAdd) return acc;
-        return [...acc, fieldToAdd];
-      }, defaultAcc)
-    : [];
+  const fields =
+    preset && fieldData
+      ? preset.fieldRefs.reduce((acc, pres) => {
+          const fieldToAdd = fieldData.find(
+            field => field.docId === pres.docId,
+          );
+          if (!fieldToAdd) return acc;
+          return [...acc, fieldToAdd];
+        }, defaultAcc)
+      : [];
 
   const {lat, lon, originalVersionId} = observation;
   const {data: deviceInfo, isPending: isDeviceInfoPending} = useDeviceInfo();
@@ -99,7 +102,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
           </Text>
         </View>
         <View style={[styles.section, {flex: 1}]}>
-          {preset && <PresetHeader preset={preset} />}
+          <PresetHeader preset={preset} />
 
           {typeof observation.tags.notes === 'string' ? (
             <View style={{paddingTop: 15}}>
@@ -128,7 +131,11 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
         {isDeviceInfoPending || isDeviceIdPending ? (
           <UIActivityIndicator size={20} />
         ) : (
-          <ButtonFields isMine={isMine} observationId={observationId} />
+          <ButtonFields
+            isMine={isMine}
+            observationId={observationId}
+            fields={fields}
+          />
         )}
       </>
     </ScrollView>

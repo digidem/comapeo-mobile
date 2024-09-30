@@ -2,8 +2,11 @@ import {useCallback, useEffect, useState} from 'react';
 import {useApi} from '../contexts/ApiContext';
 import {useQueryClient} from '@tanstack/react-query';
 import {INVITE_KEY} from './server/invites';
-import {MapBuffers} from '@mapeo/core/dist/types';
-import {InviteInternal, InviteRemovalReason} from '@mapeo/core/dist/invite-api';
+import {MapBuffers} from '@comapeo/core/dist/types';
+import {
+  InviteInternal,
+  InviteRemovalReason,
+} from '@comapeo/core/dist/invite-api';
 
 export const useProjectInvitesListener = ({
   inviteId,

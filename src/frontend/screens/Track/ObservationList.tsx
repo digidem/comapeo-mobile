@@ -10,7 +10,7 @@ import {Text} from '../../sharedComponents/Text.tsx';
 import ChainIcon from '../../images/Chain.svg';
 import Chevrondown from '../../images/chevrondown.svg';
 import ChevrondownDefault from '../../images/chevrondown-expanded.svg';
-import {Observation} from '@mapeo/schema';
+import {Observation} from '@comapeo/schema';
 import {ObservationListItem} from '../ObservationsList/ObservationListItem.tsx';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
 import {defineMessages, useIntl} from 'react-intl';

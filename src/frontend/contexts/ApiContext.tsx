@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {type MapeoClientApi} from '@mapeo/ipc';
+import {type MapeoClientApi} from '@comapeo/ipc';
 
 // TODO: support passing api mock for unit tests
 const ApiContext = React.createContext<MapeoClientApi | undefined>(undefined);

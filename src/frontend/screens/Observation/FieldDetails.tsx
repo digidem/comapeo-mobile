@@ -5,7 +5,7 @@ import {
   FormattedFieldProp,
   FormattedFieldValue,
 } from '../../sharedComponents/FormattedData';
-import {Field, Observation} from '@mapeo/schema';
+import {Field, Observation} from '@comapeo/schema';
 
 export const FieldDetails = ({
   fields,

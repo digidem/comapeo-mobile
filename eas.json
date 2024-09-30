@@ -1,46 +1,40 @@
 {
   "cli": {
     "version": ">= 7.8.0",
-    "appVersionSource": "remote"
+    "appVersionSource": "remote",
+    "requireCommit": true
   },
   "build": {
-    "development": {
-      "developmentClient": true,
-      "distribution": "internal",
-      "ios": {
-        "image": "latest",
-        "simulator": true
-      },
+    "base": {
       "android": {
         "image": "latest",
-        "buildType": "apk"
+        "node": "20.17.0"
       },
+      "ios": {
+        "image": "latest",
+        "node": "20.17.0"
+      }
+    },
+    "development": {
+      "extends": "base",
+      "developmentClient": true,
+      "distribution": "internal",
       "env": {
         "APP_VARIANT": "development"
       }
     },
     "release-candidate": {
+      "extends": "base",
       "distribution": "internal",
       "channel": "preview",
       "env": {
         "APP_VARIANT": "releaseCandidate",
-        "EXPO_PUBLIC_FEATURE_TEST_DATA_UI":"true"
-      },
-      "android": {
-        "image": "latest",
-        "buildType": "apk"
-      },
-      "ios": {
-        "image": "latest"
+        "EXPO_PUBLIC_FEATURE_TEST_DATA_UI": "true"
       }
     },
     "production": {
-      "android": {
-        "image": "latest"
-      },
-      "ios": {
-        "image": "latest"
-      },
+      "extends": "base",
+      "distribution": "store",
       "channel": "production",
       "env": {
         "APP_VARIANT": "production"
@@ -48,17 +42,11 @@
       "autoIncrement": true
     },
     "pre-release": {
+      "extends": "base",
       "distribution": "internal",
       "channel": "preview",
       "env": {
         "APP_VARIANT": "preRelease"
-      },
-      "android": {
-        "image": "latest",
-        "buildType": "apk"
-      },
-      "ios": {
-        "image": "latest"
       }
     }
   },

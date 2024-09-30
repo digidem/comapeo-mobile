@@ -14,7 +14,7 @@ import {WHITE} from '../lib/styles';
 import {NativeNavigationComponent} from '../sharedTypes/navigation';
 import {CustomHeaderLeftClose} from '../sharedComponents/CustomHeaderLeftClose';
 import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
-import {Preset} from '@mapeo/schema';
+import {Preset} from '@comapeo/schema';
 import {usePresetsQuery} from '../hooks/server/presets';
 import {usePersistedDraftObservation} from '../hooks/persistedState/usePersistedDraftObservation';
 import {CommonActions} from '@react-navigation/native';
@@ -151,7 +151,7 @@ const Item = React.memo(
       activeOpacity={1}
       underlayColor="#000033">
       <View style={styles.cellContainer}>
-        <PresetCircleIcon presetDocId={item.iconRef?.docId} size="medium" />
+        <PresetCircleIcon iconId={item.iconRef?.docId} size="medium" />
         <Text numberOfLines={3} style={styles.categoryName}>
           <DynFormattedMessage
             id={`presets.${item.docId}.name`}

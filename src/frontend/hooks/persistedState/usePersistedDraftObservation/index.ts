@@ -7,7 +7,7 @@ import {
 } from '../../../contexts/PhotoPromiseContext/types';
 import {deletePhoto, replaceDraftPhotos} from './photosMethods';
 import {ClientGeneratedObservation, Position} from '../../../sharedTypes';
-import {Observation, Preset} from '@mapeo/schema';
+import {Observation, Preset} from '@comapeo/schema';
 import {usePresetsQuery} from '../../server/presets';
 import {matchPreset} from '../../../lib/utils';
 
@@ -35,10 +35,22 @@ export type DraftObservationSlice = {
     newDraft: () => void;
     deletePhoto: (uri: string) => void;
     existingObservationToDraft: (observation: Observation) => void;
-    updateObservationPosition: (props: {
-      position: Position | undefined;
-      manualLocation: boolean;
-    }) => void;
+    updateObservationPosition: (
+      props:
+        | {
+            manualLocation: false;
+            position: Position | undefined;
+          }
+        | {
+            manualLocation: true;
+            position: {
+              coords: {
+                latitude: number;
+                longitude: number;
+              };
+            };
+          },
+    ) => void;
     updateTags: (tagKey: string, value: Observation['tags'][0]) => void;
     updatePreset: (preset: Preset) => void;
   };
@@ -72,18 +84,31 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
           'cannot update the draft position until a draft has been initialized',
         );
 
-      set({
-        value: {
-          ...prevValue,
-          lon: props?.position?.coords?.longitude,
-          lat: props?.position?.coords?.latitude,
-          metadata: {
-            ...prevValue.metadata,
-            position: props.position,
-            manualLocation: props.manualLocation,
+      if (props.manualLocation) {
+        set({
+          value: {
+            ...prevValue,
+            lon: props.position.coords.longitude,
+            lat: props.position.coords.latitude,
+            metadata: {
+              manualLocation: props.manualLocation,
+            },
           },
-        },
-      });
+        });
+      } else {
+        set({
+          value: {
+            ...prevValue,
+            lon: props.position?.coords?.longitude,
+            lat: props.position?.coords?.latitude,
+            metadata: {
+              ...prevValue.metadata,
+              position: props.position,
+              manualLocation: props.manualLocation,
+            },
+          },
+        });
+      }
     },
     existingObservationToDraft: observation => {
       set({

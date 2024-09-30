@@ -1,0 +1,12 @@
+diff --git a/node_modules/@electron/asar/lib/wrapped-fs.js b/node_modules/@electron/asar/lib/wrapped-fs.js
+index ea851eb..9721836 100644
+--- a/node_modules/@electron/asar/lib/wrapped-fs.js
++++ b/node_modules/@electron/asar/lib/wrapped-fs.js
+@@ -1,6 +1,6 @@
+ "use strict";
+ Object.defineProperty(exports, "__esModule", { value: true });
+-const fs = 'electron' in process.versions ? require('original-fs') : require('fs');
++const fs = require('fs');
+ const promisifiedMethods = ['lstat', 'mkdtemp', 'readFile', 'stat', 'writeFile'];
+ const promisified = {};
+ for (const method of Object.keys(fs)) {

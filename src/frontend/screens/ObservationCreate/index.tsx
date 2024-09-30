@@ -15,6 +15,7 @@ import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';
 import {ActionsRow} from '../../sharedComponents/ActionRow';
+import {Alert, type AlertButton} from 'react-native';
 
 const m = defineMessages({
   observation: {
@@ -36,7 +37,47 @@ const m = defineMessages({
     defaultMessage: 'What is happening here?',
     description: 'Placeholder for description/notes field',
   },
+  noGpsTitle: {
+    id: 'screens.ObservationCreate.noGpsTitle',
+    defaultMessage: 'No GPS signal',
+    description: 'Title of dialog when trying to save with no GPS coords',
+  },
+  noGpsDesc: {
+    id: 'screens.ObservationCreate.noGpsDesc',
+    defaultMessage:
+      'This observation does not have a location. You can continue waiting for a GPS signal, save the observation without a location, or enter coordinates manually',
+    description: 'Description in dialog when trying to save with no GPS coords',
+  },
+  weakGpsTitle: {
+    id: 'screens.ObservationCreate.weakGpsTitle',
+    defaultMessage: 'Weak GPS signal',
+    description: 'Title of dialog when trying to save with low GPS accuracy.',
+  },
+  weakGpsDesc: {
+    id: 'screens.ObservationCreate.weakGpsDesc',
+    defaultMessage:
+      'GPS accuracy is low. You can continue waiting for better accuracy, save the observation with low accuracy, or enter coordinates manually',
+    description:
+      'Description in dialog when trying to save with low GPS accuracy.',
+  },
+  saveAnyway: {
+    id: 'screens.ObservationCreate.saveAnyway',
+    defaultMessage: 'Save',
+    description: 'Button to save regardless of GPS state',
+  },
+  manualEntry: {
+    id: 'screens.ObservationCreate.manualEntry',
+    defaultMessage: 'Manual Coords',
+    description: 'Button to manually enter GPS coordinates',
+  },
+  keepWaiting: {
+    id: 'screens.ObservationCreate.keepWaiting',
+    defaultMessage: 'Continue waiting',
+    description: 'Button to cancel save and continue waiting for GPS',
+  },
 });
+
+const MAXIMUM_ACCURACY = 10;
 
 export const ObservationCreate = ({
   navigation,
@@ -169,12 +210,68 @@ export const ObservationCreate = ({
     value,
   ]);
 
+  const checkAccuracyAndLocation = React.useCallback(() => {
+    const confirmationOptions: AlertButton[] = [
+      {
+        text: formatMessage(m.saveAnyway),
+        onPress: createObservation,
+        style: 'default',
+      },
+      {
+        text: formatMessage(m.manualEntry),
+        onPress: () => navigation.navigate('ManualGpsScreen'),
+        style: 'cancel',
+      },
+      {
+        text: formatMessage(m.keepWaiting),
+        onPress: () => {},
+      },
+    ];
+
+    if (!value) {
+      return;
+    }
+
+    // If the user has already inputted a manual location, do not check if location is accurate
+    if (value.metadata?.manualLocation) {
+      createObservation();
+      return;
+    }
+
+    const accuracy = value.metadata?.position?.coords?.accuracy;
+
+    if (!liveLocation) {
+      Alert.alert(
+        formatMessage(m.noGpsTitle),
+        formatMessage(m.noGpsDesc),
+        confirmationOptions,
+      );
+      return;
+    }
+
+    // If we don't have accuracy, allow save anyway (this is a remnant from mapeo: https://github.com/digidem/mapeo-mobile/blob/0c0ebbb9ef2261e21cd1d1c8bd5ab2fe42017ea3/src/frontend/screens/ObservationEdit/SaveButton.js#L125C3-L125C50)
+    if (
+      accuracy &&
+      typeof accuracy === 'number' &&
+      accuracy >= MAXIMUM_ACCURACY
+    ) {
+      Alert.alert(
+        formatMessage(m.weakGpsTitle),
+        formatMessage(m.weakGpsDesc),
+        confirmationOptions,
+      );
+      return;
+    }
+
+    createObservation();
+  }, [createObservation, formatMessage, navigation, liveLocation, value]);
+
   React.useEffect(() => {
     navigation.setOptions({
       // eslint-disable-next-line react/no-unstable-nested-components
       headerRight: () => (
         <SaveButton
-          onPress={createObservation}
+          onPress={checkAccuracyAndLocation}
           isLoading={
             createObservationMutation.isPending || createBlobMutation.isPending
           }
@@ -185,7 +282,7 @@ export const ObservationCreate = ({
     navigation,
     createBlobMutation.isPending,
     createObservationMutation.isPending,
-    createObservation,
+    checkAccuracyAndLocation,
   ]);
 
   return (
@@ -194,7 +291,8 @@ export const ObservationCreate = ({
         presetName={presetName}
         PresetIcon={
           <PresetCircleIcon
-            presetDocId={preset?.iconRef?.docId}
+            size="medium"
+            iconId={preset?.iconRef?.docId}
             testID={`OBS.${preset?.name}-icon`}
           />
         }

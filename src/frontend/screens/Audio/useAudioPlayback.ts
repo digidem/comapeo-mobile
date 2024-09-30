@@ -8,20 +8,16 @@ export const useAudioPlayback = (recordingUri: string) => {
   const [duration, setDuration] = useState<number>(0);
   const [currentPosition, setCurrentPosition] = useState(0);
   const [isReady, setReady] = useState(false);
-  const [hasFinished, setHasFinished] = useState(false);
-  const isPlayingRef = useRef(false);
 
   const audioCallbackHandler = useCallback((status: AVPlaybackStatus) => {
     const update = status as AVPlaybackStatusSuccess;
     if (update.didJustFinish) {
       setPlaying(false);
-      setHasFinished(true);
       setCurrentPosition(update.durationMillis ?? 0);
     } else {
       setPlaying(update.isPlaying);
       if (update.isPlaying) {
         setCurrentPosition(update.positionMillis);
-        setHasFinished(false);
       }
     }
   }, []);
@@ -36,60 +32,45 @@ export const useAudioPlayback = (recordingUri: string) => {
         }
         soundInstance = sound;
         recordedSoundRef.current = sound;
-        const successStatus = status as AVPlaybackStatusSuccess;
-        setDuration(successStatus.durationMillis ?? 0);
+        setDuration((status as AVPlaybackStatusSuccess).durationMillis ?? 0);
         setReady(true);
         sound.setOnPlaybackStatusUpdate(audioCallbackHandler);
       })
       .catch(error => console.error('Error loading sound:', error));
 
     return () => {
-      if (recordedSoundRef.current && !isPlayingRef.current) {
-        recordedSoundRef.current
+      if (soundInstance) {
+        soundInstance
           .unloadAsync()
           .catch(err => console.error('Unload error:', err));
       }
     };
-  }, [recordingUri]);
+  }, [recordingUri, audioCallbackHandler]);
 
   const startPlayback = async () => {
-    if (isPlayingRef.current || !isReady) {
-      console.warn('Playback is already in progress or not ready');
-      return;
-    }
-    isPlayingRef.current = true;
+    if (!isReady || isPlaying) return;
+
     try {
-      const status = await recordedSoundRef.current!.getStatusAsync();
-      if (hasFinished || status.positionMillis >= status.durationMillis) {
+      if (currentPosition >= duration) {
         await recordedSoundRef.current!.setPositionAsync(0);
         setCurrentPosition(0);
-        setHasFinished(false);
       }
 
       await recordedSoundRef.current!.playAsync();
-      const newStatus = await recordedSoundRef.current!.getStatusAsync();
-      if (!newStatus.isLoaded) {
-        console.error('Playback failed - Sound is not loaded!');
-      }
+      setPlaying(true);
     } catch (error) {
       console.error('Failed to play sound:', error);
-    } finally {
-      isPlayingRef.current = false;
     }
   };
 
   const stopPlayback = async () => {
-    if (isPlayingRef.current || !isReady || !isPlaying) {
-      console.warn('Playback is not in progress or not ready to stop');
-      return;
-    }
-    isPlayingRef.current = true;
+    if (!isReady || !isPlaying) return;
+
     try {
       await recordedSoundRef.current!.pauseAsync();
+      setPlaying(false);
     } catch (error) {
-      console.error('Failed to stop sound:', error);
-    } finally {
-      isPlayingRef.current = false;
+      console.error('Failed to pause sound:', error);
     }
   };
 

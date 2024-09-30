@@ -6,7 +6,10 @@ import NetInfo, {
   type NetInfoDisconnectedStates,
 } from '@react-native-community/netinfo';
 import StateMachine from 'start-stop-state-machine';
-import Zeroconf, {type Service as ZeroconfService} from 'react-native-zeroconf';
+import Zeroconf, {
+  type Service as ZeroconfService,
+  ImplType as ZeroconfImplType,
+} from 'react-native-zeroconf';
 import {type MapeoClientApi} from '@comapeo/ipc';
 import * as Sentry from '@sentry/react-native';
 import noop from '../lib/noop';
@@ -34,6 +37,8 @@ const POLL_WIFI_STATE_INTERVAL_MS = 2000;
 const ZEROCONF_SERVICE_TYPE = 'comapeo';
 const ZEROCONF_PROTOCOL = 'tcp';
 const ZEROCONF_DOMAIN = 'local.';
+const ZEROCONF_TXT = {};
+const ZEROCONF_IMPL_TYPE = ZeroconfImplType.DNSSD;
 // react-native-zeroconf does not notify when a service fails to register or unregister
 // https://github.com/balthazar/react-native-zeroconf/blob/master/android/src/main/java/com/balthazargronon/RCTZeroconf/nsd/NsdServiceImpl.java#L210
 // so we need a timeout, otherwise the service would never be considered
@@ -316,7 +321,12 @@ function startZeroconf(zeroconf: Zeroconf): Promise<void> {
     zeroconf.on('start', onStart);
     zeroconf.on('error', onError);
 
-    zeroconf.scan(ZEROCONF_SERVICE_TYPE, ZEROCONF_PROTOCOL, ZEROCONF_DOMAIN);
+    zeroconf.scan(
+      ZEROCONF_SERVICE_TYPE,
+      ZEROCONF_PROTOCOL,
+      ZEROCONF_DOMAIN,
+      ZEROCONF_IMPL_TYPE,
+    );
   });
 }
 
@@ -346,6 +356,8 @@ function publishZeroconf(
       ZEROCONF_DOMAIN,
       name,
       port,
+      ZEROCONF_TXT,
+      ZEROCONF_IMPL_TYPE,
     );
   });
 }
@@ -367,7 +379,7 @@ function stopZeroconf(zeroconf: Zeroconf): Promise<void> {
     zeroconf.on('stop', onStop);
     zeroconf.on('error', onError);
 
-    zeroconf.stop();
+    zeroconf.stop(ZEROCONF_IMPL_TYPE);
   });
 }
 
@@ -395,7 +407,7 @@ function unpublishZeroconf(
     };
     zeroconf.on('remove', onRemove);
     for (const name of publishedNamesToBeMutated) {
-      zeroconf.unpublishService(name);
+      zeroconf.unpublishService(name, ZEROCONF_IMPL_TYPE);
     }
   });
 }

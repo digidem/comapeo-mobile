@@ -5,7 +5,7 @@
   },
   "AppContainer.EditHeader.discardChangesButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes"
+    "message": "Descartar cambios"
   },
   "AppContainer.EditHeader.discardChangesDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
@@ -55,17 +55,17 @@
     "message": "Versión y número de compilación"
   },
   "Navigation.Drawer.appSettings": {
-    "message": "App Settings"
+    "message": "Ajustes de la aplicación"
   },
   "Navigation.Drawer.appSettingsDesc": {
     "description": "list of avaialable app settings",
-    "message": "Language, Security, Coordinates"
+    "message": "Idioma, seguridad, coordenadas"
   },
   "Navigation.Drawer.createOrJoin": {
-    "message": "Create or Join Project"
+    "message": "Crear o unirse a un proyecto"
   },
   "Navigation.Drawer.createOrJoinDesc": {
-    "message": "Create a new project or join existing one"
+    "message": "Crear un nuevo proyecto o unirse a uno existente"
   },
   "Navigation.Drawer.dataAndPrivacy": {
     "message": "Data & Privacy"
@@ -77,11 +77,11 @@
     "message": "Project {projectName}"
   },
   "Navigation.Drawer.projectSettings": {
-    "message": "Project Settings"
+    "message": "Configuración del proyecto"
   },
   "Navigation.Drawer.projectSettingsDesc": {
     "description": "list of avaialable project settings",
-    "message": "Categories, Config, Team"
+    "message": "Categorías, configuración, equipo"
   },
   "Navigation.Drawer.security": {
     "message": "Seguridad"
@@ -96,7 +96,7 @@
   },
   "ObservationEdit.HeaderLeft.discardObservationButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes"
+    "message": "Descartar cambios"
   },
   "ObservationEdit.HeaderLeft.discardObservationDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
@@ -130,10 +130,10 @@
     "message": "Idioma"
   },
   "Screens.Settings.AppSettings.languageDesc": {
-    "message": "Display language for app"
+    "message": "Mostrar idioma para la aplicación"
   },
   "Screens.Settings.AppSettings.title": {
-    "message": "App Settings"
+    "message": "Ajustes de la aplicación"
   },
   "Screens.Settings.ProjectSettings.deviceName": {
     "message": "Nombre del dispositivo"
@@ -142,10 +142,10 @@
     "message": "Sync Settings"
   },
   "Screens.Settings.ProjectSettings.title": {
-    "message": "Project Settings"
+    "message": "Configuración del proyecto"
   },
   "Screens.Settings.ProjectSettings.yourTeam": {
-    "message": "Your Team"
+    "message": "Tu equipo"
   },
   "SharedComponents.ActionButtons.cancel": {
     "description": "Button to cancel delete of observation",
@@ -173,7 +173,7 @@
   },
   "TrackEdit.HeaderLeft.discardTrackButton": {
     "description": "Button to confirm discarding the track",
-    "message": "Discard changes"
+    "message": "Descartar cambios"
   },
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
@@ -302,7 +302,7 @@
     "message": "Confirm Passcode"
   },
   "screens.AppPasscode.NewPasscode.SetPasscodeScreen.title": {
-    "message": "Set Passcode"
+    "message": "Establecer contraseña"
   },
   "screens.AppPasscode.NewPasscode.Splash.continue": {
     "message": "Continuar"
@@ -346,7 +346,7 @@
   },
   "screens.AudioPermission.Button.goToSettings": {
     "description": "Screen button text for navigate user to settings when audio permission was denied",
-    "message": "Go to Settings"
+    "message": "Ir a ajustes"
   },
   "screens.AudioPermission.Button.notNow": {
     "description": "Screen button text for not allowed audio permission",
@@ -361,10 +361,10 @@
     "message": "Recording Audio with CoMapeo"
   },
   "screens.CameraScreen.goToSettings": {
-    "message": "Go to Settings"
+    "message": "Ir a ajustes"
   },
   "screens.CameraScreen.noCameraAccess": {
-    "message": "No access to camera. Please Allow access in setting"
+    "message": "No hay acceso a la cámara. Por favor permite el acceso en ajustes"
   },
   "screens.CategoryChooser.categoryTitle": {
     "description": "Title for category chooser screen",
@@ -799,7 +799,7 @@
     "message": "Observación"
   },
   "screens.ObservationCreate.changePreset": {
-    "message": "Change"
+    "message": "Cambiar"
   },
   "screens.ObservationCreate.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
@@ -815,7 +815,7 @@
   },
   "screens.ObservationCreate.navTitle": {
     "description": "screen title for new observation screen",
-    "message": "New Observation"
+    "message": "Observación nueva"
   },
   "screens.ObservationCreate.noGpsDesc": {
     "description": "Description in dialog when trying to save with no GPS coords",
@@ -870,7 +870,7 @@
     "message": "Photo"
   },
   "screens.ObservationEdit.changePreset": {
-    "message": "Change"
+    "message": "Cambiar"
   },
   "screens.ObservationEdit.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
@@ -878,7 +878,7 @@
   },
   "screens.ObservationEdit.navTitle": {
     "description": "screen title for new observation screen",
-    "message": "Edit Observation"
+    "message": "Editar observación"
   },
   "screens.ObservationEdit.observation": {
     "description": "Default name of observation with no matching preset",
@@ -1106,7 +1106,7 @@
     "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.NotOnProject.createOrJoin": {
-    "message": "Create or Join Project"
+    "message": "Crear o unirse a un proyecto"
   },
   "screens.Setting.ProjectSettings.YourTeam.NotOnProject.projectNecessary": {
     "message": "Create or Join a Project to invite devices"
@@ -1151,7 +1151,7 @@
     "message": "Participants"
   },
   "screens.Setting.ProjectSettings.YourTeam.title": {
-    "message": "Your Team"
+    "message": "Tu equipo"
   },
   "screens.Settings.Config.created": {
     "message": "Created {date} at {time}"
@@ -1163,7 +1163,7 @@
     "message": "Config Name:"
   },
   "screens.Settings.Config.navTitle": {
-    "message": "Configuration"
+    "message": "Configuración"
   },
   "screens.Settings.Config.projectName": {
     "message": "Project Name:"
@@ -1252,28 +1252,28 @@
     "message": "Versión y número de compilación"
   },
   "screens.Settings.appSettings": {
-    "message": "App Settings"
+    "message": "Ajustes de la aplicación"
   },
   "screens.Settings.appSettingsDesc": {
     "description": "list of avaialable app settings",
-    "message": "Language, Security, Coordinates"
+    "message": "Idioma, seguridad, coordenadas"
   },
   "screens.Settings.config": {
     "description": "Primary text for project config settings",
     "message": "Project Configuration"
   },
   "screens.Settings.createOrJoin": {
-    "message": "Create or Join Project"
+    "message": "Crear o unirse a un proyecto"
   },
   "screens.Settings.createOrJoinDesc": {
-    "message": "Create a new project or join existing one"
+    "message": "Crear un nuevo proyecto o unirse a uno existente"
   },
   "screens.Settings.projectSettings": {
-    "message": "Project Settings"
+    "message": "Configuración del proyecto"
   },
   "screens.Settings.projectSettingsDesc": {
     "description": "list of avaialable project settings",
-    "message": "Categories, Config, Team"
+    "message": "Categorías, configuración, equipo"
   },
   "screens.Settings.title": {
     "description": "Title of settings screen",
@@ -1283,7 +1283,7 @@
     "message": "Privacy Policy"
   },
   "screens.Sync.CreateOrJoinProjectDisplay.buttonText": {
-    "message": "Create or Join Project"
+    "message": "Crear o unirse a un proyecto"
   },
   "screens.Sync.CreateOrJoinProjectDisplay.subText": {
     "message": "This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
@@ -1394,7 +1394,7 @@
     "message": "Buscando…"
   },
   "sharedComponents.Editor.PresetView.Change": {
-    "message": "Change"
+    "message": "Cambiar"
   },
   "sharedComponents.ErrorModal.goBack": {
     "message": "Go Back"

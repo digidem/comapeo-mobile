@@ -1,11 +1,11 @@
 import React, {FC, useState} from 'react';
 import {Linking, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
-import AudioPermission from '../images/observationEdit/AudioPermission.svg';
-import {BottomSheetModalContent} from './BottomSheetModal';
+import AudioPermission from '../../images/observationEdit/AudioPermission.svg';
+import {BottomSheetModalContent} from '../../sharedComponents/BottomSheetModal';
 import {Audio} from 'expo-av';
 import {PermissionResponse} from 'expo-modules-core';
-import {NativeRootNavigationProps} from '../sharedTypes/navigation';
+import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
   title: {

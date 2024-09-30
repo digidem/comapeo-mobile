@@ -6,7 +6,7 @@ import AudioIcon from '../images/observationEdit/Audio.svg';
 import DetailsIcon from '../images/observationEdit/Details.svg';
 import {useNavigation} from '@react-navigation/native';
 import {Preset} from '@comapeo/schema';
-import {PermissionAudioBottomSheetContent} from './PermissionAudioBottomSheetContent';
+import {PermissionAudioBottomSheetContent} from '../screens/Audio/PermissionAudioBottomSheetContent';
 import {Audio} from 'expo-av';
 import {useBottomSheetModal} from '../sharedComponents/BottomSheetModal';
 import {BottomSheetModal} from './BottomSheetModal';

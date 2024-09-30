@@ -105,6 +105,9 @@
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "Discard changes?"
   },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.navTitle": {
+    "message": "Add Remote Archive"
+  },
   "ProjectSettings.RemoteArchive.Coordinator.addArchive": {
     "message": "+ Add Remote Archive"
   },

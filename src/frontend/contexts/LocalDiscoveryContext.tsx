@@ -340,7 +340,7 @@ function publishZeroconf(
     };
 
     zeroconf.on(
-      // @ts-expect-error - the types are wrong, this is the correct event name
+      // @ts-expect-error We can remove this when <https://github.com/DefinitelyTyped/DefinitelyTyped/pull/70693> is merged.
       'published',
       onPublish,
     );

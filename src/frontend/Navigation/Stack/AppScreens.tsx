@@ -77,6 +77,7 @@ import {TrackEdit} from '../../screens/TrackEdit/index.tsx';
 import {Config} from '../../screens/Settings/Config';
 import {HowToLeaveProject} from '../../screens/HowToLeaveProject.tsx';
 import {RemoteArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/index.tsx';
+import {SaveButton} from '../../sharedComponents/SaveButton.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -334,7 +335,10 @@ export const createDefaultScreenGroup = ({
     <RootStack.Screen
       name="RemoteArchive"
       component={RemoteArchive}
-      options={{headerTitle: intl(RemoteArchive.navTitle)}}
+      options={{
+        headerTitle: intl(RemoteArchive.navTitle),
+        headerRight: () => <SaveButton onPress={() => {}} isLoading={false} />,
+      }}
     />
   </RootStack.Group>
 );

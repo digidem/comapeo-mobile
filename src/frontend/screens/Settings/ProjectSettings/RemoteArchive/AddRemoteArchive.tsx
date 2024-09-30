@@ -7,6 +7,7 @@ import {RED} from '../../../../lib/styles';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
 import {useForm} from 'react-hook-form';
 import {SaveButton} from '../../../../sharedComponents/SaveButton';
+import {useAddRemoteArchive} from '../../../../hooks/server/projects';
 
 const m = defineMessages({
   navTitle: {
@@ -33,9 +34,13 @@ export const AddRemoteArchive: NativeNavigationComponent<
     formState: {errors},
   } = useForm<{url: string}>();
 
+  const {mutate, isPending} = useAddRemoteArchive();
   const handleCreateProject = React.useCallback(
-    ({url}: {url: string}) => {},
-    [],
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    ({url}: {url: string}) => {
+      mutate({});
+    },
+    [mutate],
   );
 
   React.useLayoutEffect(() => {
@@ -44,11 +49,11 @@ export const AddRemoteArchive: NativeNavigationComponent<
       headerRight: () => (
         <SaveButton
           onPress={handleSubmit(handleCreateProject)}
-          isLoading={false}
+          isLoading={isPending}
         />
       ),
     });
-  }, [handleCreateProject, handleSubmit, navigation]);
+  }, [handleCreateProject, handleSubmit, navigation, isPending]);
 
   return (
     <View style={styles.container}>

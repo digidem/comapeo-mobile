@@ -159,3 +159,21 @@ export function useGetOwnRole() {
     },
   });
 }
+
+export function useAddRemoteArchive() {
+  // const {projectApi} = useActiveProject();
+  // return useMutation({
+  //   mutationFn:({url}:{url:string})=>{
+  //     return projectApi.$member.addServer(url)
+  //   }
+  // }
+
+  return useMutation({
+    mutationFn: async ({shouldThrow}: {shouldThrow?: boolean}) => {
+      setTimeout(() => {
+        if (shouldThrow) throw new Error('Server not added');
+        return {};
+      }, 1500);
+    },
+  });
+}

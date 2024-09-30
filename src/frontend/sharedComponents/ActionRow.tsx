@@ -4,11 +4,14 @@ import {ActionTab} from './ActionTab';
 import PhotoIcon from '../images/observationEdit/Photo.svg';
 import AudioIcon from '../images/observationEdit/Audio.svg';
 import DetailsIcon from '../images/observationEdit/Details.svg';
-import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
+import {useNavigation} from '@react-navigation/native';
 import {Preset} from '@comapeo/schema';
-import {PermissionAudio} from './PermissionAudio';
+import {PermissionAudioBottomSheetContent} from './PermissionAudioBottomSheetContent';
 import {Audio} from 'expo-av';
 import {useBottomSheetModal} from '../sharedComponents/BottomSheetModal';
+import {BottomSheetModal} from './BottomSheetModal';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {AppStackParamsList} from '../sharedTypes/navigation';
 
 const m = defineMessages({
   audioButton: {
@@ -27,12 +30,18 @@ const m = defineMessages({
     description: 'Button label to add details',
   },
 });
+
+type ObservationCreateNavigationProp = NativeStackNavigationProp<
+  AppStackParamsList,
+  'ObservationCreate'
+>;
+
 interface ActionButtonsProps {
   fieldRefs?: Preset['fieldRefs'];
 }
 export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
   const {formatMessage: t} = useIntl();
-  const navigation = useNavigationFromRoot();
+  const navigation = useNavigation<ObservationCreateNavigationProp>();
   const {
     openSheet: openAudioPermissionSheet,
     sheetRef: audioPermissionSheetRef,
@@ -87,11 +96,16 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
   return (
     <>
       <ActionTab items={bottomSheetItems} />
-      <PermissionAudio
-        closeSheet={closeAudioPermissionSheet}
+      <BottomSheetModal
+        ref={audioPermissionSheetRef}
         isOpen={isAudioPermissionSheetOpen}
-        sheetRef={audioPermissionSheetRef}
-      />
+        onDismiss={closeAudioPermissionSheet}
+        fullScreen>
+        <PermissionAudioBottomSheetContent
+          closeSheet={closeAudioPermissionSheet}
+          navigation={navigation}
+        />
+      </BottomSheetModal>
     </>
   );
 };

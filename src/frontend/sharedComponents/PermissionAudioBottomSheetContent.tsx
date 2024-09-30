@@ -1,12 +1,11 @@
-import React, {FC, useState, useEffect} from 'react';
-import {Linking} from 'react-native';
+import React, {FC, useState} from 'react';
+import {Linking, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import AudioPermission from '../images/observationEdit/AudioPermission.svg';
-import {BottomSheetModalContent, BottomSheetModal} from './BottomSheetModal';
+import {BottomSheetModalContent} from './BottomSheetModal';
 import {Audio} from 'expo-av';
-import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import {PermissionResponse} from 'expo-modules-core';
-import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
+import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 
 const m = defineMessages({
   title: {
@@ -37,19 +36,19 @@ const m = defineMessages({
       'Screen button text for navigate user to settings when audio permission was denied',
   },
 });
-interface PermissionAudioProps {
+
+type ObservationCreateNavigationProp =
+  NativeRootNavigationProps<'ObservationCreate'>['navigation'];
+
+interface PermissionAudioBottomSheetContentProps {
   closeSheet: () => void;
-  isOpen: boolean;
-  sheetRef: React.RefObject<BottomSheetModalMethods>;
+  navigation: ObservationCreateNavigationProp;
 }
 
-export const PermissionAudio: FC<PermissionAudioProps> = ({
-  closeSheet,
-  isOpen,
-  sheetRef,
-}) => {
+export const PermissionAudioBottomSheetContent: FC<
+  PermissionAudioBottomSheetContentProps
+> = ({closeSheet, navigation}) => {
   const {formatMessage: t} = useIntl();
-  const navigation = useNavigationFromRoot();
   const [permissionResponse, setPermissionResponse] =
     useState<PermissionResponse | null>(null);
 
@@ -71,30 +70,23 @@ export const PermissionAudio: FC<PermissionAudioProps> = ({
     }
   };
 
-  let onPressActionButton: () => void;
-  let actionButtonText: string;
-
-  if (!permissionResponse) {
-    onPressActionButton = async () => {
-      await handleRequestPermission();
-    };
-    actionButtonText = t(m.allowButtonText);
-  } else if (permissionResponse.status === 'denied') {
-    onPressActionButton = handleOpenSettings;
-    actionButtonText = t(m.goToSettingsButtonText);
-  } else {
-    onPressActionButton = async () => {
-      await handleRequestPermission();
-    };
-    actionButtonText = t(m.allowButtonText);
-  }
+  const onPressActionButton = !permissionResponse
+    ? async () => {
+        await handleRequestPermission();
+      }
+    : permissionResponse.status === 'denied'
+      ? handleOpenSettings
+      : async () => {
+          await handleRequestPermission();
+        };
+  const actionButtonText = !permissionResponse
+    ? t(m.allowButtonText)
+    : permissionResponse.status === 'denied'
+      ? t(m.goToSettingsButtonText)
+      : t(m.allowButtonText);
 
   return (
-    <BottomSheetModal
-      ref={sheetRef}
-      isOpen={isOpen}
-      onDismiss={closeSheet}
-      fullScreen>
+    <View style={{paddingTop: 80}}>
       <BottomSheetModalContent
         icon={<AudioPermission />}
         title={t(m.title)}
@@ -112,6 +104,6 @@ export const PermissionAudio: FC<PermissionAudioProps> = ({
           },
         ]}
       />
-    </BottomSheetModal>
+    </View>
   );
 };

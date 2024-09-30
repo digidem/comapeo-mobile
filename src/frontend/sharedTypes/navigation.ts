@@ -103,6 +103,7 @@ export type RootStackParamsList = {
   SettingsPrivacyPolicy: undefined;
   HowToLeaveProject: undefined;
   RemoteArchive: undefined;
+  AddRemoteArchive: undefined;
 };
 
 export type OnboardingParamsList = {

@@ -79,6 +79,7 @@ import {HowToLeaveProject} from '../../screens/HowToLeaveProject.tsx';
 import {RemoteArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/index.tsx';
 import {SaveButton} from '../../sharedComponents/SaveButton.tsx';
 import {AddRemoteArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/AddRemoteArchive.tsx';
+import {SuccessfullyAddedArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/SuccessfullyAddedArchive.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -345,6 +346,12 @@ export const createDefaultScreenGroup = ({
         headerTitle: intl(AddRemoteArchive.navTitle),
         headerRight: () => <SaveButton onPress={() => {}} isLoading={false} />,
       }}
+    />
+
+    <RootStack.Screen
+      name="SuccessfullyAddedArchive"
+      component={SuccessfullyAddedArchive}
+      options={{headerShown: false}}
     />
   </RootStack.Group>
 );

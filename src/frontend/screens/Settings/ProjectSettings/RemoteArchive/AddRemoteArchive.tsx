@@ -14,6 +14,7 @@ import {
 import {Bar} from 'react-native-progress';
 import {ScreenContentWithDock} from '../../../../sharedComponents/ScreenContentWithDock';
 import {Button} from '../../../../sharedComponents/Button';
+import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
 
 const m = defineMessages({
   navTitle: {
@@ -146,15 +147,23 @@ type AddFoundArchiveProps = {
 const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
   const {formatMessage} = useIntl();
   const {mutate} = useAddRemoteArchive();
-
+  const {navigate} = useNavigationFromRoot();
   function handleAddRemoteArchive() {
-    mutate({}, {onSuccess: () => {}});
+    mutate(
+      {},
+      {
+        onSuccess: () => {
+          navigate('SuccessfullyAddedArchive', {archiveName: name, url});
+        },
+      },
+    );
   }
 
   return (
     <ScreenContentWithDock
       dockContent={
         <Button
+          fullWidth
           onPress={
             handleAddRemoteArchive
           }>{`+ ${formatMessage(m.navTitle)}`}</Button>

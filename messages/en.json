@@ -105,14 +105,26 @@
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "Discard changes?"
   },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
+    "message": "When project participants sync their data, they will also be archived on the internet. Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data."
+  },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.invalidUrl": {
     "message": "Invalid URL"
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.looking": {
+    "message": "Looking for Remote Archive..."
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.navTitle": {
     "message": "Add Remote Archive"
   },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.permission": {
+    "message": "Only a Project Coordinator can turn off Remote Archive."
+  },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.url": {
     "message": "Url"
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.youAreAdding": {
+    "message": "You are adding:"
   },
   "ProjectSettings.RemoteArchive.Coordinator.addArchive": {
     "message": "+ Add Remote Archive"

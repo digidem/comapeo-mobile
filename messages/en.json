@@ -141,6 +141,15 @@
   "ProjectSettings.RemoteArchive.Coordinator.remoteArchiveOff": {
     "message": "Remote Archive is Off"
   },
+  "ProjectSettings.RemoteArchive.Success.archiveAdded": {
+    "message": "Remote Archive Added"
+  },
+  "ProjectSettings.RemoteArchive.Success.canSyncOnInternet": {
+    "message": "All project devices can sync with this Archive, sharing data over the internet."
+  },
+  "ProjectSettings.RemoteArchive.Success.close": {
+    "message": "Close"
+  },
   "ProjectSettings.RemoteArchive.navTitle": {
     "message": "Remote Archive"
   },

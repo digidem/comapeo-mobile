@@ -8,7 +8,7 @@
     "message": "Descartar cambios"
   },
   "AppContainer.EditHeader.discardChangesDescription": {
-    "message": "Your changes will not be saved. This cannot be undone."
+    "message": "Tus cambios no se guardarán. Esto no se puede deshacer."
   },
   "AppContainer.EditHeader.discardChangesTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
@@ -16,39 +16,39 @@
   },
   "AppContainer.EditHeader.discardObservationButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard Observation"
+    "message": "Descartar observación"
   },
   "AppContainer.EditHeader.discardObservationDescription": {
-    "message": "Your Observation will not be saved. This cannot be undone."
+    "message": "Tu observación no se guardará. Esto no se puede deshacer."
   },
   "AppContainer.EditHeader.discardTitle": {
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "¿Quieres descartar la observación?"
   },
   "Modal.GPSDisable.button": {
-    "message": "Enable"
+    "message": "Habilitar"
   },
   "Modal.GPSDisable.description": {
-    "message": "To create a Track CoMapeo needs access to your location and GPS."
+    "message": "Para crear un Trayecto, CoMapeo necesita acceso a tu ubicación y GPS."
   },
   "Modal.GPSDisable.title": {
-    "message": "GPS Disabled"
+    "message": "GPS desactivado"
   },
   "Modal.GPSEnable.button.default": {
-    "message": "Start Tracks"
+    "message": "Iniciar Trayectos"
   },
   "Modal.GPSEnable.button.loading": {
-    "message": "Loading…"
+    "message": "Cargando…"
   },
   "Modal.GPSEnable.button.stop": {
-    "message": "Stop Tracks"
+    "message": "Detener Tracks"
   },
   "Modal.GPSEnable.trackingDescription": {
-    "message": "You’ve been recording for"
+    "message": "Has estado grabando para"
   },
   "Navigation.Drawer.aboutCoMapeo": {
     "description": "Primary text for 'About CoMapeo' link (version info)",
-    "message": "About CoMapeo"
+    "message": "Acerca de CoMapeo"
   },
   "Navigation.Drawer.aboutCoMapeoDesc": {
     "description": "Description of the 'About CoMapeo' page",
@@ -68,13 +68,13 @@
     "message": "Crear un nuevo proyecto o unirse a uno existente"
   },
   "Navigation.Drawer.dataAndPrivacy": {
-    "message": "Data & Privacy"
+    "message": "Datos y privacidad"
   },
   "Navigation.Drawer.mappingOnOwn": {
-    "message": "You are currently mapping on your own"
+    "message": "Actualmente estás mapeando por tu cuenta"
   },
   "Navigation.Drawer.projName": {
-    "message": "Project {projectName}"
+    "message": "Proyecto {proyectoNombre}"
   },
   "Navigation.Drawer.projectSettings": {
     "message": "Configuración del proyecto"
@@ -99,7 +99,7 @@
     "message": "Descartar cambios"
   },
   "ObservationEdit.HeaderLeft.discardObservationDescription": {
-    "message": "Your changes will not be saved. This cannot be undone."
+    "message": "Tus cambios no se guardarán. Esto no se puede deshacer."
   },
   "ObservationEdit.HeaderLeft.discardTitle": {
     "description": "Title of dialog that shows when cancelling observation edits",
@@ -111,20 +111,20 @@
   },
   "SaveTrack.HeaderLeft.discardTitle": {
     "description": "Title of dialog that shows when cancelling track edits",
-    "message": "Discard Track?"
+    "message": "¿Descartar Trayecto?"
   },
   "SaveTrack.HeaderLeft.discardTrackButton": {
     "description": "Button to confirm discarding the track",
-    "message": "Discard Track"
+    "message": "Descartar Trayecto"
   },
   "SaveTrack.HeaderLeft.discardTrackDescription": {
-    "message": "Your Track will not be saved. This cannot be undone."
+    "message": "Tu Trayecto no se guardará. Esto no se puede deshacer."
   },
   "Screens.Settings.AppSettings.coordinateSystem": {
-    "message": "Coordinate System"
+    "message": "Sistema de coordenadas"
   },
   "Screens.Settings.AppSettings.coordinateSystemDesc": {
-    "message": "UTM,Lat/Lon,DMS"
+    "message": "UTM, Lat/Long, DMS"
   },
   "Screens.Settings.AppSettings.language": {
     "message": "Idioma"
@@ -139,7 +139,7 @@
     "message": "Nombre del dispositivo"
   },
   "Screens.Settings.ProjectSettings.mediaSyncSettings": {
-    "message": "Sync Settings"
+    "message": "Ajustes de sincronización"
   },
   "Screens.Settings.ProjectSettings.title": {
     "message": "Configuración del proyecto"
@@ -161,7 +161,7 @@
   },
   "SharedComponents.ActionButtons.share": {
     "description": "Button to share an observation",
-    "message": "Share"
+    "message": "Compartir"
   },
   "TrackEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -176,72 +176,72 @@
     "message": "Descartar cambios"
   },
   "TrackEdit.HeaderLeft.discardTrackDescription": {
-    "message": "Your changes will not be saved. This cannot be undone."
+    "message": "Tus cambios no se guardarán. Esto no se puede deshacer."
   },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
-    "message": "Coordinator"
+    "message": "Persona coordinadora"
   },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.participant": {
-    "message": "Participant"
+    "message": "Participante"
   },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.sendInvite": {
-    "message": "Send Invite"
+    "message": "Enviar invitación"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.notSeeingDevice": {
-    "message": "Not seeing a Device?"
+    "message": "¿No ves un dispositivo?"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameVersion": {
-    "message": "Make sure both devices are on the same version of CoMapeo"
+    "message": "Asegúrate de que ambos dispositivos estén en la misma red wifi"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameWifi": {
-    "message": "Make sure both devices are on the same wifi network"
+    "message": "Asegúrate de que ambos dispositivos estén en la misma red wifi"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.title": {
-    "message": "Select Device to Invite"
+    "message": "Seleccionar dispositivo para invitar"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.coordinatorDescription": {
-    "message": "As a Coordinator this device can invite and remove users, and manage project details."
+    "message": "Como persona coordinadora, este dispositivo puede invitar y quitar dispositivos de este proyecto y administrar los detalles del proyecto."
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.participantDescription": {
-    "message": "As a Participant this device can take and share observations. They cannot manage users or project details."
+    "message": "Como Participante, este dispositivo puede crear, editar, sincronizar y compartir observaciones. No puede administrar personas usuarias ni detalles del proyecto."
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.selectingDevice": {
-    "message": "You are selecting a role for this device:"
+    "message": "Está seleccionando un rol para este dispositivo:"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title": {
-    "message": "Select a Role"
+    "message": "Seleccionar un rol"
   },
   "screens.AboutSettings.CoMapeoBuild": {
     "description": "Label for CoMapeo build number",
-    "message": "CoMapeo build"
+    "message": "Número de compilación de Mapeo"
   },
   "screens.AboutSettings.CoMapeoType": {
     "description": "Label for CoMapeo type/variant (e.g. QA for testing vs normal version of app)",
-    "message": "CoMapeo variant"
+    "message": "Variante de Mapeo"
   },
   "screens.AboutSettings.CoMapeoVersion": {
     "description": "Label for CoMapeo version",
-    "message": "CoMapeo version"
+    "message": "Versión de Mapeo"
   },
   "screens.AboutSettings.androidBuild": {
     "description": "Label for Android build number",
-    "message": "Android build number"
+    "message": "Número de compilación de Android"
   },
   "screens.AboutSettings.androidVersion": {
     "description": "Label for Android version",
-    "message": "Android version"
+    "message": "Versión de Android"
   },
   "screens.AboutSettings.phoneModel": {
     "description": "Label for phone model",
-    "message": "Phone model"
+    "message": "Modelo del teléfono"
   },
   "screens.AboutSettings.title": {
     "description": "Title of 'About CoMapeo' screen",
-    "message": "About CoMapeo"
+    "message": "Acerca de CoMapeo"
   },
   "screens.AboutSettings.unknownValue": {
     "description": "Shown when a device info (e.g. version number) is unknown",
-    "message": "Unknown"
+    "message": "Desconocido"
   },
   "screens.AddPhoto.cancel": {
     "message": "Cancelar"
@@ -254,16 +254,16 @@
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
     "description": "used to indicate to the user what the new passcode will be.",
-    "message": "Passcode: {passcode}"
+    "message": "Código de acceso: {passcode}"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
     "message": "Guardar Contraseña de la aplicación"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.suggestion": {
-    "message": "Make sure to note your passcode in a secure location before saving."
+    "message": "Asegúrate de anotar tu código de acceso en algún lugar seguro antes de guardarlo."
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.title": {
-    "message": "App Passcodes can never be recovered if lost or forgotten!"
+    "message": "¡Las contraseñas de la aplicación nunca se pueden recuperar si se pierden o se olvidan!"
   },
   "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
     "message": "Por favor, introduzca su contraseña"
@@ -296,10 +296,10 @@
     "message": "Contraseña incorrecta"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet": {
-    "message": "This passcode will be required to open the CoMapeo App"
+    "message": "Esta código de acceso será necesario para abrir la aplicación de Mapeo"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
-    "message": "Confirm Passcode"
+    "message": "Confirmar contraseña"
   },
   "screens.AppPasscode.NewPasscode.SetPasscodeScreen.title": {
     "message": "Establecer contraseña"
@@ -311,7 +311,7 @@
     "message": "¿Qué es la Contraseña de la aplicación?"
   },
   "screens.AppPasscode.PasscodeIntro.description": {
-    "message": "App Passcode allows you to add an additional layer of security by requiring that you enter a passcode in order to open the CoMapeo app. You can define your own 5-digit passcode by turning on the feature below."
+    "message": "La contraseña de la aplicación le permite añadir una capa adicional de seguridad, requiriendo introducir una contraseña para abrir la aplicación de CoMapeo. Puedes definir tu propia contraseña de 5 dígitos activando la siguiente función."
   },
   "screens.AppPasscode.PasscodeIntro.warning": {
     "message": "<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open CoMapeo and will lose access to any CoMapeo data that has not been synced with other project participants."
@@ -354,7 +354,7 @@
   },
   "screens.AudioPermission.description": {
     "description": "Screen description for audio permission screen",
-    "message": "To record audio while using the app and in the background CoMapeo needs to access your microphone."
+    "message": "To record audio while using the app and in the background CoMapeo needs to access your microphone. Please enable microphone permissions in your app settings."
   },
   "screens.AudioPermission.title": {
     "description": "Screen title for audio permission screen",
@@ -489,10 +489,10 @@
     "message": "¡Comienza ya!"
   },
   "screens.IntroToCoMapeo.mapAnywhere": {
-    "message": "Map anywhere and everywhere"
+    "message": "Mapea en cualquier lugar y en todas partes"
   },
   "screens.IntroToCoMapeo.mapWorldTogether": {
-    "message": "Map your world, together"
+    "message": "Mapea tu mundo, en colectivo"
   },
   "screens.IntroToCoMapeo.ownData": {
     "message": "Own and control your data"
@@ -502,16 +502,16 @@
     "message": "Idioma"
   },
   "screens.LeaveProject.AlreadyOnProject.alreadyOnProject": {
-    "message": "You are already on a project"
+    "message": "Ya estás en un proyecto"
   },
   "screens.LeaveProject.AlreadyOnProject.goBack": {
-    "message": "Go Back"
+    "message": "Volver"
   },
   "screens.LeaveProject.AlreadyOnProject.leaveProj": {
-    "message": "Leave Current Project"
+    "message": "Abandonar el proyecto actual"
   },
   "screens.LeaveProject.AlreadyOnProject.leaveWarning": {
-    "message": "To join a new project you must leave your current one."
+    "message": "Para unirte a un nuevo proyecto debes abandonar el actual."
   },
   "screens.LeaveProject.AlreadyOnProject.onProject": {
     "message": "You are on {projectName}"
@@ -520,7 +520,7 @@
     "message": "Cancelar"
   },
   "screens.LeaveProject.checkToConfirm": {
-    "message": "Please check the box to confirm"
+    "message": "Por favor, marca la casilla para confirmar"
   },
   "screens.LeaveProject.deleteConsentWithName": {
     "message": "I understand I will be deleting all data from Project {projectName} from my device."
@@ -529,32 +529,32 @@
     "message": "I understand I will be deleting all data from my device."
   },
   "screens.LeaveProject.leaveProj": {
-    "message": "Leave Project"
+    "message": "Abandonar proyecto"
   },
   "screens.LeaveProject.leavingProject": {
-    "message": "Leaving Project {projectName}"
+    "message": "Abandonando proyecto {projectName}"
   },
   "screens.LeaveProject.removeFromProjWithName": {
-    "message": "This will remove all Project {projectName}'s data from your device."
+    "message": "Esto eliminará todos los datos del Proyecto {projectName} de tu dispositivo."
   },
   "screens.LeaveProject.removeFromProjWithoutName": {
-    "message": "This will remove all of the data from your device."
+    "message": "Esto eliminará todos los datos de su dispositivo."
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
-    "message": "Details"
+    "message": "Detalles"
   },
   "screens.LocationInfoScreen.gpsHeader": {
     "description": "Header for GPS screen",
-    "message": "Current GPS Location"
+    "message": "Ubicación actual del GPS"
   },
   "screens.LocationInfoScreen.lastUpdate": {
     "description": "Section title for time of last GPS update",
-    "message": "Last update"
+    "message": "Última actualización"
   },
   "screens.LocationInfoScreen.locationDD": {
     "description": "Section title for DD coordinates",
-    "message": "Coordinates Decimal Degrees"
+    "message": "Coordenadas Grados Decimales"
   },
   "screens.LocationInfoScreen.locationDMS": {
     "description": "Section title for DMS coordinates",
@@ -562,11 +562,11 @@
   },
   "screens.LocationInfoScreen.locationSensors": {
     "description": "Heading for section about location sensor status",
-    "message": "Sensor Status"
+    "message": "Estatus de sensores"
   },
   "screens.LocationInfoScreen.locationUTM": {
     "description": "Section title for UTM coordinates",
-    "message": "Coordinates UTM"
+    "message": "Coordenadas UTM"
   },
   "screens.LocationInfoScreen.no": {
     "description": "if a location sensor is active yes/no",
@@ -574,28 +574,28 @@
   },
   "screens.LocationInfoScreen.yes": {
     "description": "if a location sensor is active yes/no",
-    "message": "Yes"
+    "message": "Sí"
   },
   "screens.ManualGpsScreen.DdForm.east": {
-    "message": "East"
+    "message": "Este"
   },
   "screens.ManualGpsScreen.DdForm.invalidCoordinates": {
-    "message": "Invalid coordinates"
+    "message": "Coordenadas inválidas"
   },
   "screens.ManualGpsScreen.DdForm.latInputLabel": {
-    "message": "Latitude value"
+    "message": "Valor de latitud"
   },
   "screens.ManualGpsScreen.DdForm.latitude": {
-    "message": "Latitude"
+    "message": "Latitud"
   },
   "screens.ManualGpsScreen.DdForm.lonInputLabel": {
-    "message": "Longitude value"
+    "message": "Valor de longitud"
   },
   "screens.ManualGpsScreen.DdForm.longitude": {
-    "message": "Longitude"
+    "message": "Longitud"
   },
   "screens.ManualGpsScreen.DdForm.north": {
-    "message": "North"
+    "message": "Norte"
   },
   "screens.ManualGpsScreen.DdForm.selectLatCardinality": {
     "message": "Select latitude cardinality"

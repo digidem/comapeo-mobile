@@ -8,6 +8,7 @@ import {
   PhotoPromiseWithMetadata,
   UnprocessedDraftPhoto,
 } from '../contexts/PhotoPromiseContext/types';
+import {usePersistedSettings} from './persistedState/usePersistedSettings';
 // react native does not have a random bytes generator, `non-secure` does not require a random bytes generator.
 import {nanoid} from 'nanoid/non-secure';
 import * as Sentry from '@sentry/react-native';
@@ -31,6 +32,9 @@ export const useDraftObservation = () => {
     existingObservationToDraft,
   } = _usePersistedDraftObservationActions();
 
+  const mediaSyncSetting =
+    usePersistedSettings(store => store.mediaSyncSetting) ?? 'everything';
+
   const addPhoto = useCallback(
     async ({capturePromise, mediaMetadata}: PhotoPromiseWithMetadata) => {
       // creates an id, that is stored as a placeholder in persisted photots. This is associated with the processed photo, so when the photo is done processsing, we can replace the placeholder with the actual photo
@@ -41,6 +45,7 @@ export const useDraftObservation = () => {
         draftPhotoId,
         mediaMetadata,
         photo: capturePromise,
+        syncSetting: mediaSyncSetting,
       });
       try {
         // the promise is run

@@ -12,11 +12,13 @@ import {
   DraftPhoto,
 } from './types';
 import ImageResizer from '@bam.tech/react-native-image-resizer';
+import {MediaSyncSetting} from '../../sharedTypes';
 
 type AddPhotoPromiseProps = {
   photo: Promise<CapturedPictureMM>;
   mediaMetadata: MediaMetadata;
   draftPhotoId: string;
+  syncSetting?: MediaSyncSetting;
 };
 
 type PhotoPromiseContextState = {
@@ -46,7 +48,12 @@ export const PhotoPromiseProvider = ({
   >([]);
 
   const addPhotoPromise = React.useCallback(
-    ({photo, draftPhotoId, mediaMetadata}: AddPhotoPromiseProps) => {
+    ({
+      photo,
+      draftPhotoId,
+      mediaMetadata,
+      syncSetting,
+    }: AddPhotoPromiseProps) => {
       // Use signal to cancel processing by setting signal.didCancel = true
       // Important because image resize/rotate is expensive
       const signal: Signal = {};
@@ -56,6 +63,7 @@ export const PhotoPromiseProvider = ({
         photo,
         draftPhotoId,
         mediaMetadata,
+        syncSetting: syncSetting ?? 'everything',
       });
 
       photoPromise.signal = signal;
@@ -117,12 +125,16 @@ async function processPhoto({
   photo,
   draftPhotoId,
   mediaMetadata,
+  syncSetting = 'everything',
   signal,
-}: AddPhotoPromiseProps & {signal: Signal}): Promise<ProcessedDraftPhoto> {
+}: AddPhotoPromiseProps & {
+  signal: Signal;
+}): Promise<ProcessedDraftPhoto> {
   const {uri: originalUri, rotate} = await photo;
   const {didCancel} = signal;
 
   if (didCancel) throw new Error('Cancelled');
+  let previewUri;
 
   // rotate will be defined if the original photo failed to rotate (this
   // happens on low-memory devices) so we rotate the preview and
@@ -138,21 +150,23 @@ async function processPhoto({
 
   if (didCancel) throw new Error('Cancelled');
 
-  const {uri: previewUri} = await ImageResizer.createResizedImage(
-    originalUri,
-    PREVIEW_SIZE,
-    PREVIEW_SIZE,
-    'JPEG',
-    PREVIEW_QUALITY,
-    rotate,
-  );
+  if (syncSetting === 'previews' || syncSetting === 'everything') {
+    ({uri: previewUri} = await ImageResizer.createResizedImage(
+      originalUri,
+      PREVIEW_SIZE,
+      PREVIEW_SIZE,
+      'JPEG',
+      PREVIEW_QUALITY,
+      rotate,
+    ));
+  }
 
   if (didCancel) throw new Error('Cancelled');
 
   return {
     draftPhotoId,
-    originalUri,
-    previewUri,
+    originalUri: syncSetting === 'everything' ? originalUri : '',
+    previewUri: previewUri || '',
     thumbnailUri,
     mediaMetadata,
     type: 'processed',

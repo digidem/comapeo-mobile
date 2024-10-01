@@ -37,13 +37,11 @@ const m = defineMessages({
 });
 
 export function RecordingDone({
-  createdAt,
   duration,
   uri,
   onDelete,
   onRecordAnother,
 }: {
-  createdAt: number;
   duration: number;
   uri: string;
   onDelete: () => void;
@@ -78,7 +76,7 @@ export function RecordingDone({
           {...props}
           onPress={() => {
             const audioRecording = {
-              createdAt,
+              createdAt: Date.now(),
               duration,
               uri,
             };

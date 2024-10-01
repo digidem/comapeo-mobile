@@ -354,7 +354,7 @@
   },
   "screens.AudioPermission.description": {
     "description": "Screen description for audio permission screen",
-    "message": "Para gravar áudio enquanto usa o aplicativo em segundo plano o CoMapeo precisa acessar seu microfone."
+    "message": "To record audio while using the app and in the background CoMapeo needs to access your microphone. Please enable microphone permissions in your app settings."
   },
   "screens.AudioPermission.title": {
     "description": "Screen title for audio permission screen",

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
 import {RecordingActive} from './RecordingActive';
 import {RecordingDone} from './RecordingDone';
@@ -7,47 +7,26 @@ import {useAudioRecording} from './useAudioRecording';
 
 export function CreateRecording() {
   const navigation = useNavigationFromRoot();
-  const recordingState = useAudioRecording();
+  const {startRecording, stopRecording, reset, status, createdAt, uri} =
+    useAudioRecording();
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      recordingState.reset().catch(error => {
-        console.error('Error resetting recording:', error);
-      });
-    });
-
-    return unsubscribe;
-  }, [navigation, recordingState]);
-
-  switch (recordingState.status) {
-    case 'idle': {
-      return <RecordingIdle onPressRecord={recordingState.startRecording} />;
-    }
-    case 'active': {
-      return (
-        <RecordingActive
-          duration={recordingState.duration}
-          onPressStop={recordingState.stopRecording}
-        />
-      );
-    }
-    case 'done': {
-      return (
-        <RecordingDone
-          createdAt={recordingState.createdAt}
-          uri={recordingState.uri}
-          duration={recordingState.duration}
-          onDelete={async () => {
-            await recordingState.deleteRecording().catch(err => {
-              console.log(err);
-            });
-            navigation.goBack();
-          }}
-          onRecordAnother={async () => {
-            await recordingState.reset();
-          }}
-        />
-      );
-    }
-  }
+  return !status || (!status.isRecording && !uri) ? (
+    <RecordingIdle onPressRecord={startRecording} />
+  ) : status.isRecording ? (
+    <RecordingActive
+      duration={status?.durationMillis || 0}
+      onPressStop={stopRecording}
+    />
+  ) : (
+    <RecordingDone
+      createdAt={createdAt || 0}
+      uri={uri || ''}
+      duration={status?.durationMillis || 0}
+      onDelete={() => {
+        reset();
+        navigation.goBack();
+      }}
+      onRecordAnother={reset}
+    />
+  );
 }

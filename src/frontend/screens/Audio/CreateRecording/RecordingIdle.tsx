@@ -19,16 +19,17 @@ export function RecordingIdle({onPressRecord}: {onPressRecord: () => void}) {
   const navigation = useNavigationFromRoot();
   const {formatMessage: t} = useIntl();
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: props => (
-        <CustomHeaderLeft
-          tintColor={props.tintColor}
-          headerBackButtonProps={props}
-        />
-      ),
-    });
-  }, [navigation]);
+  // useEffect(() => {
+  //   navigation.setOptions({
+  //     headerTintColor:props.tintColor,
+  //     headerLeft: props => (
+  //       <CustomHeaderLeft
+  //         tintColor={props.tintColor}
+  //         headerBackButtonProps={props}
+  //       />
+  //     ),
+  //   });
+  // }, [navigation]);
 
   return (
     <ContentWithControls

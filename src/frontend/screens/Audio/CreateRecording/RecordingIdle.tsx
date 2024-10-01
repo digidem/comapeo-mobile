@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
+import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
+import {CustomHeaderLeft} from '../../../sharedComponents/CustomHeaderLeft';
 import {ContentWithControls} from '../ContentWithControls';
 import * as Controls from '../Controls';
 import {MAX_RECORDING_DURATION_MS} from '../constants';
@@ -13,7 +15,19 @@ const m = defineMessages({
 });
 
 export function RecordingIdle({onPressRecord}: {onPressRecord: () => void}) {
+  const navigation = useNavigationFromRoot();
   const {formatMessage: t} = useIntl();
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerLeft: props => (
+        <CustomHeaderLeft
+          tintColor={props.tintColor}
+          headerBackButtonProps={props}
+        />
+      ),
+    });
+  }, [navigation]);
 
   return (
     <ContentWithControls

@@ -15,6 +15,7 @@ import {useDraftObservation} from '../hooks/useDraftObservation.ts';
 import {PhotoPreparedView} from '../sharedComponents/PhotoPreparedView.tsx';
 import ErrorIcon from '../images/Error.svg';
 import {MediaLabel} from '../sharedComponents/MediaLabel.tsx';
+import {useMediaAvailability} from '../hooks/useMediaAvailability.ts';
 
 const m = defineMessages({
   headerDeleteButtonText: {
@@ -39,6 +40,7 @@ export const PhotoPreviewModal: FC<
   NativeRootNavigationProps<'PhotoPreviewModal'>
 > = ({route}) => {
   const {photo} = route.params;
+  const mediaAvailability = useMediaAvailability([photo]);
   const navigation = useNavigationFromRoot();
   const [showHeader, setShowHeader] = useState(true);
   const draftObservation = useDraftObservation();
@@ -94,6 +96,7 @@ export const PhotoPreviewModal: FC<
           textColor={WHITE}
           style={styles.mediaLabel}
           context="openMedia"
+          mediaAvailability={mediaAvailability}
         />
       )}
       <BottomSheetModal ref={sheetRef} isOpen={isOpen}>

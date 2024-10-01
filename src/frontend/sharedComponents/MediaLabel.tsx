@@ -2,7 +2,6 @@ import React from 'react';
 import {Text, StyleSheet, TextStyle} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {WHITE} from '../lib/styles';
-import {usePersistedSettings} from '../hooks/persistedState/usePersistedSettings';
 
 const m = defineMessages({
   labelFullSizePreviews: {
@@ -23,21 +22,22 @@ type MediaLabelProps = {
   textColor?: string;
   style?: TextStyle;
   context: 'observation' | 'openMedia';
+  mediaAvailability: 'full' | 'preview' | 'both' | null;
 };
 
 export const MediaLabel: React.FC<MediaLabelProps> = ({
   textColor = WHITE,
   style,
   context,
+  mediaAvailability,
 }) => {
   const {formatMessage: t} = useIntl();
-  const mediaSyncSetting = usePersistedSettings(
-    store => store.mediaSyncSetting,
-  );
+
+  console.log('mediaAvailability', mediaAvailability);
   let labelText = '';
-  if (mediaSyncSetting === 'everything') {
+  if (mediaAvailability === 'both') {
     labelText = t(m.labelFullSizePreviews);
-  } else if (mediaSyncSetting === 'previews') {
+  } else if (mediaAvailability === 'preview') {
     labelText =
       context === 'observation'
         ? t(m.labelPreviewsOnlyObservation)

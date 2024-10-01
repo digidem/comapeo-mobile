@@ -16,6 +16,10 @@ import {PhotoPreparedView} from '../sharedComponents/PhotoPreparedView.tsx';
 import ErrorIcon from '../images/Error.svg';
 import {MediaLabel} from '../sharedComponents/MediaLabel.tsx';
 import {useMediaAvailability} from '../hooks/useMediaAvailability.ts';
+import {
+  SavedPhoto,
+  ProcessedDraftPhoto,
+} from '../contexts/PhotoPromiseContext/types.ts';
 
 const m = defineMessages({
   headerDeleteButtonText: {
@@ -40,7 +44,13 @@ export const PhotoPreviewModal: FC<
   NativeRootNavigationProps<'PhotoPreviewModal'>
 > = ({route}) => {
   const {photo} = route.params;
-  const mediaAvailability = useMediaAvailability([photo]);
+  const isSavedPhoto = (
+    photo: SavedPhoto | ProcessedDraftPhoto,
+  ): photo is SavedPhoto =>
+    'driveDiscoveryId' in photo && 'name' in photo && 'hash' in photo;
+  const mediaAvailability = isSavedPhoto(photo)
+    ? useMediaAvailability([photo])
+    : null;
   const navigation = useNavigationFromRoot();
   const [showHeader, setShowHeader] = useState(true);
   const draftObservation = useDraftObservation();

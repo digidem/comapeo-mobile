@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, StyleSheet, TextStyle} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {WHITE} from '../lib/styles';
+import {usePersistedSettings} from '../hooks/persistedState/usePersistedSettings';
 
 const m = defineMessages({
   labelFullSizePreviews: {
@@ -32,6 +33,13 @@ export const MediaLabel: React.FC<MediaLabelProps> = ({
   mediaAvailability,
 }) => {
   const {formatMessage: t} = useIntl();
+  const mediaSyncSetting = usePersistedSettings(
+    store => store.mediaSyncSetting,
+  );
+
+  if (!mediaSyncSetting) {
+    return null;
+  }
 
   console.log('mediaAvailability', mediaAvailability);
   let labelText = '';

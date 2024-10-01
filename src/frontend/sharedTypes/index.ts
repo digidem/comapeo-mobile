@@ -31,7 +31,7 @@ export type Attachment = Observation['attachments'][0];
 export type PhotoVariant = 'original' | 'thumbnail' | 'preview';
 
 export type CoordinateFormat = 'utm' | 'dd' | 'dms';
-export type MediaSyncSetting = 'previews' | 'everything';
+export type MediaSyncSetting = 'previews' | 'everything' | null;
 
 // Copied from @comapeo/core/src/roles.js. Created an issue to eventually expose this: https://github.com/digidem/mapeo-core-next/issues/532
 export const CREATOR_ROLE_ID = 'a12a6702b93bd7ff';

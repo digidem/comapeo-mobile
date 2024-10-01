@@ -87,8 +87,6 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
     (attachment): attachment is SavedPhoto => attachment.type === 'photo',
   );
 
-  console.log('Phto attachments', photoAttachments);
-
   const mediaAvailability = useMediaAvailability(photoAttachments);
 
   return (

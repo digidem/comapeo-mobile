@@ -177,3 +177,38 @@ export function useAddRemoteArchive() {
     },
   });
 }
+
+export function useFindRemoteArchive({
+  shouldThrow,
+  url,
+}: {
+  shouldThrow?: boolean;
+  url?: string;
+}) {
+  // const {projectApi} = useActiveProject();
+  // return useMutation({
+  //   mutationFn:({url}:{url:string})=>{
+  //     return projectApi.$member.findServer(url)
+  //   }
+  // }
+
+  return useQuery<{url: string; name: string}>({
+    queryFn: async () => {
+      await new Promise<{url: string; name: string}>((res, rej) => {
+        if (!url) {
+          rej(new Error('No URL provided'));
+          return;
+        }
+        setTimeout(() => {
+          if (shouldThrow) {
+            rej(new Error('Server not found'));
+            return;
+          }
+          return res({url, name: 'Some Remote Archive'});
+        }, 1500);
+      });
+    },
+    queryKey: [url],
+    enabled: !!url,
+  });
+}

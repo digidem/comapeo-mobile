@@ -48,7 +48,11 @@ export function CreateRecording() {
         duration={status?.durationMillis || 0}
         onDelete={() => {
           reset();
-          navigation.goBack();
+          if (navigation.canGoBack()) {
+            navigation.goBack();
+          } else {
+            navigation.navigate('ObservationCreate');
+          }
         }}
         onRecordAnother={reset}
       />

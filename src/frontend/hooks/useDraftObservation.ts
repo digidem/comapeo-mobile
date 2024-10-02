@@ -8,7 +8,6 @@ import {
   PhotoPromiseWithMetadata,
   UnprocessedDraftPhoto,
 } from '../contexts/PhotoPromiseContext/types';
-import {AudioRecording} from '../sharedTypes';
 // react native does not have a random bytes generator, `non-secure` does not require a random bytes generator.
 import {nanoid} from 'nanoid/non-secure';
 import * as Sentry from '@sentry/react-native';
@@ -94,13 +93,6 @@ export const useDraftObservation = () => {
     [deletePersistedPhoto, deletePhotoPromise],
   );
 
-  const addAudio = useCallback(
-    (audioRecording: AudioRecording) => {
-      addAudioRecording(audioRecording);
-    },
-    [addAudioRecording],
-  );
-
   return {
     addPhoto,
     clearDraft,
@@ -111,6 +103,6 @@ export const useDraftObservation = () => {
     updatePreset,
     usePreset,
     existingObservationToDraft,
-    addAudio,
+    addAudioRecording,
   };
 };

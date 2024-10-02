@@ -13,7 +13,7 @@ import {
 import {CloseIcon, DeleteIcon} from '../../../sharedComponents/icons';
 import ErrorIcon from '../../../images/Error.svg';
 import SuccessIcon from '../../../images/GreenCheck.svg';
-import {Playback} from '../Playback';
+import {Playback} from '../../../sharedComponents/Playback';
 import {useDraftObservation} from '../../../hooks/useDraftObservation';
 import {Button} from '../../../sharedComponents/Button';
 
@@ -74,7 +74,7 @@ export function RecordingDone({
 }: RecordingDoneProps) {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
-  const {addAudio} = useDraftObservation();
+  const {addAudioRecording} = useDraftObservation();
 
   const [modalContentType, setModalContentType] =
     useState<ModalContentType>(null);
@@ -100,7 +100,7 @@ export function RecordingDone({
               duration,
               uri,
             };
-            addAudio(audioRecording);
+            addAudioRecording(audioRecording);
             setModalContentType('success');
             openSheet();
           }}
@@ -108,7 +108,7 @@ export function RecordingDone({
         />
       ),
     });
-  }, [navigation, addAudio, duration, uri, openSheet]);
+  }, [navigation, addAudioRecording, duration, uri, openSheet]);
 
   const handleReturnToEditor = () => {
     closeSheet();

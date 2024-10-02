@@ -298,6 +298,7 @@ export const ObservationCreate = ({
     navigation,
     createBlobMutation.isPending,
     createObservationMutation.isPending,
+    createAudioBlobMutation.isPending,
     checkAccuracyAndLocation,
   ]);
 

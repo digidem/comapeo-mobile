@@ -1,1 +1,0 @@
-export const MAX_RECORDING_DURATION_MS = 5 * 60_000;

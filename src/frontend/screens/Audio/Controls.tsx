@@ -1,8 +1,8 @@
 import React, {PropsWithChildren} from 'react';
 import {
   Dimensions,
-  Pressable,
-  PressableProps,
+  TouchableOpacity,
+  TouchableOpacityProps,
   StyleSheet,
   View,
 } from 'react-native';
@@ -10,21 +10,15 @@ import {
 import PlayArrow from '../../images/PlayArrow.svg';
 import {MAGENTA, BLACK, LIGHT_GREY, WHITE} from '../../lib/styles';
 
-type BaseProps = PropsWithChildren<PressableProps>;
+type BaseProps = PropsWithChildren<TouchableOpacityProps>;
 
-function ControlButtonPrimaryBase({children, ...pressableProps}: BaseProps) {
+function ControlButtonPrimaryBase({children, ...touchableProps}: BaseProps) {
   return (
-    <Pressable
-      {...pressableProps}
-      style={({pressed}) => [
-        styles.basePressable,
-        typeof pressableProps.style === 'function'
-          ? pressableProps.style({pressed})
-          : pressableProps.style,
-        pressed && styles.pressablePressed,
-      ]}>
+    <TouchableOpacity
+      {...touchableProps}
+      style={[styles.basePressable, touchableProps.style]}>
       {children}
-    </Pressable>
+    </TouchableOpacity>
   );
 }
 

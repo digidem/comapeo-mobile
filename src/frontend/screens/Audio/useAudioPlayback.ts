@@ -7,7 +7,6 @@ export const useAudioPlayback = (recordingUri: string) => {
   const [isPlaying, setPlaying] = useState(false);
   const [duration, setDuration] = useState<number>(0);
   const [currentPosition, setCurrentPosition] = useState(0);
-  const [isReady, setReady] = useState(false);
 
   const audioCallbackHandler = useCallback((status: AVPlaybackStatus) => {
     const update = status as AVPlaybackStatusSuccess;
@@ -33,7 +32,6 @@ export const useAudioPlayback = (recordingUri: string) => {
         soundInstance = sound;
         recordedSoundRef.current = sound;
         setDuration((status as AVPlaybackStatusSuccess).durationMillis ?? 0);
-        setReady(true);
         sound.setOnPlaybackStatusUpdate(audioCallbackHandler);
       })
       .catch(error => console.error('Error loading sound:', error));
@@ -48,7 +46,7 @@ export const useAudioPlayback = (recordingUri: string) => {
   }, [recordingUri, audioCallbackHandler]);
 
   const startPlayback = async () => {
-    if (!isReady || isPlaying) return;
+    if (!recordedSoundRef.current || isPlaying) return;
 
     try {
       if (currentPosition >= duration) {
@@ -64,7 +62,7 @@ export const useAudioPlayback = (recordingUri: string) => {
   };
 
   const stopPlayback = async () => {
-    if (!isReady || !isPlaying) return;
+    if (!recordedSoundRef.current || !isPlaying) return;
 
     try {
       await recordedSoundRef.current!.pauseAsync();
@@ -76,7 +74,6 @@ export const useAudioPlayback = (recordingUri: string) => {
 
   return {
     duration,
-    isReady,
     isPlaying,
     currentPosition,
     startPlayback,

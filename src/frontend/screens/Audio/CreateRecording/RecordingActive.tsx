@@ -6,7 +6,7 @@ import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
 import {AnimatedBackground} from '../AnimatedBackground';
 import {ContentWithControls} from '../ContentWithControls';
 import * as Controls from '../Controls';
-import {MAX_RECORDING_DURATION_MS} from '../constants';
+import {MAX_RECORDING_DURATION_MS} from '../index';
 import {useAutoStopRecording} from './useAutoStopRecording';
 
 const m = defineMessages({

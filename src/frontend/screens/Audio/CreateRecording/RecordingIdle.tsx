@@ -4,7 +4,7 @@ import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
 import {CustomHeaderLeft} from '../../../sharedComponents/CustomHeaderLeft';
 import {ContentWithControls} from '../ContentWithControls';
 import * as Controls from '../Controls';
-import {MAX_RECORDING_DURATION_MS} from '../constants';
+import {MAX_RECORDING_DURATION_MS} from '../index';
 
 const m = defineMessages({
   description: {

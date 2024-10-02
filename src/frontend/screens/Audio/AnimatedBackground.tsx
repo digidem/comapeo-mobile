@@ -3,7 +3,7 @@ import {Dimensions, StyleSheet} from 'react-native';
 import Animated, {SharedValue, useAnimatedStyle} from 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {MAX_RECORDING_DURATION_MS} from './constants';
+import {MAX_RECORDING_DURATION_MS} from './index';
 
 export function AnimatedBackground({
   elapsedTimeValue,

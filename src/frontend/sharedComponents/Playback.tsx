@@ -1,9 +1,9 @@
 import React, {ReactNode} from 'react';
 import {Duration} from 'luxon';
 import {defineMessages, useIntl} from 'react-intl';
-import {ContentWithControls} from './ContentWithControls';
-import * as Controls from './Controls';
-import {useAudioPlayback} from './useAudioPlayback';
+import {ContentWithControls} from '../screens/Audio/ContentWithControls';
+import * as Controls from '../screens/Audio/Controls';
+import {useAudioPlayback} from '../screens/Audio/useAudioPlayback';
 const m = defineMessages({
   description: {
     id: 'screens.AudioScreen.Playback.description',

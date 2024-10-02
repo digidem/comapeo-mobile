@@ -5,7 +5,7 @@ export function useAutoStopRecording(
   onPressStop: () => void,
 ) {
   useEffect(() => {
-    if (minutesRemaining === 0) {
+    if (minutesRemaining <= 0) {
       onPressStop();
     }
   }, [minutesRemaining, onPressStop]);

@@ -661,7 +661,7 @@
     "message": "Graus decimais (DD)"
   },
   "screens.ManualGpsScreen.degreesMinutesSeconds": {
-    "message": "Degrees/Minutes/Seconds (DMS)"
+    "message": "Graus/Minutos/Segundos (DMS)"
   },
   "screens.ManualGpsScreen.easting": {
     "message": "Leste"
@@ -766,7 +766,7 @@
     "message": "Cancelar"
   },
   "screens.Observation.comapeoAlert": {
-    "message": "CoMapeo Alert"
+    "message": "Alerta CoMapeo"
   },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
@@ -785,10 +785,10 @@
     "message": "Compartilhando imagem"
   },
   "screens.Observation.shareMessageFooter": {
-    "message": "Sent from CoMapeo"
+    "message": "Enviado pelo CoMapeo"
   },
   "screens.Observation.shareMessageTitle": {
-    "message": "CoMapeo Alert"
+    "message": "Alerta CoMapeo"
   },
   "screens.Observation.shareTextTitle": {
     "description": "Title of dialog to share an observation without media",
@@ -947,7 +947,7 @@
     "message": "Sobre Awana Digital"
   },
   "screens.PrivacyPolicy.aboutAwanaContent": {
-    "message": "CoMapeo is developed by Awana Digital, a 501c3 non-profit organization registered in the United States. Awana Digital works in solidarity with frontline communities to use technology to defend their rights and fight climate change."
+    "message": "CoMapeo é desenvolvido por Awana Digital, uma organização sem fins lucrativos registrada conforme lei 501c3 nos Estados Unidos. Awana Digital trabalha em conjunto com as comunidades que estão na linha de frente, para que utilizem a tecnologia na defesa dos seus direitos e na luta contra as mudanças climáticas."
   },
   "screens.PrivacyPolicy.appErrors": {
     "message": "Erros do aplicativo"
@@ -1208,7 +1208,7 @@
     "message": "Importar configuração"
   },
   "screens.Settings.CreateOrJoinProject.importConfigFileError": {
-    "message": "File name should end with .comapeocat"
+    "message": "O nome do arquivo deve terminar com .mapeoconfig"
   },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
     "message": "Junte-se a um projeto existente"

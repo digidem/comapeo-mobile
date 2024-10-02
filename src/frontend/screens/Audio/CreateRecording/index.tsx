@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {BackHandler} from 'react-native';
 import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
 import {RecordingActive} from './RecordingActive';
 import {RecordingDone} from './RecordingDone';
@@ -10,11 +11,33 @@ export function CreateRecording() {
   const {startRecording, stopRecording, reset, status, uri} =
     useAudioRecording();
 
-  if (!status || (!status.isRecording && !uri)) {
+  let currentState = 'idle';
+  if (status && status.isRecording) {
+    currentState = 'active';
+  } else if (uri) {
+    currentState = 'done';
+  }
+
+  useEffect(() => {
+    if (currentState === 'active' || currentState === 'done') {
+      const onBackPress = () => {
+        return true;
+      };
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress,
+      );
+      return () => {
+        backHandler.remove();
+      };
+    }
+  }, [currentState]);
+
+  if (currentState === 'idle') {
     return <RecordingIdle onPressRecord={startRecording} />;
   }
 
-  if (status.isRecording) {
+  if (currentState === 'active') {
     return (
       <RecordingActive
         duration={status?.durationMillis || 0}
@@ -23,15 +46,19 @@ export function CreateRecording() {
     );
   }
 
-  return (
-    <RecordingDone
-      uri={uri || ''}
-      duration={status?.durationMillis || 0}
-      onDelete={() => {
-        reset();
-        navigation.goBack();
-      }}
-      onRecordAnother={reset}
-    />
-  );
+  if (currentState === 'done') {
+    return (
+      <RecordingDone
+        uri={uri || ''}
+        duration={status?.durationMillis || 0}
+        onDelete={() => {
+          navigation.goBack();
+          reset();
+        }}
+        onRecordAnother={reset}
+      />
+    );
+  }
+
+  return null;
 }

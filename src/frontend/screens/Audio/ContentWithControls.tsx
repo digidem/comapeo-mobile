@@ -6,6 +6,7 @@ import {Duration} from 'luxon';
 import {MEDIUM_GREY, WHITE} from '../../lib/styles';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {Text} from '../../sharedComponents/Text';
+import {Row as ControlsRow} from './Controls';
 
 export function ContentWithControls({
   controls,
@@ -22,7 +23,7 @@ export function ContentWithControls({
     <ScreenContentWithDock
       contentContainerStyle={styles.contentContainer}
       dockContainerStyle={styles.dockContainer}
-      dockContent={controls}>
+      dockContent={<ControlsRow>{controls}</ControlsRow>}>
       <View style={styles.container}>
         <View style={styles.timerContainer}>
           <Text style={styles.timerText}>

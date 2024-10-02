@@ -36,7 +36,7 @@ export function RecordingActive({
   }, [duration]);
 
   useEffect(() => {
-    navigation.setOptions({headerLeft: () => null});
+    navigation.setOptions({headerShown: false});
   }, [navigation]);
 
   useAutoStopRecording(minutesRemaining, onPressStop);
@@ -52,11 +52,7 @@ export function RecordingActive({
               })
             : undefined
         }
-        controls={
-          <Controls.Row>
-            <Controls.Stop onPress={onPressStop} />
-          </Controls.Row>
-        }
+        controls={<Controls.Stop onPress={onPressStop} />}
       />
       <AnimatedBackground elapsedTimeValue={elapsedTimeValue} />
     </>

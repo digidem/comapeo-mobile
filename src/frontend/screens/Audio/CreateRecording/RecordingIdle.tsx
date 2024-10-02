@@ -35,11 +35,7 @@ export function RecordingIdle({onPressRecord}: {onPressRecord: () => void}) {
         length: MAX_RECORDING_DURATION_MS / 60_000,
       })}
       timeElapsed={0}
-      controls={
-        <Controls.Row>
-          <Controls.Record onPress={onPressRecord} />
-        </Controls.Row>
-      }
+      controls={<Controls.Record onPress={onPressRecord} />}
     />
   );
 }

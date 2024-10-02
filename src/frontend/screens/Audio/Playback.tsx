@@ -30,27 +30,19 @@ export function Playback({
       })}
       progress={currentPosition / duration}
       controls={
-        <Controls.Row>
-          {leftControl ? (
+        <>
+          {leftControl && (
             <Controls.Side side="left">{leftControl}</Controls.Side>
-          ) : null}
-          {isPlaying ? (
-            <Controls.Stop
-              onPress={() => {
-                stopPlayback();
-              }}
-            />
-          ) : (
-            <Controls.Play
-              onPress={() => {
-                startPlayback();
-              }}
-            />
           )}
-          {rightControl ? (
+          {isPlaying ? (
+            <Controls.Stop onPress={stopPlayback} />
+          ) : (
+            <Controls.Play onPress={startPlayback} />
+          )}
+          {rightControl && (
             <Controls.Side side="right">{rightControl}</Controls.Side>
-          ) : null}
-        </Controls.Row>
+          )}
+        </>
       }
     />
   );

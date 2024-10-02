@@ -187,9 +187,7 @@ export const ProjectSyncDisplay = ({
       syncInfoContent = (
         <Text style={styles.titleText}>
           {syncStage.connectedPeersCount > 0
-            ? t(m.devicesAvailableToSync, {
-                count: syncStage.connectedPeersCount,
-              })
+            ? t(m.devicesAvailableToSync)
             : t(m.noDevicesAvailableToSync)}
         </Text>
       );
@@ -241,10 +239,7 @@ export const ProjectSyncDisplay = ({
           <Text style={styles.titleText}>
             {syncStage.progress === 0
               ? t(m.waitingForDevices)
-              : t(m.syncingWithDevices, {
-                  active: syncingPeersCount,
-                  total: connectedPeersCount,
-                })}
+              : t(m.syncingWithDevices)}
           </Text>
           <SyncProgress stage={syncStage} />
         </>
@@ -271,10 +266,7 @@ export const ProjectSyncDisplay = ({
       syncInfoContent = (
         <>
           <Text style={styles.titleText}>
-            {t(m.syncingCompleteButWaitingForOthers, {
-              count:
-                syncStage.connectedPeersCount - syncStage.syncingPeersCount,
-            })}
+            {t(m.syncingCompleteButWaitingForOthers)}
           </Text>
           <SyncProgress stage={syncStage} />
         </>
@@ -333,7 +325,7 @@ export const ProjectSyncDisplay = ({
         )}
         <View style={styles.connectedDevicesInfoContainer}>
           <WifiIcon color={DARK_GREY} size={20} />
-          <Text>{t(m.devicesFound, {count: connectedPeersCount})}</Text>
+          <Text>{t(m.devicesFound)}</Text>
         </View>
       </View>
       {syncInfoContent}
@@ -363,10 +355,7 @@ function SyncProgress({
       break;
     }
     case 'complete-partial': {
-      progressLabel = t(m.progressLabelWithDeviceCount, {
-        active: stage.syncingPeersCount,
-        total: stage.connectedPeersCount,
-      });
+      progressLabel = t(m.progressLabelWithDeviceCount);
       break;
     }
     case 'complete-full': {

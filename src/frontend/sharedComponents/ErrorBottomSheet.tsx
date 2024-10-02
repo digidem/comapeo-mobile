@@ -8,7 +8,7 @@ import {
   BottomSheetModal,
   useBottomSheetModal,
 } from './BottomSheetModal';
-import {LogoWithErrorIcon} from './LogoWithErrorIcon';
+import ErrorIcon from '../images/Error.svg';
 
 const m = defineMessages({
   somethingWrong: {
@@ -74,7 +74,7 @@ export const ErrorBottomSheet = (props: ErrorModalProps) => {
       onDismiss={closeSheet}
       isOpen={isOpen}>
       <BottomSheetModalContent
-        icon={<LogoWithErrorIcon />}
+        icon={<ErrorIcon style={{marginTop: 80}} />}
         title={formatMessage(m.somethingWrong)}
         buttonConfigs={buttonConfigs}
       />

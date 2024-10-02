@@ -40,8 +40,7 @@ import {Text} from '../../sharedComponents/Text';
 const m = defineMessages({
   devicesFound: {
     id: 'screens.Sync.ProjectSyncDisplay.devicesFound',
-    defaultMessage:
-      '{count} {count, plural, one {Device} other {Devices}} found',
+    defaultMessage: 'Devices found',
   },
 
   noDevicesAvailableToSync: {
@@ -50,8 +49,7 @@ const m = defineMessages({
   },
   devicesAvailableToSync: {
     id: 'screens.Sync.ProjectSyncDisplay.devicesAvailableToSync',
-    defaultMessage:
-      '{count} {count, plural, one {device} other {devices}} available',
+    defaultMessage: 'Devices available',
   },
   waitingForDevices: {
     id: 'screens.Sync.ProjectSyncDisplay.waitingForDevices',
@@ -59,13 +57,11 @@ const m = defineMessages({
   },
   syncingWithDevices: {
     id: 'screens.Sync.ProjectSyncDisplay.syncingWithDevices',
-    defaultMessage:
-      'Syncing with {active} out of {total} {total, plural, one {device} other {devices}}',
+    defaultMessage: 'You are syncing with your team',
   },
   syncingCompleteButWaitingForOthers: {
     id: 'screens.Sync.ProjectSyncDisplay.syncingCompleteButWaitingForOthers',
-    defaultMessage:
-      'Complete! Waiting for {count} {count, plural, one {device} other {devices}}',
+    defaultMessage: 'Complete! Waiting for other devices to join',
   },
   syncingFullyComplete: {
     id: 'screens.Sync.ProjectSyncDisplay.syncingFullyComplete',
@@ -86,13 +82,7 @@ const m = defineMessages({
   },
   progressLabelWithDeviceCount: {
     id: 'screens.Sync.ProjectSyncDisplay.progressLabelWithDeviceCount',
-    defaultMessage:
-      '{active} out of {total} {total, plural, one {device} other {devices}}…',
-  },
-  progressLabelComplete: {
-    id: 'screens.Sync.ProjectSyncDisplay.progressLabelComplete',
-    defaultMessage:
-      '{count} out of {count} {count, plural, one {device} other {devices}}',
+    defaultMessage: 'Waiting for other devices',
   },
   progressSyncPercentage: {
     id: 'screens.Sync.ProjectSyncDisplay.syncProgress',
@@ -380,9 +370,7 @@ function SyncProgress({
       break;
     }
     case 'complete-full': {
-      progressLabel = t(m.progressLabelComplete, {
-        count: stage.connectedPeersCount,
-      });
+      progressLabel = '';
       break;
     }
     default: {

@@ -11,12 +11,7 @@ export function CreateRecording() {
   const {startRecording, stopRecording, reset, status, uri} =
     useAudioRecording();
 
-  let currentState = 'idle';
-  if (status && status.isRecording) {
-    currentState = 'active';
-  } else if (uri) {
-    currentState = 'done';
-  }
+  const currentState = status?.isRecording ? 'active' : uri ? 'done' : 'idle';
 
   useEffect(() => {
     if (currentState === 'active' || currentState === 'done') {
@@ -52,13 +47,11 @@ export function CreateRecording() {
         uri={uri || ''}
         duration={status?.durationMillis || 0}
         onDelete={() => {
-          navigation.goBack();
           reset();
+          navigation.goBack();
         }}
         onRecordAnother={reset}
       />
     );
   }
-
-  return null;
 }

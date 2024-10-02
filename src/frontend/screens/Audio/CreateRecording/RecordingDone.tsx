@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {HeaderBackButton} from '@react-navigation/elements';
 import {defineMessages, useIntl, FormattedMessage} from 'react-intl';
-import {Pressable, Text, View, StyleSheet} from 'react-native';
+import {Pressable, Text, View} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
 import {WHITE} from '../../../lib/styles';
@@ -15,7 +15,6 @@ import ErrorIcon from '../../../images/Error.svg';
 import SuccessIcon from '../../../images/GreenCheck.svg';
 import {Playback} from '../../../sharedComponents/Playback';
 import {useDraftObservation} from '../../../hooks/useDraftObservation';
-import {Button} from '../../../sharedComponents/Button';
 
 const m = defineMessages({
   deleteBottomSheetTitle: {
@@ -150,35 +149,40 @@ export function RecordingDone({
         />
       );
     } else if (modalContentType === 'success') {
+      const description = (
+        <View style={{marginTop: 40}}>
+          <Text style={{fontSize: 16}}>
+            <FormattedMessage
+              {...m.successDescription}
+              values={{
+                audioRecording: t(m.audioRecording),
+                bold: message => (
+                  <Text style={{fontWeight: 'bold'}}>{message}</Text>
+                ),
+              }}
+            />
+          </Text>
+        </View>
+      );
       return (
-        <View style={styles.container}>
-          <View style={styles.wrapper}>
-            <SuccessIcon />
-            <Text style={styles.title}>{t(m.successTitle)}</Text>
-            <Text style={styles.description}>
-              <FormattedMessage
-                {...m.successDescription}
-                values={{
-                  audioRecording: t(m.audioRecording),
-                  bold: message => (
-                    <Text style={styles.textBold}>{message}</Text>
-                  ),
-                }}
-              />
-            </Text>
-          </View>
-          <View style={styles.buttonContainer}>
-            <Button
-              fullWidth
-              onPress={handleReturnToEditor}
-              variant="outlined"
-              color="ComapeoBlue">
-              {t(m.returnToEditorButtonText)}
-            </Button>
-            <Button fullWidth onPress={handleRecordAnother}>
-              {t(m.recordAnotherButtonText)}
-            </Button>
-          </View>
+        <View style={{marginTop: 80}}>
+          <BottomSheetModalContent
+            icon={<SuccessIcon />}
+            title={t(m.successTitle)}
+            description={description}
+            buttonConfigs={[
+              {
+                text: t(m.returnToEditorButtonText),
+                onPress: handleReturnToEditor,
+                variation: 'outlined',
+              },
+              {
+                text: t(m.recordAnotherButtonText),
+                onPress: handleRecordAnother,
+                variation: 'filled',
+              },
+            ]}
+          />
         </View>
       );
     }
@@ -208,34 +212,3 @@ export function RecordingDone({
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100%',
-    padding: 20,
-    paddingTop: 80,
-  },
-  wrapper: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 24,
-    marginTop: 10,
-  },
-  description: {fontSize: 16, marginTop: 40},
-  textBold: {
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  buttonContainer: {
-    width: '100%',
-    justifyContent: 'flex-end',
-    flex: 1,
-    gap: 15,
-  },
-});

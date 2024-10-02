@@ -45,7 +45,7 @@ export const useAudioPlayback = (recordingUri: string) => {
     };
   }, [recordingUri, audioCallbackHandler]);
 
-  const startPlayback = async () => {
+  const startPlayback = useCallback(async () => {
     if (!recordedSoundRef.current || isPlaying) return;
 
     try {
@@ -59,9 +59,9 @@ export const useAudioPlayback = (recordingUri: string) => {
     } catch (error) {
       console.error('Failed to play sound:', error);
     }
-  };
+  }, [isPlaying, currentPosition, duration]);
 
-  const stopPlayback = async () => {
+  const stopPlayback = useCallback(async () => {
     if (!recordedSoundRef.current || !isPlaying) return;
 
     try {
@@ -70,7 +70,7 @@ export const useAudioPlayback = (recordingUri: string) => {
     } catch (error) {
       console.error('Failed to pause sound:', error);
     }
-  };
+  }, [isPlaying]);
 
   return {
     duration,

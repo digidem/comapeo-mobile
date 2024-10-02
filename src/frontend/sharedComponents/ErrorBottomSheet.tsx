@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as Sentry from '@sentry/react-native';
-import {defineMessages, useIntl} from 'react-intl';
+import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 
 import {ActionButtonConfig} from './BottomSheetModal/Content';
 import {
@@ -29,10 +29,12 @@ type ErrorModalProps = {
   error: Error | null;
   clearError: () => void;
   tryAgain?: () => unknown;
+  title?: MessageDescriptor;
+  description?: MessageDescriptor;
 };
 
 export const ErrorBottomSheet = (props: ErrorModalProps) => {
-  const {error, clearError, tryAgain} = props;
+  const {error, clearError, tryAgain, title, description} = props;
 
   const {formatMessage} = useIntl();
   const {openSheet, sheetRef, isOpen, closeSheet} = useBottomSheetModal({
@@ -75,7 +77,8 @@ export const ErrorBottomSheet = (props: ErrorModalProps) => {
       isOpen={isOpen}>
       <BottomSheetModalContent
         icon={<ErrorIcon style={{marginTop: 80}} />}
-        title={formatMessage(m.somethingWrong)}
+        title={formatMessage(title || m.somethingWrong)}
+        description={description ? formatMessage(description) : undefined}
         buttonConfigs={buttonConfigs}
       />
     </BottomSheetModal>

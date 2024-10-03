@@ -61,8 +61,8 @@ export const PermissionAudioBottomSheetContent: FC<
     const response = await Audio.requestPermissionsAsync();
     setPermissionResponse(response);
     if (response.status === 'granted') {
-      closeSheet();
       navigation.navigate('Audio');
+      closeSheet();
     } else if (response.status === 'denied' && response.canAskAgain) {
       closeSheet();
     } else if (response.status === 'denied' && !response.canAskAgain) {

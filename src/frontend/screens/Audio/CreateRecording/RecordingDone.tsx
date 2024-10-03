@@ -205,6 +205,7 @@ export function RecordingDone({
       />
       <BottomSheetModal
         ref={sheetRef}
+        onDismiss={closeSheet}
         isOpen={isModalOpen}
         fullScreen={modalContentType === 'success'}>
         {renderModalContent()}

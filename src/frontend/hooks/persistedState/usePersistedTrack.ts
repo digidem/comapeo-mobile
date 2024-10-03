@@ -72,7 +72,7 @@ export const tracksStore = createPersistedStore<TracksStoreState>(
           trackingSince: null,
           distance: 0,
           isTracking: false,
-          observations: [],
+          observationRefs: [],
           description: '',
         };
       }),

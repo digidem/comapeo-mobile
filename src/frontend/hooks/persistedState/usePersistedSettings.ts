@@ -18,7 +18,7 @@ type SettingsSlice = {
 const settingsSlice: StateCreator<SettingsSlice> = (set, get) => ({
   coordinateFormat: 'utm',
   manualCoordinateEntryFormat: 'utm',
-  mediaSyncSetting: 'everything',
+  mediaSyncSetting: null,
   actions: {
     setCoordinateFormat: coordinateFormat => set({coordinateFormat}),
     setManualCoordinateEntryFormat: coordinateFormat =>

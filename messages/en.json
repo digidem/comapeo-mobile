@@ -691,6 +691,9 @@
   "screens.ManualGpsScreen.zoneNumber": {
     "message": "Zone Number"
   },
+  "screens.MediaLabel.labelFullSizePreviews": {
+    "message": "Full size and previews available"
+  },
   "screens.MediaSyncActionSheetContent.cancel": {
     "message": "Cancel"
   },
@@ -779,6 +782,9 @@
   "screens.Observation.fallbackCategoryName": {
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "Observation"
+  },
+  "screens.Observation.labelPreviewsOnlyObservation": {
+    "message": "Only previews are available"
   },
   "screens.Observation.shareMediaTitle": {
     "description": "Title of dialog to share an observation with media",
@@ -942,6 +948,9 @@
   },
   "screens.PhotoPreviewModal.DeletePhoto.headerButtonText": {
     "message": "Delete Photo"
+  },
+  "screens.PhotoPreviewModal.labelPreviewsOnlyOpenMedia": {
+    "message": "Only preview is available"
   },
   "screens.PrivacyPolicy.aboutAwana": {
     "message": "About Awana Digital"

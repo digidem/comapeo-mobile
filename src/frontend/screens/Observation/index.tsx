@@ -2,7 +2,13 @@ import * as React from 'react';
 
 import {Text, View, ScrollView, StyleSheet} from 'react-native';
 import {defineMessages} from 'react-intl';
-import {BLACK, WHITE, DARK_GREY, LIGHT_GREY} from '../../lib/styles';
+import {
+  BLACK,
+  WHITE,
+  DARK_GREY,
+  LIGHT_GREY,
+  NEW_DARK_GREY,
+} from '../../lib/styles';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 import {FormattedObservationDate} from '../../sharedComponents/FormattedData';
@@ -20,6 +26,8 @@ import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
 import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types.ts';
 import {ButtonFields} from './Buttons.tsx';
+import {MediaLabel} from '../../sharedComponents/MediaLabel.tsx';
+import {useMediaAvailability} from '../../hooks/useMediaAvailability.ts';
 
 const m = defineMessages({
   deleteTitle: {
@@ -79,6 +87,8 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
     (attachment): attachment is SavedPhoto => attachment.type === 'photo',
   );
 
+  const mediaAvailability = useMediaAvailability(photoAttachments);
+
   return (
     <ScrollView
       style={styles.root}
@@ -102,6 +112,15 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
               <Text style={styles.textNotes}>{observation.tags.notes}</Text>
             </View>
           ) : null}
+          {process.env.EXPO_PUBLIC_FEATURE_MEDIA_MANAGER &&
+            photoAttachments.length > 0 && (
+              <MediaLabel
+                textColor={NEW_DARK_GREY}
+                style={styles.mediaLabel}
+                context="observation"
+                mediaAvailability={mediaAvailability}
+              />
+            )}
           {photoAttachments.length > 0 && (
             <MediaScrollView
               photos={photoAttachments}
@@ -157,5 +176,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingVertical: 10,
     textAlign: 'center',
+  },
+  mediaLabel: {
+    marginVertical: 20,
+    marginLeft: 10,
   },
 });

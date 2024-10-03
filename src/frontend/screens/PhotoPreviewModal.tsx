@@ -14,6 +14,12 @@ import {defineMessages, useIntl} from 'react-intl';
 import {useDraftObservation} from '../hooks/useDraftObservation.ts';
 import {PhotoPreparedView} from '../sharedComponents/PhotoPreparedView.tsx';
 import ErrorIcon from '../images/Error.svg';
+import {MediaLabel} from '../sharedComponents/MediaLabel.tsx';
+import {useMediaAvailability} from '../hooks/useMediaAvailability.ts';
+import {
+  SavedPhoto,
+  ProcessedDraftPhoto,
+} from '../contexts/PhotoPromiseContext/types.ts';
 
 const m = defineMessages({
   headerDeleteButtonText: {
@@ -38,6 +44,13 @@ export const PhotoPreviewModal: FC<
   NativeRootNavigationProps<'PhotoPreviewModal'>
 > = ({route}) => {
   const {photo} = route.params;
+  const isSavedPhoto = (
+    photo: SavedPhoto | ProcessedDraftPhoto,
+  ): photo is SavedPhoto =>
+    'driveDiscoveryId' in photo && 'name' in photo && 'hash' in photo;
+  const mediaAvailability = isSavedPhoto(photo)
+    ? useMediaAvailability([photo])
+    : null;
   const navigation = useNavigationFromRoot();
   const [showHeader, setShowHeader] = useState(true);
   const draftObservation = useDraftObservation();
@@ -88,7 +101,14 @@ export const PhotoPreviewModal: FC<
           photo={photo}
         />
       )}
-
+      {process.env.EXPO_PUBLIC_FEATURE_MEDIA_MANAGER && (
+        <MediaLabel
+          textColor={WHITE}
+          style={styles.mediaLabel}
+          context="openMedia"
+          mediaAvailability={mediaAvailability}
+        />
+      )}
       <BottomSheetModal ref={sheetRef} isOpen={isOpen}>
         <BottomSheetModalContent
           title={t(m.deleteModalTitle)}
@@ -129,5 +149,10 @@ const styles = StyleSheet.create({
     marginLeft: 4,
     color: WHITE,
     fontSize: 13,
+  },
+  mediaLabel: {
+    position: 'absolute',
+    bottom: 12,
+    left: 20,
   },
 });

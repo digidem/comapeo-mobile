@@ -126,29 +126,7 @@ export function RecordingDone({
   };
 
   const renderModalContent = () => {
-    if (modalContentType === 'delete') {
-      return (
-        <BottomSheetModalContent
-          icon={<ErrorIcon />}
-          title={t(m.deleteBottomSheetTitle)}
-          description={t(m.deleteBottomSheetDescription)}
-          buttonConfigs={[
-            {
-              dangerous: true,
-              text: t(m.deleteBottomSheetPrimaryButtonText),
-              icon: <DeleteIcon color={WHITE} />,
-              onPress: handleDelete,
-              variation: 'filled',
-            },
-            {
-              variation: 'outlined',
-              text: t(m.deleteBottomSheetSecondaryButtonText),
-              onPress: closeSheet,
-            },
-          ]}
-        />
-      );
-    } else if (modalContentType === 'success') {
+    if (modalContentType === 'success') {
       const description = (
         <View style={{marginTop: 40}}>
           <Text style={{fontSize: 16}}>
@@ -208,7 +186,25 @@ export function RecordingDone({
         onDismiss={closeSheet}
         isOpen={isModalOpen}
         fullScreen={modalContentType === 'success'}>
-        {renderModalContent()}
+        <BottomSheetModalContent
+          icon={<ErrorIcon />}
+          title={t(m.deleteBottomSheetTitle)}
+          description={t(m.deleteBottomSheetDescription)}
+          buttonConfigs={[
+            {
+              dangerous: true,
+              text: t(m.deleteBottomSheetPrimaryButtonText),
+              icon: <DeleteIcon color={WHITE} />,
+              onPress: handleDelete,
+              variation: 'filled',
+            },
+            {
+              variation: 'outlined',
+              text: t(m.deleteBottomSheetSecondaryButtonText),
+              onPress: closeSheet,
+            },
+          ]}
+        />
       </BottomSheetModal>
     </>
   );

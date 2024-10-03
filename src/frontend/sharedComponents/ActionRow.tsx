@@ -58,14 +58,14 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
     navigation.navigate('ObservationFields', {question: 1});
   };
 
-  const handleAudioPress = useCallback(async () => {
+  const handleAudioPress = async () => {
     const {status} = await Audio.getPermissionsAsync();
     if (status === 'granted') {
       navigation.navigate('Audio');
     } else {
       openAudioPermissionSheet();
     }
-  }, [navigation, openAudioPermissionSheet]);
+  };
 
   const bottomSheetItems = [
     {

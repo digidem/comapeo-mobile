@@ -184,8 +184,7 @@ export function RecordingDone({
       <BottomSheetModal
         ref={sheetRef}
         onDismiss={closeSheet}
-        isOpen={isModalOpen}
-        fullScreen={modalContentType === 'success'}>
+        isOpen={isModalOpen}>
         <BottomSheetModalContent
           icon={<ErrorIcon />}
           title={t(m.deleteBottomSheetTitle)}

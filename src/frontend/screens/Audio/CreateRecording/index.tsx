@@ -13,20 +13,20 @@ export function CreateRecording() {
 
   const currentState = status?.isRecording ? 'active' : uri ? 'done' : 'idle';
 
-  useEffect(() => {
-    if (currentState === 'active' || currentState === 'done') {
-      const onBackPress = () => {
-        return true;
-      };
-      const backHandler = BackHandler.addEventListener(
-        'hardwareBackPress',
-        onBackPress,
-      );
-      return () => {
-        backHandler.remove();
-      };
-    }
-  }, [currentState]);
+  // useEffect(() => {
+  //   if (currentState === 'active' || currentState === 'done') {
+  //     const onBackPress = () => {
+  //       return true;
+  //     };
+  //     const backHandler = BackHandler.addEventListener(
+  //       'hardwareBackPress',
+  //       onBackPress,
+  //     );
+  //     return () => {
+  //       backHandler.remove();
+  //     };
+  //   }
+  // }, [currentState]);
 
   if (currentState === 'idle') {
     return <RecordingIdle onPressRecord={startRecording} />;

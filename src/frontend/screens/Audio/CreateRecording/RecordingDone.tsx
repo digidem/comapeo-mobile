@@ -109,14 +109,21 @@ export function RecordingDone({
     });
   }, [navigation, addAudioRecording, duration, uri, openSheet]);
 
-  const handleDelete = async () => {
-    await closeSheet();
-    if (navigation.canGoBack()) {
-      navigation.goBack();
-    } else {
-      navigation.navigate('ObservationCreate');
-    }
+  const handleDelete = () => {
+    closeSheet();
     onDelete();
+    setTimeout(() => {
+      navigation.goBack();
+    }, 100);
+  };
+
+  const handleDeletePress = () => {
+    if (isModalOpen) {
+      return;
+    } else {
+      setModalContentType('delete');
+      openSheet();
+    }
   };
 
   const handleReturnToEditor = () => {
@@ -200,11 +207,7 @@ export function RecordingDone({
         uri={uri}
         isModalOpen={isModalOpen}
         leftControl={
-          <Pressable
-            onPress={() => {
-              setModalContentType('delete');
-              openSheet();
-            }}>
+          <Pressable onPress={handleDeletePress}>
             <MaterialIcon name="delete" color={WHITE} size={36} />
           </Pressable>
         }

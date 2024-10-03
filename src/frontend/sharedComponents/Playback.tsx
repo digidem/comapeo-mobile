@@ -1,4 +1,5 @@
 import React, {ReactNode} from 'react';
+import {View} from 'react-native';
 import {Duration} from 'luxon';
 import {defineMessages, useIntl} from 'react-intl';
 import {ContentWithControls} from '../screens/Audio/ContentWithControls';
@@ -12,10 +13,12 @@ const m = defineMessages({
 });
 export function Playback({
   uri,
+  isModalOpen,
   leftControl,
   rightControl,
 }: {
   uri: string;
+  isModalOpen?: boolean;
   leftControl?: ReactNode;
   rightControl?: ReactNode;
 }) {
@@ -23,27 +26,29 @@ export function Playback({
   const {duration, currentPosition, isPlaying, stopPlayback, startPlayback} =
     useAudioPlayback(uri);
   return (
-    <ContentWithControls
-      timeElapsed={currentPosition}
-      message={t(m.description, {
-        length: Duration.fromMillis(duration).toFormat('mm:ss'),
-      })}
-      progress={currentPosition / duration}
-      controls={
-        <>
-          {leftControl && (
-            <Controls.Side side="left">{leftControl}</Controls.Side>
-          )}
-          {isPlaying ? (
-            <Controls.Stop onPress={stopPlayback} />
-          ) : (
-            <Controls.Play onPress={startPlayback} />
-          )}
-          {rightControl && (
-            <Controls.Side side="right">{rightControl}</Controls.Side>
-          )}
-        </>
-      }
-    />
+    <View pointerEvents={isModalOpen ? 'none' : 'auto'}>
+      <ContentWithControls
+        timeElapsed={currentPosition}
+        message={t(m.description, {
+          length: Duration.fromMillis(duration).toFormat('mm:ss'),
+        })}
+        progress={currentPosition / duration}
+        controls={
+          <>
+            {leftControl && (
+              <Controls.Side side="left">{leftControl}</Controls.Side>
+            )}
+            {isPlaying ? (
+              <Controls.Stop onPress={stopPlayback} />
+            ) : (
+              <Controls.Play onPress={startPlayback} />
+            )}
+            {rightControl && (
+              <Controls.Side side="right">{rightControl}</Controls.Side>
+            )}
+          </>
+        }
+      />
+    </View>
   );
 }

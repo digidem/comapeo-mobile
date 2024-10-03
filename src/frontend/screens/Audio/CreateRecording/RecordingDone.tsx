@@ -198,6 +198,7 @@ export function RecordingDone({
     <>
       <Playback
         uri={uri}
+        isModalOpen={isModalOpen}
         leftControl={
           <Pressable
             onPress={() => {

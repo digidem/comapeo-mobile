@@ -1313,16 +1313,13 @@
     "message": "Todos los datos están sincronizados"
   },
   "screens.Sync.ProjectSyncDisplay.devicesAvailableToSync": {
-    "message": "¡{count} {count, plural, one {dispositivo} other {dispositivos}} disponibles"
+    "message": "Devices available"
   },
   "screens.Sync.ProjectSyncDisplay.devicesFound": {
-    "message": "{count} {count, plural, one {dispositivo} other {dispositivos}} disponibles"
+    "message": "Devices found"
   },
   "screens.Sync.ProjectSyncDisplay.noDevicesAvailableToSync": {
     "message": "No hay dispositivos disponibles para sincronizar"
-  },
-  "screens.Sync.ProjectSyncDisplay.progressLabelComplete": {
-    "message": "{count} de {count} {count, plural, one {device} other {devices}}"
   },
   "screens.Sync.ProjectSyncDisplay.progressLabelSyncing": {
     "message": "Sincronizando…"
@@ -1331,7 +1328,7 @@
     "message": "Esperando…"
   },
   "screens.Sync.ProjectSyncDisplay.progressLabelWithDeviceCount": {
-    "message": "{active} de {total} {total, plural, one {device} other {devices}}…"
+    "message": "Waiting for other devices"
   },
   "screens.Sync.ProjectSyncDisplay.startSync": {
     "message": "Iniciar Sincronización"
@@ -1343,13 +1340,13 @@
     "message": "{value}%"
   },
   "screens.Sync.ProjectSyncDisplay.syncingCompleteButWaitingForOthers": {
-    "message": "¡Listo! ¡Esperando a {count} {count, plural, one {dispositivo} other {dispositivos}}"
+    "message": "Complete! Waiting for other devices to join"
   },
   "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
     "message": "¡Listo! Ya te actualizaste"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "Sincronizando con {active} de {total} {total, plural, one {dispositivo} other {dispositivos}}"
+    "message": "You are syncing with your team"
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
     "message": "Esperando a los dispositivos"

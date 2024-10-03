@@ -71,14 +71,10 @@ export const PermissionAudioBottomSheetContent: FC<
   };
 
   const onPressActionButton = !permissionResponse
-    ? async () => {
-        await handleRequestPermission();
-      }
+    ? handleRequestPermission
     : permissionResponse.status === 'denied'
       ? handleOpenSettings
-      : async () => {
-          await handleRequestPermission();
-        };
+      : handleRequestPermission;
   const actionButtonText = !permissionResponse
     ? t(m.allowButtonText)
     : permissionResponse.status === 'denied'

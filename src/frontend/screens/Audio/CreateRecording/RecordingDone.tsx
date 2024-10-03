@@ -109,6 +109,11 @@ export function RecordingDone({
     });
   }, [navigation, addAudioRecording, duration, uri, openSheet]);
 
+  const handleDelete = () => {
+    closeSheet();
+    onDelete();
+  };
+
   const handleReturnToEditor = () => {
     closeSheet();
     navigation.navigate('ObservationCreate');
@@ -132,18 +137,13 @@ export function RecordingDone({
               dangerous: true,
               text: t(m.deleteBottomSheetPrimaryButtonText),
               icon: <DeleteIcon color={WHITE} />,
-              onPress: () => {
-                closeSheet();
-                onDelete();
-              },
+              onPress: handleDelete,
               variation: 'filled',
             },
             {
               variation: 'outlined',
               text: t(m.deleteBottomSheetSecondaryButtonText),
-              onPress: () => {
-                closeSheet();
-              },
+              onPress: closeSheet,
             },
           ]}
         />

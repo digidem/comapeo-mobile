@@ -47,8 +47,8 @@ export function CreateRecording() {
         uri={uri || ''}
         duration={status?.durationMillis || 0}
         onDelete={() => {
-          navigation.goBack();
           reset();
+          navigation.goBack();
         }}
         onRecordAnother={reset}
       />

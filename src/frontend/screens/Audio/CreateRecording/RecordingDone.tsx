@@ -109,8 +109,13 @@ export function RecordingDone({
     });
   }, [navigation, addAudioRecording, duration, uri, openSheet]);
 
-  const handleDelete = () => {
-    closeSheet();
+  const handleDelete = async () => {
+    await closeSheet();
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    } else {
+      navigation.navigate('ObservationCreate');
+    }
     onDelete();
   };
 
@@ -205,7 +210,6 @@ export function RecordingDone({
       />
       <BottomSheetModal
         ref={sheetRef}
-        onDismiss={closeSheet}
         isOpen={isModalOpen}
         fullScreen={modalContentType === 'success'}>
         {renderModalContent()}

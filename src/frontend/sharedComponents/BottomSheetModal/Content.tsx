@@ -54,7 +54,7 @@ export const Content = ({
   titleStyle,
 }: Props) => {
   const {window} = useDimensions();
-  const fullScreen = true;
+  const {fullScreen} = useBottomSheetModalProperties();
 
   return (
     <View

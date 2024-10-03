@@ -59,6 +59,9 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
   };
 
   const handleAudioPress = useCallback(async () => {
+    if (isAudioPermissionSheetOpen) {
+      return;
+    }
     const {status} = await Audio.getPermissionsAsync();
     if (status === 'granted') {
       navigation.navigate('Audio');

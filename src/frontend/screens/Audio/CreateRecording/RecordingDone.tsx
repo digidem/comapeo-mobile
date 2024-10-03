@@ -15,7 +15,6 @@ import ErrorIcon from '../../../images/Error.svg';
 import SuccessIcon from '../../../images/GreenCheck.svg';
 import {Playback} from '../../../sharedComponents/Playback';
 import {useDraftObservation} from '../../../hooks/useDraftObservation';
-import {useBottomSheetModal as useGorhamBottomSheet} from '@gorhom/bottom-sheet';
 
 const m = defineMessages({
   deleteBottomSheetTitle: {
@@ -88,8 +87,6 @@ export function RecordingDone({
     openOnMount: false,
   });
 
-  const {dismissAll} = useGorhamBottomSheet();
-
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -137,9 +134,6 @@ export function RecordingDone({
               icon: <DeleteIcon color={WHITE} />,
               onPress: () => {
                 closeSheet();
-                if (!sheetRef.current) {
-                  dismissAll();
-                }
                 onDelete();
               },
               variation: 'filled',

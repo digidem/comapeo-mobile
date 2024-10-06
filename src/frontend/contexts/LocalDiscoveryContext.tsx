@@ -8,6 +8,7 @@ import NetInfo, {
 import StateMachine from 'start-stop-state-machine';
 import Zeroconf, {type Service as ZeroconfService} from 'react-native-zeroconf';
 import {type MapeoClientApi} from '@comapeo/ipc';
+import * as Sentry from '@sentry/react-native';
 import noop from '../lib/noop';
 
 type LocalDiscoveryController = ReturnType<
@@ -33,6 +34,12 @@ const POLL_WIFI_STATE_INTERVAL_MS = 2000;
 const ZEROCONF_SERVICE_TYPE = 'comapeo';
 const ZEROCONF_PROTOCOL = 'tcp';
 const ZEROCONF_DOMAIN = 'local.';
+// react-native-zeroconf does not notify when a service fails to register or unregister
+// https://github.com/balthazar/react-native-zeroconf/blob/master/android/src/main/java/com/balthazargronon/RCTZeroconf/nsd/NsdServiceImpl.java#L210
+// so we need a timeout, otherwise the service would never be considered
+// "started" or "stopped", which would stop browsing for peers.
+const ZEROCONF_PUBLISH_TIMEOUT_MS = 5000;
+const ZEROCONF_UNPUBLISH_TIMEOUT_MS = 5000;
 
 const LocalDiscoveryContext = React.createContext<
   LocalDiscoveryController | undefined
@@ -91,33 +98,48 @@ export function createLocalDiscoveryController(mapeoApi: MapeoClientApi) {
   };
   let cancelNetInfoFetch: undefined | (() => void);
   const zeroconf = new Zeroconf();
+  // In edge-cases, we may end up with multiple published names (NSD service
+  // will append ` (1)` to the name if there is a conflict), so we need to track
+  // them here so that we can unpublish them when we stop the service.
+  const publishedNames = new Set<string>();
 
   const sm = new StateMachine({
     async start() {
-      const [{name, port}] = await Promise.all([
-        mapeoApi.startLocalPeerDiscoveryServer(),
-        startZeroconf(zeroconf),
-      ]);
-      zeroconf.publishService(
-        ZEROCONF_SERVICE_TYPE,
-        ZEROCONF_PROTOCOL,
-        ZEROCONF_DOMAIN,
-        name,
-        port,
-      );
+      // start browsing straight away
+      const startZeroconfPromise = startZeroconf(zeroconf);
+      const {name, port} = await mapeoApi.startLocalPeerDiscoveryServer();
+      // publishedName could be different from the name we requested, if there
+      // was a conflict on the network (the conflict could come from the same
+      // name still being registered on the network and not yet cleaned up)
+      try {
+        const publishedName = await publishZeroconf(zeroconf, {name, port});
+        publishedNames.add(publishedName);
+      } catch (e) {
+        // Publishing could fail (timeout), but we don't want to throw the
+        // state machine start(), because that would leave the state machine
+        // in an "error" state and stop other things from working. By silently
+        // failing (with the report to Sentry), we are able to try again next
+        // time.
+        Sentry.captureException(e);
+      }
+      await startZeroconfPromise;
     },
     async stop() {
       await Promise.all([
         mapeoApi.stopLocalPeerDiscoveryServer(),
         stopZeroconf(zeroconf),
+        unpublishZeroconf(zeroconf, publishedNames).catch(e => {
+          // See above for why we silently fail here
+          Sentry.captureException(e);
+        }),
       ]);
     },
   });
-  sm.on('state', state => {
-    if (state.value === 'error') {
-      updateState({status: 'error', error: state.error});
+  sm.on('state', smState => {
+    if (smState.value === 'error') {
+      updateState({status: 'error', error: smState.error});
     } else {
-      updateState({status: state.value});
+      updateState({status: smState.value});
     }
   });
   const listeners = new Set<() => void>();
@@ -163,9 +185,9 @@ export function createLocalDiscoveryController(mapeoApi: MapeoClientApi) {
       cancel = true;
     };
     NetInfo.fetch('wifi')
-      .then(state => {
+      .then(netInfoState => {
         if (cancel) return;
-        onNetInfo(state);
+        onNetInfo(netInfoState);
       })
       .catch(noop);
   }
@@ -298,6 +320,36 @@ function startZeroconf(zeroconf: Zeroconf): Promise<void> {
   });
 }
 
+function publishZeroconf(
+  zeroconf: Zeroconf,
+  {name, port}: {name: string; port: number},
+): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const timeoutId = setTimeout(() => {
+      cleanup();
+      reject(new Error('Timed out publishing zeroconf service'));
+    }, ZEROCONF_PUBLISH_TIMEOUT_MS);
+
+    const cleanup = () => {
+      clearTimeout(timeoutId);
+      zeroconf.off('published', onPublish);
+    };
+    const onPublish = ({name: publishedName}: ZeroconfService) => {
+      cleanup();
+      resolve(publishedName);
+    };
+
+    zeroconf.on('published', onPublish);
+    zeroconf.publishService(
+      ZEROCONF_SERVICE_TYPE,
+      ZEROCONF_PROTOCOL,
+      ZEROCONF_DOMAIN,
+      name,
+      port,
+    );
+  });
+}
+
 function stopZeroconf(zeroconf: Zeroconf): Promise<void> {
   return new Promise((resolve, reject) => {
     const cleanup = () => {
@@ -316,6 +368,35 @@ function stopZeroconf(zeroconf: Zeroconf): Promise<void> {
     zeroconf.on('error', onError);
 
     zeroconf.stop();
+  });
+}
+
+function unpublishZeroconf(
+  zeroconf: Zeroconf,
+  publishedNamesToBeMutated: Set<string>,
+): Promise<void> {
+  if (publishedNamesToBeMutated.size === 0) return Promise.resolve();
+  return new Promise((resolve, reject) => {
+    const timeoutId = setTimeout(() => {
+      cleanup();
+      reject(new Error('Timed out unpublishing zeroconf service'));
+    }, ZEROCONF_UNPUBLISH_TIMEOUT_MS);
+
+    const cleanup = () => {
+      clearTimeout(timeoutId);
+      zeroconf.off('remove', onRemove);
+    };
+    const onRemove = (name: string) => {
+      publishedNamesToBeMutated.delete(name);
+      if (publishedNamesToBeMutated.size === 0) {
+        cleanup();
+        resolve();
+      }
+    };
+    zeroconf.on('remove', onRemove);
+    for (const name of publishedNamesToBeMutated) {
+      zeroconf.unpublishService(name);
+    }
   });
 }
 

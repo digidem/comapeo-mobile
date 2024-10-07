@@ -354,7 +354,7 @@
   },
   "screens.AudioPermission.description": {
     "description": "Screen description for audio permission screen",
-    "message": "Para gravar áudio enquanto usa o aplicativo em segundo plano o CoMapeo precisa acessar seu microfone."
+    "message": "To record audio while using the app and in the background CoMapeo needs to access your microphone. Please enable microphone permissions in your app settings."
   },
   "screens.AudioPermission.title": {
     "description": "Screen title for audio permission screen",
@@ -661,7 +661,7 @@
     "message": "Graus decimais (DD)"
   },
   "screens.ManualGpsScreen.degreesMinutesSeconds": {
-    "message": "Degrees/Minutes/Seconds (DMS)"
+    "message": "Graus/Minutos/Segundos (DMS)"
   },
   "screens.ManualGpsScreen.easting": {
     "message": "Leste"
@@ -766,7 +766,7 @@
     "message": "Cancelar"
   },
   "screens.Observation.comapeoAlert": {
-    "message": "CoMapeo Alert"
+    "message": "Alerta CoMapeo"
   },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
@@ -784,9 +784,11 @@
     "description": "Title of dialog to share an observation with media",
     "message": "Compartilhando imagem"
   },
-  "screens.Observation.shareMessage": {
-    "description": "Message that will be shared along with image",
-    "message": "Alerta CoMapeo — _*{category_name}*_ {date, date, full} {time, time, long} {coordinates}"
+  "screens.Observation.shareMessageFooter": {
+    "message": "Enviado pelo CoMapeo"
+  },
+  "screens.Observation.shareMessageTitle": {
+    "message": "Alerta CoMapeo"
   },
   "screens.Observation.shareTextTitle": {
     "description": "Title of dialog to share an observation without media",
@@ -945,7 +947,7 @@
     "message": "Sobre Awana Digital"
   },
   "screens.PrivacyPolicy.aboutAwanaContent": {
-    "message": "CoMapeo is developed by Awana Digital, a 501c3 non-profit organization registered in the United States. Awana Digital works in solidarity with frontline communities to use technology to defend their rights and fight climate change."
+    "message": "CoMapeo é desenvolvido por Awana Digital, uma organização sem fins lucrativos registrada conforme lei 501c3 nos Estados Unidos. Awana Digital trabalha em conjunto com as comunidades que estão na linha de frente, para que utilizem a tecnologia na defesa dos seus direitos e na luta contra as mudanças climáticas."
   },
   "screens.PrivacyPolicy.appErrors": {
     "message": "Erros do aplicativo"
@@ -1206,7 +1208,7 @@
     "message": "Importar configuração"
   },
   "screens.Settings.CreateOrJoinProject.importConfigFileError": {
-    "message": "File name should end with .comapeocat"
+    "message": "O nome do arquivo deve terminar com .mapeoconfig"
   },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
     "message": "Junte-se a um projeto existente"
@@ -1311,16 +1313,13 @@
     "message": "Todos os dados foram sincronizados"
   },
   "screens.Sync.ProjectSyncDisplay.devicesAvailableToSync": {
-    "message": "{count} {count, plural, one {dispositivo} other {dispositivos}} encontrados"
+    "message": "Devices available"
   },
   "screens.Sync.ProjectSyncDisplay.devicesFound": {
-    "message": "{count} {count, plural, one {Dispositivo} other {Dispositivos}} encontrados"
+    "message": "Devices found"
   },
   "screens.Sync.ProjectSyncDisplay.noDevicesAvailableToSync": {
     "message": "Não há dispositivos disponíveis para sincronização"
-  },
-  "screens.Sync.ProjectSyncDisplay.progressLabelComplete": {
-    "message": "{count} de {count} {count, plural, one {dispositivos} other {devices}}"
   },
   "screens.Sync.ProjectSyncDisplay.progressLabelSyncing": {
     "message": "Sincronizando…"
@@ -1329,7 +1328,7 @@
     "message": "Esperando…"
   },
   "screens.Sync.ProjectSyncDisplay.progressLabelWithDeviceCount": {
-    "message": "{active} out of {total} {total, plural, one {device} other {devices}}…"
+    "message": "Waiting for other devices"
   },
   "screens.Sync.ProjectSyncDisplay.startSync": {
     "message": "Iniciar sincronização"
@@ -1341,13 +1340,13 @@
     "message": "{value}%"
   },
   "screens.Sync.ProjectSyncDisplay.syncingCompleteButWaitingForOthers": {
-    "message": "Completo! Esperando por {count} {count, plural, one {dispositivo} other {devices}}"
+    "message": "Complete! Waiting for other devices to join"
   },
   "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
     "message": "Completo! Você está atualizado"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "Syncing with {active} out of {total} {total, plural, one {device} other {devices}}"
+    "message": "You are syncing with your team"
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
     "message": "Aguardando dispositivos"

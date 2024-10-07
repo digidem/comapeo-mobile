@@ -66,15 +66,13 @@ export const tracksStore = createPersistedStore<TracksStoreState>(
         };
       }),
     clearCurrentTrack: () =>
-      set(() => {
-        return {
-          locationHistory: [],
-          trackingSince: null,
-          distance: 0,
-          isTracking: false,
-          observations: [],
-          description: '',
-        };
+      set({
+        locationHistory: [],
+        trackingSince: null,
+        distance: 0,
+        isTracking: false,
+        observationRefs: [],
+        description: '',
       }),
     setTracking: (val: boolean) =>
       set(() =>

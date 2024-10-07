@@ -1349,16 +1349,13 @@
     "message": "All data synced"
   },
   "screens.Sync.ProjectSyncDisplay.devicesAvailableToSync": {
-    "message": "{count} {count, plural, one {device} other {devices}} available"
+    "message": "Devices available"
   },
   "screens.Sync.ProjectSyncDisplay.devicesFound": {
-    "message": "{count} {count, plural, one {Device} other {Devices}} found"
+    "message": "Devices found"
   },
   "screens.Sync.ProjectSyncDisplay.noDevicesAvailableToSync": {
     "message": "No devices available to sync"
-  },
-  "screens.Sync.ProjectSyncDisplay.progressLabelComplete": {
-    "message": "{count} out of {count} {count, plural, one {device} other {devices}}"
   },
   "screens.Sync.ProjectSyncDisplay.progressLabelSyncing": {
     "message": "Syncing…"
@@ -1367,7 +1364,7 @@
     "message": "Waiting…"
   },
   "screens.Sync.ProjectSyncDisplay.progressLabelWithDeviceCount": {
-    "message": "{active} out of {total} {total, plural, one {device} other {devices}}…"
+    "message": "Waiting for other devices"
   },
   "screens.Sync.ProjectSyncDisplay.startSync": {
     "message": "Start Sync"
@@ -1379,13 +1376,13 @@
     "message": "{value}%"
   },
   "screens.Sync.ProjectSyncDisplay.syncingCompleteButWaitingForOthers": {
-    "message": "Complete! Waiting for {count} {count, plural, one {device} other {devices}}"
+    "message": "Complete! Waiting for other devices to join"
   },
   "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
     "message": "Complete! You're up to date"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "Syncing with {active} out of {total} {total, plural, one {device} other {devices}}"
+    "message": "You are syncing with your team"
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
     "message": "Waiting for devices"

@@ -13,7 +13,6 @@ const m = defineMessages({
 });
 export function Playback({
   uri,
-  isModalOpen,
   leftControl,
   rightControl,
 }: {
@@ -26,7 +25,7 @@ export function Playback({
   const {duration, currentPosition, isPlaying, stopPlayback, startPlayback} =
     useAudioPlayback(uri);
   return (
-    <View style={{flex: 1}} pointerEvents={isModalOpen ? 'none' : 'auto'}>
+    <View style={{flex: 1}}>
       <ContentWithControls
         timeElapsed={currentPosition}
         message={t(m.description, {

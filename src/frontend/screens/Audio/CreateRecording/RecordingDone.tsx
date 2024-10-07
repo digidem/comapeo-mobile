@@ -114,12 +114,8 @@ export function RecordingDone({
   };
 
   const handleDeletePress = () => {
-    if (isOpen) {
-      return;
-    } else {
-      setModalContentType('delete');
-      openSheet();
-    }
+    setModalContentType('delete');
+    openSheet();
   };
 
   const handleReturnToEditor = () => {
@@ -201,7 +197,6 @@ export function RecordingDone({
     <>
       <Playback
         uri={uri}
-        isModalOpen={isOpen}
         leftControl={
           <Pressable onPress={handleDeletePress}>
             <MaterialIcon name="delete" color={WHITE} size={36} />

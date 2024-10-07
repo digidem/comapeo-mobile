@@ -64,6 +64,7 @@ interface RecordingDoneProps {
 }
 
 type ModalContentType = 'delete' | 'success' | null;
+type PendingAction = 'delete' | 'returnToEditor' | 'recordAnother' | null;
 
 export function RecordingDone({
   duration,
@@ -74,6 +75,7 @@ export function RecordingDone({
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
   const {addAudioRecording} = useDraftObservation();
+  const [pendingAction, setPendingAction] = useState<PendingAction>(null);
 
   const [modalContentType, setModalContentType] =
     useState<ModalContentType>(null);
@@ -106,11 +108,8 @@ export function RecordingDone({
 
   const handleDelete = () => {
     closeSheet();
+    setPendingAction('delete');
     onDelete();
-    // setTimeout(() => {
-    //   navigation.goBack();
-    // }, 100);
-    navigation.goBack();
   };
 
   const handleDeletePress = () => {
@@ -120,13 +119,32 @@ export function RecordingDone({
 
   const handleReturnToEditor = () => {
     closeSheet();
-    navigation.navigate('ObservationCreate');
+    setPendingAction('returnToEditor');
   };
 
   const handleRecordAnother = async () => {
     closeSheet();
-    await onRecordAnother();
-    navigation.navigate('Audio');
+    setPendingAction('recordAnother');
+  };
+
+  const onModalDismiss = () => {
+    console.log(
+      'modal dismiss being called with this pending action: ',
+      pendingAction,
+    );
+    if (pendingAction === 'delete') {
+      if (navigation.canGoBack()) {
+        navigation.goBack();
+      } else {
+        navigation.navigate('ObservationCreate');
+      }
+    } else if (pendingAction === 'returnToEditor') {
+      navigation.navigate('ObservationCreate');
+    } else if (pendingAction === 'recordAnother') {
+      onRecordAnother();
+      navigation.navigate('Audio');
+    }
+    setPendingAction(null);
   };
 
   const renderModalContent = () => {
@@ -206,7 +224,7 @@ export function RecordingDone({
       <BottomSheetModal
         isOpen={isOpen}
         ref={sheetRef}
-        onDismiss={closeSheet}
+        onDismiss={onModalDismiss}
         fullScreen={modalContentType === 'success'}>
         {renderModalContent()}
       </BottomSheetModal>

@@ -5,6 +5,7 @@ import AudioPermission from '../../images/observationEdit/AudioPermission.svg';
 import {BottomSheetModalContent} from '../../sharedComponents/BottomSheetModal';
 import {Audio} from 'expo-av';
 import {PermissionResponse} from 'expo-modules-core';
+import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
   title: {
@@ -36,20 +37,24 @@ const m = defineMessages({
   },
 });
 
+type ObservationCreateNavigationProp =
+  NativeRootNavigationProps<'ObservationCreate'>['navigation'];
+
 interface PermissionAudioBottomSheetContentProps {
   closeSheet: () => void;
-  setPendingAction: (action: 'navigateToAudio' | null) => void;
+  navigation: ObservationCreateNavigationProp;
 }
 
 export const PermissionAudioBottomSheetContent: FC<
   PermissionAudioBottomSheetContentProps
-> = ({closeSheet, setPendingAction}) => {
+> = ({closeSheet, navigation}) => {
   const {formatMessage: t} = useIntl();
   const [permissionResponse, setPermissionResponse] =
     useState<PermissionResponse | null>(null);
 
   const handleOpenSettings = () => {
     Linking.openSettings();
+    closeSheet();
   };
 
   const handleRequestPermission = async () => {
@@ -57,7 +62,9 @@ export const PermissionAudioBottomSheetContent: FC<
     closeSheet();
     setPermissionResponse(response);
     if (response.status === 'granted') {
-      setPendingAction('navigateToAudio');
+      navigation.navigate('Audio');
+    } else if (response.status === 'denied' && response.canAskAgain) {
+      closeSheet();
     } else if (response.status === 'denied' && !response.canAskAgain) {
       handleOpenSettings();
     }

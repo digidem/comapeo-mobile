@@ -64,7 +64,6 @@ interface RecordingDoneProps {
 }
 
 type ModalContentType = 'delete' | 'success' | null;
-type PendingAction = 'delete' | 'returnToEditor' | 'recordAnother' | null;
 
 export function RecordingDone({
   duration,
@@ -75,7 +74,6 @@ export function RecordingDone({
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
   const {addAudioRecording} = useDraftObservation();
-  const [pendingAction, setPendingAction] = useState<PendingAction>(null);
 
   const [modalContentType, setModalContentType] =
     useState<ModalContentType>(null);
@@ -83,6 +81,14 @@ export function RecordingDone({
   const {sheetRef, isOpen, openSheet, closeSheet} = useBottomSheetModal({
     openOnMount: false,
   });
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('blur', () => {
+      closeSheet();
+    });
+
+    return unsubscribe;
+  }, [navigation, closeSheet]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -107,9 +113,12 @@ export function RecordingDone({
   }, [navigation, addAudioRecording, duration, uri, openSheet]);
 
   const handleDelete = () => {
-    closeSheet();
-    setPendingAction('delete');
     onDelete();
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    } else {
+      navigation.navigate('ObservationCreate');
+    }
   };
 
   const handleDeletePress = () => {
@@ -118,35 +127,12 @@ export function RecordingDone({
   };
 
   const handleReturnToEditor = () => {
-    closeSheet();
-    setPendingAction('returnToEditor');
+    navigation.navigate('ObservationCreate');
   };
 
   const handleRecordAnother = async () => {
-    closeSheet();
-    setPendingAction('recordAnother');
-  };
-
-  const onModalDismiss = () => {
-    switch (pendingAction) {
-      case 'delete':
-        if (navigation.canGoBack()) {
-          navigation.goBack();
-        } else {
-          navigation.navigate('ObservationCreate');
-        }
-        break;
-      case 'returnToEditor':
-        navigation.navigate('ObservationCreate');
-        break;
-      case 'recordAnother':
-        onRecordAnother();
-        navigation.navigate('Audio');
-        break;
-      default:
-        break;
-    }
-    setPendingAction(null);
+    onRecordAnother();
+    navigation.navigate('Audio');
   };
 
   const renderModalContent = () => {
@@ -226,7 +212,6 @@ export function RecordingDone({
       <BottomSheetModal
         isOpen={isOpen}
         ref={sheetRef}
-        onDismiss={onModalDismiss}
         fullScreen={modalContentType === 'success'}>
         {renderModalContent()}
       </BottomSheetModal>

@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {ActionTab} from './ActionTab';
 import PhotoIcon from '../images/observationEdit/Photo.svg';
@@ -51,9 +51,13 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
     openOnMount: false,
   });
 
-  const [pendingAction, setPendingAction] = useState<'navigateToAudio' | null>(
-    null,
-  );
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('blur', () => {
+      closeAudioPermissionSheet();
+    });
+
+    return unsubscribe;
+  }, [navigation, closeAudioPermissionSheet]);
 
   const handleCameraPress = () => {
     navigation.navigate('AddPhoto');
@@ -70,13 +74,6 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
       openAudioPermissionSheet();
     }
   }, [navigation, openAudioPermissionSheet]);
-
-  const handleModalDismiss = useCallback(() => {
-    if (pendingAction === 'navigateToAudio') {
-      navigation.navigate('Audio');
-      setPendingAction(null);
-    }
-  }, [pendingAction, navigation]);
 
   const bottomSheetItems = [
     {
@@ -110,11 +107,10 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
       <BottomSheetModal
         ref={audioPermissionSheetRef}
         isOpen={isAudioPermissionSheetOpen}
-        onDismiss={handleModalDismiss}
         fullScreen>
         <PermissionAudioBottomSheetContent
           closeSheet={closeAudioPermissionSheet}
-          setPendingAction={setPendingAction}
+          navigation={navigation}
         />
       </BottomSheetModal>
     </>

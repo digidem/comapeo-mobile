@@ -113,12 +113,13 @@ export function RecordingDone({duration, uri, reset}: RecordingDoneProps) {
 
   const handleReturnToEditor = () => {
     closeSheet();
-    setPendingAction('recordAnother');
+    setPendingAction('returnToEditor');
   };
 
   const handleRecordAnother = async () => {
+    closeSheet();
+    setPendingAction('recordAnother');
     reset();
-    navigation.navigate('Audio');
   };
 
   const onModalDismiss = () => {
@@ -134,7 +135,6 @@ export function RecordingDone({duration, uri, reset}: RecordingDoneProps) {
         navigation.navigate('ObservationCreate');
         break;
       case 'recordAnother':
-        reset();
         navigation.navigate('Audio');
         break;
       default:

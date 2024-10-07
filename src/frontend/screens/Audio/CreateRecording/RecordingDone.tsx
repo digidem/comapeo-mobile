@@ -128,21 +128,23 @@ export function RecordingDone({
   };
 
   const onModalDismiss = () => {
-    console.log(
-      'modal dismiss being called with this pending action: ',
-      pendingAction,
-    );
-    if (pendingAction === 'delete') {
-      if (navigation.canGoBack()) {
-        navigation.goBack();
-      } else {
+    switch (pendingAction) {
+      case 'delete':
+        if (navigation.canGoBack()) {
+          navigation.goBack();
+        } else {
+          navigation.navigate('ObservationCreate');
+        }
+        break;
+      case 'returnToEditor':
         navigation.navigate('ObservationCreate');
-      }
-    } else if (pendingAction === 'returnToEditor') {
-      navigation.navigate('ObservationCreate');
-    } else if (pendingAction === 'recordAnother') {
-      onRecordAnother();
-      navigation.navigate('Audio');
+        break;
+      case 'recordAnother':
+        onRecordAnother();
+        navigation.navigate('Audio');
+        break;
+      default:
+        break;
     }
     setPendingAction(null);
   };

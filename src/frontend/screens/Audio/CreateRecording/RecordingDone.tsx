@@ -78,12 +78,7 @@ export function RecordingDone({
   const [modalContentType, setModalContentType] =
     useState<ModalContentType>(null);
 
-  const {
-    sheetRef,
-    isOpen: isModalOpen,
-    openSheet,
-    closeSheet,
-  } = useBottomSheetModal({
+  const {sheetRef, isOpen, openSheet, closeSheet} = useBottomSheetModal({
     openOnMount: false,
   });
 
@@ -112,13 +107,14 @@ export function RecordingDone({
   const handleDelete = () => {
     closeSheet();
     onDelete();
-    setTimeout(() => {
-      navigation.goBack();
-    }, 100);
+    // setTimeout(() => {
+    //   navigation.goBack();
+    // }, 100);
+    navigation.goBack();
   };
 
   const handleDeletePress = () => {
-    if (isModalOpen) {
+    if (isOpen) {
       return;
     } else {
       setModalContentType('delete');
@@ -205,7 +201,7 @@ export function RecordingDone({
     <>
       <Playback
         uri={uri}
-        isModalOpen={isModalOpen}
+        isModalOpen={isOpen}
         leftControl={
           <Pressable onPress={handleDeletePress}>
             <MaterialIcon name="delete" color={WHITE} size={36} />
@@ -213,8 +209,9 @@ export function RecordingDone({
         }
       />
       <BottomSheetModal
+        isOpen={isOpen}
         ref={sheetRef}
-        isOpen={isModalOpen}
+        onDismiss={closeSheet}
         fullScreen={modalContentType === 'success'}>
         {renderModalContent()}
       </BottomSheetModal>

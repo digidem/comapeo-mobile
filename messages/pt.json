@@ -483,7 +483,7 @@
     "message": "Colaborar com outros"
   },
   "screens.IntroToCoMapeo.designedFor": {
-    "message": "Designed with and for Indigenous peoples & frontline communities"
+    "message": "Desenvolvido com e para povos indígenas e comunidades que estão na linha de frente"
   },
   "screens.IntroToCoMapeo.getStarted": {
     "message": "Vamos Começar"
@@ -959,7 +959,7 @@
     "message": "Informações do aplicativo"
   },
   "screens.PrivacyPolicy.appInfoDescription": {
-    "message": "The version and locale (language) of CoMapeo"
+    "message": "A versão e idioma do CoMapeo"
   },
   "screens.PrivacyPolicy.appUsageTitle": {
     "message": "Uso do aplicativo"
@@ -977,7 +977,7 @@
     "message": "Informações sobre o que fez o aplicativo fechar inesperadamente"
   },
   "screens.PrivacyPolicy.dataCollection": {
-    "message": "CoMapeo Data Collection"
+    "message": "Coleta de dados do CoMapeo"
   },
   "screens.PrivacyPolicy.deviceInfo": {
     "message": "Informações do Dispositivo"
@@ -1028,13 +1028,13 @@
     "message": "Acesso de terceiros aos dados"
   },
   "screens.PrivacyPolicy.thirdPartyDescription": {
-    "message": "A \"third-party\" is an organization other than Awana Digital."
+    "message": "Uma \"organização de terceiros\" é uma que não Awana Digital."
   },
   "screens.PrivacyPolicy.userCount": {
     "message": "Contagem de usuários"
   },
   "screens.PrivacyPolicy.userCountDescription": {
-    "message": "The number of users per country and per project. Aggregated and anonymized"
+    "message": "O número de usuários por país e por projeto. Agregado e anônimo"
   },
   "screens.PrivacyPolicy.whatIsCollected": {
     "message": "O que é coletado?"
@@ -1313,10 +1313,10 @@
     "message": "Todos os dados foram sincronizados"
   },
   "screens.Sync.ProjectSyncDisplay.devicesAvailableToSync": {
-    "message": "Devices available"
+    "message": "Dispositivos disponíveis"
   },
   "screens.Sync.ProjectSyncDisplay.devicesFound": {
-    "message": "Devices found"
+    "message": "Dispositivos encontrados"
   },
   "screens.Sync.ProjectSyncDisplay.noDevicesAvailableToSync": {
     "message": "Não há dispositivos disponíveis para sincronização"
@@ -1328,7 +1328,7 @@
     "message": "Esperando…"
   },
   "screens.Sync.ProjectSyncDisplay.progressLabelWithDeviceCount": {
-    "message": "Waiting for other devices"
+    "message": "Aguardando dispositivos"
   },
   "screens.Sync.ProjectSyncDisplay.startSync": {
     "message": "Iniciar sincronização"
@@ -1340,13 +1340,13 @@
     "message": "{value}%"
   },
   "screens.Sync.ProjectSyncDisplay.syncingCompleteButWaitingForOthers": {
-    "message": "Complete! Waiting for other devices to join"
+    "message": "Concluído! Esperando que outros dispositivos participem"
   },
   "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
     "message": "Completo! Você está atualizado"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "You are syncing with your team"
+    "message": "Você está sincronizando com sua equipe"
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
     "message": "Aguardando dispositivos"

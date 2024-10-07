@@ -76,10 +76,11 @@ export const ErrorBottomSheet = (props: ErrorModalProps) => {
       onDismiss={closeSheet}
       isOpen={isOpen}>
       <BottomSheetModalContent
-        icon={<ErrorIcon style={{marginTop: 80}} />}
+        icon={<ErrorIcon width={160} height={160} style={{marginTop: 80}} />}
         title={formatMessage(title || m.somethingWrong)}
         description={description ? formatMessage(description) : undefined}
         buttonConfigs={buttonConfigs}
+        descriptionStyle={{fontSize: 16}}
       />
     </BottomSheetModal>
   );

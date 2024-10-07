@@ -46,10 +46,7 @@ export function CreateRecording() {
       <RecordingDone
         uri={uri || ''}
         duration={status?.durationMillis || 0}
-        onDelete={() => {
-          reset();
-        }}
-        onRecordAnother={reset}
+        reset={reset}
       />
     );
   }

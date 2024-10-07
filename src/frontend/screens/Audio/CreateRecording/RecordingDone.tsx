@@ -59,18 +59,12 @@ const m = defineMessages({
 interface RecordingDoneProps {
   duration: number;
   uri: string;
-  onDelete: () => void;
-  onRecordAnother: () => void;
+  reset: () => void;
 }
 
 type ModalContentType = 'delete' | 'success' | null;
 
-export function RecordingDone({
-  duration,
-  uri,
-  onDelete,
-  onRecordAnother,
-}: RecordingDoneProps) {
+export function RecordingDone({duration, uri, reset}: RecordingDoneProps) {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
   const {addAudioRecording} = useDraftObservation();
@@ -113,7 +107,8 @@ export function RecordingDone({
   }, [navigation, addAudioRecording, duration, uri, openSheet]);
 
   const handleDelete = () => {
-    onDelete();
+    closeSheet();
+    reset();
     if (navigation.canGoBack()) {
       navigation.goBack();
     } else {
@@ -131,7 +126,7 @@ export function RecordingDone({
   };
 
   const handleRecordAnother = async () => {
-    onRecordAnother();
+    reset();
     navigation.navigate('Audio');
   };
 
@@ -175,25 +170,23 @@ export function RecordingDone({
         </View>
       );
       return (
-        <View style={{marginTop: 80}}>
-          <BottomSheetModalContent
-            icon={<SuccessIcon />}
-            title={t(m.successTitle)}
-            description={description}
-            buttonConfigs={[
-              {
-                text: t(m.returnToEditorButtonText),
-                onPress: handleReturnToEditor,
-                variation: 'outlined',
-              },
-              {
-                text: t(m.recordAnotherButtonText),
-                onPress: handleRecordAnother,
-                variation: 'filled',
-              },
-            ]}
-          />
-        </View>
+        <BottomSheetModalContent
+          icon={<SuccessIcon style={{marginTop: 80}} />}
+          title={t(m.successTitle)}
+          description={description}
+          buttonConfigs={[
+            {
+              text: t(m.returnToEditorButtonText),
+              onPress: handleReturnToEditor,
+              variation: 'outlined',
+            },
+            {
+              text: t(m.recordAnotherButtonText),
+              onPress: handleRecordAnother,
+              variation: 'filled',
+            },
+          ]}
+        />
       );
     }
     return null;

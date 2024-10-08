@@ -1,13 +1,11 @@
 import React, {useEffect} from 'react';
 import {BackHandler} from 'react-native';
-import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
 import {RecordingActive} from './RecordingActive';
 import {RecordingDone} from './RecordingDone';
 import {RecordingIdle} from './RecordingIdle';
 import {useAudioRecording} from './useAudioRecording';
 
 export function CreateRecording() {
-  const navigation = useNavigationFromRoot();
   const {startRecording, stopRecording, reset, status, uri} =
     useAudioRecording();
 

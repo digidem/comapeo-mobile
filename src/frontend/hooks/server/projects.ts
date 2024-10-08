@@ -178,35 +178,32 @@ export function useAddRemoteArchive() {
   });
 }
 
-export function useFindRemoteArchive({
-  shouldThrow,
-  url,
-}: {
-  shouldThrow?: boolean;
-  url?: string;
-}) {
-  // const {projectApi} = useActiveProject();
-  // return useMutation({
-  //   mutationFn:({url}:{url:string})=>{
-  //     return projectApi.$member.findServer(url)
-  //   }
-  // }
-
-  return useQuery<{url: string; name: string}>({
+export function useFindRemoteArchive({url}: {url?: string}) {
+  return useQuery({
     queryFn: async () => {
-      await new Promise<{url: string; name: string}>((res, rej) => {
-        if (!url) {
-          rej(new Error('No URL provided'));
-          return;
-        }
-        setTimeout(() => {
-          if (shouldThrow) {
-            rej(new Error('Server not found'));
-            return;
-          }
-          return res({url, name: 'Some Remote Archive'});
-        }, 1500);
-      });
+      if (!url) throw new Error('no url');
+      const response = await fetch(url);
+
+      if (response.status !== 200) {
+        throw new Error('Server should return a 200');
+      }
+
+      const responseJson = await response.json();
+
+      if (
+        responseJson &&
+        typeof responseJson === 'object' &&
+        'data' in responseJson &&
+        responseJson.data &&
+        typeof responseJson.data === 'object' &&
+        'name' in responseJson.data &&
+        responseJson.data.name &&
+        typeof responseJson.data.name === 'string'
+      ) {
+        return responseJson.data.name;
+      } else {
+        throw new Error('Server responded with unexpected data');
+      }
     },
     queryKey: [url],
     enabled: !!url,

@@ -10,6 +10,7 @@ import {SaveButton} from '../../../../sharedComponents/SaveButton';
 import {
   useAddRemoteArchive,
   useFindRemoteArchive,
+  useProjectMembers,
 } from '../../../../hooks/server/projects';
 import {Bar} from 'react-native-progress';
 import {ScreenContentWithDock} from '../../../../sharedComponents/ScreenContentWithDock';
@@ -61,45 +62,62 @@ export const AddRemoteArchive: NativeNavigationComponent<
     setError,
     formState: {errors},
   } = useForm<URLInput>();
-  const [queryUrl, setQueryUrl] = React.useState<string>();
+  const [queryUrl, setQueryUrl] = React.useState<string>('');
 
-  const {data, isLoading, isError} = useFindRemoteArchive({url: queryUrl});
+  const {data: members = []} = useProjectMembers();
+  const {isLoading: urlSearching, data: archiveName} = useFindRemoteArchive({
+    url: queryUrl,
+  });
 
-  if (isError && !errors.root) {
-    setError('root', {message: 'url not found'});
-  }
+  const alreadyHasRemoteArchive = members.some(
+    member => member.deviceType === 'selfHostedServer',
+  );
 
   const handleFindRemoteArchive = React.useCallback(
     ({url}: URLInput) => {
-      setQueryUrl(url);
+      try {
+        setQueryUrl(new URL('/info', url).toString());
+      } catch (_err) {
+        setError('root', {message: 'invalid URL'});
+      }
     },
-    [setQueryUrl],
+    [setQueryUrl, setError],
   );
 
   React.useLayoutEffect(() => {
-    navigation.setOptions({headerShown: !isLoading});
-  }, [navigation, isLoading]);
+    navigation.setOptions({headerShown: !urlSearching});
+  }, [navigation, urlSearching]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
       // eslint-disable-next-line react/no-unstable-nested-components
       headerRight: () =>
-        !data ? (
+        !archiveName ? (
           <SaveButton
             onPress={handleSubmit(handleFindRemoteArchive)}
-            isLoading={isLoading}
+            isLoading={urlSearching}
           />
         ) : null,
     });
-  }, [handleFindRemoteArchive, handleSubmit, navigation, isLoading, data]);
+  }, [
+    handleFindRemoteArchive,
+    handleSubmit,
+    navigation,
+    urlSearching,
+    archiveName,
+  ]);
 
-  return false ? (
-    <FindingRemoteArchive />
-  ) : true ? (
-    <AddFoundArchive name={'newThing'} url={'data.url.laksjdflka;jo;aie;a'} />
-  ) : (
-    <SearchUrl control={control} errors={errors} />
-  );
+  if (urlSearching) {
+    return <FindingRemoteArchive />;
+  }
+
+  if (archiveName) {
+    return <AddFoundArchive name={archiveName} url={queryUrl} />;
+  }
+
+  if (!alreadyHasRemoteArchive) {
+    return <SearchUrl control={control} errors={errors} />;
+  }
 };
 
 type SearchUrlProp = {
@@ -109,6 +127,7 @@ type SearchUrlProp = {
 
 const SearchUrl = ({control, errors}: SearchUrlProp) => {
   const {formatMessage} = useIntl();
+
   return (
     <View style={styles.container}>
       <View style={{flexDirection: 'row', marginBottom: 10}}>

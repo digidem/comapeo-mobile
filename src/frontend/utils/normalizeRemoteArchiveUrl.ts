@@ -2,6 +2,8 @@ import {assert} from '../lib/assert';
 import {isIPv4, isIPv6} from '../lib/ipAddress';
 
 function parseUrl(userInput: string): URL {
+  userInput = userInput.trim();
+
   if (isIPv6(userInput)) {
     return new URL('https://[' + userInput + ']');
   }

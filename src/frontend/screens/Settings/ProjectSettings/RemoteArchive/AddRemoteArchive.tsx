@@ -16,6 +16,7 @@ import {Bar} from 'react-native-progress';
 import {ScreenContentWithDock} from '../../../../sharedComponents/ScreenContentWithDock';
 import {Button} from '../../../../sharedComponents/Button';
 import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
+import {normalizeRemoteArchiveUrl} from '../../../../utils/normalizeRemoteArchiveUrl';
 
 const m = defineMessages({
   navTitle: {
@@ -62,11 +63,11 @@ export const AddRemoteArchive: NativeNavigationComponent<
     setError,
     formState: {errors},
   } = useForm<URLInput>();
-  const [queryUrl, setQueryUrl] = React.useState<string>('');
+  const [normalizedUrl, setNormalizedUrl] = React.useState<string>('');
 
   const {data: members = []} = useProjectMembers();
   const {isLoading: urlSearching, data: archiveName} = useFindRemoteArchive({
-    url: queryUrl,
+    url: normalizedUrl ? new URL('/info', normalizedUrl).toString() : undefined,
   });
 
   const alreadyHasRemoteArchive = members.some(
@@ -76,12 +77,12 @@ export const AddRemoteArchive: NativeNavigationComponent<
   const handleFindRemoteArchive = React.useCallback(
     ({url}: URLInput) => {
       try {
-        setQueryUrl(new URL('/info', url).toString());
+        setNormalizedUrl(normalizeRemoteArchiveUrl(url));
       } catch (_err) {
         setError('root', {message: 'invalid URL'});
       }
     },
-    [setQueryUrl, setError],
+    [setNormalizedUrl, setError],
   );
 
   React.useLayoutEffect(() => {
@@ -112,7 +113,7 @@ export const AddRemoteArchive: NativeNavigationComponent<
   }
 
   if (archiveName) {
-    return <AddFoundArchive name={archiveName} url={queryUrl} />;
+    return <AddFoundArchive name={archiveName} url={normalizedUrl} />;
   }
 
   if (!alreadyHasRemoteArchive) {

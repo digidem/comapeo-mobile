@@ -4,8 +4,10 @@ describe('normalizeRemoteArchiveUrl', () => {
   const validTestCases = [
     ['example.com/path', 'https://example.com/path/'],
     ['example.com/path/', 'https://example.com/path/'],
+    ['  example.com/path/  ', 'https://example.com/path/'],
     ['https://example.com/path', 'https://example.com/path/'],
     ['https://example.com/path/', 'https://example.com/path/'],
+    ['  https://example.com/path/  ', 'https://example.com/path/'],
     ['https://example.com/has spaces', 'https://example.com/has%20spaces/'],
     ['https://example.com/?', 'https://example.com/'],
     ['https://example.com/#', 'https://example.com/'],

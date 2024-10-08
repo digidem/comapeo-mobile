@@ -9,10 +9,10 @@ export function CreateRecording() {
   const {startRecording, stopRecording, reset, status, uri} =
     useAudioRecording();
 
-  const currentState = status?.isRecording ? 'active' : uri ? 'done' : 'idle';
+  const recordingState = status?.isRecording ? 'active' : uri ? 'done' : 'idle';
 
   useEffect(() => {
-    if (currentState === 'active' || currentState === 'done') {
+    if (recordingState === 'active' || recordingState === 'done') {
       const onBackPress = () => {
         return true;
       };
@@ -24,13 +24,13 @@ export function CreateRecording() {
         backHandler.remove();
       };
     }
-  }, [currentState]);
+  }, [recordingState]);
 
-  if (currentState === 'idle') {
+  if (recordingState === 'idle') {
     return <RecordingIdle onPressRecord={startRecording} />;
   }
 
-  if (currentState === 'active') {
+  if (recordingState === 'active') {
     return (
       <RecordingActive
         duration={status?.durationMillis || 0}
@@ -39,7 +39,7 @@ export function CreateRecording() {
     );
   }
 
-  if (currentState === 'done') {
+  if (recordingState === 'done') {
     return (
       <RecordingDone
         uri={uri || ''}

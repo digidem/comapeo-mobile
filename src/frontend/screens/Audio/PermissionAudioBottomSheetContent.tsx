@@ -38,12 +38,12 @@ const m = defineMessages({
 
 interface PermissionAudioBottomSheetContentProps {
   closeSheet: () => void;
-  setPendingAction: (action: 'navigateToAudio' | null) => void;
+  setShouldNavigateToAudioTrue: () => void;
 }
 
 export const PermissionAudioBottomSheetContent: FC<
   PermissionAudioBottomSheetContentProps
-> = ({closeSheet, setPendingAction}) => {
+> = ({closeSheet, setShouldNavigateToAudioTrue}) => {
   const {formatMessage: t} = useIntl();
   const [permissionResponse, setPermissionResponse] =
     useState<PermissionResponse | null>(null);
@@ -57,7 +57,7 @@ export const PermissionAudioBottomSheetContent: FC<
     closeSheet();
     setPermissionResponse(response);
     if (response.status === 'granted') {
-      setPendingAction('navigateToAudio');
+      setShouldNavigateToAudioTrue();
     } else if (response.status === 'denied' && !response.canAskAgain) {
       handleOpenSettings();
     }

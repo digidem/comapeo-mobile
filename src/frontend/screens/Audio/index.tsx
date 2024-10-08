@@ -3,7 +3,6 @@ import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 
 import {DARK_GREY, WHITE} from '../../lib/styles';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
-import {StatusBar} from 'expo-status-bar';
 import {CreateRecording} from './CreateRecording';
 
 export const MAX_RECORDING_DURATION_MS = 5 * 60_000;
@@ -11,7 +10,6 @@ export const MAX_RECORDING_DURATION_MS = 5 * 60_000;
 export function Audio() {
   return (
     <>
-      <StatusBar style="light" />
       <CreateRecording />
     </>
   );

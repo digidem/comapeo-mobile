@@ -51,9 +51,7 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
     openOnMount: false,
   });
 
-  const [pendingAction, setPendingAction] = useState<'navigateToAudio' | null>(
-    null,
-  );
+  const [shouldNavigateToAudio, setShouldNavigateToAudio] = useState(false);
 
   const handleCameraPress = () => {
     navigation.navigate('AddPhoto');
@@ -72,11 +70,11 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
   }, [navigation, openAudioPermissionSheet]);
 
   const handleModalDismiss = useCallback(() => {
-    if (pendingAction === 'navigateToAudio') {
+    if (shouldNavigateToAudio) {
       navigation.navigate('Audio');
-      setPendingAction(null);
+      setShouldNavigateToAudio(false);
     }
-  }, [pendingAction, navigation]);
+  }, [shouldNavigateToAudio, navigation]);
 
   const bottomSheetItems = [
     {
@@ -114,7 +112,7 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
         fullScreen>
         <PermissionAudioBottomSheetContent
           closeSheet={closeAudioPermissionSheet}
-          setPendingAction={setPendingAction}
+          setShouldNavigateToAudioTrue={() => setShouldNavigateToAudio(true)}
         />
       </BottomSheetModal>
     </>

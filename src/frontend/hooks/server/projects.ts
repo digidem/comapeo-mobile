@@ -161,19 +161,10 @@ export function useGetOwnRole() {
 }
 
 export function useAddRemoteArchive() {
-  // const {projectApi} = useActiveProject();
-  // return useMutation({
-  //   mutationFn:({url}:{url:string})=>{
-  //     return projectApi.$member.addServer(url)
-  //   }
-  // }
-
+  const {projectApi} = useActiveProject();
   return useMutation({
-    mutationFn: async ({shouldThrow}: {shouldThrow?: boolean}) => {
-      setTimeout(() => {
-        if (shouldThrow) throw new Error('Server not added');
-        return {};
-      }, 1500);
+    mutationFn: async (normalizedUrl: string) => {
+      return projectApi.$member.addServerPeer(normalizedUrl);
     },
   });
 }

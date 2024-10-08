@@ -17,6 +17,8 @@ import {ScreenContentWithDock} from '../../../../sharedComponents/ScreenContentW
 import {Button} from '../../../../sharedComponents/Button';
 import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
 import {normalizeRemoteArchiveUrl} from '../../../../utils/normalizeRemoteArchiveUrl';
+import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 const m = defineMessages({
   navTitle: {
@@ -166,40 +168,44 @@ type AddFoundArchiveProps = {
 
 const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
   const {formatMessage} = useIntl();
-  const {mutate} = useAddRemoteArchive();
+  const {mutate, error, reset, isPending} = useAddRemoteArchive();
   const {navigate} = useNavigationFromRoot();
   function handleAddRemoteArchive() {
-    mutate(
-      {},
-      {
-        onSuccess: () => {
-          navigate('SuccessfullyAddedArchive', {archiveName: name, url});
-        },
+    mutate(url, {
+      onSuccess: () => {
+        navigate('SuccessfullyAddedArchive', {archiveName: name, url});
       },
-    );
+    });
   }
 
   return (
-    <ScreenContentWithDock
-      dockContent={
-        <Button
-          fullWidth
-          onPress={
-            handleAddRemoteArchive
-          }>{`+ ${formatMessage(m.navTitle)}`}</Button>
-      }>
-      <Text style={[styles.title, {fontSize: 24}]}>
-        {formatMessage(m.youAreAdding)}
-      </Text>
-      <View style={{alignSelf: 'center', marginBottom: 20}}>
-        <Text>{name}</Text>
-        <Text>{url}</Text>
-      </View>
-      <View style={styles.greyBox}>
-        <Text>{formatMessage(m.archiveInfo)}</Text>
-        <Text>{formatMessage(m.permission)}</Text>
-      </View>
-    </ScreenContentWithDock>
+    <>
+      <ScreenContentWithDock
+        dockContent={
+          isPending ? (
+            <UIActivityIndicator style={{marginBottom: 20}} />
+          ) : (
+            <Button
+              fullWidth
+              onPress={
+                handleAddRemoteArchive
+              }>{`+ ${formatMessage(m.navTitle)}`}</Button>
+          )
+        }>
+        <Text style={[styles.title, {fontSize: 24}]}>
+          {formatMessage(m.youAreAdding)}
+        </Text>
+        <View style={{alignSelf: 'center', marginBottom: 20}}>
+          <Text>{name}</Text>
+          <Text>{url}</Text>
+        </View>
+        <View style={styles.greyBox}>
+          <Text>{formatMessage(m.archiveInfo)}</Text>
+          <Text>{formatMessage(m.permission)}</Text>
+        </View>
+      </ScreenContentWithDock>
+      <ErrorBottomSheet error={error} clearError={reset} />
+    </>
   );
 };
 

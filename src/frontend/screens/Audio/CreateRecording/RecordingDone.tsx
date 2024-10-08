@@ -125,11 +125,7 @@ export function RecordingDone({duration, uri, reset}: RecordingDoneProps) {
   const onModalDismiss = () => {
     switch (pendingAction) {
       case 'delete':
-        if (navigation.canGoBack()) {
-          navigation.goBack();
-        } else {
-          navigation.navigate('ObservationCreate');
-        }
+        navigation.goBack();
         break;
       case 'returnToEditor':
         navigation.navigate('ObservationCreate');

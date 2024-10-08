@@ -354,7 +354,7 @@
   },
   "screens.AudioPermission.description": {
     "description": "Screen description for audio permission screen",
-    "message": "To record audio while using the app and in the background CoMapeo needs to access your microphone. Please enable microphone permissions in your app settings."
+    "message": "Para gravar áudio enquanto usa o aplicativo, CoMapeo precisa acessar o seu microfone. Por favor, ative as permissões do microfone nas configurações do seu aplicativo."
   },
   "screens.AudioPermission.title": {
     "description": "Screen title for audio permission screen",
@@ -731,7 +731,7 @@
     "message": "Configurações de Sincronização"
   },
   "screens.ObscurePasscode.description": {
-    "message": "Obscure Passcode is a security feature that allows you to open CoMapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of CoMapeo which allows you to create demonstration observations that are not saved to the CoMapeo database."
+    "message": "A senha secreta é um recurso de segurança que permite abrir o CoMapeo em um modo que oculta todos os seus dados. Digitar essa senha secreta na tela de início do app exibirá uma versão vazia do CoMapeo, permitindo que você crie observações de demonstração que não são salvas no banco de dados do CoMapeo."
   },
   "screens.ObscurePasscode.instructions": {
     "message": "Insira o código acima para ocultar seus dados no CoMapeo"
@@ -1013,7 +1013,7 @@
     "message": "Dados de desempenho"
   },
   "screens.PrivacyPolicy.performanceDataDescription": {
-    "message": "Such as launch time, energy usage, app freezes, and responsiveness"
+    "message": "Como o tempo de inicialização, uso de energia, congelamento de aplicativos e capacidade de resposta"
   },
   "screens.PrivacyPolicy.privacyPolicyTitle": {
     "message": "Privacidade de dados do CoMapeo"

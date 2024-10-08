@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as Sentry from '@sentry/react-native';
-import {defineMessages, useIntl} from 'react-intl';
+import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 
 import {ActionButtonConfig} from './BottomSheetModal/Content';
 import {
@@ -8,7 +8,7 @@ import {
   BottomSheetModal,
   useBottomSheetModal,
 } from './BottomSheetModal';
-import {LogoWithErrorIcon} from './LogoWithErrorIcon';
+import ErrorIcon from '../images/Error.svg';
 
 const m = defineMessages({
   somethingWrong: {
@@ -29,10 +29,12 @@ type ErrorModalProps = {
   error: Error | null;
   clearError: () => void;
   tryAgain?: () => unknown;
+  title?: MessageDescriptor;
+  description?: MessageDescriptor;
 };
 
 export const ErrorBottomSheet = (props: ErrorModalProps) => {
-  const {error, clearError, tryAgain} = props;
+  const {error, clearError, tryAgain, title, description} = props;
 
   const {formatMessage} = useIntl();
   const {openSheet, sheetRef, isOpen, closeSheet} = useBottomSheetModal({
@@ -74,9 +76,11 @@ export const ErrorBottomSheet = (props: ErrorModalProps) => {
       onDismiss={closeSheet}
       isOpen={isOpen}>
       <BottomSheetModalContent
-        icon={<LogoWithErrorIcon />}
-        title={formatMessage(m.somethingWrong)}
+        icon={<ErrorIcon width={160} height={160} style={{marginTop: 80}} />}
+        title={formatMessage(title || m.somethingWrong)}
+        description={description ? formatMessage(description) : undefined}
         buttonConfigs={buttonConfigs}
+        descriptionStyle={{fontSize: 16}}
       />
     </BottomSheetModal>
   );

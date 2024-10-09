@@ -1,45 +1,54 @@
-import React, {FC} from 'react';
+import React, {FC, useMemo} from 'react';
 import {
   StyleProp,
   StyleSheet,
   Text,
   TouchableOpacity,
   ViewStyle,
+  View,
 } from 'react-native';
 import {BLACK, NEW_DARK_GREY, VERY_LIGHT_GREY, WHITE} from '../../lib/styles';
 import Play from '../../images/observationEdit/Play.svg';
 import {FormattedRelativeTime} from 'react-intl';
 import {Duration} from 'luxon';
 
-interface Record {
-  createdAt: Date;
+interface Recording {
+  createdAt: number;
+  duration: number;
 }
 interface AudioThumbnail {
   onPress: () => unknown;
   size: number;
-  record: Record;
+  recording: Recording;
   style?: StyleProp<ViewStyle>;
 }
 
 export const AudioThumbnail: FC<AudioThumbnail> = ({
   onPress,
-  record,
+  recording,
   size,
   style,
 }) => {
+  const relativeTime = useMemo(
+    () => Math.round((Date.now() - recording.createdAt) / 1000),
+    [recording.createdAt],
+  );
+
   return (
     <TouchableOpacity
       style={[styles.thumbnailContainer, {width: size, height: size}, style]}
       onPress={onPress}>
-      <Play />
+      <View style={styles.playIconContainer}>
+        <Play width={24} height={24} />
+      </View>
       <Text style={styles.duration}>
-        {Duration.fromMillis(record.createdAt.getTime()).toFormat('mm:ss')}
+        {Duration.fromMillis(recording.duration).toFormat('mm:ss')}
       </Text>
       <Text style={styles.timeSince}>
         <FormattedRelativeTime
-          value={(Date.now() - record.createdAt.getTime()) / 1000}
+          value={-relativeTime}
           numeric="auto"
-          updateIntervalInSeconds={1}
+          updateIntervalInSeconds={60}
         />
       </Text>
     </TouchableOpacity>
@@ -55,9 +64,19 @@ const styles = StyleSheet.create({
     borderColor: VERY_LIGHT_GREY,
     borderWidth: 1,
     overflow: 'hidden',
+    padding: 10,
+  },
+  playIconContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: VERY_LIGHT_GREY,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    marginBottom: 8,
   },
   duration: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '600',
     fontFamily: 'Rubik',
     color: BLACK,

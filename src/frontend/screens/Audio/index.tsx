@@ -3,14 +3,26 @@ import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 
 import {DARK_GREY, WHITE} from '../../lib/styles';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
+import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {CreateRecording} from './CreateRecording';
+import {ExistingRecording} from './ExistingRecording';
 
 export const MAX_RECORDING_DURATION_MS = 5 * 60_000;
 
-export function Audio() {
+export function Audio({route}: NativeRootNavigationProps<'Audio'>) {
   return (
     <>
-      <CreateRecording />
+      {route.params?.existingUri ? (
+        <ExistingRecording
+          uri={route.params?.existingUri}
+          onDelete={() => {
+            // Implement the delete functionality here
+            console.log('Deleted recording at:', route.params?.existingUri);
+          }}
+        />
+      ) : (
+        <CreateRecording />
+      )}
     </>
   );
 }

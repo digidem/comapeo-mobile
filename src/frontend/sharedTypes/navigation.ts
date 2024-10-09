@@ -102,7 +102,7 @@ export type RootStackParamsList = {
   DataAndPrivacy: undefined;
   SettingsPrivacyPolicy: undefined;
   HowToLeaveProject: undefined;
-  Audio: undefined;
+  Audio: {existingUri: string} | undefined;
 };
 
 export type OnboardingParamsList = {

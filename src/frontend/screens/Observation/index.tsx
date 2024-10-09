@@ -19,7 +19,9 @@ import {MediaScrollView} from '../../sharedComponents/MediaScrollView/index.tsx'
 import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
 import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types.ts';
+import {AudioRecording} from '../../sharedTypes/index.ts';
 import {ButtonFields} from './Buttons.tsx';
+import {useAttachmentUrlQueries} from '../../hooks/server/media';
 
 const m = defineMessages({
   deleteTitle: {
@@ -74,10 +76,38 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
     convertedDeviceId !== undefined &&
     deviceInfo.deviceId === convertedDeviceId;
 
-  // Currently only show photo attachments
   const photoAttachments = observation.attachments.filter(
     (attachment): attachment is SavedPhoto => attachment.type === 'photo',
   );
+
+  const audioAttachments = observation.attachments.filter(
+    attachment => attachment.type === 'audio',
+  );
+
+  const audioQueries = useAttachmentUrlQueries(audioAttachments, 'original');
+
+  const [audioRecordings, setAudioRecordings] = React.useState<
+    AudioRecording[]
+  >([]);
+
+  React.useEffect(() => {
+    if (audioQueries.every(query => query.isSuccess)) {
+      const transformedRecordings = audioQueries.map(query => {
+        const attachment = query.data!;
+        return {
+          createdAt: new Date(observation.createdAt).getTime(),
+          duration: 0,
+          uri: attachment.url,
+        } as AudioRecording;
+      });
+
+      setAudioRecordings(prev =>
+        JSON.stringify(prev) !== JSON.stringify(transformedRecordings)
+          ? transformedRecordings
+          : prev,
+      );
+    }
+  }, [audioQueries]);
 
   return (
     <ScrollView
@@ -102,12 +132,14 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
               <Text style={styles.textNotes}>{observation.tags.notes}</Text>
             </View>
           ) : null}
-          {photoAttachments.length > 0 && (
-            <MediaScrollView
-              photos={photoAttachments}
-              observationId={observationId}
-            />
-          )}
+          {photoAttachments.length > 0 ||
+            (audioRecordings.length > 0 && (
+              <MediaScrollView
+                photos={photoAttachments}
+                audioRecordings={audioRecordings}
+                observationId={observationId}
+              />
+            ))}
         </View>
         {fields.length > 0 && (
           <FieldDetails observation={observation} fields={fields} />

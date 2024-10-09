@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import {BLACK, NEW_DARK_GREY, VERY_LIGHT_GREY, WHITE} from '../../lib/styles';
-import Play from '../../images/observationEdit/Play.svg';
+import PlayArrow from '../../images/PlayArrow.svg';
 import {FormattedRelativeTime} from 'react-intl';
 import {Duration} from 'luxon';
 
@@ -38,8 +38,8 @@ export const AudioThumbnail: FC<AudioThumbnail> = ({
     <TouchableOpacity
       style={[styles.thumbnailContainer, {width: size, height: size}, style]}
       onPress={onPress}>
-      <View style={styles.playIconContainer}>
-        <Play width={24} height={24} />
+      <View>
+        <PlayArrow width={48} height={48} />
       </View>
       <Text style={styles.duration}>
         {Duration.fromMillis(recording.duration).toFormat('mm:ss')}
@@ -65,15 +65,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     overflow: 'hidden',
     padding: 10,
-  },
-  playIconContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: VERY_LIGHT_GREY,
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    marginBottom: 8,
   },
   duration: {
     fontSize: 14,

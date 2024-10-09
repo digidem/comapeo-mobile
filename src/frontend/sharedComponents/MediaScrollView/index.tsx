@@ -64,7 +64,6 @@ export const MediaScrollView: FC<MediaScrollView> = ({
           );
         })}
       {audioRecordings?.map((recording, index) => {
-        console.log('recording', recording);
         const onPress = () => {
           navigation.navigate('Audio', {
             existingUri: recording.uri,

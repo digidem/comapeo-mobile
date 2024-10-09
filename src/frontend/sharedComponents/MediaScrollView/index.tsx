@@ -44,25 +44,6 @@ export const MediaScrollView: FC<MediaScrollView> = ({
       showsHorizontalScrollIndicator={false}
       contentInset={{top: 5, right: 5, bottom: 5, left: 5}}
       style={styles.mediaContainer}>
-      {photos
-        ?.filter(photo => photo?.deleted == null)
-        ?.map((photo, index) => {
-          const onPress =
-            photo.type === 'photo' || photo.type === 'processed'
-              ? () => {
-                  navigation.navigate('PhotoPreviewModal', {photo});
-                }
-              : undefined;
-          return (
-            <PhotoThumbnail
-              key={index}
-              photo={photo}
-              style={styles.thumbnail}
-              size={size}
-              onPress={onPress}
-            />
-          );
-        })}
       {audioRecordings?.map((recording, index) => {
         const onPress = () => {
           navigation.navigate('Audio', {
@@ -83,6 +64,25 @@ export const MediaScrollView: FC<MediaScrollView> = ({
           />
         );
       })}
+      {photos
+        ?.filter(photo => photo?.deleted == null)
+        ?.map((photo, index) => {
+          const onPress =
+            photo.type === 'photo' || photo.type === 'processed'
+              ? () => {
+                  navigation.navigate('PhotoPreviewModal', {photo});
+                }
+              : undefined;
+          return (
+            <PhotoThumbnail
+              key={index}
+              photo={photo}
+              style={styles.thumbnail}
+              size={size}
+              onPress={onPress}
+            />
+          );
+        })}
     </ScrollView>
   );
 };

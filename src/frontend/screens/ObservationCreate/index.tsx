@@ -324,6 +324,7 @@ export const ObservationCreate = ({
           updateTags('notes', newVal);
         }}
         photos={photos}
+        audioRecordings={audioRecordings}
         location={coordinateInfo}
         actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
       />

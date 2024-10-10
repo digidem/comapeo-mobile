@@ -7,7 +7,6 @@ export async function getAudioDuration(uri: string): Promise<number> {
     await sound.unloadAsync();
     return duration;
   } catch (error) {
-    console.error('Error loading audio file for duration check:', error);
     return 0;
   }
 }

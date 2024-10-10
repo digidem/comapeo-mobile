@@ -115,7 +115,7 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
         });
       }
     },
-    existingObservationToDraft: observation => {
+    existingObservationToDraft: async observation => {
       set({
         value: observation,
         observationId: observation.docId,

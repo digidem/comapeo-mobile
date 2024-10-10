@@ -19,10 +19,8 @@ import {MediaScrollView} from '../../sharedComponents/MediaScrollView/index.tsx'
 import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
 import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types.ts';
-import {AudioRecording} from '../../sharedTypes/index.ts';
 import {ButtonFields} from './Buttons.tsx';
-import {useAttachmentUrlQueries} from '../../hooks/server/media';
-import {getAudioDuration} from '../Audio/getAudioDuration';
+import {useAudioRecordingsFromObservation} from '../../hooks/server/media.ts';
 
 const m = defineMessages({
   deleteTitle: {
@@ -81,42 +79,11 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
     (attachment): attachment is SavedPhoto => attachment.type === 'photo',
   );
 
-  const audioAttachments = observation.attachments.filter(
-    attachment => attachment.type === 'audio',
-  );
-
-  const audioQueries = useAttachmentUrlQueries(audioAttachments, 'original');
-
-  const [audioRecordings, setAudioRecordings] = React.useState<
-    AudioRecording[]
-  >([]);
-
-  React.useEffect(() => {
-    if (audioQueries.every(query => query.isSuccess)) {
-      const fetchDurations = async () => {
-        const transformedRecordings = await Promise.all(
-          audioQueries.map(async query => {
-            const attachment = query.data!;
-            const duration = await getAudioDuration(attachment.url);
-
-            return {
-              createdAt: new Date(observation.createdAt).getTime(),
-              duration,
-              uri: attachment.url,
-            } as AudioRecording;
-          }),
-        );
-
-        setAudioRecordings(prev =>
-          JSON.stringify(prev) !== JSON.stringify(transformedRecordings)
-            ? transformedRecordings
-            : prev,
-        );
-      };
-
-      fetchDurations();
-    }
-  }, [audioQueries]);
+  const {
+    audioRecordings,
+    isLoading: isAudioLoading,
+    error: audioError,
+  } = useAudioRecordingsFromObservation(observation);
 
   return (
     <ScrollView

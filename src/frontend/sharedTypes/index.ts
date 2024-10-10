@@ -38,6 +38,12 @@ export type AudioRecording = {
   uri: string;
 };
 
+export interface AudioMetadata extends Metadata {
+  duration: number;
+  timestamp: number;
+  uri: string;
+}
+
 // Copied from @comapeo/core/src/roles.js. Created an issue to eventually expose this: https://github.com/digidem/mapeo-core-next/issues/532
 export const CREATOR_ROLE_ID = 'a12a6702b93bd7ff';
 export const COORDINATOR_ROLE_ID = 'f7c150f5a3a9a855';

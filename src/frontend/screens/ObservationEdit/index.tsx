@@ -16,6 +16,8 @@ import {Loading} from '../../sharedComponents/Loading';
 import {HeaderLeft} from './HeaderLeft';
 import {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
 import {CommonActions} from '@react-navigation/native';
+import {useAudioRecordings} from '../Audio/audioUtils';
+import {useObservation} from '../../hooks/server/observations';
 
 const m = defineMessages({
   observation: {
@@ -52,6 +54,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   const preset = usePreset();
   const editObservationMutation = useEditObservation();
   const photos = usePersistedDraftObservation(store => store.photos);
+
   const createBlobMutation = useCreateBlobMutation();
 
   const notes = value?.tags.notes;
@@ -61,6 +64,11 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         defaultMessage: preset.name,
       })
     : formatMessage(m.observation);
+
+  const {data: observation} = route.params?.observationId
+    ? useObservation(route.params.observationId)
+    : {data: null};
+  const audioRecordings = observation ? useAudioRecordings(observation) : [];
 
   React.useEffect(() => {
     if (!value) {
@@ -203,6 +211,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
           updateTags('notes', newVal);
         }}
         photos={photos}
+        audioRecordings={audioRecordings}
         actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
       />
       <ErrorBottomSheet

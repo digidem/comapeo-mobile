@@ -160,7 +160,10 @@ export const ObservationCreate = ({
     // Basically, which is worse: orphaned attachments or saving observations that seem to be missing attachments?
     Promise.all(
       savablePhotos.map(photo => {
-        return createBlobMutation.mutateAsync(photo);
+        return createBlobMutation.mutateAsync(
+          // @ts-expect-error Due to TS array filtering limitations. Fixed in TS 5.5
+          photo,
+        );
       }),
     ).then(results => {
       const newAttachments = results.map(

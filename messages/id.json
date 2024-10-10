@@ -25,6 +25,21 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "Hapus pengamatan?"
   },
+  "AudioPlaybackScreen.DeleteAudioRecordingModal.successDescription": {
+    "message": "Your <bold>{audioRecording}</bold> was added."
+  },
+  "AudioPlaybackScreen.DeleteAudioRecordingModal.successTitle": {
+    "message": "Success!"
+  },
+  "AudioPlaybackScreen.SuccessAudioRecordingModal.audioRecording": {
+    "message": "Audio Recording"
+  },
+  "AudioPlaybackScreen.SuccessAudioRecordingModal.recordAnother": {
+    "message": "Record Another"
+  },
+  "AudioPlaybackScreen.SuccessAudioRecordingModal.returnToEditor": {
+    "message": "Return to Editor"
+  },
   "Modal.GPSDisable.button": {
     "message": "Enable"
   },
@@ -359,6 +374,27 @@
   "screens.AudioPermission.title": {
     "description": "Screen title for audio permission screen",
     "message": "Recording Audio with CoMapeo"
+  },
+  "screens.AudioScreen.CreateRecording.RecordingActive.description": {
+    "message": "Less than {length} {length, plural, one {minute} other {minutes}} left"
+  },
+  "screens.AudioScreen.CreateRecording.RecordingDone.deleteBottomSheetDescription": {
+    "message": "Your Audio Recording will be permanently deleted. This cannot be undone."
+  },
+  "screens.AudioScreen.CreateRecording.RecordingDone.deleteBottomSheetPrimaryButtonText": {
+    "message": "Hapus"
+  },
+  "screens.AudioScreen.CreateRecording.RecordingDone.deleteBottomSheetSecondaryButtonText": {
+    "message": "Batal"
+  },
+  "screens.AudioScreen.CreateRecording.RecordingDone.deleteBottomSheetTitle": {
+    "message": "Delete?"
+  },
+  "screens.AudioScreen.CreateRecording.RecordingIdle.description": {
+    "message": "Record up to {length} {length, plural, one {minute} other {minutes}}"
+  },
+  "screens.AudioScreen.Playback.description": {
+    "message": "Total length: {length}"
   },
   "screens.CameraScreen.goToSettings": {
     "message": "Go to Settings"

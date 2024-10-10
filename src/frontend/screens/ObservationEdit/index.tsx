@@ -16,6 +16,7 @@ import {Loading} from '../../sharedComponents/Loading';
 import {HeaderLeft} from './HeaderLeft';
 import {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
 import {CommonActions} from '@react-navigation/native';
+import {matchPreset} from '../../lib/utils.ts';
 
 const m = defineMessages({
   observation: {
@@ -62,23 +63,44 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       })
     : formatMessage(m.observation);
 
+  // TODO: This shouldn't be an effect, the logic should happen when the user
+  // presses the edit button.
   React.useEffect(() => {
-    if (!value) {
-      if (!route.params?.observationId) {
-        navigation.goBack();
-        return;
-      }
-      projectApi.observation
-        .getByDocId(route.params.observationId)
-        .then(observation => {
-          existingObservationToDraft(observation);
-        });
+    let cancelled = false;
+    if (value) return;
+    if (!route.params?.observationId) {
+      navigation.goBack();
+      return;
     }
+
+    async function createDraftFromExistingObservation(docId: string) {
+      const observation = await projectApi.observation.getByDocId(docId);
+      if (cancelled) return;
+      const presets = await projectApi.preset.getMany();
+      if (cancelled) return;
+      let matchingPreset;
+      if (observation.presetRef) {
+        matchingPreset = presets.find(
+          p => p.docId === observation.presetRef?.docId,
+        );
+      }
+      if (!matchingPreset) {
+        matchingPreset = matchPreset(observation.tags, presets);
+      }
+      existingObservationToDraft(observation, matchingPreset);
+    }
+
+    createDraftFromExistingObservation(route.params?.observationId);
+
+    return () => {
+      cancelled = true;
+    };
   }, [
     value,
     existingObservationToDraft,
     route.params?.observationId,
     projectApi.observation,
+    projectApi.preset,
     navigation,
   ]);
 

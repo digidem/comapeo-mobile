@@ -30,6 +30,7 @@ export const useDraftObservation = () => {
     updatePreset,
     existingObservationToDraft,
     addAudioRecording,
+    deleteAudioRecording,
   } = _usePersistedDraftObservationActions();
 
   const addPhoto = useCallback(
@@ -104,5 +105,6 @@ export const useDraftObservation = () => {
     usePreset,
     existingObservationToDraft,
     addAudioRecording,
+    deleteAudioRecording,
   };
 };

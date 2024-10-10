@@ -130,9 +130,8 @@ export const ObservationCreate = ({
     if (!value) throw new Error('no observation saved in persisted state ');
 
     const savablePhotos = photos.filter(photo => photo.type === 'processed');
-    const savableAudioRecordings = audioRecordings;
 
-    if (savablePhotos.length === 0 && savableAudioRecordings.length === 0) {
+    if (savablePhotos.length === 0 && audioRecordings.length === 0) {
       createObservationMutation.mutate(
         {value},
         {
@@ -166,7 +165,7 @@ export const ObservationCreate = ({
       );
     });
 
-    const audioPromises = savableAudioRecordings.map(audio => {
+    const audioPromises = audioRecordings.map(audio => {
       return createAudioBlobMutation.mutateAsync(audio);
     });
 

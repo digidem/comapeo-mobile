@@ -6,17 +6,19 @@ import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {CreateRecording} from './CreateRecording';
 import {ExistingRecording} from './ExistingRecording';
+import {useDraftObservation} from '../../hooks/useDraftObservation';
 
 export const MAX_RECORDING_DURATION_MS = 5 * 60_000;
 
 export function Audio({route}: NativeRootNavigationProps<'Audio'>) {
+  const {deleteAudioRecording} = useDraftObservation();
   return (
     <>
       {route.params?.existingUri ? (
         <ExistingRecording
           uri={route.params?.existingUri}
           onDelete={() => {
-            // Implement the delete functionality here
+            deleteAudioRecording(route.params?.existingUri);
             console.log('Deleted recording at:', route.params?.existingUri);
           }}
         />

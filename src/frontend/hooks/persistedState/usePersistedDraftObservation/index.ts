@@ -38,6 +38,7 @@ export type DraftObservationSlice = {
     // Create a new draft observation
     newDraft: () => void;
     deletePhoto: (uri: string) => void;
+    deleteAudioRecording: (uri: string) => void;
     existingObservationToDraft: (observation: Observation) => void;
     updateObservationPosition: (
       props:
@@ -181,6 +182,10 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
     addAudioRecording: recording =>
       set({
         audioRecordings: [...get().audioRecordings, recording],
+      }),
+    deleteAudioRecording: uri =>
+      set({
+        audioRecordings: get().audioRecordings.filter(a => a.uri !== uri),
       }),
   },
 });

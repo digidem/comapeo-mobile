@@ -54,10 +54,6 @@ export const MediaScrollView: FC<MediaScrollView> = ({
         return (
           <AudioThumbnail
             key={`audio-${index}`}
-            recording={{
-              createdAt: recording.createdAt,
-              duration: recording.duration,
-            }}
             style={styles.thumbnail}
             size={size}
             onPress={onPress}

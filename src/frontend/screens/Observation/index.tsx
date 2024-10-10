@@ -20,7 +20,8 @@ import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
 import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types.ts';
 import {ButtonFields} from './Buttons.tsx';
-import {useAudioRecordingsFromObservation} from '../../hooks/server/media.ts';
+import {useAttachmentUrlQueries} from '../../hooks/server/media';
+import {AudioRecording} from '../../sharedTypes';
 
 const m = defineMessages({
   deleteTitle: {
@@ -79,11 +80,40 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
     (attachment): attachment is SavedPhoto => attachment.type === 'photo',
   );
 
-  const {
-    audioRecordings,
-    isLoading: isAudioLoading,
-    error: audioError,
-  } = useAudioRecordingsFromObservation(observation);
+  const audioAttachments = React.useMemo(
+    () =>
+      observation?.attachments?.filter(
+        attachment => attachment.type === 'audio',
+      ) || [],
+    [observation],
+  );
+
+  const audioQueries = useAttachmentUrlQueries(audioAttachments, 'original');
+  const [audioRecordings, setAudioRecordings] = React.useState<
+    AudioRecording[]
+  >([]);
+
+  React.useEffect(() => {
+    if (audioQueries.every(query => query.isSuccess)) {
+      const transformedRecordings = audioQueries
+        .filter(query => query.data?.url)
+        .map(query => ({
+          uri: query.data!.url,
+          createdAt: 0, // Placeholder
+          duration: 0, // Placeholder
+        }));
+
+      setAudioRecordings(currentRecordings => {
+        if (
+          JSON.stringify(currentRecordings) !==
+          JSON.stringify(transformedRecordings)
+        ) {
+          return transformedRecordings;
+        }
+        return currentRecordings;
+      });
+    }
+  }, [audioQueries, observation.createdAt]);
 
   return (
     <ScrollView

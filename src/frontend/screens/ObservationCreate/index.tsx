@@ -126,7 +126,14 @@ export const ObservationCreate = ({
 
     if (!savablePhotos) {
       createObservationMutation.mutate(
-        {value},
+        {
+          value: {
+            ...value,
+            presetRef: preset
+              ? {docId: preset.docId, versionId: preset.versionId}
+              : undefined,
+          },
+        },
         {
           onSuccess: () => {
             clearDraft();
@@ -153,10 +160,7 @@ export const ObservationCreate = ({
     // Basically, which is worse: orphaned attachments or saving observations that seem to be missing attachments?
     Promise.all(
       savablePhotos.map(photo => {
-        return createBlobMutation.mutateAsync(
-          // @ts-expect-error Due to TS array filtering limitations. Fixed in TS 5.5
-          photo,
-        );
+        return createBlobMutation.mutateAsync(photo);
       }),
     ).then(results => {
       const newAttachments = results.map(
@@ -208,6 +212,7 @@ export const ObservationCreate = ({
     navigation,
     photos,
     value,
+    preset,
   ]);
 
   const checkAccuracyAndLocation = React.useCallback(() => {

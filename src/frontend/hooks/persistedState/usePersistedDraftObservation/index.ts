@@ -26,6 +26,7 @@ export type DraftObservationSlice = {
   audioRecordings: [];
   value: Observation | null | ClientGeneratedObservation;
   observationId?: string;
+  preset?: Preset;
   actions: {
     addPhotoPlaceholder: (draftPhotoId: string) => void;
     replacePhotoPlaceholderWithPhoto: (draftPhoto: DraftPhoto) => void;
@@ -75,6 +76,7 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
         audioRecordings: [],
         value: null,
         observationId: undefined,
+        preset: undefined,
       });
     },
     updateObservationPosition: props => {
@@ -143,33 +145,53 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
       });
       return;
     },
-    updatePreset: ({tags, fieldRefs}) => {
+    updatePreset: preset => {
       const prevValue = get().value;
+      const prevPreset = get().preset;
       if (!prevValue) {
         set({
+          preset,
           value: {
             ...emptyObservation,
-            tags,
+            tags: {
+              ...preset.tags,
+              ...preset.addTags,
+            },
           },
         });
         return;
       }
-      const fieldIds = fieldRefs.map(({docId}) => docId);
-      // we want to keep any field tags that are the same from the previous preset
-      const savedFieldTags = Object.fromEntries(
-        Object.entries(prevValue.tags).filter(([key]) =>
-          fieldIds.includes(key),
-        ),
-      );
+      if (!prevPreset) {
+        set({
+          preset,
+          value: {
+            ...prevValue,
+            tags: {
+              ...prevValue.tags,
+              ...preset.tags,
+              ...preset.addTags,
+            },
+          },
+        });
+        return;
+      }
+      // Apply tags from new preset and remove tags from previous preset
+      const newTags: Observation['tags'] = {...preset.tags, ...preset.addTags};
+      for (const [key, value] of Object.entries(prevValue.tags)) {
+        const tagWasFromPrevPreset =
+          prevPreset.tags[key] === value || prevPreset.addTags[key] === value;
+        const shouldRemoveTag = preset.removeTags[key] === value;
+        // Only keep tags that were not from the previous preset and are not removed by the new preset
+        if (!tagWasFromPrevPreset && !shouldRemoveTag) {
+          newTags[key] = value;
+        }
+      }
 
       set({
+        preset,
         value: {
           ...prevValue,
-          tags: {
-            ...tags,
-            ...savedFieldTags,
-            ...(prevValue.tags.notes ? {notes: prevValue.tags.notes} : {}),
-          },
+          tags: newTags,
         },
       });
     },
@@ -184,7 +206,8 @@ export const usePersistedDraftObservation = createPersistedState(
 export const usePreset = () => {
   const {data: presets} = usePresetsQuery();
   const tags = usePersistedDraftObservation(store => store.value?.tags);
-  return !tags ? undefined : matchPreset(tags, presets);
+  const preset = usePersistedDraftObservation(store => store.preset);
+  return preset || !tags ? undefined : matchPreset(tags, presets);
 };
 
 export const _usePersistedDraftObservationActions = () =>

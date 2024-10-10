@@ -97,7 +97,15 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
 
     if (!newPhotos || !newPhotos.length) {
       editObservationMutation.mutate(
-        {versionId: value.versionId, value},
+        {
+          versionId: value.versionId,
+          value: {
+            ...value,
+            presetRef: preset
+              ? {docId: preset.docId, versionId: preset.versionId}
+              : undefined,
+          },
+        },
         {
           onSuccess: () => {
             if (navigation.canGoBack()) {
@@ -140,6 +148,9 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
           value: {
             ...value,
             attachments: [...value.attachments, ...newAttachments],
+            presetRef: preset
+              ? {docId: preset.docId, versionId: preset.versionId}
+              : undefined,
           },
         },
         {
@@ -164,6 +175,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       );
     });
   }, [
+    preset,
     navigation,
     clearDraft,
     value,

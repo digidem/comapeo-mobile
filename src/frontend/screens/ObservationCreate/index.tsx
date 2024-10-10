@@ -126,7 +126,14 @@ export const ObservationCreate = ({
 
     if (!savablePhotos) {
       createObservationMutation.mutate(
-        {value},
+        {
+          value: {
+            ...value,
+            presetRef: preset
+              ? {docId: preset.docId, versionId: preset.versionId}
+              : undefined,
+          },
+        },
         {
           onSuccess: () => {
             clearDraft();
@@ -173,6 +180,9 @@ export const ObservationCreate = ({
           value: {
             ...value,
             attachments: [...value.attachments, ...newAttachments],
+            presetRef: preset
+              ? {docId: preset.docId, versionId: preset.versionId}
+              : undefined,
           },
         },
         {
@@ -208,6 +218,7 @@ export const ObservationCreate = ({
     navigation,
     photos,
     value,
+    preset,
   ]);
 
   const checkAccuracyAndLocation = React.useCallback(() => {

@@ -10,7 +10,7 @@
     "ios-no-backend-rebuild": "expo run:ios",
     "prestart": "npm run build:translations && npm run build:intl-polyfills",
     "start": "expo start",
-    "test": "jest",
+    "test": "dotenv -- jest",
     "lint:prettier": "prettier \"src/**/*.{js,ts,jsx,tsx}\" --check",
     "lint:eslint": "eslint . --ext .js,.jsx,.ts,.tsx --cache --ignore-path .gitignore",
     "lint:types": "tsc --noEmit",
@@ -148,7 +148,8 @@
     "execa": "^8.0.1",
     "glob": "^10.3.14",
     "husky": "^8.0.0",
-    "jest": "^29.6.3",
+    "jest": "^29.7.0",
+    "jest-expo": "^50.0.4",
     "lint-staged": "^14.0.1",
     "patch-package": "^8.0.0",
     "prettier": "^3.2.5",
@@ -161,7 +162,7 @@
     "typescript": "^5.3.3"
   },
   "jest": {
-    "preset": "react-native",
+    "preset": "jest-expo",
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -174,7 +175,7 @@
       "@rnmapbox/maps/setup-jest"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(...|@rnmapbox))"
+      "node_modules/(?!(...|@rnmapbox|(jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg)"
     ]
   },
   "lint-staged": {

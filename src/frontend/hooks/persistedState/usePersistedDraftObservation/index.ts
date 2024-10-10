@@ -207,7 +207,14 @@ export const usePreset = () => {
   const {data: presets} = usePresetsQuery();
   const tags = usePersistedDraftObservation(store => store.value?.tags);
   const preset = usePersistedDraftObservation(store => store.preset);
-  return preset || !tags ? undefined : matchPreset(tags, presets);
+  // For a draft observation (in contrast to an existing observation), we
+  // prioritize the preset explicitly set on the draft, rather than the one that
+  // we match based on tags.
+  if (preset) {
+    return preset;
+  } else if (tags) {
+    return matchPreset(tags, presets);
+  }
 };
 
 export const _usePersistedDraftObservationActions = () =>

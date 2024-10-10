@@ -141,10 +141,15 @@ export const ProjectSyncDisplay = ({
     dataSyncEnabled: syncState.data.isSyncEnabled,
   });
 
-  // Unset sync autostop when screen mounts
   useFocusEffect(
     React.useCallback(() => {
+      // Unset sync autostop when screen mounts
       projectApi.$sync.setAutostopDataSyncTimeout(null);
+      // Connects to Servers
+      projectApi.$sync.connectServers();
+      return () => {
+        projectApi.$sync.disconnectServers();
+      };
     }, [projectApi]),
   );
 

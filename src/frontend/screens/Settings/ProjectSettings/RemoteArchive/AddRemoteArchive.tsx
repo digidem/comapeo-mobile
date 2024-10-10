@@ -177,7 +177,7 @@ type AddFoundArchiveProps = {
 const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
   const {formatMessage} = useIntl();
   const {mutate, error, reset, isPending} = useAddRemoteArchive();
-  const {navigate, setOptions} = useNavigationFromRoot();
+  const {navigate, setOptions, addListener} = useNavigationFromRoot();
   function handleAddRemoteArchive() {
     mutate(url, {
       onSuccess: () => {
@@ -185,6 +185,21 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
       },
     });
   }
+
+  React.useEffect(() => {
+    const unsubscribe = addListener('beforeRemove', e => {
+      if (!isPending) {
+        // If user is not actively adding server
+        return;
+      }
+
+      // Prevent default behavior of leaving the screen
+      e.preventDefault();
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, [addListener, isPending]);
 
   React.useLayoutEffect(() => {
     setOptions({headerShown: true});

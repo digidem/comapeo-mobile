@@ -174,9 +174,13 @@ export function useCheckIfRemoteArchiveConnected() {
 
 export function useAddRemoteArchive() {
   const {projectApi} = useActiveProject();
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (normalizedUrl: string) => {
       return projectApi.$member.addServerPeer(normalizedUrl);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: [PROJECT_MEMBERS_KEY]});
     },
   });
 }

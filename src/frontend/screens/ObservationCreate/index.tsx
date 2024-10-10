@@ -180,6 +180,9 @@ export const ObservationCreate = ({
           value: {
             ...value,
             attachments: [...value.attachments, ...newAttachments],
+            presetRef: preset
+              ? {docId: preset.docId, versionId: preset.versionId}
+              : undefined,
           },
         },
         {

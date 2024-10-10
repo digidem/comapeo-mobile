@@ -74,7 +74,7 @@
     "message": "Actualmente estás mapeando por tu cuenta"
   },
   "Navigation.Drawer.projName": {
-    "message": "Proyecto "
+    "message": "Proyecto {projectName}"
   },
   "Navigation.Drawer.projectSettings": {
     "message": "Configuración del proyecto"
@@ -254,7 +254,7 @@
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
     "description": "used to indicate to the user what the new passcode will be.",
-    "message": "Contraseña"
+    "message": "Contraseña: {passcode}"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
     "message": "Guardar Contraseña de la aplicación"
@@ -296,7 +296,7 @@
     "message": "Contraseña incorrecta"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet": {
-    "message": "Esta código de acceso será necesario para abrir la aplicación de Mapeo"
+    "message": "Este código de acceso será necesario para abrir la aplicación de Mapeo"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
     "message": "Confirmar contraseña"
@@ -314,7 +314,7 @@
     "message": "La contraseña de la aplicación le permite añadir una capa adicional de seguridad, requiriendo introducir una contraseña para abrir la aplicación de CoMapeo. Puedes definir tu propia contraseña de 5 dígitos activando la siguiente función."
   },
   "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "¡Porfavor considera que las contraseñas olvidadas no pueden ser recuperadas! Una vez que esta funcionalidad está activada, si olvidas o pierdes tu contraseña, no podrás abrir CoMapeo y perderás el acceso a cualquier dato de CoMapeo que no hayas sido sincronizado con otras personas participantes del proyecto."
+    "message": "<bold>¡Por favor considera que las contraseñas olvidadas no pueden ser recuperadas!</bold> Una vez que esta funcionalidad está activada, si olvidas o pierdes tu contraseña, no podrás abrir CoMapeo y perderás el acceso a cualquier dato de CoMapeo que no hayas sido sincronizado con otras personas participantes del proyecto."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Cancelar"
@@ -338,7 +338,7 @@
     "message": "¿Desactivar la Contraseña de la aplicación?"
   },
   "screens.AppPasscode.TurnOffPasscode.usePasscode": {
-    "message": "Usar la Contraseña de la apliación"
+    "message": "Usar la Contraseña de la aplicación"
   },
   "screens.AudioPermission.Button.allow": {
     "description": "Screen button text for allow the audio permission",
@@ -535,7 +535,7 @@
     "message": "Abandonando proyecto {projectName}"
   },
   "screens.LeaveProject.removeFromProjWithName": {
-    "message": "Esto eliminará todos los datos del Proyecto de tu dispositivo."
+    "message": "Esto eliminará todos los datos del Proyecto {projectName} de tu dispositivo."
   },
   "screens.LeaveProject.removeFromProjWithoutName": {
     "message": "Esto eliminará todos los datos de su dispositivo."
@@ -722,7 +722,7 @@
     "message": "¿Sincronizar vistas previas?"
   },
   "screens.MediaSyncSettings.syncPreviewsDescription": {
-    "message": "Las fotos se van a sincronizar en un tamaño reducido. Tu dispositivo <bold> no <bold> sincornizará audio y video."
+    "message": "Las fotos se van a sincronizar en un tamaño reducido. Tu dispositivo <bold>no</bold> sincronizará audio y video."
   },
   "screens.MediaSyncSettings.syncPreviewsDescriptionBottomSheet": {
     "message": "Tu dispositivo mantendrá todos los datos existentes, pero las nuevas observaciones se sincronizarán en un tamaño más pequeño, de vista previa."
@@ -851,7 +851,7 @@
   },
   "screens.ObservationDetails.title": {
     "description": "Title of observation details screen showing question number and total",
-    "message": "Pregunta de "
+    "message": "Pregunta {current} de {total}"
   },
   "screens.ObservationEdit.ObservationEditView.audioButton": {
     "description": "Button label for adding audio",
@@ -1124,7 +1124,7 @@
     "message": "Cancelar invitación"
   },
   "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.timerMessage": {
-    "message": "Invitación enviada hace {segundos}"
+    "message": "Invitación enviada hace {seconds}s"
   },
   "screens.Setting.ProjectSettings.YourTeam.WaitingForInviteAccept.waitingMessage": {
     "message": "Esperando a que el dispositivo acepte la invitación"
@@ -1187,7 +1187,7 @@
     "message": "Invitar dispositivo"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.projectCreated": {
-    "message": "Creado!"
+    "message": "{projectName} Creado!"
   },
   "screens.Settings.CreateOrJoinProject.advancedSettings": {
     "message": "Ajustes avanzados del Proyecto"
@@ -1235,7 +1235,7 @@
     "message": "Cerrar"
   },
   "screens.Settings.YourTeam.deviceHasJoined": {
-    "message": "Este dispositivo de ha unido "
+    "message": "Este dispositivo ha unido a {projectName}"
   },
   "screens.Settings.YourTeam.inviteDeclinedDes": {
     "message": "Este dispositivo ha rechazado tu invitación. No se ha unido al Proyecto."
@@ -1424,10 +1424,10 @@
     "message": "Rechazar invitación"
   },
   "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.invitedToJoin": {
-    "message": "Te invitaron a unirte a {projectName} "
+    "message": "Te invitaron a unirte a {projectName}"
   },
   "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.joinProject": {
-    "message": "Unirse al Proyecto"
+    "message": "Unirse al Proyecto {projectName}"
   },
   "sharedComponents.ProjectInviteBottomSheet.goToMap": {
     "message": "Ir al mapa"

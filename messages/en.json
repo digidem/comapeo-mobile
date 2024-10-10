@@ -192,6 +192,12 @@
   "Screens.Settings.ProjectSettings.mediaSyncSettings": {
     "message": "Sync Settings"
   },
+  "Screens.Settings.ProjectSettings.remoteArchiveOff": {
+    "message": "Remote Archive is OFF"
+  },
+  "Screens.Settings.ProjectSettings.remoteArchiveOn": {
+    "message": "Remote Archive is ON"
+  },
   "Screens.Settings.ProjectSettings.title": {
     "message": "Project Settings"
   },

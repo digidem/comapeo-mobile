@@ -78,7 +78,7 @@ describe('normalizeRemoteArchiveUrl', () => {
     'https/no-colon.example',
     'https//no-colon.example',
     'https://' + 'x'.repeat(2000),
-    'https://bad-port:-1.example',
+    'https://bad-port.example:-1',
     'https://127.0.0.1:.example',
     'https://127.0.0.1:0.example',
   ];

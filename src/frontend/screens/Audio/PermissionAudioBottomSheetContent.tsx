@@ -5,7 +5,6 @@ import AudioPermission from '../../images/observationEdit/AudioPermission.svg';
 import {BottomSheetModalContent} from '../../sharedComponents/BottomSheetModal';
 import {Audio} from 'expo-av';
 import {PermissionResponse} from 'expo-modules-core';
-import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
   title: {
@@ -37,48 +36,38 @@ const m = defineMessages({
   },
 });
 
-type ObservationCreateNavigationProp =
-  NativeRootNavigationProps<'ObservationCreate'>['navigation'];
-
 interface PermissionAudioBottomSheetContentProps {
   closeSheet: () => void;
-  navigation: ObservationCreateNavigationProp;
+  setShouldNavigateToAudioTrue: () => void;
 }
 
 export const PermissionAudioBottomSheetContent: FC<
   PermissionAudioBottomSheetContentProps
-> = ({closeSheet, navigation}) => {
+> = ({closeSheet, setShouldNavigateToAudioTrue}) => {
   const {formatMessage: t} = useIntl();
   const [permissionResponse, setPermissionResponse] =
     useState<PermissionResponse | null>(null);
 
   const handleOpenSettings = () => {
     Linking.openSettings();
-    closeSheet();
   };
 
   const handleRequestPermission = async () => {
     const response = await Audio.requestPermissionsAsync();
+    closeSheet();
     setPermissionResponse(response);
     if (response.status === 'granted') {
-      closeSheet();
-      navigation.navigate('Audio');
-    } else if (response.status === 'denied' && response.canAskAgain) {
-      closeSheet();
+      setShouldNavigateToAudioTrue();
     } else if (response.status === 'denied' && !response.canAskAgain) {
       handleOpenSettings();
     }
   };
 
   const onPressActionButton = !permissionResponse
-    ? async () => {
-        await handleRequestPermission();
-      }
+    ? handleRequestPermission
     : permissionResponse.status === 'denied'
       ? handleOpenSettings
-      : async () => {
-          await handleRequestPermission();
-        };
+      : handleRequestPermission;
   const actionButtonText = !permissionResponse
     ? t(m.allowButtonText)
     : permissionResponse.status === 'denied'

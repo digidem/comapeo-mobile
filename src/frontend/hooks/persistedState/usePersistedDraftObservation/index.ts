@@ -6,7 +6,11 @@ import {
   SavedPhoto,
 } from '../../../contexts/PhotoPromiseContext/types';
 import {deletePhoto, replaceDraftPhotos} from './photosMethods';
-import {ClientGeneratedObservation, Position} from '../../../sharedTypes';
+import {
+  ClientGeneratedObservation,
+  Position,
+  AudioRecording,
+} from '../../../sharedTypes';
 import {Observation, Preset} from '@comapeo/schema';
 import {usePresetsQuery} from '../../server/presets';
 import {matchPreset} from '../../../lib/utils';
@@ -23,7 +27,7 @@ const emptyObservation: ClientGeneratedObservation = {
 
 export type DraftObservationSlice = {
   photos: Photo[];
-  audioRecordings: [];
+  audioRecordings: AudioRecording[];
   value: Observation | null | ClientGeneratedObservation;
   observationId?: string;
   preset?: Preset;
@@ -57,6 +61,7 @@ export type DraftObservationSlice = {
     ) => void;
     updateTags: (tagKey: string, value: Observation['tags'][0]) => void;
     updatePreset: (preset: Preset) => void;
+    addAudioRecording: (audioRecording: AudioRecording) => void;
   };
 };
 
@@ -199,6 +204,10 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
         },
       });
     },
+    addAudioRecording: recording =>
+      set({
+        audioRecordings: [...get().audioRecordings, recording],
+      }),
   },
 });
 

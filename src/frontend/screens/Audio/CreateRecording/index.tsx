@@ -1,40 +1,51 @@
 import React, {useEffect} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
-import {WHITE} from '../../../lib/styles';
-
-import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
-import {CustomHeaderLeft} from '../../../sharedComponents/CustomHeaderLeft';
+import {BackHandler} from 'react-native';
+import {RecordingActive} from './RecordingActive';
+import {RecordingDone} from './RecordingDone';
+import {RecordingIdle} from './RecordingIdle';
+import {useAudioRecording} from './useAudioRecording';
 
 export function CreateRecording() {
-  const navigation = useNavigationFromRoot();
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: props => (
-        <CustomHeaderLeft
-          tintColor={props.tintColor}
-          headerBackButtonProps={props}
-        />
-      ),
-    });
-  }, [navigation]);
-  return (
-    <View style={styles.contentContainer}>
-      <View style={styles.container}>
-        <Text style={styles.message}>Create Recording</Text>
-      </View>
-    </View>
-  );
-}
+  const {startRecording, stopRecording, reset, status, uri} =
+    useAudioRecording();
 
-const styles = StyleSheet.create({
-  contentContainer: {flex: 1},
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  message: {
-    color: WHITE,
-    fontSize: 20,
-    textAlign: 'center',
-  },
-});
+  const recordingState = status?.isRecording ? 'active' : uri ? 'done' : 'idle';
+
+  useEffect(() => {
+    if (recordingState === 'active' || recordingState === 'done') {
+      const onBackPress = () => {
+        return true;
+      };
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress,
+      );
+      return () => {
+        backHandler.remove();
+      };
+    }
+  }, [recordingState]);
+
+  if (recordingState === 'idle') {
+    return <RecordingIdle onPressRecord={startRecording} />;
+  }
+
+  if (recordingState === 'active') {
+    return (
+      <RecordingActive
+        duration={status?.durationMillis || 0}
+        onPressStop={stopRecording}
+      />
+    );
+  }
+
+  if (recordingState === 'done') {
+    return (
+      <RecordingDone
+        uri={uri || ''}
+        duration={status?.durationMillis || 0}
+        reset={reset}
+      />
+    );
+  }
+}

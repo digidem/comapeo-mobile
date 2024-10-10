@@ -160,6 +160,18 @@ export function useGetOwnRole() {
   });
 }
 
+export function useCheckIfRemoteArchiveConnected() {
+  const {projectId, projectApi} = useActiveProject();
+
+  return useQuery({
+    queryKey: [PROJECT_MEMBERS_KEY, projectId],
+    queryFn: async () => {
+      const members = await projectApi.$member.getMany();
+      return members.some(member => member.deviceType === 'selfHostedServer');
+    },
+  });
+}
+
 export function useAddRemoteArchive() {
   const {projectApi} = useActiveProject();
   return useMutation({

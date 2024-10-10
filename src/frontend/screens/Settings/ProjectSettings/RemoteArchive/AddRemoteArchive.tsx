@@ -10,7 +10,6 @@ import {SaveButton} from '../../../../sharedComponents/SaveButton';
 import {
   useAddRemoteArchive,
   useFindRemoteArchive,
-  useProjectMembers,
 } from '../../../../hooks/server/projects';
 import {Bar} from 'react-native-progress';
 import {ScreenContentWithDock} from '../../../../sharedComponents/ScreenContentWithDock';
@@ -67,29 +66,30 @@ export const AddRemoteArchive: NativeNavigationComponent<
   } = useForm<URLInput>();
   const [normalizedUrl, setNormalizedUrl] = React.useState<string>('');
 
-  const {data: members = []} = useProjectMembers();
-  const {isLoading: urlSearching, data: archiveName} = useFindRemoteArchive({
+  const {
+    isLoading: urlSearching,
+    data: archiveName,
+    isError,
+  } = useFindRemoteArchive({
     url: normalizedUrl ? new URL('/info', normalizedUrl).toString() : undefined,
   });
 
-  const alreadyHasRemoteArchive = members.some(
-    member => member.deviceType === 'selfHostedServer',
-  );
+  React.useEffect(() => {
+    if (isError) {
+      setError('url', {type: 'required'});
+    }
+  }, [isError, setError]);
 
   const handleFindRemoteArchive = React.useCallback(
     ({url}: URLInput) => {
       try {
         setNormalizedUrl(normalizeRemoteArchiveUrl(url));
       } catch (_err) {
-        setError('root', {message: 'invalid URL'});
+        setError('url', {type: 'required'});
       }
     },
     [setNormalizedUrl, setError],
   );
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({headerShown: !urlSearching});
-  }, [navigation, urlSearching]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -98,17 +98,11 @@ export const AddRemoteArchive: NativeNavigationComponent<
         !archiveName ? (
           <SaveButton
             onPress={handleSubmit(handleFindRemoteArchive)}
-            isLoading={urlSearching}
+            isLoading={false}
           />
         ) : null,
     });
-  }, [
-    handleFindRemoteArchive,
-    handleSubmit,
-    navigation,
-    urlSearching,
-    archiveName,
-  ]);
+  }, [handleFindRemoteArchive, handleSubmit, navigation, archiveName]);
 
   if (urlSearching) {
     return <FindingRemoteArchive />;
@@ -118,9 +112,7 @@ export const AddRemoteArchive: NativeNavigationComponent<
     return <AddFoundArchive name={archiveName} url={normalizedUrl} />;
   }
 
-  if (!alreadyHasRemoteArchive) {
-    return <SearchUrl control={control} errors={errors} />;
-  }
+  return <SearchUrl control={control} errors={errors} />;
 };
 
 type SearchUrlProp = {
@@ -130,7 +122,11 @@ type SearchUrlProp = {
 
 const SearchUrl = ({control, errors}: SearchUrlProp) => {
   const {formatMessage} = useIntl();
+  const navigation = useNavigationFromRoot();
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions({headerShown: true});
+  }, [navigation]);
   return (
     <View style={styles.container}>
       <View style={{flexDirection: 'row', marginBottom: 10}}>
@@ -153,10 +149,22 @@ const SearchUrl = ({control, errors}: SearchUrlProp) => {
 
 const FindingRemoteArchive = () => {
   const {formatMessage} = useIntl();
+  const navigation = useNavigationFromRoot();
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({headerShown: false});
+  }, [navigation]);
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {marginTop: 80}]}>
       <Text style={styles.title}>{formatMessage(m.looking)}</Text>
-      <Bar indeterminate color={COMAPEO_BLUE} width={null} height={20} />
+      <Bar
+        style={{borderWidth: 0, marginTop: 30}}
+        indeterminate
+        color={COMAPEO_BLUE}
+        width={null}
+        height={10}
+      />
     </View>
   );
 };
@@ -169,7 +177,7 @@ type AddFoundArchiveProps = {
 const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
   const {formatMessage} = useIntl();
   const {mutate, error, reset, isPending} = useAddRemoteArchive();
-  const {navigate} = useNavigationFromRoot();
+  const {navigate, setOptions} = useNavigationFromRoot();
   function handleAddRemoteArchive() {
     mutate(url, {
       onSuccess: () => {
@@ -177,6 +185,10 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
       },
     });
   }
+
+  React.useLayoutEffect(() => {
+    setOptions({headerShown: true});
+  }, [setOptions]);
 
   return (
     <>

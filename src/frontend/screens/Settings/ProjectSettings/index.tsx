@@ -3,6 +3,8 @@ import {ScrollView} from 'react-native';
 import {List, ListItem, ListItemText} from '../../../sharedComponents/List';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
+import {useCheckIfRemoteArchiveConnected} from '../../../hooks/server/projects';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 const m = defineMessages({
   title: {
@@ -30,11 +32,21 @@ const m = defineMessages({
     id: 'Screens.Settings.ProjectSettings.RemoteArchive',
     defaultMessage: 'Remote Archive',
   },
+  remoteArchiveOff: {
+    id: 'Screens.Settings.ProjectSettings.remoteArchiveOff',
+    defaultMessage: 'Remote Archive is OFF',
+  },
+  remoteArchiveOn: {
+    id: 'Screens.Settings.ProjectSettings.remoteArchiveOn',
+    defaultMessage: 'Remote Archive is ON',
+  },
 });
 
 export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
   navigation,
 }) => {
+  const {data: remoteArchiveConnected, isPending} =
+    useCheckIfRemoteArchiveConnected();
   return (
     <ScrollView>
       <List>
@@ -71,13 +83,26 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
           testID="settingsConfigButton">
           <ListItemText primary={<FormattedMessage {...m.config} />} />
         </ListItem>
-        <ListItem
-          onPress={() => {
-            navigation.navigate('RemoteArchive');
-          }}
-          testID="settingsConfigButton">
-          <ListItemText primary={<FormattedMessage {...m.RemoteArchive} />} />
-        </ListItem>
+        {!isPending && remoteArchiveConnected !== undefined && true ? (
+          <ListItem
+            onPress={() => {
+              navigation.navigate('RemoteArchive');
+            }}
+            testID="settingsConfigButton">
+            <ListItemText
+              primary={<FormattedMessage {...m.RemoteArchive} />}
+              secondary={
+                remoteArchiveConnected ? (
+                  <FormattedMessage {...m.remoteArchiveOn} />
+                ) : (
+                  <FormattedMessage {...m.remoteArchiveOff} />
+                )
+              }
+            />
+          </ListItem>
+        ) : (
+          <UIActivityIndicator style={{alignSelf: 'flex-start', padding: 20}} />
+        )}
       </List>
     </ScrollView>
   );

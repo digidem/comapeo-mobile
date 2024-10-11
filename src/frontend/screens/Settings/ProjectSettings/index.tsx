@@ -3,7 +3,7 @@ import {ScrollView} from 'react-native';
 import {List, ListItem, ListItemText} from '../../../sharedComponents/List';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
-import {useCheckIfRemoteArchiveConnected} from '../../../hooks/server/projects';
+import {useGetRemoteArchives} from '../../../hooks/server/projects';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 const m = defineMessages({
@@ -45,8 +45,9 @@ const m = defineMessages({
 export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
   navigation,
 }) => {
-  const {data: remoteArchiveConnected, isPending} =
-    useCheckIfRemoteArchiveConnected();
+  const {data: remoteArchives, isPending} = useGetRemoteArchives();
+
+  const remoteArchiveOn = remoteArchives && remoteArchives.length > 0;
   return (
     <ScrollView>
       <List>
@@ -83,16 +84,18 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
           testID="settingsConfigButton">
           <ListItemText primary={<FormattedMessage {...m.config} />} />
         </ListItem>
-        {!isPending && remoteArchiveConnected !== undefined && true ? (
+        {!isPending && remoteArchives !== undefined ? (
           <ListItem
             onPress={() => {
-              navigation.navigate('RemoteArchive');
+              navigation.navigate(
+                remoteArchiveOn ? 'RemoteArchiveOn' : 'RemoteArchiveOff',
+              );
             }}
             testID="settingsConfigButton">
             <ListItemText
               primary={<FormattedMessage {...m.RemoteArchive} />}
               secondary={
-                remoteArchiveConnected ? (
+                remoteArchiveOn ? (
                   <FormattedMessage {...m.remoteArchiveOn} />
                 ) : (
                   <FormattedMessage {...m.remoteArchiveOff} />

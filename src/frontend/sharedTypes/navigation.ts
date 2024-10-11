@@ -102,9 +102,10 @@ export type RootStackParamsList = {
   DataAndPrivacy: undefined;
   SettingsPrivacyPolicy: undefined;
   HowToLeaveProject: undefined;
-  RemoteArchive: undefined;
+  RemoteArchiveOff: undefined;
   AddRemoteArchive: undefined;
   SuccessfullyAddedArchive: {archiveName: string; url: string};
+  RemoteArchiveOn: undefined;
 };
 
 export type OnboardingParamsList = {

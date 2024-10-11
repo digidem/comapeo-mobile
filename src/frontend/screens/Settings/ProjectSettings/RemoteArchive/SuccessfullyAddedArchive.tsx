@@ -37,7 +37,7 @@ export const SuccessfullyAddedArchive = ({
           fullWidth
           variant="outlined"
           onPress={() => {
-            navigation.navigate('Home', {screen: 'Map'});
+            navigation.navigate('RemoteArchiveOn');
           }}>
           {formatMessage(m.close)}
         </Button>

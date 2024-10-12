@@ -106,6 +106,7 @@ export type RootStackParamsList = {
   AddRemoteArchive: undefined;
   SuccessfullyAddedArchive: {archiveName: string; url: string};
   RemoteArchiveOn: undefined;
+  Audio: undefined;
 };
 
 export type OnboardingParamsList = {

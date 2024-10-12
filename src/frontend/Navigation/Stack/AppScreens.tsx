@@ -81,6 +81,10 @@ import {SaveButton} from '../../sharedComponents/SaveButton.tsx';
 import {AddRemoteArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/AddRemoteArchive.tsx';
 import {SuccessfullyAddedArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/SuccessfullyAddedArchive.tsx';
 import {RemoteArchiveOn} from '../../screens/Settings/ProjectSettings/RemoteArchive/RemoteArchiveOn.tsx';
+import {
+  Audio,
+  navigationOptions as audioNavigationOptions,
+} from '../../screens/Audio/index.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -327,7 +331,13 @@ export const createDefaultScreenGroup = ({
       component={HowToLeaveProject}
       options={{headerShown: false}}
     />
-
+    {process.env.EXPO_PUBLIC_FEATURE_AUDIO && (
+      <RootStack.Screen
+        name="Audio"
+        options={audioNavigationOptions}
+        component={Audio}
+      />
+    )}
     {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
       <RootStack.Screen
         name="CreateTestData"

@@ -14,6 +14,7 @@ export const PROJECT_MEMBERS_KEY = 'project_members';
 export const ORIGINAL_VERSION_ID_TO_DEVICE_ID_KEY =
   'originalVersionIdToDeviceId';
 export const THIS_USERS_ROLE_KEY = 'my_role';
+export const REMOTE_ARCHIVE = 'remote_archive';
 
 export function useProject(projectId?: string) {
   const api = useApi();
@@ -164,10 +165,13 @@ export function useGetRemoteArchives() {
   const {projectId, projectApi} = useActiveProject();
 
   return useQuery({
-    queryKey: [PROJECT_MEMBERS_KEY, projectId],
+    queryKey: [REMOTE_ARCHIVE, projectId, PROJECT_MEMBERS_KEY],
     queryFn: async () => {
       const members = await projectApi.$member.getMany();
-      return members.filter(member => member.deviceType === 'selfHostedServer');
+      const filteredMembers = members.filter(
+        member => member.deviceType === 'selfHostedServer',
+      );
+      return filteredMembers;
     },
   });
 }
@@ -180,7 +184,7 @@ export function useAddRemoteArchive() {
       return projectApi.$member.addServerPeer(normalizedUrl);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [PROJECT_MEMBERS_KEY]});
+      queryClient.invalidateQueries({queryKey: [REMOTE_ARCHIVE]});
     },
   });
 }

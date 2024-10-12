@@ -56,9 +56,9 @@ export const RemoteArchiveOff: NativeNavigationComponent<
         {formatMessage(m.experimentalFeature)}
       </Text>
       <Text style={styles.subtext}>{formatMessage(m.noServers)}</Text>
-      {roleIsPending || isCoordinator === undefined ? (
+      {roleIsPending ? (
         <UIActivityIndicator />
-      ) : (
+      ) : isCoordinator ? (
         <Button
           variant="outlined"
           style={{marginTop: 20}}
@@ -67,7 +67,7 @@ export const RemoteArchiveOff: NativeNavigationComponent<
           }}>
           {formatMessage(m.addArchive)}
         </Button>
-      )}
+      ) : null}
     </View>
   );
 };

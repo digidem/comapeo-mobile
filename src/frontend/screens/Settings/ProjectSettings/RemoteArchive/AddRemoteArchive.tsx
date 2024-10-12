@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 import {defineMessages, useIntl} from 'react-intl';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Text} from '../../../../sharedComponents/Text';
 import {COMAPEO_BLUE, DARK_GREY, LIGHT_GREY, RED} from '../../../../lib/styles';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
@@ -18,6 +18,11 @@ import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
 import {normalizeRemoteArchiveUrl} from '../../../../utils/normalizeRemoteArchiveUrl';
 import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {
+  BottomSheetModal,
+  useBottomSheetModal,
+} from '../../../../sharedComponents/BottomSheetModal';
+import {WhatsIncludedBottomSheetContent} from './WhatsIncludedBottomSheetContent';
 
 const m = defineMessages({
   navTitle: {
@@ -48,6 +53,10 @@ const m = defineMessages({
   permission: {
     id: 'ProjectSettings.RemoteArchive.AddRemoteArchive.permission',
     defaultMessage: 'Only a Project Coordinator can turn off Remote Archive.',
+  },
+  whatsIncluded: {
+    id: 'ProjectSettings.RemoteArchive.AddRemoteArchive.whatsIncluded',
+    defaultMessage: 'See What is Included',
   },
 });
 
@@ -178,6 +187,9 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
   const {formatMessage} = useIntl();
   const {mutate, error, reset, isPending} = useAddRemoteArchive();
   const {navigate, setOptions, addListener} = useNavigationFromRoot();
+  const {openSheet, isOpen, closeSheet, sheetRef} = useBottomSheetModal({
+    openOnMount: false,
+  });
   function handleAddRemoteArchive() {
     mutate(url, {
       onSuccess: () => {
@@ -229,9 +241,17 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
         <View style={styles.greyBox}>
           <Text>{formatMessage(m.archiveInfo)}</Text>
           <Text>{formatMessage(m.permission)}</Text>
+          <TouchableOpacity onPress={openSheet}>
+            <Text style={{color: COMAPEO_BLUE}}>
+              {formatMessage(m.whatsIncluded)}
+            </Text>
+          </TouchableOpacity>
         </View>
       </ScreenContentWithDock>
       <ErrorBottomSheet error={error} clearError={reset} />
+      <BottomSheetModal isOpen={isOpen} ref={sheetRef}>
+        <WhatsIncludedBottomSheetContent closeSheet={closeSheet} />
+      </BottomSheetModal>
     </>
   );
 };

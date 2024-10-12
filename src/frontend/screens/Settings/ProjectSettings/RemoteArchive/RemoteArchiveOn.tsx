@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {BackHandler, StyleSheet, View} from 'react-native';
 import {Text} from '../../../../sharedComponents/Text';
 import {FormattedDate, defineMessages, useIntl} from 'react-intl';
 import {
@@ -11,6 +11,8 @@ import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../../../sharedTypes';
 import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 import {LIGHT_GREY, MEDIUM_GREY} from '../../../../lib/styles';
 import {ScrollView} from 'react-native-gesture-handler';
+import {useFocusEffect} from '@react-navigation/native';
+import {CustomHeaderLeft} from '../../../../sharedComponents/CustomHeaderLeft';
 // import {TouchableOpacity} from 'react-native';
 
 const m = defineMessages({
@@ -69,9 +71,9 @@ const m = defineMessages({
   //   },
 });
 
-export const RemoteArchiveOn: NativeNavigationComponent<
-  'RemoteArchiveOn'
-> = () => {
+export const RemoteArchiveOn: NativeNavigationComponent<'RemoteArchiveOn'> = ({
+  navigation,
+}) => {
   const {formatMessage} = useIntl();
   const {data: role, isPending: roleIsPending} = useGetOwnRole();
   const {data: remoteArchive, isPending} = useGetRemoteArchives();
@@ -80,6 +82,37 @@ export const RemoteArchiveOn: NativeNavigationComponent<
     role?.roleId === COORDINATOR_ROLE_ID || role?.roleId === CREATOR_ROLE_ID;
 
   const currentRemoteArchive = !remoteArchive ? undefined : remoteArchive[0];
+
+  const handleGoBack = React.useCallback(() => {
+    navigation.navigate('ProjectSettings');
+  }, [navigation]);
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: props => (
+        <CustomHeaderLeft
+          onPress={handleGoBack}
+          headerBackButtonProps={props}
+        />
+      ),
+    });
+  }, [handleGoBack, navigation]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        handleGoBack();
+        return true;
+      };
+
+      const subscription = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress,
+      );
+
+      return () => subscription.remove();
+    }, [handleGoBack]),
+  );
 
   if (isPending || roleIsPending) {
     return <Loading />;

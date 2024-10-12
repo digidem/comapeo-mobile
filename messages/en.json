@@ -141,6 +141,9 @@
   "ProjectSettings.RemoteArchive.Coordinator.remoteArchiveOff": {
     "message": "Remote Archive is Off"
   },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn": {
+    "message": "Remote Archive is On"
+  },
   "ProjectSettings.RemoteArchive.Success.archiveAdded": {
     "message": "Remote Archive Added"
   },
@@ -150,8 +153,38 @@
   "ProjectSettings.RemoteArchive.Success.close": {
     "message": "Close"
   },
+  "ProjectSettings.RemoteArchive.coordinatorCanTurnOff": {
+    "message": "Only a Project Coordinator can turn off Remote Archive."
+  },
+  "ProjectSettings.RemoteArchive.dateAdded": {
+    "message": "Date Added"
+  },
+  "ProjectSettings.RemoteArchive.deviceNames": {
+    "message": "Device Names"
+  },
   "ProjectSettings.RemoteArchive.navTitle": {
     "message": "Remote Archive"
+  },
+  "ProjectSettings.RemoteArchive.observations": {
+    "message": "Observations (including photos and audio)"
+  },
+  "ProjectSettings.RemoteArchive.projectSettings": {
+    "message": "Project Settings (categories, questions)"
+  },
+  "ProjectSettings.RemoteArchive.remove": {
+    "message": "Remove the server to stop Remote Archive."
+  },
+  "ProjectSettings.RemoteArchive.serverName": {
+    "message": "Server Name"
+  },
+  "ProjectSettings.RemoteArchive.syncWithInternet": {
+    "message": "Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data"
+  },
+  "ProjectSettings.RemoteArchive.thisIncludes": {
+    "message": "This includes"
+  },
+  "ProjectSettings.RemoteArchive.tracks": {
+    "message": "Tracks"
   },
   "SaveTrack.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",

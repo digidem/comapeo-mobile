@@ -123,6 +123,9 @@
   "ProjectSettings.RemoteArchive.AddRemoteArchive.url": {
     "message": "Url"
   },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.whatsIncluded": {
+    "message": "See What is Included"
+  },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.youAreAdding": {
     "message": "You are adding:"
   },
@@ -152,6 +155,24 @@
   },
   "ProjectSettings.RemoteArchive.Success.close": {
     "message": "Close"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.close": {
+    "message": "Close"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.deviceNames": {
+    "message": "Device Names"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.observations": {
+    "message": "Observations (including photos and audio)"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.projectSettings": {
+    "message": "Project Settings (categories, questions)"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.title": {
+    "message": "What is Included"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.tracks": {
+    "message": "Tracks"
   },
   "ProjectSettings.RemoteArchive.coordinatorCanTurnOff": {
     "message": "Only a Project Coordinator can turn off Remote Archive."

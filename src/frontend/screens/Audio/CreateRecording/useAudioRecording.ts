@@ -55,5 +55,6 @@ export function useAudioRecording() {
     uri,
     hasError,
     clearError,
+    setHasError,
   };
 }

@@ -15,6 +15,7 @@ export function CreateRecording() {
     uri,
     hasError,
     clearError,
+    setHasError,
   } = useAudioRecording();
 
   const recordingState = status?.isRecording ? 'active' : uri ? 'done' : 'idle';
@@ -33,6 +34,12 @@ export function CreateRecording() {
       };
     }
   }, [recordingState]);
+
+  useEffect(() => {
+    if (recordingState === 'done' && !uri) {
+      setHasError(true);
+    }
+  }, [recordingState, uri, setHasError]);
 
   return (
     <>

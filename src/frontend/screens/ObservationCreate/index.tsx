@@ -134,7 +134,14 @@ export const ObservationCreate = ({
 
     if (savablePhotos.length === 0 && savableAudioRecordings.length === 0) {
       createObservationMutation.mutate(
-        {value},
+        {
+          value: {
+            ...value,
+            presetRef: preset
+              ? {docId: preset.docId, versionId: preset.versionId}
+              : undefined,
+          },
+        },
         {
           onSuccess: () => {
             clearDraft();
@@ -185,6 +192,9 @@ export const ObservationCreate = ({
           value: {
             ...value,
             attachments: [...value.attachments, ...newAttachments],
+            presetRef: preset
+              ? {docId: preset.docId, versionId: preset.versionId}
+              : undefined,
           },
         },
         {
@@ -222,6 +232,7 @@ export const ObservationCreate = ({
     photos,
     audioRecordings,
     value,
+    preset,
   ]);
 
   const checkAccuracyAndLocation = React.useCallback(() => {

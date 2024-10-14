@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {createMapeoClient} from '@mapeo/ipc';
+import {createMapeoClient} from '@comapeo/ipc';
 import {AppNavigator} from './AppNavigator';
 import {MessagePortLike} from './lib/MessagePortLike';
 import {initializeNodejs} from './initializeNodejs';
@@ -9,6 +9,7 @@ import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Sentry from '@sentry/react-native';
 import * as TaskManager from 'expo-task-manager';
+import {applicationId} from 'expo-application';
 import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
 import {storage} from './hooks/persistedState/createPersistedState';
 import {tracksStore} from './hooks/persistedState/usePersistedTrack';
@@ -17,12 +18,22 @@ import {getSentryUserId} from './metrics/getSentryUserId';
 import {AppDiagnosticMetrics} from './metrics/AppDiagnosticMetrics';
 import {DeviceDiagnosticMetrics} from './metrics/DeviceDiagnosticMetrics';
 
+type SentryEnvironment = 'development' | 'qa' | 'production';
+
+let sentryEnvironment: SentryEnvironment = 'production';
+if (applicationId?.endsWith('.dev') || applicationId?.endsWith('.pre')) {
+  sentryEnvironment = 'development';
+} else if (applicationId?.endsWith('.rc')) {
+  sentryEnvironment = 'qa';
+}
+
+const sentryDebug = applicationId?.endsWith('.dev');
+
 Sentry.init({
   dsn: 'https://e0e02907e05dc72a6da64c3483ed88a6@o4507148235702272.ingest.us.sentry.io/4507170965618688',
   tracesSampleRate: 1.0,
-  debug:
-    process.env.APP_VARIANT === 'development' ||
-    process.env.APP_VARIANT === 'test', // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
+  environment: sentryEnvironment,
+  debug: sentryDebug, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
   initialScope: {
     user: {
       id: getSentryUserId({now: new Date(), storage}),

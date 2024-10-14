@@ -4,7 +4,7 @@ import {ActionTab} from './ActionTab';
 import PhotoIcon from '../images/observationEdit/Photo.svg';
 import DetailsIcon from '../images/observationEdit/Details.svg';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
-import {Preset} from '@mapeo/schema';
+import {Preset} from '@comapeo/schema';
 
 const m = defineMessages({
   audioButton: {

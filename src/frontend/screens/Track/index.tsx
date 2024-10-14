@@ -1,27 +1,21 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  SafeAreaView,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, View, Text, SafeAreaView} from 'react-native';
 import {BLACK, DARK_GREY} from '../../lib/styles.ts';
 
 import TrackIcon from '../../images/Track.svg';
-import EditIcon from '../../images/Edit.svg';
-import {FormattedMessage, defineMessages} from 'react-intl';
+import {FormattedMessage, MessageDescriptor, defineMessages} from 'react-intl';
 import {
   useDeleteTrackMutation,
   useTrackQuery,
 } from '../../hooks/server/track.ts';
 import {useObservations} from '../../hooks/server/observations.ts';
-import {NativeNavigationComponent} from '../../sharedTypes/navigation';
+import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {MapPreview} from './MapPreview.tsx';
 import {ObservationList} from './ObservationList.tsx';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {ActionButtons} from '../../sharedComponents/ActionButtons.tsx';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock.tsx';
+import {TrackHeaderRight} from './TrackHeaderRight';
 
 const m = defineMessages({
   title: {
@@ -41,35 +35,13 @@ const m = defineMessages({
   },
 });
 
-const HIT_SLOP_PADDING = 16;
-
-export const TrackScreen: NativeNavigationComponent<'Track'> = ({
+export const TrackScreen = ({
   route,
   navigation,
-}) => {
-  const isMine = false;
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: isMine
-        ? () => (
-            <TouchableOpacity
-              hitSlop={{
-                top: HIT_SLOP_PADDING,
-                right: HIT_SLOP_PADDING,
-                bottom: HIT_SLOP_PADDING,
-                left: HIT_SLOP_PADDING,
-              }}
-              onPress={() => {
-                // TODO: navigate to edit track screen
-              }}>
-              <EditIcon />
-            </TouchableOpacity>
-          )
-        : undefined,
-    });
-  }, [navigation, isMine]);
+}: NativeRootNavigationProps<'Track'>) => {
+  const {trackId} = route.params;
 
-  const {data: track} = useTrackQuery(route.params.trackId);
+  const {data: track} = useTrackQuery(trackId);
   const {data: observations} = useObservations();
   const trackObservations = observations.filter(observation =>
     track.observationRefs.some(ref => ref.docId === observation.docId),
@@ -126,7 +98,20 @@ export const TrackScreen: NativeNavigationComponent<'Track'> = ({
     </SafeAreaView>
   );
 };
-TrackScreen.navTitle = m.title;
+export function createNavigationOptions({
+  intl,
+}: {
+  intl: (title: MessageDescriptor) => string;
+}) {
+  return (props: NativeRootNavigationProps<'Track'>) => {
+    return {
+      headerTitle: intl(m.title),
+      headerRight: () => (
+        <TrackHeaderRight trackId={props.route.params.trackId} />
+      ),
+    };
+  };
+}
 
 export const styles = StyleSheet.create({
   positionText: {

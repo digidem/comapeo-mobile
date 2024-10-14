@@ -27,12 +27,12 @@ const m = defineMessages({
   },
   instructions: {
     id: 'screens.ObscurePasscode.instructions',
-    defaultMessage: 'Enter the code above to hide your data in Mapeo',
+    defaultMessage: 'Enter the code above to hide your data in CoMapeo',
   },
   description: {
     id: 'screens.ObscurePasscode.description',
     defaultMessage:
-      'Obscure Passcode is a security feature that allows you to open Mapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of Mapeo which allows you to create demonstration observations that are not saved to the Mapeo database.',
+      'Obscure Passcode is a security feature that allows you to open CoMapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of CoMapeo which allows you to create demonstration observations that are not saved to the CoMapeo database.',
   },
 });
 

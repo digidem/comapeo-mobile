@@ -47,7 +47,7 @@
     "message": "You’ve been recording for"
   },
   "Navigation.Drawer.aboutCoMapeo": {
-    "description": "Primary text for 'About Mapeo' link (version info)",
+    "description": "Primary text for 'About CoMapeo' link (version info)",
     "message": "About CoMapeo"
   },
   "Navigation.Drawer.aboutCoMapeoDesc": {
@@ -67,11 +67,11 @@
   "Navigation.Drawer.createOrJoinDesc": {
     "message": "Create a new project or join existing one"
   },
-  "Navigation.Drawer.createOrJoinToSync": {
-    "message": "Create or Join a Project to sync with other devices"
-  },
   "Navigation.Drawer.dataAndPrivacy": {
     "message": "Data & Privacy"
+  },
+  "Navigation.Drawer.mappingOnOwn": {
+    "message": "You are currently mapping on your own"
   },
   "Navigation.Drawer.projName": {
     "message": "Project {projectName}"
@@ -160,6 +160,21 @@
     "description": "Button to share an observation",
     "message": "Share"
   },
+  "TrackEdit.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Continue editing"
+  },
+  "TrackEdit.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling track edits",
+    "message": "Discard changes?"
+  },
+  "TrackEdit.HeaderLeft.discardTrackButton": {
+    "description": "Button to confirm discarding the track",
+    "message": "Discard changes"
+  },
+  "TrackEdit.HeaderLeft.discardTrackDescription": {
+    "message": "Your changes will not be saved. This cannot be undone."
+  },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Coordinator"
   },
@@ -173,7 +188,7 @@
     "message": "Not seeing a Device?"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameVersion": {
-    "message": "Make sure both devices are on the same version of Mapeo"
+    "message": "Make sure both devices are on the same version of CoMapeo"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameWifi": {
     "message": "Make sure both devices are on the same wifi network"
@@ -278,7 +293,7 @@
     "message": "Incorrect Passcode"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet": {
-    "message": "This passcode will be required to open the Mapeo App"
+    "message": "This passcode will be required to open the CoMapeo App"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
     "message": "Confirm Passcode"
@@ -293,10 +308,10 @@
     "message": "What is App Passcode?"
   },
   "screens.AppPasscode.PasscodeIntro.description": {
-    "message": "App Passcode allows you to add an additional layer of security by requiring that you enter a passcode in order to open the Mapeo app. You can define your own 5-digit passcode by turning on the feature below."
+    "message": "App Passcode allows you to add an additional layer of security by requiring that you enter a passcode in order to open the CoMapeo app. You can define your own 5-digit passcode by turning on the feature below."
   },
   "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open Mapeo and will lose access to any Mapeo data that has not been synced with other project participants."
+    "message": "<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open CoMapeo and will lose access to any CoMapeo data that has not been synced with other project participants."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Cancel"
@@ -308,7 +323,7 @@
     "message": "You are currently using App Passcode. See below to stop using or change your passcode."
   },
   "screens.AppPasscode.TurnOffPasscode.description": {
-    "message": "App Passcode adds an additional layer of security by requiring that you enter a passcode in order to open the Mapeo app."
+    "message": "App Passcode adds an additional layer of security by requiring that you enter a passcode in order to open the CoMapeo app."
   },
   "screens.AppPasscode.TurnOffPasscode.title": {
     "message": "App Passcode"
@@ -416,8 +431,14 @@
   "screens.DeviceNaming.Success.description": {
     "message": "You named your device"
   },
+  "screens.DeviceNaming.Success.findSettings": {
+    "message": "To find your project settings go to the main menu found on the map screen."
+  },
   "screens.DeviceNaming.Success.goToMap": {
     "message": "Go to Map"
+  },
+  "screens.DeviceNaming.Success.startMappingInstructions": {
+    "message": "You can start mapping alone or start mapping with a team. Create or join a project in order to share data with other devices that are part of the same project."
   },
   "screens.DeviceNaming.Success.success": {
     "message": "Success!"
@@ -426,7 +447,7 @@
     "message": "Add Name"
   },
   "screens.DeviceNaming.description": {
-    "message": "To create or join a new project you will have to name your device. In a future version of CoMapeo, you will be able to manage the projects you created by changing devices roles, deleting devices and much more."
+    "message": "You can start mapping alone or start mapping with a team. Create or join a project in order to share data with other devices that are part of the same project."
   },
   "screens.DeviceNaming.header": {
     "message": "Add a name for your device"
@@ -442,6 +463,18 @@
   },
   "screens.FatalError.somethingWrong": {
     "message": "Something Went Wrong"
+  },
+  "screens.HowToLeaveProject.goBack": {
+    "message": "Go back"
+  },
+  "screens.HowToLeaveProject.howTo": {
+    "message": "How to Leave Project"
+  },
+  "screens.HowToLeaveProject.instructions": {
+    "message": "To leave this project please uninstall and reinstall CoMapeo. All project data will be removed from this device."
+  },
+  "screens.HowToLeaveProject.warning": {
+    "message": "If you are the only Coordinator on the project no one else will be able to edit project details or invite other devices!"
   },
   "screens.IntroToCoMapeo.collaborate": {
     "message": "Collaborate with others"
@@ -656,10 +689,10 @@
     "message": "Zone Number"
   },
   "screens.ObscurePasscode.description": {
-    "message": "Obscure Passcode is a security feature that allows you to open Mapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of Mapeo which allows you to create demonstration observations that are not saved to the Mapeo database."
+    "message": "Obscure Passcode is a security feature that allows you to open CoMapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of CoMapeo which allows you to create demonstration observations that are not saved to the CoMapeo database."
   },
   "screens.ObscurePasscode.instructions": {
-    "message": "Enter the code above to hide your data in Mapeo"
+    "message": "Enter the code above to hide your data in CoMapeo"
   },
   "screens.ObscurePasscode.title": {
     "message": "Obscure Passcode"
@@ -690,6 +723,9 @@
     "description": "Button to cancel delete of observation",
     "message": "Cancel"
   },
+  "screens.Observation.comapeoAlert": {
+    "message": "CoMapeo Alert"
+  },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
     "message": "Yes, delete"
@@ -698,13 +734,19 @@
     "description": "Title of dialog asking confirmation to delete an observation",
     "message": "Delete observation?"
   },
+  "screens.Observation.fallbackCategoryName": {
+    "description": "Fallback name used when category name cannot be determined for observation",
+    "message": "Observation"
+  },
   "screens.Observation.shareMediaTitle": {
     "description": "Title of dialog to share an observation with media",
     "message": "Sharing image"
   },
-  "screens.Observation.shareMessage": {
-    "description": "Message that will be shared along with image",
-    "message": "CoMapeo Alert — _*{category_name}*_ {date, date, full} {time, time, long} {coordinates}"
+  "screens.Observation.shareMessageFooter": {
+    "message": "Sent from CoMapeo"
+  },
+  "screens.Observation.shareMessageTitle": {
+    "message": "CoMapeo Alert"
   },
   "screens.Observation.shareTextTitle": {
     "description": "Title of dialog to share an observation without media",
@@ -721,13 +763,41 @@
     "description": "Placeholder for description/notes field",
     "message": "What is happening here?"
   },
+  "screens.ObservationCreate.keepWaiting": {
+    "description": "Button to cancel save and continue waiting for GPS",
+    "message": "Continue waiting"
+  },
+  "screens.ObservationCreate.manualEntry": {
+    "description": "Button to manually enter GPS coordinates",
+    "message": "Manual Coords"
+  },
   "screens.ObservationCreate.navTitle": {
     "description": "screen title for new observation screen",
     "message": "New Observation"
   },
+  "screens.ObservationCreate.noGpsDesc": {
+    "description": "Description in dialog when trying to save with no GPS coords",
+    "message": "This observation does not have a location. You can continue waiting for a GPS signal, save the observation without a location, or enter coordinates manually"
+  },
+  "screens.ObservationCreate.noGpsTitle": {
+    "description": "Title of dialog when trying to save with no GPS coords",
+    "message": "No GPS signal"
+  },
   "screens.ObservationCreate.observation": {
     "description": "Default name of observation with no matching preset",
     "message": "Observation"
+  },
+  "screens.ObservationCreate.saveAnyway": {
+    "description": "Button to save regardless of GPS state",
+    "message": "Save"
+  },
+  "screens.ObservationCreate.weakGpsDesc": {
+    "description": "Description in dialog when trying to save with low GPS accuracy.",
+    "message": "GPS accuracy is low. You can continue waiting for better accuracy, save the observation with low accuracy, or enter coordinates manually"
+  },
+  "screens.ObservationCreate.weakGpsTitle": {
+    "description": "Title of dialog when trying to save with low GPS accuracy.",
+    "message": "Weak GPS signal"
   },
   "screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
@@ -780,7 +850,7 @@
     "message": "Observations"
   },
   "screens.ObservationsList.NoProjectWarning": {
-    "message": "You won’t be able to share observations collected yet."
+    "message": "You are currently mapping on your own."
   },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
     "description": "Back button on observation list screen when no observations are yet recorded",
@@ -795,20 +865,20 @@
     "message": "Add Observations"
   },
   "screens.ObservationsList.createOrJoin": {
-    "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
-    "message": "Create or Join a Project."
+    "description": "The full sentence is 'Create or Join a Project to collect data with a team. This action will delete observations you have collected so far. Consider sharingimportant observations to you email before proceeding.' The sentence needs to be seperated for styling purposes",
+    "message": "Create or Join a Project"
   },
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",
-    "message": "Error loading observations. Try quitting and restarting Mapeo."
+    "message": "Error loading observations. Try quitting and restarting CoMapeo."
   },
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
     "message": "Loading… this can take a while after synchronizing with a new device"
   },
   "screens.ObservationsList.toSync": {
-    "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
-    "message": "To sync and share with other devices,"
+    "description": "The full sentence is 'Create or Join a Project to collect data with a team. This action will delete observations you have collected so far. Consider sharing important observations to you email before proceeding.' The sentence needs to be seperated for styling purposes",
+    "message": "to collect data with a team. This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
   },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "Privacy Policy"
@@ -1041,6 +1111,21 @@
   "screens.Setting.ProjectSettings.YourTeam.title": {
     "message": "Your Team"
   },
+  "screens.Settings.Config.created": {
+    "message": "Created {date} at {time}"
+  },
+  "screens.Settings.Config.importConfig": {
+    "message": "Import Config"
+  },
+  "screens.Settings.Config.name": {
+    "message": "Config Name:"
+  },
+  "screens.Settings.Config.navTitle": {
+    "message": "Configuration"
+  },
+  "screens.Settings.Config.projectName": {
+    "message": "Project Name:"
+  },
   "screens.Settings.CreateOrJoinProject.CreateProject.title": {
     "message": "Create a Project"
   },
@@ -1081,16 +1166,16 @@
     "message": "Import Config"
   },
   "screens.Settings.CreateOrJoinProject.importConfigFileError": {
-    "message": "File name should end with .mapeoconfig"
+    "message": "File name should end with .comapeocat"
   },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
-    "message": "Join an existing Mapeo Project"
+    "message": "Join an existing CoMapeo Project"
   },
   "screens.Settings.CreateOrJoinProject.joinProject": {
     "message": "Join a Project"
   },
   "screens.Settings.CreateOrJoinProject.projectDescription": {
-    "message": "A project is a secure container for your data. Only devices you invite can enter and share data with you. Create or Join a project in order to share data with other devices."
+    "message": "A project is a secure container for your data. Only devices you invite can enter and share data with you. Create or Join a project in order to share data with other devices. This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
   },
   "screens.Settings.CreateOrJoinProject.startProject": {
     "message": "Start a CoMapeo Project"
@@ -1116,12 +1201,12 @@
   "screens.Settings.YourTeam.unableToCancel": {
     "message": "Unable to Cancel Invitation"
   },
-  "screens.Settings.aboutMapeo": {
-    "description": "Primary text for 'About Mapeo' link (version info)",
-    "message": "About Mapeo"
+  "screens.Settings.aboutCoMapeo": {
+    "description": "Primary text for 'About CoMapeo' link (version info)",
+    "message": "About CoMapeo"
   },
-  "screens.Settings.aboutMapeoDesc": {
-    "description": "Description of the 'About Mapeo' page",
+  "screens.Settings.aboutCoMapeoDesc": {
+    "description": "Description of the 'About CoMapeo' page",
     "message": "Version and build number"
   },
   "screens.Settings.appSettings": {
@@ -1130,6 +1215,10 @@
   "screens.Settings.appSettingsDesc": {
     "description": "list of avaialable app settings",
     "message": "Language, Security, Coordinates"
+  },
+  "screens.Settings.config": {
+    "description": "Primary text for project config settings",
+    "message": "Project Configuration"
   },
   "screens.Settings.createOrJoin": {
     "message": "Create or Join Project"
@@ -1154,8 +1243,14 @@
   "screens.Sync.CreateOrJoinProjectDisplay.buttonText": {
     "message": "Create or Join Project"
   },
-  "screens.Sync.CreateOrJoinProjectDisplay.description": {
-    "message": "Create or Join a Project to sync with other devices"
+  "screens.Sync.CreateOrJoinProjectDisplay.subText": {
+    "message": "This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
+  },
+  "screens.Sync.CreateOrJoinProjectDisplay.subTitle": {
+    "message": "You will be able to share data with devices that are part of the same project."
+  },
+  "screens.Sync.CreateOrJoinProjectDisplay.title": {
+    "message": "Create or join a project to collect data with a team"
   },
   "screens.Sync.HeaderTitle.noWiFi": {
     "message": "No WiFi"
@@ -1176,16 +1271,13 @@
     "message": "All data synced"
   },
   "screens.Sync.ProjectSyncDisplay.devicesAvailableToSync": {
-    "message": "{count} {count, plural, one {device} other {devices}} available"
+    "message": "Devices available"
   },
   "screens.Sync.ProjectSyncDisplay.devicesFound": {
-    "message": "{count} {count, plural, one {Device} other {Devices}} found"
+    "message": "Devices found"
   },
   "screens.Sync.ProjectSyncDisplay.noDevicesAvailableToSync": {
     "message": "No devices available to sync"
-  },
-  "screens.Sync.ProjectSyncDisplay.progressLabelComplete": {
-    "message": "{count} out of {count} {count, plural, one {device} other {devices}}"
   },
   "screens.Sync.ProjectSyncDisplay.progressLabelSyncing": {
     "message": "Syncing…"
@@ -1194,7 +1286,7 @@
     "message": "Waiting…"
   },
   "screens.Sync.ProjectSyncDisplay.progressLabelWithDeviceCount": {
-    "message": "{active} out of {total} {total, plural, one {device} other {devices}}…"
+    "message": "Waiting for other devices"
   },
   "screens.Sync.ProjectSyncDisplay.startSync": {
     "message": "Start Sync"
@@ -1206,13 +1298,13 @@
     "message": "{value}%"
   },
   "screens.Sync.ProjectSyncDisplay.syncingCompleteButWaitingForOthers": {
-    "message": "Complete! Waiting for {count} {count, plural, one {device} other {devices}}"
+    "message": "Complete! Waiting for other devices to join"
   },
   "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
     "message": "Complete! You're up to date"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "Syncing with {active} out of {total} {total, plural, one {device} other {devices}}"
+    "message": "You are syncing with your team"
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
     "message": "Waiting for devices"
@@ -1231,9 +1323,20 @@
   "screens.Track.tracks": {
     "message": "Tracks"
   },
+  "screens.TrackEdit.title": {
+    "description": "Title for editing track screen",
+    "message": "Edit Track"
+  },
+  "screens.TrackEdit.track": {
+    "description": "Preset title for new track screen",
+    "message": "Track"
+  },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",
     "message": "Show Options"
+  },
+  "sharedComponents.DeviceCard.leaveProject": {
+    "message": "Leave Project"
   },
   "sharedComponents.DeviceIconWithName.Disconnected": {
     "message": "Disconnected"

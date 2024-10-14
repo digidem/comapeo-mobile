@@ -1,4 +1,10 @@
 import * as React from 'react';
+import {MapBuffers} from '@comapeo/core/dist/types';
+import {
+  InviteInternal,
+  InviteRemovalReason,
+} from '@comapeo/core/dist/invite-api';
+
 import {BottomSheetModal, useBottomSheetModal} from '../BottomSheetModal';
 import {
   useAcceptInvite,
@@ -11,6 +17,7 @@ import {InviteSuccessBottomSheetContent} from './InviteSuccessBottomSheetContent
 import {InviteCanceledBottomSheetContent} from './InviteCanceledBottomSheetContent';
 import {useAllProjects} from '../../hooks/server/projects';
 import {LeaveProjectModalContent} from '../LeaveProjectModalContent';
+import {useApi} from '../../contexts/ApiContext';
 
 export type LeaveProjectModalState = 'AlreadyOnProj' | 'LeaveProj';
 
@@ -46,6 +53,8 @@ export const ProjectInviteBottomSheet = ({
     React.useState<LeaveProjectModalState>('AlreadyOnProj');
 
   const invite = invites[0];
+
+  const acceptedInvite = useAcceptedInvite();
 
   const {currentInviteCanceled, resetCacheAndClearCanceled} =
     useProjectInvitesListener({
@@ -105,16 +114,17 @@ export const ProjectInviteBottomSheet = ({
         onDismiss={() => {
           accept.reset();
           reject.reset();
+          acceptedInvite?.remove();
         }}>
         {currentInviteCanceled ? (
           <InviteCanceledBottomSheetContent
             handleClose={handleCanceledInvite}
             projectName={invite?.projectName}
           />
-        ) : accept.isSuccess ? (
+        ) : acceptedInvite ? (
           <InviteSuccessBottomSheetContent
             closeSheet={closeInviteSheet}
-            projectName={invite?.projectName}
+            projectName={acceptedInvite.value.projectName}
           />
         ) : (
           <NewInviteBottomSheetContent
@@ -143,3 +153,35 @@ export const ProjectInviteBottomSheet = ({
     </>
   );
 };
+
+function useAcceptedInvite() {
+  const api = useApi();
+  const [acceptedInvite, setAcceptedInvite] =
+    React.useState<MapBuffers<InviteInternal> | null>(null);
+
+  React.useEffect(() => {
+    function onInviteRemoved(
+      invite: MapBuffers<InviteInternal>,
+      reason: InviteRemovalReason,
+    ) {
+      if (reason === 'accepted') {
+        setAcceptedInvite(invite);
+      }
+    }
+
+    api.invite.addListener('invite-removed', onInviteRemoved);
+
+    return () => {
+      api.invite.removeListener('invite-removed', onInviteRemoved);
+    };
+  }, [api.invite, setAcceptedInvite]);
+
+  return acceptedInvite
+    ? {
+        value: acceptedInvite,
+        remove: () => {
+          setAcceptedInvite(null);
+        },
+      }
+    : null;
+}

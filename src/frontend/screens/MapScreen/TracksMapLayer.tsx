@@ -5,7 +5,7 @@ import {StyleSheet} from 'react-native';
 import {FeatureCollection} from 'geojson';
 import {BLACK} from '../../lib/styles';
 import {useTracks} from '../../hooks/server/track';
-import {Track} from '@mapeo/schema';
+import {Track} from '@comapeo/schema';
 import {OnPressEvent} from '@rnmapbox/maps/lib/typescript/src/types/OnPressEvent';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 

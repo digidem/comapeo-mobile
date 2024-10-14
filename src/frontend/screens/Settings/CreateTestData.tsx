@@ -17,6 +17,7 @@ import {Button} from '../../sharedComponents/Button';
 import {LocationView} from '../../sharedComponents/Editor/LocationView';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {Text} from '../../sharedComponents/Text';
+import type {Metadata} from '../../sharedTypes';
 
 const DISTANCE_BUFFER_KM = 50;
 
@@ -258,23 +259,35 @@ function useCreateFakeObservationsMutation() {
       const promises = [];
 
       for (let i = 0; i < count; i++) {
-        const fakeCoordinates = randomPosition({
-          bbox,
-        });
+        const [lon, lat] = randomPosition({bbox});
+        if (lon === undefined || lat === undefined) {
+          throw new Error('randomPosition returned invalid position');
+        }
 
         const randomPreset = presets.at(
           Math.floor(Math.random() * presets.length),
         );
 
+        const isManualLocation = Math.random() < 0.25;
+        let metadata: Metadata;
+        if (isManualLocation) {
+          metadata = {manualLocation: true};
+        } else {
+          metadata = {
+            manualLocation: false,
+            position: {
+              mocked: false,
+              timestamp: new Date().toISOString(),
+              coords: {latitude: lat, longitude: lon},
+            },
+          };
+        }
+
         const value = {
           attachments: [],
-          lon: fakeCoordinates[0],
-          lat: fakeCoordinates[1],
-          metadata: {
-            position: {
-              mocked: !!location.mocked,
-            },
-          },
+          lon,
+          lat,
+          metadata,
           schemaName: 'observation' as const,
           tags: {...randomPreset!.tags, notes},
         };

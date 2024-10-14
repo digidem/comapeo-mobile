@@ -24,7 +24,7 @@ import {IconButton} from '../../sharedComponents/IconButton';
 import SaveCheck from '../../images/CheckMark.svg';
 import {Select} from '../../sharedComponents/Select';
 import {Text} from '../../sharedComponents/Text';
-import {type CoordinateFormat} from '../../sharedTypes';
+import type {CoordinateFormat} from '../../sharedTypes';
 
 import {
   latitudeIsValid,
@@ -104,30 +104,27 @@ export const ManualGpsScreen = ({
         );
       }
 
-      if (convertedData.coords) {
-        const {lon, lat} = convertedData.coords;
+      const {lon: longitude, lat: latitude} = convertedData.coords || {};
 
-        const lonIsValid = lon !== undefined && longitudeIsValid(lon);
-        const latIsValid = lat !== undefined && latitudeIsValid(lat);
+      const lonIsValid = longitude !== undefined && longitudeIsValid(longitude);
+      const latIsValid = latitude !== undefined && latitudeIsValid(latitude);
 
-        if (!lonIsValid || !latIsValid) {
-          return ToastAndroid.showWithGravity(
-            t(m.invalidCoordinates),
-            ToastAndroid.LONG,
-            ToastAndroid.TOP,
-          );
-        }
+      if (!lonIsValid || !latIsValid) {
+        return ToastAndroid.showWithGravity(
+          t(m.invalidCoordinates),
+          ToastAndroid.LONG,
+          ToastAndroid.TOP,
+        );
       }
 
       updateObservationPosition({
+        manualLocation: true,
         position: {
-          mocked: false,
           coords: {
-            latitude: convertedData.coords?.lat,
-            longitude: convertedData.coords?.lon,
+            longitude,
+            latitude,
           },
         },
-        manualLocation: true,
       });
 
       navigation.pop();

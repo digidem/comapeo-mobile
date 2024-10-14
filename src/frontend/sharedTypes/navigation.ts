@@ -37,7 +37,7 @@ export type RootStackParamsList = {
   Home: NavigatorScreenParams<HomeTabsParamsList>;
   GpsModal: undefined;
   Settings: undefined;
-  ProjectConfig: undefined;
+  Config: undefined;
   AboutSettings: undefined;
   LanguageSettings: undefined;
   CoordinateFormat: undefined;
@@ -96,9 +96,11 @@ export type RootStackParamsList = {
   SaveTrack: undefined;
   Sync: undefined;
   Track: {trackId: string};
+  TrackEdit: {trackId: string};
   CreateTestData: undefined;
   DataAndPrivacy: undefined;
   SettingsPrivacyPolicy: undefined;
+  HowToLeaveProject: undefined;
 };
 
 export type OnboardingParamsList = {

@@ -25,23 +25,11 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "Сануулгаас татгалзах уу?"
   },
-  "Modal.DiscardTrack.description": {
-    "message": "Your Track will not be saved. This cannot be undone."
-  },
-  "Modal.DiscardTrack.title": {
-    "message": "Discard Track?"
-  },
   "Modal.GPSDisable.button": {
     "message": "Enable"
   },
-  "Modal.GPSDisable.defaultButton": {
-    "message": "Continue Editing"
-  },
   "Modal.GPSDisable.description": {
     "message": "To create a Track CoMapeo needs access to your location and GPS."
-  },
-  "Modal.GPSDisable.discardButton": {
-    "message": "Discard Track"
   },
   "Modal.GPSDisable.title": {
     "message": "GPS Disabled"
@@ -58,6 +46,80 @@
   "Modal.GPSEnable.trackingDescription": {
     "message": "You’ve been recording for"
   },
+  "Navigation.Drawer.aboutCoMapeo": {
+    "description": "Primary text for 'About CoMapeo' link (version info)",
+    "message": "About CoMapeo"
+  },
+  "Navigation.Drawer.aboutCoMapeoDesc": {
+    "description": "Description of the 'About CoMapeo' page",
+    "message": "Хувилбар ба барилгын дугаар"
+  },
+  "Navigation.Drawer.appSettings": {
+    "message": "App Settings"
+  },
+  "Navigation.Drawer.appSettingsDesc": {
+    "description": "list of avaialable app settings",
+    "message": "Language, Security, Coordinates"
+  },
+  "Navigation.Drawer.createOrJoin": {
+    "message": "Create or Join Project"
+  },
+  "Navigation.Drawer.createOrJoinDesc": {
+    "message": "Create a new project or join existing one"
+  },
+  "Navigation.Drawer.dataAndPrivacy": {
+    "message": "Data & Privacy"
+  },
+  "Navigation.Drawer.mappingOnOwn": {
+    "message": "You are currently mapping on your own"
+  },
+  "Navigation.Drawer.projName": {
+    "message": "Project {projectName}"
+  },
+  "Navigation.Drawer.projectSettings": {
+    "message": "Project Settings"
+  },
+  "Navigation.Drawer.projectSettingsDesc": {
+    "description": "list of avaialable project settings",
+    "message": "Categories, Config, Team"
+  },
+  "Navigation.Drawer.security": {
+    "message": "Аюулгүй байдал"
+  },
+  "Navigation.Drawer.title": {
+    "description": "Title of settings screen",
+    "message": "Тохиргоо"
+  },
+  "ObservationEdit.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Үргэлжлүүлэн засварлах"
+  },
+  "ObservationEdit.HeaderLeft.discardObservationButton": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Discard changes"
+  },
+  "ObservationEdit.HeaderLeft.discardObservationDescription": {
+    "message": "Your changes will not be saved. This cannot be undone."
+  },
+  "ObservationEdit.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling observation edits",
+    "message": "Өөрчлөлтийг цуцлах уу? "
+  },
+  "SaveTrack.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Үргэлжлүүлэн засварлах"
+  },
+  "SaveTrack.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling track edits",
+    "message": "Discard Track?"
+  },
+  "SaveTrack.HeaderLeft.discardTrackButton": {
+    "description": "Button to confirm discarding the track",
+    "message": "Discard Track"
+  },
+  "SaveTrack.HeaderLeft.discardTrackDescription": {
+    "message": "Your Track will not be saved. This cannot be undone."
+  },
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Coordinate System"
   },
@@ -71,19 +133,50 @@
     "message": "Display language for app"
   },
   "Screens.Settings.AppSettings.title": {
-    "message": "App Setttings"
-  },
-  "Screens.Settings.ProjectSettings.configuration": {
-    "message": "Configuration"
+    "message": "App Settings"
   },
   "Screens.Settings.ProjectSettings.deviceName": {
     "message": "Төхөөрөмжний нэр"
   },
+  "Screens.Settings.ProjectSettings.mediaSyncSettings": {
+    "message": "Sync Settings"
+  },
   "Screens.Settings.ProjectSettings.title": {
-    "message": "Project Setttings"
+    "message": "Project Settings"
   },
   "Screens.Settings.ProjectSettings.yourTeam": {
     "message": "Your Team"
+  },
+  "SharedComponents.ActionButtons.cancel": {
+    "description": "Button to cancel delete of observation",
+    "message": "Цуцлах"
+  },
+  "SharedComponents.ActionButtons.confirm": {
+    "description": "Button to confirm delete of observation",
+    "message": "Тийм, устгах"
+  },
+  "SharedComponents.ActionButtons.delete": {
+    "description": "Button to delete an observation",
+    "message": "Устгах"
+  },
+  "SharedComponents.ActionButtons.share": {
+    "description": "Button to share an observation",
+    "message": "Share"
+  },
+  "TrackEdit.HeaderLeft.discardCancel": {
+    "description": "Button on dialog to keep editing (cancelling close action)",
+    "message": "Үргэлжлүүлэн засварлах"
+  },
+  "TrackEdit.HeaderLeft.discardTitle": {
+    "description": "Title of dialog that shows when cancelling track edits",
+    "message": "Өөрчлөлтийг цуцлах уу? "
+  },
+  "TrackEdit.HeaderLeft.discardTrackButton": {
+    "description": "Button to confirm discarding the track",
+    "message": "Discard changes"
+  },
+  "TrackEdit.HeaderLeft.discardTrackDescription": {
+    "message": "Your changes will not be saved. This cannot be undone."
   },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Coordinator"
@@ -98,7 +191,7 @@
     "message": "Not seeing a Device?"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameVersion": {
-    "message": "Make sure both devices are on the same version of Mapeo"
+    "message": "Make sure both devices are on the same version of CoMapeo"
   },
   "screen.Settings.ProjectSettings.YourTeam.SelectDevice.sameWifi": {
     "message": "Make sure both devices are on the same wifi network"
@@ -118,6 +211,38 @@
   "screen.Settings.ProjectSettings.YourTeam.SelectInviteeRole.title": {
     "message": "Select a Role"
   },
+  "screens.AboutSettings.CoMapeoBuild": {
+    "description": "Label for CoMapeo build number",
+    "message": "CoMapeo build"
+  },
+  "screens.AboutSettings.CoMapeoType": {
+    "description": "Label for CoMapeo type/variant (e.g. QA for testing vs normal version of app)",
+    "message": "CoMapeo variant"
+  },
+  "screens.AboutSettings.CoMapeoVersion": {
+    "description": "Label for CoMapeo version",
+    "message": "CoMapeo version"
+  },
+  "screens.AboutSettings.androidBuild": {
+    "description": "Label for Android build number",
+    "message": "Android build number"
+  },
+  "screens.AboutSettings.androidVersion": {
+    "description": "Label for Android version",
+    "message": "Android version"
+  },
+  "screens.AboutSettings.phoneModel": {
+    "description": "Label for phone model",
+    "message": "Phone model"
+  },
+  "screens.AboutSettings.title": {
+    "description": "Title of 'About CoMapeo' screen",
+    "message": "About CoMapeo"
+  },
+  "screens.AboutSettings.unknownValue": {
+    "description": "Shown when a device info (e.g. version number) is unknown",
+    "message": "Unknown"
+  },
   "screens.AddPhoto.cancel": {
     "message": "Цуцлах"
   },
@@ -129,13 +254,16 @@
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.passcode": {
     "description": "used to indicate to the user what the new passcode will be.",
-    "message": "Нууц үг"
+    "message": "Passcode: {passcode}"
   },
   "screens.AppPasscode.ConfirmPasscodeSheet.saveAppPasscode": {
     "message": "Аппликэйшний нууц үгийг хадгалах"
   },
+  "screens.AppPasscode.ConfirmPasscodeSheet.suggestion": {
+    "message": "Make sure to note your passcode in a secure location before saving."
+  },
   "screens.AppPasscode.ConfirmPasscodeSheet.title": {
-    "message": "Аппликэйшний нууц үгийг алдсан эсвэл мартсан тохиолдолд хэзээ ч сэргээх боломжгүй! Хадгалахаасаа өмнө нууц үгээ аюулгүй газар тэмдэглэнэ үү."
+    "message": "App Passcodes can never be recovered if lost or forgotten!"
   },
   "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
     "message": "Нууц үгийг оруулна уу"
@@ -168,7 +296,7 @@
     "message": "Нууц үг буруу"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet": {
-    "message": "Mapeo програмыг нээхэд энэ нууц үг шаардлагатай болно"
+    "message": "This passcode will be required to open the CoMapeo App"
   },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
     "message": "Confirm Passcode"
@@ -183,10 +311,10 @@
     "message": "Аппликэйшний нууц үг гэж юу вэ?"
   },
   "screens.AppPasscode.PasscodeIntro.description": {
-    "message": "Аппликэйшний нууц үг нь Mapeo програмыг нээхийн тулд нууц үг оруулах шаардлагатай тул хамгаалалтын нэмэлт давхарга нэмэх боломжийг танд олгоно. Та доорх функцийг идэвхжүүлснээр өөрийн 5 оронтой нууц үгийг тодорхойлж болно."
+    "message": "App Passcode allows you to add an additional layer of security by requiring that you enter a passcode in order to open the CoMapeo app. You can define your own 5-digit passcode by turning on the feature below."
   },
   "screens.AppPasscode.PasscodeIntro.warning": {
-    "message": "**Мартагдсан нууц үгийг сэргээх боломжгүй гэдгийг анхаарна уу!** Энэ функцийг идэвхжүүлсний дараа, хэрэв та нууц үгээ мартсан эсвэл алдсан тохиолдолд Mapeo-г нээх боломжгүй бөгөөд бусад төсөлд оролцогчидтой синк хийгээгүй Mapeo өгөгдөлд хандах эрхээ алдах болно. "
+    "message": "<bold>Please note that forgotten passcodes cannot be recovered!</bold> Once this feature is enabled, if you forget or lose your passcode, you will not be able to open CoMapeo and will lose access to any CoMapeo data that has not been synced with other project participants."
   },
   "screens.AppPasscode.TurnOffPasscode.cancel": {
     "message": "Цуцлах"
@@ -198,7 +326,7 @@
     "message": "Та одоогоор Аппликэйшний нууц үгийг ашиглаж байна. Нууц үгээ ашиглахаа зогсоох эсвэл өөрчлөхийн тулд доороос үзнэ үү."
   },
   "screens.AppPasscode.TurnOffPasscode.description": {
-    "message": "Аппликэйшний нууц үг нь Mapeo програмыг нээхийн тулд нууц үг оруулах шаардлагатай тул аюулгүй байдлын нэмэлт давхаргыг нэмдэг."
+    "message": "App Passcode adds an additional layer of security by requiring that you enter a passcode in order to open the CoMapeo app."
   },
   "screens.AppPasscode.TurnOffPasscode.title": {
     "message": "Аппликэшний нууц үг"
@@ -211,6 +339,26 @@
   },
   "screens.AppPasscode.TurnOffPasscode.usePasscode": {
     "message": "Аппликэйшний нууц үгийг ашиглах"
+  },
+  "screens.AudioPermission.Button.allow": {
+    "description": "Screen button text for allow the audio permission",
+    "message": "Allow"
+  },
+  "screens.AudioPermission.Button.goToSettings": {
+    "description": "Screen button text for navigate user to settings when audio permission was denied",
+    "message": "Go to Settings"
+  },
+  "screens.AudioPermission.Button.notNow": {
+    "description": "Screen button text for not allowed audio permission",
+    "message": "Not Now"
+  },
+  "screens.AudioPermission.description": {
+    "description": "Screen description for audio permission screen",
+    "message": "To record audio while using the app and in the background CoMapeo needs to access your microphone. Please enable microphone permissions in your app settings."
+  },
+  "screens.AudioPermission.title": {
+    "description": "Screen title for audio permission screen",
+    "message": "Recording Audio with CoMapeo"
   },
   "screens.CameraScreen.goToSettings": {
     "message": "Go to Settings"
@@ -238,11 +386,62 @@
     "description": "Universal Transverse Mercator coordinate format",
     "message": "Universal Transverse Mercator (UTM)"
   },
+  "screens.DataAndPrivacy.diagnosticInfoText": {
+    "message": "Anonymized information about your device, app crashes, errors and performance helps Awana Digital improve the app and fix errors."
+  },
+  "screens.DataAndPrivacy.diagnosticInfoTitle": {
+    "message": "Diagnostic Information"
+  },
+  "screens.DataAndPrivacy.learnMore": {
+    "message": "Learn More"
+  },
+  "screens.DataAndPrivacy.navTitle": {
+    "message": "Data & Privacy"
+  },
+  "screens.DataAndPrivacy.noPII": {
+    "message": "This never includes any of your data or personal information."
+  },
+  "screens.DataAndPrivacy.optOut": {
+    "message": "You can opt-out of sharing diagnostic information at any time."
+  },
+  "screens.DataAndPrivacy.respectsPrivacy": {
+    "message": "CoMapeo Respects Your Privacy & Autonomy"
+  },
+  "screens.DataPrivacy.description": {
+    "message": "CoMapeo allows you and your collaborators to map offline without needing servers."
+  },
+  "screens.DataPrivacy.diagnostic": {
+    "message": "Private by default — diagnostic information is fully anonymized and you can opt-out any time."
+  },
+  "screens.DataPrivacy.encrypted": {
+    "message": "All data stays fully encrypted"
+  },
+  "screens.DataPrivacy.learnMore": {
+    "message": "Learn More"
+  },
+  "screens.DataPrivacy.manageAndControl": {
+    "message": "Easily manage and control sharing and collaboration."
+  },
+  "screens.DataPrivacy.next": {
+    "message": "Дараагийнх"
+  },
+  "screens.DataPrivacy.stays": {
+    "message": "Your data stays on your devices."
+  },
+  "screens.DataPrivacy.title": {
+    "message": "Data & Privacy"
+  },
   "screens.DeviceNaming.Success.description": {
     "message": "You named your device"
   },
+  "screens.DeviceNaming.Success.findSettings": {
+    "message": "To find your project settings go to the main menu found on the map screen."
+  },
   "screens.DeviceNaming.Success.goToMap": {
     "message": "Go to Map"
+  },
+  "screens.DeviceNaming.Success.startMappingInstructions": {
+    "message": "You can start mapping alone or start mapping with a team. Create or join a project in order to share data with other devices that are part of the same project."
   },
   "screens.DeviceNaming.Success.success": {
     "message": "Success!"
@@ -251,7 +450,7 @@
     "message": "Add Name"
   },
   "screens.DeviceNaming.description": {
-    "message": "To create or join a new project you will have to name your device. In a future version of CoMapeo, you will be able to manage the projects you created by changing devices roles, deleting devices and much more."
+    "message": "You can start mapping alone or start mapping with a team. Create or join a project in order to share data with other devices that are part of the same project."
   },
   "screens.DeviceNaming.header": {
     "message": "Add a name for your device"
@@ -268,23 +467,78 @@
   "screens.FatalError.somethingWrong": {
     "message": "Something Went Wrong"
   },
+  "screens.HowToLeaveProject.goBack": {
+    "message": "Go back"
+  },
+  "screens.HowToLeaveProject.howTo": {
+    "message": "How to Leave Project"
+  },
+  "screens.HowToLeaveProject.instructions": {
+    "message": "To leave this project please uninstall and reinstall CoMapeo. All project data will be removed from this device."
+  },
+  "screens.HowToLeaveProject.warning": {
+    "message": "If you are the only Coordinator on the project no one else will be able to edit project details or invite other devices!"
+  },
   "screens.IntroToCoMapeo.collaborate": {
-    "message": "Collaborate on mapping and monitoring projects"
+    "message": "Collaborate with others"
+  },
+  "screens.IntroToCoMapeo.designedFor": {
+    "message": "Designed with and for Indigenous peoples & frontline communities"
   },
   "screens.IntroToCoMapeo.getStarted": {
     "message": "Get Started"
   },
-  "screens.IntroToCoMapeo.isNow": {
-    "description": "The full sentence is mapeo 'is now' comapeo. ",
-    "message": "is now"
+  "screens.IntroToCoMapeo.mapAnywhere": {
+    "message": "Map anywhere and everywhere"
   },
-  "screens.IntroToCoMapeo.version": {
-    "description": "v is short for version. the translation for version can be used instead",
-    "message": "V"
+  "screens.IntroToCoMapeo.mapWorldTogether": {
+    "message": "Map your world, together"
+  },
+  "screens.IntroToCoMapeo.ownData": {
+    "message": "Own and control your data"
   },
   "screens.LanguageSettings.title": {
     "description": "Title language settings screen",
-    "message": "Language"
+    "message": "Хэл"
+  },
+  "screens.LeaveProject.AlreadyOnProject.alreadyOnProject": {
+    "message": "You are already on a project"
+  },
+  "screens.LeaveProject.AlreadyOnProject.goBack": {
+    "message": "Go Back"
+  },
+  "screens.LeaveProject.AlreadyOnProject.leaveProj": {
+    "message": "Leave Current Project"
+  },
+  "screens.LeaveProject.AlreadyOnProject.leaveWarning": {
+    "message": "To join a new project you must leave your current one."
+  },
+  "screens.LeaveProject.AlreadyOnProject.onProject": {
+    "message": "You are on {projectName}"
+  },
+  "screens.LeaveProject.cancel": {
+    "message": "Цуцлах"
+  },
+  "screens.LeaveProject.checkToConfirm": {
+    "message": "Please check the box to confirm"
+  },
+  "screens.LeaveProject.deleteConsentWithName": {
+    "message": "I understand I will be deleting all data from Project {projectName} from my device."
+  },
+  "screens.LeaveProject.deleteConsentWithoutName": {
+    "message": "I understand I will be deleting all data from my device."
+  },
+  "screens.LeaveProject.leaveProj": {
+    "message": "Leave Project"
+  },
+  "screens.LeaveProject.leavingProject": {
+    "message": "Leaving Project {projectName}"
+  },
+  "screens.LeaveProject.removeFromProjWithName": {
+    "message": "This will remove all Project {projectName}'s data from your device."
+  },
+  "screens.LeaveProject.removeFromProjWithoutName": {
+    "message": "This will remove all of the data from your device."
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
@@ -437,11 +691,50 @@
   "screens.ManualGpsScreen.zoneNumber": {
     "message": "Zone Number"
   },
+  "screens.MediaSyncActionSheetContent.cancel": {
+    "message": "Цуцлах"
+  },
+  "screens.MediaSyncSettings.syncEverything": {
+    "message": "Sync Everything"
+  },
+  "screens.MediaSyncSettings.syncEverythingButtonBottomSheet": {
+    "message": "Sync Everything?"
+  },
+  "screens.MediaSyncSettings.syncEverythingDescription": {
+    "message": "Your device will sync <bold>all</bold> content at full size, including photos, audio, and videos."
+  },
+  "screens.MediaSyncSettings.syncEverythingDescriptionBottomSheet": {
+    "message": "You are about to sync everything. This may increase the disk space used on your device."
+  },
+  "screens.MediaSyncSettings.syncEverythingWarning": {
+    "message": "Note: This will use more storage."
+  },
+  "screens.MediaSyncSettings.syncPreviewWarningBottomSheet": {
+    "message": "You will no longer sync Audio or Video."
+  },
+  "screens.MediaSyncSettings.syncPreviews": {
+    "message": "Sync Previews (Photos Only)"
+  },
+  "screens.MediaSyncSettings.syncPreviewsBottomSheetConfirm": {
+    "message": "Sync Previews"
+  },
+  "screens.MediaSyncSettings.syncPreviewsButtonBottomSheet": {
+    "message": "Sync Previews?"
+  },
+  "screens.MediaSyncSettings.syncPreviewsDescription": {
+    "message": "Photos will sync at a reduced smaller size. Device will <bold>not</bold> sync audio or video."
+  },
+  "screens.MediaSyncSettings.syncPreviewsDescriptionBottomSheet": {
+    "message": "Your device will keep all existing data but new observations will sync in a smaller, preview size."
+  },
+  "screens.MediaSyncSettings.title": {
+    "message": "Sync Settings"
+  },
   "screens.ObscurePasscode.description": {
-    "message": "Бүрхэг нууц үг нь Mapeo-г төөрөгдүүлэх горимд нээх боломжийг олгодог хамгаалалтын функц бөгөөд таны бүх өгөгдлийг нуудаг. Танилцуулгын дэлгэцэн дээр тодорхойгүй нууц үгийг оруулснаар Mapeo-ийн хоосон хувилбар гарч ирэх бөгөөд энэ нь танд Mapeo мэдээллийн санд хадгалагдаагүй үзүүлэх ажиглалт үүсгэх боломжийг олгоно."
+    "message": "Obscure Passcode is a security feature that allows you to open CoMapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of CoMapeo which allows you to create demonstration observations that are not saved to the CoMapeo database."
   },
   "screens.ObscurePasscode.instructions": {
-    "message": "Mapeo дээрх өгөгдлөө нуухын тулд дээрх кодыг оруулна уу"
+    "message": "Enter the code above to hide your data in CoMapeo"
   },
   "screens.ObscurePasscode.title": {
     "message": "Тодорхой бус нууц үг"
@@ -451,13 +744,6 @@
   },
   "screens.ObscurePasscode.whatIsObscure": {
     "message": "Тодорхой бус нууц үг юу вэ?"
-  },
-  "screens.Observation.ObservationEdit.CategoryView.changePreset": {
-    "message": "Өөрчлөх"
-  },
-  "screens.Observation.ObservationEdit.CategoryView.observation": {
-    "description": "Default name of observation with no matching preset",
-    "message": "Сануулга"
   },
   "screens.Observation.ObservationView.delete": {
     "description": "Button to delete an observation",
@@ -471,9 +757,16 @@
     "description": "Default name of observation with no matching preset",
     "message": "Сануулга"
   },
+  "screens.Observation.ObservationView.share": {
+    "description": "Button to share an observation",
+    "message": "Share"
+  },
   "screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
     "message": "Цуцлах"
+  },
+  "screens.Observation.comapeoAlert": {
+    "message": "CoMapeo Alert"
   },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
@@ -483,9 +776,70 @@
     "description": "Title of dialog asking confirmation to delete an observation",
     "message": "Сануулгыг устгах уу?"
   },
+  "screens.Observation.fallbackCategoryName": {
+    "description": "Fallback name used when category name cannot be determined for observation",
+    "message": "Сануулга"
+  },
+  "screens.Observation.shareMediaTitle": {
+    "description": "Title of dialog to share an observation with media",
+    "message": "Sharing image"
+  },
+  "screens.Observation.shareMessageFooter": {
+    "message": "Sent from CoMapeo"
+  },
+  "screens.Observation.shareMessageTitle": {
+    "message": "CoMapeo Alert"
+  },
+  "screens.Observation.shareTextTitle": {
+    "description": "Title of dialog to share an observation without media",
+    "message": "Sharing text"
+  },
   "screens.Observation.title": {
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
     "message": "Сануулга"
+  },
+  "screens.ObservationCreate.changePreset": {
+    "message": "Change"
+  },
+  "screens.ObservationCreate.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "Энд юу болоод байгаа юм бэ?"
+  },
+  "screens.ObservationCreate.keepWaiting": {
+    "description": "Button to cancel save and continue waiting for GPS",
+    "message": "Үргэлжлүүлэн хүлээж байна"
+  },
+  "screens.ObservationCreate.manualEntry": {
+    "description": "Button to manually enter GPS coordinates",
+    "message": "Гар ажиллагаатай солбицолууд"
+  },
+  "screens.ObservationCreate.navTitle": {
+    "description": "screen title for new observation screen",
+    "message": "New Observation"
+  },
+  "screens.ObservationCreate.noGpsDesc": {
+    "description": "Description in dialog when trying to save with no GPS coords",
+    "message": "Энэ сануулга нь байршилгүй. Та GPS дохиог үргэлжлүүлэн хүлээх, сануулгыг байршилгүйгээр хадгалах эсвэл солбицолуудыг гараар оруулах боломжтой"
+  },
+  "screens.ObservationCreate.noGpsTitle": {
+    "description": "Title of dialog when trying to save with no GPS coords",
+    "message": "GPS-ийн дохио байхгүй"
+  },
+  "screens.ObservationCreate.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Сануулга"
+  },
+  "screens.ObservationCreate.saveAnyway": {
+    "description": "Button to save regardless of GPS state",
+    "message": "Хадгалах"
+  },
+  "screens.ObservationCreate.weakGpsDesc": {
+    "description": "Description in dialog when trying to save with low GPS accuracy.",
+    "message": "GPS-ийн нарийвчлал бага байна. Та илүү нарийвчлалтай байхыг үргэлжлүүлэн хүлээх, ажиглалтыг бага нарийвчлалтайгаар хадгалах эсвэл солбицолыг гараар оруулах боломжтой."
+  },
+  "screens.ObservationCreate.weakGpsTitle": {
+    "description": "Title of dialog when trying to save with low GPS accuracy.",
+    "message": "GPS-ийн дохио сул байна"
   },
   "screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
@@ -493,15 +847,11 @@
   },
   "screens.ObservationDetails.nextQuestion": {
     "description": "Button text to navigate to next question",
-    "message": "Next"
+    "message": "Дараагийнх"
   },
   "screens.ObservationDetails.title": {
     "description": "Title of observation details screen showing question number and total",
     "message": "Question {current} of {total}"
-  },
-  "screens.ObservationEdit.BottomSheet.addLabel": {
-    "description": "Label above keyboard that expands into bottom sheet of options to add (photo, details etc)",
-    "message": "Нэмэх…"
   },
   "screens.ObservationEdit.ObservationEditView.audioButton": {
     "description": "Button label for adding audio",
@@ -519,52 +869,30 @@
     "description": "Button label for adding photo",
     "message": "Photo"
   },
-  "screens.ObservationEdit.ObservationEditView.searching": {
-    "description": "Shown in new observation screen whilst looking for GPS",
-    "message": "Хайлт хийж байна..."
+  "screens.ObservationEdit.changePreset": {
+    "message": "Change"
   },
-  "screens.ObservationEdit.SaveButton.keepWaiting": {
-    "description": "Button to cancel save and continue waiting for GPS",
-    "message": "Үргэлжлүүлэн хүлээж байна"
+  "screens.ObservationEdit.descriptionPlaceholder": {
+    "description": "Placeholder for description/notes field",
+    "message": "Энд юу болоод байгаа юм бэ?"
   },
-  "screens.ObservationEdit.SaveButton.manualEntry": {
-    "description": "Button to manually enter GPS coordinates",
-    "message": "Гар ажиллагаатай солбицолууд"
-  },
-  "screens.ObservationEdit.SaveButton.noGpsDesc": {
-    "description": "Description in dialog when trying to save with no GPS coords",
-    "message": "Энэ сануулга нь байршилгүй. Та GPS дохиог үргэлжлүүлэн хүлээх, сануулгыг байршилгүйгээр хадгалах эсвэл солбицолуудыг гараар оруулах боломжтой"
-  },
-  "screens.ObservationEdit.SaveButton.noGpsTitle": {
-    "description": "Title of dialog when trying to save with no GPS coords",
-    "message": "GPS-ийн дохио байхгүй"
-  },
-  "screens.ObservationEdit.SaveButton.saveAnyway": {
-    "description": "Button to save regardless of GPS state",
-    "message": "Хадгалах"
-  },
-  "screens.ObservationEdit.SaveButton.weakGpsDesc": {
-    "description": "Description in dialog when trying to save with low GPS accuracy.",
-    "message": "GPS-ийн нарийвчлал бага байна. Та илүү нарийвчлалтай байхыг үргэлжлүүлэн хүлээх, ажиглалтыг бага нарийвчлалтайгаар хадгалах эсвэл солбицолыг гараар оруулах боломжтой."
-  },
-  "screens.ObservationEdit.SaveButton.weakGpsTitle": {
-    "description": "Title of dialog when trying to save with low GPS accuracy.",
-    "message": "GPS-ийн дохио сул байна"
-  },
-  "screens.ObservationEdit.editTitle": {
-    "description": "screen title for edit observation screen",
-    "message": "Сануулга засах"
-  },
-  "screens.ObservationEdit.newTitle": {
+  "screens.ObservationEdit.navTitle": {
     "description": "screen title for new observation screen",
-    "message": "Шинэ сануулга"
+    "message": "Edit Observation"
+  },
+  "screens.ObservationEdit.observation": {
+    "description": "Default name of observation with no matching preset",
+    "message": "Сануулга"
+  },
+  "screens.ObservationList.TrackListItem.Track": {
+    "message": "Track"
   },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",
     "message": "Сануулгууд"
   },
   "screens.ObservationsList.NoProjectWarning": {
-    "message": "You won’t be able to share observations collected yet."
+    "message": "You are currently mapping on your own."
   },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
     "description": "Back button on observation list screen when no observations are yet recorded",
@@ -579,32 +907,150 @@
     "message": "Сануулгууд нэмэх"
   },
   "screens.ObservationsList.createOrJoin": {
-    "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
-    "message": "Create or Join a Project."
+    "description": "The full sentence is 'Create or Join a Project to collect data with a team. This action will delete observations you have collected so far. Consider sharingimportant observations to you email before proceeding.' The sentence needs to be seperated for styling purposes",
+    "message": "Create or Join a Project"
   },
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",
-    "message": "Сануулгыг ачаалахад алдаа гарлаа. Mapeo-г орхиж, дахин эхлүүлээд үзээрэй."
+    "message": "Error loading observations. Try quitting and restarting CoMapeo."
   },
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
     "message": "Ачаалж байна... шинэ төхөөрөмжтэй зэрэгцүүлэлт хийсний дараа хэсэг хугацаа шаардагдах болно"
   },
   "screens.ObservationsList.toSync": {
-    "description": "The full sentence is 'To sync and share with other devices, Create or Join a Project.' The sentence needs to be seperated for styling purposes",
-    "message": "To sync and share with other devices,"
+    "description": "The full sentence is 'Create or Join a Project to collect data with a team. This action will delete observations you have collected so far. Consider sharing important observations to you email before proceeding.' The sentence needs to be seperated for styling purposes",
+    "message": "to collect data with a team. This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
+  },
+  "screens.OnboardingPrivacyPolicy.navTitle": {
+    "message": "Privacy Policy"
+  },
+  "screens.OnboardingPrivacyPolicy.permissionsTitle": {
+    "message": "Current Permissions"
+  },
+  "screens.OnboardingPrivacyPolicy.shareDiagnostics": {
+    "message": "Share Diagnostic Information"
+  },
+  "screens.PhotoPreviewModal.DeletePhoto.cancelButton": {
+    "message": "Цуцлах"
+  },
+  "screens.PhotoPreviewModal.DeletePhoto.deleteModalDeleteButton": {
+    "message": "Delete Image"
+  },
+  "screens.PhotoPreviewModal.DeletePhoto.deleteModalTitle": {
+    "message": "Delete this photo?"
+  },
+  "screens.PhotoPreviewModal.DeletePhoto.headerButtonText": {
+    "message": "Delete Photo"
+  },
+  "screens.PrivacyPolicy.aboutAwana": {
+    "message": "About Awana Digital"
+  },
+  "screens.PrivacyPolicy.aboutAwanaContent": {
+    "message": "CoMapeo is developed by Awana Digital, a 501c3 non-profit organization registered in the United States. Awana Digital works in solidarity with frontline communities to use technology to defend their rights and fight climate change."
+  },
+  "screens.PrivacyPolicy.appErrors": {
+    "message": "App Errors"
+  },
+  "screens.PrivacyPolicy.appErrorsDescription": {
+    "message": "Information about internal errors that result in the app not functioning as expected"
+  },
+  "screens.PrivacyPolicy.appInfo": {
+    "message": "App Info"
+  },
+  "screens.PrivacyPolicy.appInfoDescription": {
+    "message": "The version and locale (language) of CoMapeo"
+  },
+  "screens.PrivacyPolicy.appUsageTitle": {
+    "message": "App Usage"
+  },
+  "screens.PrivacyPolicy.control": {
+    "message": "You're in control"
+  },
+  "screens.PrivacyPolicy.controlDescription": {
+    "message": "You can opt out of sending any information to Awana Digital. You choose where your data is stored and who it is shared with. You may choose to share anonymized, summarized data about how you use CoMapeo with Awana Digital. We will always be transparent about what information you choose to share for the purposed of improving the app, and this information will never include photos, videos, audio, text, or precise locations that you have entered into CoMapeo."
+  },
+  "screens.PrivacyPolicy.crashData": {
+    "message": "Crash Data"
+  },
+  "screens.PrivacyPolicy.crashDataDescription": {
+    "message": "Information about what caused the app to close unexpectedly"
+  },
+  "screens.PrivacyPolicy.dataCollection": {
+    "message": "CoMapeo Data Collection"
+  },
+  "screens.PrivacyPolicy.deviceInfo": {
+    "message": "Device Info"
+  },
+  "screens.PrivacyPolicy.deviceInfoDescription": {
+    "message": "Such as model and manufacturer of your device; device operating system; screen size; device locale (language); device memory."
+  },
+  "screens.PrivacyPolicy.diagnosticsTitle": {
+    "message": "Diagnostics"
+  },
+  "screens.PrivacyPolicy.noPII": {
+    "message": "No personally identifiable information"
+  },
+  "screens.PrivacyPolicy.noPIIDescription": {
+    "message": "Using CoMapeo does not require a user account. Awana Digital does not collect your name, email address or any other personal details. No permanent user identifier or device identifier is ever shared with Awana Digital, and we take extra measures to ensure that no information you share can be used to track you: identifiers are randomized and rotated (changed) every month and we do not store IP addresses."
+  },
+  "screens.PrivacyPolicy.notCollected": {
+    "message": "What is not collected?"
+  },
+  "screens.PrivacyPolicy.notCollectedDescription": {
+    "message": "We do not collect any personal data or anything that can be used to identify or track a user or device. Device identifiers used to aggregate information are random, anonymous, and changed every month. Diagnostic information does not include data about how you use the app, and it never includes any of the data you have collected with the app. We do not collect your precise or coarse location, only the country where you are using CoMapeo."
+  },
+  "screens.PrivacyPolicy.openSource": {
+    "message": "Open Source and the \"Official\" Version"
+  },
+  "screens.PrivacyPolicy.openSourceContent": {
+    "message": "CoMapeo is an open-source application. This means that anyone can view the code that makes the app work and can verify the privacy declarations in this document. It also means that anyone can adapt the app to their own needs and release an alternative version. This document refers to data collected by the official releases of CoMapeo, digitally signed by Awana Digital, available from the Google Play Store or the Awana Digital website. Unofficial releases of CoMapeo obtained from other channels are outside our control and may share additional information with other organizations."
+  },
+  "screens.PrivacyPolicy.overview": {
+    "message": "This document describes what information (\"data\") is sent from CoMapeo to the application developer, Awana Digital, and how that information is used."
+  },
+  "screens.PrivacyPolicy.performanceData": {
+    "message": "Performance Data"
+  },
+  "screens.PrivacyPolicy.performanceDataDescription": {
+    "message": "Such as launch time, energy usage, app freezes, and responsiveness"
+  },
+  "screens.PrivacyPolicy.privacyPolicyTitle": {
+    "message": "CoMapeo Data Privacy"
+  },
+  "screens.PrivacyPolicy.privateByDefault": {
+    "message": "Private by default"
+  },
+  "screens.PrivacyPolicy.privateByDefaultDescription": {
+    "message": "The data you collect and create with CoMapeo (locations, photos, video, audio, text) is only stored on your device by default, and is not stored or sent anywhere else. When you share data with collaborators by joining a project with them, it is sent encrypted, directly to your collaborators' device. This means that the data is not sent via Awana Digital, nor anyone else, on its way to your collaborator. Awana Digital never sees nor has access to any of the data you collect with CoMapeo unless you explicitly send it to us."
+  },
+  "screens.PrivacyPolicy.thirdParty": {
+    "message": "Third-party access to data"
+  },
+  "screens.PrivacyPolicy.thirdPartyDescription": {
+    "message": "A \"third-party\" is an organization other than Awana Digital."
+  },
+  "screens.PrivacyPolicy.userCount": {
+    "message": "User Counts"
+  },
+  "screens.PrivacyPolicy.userCountDescription": {
+    "message": "The number of users per country and per project. Aggregated and anonymized"
+  },
+  "screens.PrivacyPolicy.whatIsCollected": {
+    "message": "What is collected?"
+  },
+  "screens.PrivacyPolicy.whatIsCollectedDescription": {
+    "message": "By default, anonymized diagnostic information about your device, app crashes, errors and performance is shared with Awana Digital. You can opt-out of sharing this information at any time. This diagnostic information is completely anonymized and it never contains any of your data (the data you have collected with CoMapeo)."
+  },
+  "screens.PrivacyPolicy.whyCollected": {
+    "message": "Why is this data collected?"
+  },
+  "screens.PrivacyPolicy.whyCollectedDescription": {
+    "message": "Crash data and app errors together with the device and app info provide Awana Digital with the information we need to fix errors and bugs in the app. The performance data helps us improve the responsiveness of the app and identify errors. User counts, including total users, users per country, and users per project, help justify ongoing investment in the development of CoMapeo."
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
-    "message": "What is happening here?"
-  },
-  "screens.SaveTrack.TrackEditView.saveTrackCamera": {
-    "description": "Button label for adding photo",
-    "message": "Camera"
-  },
-  "screens.SaveTrack.TrackEditView.saveTrackDetails": {
-    "description": "Button label for check details",
-    "message": "Details"
+    "message": "Энд юу болоод байгаа юм бэ?"
   },
   "screens.SaveTrack.TrackEditView.title": {
     "description": "Title for new track screen",
@@ -613,15 +1059,6 @@
   "screens.SaveTrack.track": {
     "description": "Category title for new track screen",
     "message": "Track"
-  },
-  "screens.Security.obscurePassDescriptonPassNotSet": {
-    "message": "Ашиглахын тулд Аппликэшний нууц үгийг тааруулах"
-  },
-  "screens.Security.obscurePassDescriptonPassSet": {
-    "message": "Төхөөрөмжөө хураахаас хамгаалаарай"
-  },
-  "screens.Security.obscurePasscodeHeader": {
-    "message": "Тодорхой бус нууц үг"
   },
   "screens.Security.passDesriptionPassNotSet": {
     "message": "Нууц үгийг тохируулаагүй байна"
@@ -642,7 +1079,7 @@
     "message": "Your Device Name"
   },
   "screens.Setting.ProjectSettings.DeviceName.DisplayScreen.title": {
-    "message": "Device Name"
+    "message": "Төхөөрөмжний нэр"
   },
   "screens.Setting.ProjectSettings.DeviceName.EditScreen.deviceNameLabel": {
     "message": "Edit Device Name"
@@ -654,10 +1091,10 @@
     "message": "Discard Changes"
   },
   "screens.Setting.ProjectSettings.DeviceName.EditScreen.discardChangesAlertTitle": {
-    "message": "Discard changes?"
+    "message": "Өөрчлөлтийг цуцлах уу? "
   },
   "screens.Setting.ProjectSettings.DeviceName.EditScreen.title": {
-    "message": "Device Name"
+    "message": "Төхөөрөмжний нэр"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
     "message": "Add Another Device"
@@ -702,7 +1139,7 @@
     "message": "Date Added"
   },
   "screens.Setting.ProjectSettings.YourTeam.deviceName": {
-    "message": "Device Name"
+    "message": "Төхөөрөмжний нэр"
   },
   "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
     "message": "Invite Device"
@@ -715,6 +1152,21 @@
   },
   "screens.Setting.ProjectSettings.YourTeam.title": {
     "message": "Your Team"
+  },
+  "screens.Settings.Config.created": {
+    "message": "Created {date} at {time}"
+  },
+  "screens.Settings.Config.importConfig": {
+    "message": "Import Config"
+  },
+  "screens.Settings.Config.name": {
+    "message": "Config Name:"
+  },
+  "screens.Settings.Config.navTitle": {
+    "message": "Configuration"
+  },
+  "screens.Settings.Config.projectName": {
+    "message": "Project Name:"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.title": {
     "message": "Create a Project"
@@ -755,14 +1207,17 @@
   "screens.Settings.CreateOrJoinProject.importConfig": {
     "message": "Import Config"
   },
+  "screens.Settings.CreateOrJoinProject.importConfigFileError": {
+    "message": "File name should end with .comapeocat"
+  },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
-    "message": "Join an existing Mapeo Project"
+    "message": "Join an existing CoMapeo Project"
   },
   "screens.Settings.CreateOrJoinProject.joinProject": {
     "message": "Join a Project"
   },
   "screens.Settings.CreateOrJoinProject.projectDescription": {
-    "message": "A project is a secure container for your data. Only devices you invite can enter and share data with you. Create or Join a project in order to share data with other devices."
+    "message": "A project is a secure container for your data. Only devices you invite can enter and share data with you. Create or Join a project in order to share data with other devices. This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
   },
   "screens.Settings.CreateOrJoinProject.startProject": {
     "message": "Start a CoMapeo Project"
@@ -788,12 +1243,12 @@
   "screens.Settings.YourTeam.unableToCancel": {
     "message": "Unable to Cancel Invitation"
   },
-  "screens.Settings.aboutMapeo": {
-    "description": "Primary text for 'About Mapeo' link (version info)",
-    "message": "Mapeo-гийн тухай"
+  "screens.Settings.aboutCoMapeo": {
+    "description": "Primary text for 'About CoMapeo' link (version info)",
+    "message": "About CoMapeo"
   },
-  "screens.Settings.aboutMapeoDesc": {
-    "description": "Description of the 'About Mapeo' page",
+  "screens.Settings.aboutCoMapeoDesc": {
+    "description": "Description of the 'About CoMapeo' page",
     "message": "Хувилбар ба барилгын дугаар"
   },
   "screens.Settings.appSettings": {
@@ -802,6 +1257,10 @@
   "screens.Settings.appSettingsDesc": {
     "description": "list of avaialable app settings",
     "message": "Language, Security, Coordinates"
+  },
+  "screens.Settings.config": {
+    "description": "Primary text for project config settings",
+    "message": "Project Configuration"
   },
   "screens.Settings.createOrJoin": {
     "message": "Create or Join Project"
@@ -820,11 +1279,20 @@
     "description": "Title of settings screen",
     "message": "Тохиргоо"
   },
+  "screens.SettingsPrivacyPolicy.navTitle": {
+    "message": "Privacy Policy"
+  },
   "screens.Sync.CreateOrJoinProjectDisplay.buttonText": {
     "message": "Create or Join Project"
   },
-  "screens.Sync.CreateOrJoinProjectDisplay.description": {
-    "message": "Create or Join a Project to sync with other devices"
+  "screens.Sync.CreateOrJoinProjectDisplay.subText": {
+    "message": "This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
+  },
+  "screens.Sync.CreateOrJoinProjectDisplay.subTitle": {
+    "message": "You will be able to share data with devices that are part of the same project."
+  },
+  "screens.Sync.CreateOrJoinProjectDisplay.title": {
+    "message": "Create or join a project to collect data with a team"
   },
   "screens.Sync.HeaderTitle.noWiFi": {
     "message": "No WiFi"
@@ -838,48 +1306,92 @@
   "screens.Sync.NoWifiDisplay.title": {
     "message": "No WiFi"
   },
-  "screens.Sync.ProjectSyncDisplay.buttonTextDone": {
-    "message": "You're all caught up"
+  "screens.Sync.ProjectSyncDisplay.allCaughtUp": {
+    "message": "You're all caught up!"
   },
-  "screens.Sync.ProjectSyncDisplay.buttonTextStop": {
+  "screens.Sync.ProjectSyncDisplay.allDataSynced": {
+    "message": "All data synced"
+  },
+  "screens.Sync.ProjectSyncDisplay.devicesAvailableToSync": {
+    "message": "Devices available"
+  },
+  "screens.Sync.ProjectSyncDisplay.devicesFound": {
+    "message": "Devices found"
+  },
+  "screens.Sync.ProjectSyncDisplay.noDevicesAvailableToSync": {
+    "message": "No devices available to sync"
+  },
+  "screens.Sync.ProjectSyncDisplay.progressLabelSyncing": {
+    "message": "Syncing…"
+  },
+  "screens.Sync.ProjectSyncDisplay.progressLabelWaiting": {
+    "message": "Waiting…"
+  },
+  "screens.Sync.ProjectSyncDisplay.progressLabelWithDeviceCount": {
+    "message": "Waiting for other devices"
+  },
+  "screens.Sync.ProjectSyncDisplay.startSync": {
+    "message": "Start Sync"
+  },
+  "screens.Sync.ProjectSyncDisplay.stop": {
     "message": "Stop"
-  },
-  "screens.Sync.ProjectSyncDisplay.buttonTextSync": {
-    "message": "Sync"
-  },
-  "screens.Sync.ProjectSyncDisplay.deviceName": {
-    "message": "Your device name is {name}"
-  },
-  "screens.Sync.ProjectSyncDisplay.devicesNearby": {
-    "message": "{count} {count, plural, one {device} other {devices}} nearby/connected"
-  },
-  "screens.Sync.ProjectSyncDisplay.devicesSyncing": {
-    "message": "Syncing with {count} {count, plural, one {Device} other {Devices}}"
-  },
-  "screens.Sync.ProjectSyncDisplay.devicesWaitingToSync": {
-    "message": "{count} {count, plural, one {Device} other {Devices}} Waiting to Sync with you"
-  },
-  "screens.Sync.ProjectSyncDisplay.noDevicesSyncing": {
-    "message": "No Devices are Syncing"
   },
   "screens.Sync.ProjectSyncDisplay.syncProgress": {
     "message": "{value}%"
   },
-  "screens.Sync.ProjectSyncDisplay.syncing": {
-    "message": "Syncing…"
+  "screens.Sync.ProjectSyncDisplay.syncingCompleteButWaitingForOthers": {
+    "message": "Complete! Waiting for other devices to join"
   },
-  "screens.Sync.ProjectSyncDisplay.upToDate": {
-    "message": "Up to Date! No data to Sync"
+  "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
+    "message": "Complete! You're up to date"
+  },
+  "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
+    "message": "You are syncing with your team"
+  },
+  "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
+    "message": "Waiting for devices"
+  },
+  "screens.Track.ObservationList.observations": {
+    "message": "Сануулгууд"
+  },
+  "screens.Track.deleteTitle": {
+    "description": "Title of dialog asking confirmation to delete a track",
+    "message": "Delete track?"
+  },
+  "screens.Track.title": {
+    "description": "Title of track screen showing (non-editable) view of observation with map",
+    "message": "Track"
+  },
+  "screens.Track.tracks": {
+    "message": "Tracks"
+  },
+  "screens.TrackEdit.title": {
+    "description": "Title for editing track screen",
+    "message": "Edit Track"
+  },
+  "screens.TrackEdit.track": {
+    "description": "Preset title for new track screen",
+    "message": "Track"
   },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",
     "message": "Show Options"
   },
-  "sharedComponents.DeviceCard.ThisDevice": {
-    "message": "This Device!"
+  "sharedComponents.DeviceCard.leaveProject": {
+    "message": "Leave Project"
+  },
+  "sharedComponents.DeviceIconWithName.Disconnected": {
+    "message": "Disconnected"
   },
   "sharedComponents.DeviceIconWithName.thisDevice": {
     "message": "This Device!"
+  },
+  "sharedComponents.EditScreen.PresetAndLocationView.seaching": {
+    "description": "Shown in new observation screen whilst looking for GPS",
+    "message": "Хайлт хийж байна..."
+  },
+  "sharedComponents.Editor.PresetView.Change": {
+    "message": "Change"
   },
   "sharedComponents.ErrorModal.goBack": {
     "message": "Go Back"
@@ -894,31 +1406,40 @@
     "message": "No GPS"
   },
   "sharedComponents.GpsPill.searching": {
-    "message": "Searching…"
+    "message": "Хайлт хийж байна..."
   },
-  "sharedComponents.ProjectInviteBottomSheet.acceptInvite": {
+  "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.canceled": {
+    "message": "Invite Canceled"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.close": {
+    "message": "Close"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.projectInviteCanceled": {
+    "message": "Your invitation to {projectName} has been canceled."
+  },
+  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.acceptInvite": {
     "message": "Accept Invite"
   },
-  "sharedComponents.ProjectInviteBottomSheet.declineInvite": {
+  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.declineInvite": {
     "message": "Decline Invite"
   },
+  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.invitedToJoin": {
+    "message": "You've been invited to join {projectName}"
+  },
+  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.joinProject": {
+    "message": "Join Project {projectName}"
+  },
   "sharedComponents.ProjectInviteBottomSheet.goToMap": {
-    "message": "Go To Map"
+    "message": "Газрын зураг руу очих"
   },
   "sharedComponents.ProjectInviteBottomSheet.goToSync": {
     "message": "Go To Sync"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.invitedToJoin": {
-    "message": "You've been invited to join {projName}"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.joinProject": {
-    "message": "Join Project {projName}"
   },
   "sharedComponents.ProjectInviteBottomSheet.success": {
     "message": "Success"
   },
   "sharedComponents.ProjectInviteBottomSheet.youHaveJoined": {
-    "message": "You have joined {projName}"
+    "message": "You have joined {projectName}"
   },
   "sharedComponents.RoleWithIcon.coordinator": {
     "message": "Coordinator"

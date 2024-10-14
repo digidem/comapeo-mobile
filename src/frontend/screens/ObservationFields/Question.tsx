@@ -3,7 +3,7 @@ import React from 'react';
 import {SelectOne} from './SelectOne';
 import {SelectMultiple} from './SelectMultiple';
 import {TextArea} from './TextArea';
-import {Field} from '@mapeo/schema';
+import {Field} from '@comapeo/schema';
 import {
   SelectMultipleField,
   SelectOneField,

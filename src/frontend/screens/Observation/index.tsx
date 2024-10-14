@@ -6,7 +6,7 @@ import {BLACK, WHITE, DARK_GREY, LIGHT_GREY} from '../../lib/styles';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 import {FormattedObservationDate} from '../../sharedComponents/FormattedData';
-import {Field} from '@mapeo/schema';
+import {Field} from '@comapeo/schema';
 import {PresetHeader} from './PresetHeader';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
 import {useFieldsQuery} from '../../hooks/server/fields';
@@ -17,7 +17,7 @@ import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
 import {MediaScrollView} from '../../sharedComponents/MediaScrollView/index.tsx';
 import {useDeviceInfo} from '../../hooks/server/deviceInfo';
-import {useCreatedByToDeviceId} from '../../hooks/server/projects.ts';
+import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
 import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types.ts';
 import {ButtonFields} from './Buttons.tsx';
 
@@ -53,18 +53,21 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   const {data: fieldData} = useFieldsQuery();
 
   const defaultAcc: Field[] = [];
-  const fields = fieldData
-    ? preset.fieldRefs.reduce((acc, pres) => {
-        const fieldToAdd = fieldData.find(field => field.docId === pres.docId);
-        if (!fieldToAdd) return acc;
-        return [...acc, fieldToAdd];
-      }, defaultAcc)
-    : [];
+  const fields =
+    preset && fieldData
+      ? preset.fieldRefs.reduce((acc, pres) => {
+          const fieldToAdd = fieldData.find(
+            field => field.docId === pres.docId,
+          );
+          if (!fieldToAdd) return acc;
+          return [...acc, fieldToAdd];
+        }, defaultAcc)
+      : [];
 
-  const {lat, lon, createdBy} = observation;
+  const {lat, lon, originalVersionId} = observation;
   const {data: deviceInfo, isPending: isDeviceInfoPending} = useDeviceInfo();
-  const {data: convertedDeviceId, isPending: isCreatedByDeviceIdPending} =
-    useCreatedByToDeviceId(createdBy);
+  const {data: convertedDeviceId, isPending: isDeviceIdPending} =
+    useOriginalVersionIdToDeviceId(originalVersionId);
 
   const isMine =
     deviceInfo?.deviceId !== undefined &&
@@ -92,7 +95,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
           </Text>
         </View>
         <View style={[styles.section, {flex: 1}]}>
-          {preset && <PresetHeader preset={preset} />}
+          <PresetHeader preset={preset} />
 
           {typeof observation.tags.notes === 'string' ? (
             <View style={{paddingTop: 15}}>
@@ -110,10 +113,14 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
           <FieldDetails observation={observation} fields={fields} />
         )}
         <View style={styles.divider} />
-        {isDeviceInfoPending || isCreatedByDeviceIdPending ? (
+        {isDeviceInfoPending || isDeviceIdPending ? (
           <UIActivityIndicator size={20} />
         ) : (
-          <ButtonFields isMine={isMine} observationId={observationId} />
+          <ButtonFields
+            isMine={isMine}
+            observationId={observationId}
+            fields={fields}
+          />
         )}
       </>
     </ScrollView>

@@ -1,4 +1,4 @@
-import {type MapeoClientApi} from '@mapeo/ipc';
+import {type MapeoClientApi} from '@comapeo/ipc';
 import {useSyncExternalStore} from 'react';
 import {useApi} from '../contexts/ApiContext';
 

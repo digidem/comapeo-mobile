@@ -6,7 +6,7 @@ import { init } from './src/app.js'
 // This assumes that we keep the relevant directory as part of the built assets when building for nodejs mobile
 // (see `KEEP_THESE` variable in build-backend.mjs)
 const MIGRATIONS_FOLDER_PATH = new URL(
-  './node_modules/@mapeo/core/drizzle',
+  './node_modules/@comapeo/core/drizzle',
   import.meta.url,
 ).pathname
 const FALLBACK_MAP_PATH = new URL(
@@ -15,7 +15,7 @@ const FALLBACK_MAP_PATH = new URL(
 ).pathname
 
 const DEFAULT_CONFIG_PATH = new URL(
-  './node_modules/@mapeo/default-config/dist/mapeo-default-config.mapeoconfig',
+  './node_modules/@mapeo/default-config/dist/mapeo-default-config.comapeocat',
   import.meta.url,
 ).pathname
 

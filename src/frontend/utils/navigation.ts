@@ -1,5 +1,5 @@
 import {ClientGeneratedObservation} from '../sharedTypes';
-import {Observation, Preset} from '@mapeo/schema';
+import {Observation, Preset} from '@comapeo/schema';
 import {matchPreset} from '../lib/utils';
 import {
   RootStackParamsList,

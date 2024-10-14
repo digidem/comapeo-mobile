@@ -1,4 +1,3 @@
-import {type DeviceInfo} from '@mapeo/schema';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {deviceType, DeviceType} from 'expo-device';
 
@@ -26,7 +25,7 @@ export const useEditDeviceInfo = () => {
     mutationFn: async (name: string) => {
       return mapeoApi.setDeviceInfo({
         name,
-        deviceType: deviceType ? expoToCoreDeviceType(deviceType) : undefined,
+        deviceType: expoToCoreDeviceType(deviceType),
       });
     },
     onSuccess: () => {
@@ -35,7 +34,9 @@ export const useEditDeviceInfo = () => {
   });
 };
 
-function expoToCoreDeviceType(d: DeviceType): DeviceInfo['deviceType'] {
+function expoToCoreDeviceType(
+  d: Readonly<null | DeviceType>,
+): 'mobile' | 'tablet' | 'desktop' | 'UNRECOGNIZED' {
   switch (d) {
     case DeviceType.PHONE: {
       return 'mobile';
@@ -43,12 +44,11 @@ function expoToCoreDeviceType(d: DeviceType): DeviceInfo['deviceType'] {
     case DeviceType.TABLET: {
       return 'tablet';
     }
-    case DeviceType.TV: {
-      return undefined;
-    }
     case DeviceType.DESKTOP: {
       return 'desktop';
     }
+    case null:
+    case DeviceType.TV:
     case DeviceType.UNKNOWN: {
       return 'UNRECOGNIZED';
     }

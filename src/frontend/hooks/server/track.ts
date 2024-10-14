@@ -3,7 +3,7 @@ import {
   useMutation,
   useSuspenseQuery,
 } from '@tanstack/react-query';
-import {TrackValue} from '@mapeo/schema';
+import {TrackValue} from '@comapeo/schema';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 
@@ -42,6 +42,28 @@ export function useTrackQuery(docId: string) {
     queryKey: [TRACK_KEY, projectId, docId],
     queryFn: async () => {
       return projectApi.track.getByDocId(docId);
+    },
+  });
+}
+
+export function useEditTrackMutation() {
+  const queryClient = useQueryClient();
+  const {projectId, projectApi} = useActiveProject();
+
+  return useMutation({
+    mutationFn: async ({
+      versionId,
+      updatedTrack,
+    }: {
+      versionId: string;
+      updatedTrack: TrackValue;
+    }) => {
+      return projectApi.track.update(versionId, updatedTrack);
+    },
+    onSuccess: data => {
+      queryClient.invalidateQueries({
+        queryKey: [TRACK_KEY, projectId, data.docId],
+      });
     },
   });
 }

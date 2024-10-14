@@ -1,6 +1,6 @@
 {
   "name": "comapeo-mobile",
-  "version": "0.0.1",
+  "version": "1.0.0-pre",
   "private": true,
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "ios-no-backend-rebuild": "expo run:ios",
     "prestart": "npm run build:translations && npm run build:intl-polyfills",
     "start": "expo start",
-    "test": "jest",
+    "test": "dotenv -- jest",
     "lint:prettier": "prettier \"src/**/*.{js,ts,jsx,tsx}\" --check",
     "lint:eslint": "eslint . --ext .js,.jsx,.ts,.tsx --cache --ignore-path .gitignore",
     "lint:types": "tsc --noEmit",
@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@bam.tech/react-native-image-resizer": "^3.0.7",
+    "@comapeo/ipc": "1.0.1",
     "@dev-plugins/react-navigation": "^0.0.6",
     "@dr.pogodin/react-native-fs": "^2.24.1",
     "@formatjs/intl-getcanonicallocales": "^2.3.0",
@@ -35,8 +36,6 @@
     "@formatjs/intl-pluralrules": "^5.2.4",
     "@formatjs/intl-relativetimeformat": "^11.2.4",
     "@gorhom/bottom-sheet": "^4.5.1",
-    "@mapeo/ipc": "0.11.0",
-    "@mapeo/mock-data": "1.0.2",
     "@osm_borders/maritime_10000m": "^1.1.0",
     "@react-native-community/hooks": "^2.8.0",
     "@react-native-community/netinfo": "11.1.0",
@@ -79,6 +78,7 @@
     "geojson-geometries-lookup": "^0.5.0",
     "lodash.isequal": "^4.5.0",
     "luxon": "^3.4.4",
+    "map-obj": "^5.0.2",
     "nanoid": "^5.0.1",
     "nodejs-mobile-react-native": "^18.17.8",
     "react": "18.2.0",
@@ -116,9 +116,9 @@
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
+    "@comapeo/core": "1.0.1",
+    "@comapeo/schema": "1.0.0",
     "@formatjs/cli": "^6.2.0",
-    "@mapeo/core": "9.0.0-alpha.16",
-    "@mapeo/schema": "3.0.0-next.19",
     "@react-native-community/cli": "^12.3.6",
     "@react-native/babel-preset": "^0.73.21",
     "@react-native/eslint-config": "^0.73.2",
@@ -128,13 +128,13 @@
     "@testing-library/react-native": "^12.4.3",
     "@types/debug": "^4.1.7",
     "@types/geojson": "^7946.0.14",
-    "@types/jest": "^29.5.12",
+    "@types/jest": "^29.5.13",
     "@types/lodash.isequal": "^4.5.6",
     "@types/node": "^20.8.4",
     "@types/react": "^18.2.58",
     "@types/react-native-indicators": "^0.16.2",
     "@types/react-native-vector-icons": "^6.4.8",
-    "@types/react-native-zeroconf": "^0.12.3",
+    "@types/react-native-zeroconf": "^0.13.1",
     "@types/react-test-renderer": "^18.0.0",
     "@types/semver": "^7.5.8",
     "@types/utm": "^1.1.2",
@@ -143,12 +143,14 @@
     "babel-jest": "^29.6.3",
     "babel-plugin-transform-inline-environment-variables": "^0.4.4",
     "date-fns": "^3.6.0",
+    "dotenv-cli": "^7.4.2",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^9.1.0",
     "execa": "^8.0.1",
     "glob": "^10.3.14",
     "husky": "^8.0.0",
-    "jest": "^29.6.3",
+    "jest": "^29.7.0",
+    "jest-expo": "^50.0.4",
     "lint-staged": "^14.0.1",
     "patch-package": "^8.0.0",
     "prettier": "^3.2.5",
@@ -161,7 +163,7 @@
     "typescript": "^5.3.3"
   },
   "jest": {
-    "preset": "react-native",
+    "preset": "jest-expo",
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -174,7 +176,7 @@
       "@rnmapbox/maps/setup-jest"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(...|@rnmapbox))"
+      "node_modules/(?!(...|@rnmapbox|(jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg)"
     ]
   },
   "lint-staged": {

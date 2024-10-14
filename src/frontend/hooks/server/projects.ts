@@ -2,13 +2,18 @@ import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 
 import {useApi} from '../../contexts/ApiContext';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {PRESETS_KEY} from './presets';
+import {ICONS_KEY} from './icons';
+import {FIELDS_KEY} from './fields';
 
 export const ALL_PROJECTS_KEY = 'all_projects';
 export const PROJECT_SETTINGS_KEY = 'project_settings';
 export const CREATE_PROJECT_KEY = 'create_project';
 export const PROJECT_KEY = 'project';
 export const PROJECT_MEMBERS_KEY = 'project_members';
-export const CREATED_BY_TO_DEVICE_ID_KEY = 'createdByToDeviceId';
+export const ORIGINAL_VERSION_ID_TO_DEVICE_ID_KEY =
+  'originalVersionIdToDeviceId';
+export const THIS_USERS_ROLE_KEY = 'my_role';
 
 export function useProject(projectId?: string) {
   const api = useApi();
@@ -56,6 +61,9 @@ export function useCreateProject() {
       queryClient.invalidateQueries({
         queryKey: [ALL_PROJECTS_KEY],
       });
+      queryClient.invalidateQueries({
+        queryKey: [PROJECT_SETTINGS_KEY],
+      });
     },
   });
 }
@@ -82,13 +90,17 @@ export function useProjectSettings() {
   });
 }
 
-export const useCreatedByToDeviceId = (createdBy: string) => {
+export const useOriginalVersionIdToDeviceId = (originalVersionId: string) => {
   const {projectId, projectApi} = useActiveProject();
 
   return useQuery({
-    queryKey: [CREATED_BY_TO_DEVICE_ID_KEY, projectId, createdBy],
+    queryKey: [
+      ORIGINAL_VERSION_ID_TO_DEVICE_ID_KEY,
+      projectId,
+      originalVersionId,
+    ],
     queryFn: async () => {
-      return await projectApi.$createdByToDeviceId(createdBy);
+      return await projectApi.$originalVersionIdToDeviceId(originalVersionId);
     },
   });
 };
@@ -106,6 +118,44 @@ export function useLeaveProject() {
       queryClient.invalidateQueries({
         queryKey: [ALL_PROJECTS_KEY],
       });
+    },
+  });
+}
+
+export function useImportProjectConfig() {
+  const queryClient = useQueryClient();
+  const {projectApi} = useActiveProject();
+
+  return useMutation({
+    mutationFn: (configPath: string) => {
+      return projectApi.importConfig({configPath});
+    },
+    onSuccess: () => {
+      return Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: [FIELDS_KEY],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: [ICONS_KEY],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: [PROJECT_SETTINGS_KEY],
+        }),
+        queryClient.invalidateQueries({
+          queryKey: [PRESETS_KEY],
+        }),
+      ]);
+    },
+  });
+}
+
+export function useGetOwnRole() {
+  const {projectId, projectApi} = useActiveProject();
+
+  return useQuery({
+    queryKey: [THIS_USERS_ROLE_KEY, projectId],
+    queryFn: () => {
+      return projectApi.$getOwnRole();
     },
   });
 }

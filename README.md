@@ -22,15 +22,14 @@ The next version of Mapeo Mobile
 
       - When setting up the Android-specific tooling, you will also need to install the [Android NDK](https://developer.android.com/ndk/). This can be installed using Android Studio by going to the `SDK Tools` tab in the `SDK Manager`. This project uses **NDK 25.1.8937393**.
 
-   3. Create a `.env` file at the root of the project with the following content:
+   3. Copy the [`.env.template`](./.env.template) file to a file called `.env`. Replace any placeholder `<replace_me>` values with the relevant ones:
 
-      ```
-      MAPBOX_DOWNLOAD_TOKEN=<your_token_here>
-      EXPO_PUBLIC_METRICS_URL=<metrics URL>
-      EXPO_PUBLIC_METRICS_API_KEY=<metrics API key>
-      ```
+      `MAPBOX_ACCESS_TOKEN`: a [Mapbox access token](https://docs.mapbox.com/android/maps/guides/install/#configure-credentials). If you do not have access to a Mapbox account, reach out to the maintainers about getting access to an access token.
 
-      Replace `<your_token_here>` with a [Mapbox secret token](https://docs.mapbox.com/android/maps/guides/install/#configure-credentials). This is unfortunately required to install the necessary Mapbox Android SDK components used by `@rnmapbox/maps@10` when building the app (more info [here](https://github.com/rnmapbox/maps/blob/v10.0/android/install.md#mapbox-maps-sdk-v10)). If you do not have access to a Mapbox account, reach out to the maintainers about getting access to a secret token.
+      `MAPBOX_DOWNLOAD_TOKEN`: a [Mapbox secret token](https://docs.mapbox.com/android/maps/guides/install/#configure-credentials). This is unfortunately required to install the necessary Mapbox Android SDK components used by `@rnmapbox/maps@10` when building the app (more info [here](https://github.com/rnmapbox/maps/blob/v10.0/android/install.md#mapbox-maps-sdk-v10)). If you do not have access to a Mapbox account, reach out to the maintainers about getting access to a secret token.
+
+      `COMAPEO_METRICS_URL`: URL pointing to a hosted CoMapeo metrics server. Reach out to the maintainers about getting access to this credential.
+      `COMAPEO_METRICS_API_KEY`: API key needed for accessing a CoMapeo metrics server. Reach out to the maintainers about getting access to this credential.
 
 3. Run the app locally
 

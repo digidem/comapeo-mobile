@@ -5,7 +5,7 @@ import {Text} from '../../sharedComponents/Text';
 import {TouchableHighlight} from '../../sharedComponents/Touchables';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {Attachment, ViewStyleProp} from '../../sharedTypes';
-import {Observation} from '@mapeo/schema';
+import {Observation} from '@comapeo/schema';
 import {
   FormattedObservationDate,
   FormattedPresetName,
@@ -13,7 +13,7 @@ import {
 import {PhotoAttachmentView} from '../../sharedComponents/PhotoAttachmentView.tsx';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
 import {useDeviceInfo} from '../../hooks/server/deviceInfo';
-import {useCreatedByToDeviceId} from '../../hooks/server/projects.ts';
+import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;
@@ -43,12 +43,14 @@ function ObservationListItemNotMemoized({
     (attachment): attachment is PhotoAttachment => attachment.type === 'photo',
   );
 
-  const {data: createdByDeviceId, status: createdByToDeviceIdQueryStatus} =
-    useCreatedByToDeviceId(observation.createdBy);
+  const {
+    data: createdByDeviceId,
+    status: originalVersionIdToDeviceIdQueryStatus,
+  } = useOriginalVersionIdToDeviceId(observation.originalVersionId);
   const isMine = createdByDeviceId === deviceInfo?.deviceId;
   const queriesSucceeded =
     deviceInfoQueryStatus === 'success' &&
-    createdByToDeviceIdQueryStatus === 'success';
+    originalVersionIdToDeviceIdQueryStatus === 'success';
 
   return (
     <TouchableHighlight
@@ -62,11 +64,9 @@ function ObservationListItemNotMemoized({
           queriesSucceeded && !isMine && styles.syncedObservation,
         ]}>
         <View style={styles.text}>
-          {preset && (
-            <Text style={styles.title}>
-              <FormattedPresetName preset={preset} />
-            </Text>
-          )}
+          <Text style={styles.title}>
+            <FormattedPresetName preset={preset} />
+          </Text>
           <Text>
             <FormattedObservationDate
               createdDate={observation.createdAt}
@@ -78,12 +78,12 @@ function ObservationListItemNotMemoized({
           <View style={styles.photoContainer}>
             <PhotoStack photos={photos} />
             <View style={styles.smallIconContainer}>
-              <PresetCircleIcon name={preset.name} size="small" />
+              <PresetCircleIcon iconId={preset?.iconRef?.docId} size="small" />
             </View>
           </View>
         ) : (
           <PresetCircleIcon
-            name={preset.name}
+            iconId={preset?.iconRef?.docId}
             size="medium"
             testID={`OBS.${preset?.name}-list-icon`}
           />

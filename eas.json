@@ -1,47 +1,51 @@
 {
   "cli": {
-    "version": ">= 7.8.0"
+    "version": ">= 7.8.0",
+    "appVersionSource": "remote",
+    "requireCommit": true
   },
   "build": {
-    "development": {
-      "developmentClient": true,
-      "distribution": "internal",
-      "ios": {
-        "image": "latest",
-        "simulator": true
-      },
+    "base": {
       "android": {
         "image": "latest",
-        "buildType": "apk"
+        "node": "20.17.0"
       },
+      "ios": {
+        "image": "latest",
+        "node": "20.17.0"
+      }
+    },
+    "development": {
+      "extends": "base",
+      "developmentClient": true,
+      "distribution": "internal",
       "env": {
         "APP_VARIANT": "development"
       }
     },
-    "test": {
+    "release-candidate": {
+      "extends": "base",
       "distribution": "internal",
       "channel": "preview",
       "env": {
-        "APP_VARIANT": "test"
-      },
-      "android": {
-        "image": "latest",
-        "buildType": "apk"
-      },
-      "ios": {
-        "image": "latest"
+        "APP_VARIANT": "releaseCandidate"
       }
     },
     "production": {
-      "android": {
-        "image": "latest"
-      },
-      "ios": {
-        "image": "latest"
-      },
+      "extends": "base",
+      "distribution": "store",
       "channel": "production",
       "env": {
         "APP_VARIANT": "production"
+      },
+      "autoIncrement": true
+    },
+    "pre-release": {
+      "extends": "base",
+      "distribution": "internal",
+      "channel": "preview",
+      "env": {
+        "APP_VARIANT": "preRelease"
       }
     }
   },

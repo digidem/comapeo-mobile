@@ -1,8 +1,10 @@
 // import { Alert } from "react-native";
 import {fromLatLon} from 'utm';
-import {Preset, Observation, Track} from '@mapeo/schema';
+import {Preset, Observation, Track} from '@comapeo/schema';
 import {LocationObject, LocationProviderStatus} from 'expo-location';
 import {FeatureCollection, LineString} from 'geojson';
+
+import {type CoordinateFormat} from '../sharedTypes';
 import {LocationHistoryPoint} from '../sharedTypes/location';
 
 // import type {
@@ -169,7 +171,7 @@ export function formatCoords({
 }: {
   lon: number;
   lat: number;
-  format?: 'utm' | 'dd' | 'dms';
+  format?: CoordinateFormat;
 }): string {
   switch (format) {
     case 'dd':

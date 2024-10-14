@@ -2,22 +2,22 @@ import {
   useSuspenseQuery,
   useMutation,
   useQueryClient,
-  useQuery,
 } from '@tanstack/react-query';
-import {PresetValue} from '@mapeo/schema';
-import {IconSize} from '../../sharedTypes';
+import {PresetValue} from '@comapeo/schema';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {usePersistedLocale} from '../persistedState/usePersistedLocale';
 
 export const PRESETS_KEY = 'presets';
 
 export function usePresetsQuery() {
   const {projectId, projectApi} = useActiveProject();
+  const locale = usePersistedLocale(store => store.locale);
 
   return useSuspenseQuery({
-    queryKey: [PRESETS_KEY, projectId],
+    queryKey: [PRESETS_KEY, projectId, locale],
     queryFn: async () => {
-      return await projectApi.preset.getMany();
+      return await projectApi.preset.getMany({lang: locale});
     },
   });
 }
@@ -32,29 +32,6 @@ export function usePresetsMutation() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: [PRESETS_KEY]});
-    },
-  });
-}
-
-export function useGetPresetIcon(size: IconSize, name?: string) {
-  const {projectId, projectApi} = useActiveProject();
-
-  return useQuery({
-    queryKey: ['presetIcon', projectId, size, name],
-    enabled: !!name,
-    queryFn: async () => {
-      const currentPreset = await projectApi.preset
-        .getMany()
-        .then(res => res.find(p => p.name === name));
-
-      return await projectApi.$icons.getIconUrl(
-        currentPreset?.iconRef?.docId!,
-        {
-          mimeType: 'image/png',
-          size: size,
-          pixelDensity: 3,
-        },
-      );
     },
   });
 }

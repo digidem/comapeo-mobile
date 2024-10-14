@@ -11,8 +11,8 @@ import {
   MapeoMapsFastifyPlugin,
   MapeoStaticMapsFastifyPlugin,
   MapeoOfflineFallbackMapFastifyPlugin,
-} from '@mapeo/core'
-import { createMapeoServer } from '@mapeo/ipc'
+} from '@comapeo/core'
+import { createMapeoServer } from '@comapeo/ipc'
 import Fastify from 'fastify'
 
 import MessagePortLike from './message-port-like.js'

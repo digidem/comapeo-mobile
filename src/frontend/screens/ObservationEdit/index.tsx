@@ -6,7 +6,11 @@ import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {useEditObservation} from '../../hooks/server/observations';
-import {useCreateBlobMutation} from '../../hooks/server/media';
+import {
+  useCreateBlobMutation,
+  useCreateAudioBlobMutation,
+  useAttachmentUrlQueries,
+} from '../../hooks/server/media';
 import {SaveButton} from '../../sharedComponents/SaveButton';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
@@ -47,22 +51,21 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   const {projectApi} = useActiveProject();
 
   const value = usePersistedDraftObservation(store => store.value);
-  const {
-    updateTags,
-    clearDraft,
-    usePreset,
-    existingObservationToDraft,
-    addAudioRecording,
-    deleteAudioRecording,
-  } = useDraftObservation();
+  const {updateTags, clearDraft, usePreset, existingObservationToDraft} =
+    useDraftObservation();
   const preset = usePreset();
   const editObservationMutation = useEditObservation();
   const photos = usePersistedDraftObservation(store => store.photos);
-  const audioRecordings = usePersistedDraftObservation(
+  const savedAudioRecordings = usePersistedDraftObservation(
     store => store.audioRecordings,
   );
+  const observationId = route.params?.observationId;
+
+  const [audioAttachments, setAudioAttachments] = React.useState<any[]>([]);
+  const [localObservation, setLocalObservation] = React.useState<any>(null);
 
   const createBlobMutation = useCreateBlobMutation();
+  const createAudioBlobMutation = useCreateAudioBlobMutation();
 
   const notes = value?.tags.notes;
   const presetName = preset
@@ -73,24 +76,46 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     : formatMessage(m.observation);
 
   React.useEffect(() => {
-    if (!value) {
-      if (!route.params?.observationId) {
-        navigation.goBack();
-        return;
-      }
+    if (!value && observationId) {
       projectApi.observation
-        .getByDocId(route.params.observationId)
+        .getByDocId(observationId)
         .then(observation => {
-          existingObservationToDraft(observation);
+          const audioFiles = observation.attachments.filter(
+            attachment => attachment.type === 'audio',
+          );
+          setAudioAttachments(audioFiles);
+          setLocalObservation(observation);
+        })
+        .catch(err => {
+          console.error('Failed to fetch observation:', err);
+          navigation.goBack();
         });
     }
-  }, [
-    value,
-    existingObservationToDraft,
-    route.params?.observationId,
-    projectApi.observation,
-    navigation,
-  ]);
+  }, [value, observationId, projectApi, navigation]);
+
+  React.useEffect(() => {
+    if (localObservation && !audioAttachments?.length) {
+      existingObservationToDraft(localObservation, []);
+    }
+  }, [localObservation, audioAttachments, existingObservationToDraft]);
+
+  const audioQueries = useAttachmentUrlQueries(audioAttachments, 'original');
+
+  React.useEffect(() => {
+    if (audioQueries.every(query => query.isSuccess)) {
+      const audioRecordings = audioQueries
+        .filter(query => query.data?.url)
+        .map(query => ({
+          uri: query.data!.url,
+          createdAt: 0,
+          duration: 0,
+        }));
+
+      if (audioRecordings?.length > 0 && localObservation) {
+        existingObservationToDraft(localObservation, audioRecordings);
+      }
+    }
+  }, [audioQueries, localObservation, existingObservationToDraft]);
 
   const editObservation = React.useCallback(() => {
     if (!value) {
@@ -105,7 +130,11 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       (photo): photo is ProcessedDraftPhoto => photo.type === 'processed',
     );
 
-    if (!newPhotos || !newPhotos.length) {
+    const audioRecordings = usePersistedDraftObservation(
+      store => store.audioRecordings,
+    );
+
+    if (!newPhotos.length && !audioRecordings.length) {
       editObservationMutation.mutate(
         {versionId: value.versionId, value},
         {
@@ -131,11 +160,14 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       return;
     }
 
-    Promise.all(
-      newPhotos.map(photo => {
-        return createBlobMutation.mutateAsync(photo);
-      }),
-    ).then(results => {
+    const photoPromises = newPhotos.map(photo =>
+      createBlobMutation.mutateAsync(photo),
+    );
+    const audioPromises = audioRecordings.map(audio =>
+      createAudioBlobMutation.mutateAsync(audio),
+    );
+
+    Promise.all([...photoPromises, ...audioPromises]).then(results => {
       const newAttachments = results.map(
         ({driveId: driveDiscoveryId, type, name, hash}) => ({
           driveDiscoveryId,
@@ -180,6 +212,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     editObservationMutation,
     photos,
     createBlobMutation,
+    savedAudioRecordings,
   ]);
 
   React.useLayoutEffect(() => {
@@ -213,7 +246,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
           updateTags('notes', newVal);
         }}
         photos={photos}
-        audioRecordings={audioRecordings}
+        audioRecordings={savedAudioRecordings}
         actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
       />
       <ErrorBottomSheet

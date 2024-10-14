@@ -17,7 +17,7 @@ interface MediaScrollView {
 }
 
 export const MediaScrollView: FC<MediaScrollView> = ({
-  photos,
+  photos = [],
   audioRecordings = [],
 }) => {
   const scrollViewRef = React.useRef<ScrollView>(null);

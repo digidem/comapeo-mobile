@@ -39,7 +39,10 @@ export type DraftObservationSlice = {
     newDraft: () => void;
     deletePhoto: (uri: string) => void;
     deleteAudioRecording: (uri: string) => void;
-    existingObservationToDraft: (observation: Observation) => void;
+    existingObservationToDraft: (
+      observation: Observation,
+      audioRecordings: AudioRecording[],
+    ) => void;
     updateObservationPosition: (
       props:
         | {
@@ -116,13 +119,17 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
         });
       }
     },
-    existingObservationToDraft: async observation => {
+    existingObservationToDraft: (observation, audioRecordings) => {
+      if (!observation || !observation.docId) {
+        throw new Error('Invalid observation object');
+      }
       set({
         value: observation,
         observationId: observation.docId,
         photos: observation.attachments.filter(
           (att): att is SavedPhoto => att.type === 'photo',
         ),
+        audioRecordings,
       });
     },
     newDraft: () => {

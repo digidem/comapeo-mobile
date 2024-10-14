@@ -37,11 +37,11 @@ export function useCreateBlobMutation(opts: {retry?: number} = {}) {
 
 export function useCreateAudioBlobMutation(opts: {retry?: number} = {}) {
   const {projectApi} = useActiveProject();
-
+  // need to add duration when backend supports it
   return useMutation({
     retry: opts.retry,
     mutationFn: async (audio: AudioRecording) => {
-      const {uri, createdAt, duration} = audio;
+      const {uri, createdAt} = audio;
 
       return projectApi.$blobs.create(
         {
@@ -50,7 +50,6 @@ export function useCreateAudioBlobMutation(opts: {retry?: number} = {}) {
         {
           mimeType: 'audio/mp4',
           timestamp: createdAt!,
-          duration,
         },
       );
     },

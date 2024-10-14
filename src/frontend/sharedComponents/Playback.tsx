@@ -5,9 +5,6 @@ import {defineMessages, useIntl} from 'react-intl';
 import {ContentWithControls} from '../screens/Audio/ContentWithControls';
 import * as Controls from '../screens/Audio/Controls';
 import {useAudioPlayback} from '../screens/Audio/useAudioPlayback';
-import {ErrorBottomSheet} from '../sharedComponents/ErrorBottomSheet';
-import {MessageDescriptor} from 'react-intl';
-
 const m = defineMessages({
   description: {
     id: 'screens.AudioScreen.Playback.description',
@@ -25,15 +22,8 @@ export function Playback({
   rightControl?: ReactNode;
 }) {
   const {formatMessage: t} = useIntl();
-  const {
-    duration,
-    currentPosition,
-    isPlaying,
-    stopPlayback,
-    startPlayback,
-    error,
-    clearError,
-  } = useAudioPlayback(uri);
+  const {duration, currentPosition, isPlaying, stopPlayback, startPlayback} =
+    useAudioPlayback(uri);
   return (
     <View style={{flex: 1}}>
       <ContentWithControls
@@ -57,19 +47,6 @@ export function Playback({
             )}
           </>
         }
-      />
-      <ErrorBottomSheet
-        error={error}
-        description={
-          error?.message
-            ? ({
-                id: 'error.dynamic',
-                defaultMessage: error.message,
-              } as MessageDescriptor)
-            : undefined
-        }
-        clearError={clearError}
-        tryAgain={isPlaying ? stopPlayback : startPlayback}
       />
     </View>
   );

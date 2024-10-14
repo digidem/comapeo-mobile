@@ -4,11 +4,9 @@ import {RecordingActive} from './RecordingActive';
 import {RecordingDone} from './RecordingDone';
 import {RecordingIdle} from './RecordingIdle';
 import {useAudioRecording} from './useAudioRecording';
-import {ErrorBottomSheet} from '../../../sharedComponents/ErrorBottomSheet';
-import {MessageDescriptor} from 'react-intl';
 
 export function CreateRecording() {
-  const {startRecording, stopRecording, reset, status, uri, error, clearError} =
+  const {startRecording, stopRecording, reset, status, uri} =
     useAudioRecording();
 
   const recordingState = status?.isRecording ? 'active' : uri ? 'done' : 'idle';
@@ -28,43 +26,26 @@ export function CreateRecording() {
     }
   }, [recordingState]);
 
-  return (
-    <>
-      {recordingState === 'idle' && (
-        <RecordingIdle onPressRecord={startRecording} />
-      )}
-      {recordingState === 'active' && (
-        <RecordingActive
-          duration={status?.durationMillis || 0}
-          onPressStop={stopRecording}
-        />
-      )}
-      {recordingState === 'done' && (
-        <RecordingDone
-          uri={uri || ''}
-          duration={status?.durationMillis || 0}
-          reset={reset}
-        />
-      )}
-      <ErrorBottomSheet
-        error={error}
-        description={
-          error?.message
-            ? ({
-                id: 'error.dynamic',
-                defaultMessage: error.message,
-              } as MessageDescriptor)
-            : undefined
-        }
-        clearError={clearError}
-        tryAgain={
-          recordingState === 'idle'
-            ? startRecording
-            : recordingState === 'active'
-              ? stopRecording
-              : reset
-        }
+  if (recordingState === 'idle') {
+    return <RecordingIdle onPressRecord={startRecording} />;
+  }
+
+  if (recordingState === 'active') {
+    return (
+      <RecordingActive
+        duration={status?.durationMillis || 0}
+        onPressStop={stopRecording}
       />
-    </>
-  );
+    );
+  }
+
+  if (recordingState === 'done') {
+    return (
+      <RecordingDone
+        uri={uri || ''}
+        duration={status?.durationMillis || 0}
+        reset={reset}
+      />
+    );
+  }
 }

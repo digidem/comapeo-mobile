@@ -20,6 +20,7 @@ import {Loading} from '../../sharedComponents/Loading';
 import {HeaderLeft} from './HeaderLeft';
 import {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
 import {CommonActions} from '@react-navigation/native';
+import {matchPreset} from '../../lib/utils.ts';
 
 const m = defineMessages({
   observation: {
@@ -75,27 +76,55 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       })
     : formatMessage(m.observation);
 
+  // TODO: This shouldn't be an effect, the logic should happen when the user
+  // presses the edit button.
   React.useEffect(() => {
-    if (!value && observationId) {
-      projectApi.observation
-        .getByDocId(observationId)
-        .then(observation => {
-          const audioFiles = observation.attachments.filter(
-            attachment => attachment.type === 'audio',
-          );
-          setAudioAttachments(audioFiles);
-          setLocalObservation(observation);
-        })
-        .catch(err => {
-          console.error('Failed to fetch observation:', err);
-          navigation.goBack();
-        });
+    let cancelled = false;
+    if (value) return;
+    if (!route.params?.observationId) {
+      navigation.goBack();
+      return;
     }
-  }, [value, observationId, projectApi, navigation]);
+
+    async function createDraftFromExistingObservation(docId: string) {
+      const observation = await projectApi.observation.getByDocId(docId);
+      if (cancelled) return;
+      const presets = await projectApi.preset.getMany();
+      if (cancelled) return;
+      let matchingPreset;
+      if (observation.presetRef) {
+        matchingPreset = presets.find(
+          p => p.docId === observation.presetRef?.docId,
+        );
+      }
+      if (!matchingPreset) {
+        matchingPreset = matchPreset(observation.tags, presets);
+      }
+      const audioFiles = observation.attachments.filter(
+        attachment => attachment.type === 'audio',
+      );
+      setAudioAttachments(audioFiles);
+      setLocalObservation(observation);
+      existingObservationToDraft(observation, matchingPreset, []);
+    }
+
+    createDraftFromExistingObservation(route.params?.observationId);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    value,
+    existingObservationToDraft,
+    route.params?.observationId,
+    projectApi.observation,
+    projectApi.preset,
+    navigation,
+  ]);
 
   React.useEffect(() => {
     if (localObservation && !audioAttachments?.length) {
-      existingObservationToDraft(localObservation, []);
+      existingObservationToDraft(localObservation);
     }
   }, [localObservation, audioAttachments, existingObservationToDraft]);
 
@@ -111,9 +140,10 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
           duration: 0,
         }));
 
-      if (audioRecordings?.length > 0 && localObservation) {
-        existingObservationToDraft(localObservation, audioRecordings);
-      }
+      // have to pass the preset here somehow
+      // if (audioRecordings?.length > 0 && localObservation) {
+      //   existingObservationToDraft(localObservation, audioRecordings);
+      // }
     }
   }, [audioQueries, localObservation, existingObservationToDraft]);
 
@@ -136,7 +166,15 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
 
     if (!newPhotos.length && !audioRecordings.length) {
       editObservationMutation.mutate(
-        {versionId: value.versionId, value},
+        {
+          versionId: value.versionId,
+          value: {
+            ...value,
+            presetRef: preset
+              ? {docId: preset.docId, versionId: preset.versionId}
+              : undefined,
+          },
+        },
         {
           onSuccess: () => {
             if (navigation.canGoBack()) {
@@ -182,6 +220,9 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
           value: {
             ...value,
             attachments: [...value.attachments, ...newAttachments],
+            presetRef: preset
+              ? {docId: preset.docId, versionId: preset.versionId}
+              : undefined,
           },
         },
         {
@@ -206,6 +247,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       );
     });
   }, [
+    preset,
     navigation,
     clearDraft,
     value,

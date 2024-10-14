@@ -5,11 +5,17 @@ import {RecordingDone} from './RecordingDone';
 import {RecordingIdle} from './RecordingIdle';
 import {useAudioRecording} from './useAudioRecording';
 import {ErrorBottomSheet} from '../../../sharedComponents/ErrorBottomSheet';
-import {MessageDescriptor} from 'react-intl';
 
 export function CreateRecording() {
-  const {startRecording, stopRecording, reset, status, uri, error, clearError} =
-    useAudioRecording();
+  const {
+    startRecording,
+    stopRecording,
+    reset,
+    status,
+    uri,
+    hasError,
+    clearError,
+  } = useAudioRecording();
 
   const recordingState = status?.isRecording ? 'active' : uri ? 'done' : 'idle';
 
@@ -47,15 +53,7 @@ export function CreateRecording() {
         />
       )}
       <ErrorBottomSheet
-        error={error}
-        description={
-          error?.message
-            ? ({
-                id: 'error.dynamic',
-                defaultMessage: error.message,
-              } as MessageDescriptor)
-            : undefined
-        }
+        error={hasError ? new Error('An error occurred') : null}
         clearError={clearError}
         tryAgain={
           recordingState === 'idle'

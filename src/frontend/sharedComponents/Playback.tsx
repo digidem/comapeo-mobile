@@ -6,7 +6,6 @@ import {ContentWithControls} from '../screens/Audio/ContentWithControls';
 import * as Controls from '../screens/Audio/Controls';
 import {useAudioPlayback} from '../screens/Audio/useAudioPlayback';
 import {ErrorBottomSheet} from '../sharedComponents/ErrorBottomSheet';
-import {MessageDescriptor} from 'react-intl';
 
 const m = defineMessages({
   description: {
@@ -31,7 +30,7 @@ export function Playback({
     isPlaying,
     stopPlayback,
     startPlayback,
-    error,
+    hasError,
     clearError,
   } = useAudioPlayback(uri);
   return (
@@ -59,15 +58,7 @@ export function Playback({
         }
       />
       <ErrorBottomSheet
-        error={error}
-        description={
-          error?.message
-            ? ({
-                id: 'error.dynamic',
-                defaultMessage: error.message,
-              } as MessageDescriptor)
-            : undefined
-        }
+        error={hasError ? new Error('An error occurred') : null}
         clearError={clearError}
         tryAgain={isPlaying ? stopPlayback : startPlayback}
       />

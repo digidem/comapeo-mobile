@@ -7,19 +7,9 @@ export const useAudioPlayback = (recordingUri: string) => {
   const [isPlaying, setPlaying] = useState(false);
   const [duration, setDuration] = useState<number>(0);
   const [currentPosition, setCurrentPosition] = useState(0);
-  const [error, setError] = useState<Error | null>(null);
+  const [hasError, setHasError] = useState(false);
 
-  const clearError = useCallback(() => setError(null), []);
-
-  function normalizeError(err: unknown): Error {
-    if (err instanceof Error) {
-      return err;
-    }
-    if (typeof err === 'string') {
-      return new Error(err);
-    }
-    return new Error('An unknown error occurred');
-  }
+  const clearError = useCallback(() => setHasError(false), []);
 
   const audioCallbackHandler = useCallback((status: AVPlaybackStatus) => {
     const update = status as AVPlaybackStatusSuccess;
@@ -39,27 +29,27 @@ export const useAudioPlayback = (recordingUri: string) => {
     Audio.Sound.createAsync({uri: recordingUri})
       .then(({sound, status}) => {
         if ('error' in status && status.error) {
-          setError(new Error(status.error));
+          setHasError(true);
           return;
         }
         soundInstance = sound;
         recordedSoundRef.current = sound;
         setDuration((status as AVPlaybackStatusSuccess).durationMillis ?? 0);
         sound.setOnPlaybackStatusUpdate(audioCallbackHandler);
+        setHasError(false);
       })
-      .catch(err => {
-        const error = normalizeError(err);
-        setError(error);
+      .catch(() => {
+        setHasError(true);
       });
 
     return () => {
       if (soundInstance) {
-        soundInstance.unloadAsync().catch(err => {
-          setError(err);
+        soundInstance.unloadAsync().catch(() => {
+          setHasError(true);
         });
       }
     };
-  }, [recordingUri, audioCallbackHandler, setError]);
+  }, [recordingUri, audioCallbackHandler]);
 
   const startPlayback = useCallback(async () => {
     if (!recordedSoundRef.current || isPlaying) return;
@@ -72,11 +62,11 @@ export const useAudioPlayback = (recordingUri: string) => {
 
       await recordedSoundRef.current!.playAsync();
       setPlaying(true);
-    } catch (err) {
-      const error = normalizeError(err);
-      setError(error);
+      setHasError(false);
+    } catch {
+      setHasError(true);
     }
-  }, [isPlaying, currentPosition, duration, setError, setPlaying]);
+  }, [isPlaying, currentPosition, duration]);
 
   const stopPlayback = useCallback(async () => {
     if (!recordedSoundRef.current || !isPlaying) return;
@@ -84,11 +74,11 @@ export const useAudioPlayback = (recordingUri: string) => {
     try {
       await recordedSoundRef.current!.pauseAsync();
       setPlaying(false);
-    } catch (err) {
-      const error = normalizeError(err);
-      setError(error);
+      setHasError(false);
+    } catch {
+      setHasError(true);
     }
-  }, [isPlaying, setPlaying, setError]);
+  }, [isPlaying]);
 
   return {
     duration,
@@ -96,7 +86,7 @@ export const useAudioPlayback = (recordingUri: string) => {
     currentPosition,
     startPlayback,
     stopPlayback,
-    error,
+    hasError,
     clearError,
   };
 };

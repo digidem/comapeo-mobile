@@ -5,19 +5,9 @@ export function useAudioRecording() {
   const [recording, setRecording] = useState<Audio.Recording | null>(null);
   const [status, setStatus] = useState<Audio.RecordingStatus | null>(null);
   const [uri, setUri] = useState<string | null>(null);
-  const [error, setError] = useState<Error | null>(null);
+  const [hasError, setHasError] = useState(false);
 
-  const clearError = useCallback(() => setError(null), []);
-
-  function normalizeError(err: unknown): Error {
-    if (err instanceof Error) {
-      return err;
-    }
-    if (typeof err === 'string') {
-      return new Error(err);
-    }
-    return new Error('An unknown error occurred');
-  }
+  const clearError = useCallback(() => setHasError(false), []);
 
   const startRecording = useCallback(async () => {
     try {
@@ -26,38 +16,44 @@ export function useAudioRecording() {
         stat => setStatus(stat),
       );
       setRecording(audioRecording);
+      setHasError(false);
     } catch (err) {
-      const error = normalizeError(err);
-      setError(error);
+      setHasError(true);
     }
-  }, [setRecording, setStatus, setError]);
+  }, []);
 
   const reset = useCallback(async () => {
     try {
-      if (recording) {
-        if ((await recording.getStatusAsync()).isRecording) {
-          await recording.stopAndUnloadAsync();
-        }
+      if (recording && (await recording.getStatusAsync()).isRecording) {
+        await recording.stopAndUnloadAsync();
       }
       setRecording(null);
       setStatus(null);
       setUri(null);
-    } catch (err) {
-      const error = normalizeError(err);
-      setError(error);
+      setHasError(false);
+    } catch {
+      setHasError(true);
     }
-  }, [recording, setRecording, setStatus, setUri, setError]);
+  }, [recording]);
 
   const stopRecording = useCallback(async () => {
     try {
       if (!recording) return;
       await recording.stopAndUnloadAsync();
       setUri(recording.getURI());
-    } catch (err) {
-      const error = normalizeError(err);
-      setError(error);
+      setHasError(false);
+    } catch {
+      setHasError(true);
     }
-  }, [recording, setUri]);
+  }, [recording]);
 
-  return {reset, startRecording, stopRecording, status, uri, error, clearError};
+  return {
+    reset,
+    startRecording,
+    stopRecording,
+    status,
+    uri,
+    hasError,
+    clearError,
+  };
 }

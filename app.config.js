@@ -56,7 +56,6 @@ const versionName = `${pkgVersionBase}${appVersionSuffix}`;
  */
 module.exports = ({config}) => ({
   ...config,
-  plugin: [config.plugins, removeActivityRecognition],
   version: versionName,
   extra: {
     ...config.extra,
@@ -80,4 +79,5 @@ module.exports = ({config}) => ({
   runtimeVersion: {
     policy: 'appVersion',
   },
+  plugins: [removeActivityRecognition],
 });

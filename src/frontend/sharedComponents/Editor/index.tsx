@@ -27,6 +27,7 @@ type EditorProps = {
   notesComponent?: React.ReactNode;
   isTrack?: boolean;
   presetDisabled?: boolean;
+  isEditing?: boolean;
 };
 
 export const Editor = ({
@@ -38,6 +39,7 @@ export const Editor = ({
   actionsRow,
   notesComponent,
   isTrack = false,
+  isEditing = false,
   ...presetProps
 }: EditorProps) => {
   return (
@@ -58,7 +60,11 @@ export const Editor = ({
       ) : (
         <DescriptionField notes={notes} updateNotes={updateNotes} />
       )}
-      <MediaScrollView photos={photos} audioRecordings={audioRecordings} />
+      <MediaScrollView
+        photos={photos}
+        audioRecordings={audioRecordings}
+        isEditing={isEditing}
+      />
     </ScreenContentWithDock>
   );
 };

@@ -318,6 +318,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         photos={photos}
         audioRecordings={audioRecordings}
         actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
+        isEditing={true}
       />
       <ErrorBottomSheet
         error={editObservationMutation.error || createBlobMutation.error}

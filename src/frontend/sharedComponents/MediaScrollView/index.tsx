@@ -14,11 +14,13 @@ interface MediaScrollView {
   photos: Photo[];
   audioRecordings?: AudioRecording[];
   observationId?: string;
+  isEditing?: boolean;
 }
 
 export const MediaScrollView: FC<MediaScrollView> = ({
   photos = [],
   audioRecordings = [],
+  isEditing = false,
 }) => {
   const scrollViewRef = React.useRef<ScrollView>(null);
   const length = (photos?.length ?? 0) + (audioRecordings?.length ?? 0);
@@ -48,6 +50,7 @@ export const MediaScrollView: FC<MediaScrollView> = ({
         const onPress = () => {
           navigation.navigate('Audio', {
             existingUri: recording.uri,
+            isEditing: isEditing,
           });
         };
 

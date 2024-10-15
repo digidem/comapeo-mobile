@@ -12,17 +12,19 @@ export const MAX_RECORDING_DURATION_MS = 5 * 60_000;
 
 export function Audio({route}: NativeRootNavigationProps<'Audio'>) {
   const {deleteAudioRecording} = useDraftObservation();
+  const {existingUri, isEditing} = route.params ?? {
+    existingUri: undefined,
+    isEditing: false,
+  };
   return (
     <>
-      {route.params?.existingUri ? (
+      {existingUri ? (
         <ExistingRecording
-          uri={route.params?.existingUri}
+          uri={existingUri}
           onDelete={() => {
-            deleteAudioRecording(
-              route.params?.existingUri ? route.params?.existingUri : '',
-            );
-            console.log('Deleted recording at:', route.params?.existingUri);
+            deleteAudioRecording(existingUri);
           }}
+          isEditing={isEditing}
         />
       ) : (
         <CreateRecording />

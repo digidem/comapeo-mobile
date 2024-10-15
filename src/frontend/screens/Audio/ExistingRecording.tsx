@@ -41,11 +41,13 @@ const m = defineMessages({
 interface ExistingRecordingProps {
   uri: string;
   onDelete: () => void;
+  isEditing: boolean;
 }
 
 export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
   uri,
   onDelete,
+  isEditing,
 }) => {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigation();
@@ -85,9 +87,11 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
         <Playback
           uri={uri}
           leftControl={
-            <Pressable onPress={openSheet}>
-              <MaterialIcon name="delete" color={WHITE} size={36} />
-            </Pressable>
+            isEditing ? (
+              <Pressable onPress={openSheet}>
+                <MaterialIcon name="delete" color={WHITE} size={36} />
+              </Pressable>
+            ) : null
           }
           rightControl={
             <Pressable onPress={handleShare}>

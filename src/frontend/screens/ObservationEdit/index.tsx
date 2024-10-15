@@ -9,7 +9,6 @@ import {useEditObservation} from '../../hooks/server/observations';
 import {
   useCreateBlobMutation,
   useCreateAudioBlobMutation,
-  useAttachmentUrlQueries,
 } from '../../hooks/server/media';
 import {SaveButton} from '../../sharedComponents/SaveButton';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
@@ -21,6 +20,8 @@ import {HeaderLeft} from './HeaderLeft';
 import {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
 import {CommonActions} from '@react-navigation/native';
 import {matchPreset} from '../../lib/utils.ts';
+import {AudioRecording, StoredAudioRecording} from '../../sharedTypes/index.ts';
+import {useAudioProcessing} from '../../screens/Audio/useAudioProcessing.ts';
 
 const m = defineMessages({
   observation: {
@@ -57,13 +58,9 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   const preset = usePreset();
   const editObservationMutation = useEditObservation();
   const photos = usePersistedDraftObservation(store => store.photos);
-  const savedAudioRecordings = usePersistedDraftObservation(
+  const audioRecordings = usePersistedDraftObservation(
     store => store.audioRecordings,
   );
-  const observationId = route.params?.observationId;
-
-  const [audioAttachments, setAudioAttachments] = React.useState<any[]>([]);
-  const [localObservation, setLocalObservation] = React.useState<any>(null);
 
   const createBlobMutation = useCreateBlobMutation();
   const createAudioBlobMutation = useCreateAudioBlobMutation();
@@ -75,6 +72,13 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         defaultMessage: preset.name,
       })
     : formatMessage(m.observation);
+
+  const [audioAttachments, setAudioAttachments] = React.useState<
+    StoredAudioRecording[]
+  >([]);
+
+  const [processedAudioRecordings, setProcessedAudioRecordings] =
+    React.useState<AudioRecording[]>([]);
 
   // TODO: This shouldn't be an effect, the logic should happen when the user
   // presses the edit button.
@@ -88,6 +92,12 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
 
     async function createDraftFromExistingObservation(docId: string) {
       const observation = await projectApi.observation.getByDocId(docId);
+      const audioAttachments =
+        observation.attachments.filter(
+          attachment => attachment.type === 'audio',
+        ) || [];
+      setAudioAttachments(audioAttachments);
+
       if (cancelled) return;
       const presets = await projectApi.preset.getMany();
       if (cancelled) return;
@@ -100,12 +110,11 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       if (!matchingPreset) {
         matchingPreset = matchPreset(observation.tags, presets);
       }
-      const audioFiles = observation.attachments.filter(
-        attachment => attachment.type === 'audio',
+      existingObservationToDraft(
+        observation,
+        matchingPreset,
+        processedAudioRecordings,
       );
-      setAudioAttachments(audioFiles);
-      setLocalObservation(observation);
-      existingObservationToDraft(observation, matchingPreset, []);
     }
 
     createDraftFromExistingObservation(route.params?.observationId);
@@ -120,32 +129,19 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     projectApi.observation,
     projectApi.preset,
     navigation,
+    processedAudioRecordings,
   ]);
 
-  React.useEffect(() => {
-    if (localObservation && !audioAttachments?.length) {
-      existingObservationToDraft(localObservation);
-    }
-  }, [localObservation, audioAttachments, existingObservationToDraft]);
-
-  const audioQueries = useAttachmentUrlQueries(audioAttachments, 'original');
+  const audioFiles = useAudioProcessing(audioAttachments);
 
   React.useEffect(() => {
-    if (audioQueries.every(query => query.isSuccess)) {
-      const audioRecordings = audioQueries
-        .filter(query => query.data?.url)
-        .map(query => ({
-          uri: query.data!.url,
-          createdAt: 0,
-          duration: 0,
-        }));
-
-      // have to pass the preset here somehow
-      // if (audioRecordings?.length > 0 && localObservation) {
-      //   existingObservationToDraft(localObservation, audioRecordings);
-      // }
+    if (
+      audioFiles.length > 0 &&
+      JSON.stringify(processedAudioRecordings) !== JSON.stringify(audioFiles)
+    ) {
+      setProcessedAudioRecordings(audioFiles);
     }
-  }, [audioQueries, localObservation, existingObservationToDraft]);
+  }, [audioFiles, processedAudioRecordings]);
 
   const editObservation = React.useCallback(() => {
     if (!value) {
@@ -158,10 +154,6 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
 
     const newPhotos = photos.filter(
       (photo): photo is ProcessedDraftPhoto => photo.type === 'processed',
-    );
-
-    const audioRecordings = usePersistedDraftObservation(
-      store => store.audioRecordings,
     );
 
     if (!newPhotos.length && !audioRecordings.length) {
@@ -254,7 +246,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     editObservationMutation,
     photos,
     createBlobMutation,
-    savedAudioRecordings,
+    audioRecordings,
   ]);
 
   React.useLayoutEffect(() => {
@@ -288,7 +280,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
           updateTags('notes', newVal);
         }}
         photos={photos}
-        audioRecordings={savedAudioRecordings}
+        audioRecordings={audioRecordings}
         actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
       />
       <ErrorBottomSheet

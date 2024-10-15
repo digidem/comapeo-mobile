@@ -76,6 +76,11 @@ import {SettingsPrivacyPolicy} from '../../screens/Settings/DataAndPrivacy/Setti
 import {TrackEdit} from '../../screens/TrackEdit/index.tsx';
 import {Config} from '../../screens/Settings/Config';
 import {HowToLeaveProject} from '../../screens/HowToLeaveProject.tsx';
+import {RemoteArchiveOff} from '../../screens/Settings/ProjectSettings/RemoteArchive/RemoteArchiveOff.tsx';
+import {SaveButton} from '../../sharedComponents/SaveButton.tsx';
+import {AddRemoteArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/AddRemoteArchive.tsx';
+import {SuccessfullyAddedArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/SuccessfullyAddedArchive.tsx';
+import {RemoteArchiveOn} from '../../screens/Settings/ProjectSettings/RemoteArchive/RemoteArchiveOn.tsx';
 import {
   Audio,
   navigationOptions as audioNavigationOptions,
@@ -340,5 +345,28 @@ export const createDefaultScreenGroup = ({
         options={{headerTitle: 'Create Test Data'}}
       />
     )}
+    <RootStack.Screen
+      name="RemoteArchiveOff"
+      component={RemoteArchiveOff}
+      options={{headerTitle: intl(RemoteArchiveOff.navTitle)}}
+    />
+    <RootStack.Screen
+      name="AddRemoteArchive"
+      component={AddRemoteArchive}
+      options={{
+        headerTitle: intl(AddRemoteArchive.navTitle),
+        headerRight: () => <SaveButton onPress={() => {}} isLoading={false} />,
+      }}
+    />
+    <RootStack.Screen
+      name="SuccessfullyAddedArchive"
+      component={SuccessfullyAddedArchive}
+      options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="RemoteArchiveOn"
+      component={RemoteArchiveOn}
+      options={{headerTitle: intl(RemoteArchiveOn.navTitle)}}
+    />
   </RootStack.Group>
 );

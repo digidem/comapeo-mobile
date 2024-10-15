@@ -120,6 +120,108 @@
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "Discard changes?"
   },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
+    "message": "When project participants sync their data, they will also be archived on the internet. Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data."
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.invalidUrl": {
+    "message": "Invalid URL"
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.looking": {
+    "message": "Looking for Remote Archive..."
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.navTitle": {
+    "message": "Add Remote Archive"
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.permission": {
+    "message": "Only a Project Coordinator can turn off Remote Archive."
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.url": {
+    "message": "Url"
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.whatsIncluded": {
+    "message": "See What is Included"
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.youAreAdding": {
+    "message": "You are adding:"
+  },
+  "ProjectSettings.RemoteArchive.Coordinator.addArchive": {
+    "message": "+ Add Remote Archive"
+  },
+  "ProjectSettings.RemoteArchive.Coordinator.dataNotShared": {
+    "message": "The data in your project is not shared over the internet. Only people in your project can see your data."
+  },
+  "ProjectSettings.RemoteArchive.Coordinator.experimentalFeature": {
+    "message": "This is an experimental feature. You need a Remote Archive URL to enable Remote Archive."
+  },
+  "ProjectSettings.RemoteArchive.Coordinator.noServers": {
+    "message": "No servers have been added to this project"
+  },
+  "ProjectSettings.RemoteArchive.Coordinator.remoteArchiveOff": {
+    "message": "Remote Archive is Off"
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn": {
+    "message": "Remote Archive is On"
+  },
+  "ProjectSettings.RemoteArchive.Success.archiveAdded": {
+    "message": "Remote Archive Added"
+  },
+  "ProjectSettings.RemoteArchive.Success.canSyncOnInternet": {
+    "message": "All project devices can sync with this Archive, sharing data over the internet."
+  },
+  "ProjectSettings.RemoteArchive.Success.close": {
+    "message": "Close"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.close": {
+    "message": "Close"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.deviceNames": {
+    "message": "Device Names"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.observations": {
+    "message": "Observations (including photos and audio)"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.projectSettings": {
+    "message": "Project Settings (categories, questions)"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.title": {
+    "message": "What is Included"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.tracks": {
+    "message": "Tracks"
+  },
+  "ProjectSettings.RemoteArchive.coordinatorCanTurnOff": {
+    "message": "Only a Project Coordinator can turn off Remote Archive."
+  },
+  "ProjectSettings.RemoteArchive.dateAdded": {
+    "message": "Date Added"
+  },
+  "ProjectSettings.RemoteArchive.deviceNames": {
+    "message": "Device Names"
+  },
+  "ProjectSettings.RemoteArchive.navTitle": {
+    "message": "Remote Archive"
+  },
+  "ProjectSettings.RemoteArchive.observations": {
+    "message": "Observations (including photos and audio)"
+  },
+  "ProjectSettings.RemoteArchive.projectSettings": {
+    "message": "Project Settings (categories, questions)"
+  },
+  "ProjectSettings.RemoteArchive.remove": {
+    "message": "Remove the server to stop Remote Archive."
+  },
+  "ProjectSettings.RemoteArchive.serverName": {
+    "message": "Server Name"
+  },
+  "ProjectSettings.RemoteArchive.syncWithInternet": {
+    "message": "Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data"
+  },
+  "ProjectSettings.RemoteArchive.thisIncludes": {
+    "message": "This includes"
+  },
+  "ProjectSettings.RemoteArchive.tracks": {
+    "message": "Tracks"
+  },
   "SaveTrack.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "Continue editing"
@@ -150,11 +252,20 @@
   "Screens.Settings.AppSettings.title": {
     "message": "App Settings"
   },
+  "Screens.Settings.ProjectSettings.RemoteArchive": {
+    "message": "Remote Archive"
+  },
   "Screens.Settings.ProjectSettings.deviceName": {
     "message": "Device Name"
   },
   "Screens.Settings.ProjectSettings.mediaSyncSettings": {
     "message": "Sync Settings"
+  },
+  "Screens.Settings.ProjectSettings.remoteArchiveOff": {
+    "message": "Remote Archive is OFF"
+  },
+  "Screens.Settings.ProjectSettings.remoteArchiveOn": {
+    "message": "Remote Archive is ON"
   },
   "Screens.Settings.ProjectSettings.title": {
     "message": "Project Settings"

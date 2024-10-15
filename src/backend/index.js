@@ -9,10 +9,6 @@ const MIGRATIONS_FOLDER_PATH = new URL(
   './node_modules/@comapeo/core/drizzle',
   import.meta.url,
 ).pathname
-const FALLBACK_MAP_PATH = new URL(
-  './node_modules/mapeo-offline-map',
-  import.meta.url,
-).pathname
 
 const DEFAULT_CONFIG_PATH = new URL(
   './node_modules/@mapeo/default-config/dist/mapeo-default-config.comapeocat',
@@ -45,7 +41,6 @@ try {
     migrationsFolderPath: MIGRATIONS_FOLDER_PATH,
     sharedStoragePath: values.sharedStoragePath,
     defaultConfigPath: DEFAULT_CONFIG_PATH,
-    fallbackMapPath: FALLBACK_MAP_PATH,
   }).catch((err) => {
     console.error('Server startup error:', err)
   })

@@ -55,7 +55,8 @@ const versionName = `${pkgVersionBase}${appVersionSuffix}`;
  * @returns {import('@expo/config-types').ExpoConfig}
  */
 module.exports = ({config}) => ({
-  ...removeActivityRecognition(config),
+  ...config,
+  plugin: [config.plugins, removeActivityRecognition],
   version: versionName,
   extra: {
     ...config.extra,

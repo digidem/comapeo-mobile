@@ -79,5 +79,5 @@ module.exports = ({config}) => ({
   runtimeVersion: {
     policy: 'appVersion',
   },
-  plugins: [removeActivityRecognition],
+  plugins: [...config.plugins, removeActivityRecognition],
 });

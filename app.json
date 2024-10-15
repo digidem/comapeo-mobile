@@ -51,7 +51,8 @@
         }
       ],
       ["./expo-config-plugins/removeExpoInputStyles.js"],
-      ["./expo-config-plugins/targetArmArchsOnly.js"]
+      ["./expo-config-plugins/targetArmArchsOnly.js"],
+      ["./expo-config-plugins/removeActivityRecognition.js"]
     ],
     "android": {
       "allowBackup": false,

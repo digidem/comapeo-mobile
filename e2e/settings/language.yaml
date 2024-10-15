@@ -1,4 +1,4 @@
-appId: com.comapeo
+appId: com.comapeo.dev
 env:
   CAT: MAIN
 ---
@@ -26,7 +26,7 @@ env:
     id: '${CAT}.header-back-btn'
 - tapOn:
     id: '${CAT}.drawer-icon'
-- tapOn: '.*App Settings.*'
+- tapOn: '.*Ajustes de la.*'
 - tapOn: '.*Idioma.*'
 - tapOn: '.*English.*'
 - tapOn:

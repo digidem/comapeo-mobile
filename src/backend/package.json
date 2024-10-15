@@ -13,11 +13,10 @@
   "author": "Digital Democracy",
   "license": "MIT",
   "dependencies": {
-    "@comapeo/core": "1.0.1",
-    "@comapeo/ipc": "1.0.1",
+    "@comapeo/core": "2.0.0",
+    "@comapeo/ipc": "2.0.0",
     "@mapeo/default-config": "5.0.0",
-    "debug": "^4.3.4",
-    "mapeo-offline-map": "^2.0.0"
+    "debug": "^4.3.4"
   },
   "devDependencies": {
     "@digidem/types": "~2.1.0",

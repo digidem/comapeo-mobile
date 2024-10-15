@@ -1,8 +1,10 @@
 import path from 'node:path';
 import fs from 'node:fs';
 
+const PROJECT_ROOT_DIR_PATH = new URL('../', import.meta.url).pathname;
+
 const manifestPath = path.join(
-  __dirname,
+  PROJECT_ROOT_DIR_PATH,
   'android',
   'app',
   'src',

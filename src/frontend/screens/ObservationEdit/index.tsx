@@ -156,7 +156,11 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       (photo): photo is ProcessedDraftPhoto => photo.type === 'processed',
     );
 
-    if (!newPhotos.length && !audioRecordings.length) {
+    const updatedAudioRecordings = usePersistedDraftObservation(
+      store => store.audioRecordings,
+    );
+
+    if (!newPhotos.length && !updatedAudioRecordings.length) {
       editObservationMutation.mutate(
         {
           versionId: value.versionId,

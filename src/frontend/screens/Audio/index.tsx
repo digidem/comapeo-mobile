@@ -18,7 +18,9 @@ export function Audio({route}: NativeRootNavigationProps<'Audio'>) {
         <ExistingRecording
           uri={route.params?.existingUri}
           onDelete={() => {
-            deleteAudioRecording(route.params?.existingUri);
+            deleteAudioRecording(
+              route.params?.existingUri ? route.params?.existingUri : '',
+            );
             console.log('Deleted recording at:', route.params?.existingUri);
           }}
         />

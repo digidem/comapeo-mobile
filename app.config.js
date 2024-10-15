@@ -1,5 +1,4 @@
 const {execSync} = require('child_process');
-const removeActivityRecognition = require('./expo-config-plugins/removeActivityRecognition');
 
 const APP_VARIANT = process.env.APP_VARIANT;
 
@@ -79,5 +78,4 @@ module.exports = ({config}) => ({
   runtimeVersion: {
     policy: 'appVersion',
   },
-  plugins: [...config.plugins, removeActivityRecognition],
 });

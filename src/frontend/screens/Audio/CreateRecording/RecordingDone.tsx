@@ -114,6 +114,7 @@ export function RecordingDone({duration, uri, reset}: RecordingDoneProps) {
   const handleReturnToEditor = () => {
     closeSheet();
     setPendingAction('returnToEditor');
+    reset();
   };
 
   const handleRecordAnother = async () => {
@@ -128,7 +129,7 @@ export function RecordingDone({duration, uri, reset}: RecordingDoneProps) {
         navigation.goBack();
         break;
       case 'returnToEditor':
-        navigation.navigate('ObservationCreate');
+        navigation.goBack();
         break;
       case 'recordAnother':
         navigation.navigate('Audio');

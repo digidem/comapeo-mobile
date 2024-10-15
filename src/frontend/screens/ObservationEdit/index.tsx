@@ -156,11 +156,34 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       (photo): photo is ProcessedDraftPhoto => photo.type === 'processed',
     );
 
-    const updatedAudioRecordings = usePersistedDraftObservation(
-      store => store.audioRecordings,
+    const extractDriveDiscoveryId = (uri: string) => {
+      const regex = /\/([^\/]+)\/audio\/original\//;
+      const match = uri.match(regex);
+      return match ? match[1] : null;
+    };
+
+    const removedAudioAttachments = audioAttachments.filter(
+      attachment =>
+        !audioRecordings.some(
+          recording =>
+            extractDriveDiscoveryId(recording.uri) ===
+            attachment.driveDiscoveryId,
+        ),
     );
 
-    if (!newPhotos.length && !updatedAudioRecordings.length) {
+    const newAudioRecordings = audioRecordings.filter(
+      recording =>
+        !audioAttachments.some(
+          attachment =>
+            extractDriveDiscoveryId(recording.uri) ===
+            attachment.driveDiscoveryId,
+        ),
+    );
+
+    const audioAttachmentsChanged =
+      newAudioRecordings.length > 0 || removedAudioAttachments.length > 0;
+
+    if (!newPhotos.length && !audioAttachmentsChanged) {
       editObservationMutation.mutate(
         {
           versionId: value.versionId,
@@ -197,7 +220,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     const photoPromises = newPhotos.map(photo =>
       createBlobMutation.mutateAsync(photo),
     );
-    const audioPromises = audioRecordings.map(audio =>
+    const audioPromises = newAudioRecordings.map(audio =>
       createAudioBlobMutation.mutateAsync(audio),
     );
 
@@ -210,12 +233,20 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
           hash,
         }),
       );
+
+      const filteredAttachments = value.attachments.filter(
+        attachment =>
+          !removedAudioAttachments.some(
+            removed => removed.driveDiscoveryId === attachment.driveDiscoveryId,
+          ),
+      );
+
       editObservationMutation.mutate(
         {
           versionId: value.versionId,
           value: {
             ...value,
-            attachments: [...value.attachments, ...newAttachments],
+            attachments: [...filteredAttachments, ...newAttachments],
             presetRef: preset
               ? {docId: preset.docId, versionId: preset.versionId}
               : undefined,
@@ -251,6 +282,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     photos,
     createBlobMutation,
     audioRecordings,
+    audioAttachments,
   ]);
 
   React.useLayoutEffect(() => {

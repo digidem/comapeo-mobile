@@ -18,7 +18,7 @@ function removeActivityRecognitionPermission() {
 
     // Remove the permission
     manifestContent = manifestContent.replace(
-      /<uses-permission android:name="android\.permission\.ACTIVITY_RECOGNITION"\s*\/>/,
+      /<uses-permission[\s\S]*?android:name="com\.google\.android\.gms\.permission\.ACTIVITY_RECOGNITION"[\s\S]*?\/>/g,
       ''
     );
 

@@ -50,14 +50,12 @@ process.on('exit', (code) => {
  * @param {string} [options.version] Device Version
  * @param {Buffer} options.rootKey
  * @param {string} options.migrationsFolderPath
- * @param {string} options.sharedStoragePath Path to app-specific external file storage folder
  * @param {string} options.defaultConfigPath
  */
 export async function init({
   version,
   rootKey,
   migrationsFolderPath,
-  // sharedStoragePath,
   defaultConfigPath,
 }) {
   log('Starting app...')

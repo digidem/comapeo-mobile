@@ -20,7 +20,6 @@ try {
     options: {
       version: { type: 'string' },
       rootKey: { type: 'string' },
-      sharedStoragePath: { type: 'string' },
     },
   })
 
@@ -28,18 +27,11 @@ try {
     throw new Error('backend did not receive root key from front end')
   }
 
-  if (typeof values.sharedStoragePath !== 'string') {
-    throw new Error(
-      'backend did not receive shared storage path from front end',
-    )
-  }
-
   // Do not await this as we want this to run indefinitely
   init({
     version: values.version,
     rootKey: Buffer.from(values.rootKey, 'hex'),
     migrationsFolderPath: MIGRATIONS_FOLDER_PATH,
-    sharedStoragePath: values.sharedStoragePath,
     defaultConfigPath: DEFAULT_CONFIG_PATH,
   }).catch((err) => {
     console.error('Server startup error:', err)

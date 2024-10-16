@@ -5,11 +5,11 @@ import {ScrollView, StyleSheet, View} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {
-  useGetCustomMapDetails,
+  useGetCustomMapInfo,
   useImportCustomMapFile,
   useRemoveCustomMapFile,
-  useSelectOfflineMapFile,
-} from '../../../hooks/customMaps';
+  useSelectCustomMapFile,
+} from '../../../hooks/server/maps';
 import ErrorSvg from '../../../images/Error.svg';
 import GreenCheckSvg from '../../../images/GreenCheck.svg';
 import {DARK_GREY, WHITE} from '../../../lib/styles';
@@ -50,8 +50,8 @@ const m = defineMessages({
     id: 'screens.Settings.MapManagement.BackgroundMaps.customMapAddedTitle',
     defaultMessage: 'Custom Map Added',
   },
-  offlineMapAddedDescription: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.offlineMapAddedDescription',
+  customMapAddedDescription: {
+    id: 'screens.Settings.MapManagement.BackgroundMaps.customMapAddedDescription',
     defaultMessage:
       'You will see this map when you are offline, but you will not see a map outside the area defined in your custom map.',
   },
@@ -62,7 +62,7 @@ const m = defineMessages({
 
   deleteCustomMapTitle: {
     id: 'screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapTitle',
-    defaultMessage: 'Delete CUstom Map?',
+    defaultMessage: 'Delete Custom Map?',
   },
   deleteCustomMapDescription: {
     id: 'screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapDescription',
@@ -100,28 +100,29 @@ export function BackgroundMapsScreen() {
   const mapAddedBottomSheet = useBottomSheetModal({openOnMount: false});
   const removeMapBottomSheet = useBottomSheetModal({openOnMount: false});
 
-  const selectOfflineMapMutation = useSelectOfflineMapFile();
-  const importOfflineMapMutation = useImportCustomMapFile();
-  const removeOfflineMapMutation = useRemoveCustomMapFile();
-  const offlineMapQuery = useGetCustomMapDetails();
+  const selectCustomMapMutation = useSelectCustomMapFile();
+  const importCustomMapMutation = useImportCustomMapFile();
+  const removeCustomMapMutation = useRemoveCustomMapFile();
+  const customMapInfoQuery = useGetCustomMapInfo();
 
   let renderedMapInfo;
 
-  switch (offlineMapQuery.status) {
+  switch (customMapInfoQuery.status) {
     case 'pending': {
       renderedMapInfo = <Loading size={10} />;
 
       break;
     }
     case 'error': {
+      // TODO: Should surface error info better and also provide option to replace/remove map
       renderedMapInfo = (
         <ChooseMapFile
           onChooseFile={() => {
-            selectOfflineMapMutation.mutate(undefined, {
+            selectCustomMapMutation.mutate(undefined, {
               onSuccess: asset => {
                 if (!asset) return;
 
-                return importOfflineMapMutation.mutateAsync(
+                return importCustomMapMutation.mutateAsync(
                   {
                     uri: asset.uri,
                   },
@@ -140,15 +141,14 @@ export function BackgroundMapsScreen() {
       break;
     }
     case 'success': {
-      if (offlineMapQuery.isFetching) {
+      if (customMapInfoQuery.isFetching) {
         renderedMapInfo = <Loading size={10} />;
       } else {
-        renderedMapInfo = offlineMapQuery.data ? (
+        renderedMapInfo = customMapInfoQuery.data ? (
           <CustomMapDetails
-            // TODO: The map name should come from the style.json in the smp
-            name={offlineMapQuery.data.name}
-            dateAdded={offlineMapQuery.data.modificationTime}
-            size={offlineMapQuery.data.size}
+            name={customMapInfoQuery.data.name}
+            dateAdded={customMapInfoQuery.data.created}
+            size={customMapInfoQuery.data.size}
             onRemove={() => {
               removeMapBottomSheet.openSheet();
             }}
@@ -156,11 +156,11 @@ export function BackgroundMapsScreen() {
         ) : (
           <ChooseMapFile
             onChooseFile={() => {
-              selectOfflineMapMutation.mutate(undefined, {
+              selectCustomMapMutation.mutate(undefined, {
                 onSuccess: asset => {
                   if (!asset) return;
 
-                  return importOfflineMapMutation.mutateAsync(
+                  return importCustomMapMutation.mutateAsync(
                     {
                       uri: asset.uri,
                     },
@@ -207,12 +207,8 @@ export function BackgroundMapsScreen() {
               text: t(m.deleteMapButtonText),
               icon: <MaterialIcon size={30} name="delete" color={WHITE} />,
               onPress: () => {
-                if (!offlineMapQuery.data?.uri) return;
-
-                removeOfflineMapMutation.mutate({
-                  uri: offlineMapQuery.data.uri,
-                });
-
+                // TODO: Map screen doesn't update after this. Need to bust cache by changing style url?
+                removeCustomMapMutation.mutate();
                 removeMapBottomSheet.closeSheet();
               },
             },
@@ -234,7 +230,7 @@ export function BackgroundMapsScreen() {
         <BottomSheetModalContent
           icon={<GreenCheckSvg />}
           title={t(m.customMapAddedTitle)}
-          description={t(m.offlineMapAddedDescription)}
+          description={t(m.customMapAddedDescription)}
           buttonConfigs={[
             {
               variation: 'outlined',
@@ -248,13 +244,13 @@ export function BackgroundMapsScreen() {
       </BottomSheetModal>
 
       <ErrorBottomSheet
-        error={removeOfflineMapMutation.error || selectOfflineMapMutation.error}
+        error={removeCustomMapMutation.error || selectCustomMapMutation.error}
         clearError={() => {
-          if (removeOfflineMapMutation.error) {
-            removeOfflineMapMutation.reset();
+          if (removeCustomMapMutation.error) {
+            removeCustomMapMutation.reset();
           }
-          if (selectOfflineMapMutation.error) {
-            selectOfflineMapMutation.reset();
+          if (selectCustomMapMutation.error) {
+            selectCustomMapMutation.reset();
           }
         }}
       />

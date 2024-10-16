@@ -2,9 +2,6 @@ import debug from 'debug'
 import { join } from 'path'
 import { mkdirSync } from 'fs'
 import { createRequire } from 'module'
-const require = createRequire(import.meta.url)
-/** @type {import('../types/rn-bridge.js')} */
-const rnBridge = require('rn-bridge')
 import { MapeoManager, FastifyController } from '@comapeo/core'
 import { createMapeoServer } from '@comapeo/ipc'
 import Fastify from 'fastify'
@@ -12,9 +9,16 @@ import Fastify from 'fastify'
 import MessagePortLike from './message-port-like.js'
 import { ServerStatus } from './status.js'
 
+const require = createRequire(import.meta.url)
+
+/** @type {import('../types/rn-bridge.js')} */
+const rnBridge = require('rn-bridge')
+
 // Do not touch these!
 const DB_DIR_NAME = 'sqlite-dbs'
 const CORE_STORAGE_DIR_NAME = 'core-storage'
+const CUSTOM_MAPS_DIR_NAME = 'maps'
+const DEFAULT_CUSTOM_MAP_FILE_NAME = 'default.smp'
 
 const MAPBOX_ACCESS_TOKEN =
   'pk.eyJ1IjoiZGlnaWRlbSIsImEiOiJjbHRyaGh3cm0wN3l4Mmpsam95NDI3c2xiIn0.daq2iZFZXQ08BD0VZWAGUw'
@@ -64,9 +68,11 @@ export async function init({
   const privateStorageDir = rnBridge.app.datadir()
   const dbDir = join(privateStorageDir, DB_DIR_NAME)
   const indexDir = join(privateStorageDir, CORE_STORAGE_DIR_NAME)
+  const customMapsDir = join(privateStorageDir, CUSTOM_MAPS_DIR_NAME)
 
   mkdirSync(dbDir, { recursive: true })
   mkdirSync(indexDir, { recursive: true })
+  mkdirSync(customMapsDir, { recursive: true })
 
   const fastify = Fastify()
   const fastifyController = new FastifyController({ fastify })
@@ -80,6 +86,7 @@ export async function init({
     fastify,
     defaultConfigPath,
     defaultOnlineStyleUrl: DEFAULT_ONLINE_MAP_STYLE_URL,
+    customMapPath: join(customMapsDir, DEFAULT_CUSTOM_MAP_FILE_NAME),
   })
 
   // Don't await, methods that use the server will await this internally

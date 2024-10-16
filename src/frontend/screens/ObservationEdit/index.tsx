@@ -80,6 +80,17 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   const [processedAudioRecordings, setProcessedAudioRecordings] =
     React.useState<AudioRecording[]>([]);
 
+  const audioWithUri = useAudioProcessing(audioAttachments);
+
+  React.useEffect(() => {
+    if (
+      audioWithUri.length > 0 &&
+      JSON.stringify(processedAudioRecordings) !== JSON.stringify(audioWithUri)
+    ) {
+      setProcessedAudioRecordings(audioWithUri);
+    }
+  }, [audioWithUri]);
+
   // TODO: This shouldn't be an effect, the logic should happen when the user
   // presses the edit button.
   React.useEffect(() => {
@@ -132,18 +143,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     processedAudioRecordings,
   ]);
 
-  const audioFiles = useAudioProcessing(audioAttachments);
-
-  React.useEffect(() => {
-    if (
-      audioFiles.length > 0 &&
-      JSON.stringify(processedAudioRecordings) !== JSON.stringify(audioFiles)
-    ) {
-      setProcessedAudioRecordings(audioFiles);
-    }
-  }, [audioFiles, processedAudioRecordings]);
-
-  const editObservation = React.useCallback(() => {
+  const editObservation = React.useCallback(async () => {
     if (!value) {
       throw new Error('no observation saved in persisted state');
     }
@@ -184,7 +184,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       newAudioRecordings.length > 0 || removedAudioAttachments.length > 0;
 
     if (!newPhotos.length && !audioAttachmentsChanged) {
-      editObservationMutation.mutate(
+      return editObservationMutation.mutate(
         {
           versionId: value.versionId,
           value: {
@@ -194,85 +194,44 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
               : undefined,
           },
         },
-        {
-          onSuccess: () => {
-            if (navigation.canGoBack()) {
-              navigation.goBack();
-            } else {
-              navigation.dispatch(
-                CommonActions.reset({
-                  index: 0,
-                  routes: [
-                    {
-                      name: 'Home',
-                    },
-                  ],
-                }),
-              );
-            }
-            clearDraft();
-          },
-        },
+        {onSuccess: handleNavigationSuccess},
       );
-      return;
     }
 
-    const photoPromises = newPhotos.map(photo =>
-      createBlobMutation.mutateAsync(photo),
+    const newAttachments = await Promise.all([
+      ...newPhotos.map(photo => createBlobMutation.mutateAsync(photo)),
+      ...newAudioRecordings.map(audio =>
+        createAudioBlobMutation.mutateAsync(audio),
+      ),
+    ]).then(results =>
+      results.map(({driveId, type, name, hash}) => ({
+        driveDiscoveryId: driveId,
+        type,
+        name,
+        hash,
+      })),
     );
-    const audioPromises = newAudioRecordings.map(audio =>
-      createAudioBlobMutation.mutateAsync(audio),
+
+    const filteredAttachments = value.attachments.filter(
+      attachment =>
+        !removedAudioAttachments.some(
+          removed => removed.driveDiscoveryId === attachment.driveDiscoveryId,
+        ),
     );
 
-    Promise.all([...photoPromises, ...audioPromises]).then(results => {
-      const newAttachments = results.map(
-        ({driveId: driveDiscoveryId, type, name, hash}) => ({
-          driveDiscoveryId,
-          type,
-          name,
-          hash,
-        }),
-      );
-
-      const filteredAttachments = value.attachments.filter(
-        attachment =>
-          !removedAudioAttachments.some(
-            removed => removed.driveDiscoveryId === attachment.driveDiscoveryId,
-          ),
-      );
-
-      editObservationMutation.mutate(
-        {
-          versionId: value.versionId,
-          value: {
-            ...value,
-            attachments: [...filteredAttachments, ...newAttachments],
-            presetRef: preset
-              ? {docId: preset.docId, versionId: preset.versionId}
-              : undefined,
-          },
+    editObservationMutation.mutate(
+      {
+        versionId: value.versionId,
+        value: {
+          ...value,
+          attachments: [...filteredAttachments, ...newAttachments],
+          presetRef: preset
+            ? {docId: preset.docId, versionId: preset.versionId}
+            : undefined,
         },
-        {
-          onSuccess: () => {
-            if (navigation.canGoBack()) {
-              navigation.goBack();
-            } else {
-              navigation.dispatch(
-                CommonActions.reset({
-                  index: 0,
-                  routes: [
-                    {
-                      name: 'Home',
-                    },
-                  ],
-                }),
-              );
-            }
-            clearDraft();
-          },
-        },
-      );
-    });
+      },
+      {onSuccess: handleNavigationSuccess},
+    );
   }, [
     preset,
     navigation,
@@ -284,6 +243,20 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     audioRecordings,
     audioAttachments,
   ]);
+
+  const handleNavigationSuccess = () => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    } else {
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{name: 'Home'}],
+        }),
+      );
+    }
+    clearDraft();
+  };
 
   React.useLayoutEffect(() => {
     navigation.setOptions({

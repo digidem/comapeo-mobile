@@ -123,9 +123,6 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
       }
     },
     existingObservationToDraft: (observation, preset, audioRecordings) => {
-      if (!observation || !observation.docId) {
-        throw new Error('Invalid observation object');
-      }
       set({
         value: observation,
         observationId: observation.docId,

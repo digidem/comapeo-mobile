@@ -25,6 +25,7 @@ export const SaveTrackScreen = () => {
 
   return (
     <Editor
+      audioRecordings={[]}
       photos={[]}
       presetName={t(m.newTitle)}
       notesComponent={<TrackDescriptionField />}

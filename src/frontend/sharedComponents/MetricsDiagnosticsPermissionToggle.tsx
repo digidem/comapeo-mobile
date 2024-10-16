@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {View, Text, StyleSheet} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
 import {BLUE_GREY, WHITE, BLACK, COMAPEO_BLUE} from '../lib/styles';
 import {usePersistedMetricDiagnosticsPermission} from '../hooks/persistedState/usePersistedMetricDiagnosticsPermission';
+import {Checkbox} from './Checkbox';
 
 const m = defineMessages({
   shareDiagnostics: {
@@ -23,12 +23,7 @@ export const MetricsDiagnosticsPermissionToggle: React.FC = () => {
       <Text style={styles.permissionText}>
         {formatMessage(m.shareDiagnostics)}
       </Text>
-      <TouchableOpacity
-        onPress={togglePermission}
-        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-        style={[styles.checkBox, isEnabled && styles.checkBoxChecked]}>
-        {isEnabled && <MaterialIcons name="check" size={18} color={WHITE} />}
-      </TouchableOpacity>
+      <Checkbox isChecked={isEnabled} onPress={togglePermission} />
     </View>
   );
 };

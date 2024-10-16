@@ -32,7 +32,7 @@ export function CustomMapDetails({
   onRemove,
   size,
 }: {
-  dateAdded: number;
+  dateAdded: Date;
   name: string;
   onRemove: () => void;
   size?: number;

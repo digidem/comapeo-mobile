@@ -27,7 +27,7 @@ export function Audio({route}: NativeRootNavigationProps<'Audio'>) {
           isEditing={isEditing}
         />
       ) : (
-        <CreateRecording />
+        <CreateRecording isEditing={isEditing} />
       )}
     </>
   );

@@ -171,13 +171,8 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         ),
     );
 
-    const newAudioRecordings = audioRecordings.filter(
-      recording =>
-        !audioAttachments.some(
-          attachment =>
-            extractDriveDiscoveryId(recording.uri) ===
-            attachment.driveDiscoveryId,
-        ),
+    const newAudioRecordings = audioRecordings.filter(recording =>
+      recording.uri.startsWith('file://'),
     );
 
     const audioAttachmentsChanged =
@@ -290,7 +285,9 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         }}
         photos={photos}
         audioRecordings={audioRecordings}
-        actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
+        actionsRow={
+          <ActionsRow fieldRefs={preset?.fieldRefs} isEditing={true} />
+        }
         isEditing={true}
       />
       <ErrorBottomSheet

@@ -17,6 +17,7 @@ import {CloseIcon, DeleteIcon} from '../../sharedComponents/icons';
 import {WHITE, BLACK} from '../../lib/styles';
 import ErrorIcon from '../../images/Error.svg';
 import Share from 'react-native-share';
+import * as FileSystem from 'expo-file-system';
 
 const m = defineMessages({
   deleteBottomSheetTitle: {
@@ -74,9 +75,15 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
   };
 
   const handleShare = async () => {
+    const tempFileName = 'temp_audio_file.m4a';
+    const localUri = `${FileSystem.cacheDirectory}${tempFileName}`;
+
     try {
-      await Share.open({url: uri});
+      const downloadResult = await FileSystem.downloadAsync(uri, localUri);
+      await Share.open({url: downloadResult.uri});
+      await FileSystem.deleteAsync(downloadResult.uri, {idempotent: true});
     } catch (err) {
+      // just keep while developing
       console.error('Error sharing file:', err);
     }
   };

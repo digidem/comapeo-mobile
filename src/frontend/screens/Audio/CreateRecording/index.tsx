@@ -5,7 +5,7 @@ import {RecordingDone} from './RecordingDone';
 import {RecordingIdle} from './RecordingIdle';
 import {useAudioRecording} from './useAudioRecording';
 
-export function CreateRecording() {
+export function CreateRecording({isEditing = false}: {isEditing: boolean}) {
   const {startRecording, stopRecording, reset, status, uri} =
     useAudioRecording();
 
@@ -45,6 +45,7 @@ export function CreateRecording() {
         uri={uri || ''}
         duration={status?.durationMillis || 0}
         reset={reset}
+        isEditing={isEditing}
       />
     );
   }

@@ -60,12 +60,18 @@ interface RecordingDoneProps {
   duration: number;
   uri: string;
   reset: () => void;
+  isEditing?: boolean;
 }
 
 type ModalContentType = 'delete' | 'success' | null;
 type PendingAction = 'delete' | 'returnToEditor' | 'recordAnother' | null;
 
-export function RecordingDone({duration, uri, reset}: RecordingDoneProps) {
+export function RecordingDone({
+  duration,
+  uri,
+  reset,
+  isEditing = false,
+}: RecordingDoneProps) {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
   const {addAudioRecording} = useDraftObservation();
@@ -129,7 +135,11 @@ export function RecordingDone({duration, uri, reset}: RecordingDoneProps) {
         navigation.goBack();
         break;
       case 'returnToEditor':
-        navigation.goBack();
+        if (isEditing) {
+          navigation.goBack();
+        } else {
+          navigation.navigate('ObservationCreate');
+        }
         break;
       case 'recordAnother':
         navigation.navigate('Audio');

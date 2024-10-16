@@ -142,7 +142,7 @@ export function RecordingDone({
         }
         break;
       case 'recordAnother':
-        navigation.navigate('Audio');
+        navigation.navigate('Audio', {isEditing});
         break;
       default:
         break;

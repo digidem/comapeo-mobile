@@ -12,9 +12,9 @@ export const useAudioPlayback = (recordingUri: string) => {
   const clearError = useCallback(() => setError(null), []);
 
   const handleError = useCallback((err: unknown) => {
-    const error =
+    const newError =
       err instanceof Error ? err : new Error('An unknown error occurred');
-    setError(error);
+    setError(newError);
   }, []);
 
   const audioCallbackHandler = useCallback((status: AVPlaybackStatus) => {
@@ -54,7 +54,7 @@ export const useAudioPlayback = (recordingUri: string) => {
         });
       }
     };
-  }, [recordingUri, audioCallbackHandler]);
+  }, [recordingUri, audioCallbackHandler, handleError]);
 
   const startPlayback = useCallback(async () => {
     if (!recordedSoundRef.current || isPlaying) return;
@@ -70,7 +70,7 @@ export const useAudioPlayback = (recordingUri: string) => {
     } catch (err) {
       handleError(err);
     }
-  }, [isPlaying, currentPosition, duration]);
+  }, [isPlaying, currentPosition, duration, handleError]);
 
   const stopPlayback = useCallback(async () => {
     if (!recordedSoundRef.current || !isPlaying) return;
@@ -81,7 +81,7 @@ export const useAudioPlayback = (recordingUri: string) => {
     } catch (err) {
       handleError(err);
     }
-  }, [isPlaying]);
+  }, [isPlaying, handleError]);
 
   return {
     duration,

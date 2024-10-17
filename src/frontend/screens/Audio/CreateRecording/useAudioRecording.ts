@@ -8,9 +8,9 @@ export function useAudioRecording() {
   const [error, setError] = useState<Error | null>(null);
 
   const handleError = useCallback((err: unknown) => {
-    const error =
+    const newError =
       err instanceof Error ? err : new Error('An unknown error occurred');
-    setError(error);
+    setError(newError);
   }, []);
 
   const reset = useCallback(async () => {
@@ -25,7 +25,7 @@ export function useAudioRecording() {
     } catch (err) {
       handleError(err);
     }
-  }, [recording]);
+  }, [recording, handleError]);
 
   const startRecording = useCallback(async () => {
     try {
@@ -37,7 +37,7 @@ export function useAudioRecording() {
     } catch (err) {
       handleError(err);
     }
-  }, []);
+  }, [handleError]);
 
   const stopRecording = useCallback(async () => {
     try {
@@ -47,7 +47,7 @@ export function useAudioRecording() {
     } catch (err) {
       handleError(err);
     }
-  }, [recording]);
+  }, [recording, handleError]);
 
   return {
     reset,

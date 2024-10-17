@@ -37,6 +37,17 @@ export type AudioRecording = {
   duration: number;
   uri: string;
 };
+export type StoredAudioRecording = {
+  driveDiscoveryId: string;
+  name: string;
+  type:
+    | 'photo'
+    | 'attachment_type_unspecified'
+    | 'video'
+    | 'audio'
+    | 'UNRECOGNIZED';
+  hash: string;
+};
 
 // Copied from @comapeo/core/src/roles.js. Created an issue to eventually expose this: https://github.com/digidem/mapeo-core-next/issues/532
 export const CREATOR_ROLE_ID = 'a12a6702b93bd7ff';

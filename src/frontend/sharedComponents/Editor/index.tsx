@@ -8,6 +8,7 @@ import {LIGHT_GREY} from '../../lib/styles';
 import {PresetView} from './PresetView';
 import {LocationView} from './LocationView';
 import {Divider} from '../Divider';
+import {AudioRecording} from '../../sharedTypes/index.ts';
 
 type EditorProps = {
   presetName: string;
@@ -16,6 +17,7 @@ type EditorProps = {
   notes?: string;
   updateNotes?: (newNotes: string) => void;
   photos: Photo[];
+  audioRecordings: AudioRecording[];
   location?: {
     lat: number | undefined;
     lon: number | undefined;
@@ -25,16 +27,19 @@ type EditorProps = {
   notesComponent?: React.ReactNode;
   isTrack?: boolean;
   presetDisabled?: boolean;
+  isEditing?: boolean;
 };
 
 export const Editor = ({
   notes,
   updateNotes,
   photos,
+  audioRecordings,
   location,
   actionsRow,
   notesComponent,
   isTrack = false,
+  isEditing = false,
   ...presetProps
 }: EditorProps) => {
   return (
@@ -55,7 +60,11 @@ export const Editor = ({
       ) : (
         <DescriptionField notes={notes} updateNotes={updateNotes} />
       )}
-      <MediaScrollView photos={photos} />
+      <MediaScrollView
+        photos={photos}
+        audioRecordings={audioRecordings}
+        isEditing={isEditing}
+      />
     </ScreenContentWithDock>
   );
 };

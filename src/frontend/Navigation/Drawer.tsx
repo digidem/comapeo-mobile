@@ -20,7 +20,7 @@ import {useProjectSettings} from '../hooks/server/projects';
 import {AppStackParamsList} from '../sharedTypes/navigation';
 import {RootStackNavigator} from './Stack';
 import {DrawerMenuIcon} from '../sharedComponents/icons/DrawerMenuIcon';
-import {useSecurityContext} from '../contexts/SecurityContext';
+import {Divider} from '../sharedComponents/Divider';
 
 const m = defineMessages({
   settingsTitle: {
@@ -64,8 +64,8 @@ const m = defineMessages({
     defaultMessage: 'Language, Security, Coordinates',
     description: 'list of avaialable app settings',
   },
-  dataAndPrivacy: {
-    id: 'Navigation.Drawer.dataAndPrivacy',
+  privacyPolicy: {
+    id: 'Navigation.Drawer.privacyPolicy',
     defaultMessage: 'Data & Privacy',
   },
   projName: {
@@ -75,10 +75,6 @@ const m = defineMessages({
   mappingOnOwn: {
     id: 'Navigation.Drawer.mappingOnOwn',
     defaultMessage: 'You are currently mapping on your own',
-  },
-  security: {
-    id: 'Navigation.Drawer.security',
-    defaultMessage: 'Security',
   },
 });
 
@@ -107,7 +103,6 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
   const {navigate} = navigation;
   const {formatMessage} = useIntl();
   const {data} = useProjectSettings();
-  const {authState} = useSecurityContext();
 
   return (
     <DrawerContentScrollView
@@ -138,72 +133,71 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
         style={{
           backgroundColor: WHITE,
           height: '100%',
+          justifyContent: 'space-between',
         }}>
-        <ListItem
-          testID="MAIN.create-join-list-item"
-          onPress={() => {
-            navigate('DrawerHome', {screen: 'CreateOrJoinProject'});
-          }}>
-          <DrawerListItemIcon
-            icon={
-              <MaterialCommunityIcons
-                name="shape-square-rounded-plus"
-                size={24}
-                color="rgba(0, 0, 0, 0.54)"
-              />
-            }
-          />
-          <ListItemText primary={<FormattedMessage {...m.createOrJoin} />} />
-        </ListItem>
-        <ListItem
-          testID="MAIN.project-stg-list-item"
-          onPress={() => {
-            navigate('DrawerHome', {screen: 'ProjectSettings'});
-          }}>
-          <DrawerListItemIcon iconName="assignment" />
-          <ListItemText primary={<FormattedMessage {...m.projectSettings} />} />
-        </ListItem>
-        <ListItem
-          onPress={() => {
-            navigate('DrawerHome', {screen: 'AppSettings'});
-          }}>
-          <DrawerListItemIcon iconName="settings-suggest" />
-          <ListItemText primary={<FormattedMessage {...m.appSettings} />} />
-        </ListItem>
-        <ListItem
-          onPress={() => {
-            navigate('DataAndPrivacy');
-          }}>
-          <DrawerListItemIcon iconName="privacy-tip" />
-          <ListItemText primary={<FormattedMessage {...m.dataAndPrivacy} />} />
-        </ListItem>
-        {authState !== 'obscured' && (
+        <View>
           <ListItem
+            testID="MAIN.create-join-list-item"
             onPress={() => {
-              navigate('Security');
+              navigate('DrawerHome', {screen: 'CreateOrJoinProject'});
             }}>
-            <DrawerListItemIcon iconName="security" />
-            <ListItemText primary={<FormattedMessage {...m.security} />} />
+            <DrawerListItemIcon
+              icon={
+                <MaterialCommunityIcons
+                  name="shape-square-rounded-plus"
+                  size={24}
+                  color="rgba(0, 0, 0, 0.54)"
+                />
+              }
+            />
+            <ListItemText primary={<FormattedMessage {...m.createOrJoin} />} />
           </ListItem>
-        )}
-        <ListItem
-          onPress={() => {
-            navigate('AboutSettings');
-          }}
-          testID="settingsAboutButton">
-          <DrawerListItemIcon iconName="info-outline" />
-          <ListItemText primary={<FormattedMessage {...m.aboutCoMapeo} />} />
-        </ListItem>
-        {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
+          <ListItem
+            testID="MAIN.project-stg-list-item"
+            onPress={() => {
+              navigate('DrawerHome', {screen: 'ProjectSettings'});
+            }}>
+            <DrawerListItemIcon iconName="assignment" />
+            <ListItemText
+              primary={<FormattedMessage {...m.projectSettings} />}
+            />
+          </ListItem>
           <ListItem
             onPress={() => {
-              navigate('CreateTestData');
-            }}
-            testID="settingsCreateTestDataButton">
-            <DrawerListItemIcon iconName="auto-fix-high" />
-            <ListItemText primary="Create Test Data" />
+              navigate('DrawerHome', {screen: 'AppSettings'});
+            }}>
+            <DrawerListItemIcon iconName="settings-suggest" />
+            <ListItemText primary={<FormattedMessage {...m.appSettings} />} />
           </ListItem>
-        )}
+          {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
+            <ListItem
+              onPress={() => {
+                navigate('CreateTestData');
+              }}
+              testID="settingsCreateTestDataButton">
+              <DrawerListItemIcon iconName="auto-fix-high" />
+              <ListItemText primary="Create Test Data" />
+            </ListItem>
+          )}
+        </View>
+        <View>
+          <Divider />
+          <ListItem
+            onPress={() => {
+              navigate('AboutSettings');
+            }}
+            testID="settingsAboutButton">
+            <DrawerListItemIcon iconName="info-outline" />
+            <ListItemText primary={<FormattedMessage {...m.aboutCoMapeo} />} />
+          </ListItem>
+          <ListItem
+            onPress={() => {
+              navigate('DataAndPrivacy');
+            }}>
+            <DrawerListItemIcon iconName="privacy-tip" />
+            <ListItemText primary={<FormattedMessage {...m.privacyPolicy} />} />
+          </ListItem>
+        </View>
       </List>
     </DrawerContentScrollView>
   );

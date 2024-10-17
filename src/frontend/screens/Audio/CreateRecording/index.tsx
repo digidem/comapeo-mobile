@@ -7,16 +7,8 @@ import {useAudioRecording} from './useAudioRecording';
 import {ErrorBottomSheet} from '../../../sharedComponents/ErrorBottomSheet';
 
 export function CreateRecording() {
-  const {
-    startRecording,
-    stopRecording,
-    reset,
-    status,
-    uri,
-    hasError,
-    clearError,
-    setHasError,
-  } = useAudioRecording();
+  const {startRecording, stopRecording, reset, status, uri, error, setError} =
+    useAudioRecording();
 
   const recordingState = status?.isRecording ? 'active' : uri ? 'done' : 'idle';
 
@@ -35,11 +27,9 @@ export function CreateRecording() {
     }
   }, [recordingState]);
 
-  useEffect(() => {
-    if (recordingState === 'done' && !uri) {
-      setHasError(true);
-    }
-  }, [recordingState, uri, setHasError]);
+  if (!error && recordingState === 'done' && !uri) {
+    setError(new Error('Recording is done, but no URI is available.'));
+  }
 
   return (
     <>
@@ -59,17 +49,7 @@ export function CreateRecording() {
           reset={reset}
         />
       )}
-      <ErrorBottomSheet
-        error={hasError ? new Error('An error occurred') : null}
-        clearError={clearError}
-        tryAgain={
-          recordingState === 'idle'
-            ? startRecording
-            : recordingState === 'active'
-              ? stopRecording
-              : reset
-        }
-      />
+      <ErrorBottomSheet error={error} clearError={reset} />
     </>
   );
 }

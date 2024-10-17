@@ -5,21 +5,12 @@ export function useAudioRecording() {
   const [recording, setRecording] = useState<Audio.Recording | null>(null);
   const [status, setStatus] = useState<Audio.RecordingStatus | null>(null);
   const [uri, setUri] = useState<string | null>(null);
-  const [hasError, setHasError] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
 
-  const clearError = useCallback(() => setHasError(false), []);
-
-  const startRecording = useCallback(async () => {
-    try {
-      const {recording: audioRecording} = await Audio.Recording.createAsync(
-        Audio.RecordingOptionsPresets.HIGH_QUALITY,
-        stat => setStatus(stat),
-      );
-      setRecording(audioRecording);
-      setHasError(false);
-    } catch (err) {
-      setHasError(true);
-    }
+  const handleError = useCallback((err: unknown) => {
+    const error =
+      err instanceof Error ? err : new Error('An unknown error occurred');
+    setError(error);
   }, []);
 
   const reset = useCallback(async () => {
@@ -30,20 +21,31 @@ export function useAudioRecording() {
       setRecording(null);
       setStatus(null);
       setUri(null);
-      setHasError(false);
-    } catch {
-      setHasError(true);
+      setError(null);
+    } catch (err) {
+      handleError(err);
     }
   }, [recording]);
+
+  const startRecording = useCallback(async () => {
+    try {
+      const {recording: audioRecording} = await Audio.Recording.createAsync(
+        Audio.RecordingOptionsPresets.HIGH_QUALITY,
+        stat => setStatus(stat),
+      );
+      setRecording(audioRecording);
+    } catch (err) {
+      handleError(err);
+    }
+  }, []);
 
   const stopRecording = useCallback(async () => {
     try {
       if (!recording) return;
       await recording.stopAndUnloadAsync();
       setUri(recording.getURI());
-      setHasError(false);
-    } catch {
-      setHasError(true);
+    } catch (err) {
+      handleError(err);
     }
   }, [recording]);
 
@@ -53,8 +55,7 @@ export function useAudioRecording() {
     stopRecording,
     status,
     uri,
-    hasError,
-    clearError,
-    setHasError,
+    error,
+    setError,
   };
 }

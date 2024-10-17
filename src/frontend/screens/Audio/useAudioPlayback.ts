@@ -7,9 +7,15 @@ export const useAudioPlayback = (recordingUri: string) => {
   const [isPlaying, setPlaying] = useState(false);
   const [duration, setDuration] = useState<number>(0);
   const [currentPosition, setCurrentPosition] = useState(0);
-  const [hasError, setHasError] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
 
-  const clearError = useCallback(() => setHasError(false), []);
+  const clearError = useCallback(() => setError(null), []);
+
+  const handleError = useCallback((err: unknown) => {
+    const error =
+      err instanceof Error ? err : new Error('An unknown error occurred');
+    setError(error);
+  }, []);
 
   const audioCallbackHandler = useCallback((status: AVPlaybackStatus) => {
     const update = status as AVPlaybackStatusSuccess;
@@ -29,23 +35,22 @@ export const useAudioPlayback = (recordingUri: string) => {
     Audio.Sound.createAsync({uri: recordingUri})
       .then(({sound, status}) => {
         if ('error' in status && status.error) {
-          setHasError(true);
+          setError(new Error(status.error));
           return;
         }
         soundInstance = sound;
         recordedSoundRef.current = sound;
         setDuration((status as AVPlaybackStatusSuccess).durationMillis ?? 0);
         sound.setOnPlaybackStatusUpdate(audioCallbackHandler);
-        setHasError(false);
       })
-      .catch(() => {
-        setHasError(true);
+      .catch(err => {
+        handleError(err);
       });
 
     return () => {
       if (soundInstance) {
-        soundInstance.unloadAsync().catch(() => {
-          setHasError(true);
+        soundInstance.unloadAsync().catch(err => {
+          handleError(err);
         });
       }
     };
@@ -62,9 +67,8 @@ export const useAudioPlayback = (recordingUri: string) => {
 
       await recordedSoundRef.current!.playAsync();
       setPlaying(true);
-      setHasError(false);
-    } catch {
-      setHasError(true);
+    } catch (err) {
+      handleError(err);
     }
   }, [isPlaying, currentPosition, duration]);
 
@@ -74,9 +78,8 @@ export const useAudioPlayback = (recordingUri: string) => {
     try {
       await recordedSoundRef.current!.pauseAsync();
       setPlaying(false);
-      setHasError(false);
-    } catch {
-      setHasError(true);
+    } catch (err) {
+      handleError(err);
     }
   }, [isPlaying]);
 
@@ -86,7 +89,7 @@ export const useAudioPlayback = (recordingUri: string) => {
     currentPosition,
     startPlayback,
     stopPlayback,
-    hasError,
+    error,
     clearError,
   };
 };

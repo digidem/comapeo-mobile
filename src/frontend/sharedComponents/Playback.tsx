@@ -24,15 +24,17 @@ export function Playback({
   rightControl?: ReactNode;
 }) {
   const {formatMessage: t} = useIntl();
+
   const {
     duration,
     currentPosition,
     isPlaying,
     stopPlayback,
     startPlayback,
-    hasError,
+    error,
     clearError,
   } = useAudioPlayback(uri);
+
   return (
     <View style={{flex: 1}}>
       <ContentWithControls
@@ -58,9 +60,16 @@ export function Playback({
         }
       />
       <ErrorBottomSheet
-        error={hasError ? new Error('An error occurred') : null}
+        error={error}
         clearError={clearError}
-        tryAgain={isPlaying ? stopPlayback : startPlayback}
+        tryAgain={() => {
+          clearError();
+          if (isPlaying) {
+            stopPlayback();
+          } else {
+            startPlayback();
+          }
+        }}
       />
     </View>
   );

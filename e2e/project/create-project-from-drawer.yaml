@@ -1,4 +1,4 @@
-appId: com.comapeo
+appId: com.comapeo.dev
 env:
   CAT: PROJECT
   SUBCAT: MAIN
@@ -30,6 +30,7 @@ env:
 - inputText:
     label: 'Can input a project name'
     text: ${output.names.project}
+- hideKeyboard
 - tapOn:
     id: '${CAT}.create-btn'
 - assertVisible: '.*Invite Device.*'

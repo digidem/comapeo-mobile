@@ -4,9 +4,10 @@ import {RecordingActive} from './RecordingActive';
 import {RecordingDone} from './RecordingDone';
 import {RecordingIdle} from './RecordingIdle';
 import {useAudioRecording} from './useAudioRecording';
+import {ErrorBottomSheet} from '../../../sharedComponents/ErrorBottomSheet';
 
 export function CreateRecording({isEditing = false}: {isEditing: boolean}) {
-  const {startRecording, stopRecording, reset, status, uri} =
+  const {startRecording, stopRecording, reset, status, uri, error, setError} =
     useAudioRecording();
 
   const recordingState = status?.isRecording ? 'active' : uri ? 'done' : 'idle';
@@ -26,27 +27,30 @@ export function CreateRecording({isEditing = false}: {isEditing: boolean}) {
     }
   }, [recordingState]);
 
-  if (recordingState === 'idle') {
-    return <RecordingIdle onPressRecord={startRecording} />;
+  if (!error && recordingState === 'done' && !uri) {
+    setError(new Error('Recording is done, but no URI is available.'));
   }
 
-  if (recordingState === 'active') {
-    return (
-      <RecordingActive
-        duration={status?.durationMillis || 0}
-        onPressStop={stopRecording}
-      />
-    );
-  }
-
-  if (recordingState === 'done') {
-    return (
-      <RecordingDone
-        uri={uri || ''}
-        duration={status?.durationMillis || 0}
-        reset={reset}
-        isEditing={isEditing}
-      />
-    );
-  }
+  return (
+    <>
+      {recordingState === 'idle' && (
+        <RecordingIdle onPressRecord={startRecording} />
+      )}
+      {recordingState === 'active' && (
+        <RecordingActive
+          duration={status?.durationMillis || 0}
+          onPressStop={stopRecording}
+        />
+      )}
+      {recordingState === 'done' && (
+        <RecordingDone
+          uri={uri || ''}
+          duration={status?.durationMillis || 0}
+          reset={reset}
+          isEditing={isEditing}
+        />
+      )}
+      <ErrorBottomSheet error={error} clearError={reset} />
+    </>
+  );
 }

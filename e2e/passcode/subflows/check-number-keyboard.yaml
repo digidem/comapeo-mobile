@@ -1,4 +1,4 @@
-appId: com.comapeo
+appId: com.comapeo.dev
 ---
 - assertVisible: '1'
 - assertVisible: '2'

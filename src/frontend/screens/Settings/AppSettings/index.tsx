@@ -30,6 +30,14 @@ const m = defineMessages({
     id: 'Screens.Settings.AppSettings.coordinateSystemDesc',
     defaultMessage: 'UTM,Lat/Lon,DMS',
   },
+  mapManagement: {
+    id: 'Screens.Settings.AppSettings.mapManagement',
+    defaultMessage: 'Map Management',
+  },
+  mapManagementDesc: {
+    id: 'Screens.Settings.AppSettings.mapManagementDesc',
+    defaultMessage: 'Backgrounds, Map Data',
+  },
 });
 
 export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
@@ -55,6 +63,17 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
           <ListItemText
             primary={<FormattedMessage {...m.coordinateSystem} />}
             secondary={<FormattedMessage {...m.coordinateSystemDesc} />}
+          />
+        </ListItem>
+        <ListItem
+          onPress={() => {
+            navigation.navigate('MapManagement');
+          }}
+          testID="mapManagementButton">
+          <ListItemIcon iconName="map" />
+          <ListItemText
+            primary={<FormattedMessage {...m.mapManagement} />}
+            secondary={<FormattedMessage {...m.mapManagementDesc} />}
           />
         </ListItem>
       </List>

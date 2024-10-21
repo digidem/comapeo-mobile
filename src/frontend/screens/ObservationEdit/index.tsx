@@ -20,8 +20,7 @@ import {HeaderLeft} from './HeaderLeft';
 import {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
 import {CommonActions} from '@react-navigation/native';
 import {matchPreset} from '../../lib/utils.ts';
-import {AudioRecording, StoredAudioRecording} from '../../sharedTypes/index.ts';
-import {useAudioProcessing} from '../../screens/Audio/useAudioProcessing.ts';
+import {StoredAudioRecording, AudioRecording} from '../../sharedTypes/index.ts';
 
 const m = defineMessages({
   observation: {
@@ -73,24 +72,6 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       })
     : formatMessage(m.observation);
 
-  const [audioAttachments, setAudioAttachments] = React.useState<
-    StoredAudioRecording[]
-  >([]);
-
-  const [processedAudioRecordings, setProcessedAudioRecordings] =
-    React.useState<AudioRecording[]>([]);
-
-  const audioWithUri = useAudioProcessing(audioAttachments);
-
-  React.useEffect(() => {
-    if (
-      audioWithUri.length > 0 &&
-      JSON.stringify(processedAudioRecordings) !== JSON.stringify(audioWithUri)
-    ) {
-      setProcessedAudioRecordings(audioWithUri);
-    }
-  }, [audioWithUri]);
-
   // TODO: This shouldn't be an effect, the logic should happen when the user
   // presses the edit button.
   React.useEffect(() => {
@@ -103,13 +84,31 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
 
     async function createDraftFromExistingObservation(docId: string) {
       const observation = await projectApi.observation.getByDocId(docId);
+      if (cancelled) return;
       const audioAttachments =
         observation.attachments.filter(
-          attachment => attachment.type === 'audio',
+          (attachment): attachment is StoredAudioRecording =>
+            attachment.type === 'audio',
         ) || [];
-      setAudioAttachments(audioAttachments);
+      let processedAudioRecordings: AudioRecording[] = [];
+      if (audioAttachments.length > 0) {
+        processedAudioRecordings = await Promise.all(
+          audioAttachments.map(async attachment => {
+            const url = await projectApi.$blobs.getUrl({
+              driveId: attachment.driveDiscoveryId,
+              name: attachment.name,
+              type: attachment.type as 'audio',
+              variant: 'original',
+            });
+            return {
+              uri: url,
+              createdAt: 0, // placeholder
+              duration: 0, // placeholder
+            } as AudioRecording;
+          }),
+        );
+      }
 
-      if (cancelled) return;
       const presets = await projectApi.preset.getMany();
       if (cancelled) return;
       let matchingPreset;
@@ -140,8 +139,23 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     projectApi.observation,
     projectApi.preset,
     navigation,
-    processedAudioRecordings,
+    audioRecordings,
+    projectApi.$blobs,
   ]);
+
+  const handleNavigationSuccess = React.useCallback(() => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    } else {
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{name: 'Home'}],
+        }),
+      );
+    }
+    clearDraft();
+  }, [navigation, clearDraft]);
 
   const editObservation = React.useCallback(async () => {
     if (!value) {
@@ -156,29 +170,30 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       (photo): photo is ProcessedDraftPhoto => photo.type === 'processed',
     );
 
-    const extractDriveDiscoveryId = (uri: string) => {
-      const regex = /\/([^\/]+)\/audio\/original\//;
-      const match = uri.match(regex);
-      return match ? match[1] : null;
-    };
-
-    const removedAudioAttachments = audioAttachments.filter(
-      attachment =>
-        !audioRecordings.some(
-          recording =>
-            extractDriveDiscoveryId(recording.uri) ===
-            attachment.driveDiscoveryId,
-        ),
+    const audioAttachments = value.attachments.filter(
+      attachment => attachment.type === 'audio',
     );
+
+    const removedAudioAttachments = audioAttachments.filter(attachment => {
+      const existsInRecordings = audioRecordings.some(recording => {
+        const url = new URL(recording.uri);
+        const pathSegments = url.pathname.split('/');
+        const name = pathSegments[pathSegments.length - 1];
+        return name === attachment.name;
+      });
+      return !existsInRecordings;
+    });
 
     const newAudioRecordings = audioRecordings.filter(recording =>
       recording.uri.startsWith('file://'),
     );
 
-    const audioAttachmentsChanged =
-      newAudioRecordings.length > 0 || removedAudioAttachments.length > 0;
+    const attachmentsChanged =
+      newPhotos.length > 0 ||
+      newAudioRecordings.length > 0 ||
+      removedAudioAttachments.length > 0;
 
-    if (!newPhotos.length && !audioAttachmentsChanged) {
+    if (!attachmentsChanged) {
       return editObservationMutation.mutate(
         {
           versionId: value.versionId,
@@ -207,19 +222,22 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       })),
     );
 
-    const filteredAttachments = value.attachments.filter(
-      attachment =>
-        !removedAudioAttachments.some(
-          removed => removed.driveDiscoveryId === attachment.driveDiscoveryId,
-        ),
-    );
+    const updatedAttachments = [
+      ...value.attachments.filter(
+        attachment =>
+          !removedAudioAttachments.some(
+            removed => removed.name === attachment.name,
+          ),
+      ),
+      ...newAttachments,
+    ];
 
     editObservationMutation.mutate(
       {
         versionId: value.versionId,
         value: {
           ...value,
-          attachments: [...filteredAttachments, ...newAttachments],
+          attachments: updatedAttachments,
           presetRef: preset
             ? {docId: preset.docId, versionId: preset.versionId}
             : undefined,
@@ -229,29 +247,14 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     );
   }, [
     preset,
-    navigation,
-    clearDraft,
     value,
     editObservationMutation,
     photos,
     createBlobMutation,
     audioRecordings,
-    audioAttachments,
+    handleNavigationSuccess,
+    createAudioBlobMutation,
   ]);
-
-  const handleNavigationSuccess = () => {
-    if (navigation.canGoBack()) {
-      navigation.goBack();
-    } else {
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{name: 'Home'}],
-        }),
-      );
-    }
-    clearDraft();
-  };
 
   React.useLayoutEffect(() => {
     navigation.setOptions({

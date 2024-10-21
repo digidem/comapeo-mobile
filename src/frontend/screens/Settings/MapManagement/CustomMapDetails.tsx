@@ -3,9 +3,10 @@ import {FormattedDate, defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-import {MEDIUM_GREY, RED, VERY_LIGHT_GREY} from '../../../lib/styles';
-import {Text} from '../../../sharedComponents/Text';
 import {bytesToMegabytes} from '../../../lib/bytesToMegabytes';
+import {BLACK, MEDIUM_GREY, RED, VERY_LIGHT_GREY} from '../../../lib/styles';
+import {Loading} from '../../../sharedComponents/Loading';
+import {Text} from '../../../sharedComponents/Text';
 
 const m = defineMessages({
   mapNameColumn: {
@@ -28,11 +29,13 @@ const m = defineMessages({
 
 export function CustomMapDetails({
   dateAdded,
+  loading,
   name,
   onRemove,
   size,
 }: {
   dateAdded: Date;
+  loading?: boolean;
   name: string;
   onRemove: () => void;
   size?: number;
@@ -80,7 +83,17 @@ export function CustomMapDetails({
             <Text style={styles.removeMapText}>{t(m.removeMap)}</Text>
           </TouchableOpacity>
         </View>
+        {loading && <LoadingOverlay />}
       </View>
+    </View>
+  );
+}
+
+function LoadingOverlay() {
+  return (
+    <View pointerEvents="none" style={styles.overlay}>
+      <View style={[styles.overlay, {opacity: 0.1, backgroundColor: BLACK}]} />
+      <Loading size={10} />
     </View>
   );
 }
@@ -129,5 +142,12 @@ const styles = StyleSheet.create({
   columnRight: {
     flex: 1,
     alignItems: 'flex-end',
+  },
+  overlay: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
   },
 });

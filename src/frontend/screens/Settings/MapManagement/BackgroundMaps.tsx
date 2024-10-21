@@ -142,7 +142,19 @@ export function BackgroundMapsScreen() {
     }
     case 'success': {
       if (customMapInfoQuery.isFetching) {
-        renderedMapInfo = <Loading size={10} />;
+        renderedMapInfo = customMapInfoQuery.data ? (
+          <CustomMapDetails
+            loading
+            name={customMapInfoQuery.data.name}
+            dateAdded={customMapInfoQuery.data.created}
+            size={customMapInfoQuery.data.size}
+            onRemove={() => {
+              removeMapBottomSheet.openSheet();
+            }}
+          />
+        ) : (
+          <Loading size={10} />
+        );
       } else {
         renderedMapInfo = customMapInfoQuery.data ? (
           <CustomMapDetails
@@ -207,7 +219,6 @@ export function BackgroundMapsScreen() {
               text: t(m.deleteMapButtonText),
               icon: <MaterialIcon size={30} name="delete" color={WHITE} />,
               onPress: () => {
-                // TODO: Map screen doesn't update after this. Need to bust cache by changing style url?
                 removeCustomMapMutation.mutate();
                 removeMapBottomSheet.closeSheet();
               },

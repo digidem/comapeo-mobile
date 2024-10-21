@@ -18,6 +18,7 @@ import {
   BottomSheetModalContent,
   useBottomSheetModal,
 } from '../../../sharedComponents/BottomSheetModal';
+import {Button} from '../../../sharedComponents/Button';
 import {ErrorBottomSheet} from '../../../sharedComponents/ErrorBottomSheet';
 import {Loading} from '../../../sharedComponents/Loading';
 import {Text} from '../../../sharedComponents/Text';
@@ -49,7 +50,11 @@ const m = defineMessages({
   customMapInfoLoadError: {
     id: 'screens.Settings.MapManagement.BackgroundMaps.customMapInfoLoadError',
     defaultMessage:
-      'Could not get custom map information. Please choose a different file.',
+      'Could not get custom map information from file. Please remove it or choose a different file.',
+  },
+  removeMapFile: {
+    id: 'screens.Settings.MapManagement.BackgroundMaps.removeMapFile',
+    defaultMessage: 'Remove Map File',
   },
 
   customMapAddedTitle: {
@@ -146,6 +151,16 @@ export function BackgroundMapsScreen() {
           <Text style={styles.infoLoadErrorText}>
             {t(m.customMapInfoLoadError)}
           </Text>
+          <Button
+            fullWidth
+            variant="outlined"
+            onPress={() => {
+              removeCustomMapMutation.mutate();
+            }}>
+            <Text style={styles.removeMapFileButtonText}>
+              {t(m.removeMapFile)}
+            </Text>
+          </Button>
         </>
       );
 
@@ -299,5 +314,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: RED,
     fontSize: 20,
+  },
+  removeMapFileButton: {
+    backgroundColor: RED,
+  },
+  removeMapFileButtonText: {
+    fontWeight: '700',
+    letterSpacing: 0.5,
+    fontSize: 18,
+    color: RED,
   },
 });

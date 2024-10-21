@@ -1292,7 +1292,7 @@
     "message": "Custom Map Added"
   },
   "screens.Settings.MapManagement.BackgroundMaps.customMapInfoLoadError": {
-    "message": "Could not get custom map information. Please choose a different file."
+    "message": "Could not get custom map information from file. Please remove it or choose a different file."
   },
   "screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapDescription": {
     "message": "This will delete the map and its offline areas. No collected observation data will be deleted."
@@ -1308,6 +1308,9 @@
   },
   "screens.Settings.MapManagement.BackgroundMaps.description2": {
     "message": "Your custom map is not shared with other devices in your project."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
+    "message": "Remove Map File"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
     "message": "Background Maps"

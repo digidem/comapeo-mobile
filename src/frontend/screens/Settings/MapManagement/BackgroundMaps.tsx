@@ -91,6 +91,15 @@ const m = defineMessages({
     id: 'screens.Settings.MapManagement.BackgroundMaps.deleteMapButtonText',
     defaultMessage: 'Delete Map',
   },
+
+  importErrorTitle: {
+    id: 'screens.Settings.MapManagement.BackgroundMaps.importErrorTitle',
+    defaultMessage: 'Import Error',
+  },
+  importErrorDesciption: {
+    id: 'screens.Settings.MapManagement.BackgroundMaps.importErrorDescription',
+    defaultMessage: 'Unable to import the file. Please go back and try again.',
+  },
 });
 
 export function createNavigationOptions({
@@ -296,6 +305,16 @@ export function BackgroundMapsScreen() {
           removeCustomMapMutation.error ||
           selectCustomMapMutation.error ||
           importCustomMapMutation.error
+        }
+        title={
+          selectCustomMapMutation.error || importCustomMapMutation.error
+            ? m.importErrorTitle
+            : undefined
+        }
+        description={
+          selectCustomMapMutation.error || importCustomMapMutation.error
+            ? m.importErrorDesciption
+            : undefined
         }
         clearError={() => {
           if (removeCustomMapMutation.error) {

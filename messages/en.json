@@ -1309,6 +1309,12 @@
   "screens.Settings.MapManagement.BackgroundMaps.description2": {
     "message": "Your custom map is not shared with other devices in your project."
   },
+  "screens.Settings.MapManagement.BackgroundMaps.importErrorDescription": {
+    "message": "Unable to import the file. Please go back and try again."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
+    "message": "Import Error"
+  },
   "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
     "message": "Remove Map File"
   },

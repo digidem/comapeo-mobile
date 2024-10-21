@@ -6,6 +6,7 @@ import {useApi} from '../../contexts/ApiContext';
 import {DOCUMENT_DIRECTORY, selectFile} from '../../lib/file-system';
 
 import {createRefreshTokenStore} from '../refreshTokenStore';
+import noop from '../../lib/noop';
 
 export const MAPS_QUERY_KEY = 'maps';
 
@@ -51,14 +52,27 @@ export function useSelectCustomMapFile() {
 
 export function useImportCustomMapFile() {
   const queryClient = useQueryClient();
+  const api = useApi();
   const {refresh} = useRefreshTokenActions();
 
   return useMutation({
     mutationFn: async (opts: {uri: string}) => {
-      return FileSystem.moveAsync({
+      await FileSystem.moveAsync({
         from: opts.uri,
         to: DEFAULT_CUSTOM_MAP_FILE_PATH,
       });
+
+      const styleUrl = await api.getMapStyleJsonUrl();
+
+      const response = await fetchCustomMapInfo(styleUrl);
+
+      if (!response.ok) {
+        FileSystem.deleteAsync(DEFAULT_CUSTOM_MAP_FILE_PATH, {
+          idempotent: true,
+        }).catch(noop);
+
+        throw new Error('Invalid map file');
+      }
     },
     onSuccess: () => {
       refresh();
@@ -99,9 +113,7 @@ export function useGetCustomMapInfo() {
     queryFn: async () => {
       const styleUrl = await api.getMapStyleJsonUrl();
 
-      const infoUrl = new URL('/maps/custom/info', styleUrl).href;
-
-      const response = await fetch(infoUrl);
+      const response = await fetchCustomMapInfo(styleUrl);
 
       if (response.status === 404) {
         return null;
@@ -114,4 +126,9 @@ export function useGetCustomMapInfo() {
       return v.parse(CustomMapInfoSchema, await response.json());
     },
   });
+}
+
+async function fetchCustomMapInfo(baseUrl: string) {
+  const infoUrl = new URL('/maps/custom/info', baseUrl).href;
+  return fetch(infoUrl);
 }

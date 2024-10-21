@@ -3,6 +3,7 @@ import React from 'react';
 import {defineMessages, useIntl, type MessageDescriptor} from 'react-intl';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import * as FileSystem from 'expo-file-system';
 
 import {
   useGetCustomMapInfo,
@@ -25,6 +26,7 @@ import {Text} from '../../../sharedComponents/Text';
 import {type NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {ChooseMapFile} from './ChooseMapFile';
 import {CustomMapDetails} from './CustomMapDetails';
+import noop from '../../../lib/noop';
 
 const m = defineMessages({
   screenTitle: {
@@ -133,11 +135,16 @@ export function BackgroundMapsScreen() {
                 onSuccess: asset => {
                   if (!asset) return;
 
-                  return importCustomMapMutation.mutateAsync(
+                  importCustomMapMutation.mutate(
                     {
                       uri: asset.uri,
                     },
                     {
+                      onError: () => {
+                        FileSystem.deleteAsync(asset.uri, {
+                          idempotent: true,
+                        }).catch(noop);
+                      },
                       onSuccess: () => {
                         mapAddedBottomSheet.openSheet();
                       },
@@ -197,11 +204,16 @@ export function BackgroundMapsScreen() {
                 onSuccess: asset => {
                   if (!asset) return;
 
-                  return importCustomMapMutation.mutateAsync(
+                  importCustomMapMutation.mutate(
                     {
                       uri: asset.uri,
                     },
                     {
+                      onError: () => {
+                        FileSystem.deleteAsync(asset.uri, {
+                          idempotent: true,
+                        }).catch(noop);
+                      },
                       onSuccess: () => {
                         mapAddedBottomSheet.openSheet();
                       },
@@ -280,13 +292,20 @@ export function BackgroundMapsScreen() {
       </BottomSheetModal>
 
       <ErrorBottomSheet
-        error={removeCustomMapMutation.error || selectCustomMapMutation.error}
+        error={
+          removeCustomMapMutation.error ||
+          selectCustomMapMutation.error ||
+          importCustomMapMutation.error
+        }
         clearError={() => {
           if (removeCustomMapMutation.error) {
             removeCustomMapMutation.reset();
           }
           if (selectCustomMapMutation.error) {
             selectCustomMapMutation.reset();
+          }
+          if (importCustomMapMutation.error) {
+            importCustomMapMutation.reset();
           }
         }}
       />

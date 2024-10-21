@@ -125,7 +125,6 @@ export function BackgroundMapsScreen() {
       break;
     }
     case 'error': {
-      // TODO: Should surface error info better and also provide option to replace/remove map
       renderedMapInfo = (
         <>
           <ChooseMapFile

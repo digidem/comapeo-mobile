@@ -5,6 +5,8 @@ import * as v from 'valibot';
 import {useApi} from '../../contexts/ApiContext';
 import {DOCUMENT_DIRECTORY, selectFile} from '../../lib/file-system';
 
+import {createRefreshTokenStore} from '../refreshTokenStore';
+
 export const MAPS_QUERY_KEY = 'maps';
 
 const CUSTOM_MAPS_DIRECTORY = new URL('maps', DOCUMENT_DIRECTORY).href;
@@ -22,13 +24,17 @@ const CustomMapInfoSchema = v.object({
 
 export type CustomMapInfo = v.InferOutput<typeof CustomMapInfoSchema>;
 
+const {useRefreshToken, useRefreshTokenActions} = createRefreshTokenStore();
+
 export function useMapStyleJsonUrl() {
   const api = useApi();
+  const refreshToken = useRefreshToken();
 
   return useQuery({
-    queryKey: [MAPS_QUERY_KEY, 'stylejson-url'],
-    queryFn: () => {
-      return api.getMapStyleJsonUrl();
+    queryKey: [MAPS_QUERY_KEY, 'stylejson-url', refreshToken],
+    queryFn: async () => {
+      let result = await api.getMapStyleJsonUrl();
+      return result + `?refresh_token=${refreshToken}`;
     },
   });
 }
@@ -45,6 +51,7 @@ export function useSelectCustomMapFile() {
 
 export function useImportCustomMapFile() {
   const queryClient = useQueryClient();
+  const {refresh} = useRefreshTokenActions();
 
   return useMutation({
     mutationFn: async (opts: {uri: string}) => {
@@ -54,6 +61,7 @@ export function useImportCustomMapFile() {
       });
     },
     onSuccess: () => {
+      refresh();
       queryClient.invalidateQueries({
         queryKey: [MAPS_QUERY_KEY],
       });
@@ -63,6 +71,7 @@ export function useImportCustomMapFile() {
 
 export function useRemoveCustomMapFile() {
   const queryClient = useQueryClient();
+  const {refresh} = useRefreshTokenActions();
 
   return useMutation({
     mutationFn: () => {
@@ -71,6 +80,7 @@ export function useRemoveCustomMapFile() {
       });
     },
     onSuccess: () => {
+      refresh();
       queryClient.invalidateQueries({
         queryKey: [MAPS_QUERY_KEY],
       });

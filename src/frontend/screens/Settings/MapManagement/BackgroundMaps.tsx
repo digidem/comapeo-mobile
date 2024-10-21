@@ -12,7 +12,7 @@ import {
 } from '../../../hooks/server/maps';
 import ErrorSvg from '../../../images/Error.svg';
 import GreenCheckSvg from '../../../images/GreenCheck.svg';
-import {DARK_GREY, WHITE} from '../../../lib/styles';
+import {DARK_GREY, RED, WHITE} from '../../../lib/styles';
 import {
   BottomSheetModal,
   BottomSheetModalContent,
@@ -44,6 +44,12 @@ const m = defineMessages({
     id: 'screens.Settings.MapManagement.BackgroundMaps.description2',
     defaultMessage:
       'Your custom map is not shared with other devices in your project.',
+  },
+
+  customMapInfoLoadError: {
+    id: 'screens.Settings.MapManagement.BackgroundMaps.customMapInfoLoadError',
+    defaultMessage:
+      'Could not get custom map information. Please choose a different file.',
   },
 
   customMapAddedTitle: {
@@ -116,26 +122,31 @@ export function BackgroundMapsScreen() {
     case 'error': {
       // TODO: Should surface error info better and also provide option to replace/remove map
       renderedMapInfo = (
-        <ChooseMapFile
-          onChooseFile={() => {
-            selectCustomMapMutation.mutate(undefined, {
-              onSuccess: asset => {
-                if (!asset) return;
+        <>
+          <ChooseMapFile
+            onChooseFile={() => {
+              selectCustomMapMutation.mutate(undefined, {
+                onSuccess: asset => {
+                  if (!asset) return;
 
-                return importCustomMapMutation.mutateAsync(
-                  {
-                    uri: asset.uri,
-                  },
-                  {
-                    onSuccess: () => {
-                      mapAddedBottomSheet.openSheet();
+                  return importCustomMapMutation.mutateAsync(
+                    {
+                      uri: asset.uri,
                     },
-                  },
-                );
-              },
-            });
-          }}
-        />
+                    {
+                      onSuccess: () => {
+                        mapAddedBottomSheet.openSheet();
+                      },
+                    },
+                  );
+                },
+              });
+            }}
+          />
+          <Text style={styles.infoLoadErrorText}>
+            {t(m.customMapInfoLoadError)}
+          </Text>
+        </>
       );
 
       break;
@@ -283,5 +294,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 36,
     color: DARK_GREY,
+  },
+  infoLoadErrorText: {
+    textAlign: 'center',
+    color: RED,
+    fontSize: 20,
   },
 });

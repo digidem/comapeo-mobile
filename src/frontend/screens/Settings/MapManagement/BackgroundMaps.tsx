@@ -116,7 +116,7 @@ export function BackgroundMapsScreen() {
   const removeCustomMapMutation = useRemoveCustomMapFile();
   const customMapInfoQuery = useGetCustomMapInfo();
 
-  let renderedMapInfo;
+  let renderedMapInfo: React.JSX.Element;
 
   switch (customMapInfoQuery.status) {
     case 'pending': {

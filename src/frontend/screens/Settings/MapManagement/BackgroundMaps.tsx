@@ -127,117 +127,6 @@ export function BackgroundMapsScreen() {
   const removeCustomMapMutation = useRemoveCustomMapFile();
   const customMapInfoQuery = useGetCustomMapInfo();
 
-  let renderedMapInfo: React.JSX.Element;
-
-  switch (customMapInfoQuery.status) {
-    case 'pending': {
-      renderedMapInfo = <Loading size={10} />;
-
-      break;
-    }
-    case 'error': {
-      renderedMapInfo = (
-        <>
-          <ChooseMapFile
-            onChooseFile={() => {
-              selectCustomMapMutation.mutate(undefined, {
-                onSuccess: asset => {
-                  if (!asset) return;
-
-                  importCustomMapMutation.mutate(
-                    {
-                      uri: asset.uri,
-                    },
-                    {
-                      onError: () => {
-                        FileSystem.deleteAsync(asset.uri, {
-                          idempotent: true,
-                        }).catch(noop);
-                      },
-                      onSuccess: () => {
-                        mapAddedBottomSheet.openSheet();
-                      },
-                    },
-                  );
-                },
-              });
-            }}
-          />
-          <Text style={styles.infoLoadErrorText}>
-            {t(m.customMapInfoLoadError)}
-          </Text>
-          <Button
-            fullWidth
-            variant="outlined"
-            onPress={() => {
-              removeCustomMapMutation.mutate();
-            }}>
-            <Text style={styles.removeMapFileButtonText}>
-              {t(m.removeMapFile)}
-            </Text>
-          </Button>
-        </>
-      );
-
-      break;
-    }
-    case 'success': {
-      if (customMapInfoQuery.isFetching) {
-        renderedMapInfo = customMapInfoQuery.data ? (
-          <CustomMapDetails
-            loading
-            name={customMapInfoQuery.data.name}
-            dateAdded={customMapInfoQuery.data.created}
-            size={customMapInfoQuery.data.size}
-            onRemove={() => {
-              removeMapBottomSheet.openSheet();
-            }}
-          />
-        ) : (
-          <Loading size={10} />
-        );
-      } else {
-        renderedMapInfo = customMapInfoQuery.data ? (
-          <CustomMapDetails
-            name={customMapInfoQuery.data.name}
-            dateAdded={customMapInfoQuery.data.created}
-            size={customMapInfoQuery.data.size}
-            onRemove={() => {
-              removeMapBottomSheet.openSheet();
-            }}
-          />
-        ) : (
-          <ChooseMapFile
-            onChooseFile={() => {
-              selectCustomMapMutation.mutate(undefined, {
-                onSuccess: asset => {
-                  if (!asset) return;
-
-                  importCustomMapMutation.mutate(
-                    {
-                      uri: asset.uri,
-                    },
-                    {
-                      onError: () => {
-                        FileSystem.deleteAsync(asset.uri, {
-                          idempotent: true,
-                        }).catch(noop);
-                      },
-                      onSuccess: () => {
-                        mapAddedBottomSheet.openSheet();
-                      },
-                    },
-                  );
-                },
-              });
-            }}
-          />
-        );
-      }
-
-      break;
-    }
-  }
   return (
     <>
       <ScrollView contentContainerStyle={styles.container}>
@@ -246,7 +135,53 @@ export function BackgroundMapsScreen() {
           <Text>{t(m.description1)}</Text>
           <Text>{t(m.description2)}</Text>
         </View>
-        {renderedMapInfo}
+
+        <CustomMapInfoSection
+          onChooseFile={() => {
+            selectCustomMapMutation.mutate(undefined, {
+              onSuccess: asset => {
+                if (!asset) return;
+
+                importCustomMapMutation.mutate(
+                  {
+                    uri: asset.uri,
+                  },
+                  {
+                    onError: () => {
+                      FileSystem.deleteAsync(asset.uri, {
+                        idempotent: true,
+                      }).catch(noop);
+                    },
+                    onSuccess: () => {
+                      mapAddedBottomSheet.openSheet();
+                    },
+                  },
+                );
+              },
+            });
+          }}
+          onRemoveMap={() => {
+            removeMapBottomSheet.openSheet();
+          }}
+        />
+
+        {customMapInfoQuery.status === 'error' && (
+          <>
+            <Text style={styles.infoLoadErrorText}>
+              {t(m.customMapInfoLoadError)}
+            </Text>
+            <Button
+              fullWidth
+              variant="outlined"
+              onPress={() => {
+                removeCustomMapMutation.mutate();
+              }}>
+              <Text style={styles.removeMapFileButtonText}>
+                {t(m.removeMapFile)}
+              </Text>
+            </Button>
+          </>
+        )}
       </ScrollView>
 
       <BottomSheetModal
@@ -329,6 +264,38 @@ export function BackgroundMapsScreen() {
         }}
       />
     </>
+  );
+}
+
+function CustomMapInfoSection({
+  onChooseFile,
+  onRemoveMap,
+}: {
+  onChooseFile: () => void;
+  onRemoveMap: () => void;
+}) {
+  const customMapInfoQuery = useGetCustomMapInfo();
+
+  if (customMapInfoQuery.status === 'pending') {
+    return <Loading size={10} />;
+  }
+
+  if (customMapInfoQuery.data) {
+    return (
+      <CustomMapDetails
+        loading={customMapInfoQuery.isFetching}
+        name={customMapInfoQuery.data.name}
+        dateAdded={customMapInfoQuery.data.created}
+        size={customMapInfoQuery.data.size}
+        onRemove={onRemoveMap}
+      />
+    );
+  }
+
+  return customMapInfoQuery.isFetching ? (
+    <Loading size={10} />
+  ) : (
+    <ChooseMapFile onChooseFile={onChooseFile} />
   );
 }
 

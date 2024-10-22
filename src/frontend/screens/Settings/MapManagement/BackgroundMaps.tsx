@@ -9,7 +9,7 @@ import {
   useGetCustomMapInfo,
   useImportCustomMapFile,
   useRemoveCustomMapFile,
-  useSelectCustomMapFile,
+  useSelectFile,
 } from '../../../hooks/server/maps';
 import ErrorSvg from '../../../images/Error.svg';
 import GreenCheckSvg from '../../../images/GreenCheck.svg';
@@ -122,7 +122,7 @@ export function BackgroundMapsScreen() {
   const mapAddedBottomSheet = useBottomSheetModal({openOnMount: false});
   const removeMapBottomSheet = useBottomSheetModal({openOnMount: false});
 
-  const selectCustomMapMutation = useSelectCustomMapFile();
+  const selectCustomMapMutation = useSelectFile();
   const importCustomMapMutation = useImportCustomMapFile();
   const removeCustomMapMutation = useRemoveCustomMapFile();
   const customMapInfoQuery = useGetCustomMapInfo();
@@ -138,27 +138,32 @@ export function BackgroundMapsScreen() {
 
         <CustomMapInfoSection
           onChooseFile={() => {
-            selectCustomMapMutation.mutate(undefined, {
-              onSuccess: asset => {
-                if (!asset) return;
-
-                importCustomMapMutation.mutate(
-                  {
-                    uri: asset.uri,
-                  },
-                  {
-                    onError: () => {
-                      FileSystem.deleteAsync(asset.uri, {
-                        idempotent: true,
-                      }).catch(noop);
-                    },
-                    onSuccess: () => {
-                      mapAddedBottomSheet.openSheet();
-                    },
-                  },
-                );
+            selectCustomMapMutation.mutate(
+              {
+                extensionFilters: ['smp'],
               },
-            });
+              {
+                onSuccess: asset => {
+                  if (!asset) return;
+
+                  importCustomMapMutation.mutate(
+                    {
+                      uri: asset.uri,
+                    },
+                    {
+                      onError: () => {
+                        FileSystem.deleteAsync(asset.uri, {
+                          idempotent: true,
+                        }).catch(noop);
+                      },
+                      onSuccess: () => {
+                        mapAddedBottomSheet.openSheet();
+                      },
+                    },
+                  );
+                },
+              },
+            );
           }}
           onRemoveMap={() => {
             removeMapBottomSheet.openSheet();

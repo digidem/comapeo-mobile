@@ -40,12 +40,10 @@ export function useMapStyleJsonUrl() {
   });
 }
 
-export function useSelectCustomMapFile() {
+export function useSelectFile() {
   return useMutation({
-    mutationFn: () => {
-      return selectFile({
-        extensionFilters: ['smp'],
-      });
+    mutationFn: (opts: Parameters<typeof selectFile>[0]) => {
+      return selectFile(opts);
     },
   });
 }

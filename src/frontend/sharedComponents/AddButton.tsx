@@ -43,8 +43,4 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'center',
   },
-  button: {
-    width: 125,
-    height: 125,
-  },
 });

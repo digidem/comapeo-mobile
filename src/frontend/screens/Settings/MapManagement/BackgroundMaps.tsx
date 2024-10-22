@@ -1,9 +1,9 @@
 import {type NativeStackNavigationOptions} from '@react-navigation/native-stack';
+import * as FileSystem from 'expo-file-system';
 import React from 'react';
 import {defineMessages, useIntl, type MessageDescriptor} from 'react-intl';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import * as FileSystem from 'expo-file-system';
 
 import {
   useGetCustomMapInfo,
@@ -13,6 +13,7 @@ import {
 } from '../../../hooks/server/maps';
 import ErrorSvg from '../../../images/Error.svg';
 import GreenCheckSvg from '../../../images/GreenCheck.svg';
+import noop from '../../../lib/noop';
 import {DARK_GREY, RED, WHITE} from '../../../lib/styles';
 import {
   BottomSheetModal,
@@ -26,7 +27,6 @@ import {Text} from '../../../sharedComponents/Text';
 import {type NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {ChooseMapFile} from './ChooseMapFile';
 import {CustomMapDetails} from './CustomMapDetails';
-import noop from '../../../lib/noop';
 
 const m = defineMessages({
   screenTitle: {

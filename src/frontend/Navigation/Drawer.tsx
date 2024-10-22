@@ -91,6 +91,8 @@ export const DrawerNavigator = () => {
         drawerPosition: 'right',
         headerShown: false,
         swipeEnabled: false,
+        // the child (DrawerContent) is setting the background color
+        drawerStyle: {width: '100%', backgroundColor: 'transparent'},
       }}
       drawerContent={DrawerContent}
       initialRouteName="DrawerHome">
@@ -105,101 +107,115 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
   const {data} = useProjectSettings();
 
   return (
-    <DrawerContentScrollView
-      contentContainerStyle={{flexGrow: 1}}
-      style={{backgroundColor: VERY_LIGHT_GREY, flex: 1}}>
-      <View
+    // By default, the drawer content only takes up some of the screen, if the user clicks outside of the drawer content, it causes the drawer to close. The api does not allow us to stop this behaviour
+    // As a workaround, I am setting a transparent background that takes up the entire screen, and putting the menu on top of that. This blocks the user from clicking outside of the menu as the transparent background is techincally still the menu.
+    <View style={{flex: 1, backgroundColor: 'rgba(0, 0, 0, 0)'}}>
+      <DrawerContentScrollView
+        contentContainerStyle={{flexGrow: 1}}
         style={{
-          paddingBottom: 40,
+          backgroundColor: VERY_LIGHT_GREY,
+          width: '80%',
+          alignSelf: 'flex-end',
         }}>
-        <DrawerMenuIcon
-          style={{alignSelf: 'flex-end', marginRight: 20}}
-          onPress={navigation.closeDrawer}
-        />
-        <Text
-          testID="MAIN.drawer-create-join-txt"
+        <View
           style={{
-            alignSelf: 'center',
-            textAlign: 'center',
-            paddingHorizontal: 40,
-            fontSize: 18,
+            paddingBottom: 40,
           }}>
-          {data?.name
-            ? formatMessage(m.projName, {projectName: data.name})
-            : formatMessage(m.mappingOnOwn)}
-        </Text>
-      </View>
-      <List
-        style={{
-          backgroundColor: WHITE,
-          height: '100%',
-          justifyContent: 'space-between',
-        }}>
-        <View>
-          <ListItem
-            testID="MAIN.create-join-list-item"
-            onPress={() => {
-              navigate('DrawerHome', {screen: 'CreateOrJoinProject'});
+          <DrawerMenuIcon
+            style={{alignSelf: 'flex-end', marginRight: 20}}
+            onPress={navigation.closeDrawer}
+          />
+          <Text
+            testID="MAIN.drawer-create-join-txt"
+            style={{
+              alignSelf: 'center',
+              textAlign: 'center',
+              paddingHorizontal: 40,
+              fontSize: 18,
             }}>
-            <DrawerListItemIcon
-              icon={
-                <MaterialCommunityIcons
-                  name="shape-square-rounded-plus"
-                  size={24}
-                  color="rgba(0, 0, 0, 0.54)"
-                />
-              }
-            />
-            <ListItemText primary={<FormattedMessage {...m.createOrJoin} />} />
-          </ListItem>
-          <ListItem
-            testID="MAIN.project-stg-list-item"
-            onPress={() => {
-              navigate('DrawerHome', {screen: 'ProjectSettings'});
-            }}>
-            <DrawerListItemIcon iconName="assignment" />
-            <ListItemText
-              primary={<FormattedMessage {...m.projectSettings} />}
-            />
-          </ListItem>
-          <ListItem
-            onPress={() => {
-              navigate('DrawerHome', {screen: 'AppSettings'});
-            }}>
-            <DrawerListItemIcon iconName="settings-suggest" />
-            <ListItemText primary={<FormattedMessage {...m.appSettings} />} />
-          </ListItem>
-          {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
+            {data?.name
+              ? formatMessage(m.projName, {projectName: data.name})
+              : formatMessage(m.mappingOnOwn)}
+          </Text>
+        </View>
+        <List
+          style={{
+            backgroundColor: WHITE,
+            height: '100%',
+            justifyContent: 'space-between',
+          }}>
+          <View>
+            <ListItem
+              testID="MAIN.create-join-list-item"
+              onPress={() => {
+                navigate('DrawerHome', {screen: 'CreateOrJoinProject'});
+              }}>
+              <DrawerListItemIcon
+                icon={
+                  <MaterialCommunityIcons
+                    name="shape-square-rounded-plus"
+                    size={24}
+                    color="rgba(0, 0, 0, 0.54)"
+                  />
+                }
+              />
+              <ListItemText
+                primary={<FormattedMessage {...m.createOrJoin} />}
+              />
+            </ListItem>
+            <ListItem
+              testID="MAIN.project-stg-list-item"
+              onPress={() => {
+                navigate('DrawerHome', {screen: 'ProjectSettings'});
+              }}>
+              <DrawerListItemIcon iconName="assignment" />
+              <ListItemText
+                primary={<FormattedMessage {...m.projectSettings} />}
+              />
+            </ListItem>
             <ListItem
               onPress={() => {
-                navigate('CreateTestData');
-              }}
-              testID="settingsCreateTestDataButton">
-              <DrawerListItemIcon iconName="auto-fix-high" />
-              <ListItemText primary="Create Test Data" />
+                navigate('DrawerHome', {screen: 'AppSettings'});
+              }}>
+              <DrawerListItemIcon iconName="settings-suggest" />
+              <ListItemText primary={<FormattedMessage {...m.appSettings} />} />
             </ListItem>
-          )}
-        </View>
-        <View>
-          <ListDivider style={{marginBottom: 5}} />
-          <ListItem
-            onPress={() => {
-              navigate('AboutSettings');
-            }}
-            testID="settingsAboutButton">
-            <DrawerListItemIcon iconName="info-outline" />
-            <ListItemText primary={<FormattedMessage {...m.aboutCoMapeo} />} />
-          </ListItem>
-          <ListItem
-            onPress={() => {
-              navigate('DataAndPrivacy');
-            }}>
-            <DrawerListItemIcon iconName="privacy-tip" />
-            <ListItemText primary={<FormattedMessage {...m.privacyPolicy} />} />
-          </ListItem>
-        </View>
-      </List>
-    </DrawerContentScrollView>
+            {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
+              <ListItem
+                onPress={() => {
+                  navigate('CreateTestData');
+                }}
+                testID="settingsCreateTestDataButton">
+                <DrawerListItemIcon iconName="auto-fix-high" />
+                <ListItemText primary="Create Test Data" />
+              </ListItem>
+            )}
+          </View>
+          <View>
+            <ListDivider style={{marginBottom: 5}} />
+            <ListItem
+              onPress={() => {
+                navigate('AboutSettings');
+              }}
+              testID="settingsAboutButton">
+              <DrawerListItemIcon iconName="info-outline" />
+              <ListItemText
+                primary={<FormattedMessage {...m.aboutCoMapeo} />}
+              />
+            </ListItem>
+            <ListItem
+              onPress={() => {
+                navigate('DataAndPrivacy');
+              }}>
+              <DrawerListItemIcon iconName="privacy-tip" />
+              <ListItemText
+                primary={<FormattedMessage {...m.privacyPolicy} />}
+              />
+            </ListItem>
+          </View>
+        </List>
+      </DrawerContentScrollView>
+    </View>
   );
 };
 

@@ -24,7 +24,6 @@ type ImageIconProps = {
 
 export {GpsIcon} from './GpsIcon';
 // export { CategoryIcon, CategoryCircleIcon } from "./CategoryIcon";
-export {SyncIconCircle} from './SyncIconCircle';
 
 export const AlertIcon = ({size = 30, color = RED, style}: FontIconProps) => (
   <MaterialCommunityIcon color={color} name="alert" size={size} style={style} />

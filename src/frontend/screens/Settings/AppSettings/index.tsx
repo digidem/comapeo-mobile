@@ -8,6 +8,7 @@ import {
 } from '../../../sharedComponents/List';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
+import {useSecurityContext} from '../../../contexts/SecurityContext';
 
 const m = defineMessages({
   title: {
@@ -30,11 +31,17 @@ const m = defineMessages({
     id: 'Screens.Settings.AppSettings.coordinateSystemDesc',
     defaultMessage: 'UTM,Lat/Lon,DMS',
   },
+  security: {
+    id: 'Screens.Settings.AppSettings.Drawer.security',
+    defaultMessage: 'Security',
+  },
 });
 
 export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
   navigation,
 }) => {
+  const {authState} = useSecurityContext();
+
   return (
     <ScrollView>
       <List>
@@ -57,6 +64,15 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
             secondary={<FormattedMessage {...m.coordinateSystemDesc} />}
           />
         </ListItem>
+        {authState !== 'obscured' && (
+          <ListItem
+            onPress={() => {
+              navigation.navigate('Security');
+            }}>
+            <ListItemIcon iconName="security" />
+            <ListItemText primary={<FormattedMessage {...m.security} />} />
+          </ListItem>
+        )}
       </List>
     </ScrollView>
   );

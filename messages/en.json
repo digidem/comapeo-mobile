@@ -82,11 +82,11 @@
   "Navigation.Drawer.createOrJoinDesc": {
     "message": "Create a new project or join existing one"
   },
-  "Navigation.Drawer.dataAndPrivacy": {
-    "message": "Data & Privacy"
-  },
   "Navigation.Drawer.mappingOnOwn": {
     "message": "You are currently mapping on your own"
+  },
+  "Navigation.Drawer.privacyPolicy": {
+    "message": "Privacy Policy"
   },
   "Navigation.Drawer.projName": {
     "message": "Project {projectName}"
@@ -97,9 +97,6 @@
   "Navigation.Drawer.projectSettingsDesc": {
     "description": "list of avaialable project settings",
     "message": "Categories, Config, Team"
-  },
-  "Navigation.Drawer.security": {
-    "message": "Security"
   },
   "Navigation.Drawer.title": {
     "description": "Title of settings screen",
@@ -134,6 +131,9 @@
   },
   "SaveTrack.HeaderLeft.discardTrackDescription": {
     "message": "Your Track will not be saved. This cannot be undone."
+  },
+  "Screens.Settings.AppSettings.Drawer.security": {
+    "message": "Security"
   },
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Coordinate System"

@@ -122,7 +122,7 @@ export function BackgroundMapsScreen() {
   const mapAddedBottomSheet = useBottomSheetModal({openOnMount: false});
   const removeMapBottomSheet = useBottomSheetModal({openOnMount: false});
 
-  const selectCustomMapMutation = useSelectFile();
+  const selectFileMutation = useSelectFile();
   const importCustomMapMutation = useImportCustomMapFile();
   const removeCustomMapMutation = useRemoveCustomMapFile();
   const customMapInfoQuery = useGetCustomMapInfo();
@@ -138,7 +138,7 @@ export function BackgroundMapsScreen() {
 
         <CustomMapInfoSection
           onChooseFile={() => {
-            selectCustomMapMutation.mutate(
+            selectFileMutation.mutate(
               {
                 extensionFilters: ['smp'],
               },
@@ -243,16 +243,16 @@ export function BackgroundMapsScreen() {
       <ErrorBottomSheet
         error={
           removeCustomMapMutation.error ||
-          selectCustomMapMutation.error ||
+          selectFileMutation.error ||
           importCustomMapMutation.error
         }
         title={
-          selectCustomMapMutation.error || importCustomMapMutation.error
+          selectFileMutation.error || importCustomMapMutation.error
             ? m.importErrorTitle
             : undefined
         }
         description={
-          selectCustomMapMutation.error || importCustomMapMutation.error
+          selectFileMutation.error || importCustomMapMutation.error
             ? m.importErrorDesciption
             : undefined
         }
@@ -260,8 +260,8 @@ export function BackgroundMapsScreen() {
           if (removeCustomMapMutation.error) {
             removeCustomMapMutation.reset();
           }
-          if (selectCustomMapMutation.error) {
-            selectCustomMapMutation.reset();
+          if (selectFileMutation.error) {
+            selectFileMutation.reset();
           }
           if (importCustomMapMutation.error) {
             importCustomMapMutation.reset();

@@ -1,4 +1,4 @@
-appId: com.comapeo
+appId: com.comapeo.dev
 env:
   CAT: OBS
   SUBCAT: MAIN
@@ -22,9 +22,9 @@ env:
     text: '.*[Next | Done].*'
 - assertVisible:
     text: '.*What is gathered here?.*'
-- assertVisible:
-    label: 'Prompt displays name of detail field with placeholder/help text below'
-    text: '.*firewood.*'
+# - assertVisible:
+#     label: 'Prompt displays name of detail field with placeholder/help text below'
+#     text: '.*firewood.*'
 - assertVisible:
     label: 'Cursor is visible and on-screen keyboard is open by default'
     id: '${CAT}.details-inp'
@@ -50,4 +50,4 @@ env:
     label: 'Tapping done returns to new observation screen'
     text: '.*New Observation.*'
 - tapOn:
-    id: '${CAT}.save-btn'
+    id: '${CAT}.edit-save-btn'

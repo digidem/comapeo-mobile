@@ -1,4 +1,4 @@
-appId: com.comapeo
+appId: com.comapeo.dev
 ---
 - assertVisible:
     label: 'Back button returns to the Security Screen'

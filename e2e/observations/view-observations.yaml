@@ -1,4 +1,4 @@
-appId: com.comapeo
+appId: com.comapeo.dev
 env:
   CAT: OBS
   SUBCAT: MAIN
@@ -24,7 +24,7 @@ env:
     point: '46%,49%'
 - assertVisible:
     label: 'Point goes to the View observation screen for that point'
-    text: 'Gathering Site'
+    text: 'Threat'
 - tapOn:
     id: '${SUBCAT}.header-back-btn'
 - assertVisible:

@@ -1,8 +1,8 @@
-appId: com.comapeo
+appId: com.comapeo.dev
 ---
 - stopApp
 - launchApp:
-    appId: com.comapeo
+    appId: com.comapeo.dev
 - assertVisible:
     label: 'Passcode entry screen appears when user closes Mapeo app completely, and re-opens CoMapeo app'
     text: 'Enter your passcode'

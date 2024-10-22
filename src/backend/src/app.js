@@ -5,13 +5,7 @@ import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
 /** @type {import('../types/rn-bridge.js')} */
 const rnBridge = require('rn-bridge')
-import {
-  MapeoManager,
-  FastifyController,
-  MapeoMapsFastifyPlugin,
-  MapeoStaticMapsFastifyPlugin,
-  MapeoOfflineFallbackMapFastifyPlugin,
-} from '@comapeo/core'
+import { MapeoManager, FastifyController } from '@comapeo/core'
 import { createMapeoServer } from '@comapeo/ipc'
 import Fastify from 'fastify'
 
@@ -56,18 +50,13 @@ process.on('exit', (code) => {
  * @param {string} [options.version] Device Version
  * @param {Buffer} options.rootKey
  * @param {string} options.migrationsFolderPath
- * @param {string} options.sharedStoragePath Path to app-specific external file storage folder
  * @param {string} options.defaultConfigPath
- * @param {string} options.fallbackMapPath Path to app-specific external file storage folder
- *
  */
 export async function init({
   version,
   rootKey,
   migrationsFolderPath,
-  sharedStoragePath,
   defaultConfigPath,
-  fallbackMapPath,
 }) {
   log('Starting app...')
   log(`Device version is ${version}`)
@@ -75,29 +64,12 @@ export async function init({
   const privateStorageDir = rnBridge.app.datadir()
   const dbDir = join(privateStorageDir, DB_DIR_NAME)
   const indexDir = join(privateStorageDir, CORE_STORAGE_DIR_NAME)
-  const staticStylesDir = join(sharedStoragePath, 'styles')
 
   mkdirSync(dbDir, { recursive: true })
   mkdirSync(indexDir, { recursive: true })
-  mkdirSync(staticStylesDir, { recursive: true })
 
   const fastify = Fastify()
   const fastifyController = new FastifyController({ fastify })
-
-  // Register maps plugins
-  fastify.register(MapeoStaticMapsFastifyPlugin, {
-    prefix: 'static',
-    staticRootDir: staticStylesDir,
-  })
-  fastify.register(MapeoOfflineFallbackMapFastifyPlugin, {
-    prefix: 'fallback',
-    styleJsonPath: join(fallbackMapPath, 'style.json'),
-    sourcesDir: join(fallbackMapPath, 'dist'),
-  })
-  fastify.register(MapeoMapsFastifyPlugin, {
-    prefix: 'maps',
-    defaultOnlineStyleUrl: DEFAULT_ONLINE_MAP_STYLE_URL,
-  })
 
   const manager = new MapeoManager({
     rootKey,
@@ -107,6 +79,7 @@ export async function init({
     projectMigrationsFolder: join(migrationsFolderPath, 'project'),
     fastify,
     defaultConfigPath,
+    defaultOnlineStyleUrl: DEFAULT_ONLINE_MAP_STYLE_URL,
   })
 
   // Don't await, methods that use the server will await this internally

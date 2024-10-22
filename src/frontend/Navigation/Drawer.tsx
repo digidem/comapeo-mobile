@@ -10,6 +10,7 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
+  ListDivider,
 } from '../sharedComponents/List';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {NavigatorScreenParams} from '@react-navigation/native';
@@ -20,7 +21,6 @@ import {useProjectSettings} from '../hooks/server/projects';
 import {AppStackParamsList} from '../sharedTypes/navigation';
 import {RootStackNavigator} from './Stack';
 import {DrawerMenuIcon} from '../sharedComponents/icons/DrawerMenuIcon';
-import {Divider} from '../sharedComponents/Divider';
 
 const m = defineMessages({
   settingsTitle: {
@@ -66,7 +66,7 @@ const m = defineMessages({
   },
   privacyPolicy: {
     id: 'Navigation.Drawer.privacyPolicy',
-    defaultMessage: 'Data & Privacy',
+    defaultMessage: 'Privacy Policy',
   },
   projName: {
     id: 'Navigation.Drawer.projName',
@@ -122,7 +122,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
             alignSelf: 'center',
             textAlign: 'center',
             paddingHorizontal: 40,
-            fontSize: 20,
+            fontSize: 18,
           }}>
           {data?.name
             ? formatMessage(m.projName, {projectName: data.name})
@@ -181,7 +181,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
           )}
         </View>
         <View>
-          <Divider />
+          <ListDivider style={{marginBottom: 5}} />
           <ListItem
             onPress={() => {
               navigate('AboutSettings');

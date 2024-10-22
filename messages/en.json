@@ -86,7 +86,7 @@
     "message": "You are currently mapping on your own"
   },
   "Navigation.Drawer.privacyPolicy": {
-    "message": "Data & Privacy"
+    "message": "Privacy Policy"
   },
   "Navigation.Drawer.projName": {
     "message": "Project {projectName}"

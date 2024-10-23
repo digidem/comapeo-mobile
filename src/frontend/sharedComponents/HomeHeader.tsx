@@ -2,11 +2,11 @@ import React, {FC} from 'react';
 import {View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {IconButton} from './IconButton';
-import {SyncIconCircle} from './icons';
 import {GPSPill} from './GPSPill';
 import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
 import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {DrawerMenuIcon} from './icons/DrawerMenuIcon';
+import SyncIconCircle from '../images/Sync.svg';
 
 export const HomeHeader: FC<
   BottomTabHeaderProps & {openDrawer: () => void}
@@ -25,7 +25,7 @@ export const HomeHeader: FC<
         onPress={() => {
           navigation.navigate('Sync');
         }}>
-        <SyncIconCircle />
+        <SyncIconCircle testID="MAIN.sync-icon" />
       </IconButton>
       <GPSPill navigation={navigation} />
       <DrawerMenuIcon style={{marginRight: 20}} onPress={openDrawer} />

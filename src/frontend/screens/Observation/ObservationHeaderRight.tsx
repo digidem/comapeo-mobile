@@ -4,7 +4,7 @@ import {View, StyleSheet} from 'react-native';
 import {IconButton} from '../../sharedComponents/IconButton';
 
 import {EditIcon} from '../../sharedComponents/icons';
-import {SyncIcon} from '../../sharedComponents/icons/SyncIconCircle';
+import {SyncIcon} from '../../sharedComponents/icons';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {UIActivityIndicator} from 'react-native-indicators';

@@ -189,8 +189,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         ...value.attachments.filter(
           attachment =>
             !removedAudioAttachments.some(
-              removed =>
-                removed.driveDiscoveryId === attachment.driveDiscoveryId,
+              removed => removed.name === attachment.name,
             ),
         ),
         ...newAttachments,

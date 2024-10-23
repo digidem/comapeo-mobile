@@ -7,41 +7,52 @@ import {useAttachmentUrlQuery} from '../../hooks/server/media';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 
 type AudioThumbnailProps = {
-  audioAttachment: Audio;
+  audio: Audio;
   style?: StyleProp<ViewStyle>;
   size?: number;
   isEditing: boolean;
 };
 
-const UnsavedAudioThumbnail: FC<{
-  audio: UnsavedAudio;
+interface SharedThumbnailProps {
   style?: StyleProp<ViewStyle>;
   size: number;
   isEditing: boolean;
-}> = ({audio, style, size, isEditing}) => {
+  onPress?: () => void;
+  disabled?: boolean;
+}
+
+const AudioThumbnailButton: FC<SharedThumbnailProps> = ({
+  style,
+  size,
+  onPress,
+  disabled = false,
+}) => (
+  <TouchableOpacity
+    style={[styles.thumbnailContainer, {width: size, height: size}, style]}
+    disabled={disabled}
+    onPress={onPress}>
+    <PlayArrow width={48} height={48} />
+  </TouchableOpacity>
+);
+
+const UnsavedAudioThumbnail: FC<
+  SharedThumbnailProps & {audio: UnsavedAudio}
+> = ({audio, ...props}) => {
   const navigation = useNavigationFromRoot();
 
   const handlePress = () => {
     navigation.navigate('Audio', {
       existingUri: audio.uri,
-      isEditing,
+      isEditing: props.isEditing,
     });
   };
-  return (
-    <TouchableOpacity
-      style={[styles.thumbnailContainer, {width: size, height: size}, style]}
-      onPress={handlePress}>
-      <PlayArrow width={48} height={48} />
-    </TouchableOpacity>
-  );
+
+  return <AudioThumbnailButton {...props} onPress={handlePress} />;
 };
 
-const SavedAudioThumbnail: FC<{
-  audio: AudioAttachment;
-  style?: StyleProp<ViewStyle>;
-  size: number;
-  isEditing: boolean;
-}> = ({audio, style, size, isEditing}) => {
+const SavedAudioThumbnail: FC<
+  SharedThumbnailProps & {audio: AudioAttachment}
+> = ({audio, ...props}) => {
   const {data, isPending, isError} = useAttachmentUrlQuery(audio, 'original');
   const navigation = useNavigationFromRoot();
 
@@ -49,34 +60,33 @@ const SavedAudioThumbnail: FC<{
     if (!isPending && data?.url) {
       navigation.navigate('Audio', {
         existingUri: data.url,
-        isEditing,
+        isEditing: props.isEditing,
       });
     }
   };
 
   return (
-    <TouchableOpacity
-      style={[styles.thumbnailContainer, {width: size, height: size}, style]}
+    <AudioThumbnailButton
+      {...props}
       onPress={handlePress}
-      disabled={isPending || !data?.url || isError}>
-      <PlayArrow width={48} height={48} />
-    </TouchableOpacity>
+      disabled={isPending || !data?.url || isError}
+    />
   );
 };
 
 export const AudioThumbnail: FC<AudioThumbnailProps> = ({
-  audioAttachment,
+  audio,
   style,
   size = 80,
   isEditing = false,
 }) => {
-  if ('deleted' in audioAttachment && audioAttachment.deleted === true) {
+  if ('deleted' in audio && audio.deleted === true) {
     return null;
   }
-  if ('uri' in audioAttachment) {
+  if ('uri' in audio) {
     return (
       <UnsavedAudioThumbnail
-        audio={audioAttachment}
+        audio={audio}
         style={style}
         size={size}
         isEditing={isEditing}
@@ -85,7 +95,7 @@ export const AudioThumbnail: FC<AudioThumbnailProps> = ({
   }
   return (
     <SavedAudioThumbnail
-      audio={audioAttachment}
+      audio={audio}
       style={style}
       size={size}
       isEditing={isEditing}

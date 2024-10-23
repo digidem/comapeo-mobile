@@ -164,8 +164,8 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       return;
     }
 
-    const files = [...newPhotos, ...newAudioRecordings];
-    const attachmentPromises = files.map(file =>
+    const unsavedFiles = [...newPhotos, ...newAudioRecordings];
+    const attachmentPromises = unsavedFiles.map(file =>
       createBlobMutation.mutateAsync(file),
     );
 

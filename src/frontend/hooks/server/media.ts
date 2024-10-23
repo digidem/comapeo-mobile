@@ -14,44 +14,37 @@ export function useCreateBlobMutation(opts: {retry?: number} = {}) {
 
   return useMutation({
     retry: opts.retry,
-    mutationFn: async (photo: ProcessedDraftPhoto) => {
-      const {originalUri, previewUri, thumbnailUri} = photo;
-
-      return projectApi.$blobs.create(
-        {
-          original: new URL(originalUri).pathname,
-          preview: previewUri ? new URL(previewUri).pathname : undefined,
-          thumbnail: thumbnailUri ? new URL(thumbnailUri).pathname : undefined,
-        },
-        // TODO: DraftPhoto type should probably carry MIME type info that feeds this
-        // although backend currently only uses first part of path
-        {
-          mimeType: 'image/jpeg',
-          location: photo.mediaMetadata.location,
-          timestamp: photo.mediaMetadata.timestamp,
-        },
-      );
-    },
-  });
-}
-
-export function useCreateAudioBlobMutation(opts: {retry?: number} = {}) {
-  const {projectApi} = useActiveProject();
-
-  return useMutation({
-    retry: opts.retry,
-    mutationFn: async (audio: UnsavedAudio) => {
-      const {uri, createdAt} = audio;
-
-      return projectApi.$blobs.create(
-        {
-          original: new URL(uri).pathname,
-        },
-        {
-          mimeType: 'audio/mp4',
-          timestamp: createdAt,
-        },
-      );
+    mutationFn: async (attachment: ProcessedDraftPhoto | UnsavedAudio) => {
+      if ('type' in attachment) {
+        const {originalUri, previewUri, thumbnailUri} = attachment;
+        return projectApi.$blobs.create(
+          {
+            original: new URL(originalUri).pathname,
+            preview: previewUri ? new URL(previewUri).pathname : undefined,
+            thumbnail: thumbnailUri
+              ? new URL(thumbnailUri).pathname
+              : undefined,
+          },
+          // TODO: DraftPhoto type should probably carry MIME type info that feeds this
+          // although backend currently only uses first part of path
+          {
+            mimeType: 'image/jpeg',
+            location: attachment.mediaMetadata.location,
+            timestamp: attachment.mediaMetadata.timestamp,
+          },
+        );
+      } else {
+        const {uri, createdAt} = attachment;
+        return projectApi.$blobs.create(
+          {
+            original: new URL(uri).pathname,
+          },
+          {
+            mimeType: 'audio/mp4',
+            timestamp: createdAt,
+          },
+        );
+      }
     },
   });
 }

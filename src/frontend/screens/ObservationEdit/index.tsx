@@ -6,10 +6,7 @@ import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {useEditObservation} from '../../hooks/server/observations';
-import {
-  useCreateBlobMutation,
-  useCreateAudioBlobMutation,
-} from '../../hooks/server/media';
+import {useCreateBlobMutation} from '../../hooks/server/media';
 import {SaveButton} from '../../sharedComponents/SaveButton';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
@@ -59,7 +56,6 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   const photos = usePersistedDraftObservation(store => store.photos);
   const audioRecordings = usePersistedDraftObservation(store => store.audios);
   const createBlobMutation = useCreateBlobMutation();
-  const createAudioBlobMutation = useCreateAudioBlobMutation();
 
   const notes = value?.tags.notes;
   const presetName = preset
@@ -168,14 +164,12 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       return;
     }
 
-    const photoPromises = newPhotos.map(photo =>
-      createBlobMutation.mutateAsync(photo),
-    );
-    const audioPromises = newAudioRecordings.map(audio =>
-      createAudioBlobMutation.mutateAsync(audio),
+    const files = [...newPhotos, ...newAudioRecordings];
+    const attachmentPromises = files.map(file =>
+      createBlobMutation.mutateAsync(file),
     );
 
-    Promise.all([...photoPromises, ...audioPromises]).then(results => {
+    Promise.all(attachmentPromises).then(results => {
       const newAttachments = results.map(
         ({driveId: driveDiscoveryId, type, name, hash}) => ({
           driveDiscoveryId,
@@ -218,7 +212,6 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     photos,
     createBlobMutation,
     audioRecordings,
-    createAudioBlobMutation,
     handleNavigationSuccess,
   ]);
 
@@ -260,15 +253,10 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         isEditing={true}
       />
       <ErrorBottomSheet
-        error={
-          editObservationMutation.error ||
-          createBlobMutation.error ||
-          createAudioBlobMutation.error
-        }
+        error={editObservationMutation.error || createBlobMutation.error}
         clearError={() => {
           editObservationMutation.reset();
           createBlobMutation.reset();
-          createAudioBlobMutation.reset();
         }}
         tryAgain={editObservation}
       />

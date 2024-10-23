@@ -7,7 +7,7 @@ import {useAttachmentUrlQuery} from '../../hooks/server/media';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 
 type AudioThumbnailProps = {
-  audio: Audio;
+  audioAttachment: Audio;
   style?: StyleProp<ViewStyle>;
   size?: number;
   isEditing: boolean;
@@ -36,13 +36,13 @@ const AudioThumbnailButton: FC<SharedThumbnailProps> = ({
 );
 
 const UnsavedAudioThumbnail: FC<
-  SharedThumbnailProps & {audio: UnsavedAudio}
-> = ({audio, ...props}) => {
+  SharedThumbnailProps & {audioAttachment: UnsavedAudio}
+> = ({audioAttachment, ...props}) => {
   const navigation = useNavigationFromRoot();
 
   const handlePress = () => {
     navigation.navigate('Audio', {
-      existingUri: audio.uri,
+      existingUri: audioAttachment.uri,
       isEditing: props.isEditing,
     });
   };
@@ -51,9 +51,12 @@ const UnsavedAudioThumbnail: FC<
 };
 
 const SavedAudioThumbnail: FC<
-  SharedThumbnailProps & {audio: AudioAttachment}
-> = ({audio, ...props}) => {
-  const {data, isPending, isError} = useAttachmentUrlQuery(audio, 'original');
+  SharedThumbnailProps & {audioAttachment: AudioAttachment}
+> = ({audioAttachment, ...props}) => {
+  const {data, isPending, isError} = useAttachmentUrlQuery(
+    audioAttachment,
+    'original',
+  );
   const navigation = useNavigationFromRoot();
 
   const handlePress = () => {
@@ -75,18 +78,18 @@ const SavedAudioThumbnail: FC<
 };
 
 export const AudioThumbnail: FC<AudioThumbnailProps> = ({
-  audio,
+  audioAttachment,
   style,
   size = 80,
   isEditing = false,
 }) => {
-  if ('deleted' in audio && audio.deleted === true) {
+  if ('deleted' in audioAttachment && audioAttachment.deleted === true) {
     return null;
   }
-  if ('uri' in audio) {
+  if ('uri' in audioAttachment) {
     return (
       <UnsavedAudioThumbnail
-        audio={audio}
+        audioAttachment={audioAttachment}
         style={style}
         size={size}
         isEditing={isEditing}
@@ -95,7 +98,7 @@ export const AudioThumbnail: FC<AudioThumbnailProps> = ({
   }
   return (
     <SavedAudioThumbnail
-      audio={audio}
+      audioAttachment={audioAttachment}
       style={style}
       size={size}
       isEditing={isEditing}

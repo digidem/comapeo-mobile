@@ -165,14 +165,15 @@ export const ObservationCreate = ({
     // This could potentially be alleviated by a more granular and informative UI about the photo-saving state, but currently there is nothing in place.
     // Basically, which is worse: orphaned attachments or saving observations that seem to be missing attachments?
 
-    const attachmentPromises = [savablePhotos, unsavedAudioRecordings].map(
-      file => {
-        return createBlobMutation.mutateAsync(
-          // @ts-expect-error Due to TS array filtering limitations. Fixed in TS 5.5
-          file,
-        );
-      },
-    );
+    const attachmentPromises = [
+      ...savablePhotos,
+      ...unsavedAudioRecordings,
+    ].map(file => {
+      return createBlobMutation.mutateAsync(
+        // @ts-expect-error Due to TS array filtering limitations. Fixed in TS 5.5
+        file,
+      );
+    });
 
     Promise.all(attachmentPromises).then(results => {
       const newAttachments = results.map(

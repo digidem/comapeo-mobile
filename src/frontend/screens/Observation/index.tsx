@@ -19,6 +19,7 @@ import {MediaScrollView} from '../../sharedComponents/MediaScrollView/index.tsx'
 import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
 import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types.ts';
+import {SavedAudio} from '../../contexts/AudioPromiseContext/types.ts';
 import {ButtonFields} from './Buttons.tsx';
 
 const m = defineMessages({
@@ -79,6 +80,10 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
     (attachment): attachment is SavedPhoto => attachment.type === 'photo',
   );
 
+  const audioAttachments = observation.attachments.filter(
+    (attachment): attachment is SavedAudio => attachment.type === 'audio',
+  );
+
   return (
     <ScrollView
       style={styles.root}
@@ -102,9 +107,10 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
               <Text style={styles.textNotes}>{observation.tags.notes}</Text>
             </View>
           ) : null}
-          {photoAttachments.length > 0 && (
+          {(photoAttachments.length > 0 || audioAttachments.length > 0) && (
             <MediaScrollView
               photos={photoAttachments}
+              audioAttachments={audioAttachments}
               observationId={observationId}
             />
           )}

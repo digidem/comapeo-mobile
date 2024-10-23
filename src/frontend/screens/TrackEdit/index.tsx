@@ -78,6 +78,7 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
 
   return (
     <Editor
+      audioAttachments={[]}
       photos={[]}
       presetName={formatMessage(m.presetTitle)}
       notesComponent={<TrackDescriptionField />}

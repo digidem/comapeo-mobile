@@ -19,6 +19,7 @@ import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';
 import {ActionsRow} from '../../sharedComponents/ActionRow';
 import {Alert, type AlertButton} from 'react-native';
+import {ProcessedDraftAudio} from '../../contexts/AudioPromiseContext/types';
 
 const m = defineMessages({
   observation: {
@@ -89,9 +90,7 @@ export const ObservationCreate = ({
   const {usePreset} = useDraftObservation();
   const preset = usePreset();
   const value = usePersistedDraftObservation(store => store.value);
-  const audioRecordings = usePersistedDraftObservation(
-    store => store.audioRecordings,
-  );
+  const audioRecordings = usePersistedDraftObservation(store => store.audios);
   const {updateTags, clearDraft} = useDraftObservation();
   const photos = usePersistedDraftObservation(store => store.photos);
   const createObservationMutation = useCreateObservation();
@@ -130,7 +129,9 @@ export const ObservationCreate = ({
     if (!value) throw new Error('no observation saved in persisted state ');
 
     const savablePhotos = photos.filter(photo => photo.type === 'processed');
-    const savableAudioRecordings = audioRecordings;
+    const savableAudioRecordings = audioRecordings.filter(
+      (audio): audio is ProcessedDraftAudio => audio.type === 'processed',
+    );
 
     if (savablePhotos.length === 0 && savableAudioRecordings.length === 0) {
       createObservationMutation.mutate(
@@ -335,8 +336,11 @@ export const ObservationCreate = ({
           updateTags('notes', newVal);
         }}
         photos={photos}
+        audioAttachments={audioRecordings}
         location={coordinateInfo}
-        actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
+        actionsRow={
+          <ActionsRow fieldRefs={preset?.fieldRefs} isEditing={false} />
+        }
       />
       <ErrorBottomSheet
         error={

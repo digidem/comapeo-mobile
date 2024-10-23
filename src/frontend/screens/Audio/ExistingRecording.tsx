@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Pressable, View, StyleSheet} from 'react-native';
 import {
   HeaderBackButton,
@@ -18,6 +18,7 @@ import {WHITE, BLACK} from '../../lib/styles';
 import ErrorIcon from '../../images/Error.svg';
 import Share from 'react-native-share';
 import * as FileSystem from 'expo-file-system';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 const m = defineMessages({
   deleteBottomSheetTitle: {
@@ -56,6 +57,8 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
     openOnMount: false,
   });
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -77,6 +80,7 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
   };
 
   const handleShare = async () => {
+    setLoading(true);
     const tempFileName = 'temp_audio_file.m4a';
     const localUri = `${FileSystem.cacheDirectory}${tempFileName}`;
 
@@ -87,6 +91,8 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
     } catch (err) {
       // just keep while developing
       console.error('Error sharing file:', err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -103,9 +109,13 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
             ) : null
           }
           rightControl={
-            <Pressable onPress={handleShare}>
-              <MaterialIcon name="share" color={WHITE} size={36} />
-            </Pressable>
+            loading ? (
+              <UIActivityIndicator size={36} />
+            ) : (
+              <Pressable onPress={handleShare}>
+                <MaterialIcon name="share" color={WHITE} size={36} />
+              </Pressable>
+            )
           }
         />
       </View>

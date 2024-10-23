@@ -128,7 +128,8 @@ export const ObservationCreate = ({
     );
 
     const unsavedAudioRecordings = attachments.filter(
-      (audio): audio is UnsavedAudio => !('driveDiscoveryId' in audio),
+      (audio): audio is UnsavedAudio =>
+        !('driveDiscoveryId' in audio) && 'uri' in audio,
     );
 
     if (savablePhotos.length === 0 && unsavedAudioRecordings.length === 0) {

@@ -57,7 +57,42 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
     openOnMount: false,
   });
 
+  const [localUri, setLocalUri] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    let isCancelled = false;
+    const tempFileName = `audio_${Date.now()}.m4a`;
+    const localFilePath = `${FileSystem.cacheDirectory}${tempFileName}`;
+    setLoading(true);
+
+    const downloadAudio = async () => {
+      try {
+        const downloadResult = await FileSystem.downloadAsync(
+          uri,
+          localFilePath,
+        );
+        if (!isCancelled) {
+          setLocalUri(downloadResult.uri);
+        }
+      } catch (err) {
+        console.error('Error downloading audio file:', err);
+      } finally {
+        if (!isCancelled) {
+          setLoading(false);
+        }
+      }
+    };
+
+    downloadAudio();
+
+    return () => {
+      isCancelled = true;
+      if (localUri) {
+        FileSystem.deleteAsync(localUri, {idempotent: true}).catch(() => {});
+      }
+    };
+  }, [uri, localUri]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -80,16 +115,14 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
   };
 
   const handleShare = async () => {
+    if (!localUri) {
+      console.error('Local audio file is not available for sharing.');
+      return;
+    }
     setLoading(true);
-    const tempFileName = 'temp_audio_file.m4a';
-    const localUri = `${FileSystem.cacheDirectory}${tempFileName}`;
-
     try {
-      const downloadResult = await FileSystem.downloadAsync(uri, localUri);
-      await Share.open({url: downloadResult.uri});
-      await FileSystem.deleteAsync(downloadResult.uri, {idempotent: true});
+      await Share.open({url: localUri});
     } catch (err) {
-      // just keep while developing
       console.error('Error sharing file:', err);
     } finally {
       setLoading(false);
@@ -100,7 +133,7 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
     <>
       <View style={styles.container}>
         <Playback
-          uri={uri}
+          uri={localUri || uri} // Use localUri if available
           leftControl={
             isEditing ? (
               <Pressable onPress={openSheet}>
@@ -110,7 +143,7 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
           }
           rightControl={
             loading ? (
-              <UIActivityIndicator size={36} />
+              <UIActivityIndicator size={24} color={WHITE} />
             ) : (
               <Pressable onPress={handleShare}>
                 <MaterialIcon name="share" color={WHITE} size={36} />

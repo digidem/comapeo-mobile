@@ -6,11 +6,11 @@ type Setter = StoreApi<DraftObservationSlice>['setState'];
 type Getter = StoreApi<DraftObservationSlice>['getState'];
 
 export function deletePhoto(set: Setter, get: Getter, uri: string) {
-  const newPhotosArray = get().photos.filter(
+  const newAttachments = get().attachments.filter(
     photo => 'originalUri' in photo && photo.originalUri !== uri,
   );
 
-  set({photos: newPhotosArray});
+  set({attachments: newAttachments});
 }
 
 export function replaceDraftPhotos(

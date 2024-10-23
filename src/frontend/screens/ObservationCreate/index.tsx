@@ -87,9 +87,8 @@ export const ObservationCreate = ({
   const {usePreset} = useDraftObservation();
   const preset = usePreset();
   const value = usePersistedDraftObservation(store => store.value);
-  const audioRecordings = usePersistedDraftObservation(store => store.audios);
+  const attachments = usePersistedDraftObservation(store => store.attachments);
   const {updateTags, clearDraft} = useDraftObservation();
-  const photos = usePersistedDraftObservation(store => store.photos);
   const createObservationMutation = useCreateObservation();
   const createBlobMutation = useCreateBlobMutation();
   const isTracking = usePersistedTrack(state => state.isTracking);
@@ -124,9 +123,11 @@ export const ObservationCreate = ({
   const createObservation = React.useCallback(() => {
     if (!value) throw new Error('no observation saved in persisted state ');
 
-    const savablePhotos = photos.filter(photo => photo.type === 'processed');
+    const savablePhotos = attachments.filter(
+      attachment => 'type' in attachment && attachment.type === 'processed',
+    );
 
-    const unsavedAudioRecordings = audioRecordings.filter(
+    const unsavedAudioRecordings = attachments.filter(
       (audio): audio is UnsavedAudio => !('driveDiscoveryId' in audio),
     );
 
@@ -170,7 +171,7 @@ export const ObservationCreate = ({
       ...unsavedAudioRecordings,
     ].map(file => {
       return createBlobMutation.mutateAsync(
-        // @ts-expect-error Due to TS array filtering limitations. Fixed in TS 5.5
+        // @ts-expect-error
         file,
       );
     });
@@ -226,8 +227,7 @@ export const ObservationCreate = ({
     createObservationMutation,
     isTracking,
     navigation,
-    photos,
-    audioRecordings,
+    attachments,
     value,
     preset,
   ]);
@@ -328,8 +328,7 @@ export const ObservationCreate = ({
         updateNotes={newVal => {
           updateTags('notes', newVal);
         }}
-        photos={photos}
-        audioAttachments={audioRecordings}
+        attachments={attachments}
         location={coordinateInfo}
         actionsRow={
           <ActionsRow fieldRefs={preset?.fieldRefs} isEditing={false} />

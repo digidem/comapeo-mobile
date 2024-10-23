@@ -23,8 +23,7 @@ const emptyObservation: ClientGeneratedObservation = {
 };
 
 export type DraftObservationSlice = {
-  photos: Photo[];
-  audios: Audio[];
+  attachments: (Photo | Audio)[];
   value: Observation | null | ClientGeneratedObservation;
   observationId?: string;
   preset?: Preset;
@@ -67,19 +66,22 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
   set,
   get,
 ) => ({
-  photos: [],
-  audios: [],
+  attachments: [],
   value: null,
   actions: {
     deletePhoto: uri => deletePhoto(set, get, uri),
     addPhotoPlaceholder: draftPhotoId =>
-      set({photos: [...get().photos, {type: 'unprocessed', draftPhotoId}]}),
+      set({
+        attachments: [
+          ...get().attachments,
+          {type: 'unprocessed', draftPhotoId},
+        ],
+      }),
     replacePhotoPlaceholderWithPhoto: draftPhoto =>
       replaceDraftPhotos(set, get, draftPhoto),
     clearDraft: () => {
       set({
-        photos: [],
-        audios: [],
+        attachments: [],
         value: null,
         observationId: undefined,
         preset: undefined,
@@ -119,15 +121,17 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
       }
     },
     existingObservationToDraft: (observation, preset) => {
+      const photos = observation.attachments.filter(
+        (att): att is SavedPhoto => att.type === 'photo',
+      );
+      const audios = observation.attachments.filter(
+        (att): att is AudioAttachment => att.type === 'audio',
+      );
+
       set({
         value: observation,
         observationId: observation.docId,
-        photos: observation.attachments.filter(
-          (att): att is SavedPhoto => att.type === 'photo',
-        ),
-        audios: observation.attachments.filter(
-          (att): att is AudioAttachment => att.type === 'audio',
-        ),
+        attachments: [...photos, ...audios],
         preset,
       });
     },
@@ -206,19 +210,17 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
       });
     },
     addAudio: (audio: UnsavedAudio) => {
-      set({audios: [...get().audios, audio]});
+      set({attachments: [...get().attachments, audio]});
     },
     deleteAudio: (uri: string) => {
       const extractedName = uri.split('/').pop();
-      const updatedAudios = get().audios.map(audio => {
-        if ('uri' in audio) {
-          return audio;
-        } else if ('name' in audio && audio.name === extractedName) {
-          return {...audio, deleted: true};
+      const updatedAttachments = get().attachments.map(attachment => {
+        if ('name' in attachment && attachment.name === extractedName) {
+          return {...attachment, deleted: true};
         }
-        return audio;
+        return attachment;
       });
-      set({audios: updatedAudios});
+      set({attachments: updatedAttachments});
     },
   },
 });

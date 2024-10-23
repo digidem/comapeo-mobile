@@ -16,8 +16,7 @@ type EditorProps = {
   PresetIcon: React.ReactNode;
   notes?: string;
   updateNotes?: (newNotes: string) => void;
-  photos: Photo[];
-  audioAttachments: Audio[];
+  attachments?: (Audio | Photo)[];
   location?: {
     lat: number | undefined;
     lon: number | undefined;
@@ -33,8 +32,7 @@ type EditorProps = {
 export const Editor = ({
   notes,
   updateNotes,
-  photos,
-  audioAttachments,
+  attachments,
   location,
   actionsRow,
   notesComponent,
@@ -60,11 +58,9 @@ export const Editor = ({
       ) : (
         <DescriptionField notes={notes} updateNotes={updateNotes} />
       )}
-      <MediaScrollView
-        photos={photos}
-        audioAttachments={audioAttachments}
-        isEditing={isEditing}
-      />
+      {attachments && attachments.length > 0 && (
+        <MediaScrollView attachments={attachments} isEditing={isEditing} />
+      )}
     </ScreenContentWithDock>
   );
 };

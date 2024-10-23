@@ -25,8 +25,6 @@ export const SaveTrackScreen = () => {
 
   return (
     <Editor
-      audioAttachments={[]}
-      photos={[]}
       presetName={t(m.newTitle)}
       notesComponent={<TrackDescriptionField />}
       PresetIcon={<TrackIcon style={styles.icon} />}

@@ -11,15 +11,13 @@ const spacing = 10;
 const minSize = 150;
 
 interface MediaScrollView {
-  photos: Photo[];
-  audioAttachments: Audio[];
+  attachments: (Audio | Photo)[];
   observationId?: string;
   isEditing?: boolean;
 }
 
 export const MediaScrollView: FC<MediaScrollView> = ({
-  photos = [],
-  audioAttachments = [],
+  attachments,
   isEditing = false,
 }) => {
   const scrollViewRef = React.useRef<ScrollView>(null);

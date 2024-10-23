@@ -53,8 +53,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     useDraftObservation();
   const preset = usePreset();
   const editObservationMutation = useEditObservation();
-  const photos = usePersistedDraftObservation(store => store.photos);
-  const audioRecordings = usePersistedDraftObservation(store => store.audios);
+  const attachments = usePersistedDraftObservation(store => store.attachments);
   const createBlobMutation = useCreateBlobMutation();
 
   const notes = value?.tags.notes;
@@ -129,16 +128,18 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       throw new Error('Cannot update a unsaved observation (must create one)');
     }
 
-    const newPhotos = photos.filter(
-      (photo): photo is ProcessedDraftPhoto => photo.type === 'processed',
+    const newPhotos = attachments.filter(
+      (attachment): attachment is ProcessedDraftPhoto =>
+        'type' in attachment && attachment.type === 'processed',
     );
 
-    const removedAudioAttachments = audioRecordings.filter(
-      (audio): audio is AudioAttachment =>
-        'driveDiscoveryId' in audio && audio.deleted === true,
+    const removedAudioAttachments = attachments.filter(
+      (attachment): attachment is AudioAttachment =>
+        'driveDiscoveryId' in attachment && attachment.deleted === true,
     );
-    const newAudioRecordings = audioRecordings.filter(
-      (audio): audio is UnsavedAudio => !('driveDiscoveryId' in audio),
+    const newAudioRecordings = attachments.filter(
+      (attachment): attachment is UnsavedAudio =>
+        !('driveDiscoveryId' in attachment) && 'uri' in attachment,
     );
 
     const attachmentsChanged =
@@ -209,9 +210,8 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     preset,
     value,
     editObservationMutation,
-    photos,
     createBlobMutation,
-    audioRecordings,
+    attachments,
     handleNavigationSuccess,
   ]);
 
@@ -245,8 +245,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         updateNotes={newVal => {
           updateTags('notes', newVal);
         }}
-        photos={photos}
-        audioAttachments={audioRecordings}
+        attachments={attachments}
         actionsRow={
           <ActionsRow fieldRefs={preset?.fieldRefs} isEditing={true} />
         }

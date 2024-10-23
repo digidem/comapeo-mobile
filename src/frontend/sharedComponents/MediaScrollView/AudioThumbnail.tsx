@@ -70,6 +70,9 @@ export const AudioThumbnail: FC<AudioThumbnailProps> = ({
   size = 80,
   isEditing = false,
 }) => {
+  if ('deleted' in audioAttachment && audioAttachment.deleted === true) {
+    return null;
+  }
   if ('uri' in audioAttachment) {
     return (
       <UnsavedAudioThumbnail

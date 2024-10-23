@@ -5,6 +5,8 @@ import PlayArrow from '../../images/PlayArrow.svg';
 import {AudioAttachment, UnsavedAudio, Audio} from '../../sharedTypes/audio';
 import {useAttachmentUrlQuery} from '../../hooks/server/media';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {AlertIcon} from '../icons';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 type AudioThumbnailProps = {
   audioAttachment: Audio;
@@ -21,19 +23,38 @@ interface SharedThumbnailProps {
   disabled?: boolean;
 }
 
-const AudioThumbnailButton: FC<SharedThumbnailProps> = ({
+type AudioThumbnailImageProps = {
+  isLoading: boolean;
+  error?: Error | null;
+  uri?: string;
+  onPress?: () => void;
+  style?: StyleProp<ViewStyle>;
+  size: number;
+};
+
+const AudioThumbnailImage = ({
+  isLoading,
+  error,
+  uri,
+  onPress,
   style,
   size,
-  onPress,
-  disabled = false,
-}) => (
-  <TouchableOpacity
-    style={[styles.thumbnailContainer, {width: size, height: size}, style]}
-    disabled={disabled}
-    onPress={onPress}>
-    <PlayArrow width={48} height={48} />
-  </TouchableOpacity>
-);
+}: AudioThumbnailImageProps) => {
+  return (
+    <TouchableOpacity
+      style={[styles.thumbnailContainer, {width: size, height: size}, style]}
+      disabled={isLoading || !!error || !onPress}
+      onPress={onPress}>
+      {isLoading ? (
+        <UIActivityIndicator size={48} />
+      ) : error || !uri ? (
+        <AlertIcon />
+      ) : (
+        <PlayArrow width={48} height={48} />
+      )}
+    </TouchableOpacity>
+  );
+};
 
 const UnsavedAudioThumbnail: FC<
   SharedThumbnailProps & {audioAttachment: UnsavedAudio}
@@ -47,13 +68,22 @@ const UnsavedAudioThumbnail: FC<
     });
   };
 
-  return <AudioThumbnailButton {...props} onPress={handlePress} />;
+  return (
+    <AudioThumbnailImage
+      isLoading={false}
+      error={null}
+      uri={audioAttachment.uri}
+      onPress={handlePress}
+      style={props.style}
+      size={props.size}
+    />
+  );
 };
 
 const SavedAudioThumbnail: FC<
   SharedThumbnailProps & {audioAttachment: AudioAttachment}
 > = ({audioAttachment, ...props}) => {
-  const {data, isPending, isError} = useAttachmentUrlQuery(
+  const {data, isPending, error} = useAttachmentUrlQuery(
     audioAttachment,
     'original',
   );
@@ -69,10 +99,13 @@ const SavedAudioThumbnail: FC<
   };
 
   return (
-    <AudioThumbnailButton
-      {...props}
+    <AudioThumbnailImage
+      isLoading={isPending && !error}
+      error={error}
+      uri={data?.url}
       onPress={handlePress}
-      disabled={isPending || !data?.url || isError}
+      style={props.style}
+      size={props.size}
     />
   );
 };

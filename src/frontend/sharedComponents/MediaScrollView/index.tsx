@@ -5,7 +5,7 @@ import {Photo} from '../../contexts/PhotoPromiseContext/types.ts';
 import {PhotoThumbnail} from './PhotoThumbnail.tsx';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
 import {AudioThumbnail} from './AudioThumbnail.tsx';
-import {Audio} from '../../contexts/AudioPromiseContext/types.ts';
+import {Audio} from '../../sharedTypes/audio.ts';
 
 const spacing = 10;
 const minSize = 150;

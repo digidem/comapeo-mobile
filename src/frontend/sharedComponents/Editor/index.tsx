@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Photo} from '../../contexts/PhotoPromiseContext/types';
-import {Audio} from '../../contexts/AudioPromiseContext/types';
+import {Audio} from '../../sharedTypes/audio';
 import {DescriptionField} from './DescriptionField';
 import {MediaScrollView} from '../MediaScrollView';
 import {ScreenContentWithDock} from '../ScreenContentWithDock';

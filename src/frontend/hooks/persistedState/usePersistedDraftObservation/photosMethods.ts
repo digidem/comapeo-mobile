@@ -18,11 +18,11 @@ export function replaceDraftPhotos(
   get: Getter,
   draftPhoto: DraftPhoto,
 ) {
-  const updatedPhotosState = get().photos.map(p => {
+  const updatedPhotosState = get().attachments.map(p => {
     if ('draftPhotoId' in p && p.draftPhotoId === draftPhoto.draftPhotoId) {
       return draftPhoto;
     }
     return p;
   });
-  set({photos: updatedPhotosState});
+  set({attachments: updatedPhotosState});
 }

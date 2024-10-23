@@ -193,15 +193,15 @@ const HeaderBackEditObservation = ({
 }: HeaderBackEditObservationProps) => {
   const navigation = useNavigationFromRoot();
   const {observation} = useObservationWithPreset(observationId);
-  const photos = usePersistedDraftObservation(store => store.photos);
+  const attachments = usePersistedDraftObservation(store => store.attachments);
   const draftObservation = usePersistedDraftObservation(store => store.value);
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', e => {
       if (
         checkEqual(observation, {
-          numberOfPhotos: photos.length,
-          editted: draftObservation,
+          numberOfAttachments: attachments.length,
+          edited: draftObservation,
         })
       ) {
         return;
@@ -213,7 +213,7 @@ const HeaderBackEditObservation = ({
     });
 
     return () => unsubscribe();
-  }, [observation, photos, draftObservation, openBottomSheet, navigation]);
+  }, [observation, attachments, draftObservation, openBottomSheet, navigation]);
 
   return (
     <SharedBackButton
@@ -243,19 +243,19 @@ const SharedBackButton = ({
 function checkEqual(
   original: Observation,
   {
-    editted,
-    numberOfPhotos,
+    edited,
+    numberOfAttachments,
   }: {
-    editted: Observation | ClientGeneratedObservation | null;
-    numberOfPhotos?: number;
+    edited: Observation | ClientGeneratedObservation | null;
+    numberOfAttachments?: number;
   },
 ) {
-  if (!editted || !('docId' in editted)) return true;
-  // attachments are created right before an observation is made, so we need to check # photos that are about to be saved
-  const {attachments: originalAtts, ...orignalNoPhotos} = original;
+  if (!edited || !('docId' in edited)) return true;
+  // attachments are created right before an observation is made, so we need to check # attachments that are about to be saved
+  const {attachments: originalAtts, ...originalNoAttachments} = original;
 
-  if (originalAtts.length !== numberOfPhotos) return false;
+  if (originalAtts.length !== numberOfAttachments) return false;
 
-  const {attachments, ...edittedNoPhotos} = editted;
-  return isEqual(orignalNoPhotos, edittedNoPhotos);
+  const {attachments, ...editedNoAttachments} = edited;
+  return isEqual(originalNoAttachments, editedNoAttachments);
 }

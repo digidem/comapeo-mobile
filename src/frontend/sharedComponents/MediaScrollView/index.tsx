@@ -5,7 +5,7 @@ import {Photo} from '../../contexts/PhotoPromiseContext/types.ts';
 import {PhotoThumbnail} from './PhotoThumbnail.tsx';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes.ts';
 import {AudioThumbnail} from './AudioThumbnail.tsx';
-import {Audio} from '../../sharedTypes/audio.ts';
+import {Audio, AudioAttachment, UnsavedAudio} from '../../sharedTypes/audio.ts';
 
 const spacing = 10;
 const minSize = 150;
@@ -16,16 +16,37 @@ interface MediaScrollView {
   isEditing?: boolean;
 }
 
+const isPhoto = (attachment: Audio | Photo): attachment is Photo => {
+  return (
+    'type' in attachment &&
+    (attachment.type === 'photo' ||
+      attachment.type === 'processed' ||
+      attachment.type === 'unprocessed')
+  );
+};
+
+const isAudioAttachment = (
+  attachment: Audio | Photo,
+): attachment is AudioAttachment => {
+  return 'type' in attachment && attachment.type === 'audio';
+};
+
+const isUnsavedAudio = (
+  attachment: Audio | Photo,
+): attachment is UnsavedAudio => {
+  return 'uri' in attachment && !('driveDiscoveryId' in attachment);
+};
+
 export const MediaScrollView: FC<MediaScrollView> = ({
   attachments,
   isEditing = false,
 }) => {
   const scrollViewRef = React.useRef<ScrollView>(null);
-  const length = (photos?.length ?? 0) + (audioAttachments?.length ?? 0);
+  const length = attachments.length;
   const navigation = useNavigationFromRoot();
   React.useLayoutEffect(() => {
     scrollViewRef.current && scrollViewRef.current.scrollToEnd();
-  }, [photos?.length, audioAttachments?.length]);
+  }, [attachments.length]);
 
   if (length === 0) return null;
   const windowWidth = Dimensions.get('window').width;
@@ -33,6 +54,12 @@ export const MediaScrollView: FC<MediaScrollView> = ({
   // the screen.
   const size =
     windowWidth / (Math.round(0.6 + windowWidth / minSize) - 0.5) - spacing;
+
+  const photos = attachments.filter(isPhoto);
+  const audioAttachments = attachments.filter(
+    (attachment): attachment is AudioAttachment | UnsavedAudio =>
+      isAudioAttachment(attachment) || isUnsavedAudio(attachment),
+  );
 
   return (
     <ScrollView

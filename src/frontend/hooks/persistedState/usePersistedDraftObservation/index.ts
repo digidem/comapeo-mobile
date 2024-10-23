@@ -5,12 +5,9 @@ import {
   Photo,
   SavedPhoto,
 } from '../../../contexts/PhotoPromiseContext/types';
+import {Audio, UnsavedAudio, AudioAttachment} from '../../../sharedTypes/audio';
 import {deletePhoto, replaceDraftPhotos} from './photosMethods';
-import {
-  ClientGeneratedObservation,
-  Position,
-  AudioRecording,
-} from '../../../sharedTypes';
+import {ClientGeneratedObservation, Position} from '../../../sharedTypes';
 import {Observation, Preset} from '@comapeo/schema';
 import {usePresetsQuery} from '../../server/presets';
 import {matchPreset} from '../../../lib/utils';
@@ -27,13 +24,15 @@ const emptyObservation: ClientGeneratedObservation = {
 
 export type DraftObservationSlice = {
   photos: Photo[];
-  audioRecordings: AudioRecording[];
+  audios: Audio[];
   value: Observation | null | ClientGeneratedObservation;
   observationId?: string;
   preset?: Preset;
   actions: {
     addPhotoPlaceholder: (draftPhotoId: string) => void;
     replacePhotoPlaceholderWithPhoto: (draftPhoto: DraftPhoto) => void;
+    addAudio: (audio: UnsavedAudio) => void;
+    deleteAudio: (uri: string) => void;
     // Clear the current draft
     clearDraft: () => void;
     // Create a new draft observation
@@ -61,7 +60,6 @@ export type DraftObservationSlice = {
     ) => void;
     updateTags: (tagKey: string, value: Observation['tags'][0]) => void;
     updatePreset: (preset: Preset) => void;
-    addAudioRecording: (audioRecording: AudioRecording) => void;
   };
 };
 
@@ -70,7 +68,7 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
   get,
 ) => ({
   photos: [],
-  audioRecordings: [],
+  audios: [],
   value: null,
   actions: {
     deletePhoto: uri => deletePhoto(set, get, uri),
@@ -81,7 +79,7 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
     clearDraft: () => {
       set({
         photos: [],
-        audioRecordings: [],
+        audios: [],
         value: null,
         observationId: undefined,
         preset: undefined,
@@ -126,6 +124,9 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
         observationId: observation.docId,
         photos: observation.attachments.filter(
           (att): att is SavedPhoto => att.type === 'photo',
+        ),
+        audios: observation.attachments.filter(
+          (att): att is AudioAttachment => att.type === 'audio',
         ),
         preset,
       });
@@ -204,10 +205,21 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
         },
       });
     },
-    addAudioRecording: recording =>
-      set({
-        audioRecordings: [...get().audioRecordings, recording],
-      }),
+    addAudio: (audio: UnsavedAudio) => {
+      set({audios: [...get().audios, audio]});
+    },
+    deleteAudio: (uri: string) => {
+      const extractedName = uri.split('/').pop();
+      const updatedAudios = get().audios.map(audio => {
+        if ('uri' in audio) {
+          return audio;
+        } else if ('name' in audio && audio.name === extractedName) {
+          return {...audio, deleted: true};
+        }
+        return audio;
+      });
+      set({audios: updatedAudios});
+    },
   },
 });
 

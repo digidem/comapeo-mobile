@@ -18,18 +18,18 @@ import * as Sentry from '@sentry/react-native';
 export const useDraftObservation = () => {
   const {addPhotoPromise, cancelPhotoProcessing, deletePhotoPromise} =
     usePhotoPromiseContext();
-
   const {
     addPhotoPlaceholder,
     replacePhotoPlaceholderWithPhoto,
+    deletePhoto: deletePersistedPhoto,
     clearDraft: clearPersistedDraft,
     newDraft: newPersistedDraft,
     updateObservationPosition,
-    deletePhoto: deletePersistedPhoto,
     updateTags,
     updatePreset,
     existingObservationToDraft,
-    addAudioRecording,
+    addAudio,
+    deleteAudio,
   } = _usePersistedDraftObservationActions();
 
   const addPhoto = useCallback(
@@ -95,14 +95,15 @@ export const useDraftObservation = () => {
 
   return {
     addPhoto,
+    addAudio,
     clearDraft,
     newDraft,
     deletePhoto,
+    deleteAudio,
     updateObservationPosition,
     updateTags,
     updatePreset,
     usePreset,
     existingObservationToDraft,
-    addAudioRecording,
   };
 };

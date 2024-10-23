@@ -7,7 +7,7 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
 import type {MapeoProjectApi} from '@comapeo/ipc';
 import {ClientApi} from 'rpc-reflector';
-import {ProcessedDraftAudio} from '../../contexts/AudioPromiseContext/types';
+import {UnsavedAudio} from '../../sharedTypes/audio';
 
 export function useCreateBlobMutation(opts: {retry?: number} = {}) {
   const {projectApi} = useActiveProject();
@@ -40,12 +40,12 @@ export function useCreateAudioBlobMutation(opts: {retry?: number} = {}) {
 
   return useMutation({
     retry: opts.retry,
-    mutationFn: async (audio: ProcessedDraftAudio) => {
-      const {originalUri, createdAt} = audio;
+    mutationFn: async (audio: UnsavedAudio) => {
+      const {uri, createdAt} = audio;
 
       return projectApi.$blobs.create(
         {
-          original: new URL(originalUri).pathname,
+          original: new URL(uri).pathname,
         },
         {
           mimeType: 'audio/mp4',

@@ -19,7 +19,7 @@ import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';
 import {ActionsRow} from '../../sharedComponents/ActionRow';
 import {Alert, type AlertButton} from 'react-native';
-import {ProcessedDraftAudio} from '../../contexts/AudioPromiseContext/types';
+import {UnsavedAudio} from '../../sharedTypes/audio';
 
 const m = defineMessages({
   observation: {
@@ -129,11 +129,12 @@ export const ObservationCreate = ({
     if (!value) throw new Error('no observation saved in persisted state ');
 
     const savablePhotos = photos.filter(photo => photo.type === 'processed');
-    const savableAudioRecordings = audioRecordings.filter(
-      (audio): audio is ProcessedDraftAudio => audio.type === 'processed',
+
+    const unsavedAudioRecordings = audioRecordings.filter(
+      (audio): audio is UnsavedAudio => !('driveDiscoveryId' in audio),
     );
 
-    if (savablePhotos.length === 0 && savableAudioRecordings.length === 0) {
+    if (savablePhotos.length === 0 && unsavedAudioRecordings.length === 0) {
       createObservationMutation.mutate(
         {
           value: {
@@ -174,7 +175,7 @@ export const ObservationCreate = ({
       );
     });
 
-    const audioPromises = savableAudioRecordings.map(audio => {
+    const audioPromises = unsavedAudioRecordings.map(audio => {
       return createAudioBlobMutation.mutateAsync(audio);
     });
 

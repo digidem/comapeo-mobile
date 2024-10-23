@@ -19,8 +19,8 @@ import {MediaScrollView} from '../../sharedComponents/MediaScrollView/index.tsx'
 import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
 import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types.ts';
-import {SavedAudio} from '../../contexts/AudioPromiseContext/types.ts';
 import {ButtonFields} from './Buttons.tsx';
+import {AudioAttachment} from '../../sharedTypes/audio.ts';
 
 const m = defineMessages({
   deleteTitle: {
@@ -81,7 +81,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   );
 
   const audioAttachments = observation.attachments.filter(
-    (attachment): attachment is SavedAudio => attachment.type === 'audio',
+    (attachment): attachment is AudioAttachment => attachment.type === 'audio',
   );
 
   return (

@@ -6,7 +6,10 @@ import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {useEditObservation} from '../../hooks/server/observations';
-import {useCreateBlobMutation} from '../../hooks/server/media';
+import {
+  useCreateBlobMutation,
+  useCreateAudioBlobMutation,
+} from '../../hooks/server/media';
 import {SaveButton} from '../../sharedComponents/SaveButton';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
@@ -17,6 +20,7 @@ import {HeaderLeft} from './HeaderLeft';
 import {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
 import {CommonActions} from '@react-navigation/native';
 import {matchPreset} from '../../lib/utils.ts';
+import {AudioAttachment, UnsavedAudio} from '../../sharedTypes/audio.ts';
 
 const m = defineMessages({
   observation: {
@@ -53,7 +57,9 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   const preset = usePreset();
   const editObservationMutation = useEditObservation();
   const photos = usePersistedDraftObservation(store => store.photos);
+  const audioRecordings = usePersistedDraftObservation(store => store.audios);
   const createBlobMutation = useCreateBlobMutation();
+  const createAudioBlobMutation = useCreateAudioBlobMutation();
 
   const notes = value?.tags.notes;
   const presetName = preset
@@ -104,6 +110,20 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     navigation,
   ]);
 
+  const handleNavigationSuccess = React.useCallback(() => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    } else {
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{name: 'Home'}],
+        }),
+      );
+    }
+    clearDraft();
+  }, [navigation, clearDraft]);
+
   const editObservation = React.useCallback(() => {
     if (!value) {
       throw new Error('no observation saved in persisted state');
@@ -117,7 +137,20 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       (photo): photo is ProcessedDraftPhoto => photo.type === 'processed',
     );
 
-    if (!newPhotos || !newPhotos.length) {
+    const removedAudioAttachments = audioRecordings.filter(
+      (audio): audio is AudioAttachment =>
+        'driveDiscoveryId' in audio && audio.deleted === true,
+    );
+    const newAudioRecordings = audioRecordings.filter(
+      (audio): audio is UnsavedAudio => !('driveDiscoveryId' in audio),
+    );
+
+    const attachmentsChanged =
+      newPhotos.length > 0 ||
+      newAudioRecordings.length > 0 ||
+      removedAudioAttachments.length > 0;
+
+    if (!attachmentsChanged) {
       editObservationMutation.mutate(
         {
           versionId: value.versionId,
@@ -129,33 +162,20 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
           },
         },
         {
-          onSuccess: () => {
-            if (navigation.canGoBack()) {
-              navigation.goBack();
-            } else {
-              navigation.dispatch(
-                CommonActions.reset({
-                  index: 0,
-                  routes: [
-                    {
-                      name: 'Home',
-                    },
-                  ],
-                }),
-              );
-            }
-            clearDraft();
-          },
+          onSuccess: handleNavigationSuccess,
         },
       );
       return;
     }
 
-    Promise.all(
-      newPhotos.map(photo => {
-        return createBlobMutation.mutateAsync(photo);
-      }),
-    ).then(results => {
+    const photoPromises = newPhotos.map(photo =>
+      createBlobMutation.mutateAsync(photo),
+    );
+    const audioPromises = newAudioRecordings.map(audio =>
+      createAudioBlobMutation.mutateAsync(audio),
+    );
+
+    Promise.all([...photoPromises, ...audioPromises]).then(results => {
       const newAttachments = results.map(
         ({driveId: driveDiscoveryId, type, name, hash}) => ({
           driveDiscoveryId,
@@ -164,46 +184,43 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
           hash,
         }),
       );
+
+      const updatedAttachments = [
+        ...value.attachments.filter(
+          attachment =>
+            !removedAudioAttachments.some(
+              removed =>
+                removed.driveDiscoveryId === attachment.driveDiscoveryId,
+            ),
+        ),
+        ...newAttachments,
+      ];
+
       editObservationMutation.mutate(
         {
           versionId: value.versionId,
           value: {
             ...value,
-            attachments: [...value.attachments, ...newAttachments],
+            attachments: updatedAttachments,
             presetRef: preset
               ? {docId: preset.docId, versionId: preset.versionId}
               : undefined,
           },
         },
         {
-          onSuccess: () => {
-            if (navigation.canGoBack()) {
-              navigation.goBack();
-            } else {
-              navigation.dispatch(
-                CommonActions.reset({
-                  index: 0,
-                  routes: [
-                    {
-                      name: 'Home',
-                    },
-                  ],
-                }),
-              );
-            }
-            clearDraft();
-          },
+          onSuccess: handleNavigationSuccess,
         },
       );
     });
   }, [
     preset,
-    navigation,
-    clearDraft,
     value,
     editObservationMutation,
     photos,
     createBlobMutation,
+    audioRecordings,
+    createAudioBlobMutation,
+    handleNavigationSuccess,
   ]);
 
   React.useLayoutEffect(() => {
@@ -237,13 +254,22 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
           updateTags('notes', newVal);
         }}
         photos={photos}
-        actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
+        audioAttachments={audioRecordings}
+        actionsRow={
+          <ActionsRow fieldRefs={preset?.fieldRefs} isEditing={true} />
+        }
+        isEditing={true}
       />
       <ErrorBottomSheet
-        error={editObservationMutation.error || createBlobMutation.error}
+        error={
+          editObservationMutation.error ||
+          createBlobMutation.error ||
+          createAudioBlobMutation.error
+        }
         clearError={() => {
           editObservationMutation.reset();
           createBlobMutation.reset();
+          createAudioBlobMutation.reset();
         }}
         tryAgain={editObservation}
       />

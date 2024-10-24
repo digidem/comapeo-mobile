@@ -327,8 +327,9 @@ export const ObservationCreate = ({
         }}
         attachments={attachments}
         location={coordinateInfo}
+        isEditing={true}
         actionsRow={
-          <ActionsRow fieldRefs={preset?.fieldRefs} isEditing={true} />
+          <ActionsRow fieldRefs={preset?.fieldRefs} isEditing={false} />
         }
       />
       <ErrorBottomSheet

@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {ScrollView} from 'react-native';
-import {List, ListItem, ListItemText} from '../../../sharedComponents/List';
-import {FormattedMessage, defineMessages} from 'react-intl';
+import {defineMessages, useIntl} from 'react-intl';
 import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
+import {MenuList, MenuListItemType} from '../../../sharedComponents/MenuList';
 
 const m = defineMessages({
   title: {
@@ -31,44 +30,48 @@ const m = defineMessages({
 export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
   navigation,
 }) => {
-  return (
-    <ScrollView>
-      <List>
-        <ListItem
-          testID="PROJECT.device-name-list-item"
-          onPress={() => {
-            navigation.navigate('DeviceNameDisplay');
-          }}>
-          <ListItemText primary={<FormattedMessage {...m.deviceName} />} />
-        </ListItem>
-        <ListItem
-          testID="MAIN.team-list-item"
-          onPress={() => {
-            navigation.navigate('YourTeam');
-          }}>
-          <ListItemText primary={<FormattedMessage {...m.yourTeam} />} />
-        </ListItem>
-        {process.env.EXPO_PUBLIC_FEATURE_MEDIA_MANAGER && (
-          <ListItem
-            testID="MAIN.sync-list-item"
-            onPress={() => {
-              navigation.navigate('MediaSyncSettings');
-            }}>
-            <ListItemText
-              primary={<FormattedMessage {...m.mediaSyncSettings} />}
-            />
-          </ListItem>
-        )}
+  const {formatMessage} = useIntl();
 
-        <ListItem
-          onPress={() => {
-            navigation.navigate('Config');
-          }}
-          testID="settingsConfigButton">
-          <ListItemText primary={<FormattedMessage {...m.config} />} />
-        </ListItem>
-      </List>
-    </ScrollView>
+  const MenuItems: MenuListItemType[] = [
+    {
+      onPress: () => {
+        navigation.navigate('DeviceNameDisplay');
+      },
+      primaryText: formatMessage(m.deviceName),
+      testID: 'PROJECT.device-name-list-item',
+    },
+    {
+      onPress: () => {
+        navigation.navigate('YourTeam');
+      },
+      primaryText: formatMessage(m.yourTeam),
+      testID: 'MAIN.team-list-item',
+    },
+    {
+      onPress: () => {
+        navigation.navigate('Config');
+      },
+      primaryText: formatMessage(m.config),
+      testID: 'settingsConfigButton',
+    },
+    ...(process.env.EXPO_PUBLIC_FEATURE_MEDIA_MANAGER
+      ? [
+          {
+            onPress: () => {
+              navigation.navigate('MediaSyncSettings');
+            },
+            primaryText: formatMessage(m.mediaSyncSettings),
+            testID: 'AIN.sync-list-item',
+          },
+        ]
+      : []),
+  ];
+
+  return (
+    <MenuList
+      contentContainerStyle={{padding: 20, paddingTop: 40}}
+      data={MenuItems}
+    />
   );
 };
 

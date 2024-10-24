@@ -1,7 +1,10 @@
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
-import {MenuList, MenuListItemType} from '../../../sharedComponents/MenuList';
+import {
+  FullScreenMenuList,
+  MenuListItemType,
+} from '../../../sharedComponents/MenuList';
 
 const m = defineMessages({
   title: {
@@ -67,12 +70,7 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
       : []),
   ];
 
-  return (
-    <MenuList
-      contentContainerStyle={{padding: 20, paddingTop: 40}}
-      data={MenuItems}
-    />
-  );
+  return <FullScreenMenuList data={MenuItems} />;
 };
 
 ProjectSettings.navTitle = m.title;

@@ -2,11 +2,9 @@ import * as React from 'react';
 import {
   DimensionValue,
   FlatList,
-  StyleProp,
   StyleSheet,
   TouchableNativeFeedback,
   View,
-  ViewStyle,
 } from 'react-native';
 import {NEW_DARK_GREY, VERY_LIGHT_BLUE} from '../lib/styles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -20,26 +18,25 @@ type MenuListProps = Omit<FlatListProps, 'renderItem'>;
  *
  * This list is designed for menus and intended to take up its entire container (aka, entire screen or drawer)
  */
-export const MenuList = ({
+export const FullScreenMenuList = ({
   data,
   contentContainerStyle,
   ...rest
 }: MenuListProps) => {
-  // Horizontal padding is applied to the item so that the onPress highlight shows up accross the entire screen
-  const {paddingLeft, paddingRight, remainingStyles} = extractPadding(
-    contentContainerStyle,
-  );
-
   return (
     <FlatList
       {...rest}
-      contentContainerStyle={remainingStyles}
+      contentContainerStyle={[
+        contentContainerStyle,
+        {paddingTop: 40, rowGap: 20},
+      ]}
       data={data}
       renderItem={({item}) => (
         <MenuListItem
           item={item}
-          paddingLeft={paddingLeft}
-          paddingRight={paddingRight}
+          paddingLeft={20}
+          paddingRight={20}
+          columnGap={20}
         />
       )}
     />
@@ -62,10 +59,12 @@ const MenuListItem = ({
   item,
   paddingLeft,
   paddingRight,
+  columnGap,
 }: {
   item: MenuListItemType;
-  paddingLeft?: DimensionValue;
-  paddingRight?: DimensionValue;
+  paddingLeft: DimensionValue;
+  paddingRight: DimensionValue;
+  columnGap: number;
 }) => {
   return (
     <TouchableNativeFeedback
@@ -75,7 +74,7 @@ const MenuListItem = ({
       background={TouchableNativeFeedback.Ripple(VERY_LIGHT_BLUE, false)}>
       <View
         testID={item.testID}
-        style={[styles.itemContainer, {paddingLeft, paddingRight}]}>
+        style={[styles.itemContainer, {paddingLeft, paddingRight, columnGap}]}>
         {item.materialIconName ? (
           <MaterialIcon
             name={item.materialIconName}
@@ -96,32 +95,11 @@ const MenuListItem = ({
   );
 };
 
-function extractPadding(style: StyleProp<ViewStyle>) {
-  if (!style) return {paddingLeft: 0, paddingRight: 0, remainingStyles: {}};
-
-  const flattenStyle = StyleSheet.flatten(style); // Flatten style if it's an array or object
-  const {
-    paddingLeft = 0,
-    paddingRight = 0,
-    paddingHorizontal = 0,
-    padding = 0,
-    ...remainingStyles
-  } = flattenStyle || {};
-
-  // Use paddingHorizontal as a fallback for paddingLeft/paddingRight if they're not explicitly defined
-  return {
-    paddingLeft: paddingLeft || paddingHorizontal || padding,
-    paddingRight: paddingRight || paddingHorizontal || padding,
-    remainingStyles,
-  };
-}
-
 const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     minHeight: 40,
-    paddingHorizontal: 20,
   },
   secondaryText: {fontSize: 14, color: NEW_DARK_GREY},
 });

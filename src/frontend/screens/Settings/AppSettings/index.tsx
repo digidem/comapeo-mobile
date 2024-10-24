@@ -1,14 +1,11 @@
 import React from 'react';
-import {ScrollView} from 'react-native';
-import {
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-} from '../../../sharedComponents/List';
-import {FormattedMessage, defineMessages} from 'react-intl';
+import {defineMessages, useIntl} from 'react-intl';
 import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
 import {useSecurityContext} from '../../../contexts/SecurityContext';
+import {
+  FullScreenMenuList,
+  MenuListItemType,
+} from '../../../sharedComponents/MenuList';
 
 const m = defineMessages({
   title: {
@@ -41,41 +38,38 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
   navigation,
 }) => {
   const {authState} = useSecurityContext();
-
-  return (
-    <ScrollView>
-      <List>
-        <ListItem
-          onPress={() => {
-            navigation.navigate('LanguageSettings');
-          }}>
-          <ListItemIcon iconName="language" />
-          <ListItemText
-            primary={<FormattedMessage {...m.language} />}
-            secondary={<FormattedMessage {...m.languageDesc} />}
-          />
-        </ListItem>
-        <ListItem
-          onPress={() => navigation.navigate('CoordinateFormat')}
-          testID="settingsCoodinatesButton">
-          <ListItemIcon iconName="explore" />
-          <ListItemText
-            primary={<FormattedMessage {...m.coordinateSystem} />}
-            secondary={<FormattedMessage {...m.coordinateSystemDesc} />}
-          />
-        </ListItem>
-        {authState !== 'obscured' && (
-          <ListItem
-            onPress={() => {
+  const {formatMessage} = useIntl();
+  const MenuItems: MenuListItemType[] = [
+    {
+      onPress: () => {
+        navigation.navigate('LanguageSettings');
+      },
+      primaryText: formatMessage(m.language),
+      secondaryText: formatMessage(m.languageDesc),
+      materialIconName: 'language',
+    },
+    {
+      onPress: () => {
+        navigation.navigate('CoordinateFormat');
+      },
+      testID: 'settingsCoodinatesButton',
+      primaryText: formatMessage(m.coordinateSystem),
+      secondaryText: formatMessage(m.coordinateSystemDesc),
+      materialIconName: 'explore',
+    },
+    ...(authState !== 'obscured'
+      ? [
+          {
+            onPress: () => {
               navigation.navigate('Security');
-            }}>
-            <ListItemIcon iconName="security" />
-            <ListItemText primary={<FormattedMessage {...m.security} />} />
-          </ListItem>
-        )}
-      </List>
-    </ScrollView>
-  );
+            },
+            primaryText: formatMessage(m.security),
+            materialIconName: 'security',
+          },
+        ]
+      : []),
+  ];
+  return <FullScreenMenuList data={MenuItems} />;
 };
 
 AppSettings.navTitle = m.title;

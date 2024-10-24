@@ -16,7 +16,11 @@ import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';
 import {ActionsRow} from '../../sharedComponents/ActionRow';
 import {Alert, type AlertButton} from 'react-native';
-import {UnsavedAudio} from '../../sharedTypes/audio';
+
+import {
+  isProcessedDraftPhoto,
+  isUnsavedAudio,
+} from '../../lib/attachmentTypeChecks';
 
 const m = defineMessages({
   observation: {
@@ -123,14 +127,9 @@ export const ObservationCreate = ({
   const createObservation = React.useCallback(() => {
     if (!value) throw new Error('no observation saved in persisted state ');
 
-    const savablePhotos = attachments.filter(
-      attachment => 'type' in attachment && attachment.type === 'processed',
-    );
+    const savablePhotos = attachments.filter(isProcessedDraftPhoto);
 
-    const unsavedAudioRecordings = attachments.filter(
-      (audio): audio is UnsavedAudio =>
-        !('driveDiscoveryId' in audio) && 'uri' in audio,
-    );
+    const unsavedAudioRecordings = attachments.filter(isUnsavedAudio);
 
     if (savablePhotos.length === 0 && unsavedAudioRecordings.length === 0) {
       createObservationMutation.mutate(
@@ -171,10 +170,7 @@ export const ObservationCreate = ({
       ...savablePhotos,
       ...unsavedAudioRecordings,
     ].map(file => {
-      return createBlobMutation.mutateAsync(
-        // @ts-expect-error
-        file,
-      );
+      return createBlobMutation.mutateAsync(file);
     });
 
     Promise.all(attachmentPromises).then(results => {

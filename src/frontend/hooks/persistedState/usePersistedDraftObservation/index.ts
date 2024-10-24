@@ -1,16 +1,16 @@
 import {StateCreator} from 'zustand';
 import {createPersistedState} from '../createPersistedState';
-import {
-  DraftPhoto,
-  Photo,
-  SavedPhoto,
-} from '../../../contexts/PhotoPromiseContext/types';
-import {Audio, UnsavedAudio, AudioAttachment} from '../../../sharedTypes/audio';
+import {DraftPhoto, Photo} from '../../../contexts/PhotoPromiseContext/types';
+import {Audio, UnsavedAudio} from '../../../sharedTypes/audio';
 import {deletePhoto, replaceDraftPhotos} from './photosMethods';
 import {ClientGeneratedObservation, Position} from '../../../sharedTypes';
 import {Observation, Preset} from '@comapeo/schema';
 import {usePresetsQuery} from '../../server/presets';
 import {matchPreset} from '../../../lib/utils';
+import {
+  isSavedPhoto,
+  isAudioAttachment,
+} from '../../../lib/attachmentTypeChecks';
 
 const emptyObservation: ClientGeneratedObservation = {
   lat: 0,
@@ -121,12 +121,9 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
       }
     },
     existingObservationToDraft: (observation, preset) => {
-      const photos = observation.attachments.filter(
-        (att): att is SavedPhoto => att.type === 'photo',
-      );
-      const audios = observation.attachments.filter(
-        (att): att is AudioAttachment => att.type === 'audio',
-      );
+      const photos = observation.attachments.filter(isSavedPhoto);
+
+      const audios = observation.attachments.filter(isAudioAttachment);
 
       set({
         value: observation,

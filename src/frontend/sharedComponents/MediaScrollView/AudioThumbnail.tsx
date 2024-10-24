@@ -27,7 +27,7 @@ type AudioThumbnailImageProps = {
   isLoading: boolean;
   error?: Error | null;
   uri?: string;
-  onPress?: () => void;
+  onPress: () => void;
   style?: StyleProp<ViewStyle>;
   size: number;
 };
@@ -63,7 +63,7 @@ const UnsavedAudioThumbnail: FC<
 
   const handlePress = () => {
     navigation.navigate('Audio', {
-      existingUri: audioAttachment.uri,
+      uri: audioAttachment.uri,
       isEditing: props.isEditing,
     });
   };
@@ -92,7 +92,7 @@ const SavedAudioThumbnail: FC<
   const handlePress = () => {
     if (!isPending && data?.url) {
       navigation.navigate('Audio', {
-        existingUri: data.url,
+        uri: data.url,
         isEditing: props.isEditing,
       });
     }

@@ -31,27 +31,31 @@ export const useAudioPlayback = (recordingUri: string) => {
   }, []);
 
   useEffect(() => {
-    let soundInstance: Sound | null = null;
+    let isCancelled = false;
+
     Audio.Sound.createAsync({uri: recordingUri})
       .then(({sound, status}) => {
-        if ('error' in status && status.error) {
-          setError(new Error(status.error));
+        if (isCancelled) {
+          sound.unloadAsync().catch(() => {});
           return;
         }
-        soundInstance = sound;
         recordedSoundRef.current = sound;
         setDuration((status as AVPlaybackStatusSuccess).durationMillis ?? 0);
         sound.setOnPlaybackStatusUpdate(audioCallbackHandler);
       })
       .catch(err => {
-        handleError(err);
+        if (!isCancelled) {
+          handleError(err);
+        }
       });
 
     return () => {
-      if (soundInstance) {
-        soundInstance.unloadAsync().catch(err => {
+      isCancelled = true;
+      if (recordedSoundRef.current) {
+        recordedSoundRef.current.unloadAsync().catch(err => {
           handleError(err);
         });
+        recordedSoundRef.current = null;
       }
     };
   }, [recordingUri, audioCallbackHandler, handleError]);
@@ -61,11 +65,11 @@ export const useAudioPlayback = (recordingUri: string) => {
 
     try {
       if (currentPosition >= duration) {
-        await recordedSoundRef.current!.setPositionAsync(0);
+        await recordedSoundRef.current.setPositionAsync(0);
         setCurrentPosition(0);
       }
 
-      await recordedSoundRef.current!.playAsync();
+      await recordedSoundRef.current.playAsync();
       setPlaying(true);
     } catch (err) {
       handleError(err);

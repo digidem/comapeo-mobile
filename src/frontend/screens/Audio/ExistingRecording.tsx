@@ -61,40 +61,6 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    let isCancelled = false;
-    const tempFileName = `audio_${Date.now()}.m4a`;
-    const localFilePath = `${FileSystem.cacheDirectory}${tempFileName}`;
-    setLoading(true);
-
-    const downloadAudio = async () => {
-      try {
-        const downloadResult = await FileSystem.downloadAsync(
-          uri,
-          localFilePath,
-        );
-        if (!isCancelled) {
-          setLocalUri(downloadResult.uri);
-        }
-      } catch (err) {
-        console.error('Error downloading audio file:', err);
-      } finally {
-        if (!isCancelled) {
-          setLoading(false);
-        }
-      }
-    };
-
-    downloadAudio();
-
-    return () => {
-      isCancelled = true;
-      if (localUri) {
-        FileSystem.deleteAsync(localUri, {idempotent: true}).catch(() => {});
-      }
-    };
-  }, [uri, localUri]);
-
-  useEffect(() => {
     navigation.setOptions({
       headerShown: true,
       headerLeft: (props: HeaderBackButtonProps) => (
@@ -115,13 +81,18 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
   };
 
   const handleShare = async () => {
-    if (!localUri) {
-      console.error('Local audio file is not available for sharing.');
-      return;
-    }
     setLoading(true);
     try {
-      await Share.open({url: localUri});
+      if (!localUri) {
+        const tempFileName = `audio_${Date.now()}.m4a`;
+        const localFilePath = `${FileSystem.cacheDirectory}${tempFileName}`;
+        const downloadResult = await FileSystem.downloadAsync(
+          uri,
+          localFilePath,
+        );
+        setLocalUri(downloadResult.uri);
+      }
+      await Share.open({url: localUri!});
     } catch (err) {
       console.error('Error sharing file:', err);
     } finally {
@@ -129,11 +100,19 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
     }
   };
 
+  useEffect(() => {
+    return () => {
+      if (localUri) {
+        FileSystem.deleteAsync(localUri, {idempotent: true}).catch(() => {});
+      }
+    };
+  }, [localUri]);
+
   return (
     <>
       <View style={styles.container}>
         <Playback
-          uri={localUri || uri} // Use localUri if available
+          uri={uri}
           leftControl={
             isEditing ? (
               <Pressable onPress={openSheet}>

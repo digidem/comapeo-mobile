@@ -14,10 +14,14 @@ import {ActionsRow} from '../../sharedComponents/ActionRow';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {Loading} from '../../sharedComponents/Loading';
 import {HeaderLeft} from './HeaderLeft';
-import {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
 import {CommonActions} from '@react-navigation/native';
 import {matchPreset} from '../../lib/utils.ts';
-import {AudioAttachment, UnsavedAudio} from '../../sharedTypes/audio.ts';
+import {AudioAttachment} from '../../sharedTypes/audio.ts';
+import {
+  isProcessedDraftPhoto,
+  isAudioAttachment,
+  isUnsavedAudio,
+} from '../../lib/attachmentTypeChecks';
 
 const m = defineMessages({
   observation: {
@@ -128,19 +132,14 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       throw new Error('Cannot update a unsaved observation (must create one)');
     }
 
-    const newPhotos = attachments.filter(
-      (attachment): attachment is ProcessedDraftPhoto =>
-        'type' in attachment && attachment.type === 'processed',
-    );
+    const newPhotos = attachments.filter(isProcessedDraftPhoto);
 
     const removedAudioAttachments = attachments.filter(
       (attachment): attachment is AudioAttachment =>
-        'driveDiscoveryId' in attachment && attachment.deleted === true,
+        isAudioAttachment(attachment) && attachment.deleted === true,
     );
-    const newAudioRecordings = attachments.filter(
-      (attachment): attachment is UnsavedAudio =>
-        !('driveDiscoveryId' in attachment) && 'uri' in attachment,
-    );
+
+    const newAudioRecordings = attachments.filter(isUnsavedAudio);
 
     const attachmentsChanged =
       newPhotos.length > 0 ||

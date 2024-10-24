@@ -16,6 +16,10 @@ type FlatListProps = React.ComponentProps<typeof FlatList<MenuListItemType>>;
 
 type MenuListProps = Omit<FlatListProps, 'renderItem'>;
 
+/**
+ *
+ * This list is designed for menus and intended to take up its entire container (aka, entire screen or drawer)
+ */
 export const MenuList = ({
   data,
   contentContainerStyle,

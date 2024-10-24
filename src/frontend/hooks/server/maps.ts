@@ -40,14 +40,6 @@ export function useMapStyleJsonUrl() {
   });
 }
 
-export function useSelectFile() {
-  return useMutation({
-    mutationFn: (opts: Parameters<typeof selectFile>[0]) => {
-      return selectFile(opts);
-    },
-  });
-}
-
 export function useImportCustomMapFile() {
   const queryClient = useQueryClient();
   const api = useApi();

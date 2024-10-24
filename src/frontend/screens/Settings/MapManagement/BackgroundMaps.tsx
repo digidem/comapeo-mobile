@@ -5,11 +5,11 @@ import {defineMessages, useIntl, type MessageDescriptor} from 'react-intl';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
+import {useSelectFile} from '../../../hooks/files';
 import {
   useGetCustomMapInfo,
   useImportCustomMapFile,
   useRemoveCustomMapFile,
-  useSelectFile,
 } from '../../../hooks/server/maps';
 import ErrorSvg from '../../../images/Error.svg';
 import GreenCheckSvg from '../../../images/GreenCheck.svg';

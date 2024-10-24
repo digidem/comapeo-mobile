@@ -1,19 +1,17 @@
 import {StateCreator} from 'zustand';
 import {createPersistedState} from '../createPersistedState';
-import {
-  DraftPhoto,
-  Photo,
-  SavedPhoto,
-} from '../../../contexts/PhotoPromiseContext/types';
+import {DraftPhoto, Photo} from '../../../contexts/PhotoPromiseContext/types';
+import {Audio, UnsavedAudio} from '../../../sharedTypes/audio';
 import {deletePhoto, replaceDraftPhotos} from './photosMethods';
-import {
-  ClientGeneratedObservation,
-  Position,
-  AudioRecording,
-} from '../../../sharedTypes';
+import {ClientGeneratedObservation, Position} from '../../../sharedTypes';
 import {Observation, Preset} from '@comapeo/schema';
 import {usePresetsQuery} from '../../server/presets';
 import {matchPreset} from '../../../lib/utils';
+import {
+  isSavedPhoto,
+  isAudioAttachment,
+  isUnsavedAudio,
+} from '../../../lib/attachmentTypeChecks';
 
 const emptyObservation: ClientGeneratedObservation = {
   lat: 0,
@@ -26,14 +24,15 @@ const emptyObservation: ClientGeneratedObservation = {
 };
 
 export type DraftObservationSlice = {
-  photos: Photo[];
-  audioRecordings: AudioRecording[];
+  attachments: (Photo | Audio)[];
   value: Observation | null | ClientGeneratedObservation;
   observationId?: string;
   preset?: Preset;
   actions: {
     addPhotoPlaceholder: (draftPhotoId: string) => void;
     replacePhotoPlaceholderWithPhoto: (draftPhoto: DraftPhoto) => void;
+    addAudio: (audio: UnsavedAudio) => void;
+    deleteAudio: (uri: string, isSavedAudioUrl: boolean) => void;
     // Clear the current draft
     clearDraft: () => void;
     // Create a new draft observation
@@ -61,7 +60,6 @@ export type DraftObservationSlice = {
     ) => void;
     updateTags: (tagKey: string, value: Observation['tags'][0]) => void;
     updatePreset: (preset: Preset) => void;
-    addAudioRecording: (audioRecording: AudioRecording) => void;
   };
 };
 
@@ -69,19 +67,22 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
   set,
   get,
 ) => ({
-  photos: [],
-  audioRecordings: [],
+  attachments: [],
   value: null,
   actions: {
     deletePhoto: uri => deletePhoto(set, get, uri),
     addPhotoPlaceholder: draftPhotoId =>
-      set({photos: [...get().photos, {type: 'unprocessed', draftPhotoId}]}),
+      set({
+        attachments: [
+          ...get().attachments,
+          {type: 'unprocessed', draftPhotoId},
+        ],
+      }),
     replacePhotoPlaceholderWithPhoto: draftPhoto =>
       replaceDraftPhotos(set, get, draftPhoto),
     clearDraft: () => {
       set({
-        photos: [],
-        audioRecordings: [],
+        attachments: [],
         value: null,
         observationId: undefined,
         preset: undefined,
@@ -121,12 +122,14 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
       }
     },
     existingObservationToDraft: (observation, preset) => {
+      const photos = observation.attachments.filter(isSavedPhoto);
+
+      const audios = observation.attachments.filter(isAudioAttachment);
+
       set({
         value: observation,
         observationId: observation.docId,
-        photos: observation.attachments.filter(
-          (att): att is SavedPhoto => att.type === 'photo',
-        ),
+        attachments: [...photos, ...audios],
         preset,
       });
     },
@@ -204,10 +207,32 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
         },
       });
     },
-    addAudioRecording: recording =>
-      set({
-        audioRecordings: [...get().audioRecordings, recording],
-      }),
+    addAudio: (audio: UnsavedAudio) => {
+      set({attachments: [...get().attachments, audio]});
+    },
+    deleteAudio: (uri: string, isSavedAudioUrl: boolean) => {
+      if (isSavedAudioUrl) {
+        const extractedName = uri.split('/').pop();
+        const updatedAttachments = get().attachments.map(attachment => {
+          if (
+            isAudioAttachment(attachment) &&
+            attachment.name === extractedName
+          ) {
+            return {...attachment, deleted: true};
+          }
+          return attachment;
+        });
+        set({attachments: updatedAttachments});
+      } else {
+        const updatedAttachments = get().attachments.filter(attachment => {
+          if (isUnsavedAudio(attachment) && attachment.uri === uri) {
+            return false;
+          }
+          return true;
+        });
+        set({attachments: updatedAttachments});
+      }
+    },
   },
 });
 

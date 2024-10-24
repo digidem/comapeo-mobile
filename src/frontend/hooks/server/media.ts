@@ -7,51 +7,50 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
 import type {MapeoProjectApi} from '@comapeo/ipc';
 import {ClientApi} from 'rpc-reflector';
-import {AudioRecording} from '../../sharedTypes';
+import {UnsavedAudio} from '../../sharedTypes/audio';
+import {
+  isProcessedDraftPhoto,
+  isUnsavedAudio,
+} from '../../lib/attachmentTypeChecks';
 
 export function useCreateBlobMutation(opts: {retry?: number} = {}) {
   const {projectApi} = useActiveProject();
 
   return useMutation({
     retry: opts.retry,
-    mutationFn: async (photo: ProcessedDraftPhoto) => {
-      const {originalUri, previewUri, thumbnailUri} = photo;
-
-      return projectApi.$blobs.create(
-        {
-          original: new URL(originalUri).pathname,
-          preview: previewUri ? new URL(previewUri).pathname : undefined,
-          thumbnail: thumbnailUri ? new URL(thumbnailUri).pathname : undefined,
-        },
-        // TODO: DraftPhoto type should probably carry MIME type info that feeds this
-        // although backend currently only uses first part of path
-        {
-          mimeType: 'image/jpeg',
-          location: photo.mediaMetadata.location,
-          timestamp: photo.mediaMetadata.timestamp,
-        },
-      );
-    },
-  });
-}
-
-export function useCreateAudioBlobMutation(opts: {retry?: number} = {}) {
-  const {projectApi} = useActiveProject();
-
-  return useMutation({
-    retry: opts.retry,
-    mutationFn: async (audio: AudioRecording) => {
-      const {uri, createdAt} = audio;
-
-      return projectApi.$blobs.create(
-        {
-          original: new URL(uri).pathname,
-        },
-        {
-          mimeType: 'audio/mp4',
-          timestamp: createdAt,
-        },
-      );
+    mutationFn: async (attachment: ProcessedDraftPhoto | UnsavedAudio) => {
+      if (isProcessedDraftPhoto(attachment)) {
+        const {originalUri, previewUri, thumbnailUri} = attachment;
+        return projectApi.$blobs.create(
+          {
+            original: new URL(originalUri).pathname,
+            preview: previewUri ? new URL(previewUri).pathname : undefined,
+            thumbnail: thumbnailUri
+              ? new URL(thumbnailUri).pathname
+              : undefined,
+          },
+          // TODO: DraftPhoto type should probably carry MIME type info that feeds this
+          // although backend currently only uses first part of path
+          {
+            mimeType: 'image/jpeg',
+            location: attachment.mediaMetadata.location,
+            timestamp: attachment.mediaMetadata.timestamp,
+          },
+        );
+      } else if (isUnsavedAudio(attachment)) {
+        const {uri, createdAt} = attachment;
+        return projectApi.$blobs.create(
+          {
+            original: new URL(uri).pathname,
+          },
+          {
+            mimeType: 'audio/mp4',
+            timestamp: createdAt,
+          },
+        );
+      } else {
+        throw new Error('Unknown attachment type');
+      }
     },
   });
 }

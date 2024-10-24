@@ -38,8 +38,12 @@ type ObservationCreateNavigationProp = NativeStackNavigationProp<
 
 interface ActionButtonsProps {
   fieldRefs?: Preset['fieldRefs'];
+  isEditing: boolean;
 }
-export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
+export const ActionsRow = ({
+  fieldRefs,
+  isEditing = false,
+}: ActionButtonsProps) => {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigation<ObservationCreateNavigationProp>();
   const {
@@ -63,18 +67,18 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
   const handleAudioPress = useCallback(async () => {
     const {status} = await Audio.getPermissionsAsync();
     if (status === 'granted') {
-      navigation.navigate('Audio');
+      navigation.navigate('Audio', {isEditing});
     } else {
       openAudioPermissionSheet();
     }
-  }, [navigation, openAudioPermissionSheet]);
+  }, [navigation, openAudioPermissionSheet, isEditing]);
 
   const handleModalDismiss = useCallback(() => {
     if (shouldNavigateToAudio) {
-      navigation.navigate('Audio');
+      navigation.navigate('Audio', {isEditing});
       setShouldNavigateToAudio(false);
     }
-  }, [shouldNavigateToAudio, navigation]);
+  }, [shouldNavigateToAudio, navigation, isEditing]);
 
   const bottomSheetItems = [
     {

@@ -14,6 +14,7 @@ import {PhotoAttachmentView} from '../../sharedComponents/PhotoAttachmentView.ts
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
 import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
+import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;
@@ -39,9 +40,7 @@ function ObservationListItemNotMemoized({
   const {preset} = useObservationWithPreset(observation.docId);
   const {data: deviceInfo, status: deviceInfoQueryStatus} = useDeviceInfo();
 
-  const photos = observation.attachments.filter(
-    (attachment): attachment is PhotoAttachment => attachment.type === 'photo',
-  );
+  const photos = observation.attachments.filter(isSavedPhoto);
 
   const {
     data: createdByDeviceId,

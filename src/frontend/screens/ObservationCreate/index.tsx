@@ -7,10 +7,7 @@ import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersis
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {useCreateObservation} from '../../hooks/server/observations';
 import {CommonActions} from '@react-navigation/native';
-import {
-  useCreateBlobMutation,
-  useCreateAudioBlobMutation,
-} from '../../hooks/server/media';
+import {useCreateBlobMutation} from '../../hooks/server/media';
 import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import {SaveButton} from '../../sharedComponents/SaveButton';
 import {useMostAccurateLocationForObservation} from './useMostAccurateLocationForObservation';
@@ -19,6 +16,11 @@ import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';
 import {ActionsRow} from '../../sharedComponents/ActionRow';
 import {Alert, type AlertButton} from 'react-native';
+
+import {
+  isProcessedDraftPhoto,
+  isUnsavedAudio,
+} from '../../lib/attachmentTypeChecks';
 
 const m = defineMessages({
   observation: {
@@ -89,14 +91,10 @@ export const ObservationCreate = ({
   const {usePreset} = useDraftObservation();
   const preset = usePreset();
   const value = usePersistedDraftObservation(store => store.value);
-  const audioRecordings = usePersistedDraftObservation(
-    store => store.audioRecordings,
-  );
+  const attachments = usePersistedDraftObservation(store => store.attachments);
   const {updateTags, clearDraft} = useDraftObservation();
-  const photos = usePersistedDraftObservation(store => store.photos);
   const createObservationMutation = useCreateObservation();
   const createBlobMutation = useCreateBlobMutation();
-  const createAudioBlobMutation = useCreateAudioBlobMutation();
   const isTracking = usePersistedTrack(state => state.isTracking);
   const addNewTrackLocations = usePersistedTrack(
     state => state.addNewLocations,
@@ -129,10 +127,11 @@ export const ObservationCreate = ({
   const createObservation = React.useCallback(() => {
     if (!value) throw new Error('no observation saved in persisted state ');
 
-    const savablePhotos = photos.filter(photo => photo.type === 'processed');
-    const savableAudioRecordings = audioRecordings;
+    const savablePhotos = attachments.filter(isProcessedDraftPhoto);
 
-    if (savablePhotos.length === 0 && savableAudioRecordings.length === 0) {
+    const unsavedAudioRecordings = attachments.filter(isUnsavedAudio);
+
+    if (savablePhotos.length === 0 && unsavedAudioRecordings.length === 0) {
       createObservationMutation.mutate(
         {
           value: {
@@ -166,18 +165,15 @@ export const ObservationCreate = ({
     // The alternative is to save the observation but excluding photos that failed to save, which is prone to an odd UX of an observation "missing" some attachments.
     // This could potentially be alleviated by a more granular and informative UI about the photo-saving state, but currently there is nothing in place.
     // Basically, which is worse: orphaned attachments or saving observations that seem to be missing attachments?
-    const photoPromises = savablePhotos.map(photo => {
-      return createBlobMutation.mutateAsync(
-        // @ts-expect-error Due to TS array filtering limitations. Fixed in TS 5.5
-        photo,
-      );
+
+    const attachmentPromises = [
+      ...savablePhotos,
+      ...unsavedAudioRecordings,
+    ].map(file => {
+      return createBlobMutation.mutateAsync(file);
     });
 
-    const audioPromises = savableAudioRecordings.map(audio => {
-      return createAudioBlobMutation.mutateAsync(audio);
-    });
-
-    Promise.all([...photoPromises, ...audioPromises]).then(results => {
+    Promise.all(attachmentPromises).then(results => {
       const newAttachments = results.map(
         ({driveId: driveDiscoveryId, type, name, hash}) => ({
           driveDiscoveryId,
@@ -225,12 +221,10 @@ export const ObservationCreate = ({
     addNewTrackObservation,
     clearDraft,
     createBlobMutation,
-    createAudioBlobMutation,
     createObservationMutation,
     isTracking,
     navigation,
-    photos,
-    audioRecordings,
+    attachments,
     value,
     preset,
   ]);
@@ -298,9 +292,7 @@ export const ObservationCreate = ({
         <SaveButton
           onPress={checkAccuracyAndLocation}
           isLoading={
-            createObservationMutation.isPending ||
-            createBlobMutation.isPending ||
-            createAudioBlobMutation.isPending
+            createObservationMutation.isPending || createBlobMutation.isPending
           }
         />
       ),
@@ -309,7 +301,6 @@ export const ObservationCreate = ({
     navigation,
     createBlobMutation.isPending,
     createObservationMutation.isPending,
-    createAudioBlobMutation.isPending,
     checkAccuracyAndLocation,
   ]);
 
@@ -334,20 +325,18 @@ export const ObservationCreate = ({
         updateNotes={newVal => {
           updateTags('notes', newVal);
         }}
-        photos={photos}
+        attachments={attachments}
         location={coordinateInfo}
-        actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
+        isEditing={true}
+        actionsRow={
+          <ActionsRow fieldRefs={preset?.fieldRefs} isEditing={false} />
+        }
       />
       <ErrorBottomSheet
-        error={
-          createObservationMutation.error ||
-          createBlobMutation.error ||
-          createAudioBlobMutation.error
-        }
+        error={createObservationMutation.error || createBlobMutation.error}
         clearError={() => {
           createObservationMutation.reset();
           createBlobMutation.reset();
-          createAudioBlobMutation.reset();
         }}
         tryAgain={createObservation}
       />

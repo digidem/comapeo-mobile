@@ -60,15 +60,21 @@ interface RecordingDoneProps {
   duration: number;
   uri: string;
   reset: () => void;
+  isEditing?: boolean;
 }
 
 type ModalContentType = 'delete' | 'success' | null;
 type PendingAction = 'delete' | 'returnToEditor' | 'recordAnother' | null;
 
-export function RecordingDone({duration, uri, reset}: RecordingDoneProps) {
+export function RecordingDone({
+  duration,
+  uri,
+  reset,
+  isEditing = false,
+}: RecordingDoneProps) {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
-  const {addAudioRecording} = useDraftObservation();
+  const {addAudio} = useDraftObservation();
   const [pendingAction, setPendingAction] = useState<PendingAction>(null);
 
   const [modalContentType, setModalContentType] =
@@ -86,19 +92,21 @@ export function RecordingDone({duration, uri, reset}: RecordingDoneProps) {
           {...props}
           onPress={() => {
             const audioRecording = {
-              createdAt: Date.now(),
-              duration,
               uri,
+              duration,
+              createdAt: Date.now(),
             };
-            addAudioRecording(audioRecording);
+            addAudio(audioRecording);
             setModalContentType('success');
             openSheet();
           }}
-          backImage={props => <CloseIcon color={props.tintColor} />}
+          backImage={backImageProps => (
+            <CloseIcon color={backImageProps.tintColor} />
+          )}
         />
       ),
     });
-  }, [navigation, addAudioRecording, duration, uri, openSheet]);
+  }, [navigation, addAudio, duration, uri, openSheet]);
 
   const handleDelete = () => {
     closeSheet();
@@ -114,6 +122,7 @@ export function RecordingDone({duration, uri, reset}: RecordingDoneProps) {
   const handleReturnToEditor = () => {
     closeSheet();
     setPendingAction('returnToEditor');
+    reset();
   };
 
   const handleRecordAnother = async () => {
@@ -128,77 +137,19 @@ export function RecordingDone({duration, uri, reset}: RecordingDoneProps) {
         navigation.goBack();
         break;
       case 'returnToEditor':
-        navigation.navigate('ObservationCreate');
+        if (isEditing) {
+          navigation.goBack();
+        } else {
+          navigation.navigate('ObservationCreate');
+        }
         break;
       case 'recordAnother':
-        navigation.navigate('Audio');
+        navigation.navigate('Audio', {isEditing});
         break;
       default:
         break;
     }
     setPendingAction(null);
-  };
-
-  const renderModalContent = () => {
-    if (modalContentType === 'delete') {
-      return (
-        <BottomSheetModalContent
-          icon={<ErrorIcon />}
-          title={t(m.deleteBottomSheetTitle)}
-          description={t(m.deleteBottomSheetDescription)}
-          buttonConfigs={[
-            {
-              dangerous: true,
-              text: t(m.deleteBottomSheetPrimaryButtonText),
-              icon: <DeleteIcon color={WHITE} />,
-              onPress: handleDelete,
-              variation: 'filled',
-            },
-            {
-              variation: 'outlined',
-              text: t(m.deleteBottomSheetSecondaryButtonText),
-              onPress: closeSheet,
-            },
-          ]}
-        />
-      );
-    } else if (modalContentType === 'success') {
-      const description = (
-        <View style={{marginTop: 40}}>
-          <Text style={{fontSize: 16}}>
-            <FormattedMessage
-              {...m.successDescription}
-              values={{
-                audioRecording: t(m.audioRecording),
-                bold: message => (
-                  <Text style={{fontWeight: 'bold'}}>{message}</Text>
-                ),
-              }}
-            />
-          </Text>
-        </View>
-      );
-      return (
-        <BottomSheetModalContent
-          icon={<SuccessIcon style={{marginTop: 80}} />}
-          title={t(m.successTitle)}
-          description={description}
-          buttonConfigs={[
-            {
-              text: t(m.returnToEditorButtonText),
-              onPress: handleReturnToEditor,
-              variation: 'outlined',
-            },
-            {
-              text: t(m.recordAnotherButtonText),
-              onPress: handleRecordAnother,
-              variation: 'filled',
-            },
-          ]}
-        />
-      );
-    }
-    return null;
   };
 
   return (
@@ -216,8 +167,91 @@ export function RecordingDone({duration, uri, reset}: RecordingDoneProps) {
         ref={sheetRef}
         onDismiss={onModalDismiss}
         fullScreen={modalContentType === 'success'}>
-        {renderModalContent()}
+        <RenderModalContent
+          modalContentType={modalContentType}
+          t={t}
+          handleDelete={handleDelete}
+          closeSheet={closeSheet}
+          handleReturnToEditor={handleReturnToEditor}
+          handleRecordAnother={handleRecordAnother}
+        />
       </BottomSheetModal>
     </>
   );
 }
+
+const RenderModalContent = ({
+  modalContentType,
+  t,
+  handleDelete,
+  closeSheet,
+  handleReturnToEditor,
+  handleRecordAnother,
+}: {
+  modalContentType: ModalContentType;
+  t: ReturnType<typeof useIntl>['formatMessage'];
+  handleDelete: () => void;
+  closeSheet: () => void;
+  handleReturnToEditor: () => void;
+  handleRecordAnother: () => void;
+}) => {
+  if (modalContentType === 'delete') {
+    return (
+      <BottomSheetModalContent
+        icon={<ErrorIcon />}
+        title={t(m.deleteBottomSheetTitle)}
+        description={t(m.deleteBottomSheetDescription)}
+        buttonConfigs={[
+          {
+            dangerous: true,
+            text: t(m.deleteBottomSheetPrimaryButtonText),
+            icon: <DeleteIcon color={WHITE} />,
+            onPress: handleDelete,
+            variation: 'filled',
+          },
+          {
+            variation: 'outlined',
+            text: t(m.deleteBottomSheetSecondaryButtonText),
+            onPress: closeSheet,
+          },
+        ]}
+      />
+    );
+  } else if (modalContentType === 'success') {
+    const description = (
+      <View style={{marginTop: 40}}>
+        <Text style={{fontSize: 16}}>
+          <FormattedMessage
+            {...m.successDescription}
+            values={{
+              audioRecording: t(m.audioRecording),
+              bold: message => (
+                <Text style={{fontWeight: 'bold'}}>{message}</Text>
+              ),
+            }}
+          />
+        </Text>
+      </View>
+    );
+    return (
+      <BottomSheetModalContent
+        icon={<SuccessIcon style={{marginTop: 80}} />}
+        title={t(m.successTitle)}
+        description={description}
+        buttonConfigs={[
+          {
+            text: t(m.returnToEditorButtonText),
+            onPress: handleReturnToEditor,
+            variation: 'outlined',
+          },
+          {
+            text: t(m.recordAnotherButtonText),
+            onPress: handleRecordAnother,
+            variation: 'filled',
+          },
+        ]}
+      />
+    );
+  }
+  return null;
+};

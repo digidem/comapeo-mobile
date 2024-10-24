@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {Photo} from '../../contexts/PhotoPromiseContext/types';
+import {Audio} from '../../sharedTypes/audio';
 import {DescriptionField} from './DescriptionField';
 import {MediaScrollView} from '../MediaScrollView';
 import {ScreenContentWithDock} from '../ScreenContentWithDock';
@@ -15,7 +16,7 @@ type EditorProps = {
   PresetIcon: React.ReactNode;
   notes?: string;
   updateNotes?: (newNotes: string) => void;
-  photos: Photo[];
+  attachments?: (Audio | Photo)[];
   location?: {
     lat: number | undefined;
     lon: number | undefined;
@@ -25,16 +26,18 @@ type EditorProps = {
   notesComponent?: React.ReactNode;
   isTrack?: boolean;
   presetDisabled?: boolean;
+  isEditing?: boolean;
 };
 
 export const Editor = ({
   notes,
   updateNotes,
-  photos,
+  attachments,
   location,
   actionsRow,
   notesComponent,
   isTrack = false,
+  isEditing = false,
   ...presetProps
 }: EditorProps) => {
   return (
@@ -55,7 +58,9 @@ export const Editor = ({
       ) : (
         <DescriptionField notes={notes} updateNotes={updateNotes} />
       )}
-      <MediaScrollView photos={photos} />
+      {attachments && attachments.length > 0 && (
+        <MediaScrollView attachments={attachments} isEditing={isEditing} />
+      )}
     </ScreenContentWithDock>
   );
 };

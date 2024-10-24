@@ -78,7 +78,6 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
 
   return (
     <Editor
-      photos={[]}
       presetName={formatMessage(m.presetTitle)}
       notesComponent={<TrackDescriptionField />}
       PresetIcon={<TrackIcon style={styles.icon} />}

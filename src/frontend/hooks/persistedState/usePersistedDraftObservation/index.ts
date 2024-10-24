@@ -211,12 +211,22 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
     },
     deleteAudio: (uri: string) => {
       const extractedName = uri.split('/').pop();
-      const updatedAttachments = get().attachments.map(attachment => {
-        if ('name' in attachment && attachment.name === extractedName) {
-          return {...attachment, deleted: true};
-        }
-        return attachment;
-      });
+      const updatedAttachments = get()
+        .attachments.map(attachment => {
+          if ('uri' in attachment && attachment.uri === uri) {
+            return null;
+          } else if (
+            'name' in attachment &&
+            attachment.name === extractedName
+          ) {
+            return {...attachment, deleted: true};
+          } else {
+            return attachment;
+          }
+        })
+        .filter(
+          (attachment): attachment is Photo | Audio => attachment !== null,
+        );
       set({attachments: updatedAttachments});
     },
   },

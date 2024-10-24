@@ -193,6 +193,7 @@ export function BackgroundMapsScreen() {
         ref={removeMapBottomSheet.sheetRef}
         isOpen={removeMapBottomSheet.isOpen}>
         <BottomSheetModalContent
+          loading={removeCustomMapMutation.isPending}
           icon={<ErrorSvg />}
           title={t(m.deleteCustomMapTitle)}
           description={

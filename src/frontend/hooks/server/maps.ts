@@ -3,7 +3,7 @@ import * as FileSystem from 'expo-file-system';
 import * as v from 'valibot';
 
 import {useApi} from '../../contexts/ApiContext';
-import {DOCUMENT_DIRECTORY, selectFile} from '../../lib/file-system';
+import {DOCUMENT_DIRECTORY} from '../../lib/file-system';
 
 import {createRefreshTokenStore} from '../refreshTokenStore';
 import noop from '../../lib/noop';

@@ -147,6 +147,12 @@
   "Screens.Settings.AppSettings.languageDesc": {
     "message": "Display language for app"
   },
+  "Screens.Settings.AppSettings.mapManagement": {
+    "message": "Map Management"
+  },
+  "Screens.Settings.AppSettings.mapManagementDesc": {
+    "message": "Backgrounds, Map Data"
+  },
   "Screens.Settings.AppSettings.title": {
     "message": "App Settings"
   },
@@ -1275,6 +1281,75 @@
   },
   "screens.Settings.CreateOrJoinProject.whatIsAProject": {
     "message": "What is a Project"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
+    "message": "Accepted file types are .smp"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.chooseFile": {
+    "message": "Choose File"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.about": {
+    "message": "About Custom Map"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
+    "message": "This cannot be undone."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.close": {
+    "message": "Close"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.customMapAddedDescription": {
+    "message": "You will see this map when you are offline, but you will not see a map outside the area defined in your custom map."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.customMapAddedTitle": {
+    "message": "Custom Map Added"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.customMapInfoLoadError": {
+    "message": "Could not get custom map information from file. Please remove it or choose a different file."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapDescription": {
+    "message": "This will delete the map and its offline areas. No collected observation data will be deleted."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapTitle": {
+    "message": "Delete Custom Map?"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.deleteMapButtonText": {
+    "message": "Delete Map"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.description1": {
+    "message": "Adding a custom map will enable you to see a map when you are offline."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.description2": {
+    "message": "Your custom map is not shared with other devices in your project."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.importErrorDescription": {
+    "message": "Unable to import the file. Please go back and try again."
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
+    "message": "Import Error"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
+    "message": "Remove Map File"
+  },
+  "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
+    "message": "Background Maps"
+  },
+  "screens.Settings.MapManagement.MapsList.CustomMapDetails.dateAdded": {
+    "message": "Date Added"
+  },
+  "screens.Settings.MapManagement.MapsList.CustomMapDetails.mapNameColumn": {
+    "message": "Map Name"
+  },
+  "screens.Settings.MapManagement.MapsList.CustomMapDetails.removeMap": {
+    "message": "Remove Map"
+  },
+  "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
+    "message": "{value} MB"
+  },
+  "screens.Settings.MapManagement.backgroundMaps": {
+    "message": "Background Maps"
+  },
+  "screens.Settings.MapManagement.screenTitle": {
+    "message": "Map Management"
   },
   "screens.Settings.YourTeam.InviteDeclined": {
     "message": "Invitation Declined"

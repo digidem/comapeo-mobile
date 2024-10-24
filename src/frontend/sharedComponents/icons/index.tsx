@@ -2,6 +2,8 @@ import React from 'react';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import AntDesignIcon from 'react-native-vector-icons/AntDesign';
+
 import {Image} from 'react-native';
 
 import {Circle} from './Circle';
@@ -212,3 +214,7 @@ export const LocationFollowingIcon = ({
 export const StopIcon = ({color = WHITE, size = 30}: FontIconProps) => (
   <FontAwesomeIcon color={color} name="stop" size={size} />
 );
+
+export function DownloadIcon(props: FontIconProps) {
+  return <AntDesignIcon {...props} name="download" />;
+}

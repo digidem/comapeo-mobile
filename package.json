@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@bam.tech/react-native-image-resizer": "^3.0.7",
-    "@comapeo/ipc": "2.0.0",
+    "@comapeo/ipc": "2.0.2",
     "@dev-plugins/react-navigation": "^0.0.6",
     "@formatjs/intl-getcanonicallocales": "^2.3.0",
     "@formatjs/intl-locale": "^3.3.2",
@@ -108,6 +108,7 @@
     "tiny-typed-emitter": "^2.1.0",
     "uint8array-extras": "^0.5.0",
     "utm": "^1.1.1",
+    "valibot": "^0.42.1",
     "validate-color": "^2.2.4",
     "zustand": "^4.4.6"
   },
@@ -115,7 +116,7 @@
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
-    "@comapeo/core": "2.0.0",
+    "@comapeo/core": "2.0.1",
     "@comapeo/schema": "1.0.0",
     "@formatjs/cli": "^6.2.0",
     "@react-native-community/cli": "^12.3.6",

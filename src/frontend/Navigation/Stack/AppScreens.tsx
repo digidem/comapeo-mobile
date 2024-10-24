@@ -80,6 +80,14 @@ import {
   Audio,
   navigationOptions as audioNavigationOptions,
 } from '../../screens/Audio/index.tsx';
+import {
+  createNavigationOptions as createMapManagementNavigationOptions,
+  MapManagementScreen,
+} from '../../screens/Settings/MapManagement';
+import {
+  createNavigationOptions as createBackgroundMapsNavigationOptions,
+  BackgroundMapsScreen,
+} from '../../screens/Settings/MapManagement/BackgroundMaps.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -314,13 +322,11 @@ export const createDefaultScreenGroup = ({
       component={TrackEdit}
       options={{headerTitle: intl(TrackEdit.navTitle)}}
     />
-
     <RootStack.Screen
       name="Config"
       component={Config}
       options={{headerTitle: intl(Config.navTitle)}}
     />
-
     <RootStack.Screen
       name="HowToLeaveProject"
       component={HowToLeaveProject}
@@ -333,6 +339,18 @@ export const createDefaultScreenGroup = ({
         component={Audio}
       />
     )}
+
+    <RootStack.Screen
+      name="MapManagement"
+      component={MapManagementScreen}
+      options={createMapManagementNavigationOptions({intl})}
+    />
+    <RootStack.Screen
+      name="BackgroundMaps"
+      component={BackgroundMapsScreen}
+      options={createBackgroundMapsNavigationOptions({intl})}
+    />
+
     {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
       <RootStack.Screen
         name="CreateTestData"

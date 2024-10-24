@@ -21,6 +21,7 @@ import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
 import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types.ts';
 import {ButtonFields} from './Buttons.tsx';
 import {AudioAttachment} from '../../sharedTypes/audio.ts';
+import {isSavedPhoto, isAudioAttachment} from '../../lib/attachmentTypeChecks';
 
 const m = defineMessages({
   deleteTitle: {
@@ -77,7 +78,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
 
   const attachments = observation.attachments.filter(
     (attachment): attachment is SavedPhoto | AudioAttachment =>
-      attachment.type === 'photo' || attachment.type === 'audio',
+      isSavedPhoto(attachment) || isAudioAttachment(attachment),
   );
 
   return (

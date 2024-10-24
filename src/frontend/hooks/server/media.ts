@@ -8,6 +8,10 @@ import {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
 import type {MapeoProjectApi} from '@comapeo/ipc';
 import {ClientApi} from 'rpc-reflector';
 import {UnsavedAudio} from '../../sharedTypes/audio';
+import {
+  isProcessedDraftPhoto,
+  isUnsavedAudio,
+} from '../../lib/attachmentTypeChecks';
 
 export function useCreateBlobMutation(opts: {retry?: number} = {}) {
   const {projectApi} = useActiveProject();
@@ -15,7 +19,7 @@ export function useCreateBlobMutation(opts: {retry?: number} = {}) {
   return useMutation({
     retry: opts.retry,
     mutationFn: async (attachment: ProcessedDraftPhoto | UnsavedAudio) => {
-      if ('type' in attachment) {
+      if (isProcessedDraftPhoto(attachment)) {
         const {originalUri, previewUri, thumbnailUri} = attachment;
         return projectApi.$blobs.create(
           {
@@ -33,7 +37,7 @@ export function useCreateBlobMutation(opts: {retry?: number} = {}) {
             timestamp: attachment.mediaMetadata.timestamp,
           },
         );
-      } else {
+      } else if (isUnsavedAudio(attachment)) {
         const {uri, createdAt} = attachment;
         return projectApi.$blobs.create(
           {
@@ -44,6 +48,8 @@ export function useCreateBlobMutation(opts: {retry?: number} = {}) {
             timestamp: createdAt,
           },
         );
+      } else {
+        throw new Error('Unknown attachment type');
       }
     },
   });

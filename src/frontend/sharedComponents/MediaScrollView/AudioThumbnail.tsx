@@ -19,7 +19,6 @@ interface SharedThumbnailProps {
   style?: StyleProp<ViewStyle>;
   size: number;
   isEditing: boolean;
-  onPress?: () => void;
   disabled?: boolean;
 }
 

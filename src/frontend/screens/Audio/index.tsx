@@ -20,8 +20,8 @@ export function Audio({route}: NativeRootNavigationProps<'Audio'>) {
       {uri ? (
         <ExistingRecording
           uri={uri}
-          onDelete={() => {
-            deleteAudio(uri);
+          onDelete={isSavedAudioUrl => {
+            deleteAudio(uri, isSavedAudioUrl);
           }}
           isEditing={isEditing}
         />

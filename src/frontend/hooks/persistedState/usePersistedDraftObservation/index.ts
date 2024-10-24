@@ -10,6 +10,7 @@ import {matchPreset} from '../../../lib/utils';
 import {
   isSavedPhoto,
   isAudioAttachment,
+  isUnsavedAudio,
 } from '../../../lib/attachmentTypeChecks';
 
 const emptyObservation: ClientGeneratedObservation = {
@@ -31,7 +32,7 @@ export type DraftObservationSlice = {
     addPhotoPlaceholder: (draftPhotoId: string) => void;
     replacePhotoPlaceholderWithPhoto: (draftPhoto: DraftPhoto) => void;
     addAudio: (audio: UnsavedAudio) => void;
-    deleteAudio: (uri: string) => void;
+    deleteAudio: (uri: string, isSavedAudioUrl: boolean) => void;
     // Clear the current draft
     clearDraft: () => void;
     // Create a new draft observation
@@ -209,25 +210,28 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
     addAudio: (audio: UnsavedAudio) => {
       set({attachments: [...get().attachments, audio]});
     },
-    deleteAudio: (uri: string) => {
-      const extractedName = uri.split('/').pop();
-      const updatedAttachments = get()
-        .attachments.map(attachment => {
-          if ('uri' in attachment && attachment.uri === uri) {
-            return null;
-          } else if (
-            'name' in attachment &&
+    deleteAudio: (uri: string, isSavedAudioUrl: boolean) => {
+      if (isSavedAudioUrl) {
+        const extractedName = uri.split('/').pop();
+        const updatedAttachments = get().attachments.map(attachment => {
+          if (
+            isAudioAttachment(attachment) &&
             attachment.name === extractedName
           ) {
             return {...attachment, deleted: true};
-          } else {
-            return attachment;
           }
-        })
-        .filter(
-          (attachment): attachment is Photo | Audio => attachment !== null,
-        );
-      set({attachments: updatedAttachments});
+          return attachment;
+        });
+        set({attachments: updatedAttachments});
+      } else {
+        const updatedAttachments = get().attachments.filter(attachment => {
+          if (isUnsavedAudio(attachment) && attachment.uri === uri) {
+            return false;
+          }
+          return true;
+        });
+        set({attachments: updatedAttachments});
+      }
     },
   },
 });

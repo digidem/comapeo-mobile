@@ -42,7 +42,7 @@ const m = defineMessages({
 
 interface ExistingRecordingProps {
   uri: string;
-  onDelete: () => void;
+  onDelete: (isSavedAudio: boolean) => void;
   isEditing: boolean;
 }
 
@@ -56,6 +56,15 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
   const {sheetRef, isOpen, openSheet, closeSheet} = useBottomSheetModal({
     openOnMount: false,
   });
+  const isRemoteUri = (url: string): boolean => {
+    try {
+      const parsedUri = new URL(url);
+      return parsedUri.protocol === 'http:' || parsedUri.protocol === 'https:';
+    } catch (e) {
+      // if url doesn't meet these conditions return false
+      return false;
+    }
+  };
 
   const [localUri, setLocalUri] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -77,7 +86,7 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
 
   const handleDelete = () => {
     closeSheet();
-    onDelete();
+    onDelete(isRemoteUri(uri));
   };
 
   const handleShare = async () => {
@@ -93,8 +102,6 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
         setLocalUri(downloadResult.uri);
       }
       await Share.open({url: localUri!});
-    } catch (err) {
-      console.error('Error sharing file:', err);
     } finally {
       setLoading(false);
     }
@@ -123,11 +130,11 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
           rightControl={
             loading ? (
               <UIActivityIndicator size={24} color={WHITE} />
-            ) : (
+            ) : isRemoteUri(uri) ? (
               <Pressable onPress={handleShare}>
                 <MaterialIcon name="share" color={WHITE} size={36} />
               </Pressable>
-            )
+            ) : null
           }
         />
       </View>

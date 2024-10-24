@@ -252,10 +252,9 @@ function checkEqual(
 ) {
   if (!edited || !('docId' in edited)) return true;
   // attachments are created right before an observation is made, so we need to check # attachments that are about to be saved
-  const {attachments: originalAtts, ...originalNoAttachments} = original;
+  const {attachments: originalAtts} = original;
 
   if (originalAtts.length !== numberOfAttachments) return false;
 
-  const {attachments, ...editedNoAttachments} = edited;
-  return isEqual(originalNoAttachments, editedNoAttachments);
+  return isEqual(original, edited);
 }

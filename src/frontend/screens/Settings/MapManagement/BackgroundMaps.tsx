@@ -226,7 +226,13 @@ export function BackgroundMapsScreen() {
         ref={mapAddedBottomSheet.sheetRef}
         isOpen={mapAddedBottomSheet.isOpen}>
         <BottomSheetModalContent
-          icon={<GreenCheckSvg />}
+          icon={
+            <GreenCheckSvg
+              style={{
+                marginTop: 80,
+              }}
+            />
+          }
           title={t(m.customMapAddedTitle)}
           description={t(m.customMapAddedDescription)}
           buttonConfigs={[

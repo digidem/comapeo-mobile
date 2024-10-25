@@ -1,52 +1,18 @@
 import * as React from 'react';
 import {
   DimensionValue,
-  FlatList,
   StyleSheet,
   TouchableNativeFeedback,
   View,
 } from 'react-native';
-import {NEW_DARK_GREY, VERY_LIGHT_BLUE} from '../lib/styles';
+import {NEW_DARK_GREY, VERY_LIGHT_BLUE} from '../../lib/styles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {Text} from './Text';
-
-type FlatListProps = React.ComponentProps<typeof FlatList<MenuListItemType>>;
-
-type MenuListProps = Omit<FlatListProps, 'renderItem'>;
-
-/**
- *
- * This list is designed for menus and intended to take up its entire container (aka, entire screen or drawer)
- */
-export const FullScreenMenuList = ({
-  data,
-  contentContainerStyle,
-  ...rest
-}: MenuListProps) => {
-  return (
-    <FlatList
-      {...rest}
-      contentContainerStyle={[
-        contentContainerStyle,
-        {paddingTop: 40, rowGap: 20},
-      ]}
-      data={data}
-      renderItem={({item}) => (
-        <MenuListItem
-          item={item}
-          paddingLeft={20}
-          paddingRight={20}
-          columnGap={20}
-        />
-      )}
-    />
-  );
-};
+import {Text} from '../Text';
 
 export type MenuListItemType = {
   primaryText: string;
   onPress: () => void;
-  secondaryText?: string;
+  secondaryText?: string | React.ReactNode;
   testID?: string;
   disabled?: boolean;
 } & (
@@ -55,7 +21,7 @@ export type MenuListItemType = {
   | {materialIconName?: never; icon?: never} // Has neither
 );
 
-const MenuListItem = ({
+export const MenuListItem = ({
   item,
   paddingLeft,
   paddingRight,

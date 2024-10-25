@@ -2,10 +2,8 @@ import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
 import {useSecurityContext} from '../../../contexts/SecurityContext';
-import {
-  FullScreenMenuList,
-  MenuListItemType,
-} from '../../../sharedComponents/MenuList';
+import {FullScreenMenuList} from '../../../sharedComponents/MenuList/FullScreenMenuList';
+import {MenuListItemType} from '../../../sharedComponents/MenuList/MenuListItem';
 
 const m = defineMessages({
   title: {

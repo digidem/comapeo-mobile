@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef, useCallback} from 'react';
 import {Pressable, View, StyleSheet} from 'react-native';
 import {
   HeaderBackButton,
@@ -19,6 +19,13 @@ import ErrorIcon from '../../images/Error.svg';
 import Share from 'react-native-share';
 import * as FileSystem from 'expo-file-system';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
+import {
+  isAudioAttachment,
+  isUnsavedAudio,
+} from '../../lib/attachmentTypeChecks';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 
 const m = defineMessages({
   deleteBottomSheetTitle: {
@@ -41,13 +48,11 @@ const m = defineMessages({
 });
 
 interface ExistingRecordingProps {
-  uri: string;
-  onDelete: (isSavedAudioUrl: boolean) => void;
+  onDelete: () => void;
   isEditing: boolean;
 }
 
 export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
-  uri,
   onDelete,
   isEditing,
 }) => {
@@ -56,62 +61,25 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
   const {sheetRef, isOpen, openSheet, closeSheet} = useBottomSheetModal({
     openOnMount: false,
   });
+  const selectedAudioAttachment = usePersistedDraftObservation(
+    state => state.selectedAudioAttachment,
+  );
+  const setSelectedAudioAttachment = usePersistedDraftObservation(
+    state => state.actions.setSelectedAudioAttachment,
+  );
+  const {projectApi} = useActiveProject();
 
   const [localUri, setLocalUri] = useState<string | null>(null);
+  const [shareLoading, setShareLoading] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+  const isSavedUri = isAudioAttachment(selectedAudioAttachment);
+  const localUriRef = useRef<string | null>(null);
 
-  const isRemoteUri = (url: string): boolean => {
-    try {
-      const parsedUri = new URL(url);
-      return parsedUri.protocol === 'http:' || parsedUri.protocol === 'https:';
-    } catch (e) {
-      return false;
-    }
-  };
-
-  useEffect(() => {
-    let isCancelled = false;
-
-    const downloadAudio = async () => {
-      try {
-        if (isRemoteUri(uri)) {
-          const tempFileName = `audio_${Date.now()}.m4a`;
-          const localFilePath = `${FileSystem.cacheDirectory}${tempFileName}`;
-          const downloadResult = await FileSystem.downloadAsync(
-            uri,
-            localFilePath,
-          );
-          if (!isCancelled) {
-            setLocalUri(downloadResult.uri);
-          } else {
-            await FileSystem.deleteAsync(localFilePath, {idempotent: true});
-          }
-        } else {
-          setLocalUri(uri);
-        }
-      } catch (error) {
-        console.error('Error downloading audio file:', error);
-      } finally {
-        if (!isCancelled) {
-          setLoading(false);
-        }
-      }
-    };
-
-    downloadAudio();
-
-    return () => {
-      isCancelled = true;
-    };
-  }, [uri]);
-
-  useEffect(() => {
-    return () => {
-      if (localUri && isRemoteUri(uri)) {
-        FileSystem.deleteAsync(localUri, {idempotent: true}).catch(() => {});
-      }
-    };
-  }, [localUri, uri]);
+  const handleBackPress = useCallback(() => {
+    setSelectedAudioAttachment(null);
+    navigation.goBack();
+  }, [setSelectedAudioAttachment, navigation]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -119,41 +87,103 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
       headerLeft: (props: HeaderBackButtonProps) => (
         <HeaderBackButton
           {...props}
-          onPress={() => navigation.goBack()}
+          onPress={handleBackPress}
           backImage={backImageProps => (
             <CloseIcon color={backImageProps.tintColor} />
           )}
         />
       ),
     });
-  }, [navigation]);
+  }, [navigation, handleBackPress]);
+
+  useEffect(() => {
+    let isCancelled = false;
+
+    const prepareAudio = async () => {
+      try {
+        if (!selectedAudioAttachment) {
+          setError(new Error('No audio attachment selected.'));
+          return;
+        }
+        let playbackUri: string | null = null;
+        if (isSavedUri) {
+          const url = await projectApi.$blobs.getUrl({
+            driveId: selectedAudioAttachment.driveDiscoveryId,
+            name: selectedAudioAttachment.name,
+            type: selectedAudioAttachment.type,
+            variant: 'original',
+          });
+
+          if (url) {
+            const tempFileName = `audio_${Date.now()}.m4a`;
+            const localFilePath = `${FileSystem.cacheDirectory}${tempFileName}`;
+            const downloadResult = await FileSystem.downloadAsync(
+              url,
+              localFilePath,
+            );
+            playbackUri = downloadResult.uri;
+          } else {
+            setError(new Error('No URL available for audio attachment.'));
+          }
+        } else if (isUnsavedAudio(selectedAudioAttachment)) {
+          playbackUri = selectedAudioAttachment.uri;
+        } else {
+          setError(new Error('Invalid audio attachment type.'));
+        }
+
+        if (!isCancelled && playbackUri) {
+          setLocalUri(playbackUri);
+          localUriRef.current = playbackUri;
+        }
+      } catch (err) {
+        if (!isCancelled) {
+          setError(err as Error);
+        }
+      } finally {
+        if (!isCancelled) {
+          setLoading(false);
+        }
+      }
+    };
+
+    prepareAudio();
+
+    return () => {
+      isCancelled = true;
+      const uriToDelete = localUriRef.current;
+      if (uriToDelete && isSavedUri) {
+        FileSystem.deleteAsync(uriToDelete, {idempotent: true}).catch(() => {});
+      }
+    };
+  }, [selectedAudioAttachment, isSavedUri, projectApi.$blobs]);
 
   const handleDelete = () => {
     closeSheet();
-    onDelete(isRemoteUri(uri));
+    onDelete();
+    navigation.goBack();
   };
 
   const handleShare = async () => {
     if (!localUri) {
-      console.error('Local audio file is not available for sharing.');
+      setError(new Error('Local audio file is not available for sharing.'));
       return;
     }
-    setLoading(true);
+    setShareLoading(true);
     try {
-      await Share.open({url: localUri});
+      await Share.open({url: localUri, failOnCancel: false});
     } catch (err) {
-      console.error('Error sharing file:', err);
+      setError(err as Error);
     } finally {
-      setLoading(false);
+      setShareLoading(false);
     }
   };
 
   return (
     <>
       <View style={styles.container}>
-        {loading || !localUri ? (
-          <UIActivityIndicator size={24} color={WHITE} />
-        ) : (
+        {loading ? (
+          <UIActivityIndicator size={48} color={WHITE} />
+        ) : localUri ? (
           <Playback
             uri={localUri}
             leftControl={
@@ -164,21 +194,19 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
               ) : null
             }
             rightControl={
-              isRemoteUri(uri) ? (
+              shareLoading ? (
+                <UIActivityIndicator size={24} color={WHITE} />
+              ) : isSavedUri ? (
                 <Pressable onPress={handleShare}>
                   <MaterialIcon name="share" color={WHITE} size={36} />
                 </Pressable>
               ) : null
             }
           />
-        )}
+        ) : null}
       </View>
-      <BottomSheetModal
-        isOpen={isOpen}
-        ref={sheetRef}
-        onDismiss={() => {
-          navigation.goBack();
-        }}>
+      <ErrorBottomSheet error={error} clearError={() => setError(null)} />
+      <BottomSheetModal isOpen={isOpen} ref={sheetRef} onDismiss={() => {}}>
         <BottomSheetModalContent
           icon={<ErrorIcon />}
           title={t(m.deleteBottomSheetTitle)}

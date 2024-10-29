@@ -85,3 +85,6 @@ ios/*.env*.local
 # Expo
 android/
 ios/
+
+#Detox
+/artifacts

@@ -58,6 +58,13 @@
         }
       ],
       ["./expo-config-plugins/removeExpoInputStyles.js"],
+      [
+        "@config-plugins/detox",
+        {
+          "skipProguard": false,
+          "subdomains": ["10.0.2.2", "localhost", "127.0.0.1"]
+        }
+      ],
       ["./expo-config-plugins/targetArmArchsOnly.js"]
     ],
     "android": {

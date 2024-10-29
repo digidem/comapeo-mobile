@@ -24,7 +24,10 @@
     "build:backend": "node ./scripts/build-backend.mjs",
     "extract-messages": "formatjs extract 'src/frontend/**/*.{ts,tsx}' --ignore='**/*.d.ts' --format crowdin --out-file ./messages/en.json",
     "eas-build-post-install": "npm run build:backend && npm run build:translations && npm run build:intl-polyfills",
-    "tests": "maestro start-device --platform android && npm run android && maestro test e2e"
+    "tests": "maestro start-device --platform android && npm run android && maestro test e2e",
+    "build:test": "detox build --configuration android.att.release",
+    "test:e2e": "node ./bin/e2e-test.js",
+    "test:e2e-local": "detox test --configuration android.att.release"
   },
   "dependencies": {
     "@bam.tech/react-native-image-resizer": "^3.0.7",
@@ -118,6 +121,7 @@
     "@babel/runtime": "^7.20.0",
     "@comapeo/core": "2.0.1",
     "@comapeo/schema": "1.0.0",
+    "@config-plugins/detox": "^7.0.0",
     "@formatjs/cli": "^6.2.0",
     "@react-native-community/cli": "^12.3.6",
     "@react-native/babel-preset": "^0.73.21",
@@ -143,6 +147,7 @@
     "babel-jest": "^29.6.3",
     "babel-plugin-transform-inline-environment-variables": "^0.4.4",
     "date-fns": "^3.6.0",
+    "detox": "^20.27.6",
     "dotenv-cli": "^7.4.2",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^9.1.0",
@@ -159,6 +164,7 @@
     "rimraf": "^5.0.5",
     "rollup-plugin-node-polyfills": "^0.2.1",
     "semver": "^7.6.0",
+    "ts-jest": "^29.1.4",
     "type-fest": "^4.10.3",
     "typescript": "^5.3.3"
   },

@@ -522,7 +522,7 @@
     "message": "Se você é o único Coordenador no projeto, ninguém mais poderá editar os detalhes do projeto ou convidar outros dispositivos!"
   },
   "screens.IntroToCoMapeo.collaborate": {
-    "message": "Colaborar com outros"
+    "message": "Colabore com outras pessoas"
   },
   "screens.IntroToCoMapeo.designedFor": {
     "message": "Desenvolvido com e para povos indígenas e comunidades que estão na linha de frente"
@@ -1403,7 +1403,7 @@
     "message": "Você poderá compartilhar dados com dispositivos que fazem parte do mesmo projeto."
   },
   "screens.Sync.CreateOrJoinProjectDisplay.title": {
-    "message": "Crie ou participe de um projeto para coletar dados com uma equipe"
+    "message": "Crie ou participe de um projeto para coletar dados com a equipe"
   },
   "screens.Sync.HeaderTitle.noWiFi": {
     "message": "Sem Wi-Fi"

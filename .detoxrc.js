@@ -25,7 +25,7 @@ module.exports = {
       type: 'android.apk',
       binaryPath: 'android/app/build/outputs/apk/release/app-release.apk',
       build:
-        'cd android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release -PreactNativeArchitectures=arm64-v8a,armeabi-v7a',
+        'cd android && EXPO_PUBLIC_IS_E2E=TRUE ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release',
     },
     'android.cloud.release': {
       type: 'android.cloud',

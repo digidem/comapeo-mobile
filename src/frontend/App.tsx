@@ -72,9 +72,12 @@ TaskManager.defineTask(
   },
 );
 
+const isE2e = !!process.env.EXPO_PUBLIC_IS_E2E;
+
 const App = () => {
-  const [permissionsAsked, setPermissionsAsked] = React.useState(false);
+  const [permissionsAsked, setPermissionsAsked] = React.useState(isE2e);
   React.useEffect(() => {
+    if (isE2e) return;
     PermissionsAndroid.requestMultiple([
       'android.permission.CAMERA',
       'android.permission.ACCESS_FINE_LOCATION',

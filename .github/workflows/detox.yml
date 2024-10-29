@@ -77,7 +77,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Get available devices
         id: get-devices
-        run: '(echo -n "devices=" && jq -c . e2e/devices.json) >> $GITHUB_OUTPUT'
+        run: '(echo -n "devices=" && jq -c . e2e-detox/devices.json) >> $GITHUB_OUTPUT'
 
   test:
     runs-on: ubuntu-latest

@@ -44,6 +44,14 @@ jobs:
           distribution: adopt
           cache: gradle
 
+      - name: Build translations
+        if: steps.cache-builds.outputs.cache-hit != 'true'
+        run: npm run build:translations
+
+      - name: Build intl polyfills
+        if: steps.cache-builds.outputs.cache-hit != 'true'
+        run: npm run build:intl-polyfills
+
       - name: Build backend
         if: steps.cache-builds.outputs.cache-hit != 'true'
         run: npm run build:backend

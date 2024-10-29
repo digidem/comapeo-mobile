@@ -5,10 +5,12 @@ import PlayArrow from '../../images/PlayArrow.svg';
 import {Audio} from '../../sharedTypes/audio';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {UIActivityIndicator} from 'react-native-indicators';
 import {
   isAudioAttachment,
   isUnsavedAudio,
 } from '../../lib/attachmentTypeChecks';
+import {BLACK} from '../../lib/styles';
 
 type AudioThumbnailProps = {
   audioAttachment: Audio;
@@ -25,12 +27,14 @@ export const AudioThumbnail: FC<AudioThumbnailProps> = ({
 }) => {
   const navigation = useNavigationFromRoot();
   const {projectApi} = useActiveProject();
+  const [loading, setLoading] = React.useState(false);
 
   if ('deleted' in audioAttachment && audioAttachment.deleted === true) {
     return null;
   }
 
   const handlePress = async () => {
+    setLoading(true);
     let uri: string | undefined;
     const isSavedUri = isAudioAttachment(audioAttachment);
 
@@ -44,7 +48,7 @@ export const AudioThumbnail: FC<AudioThumbnailProps> = ({
         variant: 'original',
       });
     }
-
+    setLoading(false);
     navigation.navigate('Audio', {
       isEditing,
       uri,
@@ -56,7 +60,11 @@ export const AudioThumbnail: FC<AudioThumbnailProps> = ({
     <TouchableOpacity
       style={[styles.thumbnailContainer, {width: size, height: size}, style]}
       onPress={handlePress}>
-      <PlayArrow width={48} height={48} />
+      {loading ? (
+        <UIActivityIndicator color={BLACK} />
+      ) : (
+        <PlayArrow width={48} height={48} />
+      )}
     </TouchableOpacity>
   );
 };

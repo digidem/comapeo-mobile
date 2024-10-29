@@ -1,9 +1,13 @@
+const DEVICE_NAME = process.env.DEVICE_NAME || 'OnePlus 8';
+const DEVICE_OS_VERSION = process.env.DEVICE_OS_VERSION || '10.0';
+const BUILD_ID = process.env.BUILD_ID || 'Internal';
+
 /** @type {Detox.DetoxConfig} */
 module.exports = {
   testRunner: {
     args: {
       $0: 'jest',
-      config: 'e2e/jest.config.ts',
+      config: 'e2e-detox/jest.config.ts',
     },
     jest: {
       setupTimeout: 120000,
@@ -49,36 +53,36 @@ module.exports = {
         osVersion: DEVICE_OS_VERSION,
       },
     },
-    configurations: {
-      'android.att.debug': {
-        device: 'attached',
-        app: 'android.debug',
+  },
+  configurations: {
+    'android.att.debug': {
+      device: 'attached',
+      app: 'android.debug',
+    },
+    'android.att.release': {
+      device: 'attached',
+      app: 'android.release',
+    },
+    'android.emu.debug': {
+      device: 'emulator',
+      app: 'android.debug',
+    },
+    'android.emu.release': {
+      device: 'emulator',
+      app: 'android.release',
+    },
+    'android.cloud.release': {
+      device: 'cloud',
+      app: 'android.cloud.release',
+      cloudAuthentication: {
+        username: process.env.BROWSERSTACK_USERNAME,
+        accessKey: process.env.BROWSERSTACK_ACCESS_KEY,
       },
-      'android.att.release': {
-        device: 'attached',
-        app: 'android.release',
-      },
-      'android.emu.debug': {
-        device: 'emulator',
-        app: 'android.debug',
-      },
-      'android.emu.release': {
-        device: 'emulator',
-        app: 'android.release',
-      },
-      'android.cloud.release': {
-        device: 'cloud',
-        app: 'android.cloud.release',
-        cloudAuthentication: {
-          username: process.env.BROWSERSTACK_USERNAME,
-          accessKey: process.env.BROWSERSTACK_ACCESS_KEY,
-        },
-        session: {
-          server: 'wss://detox.browserstack.com/init',
-          name: `${DEVICE_NAME} v${DEVICE_OS_VERSION}`,
-          build: BUILD_ID,
-          project: 'Detox Example',
-        },
+      session: {
+        server: 'wss://detox.browserstack.com/init',
+        name: `${DEVICE_NAME} v${DEVICE_OS_VERSION}`,
+        build: BUILD_ID,
+        project: 'Detox Example',
       },
     },
   },

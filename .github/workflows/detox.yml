@@ -1,0 +1,130 @@
+name: Detox BrowserStack
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    outputs:
+      app_url: ${{ steps.upload.outputs.app_url }}
+      app_client_url: ${{ steps.upload-client.outputs.app_client_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Cache builds during dev to speed up actions
+      - name: Cache builds
+        id: cache-builds
+        uses: actions/cache@v4
+        with:
+          path: android/app/build
+          key: app-build-1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Expo prebuild
+        if: steps.cache-builds.outputs.cache-hit != 'true'
+        run: npx expo prebuild
+
+      - name: Install Java
+        if: steps.cache-builds.outputs.cache-hit != 'true'
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: adopt
+          cache: gradle
+
+      - name: Build app for Detox
+        if: steps.cache-builds.outputs.cache-hit != 'true'
+        run: npx detox build --configuration android.att.release
+
+      - name: Upload app to BrowserStack
+        id: upload
+        run: (echo -n "app_url=" && scripts/upload-app.mjs) >> $GITHUB_OUTPUT
+        env:
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+
+      - name: Upload app client to BrowserStack
+        id: upload-client
+        run: (echo -n "app_client_url=" && scripts/upload-app-client.mjs) >> $GITHUB_OUTPUT
+        env:
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+
+  devices:
+    runs-on: ubuntu-latest
+
+    outputs:
+      devices: ${{ steps.get-devices.outputs.devices }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Get available devices
+        id: get-devices
+        run: '(echo -n "devices=" && jq -c . e2e/devices.json) >> $GITHUB_OUTPUT'
+
+  test:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+      - devices
+
+    strategy:
+      max-parallel: 5
+      matrix:
+        include: ${{ fromJson(needs.devices.outputs.devices) }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Don't cache this because we install patched Detox
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fake adb to keep Detox happy
+        run: |
+          mkdir -p $ANDROID_SDK_ROOT/platform-tools
+          echo '#!/bin/bash' > $ANDROID_SDK_ROOT/platform-tools/adb
+          chmod +x $ANDROID_SDK_ROOT/platform-tools/adb
+
+      - name: Install Patched Detox for BrowserStack
+        run: npm install --no-save detox@npm:@avinashbharti97/detox@^20.26.2
+
+      - name: Get branch name
+        run: |
+          if [ "${{ github.event_name }}" == "push" ]; then
+            BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          elif [ "${{ github.event_name }}" == "pull_request" ]; then
+            BRANCH_NAME=${GITHUB_HEAD_REF}
+          else
+            BRANCH_NAME="unknown"
+          fi
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+
+      - name: Get build ID
+        run: echo "BUILD_ID=$BRANCH_NAME-${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+      - name: Run Detox tests
+        run: npx detox test --configuration android.cloud.release
+        env:
+          BROWSERSTACK_APP_URL: ${{ needs.build.outputs.app_url }}
+          BROWSERSTACK_APP_CLIENT_URL: ${{ needs.build.outputs.app_client_url }}
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+          DEVICE_NAME: ${{ matrix.name }}
+          DEVICE_OS_VERSION: ${{ matrix.osVersion }}

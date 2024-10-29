@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef, useCallback} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {Pressable, View, StyleSheet} from 'react-native';
 import {
   HeaderBackButton,
@@ -70,11 +70,9 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
   const {projectApi} = useActiveProject();
 
   const [localUri, setLocalUri] = useState<string | null>(null);
-  const [shareLoading, setShareLoading] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const isSavedUri = isAudioAttachment(selectedAudioAttachment);
-  const localUriRef = useRef<string | null>(null);
 
   const handleBackPress = useCallback(() => {
     setSelectedAudioAttachment(null);
@@ -102,39 +100,30 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
     const prepareAudio = async () => {
       try {
         if (!selectedAudioAttachment) {
-          setError(new Error('No audio attachment selected.'));
+          throw new Error('No audio attachment selected.');
+        }
+
+        if (isUnsavedAudio(selectedAudioAttachment)) {
+          setLocalUri(selectedAudioAttachment.uri);
           return;
         }
-        let playbackUri: string | null = null;
-        if (isSavedUri) {
-          const url = await projectApi.$blobs.getUrl({
-            driveId: selectedAudioAttachment.driveDiscoveryId,
-            name: selectedAudioAttachment.name,
-            type: selectedAudioAttachment.type,
-            variant: 'original',
-          });
 
-          if (url) {
-            const tempFileName = `audio_${Date.now()}.m4a`;
-            const localFilePath = `${FileSystem.cacheDirectory}${tempFileName}`;
-            const downloadResult = await FileSystem.downloadAsync(
-              url,
-              localFilePath,
-            );
-            playbackUri = downloadResult.uri;
-          } else {
-            setError(new Error('No URL available for audio attachment.'));
-          }
-        } else if (isUnsavedAudio(selectedAudioAttachment)) {
-          playbackUri = selectedAudioAttachment.uri;
-        } else {
-          setError(new Error('Invalid audio attachment type.'));
-        }
+        const url = await projectApi.$blobs.getUrl({
+          driveId: selectedAudioAttachment.driveDiscoveryId,
+          name: selectedAudioAttachment.name,
+          type: selectedAudioAttachment.type,
+          variant: 'original',
+        });
 
-        if (!isCancelled && playbackUri) {
-          setLocalUri(playbackUri);
-          localUriRef.current = playbackUri;
-        }
+        const tempFileName = `audio_${Date.now()}.m4a`;
+        const localFilePath = `${FileSystem.cacheDirectory}${tempFileName}`;
+        const downloadResult = await FileSystem.downloadAsync(
+          url,
+          localFilePath,
+        );
+
+        setLocalUri(downloadResult.uri);
+        return;
       } catch (err) {
         if (!isCancelled) {
           setError(err as Error);
@@ -150,12 +139,16 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
 
     return () => {
       isCancelled = true;
-      const uriToDelete = localUriRef.current;
-      if (uriToDelete && isSavedUri) {
-        FileSystem.deleteAsync(uriToDelete, {idempotent: true}).catch(() => {});
-      }
     };
   }, [selectedAudioAttachment, isSavedUri, projectApi.$blobs]);
+
+  useEffect(() => {
+    return () => {
+      if (localUri && isSavedUri) {
+        FileSystem.deleteAsync(localUri, {idempotent: true}).catch(() => {});
+      }
+    };
+  }, [localUri, isSavedUri]);
 
   const handleDelete = () => {
     closeSheet();
@@ -164,17 +157,13 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
   };
 
   const handleShare = async () => {
-    if (!localUri) {
-      setError(new Error('Local audio file is not available for sharing.'));
-      return;
-    }
-    setShareLoading(true);
     try {
+      if (!localUri) {
+        throw new Error('Local audio file is not available for sharing.');
+      }
       await Share.open({url: localUri, failOnCancel: false});
     } catch (err) {
       setError(err as Error);
-    } finally {
-      setShareLoading(false);
     }
   };
 
@@ -194,9 +183,7 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
               ) : null
             }
             rightControl={
-              shareLoading ? (
-                <UIActivityIndicator size={24} color={WHITE} />
-              ) : isSavedUri ? (
+              isSavedUri ? (
                 <Pressable onPress={handleShare}>
                   <MaterialIcon name="share" color={WHITE} size={36} />
                 </Pressable>

@@ -89,6 +89,7 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
         value: null,
         observationId: undefined,
         preset: undefined,
+        selectedAudioAttachment: null,
       });
     },
     updateObservationPosition: props => {

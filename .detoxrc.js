@@ -82,7 +82,7 @@ module.exports = {
         server: 'wss://detox.browserstack.com/init',
         name: `${DEVICE_NAME} v${DEVICE_OS_VERSION}`,
         build: BUILD_ID,
-        project: 'Detox Example',
+        project: 'CoMapeo Mobile',
       },
     },
   },

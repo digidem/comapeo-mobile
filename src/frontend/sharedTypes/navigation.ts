@@ -94,7 +94,7 @@ export type RootStackParamsList = {
   DataAndPrivacy: undefined;
   SettingsPrivacyPolicy: undefined;
   HowToLeaveProject: undefined;
-  Audio: {isEditing: boolean} | undefined;
+  Audio: {isEditing: boolean; uri?: string; isSavedUri?: boolean};
   MapManagement: undefined;
   BackgroundMaps: undefined;
 };

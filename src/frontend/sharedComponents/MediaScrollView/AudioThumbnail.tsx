@@ -3,8 +3,12 @@ import {StyleProp, StyleSheet, TouchableOpacity, ViewStyle} from 'react-native';
 import {LIGHT_GREY} from '../../lib/styles';
 import PlayArrow from '../../images/PlayArrow.svg';
 import {Audio} from '../../sharedTypes/audio';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {
+  isAudioAttachment,
+  isUnsavedAudio,
+} from '../../lib/attachmentTypeChecks';
 
 type AudioThumbnailProps = {
   audioAttachment: Audio;
@@ -20,16 +24,31 @@ export const AudioThumbnail: FC<AudioThumbnailProps> = ({
   isEditing = false,
 }) => {
   const navigation = useNavigationFromRoot();
-  const {actions} = usePersistedDraftObservation();
+  const {projectApi} = useActiveProject();
 
   if ('deleted' in audioAttachment && audioAttachment.deleted === true) {
     return null;
   }
 
-  const handlePress = () => {
-    actions.setSelectedAudioAttachment(audioAttachment);
+  const handlePress = async () => {
+    let uri: string | undefined;
+    const isSavedUri = isAudioAttachment(audioAttachment);
+
+    if (isUnsavedAudio(audioAttachment)) {
+      uri = audioAttachment.uri;
+    } else {
+      uri = await projectApi.$blobs.getUrl({
+        driveId: audioAttachment.driveDiscoveryId,
+        name: audioAttachment.name,
+        type: audioAttachment.type,
+        variant: 'original',
+      });
+    }
+
     navigation.navigate('Audio', {
       isEditing,
+      uri,
+      isSavedUri,
     });
   };
 

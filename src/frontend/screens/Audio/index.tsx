@@ -6,23 +6,20 @@ import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {CreateRecording} from './CreateRecording';
 import {ExistingRecording} from './ExistingRecording';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 
 export const MAX_RECORDING_DURATION_MS = 5 * 60_000;
 
 export function Audio({route}: NativeRootNavigationProps<'Audio'>) {
   const {deleteAudio} = useDraftObservation();
-  const {isEditing} = route.params ?? {
-    isEditing: false,
-  };
-  const {selectedAudioAttachment} = usePersistedDraftObservation();
-
+  const {isEditing = false, uri, isSavedUri = false} = route.params ?? {};
   return (
     <>
-      {selectedAudioAttachment ? (
+      {uri ? (
         <ExistingRecording
+          uri={uri}
+          isSavedUri={isSavedUri}
           onDelete={() => {
-            deleteAudio();
+            deleteAudio(uri, isSavedUri);
           }}
           isEditing={isEditing}
         />

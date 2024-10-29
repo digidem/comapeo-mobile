@@ -26,14 +26,13 @@ const emptyObservation: ClientGeneratedObservation = {
 export type DraftObservationSlice = {
   attachments: (Photo | Audio)[];
   value: Observation | null | ClientGeneratedObservation;
-  selectedAudioAttachment: Audio | null;
   observationId?: string;
   preset?: Preset;
   actions: {
     addPhotoPlaceholder: (draftPhotoId: string) => void;
     replacePhotoPlaceholderWithPhoto: (draftPhoto: DraftPhoto) => void;
     addAudio: (audio: UnsavedAudio) => void;
-    deleteAudio: () => void;
+    deleteAudio: (uri: string, isSavedAudioUrl: boolean) => void;
     // Clear the current draft
     clearDraft: () => void;
     // Create a new draft observation
@@ -61,7 +60,6 @@ export type DraftObservationSlice = {
     ) => void;
     updateTags: (tagKey: string, value: Observation['tags'][0]) => void;
     updatePreset: (preset: Preset) => void;
-    setSelectedAudioAttachment: (audio: Audio | null) => void;
   };
 };
 
@@ -71,7 +69,6 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
 ) => ({
   attachments: [],
   value: null,
-  selectedAudioAttachment: null,
   actions: {
     deletePhoto: uri => deletePhoto(set, get, uri),
     addPhotoPlaceholder: draftPhotoId =>
@@ -89,7 +86,6 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
         value: null,
         observationId: undefined,
         preset: undefined,
-        selectedAudioAttachment: null,
       });
     },
     updateObservationPosition: props => {
@@ -214,37 +210,32 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
     addAudio: (audio: UnsavedAudio) => {
       set({attachments: [...get().attachments, audio]});
     },
-    deleteAudio: () => {
-      const audioFile = get().selectedAudioAttachment;
-      if (!audioFile) {
-        return;
-      }
-
-      if (isAudioAttachment(audioFile)) {
+    deleteAudio: (uri: string, isSavedAudioUrl: boolean) => {
+      if (isSavedAudioUrl) {
+        const url = new URL(uri);
+        const pathSegments = url.pathname.split('/').filter(Boolean);
+        const blobsIndex = pathSegments.findIndex(
+          segment => segment === 'blobs',
+        );
+        const driveDiscoveryId = pathSegments[blobsIndex + 2];
+        const name = pathSegments[pathSegments.length - 1];
         const updatedAttachments = get().attachments.map(attachment => {
           if (
             isAudioAttachment(attachment) &&
-            attachment.name === audioFile.name &&
-            attachment.driveDiscoveryId === audioFile.driveDiscoveryId
+            attachment.driveDiscoveryId === driveDiscoveryId &&
+            attachment.name === name
           ) {
             return {...attachment, deleted: true};
           }
           return attachment;
         });
         set({attachments: updatedAttachments});
-      } else if (isUnsavedAudio(audioFile)) {
+      } else {
         const updatedAttachments = get().attachments.filter(attachment => {
-          return !(
-            isUnsavedAudio(attachment) && attachment.uri === audioFile.uri
-          );
+          return !(isUnsavedAudio(attachment) && attachment.uri === uri);
         });
         set({attachments: updatedAttachments});
       }
-      get().actions.setSelectedAudioAttachment(null);
-    },
-
-    setSelectedAudioAttachment: (audio: Audio | null) => {
-      set({selectedAudioAttachment: audio});
     },
   },
 });

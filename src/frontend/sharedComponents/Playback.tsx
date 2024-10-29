@@ -4,7 +4,7 @@ import {Duration} from 'luxon';
 import {defineMessages, useIntl} from 'react-intl';
 import {ContentWithControls} from '../screens/Audio/ContentWithControls';
 import * as Controls from '../screens/Audio/Controls';
-import {useAudioPlayback} from '../screens/ManualGpsScreen/useAudioPlayback';
+import {useAudioPlayback} from '../screens/Audio/useAudioPlayback';
 import {ErrorBottomSheet} from '../sharedComponents/ErrorBottomSheet';
 
 const m = defineMessages({

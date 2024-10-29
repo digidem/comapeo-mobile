@@ -19,12 +19,6 @@ import ErrorIcon from '../../images/Error.svg';
 import Share from 'react-native-share';
 import * as FileSystem from 'expo-file-system';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
-import {
-  isAudioAttachment,
-  isUnsavedAudio,
-} from '../../lib/attachmentTypeChecks';
-import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 
 const m = defineMessages({
@@ -50,34 +44,29 @@ const m = defineMessages({
 interface ExistingRecordingProps {
   onDelete: () => void;
   isEditing: boolean;
+  uri: string;
+  isSavedUri: boolean;
 }
 
 export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
   onDelete,
   isEditing,
+  uri,
+  isSavedUri = false,
 }) => {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigation();
   const {sheetRef, isOpen, openSheet, closeSheet} = useBottomSheetModal({
     openOnMount: false,
   });
-  const selectedAudioAttachment = usePersistedDraftObservation(
-    state => state.selectedAudioAttachment,
-  );
-  const setSelectedAudioAttachment = usePersistedDraftObservation(
-    state => state.actions.setSelectedAudioAttachment,
-  );
-  const {projectApi} = useActiveProject();
 
   const [localUri, setLocalUri] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [shareLoading, setShareLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-  const isSavedUri = isAudioAttachment(selectedAudioAttachment);
 
   const handleBackPress = useCallback(() => {
-    setSelectedAudioAttachment(null);
     navigation.goBack();
-  }, [setSelectedAudioAttachment, navigation]);
+  }, [navigation]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -94,53 +83,41 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
     });
   }, [navigation, handleBackPress]);
 
-  useEffect(() => {
-    let isCancelled = false;
+  const handleDelete = () => {
+    closeSheet();
+    onDelete();
+  };
 
-    const prepareAudio = async () => {
-      try {
-        if (!selectedAudioAttachment) {
-          throw new Error('No audio attachment selected.');
+  const handleShare = useCallback(async () => {
+    setShareLoading(true);
+    try {
+      let fileUri = localUri;
+
+      if (!fileUri) {
+        if (!uri) {
+          throw new Error('No audio URI provided.');
         }
-
-        if (isUnsavedAudio(selectedAudioAttachment)) {
-          setLocalUri(selectedAudioAttachment.uri);
-          return;
-        }
-
-        const url = await projectApi.$blobs.getUrl({
-          driveId: selectedAudioAttachment.driveDiscoveryId,
-          name: selectedAudioAttachment.name,
-          type: selectedAudioAttachment.type,
-          variant: 'original',
-        });
-
-        const tempFileName = `audio_${Date.now()}.m4a`;
-        const localFilePath = `${FileSystem.cacheDirectory}${tempFileName}`;
-        const downloadResult = await FileSystem.downloadAsync(
-          url,
-          localFilePath,
-        );
-
-        setLocalUri(downloadResult.uri);
-        return;
-      } catch (err) {
-        if (!isCancelled) {
-          setError(err as Error);
-        }
-      } finally {
-        if (!isCancelled) {
-          setLoading(false);
+        if (isSavedUri) {
+          const tempFileName = `audio_${Date.now()}.m4a`;
+          const localFilePath = `${FileSystem.cacheDirectory}${tempFileName}`;
+          const downloadResult = await FileSystem.downloadAsync(
+            uri,
+            localFilePath,
+          );
+          fileUri = downloadResult.uri;
+          setLocalUri(fileUri);
+        } else {
+          fileUri = uri;
         }
       }
-    };
 
-    prepareAudio();
-
-    return () => {
-      isCancelled = true;
-    };
-  }, [selectedAudioAttachment, isSavedUri, projectApi.$blobs]);
+      await Share.open({url: fileUri, failOnCancel: false});
+    } catch (err) {
+      setError(err as Error);
+    } finally {
+      setShareLoading(false);
+    }
+  }, [uri, isSavedUri, localUri]);
 
   useEffect(() => {
     return () => {
@@ -150,50 +127,36 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
     };
   }, [localUri, isSavedUri]);
 
-  const handleDelete = () => {
-    closeSheet();
-    onDelete();
-    navigation.goBack();
-  };
-
-  const handleShare = async () => {
-    try {
-      if (!localUri) {
-        throw new Error('Local audio file is not available for sharing.');
-      }
-      await Share.open({url: localUri, failOnCancel: false});
-    } catch (err) {
-      setError(err as Error);
-    }
-  };
-
   return (
     <>
       <View style={styles.container}>
-        {loading ? (
-          <UIActivityIndicator size={48} color={WHITE} />
-        ) : localUri ? (
-          <Playback
-            uri={localUri}
-            leftControl={
-              isEditing ? (
-                <Pressable onPress={openSheet}>
-                  <MaterialIcon name="delete" color={WHITE} size={36} />
-                </Pressable>
-              ) : null
-            }
-            rightControl={
-              isSavedUri ? (
-                <Pressable onPress={handleShare}>
+        <Playback
+          uri={localUri || uri}
+          leftControl={
+            isEditing ? (
+              <Pressable onPress={openSheet}>
+                <MaterialIcon name="delete" color={WHITE} size={36} />
+              </Pressable>
+            ) : null
+          }
+          rightControl={
+            isSavedUri ? (
+              <Pressable onPress={handleShare}>
+                {shareLoading ? (
+                  <UIActivityIndicator size={24} color={WHITE} />
+                ) : (
                   <MaterialIcon name="share" color={WHITE} size={36} />
-                </Pressable>
-              ) : null
-            }
-          />
-        ) : null}
+                )}
+              </Pressable>
+            ) : null
+          }
+        />
       </View>
       <ErrorBottomSheet error={error} clearError={() => setError(null)} />
-      <BottomSheetModal isOpen={isOpen} ref={sheetRef} onDismiss={() => {}}>
+      <BottomSheetModal
+        isOpen={isOpen}
+        ref={sheetRef}
+        onDismiss={handleBackPress}>
         <BottomSheetModalContent
           icon={<ErrorIcon />}
           title={t(m.deleteBottomSheetTitle)}

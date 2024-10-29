@@ -5,7 +5,7 @@ import {execa, parseCommandString} from 'execa';
 import {program} from 'commander';
 import fs from 'fs/promises';
 import {Listr} from 'listr2';
-import {buildId, getUser, isRunFromCli} from '../scripts/helpers.mjs';
+import {buildId, getUser} from '../scripts/helpers.mjs';
 import {uploadApp} from '../scripts/upload-app.mjs';
 import {uploadAppClient} from '../scripts/upload-app-client.mjs';
 import {runE2ETests} from '../scripts/e2e-test-cloud.mjs';
@@ -31,6 +31,14 @@ const response = await prompts([
     name: 'rebuild',
     message: 'Rebuild app?',
     initial: false,
+    active: 'yes',
+    inactive: 'no',
+  },
+  {
+    type: prev => (prev ? 'toggle' : null),
+    name: 'rebuildBackend',
+    message: 'Rebuild backend?',
+    initial: true,
     active: 'yes',
     inactive: 'no',
   },
@@ -99,8 +107,17 @@ const tasks = new Listr([
           task: cliTask('npm install --no-save detox'),
         },
         {
+          title: 'Rebuild backend',
+          enabled: () => response.rebuildBackend,
+          task: async () => {
+            const execute = execa`npm run build:backend`;
+            execute.stdout.pipe(task.stdout());
+            await execute;
+          },
+        },
+        {
           title: 'Build app',
-          task: async (ctx, task) => {
+          task: async () => {
             const execute = execa`npm run build:test`;
             execute.stdout.pipe(task.stdout());
             await execute;
@@ -116,13 +133,13 @@ const tasks = new Listr([
         [
           {
             title: 'Uploading app',
-            task: async ctx => {
+            task: async () => {
               ctx.appUrl = await uploadApp(response);
             },
           },
           {
             title: 'Uploading app client',
-            task: async ctx => {
+            task: async () => {
               ctx.appClientUrl = await uploadAppClient(response);
             },
           },

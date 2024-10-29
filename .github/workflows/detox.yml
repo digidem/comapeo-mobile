@@ -44,6 +44,10 @@ jobs:
           distribution: adopt
           cache: gradle
 
+      - name: Build backend
+        if: steps.cache-builds.outputs.cache-hit != 'true'
+        run: npm run build:backend
+
       - name: Build app for Detox
         if: steps.cache-builds.outputs.cache-hit != 'true'
         run: npx detox build --configuration android.att.release

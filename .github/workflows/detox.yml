@@ -51,6 +51,11 @@ jobs:
       - name: Build app for Detox
         if: steps.cache-builds.outputs.cache-hit != 'true'
         run: npx detox build --configuration android.att.release
+        env:
+          COMAPEO_METRICS_URL: ${{ secrets.COMAPEO_METRICS_URL }}
+          COMAPEO_METRICS_API_KEY: ${{ secrets.COMAPEO_METRICS_API_KEY }}
+          MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
       - name: Upload app to BrowserStack
         id: upload

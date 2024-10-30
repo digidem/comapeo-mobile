@@ -16,16 +16,16 @@ type AudioThumbnailProps = {
   audioAttachment: Audio;
   style?: StyleProp<ViewStyle>;
   size?: number;
-  isEditing: boolean;
 };
 
 export const AudioThumbnail: FC<AudioThumbnailProps> = ({
   audioAttachment,
   style,
   size = 80,
-  isEditing = false,
 }) => {
   const navigation = useNavigationFromRoot();
+  const navState = navigation.getState();
+  const curentRoute = navState.routes[navState.index];
   const {projectApi} = useActiveProject();
   const [loading, setLoading] = React.useState(false);
 
@@ -50,7 +50,7 @@ export const AudioThumbnail: FC<AudioThumbnailProps> = ({
     }
     setLoading(false);
     navigation.navigate('Audio', {
-      isEditing,
+      isEditing: curentRoute?.name === 'ObservationEdit',
       uri,
       isSavedUri,
     });

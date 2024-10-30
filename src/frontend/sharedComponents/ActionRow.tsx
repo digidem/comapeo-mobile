@@ -38,14 +38,12 @@ type ObservationCreateNavigationProp = NativeStackNavigationProp<
 
 interface ActionButtonsProps {
   fieldRefs?: Preset['fieldRefs'];
-  isEditing: boolean;
 }
-export const ActionsRow = ({
-  fieldRefs,
-  isEditing = false,
-}: ActionButtonsProps) => {
+export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigation<ObservationCreateNavigationProp>();
+  const navState = navigation.getState();
+  const curentRoute = navState.routes[navState.index];
   const {
     openSheet: openAudioPermissionSheet,
     sheetRef: audioPermissionSheetRef,
@@ -67,18 +65,22 @@ export const ActionsRow = ({
   const handleAudioPress = useCallback(async () => {
     const {status} = await Audio.getPermissionsAsync();
     if (status === 'granted') {
-      navigation.navigate('Audio', {isEditing});
+      navigation.navigate('Audio', {
+        isEditing: curentRoute?.name === 'ObservationEdit',
+      });
     } else {
       openAudioPermissionSheet();
     }
-  }, [navigation, openAudioPermissionSheet, isEditing]);
+  }, [navigation, openAudioPermissionSheet, curentRoute]);
 
   const handleModalDismiss = useCallback(() => {
     if (shouldNavigateToAudio) {
-      navigation.navigate('Audio', {isEditing});
+      navigation.navigate('Audio', {
+        isEditing: curentRoute?.name === 'ObservationEdit',
+      });
       setShouldNavigateToAudio(false);
     }
-  }, [shouldNavigateToAudio, navigation, isEditing]);
+  }, [shouldNavigateToAudio, navigation, curentRoute]);
 
   const bottomSheetItems = [
     {

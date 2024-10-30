@@ -245,10 +245,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
           updateTags('notes', newVal);
         }}
         attachments={attachments}
-        actionsRow={
-          <ActionsRow fieldRefs={preset?.fieldRefs} isEditing={true} />
-        }
-        isEditing={true}
+        actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
       />
       <ErrorBottomSheet
         error={editObservationMutation.error || createBlobMutation.error}

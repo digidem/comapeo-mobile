@@ -327,10 +327,7 @@ export const ObservationCreate = ({
         }}
         attachments={attachments}
         location={coordinateInfo}
-        isEditing={true}
-        actionsRow={
-          <ActionsRow fieldRefs={preset?.fieldRefs} isEditing={false} />
-        }
+        actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
       />
       <ErrorBottomSheet
         error={createObservationMutation.error || createBlobMutation.error}

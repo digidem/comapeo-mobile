@@ -14,13 +14,9 @@ const minSize = 150;
 interface MediaScrollView {
   attachments: (Audio | Photo)[];
   observationId?: string;
-  isEditing?: boolean;
 }
 
-export const MediaScrollView: FC<MediaScrollView> = ({
-  attachments,
-  isEditing = false,
-}) => {
+export const MediaScrollView: FC<MediaScrollView> = ({attachments}) => {
   const scrollViewRef = React.useRef<ScrollView>(null);
   const navigation = useNavigationFromRoot();
   React.useLayoutEffect(() => {
@@ -50,7 +46,6 @@ export const MediaScrollView: FC<MediaScrollView> = ({
           audioAttachment={audio}
           style={styles.thumbnail}
           size={size}
-          isEditing={isEditing}
         />
       ))}
       {photos

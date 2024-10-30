@@ -44,7 +44,7 @@ export const GPSBackgroundPermissionDisabled = ({
       return;
     }
 
-    if (backgroundPermission.canAskAgain) {
+    if (!backgroundPermission.canAskAgain) {
       handleOpenSettings();
     }
   }

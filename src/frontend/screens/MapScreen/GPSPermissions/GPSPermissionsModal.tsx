@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {GPSPermissionsDisabled} from './GPSPermissionsDisabled';
+import {GPSForegroundPermissionDisabled} from './GPSForegroundPermissionDisabled';
 import {GPSPermissionsEnabled} from './GPSPermissionsEnabled';
 import * as Location from 'expo-location';
 import {useGPSModalContext} from '../../../contexts/GPSModalContext';
@@ -8,20 +8,34 @@ import {BottomSheetModal, BottomSheetView} from '@gorhom/bottom-sheet';
 import {TAB_BAR_HEIGHT} from '../../../Navigation/Stack/AppScreens';
 import {StyleSheet} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
+import {GPSBackgroundPermissionDisabled} from './GPSBackgroundPermissionDisabled';
 
 export const GPSPermissionsModal = React.memo(() => {
   const {setCurrentTab} = useTabNavigationStore();
   const [backgroundStatus] = Location.useBackgroundPermissions();
   const [foregroundStatus] = Location.useForegroundPermissions();
 
-  const [isGranted, setIsGranted] = useState<boolean | null>(null);
+  console.log({foregroundStatus});
+
+  const [foregroundStatusGranted, setForegroundStatusGranted] = useState<
+    boolean | null
+  >(null);
+  const [backgroundStatusGranted, setBackgroundStatusGranted] = useState<
+    boolean | null
+  >(null);
   const {bottomSheetRef} = useGPSModalContext();
 
   useEffect(() => {
-    if (backgroundStatus && foregroundStatus && isGranted === null) {
-      setIsGranted(backgroundStatus.granted && foregroundStatus.granted);
+    if (foregroundStatus && foregroundStatusGranted === null) {
+      setForegroundStatusGranted(foregroundStatus.granted);
     }
-  }, [backgroundStatus, foregroundStatus, isGranted]);
+  }, [foregroundStatus, foregroundStatusGranted]);
+
+  useEffect(() => {
+    if (backgroundStatus && backgroundStatusGranted === null) {
+      setBackgroundStatusGranted(backgroundStatus.granted);
+    }
+  }, [backgroundStatus, backgroundStatusGranted]);
 
   const onBottomSheetDismiss = () => {
     setCurrentTab('Map');
@@ -39,10 +53,14 @@ export const GPSPermissionsModal = React.memo(() => {
       onDismiss={onBottomSheetDismiss}
       handleComponent={() => null}>
       <BottomSheetView>
-        {isGranted ? (
-          <GPSPermissionsEnabled />
+        {!foregroundStatusGranted ? (
+          <GPSForegroundPermissionDisabled
+            setForegroundStatusGranted={setForegroundStatusGranted}
+          />
+        ) : !backgroundStatusGranted ? (
+          <GPSBackgroundPermissionDisabled />
         ) : (
-          <GPSPermissionsDisabled setIsGranted={setIsGranted} />
+          <GPSPermissionsEnabled />
         )}
       </BottomSheetView>
     </BottomSheetModal>

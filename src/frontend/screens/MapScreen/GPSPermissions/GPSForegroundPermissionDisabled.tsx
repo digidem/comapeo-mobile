@@ -26,26 +26,28 @@ const m = defineMessages({
 });
 
 interface GPSPermissionsDisabled {
-  setIsGranted: React.Dispatch<React.SetStateAction<boolean | null>>;
+  setForegroundStatusGranted: React.Dispatch<
+    React.SetStateAction<boolean | null>
+  >;
 }
-export const GPSPermissionsDisabled: React.FC<GPSPermissionsDisabled> = ({
-  setIsGranted,
-}) => {
+export const GPSForegroundPermissionDisabled: React.FC<
+  GPSPermissionsDisabled
+> = ({setForegroundStatusGranted}) => {
   const {formatMessage} = useIntl();
-  const requestForLocationPermissions = async () => {
-    const [foregroundPermission, backgroundPermission] = await Promise.all([
-      Location.requestForegroundPermissionsAsync(),
-      Location.requestBackgroundPermissionsAsync(),
-    ]);
-    if (foregroundPermission.granted && backgroundPermission.granted) {
-      setIsGranted(true);
-    } else if (
-      !foregroundPermission.canAskAgain ||
-      !backgroundPermission.canAskAgain
-    ) {
+
+  async function askForegroundLocationPermission() {
+    const foregroundPermission =
+      await Location.requestForegroundPermissionsAsync();
+
+    if (foregroundPermission.granted) {
+      setForegroundStatusGranted(true);
+      return;
+    }
+
+    if (foregroundPermission.canAskAgain) {
       handleOpenSettings();
     }
-  };
+  }
 
   return (
     <View style={styles.wrapper}>
@@ -62,7 +64,7 @@ export const GPSPermissionsDisabled: React.FC<GPSPermissionsDisabled> = ({
       </Text>
       <Button
         fullWidth
-        onPress={requestForLocationPermissions}
+        onPress={askForegroundLocationPermission}
         style={styles.button}>
         <Text style={styles.buttonText}>
           {formatMessage(m.gpsDisabledButtonText)}

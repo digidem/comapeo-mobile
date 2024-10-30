@@ -44,7 +44,7 @@ export const GPSForegroundPermissionDisabled: React.FC<
       return;
     }
 
-    if (foregroundPermission.canAskAgain) {
+    if (!foregroundPermission.canAskAgain) {
       handleOpenSettings();
     }
   }

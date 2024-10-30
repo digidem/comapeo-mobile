@@ -66,8 +66,8 @@ jobs:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           # JVM args to match those used by EAS: https://docs.expo.dev/build-reference/infrastructure/#android-build-server-configurations
           # - `Xmx` specifies the maximum memory allocation pool for a Java virtual machine (JVM)
-          # - `XX:MaxPermSize`: the maximum permanent generation size
-          _JAVA_OPTIONS: '-Xmx14g -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError'
+          # - `XX:MaxMetaspaceSize`: the maximum permanent generation size
+          _JAVA_OPTIONS: '-Xmx14g -XX:MaxMetaspaceSize=512m -XX:+HeapDumpOnOutOfMemoryError'
 
       - name: Upload app to BrowserStack
         id: upload

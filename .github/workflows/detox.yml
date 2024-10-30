@@ -44,6 +44,13 @@ jobs:
           distribution: adopt
           cache: gradle
 
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          packages: ''
+
+      - run: sdkmanager 'cmake;3.22.1'
+
       - name: Build translations
         if: steps.cache-builds.outputs.cache-hit != 'true'
         run: npm run build:translations

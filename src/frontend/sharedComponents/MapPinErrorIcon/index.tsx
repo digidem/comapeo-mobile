@@ -1,8 +1,8 @@
 import React from 'react';
 import {View} from 'react-native';
-import GreyMap from '../images/grey-map-icon.svg';
-import ErrorIcon from '../images/Error.svg';
-import {ViewStyleProp} from '../sharedTypes';
+import GreyMap from '../../images/grey-map-icon.svg';
+import ErrorIcon from '../../images/Error.svg';
+import {ViewStyleProp} from '../../sharedTypes';
 
 export const MapPinErrorIcon = ({style}: {style?: ViewStyleProp}) => {
   return (

@@ -6,7 +6,7 @@ import {Text} from '../sharedComponents/Text';
 import {Button} from '../sharedComponents/Button';
 import {WHITE} from '../lib/styles';
 import {defineMessages, useIntl} from 'react-intl';
-import {MapPinErrorIcon} from '../sharedComponents/LogoWithErrorIcon';
+import {MapPinErrorIcon} from '../sharedComponents/MapPinErrorIcon';
 
 const m = defineMessages({
   somethingWrong: {

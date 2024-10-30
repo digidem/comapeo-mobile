@@ -91,24 +91,21 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
   const handleShare = useCallback(async () => {
     setShareLoading(true);
     try {
-      let fileUri = localUri;
+      let fileUri: string;
 
-      if (!fileUri) {
-        if (!uri) {
-          throw new Error('No audio URI provided.');
-        }
-        if (isSavedUri) {
-          const tempFileName = `audio_${Date.now()}.m4a`;
-          const localFilePath = `${FileSystem.cacheDirectory}${tempFileName}`;
-          const downloadResult = await FileSystem.downloadAsync(
-            uri,
-            localFilePath,
-          );
-          fileUri = downloadResult.uri;
-          setLocalUri(fileUri);
-        } else {
-          fileUri = uri;
-        }
+      if (localUri) {
+        fileUri = localUri;
+      } else if (isSavedUri) {
+        const tempFileName = `audio_${Date.now()}.m4a`;
+        const localFilePath = `${FileSystem.cacheDirectory}${tempFileName}`;
+        const downloadResult = await FileSystem.downloadAsync(
+          uri,
+          localFilePath,
+        );
+        fileUri = downloadResult.uri;
+        setLocalUri(fileUri);
+      } else {
+        fileUri = uri;
       }
 
       await Share.open({url: fileUri, failOnCancel: false});

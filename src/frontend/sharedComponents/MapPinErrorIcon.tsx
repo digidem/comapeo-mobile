@@ -4,7 +4,7 @@ import GreyMap from '../images/grey-map-icon.svg';
 import ErrorIcon from '../images/Error.svg';
 import {ViewStyleProp} from '../sharedTypes';
 
-export const LogoWithErrorIcon = ({style}: {style?: ViewStyleProp}) => {
+export const MapPinErrorIcon = ({style}: {style?: ViewStyleProp}) => {
   return (
     <View
       style={[

@@ -47,9 +47,12 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
         with:
+          cmdline-tools-version: 11076708
           packages: ''
 
-      - run: sdkmanager 'cmake;3.22.1'
+      - run: sdkmanager 'cmake;3.22.1' 'cmake;3.18.1'
+
+      - run: sdkmanager --list_installed
 
       - name: Build translations
         if: steps.cache-builds.outputs.cache-hit != 'true'

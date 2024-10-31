@@ -127,7 +127,7 @@ export const ObservationCreate = ({
 
   const addObservationRefToTrack = React.useCallback(
     (obs: Observation) => {
-      if (value && value.lat && value.lon) {
+      if (value?.lat && value?.lon) {
         addNewTrackLocations([
           {
             timestamp: new Date().getTime(),

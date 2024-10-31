@@ -399,6 +399,18 @@
   "screens.AudioScreen.CreateRecording.RecordingIdle.description": {
     "message": "Record up to {length} {length, plural, one {minute} other {minutes}}"
   },
+  "screens.AudioScreen.ExistingRecording.deleteBottomSheetDescription": {
+    "message": "Your Audio Recording will be permanently deleted. This cannot be undone."
+  },
+  "screens.AudioScreen.ExistingRecording.deleteBottomSheetPrimaryButtonText": {
+    "message": "Delete"
+  },
+  "screens.AudioScreen.ExistingRecording.deleteBottomSheetSecondaryButtonText": {
+    "message": "Cancel"
+  },
+  "screens.AudioScreen.ExistingRecording.deleteBottomSheetTitle": {
+    "message": "Delete?"
+  },
   "screens.AudioScreen.Playback.description": {
     "message": "Total length: {length}"
   },

@@ -330,14 +330,11 @@ export const createDefaultScreenGroup = ({
       component={HowToLeaveProject}
       options={{headerShown: false}}
     />
-    {process.env.EXPO_PUBLIC_FEATURE_AUDIO && (
-      <RootStack.Screen
-        name="Audio"
-        options={audioNavigationOptions}
-        component={Audio}
-      />
-    )}
-
+    <RootStack.Screen
+      name="Audio"
+      options={audioNavigationOptions}
+      component={Audio}
+    />
     <RootStack.Screen
       name="MapManagement"
       component={MapManagementScreen}

@@ -1,34 +1,82 @@
-import React, {useEffect, useState} from 'react';
-import {GPSPermissionsDisabled} from './GPSPermissionsDisabled';
+import React from 'react';
+import {GPSForegroundPermissionDisabled} from './GPSForegroundPermissionDisabled';
 import {GPSPermissionsEnabled} from './GPSPermissionsEnabled';
 import * as Location from 'expo-location';
 import {useGPSModalContext} from '../../../contexts/GPSModalContext';
 import {useTabNavigationStore} from '../../../hooks/useTabNavigationStore';
 import {BottomSheetModal, BottomSheetView} from '@gorhom/bottom-sheet';
 import {TAB_BAR_HEIGHT} from '../../../Navigation/Stack/AppScreens';
-import {StyleSheet} from 'react-native';
-import {useFocusEffect} from '@react-navigation/native';
+import {StyleSheet, Linking, View} from 'react-native';
+import {GPSBackgroundPermissionDisabled} from './GPSBackgroundPermissionDisabled';
+import {Loading} from '../../../sharedComponents/Loading';
+
+const handleOpenSettings = () => {
+  Linking.sendIntent('android.settings.LOCATION_SOURCE_SETTINGS');
+};
 
 export const GPSPermissionsModal = React.memo(() => {
   const {setCurrentTab} = useTabNavigationStore();
-  const [backgroundStatus] = Location.useBackgroundPermissions();
-  const [foregroundStatus] = Location.useForegroundPermissions();
 
-  const [isGranted, setIsGranted] = useState<boolean | null>(null);
+  const [foregroundPermission, setForegroundPermission] =
+    React.useState<Location.LocationPermissionResponse | null>(null);
+  const [backgroundPermission, setBackgroundPermission] =
+    React.useState<Location.LocationPermissionResponse | null>(null);
   const {bottomSheetRef} = useGPSModalContext();
 
-  useEffect(() => {
-    if (backgroundStatus && foregroundStatus && isGranted === null) {
-      setIsGranted(backgroundStatus.granted && foregroundStatus.granted);
-    }
-  }, [backgroundStatus, foregroundStatus, isGranted]);
+  React.useEffect(() => {
+    Location.getForegroundPermissionsAsync().then(permission =>
+      setForegroundPermission(permission),
+    );
+
+    Location.getBackgroundPermissionsAsync().then(permission =>
+      setBackgroundPermission(permission),
+    );
+  }, []);
 
   const onBottomSheetDismiss = () => {
     setCurrentTab('Map');
   };
-  useFocusEffect(() => {
-    return () => bottomSheetRef?.current?.close();
-  });
+
+  const renderContent = () => {
+    if (!foregroundPermission || !backgroundPermission) {
+      return (
+        <View style={{display: 'flex', minHeight: 200}}>
+          <Loading />
+        </View>
+      );
+    }
+    if (!foregroundPermission.granted) {
+      return (
+        <GPSForegroundPermissionDisabled
+          askForegroundLocationPermission={async () => {
+            if (foregroundPermission.canAskAgain) {
+              const permission =
+                await Location.requestForegroundPermissionsAsync();
+              setForegroundPermission(permission);
+            } else {
+              handleOpenSettings();
+            }
+          }}
+        />
+      );
+    }
+    if (!backgroundPermission.granted) {
+      return (
+        <GPSBackgroundPermissionDisabled
+          askBackgroundLocationPermission={async () => {
+            if (backgroundPermission.canAskAgain) {
+              const permission =
+                await Location.requestBackgroundPermissionsAsync();
+              setBackgroundPermission(permission);
+            } else {
+              handleOpenSettings();
+            }
+          }}
+        />
+      );
+    }
+    return <GPSPermissionsEnabled />;
+  };
 
   return (
     <BottomSheetModal
@@ -38,13 +86,7 @@ export const GPSPermissionsModal = React.memo(() => {
       enableDynamicSizing
       onDismiss={onBottomSheetDismiss}
       handleComponent={() => null}>
-      <BottomSheetView>
-        {isGranted ? (
-          <GPSPermissionsEnabled />
-        ) : (
-          <GPSPermissionsDisabled setIsGranted={setIsGranted} />
-        )}
-      </BottomSheetView>
+      <BottomSheetView>{renderContent()}</BottomSheetView>
     </BottomSheetModal>
   );
 });

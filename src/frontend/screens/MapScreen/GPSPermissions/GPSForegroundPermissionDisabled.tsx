@@ -1,13 +1,8 @@
 import * as React from 'react';
-import {Image, Linking, StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import {Button} from '../../../sharedComponents/Button';
 import {Text} from '../../../sharedComponents/Text';
-import * as Location from 'expo-location';
 import {defineMessages, useIntl} from 'react-intl';
-
-const handleOpenSettings = () => {
-  Linking.sendIntent('android.settings.LOCATION_SOURCE_SETTINGS');
-};
 
 const m = defineMessages({
   gpsDisabledTitle: {
@@ -25,29 +20,13 @@ const m = defineMessages({
   },
 });
 
-interface GPSPermissionsDisabled {
-  setForegroundStatusGranted: React.Dispatch<
-    React.SetStateAction<boolean | null>
-  >;
-}
-export const GPSForegroundPermissionDisabled: React.FC<
-  GPSPermissionsDisabled
-> = ({setForegroundStatusGranted}) => {
+type GPSForegroundPermissionDisabledProps = {
+  askForegroundLocationPermission: () => void;
+};
+export const GPSForegroundPermissionDisabled = ({
+  askForegroundLocationPermission,
+}: GPSForegroundPermissionDisabledProps) => {
   const {formatMessage} = useIntl();
-
-  async function askForegroundLocationPermission() {
-    const foregroundPermission =
-      await Location.requestForegroundPermissionsAsync();
-
-    if (foregroundPermission.granted) {
-      setForegroundStatusGranted(true);
-      return;
-    }
-
-    if (!foregroundPermission.canAskAgain) {
-      handleOpenSettings();
-    }
-  }
 
   return (
     <View style={styles.wrapper}>

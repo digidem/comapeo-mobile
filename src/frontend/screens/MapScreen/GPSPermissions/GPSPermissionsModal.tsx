@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {GPSForegroundPermissionDisabled} from './GPSForegroundPermissionDisabled';
 import {GPSPermissionsEnabled} from './GPSPermissionsEnabled';
 import * as Location from 'expo-location';
@@ -6,36 +6,80 @@ import {useGPSModalContext} from '../../../contexts/GPSModalContext';
 import {useTabNavigationStore} from '../../../hooks/useTabNavigationStore';
 import {BottomSheetModal, BottomSheetView} from '@gorhom/bottom-sheet';
 import {TAB_BAR_HEIGHT} from '../../../Navigation/Stack/AppScreens';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Linking, View} from 'react-native';
 import {GPSBackgroundPermissionDisabled} from './GPSBackgroundPermissionDisabled';
+import {Loading} from '../../../sharedComponents/Loading';
+
+const handleOpenSettings = () => {
+  Linking.sendIntent('android.settings.LOCATION_SOURCE_SETTINGS');
+};
 
 export const GPSPermissionsModal = React.memo(() => {
   const {setCurrentTab} = useTabNavigationStore();
-  const [backgroundStatus] = Location.useBackgroundPermissions();
-  const [foregroundStatus] = Location.useForegroundPermissions();
 
-  const [foregroundStatusGranted, setForegroundStatusGranted] = useState<
-    boolean | null
-  >(null);
-  const [backgroundStatusGranted, setBackgroundStatusGranted] = useState<
-    boolean | null
-  >(null);
+  const [foregroundPermission, setForegroundPermission] =
+    React.useState<Location.LocationPermissionResponse | null>(null);
+  const [backgroundPermission, setBackgroundPermission] =
+    React.useState<Location.LocationPermissionResponse | null>(null);
   const {bottomSheetRef} = useGPSModalContext();
 
-  useEffect(() => {
-    if (foregroundStatus && foregroundStatusGranted === null) {
-      setForegroundStatusGranted(foregroundStatus.granted);
-    }
-  }, [foregroundStatus, foregroundStatusGranted]);
+  console.log({foregroundPermission: foregroundPermission?.granted});
 
-  useEffect(() => {
-    if (backgroundStatus && backgroundStatusGranted === null) {
-      setBackgroundStatusGranted(backgroundStatus.granted);
-    }
-  }, [backgroundStatus, backgroundStatusGranted]);
+  React.useEffect(() => {
+    Location.getForegroundPermissionsAsync().then(permission =>
+      setForegroundPermission(permission),
+    );
+
+    Location.getBackgroundPermissionsAsync().then(permission =>
+      setBackgroundPermission(permission),
+    );
+  }, []);
 
   const onBottomSheetDismiss = () => {
     setCurrentTab('Map');
+  };
+
+  async function askForegroundLocationPermission() {
+    if (foregroundPermission!.canAskAgain) {
+      const permission = await Location.requestForegroundPermissionsAsync();
+      setForegroundPermission(permission);
+    } else {
+      handleOpenSettings();
+    }
+  }
+
+  async function askBackgroundLocationPermission() {
+    if (backgroundPermission!.canAskAgain) {
+      const permission = await Location.requestBackgroundPermissionsAsync();
+      setBackgroundPermission(permission);
+    } else {
+      handleOpenSettings();
+    }
+  }
+
+  const renderContent = () => {
+    if (!foregroundPermission || !backgroundPermission) {
+      return (
+        <View style={{display: 'flex', minHeight: 200}}>
+          <Loading />
+        </View>
+      );
+    }
+    if (!foregroundPermission.granted) {
+      return (
+        <GPSForegroundPermissionDisabled
+          askForegroundLocationPermission={askForegroundLocationPermission}
+        />
+      );
+    }
+    if (!backgroundPermission.granted) {
+      return (
+        <GPSBackgroundPermissionDisabled
+          askBackgroundLocationPermission={askBackgroundLocationPermission}
+        />
+      );
+    }
+    return <GPSPermissionsEnabled />;
   };
 
   return (
@@ -46,19 +90,7 @@ export const GPSPermissionsModal = React.memo(() => {
       enableDynamicSizing
       onDismiss={onBottomSheetDismiss}
       handleComponent={() => null}>
-      <BottomSheetView>
-        {!foregroundStatusGranted ? (
-          <GPSForegroundPermissionDisabled
-            setForegroundStatusGranted={setForegroundStatusGranted}
-          />
-        ) : !backgroundStatusGranted ? (
-          <GPSBackgroundPermissionDisabled
-            setBackgroundStatusGranted={setBackgroundStatusGranted}
-          />
-        ) : (
-          <GPSPermissionsEnabled />
-        )}
-      </BottomSheetView>
+      <BottomSheetView>{renderContent()}</BottomSheetView>
     </BottomSheetModal>
   );
 });

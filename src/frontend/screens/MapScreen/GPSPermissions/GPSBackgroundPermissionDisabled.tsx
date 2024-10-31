@@ -1,14 +1,9 @@
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {StyleSheet, View, Linking} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Text} from '../../../sharedComponents/Text';
 import {MapPinErrorIconSmall} from '../../../sharedComponents/MapPinErrorIcon/MapPinErrorIconSmall';
 import {Button} from '../../../sharedComponents/Button';
-import * as Location from 'expo-location';
-
-const handleOpenSettings = () => {
-  Linking.sendIntent('android.settings.LOCATION_SOURCE_SETTINGS');
-};
 
 const m = defineMessages({
   useLocation: {
@@ -27,27 +22,14 @@ const m = defineMessages({
 });
 
 type GPSBackgroundPermissionDisabledProp = {
-  setBackgroundStatusGranted: (status: boolean) => void;
+  askBackgroundLocationPermission: () => void;
 };
 
 export const GPSBackgroundPermissionDisabled = ({
-  setBackgroundStatusGranted,
+  askBackgroundLocationPermission,
 }: GPSBackgroundPermissionDisabledProp) => {
   const {formatMessage} = useIntl();
 
-  async function askBackgroundLocationPermission() {
-    const backgroundPermission =
-      await Location.requestBackgroundPermissionsAsync();
-
-    if (backgroundPermission.granted) {
-      setBackgroundStatusGranted(true);
-      return;
-    }
-
-    if (!backgroundPermission.canAskAgain) {
-      handleOpenSettings();
-    }
-  }
   return (
     <View style={styles.container}>
       <MapPinErrorIconSmall style={{marginBottom: 20}} />

@@ -60,7 +60,7 @@ interface RecordingDoneProps {
   duration: number;
   uri: string;
   reset: () => void;
-  isEditing?: boolean;
+  isEditing: boolean;
 }
 
 type ModalContentType = 'delete' | 'success' | null;
@@ -70,9 +70,8 @@ export function RecordingDone({
   duration,
   uri,
   reset,
-  isEditing = false,
+  isEditing,
 }: RecordingDoneProps) {
-  const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
   const {addAudio} = useDraftObservation();
   const [pendingAction, setPendingAction] = useState<PendingAction>(null);
@@ -169,7 +168,6 @@ export function RecordingDone({
         fullScreen={modalContentType === 'success'}>
         <RenderModalContent
           modalContentType={modalContentType}
-          t={t}
           handleDelete={handleDelete}
           closeSheet={closeSheet}
           handleReturnToEditor={handleReturnToEditor}
@@ -182,36 +180,35 @@ export function RecordingDone({
 
 const RenderModalContent = ({
   modalContentType,
-  t,
   handleDelete,
   closeSheet,
   handleReturnToEditor,
   handleRecordAnother,
 }: {
   modalContentType: ModalContentType;
-  t: ReturnType<typeof useIntl>['formatMessage'];
   handleDelete: () => void;
   closeSheet: () => void;
   handleReturnToEditor: () => void;
   handleRecordAnother: () => void;
 }) => {
+  const {formatMessage} = useIntl();
   if (modalContentType === 'delete') {
     return (
       <BottomSheetModalContent
         icon={<ErrorIcon />}
-        title={t(m.deleteBottomSheetTitle)}
-        description={t(m.deleteBottomSheetDescription)}
+        title={formatMessage(m.deleteBottomSheetTitle)}
+        description={formatMessage(m.deleteBottomSheetDescription)}
         buttonConfigs={[
           {
             dangerous: true,
-            text: t(m.deleteBottomSheetPrimaryButtonText),
+            text: formatMessage(m.deleteBottomSheetPrimaryButtonText),
             icon: <DeleteIcon color={WHITE} />,
             onPress: handleDelete,
             variation: 'filled',
           },
           {
             variation: 'outlined',
-            text: t(m.deleteBottomSheetSecondaryButtonText),
+            text: formatMessage(m.deleteBottomSheetSecondaryButtonText),
             onPress: closeSheet,
           },
         ]}
@@ -224,7 +221,7 @@ const RenderModalContent = ({
           <FormattedMessage
             {...m.successDescription}
             values={{
-              audioRecording: t(m.audioRecording),
+              audioRecording: formatMessage(m.audioRecording),
               bold: message => (
                 <Text style={{fontWeight: 'bold'}}>{message}</Text>
               ),
@@ -236,16 +233,16 @@ const RenderModalContent = ({
     return (
       <BottomSheetModalContent
         icon={<SuccessIcon style={{marginTop: 80}} />}
-        title={t(m.successTitle)}
+        title={formatMessage(m.successTitle)}
         description={description}
         buttonConfigs={[
           {
-            text: t(m.returnToEditorButtonText),
+            text: formatMessage(m.returnToEditorButtonText),
             onPress: handleReturnToEditor,
             variation: 'outlined',
           },
           {
-            text: t(m.recordAnotherButtonText),
+            text: formatMessage(m.recordAnotherButtonText),
             onPress: handleRecordAnother,
             variation: 'filled',
           },

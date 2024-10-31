@@ -127,11 +127,11 @@ export const ObservationCreate = ({
   const createObservation = React.useCallback(() => {
     if (!value) throw new Error('no observation saved in persisted state ');
 
-    const savablePhotos = attachments.filter(isProcessedDraftPhoto);
+    const unsavedPhotos = attachments.filter(isProcessedDraftPhoto);
 
     const unsavedAudioRecordings = attachments.filter(isUnsavedAudio);
 
-    if (savablePhotos.length === 0 && unsavedAudioRecordings.length === 0) {
+    if (unsavedPhotos.length === 0 && unsavedAudioRecordings.length === 0) {
       createObservationMutation.mutate(
         {
           value: {
@@ -167,7 +167,7 @@ export const ObservationCreate = ({
     // Basically, which is worse: orphaned attachments or saving observations that seem to be missing attachments?
 
     const attachmentPromises = [
-      ...savablePhotos,
+      ...unsavedPhotos,
       ...unsavedAudioRecordings,
     ].map(file => {
       return createBlobMutation.mutateAsync(file);

@@ -25,7 +25,7 @@ export const AudioThumbnail: FC<AudioThumbnailProps> = ({
 }) => {
   const navigation = useNavigationFromRoot();
   const navState = navigation.getState();
-  const curentRoute = navState.routes[navState.index];
+  const currentRoute = navState.routes[navState.index];
   const {projectApi} = useActiveProject();
   const [loading, setLoading] = React.useState(false);
 
@@ -50,7 +50,7 @@ export const AudioThumbnail: FC<AudioThumbnailProps> = ({
     }
     setLoading(false);
     navigation.navigate('Audio', {
-      isEditing: curentRoute?.name === 'ObservationEdit',
+      isEditing: currentRoute?.name === 'ObservationEdit',
       uri,
       isSavedUri,
     });

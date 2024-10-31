@@ -52,9 +52,7 @@ export const useAudioPlayback = (recordingUri: string) => {
     return () => {
       isCancelled = true;
       if (recordedSoundRef.current) {
-        recordedSoundRef.current.unloadAsync().catch(err => {
-          handleError(err);
-        });
+        recordedSoundRef.current.unloadAsync();
         recordedSoundRef.current = null;
       }
     };

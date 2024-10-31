@@ -6,7 +6,7 @@ import {RecordingIdle} from './RecordingIdle';
 import {useAudioRecording} from './useAudioRecording';
 import {ErrorBottomSheet} from '../../../sharedComponents/ErrorBottomSheet';
 
-export function CreateRecording({isEditing = false}: {isEditing: boolean}) {
+export function CreateRecording({isEditing}: {isEditing: boolean}) {
   const {startRecording, stopRecording, reset, status, uri, error, setError} =
     useAudioRecording();
 

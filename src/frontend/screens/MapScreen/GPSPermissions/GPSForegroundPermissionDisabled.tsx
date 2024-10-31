@@ -1,13 +1,8 @@
 import * as React from 'react';
-import {Image, Linking, StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import {Button} from '../../../sharedComponents/Button';
 import {Text} from '../../../sharedComponents/Text';
-import * as Location from 'expo-location';
 import {defineMessages, useIntl} from 'react-intl';
-
-const handleOpenSettings = () => {
-  Linking.sendIntent('android.settings.LOCATION_SOURCE_SETTINGS');
-};
 
 const m = defineMessages({
   gpsDisabledTitle: {
@@ -25,27 +20,13 @@ const m = defineMessages({
   },
 });
 
-interface GPSPermissionsDisabled {
-  setIsGranted: React.Dispatch<React.SetStateAction<boolean | null>>;
-}
-export const GPSPermissionsDisabled: React.FC<GPSPermissionsDisabled> = ({
-  setIsGranted,
-}) => {
+type GPSForegroundPermissionDisabledProps = {
+  askForegroundLocationPermission: () => void;
+};
+export const GPSForegroundPermissionDisabled = ({
+  askForegroundLocationPermission,
+}: GPSForegroundPermissionDisabledProps) => {
   const {formatMessage} = useIntl();
-  const requestForLocationPermissions = async () => {
-    const [foregroundPermission, backgroundPermission] = await Promise.all([
-      Location.requestForegroundPermissionsAsync(),
-      Location.requestBackgroundPermissionsAsync(),
-    ]);
-    if (foregroundPermission.granted && backgroundPermission.granted) {
-      setIsGranted(true);
-    } else if (
-      !foregroundPermission.canAskAgain ||
-      !backgroundPermission.canAskAgain
-    ) {
-      handleOpenSettings();
-    }
-  };
 
   return (
     <View style={styles.wrapper}>
@@ -62,7 +43,7 @@ export const GPSPermissionsDisabled: React.FC<GPSPermissionsDisabled> = ({
       </Text>
       <Button
         fullWidth
-        onPress={requestForLocationPermissions}
+        onPress={askForegroundLocationPermission}
         style={styles.button}>
         <Text style={styles.buttonText}>
           {formatMessage(m.gpsDisabledButtonText)}

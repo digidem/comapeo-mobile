@@ -1,4 +1,4 @@
-appId: com.comapeo
+appId: com.comapeo.dev
 env:
   CAT: MAIN
 ---
@@ -8,16 +8,16 @@ env:
 - tapOn:
     id: '${CAT}.drawer-icon'
 - assertVisible:
-    label: 'User sees the header stating the following "Create or join a project to sync with other devices"'
-    text: '.*Create or Join a Project.*'
+    label: 'User sees the header stating the following "You are currently mapping on your own"'
+    text: '.*You are currently mapping on your own.*'
 - tapOn:
     id: '${CAT}.drawer-create-join-txt'
 - assertVisible:
     label: 'Menu cannot be closed by clicking anywhere else on the menu screen'
-    text: '.*Create or Join a Project to sync with other devices.*'
+    text: '.*You are currently mapping on your own.*'
 - assertVisible:
     label: 'Menu items are all visible in the drawer menu'
-    text: '.*Create or Join project.*'
+    text: '.*Create or Join Project.*'
 - assertVisible: '.*Project Settings.*'
 - assertVisible: '.*App Settings.*'
 - assertVisible: '.*About CoMapeo.*'

@@ -1,4 +1,4 @@
-appId: com.comapeo
+appId: com.comapeo.dev
 ---
 - runFlow:
     when:
@@ -16,5 +16,5 @@ appId: com.comapeo
     commands:
       - swipe:
           from:
-            text: 'CoMapeo'
+            text: '.*CoMapeo.*'
           direction: DOWN

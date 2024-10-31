@@ -7,6 +7,15 @@ export const useAudioPlayback = (recordingUri: string) => {
   const [isPlaying, setPlaying] = useState(false);
   const [duration, setDuration] = useState<number>(0);
   const [currentPosition, setCurrentPosition] = useState(0);
+  const [error, setError] = useState<Error | null>(null);
+
+  const clearError = useCallback(() => setError(null), []);
+
+  const handleError = useCallback((err: unknown) => {
+    const newError =
+      err instanceof Error ? err : new Error('An unknown error occurred');
+    setError(newError);
+  }, []);
 
   const audioCallbackHandler = useCallback((status: AVPlaybackStatus) => {
     const update = status as AVPlaybackStatusSuccess;
@@ -26,7 +35,7 @@ export const useAudioPlayback = (recordingUri: string) => {
     Audio.Sound.createAsync({uri: recordingUri})
       .then(({sound, status}) => {
         if ('error' in status && status.error) {
-          console.error('Error while creating audio playback', status.error);
+          setError(new Error(status.error));
           return;
         }
         soundInstance = sound;
@@ -34,16 +43,18 @@ export const useAudioPlayback = (recordingUri: string) => {
         setDuration((status as AVPlaybackStatusSuccess).durationMillis ?? 0);
         sound.setOnPlaybackStatusUpdate(audioCallbackHandler);
       })
-      .catch(error => console.error('Error loading sound:', error));
+      .catch(err => {
+        handleError(err);
+      });
 
     return () => {
       if (soundInstance) {
-        soundInstance
-          .unloadAsync()
-          .catch(err => console.error('Unload error:', err));
+        soundInstance.unloadAsync().catch(err => {
+          handleError(err);
+        });
       }
     };
-  }, [recordingUri, audioCallbackHandler]);
+  }, [recordingUri, audioCallbackHandler, handleError]);
 
   const startPlayback = useCallback(async () => {
     if (!recordedSoundRef.current || isPlaying) return;
@@ -56,10 +67,10 @@ export const useAudioPlayback = (recordingUri: string) => {
 
       await recordedSoundRef.current!.playAsync();
       setPlaying(true);
-    } catch (error) {
-      console.error('Failed to play sound:', error);
+    } catch (err) {
+      handleError(err);
     }
-  }, [isPlaying, currentPosition, duration]);
+  }, [isPlaying, currentPosition, duration, handleError]);
 
   const stopPlayback = useCallback(async () => {
     if (!recordedSoundRef.current || !isPlaying) return;
@@ -67,10 +78,10 @@ export const useAudioPlayback = (recordingUri: string) => {
     try {
       await recordedSoundRef.current!.pauseAsync();
       setPlaying(false);
-    } catch (error) {
-      console.error('Failed to pause sound:', error);
+    } catch (err) {
+      handleError(err);
     }
-  }, [isPlaying]);
+  }, [isPlaying, handleError]);
 
   return {
     duration,
@@ -78,5 +89,7 @@ export const useAudioPlayback = (recordingUri: string) => {
     currentPosition,
     startPlayback,
     stopPlayback,
+    error,
+    clearError,
   };
 };

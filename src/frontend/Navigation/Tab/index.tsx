@@ -59,27 +59,24 @@ export const HomeTabs = () => {
           header: props => <HomeHeader {...props} openDrawer={openDrawer} />,
         }}
       />
-
-      {process.env.EXPO_PUBLIC_FEATURE_TRACKS && (
-        <Tab.Screen
-          name="Tracking"
-          options={{
-            tabBarIcon: TrackingTabBarIcon,
-            headerShown: false,
-          }}
-          listeners={({
-            navigation,
-          }: {
-            navigation: BottomTabNavigationProp<HomeTabsParamsList>;
-          }) => ({
-            tabPress: e => {
-              e.preventDefault();
-              navigation.navigate('Map');
-            },
-          })}
-          children={() => <></>}
-        />
-      )}
+      <Tab.Screen
+        name="Tracking"
+        options={{
+          tabBarIcon: TrackingTabBarIcon,
+          headerShown: false,
+        }}
+        listeners={({
+          navigation,
+        }: {
+          navigation: BottomTabNavigationProp<HomeTabsParamsList>;
+        }) => ({
+          tabPress: e => {
+            e.preventDefault();
+            navigation.navigate('Map');
+          },
+        })}
+        children={() => <></>}
+      />
     </Tab.Navigator>
   );
 };

@@ -16,6 +16,7 @@ import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';
 import {ActionsRow} from '../../sharedComponents/ActionRow';
 import {Alert, type AlertButton} from 'react-native';
+import {Observation} from '@comapeo/schema';
 
 import {
   isProcessedDraftPhoto,
@@ -124,6 +125,25 @@ export const ObservationCreate = ({
       })
     : formatMessage(m.observation);
 
+  const addObservationRefToTrack = React.useCallback(
+    (obs: Observation) => {
+      if (value?.lat && value?.lon) {
+        addNewTrackLocations([
+          {
+            timestamp: new Date().getTime(),
+            latitude: value.lat,
+            longitude: value.lon,
+          },
+        ]);
+      }
+      addNewTrackObservation({
+        docId: obs.docId,
+        versionId: obs.versionId,
+      });
+    },
+    [addNewTrackLocations, addNewTrackObservation, value],
+  );
+
   const createObservation = React.useCallback(() => {
     if (!value) throw new Error('no observation saved in persisted state ');
 
@@ -142,7 +162,7 @@ export const ObservationCreate = ({
           },
         },
         {
-          onSuccess: () => {
+          onSuccess: data => {
             clearDraft();
             navigation.dispatch(
               CommonActions.reset({
@@ -153,6 +173,9 @@ export const ObservationCreate = ({
                 ],
               }),
             );
+            if (isTracking) {
+              addObservationRefToTrack(data);
+            }
           },
         },
       );
@@ -198,27 +221,14 @@ export const ObservationCreate = ({
             clearDraft();
             navigation.navigate('Home', {screen: 'Map'});
             if (isTracking) {
-              if (value.lat && value.lon) {
-                addNewTrackLocations([
-                  {
-                    timestamp: new Date().getTime(),
-                    latitude: value.lat,
-                    longitude: value.lon,
-                  },
-                ]);
-              }
-              addNewTrackObservation({
-                docId: data.docId,
-                versionId: data.versionId,
-              });
+              addObservationRefToTrack(data);
             }
           },
         },
       );
     });
   }, [
-    addNewTrackLocations,
-    addNewTrackObservation,
+    addObservationRefToTrack,
     clearDraft,
     createBlobMutation,
     createObservationMutation,

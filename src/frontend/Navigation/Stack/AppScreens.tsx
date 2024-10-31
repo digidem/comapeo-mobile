@@ -13,7 +13,6 @@ import {TurnOffPasscode} from '../../screens/AppPasscode/TurnOffPasscode';
 import {Security} from '../../screens/Security';
 import {AuthScreen} from '../../screens/AuthScreen';
 import {ObscurePasscode} from '../../screens/ObscurePasscode';
-import {Settings} from '../../screens/Settings';
 import {PresetChooser} from '../../screens/PresetChooser';
 import {ObservationScreen} from '../../screens/Observation';
 import {AppSettings} from '../../screens/Settings/AppSettings';
@@ -171,7 +170,6 @@ export const createDefaultScreenGroup = ({
       component={ObscurePasscode}
       options={{headerTitle: intl(ObscurePasscode.navTitle)}}
     />
-    <RootStack.Screen name="Settings" component={Settings} />
     <RootStack.Screen
       name="PresetChooser"
       component={PresetChooser}

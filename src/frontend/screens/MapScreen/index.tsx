@@ -113,7 +113,7 @@ export const MapScreen = () => {
         )}
 
         {isFinishedLoading && <ObservationMapLayer />}
-        {isFinishedLoading && process.env.EXPO_PUBLIC_FEATURE_TRACKS && (
+        {isFinishedLoading && (
           <>
             <CurrentTrackMapLayer />
             <TracksMapLayer />

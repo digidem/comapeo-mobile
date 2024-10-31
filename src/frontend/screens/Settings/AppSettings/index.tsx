@@ -26,6 +26,14 @@ const m = defineMessages({
     id: 'Screens.Settings.AppSettings.coordinateSystemDesc',
     defaultMessage: 'UTM,Lat/Lon,DMS',
   },
+  mapManagement: {
+    id: 'Screens.Settings.AppSettings.mapManagement',
+    defaultMessage: 'Map Management',
+  },
+  mapManagementDesc: {
+    id: 'Screens.Settings.AppSettings.mapManagementDesc',
+    defaultMessage: 'Backgrounds, Map Data',
+  },
   security: {
     id: 'Screens.Settings.AppSettings.Drawer.security',
     defaultMessage: 'Security',
@@ -54,6 +62,15 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
       primaryText: formatMessage(m.coordinateSystem),
       secondaryText: formatMessage(m.coordinateSystemDesc),
       materialIconName: 'explore',
+    },
+    {
+      onPress: () => {
+        navigation.navigate('MapManagement');
+      },
+      testID: 'mapManagementButton',
+      primaryText: formatMessage(m.mapManagement),
+      secondaryText: formatMessage(m.mapManagementDesc),
+      materialIconName: 'map',
     },
     ...(authState !== 'obscured'
       ? [

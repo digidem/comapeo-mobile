@@ -20,7 +20,7 @@ import {GPSPermissionsModal} from './GPSPermissions/GPSPermissionsModal';
 import {CurrentTrackMapLayer} from './CurrentTrack/CurrrentTrackMapLayer';
 import {UserLocation} from './UserLocation';
 import {useSharedLocationContext} from '../../contexts/SharedLocationContext';
-import {useMapStyleUrl} from '../../hooks/server/mapStyleUrl';
+import {useMapStyleJsonUrl} from '../../hooks/server/maps.ts';
 import {TracksMapLayer} from './TracksMapLayer';
 import {assert} from '../../lib/assert.ts';
 
@@ -49,7 +49,7 @@ export const MapScreen = () => {
   const locationServicesEnabled =
     !!locationProviderStatus?.locationServicesEnabled;
 
-  const styleUrlQuery = useMapStyleUrl();
+  const styleUrlQuery = useMapStyleJsonUrl();
 
   const handleAddPress = () => {
     newDraft();

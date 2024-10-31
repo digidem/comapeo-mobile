@@ -4,7 +4,7 @@ import {ActionTab} from './ActionTab';
 import PhotoIcon from '../images/observationEdit/Photo.svg';
 import AudioIcon from '../images/observationEdit/Audio.svg';
 import DetailsIcon from '../images/observationEdit/Details.svg';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useNavigationState} from '@react-navigation/native';
 import {Preset} from '@comapeo/schema';
 import {PermissionAudioBottomSheetContent} from '../screens/Audio/PermissionAudioBottomSheetContent';
 import {Audio} from 'expo-av';
@@ -42,8 +42,9 @@ interface ActionButtonsProps {
 export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigation<ObservationCreateNavigationProp>();
-  const navState = navigation.getState();
-  const currentRoute = navState.routes[navState.index];
+  const routes = useNavigationState(state => state.routes);
+  const navIndex = useNavigationState(state => state.index);
+  const currentRoute = routes[navIndex];
   const {
     openSheet: openAudioPermissionSheet,
     sheetRef: audioPermissionSheetRef,

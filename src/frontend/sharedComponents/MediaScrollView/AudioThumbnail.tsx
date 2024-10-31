@@ -11,6 +11,7 @@ import {
   isUnsavedAudio,
 } from '../../lib/attachmentTypeChecks';
 import {BLACK} from '../../lib/styles';
+import {useNavigationState} from '@react-navigation/native';
 
 type AudioThumbnailProps = {
   audioAttachment: Audio;
@@ -24,14 +25,19 @@ export const AudioThumbnail: FC<AudioThumbnailProps> = ({
   size = 80,
 }) => {
   const navigation = useNavigationFromRoot();
-  const navState = navigation.getState();
-  const currentRoute = navState.routes[navState.index];
+  const routes = useNavigationState(state => state.routes);
+  const navIndex = useNavigationState(state => state.index);
+  const currentRoute = routes[navIndex];
   const {projectApi} = useActiveProject();
   const [loading, setLoading] = React.useState(false);
+
+  console.log({currentRoute});
 
   if ('deleted' in audioAttachment && audioAttachment.deleted === true) {
     return null;
   }
+
+  console.log();
 
   const handlePress = async () => {
     setLoading(true);

@@ -12,6 +12,8 @@ export const MAX_RECORDING_DURATION_MS = 5 * 60_000;
 export function Audio({route}: NativeRootNavigationProps<'Audio'>) {
   const {deleteAudio} = useDraftObservation();
   const {isEditing, uri, isSavedUri = false} = route.params;
+
+  console.log({isEditing});
   return (
     <>
       {uri ? (

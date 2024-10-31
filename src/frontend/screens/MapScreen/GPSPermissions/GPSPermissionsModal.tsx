@@ -37,24 +37,6 @@ export const GPSPermissionsModal = React.memo(() => {
     setCurrentTab('Map');
   };
 
-  async function askForegroundLocationPermission() {
-    if (foregroundPermission!.canAskAgain) {
-      const permission = await Location.requestForegroundPermissionsAsync();
-      setForegroundPermission(permission);
-    } else {
-      handleOpenSettings();
-    }
-  }
-
-  async function askBackgroundLocationPermission() {
-    if (backgroundPermission!.canAskAgain) {
-      const permission = await Location.requestBackgroundPermissionsAsync();
-      setBackgroundPermission(permission);
-    } else {
-      handleOpenSettings();
-    }
-  }
-
   const renderContent = () => {
     if (!foregroundPermission || !backgroundPermission) {
       return (
@@ -66,14 +48,30 @@ export const GPSPermissionsModal = React.memo(() => {
     if (!foregroundPermission.granted) {
       return (
         <GPSForegroundPermissionDisabled
-          askForegroundLocationPermission={askForegroundLocationPermission}
+          askForegroundLocationPermission={async () => {
+            if (foregroundPermission.canAskAgain) {
+              const permission =
+                await Location.requestForegroundPermissionsAsync();
+              setForegroundPermission(permission);
+            } else {
+              handleOpenSettings();
+            }
+          }}
         />
       );
     }
     if (!backgroundPermission.granted) {
       return (
         <GPSBackgroundPermissionDisabled
-          askBackgroundLocationPermission={askBackgroundLocationPermission}
+          askBackgroundLocationPermission={async () => {
+            if (backgroundPermission.canAskAgain) {
+              const permission =
+                await Location.requestBackgroundPermissionsAsync();
+              setBackgroundPermission(permission);
+            } else {
+              handleOpenSettings();
+            }
+          }}
         />
       );
     }

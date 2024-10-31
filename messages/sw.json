@@ -733,6 +733,15 @@
   "screens.ManualGpsScreen.zoneNumber": {
     "message": "Zone Number"
   },
+  "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
+    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
+  },
+  "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
+    "message": "Turn On"
+  },
+  "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
+    "message": "Use Your Location"
+  },
   "screens.MediaSyncActionSheetContent.cancel": {
     "message": "Ghairi"
   },

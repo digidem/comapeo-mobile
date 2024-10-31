@@ -23,8 +23,6 @@ export const GPSPermissionsModal = React.memo(() => {
     React.useState<Location.LocationPermissionResponse | null>(null);
   const {bottomSheetRef} = useGPSModalContext();
 
-  console.log({foregroundPermission: foregroundPermission?.granted});
-
   React.useEffect(() => {
     Location.getForegroundPermissionsAsync().then(permission =>
       setForegroundPermission(permission),

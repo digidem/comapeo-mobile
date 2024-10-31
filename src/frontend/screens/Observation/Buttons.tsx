@@ -145,10 +145,6 @@ export const ButtonFields = ({
         urls.map(url => convertUrlToBase64(url)),
       );
 
-      const audioUrls = base64Urls.filter(url => url.startsWith('data:audio'));
-      const photoUrls = base64Urls.filter(url => !url.startsWith('data:audio'));
-      const urlsForSharing = [...photoUrls, ...audioUrls];
-
       const completedFields: Array<{label: string; value: string}> = [];
 
       for (const field of fields) {
@@ -170,11 +166,8 @@ export const ButtonFields = ({
       await Share.open({
         subject: `${t(m.comapeoAlert)} — _*${preset ? preset.name : t(m.fallbackCategoryName)}*_ — ${formatDate(observation.createdAt, {format: 'long'})}`,
         title:
-          urlsForSharing.length > 0
-            ? t(m.shareMediaTitle)
-            : t(m.shareTextTitle),
-        urls: urlsForSharing,
-        type: 'text/plain',
+          base64Urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),
+        urls: base64Urls,
         message: createObservationShareMessage({
           categoryName: preset ? preset.name : t(m.fallbackCategoryName),
           coordinateFormat: format,

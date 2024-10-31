@@ -84,6 +84,12 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
 
   const bottomSheetItems = [
     {
+      icon: <AudioIcon width={30} height={30} />,
+      label: t(m.audioButton),
+      onPress: handleAudioPress,
+      testID: 'OBS.add-audio-btn',
+    },
+    {
       icon: <PhotoIcon width={30} height={30} />,
       label: t(m.photoButton),
       onPress: handleCameraPress,
@@ -91,14 +97,6 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
     },
   ];
 
-  if (process.env.EXPO_PUBLIC_FEATURE_AUDIO) {
-    bottomSheetItems.unshift({
-      icon: <AudioIcon width={30} height={30} />,
-      label: t(m.audioButton),
-      onPress: handleAudioPress,
-      testID: 'OBS.add-audio-btn',
-    });
-  }
   if (fieldRefs?.length) {
     bottomSheetItems.push({
       icon: <DetailsIcon width={30} height={30} />,

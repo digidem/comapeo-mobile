@@ -23,7 +23,7 @@ const m = defineMessages({
   },
   config: {
     id: 'screens.Settings.config',
-    defaultMessage: 'Project Configuration',
+    defaultMessage: 'Configuration',
     description: 'Primary text for project config settings',
   },
 });
@@ -43,17 +43,17 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
     },
     {
       onPress: () => {
-        navigation.navigate('YourTeam');
-      },
-      primaryText: formatMessage(m.yourTeam),
-      testID: 'MAIN.team-list-item',
-    },
-    {
-      onPress: () => {
         navigation.navigate('Config');
       },
       primaryText: formatMessage(m.config),
       testID: 'settingsConfigButton',
+    },
+    {
+      onPress: () => {
+        navigation.navigate('YourTeam');
+      },
+      primaryText: formatMessage(m.yourTeam),
+      testID: 'MAIN.team-list-item',
     },
     ...(process.env.EXPO_PUBLIC_FEATURE_MEDIA_MANAGER
       ? [

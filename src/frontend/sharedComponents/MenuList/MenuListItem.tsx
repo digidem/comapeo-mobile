@@ -1,9 +1,11 @@
 import * as React from 'react';
 import {
   DimensionValue,
+  StyleProp,
   StyleSheet,
   TouchableNativeFeedback,
   View,
+  ViewStyle,
 } from 'react-native';
 import {NEW_DARK_GREY, VERY_LIGHT_BLUE} from '../../lib/styles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -26,11 +28,13 @@ export const MenuListItem = ({
   paddingLeft,
   paddingRight,
   columnGap,
+  style,
 }: {
   item: MenuListItemType;
   paddingLeft: DimensionValue;
   paddingRight: DimensionValue;
   columnGap: number;
+  style?: StyleProp<ViewStyle>;
 }) => {
   return (
     <TouchableNativeFeedback
@@ -40,7 +44,11 @@ export const MenuListItem = ({
       background={TouchableNativeFeedback.Ripple(VERY_LIGHT_BLUE, false)}>
       <View
         testID={item.testID}
-        style={[styles.itemContainer, {paddingLeft, paddingRight, columnGap}]}>
+        style={[
+          styles.itemContainer,
+          style,
+          {paddingLeft, paddingRight, columnGap},
+        ]}>
         {item.materialIconName ? (
           <MaterialIcon
             name={item.materialIconName}

@@ -1356,7 +1356,7 @@
   },
   "screens.Settings.config": {
     "description": "Primary text for project config settings",
-    "message": "Project Configuration"
+    "message": "Configuration"
   },
   "screens.SettingsPrivacyPolicy.navTitle": {
     "message": "Privacy Policy"

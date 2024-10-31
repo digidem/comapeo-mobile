@@ -4,15 +4,9 @@ import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
 } from '@react-navigation/drawer';
-import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
-import {
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  ListDivider,
-} from '../sharedComponents/List';
+import {defineMessages, useIntl} from 'react-intl';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import EntypoIcon from 'react-native-vector-icons/Entypo';
 import {NavigatorScreenParams} from '@react-navigation/native';
 import {View} from 'react-native';
 import {Text} from '../sharedComponents/Text';
@@ -21,6 +15,8 @@ import {useProjectSettings} from '../hooks/server/projects';
 import {AppStackParamsList} from '../sharedTypes/navigation';
 import {RootStackNavigator} from './Stack';
 import {DrawerMenuIcon} from '../sharedComponents/icons/DrawerMenuIcon';
+import {MenuListItem} from '../sharedComponents/MenuList/MenuListItem';
+import {Divider} from '../sharedComponents/Divider';
 
 const m = defineMessages({
   settingsTitle: {
@@ -138,87 +134,107 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
               : formatMessage(m.mappingOnOwn)}
           </Text>
         </View>
-        <List
+        <View
           style={{
             backgroundColor: WHITE,
-            height: '100%',
             justifyContent: 'space-between',
+            flex: 1,
+            paddingVertical: 10,
           }}>
           <View>
-            <ListItem
-              testID="MAIN.create-join-list-item"
-              onPress={() => {
-                navigate('DrawerHome', {screen: 'CreateOrJoinProject'});
-              }}>
-              <DrawerListItemIcon
-                icon={
+            <DrawerMenuListItem
+              item={{
+                onPress: () => {
+                  navigate('DrawerHome', {screen: 'CreateOrJoinProject'});
+                },
+                icon: (
                   <MaterialCommunityIcons
                     name="shape-square-rounded-plus"
                     size={24}
                     color="rgba(0, 0, 0, 0.54)"
                   />
-                }
-              />
-              <ListItemText
-                primary={<FormattedMessage {...m.createOrJoin} />}
-              />
-            </ListItem>
-            <ListItem
-              testID="MAIN.project-stg-list-item"
-              onPress={() => {
-                navigate('DrawerHome', {screen: 'ProjectSettings'});
-              }}>
-              <DrawerListItemIcon iconName="assignment" />
-              <ListItemText
-                primary={<FormattedMessage {...m.projectSettings} />}
-              />
-            </ListItem>
-            <ListItem
-              onPress={() => {
-                navigate('DrawerHome', {screen: 'AppSettings'});
-              }}>
-              <DrawerListItemIcon iconName="settings-suggest" />
-              <ListItemText primary={<FormattedMessage {...m.appSettings} />} />
-            </ListItem>
+                ),
+                primaryText: formatMessage(m.createOrJoin),
+                testID: 'MAIN.create-join-list-item',
+              }}
+            />
+            <DrawerMenuListItem
+              item={{
+                onPress: () => {
+                  navigate('DrawerHome', {screen: 'ProjectSettings'});
+                },
+                materialIconName: 'assignment',
+                primaryText: formatMessage(m.projectSettings),
+                testID: 'MAIN.project-stg-list-item',
+              }}
+            />
+            <DrawerMenuListItem
+              item={{
+                onPress: () => {
+                  navigate('DrawerHome', {screen: 'AppSettings'});
+                },
+                materialIconName: 'settings-suggest',
+                primaryText: formatMessage(m.appSettings),
+              }}
+            />
             {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
-              <ListItem
-                onPress={() => {
-                  navigate('CreateTestData');
+              <DrawerMenuListItem
+                item={{
+                  onPress: () => {
+                    navigate('CreateTestData');
+                  },
+                  materialIconName: 'auto-fix-high',
+                  primaryText: 'Create Test Data',
                 }}
-                testID="settingsCreateTestDataButton">
-                <DrawerListItemIcon iconName="auto-fix-high" />
-                <ListItemText primary="Create Test Data" />
-              </ListItem>
+              />
             )}
           </View>
           <View>
-            <ListDivider style={{marginBottom: 5}} />
-            <ListItem
-              onPress={() => {
-                navigate('AboutSettings');
+            <Divider />
+            <DrawerMenuListItem
+              item={{
+                onPress: () => {
+                  navigate('AboutSettings');
+                },
+                materialIconName: 'info-outline',
+                primaryText: formatMessage(m.aboutCoMapeo),
               }}
-              testID="settingsAboutButton">
-              <DrawerListItemIcon iconName="info-outline" />
-              <ListItemText
-                primary={<FormattedMessage {...m.aboutCoMapeo} />}
-              />
-            </ListItem>
-            <ListItem
-              onPress={() => {
-                navigate('DataAndPrivacy');
-              }}>
-              <DrawerListItemIcon iconName="privacy-tip" />
-              <ListItemText
-                primary={<FormattedMessage {...m.privacyPolicy} />}
-              />
-            </ListItem>
+            />
+            <DrawerMenuListItem
+              item={{
+                onPress: () => {
+                  navigate('DataAndPrivacy');
+                },
+                icon: (
+                  <EntypoIcon
+                    name="lock"
+                    size={24}
+                    color="rgba(0, 0, 0, 0.54)"
+                  />
+                ),
+                primaryText: formatMessage(m.privacyPolicy),
+              }}
+            />
           </View>
-        </List>
+        </View>
       </DrawerContentScrollView>
     </View>
   );
 };
 
-function DrawerListItemIcon(props: React.ComponentProps<typeof ListItemIcon>) {
-  return <ListItemIcon {...props} style={{minWidth: 0, marginRight: 10}} />;
+function DrawerMenuListItem(
+  props: Omit<
+    React.ComponentProps<typeof MenuListItem>,
+    'paddingLeft' | 'paddingRight' | 'columnGap'
+  >,
+) {
+  return (
+    <MenuListItem
+      {...props}
+      style={{paddingTop: 10, paddingBottom: 10}}
+      paddingLeft={15}
+      paddingRight={15}
+      columnGap={15}
+    />
+  );
 }

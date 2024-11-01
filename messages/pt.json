@@ -82,11 +82,11 @@
   "Navigation.Drawer.createOrJoinDesc": {
     "message": "Criar um novo projeto ou se juntar a um já existente"
   },
-  "Navigation.Drawer.dataAndPrivacy": {
-    "message": "Dados & Privacidade"
-  },
   "Navigation.Drawer.mappingOnOwn": {
     "message": "Agora você está mapeando por contra própria"
+  },
+  "Navigation.Drawer.privacyPolicy": {
+    "message": "Privacy Policy"
   },
   "Navigation.Drawer.projName": {
     "message": "Projeto {projectName}"
@@ -97,9 +97,6 @@
   "Navigation.Drawer.projectSettingsDesc": {
     "description": "list of avaialable project settings",
     "message": "Categorias, Configurações, Equipe"
-  },
-  "Navigation.Drawer.security": {
-    "message": "Segurança"
   },
   "Navigation.Drawer.title": {
     "description": "Title of settings screen",
@@ -134,6 +131,9 @@
   },
   "SaveTrack.HeaderLeft.discardTrackDescription": {
     "message": "Sua trilha não será salva. Isso não poderá ser desfeito."
+  },
+  "Screens.Settings.AppSettings.Drawer.security": {
+    "message": "Segurança"
   },
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Sistema de Coordenadas"
@@ -398,6 +398,18 @@
   },
   "screens.AudioScreen.CreateRecording.RecordingIdle.description": {
     "message": "Grave até {length} {length, plural, one {minuto} other {minutos}}"
+  },
+  "screens.AudioScreen.ExistingRecording.deleteBottomSheetDescription": {
+    "message": "Your Audio Recording will be permanently deleted. This cannot be undone."
+  },
+  "screens.AudioScreen.ExistingRecording.deleteBottomSheetPrimaryButtonText": {
+    "message": "Excluir"
+  },
+  "screens.AudioScreen.ExistingRecording.deleteBottomSheetSecondaryButtonText": {
+    "message": "Cancelar"
+  },
+  "screens.AudioScreen.ExistingRecording.deleteBottomSheetTitle": {
+    "message": "Delete?"
   },
   "screens.AudioScreen.Playback.description": {
     "message": "Duração total: {length}"
@@ -1363,41 +1375,9 @@
   "screens.Settings.YourTeam.unableToCancel": {
     "message": "Não foi possível cancelar o convite"
   },
-  "screens.Settings.aboutCoMapeo": {
-    "description": "Primary text for 'About CoMapeo' link (version info)",
-    "message": "Sobre o CoMapeo"
-  },
-  "screens.Settings.aboutCoMapeoDesc": {
-    "description": "Description of the 'About CoMapeo' page",
-    "message": "Versão e número do build"
-  },
-  "screens.Settings.appSettings": {
-    "message": "Configurações do Aplicativo"
-  },
-  "screens.Settings.appSettingsDesc": {
-    "description": "list of avaialable app settings",
-    "message": "Idioma, Segurança, Coordenadas"
-  },
   "screens.Settings.config": {
     "description": "Primary text for project config settings",
-    "message": "Configuração do projeto"
-  },
-  "screens.Settings.createOrJoin": {
-    "message": "Criar ou Juntar-se a um Projeto"
-  },
-  "screens.Settings.createOrJoinDesc": {
-    "message": "Criar um novo projeto ou se juntar a um já existente"
-  },
-  "screens.Settings.projectSettings": {
-    "message": "Configurações do Projeto"
-  },
-  "screens.Settings.projectSettingsDesc": {
-    "description": "list of avaialable project settings",
-    "message": "Categorias, Configurações, Equipe"
-  },
-  "screens.Settings.title": {
-    "description": "Title of settings screen",
-    "message": "Ajustes"
+    "message": "Configurações"
   },
   "screens.SettingsPrivacyPolicy.navTitle": {
     "message": "Política de Privacidade"

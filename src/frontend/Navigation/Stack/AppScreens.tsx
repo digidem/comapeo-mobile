@@ -13,7 +13,6 @@ import {TurnOffPasscode} from '../../screens/AppPasscode/TurnOffPasscode';
 import {Security} from '../../screens/Security';
 import {AuthScreen} from '../../screens/AuthScreen';
 import {ObscurePasscode} from '../../screens/ObscurePasscode';
-import {Settings} from '../../screens/Settings';
 import {PresetChooser} from '../../screens/PresetChooser';
 import {ObservationScreen} from '../../screens/Observation';
 import {AppSettings} from '../../screens/Settings/AppSettings';
@@ -80,6 +79,14 @@ import {
   Audio,
   navigationOptions as audioNavigationOptions,
 } from '../../screens/Audio/index.tsx';
+import {
+  createNavigationOptions as createMapManagementNavigationOptions,
+  MapManagementScreen,
+} from '../../screens/Settings/MapManagement';
+import {
+  createNavigationOptions as createBackgroundMapsNavigationOptions,
+  BackgroundMapsScreen,
+} from '../../screens/Settings/MapManagement/BackgroundMaps.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -163,7 +170,6 @@ export const createDefaultScreenGroup = ({
       component={ObscurePasscode}
       options={{headerTitle: intl(ObscurePasscode.navTitle)}}
     />
-    <RootStack.Screen name="Settings" component={Settings} />
     <RootStack.Screen
       name="PresetChooser"
       component={PresetChooser}
@@ -314,25 +320,32 @@ export const createDefaultScreenGroup = ({
       component={TrackEdit}
       options={{headerTitle: intl(TrackEdit.navTitle)}}
     />
-
     <RootStack.Screen
       name="Config"
       component={Config}
       options={{headerTitle: intl(Config.navTitle)}}
     />
-
     <RootStack.Screen
       name="HowToLeaveProject"
       component={HowToLeaveProject}
       options={{headerShown: false}}
     />
-    {process.env.EXPO_PUBLIC_FEATURE_AUDIO && (
-      <RootStack.Screen
-        name="Audio"
-        options={audioNavigationOptions}
-        component={Audio}
-      />
-    )}
+    <RootStack.Screen
+      name="Audio"
+      options={audioNavigationOptions}
+      component={Audio}
+    />
+    <RootStack.Screen
+      name="MapManagement"
+      component={MapManagementScreen}
+      options={createMapManagementNavigationOptions({intl})}
+    />
+    <RootStack.Screen
+      name="BackgroundMaps"
+      component={BackgroundMapsScreen}
+      options={createBackgroundMapsNavigationOptions({intl})}
+    />
+
     {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
       <RootStack.Screen
         name="CreateTestData"

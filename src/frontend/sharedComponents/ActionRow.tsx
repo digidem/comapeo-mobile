@@ -4,7 +4,7 @@ import {ActionTab} from './ActionTab';
 import PhotoIcon from '../images/observationEdit/Photo.svg';
 import AudioIcon from '../images/observationEdit/Audio.svg';
 import DetailsIcon from '../images/observationEdit/Details.svg';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useNavigationState} from '@react-navigation/native';
 import {Preset} from '@comapeo/schema';
 import {PermissionAudioBottomSheetContent} from '../screens/Audio/PermissionAudioBottomSheetContent';
 import {Audio} from 'expo-av';
@@ -42,6 +42,9 @@ interface ActionButtonsProps {
 export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigation<ObservationCreateNavigationProp>();
+  const routes = useNavigationState(state => state.routes);
+  const navIndex = useNavigationState(state => state.index);
+  const currentRoute = routes[navIndex];
   const {
     openSheet: openAudioPermissionSheet,
     sheetRef: audioPermissionSheetRef,
@@ -63,20 +66,30 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
   const handleAudioPress = useCallback(async () => {
     const {status} = await Audio.getPermissionsAsync();
     if (status === 'granted') {
-      navigation.navigate('Audio');
+      navigation.navigate('Audio', {
+        isEditing: currentRoute?.name === 'ObservationEdit',
+      });
     } else {
       openAudioPermissionSheet();
     }
-  }, [navigation, openAudioPermissionSheet]);
+  }, [navigation, openAudioPermissionSheet, currentRoute]);
 
   const handleModalDismiss = useCallback(() => {
     if (shouldNavigateToAudio) {
-      navigation.navigate('Audio');
+      navigation.navigate('Audio', {
+        isEditing: currentRoute?.name === 'ObservationEdit',
+      });
       setShouldNavigateToAudio(false);
     }
-  }, [shouldNavigateToAudio, navigation]);
+  }, [shouldNavigateToAudio, navigation, currentRoute]);
 
   const bottomSheetItems = [
+    {
+      icon: <AudioIcon width={30} height={30} />,
+      label: t(m.audioButton),
+      onPress: handleAudioPress,
+      testID: 'OBS.add-audio-btn',
+    },
     {
       icon: <PhotoIcon width={30} height={30} />,
       label: t(m.photoButton),
@@ -85,14 +98,6 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
     },
   ];
 
-  if (process.env.EXPO_PUBLIC_FEATURE_AUDIO) {
-    bottomSheetItems.unshift({
-      icon: <AudioIcon width={30} height={30} />,
-      label: t(m.audioButton),
-      onPress: handleAudioPress,
-      testID: 'OBS.add-audio-btn',
-    });
-  }
   if (fieldRefs?.length) {
     bottomSheetItems.push({
       icon: <DetailsIcon width={30} height={30} />,

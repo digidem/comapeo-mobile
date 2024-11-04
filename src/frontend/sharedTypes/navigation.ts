@@ -61,14 +61,6 @@ export type RootStackParamsList = {
   Security: undefined;
   DirectionalArrow: undefined;
   P2pUpgrade: undefined;
-  MapSettings: undefined;
-  BackgroundMaps: undefined;
-  BackgroundMapInfo: {
-    bytesStored: number;
-    id: string;
-    styleUrl: string;
-    name: string;
-  };
   ObservationFields: {question: number};
   ObservationCreate: undefined;
   BGMapsSettings: undefined;
@@ -102,7 +94,9 @@ export type RootStackParamsList = {
   DataAndPrivacy: undefined;
   SettingsPrivacyPolicy: undefined;
   HowToLeaveProject: undefined;
-  Audio: undefined;
+  Audio: {isEditing: boolean; uri?: string; isSavedUri?: boolean};
+  MapManagement: undefined;
+  BackgroundMaps: undefined;
 };
 
 export type OnboardingParamsList = {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {Button} from '../../sharedComponents/Button';
 import {useIntl} from 'react-intl';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -8,6 +8,7 @@ import CoMapeoShield from '../../images/CoMapeoShield.svg';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {NEW_DARK_GREY, BLUE_GREY} from '../../lib/styles';
 import {m} from './DataPrivacyMessages';
+import {Text} from '../../sharedComponents/Text';
 
 export const DataPrivacy = ({
   navigation,
@@ -17,7 +18,9 @@ export const DataPrivacy = ({
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <CoMapeoShield width={64} height={80} style={styles.shieldIcon} />
-      <Text style={styles.title}>{formatMessage(m.dataPrivacyTitle)}</Text>
+      <Text style={styles.title} variant="primary">
+        {formatMessage(m.dataPrivacyTitle)}
+      </Text>
       <View style={styles.descriptionContainer}>
         <Text style={styles.description}>
           {formatMessage(m.dataPrivacyDescription)}
@@ -105,7 +108,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    fontWeight: 'bold',
+    fontWeight: '500',
     marginBottom: GAP,
   },
   descriptionContainer: {

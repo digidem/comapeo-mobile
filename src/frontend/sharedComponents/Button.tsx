@@ -54,7 +54,7 @@ export const Button = ({
     <View style={touchableStyle as ViewStyle} testID={testID}>
       {
         typeof children === 'string' ? (
-          <Text isRubik style={[styles.textBase, textStyle]}>
+          <Text variant="primary" style={[styles.textBase, textStyle]}>
             {children}
           </Text>
         ) : (

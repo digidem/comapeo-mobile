@@ -123,6 +123,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
           />
           <Text
             testID="MAIN.drawer-create-join-txt"
+            isRubik
             style={{
               alignSelf: 'center',
               textAlign: 'center',

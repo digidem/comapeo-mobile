@@ -54,30 +54,7 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
 
   const remoteArchiveOn = remoteArchives && remoteArchives.length > 0;
 
-  const {data: projects, isPending: projectsPending} = useAllProjects();
-
-  // if (projects && projects.length > 1 && remoteArchives !== undefined) {
-  //   return (
-  //     <ListItem
-  //       onPress={() => {
-  //         navigation.navigate(
-  //           remoteArchiveOn ? 'RemoteArchiveOn' : 'RemoteArchiveOff',
-  //         );
-  //       }}
-  //       testID="settingsConfigButton">
-  //       <ListItemText
-  //         primary={<FormattedMessage {...m.RemoteArchive} />}
-  //         secondary={
-  //           remoteArchiveOn ? (
-  //             <FormattedMessage {...m.remoteArchiveOn} />
-  //           ) : (
-  //             <FormattedMessage {...m.remoteArchiveOff} />
-  //           )
-  //         }
-  //       />
-  //     </ListItem>
-  //   );
-  // }
+  const {data: projects} = useAllProjects();
 
   const MenuItems: MenuListItemType[] = [
     {
@@ -101,6 +78,25 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
       primaryText: formatMessage(m.yourTeam),
       testID: 'MAIN.team-list-item',
     },
+    ...(projects && projects.length > 1 && remoteArchives !== undefined
+      ? [
+          {
+            onPress: () => {
+              navigation.navigate(
+                remoteArchiveOn ? 'RemoteArchiveOn' : 'RemoteArchiveOff',
+              );
+            },
+            primaryText: formatMessage(m.RemoteArchive),
+            secondaryText: isPending ? (
+              <UIActivityIndicator />
+            ) : remoteArchiveOn ? (
+              formatMessage(m.remoteArchiveOn)
+            ) : (
+              formatMessage(m.remoteArchiveOff)
+            ),
+          },
+        ]
+      : []),
     ...(process.env.EXPO_PUBLIC_FEATURE_MEDIA_MANAGER
       ? [
           {

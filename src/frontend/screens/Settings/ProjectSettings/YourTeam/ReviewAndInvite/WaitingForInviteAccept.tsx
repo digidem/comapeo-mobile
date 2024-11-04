@@ -55,7 +55,9 @@ export const WaitingForInviteAccept = ({
   return (
     <View style={styles.container}>
       <InviteSent />
-      <Text style={{marginTop: 10}}>{t(m.waitingMessage)}</Text>
+      <Text style={{marginTop: 10}} variant="primary">
+        {t(m.waitingMessage)}
+      </Text>
       <Text style={{marginTop: 20}}>{t(m.timerMessage, {seconds: time})}</Text>
       <TextButton title={t(m.cancelInvite)} onPress={cancelInvite} />
     </View>

@@ -185,7 +185,7 @@ export const ProjectSyncDisplay = ({
       );
 
       syncInfoContent = (
-        <Text style={styles.titleText}>
+        <Text style={styles.titleText} variant="primary">
           {syncStage.connectedPeersCount > 0
             ? t(m.devicesAvailableToSync)
             : t(m.noDevicesAvailableToSync)}
@@ -321,7 +321,9 @@ export const ProjectSyncDisplay = ({
       <View style={styles.projectInfoContainer}>
         <ObservationsProjectImage />
         {projectName && (
-          <Text style={styles.projectNameText}>{projectName}</Text>
+          <Text style={styles.projectNameText} variant="primary">
+            {projectName}
+          </Text>
         )}
         <View style={styles.connectedDevicesInfoContainer}>
           <WifiIcon color={DARK_GREY} size={20} />

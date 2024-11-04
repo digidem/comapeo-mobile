@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunity from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -31,7 +32,7 @@ export const RoleWithIcon = ({role, style}: RoleWithIconProps) => {
       ) : (
         <MaterialCommunity name="account-cog" size={25} color={BLACK} />
       )}
-      <Text style={{marginLeft: 10, fontWeight: 'bold'}}>
+      <Text variant="primary" style={{marginLeft: 10, fontWeight: '500'}}>
         {formatMessage(role === 'coordinator' ? m.coordinator : m.participant)}
       </Text>
     </View>

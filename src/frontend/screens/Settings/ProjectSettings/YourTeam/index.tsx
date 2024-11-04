@@ -210,7 +210,7 @@ const IconHeader = ({
         name={iconName}
         style={{marginRight: 10}}
       />
-      <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+      <Text variant="primary" style={{fontSize: 18, fontWeight: '500'}}>
         {t(messageDescriptor)}
       </Text>
     </View>

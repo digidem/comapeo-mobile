@@ -66,7 +66,9 @@ export const DeviceNameWithIcon = ({
         <DeviceDesktop width={iconSize || 35} height={iconSize || 35} />
       )}
       <View style={{marginLeft: 10, flex: 1}}>
-        <Text style={{fontWeight: 'bold'}}>{name}</Text>
+        <Text variant="primary" style={{fontWeight: '500'}}>
+          {name}
+        </Text>
         {deviceId && (
           <Text
             style={{color: MEDIUM_GREY, overflow: 'hidden', flexShrink: 1}}

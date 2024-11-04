@@ -47,7 +47,9 @@ export const InviteAccepted = ({
     <View style={styles.container}>
       <View style={{alignItems: 'center'}}>
         <GreenCheck />
-        <Text style={{marginTop: 10, fontSize: 20, fontWeight: 'bold'}}>
+        <Text
+          variant="primary"
+          style={{marginTop: 10, fontSize: 20, fontWeight: '500'}}>
           {t(m.inviteAccepted)}
         </Text>
         <DeviceNameWithIcon {...deviceInfo} style={{marginTop: 10}} />

@@ -1,14 +1,14 @@
 import React from 'react';
 import {
   GestureResponderEvent,
-  Image,
   StyleProp,
   StyleSheet,
   TouchableOpacity,
   View,
   ViewStyle,
 } from 'react-native';
-import {Loading} from './Loading';
+import AddButtonSVG from '../images/AddButton.svg';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 interface AddButtonProps {
   style?: StyleProp<ViewStyle>;
@@ -17,7 +17,6 @@ interface AddButtonProps {
   onPress: ((event: GestureResponderEvent) => void) & (() => void);
   isLoading?: boolean;
 }
-
 const AddButtonNoMemo = ({
   style,
   testID,
@@ -27,16 +26,9 @@ const AddButtonNoMemo = ({
 }: AddButtonProps) => (
   <View
     testID={testID}
-    style={[styles.container, {bottom: isLoading ? 75 : 25}, style]}>
+    style={[styles.container, {bottom: isLoading ? 50 : 25}, style]}>
     <TouchableOpacity disabled={disabled || isLoading} onPress={onPress}>
-      {!isLoading ? (
-        <Image
-          source={require('../images/add-button.png')}
-          style={styles.button}
-        />
-      ) : (
-        <Loading size={15} />
-      )}
+      {isLoading ? <UIActivityIndicator size={50} /> : <AddButtonSVG />}
     </TouchableOpacity>
   </View>
 );
@@ -50,9 +42,5 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     alignSelf: 'center',
-  },
-  button: {
-    width: 125,
-    height: 125,
   },
 });

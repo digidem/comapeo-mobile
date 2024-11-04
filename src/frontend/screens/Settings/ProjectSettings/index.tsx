@@ -1,13 +1,13 @@
 import * as React from 'react';
-import {ScrollView} from 'react-native';
-import {List, ListItem, ListItemText} from '../../../sharedComponents/List';
-import {FormattedMessage, defineMessages} from 'react-intl';
+import {defineMessages, useIntl} from 'react-intl';
 import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
 import {
   useAllProjects,
   useGetRemoteArchives,
 } from '../../../hooks/server/projects';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {FullScreenMenuList} from '../../../sharedComponents/MenuList/FullScreenMenuList';
+import {MenuListItemType} from '../../../sharedComponents/MenuList/MenuListItem';
 
 const m = defineMessages({
   title: {
@@ -28,7 +28,7 @@ const m = defineMessages({
   },
   config: {
     id: 'screens.Settings.config',
-    defaultMessage: 'Project Configuration',
+    defaultMessage: 'Configuration',
     description: 'Primary text for project config settings',
   },
   RemoteArchive: {
@@ -48,85 +48,73 @@ const m = defineMessages({
 export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
   navigation,
 }) => {
+  const {formatMessage} = useIntl();
+
   const {data: remoteArchives, isPending} = useGetRemoteArchives();
 
   const remoteArchiveOn = remoteArchives && remoteArchives.length > 0;
 
   const {data: projects, isPending: projectsPending} = useAllProjects();
 
-  const renderRemoteArchiveListItem = () => {
-    if (projectsPending || isPending) {
-      return (
-        <UIActivityIndicator style={{alignSelf: 'flex-start', padding: 20}} />
-      );
-    }
+  // if (projects && projects.length > 1 && remoteArchives !== undefined) {
+  //   return (
+  //     <ListItem
+  //       onPress={() => {
+  //         navigation.navigate(
+  //           remoteArchiveOn ? 'RemoteArchiveOn' : 'RemoteArchiveOff',
+  //         );
+  //       }}
+  //       testID="settingsConfigButton">
+  //       <ListItemText
+  //         primary={<FormattedMessage {...m.RemoteArchive} />}
+  //         secondary={
+  //           remoteArchiveOn ? (
+  //             <FormattedMessage {...m.remoteArchiveOn} />
+  //           ) : (
+  //             <FormattedMessage {...m.remoteArchiveOff} />
+  //           )
+  //         }
+  //       />
+  //     </ListItem>
+  //   );
+  // }
 
-    if (projects && projects.length > 1 && remoteArchives !== undefined) {
-      return (
-        <ListItem
-          onPress={() => {
-            navigation.navigate(
-              remoteArchiveOn ? 'RemoteArchiveOn' : 'RemoteArchiveOff',
-            );
-          }}
-          testID="settingsConfigButton">
-          <ListItemText
-            primary={<FormattedMessage {...m.RemoteArchive} />}
-            secondary={
-              remoteArchiveOn ? (
-                <FormattedMessage {...m.remoteArchiveOn} />
-              ) : (
-                <FormattedMessage {...m.remoteArchiveOff} />
-              )
-            }
-          />
-        </ListItem>
-      );
-    }
-
-    return null;
-  };
-
-  return (
-    <ScrollView>
-      <List>
-        <ListItem
-          testID="PROJECT.device-name-list-item"
-          onPress={() => {
-            navigation.navigate('DeviceNameDisplay');
-          }}>
-          <ListItemText primary={<FormattedMessage {...m.deviceName} />} />
-        </ListItem>
-        <ListItem
-          testID="MAIN.team-list-item"
-          onPress={() => {
-            navigation.navigate('YourTeam');
-          }}>
-          <ListItemText primary={<FormattedMessage {...m.yourTeam} />} />
-        </ListItem>
-        {process.env.EXPO_PUBLIC_FEATURE_MEDIA_MANAGER && (
-          <ListItem
-            testID="MAIN.sync-list-item"
-            onPress={() => {
+  const MenuItems: MenuListItemType[] = [
+    {
+      onPress: () => {
+        navigation.navigate('DeviceNameDisplay');
+      },
+      primaryText: formatMessage(m.deviceName),
+      testID: 'PROJECT.device-name-list-item',
+    },
+    {
+      onPress: () => {
+        navigation.navigate('Config');
+      },
+      primaryText: formatMessage(m.config),
+      testID: 'settingsConfigButton',
+    },
+    {
+      onPress: () => {
+        navigation.navigate('YourTeam');
+      },
+      primaryText: formatMessage(m.yourTeam),
+      testID: 'MAIN.team-list-item',
+    },
+    ...(process.env.EXPO_PUBLIC_FEATURE_MEDIA_MANAGER
+      ? [
+          {
+            onPress: () => {
               navigation.navigate('MediaSyncSettings');
-            }}>
-            <ListItemText
-              primary={<FormattedMessage {...m.mediaSyncSettings} />}
-            />
-          </ListItem>
-        )}
+            },
+            primaryText: formatMessage(m.mediaSyncSettings),
+            testID: 'AIN.sync-list-item',
+          },
+        ]
+      : []),
+  ];
 
-        <ListItem
-          onPress={() => {
-            navigation.navigate('Config');
-          }}
-          testID="settingsConfigButton">
-          <ListItemText primary={<FormattedMessage {...m.config} />} />
-        </ListItem>
-        {renderRemoteArchiveListItem()}
-      </List>
-    </ScrollView>
-  );
+  return <FullScreenMenuList data={MenuItems} />;
 };
 
 ProjectSettings.navTitle = m.title;

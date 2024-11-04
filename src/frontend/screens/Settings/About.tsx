@@ -61,7 +61,7 @@ const DeviceInfoListItem = ({
   const {data, isPending, error} = useDeviceInfo(deviceInfoMethod);
 
   return (
-    <ListItem>
+    <ListItem disableGutters>
       <ListItemText
         primary={label}
         secondary={
@@ -82,8 +82,8 @@ export const AboutSettings = () => {
   const {formatMessage: t} = useIntl();
 
   return (
-    <ScrollView>
-      <List>
+    <ScrollView contentContainerStyle={{padding: 20, paddingTop: 40}}>
+      <List disablePadding>
         <DeviceInfoListItem
           label={t(m.coMapeoVersion)}
           deviceInfoMethod="getVersion"

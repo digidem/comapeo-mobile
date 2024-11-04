@@ -77,7 +77,7 @@ const KEEP_THESE = [
   // zip file that is the default config
   'node_modules/@mapeo/default-config/dist/mapeo-default-config.comapeocat',
   // Offline fallback map
-  'node_modules/mapeo-offline-map',
+  'node_modules/@comapeo/fallback-smp',
 ];
 
 for (const name of KEEP_THESE) {

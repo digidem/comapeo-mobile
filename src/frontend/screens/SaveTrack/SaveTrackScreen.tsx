@@ -25,7 +25,6 @@ export const SaveTrackScreen = () => {
 
   return (
     <Editor
-      photos={[]}
       presetName={t(m.newTitle)}
       notesComponent={<TrackDescriptionField />}
       PresetIcon={<TrackIcon style={styles.icon} />}

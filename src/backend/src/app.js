@@ -2,25 +2,23 @@ import debug from 'debug'
 import { join } from 'path'
 import { mkdirSync } from 'fs'
 import { createRequire } from 'module'
-const require = createRequire(import.meta.url)
-/** @type {import('../types/rn-bridge.js')} */
-const rnBridge = require('rn-bridge')
-import {
-  MapeoManager,
-  FastifyController,
-  MapeoMapsFastifyPlugin,
-  MapeoStaticMapsFastifyPlugin,
-  MapeoOfflineFallbackMapFastifyPlugin,
-} from '@comapeo/core'
+import { MapeoManager, FastifyController } from '@comapeo/core'
 import { createMapeoServer } from '@comapeo/ipc'
 import Fastify from 'fastify'
 
 import MessagePortLike from './message-port-like.js'
 import { ServerStatus } from './status.js'
 
+const require = createRequire(import.meta.url)
+
+/** @type {import('../types/rn-bridge.js')} */
+const rnBridge = require('rn-bridge')
+
 // Do not touch these!
 const DB_DIR_NAME = 'sqlite-dbs'
 const CORE_STORAGE_DIR_NAME = 'core-storage'
+const CUSTOM_MAPS_DIR_NAME = 'maps'
+const DEFAULT_CUSTOM_MAP_FILE_NAME = 'default.smp'
 
 const MAPBOX_ACCESS_TOKEN =
   'pk.eyJ1IjoiZGlnaWRlbSIsImEiOiJjbHRyaGh3cm0wN3l4Mmpsam95NDI3c2xiIn0.daq2iZFZXQ08BD0VZWAGUw'
@@ -56,18 +54,13 @@ process.on('exit', (code) => {
  * @param {string} [options.version] Device Version
  * @param {Buffer} options.rootKey
  * @param {string} options.migrationsFolderPath
- * @param {string} options.sharedStoragePath Path to app-specific external file storage folder
  * @param {string} options.defaultConfigPath
- * @param {string} options.fallbackMapPath Path to app-specific external file storage folder
- *
  */
 export async function init({
   version,
   rootKey,
   migrationsFolderPath,
-  sharedStoragePath,
   defaultConfigPath,
-  fallbackMapPath,
 }) {
   log('Starting app...')
   log(`Device version is ${version}`)
@@ -75,29 +68,14 @@ export async function init({
   const privateStorageDir = rnBridge.app.datadir()
   const dbDir = join(privateStorageDir, DB_DIR_NAME)
   const indexDir = join(privateStorageDir, CORE_STORAGE_DIR_NAME)
-  const staticStylesDir = join(sharedStoragePath, 'styles')
+  const customMapsDir = join(privateStorageDir, CUSTOM_MAPS_DIR_NAME)
 
   mkdirSync(dbDir, { recursive: true })
   mkdirSync(indexDir, { recursive: true })
-  mkdirSync(staticStylesDir, { recursive: true })
+  mkdirSync(customMapsDir, { recursive: true })
 
   const fastify = Fastify()
   const fastifyController = new FastifyController({ fastify })
-
-  // Register maps plugins
-  fastify.register(MapeoStaticMapsFastifyPlugin, {
-    prefix: 'static',
-    staticRootDir: staticStylesDir,
-  })
-  fastify.register(MapeoOfflineFallbackMapFastifyPlugin, {
-    prefix: 'fallback',
-    styleJsonPath: join(fallbackMapPath, 'style.json'),
-    sourcesDir: join(fallbackMapPath, 'dist'),
-  })
-  fastify.register(MapeoMapsFastifyPlugin, {
-    prefix: 'maps',
-    defaultOnlineStyleUrl: DEFAULT_ONLINE_MAP_STYLE_URL,
-  })
 
   const manager = new MapeoManager({
     rootKey,
@@ -107,6 +85,8 @@ export async function init({
     projectMigrationsFolder: join(migrationsFolderPath, 'project'),
     fastify,
     defaultConfigPath,
+    defaultOnlineStyleUrl: DEFAULT_ONLINE_MAP_STYLE_URL,
+    customMapPath: join(customMapsDir, DEFAULT_CUSTOM_MAP_FILE_NAME),
   })
 
   // Don't await, methods that use the server will await this internally

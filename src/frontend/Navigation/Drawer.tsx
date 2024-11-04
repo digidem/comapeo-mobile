@@ -120,6 +120,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
         <DrawerMenuIcon
           style={{alignSelf: 'flex-end', marginRight: 20}}
           onPress={navigation.closeDrawer}
+          testID="drawer-icon-drawer"
         />
         <Text
           testID="MAIN.drawer-create-join-txt"

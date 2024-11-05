@@ -2,7 +2,7 @@
 const config = {
   preset: 'ts-jest',
   rootDir: '..',
-  testMatch: ['<rootDir>/e2e-detox/flow.test.ts'],
+  testMatch: ['<rootDir>/e2e-detox/flow.spec.ts'],
   testTimeout: 120000,
   maxWorkers: 1,
   globalSetup: 'detox/runners/jest/globalSetup',

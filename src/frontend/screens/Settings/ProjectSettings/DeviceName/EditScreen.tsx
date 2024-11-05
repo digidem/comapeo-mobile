@@ -50,7 +50,7 @@ export function createNavigationOptions({
       headerTitle: intl(m.title),
       animation: 'none',
       headerRight: () => (
-        <IconButton testID="save-icon" onPress={() => {}}>
+        <IconButton onPress={() => {}}>
           <SaveIcon />
         </IconButton>
       ),
@@ -58,7 +58,6 @@ export function createNavigationOptions({
   };
 }
 
-// TODO: Add the test for saving an edited device name to the end to end test once the save button works correctly https://github.com/digidem/comapeo-mobile/issues/434
 export const EditScreen = ({
   navigation,
 }: NativeRootNavigationProps<'DeviceNameEdit'>) => {
@@ -126,7 +125,7 @@ export const EditScreen = ({
       navigation.setOptions({
         headerRight: () => {
           return isPending ? (
-            <IconButton testID="save-icon">
+            <IconButton>
               <UIActivityIndicator size={30} />
             </IconButton>
           ) : (

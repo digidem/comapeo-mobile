@@ -157,7 +157,6 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
           <ListItemText primary={<FormattedMessage {...m.createOrJoin} />} />
         </ListItem>
         <ListItem
-          testID="MAIN.project-stg-list-item"
           onPress={() => {
             navigate('DrawerHome', {screen: 'ProjectSettings'});
           }}>

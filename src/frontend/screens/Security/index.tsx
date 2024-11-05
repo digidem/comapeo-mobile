@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {ScrollView} from 'react-native-gesture-handler';
 
 import {useSecurityContext} from '../../contexts/SecurityContext';
-import {List, ListItem, ListItemText} from '../../sharedComponents/List';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
+import {FullScreenMenuList} from '../../sharedComponents/MenuList/FullScreenMenuList';
+import {MenuListItemType} from '../../sharedComponents/MenuList/MenuListItem';
 
 const m = defineMessages({
   title: {
@@ -41,28 +41,22 @@ export const Security: NativeNavigationComponent<'Security'> = ({
     }
   }, [navigation, authState]);
 
-  return (
-    <ScrollView>
-      <List>
-        <ListItem
-          button={true}
-          onPress={() =>
-            navigation.navigate(
-              authValuesSet.passcodeSet ? 'EnterPassToTurnOff' : 'AppPasscode',
-            )
-          }>
-          <ListItemText
-            primary={t(m.passcodeHeader)}
-            secondary={t(
-              authValuesSet.passcodeSet
-                ? m.passDesriptionPassSet
-                : m.passDesriptionPassNotSet,
-            )}
-          />
-        </ListItem>
-      </List>
-    </ScrollView>
-  );
+  const menuItems: MenuListItemType[] = [
+    {
+      onPress: () =>
+        navigation.navigate(
+          authValuesSet.passcodeSet ? 'EnterPassToTurnOff' : 'AppPasscode',
+        ),
+      primaryText: t(m.passcodeHeader),
+      secondaryText: t(
+        authValuesSet.passcodeSet
+          ? m.passDesriptionPassSet
+          : m.passDesriptionPassNotSet,
+      ),
+    },
+  ];
+
+  return <FullScreenMenuList data={menuItems} />;
 };
 
 Security.navTitle = m.title;

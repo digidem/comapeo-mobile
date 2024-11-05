@@ -20,6 +20,8 @@ import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
 import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types.ts';
 import {ButtonFields} from './Buttons.tsx';
+import {AudioAttachment} from '../../sharedTypes/audio.ts';
+import {isSavedPhoto, isAudioAttachment} from '../../lib/attachmentTypeChecks';
 
 const m = defineMessages({
   deleteTitle: {
@@ -74,9 +76,9 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
     convertedDeviceId !== undefined &&
     deviceInfo.deviceId === convertedDeviceId;
 
-  // Currently only show photo attachments
-  const photoAttachments = observation.attachments.filter(
-    (attachment): attachment is SavedPhoto => attachment.type === 'photo',
+  const attachments = observation.attachments.filter(
+    (attachment): attachment is SavedPhoto | AudioAttachment =>
+      isSavedPhoto(attachment) || isAudioAttachment(attachment),
   );
 
   return (
@@ -102,9 +104,9 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
               <Text style={styles.textNotes}>{observation.tags.notes}</Text>
             </View>
           ) : null}
-          {photoAttachments.length > 0 && (
+          {attachments.length > 0 && (
             <MediaScrollView
-              photos={photoAttachments}
+              attachments={attachments}
               observationId={observationId}
             />
           )}

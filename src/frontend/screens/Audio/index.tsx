@@ -1,16 +1,33 @@
 import React from 'react';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
-
 import {DARK_GREY, WHITE} from '../../lib/styles';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
+import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {CreateRecording} from './CreateRecording';
+import {ExistingRecording} from './ExistingRecording';
+import {useDraftObservation} from '../../hooks/useDraftObservation';
 
 export const MAX_RECORDING_DURATION_MS = 5 * 60_000;
 
-export function Audio() {
+export function Audio({route}: NativeRootNavigationProps<'Audio'>) {
+  const {deleteAudio} = useDraftObservation();
+  const {isEditing, uri, isSavedUri = false} = route.params;
+
+  console.log({isEditing});
   return (
     <>
-      <CreateRecording />
+      {uri ? (
+        <ExistingRecording
+          uri={uri}
+          isSavedUri={isSavedUri}
+          onDelete={() => {
+            deleteAudio(uri, isSavedUri);
+          }}
+          isEditing={isEditing}
+        />
+      ) : (
+        <CreateRecording isEditing={isEditing} />
+      )}
     </>
   );
 }

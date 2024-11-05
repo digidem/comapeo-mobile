@@ -61,6 +61,7 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
       onPress: () => {
         navigation.navigate('DeviceNameDisplay');
       },
+      disabled: remoteArchives === undefined,
       primaryText: formatMessage(m.deviceName),
       testID: 'PROJECT.device-name-list-item',
     },
@@ -78,7 +79,7 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
       primaryText: formatMessage(m.yourTeam),
       testID: 'MAIN.team-list-item',
     },
-    ...(projects && projects.length > 1 && remoteArchives !== undefined
+    ...(projects && projects.length > 1
       ? [
           {
             onPress: () => {
@@ -88,7 +89,7 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
             },
             primaryText: formatMessage(m.RemoteArchive),
             secondaryText: isPending ? (
-              <UIActivityIndicator />
+              <UIActivityIndicator size={25} />
             ) : remoteArchiveOn ? (
               formatMessage(m.remoteArchiveOn)
             ) : (

@@ -40,7 +40,7 @@ export const WhatsIncludedBottomSheetContent = ({
   return (
     <BottomSheetModalContent
       title={<Text style={{fontSize: 24}}>{formatMessage(m.title)}</Text>}
-      descriptionStyle={{fontSize: 14, textAlign: 'left'}}
+      descriptionStyle={{marginBottom: 30, textAlign: 'left'}}
       description={
         `\u2022 ` +
         formatMessage(m.observations) +
@@ -54,7 +54,13 @@ export const WhatsIncludedBottomSheetContent = ({
         `\u2022 ` +
         formatMessage(m.projectSettings)
       }
-      icon={<QuestionMarkWithShadow width={60} height={60} />}
+      icon={
+        <QuestionMarkWithShadow
+          style={{marginTop: 30}}
+          width={60}
+          height={60}
+        />
+      }
       buttonConfigs={[
         {
           text: formatMessage(m.close),

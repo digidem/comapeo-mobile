@@ -2,6 +2,7 @@ import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 import DeviceMobile from '../images/DeviceMobile.svg';
 import DeviceDesktop from '../images/DeviceDesktop.svg';
+import ShieldIcon from '../images/BlackShield.svg';
 import type {
   ViewStyleProp,
   DeviceConnectionStatus,
@@ -9,7 +10,7 @@ import type {
 } from '../sharedTypes';
 import {defineMessages, useIntl} from 'react-intl';
 import {Text} from './Text';
-import {MEDIUM_GREY} from '../lib/styles';
+import {LIGHT_GREY, MEDIUM_GREY} from '../lib/styles';
 import {ExhaustivenessError} from '../lib/ExhaustivenessError';
 import Caution from '../images/caution.svg';
 
@@ -62,6 +63,8 @@ export const DeviceNameWithIcon = ({
     <View style={[styles.flexRow, style]}>
       {deviceType === 'mobile' ? (
         <DeviceMobile width={iconSize || 35} height={iconSize || 35} />
+      ) : deviceType === 'selfHostedServer' ? (
+        <DeviceArchive />
       ) : (
         <DeviceDesktop width={iconSize || 35} height={iconSize || 35} />
       )}
@@ -91,6 +94,29 @@ export const DeviceNameWithIcon = ({
           </View>
         )}
       </View>
+    </View>
+  );
+};
+
+const DeviceArchive = () => {
+  return (
+    <View
+      style={[
+        {
+          alignItems: 'center',
+          position: 'relative',
+          backgroundColor: LIGHT_GREY,
+          borderRadius: 100,
+          padding: 40,
+          width: 35,
+          height: 35,
+        },
+      ]}>
+      <ShieldIcon
+        width={50}
+        height={50}
+        style={{position: 'absolute', top: 15, left: 15}}
+      />
     </View>
   );
 };

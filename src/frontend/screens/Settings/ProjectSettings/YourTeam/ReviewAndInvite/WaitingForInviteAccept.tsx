@@ -56,7 +56,9 @@ export const WaitingForInviteAccept = ({
   return (
     <View style={styles.container}>
       <InviteSent />
-      <HeaderText style={{marginTop: 10}}>{t(m.waitingMessage)}</HeaderText>
+      <HeaderText style={{marginTop: 10, textAlign: 'center'}}>
+        {t(m.waitingMessage)}
+      </HeaderText>
       <BodyText style={{marginTop: 20}}>
         {t(m.timerMessage, {seconds: time})}
       </BodyText>

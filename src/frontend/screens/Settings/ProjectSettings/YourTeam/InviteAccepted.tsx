@@ -1,6 +1,5 @@
 import {BackHandler, StyleSheet, View} from 'react-native';
 import GreenCheck from '../../../../images/GreenCheck.svg';
-import {Text} from '../../../../sharedComponents/Text';
 import {defineMessages, useIntl} from 'react-intl';
 import React from 'react';
 import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
@@ -9,6 +8,7 @@ import {RoleWithIcon} from '../../../../sharedComponents/RoleWithIcon';
 import {Button} from '../../../../sharedComponents/Button';
 import {useFocusEffect} from '@react-navigation/native';
 import {COORDINATOR_ROLE_ID} from '../../../../sharedTypes';
+import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 
 const m = defineMessages({
   inviteAccepted: {
@@ -47,11 +47,9 @@ export const InviteAccepted = ({
     <View style={styles.container}>
       <View style={{alignItems: 'center'}}>
         <GreenCheck />
-        <Text
-          variant="primary"
-          style={{marginTop: 10, fontSize: 20, fontWeight: '500'}}>
+        <HeaderText variant="header3" style={{marginTop: 10}}>
           {t(m.inviteAccepted)}
-        </Text>
+        </HeaderText>
         <DeviceNameWithIcon {...deviceInfo} style={{marginTop: 10}} />
         <RoleWithIcon
           style={{marginTop: 20}}

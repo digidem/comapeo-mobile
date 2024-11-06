@@ -3,9 +3,9 @@ import {StyleSheet, View} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunity from 'react-native-vector-icons/MaterialCommunityIcons';
 import {defineMessages, useIntl} from 'react-intl';
-import {Text} from './Text';
 import {BLACK} from '../lib/styles';
 import {ViewStyleProp} from '../sharedTypes';
+import {HeaderText} from './Text/HeaderText';
 
 const m = defineMessages({
   coordinator: {
@@ -32,9 +32,9 @@ export const RoleWithIcon = ({role, style}: RoleWithIconProps) => {
       ) : (
         <MaterialCommunity name="account-cog" size={25} color={BLACK} />
       )}
-      <Text variant="primary" style={{marginLeft: 10, fontWeight: '500'}}>
+      <HeaderText style={{marginLeft: 10}}>
         {formatMessage(role === 'coordinator' ? m.coordinator : m.participant)}
-      </Text>
+      </HeaderText>
     </View>
   );
 };

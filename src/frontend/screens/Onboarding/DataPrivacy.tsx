@@ -8,7 +8,8 @@ import CoMapeoShield from '../../images/CoMapeoShield.svg';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {NEW_DARK_GREY, BLUE_GREY} from '../../lib/styles';
 import {m} from './DataPrivacyMessages';
-import {Text} from '../../sharedComponents/Text';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
 
 export const DataPrivacy = ({
   navigation,
@@ -18,13 +19,13 @@ export const DataPrivacy = ({
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <CoMapeoShield width={64} height={80} style={styles.shieldIcon} />
-      <Text style={styles.title} variant="primary">
+      <HeaderText style={styles.title}>
         {formatMessage(m.dataPrivacyTitle)}
-      </Text>
+      </HeaderText>
       <View style={styles.descriptionContainer}>
-        <Text style={styles.description}>
+        <BodyText style={styles.description}>
           {formatMessage(m.dataPrivacyDescription)}
-        </Text>
+        </BodyText>
         <View style={styles.bulletPoints}>
           <View style={styles.bulletPointContainer}>
             <MaterialIcons
@@ -33,9 +34,9 @@ export const DataPrivacy = ({
               color={NEW_DARK_GREY}
               style={styles.bulletIcon}
             />
-            <Text style={styles.bulletPointText}>
+            <BodyText variant="smallMeta" style={styles.bulletPointText}>
               {formatMessage(m.dataPrivacyStays)}
-            </Text>
+            </BodyText>
           </View>
           <View style={styles.bulletPointContainer}>
             <MaterialIcons
@@ -44,9 +45,9 @@ export const DataPrivacy = ({
               color={NEW_DARK_GREY}
               style={styles.bulletIcon}
             />
-            <Text style={styles.bulletPointText}>
+            <BodyText variant="smallMeta" style={styles.bulletPointText}>
               {formatMessage(m.dataPrivacyEncrypted)}
-            </Text>
+            </BodyText>
           </View>
           <View style={styles.bulletPointContainer}>
             <MaterialIcons
@@ -55,9 +56,9 @@ export const DataPrivacy = ({
               color={NEW_DARK_GREY}
               style={styles.bulletIcon}
             />
-            <Text style={styles.bulletPointText}>
+            <BodyText variant="smallMeta" style={styles.bulletPointText}>
               {formatMessage(m.dataPrivacyManageAndControl)}
-            </Text>
+            </BodyText>
           </View>
           <View style={styles.bulletPointContainer}>
             <MaterialIcons
@@ -66,9 +67,9 @@ export const DataPrivacy = ({
               color={NEW_DARK_GREY}
               style={styles.bulletIcon}
             />
-            <Text style={styles.bulletPointText}>
+            <BodyText variant="smallMeta" style={styles.bulletPointText}>
               {formatMessage(m.dataPrivacyDiagnostic)}
-            </Text>
+            </BodyText>
           </View>
         </View>
       </View>
@@ -107,8 +108,6 @@ const styles = StyleSheet.create({
     marginBottom: GAP,
   },
   title: {
-    fontSize: 32,
-    fontWeight: '500',
     marginBottom: GAP,
   },
   descriptionContainer: {
@@ -117,7 +116,6 @@ const styles = StyleSheet.create({
     gap: GAP,
   },
   description: {
-    fontSize: 16,
     textAlign: 'left',
   },
   bulletPoints: {
@@ -134,7 +132,6 @@ const styles = StyleSheet.create({
   },
   bulletPointText: {
     flex: 1,
-    fontSize: 14,
     color: NEW_DARK_GREY,
   },
   buttonContainer: {

@@ -46,7 +46,7 @@
       [
         "expo-font",
         {
-          "fonts": ["node_modules/@expo-google-fonts/rubik/Rubik_300Light_Italic.ttf","node_modules/@expo-google-fonts/rubik/Rubik_300Light.ttf","node_modules/@expo-google-fonts/rubik/Rubik_400Regular_Italic.ttf","node_modules/@expo-google-fonts/rubik/Rubik_400Regular.ttf", "node_modules/@expo-google-fonts/rubik/Rubik_500Medium_Italic.ttf", "node_modules/@expo-google-fonts/rubik/Rubik_500Medium.ttf", "node_modules/@expo-google-fonts/rubik/Rubik_600SemiBold_Italic.ttf","node_modules/@expo-google-fonts/rubik/Rubik_600SemiBold.ttf","node_modules/@expo-google-fonts/rubik/Rubik_700Bold_Italic.ttf", "node_modules/@expo-google-fonts/rubik/Rubik_700Bold.ttf","node_modules/@expo-google-fonts/rubik/Rubik_800ExtraBold_Italic.ttf","node_modules/@expo-google-fonts/rubik/Rubik_800ExtraBold.ttf","node_modules/@expo-google-fonts/rubik/Rubik_900Black_Italic.ttf", "node_modules/@expo-google-fonts/rubik/Rubik_900Black.ttf"]
+          "fonts": ["node_modules/@expo-google-fonts/rubik/Rubik_400Regular.ttf", "node_modules/@expo-google-fonts/rubik/Rubik_500Medium.ttf"]
         }
       ],
       [

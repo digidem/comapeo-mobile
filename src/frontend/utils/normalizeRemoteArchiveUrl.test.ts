@@ -13,10 +13,14 @@ describe('normalizeRemoteArchiveUrl', () => {
     ['https://example.com/#', 'https://example.com/'],
     ['HTTPS://example.com', 'https://example.com/'],
     ['HtTpS://example.com', 'https://example.com/'],
-    ['例子.网站', 'https://xn--fsqu00a.xn--5tzm5g/'],
-    ['https://例子.网站', 'https://xn--fsqu00a.xn--5tzm5g/'],
     ['https:example.com', 'https://example.com/'],
     ['https:/example.com', 'https://example.com/'],
+    // [Expo's `URL` constructor isn't spec compliant.][0] If that changes, we
+    // can uncomment these test cases.
+    // [0]: https://github.com/expo/expo/issues/32664
+    //
+    // ['例子.网站', 'https://xn--fsqu00a.xn--5tzm5g/'],
+    // ['https://例子.网站', 'https://xn--fsqu00a.xn--5tzm5g/'],
   ];
   const hosts = ['example.com', '0.0.0.0', '127.0.0.1', '100.64.0.42'];
   for (const host of hosts) {

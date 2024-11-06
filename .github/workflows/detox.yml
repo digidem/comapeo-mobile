@@ -20,8 +20,10 @@ jobs:
         id: cache-builds
         uses: actions/cache@v4
         with:
-          path: android/app/build
-          key: app-build-1
+          path: |
+            android/.gradle
+            android/app/build
+          key: app-build-${{ github.run_id }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4

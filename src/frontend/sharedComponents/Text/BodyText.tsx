@@ -30,19 +30,24 @@ export const BodyText = ({
 }: React.PropsWithChildren<BodyProps>) => {
   let computedStyle: StyleProp<TextStyle>;
 
+  let fontSize: number;
   switch (variant) {
     case 'large':
-      computedStyle = {fontSize: 20, lineHeight: 1.5};
+      fontSize = 20;
+      computedStyle = {fontSize};
       break;
     case 'smallMeta':
-      computedStyle = {fontSize: 14};
+      fontSize = 14;
+      computedStyle = {fontSize};
       break;
     case 'tinyMeta':
-      computedStyle = {fontSize: 12};
+      fontSize = 12;
+      computedStyle = {fontSize};
       break;
     case 'regular':
     default:
-      computedStyle = {fontSize: 16, lineHeight: 1.5};
+      fontSize = 16;
+      computedStyle = {fontSize};
       break;
   }
 

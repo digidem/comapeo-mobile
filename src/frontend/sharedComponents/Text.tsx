@@ -4,7 +4,7 @@ import {BLACK} from '../lib/styles';
 
 /**
  *
- * @deprecated use `sharedComponent/Text/Header` or `sharedComponent/Text/Body`  instead
+ * @deprecated use `sharedComponent/Text/HeaderText` or `sharedComponent/Text/BodyText`  instead
  */
 export const Text = ({
   children,

@@ -12,10 +12,28 @@ type Variant =
 
 interface HeaderProps extends Omit<TextProps, 'style'> {
   style?: Omit<TextStyle, 'fontSize' | 'fontFamily' | 'fontWeight'>;
-  variant: Variant;
+  variant?: Variant;
 }
 
-export const Header = ({
+/**
+ * HeaderText should be used for all headers, form labels, and buttons. HeaderText uses rubik font at font weight 500
+ *
+ * Different `variant` types (default to `header1`):
+ *
+ * header1 = `{fontSize:32}`
+ *
+ * header2 = `{fontSize:24}`
+ *
+ * header3 = `{fontSize:20}`
+ *
+ * header4 = `{fontSize:18}`
+ *
+ * header5 = `{fontSize:16}`
+ *
+ * header6 = `{fontSize:14}`
+ *
+ */
+export const HeaderText = ({
   children,
   style,
   variant,
@@ -24,9 +42,6 @@ export const Header = ({
   let fontSize: number;
 
   switch (variant) {
-    case 'header1':
-      fontSize = 32;
-      break;
     case 'header2':
       fontSize = 24;
       break;
@@ -41,6 +56,10 @@ export const Header = ({
       break;
     case 'header6':
       fontSize = 14;
+      break;
+    case 'header1':
+    default:
+      fontSize = 32;
       break;
   }
 

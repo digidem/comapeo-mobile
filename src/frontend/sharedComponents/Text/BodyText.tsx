@@ -6,10 +6,23 @@ type Variant = 'large' | 'regular' | 'smallMeta' | 'tinyMeta';
 
 interface BodyProps extends Omit<TextProps, 'style'> {
   style?: Omit<TextStyle, 'fontSize' | 'fontFamily' | 'fontWeight'>;
-  variant: Variant;
+  variant?: Variant;
 }
 
-export const Body = ({
+/**
+ * Body text uses system font and opinated font sizes and font weight. Should be used for most text.
+ *
+ * Different `variant` types (default to 'regular'):
+ *
+ * large = `{fontSize:20}`
+ *
+ * regular = `{fontSize:16}`
+ *
+ * smallMeta = `{fontSize:14}`
+ *
+ * tinyMeta = `{fontSize:12}`
+ */
+export const BodyText = ({
   children,
   style,
   variant,
@@ -21,14 +34,15 @@ export const Body = ({
     case 'large':
       computedStyle = {fontSize: 20, lineHeight: 1.5};
       break;
-    case 'regular':
-      computedStyle = {fontSize: 16, lineHeight: 1.5};
-      break;
     case 'smallMeta':
       computedStyle = {fontSize: 14};
       break;
     case 'tinyMeta':
       computedStyle = {fontSize: 12};
+      break;
+    case 'regular':
+    default:
+      computedStyle = {fontSize: 16, lineHeight: 1.5};
       break;
   }
 

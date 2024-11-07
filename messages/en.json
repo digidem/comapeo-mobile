@@ -211,7 +211,7 @@
     "message": "Server Name"
   },
   "ProjectSettings.RemoteArchive.syncWithInternet": {
-    "message": "Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data"
+    "message": "Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data."
   },
   "ProjectSettings.RemoteArchive.thisIncludes": {
     "message": "This includes"

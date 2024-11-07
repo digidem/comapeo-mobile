@@ -39,35 +39,27 @@ export const HeaderText = ({
   variant,
   ...otherTextProps
 }: React.PropsWithChildren<HeaderProps>) => {
-  let fontSize: number;
-
-  switch (variant) {
-    case 'header2':
-      fontSize = 24;
-      break;
-    case 'header3':
-      fontSize = 20;
-      break;
-    case 'header4':
-      fontSize = 18;
-      break;
-    case 'header5':
-      fontSize = 16;
-      break;
-    case 'header6':
-      fontSize = 14;
-      break;
-    case 'header1':
-    default:
-      fontSize = 32;
-      break;
-  }
-
   return (
     <RNText
-      style={[{fontFamily: 'Rubik_500Medium', color: BLACK, fontSize}, style]}
+      style={[
+        {
+          fontFamily: 'Rubik_500Medium',
+          color: BLACK,
+          fontSize: fontSizeMap[variant || 'header1'],
+        },
+        style,
+      ]}
       {...otherTextProps}>
       {children}
     </RNText>
   );
+};
+
+const fontSizeMap: {[key in Variant]: number} = {
+  header1: 32,
+  header2: 24,
+  header3: 20,
+  header4: 18,
+  header5: 16,
+  header6: 24,
 };

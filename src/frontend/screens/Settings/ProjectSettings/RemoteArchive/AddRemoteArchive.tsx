@@ -4,7 +4,6 @@ import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {
   COMAPEO_BLUE,
-  DARK_GREY,
   BLUE_GREY,
   RED,
   VERY_LIGHT_GREY,

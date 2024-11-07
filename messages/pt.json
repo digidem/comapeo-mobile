@@ -86,7 +86,7 @@
     "message": "Agora você está mapeando por contra própria"
   },
   "Navigation.Drawer.privacyPolicy": {
-    "message": "Privacy Policy"
+    "message": "Política de Privacidade"
   },
   "Navigation.Drawer.projName": {
     "message": "Projeto {projectName}"
@@ -148,10 +148,10 @@
     "message": "Idioma de exibição do aplicativo"
   },
   "Screens.Settings.AppSettings.mapManagement": {
-    "message": "Map Management"
+    "message": "Gerenciamento de Mapa"
   },
   "Screens.Settings.AppSettings.mapManagementDesc": {
-    "message": "Backgrounds, Map Data"
+    "message": "Mapa de fundo, dados de mapa"
   },
   "Screens.Settings.AppSettings.title": {
     "message": "Configurações do Aplicativo"
@@ -400,7 +400,7 @@
     "message": "Grave até {length} {length, plural, one {minuto} other {minutos}}"
   },
   "screens.AudioScreen.ExistingRecording.deleteBottomSheetDescription": {
-    "message": "Your Audio Recording will be permanently deleted. This cannot be undone."
+    "message": "Sua gravação de áudio será excluída permanentemente. Isto não pode ser desfeito."
   },
   "screens.AudioScreen.ExistingRecording.deleteBottomSheetPrimaryButtonText": {
     "message": "Excluir"
@@ -409,7 +409,7 @@
     "message": "Cancelar"
   },
   "screens.AudioScreen.ExistingRecording.deleteBottomSheetTitle": {
-    "message": "Delete?"
+    "message": "Excluir?"
   },
   "screens.AudioScreen.Playback.description": {
     "message": "Duração total: {length}"
@@ -746,13 +746,13 @@
     "message": "Número do fuso"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
-    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
+    "message": "O CoMapeo coleta dados de localização para rastrear a sua rota no mapa, mesmo quando o app é fechado. Seus dados de localização são armazenados apenas no seu dispositivo por padrão e não são armazenados ou enviados para lugar algum."
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Turn On"
+    "message": "Ligar"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
-    "message": "Use Your Location"
+    "message": "Use sua localização"
   },
   "screens.MediaSyncActionSheetContent.cancel": {
     "message": "Cancelar"
@@ -1292,73 +1292,73 @@
     "message": "O que é um Projeto"
   },
   "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
-    "message": "Accepted file types are .smp"
+    "message": "Tipos de arquivos aceitos são .smp"
   },
   "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.chooseFile": {
-    "message": "Choose File"
+    "message": "Selecionar Arquivo"
   },
   "screens.Settings.MapManagement.BackgroundMaps.about": {
-    "message": "About Custom Map"
+    "message": "Sobre o mapa personalizado"
   },
   "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
-    "message": "This cannot be undone."
+    "message": "Isto não pode ser desfeito."
   },
   "screens.Settings.MapManagement.BackgroundMaps.close": {
-    "message": "Close"
+    "message": "Fechar"
   },
   "screens.Settings.MapManagement.BackgroundMaps.customMapAddedDescription": {
-    "message": "You will see this map when you are offline, but you will not see a map outside the area defined in your custom map."
+    "message": "Você verá este mapa quando estiver offline, mas não verá um mapa fora da área definida em seu mapa personalizado."
   },
   "screens.Settings.MapManagement.BackgroundMaps.customMapAddedTitle": {
-    "message": "Custom Map Added"
+    "message": "Mapa Personalizado Adicionado"
   },
   "screens.Settings.MapManagement.BackgroundMaps.customMapInfoLoadError": {
-    "message": "Could not get custom map information from file. Please remove it or choose a different file."
+    "message": "Não foi possível obter informação de mapa personalizado do arquivo. Por favor, remova-a ou escolha um arquivo diferente."
   },
   "screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapDescription": {
-    "message": "This will delete the map and its offline areas. No collected observation data will be deleted."
+    "message": "Isto excluirá o mapa e suas áreas offline. Nenhum dado de observação coletada será excluído."
   },
   "screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapTitle": {
-    "message": "Delete Custom Map?"
+    "message": "Excluir Mapa Personalizado?"
   },
   "screens.Settings.MapManagement.BackgroundMaps.deleteMapButtonText": {
-    "message": "Delete Map"
+    "message": "Excluir mapa"
   },
   "screens.Settings.MapManagement.BackgroundMaps.description1": {
-    "message": "Adding a custom map will enable you to see a map when you are offline."
+    "message": "Adicionar um mapa personalizado permitirá que você veja um mapa quando estiver offline."
   },
   "screens.Settings.MapManagement.BackgroundMaps.description2": {
-    "message": "Your custom map is not shared with other devices in your project."
+    "message": "Seu mapa personalizado não está compartilhado com outros dispositivos no seu projeto."
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorDescription": {
-    "message": "Unable to import the file. Please go back and try again."
+    "message": "Não foi possível importar o arquivo. Por favor, volte e tente novamente."
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
-    "message": "Import Error"
+    "message": "Erro ao importar"
   },
   "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
-    "message": "Remove Map File"
+    "message": "Remover arquivo do mapa"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
-    "message": "Background Maps"
+    "message": "Mapas de fundo"
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.dateAdded": {
-    "message": "Date Added"
+    "message": "Data de inclusão"
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.mapNameColumn": {
-    "message": "Map Name"
+    "message": "Nome do Mapa"
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.removeMap": {
-    "message": "Remove Map"
+    "message": "Excluir mapa"
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
     "message": "{value} MB"
   },
   "screens.Settings.MapManagement.backgroundMaps": {
-    "message": "Background Maps"
+    "message": "Mapas de fundo"
   },
   "screens.Settings.MapManagement.screenTitle": {
-    "message": "Map Management"
+    "message": "Gerenciamento de Mapa"
   },
   "screens.Settings.YourTeam.InviteDeclined": {
     "message": "Convite recusado"

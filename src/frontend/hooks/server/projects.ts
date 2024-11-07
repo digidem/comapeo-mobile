@@ -14,6 +14,7 @@ export const PROJECT_MEMBERS_KEY = 'project_members';
 export const ORIGINAL_VERSION_ID_TO_DEVICE_ID_KEY =
   'originalVersionIdToDeviceId';
 export const THIS_USERS_ROLE_KEY = 'my_role';
+export const REMOTE_ARCHIVE = 'remote_archive';
 
 export function useProject(projectId?: string) {
   const api = useApi();
@@ -157,5 +158,65 @@ export function useGetOwnRole() {
     queryFn: () => {
       return projectApi.$getOwnRole();
     },
+  });
+}
+
+export function useGetRemoteArchives() {
+  const {projectId, projectApi} = useActiveProject();
+
+  return useQuery({
+    queryKey: [REMOTE_ARCHIVE, projectId, PROJECT_MEMBERS_KEY],
+    queryFn: async () => {
+      const members = await projectApi.$member.getMany();
+      const filteredMembers = members.filter(
+        member => member.deviceType === 'selfHostedServer',
+      );
+      return filteredMembers;
+    },
+  });
+}
+
+export function useAddRemoteArchive() {
+  const {projectApi} = useActiveProject();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (normalizedUrl: string) => {
+      return projectApi.$member.addServerPeer(normalizedUrl);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: [REMOTE_ARCHIVE]});
+    },
+  });
+}
+
+export function useFindRemoteArchive({url}: {url?: string}) {
+  return useQuery({
+    queryFn: async () => {
+      if (!url) throw new Error('no url');
+      const response = await fetch(url);
+
+      if (response.status !== 200) {
+        throw new Error('Server should return a 200');
+      }
+
+      const responseJson = await response.json();
+
+      if (
+        responseJson &&
+        typeof responseJson === 'object' &&
+        'data' in responseJson &&
+        responseJson.data &&
+        typeof responseJson.data === 'object' &&
+        'name' in responseJson.data &&
+        responseJson.data.name &&
+        typeof responseJson.data.name === 'string'
+      ) {
+        return responseJson.data.name;
+      } else {
+        throw new Error('Server responded with unexpected data');
+      }
+    },
+    queryKey: [url],
+    enabled: !!url,
   });
 }

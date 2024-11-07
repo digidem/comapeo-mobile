@@ -1,10 +1,11 @@
 import {ImageStyle, StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {Observation, ObservationValue} from '@comapeo/schema';
 import type {RoleId, RoleIdForNewInvite} from '@comapeo/core/dist/roles';
+import {MemberInfo} from '@comapeo/core/dist/member-api';
 
 export type DeviceConnectionStatus = 'connected' | 'disconnected';
 
-export type DeviceType = 'mobile' | 'desktop';
+export type DeviceType = MemberInfo['deviceType'];
 
 export type DeviceRole = RoleId;
 

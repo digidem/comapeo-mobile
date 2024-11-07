@@ -152,7 +152,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
           name={coordinator.name || ''}
           deviceId={coordinator.deviceId}
           dateAdded={coordinator.joinedAt}
-          deviceType="mobile"
+          deviceType={coordinator.deviceType}
           thisDevice={deviceInfo.data?.deviceId === coordinator.deviceId}
         />
       ))}
@@ -172,7 +172,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
           style={{marginTop: 10}}
           name={participant.name || ''}
           deviceId={participant.deviceId}
-          deviceType="mobile"
+          deviceType={participant.deviceType}
           dateAdded={participant.joinedAt}
           thisDevice={deviceInfo.data?.deviceId === participant.deviceId}
         />

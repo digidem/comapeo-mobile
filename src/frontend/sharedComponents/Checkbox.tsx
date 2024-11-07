@@ -21,17 +21,19 @@ export const Checkbox = ({
   error,
   hitSlop,
 }: CheckboxProps) => {
-  if (error) {
-    return <CheckBoxError />;
-  }
-
   return (
     <TouchableOpacity
       hitSlop={hitSlop}
       testID={testID}
       disabled={disabled}
       onPress={onPress}>
-      {value ? <CheckBoxSelected /> : <CheckBoxUnSelected />}
+      {value ? (
+        <CheckBoxSelected />
+      ) : error ? (
+        <CheckBoxError />
+      ) : (
+        <CheckBoxUnSelected />
+      )}
     </TouchableOpacity>
   );
 };

@@ -9,6 +9,7 @@ describe('Onboarding - Create Device Name', () => {
   it('should allow input of device name and show success message', async () => {
     await element(by.id('ONBOARDING.device-name-inp')).tap();
     await element(by.id('ONBOARDING.device-name-inp')).typeText('Test Device');
+    await element(by.id('ONBOARDING.device-name-inp')).tapReturnKey();
     await element(by.id('ONBOARDING.add-name-btn')).tap();
     await expect(element(by.text('Success!'))).toBeVisible();
     await expect(element(by.text('Test Device'))).toBeVisible();

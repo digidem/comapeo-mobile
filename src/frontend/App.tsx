@@ -72,18 +72,20 @@ TaskManager.defineTask(
   },
 );
 
-const isE2e = !!process.env.EXPO_PUBLIC_IS_E2E;
-
 const App = () => {
+  const isE2e = !!process.env.EXPO_PUBLIC_IS_E2E;
   const [permissionsAsked, setPermissionsAsked] = React.useState(isE2e);
   React.useEffect(() => {
-    if (isE2e) return;
+    if (isE2e) {
+      setPermissionsAsked(true);
+      return;
+    }
     PermissionsAndroid.requestMultiple([
       'android.permission.CAMERA',
       'android.permission.ACCESS_FINE_LOCATION',
       'android.permission.ACCESS_COARSE_LOCATION',
     ]).then(() => setPermissionsAsked(true));
-  }, []);
+  }, [isE2e]);
 
   useOnBackgroundedAndForegrounded(mapeoApi);
 

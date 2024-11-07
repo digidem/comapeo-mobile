@@ -61,5 +61,5 @@ const fontSizeMap: {[key in Variant]: number} = {
   header3: 20,
   header4: 18,
   header5: 16,
-  header6: 24,
+  header6: 14,
 };

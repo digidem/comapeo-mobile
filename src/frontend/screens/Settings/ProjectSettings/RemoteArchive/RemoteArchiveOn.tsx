@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {BackHandler, StyleSheet, View} from 'react-native';
-import {Text} from '../../../../sharedComponents/Text';
 import {FormattedDate, defineMessages, useIntl} from 'react-intl';
 import {
   useGetOwnRole,
@@ -13,6 +12,8 @@ import {LIGHT_GREY, MEDIUM_GREY} from '../../../../lib/styles';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useFocusEffect} from '@react-navigation/native';
 import {CustomHeaderLeft} from '../../../../sharedComponents/CustomHeaderLeft';
+import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../../../sharedComponents/Text/BodyText';
 // import {TouchableOpacity} from 'react-native';
 
 const m = defineMessages({
@@ -27,7 +28,7 @@ const m = defineMessages({
   syncWithInternet: {
     id: 'ProjectSettings.RemoteArchive.syncWithInternet',
     defaultMessage:
-      'Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data',
+      'Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data.',
   },
   remove: {
     id: 'ProjectSettings.RemoteArchive.remove',
@@ -122,41 +123,53 @@ export const RemoteArchiveOn: NativeNavigationComponent<'RemoteArchiveOn'> = ({
     <ScrollView
       style={styles.container}
       contentContainerStyle={{paddingBottom: 60}}>
-      <Text style={styles.title}>{formatMessage(m.remoteArchiveOn)}</Text>
-      <Text style={{marginTop: 20}}>{formatMessage(m.syncWithInternet)}</Text>
+      <HeaderText variant="header2" style={styles.title}>
+        {formatMessage(m.remoteArchiveOn)}
+      </HeaderText>
+      <BodyText style={{marginTop: 20}}>
+        {formatMessage(m.syncWithInternet)}
+      </BodyText>
 
       {isCoordinator ? (
         <>
           {/* <Text>{formatMessage(m.remove)}</Text> */}
-          <Text style={{marginTop: 20, fontWeight: 'bold'}}>
+          <BodyText variant="smallMeta" style={{marginTop: 20}}>
             {formatMessage(m.thisIncludes)}
-          </Text>
-          <Text>{formatMessage(m.observations)}</Text>
-          <Text>{formatMessage(m.tracks)}</Text>
-          <Text>{formatMessage(m.deviceNames)}</Text>
-          <Text>{formatMessage(m.projectSettings)}</Text>
+          </BodyText>
+          <BodyText variant="smallMeta">
+            {formatMessage(m.observations)}
+          </BodyText>
+          <BodyText variant="smallMeta">{formatMessage(m.tracks)}</BodyText>
+          <BodyText variant="smallMeta">
+            {formatMessage(m.deviceNames)}
+          </BodyText>
+          <BodyText variant="smallMeta">
+            {formatMessage(m.projectSettings)}
+          </BodyText>
         </>
       ) : (
-        <Text>{formatMessage(m.coordinatorCanTurnOff)}</Text>
+        <BodyText>{formatMessage(m.coordinatorCanTurnOff)}</BodyText>
       )}
 
       {currentRemoteArchive && (
         <>
           <View style={styles.nameDate}>
-            <Text style={styles.smallGrayText}>
+            <BodyText variant="smallMeta" style={styles.smallGrayText}>
               {formatMessage(m.serverName)}
-            </Text>
-            <Text style={styles.smallGrayText}>
+            </BodyText>
+            <BodyText variant="smallMeta" style={styles.smallGrayText}>
               {formatMessage(m.dateAdded)}
-            </Text>
+            </BodyText>
           </View>
           <View style={styles.card}>
             <View style={{alignSelf: 'flex-start', maxWidth: '70%'}}>
-              <Text style={{fontSize: 14}}>{currentRemoteArchive.name}</Text>
+              <HeaderText variant="header6">
+                {currentRemoteArchive.name}
+              </HeaderText>
               {currentRemoteArchive.selfHostedServerDetails && (
-                <Text style={{fontSize: 14}}>
+                <BodyText variant="smallMeta">
                   {currentRemoteArchive.selfHostedServerDetails.baseUrl}
-                </Text>
+                </BodyText>
               )}
               {/* {isCoordinator && (
                 <TouchableOpacity>
@@ -166,13 +179,13 @@ export const RemoteArchiveOn: NativeNavigationComponent<'RemoteArchiveOn'> = ({
                 </TouchableOpacity>
               )} */}
             </View>
-            <Text
+            <BodyText
+              variant="tinyMeta"
               style={{
                 flex: 1,
                 alignSelf: 'flex-start',
                 textAlign: 'right',
                 justifyContent: 'center',
-                fontSize: 14,
                 color: MEDIUM_GREY,
               }}>
               <FormattedDate
@@ -181,7 +194,7 @@ export const RemoteArchiveOn: NativeNavigationComponent<'RemoteArchiveOn'> = ({
                 month="short"
                 day="2-digit"
               />
-            </Text>
+            </BodyText>
           </View>
         </>
       )}
@@ -198,7 +211,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 32,
     textAlign: 'center',
   },
   nameDate: {
@@ -206,7 +218,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
     justifyContent: 'space-between',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   smallGrayText: {
     fontSize: 12,

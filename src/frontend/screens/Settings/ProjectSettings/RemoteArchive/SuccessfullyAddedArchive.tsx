@@ -1,12 +1,13 @@
 import * as React from 'react';
 import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
 import {defineMessages, useIntl} from 'react-intl';
-import {Text} from '../../../../sharedComponents/Text';
 import {ScreenContentWithDock} from '../../../../sharedComponents/ScreenContentWithDock';
 import {Button} from '../../../../sharedComponents/Button';
 import GreenCheck from '../../../../images/GreenCheck.svg';
 import {StyleSheet, View} from 'react-native';
 import {MEDIUM_GREY} from '../../../../lib/styles';
+import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   archiveAdded: {
@@ -45,15 +46,19 @@ export const SuccessfullyAddedArchive = ({
       contentContainerStyle={{marginTop: 80}}>
       <View style={{alignItems: 'center'}}>
         <GreenCheck />
-        <Text style={[styles.centerText, {fontSize: 32}]}>
+        <HeaderText variant="header2" style={styles.centerText}>
           {formatMessage(m.archiveAdded)}
-        </Text>
-        <Text style={styles.centerText}>
+        </HeaderText>
+        <BodyText style={styles.centerText}>
           {formatMessage(m.canSyncOnInternet)}
-        </Text>
+        </BodyText>
       </View>
-      <Text style={{marginTop: 40}}>{archiveName}</Text>
-      <Text style={{color: MEDIUM_GREY}}>{url}</Text>
+      <HeaderText variant="header5" style={{marginTop: 40}}>
+        {archiveName}
+      </HeaderText>
+      <BodyText variant="smallMeta" style={{color: MEDIUM_GREY}}>
+        {url}
+      </BodyText>
     </ScreenContentWithDock>
   );
 };

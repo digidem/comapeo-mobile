@@ -1,7 +1,6 @@
 import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Text} from '../../../../sharedComponents/Text';
 import {defineMessages, useIntl} from 'react-intl';
 import {Button} from '../../../../sharedComponents/Button';
 import {MEDIUM_GREY} from '../../../../lib/styles';
@@ -9,6 +8,8 @@ import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
 import {useGetOwnRole} from '../../../../hooks/server/projects';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../../../sharedTypes';
+import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   navTitle: {
@@ -50,12 +51,18 @@ export const RemoteArchiveOff: NativeNavigationComponent<
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{formatMessage(m.remoteArchiveOff)} </Text>
-      <Text style={{marginTop: 20}}>{formatMessage(m.dataNotShared)}</Text>
-      <Text style={{marginTop: 20}}>
+      <HeaderText variant="header2" style={styles.title}>
+        {formatMessage(m.remoteArchiveOff)}{' '}
+      </HeaderText>
+      <BodyText style={{marginTop: 20}}>
+        {formatMessage(m.dataNotShared)}
+      </BodyText>
+      <BodyText style={{marginTop: 20}}>
         {formatMessage(m.experimentalFeature)}
-      </Text>
-      <Text style={styles.subtext}>{formatMessage(m.noServers)}</Text>
+      </BodyText>
+      <BodyText variant="smallMeta" style={styles.subtext}>
+        {formatMessage(m.noServers)}
+      </BodyText>
       {roleIsPending ? (
         <UIActivityIndicator />
       ) : isCoordinator ? (
@@ -78,13 +85,11 @@ const styles = StyleSheet.create({
     paddingTop: 40,
   },
   title: {
-    fontSize: 32,
     textAlign: 'center',
   },
   subtext: {
     color: MEDIUM_GREY,
     textAlign: 'center',
-    fontSize: 12,
     marginTop: 20,
   },
 });

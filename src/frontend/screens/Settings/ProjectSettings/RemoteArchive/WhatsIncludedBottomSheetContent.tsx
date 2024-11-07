@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {BottomSheetModalContent} from '../../../../sharedComponents/BottomSheetModal';
 import {defineMessages, useIntl} from 'react-intl';
-import {Text} from '../../../../sharedComponents/Text';
 import {QuestionMarkWithShadow} from '../../../../sharedComponents/icons/QuestionMarkWithShadow';
+import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 
 const m = defineMessages({
   title: {
@@ -39,7 +39,9 @@ export const WhatsIncludedBottomSheetContent = ({
   const {formatMessage} = useIntl();
   return (
     <BottomSheetModalContent
-      title={<Text style={{fontSize: 24}}>{formatMessage(m.title)}</Text>}
+      title={
+        <HeaderText variant="header2">{formatMessage(m.title)}</HeaderText>
+      }
       descriptionStyle={{marginBottom: 30, textAlign: 'left'}}
       description={
         `\u2022 ` +

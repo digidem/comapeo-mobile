@@ -2,8 +2,13 @@ import * as React from 'react';
 import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Text} from '../../../../sharedComponents/Text';
-import {COMAPEO_BLUE, DARK_GREY, LIGHT_GREY, RED} from '../../../../lib/styles';
+import {
+  COMAPEO_BLUE,
+  DARK_GREY,
+  BLUE_GREY,
+  RED,
+  VERY_LIGHT_GREY,
+} from '../../../../lib/styles';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
 import {Control, FieldErrors, useForm} from 'react-hook-form';
 import {SaveButton} from '../../../../sharedComponents/SaveButton';
@@ -23,6 +28,8 @@ import {
   useBottomSheetModal,
 } from '../../../../sharedComponents/BottomSheetModal';
 import {WhatsIncludedBottomSheetContent} from './WhatsIncludedBottomSheetContent';
+import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   navTitle: {
@@ -139,8 +146,10 @@ const SearchUrl = ({control, errors}: SearchUrlProp) => {
   return (
     <View style={styles.container}>
       <View style={{flexDirection: 'row', marginBottom: 10}}>
-        <Text>{formatMessage(m.url)}</Text>
-        <Text style={{color: RED}}>*</Text>
+        <HeaderText variant="header5">{formatMessage(m.url)}</HeaderText>
+        <HeaderText variant="header5" style={{color: RED}}>
+          *
+        </HeaderText>
       </View>
       <HookFormTextInput
         control={control}
@@ -148,9 +157,9 @@ const SearchUrl = ({control, errors}: SearchUrlProp) => {
         rules={{required: true, minLength: 1}}
       />
       {(errors.url || errors.root) && (
-        <Text style={{color: RED, marginTop: 10}}>
+        <HeaderText variant="header6" style={{color: RED, marginTop: 10}}>
           {formatMessage(m.invalidUrl)}
-        </Text>
+        </HeaderText>
       )}
     </View>
   );
@@ -166,7 +175,7 @@ const FindingRemoteArchive = () => {
 
   return (
     <View style={[styles.container, {marginTop: 80}]}>
-      <Text style={styles.title}>{formatMessage(m.looking)}</Text>
+      <HeaderText style={styles.title}>{formatMessage(m.looking)}</HeaderText>
       <Bar
         style={{borderWidth: 0, marginTop: 30}}
         indeterminate
@@ -231,20 +240,26 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
               }>{`+ ${formatMessage(m.navTitle)}`}</Button>
           )
         }>
-        <Text style={[styles.title, {fontSize: 24}]}>
+        <HeaderText variant="header4" style={styles.title}>
           {formatMessage(m.youAreAdding)}
-        </Text>
+        </HeaderText>
         <View style={{alignSelf: 'center', marginBottom: 20}}>
-          <Text>{name}</Text>
-          <Text>{url}</Text>
+          <HeaderText variant="header5">{name}</HeaderText>
+          <BodyText variant="smallMeta">{url}</BodyText>
         </View>
         <View style={styles.greyBox}>
-          <Text>{formatMessage(m.archiveInfo)}</Text>
-          <Text>{formatMessage(m.permission)}</Text>
+          <BodyText variant="smallMeta">
+            {formatMessage(m.archiveInfo)}
+          </BodyText>
+          <BodyText style={{marginTop: 5}} variant="smallMeta">
+            {formatMessage(m.permission)}
+          </BodyText>
           <TouchableOpacity onPress={openSheet}>
-            <Text style={{color: COMAPEO_BLUE}}>
+            <HeaderText
+              variant="header5"
+              style={{color: COMAPEO_BLUE, marginTop: 10}}>
               {formatMessage(m.whatsIncluded)}
-            </Text>
+            </HeaderText>
           </TouchableOpacity>
         </View>
       </ScreenContentWithDock>
@@ -265,13 +280,12 @@ const styles = StyleSheet.create({
   },
   title: {
     marginBottom: 20,
-    fontSize: 32,
     textAlign: 'center',
   },
   greyBox: {
-    backgroundColor: LIGHT_GREY,
+    backgroundColor: VERY_LIGHT_GREY,
     padding: 20,
-    borderColor: DARK_GREY,
+    borderColor: BLUE_GREY,
     borderWidth: 1,
     borderRadius: 10,
   },

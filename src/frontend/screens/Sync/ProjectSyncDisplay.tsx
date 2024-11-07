@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import {useQueryClient} from '@tanstack/react-query';
 import {defineMessages, useIntl} from 'react-intl';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 import {Bar as ProgressBar} from 'react-native-progress';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
@@ -35,7 +35,8 @@ import {
   WifiIcon,
 } from '../../sharedComponents/icons';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
-import {Text} from '../../sharedComponents/Text';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   devicesFound: {
@@ -102,7 +103,7 @@ const m = defineMessages({
     defaultMessage: "You're all caught up!",
   },
 });
-
+// This component has headers that vary from the design system by request of sabella. The headers are manually set to rubik 400 at size 32
 export const ProjectSyncDisplay = ({
   syncState,
   projectName,
@@ -184,7 +185,9 @@ export const ProjectSyncDisplay = ({
           }}>
           <View style={styles.buttonContentContainer}>
             <SyncIcon size={20} />
-            <Text style={styles.buttonTextPrimary}>{t(m.startSync)}</Text>
+            <HeaderText variant="header5" style={styles.buttonTextPrimary}>
+              {t(m.startSync)}
+            </HeaderText>
           </View>
         </Button>
       );
@@ -209,7 +212,7 @@ export const ProjectSyncDisplay = ({
           }}>
           <View style={styles.buttonContentContainer}>
             <StopIcon size={20} color={BLACK} />
-            <Text style={styles.buttonTextSecondary}>{t(m.stop)}</Text>
+            <HeaderText variant="header5">{t(m.stop)}</HeaderText>
           </View>
         </Button>
       );
@@ -234,7 +237,7 @@ export const ProjectSyncDisplay = ({
           }}>
           <View style={styles.buttonContentContainer}>
             <StopIcon size={20} color={BLACK} />
-            <Text style={styles.buttonTextSecondary}>{t(m.stop)}</Text>
+            <HeaderText variant="header5">{t(m.stop)}</HeaderText>
           </View>
         </Button>
       );
@@ -263,7 +266,7 @@ export const ProjectSyncDisplay = ({
           }}>
           <View style={styles.buttonContentContainer}>
             <StopIcon size={20} color={BLACK} />
-            <Text style={styles.buttonTextSecondary}>{t(m.stop)}</Text>
+            <HeaderText variant="header5">{t(m.stop)}</HeaderText>
           </View>
         </Button>
       );
@@ -290,12 +293,12 @@ export const ProjectSyncDisplay = ({
           }}>
           <View style={styles.buttonContentContainer}>
             <StopIcon size={20} color={BLACK} />
-            <Text style={styles.buttonTextSecondary}>{t(m.stop)}</Text>
+            <HeaderText variant="header5">{t(m.stop)}</HeaderText>
           </View>
         </Button>
       ) : (
         <Button variant="text" disabled onPress={() => {}}>
-          <Text style={styles.buttonTextSecondary}>{t(m.allCaughtUp)}</Text>
+          <HeaderText variant="header5">{t(m.allCaughtUp)}</HeaderText>
         </Button>
       );
 
@@ -303,7 +306,9 @@ export const ProjectSyncDisplay = ({
         <>
           <View>
             <Text style={styles.titleText}>{t(m.syncingFullyComplete)}</Text>
-            <Text style={styles.subtitleText}>{t(m.allDataSynced)}</Text>
+            <HeaderText variant="header2" style={styles.subtitleText}>
+              {t(m.allDataSynced)}
+            </HeaderText>
           </View>
           <SyncProgress stage={syncStage} />
         </>
@@ -326,11 +331,11 @@ export const ProjectSyncDisplay = ({
       <View style={styles.projectInfoContainer}>
         <ObservationsProjectImage />
         {projectName && (
-          <Text style={styles.projectNameText}>{projectName}</Text>
+          <HeaderText variant="header2">{projectName}</HeaderText>
         )}
         <View style={styles.connectedDevicesInfoContainer}>
           <WifiIcon color={DARK_GREY} size={20} />
-          <Text>{t(m.devicesFound)}</Text>
+          <BodyText>{t(m.devicesFound)}</BodyText>
         </View>
       </View>
       {syncInfoContent}
@@ -383,13 +388,14 @@ function SyncProgress({
         ) : (
           <SyncIcon color={COMAPEO_BLUE} size={20} />
         )}
-        <Text
-          style={[
-            styles.syncProgressLabel,
-            stage.name === 'complete-full' && {color: DARK_GREEN},
-          ]}>
+        <HeaderText
+          variant="header3"
+          style={{
+            ...styles.syncProgressLabel,
+            ...(stage.name === 'complete-full' && {color: DARK_GREEN}),
+          }}>
           {progressLabel}
-        </Text>
+        </HeaderText>
       </View>
       <ProgressBar
         {...(stage.name === 'waiting'
@@ -404,11 +410,11 @@ function SyncProgress({
       />
 
       {stage.name !== 'waiting' && (
-        <Text style={styles.syncProgressText}>
+        <BodyText style={styles.syncProgressText}>
           {t(m.progressSyncPercentage, {
             value: Math.round(stage.progress * 100),
           })}
-        </Text>
+        </BodyText>
       )}
     </View>
   );
@@ -427,16 +433,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 8,
   },
-  projectNameText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
   titleText: {
-    fontSize: 40,
+    fontSize: 32,
     textAlign: 'center',
+    fontFamily: 'Rubik_400Regular',
   },
   subtitleText: {
-    fontSize: 24,
     textAlign: 'center',
   },
   buttonContentContainer: {
@@ -445,13 +447,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   buttonTextPrimary: {
-    fontWeight: 'bold',
-    fontSize: 20,
     color: WHITE,
-  },
-  buttonTextSecondary: {
-    fontWeight: 'bold',
-    fontSize: 20,
   },
   syncProgressContainer: {
     gap: 12,
@@ -462,7 +458,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   syncProgressLabel: {
-    fontSize: 20,
     color: COMAPEO_BLUE,
   },
   syncProgressText: {

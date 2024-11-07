@@ -103,6 +103,7 @@ export const NavigatorScreenOptions: NativeStackNavigationOptions = {
   presentation: 'card',
   contentStyle: {backgroundColor: WHITE},
   headerStyle: {backgroundColor: WHITE},
+  headerTitleStyle: {fontFamily: 'Rubik_500Medium'},
   headerLeft: props => <CustomHeaderLeft headerBackButtonProps={props} />,
   // This only hides the DEFAULT back button. We render a custom one in headerLeft, so the default one should always be hidden.
   // This **might** cause a problem for IOS

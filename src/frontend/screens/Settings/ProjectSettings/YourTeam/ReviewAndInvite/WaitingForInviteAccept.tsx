@@ -1,11 +1,12 @@
 import {BackHandler, StyleSheet, View} from 'react-native';
 import InviteSent from '../../../../../images/InviteSent.svg';
-import {Text} from '../../../../../sharedComponents/Text';
 import {defineMessages, useIntl} from 'react-intl';
 import React from 'react';
 import {TextButton} from '../../../../../sharedComponents/TextButton';
 import {useFocusEffect} from '@react-navigation/native';
 import {useNavigationFromRoot} from '../../../../../hooks/useNavigationWithTypes';
+import {HeaderText} from '../../../../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../../../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   waitingMessage: {
@@ -55,8 +56,12 @@ export const WaitingForInviteAccept = ({
   return (
     <View style={styles.container}>
       <InviteSent />
-      <Text style={{marginTop: 10}}>{t(m.waitingMessage)}</Text>
-      <Text style={{marginTop: 20}}>{t(m.timerMessage, {seconds: time})}</Text>
+      <HeaderText style={{marginTop: 10, textAlign: 'center'}}>
+        {t(m.waitingMessage)}
+      </HeaderText>
+      <BodyText style={{marginTop: 20}}>
+        {t(m.timerMessage, {seconds: time})}
+      </BodyText>
       <TextButton title={t(m.cancelInvite)} onPress={cancelInvite} />
     </View>
   );

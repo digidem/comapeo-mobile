@@ -8,7 +8,7 @@ import {
 } from '../../sharedComponents/icons';
 
 import {View, StyleSheet} from 'react-native';
-import {ObservationMapLayer} from './ObservationMapLayer';
+import {ObservationMapLayer} from './MapLayers/ObservationMapLayer.tsx';
 import {AddButton} from '../../sharedComponents/AddButton';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
@@ -21,7 +21,7 @@ import {CurrentTrackMapLayer} from './CurrentTrack/CurrrentTrackMapLayer';
 import {UserLocation} from './UserLocation';
 import {useSharedLocationContext} from '../../contexts/SharedLocationContext';
 import {useMapStyleJsonUrl} from '../../hooks/server/maps.ts';
-import {TracksMapLayer} from './TracksMapLayer';
+import {TracksMapLayer} from './MapLayers/TracksMapLayer.tsx';
 import {assert} from '../../lib/assert.ts';
 
 // This is the default zoom used when the map first loads, and also the zoom

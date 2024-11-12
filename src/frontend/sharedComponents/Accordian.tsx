@@ -8,13 +8,19 @@ import Animated, {
 } from 'react-native-reanimated';
 import Chevrondown from '../images/chevrondown.svg';
 import ChevrondownDefault from '../images/chevrondown-expanded.svg';
+import {ViewStyleProp} from '../sharedTypes';
 
 interface AccordianProps {
   title: React.ReactNode;
   innerAccordianDetails: React.ReactNode;
+  style?: ViewStyleProp;
 }
 
-export function Accordian({title, innerAccordianDetails}: AccordianProps) {
+export function Accordian({
+  title,
+  innerAccordianDetails,
+  style,
+}: AccordianProps) {
   const [expanded, setExpanded] = useState(false);
   const Icon = expanded ? Chevrondown : ChevrondownDefault;
 
@@ -25,7 +31,7 @@ export function Accordian({title, innerAccordianDetails}: AccordianProps) {
         onPress={() => {
           setExpanded(prev => !prev);
         }}
-        style={[styles.wrapper, styles.elementWrapper]}>
+        style={[styles.wrapper, styles.elementWrapper, style]}>
         <View style={styles.wrapper}>{title}</View>
         <Icon />
       </Pressable>
@@ -43,7 +49,5 @@ const styles = StyleSheet.create({
   },
   elementWrapper: {
     justifyContent: 'space-between',
-    paddingVertical: 10,
-    paddingHorizontal: 15,
   },
 });

@@ -1562,8 +1562,11 @@
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
     "message": "Waiting for devices"
   },
-  "screens.Track.ObservationList.observations": {
+  "screens.Track.ObservationList.observation": {
     "message": "Observation"
+  },
+  "screens.Track.ObservationList.observations": {
+    "message": "Observations"
   },
   "screens.Track.deleteTitle": {
     "description": "Title of dialog asking confirmation to delete a track",

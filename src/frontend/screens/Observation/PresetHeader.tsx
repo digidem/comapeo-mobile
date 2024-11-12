@@ -4,10 +4,17 @@ import {BLACK} from '../../lib/styles';
 import {FormattedPresetName} from '../../sharedComponents/FormattedData';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {Preset} from '@comapeo/schema';
+import {ViewStyleProp} from '../../sharedTypes';
 
-export const PresetHeader = ({preset}: {preset?: Preset}) => {
+export const PresetHeader = ({
+  preset,
+  style,
+}: {
+  preset?: Preset;
+  style: ViewStyleProp;
+}) => {
   return (
-    <View style={styles.categoryIconContainer}>
+    <View style={[styles.categoryIconContainer, style]}>
       <PresetCircleIcon
         size="medium"
         iconId={preset?.iconRef?.docId}

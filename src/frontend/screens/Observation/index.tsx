@@ -2,11 +2,11 @@ import * as React from 'react';
 
 import {Text, View, ScrollView, StyleSheet} from 'react-native';
 import {defineMessages} from 'react-intl';
-import {BLACK, WHITE, DARK_GREY, LIGHT_GREY} from '../../lib/styles';
+import {BLACK, WHITE, DARK_GREY, LIGHT_GREY, BLUE_GREY} from '../../lib/styles';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 import {FormattedObservationDate} from '../../sharedComponents/FormattedData';
-import {Field} from '@comapeo/schema';
+import {Field, Track} from '@comapeo/schema';
 import {PresetHeader} from './PresetHeader';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
 import {useFieldsQuery} from '../../hooks/server/fields';
@@ -22,6 +22,10 @@ import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types.ts';
 import {ButtonFields} from './Buttons.tsx';
 import {AudioAttachment} from '../../sharedTypes/audio.ts';
 import {isSavedPhoto, isAudioAttachment} from '../../lib/attachmentTypeChecks';
+import {TrackList} from './TrackList.tsx';
+import {useTracks} from '../../hooks/server/track.ts';
+import {Loading} from '../../sharedComponents/Loading.tsx';
+import {Divider} from '../../sharedComponents/Divider.tsx';
 
 const m = defineMessages({
   deleteTitle: {
@@ -53,6 +57,20 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
 
   const {observation, preset} = useObservationWithPreset(observationId);
   const {data: fieldData} = useFieldsQuery();
+  const [track, setTrack] = React.useState<undefined | 'loading' | Track>(
+    'loading',
+  );
+  const tracksQuery = useTracks();
+
+  React.useEffect(() => {
+    if (track !== 'loading') return;
+    if (tracksQuery.data) {
+      const associatedTrack = tracksQuery.data.find(trackData =>
+        trackData.observationRefs.some(ref => ref.docId === observationId),
+      );
+      setTrack(associatedTrack);
+    }
+  }, [track, tracksQuery.data, observationId]);
 
   const defaultAcc: Field[] = [];
   const fields =
@@ -96,33 +114,45 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
             />
           </Text>
         </View>
-        <View style={[styles.section, {flex: 1}]}>
-          <PresetHeader preset={preset} />
-
-          {typeof observation.tags.notes === 'string' ? (
-            <View style={{paddingTop: 15}}>
-              <Text style={styles.textNotes}>{observation.tags.notes}</Text>
-            </View>
-          ) : null}
-          {attachments.length > 0 && (
-            <MediaScrollView
-              attachments={attachments}
-              observationId={observationId}
-            />
-          )}
-        </View>
-        {fields.length > 0 && (
-          <FieldDetails observation={observation} fields={fields} />
-        )}
-        <View style={styles.divider} />
-        {isDeviceInfoPending || isDeviceIdPending ? (
-          <UIActivityIndicator size={20} />
+        {track === 'loading' ? (
+          <Loading />
         ) : (
-          <ButtonFields
-            isMine={isMine}
-            observationId={observationId}
-            fields={fields}
-          />
+          <>
+            <View style={[styles.section, {flex: 1}]}>
+              <PresetHeader preset={preset} style={{paddingHorizontal: 20}} />
+              {track && (
+                <View style={{marginTop: 20}}>
+                  <Divider />
+                  <TrackList track={track} />
+                  <Divider />
+                </View>
+              )}
+              {typeof observation.tags.notes === 'string' ? (
+                <View style={{paddingTop: 15}}>
+                  <Text style={styles.textNotes}>{observation.tags.notes}</Text>
+                </View>
+              ) : null}
+              {attachments.length > 0 && (
+                <MediaScrollView
+                  attachments={attachments}
+                  observationId={observationId}
+                />
+              )}
+            </View>
+            {fields.length > 0 && (
+              <FieldDetails observation={observation} fields={fields} />
+            )}
+            <View style={styles.divider} />
+            {isDeviceInfoPending || isDeviceIdPending ? (
+              <UIActivityIndicator size={20} />
+            ) : (
+              <ButtonFields
+                isMine={isMine}
+                observationId={observationId}
+                fields={fields}
+              />
+            )}
+          </>
         )}
       </>
     </ScrollView>
@@ -139,12 +169,11 @@ const styles = StyleSheet.create({
   },
   scrollContent: {minHeight: '100%'},
   divider: {
-    backgroundColor: LIGHT_GREY,
+    backgroundColor: BLUE_GREY,
     paddingVertical: 15,
   },
   section: {
     flex: 1,
-    marginHorizontal: 15,
     paddingVertical: 15,
   },
   textNotes: {

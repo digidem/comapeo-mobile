@@ -30,6 +30,7 @@ export function ObservationList({observations}: TrackObservation) {
 
   return (
     <Accordian
+      style={{padding: 20}}
       title={
         <>
           <HeaderText variant="header5">{numberOfObservations}</HeaderText>

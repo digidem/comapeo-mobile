@@ -935,6 +935,9 @@
     "description": "Button to share an observation",
     "message": "Share"
   },
+  "screens.Observation.TrackList.track": {
+    "message": "Track"
+  },
   "screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
     "message": "Cancel"

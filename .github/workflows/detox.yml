@@ -79,7 +79,7 @@ jobs:
           # JVM args to match those used by EAS: https://docs.expo.dev/build-reference/infrastructure/#android-build-server-configurations
           # - `Xmx` specifies the maximum memory allocation pool for a Java virtual machine (JVM)
           # - `XX:MaxMetaspaceSize`: the maximum permanent generation size
-
+          _JAVA_OPTIONS: '-Xmx14g -XX:MaxMetaspaceSize=512m -XX:+HeapDumpOnOutOfMemoryError'
       - name: Upload app to BrowserStack
         id: upload
         run: (echo -n "app_url=" && scripts/upload-app.mjs) >> $GITHUB_OUTPUT

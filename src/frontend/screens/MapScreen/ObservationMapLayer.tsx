@@ -1,7 +1,6 @@
 import React from 'react';
 import MapboxGL from '@rnmapbox/maps';
 
-import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import {useObservations} from '../../hooks/server/observations';
 import {usePresetsQuery} from '../../hooks/server/presets';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
@@ -13,7 +12,6 @@ import {
 export const ObservationMapLayer = () => {
   const {data: observations} = useObservations();
   const {navigate} = useNavigationFromHomeTabs();
-  const isTracking = usePersistedTrack(state => state.isTracking);
 
   const {data: presets} = usePresetsQuery();
 
@@ -38,11 +36,7 @@ export const ObservationMapLayer = () => {
       }}
       id="observations-source"
       shape={displayedFeatures}>
-      <MapboxGL.CircleLayer
-        aboveLayerID={isTracking ? 'routeFill' : undefined}
-        id="circles"
-        style={layerStyles}
-      />
+      <MapboxGL.CircleLayer id="circles" style={layerStyles} />
     </MapboxGL.ShapeSource>
   );
 };

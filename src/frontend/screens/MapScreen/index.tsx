@@ -112,9 +112,9 @@ export const MapScreen = () => {
           <UserLocation minDisplacement={MIN_DISPLACEMENT} />
         )}
 
-        {isFinishedLoading && <ObservationMapLayer />}
         {isFinishedLoading && (
           <>
+            <ObservationMapLayer />
             <CurrentTrackMapLayer />
             <TracksMapLayer />
           </>

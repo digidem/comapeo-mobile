@@ -94,6 +94,10 @@ export type RootStackParamsList = {
   DataAndPrivacy: undefined;
   SettingsPrivacyPolicy: undefined;
   HowToLeaveProject: undefined;
+  RemoteArchiveOff: undefined;
+  AddRemoteArchive: undefined;
+  SuccessfullyAddedArchive: {archiveName: string; url: string};
+  RemoteArchiveOn: undefined;
   Audio: {isEditing: boolean; uri?: string; isSavedUri?: boolean};
   MapManagement: undefined;
   BackgroundMaps: undefined;

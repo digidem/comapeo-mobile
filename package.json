@@ -33,6 +33,7 @@
     "@bam.tech/react-native-image-resizer": "^3.0.7",
     "@comapeo/ipc": "2.0.2",
     "@dev-plugins/react-navigation": "^0.0.6",
+    "@expo-google-fonts/rubik": "^0.2.3",
     "@formatjs/intl-getcanonicallocales": "^2.3.0",
     "@formatjs/intl-locale": "^3.3.2",
     "@formatjs/intl-pluralrules": "^5.2.4",

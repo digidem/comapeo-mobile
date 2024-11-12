@@ -8,7 +8,7 @@ const APP_ID_SUFFIX =
     development: '.dev',
     production: '',
     releaseCandidate: '.rc',
-    preRelease: '.pre',
+    preRelease: '.test',
   }[APP_VARIANT] ?? '.dev';
 
 /** @type {string} */

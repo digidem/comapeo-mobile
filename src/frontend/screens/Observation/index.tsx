@@ -128,7 +128,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
                 </View>
               )}
               {typeof observation.tags.notes === 'string' ? (
-                <View style={{paddingTop: 15}}>
+                <View style={{padding: 20}}>
                   <Text style={styles.textNotes}>{observation.tags.notes}</Text>
                 </View>
               ) : null}
@@ -140,7 +140,14 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
               )}
             </View>
             {fields.length > 0 && (
-              <FieldDetails observation={observation} fields={fields} />
+              <>
+                <Divider />
+                <FieldDetails
+                  style={{paddingHorizontal: 20}}
+                  observation={observation}
+                  fields={fields}
+                />
+              </>
             )}
             <View style={styles.divider} />
             {isDeviceInfoPending || isDeviceIdPending ? (
@@ -180,7 +187,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: DARK_GREY,
     fontWeight: '100',
-    marginLeft: 10,
   },
   time: {
     color: BLACK,

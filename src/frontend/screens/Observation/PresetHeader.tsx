@@ -11,7 +11,7 @@ export const PresetHeader = ({
   style,
 }: {
   preset?: Preset;
-  style: ViewStyleProp;
+  style?: ViewStyleProp;
 }) => {
   return (
     <View style={[styles.categoryIconContainer, style]}>

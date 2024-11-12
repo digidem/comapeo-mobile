@@ -6,8 +6,8 @@ import Animated, {
   FadeOutUp,
   LinearTransition,
 } from 'react-native-reanimated';
-import Chevrondown from '../../images/chevrondown.svg';
-import ChevrondownDefault from '../../images/chevrondown-expanded.svg';
+import Chevrondown from '../images/chevrondown.svg';
+import ChevrondownDefault from '../images/chevrondown-expanded.svg';
 
 interface AccordianProps {
   title: React.ReactNode;

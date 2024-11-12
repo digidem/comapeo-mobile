@@ -17,20 +17,27 @@ const m = defineMessages({
     id: 'screens.Track.ObservationList.observations',
     defaultMessage: 'Observations',
   },
+  observation: {
+    id: 'screens.Track.ObservationList.observations',
+    defaultMessage: 'Observation',
+  },
 });
 
 export function ObservationList({observations}: TrackObservation) {
   const navigation = useNavigationFromRoot();
   const {formatMessage} = useIntl();
+  const numberOfObservations = observations.length;
 
   return (
     <Accordian
       title={
         <>
-          <HeaderText variant="header5">{observations.length}</HeaderText>
+          <HeaderText variant="header5">{numberOfObservations}</HeaderText>
           <ChainIcon style={{marginRight: 10, marginLeft: 2}} />
           <HeaderText variant="header5">
-            {formatMessage(m.observations)}
+            {formatMessage(
+              numberOfObservations === 1 ? m.observation : m.observations,
+            )}
           </HeaderText>
         </>
       }

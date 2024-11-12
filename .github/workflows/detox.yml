@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     outputs:
       app_url: ${{ steps.upload.outputs.app_url }}
@@ -55,6 +55,19 @@ jobs:
       - run: sdkmanager 'cmake;3.22.1' 'cmake;3.18.1'
 
       - run: sdkmanager --list_installed
+
+      - name: Remove unnecessary directories to free up space
+        run: |
+          echo "Disk space before post-build cleanup:"
+          df -h
+          sudo rm -rf /usr/local/.ghcup
+          sudo rm -rf /opt/hostedtoolcache/CodeQL
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/share/boost
+          sudo apt-get clean
+          echo "Disk space after post-build cleanup:"
+          df -h
 
       - name: Build translations
         if: steps.cache-builds.outputs.cache-hit != 'true'

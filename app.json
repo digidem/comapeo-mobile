@@ -46,7 +46,10 @@
       [
         "expo-font",
         {
-          "fonts": ["node_modules/@expo-google-fonts/rubik/Rubik_400Regular.ttf", "node_modules/@expo-google-fonts/rubik/Rubik_500Medium.ttf"]
+          "fonts": [
+            "node_modules/@expo-google-fonts/rubik/Rubik_400Regular.ttf",
+            "node_modules/@expo-google-fonts/rubik/Rubik_500Medium.ttf"
+          ]
         }
       ],
       [
@@ -57,7 +60,6 @@
           }
         }
       ],
-      ["./expo-config-plugins/removeExpoInputStyles.js"],
       [
         "@config-plugins/detox",
         {
@@ -65,7 +67,9 @@
           "subdomains": ["10.0.2.2", "localhost", "127.0.0.1"]
         }
       ],
-      ["./expo-config-plugins/targetArmArchsOnly.js"]
+      ["./expo-config-plugins/removeExpoInputStyles.js"],
+      ["./expo-config-plugins/targetArmArchsOnly.js"],
+      ["./expo-config-plugins/increaseJavaMemory.js"]
     ],
     "android": {
       "allowBackup": false,

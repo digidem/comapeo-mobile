@@ -18,7 +18,7 @@ const m = defineMessages({
     defaultMessage: 'Observations',
   },
   observation: {
-    id: 'screens.Track.ObservationList.observations',
+    id: 'screens.Track.ObservationList.observation',
     defaultMessage: 'Observation',
   },
 });

@@ -1563,7 +1563,7 @@
     "message": "Waiting for devices"
   },
   "screens.Track.ObservationList.observations": {
-    "message": "Observations"
+    "message": "Observation"
   },
   "screens.Track.deleteTitle": {
     "description": "Title of dialog asking confirmation to delete a track",

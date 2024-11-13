@@ -1,10 +1,9 @@
-import React, {FC, useState} from 'react';
-import {Linking, View} from 'react-native';
+import React, {FC, useEffect, useRef} from 'react';
+import {Linking, View, AppState, AppStateStatus} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import AudioPermission from '../../images/observationEdit/AudioPermission.svg';
 import {BottomSheetModalContent} from '../../sharedComponents/BottomSheetModal';
 import {Audio} from 'expo-av';
-import {PermissionResponse} from 'expo-modules-core';
 
 const m = defineMessages({
   title: {
@@ -39,14 +38,42 @@ const m = defineMessages({
 interface PermissionAudioBottomSheetContentProps {
   closeSheet: () => void;
   setShouldNavigateToAudioTrue: () => void;
+  permissionStatus: Audio.PermissionStatus | null;
+  isOpen: boolean;
 }
 
 export const PermissionAudioBottomSheetContent: FC<
   PermissionAudioBottomSheetContentProps
-> = ({closeSheet, setShouldNavigateToAudioTrue}) => {
+> = ({closeSheet, setShouldNavigateToAudioTrue, permissionStatus, isOpen}) => {
   const {formatMessage: t} = useIntl();
-  const [permissionResponse, setPermissionResponse] =
-    useState<PermissionResponse | null>(null);
+  const appState = useRef(AppState.currentState);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleAppStateChange = async (nextAppState: AppStateStatus) => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active'
+      ) {
+        const {status} = await Audio.getPermissionsAsync();
+        if (status === 'granted') {
+          closeSheet();
+          setShouldNavigateToAudioTrue();
+        }
+      }
+      appState.current = nextAppState;
+    };
+
+    const subscription = AppState.addEventListener(
+      'change',
+      handleAppStateChange,
+    );
+
+    return () => {
+      subscription.remove();
+    };
+  }, [isOpen, closeSheet, setShouldNavigateToAudioTrue]);
 
   const handleOpenSettings = () => {
     Linking.openSettings();
@@ -55,7 +82,6 @@ export const PermissionAudioBottomSheetContent: FC<
   const handleRequestPermission = async () => {
     const response = await Audio.requestPermissionsAsync();
     closeSheet();
-    setPermissionResponse(response);
     if (response.status === 'granted') {
       setShouldNavigateToAudioTrue();
     } else if (response.status === 'denied' && !response.canAskAgain) {
@@ -63,16 +89,18 @@ export const PermissionAudioBottomSheetContent: FC<
     }
   };
 
-  const onPressActionButton = !permissionResponse
-    ? handleRequestPermission
-    : permissionResponse.status === 'denied'
-      ? handleOpenSettings
-      : handleRequestPermission;
-  const actionButtonText = !permissionResponse
-    ? t(m.allowButtonText)
-    : permissionResponse.status === 'denied'
-      ? t(m.goToSettingsButtonText)
-      : t(m.allowButtonText);
+  const onPressActionButton =
+    !permissionStatus || permissionStatus === 'undetermined'
+      ? handleRequestPermission
+      : permissionStatus === 'denied'
+        ? handleOpenSettings
+        : handleRequestPermission;
+  const actionButtonText =
+    !permissionStatus || permissionStatus === 'undetermined'
+      ? t(m.allowButtonText)
+      : permissionStatus === 'denied'
+        ? t(m.goToSettingsButtonText)
+        : t(m.allowButtonText);
 
   return (
     <View style={{paddingTop: 80}}>

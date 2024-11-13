@@ -31,13 +31,9 @@ export const AudioThumbnail: FC<AudioThumbnailProps> = ({
   const {projectApi} = useActiveProject();
   const [loading, setLoading] = React.useState(false);
 
-  console.log({currentRoute});
-
   if ('deleted' in audioAttachment && audioAttachment.deleted === true) {
     return null;
   }
-
-  console.log();
 
   const handlePress = async () => {
     setLoading(true);

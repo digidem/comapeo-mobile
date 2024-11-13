@@ -55,6 +55,8 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
   });
 
   const [shouldNavigateToAudio, setShouldNavigateToAudio] = useState(false);
+  const [permissionStatus, setPermissionStatus] =
+    useState<Audio.PermissionStatus | null>(null);
 
   const handleCameraPress = () => {
     navigation.navigate('AddPhoto');
@@ -65,6 +67,7 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
 
   const handleAudioPress = useCallback(async () => {
     const {status} = await Audio.getPermissionsAsync();
+    setPermissionStatus(status);
     if (status === 'granted') {
       navigation.navigate('Audio', {
         isEditing: currentRoute?.name === 'ObservationEdit',
@@ -118,6 +121,8 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
         <PermissionAudioBottomSheetContent
           closeSheet={closeAudioPermissionSheet}
           setShouldNavigateToAudioTrue={() => setShouldNavigateToAudio(true)}
+          permissionStatus={permissionStatus}
+          isOpen={isAudioPermissionSheetOpen}
         />
       </BottomSheetModal>
     </>

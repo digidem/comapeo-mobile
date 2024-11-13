@@ -4,6 +4,8 @@ import MapboxGL from '@rnmapbox/maps';
 import {RemoteDetectionAlert} from '@comapeo/schema';
 import {FeatureCollection} from 'geojson';
 import {useRemoteDectionAlerts} from '../../../hooks/server/remoteDetectionAlert';
+import {flatten} from 'flat';
+import {includeKeys} from 'filter-obj';
 
 export const RemoteDectionAlertsMapLayer = () => {
   const {data: alerts} = useRemoteDectionAlerts();
@@ -30,14 +32,14 @@ export const RemoteDectionAlertsMapLayer = () => {
             'MultiLineString',
             'MultiPolygon',
           ],
-          ['has', 'alert_type'],
+          ['has', 'metadata.alert_type'],
           ['has', 'month_detec'],
           ['has', 'year_detec'],
         ]}
         style={{
           textField: [
             'concat',
-            ['get', 'alert_type'],
+            ['get', 'metadata.alert_type'],
             ' (',
             ['get', 'month_detec'],
             '-',
@@ -56,7 +58,7 @@ export const RemoteDectionAlertsMapLayer = () => {
 
       {/* Circle Layer for Points */}
       <MapboxGL.CircleLayer
-        id="mapeo-alerts-point"
+        id="comapeo-alerts-point"
         filter={['==', '$type', 'Point']}
         style={{
           circleRadius: 5,
@@ -66,7 +68,7 @@ export const RemoteDectionAlertsMapLayer = () => {
 
       {/* Line Layer for LineStrings and MultiLineStrings */}
       <MapboxGL.LineLayer
-        id="mapeo-alerts-linestring"
+        id="comapeo-alerts-linestring"
         filter={['in', '$type', 'LineString', 'MultiLineString']}
         style={{
           lineColor: '#FF0000',
@@ -77,7 +79,7 @@ export const RemoteDectionAlertsMapLayer = () => {
 
       {/* Line Layer for Polygon Stroke */}
       <MapboxGL.LineLayer
-        id="mapeo-alerts-polygon-stroke"
+        id="comapeo-alerts-polygon-stroke"
         filter={['in', '$type', 'Polygon', 'MultiPolygon']}
         style={{
           lineColor: '#FF0000',
@@ -87,7 +89,7 @@ export const RemoteDectionAlertsMapLayer = () => {
 
       {/* Fill Layer for Polygon Fill */}
       <MapboxGL.FillLayer
-        id="mapeo-alerts-polygon"
+        id="comapeo-alerts-polygon"
         filter={['in', '$type', 'Polygon', 'MultiPolygon']}
         style={{
           fillColor: '#FF0000',
@@ -103,13 +105,24 @@ function convertRemoteDetectionAlertsToFeatures(
 ): FeatureCollection {
   return {
     type: 'FeatureCollection',
-    features: alerts.map(alert => ({
-      type: 'Feature',
-      geometry: alert.geometry,
-      id: alert.sourceId,
-      properties: {
-        alert,
-      },
-    })),
+    features: alerts.map(alert => {
+      const dateStart = new Date(alert.detectionDateStart);
+      return {
+        type: 'Feature',
+        geometry: alert.geometry,
+        properties: {
+          ...flatten(
+            includeKeys(alert, [
+              'metadata',
+              'detectionDateStart',
+              'detectionDateEnd',
+              'sourceId',
+            ]),
+          ),
+          month_detec: dateStart.getMonth() + 1,
+          year_detec: dateStart.getFullYear(),
+        },
+      };
+    }),
   };
 }

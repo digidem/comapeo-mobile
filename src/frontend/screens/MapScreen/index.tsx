@@ -23,6 +23,7 @@ import {useSharedLocationContext} from '../../contexts/SharedLocationContext';
 import {useMapStyleJsonUrl} from '../../hooks/server/maps.ts';
 import {TracksMapLayer} from './MapLayers/TracksMapLayer.tsx';
 import {assert} from '../../lib/assert.ts';
+import {RemoteDectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLayer.tsx';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -114,6 +115,7 @@ export const MapScreen = () => {
 
         {isFinishedLoading && (
           <>
+            <RemoteDectionAlertsMapLayer />
             <ObservationMapLayer />
             <CurrentTrackMapLayer />
             <TracksMapLayer />

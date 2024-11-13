@@ -120,7 +120,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
           <Loading />
         ) : (
           <>
-            <View style={[styles.section, {flex: 1}]}>
+            <View style={styles.section}>
               <PresetHeader preset={preset} style={{paddingHorizontal: 20}} />
               {track && (
                 <View style={{marginTop: 20}}>
@@ -173,7 +173,6 @@ ObservationScreen.navTitle = m.title;
 const styles = StyleSheet.create({
   root: {
     backgroundColor: WHITE,
-    flex: 1,
     flexDirection: 'column',
   },
   scrollContent: {minHeight: '100%'},

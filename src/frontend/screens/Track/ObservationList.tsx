@@ -47,7 +47,7 @@ export function ObservationList({observations}: TrackObservation) {
           key={index}
           observation={observation}
           onPress={() => {
-            navigation.navigate('Observation', {
+            navigation.push('Observation', {
               observationId: observation.docId,
             });
           }}

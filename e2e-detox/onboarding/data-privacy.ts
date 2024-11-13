@@ -19,8 +19,8 @@ describe('Onboarding - Data & Privacy Screen', () => {
 
   it('should navigate to Privacy Policy when "Learn More" is tapped', async () => {
     await element(by.text('Learn More')).tap();
-    await expect(element(by.text('Privacy Policy'))).toBeVisible();
-    await device.pressBack();
+    await expect(element(by.text('CoMapeo Data Privacy'))).toBeVisible();
+    await element(by.id('MAIN.header-back-btn')).tap();
   });
 
   it('should navigate to Device Naming screen after tapping "Next"', async () => {

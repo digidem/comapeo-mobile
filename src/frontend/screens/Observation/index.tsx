@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import {Text, View, ScrollView, StyleSheet} from 'react-native';
+import {View, ScrollView, StyleSheet} from 'react-native';
 import {defineMessages} from 'react-intl';
-import {BLACK, WHITE, DARK_GREY, LIGHT_GREY, BLUE_GREY} from '../../lib/styles';
+import {WHITE, DARK_GREY, LIGHT_GREY, BLUE_GREY} from '../../lib/styles';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 import {FormattedObservationDate} from '../../sharedComponents/FormattedData';
@@ -26,6 +26,8 @@ import {TrackList} from './TrackList.tsx';
 import {useTracks} from '../../hooks/server/track.ts';
 import {Loading} from '../../sharedComponents/Loading.tsx';
 import {Divider} from '../../sharedComponents/Divider.tsx';
+import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
 
 const m = defineMessages({
   deleteTitle: {
@@ -107,12 +109,12 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
         {/* check lat and lon are not null or undefined */}
         {lat != null && lon != null && <InsetMapView lat={lat} lon={lon} />}
         <View>
-          <Text style={styles.time}>
+          <BodyText variant="smallMeta" style={styles.time}>
             <FormattedObservationDate
               createdDate={observation.createdAt}
               variant="long"
             />
-          </Text>
+          </BodyText>
         </View>
         {track === 'loading' ? (
           <Loading />
@@ -128,9 +130,9 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
                 </View>
               )}
               {typeof observation.tags.notes === 'string' ? (
-                <View style={{padding: 20}}>
-                  <Text style={styles.textNotes}>{observation.tags.notes}</Text>
-                </View>
+                <HeaderText variant="header3" style={styles.textNotes}>
+                  {observation.tags.notes}
+                </HeaderText>
               ) : null}
               {attachments.length > 0 && (
                 <MediaScrollView
@@ -184,14 +186,12 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   textNotes: {
-    fontSize: 22,
     color: DARK_GREY,
     fontWeight: '100',
+    padding: 20,
   },
   time: {
-    color: BLACK,
     backgroundColor: LIGHT_GREY,
-    fontSize: 14,
     paddingVertical: 10,
     textAlign: 'center',
   },

@@ -1,10 +1,10 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {BLACK} from '../../lib/styles';
+import {View, StyleSheet} from 'react-native';
 import {FormattedPresetName} from '../../sharedComponents/FormattedData';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {Preset} from '@comapeo/schema';
 import {ViewStyleProp} from '../../sharedTypes';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 
 export const PresetHeader = ({
   preset,
@@ -20,9 +20,12 @@ export const PresetHeader = ({
         iconId={preset?.iconRef?.docId}
         testID={`OBS.${preset?.name}-view-icon`}
       />
-      <Text style={styles.categoryLabel} numberOfLines={1}>
+      <HeaderText
+        variant="header3"
+        style={styles.categoryLabel}
+        numberOfLines={1}>
         <FormattedPresetName preset={preset} />
-      </Text>
+      </HeaderText>
     </View>
   );
 };
@@ -33,9 +36,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   categoryLabel: {
-    color: BLACK,
-    fontWeight: 'bold',
-    fontSize: 20,
     marginLeft: 10,
   },
 });

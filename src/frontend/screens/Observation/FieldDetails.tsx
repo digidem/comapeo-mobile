@@ -1,12 +1,14 @@
 import * as React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {MEDIUM_GREY, DARK_GREY, BLACK} from '../../lib/styles';
+import {View, StyleSheet} from 'react-native';
+import {MEDIUM_GREY} from '../../lib/styles';
 import {
   FormattedFieldProp,
   FormattedFieldValue,
 } from '../../sharedComponents/FormattedData';
 import {Field, Observation} from '@comapeo/schema';
 import {ViewStyleProp} from '../../sharedTypes';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
 
 export const FieldDetails = ({
   fields,
@@ -23,16 +25,13 @@ export const FieldDetails = ({
         const value = observation.tags[field.tagKey];
         return (
           <View key={field.docId} style={[styles.section, style]}>
-            <Text style={styles.fieldTitle}>
+            <HeaderText variant="header3" style={styles.fieldTitle}>
               <FormattedFieldProp field={field} propName="label" />
-            </Text>
-            <Text
-              style={[
-                styles.fieldAnswer,
-                {color: value === undefined ? MEDIUM_GREY : DARK_GREY},
-              ]}>
+            </HeaderText>
+            <BodyText
+              style={{color: value === undefined ? MEDIUM_GREY : undefined}}>
               <FormattedFieldValue value={value} field={field} />
-            </Text>
+            </BodyText>
           </View>
         );
       })}
@@ -41,14 +40,7 @@ export const FieldDetails = ({
 };
 
 const styles = StyleSheet.create({
-  fieldAnswer: {
-    fontSize: 20,
-    fontWeight: '100',
-  },
   fieldTitle: {
-    color: BLACK,
-    fontSize: 14,
-    fontWeight: '700',
     marginBottom: 10,
   },
   section: {

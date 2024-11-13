@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text, SafeAreaView} from 'react-native';
-import {BLACK, DARK_GREY} from '../../lib/styles.ts';
+import {BLACK, BLUE_GREY, DARK_GREY} from '../../lib/styles.ts';
 
 import TrackIcon from '../../images/Track.svg';
 import {FormattedMessage, MessageDescriptor, defineMessages} from 'react-intl';
@@ -124,7 +124,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
-  divider: {borderBottomColor: '#CCCCD6', borderBottomWidth: 1},
+  divider: {borderBottomColor: BLUE_GREY, borderBottomWidth: 1},
   trackTitleWrapper: {
     marginVertical: 10,
     marginHorizontal: 15,

@@ -7,10 +7,6 @@ import {Accordian} from '../../sharedComponents/Accordian.tsx';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
 import {TrackListItem} from '../ObservationsList/TrackListItem.tsx';
 
-interface TrackListProps {
-  track: Track;
-}
-
 const m = defineMessages({
   track: {
     id: 'screens.Observation.TrackList.track',
@@ -18,7 +14,7 @@ const m = defineMessages({
   },
 });
 
-export function TrackList({track}: TrackListProps) {
+export function TrackAccordian({track}: {track: Track}) {
   const navigation = useNavigationFromRoot();
   const {formatMessage} = useIntl();
 
@@ -36,7 +32,7 @@ export function TrackList({track}: TrackListProps) {
         <TrackListItem
           track={track}
           onPress={() => {
-            navigation.navigate('Track', {trackId: track.docId});
+            navigation.push('Track', {trackId: track.docId});
           }}
           testID={`trackListItem:${track.docId}`}
         />

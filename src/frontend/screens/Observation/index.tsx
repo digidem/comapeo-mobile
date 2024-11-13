@@ -22,7 +22,7 @@ import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types.ts';
 import {ButtonFields} from './Buttons.tsx';
 import {AudioAttachment} from '../../sharedTypes/audio.ts';
 import {isSavedPhoto, isAudioAttachment} from '../../lib/attachmentTypeChecks';
-import {TrackList} from './TrackList.tsx';
+import {TrackAccordian} from './TrackAccordian.tsx';
 import {useTracks} from '../../hooks/server/track.ts';
 import {Loading} from '../../sharedComponents/Loading.tsx';
 import {Divider} from '../../sharedComponents/Divider.tsx';
@@ -125,7 +125,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
               {track && (
                 <View style={{marginTop: 20}}>
                   <Divider />
-                  <TrackList track={track} />
+                  <TrackAccordian track={track} />
                   <Divider />
                 </View>
               )}

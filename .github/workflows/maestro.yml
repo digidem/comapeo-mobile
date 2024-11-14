@@ -14,6 +14,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Env
+        run: printenv
+
       - name: Get APK for testing
         run: |
           curl -o test.apk "https://github.com/digidem/comapeo-mobile/releases/download/untagged-142428c7d3d78b089aab/CoMapeo0.0.apk"
@@ -70,7 +73,7 @@ jobs:
       - name: Create virtual device
         run: |
           pwd
-          echo no | avdmanager create avd --force --name emu --device "pixel_8" -k 'system-images;android-34;google_apis;arm64-v8a' --path "$HOME/.android/avd"
+          echo no | avdmanager create avd --force --name emu --device "pixel_8" -k 'system-images;android-34;google_apis;arm64-v8a' --path "$HOME/.android/avd/test.avd"
           avdmanager list avd
           ls -al $HOME/.android/avd
           echo "Emulator version:"

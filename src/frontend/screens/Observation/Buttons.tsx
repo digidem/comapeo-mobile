@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Field, Observation} from '@comapeo/schema';
 import {DARK_GREY} from '../../lib/styles';
@@ -8,16 +8,15 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useDeleteObservation} from '../../hooks/server/observations';
 import {Text} from '../../sharedComponents/Text';
 import Share from 'react-native-share';
-import {useAttachmentUrlQueries} from '../../hooks/server/media.ts';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset.ts';
 import {formatCoords} from '../../lib/utils.ts';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {convertUrlToBase64} from '../../utils/base64.ts';
-import {useState} from 'react';
 import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings.ts';
 import * as Sentry from '@sentry/react-native';
 import {CoordinateFormat} from '../../sharedTypes/index.ts';
 import {getValueLabel} from '../../sharedComponents/FormattedData.tsx';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
 
 const m = defineMessages({
   delete: {
@@ -95,11 +94,8 @@ export const ButtonFields = ({
   const deleteObservationMutation = useDeleteObservation();
   const {observation, preset} = useObservationWithPreset(observationId);
   const format = usePersistedSettings(store => store.coordinateFormat);
-  const attachmentUrlQueries = useAttachmentUrlQueries(
-    observation.attachments,
-    'original',
-  );
   const [isShareButtonLoading, setShareButtonLoading] = useState(false);
+  const {projectApi} = useActiveProject();
 
   function handlePressDelete() {
     Alert.alert(t(m.deleteTitle), undefined, [
@@ -117,36 +113,47 @@ export const ButtonFields = ({
     ]);
   }
 
-  async function handlePressShare() {
+  async function fetchFreshUrls() {
     const {attachments} = observation;
-    setShareButtonLoading(true);
-    const getValidUrls = (queries: typeof attachmentUrlQueries) => {
-      const urls = queries
-        .map(query => query.data?.url)
-        .filter((url): url is string => url !== undefined && url !== null);
 
-      return urls;
-    };
-
-    let urls: string[] = [];
-
-    if (attachments.length > 0) {
-      urls = getValidUrls(attachmentUrlQueries);
-
-      if (urls.length === 0) {
-        setShareButtonLoading(false);
-        Alert.alert('Error', 'Unable to share this observation.');
-        return;
-      }
+    if (!attachments || attachments.length === 0) {
+      return [];
     }
 
+    const urls = await Promise.all(
+      attachments.map(async attachment => {
+        if (attachment.type !== 'photo' && attachment.type !== 'audio') {
+          return [];
+        }
+
+        try {
+          const url = await projectApi.$blobs.getUrl({
+            driveId: attachment.driveDiscoveryId,
+            name: attachment.name,
+            type: attachment.type,
+            variant: 'original',
+          });
+          return url;
+        } catch (error) {
+          return null;
+        }
+      }),
+    );
+
+    return urls.filter((url): url is string => url !== null);
+  }
+
+  async function handlePressShare() {
+    setShareButtonLoading(true);
+
     try {
-      const base64Urls = await Promise.all(
-        urls.map(url => convertUrlToBase64(url)),
-      );
+      const urls = await fetchFreshUrls();
+      const base64Urls =
+        urls.length > 0
+          ? await Promise.all(urls.map(url => convertUrlToBase64(url)))
+          : [];
 
       const completedFields: Array<{label: string; value: string}> = [];
-
       for (const field of fields) {
         const value = observation.tags[field.tagKey];
 
@@ -155,9 +162,7 @@ export const ButtonFields = ({
         }
 
         const displayedValue = (Array.isArray(value) ? value : [value])
-          .map(v => {
-            return getValueLabel(v, field).trim();
-          })
+          .map(v => getValueLabel(v, field).trim())
           .join(', ');
 
         completedFields.push({label: field.label, value: displayedValue});
@@ -177,6 +182,7 @@ export const ButtonFields = ({
           timestamp: formatDate(observation.createdAt, {format: 'long'}),
           titleText: t(m.shareMessageTitle),
         }),
+        failOnCancel: false,
       });
     } catch (err) {
       Sentry.captureException(err);

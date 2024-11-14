@@ -3,7 +3,7 @@ name: E2E CI
 on:
   push:
     branches:
-      - chore/e2e-ci
+      - chore/maestro-ci
 
 jobs:
   run-tests:

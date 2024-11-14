@@ -73,7 +73,7 @@ jobs:
       - name: Create virtual device
         run: |
           pwd
-          echo no | avdmanager create avd --force --name emu --device "pixel_8" -k 'system-images;android-34;google_apis;arm64-v8a' --path "$HOME/.android/avd/test.avd"
+          echo no | avdmanager create avd --force --name emu --device "pixel_8" -k 'system-images;android-34;google_apis;arm64-v8a' --path "$HOME/.android/avd/emu.avd"
           avdmanager list avd
           ls -al $HOME/.android/avd
           echo "Emulator version:"

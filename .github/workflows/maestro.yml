@@ -18,6 +18,12 @@ jobs:
         run: |
           curl -o test.apk "https://github.com/digidem/comapeo-mobile/releases/download/untagged-142428c7d3d78b089aab/CoMapeo0.0.apk"
 
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
       # https://developer.android.com/tools/variables
       - name: Set up environment variables
         run: |

@@ -72,14 +72,14 @@ jobs:
           echo no | avdmanager create avd --force --name test -k 'system-images;android-34;google_apis;arm64-v8a'
           avdmanager list avd
           echo "Emulator version:"
-          $ANDROID_HOME/emulator/emulator @emu -version
+          $ANDROID_HOME/emulator/emulator @test -version
           echo "Hardware acceleration:"
           $ANDROID_HOME/emulator/emulator -accel-check
         shell: bash
 
       - name: Start emulator
         run: |
-          $ANDROID_HOME/emulator/emulator -avd emu -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back emulated
+          $ANDROID_HOME/emulator/emulator -avd test -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back emulated
         shell: bash
 
       - name: Wait for emulator to boot

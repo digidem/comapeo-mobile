@@ -57,7 +57,7 @@ jobs:
       # https://ci.android.com/builds/branches/aosp-emu-master-dev/grid
       - name: Install Emulator
         run: |
-          curl --compressed --location --output emulator.zip $(curl --location --silent https://ci.android.com/builds/submitted/12656970/emulator-linux_aarch64/latest/sdk-repo-linux_aarch64-emulator-12656970.zip | grep -o 'https://storage[^"]*' | sed 's/\\u0026/\&/g')
+          curl --compressed --location --output emulator.zip $(curl --location --silent https://ci.android.com/builds/submitted/12401025/emulator-linux_aarch64/latest/sdk-repo-linux_aarch64-emulator-12401025.zip | grep -o 'https://storage[^"]*' | sed 's/\\u0026/\&/g')
           unzip -d $ANDROID_HOME -n -q emulator.zip
           rm -f emulator.zip
           cp $ANDROID_HOME/platform-tools/package.xml $ANDROID_HOME/emulator/package.xml
@@ -87,7 +87,7 @@ jobs:
       - name: Start emulator
         run: |
           adb devices
-          nohup $ANDROID_HOME/emulator/emulator -avd emu -no-window -gpu swiftshader_indirect -memory 2048 -no-snapshot -noaudio -skip-adb-auth -no-boot-anim -accel off -camera-back emulated -qemu -cpu max -machine gic-version=max &
+          nohup $ANDROID_HOME/emulator/emulator -avd emu -cores 2 -no-window -gpu swiftshader_indirect -memory 2048 -no-snapshot -noaudio -no-boot-anim -accel off -camera-back emulated -qemu -cpu max -machine gic-version=max &
         shell: bash
 
       - name: Wait for emulator to boot

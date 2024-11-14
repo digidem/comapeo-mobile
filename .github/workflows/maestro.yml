@@ -14,8 +14,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Env
-        run: printenv
+      - name: HW Accel check
+        run: |
+          grep -E -c '(vmx|svm)' /proc/cpuinfo
 
       - name: Get APK for testing
         run: |
@@ -89,7 +90,7 @@ jobs:
 
       - name: Start emulator
         run: |
-          $ANDROID_HOME/emulator/emulator -avd emu -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -camera-back emulated
+          nohup $ANDROID_HOME/emulator/emulator -avd emu -no-window -gpu off -no-snapshot -noaudio -no-boot-anim -camera-back emulated &
         shell: bash
 
       - name: Wait for emulator to boot

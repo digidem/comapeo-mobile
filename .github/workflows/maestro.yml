@@ -85,8 +85,6 @@ jobs:
           ls -al $ANDROID_EMULATOR_HOME
           echo "Emulator version:"
           $ANDROID_HOME/emulator/emulator @emu -version
-          echo "Hardware acceleration:"
-          $ANDROID_HOME/emulator/emulator -accel-check
         shell: bash
 
       - name: Start emulator

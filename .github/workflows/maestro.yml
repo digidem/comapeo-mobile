@@ -14,10 +14,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: HW Accel check
-        run: |
-          grep -E -c '(vmx|svm)' /proc/cpuinfo
-
       - name: Get APK for testing
         run: |
           curl -o test.apk "https://github.com/digidem/comapeo-mobile/releases/download/untagged-142428c7d3d78b089aab/CoMapeo0.0.apk"

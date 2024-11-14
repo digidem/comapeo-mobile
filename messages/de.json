@@ -935,6 +935,9 @@
     "description": "Button to share an observation",
     "message": "Share"
   },
+  "screens.Observation.TrackList.track": {
+    "message": "Track"
+  },
   "screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
     "message": "Abbrechen"
@@ -1561,6 +1564,9 @@
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
     "message": "Waiting for devices"
+  },
+  "screens.Track.ObservationList.observation": {
+    "message": "Beobachtung"
   },
   "screens.Track.ObservationList.observations": {
     "message": "Beobachtungen"

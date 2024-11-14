@@ -206,8 +206,11 @@ export function BackgroundMapsScreen() {
               text: t(m.deleteMapButtonText),
               icon: <MaterialIcon size={30} name="delete" color={WHITE} />,
               onPress: () => {
-                removeCustomMapMutation.mutate();
-                removeMapBottomSheet.closeSheet();
+                removeCustomMapMutation.mutate(undefined, {
+                  onSuccess: () => {
+                    removeMapBottomSheet.closeSheet();
+                  },
+                });
               },
             },
             {

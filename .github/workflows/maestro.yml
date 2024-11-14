@@ -86,7 +86,7 @@ jobs:
 
       - name: Start emulator
         run: |
-          nohup $ANDROID_HOME/emulator/emulator -avd emu -no-window -gpu off -no-snapshot -noaudio -no-boot-anim -camera-back emulated &
+          $ANDROID_HOME/emulator/emulator -avd emu -no-window -gpu swiftshader_indirect -memory 2048 -no-snapshot -noaudio -skip-adb-auth -no-boot-anim -accel off -camera-back emulated -qemu -cpu max -machine gic-version=max &
         shell: bash
 
       - name: Wait for emulator to boot

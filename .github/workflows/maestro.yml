@@ -122,6 +122,8 @@ jobs:
           adb devices -l
           jobs
           cat emu.log
+          echo "boot prop"
+          adb shell getprop sys.boot_completed
         shell: bash
 
       - name: Upload Maestro test artifacts

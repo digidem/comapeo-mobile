@@ -77,7 +77,7 @@ jobs:
       - name: Create virtual device
         run: |
           pwd
-          echo no | avdmanager create avd --force --name emu -ports 5554,5555 --device "pixel_8" -k 'system-images;android-28/google_apis;arm64-v8a'
+          echo no | avdmanager create avd --force --name emu --device "pixel_8" -k 'system-images;android-28/google_apis;arm64-v8a'
           avdmanager list avd
           ls -al $ANDROID_EMULATOR_HOME
           echo "Emulator version:"
@@ -88,7 +88,7 @@ jobs:
         timeout-minutes: 10
         run: |
           adb devices
-          $ANDROID_HOME/emulator/emulator -avd emu -cores 2 -no-window -gpu swiftshader_indirect -memory 2048 -no-snapshot -logcat "*:v" -show-kernel -noaudio -no-boot-anim -accel off -camera-back emulated -qemu -cpu max -machine gic-version=2
+          $ANDROID_HOME/emulator/emulator -avd emu -cores 2 -no-window -gpu swiftshader_indirect -memory 2048 -ports 5554,5555 -no-snapshot -logcat "*:v" -show-kernel -noaudio -no-boot-anim -accel off -camera-back emulated -qemu -cpu max -machine gic-version=2
         shell: bash
 
       - name: Wait for emulator to boot

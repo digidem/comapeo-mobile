@@ -94,7 +94,8 @@ jobs:
 
       - name: Wait for emulator to boot
         timeout-minutes: 5
-        run: ./scripts/wait-for-emulator.sh
+        run: |
+          adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
 
       - name: Install APK
         run: |

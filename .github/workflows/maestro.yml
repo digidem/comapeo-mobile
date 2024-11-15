@@ -70,14 +70,14 @@ jobs:
 
       - name: Install SDK Tools
         run: |
-          sdkmanager 'system-images;android-28;google_apis;arm64-v8a' 'tools'
+          sdkmanager 'system-images;android-30;google_atd;arm64-v8a' 'tools'
           bash -c 'yes || true' | sdkmanager --licenses
         shell: bash
 
       - name: Create virtual device
         run: |
           pwd
-          echo no | avdmanager create avd --force --name emu --device "pixel_8" -k 'system-images;android-28;google_apis;arm64-v8a'
+          echo no | avdmanager create avd --force --name emu --device "pixel_8" -k 'system-images;android-30;google_atd;arm64-v8a'
           avdmanager list avd
           ls -al $ANDROID_EMULATOR_HOME
           echo "Emulator version:"
@@ -85,14 +85,15 @@ jobs:
         shell: bash
 
       - name: Start emulator
-        timeout-minutes: 10
+        timeout-minutes: 5
         run: |
           adb devices
-          nohup $ANDROID_HOME/emulator/emulator -avd emu -cores 2 -no-window -gpu swiftshader_indirect -memory 2048 -ports 5554,5555 -no-snapshot -show-kernel -noaudio -no-boot-anim -accel off -camera-back emulated -qemu -cpu max -machine gic-version=2 &
+          nohup $ANDROID_HOME/emulator/emulator -avd emu -cores 2 -no-window -gpu swiftshader_indirect -memory 2048 -skip-adb-auth -ports 5554,5555 -no-snapshot -show-kernel -noaudio -no-boot-anim -logcat -logcat-output "logcat.log" -accel off -camera-back emulated -qemu -cpu max -machine gic-version=2 &
           echo "Emulator started"
         shell: bash
 
       - name: Wait for emulator to boot
+        timeout-minutes: 5
         run: ./scripts/wait-for-emulator.sh
 
       - name: Install APK
@@ -115,7 +116,7 @@ jobs:
       - name: Emulator logs
         if: always()
         run: |
-          cat nohup.out
+          cat logcat.log
         shell: bash
 
       - name: Upload Maestro test artifacts

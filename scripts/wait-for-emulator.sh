@@ -54,5 +54,5 @@ check_emulator_status
 sleep 1
 disable_animation
 sleep 1
-hidden_policy
-sleep 1
+# hidden_policy
+# sleep 1

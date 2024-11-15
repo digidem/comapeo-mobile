@@ -88,7 +88,7 @@ jobs:
         timeout-minutes: 10
         run: |
           adb devices
-          $ANDROID_HOME/emulator/emulator -avd emu -cores 2 -no-window -gpu swiftshader_indirect -memory 2048 -no-snapshot -noaudio -no-boot-anim -accel off -camera-back emulated -qemu -cpu max -machine gic-version=max
+          $ANDROID_HOME/emulator/emulator -avd emu -cores 2 -no-window -gpu swiftshader_indirect -memory 2048 -no-snapshot -logcat "*:V" -show-kernel -noaudio -no-boot-anim -accel off -camera-back emulated -qemu -cpu max -machine gic-version=max
         shell: bash
 
       - name: Wait for emulator to boot

@@ -96,6 +96,7 @@ jobs:
         timeout-minutes: 5
         run: |
           adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
+          adb devices -l
 
       - name: Install APK
         run: |

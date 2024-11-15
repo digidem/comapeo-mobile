@@ -94,6 +94,7 @@ jobs:
 
       - name: Wait for emulator to boot
         timeout-minutes: 5
+        continue-on-error: true
         run: |
           adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
           adb devices -l
@@ -118,6 +119,7 @@ jobs:
       - name: Emulator logs
         if: always()
         run: |
+          adb devices -l
           jobs
           cat emu.log
         shell: bash

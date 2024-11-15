@@ -57,7 +57,7 @@ jobs:
       # https://ci.android.com/builds/branches/aosp-emu-master-dev/grid
       - name: Install Emulator
         run: |
-          curl --compressed --location --output emulator.zip $(curl --location --silent https://ci.android.com/builds/submitted/12414276/emulator-linux_aarch64/latest/sdk-repo-linux_aarch64-emulator-12414276.zip | grep -o 'https://storage[^"]*' | sed 's/\\u0026/\&/g')
+          curl --compressed --location --output emulator.zip $(curl --location --silent https://ci.android.com/builds/submitted/11435509/emulator-linux_aarch64/latest/sdk-repo-linux_aarch64-emulator-11435509.zip | grep -o 'https://storage[^"]*' | sed 's/\\u0026/\&/g')
           unzip -d $ANDROID_HOME -n -q emulator.zip
           rm -f emulator.zip
           cp $ANDROID_HOME/platform-tools/package.xml $ANDROID_HOME/emulator/package.xml
@@ -70,14 +70,14 @@ jobs:
 
       - name: Install SDK Tools
         run: |
-          sdkmanager 'system-images;android-33;google_atd;arm64-v8a' 'tools'
+          sdkmanager 'system-images;android-28/google_apis;arm64-v8a' 'tools'
           bash -c 'yes || true' | sdkmanager --licenses
         shell: bash
 
       - name: Create virtual device
         run: |
           pwd
-          echo no | avdmanager create avd --force --name emu --device "pixel_8" -k 'system-images;android-33;google_atd;arm64-v8a'
+          echo no | avdmanager create avd --force --name emu -ports 5554,5555 --device "pixel_8" -k 'system-images;android-28/google_apis;arm64-v8a'
           avdmanager list avd
           ls -al $ANDROID_EMULATOR_HOME
           echo "Emulator version:"
@@ -88,7 +88,7 @@ jobs:
         timeout-minutes: 10
         run: |
           adb devices
-          $ANDROID_HOME/emulator/emulator -avd emu -cores 2 -no-window -gpu swiftshader_indirect -memory 2048 -no-snapshot -logcat "*:v" -show-kernel -noaudio -no-boot-anim -accel off -camera-back emulated -qemu -cpu max -machine gic-version=max
+          $ANDROID_HOME/emulator/emulator -avd emu -cores 2 -no-window -gpu swiftshader_indirect -memory 2048 -no-snapshot -logcat "*:v" -show-kernel -noaudio -no-boot-anim -accel off -camera-back emulated -qemu -cpu max -machine gic-version=2
         shell: bash
 
       - name: Wait for emulator to boot

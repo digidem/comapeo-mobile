@@ -15,6 +15,7 @@ export type QuestionProps = {
 };
 
 export const Question = ({field}: QuestionProps) => {
+  return <Number field={field} />;
   if (field.type === 'selectOne' && Array.isArray(field.options)) {
     return <SelectOne field={field as SelectOneField} />;
   }

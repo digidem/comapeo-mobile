@@ -16,7 +16,12 @@ export const Number = React.memo<{field: Field}>(({field}) => {
         testID="OBS.details-inp"
         value={typeof value === 'string' ? value : ''}
         onChangeText={newVal =>
-          updateTags(field.tagKey, newVal.replace(/[^0-9]/g, ''))
+          updateTags(
+            field.tagKey,
+            newVal
+              .replace(/[^0-9.-]/g, '') // Allow digits, decimal, and negative sign
+              .replace(/(?!^)-/g, ''), // Remove any minus sign that is not at the start
+          )
         }
         keyboardType="numeric"
         style={styles.textInput}

@@ -3,16 +3,11 @@ import {View, StyleSheet} from 'react-native';
 import {FormattedFieldProp} from '../../sharedComponents/FormattedData';
 import {Field} from '@comapeo/schema';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {Header} from 'react-native/Libraries/NewAppScreen';
-
 interface Props {
   field: Field;
 }
 
 export const QuestionLabel = ({field}: Props) => {
-  // const hint = <FormattedFieldProp field={field} propName="placeholder" />;
-
-  console.log({val: field.placeholder});
   return (
     <View style={styles.labelContainer}>
       <HeaderText variant="header3">

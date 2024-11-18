@@ -13,7 +13,6 @@ export function Audio({route}: NativeRootNavigationProps<'Audio'>) {
   const {deleteAudio} = useDraftObservation();
   const {isEditing, uri, isSavedUri = false} = route.params;
 
-  console.log({isEditing});
   return (
     <>
       {uri ? (

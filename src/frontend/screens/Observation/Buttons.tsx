@@ -6,7 +6,6 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useDeleteObservation} from '../../hooks/server/observations';
-import {Text} from '../../sharedComponents/Text';
 import Share from 'react-native-share';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset.ts';
 import {formatCoords} from '../../lib/utils.ts';
@@ -17,6 +16,8 @@ import * as Sentry from '@sentry/react-native';
 import {CoordinateFormat} from '../../sharedTypes/index.ts';
 import {getValueLabel} from '../../sharedComponents/FormattedData.tsx';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
+import {isPhotoOrAudio} from '../../lib/attachmentTypeChecks.ts';
 
 const m = defineMessages({
   delete: {
@@ -120,27 +121,16 @@ export const ButtonFields = ({
       return [];
     }
 
-    const urls = await Promise.all(
-      attachments.map(async attachment => {
-        if (attachment.type !== 'photo' && attachment.type !== 'audio') {
-          return [];
-        }
-
-        try {
-          const url = await projectApi.$blobs.getUrl({
-            driveId: attachment.driveDiscoveryId,
-            name: attachment.name,
-            type: attachment.type,
-            variant: 'original',
-          });
-          return url;
-        } catch (error) {
-          return null;
-        }
+    return await Promise.all(
+      attachments.filter(isPhotoOrAudio).map(async attachment => {
+        return projectApi.$blobs.getUrl({
+          driveId: attachment.driveDiscoveryId,
+          name: attachment.name,
+          type: attachment.type as 'photo' | 'audio',
+          variant: 'original',
+        });
       }),
     );
-
-    return urls.filter((url): url is string => url !== null);
   }
 
   async function handlePressShare() {
@@ -230,7 +220,9 @@ const Button = ({onPress, isLoading, iconName, title}: ButtonProps) => (
           style={styles.buttonIcon}
         />
       )}
-      <Text style={styles.buttonText}>{title}</Text>
+      <BodyText variant="smallMeta" style={styles.buttonText}>
+        {title}
+      </BodyText>
     </View>
   </TouchableOpacity>
 );

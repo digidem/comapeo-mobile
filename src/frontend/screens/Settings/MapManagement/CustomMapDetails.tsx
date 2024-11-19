@@ -4,9 +4,15 @@ import {StyleSheet, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 import {bytesToMegabytes} from '../../../lib/bytesToMegabytes';
-import {BLACK, MEDIUM_GREY, RED, VERY_LIGHT_GREY} from '../../../lib/styles';
+import {
+  BLACK,
+  NEW_DARK_GREY,
+  WARNING_RED,
+  VERY_LIGHT_GREY,
+} from '../../../lib/styles';
 import {Loading} from '../../../sharedComponents/Loading';
-import {Text} from '../../../sharedComponents/Text';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
+import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 
 const m = defineMessages({
   mapNameColumn: {
@@ -53,34 +59,40 @@ export function CustomMapDetails({
   return (
     <View style={styles.rootContainer}>
       <View style={styles.columnHeadersContainer}>
-        <Text style={styles.columnTitleText}>{t(m.mapNameColumn)}</Text>
-        <Text style={styles.columnTitleText}>{t(m.dateAddedColumn)}</Text>
+        <BodyText variant="smallMeta" style={styles.columnTitleText}>
+          {t(m.mapNameColumn)}
+        </BodyText>
+        <BodyText variant="smallMeta" style={styles.columnTitleText}>
+          {t(m.dateAddedColumn)}
+        </BodyText>
       </View>
       <View style={styles.cardContainer}>
         <View style={styles.cardRow}>
           <View style={styles.columnLeft}>
-            <Text style={styles.nameText}>{name}</Text>
-            <Text style={styles.sizeText}>
+            <HeaderText variant="header5">{name}</HeaderText>
+            <BodyText variant="smallMeta" style={styles.sizeText}>
               {displayedSize !== undefined &&
                 t(m.sizeInMegabytes, {
                   value: displayedSize,
                 })}
-            </Text>
+            </BodyText>
           </View>
           <View style={styles.columnRight}>
-            <Text style={styles.dateAddedText}>
+            <BodyText variant="smallMeta" style={styles.dateAddedText}>
               <FormattedDate
                 year="numeric"
                 month="short"
                 day="2-digit"
                 value={dateAdded}
               />
-            </Text>
+            </BodyText>
           </View>
         </View>
         <View style={styles.cardRow}>
           <TouchableOpacity onPress={onRemove} hitSlop={20}>
-            <Text style={styles.removeMapText}>{t(m.removeMap)}</Text>
+            <BodyText variant="smallMeta" style={styles.removeMapText}>
+              {t(m.removeMap)}
+            </BodyText>
           </TouchableOpacity>
         </View>
         {loading && <LoadingOverlay />}
@@ -119,21 +131,17 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   columnTitleText: {
-    color: MEDIUM_GREY,
+    color: NEW_DARK_GREY,
   },
   dateAddedText: {
-    color: MEDIUM_GREY,
+    color: NEW_DARK_GREY,
   },
   sizeText: {
-    color: MEDIUM_GREY,
+    color: NEW_DARK_GREY,
   },
   removeMapText: {
     fontWeight: 'bold',
-    color: RED,
-  },
-  nameText: {
-    fontWeight: 'bold',
-    fontSize: 18,
+    color: WARNING_RED,
   },
   columnLeft: {
     flex: 1,

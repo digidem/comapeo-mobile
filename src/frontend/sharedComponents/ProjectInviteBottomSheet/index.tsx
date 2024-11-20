@@ -51,6 +51,7 @@ export const ProjectInviteBottomSheet = ({
 
   const [leaveModalState, setLeaveModalState] =
     React.useState<LeaveProjectModalState>('AlreadyOnProj');
+  const [modalVisible, setModalVisible] = React.useState(false);
 
   const invite = invites[0];
 
@@ -64,9 +65,23 @@ export const ProjectInviteBottomSheet = ({
   const accept = useAcceptInvite();
   const reject = useRejectInvite();
 
-  if (invite && !inviteIsOpen && enabledForCurrentScreen) {
-    openInviteSheet();
-  }
+  React.useEffect(() => {
+    if (
+      (invite || acceptedInvite) &&
+      !modalVisible &&
+      enabledForCurrentScreen
+    ) {
+      setModalVisible(true);
+    }
+  }, [invite, acceptedInvite, modalVisible, enabledForCurrentScreen]);
+
+  React.useEffect(() => {
+    if (modalVisible && !inviteIsOpen) {
+      openInviteSheet();
+    } else if (!modalVisible && inviteIsOpen) {
+      closeInviteSheet();
+    }
+  }, [modalVisible, inviteIsOpen, openInviteSheet, closeInviteSheet]);
 
   if (currentInviteCanceled && leaveIsOpen) {
     closeLeaveSheet();
@@ -77,20 +92,20 @@ export const ProjectInviteBottomSheet = ({
       reject.mutate(invite, {
         onSuccess: () => {
           if (invites.length <= 1) {
-            closeInviteSheet();
+            setModalVisible(false);
           }
         },
       });
     }
     if (invites.length <= 1) {
-      closeInviteSheet();
+      setModalVisible(false);
     }
   }
 
   function handleCanceledInvite() {
     resetCacheAndClearCanceled();
     if (invites.length <= 1) {
-      closeInviteSheet();
+      setModalVisible(false);
     }
   }
 
@@ -115,6 +130,7 @@ export const ProjectInviteBottomSheet = ({
           accept.reset();
           reject.reset();
           acceptedInvite?.remove();
+          setModalVisible(false);
         }}>
         {currentInviteCanceled ? (
           <InviteCanceledBottomSheetContent
@@ -123,7 +139,9 @@ export const ProjectInviteBottomSheet = ({
           />
         ) : acceptedInvite ? (
           <InviteSuccessBottomSheetContent
-            closeSheet={closeInviteSheet}
+            closeSheet={() => {
+              setModalVisible(false);
+            }}
             projectName={acceptedInvite.value.projectName}
           />
         ) : (

@@ -81,7 +81,3 @@ export function isDraftPhoto(attachment: any): attachment is DraftPhoto {
 export function isPhoto(attachment: any): attachment is Photo {
   return isSavedPhoto(attachment) || isDraftPhoto(attachment);
 }
-
-export function isPhotoOrAudio(attachment: any): attachment is Photo | Audio {
-  return isSavedPhoto(attachment) || isAudioAttachment(attachment);
-}

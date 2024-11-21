@@ -17,7 +17,7 @@ import {CoordinateFormat} from '../../sharedTypes/index.ts';
 import {getValueLabel} from '../../sharedComponents/FormattedData.tsx';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
-import {isPhotoOrAudio} from '../../lib/attachmentTypeChecks.ts';
+import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
 
 const m = defineMessages({
   delete: {
@@ -120,13 +120,17 @@ export const ButtonFields = ({
     if (!attachments || attachments.length === 0) {
       return [];
     }
+    const photoAttachments = attachments.filter(isSavedPhoto);
+    if (photoAttachments.length === 0) {
+      return [];
+    }
 
     return await Promise.all(
-      attachments.filter(isPhotoOrAudio).map(async attachment => {
+      photoAttachments.map(async attachment => {
         return projectApi.$blobs.getUrl({
           driveId: attachment.driveDiscoveryId,
           name: attachment.name,
-          type: attachment.type as 'photo' | 'audio',
+          type: 'photo',
           variant: 'original',
         });
       }),

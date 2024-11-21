@@ -47,7 +47,7 @@ export function useImportCustomMapFile() {
 
   return useMutation({
     mutationFn: async (opts: {uri: string}) => {
-      await FileSystem.moveAsync({
+      await FileSystem.copyAsync({
         from: opts.uri,
         to: DEFAULT_CUSTOM_MAP_FILE_PATH,
       });

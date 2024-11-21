@@ -28,17 +28,22 @@ export async function selectFile(opts: {
     throw new Error();
   }
 
-  const hasValidExtension = opts.extensionFilters
-    ? opts.extensionFilters.some(extension =>
-        asset.uri.endsWith(`.${extension}`),
-      )
-    : true;
-
-  if (!hasValidExtension) {
-    FileSystem.deleteAsync(asset.uri).catch(err => {
-      console.log(err);
+  if (opts.extensionFilters) {
+    const hasValidExtension = opts.extensionFilters.some(extension => {
+      return asset.name.endsWith(`.${extension}`);
     });
-    throw new Error('Invalid extension');
+
+    if (!hasValidExtension) {
+      if (opts.copyToCache) {
+        FileSystem.deleteAsync(asset.uri, {
+          idempotent: true,
+        }).catch(err => {
+          console.log(err);
+        });
+      }
+
+      throw new Error('Invalid extension');
+    }
   }
 
   return asset;

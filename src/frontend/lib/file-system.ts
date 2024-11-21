@@ -9,14 +9,16 @@ export function convertFileUriToPosixPath(fileUri: string) {
 }
 
 // TODO: Some overlap with selectFile() from lib/utils but fixes some usage limitations. Ideally use this for everything
-export async function selectFile(opts: {
-  copyToCache?: boolean;
+export async function selectFile({
+  mimeFilters,
+  extensionFilters,
+}: {
   mimeFilters?: Array<string>;
   extensionFilters?: Array<string>;
-}) {
+} = {}) {
   const documentResult = await DocumentPicker.getDocumentAsync({
-    type: opts.mimeFilters,
-    copyToCacheDirectory: opts.copyToCache,
+    type: mimeFilters,
+    copyToCacheDirectory: false,
     multiple: false,
   });
 
@@ -28,20 +30,12 @@ export async function selectFile(opts: {
     throw new Error();
   }
 
-  if (opts.extensionFilters) {
-    const hasValidExtension = opts.extensionFilters.some(extension => {
+  if (extensionFilters) {
+    const hasValidExtension = extensionFilters.some(extension => {
       return asset.name.endsWith(`.${extension}`);
     });
 
     if (!hasValidExtension) {
-      if (opts.copyToCache) {
-        FileSystem.deleteAsync(asset.uri, {
-          idempotent: true,
-        }).catch(err => {
-          console.log(err);
-        });
-      }
-
       throw new Error('Invalid extension');
     }
   }

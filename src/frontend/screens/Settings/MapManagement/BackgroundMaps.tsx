@@ -141,7 +141,6 @@ export function BackgroundMapsScreen() {
           onChooseFile={() => {
             selectFileMutation.mutate(
               {
-                copyToCache: false,
                 extensionFilters: ['smp'],
               },
               {

@@ -1,5 +1,4 @@
 import {type NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import * as FileSystem from 'expo-file-system';
 import React from 'react';
 import {defineMessages, useIntl, type MessageDescriptor} from 'react-intl';
 import {ScrollView, StyleSheet, View} from 'react-native';
@@ -13,7 +12,6 @@ import {
 } from '../../../hooks/server/maps';
 import ErrorSvg from '../../../images/Error.svg';
 import GreenCheckSvg from '../../../images/GreenCheck.svg';
-import noop from '../../../lib/noop';
 import {RED, WHITE} from '../../../lib/styles';
 import {
   BottomSheetModal,
@@ -154,11 +152,6 @@ export function BackgroundMapsScreen() {
                       uri: asset.uri,
                     },
                     {
-                      onError: () => {
-                        FileSystem.deleteAsync(asset.uri, {
-                          idempotent: true,
-                        }).catch(noop);
-                      },
                       onSuccess: () => {
                         mapAddedBottomSheet.openSheet();
                       },

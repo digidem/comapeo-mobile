@@ -20,7 +20,8 @@ export const Number = React.memo<{field: Field}>(({field}) => {
             field.tagKey,
             newVal
               .replace(/[^0-9.-]/g, '') // Allow digits, decimal, and negative sign
-              .replace(/(?!^)-/g, ''), // Remove any minus sign that is not at the start
+              .replace(/(?!^)-/g, '') // Remove any minus sign that is not at the start
+              .replace(/(\..*?)\./g, '$1'), // Remove additional decimal points
           )
         }
         keyboardType="numeric"

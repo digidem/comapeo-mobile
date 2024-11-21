@@ -117,7 +117,7 @@
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
-    "@comapeo/core": "2.1.0",
+    "@comapeo/core": "2.2.0",
     "@comapeo/schema": "1.2.0",
     "@formatjs/cli": "^6.2.0",
     "@react-native-community/cli": "^12.3.6",

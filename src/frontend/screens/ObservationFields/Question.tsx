@@ -3,6 +3,7 @@ import React from 'react';
 import {SelectOne} from './SelectOne';
 import {SelectMultiple} from './SelectMultiple';
 import {TextArea} from './TextArea';
+import {Number} from './Number';
 import {Field} from '@comapeo/schema';
 import {
   SelectMultipleField,
@@ -20,6 +21,10 @@ export const Question = ({field}: QuestionProps) => {
 
   if (field.type === 'selectMultiple' && Array.isArray(field.options)) {
     return <SelectMultiple field={field as SelectMultipleField} />;
+  }
+
+  if (field.type === 'number') {
+    return <Number field={field} />;
   }
 
   return <TextArea field={field} />;

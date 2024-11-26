@@ -52,7 +52,7 @@
     "@types/luxon": "^3.4.2",
     "assert": "2.1.0",
     "buffer": "^6.0.3",
-    "cheap-ruler": "^3.0.2",
+    "cheap-ruler": "4.0.0",
     "eventemitter3": "^5.0.1",
     "expo": "~50.0.20",
     "expo-application": "~5.8.4",

@@ -111,7 +111,7 @@
     "utm": "^1.1.1",
     "valibot": "^0.42.1",
     "validate-color": "^2.2.4",
-    "zustand": "^4.4.6"
+    "zustand": "5.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

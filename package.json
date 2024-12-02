@@ -37,7 +37,7 @@
     "@formatjs/intl-relativetimeformat": "11.4.5",
     "@gorhom/bottom-sheet": "5.0.6",
     "@osm_borders/maritime_10000m": "^1.1.0",
-    "@react-native-community/hooks": "^2.8.0",
+    "@react-native-community/hooks": "3.0.0",
     "@react-native-community/netinfo": "11.4.1",
     "@react-native-picker/picker": "2.10.1",
     "@react-navigation/bottom-tabs": "^6.3.1",

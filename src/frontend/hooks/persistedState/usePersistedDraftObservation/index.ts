@@ -1,5 +1,4 @@
-import {StateCreator} from 'zustand';
-import {createPersistedState} from '../createPersistedState';
+import {createPersistedStore} from '../createPersistedState';
 import {DraftPhoto, Photo} from '../../../contexts/PhotoPromiseContext/types';
 import {Audio, UnsavedAudio} from '../../../sharedTypes/audio';
 import {deletePhoto, replaceDraftPhotos} from './photosMethods';
@@ -12,6 +11,7 @@ import {
   isAudioAttachment,
   isUnsavedAudio,
 } from '../../../lib/attachmentTypeChecks';
+import {useStore} from 'zustand';
 
 const emptyObservation: ClientGeneratedObservation = {
   lat: 0,
@@ -23,7 +23,7 @@ const emptyObservation: ClientGeneratedObservation = {
   attachments: [],
 };
 
-export type DraftObservationSlice = {
+export type DraftObservationStoreState = {
   attachments: (Photo | Audio)[];
   value: Observation | null | ClientGeneratedObservation;
   observationId?: string;
@@ -63,187 +63,198 @@ export type DraftObservationSlice = {
   };
 };
 
-const draftObservationSlice: StateCreator<DraftObservationSlice> = (
-  set,
-  get,
-) => ({
-  attachments: [],
-  value: null,
-  actions: {
-    deletePhoto: uri => deletePhoto(set, get, uri),
-    addPhotoPlaceholder: draftPhotoId =>
-      set({
-        attachments: [
-          ...get().attachments,
-          {type: 'unprocessed', draftPhotoId},
-        ],
-      }),
-    replacePhotoPlaceholderWithPhoto: draftPhoto =>
-      replaceDraftPhotos(set, get, draftPhoto),
-    clearDraft: () => {
-      set({
-        attachments: [],
-        value: null,
-        observationId: undefined,
-        preset: undefined,
-      });
-    },
-    updateObservationPosition: props => {
-      const prevValue = get().value;
-      if (!prevValue)
-        throw new Error(
-          'cannot update the draft position until a draft has been initialized',
-        );
-
-      if (props.manualLocation) {
-        set({
-          value: {
-            ...prevValue,
-            lon: props.position.coords.longitude,
-            lat: props.position.coords.latitude,
-            metadata: {
-              manualLocation: props.manualLocation,
-            },
-          },
-        });
-      } else {
-        set({
-          value: {
-            ...prevValue,
-            lon: props.position?.coords?.longitude,
-            lat: props.position?.coords?.latitude,
-            metadata: {
-              ...prevValue.metadata,
-              position: props.position,
-              manualLocation: props.manualLocation,
-            },
-          },
-        });
-      }
-    },
-    existingObservationToDraft: (observation, preset) => {
-      const photos = observation.attachments.filter(isSavedPhoto);
-
-      const audios = observation.attachments.filter(isAudioAttachment);
-
-      set({
-        value: observation,
-        observationId: observation.docId,
-        attachments: [...photos, ...audios],
-        preset,
-      });
-    },
-    newDraft: () => {
-      get().actions.clearDraft();
-      set({
-        value: emptyObservation,
-      });
-    },
-    updateTags: (tagKey, tagValue) => {
-      const prevValue = get().value;
-      if (!prevValue)
-        throw new Error(
-          'cannot update the tags until a draft has been initialized and a preset has been chosem',
-        );
-
-      set({
-        value: {
-          ...prevValue,
-          tags: {
-            ...prevValue.tags,
-            [tagKey]: tagValue,
-          },
+export const draftObservationStore =
+  createPersistedStore<DraftObservationStoreState>(
+    (set, get) => ({
+      attachments: [],
+      value: null,
+      actions: {
+        deletePhoto: uri => deletePhoto(set, get, uri),
+        addPhotoPlaceholder: draftPhotoId =>
+          set({
+            attachments: [
+              ...get().attachments,
+              {type: 'unprocessed', draftPhotoId},
+            ],
+          }),
+        replacePhotoPlaceholderWithPhoto: draftPhoto =>
+          replaceDraftPhotos(set, get, draftPhoto),
+        clearDraft: () => {
+          set({
+            attachments: [],
+            value: null,
+            observationId: undefined,
+            preset: undefined,
+          });
         },
-      });
-      return;
-    },
-    updatePreset: preset => {
-      const prevValue = get().value;
-      const prevPreset = get().preset;
-      if (!prevValue) {
-        set({
-          preset,
-          value: {
-            ...emptyObservation,
-            tags: {
-              ...preset.tags,
-              ...preset.addTags,
-            },
-          },
-        });
-        return;
-      }
-      if (!prevPreset) {
-        set({
-          preset,
-          value: {
-            ...prevValue,
-            tags: {
-              ...prevValue.tags,
-              ...preset.tags,
-              ...preset.addTags,
-            },
-          },
-        });
-        return;
-      }
-      // Apply tags from new preset and remove tags from previous preset
-      const newTags: Observation['tags'] = {...preset.tags, ...preset.addTags};
-      for (const [key, value] of Object.entries(prevValue.tags)) {
-        const tagWasFromPrevPreset =
-          prevPreset.tags[key] === value || prevPreset.addTags[key] === value;
-        const shouldRemoveTag = preset.removeTags[key] === value;
-        // Only keep tags that were not from the previous preset and are not removed by the new preset
-        if (!tagWasFromPrevPreset && !shouldRemoveTag) {
-          newTags[key] = value;
-        }
-      }
+        updateObservationPosition: props => {
+          const prevValue = get().value;
+          if (!prevValue)
+            throw new Error(
+              'cannot update the draft position until a draft has been initialized',
+            );
 
-      set({
-        preset,
-        value: {
-          ...prevValue,
-          tags: newTags,
-        },
-      });
-    },
-    addAudio: (audio: UnsavedAudio) => {
-      set({attachments: [...get().attachments, audio]});
-    },
-    deleteAudio: (uri: string, isSavedAudioUrl: boolean) => {
-      if (isSavedAudioUrl) {
-        const url = new URL(uri);
-        const pathSegments = url.pathname.split('/').filter(Boolean);
-        const blobsIndex = pathSegments.findIndex(
-          segment => segment === 'blobs',
-        );
-        const driveDiscoveryId = pathSegments[blobsIndex + 2];
-        const name = pathSegments[pathSegments.length - 1];
-        const updatedAttachments = get().attachments.map(attachment => {
-          if (
-            isAudioAttachment(attachment) &&
-            attachment.driveDiscoveryId === driveDiscoveryId &&
-            attachment.name === name
-          ) {
-            return {...attachment, deleted: true};
+          if (props.manualLocation) {
+            set({
+              value: {
+                ...prevValue,
+                lon: props.position.coords.longitude,
+                lat: props.position.coords.latitude,
+                metadata: {
+                  manualLocation: props.manualLocation,
+                },
+              },
+            });
+          } else {
+            set({
+              value: {
+                ...prevValue,
+                lon: props.position?.coords?.longitude,
+                lat: props.position?.coords?.latitude,
+                metadata: {
+                  ...prevValue.metadata,
+                  position: props.position,
+                  manualLocation: props.manualLocation,
+                },
+              },
+            });
           }
-          return attachment;
-        });
-        set({attachments: updatedAttachments});
-      } else {
-        const updatedAttachments = get().attachments.filter(attachment => {
-          return !(isUnsavedAudio(attachment) && attachment.uri === uri);
-        });
-        set({attachments: updatedAttachments});
-      }
-    },
-  },
-});
+        },
+        existingObservationToDraft: (observation, preset) => {
+          const photos = observation.attachments.filter(isSavedPhoto);
 
-export const usePersistedDraftObservation = createPersistedState(
-  draftObservationSlice,
-  '@MapeoDraft',
-);
+          const audios = observation.attachments.filter(isAudioAttachment);
+
+          set({
+            value: observation,
+            observationId: observation.docId,
+            attachments: [...photos, ...audios],
+            preset,
+          });
+        },
+        newDraft: () => {
+          get().actions.clearDraft();
+          set({
+            value: emptyObservation,
+          });
+        },
+        updateTags: (tagKey, tagValue) => {
+          const prevValue = get().value;
+          if (!prevValue)
+            throw new Error(
+              'cannot update the tags until a draft has been initialized and a preset has been chosem',
+            );
+
+          set({
+            value: {
+              ...prevValue,
+              tags: {
+                ...prevValue.tags,
+                [tagKey]: tagValue,
+              },
+            },
+          });
+          return;
+        },
+        updatePreset: preset => {
+          const prevValue = get().value;
+          const prevPreset = get().preset;
+          if (!prevValue) {
+            set({
+              preset,
+              value: {
+                ...emptyObservation,
+                tags: {
+                  ...preset.tags,
+                  ...preset.addTags,
+                },
+              },
+            });
+            return;
+          }
+          if (!prevPreset) {
+            set({
+              preset,
+              value: {
+                ...prevValue,
+                tags: {
+                  ...prevValue.tags,
+                  ...preset.tags,
+                  ...preset.addTags,
+                },
+              },
+            });
+            return;
+          }
+          // Apply tags from new preset and remove tags from previous preset
+          const newTags: Observation['tags'] = {
+            ...preset.tags,
+            ...preset.addTags,
+          };
+          for (const [key, value] of Object.entries(prevValue.tags)) {
+            const tagWasFromPrevPreset =
+              prevPreset.tags[key] === value ||
+              prevPreset.addTags[key] === value;
+            const shouldRemoveTag = preset.removeTags[key] === value;
+            // Only keep tags that were not from the previous preset and are not removed by the new preset
+            if (!tagWasFromPrevPreset && !shouldRemoveTag) {
+              newTags[key] = value;
+            }
+          }
+
+          set({
+            preset,
+            value: {
+              ...prevValue,
+              tags: newTags,
+            },
+          });
+        },
+        addAudio: (audio: UnsavedAudio) => {
+          set({attachments: [...get().attachments, audio]});
+        },
+        deleteAudio: (uri: string, isSavedAudioUrl: boolean) => {
+          if (isSavedAudioUrl) {
+            const url = new URL(uri);
+            const pathSegments = url.pathname.split('/').filter(Boolean);
+            const blobsIndex = pathSegments.findIndex(
+              segment => segment === 'blobs',
+            );
+            const driveDiscoveryId = pathSegments[blobsIndex + 2];
+            const name = pathSegments[pathSegments.length - 1];
+            const updatedAttachments = get().attachments.map(attachment => {
+              if (
+                isAudioAttachment(attachment) &&
+                attachment.driveDiscoveryId === driveDiscoveryId &&
+                attachment.name === name
+              ) {
+                return {...attachment, deleted: true};
+              }
+              return attachment;
+            });
+            set({attachments: updatedAttachments});
+          } else {
+            const updatedAttachments = get().attachments.filter(attachment => {
+              return !(isUnsavedAudio(attachment) && attachment.uri === uri);
+            });
+            set({attachments: updatedAttachments});
+          }
+        },
+      },
+    }),
+    '@MapeoDraft',
+  );
+
+// Taken from https://github.com/pmndrs/zustand/blob/main/docs/guides/typescript.md#bounded-usestore-hook-for-vanilla-stores
+export function usePersistedDraftObservation(): DraftObservationStoreState;
+export function usePersistedDraftObservation<T>(
+  selector: (state: DraftObservationStoreState) => T,
+): T;
+export function usePersistedDraftObservation<T>(
+  selector?: (state: DraftObservationStoreState) => T,
+) {
+  return useStore(draftObservationStore, selector!);
+}
 
 export const usePreset = () => {
   const {data: presets} = usePresetsQuery();

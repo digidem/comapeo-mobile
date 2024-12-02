@@ -6,6 +6,7 @@ import {FeatureCollection, LineString} from 'geojson';
 
 import {type CoordinateFormat} from '../sharedTypes';
 import {LocationHistoryPoint} from '../sharedTypes/location';
+import mapObject, {mapObjectSkip} from 'map-obj';
 
 // import type {
 //   ObservationValue,
@@ -316,3 +317,25 @@ export const convertToLineString = (
     ]),
   };
 };
+
+export function nullToUndefined<T extends Record<string, any>>(
+  value: T,
+): NullToUndefined<T> {
+  // @ts-expect-error
+  return mapObject(
+    value,
+    (key, val) => {
+      if (typeof key !== 'string') return mapObjectSkip;
+      return [key, val];
+    },
+    {deep: true},
+  );
+}
+
+export type NullToUndefined<T> = T extends (...args: any[]) => any
+  ? T // Keep functions as is
+  : T extends object
+    ? {[K in keyof T]: NullToUndefined<T[K]>}
+    : T extends null
+      ? undefined
+      : T;

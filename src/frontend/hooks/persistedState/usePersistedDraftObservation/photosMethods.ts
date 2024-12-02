@@ -1,9 +1,9 @@
 import {StoreApi} from 'zustand';
 import {DraftPhoto} from '../../../contexts/PhotoPromiseContext/types';
-import {DraftObservationSlice} from '.';
+import {DraftObservationStoreState} from '.';
 
-type Setter = StoreApi<DraftObservationSlice>['setState'];
-type Getter = StoreApi<DraftObservationSlice>['getState'];
+type Setter = StoreApi<DraftObservationStoreState>['setState'];
+type Getter = StoreApi<DraftObservationStoreState>['getState'];
 
 export function deletePhoto(set: Setter, get: Getter, uri: string) {
   const newAttachments = get().attachments.filter(

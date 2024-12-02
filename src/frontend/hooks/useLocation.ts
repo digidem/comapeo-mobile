@@ -6,6 +6,7 @@ import {
   Accuracy,
 } from 'expo-location';
 import React, {useEffect} from 'react';
+import {nullToUndefined, type NullToUndefined} from '../lib/utils.ts';
 
 interface LocationOptions {
   /** Only update location if it has changed by at least this distance in meters (or maxTimeInterval has passed) */
@@ -19,7 +20,7 @@ interface LocationOptions {
 }
 
 export interface LocationState {
-  location: LocationObject | undefined;
+  location: NullToUndefined<LocationObject> | undefined;
   error: Error | undefined;
 }
 
@@ -49,9 +50,12 @@ export function useLocation({
         minTimeInterval,
         maxTimeInterval,
         maxDistanceInterval,
-      })(location => {
-        if (ignore) return;
-        setLocation({location, error: undefined});
+      })(nextLocation => {
+        if (ignore || !nextLocation) return;
+        setLocation({
+          location: nullToUndefined(nextLocation),
+          error: undefined,
+        });
       }),
     );
 

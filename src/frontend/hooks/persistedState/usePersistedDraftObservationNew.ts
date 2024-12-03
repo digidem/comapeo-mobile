@@ -1,7 +1,8 @@
 import {
-  valueOf,
+  type MapeoDoc,
   type Observation,
   type ObservationValue,
+  type Preset,
 } from '@comapeo/schema';
 import {createPersistedStore} from './createPersistedState.ts';
 import type {LocationObject, LocationProviderStatus} from 'expo-location';
@@ -70,8 +71,16 @@ type DraftStateEmpty = {
   unsavedAttachments: null;
 };
 
+type ObservationWithPreset = Exclude<Observation, 'presetRef'> & {
+  presetRef?: Preset;
+};
+
+type ObservationValueWithPreset = Exclude<ObservationValue, 'presetRef'> & {
+  presetRef?: Preset;
+};
+
 type DraftStatePopulated = {
-  value: ObservationValue;
+  value: ObservationValueWithPreset;
   id: {docId: string; versionId: string} | null;
   unsavedAttachments: Map<number, UnsavedAttachment>;
 };
@@ -84,7 +93,7 @@ const THUMBNAIL_COMPRESSION = 0.3;
 const PREVIEW_SIZE = 1200;
 const PREVIEW_COMPRESSION = 0.3;
 
-function createEmptyObservationValue(): ObservationValue {
+function createEmptyObservationValue(): ObservationValueWithPreset {
   return {
     schemaName: 'observation',
     lat: 0,
@@ -296,7 +305,7 @@ export function createDraftObservationStore() {
     });
   }
 
-  function createDraft(observation?: Observation) {
+  function createDraft(observation?: ObservationWithPreset) {
     if (observation) {
       store.setState({
         value: valueOf(observation),
@@ -361,13 +370,39 @@ export function createDraftObservationStore() {
     });
   }
 
-  function updatePreset(presetRef: {docId: string; versionId: string}) {
-    // TODO: Need the hellish code to update tags based on preset change
+  function updatePreset(preset: Preset) {
     setAssertDraft(prev => {
+      const prevPreset = prev.value.presetRef;
+      if (!prevPreset) {
+        return {
+          value: {
+            ...prev.value,
+            presetRef: preset,
+            tags: {
+              ...prev.value.tags,
+              ...preset.tags,
+              ...preset.addTags,
+            },
+          },
+        };
+      }
+      // Apply tags from new preset and remove tags from previous preset
+      const newTags: Observation['tags'] = {...preset.tags, ...preset.addTags};
+      for (const [key, value] of Object.entries(prev.value.tags)) {
+        const tagWasFromPrevPreset =
+          prevPreset.tags[key] === value || prevPreset.addTags[key] === value;
+        const shouldRemoveTag = preset.removeTags[key] === value;
+        // Only keep tags that were not from the previous preset and are not removed by the new preset
+        if (!tagWasFromPrevPreset && !shouldRemoveTag) {
+          newTags[key] = value;
+        }
+      }
+
       return {
         value: {
           ...prev.value,
-          presetRef: presetRef,
+          presetRef: preset,
+          tags: newTags,
         },
       };
     });
@@ -446,4 +481,18 @@ function convertPosition(location: LocationObject | ManualPosition): Position {
         ? new Date(location.timestamp).toISOString()
         : new Date().toISOString(),
   };
+}
+
+// TODO: Move this to @mapeo/schema - the current version is not flexible enough
+function valueOf<T extends MapeoDoc>(doc: T & {forks?: string[]}) {
+  return excludeKeys(doc, [
+    'docId',
+    'versionId',
+    'originalVersionId',
+    'links',
+    'forks',
+    'createdAt',
+    'updatedAt',
+    'deleted',
+  ]);
 }

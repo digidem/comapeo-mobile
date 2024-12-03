@@ -69,6 +69,7 @@ type DraftStateEmpty = {
   value: null;
   id: null;
   unsavedAttachments: null;
+  initialPosition: null;
 };
 
 type ObservationWithPreset = Exclude<Observation, 'presetRef'> & {
@@ -83,6 +84,9 @@ export type DraftStatePopulated = {
   value: ObservationValueWithPreset;
   id: {docId: string; versionId: string} | null;
   unsavedAttachments: Map<number, UnsavedAttachment>;
+  /** Initial (first) position of an observation. Not currently persisted, but
+   * used for checking if the user moves away from the original location */
+  initialPosition: Position | null;
 };
 
 export type DraftState = DraftStateEmpty | DraftStatePopulated;
@@ -92,6 +96,15 @@ const THUMBNAIL_SIZE = 400;
 const THUMBNAIL_COMPRESSION = 0.3;
 const PREVIEW_SIZE = 1200;
 const PREVIEW_COMPRESSION = 0.3;
+
+function createEmptyStoreState(): DraftStateEmpty {
+  return {
+    value: null,
+    id: null,
+    unsavedAttachments: null,
+    initialPosition: null,
+  };
+}
 
 function createEmptyObservationValue(): ObservationValueWithPreset {
   return {
@@ -126,11 +139,7 @@ export function createDraftObservationStore() {
   let nextAttachmentId = 0;
 
   const store = createPersistedStore<DraftState>(
-    () => ({
-      value: null,
-      id: null,
-      unsavedAttachments: null,
-    }),
+    () => createEmptyStoreState(),
     '@MapeoDraft',
   );
 
@@ -298,26 +307,30 @@ export function createDraftObservationStore() {
   }
 
   function clearDraft() {
-    store.setState({
-      value: null,
-      id: null,
-      unsavedAttachments: null,
-    });
+    store.setState(createEmptyStoreState(), true);
   }
 
   function createDraft(observation?: ObservationWithPreset) {
     if (observation) {
-      store.setState({
-        value: valueOf(observation),
-        id: {docId: observation.docId, versionId: observation.versionId},
-        unsavedAttachments: new Map(),
-      });
+      store.setState(
+        {
+          value: valueOf(observation),
+          id: {docId: observation.docId, versionId: observation.versionId},
+          unsavedAttachments: new Map(),
+          initialPosition: null,
+        },
+        true,
+      );
     } else {
-      store.setState({
-        value: createEmptyObservationValue(),
-        id: null,
-        unsavedAttachments: new Map(),
-      });
+      store.setState(
+        {
+          value: createEmptyObservationValue(),
+          id: null,
+          unsavedAttachments: new Map(),
+          initialPosition: null,
+        },
+        true,
+      );
     }
   }
 
@@ -326,7 +339,8 @@ export function createDraftObservationStore() {
       | {
           manualLocation: false;
           position: LocationObject;
-          positionProvider: LocationProviderStatus;
+          // TODO: Optional for now until we integrate this into the draft observation location updater
+          positionProvider?: LocationProviderStatus;
         }
       | {
           manualLocation: true;
@@ -461,7 +475,9 @@ function getPhotoRotation(acc?: AccelerometerMeasurement) {
   return rotation;
 }
 
-function convertPosition(location: LocationObject | ManualPosition): Position {
+export function convertPosition(
+  location: LocationObject | ManualPosition,
+): Position {
   const {coords} = location;
   return {
     coords: {

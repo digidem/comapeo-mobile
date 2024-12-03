@@ -38,8 +38,8 @@ function defaultSelector(state: DraftState) {
   return state;
 }
 
-export function useDraftObservation(
-  selector: (state: DraftState) => Partial<DraftState> = defaultSelector,
+export function useDraftObservation<S = DraftState>(
+  selector: (state: DraftState) => S = defaultSelector as any,
 ) {
   const {store} = useDraftObservationContext();
   const draftObservation = useStore(store, selector);

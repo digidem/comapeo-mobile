@@ -76,7 +76,7 @@ type DraftStatePopulated = {
   unsavedAttachments: Map<number, UnsavedAttachment>;
 };
 
-type DraftState = DraftStateEmpty | DraftStatePopulated;
+export type DraftState = DraftStateEmpty | DraftStatePopulated;
 
 const ORIGINAL_COMPRESSION = 0.75;
 const THUMBNAIL_SIZE = 400;

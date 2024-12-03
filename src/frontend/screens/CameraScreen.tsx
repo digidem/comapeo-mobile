@@ -3,24 +3,26 @@ import {View, StyleSheet} from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 
 import {CameraView} from '../sharedComponents/CameraView';
-import {PhotoPromiseWithMetadata} from '../contexts/PhotoPromiseContext/types';
-import {useDraftObservation} from '../hooks/useDraftObservation';
 import {NativeHomeTabsNavigationProps} from '../sharedTypes/navigation';
+import {useDraftObservationActions} from '../hooks/draftObservation';
 
 export const CameraScreen = ({
   navigation,
 }: NativeHomeTabsNavigationProps<'Camera'>) => {
   const isFocused = useIsFocused();
-  const {newDraft} = useDraftObservation();
-
-  function handleAddPress(capture: PhotoPromiseWithMetadata) {
-    newDraft(capture);
-    navigation.navigate('PresetChooser');
-  }
+  const {createDraft, addPhoto} = useDraftObservationActions();
 
   return (
     <View style={styles.container}>
-      {isFocused ? <CameraView onAddPress={handleAddPress} /> : null}
+      {isFocused ? (
+        <CameraView
+          onAddPress={(capturePromise, metadata) => {
+            createDraft();
+            addPhoto(capturePromise, metadata);
+            navigation.navigate('PresetChooser');
+          }}
+        />
+      ) : null}
     </View>
   );
 };

@@ -43,7 +43,7 @@ type UnsavedPhotoAttachment = {
   abortController: AbortController;
 };
 
-type PhotoMetadata = Pick<
+export type PhotoMetadata = Pick<
   UnsavedPhotoAttachment,
   'location' | 'accelerometer' | 'timestamp'
 >;

@@ -5,9 +5,8 @@ import debug from 'debug';
 import {defineMessages, FormattedMessage} from 'react-intl';
 
 import {CameraView} from '../sharedComponents/CameraView';
-import {useDraftObservation} from '../hooks/useDraftObservation';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
-import {PhotoPromiseWithMetadata} from '../contexts/PhotoPromiseContext/types';
+import {useDraftObservationActions} from '../hooks/draftObservation';
 
 const m = defineMessages({
   cancel: {
@@ -21,13 +20,7 @@ const log = debug('AddPhotoScreen');
 export const AddPhotoScreen = ({
   navigation,
 }: NativeRootNavigationProps<'AddPhoto'>) => {
-  const {addPhoto} = useDraftObservation();
-
-  const handleAddPress = (capture: PhotoPromiseWithMetadata) => {
-    log('pressed add button');
-    addPhoto(capture);
-    navigation.pop();
-  };
+  const {addPhoto} = useDraftObservationActions();
 
   const handleCancelPress = () => {
     log('cancelled');
@@ -36,7 +29,13 @@ export const AddPhotoScreen = ({
 
   return (
     <View style={styles.container}>
-      <CameraView onAddPress={handleAddPress} />
+      <CameraView
+        onAddPress={(capturePromise, metadata) => {
+          log('pressed add photo');
+          addPhoto(capturePromise, metadata);
+          navigation.pop();
+        }}
+      />
       <TouchableNativeFeedback onPress={handleCancelPress}>
         <View style={styles.cancelButton}>
           <Text style={styles.cancelButtonLabel}>

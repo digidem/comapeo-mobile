@@ -935,6 +935,9 @@
     "description": "Button to share an observation",
     "message": "Share"
   },
+  "screens.Observation.TrackList.track": {
+    "message": "Track"
+  },
   "screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
     "message": "Cancel"
@@ -1562,6 +1565,9 @@
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
     "message": "Waiting for devices"
   },
+  "screens.Track.ObservationList.observation": {
+    "message": "Observation"
+  },
   "screens.Track.ObservationList.observations": {
     "message": "Observations"
   },
@@ -1657,12 +1663,5 @@
   },
   "sharedComponents.RoleWithIcon.participant": {
     "message": "Participant"
-  },
-  "sharedComponents.WifiBar.noWifi": {
-    "message": "No Internet"
-  },
-  "sharedComponents.WifiBar.wifi": {
-    "description": "Label for wifi network name",
-    "message": "WiFi:"
   }
 }

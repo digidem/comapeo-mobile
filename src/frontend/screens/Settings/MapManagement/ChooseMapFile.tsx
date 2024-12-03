@@ -2,10 +2,11 @@ import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 
-import {MEDIUM_GREY, RED} from '../../../lib/styles';
+import {NEW_DARK_GREY, RED} from '../../../lib/styles';
 import {Button} from '../../../sharedComponents/Button';
-import {Text} from '../../../sharedComponents/Text';
 import {DownloadIcon} from '../../../sharedComponents/icons';
+import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   chooseFile: {
@@ -27,14 +28,19 @@ export function ChooseMapFile({onChooseFile}: {onChooseFile: () => void}) {
         <View style={styles.buttonContentContainer}>
           <DownloadIcon size={24} />
           <View>
-            <Text style={styles.buttonTextBase}>
+            <HeaderText variant="header5" style={styles.buttonTextBase}>
               {t(m.chooseFile)}
-              <Text style={styles.asteriskText}> *</Text>
-            </Text>
+              <HeaderText variant="header5" style={styles.asteriskText}>
+                {' '}
+                *
+              </HeaderText>
+            </HeaderText>
           </View>
         </View>
       </Button>
-      <Text style={styles.fileTypeText}>{t(m.acceptedFileTypes)}</Text>
+      <BodyText variant="smallMeta" style={styles.fileTypeText}>
+        {t(m.acceptedFileTypes)}
+      </BodyText>
     </View>
   );
 }
@@ -49,17 +55,13 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   buttonTextBase: {
-    fontWeight: '700',
     letterSpacing: 0.5,
-    fontSize: 18,
   },
   asteriskText: {
-    fontSize: 18,
     color: RED,
   },
   fileTypeText: {
-    color: MEDIUM_GREY,
-    fontSize: 14,
     textAlign: 'center',
+    color: NEW_DARK_GREY,
   },
 });

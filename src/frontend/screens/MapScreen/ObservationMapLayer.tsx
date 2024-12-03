@@ -1,13 +1,13 @@
 import React from 'react';
 import MapboxGL from '@rnmapbox/maps';
 
-import {useObservations} from '../../../hooks/server/observations.ts';
-import {usePresetsQuery} from '../../../hooks/server/presets.ts';
-import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes.ts';
+import {useObservations} from '../../hooks/server/observations';
+import {usePresetsQuery} from '../../hooks/server/presets';
+import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import {
   createObservationMapLayerStyle,
   observationsToFeatureCollection,
-} from '../../../lib/ObservationMapLayer.ts';
+} from '../../lib/ObservationMapLayer.ts';
 
 export const ObservationMapLayer = () => {
   const {data: observations} = useObservations();

@@ -1,4 +1,5 @@
-import {StyleSheet, View, useWindowDimensions} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import {useDimensions} from '@react-native-community/hooks';
 import {defineMessages, useIntl} from 'react-intl';
 
 import {useLocalDiscoveryState} from '../../hooks/useLocalDiscoveryState';
@@ -16,7 +17,7 @@ const m = defineMessages({
 
 export function HeaderTitle() {
   const {formatMessage: t} = useIntl();
-  const {width: screenWidth} = useWindowDimensions();
+  const screenWidth = useDimensions().screen.width;
   const ssid = useLocalDiscoveryState(state => state.ssid);
 
   const WifiIconComponent = ssid ? WifiIcon : WifiOffIcon;

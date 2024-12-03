@@ -58,18 +58,7 @@
         }
       ],
       ["./expo-config-plugins/removeExpoInputStyles.js"],
-      ["./expo-config-plugins/targetArmArchsOnly.js"],
-      [
-        "react-native-share",
-        {
-          "android": [
-            "com.facebook.katana",
-            "com.instagram.android",
-            "com.twitter.android",
-            "com.zhiliaoapp.musically"
-          ]
-        }
-      ]
+      ["./expo-config-plugins/targetArmArchsOnly.js"]
     ],
     "android": {
       "allowBackup": false,

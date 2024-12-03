@@ -5,6 +5,7 @@ import * as semver from 'semver';
 describe('frontend package.json', () => {
   let frontendMapeoDependencies: Record<string, string>;
   let backendMapeoDependencies: Record<string, string>;
+  let allDependencies: Record<string, string>;
 
   beforeAll(async () => {
     const rootPath = path.resolve(__dirname, '..', '..');
@@ -15,10 +16,12 @@ describe('frontend package.json', () => {
       'backend',
       'package.json',
     );
-    [frontendMapeoDependencies, backendMapeoDependencies] = await Promise.all([
-      readMapeoDependencies(frontendPackageJsonPath),
-      readMapeoDependencies(backendPackageJsonPath),
-    ]);
+    [frontendMapeoDependencies, backendMapeoDependencies, allDependencies] =
+      await Promise.all([
+        readMapeoDependencies(frontendPackageJsonPath),
+        readMapeoDependencies(backendPackageJsonPath),
+        readAllDependencies(frontendPackageJsonPath),
+      ]);
   });
 
   it('uses exact versions for @mapeo dependencies', () => {
@@ -37,6 +40,13 @@ describe('frontend package.json', () => {
       expect(semver.satisfies(frontendVersion, backendVersion)).toBe(true);
     }
   });
+
+  it('all front end dependencies use exact version', () => {
+    for (const version of Object.values(allDependencies)) {
+      const isExact = semver.valid(version) !== null;
+      expect(isExact).toBe(true);
+    }
+  });
 });
 
 async function readMapeoDependencies(
@@ -53,4 +63,17 @@ async function readMapeoDependencies(
       dependency.startsWith('@mapeo/') || dependency.startsWith('@comapeo/'),
   );
   return Object.fromEntries(mapeoEntries);
+}
+
+async function readAllDependencies(
+  packageJsonPath: string,
+): Promise<Record<string, string>> {
+  const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
+  const {dependencies = {}, devDependencies = {}} = packageJson;
+  const allDependencies: Record<string, string> = {
+    ...dependencies,
+    ...devDependencies,
+  };
+
+  return allDependencies;
 }

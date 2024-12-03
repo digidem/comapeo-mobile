@@ -79,7 +79,7 @@ type ObservationValueWithPreset = Exclude<ObservationValue, 'presetRef'> & {
   presetRef?: Preset;
 };
 
-type DraftStatePopulated = {
+export type DraftStatePopulated = {
   value: ObservationValueWithPreset;
   id: {docId: string; versionId: string} | null;
   unsavedAttachments: Map<number, UnsavedAttachment>;

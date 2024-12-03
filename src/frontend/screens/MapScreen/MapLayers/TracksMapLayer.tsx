@@ -3,11 +3,11 @@ import * as React from 'react';
 import {StyleSheet} from 'react-native';
 
 import {FeatureCollection} from 'geojson';
-import {BLACK} from '../../lib/styles';
-import {useTracks} from '../../hooks/server/track';
+import {BLACK} from '../../../lib/styles';
+import {useTracks} from '../../../hooks/server/track';
 import {Track} from '@comapeo/schema';
 import {OnPressEvent} from '@rnmapbox/maps/lib/typescript/src/types/OnPressEvent';
-import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
+import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes';
 
 export const TracksMapLayer = () => {
   const {data: tracks} = useTracks();

@@ -98,7 +98,7 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
           },
         ]
       : []),
-    ...(process.env.EXPO_PUBLIC_FEATURE_MEDIA_MANAGER
+    ...(true // process.env.EXPO_PUBLIC_FEATURE_MEDIA_MANAGER
       ? [
           {
             onPress: () => {

@@ -13,6 +13,10 @@ import {
   BottomSheetModal,
 } from '../../../sharedComponents/BottomSheetModal';
 import {MediaSyncSetting} from '../../../sharedTypes';
+import {
+  NativeNavigationComponent,
+  NativeRootNavigationProps,
+} from '../../../sharedTypes/navigation';
 
 const m = defineMessages({
   syncSettingsTitle: {
@@ -69,29 +73,21 @@ const m = defineMessages({
   },
 });
 
-export const MediaSyncSettings = () => {
+export const MediaSyncSettings = ({
+  navigation,
+}: NativeRootNavigationProps<'MediaSyncSettings'>) => {
   const {formatMessage: t} = useIntl();
   const mediaSyncSetting = usePersistedSettings(
     store => store.mediaSyncSetting,
   );
-  const {setMediaSyncSetting} = usePersistedSettingsAction();
-
-  const [modalType, setModalType] = React.useState<MediaSyncSetting>(
-    () => mediaSyncSetting,
-  );
-
-  const {isOpen, openSheet, closeSheet, sheetRef} = useBottomSheetModal({
-    openOnMount: false,
-  });
 
   const handleOptionChange = (value: MediaSyncSetting) => {
-    setModalType(value);
-    openSheet();
-  };
-
-  const handleConfirm = () => {
-    setMediaSyncSetting(modalType);
-    closeSheet();
+    navigation.navigate('Modals', {
+      screen: 'MediaSyncModal',
+      params: {
+        value,
+      },
+    });
   };
 
   const options: {
@@ -126,35 +122,6 @@ export const MediaSyncSettings = () => {
         radioButtonPosition="right"
         color={SYNC_BACKGROUND}
       />
-      <BottomSheetModal ref={sheetRef} isOpen={isOpen}>
-        <MediaSyncActionSheetContent
-          title={
-            modalType === 'previews'
-              ? t(m.syncPreviewsBottomSheet)
-              : t(m.syncEverythingBottomSheet)
-          }
-          description={
-            modalType === 'previews' ? (
-              <>
-                {t(m.syncPreviewsDescriptionBottomSheet)}
-                {'\n\n'}
-                {t(m.syncPreviewWarningBottomSheet)}
-              </>
-            ) : (
-              t(m.syncEverythingDescriptionBottomSheet)
-            )
-          }
-          confirmActionText={
-            modalType === 'previews'
-              ? t(m.syncPreviewsBottomSheetConfirm)
-              : t(m.syncEverything)
-          }
-          confirmAction={handleConfirm}
-          onDismiss={() => {
-            closeSheet();
-          }}
-        />
-      </BottomSheetModal>
     </ScrollView>
   );
 };
@@ -164,5 +131,6 @@ MediaSyncSettings.navTitle = m.syncSettingsTitle;
 const styles = StyleSheet.create({
   container: {
     padding: 20,
+    backgroundColor: 'cyan',
   },
 });

@@ -382,6 +382,17 @@ export const createDefaultScreenGroup = ({
       component={RemoteArchiveOn}
       options={{headerTitle: intl(RemoteArchiveOn.navTitle)}}
     />
-    <RootStack.Screen name="Modals" component={ModalStackNavigator} />
+    <RootStack.Screen
+      name="Modals"
+      component={ModalStackNavigator}
+      options={{
+        presentation: 'transparentModal',
+        headerShown: false,
+        // animation: 'slide_from_bottom',
+        animation: 'none',
+        contentStyle: {backgroundColor: 'transparent'},
+        // animation: 'none',
+      }}
+    />
   </RootStack.Group>
 );

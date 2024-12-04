@@ -10,6 +10,7 @@ import {
   ProcessedDraftPhoto,
   SavedPhoto,
 } from '../contexts/PhotoPromiseContext/types';
+import {ModalScreens} from '../Navigation/Modal';
 
 export interface TabBarIconProps {
   size: number;
@@ -35,6 +36,7 @@ export type TabName = keyof HomeTabsParamsList;
 
 export type RootStackParamsList = {
   Home: NavigatorScreenParams<HomeTabsParamsList>;
+  Modals: NavigatorScreenParams<ModalScreens>;
   GpsModal: undefined;
   Settings: undefined;
   Config: undefined;

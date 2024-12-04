@@ -92,6 +92,7 @@ import {
   createNavigationOptions as createBackgroundMapsNavigationOptions,
   BackgroundMapsScreen,
 } from '../../screens/Settings/MapManagement/BackgroundMaps.tsx';
+import {ModalStackNavigator} from '../Modal/index.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -381,5 +382,6 @@ export const createDefaultScreenGroup = ({
       component={RemoteArchiveOn}
       options={{headerTitle: intl(RemoteArchiveOn.navTitle)}}
     />
+    <RootStack.Screen name="Modals" component={ModalStackNavigator} />
   </RootStack.Group>
 );

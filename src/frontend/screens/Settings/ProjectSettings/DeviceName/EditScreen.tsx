@@ -117,9 +117,13 @@ export const EditScreen = ({
 
       mutate(value.deviceName, {
         onSuccess: () => navigation.navigate('DeviceNameDisplay'),
+        onError: () => {
+          reset();
+          navigation.navigate('Modals', {screen: 'ErrorModal'});
+        },
       });
     });
-  }, [handleSubmit, mutate, nameHasChanges, navigation]);
+  }, [handleSubmit, mutate, nameHasChanges, navigation, reset]);
 
   React.useEffect(
     function updateNavigationOptions() {
@@ -159,7 +163,7 @@ export const EditScreen = ({
           />
         </FieldRow>
       </ScrollView>
-      <ErrorBottomSheet error={error} clearError={reset} tryAgain={onSubmit} />
+      {/* <ErrorBottomSheet error={error} clearError={reset} tryAgain={onSubmit} /> */}
     </>
   );
 };

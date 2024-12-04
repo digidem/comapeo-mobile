@@ -391,7 +391,6 @@ export const createDefaultScreenGroup = ({
         // animation: 'slide_from_bottom',
         animation: 'none',
         contentStyle: {backgroundColor: 'transparent'},
-        // animation: 'none',
       }}
     />
   </RootStack.Group>

@@ -23,6 +23,7 @@ export const useEditDeviceInfo = () => {
   return useMutation({
     mutationKey: ['device'],
     mutationFn: async (name: string) => {
+      throw new Error('Failed');
       return mapeoApi.setDeviceInfo({
         name,
         deviceType: expoToCoreDeviceType(deviceType),

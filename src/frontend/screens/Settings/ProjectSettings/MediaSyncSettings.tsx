@@ -75,11 +75,20 @@ const m = defineMessages({
 
 export const MediaSyncSettings = ({
   navigation,
+  route,
 }: NativeRootNavigationProps<'MediaSyncSettings'>) => {
   const {formatMessage: t} = useIntl();
-  const mediaSyncSetting = usePersistedSettings(
-    store => store.mediaSyncSetting,
-  );
+  // const mediaSyncSetting = usePersistedSettings(
+  //   store => store.mediaSyncSetting,
+  // );
+
+  const [mediaSyncSetting, setValue] =
+    React.useState<MediaSyncSetting>('previews');
+
+  React.useEffect(() => {
+    if (mediaSyncSetting === route.params.mediaSyncSetting) return;
+    else setValue(route.params.mediaSyncSetting);
+  }, [mediaSyncSetting, route.params.mediaSyncSetting]);
 
   const handleOptionChange = (value: MediaSyncSetting) => {
     navigation.navigate('Modals', {

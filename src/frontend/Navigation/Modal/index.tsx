@@ -9,11 +9,15 @@ import {View} from 'react-native';
 import {Button} from '../../sharedComponents/Button';
 import {MediaSyncSetting} from '../../sharedTypes';
 import {usePersistedSettingsAction} from '../../hooks/persistedState/usePersistedSettings';
+import {InviteInternal} from '@comapeo/core/dist/invite-api';
+import {MapBuffers} from '@comapeo/core/dist/types';
 
 export type ModalScreens = {
   MediaSyncModal: {
     value: MediaSyncSetting;
   };
+  InviteModalRoot: {invite: MapBuffers<InviteInternal>};
+  ErrorModal: undefined;
 };
 
 const ModalStack = createNativeStackNavigator<ModalScreens>();
@@ -33,9 +37,105 @@ export const ModalStackNavigator = () => {
         component={MediaSyncSettingsModal}
         name="MediaSyncModal"
       />
+      <ModalStack.Screen component={InviteModalRoot} name="InviteModalRoot" />
+      <ModalStack.Screen component={ErrorModal} name="ErrorModal" />
     </ModalStack.Navigator>
   );
 };
+
+function ErrorModal({
+  navigation,
+  route,
+}: NativeStackScreenProps<ModalScreens, 'ErrorModal'>) {
+  return (
+    <View
+      style={{
+        justifyContent: 'flex-end',
+        backgroundColor: 'white',
+        height: 400,
+        // flex: 1,
+      }}>
+      <View>
+        <BodyText>Error occurred</BodyText>
+        <Button
+          onPress={() => {
+            navigation.goBack();
+          }}>
+          <BodyText>Try Again</BodyText>
+        </Button>
+        <Button
+          onPress={() => {
+            navigation.goBack();
+          }}>
+          <BodyText>Go Back</BodyText>
+        </Button>
+      </View>
+    </View>
+  );
+}
+
+export type InviteScreens = {
+  Received: {invite: MapBuffers<InviteInternal>};
+  Accepted: {invite: MapBuffers<InviteInternal>};
+  Rejected: {invite: MapBuffers<InviteInternal>};
+  Cancelled: {invite: MapBuffers<InviteInternal>};
+};
+
+const InviteStack = createNativeStackNavigator<InviteScreens>();
+
+function InviteModalRoot({
+  route,
+  navigation,
+}: NativeStackScreenProps<ModalScreens, 'InviteModalRoot'>) {
+  const invite = route.params.invite;
+
+  // useInviteCancelledEffect(
+  //   invite => {
+  //     if (invite.id !== inviteId) return;
+  //     navigation.push('InviteCancelledScreen');
+  //   },
+  //   [inviteId],
+  // );
+
+  return (
+    <InviteStack.Navigator>
+      <InviteStack.Screen name="Received" component={InviteReceived} />
+      {/* <InviteStack.Screen name="Accepted" component={} /> */}
+    </InviteStack.Navigator>
+  );
+}
+
+function InviteReceived({
+  navigation,
+  route,
+}: NativeStackScreenProps<InviteScreens, 'Received'>) {
+  return (
+    <View
+      style={{
+        justifyContent: 'flex-end',
+        backgroundColor: 'white',
+        height: 400,
+      }}>
+      <View>
+        <BodyText>Invite Received</BodyText>
+        <Button
+          onPress={() => {
+            navigation.navigate('Accepted', {invite: route.params.invite});
+          }}>
+          <BodyText>Accept</BodyText>
+        </Button>
+        <Button
+          onPress={() => {
+            navigation.navigate('Rejected', {invite: route.params.invite});
+          }}>
+          <BodyText>Reject</BodyText>
+        </Button>
+      </View>
+    </View>
+  );
+}
+
+function useInviteCancelledEffect(cb) {}
 
 function MediaSyncSettingsModal({
   navigation,

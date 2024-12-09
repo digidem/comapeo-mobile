@@ -119,6 +119,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
           <DrawerMenuIcon
             style={{alignSelf: 'flex-end', marginRight: 20}}
             onPress={navigation.closeDrawer}
+            close
           />
           {/* This text component is one of the exceptions that does not use the shared text components as requested by Sabella */}
           <Text

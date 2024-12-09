@@ -103,22 +103,24 @@ export const PermissionAudioBottomSheetContent: FC<
         : t(m.allowButtonText);
 
   return (
-    <BottomSheetModalContent
-      icon={<AudioPermission />}
-      title={t(m.title)}
-      description={t(m.description)}
-      buttonConfigs={[
-        {
-          variation: 'outlined',
-          onPress: closeSheet,
-          text: t(m.notNowButtonText),
-        },
-        {
-          variation: 'filled',
-          onPress: onPressActionButton,
-          text: actionButtonText,
-        },
-      ]}
-    />
+    <View style={{paddingTop: 80}}>
+      <BottomSheetModalContent
+        icon={<AudioPermission />}
+        title={t(m.title)}
+        description={t(m.description)}
+        buttonConfigs={[
+          {
+            variation: 'outlined',
+            onPress: closeSheet,
+            text: t(m.notNowButtonText),
+          },
+          {
+            variation: 'filled',
+            onPress: onPressActionButton,
+            text: actionButtonText,
+          },
+        ]}
+      />
+    </View>
   );
 };

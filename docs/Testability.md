@@ -307,12 +307,12 @@ By isolating the logic into a separate function, you can more easily test the be
 
 # Things to watch out for
 
-> **Prop forwarding:** Passing props to a child, simply for that child to pass it to its children.
-> This is often a symptom of component handling too many states which are nested in its children components. Instead expose the children as `ReactNodes`, and let the parent component pass the props directly allowing for a seperation of concerns and easier testing in isolation.
+- **Prop forwarding:** Passing props to a child, simply for that child to pass it to its children.
+  This is often a symptom of component handling too many states which are nested in its children components. Instead expose the children as `ReactNodes`, and let the parent component pass the props directly allowing for a seperation of concerns and easier testing in isolation.
 
-> **Components with several props or several hooks.**
-> With several props, testing become quite difficult as there are either many states, unused props, or prop forwarding. Determine if the component can be broken down into smaller components, each with a seperation of concerns. Also determine if the component is using the props agnostically, or processing the props inside the component. Can that processing be done outside of the component and allow of a simpler prop to be passed?
-> Adding multiple props is a common pattern when trying to make a component reusable, where more props are added so it can accomodate the many states needed by the different parent components; The parent is able to manipulate the component by simply changing the props. While this is convenient when a component is used in many places, try to determine what actually being shared between the different components. Is is simply a shared style? Then pass a reusable wrapper contianer that allows the parents to determine the children. Are there smaller pieces inside the shared component that can be shared?
+- **Components with several props or several hooks.**
+  With several props, testing become quite difficult as there are either many states, unused props, or prop forwarding. Determine if the component can be broken down into smaller components, each with a seperation of concerns. Also determine if the component is using the props agnostically, or processing the props inside the component. Can that processing be done outside of the component and allow of a simpler prop to be passed?
+  Adding multiple props is a common pattern when trying to make a component reusable, where more props are added so it can accomodate the many states needed by the different parent components; The parent is able to manipulate the component by simply changing the props. While this is convenient when a component is used in many places, try to determine what actually being shared between the different components. Is is simply a shared style? Then pass a reusable wrapper contianer that allows the parents to determine the children. Are there smaller pieces inside the shared component that can be shared?
 
-> **Deeply nested components.**
-> If the component layers are really deep, this makes testing difficult. To test the parent component, we need to test all its children component. By having smaller component exposed at the highest level possible, there are less components to test. It also promotes a seperation of concerns as each component is not required to know the state of its parent or child component.
+- **Deeply nested components.**
+  If the component layers are really deep, this makes testing difficult. To test the parent component, we need to test all its children component. By having smaller component exposed at the highest level possible, there are less components to test. It also promotes a seperation of concerns as each component is not required to know the state of its parent or child component.

@@ -4,10 +4,9 @@ export function findAssociatedTrack({
   tracks,
   observationId,
 }: {
-  tracks: Track[] | undefined;
+  tracks: Track[];
   observationId: string;
 }) {
-  if (!tracks) return undefined;
   return tracks.find(trackData =>
     trackData.observationRefs.some(ref => ref.docId === observationId),
   );

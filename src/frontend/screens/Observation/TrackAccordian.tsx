@@ -19,11 +19,16 @@ const m = defineMessages({
 
 export function TrackAccordian({observationId}: {observationId: string}) {
   const navigation = useNavigationFromRoot();
-  const tracksQuery = useTracks();
-  const track = findAssociatedTrack({tracks: tracksQuery.data, observationId});
+  const {data: allTracks} = useTracks();
+  const track =
+    allTracks === undefined
+      ? undefined
+      : findAssociatedTrack({tracks: allTracks, observationId});
   const {formatMessage} = useIntl();
 
-  return !track ? null : (
+  if (!track) return null;
+
+  return (
     <View
       style={{
         marginTop: 20,

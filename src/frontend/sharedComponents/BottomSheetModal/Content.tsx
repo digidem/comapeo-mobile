@@ -60,7 +60,7 @@ export const Content = ({
     <View
       style={[
         styles.container,
-        fullScreen ? {height: window.height} : {maxHeight: window.height * 0.8},
+        fullScreen ? {height: '100%'} : {maxHeight: window.height * 0.8},
       ]}>
       <View style={[styles.infoContainer, fullScreen && {flex: 1}]}>
         {icon ? <View style={styles.iconContainer}>{icon}</View> : null}

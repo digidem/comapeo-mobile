@@ -1,10 +1,8 @@
 # Table of Contents
 
 - [Best Practices for Making Components Testable and Maintainable](#best-practices-for-making-components-testable-and-maintainable)
-  - [What is a testable component and why is it important?](#what-is-a-testable-component-and-why-is-it-important)
-  - [What is a maintainable component and why is it important?](#what-is-a-maintainable-component-and-why-is-it-important)
 - [Guidelines for Code](#guidelines-for-code)
-  - [A Component State Should Be Limited and It Should Only Manage That Limited State](#a-component-state-should-be-limited-and-it-should-only-manage-that-limited-state)
+  - [A Component's state should be limited](#a-component's-state-should-be-limited)
     - [Example of component with too many states](#Example-of-component-with-too-many-states)
     - [Problems](#problems)
     - [Updated Example](#updated-example)
@@ -27,13 +25,13 @@ If we are in the practice of testing our component we can catch bugs sooner, whi
 **What is a maintainable component and why is it importnant?**
 A maintainable component is one that can be easily understood. A component should either be well documented or structered in a way that makes it obvious why the code is the way that it is. There should be very little to no implicit "developer knowledge", that is knowledge that is not obvious in the code but is held by the developer that informs how the code is structured.
 
-A maintainable component can be modified, and extended without introducing new issues or requiring a lot of time and effort. It is flexible enough that when changed, only a minimal amount of code needs to be changes while still producing the expected results. It also should be resilient enough that unrelated external changes do no effect the code.
+A maintainable component can be modified, and extended without introducing new issues or requiring a lot of time and effort. It is flexible enough that when changed, only a minimal amount of code needs to be changed while still producing the expected results. It also should be resilient enough that unrelated external changes do no effect the code.
 
 Maintainable code is important for code bases that are constantly changes, whether it is because of changing requirements or new features. It also helps with longevity of code as new developers can easily pick up the code and fix any bugs or add new components that interacet seemlessly with exisiting components.
 
-# Guidlines for code:
+# Guidelines for code:
 
-## A Component state should be limited and it should only manage that limited state
+## A Component's state should be limited
 
 A components should have a limited number of states and avoid excessive nesting. Fewer states reduce the complexity of testing, and fewer nested components minimize the overall testing scope.
 

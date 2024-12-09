@@ -13,7 +13,11 @@ export const QuestionLabel = ({field}: Props) => {
       <HeaderText variant="header3">
         <FormattedFieldProp field={field} propName="label" />
       </HeaderText>
-      {<HeaderText variant="header5">{field.helperText}</HeaderText>}
+      {
+        <HeaderText variant="header5" style={styles.hint}>
+          {field.placeholder}
+        </HeaderText>
+      }
     </View>
   );
 };

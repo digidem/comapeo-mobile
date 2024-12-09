@@ -3,16 +3,16 @@ import {ScrollView, StyleSheet} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
 import {SelectOne} from '../../../sharedComponents/SelectOne';
 import {SYNC_BACKGROUND} from '../../../lib/styles';
-import {
-  usePersistedSettings,
-  usePersistedSettingsAction,
-} from '../../../hooks/persistedState/usePersistedSettings';
 import {MediaSyncActionSheetContent} from './MediaSyncActionSheetContent';
 import {
   useBottomSheetModal,
   BottomSheetModal,
 } from '../../../sharedComponents/BottomSheetModal';
 import {MediaSyncSetting} from '../../../sharedTypes';
+import {
+  useGetMediaSyncSetting,
+  useSetMediaSyncSetting,
+} from '../../../hooks/server/mediaSync';
 
 const m = defineMessages({
   syncSettingsTitle: {
@@ -71,14 +71,17 @@ const m = defineMessages({
 
 export const MediaSyncSettings = () => {
   const {formatMessage: t} = useIntl();
-  const mediaSyncSetting = usePersistedSettings(
-    store => store.mediaSyncSetting,
-  );
-  const {setMediaSyncSetting} = usePersistedSettingsAction();
+  const {data: mediaSyncSetting, isLoading} = useGetMediaSyncSetting();
+  const {mutate: setMediaSyncSetting} = useSetMediaSyncSetting();
 
-  const [modalType, setModalType] = React.useState<MediaSyncSetting>(
-    () => mediaSyncSetting,
-  );
+  const [modalType, setModalType] =
+    React.useState<MediaSyncSetting>('everything');
+
+  React.useEffect(() => {
+    if (!isLoading && mediaSyncSetting) {
+      setModalType(mediaSyncSetting);
+    }
+  }, [mediaSyncSetting]);
 
   const {isOpen, openSheet, closeSheet, sheetRef} = useBottomSheetModal({
     openOnMount: false,
@@ -97,7 +100,7 @@ export const MediaSyncSettings = () => {
   const options: {
     value: MediaSyncSetting;
     label: string;
-    hint?: React.ReactNode;
+    hint: React.ReactNode;
   }[] = [
     {
       value: 'previews',
@@ -120,7 +123,7 @@ export const MediaSyncSettings = () => {
   return (
     <ScrollView style={styles.container}>
       <SelectOne
-        value={mediaSyncSetting}
+        value={modalType}
         onChange={handleOptionChange}
         options={options}
         radioButtonPosition="right"
@@ -150,9 +153,7 @@ export const MediaSyncSettings = () => {
               : t(m.syncEverything)
           }
           confirmAction={handleConfirm}
-          onDismiss={() => {
-            closeSheet();
-          }}
+          onDismiss={closeSheet}
         />
       </BottomSheetModal>
     </ScrollView>

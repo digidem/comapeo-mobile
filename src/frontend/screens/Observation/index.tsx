@@ -6,7 +6,7 @@ import {WHITE, DARK_GREY, LIGHT_GREY, BLUE_GREY} from '../../lib/styles';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 import {FormattedObservationDate} from '../../sharedComponents/FormattedData';
-import {Field, Track} from '@comapeo/schema';
+import {Field} from '@comapeo/schema';
 import {PresetHeader} from './PresetHeader';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
 import {useFieldsQuery} from '../../hooks/server/fields';
@@ -23,8 +23,6 @@ import {ButtonFields} from './Buttons.tsx';
 import {AudioAttachment} from '../../sharedTypes/audio.ts';
 import {isSavedPhoto, isAudioAttachment} from '../../lib/attachmentTypeChecks';
 import {TrackAccordian} from './TrackAccordian.tsx';
-import {useTracks} from '../../hooks/server/track.ts';
-import {Loading} from '../../sharedComponents/Loading.tsx';
 import {Divider} from '../../sharedComponents/Divider.tsx';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
@@ -59,20 +57,6 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
 
   const {observation, preset} = useObservationWithPreset(observationId);
   const {data: fieldData} = useFieldsQuery();
-  const [track, setTrack] = React.useState<undefined | 'loading' | Track>(
-    'loading',
-  );
-  const tracksQuery = useTracks();
-
-  React.useEffect(() => {
-    if (track !== 'loading') return;
-    if (tracksQuery.data) {
-      const associatedTrack = tracksQuery.data.find(trackData =>
-        trackData.observationRefs.some(ref => ref.docId === observationId),
-      );
-      setTrack(associatedTrack);
-    }
-  }, [track, tracksQuery.data, observationId]);
 
   const defaultAcc: Field[] = [];
   const fields =
@@ -116,52 +100,43 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
             />
           </BodyText>
         </View>
-        {track === 'loading' ? (
-          <Loading />
-        ) : (
+
+        <View style={styles.section}>
+          <PresetHeader preset={preset} style={{paddingHorizontal: 20}} />
+          <React.Suspense fallback={<UIActivityIndicator />}>
+            <TrackAccordian observationId={observationId} />
+          </React.Suspense>
+          {typeof observation.tags.notes === 'string' ? (
+            <HeaderText variant="header3" style={styles.textNotes}>
+              {observation.tags.notes}
+            </HeaderText>
+          ) : null}
+          {attachments.length > 0 && (
+            <MediaScrollView
+              attachments={attachments}
+              observationId={observationId}
+            />
+          )}
+        </View>
+        {fields.length > 0 && (
           <>
-            <View style={styles.section}>
-              <PresetHeader preset={preset} style={{paddingHorizontal: 20}} />
-              {track && (
-                <View style={{marginTop: 20}}>
-                  <Divider />
-                  <TrackAccordian track={track} />
-                  <Divider />
-                </View>
-              )}
-              {typeof observation.tags.notes === 'string' ? (
-                <HeaderText variant="header3" style={styles.textNotes}>
-                  {observation.tags.notes}
-                </HeaderText>
-              ) : null}
-              {attachments.length > 0 && (
-                <MediaScrollView
-                  attachments={attachments}
-                  observationId={observationId}
-                />
-              )}
-            </View>
-            {fields.length > 0 && (
-              <>
-                <Divider />
-                <FieldDetails
-                  style={{paddingHorizontal: 20}}
-                  observation={observation}
-                  fields={fields}
-                />
-              </>
-            )}
-            <View style={styles.divider} />
-            {isDeviceInfoPending || isDeviceIdPending ? (
-              <UIActivityIndicator size={20} />
-            ) : (
-              <ButtonFields
-                isMine={isMine}
-                observationId={observationId}
-                fields={fields}
-              />
-            )}
+            <Divider />
+            <FieldDetails
+              style={{paddingHorizontal: 20}}
+              observation={observation}
+              fields={fields}
+            />
           </>
+        )}
+        <View style={styles.divider} />
+        {isDeviceInfoPending || isDeviceIdPending ? (
+          <UIActivityIndicator size={20} />
+        ) : (
+          <ButtonFields
+            isMine={isMine}
+            observationId={observationId}
+            fields={fields}
+          />
         )}
       </>
     </ScrollView>

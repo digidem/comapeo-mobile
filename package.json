@@ -36,6 +36,7 @@
     "@formatjs/intl-pluralrules": "^5.2.4",
     "@formatjs/intl-relativetimeformat": "^11.2.4",
     "@gorhom/bottom-sheet": "^5.0.5",
+    "@mapeo/mock-data": "2.1.2",
     "@osm_borders/maritime_10000m": "^1.1.0",
     "@react-native-community/hooks": "^2.8.0",
     "@react-native-community/netinfo": "11.1.0",

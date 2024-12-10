@@ -71,29 +71,29 @@ const m = defineMessages({
 
 export const MediaSyncSettings = () => {
   const {formatMessage: t} = useIntl();
-  const {data: mediaSyncSetting, isLoading} = useGetMediaSyncSetting();
+  const {data: mediaSyncSetting} = useGetMediaSyncSetting();
   const {mutate: setMediaSyncSetting} = useSetMediaSyncSetting();
-
-  const [modalType, setModalType] =
-    React.useState<MediaSyncSetting>('everything');
-
-  React.useEffect(() => {
-    if (!isLoading && mediaSyncSetting) {
-      setModalType(mediaSyncSetting);
-    }
-  }, [mediaSyncSetting]);
+  const [possibleSetting, setPossibleSetting] =
+    React.useState<MediaSyncSetting | null>(null);
 
   const {isOpen, openSheet, closeSheet, sheetRef} = useBottomSheetModal({
     openOnMount: false,
   });
 
   const handleOptionChange = (value: MediaSyncSetting) => {
-    setModalType(value);
+    setPossibleSetting(value);
     openSheet();
   };
 
   const handleConfirm = () => {
-    setMediaSyncSetting(modalType);
+    if (possibleSetting) {
+      setMediaSyncSetting(possibleSetting);
+    }
+    closeSheet();
+  };
+
+  const handleDismiss = () => {
+    setPossibleSetting(null);
     closeSheet();
   };
 
@@ -123,7 +123,7 @@ export const MediaSyncSettings = () => {
   return (
     <ScrollView style={styles.container}>
       <SelectOne
-        value={modalType}
+        value={mediaSyncSetting}
         onChange={handleOptionChange}
         options={options}
         radioButtonPosition="right"
@@ -132,12 +132,12 @@ export const MediaSyncSettings = () => {
       <BottomSheetModal ref={sheetRef} isOpen={isOpen}>
         <MediaSyncActionSheetContent
           title={
-            modalType === 'previews'
+            possibleSetting === 'previews'
               ? t(m.syncPreviewsBottomSheet)
               : t(m.syncEverythingBottomSheet)
           }
           description={
-            modalType === 'previews' ? (
+            possibleSetting === 'previews' ? (
               <>
                 {t(m.syncPreviewsDescriptionBottomSheet)}
                 {'\n\n'}
@@ -148,12 +148,12 @@ export const MediaSyncSettings = () => {
             )
           }
           confirmActionText={
-            modalType === 'previews'
+            possibleSetting === 'previews'
               ? t(m.syncPreviewsBottomSheetConfirm)
               : t(m.syncEverything)
           }
           confirmAction={handleConfirm}
-          onDismiss={closeSheet}
+          onDismiss={handleDismiss}
         />
       </BottomSheetModal>
     </ScrollView>

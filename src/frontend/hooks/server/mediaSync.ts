@@ -1,4 +1,8 @@
-import {useQuery, useMutation, useQueryClient} from '@tanstack/react-query';
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 import {useApi} from '../../contexts/ApiContext';
 import {MediaSyncSetting} from '../../sharedTypes';
 
@@ -15,7 +19,7 @@ export function isArchiveDevice(value: MediaSyncSetting): boolean {
 export function useGetMediaSyncSetting() {
   const api = useApi();
 
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: [MEDIA_SYNC_SETTING_KEY],
     queryFn: async () => {
       const isArchive = await api.getIsArchiveDevice();
@@ -33,7 +37,23 @@ export function useSetMediaSyncSetting() {
       const isArchive = isArchiveDevice(newSetting);
       await api.setIsArchiveDevice(isArchive);
     },
-    onSuccess: () => {
+    onMutate: async newSetting => {
+      await queryClient.cancelQueries({queryKey: [MEDIA_SYNC_SETTING_KEY]});
+      const previousSetting = queryClient.getQueryData<MediaSyncSetting>([
+        MEDIA_SYNC_SETTING_KEY,
+      ]);
+      queryClient.setQueryData([MEDIA_SYNC_SETTING_KEY], newSetting);
+      return {previousSetting};
+    },
+    onError: (err, newSetting, context) => {
+      if (context?.previousSetting) {
+        queryClient.setQueryData(
+          [MEDIA_SYNC_SETTING_KEY],
+          context.previousSetting,
+        );
+      }
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({queryKey: [MEDIA_SYNC_SETTING_KEY]});
     },
   });

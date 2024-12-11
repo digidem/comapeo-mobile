@@ -35,26 +35,12 @@ export function useSetMediaSyncSetting() {
   return useMutation({
     mutationFn: async (newSetting: MediaSyncSetting) => {
       const isArchive = isArchiveDevice(newSetting);
-      await api.setIsArchiveDevice(isArchive);
+      return api.setIsArchiveDevice(isArchive);
     },
-    onMutate: async newSetting => {
-      await queryClient.cancelQueries({queryKey: [MEDIA_SYNC_SETTING_KEY]});
-      const previousSetting = queryClient.getQueryData<MediaSyncSetting>([
-        MEDIA_SYNC_SETTING_KEY,
-      ]);
-      queryClient.setQueryData([MEDIA_SYNC_SETTING_KEY], newSetting);
-      return {previousSetting};
-    },
-    onError: (err, newSetting, context) => {
-      if (context?.previousSetting) {
-        queryClient.setQueryData(
-          [MEDIA_SYNC_SETTING_KEY],
-          context.previousSetting,
-        );
-      }
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({queryKey: [MEDIA_SYNC_SETTING_KEY]});
+    onSettled: async () => {
+      return await queryClient.invalidateQueries({
+        queryKey: [MEDIA_SYNC_SETTING_KEY],
+      });
     },
   });
 }

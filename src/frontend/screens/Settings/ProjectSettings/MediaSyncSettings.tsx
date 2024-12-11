@@ -72,7 +72,11 @@ const m = defineMessages({
 export const MediaSyncSettings = () => {
   const {formatMessage: t} = useIntl();
   const {data: mediaSyncSetting} = useGetMediaSyncSetting();
-  const {mutate: setMediaSyncSetting} = useSetMediaSyncSetting();
+  const {
+    mutate: setMediaSyncSetting,
+    variables,
+    isPending,
+  } = useSetMediaSyncSetting();
   const [possibleSetting, setPossibleSetting] =
     React.useState<MediaSyncSetting | null>(null);
 
@@ -123,7 +127,7 @@ export const MediaSyncSettings = () => {
   return (
     <ScrollView style={styles.container}>
       <SelectOne
-        value={mediaSyncSetting}
+        value={isPending ? variables : mediaSyncSetting}
         onChange={handleOptionChange}
         options={options}
         radioButtonPosition="right"

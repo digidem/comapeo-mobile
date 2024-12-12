@@ -1,9 +1,5 @@
 import * as React from 'react';
-import {MapBuffers} from '@comapeo/core/dist/types';
-import {
-  InviteInternal,
-  InviteRemovalReason,
-} from '@comapeo/core/dist/invite-api';
+import {Invite, InviteRemovalReason} from '@comapeo/core/dist/invite-api';
 
 import {BottomSheetModal, useBottomSheetModal} from '../BottomSheetModal';
 import {
@@ -174,14 +170,12 @@ export const ProjectInviteBottomSheet = ({
 
 function useAcceptedInvite() {
   const api = useApi();
-  const [acceptedInvite, setAcceptedInvite] =
-    React.useState<MapBuffers<InviteInternal> | null>(null);
+  const [acceptedInvite, setAcceptedInvite] = React.useState<Invite | null>(
+    null,
+  );
 
   React.useEffect(() => {
-    function onInviteRemoved(
-      invite: MapBuffers<InviteInternal>,
-      reason: InviteRemovalReason,
-    ) {
+    function onInviteRemoved(invite: Invite, reason: InviteRemovalReason) {
       if (reason === 'accepted') {
         setAcceptedInvite(invite);
       }

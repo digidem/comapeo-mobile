@@ -2,10 +2,10 @@ import * as React from 'react';
 import {GestureResponderEvent, StyleSheet, View, ViewStyle} from 'react-native';
 
 import {BLACK, COMAPEO_BLUE, VERY_LIGHT_BLUE} from '../lib/styles';
-import {Text} from './Text';
 import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 
 import {ViewStyleProp} from '../sharedTypes';
+import {HeaderText} from './Text/HeaderText';
 
 type ColorScheme = 'dark' | 'light' | 'ComapeoBlue';
 type Variant = 'contained' | 'outlined' | 'text';
@@ -54,7 +54,11 @@ export const Button = ({
     <View style={touchableStyle as ViewStyle} testID={testID}>
       {
         typeof children === 'string' ? (
-          <Text style={[styles.textBase, textStyle]}>{children}</Text>
+          <HeaderText
+            variant="header5"
+            style={{...styles.textBase, ...textStyle}}>
+            {children}
+          </HeaderText>
         ) : (
           children
         )
@@ -152,9 +156,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textBase: {
-    fontWeight: '700',
     letterSpacing: 0.5,
-    fontSize: 16,
     color: '#FFFFFF',
   },
   textOutlinedLight: {

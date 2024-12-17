@@ -46,7 +46,7 @@
       [
         "expo-font",
         {
-          "fonts": ["./public/Rubik-Regular.ttf", "./public/Rubik-Medium.ttf"]
+          "fonts": ["node_modules/@expo-google-fonts/rubik/Rubik_400Regular.ttf", "node_modules/@expo-google-fonts/rubik/Rubik_500Medium.ttf"]
         }
       ],
       [

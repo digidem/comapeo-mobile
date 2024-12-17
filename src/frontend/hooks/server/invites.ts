@@ -1,10 +1,10 @@
+import {useClientApi} from '@comapeo/core-react';
 import {
   useMutation,
   useQueryClient,
   useSuspenseQuery,
 } from '@tanstack/react-query';
 
-import {useApi} from '../../contexts/ApiContext';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {usePersistedProjectId} from '../persistedState/usePersistedProjectId';
 import {ALL_PROJECTS_KEY, PROJECT_MEMBERS_KEY} from './projects';
@@ -12,7 +12,7 @@ import {ALL_PROJECTS_KEY, PROJECT_MEMBERS_KEY} from './projects';
 export const INVITE_KEY = 'pending_invites';
 
 export function usePendingInvites() {
-  const mapeoApi = useApi();
+  const mapeoApi = useClientApi();
   return useSuspenseQuery({
     queryKey: [INVITE_KEY],
     queryFn: async () => {
@@ -22,7 +22,7 @@ export function usePendingInvites() {
 }
 
 export function useAcceptInvite() {
-  const mapeoApi = useApi();
+  const mapeoApi = useClientApi();
   const queryClient = useQueryClient();
   const switchActiveProject = usePersistedProjectId(
     state => state.setProjectId,
@@ -46,7 +46,7 @@ export function useAcceptInvite() {
 }
 
 export function useRejectInvite() {
-  const mapeoApi = useApi();
+  const mapeoApi = useClientApi();
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({inviteId}: {inviteId: string}) => {

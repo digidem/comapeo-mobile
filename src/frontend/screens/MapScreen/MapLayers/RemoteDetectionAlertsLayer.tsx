@@ -31,6 +31,7 @@ export const RemoteDectionAlertsMapLayer = () => {
             'Point',
             'MultiLineString',
             'MultiPolygon',
+            'MultiPoint',
           ],
           ['has', 'metadata.alert_type'],
           ['has', 'month_detec'],
@@ -59,7 +60,7 @@ export const RemoteDectionAlertsMapLayer = () => {
       {/* Circle Layer for Points */}
       <MapboxGL.CircleLayer
         id="comapeo-alerts-point"
-        filter={['==', '$type', 'Point']}
+        filter={['==', '$type', 'Point', 'MultiPoint']}
         style={{
           circleRadius: 5,
           circleColor: '#FF0000',

@@ -1,4 +1,4 @@
-import {useQuery} from '@tanstack/react-query';
+import {useSuspenseQuery} from '@tanstack/react-query';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 
 export const REMOTE_DETECTION_ALERTS_KEY = 'alerts';
@@ -6,7 +6,7 @@ export const REMOTE_DETECTION_ALERTS_KEY = 'alerts';
 export function useRemoteDectionAlerts() {
   const {projectId, projectApi} = useActiveProject();
 
-  return useQuery({
+  return useSuspenseQuery({
     queryFn: async () => {
       return await projectApi.remoteDetectionAlert.getMany();
     },

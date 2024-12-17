@@ -1,3 +1,5 @@
+// @ts-check
+
 /** @type {import("jest").Config} */
 const config = {
   preset: 'jest-expo',

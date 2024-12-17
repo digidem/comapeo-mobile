@@ -167,23 +167,6 @@
     "type-fest": "4.26.0",
     "typescript": "5.3.3"
   },
-  "jest": {
-    "preset": "jest-expo",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ],
-    "setupFilesAfterEnv": [
-      "@rnmapbox/maps/setup-jest"
-    ],
-    "transformIgnorePatterns": [
-      "node_modules/(?!(...|@rnmapbox|(jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg)"
-    ]
-  },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": "prettier --write",
     "src/frontend/**/*.{ts,tsx}": "npm run extract-messages"

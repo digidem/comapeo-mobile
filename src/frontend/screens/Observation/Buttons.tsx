@@ -166,7 +166,7 @@ export const ButtonFields = ({
         subject: `${t(m.comapeoAlert)} — _*${preset ? preset.name : t(m.fallbackCategoryName)}*_ — ${formatDate(observation.createdAt, {format: 'long'})}`,
         title:
           base64Urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),
-        urls: base64Urls,
+        urls: !base64Urls.length ? undefined : base64Urls,
         message: createObservationShareMessage({
           categoryName: preset ? preset.name : t(m.fallbackCategoryName),
           coordinateFormat: format,

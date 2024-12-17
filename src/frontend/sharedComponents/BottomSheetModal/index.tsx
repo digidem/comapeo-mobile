@@ -92,6 +92,7 @@ export const BottomSheetModal = React.forwardRef<RNBottomSheetModal, Props>(
     return (
       <RNBottomSheetModal
         enableDynamicSizing
+        snapPoints={fullScreen ? ['100%'] : undefined}
         ref={ref}
         backgroundStyle={
           fullScreen ? styles.backgroundFullScreen : styles.backgroundDynamic

@@ -2,11 +2,7 @@ import {useCallback, useEffect, useState} from 'react';
 import {useApi} from '../contexts/ApiContext';
 import {useQueryClient} from '@tanstack/react-query';
 import {INVITE_KEY} from './server/invites';
-import {MapBuffers} from '@comapeo/core/dist/types';
-import {
-  InviteInternal,
-  InviteRemovalReason,
-} from '@comapeo/core/dist/invite-api';
+import {Invite, InviteRemovalReason} from '@comapeo/core/dist/invite-api';
 
 export const useProjectInvitesListener = ({
   inviteId,
@@ -25,10 +21,7 @@ export const useProjectInvitesListener = ({
   }, [queryClient]);
 
   useEffect(() => {
-    function shouldInterceptCancel(
-      val: MapBuffers<InviteInternal>,
-      reason: InviteRemovalReason,
-    ) {
+    function shouldInterceptCancel(val: Invite, reason: InviteRemovalReason) {
       if (
         reason === 'canceled' &&
         inviteId === val.inviteId &&

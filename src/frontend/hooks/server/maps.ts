@@ -42,7 +42,6 @@ export function useMapStyleJsonUrl() {
 
 export function useImportCustomMapFile() {
   const queryClient = useQueryClient();
-  // const api = useApi();
   const api = useClientApi();
   const {refresh} = useRefreshTokenActions();
 

@@ -3,48 +3,56 @@
 import {$} from 'execa';
 import fs from 'node:fs';
 import path from 'node:path';
+import {createRequire} from 'node:module';
+import {fileURLToPath} from 'node:url';
+
+const require = createRequire(import.meta.url);
 
 // NOTE: we currently don't support building for intel arch (android-x64)
-const TARGETS = ['android-arm', 'android-arm64'];
+const TARGETS = ['android-arm', 'android-arm64', 'android-x64'];
 
 // TODO: Figure out how to know if module uses N-API at runtime
 const NATIVE_MODULES = [
-  {name: 'better-sqlite3', version: '8.7.0', usesNapi: false},
-  {name: 'crc-native', version: '1.0.11', usesNapi: true},
-  {name: 'fs-native-extensions', version: '1.2.3', usesNapi: true},
-  {name: 'quickbit-native', version: '2.2.0', usesNapi: true},
-  {name: 'simdle-native', version: '1.2.0', usesNapi: true},
-  {name: 'sodium-native', version: '4.0.4', usesNapi: true},
-  {name: 'udx-native', version: '1.7.12', usesNapi: true},
+  {name: 'better-sqlite3', usesNapi: false},
+  {name: 'crc-native', usesNapi: true},
+  {name: 'fs-native-extensions', usesNapi: true},
+  {name: 'quickbit-native', usesNapi: true},
+  {name: 'simdle-native', usesNapi: true},
+  {name: 'sodium-native', usesNapi: true},
 ];
 
 // Uncomment line below if you want to run this script directly
-// await downloadPrebuilds();
+// await downloadPrebuilds({verbose: true});
 
 /**
  * @param {{verbose?: boolean}} opts
  */
 export async function downloadPrebuilds({verbose} = {verbose: false}) {
-  const prevCwd = process.cwd();
-
-  process.chdir(
-    path.resolve(
-      new URL('../nodejs-assets/nodejs-project/node_modules', import.meta.url)
-        .pathname,
-    ),
+  const backendRootUrl = new URL('../src/backend/', import.meta.url);
+  const nodejsProjectUrl = new URL(
+    '../nodejs-assets/nodejs-project/',
+    import.meta.url,
   );
 
   const {abi: NODE_ABI} = getNodeJsMobileNodeVersions();
 
   return Promise.all(
-    NATIVE_MODULES.map(async ({name, version, usesNapi}) => {
+    NATIVE_MODULES.map(async ({name, usesNapi}) => {
+      const pkgJsonPath = require.resolve(`${name}/package.json`, {
+        paths: [fileURLToPath(backendRootUrl)],
+      });
+      const {version} = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf-8'));
       if (verbose) {
         console.log(`${name}: prebuilds start (${version})`);
       }
+      const prebuildsDir = fileURLToPath(
+        new URL(`node_modules/${name}/prebuilds/`, nodejsProjectUrl),
+      );
+      fs.rmSync(prebuildsDir, {recursive: true, force: true});
 
       await Promise.all(
         TARGETS.map(async target => {
-          const targetDir = path.join(name, 'prebuilds', target);
+          const targetDir = path.join(prebuildsDir, target);
 
           fs.mkdirSync(targetDir, {recursive: true});
 
@@ -85,9 +93,7 @@ export async function downloadPrebuilds({verbose} = {verbose: false}) {
         console.log(`${name}: prebuilds done (${version})`);
       }
     }),
-  ).finally(() => {
-    process.chdir(prevCwd);
-  });
+  );
 }
 
 function getNodeJsMobileNodeVersions() {

@@ -1663,12 +1663,5 @@
   },
   "sharedComponents.RoleWithIcon.participant": {
     "message": "Participante"
-  },
-  "sharedComponents.WifiBar.noWifi": {
-    "message": "Sem internet"
-  },
-  "sharedComponents.WifiBar.wifi": {
-    "description": "Label for wifi network name",
-    "message": "Wi-Fi:"
   }
 }

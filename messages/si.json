@@ -1663,12 +1663,5 @@
   },
   "sharedComponents.RoleWithIcon.participant": {
     "message": "Participant"
-  },
-  "sharedComponents.WifiBar.noWifi": {
-    "message": "අන්තර්ජාලය නොමැත"
-  },
-  "sharedComponents.WifiBar.wifi": {
-    "description": "Label for wifi network name",
-    "message": "වයිෆයි:"
   }
 }

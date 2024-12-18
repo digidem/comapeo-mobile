@@ -1663,12 +1663,5 @@
   },
   "sharedComponents.RoleWithIcon.participant": {
     "message": "Participant"
-  },
-  "sharedComponents.WifiBar.noWifi": {
-    "message": "Không có kết nối Internet"
-  },
-  "sharedComponents.WifiBar.wifi": {
-    "description": "Label for wifi network name",
-    "message": "WiFi:"
   }
 }

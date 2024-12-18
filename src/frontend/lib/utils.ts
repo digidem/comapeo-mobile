@@ -228,7 +228,7 @@ export function matchPreset(
 
   presets.forEach(preset => {
     let score = 0;
-    let presetTagsCount = Object.keys(preset.tags).length;
+    const presetTagsCount = Object.keys(preset.tags).length;
 
     for (const key in preset.tags) {
       if (preset.tags.hasOwnProperty(key)) {

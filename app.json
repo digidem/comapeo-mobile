@@ -1,5 +1,6 @@
 {
   "expo": {
+    "newArchEnabled": false,
     "jsEngine": "hermes",
     "name": "CoMapeo",
     "slug": "comapeo",
@@ -46,7 +47,10 @@
       [
         "expo-font",
         {
-          "fonts": ["node_modules/@expo-google-fonts/rubik/Rubik_400Regular.ttf", "node_modules/@expo-google-fonts/rubik/Rubik_500Medium.ttf"]
+          "fonts": [
+            "node_modules/@expo-google-fonts/rubik/Rubik_400Regular.ttf",
+            "node_modules/@expo-google-fonts/rubik/Rubik_500Medium.ttf"
+          ]
         }
       ],
       [

@@ -20,7 +20,7 @@ The next version of Mapeo Mobile
 
       - Note that **Java 17** is the minimum version required for this project.
 
-      - When setting up the Android-specific tooling, you will also need to install the [Android NDK](https://developer.android.com/ndk/). This can be installed using Android Studio by going to the `SDK Tools` tab in the `SDK Manager`. This project uses **NDK 25.1.8937393**.
+      - When setting up the Android-specific tooling, you will also need to install the [Android NDK](https://developer.android.com/ndk/). This can be installed using Android Studio by going to the `SDK Tools` tab in the `SDK Manager`. This project uses **NDK 26.1.10909125**.
 
    3. Copy the [`.env.template`](./.env.template) file to a file called `.env`. Replace any placeholder `<replace_me>` values with the relevant ones:
 

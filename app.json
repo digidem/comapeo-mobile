@@ -21,6 +21,20 @@
         }
       ],
       [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash.png",
+          "backgroundColor": "#050F77",
+          "imageWidth": 200,
+          "android": {
+            "resizeMode": "contain"
+          },
+          "ios": {
+            "resizeMode": "contain"
+          }
+        }
+      ],
+      [
         "expo-location",
         {
           "isIosBackgroundLocationEnabled": true,
@@ -81,11 +95,6 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#050F77"
       },
-      "splash": {
-        "image": "./assets/splash.png",
-        "backgroundColor": "#050F77",
-        "resizeMode": "contain"
-      },
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
@@ -98,11 +107,6 @@
       "package": "com.comapeo"
     },
     "ios": {
-      "splash": {
-        "image": "./assets/splash.png",
-        "backgroundColor": "#050F77",
-        "resizeMode": "contain"
-      },
       "bundleIdentifier": "com.comapeo"
     },
     "extra": {

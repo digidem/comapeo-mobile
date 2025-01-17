@@ -80,3 +80,9 @@ There was an error while running app via Expo because of exports in `rpc-reflect
 
 There was an error while running app via Expo because of `duplex` method call in `rpc-reflector` package.
 As this feature is not used in CoMapeo, this can be safely hardcoded to `false`. To remove this patch, `rpc-reflector` would need to be updated to account for this bug.
+
+## react-native-indicators
+
+### [Fix `key` prop error when using components](./react-native-indicators+0.17.0+001+fix-key-prop-error.patch)
+
+Refer to https://github.com/n4kz/react-native-indicators/issues/43 for details.

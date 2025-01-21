@@ -3,7 +3,6 @@
 import path from 'node:path';
 import fs from 'node:fs';
 import {readFile, writeFile} from 'node:fs/promises';
-import {glob} from 'glob';
 
 import LANGUAGE_NAME_TRANSLATIONS from '../src/frontend/languages.json' with {type: 'json'};
 
@@ -38,13 +37,15 @@ async function run() {
  * @returns {Promise<{ [lang: string]: unknown }>}
  */
 async function loadMessages() {
-  const files = await glob(`${PROJECT_ROOT_DIR_PATH}/messages/**/*.json`);
+  const files = fs.readdirSync(path.join(PROJECT_ROOT_DIR_PATH, 'messages'), {
+    withFileTypes: true,
+  });
 
   /** @type {Array<[string, any]>} */
   const loadedMessages = await Promise.all(
     files.map(async file => {
-      const lang = path.parse(file).name;
-      const msgs = JSON.parse(await readFile(file));
+      const lang = path.parse(file.name).name;
+      const msgs = JSON.parse(await readFile(path.join(file.path, file.name)));
       return [lang, msgs];
     }),
   );

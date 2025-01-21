@@ -4,7 +4,6 @@ import path from 'node:path';
 import fs from 'node:fs';
 import {readFile, writeFile} from 'node:fs/promises';
 import {glob} from 'glob';
-import {rimraf} from 'rimraf';
 
 import LANGUAGE_NAME_TRANSLATIONS from '../src/frontend/languages.json' with {type: 'json'};
 
@@ -19,14 +18,8 @@ const TRANSLATIONS_OUTPUT_PATH = path.join(
 await run();
 
 async function run() {
-  // We want to preserve the translations/ directory
-  await rimraf(`${TRANSLATIONS_DIR_PATH}/*`, {glob: true, preserveRoot: true});
-
-  try {
-    fs.mkdirSync(TRANSLATIONS_DIR_PATH);
-  } catch {
-    // Translations directory already exists
-  }
+  fs.rmSync(TRANSLATIONS_DIR_PATH, {force: true, recursive: true});
+  fs.mkdirSync(TRANSLATIONS_DIR_PATH);
 
   const messages = await loadMessages();
   const translations = convertMessagesToTranslations(messages);

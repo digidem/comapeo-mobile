@@ -88,9 +88,7 @@ export default tseslint.config(
   toolingConfig,
   backendConfig,
   frontendConfig,
-  {
-    ignores: ['e2e/**/*'],
-  },
+  {ignores: ['e2e/**/*']},
   includeIgnoreFile(gitignorePath),
   includeIgnoreFile(gitExcludePath),
 );

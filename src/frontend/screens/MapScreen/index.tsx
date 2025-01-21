@@ -114,9 +114,9 @@ export const MapScreen = () => {
 
         {isFinishedLoading && (
           <>
-            <ObservationMapLayer />
             <CurrentTrackMapLayer />
             <TracksMapLayer />
+            <ObservationMapLayer />
           </>
         )}
       </Mapbox.MapView>

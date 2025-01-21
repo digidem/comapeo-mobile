@@ -29,7 +29,6 @@ const toolingConfig = tseslint.config({
     '*.config.{js,mjs,cjs}',
     'scripts/*.{js,mjs,cjs}',
     'expo-config-plugins/*.{js,mjs,cjs}',
-    '.prettierrc.js',
   ],
   languageOptions: {
     globals: {

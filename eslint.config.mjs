@@ -59,8 +59,8 @@ const frontendConfig = tseslint.config({
   extends: [
     tseslint.configs.recommended,
     pluginQuery.configs['flat/recommended'],
-    // TODO: incorporate 'disable-dom' and 'disable-web-apis' presets
     react.configs['recommended-typescript'],
+    react.configs['disable-dom'],
   ],
   rules: {
     // Allow unused vars if prefixed with `_` (https://typescript-eslint.io/rules/no-unused-vars/)

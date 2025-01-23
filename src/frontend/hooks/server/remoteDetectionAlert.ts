@@ -3,7 +3,7 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 
 export const REMOTE_DETECTION_ALERTS_KEY = 'alerts';
 
-export function useRemoteDectionAlerts() {
+export function useRemoteDetectionAlerts() {
   const {projectId, projectApi} = useActiveProject();
 
   return useSuspenseQuery({

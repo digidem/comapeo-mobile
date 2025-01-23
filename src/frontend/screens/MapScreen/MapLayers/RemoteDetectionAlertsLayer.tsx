@@ -3,12 +3,12 @@ import MapboxGL from '@rnmapbox/maps';
 
 import {RemoteDetectionAlert} from '@comapeo/schema';
 import {FeatureCollection} from 'geojson';
-import {useRemoteDectionAlerts} from '../../../hooks/server/remoteDetectionAlert';
+import {useRemoteDetectionAlerts} from '../../../hooks/server/remoteDetectionAlert';
 import {flatten} from 'flat';
 import {includeKeys} from 'filter-obj';
 
 export const RemoteDectionAlertsMapLayer = () => {
-  const {data: alerts} = useRemoteDectionAlerts();
+  const {data: alerts} = useRemoteDetectionAlerts();
 
   if (!alerts) {
     return null;

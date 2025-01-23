@@ -7,6 +7,31 @@ import {useRemoteDetectionAlerts} from '../../../hooks/server/remoteDetectionAle
 import {flatten} from 'flat';
 import {includeKeys} from 'filter-obj';
 
+const LABEL_FILTER = [
+  'all',
+  [
+    'in',
+    '$type',
+    'Polygon',
+    'LineString',
+    'Point',
+    'MultiLineString',
+    'MultiPolygon',
+    'MultiPoint',
+  ],
+  ['has', 'metadata.alert_type'],
+  ['has', 'month_detec'],
+  ['has', 'year_detec'],
+];
+
+const POINT_FILTER = ['==', '$type', 'Point', 'MultiPoint'];
+
+const LINESTRING_FILTER = ['in', '$type', 'LineString', 'MultiLineString'];
+
+const POLYGON_STROKE_FILTER = ['in', '$type', 'Polygon', 'MultiPolygon'];
+
+const POLYGON_FILL_FILTER = ['in', '$type', 'Polygon', 'MultiPolygon'];
+
 export const RemoteDetectionAlertsMapLayer = () => {
   const {data: alerts} = useRemoteDetectionAlerts();
 
@@ -20,23 +45,8 @@ export const RemoteDetectionAlertsMapLayer = () => {
       shape={convertRemoteDetectionAlertsToFeatures(alerts)}>
       {/* Symbol Layer for Labels */}
       <MapboxGL.SymbolLayer
-        id="mapeo-alerts-label"
-        filter={[
-          'all',
-          [
-            'in',
-            '$type',
-            'Polygon',
-            'LineString',
-            'Point',
-            'MultiLineString',
-            'MultiPolygon',
-            'MultiPoint',
-          ],
-          ['has', 'metadata.alert_type'],
-          ['has', 'month_detec'],
-          ['has', 'year_detec'],
-        ]}
+        id="comapeo-alerts-label"
+        filter={LABEL_FILTER}
         style={{
           textField: [
             'concat',
@@ -60,7 +70,7 @@ export const RemoteDetectionAlertsMapLayer = () => {
       {/* Circle Layer for Points */}
       <MapboxGL.CircleLayer
         id="comapeo-alerts-point"
-        filter={['==', '$type', 'Point', 'MultiPoint']}
+        filter={POINT_FILTER}
         style={{
           circleRadius: 5,
           circleColor: '#FF0000',
@@ -70,7 +80,7 @@ export const RemoteDetectionAlertsMapLayer = () => {
       {/* Line Layer for LineStrings and MultiLineStrings */}
       <MapboxGL.LineLayer
         id="comapeo-alerts-linestring"
-        filter={['in', '$type', 'LineString', 'MultiLineString']}
+        filter={LINESTRING_FILTER}
         style={{
           lineColor: '#FF0000',
           lineWidth: 3,
@@ -81,7 +91,7 @@ export const RemoteDetectionAlertsMapLayer = () => {
       {/* Line Layer for Polygon Stroke */}
       <MapboxGL.LineLayer
         id="comapeo-alerts-polygon-stroke"
-        filter={['in', '$type', 'Polygon', 'MultiPolygon']}
+        filter={POLYGON_STROKE_FILTER}
         style={{
           lineColor: '#FF0000',
           lineWidth: 2,
@@ -90,8 +100,8 @@ export const RemoteDetectionAlertsMapLayer = () => {
 
       {/* Fill Layer for Polygon Fill */}
       <MapboxGL.FillLayer
-        id="comapeo-alerts-polygon"
-        filter={['in', '$type', 'Polygon', 'MultiPolygon']}
+        id="comapeo-alerts-polygon-fill"
+        filter={POLYGON_FILL_FILTER}
         style={{
           fillColor: '#FF0000',
           fillOpacity: 0.5,

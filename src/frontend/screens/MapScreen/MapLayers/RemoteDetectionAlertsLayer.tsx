@@ -4,8 +4,6 @@ import MapboxGL from '@rnmapbox/maps';
 import {RemoteDetectionAlert} from '@comapeo/schema';
 import {FeatureCollection} from 'geojson';
 import {useRemoteDetectionAlerts} from '../../../hooks/server/remoteDetectionAlert';
-import {flatten} from 'flat';
-import {includeKeys} from 'filter-obj';
 
 const LABEL_FILTER = [
   'all',
@@ -19,7 +17,7 @@ const LABEL_FILTER = [
     'MultiPolygon',
     'MultiPoint',
   ],
-  ['has', 'metadata.alert_type'],
+  ['has', 'alert_type'],
   ['has', 'month_detec'],
   ['has', 'year_detec'],
 ];
@@ -50,7 +48,7 @@ export const RemoteDetectionAlertsMapLayer = () => {
         style={{
           textField: [
             'concat',
-            ['get', 'metadata.alert_type'],
+            ['get', 'alert_type'],
             ' (',
             ['get', 'month_detec'],
             '-',
@@ -122,14 +120,10 @@ function convertRemoteDetectionAlertsToFeatures(
         type: 'Feature',
         geometry: alert.geometry,
         properties: {
-          ...flatten(
-            includeKeys(alert, [
-              'metadata',
-              'detectionDateStart',
-              'detectionDateEnd',
-              'sourceId',
-            ]),
-          ),
+          alertType: alert.metadata.alert_type,
+          detectionDateStart: alert.detectionDateStart,
+          detectionDateEnd: alert.detectionDateEnd,
+          sourceId: alert.sourceId,
           month_detec: dateStart.getMonth() + 1,
           year_detec: dateStart.getFullYear(),
         },

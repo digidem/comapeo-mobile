@@ -17,9 +17,9 @@ const LABEL_FILTER = [
     'MultiPolygon',
     'MultiPoint',
   ],
-  ['has', 'alert_type'],
-  ['has', 'month_detec'],
-  ['has', 'year_detec'],
+  ['has', 'alertType'],
+  ['has', 'monthDetec'],
+  ['has', 'yearDetec'],
 ];
 
 const POINT_FILTER = ['==', '$type', 'Point', 'MultiPoint'];
@@ -48,11 +48,11 @@ export const RemoteDetectionAlertsMapLayer = () => {
         style={{
           textField: [
             'concat',
-            ['get', 'alert_type'],
+            ['get', 'alertType'],
             ' (',
-            ['get', 'month_detec'],
+            ['get', 'monthDetec'],
             '-',
-            ['get', 'year_detec'],
+            ['get', 'yearDetec'],
             ')',
           ],
           textFont: ['Open Sans Regular'],
@@ -124,8 +124,8 @@ function convertRemoteDetectionAlertsToFeatures(
           detectionDateStart: alert.detectionDateStart,
           detectionDateEnd: alert.detectionDateEnd,
           sourceId: alert.sourceId,
-          month_detec: dateStart.getMonth() + 1,
-          year_detec: dateStart.getFullYear(),
+          monthDetec: dateStart.getMonth() + 1,
+          yearDetec: dateStart.getFullYear(),
         },
       };
     }),

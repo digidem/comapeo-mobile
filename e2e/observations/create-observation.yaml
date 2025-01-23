@@ -101,3 +101,10 @@ env:
     text: '.*New Observation.*'
 - tapOn:
     id: '${CAT}.edit-save-btn'
+- runFlow:
+    when:
+      visible:
+        id: '${SUBCAT}.header-back-btn'
+    commands:
+      - tapOn:
+          id: '${SUBCAT}.header-back-btn'

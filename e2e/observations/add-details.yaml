@@ -51,3 +51,5 @@ env:
     text: '.*New Observation.*'
 - tapOn:
     id: '${CAT}.edit-save-btn'
+- tapOn:
+    id: '${SUBCAT}.header-back-btn'

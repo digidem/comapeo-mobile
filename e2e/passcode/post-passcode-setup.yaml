@@ -5,6 +5,7 @@ env:
 ---
 - tapOn:
     id: '${SUBCAT}.drawer-icon'
+- tapOn: 'App Settings'
 - tapOn: 'Security'
 - tapOn: 'App Passcode'
 - assertVisible:

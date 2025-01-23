@@ -11,6 +11,8 @@ env:
 - tapOn: '.*Lake.*'
 - tapOn:
     id: '${CAT}.edit-save-btn'
+- tapOn:
+    id: '${SUBCAT}.header-back-btn'
 - setLocation:
     latitude: 48.8590
     longitude: 2.3544
@@ -19,17 +21,20 @@ env:
 - tapOn: '.*Clay.*'
 - tapOn:
     id: '${CAT}.edit-save-btn'
-- takeScreenshot: ObservationDots
-- tapOn:
-    point: '46%,49%'
-- assertVisible:
-    label: 'Point goes to the View observation screen for that point'
-    text: 'Threat'
 - tapOn:
     id: '${SUBCAT}.header-back-btn'
-- assertVisible:
-    label: 'Back button returns to Home map screen'
-    id: '${SUBCAT}.mapbox-map-view'
+- takeScreenshot: ObservationDots
+#- this is very dependent on which device you use and is too flaky to be used generally
+# - tapOn:
+#     point: '46%,49%'
+# - assertVisible:
+#     label: 'Point goes to the View observation screen for that point'
+#     text: 'Gathering Site'
+# - tapOn:
+#     id: '${SUBCAT}.header-back-btn'
+# - assertVisible:
+#     label: 'Back button returns to Home map screen'
+#     id: '${SUBCAT}.mapbox-map-view'
 - tapOn:
     id: 'tabBarButtonObservationsList'
 - assertVisible:

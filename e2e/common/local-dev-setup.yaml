@@ -2,9 +2,9 @@ appId: com.comapeo.dev
 ---
 - runFlow:
     when:
-      visible: 'http://10.0.2.2:8081'
+      visible: '.*8081.*'
     commands:
-      - tapOn: 'http://10.0.2.2:8081'
+      - tapOn: '.*8081.*'
 - runFlow:
     when:
       visible: 'Continue'

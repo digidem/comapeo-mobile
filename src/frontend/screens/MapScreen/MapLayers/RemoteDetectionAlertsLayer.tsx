@@ -7,7 +7,7 @@ import {useRemoteDetectionAlerts} from '../../../hooks/server/remoteDetectionAle
 import {flatten} from 'flat';
 import {includeKeys} from 'filter-obj';
 
-export const RemoteDectionAlertsMapLayer = () => {
+export const RemoteDetectionAlertsMapLayer = () => {
   const {data: alerts} = useRemoteDetectionAlerts();
 
   if (!alerts) {

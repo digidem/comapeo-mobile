@@ -22,7 +22,7 @@ const LABEL_FILTER = [
   ['has', 'yearDetec'],
 ];
 
-const POINT_FILTER = ['==', '$type', 'Point', 'MultiPoint'];
+const POINT_FILTER = ['in', '$type', 'Point', 'MultiPoint'];
 
 const LINESTRING_FILTER = ['in', '$type', 'LineString', 'MultiLineString'];
 

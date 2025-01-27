@@ -25,7 +25,7 @@
         {
           "image": "./assets/splash.png",
           "backgroundColor": "#050F77",
-          "imageWidth": 200,
+          "imageWidth": 300,
           "android": {
             "resizeMode": "contain"
           },

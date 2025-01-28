@@ -1,3 +1,4 @@
+import {useClientApi} from '@comapeo/core-react';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {lengthToDegrees} from '@turf/helpers';
 import {randomPosition} from '@turf/random';
@@ -9,7 +10,6 @@ import {StyleSheet, TextInput, ToastAndroid, View} from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {useApi} from '../../contexts/ApiContext';
 import {OBSERVATION_KEY} from '../../hooks/server/observations';
 import {useLocation} from '../../hooks/useLocation';
 import {LIGHT_GREY, RED, WHITE} from '../../lib/styles';
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
 
 function useCreateFakeObservationsMutation() {
   const queryClient = useQueryClient();
-  const mapeoApi = useApi();
+  const mapeoApi = useClientApi();
   const {projectApi, projectId} = useActiveProject();
 
   return useMutation({

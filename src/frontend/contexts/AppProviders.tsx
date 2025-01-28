@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {ClientApiProvider} from '@comapeo/core-react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {StyleSheet} from 'react-native';
@@ -19,7 +20,6 @@ import {
 } from './LocalDiscoveryContext';
 import {type MapeoClientApi} from '@comapeo/ipc';
 import {ServerLoading} from '../ServerLoading';
-import {ApiProvider} from './ApiContext';
 import {MessagePortLike} from '../lib/MessagePortLike';
 import {IntlProvider} from './IntlContext';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
@@ -55,7 +55,7 @@ export const AppProviders = ({
               <GPSModalContextProvider>
                 <ServerLoading messagePort={messagePort}>
                   <LocalDiscoveryProvider value={localDiscoveryController}>
-                    <ApiProvider api={mapeoApi}>
+                    <ClientApiProvider clientApi={mapeoApi}>
                       <MetricsProvider
                         appMetrics={appMetrics}
                         deviceMetrics={deviceMetrics}>
@@ -67,7 +67,7 @@ export const AppProviders = ({
                           </BottomSheetModalProvider>
                         </ActiveProjectProvider>
                       </MetricsProvider>
-                    </ApiProvider>
+                    </ClientApiProvider>
                   </LocalDiscoveryProvider>
                 </ServerLoading>
               </GPSModalContextProvider>

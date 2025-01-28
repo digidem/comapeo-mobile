@@ -1,9 +1,9 @@
+import {useClientApi} from '@comapeo/core-react';
 import {
   useMutation,
   useQueryClient,
   useSuspenseQuery,
 } from '@tanstack/react-query';
-import {useApi} from '../../contexts/ApiContext';
 import {MediaSyncSetting} from '../../sharedTypes';
 
 export const MEDIA_SYNC_SETTING_KEY = 'media_sync_setting';
@@ -17,7 +17,7 @@ export function isArchiveDevice(value: MediaSyncSetting): boolean {
 }
 
 export function useGetMediaSyncSetting() {
-  const api = useApi();
+  const api = useClientApi();
 
   return useSuspenseQuery({
     queryKey: [MEDIA_SYNC_SETTING_KEY],
@@ -29,7 +29,7 @@ export function useGetMediaSyncSetting() {
 }
 
 export function useSetMediaSyncSetting() {
-  const api = useApi();
+  const api = useClientApi();
   const queryClient = useQueryClient();
 
   return useMutation({

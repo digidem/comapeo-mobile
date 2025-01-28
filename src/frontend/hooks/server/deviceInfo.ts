@@ -1,12 +1,11 @@
+import {useClientApi} from '@comapeo/core-react';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {deviceType, DeviceType} from 'expo-device';
-
-import {useApi} from '../../contexts/ApiContext';
 
 export const DEVICE_INFO_KEY = 'deviceInfo';
 
 export const useDeviceInfo = () => {
-  const mapeoApi = useApi();
+  const mapeoApi = useClientApi();
 
   return useQuery({
     queryKey: [DEVICE_INFO_KEY],
@@ -17,7 +16,7 @@ export const useDeviceInfo = () => {
 };
 
 export const useEditDeviceInfo = () => {
-  const mapeoApi = useApi();
+  const mapeoApi = useClientApi();
   const queryClient = useQueryClient();
 
   return useMutation({

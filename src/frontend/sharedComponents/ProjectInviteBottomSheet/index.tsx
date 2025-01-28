@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {Invite, InviteRemovalReason} from '@comapeo/core/dist/invite-api';
+import {useClientApi} from '@comapeo/core-react';
 
 import {BottomSheetModal, useBottomSheetModal} from '../BottomSheetModal';
 import {
@@ -13,7 +14,6 @@ import {InviteSuccessBottomSheetContent} from './InviteSuccessBottomSheetContent
 import {InviteCanceledBottomSheetContent} from './InviteCanceledBottomSheetContent';
 import {useAllProjects} from '../../hooks/server/projects';
 import {LeaveProjectModalContent} from '../LeaveProjectModalContent';
-import {useApi} from '../../contexts/ApiContext';
 
 export type LeaveProjectModalState = 'AlreadyOnProj' | 'LeaveProj';
 
@@ -169,7 +169,7 @@ export const ProjectInviteBottomSheet = ({
 };
 
 function useAcceptedInvite() {
-  const api = useApi();
+  const api = useClientApi();
   const [acceptedInvite, setAcceptedInvite] = React.useState<Invite | null>(
     null,
   );

@@ -33,10 +33,10 @@ await Promise.all([
 fs.cpSync('./src/backend', './nodejs-assets/backend', {recursive: true});
 fs.mkdirSync('./nodejs-assets/nodejs-project/node_modules', {recursive: true});
 
-fs.writeFileSync('./nodejs-assets/BUILD_NATIVE_MODULES.txt', '0', {
+fs.writeFileSync('./nodejs-assets/BUILD_NATIVE_MODULES.txt', '1', {
   encoding: 'utf-8',
 });
-console.log('Set build native modules off');
+console.log('Set build native modules on');
 
 console.groupEnd();
 

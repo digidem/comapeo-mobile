@@ -8,7 +8,6 @@ import {fileURLToPath} from 'node:url';
 
 const require = createRequire(import.meta.url);
 
-// NOTE: we currently don't support building for intel arch (android-x64)
 const TARGETS = ['android-arm', 'android-arm64', 'android-x64'];
 
 // TODO: Figure out how to know if module uses N-API at runtime

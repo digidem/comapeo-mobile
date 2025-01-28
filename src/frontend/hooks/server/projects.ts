@@ -1,6 +1,6 @@
+import {useClientApi} from '@comapeo/core-react';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 
-import {useApi} from '../../contexts/ApiContext';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {PRESETS_KEY} from './presets';
 import {ICONS_KEY} from './icons';
@@ -17,7 +17,7 @@ export const THIS_USERS_ROLE_KEY = 'my_role';
 export const REMOTE_ARCHIVE = 'remote_archive';
 
 export function useProject(projectId?: string) {
-  const api = useApi();
+  const api = useClientApi();
 
   return useQuery({
     queryKey: [PROJECT_KEY, projectId],
@@ -33,7 +33,7 @@ export function useProject(projectId?: string) {
 }
 
 export function useAllProjects() {
-  const api = useApi();
+  const api = useClientApi();
 
   return useQuery({
     queryKey: [ALL_PROJECTS_KEY],
@@ -44,7 +44,7 @@ export function useAllProjects() {
 }
 
 export function useCreateProject() {
-  const api = useApi();
+  const api = useClientApi();
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -107,7 +107,7 @@ export const useOriginalVersionIdToDeviceId = (originalVersionId: string) => {
 };
 
 export function useLeaveProject() {
-  const mapeoApi = useApi();
+  const mapeoApi = useClientApi();
 
   const queryClient = useQueryClient();
 

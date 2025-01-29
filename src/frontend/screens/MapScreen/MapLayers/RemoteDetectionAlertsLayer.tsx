@@ -41,6 +41,47 @@ export const RemoteDetectionAlertsMapLayer = () => {
     <MapboxGL.ShapeSource
       id="alerts-source"
       shape={convertRemoteDetectionAlertsToFeatures(alerts)}>
+      {/* Fill Layer for Polygon Fill */}
+      <MapboxGL.FillLayer
+        id="comapeo-alerts-polygon-fill"
+        filter={POLYGON_FILL_FILTER}
+        style={{
+          fillColor: '#FF0000',
+          fillOpacity: 0.5,
+        }}
+      />
+
+      {/* Line Layer for Polygon Stroke */}
+      <MapboxGL.LineLayer
+        id="comapeo-alerts-polygon-stroke"
+        filter={POLYGON_STROKE_FILTER}
+        style={{
+          lineColor: '#FF0000',
+          lineWidth: 2,
+        }}
+      />
+
+      {/* Line Layer for LineStrings and MultiLineStrings */}
+      <MapboxGL.LineLayer
+        id="comapeo-alerts-linestring"
+        filter={LINESTRING_FILTER}
+        style={{
+          lineColor: '#FF0000',
+          lineWidth: 3,
+          lineOpacity: 0.8,
+        }}
+      />
+
+      {/* Circle Layer for Points */}
+      <MapboxGL.CircleLayer
+        id="comapeo-alerts-point"
+        filter={POINT_FILTER}
+        style={{
+          circleRadius: 5,
+          circleColor: '#FF0000',
+        }}
+      />
+
       {/* Symbol Layer for Labels */}
       <MapboxGL.SymbolLayer
         id="comapeo-alerts-label"
@@ -62,47 +103,6 @@ export const RemoteDetectionAlertsMapLayer = () => {
           textHaloColor: '#000000',
           textHaloWidth: 1,
           textHaloBlur: 1,
-        }}
-      />
-
-      {/* Circle Layer for Points */}
-      <MapboxGL.CircleLayer
-        id="comapeo-alerts-point"
-        filter={POINT_FILTER}
-        style={{
-          circleRadius: 5,
-          circleColor: '#FF0000',
-        }}
-      />
-
-      {/* Line Layer for LineStrings and MultiLineStrings */}
-      <MapboxGL.LineLayer
-        id="comapeo-alerts-linestring"
-        filter={LINESTRING_FILTER}
-        style={{
-          lineColor: '#FF0000',
-          lineWidth: 3,
-          lineOpacity: 0.8,
-        }}
-      />
-
-      {/* Line Layer for Polygon Stroke */}
-      <MapboxGL.LineLayer
-        id="comapeo-alerts-polygon-stroke"
-        filter={POLYGON_STROKE_FILTER}
-        style={{
-          lineColor: '#FF0000',
-          lineWidth: 2,
-        }}
-      />
-
-      {/* Fill Layer for Polygon Fill */}
-      <MapboxGL.FillLayer
-        id="comapeo-alerts-polygon-fill"
-        filter={POLYGON_FILL_FILTER}
-        style={{
-          fillColor: '#FF0000',
-          fillOpacity: 0.5,
         }}
       />
     </MapboxGL.ShapeSource>

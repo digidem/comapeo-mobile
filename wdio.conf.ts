@@ -1,7 +1,7 @@
 export const config = {
   runner: 'local',
-  user: process.env.BROWSERSTACK_USERNAME || 'your_browserstack_username',
-  key: process.env.BROWSERSTACK_ACCESS_KEY || 'your_browserstack_access_key',
+  user: process.env.BROWSERSTACK_USERNAME,
+  key: process.env.BROWSERSTACK_ACCESS_KEY,
   hostname: 'hub.browserstack.com',
   specs: ['./tests/e2e/**/*.ts'],
   maxInstances: 1,
@@ -9,7 +9,7 @@ export const config = {
     [
       'browserstack',
       {
-        app: 'bs://47bee6ffa622788b17340af25cff598eb7fb132e',
+        app: process.env.BROWSERSTACK_APP_URL,
         buildIdentifier: `${process.env.BUILD_NUMBER || `build-${new Date().toISOString()}`}`,
         browserstackLocal: true,
         testObservability: true,
@@ -22,7 +22,7 @@ export const config = {
       'appium:platformVersion': '12.0',
       'appium:deviceName': 'Samsung Galaxy S22 Ultra',
       'appium:automationName': 'UIAutomator2',
-      'appium:app': 'bs://47bee6ffa622788b17340af25cff598eb7fb132e',
+      'appium:app': process.env.BROWSERSTACK_APP_URL,
       'appium:autoGrantPermissions': true,
       'bstack:options': {
         projectName: 'CoMapeo',
@@ -35,7 +35,7 @@ export const config = {
     },
   ],
   logLevel: 'info',
-  waitforTimeout: 15000,
+  waitforTimeout: 20000,
   connectionRetryTimeout: 180000,
   connectionRetryCount: 3,
   framework: 'mocha',

@@ -28,6 +28,9 @@ jobs:
       - name: Install EAS CLI
         run: npm install -g eas-cli
 
+      - name: Authenticate with EAS
+        run: eas login --token ${{ secrets.EXPO_TOKEN }}
+
       - name: Build APK
         env:
           SENTRY_DISABLE_AUTO_UPLOAD: 'true'

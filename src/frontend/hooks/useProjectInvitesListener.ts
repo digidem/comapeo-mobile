@@ -1,8 +1,8 @@
 import {useCallback, useEffect, useState} from 'react';
-import {useApi} from '../contexts/ApiContext';
 import {useQueryClient} from '@tanstack/react-query';
 import {INVITE_KEY} from './server/invites';
 import {Invite, InviteRemovalReason} from '@comapeo/core/dist/invite-api';
+import {useClientApi} from '@comapeo/core-react';
 
 export const useProjectInvitesListener = ({
   inviteId,
@@ -11,7 +11,7 @@ export const useProjectInvitesListener = ({
   inviteId?: string;
   bottomSheetIsOpen: boolean;
 }) => {
-  const mapeoApi = useApi();
+  const mapeoApi = useClientApi();
   const queryClient = useQueryClient();
 
   const [currentInviteCanceled, setCurrentInviteCancelled] = useState(false);

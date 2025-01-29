@@ -1,6 +1,6 @@
-import {type MapeoClientApi} from '@comapeo/ipc';
 import {useSyncExternalStore} from 'react';
-import {useApi} from '../contexts/ApiContext';
+import {useClientApi} from '@comapeo/core-react';
+import {type MapeoClientApi} from '@comapeo/ipc';
 
 type LocalPeer = Awaited<ReturnType<MapeoClientApi['listLocalPeers']>>[number];
 
@@ -10,7 +10,7 @@ let localPeerState: ReturnType<typeof createLocalPeerState> | undefined;
  * @returns An array of local peers (includes peers that were previously connected but are no longer connected)
  */
 export function useLocalPeers(): LocalPeer[] {
-  const api = useApi();
+  const api = useClientApi();
   if (!localPeerState) {
     localPeerState = createLocalPeerState(api);
   }

@@ -1,36 +1,42 @@
-import {Options} from '@wdio/types';
-
-export const config: Options.Testrunner = {
+export const config = {
   runner: 'local',
-  hostname: 'hub.browserstack.com',
   user: process.env.BROWSERSTACK_USERNAME || 'your_browserstack_username',
   key: process.env.BROWSERSTACK_ACCESS_KEY || 'your_browserstack_access_key',
+  hostname: 'hub.browserstack.com',
   specs: ['./tests/e2e/**/*.ts'],
-  maxInstances: 10,
+  maxInstances: 1,
   services: [
     [
       'browserstack',
       {
-        app: 'bs://<app-id>',
-        buildIdentifier:
-          process.env.BUILD_NUMBER || `build-${new Date().toISOString()}`,
+        app: 'bs://47bee6ffa622788b17340af25cff598eb7fb132e',
+        buildIdentifier: `${process.env.BUILD_NUMBER || `build-${new Date().toISOString()}`}`,
         browserstackLocal: true,
-        capabilities: [
-          {
-            platformName: 'Android',
-            'appium:deviceName': 'Samsung Galaxy S23 Ultra',
-            'appium:platformVersion': '13.0',
-            'appium:automationName': 'UiAutomator2',
-            'appium:app': 'bs://<app-id>',
-            'appium:autoGrantPermissions': true,
-          },
-        ],
+        testObservability: true,
       },
     ],
   ],
+  capabilities: [
+    {
+      platformName: 'android',
+      'appium:platformVersion': '12.0',
+      'appium:deviceName': 'Samsung Galaxy S22 Ultra',
+      'appium:automationName': 'UIAutomator2',
+      'appium:app': 'bs://47bee6ffa622788b17340af25cff598eb7fb132e',
+      'appium:autoGrantPermissions': true,
+      'bstack:options': {
+        projectName: 'CoMapeo',
+        buildName: 'CoMapeo Android Build',
+        sessionName: 'Launch App and Grant Permissions',
+        appiumVersion: '2.12.1',
+        debug: true,
+        networkLogs: true,
+      },
+    },
+  ],
   logLevel: 'info',
-  waitforTimeout: 10000,
-  connectionRetryTimeout: 120000,
+  waitforTimeout: 15000,
+  connectionRetryTimeout: 180000,
   connectionRetryCount: 3,
   framework: 'mocha',
   mochaOpts: {

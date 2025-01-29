@@ -16,6 +16,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO }}
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -24,12 +30,6 @@ jobs:
 
       - name: Install Dependencies
         run: npm ci
-
-      - name: Install EAS CLI
-        run: npm install -g eas-cli
-
-      - name: Authenticate with EAS
-        run: eas login --token ${{ secrets.EXPO_TOKEN }}
 
       - name: Build APK
         env:

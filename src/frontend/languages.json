@@ -23,6 +23,10 @@
     "nativeName": "Tɕɥi",
     "englishName": "Akan"
   },
+  "api": {
+    "nativeName": "Aparai",
+    "englishName": "Apalaí"
+  },
   "ar": {
     "nativeName": "العربية",
     "englishName": "Arabic"
@@ -359,6 +363,10 @@
     "nativeName": "हिन्दी",
     "englishName": "Hindi"
   },
+  "hix": {
+    "nativeName": "Hixkaryána",
+    "englishName": "Hixkaryana"
+  },
   "hr": {
     "nativeName": "Hrvatski",
     "englishName": "Croatian"
@@ -426,6 +434,10 @@
   "ka-GE": {
     "nativeName": "ქართული",
     "englishName": "Georgian"
+  },
+  "kbb": {
+    "nativeName": "Werikyana",
+    "englishName": "Kaxuiâna"
   },
   "kk-KZ": {
     "nativeName": "Қазақша",
@@ -791,6 +803,10 @@
     "nativeName": "Türkçe",
     "englishName": "Turkish"
   },
+  "tri": {
+    "nativeName": "Trio",
+    "englishName": "Tiriyó"
+  },
   "tt-RU": {
     "nativeName": "татарча",
     "englishName": "Tatar"
@@ -826,6 +842,14 @@
   "vi-VN": {
     "nativeName": "Tiếng Việt",
     "englishName": "Vietnamese"
+  },
+  "waw": {
+    "nativeName": "Waiwai",
+    "englishName": "Wai Wai"
+  },
+  "way": {
+    "nativeName": "Wayana",
+    "englishName": "Wayana"
   },
   "xh-ZA": {
     "nativeName": "isiXhosa",

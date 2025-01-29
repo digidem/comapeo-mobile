@@ -1,33 +1,17 @@
 #!/usr/bin/env node
 
-import {$} from 'execa';
 import fs from 'node:fs';
 import path from 'node:path';
-import {createRequire} from 'node:module';
 import {fileURLToPath} from 'node:url';
-
-const require = createRequire(import.meta.url);
+import {$} from 'execa';
 
 const TARGETS = ['android-arm', 'android-arm64', 'android-x64'];
 
-// TODO: Figure out how to know if module uses N-API at runtime
-const NATIVE_MODULES = [
-  {name: 'better-sqlite3', usesNapi: false},
-  {name: 'crc-native', usesNapi: true},
-  {name: 'fs-native-extensions', usesNapi: true},
-  {name: 'quickbit-native', usesNapi: true},
-  {name: 'simdle-native', usesNapi: true},
-  {name: 'sodium-native', usesNapi: true},
-];
-
-// Uncomment line below if you want to run this script directly
-// await downloadPrebuilds({verbose: true});
-
 /**
+ * @param {Array<{ name: string, usesNapi: boolean, version: string }>} modules
  * @param {{verbose?: boolean}} opts
  */
-export async function downloadPrebuilds({verbose} = {verbose: false}) {
-  const backendRootUrl = new URL('../src/backend/', import.meta.url);
+export async function downloadPrebuilds(modules, {verbose} = {verbose: false}) {
   const nodejsProjectUrl = new URL(
     '../nodejs-assets/nodejs-project/',
     import.meta.url,
@@ -36,11 +20,7 @@ export async function downloadPrebuilds({verbose} = {verbose: false}) {
   const {abi: NODE_ABI} = getNodeJsMobileNodeVersions();
 
   return Promise.all(
-    NATIVE_MODULES.map(async ({name, usesNapi}) => {
-      const pkgJsonPath = require.resolve(`${name}/package.json`, {
-        paths: [fileURLToPath(backendRootUrl)],
-      });
-      const {version} = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf-8'));
+    modules.map(async ({name, usesNapi, version}) => {
       if (verbose) {
         console.log(`${name}: prebuilds start (${version})`);
       }

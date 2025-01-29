@@ -1,0 +1,26 @@
+diff --git a/node_modules/react-native-indicators/src/components/dot-indicator/index.js b/node_modules/react-native-indicators/src/components/dot-indicator/index.js
+index b49cbfd..3512e0e 100644
+--- a/node_modules/react-native-indicators/src/components/dot-indicator/index.js
++++ b/node_modules/react-native-indicators/src/components/dot-indicator/index.js
+@@ -57,7 +57,7 @@ export default class DotIndicator extends PureComponent {
+     };
+ 
+     return (
+-      <Animated.View style={style} {...{ key: index }} />
++      <Animated.View style={style} key={index} />
+     );
+   }
+ 
+diff --git a/node_modules/react-native-indicators/src/components/ui-activity-indicator/index.js b/node_modules/react-native-indicators/src/components/ui-activity-indicator/index.js
+index dcde1e5..392e174 100644
+--- a/node_modules/react-native-indicators/src/components/ui-activity-indicator/index.js
++++ b/node_modules/react-native-indicators/src/components/ui-activity-indicator/index.js
+@@ -61,7 +61,7 @@ export default class UIActivityIndicator extends PureComponent {
+     };
+ 
+     return (
+-      <Animated.View style={[styles.layer, layerStyle]} {...{ key: index }}>
++      <Animated.View style={[styles.layer, layerStyle]} key={index}>
+         <Animated.View style={barStyle} />
+       </Animated.View>
+     );

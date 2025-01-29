@@ -48,7 +48,13 @@ const mapeoApi = createMapeoClient(messagePort, {timeout: Infinity});
 const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();
 initializeNodejs();
-SplashScreen.preventAutoHideAsync();
+
+SplashScreen.setOptions({
+  fade: true,
+});
+SplashScreen.preventAutoHideAsync().catch(err => {
+  console.log(err);
+});
 
 // Defines task that handles background location updates for tracks feature
 TaskManager.defineTask(

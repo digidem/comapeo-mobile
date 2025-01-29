@@ -1,17 +1,36 @@
 #!/usr/bin/env node
 
-import {parseArgs} from 'util';
+import fs from 'node:fs';
+import {createRequire} from 'node:module';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {parseArgs} from 'node:util';
 import {$} from 'execa';
-import path from 'path';
-import fs from 'fs';
+
 import {downloadPrebuilds} from './download-prebuilds.mjs';
+
+const require = createRequire(import.meta.url);
+
+const nodejsAssetsDirectory = fileURLToPath(
+  new URL('../nodejs-assets', import.meta.url),
+);
+const nodejsAssetsBackendDirectory = path.join(
+  nodejsAssetsDirectory,
+  'backend',
+);
+const nodejsAssetsProjectDirectory = path.join(
+  nodejsAssetsDirectory,
+  'nodejs-project',
+);
+
+const backendSourceDirectory = fileURLToPath(
+  new URL('../src/backend', import.meta.url),
+);
 
 const {
   values: {prod},
 } = parseArgs({
-  options: {
-    prod: {type: 'boolean'},
-  },
+  options: {prod: {type: 'boolean'}},
 });
 
 const $$ = $({stdio: 'inherit'});
@@ -19,23 +38,29 @@ const $$ = $({stdio: 'inherit'});
 console.group('[SETUP]');
 
 // Ensure we start in the right place
-process.chdir(new URL('../', import.meta.url).pathname);
+process.chdir(fileURLToPath(new URL('../', import.meta.url)));
 
 console.log('Preparing nodejs-assets directory...');
 
-fs.mkdirSync('./nodejs-assets', {recursive: true});
+fs.mkdirSync(nodejsAssetsDirectory, {recursive: true});
 
 await Promise.all([
-  $$`rm -rf ./nodejs-assets/nodejs-project`,
-  $$`rm -rf ./nodejs-assets/backend`,
+  $$`rm -rf ${nodejsAssetsProjectDirectory}`,
+  $$`rm -rf ${nodejsAssetsBackendDirectory}`,
 ]);
 
-fs.cpSync('./src/backend', './nodejs-assets/backend', {recursive: true});
-fs.mkdirSync('./nodejs-assets/nodejs-project/node_modules', {recursive: true});
-
-fs.writeFileSync('./nodejs-assets/BUILD_NATIVE_MODULES.txt', '1', {
-  encoding: 'utf-8',
+fs.cpSync(backendSourceDirectory, nodejsAssetsBackendDirectory, {
+  recursive: true,
 });
+fs.mkdirSync(path.join(nodejsAssetsProjectDirectory, 'node_modules'), {
+  recursive: true,
+});
+
+fs.writeFileSync(
+  path.join(nodejsAssetsDirectory, 'BUILD_NATIVE_MODULES.txt'),
+  '1',
+  {encoding: 'utf-8'},
+);
 console.log('Set build native modules on');
 
 console.groupEnd();
@@ -50,18 +75,18 @@ console.log('Installing deps...');
 // for generating / downloading builds of native modules.
 // We don't need to run these scripts since we pull prebuilds in a later step.
 await $$({
-  cwd: './nodejs-assets/backend',
+  cwd: nodejsAssetsBackendDirectory,
 })`npm ci --ignore-scripts`;
 
 //  Setting --ignore-scripts above means that the postinstall script will not run (needed for patch-package)
 await $$({
-  cwd: './nodejs-assets/backend',
+  cwd: nodejsAssetsBackendDirectory,
 })`npm run postinstall`;
 
 if (prod) {
-  await $$({cwd: './nodejs-assets/backend'})`npm run build -- --minify`;
+  await $$({cwd: nodejsAssetsBackendDirectory})`npm run build -- --minify`;
 } else {
-  await $$({cwd: './nodejs-assets/backend'})`npm run build`;
+  await $$({cwd: nodejsAssetsBackendDirectory})`npm run build`;
 }
 
 console.log(
@@ -81,24 +106,40 @@ const KEEP_THESE = [
 ];
 
 for (const name of KEEP_THESE) {
-  const source = path.join('./nodejs-assets/backend/', name);
+  const source = path.join(nodejsAssetsBackendDirectory, name);
   const destination = path.join(
-    './nodejs-assets/nodejs-project',
+    nodejsAssetsProjectDirectory,
     name === 'index.bundle.js' ? 'index.js' : name,
   );
 
   fs.cpSync(source, destination, {recursive: true});
 }
 
-await $$`rm -rf ./nodejs-assets/backend`;
+console.log('Downloading native prebuilds...');
 
-console.groupEnd();
+// TODO: Figure out how to know if module uses N-API at runtime
+const NATIVE_MODULES = [
+  {name: 'better-sqlite3', usesNapi: false},
+  {name: 'crc-native', usesNapi: true},
+  {name: 'fs-native-extensions', usesNapi: true},
+  {name: 'quickbit-native', usesNapi: true},
+  {name: 'simdle-native', usesNapi: true},
+  {name: 'sodium-native', usesNapi: true},
+];
 
-// ------------------------------------------------
+await downloadPrebuilds(
+  NATIVE_MODULES.map(m => {
+    const pkgJsonPath = require.resolve(`${m.name}/package.json`, {
+      paths: [nodejsAssetsBackendDirectory],
+    });
 
-console.group('[PREBUILDS]');
+    const {version} = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf-8'));
 
-await downloadPrebuilds();
+    return {...m, version};
+  }),
+);
+
+await $$`rm -rf ${nodejsAssetsBackendDirectory}`;
 
 console.groupEnd();
 

@@ -1,8 +1,12 @@
+// @ts-check
+
 /** @type {import('prettier').Config} */
-module.exports = {
+const config = {
   arrowParens: 'avoid',
   bracketSameLine: true,
   bracketSpacing: false,
   singleQuote: true,
   trailingComma: 'all',
 };
+
+module.exports = config;

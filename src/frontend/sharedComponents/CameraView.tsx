@@ -1,10 +1,10 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {
-  Camera,
-  CameraPictureOptions,
-  CameraType,
   CameraCapturedPicture,
+  CameraPictureOptions,
+  CameraView as ExpoCameraView,
+  useCameraPermissions,
 } from 'expo-camera';
 import ImageResizer from '@bam.tech/react-native-image-resizer';
 import {Accelerometer, AccelerometerMeasurement} from 'expo-sensors';
@@ -42,9 +42,9 @@ type Props = {
 export const CameraView = ({onAddPress}: Props) => {
   const [capturing, setCapturing] = React.useState(false);
   const [cameraReady, setCameraReady] = React.useState(false);
-  const ref = React.useRef<Camera>(null);
+  const ref = React.useRef<ExpoCameraView>(null);
   const accelerometerMeasurement = React.useRef<AccelerometerMeasurement>();
-  const [permissionsResponse] = Camera.useCameraPermissions();
+  const [permissionsResponse] = useCameraPermissions();
   const {location} = useLocation({maxDistanceInterval: 0});
 
   React.useEffect(() => {
@@ -85,6 +85,7 @@ export const CameraView = ({onAddPress}: Props) => {
     ref.current
       .takePictureAsync(captureOptions)
       .then(pic => {
+        if (!pic) return;
         onAddPress({
           capturePromise: rotatePhoto(pic, accelerometerMeasurement.current),
           mediaMetadata: {location, timestamp: Date.now()},
@@ -111,14 +112,14 @@ export const CameraView = ({onAddPress}: Props) => {
           </Text>
         </View>
       ) : (
-        <Camera
+        <ExpoCameraView
           ref={ref}
           onCameraReady={() => {
             setCameraReady(true);
           }}
           style={{flex: 1}}
-          type={CameraType.back}
-          useCamera2Api={false}
+          facing="back"
+          animateShutter={false}
         />
       )}
 
@@ -143,8 +144,8 @@ function rotatePhoto(
     'JPEG',
     CAPTURE_QUALITY,
     getPhotoRotation(acc),
-  ).then(({uri}) => {
-    return {uri};
+  ).then(resized => {
+    return {uri: resized.uri};
   });
 
   return resizePromise;

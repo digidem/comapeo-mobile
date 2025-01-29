@@ -15,7 +15,7 @@ export const rootNavigationRef =
 
 export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   if (permissionAsked) {
-    SplashScreen.hideAsync();
+    SplashScreen.hide();
   }
 
   const [inviteSheetEnabled, setInviteSheetEnabled] = React.useState(() => {

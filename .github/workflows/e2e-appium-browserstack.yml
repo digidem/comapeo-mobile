@@ -1,0 +1,77 @@
+name: Appium E2E Tests on BrowserStack
+
+on:
+  push:
+    branches:
+      - feat/appium-webdriver-setup
+  pull_request:
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    outputs:
+      app_url: ${{ steps.upload.outputs.app_url }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build APK
+        env:
+          SENTRY_DISABLE_AUTO_UPLOAD: 'true'
+          MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+          COMAPEO_METRICS_URL: ${{ secrets.COMAPEO_METRICS_URL }}
+          COMAPEO_METRICS_API_KEY: ${{ secrets.COMAPEO_METRICS_API_KEY }}
+        run: |
+          npm run extract-messages
+          npx expo prebuild --clean -p android
+          eas build --platform android --profile release-candidate --local --clear-cache
+
+      - name: Find Built APK
+        id: find-apk
+        run: echo "APK_PATH=$(ls -t build-*.apk | head -n 1)" >> $GITHUB_ENV
+
+      - name: Upload APK to BrowserStack
+        id: upload
+        run: |
+          APP_URL=$(curl -u "$BROWSERSTACK_USERNAME:$BROWSERSTACK_ACCESS_KEY" \
+            -X POST "https://api-cloud.browserstack.com/app-automate/upload" \
+            -F "file=@$APK_PATH" | jq -r '.app_url')
+          echo "app_url=$APP_URL" >> $GITHUB_ENV
+          echo "app_url=$APP_URL" >> $GITHUB_OUTPUT
+        env:
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+
+  run-e2e-tests:
+    runs-on: ubuntu-latest
+    needs: build-apk
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Webdriver IO E2E Tests on BrowserStack
+        run: npx wdio run wdio.conf.ts
+        env:
+          BROWSERSTACK_APP_URL: ${{ needs.build-apk.outputs.app_url }}
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}

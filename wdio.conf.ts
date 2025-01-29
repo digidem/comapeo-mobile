@@ -43,5 +43,23 @@ export const config = {
     ui: 'bdd',
     timeout: 60000,
   },
-  reporters: ['spec'],
+  reporters: [
+    'spec',
+    [
+      'json',
+      {
+        outputDir: './test-results',
+        fileName: 'wdio-log.json',
+      },
+    ],
+    [
+      'junit',
+      {
+        outputDir: './test-results',
+        outputFileFormat: function (options) {
+          return `wdio-results-${options.cid}.xml`;
+        },
+      },
+    ],
+  ],
 };

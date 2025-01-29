@@ -98,12 +98,13 @@ jobs:
           echo "Branch: $BRANCH_NAME" >> test-results/test-summary.txt
           echo "Commit: $COMMIT_SHA" >> test-results/test-summary.txt
           echo "Logs saved from failed test run." >> test-results/test-summary.txt
-          mv wdio.log test-results/
+          ls -la test-results
+          mv test-results/wdio-log.json test-results/ || echo "No WDIO log file found"
         continue-on-error: true
 
-      - name: Upload Test Logs Artifact
-        if: failure()
+      - name: Upload JUnit Test Results
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: browserstack-test-logs-${{ github.event.pull_request.number }}
-          path: test-results/
+          name: junit-test-results-${{ github.event.pull_request.number }}
+          path: test-results/wdio-results-*.xml

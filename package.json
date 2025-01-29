@@ -133,6 +133,7 @@
     "@types/debug": "4.1.12",
     "@types/geojson": "7946.0.15",
     "@types/jest": "29.5.13",
+    "@types/lint-staged": "13.3.0",
     "@types/lodash.isequal": "4.5.6",
     "@types/node": "20.8.4",
     "@types/react": "18.3.18",
@@ -166,26 +167,5 @@
     "semver": "7.6.0",
     "type-fest": "4.26.0",
     "typescript": "5.3.3"
-  },
-  "jest": {
-    "preset": "jest-expo",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ],
-    "setupFilesAfterEnv": [
-      "@rnmapbox/maps/setup-jest"
-    ],
-    "transformIgnorePatterns": [
-      "node_modules/(?!(...|@rnmapbox|(jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg)"
-    ]
-  },
-  "lint-staged": {
-    "*.{js,ts,jsx,tsx}": "prettier --write",
-    "src/frontend/**/*.{ts,tsx}": "npm run extract-messages"
   }
 }

@@ -5,6 +5,12 @@ import {WHITE} from '../lib/styles';
 import {useNavigation} from '@react-navigation/native';
 import {usePreventAndroidBackButton} from '../hooks/usePreventAndroidBackButton';
 
+/**
+ *
+ * @description A wrapper component that should be used for bottom sheets. It will handle the animation and prevent the back button from closing the bottom sheet.
+ *
+ * When pushing a bottom sheet ontop of another bottom sheet use `navigation.replace`, to close the original bottom sheet first.
+ */
 export const BottomSheetWrapper = ({children}: {children: React.ReactNode}) => {
   const navigation = useNavigation();
 

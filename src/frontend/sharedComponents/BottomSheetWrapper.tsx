@@ -3,11 +3,14 @@ import {View} from 'react-native';
 import Animated, {SlideInDown, SlideOutDown} from 'react-native-reanimated';
 import {WHITE} from '../lib/styles';
 import {useNavigation} from '@react-navigation/native';
+import {usePreventAndroidBackButton} from '../hooks/usePreventAndroidBackButton';
 
 export const BottomSheetWrapper = ({children}: {children: React.ReactNode}) => {
   const navigation = useNavigation();
 
   const [displayContent, setDisplayContent] = React.useState(true);
+
+  usePreventAndroidBackButton();
 
   // This effect is used to prevent the bottom sheet from being removed before the animation is complete
   React.useEffect(() => {

@@ -105,7 +105,8 @@ jobs:
 
       - name: Run Webdriver IO E2E Tests on BrowserStack
         run: |
-          mkdir -p test-results   
+          set -o pipefail
+          mkdir -p test-results
           npx wdio run wdio.conf.ts | tee test-results/spec-log.txt
         env:
           BROWSERSTACK_APP_URL: ${{ needs.build-apk.outputs.app_url }}
@@ -113,7 +114,7 @@ jobs:
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
 
       - name: Upload Spec Reporter Logs (if failed)
-        if: failure()
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: spec-reporter-logs-${{ github.event.pull_request.number }}

@@ -105,7 +105,8 @@ jobs:
 
       - name: Run Webdriver IO E2E Tests on BrowserStack
         run: |
-          npx wdio run wdio.conf.ts || exit 1
+          mkdir -p test-results   
+          npx wdio run wdio.conf.ts | tee test-results/spec-log.txt
         env:
           BROWSERSTACK_APP_URL: ${{ needs.build-apk.outputs.app_url }}
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}

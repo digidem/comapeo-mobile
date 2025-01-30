@@ -22,6 +22,33 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO }}
 
+      - name: Free Up Space
+        run: |
+          echo "Disk space before cleanup:"
+          df -h
+          sudo rm -rf /usr/local/.ghcup
+          sudo rm -rf /opt/hostedtoolcache/CodeQL
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/share/boost
+          sudo apt-get clean
+          echo "Disk space after cleanup:"
+          df -h
+
+      - name: Cache Dependencies
+        id: cache-dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            path: |
+             ~/.gradle/caches/
+             ~/.gradle/wrapper/
+             ~/.gradle/daemon/
+             node_modules
+          key: dependencies-cache-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            dependencies-cache-
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -29,6 +56,7 @@ jobs:
           cache: 'npm'
 
       - name: Install Dependencies
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Build APK
@@ -39,8 +67,8 @@ jobs:
           COMAPEO_METRICS_API_KEY: ${{ secrets.COMAPEO_METRICS_API_KEY }}
         run: |
           npm run extract-messages
-          npx expo prebuild --clean -p android
-          eas build --platform android --profile release-candidate --local --clear-cache
+          npx expo prebuild -p android
+          eas build --platform android --profile release-candidate --local
 
       - name: Find Built APK
         id: find-apk

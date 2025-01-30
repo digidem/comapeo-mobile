@@ -13,6 +13,10 @@ export const config = {
         buildIdentifier: `${process.env.BUILD_NUMBER || `build-${new Date().toISOString()}`}`,
         browserstackLocal: true,
         testObservability: true,
+        testObservabilityOptions: {
+          projectName: 'CoMapeo',
+          buildName: `CoMapeo E2E Tests - ${new Date().toISOString()}`,
+        },
       },
     ],
   ],
@@ -34,7 +38,7 @@ export const config = {
       },
     },
   ],
-  logLevel: 'info',
+  logLevel: 'error',
   waitforTimeout: 20000,
   connectionRetryTimeout: 180000,
   connectionRetryCount: 3,
@@ -45,21 +49,12 @@ export const config = {
   },
   reporters: [
     'spec',
-    [
-      'json',
-      {
-        outputDir: './test-results',
-        fileName: 'wdio-log.json',
-      },
-    ],
-    [
-      'junit',
-      {
-        outputDir: './test-results',
-        outputFileFormat: function (options) {
-          return `wdio-results-${options.cid}.xml`;
-        },
-      },
-    ],
+    {
+      showPreface: false,
+      color: true,
+      addConsoleLogs: true,
+      onlyFailures: false,
+    },
   ],
+  outputDir: './test-results',
 };

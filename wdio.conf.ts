@@ -48,13 +48,15 @@ export const config = {
     timeout: 60000,
   },
   reporters: [
-    'spec',
-    {
-      showPreface: false,
-      color: true,
-      addConsoleLogs: true,
-      onlyFailures: false,
-    },
+    [
+      'spec',
+      {
+        showPreface: false,
+        color: true,
+        addConsoleLogs: true,
+        onlyFailures: false,
+      },
+    ],
   ],
   outputDir: './test-results',
 };

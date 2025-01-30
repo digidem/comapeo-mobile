@@ -20,13 +20,17 @@ export const BottomSheetWrapper = ({children}: {children: React.ReactNode}) => {
 
   // This effect is used to prevent the bottom sheet from being removed before the animation is complete
   React.useEffect(() => {
-    navigation.addListener('beforeRemove', e => {
+    const unsubscribe = navigation.addListener('beforeRemove', e => {
       e.preventDefault();
       setDisplayContent(false);
       setTimeout(() => {
         navigation.dispatch(e.data.action);
       }, 140);
     });
+
+    return () => {
+      unsubscribe();
+    };
   }, [navigation]);
 
   return (

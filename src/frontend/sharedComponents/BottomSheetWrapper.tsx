@@ -42,8 +42,8 @@ export const BottomSheetWrapper = ({children}: {children: React.ReactNode}) => {
             backgroundColor: WHITE,
             padding: 20,
             paddingTop: 40,
-            borderTopLeftRadius: 25,
-            borderTopRightRadius: 25,
+            borderTopLeftRadius: 10,
+            borderTopRightRadius: 10,
           }}
           entering={SlideInDown.duration(150)}
           exiting={SlideOutDown.duration(150)}>

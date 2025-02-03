@@ -125,7 +125,7 @@ jobs:
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
 
-      - name: Upload Spec Reporter Logs (if failed)
+      - name: Upload Spec Reporter Logs
         if: always()
         uses: actions/upload-artifact@v4
         with:

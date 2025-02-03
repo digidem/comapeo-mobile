@@ -68,16 +68,6 @@ skipping it does not seem to affect our ability to build the app and is thus (pr
 
 When targeting Intel-based architectures (i.e. `x86_64`), the affected Gradle build steps were attempting to find native prebuilds using the extended target architecture name i.e. in each directory for relevant native Node modules, it was looking for `prebuilds/android-x86_64/` instead of `prebuilds/android-x64/`. This naming discrepancy is due to how our [prebuild template](https://github.com/digidem/nodejs-mobile-prebuilds-template) publishes the output from https://github.com/nodejs-mobile/prebuild-for-nodejs-mobile/, which uses an abbreviated name of the architecture (e.g. `x86_64` is referred to as `x64`).
 
-## @react-native/eslint-config
-
-### [Disable prettier plugin rules](./@react-native+eslint-config+0.73.2.patch)
-
-The module uses a plugin whose currently specified version is not compatible with Prettier v3. Additionally, it is not
-desirable to have Prettier tightly integrated with ESLint. The patch removes the usage of the discouraged plugin.
-
-We can remove this if either [this](https://github.com/facebook/react-native/pull/41877)
-or [this](https://github.com/facebook/react-native/pull/43756) is merged.
-
 ## @comapeo/ipc
 
 ### [Change imports to avoid calling unavailable code](./@comapeo+ipc+2.1.0.patch)
@@ -90,3 +80,9 @@ There was an error while running app via Expo because of exports in `rpc-reflect
 
 There was an error while running app via Expo because of `duplex` method call in `rpc-reflector` package.
 As this feature is not used in CoMapeo, this can be safely hardcoded to `false`. To remove this patch, `rpc-reflector` would need to be updated to account for this bug.
+
+## react-native-indicators
+
+### [Fix `key` prop error when using components](./react-native-indicators+0.17.0+001+fix-key-prop-error.patch)
+
+Refer to https://github.com/n4kz/react-native-indicators/issues/43 for details.

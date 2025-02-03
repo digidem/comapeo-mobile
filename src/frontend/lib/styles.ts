@@ -24,3 +24,4 @@ export const DARK_ORANGE = '#E86826';
 export const SYNC_BACKGROUND = '#2348B2';
 export const GPS_MODAL_TEXT = 'rgb(40,40,40)';
 export const DARK_GREEN = '#59A553';
+export const WARNING_RED = '#D92222';

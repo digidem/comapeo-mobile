@@ -1,50 +1,37 @@
 #!/usr/bin/env node
 
-import {$} from 'execa';
 import fs from 'node:fs';
 import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {$} from 'execa';
 
-// NOTE: we currently don't support building for intel arch (android-x64)
-const TARGETS = ['android-arm', 'android-arm64'];
-
-// TODO: Figure out how to know if module uses N-API at runtime
-const NATIVE_MODULES = [
-  {name: 'better-sqlite3', version: '8.7.0', usesNapi: false},
-  {name: 'crc-native', version: '1.0.11', usesNapi: true},
-  {name: 'fs-native-extensions', version: '1.2.3', usesNapi: true},
-  {name: 'quickbit-native', version: '2.2.0', usesNapi: true},
-  {name: 'simdle-native', version: '1.2.0', usesNapi: true},
-  {name: 'sodium-native', version: '4.0.4', usesNapi: true},
-  {name: 'udx-native', version: '1.7.12', usesNapi: true},
-];
-
-// Uncomment line below if you want to run this script directly
-// await downloadPrebuilds();
+const TARGETS = ['android-arm', 'android-arm64', 'android-x64'];
 
 /**
+ * @param {Array<{ name: string, usesNapi: boolean, version: string }>} modules
  * @param {{verbose?: boolean}} opts
  */
-export async function downloadPrebuilds({verbose} = {verbose: false}) {
-  const prevCwd = process.cwd();
-
-  process.chdir(
-    path.resolve(
-      new URL('../nodejs-assets/nodejs-project/node_modules', import.meta.url)
-        .pathname,
-    ),
+export async function downloadPrebuilds(modules, {verbose} = {verbose: false}) {
+  const nodejsProjectUrl = new URL(
+    '../nodejs-assets/nodejs-project/',
+    import.meta.url,
   );
 
   const {abi: NODE_ABI} = getNodeJsMobileNodeVersions();
 
   return Promise.all(
-    NATIVE_MODULES.map(async ({name, version, usesNapi}) => {
+    modules.map(async ({name, usesNapi, version}) => {
       if (verbose) {
         console.log(`${name}: prebuilds start (${version})`);
       }
+      const prebuildsDir = fileURLToPath(
+        new URL(`node_modules/${name}/prebuilds/`, nodejsProjectUrl),
+      );
+      fs.rmSync(prebuildsDir, {recursive: true, force: true});
 
       await Promise.all(
         TARGETS.map(async target => {
-          const targetDir = path.join(name, 'prebuilds', target);
+          const targetDir = path.join(prebuildsDir, target);
 
           fs.mkdirSync(targetDir, {recursive: true});
 
@@ -85,9 +72,7 @@ export async function downloadPrebuilds({verbose} = {verbose: false}) {
         console.log(`${name}: prebuilds done (${version})`);
       }
     }),
-  ).finally(() => {
-    process.chdir(prevCwd);
-  });
+  );
 }
 
 function getNodeJsMobileNodeVersions() {

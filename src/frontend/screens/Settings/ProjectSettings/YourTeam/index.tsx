@@ -10,7 +10,6 @@ import type {NativeNavigationComponent} from '../../../../sharedTypes/navigation
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {Button} from '../../../../sharedComponents/Button';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {Text} from '../../../../sharedComponents/Text';
 import {BLACK} from '../../../../lib/styles';
 import {DeviceCard} from '../../../../sharedComponents/DeviceCard';
 import {
@@ -22,6 +21,8 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import {useDeviceInfo} from '../../../../hooks/server/deviceInfo';
 import {CenteredView} from '../../../../sharedComponents/CenteredView';
 import {NotOnProject} from './NotOnProject';
+import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   title: {
@@ -120,9 +121,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
               name="person-add"
               style={{marginRight: 10}}
             />
-            <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-              {t(m.inviteDevice)}
-            </Text>
+            <HeaderText variant="header5">{t(m.inviteDevice)}</HeaderText>
           </View>
         </Button>
       )}
@@ -131,7 +130,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
         messageDescriptor={m.coordinators}
         style={{marginTop: 20}}
       />
-      <Text style={{marginTop: 10}}>{t(m.coordinatorDescription)}</Text>
+      <BodyText style={{marginTop: 10}}>{t(m.coordinatorDescription)}</BodyText>
 
       <View
         style={{
@@ -140,8 +139,8 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
           alignItems: 'center',
           marginTop: 20,
         }}>
-        <Text style={{marginTop: 10}}>{t(m.deviceName)}</Text>
-        <Text style={{marginTop: 10}}>{t(m.dateAdded)}</Text>
+        <BodyText style={{marginTop: 10}}>{t(m.deviceName)}</BodyText>
+        <BodyText style={{marginTop: 10}}>{t(m.dateAdded)}</BodyText>
       </View>
 
       {membersQuery.isLoading && <Loading />}
@@ -153,7 +152,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
           name={coordinator.name || ''}
           deviceId={coordinator.deviceId}
           dateAdded={coordinator.joinedAt}
-          deviceType="mobile"
+          deviceType={coordinator.deviceType}
           thisDevice={deviceInfo.data?.deviceId === coordinator.deviceId}
         />
       ))}
@@ -163,7 +162,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
         messageDescriptor={m.participants}
         style={{marginTop: 20}}
       />
-      <Text style={{marginTop: 10}}>{t(m.participantDescription)}</Text>
+      <BodyText style={{marginTop: 10}}>{t(m.participantDescription)}</BodyText>
 
       {membersQuery.isLoading && <Loading />}
 
@@ -173,7 +172,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
           style={{marginTop: 10}}
           name={participant.name || ''}
           deviceId={participant.deviceId}
-          deviceType="mobile"
+          deviceType={participant.deviceType}
           dateAdded={participant.joinedAt}
           thisDevice={deviceInfo.data?.deviceId === participant.deviceId}
         />
@@ -210,9 +209,7 @@ const IconHeader = ({
         name={iconName}
         style={{marginRight: 10}}
       />
-      <Text style={{fontSize: 18, fontWeight: 'bold'}}>
-        {t(messageDescriptor)}
-      </Text>
+      <HeaderText variant="header4">{t(messageDescriptor)}</HeaderText>
     </View>
   );
 };

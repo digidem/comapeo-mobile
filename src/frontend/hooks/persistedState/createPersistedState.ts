@@ -37,13 +37,26 @@ type MigrationOpt<T> =
 export function createPersistedState<T>(
   ...args: Parameters<typeof createPersistMiddleware<T>>
 ) {
-  return create<T>()(createPersistMiddleware(...args));
+  const store = create<T>()(createPersistMiddleware(...args));
+
+  store.setState(state => ({
+    ...state,
+    ...args[0],
+  }));
+
+  return store;
 }
 
 export function createPersistedStore<T>(
   ...args: Parameters<typeof createPersistMiddleware<T>>
 ) {
-  return createStore<T>()(createPersistMiddleware(...args));
+  const store = createStore<T>()(createPersistMiddleware(...args));
+  store.setState(state => ({
+    ...state,
+    ...args[0],
+  }));
+
+  return store;
 }
 
 function createPersistMiddleware<State>(

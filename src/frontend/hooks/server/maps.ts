@@ -1,8 +1,8 @@
+import {useClientApi} from '@comapeo/core-react';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import * as FileSystem from 'expo-file-system';
 import * as v from 'valibot';
 
-import {useApi} from '../../contexts/ApiContext';
 import {DOCUMENT_DIRECTORY} from '../../lib/file-system';
 
 import {createRefreshTokenStore} from '../refreshTokenStore';
@@ -28,7 +28,7 @@ export type CustomMapInfo = v.InferOutput<typeof CustomMapInfoSchema>;
 const {useRefreshToken, useRefreshTokenActions} = createRefreshTokenStore();
 
 export function useMapStyleJsonUrl() {
-  const api = useApi();
+  const api = useClientApi();
   const refreshToken = useRefreshToken();
 
   return useQuery({
@@ -42,12 +42,12 @@ export function useMapStyleJsonUrl() {
 
 export function useImportCustomMapFile() {
   const queryClient = useQueryClient();
-  const api = useApi();
+  const api = useClientApi();
   const {refresh} = useRefreshTokenActions();
 
   return useMutation({
     mutationFn: async (opts: {uri: string}) => {
-      await FileSystem.moveAsync({
+      await FileSystem.copyAsync({
         from: opts.uri,
         to: DEFAULT_CUSTOM_MAP_FILE_PATH,
       });
@@ -96,7 +96,7 @@ export function useRemoveCustomMapFile() {
  * Returns `null` if no viable map is found. Throws an error if a detected map is invalid.
  */
 export function useGetCustomMapInfo() {
-  const api = useApi();
+  const api = useClientApi();
 
   return useQuery({
     queryKey: [MAPS_QUERY_KEY, 'custom', 'info'],

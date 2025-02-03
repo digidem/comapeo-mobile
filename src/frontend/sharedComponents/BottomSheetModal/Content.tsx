@@ -1,7 +1,12 @@
 import * as React from 'react';
-import {StyleSheet, TextStyle, ScrollView, View} from 'react-native';
+import {
+  StyleSheet,
+  TextStyle,
+  ScrollView,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import {TouchableHighlight} from '@gorhom/bottom-sheet';
-import {useDimensions} from '@react-native-community/hooks';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 import {LIGHT_BLUE, MAGENTA, COMAPEO_BLUE, RED, WHITE} from '../../lib/styles';
@@ -53,14 +58,14 @@ export const Content = ({
   title,
   titleStyle,
 }: Props) => {
-  const {window} = useDimensions();
+  const {height} = useWindowDimensions();
   const {fullScreen} = useBottomSheetModalProperties();
 
   return (
     <View
       style={[
         styles.container,
-        fullScreen ? {height: '100%'} : {maxHeight: window.height * 0.8},
+        fullScreen ? {height: '100%'} : {maxHeight: height * 0.8},
       ]}>
       <View style={[styles.infoContainer, fullScreen && {flex: 1}]}>
         {icon ? <View style={styles.iconContainer}>{icon}</View> : null}
@@ -74,7 +79,7 @@ export const Content = ({
         </View>
         {children ? (
           <ScrollView
-            style={fullScreen ? {flex: 1} : {maxHeight: window.height * 0.2}}>
+            style={fullScreen ? {flex: 1} : {maxHeight: height * 0.2}}>
             {children}
           </ScrollView>
         ) : null}

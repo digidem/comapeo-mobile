@@ -1,5 +1,6 @@
 {
   "expo": {
+    "newArchEnabled": false,
     "jsEngine": "hermes",
     "name": "CoMapeo",
     "slug": "comapeo",
@@ -17,6 +18,20 @@
           "RNMapboxMapsImpl": "mapbox",
           "RNMapboxMapsVersion": "11.1.0",
           "RNMapboxMapsDownloadToken": "sk.eyJ1IjoiYnN0ZWZhbmN6eWsiLCJhIjoiY2x1dXV1NHNlMGU5dzJqcnh1Zno4YW4xcyJ9.P_LsVHh_HWTh25x5rRdrQg"
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash.png",
+          "backgroundColor": "#050F77",
+          "imageWidth": 300,
+          "android": {
+            "resizeMode": "contain"
+          },
+          "ios": {
+            "resizeMode": "contain"
+          }
         }
       ],
       [
@@ -46,7 +61,10 @@
       [
         "expo-font",
         {
-          "fonts": ["./public/Rubik-Regular.ttf", "./public/Rubik-Medium.ttf"]
+          "fonts": [
+            "node_modules/@expo-google-fonts/rubik/Rubik_400Regular.ttf",
+            "node_modules/@expo-google-fonts/rubik/Rubik_500Medium.ttf"
+          ]
         }
       ],
       [
@@ -58,18 +76,24 @@
         }
       ],
       ["./expo-config-plugins/removeExpoInputStyles.js"],
-      ["./expo-config-plugins/targetArmArchsOnly.js"]
+      ["./expo-config-plugins/targetArmArchsOnly.js"],
+      [
+        "react-native-share",
+        {
+          "android": [
+            "com.facebook.katana",
+            "com.instagram.android",
+            "com.twitter.android",
+            "com.zhiliaoapp.musically"
+          ]
+        }
+      ]
     ],
     "android": {
       "allowBackup": false,
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#050F77"
-      },
-      "splash": {
-        "image": "./assets/splash.png",
-        "backgroundColor": "#050F77",
-        "resizeMode": "contain"
       },
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
@@ -83,11 +107,6 @@
       "package": "com.comapeo"
     },
     "ios": {
-      "splash": {
-        "image": "./assets/splash.png",
-        "backgroundColor": "#050F77",
-        "resizeMode": "contain"
-      },
       "bundleIdentifier": "com.comapeo"
     },
     "extra": {

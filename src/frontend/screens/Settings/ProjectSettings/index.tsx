@@ -1,6 +1,11 @@
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
+import {
+  useAllProjects,
+  useGetRemoteArchives,
+} from '../../../hooks/server/projects';
+import {UIActivityIndicator} from 'react-native-indicators';
 import {FullScreenMenuList} from '../../../sharedComponents/MenuList/FullScreenMenuList';
 import {MenuListItemType} from '../../../sharedComponents/MenuList/MenuListItem';
 
@@ -26,6 +31,18 @@ const m = defineMessages({
     defaultMessage: 'Configuration',
     description: 'Primary text for project config settings',
   },
+  RemoteArchive: {
+    id: 'Screens.Settings.ProjectSettings.RemoteArchive',
+    defaultMessage: 'Remote Archive',
+  },
+  remoteArchiveOff: {
+    id: 'Screens.Settings.ProjectSettings.remoteArchiveOff',
+    defaultMessage: 'Remote Archive is OFF',
+  },
+  remoteArchiveOn: {
+    id: 'Screens.Settings.ProjectSettings.remoteArchiveOn',
+    defaultMessage: 'Remote Archive is ON',
+  },
 });
 
 export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
@@ -33,11 +50,18 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
 }) => {
   const {formatMessage} = useIntl();
 
+  const {data: remoteArchives, isPending} = useGetRemoteArchives();
+
+  const remoteArchiveOn = remoteArchives && remoteArchives.length > 0;
+
+  const {data: projects} = useAllProjects();
+
   const MenuItems: MenuListItemType[] = [
     {
       onPress: () => {
         navigation.navigate('DeviceNameDisplay');
       },
+      disabled: remoteArchives === undefined,
       primaryText: formatMessage(m.deviceName),
       testID: 'PROJECT.device-name-list-item',
     },
@@ -55,17 +79,32 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
       primaryText: formatMessage(m.yourTeam),
       testID: 'MAIN.team-list-item',
     },
-    ...(process.env.EXPO_PUBLIC_FEATURE_MEDIA_MANAGER
+    ...(projects && projects.length > 1
       ? [
           {
             onPress: () => {
-              navigation.navigate('MediaSyncSettings');
+              navigation.navigate(
+                remoteArchiveOn ? 'RemoteArchiveOn' : 'RemoteArchiveOff',
+              );
             },
-            primaryText: formatMessage(m.mediaSyncSettings),
-            testID: 'AIN.sync-list-item',
+            primaryText: formatMessage(m.RemoteArchive),
+            secondaryText: isPending ? (
+              <UIActivityIndicator size={25} />
+            ) : remoteArchiveOn ? (
+              formatMessage(m.remoteArchiveOn)
+            ) : (
+              formatMessage(m.remoteArchiveOff)
+            ),
           },
         ]
       : []),
+    {
+      onPress: () => {
+        navigation.navigate('MediaSyncSettings');
+      },
+      primaryText: formatMessage(m.mediaSyncSettings),
+      testID: 'MAIN.sync-list-item',
+    },
   ];
 
   return <FullScreenMenuList data={MenuItems} />;

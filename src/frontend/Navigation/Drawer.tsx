@@ -8,8 +8,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import {NavigatorScreenParams} from '@react-navigation/native';
-import {View} from 'react-native';
-import {Text} from '../sharedComponents/Text';
+import {View, Text} from 'react-native';
 import {VERY_LIGHT_GREY, WHITE} from '../lib/styles';
 import {useProjectSettings} from '../hooks/server/projects';
 import {AppStackParamsList} from '../sharedTypes/navigation';
@@ -121,6 +120,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
             style={{alignSelf: 'flex-end', marginRight: 20}}
             onPress={navigation.closeDrawer}
           />
+          {/* This text component is one of the exceptions that does not use the shared text components as requested by Sabella */}
           <Text
             testID="MAIN.drawer-create-join-txt"
             style={{
@@ -128,6 +128,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
               textAlign: 'center',
               paddingHorizontal: 40,
               fontSize: 18,
+              fontFamily: 'Rubik_400Regular',
             }}>
             {data?.name
               ? formatMessage(m.projName, {projectName: data.name})

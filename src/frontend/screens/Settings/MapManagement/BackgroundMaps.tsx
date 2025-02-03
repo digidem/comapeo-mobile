@@ -1,5 +1,4 @@
 import {type NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import * as FileSystem from 'expo-file-system';
 import React from 'react';
 import {defineMessages, useIntl, type MessageDescriptor} from 'react-intl';
 import {ScrollView, StyleSheet, View} from 'react-native';
@@ -13,8 +12,7 @@ import {
 } from '../../../hooks/server/maps';
 import ErrorSvg from '../../../images/Error.svg';
 import GreenCheckSvg from '../../../images/GreenCheck.svg';
-import noop from '../../../lib/noop';
-import {DARK_GREY, RED, WHITE} from '../../../lib/styles';
+import {RED, WHITE} from '../../../lib/styles';
 import {
   BottomSheetModal,
   BottomSheetModalContent,
@@ -23,7 +21,8 @@ import {
 import {Button} from '../../../sharedComponents/Button';
 import {ErrorBottomSheet} from '../../../sharedComponents/ErrorBottomSheet';
 import {Loading} from '../../../sharedComponents/Loading';
-import {Text} from '../../../sharedComponents/Text';
+import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {type NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {ChooseMapFile} from './ChooseMapFile';
 import {CustomMapDetails} from './CustomMapDetails';
@@ -130,10 +129,12 @@ export function BackgroundMapsScreen() {
   return (
     <>
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.aboutText}>{t(m.about)}</Text>
+        <HeaderText variant="header2" style={styles.aboutText}>
+          {t(m.about)}
+        </HeaderText>
         <View style={styles.descriptionContainer}>
-          <Text>{t(m.description1)}</Text>
-          <Text>{t(m.description2)}</Text>
+          <BodyText>{t(m.description1)}</BodyText>
+          <BodyText>{t(m.description2)}</BodyText>
         </View>
 
         <CustomMapInfoSection
@@ -151,11 +152,6 @@ export function BackgroundMapsScreen() {
                       uri: asset.uri,
                     },
                     {
-                      onError: () => {
-                        FileSystem.deleteAsync(asset.uri, {
-                          idempotent: true,
-                        }).catch(noop);
-                      },
                       onSuccess: () => {
                         mapAddedBottomSheet.openSheet();
                       },
@@ -172,18 +168,20 @@ export function BackgroundMapsScreen() {
 
         {customMapInfoQuery.status === 'error' && (
           <>
-            <Text style={styles.infoLoadErrorText}>
+            <BodyText variant="large" style={styles.infoLoadErrorText}>
               {t(m.customMapInfoLoadError)}
-            </Text>
+            </BodyText>
             <Button
               fullWidth
               variant="outlined"
               onPress={() => {
                 removeCustomMapMutation.mutate();
               }}>
-              <Text style={styles.removeMapFileButtonText}>
+              <HeaderText
+                variant="header5"
+                style={styles.removeMapFileButtonText}>
                 {t(m.removeMapFile)}
-              </Text>
+              </HeaderText>
             </Button>
           </>
         )}
@@ -206,8 +204,11 @@ export function BackgroundMapsScreen() {
               text: t(m.deleteMapButtonText),
               icon: <MaterialIcon size={30} name="delete" color={WHITE} />,
               onPress: () => {
-                removeCustomMapMutation.mutate();
-                removeMapBottomSheet.closeSheet();
+                removeCustomMapMutation.mutate(undefined, {
+                  onSuccess: () => {
+                    removeMapBottomSheet.closeSheet();
+                  },
+                });
               },
             },
             {
@@ -322,22 +323,16 @@ const styles = StyleSheet.create({
   },
   aboutText: {
     textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 36,
-    color: DARK_GREY,
   },
   infoLoadErrorText: {
     textAlign: 'center',
     color: RED,
-    fontSize: 20,
   },
   removeMapFileButton: {
     backgroundColor: RED,
   },
   removeMapFileButtonText: {
-    fontWeight: '700',
     letterSpacing: 0.5,
-    fontSize: 18,
     color: RED,
   },
 });

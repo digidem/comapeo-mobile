@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useClientApi} from '@comapeo/core-react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack/lib/typescript/src/types';
 import {WHITE} from '../../lib/styles';
@@ -17,7 +18,6 @@ import {getInitialRouteName} from '../../utils/navigation';
 import {createDefaultScreenGroup} from './AppScreens';
 import {createOnboardingScreens} from './OnboardingScreens';
 import {useSuspenseQuery} from '@tanstack/react-query';
-import {useApi} from '../../contexts/ApiContext';
 import {Loading} from '../../sharedComponents/Loading';
 import {useSecurityContext} from '../../contexts/SecurityContext';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
@@ -63,7 +63,7 @@ function RootStackNavigatorChild() {
     store => store.value,
   );
   const {data: presets} = usePresetsQuery();
-  const mapeoApi = useApi();
+  const mapeoApi = useClientApi();
 
   const deviceInfo = useSuspenseQuery({
     queryKey: [DEVICE_INFO_KEY],
@@ -103,6 +103,7 @@ export const NavigatorScreenOptions: NativeStackNavigationOptions = {
   presentation: 'card',
   contentStyle: {backgroundColor: WHITE},
   headerStyle: {backgroundColor: WHITE},
+  headerTitleStyle: {fontFamily: 'Rubik_500Medium'},
   headerLeft: props => <CustomHeaderLeft headerBackButtonProps={props} />,
   // This only hides the DEFAULT back button. We render a custom one in headerLeft, so the default one should always be hidden.
   // This **might** cause a problem for IOS

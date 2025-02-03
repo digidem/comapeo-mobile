@@ -1,9 +1,6 @@
 import * as React from 'react';
-import {MapBuffers} from '@comapeo/core/dist/types';
-import {
-  InviteInternal,
-  InviteRemovalReason,
-} from '@comapeo/core/dist/invite-api';
+import {Invite, InviteRemovalReason} from '@comapeo/core/dist/invite-api';
+import {useClientApi} from '@comapeo/core-react';
 
 import {BottomSheetModal, useBottomSheetModal} from '../BottomSheetModal';
 import {
@@ -17,7 +14,6 @@ import {InviteSuccessBottomSheetContent} from './InviteSuccessBottomSheetContent
 import {InviteCanceledBottomSheetContent} from './InviteCanceledBottomSheetContent';
 import {useAllProjects} from '../../hooks/server/projects';
 import {LeaveProjectModalContent} from '../LeaveProjectModalContent';
-import {useApi} from '../../contexts/ApiContext';
 
 export type LeaveProjectModalState = 'AlreadyOnProj' | 'LeaveProj';
 
@@ -51,6 +47,7 @@ export const ProjectInviteBottomSheet = ({
 
   const [leaveModalState, setLeaveModalState] =
     React.useState<LeaveProjectModalState>('AlreadyOnProj');
+  const [inviteModalVisible, setInviteModalVisible] = React.useState(false);
 
   const invite = invites[0];
 
@@ -64,9 +61,23 @@ export const ProjectInviteBottomSheet = ({
   const accept = useAcceptInvite();
   const reject = useRejectInvite();
 
-  if (invite && !inviteIsOpen && enabledForCurrentScreen) {
-    openInviteSheet();
-  }
+  React.useEffect(() => {
+    if (
+      (invite || acceptedInvite) &&
+      !inviteModalVisible &&
+      enabledForCurrentScreen
+    ) {
+      setInviteModalVisible(true);
+    }
+  }, [invite, acceptedInvite, inviteModalVisible, enabledForCurrentScreen]);
+
+  React.useEffect(() => {
+    if (inviteModalVisible && !inviteIsOpen) {
+      openInviteSheet();
+    } else if (!inviteModalVisible && inviteIsOpen) {
+      closeInviteSheet();
+    }
+  }, [inviteModalVisible, inviteIsOpen, openInviteSheet, closeInviteSheet]);
 
   if (currentInviteCanceled && leaveIsOpen) {
     closeLeaveSheet();
@@ -77,20 +88,20 @@ export const ProjectInviteBottomSheet = ({
       reject.mutate(invite, {
         onSuccess: () => {
           if (invites.length <= 1) {
-            closeInviteSheet();
+            setInviteModalVisible(false);
           }
         },
       });
     }
     if (invites.length <= 1) {
-      closeInviteSheet();
+      setInviteModalVisible(false);
     }
   }
 
   function handleCanceledInvite() {
     resetCacheAndClearCanceled();
     if (invites.length <= 1) {
-      closeInviteSheet();
+      setInviteModalVisible(false);
     }
   }
 
@@ -115,6 +126,7 @@ export const ProjectInviteBottomSheet = ({
           accept.reset();
           reject.reset();
           acceptedInvite?.remove();
+          setInviteModalVisible(false);
         }}>
         {currentInviteCanceled ? (
           <InviteCanceledBottomSheetContent
@@ -123,7 +135,9 @@ export const ProjectInviteBottomSheet = ({
           />
         ) : acceptedInvite ? (
           <InviteSuccessBottomSheetContent
-            closeSheet={closeInviteSheet}
+            closeSheet={() => {
+              setInviteModalVisible(false);
+            }}
             projectName={acceptedInvite.value.projectName}
           />
         ) : (
@@ -155,15 +169,13 @@ export const ProjectInviteBottomSheet = ({
 };
 
 function useAcceptedInvite() {
-  const api = useApi();
-  const [acceptedInvite, setAcceptedInvite] =
-    React.useState<MapBuffers<InviteInternal> | null>(null);
+  const api = useClientApi();
+  const [acceptedInvite, setAcceptedInvite] = React.useState<Invite | null>(
+    null,
+  );
 
   React.useEffect(() => {
-    function onInviteRemoved(
-      invite: MapBuffers<InviteInternal>,
-      reason: InviteRemovalReason,
-    ) {
+    function onInviteRemoved(invite: Invite, reason: InviteRemovalReason) {
       if (reason === 'accepted') {
         setAcceptedInvite(invite);
       }

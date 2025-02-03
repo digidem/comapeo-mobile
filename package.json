@@ -132,7 +132,7 @@
     "@react-native/metro-babel-transformer": "0.76.6",
     "@react-native/metro-config": "0.76.6",
     "@react-native/typescript-config": "0.76.6",
-    "@tanstack/eslint-plugin-query": "5.62.1",
+    "@tanstack/eslint-plugin-query": "5.66.0",
     "@testing-library/react-native": "12.4.3",
     "@types/debug": "4.1.12",
     "@types/geojson": "7946.0.15",

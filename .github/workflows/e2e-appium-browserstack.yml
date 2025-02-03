@@ -117,5 +117,5 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: spec-reporter-logs-${{ github.event.pull_request.number }}
+          name: spec-reporter-logs-${{ github.event.pull_request.number || github.run_number }}
           path: test-results/spec-log.txt

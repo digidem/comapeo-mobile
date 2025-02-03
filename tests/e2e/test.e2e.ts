@@ -4,7 +4,7 @@ describe('CoMapeo App Tests', () => {
   it('should launch the app, grant permissions, and navigate to the next screen', async () => {
     await browser.pause(15000);
     const description = await $(
-      'android=new UiSelector().text("Map your world")',
+      'android=new UiSelector().text("Map your world, together")',
     );
     await description.waitForDisplayed({timeout: 15000});
     await expect(description).toBeDisplayed();

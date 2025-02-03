@@ -3,11 +3,12 @@
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import react from '@eslint-react/eslint-plugin';
-import {includeIgnoreFile} from '@eslint/compat';
+import {includeIgnoreFile, fixupPluginRules} from '@eslint/compat';
 import js from '@eslint/js';
 import pluginQuery from '@tanstack/eslint-plugin-query';
 // @ts-expect-error Requires updating tsconfig (see https://github.com/typescript-eslint/typescript-eslint/issues/7284)
 import * as tsParser from '@typescript-eslint/parser';
+import reactNative from 'eslint-plugin-react-native';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
@@ -52,7 +53,6 @@ const backendConfig = tseslint.config({
   },
 });
 
-// TODO: Incorporate react-native
 const frontendConfig = tseslint.config({
   name: 'frontend',
   files: ['src/frontend/**/*.{js,jsx,ts,tsx}'],
@@ -61,6 +61,22 @@ const frontendConfig = tseslint.config({
     pluginQuery.configs['flat/recommended'],
     react.configs['recommended-typescript'],
     react.configs['disable-dom'],
+    // https://github.com/facebook/react-native/issues/42996#issuecomment-2275994981
+    {
+      name: 'eslint-plugin-react-native',
+      plugins: {
+        'react-native': fixupPluginRules({
+          // @ts-expect-error
+          rules: reactNative.rules,
+        }),
+      },
+      rules: {
+        ...reactNative.configs.all.rules,
+        'react-native/sort-styles': 'off',
+        'react-native/no-inline-styles': 'off',
+        'react-native/no-color-literals': 'warn',
+      },
+    },
   ],
   rules: {
     // Allow unused vars if prefixed with `_` (https://typescript-eslint.io/rules/no-unused-vars/)

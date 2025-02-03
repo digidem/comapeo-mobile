@@ -82,11 +82,11 @@
   "Navigation.Drawer.createOrJoinDesc": {
     "message": "Create a new project or join existing one"
   },
-  "Navigation.Drawer.dataAndPrivacy": {
-    "message": "Data & Privacy"
-  },
   "Navigation.Drawer.mappingOnOwn": {
     "message": "You are currently mapping on your own"
+  },
+  "Navigation.Drawer.privacyPolicy": {
+    "message": "Privacy Policy"
   },
   "Navigation.Drawer.projName": {
     "message": "Project {projectName}"
@@ -97,9 +97,6 @@
   "Navigation.Drawer.projectSettingsDesc": {
     "description": "list of avaialable project settings",
     "message": "Categories, Config, Team"
-  },
-  "Navigation.Drawer.security": {
-    "message": "Security"
   },
   "Navigation.Drawer.title": {
     "description": "Title of settings screen",
@@ -120,6 +117,108 @@
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "តើ​អ្នក​ចង់​រក្សា​ទុក​មុន​ពេល​ចាកចេញទេ?"
   },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
+    "message": "When project participants sync their data, they will also be archived on the internet. Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data."
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.invalidUrl": {
+    "message": "Invalid URL"
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.looking": {
+    "message": "Looking for Remote Archive..."
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.navTitle": {
+    "message": "Add Remote Archive"
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.permission": {
+    "message": "Only a Project Coordinator can turn off Remote Archive."
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.url": {
+    "message": "Url"
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.whatsIncluded": {
+    "message": "See What is Included"
+  },
+  "ProjectSettings.RemoteArchive.AddRemoteArchive.youAreAdding": {
+    "message": "You are adding:"
+  },
+  "ProjectSettings.RemoteArchive.Coordinator.addArchive": {
+    "message": "+ Add Remote Archive"
+  },
+  "ProjectSettings.RemoteArchive.Coordinator.dataNotShared": {
+    "message": "The data in your project is not shared over the internet. Only people in your project can see your data."
+  },
+  "ProjectSettings.RemoteArchive.Coordinator.experimentalFeature": {
+    "message": "This is an experimental feature. You need a Remote Archive URL to enable Remote Archive."
+  },
+  "ProjectSettings.RemoteArchive.Coordinator.noServers": {
+    "message": "No servers have been added to this project"
+  },
+  "ProjectSettings.RemoteArchive.Coordinator.remoteArchiveOff": {
+    "message": "Remote Archive is Off"
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn": {
+    "message": "Remote Archive is On"
+  },
+  "ProjectSettings.RemoteArchive.Success.archiveAdded": {
+    "message": "Remote Archive Added"
+  },
+  "ProjectSettings.RemoteArchive.Success.canSyncOnInternet": {
+    "message": "All project devices can sync with this Archive, sharing data over the internet."
+  },
+  "ProjectSettings.RemoteArchive.Success.close": {
+    "message": "Close"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.close": {
+    "message": "Close"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.deviceNames": {
+    "message": "Device Names"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.observations": {
+    "message": "Observations (including photos and audio)"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.projectSettings": {
+    "message": "Project Settings (categories, questions)"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.title": {
+    "message": "What is Included"
+  },
+  "ProjectSettings.RemoteArchive.WhatsIncludedSheet.tracks": {
+    "message": "Tracks"
+  },
+  "ProjectSettings.RemoteArchive.coordinatorCanTurnOff": {
+    "message": "Only a Project Coordinator can turn off Remote Archive."
+  },
+  "ProjectSettings.RemoteArchive.dateAdded": {
+    "message": "Date Added"
+  },
+  "ProjectSettings.RemoteArchive.deviceNames": {
+    "message": "Device Names"
+  },
+  "ProjectSettings.RemoteArchive.navTitle": {
+    "message": "Remote Archive"
+  },
+  "ProjectSettings.RemoteArchive.observations": {
+    "message": "Observations (including photos and audio)"
+  },
+  "ProjectSettings.RemoteArchive.projectSettings": {
+    "message": "Project Settings (categories, questions)"
+  },
+  "ProjectSettings.RemoteArchive.remove": {
+    "message": "Remove the server to stop Remote Archive."
+  },
+  "ProjectSettings.RemoteArchive.serverName": {
+    "message": "Server Name"
+  },
+  "ProjectSettings.RemoteArchive.syncWithInternet": {
+    "message": "Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data."
+  },
+  "ProjectSettings.RemoteArchive.thisIncludes": {
+    "message": "This includes"
+  },
+  "ProjectSettings.RemoteArchive.tracks": {
+    "message": "Tracks"
+  },
   "SaveTrack.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "បន្តកែសម្រួល"
@@ -134,6 +233,9 @@
   },
   "SaveTrack.HeaderLeft.discardTrackDescription": {
     "message": "Your Track will not be saved. This cannot be undone."
+  },
+  "Screens.Settings.AppSettings.Drawer.security": {
+    "message": "Security"
   },
   "Screens.Settings.AppSettings.coordinateSystem": {
     "message": "Coordinate System"
@@ -156,11 +258,20 @@
   "Screens.Settings.AppSettings.title": {
     "message": "App Settings"
   },
+  "Screens.Settings.ProjectSettings.RemoteArchive": {
+    "message": "Remote Archive"
+  },
   "Screens.Settings.ProjectSettings.deviceName": {
     "message": "Device Name"
   },
   "Screens.Settings.ProjectSettings.mediaSyncSettings": {
     "message": "Sync Settings"
+  },
+  "Screens.Settings.ProjectSettings.remoteArchiveOff": {
+    "message": "Remote Archive is OFF"
+  },
+  "Screens.Settings.ProjectSettings.remoteArchiveOn": {
+    "message": "Remote Archive is ON"
   },
   "Screens.Settings.ProjectSettings.title": {
     "message": "Project Settings"
@@ -398,6 +509,18 @@
   },
   "screens.AudioScreen.CreateRecording.RecordingIdle.description": {
     "message": "Record up to {length} {length, plural, one {minute} other {minutes}}"
+  },
+  "screens.AudioScreen.ExistingRecording.deleteBottomSheetDescription": {
+    "message": "Your Audio Recording will be permanently deleted. This cannot be undone."
+  },
+  "screens.AudioScreen.ExistingRecording.deleteBottomSheetPrimaryButtonText": {
+    "message": "លុប"
+  },
+  "screens.AudioScreen.ExistingRecording.deleteBottomSheetSecondaryButtonText": {
+    "message": "បោះបង់"
+  },
+  "screens.AudioScreen.ExistingRecording.deleteBottomSheetTitle": {
+    "message": "Delete?"
   },
   "screens.AudioScreen.Playback.description": {
     "message": "Total length: {length}"
@@ -811,6 +934,9 @@
   "screens.Observation.ObservationView.share": {
     "description": "Button to share an observation",
     "message": "Share"
+  },
+  "screens.Observation.TrackList.track": {
+    "message": "Track"
   },
   "screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
@@ -1363,41 +1489,9 @@
   "screens.Settings.YourTeam.unableToCancel": {
     "message": "Unable to Cancel Invitation"
   },
-  "screens.Settings.aboutCoMapeo": {
-    "description": "Primary text for 'About CoMapeo' link (version info)",
-    "message": "About CoMapeo"
-  },
-  "screens.Settings.aboutCoMapeoDesc": {
-    "description": "Description of the 'About CoMapeo' page",
-    "message": "លេខសេរ៊ីនិងកំណែរ"
-  },
-  "screens.Settings.appSettings": {
-    "message": "App Settings"
-  },
-  "screens.Settings.appSettingsDesc": {
-    "description": "list of avaialable app settings",
-    "message": "Language, Security, Coordinates"
-  },
   "screens.Settings.config": {
     "description": "Primary text for project config settings",
-    "message": "Project Configuration"
-  },
-  "screens.Settings.createOrJoin": {
-    "message": "Create or Join Project"
-  },
-  "screens.Settings.createOrJoinDesc": {
-    "message": "Create a new project or join existing one"
-  },
-  "screens.Settings.projectSettings": {
-    "message": "Project Settings"
-  },
-  "screens.Settings.projectSettingsDesc": {
-    "description": "list of avaialable project settings",
-    "message": "Categories, Config, Team"
-  },
-  "screens.Settings.title": {
-    "description": "Title of settings screen",
-    "message": "ការកំណត់"
+    "message": "Configuration"
   },
   "screens.SettingsPrivacyPolicy.navTitle": {
     "message": "Privacy Policy"
@@ -1470,6 +1564,9 @@
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
     "message": "Waiting for devices"
+  },
+  "screens.Track.ObservationList.observation": {
+    "message": "ការសង្កេត"
   },
   "screens.Track.ObservationList.observations": {
     "message": "ការសង្កេត"
@@ -1566,12 +1663,5 @@
   },
   "sharedComponents.RoleWithIcon.participant": {
     "message": "Participant"
-  },
-  "sharedComponents.WifiBar.noWifi": {
-    "message": "No Internet"
-  },
-  "sharedComponents.WifiBar.wifi": {
-    "description": "Label for wifi network name",
-    "message": "ប្រព័ន្ធ WiFi:"
   }
 }

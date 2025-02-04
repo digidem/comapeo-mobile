@@ -27,6 +27,9 @@
       "extends": "base",
       "distribution": "internal",
       "channel": "preview",
+      "android": {
+        "resourceClass": "large"
+      },
       "env": {
         "APP_VARIANT": "releaseCandidate",
         "EXPO_PUBLIC_FEATURE_TEST_DATA_UI": "true"
@@ -36,6 +39,9 @@
       "extends": "base",
       "distribution": "store",
       "channel": "production",
+      "android": {
+        "resourceClass": "large"
+      },
       "env": {
         "APP_VARIANT": "production"
       },

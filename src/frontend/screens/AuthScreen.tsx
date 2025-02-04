@@ -51,7 +51,7 @@ export const AuthScreen = ({
     if (navigation.canGoBack()) {
       navigation.goBack();
     } else {
-      navigation.navigate('Home', {screen: 'Map'});
+      navigation.popTo('Home', {screen: 'Map'});
     }
   }, [authState, navigation]);
 

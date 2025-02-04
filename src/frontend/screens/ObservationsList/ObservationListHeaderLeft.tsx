@@ -16,7 +16,6 @@ export const ObservationListHeaderLeft = (props: {
       <CustomHeaderLeft
         onPress={() => goBack()}
         headerBackButtonProps={{
-          canGoBack: true,
           tintColor: props?.tintColor,
         }}
       />

@@ -52,7 +52,7 @@ export const ConfirmPasscodeSheet = React.forwardRef<
 
   function setPasscodeAndNavigateBack() {
     setPasscode(inputtedPasscode);
-    navigation.navigate('Security');
+    navigation.popTo('Security');
   }
 
   return (
@@ -66,7 +66,7 @@ export const ConfirmPasscodeSheet = React.forwardRef<
           {
             text: t(m.cancel),
             onPress: () => {
-              navigation.navigate('Security');
+              navigation.popTo('Security');
             },
             variation: 'outlined',
           },

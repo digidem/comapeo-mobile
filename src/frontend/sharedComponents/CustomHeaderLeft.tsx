@@ -1,6 +1,6 @@
 import React from 'react';
 import {HeaderBackButton} from '@react-navigation/elements';
-import {HeaderBackButtonProps} from '@react-navigation/native-stack/lib/typescript/src/types';
+import {HeaderBackButtonProps} from '@react-navigation/elements';
 
 import {BackIcon} from './icons';
 import {BLACK} from '../lib/styles';

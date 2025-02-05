@@ -94,6 +94,7 @@ import {
 } from '../../screens/Settings/MapManagement/BackgroundMaps.tsx';
 import {SyncPreviewsBottomSheet} from '../../screens/Settings/ProjectSettings/MediaSyncSettings/SyncPreviewsBottomSheet.tsx';
 import {SyncEverythingBottomSheet} from '../../screens/Settings/ProjectSettings/MediaSyncSettings/SyncEverythingBottomSheet.tsx';
+import {AudioPermissionWarningBottomSheet} from '../../screens/Audio/AudioPermissionWarningBottomSheet.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -404,6 +405,10 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="SyncEverythingBottomSheet"
         component={SyncEverythingBottomSheet}
+      />
+      <RootStack.Screen
+        name="AudioPermissionWarningBottomSheet"
+        component={AudioPermissionWarningBottomSheet}
       />
     </RootStack.Group>
   </>

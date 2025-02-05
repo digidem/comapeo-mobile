@@ -10,6 +10,7 @@ import {
   ProcessedDraftPhoto,
   SavedPhoto,
 } from '../contexts/PhotoPromiseContext/types';
+import {Audio} from 'expo-av';
 
 export interface TabBarIconProps {
   size: number;
@@ -103,6 +104,9 @@ export type RootStackParamsList = {
   BackgroundMaps: undefined;
   SyncPreviewsBottomSheet: undefined;
   SyncEverythingBottomSheet: undefined;
+  AudioPermissionWarningBottomSheet: {
+    audioPermission: Audio.PermissionResponse;
+  };
 };
 
 export type OnboardingParamsList = {

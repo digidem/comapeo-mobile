@@ -13,6 +13,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
+import {AudioStyles} from '../../sharedComponents/AudioStyles';
 
 // 5 minutes
 const MAX_RECORDING_DURATION_MS = 300000;
@@ -65,26 +66,26 @@ export function AudioRecording({}: NativeRootNavigationProps<'AudioRecording'>) 
   return (
     <>
       <ScreenContentWithDock
-        contentContainerStyle={styles.contentContainer}
-        dockContainerStyle={styles.dockContainer}
+        contentContainerStyle={AudioStyles.contentContainer}
+        dockContainerStyle={AudioStyles.dockContainer}
         dockContent={
           <TouchableOpacity
             onPress={!isRecording ? startRecording : finishRecording}
-            style={styles.basePressable}>
+            style={AudioStyles.basePressable}>
             {<View style={!isRecording ? styles.record : styles.stop} />}
           </TouchableOpacity>
         }>
-        <View style={styles.container}>
-          <View style={styles.timerContainer}>
+        <View style={AudioStyles.container}>
+          <View style={AudioStyles.timerContainer}>
             <Text
               style={[
-                styles.timerText,
+                AudioStyles.timerText,
                 {color: timeElapsed === 0 ? MEDIUM_GREY : WHITE},
               ]}>
               {Duration.fromMillis(timeElapsed).toFormat('mm:ss')}
             </Text>
           </View>
-          <HeaderText variant="header3" style={styles.message}>
+          <HeaderText variant="header3" style={AudioStyles.message}>
             {!isRecording
               ? formatMessage(m.record5Min)
               : timeElapsed < 240000
@@ -114,38 +115,6 @@ export const navigationOptions: NativeStackNavigationOptions = {
 };
 
 const styles = StyleSheet.create({
-  contentContainer: {flex: 1},
-  dockContainer: {paddingVertical: 24},
-  container: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-  timerContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    gap: 48,
-  },
-  message: {
-    color: WHITE,
-    textAlign: 'center',
-  },
-  timerText: {
-    fontFamily: 'Rubik',
-    fontSize: 96,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  basePressable: {
-    height: PRIMARY_CONTROL_DIAMETER,
-    width: PRIMARY_CONTROL_DIAMETER,
-    borderRadius: PRIMARY_CONTROL_DIAMETER,
-    borderWidth: 12,
-    borderColor: WHITE,
-    overflow: 'hidden',
-    backgroundColor: WHITE,
-    justifyContent: 'center',
-    alignSelf: 'center',
-  },
   record: {
     height: PRIMARY_CONTROL_DIAMETER,
     backgroundColor: MAGENTA,

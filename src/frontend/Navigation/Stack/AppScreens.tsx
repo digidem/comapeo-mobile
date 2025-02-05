@@ -99,6 +99,10 @@ import {
   AudioRecording,
   navigationOptions as AudioRecordingNavigationOptions,
 } from '../../screens/AudioRecording/index.tsx';
+import {
+  AudioPlaybackUnsaved,
+  navigationOptions as AudioPlaybackUnsavedNavigationOptions,
+} from '../../screens/AudioPlaybackUnsaved/index.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -399,6 +403,12 @@ export const createDefaultScreenGroup = ({
         component={AudioRecording}
         options={AudioRecordingNavigationOptions}
       />
+
+      <RootStack.Screen
+        name="AudioPlaybackUnsaved"
+        component={AudioPlaybackUnsaved}
+        options={AudioPlaybackUnsavedNavigationOptions}
+      />
     </RootStack.Group>
     <RootStack.Group
       screenOptions={{
@@ -416,7 +426,7 @@ export const createDefaultScreenGroup = ({
         component={SyncEverythingBottomSheet}
       />
       <RootStack.Screen
-        name="AudioPermissionWarningBottomSheet"
+        name="AudioAskPermissionBottomSheet"
         component={AudioAskPermissionBottomSheet}
       />
     </RootStack.Group>

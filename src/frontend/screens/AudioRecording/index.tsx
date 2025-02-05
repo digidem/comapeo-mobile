@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Duration} from 'luxon';
 
-import {BLACK, DARK_GREY, MAGENTA, MEDIUM_GREY, WHITE} from '../../lib/styles';
+import {BLACK, MAGENTA, MEDIUM_GREY, WHITE} from '../../lib/styles';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {Text} from '../../sharedComponents/Text';
 import {AnimatedBackground} from './AnimatedBackground';
@@ -13,7 +13,10 @@ import {defineMessages, useIntl} from 'react-intl';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import {AudioStyles} from '../../sharedComponents/AudioStyles';
+import {
+  AudioStyles,
+  sharedAudioNavOptions,
+} from '../../sharedComponents/AudioStyles';
 
 // 5 minutes
 const MAX_RECORDING_DURATION_MS = 300000;
@@ -100,12 +103,7 @@ export function AudioRecording({}: NativeRootNavigationProps<'AudioRecording'>) 
 }
 
 export const navigationOptions: NativeStackNavigationOptions = {
-  contentStyle: {backgroundColor: DARK_GREY},
-  headerTintColor: WHITE,
-  headerShadowVisible: false,
-  headerTitle: () => null,
-  headerStyle: {backgroundColor: 'transparent'},
-  headerTransparent: true,
+  ...sharedAudioNavOptions,
   headerLeft: props => (
     <CustomHeaderLeft
       tintColor={props.tintColor}

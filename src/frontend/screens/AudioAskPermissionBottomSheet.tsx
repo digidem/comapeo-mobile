@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
-import AudioPermission from '../../images/observationEdit/AudioPermission.svg';
+import AudioPermission from '../images/observationEdit/AudioPermission.svg';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 import {Button} from '../sharedComponents/Button';

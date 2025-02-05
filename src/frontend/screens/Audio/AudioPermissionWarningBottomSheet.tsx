@@ -1,13 +1,19 @@
 import * as React from 'react';
 import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
-import {AppState, AppStateStatus, StyleSheet, View} from 'react-native';
+import {
+  AppState,
+  AppStateStatus,
+  Linking,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import AudioPermission from '../../images/observationEdit/AudioPermission.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {Button} from '../../sharedComponents/Button';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {Audio} from 'expo-av';
+import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
   title: {
@@ -39,17 +45,15 @@ const m = defineMessages({
   },
 });
 
-type AudioPermissionWarningBottomSheetProps = {
-  audioPermission: Audio.PermissionResponse;
-};
-
 export const AudioPermissionWarningBottomSheet = ({
-  audioPermission,
-}: AudioPermissionWarningBottomSheetProps) => {
+  navigation,
+  route,
+}: NativeRootNavigationProps<'AudioPermissionWarningBottomSheet'>) => {
   const {formatMessage} = useIntl();
-  const {goBack, replace} = useNavigationFromRoot();
-  const [permission, setPermission] =
-    React.useState<Audio.PermissionResponse>(audioPermission);
+  const {goBack, replace} = navigation;
+  const [permission, setPermission] = React.useState<Audio.PermissionResponse>(
+    route.params.audioPermission,
+  );
 
   React.useEffect(() => {
     let isCancelled = false;
@@ -108,7 +112,10 @@ export const AudioPermissionWarningBottomSheet = ({
               {formatMessage(m.allowButtonText)}
             </Button>
           ) : (
-            <Button fullWidth onPress={goBack} style={{marginTop: 20}}>
+            <Button
+              fullWidth
+              onPress={() => Linking.openSettings()}
+              style={{marginTop: 20}}>
               {formatMessage(m.goToSettingsButtonText)}
             </Button>
           )}

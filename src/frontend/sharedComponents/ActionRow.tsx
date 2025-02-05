@@ -1,15 +1,12 @@
-import React, {useCallback, useState} from 'react';
+import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {ActionTab} from './ActionTab';
 import PhotoIcon from '../images/observationEdit/Photo.svg';
 import AudioIcon from '../images/observationEdit/Audio.svg';
 import DetailsIcon from '../images/observationEdit/Details.svg';
-import {useNavigation, useNavigationState} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {Preset} from '@comapeo/schema';
-import {PermissionAudioBottomSheetContent} from '../screens/Audio/PermissionAudioBottomSheetContent';
 import {Audio} from 'expo-av';
-import {useBottomSheetModal} from '../sharedComponents/BottomSheetModal';
-import {BottomSheetModal} from './BottomSheetModal';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AppStackParamsList} from '../sharedTypes/navigation';
 
@@ -42,21 +39,7 @@ interface ActionButtonsProps {
 export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigation<ObservationCreateNavigationProp>();
-  const routes = useNavigationState(state => state.routes);
-  const navIndex = useNavigationState(state => state.index);
-  const currentRoute = routes[navIndex];
-  const {
-    openSheet: openAudioPermissionSheet,
-    sheetRef: audioPermissionSheetRef,
-    closeSheet: closeAudioPermissionSheet,
-    isOpen: isAudioPermissionSheetOpen,
-  } = useBottomSheetModal({
-    openOnMount: false,
-  });
-
-  const [shouldNavigateToAudio, setShouldNavigateToAudio] = useState(false);
-  const [audioPermissionStatus, setAudioPermissionStatus] =
-    useState<Audio.PermissionStatus | null>(null);
+  const [audioPermission] = Audio.usePermissions();
 
   const handleCameraPress = () => {
     navigation.navigate('AddPhoto');
@@ -64,27 +47,10 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
   const handleDetailsPress = () => {
     navigation.navigate('ObservationFields', {question: 1});
   };
-
-  const handleAudioPress = useCallback(async () => {
-    const {status} = await Audio.getPermissionsAsync();
-    setAudioPermissionStatus(status);
-    if (status === 'granted') {
-      navigation.navigate('Audio', {
-        isEditing: currentRoute?.name === 'ObservationEdit',
-      });
-    } else {
-      openAudioPermissionSheet();
-    }
-  }, [navigation, openAudioPermissionSheet, currentRoute]);
-
-  const handleModalDismiss = useCallback(() => {
-    if (shouldNavigateToAudio) {
-      navigation.navigate('Audio', {
-        isEditing: currentRoute?.name === 'ObservationEdit',
-      });
-      setShouldNavigateToAudio(false);
-    }
-  }, [shouldNavigateToAudio, navigation, currentRoute]);
+  const handleAudioPress = () => {
+    if (audioPermission === null) return;
+    navigation.navigate('AudioPermissionWarningBottomSheet', {audioPermission});
+  };
 
   const bottomSheetItems = [
     {
@@ -113,18 +79,6 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
   return (
     <>
       <ActionTab items={bottomSheetItems} />
-      <BottomSheetModal
-        ref={audioPermissionSheetRef}
-        isOpen={isAudioPermissionSheetOpen}
-        onDismiss={handleModalDismiss}
-        fullScreen>
-        <PermissionAudioBottomSheetContent
-          closeSheet={closeAudioPermissionSheet}
-          setShouldNavigateToAudioTrue={() => setShouldNavigateToAudio(true)}
-          permissionStatus={audioPermissionStatus}
-          isOpen={isAudioPermissionSheetOpen}
-        />
-      </BottomSheetModal>
     </>
   );
 };

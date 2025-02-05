@@ -871,35 +871,17 @@
   "screens.MediaSyncSettings.syncEverything": {
     "message": "Sync Everything"
   },
-  "screens.MediaSyncSettings.syncEverythingButtonBottomSheet": {
-    "message": "Sync Everything?"
-  },
   "screens.MediaSyncSettings.syncEverythingDescription": {
     "message": "Your device will sync <bold>all</bold> content at full size, including photos, audio, and videos."
-  },
-  "screens.MediaSyncSettings.syncEverythingDescriptionBottomSheet": {
-    "message": "You are about to sync everything. This may increase the disk space used on your device."
   },
   "screens.MediaSyncSettings.syncEverythingWarning": {
     "message": "Note: This will use more storage."
   },
-  "screens.MediaSyncSettings.syncPreviewWarningBottomSheet": {
-    "message": "You will no longer sync Audio or Video."
-  },
   "screens.MediaSyncSettings.syncPreviews": {
     "message": "Sync Previews (Photos Only)"
   },
-  "screens.MediaSyncSettings.syncPreviewsBottomSheetConfirm": {
-    "message": "Sync Previews"
-  },
-  "screens.MediaSyncSettings.syncPreviewsButtonBottomSheet": {
-    "message": "Sync Previews?"
-  },
   "screens.MediaSyncSettings.syncPreviewsDescription": {
     "message": "Photos will sync at a reduced smaller size. Device will <bold>not</bold> sync audio or video."
-  },
-  "screens.MediaSyncSettings.syncPreviewsDescriptionBottomSheet": {
-    "message": "Your device will keep all existing data but new observations will sync in a smaller, preview size."
   },
   "screens.MediaSyncSettings.title": {
     "message": "Sync Settings"
@@ -1564,6 +1546,33 @@
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
     "message": "Waiting for devices"
+  },
+  "screens.SyncEverythingBottomSheet.cancel": {
+    "message": "Cancel"
+  },
+  "screens.SyncEverythingBottomSheet.confirm": {
+    "message": "Sync Everything"
+  },
+  "screens.SyncEverythingBottomSheet.syncEverything": {
+    "message": "Sync Everything?"
+  },
+  "screens.SyncEverythingBottomSheet.syncEverythingDescription": {
+    "message": "You are about to sync everything. This may increase the disk space used on your device."
+  },
+  "screens.SyncPreviewBottomSheet.cancel": {
+    "message": "Cancel"
+  },
+  "screens.SyncPreviewBottomSheet.confirm": {
+    "message": "Sync Previews"
+  },
+  "screens.SyncPreviewBottomSheet.syncPreviewWarningBottomSheet": {
+    "message": "You will no longer sync Audio or Video."
+  },
+  "screens.SyncPreviewBottomSheet.syncPreviewsButtonBottomSheet": {
+    "message": "Sync Previews?"
+  },
+  "screens.SyncPreviewBottomSheet.syncPreviewsDescriptionBottomSheet": {
+    "message": "Your device will keep all existing data but new observations will sync in a smaller, preview size."
   },
   "screens.Track.ObservationList.observation": {
     "message": "Observation"

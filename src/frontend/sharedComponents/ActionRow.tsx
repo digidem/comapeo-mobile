@@ -50,10 +50,10 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
   const handleAudioPress = () => {
     if (audioPermission === null) return;
     if (audioPermission.granted) {
-      navigation.navigate('Audio', {isEditing: false});
+      navigation.navigate('AudioRecording');
       return;
     }
-    navigation.navigate('AudioPermissionWarningBottomSheet', {audioPermission});
+    navigation.navigate('AudioAskPermissionBottomSheet', {audioPermission});
   };
 
   const bottomSheetItems = [

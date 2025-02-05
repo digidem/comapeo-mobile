@@ -104,9 +104,10 @@ export type RootStackParamsList = {
   BackgroundMaps: undefined;
   SyncPreviewsBottomSheet: undefined;
   SyncEverythingBottomSheet: undefined;
-  AudioPermissionWarningBottomSheet: {
+  AudioAskPermissionBottomSheet: {
     audioPermission: Audio.PermissionResponse;
   };
+  AudioRecording: undefined;
 };
 
 export type OnboardingParamsList = {

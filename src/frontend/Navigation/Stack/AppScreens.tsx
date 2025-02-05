@@ -94,7 +94,11 @@ import {
 } from '../../screens/Settings/MapManagement/BackgroundMaps.tsx';
 import {SyncPreviewsBottomSheet} from '../../screens/Settings/ProjectSettings/MediaSyncSettings/SyncPreviewsBottomSheet.tsx';
 import {SyncEverythingBottomSheet} from '../../screens/Settings/ProjectSettings/MediaSyncSettings/SyncEverythingBottomSheet.tsx';
-import {AudioPermissionWarningBottomSheet} from '../../screens/Audio/AudioPermissionWarningBottomSheet.tsx';
+import {AudioAskPermissionBottomSheet} from '../../screens/AudioAskPermissionBottomSheet.tsx';
+import {
+  AudioRecording,
+  navigationOptions as AudioRecordingNavigationOptions,
+} from '../../screens/AudioRecording/index.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -390,6 +394,11 @@ export const createDefaultScreenGroup = ({
         component={RemoteArchiveOn}
         options={{headerTitle: intl(RemoteArchiveOn.navTitle)}}
       />
+      <RootStack.Screen
+        name="AudioRecording"
+        component={AudioRecording}
+        options={AudioRecordingNavigationOptions}
+      />
     </RootStack.Group>
     <RootStack.Group
       screenOptions={{
@@ -408,7 +417,7 @@ export const createDefaultScreenGroup = ({
       />
       <RootStack.Screen
         name="AudioPermissionWarningBottomSheet"
-        component={AudioPermissionWarningBottomSheet}
+        component={AudioAskPermissionBottomSheet}
       />
     </RootStack.Group>
   </>

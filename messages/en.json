@@ -492,6 +492,15 @@
     "description": "Screen title for audio permission screen",
     "message": "Recording Audio with CoMapeo"
   },
+  "screens.AudioRecording.lessThan1": {
+    "message": "Less than a minute left"
+  },
+  "screens.AudioRecording.lessThan5": {
+    "message": "Less than 5 minutes left"
+  },
+  "screens.AudioRecording.record5Min": {
+    "message": "Record up to 5 minutes"
+  },
   "screens.AudioScreen.CreateRecording.RecordingActive.description": {
     "message": "Less than {length} {length, plural, one {minute} other {minutes}} left"
   },

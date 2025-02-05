@@ -1,17 +1,21 @@
 import React from 'react';
 import {Dimensions, StyleSheet} from 'react-native';
-import Animated, {SharedValue, useAnimatedStyle} from 'react-native-reanimated';
+import Animated, {
+  useAnimatedStyle,
+  useDerivedValue,
+  withTiming,
+} from 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {MAX_RECORDING_DURATION_MS} from './index';
+import {MAX_RECORDING_DURATION_MS} from '../Audio/index';
 
-export function AnimatedBackground({
-  elapsedTimeValue,
-}: {
-  elapsedTimeValue: SharedValue<number>;
-}) {
+export function AnimatedBackground({timeElapsed}: {timeElapsed: number}) {
   const {top} = useSafeAreaInsets();
   const {height} = Dimensions.get('window');
+
+  const elapsedTimeValue = useDerivedValue(() => {
+    return withTiming(timeElapsed, {duration: 500});
+  }, [timeElapsed]);
 
   const animatedStyles = useAnimatedStyle(() => ({
     height:

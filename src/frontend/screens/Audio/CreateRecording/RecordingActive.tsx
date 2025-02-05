@@ -3,7 +3,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {useDerivedValue, withTiming} from 'react-native-reanimated';
 
 import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
-import {AnimatedBackground} from '../AnimatedBackground';
+import {AnimatedBackground} from '../../AudioRecording/AnimatedBackground';
 import {ContentWithControls} from '../ContentWithControls';
 import * as Controls from '../Controls';
 import {MAX_RECORDING_DURATION_MS} from '../index';

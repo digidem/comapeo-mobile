@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
-import {WHITE, MAGENTA} from '../lib/styles';
+import {WHITE, MAGENTA, DARK_GREY} from '../lib/styles';
+import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 
 const PRIMARY_CONTROL_DIAMETER = 96;
 
@@ -41,3 +42,12 @@ export const AudioStyles = StyleSheet.create({
     backgroundColor: MAGENTA,
   },
 });
+
+export const sharedAudioNavOptions: NativeStackNavigationOptions = {
+  contentStyle: {backgroundColor: DARK_GREY},
+  headerTintColor: WHITE,
+  headerShadowVisible: false,
+  headerTitle: () => null,
+  headerStyle: {backgroundColor: 'transparent'},
+  headerTransparent: true,
+};

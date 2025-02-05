@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
+import {BottomSheetWrapper} from '../sharedComponents/BottomSheetWrapper';
 import {
   AppState,
   AppStateStatus,
@@ -9,11 +9,11 @@ import {
 } from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import AudioPermission from '../../images/observationEdit/AudioPermission.svg';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {Button} from '../../sharedComponents/Button';
+import {HeaderText} from '../sharedComponents/Text/HeaderText';
+import {BodyText} from '../sharedComponents/Text/BodyText';
+import {Button} from '../sharedComponents/Button';
 import {Audio} from 'expo-av';
-import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
+import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 
 const m = defineMessages({
   title: {
@@ -45,10 +45,10 @@ const m = defineMessages({
   },
 });
 
-export const AudioPermissionWarningBottomSheet = ({
+export const AudioAskPermissionBottomSheet = ({
   navigation,
   route,
-}: NativeRootNavigationProps<'AudioPermissionWarningBottomSheet'>) => {
+}: NativeRootNavigationProps<'AudioAskPermissionBottomSheet'>) => {
   const {formatMessage} = useIntl();
   const {goBack, replace} = navigation;
   const [permission, setPermission] = React.useState<Audio.PermissionResponse>(

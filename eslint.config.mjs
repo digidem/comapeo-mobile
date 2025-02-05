@@ -95,6 +95,7 @@ const frontendConfig = tseslint.config(
         },
       ],
       '@typescript-eslint/no-require-imports': 'warn',
+      '@eslint-react/web-api/no-leaked-resize-observer': 'off',
     },
     languageOptions: {
       parser: tsParser,

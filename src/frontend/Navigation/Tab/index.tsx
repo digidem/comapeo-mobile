@@ -34,7 +34,7 @@ export const HomeTabs = () => {
         tabBarStyle: {height: TAB_BAR_HEIGHT},
         tabBarShowLabel: false,
         headerTransparent: true,
-        tabBarTestID: 'tabBarButton' + route.name,
+        tabBarButtonTestID: 'tabBarButton' + route.name,
       })}
       initialRouteName={'Map'}
       backBehavior="initialRoute">

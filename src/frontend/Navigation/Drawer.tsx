@@ -182,7 +182,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
               <DrawerMenuListItem
                 item={{
                   onPress: () => {
-                    navigate('CreateTestData');
+                    navigate('DrawerHome', {screen: 'CreateTestData'});
                   },
                   materialIconName: 'auto-fix-high',
                   primaryText: 'Create Test Data',
@@ -195,7 +195,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
             <DrawerMenuListItem
               item={{
                 onPress: () => {
-                  navigate('AboutSettings');
+                  navigate('DrawerHome', {screen: 'AboutSettings'});
                 },
                 materialIconName: 'info-outline',
                 primaryText: formatMessage(m.aboutCoMapeo),
@@ -204,7 +204,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
             <DrawerMenuListItem
               item={{
                 onPress: () => {
-                  navigate('DataAndPrivacy');
+                  navigate('DrawerHome', {screen: 'DataAndPrivacy'});
                 },
                 icon: (
                   <EntypoIcon

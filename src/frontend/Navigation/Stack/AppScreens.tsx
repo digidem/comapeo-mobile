@@ -69,7 +69,7 @@ import {
   TrackScreen,
   createNavigationOptions as createTrackNavigationOptions,
 } from '../../screens/Track/index.tsx';
-import {MediaSyncSettings} from '../../screens/Settings/ProjectSettings/MediaSyncSettings.tsx';
+import {MediaSyncSettings} from '../../screens/Settings/ProjectSettings/MediaSyncSettings/index.tsx';
 import {DataAndPrivacy} from '../../screens/Settings/DataAndPrivacy/DataAndPrivacy';
 import {SettingsPrivacyPolicy} from '../../screens/Settings/DataAndPrivacy/SettingsPrivacyPolicy';
 import {TrackEdit} from '../../screens/TrackEdit/index.tsx';
@@ -92,6 +92,8 @@ import {
   createNavigationOptions as createBackgroundMapsNavigationOptions,
   BackgroundMapsScreen,
 } from '../../screens/Settings/MapManagement/BackgroundMaps.tsx';
+import {SyncPreviewsBottomSheet} from '../../screens/Settings/ProjectSettings/MediaSyncSettings/SyncPreviewsBottomSheet.tsx';
+import {SyncEverythingBottomSheet} from '../../screens/Settings/ProjectSettings/MediaSyncSettings/SyncEverythingBottomSheet.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -102,284 +104,307 @@ export const createDefaultScreenGroup = ({
 }: {
   intl: (title: MessageDescriptor) => string;
 }) => (
-  <RootStack.Group key="default">
-    <RootStack.Screen
-      name="Home"
-      options={{headerShown: false}}
-      children={() => (
-        <SharedLocationContextProvider>
-          {/* This provider allows the bottoms sheet used by tracks to open up behind the drawers */}
-          <BottomSheetModalProvider>
-            <HomeTabs />
-          </BottomSheetModalProvider>
-        </SharedLocationContextProvider>
-      )}
-    />
-    <RootStack.Screen
-      name="AuthScreen"
-      component={AuthScreen}
-      options={{
-        headerShown: false,
-        animation: 'fade',
-      }}
-    />
-    <RootStack.Screen
-      name="ObservationEdit"
-      component={ObservationEdit}
-      options={createObservationEditNavOptions({intl})}
-    />
-    <RootStack.Screen
-      name="AddPhoto"
-      component={AddPhotoScreen}
-      options={{headerShown: false}}
-    />
-    <RootStack.Screen
-      name="PhotoPreviewModal"
-      component={PhotoPreviewModal}
-      options={{
-        headerTitle: '',
-        headerTransparent: true,
-        headerStyle: {backgroundColor: 'transparent'},
-        headerLeft: props => (
-          <CustomHeaderLeft tintColor={WHITE} headerBackButtonProps={props} />
-        ),
-      }}
-    />
-    <RootStack.Screen
-      name="Security"
-      component={Security}
-      options={{headerTitle: intl(Security.navTitle)}}
-    />
-    <RootStack.Screen
-      name="AppPasscode"
-      component={AppPasscode}
-      options={{headerTitle: intl(AppPasscode.navTitle)}}
-    />
-    <RootStack.Screen
-      name="DisablePasscode"
-      component={TurnOffPasscode}
-      options={{headerTitle: intl(TurnOffPasscode.navTitle)}}
-    />
-    <RootStack.Screen
-      name="SetPasscode"
-      component={SetPasscode}
-      options={{headerTitle: intl(SetPasscode.navTitle)}}
-    />
-    <RootStack.Screen
-      name="EnterPassToTurnOff"
-      component={EnterPassToTurnOff}
-      options={{headerTitle: intl(EnterPassToTurnOff.navTitle)}}
-    />
-    <RootStack.Screen
-      name="ObscurePasscode"
-      component={ObscurePasscode}
-      options={{headerTitle: intl(ObscurePasscode.navTitle)}}
-    />
-    <RootStack.Screen
-      name="PresetChooser"
-      component={PresetChooser}
-      options={{headerTitle: intl(PresetChooser.navTitle)}}
-    />
-    <RootStack.Screen
-      name="Observation"
-      component={ObservationScreen}
-      options={{headerTitle: intl(ObservationScreen.navTitle)}}
-    />
-    <RootStack.Screen
-      name="AppSettings"
-      component={AppSettings}
-      options={{headerTitle: intl(AppSettings.navTitle)}}
-    />
-    <RootStack.Screen
-      name="ProjectSettings"
-      component={ProjectSettings}
-      options={{headerTitle: intl(ProjectSettings.navTitle)}}
-    />
-    <RootStack.Screen
-      name="CoordinateFormat"
-      component={CoordinateFormat}
-      options={{headerTitle: intl(CoordinateFormat.navTitle)}}
-    />
-    <RootStack.Screen
-      name="CreateOrJoinProject"
-      component={CreateOrJoinProject}
-      options={{headerTitle: intl(CreateOrJoinProject.navTitle)}}
-    />
-    <RootStack.Screen
-      name="CreateProject"
-      component={CreateProject}
-      options={{headerTitle: intl(CreateProject.navTitle)}}
-    />
-    <RootStack.Screen
-      name="ProjectCreated"
-      component={ProjectCreated}
-      options={{headerShown: false}}
-    />
-    <RootStack.Screen
-      name="JoinExistingProject"
-      component={JoinExistingProject}
-      options={{headerShown: false}}
-    />
-    <RootStack.Screen
-      name="YourTeam"
-      component={YourTeam}
-      options={{headerTitle: intl(YourTeam.navTitle)}}
-    />
-    <RootStack.Screen
-      name="SelectDevice"
-      component={SelectDevice}
-      options={{headerTitle: intl(SelectDevice.navTitle)}}
-    />
-    <RootStack.Screen
-      name="SelectInviteeRole"
-      component={SelectInviteeRole}
-      options={{headerTitle: intl(SelectInviteeRole.navTitle)}}
-    />
-    <RootStack.Screen
-      name="ReviewAndInvite"
-      component={ReviewAndInvite}
-      options={{headerTitle: intl(ReviewInvitation.navTitle)}}
-    />
-    <RootStack.Screen
-      name="InviteAccepted"
-      component={InviteAccepted}
-      options={{headerShown: false}}
-    />
-    <RootStack.Screen
-      name="DeviceNameDisplay"
-      component={DeviceNameDisplayScreen}
-      options={createDeviceNameDisplayNavOptions({intl})}
-    />
-    <RootStack.Screen
-      name="DeviceNameEdit"
-      component={DeviceNameEditScreen}
-      options={createDeviceNameEditNavOptions({intl})}
-    />
-    <RootStack.Screen
-      name="GpsModal"
-      component={LocationInfoScreen}
-      options={createLocationInfoNavOptions({intl})}
-    />
-    <RootStack.Screen name="SaveTrack" component={SaveTrackScreen} />
-    <RootStack.Screen
-      name="InviteDeclined"
-      component={InviteDeclined}
-      options={{headerShown: false}}
-    />
-    <RootStack.Screen
-      name="UnableToCancelInvite"
-      component={UnableToCancelInvite}
-      options={{headerShown: false}}
-    />
-    <RootStack.Screen
-      name="Sync"
-      component={SyncScreen}
-      options={createSyncNavOptions()}
-    />
-    <RootStack.Screen
-      name="ManualGpsScreen"
-      component={ManualGpsScreen}
-      options={createManualGpsNavigationOptions({intl})}
-    />
-    <RootStack.Screen name="ObservationFields" component={ObservationFields} />
-    <RootStack.Screen
-      name="LanguageSettings"
-      component={LanguageSettings}
-      options={{headerTitle: intl(LanguageSettings.navTitle)}}
-    />
-    <RootStack.Screen
-      name="Track"
-      component={TrackScreen}
-      options={createTrackNavigationOptions({intl})}
-    />
-
-    <RootStack.Screen
-      name="ObservationCreate"
-      component={ObservationCreate}
-      options={createObservationCreateNavigationOptions({intl})}
-    />
-
-    <RootStack.Screen
-      name="AboutSettings"
-      component={AboutSettings}
-      options={{headerTitle: intl(AboutSettings.navTitle)}}
-    />
-    <RootStack.Screen
-      name="MediaSyncSettings"
-      component={MediaSyncSettings}
-      options={{headerTitle: intl(MediaSyncSettings.navTitle)}}
-    />
-
-    <RootStack.Screen
-      name="DataAndPrivacy"
-      component={DataAndPrivacy}
-      options={{headerTitle: intl(DataAndPrivacy.navTitle)}}
-    />
-    <RootStack.Screen
-      name="SettingsPrivacyPolicy"
-      component={SettingsPrivacyPolicy}
-      options={{headerTitle: intl(SettingsPrivacyPolicy.navTitle)}}
-    />
-    <RootStack.Screen
-      name="TrackEdit"
-      component={TrackEdit}
-      options={{headerTitle: intl(TrackEdit.navTitle)}}
-    />
-    <RootStack.Screen
-      name="Config"
-      component={Config}
-      options={{headerTitle: intl(Config.navTitle)}}
-    />
-    <RootStack.Screen
-      name="HowToLeaveProject"
-      component={HowToLeaveProject}
-      options={{headerShown: false}}
-    />
-    <RootStack.Screen
-      name="Audio"
-      options={audioNavigationOptions}
-      component={Audio}
-    />
-    <RootStack.Screen
-      name="MapManagement"
-      component={MapManagementScreen}
-      options={createMapManagementNavigationOptions({intl})}
-    />
-    <RootStack.Screen
-      name="BackgroundMaps"
-      component={BackgroundMapsScreen}
-      options={createBackgroundMapsNavigationOptions({intl})}
-    />
-
-    {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
+  <>
+    <RootStack.Group screenOptions={{presentation: 'card'}} key="default">
       <RootStack.Screen
-        name="CreateTestData"
-        component={CreateTestDataScreen}
-        options={{headerTitle: 'Create Test Data'}}
+        name="Home"
+        options={{headerShown: false}}
+        children={() => (
+          <SharedLocationContextProvider>
+            {/* This provider allows the bottoms sheet used by tracks to open up behind the drawers */}
+            <BottomSheetModalProvider>
+              <HomeTabs />
+            </BottomSheetModalProvider>
+          </SharedLocationContextProvider>
+        )}
       />
-    )}
-    <RootStack.Screen
-      name="RemoteArchiveOff"
-      component={RemoteArchiveOff}
-      options={{headerTitle: intl(RemoteArchiveOff.navTitle)}}
-    />
-    <RootStack.Screen
-      name="AddRemoteArchive"
-      component={AddRemoteArchive}
-      options={{
-        headerTitle: intl(AddRemoteArchive.navTitle),
-        headerRight: () => <SaveButton onPress={() => {}} isLoading={false} />,
-      }}
-    />
-    <RootStack.Screen
-      name="SuccessfullyAddedArchive"
-      component={SuccessfullyAddedArchive}
-      options={{headerShown: false}}
-    />
-    <RootStack.Screen
-      name="RemoteArchiveOn"
-      component={RemoteArchiveOn}
-      options={{headerTitle: intl(RemoteArchiveOn.navTitle)}}
-    />
-  </RootStack.Group>
+      <RootStack.Screen
+        name="AuthScreen"
+        component={AuthScreen}
+        options={{
+          headerShown: false,
+          animation: 'fade',
+        }}
+      />
+      <RootStack.Screen
+        name="ObservationEdit"
+        component={ObservationEdit}
+        options={createObservationEditNavOptions({intl})}
+      />
+      <RootStack.Screen
+        name="AddPhoto"
+        component={AddPhotoScreen}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="PhotoPreviewModal"
+        component={PhotoPreviewModal}
+        options={{
+          headerTitle: '',
+          headerTransparent: true,
+          headerStyle: {backgroundColor: 'transparent'},
+          headerLeft: props => (
+            <CustomHeaderLeft tintColor={WHITE} headerBackButtonProps={props} />
+          ),
+        }}
+      />
+      <RootStack.Screen
+        name="Security"
+        component={Security}
+        options={{headerTitle: intl(Security.navTitle)}}
+      />
+      <RootStack.Screen
+        name="AppPasscode"
+        component={AppPasscode}
+        options={{headerTitle: intl(AppPasscode.navTitle)}}
+      />
+      <RootStack.Screen
+        name="DisablePasscode"
+        component={TurnOffPasscode}
+        options={{headerTitle: intl(TurnOffPasscode.navTitle)}}
+      />
+      <RootStack.Screen
+        name="SetPasscode"
+        component={SetPasscode}
+        options={{headerTitle: intl(SetPasscode.navTitle)}}
+      />
+      <RootStack.Screen
+        name="EnterPassToTurnOff"
+        component={EnterPassToTurnOff}
+        options={{headerTitle: intl(EnterPassToTurnOff.navTitle)}}
+      />
+      <RootStack.Screen
+        name="ObscurePasscode"
+        component={ObscurePasscode}
+        options={{headerTitle: intl(ObscurePasscode.navTitle)}}
+      />
+      <RootStack.Screen
+        name="PresetChooser"
+        component={PresetChooser}
+        options={{headerTitle: intl(PresetChooser.navTitle)}}
+      />
+      <RootStack.Screen
+        name="Observation"
+        component={ObservationScreen}
+        options={{headerTitle: intl(ObservationScreen.navTitle)}}
+      />
+      <RootStack.Screen
+        name="AppSettings"
+        component={AppSettings}
+        options={{headerTitle: intl(AppSettings.navTitle)}}
+      />
+      <RootStack.Screen
+        name="ProjectSettings"
+        component={ProjectSettings}
+        options={{headerTitle: intl(ProjectSettings.navTitle)}}
+      />
+      <RootStack.Screen
+        name="CoordinateFormat"
+        component={CoordinateFormat}
+        options={{headerTitle: intl(CoordinateFormat.navTitle)}}
+      />
+      <RootStack.Screen
+        name="CreateOrJoinProject"
+        component={CreateOrJoinProject}
+        options={{headerTitle: intl(CreateOrJoinProject.navTitle)}}
+      />
+      <RootStack.Screen
+        name="CreateProject"
+        component={CreateProject}
+        options={{headerTitle: intl(CreateProject.navTitle)}}
+      />
+      <RootStack.Screen
+        name="ProjectCreated"
+        component={ProjectCreated}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="JoinExistingProject"
+        component={JoinExistingProject}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="YourTeam"
+        component={YourTeam}
+        options={{headerTitle: intl(YourTeam.navTitle)}}
+      />
+      <RootStack.Screen
+        name="SelectDevice"
+        component={SelectDevice}
+        options={{headerTitle: intl(SelectDevice.navTitle)}}
+      />
+      <RootStack.Screen
+        name="SelectInviteeRole"
+        component={SelectInviteeRole}
+        options={{headerTitle: intl(SelectInviteeRole.navTitle)}}
+      />
+      <RootStack.Screen
+        name="ReviewAndInvite"
+        component={ReviewAndInvite}
+        options={{headerTitle: intl(ReviewInvitation.navTitle)}}
+      />
+      <RootStack.Screen
+        name="InviteAccepted"
+        component={InviteAccepted}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="DeviceNameDisplay"
+        component={DeviceNameDisplayScreen}
+        options={createDeviceNameDisplayNavOptions({intl})}
+      />
+      <RootStack.Screen
+        name="DeviceNameEdit"
+        component={DeviceNameEditScreen}
+        options={createDeviceNameEditNavOptions({intl})}
+      />
+      <RootStack.Screen
+        name="GpsModal"
+        component={LocationInfoScreen}
+        options={createLocationInfoNavOptions({intl})}
+      />
+      <RootStack.Screen name="SaveTrack" component={SaveTrackScreen} />
+      <RootStack.Screen
+        name="InviteDeclined"
+        component={InviteDeclined}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="UnableToCancelInvite"
+        component={UnableToCancelInvite}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="Sync"
+        component={SyncScreen}
+        options={createSyncNavOptions()}
+      />
+      <RootStack.Screen
+        name="ManualGpsScreen"
+        component={ManualGpsScreen}
+        options={createManualGpsNavigationOptions({intl})}
+      />
+      <RootStack.Screen
+        name="ObservationFields"
+        component={ObservationFields}
+      />
+      <RootStack.Screen
+        name="LanguageSettings"
+        component={LanguageSettings}
+        options={{headerTitle: intl(LanguageSettings.navTitle)}}
+      />
+      <RootStack.Screen
+        name="Track"
+        component={TrackScreen}
+        options={createTrackNavigationOptions({intl})}
+      />
+
+      <RootStack.Screen
+        name="ObservationCreate"
+        component={ObservationCreate}
+        options={createObservationCreateNavigationOptions({intl})}
+      />
+
+      <RootStack.Screen
+        name="AboutSettings"
+        component={AboutSettings}
+        options={{headerTitle: intl(AboutSettings.navTitle)}}
+      />
+      <RootStack.Screen
+        name="MediaSyncSettings"
+        component={MediaSyncSettings}
+        options={{headerTitle: intl(MediaSyncSettings.navTitle)}}
+      />
+
+      <RootStack.Screen
+        name="DataAndPrivacy"
+        component={DataAndPrivacy}
+        options={{headerTitle: intl(DataAndPrivacy.navTitle)}}
+      />
+      <RootStack.Screen
+        name="SettingsPrivacyPolicy"
+        component={SettingsPrivacyPolicy}
+        options={{headerTitle: intl(SettingsPrivacyPolicy.navTitle)}}
+      />
+      <RootStack.Screen
+        name="TrackEdit"
+        component={TrackEdit}
+        options={{headerTitle: intl(TrackEdit.navTitle)}}
+      />
+      <RootStack.Screen
+        name="Config"
+        component={Config}
+        options={{headerTitle: intl(Config.navTitle)}}
+      />
+      <RootStack.Screen
+        name="HowToLeaveProject"
+        component={HowToLeaveProject}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="Audio"
+        options={audioNavigationOptions}
+        component={Audio}
+      />
+      <RootStack.Screen
+        name="MapManagement"
+        component={MapManagementScreen}
+        options={createMapManagementNavigationOptions({intl})}
+      />
+      <RootStack.Screen
+        name="BackgroundMaps"
+        component={BackgroundMapsScreen}
+        options={createBackgroundMapsNavigationOptions({intl})}
+      />
+
+      {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
+        <RootStack.Screen
+          name="CreateTestData"
+          component={CreateTestDataScreen}
+          options={{headerTitle: 'Create Test Data'}}
+        />
+      )}
+      <RootStack.Screen
+        name="RemoteArchiveOff"
+        component={RemoteArchiveOff}
+        options={{headerTitle: intl(RemoteArchiveOff.navTitle)}}
+      />
+      <RootStack.Screen
+        name="AddRemoteArchive"
+        component={AddRemoteArchive}
+        options={{
+          headerTitle: intl(AddRemoteArchive.navTitle),
+          headerRight: () => (
+            <SaveButton onPress={() => {}} isLoading={false} />
+          ),
+        }}
+      />
+      <RootStack.Screen
+        name="SuccessfullyAddedArchive"
+        component={SuccessfullyAddedArchive}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="RemoteArchiveOn"
+        component={RemoteArchiveOn}
+        options={{headerTitle: intl(RemoteArchiveOn.navTitle)}}
+      />
+    </RootStack.Group>
+    <RootStack.Group
+      screenOptions={{
+        presentation: 'transparentModal',
+        headerShown: false,
+        animation: 'none',
+        contentStyle: {backgroundColor: 'transparent'},
+      }}>
+      <RootStack.Screen
+        name="SyncPreviewsBottomSheet"
+        component={SyncPreviewsBottomSheet}
+      />
+      <RootStack.Screen
+        name="SyncEverythingBottomSheet"
+        component={SyncEverythingBottomSheet}
+      />
+    </RootStack.Group>
+  </>
 );

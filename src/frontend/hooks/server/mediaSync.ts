@@ -7,6 +7,7 @@ import {
 import {MediaSyncSetting} from '../../sharedTypes';
 
 export const MEDIA_SYNC_SETTING_KEY = 'media_sync_setting';
+export const UPDATE_MEDIA_SETTING = 'update_media_setting';
 
 export function convertMediaSyncSetting(isArchive: boolean): MediaSyncSetting {
   return isArchive ? 'everything' : 'previews';
@@ -33,6 +34,7 @@ export function useSetMediaSyncSetting() {
   const queryClient = useQueryClient();
 
   return useMutation({
+    mutationKey: [UPDATE_MEDIA_SETTING],
     mutationFn: async (newSetting: MediaSyncSetting) => {
       const isArchive = isArchiveDevice(newSetting);
       return api.setIsArchiveDevice(isArchive);

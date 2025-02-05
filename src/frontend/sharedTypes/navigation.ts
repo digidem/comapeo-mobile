@@ -101,6 +101,8 @@ export type RootStackParamsList = {
   Audio: {isEditing: boolean; uri?: string; isSavedUri?: boolean};
   MapManagement: undefined;
   BackgroundMaps: undefined;
+  SyncPreviewsBottomSheet: undefined;
+  SyncEverythingBottomSheet: undefined;
 };
 
 export type OnboardingParamsList = {

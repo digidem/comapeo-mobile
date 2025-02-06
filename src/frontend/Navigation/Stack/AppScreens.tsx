@@ -99,10 +99,11 @@ import {
   AudioRecording,
   navigationOptions as AudioRecordingNavigationOptions,
 } from '../../screens/AudioRecording/index.tsx';
-import {
-  AudioPlaybackUnsaved,
-  navigationOptions as AudioPlaybackUnsavedNavigationOptions,
-} from '../../screens/AudioPlaybackUnsaved/index.tsx';
+import {AudioPlaybackUnsaved} from '../../screens/AudioPlaybackUnsaved.tsx';
+import {UnsavedAudio} from '../../sharedTypes/audio.ts';
+import {HeaderBackButton} from '@react-navigation/elements';
+import {CloseIcon} from '../../sharedComponents/icons/index.tsx';
+import {sharedAudioNavOptions} from '../../sharedComponents/AudioStyles.ts';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -110,8 +111,10 @@ export const TAB_BAR_HEIGHT = 70;
 // that returns a react element)
 export const createDefaultScreenGroup = ({
   intl,
+  addAudio,
 }: {
   intl: (title: MessageDescriptor) => string;
+  addAudio: (audio: UnsavedAudio) => void;
 }) => (
   <>
     <RootStack.Group screenOptions={{presentation: 'card'}} key="default">
@@ -407,7 +410,28 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="AudioPlaybackUnsaved"
         component={AudioPlaybackUnsaved}
-        options={AudioPlaybackUnsavedNavigationOptions}
+        options={({route, navigation}) => ({
+          ...sharedAudioNavOptions,
+          headerLeft: props => {
+            return (
+              <HeaderBackButton
+                {...props}
+                onPress={() => {
+                  const audioRecording = {
+                    uri: route.params.uri,
+                    duration: route.params.duration,
+                    createdAt: Date.now(),
+                  };
+                  addAudio(audioRecording);
+                  navigation.navigate('ObservationCreate');
+                }}
+                backImage={backImageProps => (
+                  <CloseIcon color={backImageProps.tintColor} />
+                )}
+              />
+            );
+          },
+        })}
       />
     </RootStack.Group>
     <RootStack.Group

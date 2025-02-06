@@ -9,9 +9,11 @@ export function usePreventBackButtonWhileRecording({
 }) {
   const {setOptions} = useNavigationFromRoot();
 
-  if (shouldPrevent) {
-    setOptions({headerShown: false});
-  }
+  useEffect(() => {
+    if (shouldPrevent) {
+      setOptions({headerShown: false});
+    }
+  }, [shouldPrevent, setOptions]);
 
   useEffect(() => {
     if (shouldPrevent) {

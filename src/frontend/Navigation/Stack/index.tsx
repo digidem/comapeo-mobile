@@ -21,6 +21,7 @@ import {useSuspenseQuery} from '@tanstack/react-query';
 import {Loading} from '../../sharedComponents/Loading';
 import {useSecurityContext} from '../../contexts/SecurityContext';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {useDraftObservation} from '../../hooks/useDraftObservation';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
 
@@ -59,6 +60,7 @@ export function RootStackNavigator({
 
 function RootStackNavigatorChild() {
   const {formatMessage} = useIntl();
+  const {addAudio} = useDraftObservation();
   const existingObservation = usePersistedDraftObservation(
     store => store.value,
   );
@@ -93,6 +95,7 @@ function RootStackNavigatorChild() {
       {deviceInfo.data?.name
         ? createDefaultScreenGroup({
             intl: formatMessage,
+            addAudio,
           })
         : createOnboardingScreens({intl: formatMessage})}
     </RootStack.Navigator>

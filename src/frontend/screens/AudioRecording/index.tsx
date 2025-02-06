@@ -17,6 +17,8 @@ import {
   AudioStyles,
   sharedAudioNavOptions,
 } from '../../sharedComponents/AudioStyles';
+import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 // 5 minutes
 const MAX_RECORDING_DURATION_MS = 300000;
@@ -37,8 +39,10 @@ const m = defineMessages({
   },
 });
 
-export function AudioRecording({}: NativeRootNavigationProps<'AudioRecording'>) {
-  const {startRecording, stopRecording, status, uri, error, setError} =
+export function AudioRecording({
+  navigation,
+}: NativeRootNavigationProps<'AudioRecording'>) {
+  const {startRecording, stopRecording, status, error, setError, reset} =
     useAudioRecording();
 
   const timeElapsed = status?.durationMillis || 0;
@@ -47,24 +51,32 @@ export function AudioRecording({}: NativeRootNavigationProps<'AudioRecording'>) 
   const {formatMessage} = useIntl();
 
   usePreventBackButtonWhileRecording({
-    shouldPrevent: isRecording || !!uri,
+    shouldPrevent: isRecording,
   });
 
   const finishRecording = React.useCallback(() => {
-    stopRecording();
-    //navigation.navigate('AudioRecordingDone', {uri})
-  }, [stopRecording]);
+    stopRecording()
+      .then(uri => {
+        if (!uri) {
+          throw new Error('Recording is done, but no URI is available.');
+        }
 
-  // if recording is longer than 5 minutes, finish recording
+        navigation.navigate('AudioPlaybackUnsaved', {
+          uri,
+          duration: timeElapsed,
+        });
+      })
+      .catch(err => {
+        setError(err);
+      });
+  }, [stopRecording, setError, navigation, timeElapsed]);
+
+  // stop recording at 5 minutes
   React.useEffect(() => {
     if (timeElapsed >= MAX_RECORDING_DURATION_MS) {
       finishRecording();
     }
   }, [timeElapsed, finishRecording]);
-
-  if (!error && isRecording && !uri) {
-    setError(new Error('Recording is done, but no URI is available.'));
-  }
 
   return (
     <>
@@ -72,11 +84,26 @@ export function AudioRecording({}: NativeRootNavigationProps<'AudioRecording'>) 
         contentContainerStyle={AudioStyles.contentContainer}
         dockContainerStyle={AudioStyles.dockContainer}
         dockContent={
-          <TouchableOpacity
-            onPress={!isRecording ? startRecording : finishRecording}
-            style={AudioStyles.basePressable}>
-            {<View style={!isRecording ? styles.record : styles.stop} />}
-          </TouchableOpacity>
+          status?.isDoneRecording ? (
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingBottom: 60,
+                marginTop: 20,
+              }}>
+              <UIActivityIndicator
+                color={WHITE}
+                size={PRIMARY_CONTROL_DIAMETER}
+              />
+            </View>
+          ) : (
+            <TouchableOpacity
+              onPress={!isRecording ? startRecording : finishRecording}
+              style={AudioStyles.basePressable}>
+              {<View style={!isRecording ? styles.record : styles.stop} />}
+            </TouchableOpacity>
+          )
         }>
         <View style={AudioStyles.container}>
           <View style={AudioStyles.timerContainer}>
@@ -98,6 +125,7 @@ export function AudioRecording({}: NativeRootNavigationProps<'AudioRecording'>) 
         </View>
       </ScreenContentWithDock>
       <AnimatedBackground timeElapsed={timeElapsed} />
+      <ErrorBottomSheet error={error} clearError={reset} />
     </>
   );
 }

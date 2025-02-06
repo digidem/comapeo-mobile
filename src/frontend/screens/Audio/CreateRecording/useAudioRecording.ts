@@ -4,7 +4,6 @@ import {Audio} from 'expo-av';
 export function useAudioRecording() {
   const [recording, setRecording] = useState<Audio.Recording | null>(null);
   const [status, setStatus] = useState<Audio.RecordingStatus | null>(null);
-  const [uri, setUri] = useState<string | null>(null);
   const [error, setError] = useState<Error | null>(null);
 
   const handleError = useCallback((err: unknown) => {
@@ -20,7 +19,6 @@ export function useAudioRecording() {
       }
       setRecording(null);
       setStatus(null);
-      setUri(null);
       setError(null);
     } catch (err) {
       handleError(err);
@@ -43,7 +41,7 @@ export function useAudioRecording() {
     try {
       if (!recording) return;
       await recording.stopAndUnloadAsync();
-      setUri(recording.getURI());
+      return recording.getURI();
     } catch (err) {
       handleError(err);
     }
@@ -54,7 +52,6 @@ export function useAudioRecording() {
     startRecording,
     stopRecording,
     status,
-    uri,
     error,
     setError,
   };

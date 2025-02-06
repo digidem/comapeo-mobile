@@ -1,8 +1,9 @@
 import {StyleSheet} from 'react-native';
-import {WHITE, MAGENTA, DARK_GREY} from '../lib/styles';
+import {WHITE, MAGENTA, DARK_GREY, BLACK} from '../lib/styles';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 
 const PRIMARY_CONTROL_DIAMETER = 96;
+export const SIDE_ICON_BUTTON_WIDTH = 36;
 
 export const AudioStyles = StyleSheet.create({
   contentContainer: {flex: 1},
@@ -40,6 +41,16 @@ export const AudioStyles = StyleSheet.create({
   record: {
     height: PRIMARY_CONTROL_DIAMETER,
     backgroundColor: MAGENTA,
+  },
+  stop: {
+    height: PRIMARY_CONTROL_DIAMETER / 3,
+    width: PRIMARY_CONTROL_DIAMETER / 3,
+    backgroundColor: BLACK,
+    alignSelf: 'center',
+  },
+  play: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

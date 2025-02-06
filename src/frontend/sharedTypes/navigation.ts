@@ -108,7 +108,7 @@ export type RootStackParamsList = {
     audioPermission: Audio.PermissionResponse;
   };
   AudioRecording: undefined;
-  AudioPlaybackUnsaved: {uri: string};
+  AudioPlaybackUnsaved: {uri: string; duration: number};
 };
 
 export type OnboardingParamsList = {

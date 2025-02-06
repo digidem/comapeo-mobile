@@ -109,11 +109,11 @@ const frontendConfig = tseslint.config(
 );
 
 export default tseslint.config(
+  {ignores: ['e2e/**/*']},
+  includeIgnoreFile(gitignorePath),
+  includeIgnoreFile(gitExcludePath),
   js.configs.recommended,
   toolingConfig,
   backendConfig,
   frontendConfig,
-  {ignores: ['e2e/**/*']},
-  includeIgnoreFile(gitignorePath),
-  includeIgnoreFile(gitExcludePath),
 );

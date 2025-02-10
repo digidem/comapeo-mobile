@@ -1,4 +1,4 @@
-name: Start Feature Release
+name: Start Scheduled Release
 
 env:
   # This is the branch where development happens, where releases are cut from

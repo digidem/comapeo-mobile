@@ -3,7 +3,7 @@ import {BackHandler} from 'react-native';
 import {RecordingActive} from './RecordingActive';
 import {RecordingDone} from './RecordingDone';
 import {RecordingIdle} from './RecordingIdle';
-import {useAudioRecording} from './useAudioRecording';
+import {useAudioRecording} from '../../AudioRecording/useAudioRecording';
 import {ErrorBottomSheet} from '../../../sharedComponents/ErrorBottomSheet';
 
 export function CreateRecording({isEditing}: {isEditing: boolean}) {

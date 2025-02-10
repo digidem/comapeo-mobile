@@ -4,7 +4,7 @@ import {
   SIDE_ICON_BUTTON_WIDTH,
 } from '../sharedComponents/AudioStyles';
 import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
-import {useAudioPlayback} from './Audio/useAudioPlayback';
+import {useAudioPlayback} from '../hooks/useAudioPlayback';
 import {Duration} from 'luxon';
 import {View, Text, Pressable, TouchableOpacity} from 'react-native';
 import {Bar} from 'react-native-progress';

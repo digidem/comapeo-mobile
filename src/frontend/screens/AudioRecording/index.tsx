@@ -6,7 +6,7 @@ import {BLACK, MAGENTA, MEDIUM_GREY, WHITE} from '../../lib/styles';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {Text} from '../../sharedComponents/Text';
 import {AnimatedBackground} from './AnimatedBackground';
-import {useAudioRecording} from '../Audio/CreateRecording/useAudioRecording';
+import {useAudioRecording} from './useAudioRecording';
 import {usePreventBackButtonWhileRecording} from './usePreventBackButtonWhileRecording';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {defineMessages, useIntl} from 'react-intl';

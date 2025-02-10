@@ -14,7 +14,7 @@ export function useAudioRecording() {
 
   const reset = useCallback(async () => {
     try {
-      if (recording && (await recording.getStatusAsync()).isRecording) {
+      if (recording) {
         await recording.stopAndUnloadAsync();
       }
       setRecording(null);

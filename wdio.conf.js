@@ -1,4 +1,8 @@
-export const config = {
+/**
+ * @type {import('webdriverio').Config}
+ */
+
+const config = {
   runner: 'local',
   user: process.env.BROWSERSTACK_USERNAME,
   key: process.env.BROWSERSTACK_ACCESS_KEY,
@@ -39,7 +43,7 @@ export const config = {
     },
   ],
   logLevel: 'error',
-  waitforTimeout: 20000,
+  waitforTimeout: 15000,
   connectionRetryTimeout: 180000,
   connectionRetryCount: 3,
   framework: 'mocha',
@@ -51,12 +55,11 @@ export const config = {
     [
       'spec',
       {
-        showPreface: false,
-        color: true,
         addConsoleLogs: true,
-        onlyFailures: false,
       },
     ],
   ],
   outputDir: './test-results',
 };
+
+module.exports = config;

@@ -1,5 +1,5 @@
 {
   "compilerOptions": {
-    "types": ["@wdio/globals/types", "@wdio/mocha-framework", "mocha"]
+    "types": ["@wdio/globals/types", "@wdio/mocha-framework"]
   }
 }

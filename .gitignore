@@ -91,3 +91,4 @@ logs/
 logs/*.log
 logs/*.json
 local.log
+test-results/

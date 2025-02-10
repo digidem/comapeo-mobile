@@ -15,7 +15,6 @@ import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import PlayArrow from '../images/PlayArrow.svg';
-import {usePreventAndroidBackButton} from '../hooks/usePreventAndroidBackButton';
 import {UIActivityIndicator} from 'react-native-indicators';
 import Share from 'react-native-share';
 import * as FileSystem from 'expo-file-system';
@@ -40,7 +39,6 @@ export const AudioPlaybackSaved = ({
     error,
     clearError,
   } = useAudioPlayback(uri);
-  usePreventAndroidBackButton();
   const {formatMessage} = useIntl();
 
   const progress = currentPosition / duration;

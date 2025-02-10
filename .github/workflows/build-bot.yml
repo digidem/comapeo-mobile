@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     if: |
       github.event.issue.pull_request &&
-      contains(github.event.comment.body, vars.BUILD_COMMENT_TRIGGER || '/buildrc')
+      contains(github.event.comment.body, vars.BUILD_COMMENT_TRIGGER || '/build-rc')
     outputs:
       is_release_pr: ${{ steps.check_base_branch.outputs.is_release_pr }}
       build_sha: ${{ steps.pr_shas.outputs.build_sha }}

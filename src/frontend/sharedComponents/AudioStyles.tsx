@@ -1,6 +1,8 @@
+import * as React from 'react';
 import {StyleSheet} from 'react-native';
 import {WHITE, MAGENTA, DARK_GREY, BLACK} from '../lib/styles';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
+import {CustomHeaderLeft} from './CustomHeaderLeft';
 
 const PRIMARY_CONTROL_DIAMETER = 96;
 export const SIDE_ICON_BUTTON_WIDTH = 36;
@@ -61,4 +63,10 @@ export const sharedAudioNavOptions: NativeStackNavigationOptions = {
   headerTitle: () => null,
   headerStyle: {backgroundColor: 'transparent'},
   headerTransparent: true,
+  headerLeft: props => (
+    <CustomHeaderLeft
+      tintColor={props.tintColor}
+      headerBackButtonProps={props}
+    />
+  ),
 };

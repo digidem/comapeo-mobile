@@ -6,13 +6,7 @@ import {
 import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
 import {useAudioPlayback} from './Audio/useAudioPlayback';
 import {Duration} from 'luxon';
-import {
-  View,
-  Text,
-  Pressable,
-  TouchableOpacity,
-  BackHandler,
-} from 'react-native';
+import {View, Text, Pressable, TouchableOpacity} from 'react-native';
 import {Bar} from 'react-native-progress';
 import {WHITE, MEDIUM_GREY} from '../lib/styles';
 import {ErrorBottomSheet} from '../sharedComponents/ErrorBottomSheet';
@@ -21,7 +15,10 @@ import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import PlayArrow from '../images/PlayArrow.svg';
-import {useFocusEffect} from '@react-navigation/native';
+import {usePreventAndroidBackButton} from '../hooks/usePreventAndroidBackButton';
+import {UIActivityIndicator} from 'react-native-indicators';
+import Share from 'react-native-share';
+import * as FileSystem from 'expo-file-system';
 
 const m = defineMessages({
   description: {
@@ -29,12 +26,10 @@ const m = defineMessages({
     defaultMessage: 'Total length: {length}',
   },
 });
-export const AudioPlaybackUnsaved = ({
+export const AudioPlaybackSaved = ({
   route,
   navigation,
-}: NativeRootNavigationProps<
-  'AudioPlaybackUnsavedReview' | 'AudioPlaybackUnsavedPreview'
->) => {
+}: NativeRootNavigationProps<'AudioPlaybackSaved'>) => {
   const uri = route.params.uri;
   const {
     duration,
@@ -45,26 +40,47 @@ export const AudioPlaybackUnsaved = ({
     error,
     clearError,
   } = useAudioPlayback(uri);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      const onBackPress = () => {
-        if (route.name === 'AudioPlaybackUnsavedReview') {
-          return true;
-        }
-      };
-
-      const subscription = BackHandler.addEventListener(
-        'hardwareBackPress',
-        onBackPress,
-      );
-
-      return () => subscription.remove();
-    }, [route.name]),
-  );
+  usePreventAndroidBackButton();
   const {formatMessage} = useIntl();
 
   const progress = currentPosition / duration;
+
+  const [localUri, setLocalUri] = React.useState<string | null>(null);
+  const [shareLoading, setShareLoading] = React.useState(false);
+  const [shareError, setShareError] = React.useState<Error | null>(null);
+
+  const handleShare = React.useCallback(async () => {
+    setShareLoading(true);
+    try {
+      let fileUri = localUri;
+
+      if (!fileUri) {
+        const tempFileName = `audio_${Date.now()}.m4a`;
+        const localFilePath = `${FileSystem.cacheDirectory}${tempFileName}`;
+        const {uri: downloadedUri} = await FileSystem.downloadAsync(
+          uri,
+          localFilePath,
+        );
+
+        fileUri = downloadedUri;
+        setLocalUri(downloadedUri);
+      }
+
+      await Share.open({url: fileUri, failOnCancel: false});
+    } catch (err) {
+      setShareError(err as Error);
+    } finally {
+      setShareLoading(false);
+    }
+  }, [uri, localUri]);
+
+  React.useEffect(() => {
+    return () => {
+      if (localUri) {
+        FileSystem.deleteAsync(localUri, {idempotent: true}).catch(() => {});
+      }
+    };
+  }, [localUri]);
 
   return (
     <>
@@ -80,19 +96,21 @@ export const AudioPlaybackUnsaved = ({
             }}>
             <View
               style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-              <Pressable
-                onPress={() =>
-                  navigation.navigate('DeleteAudioBottomSheet', {
-                    screenToPopToAfterDelete: 'ObservationCreate',
-                    uri,
-                  })
-                }>
-                <MaterialIcon
-                  name="delete"
-                  color={WHITE}
-                  size={SIDE_ICON_BUTTON_WIDTH}
-                />
-              </Pressable>
+              {route.params.canDelete && (
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate('DeleteAudioBottomSheet', {
+                      screenToPopToAfterDelete: 'ObservationEdit',
+                      uri,
+                    })
+                  }>
+                  <MaterialIcon
+                    name="delete"
+                    color={WHITE}
+                    size={SIDE_ICON_BUTTON_WIDTH}
+                  />
+                </Pressable>
+              )}
             </View>
             {isPlaying ? (
               <TouchableOpacity
@@ -109,7 +127,25 @@ export const AudioPlaybackUnsaved = ({
                 </View>
               </TouchableOpacity>
             )}
-            <View style={{flex: 1}} />
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Pressable onPress={handleShare}>
+                {shareLoading ? (
+                  <UIActivityIndicator
+                    // If we dont set the max height, the border takes up the entire screen
+                    style={{maxHeight: SIDE_ICON_BUTTON_WIDTH}}
+                    size={SIDE_ICON_BUTTON_WIDTH}
+                    color={WHITE}
+                  />
+                ) : (
+                  <MaterialIcon name="share" color={WHITE} size={36} />
+                )}
+              </Pressable>
+            </View>
           </View>
         }>
         <View style={AudioStyles.container}>
@@ -144,10 +180,14 @@ export const AudioPlaybackUnsaved = ({
         </View>
       </ScreenContentWithDock>
       <ErrorBottomSheet
-        error={error}
-        clearError={clearError}
+        error={error || shareError}
+        clearError={() => {
+          clearError();
+          setShareError(null);
+        }}
         tryAgain={() => {
           clearError();
+          setShareError(null);
           if (isPlaying) {
             stopPlayback();
           } else {

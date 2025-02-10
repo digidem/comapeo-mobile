@@ -8,6 +8,7 @@ import {BodyText} from '../sharedComponents/Text/BodyText';
 import {Button} from '../sharedComponents/Button';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 import {RED} from '../lib/styles';
+import {useDraftObservation} from '../hooks/useDraftObservation';
 
 const m = defineMessages({
   title: {
@@ -35,6 +36,7 @@ export const DeleteAudioBottomSheet = ({
 }: NativeRootNavigationProps<'DeleteAudioBottomSheet'>) => {
   const {formatMessage} = useIntl();
   const {goBack, navigate} = navigation;
+  const {deleteAudio} = useDraftObservation();
 
   return (
     <BottomSheetWrapper>
@@ -56,6 +58,10 @@ export const DeleteAudioBottomSheet = ({
             color="dark"
             style={{backgroundColor: RED, marginTop: 30}}
             onPress={() => {
+              deleteAudio(
+                route.params.uri,
+                route.params.screenToPopToAfterDelete === 'ObservationEdit',
+              );
               navigate(route.params.screenToPopToAfterDelete);
             }}>
             {formatMessage(m.delete)}

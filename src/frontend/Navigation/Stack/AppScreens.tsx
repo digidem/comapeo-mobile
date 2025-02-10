@@ -95,17 +95,15 @@ import {
 import {SyncPreviewsBottomSheet} from '../../screens/Settings/ProjectSettings/MediaSyncSettings/SyncPreviewsBottomSheet.tsx';
 import {SyncEverythingBottomSheet} from '../../screens/Settings/ProjectSettings/MediaSyncSettings/SyncEverythingBottomSheet.tsx';
 import {AudioAskPermissionBottomSheet} from '../../screens/AudioAskPermissionBottomSheet.tsx';
-import {
-  AudioRecording,
-  navigationOptions as AudioRecordingNavigationOptions,
-} from '../../screens/AudioRecording/index.tsx';
+import {AudioRecording} from '../../screens/AudioRecording/index.tsx';
 import {AudioPlaybackUnsaved} from '../../screens/AudioPlaybackUnsaved.tsx';
 import {UnsavedAudio} from '../../sharedTypes/audio.ts';
 import {HeaderBackButton} from '@react-navigation/elements';
 import {CloseIcon} from '../../sharedComponents/icons/index.tsx';
-import {sharedAudioNavOptions} from '../../sharedComponents/AudioStyles.ts';
+import {sharedAudioNavOptions} from '../../sharedComponents/AudioStyles';
 import {DeleteAudioBottomSheet} from '../../screens/DeleteAudioBottomSheet.tsx';
 import {AudioSavedBottomSheet} from '../../screens/AudioSavedBottomSheet.tsx';
+import {AudioPlaybackSaved} from '../../screens/AudioPlaybackSaved.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -406,11 +404,11 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="AudioRecording"
         component={AudioRecording}
-        options={AudioRecordingNavigationOptions}
+        options={sharedAudioNavOptions}
       />
 
       <RootStack.Screen
-        name="AudioPlaybackUnsaved"
+        name="AudioPlaybackUnsavedReview"
         component={AudioPlaybackUnsaved}
         options={({route, navigation}) => ({
           ...sharedAudioNavOptions,
@@ -434,6 +432,16 @@ export const createDefaultScreenGroup = ({
             );
           },
         })}
+      />
+      <RootStack.Screen
+        name="AudioPlaybackSaved"
+        component={AudioPlaybackSaved}
+        options={sharedAudioNavOptions}
+      />
+      <RootStack.Screen
+        name="AudioPlaybackUnsavedPreview"
+        component={AudioPlaybackUnsaved}
+        options={sharedAudioNavOptions}
       />
     </RootStack.Group>
     <RootStack.Group

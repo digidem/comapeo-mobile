@@ -11,12 +11,7 @@ import {usePreventBackButtonWhileRecording} from './usePreventBackButtonWhileRec
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
-import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import {
-  AudioStyles,
-  sharedAudioNavOptions,
-} from '../../sharedComponents/AudioStyles';
+import {AudioStyles} from '../../sharedComponents/AudioStyles';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {UIActivityIndicator} from 'react-native-indicators';
 
@@ -60,7 +55,7 @@ export function AudioRecording({
         if (!uri) {
           throw new Error('Recording is done, but no URI is available.');
         }
-        navigation.replace('AudioPlaybackUnsaved', {
+        navigation.replace('AudioPlaybackUnsavedReview', {
           uri,
           duration: timeElapsed,
         });
@@ -128,16 +123,6 @@ export function AudioRecording({
     </>
   );
 }
-
-export const navigationOptions: NativeStackNavigationOptions = {
-  ...sharedAudioNavOptions,
-  headerLeft: props => (
-    <CustomHeaderLeft
-      tintColor={props.tintColor}
-      headerBackButtonProps={props}
-    />
-  ),
-};
 
 const styles = StyleSheet.create({
   record: {

@@ -108,11 +108,14 @@ export type RootStackParamsList = {
     audioPermission: Audio.PermissionResponse;
   };
   AudioRecording: undefined;
-  AudioPlaybackUnsaved: {uri: string; duration: number};
+  AudioPlaybackUnsavedReview: {uri: string; duration: number};
+  AudioPlaybackUnsavedPreview: {uri: string};
   DeleteAudioBottomSheet: {
     screenToPopToAfterDelete: 'ObservationCreate' | 'ObservationEdit';
+    uri: string;
   };
   AudioSavedBottomSheet: undefined;
+  AudioPlaybackSaved: {uri: string; canDelete: boolean};
 };
 
 export type OnboardingParamsList = {

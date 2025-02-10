@@ -1,3 +1,17 @@
+# Summary:
+#
+# Initializes a hotfix release. This should be used for adding fixes to specific releases.
+#
+# Triggers:
+#
+# - Manually triggered by the team via a workflow dispatch when they want to start a new hotfix release.
+#   User must enter the release version to hotfix. For example, to start a hotfix release for a release with version `1.0`, enter `1`.
+#
+# Effects:
+#
+# - Creates a new release candidate branch from the target release branch (e.g. `release/v4.x`) named `rc/v${release_version}.${hotfix_version}`.
+# - Creates a new pull request from `rc/v${release_version}.${hotfix_version}` to `release/v${release_version}.x`.
+#   A release candidate build will be triggered by the creation of the PR (see `./build-rc.yml`).
 name: Start Hotfix Release
 
 on:

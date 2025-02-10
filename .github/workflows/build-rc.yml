@@ -1,3 +1,17 @@
+# Summary:
+#
+# Builds a release candidate on Expo App Services.
+#
+# Triggers:
+#
+# - Opening a PR that targets a base branch that matches `release/**`
+# - Commenting on a PR that targets a base branch that matches `release/**` with the command specified
+#   as a repository variable called `BUILD_COMMENT_TRIGGER` (or `/build-rc` if not specified).
+#
+# Effects:
+#
+# - Triggers a Release Candidate build on EAS
+# - Creates a comment on the Release Candidate PR with a link to the EAS build process.
 name: Build Release Candidate
 
 on:

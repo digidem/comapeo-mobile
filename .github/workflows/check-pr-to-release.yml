@@ -1,3 +1,18 @@
+# Summary:
+#
+# Performs various checks on PRs that target a release branch.
+#
+# Triggers:
+#
+# - Opening, syncing or reopening a PR that targets a base branch that matches `release/**`.
+#
+# Effects:
+#
+# - Checks there are no commits made to the release branch while a release candidate PR is open.
+#   This check is important to ensure that the release candidate (and release) do not include unexpected code which has been
+#   pushed to the release branch after the release candidate branch was created.
+# - Checks that the PR's source branch is a RC branch with a correctly
+# - Checks that the bumped version is not a pre-release version.
 name: Check PR to Release
 
 on:

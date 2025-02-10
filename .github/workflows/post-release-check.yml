@@ -1,10 +1,20 @@
+# Summary:
+#
 # All commits in a release branch _should_ have been cherry-picked from the main
 # branch, but sometimes it's unavoidable to commit directly to the release
 # branch. In that case, there should be a manual review of the commits that are
 # not on the main branch to check whether any fixes in them need applied to
 # main. In most cases they can probably be ignored. This workflow creates an
 # issue for reviewing these non-cherry-picked commits.
-
+#
+# Triggers:
+#
+# - Merging a PR that targets a base branch that matches release/**
+#
+# Effects:
+#
+# - Checks for any commits made to the release candidate since branching from develop that were not cherry-picked from develop.
+# - Creates an issue to manually check any non-cherry-picked commits and add them to develop if necessary.
 name: Post Release Check
 
 on:

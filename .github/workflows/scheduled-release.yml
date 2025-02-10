@@ -1,3 +1,17 @@
+# Summary:
+#
+# Initializes a scheduled release. This marks the the feature-freeze of the current release cycle and starts a new release cycle on the develop branch.
+#
+# Triggers:
+#
+# Manually triggered by the team via a workflow dispatch when they want to start a new scheduled release.
+#
+# Effects:
+#
+# - Creates a new release branch from develop named `release/v${next_version}.x`
+# - Creates a new release candidate branch from `develop` named `rc/v${next_version}.0` and bumps the package.json version to the target version.
+# - Creates a new pull request from `rc/v${next_version}.0` to `release/v${next_version}.x` with the changes in `rc/v${next_version}.0`.
+#   A release candidate build will be triggered by the creation of the PR (see `./build-rc.yml`).
 name: Start Scheduled Release
 
 env:

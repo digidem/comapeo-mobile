@@ -1,3 +1,18 @@
+# Summary:
+#
+# Creates a production build of the app that is eventually submitted for distribution.
+# This workflow DOES NOT automatically perform the submission - that must still be handled manually.
+#
+# Triggers:
+#
+# - Merging a PR that targets a base branch that matches `release/**`
+#
+# Effects:
+#
+# - Triggers a Release build on EAS
+# - Creates a comment on the (merged) Release Candidate PR with a link to the EAS build process.
+# - Creates a release tag named `v${version}` on the merge commit in the targeted `release/**` branch.
+#   `version` is `<minor>.<patch>` e.g. `1.2.0` is truncated to `2.0`.
 name: Build Release
 
 on:

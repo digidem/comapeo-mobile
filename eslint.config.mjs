@@ -2,16 +2,16 @@
 
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
-import react from '@eslint-react/eslint-plugin';
+import pluginReact from '@eslint-react/eslint-plugin';
 import {includeIgnoreFile, fixupPluginRules} from '@eslint/compat';
-import js from '@eslint/js';
+import pluginJs from '@eslint/js';
 import pluginQuery from '@tanstack/eslint-plugin-query';
 // @ts-expect-error Requires updating tsconfig (see https://github.com/typescript-eslint/typescript-eslint/issues/7284)
 import * as tsParser from '@typescript-eslint/parser';
-import jest from 'eslint-plugin-jest';
-import reactNative from 'eslint-plugin-react-native';
+import pluginJest from 'eslint-plugin-jest';
+import pluginReactNative from 'eslint-plugin-react-native';
 import globals from 'globals';
-import tseslint from 'typescript-eslint';
+import pluginTs from 'typescript-eslint';
 
 const gitignorePath = path.join(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -25,7 +25,7 @@ const gitExcludePath = path.join(
   'exclude',
 );
 
-const toolingConfig = tseslint.config({
+const toolingConfig = pluginTs.config({
   name: 'tooling',
   files: [
     '*.config.{js,mjs,cjs}',
@@ -41,10 +41,10 @@ const toolingConfig = tseslint.config({
   },
 });
 
-const backendConfig = tseslint.config({
+const backendConfig = pluginTs.config({
   name: 'backend',
   files: ['src/backend/**/*.{js,ts}'],
-  extends: [tseslint.configs.recommended],
+  extends: [pluginTs.configs.recommended],
   languageOptions: {
     globals: {
       ...globals.node,
@@ -54,26 +54,26 @@ const backendConfig = tseslint.config({
   },
 });
 
-const frontendConfig = tseslint.config(
+const frontendConfig = pluginTs.config(
   {
     name: 'frontend',
     files: ['src/frontend/**/*.{js,jsx,ts,tsx}'],
     extends: [
-      tseslint.configs.recommended,
+      pluginTs.configs.recommended,
       pluginQuery.configs['flat/recommended'],
-      react.configs['recommended-typescript'],
-      react.configs['disable-dom'],
+      pluginReact.configs['recommended-typescript'],
+      pluginReact.configs['disable-dom'],
       // https://github.com/facebook/react-native/issues/42996#issuecomment-2275994981
       {
         name: 'eslint-plugin-react-native',
         plugins: {
           'react-native': fixupPluginRules({
             // @ts-expect-error
-            rules: reactNative.rules,
+            rules: pluginReactNative.rules,
           }),
         },
         rules: {
-          ...reactNative.configs.all.rules,
+          ...pluginReactNative.configs.all.rules,
           'react-native/sort-styles': 'off',
           'react-native/no-inline-styles': 'off',
           'react-native/no-color-literals': 'warn',
@@ -102,17 +102,17 @@ const frontendConfig = tseslint.config(
     },
   },
   {
-    ...jest.configs['flat/recommended'],
+    ...pluginJest.configs['flat/recommended'],
     name: 'eslint-plugin-jest',
     files: ['src/frontend/**/*.test.{js,jsx,ts,tsx}'],
   },
 );
 
-export default tseslint.config(
+export default pluginTs.config(
   {ignores: ['e2e/**/*']},
   includeIgnoreFile(gitignorePath),
   includeIgnoreFile(gitExcludePath),
-  js.configs.recommended,
+  pluginJs.configs.recommended,
   toolingConfig,
   backendConfig,
   frontendConfig,

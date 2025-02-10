@@ -109,6 +109,10 @@ export type RootStackParamsList = {
   };
   AudioRecording: undefined;
   AudioPlaybackUnsaved: {uri: string; duration: number};
+  DeleteAudioBottomSheet: {
+    screenToPopToAfterDelete: 'ObservationCreate' | 'ObservationEdit';
+  };
+  AudioSavedBottomSheet: undefined;
 };
 
 export type OnboardingParamsList = {

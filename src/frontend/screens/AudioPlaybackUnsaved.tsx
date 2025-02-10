@@ -14,7 +14,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import PlayArrow from '../../images/PlayArrow.svg';
+import PlayArrow from '../images/PlayArrow.svg';
 import {usePreventAndroidBackButton} from '../hooks/usePreventAndroidBackButton';
 
 const m = defineMessages({
@@ -25,9 +25,9 @@ const m = defineMessages({
 });
 export const AudioPlaybackUnsaved = ({
   route,
+  navigation,
 }: NativeRootNavigationProps<'AudioPlaybackUnsaved'>) => {
   const uri = route.params.uri;
-  usePreventAndroidBackButton();
   const {
     duration,
     currentPosition,
@@ -37,12 +37,10 @@ export const AudioPlaybackUnsaved = ({
     error,
     clearError,
   } = useAudioPlayback(uri);
-
+  usePreventAndroidBackButton();
   const {formatMessage} = useIntl();
 
   const progress = currentPosition / duration;
-
-  function handleDeletePress() {}
 
   return (
     <>
@@ -58,7 +56,12 @@ export const AudioPlaybackUnsaved = ({
             }}>
             <View
               style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-              <Pressable onPress={handleDeletePress}>
+              <Pressable
+                onPress={() =>
+                  navigation.navigate('DeleteAudioBottomSheet', {
+                    screenToPopToAfterDelete: 'ObservationCreate',
+                  })
+                }>
                 <MaterialIcon
                   name="delete"
                   color={WHITE}

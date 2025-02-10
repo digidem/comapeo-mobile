@@ -104,6 +104,8 @@ import {UnsavedAudio} from '../../sharedTypes/audio.ts';
 import {HeaderBackButton} from '@react-navigation/elements';
 import {CloseIcon} from '../../sharedComponents/icons/index.tsx';
 import {sharedAudioNavOptions} from '../../sharedComponents/AudioStyles.ts';
+import {DeleteAudioBottomSheet} from '../../screens/DeleteAudioBottomSheet.tsx';
+import {AudioSavedBottomSheet} from '../../screens/AudioSavedBottomSheet.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -423,7 +425,7 @@ export const createDefaultScreenGroup = ({
                     createdAt: Date.now(),
                   };
                   addAudio(audioRecording);
-                  navigation.navigate('ObservationCreate');
+                  navigation.replace('AudioSavedBottomSheet');
                 }}
                 backImage={backImageProps => (
                   <CloseIcon color={backImageProps.tintColor} />
@@ -452,6 +454,14 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="AudioAskPermissionBottomSheet"
         component={AudioAskPermissionBottomSheet}
+      />
+      <RootStack.Screen
+        name="DeleteAudioBottomSheet"
+        component={DeleteAudioBottomSheet}
+      />
+      <RootStack.Screen
+        name="AudioSavedBottomSheet"
+        component={AudioSavedBottomSheet}
       />
     </RootStack.Group>
   </>

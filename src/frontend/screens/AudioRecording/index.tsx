@@ -60,8 +60,7 @@ export function AudioRecording({
         if (!uri) {
           throw new Error('Recording is done, but no URI is available.');
         }
-
-        navigation.navigate('AudioPlaybackUnsaved', {
+        navigation.replace('AudioPlaybackUnsaved', {
           uri,
           duration: timeElapsed,
         });
@@ -110,7 +109,7 @@ export function AudioRecording({
             <Text
               style={[
                 AudioStyles.timerText,
-                {color: timeElapsed === 0 ? MEDIUM_GREY : WHITE},
+                {color: !isRecording ? MEDIUM_GREY : WHITE},
               ]}>
               {Duration.fromMillis(timeElapsed).toFormat('mm:ss')}
             </Text>

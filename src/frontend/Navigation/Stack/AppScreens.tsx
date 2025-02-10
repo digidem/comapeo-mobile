@@ -81,10 +81,6 @@ import {AddRemoteArchive} from '../../screens/Settings/ProjectSettings/RemoteArc
 import {SuccessfullyAddedArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/SuccessfullyAddedArchive.tsx';
 import {RemoteArchiveOn} from '../../screens/Settings/ProjectSettings/RemoteArchive/RemoteArchiveOn.tsx';
 import {
-  Audio,
-  navigationOptions as audioNavigationOptions,
-} from '../../screens/Audio/index.tsx';
-import {
   createNavigationOptions as createMapManagementNavigationOptions,
   MapManagementScreen,
 } from '../../screens/Settings/MapManagement';
@@ -352,11 +348,6 @@ export const createDefaultScreenGroup = ({
         name="HowToLeaveProject"
         component={HowToLeaveProject}
         options={{headerShown: false}}
-      />
-      <RootStack.Screen
-        name="Audio"
-        options={audioNavigationOptions}
-        component={Audio}
       />
       <RootStack.Screen
         name="MapManagement"

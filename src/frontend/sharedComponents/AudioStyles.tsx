@@ -6,6 +6,7 @@ import {CustomHeaderLeft} from './CustomHeaderLeft';
 
 const PRIMARY_CONTROL_DIAMETER = 96;
 export const SIDE_ICON_BUTTON_WIDTH = 36;
+export const MAX_RECORDING_DURATION_MS = 5 * 60_000;
 
 export const AudioStyles = StyleSheet.create({
   contentContainer: {flex: 1},

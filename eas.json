@@ -8,7 +8,8 @@
     "base": {
       "android": {
         "image": "latest",
-        "node": "20.17.0"
+        "node": "20.17.0",
+        "resourceClass": "large"
       },
       "ios": {
         "image": "latest",

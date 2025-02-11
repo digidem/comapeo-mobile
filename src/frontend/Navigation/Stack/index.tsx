@@ -50,13 +50,17 @@ export function RootStackNavigator({
   return (
     <DrawerNavigationContext.Provider value={navigation}>
       <React.Suspense fallback={<Loading />}>
-        <RootStackNavigatorChild />
+        <RootStackNavigatorChild navigation={navigation} />
       </React.Suspense>
     </DrawerNavigationContext.Provider>
   );
 }
 
-function RootStackNavigatorChild() {
+function RootStackNavigatorChild({
+  navigation,
+}: {
+  navigation: DrawerNavigationContextType;
+}) {
   const {formatMessage} = useIntl();
   const existingObservation = usePersistedDraftObservation(
     store => store.value,
@@ -72,6 +76,11 @@ function RootStackNavigatorChild() {
   });
 
   const security = useSecurityContext();
+  React.useEffect(() => {
+    if (security.authState === 'unauthenticated') {
+      navigation.navigate('DrawerHome', {screen: 'AuthScreen'});
+    }
+  }, [security.authState, navigation]);
 
   return (
     <RootStack.Navigator

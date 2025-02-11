@@ -106,7 +106,12 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
     // As a workaround, I am setting a transparent background that takes up the entire screen, and putting the menu on top of that. This blocks the user from clicking outside of the menu as the transparent background is techincally still the menu.
     <View style={{flex: 1, backgroundColor: 'rgba(0, 0, 0, 0)'}}>
       <DrawerContentScrollView
-        contentContainerStyle={{flexGrow: 1}}
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingBottom: 0,
+          paddingStart: 0,
+          paddingEnd: 0,
+        }}
         style={{
           backgroundColor: VERY_LIGHT_GREY,
           width: '80%',

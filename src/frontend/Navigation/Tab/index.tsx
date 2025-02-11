@@ -2,7 +2,9 @@ import * as React from 'react';
 import {
   createBottomTabNavigator,
   BottomTabNavigationProp,
+  BottomTabBarButtonProps,
 } from '@react-navigation/bottom-tabs';
+import {Pressable} from 'react-native';
 import {useIntl} from 'react-intl';
 import {useCurrentTab} from '../../hooks/useCurrentTab';
 import {CameraScreen} from '../../screens/CameraScreen';
@@ -21,6 +23,13 @@ import {useDrawerNavigation} from '../Stack';
 
 const Tab = createBottomTabNavigator<HomeTabsParamsList>();
 
+const CustomTabBarButton = (props: BottomTabBarButtonProps) => (
+  <Pressable
+    {...props}
+    style={{justifyContent: 'center', alignItems: 'center', flex: 1}}
+  />
+);
+
 export const HomeTabs = () => {
   const {handleTabPress} = useCurrentTab();
   const {formatMessage} = useIntl();
@@ -34,6 +43,7 @@ export const HomeTabs = () => {
         tabBarStyle: {height: TAB_BAR_HEIGHT},
         tabBarShowLabel: false,
         headerTransparent: true,
+        tabBarButton: CustomTabBarButton,
         tabBarButtonTestID: 'tabBarButton' + route.name,
       })}
       initialRouteName={'Map'}

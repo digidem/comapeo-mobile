@@ -133,7 +133,7 @@
     "@react-native/metro-config": "0.76.6",
     "@react-native/typescript-config": "0.76.6",
     "@react-navigation/native-stack": "7.2.0",
-    "@tanstack/eslint-plugin-query": "5.66.0",
+    "@tanstack/eslint-plugin-query": "5.66.1",
     "@testing-library/react-native": "12.4.3",
     "@types/debug": "4.1.12",
     "@types/geojson": "7946.0.15",

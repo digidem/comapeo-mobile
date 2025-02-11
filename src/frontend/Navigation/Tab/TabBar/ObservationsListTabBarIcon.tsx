@@ -14,6 +14,9 @@ export const ObservationsListBarIcon: FC<TabBarIconProps> = props => {
       color={
         props.focused && currentTab !== 'Tracking' ? COMAPEO_BLUE : MEDIUM_GREY
       }
+      stroke={
+        props.focused && currentTab !== 'Tracking' ? COMAPEO_BLUE : MEDIUM_GREY
+      }
     />
   );
 };

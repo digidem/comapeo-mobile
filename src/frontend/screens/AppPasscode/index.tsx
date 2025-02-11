@@ -19,7 +19,7 @@ export const AppPasscode: NativeNavigationComponent<'AppPasscode'> = ({
 
   React.useLayoutEffect(() => {
     if (authState === 'obscured') {
-      navigation.navigate('Settings');
+      navigation.popTo('Settings');
     }
   }, [navigation, authState]);
 

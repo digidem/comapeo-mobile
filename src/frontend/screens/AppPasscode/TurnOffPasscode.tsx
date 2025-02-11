@@ -15,7 +15,7 @@ import ErrorIcon from '../../images/Error.svg';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {useFocusEffect, StackActions} from '@react-navigation/native';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
-import {HeaderButtonProps} from '@react-navigation/native-stack/lib/typescript/src/types';
+import {HeaderBackButtonProps} from '@react-navigation/elements';
 import {usePersistedPasscode} from '../../hooks/persistedState/usePersistedPasscode';
 import {useSecurityContext} from '../../contexts/SecurityContext';
 import {Text} from '../../sharedComponents/Text';
@@ -84,7 +84,7 @@ export const TurnOffPasscode: NativeNavigationComponent<'DisablePasscode'> = ({
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerLeft: (props: HeaderButtonProps) => (
+      headerLeft: (props: HeaderBackButtonProps) => (
         <CustomHeaderLeft headerBackButtonProps={props} onPress={backPress} />
       ),
     });

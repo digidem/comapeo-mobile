@@ -46,7 +46,7 @@ export const ObscurePasscode: NativeNavigationComponent<'ObscurePasscode'> = ({
 
   React.useEffect(() => {
     if (authState === 'obscured') {
-      navigation.navigate('Settings');
+      navigation.popTo('Settings');
     }
   }, [navigation, authState]);
 

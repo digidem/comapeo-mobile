@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {HeaderLeftClose} from '../../sharedComponents/HeaderLeftClose';
-import {HeaderBackButtonProps} from '@react-navigation/native-stack/lib/typescript/src/types';
+import {HeaderBackButtonProps} from '@react-navigation/elements';
 import {
   BottomSheetModal,
   useBottomSheetModal,

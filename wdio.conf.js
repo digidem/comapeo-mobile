@@ -61,5 +61,4 @@ const config = {
   ],
   outputDir: './test-results',
 };
-
-module.exports = config;
+exports.config = config;

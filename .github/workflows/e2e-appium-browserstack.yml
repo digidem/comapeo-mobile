@@ -1,18 +1,11 @@
 name: Appium E2E Tests on BrowserStack
 
-# When merged we can change to:
-# on:
-#   pull_request:
-#     branches:
-#       - main
-#       - develop
 on:
-  push:
-    branches:
-      - feat/appium-webdriver-setup
   pull_request:
     branches:
-      - feat/appium-webdriver-setup
+      - main
+      - develop
+    types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:
   group: e2e-tests-${{ github.ref }}

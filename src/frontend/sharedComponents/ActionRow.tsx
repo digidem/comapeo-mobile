@@ -88,21 +88,21 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
 
   const bottomSheetItems = [
     {
-      icon: <AudioIcon width={30} height={30} />,
-      label: t(m.audioButton),
-      onPress: handleAudioPress,
-      testID: 'OBS.add-audio-btn',
-    },
-    {
       icon: <PhotoIcon width={30} height={30} />,
       label: t(m.photoButton),
       onPress: handleCameraPress,
       testID: 'OBS.add-photo-btn',
     },
+    {
+      icon: <AudioIcon width={30} height={30} />,
+      label: t(m.audioButton),
+      onPress: handleAudioPress,
+      testID: 'OBS.add-audio-btn',
+    },
   ];
 
   if (fieldRefs?.length) {
-    bottomSheetItems.push({
+    bottomSheetItems.unshift({
       icon: <DetailsIcon width={30} height={30} />,
       label: t(m.detailsButton),
       onPress: handleDetailsPress,

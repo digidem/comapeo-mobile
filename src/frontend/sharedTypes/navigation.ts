@@ -99,7 +99,6 @@ export type RootStackParamsList = {
   AddRemoteArchive: undefined;
   SuccessfullyAddedArchive: {archiveName: string; url: string};
   RemoteArchiveOn: undefined;
-  Audio: {isEditing: boolean; uri?: string; isSavedUri?: boolean};
   MapManagement: undefined;
   BackgroundMaps: undefined;
   SyncPreviewsBottomSheet: undefined;

@@ -64,7 +64,7 @@ export const AudioAskPermissionBottomSheet = ({
         if (isCancelled) return;
         setPermission(permission);
         if (permission.status === 'granted') {
-          replace('Audio', {isEditing: false});
+          replace('AudioRecording');
         }
       }
     };
@@ -84,7 +84,7 @@ export const AudioAskPermissionBottomSheet = ({
     const response = await Audio.requestPermissionsAsync();
     setPermission(response);
     if (response.granted) {
-      replace('Audio', {isEditing: false});
+      replace('AudioRecording');
       return;
     }
   }

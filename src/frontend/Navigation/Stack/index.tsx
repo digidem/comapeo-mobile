@@ -50,18 +50,15 @@ export function RootStackNavigator({
   return (
     <DrawerNavigationContext.Provider value={navigation}>
       <React.Suspense fallback={<Loading />}>
-        <RootStackNavigatorChild navigation={navigation} />
+        <RootStackNavigatorChild />
       </React.Suspense>
     </DrawerNavigationContext.Provider>
   );
 }
 
-function RootStackNavigatorChild({
-  navigation,
-}: {
-  navigation: DrawerNavigationContextType;
-}) {
+function RootStackNavigatorChild() {
   const {formatMessage} = useIntl();
+  const navigation = useDrawerNavigation();
   const existingObservation = usePersistedDraftObservation(
     store => store.value,
   );

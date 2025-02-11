@@ -85,3 +85,10 @@ ios/*.env*.local
 # Expo
 android/
 ios/
+
+# WebdriverIO and BrowserStack logs
+logs/
+logs/*.log
+logs/*.json
+local.log
+test-results/

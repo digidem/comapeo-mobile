@@ -57,6 +57,7 @@ export const HowToLeaveProject = ({
         <Button
           fullWidth
           variant="outlined"
+          color="ComapeoBlue"
           onPress={() => {
             navigation.goBack();
           }}>

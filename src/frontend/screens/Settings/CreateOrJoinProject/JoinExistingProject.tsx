@@ -38,6 +38,7 @@ export const JoinExistingProject = ({
       <Button
         fullWidth
         variant="outlined"
+        color="ComapeoBlue"
         onPress={() => {
           navigation.goBack();
         }}>

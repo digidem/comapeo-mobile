@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {GestureResponderEvent, StyleSheet, View, ViewStyle} from 'react-native';
 
-import {BLACK, COMAPEO_BLUE, VERY_LIGHT_BLUE} from '../lib/styles';
+import {BLACK, BLUE_GREY, COMAPEO_BLUE, VERY_LIGHT_BLUE} from '../lib/styles';
 import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 
 import {ViewStyleProp} from '../sharedTypes';
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0066FF',
   },
   buttonOutlined: {
-    borderColor: '#EEEEEE',
+    borderColor: BLUE_GREY,
     borderWidth: 1.5,
   },
   touchableMedium: {

@@ -5,7 +5,7 @@ import {Text} from '../../sharedComponents/Text';
 import {useGetOwnRole, useProjectSettings} from '../../hooks/server/projects';
 import {Loading} from '../../sharedComponents/Loading';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
-import {COMAPEO_BLUE, MEDIUM_GREY} from '../../lib/styles';
+import {MEDIUM_GREY} from '../../lib/styles';
 import {Button} from '../../sharedComponents/Button';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
@@ -96,10 +96,9 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
           style={{marginTop: 20}}
           fullWidth
           variant="outlined"
+          color="ComapeoBlue"
           onPress={importConfigFile}>
-          <Text style={{color: COMAPEO_BLUE}}>
-            {formatMessage(m.importConfig)}
-          </Text>
+          {formatMessage(m.importConfig)}
         </Button>
       ) : null}
       <ErrorBottomSheet

@@ -1,0 +1,63 @@
+name: Build Bot
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  check_comment:
+    name: Check PR comment
+    runs-on: ubuntu-latest
+    if: |
+      github.event.issue.pull_request &&
+      contains(github.event.comment.body, vars.BUILD_COMMENT_TRIGGER || '/build-rc')
+    outputs:
+      is_release_pr: ${{ steps.check_base_branch.outputs.is_release_pr }}
+      build_sha: ${{ steps.pr_shas.outputs.build_sha }}
+      pr_head_sha: ${{ steps.pr_shas.outputs.pr_head_sha }}
+      is_admin: ${{ steps.check_admin.outputs.is_admin }}
+    env:
+      GH_REPO: ${{ github.repository }}
+      GH_TOKEN: ${{ github.token }}
+    permissions:
+      pull-requests: read
+      contents: read
+
+    steps:
+      - name: Check PR base branch
+        id: check_base_branch
+        run: |
+          base_branch=$(gh pr view ${{ github.event.issue.number }} -q .baseRefName --json baseRefName)
+          if [[ $base_branch != release/* ]]; then
+            echo "is_release_pr=false" >> $GITHUB_OUTPUT
+          else
+            echo "is_release_pr=true" >> $GITHUB_OUTPUT
+          fi
+      - name: Check if admin
+        id: check_admin
+        run: |
+          if [[ $(gh api /repos/$GH_REPO/collaborators/$GITHUB_ACTOR/permission --jq .permission) == "admin" ]]; then
+            echo "is_admin=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_admin=false" >> $GITHUB_OUTPUT
+          fi
+      - name: Get PR shas
+        id: pr_shas
+        if: ${{ steps.check_admin.outputs.is_admin == 'true' }}
+        run: |
+          PR_NUMBER=${{ github.event.issue.number }}
+          pr_head_sha=$(gh pr view $PR_NUMBER -q .headRefOid --json headRefOid)
+          build_sha=$(gh pr view $PR_NUMBER --json potentialMergeCommit --jq .potentialMergeCommit.oid)
+          echo "build_sha=$build_sha" >> $GITHUB_OUTPUT
+          echo "pr_head_sha=$pr_head_sha" >> $GITHUB_OUTPUT
+
+  build_rc:
+    name: Release Candidate
+    needs: check_comment
+    if: ${{ needs.check_comment.outputs.is_release_pr == 'true' && needs.check_comment.outputs.is_admin == 'true' }}
+    uses: ./.github/workflows/build-rc.yml
+    with:
+      pr_number: ${{ github.event.issue.number }}
+      pr_head_sha: ${{ needs.check_comment.outputs.pr_head_sha }}
+      build_sha: ${{ needs.check_comment.outputs.build_sha }}
+    secrets: inherit

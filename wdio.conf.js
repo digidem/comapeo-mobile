@@ -1,7 +1,7 @@
-/**
- * @type {import('webdriverio').Config}
- */
+// @ts-check
 
+// `capabilities` missing in `Options.Testrunner` type: https://github.com/webdriverio/webdriverio/issues/13769
+/** @type {import('@wdio/types').Options.Testrunner & { capabilities: import('@wdio/types').Capabilities }} */
 const config = {
   runner: 'local',
   user: process.env.BROWSERSTACK_USERNAME,
@@ -61,4 +61,7 @@ const config = {
   ],
   outputDir: './test-results',
 };
-exports.config = config;
+
+module.exports = {
+  config,
+};

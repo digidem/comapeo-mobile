@@ -18,6 +18,7 @@ import PlayArrow from '../images/PlayArrow.svg';
 import {UIActivityIndicator} from 'react-native-indicators';
 import Share from 'react-native-share';
 import * as FileSystem from 'expo-file-system';
+import {useDraftObservation} from '../hooks/useDraftObservation';
 
 const m = defineMessages({
   description: {
@@ -46,6 +47,7 @@ export const AudioPlaybackSaved = ({
   const [localUri, setLocalUri] = React.useState<string | null>(null);
   const [shareLoading, setShareLoading] = React.useState(false);
   const [shareError, setShareError] = React.useState<Error | null>(null);
+  const {deleteAudio} = useDraftObservation();
 
   const handleShare = React.useCallback(async () => {
     setShareLoading(true);
@@ -87,6 +89,11 @@ export const AudioPlaybackSaved = ({
     };
   }, [localUri]);
 
+  function onPressDelete() {
+    deleteAudio(uri, true);
+    navigation.popTo('ObservationEdit');
+  }
+
   return (
     <>
       <ScreenContentWithDock
@@ -105,7 +112,7 @@ export const AudioPlaybackSaved = ({
                 <Pressable
                   onPress={() =>
                     navigation.navigate('DeleteAudioBottomSheet', {
-                      screenToPopToAfterDelete: 'ObservationEdit',
+                      onPressDelete,
                       uri,
                     })
                   }>

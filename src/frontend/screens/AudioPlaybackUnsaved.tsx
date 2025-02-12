@@ -22,6 +22,7 @@ import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import PlayArrow from '../images/PlayArrow.svg';
 import {useFocusEffect} from '@react-navigation/native';
+import {useDraftObservation} from '../hooks/useDraftObservation';
 
 const m = defineMessages({
   description: {
@@ -46,6 +47,8 @@ export const AudioPlaybackUnsaved = ({
     clearError,
   } = useAudioPlayback(uri);
 
+  const {deleteAudio} = useDraftObservation();
+
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = () => {
@@ -66,6 +69,11 @@ export const AudioPlaybackUnsaved = ({
 
   const progress = currentPosition / duration;
 
+  function onPressDelete() {
+    deleteAudio(uri, true);
+    navigation.popTo('ObservationCreate');
+  }
+
   return (
     <>
       <ScreenContentWithDock
@@ -83,7 +91,7 @@ export const AudioPlaybackUnsaved = ({
               <Pressable
                 onPress={() =>
                   navigation.navigate('DeleteAudioBottomSheet', {
-                    screenToPopToAfterDelete: 'ObservationCreate',
+                    onPressDelete,
                     uri,
                   })
                 }>

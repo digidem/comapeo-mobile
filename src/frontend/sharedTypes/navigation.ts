@@ -110,7 +110,7 @@ export type RootStackParamsList = {
   AudioPlaybackUnsavedReview: {uri: string; duration: number};
   AudioPlaybackUnsavedPreview: {uri: string};
   DeleteAudioBottomSheet: {
-    screenToPopToAfterDelete: 'ObservationCreate' | 'ObservationEdit';
+    onPressDelete: () => void;
     uri: string;
   };
   AudioSavedBottomSheet: undefined;

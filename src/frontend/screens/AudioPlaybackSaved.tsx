@@ -67,7 +67,13 @@ export const AudioPlaybackSaved = ({
 
       await Share.open({url: fileUri, failOnCancel: false});
     } catch (err) {
-      setShareError(err as Error);
+      if (err instanceof Error) {
+        setShareError(err);
+      } else {
+        setShareError(
+          new Error('Unable to share audio file with no error thrown'),
+        );
+      }
     } finally {
       setShareLoading(false);
     }

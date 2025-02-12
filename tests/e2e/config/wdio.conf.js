@@ -2,12 +2,14 @@
  * @type {import('webdriverio').Config}
  */
 
+const path = require('path');
+
 const config = {
   runner: 'local',
   user: process.env.BROWSERSTACK_USERNAME,
   key: process.env.BROWSERSTACK_ACCESS_KEY,
   hostname: 'hub.browserstack.com',
-  specs: ['./tests/e2e/**/*.ts'],
+  specs: [path.resolve(__dirname, '../specs/**/*.test.ts')],
   maxInstances: 1,
   services: [
     [

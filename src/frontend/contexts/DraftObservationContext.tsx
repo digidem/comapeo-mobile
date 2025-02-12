@@ -115,7 +115,7 @@ type ObservationValueWithPreset = Exclude<ObservationValue, 'presetRef'> & {
   presetRef?: Preset;
 };
 
-export type DraftStatePopulated = {
+type DraftStatePopulated = {
   value: ObservationValueWithPreset;
   id: {docId: string; versionId: string} | null;
   unsavedAttachments: Map<number, UnsavedAttachment>;
@@ -124,7 +124,7 @@ export type DraftStatePopulated = {
   initialPosition: Position | null;
 };
 
-export type DraftState = DraftStateEmpty | DraftStatePopulated;
+type DraftState = DraftStateEmpty | DraftStatePopulated;
 
 const ORIGINAL_COMPRESSION = 0.75;
 const THUMBNAIL_SIZE = 400;

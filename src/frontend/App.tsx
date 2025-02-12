@@ -17,6 +17,7 @@ import {useOnBackgroundedAndForegrounded} from './hooks/useOnBackgroundedAndFore
 import {getSentryUserId} from './metrics/getSentryUserId';
 import {AppDiagnosticMetrics} from './metrics/AppDiagnosticMetrics';
 import {DeviceDiagnosticMetrics} from './metrics/DeviceDiagnosticMetrics';
+import {createDraftObservationStore} from './contexts/DraftObservationContext';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -78,6 +79,10 @@ TaskManager.defineTask(
   },
 );
 
+const persistedDrafObservationStore = createDraftObservationStore({
+  persist: true,
+});
+
 const App = () => {
   const [permissionsAsked, setPermissionsAsked] = React.useState(false);
   React.useEffect(() => {
@@ -96,7 +101,8 @@ const App = () => {
       localDiscoveryController={localDiscoveryController}
       mapeoApi={mapeoApi}
       appMetrics={appDiagnosticMetrics}
-      deviceMetrics={deviceDiagnosticMetrics}>
+      deviceMetrics={deviceDiagnosticMetrics}
+      persistedDrafObservationStore={persistedDrafObservationStore}>
       <AppNavigator permissionAsked={permissionsAsked} />
     </AppProviders>
   );

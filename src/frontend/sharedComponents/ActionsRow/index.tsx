@@ -1,8 +1,7 @@
 import React from 'react';
-import {Keyboard} from 'react-native';
+import {Keyboard, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Divider} from '../Divider';
 import {KeyboardAccessory} from './KeyboardAccessory';
-import {Actions} from './Actions';
 import {useKeyboardListener} from '../../hooks/useKeyboardListener';
 import {defineMessages, useIntl} from 'react-intl';
 import {Audio} from 'expo-av';
@@ -11,6 +10,8 @@ import PhotoIcon from '../../images/observationEdit/Photo.svg';
 import AudioIcon from '../../images/observationEdit/Audio.svg';
 import DetailsIcon from '../../images/observationEdit/Details.svg';
 import {Preset} from '@comapeo/schema';
+import {HeaderText} from '../Text/HeaderText';
+import {CustomCircleIcon} from './CustomCircleIcon';
 
 const m = defineMessages({
   audioButton: {
@@ -79,7 +80,21 @@ export function ActionsRow({fieldRefs}: {fieldRefs?: Preset['fieldRefs']}) {
     <>
       <Divider />
       {!keyboardVisible ? (
-        <Actions items={bottomSheetItems} />
+        <View style={[styles.container, styles.containerPadding]}>
+          {bottomSheetItems.map(item => (
+            <TouchableOpacity
+              onPress={item.onPress}
+              style={styles.itemContainer}
+              testID={item.testID}>
+              <View style={styles.itemIcon}>
+                <CustomCircleIcon icon={item.icon} />
+              </View>
+              <HeaderText variant="header6" numberOfLines={1}>
+                {item.label}
+              </HeaderText>
+            </TouchableOpacity>
+          ))}
+        </View>
       ) : (
         <KeyboardAccessory
           items={bottomSheetItems}
@@ -89,3 +104,23 @@ export function ActionsRow({fieldRefs}: {fieldRefs?: Preset['fieldRefs']}) {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    flexDirection: 'row',
+  },
+  containerPadding: {
+    paddingHorizontal: 20,
+    paddingVertical: 18,
+  },
+  itemContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  itemIcon: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

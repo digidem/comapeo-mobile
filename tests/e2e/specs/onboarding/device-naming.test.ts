@@ -11,8 +11,6 @@ describe('Device Naming Test', () => {
     const deviceNameInput = await $(byResourceId('ONBOARDING.device-name-inp'));
     const addNameButton = await $(byResourceId('ONBOARDING.add-name-btn'));
 
-    await deviceNameInput.waitForDisplayed();
-    await addNameButton.waitForDisplayed();
     await addNameButton.click();
 
     const successMessage = await $(byTextMatches('.*Success.*'));
@@ -21,7 +19,6 @@ describe('Device Naming Test', () => {
     await deviceNameInput.setValue(output.names.device);
     await addNameButton.click();
 
-    await successMessage.waitForDisplayed();
     await expect(successMessage).toBeDisplayed();
 
     const addedDeviceName = await $(byText(output.names.device));

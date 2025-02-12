@@ -55,6 +55,9 @@ export const AudioAskPermissionBottomSheet = ({
     route.params.audioPermission,
   );
 
+  // When the user changes their permission in phone settings and returns to the app,
+  // we need to check for updates and navigate accordingly.
+  // Without this, the app won't detect the permission change.
   React.useEffect(() => {
     let isCancelled = false;
     const handleAppStateChange = async (nextAppState: AppStateStatus) => {

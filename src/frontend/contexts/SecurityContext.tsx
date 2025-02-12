@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {AppState, AppStateStatus} from 'react-native';
 import {usePersistedPasscode} from '../hooks/persistedState/usePersistedPasscode';
+import {useIsShareDialogOpen} from '../hooks/share';
 
 type AuthState = 'unauthenticated' | 'authenticated' | 'obscured';
 
@@ -35,6 +36,8 @@ export const SecurityProvider = ({children}: {children: React.ReactNode}) => {
     passcode === null ? 'authenticated' : 'unauthenticated',
   );
 
+  const shareDialogIsOpen = useIsShareDialogOpen();
+
   const passcodeSet = passcode !== null;
   const obscureSet = obscureCode !== null;
 
@@ -42,6 +45,9 @@ export const SecurityProvider = ({children}: {children: React.ReactNode}) => {
     const appStateListener = AppState.addEventListener(
       'change',
       (nextAppState: AppStateStatus) => {
+        // If the app state changes due to opening a share dialog, do not unauthenticate
+        if (shareDialogIsOpen) return;
+
         if (passcodeSet) {
           if (
             nextAppState === 'active' ||
@@ -55,7 +61,7 @@ export const SecurityProvider = ({children}: {children: React.ReactNode}) => {
     );
 
     return () => appStateListener.remove();
-  }, [passcodeSet]);
+  }, [passcodeSet, shareDialogIsOpen]);
 
   const authenticate: SecurityContextType['authenticate'] = React.useCallback(
     (passcodeValue, validateOnly = false) => {

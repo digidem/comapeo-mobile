@@ -37,7 +37,7 @@ export const Security: NativeNavigationComponent<'Security'> = ({
 
   React.useEffect(() => {
     if (authState === 'obscured') {
-      navigation.navigate('Settings');
+      navigation.popTo('Settings');
     }
   }, [navigation, authState]);
 

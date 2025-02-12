@@ -85,7 +85,7 @@ export const RemoteArchiveOn: NativeNavigationComponent<'RemoteArchiveOn'> = ({
   const currentRemoteArchive = !remoteArchive ? undefined : remoteArchive[0];
 
   const handleGoBack = React.useCallback(() => {
-    navigation.navigate('ProjectSettings');
+    navigation.popTo('ProjectSettings');
   }, [navigation]);
 
   React.useLayoutEffect(() => {

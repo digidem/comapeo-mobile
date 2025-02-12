@@ -35,7 +35,7 @@ export const LanguageSettings: NativeNavigationComponent<
         options={options}
         onChange={selectedLocale => {
           setLocale(selectedLocale);
-          navigation.navigate('AppSettings');
+          navigation.popTo('AppSettings');
         }}
       />
     </ScrollView>

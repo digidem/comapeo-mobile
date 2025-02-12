@@ -1,13 +1,13 @@
 import * as React from 'react';
-import {BottomSheetWrapper} from '../sharedComponents/BottomSheetWrapper';
+import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import ErrorIcon from '../images/Error.svg';
-import {HeaderText} from '../sharedComponents/Text/HeaderText';
-import {BodyText} from '../sharedComponents/Text/BodyText';
-import {Button} from '../sharedComponents/Button';
-import {NativeRootNavigationProps} from '../sharedTypes/navigation';
-import {RED} from '../lib/styles';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {Button} from '../../sharedComponents/Button';
+import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
+import {RED} from '../../lib/styles';
 
 const m = defineMessages({
   title: {

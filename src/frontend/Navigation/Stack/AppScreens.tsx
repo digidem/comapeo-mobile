@@ -90,16 +90,16 @@ import {
 } from '../../screens/Settings/MapManagement/BackgroundMaps.tsx';
 import {SyncPreviewsBottomSheet} from '../../screens/Settings/ProjectSettings/MediaSyncSettings/SyncPreviewsBottomSheet.tsx';
 import {SyncEverythingBottomSheet} from '../../screens/Settings/ProjectSettings/MediaSyncSettings/SyncEverythingBottomSheet.tsx';
-import {AudioAskPermissionBottomSheet} from '../../screens/AudioAskPermissionBottomSheet.tsx';
-import {AudioRecording} from '../../screens/AudioRecording/index.tsx';
-import {AudioPlaybackUnsaved} from '../../screens/AudioPlaybackUnsaved.tsx';
+import {AudioAskPermissionBottomSheet} from '../../screens/Audio/AudioAskPermissionBottomSheet.tsx';
+import {AudioRecording} from '../../screens/Audio/AudioRecording/index.tsx';
+import {AudioPlaybackUnsaved} from '../../screens/Audio/AudioPlaybackUnsaved.tsx';
 import {UnsavedAudio} from '../../sharedTypes/audio.ts';
 import {HeaderBackButton} from '@react-navigation/elements';
 import {CloseIcon} from '../../sharedComponents/icons/index.tsx';
-import {sharedAudioNavOptions} from '../../sharedComponents/AudioStyles';
-import {DeleteAudioBottomSheet} from '../../screens/DeleteAudioBottomSheet.tsx';
-import {AudioSavedBottomSheet} from '../../screens/AudioSavedBottomSheet.tsx';
-import {AudioPlaybackSaved} from '../../screens/AudioPlaybackSaved.tsx';
+import {sharedAudioNavOptions} from '../../screens/Audio/shared';
+import {DeleteAudioBottomSheet} from '../../screens/Audio/DeleteAudioBottomSheet.tsx';
+import {AudioSavedBottomSheet} from '../../screens/Audio/AudioSavedBottomSheet.tsx';
+import {AudioPlaybackSaved} from '../../screens/Audio/AudioPlaybackSaved.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 

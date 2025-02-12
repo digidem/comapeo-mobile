@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
 import {BackHandler} from 'react-native';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
 
 export function usePreventBackButtonWhileRecording({
   shouldPrevent,

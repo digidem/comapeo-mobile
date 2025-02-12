@@ -6,7 +6,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {MAX_RECORDING_DURATION_MS} from '../../sharedComponents/AudioStyles';
+import {MAX_RECORDING_DURATION_MS} from '../shared';
 
 export function AnimatedBackground({timeElapsed}: {timeElapsed: number}) {
   const {top} = useSafeAreaInsets();

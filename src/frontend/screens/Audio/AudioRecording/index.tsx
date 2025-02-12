@@ -2,17 +2,17 @@ import React from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Duration} from 'luxon';
 
-import {BLACK, MAGENTA, MEDIUM_GREY, WHITE} from '../../lib/styles';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
-import {Text} from '../../sharedComponents/Text';
+import {BLACK, MAGENTA, MEDIUM_GREY, WHITE} from '../../../lib/styles';
+import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
+import {Text} from '../../../sharedComponents/Text';
 import {AnimatedBackground} from './AnimatedBackground';
 import {useAudioRecording} from './useAudioRecording';
 import {usePreventBackButtonWhileRecording} from './usePreventBackButtonWhileRecording';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {defineMessages, useIntl} from 'react-intl';
-import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {AudioStyles} from '../../sharedComponents/AudioStyles';
-import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
+import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
+import {AudioStyles} from '../shared';
+import {ErrorBottomSheet} from '../../../sharedComponents/ErrorBottomSheet';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 // 5 minutes

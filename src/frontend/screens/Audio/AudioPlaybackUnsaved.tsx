@@ -1,10 +1,7 @@
 import * as React from 'react';
-import {
-  AudioStyles,
-  SIDE_ICON_BUTTON_WIDTH,
-} from '../sharedComponents/AudioStyles';
-import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
-import {useAudioPlayback} from '../hooks/useAudioPlayback';
+import {AudioStyles, SIDE_ICON_BUTTON_WIDTH} from './shared';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {useAudioPlayback} from '../../hooks/useAudioPlayback';
 import {Duration} from 'luxon';
 import {
   View,
@@ -14,15 +11,15 @@ import {
   BackHandler,
 } from 'react-native';
 import {Bar} from 'react-native-progress';
-import {WHITE, MEDIUM_GREY} from '../lib/styles';
-import {ErrorBottomSheet} from '../sharedComponents/ErrorBottomSheet';
+import {WHITE, MEDIUM_GREY} from '../../lib/styles';
+import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {defineMessages, useIntl} from 'react-intl';
-import {HeaderText} from '../sharedComponents/Text/HeaderText';
-import {NativeRootNavigationProps} from '../sharedTypes/navigation';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import PlayArrow from '../images/PlayArrow.svg';
 import {useFocusEffect} from '@react-navigation/native';
-import {useDraftObservation} from '../hooks/useDraftObservation';
+import {useDraftObservation} from '../../hooks/useDraftObservation';
 
 const m = defineMessages({
   description: {

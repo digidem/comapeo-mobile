@@ -85,6 +85,7 @@ export function ActionsRow({fieldRefs}: {fieldRefs?: Preset['fieldRefs']}) {
             <TouchableOpacity
               onPress={item.onPress}
               style={styles.itemContainer}
+              key={item.testID}
               testID={item.testID}>
               <View style={styles.itemIcon}>
                 <CustomCircleIcon icon={item.icon} />

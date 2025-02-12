@@ -26,10 +26,8 @@ import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {MetricsProvider} from './MetricsContext';
 import {AppDiagnosticMetrics} from '../metrics/AppDiagnosticMetrics';
 import {DeviceDiagnosticMetrics} from '../metrics/DeviceDiagnosticMetrics';
-import {
-  DraftObservationProvider,
-  DraftObservationStore,
-} from './DraftObservationContext';
+import {DraftObservationProvider} from './DraftObservationContext';
+import {DraftObservationStore} from './PersistedStores/DraftObservationStore';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -69,7 +67,9 @@ export const AppProviders = ({
                           <BottomSheetModalProvider>
                             <PhotoPromiseProvider>
                               <DraftObservationProvider
-                                value={persistedDrafObservationStore}>
+                                draftObservationStore={
+                                  persistedDrafObservationStore
+                                }>
                                 <SecurityProvider>{children}</SecurityProvider>
                               </DraftObservationProvider>
                             </PhotoPromiseProvider>

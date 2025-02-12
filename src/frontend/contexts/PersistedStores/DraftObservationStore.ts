@@ -19,6 +19,30 @@ export type DraftObservationStore = ReturnType<
 
 export type DraftState = DraftStateEmpty | DraftStatePopulated;
 
+export function convertPosition(
+  location: LocationObject | ManualPosition,
+): Position {
+  const {coords} = location;
+  return {
+    coords: {
+      latitude: coords.latitude,
+      longitude: coords.longitude,
+      // @ts-expect-error - too much work to fix this, not a runtime issue
+      accuracy: coords.accuracy ?? undefined,
+      // @ts-expect-error - too much work to fix this, not a runtime issue
+      altitude: coords.altitude ?? undefined,
+      // @ts-expect-error - too much work to fix this, not a runtime issue
+      heading: coords.heading ?? undefined,
+      // @ts-expect-error - too much work to fix this, not a runtime issue
+      speed: coords.speed ?? undefined,
+    },
+    timestamp:
+      'timestamp' in location
+        ? new Date(location.timestamp).toISOString()
+        : new Date().toISOString(),
+  };
+}
+
 export function createDraftObservationStore({persist}: {persist: boolean}) {
   let nextAttachmentId = 0;
   let instance: StoreApi<DraftState>;
@@ -482,30 +506,6 @@ function getPhotoRotation(acc?: AccelerometerMeasurement) {
     else rotation = 90;
   }
   return rotation;
-}
-
-export function convertPosition(
-  location: LocationObject | ManualPosition,
-): Position {
-  const {coords} = location;
-  return {
-    coords: {
-      latitude: coords.latitude,
-      longitude: coords.longitude,
-      // @ts-expect-error - too much work to fix this, not a runtime issue
-      accuracy: coords.accuracy ?? undefined,
-      // @ts-expect-error - too much work to fix this, not a runtime issue
-      altitude: coords.altitude ?? undefined,
-      // @ts-expect-error - too much work to fix this, not a runtime issue
-      heading: coords.heading ?? undefined,
-      // @ts-expect-error - too much work to fix this, not a runtime issue
-      speed: coords.speed ?? undefined,
-    },
-    timestamp:
-      'timestamp' in location
-        ? new Date(location.timestamp).toISOString()
-        : new Date().toISOString(),
-  };
 }
 
 // TODO: Move this to @mapeo/schema - the current version is not flexible enough

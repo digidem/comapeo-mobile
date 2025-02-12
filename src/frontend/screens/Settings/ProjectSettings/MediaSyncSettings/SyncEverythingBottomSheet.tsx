@@ -46,6 +46,7 @@ export const SyncEverythingBottomSheet = () => {
         <Button
           fullWidth
           variant="outlined"
+          color="ComapeoBlue"
           style={{marginTop: 30}}
           onPress={() => goBack()}>
           {formatMessage(m.cancel)}

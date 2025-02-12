@@ -81,7 +81,11 @@ export const ProjectCreated = ({
         </Text>
       </View>
       <View style={{width: '100%'}}>
-        <Button fullWidth variant="outlined" onPress={handleGoToInviteScreen}>
+        <Button
+          fullWidth
+          variant="outlined"
+          color="ComapeoBlue"
+          onPress={handleGoToInviteScreen}>
           {t(m.inviteDevice)}
         </Button>
         <Button style={{marginTop: 20}} fullWidth onPress={handleGoToMap}>

@@ -77,7 +77,7 @@ export const DataPrivacy = ({
         <Button
           fullWidth
           variant="outlined"
-          color="dark"
+          color="ComapeoBlue"
           onPress={() => {
             navigation.navigate('OnboardingPrivacyPolicy');
           }}

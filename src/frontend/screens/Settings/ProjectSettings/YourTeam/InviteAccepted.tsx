@@ -60,6 +60,7 @@ export const InviteAccepted = ({
         <Button
           fullWidth
           variant="outlined"
+          color="ComapeoBlue"
           onPress={() => {
             navigation.popTo('SelectDevice');
           }}>

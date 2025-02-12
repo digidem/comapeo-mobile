@@ -1,14 +1,16 @@
 import React from 'react';
+import {Keyboard} from 'react-native';
+import {Divider} from '../Divider';
+import {KeyboardAccessory} from './KeyboardAccessory';
+import {Actions} from './Actions';
+import {useKeyboardListener} from '../../hooks/useKeyboardListener';
 import {defineMessages, useIntl} from 'react-intl';
-import {ActionTab} from './ActionTab';
-import PhotoIcon from '../images/observationEdit/Photo.svg';
-import AudioIcon from '../images/observationEdit/Audio.svg';
-import DetailsIcon from '../images/observationEdit/Details.svg';
-import {useNavigation} from '@react-navigation/native';
-import {Preset} from '@comapeo/schema';
 import {Audio} from 'expo-av';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {AppStackParamsList} from '../sharedTypes/navigation';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import PhotoIcon from '../../images/observationEdit/Photo.svg';
+import AudioIcon from '../../images/observationEdit/Audio.svg';
+import DetailsIcon from '../../images/observationEdit/Details.svg';
+import {Preset} from '@comapeo/schema';
 
 const m = defineMessages({
   audioButton: {
@@ -28,17 +30,10 @@ const m = defineMessages({
   },
 });
 
-type ObservationCreateNavigationProp = NativeStackNavigationProp<
-  AppStackParamsList,
-  'ObservationCreate'
->;
-
-interface ActionButtonsProps {
-  fieldRefs?: Preset['fieldRefs'];
-}
-export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
+export function ActionsRow({fieldRefs}: {fieldRefs?: Preset['fieldRefs']}) {
+  const {keyboardVisible} = useKeyboardListener();
   const {formatMessage: t} = useIntl();
-  const navigation = useNavigation<ObservationCreateNavigationProp>();
+  const navigation = useNavigationFromRoot();
   const [audioPermission] = Audio.usePermissions();
 
   const handleCameraPress = () => {
@@ -82,7 +77,15 @@ export const ActionsRow = ({fieldRefs}: ActionButtonsProps) => {
 
   return (
     <>
-      <ActionTab items={bottomSheetItems} />
+      <Divider />
+      {!keyboardVisible ? (
+        <Actions items={bottomSheetItems} />
+      ) : (
+        <KeyboardAccessory
+          items={bottomSheetItems}
+          onPress={() => Keyboard.dismiss()}
+        />
+      )}
     </>
   );
-};
+}

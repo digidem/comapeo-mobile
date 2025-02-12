@@ -50,6 +50,7 @@ export const AudioThumbnail: FC<AudioThumbnailProps> = ({
     setLoading(false);
     navigation.navigate('AudioPlaybackSaved', {
       uri,
+      // this should be derived from the parent component and not be reliant on navigation context. TO DO when observations is refactored
       canDelete: currentRoute?.name === 'ObservationEdit',
     });
   };

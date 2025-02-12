@@ -872,34 +872,34 @@
     "message": "Sincronizar tudo"
   },
   "screens.MediaSyncSettings.syncEverythingButtonBottomSheet": {
-    "message": "Sincronizar tudo?"
+    "message": "Sync Everything?"
   },
   "screens.MediaSyncSettings.syncEverythingDescription": {
     "message": "Seu dispositivo irá sincronizar <bold>todos os conteúdos</bold>, incluindo fotos, áudio e vídeos."
   },
   "screens.MediaSyncSettings.syncEverythingDescriptionBottomSheet": {
-    "message": "Você está prestes a sincronizar todas as informações. Isso pode aumentar o espaço ocupado na memória do seu dispositivo."
+    "message": "You are about to sync everything. This may increase the disk space used on your device."
   },
   "screens.MediaSyncSettings.syncEverythingWarning": {
     "message": "Nota: Isso usará mais armazenamento do seu dispositivo."
   },
   "screens.MediaSyncSettings.syncPreviewWarningBottomSheet": {
-    "message": "Você não sincronizará mais áudios ou vídeos."
+    "message": "You will no longer sync Audio or Video."
   },
   "screens.MediaSyncSettings.syncPreviews": {
     "message": "Pré-visualizações de Sincronização (Apenas Fotos)"
   },
   "screens.MediaSyncSettings.syncPreviewsBottomSheetConfirm": {
-    "message": "Pré-visualizações de Sincronização"
+    "message": "Sync Previews"
   },
   "screens.MediaSyncSettings.syncPreviewsButtonBottomSheet": {
-    "message": "Pré-visualizações de Sincronização?"
+    "message": "Sync Previews?"
   },
   "screens.MediaSyncSettings.syncPreviewsDescription": {
     "message": "Fotos serão sincronizadas em um tamanho menor. Dispositivo <bold>não</bold> sincronizará áudio ou vídeo."
   },
   "screens.MediaSyncSettings.syncPreviewsDescriptionBottomSheet": {
-    "message": "Seu dispositivo manterá todos os dados já existentes, mas as novas observações serão sincronizadas em uma visualização menor."
+    "message": "Your device will keep all existing data but new observations will sync in a smaller, preview size."
   },
   "screens.MediaSyncSettings.title": {
     "message": "Configurações de Sincronização"

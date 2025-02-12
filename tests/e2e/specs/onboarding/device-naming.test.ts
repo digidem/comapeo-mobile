@@ -1,7 +1,7 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import OnboardingPage from '../../pageObjects/onboarding.page';
-import {byResourceId, byText} from '../../utils/selectors';
+import {byResourceId, byTextMatches} from '../../utils/selectors';
 
 describe('Device Naming Test', () => {
   it('should input a device name and verify success message', async () => {
@@ -14,7 +14,7 @@ describe('Device Naming Test', () => {
     await addNameButton.waitForDisplayed();
     await addNameButton.click();
 
-    const successMessage = await $(byText('Success'));
+    const successMessage = await $(byTextMatches('.*Success.*'));
     await expect(successMessage).not.toBeDisplayed();
 
     await deviceNameInput.setValue('Test Device');

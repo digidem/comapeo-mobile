@@ -93,13 +93,11 @@ import {SyncEverythingBottomSheet} from '../../screens/Settings/ProjectSettings/
 import {AudioAskPermissionBottomSheet} from '../../screens/Audio/AudioAskPermissionBottomSheet.tsx';
 import {AudioRecording} from '../../screens/Audio/AudioRecording/index.tsx';
 import {AudioPlaybackUnsaved} from '../../screens/Audio/AudioPlaybackUnsaved.tsx';
-import {UnsavedAudio} from '../../sharedTypes/audio.ts';
-import {HeaderBackButton} from '@react-navigation/elements';
-import {CloseIcon} from '../../sharedComponents/icons/index.tsx';
 import {sharedAudioNavOptions} from '../../screens/Audio/shared';
 import {DeleteAudioBottomSheet} from '../../screens/Audio/DeleteAudioBottomSheet.tsx';
 import {AudioSavedBottomSheet} from '../../screens/Audio/AudioSavedBottomSheet.tsx';
 import {AudioPlaybackSaved} from '../../screens/Audio/AudioPlaybackSaved.tsx';
+import {AudioCustomHeaderLeft} from '../../screens/Audio/AudioCustomHeaderLeft.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -107,10 +105,8 @@ export const TAB_BAR_HEIGHT = 70;
 // that returns a react element)
 export const createDefaultScreenGroup = ({
   intl,
-  addAudio,
 }: {
   intl: (title: MessageDescriptor) => string;
-  addAudio: (audio: UnsavedAudio) => void;
 }) => (
   <>
     <RootStack.Group screenOptions={{presentation: 'card'}} key="default">
@@ -401,24 +397,14 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="AudioPlaybackUnsavedReview"
         component={AudioPlaybackUnsaved}
-        options={({route, navigation}) => ({
+        options={({route}) => ({
           ...sharedAudioNavOptions,
           headerLeft: props => {
             return (
-              <HeaderBackButton
+              <AudioCustomHeaderLeft
                 {...props}
-                onPress={() => {
-                  const audioRecording = {
-                    uri: route.params.uri,
-                    duration: route.params.duration,
-                    createdAt: Date.now(),
-                  };
-                  addAudio(audioRecording);
-                  navigation.replace('AudioSavedBottomSheet');
-                }}
-                backImage={backImageProps => (
-                  <CloseIcon color={backImageProps.tintColor} />
-                )}
+                duration={route.params.duration}
+                uri={route.params.uri}
               />
             );
           },

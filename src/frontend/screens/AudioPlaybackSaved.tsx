@@ -54,7 +54,8 @@ export const AudioPlaybackSaved = ({
 
       if (!fileUri) {
         const tempFileName = `audio_${Date.now()}.m4a`;
-        const localFilePath = `${FileSystem.cacheDirectory}${tempFileName}`;
+        const localFilePath = new URL(tempFileName, FileSystem.cacheDirectory!)
+          .pathname;
         const {uri: downloadedUri} = await FileSystem.downloadAsync(
           uri,
           localFilePath,

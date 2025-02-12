@@ -16,10 +16,10 @@ import {
 import {CloseIcon, DeleteIcon} from '../../sharedComponents/icons';
 import {WHITE, BLACK} from '../../lib/styles';
 import ErrorIcon from '../../images/Error.svg';
-import Share from 'react-native-share';
 import * as FileSystem from 'expo-file-system';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
+import {useOpenShareDialog} from '../../hooks/share';
 
 const m = defineMessages({
   deleteBottomSheetTitle: {
@@ -63,6 +63,8 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
   const [localUri, setLocalUri] = useState<string | null>(null);
   const [shareLoading, setShareLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+
+  const openShare = useOpenShareDialog();
 
   const handleBackPress = useCallback(() => {
     navigation.goBack();
@@ -108,13 +110,13 @@ export const ExistingRecording: React.FC<ExistingRecordingProps> = ({
         fileUri = uri;
       }
 
-      await Share.open({url: fileUri, failOnCancel: false});
+      await openShare.mutateAsync({url: fileUri, failOnCancel: false});
     } catch (err) {
       setError(err as Error);
     } finally {
       setShareLoading(false);
     }
-  }, [uri, isSavedUri, localUri]);
+  }, [uri, isSavedUri, localUri, openShare]);
 
   useEffect(() => {
     return () => {

@@ -1,17 +1,18 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {
-  Camera,
   CameraCapturedPicture,
   CameraPictureOptions,
-  CameraType,
+  CameraView as ExpoCameraView,
+  useCameraPermissions,
 } from 'expo-camera';
+import ImageResizer from '@bam.tech/react-native-image-resizer';
 import {Accelerometer, AccelerometerMeasurement} from 'expo-sensors';
 
 import {AddButton} from './AddButton';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import {Subscription} from 'expo-sensors/build/DeviceSensor';
-import {PhotoMetadata} from '../hooks/persistedState/usePersistedDraftObservationNew';
+import {PhotoPromiseWithMetadata} from '../contexts/PhotoPromiseContext/types';
 import {useLocation} from '../hooks/useLocation';
 
 const m = defineMessages({
@@ -25,26 +26,25 @@ const m = defineMessages({
   },
 });
 
-function createCameraPictureOptions(): CameraPictureOptions {
-  return {
-    base64: false,
-    exif: true,
-    skipProcessing: true,
-  };
-}
+const CAPTURE_QUALITY = 75;
+
+const captureOptions: CameraPictureOptions = {
+  base64: false,
+  exif: true,
+  skipProcessing: true,
+};
 
 type Props = {
-  onAddPress: (
-    capturePromise: Promise<CameraCapturedPicture>,
-    metadata: PhotoMetadata,
-  ) => void;
+  // Called when the user takes a picture.
+  onAddPress: (capture: PhotoPromiseWithMetadata) => void;
 };
 
 export const CameraView = ({onAddPress}: Props) => {
+  const [capturing, setCapturing] = React.useState(false);
   const [cameraReady, setCameraReady] = React.useState(false);
-  const ref = React.useRef<Camera>(null);
+  const ref = React.useRef<ExpoCameraView>(null);
   const accelerometerMeasurement = React.useRef<AccelerometerMeasurement>();
-  const [permissionsResponse] = Camera.useCameraPermissions();
+  const [permissionsResponse] = useCameraPermissions();
   const {location} = useLocation({maxDistanceInterval: 0});
 
   React.useEffect(() => {
@@ -75,14 +75,32 @@ export const CameraView = ({onAddPress}: Props) => {
       throw new Error('Camera Not Ready');
     }
 
-    onAddPress(ref.current.takePictureAsync(createCameraPictureOptions()), {
-      accelerometer: accelerometerMeasurement.current,
-      location,
-      timestamp: Date.now(),
-    });
-  }, [onAddPress, location]);
+    // if there is a double click of the button => ignore
+    if (capturing) {
+      return;
+    }
 
-  const disableButton = !cameraReady;
+    setCapturing(true);
+
+    ref.current
+      .takePictureAsync(captureOptions)
+      .then(pic => {
+        if (!pic) return;
+        onAddPress({
+          capturePromise: rotatePhoto(pic, accelerometerMeasurement.current),
+          mediaMetadata: {location, timestamp: Date.now()},
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        setCapturing(false);
+      })
+      .finally(() => {
+        setCapturing(false);
+      });
+  }, [capturing, setCapturing, onAddPress, location]);
+
+  const disableButton = capturing || !cameraReady;
   const permissionGranted = permissionsResponse?.status === 'granted';
 
   return (
@@ -94,14 +112,14 @@ export const CameraView = ({onAddPress}: Props) => {
           </Text>
         </View>
       ) : (
-        <Camera
+        <ExpoCameraView
           ref={ref}
           onCameraReady={() => {
             setCameraReady(true);
           }}
           style={{flex: 1}}
-          type={CameraType.back}
-          useCamera2Api={false}
+          facing="back"
+          animateShutter={false}
         />
       )}
 
@@ -114,6 +132,53 @@ export const CameraView = ({onAddPress}: Props) => {
     </View>
   );
 };
+
+function rotatePhoto(
+  {uri, width, height}: CameraCapturedPicture,
+  acc?: AccelerometerMeasurement,
+) {
+  const resizePromise = ImageResizer.createResizedImage(
+    uri,
+    width,
+    height,
+    'JPEG',
+    CAPTURE_QUALITY,
+    getPhotoRotation(acc),
+  ).then(resized => {
+    return {uri: resized.uri};
+  });
+
+  return resizePromise;
+}
+
+const ACC_AT_45_DEG = Math.sin(Math.PI / 4);
+
+function getPhotoRotation(acc?: AccelerometerMeasurement) {
+  if (!acc) return 0;
+  const {x, y, z} = acc;
+  let rotation = 0;
+  if (z < -ACC_AT_45_DEG || z > ACC_AT_45_DEG) {
+    // camera is pointing up or down
+    if (Math.abs(y) > Math.abs(x)) {
+      // camera is vertical
+      if (y <= 0) rotation = 180;
+      else rotation = 0;
+    } else {
+      // camera is horizontal
+      if (x >= 0) rotation = -90;
+      else rotation = 90;
+    }
+  } else if (x > -ACC_AT_45_DEG && x < ACC_AT_45_DEG) {
+    // camera is vertical
+    if (y <= 0) rotation = 180;
+    else rotation = 0;
+  } else {
+    // camera is horizontal
+    if (x >= 0) rotation = -90;
+    else rotation = 90;
+  }
+  return rotation;
+}
 
 const styles = StyleSheet.create({
   container: {

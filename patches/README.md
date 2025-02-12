@@ -5,13 +5,13 @@ fixes.
 
 ## nodejs-mobile-react-native
 
-### [Fix prebuilds Gradle step](./nodejs-mobile-react-native+18.17.8+001+fix-prebuilds-gradle-step.patch)
+### [Fix prebuilds Gradle step](./nodejs-mobile-react-native+18.20.4+001+fix-prebuilds-gradle-step.patch)
 
 When detecting and handling modules with valid prebuilds, there's a step that involves manipulating the associated
 package.json file to prevent node-gyp from trying to building it. This step fails since we don't include the
 package.json, so we can just skip it.
 
-### [Fix CopyNodeProjectAssets Gradle Step](./nodejs-mobile-react-native+18.17.8+002+fix-copy-node-project-assets-gradle-step.patch)
+### [Fix CopyNodeProjectAssets Gradle Step](./nodejs-mobile-react-native+18.20.4+002+fix-copy-node-project-assets-gradle-step.patch)
 
 When copying `comapeo-mobile/nodejs-assets/nodejs-project`
 into `comapeo-mobile/android/build/nodejs-assets/nodejs-project/`, it copies over the `prebuilds` we include for each
@@ -19,13 +19,13 @@ native module (found in `nodejs-project/node_modules/`). These are never deleted
 the APK includes these, which is not necessary because NMRN will use a target-specific directory that contains the
 native modules for their resolution e.g. `nodejs-native-assets/nodejs-native-assets/armeabi-v7a/node_modules/...`.
 
-### [Disable BuildNpmModules Gradle step](./nodejs-mobile-react-native+18.17.8+003+disable-build-npm-modules-gradle-step.patch)
+### [Disable BuildNpmModules Gradle step](./nodejs-mobile-react-native+18.20.4+003+disable-build-npm-modules-gradle-step.patch)
 
 This step assumes that there exists a `package.json` file and other files related to node-gyp in the native modules that
 we include, which isn't the case because we solely rely on using prebuilds. There's no need for `npm run build ...` to
 be called for our native modules, so this step can be skipped entirely.
 
-### [Fix DeleteIncorrectPrebuilds Gradle step](./nodejs-mobile-react-native+18.17.8+004+fix-delete-incorrect-prebuilds-gradle-step.patch)
+### [Fix DeleteIncorrectPrebuilds Gradle step](./nodejs-mobile-react-native+18.20.4+004+fix-delete-incorrect-prebuilds-gradle-step.patch)
 
 This step deletes all `.node` files found in the temp build directory and always runs after the `CopyNodeProjectAssets`
 step. However, the `DetectCorrectPrebuilds` step runs based on the output of `CopyNodeProjectAssets`, which is a
@@ -58,29 +58,19 @@ Gradle:
 
 https://docs.gradle.org/current/userguide/incremental_build.html
 
-### [Disable exact development environment Node version check](./nodejs-mobile-react-native+18.17.8+005+disable-node-version-check.patch)
+### [Disable exact development environment Node version check](./nodejs-mobile-react-native+18.20.4+005+disable-node-version-check.patch)
 
 This step ensures that the development environment is using the same major Node version as the runtime that comes with
 NodeJS Mobile React Native. The check is most relevant when building native modules, but since we use native prebuilds,
 skipping it does not seem to affect our ability to build the app and is thus (probably) not needed.
 
-### [Fix copying of Intel-based native prebuilds into native assets directory when building apk](./nodejs-mobile-react-native+18.17.8+006+fix-copying-x86-prebuilds.patch)
+### [Fix copying of Intel-based native prebuilds into native assets directory when building apk](./nodejs-mobile-react-native+18.20.4+006+fix-copying-x86-prebuilds.patch)
 
 When targeting Intel-based architectures (i.e. `x86_64`), the affected Gradle build steps were attempting to find native prebuilds using the extended target architecture name i.e. in each directory for relevant native Node modules, it was looking for `prebuilds/android-x86_64/` instead of `prebuilds/android-x64/`. This naming discrepancy is due to how our [prebuild template](https://github.com/digidem/nodejs-mobile-prebuilds-template) publishes the output from https://github.com/nodejs-mobile/prebuild-for-nodejs-mobile/, which uses an abbreviated name of the architecture (e.g. `x86_64` is referred to as `x64`).
 
-## @react-native/eslint-config
-
-### [Disable prettier plugin rules](./@react-native+eslint-config+0.73.2.patch)
-
-The module uses a plugin whose currently specified version is not compatible with Prettier v3. Additionally, it is not
-desirable to have Prettier tightly integrated with ESLint. The patch removes the usage of the discouraged plugin.
-
-We can remove this if either [this](https://github.com/facebook/react-native/pull/41877)
-or [this](https://github.com/facebook/react-native/pull/43756) is merged.
-
 ## @comapeo/ipc
 
-### [Change imports to avoid calling unavailable code](./@comapeo+ipc+2.0.0.patch)
+### [Change imports to avoid calling unavailable code](./@comapeo+ipc+2.1.0.patch)
 
 There was an error while running app via Expo because of exports in `rpc-reflector` package. To remove this patch, `rpc-reflector` would need to be updated not to use `encode-decode.js` file which indirect usage results in errors.
 
@@ -90,3 +80,9 @@ There was an error while running app via Expo because of exports in `rpc-reflect
 
 There was an error while running app via Expo because of `duplex` method call in `rpc-reflector` package.
 As this feature is not used in CoMapeo, this can be safely hardcoded to `false`. To remove this patch, `rpc-reflector` would need to be updated to account for this bug.
+
+## react-native-indicators
+
+### [Fix `key` prop error when using components](./react-native-indicators+0.17.0+001+fix-key-prop-error.patch)
+
+Refer to https://github.com/n4kz/react-native-indicators/issues/43 for details.

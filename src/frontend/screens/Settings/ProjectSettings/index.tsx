@@ -98,17 +98,13 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
           },
         ]
       : []),
-    ...(process.env.EXPO_PUBLIC_FEATURE_MEDIA_MANAGER
-      ? [
-          {
-            onPress: () => {
-              navigation.navigate('MediaSyncSettings');
-            },
-            primaryText: formatMessage(m.mediaSyncSettings),
-            testID: 'AIN.sync-list-item',
-          },
-        ]
-      : []),
+    {
+      onPress: () => {
+        navigation.navigate('MediaSyncSettings');
+      },
+      primaryText: formatMessage(m.mediaSyncSettings),
+      testID: 'MAIN.sync-list-item',
+    },
   ];
 
   return <FullScreenMenuList data={MenuItems} />;

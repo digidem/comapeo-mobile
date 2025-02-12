@@ -1,0 +1,98 @@
+# Summary:
+#
+# Performs various checks on PRs that target a release branch.
+#
+# Triggers:
+#
+# - Opening, syncing or reopening a PR that targets a base branch that matches `release/**`.
+#
+# Effects:
+#
+# - Checks there are no commits made to the release branch while a release candidate PR is open.
+#   This check is important to ensure that the release candidate (and release) do not include unexpected code which has been
+#   pushed to the release branch after the release candidate branch was created.
+# - Checks that the PR's source branch is a RC branch with a correctly
+# - Checks that the bumped version is not a pre-release version.
+name: Check PR to Release
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    branches:
+      - 'release/**'
+
+jobs:
+  check_release_branch:
+    name: No Commits
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Fetch base branch
+        run: |
+          git fetch origin ${{ github.event.pull_request.base.ref }}
+
+      - name: Check base branch has no commits since merge base
+        env:
+          BASE_BRANCH_HEAD_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -x
+          MERGE_BASE=$(git merge-base $PR_HEAD_SHA $BASE_BRANCH_HEAD_SHA)
+          echo $MERGE_BASE
+          echo $BASE_BRANCH_HEAD_SHA
+          if [ $MERGE_BASE != $BASE_BRANCH_HEAD_SHA ]; then
+            echo "Base branch has commits since merge base"
+            exit 1
+          fi
+
+  check_source_branch:
+    name: Check source branch
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Assert source branch is RC branch
+        if: ${{ !startsWith(github.head_ref, 'rc/') }}
+        run: exit 1
+
+  check_release_version:
+    name: Check release version
+    needs: check_source_branch
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout necessary files
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            package.json
+            .github/parse-version/action.yml
+          sparse-checkout-cone-mode: false
+
+      - run: npm install --no-save semver
+        shell: bash
+
+      - name: Extract release versions
+        id: version
+        run: |
+          release_version=$(cat package.json | jq '.version' --raw-output)
+          echo "release_version=$release_version" >> $GITHUB_OUTPUT
+
+          release_version_short=$(node -e "const {version} = require('./package.json'); const semver = require('semver'); const parsed = semver.parse(version); console.log(parsed.minor + '.' + parsed.patch);")
+          echo "release_version_short=$release_version_short" >> $GITHUB_OUTPUT
+
+      - name: Assert release version is not pre-release
+        if: endsWith(steps.version.outputs.release_version, '-pre')
+        run: exit 1
+
+      - name: Assert release version matches RC branch name
+        if: format('rc/v{0}', steps.version.outputs.release_version_short) != github.head_ref
+        run: exit 1

@@ -1,6 +1,7 @@
 import * as React from 'react';
+import {useClientApi} from '@comapeo/core-react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {NativeStackNavigationOptions} from '@react-navigation/native-stack/lib/typescript/src/types';
+import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {WHITE} from '../../lib/styles';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {AppStackParamsList} from '../../sharedTypes/navigation';
@@ -17,10 +18,8 @@ import {getInitialRouteName} from '../../utils/navigation';
 import {createDefaultScreenGroup} from './AppScreens';
 import {createOnboardingScreens} from './OnboardingScreens';
 import {useSuspenseQuery} from '@tanstack/react-query';
-import {useApi} from '../../contexts/ApiContext';
 import {Loading} from '../../sharedComponents/Loading';
 import {useSecurityContext} from '../../contexts/SecurityContext';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
 
@@ -59,11 +58,12 @@ export function RootStackNavigator({
 
 function RootStackNavigatorChild() {
   const {formatMessage} = useIntl();
+  const navigation = useDrawerNavigation();
   const existingObservation = usePersistedDraftObservation(
     store => store.value,
   );
   const {data: presets} = usePresetsQuery();
-  const mapeoApi = useApi();
+  const mapeoApi = useClientApi();
 
   const deviceInfo = useSuspenseQuery({
     queryKey: [DEVICE_INFO_KEY],
@@ -73,14 +73,11 @@ function RootStackNavigatorChild() {
   });
 
   const security = useSecurityContext();
-
-  const {navigate} = useNavigationFromRoot();
-
   React.useEffect(() => {
     if (security.authState === 'unauthenticated') {
-      navigate('AuthScreen');
+      navigation.navigate('DrawerHome', {screen: 'AuthScreen'});
     }
-  }, [security.authState, navigate]);
+  }, [security.authState, navigation]);
 
   return (
     <RootStack.Navigator
@@ -88,6 +85,7 @@ function RootStackNavigatorChild() {
         hasDeviceName: !!deviceInfo.data.name,
         existingObservation,
         presets,
+        requiresAuth: security.authState === 'unauthenticated',
       })}
       screenOptions={NavigatorScreenOptions}>
       {deviceInfo.data?.name

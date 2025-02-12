@@ -1,9 +1,6 @@
 import * as React from 'react';
-import {MapBuffers} from '@comapeo/core/dist/types';
-import {
-  InviteInternal,
-  InviteRemovalReason,
-} from '@comapeo/core/dist/invite-api';
+import {Invite, InviteRemovalReason} from '@comapeo/core/dist/invite-api';
+import {useClientApi} from '@comapeo/core-react';
 
 import {BottomSheetModal, useBottomSheetModal} from '../BottomSheetModal';
 import {
@@ -17,7 +14,6 @@ import {InviteSuccessBottomSheetContent} from './InviteSuccessBottomSheetContent
 import {InviteCanceledBottomSheetContent} from './InviteCanceledBottomSheetContent';
 import {useAllProjects} from '../../hooks/server/projects';
 import {LeaveProjectModalContent} from '../LeaveProjectModalContent';
-import {useApi} from '../../contexts/ApiContext';
 
 export type LeaveProjectModalState = 'AlreadyOnProj' | 'LeaveProj';
 
@@ -173,15 +169,13 @@ export const ProjectInviteBottomSheet = ({
 };
 
 function useAcceptedInvite() {
-  const api = useApi();
-  const [acceptedInvite, setAcceptedInvite] =
-    React.useState<MapBuffers<InviteInternal> | null>(null);
+  const api = useClientApi();
+  const [acceptedInvite, setAcceptedInvite] = React.useState<Invite | null>(
+    null,
+  );
 
   React.useEffect(() => {
-    function onInviteRemoved(
-      invite: MapBuffers<InviteInternal>,
-      reason: InviteRemovalReason,
-    ) {
+    function onInviteRemoved(invite: Invite, reason: InviteRemovalReason) {
       if (reason === 'accepted') {
         setAcceptedInvite(invite);
       }

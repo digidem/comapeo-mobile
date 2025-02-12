@@ -6,7 +6,6 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useDeleteObservation} from '../../hooks/server/observations';
-import Share from 'react-native-share';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset.ts';
 import {formatCoords} from '../../lib/utils.ts';
 import {UIActivityIndicator} from 'react-native-indicators';
@@ -18,6 +17,7 @@ import {getValueLabel} from '../../sharedComponents/FormattedData.tsx';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
+import {useOpenShareDialog} from '../../hooks/share.ts';
 
 const m = defineMessages({
   delete: {
@@ -97,6 +97,7 @@ export const ButtonFields = ({
   const format = usePersistedSettings(store => store.coordinateFormat);
   const [isShareButtonLoading, setShareButtonLoading] = useState(false);
   const {projectApi} = useActiveProject();
+  const openShare = useOpenShareDialog();
 
   function handlePressDelete() {
     Alert.alert(t(m.deleteTitle), undefined, [
@@ -162,9 +163,7 @@ export const ButtonFields = ({
         completedFields.push({label: field.label, value: displayedValue});
       }
 
-      console.log({length: base64Urls.length});
-
-      await Share.open({
+      await openShare.mutateAsync({
         subject: `${t(m.comapeoAlert)} — _*${preset ? preset.name : t(m.fallbackCategoryName)}*_ — ${formatDate(observation.createdAt, {format: 'long'})}`,
         title:
           base64Urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),

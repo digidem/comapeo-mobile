@@ -39,7 +39,7 @@ export const ServerLoading = ({
   }
 
   if (serverStatus.value === 'ERROR') {
-    SplashScreen.hideAsync();
+    SplashScreen.hide();
     return <FatalError />;
   }
 

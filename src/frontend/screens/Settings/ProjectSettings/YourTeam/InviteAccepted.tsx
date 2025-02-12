@@ -61,7 +61,7 @@ export const InviteAccepted = ({
           fullWidth
           variant="outlined"
           onPress={() => {
-            navigation.navigate('SelectDevice');
+            navigation.popTo('SelectDevice');
           }}>
           {t(m.addAnotherDevice)}
         </Button>
@@ -69,7 +69,7 @@ export const InviteAccepted = ({
           style={{marginTop: 10}}
           fullWidth
           onPress={() => {
-            navigation.navigate('YourTeam');
+            navigation.popTo('YourTeam');
           }}>
           {t(m.close)}
         </Button>

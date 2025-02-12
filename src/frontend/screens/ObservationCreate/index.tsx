@@ -219,7 +219,7 @@ export const ObservationCreate = ({
         {
           onSuccess: data => {
             clearDraft();
-            navigation.navigate('Home', {screen: 'Map'});
+            navigation.popTo('Home', {screen: 'Map'});
             if (isTracking) {
               addObservationRefToTrack(data);
             }
@@ -325,12 +325,7 @@ export const ObservationCreate = ({
             testID={`OBS.${preset?.name}-icon`}
           />
         }
-        onPressPreset={() =>
-          navigation.navigate({
-            key: 'fromObservationEdit',
-            name: 'PresetChooser',
-          })
-        }
+        onPressPreset={() => navigation.navigate('PresetChooser')}
         notes={typeof notes !== 'string' ? '' : notes}
         updateNotes={newVal => {
           updateTags('notes', newVal);

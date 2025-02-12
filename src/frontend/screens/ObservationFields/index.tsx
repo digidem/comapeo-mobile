@@ -52,14 +52,14 @@ export const ObservationFields = ({
         return;
       }
       if (observationId) {
-        navigation.navigate('ObservationEdit', {observationId});
+        navigation.popTo('ObservationEdit', {observationId});
         return;
       }
 
-      navigation.navigate('ObservationCreate');
+      navigation.popTo('ObservationCreate');
     }
 
-    navigation.navigate('ObservationFields', {
+    navigation.popTo('ObservationFields', {
       question: current - 1,
     });
   }, [current, navigation, observationId]);
@@ -111,12 +111,12 @@ const DetailsHeaderRight = ({questionNumber}: {questionNumber: number}) => {
 
   const onPress = () =>
     !isLastQuestion
-      ? navigation.navigate('ObservationFields', {
+      ? navigation.popTo('ObservationFields', {
           question: questionNumber + 1,
         })
       : observationId
-        ? navigation.navigate('ObservationEdit', {observationId})
-        : navigation.navigate('ObservationCreate');
+        ? navigation.popTo('ObservationEdit', {observationId})
+        : navigation.popTo('ObservationCreate');
 
   return (
     <TextButton

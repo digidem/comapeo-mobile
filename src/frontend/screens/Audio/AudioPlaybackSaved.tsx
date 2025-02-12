@@ -11,7 +11,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import PlayArrow from '../images/PlayArrow.svg';
+import PlayArrow from '../../images/PlayArrow.svg';
 import {UIActivityIndicator} from 'react-native-indicators';
 import Share from 'react-native-share';
 import * as FileSystem from 'expo-file-system';
@@ -53,8 +53,7 @@ export const AudioPlaybackSaved = ({
 
       if (!fileUri) {
         const tempFileName = `audio_${Date.now()}.m4a`;
-        const localFilePath = new URL(tempFileName, FileSystem.cacheDirectory!)
-          .pathname;
+        const localFilePath = `${FileSystem.cacheDirectory}${tempFileName}`;
         const {uri: downloadedUri} = await FileSystem.downloadAsync(
           uri,
           localFilePath,

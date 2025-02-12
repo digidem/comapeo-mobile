@@ -5,7 +5,7 @@ import {
 } from '@react-navigation/elements';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {CloseIcon} from '../../sharedComponents/icons';
-import {StackActions, useNavigation} from '@react-navigation/native';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 
 export function AudioCustomHeaderLeft({
   duration,
@@ -17,7 +17,7 @@ export function AudioCustomHeaderLeft({
 }) {
   // Now the usage of this hook is co-located to where it's needed and not unnecessarily set up further up the component tree (which potentially introduces rendering overhead)
   const {addAudio} = useDraftObservation();
-  const navigation = useNavigation();
+  const navigation = useNavigationFromRoot();
 
   return (
     <HeaderBackButton
@@ -28,7 +28,7 @@ export function AudioCustomHeaderLeft({
           duration,
           createdAt: Date.now(),
         });
-        navigation.dispatch(StackActions.replace('AudioSaveBottomSheet'));
+        navigation.replace('AudioSavedBottomSheet');
       }}
       // eslint-disable-next-line react/no-unstable-nested-components
       backImage={backImageProps => (

@@ -17,7 +17,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import PlayArrow from '../images/PlayArrow.svg';
+import PlayArrow from '../../images/PlayArrow.svg';
 import {useFocusEffect} from '@react-navigation/native';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 
@@ -67,7 +67,7 @@ export const AudioPlaybackUnsaved = ({
   const progress = currentPosition / duration;
 
   function onPressDelete() {
-    deleteAudio(uri, true);
+    deleteAudio(uri, false);
     navigation.popTo('ObservationCreate');
   }
 

@@ -2,7 +2,7 @@ import * as React from 'react';
 import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
 import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
-import ErrorIcon from '../images/Error.svg';
+import ErrorIcon from '../../images/Error.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {Button} from '../../sharedComponents/Button';

@@ -17,128 +17,7 @@ export type DraftObservationStore = ReturnType<
   typeof createDraftObservationStore
 >;
 
-type ObservationTagValue = Observation['tags'][number];
-
-type UnsavedAttachmentBlob =
-  | {
-      uri: string;
-      processingState: 'complete';
-    }
-  | {
-      uri: null;
-      processingState: 'pending';
-    }
-  | {
-      uri: null;
-      error: Error;
-      processingState: 'error';
-    };
-
-type UnsavedPhotoAttachment = {
-  id: number;
-  type: 'photo';
-  // Represents unprocessed blob (i.e. not resized or rotated)
-  raw: UnsavedAttachmentBlob;
-  original: UnsavedAttachmentBlob;
-  thumbnail: UnsavedAttachmentBlob;
-  preview: UnsavedAttachmentBlob;
-  accelerometer?: AccelerometerMeasurement;
-  location?: LocationObject;
-  timestamp: number;
-  abortController: AbortController;
-};
-
-export type PhotoMetadata = Pick<
-  UnsavedPhotoAttachment,
-  'location' | 'accelerometer' | 'timestamp'
->;
-
-/** Position update from manual coordinate entry */
-type ManualPosition = {
-  coords: {
-    latitude: number;
-    longitude: number;
-  };
-};
-
-type UnsavedAudioAttachment = {
-  id: number;
-  original: UnsavedAttachmentBlob;
-  type: 'audio';
-  abortController: AbortController;
-};
-
-type UnsavedAttachment = UnsavedPhotoAttachment | UnsavedAudioAttachment;
-
-type DraftStateEmpty = {
-  value: null;
-  id: null;
-  unsavedAttachments: null;
-  initialPosition: null;
-};
-
-type ObservationWithPreset = Exclude<Observation, 'presetRef'> & {
-  presetRef?: Preset;
-};
-
-type ObservationValueWithPreset = Exclude<ObservationValue, 'presetRef'> & {
-  presetRef?: Preset;
-};
-
-type DraftStatePopulated = {
-  value: ObservationValueWithPreset;
-  id: {docId: string; versionId: string} | null;
-  unsavedAttachments: Map<number, UnsavedAttachment>;
-  /** Initial (first) position of an observation. Not currently persisted, but
-   * used for checking if the user moves away from the original location */
-  initialPosition: Position | null;
-};
-
 export type DraftState = DraftStateEmpty | DraftStatePopulated;
-
-const ORIGINAL_COMPRESSION = 0.75;
-const THUMBNAIL_SIZE = 400;
-const THUMBNAIL_COMPRESSION = 0.3;
-const PREVIEW_SIZE = 1200;
-const PREVIEW_COMPRESSION = 0.3;
-
-function createEmptyStoreState(): DraftStateEmpty {
-  return {
-    value: null,
-    id: null,
-    unsavedAttachments: null,
-    initialPosition: null,
-  };
-}
-
-function createEmptyObservationValue(): ObservationValueWithPreset {
-  return {
-    schemaName: 'observation',
-    lat: 0,
-    lon: 0,
-    metadata: {manualLocation: false},
-    tags: {
-      notes: '',
-    },
-    attachments: [],
-  };
-}
-
-function createNewPhotoAttachment(
-  id: number,
-  metadata: PhotoMetadata,
-): UnsavedAttachment {
-  return {
-    id,
-    type: 'photo',
-    raw: {uri: null, processingState: 'pending'},
-    original: {uri: null, processingState: 'pending'},
-    thumbnail: {uri: null, processingState: 'pending'},
-    preview: {uri: null, processingState: 'pending'},
-    abortController: new AbortController(),
-    ...metadata,
-  };
-}
 
 export function createDraftObservationStore({persist}: {persist: boolean}) {
   let nextAttachmentId = 0;
@@ -443,6 +322,127 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
   };
 
   return {instance, actions};
+}
+
+type ObservationTagValue = Observation['tags'][number];
+
+type UnsavedAttachmentBlob =
+  | {
+      uri: string;
+      processingState: 'complete';
+    }
+  | {
+      uri: null;
+      processingState: 'pending';
+    }
+  | {
+      uri: null;
+      error: Error;
+      processingState: 'error';
+    };
+
+type UnsavedPhotoAttachment = {
+  id: number;
+  type: 'photo';
+  // Represents unprocessed blob (i.e. not resized or rotated)
+  raw: UnsavedAttachmentBlob;
+  original: UnsavedAttachmentBlob;
+  thumbnail: UnsavedAttachmentBlob;
+  preview: UnsavedAttachmentBlob;
+  accelerometer?: AccelerometerMeasurement;
+  location?: LocationObject;
+  timestamp: number;
+  abortController: AbortController;
+};
+
+export type PhotoMetadata = Pick<
+  UnsavedPhotoAttachment,
+  'location' | 'accelerometer' | 'timestamp'
+>;
+
+/** Position update from manual coordinate entry */
+type ManualPosition = {
+  coords: {
+    latitude: number;
+    longitude: number;
+  };
+};
+
+type UnsavedAudioAttachment = {
+  id: number;
+  original: UnsavedAttachmentBlob;
+  type: 'audio';
+  abortController: AbortController;
+};
+
+type UnsavedAttachment = UnsavedPhotoAttachment | UnsavedAudioAttachment;
+
+type DraftStateEmpty = {
+  value: null;
+  id: null;
+  unsavedAttachments: null;
+  initialPosition: null;
+};
+
+type ObservationWithPreset = Exclude<Observation, 'presetRef'> & {
+  presetRef?: Preset;
+};
+
+type ObservationValueWithPreset = Exclude<ObservationValue, 'presetRef'> & {
+  presetRef?: Preset;
+};
+
+type DraftStatePopulated = {
+  value: ObservationValueWithPreset;
+  id: {docId: string; versionId: string} | null;
+  unsavedAttachments: Map<number, UnsavedAttachment>;
+  /** Initial (first) position of an observation. Not currently persisted, but
+   * used for checking if the user moves away from the original location */
+  initialPosition: Position | null;
+};
+
+const ORIGINAL_COMPRESSION = 0.75;
+const THUMBNAIL_SIZE = 400;
+const THUMBNAIL_COMPRESSION = 0.3;
+const PREVIEW_SIZE = 1200;
+const PREVIEW_COMPRESSION = 0.3;
+
+function createEmptyStoreState(): DraftStateEmpty {
+  return {
+    value: null,
+    id: null,
+    unsavedAttachments: null,
+    initialPosition: null,
+  };
+}
+
+function createEmptyObservationValue(): ObservationValueWithPreset {
+  return {
+    schemaName: 'observation',
+    lat: 0,
+    lon: 0,
+    metadata: {manualLocation: false},
+    tags: {
+      notes: '',
+    },
+    attachments: [],
+  };
+}
+
+function createNewPhotoAttachment(
+  id: number,
+  metadata: PhotoMetadata,
+): UnsavedAttachment {
+  return {
+    id,
+    type: 'photo',
+    raw: {uri: null, processingState: 'pending'},
+    original: {uri: null, processingState: 'pending'},
+    thumbnail: {uri: null, processingState: 'pending'},
+    preview: {uri: null, processingState: 'pending'},
+    abortController: new AbortController(),
+    ...metadata,
+  };
 }
 
 function reasonToError(reason: unknown): Error {

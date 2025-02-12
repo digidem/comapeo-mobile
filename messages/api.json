@@ -244,7 +244,7 @@
     "message": "UTM,Lat/Lon,DMS"
   },
   "Screens.Settings.AppSettings.language": {
-    "message": "Idioma"
+    "message": "Language"
   },
   "Screens.Settings.AppSettings.languageDesc": {
     "message": "Display language for app"

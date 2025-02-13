@@ -9,7 +9,7 @@ export function useSelectFileAndImportConfig() {
 
   return useMutation({
     mutationFn: async () => {
-      const asset = await selectFile(['comapeocat']);
+      const asset = await selectFile(['comapeocat', 'zip']);
       if (!asset) return;
 
       try {

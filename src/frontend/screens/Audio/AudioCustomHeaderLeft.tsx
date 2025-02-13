@@ -15,7 +15,6 @@ export function AudioCustomHeaderLeft({
   duration: number;
   uri: string;
 }) {
-  // Now the usage of this hook is co-located to where it's needed and not unnecessarily set up further up the component tree (which potentially introduces rendering overhead)
   const {addAudio} = useDraftObservation();
   const navigation = useNavigationFromRoot();
 

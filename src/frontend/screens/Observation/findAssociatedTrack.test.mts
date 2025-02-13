@@ -1,5 +1,5 @@
 import {findAssociatedTrack} from './findAssociatedTrack';
-import mock from '@mapeo/mock-data';
+import * as mock from '@mapeo/mock-data';
 import {assert} from '../../lib/assert';
 
 describe('Tests findAssociatedTrack', () => {

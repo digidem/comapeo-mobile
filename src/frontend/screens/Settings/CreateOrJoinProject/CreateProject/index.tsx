@@ -11,6 +11,7 @@ import {
 import {UIActivityIndicator} from 'react-native-indicators';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
+import {useSelectFile} from '../../../../hooks/files';
 import {usePersistedProjectId} from '../../../../hooks/persistedState/usePersistedProjectId';
 import {useCreateProject} from '../../../../hooks/server/projects';
 import {convertFileUriToPosixPath} from '../../../../lib/file-system';
@@ -21,7 +22,6 @@ import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
 import {Text} from '../../../../sharedComponents/Text';
 import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
-import {selectFile} from '../../../../lib/selectFile';
 
 const m = defineMessages({
   title: {
@@ -79,6 +79,8 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
     error: projectCreationError,
   } = useCreateProject();
 
+  const selectFileMutation = useSelectFile();
+
   React.useEffect(() => {
     // Prevent back navigation while project creation mutation is pending
     const unsubscribe = navigation.addListener('beforeRemove', event => {
@@ -123,18 +125,22 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
     );
   }
 
-  async function importConfigFile() {
-    try {
-      const asset = await selectFile(['comapeocat']);
-      if (!asset) return;
-      setConfigFileResult({type: 'success', file: asset});
-    } catch (err) {
-      if (err instanceof Error) {
-        setConfigFileResult({type: 'error', error: err});
-      }
-
-      return;
-    }
+  function selectConfigFile() {
+    selectFileMutation.mutate(
+      {
+        copyToCacheDirectory: true,
+        extensionFilters: ['comapeocat', 'zip'],
+      },
+      {
+        onSuccess: selected => {
+          if (!selected) return;
+          setConfigFileResult({type: 'success', file: selected});
+        },
+        onError: err => {
+          setConfigFileResult({type: 'error', error: err});
+        },
+      },
+    );
   }
 
   const errorSheetProps =
@@ -193,7 +199,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
                     fullWidth
                     variant="outlined"
                     onPress={() => {
-                      importConfigFile();
+                      selectConfigFile();
                     }}>
                     {t(m.importConfig)}
                   </Button>

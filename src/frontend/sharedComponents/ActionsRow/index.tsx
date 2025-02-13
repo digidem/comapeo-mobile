@@ -12,6 +12,7 @@ import DetailsIcon from '../../images/observationEdit/Details.svg';
 import {Preset} from '@comapeo/schema';
 import {HeaderText} from '../Text/HeaderText';
 import {CustomCircleIcon} from './CustomCircleIcon';
+import {useFocusEffect} from '@react-navigation/native';
 
 const m = defineMessages({
   audioButton: {
@@ -35,7 +36,20 @@ export function ActionsRow({fieldRefs}: {fieldRefs?: Preset['fieldRefs']}) {
   const {keyboardVisible} = useKeyboardListener();
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
-  const [audioPermission] = Audio.usePermissions();
+  const [audioPermission, setAudioPermission] =
+    React.useState<Audio.PermissionResponse | null>(null);
+
+  // Audio permissions are granted on a different page. Since this page stays in the navigation stack,
+  // it does not remount when permissions change, leading to stale permission data.
+  // To ensure we always have the latest permission status, we check it whenever the page comes into focus.
+  useFocusEffect(
+    React.useCallback(() => {
+      (async () => {
+        const permission = await Audio.getPermissionsAsync();
+        setAudioPermission(permission);
+      })();
+    }, []),
+  );
 
   const handleCameraPress = () => {
     navigation.navigate('AddPhoto');

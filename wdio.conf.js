@@ -1,7 +1,7 @@
 // @ts-check
 
-// `capabilities` missing in `Options.Testrunner` type: https://github.com/webdriverio/webdriverio/issues/13769
-/** @type {import('@wdio/types').Options.Testrunner & { capabilities: import('@wdio/types').Capabilities }} */
+// Type is very questionably declared in the global namespace via @wdio/types
+/** @type {WebdriverIO.Config} */
 const config = {
   runner: 'local',
   user: process.env.BROWSERSTACK_USERNAME,

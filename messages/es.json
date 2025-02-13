@@ -470,7 +470,7 @@
     "message": "¿Desactivar la Contraseña de la aplicación?"
   },
   "screens.AppPasscode.TurnOffPasscode.usePasscode": {
-    "message": "Usar la Contraseña de la apliación"
+    "message": "Usar la Contraseña de la aplicación"
   },
   "screens.AudioPermission.Button.allow": {
     "description": "Screen button text for allow the audio permission",

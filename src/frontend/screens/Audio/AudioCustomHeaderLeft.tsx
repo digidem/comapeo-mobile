@@ -29,7 +29,6 @@ export function AudioCustomHeaderLeft({
         });
         navigation.replace('AudioSavedBottomSheet');
       }}
-      // eslint-disable-next-line react/no-unstable-nested-components
       backImage={backImageProps => (
         <CloseIcon color={backImageProps.tintColor} />
       )}

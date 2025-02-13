@@ -62,11 +62,10 @@ export const AudioAskPermissionBottomSheet = ({
     let isCancelled = false;
     const handleAppStateChange = async (nextAppState: AppStateStatus) => {
       if (nextAppState === 'active') {
-        // eslint-disable-next-line @typescript-eslint/no-shadow
-        const permission = await Audio.getPermissionsAsync();
+        const newPermission = await Audio.getPermissionsAsync();
         if (isCancelled) return;
-        setPermission(permission);
-        if (permission.status === 'granted') {
+        setPermission(newPermission);
+        if (newPermission.status === 'granted') {
           replace('AudioRecording');
         }
       }

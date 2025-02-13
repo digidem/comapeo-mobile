@@ -1,14 +1,17 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
-import OnboardingPage from '../../pageObjects/onboarding.page';
 import {byResourceId, byTextMatches, byText} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 
 describe('Device Naming Test', () => {
-  it('should input a device name and verify success message', async () => {
-    await OnboardingPage.completeOnboarding();
+  it('should navigate to Device Naming screen after tapping "Next"', async () => {
+    const nextButton = await $(byText('Next'));
+    await nextButton.click();
+  });
 
+  it('should input a device name and verify success message', async () => {
     const deviceNameInput = await $(byResourceId('ONBOARDING.device-name-inp'));
+    await expect(deviceNameInput).toBeDisplayed();
     const addNameButton = await $(byResourceId('ONBOARDING.add-name-btn'));
 
     await addNameButton.click();

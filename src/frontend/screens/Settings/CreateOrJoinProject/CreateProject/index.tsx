@@ -114,7 +114,9 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
           if (configFileResult?.type === 'success') {
             // No need to block UI on this
             // no-op if something fails here. caches can eventually get cleared by the OS automatically.
-            FileSystem.deleteAsync(configFileResult.file.uri).catch(noop);
+            FileSystem.deleteAsync(configFileResult.file.uri, {
+              idempotent: true,
+            }).catch(noop);
           }
 
           updateActiveProjectId(projectId);

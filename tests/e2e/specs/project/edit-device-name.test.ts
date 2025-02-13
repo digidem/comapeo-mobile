@@ -5,12 +5,10 @@ import {output} from '../../utils/naming';
 
 describe('Edit Device Name Test', () => {
   it('should navigate to project settings and edit the device name', async () => {
-    const drawerIcon = await $(byResourceId('MAIN.drawer-icon'));
+    const drawerIcon = await $(byResourceId('drawer-icon-home'));
     await drawerIcon.click();
 
-    const projectSettingsItem = await $(
-      byResourceId('MAIN.project-stg-list-item'),
-    );
+    const projectSettingsItem = await $(byText('Project Settings'));
     await projectSettingsItem.click();
 
     const deviceNameListItem = await $(

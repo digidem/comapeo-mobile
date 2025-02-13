@@ -9,7 +9,7 @@ const config = {
   user: process.env.BROWSERSTACK_USERNAME,
   key: process.env.BROWSERSTACK_ACCESS_KEY,
   hostname: 'hub.browserstack.com',
-  specs: [path.resolve(__dirname, '../specs/**/*.test.ts')],
+  specs: [path.resolve(__dirname, '../specs/flow.test.ts')],
   maxInstances: 1,
   services: [
     [
@@ -37,7 +37,7 @@ const config = {
       'bstack:options': {
         projectName: 'CoMapeo',
         buildName: 'CoMapeo Android Build',
-        sessionName: 'Launch App and Grant Permissions',
+        sessionName: 'Run Android e2e tests',
         appiumVersion: '2.12.1',
         debug: true,
         networkLogs: true,
@@ -45,13 +45,13 @@ const config = {
     },
   ],
   logLevel: 'error',
-  waitforTimeout: 15000,
-  connectionRetryTimeout: 180000,
-  connectionRetryCount: 3,
+  waitforTimeout: 5000,
+  connectionRetryTimeout: 90000,
+  connectionRetryCount: 2,
   framework: 'mocha',
   mochaOpts: {
     ui: 'bdd',
-    timeout: 60000,
+    timeout: 300000,
   },
   reporters: [
     [

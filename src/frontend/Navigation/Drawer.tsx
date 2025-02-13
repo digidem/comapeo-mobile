@@ -124,6 +124,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
           <DrawerMenuIcon
             style={{alignSelf: 'flex-end', marginRight: 20}}
             onPress={navigation.closeDrawer}
+            testID="drawer-icon-drawer"
           />
           {/* This text component is one of the exceptions that does not use the shared text components as requested by Sabella */}
           <Text
@@ -171,7 +172,6 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
                 },
                 materialIconName: 'assignment',
                 primaryText: formatMessage(m.projectSettings),
-                testID: 'MAIN.project-stg-list-item',
               }}
             />
             <DrawerMenuListItem

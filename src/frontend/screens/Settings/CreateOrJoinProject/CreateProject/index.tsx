@@ -218,7 +218,13 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
           selectFileMutation.reset();
           createProjectMutation.reset();
         }}
-        tryAgain={handleSubmit(handleCreateProject)}
+        tryAgain={
+          selectFileMutation.error
+            ? selectConfigFile
+            : createProjectMutation.error
+              ? handleSubmit(handleCreateProject)
+              : undefined
+        }
       />
     </React.Fragment>
   );

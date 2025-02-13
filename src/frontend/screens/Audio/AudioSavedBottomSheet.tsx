@@ -51,8 +51,7 @@ export const AudioSavedBottomSheet = ({
             fullWidth
             variant="outlined"
             onPress={() => {
-              // Should use `popTo` in React Nav v7
-              navigation.navigate('ObservationCreate');
+              navigation.popTo('ObservationCreate');
             }}>
             {formatMessage(m.returnToEditor)}
           </Button>

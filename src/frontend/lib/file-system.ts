@@ -43,7 +43,7 @@ export async function selectFile({
 
   if (extensionFilters) {
     const hasValidExtension = extensionFilters.some(extension => {
-      return asset.name.endsWith(`.${extension}`);
+      return asset.name.toLowerCase().endsWith(`.${extension.toLowerCase()}`);
     });
 
     if (!hasValidExtension) {

@@ -1,3 +1,5 @@
+import * as Sentry from '@sentry/react-native';
+import * as FileSystem from 'expo-file-system';
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
@@ -16,6 +18,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../sharedTypes';
 import {convertFileUriToPosixPath} from '../../lib/file-system';
+import noop from '../../lib/noop';
 
 const m = defineMessages({
   navTitle: {
@@ -84,6 +87,13 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
           if (!selected) return;
           importProjectConfigMutation.mutate(
             convertFileUriToPosixPath(selected.uri),
+            {
+              onSettled: () => {
+                FileSystem.deleteAsync(selected.uri, {idempotent: true}).catch(
+                  noop,
+                );
+              },
+            },
           );
         },
       },

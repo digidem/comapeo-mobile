@@ -463,6 +463,10 @@
     "nativeName": "ಕನ್ನಡ (India)",
     "englishName": "Kannada (India)"
   },
+  "knm": {
+    "nativeName": "Tüküna",
+    "englishName": "Kanamari"
+  },
   "ko": {
     "nativeName": "한국어",
     "englishName": "Korean"
@@ -515,6 +519,10 @@
     "nativeName": "मैथिली, মৈথিলী",
     "englishName": "Maithili"
   },
+  "mcf": {
+    "nativeName": "Matsés",
+    "englishName": "Mayoruna"
+  },
   "mg": {
     "nativeName": "Malagasy",
     "englishName": "Malagasy"
@@ -543,6 +551,10 @@
     "nativeName": "Монгол",
     "englishName": "Mongolian"
   },
+  "mpq": {
+    "nativeName": "Matis",
+    "englishName": "Matis"
+  },
   "mr": {
     "nativeName": "मराठी",
     "englishName": "Marathi"
@@ -570,6 +582,10 @@
   "my": {
     "nativeName": "ဗမာစကာ",
     "englishName": "Burmese"
+  },
+  "mzr": {
+    "nativeName": "Marúbo",
+    "englishName": "Marubo"
   },
   "no": {
     "nativeName": "Norsk",

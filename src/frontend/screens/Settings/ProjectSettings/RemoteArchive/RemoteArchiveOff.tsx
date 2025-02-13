@@ -68,6 +68,8 @@ export const RemoteArchiveOff: NativeNavigationComponent<
       ) : isCoordinator ? (
         <Button
           variant="outlined"
+          color="ComapeoBlue"
+          fullWidth
           style={{marginTop: 20}}
           onPress={() => {
             navigate('AddRemoteArchive');

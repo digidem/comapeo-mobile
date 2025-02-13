@@ -37,6 +37,7 @@ export const SuccessfullyAddedArchive = ({
         <Button
           fullWidth
           variant="outlined"
+          color="ComapeoBlue"
           onPress={() => {
             navigation.navigate('RemoteArchiveOn');
           }}>

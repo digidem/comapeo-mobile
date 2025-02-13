@@ -2,7 +2,7 @@ import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 
-import {NEW_DARK_GREY, RED} from '../../../lib/styles';
+import {COMAPEO_BLUE, NEW_DARK_GREY, RED} from '../../../lib/styles';
 import {Button} from '../../../sharedComponents/Button';
 import {DownloadIcon} from '../../../sharedComponents/icons';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
@@ -26,7 +26,7 @@ export function ChooseMapFile({onChooseFile}: {onChooseFile: () => void}) {
     <View style={styles.container}>
       <Button fullWidth variant="outlined" onPress={onChooseFile}>
         <View style={styles.buttonContentContainer}>
-          <DownloadIcon size={24} />
+          <DownloadIcon size={24} color={COMAPEO_BLUE} />
           <View>
             <HeaderText variant="header5" style={styles.buttonTextBase}>
               {t(m.chooseFile)}
@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
   },
   buttonTextBase: {
     letterSpacing: 0.5,
+    color: COMAPEO_BLUE,
   },
   asteriskText: {
     color: RED,

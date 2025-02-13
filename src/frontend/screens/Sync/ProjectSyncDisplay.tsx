@@ -12,7 +12,6 @@ import {useDataSyncProgress} from '../../hooks/useSyncState';
 import ObservationsProjectImage from '../../images/ObservationsProject.svg';
 import {ExhaustivenessError} from '../../lib/ExhaustivenessError';
 import {
-  BLACK,
   COMAPEO_BLUE,
   DARK_GREEN,
   DARK_GREY,
@@ -243,8 +242,10 @@ export const ProjectSyncDisplay = ({
             projectApi.$sync.stop();
           }}>
           <View style={styles.buttonContentContainer}>
-            <StopIcon size={20} color={BLACK} />
-            <HeaderText variant="header5">{t(m.stop)}</HeaderText>
+            <StopIcon size={20} color={COMAPEO_BLUE} />
+            <HeaderText variant="header5" style={{color: COMAPEO_BLUE}}>
+              {t(m.stop)}
+            </HeaderText>
           </View>
         </Button>
       );
@@ -272,8 +273,10 @@ export const ProjectSyncDisplay = ({
             projectApi.$sync.stop();
           }}>
           <View style={styles.buttonContentContainer}>
-            <StopIcon size={20} color={BLACK} />
-            <HeaderText variant="header5">{t(m.stop)}</HeaderText>
+            <StopIcon size={20} color={COMAPEO_BLUE} />
+            <HeaderText variant="header5" style={{color: COMAPEO_BLUE}}>
+              {t(m.stop)}
+            </HeaderText>
           </View>
         </Button>
       );
@@ -299,8 +302,10 @@ export const ProjectSyncDisplay = ({
             projectApi.$sync.stop();
           }}>
           <View style={styles.buttonContentContainer}>
-            <StopIcon size={20} color={BLACK} />
-            <HeaderText variant="header5">{t(m.stop)}</HeaderText>
+            <StopIcon size={20} color={COMAPEO_BLUE} />
+            <HeaderText variant="header5" style={{color: COMAPEO_BLUE}}>
+              {t(m.stop)}
+            </HeaderText>
           </View>
         </Button>
       ) : (

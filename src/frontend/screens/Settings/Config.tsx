@@ -77,7 +77,7 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
     selectFileMutation.mutate(
       {
         copyToCacheDirectory: true,
-        extensionFilters: ['comapeocat', 'zip'],
+        allowedExtensions: ['comapeocat', 'zip'],
       },
       {
         onSuccess: selected => {

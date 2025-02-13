@@ -142,7 +142,7 @@ export function BackgroundMapsScreen() {
             selectFileMutation.mutate(
               {
                 copyToCacheDirectory: false,
-                extensionFilters: ['smp'],
+                allowedExtensions: ['smp'],
               },
               {
                 onSuccess: asset => {

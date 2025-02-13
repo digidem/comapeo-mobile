@@ -10,7 +10,7 @@ import type {NativeNavigationComponent} from '../../../../sharedTypes/navigation
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {Button} from '../../../../sharedComponents/Button';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {BLACK} from '../../../../lib/styles';
+import {BLACK, COMAPEO_BLUE} from '../../../../lib/styles';
 import {DeviceCard} from '../../../../sharedComponents/DeviceCard';
 import {
   useProjectMembers,
@@ -116,12 +116,14 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
               alignItems: 'center',
             }}>
             <MaterialIcon
-              color={BLACK}
+              color={COMAPEO_BLUE}
               size={32}
               name="person-add"
               style={{marginRight: 10}}
             />
-            <HeaderText variant="header5">{t(m.inviteDevice)}</HeaderText>
+            <HeaderText variant="header5" style={{color: COMAPEO_BLUE}}>
+              {t(m.inviteDevice)}
+            </HeaderText>
           </View>
         </Button>
       )}

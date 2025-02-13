@@ -52,7 +52,11 @@ const ObservationEmptyView = ({onPressBack}: Props) => {
         </Text>
       </View>
       <View style={styles.backButton}>
-        <Button onPress={onPressBack} variant="outlined" color="dark">
+        <Button
+          onPress={onPressBack}
+          variant="outlined"
+          color="ComapeoBlue"
+          fullWidth>
           {t(m.backButton)}
         </Button>
       </View>
@@ -104,5 +108,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingLeft: 20,
+    paddingRight: 20,
   },
 });

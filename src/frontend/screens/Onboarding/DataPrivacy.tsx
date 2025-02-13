@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     color: NEW_DARK_GREY,
   },
   buttonContainer: {
-    width: '90%',
+    width: '100%',
     alignItems: 'center',
     gap: GAP,
   },

@@ -192,6 +192,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
                   <Button
                     fullWidth
                     variant="outlined"
+                    color="ComapeoBlue"
                     onPress={() => {
                       importConfigFile();
                     }}>

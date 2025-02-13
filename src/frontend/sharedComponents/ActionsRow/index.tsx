@@ -93,7 +93,12 @@ export function ActionsRow({fieldRefs}: {fieldRefs?: Preset['fieldRefs']}) {
   return (
     <>
       <Divider />
-      {!keyboardVisible ? (
+      {keyboardVisible ? (
+        <KeyboardAccessory
+          items={bottomSheetItems}
+          onPress={() => Keyboard.dismiss()}
+        />
+      ) : (
         <View style={[styles.container, styles.containerPadding]}>
           {bottomSheetItems.map(item => (
             <TouchableOpacity
@@ -110,11 +115,6 @@ export function ActionsRow({fieldRefs}: {fieldRefs?: Preset['fieldRefs']}) {
             </TouchableOpacity>
           ))}
         </View>
-      ) : (
-        <KeyboardAccessory
-          items={bottomSheetItems}
-          onPress={() => Keyboard.dismiss()}
-        />
       )}
     </>
   );

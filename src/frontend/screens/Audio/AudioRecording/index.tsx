@@ -93,9 +93,9 @@ export function AudioRecording({
             </View>
           ) : (
             <TouchableOpacity
-              onPress={!isRecording ? startRecording : finishRecording}
+              onPress={isRecording ? finishRecording : startRecording}
               style={AudioStyles.basePressable}>
-              {<View style={!isRecording ? styles.record : styles.stop} />}
+              {<View style={isRecording ? styles.stop : styles.record} />}
             </TouchableOpacity>
           )
         }>
@@ -104,7 +104,7 @@ export function AudioRecording({
             <Text
               style={[
                 AudioStyles.timerText,
-                {color: !isRecording ? MEDIUM_GREY : WHITE},
+                {color: isRecording ? WHITE : MEDIUM_GREY},
               ]}>
               {Duration.fromMillis(timeElapsed).toFormat('mm:ss')}
             </Text>

@@ -12,15 +12,16 @@ import {
 } from '../../sharedComponents/FormattedData';
 import {PhotoAttachmentView} from '../../sharedComponents/PhotoAttachmentView.tsx';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
-import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
 import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
+import {sharedStyles} from './shared.ts';
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;
   observation: Observation;
   testID: string;
   onPress: (id: string) => void;
+  deviceId: string | undefined;
 }
 
 type PhotoAttachment = Omit<Attachment, 'type'> & {type: 'photo'};
@@ -36,20 +37,17 @@ function ObservationListItemNotMemoized({
   observation,
   testID,
   onPress = () => {},
+  deviceId,
 }: ObservationListItemProps) {
   const {preset} = useObservationWithPreset(observation.docId);
-  const {data: deviceInfo, status: deviceInfoQueryStatus} = useDeviceInfo();
 
   const photos = observation.attachments.filter(isSavedPhoto);
 
-  const {
-    data: createdByDeviceId,
-    status: originalVersionIdToDeviceIdQueryStatus,
-  } = useOriginalVersionIdToDeviceId(observation.originalVersionId);
-  const isMine = createdByDeviceId === deviceInfo?.deviceId;
-  const queriesSucceeded =
-    deviceInfoQueryStatus === 'success' &&
-    originalVersionIdToDeviceIdQueryStatus === 'success';
+  const {data: createdByDeviceId} = useOriginalVersionIdToDeviceId(
+    observation.originalVersionId,
+  );
+
+  const isMine = createdByDeviceId && createdByDeviceId === deviceId;
 
   return (
     <TouchableHighlight
@@ -60,7 +58,7 @@ function ObservationListItemNotMemoized({
         style={[
           styles.container,
           style,
-          queriesSucceeded && !isMine && styles.syncedObservation,
+          !isMine && sharedStyles.syncedObservation,
         ]}>
         <View style={styles.text}>
           <Text style={styles.title}>
@@ -124,10 +122,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     flex: 1,
     height: 80,
-  },
-  syncedObservation: {
-    borderLeftWidth: 5,
-    borderLeftColor: '#3C69F6',
   },
   text: {
     flex: 1,

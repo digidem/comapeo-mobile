@@ -17,6 +17,7 @@ import {TrackListItem} from './TrackListItem';
 import {useObservations} from '../../hooks/server/observations';
 import {useTracks} from '../../hooks/server/track';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 
 const m = defineMessages({
   loading: {
@@ -59,6 +60,7 @@ export const ObservationsList: React.FC<
   const {data: observations, isFetching} = useObservations();
   const {data: tracks} = useTracks();
   const {data, isPending} = useAllProjects();
+  const {data: deviceInfo} = useDeviceInfo();
 
   const rowsPerWindow = Math.ceil(
     (Dimensions.get('window').height - 65) / OBSERVATION_CELL_HEIGHT,
@@ -98,6 +100,7 @@ export const ObservationsList: React.FC<
                 <ObservationListItem
                   key={item.docId}
                   testID={`observationListItem:${index}`}
+                  deviceId={deviceInfo?.deviceId}
                   observation={item}
                   style={styles.listItem}
                   onPress={() =>
@@ -111,6 +114,7 @@ export const ObservationsList: React.FC<
               return (
                 <TrackListItem
                   key={item.docId}
+                  deviceId={deviceInfo?.deviceId}
                   testID={`trackListItem:${index}`}
                   track={item}
                   style={styles.listItem}

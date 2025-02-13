@@ -5,6 +5,8 @@ import {Track} from '@comapeo/schema';
 import {ViewStyleProp} from '../../sharedTypes/index';
 import {defineMessages, useIntl} from 'react-intl';
 import TrackIcon from '../../images/Track.svg';
+import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
+import {sharedStyles} from './shared.ts';
 
 const m = defineMessages({
   track: {
@@ -18,6 +20,7 @@ interface ObservationListItemProps {
   track: Track;
   testID: string;
   onPress: () => void;
+  deviceId: string | undefined;
 }
 
 const TrackObservationItemNotMemoized = ({
@@ -25,14 +28,25 @@ const TrackObservationItemNotMemoized = ({
   track,
   testID,
   onPress,
+  deviceId,
 }: ObservationListItemProps) => {
   const {formatMessage} = useIntl();
+  const {data: createdByDeviceId} = useOriginalVersionIdToDeviceId(
+    track.originalVersionId,
+  );
+
+  const isMine = createdByDeviceId && createdByDeviceId === deviceId;
   return (
     <TouchableHighlight
       onPress={onPress}
       testID={testID}
       style={styles.touchable}>
-      <View style={[styles.container, style]}>
+      <View
+        style={[
+          styles.container,
+          style,
+          !isMine && sharedStyles.syncedObservation,
+        ]}>
         <View style={styles.text}>
           <Text style={styles.title}>
             <Text>{formatMessage(m.track)}</Text>

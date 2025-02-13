@@ -111,12 +111,12 @@ export const EditScreen = ({
   const onSubmit = React.useMemo(() => {
     return handleSubmit(value => {
       if (!nameHasChanges) {
-        navigation.navigate('DeviceNameDisplay');
+        navigation.popTo('DeviceNameDisplay');
         return;
       }
 
       mutate(value.deviceName, {
-        onSuccess: () => navigation.navigate('DeviceNameDisplay'),
+        onSuccess: () => navigation.popTo('DeviceNameDisplay'),
       });
     });
   }, [handleSubmit, mutate, nameHasChanges, navigation]);

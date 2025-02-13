@@ -58,7 +58,7 @@ export const InviteDeclined = ({
         style={{marginTop: 10}}
         fullWidth
         onPress={() => {
-          navigation.navigate('YourTeam');
+          navigation.popTo('YourTeam');
         }}>
         {formatMessage(m.close)}
       </Button>

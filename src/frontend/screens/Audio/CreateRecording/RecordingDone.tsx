@@ -139,11 +139,11 @@ export function RecordingDone({
         if (isEditing) {
           navigation.goBack();
         } else {
-          navigation.navigate('ObservationCreate');
+          navigation.popTo('ObservationCreate');
         }
         break;
       case 'recordAnother':
-        navigation.navigate('Audio', {isEditing});
+        navigation.popTo('Audio', {isEditing});
         break;
       default:
         break;

@@ -52,7 +52,7 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
   function cancelInvite() {
     requestCancelInviteMutation.mutate(deviceId, {
       onSuccess: () => {
-        navigation.navigate('YourTeam');
+        navigation.popTo('YourTeam');
       },
     });
   }

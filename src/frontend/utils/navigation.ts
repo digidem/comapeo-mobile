@@ -13,13 +13,17 @@ export function getInitialRouteName(
         hasDeviceName: true;
         existingObservation: null | ClientGeneratedObservation | Observation;
         presets: Preset[];
+        requiresAuth: boolean;
       },
 ): keyof RootStackParamsList | keyof OnboardingParamsList {
   // if user has not set a name, navigate to intro screen where they will be prompted to set a name
   if (!initialInfo.hasDeviceName) {
     return 'IntroToCoMapeo';
   }
-
+  // if a user has set a passcode, navigate to auth screen
+  if (initialInfo.requiresAuth) {
+    return 'AuthScreen';
+  }
   // if no exisiting observation, navigate to home
   if (!initialInfo.existingObservation) {
     return 'Home';

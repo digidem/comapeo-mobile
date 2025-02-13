@@ -30,18 +30,18 @@ const m = defineMessages({
   notNowButtonText: {
     id: 'screens.AudioPermission.Button.notNow',
     defaultMessage: 'Not Now',
-    description: 'Screen button text for not allowed audio permission',
+    description: 'Screen button text for not granting audio permission',
   },
   allowButtonText: {
     id: 'screens.AudioPermission.Button.allow',
     defaultMessage: 'Allow',
-    description: 'Screen button text for allow the audio permission',
+    description: 'Screen button text for granting the audio permission',
   },
   goToSettingsButtonText: {
     id: 'screens.AudioPermission.Button.goToSettings',
     defaultMessage: 'Go to Settings',
     description:
-      'Screen button text for navigate user to settings when audio permission was denied',
+      'Screen button text for navigating the user to settings when audio permission is denied',
   },
 });
 

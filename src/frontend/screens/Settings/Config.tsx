@@ -1,16 +1,24 @@
+import * as Sentry from '@sentry/react-native';
+import * as FileSystem from 'expo-file-system';
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 import {Text} from '../../sharedComponents/Text';
-import {useGetOwnRole, useProjectSettings} from '../../hooks/server/projects';
+import {useSelectFile} from '../../hooks/files';
+import {
+  useGetOwnRole,
+  useImportProjectConfig,
+  useProjectSettings,
+} from '../../hooks/server/projects';
 import {Loading} from '../../sharedComponents/Loading';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {COMAPEO_BLUE, MEDIUM_GREY} from '../../lib/styles';
 import {Button} from '../../sharedComponents/Button';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
-import {useSelectFileAndImportConfig} from '../../hooks/useSelectFileAndImportConfig';
 import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../sharedTypes';
+import {convertFileUriToPosixPath} from '../../lib/file-system';
+import noop from '../../lib/noop';
 
 const m = defineMessages({
   navTitle: {
@@ -39,16 +47,22 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
   const {formatMessage} = useIntl();
   const {data, isPending} = useProjectSettings();
   const deviceRole = useGetOwnRole();
-  const selectAndImportConfigMutation = useSelectFileAndImportConfig();
+
+  const selectFileMutation = useSelectFile();
+  const importProjectConfigMutation = useImportProjectConfig();
 
   const isCoordinator =
     deviceRole.data?.roleId === COORDINATOR_ROLE_ID ||
     deviceRole.data?.roleId === CREATOR_ROLE_ID;
 
+  const configImportIsPending =
+    selectFileMutation.status === 'pending' ||
+    importProjectConfigMutation.status === 'pending';
+
   React.useEffect(() => {
     // Prevent back navigation while project creation mutation is pending
     const unsubscribe = navigation.addListener('beforeRemove', event => {
-      if (!selectAndImportConfigMutation.isPending) {
+      if (!configImportIsPending) {
         return;
       }
 
@@ -58,11 +72,32 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
     return () => {
       unsubscribe();
     };
-  }, [navigation, selectAndImportConfigMutation.isPending]);
+  }, [navigation, configImportIsPending]);
 
-  async function importConfigFile() {
+  async function selectAndImportConfigFile() {
     if (!isCoordinator) return;
-    selectAndImportConfigMutation.mutate();
+
+    selectFileMutation.mutate(
+      {
+        copyToCacheDirectory: true,
+        allowedExtensions: ['comapeocat', 'zip'],
+      },
+      {
+        onSuccess: selected => {
+          if (!selected) return;
+          importProjectConfigMutation.mutate(
+            convertFileUriToPosixPath(selected.uri),
+            {
+              onSettled: () => {
+                FileSystem.deleteAsync(selected.uri, {idempotent: true}).catch(
+                  noop,
+                );
+              },
+            },
+          );
+        },
+      },
+    );
   }
 
   if (!data || isPending) {
@@ -89,25 +124,26 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
           <Text>{data.configMetadata.name}</Text>
         </>
       )}
-      {deviceRole.isPending || selectAndImportConfigMutation.isPending ? (
+      {deviceRole.isPending || configImportIsPending ? (
         <UIActivityIndicator style={{marginTop: 20, flex: 0}} />
       ) : isCoordinator ? (
         <Button
           style={{marginTop: 20}}
           fullWidth
           variant="outlined"
-          onPress={importConfigFile}>
+          onPress={selectAndImportConfigFile}>
           <Text style={{color: COMAPEO_BLUE}}>
             {formatMessage(m.importConfig)}
           </Text>
         </Button>
       ) : null}
       <ErrorBottomSheet
-        error={selectAndImportConfigMutation.error}
+        error={selectFileMutation.error || importProjectConfigMutation.error}
         clearError={() => {
-          selectAndImportConfigMutation.reset();
+          selectFileMutation.reset();
+          importProjectConfigMutation.reset();
         }}
-        tryAgain={importConfigFile}
+        tryAgain={selectAndImportConfigFile}
       />
     </View>
   );

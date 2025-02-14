@@ -11,6 +11,7 @@ import {
 import {UIActivityIndicator} from 'react-native-indicators';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
+import {useSelectFile} from '../../../../hooks/files';
 import {usePersistedProjectId} from '../../../../hooks/persistedState/usePersistedProjectId';
 import {useCreateProject} from '../../../../hooks/server/projects';
 import {convertFileUriToPosixPath} from '../../../../lib/file-system';
@@ -21,7 +22,6 @@ import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
 import {Text} from '../../../../sharedComponents/Text';
 import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
-import {selectFile} from '../../../../lib/selectFile';
 
 const m = defineMessages({
   title: {
@@ -72,17 +72,17 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
   const updateActiveProjectId = usePersistedProjectId(
     state => state.setProjectId,
   );
-  const {
-    mutate,
-    isPending,
-    reset,
-    error: projectCreationError,
-  } = useCreateProject();
+  const selectFileMutation = useSelectFile();
+  const createProjectMutation = useCreateProject();
+
+  const mutationIsPending =
+    selectFileMutation.status === 'pending' ||
+    createProjectMutation.status === 'pending';
 
   React.useEffect(() => {
     // Prevent back navigation while project creation mutation is pending
     const unsubscribe = navigation.addListener('beforeRemove', event => {
-      if (!isPending) {
+      if (!mutationIsPending) {
         return;
       }
 
@@ -92,14 +92,14 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
     return () => {
       unsubscribe();
     };
-  }, [navigation, isPending]);
+  }, [navigation, mutationIsPending]);
 
   const {control, handleSubmit} = useForm<ProjectFormType>({
     defaultValues: {projectName: ''},
   });
 
   function handleCreateProject(val: ProjectFormType) {
-    mutate(
+    createProjectMutation.mutate(
       {
         name: val.projectName,
         configPath:
@@ -112,7 +112,9 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
           if (configFileResult?.type === 'success') {
             // No need to block UI on this
             // no-op if something fails here. caches can eventually get cleared by the OS automatically.
-            FileSystem.deleteAsync(configFileResult.file.uri).catch(noop);
+            FileSystem.deleteAsync(configFileResult.file.uri, {
+              idempotent: true,
+            }).catch(noop);
           }
 
           updateActiveProjectId(projectId);
@@ -123,36 +125,24 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
     );
   }
 
-  async function importConfigFile() {
-    try {
-      const asset = await selectFile(['comapeocat']);
-      if (!asset) return;
-      setConfigFileResult({type: 'success', file: asset});
-    } catch (err) {
-      if (err instanceof Error) {
-        setConfigFileResult({type: 'error', error: err});
-      }
-
-      return;
-    }
+  function selectConfigFile() {
+    selectFileMutation.mutate(
+      {
+        copyToCacheDirectory: true,
+        allowedExtensions: ['comapeocat', 'zip'],
+      },
+      {
+        onSuccess: selected => {
+          if (!selected) return;
+          setConfigFileResult({type: 'success', file: selected});
+        },
+        onError: err => {
+          setConfigFileResult({type: 'error', error: err});
+        },
+      },
+    );
   }
 
-  const errorSheetProps =
-    configFileResult?.type === 'error'
-      ? {
-          error: configFileResult.error,
-          clearError: () => setConfigFileResult(null),
-        }
-      : projectCreationError
-        ? {
-            error: projectCreationError,
-            clearError: reset,
-            tryAgain: handleSubmit(handleCreateProject),
-          }
-        : {
-            error: null,
-            clearError: () => {},
-          };
   return (
     <React.Fragment>
       <KeyboardAvoidingView>
@@ -193,7 +183,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
                     fullWidth
                     variant="outlined"
                     onPress={() => {
-                      importConfigFile();
+                      selectConfigFile();
                     }}>
                     {t(m.importConfig)}
                   </Button>
@@ -208,7 +198,8 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
             </View>
           </View>
           <View style={{paddingHorizontal: 20}}>
-            {isPending ? (
+            {selectFileMutation.status === 'pending' ||
+            createProjectMutation.status === 'pending' ? (
               <UIActivityIndicator size={30} style={{marginBottom: 20}} />
             ) : (
               <Button
@@ -221,7 +212,20 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
-      <ErrorBottomSheet {...errorSheetProps} />
+      <ErrorBottomSheet
+        error={selectFileMutation.error || createProjectMutation.error}
+        clearError={() => {
+          selectFileMutation.reset();
+          createProjectMutation.reset();
+        }}
+        tryAgain={
+          selectFileMutation.error
+            ? selectConfigFile
+            : createProjectMutation.error
+              ? handleSubmit(handleCreateProject)
+              : undefined
+        }
+      />
     </React.Fragment>
   );
 };

@@ -175,6 +175,7 @@
     "patch-package": "8.0.0",
     "prettier": "3.5.1",
     "react-native-svg-transformer": "1.5.0",
+    "react-test-renderer": "18.3.1",
     "rimraf": "5.0.5",
     "semver": "7.7.1",
     "type-fest": "4.34.1",

@@ -10,7 +10,7 @@ import {ObservationsListBarIcon} from '../../Navigation/Tab/TabBar/ObservationsL
 import {ObservationListHeaderLeft} from './ObservationListHeaderLeft';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
 import {NoProjectWarning} from './NoProjectWarning';
-import {LIGHT_GREY, WHITE} from '../../lib/styles';
+import {WHITE} from '../../lib/styles';
 import {useAllProjects} from '../../hooks/server/projects';
 import {Loading} from '../../sharedComponents/Loading';
 import {TrackListItem} from './TrackListItem';
@@ -85,10 +85,7 @@ export const ObservationsList: React.FC<
         initialNumToRender={rowsPerWindow}
         getItemLayout={getItemLayout}
         keyExtractor={keyExtractor}
-        style={[
-          styles.container,
-          {borderTopColor: LIGHT_GREY, borderTopWidth: 1},
-        ]}
+        style={styles.container}
         windowSize={3}
         removeClippedSubviews
         renderItem={({item, index}) => {
@@ -137,12 +134,6 @@ export function createNavigationOptions(
     headerLeft: ObservationListHeaderLeft,
     headerTransparent: false,
     headerTitle: formatMessage(ObservationsList.navTitle),
-    headerShadowVisible: true,
-    headerStyle: {
-      elevation: 15,
-      shadowOpacity: 0,
-      borderBottomWidth: 1,
-    },
   };
 }
 

@@ -58,9 +58,9 @@ export function useMostAccurateLocationForObservation() {
       );
 
       // Should not happen because we are checking permissions above, but just in case
-      locationSubscriptionProm.catch(error => {
+      locationSubscriptionProm.catch(() => {
         if (ignore) return;
-        // We should probably set up an error boundary and throw
+        // TODO: We should probably set up an error boundary and throw
       });
 
       return () => {

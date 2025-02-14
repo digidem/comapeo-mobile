@@ -50,16 +50,8 @@ export const CoordinateFormat: NativeNavigationComponent<
 
   const location = useLastKnownLocation();
 
-  const lat = getNestedProperty(
-    location,
-    'position.coords.latitude',
-    EXAMPLE_LOCATION.latitude,
-  );
-  const lon = getNestedProperty(
-    location,
-    'position.coords.longitude',
-    EXAMPLE_LOCATION.longitude,
-  );
+  const lat = location.data?.coords.latitude || EXAMPLE_LOCATION.latitude;
+  const lon = location.data?.coords.longitude || EXAMPLE_LOCATION.longitude;
 
   const options: React.ComponentProps<
     typeof SelectOne<CoordinateFormatType>
@@ -93,12 +85,3 @@ export const CoordinateFormat: NativeNavigationComponent<
 };
 
 CoordinateFormat.navTitle = m.title;
-
-function getNestedProperty<T>(obj: T, path: string, defaultValue: any): any {
-  const keys = path.split('.');
-  return keys.reduce(
-    (acc: any, key: string) =>
-      acc && acc[key] !== undefined ? acc[key] : defaultValue,
-    obj,
-  );
-}

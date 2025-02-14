@@ -9,75 +9,93 @@ import {
 } from '../contexts/PhotoPromiseContext/types';
 
 export function isCoMapeoCoreAttachment(
-  attachment: any,
+  attachment: unknown,
 ): attachment is Attachment {
-  return (
+  return !!(
     attachment &&
     typeof attachment === 'object' &&
+    'name' in attachment &&
     typeof attachment.name === 'string' &&
+    'type' in attachment &&
     typeof attachment.type === 'string' &&
+    'hash' in attachment &&
     typeof attachment.hash === 'string' &&
+    'driveDiscoveryId' in attachment &&
     typeof attachment.driveDiscoveryId === 'string'
   );
 }
 
 export function isAudioAttachment(
-  attachment: any,
+  attachment: unknown,
 ): attachment is AudioAttachment {
   return isCoMapeoCoreAttachment(attachment) && attachment.type === 'audio';
 }
 
-export function isUnsavedAudio(attachment: any): attachment is UnsavedAudio {
-  return (
+export function isUnsavedAudio(
+  attachment: unknown,
+): attachment is UnsavedAudio {
+  return !!(
     attachment &&
     typeof attachment === 'object' &&
+    'uri' in attachment &&
     typeof attachment.uri === 'string' &&
+    'duration' in attachment &&
     typeof attachment.duration === 'number' &&
+    'createdAt' in attachment &&
     typeof attachment.createdAt === 'number'
   );
 }
 
-export function isAudio(attachment: any): attachment is Audio {
+export function isAudio(attachment: unknown): attachment is Audio {
   return isAudioAttachment(attachment) || isUnsavedAudio(attachment);
 }
 
 export function isProcessedDraftPhoto(
-  attachment: any,
+  attachment: unknown,
 ): attachment is ProcessedDraftPhoto {
-  return (
+  return !!(
     attachment &&
     typeof attachment === 'object' &&
+    'type' in attachment &&
     attachment.type === 'processed' &&
+    'draftPhotoId' in attachment &&
     typeof attachment.draftPhotoId === 'string' &&
+    'originalUri' in attachment &&
     typeof attachment.originalUri === 'string' &&
+    'previewUri' in attachment &&
     typeof attachment.previewUri === 'string' &&
+    'thumbnailUri' in attachment &&
     typeof attachment.thumbnailUri === 'string' &&
+    'mediaMetadata' in attachment &&
     attachment.mediaMetadata &&
     typeof attachment.mediaMetadata === 'object'
   );
 }
 
 export function isUnprocessedDraftPhoto(
-  attachment: any,
+  attachment: unknown,
 ): attachment is UnprocessedDraftPhoto {
-  return (
+  return !!(
     attachment &&
     typeof attachment === 'object' &&
+    'unprocessed' in attachment &&
+    'type' in attachment &&
     attachment.type === 'unprocessed' &&
+    'draftPhotoId' in attachment &&
     typeof attachment.draftPhotoId === 'string'
   );
 }
 
-export function isSavedPhoto(attachment: any): attachment is SavedPhoto {
+export function isSavedPhoto(attachment: unknown): attachment is SavedPhoto {
   return isCoMapeoCoreAttachment(attachment) && attachment.type === 'photo';
 }
 
-export function isDraftPhoto(attachment: any): attachment is DraftPhoto {
+export function isDraftPhoto(attachment: unknown): attachment is DraftPhoto {
   return (
     isProcessedDraftPhoto(attachment) || isUnprocessedDraftPhoto(attachment)
   );
 }
 
-export function isPhoto(attachment: any): attachment is Photo {
+export function isPhoto(attachment: unknown): attachment is Photo {
   return isSavedPhoto(attachment) || isDraftPhoto(attachment);
 }

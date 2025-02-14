@@ -12,7 +12,9 @@ const ActiveProjectContext = React.createContext<
 
 export const ActiveProjectProvider = ({
   children,
-}: React.PropsWithChildren<{}>) => {
+}: {
+  children: React.ReactNode;
+}) => {
   const mapeoApi = useClientApi();
 
   const activeProjectId = usePersistedProjectId(store => store.projectId);

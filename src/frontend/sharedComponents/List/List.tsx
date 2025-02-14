@@ -7,7 +7,6 @@ interface ListProp {
   style?: StyleProp<ViewStyle>;
   disablePadding?: boolean;
   subheader?: string;
-  dense?: boolean;
   testID?: string;
 }
 
@@ -16,15 +15,11 @@ export const List = ({
   style,
   disablePadding = false,
   subheader,
-  dense = false,
   testID: testId,
-  ...other
 }: ListProp) => {
-  const context = React.useMemo(() => ({dense}), [dense]);
   return (
     <View
       style={[styles.root, !disablePadding && styles.padding, style]}
-      {...other}
       testID={testId}>
       {subheader && <Text style={styles.subheader}>{subheader}</Text>}
       {children}

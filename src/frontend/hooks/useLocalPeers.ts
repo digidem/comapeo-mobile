@@ -77,6 +77,7 @@ function createLocalPeerState(api: MapeoClientApi) {
 }
 
 // TODO: Move into shared utils
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function shallowEqual(a: any, b: any) {
   if (a === b) return true;
   if (typeof a !== 'object' || typeof b !== 'object') return false;

@@ -3,10 +3,9 @@
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import pluginReact from '@eslint-react/eslint-plugin';
-import {includeIgnoreFile, fixupPluginRules} from '@eslint/compat';
+import {fixupPluginRules, includeIgnoreFile} from '@eslint/compat';
 import pluginJs from '@eslint/js';
 import pluginQuery from '@tanstack/eslint-plugin-query';
-// @ts-expect-error Requires updating tsconfig (see https://github.com/typescript-eslint/typescript-eslint/issues/7284)
 import * as tsParser from '@typescript-eslint/parser';
 import pluginJest from 'eslint-plugin-jest';
 import pluginReactNative from 'eslint-plugin-react-native';
@@ -68,34 +67,34 @@ const frontendConfig = pluginTs.config(
         name: 'eslint-plugin-react-native',
         plugins: {
           'react-native': fixupPluginRules({
-            // @ts-expect-error
+            // @ts-expect-error Incorrect typing from dep
             rules: pluginReactNative.rules,
           }),
         },
-        rules: {
-          ...pluginReactNative.configs.all.rules,
-          'react-native/sort-styles': 'off',
-          'react-native/no-inline-styles': 'off',
-          'react-native/no-color-literals': 'warn',
-        },
+        rules: pluginReactNative.configs.all.rules,
       },
     ],
     rules: {
-      // Allow unused vars if prefixed with `_` (https://typescript-eslint.io/rules/no-unused-vars/)
-      '@typescript-eslint/no-unused-vars': [
-        'error',
-        {
-          args: 'all',
-          argsIgnorePattern: '^_',
-          caughtErrors: 'all',
-          caughtErrorsIgnorePattern: '^_',
-          destructuredArrayIgnorePattern: '^_',
-          varsIgnorePattern: '^_',
-          ignoreRestSiblings: true,
-        },
-      ],
-      '@typescript-eslint/no-require-imports': 'warn',
+      // Some React Native libraries use the subscription return approach
+      '@eslint-react/web-api/no-leaked-event-listener': 'off',
+      // Not relevant for React Native
       '@eslint-react/web-api/no-leaked-resize-observer': 'off',
+      // There are some cases in app code when it's needed
+      '@typescript-eslint/no-require-imports': 'off',
+      // Can be bothersome while prototyping
+      '@typescript-eslint/no-unused-vars': 'off',
+      // Relatively harmless
+      'react-native/no-unused-styles': 'off',
+      // Doesn't work well with custom components that wrap Text component
+      'react-native/no-raw-text': 'off',
+      // We only work on Android for now
+      'react-native/split-platform-components': 'off',
+      // Relatively harmless
+      'react-native/no-color-literals': 'off',
+      // Relatively harmless
+      'react-native/no-inline-styles': 'off',
+      // Relatively harmless
+      'react-native/sort-styles': 'off',
     },
     languageOptions: {
       parser: tsParser,
@@ -104,7 +103,7 @@ const frontendConfig = pluginTs.config(
   {
     ...pluginJest.configs['flat/recommended'],
     name: 'eslint-plugin-jest',
-    files: ['src/frontend/**/*.test.{js,jsx,ts,tsx}'],
+    files: ['src/frontend/**/*.test.{js,jsx,mts,ts,tsx}'],
   },
 );
 

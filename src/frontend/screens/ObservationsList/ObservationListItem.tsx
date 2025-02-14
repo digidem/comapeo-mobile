@@ -35,7 +35,7 @@ function ObservationListItemNotMemoized({
   style,
   observation,
   testID,
-  onPress = () => {},
+  onPress,
 }: ObservationListItemProps) {
   const {preset} = useObservationWithPreset(observation.docId);
   const {data: deviceInfo, status: deviceInfoQueryStatus} = useDeviceInfo();

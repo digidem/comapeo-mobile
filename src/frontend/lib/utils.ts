@@ -134,7 +134,7 @@ export function convertToUTM({lat, lon}: {lat: number; lon: number}) {
   try {
     const {easting, northing, zoneNum, zoneLetter} = fromLatLon(lat, lon);
     return `UTM ${zoneNum}${zoneLetter} ${easting.toFixed()} ${northing.toFixed()}`;
-  } catch (e) {
+  } catch {
     // Some coordinates (e.g. < 80S or 84N) cannot be formatted as UTM
     return `${lat >= 0 ? '+' : ''}${lat.toFixed(6)}°, ${
       lon >= 0 ? '+' : ''
@@ -231,6 +231,7 @@ export function matchPreset(
     const presetTagsCount = Object.keys(preset.tags).length;
 
     for (const key in preset.tags) {
+      // eslint-disable-next-line no-prototype-builtins
       if (preset.tags.hasOwnProperty(key)) {
         const presetTag = preset.tags[key];
         const availableTag = availableTags[key];

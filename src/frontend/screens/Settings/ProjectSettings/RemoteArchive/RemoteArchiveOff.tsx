@@ -52,7 +52,7 @@ export const RemoteArchiveOff: NativeNavigationComponent<
   return (
     <View style={styles.container}>
       <HeaderText variant="header2" style={styles.title}>
-        {formatMessage(m.remoteArchiveOff)}{' '}
+        {formatMessage(m.remoteArchiveOff) + ' '}
       </HeaderText>
       <BodyText style={{marginTop: 20}}>
         {formatMessage(m.dataNotShared)}

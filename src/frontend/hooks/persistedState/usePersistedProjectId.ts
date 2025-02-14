@@ -6,7 +6,7 @@ type ProjectIdSlice = {
   setProjectId: (id?: string) => void;
 };
 
-const projectIdSlice: StateCreator<ProjectIdSlice> = (set, get) => ({
+const projectIdSlice: StateCreator<ProjectIdSlice> = set => ({
   projectId: undefined,
   setProjectId: projectId => set({projectId}),
 });

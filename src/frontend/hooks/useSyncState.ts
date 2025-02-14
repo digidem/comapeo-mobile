@@ -36,6 +36,7 @@ function useSyncStore() {
  * @returns
  */
 export function useSyncState<S = SyncState | null>(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   selector: (state: SyncState | null) => S = identity as any,
 ): S {
   const syncStore = useSyncStore();

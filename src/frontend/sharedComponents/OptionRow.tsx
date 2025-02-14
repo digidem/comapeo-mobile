@@ -3,11 +3,12 @@ import {View, StyleSheet} from 'react-native';
 import {TouchableNativeFeedback} from '../sharedComponents/Touchables';
 import {VERY_LIGHT_BLUE} from '../lib/styles';
 
-interface Props extends React.PropsWithChildren<{}> {
+export const OptionRow = ({
+  children,
+  onPress,
+}: React.PropsWithChildren<{
   onPress: () => void;
-}
-
-export const OptionRow = ({children, onPress}: Props) => (
+}>) => (
   <View style={styles.optionContainer}>
     <View style={styles.pressableContainer}>
       <TouchableNativeFeedback

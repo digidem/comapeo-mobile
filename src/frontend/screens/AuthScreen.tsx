@@ -33,15 +33,14 @@ export const AuthScreen = ({
   const scrollViewRef = React.useRef<ScrollView>(null);
 
   React.useEffect(() => {
-    function disableBack(e: any) {
+    const unsubscribe = navigation.addListener('beforeRemove', event => {
       if (authState !== 'unauthenticated') return;
       // Prevent back if unauthenticated
-      e.preventDefault();
-    }
-    navigation.addListener('beforeRemove', disableBack);
+      event.preventDefault();
+    });
 
     return () => {
-      navigation.removeListener('beforeRemove', disableBack);
+      unsubscribe();
     };
   }, [authState, navigation]);
 
@@ -72,7 +71,7 @@ export const AuthScreen = ({
   function validatePass(passValue: string) {
     try {
       authenticate(passValue);
-    } catch (err) {
+    } catch {
       scrollViewRef.current?.scrollToEnd();
       setError(true);
     }

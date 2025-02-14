@@ -57,7 +57,6 @@ export const PhotoPreviewModal: FC<
   useEffect(() => {
     navigation.setOptions({
       headerShown: showHeader,
-      // eslint-disable-next-line react/no-unstable-nested-components -- it's correct syntax
       headerRight: () =>
         photo.type === 'processed' ? (
           <TouchableOpacity

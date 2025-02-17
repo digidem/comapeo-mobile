@@ -26,19 +26,19 @@
     "message": "¿Quieres descartar la observación?"
   },
   "AudioPlaybackScreen.DeleteAudioRecordingModal.successDescription": {
-    "message": "Your <bold>{audioRecording}</bold> was added."
+    "message": "Tu <bold>{audioRecording}</bold> ha sido añadida."
   },
   "AudioPlaybackScreen.DeleteAudioRecordingModal.successTitle": {
     "message": "¡Éxito!"
   },
   "AudioPlaybackScreen.SuccessAudioRecordingModal.audioRecording": {
-    "message": "Audio Recording"
+    "message": "Grabación de audio"
   },
   "AudioPlaybackScreen.SuccessAudioRecordingModal.recordAnother": {
-    "message": "Record Another"
+    "message": "Graba otra"
   },
   "AudioPlaybackScreen.SuccessAudioRecordingModal.returnToEditor": {
-    "message": "Return to Editor"
+    "message": "Volver al editor"
   },
   "Modal.GPSDisable.button": {
     "message": "Habilitar"
@@ -86,7 +86,7 @@
     "message": "Actualmente estás mapeando por tu cuenta"
   },
   "Navigation.Drawer.privacyPolicy": {
-    "message": "Privacy Policy"
+    "message": "Política de privacidad"
   },
   "Navigation.Drawer.projName": {
     "message": "Proyecto {projectName}"
@@ -118,106 +118,106 @@
     "message": "¿Descartar cambios?"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
-    "message": "When project participants sync their data, they will also be archived on the internet. Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data."
+    "message": "Cuando las personas que participan en el proyecto intercambian sus datos, también se archivarán en Internet. Los datos de tu proyecto se están sincronizando con el archivo a través de internet con el servidor seguro y cifrado a continuación. La persona propietaria del servidor puede ver los datos."
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.invalidUrl": {
-    "message": "Invalid URL"
+    "message": "URL no válida"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.looking": {
-    "message": "Looking for Remote Archive..."
+    "message": "Buscando archivo remoto..."
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.navTitle": {
-    "message": "Add Remote Archive"
+    "message": "Añadir archivo remoto"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.permission": {
-    "message": "Only a Project Coordinator can turn off Remote Archive."
+    "message": "Sólo una persona coordinadora del proyecto puede desactivar el archivo remoto."
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.url": {
     "message": "Url"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.whatsIncluded": {
-    "message": "See What is Included"
+    "message": "Ve lo que está incluido"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.youAreAdding": {
-    "message": "You are adding:"
+    "message": "Estás añadiendo"
   },
   "ProjectSettings.RemoteArchive.Coordinator.addArchive": {
-    "message": "+ Add Remote Archive"
+    "message": "+ Añadir archivo remoto"
   },
   "ProjectSettings.RemoteArchive.Coordinator.dataNotShared": {
-    "message": "The data in your project is not shared over the internet. Only people in your project can see your data."
+    "message": "Los datos de tu proyecto no se comparten a través de Internet. Sólo las personas de tu proyecto pueden ver tus datos."
   },
   "ProjectSettings.RemoteArchive.Coordinator.experimentalFeature": {
-    "message": "This is an experimental feature. You need a Remote Archive URL to enable Remote Archive."
+    "message": "Esta es una función experimental. Necesita una URL de archivo remoto para habilitar el archivo remoto."
   },
   "ProjectSettings.RemoteArchive.Coordinator.noServers": {
-    "message": "No servers have been added to this project"
+    "message": "No se han añadido servidores a este proyecto"
   },
   "ProjectSettings.RemoteArchive.Coordinator.remoteArchiveOff": {
-    "message": "Remote Archive is Off"
+    "message": "Archivo remoto está desactivado"
   },
   "ProjectSettings.RemoteArchive.RemoteArchiveOn": {
-    "message": "Remote Archive is On"
+    "message": "Archivo remoto está activado"
   },
   "ProjectSettings.RemoteArchive.Success.archiveAdded": {
-    "message": "Remote Archive Added"
+    "message": "Archivo remoto añadido"
   },
   "ProjectSettings.RemoteArchive.Success.canSyncOnInternet": {
-    "message": "All project devices can sync with this Archive, sharing data over the internet."
+    "message": "Todos los dispositivos del proyecto pueden sincronizarse con este Archivo, compartiendo datos a través de Internet."
   },
   "ProjectSettings.RemoteArchive.Success.close": {
-    "message": "Close"
+    "message": "Cerrar"
   },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.close": {
-    "message": "Close"
+    "message": "Cerrar"
   },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.deviceNames": {
-    "message": "Device Names"
+    "message": "Nombre del dispositivo"
   },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.observations": {
-    "message": "Observations (including photos and audio)"
+    "message": "Observaciones (incluyendo fotos y audio)"
   },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.projectSettings": {
-    "message": "Project Settings (categories, questions)"
+    "message": "Configuración del proyecto (categorías, preguntas)"
   },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.title": {
-    "message": "What is Included"
+    "message": "Qué está incluido"
   },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.tracks": {
-    "message": "Tracks"
+    "message": "Trayectos"
   },
   "ProjectSettings.RemoteArchive.coordinatorCanTurnOff": {
-    "message": "Only a Project Coordinator can turn off Remote Archive."
+    "message": "Sólo una persona coordinadora del proyecto puede desactivar el archivo remoto."
   },
   "ProjectSettings.RemoteArchive.dateAdded": {
-    "message": "Date Added"
+    "message": "Fecha agregada"
   },
   "ProjectSettings.RemoteArchive.deviceNames": {
-    "message": "Device Names"
+    "message": "Nombres del dispositivo"
   },
   "ProjectSettings.RemoteArchive.navTitle": {
-    "message": "Remote Archive"
+    "message": "Archivo remoto"
   },
   "ProjectSettings.RemoteArchive.observations": {
-    "message": "Observations (including photos and audio)"
+    "message": "Observaciones (incluyendo fotos y audio)"
   },
   "ProjectSettings.RemoteArchive.projectSettings": {
-    "message": "Project Settings (categories, questions)"
+    "message": "Configuración del proyecto (categorías, preguntas)"
   },
   "ProjectSettings.RemoteArchive.remove": {
-    "message": "Remove the server to stop Remote Archive."
+    "message": "Elimina el servidor para detener el archivo remoto."
   },
   "ProjectSettings.RemoteArchive.serverName": {
-    "message": "Server Name"
+    "message": "Nombre del servidor"
   },
   "ProjectSettings.RemoteArchive.syncWithInternet": {
-    "message": "Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data."
+    "message": "Los datos de su proyecto están sincronizando con el archivo a través de internet con el servidor seguro y cifrado a continuación. La persona propietaria del servidor puede ver los datos."
   },
   "ProjectSettings.RemoteArchive.thisIncludes": {
-    "message": "This includes"
+    "message": "Esto incluye"
   },
   "ProjectSettings.RemoteArchive.tracks": {
-    "message": "Tracks"
+    "message": "Trayectos"
   },
   "SaveTrack.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -250,16 +250,16 @@
     "message": "Mostrar idioma para la aplicación"
   },
   "Screens.Settings.AppSettings.mapManagement": {
-    "message": "Map Management"
+    "message": "Gestión de mapas"
   },
   "Screens.Settings.AppSettings.mapManagementDesc": {
-    "message": "Backgrounds, Map Data"
+    "message": "Fondos, datos del mapa"
   },
   "Screens.Settings.AppSettings.title": {
     "message": "Ajustes de la aplicación"
   },
   "Screens.Settings.ProjectSettings.RemoteArchive": {
-    "message": "Remote Archive"
+    "message": "Archivo remoto"
   },
   "Screens.Settings.ProjectSettings.deviceName": {
     "message": "Nombre del dispositivo"
@@ -268,10 +268,10 @@
     "message": "Ajustes de sincronización"
   },
   "Screens.Settings.ProjectSettings.remoteArchiveOff": {
-    "message": "Remote Archive is OFF"
+    "message": "Archivo remoto está desactivado"
   },
   "Screens.Settings.ProjectSettings.remoteArchiveOn": {
-    "message": "Remote Archive is ON"
+    "message": "Archivo remoto está activado"
   },
   "Screens.Settings.ProjectSettings.title": {
     "message": "Configuración del proyecto"
@@ -493,10 +493,10 @@
     "message": "Grabando audio con CoMapeo"
   },
   "screens.AudioScreen.CreateRecording.RecordingActive.description": {
-    "message": "Less than {length} {length, plural, one {minute} other {minutes}} left"
+    "message": "¡Menos de {length} {length, plural, one {minuto} other {minutos}}"
   },
   "screens.AudioScreen.CreateRecording.RecordingDone.deleteBottomSheetDescription": {
-    "message": "Your Audio Recording will be permanently deleted. This cannot be undone."
+    "message": "Tu grabación de audio se eliminará permanentemente. Esto no se puede deshacer."
   },
   "screens.AudioScreen.CreateRecording.RecordingDone.deleteBottomSheetPrimaryButtonText": {
     "message": "Borrar"
@@ -505,13 +505,13 @@
     "message": "Cancelar"
   },
   "screens.AudioScreen.CreateRecording.RecordingDone.deleteBottomSheetTitle": {
-    "message": "Delete?"
+    "message": "Borrar?"
   },
   "screens.AudioScreen.CreateRecording.RecordingIdle.description": {
-    "message": "Record up to {length} {length, plural, one {minute} other {minutes}}"
+    "message": "¡Menos de {length} {length, plural, one {minuto} other {minutos}}"
   },
   "screens.AudioScreen.ExistingRecording.deleteBottomSheetDescription": {
-    "message": "Your Audio Recording will be permanently deleted. This cannot be undone."
+    "message": "Tu grabación de audio se eliminará permanentemente. Esto no se puede deshacer."
   },
   "screens.AudioScreen.ExistingRecording.deleteBottomSheetPrimaryButtonText": {
     "message": "Borrar"
@@ -520,7 +520,7 @@
     "message": "Cancelar"
   },
   "screens.AudioScreen.ExistingRecording.deleteBottomSheetTitle": {
-    "message": "Delete?"
+    "message": "Borrar?"
   },
   "screens.AudioScreen.Playback.description": {
     "message": "Total length: {length}"

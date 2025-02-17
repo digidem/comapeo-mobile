@@ -55,6 +55,7 @@ export function AudioRecording({
         if (!uri) {
           throw new Error('Recording is done, but no URI is available.');
         }
+        // User cannot navigate back to the Audio Recording Screen. Using replace guarantees it is not in the stack anymore
         navigation.replace('AudioPlaybackUnsavedReview', {
           uri,
           duration: timeElapsed,

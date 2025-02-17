@@ -27,6 +27,7 @@ export function AudioCustomHeaderLeft({
           duration,
           createdAt: Date.now(),
         });
+        // User cannot navigate back to the Audio Playback (unsaved) screen. Using replace guarantees it is not in the stack anymore.
         navigation.replace('AudioSavedBottomSheet');
       }}
       backImage={backImageProps => (

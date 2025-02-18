@@ -2,7 +2,8 @@ import {useState, useCallback} from 'react';
 import {Audio} from 'expo-av';
 
 export function useAudioRecording() {
-  const [recording, setRecording] = useState<Audio.Recording | null>(null);
+  const [recordingPromise, setRecordingPromise] =
+    useState<Promise<Audio.Recording> | null>(null);
   const [status, setStatus] = useState<Audio.RecordingStatus | null>(null);
   const [error, setError] = useState<Error | null>(null);
 
@@ -14,24 +15,27 @@ export function useAudioRecording() {
 
   const reset = useCallback(async () => {
     try {
-      if (recording) {
+      if (recordingPromise) {
+        const recording = await recordingPromise;
         await recording.stopAndUnloadAsync();
       }
-      setRecording(null);
+      setRecordingPromise(null);
       setStatus(null);
       setError(null);
     } catch (err) {
       handleError(err);
     }
-  }, [recording, handleError]);
+  }, [recordingPromise, handleError]);
 
   const startRecording = useCallback(async () => {
     try {
-      const {recording: audioRecording} = await Audio.Recording.createAsync(
+      const newRecordingPromise = Audio.Recording.createAsync(
         Audio.RecordingOptionsPresets.HIGH_QUALITY,
         stat => setStatus(stat),
-      );
-      setRecording(audioRecording);
+      ).then(({recording}) => {
+        return recording;
+      });
+      setRecordingPromise(newRecordingPromise);
     } catch (err) {
       handleError(err);
     }
@@ -39,20 +43,14 @@ export function useAudioRecording() {
 
   const stopRecording = useCallback(async () => {
     try {
-      if (!recording) return;
+      if (!recordingPromise) return;
+      const recording = await recordingPromise;
       await recording.stopAndUnloadAsync();
       return recording.getURI();
     } catch (err) {
       handleError(err);
     }
-  }, [recording, handleError]);
+  }, [recordingPromise, handleError]);
 
-  return {
-    reset,
-    startRecording,
-    stopRecording,
-    status,
-    error,
-    setError,
-  };
+  return {reset, startRecording, stopRecording, status, error, setError};
 }

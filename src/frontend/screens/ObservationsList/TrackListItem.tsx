@@ -7,6 +7,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import TrackIcon from '../../images/Track.svg';
 import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
 import {sharedStyles} from './shared.ts';
+import {useDeviceInfo} from '../../hooks/server/deviceInfo.ts';
 
 const m = defineMessages({
   track: {
@@ -20,7 +21,6 @@ interface ObservationListItemProps {
   track: Track;
   testID: string;
   onPress: () => void;
-  deviceId: string | undefined;
 }
 
 const TrackObservationItemNotMemoized = ({
@@ -28,14 +28,15 @@ const TrackObservationItemNotMemoized = ({
   track,
   testID,
   onPress,
-  deviceId,
 }: ObservationListItemProps) => {
   const {formatMessage} = useIntl();
   const {data: createdByDeviceId} = useOriginalVersionIdToDeviceId(
     track.originalVersionId,
   );
+  const {data: deviceInfo} = useDeviceInfo();
 
-  const isMine = createdByDeviceId && createdByDeviceId === deviceId;
+  const isMine =
+    createdByDeviceId && createdByDeviceId === deviceInfo?.deviceId;
   return (
     <TouchableHighlight
       onPress={onPress}
@@ -88,10 +89,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   title: {fontSize: 18, fontWeight: '700', color: 'black'},
-  photoContainer: {
-    position: 'relative',
-    marginRight: -5,
-  },
+  photoContainer: {position: 'relative', marginRight: -5},
   photo: {
     borderRadius: 5,
     overflow: 'hidden',
@@ -104,8 +102,5 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
   },
   smallIconContainer: {position: 'absolute', right: -3, bottom: -3},
-  touchable: {
-    flex: 1,
-    height: 80,
-  },
+  touchable: {flex: 1, height: 80},
 });

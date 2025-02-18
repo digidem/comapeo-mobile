@@ -15,13 +15,13 @@ import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
 import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
 import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
 import {sharedStyles} from './shared.ts';
+import {useDeviceInfo} from '../../hooks/server/deviceInfo.ts';
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;
   observation: Observation;
   testID: string;
   onPress: (id: string) => void;
-  deviceId: string | undefined;
 }
 
 type PhotoAttachment = Omit<Attachment, 'type'> & {type: 'photo'};
@@ -37,7 +37,6 @@ function ObservationListItemNotMemoized({
   observation,
   testID,
   onPress = () => {},
-  deviceId,
 }: ObservationListItemProps) {
   const {preset} = useObservationWithPreset(observation.docId);
 
@@ -47,7 +46,10 @@ function ObservationListItemNotMemoized({
     observation.originalVersionId,
   );
 
-  const isMine = createdByDeviceId && createdByDeviceId === deviceId;
+  const {data: deviceInfo} = useDeviceInfo();
+
+  const isMine =
+    createdByDeviceId && createdByDeviceId === deviceInfo?.deviceId;
 
   return (
     <TouchableHighlight
@@ -92,11 +94,7 @@ function ObservationListItemNotMemoized({
 
 function PhotoStack({photos}: {photos: PhotoAttachment[]}) {
   return (
-    <View
-      style={{
-        width: 60 + (photos.length - 1) * photoOverlap,
-        height: 60,
-      }}>
+    <View style={{width: 60 + (photos.length - 1) * photoOverlap, height: 60}}>
       {photos.map((photo, idx) => (
         <PhotoAttachmentView
           key={`${photo.driveDiscoveryId}/${photo.type}/${photo.name}`}
@@ -130,10 +128,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   title: {fontSize: 18, fontWeight: '700', color: 'black'},
-  photoContainer: {
-    position: 'relative',
-    marginRight: -5,
-  },
+  photoContainer: {position: 'relative', marginRight: -5},
   photo: {
     borderRadius: 5,
     overflow: 'hidden',

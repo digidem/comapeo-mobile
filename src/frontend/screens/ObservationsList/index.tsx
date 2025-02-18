@@ -17,7 +17,6 @@ import {TrackListItem} from './TrackListItem';
 import {useObservations} from '../../hooks/server/observations';
 import {useTracks} from '../../hooks/server/track';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {useDeviceInfo} from '../../hooks/server/deviceInfo';
 
 const m = defineMessages({
   loading: {
@@ -54,13 +53,10 @@ const keyExtractor = (item: Observation | Track) => item.docId;
 
 export const ObservationsList: React.FC<
   NativeHomeTabsNavigationProps<'ObservationsList'>
-> & {
-  navTitle: MessageDescriptor;
-} = ({navigation}) => {
+> & {navTitle: MessageDescriptor} = ({navigation}) => {
   const {data: observations, isFetching} = useObservations();
   const {data: tracks} = useTracks();
   const {data, isPending} = useAllProjects();
-  const {data: deviceInfo} = useDeviceInfo();
 
   const rowsPerWindow = Math.ceil(
     (Dimensions.get('window').height - 65) / OBSERVATION_CELL_HEIGHT,
@@ -100,7 +96,6 @@ export const ObservationsList: React.FC<
                 <ObservationListItem
                   key={item.docId}
                   testID={`observationListItem:${index}`}
-                  deviceId={deviceInfo?.deviceId}
                   observation={item}
                   style={styles.listItem}
                   onPress={() =>
@@ -114,7 +109,6 @@ export const ObservationsList: React.FC<
               return (
                 <TrackListItem
                   key={item.docId}
-                  deviceId={deviceInfo?.deviceId}
                   testID={`trackListItem:${index}`}
                   track={item}
                   style={styles.listItem}
@@ -142,30 +136,21 @@ export function createNavigationOptions(
     headerTransparent: false,
     headerTitle: formatMessage(ObservationsList.navTitle),
     headerShadowVisible: true,
-    headerStyle: {
-      elevation: 15,
-      shadowOpacity: 0,
-      borderBottomWidth: 1,
-    },
+    headerStyle: {elevation: 15, shadowOpacity: 0, borderBottomWidth: 1},
   };
 }
 
 ObservationsList.navTitle = m.observationListTitle;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: WHITE,
-  },
+  container: {flex: 1, backgroundColor: WHITE},
   messageContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
   },
-  listItem: {
-    height: OBSERVATION_CELL_HEIGHT,
-  },
+  listItem: {height: OBSERVATION_CELL_HEIGHT},
   scrollViewContent: {
     flex: 1,
     flexDirection: 'column',

@@ -73,7 +73,7 @@ TaskManager.defineTask(
   },
 );
 
-const persistedDrafObservationStore = createDraftObservationStore({
+const persistedDraftObservationStore = createDraftObservationStore({
   persist: true,
 });
 
@@ -96,7 +96,7 @@ const App = () => {
       mapeoApi={mapeoApi}
       appMetrics={appDiagnosticMetrics}
       deviceMetrics={deviceDiagnosticMetrics}
-      persistedDrafObservationStore={persistedDrafObservationStore}>
+      persistedDrafObservationStore={persistedDraftObservationStore}>
       <AppNavigator permissionAsked={permissionsAsked} />
     </AppProviders>
   );

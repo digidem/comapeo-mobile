@@ -10,11 +10,11 @@ import {
   convertPosition,
 } from './PersistedStores/DraftObservationStore.ts';
 
-export function useDraftObservationInstance(): DraftState;
-export function useDraftObservationInstance<T>(
+export function useDraftObservationState(): DraftState;
+export function useDraftObservationState<T>(
   selector: (state: DraftState) => T,
 ): T;
-export function useDraftObservationInstance<T>(
+export function useDraftObservationState<T>(
   selector?: (state: DraftState) => T,
 ) {
   const {instance} = useDraftObservationContext();

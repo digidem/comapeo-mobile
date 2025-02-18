@@ -76,7 +76,7 @@ export function useBearActions() {
 
 Main things to note:
 
-- We are returning the store state as `instance` and the actions that manipulate the state as `actions`
+- We are returning the store instance as `instance` but in the hooks we return the store state.
 - In our implementation, actions are created separately from the instance. This differs from Zustand as their documentation suggests that the store should contain both the state (instance) and its actions. Zustand suggests:
 
 ```ts

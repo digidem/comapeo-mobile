@@ -163,7 +163,7 @@
     "message": "Archivo remoto añadido"
   },
   "ProjectSettings.RemoteArchive.Success.canSyncOnInternet": {
-    "message": "Todos los dispositivos del proyecto pueden sincronizarse con este Archivo, compartiendo datos a través de Internet."
+    "message": "Todos los dispositivos del proyecto pueden intercambiar datos con este Archivo, compartiendo datos a través de Internet."
   },
   "ProjectSettings.RemoteArchive.Success.close": {
     "message": "Cerrar"
@@ -523,7 +523,7 @@
     "message": "Borrar?"
   },
   "screens.AudioScreen.Playback.description": {
-    "message": "Total length: {length}"
+    "message": "Duración total: {length}"
   },
   "screens.CameraScreen.goToSettings": {
     "message": "Ir a ajustes"
@@ -857,13 +857,13 @@
     "message": "Número de zona"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
-    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
+    "message": "CoMapeo recopila datos de ubicación para rastrear la ruta en el mapa, incluso cuando la aplicación está cerrada. Los datos de tu ubicación sólo se almacenan por defecto en tu dispositivo y no se almacenan ni envían a ninguna parte."
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Turn On"
+    "message": "Activar"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
-    "message": "Use Your Location"
+    "message": "Usar tu ubicación"
   },
   "screens.MediaSyncActionSheetContent.cancel": {
     "message": "Cancelar"
@@ -918,7 +918,7 @@
     "message": "Enviar"
   },
   "screens.Observation.TrackList.track": {
-    "message": "Track"
+    "message": "Trayecto"
   },
   "screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
@@ -1388,73 +1388,73 @@
     "message": "Qué es un Proyecto"
   },
   "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.acceptedFileTypes": {
-    "message": "Accepted file types are .smp"
+    "message": "Los tipos de archivo aceptados son .smp"
   },
   "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.chooseFile": {
-    "message": "Choose File"
+    "message": "Elegir archivo"
   },
   "screens.Settings.MapManagement.BackgroundMaps.about": {
-    "message": "About Custom Map"
+    "message": "Acerca de mapa personalizado"
   },
   "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
-    "message": "This cannot be undone."
+    "message": "Esta acción no se puede deshacer."
   },
   "screens.Settings.MapManagement.BackgroundMaps.close": {
-    "message": "Close"
+    "message": "Cerrar"
   },
   "screens.Settings.MapManagement.BackgroundMaps.customMapAddedDescription": {
-    "message": "You will see this map when you are offline, but you will not see a map outside the area defined in your custom map."
+    "message": "Verás este mapa cuando tu dispositivo esté desconectado, pero no verás un mapa fuera del área definida en tu mapa personalizado."
   },
   "screens.Settings.MapManagement.BackgroundMaps.customMapAddedTitle": {
-    "message": "Custom Map Added"
+    "message": "Mapa personalizado añadido"
   },
   "screens.Settings.MapManagement.BackgroundMaps.customMapInfoLoadError": {
-    "message": "Could not get custom map information from file. Please remove it or choose a different file."
+    "message": "No se pudo obtener la información del mapa personalizado del archivo. Por favor, elimínala o elige un archivo diferente."
   },
   "screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapDescription": {
-    "message": "This will delete the map and its offline areas. No collected observation data will be deleted."
+    "message": "Esto eliminará el mapa y sus áreas sin conexión. No se eliminarán los datos de observación recolectados."
   },
   "screens.Settings.MapManagement.BackgroundMaps.deleteCustomMapTitle": {
-    "message": "Delete Custom Map?"
+    "message": "¿Eliminar mapa personalizado?"
   },
   "screens.Settings.MapManagement.BackgroundMaps.deleteMapButtonText": {
-    "message": "Delete Map"
+    "message": "Eliminar mapa"
   },
   "screens.Settings.MapManagement.BackgroundMaps.description1": {
-    "message": "Adding a custom map will enable you to see a map when you are offline."
+    "message": "Añadir un mapa personalizado te permitirá ver un mapa cuando estés sin internet."
   },
   "screens.Settings.MapManagement.BackgroundMaps.description2": {
-    "message": "Your custom map is not shared with other devices in your project."
+    "message": "Tu mapa personalizado no se comparte con otros dispositivos de tu proyecto."
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorDescription": {
-    "message": "Unable to import the file. Please go back and try again."
+    "message": "No se puede importar el archivo. Por favor, regresa e inténtalo de nuevo."
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
-    "message": "Import Error"
+    "message": "Error al importar"
   },
   "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
-    "message": "Remove Map File"
+    "message": "Eliminar archivo de mapa"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
-    "message": "Background Maps"
+    "message": "Mapas de fondo"
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.dateAdded": {
-    "message": "Date Added"
+    "message": "Fecha agregada"
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.mapNameColumn": {
-    "message": "Map Name"
+    "message": "Nombre del mapa"
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.removeMap": {
-    "message": "Remove Map"
+    "message": "Eliminar mapa"
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
     "message": "{value} MB"
   },
   "screens.Settings.MapManagement.backgroundMaps": {
-    "message": "Background Maps"
+    "message": "Mapas de fondo"
   },
   "screens.Settings.MapManagement.screenTitle": {
-    "message": "Map Management"
+    "message": "Gestión de mapas"
   },
   "screens.Settings.YourTeam.InviteDeclined": {
     "message": "Invitación rechazada"
@@ -1509,10 +1509,10 @@
     "message": "Todos los datos están sincronizados"
   },
   "screens.Sync.ProjectSyncDisplay.devicesAvailableToSync": {
-    "message": "Devices available"
+    "message": "Dispositivos disponibles"
   },
   "screens.Sync.ProjectSyncDisplay.devicesFound": {
-    "message": "Devices found"
+    "message": "Dispositivos encontrados"
   },
   "screens.Sync.ProjectSyncDisplay.noDevicesAvailableToSync": {
     "message": "No hay dispositivos disponibles para sincronizar"
@@ -1524,7 +1524,7 @@
     "message": "Esperando…"
   },
   "screens.Sync.ProjectSyncDisplay.progressLabelWithDeviceCount": {
-    "message": "Waiting for other devices"
+    "message": "Esperando a otros dispositivos"
   },
   "screens.Sync.ProjectSyncDisplay.startSync": {
     "message": "Iniciar Sincronización"
@@ -1536,13 +1536,13 @@
     "message": "{value}%"
   },
   "screens.Sync.ProjectSyncDisplay.syncingCompleteButWaitingForOthers": {
-    "message": "Complete! Waiting for other devices to join"
+    "message": "¡Completado! Esperando a que se unan otros dispositivos"
   },
   "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
     "message": "¡Listo! Ya te actualizaste"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "You are syncing with your team"
+    "message": "Estás intercambiando con tu equipo"
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
     "message": "Esperando a los dispositivos"
@@ -1551,28 +1551,28 @@
     "message": "Cancelar"
   },
   "screens.SyncEverythingBottomSheet.confirm": {
-    "message": "Sync Everything"
+    "message": "Sincronizar todo"
   },
   "screens.SyncEverythingBottomSheet.syncEverything": {
-    "message": "Sync Everything?"
+    "message": "¿Sincronizar todo?"
   },
   "screens.SyncEverythingBottomSheet.syncEverythingDescription": {
-    "message": "You are about to sync everything. This may increase the disk space used on your device."
+    "message": "Está a punto de sincronizar todo. Esto puede aumentar el espacio de disco usado en tu dispositivo."
   },
   "screens.SyncPreviewBottomSheet.cancel": {
     "message": "Cancelar"
   },
   "screens.SyncPreviewBottomSheet.confirm": {
-    "message": "Sync Previews"
+    "message": "Sincronizar vistas previas"
   },
   "screens.SyncPreviewBottomSheet.syncPreviewWarningBottomSheet": {
-    "message": "You will no longer sync Audio or Video."
+    "message": "Ya no sincronizarás Audio o Video."
   },
   "screens.SyncPreviewBottomSheet.syncPreviewsButtonBottomSheet": {
-    "message": "Sync Previews?"
+    "message": "¿Sincronizar vistas previas?"
   },
   "screens.SyncPreviewBottomSheet.syncPreviewsDescriptionBottomSheet": {
-    "message": "Your device will keep all existing data but new observations will sync in a smaller, preview size."
+    "message": "Tu dispositivo mantendrá todos los datos existentes, pero las nuevas observaciones se sincronizarán en un tamaño más pequeño, de vista previa."
   },
   "screens.Track.ObservationList.observation": {
     "message": "Observación"

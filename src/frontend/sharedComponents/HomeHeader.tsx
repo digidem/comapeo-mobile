@@ -28,7 +28,11 @@ export const HomeHeader: FC<
         <SyncIconCircle testID="MAIN.sync-icon" />
       </IconButton>
       <GPSPill navigation={navigation} />
-      <DrawerMenuIcon style={{marginRight: 20}} onPress={openDrawer} />
+      <DrawerMenuIcon
+        style={{marginRight: 20}}
+        onPress={openDrawer}
+        testID="drawer-icon-home"
+      />
     </View>
   );
 };

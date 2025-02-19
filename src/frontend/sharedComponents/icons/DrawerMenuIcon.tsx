@@ -6,13 +6,15 @@ import {ViewStyleProp} from '../../sharedTypes';
 export const DrawerMenuIcon = ({
   onPress,
   style,
+  testID,
 }: {
   onPress: () => void;
   style?: ViewStyleProp;
+  testID: string;
 }) => (
   <TouchableOpacity
     style={[{justifyContent: 'center'}, style]}
     onPress={onPress}>
-    <IonIcon name="menu" size={32} testID="MAIN.drawer-icon" />
+    <IonIcon name="menu" size={32} testID={testID} />
   </TouchableOpacity>
 );

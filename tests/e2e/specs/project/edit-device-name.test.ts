@@ -29,7 +29,7 @@ describe('Edit Device Name Test', () => {
     const backButton = await $(byResourceId('MAIN.header-back-btn'));
     await backButton.click();
 
-    const discardAlert = await $(byTextMatches('.*DISCARD CHANGES.*'));
+    const discardAlert = await $(byTextMatches('DISCARD CHANGES'));
     await expect(discardAlert).toBeDisplayed();
 
     await discardAlert.click();
@@ -44,10 +44,10 @@ describe('Edit Device Name Test', () => {
 
     await backButton.click();
 
-    const discardAlertSecond = await $(byTextMatches('.*DISCARD CHANGES.*'));
+    const discardAlertSecond = await $(byTextMatches('DISCARD CHANGES'));
     await expect(discardAlertSecond).toBeDisplayed();
 
-    const continueEditing = await $(byTextMatches('.*CONTINUE EDITING.*'));
+    const continueEditing = await $(byTextMatches('CONTINUE EDITING'));
     await continueEditing.click();
 
     const editedDeviceName = await $(byText(output.names.editdevice));

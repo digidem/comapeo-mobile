@@ -16,7 +16,7 @@ describe('Onboarding - Privacy Policy Screen', () => {
     await aboutAwana.click();
 
     const aboutAwanaContent = await $(
-      byTextMatches('.*Awana Digital, a 501c3 non-profit.*'),
+      byTextMatches('Awana Digital, a 501c3 non-profit'),
     );
     await expect(aboutAwanaContent).toBeDisplayed();
 
@@ -31,7 +31,7 @@ describe('Onboarding - Privacy Policy Screen', () => {
     await openSourceSection.click();
 
     const openSourceContent = await $(
-      byTextMatches('.*CoMapeo is an open-source application.*'),
+      byTextMatches('CoMapeo is an open-source application'),
     );
     await expect(openSourceContent).toBeDisplayed();
 
@@ -42,7 +42,7 @@ describe('Onboarding - Privacy Policy Screen', () => {
   it('should navigate back to Data & Privacy screen', async () => {
     await driver.back();
     const backToPrivacyScreen = await $(
-      byTextMatches('.*Your data stays on your devices.*'),
+      byTextMatches('Your data stays on your devices'),
     );
     await expect(backToPrivacyScreen).toBeDisplayed();
   });

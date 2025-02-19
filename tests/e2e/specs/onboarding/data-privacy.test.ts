@@ -10,7 +10,7 @@ describe('Onboarding - Data & Privacy Screen', () => {
     await getStartedButton.click();
 
     const privacyText = await $(
-      byTextMatches('.*map offline without needing servers.*'),
+      byTextMatches('map offline without needing servers'),
     );
     await expect(privacyText).toBeDisplayed();
   });

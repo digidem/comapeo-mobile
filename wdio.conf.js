@@ -8,7 +8,7 @@ const config = {
   user: process.env.BROWSERSTACK_USERNAME,
   key: process.env.BROWSERSTACK_ACCESS_KEY,
   hostname: 'hub.browserstack.com',
-  specs: [path.resolve(__dirname, '../specs/flow.test.ts')],
+  specs: [path.resolve(__dirname, 'tests/e2e/specs/flow.test.ts')],
   maxInstances: 1,
   services: [
     [

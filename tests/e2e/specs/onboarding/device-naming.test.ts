@@ -16,7 +16,7 @@ describe('Device Naming Test', () => {
 
     await addNameButton.click();
 
-    const successMessage = await $(byTextMatches('.*Success.*'));
+    const successMessage = await $(byTextMatches('Success'));
     await expect(successMessage).not.toBeDisplayed();
 
     await deviceNameInput.setValue(output.names.device);

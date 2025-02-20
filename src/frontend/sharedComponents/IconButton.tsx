@@ -14,7 +14,6 @@ type Props = {
 
 const IconButtonNotMemoized = ({children, onPress, style, testID}: Props) => (
   <TouchableNativeFeedback
-    testID={testID}
     onPress={onPress}
     background={TouchableNativeFeedback.Ripple(VERY_LIGHT_BLUE, true)}>
     <View style={[styles.container, style]} testID={testID}>

@@ -26,6 +26,8 @@ import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {MetricsProvider} from './MetricsContext';
 import {AppDiagnosticMetrics} from '../metrics/AppDiagnosticMetrics';
 import {DeviceDiagnosticMetrics} from '../metrics/DeviceDiagnosticMetrics';
+import {DraftObservationProvider} from './DraftObservationContext';
+import {DraftObservationStore} from './PersistedStores/DraftObservationStore';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -34,6 +36,7 @@ type AppProvidersProps = {
   mapeoApi: MapeoClientApi;
   appMetrics: AppDiagnosticMetrics;
   deviceMetrics: DeviceDiagnosticMetrics;
+  persistedDrafObservationStore: DraftObservationStore;
 };
 
 const queryClient = new QueryClient();
@@ -45,6 +48,7 @@ export const AppProviders = ({
   mapeoApi,
   appMetrics,
   deviceMetrics,
+  persistedDrafObservationStore,
 }: AppProvidersProps) => {
   return (
     <IntlProvider>
@@ -62,7 +66,12 @@ export const AppProviders = ({
                         <ActiveProjectProvider>
                           <BottomSheetModalProvider>
                             <PhotoPromiseProvider>
-                              <SecurityProvider>{children}</SecurityProvider>
+                              <DraftObservationProvider
+                                draftObservationStore={
+                                  persistedDrafObservationStore
+                                }>
+                                <SecurityProvider>{children}</SecurityProvider>
+                              </DraftObservationProvider>
                             </PhotoPromiseProvider>
                           </BottomSheetModalProvider>
                         </ActiveProjectProvider>

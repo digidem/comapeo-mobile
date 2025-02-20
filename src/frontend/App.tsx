@@ -17,6 +17,7 @@ import {useOnBackgroundedAndForegrounded} from './hooks/useOnBackgroundedAndFore
 import {getSentryUserId} from './metrics/getSentryUserId';
 import {AppDiagnosticMetrics} from './metrics/AppDiagnosticMetrics';
 import {DeviceDiagnosticMetrics} from './metrics/DeviceDiagnosticMetrics';
+import {createDraftObservationStore} from './contexts/PersistedStores/DraftObservationStore';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -34,11 +35,7 @@ Sentry.init({
   tracesSampleRate: 1.0,
   environment: sentryEnvironment,
   debug: sentryDebug, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
-  initialScope: {
-    user: {
-      id: getSentryUserId({now: new Date(), storage}),
-    },
-  },
+  initialScope: {user: {id: getSentryUserId({now: new Date(), storage})}},
 });
 
 const appDiagnosticMetrics = new AppDiagnosticMetrics();
@@ -49,9 +46,7 @@ const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();
 initializeNodejs();
 
-SplashScreen.setOptions({
-  fade: true,
-});
+SplashScreen.setOptions({fade: true});
 SplashScreen.preventAutoHideAsync().catch(err => {
   console.log(err);
 });
@@ -78,6 +73,10 @@ TaskManager.defineTask(
   },
 );
 
+const persistedDraftObservationStore = createDraftObservationStore({
+  persist: true,
+});
+
 const App = () => {
   const [permissionsAsked, setPermissionsAsked] = React.useState(false);
   React.useEffect(() => {
@@ -96,7 +95,8 @@ const App = () => {
       localDiscoveryController={localDiscoveryController}
       mapeoApi={mapeoApi}
       appMetrics={appDiagnosticMetrics}
-      deviceMetrics={deviceDiagnosticMetrics}>
+      deviceMetrics={deviceDiagnosticMetrics}
+      persistedDrafObservationStore={persistedDraftObservationStore}>
       <AppNavigator permissionAsked={permissionsAsked} />
     </AppProviders>
   );

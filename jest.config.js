@@ -8,6 +8,7 @@ const config = {
   transformIgnorePatterns: [
     'node_modules/(?!(...|@rnmapbox|(jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg)',
   ],
+  testPathIgnorePatterns: ['<rootDir>/tests/e2e/'],
 };
 
 module.exports = config;

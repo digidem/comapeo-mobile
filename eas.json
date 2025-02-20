@@ -26,7 +26,6 @@
     "release-candidate": {
       "extends": "base",
       "distribution": "internal",
-      "channel": "preview",
       "env": {
         "APP_VARIANT": "releaseCandidate",
         "EXPO_PUBLIC_FEATURE_TEST_DATA_UI": "true"
@@ -35,7 +34,6 @@
     "production": {
       "extends": "base",
       "distribution": "store",
-      "channel": "production",
       "env": {
         "APP_VARIANT": "production"
       },
@@ -44,7 +42,6 @@
     "pre-release": {
       "extends": "base",
       "distribution": "internal",
-      "channel": "preview",
       "env": {
         "APP_VARIANT": "preRelease"
       }

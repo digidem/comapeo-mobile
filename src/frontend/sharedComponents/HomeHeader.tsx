@@ -12,10 +12,9 @@ export const HomeHeader: FC<
   BottomTabHeaderProps & {openDrawer: () => void}
 > = ({navigation, openDrawer}) => {
   const insets = useSafeAreaInsets();
-  const styles = createStyles(insets);
 
   return (
-    <View style={styles.header}>
+    <View style={[styles.header, {paddingTop: insets.top}]}>
       <LinearGradient
         style={styles.linearGradient}
         colors={['#0006', '#0000']}
@@ -37,25 +36,23 @@ export const HomeHeader: FC<
   );
 };
 
-const createStyles = (insets: EdgeInsets) =>
-  StyleSheet.create({
-    header: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      backgroundColor: 'transparent',
-      paddingTop: insets.top,
-    },
-    leftButton: {
-      width: 60,
-      height: 60,
-    },
-    linearGradient: {
-      height: 60,
-      position: 'absolute',
-      top: 0,
-      right: 0,
-      left: 0,
-      backgroundColor: 'transparent',
-    },
-  });
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+  },
+  leftButton: {
+    width: 60,
+    height: 60,
+  },
+  linearGradient: {
+    height: 60,
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    left: 0,
+    backgroundColor: 'transparent',
+  },
+});

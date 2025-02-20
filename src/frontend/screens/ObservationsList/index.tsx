@@ -144,18 +144,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: WHITE,
   },
-  messageContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-  },
   listItem: {
     height: OBSERVATION_CELL_HEIGHT,
-  },
-  scrollViewContent: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
   },
 });

@@ -82,11 +82,6 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
     justifyContent: 'center',
   },
-  pressablePressed: {
-    backgroundColor: LIGHT_GREY,
-    borderColor: LIGHT_GREY,
-  },
-
   record: {
     height: PRIMARY_CONTROL_DIAMETER,
     backgroundColor: MAGENTA,

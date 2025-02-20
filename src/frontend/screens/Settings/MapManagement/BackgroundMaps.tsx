@@ -329,9 +329,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: RED,
   },
-  removeMapFileButton: {
-    backgroundColor: RED,
-  },
   removeMapFileButtonText: {
     letterSpacing: 0.5,
     color: RED,

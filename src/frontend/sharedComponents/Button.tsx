@@ -143,35 +143,8 @@ const styles = StyleSheet.create({
     borderColor: '#EEEEEE',
     borderWidth: 1.5,
   },
-  touchableMedium: {
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  touchableSmall: {
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   textBase: {
     letterSpacing: 0.5,
     color: '#FFFFFF',
-  },
-  textOutlinedLight: {
-    color: '#FFFFFF',
-  },
-  textOutlinedDark: {
-    color: BLACK,
-  },
-  textOutlinedComapeoBlue: {
-    color: COMAPEO_BLUE,
-  },
-  textOutlinedLightDisabled: {
-    color: '#666666',
-  },
-  textOutlinedDarkDisabled: {
-    color: '#999999',
   },
 });

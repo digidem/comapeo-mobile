@@ -114,11 +114,6 @@ export function createNavigationOptions({
 }
 
 export const styles = StyleSheet.create({
-  positionText: {
-    fontSize: 12,
-    color: BLACK,
-    fontWeight: '700',
-  },
   root: {
     flex: 1,
     flexDirection: 'column',

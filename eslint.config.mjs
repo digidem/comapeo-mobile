@@ -85,8 +85,6 @@ const frontendConfig = pluginTs.config(
       '@typescript-eslint/no-require-imports': 'off',
       // Can be bothersome while prototyping
       '@typescript-eslint/no-unused-vars': 'off',
-      // Relatively harmless
-      'react-native/no-unused-styles': 'off',
       // Doesn't work well with custom components that wrap Text component
       'react-native/no-raw-text': 'off',
       // We only work on Android for now

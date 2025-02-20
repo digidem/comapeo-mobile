@@ -10,7 +10,7 @@
     "ios-no-backend-rebuild": "expo run:ios",
     "prestart": "npm run build:translations && npm run build:intl-polyfills",
     "start": "expo start",
-    "test": "dotenv -- jest",
+    "test": "dotenv -- jest --watch",
     "lint:prettier": "prettier \"src/**/*.{js,ts,jsx,tsx}\" --check",
     "lint:eslint": "eslint . --ext .js,.jsx,.ts,.tsx --cache --ignore-path .gitignore",
     "lint:types": "tsc --noEmit",

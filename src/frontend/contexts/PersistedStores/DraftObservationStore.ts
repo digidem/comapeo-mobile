@@ -401,7 +401,7 @@ type UnsavedAudioAttachment = {
 
 type UnsavedAttachment = UnsavedPhotoAttachment | UnsavedAudioAttachment;
 
-type DraftStateEmpty = {
+export type DraftStateEmpty = {
   value: null;
   id: null;
   unsavedAttachments: null;

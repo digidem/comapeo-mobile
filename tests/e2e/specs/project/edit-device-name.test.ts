@@ -5,36 +5,42 @@ import {output} from '../../utils/naming';
 
 describe('Edit Device Name Test', () => {
   it('should navigate to project settings and edit the device name', async () => {
-    const drawerIcon = await $(byResourceId('drawer-icon-home'));
-    await drawerIcon.click();
+    const geoLocationBefore = await driver.execute('mobile: getGeolocation');
+    console.log('Current Geolocation BEFORE:', geoLocationBefore);
+    await driver.execute('mobile: setGeolocation', {
+      latitude: -0.8,
+      longitude: -76.9,
+      altitude: 0,
+    });
+    const geoLocationAfter = await driver.execute('mobile: getGeolocation');
+    console.log('Current Geolocation AFTER:', geoLocationAfter);
 
-    const projectSettingsItem = await $(byText('Project Settings'));
+    const drawerIcon = $(byResourceId('drawer-icon-home'));
+    await drawerIcon.tap();
+
+    const projectSettingsItem = $(byText('Project Settings'));
     await projectSettingsItem.click();
 
-    const deviceNameListItem = await $(
-      byResourceId('PROJECT.device-name-list-item'),
-    );
+    const deviceNameListItem = $(byResourceId('PROJECT.device-name-list-item'));
     await deviceNameListItem.click();
 
-    const editIcon = await $(byResourceId('edit-icon'));
+    const editIcon = $(byResourceId('edit-icon'));
     await editIcon.click();
 
-    const editDeviceNameField = await $(
-      byResourceId('PROJECT.edit-device-name'),
-    );
+    const editDeviceNameField = $(byResourceId('PROJECT.edit-device-name'));
     await editDeviceNameField.click();
     await editDeviceNameField.clearValue();
     await editDeviceNameField.setValue(output.names.editdevice);
 
-    const backButton = await $(byResourceId('MAIN.header-back-btn'));
+    const backButton = $(byResourceId('MAIN.header-back-btn'));
     await backButton.click();
 
-    const discardAlert = await $(byTextMatches('DISCARD CHANGES'));
+    const discardAlert = $(byTextMatches('DISCARD CHANGES'));
     await expect(discardAlert).toBeDisplayed();
 
     await discardAlert.click();
 
-    const originalDeviceName = await $(byText(output.names.device));
+    const originalDeviceName = $(byText(output.names.device));
     await expect(originalDeviceName).toBeDisplayed();
 
     await editIcon.click();
@@ -44,16 +50,15 @@ describe('Edit Device Name Test', () => {
 
     await backButton.click();
 
-    const discardAlertSecond = await $(byTextMatches('DISCARD CHANGES'));
-    await expect(discardAlertSecond).toBeDisplayed();
+    await expect(discardAlert).toBeDisplayed();
 
-    const continueEditing = await $(byTextMatches('CONTINUE EDITING'));
+    const continueEditing = $(byTextMatches('CONTINUE EDITING'));
     await continueEditing.click();
 
-    const editedDeviceName = await $(byText(output.names.editdevice));
+    const editedDeviceName = $(byText(output.names.editdevice));
     await expect(editedDeviceName).toBeDisplayed();
 
-    const saveIcon = await $(byResourceId('save-icon'));
+    const saveIcon = $(byResourceId('save-icon'));
     await saveIcon.click();
 
     await expect(editedDeviceName).toBeDisplayed();
@@ -64,7 +69,7 @@ describe('Edit Device Name Test', () => {
     await projectSettingsItem.click();
     await deviceNameListItem.click();
 
-    const persistedDeviceName = await $(byText(output.names.editdevice));
+    const persistedDeviceName = $(byText(output.names.editdevice));
     await expect(persistedDeviceName).toBeDisplayed();
 
     await driver.back();

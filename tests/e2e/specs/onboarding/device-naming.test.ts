@@ -17,7 +17,10 @@ describe('Device Naming Test', () => {
     await addNameButton.click();
 
     const successMessage = await $(byTextMatches('Success'));
-    await expect(successMessage).not.toBeDisplayed();
+    await driver.waitUntil(async () => !(await successMessage.isExisting()), {
+      timeout: 5000,
+      timeoutMsg: 'The success message did not appear within timeout',
+    });
 
     await deviceNameInput.setValue(output.names.device);
     await addNameButton.click();

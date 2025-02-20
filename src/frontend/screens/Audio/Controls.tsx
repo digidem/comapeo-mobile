@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import PlayArrow from '../../images/PlayArrow.svg';
-import {MAGENTA, BLACK, LIGHT_GREY, WHITE} from '../../lib/styles';
+import {MAGENTA, BLACK, WHITE} from '../../lib/styles';
 
 type BaseProps = PropsWithChildren<TouchableOpacityProps>;
 

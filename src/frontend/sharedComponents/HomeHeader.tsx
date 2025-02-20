@@ -4,7 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {IconButton} from './IconButton';
 import {GPSPill} from './GPSPill';
 import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
-import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {DrawerMenuIcon} from './icons/DrawerMenuIcon';
 import SyncIconCircle from '../images/Sync.svg';
 

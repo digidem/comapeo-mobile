@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text, SafeAreaView} from 'react-native';
-import {BLACK, BLUE_GREY, DARK_GREY} from '../../lib/styles.ts';
+import {BLUE_GREY, DARK_GREY} from '../../lib/styles.ts';
 
 import TrackIcon from '../../images/Track.svg';
 import {FormattedMessage, MessageDescriptor, defineMessages} from 'react-intl';

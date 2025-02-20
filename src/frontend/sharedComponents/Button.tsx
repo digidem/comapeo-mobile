@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {GestureResponderEvent, StyleSheet, View, ViewStyle} from 'react-native';
 
-import {BLACK, COMAPEO_BLUE, VERY_LIGHT_BLUE} from '../lib/styles';
+import {VERY_LIGHT_BLUE} from '../lib/styles';
 import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 
 import {ViewStyleProp} from '../sharedTypes';

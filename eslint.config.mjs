@@ -83,8 +83,6 @@ const frontendConfig = pluginTs.config(
       '@eslint-react/web-api/no-leaked-resize-observer': 'off',
       // There are some cases in app code when it's needed
       '@typescript-eslint/no-require-imports': 'off',
-      // Can be bothersome while prototyping
-      '@typescript-eslint/no-unused-vars': 'off',
       // Doesn't work well with custom components that wrap Text component
       'react-native/no-raw-text': 'off',
       // We only work on Android for now

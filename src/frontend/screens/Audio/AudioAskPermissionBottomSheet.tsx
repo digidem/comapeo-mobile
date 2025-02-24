@@ -14,6 +14,7 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {Button} from '../../sharedComponents/Button';
 import {Audio} from 'expo-av';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
+import {useFocusEffect} from '@react-navigation/native';
 
 const m = defineMessages({
   title: {
@@ -58,29 +59,31 @@ export const AudioAskPermissionBottomSheet = ({
   // When the user changes their permission in phone settings and returns to the app,
   // we need to check for updates and navigate accordingly.
   // Without this, the app won't detect the permission change.
-  React.useEffect(() => {
-    let isCancelled = false;
-    const handleAppStateChange = async (nextAppState: AppStateStatus) => {
-      if (nextAppState === 'active') {
-        const newPermission = await Audio.getPermissionsAsync();
-        if (isCancelled) return;
-        setPermission(newPermission);
-        if (newPermission.status === 'granted') {
-          replace('AudioRecording');
+  useFocusEffect(
+    React.useCallback(() => {
+      let isCancelled = false;
+      const handleAppStateChange = async (nextAppState: AppStateStatus) => {
+        if (nextAppState === 'active') {
+          const newPermission = await Audio.getPermissionsAsync();
+          if (isCancelled) return;
+          setPermission(newPermission);
+          if (newPermission.status === 'granted') {
+            replace('AudioRecording');
+          }
         }
-      }
-    };
+      };
 
-    const subscription = AppState.addEventListener(
-      'change',
-      handleAppStateChange,
-    );
+      const subscription = AppState.addEventListener(
+        'change',
+        handleAppStateChange,
+      );
 
-    return () => {
-      isCancelled = true;
-      subscription.remove();
-    };
-  }, [replace]);
+      return () => {
+        isCancelled = true;
+        subscription.remove();
+      };
+    }, [replace]),
+  );
 
   async function askPermission() {
     const response = await Audio.requestPermissionsAsync();

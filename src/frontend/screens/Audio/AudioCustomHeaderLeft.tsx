@@ -6,6 +6,7 @@ import {
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {CloseIcon} from '../../sharedComponents/icons';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {CustomHeaderLeftStyles} from '../../sharedComponents/CustomHeaderLeft';
 
 export function AudioCustomHeaderLeft({
   duration,
@@ -30,6 +31,7 @@ export function AudioCustomHeaderLeft({
         // User cannot navigate back to the Audio Playback (unsaved) screen. Using replace guarantees it is not in the stack anymore.
         navigation.replace('AudioSavedBottomSheet');
       }}
+      style={CustomHeaderLeftStyles}
       backImage={backImageProps => (
         <CloseIcon color={backImageProps.tintColor} />
       )}

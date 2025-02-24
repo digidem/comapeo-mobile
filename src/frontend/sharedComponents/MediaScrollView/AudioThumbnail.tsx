@@ -6,10 +6,7 @@ import {Audio} from '../../sharedTypes/audio';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {
-  isAudioAttachment,
-  isUnsavedAudio,
-} from '../../lib/attachmentTypeChecks';
+import {isUnsavedAudio} from '../../lib/attachmentTypeChecks';
 import {BLACK} from '../../lib/styles';
 import {useNavigationState} from '@react-navigation/native';
 
@@ -36,25 +33,25 @@ export const AudioThumbnail: FC<AudioThumbnailProps> = ({
   }
 
   const handlePress = async () => {
-    setLoading(true);
-    let uri: string | undefined;
-    const isSavedUri = isAudioAttachment(audioAttachment);
-
     if (isUnsavedAudio(audioAttachment)) {
-      uri = audioAttachment.uri;
-    } else {
-      uri = await projectApi.$blobs.getUrl({
-        driveId: audioAttachment.driveDiscoveryId,
-        name: audioAttachment.name,
-        type: audioAttachment.type,
-        variant: 'original',
+      navigation.navigate('AudioPlaybackUnsavedPreview', {
+        uri: audioAttachment.uri,
       });
+      return;
     }
+
+    setLoading(true);
+    const uri = await projectApi.$blobs.getUrl({
+      driveId: audioAttachment.driveDiscoveryId,
+      name: audioAttachment.name,
+      type: audioAttachment.type,
+      variant: 'original',
+    });
     setLoading(false);
-    navigation.navigate('Audio', {
-      isEditing: currentRoute?.name === 'ObservationEdit',
+    navigation.navigate('AudioPlaybackSaved', {
       uri,
-      isSavedUri,
+      // this should be derived from the parent component and not be reliant on navigation context. TO DO when observations is refactored
+      canDelete: currentRoute?.name === 'ObservationEdit',
     });
   };
 

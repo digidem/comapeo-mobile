@@ -11,12 +11,12 @@ import {
   createObservationMapLayerStyle,
   observationsToFeatureCollection,
 } from '../../lib/ObservationMapLayer.ts';
+import {useMapStyleJsonUrl} from '../../hooks/server/maps.ts';
 interface TrackScreenMapPreview {
   locationHistory: LocationHistoryPoint[];
   observations: Observation[];
 }
 
-const MAP_STYLE = Mapbox.StyleURL.Outdoors;
 const MAP_PADDING = 25;
 
 export const MapPreview: FC<TrackScreenMapPreview> = ({
@@ -24,6 +24,7 @@ export const MapPreview: FC<TrackScreenMapPreview> = ({
   observations,
 }) => {
   const [swBoundary, neBoundary] = getAdjustedBounds(locationHistory);
+  const styleUrlQuery = useMapStyleJsonUrl();
 
   return (
     <MapboxGL.MapView
@@ -35,7 +36,7 @@ export const MapPreview: FC<TrackScreenMapPreview> = ({
       rotateEnabled={false}
       compassEnabled={false}
       scaleBarEnabled={false}
-      styleURL={MAP_STYLE}>
+      styleURL={styleUrlQuery.data}>
       <MapboxGL.Camera
         animationMode="none"
         padding={{

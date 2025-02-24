@@ -58,7 +58,7 @@ export const HookFormTextInput = <InputFields extends FieldValues>({
         <Controller
           name={name}
           control={control}
-          rules={rules}
+          rules={{validate: value => !!value.trim(), ...rules}}
           render={({field: {value, onChange, onBlur}}) => (
             <RNTextInput
               testID={testID}

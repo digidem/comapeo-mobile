@@ -78,7 +78,6 @@ export function isUnprocessedDraftPhoto(
   return !!(
     attachment &&
     typeof attachment === 'object' &&
-    'unprocessed' in attachment &&
     'type' in attachment &&
     attachment.type === 'unprocessed' &&
     'draftPhotoId' in attachment &&

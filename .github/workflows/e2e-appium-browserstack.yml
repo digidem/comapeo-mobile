@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - develop
+      - 'release/**'
     types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:

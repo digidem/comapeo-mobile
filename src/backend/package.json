@@ -28,7 +28,6 @@
     "@tsconfig/node16": "^16.1.1",
     "@types/debug": "^4.1.7",
     "@types/node": "^20.5.0",
-    "eslint": "^8.51.0",
     "magic-string": "^0.30.5",
     "patch-package": "^8.0.0",
     "prettier": "^3.0.3",
@@ -39,18 +38,5 @@
   "prettier": {
     "semi": false,
     "singleQuote": true
-  },
-  "eslintConfig": {
-    "env": {
-      "commonjs": true,
-      "es2022": true,
-      "node": true
-    },
-    "extends": "eslint:recommended",
-    "parserOptions": {
-      "ecmaVersion": 13,
-      "sourceType": "module"
-    },
-    "rules": {}
   }
 }

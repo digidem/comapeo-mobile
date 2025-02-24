@@ -74,22 +74,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   title: {fontSize: 18, fontWeight: '700', color: 'black'},
-  photoContainer: {
-    position: 'relative',
-    marginRight: -5,
-  },
-  photo: {
-    borderRadius: 5,
-    overflow: 'hidden',
-    position: 'absolute',
-    width: 60,
-    height: 60,
-    top: 0,
-    borderWidth: 1,
-    borderColor: 'white',
-    borderStyle: 'solid',
-  },
-  smallIconContainer: {position: 'absolute', right: -3, bottom: -3},
   touchable: {
     flex: 1,
     height: 80,

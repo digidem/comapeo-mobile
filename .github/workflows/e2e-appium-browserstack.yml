@@ -113,7 +113,7 @@ jobs:
         run: |
           set -o pipefail
           mkdir -p test-results
-          npx wdio run wdio.conf.js --spec ./tests/e2e/specs/ | tee test-results/spec-log.txt
+          npx wdio run wdio.config.js --spec ./tests/e2e/specs/ | tee test-results/spec-log.txt
         env:
           BROWSERSTACK_APP_URL: ${{ needs.build-apk.outputs.app_url }}
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}

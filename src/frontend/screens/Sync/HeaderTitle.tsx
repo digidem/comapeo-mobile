@@ -36,7 +36,7 @@ export function HeaderTitle() {
         style={styles.signalIndicator}>
         <WifiIconComponent size={16} color={WHITE} />
       </Circle>
-      <Text numberOfLines={1} style={[styles.wifiText]}>
+      <Text numberOfLines={1} style={styles.wifiText}>
         {ssid || t(m.noWiFi)}
       </Text>
     </View>

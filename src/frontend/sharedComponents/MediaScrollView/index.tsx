@@ -20,7 +20,9 @@ export const MediaScrollView: FC<MediaScrollView> = ({attachments}) => {
   const scrollViewRef = React.useRef<ScrollView>(null);
   const navigation = useNavigationFromRoot();
   React.useLayoutEffect(() => {
-    scrollViewRef.current && scrollViewRef.current.scrollToEnd();
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollToEnd();
+    }
   }, [attachments.length]);
 
   const windowWidth = Dimensions.get('window').width;
@@ -40,9 +42,9 @@ export const MediaScrollView: FC<MediaScrollView> = ({attachments}) => {
       showsHorizontalScrollIndicator={false}
       contentInset={{top: 5, right: 5, bottom: 5, left: 5}}
       style={styles.mediaContainer}>
-      {audioAttachments.map((audio, index) => (
+      {audioAttachments.map(audio => (
         <AudioThumbnail
-          key={`audio-${index}`}
+          key={deriveUniqueIdentifierFromAudio(audio)}
           audioAttachment={audio}
           style={styles.thumbnail}
           size={size}
@@ -50,7 +52,7 @@ export const MediaScrollView: FC<MediaScrollView> = ({attachments}) => {
       ))}
       {photos
         ?.filter(photo => photo?.deleted == null)
-        ?.map((photo, index) => {
+        ?.map(photo => {
           const onPress =
             photo.type === 'photo' || photo.type === 'processed'
               ? () => {
@@ -59,7 +61,7 @@ export const MediaScrollView: FC<MediaScrollView> = ({attachments}) => {
               : undefined;
           return (
             <PhotoThumbnail
-              key={index}
+              key={deriveUniqueIdentifierFromPhoto(photo)}
               photo={photo}
               style={styles.thumbnail}
               size={size}
@@ -79,3 +81,23 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
 });
+
+function deriveUniqueIdentifierFromAudio(audio: Audio): string {
+  if ('uri' in audio) {
+    return audio.uri;
+  }
+
+  const {driveDiscoveryId, type, name, hash} = audio;
+
+  return `${driveDiscoveryId}-${type}-${name}-${hash}`;
+}
+
+function deriveUniqueIdentifierFromPhoto(photo: Photo): string {
+  if ('draftPhotoId' in photo) {
+    return photo.draftPhotoId;
+  }
+
+  const {driveDiscoveryId, type, name, hash} = photo;
+
+  return `${driveDiscoveryId}-${type}-${name}-${hash}`;
+}

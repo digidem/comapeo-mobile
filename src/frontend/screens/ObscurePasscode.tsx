@@ -52,7 +52,7 @@ export const ObscurePasscode: NativeNavigationComponent<'ObscurePasscode'> = ({
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={[styles.title]}>{t(m.whatIsObscure)}</Text>
+      <Text style={styles.title}>{t(m.whatIsObscure)}</Text>
 
       <Text style={{fontSize: 16}}>{t(m.description)}</Text>
 

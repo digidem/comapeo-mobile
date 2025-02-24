@@ -11,7 +11,6 @@ type Props = {
   containerStyle?: ViewStyleProp;
   textStyle?: TextStyle;
   title: string;
-  testID?: string;
   style?: ViewStyleProp;
 };
 
@@ -20,7 +19,6 @@ export const TextButton = ({
   containerStyle,
   textStyle,
   title,
-  testID,
 }: Props) => (
   <TouchableNativeFeedback
     style={[styles.buttonContainer, containerStyle]}

@@ -413,7 +413,7 @@ function zeroconfServiceToMapeoPeer({
   return address ? {address, port, name} : null;
 }
 
-function shallowPartialEqual<T extends {[k: string]: any}>(
+function shallowPartialEqual<T extends {[k: string]: unknown}>(
   object: T,
   partial: Partial<T>,
 ) {

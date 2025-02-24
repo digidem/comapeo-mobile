@@ -99,7 +99,7 @@ export const AddRemoteArchive: NativeNavigationComponent<
     ({url}: URLInput) => {
       try {
         setNormalizedUrl(normalizeRemoteArchiveUrl(url));
-      } catch (_err) {
+      } catch {
         setError('url', {type: 'required'});
       }
     },
@@ -108,7 +108,6 @@ export const AddRemoteArchive: NativeNavigationComponent<
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      // eslint-disable-next-line react/no-unstable-nested-components
       headerRight: () =>
         !archiveName ? (
           <SaveButton

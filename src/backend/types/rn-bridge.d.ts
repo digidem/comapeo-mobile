@@ -2,9 +2,9 @@ import EventEmitter from 'events'
 
 declare module 'rn-bridge' {
   export interface Channel extends EventEmitter {
-    on(event: string, callback: (message: any) => void): void
-    post(event: string, message: any): void
-    send(message: any): void
+    on(event: string, callback: (message: unknown) => void): void
+    post(event: string, message: unknown): void
+    send(message: unknown): void
   }
   export interface App {
     on(

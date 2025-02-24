@@ -34,7 +34,7 @@ export function useMapStyleJsonUrl() {
   return useQuery({
     queryKey: [MAPS_QUERY_KEY, 'stylejson-url', refreshToken],
     queryFn: async () => {
-      let result = await api.getMapStyleJsonUrl();
+      const result = await api.getMapStyleJsonUrl();
       return result + `?refresh_token=${refreshToken}`;
     },
   });

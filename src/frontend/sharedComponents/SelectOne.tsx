@@ -22,7 +22,7 @@ export const SelectOne = <T,>({
   radioButtonPosition = 'left',
   color,
 }: SelectOneProps<T>) => (
-  <List dense>
+  <List>
     {options.map((item, index) => (
       <ListItem
         key={

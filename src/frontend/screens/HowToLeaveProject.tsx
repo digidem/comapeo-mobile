@@ -105,11 +105,4 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  questionIcon: {
-    shadowColor: '#000',
-    backgroundColor: '#fff',
-    borderRadius: 100,
-    elevation: 20,
-    marginBottom: 20,
-  },
 });

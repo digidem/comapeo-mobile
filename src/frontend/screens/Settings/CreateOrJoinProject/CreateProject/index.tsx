@@ -99,9 +99,10 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
   });
 
   function handleCreateProject(val: ProjectFormType) {
+    const projectName = val.projectName.trim();
     createProjectMutation.mutate(
       {
-        name: val.projectName,
+        name: projectName,
         configPath:
           configFileResult?.type === 'success'
             ? convertFileUriToPosixPath(configFileResult.file.uri)
@@ -119,7 +120,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
 
           updateActiveProjectId(projectId);
 
-          navigation.navigate('ProjectCreated', {name: val.projectName});
+          navigation.navigate('ProjectCreated', {name: projectName});
         },
       },
     );

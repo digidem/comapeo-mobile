@@ -3,7 +3,6 @@ import {View, Text, Pressable, StyleSheet} from 'react-native';
 import {NEW_DARK_GREY} from '../../lib/styles';
 import Plus from '../../images/observationEdit/Plus.svg';
 import {defineMessages, FormattedMessage} from 'react-intl';
-import {ActionTabItems} from '.';
 
 const m = defineMessages({
   showOptions: {
@@ -12,6 +11,13 @@ const m = defineMessages({
     description: 'title for observation options',
   },
 });
+
+type ActionTabItems = {
+  icon: React.ReactNode;
+  label: string;
+  onPress: () => void;
+  testID?: string;
+};
 
 interface KeyboardAccessory {
   items: ActionTabItems[];

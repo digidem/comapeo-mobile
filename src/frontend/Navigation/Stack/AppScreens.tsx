@@ -81,10 +81,6 @@ import {AddRemoteArchive} from '../../screens/Settings/ProjectSettings/RemoteArc
 import {SuccessfullyAddedArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/SuccessfullyAddedArchive.tsx';
 import {RemoteArchiveOn} from '../../screens/Settings/ProjectSettings/RemoteArchive/RemoteArchiveOn.tsx';
 import {
-  Audio,
-  navigationOptions as audioNavigationOptions,
-} from '../../screens/Audio/index.tsx';
-import {
   createNavigationOptions as createMapManagementNavigationOptions,
   MapManagementScreen,
 } from '../../screens/Settings/MapManagement';
@@ -94,6 +90,14 @@ import {
 } from '../../screens/Settings/MapManagement/BackgroundMaps.tsx';
 import {SyncPreviewsBottomSheet} from '../../screens/Settings/ProjectSettings/MediaSyncSettings/SyncPreviewsBottomSheet.tsx';
 import {SyncEverythingBottomSheet} from '../../screens/Settings/ProjectSettings/MediaSyncSettings/SyncEverythingBottomSheet.tsx';
+import {AudioAskPermissionBottomSheet} from '../../screens/Audio/AudioAskPermissionBottomSheet.tsx';
+import {AudioRecording} from '../../screens/Audio/AudioRecording/index.tsx';
+import {AudioPlaybackUnsaved} from '../../screens/Audio/AudioPlaybackUnsaved.tsx';
+import {sharedAudioNavOptions} from '../../screens/Audio/shared';
+import {DeleteAudioBottomSheet} from '../../screens/Audio/DeleteAudioBottomSheet.tsx';
+import {AudioSavedBottomSheet} from '../../screens/Audio/AudioSavedBottomSheet.tsx';
+import {AudioPlaybackSaved} from '../../screens/Audio/AudioPlaybackSaved.tsx';
+import {AudioCustomHeaderLeft} from '../../screens/Audio/AudioCustomHeaderLeft.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -342,11 +346,6 @@ export const createDefaultScreenGroup = ({
         options={{headerShown: false}}
       />
       <RootStack.Screen
-        name="Audio"
-        options={audioNavigationOptions}
-        component={Audio}
-      />
-      <RootStack.Screen
         name="MapManagement"
         component={MapManagementScreen}
         options={createMapManagementNavigationOptions({intl})}
@@ -389,6 +388,38 @@ export const createDefaultScreenGroup = ({
         component={RemoteArchiveOn}
         options={{headerTitle: intl(RemoteArchiveOn.navTitle)}}
       />
+      <RootStack.Screen
+        name="AudioRecording"
+        component={AudioRecording}
+        options={sharedAudioNavOptions}
+      />
+
+      <RootStack.Screen
+        name="AudioPlaybackUnsavedReview"
+        component={AudioPlaybackUnsaved}
+        options={({route}) => ({
+          ...sharedAudioNavOptions,
+          headerLeft: props => {
+            return (
+              <AudioCustomHeaderLeft
+                {...props}
+                duration={route.params.duration}
+                uri={route.params.uri}
+              />
+            );
+          },
+        })}
+      />
+      <RootStack.Screen
+        name="AudioPlaybackSaved"
+        component={AudioPlaybackSaved}
+        options={sharedAudioNavOptions}
+      />
+      <RootStack.Screen
+        name="AudioPlaybackUnsavedPreview"
+        component={AudioPlaybackUnsaved}
+        options={sharedAudioNavOptions}
+      />
     </RootStack.Group>
     <RootStack.Group
       screenOptions={{
@@ -404,6 +435,18 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="SyncEverythingBottomSheet"
         component={SyncEverythingBottomSheet}
+      />
+      <RootStack.Screen
+        name="AudioAskPermissionBottomSheet"
+        component={AudioAskPermissionBottomSheet}
+      />
+      <RootStack.Screen
+        name="DeleteAudioBottomSheet"
+        component={DeleteAudioBottomSheet}
+      />
+      <RootStack.Screen
+        name="AudioSavedBottomSheet"
+        component={AudioSavedBottomSheet}
       />
     </RootStack.Group>
   </>

@@ -8,6 +8,7 @@ const PRIMARY_CONTROL_DIAMETER = 96;
 export const SIDE_ICON_BUTTON_WIDTH = 36;
 export const MAX_RECORDING_DURATION_MS = 5 * 60_000;
 
+/* eslint-disable react-native/no-unused-styles */
 export const AudioStyles = StyleSheet.create({
   contentContainer: {flex: 1},
   dockContainer: {paddingVertical: 24},
@@ -56,6 +57,7 @@ export const AudioStyles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+/* eslint-enable react-native/no-unused-styles */
 
 export const sharedAudioNavOptions: NativeStackNavigationOptions = {
   contentStyle: {backgroundColor: DARK_GREY},

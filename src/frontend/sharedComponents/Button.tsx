@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {GestureResponderEvent, StyleSheet, View, ViewStyle} from 'react-native';
 
-import {VERY_LIGHT_BLUE} from '../lib/styles';
+import {BLACK, COMAPEO_BLUE, VERY_LIGHT_BLUE} from '../lib/styles';
 import {TouchableNativeFeedback} from 'react-native-gesture-handler';
 
 import {ViewStyleProp} from '../sharedTypes';
@@ -127,6 +127,7 @@ function getTouchableStyle(size: Size) {
   return styles[('touchable' + capitalize(size)) as keyof typeof styles];
 }
 
+/* eslint-disable react-native/no-unused-styles */
 const styles = StyleSheet.create({
   buttonBase: {
     borderRadius: 30,
@@ -143,8 +144,36 @@ const styles = StyleSheet.create({
     borderColor: '#EEEEEE',
     borderWidth: 1.5,
   },
+  touchableMedium: {
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  touchableSmall: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   textBase: {
     letterSpacing: 0.5,
     color: '#FFFFFF',
   },
+  textOutlinedLight: {
+    color: '#FFFFFF',
+  },
+  textOutlinedDark: {
+    color: BLACK,
+  },
+  textOutlinedComapeoBlue: {
+    color: COMAPEO_BLUE,
+  },
+  textOutlinedLightDisabled: {
+    color: '#666666',
+  },
+  textOutlinedDarkDisabled: {
+    color: '#999999',
+  },
 });
+/* eslint-enable react-native/no-unused-styles */

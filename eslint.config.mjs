@@ -76,7 +76,7 @@ const frontendConfig = pluginTs.config(
     ],
     rules: {
       // More noise than signal
-      // '@eslint-react/hooks-extra/no-direct-set-state-in-use-effect': 'off',
+      '@eslint-react/hooks-extra/no-direct-set-state-in-use-effect': 'off',
       // Some React Native libraries use the subscription return approach
       '@eslint-react/web-api/no-leaked-event-listener': 'off',
       // Not relevant for React Native

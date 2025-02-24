@@ -16,8 +16,8 @@ export const DrawerMenuIcon = ({
 }) => (
   <TouchableOpacity
     style={[{justifyContent: 'center'}, style]}
-    onPress={onPress}>
-    accessibilityLabel={accessibilityLabel}
+    onPress={onPress}
+    accessibilityLabel={accessibilityLabel}>
     <IonIcon name="menu" size={32} testID={testID} />
   </TouchableOpacity>
 );

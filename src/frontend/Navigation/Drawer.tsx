@@ -169,6 +169,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
                 ),
                 primaryText: formatMessage(m.createOrJoin),
                 testID: 'MAIN.create-join-list-item',
+                accessibilityLabel: 'Go to Create or Join Project',
               }}
             />
             <DrawerMenuListItem

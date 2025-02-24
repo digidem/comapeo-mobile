@@ -1,17 +1,19 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
-import {byResourceId, byText} from '../../utils/selectors';
+import {byTextMatches, byResourceId} from '../../utils/selectors';
 
 describe('Unjoin Project', () => {
   it('should show message preventing rejoining project', async () => {
-    const drawerIcon = await $(byResourceId('drawer-icon-home'));
+    const drawerIcon = await $('~Open Navigation Drawer');
     await drawerIcon.click();
 
-    const createJoinOption = await $(
-      byResourceId('MAIN.create-join-list-item'),
-    );
+    const createJoinOption = await $('~Go to Create or Join Project');
     await createJoinOption.click();
 
-    await expect($(byText('You are already on a project'))).toBeDisplayed();
+    await expect(
+      $(byTextMatches('You are already on a project')),
+    ).toBeDisplayed();
+    const backButton = $(byResourceId('MAIN.header-back-btn'));
+    await backButton.click();
   });
 });

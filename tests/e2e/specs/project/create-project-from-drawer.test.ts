@@ -5,12 +5,10 @@ import {output} from '../../utils/naming';
 
 describe('Create Project from Drawer', () => {
   it('should allow user to create a new project', async () => {
-    const drawerIcon = await $(byResourceId('drawer-icon-home'));
+    const drawerIcon = await $('~Open Navigation Drawer');
     await drawerIcon.click();
 
-    const createJoinOption = await $(
-      byResourceId('MAIN.create-join-list-item'),
-    );
+    const createJoinOption = await $('~Go to Create or Join Project');
     await createJoinOption.click();
 
     const createProjectButton = await $(byText('Create a Project'));
@@ -26,7 +24,7 @@ describe('Create Project from Drawer', () => {
       byResourceId('PROJECT.advanced-settings-toggle'),
     );
     await advancedSettings.click();
-    await expect($(byText('Import config'))).toBeDisplayed();
+    await expect($(byText('Import Config'))).toBeDisplayed();
     await advancedSettings.click();
 
     const nameInput = await $(byResourceId('PROJECT.name-inp'));
@@ -34,6 +32,7 @@ describe('Create Project from Drawer', () => {
     await createBtn.click();
 
     await expect($(byText('Invite Device'))).toBeDisplayed();
-    await expect($(byText('Go to Map'))).toBeDisplayed();
+    const goToMapButton = await $(byText('Go to Map'));
+    await goToMapButton.click();
   });
 });

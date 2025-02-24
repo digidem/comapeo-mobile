@@ -55,7 +55,7 @@ describe('Edit Device Name Test', () => {
 
     await driver.back();
     await driver.back();
-    await drawerIcon.click();
+    await drawerIcon.tap();
     await projectSettingsItem.click();
     await deviceNameListItem.click();
 

@@ -25,7 +25,6 @@ export const ListItem = ({
   divider = false,
   onPress,
   testID,
-  ...otherProps
 }: ListItemProp) => {
   const componentStyle = [
     styles.root,
@@ -41,7 +40,6 @@ export const ListItem = ({
       testID={testID}
       onPress={onPress}
       disabled={disabled}
-      {...otherProps}
       background={TouchableNativeFeedback.Ripple(VERY_LIGHT_BLUE, false)}>
       <View testID={testID} style={componentStyle}>
         {children}

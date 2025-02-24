@@ -32,6 +32,7 @@ export const HomeHeader: FC<
         style={{marginRight: 20}}
         onPress={openDrawer}
         testID="drawer-icon-home"
+        accessibilityLabel="Open Navigation Drawer"
       />
     </View>
   );

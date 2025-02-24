@@ -5,21 +5,11 @@ import {output} from '../../utils/naming';
 
 describe('Edit Device Name Test', () => {
   it('should navigate to project settings and edit the device name', async () => {
-    const geoLocationBefore = await driver.execute('mobile: getGeolocation');
-    console.log('Current Geolocation BEFORE:', geoLocationBefore);
-    await driver.execute('mobile: setGeolocation', {
-      latitude: -0.8,
-      longitude: -76.9,
-      altitude: 0,
-    });
-    const geoLocationAfter = await driver.execute('mobile: getGeolocation');
-    console.log('Current Geolocation AFTER:', geoLocationAfter);
-
-    const drawerIcon = $(byResourceId('drawer-icon-home'));
+    const drawerIcon = await $('~Open Navigation Drawer');
     await drawerIcon.tap();
 
-    const projectSettingsItem = $(byText('Project Settings'));
-    await projectSettingsItem.click();
+    const projectSettingsItem = await $('~Go to Project Settings');
+    await projectSettingsItem.tap();
 
     const deviceNameListItem = $(byResourceId('PROJECT.device-name-list-item'));
     await deviceNameListItem.click();

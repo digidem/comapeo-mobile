@@ -10,7 +10,9 @@ describe('Device Naming Test', () => {
   });
 
   it('should input a device name and verify success message', async () => {
-    const deviceNameInput = await $(byResourceId('ONBOARDING.device-name-inp'));
+    const deviceNameInput = await $(
+      'android=resourceId("ONBOARDING.device-name-inp")',
+    );
     await expect(deviceNameInput).toBeDisplayed();
     const addNameButton = await $(byResourceId('ONBOARDING.add-name-btn'));
 

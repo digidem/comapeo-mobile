@@ -125,6 +125,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
             style={{alignSelf: 'flex-end', marginRight: 20}}
             onPress={navigation.closeDrawer}
             testID="drawer-icon-drawer"
+            accessibilityLabel="Close Navigation Drawer"
           />
           {/* This text component is one of the exceptions that does not use the shared text components as requested by Sabella */}
           <Text
@@ -135,7 +136,12 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
               paddingHorizontal: 40,
               fontSize: 18,
               fontFamily: 'Rubik_400Regular',
-            }}>
+            }}
+            accessibilityLabel={
+              data?.name
+                ? `Project: ${data.name}`
+                : 'You are currently mapping on your own'
+            }>
             {data?.name
               ? formatMessage(m.projName, {projectName: data.name})
               : formatMessage(m.mappingOnOwn)}
@@ -172,6 +178,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
                 },
                 materialIconName: 'assignment',
                 primaryText: formatMessage(m.projectSettings),
+                accessibilityLabel: 'Go to Project Settings',
               }}
             />
             <DrawerMenuListItem
@@ -181,6 +188,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
                 },
                 materialIconName: 'settings-suggest',
                 primaryText: formatMessage(m.appSettings),
+                accessibilityLabel: 'Go to App Settings',
               }}
             />
             {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
@@ -204,6 +212,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
                 },
                 materialIconName: 'info-outline',
                 primaryText: formatMessage(m.aboutCoMapeo),
+                accessibilityLabel: 'Go to About CoMapeo Screen',
               }}
             />
             <DrawerMenuListItem
@@ -219,6 +228,7 @@ const DrawerContent = ({navigation}: DrawerContentComponentProps) => {
                   />
                 ),
                 primaryText: formatMessage(m.privacyPolicy),
+                accessibilityLabel: 'Go to Data and Privacy Screen',
               }}
             />
           </View>

@@ -4,10 +4,6 @@ import * as Application from 'expo-application';
 import {getLastKnownPositionAsync} from 'expo-location';
 import {AppState, Platform} from 'react-native';
 import {storage} from '../hooks/persistedState/createPersistedState';
-import {
-  getDeviceLanguageTag,
-  usePersistedLocale,
-} from '../hooks/persistedState/usePersistedLocale';
 import {assert} from '../lib/assert';
 import {MINUTE_MS, formatIsoUtc, parseIsoUtc} from '../lib/date';
 import {first} from '../lib/first';
@@ -27,6 +23,9 @@ import {getMetricsRequestInfo} from './getMetricsRequestInfo';
 import {getMonthlyHash} from './getMonthlyHash';
 import {positionToCountries} from './positionToCountries';
 import {sendMetricsData} from './sendMetricsData';
+import {STORAGE_KEY as LOCALE_STORAGE_KEY} from '../contexts/SelectedLocaleContext';
+import {getLocales} from 'expo-localization';
+import {resolveLanguageTag} from '../lib/intl';
 
 const STORAGE_KEY = 'AppDiagnosticMetricsQueue';
 const CHECK_INTERVAL = 5 * MINUTE_MS;
@@ -50,12 +49,18 @@ async function getCountry(): Promise<undefined | string> {
 }
 
 async function generateAppDiagnosticMetricsData(): Promise<AppDiagnosticMetricsReport> {
+  const systemPreferredLocales = getLocales();
+  const selectedLanguageTag = getSelectedLanguageTag();
+
   const result: AppDiagnosticMetricsReport = {
     dateGenerated: formatIsoUtc(new Date()),
     os: Platform.OS,
     osVersion: Platform.Version,
-    deviceLocale: getDeviceLanguageTag(),
-    appLocale: usePersistedLocale.getState().locale,
+    deviceLocale: systemPreferredLocales[0]!.languageTag,
+    appLocale: resolveLanguageTag({
+      selected: selectedLanguageTag,
+      systemPreferred: systemPreferredLocales.map(l => l.languageTag),
+    }),
     country: await getCountry(),
   };
 
@@ -201,4 +206,28 @@ export class AppDiagnosticMetrics {
       Sentry.captureException(err);
     }
   }
+}
+
+function getSelectedLanguageTag() {
+  const stored = storage.getString(LOCALE_STORAGE_KEY);
+
+  if (!stored) {
+    // TODO: Log to Sentry?
+    return null;
+  }
+
+  const parsed = JSON.parse(stored) as unknown;
+
+  if (
+    typeof parsed === 'object' &&
+    parsed !== null &&
+    'languageTag' in parsed &&
+    typeof parsed.languageTag === 'string'
+  ) {
+    return parsed.languageTag;
+  }
+
+  // TODO: Log to Sentry?
+
+  return null;
 }

@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {IntlProvider as ReactIntlProvider, CustomFormats} from 'react-intl';
+import {CustomFormats, IntlProvider as ReactIntlProvider} from 'react-intl';
 import {StyleSheet, Text} from 'react-native';
 
 import messages from '../../../translations/messages.json';
-import {usePersistedLocale} from '../hooks/persistedState/usePersistedLocale';
-import {TranslatedLocale} from '../lib/intl';
+import {useResolvedLanguageTag} from '../hooks/useResolvedLanguageTag';
+import {extractLanguageCode, type TranslatedLanguageTag} from '../lib/intl';
 
 export const formats: CustomFormats = {
   date: {
@@ -25,20 +25,19 @@ const DEFAULT_RICH_TEXT_MAPPINGS: NonNullable<
 };
 
 export const IntlProvider = ({children}: {children: React.ReactNode}) => {
-  const appLocale = usePersistedLocale(store => store.locale);
-
-  const languageCode = appLocale.split('-')[0];
-
-  // Add fallbacks for non-regional locales (e.g. "en" for "en-GB")
-  const localeMessages = {
-    ...messages[languageCode as TranslatedLocale],
-    ...(messages[appLocale as TranslatedLocale] || {}),
-  };
+  const resolvedLanguageTag = useResolvedLanguageTag();
+  const languageCode = extractLanguageCode(resolvedLanguageTag);
 
   return (
     <ReactIntlProvider
-      locale={appLocale}
-      messages={localeMessages}
+      locale={resolvedLanguageTag}
+      messages={
+        // Add fallbacks for non-regional tags (e.g. "en" for "en-GB")
+        {
+          ...(messages[languageCode as TranslatedLanguageTag] || {}),
+          ...(messages[resolvedLanguageTag as TranslatedLanguageTag] || {}),
+        }
+      }
       formats={formats}
       onError={onError}
       wrapRichTextChunksInFragment

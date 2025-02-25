@@ -18,6 +18,7 @@ import {getSentryUserId} from './metrics/getSentryUserId';
 import {AppDiagnosticMetrics} from './metrics/AppDiagnosticMetrics';
 import {DeviceDiagnosticMetrics} from './metrics/DeviceDiagnosticMetrics';
 import {createDraftObservationStore} from './contexts/PersistedStores/DraftObservationStore';
+import {createSelectedLocaleStore} from './contexts/SelectedLocaleContext';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -77,6 +78,10 @@ const persistedDraftObservationStore = createDraftObservationStore({
   persist: true,
 });
 
+const persistedSelectedLocaleStore = createSelectedLocaleStore({
+  persist: true,
+});
+
 const App = () => {
   const [permissionsAsked, setPermissionsAsked] = React.useState(false);
   React.useEffect(() => {
@@ -96,7 +101,8 @@ const App = () => {
       mapeoApi={mapeoApi}
       appMetrics={appDiagnosticMetrics}
       deviceMetrics={deviceDiagnosticMetrics}
-      persistedDrafObservationStore={persistedDraftObservationStore}>
+      persistedDrafObservationStore={persistedDraftObservationStore}
+      selectedLocaleStore={persistedSelectedLocaleStore}>
       <AppNavigator permissionAsked={permissionsAsked} />
     </AppProviders>
   );

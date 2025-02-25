@@ -28,6 +28,10 @@ import {AppDiagnosticMetrics} from '../metrics/AppDiagnosticMetrics';
 import {DeviceDiagnosticMetrics} from '../metrics/DeviceDiagnosticMetrics';
 import {DraftObservationProvider} from './DraftObservationContext';
 import {DraftObservationStore} from './PersistedStores/DraftObservationStore';
+import {
+  SelectedLocaleStore,
+  SelectedLocaleStoreProvider,
+} from './SelectedLocaleContext';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -37,6 +41,7 @@ type AppProvidersProps = {
   appMetrics: AppDiagnosticMetrics;
   deviceMetrics: DeviceDiagnosticMetrics;
   persistedDrafObservationStore: DraftObservationStore;
+  selectedLocaleStore: SelectedLocaleStore;
 };
 
 const queryClient = new QueryClient();
@@ -49,42 +54,47 @@ export const AppProviders = ({
   appMetrics,
   deviceMetrics,
   persistedDrafObservationStore,
+  selectedLocaleStore,
 }: AppProvidersProps) => {
   return (
-    <IntlProvider>
-      <QueryClientProvider client={queryClient}>
-        <SafeAreaProvider>
-          <GestureHandlerRootView style={styles.flex}>
-            <TrackTimerContextProvider>
-              <GPSModalContextProvider>
-                <ServerLoading messagePort={messagePort}>
-                  <LocalDiscoveryProvider value={localDiscoveryController}>
-                    <ClientApiProvider clientApi={mapeoApi}>
-                      <MetricsProvider
-                        appMetrics={appMetrics}
-                        deviceMetrics={deviceMetrics}>
-                        <ActiveProjectProvider>
-                          <BottomSheetModalProvider>
-                            <PhotoPromiseProvider>
-                              <DraftObservationProvider
-                                draftObservationStore={
-                                  persistedDrafObservationStore
-                                }>
-                                <SecurityProvider>{children}</SecurityProvider>
-                              </DraftObservationProvider>
-                            </PhotoPromiseProvider>
-                          </BottomSheetModalProvider>
-                        </ActiveProjectProvider>
-                      </MetricsProvider>
-                    </ClientApiProvider>
-                  </LocalDiscoveryProvider>
-                </ServerLoading>
-              </GPSModalContextProvider>
-            </TrackTimerContextProvider>
-          </GestureHandlerRootView>
-        </SafeAreaProvider>
-      </QueryClientProvider>
-    </IntlProvider>
+    <SelectedLocaleStoreProvider value={selectedLocaleStore}>
+      <IntlProvider>
+        <QueryClientProvider client={queryClient}>
+          <SafeAreaProvider>
+            <GestureHandlerRootView style={styles.flex}>
+              <TrackTimerContextProvider>
+                <GPSModalContextProvider>
+                  <ServerLoading messagePort={messagePort}>
+                    <LocalDiscoveryProvider value={localDiscoveryController}>
+                      <ClientApiProvider clientApi={mapeoApi}>
+                        <MetricsProvider
+                          appMetrics={appMetrics}
+                          deviceMetrics={deviceMetrics}>
+                          <ActiveProjectProvider>
+                            <BottomSheetModalProvider>
+                              <PhotoPromiseProvider>
+                                <DraftObservationProvider
+                                  draftObservationStore={
+                                    persistedDrafObservationStore
+                                  }>
+                                  <SecurityProvider>
+                                    {children}
+                                  </SecurityProvider>
+                                </DraftObservationProvider>
+                              </PhotoPromiseProvider>
+                            </BottomSheetModalProvider>
+                          </ActiveProjectProvider>
+                        </MetricsProvider>
+                      </ClientApiProvider>
+                    </LocalDiscoveryProvider>
+                  </ServerLoading>
+                </GPSModalContextProvider>
+              </TrackTimerContextProvider>
+            </GestureHandlerRootView>
+          </SafeAreaProvider>
+        </QueryClientProvider>
+      </IntlProvider>
+    </SelectedLocaleStoreProvider>
   );
 };
 

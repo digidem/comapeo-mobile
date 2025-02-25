@@ -28,6 +28,7 @@ const toolingConfig = pluginTs.config({
   name: 'tooling',
   files: [
     '*.config.{js,mjs,cjs}',
+    '*.setup.js',
     'scripts/*.{js,mjs,cjs}',
     'expo-config-plugins/*.{js,mjs,cjs}',
   ],
@@ -101,7 +102,7 @@ const frontendConfig = pluginTs.config(
   {
     ...pluginJest.configs['flat/recommended'],
     name: 'eslint-plugin-jest',
-    files: ['src/frontend/**/*.test.{js,jsx,mts,ts,tsx}'],
+    files: ['jest.setup.js', 'src/frontend/**/*.test.{js,jsx,mts,ts,tsx}'],
   },
 );
 

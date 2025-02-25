@@ -1,8 +1,10 @@
 import * as React from 'react';
-import {ScrollView} from 'react-native';
 import {defineMessages} from 'react-intl';
-import {usePersistedLocale} from '../../../hooks/persistedState/usePersistedLocale';
-import {SUPPORTED_LANGUAGES} from '../../../lib/intl';
+import {ScrollView} from 'react-native';
+
+import {useSelectedLocaleActions} from '../../../contexts/SelectedLocaleContext';
+import {useResolvedLanguageTag} from '../../../hooks/useResolvedLanguageTag';
+import {USABLE_LANGUAGES} from '../../../lib/intl';
 import {SelectOne} from '../../../sharedComponents/SelectOne';
 import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
 
@@ -17,12 +19,12 @@ const m = defineMessages({
 export const LanguageSettings: NativeNavigationComponent<
   'LanguageSettings'
 > = ({navigation}) => {
-  const locale = usePersistedLocale(store => store.locale);
-  const setLocale = usePersistedLocale(store => store.setLocale);
+  const resolvedLanguageTag = useResolvedLanguageTag();
+  const {setLanguageTag} = useSelectedLocaleActions();
 
-  const options = SUPPORTED_LANGUAGES.map(
-    ({locale: supportedLocale, nativeName, englishName}) => ({
-      value: supportedLocale,
+  const options = USABLE_LANGUAGES.map(
+    ({languageTag, nativeName, englishName}) => ({
+      value: languageTag,
       label: nativeName,
       hint: englishName,
     }),
@@ -31,10 +33,10 @@ export const LanguageSettings: NativeNavigationComponent<
   return (
     <ScrollView testID="languageScrollView">
       <SelectOne
-        value={locale}
+        value={resolvedLanguageTag}
         options={options}
-        onChange={selectedLocale => {
-          setLocale(selectedLocale);
+        onChange={languageTag => {
+          setLanguageTag(languageTag);
           navigation.popTo('AppSettings');
         }}
       />

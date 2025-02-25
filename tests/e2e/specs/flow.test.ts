@@ -9,4 +9,6 @@ describe('CoMapeo E2E Flow', function () {
   require('./project/create-project-from-drawer.test');
   require('./project/unjoin-project.test');
   require('./main/side-drawer-menu-proj.test');
+  require('./main/gps.test');
+  require('./main/map.test');
 });

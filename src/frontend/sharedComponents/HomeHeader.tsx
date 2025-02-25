@@ -22,6 +22,7 @@ export const HomeHeader: FC<
       />
       <IconButton
         style={styles.leftButton}
+        accessibilityLabel="Go to Sync Screen"
         onPress={() => {
           navigation.navigate('Sync');
         }}>

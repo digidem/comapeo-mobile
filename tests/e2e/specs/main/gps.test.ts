@@ -31,7 +31,7 @@ describe('GPS Component Test', () => {
   });
 
   it('should verify GPS pill navigation from Camera screen', async () => {
-    const cameraTab = await $(byResourceId('tabBarButtonCamera'));
+    const cameraTab = await $('~Go to Camera');
     await cameraTab.click();
 
     const gpsPillButton = await $(byResourceId('MAIN.gps-pill-btn'));

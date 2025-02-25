@@ -28,7 +28,7 @@
     "upgrade-deps:all": "npm-check --update --save-exact",
     "upgrade-deps:production": "npm-check --update --save-exact --production",
     "upgrade-deps:dev": "npm-check --update --save-exact --dev-only",
-    "test:e2e": "wdio run ./wdio.conf.js"
+    "test:e2e": "E2E_TEST=true wdio run ./wdio.conf.js"
   },
   "dependencies": {
     "@bam.tech/react-native-image-resizer": "3.0.11",

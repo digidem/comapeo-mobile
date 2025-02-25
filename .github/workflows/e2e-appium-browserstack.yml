@@ -117,6 +117,7 @@ jobs:
           BROWSERSTACK_APP_URL: ${{ needs.build-apk.outputs.app_url }}
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+          E2E_TEST: 'true'
 
       - name: Upload Spec Reporter Logs
         if: always()

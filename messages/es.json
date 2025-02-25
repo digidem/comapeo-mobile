@@ -25,21 +25,6 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "¿Quieres descartar la observación?"
   },
-  "AudioPlaybackScreen.DeleteAudioRecordingModal.successDescription": {
-    "message": "Tu <bold>{audioRecording}</bold> ha sido añadida."
-  },
-  "AudioPlaybackScreen.DeleteAudioRecordingModal.successTitle": {
-    "message": "¡Éxito!"
-  },
-  "AudioPlaybackScreen.SuccessAudioRecordingModal.audioRecording": {
-    "message": "Grabación de audio"
-  },
-  "AudioPlaybackScreen.SuccessAudioRecordingModal.recordAnother": {
-    "message": "Graba otra"
-  },
-  "AudioPlaybackScreen.SuccessAudioRecordingModal.returnToEditor": {
-    "message": "Volver al editor"
-  },
   "Modal.GPSDisable.button": {
     "message": "Habilitar"
   },
@@ -473,15 +458,15 @@
     "message": "Usar la Contraseña de la aplicación"
   },
   "screens.AudioPermission.Button.allow": {
-    "description": "Screen button text for allow the audio permission",
+    "description": "Screen button text for granting the audio permission",
     "message": "Permitir"
   },
   "screens.AudioPermission.Button.goToSettings": {
-    "description": "Screen button text for navigate user to settings when audio permission was denied",
+    "description": "Screen button text for navigating the user to settings when audio permission is denied",
     "message": "Ir a ajustes"
   },
   "screens.AudioPermission.Button.notNow": {
-    "description": "Screen button text for not allowed audio permission",
+    "description": "Screen button text for not granting audio permission",
     "message": "Ahora no"
   },
   "screens.AudioPermission.description": {
@@ -492,38 +477,29 @@
     "description": "Screen title for audio permission screen",
     "message": "Grabando audio con CoMapeo"
   },
-  "screens.AudioScreen.CreateRecording.RecordingActive.description": {
-    "message": "¡Menos de {length} {length, plural, one {minuto} other {minutos}}"
+  "screens.AudioPlaybackUnsaved.description": {
+    "message": "Total length: {length}"
   },
-  "screens.AudioScreen.CreateRecording.RecordingDone.deleteBottomSheetDescription": {
-    "message": "Tu grabación de audio se eliminará permanentemente. Esto no se puede deshacer."
+  "screens.AudioRecording.lessThan1": {
+    "message": "Less than a minute left"
   },
-  "screens.AudioScreen.CreateRecording.RecordingDone.deleteBottomSheetPrimaryButtonText": {
-    "message": "Borrar"
+  "screens.AudioRecording.lessThan5": {
+    "message": "Less than 5 minutes left"
   },
-  "screens.AudioScreen.CreateRecording.RecordingDone.deleteBottomSheetSecondaryButtonText": {
-    "message": "Cancelar"
+  "screens.AudioRecording.record5Min": {
+    "message": "Record up to 5 minutes"
   },
-  "screens.AudioScreen.CreateRecording.RecordingDone.deleteBottomSheetTitle": {
-    "message": "Borrar?"
+  "screens.AudioSavedBottomSheet.recordAnother": {
+    "message": "Record Another"
   },
-  "screens.AudioScreen.CreateRecording.RecordingIdle.description": {
-    "message": "¡Menos de {length} {length, plural, one {minuto} other {minutos}}"
+  "screens.AudioSavedBottomSheet.returnToEditor": {
+    "message": "Return to Editor"
   },
-  "screens.AudioScreen.ExistingRecording.deleteBottomSheetDescription": {
-    "message": "Tu grabación de audio se eliminará permanentemente. Esto no se puede deshacer."
+  "screens.AudioSavedBottomSheet.subTitle": {
+    "message": "Your Audio Recording was added"
   },
-  "screens.AudioScreen.ExistingRecording.deleteBottomSheetPrimaryButtonText": {
-    "message": "Borrar"
-  },
-  "screens.AudioScreen.ExistingRecording.deleteBottomSheetSecondaryButtonText": {
-    "message": "Cancelar"
-  },
-  "screens.AudioScreen.ExistingRecording.deleteBottomSheetTitle": {
-    "message": "Borrar?"
-  },
-  "screens.AudioScreen.Playback.description": {
-    "message": "Duración total: {length}"
+  "screens.AudioSavedBottomSheet.title": {
+    "message": "Success!"
   },
   "screens.CameraScreen.goToSettings": {
     "message": "Ir a ajustes"
@@ -595,6 +571,18 @@
   },
   "screens.DataPrivacy.title": {
     "message": "Datos y privacidad"
+  },
+  "screens.DeleteAudioBottomSheet.Description": {
+    "message": "Your Audio Recording will be permanently deleted. This cannot be undone."
+  },
+  "screens.DeleteAudioBottomSheet.Title": {
+    "message": "Delete?"
+  },
+  "screens.DeleteAudioBottomSheet.cancel": {
+    "message": "Cancel"
+  },
+  "screens.DeleteAudioBottomSheet.delete": {
+    "message": "Delete"
   },
   "screens.DeviceNaming.Success.description": {
     "message": "Nombraste tu dispositivo"

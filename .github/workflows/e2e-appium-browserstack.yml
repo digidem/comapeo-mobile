@@ -67,6 +67,7 @@ jobs:
       - name: Build APK
         env:
           SENTRY_DISABLE_AUTO_UPLOAD: 'true'
+          E2E_TEST: 'true'
           MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
           COMAPEO_METRICS_URL: ${{ secrets.COMAPEO_METRICS_URL }}
           COMAPEO_METRICS_API_KEY: ${{ secrets.COMAPEO_METRICS_API_KEY }}
@@ -117,7 +118,6 @@ jobs:
           BROWSERSTACK_APP_URL: ${{ needs.build-apk.outputs.app_url }}
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-          E2E_TEST: 'true'
 
       - name: Upload Spec Reporter Logs
         if: always()

@@ -408,7 +408,7 @@ export type DraftStateEmpty = {
   initialPosition: null;
 };
 
-type ObservationWithPreset = Exclude<Observation, 'presetRef'> & {
+export type ObservationWithPreset = Exclude<Observation, 'presetRef'> & {
   presetRef?: Preset;
 };
 
@@ -509,7 +509,7 @@ function getPhotoRotation(acc?: AccelerometerMeasurement) {
 }
 
 // TODO: Move this to @mapeo/schema - the current version is not flexible enough
-function valueOf<T extends MapeoDoc>(doc: T & {forks?: string[]}) {
+export function valueOf<T extends MapeoDoc>(doc: T & {forks?: string[]}) {
   return excludeKeys(doc, [
     'docId',
     'versionId',

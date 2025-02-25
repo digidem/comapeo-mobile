@@ -62,19 +62,19 @@ const LOCATION_OPTIONS: Location.LocationOptions = {
 };
 /** We don't update the position of an observation with the location from the
  * device location provider if the location is older than this threshold */
-const STALE_LOCATION_THRESHOLD_MS = 1000;
+export const STALE_LOCATION_THRESHOLD_MS = 1000;
 /** Over this threshold we consider the user to have moved away from the
  * location of the observation, and we stop refining GPS position. We use the
  * accuracy of the first location as the default, and use this as a fallback if
  * we do not have an accuracy value. */
-const MOVED_AWAY_THRESHOLD_METERS = 100;
+export const MOVED_AWAY_THRESHOLD_METERS = 100;
 /** The factor of accuracy that a new location must be to consider the user to
  * have moved away. E.g. if the accuracy of the initial position is 10m and the
  * factor is 1.5, then we consider the user to have moved away if a location
  * update is 15m away. */
-const ACCURACY_MOVED_AWAY_FACTOR = 1.5;
+export const ACCURACY_MOVED_AWAY_FACTOR = 1.5;
 
-async function createDraftObservationLocationUpdator({
+export async function createDraftObservationLocationUpdator({
   instance,
   actions: {updatePosition},
 }: DraftObservationStore) {
@@ -170,10 +170,10 @@ function isNewlyCreatedDraft(storeState: DraftState) {
   return isObservationInStore && isNewlyCreatedObservation;
 }
 
-function distanceBetweenCoords(
+export function distanceBetweenCoords(
   a: {latitude: number; longitude: number},
   b: {latitude: number; longitude: number},
 ) {
-  const ruler = new CheapRuler(a.latitude);
+  const ruler = new CheapRuler(a.latitude, 'meters');
   return ruler.distance([a.longitude, a.latitude], [b.longitude, b.latitude]);
 }

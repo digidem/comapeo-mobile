@@ -33,6 +33,7 @@ type DraftObservationProviderProps = {
 };
 
 /** `draftObservationStore` should be initialized outside of react life cycle */
+// eslint-disable-next-line @eslint-react/no-unstable-context-value -- the actions are stable
 export const DraftObservationProvider = ({
   children,
   draftObservationStore,

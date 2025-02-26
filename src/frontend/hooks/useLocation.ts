@@ -85,7 +85,7 @@ function debounceLocation({
 }: Omit<LocationOptions, 'minDistanceInterval'>) {
   let lastLocation: LocationObject | undefined;
 
-  return function (callback: (location: LocationObject | undefined) => any) {
+  return function (callback: (location: LocationObject | undefined) => void) {
     return function (location: LocationObject) {
       if (!lastLocation) {
         lastLocation = location;

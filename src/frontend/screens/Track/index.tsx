@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text, SafeAreaView} from 'react-native';
-import {BLACK, BLUE_GREY, DARK_GREY} from '../../lib/styles.ts';
+import {BLUE_GREY, DARK_GREY} from '../../lib/styles.ts';
 
 import TrackIcon from '../../images/Track.svg';
 import {FormattedMessage, MessageDescriptor, defineMessages} from 'react-intl';
@@ -114,11 +114,6 @@ export function createNavigationOptions({
 }
 
 export const styles = StyleSheet.create({
-  positionText: {
-    fontSize: 12,
-    color: BLACK,
-    fontWeight: '700',
-  },
   root: {
     flex: 1,
     flexDirection: 'column',

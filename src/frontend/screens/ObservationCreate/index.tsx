@@ -14,7 +14,7 @@ import {useMostAccurateLocationForObservation} from './useMostAccurateLocationFo
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';
-import {ActionsRow} from '../../sharedComponents/ActionRow';
+import {ActionsRow} from '../../sharedComponents/ActionsRow';
 import {Alert, type AlertButton} from 'react-native';
 import {Observation} from '@comapeo/schema';
 
@@ -297,7 +297,6 @@ export const ObservationCreate = ({
 
   React.useEffect(() => {
     navigation.setOptions({
-      // eslint-disable-next-line react/no-unstable-nested-components
       headerRight: () => (
         <SaveButton
           onPress={checkAccuracyAndLocation}

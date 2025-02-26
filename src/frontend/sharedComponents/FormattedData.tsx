@@ -83,7 +83,7 @@ export const FormattedFieldValue = ({
   value,
   field,
 }: {
-  value: any;
+  value: unknown;
   field: Field;
 }) => {
   const {formatMessage: t} = useIntl();

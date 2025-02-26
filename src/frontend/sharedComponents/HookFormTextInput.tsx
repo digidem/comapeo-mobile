@@ -58,18 +58,16 @@ export const HookFormTextInput = <InputFields extends FieldValues>({
         <Controller
           name={name}
           control={control}
-          rules={rules}
+          rules={{validate: value => !!value.trim(), ...rules}}
           render={({field: {value, onChange, onBlur}}) => (
             <RNTextInput
               testID={testID}
-              style={[
-                {
-                  flex: 1,
-                  color: BLACK,
-                  fontFamily: 'Rubik_500Medium',
-                  fontSize: 16,
-                },
-              ]}
+              style={{
+                flex: 1,
+                color: BLACK,
+                fontFamily: 'Rubik_500Medium',
+                fontSize: 16,
+              }}
               value={value}
               onBlur={onBlur}
               onChangeText={onChange}
@@ -117,9 +115,9 @@ const Counter = <InputFields extends FieldValues>({
 
   return (
     <Text
-      style={[
-        {color: isMaxLengthError ? RED : LIGHT_GREY},
-      ]}>{`${inputCount}/${maxLength}`}</Text>
+      style={{
+        color: isMaxLengthError ? RED : LIGHT_GREY,
+      }}>{`${inputCount}/${maxLength}`}</Text>
   );
 };
 

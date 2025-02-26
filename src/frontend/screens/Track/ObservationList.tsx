@@ -44,7 +44,7 @@ export function ObservationList({observations}: TrackObservation) {
       }
       innerAccordianDetails={observations.map((observation, index) => (
         <ObservationListItem
-          key={index}
+          key={observation.docId}
           observation={observation}
           onPress={() => {
             navigation.push('Observation', {

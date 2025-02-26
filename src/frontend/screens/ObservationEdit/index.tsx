@@ -10,7 +10,7 @@ import {useCreateBlobMutation} from '../../hooks/server/media';
 import {SaveButton} from '../../sharedComponents/SaveButton';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import {ActionsRow} from '../../sharedComponents/ActionRow';
+import {ActionsRow} from '../../sharedComponents/ActionsRow';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {Loading} from '../../sharedComponents/Loading';
 import {HeaderLeft} from './HeaderLeft';
@@ -216,7 +216,6 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      // eslint-disable-next-line react/no-unstable-nested-components
       headerRight: () => (
         <SaveButton
           onPress={editObservation}

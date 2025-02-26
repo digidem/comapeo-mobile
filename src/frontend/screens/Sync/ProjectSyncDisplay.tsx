@@ -323,7 +323,7 @@ export const ProjectSyncDisplay = ({
     }
     default: {
       throw new ExhaustivenessError(
-        // @ts-expect-error
+        // @ts-expect-error Handled at runtime
         syncState.status,
       );
     }
@@ -379,7 +379,7 @@ function SyncProgress({
     }
     default: {
       throw new ExhaustivenessError(
-        // @ts-expect-error
+        // @ts-expect-error Handled at runtime
         stage.name,
       );
     }

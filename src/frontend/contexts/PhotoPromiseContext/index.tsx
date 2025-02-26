@@ -73,7 +73,7 @@ export const PhotoPromiseProvider = ({
   }, [photoPromises]);
 
   const deletePhotoPromise = React.useCallback(
-    (uri: String) => {
+    (uri: string) => {
       const newPhotoPromiseArray = photoPromises.map(async photo => {
         const resolvedPhoto = await photo;
         if (

@@ -70,7 +70,11 @@ function createPersistMiddleware<State>(
     version: migrationOpt?.version,
     partialize: state => {
       if (typeof state === 'object' && state && 'actions' in state) {
-        const {actions, ...other} = state;
+        const {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          actions,
+          ...other
+        } = state;
         return other;
       }
       return state;

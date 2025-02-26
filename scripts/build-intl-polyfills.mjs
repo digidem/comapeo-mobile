@@ -5,8 +5,8 @@ import fs from 'node:fs';
 import {supportedLocales as relativeTimeFormatSupportedLocales} from '@formatjs/intl-relativetimeformat/supported-locales.generated.js';
 import {supportedLocales as pluralRulesSupportedLocales} from '@formatjs/intl-pluralrules/supported-locales.generated.js';
 
-import languages from '../src/frontend/languages.json' assert {type: 'json'};
-import messages from '../translations/messages.json' assert {type: 'json'};
+import languages from '../src/frontend/languages.json' with {type: 'json'};
+import messages from '../translations/messages.json' with {type: 'json'};
 
 build();
 

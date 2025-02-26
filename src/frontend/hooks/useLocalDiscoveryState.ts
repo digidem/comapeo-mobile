@@ -23,6 +23,7 @@ import {
  */
 
 export function useLocalDiscoveryState<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   T extends (state: LocalDiscoveryState) => any = (
     state: LocalDiscoveryState,
   ) => LocalDiscoveryState,

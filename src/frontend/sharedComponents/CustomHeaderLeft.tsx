@@ -5,6 +5,7 @@ import {HeaderBackButtonProps} from '@react-navigation/elements';
 import {BackIcon} from './icons';
 import {BLACK} from '../lib/styles';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
+import {StyleSheet} from 'react-native';
 
 // We use a slightly larger back icon, to improve accessibility
 // TODO iOS: This should probably be a chevron not an arrow
@@ -29,8 +30,13 @@ export const CustomHeaderLeft = ({
       {...headerBackButtonProps}
       testID="MAIN.header-back-btn"
       onPress={onPress || (() => navigation.goBack())}
-      style={{marginLeft: 0, marginRight: 15}}
+      style={CustomHeaderLeftStyles}
       backImage={() => <HeaderBackIcon tintColor={tintColor || BLACK} />}
     />
   );
 };
+
+export const CustomHeaderLeftStyles = StyleSheet.create({
+  // eslint-disable-next-line react-native/no-unused-styles
+  headerStyles: {marginLeft: 0, marginRight: 15},
+}).headerStyles;

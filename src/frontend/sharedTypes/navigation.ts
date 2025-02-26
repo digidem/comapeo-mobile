@@ -10,6 +10,7 @@ import {
   ProcessedDraftPhoto,
   SavedPhoto,
 } from '../contexts/PhotoPromiseContext/types';
+import {Audio} from 'expo-av';
 
 export interface TabBarIconProps {
   size: number;
@@ -98,11 +99,22 @@ export type RootStackParamsList = {
   AddRemoteArchive: undefined;
   SuccessfullyAddedArchive: {archiveName: string; url: string};
   RemoteArchiveOn: undefined;
-  Audio: {isEditing: boolean; uri?: string; isSavedUri?: boolean};
   MapManagement: undefined;
   BackgroundMaps: undefined;
   SyncPreviewsBottomSheet: undefined;
   SyncEverythingBottomSheet: undefined;
+  AudioAskPermissionBottomSheet: {
+    audioPermission: Audio.PermissionResponse;
+  };
+  AudioRecording: undefined;
+  AudioPlaybackUnsavedReview: {uri: string; duration: number};
+  AudioPlaybackUnsavedPreview: {uri: string};
+  DeleteAudioBottomSheet: {
+    onPressDelete: () => void;
+    uri: string;
+  };
+  AudioSavedBottomSheet: undefined;
+  AudioPlaybackSaved: {uri: string; canDelete: boolean};
 };
 
 export type OnboardingParamsList = {

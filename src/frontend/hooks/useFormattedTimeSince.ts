@@ -2,8 +2,8 @@ import {useEffect, useState} from 'react';
 import {Duration} from 'luxon';
 
 export const useFormattedTimeSince = (start: Date | null, interval: number) => {
-  const [currentTime, setCurrentTime] = useState(new Date());
-  let startDate = start ? new Date(start) : new Date();
+  const [currentTime, setCurrentTime] = useState(() => new Date());
+  const startDate = start ? new Date(start) : new Date();
 
   useEffect(() => {
     setCurrentTime(new Date());

@@ -52,7 +52,7 @@ export const MapScreen = () => {
 
   const styleUrlQuery = useMapStyleJsonUrl();
 
-  const styleUrl = !!process.env.EXPO_PUBLIC_E2E_TEST
+  const styleUrl = process.env.EXPO_PUBLIC_E2E_TEST
     ? 'mapbox://styles/mapbox/streets-v11'
     : (styleUrlQuery?.data ?? 'mapbox://styles/mapbox/streets-v11');
 

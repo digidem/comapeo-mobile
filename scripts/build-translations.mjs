@@ -6,7 +6,7 @@ import {readFile, writeFile} from 'node:fs/promises';
 import {glob} from 'glob';
 import {rimraf} from 'rimraf';
 
-import LANGUAGE_NAME_TRANSLATIONS from '../src/frontend/languages.json' assert {type: 'json'};
+import LANGUAGE_NAME_TRANSLATIONS from '../src/frontend/languages.json' with {type: 'json'};
 
 const PROJECT_ROOT_DIR_PATH = new URL('../', import.meta.url).pathname;
 const TRANSLATIONS_DIR_PATH = path.join(PROJECT_ROOT_DIR_PATH, 'translations');
@@ -24,7 +24,7 @@ async function run() {
 
   try {
     fs.mkdirSync(TRANSLATIONS_DIR_PATH);
-  } catch (_) {
+  } catch {
     // Translations directory already exists
   }
 

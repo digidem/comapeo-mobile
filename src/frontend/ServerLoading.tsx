@@ -27,7 +27,7 @@ export const ServerLoading = ({
     // `server-started` event), prompt the server to re-send.
     nodejs.channel.post('get-server-status');
 
-    // @ts-ignore - incorrect types on nodejs.channel
+    // @ts-expect-error - incorrect types on nodejs.channel
     return () => subscription.remove();
   }, [messagePort, setServerStatus]);
 

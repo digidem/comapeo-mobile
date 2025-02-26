@@ -2,7 +2,6 @@ import React, {FC} from 'react';
 import {StyleSheet} from 'react-native';
 import MapboxGL from '@rnmapbox/maps';
 import {LocationHistoryPoint} from '../../sharedTypes/location.ts';
-import Mapbox from '@rnmapbox/maps';
 import {convertToLineString} from '../../lib/utils.ts';
 import {Observation} from '@comapeo/schema';
 import {BLACK} from '../../lib/styles.ts';

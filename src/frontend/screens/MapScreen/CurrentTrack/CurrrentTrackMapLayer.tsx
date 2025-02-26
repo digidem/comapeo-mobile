@@ -1,7 +1,6 @@
 import {LineJoin, LineLayer, ShapeSource} from '@rnmapbox/maps';
 import {usePersistedTrack} from '../../../hooks/persistedState/usePersistedTrack';
 import * as React from 'react';
-import {StyleSheet} from 'react-native';
 import {useLocation} from '../../../hooks/useLocation';
 import {convertToLineString} from '../../../lib/utils';
 
@@ -29,19 +28,15 @@ export const CurrentTrackMapLayer = () => {
         <LineLayer
           id="currentTrack"
           belowLayerID="mapboxUserLocationPulseCircle"
-          style={styles.lineLayer}
+          style={{
+            lineColor: '#000000',
+            lineWidth: 5,
+            lineCap: LineJoin.Round,
+            lineOpacity: 1.84,
+          }}
           existing
         />
       </ShapeSource>
     )
   );
 };
-
-const styles = StyleSheet.create({
-  lineLayer: {
-    lineColor: '#000000',
-    lineWidth: 5,
-    lineCap: LineJoin.Round,
-    lineOpacity: 1.84,
-  },
-} as any);

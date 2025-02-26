@@ -73,7 +73,6 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      // eslint-disable-next-line react/no-unstable-nested-components
       headerLeft: props =>
         // If a preset exists, the user is editting the preset, so they should just navigate BACK to the create or edit observation screen
         existingPreset ? (

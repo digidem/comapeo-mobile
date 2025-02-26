@@ -206,11 +206,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-  submitButtonText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: WHITE,
-  },
   input: {
     flex: 1,
     borderColor: LIGHT_GREY,

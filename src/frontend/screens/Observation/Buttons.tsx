@@ -206,7 +206,7 @@ export const ButtonFields = ({
 };
 
 type ButtonProps = {
-  onPress: () => any;
+  onPress: () => void;
   iconName: 'delete' | 'share';
   title: string;
   isLoading?: boolean;

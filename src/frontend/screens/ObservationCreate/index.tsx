@@ -297,7 +297,6 @@ export const ObservationCreate = ({
 
   React.useEffect(() => {
     navigation.setOptions({
-      // eslint-disable-next-line react/no-unstable-nested-components
       headerRight: () => (
         <SaveButton
           onPress={checkAccuracyAndLocation}

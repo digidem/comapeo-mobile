@@ -127,6 +127,7 @@ function getTouchableStyle(size: Size) {
   return styles[('touchable' + capitalize(size)) as keyof typeof styles];
 }
 
+/* eslint-disable react-native/no-unused-styles */
 const styles = StyleSheet.create({
   buttonBase: {
     borderRadius: 30,
@@ -175,3 +176,4 @@ const styles = StyleSheet.create({
     color: '#999999',
   },
 });
+/* eslint-enable react-native/no-unused-styles */

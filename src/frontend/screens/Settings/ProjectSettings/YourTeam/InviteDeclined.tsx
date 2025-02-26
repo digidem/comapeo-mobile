@@ -29,7 +29,7 @@ export const InviteDeclined = ({
   route,
 }: NativeRootNavigationProps<'InviteDeclined'>) => {
   const {formatMessage} = useIntl();
-  const {role, ...deviceInfo} = route.params;
+  const {name, deviceType, deviceId} = route.params;
 
   useFocusEffect(
     React.useCallback(() => {
@@ -52,7 +52,12 @@ export const InviteDeclined = ({
         <Text style={{marginTop: 10, textAlign: 'center'}}>
           {formatMessage(m.inviteDeclinedDes)}
         </Text>
-        <DeviceNameWithIcon {...deviceInfo} style={{marginTop: 20}} />
+        <DeviceNameWithIcon
+          name={name}
+          deviceType={deviceType}
+          deviceId={deviceId}
+          style={{marginTop: 20}}
+        />
       </View>
       <Button
         style={{marginTop: 10}}

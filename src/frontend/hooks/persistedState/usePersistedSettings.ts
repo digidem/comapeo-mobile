@@ -13,7 +13,7 @@ type SettingsSlice = {
   };
 };
 
-const settingsSlice: StateCreator<SettingsSlice> = (set, get) => ({
+const settingsSlice: StateCreator<SettingsSlice> = set => ({
   coordinateFormat: 'utm',
   manualCoordinateEntryFormat: 'utm',
   actions: {

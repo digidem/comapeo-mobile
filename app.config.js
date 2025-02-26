@@ -40,7 +40,7 @@ if (APP_VARIANT !== 'production') {
       execSync('git rev-parse HEAD').toString().trim();
     const commitShaShort = commitSha.slice(0, 7);
     appVersionSuffix += `+${commitShaShort}`;
-  } catch (e) {
+  } catch {
     // Expo-doctor runs in a temp directory which is not a git repo, so this command will fail.
   }
 }

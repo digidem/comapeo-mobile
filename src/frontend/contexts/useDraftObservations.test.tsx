@@ -16,6 +16,10 @@ import {
 import {Preset} from '@comapeo/schema';
 import {LocationObject} from 'expo-location';
 
+jest.mock('../lib/createDraftObservationLocationUpdator', () => ({
+  createDraftObservationLocationUpdator: jest.fn(),
+}));
+
 function Wrapper({
   children,
   draftObservationStore,

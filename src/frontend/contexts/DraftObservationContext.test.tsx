@@ -1,14 +1,15 @@
 import * as Location from 'expo-location';
-import {
-  createDraftObservationLocationUpdator,
-  STALE_LOCATION_THRESHOLD_MS,
-} from './DraftObservationContext';
+
 import {
   convertPosition,
   createDraftObservationStore,
 } from './PersistedStores/DraftObservationStore';
 import {AppState} from 'react-native';
 import {} from 'jest/';
+import {
+  createDraftObservationLocationUpdator,
+  STALE_LOCATION_THRESHOLD_MS,
+} from '../lib/createDraftObservationLocationUpdator';
 
 jest.mock('react-native', () => {
   return {

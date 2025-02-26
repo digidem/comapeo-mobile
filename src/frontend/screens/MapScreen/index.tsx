@@ -52,10 +52,9 @@ export const MapScreen = () => {
 
   const styleUrlQuery = useMapStyleJsonUrl();
 
-  const styleURL =
-    process.env.E2E_TEST === 'true'
-      ? 'mapbox://styles/mapbox/streets-v11'
-      : (styleUrlQuery?.data ?? 'mapbox://styles/mapbox/streets-v11');
+  const styleUrl = !!process.env.EXPO_PUBLIC_E2E_TEST
+    ? 'mapbox://styles/mapbox/streets-v11'
+    : (styleUrlQuery?.data ?? 'mapbox://styles/mapbox/streets-v11');
 
   const handleAddPress = () => {
     newDraft();
@@ -87,7 +86,7 @@ export const MapScreen = () => {
         attributionPosition={{right: 8, bottom: 8}}
         compassEnabled={false}
         scaleBarEnabled={false}
-        styleURL={styleURL}
+        styleURL={styleUrl}
         onMapIdle={event => {
           setZoom(event.properties.zoom);
         }}

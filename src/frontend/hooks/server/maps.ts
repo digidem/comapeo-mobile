@@ -34,6 +34,9 @@ export function useMapStyleJsonUrl() {
   return useQuery({
     queryKey: [MAPS_QUERY_KEY, 'stylejson-url', refreshToken],
     queryFn: async () => {
+      if (process.env.EXPO_PUBLIC_E2E_TEST) {
+        return 'mapbox://styles/mapbox/streets-v11';
+      }
       const result = await api.getMapStyleJsonUrl();
       return result + `?refresh_token=${refreshToken}`;
     },

@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-done-callback */ // the "done" callbacks are NOT promises, so this patterns follows the jest documentation
 import * as Location from 'expo-location';
 
 import {

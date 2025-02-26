@@ -11,26 +11,30 @@ describe('Edit Device Name Test', () => {
     const projectSettingsItem = await $('~Go to Project Settings');
     await projectSettingsItem.tap();
 
-    const deviceNameListItem = $(byResourceId('PROJECT.device-name-list-item'));
+    const deviceNameListItem = await $(
+      byResourceId('PROJECT.device-name-list-item'),
+    );
     await deviceNameListItem.click();
 
-    const editIcon = $(byResourceId('edit-icon'));
+    const editIcon = await $(byResourceId('edit-icon'));
     await editIcon.click();
 
-    const editDeviceNameField = $(byResourceId('PROJECT.edit-device-name'));
+    const editDeviceNameField = await $(
+      byResourceId('PROJECT.edit-device-name'),
+    );
     await editDeviceNameField.click();
     await editDeviceNameField.clearValue();
     await editDeviceNameField.setValue(output.names.editdevice);
 
-    const backButton = $(byResourceId('MAIN.header-back-btn'));
+    const backButton = await $(byResourceId('MAIN.header-back-btn'));
     await backButton.click();
 
-    const discardAlert = $(byTextMatches('DISCARD CHANGES'));
+    const discardAlert = await $(byTextMatches('DISCARD CHANGES'));
     await expect(discardAlert).toBeDisplayed();
 
     await discardAlert.click();
 
-    const originalDeviceName = $(byText(output.names.device));
+    const originalDeviceName = await $(byText(output.names.device));
     await expect(originalDeviceName).toBeDisplayed();
 
     await editIcon.click();
@@ -42,13 +46,13 @@ describe('Edit Device Name Test', () => {
 
     await expect(discardAlert).toBeDisplayed();
 
-    const continueEditing = $(byTextMatches('CONTINUE EDITING'));
+    const continueEditing = await $(byTextMatches('CONTINUE EDITING'));
     await continueEditing.click();
 
-    const editedDeviceName = $(byText(output.names.editdevice));
+    const editedDeviceName = await $(byText(output.names.editdevice));
     await expect(editedDeviceName).toBeDisplayed();
 
-    const saveIcon = $(byResourceId('save-icon'));
+    const saveIcon = await $(byResourceId('save-icon'));
     await saveIcon.click();
 
     await expect(editedDeviceName).toBeDisplayed();
@@ -59,8 +63,7 @@ describe('Edit Device Name Test', () => {
     await projectSettingsItem.click();
     await deviceNameListItem.click();
 
-    const persistedDeviceName = $(byText(output.names.editdevice));
-    await expect(persistedDeviceName).toBeDisplayed();
+    await expect(editedDeviceName).toBeDisplayed();
 
     await driver.back();
     await driver.back();

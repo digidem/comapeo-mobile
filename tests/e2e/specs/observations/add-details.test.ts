@@ -4,7 +4,7 @@ import {byResourceId, byTextMatches} from '../../utils/selectors';
 
 describe('Add Details Flow', () => {
   it('should create a new observation with Gathering Site category and open Details screen', async () => {
-    const addObsBtn = await $(byResourceId('MAIN.add-observation-btn'));
+    const addObsBtn = await $('~Add Observation');
     await addObsBtn.click();
 
     const gatherSite = await $(byTextMatches('Gathering Site'));
@@ -27,7 +27,7 @@ describe('Add Details Flow', () => {
     expect(isFocused).toBe('true');
   });
 
-  it('should return to New Observation screen via back arrow, then re-open Details', async () => {
+  it('should return to create new Observation screen via back arrow, then re-open Details', async () => {
     const backArrow = await $(byResourceId('MAIN.header-back-btn'));
     await backArrow.click();
     await expect($(byTextMatches('New Observation'))).toBeDisplayed();

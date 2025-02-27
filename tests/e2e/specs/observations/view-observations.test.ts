@@ -4,7 +4,7 @@ import {byResourceId, byTextMatches} from '../../utils/selectors';
 
 describe('View Observations Flow', () => {
   it('should create observation with "Lake" category', async () => {
-    const addObsBtn = await $(byResourceId('MAIN.add-observation-btn'));
+    const addObsBtn = await $('~Add Observation');
     await addObsBtn.click();
 
     const lakeCategory = await $(byTextMatches('Lake'));
@@ -24,7 +24,7 @@ describe('View Observations Flow', () => {
   });
 
   it('should create observation with "Clay" category', async () => {
-    const addObsBtn = await $(byResourceId('MAIN.add-observation-btn'));
+    const addObsBtn = await $('~Add Observation');
     await addObsBtn.click();
 
     const clayCategory = await $(byTextMatches('Clay'));
@@ -46,16 +46,16 @@ describe('View Observations Flow', () => {
   });
 
   it('should open Observations list and verify it is displayed', async () => {
-    const obsListTab = await $(byResourceId('tabBarButtonObservationsList'));
+    const obsListTab = await $('~Go to ObservationsList');
     await obsListTab.click();
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();
   });
 
   it('should toggle camera tab and back to confirm correct place', async () => {
-    const cameraTab = await $(byResourceId('tabBarButtonCamera'));
+    const cameraTab = await $('~Go to Camera');
     await cameraTab.click();
 
-    const obsListTab = await $(byResourceId('tabBarButtonObservationsList'));
+    const obsListTab = await $('~Go to ObservationsList');
     await obsListTab.click();
 
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();

@@ -4,8 +4,8 @@ import {byResourceId, byTextMatches} from '../../utils/selectors';
 import {tapAboveElement} from '../../utils/touchActions';
 
 describe('Create Observation Flow', () => {
-  it('should set location and open add-observation screen', async () => {
-    const addObsBtn = await $(byResourceId('MAIN.add-observation-btn'));
+  it('should set location and open create observation screen', async () => {
+    const addObsBtn = await $('~Add Observation');
     await addObsBtn.click();
     await expect($(byTextMatches('Choose what is happening'))).toBeDisplayed();
     await expect($(byTextMatches('Airstrip'))).toBeDisplayed();
@@ -32,7 +32,7 @@ describe('Create Observation Flow', () => {
   });
 
   it('should pick House category and display New Observation screen', async () => {
-    const addObsBtn = await $(byResourceId('MAIN.add-observation-btn'));
+    const addObsBtn = await $('~Add Observation');
     await addObsBtn.click();
 
     const houseCategory = await $(byTextMatches('House'));

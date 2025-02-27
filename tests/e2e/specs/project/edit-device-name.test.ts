@@ -5,11 +5,11 @@ import {output} from '../../utils/naming';
 
 describe('Edit Device Name Test', () => {
   it('should navigate to project settings and edit the device name', async () => {
-    const drawerIcon = await $(byResourceId('drawer-icon-home'));
-    await drawerIcon.click();
+    const drawerIcon = await $('~Open Navigation Drawer');
+    await drawerIcon.tap();
 
-    const projectSettingsItem = await $(byText('Project Settings'));
-    await projectSettingsItem.click();
+    const projectSettingsItem = await $('~Go to Project Settings');
+    await projectSettingsItem.tap();
 
     const deviceNameListItem = await $(
       byResourceId('PROJECT.device-name-list-item'),
@@ -44,8 +44,7 @@ describe('Edit Device Name Test', () => {
 
     await backButton.click();
 
-    const discardAlertSecond = await $(byTextMatches('DISCARD CHANGES'));
-    await expect(discardAlertSecond).toBeDisplayed();
+    await expect(discardAlert).toBeDisplayed();
 
     const continueEditing = await $(byTextMatches('CONTINUE EDITING'));
     await continueEditing.click();
@@ -60,12 +59,11 @@ describe('Edit Device Name Test', () => {
 
     await driver.back();
     await driver.back();
-    await drawerIcon.click();
+    await drawerIcon.tap();
     await projectSettingsItem.click();
     await deviceNameListItem.click();
 
-    const persistedDeviceName = await $(byText(output.names.editdevice));
-    await expect(persistedDeviceName).toBeDisplayed();
+    await expect(editedDeviceName).toBeDisplayed();
 
     await driver.back();
     await driver.back();

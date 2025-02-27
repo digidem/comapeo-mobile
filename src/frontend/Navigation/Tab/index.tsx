@@ -45,6 +45,7 @@ export const HomeTabs = () => {
         headerTransparent: true,
         tabBarButton: CustomTabBarButton,
         tabBarButtonTestID: 'tabBarButton' + route.name,
+        tabBarAccessibilityLabel: 'Go to ' + route.name,
       })}
       initialRouteName={'Map'}
       backBehavior="initialRoute">

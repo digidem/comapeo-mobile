@@ -68,13 +68,14 @@ jobs:
       - name: Build APK
         env:
           SENTRY_DISABLE_AUTO_UPLOAD: 'true'
+          EXPO_PUBLIC_E2E_TEST: 'true'
           MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
           COMAPEO_METRICS_URL: ${{ secrets.COMAPEO_METRICS_URL }}
           COMAPEO_METRICS_API_KEY: ${{ secrets.COMAPEO_METRICS_API_KEY }}
         run: |
           npm run extract-messages
           npx expo prebuild -p android
-          eas build --platform android --profile release-candidate --local
+          eas build --platform android --profile test --local
 
       - name: Find Built APK
         id: find-apk

@@ -1,27 +1,20 @@
 import * as React from 'react';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
+
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
-import {Editor} from '../../sharedComponents/Editor';
-import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {useCreateObservation} from '../../hooks/server/observations';
-import {CommonActions} from '@react-navigation/native';
-import {useCreateBlobMutation} from '../../hooks/server/media';
-import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
+
 import {SaveButton} from '../../sharedComponents/SaveButton';
-import {useMostAccurateLocationForObservation} from './useMostAccurateLocationForObservation';
-import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
+
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';
+import {useDraftObservationState} from '../../contexts/DraftObservationContext';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {ActionsRow} from '../../sharedComponents/ActionsRow';
-import {Alert, type AlertButton} from 'react-native';
-import {Observation} from '@comapeo/schema';
-
-import {
-  isProcessedDraftPhoto,
-  isUnsavedAudio,
-} from '../../lib/attachmentTypeChecks';
+import {PresetView} from './PresetView';
+import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
+import {LocationView} from './LocationView';
+import {DescriptionField} from './DescriptionField';
+import {MediaScroll} from '../../sharedComponents/MediaScroll';
 
 const m = defineMessages({
   observation: {
@@ -81,43 +74,32 @@ const m = defineMessages({
     defaultMessage: 'Continue waiting',
     description: 'Button to cancel save and continue waiting for GPS',
   },
+  audioButton: {
+    id: 'screens.ObservationEdit.ObservationEditView.audioButton',
+    defaultMessage: 'Audio',
+    description: 'Button label for adding audio',
+  },
+  photoButton: {
+    id: 'screens.ObservationEdit.ObservationEditView.photoButton',
+    defaultMessage: 'Photo',
+    description: 'Button label for adding photo',
+  },
+  detailsButton: {
+    id: 'screens.ObservationEdit.ObservationEditView.detailsButton',
+    defaultMessage: 'Details',
+    description: 'Button label to add details',
+  },
 });
-
-const MAXIMUM_ACCURACY = 10;
 
 export const ObservationCreate = ({
   navigation,
 }: NativeRootNavigationProps<'ObservationCreate'>) => {
   const {formatMessage} = useIntl();
-  const {usePreset} = useDraftObservation();
-  const preset = usePreset();
-  const value = usePersistedDraftObservation(store => store.value);
-  const attachments = usePersistedDraftObservation(store => store.attachments);
-  const {updateTags, clearDraft} = useDraftObservation();
-  const createObservationMutation = useCreateObservation();
-  const createBlobMutation = useCreateBlobMutation();
-  const isTracking = usePersistedTrack(state => state.isTracking);
-  const addNewTrackLocations = usePersistedTrack(
-    state => state.addNewLocations,
+  const preset = useDraftObservationState(state => state.value?.presetRef);
+  const unsavedAttachments = useDraftObservationState(
+    state => state.unsavedAttachments,
   );
-  const addNewTrackObservation = usePersistedTrack(
-    state => state.addNewObservation,
-  );
-  const liveLocation = useMostAccurateLocationForObservation();
 
-  const coordinateInfo = value?.metadata?.manualLocation
-    ? {
-        lat: value.lat,
-        lon: value.lon,
-        accuracy: liveLocation?.coords?.accuracy,
-      }
-    : {
-        lat: liveLocation?.coords?.latitude,
-        lon: liveLocation?.coords?.longitude,
-        accuracy: liveLocation?.coords?.accuracy,
-      };
-
-  const notes = value?.tags.notes;
   const presetName = preset
     ? formatMessage({
         id: `presets.${preset.docId}.name`,
@@ -125,198 +107,14 @@ export const ObservationCreate = ({
       })
     : formatMessage(m.observation);
 
-  const addObservationRefToTrack = React.useCallback(
-    (obs: Observation) => {
-      if (value?.lat && value?.lon) {
-        addNewTrackLocations([
-          {
-            timestamp: new Date().getTime(),
-            latitude: value.lat,
-            longitude: value.lon,
-          },
-        ]);
-      }
-      addNewTrackObservation({
-        docId: obs.docId,
-        versionId: obs.versionId,
-      });
-    },
-    [addNewTrackLocations, addNewTrackObservation, value],
-  );
-
-  const createObservation = React.useCallback(() => {
-    if (!value) throw new Error('no observation saved in persisted state ');
-
-    const unsavedPhotos = attachments.filter(isProcessedDraftPhoto);
-
-    const unsavedAudioRecordings = attachments.filter(isUnsavedAudio);
-
-    if (unsavedPhotos.length === 0 && unsavedAudioRecordings.length === 0) {
-      createObservationMutation.mutate(
-        {
-          value: {
-            ...value,
-            presetRef: preset
-              ? {docId: preset.docId, versionId: preset.versionId}
-              : undefined,
-          },
-        },
-        {
-          onSuccess: data => {
-            clearDraft();
-            navigation.dispatch(
-              CommonActions.reset({
-                index: 1,
-                routes: [
-                  {name: 'Home', params: {screen: 'Map'}},
-                  {name: 'Home', params: {screen: 'ObservationsList'}},
-                ],
-              }),
-            );
-            if (isTracking) {
-              addObservationRefToTrack(data);
-            }
-          },
-        },
-      );
-
-      return;
-    }
-
-    // Currently, we abort the process of saving an observation if saving any number of photos fails to save,
-    // but this approach is prone to creating "orphaned" blobs.
-    // The alternative is to save the observation but excluding photos that failed to save, which is prone to an odd UX of an observation "missing" some attachments.
-    // This could potentially be alleviated by a more granular and informative UI about the photo-saving state, but currently there is nothing in place.
-    // Basically, which is worse: orphaned attachments or saving observations that seem to be missing attachments?
-
-    const attachmentPromises = [
-      ...unsavedPhotos,
-      ...unsavedAudioRecordings,
-    ].map(file => {
-      return createBlobMutation.mutateAsync(file);
-    });
-
-    Promise.all(attachmentPromises).then(results => {
-      const newAttachments = results.map(
-        ({driveId: driveDiscoveryId, type, name, hash}) => ({
-          driveDiscoveryId,
-          type,
-          name,
-          hash,
-        }),
-      );
-
-      createObservationMutation.mutate(
-        {
-          value: {
-            ...value,
-            attachments: [...value.attachments, ...newAttachments],
-            presetRef: preset
-              ? {docId: preset.docId, versionId: preset.versionId}
-              : undefined,
-          },
-        },
-        {
-          onSuccess: data => {
-            clearDraft();
-            navigation.popTo('Home', {screen: 'Map'});
-            if (isTracking) {
-              addObservationRefToTrack(data);
-            }
-          },
-        },
-      );
-    });
-  }, [
-    addObservationRefToTrack,
-    clearDraft,
-    createBlobMutation,
-    createObservationMutation,
-    isTracking,
-    navigation,
-    attachments,
-    value,
-    preset,
-  ]);
-
-  const checkAccuracyAndLocation = React.useCallback(() => {
-    const confirmationOptions: AlertButton[] = [
-      {
-        text: formatMessage(m.saveAnyway),
-        onPress: createObservation,
-        style: 'default',
-      },
-      {
-        text: formatMessage(m.manualEntry),
-        onPress: () => navigation.navigate('ManualGpsScreen'),
-        style: 'cancel',
-      },
-      {
-        text: formatMessage(m.keepWaiting),
-        onPress: () => {},
-      },
-    ];
-
-    if (!value) {
-      return;
-    }
-
-    // If the user has already inputted a manual location, do not check if location is accurate
-    if (value.metadata?.manualLocation) {
-      createObservation();
-      return;
-    }
-
-    const accuracy = value.metadata?.position?.coords?.accuracy;
-
-    if (!liveLocation) {
-      Alert.alert(
-        formatMessage(m.noGpsTitle),
-        formatMessage(m.noGpsDesc),
-        confirmationOptions,
-      );
-      return;
-    }
-
-    // If we don't have accuracy, allow save anyway (this is a remnant from mapeo: https://github.com/digidem/mapeo-mobile/blob/0c0ebbb9ef2261e21cd1d1c8bd5ab2fe42017ea3/src/frontend/screens/ObservationEdit/SaveButton.js#L125C3-L125C50)
-    if (
-      accuracy &&
-      typeof accuracy === 'number' &&
-      accuracy >= MAXIMUM_ACCURACY
-    ) {
-      Alert.alert(
-        formatMessage(m.weakGpsTitle),
-        formatMessage(m.weakGpsDesc),
-        confirmationOptions,
-      );
-      return;
-    }
-
-    createObservation();
-  }, [createObservation, formatMessage, navigation, liveLocation, value]);
-
-  React.useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <SaveButton
-          onPress={checkAccuracyAndLocation}
-          isLoading={
-            createObservationMutation.isPending || createBlobMutation.isPending
-          }
-        />
-      ),
-    });
-  }, [
-    navigation,
-    createBlobMutation.isPending,
-    createObservationMutation.isPending,
-    checkAccuracyAndLocation,
-  ]);
-
   return (
-    <>
-      <Editor
+    <ScreenContentWithDock
+      dockContent={<ActionsRow fieldRefs={preset?.fieldRefs} />}>
+      <PresetView
         presetName={presetName}
+        onPressPreset={() => {
+          navigation.popTo('PresetChooser');
+        }}
         PresetIcon={
           <PresetCircleIcon
             size="medium"
@@ -324,24 +122,15 @@ export const ObservationCreate = ({
             testID={`OBS.${preset?.name}-icon`}
           />
         }
-        onPressPreset={() => navigation.navigate('PresetChooser')}
-        notes={typeof notes !== 'string' ? '' : notes}
-        updateNotes={newVal => {
-          updateTags('notes', newVal);
-        }}
-        attachments={attachments}
-        location={coordinateInfo}
-        actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
       />
-      <ErrorBottomSheet
-        error={createObservationMutation.error || createBlobMutation.error}
-        clearError={() => {
-          createObservationMutation.reset();
-          createBlobMutation.reset();
-        }}
-        tryAgain={createObservation}
-      />
-    </>
+      <LocationView />
+      <DescriptionField />
+      {unsavedAttachments && unsavedAttachments.size > 0 && (
+        <MediaScroll attachmentLength={unsavedAttachments.size}>
+          <></>
+        </MediaScroll>
+      )}
+    </ScreenContentWithDock>
   );
 };
 

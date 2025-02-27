@@ -61,6 +61,7 @@ async function generateAppDiagnosticMetricsData(): Promise<AppDiagnosticMetricsR
     dateGenerated: formatIsoUtc(new Date()),
     os: Platform.OS,
     osVersion: Platform.Version,
+    // TODO: This should really accept an array as opposed to just the first one
     deviceLocale: systemPreferredLocales[0]!.languageTag,
     appLocale,
     country: await getCountry(),

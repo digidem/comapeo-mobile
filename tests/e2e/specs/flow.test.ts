@@ -11,4 +11,7 @@ describe('CoMapeo E2E Flow', function () {
   require('./main/side-drawer-menu-proj.test');
   require('./main/gps.test');
   require('./main/map.test');
+  require('./observations/create-observation.test');
+  require('./observations/add-details.test');
+  require('./observations/view-observations.test');
 });

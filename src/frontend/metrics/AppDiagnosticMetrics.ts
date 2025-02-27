@@ -52,15 +52,17 @@ async function generateAppDiagnosticMetricsData(): Promise<AppDiagnosticMetricsR
   const systemPreferredLocales = getLocales();
   const selectedLanguageTag = getSelectedLanguageTag();
 
+  const appLocale = resolveLanguageTag({
+    selected: selectedLanguageTag,
+    systemPreferred: systemPreferredLocales.map(l => l.languageTag),
+  }).value;
+
   const result: AppDiagnosticMetricsReport = {
     dateGenerated: formatIsoUtc(new Date()),
     os: Platform.OS,
     osVersion: Platform.Version,
     deviceLocale: systemPreferredLocales[0]!.languageTag,
-    appLocale: resolveLanguageTag({
-      selected: selectedLanguageTag,
-      systemPreferred: systemPreferredLocales.map(l => l.languageTag),
-    }),
+    appLocale,
     country: await getCountry(),
   };
 

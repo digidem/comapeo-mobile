@@ -33,10 +33,10 @@ export const LanguageSettings: NativeNavigationComponent<
   return (
     <ScrollView testID="languageScrollView">
       <SelectOne
-        value={resolvedLanguageTag}
+        value={resolvedLanguageTag.value}
         options={options}
-        onChange={languageTag => {
-          setLanguageTag(languageTag);
+        onChange={value => {
+          setLanguageTag(value);
           navigation.popTo('AppSettings');
         }}
       />

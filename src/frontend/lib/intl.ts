@@ -105,7 +105,7 @@ function getUsableLanguageTag(languageTag: string) {
  * @param params.selected The language tag expicitly selected by the user.
  * @param params.systemPreferred List of preferred language tags based on system preferences, in order of highest to lowest preference.
  *
- * @returns The resolved language tag
+ * @returns The resolved language tag. `source` represents where the tag comes from and `value` represents the actual tag string
  */
 export function resolveLanguageTag({
   selected,
@@ -113,16 +113,39 @@ export function resolveLanguageTag({
 }: {
   selected: string | null;
   systemPreferred: Array<string>;
-}) {
-  const choices = selected ? [selected, ...systemPreferred] : systemPreferred;
+}): {
+  source: 'selected' | 'system' | 'fallback';
+  value: SupportedLanguageTag;
+} {
+  // Check if selected language tag is usable
+  if (selected) {
+    const usableSelectedTag = getUsableLanguageTag(selected);
 
-  for (const c of choices) {
-    const supportedLanguageTag = getUsableLanguageTag(c);
-    if (supportedLanguageTag) return supportedLanguageTag;
+    if (usableSelectedTag) {
+      return {
+        source: 'selected',
+        value: usableSelectedTag,
+      };
+    }
   }
 
-  // Fall back to English if none of the language tags of interest are supported
-  return 'en';
+  // Check if any of the system preferred languages are usable
+  for (const t of systemPreferred) {
+    const usableSystemPreferredTag = getUsableLanguageTag(t);
+
+    if (usableSystemPreferredTag) {
+      return {
+        source: 'system',
+        value: usableSystemPreferredTag,
+      };
+    }
+  }
+
+  // Fall back to English otherwise
+  return {
+    source: 'fallback',
+    value: 'en',
+  };
 }
 
 export function isTranslatedLanguageTag(

@@ -6,7 +6,7 @@ export const FIELDS_KEY = 'fields';
 
 export const useFieldsQuery = () => {
   const {projectId, projectApi} = useActiveProject();
-  const lang = useResolvedLanguageTag();
+  const lang = useResolvedLanguageTag().value;
 
   return useQuery({
     queryKey: [FIELDS_KEY, projectId, lang],

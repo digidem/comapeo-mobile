@@ -14,14 +14,17 @@ describe('extractLanguageCode()', () => {
   });
 });
 
-describe('resolveLocale()', () => {
+describe('resolveLanguageTag()', () => {
   test('no selected locale and no system preferences', () => {
     const result = resolveLanguageTag({
       selected: null,
       systemPreferred: [],
     });
 
-    expect(result).toBe('en');
+    expect(result).toStrictEqual({
+      source: 'fallback',
+      value: 'en',
+    });
   });
 
   test('no selected locale and an unsupported system preference', () => {
@@ -30,7 +33,10 @@ describe('resolveLocale()', () => {
       systemPreferred: ['__'],
     });
 
-    expect(result).toBe('en');
+    expect(result).toStrictEqual({
+      source: 'fallback',
+      value: 'en',
+    });
   });
 
   test('no selected locale and a supported system preference (base language code only)', () => {
@@ -39,7 +45,10 @@ describe('resolveLocale()', () => {
       systemPreferred: ['es'],
     });
 
-    expect(result).toBe('es');
+    expect(result).toStrictEqual({
+      source: 'system',
+      value: 'es',
+    });
   });
 
   // TODO: Not sure if the truncation is a desired outcome, but it matches pre-existing behavior
@@ -49,7 +58,10 @@ describe('resolveLocale()', () => {
       systemPreferred: ['es-MX'],
     });
 
-    expect(result).toBe('es');
+    expect(result).toStrictEqual({
+      source: 'system',
+      value: 'es',
+    });
   });
 
   test('no selected locale and multiple supported system preferences', () => {
@@ -59,7 +71,10 @@ describe('resolveLocale()', () => {
         systemPreferred: ['pt', 'es'],
       });
 
-      expect(result).toBe('pt');
+      expect(result).toStrictEqual({
+        source: 'system',
+        value: 'pt',
+      });
     }
 
     {
@@ -68,7 +83,10 @@ describe('resolveLocale()', () => {
         systemPreferred: ['__', 'pt'],
       });
 
-      expect(result).toBe('pt');
+      expect(result).toStrictEqual({
+        source: 'system',
+        value: 'pt',
+      });
     }
   });
 
@@ -79,7 +97,10 @@ describe('resolveLocale()', () => {
         systemPreferred: [],
       });
 
-      expect(result).toBe('pt');
+      expect(result).toStrictEqual({
+        source: 'selected',
+        value: 'pt',
+      });
     }
 
     // TODO: Not sure if the truncation is a desired outcome, but it matches pre-existing behavior
@@ -89,7 +110,10 @@ describe('resolveLocale()', () => {
         systemPreferred: [],
       });
 
-      expect(result).toBe('pt');
+      expect(result).toStrictEqual({
+        source: 'selected',
+        value: 'pt',
+      });
     }
   });
 
@@ -99,7 +123,10 @@ describe('resolveLocale()', () => {
       systemPreferred: ['es'],
     });
 
-    expect(result).toBe('pt');
+    expect(result).toStrictEqual({
+      source: 'selected',
+      value: 'pt',
+    });
   });
 
   test('unsupported selected locale and supported system preference', () => {
@@ -108,7 +135,10 @@ describe('resolveLocale()', () => {
       systemPreferred: ['es'],
     });
 
-    expect(result).toBe('es');
+    expect(result).toStrictEqual({
+      source: 'system',
+      value: 'es',
+    });
   });
 
   test('unsupported selected locale and no system preference', () => {
@@ -117,6 +147,9 @@ describe('resolveLocale()', () => {
       systemPreferred: [],
     });
 
-    expect(result).toBe('en');
+    expect(result).toStrictEqual({
+      source: 'fallback',
+      value: 'en',
+    });
   });
 });

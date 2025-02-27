@@ -12,12 +12,12 @@ export const PRESETS_KEY = 'presets';
 
 export function usePresetsQuery() {
   const {projectId, projectApi} = useActiveProject();
-  const locale = useResolvedLanguageTag();
+  const lang = useResolvedLanguageTag().value;
 
   return useSuspenseQuery({
-    queryKey: [PRESETS_KEY, projectId, locale],
+    queryKey: [PRESETS_KEY, projectId, lang],
     queryFn: async () => {
-      return await projectApi.preset.getMany({lang: locale});
+      return await projectApi.preset.getMany({lang});
     },
   });
 }

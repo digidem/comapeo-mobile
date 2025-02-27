@@ -69,7 +69,10 @@ describe('Nothing persisted and no system preferences', () => {
       wrapper,
     });
 
-    expect(resolvedLocaleHook.result.current).toBe('en');
+    expect(resolvedLocaleHook.result.current).toStrictEqual({
+      source: 'fallback',
+      value: 'en',
+    });
   });
 });
 
@@ -84,7 +87,10 @@ describe('Nothing persisted and single system preference exists', () => {
       wrapper,
     });
 
-    expect(resolvedLocaleHook.result.current).toBe('pt');
+    expect(resolvedLocaleHook.result.current).toStrictEqual({
+      source: 'system',
+      value: 'pt',
+    });
   });
 
   test('Returns system preference with regional code stripped (recognized regional code)', () => {
@@ -97,7 +103,10 @@ describe('Nothing persisted and single system preference exists', () => {
       wrapper,
     });
 
-    expect(resolvedLocaleHook.result.current).toBe('pt');
+    expect(resolvedLocaleHook.result.current).toStrictEqual({
+      source: 'system',
+      value: 'pt',
+    });
   });
 
   test('Returns system preference with regional code stripped (unrecognized regional code)', () => {
@@ -113,7 +122,10 @@ describe('Nothing persisted and single system preference exists', () => {
       wrapper,
     });
 
-    expect(resolvedLocaleHook.result.current).toBe('pt');
+    expect(resolvedLocaleHook.result.current).toStrictEqual({
+      source: 'system',
+      value: 'pt',
+    });
   });
 
   test('Returns fallback if not supported', () => {
@@ -129,7 +141,10 @@ describe('Nothing persisted and single system preference exists', () => {
       wrapper,
     });
 
-    expect(resolvedLocaleHook.result.current).toBe('en');
+    expect(resolvedLocaleHook.result.current).toStrictEqual({
+      source: 'fallback',
+      value: 'en',
+    });
   });
 });
 
@@ -144,7 +159,10 @@ describe('Nothing persisted and multiple system preferences exist', () => {
       wrapper,
     });
 
-    expect(resolvedLocaleHook.result.current).toBe('es');
+    expect(resolvedLocaleHook.result.current).toStrictEqual({
+      source: 'system',
+      value: 'es',
+    });
 
     act(() => {
       setSystemPreferredLocales(['pt', 'es']);
@@ -152,7 +170,10 @@ describe('Nothing persisted and multiple system preferences exist', () => {
 
     resolvedLocaleHook.rerender({});
 
-    expect(resolvedLocaleHook.result.current).toBe('pt');
+    expect(resolvedLocaleHook.result.current).toStrictEqual({
+      source: 'system',
+      value: 'pt',
+    });
   });
 
   test('Returns first supported system preference', () => {
@@ -169,7 +190,10 @@ describe('Nothing persisted and multiple system preferences exist', () => {
       wrapper,
     });
 
-    expect(resolvedLocaleHook.result.current).toBe('pt');
+    expect(resolvedLocaleHook.result.current).toStrictEqual({
+      source: 'system',
+      value: 'pt',
+    });
   });
 
   test('Returns fallback if none of the system preferences are supported', () => {
@@ -187,7 +211,10 @@ describe('Nothing persisted and multiple system preferences exist', () => {
       wrapper,
     });
 
-    expect(resolvedLocaleHook.result.current).toBe('en');
+    expect(resolvedLocaleHook.result.current).toStrictEqual({
+      source: 'fallback',
+      value: 'en',
+    });
   });
 });
 
@@ -202,7 +229,10 @@ describe('Selected locale exists', () => {
       wrapper,
     });
 
-    expect(resolvedLocaleHook.result.current).toBe('pt');
+    expect(resolvedLocaleHook.result.current).toStrictEqual({
+      source: 'system',
+      value: 'pt',
+    });
 
     const selectedLocaleActionsHook = renderHook(
       () => useSelectedLocaleActions(),
@@ -213,13 +243,19 @@ describe('Selected locale exists', () => {
       selectedLocaleActionsHook.result.current.setLanguageTag('es');
     });
 
-    expect(resolvedLocaleHook.result.current).toBe('es');
+    expect(resolvedLocaleHook.result.current).toStrictEqual({
+      source: 'selected',
+      value: 'es',
+    });
 
     act(() => {
       selectedLocaleActionsHook.result.current.setLanguageTag('en-US');
     });
 
-    expect(resolvedLocaleHook.result.current).toBe('en');
+    expect(resolvedLocaleHook.result.current).toStrictEqual({
+      source: 'selected',
+      value: 'en',
+    });
   });
 
   test('Returns selected locale if supported when omitting extended tag', () => {
@@ -232,7 +268,10 @@ describe('Selected locale exists', () => {
       wrapper,
     });
 
-    expect(resolvedLocaleHook.result.current).toBe('pt');
+    expect(resolvedLocaleHook.result.current).toStrictEqual({
+      source: 'system',
+      value: 'pt',
+    });
 
     const selectedLocaleActionsHook = renderHook(
       () => useSelectedLocaleActions(),
@@ -244,7 +283,10 @@ describe('Selected locale exists', () => {
       selectedLocaleActionsHook.result.current.setLanguageTag('es-ZZ');
     });
 
-    expect(resolvedLocaleHook.result.current).toBe('es');
+    expect(resolvedLocaleHook.result.current).toStrictEqual({
+      source: 'selected',
+      value: 'es',
+    });
   });
 
   test('Does not use selected locale if it is not supported', () => {
@@ -257,7 +299,10 @@ describe('Selected locale exists', () => {
       wrapper,
     });
 
-    expect(resolvedLocaleHook.result.current).toBe('pt');
+    expect(resolvedLocaleHook.result.current).toStrictEqual({
+      source: 'system',
+      value: 'pt',
+    });
 
     const selectedLocaleActionsHook = renderHook(
       () => useSelectedLocaleActions(),
@@ -269,7 +314,10 @@ describe('Selected locale exists', () => {
       selectedLocaleActionsHook.result.current.setLanguageTag('__');
     });
 
-    expect(resolvedLocaleHook.result.current).toBe('pt');
+    expect(resolvedLocaleHook.result.current).toStrictEqual({
+      source: 'system',
+      value: 'pt',
+    });
   });
 
   test('Respects selected locale being unset', () => {
@@ -282,7 +330,10 @@ describe('Selected locale exists', () => {
       wrapper,
     });
 
-    expect(resolvedLocaleHook.result.current).toBe('pt');
+    expect(resolvedLocaleHook.result.current).toStrictEqual({
+      source: 'system',
+      value: 'pt',
+    });
 
     const selectedLocaleActionsHook = renderHook(
       () => useSelectedLocaleActions(),
@@ -293,12 +344,18 @@ describe('Selected locale exists', () => {
       selectedLocaleActionsHook.result.current.setLanguageTag('es');
     });
 
-    expect(resolvedLocaleHook.result.current).toBe('es');
+    expect(resolvedLocaleHook.result.current).toStrictEqual({
+      source: 'selected',
+      value: 'es',
+    });
 
     act(() => {
       selectedLocaleActionsHook.result.current.setLanguageTag(null);
     });
 
-    expect(resolvedLocaleHook.result.current).toBe('pt');
+    expect(resolvedLocaleHook.result.current).toStrictEqual({
+      source: 'system',
+      value: 'pt',
+    });
   });
 });

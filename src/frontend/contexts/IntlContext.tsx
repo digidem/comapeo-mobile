@@ -26,18 +26,21 @@ const DEFAULT_RICH_TEXT_MAPPINGS: NonNullable<
 
 export const IntlProvider = ({children}: {children: React.ReactNode}) => {
   const resolvedLanguageTag = useResolvedLanguageTag();
-  const languageCode = extractLanguageCode(resolvedLanguageTag);
+
+  const messagesToUse = React.useMemo(() => {
+    const languageCode = extractLanguageCode(resolvedLanguageTag.value);
+
+    return {
+      // Add fallbacks for non-regional tags (e.g. "en" for "en-GB")
+      ...(messages[languageCode as TranslatedLanguageTag] || {}),
+      ...(messages[resolvedLanguageTag.value as TranslatedLanguageTag] || {}),
+    };
+  }, [resolvedLanguageTag.value]);
 
   return (
     <ReactIntlProvider
-      locale={resolvedLanguageTag}
-      messages={
-        // Add fallbacks for non-regional tags (e.g. "en" for "en-GB")
-        {
-          ...(messages[languageCode as TranslatedLanguageTag] || {}),
-          ...(messages[resolvedLanguageTag as TranslatedLanguageTag] || {}),
-        }
-      }
+      locale={resolvedLanguageTag.value}
+      messages={messagesToUse}
       formats={formats}
       onError={onError}
       wrapRichTextChunksInFragment

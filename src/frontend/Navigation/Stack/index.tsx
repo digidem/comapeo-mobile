@@ -5,66 +5,36 @@ import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {WHITE} from '../../lib/styles';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {AppStackParamsList} from '../../sharedTypes/navigation';
-import {
-  DrawerNavigationProp,
-  DrawerScreenProps,
-} from '@react-navigation/drawer';
-import {DrawerScreens} from '../Drawer';
 import {useIntl} from 'react-intl';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {DEVICE_INFO_KEY} from '../../hooks/server/deviceInfo';
-import {usePresetsQuery} from '../../hooks/server/presets';
-import {getInitialRouteName} from '../../utils/navigation';
 import {createDefaultScreenGroup} from './AppScreens';
 import {createOnboardingScreens} from './OnboardingScreens';
 import {useSuspenseQuery} from '@tanstack/react-query';
 import {Loading} from '../../sharedComponents/Loading';
 import {useSecurityContext} from '../../contexts/SecurityContext';
+import {NavigationContainerRefWithCurrent} from '@react-navigation/native';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
 
-type DrawerNavigationContextType = DrawerNavigationProp<
-  DrawerScreens,
-  'DrawerHome',
-  undefined
->;
-
-const DrawerNavigationContext = React.createContext<
-  DrawerNavigationContextType | undefined
->(undefined);
-
-export function useDrawerNavigation() {
-  const navigation = React.useContext(DrawerNavigationContext);
-
-  if (!navigation)
-    throw new Error(
-      'Make sure you have DrawerNavigationContext provider set up',
-    );
-
-  return navigation;
-}
-
 export function RootStackNavigator({
-  navigation,
-}: DrawerScreenProps<DrawerScreens, 'DrawerHome'>) {
+  navigatorRef,
+}: {
+  navigatorRef: NavigationContainerRefWithCurrent<AppStackParamsList>;
+}) {
   return (
-    <DrawerNavigationContext.Provider value={navigation}>
-      <React.Suspense fallback={<Loading />}>
-        <RootStackNavigatorChild />
-      </React.Suspense>
-    </DrawerNavigationContext.Provider>
+    <React.Suspense fallback={<Loading />}>
+      <RootStackNavigatorChild navigatorRef={navigatorRef} />
+    </React.Suspense>
   );
 }
 
-function RootStackNavigatorChild() {
+export function RootStackNavigatorChild({
+  navigatorRef: {navigate},
+}: {
+  navigatorRef: NavigationContainerRefWithCurrent<AppStackParamsList>;
+}) {
   const {formatMessage} = useIntl();
-  const navigation = useDrawerNavigation();
-  const existingObservation = usePersistedDraftObservation(
-    store => store.value,
-  );
-  const {data: presets} = usePresetsQuery();
   const mapeoApi = useClientApi();
-
   const deviceInfo = useSuspenseQuery({
     queryKey: [DEVICE_INFO_KEY],
     queryFn: async () => {
@@ -75,19 +45,12 @@ function RootStackNavigatorChild() {
   const security = useSecurityContext();
   React.useEffect(() => {
     if (security.authState === 'unauthenticated') {
-      navigation.navigate('DrawerHome', {screen: 'AuthScreen'});
+      navigate('AuthScreen');
     }
-  }, [security.authState, navigation]);
+  }, [security.authState, navigate]);
 
   return (
-    <RootStack.Navigator
-      initialRouteName={getInitialRouteName({
-        hasDeviceName: !!deviceInfo.data.name,
-        existingObservation,
-        presets,
-        requiresAuth: security.authState === 'unauthenticated',
-      })}
-      screenOptions={NavigatorScreenOptions}>
+    <RootStack.Navigator screenOptions={NavigatorScreenOptions}>
       {deviceInfo.data?.name
         ? createDefaultScreenGroup({
             intl: formatMessage,

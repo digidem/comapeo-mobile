@@ -4,7 +4,7 @@ import {
   BottomTabNavigationProp,
   BottomTabBarButtonProps,
 } from '@react-navigation/bottom-tabs';
-import {Pressable, View} from 'react-native';
+import {Pressable, StyleSheet, View} from 'react-native';
 import {useIntl} from 'react-intl';
 import {useCurrentTab} from '../../hooks/useCurrentTab';
 import {CameraScreen} from '../../screens/CameraScreen';
@@ -38,16 +38,7 @@ export const HomeTabs = () => {
   return (
     <>
       {drawerOpen && (
-        <View
-          style={{
-            width: '100%',
-            height: '100%',
-            position: 'absolute',
-            zIndex: 2,
-            top: 0,
-            left: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.1)',
-          }}>
+        <View style={styles.backdrop}>
           <DrawerContent closeDrawer={() => setDrawerOpen(false)} />
         </View>
       )}
@@ -117,3 +108,15 @@ export const HomeTabs = () => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  backdrop: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    zIndex: 2,
+    top: 0,
+    left: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+  },
+});

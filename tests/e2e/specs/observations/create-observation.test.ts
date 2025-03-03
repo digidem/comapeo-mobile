@@ -49,7 +49,7 @@ describe('Create Observation Flow', () => {
     await expect($(byTextMatches('UTM 44N 218632 21930'))).toBeDisplayed();
 
     await expect($(byResourceId('OBS.House-icon'))).toBeDisplayed();
-    await expect($(byTextMatches('House'))).toBeDisplayed();
+    await expect(houseCategory).toBeDisplayed();
   });
 
   it('should change category to Threat and add a description', async () => {

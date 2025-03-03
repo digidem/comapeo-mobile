@@ -39,7 +39,7 @@
     "@formatjs/intl-locale": "4.2.10",
     "@formatjs/intl-pluralrules": "5.4.3",
     "@formatjs/intl-relativetimeformat": "11.4.10",
-    "@gorhom/bottom-sheet": "5.0.6",
+    "@gorhom/bottom-sheet": "5.1.2",
     "@osm_borders/maritime_10000m": "1.1.0",
     "@react-native-community/hooks": "100.1.0",
     "@react-native-community/netinfo": "11.4.1",

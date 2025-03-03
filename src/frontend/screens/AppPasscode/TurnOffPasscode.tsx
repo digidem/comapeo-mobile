@@ -72,8 +72,6 @@ export const TurnOffPasscode: NativeNavigationComponent<'DisablePasscode'> = ({
     openOnMount: false,
   });
 
-  const {navigate} = navigation;
-
   const {formatMessage: t} = useIntl();
 
   // These next three function forces the user to go back to the setting page instead of the "EnterPassToTurnOff" screen
@@ -108,7 +106,7 @@ export const TurnOffPasscode: NativeNavigationComponent<'DisablePasscode'> = ({
 
   function unsetAppPasscode() {
     setPasscode(null);
-    navigate('Security');
+    navigation.popTo('Security');
   }
 
   return (
@@ -140,11 +138,11 @@ export const TurnOffPasscode: NativeNavigationComponent<'DisablePasscode'> = ({
         </ListItem>
         <ListDivider />
 
-        {/* User is not able to see this option unlesss they already have a pass */}
+        {/* User is not able to see this option unless they already have a pass */}
         {authValuesSet.passcodeSet && (
           <ListItem
             onPress={() => {
-              navigate('SetPasscode');
+              navigation.navigate('SetPasscode');
             }}
             style={{marginTop: 20}}>
             <ListItemText

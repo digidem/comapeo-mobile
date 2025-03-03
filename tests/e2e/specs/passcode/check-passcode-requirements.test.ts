@@ -15,11 +15,10 @@ describe('Check Passcode Requirements Flow', () => {
   });
 
   it('should press Home, then return to see passcode screen again', async () => {
-    // should put app in the background
-    // keycode 3 is home button
+    // presses the home button
     await driver.pressKeyCode(3);
-    // if I figure out how, this should involve opening another app in between
-    await driver.pause(2000);
+    // activates the calendar app
+    await driver.pressKeyCode(208);
     await driver.activateApp('com.comapeo.rc');
 
     await expect($(byTextMatches('Enter your passcode'))).toBeDisplayed();
@@ -30,9 +29,9 @@ describe('Check Passcode Requirements Flow', () => {
     await passcodeField.setValue('54321');
 
     await expect($(byTextMatches('Incorrect passcode'))).toBeDisplayed();
-    // if I figure out how, this should be turn phone on and off instead
-    await driver.terminateApp('com.comapeo.rc');
-    await driver.activateApp('com.comapeo.rc');
+    // power button (off then on)
+    await driver.pressKeyCode(26);
+    await driver.pressKeyCode(26);
 
     await expect($(byTextMatches('Enter your passcode'))).toBeDisplayed();
 

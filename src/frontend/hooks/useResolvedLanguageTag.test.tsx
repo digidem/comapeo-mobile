@@ -54,8 +54,8 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-describe('Nothing persisted and no system preferences', () => {
-  test('Returns the fallback (en)', () => {
+describe('nothing persisted and no system preferences', () => {
+  test('returns the fallback (en)', () => {
     const selectedLocaleStore = createSelectedLocaleStore();
     const wrapper = createWrapper(selectedLocaleStore);
 
@@ -76,8 +76,8 @@ describe('Nothing persisted and no system preferences', () => {
   });
 });
 
-describe('Nothing persisted and single system preference exists', () => {
-  test('Returns system preference if supported', () => {
+describe('nothing persisted and single system preference exists', () => {
+  test('returns system preference if supported', () => {
     const selectedLocaleStore = createSelectedLocaleStore();
     const wrapper = createWrapper(selectedLocaleStore);
 
@@ -93,7 +93,7 @@ describe('Nothing persisted and single system preference exists', () => {
     });
   });
 
-  test('Returns system preference with regional code stripped (recognized regional code)', () => {
+  test('returns system preference with regional code stripped (recognized regional code)', () => {
     const selectedLocaleStore = createSelectedLocaleStore();
     const wrapper = createWrapper(selectedLocaleStore);
 
@@ -109,7 +109,7 @@ describe('Nothing persisted and single system preference exists', () => {
     });
   });
 
-  test('Returns system preference with regional code stripped (unrecognized regional code)', () => {
+  test('returns system preference with regional code stripped (unrecognized regional code)', () => {
     const selectedLocaleStore = createSelectedLocaleStore();
     const wrapper = createWrapper(selectedLocaleStore);
 
@@ -128,7 +128,7 @@ describe('Nothing persisted and single system preference exists', () => {
     });
   });
 
-  test('Returns fallback if not supported', () => {
+  test('returns fallback if not supported', () => {
     const selectedLocaleStore = createSelectedLocaleStore();
     const wrapper = createWrapper(selectedLocaleStore);
 
@@ -148,8 +148,8 @@ describe('Nothing persisted and single system preference exists', () => {
   });
 });
 
-describe('Nothing persisted and multiple system preferences exist', () => {
-  test('Respects ordering of system preferences', () => {
+describe('nothing persisted and multiple system preferences exist', () => {
+  test('respects ordering of system preferences', () => {
     const selectedLocaleStore = createSelectedLocaleStore();
     const wrapper = createWrapper(selectedLocaleStore);
 
@@ -176,7 +176,7 @@ describe('Nothing persisted and multiple system preferences exist', () => {
     });
   });
 
-  test('Returns first supported system preference', () => {
+  test('returns first supported system preference', () => {
     const selectedLocaleStore = createSelectedLocaleStore();
     const wrapper = createWrapper(selectedLocaleStore);
 
@@ -196,7 +196,7 @@ describe('Nothing persisted and multiple system preferences exist', () => {
     });
   });
 
-  test('Returns fallback if none of the system preferences are supported', () => {
+  test('returns fallback if none of the system preferences are supported', () => {
     const selectedLocaleStore = createSelectedLocaleStore();
     const wrapper = createWrapper(selectedLocaleStore);
 
@@ -218,8 +218,8 @@ describe('Nothing persisted and multiple system preferences exist', () => {
   });
 });
 
-describe('Selected locale exists', () => {
-  test('Returns selected locale if supported', () => {
+describe('selected locale exists', () => {
+  test('returns selected locale if supported', () => {
     const selectedLocaleStore = createSelectedLocaleStore();
     const wrapper = createWrapper(selectedLocaleStore);
 
@@ -258,7 +258,7 @@ describe('Selected locale exists', () => {
     });
   });
 
-  test('Returns selected locale if supported when omitting extended tag', () => {
+  test('returns selected locale if supported when omitting extended tag', () => {
     const selectedLocaleStore = createSelectedLocaleStore();
     const wrapper = createWrapper(selectedLocaleStore);
 
@@ -289,7 +289,7 @@ describe('Selected locale exists', () => {
     });
   });
 
-  test('Does not use selected locale if it is not supported', () => {
+  test('does not use selected locale if it is not supported', () => {
     const selectedLocaleStore = createSelectedLocaleStore();
     const wrapper = createWrapper(selectedLocaleStore);
 
@@ -320,7 +320,7 @@ describe('Selected locale exists', () => {
     });
   });
 
-  test('Respects selected locale being unset', () => {
+  test('respects selected locale being unset', () => {
     const selectedLocaleStore = createSelectedLocaleStore();
     const wrapper = createWrapper(selectedLocaleStore);
 

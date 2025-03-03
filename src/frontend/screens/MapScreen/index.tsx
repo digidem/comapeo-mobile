@@ -12,6 +12,8 @@ import {ObservationMapLayer} from './MapLayers/ObservationMapLayer';
 import {AddButton} from '../../sharedComponents/AddButton';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
+import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
+import {usePresetsQuery} from '../../hooks/server/presets';
 import ScaleBar from 'react-native-scale-bar';
 import {getCoords} from '../../hooks/useLocation';
 import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
@@ -24,6 +26,7 @@ import {useMapStyleJsonUrl} from '../../hooks/server/maps';
 import {TracksMapLayer} from './MapLayers/TracksMapLayer';
 import {assert} from '../../lib/assert';
 import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLayer';
+import {matchPreset} from '../../lib/utils';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -51,6 +54,27 @@ export const MapScreen = () => {
     !!locationProviderStatus?.locationServicesEnabled;
 
   const styleUrlQuery = useMapStyleJsonUrl();
+  const existingObservation = usePersistedDraftObservation(
+    store => store.value,
+  );
+  const {data: presets} = usePresetsQuery();
+
+  React.useEffect(() => {
+    // if no exisiting observation, stay home
+    if (!existingObservation) {
+      return;
+    }
+    // if existing observation and no preset match, user has started creating an observation but had not chosen a preset, so navigate to preset chooser
+    if (!matchPreset(existingObservation.tags, presets)) {
+      navigate('PresetChooser');
+
+      // if existing observation, preset match, and docId exists, navigate to Observation Edit Screen
+    } else if ('docId' in existingObservation) {
+      navigate('ObservationEdit', {observationId: existingObservation.docId});
+    } else {
+      navigate('ObservationCreate');
+    }
+  }, [existingObservation, navigate, presets]);
 
   const handleAddPress = () => {
     newDraft();

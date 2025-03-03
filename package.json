@@ -50,7 +50,7 @@
     "@react-navigation/stack": "7.1.1",
     "@rnmapbox/maps": "10.1.33",
     "@sentry/react-native": "6.5.0",
-    "@tanstack/react-query": "5.64.2",
+    "@tanstack/react-query": "5.67.3",
     "@turf/helpers": "7.2.0",
     "@turf/random": "7.2.0",
     "@types/luxon": "3.4.2",

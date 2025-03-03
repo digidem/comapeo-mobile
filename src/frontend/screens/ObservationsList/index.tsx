@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {View, FlatList, Dimensions, StyleSheet} from 'react-native';
 import {ObservationListItem} from './ObservationListItem';
-import ObservationEmptyView from './ObservationsEmptyView';
+import {ObservationEmptyView} from './ObservationsEmptyView';
 
 import {Observation, Track} from '@comapeo/schema';
 import {MessageDescriptor, defineMessages} from 'react-intl';

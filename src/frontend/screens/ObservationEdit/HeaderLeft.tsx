@@ -65,7 +65,7 @@ export const HeaderLeft = ({headerBackButtonProps}: HeaderLeftProps) => {
   function handleDiscard() {
     clearDraft();
     closeSheet();
-    navigation.goBack();
+    navigation.navigate('Home', {screen: 'Map'});
   }
 
   return (

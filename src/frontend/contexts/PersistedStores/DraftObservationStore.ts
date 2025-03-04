@@ -123,7 +123,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
     }
   }
 
-  async function addPhoto(
+  function addPhoto(
     capturePromise: Promise<CameraCapturedPicture>,
     metadata: PhotoMetadata,
   ) {
@@ -135,9 +135,12 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
       abortController: {signal},
       id,
     } = newAttachment;
+    // This should happen before any async code, so that any error is synchronous
     _addAttachment(newAttachment);
 
-    try {
+    // Return a promise that resolves when the photo has been processed (since
+    // we don't use this, we could just return void instead)
+    return (async () => {
       const {uri: rawUri} = await _processPhotoAttachment({
         id,
         outputKey: 'raw',
@@ -191,12 +194,12 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
         ),
       });
       signal.throwIfAborted();
-    } catch (reason) {
+    })().catch(reason => {
       if (reason instanceof Error && reason.name === 'AbortError') {
         // TODO: Remove attachment from state
       }
       // TODO: Report other errors to Sentry
-    }
+    });
   }
 
   function addAudio(uri: string) {

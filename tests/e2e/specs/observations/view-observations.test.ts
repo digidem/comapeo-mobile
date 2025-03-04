@@ -10,14 +10,19 @@ describe('View Observations Flow', () => {
     const lakeCategory = await $(byTextMatches('Lake'));
     await lakeCategory.click();
 
-    await driver.pause(2000);
-    const noGpsElems = await $$(byTextMatches('No GPS signal'));
-    if ((await noGpsElems.length) > 0 && (await noGpsElems[0].isDisplayed())) {
-      const textSave = await $(byTextMatches('SAVE'));
-      await textSave.click();
-    } else {
-      const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
-      await saveBtn.click();
+    await $(byTextMatches('UTM')).waitForExist({
+      timeout: 10000,
+      reverse: false,
+    });
+
+    const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
+    await saveBtn.click();
+
+    const noGpsSignal = await $(byTextMatches('No GPS signal'));
+    if (await noGpsSignal.isDisplayed()) {
+      console.info('GPS not found. Handling No GPS Signal prompt...');
+      const confirmSave = await $(byTextMatches('SAVE'));
+      await confirmSave.click();
     }
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
@@ -30,15 +35,19 @@ describe('View Observations Flow', () => {
     const clayCategory = await $(byTextMatches('Clay'));
     await clayCategory.click();
 
-    await driver.pause(2000);
+    await $(byTextMatches('UTM')).waitForExist({
+      timeout: 10000,
+      reverse: false,
+    });
 
-    const noGpsElems = await $(byTextMatches('No GPS signal'));
-    if ((await noGpsElems) && (await noGpsElems[0].isDisplayed())) {
-      const textSave = await $(byTextMatches('SAVE'));
-      await textSave.click();
-    } else {
-      const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
-      await saveBtn.click();
+    const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
+    await saveBtn.click();
+
+    const noGpsSignal = await $(byTextMatches('No GPS signal'));
+    if (await noGpsSignal.isDisplayed()) {
+      console.info('GPS not found. Handling No GPS Signal prompt...');
+      const confirmSave = await $(byTextMatches('SAVE'));
+      await confirmSave.click();
     }
 
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));

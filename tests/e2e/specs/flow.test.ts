@@ -19,5 +19,6 @@ describe('CoMapeo E2E Flow', function () {
   require('./settings/about-comapeo.test');
   require('./passcode/set-passcode.test');
   require('./passcode/check-passcode-requirements.test');
+  require('./passcode/post-passcode-setup.test');
   require('./main/restart-navigation.test');
 });

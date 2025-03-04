@@ -1,6 +1,6 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
-import {byResourceId, byTextMatches} from '../../utils/selectors';
+import {byResourceId, byTextMatches, byText} from '../../utils/selectors';
 
 describe('Observation Navigation Flow', () => {
   it('should start on the Map screen if no observation exists', async () => {
@@ -43,7 +43,7 @@ describe('Observation Navigation Flow', () => {
     const closeIcon = await $(byResourceId('close-icon'));
     await closeIcon.click();
 
-    const discardObs = await $(byTextMatches('Discard Observation'));
+    const discardObs = await $(byText('Discard Observation'));
     await discardObs.click();
 
     await expect($(byResourceId('MAIN.mapbox-map-view'))).toBeDisplayed();

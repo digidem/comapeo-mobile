@@ -14,7 +14,6 @@ import {ActionsRow} from '../../sharedComponents/ActionsRow';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {Loading} from '../../sharedComponents/Loading';
 import {HeaderLeft} from './HeaderLeft';
-import {CommonActions} from '@react-navigation/native';
 import {matchPreset} from '../../lib/utils.ts';
 import {AudioAttachment} from '../../sharedTypes/audio.ts';
 import {
@@ -110,16 +109,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   ]);
 
   const handleNavigationSuccess = React.useCallback(() => {
-    if (navigation.canGoBack()) {
-      navigation.goBack();
-    } else {
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{name: 'Home'}],
-        }),
-      );
-    }
+    navigation.goBack();
     clearDraft();
   }, [navigation, clearDraft]);
 

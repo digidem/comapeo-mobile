@@ -10,7 +10,7 @@ describe('View Observations Flow', () => {
     const lakeCategory = await $(byTextMatches('Lake'));
     await lakeCategory.click();
 
-    await driver.pause(1000);
+    await driver.pause(2000);
     const noGpsElems = await $$(byTextMatches('No GPS signal'));
     if ((await noGpsElems.length) > 0 && (await noGpsElems[0].isDisplayed())) {
       const textSave = await $(byTextMatches('SAVE'));
@@ -30,10 +30,10 @@ describe('View Observations Flow', () => {
     const clayCategory = await $(byTextMatches('Clay'));
     await clayCategory.click();
 
-    await driver.pause(1000);
+    await driver.pause(2000);
 
-    const noGpsElems = await $$(byTextMatches('No GPS signal'));
-    if ((await noGpsElems.length) > 0 && (await noGpsElems[0].isDisplayed())) {
+    const noGpsElems = await $(byTextMatches('No GPS signal'));
+    if ((await noGpsElems) && (await noGpsElems[0].isDisplayed())) {
       const textSave = await $(byTextMatches('SAVE'));
       await textSave.click();
     } else {

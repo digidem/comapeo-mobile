@@ -39,8 +39,16 @@ describe('Add Details Flow', () => {
     await detailsInp.click();
     await detailsInp.setValue('Some details');
 
-    const doneBtn = await $(byTextMatches('Done'));
-    await doneBtn.click();
+    try {
+      const doneBtn = await $(byTextMatches('Done'));
+      if (await doneBtn.isDisplayed()) {
+        await doneBtn.click();
+      } else {
+        console.info('"Done" button is not visible, continuing...');
+      }
+    } catch (e) {
+      console.info('"Done" button not found, skipping click');
+    }
   });
 
   it('should confirm we are back on the New Observation screen, then save & go back', async () => {

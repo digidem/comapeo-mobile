@@ -20,6 +20,7 @@ import {MapTabBarIcon} from './TabBar/MapTabBarIcon';
 import {TrackingTabBarIcon} from './TabBar/TrackingTabBarIcon';
 import {HomeTabsParamsList} from '../../sharedTypes/navigation';
 import {DrawerContent} from '../../sharedComponents/DrawerContent';
+import {useCloseDrawerOnBackPress} from './useCloseDrawerOnBackPress';
 
 const Tab = createBottomTabNavigator<HomeTabsParamsList>();
 
@@ -35,11 +36,17 @@ export const HomeTabs = () => {
   const {formatMessage} = useIntl();
   const [drawerOpen, setDrawerOpen] = React.useState(false);
 
+  function closeDrawer() {
+    setDrawerOpen(false);
+  }
+
+  useCloseDrawerOnBackPress({drawerOpen, closeDrawer});
+
   return (
     <>
       {drawerOpen && (
         <View style={styles.backdrop}>
-          <DrawerContent closeDrawer={() => setDrawerOpen(false)} />
+          <DrawerContent closeDrawer={closeDrawer} />
         </View>
       )}
       <Tab.Navigator

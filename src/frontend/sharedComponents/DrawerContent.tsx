@@ -79,7 +79,8 @@ export const DrawerContent = ({closeDrawer}: {closeDrawer: () => void}) => {
         paddingBottom: 0,
         paddingStart: 0,
         paddingEnd: 0,
-        marginLeft: 60,
+        width: '80%',
+        alignSelf: 'flex-end',
       }}
       entering={SlideInRight.duration(250)}
       exiting={SlideOutRight.duration(250)}>

@@ -27,6 +27,7 @@ import {TracksMapLayer} from './MapLayers/TracksMapLayer';
 import {assert} from '../../lib/assert';
 import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLayer';
 import {matchPreset} from '../../lib/utils';
+import {useIsFullyFocused} from '../../hooks/useIsFullyFocused';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -58,8 +59,17 @@ export const MapScreen = () => {
     store => store.value,
   );
   const {data: presets} = usePresetsQuery();
+  const isFocused = useIsFullyFocused();
+  const hasNavigated = React.useRef(false);
 
   React.useEffect(() => {
+    if (!isFocused) {
+      hasNavigated.current = false;
+      return;
+    }
+    if (hasNavigated.current) {
+      return;
+    }
     // if no exisiting observation, stay home
     if (!existingObservation) {
       return;
@@ -74,7 +84,8 @@ export const MapScreen = () => {
     } else {
       navigate('ObservationCreate');
     }
-  }, [existingObservation, navigate, presets]);
+    hasNavigated.current = true;
+  }, [isFocused]);
 
   const handleAddPress = () => {
     newDraft();

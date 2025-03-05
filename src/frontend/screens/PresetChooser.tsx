@@ -17,7 +17,6 @@ import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 import {Preset} from '@comapeo/schema';
 import {usePresetsQuery} from '../hooks/server/presets';
 import {usePersistedDraftObservation} from '../hooks/persistedState/usePersistedDraftObservation';
-import {CommonActions} from '@react-navigation/native';
 
 const m = defineMessages({
   categoryTitle: {
@@ -47,28 +46,11 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
     if (navigation.canGoBack()) {
       navigation.goBack();
       return;
+    } else if (observationId) {
+      navigation.navigate('ObservationEdit', {observationId});
+    } else {
+      navigation.navigate('ObservationCreate');
     }
-
-    // If the user closes the app while editing of creating an observations, we
-    if (observationId) {
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 1,
-          routes: [
-            {name: 'Home'},
-            {name: 'ObservationEdit', params: {observationId}},
-          ],
-        }),
-      );
-      return;
-    }
-
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 1,
-        routes: [{name: 'Home'}, {name: 'ObservationCreate'}],
-      }),
-    );
   }, [navigation, observationId]);
 
   React.useLayoutEffect(() => {

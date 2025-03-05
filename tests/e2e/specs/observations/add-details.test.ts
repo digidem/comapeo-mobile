@@ -38,17 +38,6 @@ describe('Add Details Flow', () => {
     const detailsInp = await $(byResourceId('OBS.details-inp'));
     await detailsInp.click();
     await detailsInp.setValue('Some details');
-
-    try {
-      const doneBtn = await $(byTextMatches('Done'));
-      if (await doneBtn.isDisplayed()) {
-        await doneBtn.click();
-      } else {
-        console.info('"Done" button is not visible, continuing...');
-      }
-    } catch (e) {
-      console.info('"Done" button not found, skipping click');
-    }
   });
 
   it('should confirm we are back on the New Observation screen, then save & go back', async () => {

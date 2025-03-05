@@ -8,6 +8,9 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "assetBundlePatterns": ["**/*"],
+    "updates": {
+      "enabled": false
+    },
     "plugins": [
       "expo-localization",
       "expo-secure-store",

@@ -9,7 +9,7 @@ import {ConfirmDiscardBottomSheetContent} from '../../sharedComponents/ConfirmDi
 import {defineMessages, useIntl} from 'react-intl';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {useFocusEffect} from '@react-navigation/native';
+import {CommonActions, useFocusEffect} from '@react-navigation/native';
 import {BackHandler} from 'react-native';
 
 const m = defineMessages({
@@ -65,7 +65,12 @@ export const HeaderLeft = ({headerBackButtonProps}: HeaderLeftProps) => {
   function handleDiscard() {
     clearDraft();
     closeSheet();
-    navigation.navigate('Home', {screen: 'Map'});
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{name: 'Home', params: {screen: 'Map'}}],
+      }),
+    );
   }
 
   return (

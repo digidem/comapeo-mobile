@@ -60,31 +60,24 @@ export const MapScreen = () => {
   );
   const {data: presets} = usePresetsQuery();
   const isFocused = useIsFullyFocused();
-  const hasNavigated = React.useRef(false);
 
   React.useEffect(() => {
-    if (!isFocused) {
-      hasNavigated.current = false;
-      return;
-    }
-    if (hasNavigated.current) {
-      return;
-    }
-    // if no exisiting observation, stay home
-    if (!existingObservation) {
-      return;
-    }
-    // if existing observation and no preset match, user has started creating an observation but had not chosen a preset, so navigate to preset chooser
-    if (!matchPreset(existingObservation.tags, presets)) {
-      navigate('PresetChooser');
+    if (isFocused) {
+      // if no exisiting observation, stay home
+      if (!existingObservation) {
+        return;
+      }
+      // if existing observation and no preset match, user has started creating an observation but had not chosen a preset, so navigate to preset chooser
+      if (!matchPreset(existingObservation.tags, presets)) {
+        navigate('PresetChooser');
 
-      // if existing observation, preset match, and docId exists, navigate to Observation Edit Screen
-    } else if ('docId' in existingObservation) {
-      navigate('ObservationEdit', {observationId: existingObservation.docId});
-    } else {
-      navigate('ObservationCreate');
+        // if existing observation, preset match, and docId exists, navigate to Observation Edit Screen
+      } else if ('docId' in existingObservation) {
+        navigate('ObservationEdit', {observationId: existingObservation.docId});
+      } else {
+        navigate('ObservationCreate');
+      }
     }
-    hasNavigated.current = true;
   }, [isFocused]);
 
   const handleAddPress = () => {

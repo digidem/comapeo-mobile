@@ -43,15 +43,8 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
   const existingPreset = usePreset();
 
   const handleGoBack = React.useCallback(() => {
-    if (navigation.canGoBack()) {
-      navigation.goBack();
-      return;
-    } else if (observationId) {
-      navigation.navigate('ObservationEdit', {observationId});
-    } else {
-      navigation.navigate('ObservationCreate');
-    }
-  }, [navigation, observationId]);
+    navigation.goBack();
+  }, [navigation]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({

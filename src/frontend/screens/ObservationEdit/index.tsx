@@ -21,6 +21,7 @@ import {
   isAudioAttachment,
   isUnsavedAudio,
 } from '../../lib/attachmentTypeChecks';
+import {CommonActions} from '@react-navigation/native';
 
 const m = defineMessages({
   observation: {
@@ -109,8 +110,13 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   ]);
 
   const handleNavigationSuccess = React.useCallback(() => {
-    navigation.goBack();
     clearDraft();
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{name: 'Home', params: {screen: 'ObservationsList'}}],
+      }),
+    );
   }, [navigation, clearDraft]);
 
   const editObservation = React.useCallback(() => {

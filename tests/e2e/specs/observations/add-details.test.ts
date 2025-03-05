@@ -38,6 +38,8 @@ describe('Add Details Flow', () => {
     const detailsInp = await $(byResourceId('OBS.details-inp'));
     await detailsInp.click();
     await detailsInp.setValue('Some details');
+    const doneBtn = await $(byTextMatches('Done'));
+    await doneBtn.click();
   });
 
   it('should confirm we are back on the New Observation screen, then save & go back', async () => {

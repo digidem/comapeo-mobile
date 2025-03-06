@@ -7,6 +7,7 @@ import {Loading} from '../../../sharedComponents/Loading';
 import {StartStopTrack} from './StartStopTrack';
 import Animated, {SlideInDown, SlideOutDown} from 'react-native-reanimated';
 import {WHITE} from '../../../lib/styles';
+import {useFocusEffect} from '@react-navigation/native';
 
 const handleOpenSettings = () => {
   Linking.sendIntent('android.settings.LOCATION_SOURCE_SETTINGS');
@@ -18,15 +19,17 @@ export const TrackBottomSheet = React.memo(() => {
   const [backgroundPermission, setBackgroundPermission] =
     React.useState<Location.LocationPermissionResponse | null>(null);
 
-  React.useEffect(() => {
-    Location.getForegroundPermissionsAsync().then(permission =>
-      setForegroundPermission(permission),
-    );
+  useFocusEffect(
+    React.useCallback(() => {
+      Location.getForegroundPermissionsAsync().then(permission =>
+        setForegroundPermission(permission),
+      );
 
-    Location.getBackgroundPermissionsAsync().then(permission =>
-      setBackgroundPermission(permission),
-    );
-  }, []);
+      Location.getBackgroundPermissionsAsync().then(permission =>
+        setBackgroundPermission(permission),
+      );
+    }, []),
+  );
 
   const renderContent = () => {
     if (!foregroundPermission || !backgroundPermission) {

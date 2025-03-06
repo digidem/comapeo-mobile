@@ -3,6 +3,8 @@ import {Image, StyleSheet, View} from 'react-native';
 import {Button} from '../../../sharedComponents/Button';
 import {Text} from '../../../sharedComponents/Text';
 import {defineMessages, useIntl} from 'react-intl';
+import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   gpsDisabledTitle: {
@@ -37,10 +39,12 @@ export const GPSForegroundPermissionDisabled = ({
         style={styles.image}
       />
 
-      <Text style={styles.title}>{formatMessage(m.gpsDisabledTitle)}</Text>
-      <Text style={styles.description}>
+      <HeaderText variant="header2" style={{marginBottom: 10}}>
+        {formatMessage(m.gpsDisabledTitle)}
+      </HeaderText>
+      <BodyText style={styles.description}>
         {formatMessage(m.gpsDisabledDescription)}
-      </Text>
+      </BodyText>
       <Button
         fullWidth
         onPress={askForegroundLocationPermission}
@@ -55,15 +59,12 @@ export const GPSForegroundPermissionDisabled = ({
 
 const styles = StyleSheet.create({
   wrapper: {
-    padding: 30,
-    zIndex: 11,
     alignItems: 'center',
     display: 'flex',
     justifyContent: 'center',
   },
-  image: {marginBottom: 30},
-  title: {fontSize: 24, fontWeight: 'bold', textAlign: 'center'},
-  description: {fontSize: 20, textAlign: 'center', marginBottom: 30},
+  image: {marginBottom: 20},
+  description: {marginBottom: 30},
   button: {marginBottom: 20, marginVertical: 8.5},
   buttonText: {fontWeight: '500', color: '#fff'},
 });

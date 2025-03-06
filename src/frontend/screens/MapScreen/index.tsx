@@ -25,6 +25,7 @@ import {TracksMapLayer} from './MapLayers/TracksMapLayer';
 import {assert} from '../../lib/assert';
 import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLayer';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
+import {useFocusEffect} from '@react-navigation/native';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -38,7 +39,10 @@ assert(
 Mapbox.setAccessToken(process.env.MAPBOX_ACCESS_TOKEN);
 const MIN_DISPLACEMENT = 3;
 
-export const MapScreen = ({route}: NativeHomeTabsNavigationProps<'Map'>) => {
+export const MapScreen = ({
+  route,
+  navigation,
+}: NativeHomeTabsNavigationProps<'Map'>) => {
   const trackBottomSheetOpen = route.params?.trackingOpen;
   const [zoom, setZoom] = React.useState(DEFAULT_ZOOM);
   const [isFinishedLoading, setIsFinishedLoading] = React.useState(false);
@@ -62,6 +66,16 @@ export const MapScreen = ({route}: NativeHomeTabsNavigationProps<'Map'>) => {
   React.useEffect(() => {
     Mapbox.setTelemetryEnabled(false);
   }, []);
+
+  // This closes the track bottom sheet whenever the user is navigated away.
+  // This prevents the closing animation from happening when the map screen is being reopened
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        navigation.setParams({trackingOpen: false});
+      };
+    }, [navigation]),
+  );
 
   function handleLocationPress() {
     setZoom(DEFAULT_ZOOM);

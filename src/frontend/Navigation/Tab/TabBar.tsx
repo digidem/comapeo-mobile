@@ -4,7 +4,6 @@ import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import ObservationListIcon from '../../images/ObservationList.svg';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {COMAPEO_BLUE, MEDIUM_GREY} from '../../lib/styles';
-// import {TAB_BAR_HEIGHT} from '../Stack/AppScreens';
 
 const BUTTON_SIZE = 25;
 const HIT_SLOP = 20;

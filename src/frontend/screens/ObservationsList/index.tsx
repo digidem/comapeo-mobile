@@ -6,7 +6,6 @@ import {ObservationEmptyView} from './ObservationsEmptyView';
 import {Observation, Track} from '@comapeo/schema';
 import {MessageDescriptor, defineMessages} from 'react-intl';
 import {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs';
-import {ObservationsListBarIcon} from '../../Navigation/Tab/TabBar/ObservationsListTabBarIcon';
 import {ObservationListHeaderLeft} from './ObservationListHeaderLeft';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
 import {NoProjectWarning} from './NoProjectWarning';
@@ -130,7 +129,6 @@ export function createNavigationOptions(
   formatMessage: (title: MessageDescriptor) => string,
 ): BottomTabNavigationOptions {
   return {
-    tabBarIcon: ObservationsListBarIcon,
     headerLeft: ObservationListHeaderLeft,
     headerTransparent: false,
     headerTitle: formatMessage(ObservationsList.navTitle),

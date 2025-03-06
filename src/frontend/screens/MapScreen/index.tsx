@@ -16,7 +16,7 @@ import ScaleBar from 'react-native-scale-bar';
 import {getCoords} from '../../hooks/useLocation';
 import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
 import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
-import {GPSPermissionsModal} from './GPSPermissions/GPSPermissionsModal';
+import {TrackBottomSheet} from './TrackBottomSheet';
 import {CurrentTrackMapLayer} from './CurrentTrack/CurrrentTrackMapLayer';
 import {UserLocation} from './UserLocation';
 import {useSharedLocationContext} from '../../contexts/SharedLocationContext';
@@ -139,7 +139,7 @@ export const MapScreen = () => {
         onPress={handleAddPress}
         isLoading={!isFinishedLoading}
       />
-      <GPSPermissionsModal />
+      <TrackBottomSheet />
     </View>
   );
 };

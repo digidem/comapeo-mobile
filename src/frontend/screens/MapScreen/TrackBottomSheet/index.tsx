@@ -1,27 +1,21 @@
 import React from 'react';
 import {GPSForegroundPermissionDisabled} from './GPSForegroundPermissionDisabled';
-import {GPSPermissionsEnabled} from './GPSPermissionsEnabled';
 import * as Location from 'expo-location';
-import {useGPSModalContext} from '../../../contexts/GPSModalContext';
-import {useTabNavigationStore} from '../../../hooks/useTabNavigationStore';
-import {BottomSheetModal, BottomSheetView} from '@gorhom/bottom-sheet';
-import {TAB_BAR_HEIGHT} from '../../../Navigation/Stack/AppScreens';
-import {StyleSheet, Linking, View} from 'react-native';
+import {Linking, StyleSheet, View} from 'react-native';
 import {GPSBackgroundPermissionDisabled} from './GPSBackgroundPermissionDisabled';
 import {Loading} from '../../../sharedComponents/Loading';
+import {StartStopTrack} from './StartStopTrack';
+import Animated from 'react-native-reanimated';
 
 const handleOpenSettings = () => {
   Linking.sendIntent('android.settings.LOCATION_SOURCE_SETTINGS');
 };
 
-export const GPSPermissionsModal = React.memo(() => {
-  const {setCurrentTab} = useTabNavigationStore();
-
+export const TrackBottomSheet = React.memo(() => {
   const [foregroundPermission, setForegroundPermission] =
     React.useState<Location.LocationPermissionResponse | null>(null);
   const [backgroundPermission, setBackgroundPermission] =
     React.useState<Location.LocationPermissionResponse | null>(null);
-  const {bottomSheetRef} = useGPSModalContext();
 
   React.useEffect(() => {
     Location.getForegroundPermissionsAsync().then(permission =>
@@ -32,10 +26,6 @@ export const GPSPermissionsModal = React.memo(() => {
       setBackgroundPermission(permission),
     );
   }, []);
-
-  const onBottomSheetDismiss = () => {
-    setCurrentTab('Map');
-  };
 
   const renderContent = () => {
     if (!foregroundPermission || !backgroundPermission) {
@@ -75,26 +65,20 @@ export const GPSPermissionsModal = React.memo(() => {
         />
       );
     }
-    return <GPSPermissionsEnabled />;
+    return <StartStopTrack />;
   };
 
   return (
-    <BottomSheetModal
-      bottomInset={TAB_BAR_HEIGHT}
-      style={styles.modal}
-      ref={bottomSheetRef}
-      enableDynamicSizing
-      onDismiss={onBottomSheetDismiss}
-      handleComponent={() => null}>
-      <BottomSheetView>{renderContent()}</BottomSheetView>
-    </BottomSheetModal>
+    <View style={styles.container}>
+      <Animated.View>{renderContent()}</Animated.View>
+    </View>
   );
 });
 
 const styles = StyleSheet.create({
-  modal: {
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
-    minHeight: 140,
+  container: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
   },
 });

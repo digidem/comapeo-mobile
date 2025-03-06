@@ -1,11 +1,9 @@
 import * as Location from 'expo-location';
 import {useCallback, useState} from 'react';
 import {usePersistedTrack} from './persistedState/usePersistedTrack';
-import {useGPSModalContext} from '../contexts/GPSModalContext.tsx';
 import {LOCATION_TASK_NAME} from '../sharedTypes/location.ts';
 
 export function useTracking() {
-  const {bottomSheetRef} = useGPSModalContext();
   const [loading, setLoading] = useState(false);
   const setTracking = usePersistedTrack(state => state.setTracking);
   const isTracking = usePersistedTrack(state => state.isTracking);
@@ -30,9 +28,8 @@ export function useTracking() {
 
   const cancelTracking = useCallback(async () => {
     await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
-    bottomSheetRef.current?.close();
     setTracking(false);
-  }, [bottomSheetRef, setTracking]);
+  }, [setTracking]);
 
   return {isTracking, startTracking, cancelTracking, loading};
 }

@@ -93,6 +93,7 @@ export const DrawerContent = ({closeDrawer}: {closeDrawer: () => void}) => {
           style={{alignSelf: 'flex-end', marginRight: 20, paddingTop: 20}}
           onPress={closeDrawer}
           testID="drawer-icon-drawer"
+          accessibilityLabel="Close Navigation Drawer"
         />
         {/* This text component is one of the exceptions that does not use the shared text components as requested by Sabella */}
         <Text

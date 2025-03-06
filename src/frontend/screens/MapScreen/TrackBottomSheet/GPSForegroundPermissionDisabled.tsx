@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import {Button} from '../../../sharedComponents/Button';
-import {Text} from '../../../sharedComponents/Text';
 import {defineMessages, useIntl} from 'react-intl';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
@@ -48,10 +47,9 @@ export const GPSForegroundPermissionDisabled = ({
       <Button
         fullWidth
         onPress={askForegroundLocationPermission}
-        style={styles.button}>
-        <Text style={styles.buttonText}>
-          {formatMessage(m.gpsDisabledButtonText)}
-        </Text>
+        variant="contained"
+        color="ComapeoBlue">
+        {formatMessage(m.gpsDisabledButtonText)}
       </Button>
     </View>
   );
@@ -65,6 +63,4 @@ const styles = StyleSheet.create({
   },
   image: {marginBottom: 20},
   description: {marginBottom: 30},
-  button: {marginBottom: 20, marginVertical: 8.5},
-  buttonText: {fontWeight: '500', color: '#fff'},
 });

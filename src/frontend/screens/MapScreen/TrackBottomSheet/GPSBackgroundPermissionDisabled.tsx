@@ -1,9 +1,10 @@
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
-import {Text} from '../../../sharedComponents/Text';
 import {MapPinErrorIconSmall} from '../../../sharedComponents/MapPinErrorIcon/MapPinErrorIconSmall';
 import {Button} from '../../../sharedComponents/Button';
+import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   useLocation: {
@@ -33,10 +34,12 @@ export const GPSBackgroundPermissionDisabled = ({
   return (
     <View style={styles.container}>
       <MapPinErrorIconSmall style={{marginBottom: 20}} />
-      <Text style={styles.title}>{formatMessage(m.useLocation)}</Text>
-      <Text style={styles.description}>
+      <HeaderText variant="header2" style={styles.title}>
+        {formatMessage(m.useLocation)}
+      </HeaderText>
+      <BodyText style={styles.description}>
         {formatMessage(m.collectsLocation)}
-      </Text>
+      </BodyText>
       <Button fullWidth onPress={askBackgroundLocationPermission}>
         {formatMessage(m.turnOn)}
       </Button>
@@ -51,8 +54,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 24,
-    fontWeight: '500',
     marginBottom: 10,
     textAlign: 'center',
   },

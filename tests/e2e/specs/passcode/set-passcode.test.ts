@@ -159,9 +159,5 @@ describe('Set Passcode Flow', () => {
     await saveBtn.click();
 
     await expect($(byTextMatches('Passcode is set'))).toBeDisplayed();
-
-    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
-    await $('~Close Navigation Drawer').click();
   });
 });

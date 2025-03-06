@@ -26,6 +26,7 @@ const AddButtonNoMemo = ({
 }: AddButtonProps) => (
   <View
     testID={testID}
+    accessibilityLabel="Add Observation"
     style={[styles.container, {bottom: isLoading ? 50 : 25}, style]}>
     <TouchableOpacity disabled={disabled || isLoading} onPress={onPress}>
       {isLoading ? <UIActivityIndicator size={50} /> : <AddButtonSVG />}

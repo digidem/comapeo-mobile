@@ -10,13 +10,23 @@ type Props = {
   onPress?: ((event: GestureResponderEvent) => void) | (() => void);
   style?: ViewStyleProp;
   testID?: string;
+  accessibilityLabel?: string;
 };
 
-const IconButtonNotMemoized = ({children, onPress, style, testID}: Props) => (
+const IconButtonNotMemoized = ({
+  children,
+  onPress,
+  style,
+  testID,
+  accessibilityLabel,
+}: Props) => (
   <TouchableNativeFeedback
     onPress={onPress}
     background={TouchableNativeFeedback.Ripple(VERY_LIGHT_BLUE, true)}>
-    <View style={[styles.container, style]} testID={testID}>
+    <View
+      style={[styles.container, style]}
+      testID={testID}
+      accessibilityLabel={accessibilityLabel}>
       {children}
     </View>
   </TouchableNativeFeedback>

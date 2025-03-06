@@ -31,6 +31,14 @@
         "EXPO_PUBLIC_FEATURE_TEST_DATA_UI": "true"
       }
     },
+    "test": {
+      "extends": "base",
+      "distribution": "internal",
+      "env": {
+        "APP_VARIANT": "releaseCandidate",
+        "EXPO_PUBLIC_E2E_TEST": "true"
+      }
+    },
     "production": {
       "extends": "base",
       "distribution": "store",

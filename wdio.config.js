@@ -40,6 +40,7 @@ const config = {
         appiumVersion: '2.12.1',
         debug: true,
         networkLogs: true,
+        gpsLocation: '0.198214, 78.472225',
       },
     },
   ],

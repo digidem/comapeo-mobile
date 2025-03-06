@@ -22,6 +22,7 @@ export const HomeHeader = ({
       />
       <IconButton
         style={styles.leftButton}
+        accessibilityLabel="Go to Sync Screen"
         onPress={() => {
           navigation.navigate('Sync');
         }}>
@@ -32,6 +33,7 @@ export const HomeHeader = ({
         style={{marginRight: 20}}
         onPress={openDrawer}
         testID="drawer-icon-home"
+        accessibilityLabel="Open Navigation Drawer"
       />
     </View>
   );

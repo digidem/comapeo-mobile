@@ -10,14 +10,28 @@ describe('Device Naming Test', () => {
   });
 
   it('should input a device name and verify success message', async () => {
-    const deviceNameInput = await $(byResourceId('ONBOARDING.device-name-inp'));
+    const deviceNameInput = await $(
+      'android=resourceId("ONBOARDING.device-name-inp")',
+    );
     await expect(deviceNameInput).toBeDisplayed();
     const addNameButton = await $(byResourceId('ONBOARDING.add-name-btn'));
 
     await addNameButton.click();
 
     const successMessage = await $(byTextMatches('Success'));
-    await expect(successMessage).not.toBeDisplayed();
+    await driver.waitUntil(async () => !(await successMessage.isExisting()), {
+      timeout: 2000,
+      timeoutMsg: 'The success message did not appear within timeout',
+    });
+
+    await deviceNameInput.setValue('    ');
+    await addNameButton.click();
+
+    await driver.waitUntil(async () => !(await successMessage.isExisting()), {
+      timeout: 2000,
+      timeoutMsg:
+        'Success message should not appear when input is only spaces.',
+    });
 
     await deviceNameInput.setValue(output.names.device);
     await addNameButton.click();

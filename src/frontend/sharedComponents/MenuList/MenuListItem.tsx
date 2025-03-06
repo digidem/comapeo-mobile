@@ -17,6 +17,7 @@ export type MenuListItemType = {
   secondaryText?: string | React.ReactNode;
   testID?: string;
   disabled?: boolean;
+  accessibilityLabel?: string;
 } & (
   | {materialIconName: string; icon?: never} // Has materialIconName but no icon
   | {icon: React.ReactNode; materialIconName?: never} // Has icon but no materialIconName
@@ -39,6 +40,7 @@ export const MenuListItem = ({
   return (
     <TouchableNativeFeedback
       testID={item.testID}
+      accessibilityLabel={item.accessibilityLabel}
       onPress={item.onPress}
       disabled={item.disabled}
       background={TouchableNativeFeedback.Ripple(VERY_LIGHT_BLUE, false)}>

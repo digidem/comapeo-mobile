@@ -163,6 +163,7 @@
     "dotenv-cli": "8.0.0",
     "eslint": "9.21.0",
     "eslint-plugin-jest": "28.11.0",
+    "eslint-plugin-react-hooks": "5.2.0",
     "eslint-plugin-react-native": "5.0.0",
     "execa": "9.5.2",
     "glob": "10.3.15",

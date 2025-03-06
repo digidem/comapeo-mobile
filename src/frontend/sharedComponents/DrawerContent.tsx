@@ -104,7 +104,12 @@ export const DrawerContent = ({closeDrawer}: {closeDrawer: () => void}) => {
             paddingHorizontal: 40,
             fontSize: 18,
             fontFamily: 'Rubik_400Regular',
-          }}>
+          }}
+          accessibilityLabel={
+            data?.name
+              ? `Project: ${data.name}`
+              : 'You are currently mapping on your own'
+          }>
           {data?.name
             ? formatMessage(m.projName, {projectName: data.name})
             : formatMessage(m.mappingOnOwn)}
@@ -132,6 +137,7 @@ export const DrawerContent = ({closeDrawer}: {closeDrawer: () => void}) => {
               ),
               primaryText: formatMessage(m.createOrJoin),
               testID: 'MAIN.create-join-list-item',
+              accessibilityLabel: 'Go to Create or Join Project',
             }}
           />
           <DrawerMenuListItem
@@ -141,6 +147,7 @@ export const DrawerContent = ({closeDrawer}: {closeDrawer: () => void}) => {
               },
               materialIconName: 'assignment',
               primaryText: formatMessage(m.projectSettings),
+              accessibilityLabel: 'Go to Project Settings',
             }}
           />
           <DrawerMenuListItem
@@ -150,6 +157,7 @@ export const DrawerContent = ({closeDrawer}: {closeDrawer: () => void}) => {
               },
               materialIconName: 'settings-suggest',
               primaryText: formatMessage(m.appSettings),
+              accessibilityLabel: 'Go to App Settings',
             }}
           />
           {process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI && (
@@ -173,6 +181,7 @@ export const DrawerContent = ({closeDrawer}: {closeDrawer: () => void}) => {
               },
               materialIconName: 'info-outline',
               primaryText: formatMessage(m.aboutCoMapeo),
+              accessibilityLabel: 'Go to About CoMapeo Screen',
             }}
           />
           <DrawerMenuListItem
@@ -184,6 +193,7 @@ export const DrawerContent = ({closeDrawer}: {closeDrawer: () => void}) => {
                 <EntypoIcon name="lock" size={24} color="rgba(0, 0, 0, 0.54)" />
               ),
               primaryText: formatMessage(m.privacyPolicy),
+              accessibilityLabel: 'Go to Data and Privacy Screen',
             }}
           />
         </View>

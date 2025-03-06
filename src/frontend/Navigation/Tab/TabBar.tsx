@@ -116,9 +116,8 @@ const TrackButtonContent = ({isSelected}: {isSelected: boolean}) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
-    paddingHorizontal: 25,
   },
   buttonStyle: {
     marginTop: 25,

@@ -27,7 +27,6 @@ import {TracksMapLayer} from './MapLayers/TracksMapLayer';
 import {assert} from '../../lib/assert';
 import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLayer';
 import {matchPreset} from '../../lib/utils';
-import {useIsFullyFocused} from '../../hooks/useIsFullyFocused';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -59,26 +58,23 @@ export const MapScreen = () => {
     store => store.value,
   );
   const {data: presets} = usePresetsQuery();
-  const isFocused = useIsFullyFocused();
 
   React.useEffect(() => {
-    if (isFocused) {
-      // if no exisiting observation, stay home
-      if (!existingObservation) {
-        return;
-      }
-      // if existing observation and no preset match, user has started creating an observation but had not chosen a preset, so navigate to preset chooser
-      if (!matchPreset(existingObservation.tags, presets)) {
-        navigate('PresetChooser');
-
-        // if existing observation, preset match, and docId exists, navigate to Observation Edit Screen
-      } else if ('docId' in existingObservation) {
-        navigate('ObservationEdit', {observationId: existingObservation.docId});
-      } else {
-        navigate('ObservationCreate');
-      }
+    // if no exisiting observation, stay home
+    if (!existingObservation) {
+      return;
     }
-  }, [isFocused]);
+    // if existing observation and no preset match, user has started creating an observation but had not chosen a preset, so navigate to preset chooser
+    if (!matchPreset(existingObservation.tags, presets)) {
+      navigate('PresetChooser');
+
+      // if existing observation, preset match, and docId exists, navigate to Observation Edit Screen
+    } else if ('docId' in existingObservation) {
+      navigate('ObservationEdit', {observationId: existingObservation.docId});
+    } else {
+      navigate('ObservationCreate');
+    }
+  }, [navigate]);
 
   const handleAddPress = () => {
     newDraft();

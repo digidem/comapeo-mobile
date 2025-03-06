@@ -26,9 +26,8 @@ export type InviteProps = {
 };
 
 export type HomeTabsParamsList = {
-  Map: undefined;
+  Map: undefined | {trackingOpen: boolean};
   Camera: undefined;
-  Tracking: undefined;
   ObservationsList: undefined;
 };
 

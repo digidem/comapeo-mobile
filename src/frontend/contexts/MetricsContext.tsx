@@ -26,7 +26,7 @@ export const MetricsProvider = ({
   React.useEffect(() => {
     appMetrics.setEnabled(isEnabled);
     deviceMetrics.setEnabled(isEnabled);
-  }, [isEnabled]);
+  }, [isEnabled, appMetrics, deviceMetrics]);
 
   return (
     <MetricsContext.Provider value={{appMetrics, deviceMetrics}}>

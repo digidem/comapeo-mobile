@@ -23,6 +23,8 @@ export const TabBar = ({navigation, state}: BottomTabBarProps) => {
     <View style={styles.container}>
       <TouchableOpacity
         hitSlop={HIT_SLOP}
+        testID="tabBarButtonObservationsList"
+        accessibilityLabel="Go to ObservationsList"
         onPress={() => navigation.navigate('ObservationsList')}>
         <ObservationListIcon
           color={
@@ -34,7 +36,11 @@ export const TabBar = ({navigation, state}: BottomTabBarProps) => {
           height={BUTTON_SIZE}
         />
       </TouchableOpacity>
-      <TouchableOpacity hitSlop={HIT_SLOP} onPress={onPressMap}>
+      <TouchableOpacity
+        testID="tabBarButtonMap"
+        accessibilityLabel="Go to Map"
+        hitSlop={HIT_SLOP}
+        onPress={onPressMap}>
         <MaterialIcons
           color={
             //@ts-expect-error known type
@@ -48,6 +54,8 @@ export const TabBar = ({navigation, state}: BottomTabBarProps) => {
       </TouchableOpacity>
       <TouchableOpacity
         hitSlop={HIT_SLOP}
+        testID="tabBarButtonCamera"
+        accessibilityLabel="Go to Camera"
         onPress={() => navigation.navigate('Camera')}>
         <MaterialIcons
           color={currentTab?.name === 'Camera' ? COMAPEO_BLUE : MEDIUM_GREY}
@@ -55,7 +63,11 @@ export const TabBar = ({navigation, state}: BottomTabBarProps) => {
           name="photo-camera"
         />
       </TouchableOpacity>
-      <TouchableOpacity hitSlop={HIT_SLOP} onPress={onPressTracks}>
+      <TouchableOpacity
+        hitSlop={HIT_SLOP}
+        testID="tabBarButtonTracking"
+        accessibilityLabel="Go to Tracking"
+        onPress={onPressTracks}>
         <MaterialIcons
           color={
             currentTab?.name === 'Map' &&

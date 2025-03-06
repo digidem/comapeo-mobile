@@ -16,6 +16,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import Share from 'react-native-share';
 import * as FileSystem from 'expo-file-system';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
+import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 
 const m = defineMessages({
   description: {
@@ -45,6 +46,9 @@ export const AudioPlaybackSaved = ({
   const [shareLoading, setShareLoading] = React.useState(false);
   const [shareError, setShareError] = React.useState<Error | null>(null);
   const {deleteAudio} = useDraftObservation();
+  const observationId = usePersistedDraftObservation(
+    store => store.observationId,
+  );
 
   const handleShare = React.useCallback(async () => {
     setShareLoading(true);
@@ -87,7 +91,11 @@ export const AudioPlaybackSaved = ({
 
   function onPressDelete() {
     deleteAudio(uri, true);
-    navigation.popTo('ObservationEdit');
+    if (observationId) {
+      navigation.navigate('ObservationEdit', {observationId});
+    } else {
+      navigation.navigate('Home', {screen: 'ObservationsList'});
+    }
   }
 
   return (

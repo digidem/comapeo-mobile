@@ -4,12 +4,6 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {StyleSheet} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-
-// We need to wrap the app with this provider to fix an issue with the bottom sheet modal backdrop
-// not overlaying the navigation header. Without this, the header is accessible even when
-// the modal is open, which we don't want (e.g. header back button shouldn't be reachable).
-// See https://github.com/gorhom/react-native-bottom-sheet/issues/1157
-import {GPSModalContextProvider} from './GPSModalContext';
 import {TrackTimerContextProvider} from './TrackTimerContext';
 import {PhotoPromiseProvider} from './PhotoPromiseContext';
 import {ActiveProjectProvider} from './ActiveProjectContext';
@@ -56,30 +50,28 @@ export const AppProviders = ({
         <SafeAreaProvider>
           <GestureHandlerRootView style={styles.flex}>
             <TrackTimerContextProvider>
-              <GPSModalContextProvider>
-                <ServerLoading messagePort={messagePort}>
-                  <LocalDiscoveryProvider value={localDiscoveryController}>
-                    <ClientApiProvider clientApi={mapeoApi}>
-                      <MetricsProvider
-                        appMetrics={appMetrics}
-                        deviceMetrics={deviceMetrics}>
-                        <ActiveProjectProvider>
-                          <BottomSheetModalProvider>
-                            <PhotoPromiseProvider>
-                              <DraftObservationProvider
-                                draftObservationStore={
-                                  persistedDrafObservationStore
-                                }>
-                                <SecurityProvider>{children}</SecurityProvider>
-                              </DraftObservationProvider>
-                            </PhotoPromiseProvider>
-                          </BottomSheetModalProvider>
-                        </ActiveProjectProvider>
-                      </MetricsProvider>
-                    </ClientApiProvider>
-                  </LocalDiscoveryProvider>
-                </ServerLoading>
-              </GPSModalContextProvider>
+              <ServerLoading messagePort={messagePort}>
+                <LocalDiscoveryProvider value={localDiscoveryController}>
+                  <ClientApiProvider clientApi={mapeoApi}>
+                    <MetricsProvider
+                      appMetrics={appMetrics}
+                      deviceMetrics={deviceMetrics}>
+                      <ActiveProjectProvider>
+                        <BottomSheetModalProvider>
+                          <PhotoPromiseProvider>
+                            <DraftObservationProvider
+                              draftObservationStore={
+                                persistedDrafObservationStore
+                              }>
+                              <SecurityProvider>{children}</SecurityProvider>
+                            </DraftObservationProvider>
+                          </PhotoPromiseProvider>
+                        </BottomSheetModalProvider>
+                      </ActiveProjectProvider>
+                    </MetricsProvider>
+                  </ClientApiProvider>
+                </LocalDiscoveryProvider>
+              </ServerLoading>
             </TrackTimerContextProvider>
           </GestureHandlerRootView>
         </SafeAreaProvider>

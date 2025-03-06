@@ -1,14 +1,14 @@
 import React, {useCallback} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Button} from '../../../sharedComponents/Button';
-import {Text} from '../../../sharedComponents/Text';
+import {Button} from '../../../sharedComponents/Button.tsx';
+import {Text} from '../../../sharedComponents/Text.tsx';
 import {useTracking} from '../../../hooks/useTracking.ts';
 import StartTrackingIcon from '../../../images/StartTracking.svg';
 import StopTrackingIcon from '../../../images/StopTracking.svg';
-import {useTrackTimerContext} from '../../../contexts/TrackTimerContext';
+import {useTrackTimerContext} from '../../../contexts/TrackTimerContext.tsx';
 import {defineMessages, useIntl} from 'react-intl';
-import {usePersistedTrack} from '../../../hooks/persistedState/usePersistedTrack';
-import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes';
+import {usePersistedTrack} from '../../../hooks/persistedState/usePersistedTrack.ts';
+import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes.ts';
 
 const m = defineMessages({
   defaultButtonText: {
@@ -29,7 +29,7 @@ const m = defineMessages({
   },
 });
 
-export const GPSPermissionsEnabled = () => {
+export const StartStopTrack = () => {
   const {formatMessage} = useIntl();
   const {isTracking, cancelTracking, startTracking, loading} = useTracking();
   const locationHistory = usePersistedTrack(state => state.locationHistory);
@@ -47,7 +47,7 @@ export const GPSPermissionsEnabled = () => {
 
     if (locationHistory.length <= 1) {
       clearCurrentTrack();
-      navigation.navigate('Map');
+      navigation.setParams({trackingOpen: false});
     } else {
       navigation.navigate('SaveTrack');
     }
@@ -67,7 +67,7 @@ export const GPSPermissionsEnabled = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View>
       <Button
         fullWidth
         disabled={loading}
@@ -94,11 +94,6 @@ export const GPSPermissionsEnabled = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 20,
-    paddingVertical: 30,
-    height: 140,
-  },
   buttonWrapper: {
     flexDirection: 'row',
     display: 'flex',

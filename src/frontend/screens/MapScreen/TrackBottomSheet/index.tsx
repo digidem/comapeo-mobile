@@ -1,41 +1,35 @@
 import React from 'react';
 import {GPSForegroundPermissionDisabled} from './GPSForegroundPermissionDisabled';
-import {GPSPermissionsEnabled} from './GPSPermissionsEnabled';
 import * as Location from 'expo-location';
-import {useGPSModalContext} from '../../../contexts/GPSModalContext';
-import {useTabNavigationStore} from '../../../hooks/useTabNavigationStore';
-import {BottomSheetModal, BottomSheetView} from '@gorhom/bottom-sheet';
-import {TAB_BAR_HEIGHT} from '../../../Navigation/Stack/AppScreens';
-import {StyleSheet, Linking, View} from 'react-native';
+import {Linking, StyleSheet, View} from 'react-native';
 import {GPSBackgroundPermissionDisabled} from './GPSBackgroundPermissionDisabled';
 import {Loading} from '../../../sharedComponents/Loading';
+import {StartStopTrack} from './StartStopTrack';
+import Animated, {SlideInDown, SlideOutDown} from 'react-native-reanimated';
+import {WHITE} from '../../../lib/styles';
+import {useFocusEffect} from '@react-navigation/native';
 
 const handleOpenSettings = () => {
   Linking.sendIntent('android.settings.LOCATION_SOURCE_SETTINGS');
 };
 
-export const GPSPermissionsModal = React.memo(() => {
-  const {setCurrentTab} = useTabNavigationStore();
-
+export const TrackBottomSheet = React.memo(() => {
   const [foregroundPermission, setForegroundPermission] =
     React.useState<Location.LocationPermissionResponse | null>(null);
   const [backgroundPermission, setBackgroundPermission] =
     React.useState<Location.LocationPermissionResponse | null>(null);
-  const {bottomSheetRef} = useGPSModalContext();
 
-  React.useEffect(() => {
-    Location.getForegroundPermissionsAsync().then(permission =>
-      setForegroundPermission(permission),
-    );
+  useFocusEffect(
+    React.useCallback(() => {
+      Location.getForegroundPermissionsAsync().then(permission =>
+        setForegroundPermission(permission),
+      );
 
-    Location.getBackgroundPermissionsAsync().then(permission =>
-      setBackgroundPermission(permission),
-    );
-  }, []);
-
-  const onBottomSheetDismiss = () => {
-    setCurrentTab('Map');
-  };
+      Location.getBackgroundPermissionsAsync().then(permission =>
+        setBackgroundPermission(permission),
+      );
+    }, []),
+  );
 
   const renderContent = () => {
     if (!foregroundPermission || !backgroundPermission) {
@@ -75,26 +69,36 @@ export const GPSPermissionsModal = React.memo(() => {
         />
       );
     }
-    return <GPSPermissionsEnabled />;
+    return <StartStopTrack />;
   };
 
   return (
-    <BottomSheetModal
-      bottomInset={TAB_BAR_HEIGHT}
-      style={styles.modal}
-      ref={bottomSheetRef}
-      enableDynamicSizing
-      onDismiss={onBottomSheetDismiss}
-      handleComponent={() => null}>
-      <BottomSheetView>{renderContent()}</BottomSheetView>
-    </BottomSheetModal>
+    // Semi hacky, but without this <View> the animated view bounces too far initially and then bounces back down to adjust.
+    <View style={styles.container}>
+      <Animated.View
+        style={styles.animatedBackground}
+        entering={SlideInDown.duration(250)}
+        exiting={SlideOutDown.duration(250)}>
+        {renderContent()}
+      </Animated.View>
+    </View>
   );
 });
 
 const styles = StyleSheet.create({
-  modal: {
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
+  container: {
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+  },
+  animatedBackground: {
+    backgroundColor: WHITE,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+    width: '100%',
     minHeight: 140,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
   },
 });

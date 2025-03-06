@@ -2,7 +2,6 @@ import * as React from 'react';
 import {AudioStyles, SIDE_ICON_BUTTON_WIDTH} from './shared';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {useAudioPlayback} from '../../hooks/useAudioPlayback';
-import {Duration} from 'luxon';
 import {View, Text, Pressable, TouchableOpacity} from 'react-native';
 import {Bar} from 'react-native-progress';
 import {WHITE, MEDIUM_GREY} from '../../lib/styles';
@@ -16,6 +15,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import Share from 'react-native-share';
 import * as FileSystem from 'expo-file-system';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
+import {millisecondsToMMSS} from '../../lib/millisecondsToFormattedTime';
 
 const m = defineMessages({
   description: {
@@ -166,7 +166,7 @@ export const AudioPlaybackSaved = ({
                     currentPosition === 0 && !isPlaying ? MEDIUM_GREY : WHITE,
                 },
               ]}>
-              {Duration.fromMillis(currentPosition).toFormat('mm:ss')}
+              {millisecondsToMMSS(currentPosition)}
             </Text>
             <Bar
               // Setting to 0 seems to have issues on Android: https://github.com/oblador/react-native-progress/issues/56
@@ -182,7 +182,7 @@ export const AudioPlaybackSaved = ({
           </View>
           <HeaderText variant="header3" style={AudioStyles.message}>
             {formatMessage(m.description, {
-              length: Duration.fromMillis(duration).toFormat('mm:ss'),
+              length: millisecondsToMMSS(duration),
             })}
           </HeaderText>
         </View>

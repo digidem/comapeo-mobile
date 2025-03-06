@@ -24,6 +24,7 @@ import {useMapStyleJsonUrl} from '../../hooks/server/maps';
 import {TracksMapLayer} from './MapLayers/TracksMapLayer';
 import {assert} from '../../lib/assert';
 import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLayer';
+import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -37,7 +38,8 @@ assert(
 Mapbox.setAccessToken(process.env.MAPBOX_ACCESS_TOKEN);
 const MIN_DISPLACEMENT = 3;
 
-export const MapScreen = () => {
+export const MapScreen = ({route}: NativeHomeTabsNavigationProps<'Map'>) => {
+  const trackBottomSheetOpen = route.params?.trackingOpen;
   const [zoom, setZoom] = React.useState(DEFAULT_ZOOM);
   const [isFinishedLoading, setIsFinishedLoading] = React.useState(false);
   const [following, setFollowing] = React.useState(true);
@@ -139,7 +141,7 @@ export const MapScreen = () => {
         onPress={handleAddPress}
         isLoading={!isFinishedLoading}
       />
-      <TrackBottomSheet />
+      {trackBottomSheetOpen && <TrackBottomSheet />}
     </View>
   );
 };

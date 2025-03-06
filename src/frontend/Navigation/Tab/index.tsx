@@ -11,6 +11,7 @@ import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {HomeTabsParamsList} from '../../sharedTypes/navigation';
 import {useDrawerNavigation} from '../Stack';
 import {TabBar} from './TabBar';
+import {SharedLocationContextProvider} from '../../contexts/SharedLocationContext';
 
 const Tab = createBottomTabNavigator<HomeTabsParamsList>();
 
@@ -25,6 +26,11 @@ export const HomeTabs = () => {
         headerTransparent: true,
       }}
       initialRouteName={'Map'}
+      layout={({children}) => (
+        <SharedLocationContextProvider>
+          {children}
+        </SharedLocationContextProvider>
+      )}
       backBehavior="initialRoute">
       <Tab.Screen
         name="ObservationsList"

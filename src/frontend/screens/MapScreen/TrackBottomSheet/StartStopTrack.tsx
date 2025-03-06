@@ -67,7 +67,7 @@ export const StartStopTrack = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View>
       <Button
         fullWidth
         disabled={loading}
@@ -94,11 +94,6 @@ export const StartStopTrack = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 20,
-    paddingVertical: 30,
-    height: 140,
-  },
   buttonWrapper: {
     flexDirection: 'row',
     display: 'flex',

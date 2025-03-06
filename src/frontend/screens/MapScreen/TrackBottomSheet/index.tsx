@@ -5,7 +5,8 @@ import {Linking, StyleSheet, View} from 'react-native';
 import {GPSBackgroundPermissionDisabled} from './GPSBackgroundPermissionDisabled';
 import {Loading} from '../../../sharedComponents/Loading';
 import {StartStopTrack} from './StartStopTrack';
-import Animated from 'react-native-reanimated';
+import Animated, {SlideInDown, SlideOutDown} from 'react-native-reanimated';
+import {WHITE} from '../../../lib/styles';
 
 const handleOpenSettings = () => {
   Linking.sendIntent('android.settings.LOCATION_SOURCE_SETTINGS');
@@ -69,16 +70,32 @@ export const TrackBottomSheet = React.memo(() => {
   };
 
   return (
+    // Semi hacky, but without this <View> the animated view bounces too far initially and then bounces back down to adjust.
     <View style={styles.container}>
-      <Animated.View>{renderContent()}</Animated.View>
+      <Animated.View
+        style={styles.animatedBackground}
+        entering={SlideInDown.duration(250)}
+        exiting={SlideOutDown.duration(250)}>
+        {renderContent()}
+      </Animated.View>
     </View>
   );
 });
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: 'transparent',
     position: 'absolute',
     bottom: 0,
     width: '100%',
+  },
+  animatedBackground: {
+    backgroundColor: WHITE,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+    width: '100%',
+    minHeight: 140,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
   },
 });

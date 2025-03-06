@@ -47,7 +47,7 @@ export const StartStopTrack = () => {
 
     if (locationHistory.length <= 1) {
       clearCurrentTrack();
-      navigation.navigate('Map');
+      navigation.setParams({trackingOpen: false});
     } else {
       navigation.navigate('SaveTrack');
     }

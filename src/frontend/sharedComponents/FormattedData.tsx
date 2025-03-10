@@ -7,9 +7,8 @@ import {
 } from 'react-intl';
 import {Field, Preset} from '@comapeo/schema';
 
-import {formatCoords} from '../lib/utils';
+import {formatCoords, type CoordinateFormat} from '../lib/coordinateFormat';
 import {DateDistance} from './DateDistance';
-import {CoordinateFormat} from '../sharedTypes';
 
 const m = defineMessages({
   noAnswer: {

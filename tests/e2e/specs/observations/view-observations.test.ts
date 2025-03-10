@@ -24,8 +24,6 @@ describe('View Observations Flow', () => {
       const confirmSave = await $(byTextMatches('SAVE'));
       await confirmSave.click();
     }
-    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
   });
 
   it('should create observation with "Clay" category', async () => {
@@ -49,9 +47,6 @@ describe('View Observations Flow', () => {
       const confirmSave = await $(byTextMatches('SAVE'));
       await confirmSave.click();
     }
-
-    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
   });
 
   it('should open Observations list and verify it is displayed', async () => {

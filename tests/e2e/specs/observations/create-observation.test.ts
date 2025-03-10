@@ -22,7 +22,7 @@ describe('Create Observation Flow', () => {
     await continueEditing.click();
     await discardObs.waitForDisplayed({
       reverse: true,
-      timeout: 1500,
+      timeout: 500,
     });
 
     await closeIcon.click();

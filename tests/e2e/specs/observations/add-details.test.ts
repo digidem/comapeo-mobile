@@ -47,8 +47,5 @@ describe('Add Details Flow', () => {
 
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
-
-    const mainBack = await $(byResourceId('MAIN.header-back-btn'));
-    await mainBack.click();
   });
 });

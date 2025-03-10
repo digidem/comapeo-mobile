@@ -4,7 +4,10 @@ import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {Editor} from '../../sharedComponents/Editor';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
-import {NativeNavigationComponent} from '../../sharedTypes/navigation';
+import {
+  NativeNavigationComponent,
+  NativeRootNavigationProps,
+} from '../../sharedTypes/navigation';
 import {useEditObservation} from '../../hooks/server/observations';
 import {useCreateBlobMutation} from '../../hooks/server/media';
 import {SaveButton} from '../../sharedComponents/SaveButton';
@@ -14,7 +17,6 @@ import {ActionsRow} from '../../sharedComponents/ActionsRow';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {Loading} from '../../sharedComponents/Loading';
 import {HeaderLeft} from './HeaderLeft';
-import {CommonActions} from '@react-navigation/native';
 import {matchPreset} from '../../lib/utils.ts';
 import {AudioAttachment} from '../../sharedTypes/audio.ts';
 import {
@@ -110,18 +112,15 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   ]);
 
   const handleNavigationSuccess = React.useCallback(() => {
-    if (navigation.canGoBack()) {
-      navigation.goBack();
-    } else {
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{name: 'Home'}],
-        }),
-      );
-    }
     clearDraft();
-  }, [navigation, clearDraft]);
+    if (route.params?.observationId) {
+      navigation.popTo('Observation', {
+        observationId: route.params.observationId,
+      });
+    } else {
+      navigation.popTo('Home', {screen: 'Map'});
+    }
+  }, [clearDraft, route.params?.observationId, navigation]);
 
   const editObservation = React.useCallback(() => {
     if (!value) {
@@ -222,8 +221,19 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
           isLoading={editObservationMutation.isPending}
         />
       ),
+      headerLeft: props => (
+        <HeaderLeft
+          headerBackButtonProps={props}
+          observationId={route.params?.observationId}
+        />
+      ),
     });
-  }, [editObservation, editObservationMutation, navigation]);
+  }, [
+    editObservation,
+    editObservationMutation,
+    navigation,
+    route.params?.observationId,
+  ]);
 
   return !value ? (
     <Loading />
@@ -265,11 +275,18 @@ export function createNavigationOptions({
 }: {
   intl: (title: MessageDescriptor) => string;
 }) {
-  return (): NativeStackNavigationOptions => {
+  return ({
+    route,
+  }: NativeRootNavigationProps<'ObservationEdit'>): NativeStackNavigationOptions => {
     return {
       headerTitle: intl(m.navTitle),
       headerRight: () => <SaveButton onPress={() => {}} isLoading={false} />,
-      headerLeft: props => <HeaderLeft headerBackButtonProps={props} />,
+      headerLeft: props => (
+        <HeaderLeft
+          headerBackButtonProps={props}
+          observationId={route.params?.observationId} // Pass observationId here
+        />
+      ),
     };
   };
 }

@@ -11,10 +11,7 @@ import {
 } from '@react-navigation/drawer';
 import {DrawerScreens} from '../Drawer';
 import {useIntl} from 'react-intl';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {DEVICE_INFO_KEY} from '../../hooks/server/deviceInfo';
-import {usePresetsQuery} from '../../hooks/server/presets';
-import {getInitialRouteName} from '../../utils/navigation';
 import {createDefaultScreenGroup} from './AppScreens';
 import {createOnboardingScreens} from './OnboardingScreens';
 import {useSuspenseQuery} from '@tanstack/react-query';
@@ -59,10 +56,6 @@ export function RootStackNavigator({
 function RootStackNavigatorChild() {
   const {formatMessage} = useIntl();
   const navigation = useDrawerNavigation();
-  const existingObservation = usePersistedDraftObservation(
-    store => store.value,
-  );
-  const {data: presets} = usePresetsQuery();
   const mapeoApi = useClientApi();
 
   const deviceInfo = useSuspenseQuery({
@@ -80,14 +73,7 @@ function RootStackNavigatorChild() {
   }, [security.authState, navigation]);
 
   return (
-    <RootStack.Navigator
-      initialRouteName={getInitialRouteName({
-        hasDeviceName: !!deviceInfo.data.name,
-        existingObservation,
-        presets,
-        requiresAuth: security.authState === 'unauthenticated',
-      })}
-      screenOptions={NavigatorScreenOptions}>
+    <RootStack.Navigator screenOptions={NavigatorScreenOptions}>
       {deviceInfo.data?.name
         ? createDefaultScreenGroup({
             intl: formatMessage,

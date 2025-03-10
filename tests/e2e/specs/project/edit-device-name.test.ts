@@ -1,6 +1,6 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
-import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
+import {byResourceId, byText} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 
 describe('Edit Device Name Test', () => {
@@ -29,7 +29,7 @@ describe('Edit Device Name Test', () => {
     const backButton = await $(byResourceId('MAIN.header-back-btn'));
     await backButton.click();
 
-    const discardAlert = await $(byTextMatches('DISCARD CHANGES'));
+    const discardAlert = await $(byText('DISCARD CHANGES'));
     await expect(discardAlert).toBeDisplayed();
 
     await discardAlert.click();
@@ -46,7 +46,7 @@ describe('Edit Device Name Test', () => {
 
     await expect(discardAlert).toBeDisplayed();
 
-    const continueEditing = await $(byTextMatches('CONTINUE EDITING'));
+    const continueEditing = await $(byText('CONTINUE EDITING'));
     await continueEditing.click();
 
     const editedDeviceName = await $(byText(output.names.editdevice));

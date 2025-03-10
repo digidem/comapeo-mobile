@@ -6,7 +6,6 @@ import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {useCreateObservation} from '../../hooks/server/observations';
-import {CommonActions} from '@react-navigation/native';
 import {useCreateBlobMutation} from '../../hooks/server/media';
 import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import {SaveButton} from '../../sharedComponents/SaveButton';
@@ -164,15 +163,7 @@ export const ObservationCreate = ({
         {
           onSuccess: data => {
             clearDraft();
-            navigation.dispatch(
-              CommonActions.reset({
-                index: 1,
-                routes: [
-                  {name: 'Home', params: {screen: 'Map'}},
-                  {name: 'Home', params: {screen: 'ObservationsList'}},
-                ],
-              }),
-            );
+            navigation.navigate('Home', {screen: 'Map'});
             if (isTracking) {
               addObservationRefToTrack(data);
             }

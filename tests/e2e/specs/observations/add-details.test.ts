@@ -38,7 +38,6 @@ describe('Add Details Flow', () => {
     const detailsInp = await $(byResourceId('OBS.details-inp'));
     await detailsInp.click();
     await detailsInp.setValue('Some details');
-
     const doneBtn = await $(byTextMatches('Done'));
     await doneBtn.click();
   });
@@ -48,8 +47,5 @@ describe('Add Details Flow', () => {
 
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
-
-    const mainBack = await $(byResourceId('MAIN.header-back-btn'));
-    await mainBack.click();
   });
 });

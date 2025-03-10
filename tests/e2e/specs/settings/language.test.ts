@@ -28,14 +28,14 @@ describe('Language Settings Flow', () => {
     await obsListTab.click();
 
     await expect($(byTextMatches('Observaciones'))).toBeDisplayed();
+    await backBtn.click();
   });
 
   it('should switch back to English and confirm language revert', async () => {
-    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
-
     const drawerIcon = await $('~Open Navigation Drawer');
-    await drawerIcon.click();
+    if (await drawerIcon.isDisplayed()) {
+      await drawerIcon.click();
+    }
 
     const settingsInSpanish = await $(byTextMatches('Ajustes de la'));
     await settingsInSpanish.click();
@@ -45,7 +45,7 @@ describe('Language Settings Flow', () => {
 
     const englishElem = await $(byTextMatches('English'));
     await englishElem.click();
-
+    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
   });
 });

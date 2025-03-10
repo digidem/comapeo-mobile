@@ -1,6 +1,6 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
-import {byResourceId, byTextMatches} from '../../utils/selectors';
+import {byResourceId, byTextMatches, byText} from '../../utils/selectors';
 import {tapAboveElement} from '../../utils/touchActions';
 
 describe('Create Observation Flow', () => {
@@ -15,14 +15,14 @@ describe('Create Observation Flow', () => {
     const closeIcon = await $(byResourceId('close-icon'));
     await closeIcon.click();
 
-    const discardObs = await $(byTextMatches('Discard Observation'));
+    const discardObs = await $(byText('Discard Observation'));
     await expect(discardObs).toBeDisplayed();
 
     const continueEditing = await $(byTextMatches('Continue editing'));
     await continueEditing.click();
     await discardObs.waitForDisplayed({
       reverse: true,
-      timeout: 1500,
+      timeout: 500,
     });
 
     await closeIcon.click();

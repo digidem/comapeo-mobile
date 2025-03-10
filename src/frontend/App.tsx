@@ -3,6 +3,7 @@ import {createMapeoClient} from '@comapeo/ipc';
 import {AppNavigator} from './AppNavigator';
 import {MessagePortLike} from './lib/MessagePortLike';
 import {initializeNodejs} from './initializeNodejs';
+import Mapbox from '@rnmapbox/maps';
 import {PermissionsAndroid} from 'react-native';
 import {AppProviders} from './contexts/AppProviders';
 import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
@@ -37,6 +38,8 @@ Sentry.init({
   debug: sentryDebug, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
   initialScope: {user: {id: getSentryUserId({now: new Date(), storage})}},
 });
+
+Mapbox.setTelemetryEnabled(false);
 
 const appDiagnosticMetrics = new AppDiagnosticMetrics();
 const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();

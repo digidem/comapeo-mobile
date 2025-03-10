@@ -63,10 +63,6 @@ export const MapScreen = ({
     navigate('PresetChooser');
   };
 
-  React.useEffect(() => {
-    Mapbox.setTelemetryEnabled(false);
-  }, []);
-
   // This closes the track bottom sheet whenever the user is navigated away.
   // This prevents the closing animation from happening when the map screen is being reopened
   useFocusEffect(

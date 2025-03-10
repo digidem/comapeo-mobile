@@ -65,22 +65,24 @@ export const MapScreen = ({
   );
   const {data: presets} = usePresetsQuery();
 
-  React.useEffect(() => {
-    // if no exisiting observation, stay home
-    if (!existingObservation) {
-      return;
-    }
-    // if existing observation and no preset match, user has started creating an observation but had not chosen a preset, so navigate to preset chooser
-    if (!matchPreset(existingObservation.tags, presets)) {
-      navigate('PresetChooser');
+  useFocusEffect(
+    React.useCallback(() => {
+      // if no exisiting observation, stay home
+      if (!existingObservation) {
+        return;
+      }
+      // if existing observation and no preset match, user has started creating an observation but had not chosen a preset, so navigate to preset chooser
+      if (!matchPreset(existingObservation.tags, presets)) {
+        navigate('PresetChooser');
 
-      // if existing observation, preset match, and docId exists, navigate to Observation Edit Screen
-    } else if ('docId' in existingObservation) {
-      navigate('ObservationEdit', {observationId: existingObservation.docId});
-    } else {
-      navigate('ObservationCreate');
-    }
-  }, [navigate]);
+        // if existing observation, preset match, and docId exists, navigate to Observation Edit Screen
+      } else if ('docId' in existingObservation) {
+        navigate('ObservationEdit', {observationId: existingObservation.docId});
+      } else {
+        navigate('ObservationCreate');
+      }
+    }, [existingObservation, navigate, presets]),
+  );
 
   const handleAddPress = () => {
     newDraft();

@@ -65,7 +65,6 @@ export const HeaderLeft = ({headerBackButtonProps}: HeaderLeftProps) => {
   function handleDiscard() {
     clearDraft();
     closeSheet();
-    navigation.setParams({});
     navigation.goBack();
   }
 

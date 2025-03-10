@@ -110,7 +110,6 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
 
   const handleNavigationSuccess = React.useCallback(() => {
     clearDraft();
-    navigation.setParams({});
     navigation.goBack();
   }, [navigation, clearDraft]);
 

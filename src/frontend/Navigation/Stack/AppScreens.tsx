@@ -42,7 +42,6 @@ import {
 } from '../../screens/LocationInfoScreen';
 import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/InviteDeclined';
 import {UnableToCancelInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/UnableToCancelInvite';
-import {SharedLocationContextProvider} from '../../contexts/SharedLocationContext';
 import {
   SyncScreen,
   createNavigationOptions as createSyncNavOptions,
@@ -56,7 +55,6 @@ import {SaveTrackScreen} from '../../screens/SaveTrack/SaveTrackScreen';
 import {ObservationFields} from '../../screens/ObservationFields';
 import {WHITE} from '../../lib/styles';
 import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSettings';
-import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {PhotoPreviewModal} from '../../screens/PhotoPreviewModal';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {
@@ -113,14 +111,7 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="Home"
         options={{headerShown: false}}
-        children={() => (
-          <SharedLocationContextProvider>
-            {/* This provider allows the bottoms sheet used by tracks to open up behind the drawers */}
-            <BottomSheetModalProvider>
-              <HomeTabs />
-            </BottomSheetModalProvider>
-          </SharedLocationContextProvider>
-        )}
+        component={HomeTabs}
       />
       <RootStack.Screen
         name="AuthScreen"

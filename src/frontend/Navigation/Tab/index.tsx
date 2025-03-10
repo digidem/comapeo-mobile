@@ -1,12 +1,6 @@
 import * as React from 'react';
-import {
-  createBottomTabNavigator,
-  BottomTabNavigationProp,
-  BottomTabBarButtonProps,
-} from '@react-navigation/bottom-tabs';
-import {Pressable, StyleSheet, View} from 'react-native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useIntl} from 'react-intl';
-import {useCurrentTab} from '../../hooks/useCurrentTab';
 import {CameraScreen} from '../../screens/CameraScreen';
 import {MapScreen} from '../../screens/MapScreen';
 import {
@@ -14,30 +8,25 @@ import {
   createNavigationOptions as createObservationsListNavOptions,
 } from '../../screens/ObservationsList';
 import {HomeHeader} from '../../sharedComponents/HomeHeader';
-import {TAB_BAR_HEIGHT} from '../Stack/AppScreens';
-import {CameraTabBarIcon} from './TabBar/CameraTabBarIcon';
-import {MapTabBarIcon} from './TabBar/MapTabBarIcon';
-import {TrackingTabBarIcon} from './TabBar/TrackingTabBarIcon';
 import {HomeTabsParamsList} from '../../sharedTypes/navigation';
 import {DrawerContent} from '../../sharedComponents/DrawerContent';
 import {useCloseDrawerOnBackPress} from './useCloseDrawerOnBackPress';
+import {StyleSheet, View} from 'react-native';
+import {TabBar} from './TabBar';
+import {SharedLocationContextProvider} from '../../contexts/SharedLocationContext';
 
 const Tab = createBottomTabNavigator<HomeTabsParamsList>();
 
-const CustomTabBarButton = (props: BottomTabBarButtonProps) => (
-  <Pressable
-    {...props}
-    style={{justifyContent: 'center', alignItems: 'center', flex: 1}}
-  />
-);
-
 export const HomeTabs = () => {
-  const {handleTabPress} = useCurrentTab();
   const {formatMessage} = useIntl();
   const [drawerOpen, setDrawerOpen] = React.useState(false);
 
   function closeDrawer() {
     setDrawerOpen(false);
+  }
+
+  function openDrawer() {
+    setDrawerOpen(true);
   }
 
   useCloseDrawerOnBackPress({drawerOpen, closeDrawer});
@@ -50,18 +39,17 @@ export const HomeTabs = () => {
         </View>
       )}
       <Tab.Navigator
-        screenListeners={{
-          tabPress: handleTabPress,
-        }}
-        screenOptions={({route}) => ({
-          tabBarStyle: {height: TAB_BAR_HEIGHT},
+        tabBar={TabBar}
+        screenOptions={{
           tabBarShowLabel: false,
           headerTransparent: true,
-          tabBarButton: CustomTabBarButton,
-          tabBarButtonTestID: 'tabBarButton' + route.name,
-          tabBarAccessibilityLabel: 'Go to ' + route.name,
-        })}
+        }}
         initialRouteName={'Map'}
+        layout={({children}) => (
+          <SharedLocationContextProvider>
+            {children}
+          </SharedLocationContextProvider>
+        )}
         backBehavior="initialRoute">
         <Tab.Screen
           name="ObservationsList"
@@ -72,45 +60,15 @@ export const HomeTabs = () => {
           name="Map"
           component={MapScreen}
           options={{
-            tabBarIcon: MapTabBarIcon,
-            header: props => (
-              <HomeHeader
-                {...props}
-                openDrawer={() => {
-                  console.log('pressed');
-                  setDrawerOpen(true);
-                }}
-              />
-            ),
+            header: props => <HomeHeader {...props} openDrawer={openDrawer} />,
           }}
         />
         <Tab.Screen
           name="Camera"
           component={CameraScreen}
           options={{
-            tabBarIcon: CameraTabBarIcon,
-            header: props => (
-              <HomeHeader {...props} openDrawer={() => setDrawerOpen(true)} />
-            ),
+            header: props => <HomeHeader {...props} openDrawer={openDrawer} />,
           }}
-        />
-        <Tab.Screen
-          name="Tracking"
-          options={{
-            tabBarIcon: TrackingTabBarIcon,
-            headerShown: false,
-          }}
-          listeners={({
-            navigation,
-          }: {
-            navigation: BottomTabNavigationProp<HomeTabsParamsList>;
-          }) => ({
-            tabPress: e => {
-              e.preventDefault();
-              navigation.navigate('Map');
-            },
-          })}
-          children={() => <></>}
         />
       </Tab.Navigator>
     </>

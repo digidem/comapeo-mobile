@@ -66,7 +66,7 @@ export const HeaderLeft = ({headerBackButtonProps}: HeaderLeftProps) => {
   function handleDiscard() {
     clearDraft();
     closeSheet();
-    navigation.pop(2);
+    navigation.popTo('Home', {screen: 'Map'});
   }
 
   return (

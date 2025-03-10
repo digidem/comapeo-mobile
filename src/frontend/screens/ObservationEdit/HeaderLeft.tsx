@@ -36,9 +36,13 @@ const m = defineMessages({
 
 type HeaderLeftProps = {
   headerBackButtonProps: HeaderBackButtonProps;
+  observationId?: string;
 };
 
-export const HeaderLeft = ({headerBackButtonProps}: HeaderLeftProps) => {
+export const HeaderLeft = ({
+  headerBackButtonProps,
+  observationId,
+}: HeaderLeftProps) => {
   const {closeSheet, openSheet, isOpen, sheetRef} = useBottomSheetModal({
     openOnMount: false,
   });
@@ -65,7 +69,11 @@ export const HeaderLeft = ({headerBackButtonProps}: HeaderLeftProps) => {
   function handleDiscard() {
     clearDraft();
     closeSheet();
-    navigation.goBack();
+    if (observationId) {
+      navigation.popTo('Observation', {observationId});
+    } else {
+      navigation.popTo('Home', {screen: 'Map'});
+    }
   }
 
   return (

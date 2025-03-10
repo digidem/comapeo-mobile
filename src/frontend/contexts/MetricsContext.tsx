@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {AppDiagnosticMetrics} from '../metrics/AppDiagnosticMetrics';
 import {DeviceDiagnosticMetrics} from '../metrics/DeviceDiagnosticMetrics';
-import {usePersistedMetricDiagnosticsPermission} from '../hooks/persistedState/usePersistedMetricDiagnosticsPermission';
+import {useMetricsPermissionsEnabled} from '../hooks/resolvedSettings/useMetricsPermissionsEnabled';
 
 export type MetricsContextType = {
   appMetrics: AppDiagnosticMetrics;
@@ -21,7 +21,7 @@ export const MetricsProvider = ({
   appMetrics: AppDiagnosticMetrics;
   deviceMetrics: DeviceDiagnosticMetrics;
 }) => {
-  const {isEnabled} = usePersistedMetricDiagnosticsPermission();
+  const isEnabled = useMetricsPermissionsEnabled();
 
   React.useEffect(() => {
     appMetrics.setEnabled(isEnabled);

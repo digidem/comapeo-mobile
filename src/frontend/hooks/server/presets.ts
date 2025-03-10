@@ -6,18 +6,18 @@ import {
 import {PresetValue} from '@comapeo/schema';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {usePersistedLocale} from '../persistedState/usePersistedLocale';
+import {useLanguageTag} from '../resolvedSettings/useLanguageTag';
 
 export const PRESETS_KEY = 'presets';
 
 export function usePresetsQuery() {
   const {projectId, projectApi} = useActiveProject();
-  const locale = usePersistedLocale(store => store.locale);
+  const lang = useLanguageTag().value;
 
   return useSuspenseQuery({
-    queryKey: [PRESETS_KEY, projectId, locale],
+    queryKey: [PRESETS_KEY, projectId, lang],
     queryFn: async () => {
-      return await projectApi.preset.getMany({lang: locale});
+      return await projectApi.preset.getMany({lang});
     },
   });
 }

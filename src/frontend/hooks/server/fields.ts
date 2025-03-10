@@ -1,12 +1,12 @@
 import {useQuery} from '@tanstack/react-query';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {usePersistedLocale} from '../persistedState/usePersistedLocale';
+import {useLanguageTag} from '../resolvedSettings/useLanguageTag';
 
 export const FIELDS_KEY = 'fields';
 
 export const useFieldsQuery = () => {
   const {projectId, projectApi} = useActiveProject();
-  const lang = usePersistedLocale(store => store.locale);
+  const lang = useLanguageTag().value;
 
   return useQuery({
     queryKey: [FIELDS_KEY, projectId, lang],

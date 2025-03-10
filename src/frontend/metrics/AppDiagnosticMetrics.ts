@@ -1,16 +1,19 @@
 import * as NetInfo from '@react-native-community/netinfo';
 import * as Sentry from '@sentry/react-native';
 import * as Application from 'expo-application';
+import {getLocales} from 'expo-localization';
 import {getLastKnownPositionAsync} from 'expo-location';
 import {AppState, Platform} from 'react-native';
-import {storage} from '../hooks/persistedState/createPersistedState';
+import {is} from 'valibot';
 import {
-  getDeviceLanguageTag,
-  usePersistedLocale,
-} from '../hooks/persistedState/usePersistedLocale';
+  STORAGE_KEY as SETTINGS_STORAGE_KEY,
+  SettingsStateSchema,
+} from '../contexts/SettingsStoreContext';
+import {storage} from '../hooks/persistedState/createPersistedState';
 import {assert} from '../lib/assert';
 import {MINUTE_MS, formatIsoUtc, parseIsoUtc} from '../lib/date';
 import {first} from '../lib/first';
+import {resolveLanguageTag} from '../lib/intl';
 import {last} from '../lib/last';
 import {maybeJsonParse} from '../lib/maybeJsonParse';
 import {OneAtATimeQueue} from '../lib/OneAtATimeQueue';
@@ -50,12 +53,21 @@ async function getCountry(): Promise<undefined | string> {
 }
 
 async function generateAppDiagnosticMetricsData(): Promise<AppDiagnosticMetricsReport> {
+  const systemPreferredLocales = getLocales();
+  const selectedLanguageTag = getSelectedLanguageTag();
+
+  const appLocale = resolveLanguageTag({
+    selected: selectedLanguageTag,
+    systemPreferred: systemPreferredLocales.map(l => l.languageTag),
+  }).value;
+
   const result: AppDiagnosticMetricsReport = {
     dateGenerated: formatIsoUtc(new Date()),
     os: Platform.OS,
     osVersion: Platform.Version,
-    deviceLocale: getDeviceLanguageTag(),
-    appLocale: usePersistedLocale.getState().locale,
+    // TODO: This should really accept an array as opposed to just the first one
+    deviceLocale: systemPreferredLocales[0]!.languageTag,
+    appLocale,
     country: await getCountry(),
   };
 
@@ -201,4 +213,23 @@ export class AppDiagnosticMetrics {
       Sentry.captureException(err);
     }
   }
+}
+
+function getSelectedLanguageTag() {
+  const stored = storage.getString(SETTINGS_STORAGE_KEY);
+
+  if (!stored) {
+    // TODO: Log to Sentry?
+    return null;
+  }
+
+  const parsed = JSON.parse(stored) as unknown;
+
+  // TODO: Might need to account for v0 of persisted settings state
+  if (is(SettingsStateSchema, parsed)) {
+    return parsed.locale ? parsed.locale.languageTag : null;
+  }
+
+  // TODO: Log to Sentry?
+  return null;
 }

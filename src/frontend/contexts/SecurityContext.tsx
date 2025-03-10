@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {AppState, AppStateStatus} from 'react-native';
-import {usePersistedPasscode} from '../hooks/persistedState/usePersistedPasscode';
 import {useIsShareDialogOpen} from '../hooks/share';
+import {useSettingsState} from './SettingsStoreContext';
 
 type AuthState = 'unauthenticated' | 'authenticated' | 'obscured';
 
@@ -30,8 +30,8 @@ const SecurityContext = React.createContext<SecurityContextType>(DefaultState);
 export const useSecurityContext = () => React.useContext(SecurityContext);
 
 export const SecurityProvider = ({children}: {children: React.ReactNode}) => {
-  const passcode = usePersistedPasscode(store => store.passcode);
-  const obscureCode = usePersistedPasscode(store => store.obscureCode);
+  const passcode = useSettingsState(state => state.passcode);
+  const obscureCode = useSettingsState(state => state.obscureCode);
   const [authState, setAuthState] = React.useState<AuthState>(
     passcode === null ? 'authenticated' : 'unauthenticated',
   );

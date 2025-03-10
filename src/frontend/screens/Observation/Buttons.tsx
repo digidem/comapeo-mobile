@@ -7,17 +7,19 @@ import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useDeleteObservation} from '../../hooks/server/observations';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset.ts';
-import {formatCoords} from '../../lib/utils.ts';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {convertUrlToBase64} from '../../utils/base64.ts';
-import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings.ts';
 import * as Sentry from '@sentry/react-native';
-import {CoordinateFormat} from '../../sharedTypes/index.ts';
 import {getValueLabel} from '../../sharedComponents/FormattedData.tsx';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
 import {useOpenShareDialog} from '../../hooks/share.ts';
+import {
+  formatCoords,
+  type CoordinateFormat,
+} from '../../lib/coordinateFormat.ts';
+import {useCoordinateFormat} from '../../hooks/resolvedSettings/useCoordinateFormat.ts';
 
 const m = defineMessages({
   delete: {
@@ -94,7 +96,7 @@ export const ButtonFields = ({
   const navigation = useNavigationFromRoot();
   const deleteObservationMutation = useDeleteObservation();
   const {observation, preset} = useObservationWithPreset(observationId);
-  const format = usePersistedSettings(store => store.coordinateFormat);
+  const format = useCoordinateFormat();
   const [isShareButtonLoading, setShareButtonLoading] = useState(false);
   const {projectApi} = useActiveProject();
   const openShare = useOpenShareDialog();

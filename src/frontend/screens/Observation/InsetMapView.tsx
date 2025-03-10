@@ -2,9 +2,9 @@ import MapboxGL from '@rnmapbox/maps';
 import React from 'react';
 import {View, Text, StyleSheet, Dimensions, Image} from 'react-native';
 import {BLACK, WHITE} from '../../lib/styles';
-import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings';
 import {FormattedCoords} from '../../sharedComponents/FormattedData';
 import {useMapStyleJsonUrl} from '../../hooks/server/maps';
+import {useCoordinateFormat} from '../../hooks/resolvedSettings/useCoordinateFormat';
 
 const MAP_HEIGHT = 175;
 const ICON_OFFSET = {x: 22, y: 21};
@@ -15,7 +15,7 @@ type MapProps = {
 };
 
 export const InsetMapView = React.memo<MapProps>(({lon, lat}: MapProps) => {
-  const format = usePersistedSettings(store => store.coordinateFormat);
+  const format = useCoordinateFormat();
   const styleUrlQuery = useMapStyleJsonUrl();
 
   return (

@@ -13,19 +13,14 @@ import {
   useIntl,
 } from 'react-intl';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
+import {is} from 'valibot';
 
 import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {
-  usePersistedSettings,
-  usePersistedSettingsAction,
-} from '../../hooks/persistedState/usePersistedSettings';
 import {BLACK} from '../../lib/styles';
 import {IconButton} from '../../sharedComponents/IconButton';
 import SaveCheck from '../../images/CheckMark.svg';
 import {Select} from '../../sharedComponents/Select';
 import {Text} from '../../sharedComponents/Text';
-import type {CoordinateFormat} from '../../sharedTypes';
-
 import {
   latitudeIsValid,
   longitudeIsValid,
@@ -36,6 +31,9 @@ import {DmsForm} from './DmsForm';
 import {UtmForm} from './UtmForm';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
+import {CoordinateFormatSchema} from '../../lib/coordinateFormat';
+import {useManualEntryCoordinateFormat} from '../../hooks/resolvedSettings/useManualEntryCoordinateFormat';
+import {useSettingsActions} from '../../contexts/SettingsStoreContext';
 
 const m = defineMessages({
   title: {
@@ -87,11 +85,9 @@ export const ManualGpsScreen = ({
     observationValueSelector,
   );
 
-  const entryCoordinateFormat = usePersistedSettings(
-    entryCoordinateFormatSelector,
-  );
+  const entryCoordinateFormat = useManualEntryCoordinateFormat();
 
-  const {setManualCoordinateEntryFormat} = usePersistedSettingsAction();
+  const {setManualCoordinateEntryFormat} = useSettingsActions();
   const {updateObservationPosition} = useDraftObservation();
 
   React.useEffect(() => {
@@ -161,7 +157,7 @@ export const ManualGpsScreen = ({
             <Select
               containerStyles={styles.selectContainer}
               onChange={value => {
-                if (!isCoordinateFormat(value)) {
+                if (!is(CoordinateFormatSchema, value)) {
                   return;
                 }
 
@@ -213,20 +209,10 @@ export function createNavigationOptions({
   };
 }
 
-function entryCoordinateFormatSelector(
-  state: Parameters<Parameters<typeof usePersistedSettings>[0]>[0],
-) {
-  return state.manualCoordinateEntryFormat;
-}
-
 function observationValueSelector(
   state: Parameters<Parameters<typeof usePersistedDraftObservation>[0]>[0],
 ) {
   return state.value;
-}
-
-function isCoordinateFormat(value: string): value is CoordinateFormat {
-  return value === 'dd' || value === 'dms' || value === 'utm';
 }
 
 const styles = StyleSheet.create({

@@ -9,7 +9,7 @@ import {ConfirmDiscardBottomSheetContent} from '../../sharedComponents/ConfirmDi
 import {defineMessages, useIntl} from 'react-intl';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {CommonActions, useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 import {BackHandler} from 'react-native';
 
 const m = defineMessages({
@@ -36,9 +36,13 @@ const m = defineMessages({
 
 type HeaderLeftProps = {
   headerBackButtonProps: HeaderBackButtonProps;
+  observationId?: string;
 };
 
-export const HeaderLeft = ({headerBackButtonProps}: HeaderLeftProps) => {
+export const HeaderLeft = ({
+  headerBackButtonProps,
+  observationId,
+}: HeaderLeftProps) => {
   const {closeSheet, openSheet, isOpen, sheetRef} = useBottomSheetModal({
     openOnMount: false,
   });
@@ -65,9 +69,11 @@ export const HeaderLeft = ({headerBackButtonProps}: HeaderLeftProps) => {
   function handleDiscard() {
     clearDraft();
     closeSheet();
-    navigation.dispatch(
-      CommonActions.reset({index: 0, routes: [{name: 'Home'}]}),
-    );
+    if (observationId) {
+      navigation.popTo('Observation', {observationId});
+    } else {
+      navigation.popTo('Home', {screen: 'Map'});
+    }
   }
 
   return (

@@ -1,6 +1,6 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
-import {byTextMatches, byResourceId} from '../../utils/selectors';
+import {byTextMatches, byResourceId, byText} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 
 describe('Set Passcode Flow', () => {
@@ -11,16 +11,16 @@ describe('Set Passcode Flow', () => {
     const appSettingsOption = await $('~Go to App Settings');
     await appSettingsOption.click();
 
-    const securityOption = await $(byTextMatches('Security'));
+    const securityOption = await $(byText('Security'));
     await securityOption.click();
 
-    await expect($(byTextMatches('Security'))).toBeDisplayed();
-    await expect($(byTextMatches('App Passcode'))).toBeDisplayed();
-    await expect($(byTextMatches('Passcode not set'))).toBeDisplayed();
+    await expect($(byText('Security'))).toBeDisplayed();
+    await expect($(byText('App Passcode'))).toBeDisplayed();
+    await expect($(byText('Passcode not set'))).toBeDisplayed();
   });
 
   it('should open and back out of "What is App Passcode?" screen', async () => {
-    const appPasscodeText = await $(byTextMatches('App Passcode'));
+    const appPasscodeText = await $(byText('App Passcode'));
     await appPasscodeText.click();
 
     await expect($(byTextMatches('What is App Passcode?'))).toBeDisplayed();
@@ -32,8 +32,8 @@ describe('Set Passcode Flow', () => {
   });
 
   it('should open passcode descriptor, back out of Set Passcode screen, then open it again', async () => {
-    const appPasscodeText = await $(byTextMatches('App Passcode'));
-    await appPasscodeText.click();
+    const appPasscodeItem = await $(byText('App Passcode'));
+    await appPasscodeItem.click();
 
     await expect(
       $(byTextMatches('additional layer of security')),
@@ -56,12 +56,12 @@ describe('Set Passcode Flow', () => {
     const cancelBtn = await $(byTextMatches('Cancel'));
     await cancelBtn.click();
 
-    await expect($(byTextMatches('Security'))).toBeDisplayed();
+    await expect($(byText('Security'))).toBeDisplayed();
 
-    const appPasscodeText = await $(byTextMatches('App Passcode'));
-    await appPasscodeText.click();
+    const appPasscodeItem = await $(byText('App Passcode'));
+    await appPasscodeItem.click();
 
-    const continueBtn = await $(byTextMatches('Continue'));
+    const continueBtn = await $(byText('Continue'));
     await continueBtn.click();
 
     await expect($(byResourceId('SETTINGS.passcode-inp'))).toBeDisplayed();
@@ -70,7 +70,7 @@ describe('Set Passcode Flow', () => {
   it('should verify keyboard, handle passcode errors, then get to Re-enter screen', async () => {
     await expect(driver.isKeyboardShown());
 
-    const nextBtn = await $(byTextMatches('Next'));
+    const nextBtn = await $(byText('Next'));
     await nextBtn.click();
     await driver.hideKeyboard();
     await expect(
@@ -102,20 +102,20 @@ describe('Set Passcode Flow', () => {
     await backBtn.click();
     await expect($(byTextMatches('What is App Passcode?'))).toBeDisplayed();
 
-    const continueBtn = await $(byTextMatches('Continue'));
+    const continueBtn = await $(byText('Continue'));
     await continueBtn.click();
 
     const passcodeInput = await $(byResourceId('SETTINGS.passcode-inp'));
     await passcodeInput.setValue(output.passcode);
-    const nextBtn = await $(byTextMatches('Next'));
+    const nextBtn = await $(byText('Next'));
     await nextBtn.click();
 
-    const cancelBtn = await $(byTextMatches('Cancel'));
+    const cancelBtn = await $(byText('Cancel'));
     await cancelBtn.click();
-    await expect($(byTextMatches('Security'))).toBeDisplayed();
+    await expect($(byText('Security'))).toBeDisplayed();
 
-    const appPasscodeText = await $(byTextMatches('App Passcode'));
-    await appPasscodeText.click();
+    const appPasscodeItem = await $(byText('App Passcode'));
+    await appPasscodeItem.click();
     await continueBtn.click();
 
     await passcodeInput.setValue(output.passcode);
@@ -136,20 +136,20 @@ describe('Set Passcode Flow', () => {
     await expect($(byTextMatches(output.passcode))).toBeDisplayed();
 
     await cancelBtn.click();
-    await expect($(byTextMatches('Security'))).toBeDisplayed();
+    await expect($(byText('Security'))).toBeDisplayed();
   });
 
   it('should finalize passcode setup, see "Passcode is set," then go back', async () => {
-    const appPasscodeText = await $(byTextMatches('App Passcode'));
-    await appPasscodeText.click();
+    const appPasscodeItem = await $(byText('App Passcode'));
+    await appPasscodeItem.click();
 
-    const continueBtn = await $(byTextMatches('Continue'));
+    const continueBtn = await $(byText('Continue'));
     await continueBtn.click();
 
     const passcodeInput = await $(byResourceId('SETTINGS.passcode-inp'));
     await passcodeInput.setValue(output.passcode);
 
-    const nextBtn = await $(byTextMatches('Next'));
+    const nextBtn = await $(byText('Next'));
     await nextBtn.click();
 
     await passcodeInput.setValue(output.passcode);

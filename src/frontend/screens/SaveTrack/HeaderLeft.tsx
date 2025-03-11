@@ -7,7 +7,8 @@ import {
   BottomSheetModalContent,
 } from '../../sharedComponents/BottomSheetModal';
 import {defineMessages, useIntl} from 'react-intl';
-import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
+
+import {useTrackActions} from '../../contexts/TrackStoreContext';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import DiscardIcon from '../../images/delete.svg';
 import ErrorIcon from '../../images/Error.svg';
@@ -43,7 +44,7 @@ export const HeaderLeft = ({headerBackButtonProps}: HeaderLeftProps) => {
     openOnMount: false,
   });
   const {formatMessage} = useIntl();
-  const clearCurrentTrack = usePersistedTrack(state => state.clearCurrentTrack);
+  const {clearCurrentTrack} = useTrackActions();
   const navigation = useNavigationFromRoot();
 
   function handleDiscard() {

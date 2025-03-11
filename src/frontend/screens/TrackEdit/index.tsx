@@ -1,14 +1,15 @@
-import React, {useEffect, useCallback} from 'react';
-import {defineMessages, useIntl} from 'react-intl';
 import {useFocusEffect} from '@react-navigation/native';
-import {Editor} from '../../sharedComponents/Editor';
-import {TrackDescriptionField} from '../SaveTrack/TrackDescriptionField';
-import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
-import {NativeNavigationComponent} from '../../sharedTypes/navigation';
-import {HeaderLeft} from './HeaderLeft';
-import {SaveButton} from '../../sharedComponents/SaveButton';
+import React, {useCallback, useEffect} from 'react';
+import {defineMessages, useIntl} from 'react-intl';
+
+import {useTrackActions, useTrackState} from '../../contexts/TrackStoreContext';
+import {useEditTrackMutation, useTrackQuery} from '../../hooks/server/track';
 import TrackIcon from '../../images/Track.svg';
-import {useTrackQuery, useEditTrackMutation} from '../../hooks/server/track';
+import {Editor} from '../../sharedComponents/Editor';
+import {SaveButton} from '../../sharedComponents/SaveButton';
+import {NativeNavigationComponent} from '../../sharedTypes/navigation';
+import {TrackDescriptionField} from '../SaveTrack/TrackDescriptionField';
+import {HeaderLeft} from './HeaderLeft';
 
 export const m = defineMessages({
   trackEditScreenTitle: {
@@ -31,9 +32,8 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
   const {trackId} = route.params;
   const {data: track} = useTrackQuery(trackId);
   const editTrackMutation = useEditTrackMutation();
-  const description = usePersistedTrack(state => state.description);
-  const setDescription = usePersistedTrack(state => state.setDescription);
-  const clearCurrentTrack = usePersistedTrack(state => state.clearCurrentTrack);
+  const description = useTrackState(state => state.description);
+  const {setDescription, clearCurrentTrack} = useTrackActions();
 
   useEffect(() => {
     if (track && typeof track.tags.notes === 'string') {

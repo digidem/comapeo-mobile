@@ -1,12 +1,15 @@
 import * as Location from 'expo-location';
 import {useCallback, useState} from 'react';
-import {usePersistedTrack} from './persistedState/usePersistedTrack';
+import {
+  useTrackActions,
+  useTrackState,
+} from '../contexts/TrackStoreContext.tsx';
 import {LOCATION_TASK_NAME} from '../sharedTypes/location.ts';
 
 export function useTracking() {
   const [loading, setLoading] = useState(false);
-  const setTracking = usePersistedTrack(state => state.setTracking);
-  const isTracking = usePersistedTrack(state => state.isTracking);
+  const {setTracking} = useTrackActions();
+  const isTracking = useTrackState(state => state.isTracking);
 
   const startTracking = useCallback(async () => {
     if (isTracking) {

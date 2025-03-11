@@ -1,7 +1,8 @@
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, TextInput} from 'react-native';
-import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
+
+import {useTrackActions, useTrackState} from '../../contexts/TrackStoreContext';
 
 const m = defineMessages({
   descriptionPlaceholder: {
@@ -13,8 +14,8 @@ const m = defineMessages({
 
 export const TrackDescriptionField: React.FC = () => {
   const {formatMessage: t} = useIntl();
-  const description = usePersistedTrack(state => state.description);
-  const setDescription = usePersistedTrack(state => state.setDescription);
+  const description = useTrackState(state => state.description);
+  const {setDescription} = useTrackActions();
   return (
     <TextInput
       style={styles.textInput}

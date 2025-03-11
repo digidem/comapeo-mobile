@@ -14,13 +14,17 @@ import {InviteSuccessBottomSheetContent} from './InviteSuccessBottomSheetContent
 import {InviteCanceledBottomSheetContent} from './InviteCanceledBottomSheetContent';
 import {useAllProjects} from '../../hooks/server/projects';
 import {LeaveProjectModalContent} from '../LeaveProjectModalContent';
+import {rootNavigationRef} from '../../AppNavigator';
+import {EDITING_SCREEN_NAMES} from '../../constants';
+import {NavigationContainerRefWithCurrent} from '@react-navigation/native';
+import {AppStackParamsList} from '../../sharedTypes/navigation';
 
 export type LeaveProjectModalState = 'AlreadyOnProj' | 'LeaveProj';
 
 export const ProjectInviteBottomSheet = ({
-  enabledForCurrentScreen,
+  rootNavigationRef,
 }: {
-  enabledForCurrentScreen: boolean;
+  rootNavigationRef: NavigationContainerRefWithCurrent<AppStackParamsList>;
 }) => {
   const {
     sheetRef: inviteRef,
@@ -44,6 +48,22 @@ export const ProjectInviteBottomSheet = ({
   );
 
   const projects = useAllProjects();
+
+  const [enabledForCurrentScreen, setEnabledForCurrentScreen] = React.useState(
+    () => {
+      return shouldEnableInviteSheet();
+    },
+  );
+
+  React.useEffect(() => {
+    const unsubscribe = rootNavigationRef.addListener('state', () => {
+      setEnabledForCurrentScreen(shouldEnableInviteSheet());
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [rootNavigationRef]);
 
   const [leaveModalState, setLeaveModalState] =
     React.useState<LeaveProjectModalState>('AlreadyOnProj');
@@ -196,4 +216,16 @@ function useAcceptedInvite() {
         },
       }
     : null;
+}
+
+function shouldEnableInviteSheet() {
+  const currentRoute = rootNavigationRef?.current?.getCurrentRoute();
+
+  if (!currentRoute) return true;
+
+  for (const name of EDITING_SCREEN_NAMES) {
+    if (name === currentRoute.name) return false;
+  }
+
+  return true;
 }

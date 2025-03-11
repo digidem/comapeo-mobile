@@ -7,7 +7,6 @@ import * as SplashScreen from 'expo-splash-screen';
 import {ProjectInviteBottomSheet} from './sharedComponents/ProjectInviteBottomSheet';
 import {Loading} from './sharedComponents/Loading';
 import {AppStackParamsList} from './sharedTypes/navigation';
-import {EDITING_SCREEN_NAMES} from './constants';
 import {createDefaultScreenGroup} from './Navigation/Stack/AppScreens';
 import {createOnboardingScreens} from './Navigation/Stack/OnboardingScreens';
 import {useClientApi} from '@comapeo/core-react';
@@ -44,20 +43,6 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
     }
   }, [security.authState]);
 
-  const [inviteSheetEnabled, setInviteSheetEnabled] = React.useState(() => {
-    return shouldEnableInviteSheet();
-  });
-
-  React.useEffect(() => {
-    const unsubscribe = rootNavigationRef.addListener('state', () => {
-      setInviteSheetEnabled(shouldEnableInviteSheet());
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-
   if (deviceInfo.isPending) {
     // should not get here due to splash screen
     return null;
@@ -77,22 +62,8 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
           : createOnboardingScreens({intl: formatMessage})}
       </RootStack.Navigator>
       <React.Suspense fallback={<Loading />}>
-        <ProjectInviteBottomSheet
-          enabledForCurrentScreen={inviteSheetEnabled}
-        />
+        <ProjectInviteBottomSheet rootNavigationRef={rootNavigationRef} />
       </React.Suspense>
     </NavigationContainer>
   );
 };
-
-function shouldEnableInviteSheet() {
-  const currentRoute = rootNavigationRef?.current?.getCurrentRoute();
-
-  if (!currentRoute) return true;
-
-  for (const name of EDITING_SCREEN_NAMES) {
-    if (name === currentRoute.name) return false;
-  }
-
-  return true;
-}

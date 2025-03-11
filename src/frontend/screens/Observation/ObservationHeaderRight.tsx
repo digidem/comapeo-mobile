@@ -9,14 +9,13 @@ import {
   useSingleDocByDocId,
   useDocumentCreatedBy,
 } from '@comapeo/core-react';
-import {Loading} from '../../sharedComponents/Loading.tsx';
 import {useActiveProject} from '../../contexts/ActiveProjectContext.tsx';
 
 interface ObservationHeaderRightProps {
   observationId: string;
 }
 
-const ObservationHeaderRightContent = ({
+export const ObservationHeaderRight = ({
   observationId,
 }: ObservationHeaderRightProps) => {
   const {projectId} = useActiveProject();
@@ -48,14 +47,6 @@ const ObservationHeaderRightContent = ({
     </View>
   );
 };
-
-export const ObservationHeaderRight = ({
-  observationId,
-}: ObservationHeaderRightProps) => (
-  <React.Suspense fallback={<Loading />}>
-    <ObservationHeaderRightContent observationId={observationId} />
-  </React.Suspense>
-);
 
 const styles = StyleSheet.create({
   syncIconContainer: {

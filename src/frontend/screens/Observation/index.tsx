@@ -8,8 +8,6 @@ import {FormattedObservationDate} from '../../sharedComponents/FormattedData';
 import {PresetHeader} from './PresetHeader';
 import {FieldDetails} from './FieldDetails';
 import {InsetMapView} from './InsetMapView';
-
-import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
 import {MediaScrollView} from '../../sharedComponents/MediaScrollView/index.tsx';
 import {
@@ -46,7 +44,7 @@ const m = defineMessages({
   },
 });
 
-const ObservationScreenContent = ({
+export const ObservationScreen = ({
   observationId,
   navigation,
 }: {
@@ -148,20 +146,6 @@ const ObservationScreenContent = ({
         />
       </>
     </ScrollView>
-  );
-};
-
-export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
-  route,
-  navigation,
-}) => {
-  return (
-    <React.Suspense fallback={<Loading />}>
-      <ObservationScreenContent
-        observationId={route.params.observationId}
-        navigation={navigation}
-      />
-    </React.Suspense>
   );
 };
 

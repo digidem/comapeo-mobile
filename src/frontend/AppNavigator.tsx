@@ -44,7 +44,7 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   }, [security.authState]);
 
   if (deviceInfo.isPending) {
-    // should not get here due to splash screen
+    //user should not see this due to the splash screen
     return null;
   }
 

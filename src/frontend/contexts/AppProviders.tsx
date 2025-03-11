@@ -24,6 +24,10 @@ import {DraftObservationProvider} from './DraftObservationContext';
 import {DraftObservationStore} from './PersistedStores/DraftObservationStore';
 import {type TrackStore, TrackStoreProvider} from './TrackStoreContext';
 import {SecurityStore, SecurityStoreProvider} from './SecurityStoreContext';
+import {
+  type ActiveProjectIdStore,
+  ActiveProjectIdStoreProvider,
+} from './ActiveProjectIdStoreContext';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -35,6 +39,7 @@ type AppProvidersProps = {
   persistedDrafObservationStore: DraftObservationStore;
   trackStore: TrackStore;
   securityStore: SecurityStore;
+  activeProjectIdStore: ActiveProjectIdStore;
 };
 
 const queryClient = new QueryClient();
@@ -49,44 +54,47 @@ export const AppProviders = ({
   persistedDrafObservationStore,
   trackStore,
   securityStore,
+  activeProjectIdStore,
 }: AppProvidersProps) => {
   return (
-    <SecurityStoreProvider value={securityStore}>
-      <TrackStoreProvider value={trackStore}>
-        <IntlProvider>
-          <QueryClientProvider client={queryClient}>
-            <SafeAreaProvider>
-              <GestureHandlerRootView style={styles.flex}>
-                <TrackTimerContextProvider>
-                  <ServerLoading messagePort={messagePort}>
-                    <LocalDiscoveryProvider value={localDiscoveryController}>
-                      <ClientApiProvider clientApi={mapeoApi}>
-                        <MetricsProvider
-                          appMetrics={appMetrics}
-                          deviceMetrics={deviceMetrics}>
-                          <ActiveProjectProvider>
-                            <BottomSheetModalProvider>
-                              <PhotoPromiseProvider>
-                                <DraftObservationProvider
-                                  draftObservationStore={
-                                    persistedDrafObservationStore
-                                  }>
-                                  <AuthProvider>{children}</AuthProvider>
-                                </DraftObservationProvider>
-                              </PhotoPromiseProvider>
-                            </BottomSheetModalProvider>
-                          </ActiveProjectProvider>
-                        </MetricsProvider>
-                      </ClientApiProvider>
-                    </LocalDiscoveryProvider>
-                  </ServerLoading>
-                </TrackTimerContextProvider>
-              </GestureHandlerRootView>
-            </SafeAreaProvider>
-          </QueryClientProvider>
-        </IntlProvider>
-      </TrackStoreProvider>
-    </SecurityStoreProvider>
+    <ActiveProjectIdStoreProvider value={activeProjectIdStore}>
+      <SecurityStoreProvider value={securityStore}>
+        <TrackStoreProvider value={trackStore}>
+          <IntlProvider>
+            <QueryClientProvider client={queryClient}>
+              <SafeAreaProvider>
+                <GestureHandlerRootView style={styles.flex}>
+                  <TrackTimerContextProvider>
+                    <ServerLoading messagePort={messagePort}>
+                      <LocalDiscoveryProvider value={localDiscoveryController}>
+                        <ClientApiProvider clientApi={mapeoApi}>
+                          <MetricsProvider
+                            appMetrics={appMetrics}
+                            deviceMetrics={deviceMetrics}>
+                            <ActiveProjectProvider>
+                              <BottomSheetModalProvider>
+                                <PhotoPromiseProvider>
+                                  <DraftObservationProvider
+                                    draftObservationStore={
+                                      persistedDrafObservationStore
+                                    }>
+                                    <AuthProvider>{children}</AuthProvider>
+                                  </DraftObservationProvider>
+                                </PhotoPromiseProvider>
+                              </BottomSheetModalProvider>
+                            </ActiveProjectProvider>
+                          </MetricsProvider>
+                        </ClientApiProvider>
+                      </LocalDiscoveryProvider>
+                    </ServerLoading>
+                  </TrackTimerContextProvider>
+                </GestureHandlerRootView>
+              </SafeAreaProvider>
+            </QueryClientProvider>
+          </IntlProvider>
+        </TrackStoreProvider>
+      </SecurityStoreProvider>
+    </ActiveProjectIdStoreProvider>
   );
 };
 

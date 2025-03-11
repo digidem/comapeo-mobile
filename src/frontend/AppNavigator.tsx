@@ -7,20 +7,15 @@ import * as SplashScreen from 'expo-splash-screen';
 import {ProjectInviteBottomSheet} from './sharedComponents/ProjectInviteBottomSheet';
 import {Loading} from './sharedComponents/Loading';
 import {AppStackParamsList} from './sharedTypes/navigation';
-import {createDefaultScreenGroup} from './Navigation/Stack/AppScreens';
-import {createOnboardingScreens} from './Navigation/Stack/OnboardingScreens';
 import {useClientApi} from '@comapeo/core-react';
 import {useQuery} from '@tanstack/react-query';
-import {useIntl} from 'react-intl';
-import {useSecurityContext} from './contexts/SecurityContext';
 import {DEVICE_INFO_KEY} from './hooks/server/deviceInfo';
-import {NavigatorScreenOptions, RootStack} from './Navigation/Stack';
+import {RootStackNavigator} from './Navigation/Stack';
 
 export const rootNavigationRef =
   createNavigationContainerRef<AppStackParamsList>();
 
 export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
-  const {formatMessage} = useIntl();
   const mapeoApi = useClientApi();
 
   //This cannot be a suspense query as there is no suspense boundry above this
@@ -31,17 +26,9 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
     },
   });
 
-  const security = useSecurityContext();
-
   if (permissionAsked && !deviceInfo.isPending) {
     SplashScreen.hide();
   }
-
-  React.useEffect(() => {
-    if (security.authState === 'unauthenticated') {
-      rootNavigationRef.navigate('AuthScreen');
-    }
-  }, [security.authState]);
 
   if (deviceInfo.isPending) {
     //user should not see this due to the splash screen
@@ -50,21 +37,9 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
 
   return (
     <NavigationContainer ref={rootNavigationRef}>
-      <RootStack.Navigator
-        screenLayout={({children}) => (
-          <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
-        )}
-        screenOptions={NavigatorScreenOptions}>
-        {deviceInfo.data?.name
-          ? createDefaultScreenGroup({
-              intl: formatMessage,
-            })
-          : createOnboardingScreens({intl: formatMessage})}
-      </RootStack.Navigator>
+      <RootStackNavigator deviceName={deviceInfo.data?.name} />
       <React.Suspense fallback={<Loading />}>
-        <ProjectInviteBottomSheet
-          currentRouteName={rootNavigationRef.getCurrentRoute()?.name}
-        />
+        <ProjectInviteBottomSheet />
       </React.Suspense>
     </NavigationContainer>
   );

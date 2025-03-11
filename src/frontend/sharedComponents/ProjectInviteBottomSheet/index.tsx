@@ -15,14 +15,11 @@ import {InviteCanceledBottomSheetContent} from './InviteCanceledBottomSheetConte
 import {useAllProjects} from '../../hooks/server/projects';
 import {LeaveProjectModalContent} from '../LeaveProjectModalContent';
 import {isEditingScreen} from '../../lib/isEditingScreen';
+import {useNavigation} from '@react-navigation/native';
 
 export type LeaveProjectModalState = 'AlreadyOnProj' | 'LeaveProj';
 
-export const ProjectInviteBottomSheet = ({
-  currentRouteName,
-}: {
-  currentRouteName?: string;
-}) => {
+export const ProjectInviteBottomSheet = () => {
   const {
     sheetRef: inviteRef,
     isOpen: inviteIsOpen,
@@ -43,11 +40,16 @@ export const ProjectInviteBottomSheet = ({
   const invites = usePendingInvites().data.sort(
     (a, b) => a.receivedAt - b.receivedAt,
   );
-
   const projects = useAllProjects();
 
+  const {getState} = useNavigation();
+  const routes = getState()?.routes;
+  const index = getState()?.index;
+
+  const currentRouteName = !routes || !index ? undefined : routes[index]?.name;
+
   const bottomSheetEnabled =
-    !currentRouteName || !isEditingScreen(currentRouteName);
+    !!currentRouteName && !isEditingScreen(currentRouteName);
 
   const [leaveModalState, setLeaveModalState] =
     React.useState<LeaveProjectModalState>('AlreadyOnProj');

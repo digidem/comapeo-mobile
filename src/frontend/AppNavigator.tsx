@@ -4,11 +4,11 @@ import {
 } from '@react-navigation/native';
 import * as React from 'react';
 import * as SplashScreen from 'expo-splash-screen';
-import {DrawerNavigator} from './Navigation/Drawer';
 import {ProjectInviteBottomSheet} from './sharedComponents/ProjectInviteBottomSheet';
 import {Loading} from './sharedComponents/Loading';
 import {AppStackParamsList} from './sharedTypes/navigation';
 import {EDITING_SCREEN_NAMES} from './constants';
+import {RootStackNavigator} from './Navigation/Stack';
 
 export const rootNavigationRef =
   createNavigationContainerRef<AppStackParamsList>();
@@ -35,7 +35,7 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   return (
     <NavigationContainer ref={rootNavigationRef}>
       <React.Suspense fallback={<Loading />}>
-        <DrawerNavigator />
+        <RootStackNavigator navigatorRef={rootNavigationRef} />
         <ProjectInviteBottomSheet
           enabledForCurrentScreen={inviteSheetEnabled}
         />

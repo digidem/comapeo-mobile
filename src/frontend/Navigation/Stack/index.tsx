@@ -5,59 +5,23 @@ import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {WHITE} from '../../lib/styles';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {AppStackParamsList} from '../../sharedTypes/navigation';
-import {
-  DrawerNavigationProp,
-  DrawerScreenProps,
-} from '@react-navigation/drawer';
-import {DrawerScreens} from '../Drawer';
 import {useIntl} from 'react-intl';
 import {DEVICE_INFO_KEY} from '../../hooks/server/deviceInfo';
 import {createDefaultScreenGroup} from './AppScreens';
 import {createOnboardingScreens} from './OnboardingScreens';
 import {useSuspenseQuery} from '@tanstack/react-query';
-import {Loading} from '../../sharedComponents/Loading';
 import {useSecurityContext} from '../../contexts/SecurityContext';
+import {NavigationContainerRefWithCurrent} from '@react-navigation/native';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
 
-type DrawerNavigationContextType = DrawerNavigationProp<
-  DrawerScreens,
-  'DrawerHome',
-  undefined
->;
-
-const DrawerNavigationContext = React.createContext<
-  DrawerNavigationContextType | undefined
->(undefined);
-
-export function useDrawerNavigation() {
-  const navigation = React.useContext(DrawerNavigationContext);
-
-  if (!navigation)
-    throw new Error(
-      'Make sure you have DrawerNavigationContext provider set up',
-    );
-
-  return navigation;
-}
-
 export function RootStackNavigator({
-  navigation,
-}: DrawerScreenProps<DrawerScreens, 'DrawerHome'>) {
-  return (
-    <DrawerNavigationContext.Provider value={navigation}>
-      <React.Suspense fallback={<Loading />}>
-        <RootStackNavigatorChild />
-      </React.Suspense>
-    </DrawerNavigationContext.Provider>
-  );
-}
-
-function RootStackNavigatorChild() {
+  navigatorRef: {navigate},
+}: {
+  navigatorRef: NavigationContainerRefWithCurrent<AppStackParamsList>;
+}) {
   const {formatMessage} = useIntl();
-  const navigation = useDrawerNavigation();
   const mapeoApi = useClientApi();
-
   const deviceInfo = useSuspenseQuery({
     queryKey: [DEVICE_INFO_KEY],
     queryFn: async () => {
@@ -68,9 +32,9 @@ function RootStackNavigatorChild() {
   const security = useSecurityContext();
   React.useEffect(() => {
     if (security.authState === 'unauthenticated') {
-      navigation.navigate('DrawerHome', {screen: 'AuthScreen'});
+      navigate('AuthScreen');
     }
-  }, [security.authState, navigation]);
+  }, [security.authState, navigate]);
 
   return (
     <RootStack.Navigator screenOptions={NavigatorScreenOptions}>

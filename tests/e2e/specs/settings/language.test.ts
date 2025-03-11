@@ -23,7 +23,7 @@ describe('Language Settings Flow', () => {
 
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
-
+    await $('~Close Navigation Drawer').click();
     const obsListTab = await $('~Go to ObservationsList');
     await obsListTab.click();
 
@@ -47,5 +47,6 @@ describe('Language Settings Flow', () => {
     await englishElem.click();
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
+    await $('~Close Navigation Drawer').click();
   });
 });

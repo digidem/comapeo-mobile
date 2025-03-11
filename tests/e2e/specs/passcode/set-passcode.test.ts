@@ -72,6 +72,7 @@ describe('Set Passcode Flow', () => {
 
     const nextBtn = await $(byText('Next'));
     await nextBtn.click();
+    await driver.hideKeyboard();
     await expect(
       $(byTextMatches('Password must be 5 numbers')),
     ).toBeDisplayed();
@@ -79,19 +80,20 @@ describe('Set Passcode Flow', () => {
     const passcodeInp = await $(byResourceId('SETTINGS.passcode-inp'));
     await passcodeInp.setValue('22');
     await nextBtn.click();
+    await driver.hideKeyboard();
     await expect(
       $(byTextMatches('Password must be 5 numbers')),
     ).toBeDisplayed();
 
     await passcodeInp.setValue('00000');
     await nextBtn.click();
+    await driver.hideKeyboard();
     await expect(
       $(byTextMatches('Cannot be used as a Passcode')),
     ).toBeDisplayed();
 
     await passcodeInp.setValue(output.passcode);
     await nextBtn.click();
-
     await expect($(byTextMatches('Re-enter Passcode'))).toBeDisplayed();
   });
 
@@ -123,6 +125,7 @@ describe('Set Passcode Flow', () => {
 
     await passcodeInput.setValue('54321');
     await nextBtn.click();
+    await driver.hideKeyboard();
     await expect($(byTextMatches('Password does not match'))).toBeDisplayed();
 
     await passcodeInput.setValue(output.passcode);
@@ -156,8 +159,5 @@ describe('Set Passcode Flow', () => {
     await saveBtn.click();
 
     await expect($(byTextMatches('Passcode is set'))).toBeDisplayed();
-
-    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
   });
 });

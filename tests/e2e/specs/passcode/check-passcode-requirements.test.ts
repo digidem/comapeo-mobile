@@ -27,6 +27,7 @@ describe('Check Passcode Requirements Flow', () => {
   it('should handle wrong passcode, then close and reopen app, see passcode again, then correct passcode', async () => {
     const passcodeField = await $(byResourceId('SETTINGS.auth-passcode-inp'));
     await passcodeField.setValue('54321');
+    await driver.hideKeyboard();
 
     await expect($(byTextMatches('Incorrect passcode'))).toBeDisplayed();
     // power button (off then on)

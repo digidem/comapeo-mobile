@@ -18,7 +18,6 @@ describe('Edit Device Name Test', () => {
 
     const editIcon = await $(byResourceId('edit-icon'));
     await editIcon.click();
-
     const editDeviceNameField = await $(
       byResourceId('PROJECT.edit-device-name'),
     );
@@ -59,6 +58,8 @@ describe('Edit Device Name Test', () => {
 
     await driver.back();
     await driver.back();
+    await $('~Close Navigation Drawer').click();
+
     await drawerIcon.tap();
     await projectSettingsItem.click();
     await deviceNameListItem.click();
@@ -67,5 +68,6 @@ describe('Edit Device Name Test', () => {
 
     await driver.back();
     await driver.back();
+    await $('~Close Navigation Drawer').click();
   });
 });

@@ -32,6 +32,7 @@ describe('Coordinates Settings Flow', () => {
     await expect($(byTextMatches('App Settings'))).toBeDisplayed();
 
     await backBtn.click();
+    await $('~Close Navigation Drawer').click();
     await expect($(byResourceId('MAIN.mapbox-map-view'))).toBeDisplayed();
   });
 });

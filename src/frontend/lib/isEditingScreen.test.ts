@@ -1,7 +1,7 @@
 import {EDITING_SCREEN_NAMES} from '../constants';
 import {isEditingScreen} from './isEditingScreen';
 
-describe('isNotEditingScreen', () => {
+describe('isEditingScreen', () => {
   it('should return true for editing screen names', () => {
     for (const screen of EDITING_SCREEN_NAMES) {
       expect(isEditingScreen(screen as string)).toBe(true);

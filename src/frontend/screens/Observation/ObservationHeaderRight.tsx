@@ -10,6 +10,7 @@ import {
   useDocumentCreatedBy,
 } from '@comapeo/core-react';
 import {Loading} from '../../sharedComponents/Loading.tsx';
+import {useActiveProject} from '../../contexts/ActiveProjectContext.tsx';
 
 interface ObservationHeaderRightProps {
   observationId: string;
@@ -18,14 +19,15 @@ interface ObservationHeaderRightProps {
 const ObservationHeaderRightContent = ({
   observationId,
 }: ObservationHeaderRightProps) => {
+  const {projectId} = useActiveProject();
   const {data: observation} = useSingleDocByDocId({
-    projectId: observationId,
+    projectId: projectId,
     docType: 'observation',
     docId: observationId,
   });
 
   const {data: createdByDeviceId} = useDocumentCreatedBy({
-    projectId: observationId,
+    projectId: projectId,
     originalVersionId: observation.originalVersionId,
   });
 

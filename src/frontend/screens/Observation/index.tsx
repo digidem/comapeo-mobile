@@ -65,7 +65,7 @@ const ObservationScreenContent = ({
   }, [navigation, observationId]);
   const {projectId} = useActiveProject();
   const {data: observation} = useSingleDocByDocId({
-    projectId: observationId,
+    projectId: projectId,
     docType: 'observation',
     docId: observationId,
   });
@@ -74,7 +74,7 @@ const ObservationScreenContent = ({
   const {lat, lon, originalVersionId} = observation;
   const {data: deviceInfo} = useOwnDeviceInfo();
   const {data: createdByDeviceId} = useDocumentCreatedBy({
-    projectId: observationId,
+    projectId: projectId,
     originalVersionId,
   });
   const isMine =

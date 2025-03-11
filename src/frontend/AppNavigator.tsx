@@ -5,13 +5,12 @@ import {
 import * as React from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import {ProjectInviteBottomSheet} from './sharedComponents/ProjectInviteBottomSheet';
-import {Loading} from './sharedComponents/Loading';
 import {AppStackParamsList} from './sharedTypes/navigation';
 import {useClientApi} from '@comapeo/core-react';
 import {useQuery} from '@tanstack/react-query';
 import {DEVICE_INFO_KEY} from './hooks/server/deviceInfo';
 import {RootStackNavigator} from './Navigation/Stack';
-import {EDITING_SCREEN_NAMES} from './constants';
+import {isEditingScreen} from './lib/isEditingScreen';
 
 export const rootNavigationRef =
   createNavigationContainerRef<AppStackParamsList>();
@@ -34,17 +33,12 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
     const unsubscribe = rootNavigationRef.addListener('state', () => {
       const currentRoute = rootNavigationRef?.current?.getCurrentRoute();
 
-      if (!currentRoute) return true;
-
-      for (const name of EDITING_SCREEN_NAMES) {
-        if (name === currentRoute.name) {
-          setInviteSheetEnabled(false);
-          return;
-        }
+      if (!currentRoute || isEditingScreen(currentRoute.name)) {
+        setInviteSheetEnabled(false);
+        return;
       }
 
       setInviteSheetEnabled(true);
-      return;
     });
 
     return () => {
@@ -64,7 +58,7 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   return (
     <NavigationContainer ref={rootNavigationRef}>
       <RootStackNavigator deviceName={deviceInfo.data?.name} />
-      <React.Suspense fallback={<Loading />}>
+      <React.Suspense fallback={null}>
         <ProjectInviteBottomSheet
           enabledForCurrentScreen={inviteSheetEnabled}
         />

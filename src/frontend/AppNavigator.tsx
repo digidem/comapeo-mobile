@@ -62,7 +62,9 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
           : createOnboardingScreens({intl: formatMessage})}
       </RootStack.Navigator>
       <React.Suspense fallback={<Loading />}>
-        <ProjectInviteBottomSheet rootNavigationRef={rootNavigationRef} />
+        <ProjectInviteBottomSheet
+          currentRouteName={rootNavigationRef.getCurrentRoute()?.name}
+        />
       </React.Suspense>
     </NavigationContainer>
   );

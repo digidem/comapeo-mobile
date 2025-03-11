@@ -3,6 +3,7 @@ import {createMapeoClient} from '@comapeo/ipc';
 import {AppNavigator} from './AppNavigator';
 import {MessagePortLike} from './lib/MessagePortLike';
 import {initializeNodejs} from './initializeNodejs';
+import Mapbox from '@rnmapbox/maps';
 import {PermissionsAndroid} from 'react-native';
 import {AppProviders} from './contexts/AppProviders';
 import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
@@ -40,6 +41,8 @@ Sentry.init({
     },
   },
 });
+
+Mapbox.setTelemetryEnabled(false);
 
 const appDiagnosticMetrics = new AppDiagnosticMetrics();
 const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();

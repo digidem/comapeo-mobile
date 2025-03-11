@@ -57,10 +57,6 @@ export const MapScreen = () => {
     navigate('PresetChooser');
   };
 
-  React.useEffect(() => {
-    Mapbox.setTelemetryEnabled(false);
-  }, []);
-
   function handleLocationPress() {
     setZoom(DEFAULT_ZOOM);
     setFollowing(prev => !prev);

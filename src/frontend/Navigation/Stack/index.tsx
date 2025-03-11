@@ -10,25 +10,12 @@ import {DEVICE_INFO_KEY} from '../../hooks/server/deviceInfo';
 import {createDefaultScreenGroup} from './AppScreens';
 import {createOnboardingScreens} from './OnboardingScreens';
 import {useSuspenseQuery} from '@tanstack/react-query';
-import {Loading} from '../../sharedComponents/Loading';
 import {useSecurityContext} from '../../contexts/SecurityContext';
 import {NavigationContainerRefWithCurrent} from '@react-navigation/native';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
 
 export function RootStackNavigator({
-  navigatorRef,
-}: {
-  navigatorRef: NavigationContainerRefWithCurrent<AppStackParamsList>;
-}) {
-  return (
-    <React.Suspense fallback={<Loading />}>
-      <RootStackNavigatorChild navigatorRef={navigatorRef} />
-    </React.Suspense>
-  );
-}
-
-export function RootStackNavigatorChild({
   navigatorRef: {navigate},
 }: {
   navigatorRef: NavigationContainerRefWithCurrent<AppStackParamsList>;

@@ -1,12 +1,13 @@
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import * as React from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import ObservationListIcon from '../../images/ObservationList.svg';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
+import {useDisplayedTrackTimer} from '../../hooks/useDisplayedTrackTimer';
+import {useTracking} from '../../hooks/useTracking';
+import ObservationListIcon from '../../images/ObservationList.svg';
 import {COMAPEO_BLUE, MEDIUM_GREY} from '../../lib/styles';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {useTracking} from '../../hooks/useTracking';
-import {useTrackTimerContext} from '../../contexts/TrackTimerContext';
 
 const BUTTON_SIZE = 25;
 const HIT_SLOP = 20;
@@ -93,14 +94,14 @@ export const TabBar = ({navigation, state}: BottomTabBarProps) => {
 
 const TrackButtonContent = ({isSelected}: {isSelected: boolean}) => {
   const {isTracking} = useTracking();
-  const {timer} = useTrackTimerContext();
+  const timeElapsed = useDisplayedTrackTimer();
   return (
     <>
       {isTracking && (
         <View style={styles.runtimeWrapper}>
           <View style={styles.indicator} />
           <BodyText variant="tinyMeta" style={styles.timer}>
-            {timer}
+            {timeElapsed}
           </BodyText>
         </View>
       )}

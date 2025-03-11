@@ -6,7 +6,7 @@ import {
   useTrackActions,
   useTrackState,
 } from '../../../contexts/TrackStoreContext.tsx';
-import {useTrackTimerContext} from '../../../contexts/TrackTimerContext.tsx';
+import {useDisplayedTrackTimer} from '../../../hooks/useDisplayedTrackTimer.ts';
 import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes.ts';
 import {useTracking} from '../../../hooks/useTracking.ts';
 import StartTrackingIcon from '../../../images/StartTracking.svg';
@@ -38,7 +38,8 @@ export const StartStopTrack = () => {
   const {isTracking, cancelTracking, startTracking, loading} = useTracking();
   const locationHistory = useTrackState(state => state.locationHistory);
   const {clearCurrentTrack} = useTrackActions();
-  const {timer} = useTrackTimerContext();
+  const timeElapsed = useDisplayedTrackTimer();
+
   const navigation = useNavigationFromHomeTabs();
 
   const handleTracking = useCallback(() => {
@@ -90,7 +91,7 @@ export const StartStopTrack = () => {
           <Text style={styles.text}>
             {formatMessage(m.trackingDescription)}
           </Text>
-          <Text style={styles.timer}>{timer}</Text>
+          <Text style={styles.timer}>{timeElapsed}</Text>
         </View>
       )}
     </View>

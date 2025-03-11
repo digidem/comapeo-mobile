@@ -4,7 +4,6 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {StyleSheet} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {TrackTimerContextProvider} from './TrackTimerContext';
 import {PhotoPromiseProvider} from './PhotoPromiseContext';
 import {ActiveProjectProvider} from './ActiveProjectContext';
 import {SecurityProvider} from './SecurityContext';
@@ -53,30 +52,28 @@ export const AppProviders = ({
         <QueryClientProvider client={queryClient}>
           <SafeAreaProvider>
             <GestureHandlerRootView style={styles.flex}>
-              <TrackTimerContextProvider>
-                <ServerLoading messagePort={messagePort}>
-                  <LocalDiscoveryProvider value={localDiscoveryController}>
-                    <ClientApiProvider clientApi={mapeoApi}>
-                      <MetricsProvider
-                        appMetrics={appMetrics}
-                        deviceMetrics={deviceMetrics}>
-                        <ActiveProjectProvider>
-                          <BottomSheetModalProvider>
-                            <PhotoPromiseProvider>
-                              <DraftObservationProvider
-                                draftObservationStore={
-                                  persistedDrafObservationStore
-                                }>
-                                <SecurityProvider>{children}</SecurityProvider>
-                              </DraftObservationProvider>
-                            </PhotoPromiseProvider>
-                          </BottomSheetModalProvider>
-                        </ActiveProjectProvider>
-                      </MetricsProvider>
-                    </ClientApiProvider>
-                  </LocalDiscoveryProvider>
-                </ServerLoading>
-              </TrackTimerContextProvider>
+              <ServerLoading messagePort={messagePort}>
+                <LocalDiscoveryProvider value={localDiscoveryController}>
+                  <ClientApiProvider clientApi={mapeoApi}>
+                    <MetricsProvider
+                      appMetrics={appMetrics}
+                      deviceMetrics={deviceMetrics}>
+                      <ActiveProjectProvider>
+                        <BottomSheetModalProvider>
+                          <PhotoPromiseProvider>
+                            <DraftObservationProvider
+                              draftObservationStore={
+                                persistedDrafObservationStore
+                              }>
+                              <SecurityProvider>{children}</SecurityProvider>
+                            </DraftObservationProvider>
+                          </PhotoPromiseProvider>
+                        </BottomSheetModalProvider>
+                      </ActiveProjectProvider>
+                    </MetricsProvider>
+                  </ClientApiProvider>
+                </LocalDiscoveryProvider>
+              </ServerLoading>
             </GestureHandlerRootView>
           </SafeAreaProvider>
         </QueryClientProvider>

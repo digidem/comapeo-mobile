@@ -8,11 +8,11 @@ import {AppStackParamsList} from '../sharedTypes/navigation';
 import {LIGHT_GREY} from '../lib/styles';
 import Warning from '../images/Warning.svg';
 import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
-import {useProjectMembers} from '../hooks/server/projects';
-import {useDeviceInfo} from '../hooks/server/deviceInfo';
+import {useOwnDeviceInfo, useManyMembers} from '@comapeo/core-react';
 import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../sharedTypes';
-import {UIActivityIndicator} from 'react-native-indicators';
 import {QuestionMarkWithShadow} from '../sharedComponents/icons/QuestionMarkWithShadow';
+import {useActiveProject} from '../contexts/ActiveProjectContext';
+import {Loading} from '../sharedComponents/Loading';
 
 const m = defineMessages({
   howTo: {
@@ -35,16 +35,17 @@ const m = defineMessages({
   },
 });
 
-export const HowToLeaveProject = ({
+export const HowToLeaveProjectContent = ({
   navigation,
 }: NativeStackScreenProps<AppStackParamsList, 'HowToLeaveProject'>) => {
   const {formatMessage} = useIntl();
-  const membersQuery = useProjectMembers();
-  const deviceInfo = useDeviceInfo();
+  const {projectId} = useActiveProject();
+  const {data: members} = useManyMembers({projectId});
+  const {data: deviceInfo} = useOwnDeviceInfo();
 
-  const coordinators = !membersQuery.data
+  const coordinators = !members
     ? []
-    : membersQuery.data.filter(
+    : members.filter(
         member =>
           member.role.roleId === COORDINATOR_ROLE_ID ||
           member.role.roleId === CREATOR_ROLE_ID,
@@ -71,19 +72,25 @@ export const HowToLeaveProject = ({
         {formatMessage(m.instructions)}
       </Text>
 
-      {membersQuery.isPending || deviceInfo.isPending ? (
-        <UIActivityIndicator style={{marginTop: 20}} />
-      ) : coordinators.some(
-          coordinator => coordinator.deviceId === deviceInfo.data?.deviceId,
-        ) ? (
+      {coordinators.some(
+        coordinator => coordinator.deviceId === deviceInfo.deviceId,
+      ) && (
         <View style={[styles.greyBox, {marginTop: 20}]}>
           <Warning style={{marginRight: 20}} />
           <Text style={{flex: 1}}>{formatMessage(m.warning)}</Text>
         </View>
-      ) : null}
+      )}
     </ScreenContentWithDock>
   );
 };
+
+export const HowToLeaveProject = (
+  props: NativeStackScreenProps<AppStackParamsList, 'HowToLeaveProject'>,
+) => (
+  <React.Suspense fallback={<Loading />}>
+    <HowToLeaveProjectContent {...props} />
+  </React.Suspense>
+);
 
 const styles = StyleSheet.create({
   container: {

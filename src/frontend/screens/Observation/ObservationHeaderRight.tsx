@@ -1,36 +1,36 @@
 import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
-
 import {IconButton} from '../../sharedComponents/IconButton';
-
 import {EditIcon} from '../../sharedComponents/icons';
 import {SyncIcon} from '../../sharedComponents/icons';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {useDeviceInfo} from '../../hooks/server/deviceInfo';
-import {UIActivityIndicator} from 'react-native-indicators';
-import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
-import {useObservation} from '../../hooks/server/observations.ts';
+import {
+  useOwnDeviceInfo,
+  useSingleDocByDocId,
+  useDocumentCreatedBy,
+} from '@comapeo/core-react';
+import {Loading} from '../../sharedComponents/Loading.tsx';
 
-export const ObservationHeaderRight = ({
-  observationId,
-}: {
+interface ObservationHeaderRightProps {
   observationId: string;
-}) => {
-  const {data: observation} = useObservation(observationId);
-  const {data: createdByDeviceId, isPending: isCreatedByDeviceIdPending} =
-    useOriginalVersionIdToDeviceId(observation.originalVersionId);
+}
 
-  const {data: deviceInfo, isPending: isDeviceInfoPending} = useDeviceInfo();
+const ObservationHeaderRightContent = ({
+  observationId,
+}: ObservationHeaderRightProps) => {
+  const {data: observation} = useSingleDocByDocId({
+    projectId: observationId,
+    docType: 'observation',
+    docId: observationId,
+  });
+
+  const {data: createdByDeviceId} = useDocumentCreatedBy({
+    projectId: observationId,
+    originalVersionId: observation.originalVersionId,
+  });
+
+  const {data: deviceInfo} = useOwnDeviceInfo();
   const navigation = useNavigationFromRoot();
-
-  if (isDeviceInfoPending || isCreatedByDeviceIdPending) {
-    return (
-      <UIActivityIndicator
-        size={20}
-        style={{alignItems: 'flex-end', marginRight: 20}}
-      />
-    );
-  }
 
   const canEdit = createdByDeviceId === deviceInfo?.deviceId;
 
@@ -46,6 +46,14 @@ export const ObservationHeaderRight = ({
     </View>
   );
 };
+
+export const ObservationHeaderRight = ({
+  observationId,
+}: ObservationHeaderRightProps) => (
+  <React.Suspense fallback={<Loading />}>
+    <ObservationHeaderRightContent observationId={observationId} />
+  </React.Suspense>
+);
 
 const styles = StyleSheet.create({
   syncIconContainer: {

@@ -14,7 +14,7 @@ import {InviteSuccessBottomSheetContent} from './InviteSuccessBottomSheetContent
 import {InviteCanceledBottomSheetContent} from './InviteCanceledBottomSheetContent';
 import {useAllProjects} from '../../hooks/server/projects';
 import {LeaveProjectModalContent} from '../LeaveProjectModalContent';
-import {EDITING_SCREEN_NAMES} from '../../constants';
+import {isEditingScreen} from '../../lib/isEditingScreen';
 
 export type LeaveProjectModalState = 'AlreadyOnProj' | 'LeaveProj';
 
@@ -46,8 +46,8 @@ export const ProjectInviteBottomSheet = ({
 
   const projects = useAllProjects();
 
-  const enabledForCurrentScreen =
-    !currentRouteName || isNotEditingScreen(currentRouteName);
+  const bottomSheetEnabled =
+    !currentRouteName || !isEditingScreen(currentRouteName);
 
   const [leaveModalState, setLeaveModalState] =
     React.useState<LeaveProjectModalState>('AlreadyOnProj');
@@ -69,11 +69,11 @@ export const ProjectInviteBottomSheet = ({
     if (
       (invite || acceptedInvite) &&
       !inviteModalVisible &&
-      enabledForCurrentScreen
+      bottomSheetEnabled
     ) {
       setInviteModalVisible(true);
     }
-  }, [invite, acceptedInvite, inviteModalVisible, enabledForCurrentScreen]);
+  }, [invite, acceptedInvite, inviteModalVisible, bottomSheetEnabled]);
 
   React.useEffect(() => {
     if (inviteModalVisible && !inviteIsOpen) {
@@ -200,11 +200,4 @@ function useAcceptedInvite() {
         },
       }
     : null;
-}
-
-function isNotEditingScreen(routeName: string) {
-  for (const name of EDITING_SCREEN_NAMES) {
-    if (name === routeName) return false;
-  }
-  return true;
 }

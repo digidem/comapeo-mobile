@@ -1,32 +1,48 @@
-import {Track} from '@comapeo/schema';
 import {createContext, useContext} from 'react';
 import {createStore, useStore, type StoreApi} from 'zustand';
 import {
   createJSONStorage,
   persist as createPersistedState,
 } from 'zustand/middleware';
+import * as v from 'valibot';
 
 import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
 import {LocationHistoryPoint} from '../sharedTypes/location';
 import {calculateTotalDistance} from '../utils/distance';
 
-type ObservationRef = Track['observationRefs'][number];
+const TrackStateSchema = v.intersect([
+  v.object({
+    description: v.string(),
+    distance: v.number(),
+    locationHistory: v.array(
+      // TODO: Create schema for this
+      v.object({
+        latitude: v.number(),
+        longitude: v.number(),
+        timestamp: v.number(),
+      }),
+    ),
+    observationRefs: v.array(
+      // TODO: Create schema for this
+      v.object({
+        docId: v.string(),
+        versionId: v.string(),
+      }),
+    ),
+  }),
+  v.union([
+    v.object({
+      isTracking: v.literal(true),
+      trackingSince: v.date(),
+    }),
+    v.object({
+      isTracking: v.literal(false),
+      trackingSince: v.null(),
+    }),
+  ]),
+]);
 
-export type TrackState = {
-  description: string;
-  distance: number;
-  locationHistory: Array<LocationHistoryPoint>;
-  observationRefs: Array<ObservationRef>;
-} & (
-  | {
-      isTracking: true;
-      trackingSince: Date;
-    }
-  | {
-      isTracking: false;
-      trackingSince: null;
-    }
-);
+export type TrackState = v.InferOutput<typeof TrackStateSchema>;
 
 // NOTE: Do not change!
 const STORAGE_KEY = 'MapeoTrack' as const;
@@ -51,59 +67,19 @@ export function createTrackStore({persist} = {persist: false}) {
         name: STORAGE_KEY,
         storage: createJSONStorage(() => MMKVZustandStorage),
         version: 1,
-        migrate: (persistedState, version) => {
+        migrate: (persistedState, version): TrackState => {
           const newState = createInitialState();
 
-          // TODO: ideally use validation with valibot
           if (version === 0) {
-            if (!(typeof persistedState === 'object')) {
+            try {
+              // Even if persisted state has fields that are not part of the schema,
+              // Valibot will only extract the relevant fields (assuming all relevant ones pass validation).
+              // https://valibot.dev/guides/objects/
+              return v.parse(TrackStateSchema, persistedState, {
+                abortEarly: true,
+              });
+            } catch {
               return newState;
-            }
-
-            if (!persistedState) {
-              return newState;
-            }
-
-            if (
-              'locationHistory' in persistedState &&
-              Array.isArray(persistedState.locationHistory)
-            ) {
-              newState.locationHistory = persistedState.locationHistory;
-            }
-
-            if (
-              'observationRefs' in persistedState &&
-              Array.isArray(persistedState.observationRefs)
-            ) {
-              newState.observationRefs = persistedState.observationRefs;
-            }
-
-            if (
-              'description' in persistedState &&
-              typeof persistedState.description === 'string'
-            ) {
-              newState.description = persistedState.description;
-            }
-
-            if (
-              'distance' in persistedState &&
-              typeof persistedState.distance === 'number'
-            ) {
-              newState.distance = persistedState.distance;
-            }
-
-            if (
-              'isTracking' in persistedState &&
-              typeof persistedState.isTracking === 'boolean'
-            ) {
-              newState.isTracking = persistedState.isTracking;
-            }
-
-            if (
-              'trackingSince' in persistedState &&
-              typeof persistedState.trackingSince === 'string'
-            ) {
-              newState.trackingSince = new Date(persistedState.trackingSince);
             }
           }
 
@@ -119,7 +95,9 @@ export function createTrackStore({persist} = {persist: false}) {
     setDescription: (description: string) => {
       store.setState({description});
     },
-    addNewObservation: (observationRef: ObservationRef) => {
+    addNewObservation: (
+      observationRef: TrackState['observationRefs'][number],
+    ) => {
       store.setState(prev => {
         return {
           observationRefs: [...prev.observationRefs, observationRef],

@@ -1,21 +1,23 @@
 import {Audio, AVPlaybackStatus, AVPlaybackStatusSuccess} from 'expo-av';
 import {useCallback, useEffect, useState, useRef} from 'react';
 import {Sound} from 'expo-av/build/Audio/Sound';
+import {useNavigationFromRoot} from './useNavigationWithTypes';
 
 export const useAudioPlayback = (recordingUri: string) => {
   const recordedSoundRef = useRef<Sound | null>(null);
   const [isPlaying, setPlaying] = useState(false);
   const [duration, setDuration] = useState<number>(0);
   const [currentPosition, setCurrentPosition] = useState(0);
-  const [error, setError] = useState<Error | null>(null);
+  const {navigate} = useNavigationFromRoot();
 
-  const clearError = useCallback(() => setError(null), []);
-
-  const handleError = useCallback((err: unknown) => {
-    const newError =
-      err instanceof Error ? err : new Error('An unknown error occurred');
-    setError(newError);
-  }, []);
+  const handleError = useCallback(
+    (err: unknown) => {
+      const newError =
+        err instanceof Error ? err : new Error('An unknown error occurred');
+      navigate('ErrorBottomSheet', {errorMessage: newError.message});
+    },
+    [navigate],
+  );
 
   const audioCallbackHandler = useCallback((status: AVPlaybackStatus) => {
     const update = status as AVPlaybackStatusSuccess;
@@ -91,7 +93,5 @@ export const useAudioPlayback = (recordingUri: string) => {
     currentPosition,
     startPlayback,
     stopPlayback,
-    error,
-    clearError,
   };
 };

@@ -33,6 +33,10 @@ type ErrorModalProps = {
   description?: MessageDescriptor;
 };
 
+/**
+ *
+ * @deprecated
+ */
 export const ErrorBottomSheetDeprecated = (props: ErrorModalProps) => {
   const {error, clearError, tryAgain, title, description} = props;
 

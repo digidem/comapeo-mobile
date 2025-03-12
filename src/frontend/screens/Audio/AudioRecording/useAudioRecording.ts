@@ -1,17 +1,21 @@
 import {useState, useCallback} from 'react';
 import {Audio} from 'expo-av';
+import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
 
 export function useAudioRecording() {
   const [recordingPromise, setRecordingPromise] =
     useState<Promise<Audio.Recording> | null>(null);
   const [status, setStatus] = useState<Audio.RecordingStatus | null>(null);
-  const [error, setError] = useState<Error | null>(null);
+  const {navigate} = useNavigationFromRoot();
 
-  const handleError = useCallback((err: unknown) => {
-    const newError =
-      err instanceof Error ? err : new Error('An unknown error occurred');
-    setError(newError);
-  }, []);
+  const handleError = useCallback(
+    (err: unknown) => {
+      const newError =
+        err instanceof Error ? err : new Error('An unknown error occurred');
+      navigate('ErrorBottomSheet', {errorMessage: newError.message});
+    },
+    [navigate],
+  );
 
   const reset = useCallback(async () => {
     try {
@@ -21,7 +25,6 @@ export function useAudioRecording() {
       }
       setRecordingPromise(null);
       setStatus(null);
-      setError(null);
     } catch (err) {
       handleError(err);
     }
@@ -52,5 +55,5 @@ export function useAudioRecording() {
     }
   }, [recordingPromise, handleError]);
 
-  return {reset, startRecording, stopRecording, status, error, setError};
+  return {reset, startRecording, stopRecording, status};
 }

@@ -12,7 +12,6 @@ import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {AudioStyles} from '../shared';
-import {ErrorBottomSheetDeprecated} from '../../../sharedComponents/ErrorBottomSheetDeprecated';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 // 5 minutes
@@ -37,8 +36,7 @@ const m = defineMessages({
 export function AudioRecording({
   navigation,
 }: NativeRootNavigationProps<'AudioRecording'>) {
-  const {startRecording, stopRecording, status, error, setError, reset} =
-    useAudioRecording();
+  const {startRecording, stopRecording, status} = useAudioRecording();
 
   const timeElapsed = status?.durationMillis || 0;
   const isRecording = !!status?.isRecording;
@@ -62,9 +60,11 @@ export function AudioRecording({
         });
       })
       .catch(err => {
-        setError(err);
+        navigation.navigate('ErrorBottomSheet', {
+          errorMessage: err instanceof Error ? err.message : '',
+        });
       });
-  }, [stopRecording, setError, navigation, timeElapsed]);
+  }, [stopRecording, navigation, timeElapsed]);
 
   // stop recording at 5 minutes
   React.useEffect(() => {
@@ -120,7 +120,6 @@ export function AudioRecording({
         </View>
       </ScreenContentWithDock>
       <AnimatedBackground timeElapsed={timeElapsed} />
-      <ErrorBottomSheetDeprecated error={error} clearError={reset} />
     </>
   );
 }

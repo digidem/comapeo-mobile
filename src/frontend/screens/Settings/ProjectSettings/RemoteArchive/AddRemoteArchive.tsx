@@ -20,7 +20,6 @@ import {ScreenContentWithDock} from '../../../../sharedComponents/ScreenContentW
 import {Button} from '../../../../sharedComponents/Button';
 import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
 import {normalizeRemoteArchiveUrl} from '../../../../utils/normalizeRemoteArchiveUrl';
-import {ErrorBottomSheetDeprecated} from '../../../../sharedComponents/ErrorBottomSheetDeprecated';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {
   BottomSheetModal,
@@ -29,6 +28,7 @@ import {
 import {WhatsIncludedBottomSheetContent} from './WhatsIncludedBottomSheetContent';
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../../sharedComponents/Text/BodyText';
+import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
   navTitle: {
@@ -192,7 +192,7 @@ type AddFoundArchiveProps = {
 
 const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
   const {formatMessage} = useIntl();
-  const {mutate, error, reset, isPending} = useAddRemoteArchive();
+  const {mutate, isPending} = useAddRemoteArchive();
   const {navigate, setOptions, addListener} = useNavigationFromRoot();
   const {openSheet, isOpen, closeSheet, sheetRef} = useBottomSheetModal({
     openOnMount: false,
@@ -201,6 +201,10 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
     mutate(url, {
       onSuccess: () => {
         navigate('SuccessfullyAddedArchive', {archiveName: name, url});
+      },
+      onError: err => {
+        Sentry.captureException(err);
+        navigate('ErrorBottomSheet');
       },
     });
   }
@@ -261,7 +265,6 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
           </TouchableOpacity>
         </View>
       </ScreenContentWithDock>
-      <ErrorBottomSheetDeprecated error={error} clearError={reset} />
       <BottomSheetModal isOpen={isOpen} ref={sheetRef}>
         <WhatsIncludedBottomSheetContent closeSheet={closeSheet} />
       </BottomSheetModal>

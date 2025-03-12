@@ -2,7 +2,6 @@ import * as FileSystem from 'expo-file-system';
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
-import {Text} from '../../sharedComponents/Text';
 import {useSelectFile} from '../../hooks/files';
 import {
   useGetOwnRole,
@@ -14,10 +13,12 @@ import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {COMAPEO_BLUE, MEDIUM_GREY} from '../../lib/styles';
 import {Button} from '../../sharedComponents/Button';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {ErrorBottomSheetDeprecated} from '../../sharedComponents/ErrorBottomSheetDeprecated';
 import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../sharedTypes';
 import {convertFileUriToPosixPath} from '../../lib/file-system';
 import noop from '../../lib/noop';
+import * as Sentry from '@sentry/react-native';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   navTitle: {
@@ -92,8 +93,16 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
                   noop,
                 );
               },
+              onError: err => {
+                Sentry.captureException(err);
+                navigation.navigate('ErrorBottomSheet');
+              },
             },
           );
+        },
+        onError: err => {
+          Sentry.captureException(err);
+          navigation.navigate('ErrorBottomSheet');
         },
       },
     );
@@ -107,20 +116,22 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
     <View style={styles.container}>
       {data.name && (
         <>
-          <Text>{formatMessage(m.projectName)}</Text>
-          <Text style={{marginBottom: 20}}>{data.name}</Text>
+          <HeaderText variant="header5">
+            {formatMessage(m.projectName)}
+          </HeaderText>
+          <BodyText style={{marginBottom: 20}}>{data.name}</BodyText>
         </>
       )}
       {data.configMetadata && (
         <>
-          <Text>{formatMessage(m.name)}</Text>
-          <Text style={{color: MEDIUM_GREY}}>
+          <HeaderText variant="header5">{formatMessage(m.name)}</HeaderText>
+          <BodyText style={{color: MEDIUM_GREY}}>
             {formatMessage(m.created, {
               date: formatDate(data.configMetadata.buildDate),
               time: formatHours(data.configMetadata.buildDate),
             })}
-          </Text>
-          <Text>{data.configMetadata.name}</Text>
+          </BodyText>
+          <BodyText>{data.configMetadata.name}</BodyText>
         </>
       )}
       {deviceRole.isPending || configImportIsPending ? (
@@ -131,19 +142,11 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
           fullWidth
           variant="outlined"
           onPress={selectAndImportConfigFile}>
-          <Text style={{color: COMAPEO_BLUE}}>
+          <HeaderText variant="header5" style={{color: COMAPEO_BLUE}}>
             {formatMessage(m.importConfig)}
-          </Text>
+          </HeaderText>
         </Button>
       ) : null}
-      <ErrorBottomSheetDeprecated
-        error={selectFileMutation.error || importProjectConfigMutation.error}
-        clearError={() => {
-          selectFileMutation.reset();
-          importProjectConfigMutation.reset();
-        }}
-        tryAgain={selectAndImportConfigFile}
-      />
     </View>
   );
 };

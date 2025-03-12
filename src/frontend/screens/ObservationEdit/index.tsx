@@ -11,7 +11,6 @@ import {
 import {useEditObservation} from '../../hooks/server/observations';
 import {useCreateBlobMutation} from '../../hooks/server/media';
 import {SaveButton} from '../../sharedComponents/SaveButton';
-import {ErrorBottomSheetDeprecated} from '../../sharedComponents/ErrorBottomSheetDeprecated.tsx';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {ActionsRow} from '../../sharedComponents/ActionsRow';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
@@ -24,6 +23,7 @@ import {
   isAudioAttachment,
   isUnsavedAudio,
 } from '../../lib/attachmentTypeChecks';
+import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
   observation: {
@@ -150,6 +150,10 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         },
         {
           onSuccess: handleNavigationSuccess,
+          onError: err => {
+            Sentry.captureException(err);
+            navigation.navigate('ErrorBottomSheet');
+          },
         },
       );
       return;
@@ -203,6 +207,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     createBlobMutation,
     attachments,
     handleNavigationSuccess,
+    navigation,
   ]);
 
   React.useLayoutEffect(() => {
@@ -230,33 +235,23 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   return !value ? (
     <Loading />
   ) : (
-    <>
-      <Editor
-        presetName={presetName}
-        PresetIcon={
-          <PresetCircleIcon
-            size="medium"
-            iconId={preset?.iconRef?.docId}
-            testID={`OBS.${preset?.name}-icon`}
-          />
-        }
-        onPressPreset={() => navigation.navigate('PresetChooser')}
-        notes={typeof notes !== 'string' ? '' : notes}
-        updateNotes={newVal => {
-          updateTags('notes', newVal);
-        }}
-        attachments={attachments}
-        actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
-      />
-      <ErrorBottomSheetDeprecated
-        error={editObservationMutation.error || createBlobMutation.error}
-        clearError={() => {
-          editObservationMutation.reset();
-          createBlobMutation.reset();
-        }}
-        tryAgain={editObservation}
-      />
-    </>
+    <Editor
+      presetName={presetName}
+      PresetIcon={
+        <PresetCircleIcon
+          size="medium"
+          iconId={preset?.iconRef?.docId}
+          testID={`OBS.${preset?.name}-icon`}
+        />
+      }
+      onPressPreset={() => navigation.navigate('PresetChooser')}
+      notes={typeof notes !== 'string' ? '' : notes}
+      updateNotes={newVal => {
+        updateTags('notes', newVal);
+      }}
+      attachments={attachments}
+      actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
+    />
   );
 };
 

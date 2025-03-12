@@ -10,7 +10,7 @@ import {useCreateBlobMutation} from '../../hooks/server/media';
 import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import {SaveButton} from '../../sharedComponents/SaveButton';
 import {useMostAccurateLocationForObservation} from './useMostAccurateLocationForObservation';
-import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
+import {ErrorBottomSheetDeprecated} from '../../sharedComponents/ErrorBottomSheetDeprecated';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';
 import {ActionsRow} from '../../sharedComponents/ActionsRow';
@@ -324,7 +324,7 @@ export const ObservationCreate = ({
         location={coordinateInfo}
         actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
       />
-      <ErrorBottomSheet
+      <ErrorBottomSheetDeprecated
         error={createObservationMutation.error || createBlobMutation.error}
         clearError={() => {
           createObservationMutation.reset();

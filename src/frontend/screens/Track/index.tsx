@@ -12,7 +12,7 @@ import {useObservations} from '../../hooks/server/observations.ts';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {MapPreview} from './MapPreview.tsx';
 import {ObservationList} from './ObservationList.tsx';
-import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
+import {ErrorBottomSheetDeprecated} from '../../sharedComponents/ErrorBottomSheetDeprecated.tsx';
 import {ActionButtons} from '../../sharedComponents/ActionButtons.tsx';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock.tsx';
 import {TrackHeaderRight} from './TrackHeaderRight';
@@ -90,7 +90,7 @@ export const TrackScreen = ({
           <Text style={styles.text}>{track.tags.notes}</Text>
         </View>
       </ScreenContentWithDock>
-      <ErrorBottomSheet
+      <ErrorBottomSheetDeprecated
         error={deleteTrackMutation.error}
         clearError={deleteTrackMutation.reset}
         tryAgain={deleteTrack}

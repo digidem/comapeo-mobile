@@ -33,7 +33,7 @@ type ErrorModalProps = {
   description?: MessageDescriptor;
 };
 
-export const ErrorBottomSheet = (props: ErrorModalProps) => {
+export const ErrorBottomSheetDeprecated = (props: ErrorModalProps) => {
   const {error, clearError, tryAgain, title, description} = props;
 
   const {formatMessage} = useIntl();

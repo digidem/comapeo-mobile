@@ -14,7 +14,7 @@ import {BLACK} from '../../../../lib/styles';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
 import {IconButton} from '../../../../sharedComponents/IconButton';
 import SaveIcon from '../../../../images/CheckMark.svg';
-import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
+import {ErrorBottomSheetDeprecated} from '../../../../sharedComponents/ErrorBottomSheetDeprecated';
 import {FieldRow} from './FieldRow';
 
 const m = defineMessages({
@@ -158,7 +158,11 @@ export const EditScreen = ({
           />
         </FieldRow>
       </ScrollView>
-      <ErrorBottomSheet error={error} clearError={reset} tryAgain={onSubmit} />
+      <ErrorBottomSheetDeprecated
+        error={error}
+        clearError={reset}
+        tryAgain={onSubmit}
+      />
     </>
   );
 };

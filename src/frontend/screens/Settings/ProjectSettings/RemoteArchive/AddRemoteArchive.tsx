@@ -20,7 +20,7 @@ import {ScreenContentWithDock} from '../../../../sharedComponents/ScreenContentW
 import {Button} from '../../../../sharedComponents/Button';
 import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
 import {normalizeRemoteArchiveUrl} from '../../../../utils/normalizeRemoteArchiveUrl';
-import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
+import {ErrorBottomSheetDeprecated} from '../../../../sharedComponents/ErrorBottomSheetDeprecated';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {
   BottomSheetModal,
@@ -261,7 +261,7 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
           </TouchableOpacity>
         </View>
       </ScreenContentWithDock>
-      <ErrorBottomSheet error={error} clearError={reset} />
+      <ErrorBottomSheetDeprecated error={error} clearError={reset} />
       <BottomSheetModal isOpen={isOpen} ref={sheetRef}>
         <WhatsIncludedBottomSheetContent closeSheet={closeSheet} />
       </BottomSheetModal>

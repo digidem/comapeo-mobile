@@ -12,7 +12,7 @@ import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {AudioStyles} from '../shared';
-import {ErrorBottomSheet} from '../../../sharedComponents/ErrorBottomSheet';
+import {ErrorBottomSheetDeprecated} from '../../../sharedComponents/ErrorBottomSheetDeprecated';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 // 5 minutes
@@ -120,7 +120,7 @@ export function AudioRecording({
         </View>
       </ScreenContentWithDock>
       <AnimatedBackground timeElapsed={timeElapsed} />
-      <ErrorBottomSheet error={error} clearError={reset} />
+      <ErrorBottomSheetDeprecated error={error} clearError={reset} />
     </>
   );
 }

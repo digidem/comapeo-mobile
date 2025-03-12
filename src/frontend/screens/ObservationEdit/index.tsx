@@ -11,7 +11,7 @@ import {
 import {useEditObservation} from '../../hooks/server/observations';
 import {useCreateBlobMutation} from '../../hooks/server/media';
 import {SaveButton} from '../../sharedComponents/SaveButton';
-import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
+import {ErrorBottomSheetDeprecated} from '../../sharedComponents/ErrorBottomSheetDeprecated.tsx';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {ActionsRow} from '../../sharedComponents/ActionsRow';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
@@ -248,7 +248,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         attachments={attachments}
         actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
       />
-      <ErrorBottomSheet
+      <ErrorBottomSheetDeprecated
         error={editObservationMutation.error || createBlobMutation.error}
         clearError={() => {
           editObservationMutation.reset();

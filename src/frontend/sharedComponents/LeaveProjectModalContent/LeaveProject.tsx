@@ -13,7 +13,7 @@ import {TouchableOpacity} from '../../sharedComponents/Touchables';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {BottomSheetModalContent} from '../BottomSheetModal';
 import {useAcceptInvite} from '../../hooks/server/invites';
-import {ErrorBottomSheet} from '../ErrorBottomSheet';
+import {ErrorBottomSheetDeprecated} from '../ErrorBottomSheetDeprecated';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 
 const m = defineMessages({
@@ -157,7 +157,7 @@ export const LeaveProject = ({
           </View>
         </BottomSheetModalContent>
       )}
-      <ErrorBottomSheet
+      <ErrorBottomSheetDeprecated
         error={leaveProject.error || accept.error}
         clearError={() => {
           leaveProject.reset();

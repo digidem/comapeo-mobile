@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import {Bar} from 'react-native-progress';
 import {WHITE, MEDIUM_GREY} from '../../lib/styles';
-import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
+import {ErrorBottomSheetDeprecated} from '../../sharedComponents/ErrorBottomSheetDeprecated';
 import {defineMessages, useIntl} from 'react-intl';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
@@ -148,7 +148,7 @@ export const AudioPlaybackUnsaved = ({
           </HeaderText>
         </View>
       </ScreenContentWithDock>
-      <ErrorBottomSheet
+      <ErrorBottomSheetDeprecated
         error={error}
         clearError={clearError}
         tryAgain={() => {

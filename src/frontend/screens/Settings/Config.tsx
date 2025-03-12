@@ -14,7 +14,7 @@ import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {COMAPEO_BLUE, MEDIUM_GREY} from '../../lib/styles';
 import {Button} from '../../sharedComponents/Button';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
+import {ErrorBottomSheetDeprecated} from '../../sharedComponents/ErrorBottomSheetDeprecated';
 import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../sharedTypes';
 import {convertFileUriToPosixPath} from '../../lib/file-system';
 import noop from '../../lib/noop';
@@ -136,7 +136,7 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
           </Text>
         </Button>
       ) : null}
-      <ErrorBottomSheet
+      <ErrorBottomSheetDeprecated
         error={selectFileMutation.error || importProjectConfigMutation.error}
         clearError={() => {
           selectFileMutation.reset();

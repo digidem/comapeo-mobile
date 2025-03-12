@@ -18,7 +18,7 @@ import {convertFileUriToPosixPath} from '../../../../lib/file-system';
 import {BLACK, LIGHT_GREY} from '../../../../lib/styles';
 import noop from '../../../../lib/noop';
 import {Button} from '../../../../sharedComponents/Button';
-import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
+import {ErrorBottomSheetDeprecated} from '../../../../sharedComponents/ErrorBottomSheetDeprecated';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
 import {Text} from '../../../../sharedComponents/Text';
 import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
@@ -213,7 +213,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
-      <ErrorBottomSheet
+      <ErrorBottomSheetDeprecated
         error={selectFileMutation.error || createProjectMutation.error}
         clearError={() => {
           selectFileMutation.reset();

@@ -19,7 +19,7 @@ import {
   useBottomSheetModal,
 } from '../../../sharedComponents/BottomSheetModal';
 import {Button} from '../../../sharedComponents/Button';
-import {ErrorBottomSheet} from '../../../sharedComponents/ErrorBottomSheet';
+import {ErrorBottomSheetDeprecated} from '../../../sharedComponents/ErrorBottomSheetDeprecated';
 import {Loading} from '../../../sharedComponents/Loading';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
@@ -249,7 +249,7 @@ export function BackgroundMapsScreen() {
         />
       </BottomSheetModal>
 
-      <ErrorBottomSheet
+      <ErrorBottomSheetDeprecated
         error={
           removeCustomMapMutation.error ||
           selectFileMutation.error ||

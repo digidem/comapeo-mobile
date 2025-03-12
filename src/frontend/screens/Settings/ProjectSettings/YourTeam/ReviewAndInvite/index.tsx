@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {NativeNavigationComponent} from '../../../../../sharedTypes/navigation';
 import {defineMessages} from 'react-intl';
-import {ErrorBottomSheet} from '../../../../../sharedComponents/ErrorBottomSheet';
+import {ErrorBottomSheetDeprecated} from '../../../../../sharedComponents/ErrorBottomSheetDeprecated';
 import {ReviewInvitation} from './ReviewInvitation';
 import {WaitingForInviteAccept} from './WaitingForInviteAccept';
 import {
@@ -91,7 +91,7 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
       ) : (
         <WaitingForInviteAccept cancelInvite={cancelInvite} />
       )}
-      <ErrorBottomSheet
+      <ErrorBottomSheetDeprecated
         error={sendInviteMutation.error || requestCancelInviteMutation.error}
         clearError={clearError}
         tryAgain={tryAgain}

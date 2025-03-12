@@ -5,8 +5,7 @@ import {Editor} from '../../sharedComponents/Editor';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {useCreateObservation} from '../../hooks/server/observations';
-import {useCreateBlobMutation} from '../../hooks/server/media';
+import {useCreateDocument, useCreateBlob} from '@comapeo/core-react';
 import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import {SaveButton} from '../../sharedComponents/SaveButton';
 import {useMostAccurateLocationForObservation} from './useMostAccurateLocationForObservation';
@@ -16,11 +15,14 @@ import {HeaderLeft} from './HeaderLeft';
 import {ActionsRow} from '../../sharedComponents/ActionsRow';
 import {Alert, type AlertButton} from 'react-native';
 import {Observation} from '@comapeo/schema';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
 
 import {
   isProcessedDraftPhoto,
   isUnsavedAudio,
 } from '../../lib/attachmentTypeChecks';
+import {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
+import {UnsavedAudio} from '../../sharedTypes/audio';
 
 const m = defineMessages({
   observation: {
@@ -88,13 +90,27 @@ export const ObservationCreate = ({
   navigation,
 }: NativeRootNavigationProps<'ObservationCreate'>) => {
   const {formatMessage} = useIntl();
+  const {projectId} = useActiveProject();
   const {usePreset} = useDraftObservation();
   const preset = usePreset();
   const value = usePersistedDraftObservation(store => store.value);
   const attachments = usePersistedDraftObservation(store => store.attachments);
   const {updateTags, clearDraft} = useDraftObservation();
-  const createObservationMutation = useCreateObservation();
-  const createBlobMutation = useCreateBlobMutation();
+  const [error, setError] = React.useState<Error | null>(null);
+  const {
+    mutate: createObservationMutation,
+    reset: resetObservation,
+    status: observationStatus,
+  } = useCreateDocument({
+    docType: 'observation',
+    projectId,
+  });
+  const {
+    mutate: mutateAttachment,
+    status: attachmentStatus,
+    reset: resetAttachment,
+  } = useCreateBlob({projectId});
+
   const isTracking = usePersistedTrack(state => state.isTracking);
   const addNewTrackLocations = usePersistedTrack(
     state => state.addNewLocations,
@@ -143,7 +159,59 @@ export const ObservationCreate = ({
     [addNewTrackLocations, addNewTrackObservation, value],
   );
 
-  const createObservation = React.useCallback(() => {
+  const createBlobAsync = React.useCallback(
+    async (file: ProcessedDraftPhoto | UnsavedAudio) => {
+      return new Promise<{
+        driveDiscoveryId: string;
+        type: 'photo' | 'audio' | 'video';
+        name: string;
+        hash: string;
+      }>((resolve, reject) => {
+        const args = fileToBlobArgs(file);
+
+        mutateAttachment(args, {
+          onSuccess: data => {
+            resolve({
+              driveDiscoveryId: data.driveId,
+              name: data.name,
+              type: data.type,
+              hash: data.hash,
+            });
+          },
+          onError: err => reject(err),
+        });
+      });
+    },
+    [mutateAttachment],
+  );
+
+  function fileToBlobArgs(file: ProcessedDraftPhoto | UnsavedAudio) {
+    if (isProcessedDraftPhoto(file)) {
+      const {originalUri, previewUri, thumbnailUri, mediaMetadata} = file;
+      return {
+        original: new URL(originalUri).pathname,
+        preview: previewUri ? new URL(previewUri).pathname : undefined,
+        thumbnail: thumbnailUri ? new URL(thumbnailUri).pathname : undefined,
+        metadata: {
+          mimeType: 'image/jpeg',
+          location: mediaMetadata.location,
+          timestamp: mediaMetadata.timestamp,
+        },
+      };
+    } else if (isUnsavedAudio(file)) {
+      const {uri, createdAt} = file;
+      return {
+        original: new URL(uri).pathname,
+        metadata: {
+          mimeType: 'audio/mp4',
+          timestamp: createdAt,
+        },
+      };
+    }
+    throw new Error('Unknown file type');
+  }
+
+  const createObservation = React.useCallback(async () => {
     if (!value) throw new Error('no observation saved in persisted state ');
 
     const unsavedPhotos = attachments.filter(isProcessedDraftPhoto);
@@ -151,7 +219,7 @@ export const ObservationCreate = ({
     const unsavedAudioRecordings = attachments.filter(isUnsavedAudio);
 
     if (unsavedPhotos.length === 0 && unsavedAudioRecordings.length === 0) {
-      createObservationMutation.mutate(
+      createObservationMutation(
         {
           value: {
             ...value,
@@ -167,6 +235,9 @@ export const ObservationCreate = ({
             if (isTracking) {
               addObservationRefToTrack(data);
             }
+          },
+          onError: err => {
+            setError(err as Error);
           },
         },
       );
@@ -180,54 +251,44 @@ export const ObservationCreate = ({
     // This could potentially be alleviated by a more granular and informative UI about the photo-saving state, but currently there is nothing in place.
     // Basically, which is worse: orphaned attachments or saving observations that seem to be missing attachments?
 
-    const attachmentPromises = [
-      ...unsavedPhotos,
-      ...unsavedAudioRecordings,
-    ].map(file => {
-      return createBlobMutation.mutateAsync(file);
-    });
+    const newAttachments = [];
+    for (const file of [...unsavedPhotos, ...unsavedAudioRecordings]) {
+      const result = await createBlobAsync(file);
+      newAttachments.push(result);
+    }
 
-    Promise.all(attachmentPromises).then(results => {
-      const newAttachments = results.map(
-        ({driveDiscoveryId, type, name, hash}) => ({
-          driveDiscoveryId,
-          type,
-          name,
-          hash,
-        }),
-      );
-
-      createObservationMutation.mutate(
-        {
-          value: {
-            ...value,
-            attachments: [...value.attachments, ...newAttachments],
-            presetRef: preset
-              ? {docId: preset.docId, versionId: preset.versionId}
-              : undefined,
-          },
+    createObservationMutation(
+      {
+        value: {
+          ...value,
+          attachments: [...value.attachments, ...newAttachments],
+          presetRef: preset
+            ? {docId: preset.docId, versionId: preset.versionId}
+            : undefined,
         },
-        {
-          onSuccess: data => {
-            clearDraft();
-            navigation.popTo('Home', {screen: 'Map'});
-            if (isTracking) {
-              addObservationRefToTrack(data);
-            }
-          },
+      },
+      {
+        onSuccess: data => {
+          clearDraft();
+          navigation.popTo('Home', {screen: 'Map'});
+          if (isTracking) {
+            addObservationRefToTrack(data);
+          }
         },
-      );
-    });
+        onError: err => setError(err as Error),
+      },
+    );
   }, [
     addObservationRefToTrack,
     clearDraft,
-    createBlobMutation,
+    createBlobAsync,
     createObservationMutation,
     isTracking,
     navigation,
     attachments,
     value,
     preset,
+    setError,
   ]);
 
   const checkAccuracyAndLocation = React.useCallback(() => {
@@ -292,15 +353,15 @@ export const ObservationCreate = ({
         <SaveButton
           onPress={checkAccuracyAndLocation}
           isLoading={
-            createObservationMutation.isPending || createBlobMutation.isPending
+            observationStatus === 'pending' || attachmentStatus === 'pending'
           }
         />
       ),
     });
   }, [
     navigation,
-    createBlobMutation.isPending,
-    createObservationMutation.isPending,
+    observationStatus,
+    attachmentStatus,
     checkAccuracyAndLocation,
   ]);
 
@@ -325,10 +386,11 @@ export const ObservationCreate = ({
         actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
       />
       <ErrorBottomSheet
-        error={createObservationMutation.error}
+        error={error}
         clearError={() => {
-          createObservationMutation.reset();
-          createBlobMutation.reset();
+          setError(null);
+          resetObservation();
+          resetAttachment();
         }}
         tryAgain={createObservation}
       />

@@ -1,4 +1,4 @@
-import {useClientApi} from '@comapeo/core-react';
+import {useClientApi, useMapStyleUrl} from '@comapeo/core-react';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import * as FileSystem from 'expo-file-system';
 import * as v from 'valibot';
@@ -27,23 +27,33 @@ export type CustomMapInfo = v.InferOutput<typeof CustomMapInfoSchema>;
 
 const {useRefreshToken, useRefreshTokenActions} = createRefreshTokenStore();
 
-export function useMapStyleJsonUrl() {
-  const api = useClientApi();
+export function useCustomMapStyleUrl() {
   const refreshToken = useRefreshToken();
 
-  return useQuery({
-    queryKey: [MAPS_QUERY_KEY, 'stylejson-url', refreshToken],
-    queryFn: async () => {
-      // If we're running E2E tests (e.g. on BrowserStack), fall back to a
-      // public Mapbox style rather than our local style server to avoid 502 errors.
-      // (see https://github.com/digidem/comapeo-mobile/issues/1008)
-      if (process.env.EXPO_PUBLIC_E2E_TEST) {
-        return 'mapbox://styles/mapbox/streets-v11';
-      }
-      const result = await api.getMapStyleJsonUrl();
-      return result + `?refresh_token=${refreshToken}`;
-    },
+  const {
+    data: baseUrl,
+    error,
+    isRefetching,
+  } = useMapStyleUrl({
+    refreshToken: refreshToken ? refreshToken.toString() : undefined,
   });
+
+  // If we're running E2E tests (e.g. on BrowserStack), fall back to a
+  // public Mapbox style rather than our local style server to avoid 502 errors.
+  // (see https://github.com/digidem/comapeo-mobile/issues/1008)
+  if (process.env.EXPO_PUBLIC_E2E_TEST) {
+    return {
+      data: 'mapbox://styles/mapbox/streets-v11',
+      error: null,
+      isRefetching: false,
+    };
+  }
+
+  return {
+    data: baseUrl,
+    error,
+    isRefetching,
+  };
 }
 
 export function useImportCustomMapFile() {

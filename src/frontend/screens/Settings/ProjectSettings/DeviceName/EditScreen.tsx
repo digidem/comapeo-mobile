@@ -6,16 +6,15 @@ import {useForm} from 'react-hook-form';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
-import {
-  useDeviceInfo,
-  useEditDeviceInfo,
-} from '../../../../hooks/server/deviceInfo';
+import {useOwnDeviceInfo, useSetOwnDeviceInfo} from '@comapeo/core-react';
 import {BLACK} from '../../../../lib/styles';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
 import {IconButton} from '../../../../sharedComponents/IconButton';
 import SaveIcon from '../../../../images/CheckMark.svg';
 import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
 import {FieldRow} from './FieldRow';
+import {expoToCoreDeviceType} from '../../../../lib/deviceTypeMap';
+import {deviceType} from 'expo-device';
 
 const m = defineMessages({
   title: {
@@ -63,7 +62,7 @@ export const EditScreen = ({
 }: NativeRootNavigationProps<'DeviceNameEdit'>) => {
   const {formatMessage: t} = useIntl();
 
-  const {data} = useDeviceInfo();
+  const {data} = useOwnDeviceInfo();
 
   const deviceName = data?.name;
 
@@ -71,7 +70,9 @@ export const EditScreen = ({
     deviceName: string;
   }>({defaultValues: {deviceName}});
 
-  const {isPending, mutate, error, reset} = useEditDeviceInfo();
+  const {mutate, reset, status} = useSetOwnDeviceInfo();
+  const [error, setError] = React.useState<Error | null>(null);
+  const isPending = status === 'pending';
 
   const {isDirty: nameHasChanges} = control.getFieldState(
     'deviceName',
@@ -113,10 +114,21 @@ export const EditScreen = ({
         navigation.popTo('DeviceNameDisplay');
         return;
       }
-
-      mutate(value.deviceName, {
-        onSuccess: () => navigation.popTo('DeviceNameDisplay'),
-      });
+      mutate(
+        {
+          name: value.deviceName,
+          deviceType: expoToCoreDeviceType(deviceType),
+        },
+        {
+          onSuccess: () => {
+            setError(null);
+            navigation.popTo('DeviceNameDisplay');
+          },
+          onError: err => {
+            setError(err);
+          },
+        },
+      );
     });
   }, [handleSubmit, mutate, nameHasChanges, navigation]);
 
@@ -158,7 +170,14 @@ export const EditScreen = ({
           />
         </FieldRow>
       </ScrollView>
-      <ErrorBottomSheet error={error} clearError={reset} tryAgain={onSubmit} />
+      <ErrorBottomSheet
+        error={error}
+        clearError={() => {
+          setError(null);
+          reset();
+        }}
+        tryAgain={onSubmit}
+      />
     </>
   );
 };

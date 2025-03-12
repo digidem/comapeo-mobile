@@ -8,11 +8,12 @@ import {Question} from './Question';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 
-import {Loading} from '../../sharedComponents/Loading';
-import {useFieldsQuery} from '../../hooks/server/fields';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
+import {useManyDocs} from '@comapeo/core-react';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {usePersistedLocale} from '../../hooks/persistedState/usePersistedLocale';
 
 const m = defineMessages({
   nextQuestion: {
@@ -37,10 +38,17 @@ export const ObservationFields = ({
   navigation,
   route,
 }: NativeRootNavigationProps<'ObservationFields'>) => {
+  const {projectId} = useActiveProject();
+  const locale = usePersistedLocale(store => store.locale);
+
+  const {data: fields} = useManyDocs({
+    projectId,
+    docType: 'field',
+    lang: locale,
+  });
   const {usePreset} = useDraftObservation();
   const preset = usePreset();
   const current = route.params.question;
-  const fields = useFieldsQuery();
   const observationId = usePersistedDraftObservation(
     store => store.observationId,
   );
@@ -74,16 +82,8 @@ export const ObservationFields = ({
     });
   }, [navigation, current, onBackPress]);
 
-  if (fields.isPending) {
-    return <Loading />;
-  }
-
-  if (fields.isError) {
-    return null;
-  }
-
   const fieldId = preset?.fieldRefs.map(({docId}) => docId)[current - 1];
-  const field = fields.data?.find(val => val.docId === fieldId);
+  const field = fields.find(val => val.docId === fieldId);
 
   if (!field) {
     return null;

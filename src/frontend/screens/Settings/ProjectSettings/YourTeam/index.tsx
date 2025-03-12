@@ -13,16 +13,14 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {BLACK} from '../../../../lib/styles';
 import {DeviceCard} from '../../../../sharedComponents/DeviceCard';
 import {
-  useProjectMembers,
+  useOwnDeviceInfo,
+  useManyMembers,
   useProjectSettings,
-} from '../../../../hooks/server/projects';
-import {Loading} from '../../../../sharedComponents/Loading';
-import {UIActivityIndicator} from 'react-native-indicators';
-import {useDeviceInfo} from '../../../../hooks/server/deviceInfo';
-import {CenteredView} from '../../../../sharedComponents/CenteredView';
+} from '@comapeo/core-react';
 import {NotOnProject} from './NotOnProject';
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../../sharedComponents/Text/BodyText';
+import {useActiveProject} from '../../../../contexts/ActiveProjectContext';
 
 const m = defineMessages({
   title: {
@@ -65,9 +63,10 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
   navigation,
 }) => {
   const {formatMessage: t} = useIntl();
-  const membersQuery = useProjectMembers();
-  const deviceInfo = useDeviceInfo();
-  const projectSettings = useProjectSettings();
+  const {projectId} = useActiveProject();
+  const membersQuery = useManyMembers({projectId});
+  const {data: deviceInfo} = useOwnDeviceInfo();
+  const projectSettings = useProjectSettings({projectId});
 
   const coordinators = !membersQuery.data
     ? []
@@ -81,26 +80,16 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
     ? []
     : membersQuery.data.filter(member => member.role.roleId === MEMBER_ROLE_ID);
 
-  if (projectSettings.isLoading) {
-    return (
-      <CenteredView>
-        <Loading />
-      </CenteredView>
-    );
-  }
-
   if (projectSettings.data && !projectSettings.data.name) {
     return <NotOnProject />;
   }
 
   return (
     <ScrollView style={styles.container}>
-      {deviceInfo.isLoading ? (
-        <UIActivityIndicator size={30} />
-      ) : !deviceInfo.data ||
-        !coordinators.some(
-          coordinator => coordinator.deviceId === deviceInfo.data.deviceId,
-        ) ? null : (
+      {!deviceInfo ||
+      !coordinators.some(
+        coordinator => coordinator.deviceId === deviceInfo.deviceId,
+      ) ? null : (
         <Button
           testID="PROJECT.invite-device-btn"
           fullWidth
@@ -143,8 +132,6 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
         <BodyText style={{marginTop: 10}}>{t(m.dateAdded)}</BodyText>
       </View>
 
-      {membersQuery.isLoading && <Loading />}
-
       {coordinators.map(coordinator => (
         <DeviceCard
           key={coordinator.deviceId}
@@ -153,7 +140,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
           deviceId={coordinator.deviceId}
           dateAdded={coordinator.joinedAt}
           deviceType={coordinator.deviceType}
-          thisDevice={deviceInfo.data?.deviceId === coordinator.deviceId}
+          thisDevice={deviceInfo.deviceId === coordinator.deviceId}
         />
       ))}
 
@@ -164,8 +151,6 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
       />
       <BodyText style={{marginTop: 10}}>{t(m.participantDescription)}</BodyText>
 
-      {membersQuery.isLoading && <Loading />}
-
       {participants.map(participant => (
         <DeviceCard
           key={participant.deviceId}
@@ -174,7 +159,7 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
           deviceId={participant.deviceId}
           deviceType={participant.deviceType}
           dateAdded={participant.joinedAt}
-          thisDevice={deviceInfo.data?.deviceId === participant.deviceId}
+          thisDevice={deviceInfo.deviceId === participant.deviceId}
         />
       ))}
       <View style={{marginBottom: 40}} />

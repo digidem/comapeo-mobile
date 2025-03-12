@@ -22,7 +22,7 @@ import {TrackBottomSheet} from './TrackBottomSheet';
 import {CurrentTrackMapLayer} from './CurrentTrack/CurrrentTrackMapLayer';
 import {UserLocation} from './UserLocation';
 import {useSharedLocationContext} from '../../contexts/SharedLocationContext';
-import {useMapStyleJsonUrl} from '../../hooks/server/maps';
+import {useCustomMapStyleUrl} from '../../hooks/server/maps';
 import {TracksMapLayer} from './MapLayers/TracksMapLayer';
 import {assert} from '../../lib/assert';
 import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLayer';
@@ -59,7 +59,7 @@ export const MapScreen = ({
   const locationServicesEnabled =
     !!locationProviderStatus?.locationServicesEnabled;
 
-  const styleUrlQuery = useMapStyleJsonUrl();
+  const {data: styleUrl} = useCustomMapStyleUrl();
   const existingObservation = usePersistedDraftObservation(
     store => store.value,
   );
@@ -120,7 +120,7 @@ export const MapScreen = ({
         attributionPosition={{right: 8, bottom: 8}}
         compassEnabled={false}
         scaleBarEnabled={false}
-        styleURL={styleUrlQuery.data}
+        styleURL={styleUrl}
         onMapIdle={event => {
           setZoom(event.properties.zoom);
         }}

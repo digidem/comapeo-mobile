@@ -8,11 +8,11 @@ import {FormattedObservationDate} from '../../sharedComponents/FormattedData';
 import {PresetHeader} from './PresetHeader';
 import {FieldDetails} from './FieldDetails';
 import {InsetMapView} from './InsetMapView';
+import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
 import {MediaScrollView} from '../../sharedComponents/MediaScrollView/index.tsx';
 import {
   useOwnDeviceInfo,
-  useSingleDocByDocId,
   useManyDocs,
   useDocumentCreatedBy,
 } from '@comapeo/core-react';
@@ -25,9 +25,8 @@ import {Divider} from '../../sharedComponents/Divider.tsx';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
 import {Loading} from '../../sharedComponents/Loading.tsx';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {AppStackParamsList} from '../../sharedTypes/navigation';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
 import {Field} from '@comapeo/schema';
 
 const m = defineMessages({
@@ -44,16 +43,11 @@ const m = defineMessages({
   },
 });
 
-export const ObservationScreen = ({
-  observationId,
+export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
+  route,
   navigation,
-}: {
-  observationId: string;
-  navigation: NativeStackScreenProps<
-    AppStackParamsList,
-    'Observation'
-  >['navigation'];
 }) => {
+  const {observationId} = route.params;
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -62,12 +56,8 @@ export const ObservationScreen = ({
     });
   }, [navigation, observationId]);
   const {projectId} = useActiveProject();
-  const {data: observation} = useSingleDocByDocId({
-    projectId: projectId,
-    docType: 'observation',
-    docId: observationId,
-  });
-  const {data: presets} = useManyDocs({projectId, docType: 'preset'});
+  const {observation, preset} = useObservationWithPreset(observationId);
+
   const {data: fieldsData} = useManyDocs({projectId, docType: 'field'});
   const {lat, lon, originalVersionId} = observation;
   const {data: deviceInfo} = useOwnDeviceInfo();
@@ -79,10 +69,6 @@ export const ObservationScreen = ({
     deviceInfo?.deviceId !== undefined &&
     createdByDeviceId !== undefined &&
     deviceInfo.deviceId === createdByDeviceId;
-
-  const preset = presets.find(p =>
-    p.fieldRefs.some(ref => ref.docId === observation.tags.presetId),
-  );
 
   const fields = preset
     ? (preset.fieldRefs

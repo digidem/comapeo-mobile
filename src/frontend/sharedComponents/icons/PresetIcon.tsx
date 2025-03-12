@@ -3,9 +3,8 @@ import {Image} from 'react-native';
 import {Circle} from './Circle';
 import {type IconSize} from '../../sharedTypes';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {useIconUrl} from '../../hooks/server/icons';
+import {useProjectIconUrl} from '../../hooks/server/icons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-
 interface PresetIconProps {
   iconId?: string;
   size: IconSize;
@@ -31,31 +30,32 @@ const LoadedPresetIcon = ({
 }: PresetIconProps & {iconId: string}) => {
   const iconSize = iconSizes[size];
 
-  const iconUrlQuery = useIconUrl(iconId, size);
+  const {data: iconUrl, error, isRefetching} = useProjectIconUrl(iconId, size);
 
-  if (iconUrlQuery.status === 'pending')
+  if (isRefetching) {
     return <UIActivityIndicator size={iconSize} />;
+  }
 
-  if (iconUrlQuery.status === 'error') {
-    return <MaterialIcon name="place" size={iconSize} />;
+  if (error) {
+    return <MaterialIcon name="place" size={iconSize} testID={testID} />;
   }
 
   return (
     <Image
       style={{width: iconSize, height: iconSize}}
       resizeMode="contain"
-      src={iconUrlQuery.data}
+      source={{uri: iconUrl}}
       testID={testID}
     />
   );
 };
 
 const PresetIcon = ({iconId, size, testID}: PresetIconProps) => {
-  return iconId ? (
-    <LoadedPresetIcon iconId={iconId} size={size} testID={testID} />
-  ) : (
-    <MaterialIcon name="place" size={iconSizes[size]} testID={testID} />
-  );
+  if (!iconId) {
+    return <MaterialIcon name="place" size={iconSizes[size]} testID={testID} />;
+  }
+
+  return <LoadedPresetIcon iconId={iconId} size={size} testID={testID} />;
 };
 
 export const PresetCircleIcon = ({iconId, size, testID}: PresetIconProps) => {

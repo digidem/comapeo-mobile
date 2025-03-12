@@ -8,10 +8,13 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {Text} from '../../sharedComponents/Text';
 import {Button} from '../../sharedComponents/Button';
 import {defineMessages, useIntl} from 'react-intl';
-import {useEditDeviceInfo} from '../../hooks/server/deviceInfo';
+import {useSetOwnDeviceInfo} from '@comapeo/core-react';
 import {Loading} from '../../sharedComponents/Loading';
 import {WHITE} from '../../lib/styles';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
+import {deviceType} from 'expo-device';
+import {expoToCoreDeviceType} from '../../lib/deviceTypeMap';
+import {useQueryClient} from '@tanstack/react-query';
 
 const m = defineMessages({
   success: {
@@ -41,7 +44,8 @@ const m = defineMessages({
 export const Success = ({
   route,
 }: NativeStackScreenProps<OnboardingParamsList, 'Success'>) => {
-  const setDeviceName = useEditDeviceInfo();
+  const {mutate, status} = useSetOwnDeviceInfo();
+  const queryClient = useQueryClient();
   const deviceName = route.params.deviceName;
   const {formatMessage: t} = useIntl();
 
@@ -62,11 +66,21 @@ export const Success = ({
         testID="ONBOARDING.go-to-map-btn"
         fullWidth
         onPress={() => {
-          setDeviceName.mutate(deviceName);
+          mutate(
+            {
+              name: deviceName,
+              deviceType: expoToCoreDeviceType(deviceType),
+            },
+            {
+              onSuccess: () => {
+                queryClient.invalidateQueries({queryKey: ['deviceInfo']});
+              },
+            },
+          );
         }}>
-        {setDeviceName.isPending ? (
+        {status === 'pending' ? (
           <Loading style={{padding: 15}} size={15} color={WHITE} />
-        ) : setDeviceName.isSuccess ? (
+        ) : status === 'success' ? (
           <MaterialIcons name="check" size={30} color={WHITE} />
         ) : (
           t(m.goToMap)

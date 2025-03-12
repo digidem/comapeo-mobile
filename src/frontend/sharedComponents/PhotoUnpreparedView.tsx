@@ -25,7 +25,7 @@ const PhotoUnpreparedComponent = ({
 }: Props) => {
   const {
     data: attachmentUrl,
-    isError,
+    error,
     isPending,
   } = useAttachmentUrlQuery(photo, variant);
 
@@ -33,7 +33,7 @@ const PhotoUnpreparedComponent = ({
     <Pressable onPress={onPress} style={[styles.container, style]}>
       {isPending ? (
         <UIActivityIndicator color={WHITE} />
-      ) : isError || !attachmentUrl ? (
+      ) : error || !attachmentUrl ? (
         <AlertIcon size={96} />
       ) : (
         <Image

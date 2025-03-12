@@ -170,7 +170,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
 
     Promise.all(attachmentPromises).then(results => {
       const newAttachments = results.map(
-        ({driveId: driveDiscoveryId, type, name, hash}) => ({
+        ({driveDiscoveryId, type, name, hash}) => ({
           driveDiscoveryId,
           type,
           name,
@@ -257,7 +257,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
       />
       <ErrorBottomSheet
-        error={editObservationMutation.error || createBlobMutation.error}
+        error={editObservationMutation.error}
         clearError={() => {
           editObservationMutation.reset();
           createBlobMutation.reset();

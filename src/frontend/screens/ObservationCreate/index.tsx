@@ -189,7 +189,7 @@ export const ObservationCreate = ({
 
     Promise.all(attachmentPromises).then(results => {
       const newAttachments = results.map(
-        ({driveId: driveDiscoveryId, type, name, hash}) => ({
+        ({driveDiscoveryId, type, name, hash}) => ({
           driveDiscoveryId,
           type,
           name,
@@ -325,7 +325,7 @@ export const ObservationCreate = ({
         actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
       />
       <ErrorBottomSheet
-        error={createObservationMutation.error || createBlobMutation.error}
+        error={createObservationMutation.error}
         clearError={() => {
           createObservationMutation.reset();
           createBlobMutation.reset();

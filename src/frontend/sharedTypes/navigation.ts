@@ -48,7 +48,7 @@ export type RootStackParamsList = {
   PresetChooser: undefined;
   AddPhoto: undefined;
   Observation: {observationId: string};
-  ObservationEdit: {observationId: string} | undefined;
+  ObservationEdit: {observationId: string};
   ManualGpsScreen: undefined;
   ObservationDetails: {question: number};
   LeaveProjectScreen: undefined;
@@ -113,7 +113,7 @@ export type RootStackParamsList = {
     uri: string;
   };
   AudioSavedBottomSheet: undefined;
-  AudioPlaybackSaved: {uri: string; canDelete: boolean};
+  AudioPlaybackSaved: {uri: string; canDelete: boolean; observationId: string};
 };
 
 export type OnboardingParamsList = {

@@ -9,6 +9,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import {isUnsavedAudio} from '../../lib/attachmentTypeChecks';
 import {BLACK} from '../../lib/styles';
 import {useNavigationState} from '@react-navigation/native';
+import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 
 type AudioThumbnailProps = {
   audioAttachment: Audio;
@@ -27,6 +28,9 @@ export const AudioThumbnail: FC<AudioThumbnailProps> = ({
   const currentRoute = routes[navIndex];
   const {projectApi} = useActiveProject();
   const [loading, setLoading] = React.useState(false);
+  const observationId = usePersistedDraftObservation(
+    store => store.observationId,
+  );
 
   if ('deleted' in audioAttachment && audioAttachment.deleted === true) {
     return null;
@@ -40,6 +44,9 @@ export const AudioThumbnail: FC<AudioThumbnailProps> = ({
       return;
     }
 
+    // should not get here. this component is going to be refactored soon, which will get rid of this unnecessary check
+    if (!observationId) return;
+
     setLoading(true);
     const uri = await projectApi.$blobs.getUrl({
       driveId: audioAttachment.driveDiscoveryId,
@@ -52,6 +59,7 @@ export const AudioThumbnail: FC<AudioThumbnailProps> = ({
       uri,
       // this should be derived from the parent component and not be reliant on navigation context. TO DO when observations is refactored
       canDelete: currentRoute?.name === 'ObservationEdit',
+      observationId,
     });
   };
 

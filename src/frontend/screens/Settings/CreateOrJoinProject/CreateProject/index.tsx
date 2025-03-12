@@ -18,10 +18,10 @@ import {convertFileUriToPosixPath} from '../../../../lib/file-system';
 import {BLACK, LIGHT_GREY} from '../../../../lib/styles';
 import noop from '../../../../lib/noop';
 import {Button} from '../../../../sharedComponents/Button';
-import {ErrorBottomSheetDeprecated} from '../../../../sharedComponents/ErrorBottomSheetDeprecated';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
-import {Text} from '../../../../sharedComponents/Text';
 import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
+import * as Sentry from '@sentry/react-native';
+import {BodyText} from '../../../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   title: {
@@ -50,12 +50,7 @@ const m = defineMessages({
   },
 });
 
-type ConfigFileImportResult =
-  | {
-      type: 'success';
-      file: DocumentPicker.DocumentPickerAsset;
-    }
-  | {type: 'error'; error: Error};
+type ConfigFileImportResult = DocumentPicker.DocumentPickerAsset | null;
 
 type ProjectFormType = {
   projectName: string;
@@ -103,17 +98,16 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
     createProjectMutation.mutate(
       {
         name: projectName,
-        configPath:
-          configFileResult?.type === 'success'
-            ? convertFileUriToPosixPath(configFileResult.file.uri)
-            : undefined,
+        configPath: configFileResult
+          ? convertFileUriToPosixPath(configFileResult.uri)
+          : undefined,
       },
       {
         onSuccess: projectId => {
-          if (configFileResult?.type === 'success') {
+          if (configFileResult) {
             // No need to block UI on this
             // no-op if something fails here. caches can eventually get cleared by the OS automatically.
-            FileSystem.deleteAsync(configFileResult.file.uri, {
+            FileSystem.deleteAsync(configFileResult.uri, {
               idempotent: true,
             }).catch(noop);
           }
@@ -121,6 +115,10 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
           updateActiveProjectId(projectId);
 
           navigation.navigate('ProjectCreated', {name: projectName});
+        },
+        onError: err => {
+          Sentry.captureException(err);
+          navigation.navigate('ErrorBottomSheet');
         },
       },
     );
@@ -135,99 +133,84 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
       {
         onSuccess: selected => {
           if (!selected) return;
-          setConfigFileResult({type: 'success', file: selected});
+          setConfigFileResult(selected);
         },
         onError: err => {
-          setConfigFileResult({type: 'error', error: err});
+          Sentry.captureException(err);
+          navigation.navigate('ErrorBottomSheet');
         },
       },
     );
   }
 
   return (
-    <React.Fragment>
-      <KeyboardAvoidingView>
-        <TouchableWithoutFeedback
-          onPress={() => Keyboard.dismiss()}
-          style={styles.container}>
-          <View>
-            <Text style={{marginHorizontal: 20}}>{t(m.enterName)}</Text>
-            <View style={{marginHorizontal: 20, marginTop: 10}}>
-              <HookFormTextInput
-                testID="PROJECT.name-inp"
-                control={control}
-                name="projectName"
-                rules={{maxLength: 100, required: true, minLength: 1}}
-                showCharacterCount
-              />
-            </View>
-            <View
-              style={{marginTop: 20}}
-              testID="PROJECT.advanced-settings-toggle">
-              <TouchableOpacity
-                onPress={() => setAdvancedSettingOpen(prev => !prev)}
-                style={styles.accordianHeader}>
-                <Text>{t(m.advancedSettings)}</Text>
-                <MaterialIcon
-                  color={BLACK}
-                  name={
-                    !advancedSettingOpen
-                      ? 'keyboard-arrow-up'
-                      : 'keyboard-arrow-down'
-                  }
-                  size={40}
-                />
-              </TouchableOpacity>
-              {advancedSettingOpen && (
-                <View style={styles.importConfigContainer}>
-                  <Button
-                    fullWidth
-                    variant="outlined"
-                    onPress={() => {
-                      selectConfigFile();
-                    }}>
-                    {t(m.importConfig)}
-                  </Button>
-
-                  {configFileResult?.type === 'success' && (
-                    <Text style={styles.configFileName}>
-                      {configFileResult.file.name}
-                    </Text>
-                  )}
-                </View>
-              )}
-            </View>
+    <KeyboardAvoidingView>
+      <TouchableWithoutFeedback
+        onPress={() => Keyboard.dismiss()}
+        style={styles.container}>
+        <View>
+          <BodyText style={{marginHorizontal: 20}}>{t(m.enterName)}</BodyText>
+          <View style={{marginHorizontal: 20, marginTop: 10}}>
+            <HookFormTextInput
+              testID="PROJECT.name-inp"
+              control={control}
+              name="projectName"
+              rules={{maxLength: 100, required: true, minLength: 1}}
+              showCharacterCount
+            />
           </View>
-          <View style={{paddingHorizontal: 20}}>
-            {selectFileMutation.status === 'pending' ||
-            createProjectMutation.status === 'pending' ? (
-              <UIActivityIndicator size={30} style={{marginBottom: 20}} />
-            ) : (
-              <Button
-                testID="PROJECT.create-btn"
-                fullWidth
-                onPress={handleSubmit(handleCreateProject)}>
-                {t(m.createProjectButton)}
-              </Button>
+          <View
+            style={{marginTop: 20}}
+            testID="PROJECT.advanced-settings-toggle">
+            <TouchableOpacity
+              onPress={() => setAdvancedSettingOpen(prev => !prev)}
+              style={styles.accordianHeader}>
+              <BodyText>{t(m.advancedSettings)}</BodyText>
+              <MaterialIcon
+                color={BLACK}
+                name={
+                  !advancedSettingOpen
+                    ? 'keyboard-arrow-up'
+                    : 'keyboard-arrow-down'
+                }
+                size={40}
+              />
+            </TouchableOpacity>
+            {advancedSettingOpen && (
+              <View style={styles.importConfigContainer}>
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  onPress={() => {
+                    selectConfigFile();
+                  }}>
+                  {t(m.importConfig)}
+                </Button>
+
+                {configFileResult && (
+                  <BodyText style={styles.configFileName}>
+                    {configFileResult.name}
+                  </BodyText>
+                )}
+              </View>
             )}
           </View>
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
-      <ErrorBottomSheetDeprecated
-        error={selectFileMutation.error || createProjectMutation.error}
-        clearError={() => {
-          selectFileMutation.reset();
-          createProjectMutation.reset();
-        }}
-        tryAgain={
-          selectFileMutation.error
-            ? selectConfigFile
-            : createProjectMutation.error
-              ? handleSubmit(handleCreateProject)
-              : undefined
-        }
-      />
-    </React.Fragment>
+        </View>
+        <View style={{paddingHorizontal: 20}}>
+          {selectFileMutation.status === 'pending' ||
+          createProjectMutation.status === 'pending' ? (
+            <UIActivityIndicator size={30} style={{marginBottom: 20}} />
+          ) : (
+            <Button
+              testID="PROJECT.create-btn"
+              fullWidth
+              onPress={handleSubmit(handleCreateProject)}>
+              {t(m.createProjectButton)}
+            </Button>
+          )}
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 

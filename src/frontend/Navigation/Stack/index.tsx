@@ -1,35 +1,27 @@
 import * as React from 'react';
-import {useClientApi} from '@comapeo/core-react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {WHITE} from '../../lib/styles';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {AppStackParamsList} from '../../sharedTypes/navigation';
 import {useIntl} from 'react-intl';
-import {DEVICE_INFO_KEY} from '../../hooks/server/deviceInfo';
+import {useSecurityContext} from '../../contexts/SecurityContext';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {Loading} from '../../sharedComponents/Loading';
 import {createDefaultScreenGroup} from './AppScreens';
 import {createOnboardingScreens} from './OnboardingScreens';
-import {useSuspenseQuery} from '@tanstack/react-query';
-import {useSecurityContext} from '../../contexts/SecurityContext';
-import {NavigationContainerRefWithCurrent} from '@react-navigation/native';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
 
-export function RootStackNavigator({
-  navigatorRef: {navigate},
+export const RootStackNavigator = ({
+  deviceName,
 }: {
-  navigatorRef: NavigationContainerRefWithCurrent<AppStackParamsList>;
-}) {
+  deviceName: string | undefined;
+}) => {
   const {formatMessage} = useIntl();
-  const mapeoApi = useClientApi();
-  const deviceInfo = useSuspenseQuery({
-    queryKey: [DEVICE_INFO_KEY],
-    queryFn: async () => {
-      return await mapeoApi.getDeviceInfo();
-    },
-  });
-
   const security = useSecurityContext();
+  const {navigate} = useNavigationFromRoot();
+
   React.useEffect(() => {
     if (security.authState === 'unauthenticated') {
       navigate('AuthScreen');
@@ -37,17 +29,21 @@ export function RootStackNavigator({
   }, [security.authState, navigate]);
 
   return (
-    <RootStack.Navigator screenOptions={NavigatorScreenOptions}>
-      {deviceInfo.data?.name
+    <RootStack.Navigator
+      screenLayout={({children}) => (
+        <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
+      )}
+      screenOptions={NavigatorScreenOptions}>
+      {deviceName
         ? createDefaultScreenGroup({
             intl: formatMessage,
           })
         : createOnboardingScreens({intl: formatMessage})}
     </RootStack.Navigator>
   );
-}
+};
 
-export const NavigatorScreenOptions: NativeStackNavigationOptions = {
+const NavigatorScreenOptions: NativeStackNavigationOptions = {
   presentation: 'card',
   contentStyle: {backgroundColor: WHITE},
   headerStyle: {backgroundColor: WHITE},

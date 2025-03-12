@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {NativeNavigationComponent} from '../../../../../sharedTypes/navigation';
 import {defineMessages} from 'react-intl';
-import {ErrorBottomSheetDeprecated} from '../../../../../sharedComponents/ErrorBottomSheetDeprecated';
 import {ReviewInvitation} from './ReviewInvitation';
 import {WaitingForInviteAccept} from './WaitingForInviteAccept';
 import {
   useRequestCancelInvite,
   useSendInvite,
 } from '../../../../../hooks/server/invites';
+import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
   title: {
@@ -45,6 +45,10 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
             return;
           }
         },
+        onError: err => {
+          Sentry.captureException(err);
+          navigation.navigate('ErrorBottomSheet');
+        },
       },
     );
   }
@@ -54,32 +58,15 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
       onSuccess: () => {
         navigation.popTo('YourTeam');
       },
+      onError: err => {
+        Sentry.captureException(err);
+        navigation.navigate('ErrorBottomSheet');
+      },
     });
   }
 
-  function clearError() {
-    if (sendInviteMutation.isError) {
-      sendInviteMutation.reset();
-    }
-    if (requestCancelInviteMutation.isError) {
-      requestCancelInviteMutation.reset();
-    }
-  }
-
-  function tryAgain() {
-    if (sendInviteMutation.isError) {
-      sendInviteMutation.reset();
-      sendInvite();
-      return;
-    }
-    if (requestCancelInviteMutation.isError) {
-      requestCancelInviteMutation.reset();
-      cancelInvite();
-    }
-  }
-
   return (
-    <React.Fragment>
+    <>
       {sendInviteMutation.isIdle ? (
         <ReviewInvitation
           sendInvite={sendInvite}
@@ -91,12 +78,7 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
       ) : (
         <WaitingForInviteAccept cancelInvite={cancelInvite} />
       )}
-      <ErrorBottomSheetDeprecated
-        error={sendInviteMutation.error || requestCancelInviteMutation.error}
-        clearError={clearError}
-        tryAgain={tryAgain}
-      />
-    </React.Fragment>
+    </>
   );
 };
 

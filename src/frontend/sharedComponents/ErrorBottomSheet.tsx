@@ -3,9 +3,8 @@ import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 import {StyleSheet, View} from 'react-native';
 import {BottomSheetWrapper} from './BottomSheetWrapper';
 import ErrorIcon from '../images/Error.svg';
-import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
+import {defineMessages, useIntl} from 'react-intl';
 import {HeaderText} from './Text/HeaderText';
-import {ScreenContentWithDock} from './ScreenContentWithDock';
 import {Button} from './Button';
 
 const m = defineMessages({

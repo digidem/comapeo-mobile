@@ -1607,6 +1607,12 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Change"
   },
+  "sharedComponents.ErrorBottomSheet.goBack": {
+    "message": "Go Back"
+  },
+  "sharedComponents.ErrorBottomSheet.somethingWrong": {
+    "message": "Something Went Wrong"
+  },
   "sharedComponents.ErrorModal.goBack": {
     "message": "Go Back"
   },

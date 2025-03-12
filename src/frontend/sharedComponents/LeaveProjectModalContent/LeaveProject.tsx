@@ -2,7 +2,6 @@ import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import ErrorIcon from '../../images/Error.svg';
 import {defineMessages, useIntl} from 'react-intl';
-import {Text} from '../../sharedComponents/Text';
 import {useLeaveProject} from '../../hooks/server/projects';
 import {RED} from '../../lib/styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -13,8 +12,9 @@ import {TouchableOpacity} from '../../sharedComponents/Touchables';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {BottomSheetModalContent} from '../BottomSheetModal';
 import {useAcceptInvite} from '../../hooks/server/invites';
-import {ErrorBottomSheetDeprecated} from '../ErrorBottomSheetDeprecated';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {HeaderText} from '../Text/HeaderText';
 
 const m = defineMessages({
   leaveProj: {
@@ -72,6 +72,7 @@ export const LeaveProject = ({
   const [isChecked, setIsChecked] = React.useState(false);
   const leaveProject = useLeaveProject();
   const {projectId} = useActiveProject();
+  const {navigate} = useNavigationFromRoot();
 
   function handleLeavePress() {
     if (!isChecked) {
@@ -90,11 +91,13 @@ export const LeaveProject = ({
             },
             onError: err => {
               Sentry.captureException(err);
+              navigate('ErrorBottomSheet');
             },
           });
         },
         onError: err => {
           Sentry.captureException(err);
+          navigate('ErrorBottomSheet');
         },
       },
     );
@@ -141,30 +144,24 @@ export const LeaveProject = ({
                 color={!isChecked && error ? RED : undefined}
                 name={isChecked ? 'check-box' : 'check-box-outline-blank'}
               />
-              <Text style={{marginLeft: 10, marginRight: 10}}>
+              <HeaderText
+                variant="header5"
+                style={{marginLeft: 10, marginRight: 10}}>
                 {projectName
                   ? formatMessage(m.deleteConsentWithName, {
                       projectName: projectName,
                     })
                   : formatMessage(m.deleteConsentWithoutName)}
-              </Text>
+              </HeaderText>
             </TouchableOpacity>
             {error && !isChecked && (
-              <Text style={{color: RED, marginTop: 20}}>
+              <HeaderText variant="header5" style={{color: RED, marginTop: 20}}>
                 {formatMessage(m.checkToConfirm)}
-              </Text>
+              </HeaderText>
             )}
           </View>
         </BottomSheetModalContent>
       )}
-      <ErrorBottomSheetDeprecated
-        error={leaveProject.error || accept.error}
-        clearError={() => {
-          leaveProject.reset();
-          accept.reset();
-        }}
-        tryAgain={handleLeavePress}
-      />
     </>
   );
 };

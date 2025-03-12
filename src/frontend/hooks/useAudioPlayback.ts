@@ -10,14 +10,14 @@ export const useAudioPlayback = (recordingUri: string) => {
   const [currentPosition, setCurrentPosition] = useState(0);
   const {navigate} = useNavigationFromRoot();
 
-  const handleError = useCallback(
-    (err: unknown) => {
-      const newError =
-        err instanceof Error ? err : new Error('An unknown error occurred');
-      navigate('ErrorBottomSheet', {errorMessage: newError.message});
-    },
-    [navigate],
-  );
+  // const handleError = useCallback(
+  //   (err: unknown) => {
+  //     const newError =
+  //       err instanceof Error ? err : new Error('An unknown error occurred');
+  //     navigate('ErrorBottomSheet', {errorMessage: newError.message});
+  //   },
+  //   [navigate],
+  // );
 
   const audioCallbackHandler = useCallback((status: AVPlaybackStatus) => {
     const update = status as AVPlaybackStatusSuccess;
@@ -45,9 +45,9 @@ export const useAudioPlayback = (recordingUri: string) => {
         setDuration((status as AVPlaybackStatusSuccess).durationMillis ?? 0);
         sound.setOnPlaybackStatusUpdate(audioCallbackHandler);
       })
-      .catch(err => {
+      .catch(() => {
         if (!isCancelled) {
-          handleError(err);
+          navigate('ErrorBottomSheet');
         }
       });
 
@@ -58,7 +58,7 @@ export const useAudioPlayback = (recordingUri: string) => {
         recordedSoundRef.current = null;
       }
     };
-  }, [recordingUri, audioCallbackHandler, handleError]);
+  }, [recordingUri, audioCallbackHandler, navigate]);
 
   const startPlayback = useCallback(async () => {
     if (!recordedSoundRef.current || isPlaying) return;
@@ -71,10 +71,10 @@ export const useAudioPlayback = (recordingUri: string) => {
 
       await recordedSoundRef.current.playAsync();
       setPlaying(true);
-    } catch (err) {
-      handleError(err);
+    } catch {
+      navigate('ErrorBottomSheet');
     }
-  }, [isPlaying, currentPosition, duration, handleError]);
+  }, [isPlaying, currentPosition, duration, navigate]);
 
   const stopPlayback = useCallback(async () => {
     if (!recordedSoundRef.current || !isPlaying) return;
@@ -82,10 +82,10 @@ export const useAudioPlayback = (recordingUri: string) => {
     try {
       await recordedSoundRef.current!.pauseAsync();
       setPlaying(false);
-    } catch (err) {
-      handleError(err);
+    } catch {
+      navigate('ErrorBottomSheet');
     }
-  }, [isPlaying, handleError]);
+  }, [isPlaying, navigate]);
 
   return {
     duration,

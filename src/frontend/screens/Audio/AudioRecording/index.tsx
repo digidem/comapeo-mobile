@@ -59,10 +59,8 @@ export function AudioRecording({
           duration: timeElapsed,
         });
       })
-      .catch(err => {
-        navigation.navigate('ErrorBottomSheet', {
-          errorMessage: err instanceof Error ? err.message : '',
-        });
+      .catch(() => {
+        navigation.navigate('ErrorBottomSheet');
       });
   }, [stopRecording, navigation, timeElapsed]);
 

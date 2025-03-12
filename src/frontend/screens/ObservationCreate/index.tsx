@@ -170,9 +170,7 @@ export const ObservationCreate = ({
           },
           onError: err => {
             Sentry.captureException(err);
-            navigation.navigate('ErrorBottomSheet', {
-              errorMessage: err.message,
-            });
+            navigation.navigate('ErrorBottomSheet');
           },
         },
       );
@@ -223,9 +221,7 @@ export const ObservationCreate = ({
           },
           onError: err => {
             Sentry.captureException(err);
-            navigation.navigate('ErrorBottomSheet', {
-              errorMessage: err.message,
-            });
+            navigation.navigate('ErrorBottomSheet');
           },
         },
       );

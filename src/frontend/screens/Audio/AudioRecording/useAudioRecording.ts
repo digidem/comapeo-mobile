@@ -8,15 +8,6 @@ export function useAudioRecording() {
   const [status, setStatus] = useState<Audio.RecordingStatus | null>(null);
   const {navigate} = useNavigationFromRoot();
 
-  const handleError = useCallback(
-    (err: unknown) => {
-      const newError =
-        err instanceof Error ? err : new Error('An unknown error occurred');
-      navigate('ErrorBottomSheet', {errorMessage: newError.message});
-    },
-    [navigate],
-  );
-
   const reset = useCallback(async () => {
     try {
       if (recordingPromise) {
@@ -25,10 +16,10 @@ export function useAudioRecording() {
       }
       setRecordingPromise(null);
       setStatus(null);
-    } catch (err) {
-      handleError(err);
+    } catch {
+      navigate('ErrorBottomSheet');
     }
-  }, [recordingPromise, handleError]);
+  }, [recordingPromise, navigate]);
 
   const startRecording = useCallback(async () => {
     try {
@@ -39,10 +30,10 @@ export function useAudioRecording() {
         return recording;
       });
       setRecordingPromise(newRecordingPromise);
-    } catch (err) {
-      handleError(err);
+    } catch {
+      navigate('ErrorBottomSheet');
     }
-  }, [handleError]);
+  }, [navigate]);
 
   const stopRecording = useCallback(async () => {
     try {
@@ -50,10 +41,10 @@ export function useAudioRecording() {
       const recording = await recordingPromise;
       await recording.stopAndUnloadAsync();
       return recording.getURI();
-    } catch (err) {
-      handleError(err);
+    } catch {
+      navigate('ErrorBottomSheet');
     }
-  }, [recordingPromise, handleError]);
+  }, [recordingPromise, navigate]);
 
   return {reset, startRecording, stopRecording, status};
 }

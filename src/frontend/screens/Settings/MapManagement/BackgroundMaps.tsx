@@ -19,13 +19,14 @@ import {
   useBottomSheetModal,
 } from '../../../sharedComponents/BottomSheetModal';
 import {Button} from '../../../sharedComponents/Button';
-import {ErrorBottomSheetDeprecated} from '../../../sharedComponents/ErrorBottomSheetDeprecated';
 import {Loading} from '../../../sharedComponents/Loading';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {type NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {ChooseMapFile} from './ChooseMapFile';
 import {CustomMapDetails} from './CustomMapDetails';
+import * as Sentry from '@sentry/react-native';
+import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
 
 const m = defineMessages({
   screenTitle: {
@@ -118,6 +119,7 @@ export function createNavigationOptions({
 export function BackgroundMapsScreen() {
   const {formatMessage: t} = useIntl();
 
+  const {navigate} = useNavigationFromRoot();
   const mapAddedBottomSheet = useBottomSheetModal({openOnMount: false});
   const removeMapBottomSheet = useBottomSheetModal({openOnMount: false});
 
@@ -156,8 +158,22 @@ export function BackgroundMapsScreen() {
                       onSuccess: () => {
                         mapAddedBottomSheet.openSheet();
                       },
+                      onError: err => {
+                        Sentry.captureException(err);
+                        navigate('BackgroundMapErrorBottomSheet', {
+                          title: t(m.importErrorTitle),
+                          description: t(m.importErrorDesciption),
+                        });
+                      },
                     },
                   );
+                },
+                onError: err => {
+                  Sentry.captureException(err);
+                  navigate('BackgroundMapErrorBottomSheet', {
+                    title: t(m.importErrorTitle),
+                    description: t(m.importErrorDesciption),
+                  });
                 },
               },
             );
@@ -176,7 +192,12 @@ export function BackgroundMapsScreen() {
               fullWidth
               variant="outlined"
               onPress={() => {
-                removeCustomMapMutation.mutate();
+                removeCustomMapMutation.mutate(undefined, {
+                  onError: err => {
+                    Sentry.captureException(err);
+                    navigate('ErrorBottomSheet');
+                  },
+                });
               }}>
               <HeaderText
                 variant="header5"
@@ -248,35 +269,6 @@ export function BackgroundMapsScreen() {
           ]}
         />
       </BottomSheetModal>
-
-      <ErrorBottomSheetDeprecated
-        error={
-          removeCustomMapMutation.error ||
-          selectFileMutation.error ||
-          importCustomMapMutation.error
-        }
-        title={
-          selectFileMutation.error || importCustomMapMutation.error
-            ? m.importErrorTitle
-            : undefined
-        }
-        description={
-          selectFileMutation.error || importCustomMapMutation.error
-            ? m.importErrorDesciption
-            : undefined
-        }
-        clearError={() => {
-          if (removeCustomMapMutation.error) {
-            removeCustomMapMutation.reset();
-          }
-          if (selectFileMutation.error) {
-            selectFileMutation.reset();
-          }
-          if (importCustomMapMutation.error) {
-            importCustomMapMutation.reset();
-          }
-        }}
-      />
     </>
   );
 }

@@ -83,14 +83,13 @@ describe('Create Observation Flow', () => {
     const cancelCamera = await $(byTextMatches('Cancel'));
     await cancelCamera.click();
     await expect($(byTextMatches('New Observation'))).toBeDisplayed();
+    const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
+    await saveBtn.click();
 
     const noGpsElems = await $$(byTextMatches('No GPS signal'));
     if ((await noGpsElems.length) > 0 && (await noGpsElems[0].isDisplayed())) {
       const textSave = await $(byTextMatches('SAVE'));
       await textSave.click();
-    } else {
-      const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
-      await saveBtn.click();
     }
 
     try {

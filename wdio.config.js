@@ -49,7 +49,7 @@ const config = {
       'appium:platformVersion': '14.0',
       'appium:deviceName': 'Google Pixel 7',
       'appium:automationName': 'UIAutomator2',
-      'appium:app': process.env.BROWSERSTACK_APP_URL, // "bs://..." from upload
+      'appium:app': process.env.BROWSERSTACK_APP_URL,
       'appium:autoGrantPermissions': true,
       'bstack:options': {
         projectName: 'CoMapeo',

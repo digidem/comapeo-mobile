@@ -2,9 +2,7 @@ import React from 'react';
 import {View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import type {LocationStatus} from '../../lib/utils';
-
-const RenderError = () => (
+export const ErrorIcon = () => (
   <View
     style={{
       width: 22,
@@ -30,7 +28,7 @@ const RenderError = () => (
   </View>
 );
 
-const RenderIcon = ({color = '#00FF02'}: {color?: string}) => (
+export const GpsIcon = ({color}: {color: string}) => (
   <View
     style={{
       backgroundColor: color,
@@ -42,20 +40,4 @@ const RenderIcon = ({color = '#00FF02'}: {color?: string}) => (
   />
 );
 
-type Props = {variant: LocationStatus};
-
-const GpsIconComponent = ({variant}: Props) => {
-  switch (variant) {
-    case 'error':
-      return <RenderError />;
-    case 'searching':
-      return <RenderIcon color="#0166FF" />;
-    case 'improving':
-      return <RenderIcon color="#00FF02" />;
-    case 'good':
-    default:
-      return <RenderIcon />;
-  }
-};
-
-export const GpsIcon = React.memo<Props>(GpsIconComponent);
+// export const GpsIcon = React.memo<Props>(GpsIconComponent);

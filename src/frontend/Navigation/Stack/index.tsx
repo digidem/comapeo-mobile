@@ -30,6 +30,7 @@ export const RootStackNavigator = ({
 
   return (
     <RootStack.Navigator
+      initialRouteName="Home"
       screenLayout={({children}) => (
         <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
       )}

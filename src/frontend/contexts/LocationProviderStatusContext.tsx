@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {createContext, useContext} from 'react';
 import {
   type LocationProviderStatus,
   getProviderStatusAsync,
@@ -10,7 +10,15 @@ import noop from '../lib/noop';
 // How frequently to poll the location provider status
 const POLL_PROVIDER_STATUS_INTERVAL = 10_000; // 10 seconds
 
-export function useLocationProviderStatus() {
+const LocationProviderStatusContext = createContext<
+  LocationProviderStatus | undefined | null
+>(null);
+
+export function LocationProviderStatusProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [providerStatus, setProviderStatus] = React.useState<
     LocationProviderStatus | undefined
   >(undefined);
@@ -42,5 +50,19 @@ export function useLocationProviderStatus() {
     };
   }, [permissions, queryClient]);
 
-  return providerStatus;
+  return (
+    <LocationProviderStatusContext.Provider value={providerStatus}>
+      {children}
+    </LocationProviderStatusContext.Provider>
+  );
+}
+
+export function useLocationProviderStatus() {
+  const context = useContext(LocationProviderStatusContext);
+
+  if (context === null) {
+    throw new Error('LocationProviderStatusContext has not been initialized');
+  }
+
+  return context;
 }

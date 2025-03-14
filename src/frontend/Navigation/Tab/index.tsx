@@ -13,7 +13,6 @@ import {DrawerContent} from '../../sharedComponents/DrawerContent';
 import {useCloseDrawerOnBackPress} from './useCloseDrawerOnBackPress';
 import {StyleSheet, View} from 'react-native';
 import {TabBar} from './TabBar';
-import {SharedLocationContextProvider} from '../../contexts/SharedLocationContext';
 import {Loading} from '../../sharedComponents/Loading';
 
 const Tab = createBottomTabNavigator<HomeTabsParamsList>();
@@ -48,12 +47,6 @@ export const HomeTabs = () => {
         initialRouteName={'Map'}
         screenLayout={({children}) => (
           <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
-        )}
-        // header needs access the this provider. Layout wraps the entire navigator, while screenLayout wraps each screen (in other words not the header)
-        layout={({children}) => (
-          <SharedLocationContextProvider>
-            {children}
-          </SharedLocationContextProvider>
         )}
         backBehavior="initialRoute">
         <Tab.Screen

@@ -96,6 +96,7 @@ import {DeleteAudioBottomSheet} from '../../screens/Audio/DeleteAudioBottomSheet
 import {AudioSavedBottomSheet} from '../../screens/Audio/AudioSavedBottomSheet.tsx';
 import {AudioPlaybackSaved} from '../../screens/Audio/AudioPlaybackSaved.tsx';
 import {AudioCustomHeaderLeft} from '../../screens/Audio/AudioCustomHeaderLeft.tsx';
+import {LocationProviderStatusProvider} from '../../contexts/LocationProviderStatusContext.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -108,11 +109,24 @@ export const createDefaultScreenGroup = ({
 }) => (
   <>
     <RootStack.Group screenOptions={{presentation: 'card'}} key="default">
-      <RootStack.Screen
-        name="Home"
-        options={{headerShown: false}}
-        component={HomeTabs}
-      />
+      <RootStack.Group
+        screenLayout={({children}) => (
+          <LocationProviderStatusProvider>
+            {children}
+          </LocationProviderStatusProvider>
+        )}>
+        <RootStack.Screen
+          name="Home"
+          options={{headerShown: false}}
+          component={HomeTabs}
+        />
+        <RootStack.Screen
+          name="GpsModal"
+          component={LocationInfoScreen}
+          options={createLocationInfoNavOptions({intl})}
+        />
+      </RootStack.Group>
+
       <RootStack.Screen
         name="AuthScreen"
         component={AuthScreen}
@@ -252,11 +266,6 @@ export const createDefaultScreenGroup = ({
         name="DeviceNameEdit"
         component={DeviceNameEditScreen}
         options={createDeviceNameEditNavOptions({intl})}
-      />
-      <RootStack.Screen
-        name="GpsModal"
-        component={LocationInfoScreen}
-        options={createLocationInfoNavOptions({intl})}
       />
       <RootStack.Screen name="SaveTrack" component={SaveTrackScreen} />
       <RootStack.Screen

@@ -10,13 +10,13 @@ import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 
 import {useLocation} from '../hooks/useLocation';
 import {useLastKnownLocation} from '../hooks/useLastSavedLocation';
-import {useLocationProviderStatus} from '../hooks/useLocationProviderStatus';
 import {usePersistedSettings} from '../hooks/persistedState/usePersistedSettings';
 import {GPS_MODAL_TEXT, WHITE} from '../lib/styles';
 import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 import {DateDistance} from '../sharedComponents/DateDistance';
 import {FormattedCoords} from '../sharedComponents/FormattedData';
 import {Text} from '../sharedComponents/Text';
+import {useLocationProviderStatus} from '../contexts/LocationProviderStatusContext';
 
 const m = defineMessages({
   gpsHeader: {

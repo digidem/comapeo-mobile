@@ -9,7 +9,7 @@ import {
 } from 'expo-location';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
+import {useLocationProviderStatus} from '../../contexts/LocationProviderStatusContext';
 
 export function useMostAccurateLocationForObservation() {
   const value = usePersistedDraftObservation(store => store.value);

@@ -61,7 +61,9 @@ export function useLocationProviderStatus() {
   const context = useContext(LocationProviderStatusContext);
 
   if (context === null) {
-    throw new Error('LocationProviderStatusContext has not been initialized');
+    throw new Error(
+      'LocationProviderStatusContext has not been initialized. Make sure screen is initialzed within the StackNavigator Group where this context wraps the screens',
+    );
   }
 
   return context;

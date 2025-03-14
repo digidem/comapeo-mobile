@@ -1,13 +1,15 @@
 import {LineJoin, LineLayer, ShapeSource} from '@rnmapbox/maps';
 import {usePersistedTrack} from '../../../hooks/persistedState/usePersistedTrack';
 import * as React from 'react';
-import {useLocation} from '../../../hooks/useLocation';
 import {convertToLineString} from '../../../lib/utils';
+import {LocationObject} from 'expo-location';
 
-export const CurrentTrackMapLayer = () => {
+export const CurrentTrackMapLayer = ({
+  location,
+}: {
+  location: LocationObject | undefined;
+}) => {
   const locationHistory = usePersistedTrack(state => state.locationHistory);
-  const isTracking = usePersistedTrack(state => state.isTracking);
-  const {location} = useLocation({maxDistanceInterval: 3});
   const finalLocationHistory = location?.coords
     ? [
         ...locationHistory,
@@ -20,8 +22,7 @@ export const CurrentTrackMapLayer = () => {
     : locationHistory;
 
   return (
-    locationHistory.length > 1 &&
-    isTracking && (
+    locationHistory.length > 1 && (
       <ShapeSource
         id="routeSource"
         shape={convertToLineString(finalLocationHistory)}>

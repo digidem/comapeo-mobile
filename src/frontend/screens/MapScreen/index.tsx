@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Mapbox from '@rnmapbox/maps';
+import Mapbox, {UserLocation} from '@rnmapbox/maps';
 
 import {IconButton} from '../../sharedComponents/IconButton';
 import {
@@ -15,13 +15,9 @@ import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {usePresetsQuery} from '../../hooks/server/presets';
 import ScaleBar from 'react-native-scale-bar';
-import {getCoords} from '../../hooks/useLocation';
+import {getCoords, useLocation} from '../../hooks/useLocation';
 import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
-import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
 import {TrackBottomSheet} from './TrackBottomSheet';
-import {CurrentTrackMapLayer} from './CurrentTrack/CurrrentTrackMapLayer';
-import {UserLocation} from './UserLocation';
-import {useSharedLocationContext} from '../../contexts/SharedLocationContext';
 import {useMapStyleJsonUrl} from '../../hooks/server/maps';
 import {TracksMapLayer} from './MapLayers/TracksMapLayer';
 import {assert} from '../../lib/assert';
@@ -29,6 +25,10 @@ import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLa
 import {matchPreset} from '../../lib/utils';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
+import {useLocationProviderStatus} from '../../contexts/LocationProviderStatusContext';
+import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
+import {UserTooltipMarker} from './CurrentTrack/UserTooltipMarker';
+import {CurrentTrackMapLayer} from './CurrentTrack/CurrrentTrackMapLayer';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -40,7 +40,7 @@ assert(
   'MAPBOX_ACCESS_TOKEN environment variable should be set',
 );
 Mapbox.setAccessToken(process.env.MAPBOX_ACCESS_TOKEN);
-const MIN_DISPLACEMENT = 3;
+// const MIN_DISPLACEMENT = 3;
 
 export const MapScreen = ({
   route,
@@ -52,9 +52,9 @@ export const MapScreen = ({
   const [following, setFollowing] = React.useState(true);
   const {newDraft} = useDraftObservation();
   const {navigate} = useNavigationFromHomeTabs();
-  const {locationState} = useSharedLocationContext();
+  const {location} = useLocation({maxDistanceInterval: 3});
   const savedLocation = useLastKnownLocation();
-  const coords = locationState.location && getCoords(locationState.location);
+  const coords = location && getCoords(location);
   const locationProviderStatus = useLocationProviderStatus();
   const locationServicesEnabled =
     !!locationProviderStatus?.locationServicesEnabled;
@@ -64,6 +64,7 @@ export const MapScreen = ({
     store => store.value,
   );
   const {data: presets} = usePresetsQuery();
+  const isTracking = usePersistedTrack(store => store.isTracking);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -148,13 +149,16 @@ export const MapScreen = ({
         />
 
         {coords && locationServicesEnabled && (
-          <UserLocation minDisplacement={MIN_DISPLACEMENT} />
+          <>
+            <UserLocation />
+            {isTracking && <UserTooltipMarker location={location} />}
+          </>
         )}
 
         {isFinishedLoading && (
           <>
             <RemoteDetectionAlertsMapLayer />
-            <CurrentTrackMapLayer />
+            {isTracking && <CurrentTrackMapLayer location={location} />}
             <TracksMapLayer />
             <ObservationMapLayer />
           </>

@@ -22,7 +22,7 @@ export const CurrentTrackMapLayer = ({
     : locationHistory;
 
   return (
-    locationHistory.length > 1 && (
+    finalLocationHistory.length > 1 && (
       <ShapeSource
         id="routeSource"
         shape={convertToLineString(finalLocationHistory)}>

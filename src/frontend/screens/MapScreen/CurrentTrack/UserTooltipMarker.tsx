@@ -5,35 +5,29 @@ import {usePersistedTrack} from '../../../hooks/persistedState/usePersistedTrack
 import {useTrackTimerContext} from '../../../contexts/TrackTimerContext';
 import {LocationObject} from 'expo-location';
 
-export const UserTooltipMarker = ({
-  location,
-}: {
-  location: LocationObject | undefined;
-}) => {
+export const UserTooltipMarker = ({location}: {location: LocationObject}) => {
   const {timer} = useTrackTimerContext();
   const totalDistance = usePersistedTrack(state => state.distance);
 
   return (
-    location?.coords && (
-      <MarkerView
-        id="locationView"
-        coordinate={[location.coords.longitude, location.coords.latitude]}
-        anchor={{x: 0.5, y: 1}}>
-        <View style={styles.container}>
-          <View style={styles.wrapper}>
-            <View>
-              <Text style={styles.text}>{totalDistance.toFixed(2)}km</Text>
-            </View>
-            <View style={styles.separator} />
-            <View>
-              <Text style={styles.text}>{timer}</Text>
-            </View>
-            <View style={styles.indicator} />
+    <MarkerView
+      id="locationView"
+      coordinate={[location.coords.longitude, location.coords.latitude]}
+      anchor={{x: 0.5, y: 1}}>
+      <View style={styles.container}>
+        <View style={styles.wrapper}>
+          <View>
+            <Text style={styles.text}>{totalDistance.toFixed(2)}km</Text>
           </View>
-          <View style={styles.arrow} />
+          <View style={styles.separator} />
+          <View>
+            <Text style={styles.text}>{timer}</Text>
+          </View>
+          <View style={styles.indicator} />
         </View>
-      </MarkerView>
-    )
+        <View style={styles.arrow} />
+      </View>
+    </MarkerView>
   );
 };
 

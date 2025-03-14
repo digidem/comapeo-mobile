@@ -40,7 +40,7 @@ assert(
   'MAPBOX_ACCESS_TOKEN environment variable should be set',
 );
 Mapbox.setAccessToken(process.env.MAPBOX_ACCESS_TOKEN);
-// const MIN_DISPLACEMENT = 3;
+const DISTANCE_INTERVAL = 3;
 
 export const MapScreen = ({
   route,
@@ -52,7 +52,7 @@ export const MapScreen = ({
   const [following, setFollowing] = React.useState(true);
   const {newDraft} = useDraftObservation();
   const {navigate} = useNavigationFromHomeTabs();
-  const {location} = useLocation({maxDistanceInterval: 3});
+  const {location} = useLocation({maxDistanceInterval: DISTANCE_INTERVAL});
   const savedLocation = useLastKnownLocation();
   const coords = location && getCoords(location);
   const locationProviderStatus = useLocationProviderStatus();
@@ -150,7 +150,7 @@ export const MapScreen = ({
 
         {coords && locationServicesEnabled && (
           <>
-            <UserLocation />
+            <UserLocation minDisplacement={DISTANCE_INTERVAL} />
             {isTracking && <UserTooltipMarker location={location} />}
           </>
         )}

@@ -8,7 +8,7 @@ import {
   NativeNavigationComponent,
   NativeRootNavigationProps,
 } from '../../sharedTypes/navigation';
-import {useEditObservation} from '../../hooks/server/observations';
+import {useUpdateDocument} from '@comapeo/core-react';
 import {useCreateBlobMutation} from '../../hooks/server/media';
 import {SaveButton} from '../../sharedComponents/SaveButton';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
@@ -52,15 +52,19 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   route,
 }) => {
   const {formatMessage} = useIntl();
-  const {projectApi} = useActiveProject();
+  const {projectApi, projectId} = useActiveProject();
 
   const value = usePersistedDraftObservation(store => store.value);
   const {updateTags, clearDraft, usePreset, existingObservationToDraft} =
     useDraftObservation();
   const preset = usePreset();
-  const editObservationMutation = useEditObservation();
+  const {mutate, status, reset} = useUpdateDocument({
+    docType: 'observation',
+    projectId,
+  });
   const attachments = usePersistedDraftObservation(store => store.attachments);
-  const createBlobMutation = useCreateBlobMutation();
+  const {mutateAsync: createBlobAsync, reset: resetAttachment} =
+    useCreateBlobMutation();
 
   const notes = value?.tags.notes;
   const presetName = preset
@@ -69,6 +73,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         defaultMessage: preset.name,
       })
     : formatMessage(m.observation);
+  const [error, setError] = React.useState<Error | null>(null);
 
   // TODO: This shouldn't be an effect, the logic should happen when the user
   // presses the edit button.
@@ -138,7 +143,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       removedAudioAttachments.length > 0;
 
     if (!attachmentsChanged) {
-      editObservationMutation.mutate(
+      mutate(
         {
           versionId: value.versionId,
           value: {
@@ -150,15 +155,16 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         },
         {
           onSuccess: handleNavigationSuccess,
+          onError: err => {
+            setError(err as Error);
+          },
         },
       );
       return;
     }
 
     const unsavedFiles = [...newPhotos, ...newAudioRecordings];
-    const attachmentPromises = unsavedFiles.map(file =>
-      createBlobMutation.mutateAsync(file),
-    );
+    const attachmentPromises = unsavedFiles.map(file => createBlobAsync(file));
 
     Promise.all(attachmentPromises).then(results => {
       const newAttachments = results.map(
@@ -180,7 +186,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         ...newAttachments,
       ];
 
-      editObservationMutation.mutate(
+      mutate(
         {
           versionId: value.versionId,
           value: {
@@ -193,16 +199,20 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         },
         {
           onSuccess: handleNavigationSuccess,
+          onError: err => {
+            setError(err as Error);
+          },
         },
       );
     });
   }, [
     preset,
     value,
-    editObservationMutation,
-    createBlobMutation,
+    mutate,
+    createBlobAsync,
     attachments,
     handleNavigationSuccess,
+    setError,
   ]);
 
   React.useLayoutEffect(() => {
@@ -210,7 +220,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       headerRight: () => (
         <SaveButton
           onPress={editObservation}
-          isLoading={editObservationMutation.isPending}
+          isLoading={status === 'pending'}
         />
       ),
       headerLeft: props => (
@@ -220,12 +230,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         />
       ),
     });
-  }, [
-    editObservation,
-    editObservationMutation,
-    navigation,
-    route.params?.observationId,
-  ]);
+  }, [editObservation, status, navigation, route.params?.observationId]);
 
   return !value ? (
     <Loading />
@@ -249,10 +254,11 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
       />
       <ErrorBottomSheet
-        error={editObservationMutation.error}
+        error={error}
         clearError={() => {
-          editObservationMutation.reset();
-          createBlobMutation.reset();
+          setError(null);
+          reset();
+          resetAttachment();
         }}
         tryAgain={editObservation}
       />

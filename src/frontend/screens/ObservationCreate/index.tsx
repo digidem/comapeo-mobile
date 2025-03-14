@@ -5,7 +5,7 @@ import {Editor} from '../../sharedComponents/Editor';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {useCreateDocument, useCreateBlob} from '@comapeo/core-react';
+import {useCreateDocument} from '@comapeo/core-react';
 import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import {SaveButton} from '../../sharedComponents/SaveButton';
 import {useMostAccurateLocationForObservation} from './useMostAccurateLocationForObservation';
@@ -16,13 +16,12 @@ import {ActionsRow} from '../../sharedComponents/ActionsRow';
 import {Alert, type AlertButton} from 'react-native';
 import {Observation} from '@comapeo/schema';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {useCreateBlobMutation} from '../../hooks/server/media';
 
 import {
   isProcessedDraftPhoto,
   isUnsavedAudio,
 } from '../../lib/attachmentTypeChecks';
-import {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
-import {UnsavedAudio} from '../../sharedTypes/audio';
 
 const m = defineMessages({
   observation: {
@@ -106,10 +105,10 @@ export const ObservationCreate = ({
     projectId,
   });
   const {
-    mutate: mutateAttachment,
-    status: attachmentStatus,
+    mutateAsync: createBlobAsync,
     reset: resetAttachment,
-  } = useCreateBlob({projectId});
+    status: attachmentStatus,
+  } = useCreateBlobMutation();
 
   const isTracking = usePersistedTrack(state => state.isTracking);
   const addNewTrackLocations = usePersistedTrack(
@@ -159,63 +158,10 @@ export const ObservationCreate = ({
     [addNewTrackLocations, addNewTrackObservation, value],
   );
 
-  const createBlobAsync = React.useCallback(
-    async (file: ProcessedDraftPhoto | UnsavedAudio) => {
-      return new Promise<{
-        driveDiscoveryId: string;
-        type: 'photo' | 'audio' | 'video';
-        name: string;
-        hash: string;
-      }>((resolve, reject) => {
-        const args = fileToBlobArgs(file);
-
-        mutateAttachment(args, {
-          onSuccess: data => {
-            resolve({
-              driveDiscoveryId: data.driveId,
-              name: data.name,
-              type: data.type,
-              hash: data.hash,
-            });
-          },
-          onError: err => reject(err),
-        });
-      });
-    },
-    [mutateAttachment],
-  );
-
-  function fileToBlobArgs(file: ProcessedDraftPhoto | UnsavedAudio) {
-    if (isProcessedDraftPhoto(file)) {
-      const {originalUri, previewUri, thumbnailUri, mediaMetadata} = file;
-      return {
-        original: new URL(originalUri).pathname,
-        preview: previewUri ? new URL(previewUri).pathname : undefined,
-        thumbnail: thumbnailUri ? new URL(thumbnailUri).pathname : undefined,
-        metadata: {
-          mimeType: 'image/jpeg',
-          location: mediaMetadata.location,
-          timestamp: mediaMetadata.timestamp,
-        },
-      };
-    } else if (isUnsavedAudio(file)) {
-      const {uri, createdAt} = file;
-      return {
-        original: new URL(uri).pathname,
-        metadata: {
-          mimeType: 'audio/mp4',
-          timestamp: createdAt,
-        },
-      };
-    }
-    throw new Error('Unknown file type');
-  }
-
   const createObservation = React.useCallback(async () => {
     if (!value) throw new Error('no observation saved in persisted state ');
 
     const unsavedPhotos = attachments.filter(isProcessedDraftPhoto);
-
     const unsavedAudioRecordings = attachments.filter(isUnsavedAudio);
 
     if (unsavedPhotos.length === 0 && unsavedAudioRecordings.length === 0) {
@@ -361,8 +307,8 @@ export const ObservationCreate = ({
   }, [
     navigation,
     observationStatus,
-    attachmentStatus,
     checkAccuracyAndLocation,
+    attachmentStatus,
   ]);
 
   return (

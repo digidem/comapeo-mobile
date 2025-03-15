@@ -1,14 +1,15 @@
 import * as React from 'react';
 
-import {useStore} from 'zustand';
+import {StoreApi, useStore} from 'zustand';
 import CheapRuler from 'cheap-ruler';
 import * as Location from 'expo-location';
-import {AppState, type AppStateStatus} from 'react-native';
 import {
   DraftState,
   DraftObservationStore,
   convertPosition,
 } from './PersistedStores/DraftObservationStore.ts';
+import {useLocationContext} from './LocationContext.tsx';
+import {LocationState} from './PersistedStores/LocationStore.ts';
 
 export function useDraftObservationState(): DraftState;
 export function useDraftObservationState<T>(
@@ -34,12 +35,17 @@ type DraftObservationProviderProps = {
   draftObservationStore: DraftObservationStore;
 };
 
-/** `draftObservationStore` should be initialized outside of react life cycle */
+/** `draftObservationStore` should be initialized outside of react life cycle there will be a stable value */
+// eslint-disable-next-line @eslint-react/no-unstable-context-value
 export const DraftObservationProvider = ({
   children,
   draftObservationStore,
 }: DraftObservationProviderProps) => {
-  createDraftObservationLocationUpdator(draftObservationStore);
+  const locationStore = useLocationContext();
+  useCreateDraftObservationLocationUpdator(
+    draftObservationStore,
+    locationStore,
+  );
   return (
     <DraftObservationContext.Provider value={draftObservationStore}>
       {children}
@@ -56,10 +62,6 @@ function useDraftObservationContext() {
   return value;
 }
 
-const LOCATION_OPTIONS: Location.LocationOptions = {
-  accuracy: Location.Accuracy.Highest,
-  timeInterval: 1000,
-};
 /** We don't update the position of an observation with the location from the
  * device location provider if the location is older than this threshold */
 const STALE_LOCATION_THRESHOLD_MS = 1000;
@@ -74,94 +76,123 @@ const MOVED_AWAY_THRESHOLD_METERS = 100;
  * update is 15m away. */
 const ACCURACY_MOVED_AWAY_FACTOR = 1.5;
 
-async function createDraftObservationLocationUpdator({
-  instance,
-  actions: {updatePosition},
-}: DraftObservationStore) {
-  let {granted: locationPermissionGranted} =
-    await Location.getForegroundPermissionsAsync();
-  let locationSubscriptionPromise: Promise<Location.LocationSubscription> | null =
-    null;
-  let appState: AppStateStatus = AppState.currentState;
-  let isNewlyCreatedDraftInStore = isNewlyCreatedDraft(instance.getState());
+function useCreateDraftObservationLocationUpdator(
+  draftObservationStore: DraftObservationStore,
+  locationStore: StoreApi<LocationState>,
+) {
+  React.useEffect(() => {
+    let locationSubscription: (() => void) | null = null;
+    let storeStateSubscription: (() => void) | null = null;
 
-  AppState.addEventListener('change', async nextAppState => {
-    appState = nextAppState;
-    if (appState === 'active' && !locationPermissionGranted) {
-      locationPermissionGranted = (
-        await Location.getForegroundPermissionsAsync()
-      ).granted;
-    }
-    watchPositionIfNeeded();
-  });
+    if (storeStateSubscription) return;
 
-  instance.subscribe(storeState => {
-    isNewlyCreatedDraftInStore = isNewlyCreatedDraft(storeState);
-    watchPositionIfNeeded();
-  });
+    draftObservationStore.instance.subscribe(storeState => {
+      const isNewlyCreatedDraftInStore = isNewlyCreatedDraft(storeState);
+      if (isNewlyCreatedDraftInStore && !locationSubscription) {
+        locationSubscription = locationStore.subscribe(locationState => {
+          const {value: currentDraft, initialPosition} =
+            draftObservationStore.instance.getState();
 
-  async function watchPositionIfNeeded() {
-    const shouldBeWatchingPosition =
-      appState === 'active' &&
-      isNewlyCreatedDraftInStore &&
-      locationPermissionGranted;
+          if (!currentDraft) {
+            // should not get here, re: isNewlyCreatedDraftInStore above
+            return;
+          }
 
-    if (shouldBeWatchingPosition && !locationSubscriptionPromise) {
-      locationSubscriptionPromise = Location.watchPositionAsync(
-        LOCATION_OPTIONS,
-        onPositionUpdate,
-      );
-    } else if (!shouldBeWatchingPosition && locationSubscriptionPromise) {
-      // Avoid a race condition by nulling the state before awaiting the promise
-      const locationSubscriptionPromiseCopy = locationSubscriptionPromise;
-      locationSubscriptionPromise = null;
-      const subscription = await locationSubscriptionPromiseCopy;
-      subscription.remove();
-    }
-  }
+          const location = locationState.location;
 
-  function onPositionUpdate(location: Location.LocationObject) {
-    const {value: currentDraft, initialPosition} = instance.getState();
-    if (!currentDraft) return;
+          if (!location) return;
+          // if the permission is not granted, there should be no new location. Therefore this location being returned here is stale
+          if (locationState.locationPermission !== 'granted') return;
 
-    const isManualLocation = !!currentDraft.metadata?.manualLocation;
-    if (isManualLocation) return;
+          const providerStatus = locationState.providerStatus;
 
-    const isStale =
-      Date.now() - location.timestamp > STALE_LOCATION_THRESHOLD_MS;
-    if (isStale) return;
+          // if location services is not enabled, the location is stale
+          if (!providerStatus?.locationServicesEnabled) return;
 
-    instance.setState(prev => {
-      if (prev.initialPosition || !prev.value) return prev;
-      return {...prev, initialPosition: convertPosition(location)};
+          // If manual location, do not update
+          if (
+            draftObservationStore.instance.getState().value?.metadata
+              ?.manualLocation
+          )
+            return;
+
+          // if no initial position, set initial position
+          if (!initialPosition) {
+            draftObservationStore.instance.setState(prev => {
+              {
+                if (!prev.value) return prev;
+                return {...prev, initialPosition: convertPosition(location)};
+              }
+            });
+          }
+
+          onPositionUpdate({
+            draftObservationStore,
+            location: location,
+            positionProvider: providerStatus,
+          });
+        });
+      } else if (!isNewlyCreatedDraftInStore && locationSubscription) {
+        locationSubscription();
+        locationSubscription = null;
+      }
     });
 
-    const initialAccuracy = initialPosition?.coords.accuracy;
-    const movedAwayThreshold = initialAccuracy
-      ? initialAccuracy * ACCURACY_MOVED_AWAY_FACTOR
-      : MOVED_AWAY_THRESHOLD_METERS;
-    const hasMovedAway =
-      initialPosition &&
-      distanceBetweenCoords(initialPosition.coords, location.coords) >
-        movedAwayThreshold;
-    if (hasMovedAway) return;
+    return () => {
+      if (storeStateSubscription) {
+        storeStateSubscription();
+        storeStateSubscription = null;
+      }
+      if (locationSubscription) {
+        locationSubscription();
+        locationSubscription = null;
+      }
+    };
+  }, [draftObservationStore, locationStore]);
+}
 
-    const currentDraftCoords = currentDraft.metadata?.position?.coords;
+function onPositionUpdate({
+  location,
+  positionProvider,
+  draftObservationStore,
+}: {
+  location: Location.LocationObject;
+  positionProvider: Location.LocationProviderStatus;
+  draftObservationStore: DraftObservationStore;
+}) {
+  const {value: currentDraft, initialPosition} =
+    draftObservationStore.instance.getState();
 
-    const isMoreAccurate =
-      !currentDraftCoords ||
-      !location.coords.accuracy ||
-      !currentDraftCoords.accuracy ||
-      location.coords.accuracy < currentDraftCoords.accuracy;
+  if (!currentDraft) return;
 
-    if (!isMoreAccurate) return;
+  const isStale = Date.now() - location.timestamp > STALE_LOCATION_THRESHOLD_MS;
+  if (isStale) return;
 
-    updatePosition({
-      manualLocation: false,
-      position: location,
-      // TODO: Also add positionProvider. Probably needs access to the locationProvider store.
-    });
-  }
+  const initialAccuracy = initialPosition?.coords.accuracy;
+  const movedAwayThreshold = initialAccuracy
+    ? initialAccuracy * ACCURACY_MOVED_AWAY_FACTOR
+    : MOVED_AWAY_THRESHOLD_METERS;
+  const hasMovedAway =
+    initialPosition &&
+    distanceBetweenCoords(initialPosition.coords, location.coords) >
+      movedAwayThreshold;
+  if (hasMovedAway) return;
+
+  const currentDraftCoords = currentDraft.metadata?.position?.coords;
+
+  const isMoreAccurate =
+    !currentDraftCoords ||
+    !location.coords.accuracy ||
+    !currentDraftCoords.accuracy ||
+    location.coords.accuracy < currentDraftCoords.accuracy;
+
+  if (!isMoreAccurate) return;
+
+  draftObservationStore.actions.updatePosition({
+    manualLocation: false,
+    position: location,
+    positionProvider,
+  });
 }
 
 function isNewlyCreatedDraft(storeState: DraftState) {

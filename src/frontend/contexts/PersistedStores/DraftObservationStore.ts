@@ -252,7 +252,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
           manualLocation: false;
           position: LocationObject;
           // TODO: Optional for now until we integrate this into the draft observation location updater
-          positionProvider?: LocationProviderStatus;
+          positionProvider: LocationProviderStatus;
         }
       | {
           manualLocation: true;

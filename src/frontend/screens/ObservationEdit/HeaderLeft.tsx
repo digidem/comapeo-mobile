@@ -36,7 +36,7 @@ const m = defineMessages({
 
 type HeaderLeftProps = {
   headerBackButtonProps: HeaderBackButtonProps;
-  observationId?: string;
+  observationId: string;
 };
 
 export const HeaderLeft = ({
@@ -69,11 +69,7 @@ export const HeaderLeft = ({
   function handleDiscard() {
     clearDraft();
     closeSheet();
-    if (observationId) {
-      navigation.popTo('Observation', {observationId});
-    } else {
-      navigation.popTo('Home', {screen: 'Map'});
-    }
+    navigation.popTo('Observation', {observationId});
   }
 
   return (

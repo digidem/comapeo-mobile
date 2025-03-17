@@ -75,10 +75,6 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   React.useEffect(() => {
     let cancelled = false;
     if (value) return;
-    if (!route.params?.observationId) {
-      navigation.goBack();
-      return;
-    }
 
     async function createDraftFromExistingObservation(docId: string) {
       const observation = await projectApi.observation.getByDocId(docId);
@@ -113,14 +109,10 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
 
   const handleNavigationSuccess = React.useCallback(() => {
     clearDraft();
-    if (route.params?.observationId) {
-      navigation.popTo('Observation', {
-        observationId: route.params.observationId,
-      });
-    } else {
-      navigation.popTo('Home', {screen: 'Map'});
-    }
-  }, [clearDraft, route.params?.observationId, navigation]);
+    navigation.popTo('Observation', {
+      observationId: route.params.observationId,
+    });
+  }, [clearDraft, route.params.observationId, navigation]);
 
   const editObservation = React.useCallback(() => {
     if (!value) {

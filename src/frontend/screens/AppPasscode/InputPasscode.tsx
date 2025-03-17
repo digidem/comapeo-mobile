@@ -66,7 +66,7 @@ export const InputPasscode = ({
     if (!showNext && newVal.length === 5) validate(newVal);
   }
 
-  const {navigate} = useNavigationFromRoot();
+  const {popTo} = useNavigationFromRoot();
 
   return (
     <>
@@ -79,7 +79,7 @@ export const InputPasscode = ({
               variant="outlined"
               color="ComapeoBlue"
               onPress={() => {
-                navigate('Security');
+                popTo('Security');
               }}>
               {t(m.cancel)}
             </Button>

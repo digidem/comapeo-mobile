@@ -163,7 +163,7 @@ export const ObservationCreate = ({
         {
           onSuccess: data => {
             clearDraft();
-            navigation.navigate('Home', {screen: 'Map'});
+            navigation.popTo('Home', {screen: 'Map'});
             if (isTracking) {
               addObservationRefToTrack(data);
             }

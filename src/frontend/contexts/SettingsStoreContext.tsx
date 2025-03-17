@@ -11,7 +11,6 @@ import {
   CoordinateFormatSchema,
   type CoordinateFormat,
 } from '../lib/coordinateFormat';
-import {DEFAULT_OBSCURE_CODE, isValidPasscode} from '../lib/security';
 
 export const SettingsStateSchema = v.object({
   coordinateFormat: v.union([CoordinateFormatSchema, v.null()]),
@@ -23,8 +22,6 @@ export const SettingsStateSchema = v.object({
   ]),
   manualCoordinateEntryFormat: v.union([CoordinateFormatSchema, v.null()]),
   metricsDiagnosticsPermissionsEnabled: v.union([v.boolean(), v.null()]),
-  obscureCode: v.union([v.string(), v.null()]),
-  passcode: v.union([v.string(), v.null()]),
 });
 
 export type SettingsState = v.InferOutput<typeof SettingsStateSchema>;
@@ -38,8 +35,6 @@ function createInitialState(): SettingsState {
     locale: null,
     manualCoordinateEntryFormat: null,
     metricsDiagnosticsPermissionsEnabled: null,
-    obscureCode: null,
-    passcode: null,
   };
 }
 
@@ -89,38 +84,6 @@ export function createSettingsStore({persist} = {persist: false}) {
   const actions = {
     setLocale: (locale: SettingsState['locale']) => {
       store.setState({locale});
-    },
-    setPasscode: (passcode: SettingsState['passcode']) => {
-      if (passcode === DEFAULT_OBSCURE_CODE) {
-        throw new Error('Passcode is reserved');
-      }
-
-      // Obscure code needs to be unset when passcode is unset
-      if (passcode === null) {
-        store.setState({passcode, obscureCode: null});
-        return;
-      }
-
-      const {obscureCode} = store.getState();
-
-      if (passcode === obscureCode) {
-        throw new Error('Passcode is already being used as obscure code');
-      }
-
-      if (!isValidPasscode(passcode)) {
-        throw new Error('Passcode is invalid');
-      }
-
-      store.setState({passcode});
-    },
-    enableObscureCode: (enabled: boolean) => {
-      const {passcode} = store.getState();
-
-      if (passcode === null) {
-        throw new Error('Cannot enable obscure code if passcode is not set');
-      }
-
-      store.setState({obscureCode: enabled ? DEFAULT_OBSCURE_CODE : null});
     },
     setMetricsDiagnosticsPermissions: (enabled: boolean) => {
       store.setState({metricsDiagnosticsPermissionsEnabled: enabled});

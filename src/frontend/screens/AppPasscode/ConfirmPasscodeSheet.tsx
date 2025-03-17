@@ -2,7 +2,7 @@ import * as React from 'react';
 import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
 import {defineMessages, useIntl} from 'react-intl';
 
-import {useSettingsActions} from '../../contexts/SettingsStoreContext';
+import {usePersistedPasscode} from '../../hooks/persistedState/usePersistedPasscode';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import ErrorIcon from '../../images/Error.svg';
 import {RED} from '../../lib/styles';
@@ -47,7 +47,7 @@ export const ConfirmPasscodeSheet = React.forwardRef<
   ConfirmPasscodeSheetProps
 >(({inputtedPasscode, isOpen}, sheetRef) => {
   const {formatMessage: t} = useIntl();
-  const {setPasscode} = useSettingsActions();
+  const setPasscode = usePersistedPasscode(store => store.setPasscode);
   const navigation = useNavigationFromRoot();
 
   function setPasscodeAndNavigateBack() {

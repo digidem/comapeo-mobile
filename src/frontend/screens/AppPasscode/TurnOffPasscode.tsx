@@ -16,6 +16,7 @@ import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {useFocusEffect, StackActions} from '@react-navigation/native';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {HeaderBackButtonProps} from '@react-navigation/elements';
+import {usePersistedPasscode} from '../../hooks/persistedState/usePersistedPasscode';
 import {useSecurityContext} from '../../contexts/SecurityContext';
 import {Text} from '../../sharedComponents/Text';
 import {
@@ -23,7 +24,6 @@ import {
   BottomSheetModalContent,
   useBottomSheetModal,
 } from '../../sharedComponents/BottomSheetModal';
-import {useSettingsActions} from '../../contexts/SettingsStoreContext';
 
 const m = defineMessages({
   usePasscode: {
@@ -66,7 +66,7 @@ export const TurnOffPasscode: NativeNavigationComponent<'DisablePasscode'> = ({
   navigation,
 }) => {
   const {authValuesSet} = useSecurityContext();
-  const {setPasscode} = useSettingsActions();
+  const setPasscode = usePersistedPasscode(state => state.setPasscode);
 
   const {sheetRef, openSheet, closeSheet, isOpen} = useBottomSheetModal({
     openOnMount: false,

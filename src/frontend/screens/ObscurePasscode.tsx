@@ -8,8 +8,8 @@ import {LIGHT_GREY} from '../lib/styles';
 import {Text} from '../sharedComponents/Text';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {useSecurityContext} from '../contexts/SecurityContext';
+import {usePersistedPasscode} from '../hooks/persistedState/usePersistedPasscode';
 import {NativeNavigationComponent} from '../sharedTypes/navigation';
-import {useSettingsActions} from '../contexts/SettingsStoreContext';
 
 const m = defineMessages({
   title: {
@@ -40,7 +40,7 @@ export const ObscurePasscode: NativeNavigationComponent<'ObscurePasscode'> = ({
   navigation,
 }) => {
   const {authValuesSet, authState} = useSecurityContext();
-  const {enableObscureCode} = useSettingsActions();
+  const setObscureCode = usePersistedPasscode(state => state.setObscureCode);
 
   const {formatMessage: t} = useIntl();
 
@@ -58,7 +58,9 @@ export const ObscurePasscode: NativeNavigationComponent<'ObscurePasscode'> = ({
 
       <TouchableOpacity
         style={styles.switch}
-        onPress={() => enableObscureCode(!authValuesSet.obscureSet)}>
+        onPress={() =>
+          setObscureCode(authValuesSet.obscureSet ? null : undefined)
+        }>
         <React.Fragment>
           <Text style={{fontSize: 16}}>{t(m.toggleMessage)}</Text>
 

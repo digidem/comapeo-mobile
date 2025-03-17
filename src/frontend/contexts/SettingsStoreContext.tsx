@@ -139,26 +139,16 @@ export function useSettingsState<T>(selector?: (state: ResolvedSettings) => T) {
   return useStore(
     instance,
     useShallow(state => {
-      const coordinateFormat =
-        state.coordinateFormat === null
-          ? SETTINGS_DEFAULTS.coordinateFormat
-          : state.coordinateFormat;
-
-      const manualCoordinateEntryFormat =
-        state.manualCoordinateEntryFormat === null
-          ? SETTINGS_DEFAULTS.manualCoordinateEntryFormat
-          : state.manualCoordinateEntryFormat;
-
-      const metricsDiagnosticsPermissionsEnabled =
-        state.metricsDiagnosticsPermissionsEnabled === null
-          ? SETTINGS_DEFAULTS.metricsDiagnosticsPermissionsEnabled
-          : state.metricsDiagnosticsPermissionsEnabled;
-
       const resolvedState: ResolvedSettings = {
         ...state,
-        coordinateFormat,
-        manualCoordinateEntryFormat,
-        metricsDiagnosticsPermissionsEnabled,
+        coordinateFormat:
+          state.coordinateFormat ?? SETTINGS_DEFAULTS.coordinateFormat,
+        manualCoordinateEntryFormat:
+          state.manualCoordinateEntryFormat ??
+          SETTINGS_DEFAULTS.manualCoordinateEntryFormat,
+        metricsDiagnosticsPermissionsEnabled:
+          state.metricsDiagnosticsPermissionsEnabled ??
+          SETTINGS_DEFAULTS.metricsDiagnosticsPermissionsEnabled,
       };
 
       return selector ? selector(resolvedState) : resolvedState;

@@ -20,7 +20,6 @@ import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
 import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
 import {TrackBottomSheet} from './TrackBottomSheet';
 import {CurrentTrackMapLayer} from './CurrentTrack/CurrrentTrackMapLayer';
-import {UserLocation} from './UserLocation';
 import {useSharedLocationContext} from '../../contexts/SharedLocationContext';
 import {useMapStyleJsonUrl} from '../../hooks/server/maps';
 import {TracksMapLayer} from './MapLayers/TracksMapLayer';
@@ -29,6 +28,10 @@ import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLa
 import {matchPreset} from '../../lib/utils';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
+import {UserLocation} from '@rnmapbox/maps';
+import {TRACKING_DISTANCE_INTERVAL} from '../../hooks/useTracking';
+import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
+import {UserTooltipMarker} from './CurrentTrack/UserTooltipMarker';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -40,7 +43,6 @@ assert(
   'MAPBOX_ACCESS_TOKEN environment variable should be set',
 );
 Mapbox.setAccessToken(process.env.MAPBOX_ACCESS_TOKEN);
-const MIN_DISPLACEMENT = 3;
 
 export const MapScreen = ({
   route,
@@ -64,6 +66,7 @@ export const MapScreen = ({
     store => store.value,
   );
   const {data: presets} = usePresetsQuery();
+  const isTracking = usePersistedTrack(state => state.isTracking);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -148,8 +151,10 @@ export const MapScreen = ({
         />
 
         {coords && locationServicesEnabled && (
-          <UserLocation minDisplacement={MIN_DISPLACEMENT} />
+          <UserLocation minDisplacement={TRACKING_DISTANCE_INTERVAL} />
         )}
+
+        {isTracking && <UserTooltipMarker />}
 
         {isFinishedLoading && (
           <>

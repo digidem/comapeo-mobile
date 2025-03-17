@@ -3,6 +3,11 @@ import {useCallback, useState} from 'react';
 import {usePersistedTrack} from './persistedState/usePersistedTrack';
 import {LOCATION_TASK_NAME} from '../sharedTypes/location.ts';
 
+/**
+ * This constant should be used for tracks and for the userlocation dot. In order for the user location dot to align with the track on the map, they need to update at the same frequency.
+ */
+const TRACKING_DISTANCE_INTERVAL = 2;
+
 export function useTracking() {
   const [loading, setLoading] = useState(false);
   const setTracking = usePersistedTrack(state => state.setTracking);
@@ -19,7 +24,7 @@ export function useTracking() {
 
     await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
       accuracy: Location.Accuracy.Highest,
-      activityType: Location.LocationActivityType.Fitness,
+      distanceInterval: TRACKING_DISTANCE_INTERVAL,
     });
 
     setTracking(true);

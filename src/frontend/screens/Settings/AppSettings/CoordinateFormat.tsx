@@ -9,8 +9,10 @@ import {
   formatCoords,
   type CoordinateFormat as CoordinateFormatType,
 } from '../../../lib/coordinateFormat';
-import {useCoordinateFormat} from '../../../hooks/resolvedSettings/useCoordinateFormat';
-import {useSettingsActions} from '../../../contexts/SettingsStoreContext';
+import {
+  useSettingsActions,
+  useSettingsState,
+} from '../../../contexts/SettingsStoreContext';
 
 const m = defineMessages({
   title: {
@@ -43,8 +45,8 @@ export const CoordinateFormat: NativeNavigationComponent<
   'CoordinateFormat'
 > = () => {
   const {formatMessage} = useIntl();
-  const coordinateFormat = useCoordinateFormat();
-  const {setCoordinateFormat} = useSettingsActions();
+  const coordinateFormat = useSettingsState(state => state.coordinateFormat);
+  const {setSetting} = useSettingsActions();
 
   const location = useLastKnownLocation();
 
@@ -75,7 +77,7 @@ export const CoordinateFormat: NativeNavigationComponent<
     <ScrollView testID="coordinateFormatScrollView">
       <SelectOne
         value={coordinateFormat}
-        onChange={val => setCoordinateFormat(val)}
+        onChange={val => setSetting('coordinateFormat', val)}
         options={options}
       />
     </ScrollView>

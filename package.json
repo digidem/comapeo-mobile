@@ -114,7 +114,7 @@
     "tiny-typed-emitter": "2.1.0",
     "uint8array-extras": "0.5.0",
     "utm": "1.1.1",
-    "valibot": "0.42.1",
+    "valibot": "1.0.0-rc.4",
     "validate-color": "2.2.4",
     "zustand": "5.0.3"
   },

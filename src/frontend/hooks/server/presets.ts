@@ -6,7 +6,7 @@ import {
 import {PresetValue} from '@comapeo/schema';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {useLanguageTag} from '../resolvedSettings/useLanguageTag';
+import {useLanguageTag} from '../useLanguageTag';
 
 export const PRESETS_KEY = 'presets';
 

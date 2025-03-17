@@ -2,7 +2,7 @@ import * as React from 'react';
 import {defineMessages} from 'react-intl';
 import {ScrollView} from 'react-native';
 
-import {useLanguageTag} from '../../../hooks/resolvedSettings/useLanguageTag';
+import {useLanguageTag} from '../../../hooks/useLanguageTag';
 import {USABLE_LANGUAGES} from '../../../lib/intl';
 import {SelectOne} from '../../../sharedComponents/SelectOne';
 import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
@@ -20,7 +20,7 @@ export const LanguageSettings: NativeNavigationComponent<
   'LanguageSettings'
 > = ({navigation}) => {
   const resolvedLanguageTag = useLanguageTag();
-  const {setLocale} = useSettingsActions();
+  const {setSetting} = useSettingsActions();
 
   const options = USABLE_LANGUAGES.map(
     ({languageTag, nativeName, englishName}) => ({
@@ -36,7 +36,7 @@ export const LanguageSettings: NativeNavigationComponent<
         value={resolvedLanguageTag.value}
         options={options}
         onChange={value => {
-          setLocale({languageTag: value});
+          setSetting('locale', {languageTag: value});
           navigation.popTo('AppSettings');
         }}
       />

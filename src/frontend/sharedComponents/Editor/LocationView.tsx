@@ -4,7 +4,7 @@ import {BLACK} from '../../lib/styles';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import LocationIcon from '../../images/Location.svg';
 import {FormattedCoords} from '../FormattedData';
-import {useCoordinateFormat} from '../../hooks/resolvedSettings/useCoordinateFormat';
+import {useSettingsState} from '../../contexts/SettingsStoreContext';
 
 const m = defineMessages({
   searching: {
@@ -21,7 +21,7 @@ type LocationViewProps = {
 };
 
 export const LocationView = ({lat, lon, accuracy}: LocationViewProps) => {
-  const coordinateFormat = useCoordinateFormat();
+  const coordinateFormat = useSettingsState(state => state.coordinateFormat);
   return (
     <View style={styles.locationContainer}>
       {lat === undefined || lon === undefined ? (

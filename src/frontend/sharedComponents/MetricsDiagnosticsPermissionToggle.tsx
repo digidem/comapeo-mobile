@@ -3,8 +3,10 @@ import {View, Text, StyleSheet} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
 import {WHITE, BLACK} from '../lib/styles';
 import {Checkbox} from './Checkbox';
-import {useMetricsPermissionsEnabled} from '../hooks/resolvedSettings/useMetricsPermissionsEnabled';
-import {useSettingsActions} from '../contexts/SettingsStoreContext';
+import {
+  useSettingsActions,
+  useSettingsState,
+} from '../contexts/SettingsStoreContext';
 
 const m = defineMessages({
   shareDiagnostics: {
@@ -15,10 +17,13 @@ const m = defineMessages({
 
 export const MetricsDiagnosticsPermissionToggle: React.FC = () => {
   const {formatMessage} = useIntl();
-  const isEnabled = useMetricsPermissionsEnabled();
-  const {setMetricsDiagnosticsPermissions} = useSettingsActions();
+  const isEnabled = useSettingsState(
+    state => state.metricsDiagnosticsPermissionsEnabled,
+  );
+  const {setSetting} = useSettingsActions();
 
-  const togglePermission = () => setMetricsDiagnosticsPermissions(!isEnabled);
+  const togglePermission = () =>
+    setSetting('metricsDiagnosticsPermissionsEnabled', !isEnabled);
 
   return (
     <View style={styles.container}>

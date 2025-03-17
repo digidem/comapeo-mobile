@@ -1,6 +1,6 @@
 import {useQuery} from '@tanstack/react-query';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {useLanguageTag} from '../resolvedSettings/useLanguageTag';
+import {useLanguageTag} from '../useLanguageTag';
 
 export const FIELDS_KEY = 'fields';
 

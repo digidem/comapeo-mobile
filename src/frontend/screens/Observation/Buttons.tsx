@@ -19,7 +19,7 @@ import {
   formatCoords,
   type CoordinateFormat,
 } from '../../lib/coordinateFormat.ts';
-import {useCoordinateFormat} from '../../hooks/resolvedSettings/useCoordinateFormat.ts';
+import {useSettingsState} from '../../contexts/SettingsStoreContext.tsx';
 
 const m = defineMessages({
   delete: {
@@ -96,7 +96,7 @@ export const ButtonFields = ({
   const navigation = useNavigationFromRoot();
   const deleteObservationMutation = useDeleteObservation();
   const {observation, preset} = useObservationWithPreset(observationId);
-  const format = useCoordinateFormat();
+  const format = useSettingsState(state => state.coordinateFormat);
   const [isShareButtonLoading, setShareButtonLoading] = useState(false);
   const {projectApi} = useActiveProject();
   const openShare = useOpenShareDialog();

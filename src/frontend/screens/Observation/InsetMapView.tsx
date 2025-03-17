@@ -4,7 +4,7 @@ import {View, Text, StyleSheet, Dimensions, Image} from 'react-native';
 import {BLACK, WHITE} from '../../lib/styles';
 import {FormattedCoords} from '../../sharedComponents/FormattedData';
 import {useMapStyleJsonUrl} from '../../hooks/server/maps';
-import {useCoordinateFormat} from '../../hooks/resolvedSettings/useCoordinateFormat';
+import {useSettingsState} from '../../contexts/SettingsStoreContext';
 
 const MAP_HEIGHT = 175;
 const ICON_OFFSET = {x: 22, y: 21};
@@ -15,7 +15,7 @@ type MapProps = {
 };
 
 export const InsetMapView = React.memo<MapProps>(({lon, lat}: MapProps) => {
-  const format = useCoordinateFormat();
+  const format = useSettingsState(state => state.coordinateFormat);
   const styleUrlQuery = useMapStyleJsonUrl();
 
   return (

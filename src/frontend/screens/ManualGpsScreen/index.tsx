@@ -32,8 +32,10 @@ import {UtmForm} from './UtmForm';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {CoordinateFormatSchema} from '../../lib/coordinateFormat';
-import {useManualEntryCoordinateFormat} from '../../hooks/resolvedSettings/useManualEntryCoordinateFormat';
-import {useSettingsActions} from '../../contexts/SettingsStoreContext';
+import {
+  useSettingsActions,
+  useSettingsState,
+} from '../../contexts/SettingsStoreContext';
 
 const m = defineMessages({
   title: {
@@ -85,9 +87,11 @@ export const ManualGpsScreen = ({
     observationValueSelector,
   );
 
-  const entryCoordinateFormat = useManualEntryCoordinateFormat();
+  const entryCoordinateFormat = useSettingsState(
+    state => state.manualCoordinateEntryFormat,
+  );
 
-  const {setManualCoordinateEntryFormat} = useSettingsActions();
+  const {setSetting} = useSettingsActions();
   const {updateObservationPosition} = useDraftObservation();
 
   React.useEffect(() => {
@@ -161,7 +165,7 @@ export const ManualGpsScreen = ({
                   return;
                 }
 
-                setManualCoordinateEntryFormat(value);
+                setSetting('manualCoordinateEntryFormat', value);
               }}
               options={ENTRY_FORMAT_OPTIONS}
               selectedValue={entryCoordinateFormat}

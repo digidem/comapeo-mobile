@@ -2,12 +2,12 @@ import {useMemo} from 'react';
 import {useLocales} from 'expo-localization';
 
 import {
-  type SettingsState,
+  type Settings,
   useSettingsState,
-} from '../../contexts/SettingsStoreContext';
-import {resolveLanguageTag} from '../../lib/intl';
+} from '../contexts/SettingsStoreContext';
+import {resolveLanguageTag} from '../lib/intl';
 
-function selector(state: SettingsState): string | null {
+function selector(state: Settings): string | null {
   return state.locale ? state.locale.languageTag : null;
 }
 

@@ -7,7 +7,7 @@ import {
   type SettingsStore,
   SettingsStoreProvider,
   useSettingsActions,
-} from '../../contexts/SettingsStoreContext';
+} from '../contexts/SettingsStoreContext';
 import {useLanguageTag} from './useLanguageTag';
 
 function createWrapper(settingsStore: SettingsStore) {
@@ -240,7 +240,9 @@ describe('selected locale exists', () => {
     });
 
     act(() => {
-      settingsActionsHook.result.current.setLocale({languageTag: 'es'});
+      settingsActionsHook.result.current.setSetting('locale', {
+        languageTag: 'es',
+      });
     });
 
     expect(languageTagHook.result.current).toStrictEqual({
@@ -249,7 +251,9 @@ describe('selected locale exists', () => {
     });
 
     act(() => {
-      settingsActionsHook.result.current.setLocale({languageTag: 'en-US'});
+      settingsActionsHook.result.current.setSetting('locale', {
+        languageTag: 'en-US',
+      });
     });
 
     expect(languageTagHook.result.current).toStrictEqual({
@@ -279,7 +283,9 @@ describe('selected locale exists', () => {
 
     act(() => {
       // Intentionally somewhat nonsense
-      settingsActionsHook.result.current.setLocale({languageTag: 'es-ZZ'});
+      settingsActionsHook.result.current.setSetting('locale', {
+        languageTag: 'es-ZZ',
+      });
     });
 
     expect(languageTagHook.result.current).toStrictEqual({
@@ -309,7 +315,9 @@ describe('selected locale exists', () => {
 
     act(() => {
       // Intentionally nonsense
-      settingsActionsHook.result.current.setLocale({languageTag: '__'});
+      settingsActionsHook.result.current.setSetting('locale', {
+        languageTag: '__',
+      });
     });
 
     expect(languageTagHook.result.current).toStrictEqual({
@@ -338,7 +346,9 @@ describe('selected locale exists', () => {
     });
 
     act(() => {
-      settingsActionsHook.result.current.setLocale({languageTag: 'es'});
+      settingsActionsHook.result.current.setSetting('locale', {
+        languageTag: 'es',
+      });
     });
 
     expect(languageTagHook.result.current).toStrictEqual({
@@ -347,7 +357,7 @@ describe('selected locale exists', () => {
     });
 
     act(() => {
-      settingsActionsHook.result.current.setLocale(null);
+      settingsActionsHook.result.current.setSetting('locale', null);
     });
 
     expect(languageTagHook.result.current).toStrictEqual({

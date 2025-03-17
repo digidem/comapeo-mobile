@@ -5,12 +5,11 @@ import {
   createJSONStorage,
   persist as createPersistedState,
 } from 'zustand/middleware';
+import {useShallow} from 'zustand/react/shallow';
 
 import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
-import {
-  CoordinateFormatSchema,
-  type CoordinateFormat,
-} from '../lib/coordinateFormat';
+import {CoordinateFormatSchema} from '../lib/coordinateFormat';
+import {SetNonNullable} from 'type-fest';
 
 export const SettingsStateSchema = v.object({
   coordinateFormat: v.union([CoordinateFormatSchema, v.null()]),
@@ -24,12 +23,34 @@ export const SettingsStateSchema = v.object({
   metricsDiagnosticsPermissionsEnabled: v.union([v.boolean(), v.null()]),
 });
 
-export type SettingsState = v.InferOutput<typeof SettingsStateSchema>;
+/**
+ * "Raw" settings state
+ */
+export type Settings = v.InferOutput<typeof SettingsStateSchema>;
+
+/**
+ * Settings fields that use a default value if missing
+ */
+type SettingWithDefault =
+  | 'coordinateFormat'
+  | 'manualCoordinateEntryFormat'
+  | 'metricsDiagnosticsPermissionsEnabled';
+
+/**
+ * Settings with defaults filled in
+ */
+export type ResolvedSettings = SetNonNullable<Settings, SettingWithDefault>;
+
+const SETTINGS_DEFAULTS = {
+  coordinateFormat: 'utm',
+  manualCoordinateEntryFormat: 'utm',
+  metricsDiagnosticsPermissionsEnabled: true,
+} as const satisfies Pick<ResolvedSettings, SettingWithDefault>;
 
 // NOTE: Do not change!
 export const STORAGE_KEY = 'Settings' as const;
 
-function createInitialState(): SettingsState {
+function createInitialState(): Settings {
   return {
     coordinateFormat: null,
     locale: null,
@@ -39,7 +60,7 @@ function createInitialState(): SettingsState {
 }
 
 export function createSettingsStore({persist} = {persist: false}) {
-  let store: StoreApi<SettingsState>;
+  let store: StoreApi<Settings>;
 
   if (persist) {
     store = createStore(
@@ -47,7 +68,7 @@ export function createSettingsStore({persist} = {persist: false}) {
         name: STORAGE_KEY,
         storage: createJSONStorage(() => MMKVZustandStorage),
         version: 1,
-        migrate: (persistedState, version): SettingsState => {
+        migrate: (persistedState, version): Settings => {
           const migratedState = createInitialState();
 
           if (version === 0) {
@@ -81,24 +102,14 @@ export function createSettingsStore({persist} = {persist: false}) {
     store = createStore(createInitialState);
   }
 
-  const actions = {
-    setLocale: (locale: SettingsState['locale']) => {
-      store.setState({locale});
-    },
-    setMetricsDiagnosticsPermissions: (enabled: boolean) => {
-      store.setState({metricsDiagnosticsPermissionsEnabled: enabled});
-    },
-    setCoordinateFormat: (coordinateFormat: CoordinateFormat) => {
-      store.setState({coordinateFormat});
-    },
-    setManualCoordinateEntryFormat: (coordinateFormat: CoordinateFormat) => {
-      store.setState({manualCoordinateEntryFormat: coordinateFormat});
-    },
-  };
-
   return {
     instance: store,
-    actions,
+    actions: {
+      setSetting: <T extends keyof Settings>(key: T, value: Settings[T]) => {
+        v.assert(SettingsStateSchema.entries[key], value);
+        store.setState({[key]: value});
+      },
+    },
   };
 }
 
@@ -118,11 +129,41 @@ function useSettingsStoreContext() {
   return value;
 }
 
-export function useSettingsState(): SettingsState;
-export function useSettingsState<T>(selector: (state: SettingsState) => T): T;
-export function useSettingsState<T>(selector?: (state: SettingsState) => T) {
+export function useSettingsState(): ResolvedSettings;
+export function useSettingsState<T>(
+  selector: (state: ResolvedSettings) => T,
+): T;
+export function useSettingsState<T>(selector?: (state: ResolvedSettings) => T) {
   const {instance} = useSettingsStoreContext();
-  return useStore(instance, selector!);
+
+  return useStore(
+    instance,
+    useShallow(state => {
+      const coordinateFormat =
+        state.coordinateFormat === null
+          ? SETTINGS_DEFAULTS.coordinateFormat
+          : state.coordinateFormat;
+
+      const manualCoordinateEntryFormat =
+        state.manualCoordinateEntryFormat === null
+          ? SETTINGS_DEFAULTS.manualCoordinateEntryFormat
+          : state.manualCoordinateEntryFormat;
+
+      const metricsDiagnosticsPermissionsEnabled =
+        state.metricsDiagnosticsPermissionsEnabled === null
+          ? SETTINGS_DEFAULTS.metricsDiagnosticsPermissionsEnabled
+          : state.metricsDiagnosticsPermissionsEnabled;
+
+      const resolvedState: ResolvedSettings = {
+        ...state,
+        coordinateFormat,
+        manualCoordinateEntryFormat,
+        metricsDiagnosticsPermissionsEnabled,
+      };
+
+      return selector ? selector(resolvedState) : resolvedState;
+    }),
+  );
 }
 
 export function useSettingsActions() {

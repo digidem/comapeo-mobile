@@ -3,7 +3,7 @@ import {CustomFormats, IntlProvider as ReactIntlProvider} from 'react-intl';
 import {StyleSheet, Text} from 'react-native';
 
 import messages from '../../../translations/messages.json';
-import {useLanguageTag} from '../hooks/resolvedSettings/useLanguageTag';
+import {useLanguageTag} from '../hooks/useLanguageTag';
 import {extractLanguageCode, type TranslatedLanguageTag} from '../lib/intl';
 
 export const formats: CustomFormats = {

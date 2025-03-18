@@ -82,7 +82,10 @@ export function createSettingsStore({persist} = {persist: false}) {
 
             if (
               'coordinateFormat' in persistedState &&
-              v.is(CoordinateFormatSchema, persistedState.coordinateFormat)
+              v.is(
+                SettingsStateSchema.entries['coordinateFormat'],
+                persistedState.coordinateFormat,
+              )
             ) {
               migratedState.coordinateFormat = persistedState.coordinateFormat;
             }
@@ -90,7 +93,7 @@ export function createSettingsStore({persist} = {persist: false}) {
             if (
               'manualCoordinateEntryFormat' in persistedState &&
               v.is(
-                CoordinateFormatSchema,
+                SettingsStateSchema.entries['manualCoordinateEntryFormat'],
                 persistedState.manualCoordinateEntryFormat,
               )
             ) {

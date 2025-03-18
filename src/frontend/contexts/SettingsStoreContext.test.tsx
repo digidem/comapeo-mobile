@@ -47,14 +47,14 @@ test('coordinate format', () => {
     wrapper,
   });
 
-  const coordinateFormatHook = renderHook(
+  const selectedStateHook = renderHook(
     () => useSettingsState(state => state.coordinateFormat),
     {wrapper},
   );
 
   // Initial state
   expect(settingsStateHook.result.current.coordinateFormat).toBe('utm');
-  expect(coordinateFormatHook.result.current).toBe('utm');
+  expect(selectedStateHook.result.current).toBe('utm');
 
   const initialSettingsState = settingsStateHook.result.current;
 
@@ -66,7 +66,7 @@ test('coordinate format', () => {
     ...initialSettingsState,
     coordinateFormat: 'dd',
   });
-  expect(coordinateFormatHook.result.current).toBe('dd');
+  expect(selectedStateHook.result.current).toBe('dd');
 
   act(() => {
     actionsHook.result.current.setSetting('coordinateFormat', 'dms');
@@ -76,7 +76,7 @@ test('coordinate format', () => {
     ...initialSettingsState,
     coordinateFormat: 'dms',
   });
-  expect(coordinateFormatHook.result.current).toBe('dms');
+  expect(selectedStateHook.result.current).toBe('dms');
 
   act(() => {
     actionsHook.result.current.setSetting('coordinateFormat', 'utm');
@@ -86,7 +86,7 @@ test('coordinate format', () => {
     ...initialSettingsState,
     coordinateFormat: 'utm',
   });
-  expect(coordinateFormatHook.result.current).toBe('utm');
+  expect(selectedStateHook.result.current).toBe('utm');
 });
 
 test('manual entry coordinate format', () => {

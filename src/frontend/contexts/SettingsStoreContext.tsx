@@ -1,5 +1,4 @@
 import {createContext, useContext} from 'react';
-import type {SetNonNullable, SimplifyDeep} from 'type-fest';
 import * as v from 'valibot';
 import {createStore, useStore, type StoreApi} from 'zustand';
 import {
@@ -33,7 +32,7 @@ export type Settings = v.InferOutput<typeof SettingsStateSchema>;
 /**
  * Settings with defaults filled in
  */
-export type ResolvedSettings = SimplifyDeep<SetNonNullable<Settings>>;
+export type ResolvedSettings = Required<Settings>;
 
 const SETTINGS_DEFAULTS = {
   coordinateFormat: 'utm',
@@ -100,7 +99,7 @@ export function createSettingsStore({persist} = {persist: false}) {
     actions: {
       setSetting: <T extends keyof Settings>(
         key: T,
-        value: NonNullable<Settings[T]>,
+        value: Required<Settings[T]>,
       ) => {
         v.assert(SettingsStateSchema.entries[key], value);
         store.setState({[key]: value});

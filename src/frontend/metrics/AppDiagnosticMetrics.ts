@@ -6,6 +6,7 @@ import {getLastKnownPositionAsync} from 'expo-location';
 import {AppState, Platform} from 'react-native';
 import {is} from 'valibot';
 import {
+  type ResolvedSettings,
   STORAGE_KEY as SETTINGS_STORAGE_KEY,
   SettingsStateSchema,
 } from '../contexts/SettingsStoreContext';
@@ -54,12 +55,16 @@ async function getCountry(): Promise<undefined | string> {
 
 async function generateAppDiagnosticMetricsData(): Promise<AppDiagnosticMetricsReport> {
   const systemPreferredLocales = getLocales();
-  const selectedLanguageTag = getSelectedLanguageTag();
+  const localeSetting = getLocaleSetting();
 
-  const appLocale = resolveLanguageTag({
-    selected: selectedLanguageTag,
-    systemPreferred: systemPreferredLocales.map(l => l.languageTag),
-  }).value;
+  const appLanguageTag = resolveLanguageTag(
+    localeSetting === 'system'
+      ? {
+          from: 'system',
+          languageTags: systemPreferredLocales.map(l => l.languageTag),
+        }
+      : {from: 'selected', languageTags: [localeSetting.languageTag]},
+  );
 
   const result: AppDiagnosticMetricsReport = {
     dateGenerated: formatIsoUtc(new Date()),
@@ -67,7 +72,7 @@ async function generateAppDiagnosticMetricsData(): Promise<AppDiagnosticMetricsR
     osVersion: Platform.Version,
     // TODO: This should really accept an array as opposed to just the first one
     deviceLocale: systemPreferredLocales[0]!.languageTag,
-    appLocale,
+    appLocale: appLanguageTag.value,
     country: await getCountry(),
   };
 
@@ -215,21 +220,21 @@ export class AppDiagnosticMetrics {
   }
 }
 
-function getSelectedLanguageTag() {
+function getLocaleSetting(): ResolvedSettings['locale'] {
   const stored = storage.getString(SETTINGS_STORAGE_KEY);
 
   if (!stored) {
     // TODO: Log to Sentry?
-    return null;
+    return 'system';
   }
 
   const parsed = JSON.parse(stored) as unknown;
 
   // TODO: Might need to account for v0 of persisted settings state
   if (is(SettingsStateSchema, parsed)) {
-    return parsed.locale ? parsed.locale.languageTag : null;
+    return parsed.locale ?? 'system';
   }
 
   // TODO: Log to Sentry?
-  return null;
+  return 'system';
 }

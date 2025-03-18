@@ -294,7 +294,7 @@ describe('selected locale exists', () => {
     });
   });
 
-  test('does not use selected locale if it is not supported', () => {
+  test('uses fallback if selected locale is not supported', () => {
     const settingsStore = createSettingsStore();
     const wrapper = createWrapper(settingsStore);
 
@@ -321,12 +321,12 @@ describe('selected locale exists', () => {
     });
 
     expect(languageTagHook.result.current).toStrictEqual({
-      source: 'system',
-      value: 'pt',
+      source: 'fallback',
+      value: 'en',
     });
   });
 
-  test('respects selected locale being unset', () => {
+  test('respects locale setting being changed', () => {
     const settingsStore = createSettingsStore();
     const wrapper = createWrapper(settingsStore);
 
@@ -357,7 +357,7 @@ describe('selected locale exists', () => {
     });
 
     act(() => {
-      settingsActionsHook.result.current.setSetting('locale', null);
+      settingsActionsHook.result.current.setSetting('locale', 'system');
     });
 
     expect(languageTagHook.result.current).toStrictEqual({

@@ -15,10 +15,10 @@ describe('extractLanguageCode()', () => {
 });
 
 describe('resolveLanguageTag()', () => {
-  test('no selected locale and no system preferences', () => {
+  test('unsupported system preference', () => {
     const result = resolveLanguageTag({
-      selected: null,
-      systemPreferred: [],
+      from: 'system',
+      languageTags: ['__'],
     });
 
     expect(result).toStrictEqual({
@@ -27,22 +27,10 @@ describe('resolveLanguageTag()', () => {
     });
   });
 
-  test('no selected locale and an unsupported system preference', () => {
+  test('supported system preference (base language code only)', () => {
     const result = resolveLanguageTag({
-      selected: null,
-      systemPreferred: ['__'],
-    });
-
-    expect(result).toStrictEqual({
-      source: 'fallback',
-      value: 'en',
-    });
-  });
-
-  test('no selected locale and a supported system preference (base language code only)', () => {
-    const result = resolveLanguageTag({
-      selected: null,
-      systemPreferred: ['es'],
+      from: 'system',
+      languageTags: ['es'],
     });
 
     expect(result).toStrictEqual({
@@ -52,10 +40,10 @@ describe('resolveLanguageTag()', () => {
   });
 
   // TODO: Not sure if the truncation is a desired outcome, but it matches pre-existing behavior
-  test('no selected locale and a supported system preference (base + regional code)', () => {
+  test('supported system preference (base + regional code)', () => {
     const result = resolveLanguageTag({
-      selected: null,
-      systemPreferred: ['es-MX'],
+      from: 'system',
+      languageTags: ['es-MX'],
     });
 
     expect(result).toStrictEqual({
@@ -64,11 +52,11 @@ describe('resolveLanguageTag()', () => {
     });
   });
 
-  test('no selected locale and multiple supported system preferences', () => {
+  test('multiple supported system preferences', () => {
     {
       const result = resolveLanguageTag({
-        selected: null,
-        systemPreferred: ['pt', 'es'],
+        from: 'system',
+        languageTags: ['pt', 'es'],
       });
 
       expect(result).toStrictEqual({
@@ -79,8 +67,8 @@ describe('resolveLanguageTag()', () => {
 
     {
       const result = resolveLanguageTag({
-        selected: null,
-        systemPreferred: ['__', 'pt'],
+        from: 'system',
+        languageTags: ['__', 'pt'],
       });
 
       expect(result).toStrictEqual({
@@ -90,11 +78,11 @@ describe('resolveLanguageTag()', () => {
     }
   });
 
-  test('supported selected locale and no system preferences', () => {
+  test('supported selected locale', () => {
     {
       const result = resolveLanguageTag({
-        selected: 'pt',
-        systemPreferred: [],
+        from: 'selected',
+        languageTags: ['pt'],
       });
 
       expect(result).toStrictEqual({
@@ -106,8 +94,8 @@ describe('resolveLanguageTag()', () => {
     // TODO: Not sure if the truncation is a desired outcome, but it matches pre-existing behavior
     {
       const result = resolveLanguageTag({
-        selected: 'pt-BR',
-        systemPreferred: [],
+        from: 'selected',
+        languageTags: ['pt-BR'],
       });
 
       expect(result).toStrictEqual({
@@ -117,34 +105,10 @@ describe('resolveLanguageTag()', () => {
     }
   });
 
-  test('supported selected locale and supported system preference', () => {
+  test('unsupported selected locale', () => {
     const result = resolveLanguageTag({
-      selected: 'pt',
-      systemPreferred: ['es'],
-    });
-
-    expect(result).toStrictEqual({
-      source: 'selected',
-      value: 'pt',
-    });
-  });
-
-  test('unsupported selected locale and supported system preference', () => {
-    const result = resolveLanguageTag({
-      selected: '__',
-      systemPreferred: ['es'],
-    });
-
-    expect(result).toStrictEqual({
-      source: 'system',
-      value: 'es',
-    });
-  });
-
-  test('unsupported selected locale and no system preference', () => {
-    const result = resolveLanguageTag({
-      selected: '__',
-      systemPreferred: [],
+      from: 'selected',
+      languageTags: ['__'],
     });
 
     expect(result).toStrictEqual({

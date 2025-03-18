@@ -1,4 +1,5 @@
 import {createContext, useContext} from 'react';
+import type {SetNonNullable, SimplifyDeep} from 'type-fest';
 import * as v from 'valibot';
 import {createStore, useStore, type StoreApi} from 'zustand';
 import {
@@ -9,7 +10,6 @@ import {useShallow} from 'zustand/react/shallow';
 
 import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
 import {CoordinateFormatSchema} from '../lib/coordinateFormat';
-import {SetNonNullable} from 'type-fest';
 
 export const SettingsStateSchema = v.object({
   coordinateFormat: v.union([CoordinateFormatSchema, v.null()]),
@@ -17,6 +17,7 @@ export const SettingsStateSchema = v.object({
     v.object({
       languageTag: v.string(),
     }),
+    v.literal('system'),
     v.null(),
   ]),
   manualCoordinateEntryFormat: v.union([CoordinateFormatSchema, v.null()]),
@@ -33,16 +34,20 @@ export type Settings = v.InferOutput<typeof SettingsStateSchema>;
  */
 type SettingWithDefault =
   | 'coordinateFormat'
+  | 'locale'
   | 'manualCoordinateEntryFormat'
   | 'metricsDiagnosticsPermissionsEnabled';
 
 /**
  * Settings with defaults filled in
  */
-export type ResolvedSettings = SetNonNullable<Settings, SettingWithDefault>;
+export type ResolvedSettings = SimplifyDeep<
+  SetNonNullable<Settings, SettingWithDefault>
+>;
 
 const SETTINGS_DEFAULTS = {
   coordinateFormat: 'utm',
+  locale: 'system',
   manualCoordinateEntryFormat: 'utm',
   metricsDiagnosticsPermissionsEnabled: true,
 } as const satisfies Pick<ResolvedSettings, SettingWithDefault>;
@@ -105,7 +110,10 @@ export function createSettingsStore({persist} = {persist: false}) {
   return {
     instance: store,
     actions: {
-      setSetting: <T extends keyof Settings>(key: T, value: Settings[T]) => {
+      setSetting: <T extends keyof Settings>(
+        key: T,
+        value: NonNullable<Settings[T]>,
+      ) => {
         v.assert(SettingsStateSchema.entries[key], value);
         store.setState({[key]: value});
       },
@@ -143,6 +151,7 @@ export function useSettingsState<T>(selector?: (state: ResolvedSettings) => T) {
         ...state,
         coordinateFormat:
           state.coordinateFormat ?? SETTINGS_DEFAULTS.coordinateFormat,
+        locale: state.locale ?? SETTINGS_DEFAULTS.locale,
         manualCoordinateEntryFormat:
           state.manualCoordinateEntryFormat ??
           SETTINGS_DEFAULTS.manualCoordinateEntryFormat,

@@ -4,6 +4,13 @@ import MESSAGES from '../../../translations/messages.json';
 import LANGUAGES from '../languages.json';
 
 // Language that the app can properly present
+export type TranslatedLanguageTag = keyof typeof MESSAGES;
+type SupportedLanguageTag = keyof typeof LANGUAGES;
+
+export const USABLE_LANGUAGES = getUsableLanguages(
+  Object.keys(MESSAGES) as Array<TranslatedLanguageTag>,
+);
+
 interface UsableLanguage {
   /** IETF BCP 47 language tag (https://en.wikipedia.org/wiki/IETF_language_tag) */
   languageTag: SupportedLanguageTag;
@@ -12,13 +19,6 @@ interface UsableLanguage {
   /** English name for language */
   englishName: string;
 }
-
-export type TranslatedLanguageTag = keyof typeof MESSAGES;
-type SupportedLanguageTag = keyof typeof LANGUAGES;
-
-export const USABLE_LANGUAGES = getUsableLanguages(
-  Object.keys(MESSAGES) as Array<TranslatedLanguageTag>,
-);
 
 /**
  * Gets the languages that are usable within the app, meaning:
@@ -79,7 +79,7 @@ function isSupportedLanguageTag(value: string): value is SupportedLanguageTag {
  * @param languageTag Language tag
  * @returns The usable language tag
  */
-function getUsableLanguageTag(languageTag: string) {
+export function getUsableLanguageTag(languageTag: string) {
   for (const supported of USABLE_LANGUAGES) {
     // Check if the language tag has a matching language tag that we support
     if (languageTag === supported.languageTag) {
@@ -95,53 +95,32 @@ function getUsableLanguageTag(languageTag: string) {
   }
 }
 
+type ResolvedLanguageTag<S extends 'selected' | 'system'> = {
+  source: 'fallback' | S;
+  value: SupportedLanguageTag;
+};
+
 /**
- * Determines the language tag that the app should use based on what is supported and the following order of preference:
+ * Determines the language tag that the app should use based on what is supported.
+ * If no supported value can be determined, falls back to using `'en'` as the resolved language tag value.
  *
- * 1. The locale that is explicitly selected by the user (e.g. using the in-app language settings).
- * 2. The preferred locales based on system preferences set by the owner of the device.
- * 3. English (`'en'`)
- *
- * @param params.selected The language tag expicitly selected by the user.
- * @param params.systemPreferred List of preferred language tags based on system preferences, in order of highest to lowest preference.
+ * @param opts.from The origin of where the ideal options come from. `'system'` means from system preferences and `'selected'` means a specific language choice.
+ * @param opts.languageTags Language tags to attempt to use, in order of most to least preferred.
  *
  * @returns The resolved language tag. `source` represents where the tag comes from and `value` represents the actual tag string
  */
-export function resolveLanguageTag({
-  selected,
-  systemPreferred,
-}: {
-  selected: string | null;
-  systemPreferred: Array<string>;
-}): {
-  source: 'selected' | 'system' | 'fallback';
-  value: SupportedLanguageTag;
-} {
-  // Check if selected language tag is usable
-  if (selected) {
-    const usableSelectedTag = getUsableLanguageTag(selected);
+export function resolveLanguageTag<S extends 'system' | 'selected'>(opts: {
+  from: S;
+  languageTags: Array<string>;
+}): ResolvedLanguageTag<S> {
+  for (const t of opts.languageTags) {
+    const usableLanguageTag = getUsableLanguageTag(t);
 
-    if (usableSelectedTag) {
-      return {
-        source: 'selected',
-        value: usableSelectedTag,
-      };
+    if (usableLanguageTag) {
+      return {source: opts.from, value: usableLanguageTag};
     }
   }
 
-  // Check if any of the system preferred languages are usable
-  for (const t of systemPreferred) {
-    const usableSystemPreferredTag = getUsableLanguageTag(t);
-
-    if (usableSystemPreferredTag) {
-      return {
-        source: 'system',
-        value: usableSystemPreferredTag,
-      };
-    }
-  }
-
-  // Fall back to English otherwise
   return {
     source: 'fallback',
     value: 'en',

@@ -29,7 +29,7 @@ test('initial settings state', () => {
 
   expect(stateHook.result.current).toStrictEqual({
     coordinateFormat: 'utm',
-    locale: null,
+    locale: 'system',
     manualCoordinateEntryFormat: 'utm',
     metricsDiagnosticsPermissionsEnabled: true,
   });
@@ -215,8 +215,8 @@ test('locale', () => {
   );
 
   // Initial state
-  expect(settingsStateHook.result.current.locale).toBe(null);
-  expect(selectedStateHook.result.current).toBe(null);
+  expect(settingsStateHook.result.current.locale).toBe('system');
+  expect(selectedStateHook.result.current).toBe('system');
 
   const initialSettingsState = settingsStateHook.result.current;
 
@@ -237,12 +237,12 @@ test('locale', () => {
   });
 
   act(() => {
-    actionsHook.result.current.setSetting('locale', null);
+    actionsHook.result.current.setSetting('locale', 'system');
   });
 
   expect(settingsStateHook.result.current).toStrictEqual({
     ...initialSettingsState,
-    locale: null,
+    locale: 'system',
   });
-  expect(selectedStateHook.result.current).toBe(null);
+  expect(selectedStateHook.result.current).toBe('system');
 });

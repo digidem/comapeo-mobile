@@ -12,16 +12,17 @@ import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
 import {CoordinateFormatSchema} from '../lib/coordinateFormat';
 
 export const SettingsStateSchema = v.object({
-  coordinateFormat: v.union([CoordinateFormatSchema, v.null()]),
-  locale: v.union([
-    v.object({
-      languageTag: v.string(),
-    }),
-    v.literal('system'),
-    v.null(),
-  ]),
-  manualCoordinateEntryFormat: v.union([CoordinateFormatSchema, v.null()]),
-  metricsDiagnosticsPermissionsEnabled: v.union([v.boolean(), v.null()]),
+  coordinateFormat: v.optional(CoordinateFormatSchema),
+  locale: v.optional(
+    v.union([
+      v.object({
+        languageTag: v.string(),
+      }),
+      v.literal('system'),
+    ]),
+  ),
+  manualCoordinateEntryFormat: v.optional(CoordinateFormatSchema),
+  metricsDiagnosticsPermissionsEnabled: v.optional(v.boolean()),
 });
 
 /**
@@ -56,12 +57,7 @@ const SETTINGS_DEFAULTS = {
 export const STORAGE_KEY = 'Settings' as const;
 
 function createInitialState(): Settings {
-  return {
-    coordinateFormat: null,
-    locale: null,
-    manualCoordinateEntryFormat: null,
-    metricsDiagnosticsPermissionsEnabled: null,
-  };
+  return {};
 }
 
 export function createSettingsStore({persist} = {persist: false}) {

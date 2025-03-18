@@ -31,27 +31,16 @@ export const SettingsStateSchema = v.object({
 export type Settings = v.InferOutput<typeof SettingsStateSchema>;
 
 /**
- * Settings fields that use a default value if missing
- */
-type SettingWithDefault =
-  | 'coordinateFormat'
-  | 'locale'
-  | 'manualCoordinateEntryFormat'
-  | 'metricsDiagnosticsPermissionsEnabled';
-
-/**
  * Settings with defaults filled in
  */
-export type ResolvedSettings = SimplifyDeep<
-  SetNonNullable<Settings, SettingWithDefault>
->;
+export type ResolvedSettings = SimplifyDeep<SetNonNullable<Settings>>;
 
 const SETTINGS_DEFAULTS = {
   coordinateFormat: 'utm',
   locale: 'system',
   manualCoordinateEntryFormat: 'utm',
   metricsDiagnosticsPermissionsEnabled: true,
-} as const satisfies Pick<ResolvedSettings, SettingWithDefault>;
+} as const satisfies ResolvedSettings;
 
 // NOTE: Do not change!
 export const STORAGE_KEY = 'Settings' as const;

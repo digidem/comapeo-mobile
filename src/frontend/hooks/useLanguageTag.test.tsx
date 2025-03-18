@@ -55,7 +55,7 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-describe('nothing persisted and no system preferences', () => {
+describe('no locale setting and no system preferences', () => {
   test('returns the fallback (en)', () => {
     const settingsStore = createSettingsStore();
     const wrapper = createWrapper(settingsStore);
@@ -77,7 +77,7 @@ describe('nothing persisted and no system preferences', () => {
   });
 });
 
-describe('nothing persisted and single system preference exists', () => {
+describe('no locale setting and single system preference exists', () => {
   test('returns system preference if supported', () => {
     const settingsStore = createSettingsStore();
     const wrapper = createWrapper(settingsStore);
@@ -149,7 +149,7 @@ describe('nothing persisted and single system preference exists', () => {
   });
 });
 
-describe('nothing persisted and multiple system preferences exist', () => {
+describe('no locale setting and multiple system preferences exist', () => {
   test('respects ordering of system preferences', () => {
     const settingsStore = createSettingsStore();
     const wrapper = createWrapper(settingsStore);
@@ -219,7 +219,7 @@ describe('nothing persisted and multiple system preferences exist', () => {
   });
 });
 
-describe('selected locale exists', () => {
+describe('locale setting exists', () => {
   test('returns selected locale if supported', () => {
     const settingsStore = createSettingsStore();
     const wrapper = createWrapper(settingsStore);
@@ -294,7 +294,48 @@ describe('selected locale exists', () => {
     });
   });
 
-  test('uses fallback if selected locale is not supported', () => {
+  test("reacts to changes in system preferences when locale setting is 'system'", () => {
+    const settingsStore = createSettingsStore();
+    const wrapper = createWrapper(settingsStore);
+
+    setSystemPreferredLocales(['pt-BR']);
+
+    const settingsActionsHook = renderHook(() => useSettingsActions(), {
+      wrapper,
+    });
+
+    act(() => {
+      settingsActionsHook.result.current.setSetting('locale', 'system');
+    });
+
+    const languageTagHook = renderHook(() => useLanguageTag(), {
+      wrapper,
+    });
+
+    expect(languageTagHook.result.current).toStrictEqual({
+      source: 'system',
+      value: 'pt',
+    });
+
+    setSystemPreferredLocales(['es-MX']);
+    languageTagHook.rerender({});
+
+    expect(languageTagHook.result.current).toStrictEqual({
+      source: 'system',
+      value: 'es',
+    });
+
+    // Intentionally nonsense
+    setSystemPreferredLocales(['__']);
+    languageTagHook.rerender({});
+
+    expect(languageTagHook.result.current).toStrictEqual({
+      source: 'fallback',
+      value: 'en',
+    });
+  });
+
+  test('uses fallback if locale setting is not supported', () => {
     const settingsStore = createSettingsStore();
     const wrapper = createWrapper(settingsStore);
 

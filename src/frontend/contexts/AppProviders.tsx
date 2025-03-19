@@ -26,6 +26,7 @@ import {
   type SettingsStore,
   SettingsStoreProvider,
 } from './SettingsStoreContext';
+import {type TrackStore, TrackStoreProvider} from './TrackStoreContext';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -36,6 +37,7 @@ type AppProvidersProps = {
   deviceMetrics: DeviceDiagnosticMetrics;
   persistedDrafObservationStore: DraftObservationStore;
   settingsStore: SettingsStore;
+  trackStore: TrackStore;
 };
 
 const queryClient = new QueryClient();
@@ -49,41 +51,46 @@ export const AppProviders = ({
   deviceMetrics,
   persistedDrafObservationStore,
   settingsStore,
+  trackStore,
 }: AppProvidersProps) => {
   return (
     <SettingsStoreProvider value={settingsStore}>
-      <IntlProvider>
-        <QueryClientProvider client={queryClient}>
-          <SafeAreaProvider>
-            <GestureHandlerRootView style={styles.flex}>
-              <TrackTimerContextProvider>
-                <ServerLoading messagePort={messagePort}>
-                  <LocalDiscoveryProvider value={localDiscoveryController}>
-                    <ClientApiProvider clientApi={mapeoApi}>
-                      <MetricsProvider
-                        appMetrics={appMetrics}
-                        deviceMetrics={deviceMetrics}>
-                        <ActiveProjectProvider>
-                          <BottomSheetModalProvider>
-                            <PhotoPromiseProvider>
-                              <DraftObservationProvider
-                                draftObservationStore={
-                                  persistedDrafObservationStore
-                                }>
-                                <SecurityProvider>{children}</SecurityProvider>
-                              </DraftObservationProvider>
-                            </PhotoPromiseProvider>
-                          </BottomSheetModalProvider>
-                        </ActiveProjectProvider>
-                      </MetricsProvider>
-                    </ClientApiProvider>
-                  </LocalDiscoveryProvider>
-                </ServerLoading>
-              </TrackTimerContextProvider>
-            </GestureHandlerRootView>
-          </SafeAreaProvider>
-        </QueryClientProvider>
-      </IntlProvider>
+      <TrackStoreProvider value={trackStore}>
+        <IntlProvider>
+          <QueryClientProvider client={queryClient}>
+            <SafeAreaProvider>
+              <GestureHandlerRootView style={styles.flex}>
+                <TrackTimerContextProvider>
+                  <ServerLoading messagePort={messagePort}>
+                    <LocalDiscoveryProvider value={localDiscoveryController}>
+                      <ClientApiProvider clientApi={mapeoApi}>
+                        <MetricsProvider
+                          appMetrics={appMetrics}
+                          deviceMetrics={deviceMetrics}>
+                          <ActiveProjectProvider>
+                            <BottomSheetModalProvider>
+                              <PhotoPromiseProvider>
+                                <DraftObservationProvider
+                                  draftObservationStore={
+                                    persistedDrafObservationStore
+                                  }>
+                                  <SecurityProvider>
+                                    {children}
+                                  </SecurityProvider>
+                                </DraftObservationProvider>
+                              </PhotoPromiseProvider>
+                            </BottomSheetModalProvider>
+                          </ActiveProjectProvider>
+                        </MetricsProvider>
+                      </ClientApiProvider>
+                    </LocalDiscoveryProvider>
+                  </ServerLoading>
+                </TrackTimerContextProvider>
+              </GestureHandlerRootView>
+            </SafeAreaProvider>
+          </QueryClientProvider>
+        </IntlProvider>
+      </TrackStoreProvider>
     </SettingsStoreProvider>
   );
 };

@@ -6,16 +6,24 @@ jobs:
   lockfile_version:
     name: Lockfile version check
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        path: [package-lock.json, src/backend/package-lock.json]
     steps:
       - name: Check out a copy of the repo
         uses: actions/checkout@v4
       - name: Check package-lock.json version has not been changed
-        uses: mansona/npm-lockfile-version@v1
+        # Fork allows passing 'path' option
+        uses: digidem/npm-lockfile-version@c42a24936edf4bdab05f57ff1f07781375a14f5c
         with:
           version: 3
+          path: ${{ matrix.path }}
   lockfile_changes:
     name: Lockfile changes check
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        path: [package-lock.json, src/backend/package-lock.json]
     steps:
       - name: Check out a copy of the repo
         uses: actions/checkout@v4
@@ -32,3 +40,4 @@ jobs:
         with:
           token: ${{ steps.app-token.outputs.token }}
           updateComment: true
+          path: ${{ matrix.path }}

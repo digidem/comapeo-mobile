@@ -1616,15 +1616,6 @@
   "sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Something Went Wrong"
   },
-  "sharedComponents.ErrorModal.goBack": {
-    "message": "Go Back"
-  },
-  "sharedComponents.ErrorModal.somethingWrong": {
-    "message": "Something Went Wrong"
-  },
-  "sharedComponents.ErrorModal.tryAgain": {
-    "message": "Try Again"
-  },
   "sharedComponents.GpsPill.noGps": {
     "message": "No GPS"
   },

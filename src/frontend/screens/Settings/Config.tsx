@@ -1,15 +1,11 @@
 import * as FileSystem from 'expo-file-system';
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
+import {useImportProjectConfig} from '@comapeo/core-react';
 import {StyleSheet, View} from 'react-native';
 import {Text} from '../../sharedComponents/Text';
 import {useSelectFile} from '../../hooks/files';
-import {
-  useGetOwnRole,
-  useImportProjectConfig,
-  useProjectSettings,
-} from '../../hooks/server/projects';
-import {Loading} from '../../sharedComponents/Loading';
+import {useProjectSettings, useGetOwnRole} from '../../hooks/server/projects';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {COMAPEO_BLUE, MEDIUM_GREY} from '../../lib/styles';
 import {Button} from '../../sharedComponents/Button';
@@ -18,6 +14,7 @@ import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../sharedTypes';
 import {convertFileUriToPosixPath} from '../../lib/file-system';
 import noop from '../../lib/noop';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
 
 const m = defineMessages({
   navTitle: {
@@ -44,15 +41,18 @@ const m = defineMessages({
 
 export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
   const {formatMessage} = useIntl();
-  const {data, isPending} = useProjectSettings();
+  const {data} = useProjectSettings();
   const deviceRole = useGetOwnRole();
+  const {projectId} = useActiveProject();
+  const [importProjectConfigError, setImportProjectConfigError] =
+    React.useState<Error | null>(null);
 
   const selectFileMutation = useSelectFile();
-  const importProjectConfigMutation = useImportProjectConfig();
+  const importProjectConfigMutation = useImportProjectConfig({projectId});
 
   const isCoordinator =
-    deviceRole.data?.roleId === COORDINATOR_ROLE_ID ||
-    deviceRole.data?.roleId === CREATOR_ROLE_ID;
+    deviceRole.roleId === COORDINATOR_ROLE_ID ||
+    deviceRole.roleId === CREATOR_ROLE_ID;
 
   const configImportIsPending =
     selectFileMutation.status === 'pending' ||
@@ -85,22 +85,21 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
         onSuccess: selected => {
           if (!selected) return;
           importProjectConfigMutation.mutate(
-            convertFileUriToPosixPath(selected.uri),
+            {configPath: convertFileUriToPosixPath(selected.uri)},
             {
               onSettled: () => {
                 FileSystem.deleteAsync(selected.uri, {idempotent: true}).catch(
                   noop,
                 );
               },
+              onError: err => {
+                setImportProjectConfigError(err);
+              },
             },
           );
         },
       },
     );
-  }
-
-  if (!data || isPending) {
-    return <Loading />;
   }
 
   return (
@@ -123,7 +122,7 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
           <Text>{data.configMetadata.name}</Text>
         </>
       )}
-      {deviceRole.isPending || configImportIsPending ? (
+      {configImportIsPending ? (
         <UIActivityIndicator style={{marginTop: 20, flex: 0}} />
       ) : isCoordinator ? (
         <Button
@@ -137,10 +136,11 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
         </Button>
       ) : null}
       <ErrorBottomSheet
-        error={selectFileMutation.error || importProjectConfigMutation.error}
+        error={selectFileMutation.error || importProjectConfigError}
         clearError={() => {
           selectFileMutation.reset();
           importProjectConfigMutation.reset();
+          setImportProjectConfigError(null);
         }}
         tryAgain={selectAndImportConfigFile}
       />

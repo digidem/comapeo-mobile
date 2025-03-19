@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import ErrorIcon from '../../images/Error.svg';
 import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../sharedComponents/Text';
-import {useLeaveProject} from '../../hooks/server/projects';
+import {useLeaveProject} from '@comapeo/core-react';
 import {RED} from '../../lib/styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import * as Sentry from '@sentry/react-native';
@@ -70,8 +70,10 @@ export const LeaveProject = ({
   const {formatMessage} = useIntl();
   const [error, setError] = React.useState(false);
   const [isChecked, setIsChecked] = React.useState(false);
-  const leaveProject = useLeaveProject();
+  const [leaveProjectError, setLeaveProjectError] =
+    React.useState<Error | null>(null);
   const {projectId} = useActiveProject();
+  const leaveProject = useLeaveProject();
 
   function handleLeavePress() {
     if (!isChecked) {
@@ -84,14 +86,18 @@ export const LeaveProject = ({
       {inviteId},
       {
         onSuccess: () => {
-          leaveProject.mutate(projectId, {
-            onSuccess: () => {
-              closeSheet();
+          leaveProject.mutate(
+            {projectId},
+            {
+              onSuccess: () => {
+                closeSheet();
+              },
+              onError: err => {
+                setLeaveProjectError(err);
+                Sentry.captureException(err);
+              },
             },
-            onError: err => {
-              Sentry.captureException(err);
-            },
-          });
+          );
         },
         onError: err => {
           Sentry.captureException(err);
@@ -158,10 +164,11 @@ export const LeaveProject = ({
         </BottomSheetModalContent>
       )}
       <ErrorBottomSheet
-        error={leaveProject.error || accept.error}
+        error={accept.error || leaveProjectError}
         clearError={() => {
           leaveProject.reset();
           accept.reset();
+          setLeaveProjectError(null);
         }}
         tryAgain={handleLeavePress}
       />

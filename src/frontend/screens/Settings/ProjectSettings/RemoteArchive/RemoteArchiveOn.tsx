@@ -76,7 +76,7 @@ export const RemoteArchiveOn: NativeNavigationComponent<'RemoteArchiveOn'> = ({
   navigation,
 }) => {
   const {formatMessage} = useIntl();
-  const {data: role, isPending: roleIsPending} = useGetOwnRole();
+  const role = useGetOwnRole();
   const {data: remoteArchive, isPending} = useGetRemoteArchives();
 
   const isCoordinator =
@@ -115,7 +115,7 @@ export const RemoteArchiveOn: NativeNavigationComponent<'RemoteArchiveOn'> = ({
     }, [handleGoBack]),
   );
 
-  if (isPending || roleIsPending) {
+  if (isPending) {
     return <Loading />;
   }
 

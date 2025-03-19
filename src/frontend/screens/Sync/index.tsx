@@ -53,7 +53,7 @@ export const SyncScreen = ({navigation}: NativeRootNavigationProps<'Sync'>) => {
   const syncState = useSyncState();
   const projectSettingsQuery = useProjectSettings();
 
-  if (!syncState || !projectSettingsQuery.data || remoteArchiveLoading) {
+  if (!syncState || remoteArchiveLoading) {
     return <Loading />;
   }
 

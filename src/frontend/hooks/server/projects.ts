@@ -1,10 +1,14 @@
-import {useClientApi} from '@comapeo/core-react';
-import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {useMemo} from 'react';
+import {
+  useClientApi,
+  useProjectSettings as useComapeoProjectSettings,
+  useOwnDeviceInfo,
+  useSingleMember,
+  useManyMembers,
+} from '@comapeo/core-react';
+import {useQuery} from '@tanstack/react-query';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {PRESETS_KEY} from './presets';
-import {ICONS_KEY} from './icons';
-import {FIELDS_KEY} from './fields';
 
 export const ALL_PROJECTS_KEY = 'all_projects';
 export const PROJECT_SETTINGS_KEY = 'project_settings';
@@ -32,26 +36,9 @@ export function useProject(projectId?: string) {
   });
 }
 
-export function useProjectMembers() {
-  const {projectId, projectApi} = useActiveProject();
-
-  return useQuery({
-    queryKey: [PROJECT_MEMBERS_KEY, projectId],
-    queryFn: () => {
-      return projectApi.$member.getMany();
-    },
-  });
-}
-
 export function useProjectSettings() {
-  const {projectId, projectApi} = useActiveProject();
-
-  return useQuery({
-    queryKey: [PROJECT_SETTINGS_KEY, projectId],
-    queryFn: () => {
-      return projectApi.$getProjectSettings();
-    },
-  });
+  const {projectId} = useActiveProject();
+  return useComapeoProjectSettings({projectId});
 }
 
 export const useOriginalVersionIdToDeviceId = (originalVersionId: string) => {
@@ -69,87 +56,30 @@ export const useOriginalVersionIdToDeviceId = (originalVersionId: string) => {
   });
 };
 
-export function useLeaveProject() {
-  const mapeoApi = useClientApi();
-
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: (projectId: string) => {
-      return mapeoApi.leaveProject(projectId);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [ALL_PROJECTS_KEY],
-      });
-    },
-  });
-}
-
-export function useImportProjectConfig() {
-  const queryClient = useQueryClient();
-  const {projectApi} = useActiveProject();
-
-  return useMutation({
-    mutationFn: (configPath: string) => {
-      return projectApi.importConfig({configPath});
-    },
-    onSuccess: () => {
-      return Promise.all([
-        queryClient.invalidateQueries({
-          queryKey: [FIELDS_KEY],
-        }),
-        queryClient.invalidateQueries({
-          queryKey: [ICONS_KEY],
-        }),
-        queryClient.invalidateQueries({
-          queryKey: [PROJECT_SETTINGS_KEY],
-        }),
-        queryClient.invalidateQueries({
-          queryKey: [PRESETS_KEY],
-        }),
-      ]);
-    },
-  });
-}
-
 export function useGetOwnRole() {
-  const {projectId, projectApi} = useActiveProject();
+  const {data: deviceInfo} = useOwnDeviceInfo();
+  const {projectId} = useActiveProject();
 
-  return useQuery({
-    queryKey: [THIS_USERS_ROLE_KEY, projectId],
-    queryFn: () => {
-      return projectApi.$getOwnRole();
-    },
+  const {data} = useSingleMember({
+    projectId: projectId,
+    deviceId: deviceInfo.deviceId,
   });
+  return data.role;
 }
 
 export function useGetRemoteArchives() {
-  const {projectId, projectApi} = useActiveProject();
+  const {projectId} = useActiveProject();
+  const {data: members, error, isRefetching} = useManyMembers({projectId});
 
-  return useQuery({
-    queryKey: [REMOTE_ARCHIVE, projectId, PROJECT_MEMBERS_KEY],
-    queryFn: async () => {
-      const members = await projectApi.$member.getMany();
-      const filteredMembers = members.filter(
-        member => member.deviceType === 'selfHostedServer',
-      );
-      return filteredMembers;
-    },
-  });
-}
+  const archives = useMemo(() => {
+    return members?.filter(m => m.deviceType === 'selfHostedServer') ?? [];
+  }, [members]);
 
-export function useAddRemoteArchive() {
-  const {projectApi} = useActiveProject();
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: async (normalizedUrl: string) => {
-      return projectApi.$member.addServerPeer(normalizedUrl);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [REMOTE_ARCHIVE]});
-    },
-  });
+  return {
+    data: archives,
+    error,
+    isPending: isRefetching,
+  };
 }
 
 export function useFindRemoteArchive({url}: {url?: string}) {

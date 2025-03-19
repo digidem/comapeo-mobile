@@ -1,7 +1,7 @@
 import {MarkerView} from '@rnmapbox/maps';
 import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import {usePersistedTrack} from '../../../hooks/persistedState/usePersistedTrack';
+
+import {useTrackState} from '../../../contexts/TrackStoreContext';
 import {useTrackTimerContext} from '../../../contexts/TrackTimerContext';
 import {useLocation} from '../../../hooks/useLocation';
 import {TRACKING_DISTANCE_INTERVAL} from '../../../constants';
@@ -11,7 +11,7 @@ export const UserTooltipMarker = () => {
   const {location} = useLocation({
     maxDistanceInterval: TRACKING_DISTANCE_INTERVAL,
   });
-  const totalDistance = usePersistedTrack(state => state.distance);
+  const totalDistance = useTrackState(state => state.distance);
 
   return (
     location?.coords && (

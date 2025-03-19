@@ -6,7 +6,6 @@ import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {useCreateDocument} from '@comapeo/core-react';
-import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import {SaveButton} from '../../sharedComponents/SaveButton';
 import {useMostAccurateLocationForObservation} from './useMostAccurateLocationForObservation';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
@@ -17,7 +16,7 @@ import {Alert, type AlertButton} from 'react-native';
 import {Observation} from '@comapeo/schema';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useCreateBlobMutation} from '../../hooks/server/media';
-
+import {useTrackActions, useTrackState} from '../../contexts/TrackStoreContext';
 import {
   isProcessedDraftPhoto,
   isUnsavedAudio,
@@ -110,13 +109,11 @@ export const ObservationCreate = ({
     status: attachmentStatus,
   } = useCreateBlobMutation();
 
-  const isTracking = usePersistedTrack(state => state.isTracking);
-  const addNewTrackLocations = usePersistedTrack(
-    state => state.addNewLocations,
-  );
-  const addNewTrackObservation = usePersistedTrack(
-    state => state.addNewObservation,
-  );
+  const isTracking = useTrackState(state => state.isTracking);
+  const {
+    addNewLocations: addNewTrackLocations,
+    addNewObservation: addNewTrackObservation,
+  } = useTrackActions();
   const liveLocation = useMostAccurateLocationForObservation();
 
   const coordinateInfo = value?.metadata?.manualLocation

@@ -11,7 +11,6 @@ import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
 import {NoProjectWarning} from './NoProjectWarning';
 import {WHITE} from '../../lib/styles';
 import {useAllProjects} from '../../hooks/server/projects';
-import {Loading} from '../../sharedComponents/Loading';
 import {TrackListItem} from './TrackListItem';
 import {useObservations} from '../../hooks/server/observations';
 import {useTracks} from '../../hooks/server/track';
@@ -56,7 +55,7 @@ export const ObservationsList: React.FC<
 } = ({navigation}) => {
   const {data: observations} = useObservations();
   const {data: tracks} = useTracks();
-  const {data, isPending} = useAllProjects();
+  const projects = useAllProjects();
 
   const rowsPerWindow = Math.ceil(
     (Dimensions.get('window').height - 65) / OBSERVATION_CELL_HEIGHT,
@@ -72,9 +71,7 @@ export const ObservationsList: React.FC<
 
   return (
     <View style={styles.container} testID="OBS.list-scrn">
-      {isPending ? (
-        <Loading />
-      ) : data && data.length <= 1 ? (
+      {projects && projects.length <= 1 ? (
         <NoProjectWarning style={{margin: 20}} />
       ) : null}
       {/* re: https://github.com/digidem/comapeo-mobile/issues/586  */}

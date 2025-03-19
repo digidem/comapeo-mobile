@@ -55,7 +55,7 @@ export const CreateOrJoinProject: NativeNavigationComponent<
   const {formatMessage: t} = useIntl();
   const projects = useAllProjects();
 
-  if (projects.data) {
+  if (projects) {
     return (
       <ScrollView style={styles.container}>
         <View style={styles.greyBox}>
@@ -66,7 +66,7 @@ export const CreateOrJoinProject: NativeNavigationComponent<
             })}
           </Text>
         </View>
-        {projects.data.length > 1 ? (
+        {projects.length > 1 ? (
           <View style={[styles.greyBox, {marginTop: 10}]}>
             <View
               style={{
@@ -87,7 +87,6 @@ export const CreateOrJoinProject: NativeNavigationComponent<
             header={m.createProject}
             subHeader={m.startProject}
             style={{marginTop: 10}}
-            isLoading={projects.isLoading}
             onPress={() => {
               navigation.navigate('CreateProject');
             }}

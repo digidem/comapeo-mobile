@@ -5,6 +5,7 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {PRESETS_KEY} from './presets';
 import {ICONS_KEY} from './icons';
 import {FIELDS_KEY} from './fields';
+import {useSingleProject, useManyProjects} from '@comapeo/core-react';
 
 export const ALL_PROJECTS_KEY = 'all_projects';
 export const PROJECT_SETTINGS_KEY = 'project_settings';
@@ -17,30 +18,20 @@ export const THIS_USERS_ROLE_KEY = 'my_role';
 export const REMOTE_ARCHIVE = 'remote_archive';
 
 export function useProject(projectId?: string) {
-  const api = useClientApi();
+  if (!projectId) {
+    throw new Error('No projectId specified in useProject()');
+  }
+  const {data} = useSingleProject({projectId});
 
-  return useQuery({
-    queryKey: [PROJECT_KEY, projectId],
-    queryFn: async () => {
-      if (!projectId) throw new Error('Active project ID must exist');
-      const projectApi = await api.getProject(projectId);
-
-      return {projectId, projectApi};
-    },
-    enabled: !!projectId,
-    placeholderData: previousData => previousData,
-  });
+  return {
+    projectId,
+    projectApi: data,
+  };
 }
 
 export function useAllProjects() {
-  const api = useClientApi();
-
-  return useQuery({
-    queryKey: [ALL_PROJECTS_KEY],
-    queryFn: () => {
-      return api.listProjects();
-    },
-  });
+  const {data} = useManyProjects();
+  return data;
 }
 
 export function useCreateProject() {

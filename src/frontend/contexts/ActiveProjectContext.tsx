@@ -4,7 +4,6 @@ import {type MapeoProjectApi} from '@comapeo/ipc';
 
 import {usePersistedProjectId} from '../hooks/persistedState/usePersistedProjectId';
 import {useProject, useCreateProject} from '../hooks/server/projects';
-import {Loading} from '../sharedComponents/Loading';
 
 const ActiveProjectContext = React.createContext<
   {projectId: string; projectApi: MapeoProjectApi} | undefined
@@ -21,6 +20,7 @@ export const ActiveProjectProvider = ({
   const setActiveProjectId = usePersistedProjectId(store => store.setProjectId);
 
   const activeProjectQuery = useProject(activeProjectId);
+
   const {mutate: createProject} = useCreateProject();
 
   // The persisted active project ID may be missing in the following scenarios:
@@ -61,12 +61,8 @@ export const ActiveProjectProvider = ({
       });
   }, [activeProjectId, setActiveProjectId, createProject, mapeoApi]);
 
-  if (!activeProjectQuery.data) {
-    return <Loading />;
-  }
-
   return (
-    <ActiveProjectContext.Provider value={activeProjectQuery.data}>
+    <ActiveProjectContext.Provider value={activeProjectQuery}>
       {children}
     </ActiveProjectContext.Provider>
   );

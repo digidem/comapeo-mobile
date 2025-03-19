@@ -54,7 +54,7 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
 
   const remoteArchiveOn = remoteArchives && remoteArchives.length > 0;
 
-  const {data: projects} = useAllProjects();
+  const projects = useAllProjects();
 
   const MenuItems: MenuListItemType[] = [
     {

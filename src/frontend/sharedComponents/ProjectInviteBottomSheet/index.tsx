@@ -107,8 +107,8 @@ export const ProjectInviteBottomSheet = ({
 
   function handleAccept() {
     if (invite) {
-      // the accept button will be in a loading state until projects.data is available. So user will not be able to get here until the projects have loaded
-      if (projects.data && projects.data.length > 1) {
+      // the accept button will be in a loading state until projects are available. So user will not be able to get here until the projects have loaded
+      if (projects && projects.length > 1) {
         openLeaveSheet();
         return;
       }
@@ -143,9 +143,7 @@ export const ProjectInviteBottomSheet = ({
         ) : (
           <NewInviteBottomSheetContent
             handleAccept={handleAccept}
-            isLoading={
-              accept.isPending || reject.isPending || projects.isPending
-            }
+            isLoading={accept.isPending || reject.isPending}
             handleReject={handleReject}
             projectName={invite?.projectName}
           />

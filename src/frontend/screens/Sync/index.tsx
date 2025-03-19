@@ -49,21 +49,16 @@ export const SyncScreen = ({navigation}: NativeRootNavigationProps<'Sync'>) => {
   const hasInternetAccess = useNetInfo().isConnected;
 
   // TODO: Handle error case
-  const {isLoading, data} = useAllProjects();
+  const projects = useAllProjects();
   const syncState = useSyncState();
   const projectSettingsQuery = useProjectSettings();
 
-  if (
-    isLoading ||
-    !syncState ||
-    !projectSettingsQuery.data ||
-    remoteArchiveLoading
-  ) {
+  if (!syncState || !projectSettingsQuery.data || remoteArchiveLoading) {
     return <Loading />;
   }
 
   // TODO: Replace with proper check of being a part of a shared project
-  if (data && data.length === 1) {
+  if (projects && projects.length === 1) {
     return (
       <CreateOrJoinProjectDisplay
         onCreateOrJoinProject={() => navigation.navigate('CreateOrJoinProject')}

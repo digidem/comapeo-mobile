@@ -3,21 +3,21 @@ import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {usePersistedTrack} from '../../../hooks/persistedState/usePersistedTrack';
 import {useTrackTimerContext} from '../../../contexts/TrackTimerContext';
-import {useSharedLocationContext} from '../../../contexts/SharedLocationContext';
+import {useLocation} from '../../../hooks/useLocation';
+import {TRACKING_DISTANCE_INTERVAL} from '../../../constants';
 
 export const UserTooltipMarker = () => {
   const {timer} = useTrackTimerContext();
-  const {locationState} = useSharedLocationContext();
+  const {location} = useLocation({
+    maxDistanceInterval: TRACKING_DISTANCE_INTERVAL,
+  });
   const totalDistance = usePersistedTrack(state => state.distance);
 
   return (
-    locationState.location?.coords && (
+    location?.coords && (
       <MarkerView
         id="locationView"
-        coordinate={[
-          locationState.location.coords.longitude,
-          locationState.location.coords.latitude,
-        ]}
+        coordinate={[location.coords.longitude, location.coords.latitude]}
         anchor={{x: 0.5, y: 1}}>
         <View style={styles.container}>
           <View style={styles.wrapper}>

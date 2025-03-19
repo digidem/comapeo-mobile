@@ -29,9 +29,9 @@ import {matchPreset} from '../../lib/utils';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
 import {UserLocation} from '@rnmapbox/maps';
-import {TRACKING_DISTANCE_INTERVAL} from '../../hooks/useTracking';
 import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import {UserTooltipMarker} from './CurrentTrack/UserTooltipMarker';
+import {TRACKING_DISTANCE_INTERVAL} from '../../constants';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the

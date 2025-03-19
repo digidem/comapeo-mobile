@@ -2,11 +2,7 @@ import * as Location from 'expo-location';
 import {useCallback, useState} from 'react';
 import {usePersistedTrack} from './persistedState/usePersistedTrack';
 import {LOCATION_TASK_NAME} from '../sharedTypes/location.ts';
-
-/**
- * This constant should be used for tracks and for the userlocation dot. In order for the user location dot to align with the track on the map, they need to update at the same frequency.
- */
-export const TRACKING_DISTANCE_INTERVAL = 2;
+import {TRACKING_DISTANCE_INTERVAL} from '../constants.ts';
 
 export function useTracking() {
   const [loading, setLoading] = useState(false);

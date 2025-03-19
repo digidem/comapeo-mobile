@@ -16,3 +16,8 @@ export const EDITING_SCREEN_NAMES:
   'TrackEdit',
   'Camera',
 ];
+
+/**
+ * This constant should be used for tracks and for the userlocation dot. In order for the user location dot to align with the track on the map, they need to update at the same frequency.
+ */
+export const TRACKING_DISTANCE_INTERVAL = 2;

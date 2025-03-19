@@ -29,9 +29,9 @@ import {matchPreset} from '../../lib/utils';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
 import {UserLocation} from '@rnmapbox/maps';
-import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
 import {UserTooltipMarker} from './CurrentTrack/UserTooltipMarker';
 import {TRACKING_DISTANCE_INTERVAL} from '../../constants';
+import {useTrackState} from '../../contexts/TrackStoreContext';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -66,7 +66,7 @@ export const MapScreen = ({
     store => store.value,
   );
   const {data: presets} = usePresetsQuery();
-  const isTracking = usePersistedTrack(state => state.isTracking);
+  const isTracking = useTrackState(state => state.isTracking);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -159,7 +159,7 @@ export const MapScreen = ({
         {isFinishedLoading && (
           <>
             <RemoteDetectionAlertsMapLayer />
-            <CurrentTrackMapLayer />
+            {isTracking && <CurrentTrackMapLayer />}
             <TracksMapLayer />
             <ObservationMapLayer />
           </>

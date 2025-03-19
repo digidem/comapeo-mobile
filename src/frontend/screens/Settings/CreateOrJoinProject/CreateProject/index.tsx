@@ -10,10 +10,10 @@ import {
 } from 'react-native-gesture-handler';
 import {UIActivityIndicator} from 'react-native-indicators';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import {useCreateProject} from '@comapeo/core-react';
 
 import {useSelectFile} from '../../../../hooks/files';
 import {usePersistedProjectId} from '../../../../hooks/persistedState/usePersistedProjectId';
-import {useCreateProject} from '../../../../hooks/server/projects';
 import {convertFileUriToPosixPath} from '../../../../lib/file-system';
 import {BLACK, LIGHT_GREY} from '../../../../lib/styles';
 import noop from '../../../../lib/noop';
@@ -214,7 +214,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
       <ErrorBottomSheet
-        error={selectFileMutation.error || createProjectMutation.error}
+        error={selectFileMutation.error}
         clearError={() => {
           selectFileMutation.reset();
           createProjectMutation.reset();
@@ -222,9 +222,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
         tryAgain={
           selectFileMutation.error
             ? selectConfigFile
-            : createProjectMutation.error
-              ? handleSubmit(handleCreateProject)
-              : undefined
+            : handleSubmit(handleCreateProject)
         }
       />
     </React.Fragment>

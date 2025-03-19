@@ -1,16 +1,16 @@
 import * as React from 'react';
 import {View, FlatList, Dimensions, StyleSheet} from 'react-native';
-import {ObservationListItem} from './ObservationListItem';
-import {ObservationEmptyView} from './ObservationsEmptyView';
-
+import {useManyProjects} from '@comapeo/core-react';
 import {Observation, Track} from '@comapeo/schema';
 import {MessageDescriptor, defineMessages} from 'react-intl';
 import {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs';
+
+import {ObservationListItem} from './ObservationListItem';
+import {ObservationEmptyView} from './ObservationsEmptyView';
 import {ObservationListHeaderLeft} from './ObservationListHeaderLeft';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
 import {NoProjectWarning} from './NoProjectWarning';
 import {WHITE} from '../../lib/styles';
-import {useAllProjects} from '../../hooks/server/projects';
 import {TrackListItem} from './TrackListItem';
 import {useObservations} from '../../hooks/server/observations';
 import {useTracks} from '../../hooks/server/track';
@@ -55,7 +55,7 @@ export const ObservationsList: React.FC<
 } = ({navigation}) => {
   const {data: observations} = useObservations();
   const {data: tracks} = useTracks();
-  const projects = useAllProjects();
+  const {data: projects} = useManyProjects();
 
   const rowsPerWindow = Math.ceil(
     (Dimensions.get('window').height - 65) / OBSERVATION_CELL_HEIGHT,

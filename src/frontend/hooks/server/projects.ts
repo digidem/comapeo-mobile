@@ -5,7 +5,6 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {PRESETS_KEY} from './presets';
 import {ICONS_KEY} from './icons';
 import {FIELDS_KEY} from './fields';
-import {useSingleProject, useManyProjects} from '@comapeo/core-react';
 
 export const ALL_PROJECTS_KEY = 'all_projects';
 export const PROJECT_SETTINGS_KEY = 'project_settings';
@@ -18,45 +17,18 @@ export const THIS_USERS_ROLE_KEY = 'my_role';
 export const REMOTE_ARCHIVE = 'remote_archive';
 
 export function useProject(projectId?: string) {
-  if (!projectId) {
-    throw new Error('No projectId specified in useProject()');
-  }
-  const {data} = useSingleProject({projectId});
-
-  return {
-    projectId,
-    projectApi: data,
-  };
-}
-
-export function useAllProjects() {
-  const {data} = useManyProjects();
-  return data;
-}
-
-export function useCreateProject() {
   const api = useClientApi();
-  const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationKey: [CREATE_PROJECT_KEY],
-    mutationFn: (opts?: Parameters<typeof api.createProject>[0]) => {
-      if (opts) {
-        return api.createProject(opts);
-      } else {
-        // Have to avoid passing `undefined` explicitly
-        // See https://github.com/digidem/comapeo-mobile/issues/392
-        return api.createProject();
-      }
+  return useQuery({
+    queryKey: [PROJECT_KEY, projectId],
+    queryFn: async () => {
+      if (!projectId) throw new Error('Active project ID must exist');
+      const projectApi = await api.getProject(projectId);
+
+      return {projectId, projectApi};
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [ALL_PROJECTS_KEY],
-      });
-      queryClient.invalidateQueries({
-        queryKey: [PROJECT_SETTINGS_KEY],
-      });
-    },
+    enabled: !!projectId,
+    placeholderData: previousData => previousData,
   });
 }
 

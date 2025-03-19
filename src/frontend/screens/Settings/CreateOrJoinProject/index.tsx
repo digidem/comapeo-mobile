@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {useManyProjects} from '@comapeo/core-react';
+
 import {Text} from '../../../sharedComponents/Text';
 import type {ViewStyleProp} from '../../../sharedTypes';
 import type {NativeNavigationComponent} from '../../../sharedTypes/navigation';
@@ -8,7 +10,6 @@ import {ScrollView, StyleSheet, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {LIGHT_GREY} from '../../../lib/styles';
 import Warning from '../../../images/Warning.svg';
-import {useAllProjects} from '../../../hooks/server/projects';
 import {CenteredView} from '../../../sharedComponents/CenteredView';
 import {Loading} from '../../../sharedComponents/Loading';
 
@@ -53,7 +54,7 @@ export const CreateOrJoinProject: NativeNavigationComponent<
   'CreateOrJoinProject'
 > = ({navigation}) => {
   const {formatMessage: t} = useIntl();
-  const projects = useAllProjects();
+  const {data: projects} = useManyProjects();
 
   if (projects) {
     return (

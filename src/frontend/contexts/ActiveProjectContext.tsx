@@ -1,9 +1,10 @@
 import * as React from 'react';
 import {useClientApi} from '@comapeo/core-react';
 import {type MapeoProjectApi} from '@comapeo/ipc';
+import {useCreateProject} from '@comapeo/core-react';
 
 import {usePersistedProjectId} from '../hooks/persistedState/usePersistedProjectId';
-import {useProject, useCreateProject} from '../hooks/server/projects';
+import {useProject} from '../hooks/server/projects';
 
 const ActiveProjectContext = React.createContext<
   {projectId: string; projectApi: MapeoProjectApi} | undefined
@@ -62,7 +63,7 @@ export const ActiveProjectProvider = ({
   }, [activeProjectId, setActiveProjectId, createProject, mapeoApi]);
 
   return (
-    <ActiveProjectContext.Provider value={activeProjectQuery}>
+    <ActiveProjectContext.Provider value={activeProjectQuery.data}>
       {children}
     </ActiveProjectContext.Provider>
   );
@@ -71,7 +72,9 @@ export const ActiveProjectProvider = ({
 export function useActiveProject() {
   const projectContext = React.useContext(ActiveProjectContext);
   if (!projectContext) {
-    throw new Error('Undefined project context, use ActiveProjectProvider');
+    throw new Error(
+      'useActiveProject must be used inside ActiveProjectProvider',
+    );
   }
   return projectContext;
 }

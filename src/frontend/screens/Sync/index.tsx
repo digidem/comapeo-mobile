@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
+import {useManyProjects} from '@comapeo/core-react';
 
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {IconButton} from '../../sharedComponents/IconButton';
 import {SettingsIcon} from '../../sharedComponents/icons';
 import {
-  useAllProjects,
   useGetRemoteArchives,
   useProjectSettings,
 } from '../../hooks/server/projects';
@@ -49,7 +49,7 @@ export const SyncScreen = ({navigation}: NativeRootNavigationProps<'Sync'>) => {
   const hasInternetAccess = useNetInfo().isConnected;
 
   // TODO: Handle error case
-  const projects = useAllProjects();
+  const {data: projects} = useManyProjects();
   const syncState = useSyncState();
   const projectSettingsQuery = useProjectSettings();
 

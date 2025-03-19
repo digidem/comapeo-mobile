@@ -15,5 +15,6 @@ describe('Unjoin Project', () => {
     ).toBeDisplayed();
     const backButton = $(byResourceId('MAIN.header-back-btn'));
     await backButton.click();
+    await $('~Close Navigation Drawer').click();
   });
 });

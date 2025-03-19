@@ -87,7 +87,9 @@ export const AudioPlaybackSaved = ({
 
   function onPressDelete() {
     deleteAudio(uri, true);
-    navigation.popTo('ObservationEdit');
+    navigation.popTo('ObservationEdit', {
+      observationId: route.params.observationId,
+    });
   }
 
   return (

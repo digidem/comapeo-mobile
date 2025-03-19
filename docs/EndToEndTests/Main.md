@@ -9,6 +9,9 @@
 - [Map](#map)
   - [Test Objectives](#test-objectives-2)
   - [Special Considerations](#special-considerations-2)
+- [On App Restart Navigation](#on-app-restart-navigation)
+  - [Test Objectives](#test-objectives-3)
+  - [Special Considerations](#special-considerations-3)
 
 ### Overview
 
@@ -58,3 +61,17 @@ This tests that some of the buttons appear on the map and that an observation ca
 ### Special Considerations
 
 - A lot of the functionality for the map has to be tested by QA, and is listed in 'docs/EndToEndTests/E2ENoGos.md'
+
+## On App Restart Navigation
+
+This test ensures that the app navigates to the correct screen when handling app restarts.
+
+### Test Objectives
+
+- When launching the app with no existing observation, the user stays on the Map screen.
+- If an observation is started but no preset is selected, reopening the app returns to PresetChooser.
+- If an observation is in progress, reopening the app resumes at ObservationCreate.
+
+### Special Considerations
+
+- There also should be a test in the future that checks if someone is editing an observation the restart returns to editing the observation. Currently, there is no test for editing an observation, so that should come first.

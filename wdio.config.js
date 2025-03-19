@@ -33,6 +33,7 @@ const config = {
       'appium:automationName': 'UIAutomator2',
       'appium:app': process.env.BROWSERSTACK_APP_URL,
       'appium:autoGrantPermissions': true,
+      'appium:autoDismissAlerts': true,
       'bstack:options': {
         projectName: 'CoMapeo',
         buildName: 'CoMapeo Android Build',

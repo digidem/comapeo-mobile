@@ -27,7 +27,7 @@ These tests deal with all issues related to the main screens of the app.
 
 ### Special Considerations
 
-- All QA relating to the camera (that buttons appear where they should, adding photos, viewing photos, and deleting photos) will have to be done by a real person until we update Expo and Expo camera. See E2ENoGos.
+- All QA relating to the camera (that buttons appear where they should, adding photos, viewing photos, and deleting photos) has not been added yet.
 
 ## Adding Details
 
@@ -54,13 +54,12 @@ These tests deal with all issues related to the main screens of the app.
 
 ### Test Objectives
 
-- First the test changes locations slightly and adds observations with different preset categories
-- Takes a screenshot of the map so someone can check the dots if they want
-- Checks that clicking on a point on the map goes to that observation
+- First the test adds observations with different preset categories
 - Checks that all of the back buttons work
 - Checks that the observations list button goes to the observations list screen from map and the camera screen
 - Checks that observation names, time captures, thumbnails and icons display as expected on the list screen and the show observation screen
 
 ### Special Considerations
 
-- There is no way to automatically test the appearance of the dots, but it can be checked on a screenshot
+- The test does not check the locations of the dots at this time
+- We are not able to change the location for the app during testing at this time

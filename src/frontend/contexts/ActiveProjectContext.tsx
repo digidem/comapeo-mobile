@@ -5,6 +5,7 @@ import {useCreateProject} from '@comapeo/core-react';
 
 import {usePersistedProjectId} from '../hooks/persistedState/usePersistedProjectId';
 import {useProject} from '../hooks/server/projects';
+import {Loading} from '../sharedComponents/Loading';
 
 const ActiveProjectContext = React.createContext<
   {projectId: string; projectApi: MapeoProjectApi} | undefined
@@ -61,6 +62,10 @@ export const ActiveProjectProvider = ({
         console.error(err);
       });
   }, [activeProjectId, setActiveProjectId, createProject, mapeoApi]);
+
+  if (!activeProjectQuery.data) {
+    return <Loading />;
+  }
 
   return (
     <ActiveProjectContext.Provider value={activeProjectQuery.data}>

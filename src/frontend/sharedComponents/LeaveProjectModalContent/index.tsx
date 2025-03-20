@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useAcceptInvite} from '../../hooks/server/invites';
+import {useAcceptInvite} from '@comapeo/core-react';
 import {AlreadyOnProject} from './AlreadyOnProject';
 import {LeaveProject} from './LeaveProject';
 import {useProjectSettings} from '../../hooks/server/projects';

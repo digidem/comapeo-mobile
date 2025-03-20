@@ -4,10 +4,8 @@ import {defineMessages} from 'react-intl';
 import {ErrorBottomSheet} from '../../../../../sharedComponents/ErrorBottomSheet';
 import {ReviewInvitation} from './ReviewInvitation';
 import {WaitingForInviteAccept} from './WaitingForInviteAccept';
-import {
-  useRequestCancelInvite,
-  useSendInvite,
-} from '../../../../../hooks/server/invites';
+import {useSendInvite, useRequestCancelInvite} from '@comapeo/core-react';
+import {useActiveProject} from '../../../../../contexts/ActiveProjectContext';
 
 const m = defineMessages({
   title: {
@@ -21,17 +19,29 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
   navigation,
 }) => {
   const {role, deviceId, deviceType, name} = route.params;
+  const {projectId} = useActiveProject();
+  const [requestCancelInviteError, setRequestCancelInviteError] =
+    React.useState<Error | null>(null);
+  const [sendInviteError, setSendInviteError] = React.useState<Error | null>(
+    null,
+  );
 
-  const sendInviteMutation = useSendInvite();
-  const requestCancelInviteMutation = useRequestCancelInvite();
+  const sendInviteMutation = useSendInvite({projectId});
+  const requestCancelInviteMutation = useRequestCancelInvite({projectId});
 
   function sendInvite() {
     sendInviteMutation.mutate(
-      {deviceId, role: {roleId: role}},
+      {
+        deviceId,
+        roleId: role,
+      },
       {
         onSuccess: val => {
           // If user has attempted to cancel an invite, but an invite has already been accepted, let user know their cancellation was unsuccessful
-          if (val === 'ACCEPT' && requestCancelInviteMutation.isPending) {
+          if (
+            val === 'ACCEPT' &&
+            requestCancelInviteMutation.status === 'pending'
+          ) {
             navigation.navigate('UnableToCancelInvite', {...route.params});
             return;
           }
@@ -45,34 +55,47 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
             return;
           }
         },
+        onError(error) {
+          setSendInviteError(error);
+        },
       },
     );
   }
 
   function cancelInvite() {
-    requestCancelInviteMutation.mutate(deviceId, {
-      onSuccess: () => {
-        navigation.popTo('YourTeam');
+    requestCancelInviteMutation.mutate(
+      {deviceId},
+      {
+        onSuccess: () => {
+          navigation.popTo('YourTeam');
+        },
+        onError: err => {
+          setRequestCancelInviteError(err);
+        },
       },
-    });
+    );
   }
 
   function clearError() {
-    if (sendInviteMutation.isError) {
+    if (sendInviteMutation.status === 'error') {
+      setSendInviteError(null);
       sendInviteMutation.reset();
     }
-    if (requestCancelInviteMutation.isError) {
+    if (requestCancelInviteMutation.status === 'error') {
+      setRequestCancelInviteError(null);
       requestCancelInviteMutation.reset();
     }
   }
 
   function tryAgain() {
-    if (sendInviteMutation.isError) {
+    if (sendInviteMutation.status === 'error') {
+      setSendInviteError(null);
       sendInviteMutation.reset();
       sendInvite();
       return;
     }
-    if (requestCancelInviteMutation.isError) {
+    if (requestCancelInviteMutation.status === 'error') {
+      setRequestCancelInviteError(null);
       requestCancelInviteMutation.reset();
       cancelInvite();
     }
@@ -80,7 +103,7 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
 
   return (
     <React.Fragment>
-      {sendInviteMutation.isIdle ? (
+      {sendInviteMutation.status === 'idle' ? (
         <ReviewInvitation
           sendInvite={sendInvite}
           deviceId={deviceId}
@@ -92,7 +115,7 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
         <WaitingForInviteAccept cancelInvite={cancelInvite} />
       )}
       <ErrorBottomSheet
-        error={sendInviteMutation.error || requestCancelInviteMutation.error}
+        error={requestCancelInviteError || sendInviteError}
         clearError={clearError}
         tryAgain={tryAgain}
       />

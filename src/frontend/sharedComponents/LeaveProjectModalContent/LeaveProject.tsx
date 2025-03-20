@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import ErrorIcon from '../../images/Error.svg';
 import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../sharedComponents/Text';
-import {useLeaveProject} from '@comapeo/core-react';
+import {useLeaveProject, useAcceptInvite} from '@comapeo/core-react';
 import {RED} from '../../lib/styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import * as Sentry from '@sentry/react-native';
@@ -12,9 +12,9 @@ import {TouchableOpacity} from '../../sharedComponents/Touchables';
 
 import {UIActivityIndicator} from 'react-native-indicators';
 import {BottomSheetModalContent} from '../BottomSheetModal';
-import {useAcceptInvite} from '../../hooks/server/invites';
 import {ErrorBottomSheet} from '../ErrorBottomSheet';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {usePersistedProjectId} from '../../hooks/persistedState/usePersistedProjectId';
 
 const m = defineMessages({
   leaveProj: {
@@ -72,8 +72,13 @@ export const LeaveProject = ({
   const [isChecked, setIsChecked] = React.useState(false);
   const [leaveProjectError, setLeaveProjectError] =
     React.useState<Error | null>(null);
+  const [acceptInviteError, setAcceptInviteError] =
+    React.useState<Error | null>(null);
   const {projectId} = useActiveProject();
   const leaveProject = useLeaveProject();
+  const switchActiveProject = usePersistedProjectId(
+    state => state.setProjectId,
+  );
 
   function handleLeavePress() {
     if (!isChecked) {
@@ -85,11 +90,12 @@ export const LeaveProject = ({
     accept.mutate(
       {inviteId},
       {
-        onSuccess: () => {
+        onSuccess: projectPublicId => {
           leaveProject.mutate(
             {projectId},
             {
               onSuccess: () => {
+                switchActiveProject(projectPublicId);
                 closeSheet();
               },
               onError: err => {
@@ -100,6 +106,7 @@ export const LeaveProject = ({
           );
         },
         onError: err => {
+          setAcceptInviteError(err);
           Sentry.captureException(err);
         },
       },
@@ -164,11 +171,12 @@ export const LeaveProject = ({
         </BottomSheetModalContent>
       )}
       <ErrorBottomSheet
-        error={accept.error || leaveProjectError}
+        error={acceptInviteError || leaveProjectError}
         clearError={() => {
           leaveProject.reset();
           accept.reset();
           setLeaveProjectError(null);
+          setAcceptInviteError(null);
         }}
         tryAgain={handleLeavePress}
       />

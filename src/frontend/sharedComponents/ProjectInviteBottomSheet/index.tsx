@@ -3,16 +3,14 @@ import {Invite, InviteRemovalReason} from '@comapeo/core/dist/invite-api';
 import {useClientApi, useManyProjects} from '@comapeo/core-react';
 
 import {BottomSheetModal, useBottomSheetModal} from '../BottomSheetModal';
-import {
-  useAcceptInvite,
-  usePendingInvites,
-  useRejectInvite,
-} from '../../hooks/server/invites';
+import {usePendingInvites} from '../../hooks/server/invites';
+import {useAcceptInvite, useRejectInvite} from '@comapeo/core-react';
 import {useProjectInvitesListener} from '../../hooks/useProjectInvitesListener';
 import {NewInviteBottomSheetContent} from './NewInviteBottomSheetContent';
 import {InviteSuccessBottomSheetContent} from './InviteSuccessBottomSheetContent';
 import {InviteCanceledBottomSheetContent} from './InviteCanceledBottomSheetContent';
 import {LeaveProjectModalContent} from '../LeaveProjectModalContent';
+import {usePersistedProjectId} from '../../hooks/persistedState/usePersistedProjectId';
 
 export type LeaveProjectModalState = 'AlreadyOnProj' | 'LeaveProj';
 
@@ -59,6 +57,9 @@ export const ProjectInviteBottomSheet = ({
     });
   const accept = useAcceptInvite();
   const reject = useRejectInvite();
+  const switchActiveProject = usePersistedProjectId(
+    state => state.setProjectId,
+  );
 
   React.useEffect(() => {
     if (
@@ -111,8 +112,14 @@ export const ProjectInviteBottomSheet = ({
         openLeaveSheet();
         return;
       }
-
-      accept.mutate({inviteId: invite.inviteId});
+      accept.mutate(
+        {inviteId: invite.inviteId},
+        {
+          onSuccess: projectPublicId => {
+            switchActiveProject(projectPublicId);
+          },
+        },
+      );
     }
   }
 
@@ -142,7 +149,9 @@ export const ProjectInviteBottomSheet = ({
         ) : (
           <NewInviteBottomSheetContent
             handleAccept={handleAccept}
-            isLoading={accept.isPending || reject.isPending}
+            isLoading={
+              accept.status === 'pending' || reject.status === 'pending'
+            }
             handleReject={handleReject}
             projectName={invite?.projectName}
           />

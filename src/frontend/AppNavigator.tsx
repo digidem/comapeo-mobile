@@ -6,9 +6,7 @@ import * as React from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import {ProjectInviteBottomSheet} from './sharedComponents/ProjectInviteBottomSheet';
 import {AppStackParamsList} from './sharedTypes/navigation';
-import {useClientApi} from '@comapeo/core-react';
-import {useQuery} from '@tanstack/react-query';
-import {DEVICE_INFO_KEY} from './hooks/server/deviceInfo';
+import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {RootStackNavigator} from './Navigation/Stack';
 import {isEditingScreen} from './lib/isEditingScreen';
 
@@ -16,18 +14,12 @@ export const rootNavigationRef =
   createNavigationContainerRef<AppStackParamsList>();
 
 export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
-  const mapeoApi = useClientApi();
   const [inviteSheetEnabled, setInviteSheetEnabled] = React.useState(() => {
     return false;
   });
 
   //This cannot be a suspense query as there is no suspense boundry above this
-  const deviceInfo = useQuery({
-    queryKey: [DEVICE_INFO_KEY],
-    queryFn: async () => {
-      return await mapeoApi.getDeviceInfo();
-    },
-  });
+  const {data: deviceInfo, isRefetching} = useOwnDeviceInfo();
 
   React.useEffect(() => {
     const unsubscribe = rootNavigationRef.addListener('state', () => {
@@ -46,18 +38,18 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
     };
   }, []);
 
-  if (permissionAsked && !deviceInfo.isPending) {
+  if (permissionAsked && !isRefetching) {
     SplashScreen.hide();
   }
 
-  if (deviceInfo.isPending) {
+  if (isRefetching) {
     //user should not see this due to the splash screen
     return null;
   }
 
   return (
     <NavigationContainer ref={rootNavigationRef}>
-      <RootStackNavigator deviceName={deviceInfo.data?.name} />
+      <RootStackNavigator deviceName={deviceInfo.name} />
       <React.Suspense fallback={null}>
         <ProjectInviteBottomSheet
           enabledForCurrentScreen={inviteSheetEnabled}

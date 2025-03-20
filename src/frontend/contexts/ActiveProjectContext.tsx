@@ -4,14 +4,14 @@ import {type MapeoProjectApi} from '@comapeo/ipc';
 import {useCreateProject} from '@comapeo/core-react';
 
 import {usePersistedProjectId} from '../hooks/persistedState/usePersistedProjectId';
-import {useProject} from '../hooks/server/projects';
+import {useSingleProject} from '@comapeo/core-react';
 import {Loading} from '../sharedComponents/Loading';
 
 const ActiveProjectContext = React.createContext<
   {projectId: string; projectApi: MapeoProjectApi} | undefined
 >(undefined);
 
-export const ActiveProjectProvider = ({
+export const ActiveProjectIdProvider = ({
   children,
 }: {
   children: React.ReactNode;
@@ -20,8 +20,6 @@ export const ActiveProjectProvider = ({
 
   const activeProjectId = usePersistedProjectId(store => store.projectId);
   const setActiveProjectId = usePersistedProjectId(store => store.setProjectId);
-
-  const activeProjectQuery = useProject(activeProjectId);
 
   const {mutate: createProject} = useCreateProject();
 
@@ -63,16 +61,38 @@ export const ActiveProjectProvider = ({
       });
   }, [activeProjectId, setActiveProjectId, createProject, mapeoApi]);
 
-  if (!activeProjectQuery.data) {
+  if (!activeProjectId) {
     return <Loading />;
   }
 
   return (
-    <ActiveProjectContext.Provider value={activeProjectQuery.data}>
+    <React.Suspense fallback={<Loading />}>
+      <ActiveProjectProvider projectId={activeProjectId}>
+        {children}
+      </ActiveProjectProvider>
+    </React.Suspense>
+  );
+};
+
+function ActiveProjectProvider({
+  projectId,
+  children,
+}: {
+  projectId: string;
+  children: React.ReactNode;
+}) {
+  const {data: projectApi} = useSingleProject({projectId});
+  const dataValue = React.useMemo(
+    () => ({projectId, projectApi}),
+    [projectId, projectApi],
+  );
+
+  return (
+    <ActiveProjectContext.Provider value={dataValue}>
       {children}
     </ActiveProjectContext.Provider>
   );
-};
+}
 
 export function useActiveProject() {
   const projectContext = React.useContext(ActiveProjectContext);

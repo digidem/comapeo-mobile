@@ -6,7 +6,7 @@ import {StyleSheet} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {TrackTimerContextProvider} from './TrackTimerContext';
 import {PhotoPromiseProvider} from './PhotoPromiseContext';
-import {ActiveProjectProvider} from './ActiveProjectContext';
+import {ActiveProjectIdProvider} from './ActiveProjectContext';
 import {SecurityProvider} from './SecurityContext';
 import {
   LocalDiscoveryProvider,
@@ -60,7 +60,7 @@ export const AppProviders = ({
                       <MetricsProvider
                         appMetrics={appMetrics}
                         deviceMetrics={deviceMetrics}>
-                        <ActiveProjectProvider>
+                        <ActiveProjectIdProvider>
                           <BottomSheetModalProvider>
                             <PhotoPromiseProvider>
                               <DraftObservationProvider
@@ -71,7 +71,7 @@ export const AppProviders = ({
                               </DraftObservationProvider>
                             </PhotoPromiseProvider>
                           </BottomSheetModalProvider>
-                        </ActiveProjectProvider>
+                        </ActiveProjectIdProvider>
                       </MetricsProvider>
                     </ClientApiProvider>
                   </LocalDiscoveryProvider>

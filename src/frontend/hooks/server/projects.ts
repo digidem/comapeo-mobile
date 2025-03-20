@@ -1,6 +1,5 @@
 import {useMemo} from 'react';
 import {
-  useClientApi,
   useProjectSettings as useComapeoProjectSettings,
   useOwnDeviceInfo,
   useSingleMember,
@@ -19,22 +18,6 @@ export const ORIGINAL_VERSION_ID_TO_DEVICE_ID_KEY =
   'originalVersionIdToDeviceId';
 export const THIS_USERS_ROLE_KEY = 'my_role';
 export const REMOTE_ARCHIVE = 'remote_archive';
-
-export function useProject(projectId?: string) {
-  const api = useClientApi();
-
-  return useQuery({
-    queryKey: [PROJECT_KEY, projectId],
-    queryFn: async () => {
-      if (!projectId) throw new Error('Active project ID must exist');
-      const projectApi = await api.getProject(projectId);
-
-      return {projectId, projectApi};
-    },
-    enabled: !!projectId,
-    placeholderData: previousData => previousData,
-  });
-}
 
 export function useProjectSettings() {
   const {projectId} = useActiveProject();

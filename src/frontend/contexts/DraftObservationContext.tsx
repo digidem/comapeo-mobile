@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import {StoreApi, useStore} from 'zustand';
 import CheapRuler from 'cheap-ruler';
-import * as Location from 'expo-location';
 import {
   DraftState,
   DraftObservationStore,
@@ -110,11 +109,7 @@ function useCreateDraftObservationLocationUpdator(
           if (!providerStatus?.locationServicesEnabled) return;
 
           // If manual location, do not update
-          if (
-            draftObservationStore.instance.getState().value?.metadata
-              ?.manualLocation
-          )
-            return;
+          if (currentDraft.metadata?.manualLocation) return;
 
           // if no initial position, set initial position
           if (!initialPosition) {
@@ -126,9 +121,34 @@ function useCreateDraftObservationLocationUpdator(
             });
           }
 
-          onPositionUpdate({
-            draftObservationStore,
-            location: location,
+          const isStale =
+            Date.now() - location.timestamp > STALE_LOCATION_THRESHOLD_MS;
+          if (isStale) return;
+
+          const initialAccuracy = initialPosition?.coords.accuracy;
+
+          const movedAwayThreshold = initialAccuracy
+            ? initialAccuracy * ACCURACY_MOVED_AWAY_FACTOR
+            : MOVED_AWAY_THRESHOLD_METERS;
+          const hasMovedAway =
+            initialPosition &&
+            distanceBetweenCoords(initialPosition.coords, location.coords) >
+              movedAwayThreshold;
+          if (hasMovedAway) return;
+
+          const currentDraftCoords = currentDraft.metadata?.position?.coords;
+
+          const isMoreAccurate =
+            !currentDraftCoords ||
+            !location.coords.accuracy ||
+            !currentDraftCoords.accuracy ||
+            location.coords.accuracy < currentDraftCoords.accuracy;
+
+          if (!isMoreAccurate) return;
+
+          draftObservationStore.actions.updatePosition({
+            manualLocation: false,
+            position: location,
             positionProvider: providerStatus,
           });
         });
@@ -149,50 +169,6 @@ function useCreateDraftObservationLocationUpdator(
       }
     };
   }, [draftObservationStore, locationStore]);
-}
-
-function onPositionUpdate({
-  location,
-  positionProvider,
-  draftObservationStore,
-}: {
-  location: Location.LocationObject;
-  positionProvider: Location.LocationProviderStatus;
-  draftObservationStore: DraftObservationStore;
-}) {
-  const {value: currentDraft, initialPosition} =
-    draftObservationStore.instance.getState();
-
-  if (!currentDraft) return;
-
-  const isStale = Date.now() - location.timestamp > STALE_LOCATION_THRESHOLD_MS;
-  if (isStale) return;
-
-  const initialAccuracy = initialPosition?.coords.accuracy;
-  const movedAwayThreshold = initialAccuracy
-    ? initialAccuracy * ACCURACY_MOVED_AWAY_FACTOR
-    : MOVED_AWAY_THRESHOLD_METERS;
-  const hasMovedAway =
-    initialPosition &&
-    distanceBetweenCoords(initialPosition.coords, location.coords) >
-      movedAwayThreshold;
-  if (hasMovedAway) return;
-
-  const currentDraftCoords = currentDraft.metadata?.position?.coords;
-
-  const isMoreAccurate =
-    !currentDraftCoords ||
-    !location.coords.accuracy ||
-    !currentDraftCoords.accuracy ||
-    location.coords.accuracy < currentDraftCoords.accuracy;
-
-  if (!isMoreAccurate) return;
-
-  draftObservationStore.actions.updatePosition({
-    manualLocation: false,
-    position: location,
-    positionProvider,
-  });
 }
 
 function isNewlyCreatedDraft(storeState: DraftState) {

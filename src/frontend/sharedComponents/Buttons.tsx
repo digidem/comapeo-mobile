@@ -8,6 +8,7 @@ type ButtonProps = {
   fullWidth: boolean;
   text: string;
   onPress: () => void;
+  testID?: string;
 };
 
 export const PrimaryButton = ({
@@ -15,9 +16,11 @@ export const PrimaryButton = ({
   renderIcon,
   text,
   fullWidth,
+  testID,
 }: ButtonProps) => {
   return (
     <TouchableOpacity
+      testID={testID}
       style={[
         styles.base,
         {backgroundColor: COMAPEO_BLUE, width: fullWidth ? `100%` : 280},
@@ -40,9 +43,11 @@ export const SecondaryButton = ({
   renderIcon,
   text,
   fullWidth,
+  testID,
 }: ButtonProps) => {
   return (
     <TouchableOpacity
+      testID={testID}
       style={[
         styles.base,
         {
@@ -70,9 +75,11 @@ export const DestructiveButton = ({
   renderIcon,
   text,
   fullWidth,
+  testID,
 }: ButtonProps) => {
   return (
     <TouchableOpacity
+      testID={testID}
       style={[
         styles.base,
         {backgroundColor: WARNING_RED, width: fullWidth ? `100%` : 280},

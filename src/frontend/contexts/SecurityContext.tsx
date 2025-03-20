@@ -1,7 +1,9 @@
 import * as React from 'react';
 import {AppState, AppStateStatus} from 'react-native';
-import {usePersistedPasscode} from '../hooks/persistedState/usePersistedPasscode';
+
 import {useIsShareDialogOpen} from '../hooks/share';
+import {DEFAULT_OBSCURE_CODE} from '../lib/security';
+import {useSecurityState} from './SecurityStoreContext';
 
 type AuthState = 'unauthenticated' | 'authenticated' | 'obscured';
 
@@ -30,16 +32,12 @@ const SecurityContext = React.createContext<SecurityContextType>(DefaultState);
 export const useSecurityContext = () => React.useContext(SecurityContext);
 
 export const SecurityProvider = ({children}: {children: React.ReactNode}) => {
-  const passcode = usePersistedPasscode(store => store.passcode);
-  const obscureCode = usePersistedPasscode(store => store.obscureCode);
+  const {passcode, obscureCodeEnabled} = useSecurityState();
   const [authState, setAuthState] = React.useState<AuthState>(
     passcode === null ? 'authenticated' : 'unauthenticated',
   );
 
   const shareDialogIsOpen = useIsShareDialogOpen();
-
-  const passcodeSet = passcode !== null;
-  const obscureSet = obscureCode !== null;
 
   React.useEffect(() => {
     const appStateListener = AppState.addEventListener(
@@ -48,7 +46,7 @@ export const SecurityProvider = ({children}: {children: React.ReactNode}) => {
         // If the app state changes due to opening a share dialog, do not unauthenticate
         if (shareDialogIsOpen) return;
 
-        if (passcodeSet) {
+        if (passcode !== null) {
           if (
             nextAppState === 'active' ||
             nextAppState === 'background' ||
@@ -61,13 +59,13 @@ export const SecurityProvider = ({children}: {children: React.ReactNode}) => {
     );
 
     return () => appStateListener.remove();
-  }, [passcodeSet, shareDialogIsOpen]);
+  }, [passcode, shareDialogIsOpen]);
 
   const authenticate: SecurityContextType['authenticate'] = React.useCallback(
     (passcodeValue, validateOnly = false) => {
       if (validateOnly) return passcodeValue === passcode;
 
-      if (obscureSet && passcodeValue === obscureCode) {
+      if (obscureCodeEnabled && passcodeValue === DEFAULT_OBSCURE_CODE) {
         setAuthState('obscured');
         return true;
       }
@@ -79,19 +77,19 @@ export const SecurityProvider = ({children}: {children: React.ReactNode}) => {
 
       throw new Error('Incorrect Passcode');
     },
-    [passcode, obscureCode, obscureSet],
+    [passcode, obscureCodeEnabled],
   );
 
   const contextValue: SecurityContextType = React.useMemo(
     () => ({
       authValuesSet: {
-        passcodeSet,
-        obscureSet,
+        passcodeSet: passcode !== null,
+        obscureSet: obscureCodeEnabled,
       },
       authenticate,
       authState,
     }),
-    [authenticate, passcodeSet, obscureSet, authState],
+    [obscureCodeEnabled, passcode, authenticate, authState],
   );
 
   return (

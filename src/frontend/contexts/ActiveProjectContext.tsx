@@ -72,9 +72,7 @@ export const ActiveProjectProvider = ({
 export function useActiveProject() {
   const projectContext = React.useContext(ActiveProjectContext);
   if (!projectContext) {
-    throw new Error(
-      'useActiveProject must be used inside ActiveProjectProvider',
-    );
+    throw new Error('Undefined project context, use ActiveProjectProvider');
   }
   return projectContext;
 }

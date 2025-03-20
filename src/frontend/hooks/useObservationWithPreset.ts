@@ -1,5 +1,6 @@
 import {useActiveProject} from '../contexts/ActiveProjectContext';
-import {useSingleDocByDocId, useManyDocs} from '@comapeo/core-react';
+import {useSingleDocByDocId} from '@comapeo/core-react';
+import {usePresetsQuery} from './server/presets';
 import {matchPreset} from '../lib/utils';
 
 export function useObservationWithPreset(observationId: string) {
@@ -10,10 +11,7 @@ export function useObservationWithPreset(observationId: string) {
     docId: observationId,
   });
 
-  const {data: presets} = useManyDocs({
-    projectId,
-    docType: 'preset',
-  });
+  const {data: presets} = usePresetsQuery();
 
   const preset = matchPreset(observation.tags, presets);
 

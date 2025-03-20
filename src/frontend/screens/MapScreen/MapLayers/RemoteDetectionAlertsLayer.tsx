@@ -3,8 +3,7 @@ import MapboxGL from '@rnmapbox/maps';
 
 import {RemoteDetectionAlert} from '@comapeo/schema';
 import {FeatureCollection} from 'geojson';
-import {useActiveProject} from '../../../contexts/ActiveProjectContext';
-import {useManyDocs} from '@comapeo/core-react';
+import {useRemoteDetectionAlerts} from '../../../hooks/server/remoteDetectionAlert';
 
 const LABEL_FILTER = [
   'all',
@@ -32,11 +31,7 @@ const POLYGON_STROKE_FILTER = ['in', '$type', 'Polygon', 'MultiPolygon'];
 const POLYGON_FILL_FILTER = ['in', '$type', 'Polygon', 'MultiPolygon'];
 
 export const RemoteDetectionAlertsMapLayer = () => {
-  const {projectId} = useActiveProject();
-  const {data: alerts} = useManyDocs({
-    projectId,
-    docType: 'remoteDetectionAlert',
-  });
+  const {data: alerts} = useRemoteDetectionAlerts();
 
   if (!alerts) {
     return null;

@@ -7,7 +7,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {TrackTimerContextProvider} from './TrackTimerContext';
 import {PhotoPromiseProvider} from './PhotoPromiseContext';
 import {ActiveProjectProvider} from './ActiveProjectContext';
-import {SecurityProvider} from './SecurityContext';
+import {AuthProvider} from './AuthContext';
 import {
   LocalDiscoveryProvider,
   createLocalDiscoveryController,
@@ -71,9 +71,7 @@ export const AppProviders = ({
                                   draftObservationStore={
                                     persistedDrafObservationStore
                                   }>
-                                  <SecurityProvider>
-                                    {children}
-                                  </SecurityProvider>
+                                  <AuthProvider>{children}</AuthProvider>
                                 </DraftObservationProvider>
                               </PhotoPromiseProvider>
                             </BottomSheetModalProvider>

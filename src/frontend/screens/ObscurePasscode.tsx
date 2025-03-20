@@ -7,7 +7,7 @@ import {OBSCURE_PASSCODE} from '../constants';
 import {LIGHT_GREY} from '../lib/styles';
 import {Text} from '../sharedComponents/Text';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import {useSecurityContext} from '../contexts/SecurityContext';
+import {useAuthContext} from '../contexts/AuthContext';
 import {
   useSecurityActions,
   useSecurityState,
@@ -42,7 +42,7 @@ const m = defineMessages({
 export const ObscurePasscode: NativeNavigationComponent<'ObscurePasscode'> = ({
   navigation,
 }) => {
-  const {authState} = useSecurityContext();
+  const {authState} = useAuthContext();
   const obscureCodeEnabled = useSecurityState(
     state => state.obscureCodeEnabled,
   );

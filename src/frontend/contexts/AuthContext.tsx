@@ -7,13 +7,7 @@ import {useSecurityState} from './SecurityStoreContext';
 
 type AuthState = 'unauthenticated' | 'authenticated' | 'obscured';
 
-type AuthValuesSet = {
-  passcodeSet: boolean;
-  obscureSet: boolean;
-};
-
-type SecurityContextType = {
-  authValuesSet: AuthValuesSet;
+type AuthContextType = {
   authenticate: (
     passcodeValue: string | null,
     validateOnly?: boolean,
@@ -21,17 +15,19 @@ type SecurityContextType = {
   authState: AuthState;
 };
 
-const DefaultState: SecurityContextType = {
-  authValuesSet: {passcodeSet: false, obscureSet: false},
-  authenticate: () => false,
-  authState: 'unauthenticated',
+const AuthContext = React.createContext<AuthContextType | null>(null);
+
+export const useAuthContext = () => {
+  const value = React.useContext(AuthContext);
+
+  if (!value) {
+    throw new Error('Must set up AuthContextProvider first');
+  }
+
+  return value;
 };
 
-const SecurityContext = React.createContext<SecurityContextType>(DefaultState);
-
-export const useSecurityContext = () => React.useContext(SecurityContext);
-
-export const SecurityProvider = ({children}: {children: React.ReactNode}) => {
+export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   const {passcode, obscureCodeEnabled} = useSecurityState();
   const [authState, setAuthState] = React.useState<AuthState>(
     passcode === null ? 'authenticated' : 'unauthenticated',
@@ -61,7 +57,7 @@ export const SecurityProvider = ({children}: {children: React.ReactNode}) => {
     return () => appStateListener.remove();
   }, [passcode, shareDialogIsOpen]);
 
-  const authenticate: SecurityContextType['authenticate'] = React.useCallback(
+  const authenticate: AuthContextType['authenticate'] = React.useCallback(
     (passcodeValue, validateOnly = false) => {
       if (validateOnly) return passcodeValue === passcode;
 
@@ -80,21 +76,12 @@ export const SecurityProvider = ({children}: {children: React.ReactNode}) => {
     [passcode, obscureCodeEnabled],
   );
 
-  const contextValue: SecurityContextType = React.useMemo(
-    () => ({
-      authValuesSet: {
-        passcodeSet: passcode !== null,
-        obscureSet: obscureCodeEnabled,
-      },
-      authenticate,
-      authState,
-    }),
-    [obscureCodeEnabled, passcode, authenticate, authState],
+  const contextValue: AuthContextType = React.useMemo(
+    () => ({authenticate, authState}),
+    [authenticate, authState],
   );
 
   return (
-    <SecurityContext.Provider value={contextValue}>
-      {children}
-    </SecurityContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };

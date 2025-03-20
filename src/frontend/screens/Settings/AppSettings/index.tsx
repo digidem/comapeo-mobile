@@ -1,7 +1,7 @@
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
-import {useSecurityContext} from '../../../contexts/SecurityContext';
+import {useAuthContext} from '../../../contexts/AuthContext';
 import {FullScreenMenuList} from '../../../sharedComponents/MenuList/FullScreenMenuList';
 import {MenuListItemType} from '../../../sharedComponents/MenuList/MenuListItem';
 
@@ -43,7 +43,7 @@ const m = defineMessages({
 export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
   navigation,
 }) => {
-  const {authState} = useSecurityContext();
+  const {authState} = useAuthContext();
   const {formatMessage} = useIntl();
   const MenuItems: MenuListItemType[] = [
     {

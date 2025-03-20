@@ -1,15 +1,15 @@
 import * as React from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
-import {Button} from '../../sharedComponents/Button';
 import {useIntl} from 'react-intl';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import CoMapeoShield from '../../images/CoMapeoShield.svg';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {NEW_DARK_GREY, BLUE_GREY} from '../../lib/styles';
+import {NEW_DARK_GREY} from '../../lib/styles';
 import {m} from './DataPrivacyMessages';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 
 export const DataPrivacy = ({
   navigation,
@@ -74,23 +74,21 @@ export const DataPrivacy = ({
         </View>
       </View>
       <View style={styles.buttonContainer}>
-        <Button
-          fullWidth
-          variant="outlined"
-          color="dark"
+        <SecondaryButton
+          fullWidth={true}
           onPress={() => {
             navigation.navigate('OnboardingPrivacyPolicy');
           }}
-          style={styles.learnMoreButton}>
-          {formatMessage(m.learnMore)}
-        </Button>
-        <Button
-          fullWidth
+          text={formatMessage(m.learnMore)}
+        />
+
+        <PrimaryButton
+          fullWidth={true}
           onPress={() => {
             navigation.navigate('DeviceNaming');
-          }}>
-          {formatMessage(m.next)}
-        </Button>
+          }}
+          text={formatMessage(m.next)}
+        />
       </View>
     </ScrollView>
   );
@@ -138,9 +136,5 @@ const styles = StyleSheet.create({
     width: '90%',
     alignItems: 'center',
     gap: GAP,
-  },
-  learnMoreButton: {
-    borderColor: BLUE_GREY,
-    borderWidth: 2,
   },
 });

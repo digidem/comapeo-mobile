@@ -5,14 +5,6 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {usePersistedLocale} from '../persistedState/usePersistedLocale';
 export const PRESETS_KEY = 'presets';
 
-export function useObservations() {
-  const {projectId} = useActiveProject();
-  return useManyDocs({
-    projectId,
-    docType: 'observation',
-  });
-}
-
 export function usePresetsQuery() {
   const {projectId} = useActiveProject();
   const locale = usePersistedLocale(store => store.locale);

@@ -6,7 +6,7 @@ import * as React from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import {ProjectInviteBottomSheet} from './sharedComponents/ProjectInviteBottomSheet';
 import {AppStackParamsList} from './sharedTypes/navigation';
-import {useClientApi, useOwnDeviceInfo} from '@comapeo/core-react';
+import {useClientApi} from '@comapeo/core-react';
 import {useQuery} from '@tanstack/react-query';
 import {RootStackNavigator} from './Navigation/Stack';
 import {isEditingScreen} from './lib/isEditingScreen';

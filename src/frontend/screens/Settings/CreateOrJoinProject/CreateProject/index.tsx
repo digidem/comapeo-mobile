@@ -3,7 +3,13 @@ import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
 import {useForm} from 'react-hook-form';
 import {defineMessages, useIntl} from 'react-intl';
-import {Keyboard, KeyboardAvoidingView, StyleSheet, View} from 'react-native';
+import {
+  Alert,
+  Keyboard,
+  KeyboardAvoidingView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -47,6 +53,10 @@ const m = defineMessages({
   importConfigFileError: {
     id: 'screens.Settings.CreateOrJoinProject.importConfigFileError',
     defaultMessage: 'File name should end with .comapeocat',
+  },
+  configImportTitle: {
+    id: 'screens.Settings.CreateOrJoinProject.importSuccessTitle',
+    defaultMessage: 'Successfully imported config:',
   },
 });
 
@@ -136,6 +146,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
         onSuccess: selected => {
           if (!selected) return;
           setConfigFileResult({type: 'success', file: selected});
+          Alert.alert(t(m.configImportTitle), selected.name, [{text: 'OK'}]);
         },
         onError: err => {
           setConfigFileResult({type: 'error', error: err});

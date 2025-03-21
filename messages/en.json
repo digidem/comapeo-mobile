@@ -1306,6 +1306,9 @@
   "screens.Settings.Config.importConfig": {
     "message": "Import Config"
   },
+  "screens.Settings.Config.importSuccessTitle": {
+    "message": "Successfully imported config:"
+  },
   "screens.Settings.Config.name": {
     "message": "Config Name:"
   },
@@ -1356,6 +1359,9 @@
   },
   "screens.Settings.CreateOrJoinProject.importConfigFileError": {
     "message": "File name should end with .comapeocat"
+  },
+  "screens.Settings.CreateOrJoinProject.importSuccessTitle": {
+    "message": "Successfully imported config:"
   },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
     "message": "Join an existing CoMapeo Project"

@@ -1319,7 +1319,7 @@
     "message": "Create a Project"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
-    "message": "Go back"
+    "message": "Go Back"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.howTo": {
     "message": "How to Join a Project"

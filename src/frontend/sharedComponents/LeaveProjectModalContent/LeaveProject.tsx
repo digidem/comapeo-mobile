@@ -95,8 +95,8 @@ export const LeaveProject = ({
             {projectId},
             {
               onSuccess: () => {
-                switchActiveProject(projectPublicId);
                 closeSheet();
+                switchActiveProject(projectPublicId);
               },
               onError: err => {
                 setLeaveProjectError(err);

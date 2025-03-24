@@ -3,9 +3,12 @@ import {defineMessages, useIntl} from 'react-intl';
 import {BackHandler, StyleSheet, View} from 'react-native';
 import GreenCheck from '../../../../images/GreenCheck.svg';
 import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
-import {Text} from '../../../../sharedComponents/Text';
-import {Button} from '../../../../sharedComponents/Button';
 import {CommonActions, useFocusEffect} from '@react-navigation/native';
+import {
+  PrimaryButton,
+  SecondaryButton,
+} from '../../../../sharedComponents/Buttons';
+import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 
 const m = defineMessages({
   projectCreated: {
@@ -70,23 +73,28 @@ export const ProjectCreated = ({
     <View style={styles.container}>
       <View style={{alignItems: 'center'}}>
         <GreenCheck />
-        <Text
+        <HeaderText
+          variant="header2"
           style={{
             textAlign: 'center',
-            fontSize: 24,
             marginTop: 10,
-            fontWeight: 'bold',
           }}>
           {t(m.projectCreated, {projectName: route.params.name})}
-        </Text>
+        </HeaderText>
       </View>
       <View style={{width: '100%'}}>
-        <Button fullWidth variant="outlined" onPress={handleGoToInviteScreen}>
-          {t(m.inviteDevice)}
-        </Button>
-        <Button style={{marginTop: 20}} fullWidth onPress={handleGoToMap}>
-          {t(m.goToMap)}
-        </Button>
+        <SecondaryButton
+          fullWidth
+          text={t(m.inviteDevice)}
+          onPress={handleGoToInviteScreen}
+        />
+
+        <PrimaryButton
+          style={{marginTop: 20}}
+          fullWidth
+          onPress={handleGoToMap}
+          text={t(m.goToMap)}
+        />
       </View>
     </View>
   );

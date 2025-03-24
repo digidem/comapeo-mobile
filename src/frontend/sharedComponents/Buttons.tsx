@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {HeaderText} from './Text/HeaderText';
 import {BLUE_GREY, COMAPEO_BLUE, WARNING_RED, WHITE} from '../lib/styles';
+import {ViewStyleProp} from '../sharedTypes';
 
 type ButtonProps = {
   renderIcon?: (props: {color: string; size: number}) => React.ReactNode;
@@ -9,6 +10,7 @@ type ButtonProps = {
   text: string;
   onPress: () => void;
   testID?: string;
+  style?: ViewStyleProp;
 };
 
 export const PrimaryButton = ({
@@ -17,11 +19,13 @@ export const PrimaryButton = ({
   text,
   fullWidth,
   testID,
+  style,
 }: ButtonProps) => {
   return (
     <TouchableOpacity
       testID={testID}
       style={[
+        style,
         styles.base,
         {backgroundColor: COMAPEO_BLUE, width: fullWidth ? `100%` : 280},
       ]}
@@ -44,11 +48,13 @@ export const SecondaryButton = ({
   text,
   fullWidth,
   testID,
+  style,
 }: ButtonProps) => {
   return (
     <TouchableOpacity
       testID={testID}
       style={[
+        style,
         styles.base,
         {
           backgroundColor: WHITE,
@@ -56,6 +62,7 @@ export const SecondaryButton = ({
           borderColor: BLUE_GREY,
           width: fullWidth ? `100%` : 280,
         },
+        style,
       ]}
       onPress={onPress}>
       {renderIcon && (
@@ -76,11 +83,13 @@ export const DestructiveButton = ({
   text,
   fullWidth,
   testID,
+  style,
 }: ButtonProps) => {
   return (
     <TouchableOpacity
       testID={testID}
       style={[
+        style,
         styles.base,
         {backgroundColor: WARNING_RED, width: fullWidth ? `100%` : 280},
       ]}

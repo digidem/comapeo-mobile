@@ -1,6 +1,6 @@
 import {type StateCreator} from 'zustand';
 import {createPersistedState} from './createPersistedState';
-import {CoordinateFormat} from '../../sharedTypes';
+import {type CoordinateFormat} from '../../lib/coordinateFormat';
 
 type SettingsSlice = {
   coordinateFormat: CoordinateFormat;

@@ -8,7 +8,7 @@ import {
   usePersistedSettingsAction,
 } from '../../../hooks/persistedState/usePersistedSettings';
 import {SelectOne} from '../../../sharedComponents/SelectOne';
-import type {CoordinateFormat as CoordinateFormatType} from '../../../sharedTypes';
+import {type CoordinateFormat as CoordinateFormatType} from '../../../lib/coordinateFormat';
 import type {NativeNavigationComponent} from '../../../sharedTypes/navigation';
 import {useLastKnownLocation} from '../../../hooks/useLastSavedLocation';
 

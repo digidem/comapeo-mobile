@@ -12,7 +12,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import {convertUrlToBase64} from '../../utils/base64.ts';
 import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings.ts';
 import * as Sentry from '@sentry/react-native';
-import {CoordinateFormat} from '../../sharedTypes/index.ts';
+import {type CoordinateFormat} from '../../lib/coordinateFormat.ts';
 import {getValueLabel} from '../../sharedComponents/FormattedData.tsx';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';

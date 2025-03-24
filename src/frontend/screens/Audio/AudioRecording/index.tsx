@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Duration} from 'luxon';
 
 import {BLACK, MAGENTA, MEDIUM_GREY, WHITE} from '../../../lib/styles';
 import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
@@ -14,6 +13,7 @@ import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {AudioStyles} from '../shared';
 import {ErrorBottomSheet} from '../../../sharedComponents/ErrorBottomSheet';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {millisecondsToMMSS} from '../../../lib/millisecondsToFormattedTime';
 
 // 5 minutes
 const MAX_RECORDING_DURATION_MS = 300000;
@@ -107,7 +107,7 @@ export function AudioRecording({
                 AudioStyles.timerText,
                 {color: isRecording ? WHITE : MEDIUM_GREY},
               ]}>
-              {Duration.fromMillis(timeElapsed).toFormat('mm:ss')}
+              {millisecondsToMMSS(timeElapsed)}
             </Text>
           </View>
           <HeaderText variant="header3" style={AudioStyles.message}>

@@ -1,14 +1,18 @@
 import React, {useCallback} from 'react';
+import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
-import {Button} from '../../../sharedComponents/Button.tsx';
-import {Text} from '../../../sharedComponents/Text.tsx';
+
+import {
+  useTrackActions,
+  useTrackState,
+} from '../../../contexts/TrackStoreContext.tsx';
+import {useTrackTimerContext} from '../../../contexts/TrackTimerContext.tsx';
+import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes.ts';
 import {useTracking} from '../../../hooks/useTracking.ts';
 import StartTrackingIcon from '../../../images/StartTracking.svg';
 import StopTrackingIcon from '../../../images/StopTracking.svg';
-import {useTrackTimerContext} from '../../../contexts/TrackTimerContext.tsx';
-import {defineMessages, useIntl} from 'react-intl';
-import {usePersistedTrack} from '../../../hooks/persistedState/usePersistedTrack.ts';
-import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes.ts';
+import {Button} from '../../../sharedComponents/Button.tsx';
+import {Text} from '../../../sharedComponents/Text.tsx';
 
 const m = defineMessages({
   defaultButtonText: {
@@ -32,8 +36,8 @@ const m = defineMessages({
 export const StartStopTrack = () => {
   const {formatMessage} = useIntl();
   const {isTracking, cancelTracking, startTracking, loading} = useTracking();
-  const locationHistory = usePersistedTrack(state => state.locationHistory);
-  const clearCurrentTrack = usePersistedTrack(state => state.clearCurrentTrack);
+  const locationHistory = useTrackState(state => state.locationHistory);
+  const {clearCurrentTrack} = useTrackActions();
   const {timer} = useTrackTimerContext();
   const navigation = useNavigationFromHomeTabs();
 

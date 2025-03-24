@@ -2,7 +2,6 @@ import * as React from 'react';
 import {AudioStyles, SIDE_ICON_BUTTON_WIDTH} from './shared';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {useAudioPlayback} from '../../hooks/useAudioPlayback';
-import {Duration} from 'luxon';
 import {
   View,
   Text,
@@ -20,6 +19,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import PlayArrow from '../../images/PlayArrow.svg';
 import {useFocusEffect} from '@react-navigation/native';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
+import {millisecondsToMMSS} from '../../lib/millisecondsToFormattedTime';
 
 const m = defineMessages({
   description: {
@@ -127,7 +127,7 @@ export const AudioPlaybackUnsaved = ({
                     currentPosition === 0 && !isPlaying ? MEDIUM_GREY : WHITE,
                 },
               ]}>
-              {Duration.fromMillis(currentPosition).toFormat('mm:ss')}
+              {millisecondsToMMSS(currentPosition)}
             </Text>
             <Bar
               // Setting to 0 seems to have issues on Android: https://github.com/oblador/react-native-progress/issues/56
@@ -143,7 +143,7 @@ export const AudioPlaybackUnsaved = ({
           </View>
           <HeaderText variant="header3" style={AudioStyles.message}>
             {formatMessage(m.description, {
-              length: Duration.fromMillis(duration).toFormat('mm:ss'),
+              length: millisecondsToMMSS(duration),
             })}
           </HeaderText>
         </View>

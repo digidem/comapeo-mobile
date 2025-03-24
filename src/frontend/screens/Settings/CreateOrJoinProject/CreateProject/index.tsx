@@ -58,6 +58,10 @@ const m = defineMessages({
     id: 'screens.Settings.CreateOrJoinProject.importSuccessTitle',
     defaultMessage: 'Successfully imported config:',
   },
+  okButton: {
+    id: 'screens.Settings.CreateOrJoinProject.okButton',
+    defaultMessage: 'OK',
+  },
 });
 
 type ConfigFileImportResult =
@@ -146,7 +150,9 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
         onSuccess: selected => {
           if (!selected) return;
           setConfigFileResult({type: 'success', file: selected});
-          Alert.alert(t(m.configImportTitle), selected.name, [{text: 'OK'}]);
+          Alert.alert(t(m.configImportTitle), selected.name, [
+            {text: t(m.okButton)},
+          ]);
         },
         onError: err => {
           setConfigFileResult({type: 'error', error: err});

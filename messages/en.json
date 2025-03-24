@@ -1315,6 +1315,9 @@
   "screens.Settings.Config.navTitle": {
     "message": "Configuration"
   },
+  "screens.Settings.Config.okButton": {
+    "message": "OK"
+  },
   "screens.Settings.Config.projectName": {
     "message": "Project Name:"
   },
@@ -1368,6 +1371,9 @@
   },
   "screens.Settings.CreateOrJoinProject.joinProject": {
     "message": "Join a Project"
+  },
+  "screens.Settings.CreateOrJoinProject.okButton": {
+    "message": "OK"
   },
   "screens.Settings.CreateOrJoinProject.projectDescription": {
     "message": "A project is a secure container for your data. Only devices you invite can enter and share data with you. Create or Join a project in order to share data with other devices. This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."

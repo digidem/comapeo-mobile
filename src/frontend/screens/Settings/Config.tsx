@@ -44,6 +44,10 @@ const m = defineMessages({
     id: 'screens.Settings.Config.importSuccessTitle',
     defaultMessage: 'Successfully imported config:',
   },
+  okButton: {
+    id: 'screens.Settings.Config.okButton',
+    defaultMessage: 'OK',
+  },
 });
 
 export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
@@ -98,7 +102,7 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
               },
               onSuccess: () => {
                 Alert.alert(formatMessage(m.configImportTitle), selected.name, [
-                  {text: 'OK'},
+                  {text: formatMessage(m.okButton)},
                 ]);
               },
             },

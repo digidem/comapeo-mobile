@@ -1,17 +1,13 @@
 import * as React from 'react';
 import {AppState, AppStateStatus} from 'react-native';
-import {usePersistedPasscode} from '../hooks/persistedState/usePersistedPasscode';
+
 import {useIsShareDialogOpen} from '../hooks/share';
+import {DEFAULT_OBSCURE_CODE} from '../lib/security';
+import {useSecurityState} from './SecurityStoreContext';
 
 type AuthState = 'unauthenticated' | 'authenticated' | 'obscured';
 
-type AuthValuesSet = {
-  passcodeSet: boolean;
-  obscureSet: boolean;
-};
-
-type SecurityContextType = {
-  authValuesSet: AuthValuesSet;
+type AuthContextType = {
   authenticate: (
     passcodeValue: string | null,
     validateOnly?: boolean,
@@ -19,27 +15,25 @@ type SecurityContextType = {
   authState: AuthState;
 };
 
-const DefaultState: SecurityContextType = {
-  authValuesSet: {passcodeSet: false, obscureSet: false},
-  authenticate: () => false,
-  authState: 'unauthenticated',
+const AuthContext = React.createContext<AuthContextType | null>(null);
+
+export const useAuthContext = () => {
+  const value = React.useContext(AuthContext);
+
+  if (!value) {
+    throw new Error('Must set up AuthContextProvider first');
+  }
+
+  return value;
 };
 
-const SecurityContext = React.createContext<SecurityContextType>(DefaultState);
-
-export const useSecurityContext = () => React.useContext(SecurityContext);
-
-export const SecurityProvider = ({children}: {children: React.ReactNode}) => {
-  const passcode = usePersistedPasscode(store => store.passcode);
-  const obscureCode = usePersistedPasscode(store => store.obscureCode);
+export const AuthProvider = ({children}: {children: React.ReactNode}) => {
+  const {passcode, obscureCodeEnabled} = useSecurityState();
   const [authState, setAuthState] = React.useState<AuthState>(
     passcode === null ? 'authenticated' : 'unauthenticated',
   );
 
   const shareDialogIsOpen = useIsShareDialogOpen();
-
-  const passcodeSet = passcode !== null;
-  const obscureSet = obscureCode !== null;
 
   React.useEffect(() => {
     const appStateListener = AppState.addEventListener(
@@ -48,7 +42,7 @@ export const SecurityProvider = ({children}: {children: React.ReactNode}) => {
         // If the app state changes due to opening a share dialog, do not unauthenticate
         if (shareDialogIsOpen) return;
 
-        if (passcodeSet) {
+        if (passcode !== null) {
           if (
             nextAppState === 'active' ||
             nextAppState === 'background' ||
@@ -61,13 +55,13 @@ export const SecurityProvider = ({children}: {children: React.ReactNode}) => {
     );
 
     return () => appStateListener.remove();
-  }, [passcodeSet, shareDialogIsOpen]);
+  }, [passcode, shareDialogIsOpen]);
 
-  const authenticate: SecurityContextType['authenticate'] = React.useCallback(
+  const authenticate: AuthContextType['authenticate'] = React.useCallback(
     (passcodeValue, validateOnly = false) => {
       if (validateOnly) return passcodeValue === passcode;
 
-      if (obscureSet && passcodeValue === obscureCode) {
+      if (obscureCodeEnabled && passcodeValue === DEFAULT_OBSCURE_CODE) {
         setAuthState('obscured');
         return true;
       }
@@ -79,24 +73,15 @@ export const SecurityProvider = ({children}: {children: React.ReactNode}) => {
 
       throw new Error('Incorrect Passcode');
     },
-    [passcode, obscureCode, obscureSet],
+    [passcode, obscureCodeEnabled],
   );
 
-  const contextValue: SecurityContextType = React.useMemo(
-    () => ({
-      authValuesSet: {
-        passcodeSet,
-        obscureSet,
-      },
-      authenticate,
-      authState,
-    }),
-    [authenticate, passcodeSet, obscureSet, authState],
+  const contextValue: AuthContextType = React.useMemo(
+    () => ({authenticate, authState}),
+    [authenticate, authState],
   );
 
   return (
-    <SecurityContext.Provider value={contextValue}>
-      {children}
-    </SecurityContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };

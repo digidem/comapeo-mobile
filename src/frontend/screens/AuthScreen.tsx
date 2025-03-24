@@ -4,7 +4,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, StyleSheet, Text} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {useSecurityContext} from '../contexts/SecurityContext';
+import {useAuthContext} from '../contexts/AuthContext';
 import CoMapeoLogoSvg from '../images/CoMapeoLogo.svg';
 import {RED} from '../lib/styles';
 import {PasscodeInput} from '../sharedComponents/PasscodeInput';
@@ -28,7 +28,7 @@ export const AuthScreen = ({
 }: NativeStackScreenProps<AppStackParamsList, 'AuthScreen'>) => {
   const {formatMessage: t} = useIntl();
   const [error, setError] = React.useState(false);
-  const {authenticate, authState} = useSecurityContext();
+  const {authenticate, authState} = useAuthContext();
   const [inputtedPass, setInputtedPass] = React.useState('');
   const scrollViewRef = React.useRef<ScrollView>(null);
 

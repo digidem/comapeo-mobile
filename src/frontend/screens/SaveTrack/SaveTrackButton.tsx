@@ -1,5 +1,4 @@
 import {CommonActions} from '@react-navigation/native';
-import {DateTime} from 'luxon';
 import React, {FC} from 'react';
 import {Image, Pressable, StyleSheet} from 'react-native';
 
@@ -30,7 +29,7 @@ export const SaveTrackButton: FC = () => {
               longitude: loc.longitude,
             },
             mocked: false,
-            timestamp: DateTime.fromMillis(loc.timestamp).toISO()!,
+            timestamp: new Date(loc.timestamp).toISOString()!,
           };
         }),
       },

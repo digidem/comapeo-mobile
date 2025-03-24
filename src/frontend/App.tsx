@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {getLocales} from 'expo-localization';
 import {createMapeoClient} from '@comapeo/ipc';
 import {AppNavigator} from './AppNavigator';
 import {MessagePortLike} from './lib/MessagePortLike';
@@ -24,6 +25,8 @@ import {createCoordinateFormatStore} from './contexts/CoordinateFormatContext';
 import {createManualEntryCoordinateFormatStore} from './contexts/ManualEntryCoordinateFormatContext';
 import {createActiveProjectIdStore} from './contexts/ActiveProjectIdStoreContext';
 import {createMetricsDiagnosticsStore} from './contexts/MetricsDiagnosticsStoreContext';
+import {createLocaleStore} from './contexts/LocaleStoreContext';
+import {getAppLanguageTag} from './lib/intl';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -46,7 +49,27 @@ Sentry.init({
 
 Mapbox.setTelemetryEnabled(false);
 
-const appDiagnosticMetrics = new AppDiagnosticMetrics();
+const persistedLocaleStore = createLocaleStore({
+  persist: true,
+});
+
+const appDiagnosticMetrics = new AppDiagnosticMetrics({
+  getLocaleInfo: () => {
+    const systemLocales = getLocales();
+    const localeState = persistedLocaleStore.instance.getState();
+
+    const appLanguageTag = getAppLanguageTag({
+      localeState,
+      systemLanguageTags: systemLocales.map(l => l.languageTag),
+    }).value;
+
+    return {
+      appLanguageTag,
+      deviceLanguageTag: systemLocales[0]!.languageTag,
+    };
+  },
+});
+
 const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
 const messagePort = new MessagePortLike();
 const mapeoApi = createMapeoClient(messagePort, {timeout: Infinity});
@@ -147,7 +170,8 @@ const App = () => {
         persistedManualEntryCoordinateFormatStore
       }
       activeProjectIdStore={persistedActiveProjectIdStore}
-      metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}>
+      metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
+      localeStore={persistedLocaleStore}>
       <AppNavigator permissionAsked={permissionsAsked} />
     </AppProviders>
   );

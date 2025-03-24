@@ -14,6 +14,9 @@ type ActiveProjectIdState = {
 // NOTE: Do not change!
 const STORAGE_KEY = 'ActiveProjectId' as const;
 
+// Zustand's persist middleware and using `createJSONStorage()` assumes that states are represented as objects.
+// Using a scalar value requires tedious workarounds that are more trouble than shaping the state according to Zustand's assumptions.
+// https://github.com/pmndrs/zustand/blob/17e281fd75a8200e3598658e732b8b4a3055f0b1/src/middleware/persist.ts#L181-L184
 function createInitialState(): ActiveProjectIdState {
   return {};
 }

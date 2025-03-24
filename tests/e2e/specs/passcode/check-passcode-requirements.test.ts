@@ -32,6 +32,7 @@ describe('Check Passcode Requirements Flow', () => {
     await expect($(byTextMatches('Incorrect passcode'))).toBeDisplayed();
     // power button (off then on)
     await driver.pressKeyCode(26);
+    await driver.pause(1000);
     await driver.pressKeyCode(26);
 
     await expect($(byTextMatches('Enter your passcode'))).toBeDisplayed();

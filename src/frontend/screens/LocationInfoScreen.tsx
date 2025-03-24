@@ -16,7 +16,7 @@ import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 import {DateDistance} from '../sharedComponents/DateDistance';
 import {FormattedCoords} from '../sharedComponents/FormattedData';
 import {Text} from '../sharedComponents/Text';
-import {useCoordinateFormatState} from '../contexts/CoordinateFormatContext';
+import {useCoordinateFormat} from '../contexts/CoordinateFormatContext';
 
 const m = defineMessages({
   gpsHeader: {
@@ -77,7 +77,7 @@ export const LocationInfoScreen = () => {
   const {location} = useLocation({maxDistanceInterval: 0});
   const lastKnownLocationQuery = useLastKnownLocation();
   const provider = useLocationProviderStatus();
-  const coordinateFormat = useCoordinateFormatState();
+  const coordinateFormat = useCoordinateFormat();
   const {formatMessage: t} = useIntl();
 
   const locationTimestamp =

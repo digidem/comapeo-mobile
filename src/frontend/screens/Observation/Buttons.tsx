@@ -17,7 +17,7 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
 import {useOpenShareDialog} from '../../hooks/share.ts';
-import {useCoordinateFormatState} from '../../contexts/CoordinateFormatContext.ts';
+import {useCoordinateFormat} from '../../contexts/CoordinateFormatContext.ts';
 
 const m = defineMessages({
   delete: {
@@ -94,7 +94,7 @@ export const ButtonFields = ({
   const navigation = useNavigationFromRoot();
   const deleteObservationMutation = useDeleteObservation();
   const {observation, preset} = useObservationWithPreset(observationId);
-  const coordinateFormat = useCoordinateFormatState();
+  const coordinateFormat = useCoordinateFormat();
   const [isShareButtonLoading, setShareButtonLoading] = useState(false);
   const {projectApi} = useActiveProject();
   const openShare = useOpenShareDialog();

@@ -7,7 +7,7 @@ import {
   CoordinateFormatStore,
   createCoordinateFormatStore,
   useCoordinateFormatActions,
-  useCoordinateFormatState,
+  useCoordinateFormat,
 } from './CoordinateFormatContext';
 
 function createWrapper(store: CoordinateFormatStore) {
@@ -28,7 +28,7 @@ test('usage of state and actions hooks', () => {
     wrapper,
   });
 
-  const stateHook = renderHook(() => useCoordinateFormatState(), {
+  const stateHook = renderHook(() => useCoordinateFormat(), {
     wrapper,
   });
 

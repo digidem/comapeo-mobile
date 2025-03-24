@@ -9,7 +9,7 @@ import type {NativeNavigationComponent} from '../../../sharedTypes/navigation';
 import {useLastKnownLocation} from '../../../hooks/useLastSavedLocation';
 import {
   useCoordinateFormatActions,
-  useCoordinateFormatState,
+  useCoordinateFormat,
 } from '../../../contexts/CoordinateFormatContext';
 
 const m = defineMessages({
@@ -43,7 +43,7 @@ export const CoordinateFormat: NativeNavigationComponent<
   'CoordinateFormat'
 > = () => {
   const {formatMessage} = useIntl();
-  const coordinateFormat = useCoordinateFormatState();
+  const coordinateFormat = useCoordinateFormat();
   const {setFormat} = useCoordinateFormatActions();
 
   const location = useLastKnownLocation();

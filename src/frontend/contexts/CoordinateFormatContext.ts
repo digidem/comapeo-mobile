@@ -8,13 +8,20 @@ import {
 import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
 import {type CoordinateFormat} from '../lib/coordinateFormat';
 
-export type CoordinateFormatState = CoordinateFormat;
+type CoordinateFormatState = {
+  value: CoordinateFormat;
+};
 
 // NOTE: Do not change!
 const STORAGE_KEY = 'coordinate-format' as const;
 
+// Zustand's persist middleware and using `createJSONStorage()` assumes that states are represented as objects.
+// Using a scalar value requires tedious workarounds that are more trouble than shaping the state according to Zustand's assumptions.
+// https://github.com/pmndrs/zustand/blob/17e281fd75a8200e3598658e732b8b4a3055f0b1/src/middleware/persist.ts#L181-L184
 function createInitialState(): CoordinateFormatState {
-  return 'utm';
+  return {
+    value: 'utm',
+  };
 }
 
 export function createCoordinateFormatStore({persist} = {persist: false}) {
@@ -34,7 +41,7 @@ export function createCoordinateFormatStore({persist} = {persist: false}) {
 
   const actions = {
     setFormat: (format: CoordinateFormat) => {
-      store.setState(format);
+      store.setState({value: format});
     },
   };
 
@@ -62,9 +69,9 @@ function useCoordinateFormatContext() {
   return value;
 }
 
-export function useCoordinateFormatState(): CoordinateFormatState {
+export function useCoordinateFormat(): CoordinateFormat {
   const {instance} = useCoordinateFormatContext();
-  return useStore(instance);
+  return useStore(instance).value;
 }
 
 export function useCoordinateFormatActions() {

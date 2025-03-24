@@ -7,7 +7,7 @@ import {
   ManualEntryCoordinateFormatStore,
   createManualEntryCoordinateFormatStore,
   useManualEntryCoordinateFormatActions,
-  useManualEntryCoordinateFormatState,
+  useManualEntryCoordinateFormat,
 } from './ManualEntryCoordinateFormatContext';
 
 function createWrapper(store: ManualEntryCoordinateFormatStore) {
@@ -29,7 +29,7 @@ test('usage of state and actions hooks', () => {
     {wrapper},
   );
 
-  const stateHook = renderHook(() => useManualEntryCoordinateFormatState(), {
+  const stateHook = renderHook(() => useManualEntryCoordinateFormat(), {
     wrapper,
   });
 

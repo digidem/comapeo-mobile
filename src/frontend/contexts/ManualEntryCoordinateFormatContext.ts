@@ -8,13 +8,20 @@ import {
 import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
 import {type CoordinateFormat} from '../lib/coordinateFormat';
 
-export type ManualEntryCoordinateFormatState = CoordinateFormat;
+type ManualEntryCoordinateFormatState = {
+  value: CoordinateFormat;
+};
 
 // NOTE: Do not change!
 const STORAGE_KEY = 'manual-entry-coordinate-format' as const;
 
+// Zustand's persist middleware and using `createJSONStorage()` assumes that states are represented as objects.
+// Using a scalar value requires tedious workarounds that are more trouble than shaping the state according to Zustand's assumptions.
+// https://github.com/pmndrs/zustand/blob/17e281fd75a8200e3598658e732b8b4a3055f0b1/src/middleware/persist.ts#L181-L184
 function createInitialState(): ManualEntryCoordinateFormatState {
-  return 'utm';
+  return {
+    value: 'utm',
+  };
 }
 
 export function createManualEntryCoordinateFormatStore(
@@ -36,7 +43,7 @@ export function createManualEntryCoordinateFormatStore(
 
   const actions = {
     setFormat: (format: CoordinateFormat) => {
-      store.setState(format);
+      store.setState({value: format});
     },
   };
 
@@ -67,9 +74,9 @@ function useManualEntryCoordinateFormatContext() {
   return value;
 }
 
-export function useManualEntryCoordinateFormatState(): ManualEntryCoordinateFormatState {
+export function useManualEntryCoordinateFormat(): CoordinateFormat {
   const {instance} = useManualEntryCoordinateFormatContext();
-  return useStore(instance);
+  return useStore(instance).value;
 }
 
 export function useManualEntryCoordinateFormatActions() {

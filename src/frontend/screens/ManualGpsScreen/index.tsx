@@ -34,7 +34,7 @@ import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersis
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {
   useManualEntryCoordinateFormatActions,
-  useManualEntryCoordinateFormatState,
+  useManualEntryCoordinateFormat,
 } from '../../contexts/ManualEntryCoordinateFormatContext';
 
 const m = defineMessages({
@@ -87,7 +87,7 @@ export const ManualGpsScreen = ({
     observationValueSelector,
   );
 
-  const entryCoordinateFormat = useManualEntryCoordinateFormatState();
+  const entryCoordinateFormat = useManualEntryCoordinateFormat();
 
   const {setFormat} = useManualEntryCoordinateFormatActions();
   const {updateObservationPosition} = useDraftObservation();

@@ -85,13 +85,19 @@ describe('Create Observation Flow', () => {
     await expect($(byTextMatches('New Observation'))).toBeDisplayed();
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
+    await driver.pause(1000);
+    try {
+      const text = await driver.getAlertText();
+      console.log('Alert text is:', text);
 
-    const noGpsElems = await $$(byTextMatches('No GPS signal'));
-    if ((await noGpsElems.length) > 0 && (await noGpsElems[0].isDisplayed())) {
-      const textSave = await $(byTextMatches('SAVE'));
-      await textSave.click();
+      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
+        await driver.acceptAlert();
+      } else {
+        await driver.dismissAlert();
+      }
+    } catch (err) {
+      console.log('No RN Alert dialog was found.');
     }
-
     try {
       const backBtn = await $(byResourceId('MAIN.header-back-btn'));
       if (await backBtn.isDisplayed()) {

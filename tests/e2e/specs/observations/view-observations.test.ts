@@ -16,13 +16,31 @@ describe('View Observations Flow', () => {
     });
 
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
+    try {
+      const text = await driver.getAlertText();
+      console.log('Alert text is:', text);
+
+      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
+        await driver.acceptAlert();
+      } else {
+        await driver.dismissAlert();
+      }
+    } catch (err) {
+      console.log('No RN Alert dialog was found.');
+    }
     await saveBtn.click();
 
-    const noGpsSignal = await $(byTextMatches('No GPS signal'));
-    if (await noGpsSignal.isDisplayed()) {
-      console.info('GPS not found. Handling No GPS Signal prompt...');
-      const confirmSave = await $(byTextMatches('SAVE'));
-      await confirmSave.click();
+    try {
+      const text = await driver.getAlertText();
+      console.log('Alert text is:', text);
+
+      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
+        await driver.acceptAlert();
+      } else {
+        await driver.dismissAlert();
+      }
+    } catch (err) {
+      console.log('No RN Alert dialog was found.');
     }
   });
 
@@ -41,11 +59,17 @@ describe('View Observations Flow', () => {
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
 
-    const noGpsSignal = await $(byTextMatches('No GPS signal'));
-    if (await noGpsSignal.isDisplayed()) {
-      console.info('GPS not found. Handling No GPS Signal prompt...');
-      const confirmSave = await $(byTextMatches('SAVE'));
-      await confirmSave.click();
+    try {
+      const text = await driver.getAlertText();
+      console.log('Alert text is:', text);
+
+      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
+        await driver.acceptAlert();
+      } else {
+        await driver.dismissAlert();
+      }
+    } catch (err) {
+      console.log('No RN Alert dialog was found.');
     }
   });
 

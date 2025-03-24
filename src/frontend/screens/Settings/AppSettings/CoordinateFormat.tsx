@@ -3,14 +3,14 @@ import {ScrollView} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 
 import {formatCoords} from '../../../lib/utils';
-import {
-  usePersistedSettings,
-  usePersistedSettingsAction,
-} from '../../../hooks/persistedState/usePersistedSettings';
 import {SelectOne} from '../../../sharedComponents/SelectOne';
 import {type CoordinateFormat as CoordinateFormatType} from '../../../lib/coordinateFormat';
 import type {NativeNavigationComponent} from '../../../sharedTypes/navigation';
 import {useLastKnownLocation} from '../../../hooks/useLastSavedLocation';
+import {
+  useCoordinateFormatActions,
+  useCoordinateFormatState,
+} from '../../../contexts/CoordinateFormatContext';
 
 const m = defineMessages({
   title: {
@@ -43,10 +43,8 @@ export const CoordinateFormat: NativeNavigationComponent<
   'CoordinateFormat'
 > = () => {
   const {formatMessage} = useIntl();
-  const coordinateFormat = usePersistedSettings(
-    store => store.coordinateFormat,
-  );
-  const {setCoordinateFormat} = usePersistedSettingsAction();
+  const coordinateFormat = useCoordinateFormatState();
+  const {setFormat} = useCoordinateFormatActions();
 
   const location = useLastKnownLocation();
 
@@ -77,7 +75,7 @@ export const CoordinateFormat: NativeNavigationComponent<
     <ScrollView testID="coordinateFormatScrollView">
       <SelectOne
         value={coordinateFormat}
-        onChange={val => setCoordinateFormat(val)}
+        onChange={val => setFormat(val)}
         options={options}
       />
     </ScrollView>

@@ -35,6 +35,7 @@ describe('Check Passcode Requirements Flow', () => {
     // pushing power button twice opens camera on Pixel
     await driver.pause(1000);
     await driver.pressKeyCode(26);
+    await driver.activateApp('com.comapeo.rc');
 
     await expect($(byTextMatches('Enter your passcode'))).toBeDisplayed();
 

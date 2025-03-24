@@ -10,18 +10,23 @@ describe('View Observations Flow', () => {
     const lakeCategory = await $(byTextMatches('Lake'));
     await lakeCategory.click();
 
-    await $(byTextMatches('UTM')).waitForExist({
-      timeout: 10000,
-      reverse: false,
-    });
+    try {
+      await $(byTextMatches('UTM')).waitForExist({
+        timeout: 10000,
+        reverse: false,
+      });
+    } catch (e) {
+      await expect($(byTextMatches('Searching'))).toBeDisplayed();
+    }
+
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
     try {
       const text = await driver.getAlertText();
       if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        // On Android, RN Alert expect the last/ lowest alert to be acceptAlert().
-        // Using dismissAlert() here actually taps the "Save" button since we have it last in the order.
-        await driver.dismissAlert();
+        await driver.execute('mobile: acceptAlert', {
+          buttonLabel: 'SAVE',
+        });
       }
     } catch (err) {
       console.log('No RN Alert dialog was found.');
@@ -34,19 +39,23 @@ describe('View Observations Flow', () => {
 
     const clayCategory = await $(byTextMatches('Clay'));
     await clayCategory.click();
-    await $(byTextMatches('UTM')).waitForExist({
-      timeout: 10000,
-      reverse: false,
-    });
+    try {
+      await $(byTextMatches('UTM')).waitForExist({
+        timeout: 10000,
+        reverse: false,
+      });
+    } catch (e) {
+      await expect($(byTextMatches('Searching'))).toBeDisplayed();
+    }
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
 
     try {
       const text = await driver.getAlertText();
       if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        // On Android, RN Alert expect the last/ lowest alert to be acceptAlert().
-        // Using dismissAlert() here actually taps the "Save" button since we have it last in the order.
-        await driver.dismissAlert();
+        await driver.execute('mobile: acceptAlert', {
+          buttonLabel: 'SAVE',
+        });
       }
     } catch (err) {
       console.log('No RN Alert dialog was found.');

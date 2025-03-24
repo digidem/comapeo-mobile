@@ -95,9 +95,9 @@ describe('Create Observation Flow', () => {
     try {
       const text = await driver.getAlertText();
       if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        // On Android, RN Alert expect the last/ lowest alert to be acceptAlert().
-        // Using dismissAlert() here actually taps the "Save" button since we have it last in the order.
-        await driver.dismissAlert();
+        await driver.execute('mobile: acceptAlert', {
+          buttonLabel: 'SAVE',
+        });
       }
     } catch (err) {
       console.log('No RN Alert dialog was found.');

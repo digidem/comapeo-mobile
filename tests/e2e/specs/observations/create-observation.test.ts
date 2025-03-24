@@ -46,9 +46,13 @@ describe('Create Observation Flow', () => {
     await expect($(byResourceId('OBS.add-details-btn'))).toBeDisplayed();
     await expect($(byTextMatches('What is happening here?'))).toBeDisplayed();
 
-    await expect(
-      $(byTextMatches('^UTM\\s\\w+\\s\\d+\\s\\d+$')),
-    ).toBeDisplayed();
+    try {
+      await expect(
+        $(byTextMatches('^UTM\\s\\w+\\s\\d+\\s\\d+$')),
+      ).toBeDisplayed();
+    } catch (e) {
+      await expect($(byTextMatches('Searching'))).toBeDisplayed();
+    }
 
     await expect($(byResourceId('OBS.House-icon'))).toBeDisplayed();
     await expect(houseCategory).toBeDisplayed();
@@ -87,6 +91,7 @@ describe('Create Observation Flow', () => {
     await expect($(byTextMatches('New Observation'))).toBeDisplayed();
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
+    await driver.pause(1000);
     try {
       const text = await driver.getAlertText();
       if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {

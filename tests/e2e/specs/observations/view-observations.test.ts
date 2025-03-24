@@ -9,9 +9,13 @@ describe('View Observations Flow', () => {
 
     const lakeCategory = await $(byTextMatches('Lake'));
     await lakeCategory.click();
+
+    await $(byTextMatches('UTM')).waitForExist({
+      timeout: 10000,
+      reverse: false,
+    });
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
-
     try {
       const text = await driver.getAlertText();
       if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
@@ -30,6 +34,10 @@ describe('View Observations Flow', () => {
 
     const clayCategory = await $(byTextMatches('Clay'));
     await clayCategory.click();
+    await $(byTextMatches('UTM')).waitForExist({
+      timeout: 10000,
+      reverse: false,
+    });
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
 

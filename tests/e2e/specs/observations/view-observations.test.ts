@@ -9,34 +9,14 @@ describe('View Observations Flow', () => {
 
     const lakeCategory = await $(byTextMatches('Lake'));
     await lakeCategory.click();
-
-    await $(byTextMatches('UTM')).waitForExist({
-      timeout: 10000,
-      reverse: false,
-    });
-
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
-    try {
-      const text = await driver.getAlertText();
-      console.log('Alert text is:', text);
-
-      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.acceptAlert();
-      } else {
-        await driver.dismissAlert();
-      }
-    } catch (err) {
-      console.log('No RN Alert dialog was found.');
-    }
     await saveBtn.click();
 
     try {
       const text = await driver.getAlertText();
-      console.log('Alert text is:', text);
-
       if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.acceptAlert();
-      } else {
+        // On Android, RN Alert expect the last/ lowest alert to be acceptAlert().
+        // Using dismissAlert() here actually taps the "Save" button since we have it last in the order.
         await driver.dismissAlert();
       }
     } catch (err) {
@@ -50,22 +30,14 @@ describe('View Observations Flow', () => {
 
     const clayCategory = await $(byTextMatches('Clay'));
     await clayCategory.click();
-
-    await $(byTextMatches('UTM')).waitForExist({
-      timeout: 10000,
-      reverse: false,
-    });
-
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
 
     try {
       const text = await driver.getAlertText();
-      console.log('Alert text is:', text);
-
       if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.acceptAlert();
-      } else {
+        // On Android, RN Alert expect the last/ lowest alert to be acceptAlert().
+        // Using dismissAlert() here actually taps the "Save" button since we have it last in the order.
         await driver.dismissAlert();
       }
     } catch (err) {

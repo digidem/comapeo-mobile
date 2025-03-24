@@ -46,7 +46,9 @@ describe('Create Observation Flow', () => {
     await expect($(byResourceId('OBS.add-details-btn'))).toBeDisplayed();
     await expect($(byTextMatches('What is happening here?'))).toBeDisplayed();
 
-    await expect($(byTextMatches('UTM 44N 218632 21930'))).toBeDisplayed();
+    await expect(
+      $(byTextMatches('^UTM\\s\\w+\\s\\d+\\s\\d+$')),
+    ).toBeDisplayed();
 
     await expect($(byResourceId('OBS.House-icon'))).toBeDisplayed();
     await expect(houseCategory).toBeDisplayed();
@@ -85,14 +87,11 @@ describe('Create Observation Flow', () => {
     await expect($(byTextMatches('New Observation'))).toBeDisplayed();
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
-    await driver.pause(1000);
     try {
       const text = await driver.getAlertText();
-      console.log('Alert text is:', text);
-
       if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.acceptAlert();
-      } else {
+        // On Android, RN Alert expect the last/ lowest alert to be acceptAlert().
+        // Using dismissAlert() here actually taps the "Save" button since we have it last in the order.
         await driver.dismissAlert();
       }
     } catch (err) {

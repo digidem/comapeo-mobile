@@ -32,6 +32,7 @@ describe('Check Passcode Requirements Flow', () => {
     await expect($(byTextMatches('Incorrect passcode'))).toBeDisplayed();
     // power button (off then on)
     await driver.pressKeyCode(26);
+    // pushing power button twice opens camera on Pixel
     await driver.pause(1000);
     await driver.pressKeyCode(26);
 

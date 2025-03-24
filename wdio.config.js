@@ -46,7 +46,7 @@ const config = {
     },
     {
       platformName: 'android',
-      'appium:platformVersion': '14.0',
+      'appium:platformVersion': '13.0',
       'appium:deviceName': 'Google Pixel 7',
       'appium:automationName': 'UIAutomator2',
       'appium:app': process.env.BROWSERSTACK_APP_URL,
@@ -54,7 +54,7 @@ const config = {
       'bstack:options': {
         projectName: 'CoMapeo',
         buildName: 'Parallel Android Build',
-        sessionName: 'Pixel 7 - Android 14',
+        sessionName: 'Pixel 7 - Android 13',
         appiumVersion: '2.12.1',
         debug: true,
         networkLogs: true,

@@ -19,6 +19,7 @@ describe('Check Passcode Requirements Flow', () => {
     await driver.pressKeyCode(3);
     // activates the calendar app
     await driver.pressKeyCode(208);
+    await driver.pressKeyCode(3);
     await driver.activateApp('com.comapeo.rc');
 
     await expect($(byTextMatches('Enter your passcode'))).toBeDisplayed();

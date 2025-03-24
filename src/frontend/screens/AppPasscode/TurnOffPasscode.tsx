@@ -16,14 +16,16 @@ import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {useFocusEffect, StackActions} from '@react-navigation/native';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {HeaderBackButtonProps} from '@react-navigation/elements';
-import {usePersistedPasscode} from '../../hooks/persistedState/usePersistedPasscode';
-import {useSecurityContext} from '../../contexts/SecurityContext';
 import {Text} from '../../sharedComponents/Text';
 import {
   BottomSheetModal,
   BottomSheetModalContent,
   useBottomSheetModal,
 } from '../../sharedComponents/BottomSheetModal';
+import {
+  useSecurityActions,
+  useSecurityState,
+} from '../../contexts/SecurityStoreContext';
 
 const m = defineMessages({
   usePasscode: {
@@ -65,8 +67,8 @@ const m = defineMessages({
 export const TurnOffPasscode: NativeNavigationComponent<'DisablePasscode'> = ({
   navigation,
 }) => {
-  const {authValuesSet} = useSecurityContext();
-  const setPasscode = usePersistedPasscode(state => state.setPasscode);
+  const passcodeSet = useSecurityState(state => state.passcode !== null);
+  const {setPasscode} = useSecurityActions();
 
   const {sheetRef, openSheet, closeSheet, isOpen} = useBottomSheetModal({
     openOnMount: false,
@@ -123,14 +125,8 @@ export const TurnOffPasscode: NativeNavigationComponent<'DisablePasscode'> = ({
           />
           <TouchableOpacity shouldActivateOnStart onPress={openSheet}>
             <MaterialIcon
-              name={
-                authValuesSet.passcodeSet
-                  ? 'check-box'
-                  : 'check-box-outline-blank'
-              }
-              testID={
-                authValuesSet.passcodeSet ? 'SETTINGS.passcode-checked' : ''
-              }
+              name={passcodeSet ? 'check-box' : 'check-box-outline-blank'}
+              testID={passcodeSet ? 'SETTINGS.passcode-checked' : ''}
               size={24}
               color={MEDIUM_GREY}
             />
@@ -139,7 +135,7 @@ export const TurnOffPasscode: NativeNavigationComponent<'DisablePasscode'> = ({
         <ListDivider />
 
         {/* User is not able to see this option unless they already have a pass */}
-        {authValuesSet.passcodeSet && (
+        {passcodeSet && (
           <ListItem
             onPress={() => {
               navigation.navigate('SetPasscode');

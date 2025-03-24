@@ -3,7 +3,7 @@ import {defineMessages} from 'react-intl';
 
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {PasscodeIntro} from './PasscodeIntro';
-import {useSecurityContext} from '../../contexts/SecurityContext';
+import {useAuthContext} from '../../contexts/AuthContext';
 
 const m = defineMessages({
   title: {
@@ -15,7 +15,7 @@ const m = defineMessages({
 export const AppPasscode: NativeNavigationComponent<'AppPasscode'> = ({
   navigation,
 }) => {
-  const {authState} = useSecurityContext();
+  const {authState} = useAuthContext();
 
   React.useLayoutEffect(() => {
     if (authState === 'obscured') {

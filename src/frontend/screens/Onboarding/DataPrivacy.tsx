@@ -75,7 +75,7 @@ export const DataPrivacy = ({
       </View>
       <View style={styles.buttonContainer}>
         <SecondaryButton
-          fullWidth={true}
+          fullSize={true}
           onPress={() => {
             navigation.navigate('OnboardingPrivacyPolicy');
           }}
@@ -83,7 +83,7 @@ export const DataPrivacy = ({
         />
 
         <PrimaryButton
-          fullWidth={true}
+          fullSize={true}
           onPress={() => {
             navigation.navigate('DeviceNaming');
           }}

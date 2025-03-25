@@ -19,6 +19,9 @@ describe('Check Passcode Requirements Flow', () => {
     await driver.pressKeyCode(3);
     // activates the calendar app
     await driver.pressKeyCode(208);
+    await driver.pause(1000);
+    // presses Back
+    await driver.pressKeyCode(4);
     await driver.pressKeyCode(3);
     await driver.activateApp('com.comapeo.rc');
 
@@ -36,6 +39,10 @@ describe('Check Passcode Requirements Flow', () => {
     // pushing power button twice opens camera on Pixel
     await driver.pause(1000);
     await driver.pressKeyCode(26);
+    // some of the older phones and Android versions default to a lock screen
+    if (await driver.isLocked()) {
+      await driver.unlock();
+    }
     await driver.activateApp('com.comapeo.rc');
 
     await expect($(byTextMatches('Enter your passcode'))).toBeDisplayed();

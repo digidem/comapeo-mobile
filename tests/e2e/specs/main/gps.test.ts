@@ -39,7 +39,7 @@ describe('GPS Component Test', () => {
 
     const gpsDetailsScreen = await $(byResourceId('MAIN.gps-details-scrn'));
     await expect(gpsDetailsScreen).toBeDisplayed();
-    await expect($(byTextMatches('latitude'))).toBeDisplayed();
+    await expect($(byTextMatches('Current GPS Location'))).toBeDisplayed();
   });
 
   it('should navigate back to the Camera screen', async () => {

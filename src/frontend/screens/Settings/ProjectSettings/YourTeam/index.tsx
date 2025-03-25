@@ -103,7 +103,8 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
         ) ? null : (
         <SecondaryButton
           testID="PROJECT.invite-device-btn"
-          fullWidth={true}
+          fullSize={true}
+          style={{alignSelf: 'center'}}
           onPress={() => {
             navigation.navigate('SelectDevice');
           }}

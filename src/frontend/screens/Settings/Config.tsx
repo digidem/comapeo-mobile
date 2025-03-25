@@ -143,8 +143,8 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
         <UIActivityIndicator style={{marginTop: 20, flex: 0}} />
       ) : isCoordinator ? (
         <SecondaryButton
-          style={{marginTop: 20}}
-          fullWidth={true}
+          style={{marginTop: 20, alignSelf: 'center'}}
+          fullSize={true}
           onPress={selectAndImportConfigFile}
           text={formatMessage(m.importConfig)}
         />

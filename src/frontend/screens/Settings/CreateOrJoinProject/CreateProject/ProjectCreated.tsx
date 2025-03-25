@@ -82,16 +82,16 @@ export const ProjectCreated = ({
           {t(m.projectCreated, {projectName: route.params.name})}
         </HeaderText>
       </View>
-      <View style={{width: '100%'}}>
+      <View style={{width: '100%', alignItems: 'center'}}>
         <SecondaryButton
-          fullWidth
+          fullSize
           text={t(m.inviteDevice)}
           onPress={handleGoToInviteScreen}
         />
 
         <PrimaryButton
           style={{marginTop: 20}}
-          fullWidth
+          fullSize
           onPress={handleGoToMap}
           text={t(m.goToMap)}
         />

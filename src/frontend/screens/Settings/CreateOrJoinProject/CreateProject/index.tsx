@@ -205,7 +205,8 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
               {advancedSettingOpen && (
                 <View style={styles.importConfigContainer}>
                   <SecondaryButton
-                    fullWidth={true}
+                    fullSize={true}
+                    style={{alignSelf: 'center'}}
                     onPress={() => {
                       selectConfigFile();
                     }}
@@ -221,14 +222,18 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
               )}
             </View>
           </View>
-          <View style={{paddingHorizontal: 20}}>
+          <View
+            style={{
+              paddingHorizontal: 20,
+              alignItems: 'center',
+            }}>
             {selectFileMutation.status === 'pending' ||
             createProjectMutation.status === 'pending' ? (
               <UIActivityIndicator size={30} style={{marginBottom: 20}} />
             ) : (
               <PrimaryButton
                 testID="PROJECT.create-btn"
-                fullWidth={true}
+                fullSize={true}
                 text={t(m.createProjectButton)}
                 onPress={handleSubmit(handleCreateProject)}
               />

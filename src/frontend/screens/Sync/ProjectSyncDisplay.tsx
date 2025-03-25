@@ -182,7 +182,7 @@ export const ProjectSyncDisplay = ({
     case 'idle': {
       dockContent = (
         <PrimaryButton
-          fullWidth
+          fullSize
           text={t(m.startSync)}
           renderIcon={({size}) => <SyncIcon size={size} />}
           onPress={() => {
@@ -204,7 +204,7 @@ export const ProjectSyncDisplay = ({
     case 'waiting': {
       dockContent = (
         <SecondaryButton
-          fullWidth={true}
+          fullSize={true}
           onPress={() => {
             // TODO: Catch/surface error
             projectApi.$sync.stop();
@@ -226,7 +226,7 @@ export const ProjectSyncDisplay = ({
     case 'syncing': {
       dockContent = (
         <SecondaryButton
-          fullWidth={true}
+          fullSize={true}
           onPress={() => {
             // TODO: Catch/surface error
             projectApi.$sync.stop();
@@ -252,7 +252,7 @@ export const ProjectSyncDisplay = ({
     case 'complete-partial': {
       dockContent = (
         <SecondaryButton
-          fullWidth={true}
+          fullSize={true}
           onPress={() => {
             // TODO: Catch/surface error
             projectApi.$sync.stop();
@@ -276,7 +276,7 @@ export const ProjectSyncDisplay = ({
     case 'complete-full': {
       dockContent = syncState.data.isSyncEnabled ? (
         <SecondaryButton
-          fullWidth={true}
+          fullSize={true}
           onPress={() => {
             // TODO: Catch/surface error
             projectApi.$sync.stop();

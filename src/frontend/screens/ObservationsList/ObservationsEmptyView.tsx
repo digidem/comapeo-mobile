@@ -45,7 +45,7 @@ export const ObservationEmptyView = ({
       dockContainerStyle={styles.dockContainer}
       dockContent={
         <SecondaryButton
-          fullWidth
+          fullSize
           onPress={onPressBack}
           text={t(m.backButton)}
         />
@@ -67,11 +67,10 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
     flex: 1,
     gap: 20,
-    padding: 48,
+    paddingTop: 40,
   },
   dockContainer: {
     backgroundColor: WHITE,
-    paddingHorizontal: 48,
   },
   iconCircle: {
     alignItems: 'center',

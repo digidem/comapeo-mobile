@@ -1207,6 +1207,12 @@
     "description": "Category title for new track screen",
     "message": "Track"
   },
+  "screens.Security.obscurePasscodeDescription": {
+    "message": "To use, turn on App Passcode"
+  },
+  "screens.Security.obscurePasscodeHeader": {
+    "message": "Obscure Passcode"
+  },
   "screens.Security.passDesriptionPassNotSet": {
     "message": "Passcode not set"
   },

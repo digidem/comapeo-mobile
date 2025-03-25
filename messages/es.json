@@ -1306,11 +1306,17 @@
   "screens.Settings.Config.importConfig": {
     "message": "Importar categorías"
   },
+  "screens.Settings.Config.importSuccessTitle": {
+    "message": "Successfully imported config:"
+  },
   "screens.Settings.Config.name": {
     "message": "Nombre de categorías:"
   },
   "screens.Settings.Config.navTitle": {
     "message": "Configuración"
+  },
+  "screens.Settings.Config.okButton": {
+    "message": "OK"
   },
   "screens.Settings.Config.projectName": {
     "message": "Nombre del Proyecto:"
@@ -1319,7 +1325,7 @@
     "message": "Crear un Proyecto"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
-    "message": "Regresar"
+    "message": "Go Back"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.howTo": {
     "message": "Cómo unirse a un Proyecto"
@@ -1357,11 +1363,17 @@
   "screens.Settings.CreateOrJoinProject.importConfigFileError": {
     "message": "El nombre del archivo debe terminar en .comapeocat"
   },
+  "screens.Settings.CreateOrJoinProject.importSuccessTitle": {
+    "message": "Successfully imported config:"
+  },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
     "message": "Unirse a un Proyecto de CoMapeo existente"
   },
   "screens.Settings.CreateOrJoinProject.joinProject": {
     "message": "Unirse a un proyecto"
+  },
+  "screens.Settings.CreateOrJoinProject.okButton": {
+    "message": "OK"
   },
   "screens.Settings.CreateOrJoinProject.projectDescription": {
     "message": "Un proyecto es un contenedor seguro para tu información. Sólo los dispositivos que invites pueden ingresar y compartir información contigo. Crea o Únete a un proyecto para compartir información con otros dispositivos. Esta acción eliminará las observaciones que has recopilado hasta ahora. Considera compartir observaciones importantes {icon} a tu correo electrónico antes de continuar."

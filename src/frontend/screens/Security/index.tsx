@@ -1,10 +1,11 @@
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
-import {useSecurityContext} from '../../contexts/SecurityContext';
+import {useAuthContext} from '../../contexts/AuthContext';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {FullScreenMenuList} from '../../sharedComponents/MenuList/FullScreenMenuList';
 import {MenuListItemType} from '../../sharedComponents/MenuList/MenuListItem';
+import {useSecurityState} from '../../contexts/SecurityStoreContext';
 
 const m = defineMessages({
   title: {
@@ -33,7 +34,8 @@ export const Security: NativeNavigationComponent<'Security'> = ({
   navigation,
 }) => {
   const {formatMessage: t} = useIntl();
-  const {authState, authValuesSet} = useSecurityContext();
+  const passcodeSet = useSecurityState(state => state.passcode !== null);
+  const {authState} = useAuthContext();
 
   React.useEffect(() => {
     if (authState === 'obscured') {
@@ -44,14 +46,10 @@ export const Security: NativeNavigationComponent<'Security'> = ({
   const menuItems: MenuListItemType[] = [
     {
       onPress: () =>
-        navigation.navigate(
-          authValuesSet.passcodeSet ? 'EnterPassToTurnOff' : 'AppPasscode',
-        ),
+        navigation.navigate(passcodeSet ? 'EnterPassToTurnOff' : 'AppPasscode'),
       primaryText: t(m.passcodeHeader),
       secondaryText: t(
-        authValuesSet.passcodeSet
-          ? m.passDesriptionPassSet
-          : m.passDesriptionPassNotSet,
+        passcodeSet ? m.passDesriptionPassSet : m.passDesriptionPassNotSet,
       ),
     },
   ];

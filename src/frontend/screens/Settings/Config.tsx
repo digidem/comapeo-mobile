@@ -1,7 +1,7 @@
 import * as FileSystem from 'expo-file-system';
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {StyleSheet, View} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
 import {Text} from '../../sharedComponents/Text';
 import {useSelectFile} from '../../hooks/files';
 import {
@@ -39,6 +39,14 @@ const m = defineMessages({
   importConfig: {
     id: 'screens.Settings.Config.importConfig',
     defaultMessage: 'Import Config',
+  },
+  configImportTitle: {
+    id: 'screens.Settings.Config.importSuccessTitle',
+    defaultMessage: 'Successfully imported config:',
+  },
+  okButton: {
+    id: 'screens.Settings.Config.okButton',
+    defaultMessage: 'OK',
   },
 });
 
@@ -91,6 +99,11 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
                 FileSystem.deleteAsync(selected.uri, {idempotent: true}).catch(
                   noop,
                 );
+              },
+              onSuccess: () => {
+                Alert.alert(formatMessage(m.configImportTitle), selected.name, [
+                  {text: formatMessage(m.okButton)},
+                ]);
               },
             },
           );

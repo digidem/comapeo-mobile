@@ -19,6 +19,7 @@ import {AppDiagnosticMetrics} from './metrics/AppDiagnosticMetrics';
 import {DeviceDiagnosticMetrics} from './metrics/DeviceDiagnosticMetrics';
 import {createDraftObservationStore} from './contexts/PersistedStores/DraftObservationStore';
 import {createTrackStore} from './contexts/TrackStoreContext';
+import {createSecurityStore} from './contexts/SecurityStoreContext';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -62,6 +63,10 @@ const persistedTrackStore = createTrackStore({
   persist: true,
 });
 
+const persistedSecurityStore = createSecurityStore({
+  persist: true,
+});
+
 // Defines task that handles background location updates for tracks feature
 TaskManager.defineTask(
   LOCATION_TASK_NAME,
@@ -102,7 +107,8 @@ const App = () => {
       appMetrics={appDiagnosticMetrics}
       deviceMetrics={deviceDiagnosticMetrics}
       persistedDrafObservationStore={persistedDraftObservationStore}
-      trackStore={persistedTrackStore}>
+      trackStore={persistedTrackStore}
+      securityStore={persistedSecurityStore}>
       <AppNavigator permissionAsked={permissionsAsked} />
     </AppProviders>
   );

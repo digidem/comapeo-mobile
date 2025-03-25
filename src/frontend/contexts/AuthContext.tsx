@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {AppState, AppStateStatus} from 'react-native';
+import {AppState, AppStateStatus, NativeModules} from 'react-native';
+const {FlagSecureModule} = NativeModules;
 
 import {useIsShareDialogOpen} from '../hooks/share';
 import {DEFAULT_OBSCURE_CODE} from '../lib/security';
@@ -34,6 +35,13 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   );
 
   const shareDialogIsOpen = useIsShareDialogOpen();
+  React.useEffect(() => {
+    if (passcode !== null) {
+      FlagSecureModule.activate();
+    } else {
+      FlagSecureModule.deactivate();
+    }
+  }, [passcode]);
 
   React.useEffect(() => {
     const appStateListener = AppState.addEventListener(
@@ -43,6 +51,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
         if (shareDialogIsOpen) return;
 
         if (passcode !== null) {
+          FlagSecureModule.activate();
           if (
             nextAppState === 'active' ||
             nextAppState === 'background' ||
@@ -50,6 +59,8 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
           ) {
             setAuthState('unauthenticated');
           }
+        } else {
+          FlagSecureModule.deactivate();
         }
       },
     );

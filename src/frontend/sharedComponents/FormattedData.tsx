@@ -9,7 +9,7 @@ import {Field, Preset} from '@comapeo/schema';
 
 import {formatCoords} from '../lib/utils';
 import {DateDistance} from './DateDistance';
-import {CoordinateFormat} from '../sharedTypes';
+import {type CoordinateFormat} from '../lib/coordinateFormat';
 
 const m = defineMessages({
   noAnswer: {

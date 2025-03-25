@@ -6,7 +6,7 @@ import {
 } from '@tanstack/react-query';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {usePersistedProjectId} from '../persistedState/usePersistedProjectId';
+import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import {ALL_PROJECTS_KEY, PROJECT_MEMBERS_KEY} from './projects';
 
 export const INVITE_KEY = 'pending_invites';
@@ -24,9 +24,7 @@ export function usePendingInvites() {
 export function useAcceptInvite() {
   const mapeoApi = useClientApi();
   const queryClient = useQueryClient();
-  const switchActiveProject = usePersistedProjectId(
-    state => state.setProjectId,
-  );
+  const {setActiveProjectId} = useActiveProjectIdActions();
 
   return useMutation({
     mutationFn: async ({inviteId}: {inviteId: string}) => {
@@ -40,7 +38,7 @@ export function useAcceptInvite() {
         queryKey: [ALL_PROJECTS_KEY],
       });
 
-      switchActiveProject(projectPublicId);
+      setActiveProjectId(projectPublicId);
     },
   });
 }

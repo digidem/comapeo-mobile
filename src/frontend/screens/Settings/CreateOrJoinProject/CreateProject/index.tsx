@@ -18,7 +18,6 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 import {useSelectFile} from '../../../../hooks/files';
-import {usePersistedProjectId} from '../../../../hooks/persistedState/usePersistedProjectId';
 import {useCreateProject} from '../../../../hooks/server/projects';
 import {convertFileUriToPosixPath} from '../../../../lib/file-system';
 import {BLACK, LIGHT_GREY} from '../../../../lib/styles';
@@ -31,6 +30,7 @@ import {
   SecondaryButton,
 } from '../../../../sharedComponents/Buttons';
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
+import {useActiveProjectIdActions} from '../../../../contexts/ActiveProjectIdStoreContext';
 
 const m = defineMessages({
   title: {
@@ -86,9 +86,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
   const [configFileResult, setConfigFileResult] =
     React.useState<ConfigFileImportResult | null>(null);
 
-  const updateActiveProjectId = usePersistedProjectId(
-    state => state.setProjectId,
-  );
+  const {setActiveProjectId} = useActiveProjectIdActions();
   const selectFileMutation = useSelectFile();
   const createProjectMutation = useCreateProject();
 
@@ -135,7 +133,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
             }).catch(noop);
           }
 
-          updateActiveProjectId(projectId);
+          setActiveProjectId(projectId);
 
           navigation.navigate('ProjectCreated', {name: projectName});
         },

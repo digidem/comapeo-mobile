@@ -29,6 +29,7 @@ import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLa
 import {matchPreset} from '../../lib/utils';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
+import {useAuthContext} from '../../contexts/AuthContext';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -64,6 +65,7 @@ export const MapScreen = ({
     store => store.value,
   );
   const {data: presets} = usePresetsQuery();
+  const {authState} = useAuthContext();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -151,7 +153,7 @@ export const MapScreen = ({
           <UserLocation minDisplacement={MIN_DISPLACEMENT} />
         )}
 
-        {isFinishedLoading && (
+        {isFinishedLoading && authState !== 'obscured' && (
           <>
             <RemoteDetectionAlertsMapLayer />
             <CurrentTrackMapLayer />

@@ -20,6 +20,8 @@ import {DeviceDiagnosticMetrics} from './metrics/DeviceDiagnosticMetrics';
 import {createDraftObservationStore} from './contexts/PersistedStores/DraftObservationStore';
 import {createTrackStore} from './contexts/TrackStoreContext';
 import {createSecurityStore} from './contexts/SecurityStoreContext';
+import {createCoordinateFormatStore} from './contexts/CoordinateFormatContext';
+import {createManualEntryCoordinateFormatStore} from './contexts/ManualEntryCoordinateFormatContext';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -67,6 +69,15 @@ const persistedSecurityStore = createSecurityStore({
   persist: true,
 });
 
+const persistedCoordinateFormatStore = createCoordinateFormatStore({
+  persist: true,
+});
+
+const persistedManualEntryCoordinateFormatStore =
+  createManualEntryCoordinateFormatStore({
+    persist: true,
+  });
+
 // Defines task that handles background location updates for tracks feature
 TaskManager.defineTask(
   LOCATION_TASK_NAME,
@@ -108,7 +119,11 @@ const App = () => {
       deviceMetrics={deviceDiagnosticMetrics}
       persistedDrafObservationStore={persistedDraftObservationStore}
       trackStore={persistedTrackStore}
-      securityStore={persistedSecurityStore}>
+      securityStore={persistedSecurityStore}
+      coordinateFormatStore={persistedCoordinateFormatStore}
+      manualEntryCoordinateFormatStore={
+        persistedManualEntryCoordinateFormatStore
+      }>
       <AppNavigator permissionAsked={permissionsAsked} />
     </AppProviders>
   );

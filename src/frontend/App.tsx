@@ -22,6 +22,7 @@ import {createTrackStore} from './contexts/TrackStoreContext';
 import {createSecurityStore} from './contexts/SecurityStoreContext';
 import {createCoordinateFormatStore} from './contexts/CoordinateFormatContext';
 import {createManualEntryCoordinateFormatStore} from './contexts/ManualEntryCoordinateFormatContext';
+import {createActiveProjectIdStore} from './contexts/ActiveProjectIdStoreContext';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -78,6 +79,10 @@ const persistedManualEntryCoordinateFormatStore =
     persist: true,
   });
 
+const persistedActiveProjectIdStore = createActiveProjectIdStore({
+  persist: true,
+});
+
 // Defines task that handles background location updates for tracks feature
 TaskManager.defineTask(
   LOCATION_TASK_NAME,
@@ -123,7 +128,8 @@ const App = () => {
       coordinateFormatStore={persistedCoordinateFormatStore}
       manualEntryCoordinateFormatStore={
         persistedManualEntryCoordinateFormatStore
-      }>
+      }
+      activeProjectIdStore={persistedActiveProjectIdStore}>
       <AppNavigator permissionAsked={permissionsAsked} />
     </AppProviders>
   );

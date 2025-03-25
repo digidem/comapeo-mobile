@@ -25,6 +25,10 @@ import {DraftObservationStore} from './PersistedStores/DraftObservationStore';
 import {type TrackStore, TrackStoreProvider} from './TrackStoreContext';
 import {SecurityStore, SecurityStoreProvider} from './SecurityStoreContext';
 import {
+  type ActiveProjectIdStore,
+  ActiveProjectIdStoreProvider,
+} from './ActiveProjectIdStoreContext';
+import {
   type CoordinateFormatStore,
   CoordinateFormatProvider,
 } from './CoordinateFormatContext';
@@ -45,6 +49,7 @@ type AppProvidersProps = {
   securityStore: SecurityStore;
   coordinateFormatStore: CoordinateFormatStore;
   manualEntryCoordinateFormatStore: ManualEntryCoordinateFormatStore;
+  activeProjectIdStore: ActiveProjectIdStore;
 };
 
 const queryClient = new QueryClient();
@@ -61,50 +66,53 @@ export const AppProviders = ({
   securityStore,
   coordinateFormatStore,
   manualEntryCoordinateFormatStore,
+  activeProjectIdStore,
 }: AppProvidersProps) => {
   return (
-    <SecurityStoreProvider value={securityStore}>
-      <CoordinateFormatProvider value={coordinateFormatStore}>
-        <ManualEntryCoordinateFormatProvider
-          value={manualEntryCoordinateFormatStore}>
-          <TrackStoreProvider value={trackStore}>
-            <IntlProvider>
-              <QueryClientProvider client={queryClient}>
-                <SafeAreaProvider>
-                  <GestureHandlerRootView style={styles.flex}>
-                    <TrackTimerContextProvider>
-                      <ServerLoading messagePort={messagePort}>
-                        <LocalDiscoveryProvider
-                          value={localDiscoveryController}>
-                          <ClientApiProvider clientApi={mapeoApi}>
-                            <MetricsProvider
-                              appMetrics={appMetrics}
-                              deviceMetrics={deviceMetrics}>
-                              <ActiveProjectProvider>
-                                <BottomSheetModalProvider>
-                                  <PhotoPromiseProvider>
-                                    <DraftObservationProvider
-                                      draftObservationStore={
-                                        persistedDrafObservationStore
-                                      }>
-                                      <AuthProvider>{children}</AuthProvider>
-                                    </DraftObservationProvider>
-                                  </PhotoPromiseProvider>
-                                </BottomSheetModalProvider>
-                              </ActiveProjectProvider>
-                            </MetricsProvider>
-                          </ClientApiProvider>
-                        </LocalDiscoveryProvider>
-                      </ServerLoading>
-                    </TrackTimerContextProvider>
-                  </GestureHandlerRootView>
-                </SafeAreaProvider>
-              </QueryClientProvider>
-            </IntlProvider>
-          </TrackStoreProvider>
-        </ManualEntryCoordinateFormatProvider>
-      </CoordinateFormatProvider>
-    </SecurityStoreProvider>
+    <ActiveProjectIdStoreProvider value={activeProjectIdStore}>
+      <SecurityStoreProvider value={securityStore}>
+        <CoordinateFormatProvider value={coordinateFormatStore}>
+          <ManualEntryCoordinateFormatProvider
+            value={manualEntryCoordinateFormatStore}>
+            <TrackStoreProvider value={trackStore}>
+              <IntlProvider>
+                <QueryClientProvider client={queryClient}>
+                  <SafeAreaProvider>
+                    <GestureHandlerRootView style={styles.flex}>
+                      <TrackTimerContextProvider>
+                        <ServerLoading messagePort={messagePort}>
+                          <LocalDiscoveryProvider
+                            value={localDiscoveryController}>
+                            <ClientApiProvider clientApi={mapeoApi}>
+                              <MetricsProvider
+                                appMetrics={appMetrics}
+                                deviceMetrics={deviceMetrics}>
+                                <ActiveProjectProvider>
+                                  <BottomSheetModalProvider>
+                                    <PhotoPromiseProvider>
+                                      <DraftObservationProvider
+                                        draftObservationStore={
+                                          persistedDrafObservationStore
+                                        }>
+                                        <AuthProvider>{children}</AuthProvider>
+                                      </DraftObservationProvider>
+                                    </PhotoPromiseProvider>
+                                  </BottomSheetModalProvider>
+                                </ActiveProjectProvider>
+                              </MetricsProvider>
+                            </ClientApiProvider>
+                          </LocalDiscoveryProvider>
+                        </ServerLoading>
+                      </TrackTimerContextProvider>
+                    </GestureHandlerRootView>
+                  </SafeAreaProvider>
+                </QueryClientProvider>
+              </IntlProvider>
+            </TrackStoreProvider>
+          </ManualEntryCoordinateFormatProvider>
+        </CoordinateFormatProvider>
+      </SecurityStoreProvider>
+    </ActiveProjectIdStoreProvider>
   );
 };
 

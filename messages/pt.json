@@ -1306,11 +1306,17 @@
   "screens.Settings.Config.importConfig": {
     "message": "Importar configuração"
   },
+  "screens.Settings.Config.importSuccessTitle": {
+    "message": "Successfully imported config:"
+  },
   "screens.Settings.Config.name": {
     "message": "Nome da configuração:"
   },
   "screens.Settings.Config.navTitle": {
     "message": "Configurações"
+  },
+  "screens.Settings.Config.okButton": {
+    "message": "OK"
   },
   "screens.Settings.Config.projectName": {
     "message": "Nome do projeto:"
@@ -1319,7 +1325,7 @@
     "message": "Criar um Projeto"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
-    "message": "Voltar"
+    "message": "Go Back"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.howTo": {
     "message": "Como participar de um projeto"
@@ -1357,11 +1363,17 @@
   "screens.Settings.CreateOrJoinProject.importConfigFileError": {
     "message": "O nome do arquivo deve terminar com .mapeoconfig"
   },
+  "screens.Settings.CreateOrJoinProject.importSuccessTitle": {
+    "message": "Successfully imported config:"
+  },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
     "message": "Junte-se a um projeto existente"
   },
   "screens.Settings.CreateOrJoinProject.joinProject": {
     "message": "Participe de um projeto"
+  },
+  "screens.Settings.CreateOrJoinProject.okButton": {
+    "message": "OK"
   },
   "screens.Settings.CreateOrJoinProject.projectDescription": {
     "message": "Um projeto é um espaço seguro para os seus dados, apenas dispositivos que você convidar podem inserir e compartilhar informações com você. Crie ou participe de projetos para compartilhar dados com outros dispositivos. Esta ação irá apagar as observações que você coletou até agora. Considere compartilhar {icon} observações importantes para seu e-mail antes de continuar."

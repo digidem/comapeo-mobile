@@ -29,26 +29,7 @@ export function createActiveProjectIdStore({persist} = {persist: false}) {
       createPersistedState(createInitialState, {
         name: STORAGE_KEY,
         storage: createJSONStorage(() => MMKVZustandStorage),
-        version: 1,
-        migrate: (persistedState, version): ActiveProjectIdState => {
-          const newState = createInitialState();
-
-          if (version === 0) {
-            if (typeof persistedState !== 'object') return newState;
-            if (persistedState === null) return newState;
-
-            if (
-              'projectId' in persistedState &&
-              typeof persistedState.projectId === 'string'
-            ) {
-              return {
-                projectId: persistedState.projectId,
-              };
-            }
-          }
-
-          return newState;
-        },
+        version: 0,
       }),
     );
   } else {

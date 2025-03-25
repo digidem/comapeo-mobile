@@ -6,7 +6,7 @@ import {ViewStyleProp} from '../sharedTypes';
 
 type ButtonProps = {
   renderIcon?: (props: {color: string; size: number}) => React.ReactNode;
-  fullWidth: boolean;
+  fullSize: boolean;
   text: string;
   onPress: () => void;
   testID?: string;
@@ -17,7 +17,7 @@ export const PrimaryButton = ({
   onPress,
   renderIcon,
   text,
-  fullWidth,
+  fullSize,
   testID,
   style,
 }: ButtonProps) => {
@@ -27,7 +27,8 @@ export const PrimaryButton = ({
       style={[
         style,
         styles.base,
-        {backgroundColor: COMAPEO_BLUE, width: fullWidth ? `100%` : 280},
+        {backgroundColor: COMAPEO_BLUE},
+        fullSize && {width: 280},
       ]}
       onPress={onPress}>
       {renderIcon && (
@@ -46,7 +47,7 @@ export const SecondaryButton = ({
   onPress,
   renderIcon,
   text,
-  fullWidth,
+  fullSize,
   testID,
   style,
 }: ButtonProps) => {
@@ -60,8 +61,8 @@ export const SecondaryButton = ({
           backgroundColor: WHITE,
           borderWidth: 1.5,
           borderColor: BLUE_GREY,
-          width: fullWidth ? `100%` : 280,
         },
+        fullSize && {width: 280},
       ]}
       onPress={onPress}>
       {renderIcon && (
@@ -80,7 +81,7 @@ export const DestructiveButton = ({
   onPress,
   renderIcon,
   text,
-  fullWidth,
+  fullSize,
   testID,
   style,
 }: ButtonProps) => {
@@ -90,7 +91,8 @@ export const DestructiveButton = ({
       style={[
         style,
         styles.base,
-        {backgroundColor: WARNING_RED, width: fullWidth ? `100%` : 280},
+        {backgroundColor: WARNING_RED},
+        fullSize && {width: 280},
       ]}
       onPress={onPress}>
       {renderIcon && (

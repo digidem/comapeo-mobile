@@ -62,7 +62,6 @@ export const SecondaryButton = ({
           borderColor: BLUE_GREY,
           width: fullWidth ? `100%` : 280,
         },
-        style,
       ]}
       onPress={onPress}>
       {renderIcon && (

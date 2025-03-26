@@ -91,8 +91,10 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
       style={styles.root}
       contentContainerStyle={styles.scrollContent}>
       <>
-        {/* check lat and lon are not null or undefined */}
-        {lat != null && lon != null && <InsetMapView lat={lat} lon={lon} />}
+        {/* check lat and lon are undefined. We cannot do `!lat && !lon` as 0 is a valid number but a falsy value */}
+        {lat !== undefined && lon !== undefined && (
+          <InsetMapView lat={lat} lon={lon} />
+        )}
         <TouchableOpacity onPress={() => {}} style={styles.time}>
           <BodyText variant="smallMeta">
             <FormattedObservationDate

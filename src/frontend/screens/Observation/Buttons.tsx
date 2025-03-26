@@ -96,10 +96,11 @@ export const ButtonFields = ({
   const coordinateFormat = useCoordinateFormat();
   const [isShareButtonLoading, setShareButtonLoading] = useState(false);
   const {projectApi, projectId} = useActiveProject();
-  const {mutate: deleteObservationMutate} = useDeleteDocument({
-    docType: 'observation',
-    projectId: projectId,
-  });
+  const {mutate: deleteObservationMutate, error: deleteObservationError} =
+    useDeleteDocument({
+      docType: 'observation',
+      projectId: projectId,
+    });
   const openShare = useOpenShareDialog();
 
   function handlePressDelete() {
@@ -116,6 +117,9 @@ export const ButtonFields = ({
             {
               onSuccess: () => {
                 navigation.pop();
+              },
+              onError: () => {
+                Sentry.captureException(deleteObservationError);
               },
             },
           );

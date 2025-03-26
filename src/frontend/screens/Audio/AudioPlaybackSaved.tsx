@@ -2,10 +2,10 @@ import * as React from 'react';
 import {AudioStyles, SIDE_ICON_BUTTON_WIDTH} from './shared';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {useAudioPlayback} from '../../hooks/useAudioPlayback';
-import {Duration} from 'luxon';
 import {View, Text, Pressable, TouchableOpacity} from 'react-native';
 import {Bar} from 'react-native-progress';
 import {WHITE, MEDIUM_GREY} from '../../lib/styles';
+import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {defineMessages, useIntl} from 'react-intl';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
@@ -15,6 +15,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import Share from 'react-native-share';
 import * as FileSystem from 'expo-file-system';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
+import {millisecondsToMMSS} from '../../lib/millisecondsToFormattedTime';
 
 const m = defineMessages({
   description: {
@@ -27,14 +28,22 @@ export const AudioPlaybackSaved = ({
   navigation,
 }: NativeRootNavigationProps<'AudioPlaybackSaved'>) => {
   const uri = route.params.uri;
-  const {duration, currentPosition, isPlaying, stopPlayback, startPlayback} =
-    useAudioPlayback(uri);
+  const {
+    duration,
+    currentPosition,
+    isPlaying,
+    stopPlayback,
+    startPlayback,
+    error,
+    clearError,
+  } = useAudioPlayback(uri);
   const {formatMessage} = useIntl();
 
   const progress = currentPosition / duration;
 
   const [localUri, setLocalUri] = React.useState<string | null>(null);
   const [shareLoading, setShareLoading] = React.useState(false);
+  const [shareError, setShareError] = React.useState<Error | null>(null);
   const {deleteAudio} = useDraftObservation();
 
   const handleShare = React.useCallback(async () => {
@@ -55,12 +64,18 @@ export const AudioPlaybackSaved = ({
       }
 
       await Share.open({url: fileUri, failOnCancel: false});
-    } catch {
-      navigation.navigate('ErrorBottomSheet');
+    } catch (err) {
+      if (err instanceof Error) {
+        setShareError(err);
+      } else {
+        setShareError(
+          new Error('Unable to share audio file with no error thrown'),
+        );
+      }
     } finally {
       setShareLoading(false);
     }
-  }, [uri, localUri, navigation]);
+  }, [uri, localUri]);
 
   React.useEffect(() => {
     return () => {
@@ -78,100 +93,118 @@ export const AudioPlaybackSaved = ({
   }
 
   return (
-    <ScreenContentWithDock
-      contentContainerStyle={AudioStyles.contentContainer}
-      dockContainerStyle={AudioStyles.dockContainer}
-      dockContent={
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            alignItems: 'center',
-          }}>
-          <View
-            style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            {route.params.canDelete && (
-              <Pressable
-                onPress={() =>
-                  navigation.navigate('DeleteAudioBottomSheet', {
-                    onPressDelete,
-                    uri,
-                  })
-                }>
-                <MaterialIcon
-                  name="delete"
-                  color={WHITE}
-                  size={SIDE_ICON_BUTTON_WIDTH}
-                />
-              </Pressable>
-            )}
-          </View>
-          {isPlaying ? (
-            <TouchableOpacity
-              onPress={stopPlayback}
-              style={AudioStyles.basePressable}>
-              <View style={AudioStyles.stop} />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
-              onPress={startPlayback}
-              style={AudioStyles.basePressable}>
-              <View style={AudioStyles.play}>
-                <PlayArrow />
-              </View>
-            </TouchableOpacity>
-          )}
+    <>
+      <ScreenContentWithDock
+        contentContainerStyle={AudioStyles.contentContainer}
+        dockContainerStyle={AudioStyles.dockContainer}
+        dockContent={
           <View
             style={{
-              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
               alignItems: 'center',
-              justifyContent: 'center',
             }}>
-            <Pressable onPress={handleShare}>
-              {shareLoading ? (
-                <UIActivityIndicator
-                  // If we dont set the max height, the border takes up the entire screen
-                  style={{maxHeight: SIDE_ICON_BUTTON_WIDTH}}
-                  size={SIDE_ICON_BUTTON_WIDTH}
-                  color={WHITE}
-                />
-              ) : (
-                <MaterialIcon name="share" color={WHITE} size={36} />
+            <View
+              style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+              {route.params.canDelete && (
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate('DeleteAudioBottomSheet', {
+                      onPressDelete,
+                      uri,
+                    })
+                  }>
+                  <MaterialIcon
+                    name="delete"
+                    color={WHITE}
+                    size={SIDE_ICON_BUTTON_WIDTH}
+                  />
+                </Pressable>
               )}
-            </Pressable>
+            </View>
+            {isPlaying ? (
+              <TouchableOpacity
+                onPress={stopPlayback}
+                style={AudioStyles.basePressable}>
+                <View style={AudioStyles.stop} />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                onPress={startPlayback}
+                style={AudioStyles.basePressable}>
+                <View style={AudioStyles.play}>
+                  <PlayArrow />
+                </View>
+              </TouchableOpacity>
+            )}
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Pressable onPress={handleShare}>
+                {shareLoading ? (
+                  <UIActivityIndicator
+                    // If we dont set the max height, the border takes up the entire screen
+                    style={{maxHeight: SIDE_ICON_BUTTON_WIDTH}}
+                    size={SIDE_ICON_BUTTON_WIDTH}
+                    color={WHITE}
+                  />
+                ) : (
+                  <MaterialIcon name="share" color={WHITE} size={36} />
+                )}
+              </Pressable>
+            </View>
           </View>
+        }>
+        <View style={AudioStyles.container}>
+          <View style={AudioStyles.timerContainer}>
+            <Text
+              style={[
+                AudioStyles.timerText,
+                {
+                  color:
+                    currentPosition === 0 && !isPlaying ? MEDIUM_GREY : WHITE,
+                },
+              ]}>
+              {millisecondsToMMSS(currentPosition)}
+            </Text>
+            <Bar
+              // Setting to 0 seems to have issues on Android: https://github.com/oblador/react-native-progress/issues/56
+              progress={progress > 0 ? progress : 0.00000001}
+              indeterminate={false}
+              width={null}
+              color={WHITE}
+              borderColor="transparent"
+              borderRadius={0}
+              borderWidth={0}
+              unfilledColor={MEDIUM_GREY}
+            />
+          </View>
+          <HeaderText variant="header3" style={AudioStyles.message}>
+            {formatMessage(m.description, {
+              length: millisecondsToMMSS(duration),
+            })}
+          </HeaderText>
         </View>
-      }>
-      <View style={AudioStyles.container}>
-        <View style={AudioStyles.timerContainer}>
-          <Text
-            style={[
-              AudioStyles.timerText,
-              {
-                color:
-                  currentPosition === 0 && !isPlaying ? MEDIUM_GREY : WHITE,
-              },
-            ]}>
-            {Duration.fromMillis(currentPosition).toFormat('mm:ss')}
-          </Text>
-          <Bar
-            // Setting to 0 seems to have issues on Android: https://github.com/oblador/react-native-progress/issues/56
-            progress={progress > 0 ? progress : 0.00000001}
-            indeterminate={false}
-            width={null}
-            color={WHITE}
-            borderColor="transparent"
-            borderRadius={0}
-            borderWidth={0}
-            unfilledColor={MEDIUM_GREY}
-          />
-        </View>
-        <HeaderText variant="header3" style={AudioStyles.message}>
-          {formatMessage(m.description, {
-            length: Duration.fromMillis(duration).toFormat('mm:ss'),
-          })}
-        </HeaderText>
-      </View>
-    </ScreenContentWithDock>
+      </ScreenContentWithDock>
+      <ErrorBottomSheet
+        error={error || shareError}
+        clearError={() => {
+          clearError();
+          setShareError(null);
+        }}
+        tryAgain={() => {
+          clearError();
+          setShareError(null);
+          if (isPlaying) {
+            stopPlayback();
+          } else {
+            startPlayback();
+          }
+        }}
+      />
+    </>
   );
 };

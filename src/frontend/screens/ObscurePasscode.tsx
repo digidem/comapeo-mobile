@@ -7,8 +7,11 @@ import {OBSCURE_PASSCODE} from '../constants';
 import {LIGHT_GREY} from '../lib/styles';
 import {Text} from '../sharedComponents/Text';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import {useSecurityContext} from '../contexts/SecurityContext';
-import {usePersistedPasscode} from '../hooks/persistedState/usePersistedPasscode';
+import {useAuthContext} from '../contexts/AuthContext';
+import {
+  useSecurityActions,
+  useSecurityState,
+} from '../contexts/SecurityStoreContext';
 import {NativeNavigationComponent} from '../sharedTypes/navigation';
 
 const m = defineMessages({
@@ -39,8 +42,11 @@ const m = defineMessages({
 export const ObscurePasscode: NativeNavigationComponent<'ObscurePasscode'> = ({
   navigation,
 }) => {
-  const {authValuesSet, authState} = useSecurityContext();
-  const setObscureCode = usePersistedPasscode(state => state.setObscureCode);
+  const {authState} = useAuthContext();
+  const obscureCodeEnabled = useSecurityState(
+    state => state.obscureCodeEnabled,
+  );
+  const {enableObscureCode} = useSecurityActions();
 
   const {formatMessage: t} = useIntl();
 
@@ -58,23 +64,19 @@ export const ObscurePasscode: NativeNavigationComponent<'ObscurePasscode'> = ({
 
       <TouchableOpacity
         style={styles.switch}
-        onPress={() =>
-          setObscureCode(authValuesSet.obscureSet ? null : undefined)
-        }>
+        onPress={() => enableObscureCode(!obscureCodeEnabled)}>
         <React.Fragment>
           <Text style={{fontSize: 16}}>{t(m.toggleMessage)}</Text>
 
           <MaterialIcon
-            name={
-              authValuesSet.obscureSet ? 'check-box' : 'check-box-outline-blank'
-            }
+            name={obscureCodeEnabled ? 'check-box' : 'check-box-outline-blank'}
             size={32}
             color="rgba(0, 0, 0, 0.54)"
           />
         </React.Fragment>
       </TouchableOpacity>
 
-      {authValuesSet.obscureSet && (
+      {obscureCodeEnabled && (
         <View style={styles.passbox}>
           <Text style={{textAlign: 'center', marginBottom: 10, fontSize: 20}}>
             {OBSCURE_PASSCODE}

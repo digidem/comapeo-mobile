@@ -1,16 +1,17 @@
-import * as React from 'react';
-import {HeaderLeftClose} from '../../sharedComponents/HeaderLeftClose';
 import {HeaderBackButtonProps} from '@react-navigation/elements';
+import {CommonActions, useFocusEffect} from '@react-navigation/native';
+import * as React from 'react';
+import {defineMessages, useIntl} from 'react-intl';
+import {BackHandler} from 'react-native';
+
+import {useTrackActions} from '../../contexts/TrackStoreContext';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {
   BottomSheetModal,
   useBottomSheetModal,
 } from '../../sharedComponents/BottomSheetModal';
 import {ConfirmDiscardBottomSheetContent} from '../../sharedComponents/ConfirmDiscardBottomSheetContent';
-import {defineMessages, useIntl} from 'react-intl';
-import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {CommonActions, useFocusEffect} from '@react-navigation/native';
-import {BackHandler} from 'react-native';
+import {HeaderLeftClose} from '../../sharedComponents/HeaderLeftClose';
 
 const m = defineMessages({
   discardTitle: {
@@ -43,7 +44,7 @@ export const HeaderLeft = ({headerBackButtonProps}: HeaderLeftProps) => {
     openOnMount: false,
   });
   const {formatMessage} = useIntl();
-  const clearCurrentTrack = usePersistedTrack(state => state.clearCurrentTrack);
+  const {clearCurrentTrack} = useTrackActions();
   const navigation = useNavigationFromRoot();
 
   useFocusEffect(

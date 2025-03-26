@@ -5,7 +5,7 @@ import {WHITE} from '../../lib/styles';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {AppStackParamsList} from '../../sharedTypes/navigation';
 import {useIntl} from 'react-intl';
-import {useSecurityContext} from '../../contexts/SecurityContext';
+import {useAuthContext} from '../../contexts/AuthContext';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {Loading} from '../../sharedComponents/Loading';
 import {createDefaultScreenGroup} from './AppScreens';
@@ -19,7 +19,7 @@ export const RootStackNavigator = ({
   deviceName: string | undefined;
 }) => {
   const {formatMessage} = useIntl();
-  const security = useSecurityContext();
+  const security = useAuthContext();
   const {navigate} = useNavigationFromRoot();
 
   React.useEffect(() => {

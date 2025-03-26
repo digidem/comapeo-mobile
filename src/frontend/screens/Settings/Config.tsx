@@ -1,7 +1,7 @@
 import * as FileSystem from 'expo-file-system';
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {StyleSheet, View} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
 import {useSelectFile} from '../../hooks/files';
 import {
   useGetOwnRole,
@@ -10,13 +10,13 @@ import {
 } from '../../hooks/server/projects';
 import {Loading} from '../../sharedComponents/Loading';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
-import {COMAPEO_BLUE, MEDIUM_GREY} from '../../lib/styles';
-import {Button} from '../../sharedComponents/Button';
+import {MEDIUM_GREY} from '../../lib/styles';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../sharedTypes';
 import {convertFileUriToPosixPath} from '../../lib/file-system';
 import noop from '../../lib/noop';
 import * as Sentry from '@sentry/react-native';
+import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 
@@ -40,6 +40,14 @@ const m = defineMessages({
   importConfig: {
     id: 'screens.Settings.Config.importConfig',
     defaultMessage: 'Import Config',
+  },
+  configImportTitle: {
+    id: 'screens.Settings.Config.importSuccessTitle',
+    defaultMessage: 'Successfully imported config:',
+  },
+  okButton: {
+    id: 'screens.Settings.Config.okButton',
+    defaultMessage: 'OK',
   },
 });
 
@@ -97,6 +105,11 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
                 Sentry.captureException(err);
                 navigation.navigate('ErrorBottomSheet');
               },
+              onSuccess: () => {
+                Alert.alert(formatMessage(m.configImportTitle), selected.name, [
+                  {text: formatMessage(m.okButton)},
+                ]);
+              },
             },
           );
         },
@@ -137,15 +150,12 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
       {deviceRole.isPending || configImportIsPending ? (
         <UIActivityIndicator style={{marginTop: 20, flex: 0}} />
       ) : isCoordinator ? (
-        <Button
-          style={{marginTop: 20}}
-          fullWidth
-          variant="outlined"
-          onPress={selectAndImportConfigFile}>
-          <HeaderText variant="header5" style={{color: COMAPEO_BLUE}}>
-            {formatMessage(m.importConfig)}
-          </HeaderText>
-        </Button>
+        <SecondaryButton
+          style={{marginTop: 20, alignSelf: 'center'}}
+          fullSize={true}
+          onPress={selectAndImportConfigFile}
+          text={formatMessage(m.importConfig)}
+        />
       ) : null}
     </View>
   );

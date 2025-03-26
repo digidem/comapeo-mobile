@@ -2,7 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches} from '../../utils/selectors';
 
-describe('Add Details Flow', () => {
+describe('Observations - Add Details Flow', () => {
   it('should create a new observation with Gathering Site category and open Details screen', async () => {
     const addObsBtn = await $('~Add Observation');
     await addObsBtn.click();

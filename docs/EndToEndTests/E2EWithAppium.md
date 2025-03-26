@@ -49,7 +49,7 @@ We use [Appium](https://appium.io/) (with the UIAutomator2 driver on Android) an
       'appium:deviceName': 'emulator-5554', // Replace with your device name/ device ID (from adb devices)
       'appium:platformVersion': '13.0', // Replace with your platformVersion
       'appium:automationName': 'UIAutomator2',
-      'appium:app': 'build-1741119529300.apk', // Replace with where/ what your apk is
+      'appium:app': 'build-1741119529300.apk', // Replace with relative path of where your apk is and what your apk is
       'appium:autoGrantPermissions': true,
       },
       ],
@@ -136,7 +136,9 @@ We use [Appium](https://appium.io/) (with the UIAutomator2 driver on Android) an
 
    - Add a new `.ts` file in `tests/e2e/specs`.
    - Create a folder for it if it makes sense.
-   - Write your tests using the same style/pattern as existing specs. See guidelines below in Additional Notes.
+   - Write your tests using the same style/pattern as existing specs.
+   - Be sure to add the folder name at the beginning of the describe block within the test to make the test easy to find if there are issues.
+   - See guidelines below in Additional Notes.
 
 2. **Reference in Flow**
 

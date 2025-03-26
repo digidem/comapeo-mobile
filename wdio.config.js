@@ -35,7 +35,7 @@ const config = {
       'appium:autoGrantPermissions': true,
       'bstack:options': {
         projectName: 'CoMapeo',
-        buildName: 'Parallel Android Build',
+        buildName: 'CoMapeo Android Build',
         sessionName: 'Pixel 7 - Android 13',
         appiumVersion: '2.12.1',
         debug: true,

@@ -3,7 +3,7 @@ import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches, byText} from '../../utils/selectors';
 import {tapAboveElement} from '../../utils/touchActions';
 
-describe('Create Observation Flow', () => {
+describe('Observations - Create Observation Flow', () => {
   it('should set location and open create observation screen', async () => {
     const addObsBtn = await $('~Add Observation');
     await addObsBtn.click();

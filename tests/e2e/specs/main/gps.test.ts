@@ -2,7 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches} from '../../utils/selectors';
 
-describe('GPS Component Test', () => {
+describe('MAIN - GPS Component Test', () => {
   it('should verify GPS details on the home map screen', async () => {
     const mapView = await $(byResourceId('MAIN.mapbox-map-view'));
     await expect(mapView).toBeDisplayed();

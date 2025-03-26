@@ -3,7 +3,7 @@ import {describe, it} from 'mocha';
 import {byTextMatches, byResourceId} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 
-describe('Check Passcode Requirements Flow', () => {
+describe('Passcode - Check Passcode Requirements Flow', () => {
   it('should relaunch app and see Passcode entry screen', async () => {
     await driver.terminateApp('com.comapeo.rc');
     await driver.activateApp('com.comapeo.rc');

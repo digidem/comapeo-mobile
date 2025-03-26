@@ -21,9 +21,10 @@ const CORE_STORAGE_DIR_NAME = 'core-storage'
 const CUSTOM_MAPS_DIR_NAME = 'maps'
 const DEFAULT_CUSTOM_MAP_FILE_NAME = 'default.smp'
 
-const MAPBOX_ACCESS_TOKEN =
-  'pk.eyJ1IjoiZGlnaWRlbSIsImEiOiJjbHRyaGh3cm0wN3l4Mmpsam95NDI3c2xiIn0.daq2iZFZXQ08BD0VZWAGUw'
-const DEFAULT_ONLINE_MAP_STYLE_URL = `https://api.mapbox.com/styles/v1/mapbox/outdoors-v11?access_token=${MAPBOX_ACCESS_TOKEN}`
+// const MAPBOX_ACCESS_TOKEN =
+// 'pk.eyJ1IjoiZGlnaWRlbSIsImEiOiJjbHRyaGh3cm0wN3l4Mmpsam95NDI3c2xiIn0.daq2iZFZXQ08BD0VZWAGUw'
+// const DEFAULT_ONLINE_MAP_STYLE_URL = `https://api.mapbox.com/styles/v1/mapbox/outdoors-v11?access_token=${MAPBOX_ACCESS_TOKEN}`
+const DEFAULT_ONLINE_MAP_STYLE_URL = 'https://demotiles.maplibre.org/style.json'
 
 const log = debug('mapeo:app')
 

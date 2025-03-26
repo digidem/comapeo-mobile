@@ -24,10 +24,6 @@ The next version of Mapeo Mobile
 
    3. Copy the [`.env.template`](./.env.template) file to a file called `.env`. Replace any placeholder `<replace_me>` values with the relevant ones:
 
-      `MAPBOX_ACCESS_TOKEN`: a [Mapbox access token](https://docs.mapbox.com/android/maps/guides/install/#configure-credentials). If you do not have access to a Mapbox account, reach out to the maintainers about getting access to an access token.
-
-      `MAPBOX_DOWNLOAD_TOKEN`: a [Mapbox secret token](https://docs.mapbox.com/android/maps/guides/install/#configure-credentials). This is unfortunately required to install the necessary Mapbox Android SDK components used by `@rnmapbox/maps@10` when building the app (more info [here](https://github.com/rnmapbox/maps/blob/v10.0/android/install.md#mapbox-maps-sdk-v10)). If you do not have access to a Mapbox account, reach out to the maintainers about getting access to a secret token.
-
       `COMAPEO_METRICS_URL`: URL pointing to a hosted CoMapeo metrics server. Reach out to the maintainers about getting access to this credential.
       `COMAPEO_METRICS_API_KEY`: API key needed for accessing a CoMapeo metrics server. Reach out to the maintainers about getting access to this credential.
 

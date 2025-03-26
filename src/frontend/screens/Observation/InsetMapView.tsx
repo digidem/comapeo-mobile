@@ -1,4 +1,4 @@
-import MapboxGL from '@rnmapbox/maps';
+import {Camera, MapView} from '@maplibre/maplibre-react-native';
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {WHITE} from '../../lib/styles';
@@ -27,7 +27,7 @@ export const InsetMapView = React.memo<MapProps>(
     const {navigate} = useNavigationFromRoot();
 
     return (
-      <MapboxGL.MapView
+      <MapView
         style={styles.map}
         zoomEnabled={false}
         logoEnabled={false}
@@ -37,7 +37,7 @@ export const InsetMapView = React.memo<MapProps>(
         compassEnabled={false}
         scaleBarEnabled={false}
         styleURL={styleUrlQuery.data}>
-        <MapboxGL.Camera
+        <Camera
           centerCoordinate={[lon, lat]}
           zoomLevel={12}
           animationMode="none"
@@ -64,7 +64,7 @@ export const InsetMapView = React.memo<MapProps>(
             <OrangeDot style={{alignSelf: 'center'}} />
           </TouchableOpacity>
         </MarkerView>
-      </MapboxGL.MapView>
+      </MapView>
     );
   },
 );

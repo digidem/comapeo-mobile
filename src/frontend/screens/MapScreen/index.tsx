@@ -1,6 +1,5 @@
 import * as React from 'react';
-import Mapbox from '@rnmapbox/maps';
-
+import {Camera, MapView, UserLocation} from '@maplibre/maplibre-react-native';
 import {
   LocationFollowingIcon,
   LocationNoFollowIcon,
@@ -45,7 +44,7 @@ assert(
   process.env.MAPBOX_ACCESS_TOKEN,
   'MAPBOX_ACCESS_TOKEN environment variable should be set',
 );
-Mapbox.setAccessToken(process.env.MAPBOX_ACCESS_TOKEN);
+
 const MIN_DISPLACEMENT = 3;
 
 export const MapScreen = ({
@@ -99,7 +98,7 @@ export const MapScreen = ({
   return (
     <View style={{flex: 1}} onLayout={onLayout}>
       {dimensions && (
-        <Mapbox.MapView
+        <MapView
           key={mapKey}
           testID="MAIN.mapbox-map-view"
           style={{width: dimensions.width, height: dimensions.height}}
@@ -109,17 +108,17 @@ export const MapScreen = ({
           surfaceView={true}
           attributionPosition={{right: 8, bottom: 8}}
           compassEnabled={false}
-          scaleBarEnabled={false}
+          // scaleBarEnabled={false}
           styleURL={styleUrl}
-          onMapIdle={event => {
-            setZoom(event.properties.zoom);
-          }}
+          // onMapIdle={event => {
+          //   setZoom(event.properties.zoom);
+          // }}
           onDidFinishLoadingStyle={handleDidFinishLoadingStyle}
           onMoveShouldSetResponder={() => {
             if (following) setFollowing(false);
             return true;
           }}>
-          <Mapbox.Camera
+          <Camera
             ref={cam => {
               if (cam && !initialPositionSet.current) {
                 cam.setCamera({
@@ -137,11 +136,11 @@ export const MapScreen = ({
             centerCoordinate={following ? coords : undefined}
             zoomLevel={DEFAULT_ZOOM}
             animationDuration={0}
-            animationMode="none"
+            // animationMode="none"
             followUserLocation={false}
           />
 
-          {coords && <Mapbox.UserLocation minDisplacement={MIN_DISPLACEMENT} />}
+          {coords && <UserLocation minDisplacement={MIN_DISPLACEMENT} />}
 
           {isFinishedLoadingStyle && authState !== 'obscured' && (
             <>
@@ -156,7 +155,7 @@ export const MapScreen = ({
               <ObservationMapLayer />
             </>
           )}
-        </Mapbox.MapView>
+        </MapView>
       )}
       <View style={styles.bottomContainer}>
         <View style={{flex: 1, alignItems: 'center'}}>

@@ -1,6 +1,12 @@
 import React, {FC} from 'react';
 import {StyleSheet} from 'react-native';
-import MapboxGL from '@rnmapbox/maps';
+import {
+  Camera,
+  CircleLayer,
+  LineLayer,
+  MapView,
+  ShapeSource,
+} from '@maplibre/maplibre-react-native';
 import {LocationHistoryPoint} from '../../sharedTypes/location.ts';
 import {convertToLineString} from '../../lib/utils.ts';
 import {Observation} from '@comapeo/schema';
@@ -26,7 +32,7 @@ export const MapPreview: FC<TrackScreenMapPreview> = ({
   const styleUrlQuery = useMapStyleJsonUrl();
 
   return (
-    <MapboxGL.MapView
+    <MapView
       style={styles.map}
       zoomEnabled={false}
       logoEnabled={false}
@@ -34,10 +40,9 @@ export const MapPreview: FC<TrackScreenMapPreview> = ({
       pitchEnabled={false}
       rotateEnabled={false}
       compassEnabled={false}
-      scaleBarEnabled={false}
-      styleURL={styleUrlQuery.data}>
-      <MapboxGL.Camera
-        animationMode="none"
+      mapStyle={styleUrlQuery.data}>
+      <Camera
+        animationMode="moveTo"
         padding={{
           paddingTop: MAP_PADDING,
           paddingRight: MAP_PADDING,
@@ -51,7 +56,7 @@ export const MapPreview: FC<TrackScreenMapPreview> = ({
       />
       <TrackMapLayer locationHistory={locationHistory} />
       <ObservationMapLayer observations={observations} />
-    </MapboxGL.MapView>
+    </MapView>
   );
 };
 
@@ -67,9 +72,9 @@ function ObservationMapLayer({observations}: {observations: Observation[]}) {
   }, [presets]);
 
   return (
-    <MapboxGL.ShapeSource id="observations-source" shape={displayedFeatures}>
-      <MapboxGL.CircleLayer id="circles" style={layerStyles} />
-    </MapboxGL.ShapeSource>
+    <ShapeSource id="observations-source" shape={displayedFeatures}>
+      <CircleLayer id="circles" style={layerStyles} />
+    </ShapeSource>
   );
 }
 
@@ -79,15 +84,11 @@ function TrackMapLayer({
   locationHistory: LocationHistoryPoint[];
 }) {
   return (
-    <MapboxGL.ShapeSource
+    <ShapeSource
       id="trackShapeSource"
       shape={convertToLineString(locationHistory)}>
-      <MapboxGL.LineLayer
-        id="trackLines"
-        style={SAVED_TRACK_LINE_STYLE}
-        existing
-      />
-    </MapboxGL.ShapeSource>
+      <LineLayer id="trackLineLayer" style={SAVED_TRACK_LINE_STYLE} />
+    </ShapeSource>
   );
 }
 

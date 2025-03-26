@@ -3,7 +3,6 @@ import {getLocales} from 'expo-localization';
 import {QueryClient} from '@tanstack/react-query';
 import {AppNavigator} from './AppNavigator';
 import {initializeNodejs} from './initializeNodejs';
-import Mapbox from '@rnmapbox/maps';
 import {PermissionsAndroid} from 'react-native';
 import {AppProviders} from './contexts/AppProviders';
 import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
@@ -67,8 +66,6 @@ if (appMetricsOptIn) {
   });
   Sentry.getClient()?.addIntegration(navigationIntegration);
 }
-
-Mapbox.setTelemetryEnabled(false);
 
 const persistedLocaleStore = createLocaleStore({
   persist: true,

@@ -1,5 +1,5 @@
 import React from 'react';
-import MapboxGL from '@rnmapbox/maps';
+import {CircleLayer, ShapeSource} from '@maplibre/maplibre-react-native';
 
 import {useObservations} from '../../../hooks/server/observations';
 import {usePresetsQuery} from '../../../hooks/server/presets';
@@ -26,7 +26,7 @@ export const ObservationMapLayer = () => {
   }, [presets]);
 
   return (
-    <MapboxGL.ShapeSource
+    <ShapeSource
       onPress={event => {
         const properties = event.features[0]?.properties;
         if (!properties) return;
@@ -36,7 +36,7 @@ export const ObservationMapLayer = () => {
       }}
       id="observations-source"
       shape={displayedFeatures}>
-      <MapboxGL.CircleLayer id="circles" style={layerStyles} />
-    </MapboxGL.ShapeSource>
+      <CircleLayer id="circles" style={layerStyles} />
+    </ShapeSource>
   );
 };

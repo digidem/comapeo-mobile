@@ -51,7 +51,10 @@ const NODE_MODULE_PATTERNS_TO_TRANSFORM = [
 const config = {
   preset: 'jest-expo',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  setupFilesAfterEnv: ['@rnmapbox/maps/setup-jest', './jest.setup.js'],
+  setupFilesAfterEnv: [
+    // '@rnmapbox/maps/setup-jest',
+    './jest.setup.js',
+  ],
   transform: {
     '\\.[jt]sx?$': [
       'babel-jest',

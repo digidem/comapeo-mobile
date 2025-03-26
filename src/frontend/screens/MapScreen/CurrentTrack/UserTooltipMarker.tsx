@@ -1,4 +1,4 @@
-import {MarkerView} from '@rnmapbox/maps';
+import {MarkerView} from '@maplibre/maplibre-react-native';
 import {StyleSheet, Text, View} from 'react-native';
 
 import {useTrackState} from '../../../contexts/TrackStoreContext';

@@ -3,9 +3,12 @@ import {useClientApi} from '@comapeo/core-react';
 import {type MapeoProjectApi} from '@comapeo/ipc';
 import {useCreateProject} from '@comapeo/core-react';
 
-import {usePersistedProjectId} from '../hooks/persistedState/usePersistedProjectId';
 import {useSingleProject} from '@comapeo/core-react';
 import {Loading} from '../sharedComponents/Loading';
+import {
+  useActiveProjectIdActions,
+  useActiveProjectId,
+} from './ActiveProjectIdStoreContext';
 
 const ActiveProjectContext = React.createContext<
   {projectId: string; projectApi: MapeoProjectApi} | undefined
@@ -18,8 +21,8 @@ export const ActiveProjectIdProvider = ({
 }) => {
   const mapeoApi = useClientApi();
 
-  const activeProjectId = usePersistedProjectId(store => store.projectId);
-  const setActiveProjectId = usePersistedProjectId(store => store.setProjectId);
+  const activeProjectId = useActiveProjectId();
+  const {setActiveProjectId} = useActiveProjectIdActions();
 
   const {mutate: createProject} = useCreateProject();
 

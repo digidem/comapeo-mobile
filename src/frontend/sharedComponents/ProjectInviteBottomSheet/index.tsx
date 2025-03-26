@@ -10,7 +10,7 @@ import {NewInviteBottomSheetContent} from './NewInviteBottomSheetContent';
 import {InviteSuccessBottomSheetContent} from './InviteSuccessBottomSheetContent';
 import {InviteCanceledBottomSheetContent} from './InviteCanceledBottomSheetContent';
 import {LeaveProjectModalContent} from '../LeaveProjectModalContent';
-import {usePersistedProjectId} from '../../hooks/persistedState/usePersistedProjectId';
+import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 
 export type LeaveProjectModalState = 'AlreadyOnProj' | 'LeaveProj';
 
@@ -57,9 +57,7 @@ export const ProjectInviteBottomSheet = ({
     });
   const accept = useAcceptInvite();
   const reject = useRejectInvite();
-  const switchActiveProject = usePersistedProjectId(
-    state => state.setProjectId,
-  );
+  const {setActiveProjectId} = useActiveProjectIdActions();
 
   React.useEffect(() => {
     if (
@@ -116,7 +114,7 @@ export const ProjectInviteBottomSheet = ({
         {inviteId: invite.inviteId},
         {
           onSuccess: projectPublicId => {
-            switchActiveProject(projectPublicId);
+            setActiveProjectId(projectPublicId);
           },
         },
       );

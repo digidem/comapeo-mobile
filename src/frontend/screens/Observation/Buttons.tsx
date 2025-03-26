@@ -10,14 +10,14 @@ import {useObservationWithPreset} from '../../hooks/useObservationWithPreset.ts'
 import {formatCoords} from '../../lib/utils.ts';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {convertUrlToBase64} from '../../utils/base64.ts';
-import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings.ts';
 import * as Sentry from '@sentry/react-native';
-import {CoordinateFormat} from '../../sharedTypes/index.ts';
+import {type CoordinateFormat} from '../../lib/coordinateFormat.ts';
 import {getValueLabel} from '../../sharedComponents/FormattedData.tsx';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
 import {useOpenShareDialog} from '../../hooks/share.ts';
+import {useCoordinateFormat} from '../../contexts/CoordinateFormatContext.ts';
 
 const m = defineMessages({
   delete: {
@@ -93,7 +93,7 @@ export const ButtonFields = ({
   const {formatMessage: t, formatDate} = useIntl();
   const navigation = useNavigationFromRoot();
   const {observation, preset} = useObservationWithPreset(observationId);
-  const format = usePersistedSettings(store => store.coordinateFormat);
+  const coordinateFormat = useCoordinateFormat();
   const [isShareButtonLoading, setShareButtonLoading] = useState(false);
   const {projectApi, projectId} = useActiveProject();
   const {mutate: deleteObservationMutate} = useDeleteDocument({
@@ -179,7 +179,7 @@ export const ButtonFields = ({
         urls: !base64Urls.length ? undefined : base64Urls,
         message: createObservationShareMessage({
           categoryName: preset ? preset.name : t(m.fallbackCategoryName),
-          coordinateFormat: format,
+          coordinateFormat,
           completedFields,
           footerText: t(m.shareMessageFooter),
           observation,

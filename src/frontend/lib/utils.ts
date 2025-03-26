@@ -4,7 +4,7 @@ import {Preset, Observation, Track} from '@comapeo/schema';
 import {LocationObject, LocationProviderStatus} from 'expo-location';
 import {FeatureCollection, LineString} from 'geojson';
 
-import {type CoordinateFormat} from '../sharedTypes';
+import {type CoordinateFormat} from '../lib/coordinateFormat';
 import {LocationHistoryPoint} from '../sharedTypes/location';
 
 // import type {

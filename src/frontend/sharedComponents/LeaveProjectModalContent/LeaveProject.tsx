@@ -14,7 +14,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import {BottomSheetModalContent} from '../BottomSheetModal';
 import {ErrorBottomSheet} from '../ErrorBottomSheet';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {usePersistedProjectId} from '../../hooks/persistedState/usePersistedProjectId';
+import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 
 const m = defineMessages({
   leaveProj: {
@@ -76,10 +76,7 @@ export const LeaveProject = ({
     React.useState<Error | null>(null);
   const {projectId} = useActiveProject();
   const leaveProject = useLeaveProject();
-  const switchActiveProject = usePersistedProjectId(
-    state => state.setProjectId,
-  );
-
+  const {setActiveProjectId} = useActiveProjectIdActions();
   function handleLeavePress() {
     if (!isChecked) {
       setError(true);
@@ -96,7 +93,7 @@ export const LeaveProject = ({
             {
               onSuccess: () => {
                 closeSheet();
-                switchActiveProject(projectPublicId);
+                setActiveProjectId(projectPublicId);
               },
               onError: err => {
                 setLeaveProjectError(err);

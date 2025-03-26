@@ -7,8 +7,6 @@ import {
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 
-export const TRACK_KEY = 'tracks';
-
 export function useTracks() {
   const {projectId} = useActiveProject();
   return useManyDocs({

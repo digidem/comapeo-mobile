@@ -1,9 +1,8 @@
 import {useMemo} from 'react';
 import {
   useProjectSettings as useComapeoProjectSettings,
-  useOwnDeviceInfo,
-  useSingleMember,
   useManyMembers,
+  useOwnRoleInProject,
 } from '@comapeo/core-react';
 import {useQuery} from '@tanstack/react-query';
 
@@ -25,14 +24,8 @@ export function useProjectSettings() {
 }
 
 export function useGetOwnRole() {
-  const {data: deviceInfo} = useOwnDeviceInfo();
   const {projectId} = useActiveProject();
-
-  const {data} = useSingleMember({
-    projectId: projectId,
-    deviceId: deviceInfo.deviceId,
-  });
-  return data.role;
+  return useOwnRoleInProject({projectId});
 }
 
 export function useGetRemoteArchives() {
@@ -46,7 +39,7 @@ export function useGetRemoteArchives() {
   return {
     data: archives,
     error,
-    isPending: isRefetching,
+    isRefetching,
   };
 }
 

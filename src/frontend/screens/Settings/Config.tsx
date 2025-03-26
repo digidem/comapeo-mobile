@@ -50,8 +50,8 @@ const m = defineMessages({
 export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
   const {formatMessage} = useIntl();
   const {data} = useProjectSettings();
-  const deviceRole = useGetOwnRole();
   const {projectId} = useActiveProject();
+  const {data: deviceRole} = useGetOwnRole();
   const [importProjectConfigError, setImportProjectConfigError] =
     React.useState<Error | null>(null);
 

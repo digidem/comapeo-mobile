@@ -36,7 +36,6 @@ import {
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {REMOTE_DETECTION_ALERTS_KEY} from '../../hooks/server/remoteDetectionAlert';
 
 const m = defineMessages({
   devicesFound: {
@@ -157,10 +156,6 @@ export const ProjectSyncDisplay = ({
         }
         queryClient.invalidateQueries({
           queryKey: [ROOT_QUERY_KEY, 'projects', projectId],
-        });
-
-        queryClient.invalidateQueries({
-          queryKey: [REMOTE_DETECTION_ALERTS_KEY, projectId],
         });
       });
 

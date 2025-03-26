@@ -7,8 +7,11 @@ import {DOCUMENT_DIRECTORY} from '../../lib/file-system';
 
 import {createRefreshTokenStore} from '../refreshTokenStore';
 import noop from '../../lib/noop';
+const ROOT_QUERY_KEY = '@comapeo/core-react';
 
-export const MAPS_QUERY_KEY = 'maps';
+export function getMapsQueryKey() {
+  return [ROOT_QUERY_KEY, 'maps'] as const;
+}
 
 const CUSTOM_MAPS_DIRECTORY = new URL('maps', DOCUMENT_DIRECTORY).href;
 const DEFAULT_CUSTOM_MAP_FILE_PATH = CUSTOM_MAPS_DIRECTORY + '/default.smp';
@@ -83,7 +86,7 @@ export function useImportCustomMapFile() {
     onSuccess: () => {
       refresh();
       queryClient.invalidateQueries({
-        queryKey: [MAPS_QUERY_KEY],
+        queryKey: getMapsQueryKey(),
       });
     },
   });
@@ -102,7 +105,7 @@ export function useRemoveCustomMapFile() {
     onSuccess: () => {
       refresh();
       queryClient.invalidateQueries({
-        queryKey: [MAPS_QUERY_KEY],
+        queryKey: getMapsQueryKey(),
       });
     },
   });
@@ -112,13 +115,11 @@ export function useRemoveCustomMapFile() {
  * Returns `null` if no viable map is found. Throws an error if a detected map is invalid.
  */
 export function useGetCustomMapInfo() {
-  const api = useClientApi();
+  const {data: styleUrl} = useCustomMapStyleUrl();
 
   return useQuery({
-    queryKey: [MAPS_QUERY_KEY, 'custom', 'info'],
+    queryKey: [getMapsQueryKey, 'custom', 'info', {styleUrl}],
     queryFn: async () => {
-      const styleUrl = await api.getMapStyleJsonUrl();
-
       const response = await fetchCustomMapInfo(styleUrl);
 
       if (response.status === 404) {

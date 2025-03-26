@@ -41,7 +41,7 @@ export function createNavigationOptions() {
 export const SyncScreen = ({navigation}: NativeRootNavigationProps<'Sync'>) => {
   const wifiStatus = useLocalDiscoveryState(state => state.wifiStatus);
 
-  const {data: remoteArchive, isPending: remoteArchiveLoading} =
+  const {data: remoteArchive, isRefetching: remoteArchiveLoading} =
     useGetRemoteArchives();
 
   const hasRemoteArchive = remoteArchive && remoteArchive.length > 0;

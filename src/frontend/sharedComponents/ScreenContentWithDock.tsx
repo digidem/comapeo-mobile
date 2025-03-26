@@ -41,5 +41,6 @@ const styles = StyleSheet.create({
   dockedContentContainer: {
     flex: 0,
     padding: 20,
+    alignItems: 'center',
   },
 });

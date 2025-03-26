@@ -22,11 +22,14 @@ import {useCreateProject} from '../../../../hooks/server/projects';
 import {convertFileUriToPosixPath} from '../../../../lib/file-system';
 import {BLACK, LIGHT_GREY} from '../../../../lib/styles';
 import noop from '../../../../lib/noop';
-import {Button} from '../../../../sharedComponents/Button';
 import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
-import {Text} from '../../../../sharedComponents/Text';
 import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
+import {
+  PrimaryButton,
+  SecondaryButton,
+} from '../../../../sharedComponents/Buttons';
+import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 import {useActiveProjectIdActions} from '../../../../contexts/ActiveProjectIdStoreContext';
 
 const m = defineMessages({
@@ -166,7 +169,9 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
           onPress={() => Keyboard.dismiss()}
           style={styles.container}>
           <View>
-            <Text style={{marginHorizontal: 20}}>{t(m.enterName)}</Text>
+            <HeaderText variant="header5" style={{marginHorizontal: 20}}>
+              {t(m.enterName)}
+            </HeaderText>
             <View style={{marginHorizontal: 20, marginTop: 10}}>
               <HookFormTextInput
                 testID="PROJECT.name-inp"
@@ -182,7 +187,9 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
               <TouchableOpacity
                 onPress={() => setAdvancedSettingOpen(prev => !prev)}
                 style={styles.accordianHeader}>
-                <Text>{t(m.advancedSettings)}</Text>
+                <HeaderText variant="header5">
+                  {t(m.advancedSettings)}
+                </HeaderText>
                 <MaterialIcon
                   color={BLACK}
                   name={
@@ -195,35 +202,39 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
               </TouchableOpacity>
               {advancedSettingOpen && (
                 <View style={styles.importConfigContainer}>
-                  <Button
-                    fullWidth
-                    variant="outlined"
+                  <SecondaryButton
+                    fullSize={true}
+                    style={{alignSelf: 'center'}}
                     onPress={() => {
                       selectConfigFile();
-                    }}>
-                    {t(m.importConfig)}
-                  </Button>
+                    }}
+                    text={t(m.importConfig)}
+                  />
 
                   {configFileResult?.type === 'success' && (
-                    <Text style={styles.configFileName}>
+                    <HeaderText variant="header5" style={styles.configFileName}>
                       {configFileResult.file.name}
-                    </Text>
+                    </HeaderText>
                   )}
                 </View>
               )}
             </View>
           </View>
-          <View style={{paddingHorizontal: 20}}>
+          <View
+            style={{
+              paddingHorizontal: 20,
+              alignItems: 'center',
+            }}>
             {selectFileMutation.status === 'pending' ||
             createProjectMutation.status === 'pending' ? (
               <UIActivityIndicator size={30} style={{marginBottom: 20}} />
             ) : (
-              <Button
+              <PrimaryButton
                 testID="PROJECT.create-btn"
-                fullWidth
-                onPress={handleSubmit(handleCreateProject)}>
-                {t(m.createProjectButton)}
-              </Button>
+                fullSize={true}
+                text={t(m.createProjectButton)}
+                onPress={handleSubmit(handleCreateProject)}
+              />
             )}
           </View>
         </TouchableWithoutFeedback>

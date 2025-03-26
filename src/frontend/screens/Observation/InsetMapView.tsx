@@ -3,7 +3,7 @@ import React from 'react';
 import {View, Text, StyleSheet, Dimensions, Image} from 'react-native';
 import {BLACK, WHITE} from '../../lib/styles';
 import {FormattedCoords} from '../../sharedComponents/FormattedData';
-import {useCustomMapStyleUrl} from '../../hooks/server/maps';
+import {useMapStyleJsonUrl} from '../../hooks/server/maps';
 import {useCoordinateFormat} from '../../contexts/CoordinateFormatContext';
 
 const MAP_HEIGHT = 175;
@@ -16,7 +16,7 @@ type MapProps = {
 
 export const InsetMapView = React.memo<MapProps>(({lon, lat}: MapProps) => {
   const coordinateFormat = useCoordinateFormat();
-  const styleUrlQuery = useCustomMapStyleUrl();
+  const styleUrlQuery = useMapStyleJsonUrl();
 
   return (
     <View>

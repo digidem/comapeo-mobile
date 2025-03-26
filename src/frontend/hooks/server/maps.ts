@@ -30,7 +30,7 @@ export type CustomMapInfo = v.InferOutput<typeof CustomMapInfoSchema>;
 
 const {useRefreshToken, useRefreshTokenActions} = createRefreshTokenStore();
 
-export function useCustomMapStyleUrl() {
+export function useMapStyleJsonUrl() {
   const refreshToken = useRefreshToken();
 
   const {
@@ -115,7 +115,7 @@ export function useRemoveCustomMapFile() {
  * Returns `null` if no viable map is found. Throws an error if a detected map is invalid.
  */
 export function useGetCustomMapInfo() {
-  const {data: styleUrl} = useCustomMapStyleUrl();
+  const {data: styleUrl} = useMapStyleJsonUrl();
 
   return useQuery({
     queryKey: [getMapsQueryKey, 'custom', 'info', {styleUrl}],

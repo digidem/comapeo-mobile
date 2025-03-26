@@ -22,7 +22,7 @@ import {TrackBottomSheet} from './TrackBottomSheet';
 import {CurrentTrackMapLayer} from './CurrentTrack/CurrrentTrackMapLayer';
 import {UserLocation} from './UserLocation';
 import {useSharedLocationContext} from '../../contexts/SharedLocationContext';
-import {useCustomMapStyleUrl} from '../../hooks/server/maps';
+import {useMapStyleJsonUrl} from '../../hooks/server/maps';
 import {TracksMapLayer} from './MapLayers/TracksMapLayer';
 import {assert} from '../../lib/assert';
 import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLayer';
@@ -59,7 +59,7 @@ export const MapScreen = ({
   const locationServicesEnabled =
     !!locationProviderStatus?.locationServicesEnabled;
 
-  const {data: styleUrl} = useCustomMapStyleUrl();
+  const {data: styleUrl} = useMapStyleJsonUrl();
   const existingObservation = usePersistedDraftObservation(
     store => store.value,
   );

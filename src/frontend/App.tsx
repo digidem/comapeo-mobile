@@ -20,6 +20,10 @@ import {DeviceDiagnosticMetrics} from './metrics/DeviceDiagnosticMetrics';
 import {createDraftObservationStore} from './contexts/PersistedStores/DraftObservationStore';
 import {createTrackStore} from './contexts/TrackStoreContext';
 import {createSecurityStore} from './contexts/SecurityStoreContext';
+import {createCoordinateFormatStore} from './contexts/CoordinateFormatContext';
+import {createManualEntryCoordinateFormatStore} from './contexts/ManualEntryCoordinateFormatContext';
+import {createActiveProjectIdStore} from './contexts/ActiveProjectIdStoreContext';
+import {createMetricsDiagnosticsStore} from './contexts/MetricsDiagnosticsStoreContext';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -67,6 +71,37 @@ const persistedSecurityStore = createSecurityStore({
   persist: true,
 });
 
+const persistedCoordinateFormatStore = createCoordinateFormatStore({
+  persist: true,
+});
+
+const persistedManualEntryCoordinateFormatStore =
+  createManualEntryCoordinateFormatStore({
+    persist: true,
+  });
+
+const persistedActiveProjectIdStore = createActiveProjectIdStore({
+  persist: true,
+});
+
+const persistedMetricsDiagnosticsStore = createMetricsDiagnosticsStore({
+  persist: true,
+});
+
+// Ensure that these metrics instances are initially in sync with initial state of relevant store
+const metricsIsEnabled =
+  persistedMetricsDiagnosticsStore.instance.getState().isEnabled;
+appDiagnosticMetrics.setEnabled(metricsIsEnabled);
+deviceDiagnosticMetrics.setEnabled(metricsIsEnabled);
+
+// Sync metrics instances with subsequent changes in relevant store state
+persistedMetricsDiagnosticsStore.instance.subscribe((current, previous) => {
+  if (previous.isEnabled !== current.isEnabled) {
+    appDiagnosticMetrics.setEnabled(current.isEnabled);
+    deviceDiagnosticMetrics.setEnabled(current.isEnabled);
+  }
+});
+
 // Defines task that handles background location updates for tracks feature
 TaskManager.defineTask(
   LOCATION_TASK_NAME,
@@ -104,11 +139,15 @@ const App = () => {
       messagePort={messagePort}
       localDiscoveryController={localDiscoveryController}
       mapeoApi={mapeoApi}
-      appMetrics={appDiagnosticMetrics}
-      deviceMetrics={deviceDiagnosticMetrics}
       persistedDrafObservationStore={persistedDraftObservationStore}
       trackStore={persistedTrackStore}
-      securityStore={persistedSecurityStore}>
+      securityStore={persistedSecurityStore}
+      coordinateFormatStore={persistedCoordinateFormatStore}
+      manualEntryCoordinateFormatStore={
+        persistedManualEntryCoordinateFormatStore
+      }
+      activeProjectIdStore={persistedActiveProjectIdStore}
+      metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}>
       <AppNavigator permissionAsked={permissionsAsked} />
     </AppProviders>
   );

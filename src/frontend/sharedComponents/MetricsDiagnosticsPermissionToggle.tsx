@@ -1,8 +1,12 @@
 import * as React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
+
+import {
+  useMetricsDiagnosticsActions,
+  useMetricsDiagnosticsEnabled,
+} from '../contexts/MetricsDiagnosticsStoreContext';
 import {WHITE, BLACK} from '../lib/styles';
-import {usePersistedMetricDiagnosticsPermission} from '../hooks/persistedState/usePersistedMetricDiagnosticsPermission';
 import {Checkbox} from './Checkbox';
 
 const m = defineMessages({
@@ -14,9 +18,8 @@ const m = defineMessages({
 
 export const MetricsDiagnosticsPermissionToggle: React.FC = () => {
   const {formatMessage} = useIntl();
-  const {isEnabled, setIsEnabled} = usePersistedMetricDiagnosticsPermission();
-
-  const togglePermission = () => setIsEnabled(!isEnabled);
+  const isEnabled = useMetricsDiagnosticsEnabled();
+  const {setIsEnabled} = useMetricsDiagnosticsActions();
 
   return (
     <View style={styles.container}>
@@ -26,7 +29,9 @@ export const MetricsDiagnosticsPermissionToggle: React.FC = () => {
       <Checkbox
         value={isEnabled}
         error={false}
-        onPress={togglePermission}
+        onPress={() => {
+          setIsEnabled(!isEnabled);
+        }}
         hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
       />
     </View>

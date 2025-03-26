@@ -17,24 +17,39 @@ import {ServerLoading} from '../ServerLoading';
 import {MessagePortLike} from '../lib/MessagePortLike';
 import {IntlProvider} from './IntlContext';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
-import {MetricsProvider} from './MetricsContext';
-import {AppDiagnosticMetrics} from '../metrics/AppDiagnosticMetrics';
-import {DeviceDiagnosticMetrics} from '../metrics/DeviceDiagnosticMetrics';
 import {DraftObservationProvider} from './DraftObservationContext';
 import {DraftObservationStore} from './PersistedStores/DraftObservationStore';
 import {type TrackStore, TrackStoreProvider} from './TrackStoreContext';
 import {SecurityStore, SecurityStoreProvider} from './SecurityStoreContext';
+import {
+  type ActiveProjectIdStore,
+  ActiveProjectIdStoreProvider,
+} from './ActiveProjectIdStoreContext';
+import {
+  type CoordinateFormatStore,
+  CoordinateFormatProvider,
+} from './CoordinateFormatContext';
+import {
+  type ManualEntryCoordinateFormatStore,
+  ManualEntryCoordinateFormatProvider,
+} from './ManualEntryCoordinateFormatContext';
+import {
+  type MetricsDiagnosticsStore,
+  MetricsDiagnosticsStoreProvider,
+} from './MetricsDiagnosticsStoreContext';
 
 type AppProvidersProps = {
   children: React.ReactNode;
   messagePort: MessagePortLike;
   localDiscoveryController: ReturnType<typeof createLocalDiscoveryController>;
   mapeoApi: MapeoClientApi;
-  appMetrics: AppDiagnosticMetrics;
-  deviceMetrics: DeviceDiagnosticMetrics;
   persistedDrafObservationStore: DraftObservationStore;
   trackStore: TrackStore;
   securityStore: SecurityStore;
+  coordinateFormatStore: CoordinateFormatStore;
+  manualEntryCoordinateFormatStore: ManualEntryCoordinateFormatStore;
+  activeProjectIdStore: ActiveProjectIdStore;
+  metricsDiagnosticsStore: MetricsDiagnosticsStore;
 };
 
 const queryClient = new QueryClient();
@@ -44,49 +59,57 @@ export const AppProviders = ({
   messagePort,
   localDiscoveryController,
   mapeoApi,
-  appMetrics,
-  deviceMetrics,
   persistedDrafObservationStore,
   trackStore,
   securityStore,
+  coordinateFormatStore,
+  manualEntryCoordinateFormatStore,
+  activeProjectIdStore,
+  metricsDiagnosticsStore,
 }: AppProvidersProps) => {
   return (
-    <SecurityStoreProvider value={securityStore}>
-      <TrackStoreProvider value={trackStore}>
-        <IntlProvider>
-          <QueryClientProvider client={queryClient}>
-            <SafeAreaProvider>
-              <GestureHandlerRootView style={styles.flex}>
-                <TrackTimerContextProvider>
-                  <ServerLoading messagePort={messagePort}>
-                    <LocalDiscoveryProvider value={localDiscoveryController}>
-                      <ClientApiProvider clientApi={mapeoApi}>
-                        <MetricsProvider
-                          appMetrics={appMetrics}
-                          deviceMetrics={deviceMetrics}>
-                          <ActiveProjectProvider>
-                            <BottomSheetModalProvider>
-                              <PhotoPromiseProvider>
-                                <DraftObservationProvider
-                                  draftObservationStore={
-                                    persistedDrafObservationStore
-                                  }>
-                                  <AuthProvider>{children}</AuthProvider>
-                                </DraftObservationProvider>
-                              </PhotoPromiseProvider>
-                            </BottomSheetModalProvider>
-                          </ActiveProjectProvider>
-                        </MetricsProvider>
-                      </ClientApiProvider>
-                    </LocalDiscoveryProvider>
-                  </ServerLoading>
-                </TrackTimerContextProvider>
-              </GestureHandlerRootView>
-            </SafeAreaProvider>
-          </QueryClientProvider>
-        </IntlProvider>
-      </TrackStoreProvider>
-    </SecurityStoreProvider>
+    <MetricsDiagnosticsStoreProvider value={metricsDiagnosticsStore}>
+      <ActiveProjectIdStoreProvider value={activeProjectIdStore}>
+        <SecurityStoreProvider value={securityStore}>
+          <CoordinateFormatProvider value={coordinateFormatStore}>
+            <ManualEntryCoordinateFormatProvider
+              value={manualEntryCoordinateFormatStore}>
+              <TrackStoreProvider value={trackStore}>
+                <IntlProvider>
+                  <QueryClientProvider client={queryClient}>
+                    <SafeAreaProvider>
+                      <GestureHandlerRootView style={styles.flex}>
+                        <TrackTimerContextProvider>
+                          <ServerLoading messagePort={messagePort}>
+                            <LocalDiscoveryProvider
+                              value={localDiscoveryController}>
+                              <ClientApiProvider clientApi={mapeoApi}>
+                                <ActiveProjectProvider>
+                                  <BottomSheetModalProvider>
+                                    <PhotoPromiseProvider>
+                                      <DraftObservationProvider
+                                        draftObservationStore={
+                                          persistedDrafObservationStore
+                                        }>
+                                        <AuthProvider>{children}</AuthProvider>
+                                      </DraftObservationProvider>
+                                    </PhotoPromiseProvider>
+                                  </BottomSheetModalProvider>
+                                </ActiveProjectProvider>
+                              </ClientApiProvider>
+                            </LocalDiscoveryProvider>
+                          </ServerLoading>
+                        </TrackTimerContextProvider>
+                      </GestureHandlerRootView>
+                    </SafeAreaProvider>
+                  </QueryClientProvider>
+                </IntlProvider>
+              </TrackStoreProvider>
+            </ManualEntryCoordinateFormatProvider>
+          </CoordinateFormatProvider>
+        </SecurityStoreProvider>
+      </ActiveProjectIdStoreProvider>
+    </MetricsDiagnosticsStoreProvider>
   );
 };
 

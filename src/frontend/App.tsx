@@ -88,6 +88,13 @@ const persistedMetricsDiagnosticsStore = createMetricsDiagnosticsStore({
   persist: true,
 });
 
+// Ensure that these metrics instances are initially in sync with initial state of relevant store
+const metricsIsEnabled =
+  persistedMetricsDiagnosticsStore.instance.getState().isEnabled;
+appDiagnosticMetrics.setEnabled(metricsIsEnabled);
+deviceDiagnosticMetrics.setEnabled(metricsIsEnabled);
+
+// Sync metrics instances with subsequent changes in relevant store state
 persistedMetricsDiagnosticsStore.instance.subscribe((current, previous) => {
   if (previous.isEnabled !== current.isEnabled) {
     appDiagnosticMetrics.setEnabled(current.isEnabled);

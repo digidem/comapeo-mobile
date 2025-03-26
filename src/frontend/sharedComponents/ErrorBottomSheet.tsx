@@ -5,7 +5,7 @@ import {BottomSheetWrapper} from './BottomSheetWrapper';
 import ErrorIcon from '../images/Error.svg';
 import {defineMessages, useIntl} from 'react-intl';
 import {HeaderText} from './Text/HeaderText';
-import {Button} from './Button';
+import {SecondaryButton} from './Buttons';
 
 const m = defineMessages({
   somethingWrong: {
@@ -31,12 +31,12 @@ export const ErrorBottomSheet = ({
             {formatMessage(m.somethingWrong)}
           </HeaderText>
         </View>
-        <Button
-          variant="outlined"
-          fullWidth
-          onPress={() => navigation.goBack()}>
-          {formatMessage(m.goBack)}
-        </Button>
+        <SecondaryButton
+          fullSize
+          onPress={() => navigation.goBack()}
+          text={formatMessage(m.goBack)}
+          style={{alignSelf: 'center'}}
+        />
       </View>
     </BottomSheetWrapper>
   );

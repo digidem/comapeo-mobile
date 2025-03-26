@@ -8,7 +8,6 @@ import {
 } from '../../../../sharedTypes';
 import type {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {Button} from '../../../../sharedComponents/Button';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {BLACK} from '../../../../lib/styles';
 import {DeviceCard} from '../../../../sharedComponents/DeviceCard';
@@ -21,6 +20,7 @@ import {NotOnProject} from './NotOnProject';
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../../sharedComponents/Text/BodyText';
 import {useActiveProject} from '../../../../contexts/ActiveProjectContext';
+import {SecondaryButton} from '../../../../sharedComponents/Buttons';
 
 const m = defineMessages({
   title: {
@@ -90,29 +90,18 @@ export const YourTeam: NativeNavigationComponent<'YourTeam'> = ({
       !coordinators.some(
         coordinator => coordinator.deviceId === deviceInfo.deviceId,
       ) ? null : (
-        <Button
+        <SecondaryButton
           testID="PROJECT.invite-device-btn"
-          fullWidth
-          style={{marginTop: 20}}
-          variant="outlined"
+          fullSize={true}
+          style={{alignSelf: 'center'}}
           onPress={() => {
             navigation.navigate('SelectDevice');
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <MaterialIcon
-              color={BLACK}
-              size={32}
-              name="person-add"
-              style={{marginRight: 10}}
-            />
-            <HeaderText variant="header5">{t(m.inviteDevice)}</HeaderText>
-          </View>
-        </Button>
+          }}
+          renderIcon={({color, size}) => (
+            <MaterialIcon color={color} size={size} name="person-add" />
+          )}
+          text={t(m.inviteDevice)}
+        />
       )}
       <IconHeader
         iconName="manage-accounts"

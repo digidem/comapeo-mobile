@@ -2,7 +2,7 @@ import * as React from 'react';
 import {ScrollView} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 
-import {formatCoords} from '../../../lib/utils';
+import {formatCoords} from '../../../lib/coordinateFormat';
 import {SelectOne} from '../../../sharedComponents/SelectOne';
 import {type CoordinateFormat as CoordinateFormatType} from '../../../lib/coordinateFormat';
 import type {NativeNavigationComponent} from '../../../sharedTypes/navigation';

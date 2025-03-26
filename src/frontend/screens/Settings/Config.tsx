@@ -3,18 +3,19 @@ import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {useImportProjectConfig} from '@comapeo/core-react';
 import {Alert, StyleSheet, View} from 'react-native';
-import {Text} from '../../sharedComponents/Text';
 import {useSelectFile} from '../../hooks/files';
 import {useProjectSettings, useGetOwnRole} from '../../hooks/server/projects';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
-import {COMAPEO_BLUE, MEDIUM_GREY} from '../../lib/styles';
-import {Button} from '../../sharedComponents/Button';
+import {MEDIUM_GREY} from '../../lib/styles';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../sharedTypes';
 import {convertFileUriToPosixPath} from '../../lib/file-system';
 import noop from '../../lib/noop';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {SecondaryButton} from '../../sharedComponents/Buttons';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   navTitle: {
@@ -119,34 +120,33 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
     <View style={styles.container}>
       {data.name && (
         <>
-          <Text>{formatMessage(m.projectName)}</Text>
-          <Text style={{marginBottom: 20}}>{data.name}</Text>
+          <HeaderText variant="header5">
+            {formatMessage(m.projectName)}
+          </HeaderText>
+          <BodyText style={{marginBottom: 20}}>{data.name}</BodyText>
         </>
       )}
       {data.configMetadata && (
         <>
-          <Text>{formatMessage(m.name)}</Text>
-          <Text style={{color: MEDIUM_GREY}}>
+          <HeaderText variant="header5">{formatMessage(m.name)}</HeaderText>
+          <BodyText style={{color: MEDIUM_GREY}}>
             {formatMessage(m.created, {
               date: formatDate(data.configMetadata.buildDate),
               time: formatHours(data.configMetadata.buildDate),
             })}
-          </Text>
-          <Text>{data.configMetadata.name}</Text>
+          </BodyText>
+          <BodyText>{data.configMetadata.name}</BodyText>
         </>
       )}
       {configImportIsPending ? (
         <UIActivityIndicator style={{marginTop: 20, flex: 0}} />
       ) : isCoordinator ? (
-        <Button
-          style={{marginTop: 20}}
-          fullWidth
-          variant="outlined"
-          onPress={selectAndImportConfigFile}>
-          <Text style={{color: COMAPEO_BLUE}}>
-            {formatMessage(m.importConfig)}
-          </Text>
-        </Button>
+        <SecondaryButton
+          style={{marginTop: 20, alignSelf: 'center'}}
+          fullSize={true}
+          onPress={selectAndImportConfigFile}
+          text={formatMessage(m.importConfig)}
+        />
       ) : null}
       <ErrorBottomSheet
         error={selectFileMutation.error || importProjectConfigError}

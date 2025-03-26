@@ -46,8 +46,11 @@ export const TrackScreen = ({
   const trackObservations = observations.filter(observation =>
     track.observationRefs.some(ref => ref.docId === observation.docId),
   );
-  const {mutate: deleteTrackMutate, reset} = useDeleteTrackMutation();
-  const [error, setError] = React.useState<Error | null>(null);
+  const {
+    mutate: deleteTrackMutate,
+    reset,
+    error: deleteTrackMutationError,
+  } = useDeleteTrackMutation();
 
   function deleteTrack() {
     deleteTrackMutate(
@@ -55,9 +58,6 @@ export const TrackScreen = ({
       {
         onSuccess: () => {
           navigation.pop();
-        },
-        onError: err => {
-          setError(err);
         },
       },
     );
@@ -97,9 +97,8 @@ export const TrackScreen = ({
         </View>
       </ScreenContentWithDock>
       <ErrorBottomSheet
-        error={error}
+        error={deleteTrackMutationError}
         clearError={() => {
-          setError(null);
           reset();
         }}
         tryAgain={deleteTrack}

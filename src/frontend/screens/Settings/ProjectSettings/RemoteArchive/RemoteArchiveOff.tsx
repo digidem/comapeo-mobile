@@ -44,7 +44,7 @@ export const RemoteArchiveOff: NativeNavigationComponent<
 > = () => {
   const {formatMessage} = useIntl();
   const {navigate} = useNavigationFromRoot();
-  const role = useGetOwnRole();
+  const {data: role} = useGetOwnRole();
   const isCoordinator =
     role?.roleId === COORDINATOR_ROLE_ID || role?.roleId === CREATOR_ROLE_ID;
 

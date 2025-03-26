@@ -70,10 +70,6 @@ export const LeaveProject = ({
   const {formatMessage} = useIntl();
   const [error, setError] = React.useState(false);
   const [isChecked, setIsChecked] = React.useState(false);
-  const [leaveProjectError, setLeaveProjectError] =
-    React.useState<Error | null>(null);
-  const [acceptInviteError, setAcceptInviteError] =
-    React.useState<Error | null>(null);
   const {projectId} = useActiveProject();
   const leaveProject = useLeaveProject();
   const {setActiveProjectId} = useActiveProjectIdActions();
@@ -96,14 +92,12 @@ export const LeaveProject = ({
                 setActiveProjectId(projectPublicId);
               },
               onError: err => {
-                setLeaveProjectError(err);
                 Sentry.captureException(err);
               },
             },
           );
         },
         onError: err => {
-          setAcceptInviteError(err);
           Sentry.captureException(err);
         },
       },
@@ -168,12 +162,10 @@ export const LeaveProject = ({
         </BottomSheetModalContent>
       )}
       <ErrorBottomSheet
-        error={acceptInviteError || leaveProjectError}
+        error={accept.error || leaveProject.error}
         clearError={() => {
           leaveProject.reset();
           accept.reset();
-          setLeaveProjectError(null);
-          setAcceptInviteError(null);
         }}
         tryAgain={handleLeavePress}
       />

@@ -70,8 +70,7 @@ export const EditScreen = ({
     deviceName: string;
   }>({defaultValues: {deviceName}});
 
-  const {mutate, reset, status} = useSetOwnDeviceInfo();
-  const [error, setError] = React.useState<Error | null>(null);
+  const {mutate, reset, status, error} = useSetOwnDeviceInfo();
   const isPending = status === 'pending';
 
   const {isDirty: nameHasChanges} = control.getFieldState(
@@ -121,11 +120,7 @@ export const EditScreen = ({
         },
         {
           onSuccess: () => {
-            setError(null);
             navigation.popTo('DeviceNameDisplay');
-          },
-          onError: err => {
-            setError(err);
           },
         },
       );
@@ -173,7 +168,6 @@ export const EditScreen = ({
       <ErrorBottomSheet
         error={error}
         clearError={() => {
-          setError(null);
           reset();
         }}
         tryAgain={onSubmit}

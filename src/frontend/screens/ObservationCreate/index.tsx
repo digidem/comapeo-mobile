@@ -94,11 +94,11 @@ export const ObservationCreate = ({
   const value = usePersistedDraftObservation(store => store.value);
   const attachments = usePersistedDraftObservation(store => store.attachments);
   const {updateTags, clearDraft} = useDraftObservation();
-  const [error, setError] = React.useState<Error | null>(null);
   const {
     mutate: createObservationMutation,
     reset: resetObservation,
     status: observationStatus,
+    error: observationError,
   } = useCreateDocument({
     docType: 'observation',
     projectId,
@@ -179,9 +179,6 @@ export const ObservationCreate = ({
               addObservationRefToTrack(data);
             }
           },
-          onError: err => {
-            setError(err as Error);
-          },
         },
       );
 
@@ -218,7 +215,6 @@ export const ObservationCreate = ({
             addObservationRefToTrack(data);
           }
         },
-        onError: err => setError(err as Error),
       },
     );
   }, [
@@ -231,7 +227,6 @@ export const ObservationCreate = ({
     attachments,
     value,
     preset,
-    setError,
   ]);
 
   const checkAccuracyAndLocation = React.useCallback(() => {
@@ -329,9 +324,8 @@ export const ObservationCreate = ({
         actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
       />
       <ErrorBottomSheet
-        error={error}
+        error={observationError}
         clearError={() => {
-          setError(null);
           resetObservation();
           resetAttachment();
         }}

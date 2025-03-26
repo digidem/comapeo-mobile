@@ -58,7 +58,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   const {updateTags, clearDraft, usePreset, existingObservationToDraft} =
     useDraftObservation();
   const preset = usePreset();
-  const {mutate, status, reset} = useUpdateDocument({
+  const {mutate, status, reset, error} = useUpdateDocument({
     docType: 'observation',
     projectId,
   });
@@ -73,7 +73,6 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         defaultMessage: preset.name,
       })
     : formatMessage(m.observation);
-  const [error, setError] = React.useState<Error | null>(null);
 
   // TODO: This shouldn't be an effect, the logic should happen when the user
   // presses the edit button.
@@ -155,9 +154,6 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         },
         {
           onSuccess: handleNavigationSuccess,
-          onError: err => {
-            setError(err as Error);
-          },
         },
       );
       return;
@@ -199,9 +195,6 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         },
         {
           onSuccess: handleNavigationSuccess,
-          onError: err => {
-            setError(err as Error);
-          },
         },
       );
     });
@@ -212,7 +205,6 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     createBlobAsync,
     attachments,
     handleNavigationSuccess,
-    setError,
   ]);
 
   React.useLayoutEffect(() => {
@@ -256,7 +248,6 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       <ErrorBottomSheet
         error={error}
         clearError={() => {
-          setError(null);
           reset();
           resetAttachment();
         }}

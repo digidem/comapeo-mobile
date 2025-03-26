@@ -12,7 +12,6 @@ import {useOwnDeviceInfo, useManyMembers} from '@comapeo/core-react';
 import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../sharedTypes';
 import {QuestionMarkWithShadow} from '../sharedComponents/icons/QuestionMarkWithShadow';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
-import {Loading} from '../sharedComponents/Loading';
 
 const m = defineMessages({
   howTo: {
@@ -35,7 +34,7 @@ const m = defineMessages({
   },
 });
 
-export const HowToLeaveProjectContent = ({
+export const HowToLeaveProject = ({
   navigation,
 }: NativeStackScreenProps<AppStackParamsList, 'HowToLeaveProject'>) => {
   const {formatMessage} = useIntl();
@@ -83,14 +82,6 @@ export const HowToLeaveProjectContent = ({
     </ScreenContentWithDock>
   );
 };
-
-export const HowToLeaveProject = (
-  props: NativeStackScreenProps<AppStackParamsList, 'HowToLeaveProject'>,
-) => (
-  <React.Suspense fallback={<Loading />}>
-    <HowToLeaveProjectContent {...props} />
-  </React.Suspense>
-);
 
 const styles = StyleSheet.create({
   container: {

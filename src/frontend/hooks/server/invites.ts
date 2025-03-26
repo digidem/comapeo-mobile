@@ -1,12 +1,15 @@
 import {useClientApi} from '@comapeo/core-react';
 import {useSuspenseQuery} from '@tanstack/react-query';
+const ROOT_QUERY_KEY = '@comapeo/core-react';
 
-export const INVITE_KEY = 'pending_invites';
+function getPendingInvitesQueryKey() {
+  return [ROOT_QUERY_KEY, 'invites', {status: 'pending'}] as const;
+}
 
 export function usePendingInvites() {
   const mapeoApi = useClientApi();
   return useSuspenseQuery({
-    queryKey: [INVITE_KEY],
+    queryKey: getPendingInvitesQueryKey(),
     queryFn: async () => {
       return await mapeoApi.invite.getPending();
     },

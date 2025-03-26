@@ -6,8 +6,6 @@ import * as React from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import {ProjectInviteBottomSheet} from './sharedComponents/ProjectInviteBottomSheet';
 import {AppStackParamsList} from './sharedTypes/navigation';
-import {useClientApi} from '@comapeo/core-react';
-import {useQuery} from '@tanstack/react-query';
 import {RootStackNavigator} from './Navigation/Stack';
 import {isEditingScreen} from './lib/isEditingScreen';
 
@@ -18,17 +16,6 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   const [inviteSheetEnabled, setInviteSheetEnabled] = React.useState(() => {
     return false;
   });
-  const DEVICE_INFO_KEY = 'deviceInfo';
-  const mapeoApi = useClientApi();
-
-  //This cannot be a suspense query as there is no suspense boundry above this
-  const deviceInfo = useQuery({
-    queryKey: [DEVICE_INFO_KEY],
-    queryFn: async () => {
-      return await mapeoApi.getDeviceInfo();
-    },
-  });
-  // const {data: deviceInfo, isRefetching} = useOwnDeviceInfo();
 
   React.useEffect(() => {
     const unsubscribe = rootNavigationRef.addListener('state', () => {
@@ -47,27 +34,15 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
     };
   }, []);
 
-  if (permissionAsked && !deviceInfo.isPending) {
+  if (permissionAsked) {
     SplashScreen.hide();
   }
 
-  // if (permissionAsked && !isRefetching) {
-  //   SplashScreen.hide();
-  // }
-
-  if (deviceInfo.isPending) {
-    //user should not see this due to the splash screen
-    return null;
-  }
-
-  // if (isRefetching) {
-  //   //user should not see this due to the splash screen
-  //   return null;
-  // }
-
   return (
     <NavigationContainer ref={rootNavigationRef}>
-      <RootStackNavigator deviceName={deviceInfo.data?.name} />
+      <React.Suspense fallback={null}>
+        <RootStackNavigator />
+      </React.Suspense>
       <React.Suspense fallback={null}>
         <ProjectInviteBottomSheet
           enabledForCurrentScreen={inviteSheetEnabled}

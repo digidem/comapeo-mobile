@@ -35,7 +35,7 @@ export function useCustomMapStyleUrl() {
     error,
     isRefetching,
   } = useMapStyleUrl({
-    refreshToken: refreshToken ? refreshToken.toString() : undefined,
+    refreshToken: refreshToken?.toString(),
   });
 
   // If we're running E2E tests (e.g. on BrowserStack), fall back to a

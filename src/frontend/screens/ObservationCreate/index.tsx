@@ -15,7 +15,7 @@ import {ActionsRow} from '../../sharedComponents/ActionsRow';
 import {Alert, type AlertButton} from 'react-native';
 import {Observation} from '@comapeo/schema';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {useCreateBlobMutation} from '../../hooks/server/media';
+import {useCreateAttachment} from '../../hooks/server/media';
 import {useTrackActions, useTrackState} from '../../contexts/TrackStoreContext';
 import {
   isProcessedDraftPhoto,
@@ -107,7 +107,7 @@ export const ObservationCreate = ({
     mutateAsync: createBlobAsync,
     reset: resetAttachment,
     status: attachmentStatus,
-  } = useCreateBlobMutation();
+  } = useCreateAttachment();
 
   const isTracking = useTrackState(state => state.isTracking);
   const {

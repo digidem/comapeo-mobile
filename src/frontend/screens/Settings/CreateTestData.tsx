@@ -1,5 +1,5 @@
-import {useClientApi} from '@comapeo/core-react';
-import {useMutation, useQueryClient} from '@tanstack/react-query';
+import {useOwnDeviceInfo, useCreateDocument} from '@comapeo/core-react';
+import {useMutation} from '@tanstack/react-query';
 import {lengthToDegrees} from '@turf/helpers';
 import {randomPosition} from '@turf/random';
 import {LocationObject} from 'expo-location';
@@ -10,7 +10,6 @@ import {StyleSheet, TextInput, ToastAndroid, View} from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {OBSERVATION_KEY} from '../../hooks/server/observations';
 import {useLocation} from '../../hooks/useLocation';
 import {LIGHT_GREY, RED, WHITE} from '../../lib/styles';
 import {Button} from '../../sharedComponents/Button';
@@ -18,6 +17,7 @@ import {LocationView} from '../../sharedComponents/Editor/LocationView';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {Text} from '../../sharedComponents/Text';
 import type {Metadata} from '../../sharedTypes';
+import {usePresetsQuery} from '../../hooks/server/presets';
 
 const DISTANCE_BUFFER_KM = 50;
 
@@ -219,9 +219,14 @@ const styles = StyleSheet.create({
 });
 
 function useCreateFakeObservationsMutation() {
-  const queryClient = useQueryClient();
-  const mapeoApi = useClientApi();
-  const {projectApi, projectId} = useActiveProject();
+  const {projectId} = useActiveProject();
+  const {mutate: createObservationMutation} = useCreateDocument({
+    docType: 'observation',
+    projectId,
+  });
+
+  const {data: deviceInfo} = useOwnDeviceInfo();
+  const {data: presets} = usePresetsQuery();
 
   return useMutation({
     mutationFn: async ({
@@ -233,10 +238,12 @@ function useCreateFakeObservationsMutation() {
       location: LocationObject;
       distance: number;
     }) => {
-      const [deviceInfo, presets] = await Promise.all([
-        mapeoApi.getDeviceInfo(),
-        projectApi.preset.getMany(),
-      ]);
+      if (!deviceInfo) {
+        throw new Error('Device info not loaded yet');
+      }
+      if (!presets) {
+        throw new Error('Presets not loaded yet');
+      }
 
       const notes = deviceInfo.name ? `Created by ${deviceInfo.name}` : null;
 
@@ -287,13 +294,20 @@ function useCreateFakeObservationsMutation() {
           tags: {...randomPreset!.tags, notes},
         };
 
-        promises.push(projectApi.observation.create(value));
+        promises.push(
+          new Promise<void>((resolve, reject) => {
+            createObservationMutation(
+              {value},
+              {
+                onSuccess: () => resolve(),
+                onError: err => reject(err),
+              },
+            );
+          }),
+        );
       }
 
       return Promise.all(promises);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY, projectId]});
     },
   });
 }

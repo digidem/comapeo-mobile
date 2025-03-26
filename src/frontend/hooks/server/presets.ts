@@ -3,7 +3,6 @@ import {PresetValue} from '@comapeo/schema';
 import {useManyDocs, useCreateDocument} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {usePersistedLocale} from '../persistedState/usePersistedLocale';
-export const PRESETS_KEY = 'presets';
 
 export function usePresetsQuery() {
   const {projectId} = useActiveProject();

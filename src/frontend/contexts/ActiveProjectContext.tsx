@@ -14,7 +14,7 @@ const ActiveProjectContext = React.createContext<
   {projectId: string; projectApi: MapeoProjectApi} | undefined
 >(undefined);
 
-export const ActiveProjectIdProvider = ({
+export const ActiveProjectProvider = ({
   children,
 }: {
   children: React.ReactNode;
@@ -70,14 +70,14 @@ export const ActiveProjectIdProvider = ({
 
   return (
     <React.Suspense fallback={<Loading />}>
-      <ActiveProjectProvider projectId={activeProjectId}>
+      <ProjectApiLoader projectId={activeProjectId}>
         {children}
-      </ActiveProjectProvider>
+      </ProjectApiLoader>
     </React.Suspense>
   );
 };
 
-function ActiveProjectProvider({
+function ProjectApiLoader({
   projectId,
   children,
 }: {

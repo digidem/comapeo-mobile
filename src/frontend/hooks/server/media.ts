@@ -9,6 +9,7 @@ import {
 import {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
 import {UnsavedAudio} from '../../sharedTypes/audio';
 import {BlobId, BlobVariant} from '@comapeo/core/dist/types';
+import {useMutation} from '@tanstack/react-query';
 
 interface Attachment {
   driveDiscoveryId: string;
@@ -17,48 +18,31 @@ interface Attachment {
   hash: string;
 }
 
-export function useCreateBlobMutation() {
+export function useCreateAttachment() {
   const {projectId} = useActiveProject();
-  const {mutate: coreMutate, status, reset} = useCreateBlob({projectId});
+  const createBlobMutation = useCreateBlob({projectId});
 
-  function mutate(
-    file: ProcessedDraftPhoto | UnsavedAudio,
-    opts?: {
-      onSuccess?: (result: Attachment) => void;
-      onError?: (err: unknown) => void;
-    },
-  ) {
-    coreMutate(createBlobArgs(file), {
-      onSuccess: data => {
-        const attachment: Attachment = {
-          driveDiscoveryId: data.driveId,
-          name: data.name,
-          type: data.type,
-          hash: data.hash,
-        };
-        opts?.onSuccess?.(attachment);
-      },
-      onError: err => {
-        opts?.onError?.(err);
-      },
-    });
-  }
-
-  function mutateAsync(file: ProcessedDraftPhoto | UnsavedAudio) {
-    return new Promise<Attachment>((resolve, reject) => {
-      mutate(file, {
-        onSuccess: result => resolve(result),
-        onError: err => reject(err),
+  const wrappedMutation = useMutation({
+    mutationFn: (
+      file: ProcessedDraftPhoto | UnsavedAudio,
+    ): Promise<Attachment> => {
+      return new Promise((res, rej) => {
+        createBlobMutation.mutate(createBlobArgs(file), {
+          onError: rej,
+          onSuccess: data => {
+            res({
+              driveDiscoveryId: data.driveId,
+              name: data.name,
+              type: data.type,
+              hash: data.hash,
+            });
+          },
+        });
       });
-    });
-  }
+    },
+  });
 
-  return {
-    status,
-    reset,
-    mutate,
-    mutateAsync,
-  };
+  return wrappedMutation;
 }
 
 function createBlobArgs(file: ProcessedDraftPhoto | UnsavedAudio) {

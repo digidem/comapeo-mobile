@@ -9,7 +9,7 @@ import {
   NativeRootNavigationProps,
 } from '../../sharedTypes/navigation';
 import {useUpdateDocument} from '@comapeo/core-react';
-import {useCreateBlobMutation} from '../../hooks/server/media';
+import {useCreateAttachment} from '../../hooks/server/media';
 import {SaveButton} from '../../sharedComponents/SaveButton';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
@@ -64,7 +64,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   });
   const attachments = usePersistedDraftObservation(store => store.attachments);
   const {mutateAsync: createBlobAsync, reset: resetAttachment} =
-    useCreateBlobMutation();
+    useCreateAttachment();
 
   const notes = value?.tags.notes;
   const presetName = preset

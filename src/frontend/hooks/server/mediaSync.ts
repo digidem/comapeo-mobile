@@ -1,3 +1,4 @@
+import {useMutation} from '@tanstack/react-query';
 import {MediaSyncSetting} from '../../sharedTypes';
 import {useIsArchiveDevice, useSetIsArchiveDevice} from '@comapeo/core-react';
 
@@ -23,13 +24,20 @@ export function useGetMediaSyncSetting() {
 export function useSetMediaSyncSetting() {
   const setIsArchive = useSetIsArchiveDevice();
 
-  function mutate(newSetting: MediaSyncSetting) {
-    setIsArchive.mutate({isArchiveDevice: isArchiveDevice(newSetting)});
-  }
+  const {mutate, status, reset} = useMutation({
+    mutationKey: [UPDATE_MEDIA_SETTING],
+    mutationFn: (newSetting: MediaSyncSetting) => {
+      return new Promise((res, rej) => {
+        setIsArchive.mutate(
+          {isArchiveDevice: isArchiveDevice(newSetting)},
+          {
+            onError: rej,
+            onSuccess: res,
+          },
+        );
+      });
+    },
+  });
 
-  return {
-    mutate,
-    status: setIsArchive.status,
-    reset: setIsArchive.reset,
-  };
+  return {mutate, status, reset};
 }

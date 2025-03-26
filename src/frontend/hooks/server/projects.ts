@@ -24,21 +24,6 @@ export function useProjectSettings() {
   return useComapeoProjectSettings({projectId});
 }
 
-export const useOriginalVersionIdToDeviceId = (originalVersionId: string) => {
-  const {projectId, projectApi} = useActiveProject();
-
-  return useQuery({
-    queryKey: [
-      ORIGINAL_VERSION_ID_TO_DEVICE_ID_KEY,
-      projectId,
-      originalVersionId,
-    ],
-    queryFn: async () => {
-      return await projectApi.$originalVersionIdToDeviceId(originalVersionId);
-    },
-  });
-};
-
 export function useGetOwnRole() {
   const {data: deviceInfo} = useOwnDeviceInfo();
   const {projectId} = useActiveProject();

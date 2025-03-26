@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {View, ScrollView, StyleSheet} from 'react-native';
+import {View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import {defineMessages} from 'react-intl';
 import {WHITE, DARK_GREY, LIGHT_GREY, BLUE_GREY} from '../../lib/styles';
 import {UIActivityIndicator} from 'react-native-indicators';
@@ -26,6 +26,7 @@ import {TrackAccordian} from './TrackAccordian.tsx';
 import {Divider} from '../../sharedComponents/Divider.tsx';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
+import VerifiedBadge from '../../images/verifiedBadge.svg';
 
 const m = defineMessages({
   deleteTitle: {
@@ -92,14 +93,15 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
       <>
         {/* check lat and lon are not null or undefined */}
         {lat != null && lon != null && <InsetMapView lat={lat} lon={lon} />}
-        <View>
-          <BodyText variant="smallMeta" style={styles.time}>
+        <TouchableOpacity onPress={() => {}} style={styles.time}>
+          <BodyText variant="smallMeta">
             <FormattedObservationDate
               createdDate={observation.createdAt}
               variant="long"
             />
           </BodyText>
-        </View>
+          <VerifiedBadge style={{marginLeft: 10}} />
+        </TouchableOpacity>
 
         <View style={styles.section}>
           <PresetHeader preset={preset} style={{paddingHorizontal: 20}} />
@@ -167,6 +169,8 @@ const styles = StyleSheet.create({
   time: {
     backgroundColor: LIGHT_GREY,
     paddingVertical: 10,
-    textAlign: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
 });

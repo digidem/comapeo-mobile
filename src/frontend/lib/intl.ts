@@ -101,6 +101,8 @@ function getUsableLanguageTag(languageTag: string) {
 }
 
 type ResolvedLanguageTag = {
+  // Where the `value` comes from. Not really used in the app (yet),
+  // but it's useful for understanding the resolution implementation and for debugging purposes.
   source: 'fallback' | 'system' | 'selected';
   value: SupportedLanguageTag;
 };

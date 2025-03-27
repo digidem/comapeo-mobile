@@ -25,7 +25,7 @@ const DEFAULT_RICH_TEXT_MAPPINGS: NonNullable<
 };
 
 export const IntlProvider = ({children}: {children: React.ReactNode}) => {
-  const languageTag = useAppLanguageTag().value;
+  const languageTag = useAppLanguageTag();
 
   const messagesToUse = React.useMemo(() => {
     const languageCode = extractLanguageCode(languageTag);

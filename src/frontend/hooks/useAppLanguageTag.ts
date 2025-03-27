@@ -9,9 +9,11 @@ export function useAppLanguageTag() {
   const localeState = useLocaleState();
 
   return useMemo(() => {
-    return getAppLanguageTag({
+    const {value} = getAppLanguageTag({
       localeState,
       systemLanguageTags: systemLocales.map(l => l.languageTag),
     });
+
+    return value;
   }, [localeState, systemLocales]);
 }

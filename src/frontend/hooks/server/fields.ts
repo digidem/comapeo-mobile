@@ -7,12 +7,12 @@ export const FIELDS_KEY = 'fields';
 
 export const useFieldsQuery = () => {
   const {projectId, projectApi} = useActiveProject();
-  const {value} = useAppLanguageTag();
+  const languageTag = useAppLanguageTag();
 
   return useQuery({
-    queryKey: [FIELDS_KEY, projectId, value],
+    queryKey: [FIELDS_KEY, projectId, languageTag],
     queryFn: async () => {
-      return projectApi.field.getMany({lang: value});
+      return projectApi.field.getMany({lang: languageTag});
     },
   });
 };

@@ -66,10 +66,7 @@ describe('no locale chosen and no system preferences', () => {
       wrapper,
     });
 
-    expect(languageTagHook.result.current).toStrictEqual({
-      source: 'fallback',
-      value: 'en',
-    });
+    expect(languageTagHook.result.current).toBe('en');
   });
 });
 
@@ -84,10 +81,7 @@ describe('no specific locale selected and single system preference exists', () =
       wrapper,
     });
 
-    expect(languageTagHook.result.current).toStrictEqual({
-      source: 'system',
-      value: 'pt',
-    });
+    expect(languageTagHook.result.current).toBe('pt');
   });
 
   test('uses system preference with regional code stripped (recognized regional code)', () => {
@@ -100,10 +94,7 @@ describe('no specific locale selected and single system preference exists', () =
       wrapper,
     });
 
-    expect(languageTagHook.result.current).toStrictEqual({
-      source: 'system',
-      value: 'pt',
-    });
+    expect(languageTagHook.result.current).toBe('pt');
   });
 
   test('uses system preference with regional code stripped (unrecognized regional code)', () => {
@@ -119,10 +110,7 @@ describe('no specific locale selected and single system preference exists', () =
       wrapper,
     });
 
-    expect(languageTagHook.result.current).toStrictEqual({
-      source: 'system',
-      value: 'pt',
-    });
+    expect(languageTagHook.result.current).toBe('pt');
   });
 
   test('uses fallback if not supported', () => {
@@ -138,10 +126,7 @@ describe('no specific locale selected and single system preference exists', () =
       wrapper,
     });
 
-    expect(languageTagHook.result.current).toStrictEqual({
-      source: 'fallback',
-      value: 'en',
-    });
+    expect(languageTagHook.result.current).toBe('en');
   });
 });
 
@@ -156,10 +141,7 @@ describe('using system and multiple system preferences exist', () => {
       wrapper,
     });
 
-    expect(languageTagHook.result.current).toStrictEqual({
-      source: 'system',
-      value: 'es',
-    });
+    expect(languageTagHook.result.current).toBe('es');
 
     act(() => {
       setSystemPreferredLocales(['pt', 'es']);
@@ -167,10 +149,7 @@ describe('using system and multiple system preferences exist', () => {
 
     languageTagHook.rerender({});
 
-    expect(languageTagHook.result.current).toStrictEqual({
-      source: 'system',
-      value: 'pt',
-    });
+    expect(languageTagHook.result.current).toBe('pt');
   });
 
   test('uses first supported system preference', () => {
@@ -187,10 +166,7 @@ describe('using system and multiple system preferences exist', () => {
       wrapper,
     });
 
-    expect(languageTagHook.result.current).toStrictEqual({
-      source: 'system',
-      value: 'pt',
-    });
+    expect(languageTagHook.result.current).toBe('pt');
   });
 
   test('uses fallback if none of the system preferences are supported', () => {
@@ -208,10 +184,7 @@ describe('using system and multiple system preferences exist', () => {
       wrapper,
     });
 
-    expect(languageTagHook.result.current).toStrictEqual({
-      source: 'fallback',
-      value: 'en',
-    });
+    expect(languageTagHook.result.current).toBe('en');
   });
 });
 
@@ -226,10 +199,7 @@ describe('specific locale chosen', () => {
       wrapper,
     });
 
-    expect(languageTagHook.result.current).toStrictEqual({
-      source: 'system',
-      value: 'pt',
-    });
+    expect(languageTagHook.result.current).toBe('pt');
 
     const localeActionsHook = renderHook(() => useLocaleActions(), {
       wrapper,
@@ -239,28 +209,19 @@ describe('specific locale chosen', () => {
       localeActionsHook.result.current.setLanguageTag('es');
     });
 
-    expect(languageTagHook.result.current).toStrictEqual({
-      source: 'selected',
-      value: 'es',
-    });
+    expect(languageTagHook.result.current).toBe('es');
 
     act(() => {
       localeActionsHook.result.current.setLanguageTag(null);
     });
 
-    expect(languageTagHook.result.current).toStrictEqual({
-      source: 'system',
-      value: 'pt',
-    });
+    expect(languageTagHook.result.current).toBe('pt');
 
     act(() => {
       localeActionsHook.result.current.setLanguageTag('en');
     });
 
-    expect(languageTagHook.result.current).toStrictEqual({
-      source: 'selected',
-      value: 'en',
-    });
+    expect(languageTagHook.result.current).toBe('en');
   });
 
   test('is not affected by changes in system preferences', () => {
@@ -281,26 +242,17 @@ describe('specific locale chosen', () => {
       wrapper,
     });
 
-    expect(languageTagHook.result.current).toStrictEqual({
-      source: 'selected',
-      value: 'es',
-    });
+    expect(languageTagHook.result.current).toBe('es');
 
     setSystemPreferredLocales(['en-US']);
     languageTagHook.rerender({});
 
-    expect(languageTagHook.result.current).toStrictEqual({
-      source: 'selected',
-      value: 'es',
-    });
+    expect(languageTagHook.result.current).toBe('es');
 
     // Intentionally nonsense
     setSystemPreferredLocales(['__']);
     languageTagHook.rerender({});
 
-    expect(languageTagHook.result.current).toStrictEqual({
-      source: 'selected',
-      value: 'es',
-    });
+    expect(languageTagHook.result.current).toBe('es');
   });
 });

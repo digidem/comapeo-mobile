@@ -3,7 +3,7 @@ import {describe, it} from 'mocha';
 import {byResourceId, byText} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 
-describe('Edit Device Name Test', () => {
+describe('Project - Edit Device Name Test', () => {
   it('should navigate to project settings and edit the device name', async () => {
     const drawerIcon = await $('~Open Navigation Drawer');
     await drawerIcon.tap();

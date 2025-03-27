@@ -2,7 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byTextMatches} from '../../utils/selectors';
 
-describe('Side Drawer Menu - No Project', () => {
+describe('Main - Side Drawer Menu - No Project', () => {
   it('should open the side drawer and verify menu options', async () => {
     const drawerIcon = await $('~Open Navigation Drawer');
     await drawerIcon.click();

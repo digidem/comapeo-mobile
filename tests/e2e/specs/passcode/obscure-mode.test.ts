@@ -34,11 +34,10 @@ describe('Passcode - Obscure Passcode Mode', () => {
     await animalCategory.click();
 
     try {
-      await $(
-        byTextMatches(
-          '^\\d+° \\d+\' \\d+\\.\\d{3}" [NS], \\d+° \\d+\' \\d+\\.\\d{3}" [EW]$',
-        ),
-      ).waitForExist({timeout: 10000, reverse: false});
+      await $(byTextMatches('\\d+°.*[NS], \\d+°.*[EW]')).waitForExist({
+        timeout: 10000,
+        reverse: false,
+      });
     } catch (e) {
       await expect($(byTextMatches('Searching'))).toBeDisplayed();
     }

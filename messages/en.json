@@ -1210,6 +1210,9 @@
   "screens.Security.obscurePasscodeDescription": {
     "message": "To use, turn on App Passcode"
   },
+  "screens.Security.obscurePasscodeDescriptionActivated": {
+    "message": "Protect your device against seizure"
+  },
   "screens.Security.obscurePasscodeHeader": {
     "message": "Obscure Passcode"
   },

@@ -35,7 +35,7 @@ const m = defineMessages({
     defaultMessage: 'Obscure Passcode',
   },
   obscurePassDescriptonPassSet: {
-    id: 'screens.Security.obscurePasscodeDescription',
+    id: 'screens.Security.obscurePasscodeDescriptionActivated',
     defaultMessage: 'Protect your device against seizure',
   },
   obscurePassDescriptonPassNotSet: {

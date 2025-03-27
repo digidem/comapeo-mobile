@@ -75,12 +75,15 @@ export const ObscurePasscode: NativeNavigationComponent<'ObscurePasscode'> = ({
             name={obscureCodeEnabled ? 'check-box' : 'check-box-outline-blank'}
             size={32}
             color="rgba(0, 0, 0, 0.54)"
+            accessibilityLabel="Enable or Disable Obscure Passcode"
           />
         </React.Fragment>
       </TouchableOpacity>
 
       {obscureCodeEnabled && (
-        <View style={styles.passbox}>
+        <View
+          style={styles.passbox}
+          accessibilityLabel="Obscure Passcode is Enabled">
           <BodyText
             variant="large"
             style={{textAlign: 'center', marginBottom: 10}}>

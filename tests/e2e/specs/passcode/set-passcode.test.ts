@@ -85,7 +85,7 @@ describe('Passcode - Set Passcode Flow', () => {
       $(byTextMatches('Password must be 5 numbers')),
     ).toBeDisplayed();
 
-    await passcodeInp.setValue('00000');
+    await passcodeInp.setValue(output.obscurepasscode);
     await nextBtn.click();
     await driver.hideKeyboard();
     await expect(
@@ -159,5 +159,26 @@ describe('Passcode - Set Passcode Flow', () => {
     await saveBtn.click();
 
     await expect($(byTextMatches('Passcode is set'))).toBeDisplayed();
+  });
+  it('should show obscure passcode as available after passcode is set', async () => {
+    const seizureText = await $(
+      byTextMatches('Protect your device against seizure'),
+    );
+    await expect(seizureText).toBeDisplayed();
+    await seizureText.click();
+    await expect($(byTextMatches('Use Obscure Passcode'))).toBeDisplayed();
+  });
+  it('should enable obscure passcode when tapped and show the enabled view', async () => {
+    const toggleBtn = await $('~Enable or Disable Obscure Passcode');
+    await toggleBtn.click();
+
+    const enabledView = await $('~Obscure Passcode is Enabled');
+    await expect(enabledView).toBeDisplayed();
+    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
+    await backBtn.click();
+    await backBtn.click();
+    await backBtn.click();
+    const drawerIcon = await $('~Open Navigation Drawer');
+    drawerIcon.click();
   });
 });

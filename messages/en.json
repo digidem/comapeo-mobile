@@ -1047,6 +1047,9 @@
   "screens.ObservationMetadataVerified.altitudeAccuracy": {
     "message": "Altitude Accuracy"
   },
+  "screens.ObservationMetadataVerified.dataEntered": {
+    "message": "This data was manually entered."
+  },
   "screens.ObservationMetadataVerified.howWeCheck": {
     "message": "How we validate"
   },
@@ -1057,7 +1060,7 @@
     "message": "Longitude"
   },
   "screens.ObservationMetadataVerified.manuallyEntered": {
-    "message": "This data was manually entered."
+    "message": "Manually entered."
   },
   "screens.ObservationMetadataVerified.navTitle": {
     "message": "Observation Metadata"

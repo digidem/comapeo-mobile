@@ -99,7 +99,6 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
           onPress={() => {
             navigation.navigate('ObservationMetadataVerified', {
               observationId,
-              manualLocation: false,
             });
           }}
           style={styles.time}>

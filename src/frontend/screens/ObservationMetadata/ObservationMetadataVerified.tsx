@@ -2,15 +2,30 @@ import * as React from 'react';
 import BadgeWithCheck from '../../images/VerifiedBadgeWithCheck.svg';
 import VerifiedBadge from '../../images/verifiedBadge.svg';
 import {FlatList, View} from 'react-native';
-import {defineMessages, useIntl} from 'react-intl';
+import {
+  defineMessages,
+  FormattedDate,
+  FormattedTime,
+  useIntl,
+} from 'react-intl';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {StyleSheet} from 'react-native';
-import {COMAPEO_BLUE, LIGHT_GREY, WHITE} from '../../lib/styles';
+import {
+  COMAPEO_BLUE,
+  VERY_LIGHT_GREY,
+  NEW_DARK_GREY,
+  WHITE,
+  BLUE_GREY,
+} from '../../lib/styles';
 import {useObservation} from '../../hooks/server/observations';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useCoordinateFormat} from '../../contexts/CoordinateFormatContext';
 import {FormattedCoords} from '../../sharedComponents/FormattedData';
+import Octicons from 'react-native-vector-icons/Octicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import UnverifiedBadge from '../../images/UnverifiedBadge.svg';
 
 const m = defineMessages({
   navTitle: {
@@ -45,7 +60,13 @@ const m = defineMessages({
     id: 'screens.ObservationMetadataVerified.speed',
     defaultMessage: 'Speed',
   },
+  manuallyEntered: {
+    id: 'screens.ObservationMetadataVerified.manuallyEntered',
+    defaultMessage: 'This data was manually entered.',
+  },
 });
+
+const ICON_SIZE = 25;
 
 export const ObservationMetadataVerified: NativeNavigationComponent<
   'ObservationMetadataVerified'
@@ -55,15 +76,28 @@ export const ObservationMetadataVerified: NativeNavigationComponent<
     data: {createdAt, lat, lon, metadata},
   } = useObservation(route.params.observationId);
   const coordinateFormat = useCoordinateFormat();
+  const isVerified = !metadata?.manualLocation;
 
   const listData: {
-    [key: string]: {label: string; value: number | undefined; unit: string};
+    [key: string]: {
+      label: string;
+      value: number | undefined | string;
+      unit: string;
+      icon: React.ReactNode;
+    };
   }[] = [
     {
       latitude: {
         label: formatMessage(m.latitude),
         value: lat,
         unit: '°',
+        icon: (
+          <MaterialCommunityIcons
+            name="latitude"
+            color={NEW_DARK_GREY}
+            size={ICON_SIZE}
+          />
+        ),
       },
     },
     {
@@ -71,13 +105,29 @@ export const ObservationMetadataVerified: NativeNavigationComponent<
         label: formatMessage(m.longitude),
         value: lon,
         unit: '°',
+        icon: (
+          <MaterialCommunityIcons
+            name="longitude"
+            color={NEW_DARK_GREY}
+            size={ICON_SIZE}
+          />
+        ),
       },
     },
     {
       accuracy: {
         label: formatMessage(m.accuracy),
-        value: metadata?.position?.coords.accuracy,
+        value: metadata?.position?.coords.accuracy
+          ? '± ' + metadata.position.coords.accuracy
+          : undefined,
         unit: 'm',
+        icon: (
+          <MaterialCommunityIcons
+            name="bullseye-arrow"
+            color={NEW_DARK_GREY}
+            size={ICON_SIZE}
+          />
+        ),
       },
     },
     {
@@ -85,13 +135,29 @@ export const ObservationMetadataVerified: NativeNavigationComponent<
         label: formatMessage(m.altitude),
         value: metadata?.position?.coords.altitude,
         unit: 'm',
+        icon: (
+          <MaterialCommunityIcons
+            name="image-filter-hdr"
+            color={NEW_DARK_GREY}
+            size={ICON_SIZE}
+          />
+        ),
       },
     },
     {
       altitudeAccuracy: {
         label: formatMessage(m.altitudeAccuracy),
-        value: metadata?.position?.coords.altitudeAccuracy,
+        value: metadata?.position?.coords.altitudeAccuracy
+          ? '± ' + metadata.position.coords.altitudeAccuracy
+          : undefined,
         unit: 'm',
+        icon: (
+          <MaterialCommunityIcons
+            name="chevron-double-up"
+            color={NEW_DARK_GREY}
+            size={ICON_SIZE}
+          />
+        ),
       },
     },
     {
@@ -99,6 +165,9 @@ export const ObservationMetadataVerified: NativeNavigationComponent<
         label: formatMessage(m.speed),
         value: metadata?.position?.coords.speed,
         unit: 'm/s',
+        icon: (
+          <MaterialIcons name="speed" color={NEW_DARK_GREY} size={ICON_SIZE} />
+        ),
       },
     },
   ];
@@ -107,28 +176,59 @@ export const ObservationMetadataVerified: NativeNavigationComponent<
   const filteredListData = listData.filter(
     (
       item,
-    ): item is Record<string, {label: string; value: number; unit: string}> => {
+    ): item is Record<
+      string,
+      {
+        label: string;
+        value: number | string;
+        unit: string;
+        icon: React.ReactNode;
+      }
+    > => {
       const key = Object.keys(item)[0] as keyof typeof item;
       return item[key]?.value !== undefined;
     },
   );
   return (
     <View style={styles.container}>
-      <View style={{alignItems: 'center', padding: 20}}>
-        <BadgeWithCheck />
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <VerifiedBadge color={COMAPEO_BLUE} style={{marginRight: 10}} />
-          <HeaderText variant="header6">
-            {formatMessage(m.howWeCheck)}
-          </HeaderText>
-        </View>
+      <View style={{alignItems: 'center', marginBottom: 20}}>
+        {isVerified ? <VerifiedHeader /> : <ManuallyEnteredHeader />}
       </View>
+
       <View style={{paddingHorizontal: 20}}>
-        <BodyText variant="smallMeta">{createdAt}</BodyText>
+        <View
+          style={{
+            marginBottom: 10,
+            flexDirection: 'row',
+            alignItems: 'flex-start',
+          }}>
+          <Octicons
+            name="calendar"
+            color={NEW_DARK_GREY}
+            size={ICON_SIZE}
+            style={{marginRight: 10}}
+          />
+          <View>
+            <BodyText variant="smallMeta">
+              <FormattedDate value={createdAt} dateStyle="full" />
+            </BodyText>
+            <BodyText style={{color: NEW_DARK_GREY}} variant="smallMeta">
+              <FormattedTime value={createdAt} timeStyle="short" />
+            </BodyText>
+          </View>
+        </View>
         {lat !== undefined && lon !== undefined && (
-          <BodyText variant="smallMeta">
-            <FormattedCoords lat={lat} lon={lon} format={coordinateFormat} />
-          </BodyText>
+          <View style={[styles.flexRow, {marginBottom: 20}]}>
+            <MaterialIcons
+              name="place"
+              color={NEW_DARK_GREY}
+              size={ICON_SIZE}
+              style={{marginRight: 10}}
+            />
+            <BodyText variant="smallMeta">
+              <FormattedCoords lat={lat} lon={lon} format={coordinateFormat} />
+            </BodyText>
+          </View>
         )}
       </View>
       {filteredListData.length > 0 && (
@@ -138,17 +238,28 @@ export const ObservationMetadataVerified: NativeNavigationComponent<
             const key = Object.keys(item)[0] as string;
             return (
               <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  backgroundColor: index % 2 === 0 ? LIGHT_GREY : WHITE,
-                  paddingHorizontal: 20,
-                  paddingVertical: 10,
-                }}>
-                <BodyText variant="smallMeta">{item[key]!.label}: </BodyText>
-                <BodyText variant="smallMeta">
-                  {item[key]!.value + ' ' + item[key]!.unit}
-                </BodyText>
+                style={[
+                  styles.listItem,
+                  {backgroundColor: index % 2 === 0 ? VERY_LIGHT_GREY : WHITE},
+                ]}>
+                <View style={styles.flexRow}>
+                  {item[key]!.icon}
+                  <BodyText
+                    style={{textAlign: 'left', marginLeft: 5}}
+                    variant="smallMeta">
+                    {item[key]!.label}:{' '}
+                  </BodyText>
+                </View>
+                <View style={styles.valueText}>
+                  <BodyText
+                    variant="smallMeta"
+                    style={{flex: 1, textAlign: 'right'}}
+                    numberOfLines={1}
+                    ellipsizeMode="tail">
+                    {item[key]!.value + ' '}
+                  </BodyText>
+                  <BodyText variant="smallMeta">{item[key]!.unit}</BodyText>
+                </View>
               </View>
             );
           }}
@@ -158,10 +269,65 @@ export const ObservationMetadataVerified: NativeNavigationComponent<
   );
 };
 
+export const VerifiedHeader = () => {
+  const {formatMessage} = useIntl();
+
+  return (
+    <>
+      <BadgeWithCheck />
+      <View style={[styles.flexRow, {marginBottom: 10}]}>
+        <VerifiedBadge stroke={COMAPEO_BLUE} style={{marginRight: 10}} />
+        <HeaderText variant="header6" style={{color: COMAPEO_BLUE}}>
+          {formatMessage(m.howWeCheck)}
+        </HeaderText>
+      </View>
+    </>
+  );
+};
+
+export const ManuallyEnteredHeader = () => {
+  const {formatMessage} = useIntl();
+
+  return (
+    <View style={styles.manuallyEnteredHeader}>
+      <UnverifiedBadge />
+      <BodyText variant="smallMeta">
+        {formatMessage(m.manuallyEntered)}
+      </BodyText>
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 40,
+  },
+  listItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+  },
+  flexRow: {flexDirection: 'row', alignItems: 'center'},
+  valueText: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'flex-end',
+    marginLeft: 5,
+  },
+  manuallyEnteredHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
+    borderRadius: 6,
+    padding: 15,
+    backgroundColor: VERY_LIGHT_GREY,
+    borderColor: BLUE_GREY,
+    borderWidth: 1,
   },
 });
 

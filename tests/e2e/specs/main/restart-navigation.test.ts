@@ -2,7 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches, byText} from '../../utils/selectors';
 
-describe('Observation Navigation Flow', () => {
+describe('MAIN - Observation Navigation Flow', () => {
   it('should start on the Map screen if no observation exists', async () => {
     await driver.terminateApp('com.comapeo.rc');
     await driver.activateApp('com.comapeo.rc');

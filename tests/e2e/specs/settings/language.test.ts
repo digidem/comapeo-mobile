@@ -2,7 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches} from '../../utils/selectors';
 
-describe('Language Settings Flow', () => {
+describe('Settings - Language Settings Flow', () => {
   it('should open the Language list from App Settings', async () => {
     const drawerIcon = await $('~Open Navigation Drawer');
     await drawerIcon.click();

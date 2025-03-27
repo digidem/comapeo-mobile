@@ -1,10 +1,18 @@
 import MapboxGL from '@rnmapbox/maps';
 import React from 'react';
-import {View, Text, StyleSheet, Dimensions, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import {BLACK, WHITE} from '../../lib/styles';
 import {FormattedCoords} from '../../sharedComponents/FormattedData';
 import {useMapStyleJsonUrl} from '../../hooks/server/maps';
 import {useCoordinateFormat} from '../../contexts/CoordinateFormatContext';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 
 const MAP_HEIGHT = 175;
 const ICON_OFFSET = {x: 22, y: 21};
@@ -12,43 +20,49 @@ const ICON_OFFSET = {x: 22, y: 21};
 type MapProps = {
   lon: number;
   lat: number;
+  observationId: string;
 };
 
-export const InsetMapView = React.memo<MapProps>(({lon, lat}: MapProps) => {
-  const coordinateFormat = useCoordinateFormat();
-  const styleUrlQuery = useMapStyleJsonUrl();
+export const InsetMapView = React.memo<MapProps>(
+  ({lon, lat, observationId}: MapProps) => {
+    const coordinateFormat = useCoordinateFormat();
+    const styleUrlQuery = useMapStyleJsonUrl();
+    const {navigate} = useNavigationFromRoot();
 
-  return (
-    <View>
-      <Image
-        style={styles.mapIcon}
-        source={require('../../images/observation-icon.png')}
-      />
-      <View style={styles.coords}>
-        <View style={styles.coordsPointer} />
-        <Text style={styles.positionText}>
-          <FormattedCoords format={coordinateFormat} lat={lat} lon={lon} />
-        </Text>
-      </View>
-      <MapboxGL.MapView
-        style={styles.map}
-        zoomEnabled={false}
-        logoEnabled={false}
-        scrollEnabled={false}
-        pitchEnabled={false}
-        rotateEnabled={false}
-        compassEnabled={false}
-        scaleBarEnabled={false}
-        styleURL={styleUrlQuery.data}>
-        <MapboxGL.Camera
-          centerCoordinate={[lon, lat]}
-          zoomLevel={12}
-          animationMode="none"
+    return (
+      <View>
+        <Image
+          style={styles.mapIcon}
+          source={require('../../images/observation-icon.png')}
         />
-      </MapboxGL.MapView>
-    </View>
-  );
-});
+        <TouchableOpacity
+          onPress={() => navigate('ObservationMetadata', {observationId})}
+          style={styles.coords}>
+          <View style={styles.coordsPointer} />
+          <Text style={styles.positionText}>
+            <FormattedCoords format={coordinateFormat} lat={lat} lon={lon} />
+          </Text>
+        </TouchableOpacity>
+        <MapboxGL.MapView
+          style={styles.map}
+          zoomEnabled={false}
+          logoEnabled={false}
+          scrollEnabled={false}
+          pitchEnabled={false}
+          rotateEnabled={false}
+          compassEnabled={false}
+          scaleBarEnabled={false}
+          styleURL={styleUrlQuery.data}>
+          <MapboxGL.Camera
+            centerCoordinate={[lon, lat]}
+            zoomLevel={12}
+            animationMode="none"
+          />
+        </MapboxGL.MapView>
+      </View>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   coords: {

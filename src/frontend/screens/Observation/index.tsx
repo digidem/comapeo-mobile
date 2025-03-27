@@ -93,7 +93,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
       <>
         {/* check lat and lon are undefined. We cannot do `!lat && !lon` as 0 is a valid number but a falsy value */}
         {lat !== undefined && lon !== undefined && (
-          <InsetMapView lat={lat} lon={lon} />
+          <InsetMapView observationId={observationId} lat={lat} lon={lon} />
         )}
         <TouchableOpacity
           onPress={() => {

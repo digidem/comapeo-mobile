@@ -1056,6 +1056,9 @@
   "screens.ObservationMetadataVerified.longitude": {
     "message": "Longitude"
   },
+  "screens.ObservationMetadataVerified.manuallyEntered": {
+    "message": "This data was manually entered."
+  },
   "screens.ObservationMetadataVerified.navTitle": {
     "message": "Observation Metadata"
   },

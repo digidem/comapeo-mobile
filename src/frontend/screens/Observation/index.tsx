@@ -97,7 +97,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
         )}
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('ObservationMetadataVerified', {
+            navigation.navigate('ObservationMetadata', {
               observationId,
             });
           }}

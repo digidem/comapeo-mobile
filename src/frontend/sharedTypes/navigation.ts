@@ -114,7 +114,7 @@ export type RootStackParamsList = {
   };
   AudioSavedBottomSheet: undefined;
   AudioPlaybackSaved: {uri: string; canDelete: boolean; observationId: string};
-  ObservationMetadataVerified: {observationId: string};
+  ObservationMetadata: {observationId: string};
 };
 
 export type OnboardingParamsList = {

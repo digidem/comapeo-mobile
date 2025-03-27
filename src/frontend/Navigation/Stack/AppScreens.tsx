@@ -96,7 +96,7 @@ import {DeleteAudioBottomSheet} from '../../screens/Audio/DeleteAudioBottomSheet
 import {AudioSavedBottomSheet} from '../../screens/Audio/AudioSavedBottomSheet.tsx';
 import {AudioPlaybackSaved} from '../../screens/Audio/AudioPlaybackSaved.tsx';
 import {AudioCustomHeaderLeft} from '../../screens/Audio/AudioCustomHeaderLeft.tsx';
-import {ObservationMetadataVerified} from '../../screens/ObservationMetadata/ObservationMetadataVerified.tsx';
+import {ObservationMetadata} from '../../screens/ObservationMetadata.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -413,8 +413,9 @@ export const createDefaultScreenGroup = ({
         options={sharedAudioNavOptions}
       />
       <RootStack.Screen
-        name="ObservationMetadataVerified"
-        component={ObservationMetadataVerified}
+        name="ObservationMetadata"
+        component={ObservationMetadata}
+        options={{headerTitle: intl(ObservationMetadata.navTitle)}}
       />
     </RootStack.Group>
     <RootStack.Group

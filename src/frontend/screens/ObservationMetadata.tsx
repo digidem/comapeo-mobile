@@ -1,6 +1,6 @@
 import * as React from 'react';
-import BadgeWithCheck from '../../images/VerifiedBadgeWithCheck.svg';
-import VerifiedBadge from '../../images/verifiedBadge.svg';
+import BadgeWithCheck from '../images/VerifiedBadgeWithCheck.svg';
+import VerifiedBadge from '../images/verifiedBadge.svg';
 import {FlatList, View} from 'react-native';
 import {
   defineMessages,
@@ -8,7 +8,7 @@ import {
   FormattedTime,
   useIntl,
 } from 'react-intl';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {StyleSheet} from 'react-native';
 import {
   COMAPEO_BLUE,
@@ -16,16 +16,16 @@ import {
   NEW_DARK_GREY,
   WHITE,
   BLUE_GREY,
-} from '../../lib/styles';
-import {useObservation} from '../../hooks/server/observations';
-import {NativeNavigationComponent} from '../../sharedTypes/navigation';
-import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {useCoordinateFormat} from '../../contexts/CoordinateFormatContext';
-import {FormattedCoords} from '../../sharedComponents/FormattedData';
+} from '../lib/styles';
+import {useObservation} from '../hooks/server/observations';
+import {NativeNavigationComponent} from '../sharedTypes/navigation';
+import {BodyText} from '../sharedComponents/Text/BodyText';
+import {useCoordinateFormat} from '../contexts/CoordinateFormatContext';
+import {FormattedCoords} from '../sharedComponents/FormattedData';
 import Octicons from 'react-native-vector-icons/Octicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import UnverifiedBadge from '../../images/UnverifiedBadge.svg';
+import UnverifiedBadge from '../images/UnverifiedBadge.svg';
 
 const m = defineMessages({
   navTitle: {
@@ -60,23 +60,27 @@ const m = defineMessages({
     id: 'screens.ObservationMetadataVerified.speed',
     defaultMessage: 'Speed',
   },
+  dataEntered: {
+    id: 'screens.ObservationMetadataVerified.dataEntered',
+    defaultMessage: 'This data was manually entered.',
+  },
   manuallyEntered: {
     id: 'screens.ObservationMetadataVerified.manuallyEntered',
-    defaultMessage: 'This data was manually entered.',
+    defaultMessage: 'Manually entered.',
   },
 });
 
 const ICON_SIZE = 25;
 
-export const ObservationMetadataVerified: NativeNavigationComponent<
-  'ObservationMetadataVerified'
+export const ObservationMetadata: NativeNavigationComponent<
+  'ObservationMetadata'
 > = ({route}) => {
   const {formatMessage} = useIntl();
   const {
     data: {createdAt, lat, lon, metadata},
   } = useObservation(route.params.observationId);
   const coordinateFormat = useCoordinateFormat();
-  const isVerified = !metadata?.manualLocation;
+  const manualLocation = metadata?.manualLocation;
 
   const listData: {
     [key: string]: {
@@ -192,7 +196,7 @@ export const ObservationMetadataVerified: NativeNavigationComponent<
   return (
     <View style={styles.container}>
       <View style={{alignItems: 'center', marginBottom: 20}}>
-        {isVerified ? <VerifiedHeader /> : <ManuallyEnteredHeader />}
+        {manualLocation ? <ManuallyEnteredHeader /> : <VerifiedHeader />}
       </View>
 
       <View style={{paddingHorizontal: 20}}>
@@ -200,7 +204,6 @@ export const ObservationMetadataVerified: NativeNavigationComponent<
           style={{
             marginBottom: 10,
             flexDirection: 'row',
-            alignItems: 'flex-start',
           }}>
           <Octicons
             name="calendar"
@@ -218,16 +221,27 @@ export const ObservationMetadataVerified: NativeNavigationComponent<
           </View>
         </View>
         {lat !== undefined && lon !== undefined && (
-          <View style={[styles.flexRow, {marginBottom: 20}]}>
+          <View style={{flexDirection: 'row', marginBottom: 20}}>
             <MaterialIcons
               name="place"
               color={NEW_DARK_GREY}
               size={ICON_SIZE}
               style={{marginRight: 10}}
             />
-            <BodyText variant="smallMeta">
-              <FormattedCoords lat={lat} lon={lon} format={coordinateFormat} />
-            </BodyText>
+            <View>
+              <BodyText variant="smallMeta">
+                <FormattedCoords
+                  lat={lat}
+                  lon={lon}
+                  format={coordinateFormat}
+                />
+              </BodyText>
+              {manualLocation && (
+                <BodyText style={{color: NEW_DARK_GREY}} variant="smallMeta">
+                  {formatMessage(m.manuallyEntered)}
+                </BodyText>
+              )}
+            </View>
           </View>
         )}
       </View>
@@ -291,9 +305,7 @@ export const ManuallyEnteredHeader = () => {
   return (
     <View style={styles.manuallyEnteredHeader}>
       <UnverifiedBadge />
-      <BodyText variant="smallMeta">
-        {formatMessage(m.manuallyEntered)}
-      </BodyText>
+      <BodyText variant="smallMeta">{formatMessage(m.dataEntered)}</BodyText>
     </View>
   );
 };
@@ -331,4 +343,4 @@ const styles = StyleSheet.create({
   },
 });
 
-ObservationMetadataVerified.navTitle = m.navTitle;
+ObservationMetadata.navTitle = m.navTitle;

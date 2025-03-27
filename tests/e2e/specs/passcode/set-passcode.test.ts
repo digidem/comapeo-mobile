@@ -160,6 +160,7 @@ describe('Passcode - Set Passcode Flow', () => {
 
     await expect($(byTextMatches('Passcode is set'))).toBeDisplayed();
   });
+
   it('should show obscure passcode as available after passcode is set', async () => {
     const seizureText = await $(
       byTextMatches('Protect your device against seizure'),
@@ -168,6 +169,7 @@ describe('Passcode - Set Passcode Flow', () => {
     await seizureText.click();
     await expect($(byTextMatches('Use Obscure Passcode'))).toBeDisplayed();
   });
+
   it('should enable obscure passcode when tapped and show the enabled view', async () => {
     const toggleBtn = await $('~Enable or Disable Obscure Passcode');
     await toggleBtn.click();

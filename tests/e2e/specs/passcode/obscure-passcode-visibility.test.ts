@@ -20,8 +20,9 @@ describe('Passcode - Obscure Passcode Visibility', () => {
       byTextMatches('To use, turn on App Passcode'),
     );
     await expect(obscurePassNotYetAvailable).toBeDisplayed();
+    obscurePassNotYetAvailable.click();
+    await expect($(byText('Security'))).toBeDisplayed();
     const colorProp = await obscurePassNotYetAvailable.getCSSProperty('color');
     await expect(colorProp.parsed.hex).toEqual('#BC271A');
-    await expect($(byText('Security'))).toBeDisplayed();
   });
 });

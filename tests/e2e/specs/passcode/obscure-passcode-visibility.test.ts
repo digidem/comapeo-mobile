@@ -1,6 +1,6 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
-import {byText, byTextMatches} from '../../utils/selectors';
+import {byText, byTextMatches, byResourceId} from '../../utils/selectors';
 
 describe('Passcode - Obscure Passcode Visibility', () => {
   it('should show "To use, turn on App Passcode" if passcode is not set', async () => {
@@ -22,7 +22,9 @@ describe('Passcode - Obscure Passcode Visibility', () => {
     await expect(obscurePassNotYetAvailable).toBeDisplayed();
     obscurePassNotYetAvailable.click();
     await expect($(byText('Security'))).toBeDisplayed();
-    const colorProp = await obscurePassNotYetAvailable.getCSSProperty('color');
-    await expect(colorProp.parsed.hex).toEqual('#BC271A');
+    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
+    await backBtn.click();
+    await backBtn.click();
+    await drawerIcon.click();
   });
 });

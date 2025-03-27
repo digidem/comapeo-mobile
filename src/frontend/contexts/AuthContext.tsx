@@ -36,10 +36,12 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
 
   const shareDialogIsOpen = useIsShareDialogOpen();
   React.useEffect(() => {
-    if (passcode !== null) {
-      FlagSecureModule.activate();
-    } else {
-      FlagSecureModule.deactivate();
+    if (!process.env.EXPO_PUBLIC_E2E_TEST) {
+      if (passcode !== null) {
+        FlagSecureModule.activate();
+      } else {
+        FlagSecureModule.deactivate();
+      }
     }
   }, [passcode]);
 
@@ -51,7 +53,9 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
         if (shareDialogIsOpen) return;
 
         if (passcode !== null) {
-          FlagSecureModule.activate();
+          if (!process.env.EXPO_PUBLIC_E2E_TEST) {
+            FlagSecureModule.activate();
+          }
           if (
             nextAppState === 'active' ||
             nextAppState === 'background' ||
@@ -59,7 +63,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
           ) {
             setAuthState('unauthenticated');
           }
-        } else {
+        } else if (!process.env.EXPO_PUBLIC_E2E_TEST) {
           FlagSecureModule.deactivate();
         }
       },

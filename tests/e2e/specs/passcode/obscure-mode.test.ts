@@ -3,7 +3,7 @@ import {describe, it} from 'mocha';
 import {byText, byTextMatches, byResourceId} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 
-describe('Obscure Passcode Seizure Mode', () => {
+describe('Passcode - Obscure Passcode Mode', () => {
   it('should show a blank Observations screen after entering obscure passcode', async () => {
     const obsListTab = await $('~Go to ObservationsList');
     await obsListTab.click();

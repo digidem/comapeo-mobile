@@ -95,7 +95,14 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
         {lat !== undefined && lon !== undefined && (
           <InsetMapView lat={lat} lon={lon} />
         )}
-        <TouchableOpacity onPress={() => {}} style={styles.time}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('ObservationMetadataVerified', {
+              observationId,
+              manualLocation: false,
+            });
+          }}
+          style={styles.time}>
           <BodyText variant="smallMeta">
             <FormattedObservationDate
               createdDate={observation.createdAt}

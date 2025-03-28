@@ -12,6 +12,8 @@ describe('Settings - Language Settings Flow', () => {
 
     const languageOption = await $(byTextMatches('Language'));
     await languageOption.click();
+
+    // TODO: Add assertion about the initially selected option on this screen
   });
 
   it('should scroll to Spanish, select it, and confirm language change', async () => {

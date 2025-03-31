@@ -2,7 +2,7 @@ import {useCallback, useEffect, useState} from 'react';
 import {useQueryClient} from '@tanstack/react-query';
 import {Invite, InviteRemovalReason} from '@comapeo/core/dist/invite-api';
 import {useClientApi} from '@comapeo/core-react';
-const ROOT_QUERY_KEY = '@comapeo/core-react';
+import {ROOT_QUERY_KEY} from '../constants';
 
 export const useProjectInvitesListener = ({
   inviteId,

@@ -14,7 +14,6 @@ import {WHITE} from '../../lib/styles';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {deviceType} from 'expo-device';
 import {expoToCoreDeviceType} from '../../lib/deviceTypeMap';
-import {useQueryClient} from '@tanstack/react-query';
 
 const m = defineMessages({
   success: {
@@ -45,7 +44,6 @@ export const Success = ({
   route,
 }: NativeStackScreenProps<OnboardingParamsList, 'Success'>) => {
   const {mutate, status} = useSetOwnDeviceInfo();
-  const queryClient = useQueryClient();
   const deviceName = route.params.deviceName;
   const {formatMessage: t} = useIntl();
 
@@ -66,17 +64,10 @@ export const Success = ({
         testID="ONBOARDING.go-to-map-btn"
         fullWidth
         onPress={() => {
-          mutate(
-            {
-              name: deviceName,
-              deviceType: expoToCoreDeviceType(deviceType),
-            },
-            {
-              onSuccess: () => {
-                queryClient.invalidateQueries({queryKey: ['deviceInfo']});
-              },
-            },
-          );
+          mutate({
+            name: deviceName,
+            deviceType: expoToCoreDeviceType(deviceType),
+          });
         }}>
         {status === 'pending' ? (
           <Loading style={{padding: 15}} size={15} color={WHITE} />

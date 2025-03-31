@@ -104,7 +104,7 @@ export const ObservationCreate = ({
     projectId,
   });
   const {
-    mutateAsync: createBlobAsync,
+    mutateAsync: createAttachmentAsync,
     reset: resetAttachment,
     status: attachmentStatus,
   } = useCreateAttachment();
@@ -193,7 +193,7 @@ export const ObservationCreate = ({
 
     const newAttachments = [];
     for (const file of [...unsavedPhotos, ...unsavedAudioRecordings]) {
-      const result = await createBlobAsync(file);
+      const result = await createAttachmentAsync(file);
       newAttachments.push(result);
     }
 
@@ -220,7 +220,7 @@ export const ObservationCreate = ({
   }, [
     addObservationRefToTrack,
     clearDraft,
-    createBlobAsync,
+    createAttachmentAsync,
     createObservationMutation,
     isTracking,
     navigation,

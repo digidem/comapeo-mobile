@@ -14,11 +14,7 @@ export function isArchiveDevice(value: MediaSyncSetting): boolean {
 
 export function useGetMediaSyncSetting() {
   const {data: isArchive} = useIsArchiveDevice();
-  const setting = convertMediaSyncSetting(isArchive);
-
-  return {
-    data: setting,
-  };
+  return convertMediaSyncSetting(isArchive);
 }
 
 export function useSetMediaSyncSetting() {

@@ -63,7 +63,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     projectId,
   });
   const attachments = usePersistedDraftObservation(store => store.attachments);
-  const {mutateAsync: createBlobAsync, reset: resetAttachment} =
+  const {mutateAsync: createAttachmentAsync, reset: resetAttachment} =
     useCreateAttachment();
 
   const notes = value?.tags.notes;
@@ -160,7 +160,9 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     }
 
     const unsavedFiles = [...newPhotos, ...newAudioRecordings];
-    const attachmentPromises = unsavedFiles.map(file => createBlobAsync(file));
+    const attachmentPromises = unsavedFiles.map(file =>
+      createAttachmentAsync(file),
+    );
 
     Promise.all(attachmentPromises).then(results => {
       const newAttachments = results.map(
@@ -202,7 +204,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     preset,
     value,
     mutate,
-    createBlobAsync,
+    createAttachmentAsync,
     attachments,
     handleNavigationSuccess,
   ]);

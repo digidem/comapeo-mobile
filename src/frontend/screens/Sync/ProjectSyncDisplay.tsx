@@ -36,6 +36,7 @@ import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDoc
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
+import {ROOT_QUERY_KEY} from '../../constants';
 
 const m = defineMessages({
   devicesFound: {
@@ -115,7 +116,6 @@ export const ProjectSyncDisplay = ({
   const navigation = useNavigationFromRoot();
   const {projectApi, projectId} = useActiveProject();
   const progress = useDataSyncProgress();
-  const ROOT_QUERY_KEY = '@comapeo/core-react';
 
   const connectedPeersCount = getConnectedPeersCount(
     syncState.remoteDeviceSyncState,

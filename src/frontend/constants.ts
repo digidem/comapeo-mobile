@@ -16,3 +16,5 @@ export const EDITING_SCREEN_NAMES:
   'TrackEdit',
   'Camera',
 ];
+
+export const ROOT_QUERY_KEY = '@comapeo/core-react';

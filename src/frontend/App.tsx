@@ -27,6 +27,7 @@ import {createActiveProjectIdStore} from './contexts/ActiveProjectIdStoreContext
 import {createMetricsDiagnosticsStore} from './contexts/MetricsDiagnosticsStoreContext';
 import {createLocaleStore} from './contexts/LocaleStoreContext';
 import {getAppLanguageTag} from './lib/intl';
+import {useInvitesListeners} from '@comapeo/core-react';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -154,6 +155,8 @@ const App = () => {
       'android.permission.ACCESS_COARSE_LOCATION',
     ]).then(() => setPermissionsAsked(true));
   }, []);
+
+  useInvitesListeners();
 
   useOnBackgroundedAndForegrounded(mapeoApi);
 

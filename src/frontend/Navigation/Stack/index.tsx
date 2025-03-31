@@ -31,12 +31,22 @@ export const RootStackNavigator = ({
 
   return (
     <RootStack.Navigator
-      screenLayout={({children, navigation, route}) => {
+      layout={({children, state, navigation}) => {
         return (
-          <React.Suspense fallback={<Loading />}>
-            <InvitesListener route={route} navigation={navigation} />
+          <>
+            <InvitesListener
+              currentRouteName={state.routeNames[state.index]}
+              navigateToInviteScreen={() =>
+                navigation.navigate('ProjectSettings')
+              }
+            />
             {children}
-          </React.Suspense>
+          </>
+        );
+      }}
+      screenLayout={({children}) => {
+        return (
+          <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
         );
       }}
       screenOptions={NavigatorScreenOptions}>

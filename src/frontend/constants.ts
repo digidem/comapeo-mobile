@@ -20,4 +20,5 @@ export const EDITING_SCREEN_NAMES:
   'DeviceNaming',
   'OnboardingPrivacyPolicy',
   'Success',
+  'InviteReceived',
 ];

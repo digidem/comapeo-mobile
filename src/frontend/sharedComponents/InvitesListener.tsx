@@ -7,14 +7,14 @@ export const InvitesListener = ({
   navigateToInviteScreen,
 }: {
   currentRouteName: string | undefined;
-  navigateToInviteScreen: () => void;
+  navigateToInviteScreen: (inviteId: string) => void;
 }) => {
   const {data: invites} = useManyInvites();
 
   useEffect(() => {
     const invite = invites.find(i => i.state === 'pending');
     if (invite && currentRouteName && !isEditingScreen(currentRouteName)) {
-      navigateToInviteScreen();
+      navigateToInviteScreen(invite.inviteId);
     }
   }, [invites, currentRouteName, navigateToInviteScreen]);
   return null;

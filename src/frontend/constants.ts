@@ -15,4 +15,9 @@ export const EDITING_SCREEN_NAMES:
   'SaveTrackScreen',
   'TrackEdit',
   'Camera',
+  'IntroToCoMapeo',
+  'DataPrivacy',
+  'DeviceNaming',
+  'OnboardingPrivacyPolicy',
+  'Success',
 ];

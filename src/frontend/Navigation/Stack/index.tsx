@@ -10,6 +10,7 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {Loading} from '../../sharedComponents/Loading';
 import {createDefaultScreenGroup} from './AppScreens';
 import {createOnboardingScreens} from './OnboardingScreens';
+import {InvitesListener} from '../../sharedComponents/InvitesListener';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
 
@@ -30,9 +31,14 @@ export const RootStackNavigator = ({
 
   return (
     <RootStack.Navigator
-      screenLayout={({children}) => (
-        <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
-      )}
+      screenLayout={({children, navigation, route}) => {
+        return (
+          <React.Suspense fallback={<Loading />}>
+            <InvitesListener route={route} navigation={navigation} />
+            {children}
+          </React.Suspense>
+        );
+      }}
       screenOptions={NavigatorScreenOptions}>
       {deviceName
         ? createDefaultScreenGroup({

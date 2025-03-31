@@ -36,8 +36,8 @@ export const RootStackNavigator = ({
           <>
             <InvitesListener
               currentRouteName={state.routeNames[state.index]}
-              navigateToInviteScreen={() =>
-                navigation.navigate('ProjectSettings')
+              navigateToInviteScreen={inviteId =>
+                navigation.navigate('InviteReceived', {inviteId})
               }
             />
             {children}

@@ -23,8 +23,14 @@ describe('Passcode - Obscure Passcode Visibility', () => {
     obscurePassNotYetAvailable.click();
     await expect($(byText('Security'))).toBeDisplayed();
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
-    await backBtn.click();
-    await drawerIcon.click();
+    if (await backBtn.isDisplayed()) {
+      await backBtn.click();
+    }
+    if (await backBtn.isDisplayed()) {
+      await backBtn.click();
+    }
+    if (await drawerIcon.isDisplayed()) {
+      await drawerIcon.click();
+    }
   });
 });

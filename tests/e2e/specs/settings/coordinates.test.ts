@@ -2,7 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches} from '../../utils/selectors';
 
-describe('Coordinates Settings Flow', () => {
+describe('Settings - Coordinates Settings Flow', () => {
   it('should open the App Settings from the drawer', async () => {
     const drawerIcon = await $('~Open Navigation Drawer');
     await drawerIcon.click();

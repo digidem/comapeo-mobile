@@ -13,7 +13,7 @@ import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useManyDocs} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {usePersistedLocale} from '../../hooks/persistedState/usePersistedLocale';
+import {useAppLanguageTag} from '../../hooks/useAppLanguageTag';
 
 const m = defineMessages({
   nextQuestion: {
@@ -39,12 +39,12 @@ export const ObservationFields = ({
   route,
 }: NativeRootNavigationProps<'ObservationFields'>) => {
   const {projectId} = useActiveProject();
-  const locale = usePersistedLocale(store => store.locale);
+  const languageTag = useAppLanguageTag();
 
   const {data: fields} = useManyDocs({
     projectId,
     docType: 'field',
-    lang: locale,
+    lang: languageTag,
   });
   const {usePreset} = useDraftObservation();
   const preset = usePreset();

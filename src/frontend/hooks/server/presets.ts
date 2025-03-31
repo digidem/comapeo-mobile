@@ -1,13 +1,13 @@
 import {useManyDocs} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {usePersistedLocale} from '../persistedState/usePersistedLocale';
+import {useAppLanguageTag} from '../useAppLanguageTag';
 
 export function usePresetsQuery() {
   const {projectId} = useActiveProject();
-  const locale = usePersistedLocale(store => store.locale);
+  const languageTag = useAppLanguageTag();
   return useManyDocs({
     projectId,
     docType: 'preset',
-    lang: locale,
+    lang: languageTag,
   });
 }

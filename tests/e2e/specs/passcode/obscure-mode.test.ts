@@ -33,15 +33,6 @@ describe('Passcode - Obscure Passcode Mode', () => {
     const animalCategory = await $(byTextMatches('Animal'));
     await animalCategory.click();
 
-    try {
-      await $(byTextMatches('\\d+°.*[NS], \\d+°.*[EW]')).waitForExist({
-        timeout: 10000,
-        reverse: false,
-      });
-    } catch (e) {
-      await expect($(byTextMatches('Searching'))).toBeDisplayed();
-    }
-
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
     try {

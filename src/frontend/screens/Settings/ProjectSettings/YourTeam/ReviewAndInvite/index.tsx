@@ -4,10 +4,8 @@ import {defineMessages} from 'react-intl';
 import {ErrorBottomSheet} from '../../../../../sharedComponents/ErrorBottomSheet';
 import {ReviewInvitation} from './ReviewInvitation';
 import {WaitingForInviteAccept} from './WaitingForInviteAccept';
-import {
-  useRequestCancelInvite,
-  useSendInvite,
-} from '../../../../../hooks/server/invites';
+import {useSendInvite, useRequestCancelInvite} from '@comapeo/core-react';
+import {useActiveProjectId} from '../../../../../contexts/ActiveProjectIdStoreContext';
 
 const m = defineMessages({
   title: {
@@ -21,17 +19,22 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
   navigation,
 }) => {
   const {role, deviceId, deviceType, name} = route.params;
-
-  const sendInviteMutation = useSendInvite();
-  const requestCancelInviteMutation = useRequestCancelInvite();
+  const projectId = useActiveProjectId();
+  const sendInviteMutation = useSendInvite({projectId: projectId!});
+  const requestCancelInviteMutation = useRequestCancelInvite({
+    projectId: projectId!,
+  });
 
   function sendInvite() {
     sendInviteMutation.mutate(
-      {deviceId, role: {roleId: role}},
+      {deviceId, roleId: role},
       {
         onSuccess: val => {
           // If user has attempted to cancel an invite, but an invite has already been accepted, let user know their cancellation was unsuccessful
-          if (val === 'ACCEPT' && requestCancelInviteMutation.isPending) {
+          if (
+            val === 'ACCEPT' &&
+            requestCancelInviteMutation.status === 'pending'
+          ) {
             navigation.navigate('UnableToCancelInvite', {...route.params});
             return;
           }
@@ -50,29 +53,32 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
   }
 
   function cancelInvite() {
-    requestCancelInviteMutation.mutate(deviceId, {
-      onSuccess: () => {
-        navigation.popTo('YourTeam');
+    requestCancelInviteMutation.mutate(
+      {deviceId},
+      {
+        onSuccess: () => {
+          navigation.popTo('YourTeam');
+        },
       },
-    });
+    );
   }
 
   function clearError() {
-    if (sendInviteMutation.isError) {
+    if (sendInviteMutation.status === 'error') {
       sendInviteMutation.reset();
     }
-    if (requestCancelInviteMutation.isError) {
+    if (requestCancelInviteMutation.status === 'error') {
       requestCancelInviteMutation.reset();
     }
   }
 
   function tryAgain() {
-    if (sendInviteMutation.isError) {
+    if (sendInviteMutation.status === 'error') {
       sendInviteMutation.reset();
       sendInvite();
       return;
     }
-    if (requestCancelInviteMutation.isError) {
+    if (requestCancelInviteMutation.status === 'error') {
       requestCancelInviteMutation.reset();
       cancelInvite();
     }
@@ -80,7 +86,7 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
 
   return (
     <React.Fragment>
-      {sendInviteMutation.isIdle ? (
+      {sendInviteMutation.status === 'idle' ? (
         <ReviewInvitation
           sendInvite={sendInvite}
           deviceId={deviceId}

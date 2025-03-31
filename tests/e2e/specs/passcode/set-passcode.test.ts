@@ -178,10 +178,18 @@ describe('Passcode - Set Passcode Flow', () => {
     const enabledView = await $('~Obscure Passcode is Enabled');
     await expect(enabledView).toBeDisplayed();
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
-    await backBtn.click();
-    await backBtn.click();
+    if (await backBtn.isDisplayed()) {
+      await backBtn.click();
+    }
+    if (await backBtn.isDisplayed()) {
+      await backBtn.click();
+    }
+    if (await backBtn.isDisplayed()) {
+      await backBtn.click();
+    }
     const drawerIcon = await $('~Open Navigation Drawer');
-    drawerIcon.click();
+    if (await drawerIcon.isDisplayed()) {
+      await drawerIcon.click();
+    }
   });
 });

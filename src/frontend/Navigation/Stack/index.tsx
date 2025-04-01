@@ -33,7 +33,7 @@ export const RootStackNavigator = ({
     <RootStack.Navigator
       layout={({children, state, navigation}) => {
         return (
-          <>
+          <React.Suspense fallback={<Loading />}>
             <InvitesListener
               currentRouteName={state.routeNames[state.index]}
               navigateToInviteScreen={inviteId =>
@@ -41,7 +41,7 @@ export const RootStackNavigator = ({
               }
             />
             {children}
-          </>
+          </React.Suspense>
         );
       }}
       screenLayout={({children}) => {

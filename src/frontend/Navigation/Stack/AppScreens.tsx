@@ -96,7 +96,7 @@ import {DeleteAudioBottomSheet} from '../../screens/Audio/DeleteAudioBottomSheet
 import {AudioSavedBottomSheet} from '../../screens/Audio/AudioSavedBottomSheet.tsx';
 import {AudioPlaybackSaved} from '../../screens/Audio/AudioPlaybackSaved.tsx';
 import {AudioCustomHeaderLeft} from '../../screens/Audio/AudioCustomHeaderLeft.tsx';
-import {InviteReceived} from '../../screens/InviteReceived.tsx';
+import {InviteReceived} from '../../screens/Invites/InviteReceived.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 

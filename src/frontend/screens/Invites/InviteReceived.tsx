@@ -1,18 +1,19 @@
-import {BottomSheetWrapper} from '../sharedComponents/BottomSheetWrapper';
-import InviteIcon from '../images/AddPersonCircle.svg';
+import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
+import InviteIcon from '../../images/AddPersonCircle.svg';
 import {StyleSheet, View} from 'react-native';
-import {LIGHT_GREY} from '../lib/styles';
-import {PrimaryButton, SecondaryButton} from '../sharedComponents/Buttons';
+import {LIGHT_GREY} from '../../lib/styles';
+import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {defineMessages, useIntl} from 'react-intl';
-import {NativeNavigationComponent} from '../sharedTypes/navigation';
+import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {
   useAcceptInvite,
   useRejectInvite,
   useSingleInvite,
 } from '@comapeo/core-react';
 import {useEffect} from 'react';
-import {HeaderText} from '../sharedComponents/Text/HeaderText';
-import {BodyText} from '../sharedComponents/Text/BodyText';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 const m = defineMessages({
   navTitle: {
@@ -58,7 +59,7 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
       {inviteId: inviteId},
       {
         onSuccess: () => {
-          navigation.popTo('Home', {screen: 'Map'});
+          navigation.replace('Home', {screen: 'Map'});
         },
       },
     );
@@ -92,16 +93,23 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
         {formatMessage(m.invitedToJoin, {projectName: invite.projectName})}
       </BodyText>
       <View style={styles.buttonContainer}>
-        <SecondaryButton
-          fullSize
-          onPress={reject}
-          text={formatMessage(m.declineInvite)}
-        />
-        <PrimaryButton
-          fullSize
-          onPress={accept}
-          text={formatMessage(m.acceptInvite)}
-        />
+        {acceptInvite.status === 'pending' ||
+        rejectInvite.status === 'pending' ? (
+          <UIActivityIndicator />
+        ) : (
+          <>
+            <SecondaryButton
+              fullSize
+              onPress={reject}
+              text={formatMessage(m.declineInvite)}
+            />
+            <PrimaryButton
+              fullSize
+              onPress={accept}
+              text={formatMessage(m.acceptInvite)}
+            />
+          </>
+        )}
       </View>
     </BottomSheetWrapper>
   );

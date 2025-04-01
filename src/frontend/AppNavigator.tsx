@@ -5,7 +5,7 @@ import {
 import * as React from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import {AppStackParamsList} from './sharedTypes/navigation';
-import {useClientApi} from '@comapeo/core-react';
+import {useClientApi, useInvitesListeners} from '@comapeo/core-react';
 import {useQuery} from '@tanstack/react-query';
 import {DEVICE_INFO_KEY} from './hooks/server/deviceInfo';
 import {RootStackNavigator} from './Navigation/Stack';
@@ -15,6 +15,8 @@ export const rootNavigationRef =
 
 export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   const mapeoApi = useClientApi();
+
+  useInvitesListeners();
 
   //This cannot be a suspense query as there is no suspense boundry above this
   const deviceInfo = useQuery({

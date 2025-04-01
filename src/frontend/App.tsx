@@ -2,8 +2,6 @@ import * as React from 'react';
 import {getLocales} from 'expo-localization';
 import * as SecureStore from 'expo-secure-store';
 import {createMapeoClient} from '@comapeo/ipc';
-import {MMKV} from 'react-native-mmkv';
-import {type StateStorage} from 'zustand/middleware';
 import {AppNavigator} from './AppNavigator';
 import {MessagePortLike} from './lib/MessagePortLike';
 import {initializeNodejs} from './initializeNodejs';
@@ -29,8 +27,7 @@ import {createActiveProjectIdStore} from './contexts/ActiveProjectIdStoreContext
 import {createMetricsDiagnosticsStore} from './contexts/MetricsDiagnosticsStoreContext';
 import {createLocaleStore} from './contexts/LocaleStoreContext';
 import {getAppLanguageTag} from './lib/intl';
-
-const mmkv = new MMKV();
+import {MMKV_STORAGE, MMKV_ZUSTAND_STATE_STORAGE} from './constants';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -48,33 +45,20 @@ Sentry.init({
   tracesSampleRate: 1.0,
   environment: sentryEnvironment,
   debug: sentryDebug, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
-  initialScope: {user: {id: getSentryUserId({now: new Date(), storage: mmkv})}},
+  initialScope: {
+    user: {id: getSentryUserId({now: new Date(), storage: MMKV_STORAGE})},
+  },
 });
 
 Mapbox.setTelemetryEnabled(false);
 
-// TODO: No longer need to export this when the updated implementation of the draft observation hook is used
-// (`hooks/persistedState/createPersistedState.ts` will be removed)
-export const MMKVZustandStorage: StateStorage = {
-  setItem: (name, value) => {
-    return mmkv.set(name, value);
-  },
-  getItem: name => {
-    const value = mmkv.getString(name);
-    return value ?? null;
-  },
-  removeItem: name => {
-    return mmkv.delete(name);
-  },
-};
-
 const persistedLocaleStore = createLocaleStore({
   persist: true,
-  storage: MMKVZustandStorage,
+  storage: MMKV_ZUSTAND_STATE_STORAGE,
 });
 
 const appDiagnosticMetrics = new AppDiagnosticMetrics({
-  storage: mmkv,
+  storage: MMKV_STORAGE,
   getLocaleInfo: () => {
     const systemLocales = getLocales();
     const localeState = persistedLocaleStore.instance.getState();
@@ -91,7 +75,9 @@ const appDiagnosticMetrics = new AppDiagnosticMetrics({
   },
 });
 
-const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics({storage: mmkv});
+const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics({
+  storage: MMKV_STORAGE,
+});
 const messagePort = new MessagePortLike();
 const mapeoApi = createMapeoClient(messagePort, {timeout: Infinity});
 const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
@@ -105,12 +91,12 @@ SplashScreen.preventAutoHideAsync().catch(err => {
 
 const persistedDraftObservationStore = createDraftObservationStore({
   persist: true,
-  storage: MMKVZustandStorage,
+  storage: MMKV_ZUSTAND_STATE_STORAGE,
 });
 
 const persistedTrackStore = createTrackStore({
   persist: true,
-  storage: MMKVZustandStorage,
+  storage: MMKV_ZUSTAND_STATE_STORAGE,
 });
 
 const persistedSecurityStore = createSecurityStore({
@@ -130,23 +116,23 @@ const persistedSecurityStore = createSecurityStore({
 
 const persistedCoordinateFormatStore = createCoordinateFormatStore({
   persist: true,
-  storage: MMKVZustandStorage,
+  storage: MMKV_ZUSTAND_STATE_STORAGE,
 });
 
 const persistedManualEntryCoordinateFormatStore =
   createManualEntryCoordinateFormatStore({
     persist: true,
-    storage: MMKVZustandStorage,
+    storage: MMKV_ZUSTAND_STATE_STORAGE,
   });
 
 const persistedActiveProjectIdStore = createActiveProjectIdStore({
   persist: true,
-  storage: MMKVZustandStorage,
+  storage: MMKV_ZUSTAND_STATE_STORAGE,
 });
 
 const persistedMetricsDiagnosticsStore = createMetricsDiagnosticsStore({
   persist: true,
-  storage: MMKVZustandStorage,
+  storage: MMKV_ZUSTAND_STATE_STORAGE,
 });
 
 // Ensure that these metrics instances are initially in sync with initial state of relevant store

@@ -1,6 +1,7 @@
 import {StateCreator, create, createStore} from 'zustand';
 import {persist, createJSONStorage, PersistOptions} from 'zustand/middleware';
-import {MMKVZustandStorage} from '../../App';
+
+import {MMKV_ZUSTAND_STATE_STORAGE} from '../../constants';
 
 type PersistedStoreKey =
   | 'MapeoLocale'
@@ -47,7 +48,7 @@ function createPersistMiddleware<State>(
 ) {
   return persist(slice, {
     name: persistedStoreKey,
-    storage: createJSONStorage(() => MMKVZustandStorage),
+    storage: createJSONStorage(() => MMKV_ZUSTAND_STATE_STORAGE),
     version: migrationOpt?.version,
     partialize: state => {
       if (typeof state === 'object' && state && 'actions' in state) {

@@ -1,3 +1,6 @@
+import {MMKV} from 'react-native-mmkv';
+import {type StateStorage} from 'zustand/middleware';
+
 import {AppStackParamsList, HomeTabsParamsList} from './sharedTypes/navigation';
 
 // this has to be a string because js does not recognize 00000 as being 5 digits
@@ -21,3 +24,21 @@ export const EDITING_SCREEN_NAMES:
 // (see https://github.com/digidem/comapeo-core-react/blob/59a80cf0a1b9dad13e5f066233dae2465d2d20b1/src/lib/react-query/shared.ts#L6)
 // so partial invalidations align with the library’s queries.
 export const ROOT_QUERY_KEY = '@comapeo/core-react';
+
+// TODO: Move this to App.tsx when MMKV_ZUSTAND_STATE_STORAGE can be moved
+export const MMKV_STORAGE = new MMKV();
+
+// TODO: Move this to App.tsx when the updated implementation of the draft observation hook is used
+// (`hooks/persistedState/createPersistedState.ts` will be removed)
+export const MMKV_ZUSTAND_STATE_STORAGE: StateStorage = {
+  setItem: (name, value) => {
+    return MMKV_STORAGE.set(name, value);
+  },
+  getItem: name => {
+    const value = MMKV_STORAGE.getString(name);
+    return value ?? null;
+  },
+  removeItem: name => {
+    return MMKV_STORAGE.delete(name);
+  },
+};

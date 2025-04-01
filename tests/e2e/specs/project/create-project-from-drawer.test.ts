@@ -3,7 +3,7 @@ import {describe, it} from 'mocha';
 import {byResourceId, byText} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 
-describe('Create Project from Drawer', () => {
+describe('Project - Create Project from Drawer', () => {
   it('should allow user to create a new project', async () => {
     const drawerIcon = await $('~Open Navigation Drawer');
     await drawerIcon.click();

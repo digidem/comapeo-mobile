@@ -2,7 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches} from '../../utils/selectors';
 
-describe('Language Settings Flow', () => {
+describe('Settings - Language Settings Flow', () => {
   it('should open the Language list from App Settings', async () => {
     const drawerIcon = await $('~Open Navigation Drawer');
     await drawerIcon.click();
@@ -12,6 +12,8 @@ describe('Language Settings Flow', () => {
 
     const languageOption = await $(byTextMatches('Language'));
     await languageOption.click();
+
+    // TODO: Add assertion about the initially selected option on this screen
   });
 
   it('should scroll to Spanish, select it, and confirm language change', async () => {

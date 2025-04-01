@@ -3,7 +3,7 @@ import {describe, it} from 'mocha';
 import {byTextMatches, byResourceId, byText} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 
-describe('Set Passcode Flow', () => {
+describe('Passcode - Set Passcode Flow', () => {
   it('should navigate to Security screen from drawer', async () => {
     const drawerIcon = await $('~Open Navigation Drawer');
     await drawerIcon.click();

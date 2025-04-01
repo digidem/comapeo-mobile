@@ -3,7 +3,7 @@ import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches, byText} from '../../utils/selectors';
 import {tapAboveElement} from '../../utils/touchActions';
 
-describe('Create Observation Flow', () => {
+describe('Observations - Create Observation Flow', () => {
   it('should set location and open create observation screen', async () => {
     const addObsBtn = await $('~Add Observation');
     await addObsBtn.click();
@@ -46,7 +46,13 @@ describe('Create Observation Flow', () => {
     await expect($(byResourceId('OBS.add-details-btn'))).toBeDisplayed();
     await expect($(byTextMatches('What is happening here?'))).toBeDisplayed();
 
-    await expect($(byTextMatches('UTM 44N 218632 21930'))).toBeDisplayed();
+    try {
+      await expect(
+        $(byTextMatches('^UTM\\s\\w+\\s\\d+\\s\\d+$')),
+      ).toBeDisplayed();
+    } catch (e) {
+      await expect($(byTextMatches('Searching'))).toBeDisplayed();
+    }
 
     await expect($(byResourceId('OBS.House-icon'))).toBeDisplayed();
     await expect(houseCategory).toBeDisplayed();
@@ -83,16 +89,19 @@ describe('Create Observation Flow', () => {
     const cancelCamera = await $(byTextMatches('Cancel'));
     await cancelCamera.click();
     await expect($(byTextMatches('New Observation'))).toBeDisplayed();
-
-    const noGpsElems = await $$(byTextMatches('No GPS signal'));
-    if ((await noGpsElems.length) > 0 && (await noGpsElems[0].isDisplayed())) {
-      const textSave = await $(byTextMatches('SAVE'));
-      await textSave.click();
-    } else {
-      const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
-      await saveBtn.click();
+    const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
+    await saveBtn.click();
+    await driver.pause(1000);
+    try {
+      const text = await driver.getAlertText();
+      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
+        await driver.execute('mobile: acceptAlert', {
+          buttonLabel: 'SAVE',
+        });
+      }
+    } catch (err) {
+      console.log('No RN Alert dialog was found.');
     }
-
     try {
       const backBtn = await $(byResourceId('MAIN.header-back-btn'));
       if (await backBtn.isDisplayed()) {

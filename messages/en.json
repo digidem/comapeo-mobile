@@ -653,6 +653,10 @@
   "screens.IntroToCoMapeo.ownData": {
     "message": "Own and control your data"
   },
+  "screens.LanguageSettings.followSystemPreferences": {
+    "description": "Label for language option to follow system preferences",
+    "message": "Follow system preferences"
+  },
   "screens.LanguageSettings.title": {
     "description": "Title language settings screen",
     "message": "Language"

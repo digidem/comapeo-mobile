@@ -4,13 +4,10 @@ import * as Application from 'expo-application';
 import {getLastKnownPositionAsync} from 'expo-location';
 import {AppState, Platform} from 'react-native';
 import {storage} from '../hooks/persistedState/createPersistedState';
-import {
-  getDeviceLanguageTag,
-  usePersistedLocale,
-} from '../hooks/persistedState/usePersistedLocale';
 import {assert} from '../lib/assert';
 import {MINUTE_MS, formatIsoUtc, parseIsoUtc} from '../lib/date';
 import {first} from '../lib/first';
+import {type SupportedLanguageTag} from '../lib/intl';
 import {last} from '../lib/last';
 import {maybeJsonParse} from '../lib/maybeJsonParse';
 import {OneAtATimeQueue} from '../lib/OneAtATimeQueue';
@@ -49,13 +46,20 @@ async function getCountry(): Promise<undefined | string> {
   return first(countries);
 }
 
-async function generateAppDiagnosticMetricsData(): Promise<AppDiagnosticMetricsReport> {
+async function generateAppDiagnosticMetricsData({
+  appLanguageTag,
+  deviceLanguageTag,
+}: {
+  appLanguageTag: SupportedLanguageTag;
+  deviceLanguageTag: string;
+}): Promise<AppDiagnosticMetricsReport> {
   const result: AppDiagnosticMetricsReport = {
     dateGenerated: formatIsoUtc(new Date()),
     os: Platform.OS,
     osVersion: Platform.Version,
-    deviceLocale: getDeviceLanguageTag(),
-    appLocale: usePersistedLocale.getState().locale,
+    // TODO: Probably more useful to get all of the preferred locales
+    deviceLocale: deviceLanguageTag,
+    appLocale: appLanguageTag,
     country: await getCountry(),
   };
 
@@ -84,7 +88,18 @@ export class AppDiagnosticMetrics {
   #update;
   #updateQueue = new OneAtATimeQueue();
 
-  constructor() {
+  #getLocaleInfo;
+
+  constructor({
+    getLocaleInfo,
+  }: {
+    getLocaleInfo: () => {
+      appLanguageTag: SupportedLanguageTag;
+      deviceLanguageTag: string;
+    };
+  }) {
+    this.#getLocaleInfo = getLocaleInfo;
+
     this.#update = () => {
       this.#updateQueue.add(() => this.#doUpdate());
     };
@@ -158,7 +173,10 @@ export class AppDiagnosticMetrics {
     if (!hasReportForToday(queue)) {
       queue = {
         ...queue,
-        reports: [...queue.reports, await generateAppDiagnosticMetricsData()],
+        reports: [
+          ...queue.reports,
+          await generateAppDiagnosticMetricsData(this.#getLocaleInfo()),
+        ],
       };
       hasChangedQueue = true;
     }

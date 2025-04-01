@@ -98,6 +98,7 @@ import {AudioPlaybackSaved} from '../../screens/Audio/AudioPlaybackSaved.tsx';
 import {AudioCustomHeaderLeft} from '../../screens/Audio/AudioCustomHeaderLeft.tsx';
 import {InviteReceived} from '../../screens/Invites/InviteReceived.tsx';
 import {InviteSuccessfullyJoined} from '../../screens/Invites/InviteSuccessfullyJoined.tsx';
+import {InviteCancelled} from '../../screens/Invites/InviteCancelled.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -446,6 +447,7 @@ export const createDefaultScreenGroup = ({
         name="InviteSuccessfullyJoined"
         component={InviteSuccessfullyJoined}
       />
+      <RootStack.Screen name="InviteCancelled" component={InviteCancelled} />
     </RootStack.Group>
   </>
 );

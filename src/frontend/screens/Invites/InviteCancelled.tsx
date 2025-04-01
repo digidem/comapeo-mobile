@@ -30,7 +30,7 @@ export const InviteCancelled = ({
 
   return (
     <BottomSheetWrapper>
-      <Error style={{alignSelf: 'center', marginTop: 30}} />
+      <Error style={{alignSelf: 'center'}} />
       <HeaderText
         style={{textAlign: 'center', marginTop: 20}}
         variant="header2">

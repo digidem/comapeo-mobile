@@ -13,7 +13,10 @@ import * as Sentry from '@sentry/react-native';
 import * as TaskManager from 'expo-task-manager';
 import {applicationId} from 'expo-application';
 import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
-import {storage} from './hooks/persistedState/createPersistedState';
+import {
+  MMKVZustandStorage,
+  storage,
+} from './hooks/persistedState/createPersistedState';
 import {useOnBackgroundedAndForegrounded} from './hooks/useOnBackgroundedAndForegrounded';
 import {getSentryUserId} from './metrics/getSentryUserId';
 import {AppDiagnosticMetrics} from './metrics/AppDiagnosticMetrics';
@@ -105,6 +108,7 @@ const persistedManualEntryCoordinateFormatStore =
 
 const persistedActiveProjectIdStore = createActiveProjectIdStore({
   persist: true,
+  storage: MMKVZustandStorage,
 });
 
 const persistedMetricsDiagnosticsStore = createMetricsDiagnosticsStore({

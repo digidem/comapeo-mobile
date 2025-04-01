@@ -5,7 +5,7 @@ import {
   persist as createPersistedState,
 } from 'zustand/middleware';
 
-import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
+import {type CreateStoreOpts} from '../sharedTypes';
 
 type ActiveProjectIdState = {
   projectId?: string;
@@ -21,14 +21,14 @@ function createInitialState(): ActiveProjectIdState {
   return {};
 }
 
-export function createActiveProjectIdStore({persist} = {persist: false}) {
+export function createActiveProjectIdStore(opts: CreateStoreOpts) {
   let store: StoreApi<ActiveProjectIdState>;
 
-  if (persist) {
+  if (opts.persist) {
     store = createStore(
       createPersistedState(createInitialState, {
         name: STORAGE_KEY,
-        storage: createJSONStorage(() => MMKVZustandStorage),
+        storage: createJSONStorage(() => opts.storage),
         version: 0,
       }),
     );

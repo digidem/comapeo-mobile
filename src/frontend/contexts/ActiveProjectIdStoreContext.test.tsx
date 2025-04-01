@@ -20,7 +20,7 @@ function createWrapper(store: ActiveProjectIdStore) {
 }
 
 test('usage of state and actions hooks', () => {
-  const activeProjectStore = createActiveProjectIdStore();
+  const activeProjectStore = createActiveProjectIdStore({persist: false});
   const wrapper = createWrapper(activeProjectStore);
 
   const actionsHook = renderHook(() => useActiveProjectIdActions(), {

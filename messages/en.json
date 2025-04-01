@@ -665,6 +665,18 @@
   "screens.InviteReceived.navTitle": {
     "message": "Invite Received"
   },
+  "screens.InviteSuccess.goToMap": {
+    "message": "Go To Map"
+  },
+  "screens.InviteSuccess.goToSync": {
+    "message": "Go To Sync"
+  },
+  "screens.InviteSuccess.success": {
+    "message": "Success"
+  },
+  "screens.InviteSuccess.youHaveJoined": {
+    "message": "You have joined {projectName}"
+  },
   "screens.LanguageSettings.followSystemPreferences": {
     "description": "Label for language option to follow system preferences",
     "message": "Follow system preferences"

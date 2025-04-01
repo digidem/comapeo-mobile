@@ -15,6 +15,7 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
+import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
   navTitle: {
@@ -73,6 +74,10 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
             projectName: invite.projectName,
           });
         },
+        onError: err => {
+          Sentry.captureException(err);
+          //TO DO Navigate to error screen
+        },
       },
     );
   }
@@ -83,6 +88,10 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
       {
         onSuccess: () => {
           navigation.goBack();
+        },
+        onError: err => {
+          Sentry.captureException(err);
+          //TO DO Navigate to error screen
         },
       },
     );

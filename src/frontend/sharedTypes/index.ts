@@ -2,6 +2,7 @@ import {ImageStyle, StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {Observation, ObservationValue} from '@comapeo/schema';
 import type {RoleId, RoleIdForNewInvite} from '@comapeo/core/dist/roles';
 import {MemberInfo} from '@comapeo/core/dist/member-api';
+import {type StateStorage} from 'zustand/middleware';
 
 export type DeviceConnectionStatus = 'connected' | 'disconnected';
 
@@ -40,3 +41,12 @@ export const MEMBER_ROLE_ID = '012fd2d431c0bf60';
 export const BLOCKED_ROLE_ID = '9e6d29263cba36c9';
 export const LEFT_ROLE_ID = '8ced989b1904606b';
 export const NO_ROLE_ID = '08e4251e36f6e7ed';
+
+export type CreateStoreOpts =
+  | {
+      persist: false;
+    }
+  | {
+      persist: true;
+      storage: StateStorage;
+    };

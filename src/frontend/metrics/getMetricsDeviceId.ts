@@ -1,8 +1,8 @@
 import {getRandomBytes} from 'expo-crypto';
+import {MMKV} from 'react-native-mmkv';
 import {uint8ArrayToHex} from 'uint8array-extras';
-import {storage} from '../hooks/persistedState/createPersistedState';
 
-export function getMetricsDeviceId(): string {
+export function getMetricsDeviceId(storage: MMKV): string {
   const result = storage.getString('MetricsDeviceId');
   if (result) return result;
 

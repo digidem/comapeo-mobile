@@ -2,10 +2,11 @@ import * as Sentry from '@sentry/react-native';
 import {AppState, Dimensions, PixelRatio, Platform} from 'react-native';
 import * as NetInfo from '@react-native-community/netinfo';
 import * as Device from 'expo-device';
+import {MMKV} from 'react-native-mmkv';
+
 import {getMonthlyHash} from './getMonthlyHash';
 import {sendMetricsData} from './sendMetricsData';
 import {getMetricsRequestInfo} from './getMetricsRequestInfo';
-import {storage} from '../hooks/persistedState/createPersistedState';
 import {isDateValid, isSameUtcMonthAndYear} from '../lib/date';
 import {setIfNotNull} from '../lib/setIfNotNull';
 import {getMetricsDeviceId} from './getMetricsDeviceId';
@@ -43,7 +44,11 @@ function deviceTypeToString(deviceType: null | Device.DeviceType): string {
   }
 }
 
-async function generateDeviceDiagnosticMetricsData(): Promise<DeviceDiagnosticMetricsData> {
+async function generateDeviceDiagnosticMetricsData({
+  metricsDeviceId,
+}: {
+  metricsDeviceId: string;
+}): Promise<DeviceDiagnosticMetricsData> {
   const screen = Dimensions.get('screen');
 
   const result: DeviceDiagnosticMetricsData = {
@@ -57,7 +62,7 @@ async function generateDeviceDiagnosticMetricsData(): Promise<DeviceDiagnosticMe
     deviceType: deviceTypeToString(Device.deviceType),
     monthlyDeviceHash: await getMonthlyHash(
       'device diagnostics',
-      getMetricsDeviceId(),
+      metricsDeviceId,
       new Date(),
     ),
   };
@@ -78,21 +83,18 @@ async function generateDeviceDiagnosticMetricsData(): Promise<DeviceDiagnosticMe
   return result;
 }
 
-const hasEnoughTimeElapsed = (): boolean => {
-  const lastSentAtMs = storage.getNumber(STORAGE_KEY) ?? -Infinity;
-  const lastSentAtDate = new Date(lastSentAtMs);
-  return (
-    !isDateValid(lastSentAtDate) ||
-    !isSameUtcMonthAndYear(lastSentAtDate, new Date())
-  );
-};
-
 export class DeviceDiagnosticMetrics {
   #isEnabled = false;
   #isOnline = false;
   #isCurrentlySendingMetrics = false;
 
   #subscriptionCleanupFns: null | (() => void)[] = null;
+
+  #storage;
+
+  constructor({storage}: {storage: MMKV}) {
+    this.#storage = storage;
+  }
 
   setEnabled(isEnabled: boolean): void {
     this.#isEnabled = isEnabled;
@@ -137,7 +139,7 @@ export class DeviceDiagnosticMetrics {
       this.#isOnline &&
       AppState.currentState === 'active' &&
       !this.#isCurrentlySendingMetrics &&
-      hasEnoughTimeElapsed();
+      this.#hasEnoughTimeElapsed();
     if (!shouldSendMetrics) return;
 
     this.#isCurrentlySendingMetrics = true;
@@ -145,13 +147,24 @@ export class DeviceDiagnosticMetrics {
     try {
       await sendMetricsData({
         ...getMetricsRequestInfo(),
-        dataToSend: await generateDeviceDiagnosticMetricsData(),
+        dataToSend: await generateDeviceDiagnosticMetricsData({
+          metricsDeviceId: getMetricsDeviceId(this.#storage),
+        }),
       });
-      storage.set(STORAGE_KEY, Date.now());
+      this.#storage.set(STORAGE_KEY, Date.now());
     } catch (err) {
       Sentry.captureException(err);
     } finally {
       this.#isCurrentlySendingMetrics = false;
     }
+  }
+
+  #hasEnoughTimeElapsed(): boolean {
+    const lastSentAtMs = this.#storage.getNumber(STORAGE_KEY) ?? -Infinity;
+    const lastSentAtDate = new Date(lastSentAtMs);
+    return (
+      !isDateValid(lastSentAtDate) ||
+      !isSameUtcMonthAndYear(lastSentAtDate, new Date())
+    );
   }
 }

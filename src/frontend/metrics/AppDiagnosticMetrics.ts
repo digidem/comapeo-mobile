@@ -3,7 +3,8 @@ import * as Sentry from '@sentry/react-native';
 import * as Application from 'expo-application';
 import {getLastKnownPositionAsync} from 'expo-location';
 import {AppState, Platform} from 'react-native';
-import {storage} from '../hooks/persistedState/createPersistedState';
+import {MMKV} from 'react-native-mmkv';
+
 import {assert} from '../lib/assert';
 import {MINUTE_MS, formatIsoUtc, parseIsoUtc} from '../lib/date';
 import {first} from '../lib/first';
@@ -27,16 +28,6 @@ import {sendMetricsData} from './sendMetricsData';
 
 const STORAGE_KEY = 'AppDiagnosticMetricsQueue';
 const CHECK_INTERVAL = 5 * MINUTE_MS;
-
-function loadQueueFromStorage(): AppDiagnosticMetricsQueue {
-  const storedString = storage.getString(STORAGE_KEY);
-  if (!storedString) return {reports: []};
-
-  const stored = maybeJsonParse(storedString);
-  if (!stored) return {reports: []};
-
-  return stored as AppDiagnosticMetricsQueue;
-}
 
 async function getCountry(): Promise<undefined | string> {
   const lastKnownPosition = await getLastKnownPositionAsync().catch(() => null);
@@ -75,10 +66,6 @@ async function generateAppDiagnosticMetricsData({
   return result;
 }
 
-function saveQueueToStorage(queue: Readonly<AppDiagnosticMetricsQueue>): void {
-  storage.set(STORAGE_KEY, JSON.stringify(queue));
-}
-
 export class AppDiagnosticMetrics {
   #isEnabled = false;
   #isOnline = false;
@@ -90,14 +77,19 @@ export class AppDiagnosticMetrics {
 
   #getLocaleInfo;
 
+  #storage;
+
   constructor({
+    storage,
     getLocaleInfo,
   }: {
+    storage: MMKV;
     getLocaleInfo: () => {
       appLanguageTag: SupportedLanguageTag;
       deviceLanguageTag: string;
     };
   }) {
+    this.#storage = storage;
     this.#getLocaleInfo = getLocaleInfo;
 
     this.#update = () => {
@@ -156,11 +148,11 @@ export class AppDiagnosticMetrics {
    */
   async #doUpdate(): Promise<void> {
     if (!this.#isEnabled) {
-      storage.delete(STORAGE_KEY);
+      this.#storage.delete(STORAGE_KEY);
       return;
     }
 
-    let queue = loadQueueFromStorage();
+    let queue = this.#loadQueueFromStorage();
 
     const now = new Date();
 
@@ -181,7 +173,7 @@ export class AppDiagnosticMetrics {
       hasChangedQueue = true;
     }
 
-    if (hasChangedQueue) saveQueueToStorage(queue);
+    if (hasChangedQueue) this.#saveQueueToStorage(queue);
 
     const newestReport = last(queue.reports);
 
@@ -202,7 +194,7 @@ export class AppDiagnosticMetrics {
           type: 'app diagnostics v1',
           monthlyDeviceHash: await getMonthlyHash(
             'app diagnostics',
-            getMetricsDeviceId(),
+            getMetricsDeviceId(this.#storage),
             // We prefer the date from the newest report, not `new Date()`.
             // These will usually be the same, but it's possible for a user to
             // send metrics right at the end of the month which would generate
@@ -214,9 +206,23 @@ export class AppDiagnosticMetrics {
       });
 
       queue = updateQueueHighWatermark(queue);
-      saveQueueToStorage(queue);
+      this.#saveQueueToStorage(queue);
     } catch (err) {
       Sentry.captureException(err);
     }
+  }
+
+  #loadQueueFromStorage(): AppDiagnosticMetricsQueue {
+    const storedString = this.#storage.getString(STORAGE_KEY);
+    if (!storedString) return {reports: []};
+
+    const stored = maybeJsonParse(storedString);
+    if (!stored) return {reports: []};
+
+    return stored as AppDiagnosticMetricsQueue;
+  }
+
+  #saveQueueToStorage(queue: Readonly<AppDiagnosticMetricsQueue>): void {
+    this.#storage.set(STORAGE_KEY, JSON.stringify(queue));
   }
 }

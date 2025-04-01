@@ -1,9 +1,6 @@
 import {StateCreator, create, createStore} from 'zustand';
 import {persist, createJSONStorage, PersistOptions} from 'zustand/middleware';
-import {MMKV} from 'react-native-mmkv';
 import {MMKVZustandStorage} from '../../App';
-
-export const storage = new MMKV();
 
 type PersistedStoreKey =
   | 'MapeoLocale'

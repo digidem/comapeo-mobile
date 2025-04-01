@@ -2,6 +2,7 @@ import * as React from 'react';
 import {getLocales} from 'expo-localization';
 import * as SecureStore from 'expo-secure-store';
 import {createMapeoClient} from '@comapeo/ipc';
+import {MMKV} from 'react-native-mmkv';
 import {type StateStorage} from 'zustand/middleware';
 import {AppNavigator} from './AppNavigator';
 import {MessagePortLike} from './lib/MessagePortLike';
@@ -15,7 +16,6 @@ import * as Sentry from '@sentry/react-native';
 import * as TaskManager from 'expo-task-manager';
 import {applicationId} from 'expo-application';
 import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
-import {storage} from './hooks/persistedState/createPersistedState';
 import {useOnBackgroundedAndForegrounded} from './hooks/useOnBackgroundedAndForegrounded';
 import {getSentryUserId} from './metrics/getSentryUserId';
 import {AppDiagnosticMetrics} from './metrics/AppDiagnosticMetrics';
@@ -29,6 +29,8 @@ import {createActiveProjectIdStore} from './contexts/ActiveProjectIdStoreContext
 import {createMetricsDiagnosticsStore} from './contexts/MetricsDiagnosticsStoreContext';
 import {createLocaleStore} from './contexts/LocaleStoreContext';
 import {getAppLanguageTag} from './lib/intl';
+
+const mmkv = new MMKV();
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -46,7 +48,7 @@ Sentry.init({
   tracesSampleRate: 1.0,
   environment: sentryEnvironment,
   debug: sentryDebug, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
-  initialScope: {user: {id: getSentryUserId({now: new Date(), storage})}},
+  initialScope: {user: {id: getSentryUserId({now: new Date(), storage: mmkv})}},
 });
 
 Mapbox.setTelemetryEnabled(false);
@@ -55,14 +57,14 @@ Mapbox.setTelemetryEnabled(false);
 // (`hooks/persistedState/createPersistedState.ts` will be removed)
 export const MMKVZustandStorage: StateStorage = {
   setItem: (name, value) => {
-    return storage.set(name, value);
+    return mmkv.set(name, value);
   },
   getItem: name => {
-    const value = storage.getString(name);
+    const value = mmkv.getString(name);
     return value ?? null;
   },
   removeItem: name => {
-    return storage.delete(name);
+    return mmkv.delete(name);
   },
 };
 
@@ -72,6 +74,7 @@ const persistedLocaleStore = createLocaleStore({
 });
 
 const appDiagnosticMetrics = new AppDiagnosticMetrics({
+  storage: mmkv,
   getLocaleInfo: () => {
     const systemLocales = getLocales();
     const localeState = persistedLocaleStore.instance.getState();
@@ -88,7 +91,7 @@ const appDiagnosticMetrics = new AppDiagnosticMetrics({
   },
 });
 
-const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
+const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics({storage: mmkv});
 const messagePort = new MessagePortLike();
 const mapeoApi = createMapeoClient(messagePort, {timeout: Infinity});
 const localDiscoveryController = createLocalDiscoveryController(mapeoApi);

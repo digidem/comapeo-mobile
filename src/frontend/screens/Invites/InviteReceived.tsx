@@ -52,9 +52,9 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
 
   useEffect(() => {
     if (invite.state === 'canceled') {
-      navigation.replace('Home', {screen: 'Map'});
+      navigation.replace('InviteCancelled', {projectName: invite.projectName});
     }
-  }, [invite.state, navigation]);
+  }, [invite.state, invite.projectName, navigation]);
 
   function accept() {
     acceptInvite.mutate(

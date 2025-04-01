@@ -114,6 +114,7 @@ const persistedSecurityStore = createSecurityStore({
 
 const persistedCoordinateFormatStore = createCoordinateFormatStore({
   persist: true,
+  storage: MMKVZustandStorage,
 });
 
 const persistedManualEntryCoordinateFormatStore =

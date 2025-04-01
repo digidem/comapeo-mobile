@@ -5,8 +5,8 @@ import {
   persist as createPersistedState,
 } from 'zustand/middleware';
 
-import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
 import {type CoordinateFormat} from '../lib/coordinateFormat';
+import {type CreateStoreOpts} from '../sharedTypes';
 
 type CoordinateFormatState = {
   value: CoordinateFormat;
@@ -24,14 +24,14 @@ function createInitialState(): CoordinateFormatState {
   };
 }
 
-export function createCoordinateFormatStore({persist} = {persist: false}) {
+export function createCoordinateFormatStore(opts: CreateStoreOpts) {
   let store: StoreApi<CoordinateFormatState>;
 
-  if (persist) {
+  if (opts.persist) {
     store = createStore(
       createPersistedState(createInitialState, {
         name: STORAGE_KEY,
-        storage: createJSONStorage(() => MMKVZustandStorage),
+        storage: createJSONStorage(() => opts.storage),
         version: 0,
       }),
     );

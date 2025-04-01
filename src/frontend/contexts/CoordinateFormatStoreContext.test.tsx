@@ -21,7 +21,7 @@ function createWrapper(store: CoordinateFormatStore) {
 }
 
 test('usage of state and actions hooks', () => {
-  const store = createCoordinateFormatStore();
+  const store = createCoordinateFormatStore({persist: false});
   const wrapper = createWrapper(store);
 
   const actionsHook = renderHook(() => useCoordinateFormatActions(), {

@@ -115,6 +115,7 @@ export type RootStackParamsList = {
   AudioSavedBottomSheet: undefined;
   AudioPlaybackSaved: {uri: string; canDelete: boolean; observationId: string};
   InviteReceived: {inviteId: string};
+  InviteSuccessfullyJoined: {projectName?: string};
 };
 
 export type OnboardingParamsList = {

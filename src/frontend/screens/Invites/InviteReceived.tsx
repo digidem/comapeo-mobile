@@ -30,7 +30,7 @@ const m = defineMessages({
   },
   joinProject: {
     id: 'screens.InviteReceived.joinProject',
-    defaultMessage: 'Join Project {projectName}',
+    defaultMessage: 'Join {projectName}',
   },
   invitedToJoin: {
     id: 'screens.InviteReceived.invitedToJoin',
@@ -59,7 +59,9 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
       {inviteId: inviteId},
       {
         onSuccess: () => {
-          navigation.replace('Home', {screen: 'Map'});
+          navigation.replace('InviteSuccessfullyJoined', {
+            projectName: invite.projectName,
+          });
         },
       },
     );
@@ -70,7 +72,7 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
       {inviteId: inviteId},
       {
         onSuccess: () => {
-          navigation.popTo('Home', {screen: 'Map'});
+          navigation.goBack();
         },
       },
     );
@@ -79,23 +81,20 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
   return (
     <BottomSheetWrapper>
       <View style={styles.inviteIcon}>
-        <InviteIcon
-          style={{borderWidth: 1, borderColor: LIGHT_GREY}}
-          fill={LIGHT_GREY}
-          width={60}
-          height={60}
-        />
+        <InviteIcon fill={LIGHT_GREY} width={80} height={80} />
       </View>
-      <HeaderText variant="header2">
+      <HeaderText
+        style={{textAlign: 'center', marginTop: 20}}
+        variant="header2">
         {formatMessage(m.joinProject, {projectName: invite.projectName})}
       </HeaderText>
-      <BodyText variant="large">
+      <BodyText style={{textAlign: 'center', marginTop: 20}} variant="large">
         {formatMessage(m.invitedToJoin, {projectName: invite.projectName})}
       </BodyText>
       <View style={styles.buttonContainer}>
         {acceptInvite.status === 'pending' ||
         rejectInvite.status === 'pending' ? (
-          <UIActivityIndicator />
+          <UIActivityIndicator style={{marginVertical: 20}} />
         ) : (
           <>
             <SecondaryButton
@@ -105,6 +104,7 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
             />
             <PrimaryButton
               fullSize
+              style={{marginTop: 10}}
               onPress={accept}
               text={formatMessage(m.acceptInvite)}
             />
@@ -123,12 +123,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 100,
     alignItems: 'center',
-    shadowColor: '#171717',
-    shadowOffset: {width: -2, height: 4},
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
+    alignSelf: 'center',
+    width: 80,
   },
   buttonContainer: {
     alignItems: 'center',
+    marginTop: 20,
   },
 });

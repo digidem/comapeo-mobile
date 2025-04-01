@@ -5,7 +5,7 @@ import {
   persist as createPersistedState,
 } from 'zustand/middleware';
 
-import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
+import {type CreateStoreOpts} from '../sharedTypes';
 
 type MetricsDiagnosticsState = {
   isEnabled: boolean;
@@ -20,14 +20,14 @@ function createInitialState(): MetricsDiagnosticsState {
   };
 }
 
-export function createMetricsDiagnosticsStore({persist} = {persist: false}) {
+export function createMetricsDiagnosticsStore(opts: CreateStoreOpts) {
   let store: StoreApi<MetricsDiagnosticsState>;
 
-  if (persist) {
+  if (opts.persist) {
     store = createStore(
       createPersistedState(createInitialState, {
         name: STORAGE_KEY,
-        storage: createJSONStorage(() => MMKVZustandStorage),
+        storage: createJSONStorage(() => opts.storage),
         version: 0,
       }),
     );

@@ -20,7 +20,7 @@ function createWrapper(store: MetricsDiagnosticsStore) {
 }
 
 test('usage of state and actions hooks', () => {
-  const activeProjectStore = createMetricsDiagnosticsStore();
+  const activeProjectStore = createMetricsDiagnosticsStore({persist: false});
   const wrapper = createWrapper(activeProjectStore);
 
   const actionsHook = renderHook(() => useMetricsDiagnosticsActions(), {

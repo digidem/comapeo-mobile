@@ -130,6 +130,7 @@ const persistedActiveProjectIdStore = createActiveProjectIdStore({
 
 const persistedMetricsDiagnosticsStore = createMetricsDiagnosticsStore({
   persist: true,
+  storage: MMKVZustandStorage,
 });
 
 // Ensure that these metrics instances are initially in sync with initial state of relevant store

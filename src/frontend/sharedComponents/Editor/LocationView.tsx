@@ -4,7 +4,7 @@ import {BLACK} from '../../lib/styles';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import LocationIcon from '../../images/Location.svg';
 import {FormattedCoords} from '../FormattedData';
-import {useCoordinateFormat} from '../../contexts/CoordinateFormatContext';
+import {useCoordinateFormat} from '../../contexts/CoordinateFormatStoreContext';
 
 const m = defineMessages({
   searching: {

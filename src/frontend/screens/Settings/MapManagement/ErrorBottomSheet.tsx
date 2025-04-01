@@ -5,8 +5,8 @@ import {BottomSheetWrapper} from '../../../sharedComponents/BottomSheetWrapper';
 import ErrorIcon from '../../../images/Error.svg';
 import {defineMessages, useIntl} from 'react-intl';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
-import {Button} from '../../../sharedComponents/Button';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
+import {SecondaryButton} from '../../../sharedComponents/Buttons';
 
 const m = defineMessages({
   goBack: {
@@ -30,12 +30,12 @@ export const BackgroundMapErrorBottomSheet = ({
             {route.params.description}
           </BodyText>
         </View>
-        <Button
-          variant="outlined"
-          fullWidth
-          onPress={() => navigation.goBack()}>
-          {formatMessage(m.goBack)}
-        </Button>
+        <SecondaryButton
+          style={{alignSelf: 'center'}}
+          fullSize
+          onPress={() => navigation.goBack()}
+          text={formatMessage(m.goBack)}
+        />
       </View>
     </BottomSheetWrapper>
   );

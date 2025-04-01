@@ -650,6 +650,15 @@
   "screens.IntroToCoMapeo.ownData": {
     "message": "Own and control your data"
   },
+  "screens.InviteCancelled.canceled": {
+    "message": "Invite Canceled"
+  },
+  "screens.InviteCancelled.close": {
+    "message": "Close"
+  },
+  "screens.InviteCancelled.projectInviteCanceled": {
+    "message": "Your invitation to {projectName} has been canceled."
+  },
   "screens.InviteReceived.acceptInvite": {
     "message": "Accept Invite"
   },

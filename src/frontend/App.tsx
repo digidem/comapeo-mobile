@@ -93,6 +93,7 @@ const persistedDraftObservationStore = createDraftObservationStore({
 
 const persistedTrackStore = createTrackStore({
   persist: true,
+  storage: MMKVZustandStorage,
 });
 
 const persistedSecurityStore = createSecurityStore({

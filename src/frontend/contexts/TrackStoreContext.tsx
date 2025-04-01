@@ -6,7 +6,7 @@ import {
 } from 'zustand/middleware';
 import * as v from 'valibot';
 
-import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
+import {type CreateStoreOpts} from '../sharedTypes';
 import {LocationHistoryPoint} from '../sharedTypes/location';
 import {calculateTotalDistance} from '../utils/distance';
 
@@ -58,14 +58,14 @@ function createInitialState(): TrackState {
   };
 }
 
-export function createTrackStore({persist} = {persist: false}) {
+export function createTrackStore(opts: CreateStoreOpts) {
   let store: StoreApi<TrackState>;
 
-  if (persist) {
+  if (opts.persist) {
     store = createStore(
       createPersistedState(createInitialState, {
         name: STORAGE_KEY,
-        storage: createJSONStorage(() => MMKVZustandStorage),
+        storage: createJSONStorage(() => opts.storage),
         version: 1,
         migrate: (persistedState, version): TrackState => {
           const newState = createInitialState();

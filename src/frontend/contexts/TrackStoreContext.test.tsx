@@ -23,7 +23,7 @@ afterEach(() => {
 
 describe('useTrackState()', () => {
   test('initial state', () => {
-    const trackStore = createTrackStore();
+    const trackStore = createTrackStore({persist: false});
     const wrapper = createWrapper(trackStore);
 
     const stateHook = renderHook(() => useTrackState(), {
@@ -45,7 +45,7 @@ describe('useTrackActions()', () => {
   test('setTracking()', () => {
     const dateSpy = jest.spyOn(global, 'Date');
 
-    const trackStore = createTrackStore();
+    const trackStore = createTrackStore({persist: false});
     const wrapper = createWrapper(trackStore);
 
     const actionsHook = renderHook(() => useTrackActions(), {
@@ -83,7 +83,7 @@ describe('useTrackActions()', () => {
   });
 
   test('addNewObservation()', () => {
-    const trackStore = createTrackStore();
+    const trackStore = createTrackStore({persist: false});
     const wrapper = createWrapper(trackStore);
 
     const actionsHook = renderHook(() => useTrackActions(), {
@@ -113,7 +113,7 @@ describe('useTrackActions()', () => {
   test('clearCurrentTrack()', () => {
     const dateSpy = jest.spyOn(global, 'Date');
 
-    const trackStore = createTrackStore();
+    const trackStore = createTrackStore({persist: false});
     const wrapper = createWrapper(trackStore);
 
     const actionsHook = renderHook(() => useTrackActions(), {
@@ -151,7 +151,7 @@ describe('useTrackActions()', () => {
   });
 
   test('setDescription()', () => {
-    const trackStore = createTrackStore();
+    const trackStore = createTrackStore({persist: false});
     const wrapper = createWrapper(trackStore);
 
     const actionsHook = renderHook(() => useTrackActions(), {
@@ -176,7 +176,7 @@ describe('useTrackActions()', () => {
   });
 
   test('addNewLocations()', () => {
-    const trackStore = createTrackStore();
+    const trackStore = createTrackStore({persist: false});
     const wrapper = createWrapper(trackStore);
 
     const actionsHook = renderHook(() => useTrackActions(), {

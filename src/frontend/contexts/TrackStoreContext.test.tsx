@@ -1,5 +1,6 @@
 import {act, renderHook} from '@testing-library/react-native';
 import {type ReactNode} from 'react';
+import {type StateStorage} from 'zustand/middleware';
 
 import {
   createTrackStore,
@@ -14,6 +15,26 @@ function createWrapper(trackStore: TrackStore) {
     return (
       <TrackStoreProvider value={trackStore}>{children}</TrackStoreProvider>
     );
+  };
+}
+
+function createStateStorage(
+  storage: Map<
+    string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    any
+  >,
+): StateStorage {
+  return {
+    getItem: name => {
+      return storage.get(name);
+    },
+    setItem: (name, value) => {
+      storage.set(name, value);
+    },
+    removeItem: name => {
+      storage.delete(name);
+    },
   };
 }
 
@@ -233,4 +254,77 @@ describe('useTrackActions()', () => {
     });
     expect(stateHook.result.current.distance).toBeGreaterThan(previousDistance);
   });
+});
+
+test('persistence', () => {
+  const storage = new Map();
+
+  {
+    const store = createTrackStore({
+      persist: true,
+      storage: createStateStorage(storage),
+    });
+
+    const wrapper = createWrapper(store);
+
+    const actionsHook = renderHook(() => useTrackActions(), {
+      wrapper,
+    });
+
+    const stateHook = renderHook(() => useTrackState(), {
+      wrapper,
+    });
+
+    expect(stateHook.result.current).toStrictEqual({
+      description: '',
+      distance: 0,
+      isTracking: false,
+      locationHistory: [],
+      observationRefs: [],
+      trackingSince: null,
+    });
+
+    expect(storage.size).toBe(0);
+
+    act(() => {
+      actionsHook.result.current.addNewObservation({
+        docId: 'doc_1',
+        versionId: 'version_1',
+      });
+    });
+
+    expect(storage.size).toBe(1);
+
+    expect(stateHook.result.current).toStrictEqual({
+      description: '',
+      distance: 0,
+      isTracking: false,
+      locationHistory: [],
+      observationRefs: [{docId: 'doc_1', versionId: 'version_1'}],
+      trackingSince: null,
+    });
+  }
+
+  // This tests that persisted value is used when setting up another store in isolation
+  {
+    const store = createTrackStore({
+      persist: true,
+      storage: createStateStorage(storage),
+    });
+
+    const wrapper = createWrapper(store);
+
+    const stateHook = renderHook(() => useTrackState(), {
+      wrapper,
+    });
+
+    expect(stateHook.result.current).toStrictEqual({
+      description: '',
+      distance: 0,
+      isTracking: false,
+      locationHistory: [],
+      observationRefs: [{docId: 'doc_1', versionId: 'version_1'}],
+      trackingSince: null,
+    });
+  }
 });

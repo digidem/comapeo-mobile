@@ -1,5 +1,6 @@
 import {act, renderHook} from '@testing-library/react-native';
 import {type ReactNode} from 'react';
+import {type StateStorage} from 'zustand/middleware';
 
 import {
   createSecurityStore,
@@ -17,6 +18,26 @@ function createWrapper(settingsStore: SecurityStore) {
         {children}
       </SecurityStoreProvider>
     );
+  };
+}
+
+function createStateStorage(
+  storage: Map<
+    string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    any
+  >,
+): StateStorage {
+  return {
+    getItem: name => {
+      return storage.get(name);
+    },
+    setItem: (name, value) => {
+      storage.set(name, value);
+    },
+    removeItem: name => {
+      storage.delete(name);
+    },
   };
 }
 
@@ -150,4 +171,63 @@ test('obscure code is unset when passcode is unset', () => {
     passcode: null,
     obscureCodeEnabled: false,
   });
+});
+
+test('persistence', () => {
+  const storage = new Map();
+
+  {
+    const store = createSecurityStore({
+      persist: true,
+      storage: createStateStorage(storage),
+    });
+
+    const wrapper = createWrapper(store);
+
+    const actionsHook = renderHook(() => useSecurityActions(), {
+      wrapper,
+    });
+
+    const stateHook = renderHook(() => useSecurityState(), {
+      wrapper,
+    });
+
+    expect(stateHook.result.current).toStrictEqual({
+      passcode: null,
+      obscureCodeEnabled: false,
+    });
+
+    expect(storage.size).toBe(0);
+
+    act(() => {
+      actionsHook.result.current.setPasscode('12345');
+      actionsHook.result.current.enableObscureCode(true);
+    });
+
+    expect(storage.size).toBe(1);
+
+    expect(stateHook.result.current).toStrictEqual({
+      passcode: '12345',
+      obscureCodeEnabled: true,
+    });
+  }
+
+  // This tests that persisted value is used when setting up another store in isolation
+  {
+    const store = createSecurityStore({
+      persist: true,
+      storage: createStateStorage(storage),
+    });
+
+    const wrapper = createWrapper(store);
+
+    const stateHook = renderHook(() => useSecurityState(), {
+      wrapper,
+    });
+
+    expect(stateHook.result.current).toStrictEqual({
+      passcode: '12345',
+      obscureCodeEnabled: true,
+    });
+  }
 });

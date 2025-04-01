@@ -42,7 +42,7 @@ export const InviteSuccessfullyJoined = ({
 
   return (
     <BottomSheetWrapper>
-      <SuccessCheck style={{alignSelf: 'center', marginTop: 20}} />
+      <SuccessCheck style={{alignSelf: 'center'}} />
       <HeaderText
         style={{textAlign: 'center', marginTop: 20}}
         variant="header2">

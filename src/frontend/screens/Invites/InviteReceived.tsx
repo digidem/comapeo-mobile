@@ -53,6 +53,13 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
   useEffect(() => {
     if (invite.state === 'canceled') {
       navigation.replace('InviteCancelled', {projectName: invite.projectName});
+      return;
+    }
+
+    // this is so the user doesn't get stuck on the invite screen if there is an error
+    if (invite.state !== 'pending') {
+      navigation.goBack();
+      return;
     }
   }, [invite.state, invite.projectName, navigation]);
 

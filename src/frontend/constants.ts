@@ -22,3 +22,5 @@ export const EDITING_SCREEN_NAMES:
   'Success',
   'InviteReceived',
 ];
+
+export const ROOT_QUERY_KEY = '@comapeo/core-react';

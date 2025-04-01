@@ -1,11 +1,7 @@
 import {StateCreator, create, createStore} from 'zustand';
-import {
-  StateStorage,
-  persist,
-  createJSONStorage,
-  PersistOptions,
-} from 'zustand/middleware';
+import {persist, createJSONStorage, PersistOptions} from 'zustand/middleware';
 import {MMKV} from 'react-native-mmkv';
+import {MMKVZustandStorage} from '../../App';
 
 export const storage = new MMKV();
 
@@ -17,18 +13,6 @@ type PersistedStoreKey =
   | 'ActiveProjectId'
   | 'Settings'
   | 'MetricDiagnosticsPermission';
-export const MMKVZustandStorage: StateStorage = {
-  setItem: (name, value) => {
-    return storage.set(name, value);
-  },
-  getItem: name => {
-    const value = storage.getString(name);
-    return value ?? null;
-  },
-  removeItem: name => {
-    return storage.delete(name);
-  },
-};
 
 type MigrationOpt<T> =
   | {version: number; migrateFn: PersistOptions<T, T>['migrate']}

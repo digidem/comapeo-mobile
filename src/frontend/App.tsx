@@ -54,6 +54,7 @@ Mapbox.setTelemetryEnabled(false);
 
 const persistedLocaleStore = createLocaleStore({
   persist: true,
+  storage: MMKVZustandStorage,
 });
 
 const appDiagnosticMetrics = new AppDiagnosticMetrics({

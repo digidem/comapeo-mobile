@@ -6,8 +6,8 @@ import {
   persist as createPersistedState,
 } from 'zustand/middleware';
 
-import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
 import {isSupportedLanguageTag, SupportedLanguageTag} from '../lib/intl';
+import {type CreateStoreOpts} from '../sharedTypes';
 
 // Do not change!
 export const STORAGE_KEY = 'locale' as const;
@@ -40,14 +40,14 @@ function createInitialState(): LocaleState {
   };
 }
 
-export function createLocaleStore({persist} = {persist: false}) {
+export function createLocaleStore(opts: CreateStoreOpts) {
   let store: StoreApi<LocaleState>;
 
-  if (persist) {
+  if (opts.persist) {
     store = createStore(
       createPersistedState(createInitialState, {
         name: STORAGE_KEY,
-        storage: createJSONStorage(() => MMKVZustandStorage),
+        storage: createJSONStorage(() => opts.storage),
         version: 0,
       }),
     );

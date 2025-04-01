@@ -53,7 +53,7 @@ afterEach(() => {
 
 describe('no locale chosen and no system preferences', () => {
   test('returns the fallback (en)', () => {
-    const store = createLocaleStore();
+    const store = createLocaleStore({persist: false});
     const wrapper = createWrapper(store);
 
     setSystemPreferredLocales(
@@ -72,7 +72,7 @@ describe('no locale chosen and no system preferences', () => {
 
 describe('no specific locale selected and single system preference exists', () => {
   test('uses system preference if supported', () => {
-    const store = createLocaleStore();
+    const store = createLocaleStore({persist: false});
     const wrapper = createWrapper(store);
 
     setSystemPreferredLocales(['pt']);
@@ -85,7 +85,7 @@ describe('no specific locale selected and single system preference exists', () =
   });
 
   test('uses system preference with regional code stripped (recognized regional code)', () => {
-    const store = createLocaleStore();
+    const store = createLocaleStore({persist: false});
     const wrapper = createWrapper(store);
 
     setSystemPreferredLocales(['pt-BR']);
@@ -98,7 +98,7 @@ describe('no specific locale selected and single system preference exists', () =
   });
 
   test('uses system preference with regional code stripped (unrecognized regional code)', () => {
-    const store = createLocaleStore();
+    const store = createLocaleStore({persist: false});
     const wrapper = createWrapper(store);
 
     setSystemPreferredLocales([
@@ -114,7 +114,7 @@ describe('no specific locale selected and single system preference exists', () =
   });
 
   test('uses fallback if not supported', () => {
-    const store = createLocaleStore();
+    const store = createLocaleStore({persist: false});
     const wrapper = createWrapper(store);
 
     setSystemPreferredLocales([
@@ -132,7 +132,7 @@ describe('no specific locale selected and single system preference exists', () =
 
 describe('using system and multiple system preferences exist', () => {
   test('respects ordering of system preferences', () => {
-    const store = createLocaleStore();
+    const store = createLocaleStore({persist: false});
     const wrapper = createWrapper(store);
 
     setSystemPreferredLocales(['es', 'pt']);
@@ -153,7 +153,7 @@ describe('using system and multiple system preferences exist', () => {
   });
 
   test('uses first supported system preference', () => {
-    const store = createLocaleStore();
+    const store = createLocaleStore({persist: false});
     const wrapper = createWrapper(store);
 
     setSystemPreferredLocales([
@@ -170,7 +170,7 @@ describe('using system and multiple system preferences exist', () => {
   });
 
   test('uses fallback if none of the system preferences are supported', () => {
-    const store = createLocaleStore();
+    const store = createLocaleStore({persist: false});
     const wrapper = createWrapper(store);
 
     setSystemPreferredLocales([
@@ -190,7 +190,7 @@ describe('using system and multiple system preferences exist', () => {
 
 describe('specific locale chosen', () => {
   test('reacts to changes in selected locale', () => {
-    const store = createLocaleStore();
+    const store = createLocaleStore({persist: false});
     const wrapper = createWrapper(store);
 
     setSystemPreferredLocales(['pt-BR']);
@@ -225,7 +225,7 @@ describe('specific locale chosen', () => {
   });
 
   test('is not affected by changes in system preferences', () => {
-    const store = createLocaleStore();
+    const store = createLocaleStore({persist: false});
     const wrapper = createWrapper(store);
 
     setSystemPreferredLocales(['pt-BR']);

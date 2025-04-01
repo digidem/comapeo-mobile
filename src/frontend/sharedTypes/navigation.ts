@@ -117,6 +117,8 @@ export type RootStackParamsList = {
   InviteReceived: {inviteId: string};
   InviteSuccessfullyJoined: {projectName: string};
   InviteCancelled: {projectName: string};
+  ErrorBottomSheet: undefined;
+  BackgroundMapErrorBottomSheet: {title: string; description: string};
 };
 
 export type OnboardingParamsList = {

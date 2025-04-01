@@ -99,6 +99,8 @@ import {AudioCustomHeaderLeft} from '../../screens/Audio/AudioCustomHeaderLeft.t
 import {InviteReceived} from '../../screens/Invites/InviteReceived.tsx';
 import {InviteSuccessfullyJoined} from '../../screens/Invites/InviteSuccessfullyJoined.tsx';
 import {InviteCancelled} from '../../screens/Invites/InviteCancelled.tsx';
+import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
+import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagement/ErrorBottomSheet.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -448,6 +450,11 @@ export const createDefaultScreenGroup = ({
         component={InviteSuccessfullyJoined}
       />
       <RootStack.Screen name="InviteCancelled" component={InviteCancelled} />
+      <RootStack.Screen name="ErrorBottomSheet" component={ErrorBottomSheet} />
+      <RootStack.Screen
+        name="BackgroundMapErrorBottomSheet"
+        component={BackgroundMapErrorBottomSheet}
+      />
     </RootStack.Group>
   </>
 );

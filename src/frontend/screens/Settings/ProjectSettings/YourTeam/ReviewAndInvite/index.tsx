@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {NativeNavigationComponent} from '../../../../../sharedTypes/navigation';
 import {defineMessages} from 'react-intl';
-import {ErrorBottomSheet} from '../../../../../sharedComponents/ErrorBottomSheet';
 import {ReviewInvitation} from './ReviewInvitation';
 import {WaitingForInviteAccept} from './WaitingForInviteAccept';
 import {useSendInvite, useRequestCancelInvite} from '@comapeo/core-react';
 import {useActiveProjectId} from '../../../../../contexts/ActiveProjectIdStoreContext';
+import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
   title: {
@@ -48,6 +48,10 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
             return;
           }
         },
+        onError: err => {
+          Sentry.captureException(err);
+          navigation.navigate('ErrorBottomSheet');
+        },
       },
     );
   }
@@ -59,33 +63,16 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
         onSuccess: () => {
           navigation.popTo('YourTeam');
         },
+        onError: err => {
+          Sentry.captureException(err);
+          navigation.navigate('ErrorBottomSheet');
+        },
       },
     );
   }
 
-  function clearError() {
-    if (sendInviteMutation.status === 'error') {
-      sendInviteMutation.reset();
-    }
-    if (requestCancelInviteMutation.status === 'error') {
-      requestCancelInviteMutation.reset();
-    }
-  }
-
-  function tryAgain() {
-    if (sendInviteMutation.status === 'error') {
-      sendInviteMutation.reset();
-      sendInvite();
-      return;
-    }
-    if (requestCancelInviteMutation.status === 'error') {
-      requestCancelInviteMutation.reset();
-      cancelInvite();
-    }
-  }
-
   return (
-    <React.Fragment>
+    <>
       {sendInviteMutation.status === 'idle' ? (
         <ReviewInvitation
           sendInvite={sendInvite}
@@ -97,12 +84,7 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
       ) : (
         <WaitingForInviteAccept cancelInvite={cancelInvite} />
       )}
-      <ErrorBottomSheet
-        error={sendInviteMutation.error || requestCancelInviteMutation.error}
-        clearError={clearError}
-        tryAgain={tryAgain}
-      />
-    </React.Fragment>
+    </>
   );
 };
 

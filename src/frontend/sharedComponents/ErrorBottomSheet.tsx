@@ -1,87 +1,55 @@
 import * as React from 'react';
-import * as Sentry from '@sentry/react-native';
-import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
-
-import {ActionButtonConfig} from './BottomSheetModal/Content';
-import {
-  BottomSheetModalContent,
-  BottomSheetModal,
-  useBottomSheetModal,
-} from './BottomSheetModal';
+import {NativeRootNavigationProps} from '../sharedTypes/navigation';
+import {StyleSheet, View} from 'react-native';
+import {BottomSheetWrapper} from './BottomSheetWrapper';
 import ErrorIcon from '../images/Error.svg';
+import {defineMessages, useIntl} from 'react-intl';
+import {HeaderText} from './Text/HeaderText';
+import {SecondaryButton} from './Buttons';
 
 const m = defineMessages({
   somethingWrong: {
-    id: 'sharedComponents.ErrorModal.somethingWrong',
+    id: 'sharedComponents.ErrorBottomSheet.somethingWrong',
     defaultMessage: 'Something\n Went Wrong',
   },
   goBack: {
-    id: 'sharedComponents.ErrorModal.goBack',
+    id: 'sharedComponents.ErrorBottomSheet.goBack',
     defaultMessage: 'Go Back',
-  },
-  tryAgain: {
-    id: 'sharedComponents.ErrorModal.tryAgain',
-    defaultMessage: 'Try Again',
   },
 });
 
-type ErrorModalProps = {
-  error: Error | null;
-  clearError: () => void;
-  tryAgain?: () => unknown;
-  title?: MessageDescriptor;
-  description?: MessageDescriptor;
-};
-
-export const ErrorBottomSheet = (props: ErrorModalProps) => {
-  const {error, clearError, tryAgain, title, description} = props;
-
+export const ErrorBottomSheet = ({
+  navigation,
+}: NativeRootNavigationProps<'ErrorBottomSheet'>) => {
   const {formatMessage} = useIntl();
-  const {openSheet, sheetRef, isOpen, closeSheet} = useBottomSheetModal({
-    openOnMount: false,
-  });
-
-  if (error && !isOpen) {
-    Sentry.captureMessage(error.message, 'error');
-    openSheet();
-  }
-
-  const buttonConfigs: Array<ActionButtonConfig> = [
-    {
-      variation: 'outlined',
-      onPress: () => {
-        clearError();
-        closeSheet();
-      },
-      text: formatMessage(m.goBack),
-    },
-  ];
-
-  if (tryAgain) {
-    buttonConfigs.push({
-      variation: 'filled',
-      onPress: () => {
-        clearError();
-        closeSheet();
-        tryAgain();
-      },
-      text: formatMessage(m.tryAgain),
-    });
-  }
-
   return (
-    <BottomSheetModal
-      fullScreen
-      ref={sheetRef}
-      onDismiss={closeSheet}
-      isOpen={isOpen}>
-      <BottomSheetModalContent
-        icon={<ErrorIcon width={160} height={160} style={{marginTop: 80}} />}
-        title={formatMessage(title || m.somethingWrong)}
-        description={description ? formatMessage(description) : undefined}
-        buttonConfigs={buttonConfigs}
-        descriptionStyle={{fontSize: 16}}
-      />
-    </BottomSheetModal>
+    <BottomSheetWrapper>
+      <View style={styles.container}>
+        <View style={{alignItems: 'center'}}>
+          <ErrorIcon width={160} height={160} style={styles.icon} />
+          <HeaderText style={{textAlign: 'center'}}>
+            {formatMessage(m.somethingWrong)}
+          </HeaderText>
+        </View>
+        <SecondaryButton
+          fullSize
+          onPress={() => navigation.goBack()}
+          text={formatMessage(m.goBack)}
+          style={{alignSelf: 'center'}}
+        />
+      </View>
+    </BottomSheetWrapper>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  icon: {
+    marginTop: 40,
+    marginBottom: 30,
+  },
+});

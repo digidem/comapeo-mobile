@@ -20,7 +20,9 @@ export const EDITING_SCREEN_NAMES:
   'DeviceNaming',
   'OnboardingPrivacyPolicy',
   'Success',
-  'InviteReceived',
+  'AuthScreen',
 ];
 
-export const ROOT_QUERY_KEY = '@comapeo/core-react';
+export const INVITE_SCREEN_NAME: Omit<keyof AppStackParamsList, 'Home'>[] = [
+  'InviteReceived',
+];

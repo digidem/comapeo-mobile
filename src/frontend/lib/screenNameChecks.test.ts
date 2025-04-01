@@ -1,5 +1,5 @@
 import {EDITING_SCREEN_NAMES} from '../constants';
-import {isEditingScreen} from './isEditingScreen';
+import {isEditingScreen} from './screenNameChecks';
 
 describe('isEditingScreen', () => {
   it('should return true for editing screen names', () => {

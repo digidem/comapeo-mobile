@@ -1,6 +1,6 @@
 import {useManyInvites} from '@comapeo/core-react';
 import {useEffect} from 'react';
-import {isEditingScreen} from '../lib/isEditingScreen';
+import {isEditingScreen, isInviteScreen} from '../lib/screenNameChecks';
 
 export const InvitesListener = ({
   currentRouteName,
@@ -11,11 +11,18 @@ export const InvitesListener = ({
 }) => {
   const {data: invites} = useManyInvites();
 
+  console.log({currentRouteName});
+
   useEffect(() => {
     const invite = invites.find(i => i.state === 'pending');
-    if (invite && currentRouteName && !isEditingScreen(currentRouteName)) {
-      navigateToInviteScreen(invite.inviteId);
-    }
+    if (!invite || !currentRouteName) return;
+
+    // if user is already interacting with an invite, do nothing
+    if (isInviteScreen(currentRouteName)) return;
+
+    if (isEditingScreen(currentRouteName)) return;
+
+    navigateToInviteScreen(invite.inviteId);
   }, [invites, currentRouteName, navigateToInviteScreen]);
   return null;
 };

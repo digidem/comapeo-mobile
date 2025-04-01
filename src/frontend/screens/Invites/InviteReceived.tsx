@@ -76,7 +76,7 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
         },
         onError: err => {
           Sentry.captureException(err);
-          //TO DO Navigate to error screen
+          navigation.replace('ErrorBottomSheet');
         },
       },
     );
@@ -91,7 +91,7 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
         },
         onError: err => {
           Sentry.captureException(err);
-          //TO DO Navigate to error screen
+          navigation.replace('ErrorBottomSheet');
         },
       },
     );

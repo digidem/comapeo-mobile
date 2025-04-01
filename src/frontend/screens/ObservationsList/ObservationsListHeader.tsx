@@ -31,8 +31,12 @@ export function ObservationsListHeader({
 
   return (
     <View style={styles.container}>
-      <View style={styles.titleContainer}>
-        <HeaderText variant="header4" style={styles.projectName}>
+      <View style={{flex: 1}}>
+        <HeaderText
+          variant="header4"
+          style={styles.projectName}
+          numberOfLines={1}
+          ellipsizeMode="tail">
           {projectName}
         </HeaderText>
       </View>
@@ -57,15 +61,15 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     justifyContent: 'space-between',
   },
-  titleContainer: {
-    flexDirection: 'column',
-  },
   projectName: {
     color: DARK_GREY,
     fontFamily: 'Rubik_600SemiBold',
+    overflow: 'hidden',
   },
   iconButton: {
     width: 40,
     height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

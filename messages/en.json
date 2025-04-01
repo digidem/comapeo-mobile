@@ -295,6 +295,21 @@
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
   },
+  "homeHeader.header.mySoloProject": {
+    "message": "My Solo Project"
+  },
+  "observationsList.ObservationListHeader.coordinator": {
+    "message": "You’re a coordinator on this project."
+  },
+  "observationsList.ObservationListHeader.mappingOnYourOwn": {
+    "message": "You’re mapping on your own."
+  },
+  "observationsList.ObservationListHeader.participant": {
+    "message": "You’re a participant on this project."
+  },
+  "observationsList.header.mySoloProject": {
+    "message": "My Solo Project"
+  },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Coordinator"
   },

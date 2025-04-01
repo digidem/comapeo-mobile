@@ -5,17 +5,15 @@ import {ObservationEmptyView} from './ObservationsEmptyView';
 
 import {Observation, Track} from '@comapeo/schema';
 import {MessageDescriptor, defineMessages} from 'react-intl';
-import {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs';
-import {ObservationListHeaderLeft} from './ObservationListHeaderLeft';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
-import {NoProjectWarning} from './NoProjectWarning';
-import {WHITE} from '../../lib/styles';
+import {VERY_LIGHT_GREY, WHITE} from '../../lib/styles';
 import {useAllProjects} from '../../hooks/server/projects';
 import {Loading} from '../../sharedComponents/Loading';
 import {TrackListItem} from './TrackListItem';
 import {useObservations} from '../../hooks/server/observations';
 import {useTracks} from '../../hooks/server/track';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {ProjectCard} from './ProjectCard';
 
 const m = defineMessages({
   loading: {
@@ -35,6 +33,18 @@ const m = defineMessages({
     id: 'screens.ObservationList.observationListTitle',
     defaultMessage: 'Observations',
     description: 'Title of screen with list of observations',
+  },
+  mappingOnYourOwn: {
+    id: 'observationsList.ObservationListHeader.mappingOnYourOwn',
+    defaultMessage: 'You’re mapping on your own.',
+  },
+  coordinator: {
+    id: 'observationsList.ObservationListHeader.coordinator',
+    defaultMessage: 'You’re a coordinator on this project.',
+  },
+  participant: {
+    id: 'observationsList.ObservationListHeader.participant',
+    defaultMessage: 'You’re a participant on this project.',
   },
 });
 
@@ -57,7 +67,7 @@ export const ObservationsList: React.FC<
 } = ({navigation}) => {
   const {data: observations, isFetching} = useObservations();
   const {data: tracks} = useTracks();
-  const {data, isPending} = useAllProjects();
+  const {isPending} = useAllProjects();
 
   const rowsPerWindow = Math.ceil(
     (Dimensions.get('window').height - 65) / OBSERVATION_CELL_HEIGHT,
@@ -73,14 +83,15 @@ export const ObservationsList: React.FC<
 
   return (
     <View style={styles.container} testID="OBS.list-scrn">
-      {isPending ? (
-        <Loading />
-      ) : data && data.length <= 1 ? (
-        <NoProjectWarning style={{margin: 20}} />
-      ) : null}
+      {isPending ? <Loading /> : null}
       {/* re: https://github.com/digidem/comapeo-mobile/issues/586  */}
       {isFetching && <UIActivityIndicator style={{padding: 20, flex: 0}} />}
       <FlatList
+        ListHeaderComponent={
+          <View style={styles.projectCardContainer}>
+            <ProjectCard />
+          </View>
+        }
         initialNumToRender={rowsPerWindow}
         getItemLayout={getItemLayout}
         keyExtractor={keyExtractor}
@@ -125,16 +136,6 @@ export const ObservationsList: React.FC<
   );
 };
 
-export function createNavigationOptions(
-  formatMessage: (title: MessageDescriptor) => string,
-): BottomTabNavigationOptions {
-  return {
-    headerLeft: ObservationListHeaderLeft,
-    headerTransparent: false,
-    headerTitle: formatMessage(ObservationsList.navTitle),
-  };
-}
-
 ObservationsList.navTitle = m.observationListTitle;
 
 const styles = StyleSheet.create({
@@ -144,5 +145,12 @@ const styles = StyleSheet.create({
   },
   listItem: {
     height: OBSERVATION_CELL_HEIGHT,
+  },
+  projectCardContainer: {
+    width: '100%',
+    flex: 1,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: VERY_LIGHT_GREY,
   },
 });

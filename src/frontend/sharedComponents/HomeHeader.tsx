@@ -34,7 +34,7 @@ export function HomeHeader({openDrawer}: HomeHeaderProps) {
       <View style={styles.headerRow}>
         <View style={styles.titleBox}>
           <HeaderText
-            variant="header5"
+            variant="header4"
             style={styles.text}
             numberOfLines={1}
             ellipsizeMode="tail">

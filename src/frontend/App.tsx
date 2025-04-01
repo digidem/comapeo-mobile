@@ -119,6 +119,7 @@ const persistedCoordinateFormatStore = createCoordinateFormatStore({
 const persistedManualEntryCoordinateFormatStore =
   createManualEntryCoordinateFormatStore({
     persist: true,
+    storage: MMKVZustandStorage,
   });
 
 const persistedActiveProjectIdStore = createActiveProjectIdStore({

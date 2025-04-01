@@ -21,7 +21,7 @@ function createWrapper(store: ManualEntryCoordinateFormatStore) {
 }
 
 test('usage of state and actions hooks', () => {
-  const store = createManualEntryCoordinateFormatStore();
+  const store = createManualEntryCoordinateFormatStore({persist: false});
   const wrapper = createWrapper(store);
 
   const actionsHook = renderHook(

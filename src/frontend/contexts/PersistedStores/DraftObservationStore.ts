@@ -5,13 +5,16 @@ import {
   type Preset,
 } from '@comapeo/schema';
 import {createStore, type StoreApi} from 'zustand';
-import {persist as createPersistedState} from 'zustand/middleware';
+import {
+  createJSONStorage,
+  persist as createPersistedState,
+} from 'zustand/middleware';
 import type {LocationObject, LocationProviderStatus} from 'expo-location';
 import type {AccelerometerMeasurement} from 'expo-sensors';
 import type {CameraCapturedPicture} from 'expo-camera';
 import {manipulateAsync} from 'expo-image-manipulator';
 import {excludeKeys} from 'filter-obj';
-import type {Position} from '../../sharedTypes/index.ts';
+import type {CreateStoreOpts, Position} from '../../sharedTypes/index.ts';
 
 export type DraftObservationStore = ReturnType<
   typeof createDraftObservationStore
@@ -43,13 +46,17 @@ export function convertPosition(
   };
 }
 
-export function createDraftObservationStore({persist}: {persist: boolean}) {
+export function createDraftObservationStore(opts: CreateStoreOpts) {
   let nextAttachmentId = 0;
   let instance: StoreApi<DraftState>;
 
-  if (persist) {
+  if (opts.persist) {
     instance = createStore(
-      createPersistedState(createEmptyStoreState, {name: '@MapeoDraft'}),
+      createPersistedState(createEmptyStoreState, {
+        name: '@MapeoDraft',
+        storage: createJSONStorage(() => opts.storage),
+        version: 0,
+      }),
     );
   } else {
     instance = createStore(createEmptyStoreState);

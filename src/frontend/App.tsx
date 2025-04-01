@@ -88,6 +88,7 @@ SplashScreen.preventAutoHideAsync().catch(err => {
 
 const persistedDraftObservationStore = createDraftObservationStore({
   persist: true,
+  storage: MMKVZustandStorage,
 });
 
 const persistedTrackStore = createTrackStore({

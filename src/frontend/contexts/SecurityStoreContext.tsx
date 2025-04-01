@@ -1,4 +1,3 @@
-import {deleteItemAsync, getItem, setItem} from 'expo-secure-store';
 import {createContext, useContext} from 'react';
 import * as v from 'valibot';
 import {createStore, useStore, type StoreApi} from 'zustand';
@@ -8,6 +7,7 @@ import {
 } from 'zustand/middleware';
 
 import {PasscodeSchema} from '../lib/security';
+import {type CreateStoreOpts} from '../sharedTypes';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SecurityStateSchema = v.variant('passcode', [
@@ -33,27 +33,15 @@ function createInitialState(): SecurityState {
   };
 }
 
-export function createSecurityStore({persist} = {persist: false}) {
+export function createSecurityStore(opts: CreateStoreOpts) {
   let store: StoreApi<SecurityState>;
 
-  if (persist) {
+  if (opts.persist) {
     store = createStore(
       createPersistedState(createInitialState, {
         name: STORAGE_KEY,
         version: 0,
-        storage: createJSONStorage(() => {
-          return {
-            getItem: key => {
-              return getItem(key);
-            },
-            setItem: (key, value) => {
-              return setItem(key, value);
-            },
-            removeItem: key => {
-              return deleteItemAsync(key);
-            },
-          };
-        }),
+        storage: createJSONStorage(() => opts.storage),
       }),
     );
   } else {

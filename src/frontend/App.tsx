@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {getLocales} from 'expo-localization';
+import * as SecureStore from 'expo-secure-store';
 import {createMapeoClient} from '@comapeo/ipc';
 import {AppNavigator} from './AppNavigator';
 import {MessagePortLike} from './lib/MessagePortLike';
@@ -98,6 +99,17 @@ const persistedTrackStore = createTrackStore({
 
 const persistedSecurityStore = createSecurityStore({
   persist: true,
+  storage: {
+    getItem: key => {
+      return SecureStore.getItem(key);
+    },
+    setItem: (key, value) => {
+      return SecureStore.setItem(key, value);
+    },
+    removeItem: key => {
+      return SecureStore.deleteItemAsync(key);
+    },
+  },
 });
 
 const persistedCoordinateFormatStore = createCoordinateFormatStore({

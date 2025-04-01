@@ -21,7 +21,7 @@ function createWrapper(settingsStore: SecurityStore) {
 }
 
 test('initial state', () => {
-  const store = createSecurityStore();
+  const store = createSecurityStore({persist: false});
   const wrapper = createWrapper(store);
 
   const stateHook = renderHook(() => useSecurityState(), {
@@ -35,7 +35,7 @@ test('initial state', () => {
 });
 
 test('passcode cannot be set to invalid value', () => {
-  const store = createSecurityStore();
+  const store = createSecurityStore({persist: false});
   const wrapper = createWrapper(store);
 
   const actionsHook = renderHook(() => useSecurityActions(), {
@@ -68,7 +68,7 @@ test('passcode cannot be set to invalid value', () => {
 });
 
 test('obscure code cannot be set when passcode is not set', () => {
-  const store = createSecurityStore();
+  const store = createSecurityStore({persist: false});
   const wrapper = createWrapper(store);
 
   const actionsHook = renderHook(() => useSecurityActions(), {
@@ -90,7 +90,7 @@ test('obscure code cannot be set when passcode is not set', () => {
 });
 
 test('obscure code has expected value when enabled', () => {
-  const store = createSecurityStore();
+  const store = createSecurityStore({persist: false});
   const wrapper = createWrapper(store);
 
   const stateHook = renderHook(() => useSecurityState(), {
@@ -121,7 +121,7 @@ test('obscure code has expected value when enabled', () => {
 });
 
 test('obscure code is unset when passcode is unset', () => {
-  const store = createSecurityStore();
+  const store = createSecurityStore({persist: false});
   const wrapper = createWrapper(store);
 
   const stateHook = renderHook(() => useSecurityState(), {

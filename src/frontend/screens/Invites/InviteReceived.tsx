@@ -14,6 +14,7 @@ import {useEffect} from 'react';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 
 const m = defineMessages({
   navTitle: {
@@ -47,6 +48,7 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
   const {data: invite} = useSingleInvite({inviteId});
   const acceptInvite = useAcceptInvite();
   const rejectInvite = useRejectInvite();
+  const {setActiveProjectId} = useActiveProjectIdActions();
 
   useEffect(() => {
     if (invite.state === 'canceled') {
@@ -58,7 +60,8 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
     acceptInvite.mutate(
       {inviteId: inviteId},
       {
-        onSuccess: () => {
+        onSuccess: projectId => {
+          setActiveProjectId(projectId);
           navigation.replace('InviteSuccessfullyJoined', {
             projectName: invite.projectName,
           });

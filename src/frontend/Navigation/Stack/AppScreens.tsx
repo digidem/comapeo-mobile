@@ -97,6 +97,7 @@ import {AudioSavedBottomSheet} from '../../screens/Audio/AudioSavedBottomSheet.t
 import {AudioPlaybackSaved} from '../../screens/Audio/AudioPlaybackSaved.tsx';
 import {AudioCustomHeaderLeft} from '../../screens/Audio/AudioCustomHeaderLeft.tsx';
 import {InviteReceived} from '../../screens/Invites/InviteReceived.tsx';
+import {InviteSuccessfullyJoined} from '../../screens/Invites/InviteSuccessfullyJoined.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -441,6 +442,10 @@ export const createDefaultScreenGroup = ({
         component={AudioSavedBottomSheet}
       />
       <RootStack.Screen name="InviteReceived" component={InviteReceived} />
+      <RootStack.Screen
+        name="InviteSuccessfullyJoined"
+        component={InviteSuccessfullyJoined}
+      />
     </RootStack.Group>
   </>
 );

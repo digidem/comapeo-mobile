@@ -5,8 +5,8 @@ import {defineMessages, useIntl} from 'react-intl';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {CommonActions} from '@react-navigation/native';
-import {rootNavigationRef} from '../../AppNavigator';
+import {CommonActions, useNavigation} from '@react-navigation/native';
+import SuccessCheck from '../../images/GreenCheck.svg';
 
 const m = defineMessages({
   goToMap: {
@@ -32,15 +32,17 @@ export const InviteSuccessfullyJoined = ({
   navigation,
 }: NativeRootNavigationProps<'InviteSuccessfullyJoined'>) => {
   const {formatMessage} = useIntl();
+  const {dispatch} = useNavigation();
 
   function handleGoToSync() {
-    rootNavigationRef.dispatch(
+    dispatch(
       CommonActions.reset({index: 1, routes: [{name: 'Home'}, {name: 'Sync'}]}),
     );
   }
 
   return (
     <BottomSheetWrapper>
+      <SuccessCheck style={{alignSelf: 'center', marginTop: 20}} />
       <HeaderText
         style={{textAlign: 'center', marginTop: 20}}
         variant="header2">
@@ -55,7 +57,7 @@ export const InviteSuccessfullyJoined = ({
         <>
           <SecondaryButton
             fullSize
-            onPress={() => navigation.navigate('Home', {screen: 'Map'})}
+            onPress={() => navigation.popTo('Home', {screen: 'Map'})}
             text={formatMessage(m.goToMap)}
           />
           <PrimaryButton

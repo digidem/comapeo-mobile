@@ -1,21 +1,14 @@
 import {Audio, AVPlaybackStatus, AVPlaybackStatusSuccess} from 'expo-av';
 import {useCallback, useEffect, useState, useRef} from 'react';
 import {Sound} from 'expo-av/build/Audio/Sound';
+import {useNavigationFromRoot} from './useNavigationWithTypes';
 
 export const useAudioPlayback = (recordingUri: string) => {
   const recordedSoundRef = useRef<Sound | null>(null);
   const [isPlaying, setPlaying] = useState(false);
   const [duration, setDuration] = useState<number>(0);
   const [currentPosition, setCurrentPosition] = useState(0);
-  const [error, setError] = useState<Error | null>(null);
-
-  const clearError = useCallback(() => setError(null), []);
-
-  const handleError = useCallback((err: unknown) => {
-    const newError =
-      err instanceof Error ? err : new Error('An unknown error occurred');
-    setError(newError);
-  }, []);
+  const {navigate} = useNavigationFromRoot();
 
   const audioCallbackHandler = useCallback((status: AVPlaybackStatus) => {
     const update = status as AVPlaybackStatusSuccess;
@@ -43,9 +36,9 @@ export const useAudioPlayback = (recordingUri: string) => {
         setDuration((status as AVPlaybackStatusSuccess).durationMillis ?? 0);
         sound.setOnPlaybackStatusUpdate(audioCallbackHandler);
       })
-      .catch(err => {
+      .catch(() => {
         if (!isCancelled) {
-          handleError(err);
+          navigate('ErrorBottomSheet');
         }
       });
 
@@ -56,7 +49,7 @@ export const useAudioPlayback = (recordingUri: string) => {
         recordedSoundRef.current = null;
       }
     };
-  }, [recordingUri, audioCallbackHandler, handleError]);
+  }, [recordingUri, audioCallbackHandler, navigate]);
 
   const startPlayback = useCallback(async () => {
     if (!recordedSoundRef.current || isPlaying) return;
@@ -69,10 +62,10 @@ export const useAudioPlayback = (recordingUri: string) => {
 
       await recordedSoundRef.current.playAsync();
       setPlaying(true);
-    } catch (err) {
-      handleError(err);
+    } catch {
+      navigate('ErrorBottomSheet');
     }
-  }, [isPlaying, currentPosition, duration, handleError]);
+  }, [isPlaying, currentPosition, duration, navigate]);
 
   const stopPlayback = useCallback(async () => {
     if (!recordedSoundRef.current || !isPlaying) return;
@@ -80,10 +73,10 @@ export const useAudioPlayback = (recordingUri: string) => {
     try {
       await recordedSoundRef.current!.pauseAsync();
       setPlaying(false);
-    } catch (err) {
-      handleError(err);
+    } catch {
+      navigate('ErrorBottomSheet');
     }
-  }, [isPlaying, handleError]);
+  }, [isPlaying, navigate]);
 
   return {
     duration,
@@ -91,7 +84,5 @@ export const useAudioPlayback = (recordingUri: string) => {
     currentPosition,
     startPlayback,
     stopPlayback,
-    error,
-    clearError,
   };
 };

@@ -10,15 +10,6 @@ export const useAudioPlayback = (recordingUri: string) => {
   const [currentPosition, setCurrentPosition] = useState(0);
   const {navigate} = useNavigationFromRoot();
 
-  // const handleError = useCallback(
-  //   (err: unknown) => {
-  //     const newError =
-  //       err instanceof Error ? err : new Error('An unknown error occurred');
-  //     navigate('ErrorBottomSheet', {errorMessage: newError.message});
-  //   },
-  //   [navigate],
-  // );
-
   const audioCallbackHandler = useCallback((status: AVPlaybackStatus) => {
     const update = status as AVPlaybackStatusSuccess;
     if (update.didJustFinish) {

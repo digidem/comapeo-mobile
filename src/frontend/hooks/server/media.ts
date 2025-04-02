@@ -18,31 +18,23 @@ interface Attachment {
   hash: string;
 }
 
+type AttachmentParam = ProcessedDraftPhoto | UnsavedAudio;
+
 export function useCreateAttachment() {
   const {projectId} = useActiveProject();
-  const createBlobMutation = useCreateBlob({projectId});
+  const {mutateAsync: createBlobAsync} = useCreateBlob({projectId});
 
-  const wrappedMutation = useMutation({
-    mutationFn: (
-      file: ProcessedDraftPhoto | UnsavedAudio,
-    ): Promise<Attachment> => {
-      return new Promise((res, rej) => {
-        createBlobMutation.mutate(createBlobArgs(file), {
-          onError: rej,
-          onSuccess: data => {
-            res({
-              driveDiscoveryId: data.driveId,
-              name: data.name,
-              type: data.type,
-              hash: data.hash,
-            });
-          },
-        });
-      });
+  return useMutation<Attachment, Error, AttachmentParam>({
+    mutationFn: async file => {
+      const data = await createBlobAsync(createBlobArgs(file));
+      return {
+        driveDiscoveryId: data.driveId,
+        name: data.name,
+        type: data.type,
+        hash: data.hash,
+      };
     },
   });
-
-  return wrappedMutation;
 }
 
 function createBlobArgs(file: ProcessedDraftPhoto | UnsavedAudio) {
@@ -61,12 +53,11 @@ function createBlobArgs(file: ProcessedDraftPhoto | UnsavedAudio) {
       },
     };
   } else if (isUnsavedAudio(file)) {
-    const {uri, createdAt} = file;
     return {
-      original: new URL(uri).pathname,
+      original: new URL(file.uri).pathname,
       metadata: {
         mimeType: 'audio/mp4',
-        timestamp: createdAt,
+        timestamp: file.createdAt,
       },
     };
   }

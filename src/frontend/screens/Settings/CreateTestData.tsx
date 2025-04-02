@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
 
 function useCreateFakeObservationsMutation() {
   const {projectId} = useActiveProject();
-  const {mutate: createObservationMutation} = useCreateDocument({
+  const {mutateAsync: createObservationAsync} = useCreateDocument({
     docType: 'observation',
     projectId,
   });
@@ -251,63 +251,50 @@ function useCreateFakeObservationsMutation() {
 
       const {latitude, longitude} = location.coords;
 
-      const bbox = [
+      const bbox: BBox = [
         longitude - distanceBufferDegrees,
         latitude - distanceBufferDegrees,
         longitude + distanceBufferDegrees,
         latitude + distanceBufferDegrees,
-      ] satisfies BBox;
+      ];
 
-      const promises = [];
-
+      const tasks = [];
       for (let i = 0; i < count; i++) {
         const [lon, lat] = randomPosition({bbox});
-        if (lon === undefined || lat === undefined) {
-          throw new Error('randomPosition returned invalid position');
+        if (lon == null || lat == null)
+          throw new Error('randomPosition invalid');
+
+        const randomPreset =
+          presets[Math.floor(Math.random() * presets.length)];
+        if (!randomPreset) {
+          continue;
         }
-
-        const randomPreset = presets.at(
-          Math.floor(Math.random() * presets.length),
-        );
-
         const isManualLocation = Math.random() < 0.25;
-        let metadata: Metadata;
-        if (isManualLocation) {
-          metadata = {manualLocation: true};
-        } else {
-          metadata = {
-            manualLocation: false,
-            position: {
-              mocked: false,
-              timestamp: new Date().toISOString(),
-              coords: {latitude: lat, longitude: lon},
-            },
-          };
-        }
+
+        const metadata: Metadata = isManualLocation
+          ? {manualLocation: true}
+          : {
+              manualLocation: false,
+              position: {
+                mocked: false,
+                timestamp: new Date().toISOString(),
+                coords: {latitude: lat, longitude: lon},
+              },
+            };
 
         const value = {
-          attachments: [],
-          lon,
-          lat,
-          metadata,
           schemaName: 'observation' as const,
-          tags: {...randomPreset!.tags, notes},
+          attachments: [],
+          tags: {...randomPreset.tags, notes},
+          lat,
+          lon,
+          metadata,
         };
 
-        promises.push(
-          new Promise<void>((resolve, reject) => {
-            createObservationMutation(
-              {value},
-              {
-                onSuccess: () => resolve(),
-                onError: err => reject(err),
-              },
-            );
-          }),
-        );
+        tasks.push(createObservationAsync({value}));
       }
 
-      return Promise.all(promises);
+      return Promise.all(tasks);
     },
   });
 }

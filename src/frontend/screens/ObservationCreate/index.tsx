@@ -95,13 +95,13 @@ export const ObservationCreate = ({
   const value = usePersistedDraftObservation(store => store.value);
   const attachments = usePersistedDraftObservation(store => store.attachments);
   const {updateTags, clearDraft} = useDraftObservation();
-  const {mutate: createObservationMutation, status: observationStatus} =
+  const {mutateAsync: createAttachmentAsync, status: observationStatus} =
+    useCreateAttachment();
+  const {mutateAsync: createObservationAsync, status: attachmentStatus} =
     useCreateDocument({
       docType: 'observation',
       projectId,
     });
-  const {mutateAsync: createAttachmentAsync, status: attachmentStatus} =
-    useCreateAttachment();
 
   const isTracking = useTrackState(state => state.isTracking);
   const {
@@ -156,7 +156,7 @@ export const ObservationCreate = ({
     const unsavedAudioRecordings = attachments.filter(isUnsavedAudio);
 
     if (unsavedPhotos.length === 0 && unsavedAudioRecordings.length === 0) {
-      createObservationMutation(
+      createObservationAsync(
         {
           value: {
             ...value,
@@ -189,13 +189,13 @@ export const ObservationCreate = ({
     // This could potentially be alleviated by a more granular and informative UI about the photo-saving state, but currently there is nothing in place.
     // Basically, which is worse: orphaned attachments or saving observations that seem to be missing attachments?
 
-    const newAttachments = [];
-    for (const file of [...unsavedPhotos, ...unsavedAudioRecordings]) {
-      const result = await createAttachmentAsync(file);
-      newAttachments.push(result);
-    }
+    const newAttachments = await Promise.all(
+      [...unsavedPhotos, ...unsavedAudioRecordings].map(file =>
+        createAttachmentAsync(file),
+      ),
+    );
 
-    createObservationMutation(
+    createObservationAsync(
       {
         value: {
           ...value,
@@ -223,7 +223,7 @@ export const ObservationCreate = ({
     addObservationRefToTrack,
     clearDraft,
     createAttachmentAsync,
-    createObservationMutation,
+    createObservationAsync,
     isTracking,
     navigation,
     attachments,

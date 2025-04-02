@@ -102,6 +102,7 @@ import {InviteCancelled} from '../../screens/Invites/InviteCancelled.tsx';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagement/ErrorBottomSheet.tsx';
 import {AlreadyOnProject} from '../../screens/Invites/AlreadyOnProject.tsx';
+import {LeaveProject} from '../../screens/Invites/LeaveProject.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -457,6 +458,7 @@ export const createDefaultScreenGroup = ({
         component={BackgroundMapErrorBottomSheet}
       />
       <RootStack.Screen name="AlreadyOnProject" component={AlreadyOnProject} />
+      <RootStack.Screen name="LeaveProject" component={LeaveProject} />
     </RootStack.Group>
   </>
 );

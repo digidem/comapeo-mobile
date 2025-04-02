@@ -56,9 +56,7 @@ export const AlreadyOnProject = ({
             {formatMessage(m.alreadyOnProject)}
           </HeaderText>
           {projectName && (
-            <BodyText
-              style={{textAlign: 'center', marginTop: 20}}
-              variant="large">
+            <BodyText style={{textAlign: 'center', marginTop: 20}}>
               {formatMessage(m.onProject, {projectName: projectName})}
             </BodyText>
           )}

@@ -48,7 +48,7 @@ export const InviteSuccessfullyJoined = ({
         variant="header2">
         {formatMessage(m.success)}
       </HeaderText>
-      <BodyText style={{textAlign: 'center', marginTop: 20}} variant="large">
+      <BodyText style={{textAlign: 'center', marginTop: 20}}>
         {formatMessage(m.youHaveJoined, {
           projectName: route.params.projectName,
         })}

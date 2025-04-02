@@ -55,6 +55,13 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
 
   useListenToInviteStateUpdate(inviteId);
 
+  // This guarantees the user does not get stuck on the invite screen
+  if (!invite) {
+    console.log('this is happeniung first?');
+    navigation.goBack();
+    return null;
+  }
+
   function accept() {
     if (projects.data.length > 1) {
       navigation.replace('AlreadyOnProject', {inviteId});
@@ -102,7 +109,7 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
         variant="header2">
         {formatMessage(m.joinProject, {projectName: invite.projectName})}
       </HeaderText>
-      <BodyText style={{textAlign: 'center', marginTop: 20}} variant="large">
+      <BodyText style={{textAlign: 'center', marginTop: 20}}>
         {formatMessage(m.invitedToJoin, {projectName: invite.projectName})}
       </BodyText>
       <View style={styles.buttonContainer}>

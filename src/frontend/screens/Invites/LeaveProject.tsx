@@ -124,9 +124,7 @@ export const LeaveProject = ({
               variant="header2">
               {formatMessage(m.leaveProj)}
             </HeaderText>
-            <BodyText
-              style={{textAlign: 'center', marginTop: 20}}
-              variant="large">
+            <BodyText style={{textAlign: 'center', marginTop: 20}}>
               {projectName
                 ? formatMessage(m.removeFromProjWithName, {
                     projectName: projectName,

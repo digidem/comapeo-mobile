@@ -30,13 +30,13 @@ export const InviteCancelled = ({
 
   return (
     <BottomSheetWrapper>
-      <Error style={{alignSelf: 'center'}} />
+      <Error style={{alignSelf: 'center', marginTop: 10}} />
       <HeaderText
         style={{textAlign: 'center', marginTop: 20}}
         variant="header2">
         {formatMessage(m.canceled)}
       </HeaderText>
-      <BodyText style={{textAlign: 'center', marginTop: 20}} variant="large">
+      <BodyText style={{textAlign: 'center', marginTop: 20}}>
         {formatMessage(m.projectInviteCanceled, {
           projectName: route.params.projectName,
         })}
@@ -55,6 +55,6 @@ export const InviteCancelled = ({
 const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 30,
   },
 });

@@ -25,6 +25,9 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "လေ့လာထားရှိမှုများကို ဖျက်ပစ်မှာလား?"
   },
+  "MapManagement.ErrorBottomSheet.goBack": {
+    "message": "Go Back"
+  },
   "Modal.GPSDisable.button": {
     "message": "Enable"
   },
@@ -1623,14 +1626,11 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Change"
   },
-  "sharedComponents.ErrorModal.goBack": {
+  "sharedComponents.ErrorBottomSheet.goBack": {
     "message": "Go Back"
   },
-  "sharedComponents.ErrorModal.somethingWrong": {
+  "sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Something Went Wrong"
-  },
-  "sharedComponents.ErrorModal.tryAgain": {
-    "message": "Try Again"
   },
   "sharedComponents.GpsPill.noGps": {
     "message": "No GPS"

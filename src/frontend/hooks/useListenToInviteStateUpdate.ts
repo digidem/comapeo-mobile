@@ -23,10 +23,6 @@ export function useListenToInviteStateUpdate(inviteId: string) {
         navigation.replace('ErrorBottomSheet');
         return;
       }
-
-      if (invite.state !== 'pending') {
-        navigation.goBack();
-      }
     }
 
     mapeoApiInvite.addListener('invite-updated', navigateBasedOnInviteState);

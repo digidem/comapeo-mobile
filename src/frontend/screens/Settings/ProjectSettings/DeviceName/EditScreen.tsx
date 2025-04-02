@@ -6,15 +6,14 @@ import {useForm} from 'react-hook-form';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
-import {
-  useDeviceInfo,
-  useEditDeviceInfo,
-} from '../../../../hooks/server/deviceInfo';
+import {useOwnDeviceInfo, useSetOwnDeviceInfo} from '@comapeo/core-react';
 import {BLACK} from '../../../../lib/styles';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
 import {IconButton} from '../../../../sharedComponents/IconButton';
 import SaveIcon from '../../../../images/CheckMark.svg';
 import {FieldRow} from './FieldRow';
+import {expoToCoreDeviceType} from '../../../../lib/deviceTypeMap';
+import {deviceType} from 'expo-device';
 import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
@@ -63,7 +62,7 @@ export const EditScreen = ({
 }: NativeRootNavigationProps<'DeviceNameEdit'>) => {
   const {formatMessage: t} = useIntl();
 
-  const {data} = useDeviceInfo();
+  const {data} = useOwnDeviceInfo();
 
   const deviceName = data?.name;
 
@@ -71,7 +70,8 @@ export const EditScreen = ({
     deviceName: string;
   }>({defaultValues: {deviceName}});
 
-  const {isPending, mutate} = useEditDeviceInfo();
+  const {mutate, status} = useSetOwnDeviceInfo();
+  const isPending = status === 'pending';
 
   const {isDirty: nameHasChanges} = control.getFieldState(
     'deviceName',
@@ -113,14 +113,21 @@ export const EditScreen = ({
         navigation.popTo('DeviceNameDisplay');
         return;
       }
-
-      mutate(value.deviceName, {
-        onSuccess: () => navigation.popTo('DeviceNameDisplay'),
-        onError: err => {
-          Sentry.captureException(err);
-          navigation.navigate('ErrorBottomSheet');
+      mutate(
+        {
+          name: value.deviceName,
+          deviceType: expoToCoreDeviceType(deviceType),
         },
-      });
+        {
+          onSuccess: () => {
+            navigation.popTo('DeviceNameDisplay');
+          },
+          onError: err => {
+            Sentry.captureException(err);
+            navigation.navigate('ErrorBottomSheet');
+          },
+        },
+      );
     });
   }, [handleSubmit, mutate, nameHasChanges, navigation]);
 

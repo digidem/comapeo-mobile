@@ -84,9 +84,9 @@ const SavedPhotoThumbnail = ({photo}: {photo: SavedPhoto}) => {
 
   return (
     <PhotoThumbnailImage
-      isLoading={image.isPending}
+      isLoading={image.isRefetching}
       error={image.error}
-      uri={image.data?.url}
+      uri={image?.url}
     />
   );
 };

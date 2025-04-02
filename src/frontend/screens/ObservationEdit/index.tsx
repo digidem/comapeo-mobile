@@ -8,8 +8,8 @@ import {
   NativeNavigationComponent,
   NativeRootNavigationProps,
 } from '../../sharedTypes/navigation';
-import {useEditObservation} from '../../hooks/server/observations';
-import {useCreateBlobMutation} from '../../hooks/server/media';
+import {useUpdateDocument} from '@comapeo/core-react';
+import {useCreateAttachment} from '../../hooks/server/media';
 import {SaveButton} from '../../sharedComponents/SaveButton';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {ActionsRow} from '../../sharedComponents/ActionsRow';
@@ -52,15 +52,18 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   route,
 }) => {
   const {formatMessage} = useIntl();
-  const {projectApi} = useActiveProject();
+  const {projectApi, projectId} = useActiveProject();
 
   const value = usePersistedDraftObservation(store => store.value);
   const {updateTags, clearDraft, usePreset, existingObservationToDraft} =
     useDraftObservation();
   const preset = usePreset();
-  const editObservationMutation = useEditObservation();
+  const {mutate, status} = useUpdateDocument({
+    docType: 'observation',
+    projectId,
+  });
   const attachments = usePersistedDraftObservation(store => store.attachments);
-  const createBlobMutation = useCreateBlobMutation();
+  const {mutateAsync: createAttachmentAsync} = useCreateAttachment();
 
   const notes = value?.tags.notes;
   const presetName = preset
@@ -138,7 +141,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       removedAudioAttachments.length > 0;
 
     if (!attachmentsChanged) {
-      editObservationMutation.mutate(
+      mutate(
         {
           versionId: value.versionId,
           value: {
@@ -161,12 +164,12 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
 
     const unsavedFiles = [...newPhotos, ...newAudioRecordings];
     const attachmentPromises = unsavedFiles.map(file =>
-      createBlobMutation.mutateAsync(file),
+      createAttachmentAsync(file),
     );
 
     Promise.all(attachmentPromises).then(results => {
       const newAttachments = results.map(
-        ({driveId: driveDiscoveryId, type, name, hash}) => ({
+        ({driveDiscoveryId, type, name, hash}) => ({
           driveDiscoveryId,
           type,
           name,
@@ -184,7 +187,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         ...newAttachments,
       ];
 
-      editObservationMutation.mutate(
+      mutate(
         {
           versionId: value.versionId,
           value: {
@@ -203,8 +206,8 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   }, [
     preset,
     value,
-    editObservationMutation,
-    createBlobMutation,
+    mutate,
+    createAttachmentAsync,
     attachments,
     handleNavigationSuccess,
     navigation,
@@ -215,7 +218,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       headerRight: () => (
         <SaveButton
           onPress={editObservation}
-          isLoading={editObservationMutation.isPending}
+          isLoading={status === 'pending'}
         />
       ),
       headerLeft: props => (
@@ -225,12 +228,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         />
       ),
     });
-  }, [
-    editObservation,
-    editObservationMutation,
-    navigation,
-    route.params?.observationId,
-  ]);
+  }, [editObservation, status, navigation, route.params?.observationId]);
 
   return !value ? (
     <Loading />

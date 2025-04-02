@@ -16,9 +16,8 @@ import {
 } from 'react-native-gesture-handler';
 import {UIActivityIndicator} from 'react-native-indicators';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-
+import {useCreateProject} from '@comapeo/core-react';
 import {useSelectFile} from '../../../../hooks/files';
-import {useCreateProject} from '../../../../hooks/server/projects';
 import {convertFileUriToPosixPath} from '../../../../lib/file-system';
 import {BLACK, LIGHT_GREY} from '../../../../lib/styles';
 import noop from '../../../../lib/noop';
@@ -225,8 +224,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
             paddingHorizontal: 20,
             alignItems: 'center',
           }}>
-          {selectFileMutation.status === 'pending' ||
-          createProjectMutation.status === 'pending' ? (
+          {mutationIsPending ? (
             <UIActivityIndicator size={30} style={{marginBottom: 20}} />
           ) : (
             <PrimaryButton

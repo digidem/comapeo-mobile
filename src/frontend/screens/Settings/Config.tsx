@@ -1,20 +1,17 @@
 import * as FileSystem from 'expo-file-system';
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
+import {useImportProjectConfig} from '@comapeo/core-react';
 import {Alert, StyleSheet, View} from 'react-native';
 import {useSelectFile} from '../../hooks/files';
-import {
-  useGetOwnRole,
-  useImportProjectConfig,
-  useProjectSettings,
-} from '../../hooks/server/projects';
-import {Loading} from '../../sharedComponents/Loading';
+import {useProjectSettings, useGetOwnRole} from '../../hooks/server/projects';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {MEDIUM_GREY} from '../../lib/styles';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../sharedTypes';
 import {convertFileUriToPosixPath} from '../../lib/file-system';
 import noop from '../../lib/noop';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import * as Sentry from '@sentry/react-native';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
@@ -53,15 +50,16 @@ const m = defineMessages({
 
 export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
   const {formatMessage} = useIntl();
-  const {data, isPending} = useProjectSettings();
-  const deviceRole = useGetOwnRole();
+  const {data} = useProjectSettings();
+  const {projectId} = useActiveProject();
+  const {data: deviceRole} = useGetOwnRole();
 
   const selectFileMutation = useSelectFile();
-  const importProjectConfigMutation = useImportProjectConfig();
+  const importProjectConfigMutation = useImportProjectConfig({projectId});
 
   const isCoordinator =
-    deviceRole.data?.roleId === COORDINATOR_ROLE_ID ||
-    deviceRole.data?.roleId === CREATOR_ROLE_ID;
+    deviceRole.roleId === COORDINATOR_ROLE_ID ||
+    deviceRole.roleId === CREATOR_ROLE_ID;
 
   const configImportIsPending =
     selectFileMutation.status === 'pending' ||
@@ -94,7 +92,7 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
         onSuccess: selected => {
           if (!selected) return;
           importProjectConfigMutation.mutate(
-            convertFileUriToPosixPath(selected.uri),
+            {configPath: convertFileUriToPosixPath(selected.uri)},
             {
               onSettled: () => {
                 FileSystem.deleteAsync(selected.uri, {idempotent: true}).catch(
@@ -121,10 +119,6 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
     );
   }
 
-  if (!data || isPending) {
-    return <Loading />;
-  }
-
   return (
     <View style={styles.container}>
       {data.name && (
@@ -147,7 +141,7 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
           <BodyText>{data.configMetadata.name}</BodyText>
         </>
       )}
-      {deviceRole.isPending || configImportIsPending ? (
+      {configImportIsPending ? (
         <UIActivityIndicator style={{marginTop: 20, flex: 0}} />
       ) : isCoordinator ? (
         <SecondaryButton

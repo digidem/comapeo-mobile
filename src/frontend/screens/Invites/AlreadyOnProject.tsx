@@ -39,9 +39,9 @@ export const AlreadyOnProject = ({
   const {formatMessage} = useIntl();
   const projectId = useActiveProjectId();
   const {
-    data: {name: projectName},
+    data: {name: currentProjectName},
   } = useProjectSettings({projectId: projectId!});
-  const inviteId = route.params.inviteId;
+  const {inviteId} = route.params;
 
   useListenToInviteStateUpdate(inviteId);
 
@@ -55,9 +55,9 @@ export const AlreadyOnProject = ({
             variant="header2">
             {formatMessage(m.alreadyOnProject)}
           </HeaderText>
-          {projectName && (
+          {currentProjectName && (
             <BodyText style={{textAlign: 'center', marginTop: 20}}>
-              {formatMessage(m.onProject, {projectName: projectName})}
+              {formatMessage(m.onProject, {projectName: currentProjectName})}
             </BodyText>
           )}
         </View>
@@ -74,7 +74,7 @@ export const AlreadyOnProject = ({
             onPress={() => {
               navigation.replace('LeaveProject', {
                 inviteId,
-                projectName,
+                currentProjectName,
               });
             }}
           />

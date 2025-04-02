@@ -57,14 +57,15 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
 
   // This guarantees the user does not get stuck on the invite screen
   if (!invite) {
-    console.log('this is happeniung first?');
     navigation.goBack();
     return null;
   }
 
   function accept() {
     if (projects.data.length > 1) {
-      navigation.replace('AlreadyOnProject', {inviteId});
+      navigation.replace('AlreadyOnProject', {
+        inviteId,
+      });
       return;
     }
     acceptInvite.mutate(
@@ -149,6 +150,6 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 30,
   },
 });

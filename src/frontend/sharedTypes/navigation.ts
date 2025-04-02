@@ -120,7 +120,10 @@ export type RootStackParamsList = {
   AlreadyOnProject: {inviteId: string};
   ErrorBottomSheet: undefined;
   BackgroundMapErrorBottomSheet: {title: string; description: string};
-  LeaveProject: {inviteId: string; projectName: undefined | string};
+  LeaveProject: {
+    inviteId: string;
+    currentProjectName: undefined | string;
+  };
 };
 
 export type OnboardingParamsList = {

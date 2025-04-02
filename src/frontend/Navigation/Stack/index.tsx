@@ -35,7 +35,7 @@ export const RootStackNavigator = ({
         return (
           <React.Suspense fallback={<Loading />}>
             <InvitesListener
-              currentRouteName={state.routeNames[state.index]}
+              currentRouteName={state.routes[state.index]?.name}
               navigateToInviteScreen={inviteId =>
                 navigation.navigate('InviteReceived', {inviteId})
               }

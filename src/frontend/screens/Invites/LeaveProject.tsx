@@ -12,7 +12,11 @@ import {Checkbox} from '../../sharedComponents/Checkbox';
 import {useState} from 'react';
 import {RED} from '../../lib/styles';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {useAcceptInvite, useLeaveProject} from '@comapeo/core-react';
+import {
+  useAcceptInvite,
+  useLeaveProject,
+  useSingleInvite,
+} from '@comapeo/core-react';
 import {useActiveProjectId} from '../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
@@ -64,7 +68,8 @@ export const LeaveProject = ({
   const accept = useAcceptInvite();
   const projectId = useActiveProjectId();
   const leaveProject = useLeaveProject();
-  const {projectName, inviteId} = route.params;
+  const {currentProjectName, inviteId} = route.params;
+  const {data: invite} = useSingleInvite({inviteId});
 
   useListenToInviteStateUpdate(inviteId);
 
@@ -79,12 +84,14 @@ export const LeaveProject = ({
     accept.mutate(
       {inviteId},
       {
-        onSuccess: projectName => {
+        onSuccess: () => {
           leaveProject.mutate(
             {projectId: projectId!},
             {
               onSuccess: () => {
-                navigation.replace('InviteSuccessfullyJoined', {projectName});
+                navigation.replace('InviteSuccessfullyJoined', {
+                  projectName: invite.projectName,
+                });
               },
               onError: err => {
                 Sentry.captureException(err);
@@ -109,7 +116,7 @@ export const LeaveProject = ({
             style={{textAlign: 'center', marginTop: 80}}
             variant="header2">
             {formatMessage(m.leavingProject, {
-              projectName: projectName || '',
+              projectName: currentProjectName || '',
             })}
           </HeaderText>
 
@@ -125,9 +132,9 @@ export const LeaveProject = ({
               {formatMessage(m.leaveProj)}
             </HeaderText>
             <BodyText style={{textAlign: 'center', marginTop: 20}}>
-              {projectName
+              {currentProjectName
                 ? formatMessage(m.removeFromProjWithName, {
-                    projectName: projectName,
+                    projectName: currentProjectName,
                   })
                 : formatMessage(m.removeFromProjWithoutName)}
             </BodyText>
@@ -144,9 +151,9 @@ export const LeaveProject = ({
                 hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
               />
               <HeaderText variant="header5" style={{marginLeft: 10}}>
-                {projectName
+                {currentProjectName
                   ? formatMessage(m.deleteConsentWithName, {
-                      projectName: projectName,
+                      projectName: currentProjectName,
                     })
                   : formatMessage(m.deleteConsentWithoutName)}
               </HeaderText>

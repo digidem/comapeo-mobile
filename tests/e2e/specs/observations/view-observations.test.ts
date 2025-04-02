@@ -68,6 +68,14 @@ describe('Observations - View Observations Flow', () => {
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();
   });
 
+  it('should display my role in the observations list', async () => {
+    const myRoleText = await $(byResourceId('OBS.card-text'));
+    await expect(myRoleText).toBeDisplayed();
+    await expect(myRoleText).toHaveText(
+      'You’re a coordinator on this project.',
+    );
+  });
+
   it('should toggle camera tab and back to confirm correct place', async () => {
     const cameraTab = await $('~Go to Camera');
     await cameraTab.click();

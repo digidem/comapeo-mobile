@@ -33,6 +33,7 @@ export function ObservationsListHeader({
     <View style={styles.container}>
       <View style={{flex: 1}}>
         <HeaderText
+          testID="OBS.header-title"
           variant="header4"
           style={styles.projectName}
           numberOfLines={1}
@@ -41,7 +42,10 @@ export function ObservationsListHeader({
         </HeaderText>
       </View>
 
-      <IconButton onPress={openDrawer ?? (() => {})} style={styles.iconButton}>
+      <IconButton
+        onPress={openDrawer ?? (() => {})}
+        style={styles.iconButton}
+        testID="OBS.header-drawer-btn">
         <DeviceIcon width={32} height={32} />
       </IconButton>
     </View>

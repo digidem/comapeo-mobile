@@ -69,7 +69,9 @@ export function ProjectCard() {
   return (
     <View style={styles.card}>
       <RoleIcon width={20} height={20} />
-      <BodyText variant="smallMeta">{userRoleText}</BodyText>
+      <BodyText testID="OBS.card-text" variant="smallMeta">
+        {userRoleText}
+      </BodyText>
     </View>
   );
 }

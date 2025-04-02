@@ -8,7 +8,6 @@ import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {useCreateDocument} from '@comapeo/core-react';
 import {SaveButton} from '../../sharedComponents/SaveButton';
 import {useMostAccurateLocationForObservation} from './useMostAccurateLocationForObservation';
-import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';
 import {ActionsRow} from '../../sharedComponents/ActionsRow';
@@ -16,6 +15,8 @@ import {Alert, type AlertButton} from 'react-native';
 import {Observation} from '@comapeo/schema';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useCreateAttachment} from '../../hooks/server/media';
+import * as Sentry from '@sentry/react-native';
+
 import {useTrackActions, useTrackState} from '../../contexts/TrackStoreContext';
 import {
   isProcessedDraftPhoto,
@@ -94,20 +95,13 @@ export const ObservationCreate = ({
   const value = usePersistedDraftObservation(store => store.value);
   const attachments = usePersistedDraftObservation(store => store.attachments);
   const {updateTags, clearDraft} = useDraftObservation();
-  const {
-    mutate: createObservationMutation,
-    reset: resetObservation,
-    status: observationStatus,
-    error: observationError,
-  } = useCreateDocument({
-    docType: 'observation',
-    projectId,
-  });
-  const {
-    mutateAsync: createAttachmentAsync,
-    reset: resetAttachment,
-    status: attachmentStatus,
-  } = useCreateAttachment();
+  const {mutate: createObservationMutation, status: observationStatus} =
+    useCreateDocument({
+      docType: 'observation',
+      projectId,
+    });
+  const {mutateAsync: createAttachmentAsync, status: attachmentStatus} =
+    useCreateAttachment();
 
   const isTracking = useTrackState(state => state.isTracking);
   const {
@@ -179,6 +173,10 @@ export const ObservationCreate = ({
               addObservationRefToTrack(data);
             }
           },
+          onError: err => {
+            Sentry.captureException(err);
+            navigation.navigate('ErrorBottomSheet');
+          },
         },
       );
 
@@ -214,6 +212,10 @@ export const ObservationCreate = ({
           if (isTracking) {
             addObservationRefToTrack(data);
           }
+        },
+        onError: err => {
+          Sentry.captureException(err);
+          navigation.navigate('ErrorBottomSheet');
         },
       },
     );
@@ -304,34 +306,24 @@ export const ObservationCreate = ({
   ]);
 
   return (
-    <>
-      <Editor
-        presetName={presetName}
-        PresetIcon={
-          <PresetCircleIcon
-            size="medium"
-            iconId={preset?.iconRef?.docId}
-            testID={`OBS.${preset?.name}-icon`}
-          />
-        }
-        onPressPreset={() => navigation.navigate('PresetChooser')}
-        notes={typeof notes !== 'string' ? '' : notes}
-        updateNotes={newVal => {
-          updateTags('notes', newVal);
-        }}
-        attachments={attachments}
-        location={coordinateInfo}
-        actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
-      />
-      <ErrorBottomSheet
-        error={observationError}
-        clearError={() => {
-          resetObservation();
-          resetAttachment();
-        }}
-        tryAgain={createObservation}
-      />
-    </>
+    <Editor
+      presetName={presetName}
+      PresetIcon={
+        <PresetCircleIcon
+          size="medium"
+          iconId={preset?.iconRef?.docId}
+          testID={`OBS.${preset?.name}-icon`}
+        />
+      }
+      onPressPreset={() => navigation.navigate('PresetChooser')}
+      notes={typeof notes !== 'string' ? '' : notes}
+      updateNotes={newVal => {
+        updateTags('notes', newVal);
+      }}
+      attachments={attachments}
+      location={coordinateInfo}
+      actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
+    />
   );
 };
 

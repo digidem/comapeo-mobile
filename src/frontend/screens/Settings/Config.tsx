@@ -8,11 +8,11 @@ import {useProjectSettings, useGetOwnRole} from '../../hooks/server/projects';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {MEDIUM_GREY} from '../../lib/styles';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../sharedTypes';
 import {convertFileUriToPosixPath} from '../../lib/file-system';
 import noop from '../../lib/noop';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import * as Sentry from '@sentry/react-native';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -53,8 +53,6 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
   const {data} = useProjectSettings();
   const {projectId} = useActiveProject();
   const {data: deviceRole} = useGetOwnRole();
-  const [importProjectConfigError, setImportProjectConfigError] =
-    React.useState<Error | null>(null);
 
   const selectFileMutation = useSelectFile();
   const importProjectConfigMutation = useImportProjectConfig({projectId});
@@ -101,16 +99,21 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
                   noop,
                 );
               },
+              onError: err => {
+                Sentry.captureException(err);
+                navigation.navigate('ErrorBottomSheet');
+              },
               onSuccess: () => {
                 Alert.alert(formatMessage(m.configImportTitle), selected.name, [
                   {text: formatMessage(m.okButton)},
                 ]);
               },
-              onError: err => {
-                setImportProjectConfigError(err);
-              },
             },
           );
+        },
+        onError: err => {
+          Sentry.captureException(err);
+          navigation.navigate('ErrorBottomSheet');
         },
       },
     );
@@ -148,15 +151,6 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
           text={formatMessage(m.importConfig)}
         />
       ) : null}
-      <ErrorBottomSheet
-        error={selectFileMutation.error || importProjectConfigError}
-        clearError={() => {
-          selectFileMutation.reset();
-          importProjectConfigMutation.reset();
-          setImportProjectConfigError(null);
-        }}
-        tryAgain={selectAndImportConfigFile}
-      />
     </View>
   );
 };

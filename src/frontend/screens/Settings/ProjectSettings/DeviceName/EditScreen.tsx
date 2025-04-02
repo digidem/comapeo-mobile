@@ -11,10 +11,10 @@ import {BLACK} from '../../../../lib/styles';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
 import {IconButton} from '../../../../sharedComponents/IconButton';
 import SaveIcon from '../../../../images/CheckMark.svg';
-import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
 import {FieldRow} from './FieldRow';
 import {expoToCoreDeviceType} from '../../../../lib/deviceTypeMap';
 import {deviceType} from 'expo-device';
+import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
   title: {
@@ -70,7 +70,7 @@ export const EditScreen = ({
     deviceName: string;
   }>({defaultValues: {deviceName}});
 
-  const {mutate, reset, status, error} = useSetOwnDeviceInfo();
+  const {mutate, status} = useSetOwnDeviceInfo();
   const isPending = status === 'pending';
 
   const {isDirty: nameHasChanges} = control.getFieldState(
@@ -122,6 +122,10 @@ export const EditScreen = ({
           onSuccess: () => {
             navigation.popTo('DeviceNameDisplay');
           },
+          onError: err => {
+            Sentry.captureException(err);
+            navigation.navigate('ErrorBottomSheet');
+          },
         },
       );
     });
@@ -147,32 +151,23 @@ export const EditScreen = ({
   );
 
   return (
-    <>
-      <ScrollView contentContainerStyle={styles.container}>
-        <FieldRow label={t(m.deviceNameLabel)}>
-          <HookFormTextInput
-            testID="PROJECT.edit-device-name"
-            control={control}
-            name="deviceName"
-            rules={{maxLength: 60, required: true, minLength: 1}}
-            // TODO: Update HookFormTextInput implementation so that either:
-            // - the implementation fully determines the text input's base style and this component doesn't allow custom styling
-            // - this style prop is properly merged with the text input's base style in the implementation
-            style={{flex: 1, color: BLACK, fontSize: 16}}
-            showCharacterCount
-            autoFocus
-            editable={!isPending}
-          />
-        </FieldRow>
-      </ScrollView>
-      <ErrorBottomSheet
-        error={error}
-        clearError={() => {
-          reset();
-        }}
-        tryAgain={onSubmit}
-      />
-    </>
+    <ScrollView contentContainerStyle={styles.container}>
+      <FieldRow label={t(m.deviceNameLabel)}>
+        <HookFormTextInput
+          testID="PROJECT.edit-device-name"
+          control={control}
+          name="deviceName"
+          rules={{maxLength: 60, required: true, minLength: 1}}
+          // TODO: Update HookFormTextInput implementation so that either:
+          // - the implementation fully determines the text input's base style and this component doesn't allow custom styling
+          // - this style prop is properly merged with the text input's base style in the implementation
+          style={{flex: 1, color: BLACK, fontSize: 16}}
+          showCharacterCount
+          autoFocus
+          editable={!isPending}
+        />
+      </FieldRow>
+    </ScrollView>
   );
 };
 

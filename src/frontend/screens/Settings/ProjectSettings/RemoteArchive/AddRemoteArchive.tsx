@@ -17,7 +17,6 @@ import {ScreenContentWithDock} from '../../../../sharedComponents/ScreenContentW
 import {Button} from '../../../../sharedComponents/Button';
 import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
 import {normalizeRemoteArchiveUrl} from '../../../../utils/normalizeRemoteArchiveUrl';
-import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {
   BottomSheetModal,
@@ -28,6 +27,7 @@ import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../../sharedComponents/Text/BodyText';
 import {useAddServerPeer} from '@comapeo/core-react';
 import {useActiveProject} from '../../../../contexts/ActiveProjectContext';
+import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
   navTitle: {
@@ -192,10 +192,8 @@ type AddFoundArchiveProps = {
 const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
   const {formatMessage} = useIntl();
   const {projectId} = useActiveProject();
-  const {mutate, reset, status} = useAddServerPeer({projectId});
+  const {mutate, status} = useAddServerPeer({projectId});
   const {navigate, setOptions, addListener} = useNavigationFromRoot();
-  const [remoteServerError, setRemoteServerError] =
-    React.useState<Error | null>(null);
   const {openSheet, isOpen, closeSheet, sheetRef} = useBottomSheetModal({
     openOnMount: false,
   });
@@ -207,7 +205,8 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
           navigate('SuccessfullyAddedArchive', {archiveName: name, url});
         },
         onError: err => {
-          setRemoteServerError(err);
+          Sentry.captureException(err);
+          navigate('ErrorBottomSheet');
         },
       },
     );
@@ -269,13 +268,6 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
           </TouchableOpacity>
         </View>
       </ScreenContentWithDock>
-      <ErrorBottomSheet
-        error={remoteServerError}
-        clearError={() => {
-          reset();
-          setRemoteServerError(null);
-        }}
-      />
       <BottomSheetModal isOpen={isOpen} ref={sheetRef}>
         <WhatsIncludedBottomSheetContent closeSheet={closeSheet} />
       </BottomSheetModal>

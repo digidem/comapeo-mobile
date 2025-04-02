@@ -11,7 +11,6 @@ import {
 import {useUpdateDocument} from '@comapeo/core-react';
 import {useCreateAttachment} from '../../hooks/server/media';
 import {SaveButton} from '../../sharedComponents/SaveButton';
-import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {ActionsRow} from '../../sharedComponents/ActionsRow';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
@@ -24,6 +23,7 @@ import {
   isAudioAttachment,
   isUnsavedAudio,
 } from '../../lib/attachmentTypeChecks';
+import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
   observation: {
@@ -58,13 +58,12 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   const {updateTags, clearDraft, usePreset, existingObservationToDraft} =
     useDraftObservation();
   const preset = usePreset();
-  const {mutate, status, reset, error} = useUpdateDocument({
+  const {mutate, status} = useUpdateDocument({
     docType: 'observation',
     projectId,
   });
   const attachments = usePersistedDraftObservation(store => store.attachments);
-  const {mutateAsync: createAttachmentAsync, reset: resetAttachment} =
-    useCreateAttachment();
+  const {mutateAsync: createAttachmentAsync} = useCreateAttachment();
 
   const notes = value?.tags.notes;
   const presetName = preset
@@ -154,6 +153,10 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         },
         {
           onSuccess: handleNavigationSuccess,
+          onError: err => {
+            Sentry.captureException(err);
+            navigation.navigate('ErrorBottomSheet');
+          },
         },
       );
       return;
@@ -207,6 +210,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
     createAttachmentAsync,
     attachments,
     handleNavigationSuccess,
+    navigation,
   ]);
 
   React.useLayoutEffect(() => {
@@ -229,33 +233,23 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   return !value ? (
     <Loading />
   ) : (
-    <>
-      <Editor
-        presetName={presetName}
-        PresetIcon={
-          <PresetCircleIcon
-            size="medium"
-            iconId={preset?.iconRef?.docId}
-            testID={`OBS.${preset?.name}-icon`}
-          />
-        }
-        onPressPreset={() => navigation.navigate('PresetChooser')}
-        notes={typeof notes !== 'string' ? '' : notes}
-        updateNotes={newVal => {
-          updateTags('notes', newVal);
-        }}
-        attachments={attachments}
-        actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
-      />
-      <ErrorBottomSheet
-        error={error}
-        clearError={() => {
-          reset();
-          resetAttachment();
-        }}
-        tryAgain={editObservation}
-      />
-    </>
+    <Editor
+      presetName={presetName}
+      PresetIcon={
+        <PresetCircleIcon
+          size="medium"
+          iconId={preset?.iconRef?.docId}
+          testID={`OBS.${preset?.name}-icon`}
+        />
+      }
+      onPressPreset={() => navigation.navigate('PresetChooser')}
+      notes={typeof notes !== 'string' ? '' : notes}
+      updateNotes={newVal => {
+        updateTags('notes', newVal);
+      }}
+      attachments={attachments}
+      actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
+    />
   );
 };
 

@@ -65,6 +65,10 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
         return;
       }
 
+      if (invite.state === 'error') {
+        Sentry.captureException(invite.error);
+      }
+
       if (invite.state !== 'pending') {
         navigation.goBack();
       }

@@ -51,8 +51,6 @@ export type RootStackParamsList = {
   ObservationEdit: {observationId: string};
   ManualGpsScreen: undefined;
   ObservationDetails: {question: number};
-  LeaveProjectScreen: undefined;
-  AlreadyOnProj: undefined;
   AddToProjectScreen: undefined;
   UnableToLinkScreen: undefined;
   ConnectingToDeviceScreen: {task: () => Promise<void>};

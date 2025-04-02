@@ -7,6 +7,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {
   useAcceptInvite,
+  useClientApi,
   useRejectInvite,
   useSingleInvite,
 } from '@comapeo/core-react';
@@ -16,6 +17,7 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
+import {Invite} from '@comapeo/core/dist/invite/invite-api';
 
 const m = defineMessages({
   navTitle: {
@@ -50,19 +52,33 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
   const acceptInvite = useAcceptInvite();
   const rejectInvite = useRejectInvite();
   const {setActiveProjectId} = useActiveProjectIdActions();
+  const {invite: mapeoApiInvite} = useClientApi();
 
   useEffect(() => {
-    if (invite.state === 'canceled') {
-      navigation.replace('InviteCancelled', {projectName: invite.projectName});
-      return;
+    function navigateBasedOnInviteState(invite: Invite) {
+      if (invite.inviteId !== inviteId) return;
+
+      if (invite.state === 'canceled') {
+        navigation.replace('InviteCancelled', {
+          projectName: invite.projectName,
+        });
+        return;
+      }
+
+      if (invite.state !== 'pending') {
+        navigation.goBack();
+      }
     }
 
-    // this is so the user doesn't get stuck on the invite screen if there is an error
-    if (invite.state !== 'pending') {
-      navigation.goBack();
-      return;
-    }
-  }, [invite.state, invite.projectName, navigation]);
+    mapeoApiInvite.addListener('invite-updated', navigateBasedOnInviteState);
+
+    return () => {
+      mapeoApiInvite.removeListener(
+        'invite-updated',
+        navigateBasedOnInviteState,
+      );
+    };
+  }, [mapeoApiInvite, inviteId, navigation]);
 
   function accept() {
     acceptInvite.mutate(

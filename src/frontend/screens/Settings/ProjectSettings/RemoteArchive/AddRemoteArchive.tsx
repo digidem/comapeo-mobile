@@ -11,16 +11,12 @@ import {
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
 import {Control, FieldErrors, useForm} from 'react-hook-form';
 import {SaveButton} from '../../../../sharedComponents/SaveButton';
-import {
-  useAddRemoteArchive,
-  useFindRemoteArchive,
-} from '../../../../hooks/server/projects';
+import {useFindRemoteArchive} from '../../../../hooks/server/projects';
 import {Bar} from 'react-native-progress';
 import {ScreenContentWithDock} from '../../../../sharedComponents/ScreenContentWithDock';
 import {Button} from '../../../../sharedComponents/Button';
 import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
 import {normalizeRemoteArchiveUrl} from '../../../../utils/normalizeRemoteArchiveUrl';
-import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {
   BottomSheetModal,
@@ -29,6 +25,9 @@ import {
 import {WhatsIncludedBottomSheetContent} from './WhatsIncludedBottomSheetContent';
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../../sharedComponents/Text/BodyText';
+import {useAddServerPeer} from '@comapeo/core-react';
+import {useActiveProject} from '../../../../contexts/ActiveProjectContext';
+import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
   navTitle: {
@@ -192,22 +191,30 @@ type AddFoundArchiveProps = {
 
 const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
   const {formatMessage} = useIntl();
-  const {mutate, error, reset, isPending} = useAddRemoteArchive();
+  const {projectId} = useActiveProject();
+  const {mutate, status} = useAddServerPeer({projectId});
   const {navigate, setOptions, addListener} = useNavigationFromRoot();
   const {openSheet, isOpen, closeSheet, sheetRef} = useBottomSheetModal({
     openOnMount: false,
   });
   function handleAddRemoteArchive() {
-    mutate(url, {
-      onSuccess: () => {
-        navigate('SuccessfullyAddedArchive', {archiveName: name, url});
+    mutate(
+      {baseUrl: url},
+      {
+        onSuccess: () => {
+          navigate('SuccessfullyAddedArchive', {archiveName: name, url});
+        },
+        onError: err => {
+          Sentry.captureException(err);
+          navigate('ErrorBottomSheet');
+        },
       },
-    });
+    );
   }
 
   React.useEffect(() => {
     const unsubscribe = addListener('beforeRemove', e => {
-      if (!isPending) {
+      if (status !== 'pending') {
         // If user is not actively adding server
         return;
       }
@@ -218,7 +225,7 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
     return () => {
       unsubscribe();
     };
-  }, [addListener, isPending]);
+  }, [addListener, status]);
 
   React.useLayoutEffect(() => {
     setOptions({headerShown: true});
@@ -228,7 +235,7 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
     <>
       <ScreenContentWithDock
         dockContent={
-          isPending ? (
+          status === 'pending' ? (
             <UIActivityIndicator style={{marginBottom: 20}} />
           ) : (
             <Button
@@ -261,7 +268,6 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
           </TouchableOpacity>
         </View>
       </ScreenContentWithDock>
-      <ErrorBottomSheet error={error} clearError={reset} />
       <BottomSheetModal isOpen={isOpen} ref={sheetRef}>
         <WhatsIncludedBottomSheetContent closeSheet={closeSheet} />
       </BottomSheetModal>

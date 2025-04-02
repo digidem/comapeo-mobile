@@ -3,19 +3,19 @@ import {type ReactNode} from 'react';
 
 import {type CoordinateFormat} from '../lib/coordinateFormat';
 import {
-  CoordinateFormatProvider,
+  CoordinateFormatStoreProvider,
   CoordinateFormatStore,
   createCoordinateFormatStore,
   useCoordinateFormatActions,
   useCoordinateFormat,
-} from './CoordinateFormatContext';
+} from './CoordinateFormatStoreContext';
 
 function createWrapper(store: CoordinateFormatStore) {
   return ({children}: {children: ReactNode}) => {
     return (
-      <CoordinateFormatProvider value={store}>
+      <CoordinateFormatStoreProvider value={store}>
         {children}
-      </CoordinateFormatProvider>
+      </CoordinateFormatStoreProvider>
     );
   };
 }

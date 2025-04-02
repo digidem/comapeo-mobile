@@ -3,21 +3,19 @@ import * as React from 'react';
 import {View, ScrollView, StyleSheet} from 'react-native';
 import {defineMessages} from 'react-intl';
 import {WHITE, DARK_GREY, LIGHT_GREY, BLUE_GREY} from '../../lib/styles';
-import {UIActivityIndicator} from 'react-native-indicators';
 
 import {FormattedObservationDate} from '../../sharedComponents/FormattedData';
-import {Field} from '@comapeo/schema';
 import {PresetHeader} from './PresetHeader';
-import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
-import {useFieldsQuery} from '../../hooks/server/fields';
 import {FieldDetails} from './FieldDetails';
 import {InsetMapView} from './InsetMapView';
-
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
 import {MediaScrollView} from '../../sharedComponents/MediaScrollView/index.tsx';
-import {useDeviceInfo} from '../../hooks/server/deviceInfo';
-import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
+import {
+  useOwnDeviceInfo,
+  useManyDocs,
+  useDocumentCreatedBy,
+} from '@comapeo/core-react';
 import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types.ts';
 import {ButtonFields} from './Buttons.tsx';
 import {AudioAttachment} from '../../sharedTypes/audio.ts';
@@ -26,6 +24,10 @@ import {TrackAccordian} from './TrackAccordian.tsx';
 import {Divider} from '../../sharedComponents/Divider.tsx';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
+import {Loading} from '../../sharedComponents/Loading.tsx';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
+import {Field} from '@comapeo/schema';
 
 const m = defineMessages({
   deleteTitle: {
@@ -46,7 +48,6 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   navigation,
 }) => {
   const {observationId} = route.params;
-
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -54,31 +55,26 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
       ),
     });
   }, [navigation, observationId]);
-
+  const {projectId} = useActiveProject();
   const {observation, preset} = useObservationWithPreset(observationId);
-  const {data: fieldData} = useFieldsQuery();
 
-  const defaultAcc: Field[] = [];
-  const fields =
-    preset && fieldData
-      ? preset.fieldRefs.reduce((acc, pres) => {
-          const fieldToAdd = fieldData.find(
-            field => field.docId === pres.docId,
-          );
-          if (!fieldToAdd) return acc;
-          return [...acc, fieldToAdd];
-        }, defaultAcc)
-      : [];
-
+  const {data: fieldsData} = useManyDocs({projectId, docType: 'field'});
   const {lat, lon, originalVersionId} = observation;
-  const {data: deviceInfo, isPending: isDeviceInfoPending} = useDeviceInfo();
-  const {data: convertedDeviceId, isPending: isDeviceIdPending} =
-    useOriginalVersionIdToDeviceId(originalVersionId);
-
+  const {data: deviceInfo} = useOwnDeviceInfo();
+  const {data: createdByDeviceId} = useDocumentCreatedBy({
+    projectId: projectId,
+    originalVersionId,
+  });
   const isMine =
     deviceInfo?.deviceId !== undefined &&
-    convertedDeviceId !== undefined &&
-    deviceInfo.deviceId === convertedDeviceId;
+    createdByDeviceId !== undefined &&
+    deviceInfo.deviceId === createdByDeviceId;
+
+  const fields = preset
+    ? (preset.fieldRefs
+        .map(ref => fieldsData.find(field => field.docId === ref.docId))
+        .filter(Boolean) as Field[])
+    : [];
 
   const attachments = observation.attachments.filter(
     (attachment): attachment is SavedPhoto | AudioAttachment =>
@@ -103,7 +99,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
 
         <View style={styles.section}>
           <PresetHeader preset={preset} style={{paddingHorizontal: 20}} />
-          <React.Suspense fallback={<UIActivityIndicator />}>
+          <React.Suspense fallback={<Loading />}>
             <TrackAccordian observationId={observationId} />
           </React.Suspense>
           {typeof observation.tags.notes === 'string' ? (
@@ -129,15 +125,11 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
           </>
         )}
         <View style={styles.divider} />
-        {isDeviceInfoPending || isDeviceIdPending ? (
-          <UIActivityIndicator size={20} />
-        ) : (
-          <ButtonFields
-            isMine={isMine}
-            observationId={observationId}
-            fields={fields}
-          />
-        )}
+        <ButtonFields
+          isMine={isMine}
+          observationId={observationId}
+          fields={fields}
+        />
       </>
     </ScrollView>
   );

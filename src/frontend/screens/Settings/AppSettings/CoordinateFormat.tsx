@@ -10,7 +10,7 @@ import {useLastKnownLocation} from '../../../hooks/useLastSavedLocation';
 import {
   useCoordinateFormatActions,
   useCoordinateFormat,
-} from '../../../contexts/CoordinateFormatContext';
+} from '../../../contexts/CoordinateFormatStoreContext';
 
 const m = defineMessages({
   title: {

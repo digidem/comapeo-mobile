@@ -35,7 +35,7 @@ import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {
   useManualEntryCoordinateFormatActions,
   useManualEntryCoordinateFormat,
-} from '../../contexts/ManualEntryCoordinateFormatContext';
+} from '../../contexts/ManualEntryCoordinateFormatStoreContext';
 
 const m = defineMessages({
   title: {

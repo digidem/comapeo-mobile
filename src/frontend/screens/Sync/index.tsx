@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
+import {useManyProjects} from '@comapeo/core-react';
 
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {IconButton} from '../../sharedComponents/IconButton';
 import {SettingsIcon} from '../../sharedComponents/icons';
 import {
-  useAllProjects,
   useGetRemoteArchives,
   useProjectSettings,
 } from '../../hooks/server/projects';
@@ -41,7 +41,7 @@ export function createNavigationOptions() {
 export const SyncScreen = ({navigation}: NativeRootNavigationProps<'Sync'>) => {
   const wifiStatus = useLocalDiscoveryState(state => state.wifiStatus);
 
-  const {data: remoteArchive, isPending: remoteArchiveLoading} =
+  const {data: remoteArchive, isRefetching: remoteArchiveLoading} =
     useGetRemoteArchives();
 
   const hasRemoteArchive = remoteArchive && remoteArchive.length > 0;
@@ -49,21 +49,16 @@ export const SyncScreen = ({navigation}: NativeRootNavigationProps<'Sync'>) => {
   const hasInternetAccess = useNetInfo().isConnected;
 
   // TODO: Handle error case
-  const {isLoading, data} = useAllProjects();
+  const {data: projects} = useManyProjects();
   const syncState = useSyncState();
   const projectSettingsQuery = useProjectSettings();
 
-  if (
-    isLoading ||
-    !syncState ||
-    !projectSettingsQuery.data ||
-    remoteArchiveLoading
-  ) {
+  if (!syncState || remoteArchiveLoading) {
     return <Loading />;
   }
 
   // TODO: Replace with proper check of being a part of a shared project
-  if (data && data.length === 1) {
+  if (projects && projects.length === 1) {
     return (
       <CreateOrJoinProjectDisplay
         onCreateOrJoinProject={() => navigation.navigate('CreateOrJoinProject')}

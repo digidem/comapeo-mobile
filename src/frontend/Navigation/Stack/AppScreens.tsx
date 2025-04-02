@@ -96,6 +96,8 @@ import {DeleteAudioBottomSheet} from '../../screens/Audio/DeleteAudioBottomSheet
 import {AudioSavedBottomSheet} from '../../screens/Audio/AudioSavedBottomSheet.tsx';
 import {AudioPlaybackSaved} from '../../screens/Audio/AudioPlaybackSaved.tsx';
 import {AudioCustomHeaderLeft} from '../../screens/Audio/AudioCustomHeaderLeft.tsx';
+import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
+import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagement/ErrorBottomSheet.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -438,6 +440,11 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="AudioSavedBottomSheet"
         component={AudioSavedBottomSheet}
+      />
+      <RootStack.Screen name="ErrorBottomSheet" component={ErrorBottomSheet} />
+      <RootStack.Screen
+        name="BackgroundMapErrorBottomSheet"
+        component={BackgroundMapErrorBottomSheet}
       />
     </RootStack.Group>
   </>

@@ -25,6 +25,9 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "¿Quieres descartar la observación?"
   },
+  "MapManagement.ErrorBottomSheet.goBack": {
+    "message": "Go Back"
+  },
   "Modal.GPSDisable.button": {
     "message": "Habilitar"
   },
@@ -1623,14 +1626,11 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Cambiar"
   },
-  "sharedComponents.ErrorModal.goBack": {
-    "message": "Regresar"
+  "sharedComponents.ErrorBottomSheet.goBack": {
+    "message": "Go Back"
   },
-  "sharedComponents.ErrorModal.somethingWrong": {
-    "message": "Algo salió mal"
-  },
-  "sharedComponents.ErrorModal.tryAgain": {
-    "message": "Inténtalo de nuevo"
+  "sharedComponents.ErrorBottomSheet.somethingWrong": {
+    "message": "Something Went Wrong"
   },
   "sharedComponents.GpsPill.noGps": {
     "message": "Sin GPS"

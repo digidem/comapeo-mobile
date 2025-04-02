@@ -9,7 +9,12 @@ import {createRefreshTokenStore} from '../refreshTokenStore';
 import noop from '../../lib/noop';
 import {ROOT_QUERY_KEY} from '../../constants';
 
-export function getMapsQueryKey() {
+/**
+ * Copied from comapeo/core-react to match its query key structure:
+ * https://github.com/digidem/comapeo-core-react/blob/59a80cf0a1b9dad13e5f066233dae2465d2d20b1/src/lib/react-query/maps.ts#L6
+ * Ensures partial invalidations align with the library’s queries.
+ */
+function getMapsQueryKey() {
   return [ROOT_QUERY_KEY, 'maps'] as const;
 }
 

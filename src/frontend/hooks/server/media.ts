@@ -107,28 +107,28 @@ export function useAttachmentUrlQuery(
     throw new Error(`Invalid attachment type: ${attachment.type}`);
   }
 
-  const validAttachment: {
-    driveDiscoveryId: string;
-    name: string;
-    type: 'photo' | 'audio' | 'video';
-    hash: string;
-  } = {
-    driveDiscoveryId: attachment.driveDiscoveryId,
-    name: attachment.name,
-    type: attachment.type as 'photo' | 'audio' | 'video',
-    hash: attachment.hash,
-  };
+  const blobId = buildBlobId(
+    {
+      driveDiscoveryId: attachment.driveDiscoveryId,
+      name: attachment.name,
+      type: attachment.type as 'photo' | 'audio' | 'video',
+      hash: attachment.hash,
+    },
+    variant,
+  );
 
-  const blobId = buildBlobId(validAttachment, variant);
-
-  const {data: rawUrl, error} = useAttachmentUrl({
+  const {
+    data: rawUrl,
+    error,
+    isRefetching,
+  } = useAttachmentUrl({
     projectId,
     blobId,
   });
 
   return {
-    data: rawUrl ? {...validAttachment, url: rawUrl} : undefined,
+    url: rawUrl ?? undefined,
     error,
-    isPending: !rawUrl && !error,
+    isRefetching,
   };
 }

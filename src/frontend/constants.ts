@@ -28,4 +28,6 @@ export const INVITE_SCREEN_NAME: Omit<keyof AppStackParamsList, 'Home'>[] = [
   'InviteReceived',
   'InviteCancelled',
   'InviteSuccessfullyJoined',
+  'LeaveProject',
+  'AlreadyOnProject',
 ];

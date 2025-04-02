@@ -55,26 +55,27 @@ export type CoordinateFormatStore = ReturnType<
   typeof createCoordinateFormatStore
 >;
 
-export const CoordinateFormatContext =
+export const CoordinateFormatStoreContext =
   createContext<CoordinateFormatStore | null>(null);
-export const CoordinateFormatProvider = CoordinateFormatContext.Provider;
+export const CoordinateFormatStoreProvider =
+  CoordinateFormatStoreContext.Provider;
 
-function useCoordinateFormatContext() {
-  const value = useContext(CoordinateFormatContext);
+function useCoordinateFormatStoreContext() {
+  const value = useContext(CoordinateFormatStoreContext);
 
   if (!value) {
-    throw new Error('Must set up the CoordinateFormatProvider first');
+    throw new Error('Must set up the CoordinateFormatStoreProvider first');
   }
 
   return value;
 }
 
 export function useCoordinateFormat(): CoordinateFormat {
-  const {instance} = useCoordinateFormatContext();
+  const {instance} = useCoordinateFormatStoreContext();
   return useStore(instance).value;
 }
 
 export function useCoordinateFormatActions() {
-  const {actions} = useCoordinateFormatContext();
+  const {actions} = useCoordinateFormatStoreContext();
   return actions;
 }

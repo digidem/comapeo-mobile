@@ -17,7 +17,7 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
 import {useOpenShareDialog} from '../../hooks/share.ts';
-import {useCoordinateFormat} from '../../contexts/CoordinateFormatContext.ts';
+import {useCoordinateFormat} from '../../contexts/CoordinateFormatStoreContext.ts';
 
 const m = defineMessages({
   delete: {

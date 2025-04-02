@@ -12,10 +12,10 @@ import {Loading} from '../../sharedComponents/Loading';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {MEDIUM_GREY} from '../../lib/styles';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../sharedTypes';
 import {convertFileUriToPosixPath} from '../../lib/file-system';
 import noop from '../../lib/noop';
+import * as Sentry from '@sentry/react-native';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -101,6 +101,10 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
                   noop,
                 );
               },
+              onError: err => {
+                Sentry.captureException(err);
+                navigation.navigate('ErrorBottomSheet');
+              },
               onSuccess: () => {
                 Alert.alert(formatMessage(m.configImportTitle), selected.name, [
                   {text: formatMessage(m.okButton)},
@@ -108,6 +112,10 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
               },
             },
           );
+        },
+        onError: err => {
+          Sentry.captureException(err);
+          navigation.navigate('ErrorBottomSheet');
         },
       },
     );
@@ -149,14 +157,6 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
           text={formatMessage(m.importConfig)}
         />
       ) : null}
-      <ErrorBottomSheet
-        error={selectFileMutation.error || importProjectConfigMutation.error}
-        clearError={() => {
-          selectFileMutation.reset();
-          importProjectConfigMutation.reset();
-        }}
-        tryAgain={selectAndImportConfigFile}
-      />
     </View>
   );
 };

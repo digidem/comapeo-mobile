@@ -3,19 +3,19 @@ import {type ReactNode} from 'react';
 
 import {type CoordinateFormat} from '../lib/coordinateFormat';
 import {
-  ManualEntryCoordinateFormatProvider,
+  ManualEntryCoordinateFormatStoreProvider,
   ManualEntryCoordinateFormatStore,
   createManualEntryCoordinateFormatStore,
   useManualEntryCoordinateFormatActions,
   useManualEntryCoordinateFormat,
-} from './ManualEntryCoordinateFormatContext';
+} from './ManualEntryCoordinateFormatStoreContext';
 
 function createWrapper(store: ManualEntryCoordinateFormatStore) {
   return ({children}: {children: ReactNode}) => {
     return (
-      <ManualEntryCoordinateFormatProvider value={store}>
+      <ManualEntryCoordinateFormatStoreProvider value={store}>
         {children}
-      </ManualEntryCoordinateFormatProvider>
+      </ManualEntryCoordinateFormatStoreProvider>
     );
   };
 }

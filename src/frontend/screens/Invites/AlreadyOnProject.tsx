@@ -64,7 +64,7 @@ export const AlreadyOnProject = ({
         <View style={styles.buttonContainer}>
           <SecondaryButton
             fullSize
-            onPress={() => navigation.goBack()}
+            onPress={() => navigation.replace('InviteReceived', {inviteId})}
             text={formatMessage(m.goBack)}
           />
           <PrimaryButton

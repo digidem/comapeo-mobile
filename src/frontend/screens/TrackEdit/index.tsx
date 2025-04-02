@@ -47,7 +47,7 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
     editTrackMutation.mutate(
       {
         versionId: track.versionId,
-        updatedTrack: {
+        value: {
           ...track,
           tags: {...track.tags, notes: description},
         },
@@ -69,11 +69,11 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
         headerRight: () => (
           <SaveButton
             onPress={saveTrack}
-            isLoading={editTrackMutation.isPending}
+            isLoading={editTrackMutation.status === 'pending'}
           />
         ),
       });
-    }, [navigation, formatMessage, saveTrack, editTrackMutation.isPending]),
+    }, [navigation, formatMessage, saveTrack, editTrackMutation.status]),
   );
 
   return (

@@ -3,10 +3,8 @@ import {NativeNavigationComponent} from '../../../../../sharedTypes/navigation';
 import {defineMessages} from 'react-intl';
 import {ReviewInvitation} from './ReviewInvitation';
 import {WaitingForInviteAccept} from './WaitingForInviteAccept';
-import {
-  useRequestCancelInvite,
-  useSendInvite,
-} from '../../../../../hooks/server/invites';
+import {useSendInvite, useRequestCancelInvite} from '@comapeo/core-react';
+import {useActiveProject} from '../../../../../contexts/ActiveProjectContext';
 import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
@@ -21,17 +19,24 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
   navigation,
 }) => {
   const {role, deviceId, deviceType, name} = route.params;
+  const {projectId} = useActiveProject();
 
-  const sendInviteMutation = useSendInvite();
-  const requestCancelInviteMutation = useRequestCancelInvite();
+  const sendInviteMutation = useSendInvite({projectId});
+  const requestCancelInviteMutation = useRequestCancelInvite({projectId});
 
   function sendInvite() {
     sendInviteMutation.mutate(
-      {deviceId, role: {roleId: role}},
+      {
+        deviceId,
+        roleId: role,
+      },
       {
         onSuccess: val => {
           // If user has attempted to cancel an invite, but an invite has already been accepted, let user know their cancellation was unsuccessful
-          if (val === 'ACCEPT' && requestCancelInviteMutation.isPending) {
+          if (
+            val === 'ACCEPT' &&
+            requestCancelInviteMutation.status === 'pending'
+          ) {
             navigation.navigate('UnableToCancelInvite', {...route.params});
             return;
           }
@@ -45,8 +50,8 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
             return;
           }
         },
-        onError: err => {
-          Sentry.captureException(err);
+        onError(error) {
+          Sentry.captureException(error);
           navigation.navigate('ErrorBottomSheet');
         },
       },
@@ -54,20 +59,22 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
   }
 
   function cancelInvite() {
-    requestCancelInviteMutation.mutate(deviceId, {
-      onSuccess: () => {
-        navigation.popTo('YourTeam');
+    requestCancelInviteMutation.mutate(
+      {deviceId},
+      {
+        onSuccess: () => {
+          navigation.popTo('YourTeam');
+        },
+        onError: err => {
+          Sentry.captureException(err);
+          navigation.navigate('ErrorBottomSheet');
+        },
       },
-      onError: err => {
-        Sentry.captureException(err);
-        navigation.navigate('ErrorBottomSheet');
-      },
-    });
+    );
   }
-
   return (
     <>
-      {sendInviteMutation.isIdle ? (
+      {sendInviteMutation.status === 'idle' ? (
         <ReviewInvitation
           sendInvite={sendInvite}
           deviceId={deviceId}

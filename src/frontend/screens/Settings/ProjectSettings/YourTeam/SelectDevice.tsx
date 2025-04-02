@@ -2,15 +2,15 @@ import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, StyleSheet, View} from 'react-native';
 
-import {useProjectMembers} from '../../../../hooks/server/projects';
+import {useManyMembers} from '@comapeo/core-react';
 import {useLocalDiscoveryState} from '../../../../hooks/useLocalDiscoveryState';
 import {useLocalPeers} from '../../../../hooks/useLocalPeers';
 import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
 import WifiIcon from '../../../../images/WifiIcon.svg';
 import {DeviceCard} from '../../../../sharedComponents/DeviceCard';
-import {Loading} from '../../../../sharedComponents/Loading';
 import {Text} from '../../../../sharedComponents/Text';
 import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
+import {useActiveProject} from '../../../../contexts/ActiveProjectContext';
 
 const m = defineMessages({
   title: {
@@ -55,16 +55,8 @@ export const SelectDevice: NativeNavigationComponent<'SelectDevice'> = () => {
 function InvitableDevicesList() {
   const navigation = useNavigationFromRoot();
   const devices = useInitiallyConnectedPeers();
-  const projectMembersQuery = useProjectMembers();
-
-  if (projectMembersQuery.status === 'pending') {
-    return <Loading />;
-  }
-
-  if (projectMembersQuery.status === 'error') {
-    // TODO: Provide more useful UI?
-    return null;
-  }
+  const projectId = useActiveProject();
+  const projectMembersQuery = useManyMembers(projectId);
 
   const memberDeviceIds = projectMembersQuery.data.map(
     member => member.deviceId,

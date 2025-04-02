@@ -15,6 +15,7 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useAcceptInvite, useLeaveProject} from '@comapeo/core-react';
 import {useActiveProjectId} from '../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 const m = defineMessages({
   leaveProj: {
@@ -100,52 +101,70 @@ export const LeaveProject = ({
   return (
     <BottomSheetWrapper>
       <View style={styles.container}>
-        <Error style={{alignSelf: 'center'}} />
-        <HeaderText
-          style={{textAlign: 'center', marginTop: 20}}
-          variant="header2">
-          {formatMessage(m.leaveProj)}
-        </HeaderText>
-        <BodyText style={{textAlign: 'center', marginTop: 20}} variant="large">
-          {projectName
-            ? formatMessage(m.removeFromProjWithName, {
-                projectName: projectName,
-              })
-            : formatMessage(m.removeFromProjWithoutName)}
-        </BodyText>
-        <View>
-          <Checkbox
-            value={isChecked}
-            onPress={() => setIsChecked(val => !val)}
-            hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-          />
-          <HeaderText variant="header5">
-            {projectName
-              ? formatMessage(m.deleteConsentWithName, {
-                  projectName: projectName,
-                })
-              : formatMessage(m.deleteConsentWithoutName)}
-          </HeaderText>
-        </View>
-        {error && !isChecked && (
-          <HeaderText variant="header5" style={{color: RED, marginTop: 20}}>
-            {formatMessage(m.checkToConfirm)}
-          </HeaderText>
+        {accept.status === 'pending' || leaveProject.status === 'pending' ? (
+          <>
+            <HeaderText
+              style={{textAlign: 'center', marginTop: 80}}
+              variant="header2">
+              {formatMessage(m.leavingProject, {
+                projectName: projectName || '',
+              })}
+            </HeaderText>
+
+            <UIActivityIndicator />
+          </>
+        ) : (
+          <>
+            <Error style={{alignSelf: 'center'}} />
+            <HeaderText
+              style={{textAlign: 'center', marginTop: 20}}
+              variant="header2">
+              {formatMessage(m.leaveProj)}
+            </HeaderText>
+            <BodyText
+              style={{textAlign: 'center', marginTop: 20}}
+              variant="large">
+              {projectName
+                ? formatMessage(m.removeFromProjWithName, {
+                    projectName: projectName,
+                  })
+                : formatMessage(m.removeFromProjWithoutName)}
+            </BodyText>
+            <View>
+              <Checkbox
+                value={isChecked}
+                onPress={() => setIsChecked(val => !val)}
+                hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+              />
+              <HeaderText variant="header5">
+                {projectName
+                  ? formatMessage(m.deleteConsentWithName, {
+                      projectName: projectName,
+                    })
+                  : formatMessage(m.deleteConsentWithoutName)}
+              </HeaderText>
+            </View>
+            {error && !isChecked && (
+              <HeaderText variant="header5" style={{color: RED, marginTop: 20}}>
+                {formatMessage(m.checkToConfirm)}
+              </HeaderText>
+            )}
+            <View style={styles.buttonContainer}>
+              <DestructiveButton
+                fullSize
+                onPress={handleLeaveProject}
+                text={formatMessage(m.leaveProj)}
+              />
+              <SecondaryButton
+                fullSize
+                text={formatMessage(m.cancel)}
+                onPress={() => {
+                  navigation.replace('InviteReceived', {inviteId});
+                }}
+              />
+            </View>
+          </>
         )}
-        <View style={styles.buttonContainer}>
-          <DestructiveButton
-            fullSize
-            onPress={handleLeaveProject}
-            text={formatMessage(m.leaveProj)}
-          />
-          <SecondaryButton
-            fullSize
-            text={formatMessage(m.cancel)}
-            onPress={() => {
-              navigation.replace('InviteReceived', {inviteId});
-            }}
-          />
-        </View>
       </View>
     </BottomSheetWrapper>
   );

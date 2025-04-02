@@ -11,10 +11,14 @@ import {
   FormattedPresetName,
 } from '../../sharedComponents/FormattedData';
 import {PhotoAttachmentView} from '../../sharedComponents/PhotoAttachmentView.tsx';
-import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
-import {useDeviceInfo} from '../../hooks/server/deviceInfo';
-import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
+import {
+  useOwnDeviceInfo,
+  useDocumentCreatedBy,
+  useManyDocs,
+} from '@comapeo/core-react';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
+import {matchPreset} from '../../lib/utils';
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;
@@ -37,19 +41,18 @@ function ObservationListItemNotMemoized({
   testID,
   onPress,
 }: ObservationListItemProps) {
-  const {preset} = useObservationWithPreset(observation.docId);
-  const {data: deviceInfo, status: deviceInfoQueryStatus} = useDeviceInfo();
+  const {projectId} = useActiveProject();
+  const {data: deviceInfo} = useOwnDeviceInfo();
+  const {data: createdByDeviceId} = useDocumentCreatedBy({
+    projectId,
+    originalVersionId: observation.originalVersionId,
+  });
+  const {data: allPresets} = useManyDocs({projectId, docType: 'preset'});
+  const preset = matchPreset(observation.tags, allPresets);
 
   const photos = observation.attachments.filter(isSavedPhoto);
 
-  const {
-    data: createdByDeviceId,
-    status: originalVersionIdToDeviceIdQueryStatus,
-  } = useOriginalVersionIdToDeviceId(observation.originalVersionId);
   const isMine = createdByDeviceId === deviceInfo?.deviceId;
-  const queriesSucceeded =
-    deviceInfoQueryStatus === 'success' &&
-    originalVersionIdToDeviceIdQueryStatus === 'success';
 
   return (
     <TouchableHighlight
@@ -57,11 +60,7 @@ function ObservationListItemNotMemoized({
       testID={testID}
       style={{flex: 1, height: 80}}>
       <View
-        style={[
-          styles.container,
-          style,
-          queriesSucceeded && !isMine && styles.syncedObservation,
-        ]}>
+        style={[styles.container, style, !isMine && styles.syncedObservation]}>
         <View style={styles.text}>
           <Text style={styles.title}>
             <FormattedPresetName preset={preset} />

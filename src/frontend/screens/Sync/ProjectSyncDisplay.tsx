@@ -6,7 +6,6 @@ import {StyleSheet, View, Text} from 'react-native';
 import {Bar as ProgressBar} from 'react-native-progress';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {OBSERVATION_KEY} from '../../hooks/server/observations';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useDataSyncProgress} from '../../hooks/useSyncState';
 import ObservationsProjectImage from '../../images/ObservationsProject.svg';
@@ -36,8 +35,8 @@ import {
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {REMOTE_DETECTION_ALERTS_KEY} from '../../hooks/server/remoteDetectionAlert';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
+import {ROOT_QUERY_KEY} from '../../constants';
 
 const m = defineMessages({
   devicesFound: {
@@ -155,11 +154,8 @@ export const ProjectSyncDisplay = ({
         if (shouldAutostopSyncWhenLeavingScreen) {
           projectApi.$sync.setAutostopDataSyncTimeout(30_000);
         }
-        // TODO: All queries associated with project should be invalidated
-        queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY, projectId]});
-
         queryClient.invalidateQueries({
-          queryKey: [REMOTE_DETECTION_ALERTS_KEY, projectId],
+          queryKey: [ROOT_QUERY_KEY, 'projects', projectId],
         });
       });
 

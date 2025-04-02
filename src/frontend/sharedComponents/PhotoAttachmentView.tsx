@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, StyleSheet, Image, ActivityIndicator} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 
 import {AlertIcon} from './icons';
 import type {Attachment, PhotoVariant, ViewStyleProp} from '../sharedTypes';
@@ -18,16 +18,14 @@ const PhotoViewComponent = ({
   resizeMode = 'contain',
   style,
 }: Props) => {
-  const {data, isPending, isError} = useAttachmentUrlQuery(attachment, variant);
+  const {url, error} = useAttachmentUrlQuery(attachment, variant);
   return (
     <View style={[styles.container, style]}>
-      {isPending ? (
-        <ActivityIndicator />
-      ) : isError || !data ? (
+      {error || !url ? (
         <AlertIcon />
       ) : (
         <Image
-          source={{uri: data.url}}
+          source={{uri: url}}
           style={styles.image}
           resizeMethod="scale"
           resizeMode={resizeMode}

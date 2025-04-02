@@ -46,19 +46,21 @@ export const TrackScreen = ({
   const trackObservations = observations.filter(observation =>
     track.observationRefs.some(ref => ref.docId === observation.docId),
   );
-
-  const deleteTrackMutation = useDeleteTrackMutation();
+  const {mutate: deleteTrackMutate} = useDeleteTrackMutation();
 
   function deleteTrack() {
-    deleteTrackMutation.mutate(track.docId, {
-      onSuccess: () => {
-        navigation.pop();
+    deleteTrackMutate(
+      {docId: track.docId},
+      {
+        onSuccess: () => {
+          navigation.pop();
+        },
+        onError: err => {
+          Sentry.captureException(err);
+          navigation.navigate('ErrorBottomSheet');
+        },
       },
-      onError: err => {
-        Sentry.captureException(err);
-        navigation.navigate('ErrorBottomSheet');
-      },
-    });
+    );
   }
 
   return (

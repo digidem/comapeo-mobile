@@ -2,7 +2,7 @@ import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import ErrorIcon from '../../images/Error.svg';
 import {defineMessages, useIntl} from 'react-intl';
-import {useLeaveProject} from '../../hooks/server/projects';
+import {useLeaveProject, useAcceptInvite} from '@comapeo/core-react';
 import {RED} from '../../lib/styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import * as Sentry from '@sentry/react-native';
@@ -11,8 +11,8 @@ import {TouchableOpacity} from '../../sharedComponents/Touchables';
 
 import {UIActivityIndicator} from 'react-native-indicators';
 import {BottomSheetModalContent} from '../BottomSheetModal';
-import {useAcceptInvite} from '../../hooks/server/invites';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {HeaderText} from '../Text/HeaderText';
 
@@ -70,8 +70,9 @@ export const LeaveProject = ({
   const {formatMessage} = useIntl();
   const [error, setError] = React.useState(false);
   const [isChecked, setIsChecked] = React.useState(false);
-  const leaveProject = useLeaveProject();
   const {projectId} = useActiveProject();
+  const leaveProject = useLeaveProject();
+  const {setActiveProjectId} = useActiveProjectIdActions();
   const {navigate} = useNavigationFromRoot();
 
   function handleLeavePress() {
@@ -84,16 +85,20 @@ export const LeaveProject = ({
     accept.mutate(
       {inviteId},
       {
-        onSuccess: () => {
-          leaveProject.mutate(projectId, {
-            onSuccess: () => {
-              closeSheet();
+        onSuccess: projectPublicId => {
+          leaveProject.mutate(
+            {projectId},
+            {
+              onSuccess: () => {
+                closeSheet();
+                setActiveProjectId(projectPublicId);
+              },
+              onError: err => {
+                Sentry.captureException(err);
+                navigate('ErrorBottomSheet');
+              },
             },
-            onError: err => {
-              Sentry.captureException(err);
-              navigate('ErrorBottomSheet');
-            },
-          });
+          );
         },
         onError: err => {
           Sentry.captureException(err);

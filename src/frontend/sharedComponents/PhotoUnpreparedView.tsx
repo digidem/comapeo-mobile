@@ -4,8 +4,7 @@ import {StyleSheet, Image, Pressable} from 'react-native';
 import {AlertIcon} from './icons';
 import type {PhotoVariant, ViewStyleProp} from '../sharedTypes';
 import {useAttachmentUrlQuery} from '../hooks/server/media';
-import {UIActivityIndicator} from 'react-native-indicators';
-import {BLACK, WHITE} from '../lib/styles.ts';
+import {BLACK} from '../lib/styles.ts';
 import {SavedPhoto} from '../contexts/PhotoPromiseContext/types.ts';
 
 type Props = {
@@ -23,21 +22,15 @@ const PhotoUnpreparedComponent = ({
   style,
   onPress,
 }: Props) => {
-  const {
-    data: attachmentUrl,
-    isError,
-    isPending,
-  } = useAttachmentUrlQuery(photo, variant);
+  const {url: attachmentUrl, error} = useAttachmentUrlQuery(photo, variant);
 
   return (
     <Pressable onPress={onPress} style={[styles.container, style]}>
-      {isPending ? (
-        <UIActivityIndicator color={WHITE} />
-      ) : isError || !attachmentUrl ? (
+      {error || !attachmentUrl ? (
         <AlertIcon size={96} />
       ) : (
         <Image
-          src={attachmentUrl.url}
+          src={attachmentUrl}
           style={styles.image}
           resizeMethod="scale"
           resizeMode={resizeMode}

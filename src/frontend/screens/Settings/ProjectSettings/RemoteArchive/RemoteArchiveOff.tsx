@@ -6,7 +6,6 @@ import {Button} from '../../../../sharedComponents/Button';
 import {MEDIUM_GREY} from '../../../../lib/styles';
 import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
 import {useGetOwnRole} from '../../../../hooks/server/projects';
-import {UIActivityIndicator} from 'react-native-indicators';
 import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../../../sharedTypes';
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../../sharedComponents/Text/BodyText';
@@ -45,7 +44,7 @@ export const RemoteArchiveOff: NativeNavigationComponent<
 > = () => {
   const {formatMessage} = useIntl();
   const {navigate} = useNavigationFromRoot();
-  const {data: role, isPending: roleIsPending} = useGetOwnRole();
+  const {data: role} = useGetOwnRole();
   const isCoordinator =
     role?.roleId === COORDINATOR_ROLE_ID || role?.roleId === CREATOR_ROLE_ID;
 
@@ -63,9 +62,7 @@ export const RemoteArchiveOff: NativeNavigationComponent<
       <BodyText variant="smallMeta" style={styles.subtext}>
         {formatMessage(m.noServers)}
       </BodyText>
-      {roleIsPending ? (
-        <UIActivityIndicator />
-      ) : isCoordinator ? (
+      {isCoordinator ? (
         <Button
           variant="outlined"
           style={{marginTop: 20}}

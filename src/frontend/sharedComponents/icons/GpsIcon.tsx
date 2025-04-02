@@ -30,14 +30,14 @@ const RenderError = () => (
   </View>
 );
 
-const RenderIcon = ({color = '#00FF02'}: {color?: string}) => (
+const RenderIcon = ({color = '#36F927'}: {color?: string}) => (
   <View
     style={{
       backgroundColor: color,
       margin: 1.5,
       borderRadius: 7,
-      width: 14,
-      height: 14,
+      width: 12,
+      height: 12,
     }}
   />
 );
@@ -45,6 +45,7 @@ const RenderIcon = ({color = '#00FF02'}: {color?: string}) => (
 type Props = {variant: LocationStatus};
 
 const GpsIconComponent = ({variant}: Props) => {
+  console.log('GpsIconComponent', variant);
   switch (variant) {
     case 'error':
       return <RenderError />;

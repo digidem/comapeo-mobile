@@ -1,14 +1,12 @@
 import React, {FC, useMemo} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Text} from './Text';
-import {ParamListBase, useIsFocused} from '@react-navigation/native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
+import {defineMessages, useIntl} from 'react-intl';
+import {DARK_GREY, WHITE} from '../lib/styles';
+import {GpsIcon} from './icons/GpsIcon';
+import {useSharedLocationContext} from '../contexts/SharedLocationContext';
 import {useLocationProviderStatus} from '../hooks/useLocationProviderStatus';
 import {getLocationStatus} from '../lib/utils';
-import {defineMessages, useIntl} from 'react-intl';
-import {GpsIcon} from './icons';
-import {useSharedLocationContext} from '../contexts/SharedLocationContext';
-import {BLACK, WHITE} from '../lib/styles';
-import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
+import {BodyText} from './Text/BodyText';
 
 const m = defineMessages({
   noGps: {
@@ -21,78 +19,65 @@ const m = defineMessages({
   },
 });
 
-interface GPSPill {
-  navigation: BottomTabNavigationProp<ParamListBase, string, undefined>;
-}
+type GPSPillProps = {
+  onPress?: () => void;
+};
 
-export const GPSPill: FC<GPSPill> = ({navigation}) => {
-  const isFocused = useIsFocused();
-  const {formatMessage: t} = useIntl();
-  const {locationState, fgPermissions} = useSharedLocationContext();
+export const GPSPill: FC<GPSPillProps> = ({onPress}) => {
+  const {formatMessage} = useIntl();
   const locationProviderStatus = useLocationProviderStatus();
-
-  const precision = locationState?.location?.coords.accuracy;
+  const {locationState, fgPermissions} = useSharedLocationContext();
 
   const status = useMemo(() => {
     const isError = !!locationState.error || !fgPermissions;
+    if (isError) return 'error';
 
-    return isError
-      ? 'error'
-      : getLocationStatus({
-          location: locationState.location,
-          providerStatus: locationProviderStatus,
-        });
-  }, [
-    locationProviderStatus,
-    locationState.error,
-    locationState.location,
-    fgPermissions,
-  ]);
+    return getLocationStatus({
+      location: locationState.location,
+      providerStatus: locationProviderStatus,
+    });
+  }, [locationState, fgPermissions, locationProviderStatus]);
 
-  const text = useMemo(() => {
-    if (status === 'error') return t(m.noGps);
-    else if (status === 'searching' || typeof precision === 'undefined') {
-      return t(m.searching);
-    } else return `± ${Math.round(precision!)} m`;
-  }, [precision, status, t]);
+  const textValue = useMemo(() => {
+    if (status === 'error') {
+      return formatMessage(m.noGps);
+    }
+    if (status === 'searching' || !locationState.location?.coords.accuracy) {
+      return formatMessage(m.searching);
+    }
+
+    const precision = Math.round(locationState.location.coords.accuracy);
+    return `${precision} ±`;
+  }, [status, locationState.location, formatMessage]);
 
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('GpsModal')}
-      testID="MAIN.gps-pill-btn">
-      <View
-        style={[
-          styles.container,
-          status === 'error' ? styles.error : undefined,
-        ]}>
-        <View style={styles.icon}>
-          {isFocused && <GpsIcon variant={status} />}
-        </View>
-        <Text style={styles.text} numberOfLines={1}>
-          {text}
-        </Text>
-      </View>
+      onPress={onPress}
+      style={styles.container}
+      testID="MAP.gps-pill"
+      accessibilityLabel="Open GPS Modal">
+      <GpsIcon variant={status} />
+
+      <BodyText variant="regular" style={styles.text} numberOfLines={1}>
+        {textValue}
+      </BodyText>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0,
-    minWidth: 100,
-    maxWidth: 200,
-    borderRadius: 18,
-    height: 36,
-    paddingLeft: 32,
-    paddingRight: 20,
-    borderWidth: 3,
-    borderColor: '#33333366',
-    backgroundColor: BLACK,
-    justifyContent: 'center',
-    alignItems: 'center',
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    minWidth: 68,
+    minHeight: 32,
+    backgroundColor: DARK_GREY,
+    borderRadius: 20,
+    paddingHorizontal: 10,
+    gap: 5,
   },
-  error: {backgroundColor: '#FF0000'},
-  text: {color: WHITE},
-  icon: {position: 'absolute', left: 6},
+  text: {
+    color: WHITE,
+  },
 });

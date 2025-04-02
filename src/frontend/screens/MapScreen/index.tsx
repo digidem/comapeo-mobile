@@ -29,6 +29,7 @@ import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLa
 import {matchPreset} from '../../lib/utils';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
+import {GPSPill} from '../../sharedComponents/GPSPill';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -163,8 +164,11 @@ export const MapScreen = ({
       <ScaleBar
         zoom={zoom || 10}
         latitude={coords ? coords[1] : undefined}
-        bottom={20}
+        bottom={130}
       />
+      <View style={styles.gpsPillContainer}>
+        <GPSPill onPress={() => navigation.navigate('GpsModal')} />
+      </View>
       {coords && locationServicesEnabled && (
         <View style={styles.locationButton}>
           <IconButton onPress={handleLocationPress}>
@@ -186,6 +190,11 @@ const styles = StyleSheet.create({
   locationButton: {
     position: 'absolute',
     right: 20,
+    bottom: 20,
+  },
+  gpsPillContainer: {
+    position: 'absolute',
+    left: 10,
     bottom: 20,
   },
 });

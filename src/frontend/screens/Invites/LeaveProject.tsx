@@ -17,10 +17,13 @@ import {
   useLeaveProject,
   useSingleInvite,
 } from '@comapeo/core-react';
-import {useActiveProjectId} from '../../contexts/ActiveProjectIdStoreContext';
+import {
+  useActiveProjectId,
+  useActiveProjectIdActions,
+} from '../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
-import {UIActivityIndicator} from 'react-native-indicators';
 import {useListenToInviteStateUpdate} from '../../hooks/useListenToInviteStateUpdate';
+import {Bar as ProgressBar} from 'react-native-progress';
 
 const m = defineMessages({
   leaveProj: {
@@ -66,10 +69,11 @@ export const LeaveProject = ({
   const [isChecked, setIsChecked] = useState(false);
   const [error, setError] = useState(false);
   const accept = useAcceptInvite();
-  const projectId = useActiveProjectId();
+  const currentProjectId = useActiveProjectId();
   const leaveProject = useLeaveProject();
   const {currentProjectName, inviteId} = route.params;
   const {data: invite} = useSingleInvite({inviteId});
+  const {setActiveProjectId} = useActiveProjectIdActions();
 
   useListenToInviteStateUpdate(inviteId);
 
@@ -84,11 +88,12 @@ export const LeaveProject = ({
     accept.mutate(
       {inviteId},
       {
-        onSuccess: () => {
+        onSuccess: newProjectId => {
           leaveProject.mutate(
-            {projectId: projectId!},
+            {projectId: currentProjectId!},
             {
               onSuccess: () => {
+                setActiveProjectId(newProjectId);
                 navigation.replace('InviteSuccessfullyJoined', {
                   projectName: invite.projectName,
                 });
@@ -111,16 +116,18 @@ export const LeaveProject = ({
   return (
     <BottomSheetWrapper>
       {accept.status === 'pending' || leaveProject.status === 'pending' ? (
-        <View>
-          <HeaderText
-            style={{textAlign: 'center', marginTop: 80}}
-            variant="header2">
+        <View style={{height: '100%', paddingTop: 40}}>
+          <HeaderText style={{textAlign: 'center'}} variant="header2">
             {formatMessage(m.leavingProject, {
               projectName: currentProjectName || '',
             })}
           </HeaderText>
 
-          <UIActivityIndicator />
+          <ProgressBar
+            style={{width: '100%', marginTop: 30}}
+            height={10}
+            indeterminate={true}
+          />
         </View>
       ) : (
         <View style={styles.container}>
@@ -148,9 +155,9 @@ export const LeaveProject = ({
                 value={isChecked}
                 error={error}
                 onPress={() => setIsChecked(val => !val)}
-                hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+                hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
               />
-              <HeaderText variant="header5" style={{marginLeft: 10}}>
+              <HeaderText variant="header5" style={{marginLeft: 20, flex: 1}}>
                 {currentProjectName
                   ? formatMessage(m.deleteConsentWithName, {
                       projectName: currentProjectName,

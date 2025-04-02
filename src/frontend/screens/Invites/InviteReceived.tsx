@@ -10,6 +10,7 @@ import {
   useClientApi,
   useRejectInvite,
   useSingleInvite,
+  useManyProjects,
 } from '@comapeo/core-react';
 import {useEffect} from 'react';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
@@ -53,6 +54,7 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
   const rejectInvite = useRejectInvite();
   const {setActiveProjectId} = useActiveProjectIdActions();
   const {invite: mapeoApiInvite} = useClientApi();
+  const projects = useManyProjects();
 
   useEffect(() => {
     function navigateBasedOnInviteState(invite: Invite) {
@@ -87,6 +89,10 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
   }, [mapeoApiInvite, inviteId, navigation]);
 
   function accept() {
+    if (projects.data.length > 1) {
+      navigation.replace('AlreadyOnProject', {inviteId});
+      return;
+    }
     acceptInvite.mutate(
       {inviteId: inviteId},
       {

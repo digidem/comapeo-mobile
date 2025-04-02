@@ -117,8 +117,10 @@ export type RootStackParamsList = {
   InviteReceived: {inviteId: string};
   InviteSuccessfullyJoined: {projectName: string};
   InviteCancelled: {projectName: string};
+  AlreadyOnProject: {inviteId: string};
   ErrorBottomSheet: undefined;
   BackgroundMapErrorBottomSheet: {title: string; description: string};
+  LeaveProject: {inviteId: string; projectName: undefined | string};
 };
 
 export type OnboardingParamsList = {

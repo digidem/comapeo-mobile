@@ -55,12 +55,6 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
 
   useListenToInviteStateUpdate(inviteId);
 
-  // This guarantees the user does not get stuck on the invite screen
-  if (!invite) {
-    navigation.goBack();
-    return null;
-  }
-
   function accept() {
     if (projects.data.length > 1) {
       navigation.replace('AlreadyOnProject', {

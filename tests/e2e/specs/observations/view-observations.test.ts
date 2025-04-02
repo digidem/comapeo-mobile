@@ -116,8 +116,8 @@ describe('Observations - View Observations Flow', () => {
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();
-
-    await backBtn.click();
+    const mapTab = await $('~Go to Map');
+    await mapTab.click();
     await expect($(byResourceId('MAIN.mapbox-map-view'))).toBeDisplayed();
   });
 });

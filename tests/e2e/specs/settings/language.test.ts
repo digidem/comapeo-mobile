@@ -29,12 +29,11 @@ describe('Settings - Language Settings Flow', () => {
     const obsListTab = await $('~Go to ObservationsList');
     await obsListTab.click();
 
-    await expect($(byTextMatches('Observaciones'))).toBeDisplayed();
-    await backBtn.click();
+    await expect($(byTextMatches('Lago'))).toBeDisplayed();
   });
 
   it('should switch back to English and confirm language revert', async () => {
-    const drawerIcon = await $('~Open Navigation Drawer');
+    const drawerIcon = await $(byResourceId('OBS.header-drawer-btn'));
     if (await drawerIcon.isDisplayed()) {
       await drawerIcon.click();
     }

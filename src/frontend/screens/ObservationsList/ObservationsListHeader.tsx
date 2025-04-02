@@ -24,10 +24,10 @@ export function ObservationsListHeader({
   openDrawer,
 }: ObservationsListHeaderProps) {
   const {formatMessage} = useIntl();
-  const {data, isPending} = useProjectSettings();
+  const {data, isRefetching} = useProjectSettings();
 
   const projectName =
-    data?.name && !isPending ? data?.name : formatMessage(m.mySoloProject);
+    data?.name && !isRefetching ? data?.name : formatMessage(m.mySoloProject);
 
   return (
     <View style={styles.container}>

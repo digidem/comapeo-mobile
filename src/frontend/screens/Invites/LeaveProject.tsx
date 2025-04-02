@@ -103,22 +103,22 @@ export const LeaveProject = ({
 
   return (
     <BottomSheetWrapper>
-      <View style={styles.container}>
-        {accept.status === 'pending' || leaveProject.status === 'pending' ? (
-          <>
-            <HeaderText
-              style={{textAlign: 'center', marginTop: 80}}
-              variant="header2">
-              {formatMessage(m.leavingProject, {
-                projectName: projectName || '',
-              })}
-            </HeaderText>
+      {accept.status === 'pending' || leaveProject.status === 'pending' ? (
+        <View>
+          <HeaderText
+            style={{textAlign: 'center', marginTop: 80}}
+            variant="header2">
+            {formatMessage(m.leavingProject, {
+              projectName: projectName || '',
+            })}
+          </HeaderText>
 
-            <UIActivityIndicator />
-          </>
-        ) : (
-          <>
-            <Error style={{alignSelf: 'center'}} />
+          <UIActivityIndicator />
+        </View>
+      ) : (
+        <View style={styles.container}>
+          <View>
+            <Error style={{alignSelf: 'center', marginTop: 40}} />
             <HeaderText
               style={{textAlign: 'center', marginTop: 20}}
               variant="header2">
@@ -133,13 +133,19 @@ export const LeaveProject = ({
                   })
                 : formatMessage(m.removeFromProjWithoutName)}
             </BodyText>
-            <View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginTop: 20,
+              }}>
               <Checkbox
                 value={isChecked}
+                error={error}
                 onPress={() => setIsChecked(val => !val)}
                 hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
               />
-              <HeaderText variant="header5">
+              <HeaderText variant="header5" style={{marginLeft: 10}}>
                 {projectName
                   ? formatMessage(m.deleteConsentWithName, {
                       projectName: projectName,
@@ -152,23 +158,24 @@ export const LeaveProject = ({
                 {formatMessage(m.checkToConfirm)}
               </HeaderText>
             )}
-            <View style={styles.buttonContainer}>
-              <DestructiveButton
-                fullSize
-                onPress={handleLeaveProject}
-                text={formatMessage(m.leaveProj)}
-              />
-              <SecondaryButton
-                fullSize
-                text={formatMessage(m.cancel)}
-                onPress={() => {
-                  navigation.replace('InviteReceived', {inviteId});
-                }}
-              />
-            </View>
-          </>
-        )}
-      </View>
+          </View>
+          <View style={styles.buttonContainer}>
+            <DestructiveButton
+              fullSize
+              onPress={handleLeaveProject}
+              text={formatMessage(m.leaveProj)}
+            />
+            <SecondaryButton
+              fullSize
+              style={{marginTop: 20}}
+              text={formatMessage(m.cancel)}
+              onPress={() => {
+                navigation.replace('InviteReceived', {inviteId});
+              }}
+            />
+          </View>
+        </View>
+      )}
     </BottomSheetWrapper>
   );
 };
@@ -181,5 +188,6 @@ const styles = StyleSheet.create({
   container: {
     height: '100%',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });

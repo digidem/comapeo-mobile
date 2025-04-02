@@ -48,19 +48,21 @@ export const AlreadyOnProject = ({
   return (
     <BottomSheetWrapper>
       <View style={styles.container}>
-        <Error style={{alignSelf: 'center'}} />
-        <HeaderText
-          style={{textAlign: 'center', marginTop: 20}}
-          variant="header2">
-          {formatMessage(m.alreadyOnProject)}
-        </HeaderText>
-        {projectName && (
-          <BodyText
+        <View style={{alignItems: 'center'}}>
+          <Error style={{alignSelf: 'center', marginTop: 40}} />
+          <HeaderText
             style={{textAlign: 'center', marginTop: 20}}
-            variant="large">
-            {formatMessage(m.onProject, {projectName: projectName})}
-          </BodyText>
-        )}
+            variant="header2">
+            {formatMessage(m.alreadyOnProject)}
+          </HeaderText>
+          {projectName && (
+            <BodyText
+              style={{textAlign: 'center', marginTop: 20}}
+              variant="large">
+              {formatMessage(m.onProject, {projectName: projectName})}
+            </BodyText>
+          )}
+        </View>
         <View style={styles.buttonContainer}>
           <SecondaryButton
             fullSize
@@ -69,6 +71,7 @@ export const AlreadyOnProject = ({
           />
           <PrimaryButton
             fullSize
+            style={{marginTop: 20}}
             text={formatMessage(m.leaveProj)}
             onPress={() => {
               navigation.replace('LeaveProject', {
@@ -91,5 +94,6 @@ const styles = StyleSheet.create({
   container: {
     height: '100%',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });

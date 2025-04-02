@@ -85,8 +85,8 @@ export const MapScreen = ({
   );
 
   const handleAddPress = () => {
-    newDraft();
-    navigate('PresetChooser');
+    // newDraft();
+    navigate('AlreadyOnProject', {inviteId: 'asdf'});
   };
 
   // This closes the track bottom sheet whenever the user is navigated away.

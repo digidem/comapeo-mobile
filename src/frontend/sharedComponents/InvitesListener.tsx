@@ -11,8 +11,6 @@ export const InvitesListener = ({
 }) => {
   const {data: invites} = useManyInvites();
 
-  console.log({currentRouteName});
-
   useEffect(() => {
     const invite = invites.find(i => i.state === 'pending');
     if (!invite || !currentRouteName) return;

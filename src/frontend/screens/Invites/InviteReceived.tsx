@@ -67,6 +67,8 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
 
       if (invite.state === 'error') {
         Sentry.captureException(invite.error);
+        navigation.replace('ErrorBottomSheet');
+        return;
       }
 
       if (invite.state !== 'pending') {

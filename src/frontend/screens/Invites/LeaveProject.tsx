@@ -16,6 +16,7 @@ import {useAcceptInvite, useLeaveProject} from '@comapeo/core-react';
 import {useActiveProjectId} from '../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {useListenToInviteStateUpdate} from '../../hooks/useListenToInviteStateUpdate';
 
 const m = defineMessages({
   leaveProj: {
@@ -64,6 +65,8 @@ export const LeaveProject = ({
   const projectId = useActiveProjectId();
   const leaveProject = useLeaveProject();
   const {projectName, inviteId} = route.params;
+
+  useListenToInviteStateUpdate(inviteId);
 
   function handleLeaveProject() {
     if (!isChecked) {

@@ -7,18 +7,16 @@ import {defineMessages, useIntl} from 'react-intl';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {
   useAcceptInvite,
-  useClientApi,
   useRejectInvite,
   useSingleInvite,
   useManyProjects,
 } from '@comapeo/core-react';
-import {useEffect} from 'react';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
-import {Invite} from '@comapeo/core/dist/invite/invite-api';
+import {useListenToInviteStateUpdate} from '../../hooks/useListenToInviteStateUpdate';
 
 const m = defineMessages({
   navTitle: {
@@ -53,40 +51,9 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
   const acceptInvite = useAcceptInvite();
   const rejectInvite = useRejectInvite();
   const {setActiveProjectId} = useActiveProjectIdActions();
-  const {invite: mapeoApiInvite} = useClientApi();
   const projects = useManyProjects();
 
-  useEffect(() => {
-    function navigateBasedOnInviteState(invite: Invite) {
-      if (invite.inviteId !== inviteId) return;
-
-      if (invite.state === 'canceled') {
-        navigation.replace('InviteCancelled', {
-          projectName: invite.projectName,
-        });
-        return;
-      }
-
-      if (invite.state === 'error') {
-        Sentry.captureException(invite.error);
-        navigation.replace('ErrorBottomSheet');
-        return;
-      }
-
-      if (invite.state !== 'pending') {
-        navigation.goBack();
-      }
-    }
-
-    mapeoApiInvite.addListener('invite-updated', navigateBasedOnInviteState);
-
-    return () => {
-      mapeoApiInvite.removeListener(
-        'invite-updated',
-        navigateBasedOnInviteState,
-      );
-    };
-  }, [mapeoApiInvite, inviteId, navigation]);
+  useListenToInviteStateUpdate(inviteId);
 
   function accept() {
     if (projects.data.length > 1) {

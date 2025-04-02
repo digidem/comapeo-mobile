@@ -8,6 +8,7 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 import Error from '../../images/Error.svg';
 import {useProjectSettings} from '@comapeo/core-react';
 import {useActiveProjectId} from '../../contexts/ActiveProjectIdStoreContext';
+import {useListenToInviteStateUpdate} from '../../hooks/useListenToInviteStateUpdate';
 
 const m = defineMessages({
   leaveProj: {
@@ -40,6 +41,9 @@ export const AlreadyOnProject = ({
   const {
     data: {name: projectName},
   } = useProjectSettings({projectId: projectId!});
+  const inviteId = route.params.inviteId;
+
+  useListenToInviteStateUpdate(inviteId);
 
   return (
     <BottomSheetWrapper>
@@ -68,7 +72,7 @@ export const AlreadyOnProject = ({
             text={formatMessage(m.leaveProj)}
             onPress={() => {
               navigation.replace('LeaveProject', {
-                inviteId: route.params.inviteId,
+                inviteId,
                 projectName,
               });
             }}

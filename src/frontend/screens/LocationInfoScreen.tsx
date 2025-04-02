@@ -16,7 +16,7 @@ import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 import {DateDistance} from '../sharedComponents/DateDistance';
 import {FormattedCoords} from '../sharedComponents/FormattedData';
 import {Text} from '../sharedComponents/Text';
-import {useCoordinateFormat} from '../contexts/CoordinateFormatContext';
+import {useCoordinateFormat} from '../contexts/CoordinateFormatStoreContext';
 
 const m = defineMessages({
   gpsHeader: {

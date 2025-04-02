@@ -18,20 +18,12 @@ export function useGetMediaSyncSetting() {
 }
 
 export function useSetMediaSyncSetting() {
-  const setIsArchive = useSetIsArchiveDevice();
+  const {mutateAsync: setIsArchiveAsync} = useSetIsArchiveDevice();
 
   const {mutate, status, reset} = useMutation({
     mutationKey: [UPDATE_MEDIA_SETTING],
-    mutationFn: (newSetting: MediaSyncSetting) => {
-      return new Promise((res, rej) => {
-        setIsArchive.mutate(
-          {isArchiveDevice: isArchiveDevice(newSetting)},
-          {
-            onError: rej,
-            onSuccess: res,
-          },
-        );
-      });
+    mutationFn: async (newSetting: MediaSyncSetting) => {
+      await setIsArchiveAsync({isArchiveDevice: isArchiveDevice(newSetting)});
     },
   });
 

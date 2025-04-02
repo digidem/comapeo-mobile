@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {BLUE_GREY, VERY_LIGHT_GREY} from '../../lib/styles';
-import {useAllProjects} from '../../hooks/server/projects';
+import {useManyProjects} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {defineMessages, useIntl} from 'react-intl';
 import {useOwnRoleInProject} from '@comapeo/core-react';
@@ -31,7 +31,7 @@ const m = defineMessages({
 });
 
 export function ProjectCard() {
-  const {data} = useAllProjects();
+  const {data: projects} = useManyProjects();
   const {projectId} = useActiveProject();
   const {formatMessage} = useIntl();
   const {data: role} = useOwnRoleInProject({
@@ -39,7 +39,7 @@ export function ProjectCard() {
   });
 
   let projectRole = 'solo';
-  if (data && data.length > 1) {
+  if (projects && projects.length > 1) {
     if (
       role.roleId === COORDINATOR_ROLE_ID ||
       role.roleId === CREATOR_ROLE_ID

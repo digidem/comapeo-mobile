@@ -24,10 +24,10 @@ type HomeHeaderProps = BottomTabHeaderProps & {
 export function HomeHeader({openDrawer}: HomeHeaderProps) {
   const insets = useSafeAreaInsets();
   const {formatMessage} = useIntl();
-  const {data, isPending} = useProjectSettings();
+  const {data, isRefetching} = useProjectSettings();
 
   const projectName =
-    !isPending && data?.name ? data.name : formatMessage(m.mySoloProject);
+    !isRefetching && data?.name ? data.name : formatMessage(m.mySoloProject);
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>

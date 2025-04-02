@@ -21,6 +21,7 @@ export const EDITING_SCREEN_NAMES:
   'OnboardingPrivacyPolicy',
   'Success',
   'AuthScreen',
+  'ErrorBottomSheet',
 ];
 
 export const INVITE_SCREEN_NAME: Omit<keyof AppStackParamsList, 'Home'>[] = [

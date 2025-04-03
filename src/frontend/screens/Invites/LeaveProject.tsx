@@ -19,7 +19,7 @@ import {
 } from '@comapeo/core-react';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
-import {useListenToInviteStateUpdate} from '../../hooks/useListenToInviteStateUpdate';
+import {useListenToInviteCancel} from '../../hooks/useListenToInviteCancel';
 import {Bar as ProgressBar} from 'react-native-progress';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 
@@ -73,7 +73,7 @@ export const LeaveProject = ({
   const {data: invite} = useSingleInvite({inviteId});
   const {setActiveProjectId} = useActiveProjectIdActions();
 
-  useListenToInviteStateUpdate(inviteId);
+  useListenToInviteCancel(inviteId);
 
   function handleLeaveProject() {
     if (!isChecked) {

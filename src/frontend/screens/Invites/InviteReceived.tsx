@@ -16,7 +16,7 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
-import {useListenToInviteStateUpdate} from '../../hooks/useListenToInviteStateUpdate';
+import {useListenToInviteCancel} from '../../hooks/useListenToInviteCancel';
 
 const m = defineMessages({
   acceptInvite: {
@@ -49,7 +49,7 @@ export const InviteReceived = ({
   const {setActiveProjectId} = useActiveProjectIdActions();
   const projects = useManyProjects();
 
-  useListenToInviteStateUpdate(inviteId);
+  useListenToInviteCancel(inviteId);
 
   function accept() {
     if (projects.data.length > 1) {

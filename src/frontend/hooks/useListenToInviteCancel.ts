@@ -1,14 +1,13 @@
 import {Invite} from '@comapeo/core/dist/invite/invite-api';
 import {useEffect} from 'react';
 import {useNavigationFromRoot} from './useNavigationWithTypes';
-import * as Sentry from '@sentry/react-native';
 import {useClientApi} from '@comapeo/core-react';
 
-export function useListenToInviteStateUpdate(inviteId: string) {
+export function useListenToInviteCancel(inviteId: string) {
   const navigation = useNavigationFromRoot();
   const {invite: mapeoApiInvite} = useClientApi();
   useEffect(() => {
-    function navigateBasedOnInviteState(invite: Invite) {
+    function navigateOnCancel(invite: Invite) {
       if (invite.inviteId !== inviteId) return;
 
       if (invite.state === 'canceled') {
@@ -17,21 +16,12 @@ export function useListenToInviteStateUpdate(inviteId: string) {
         });
         return;
       }
-
-      if (invite.state === 'error') {
-        Sentry.captureException(invite.error);
-        navigation.replace('ErrorBottomSheet');
-        return;
-      }
     }
 
-    mapeoApiInvite.addListener('invite-updated', navigateBasedOnInviteState);
+    mapeoApiInvite.addListener('invite-updated', navigateOnCancel);
 
     return () => {
-      mapeoApiInvite.removeListener(
-        'invite-updated',
-        navigateBasedOnInviteState,
-      );
+      mapeoApiInvite.removeListener('invite-updated', navigateOnCancel);
     };
   }, [mapeoApiInvite, inviteId, navigation]);
 }

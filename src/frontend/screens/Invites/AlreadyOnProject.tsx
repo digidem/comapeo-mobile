@@ -7,7 +7,7 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import Error from '../../images/Error.svg';
 import {useProjectSettings} from '@comapeo/core-react';
-import {useListenToInviteStateUpdate} from '../../hooks/useListenToInviteStateUpdate';
+import {useListenToInviteCancel} from '../../hooks/useListenToInviteCancel';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 
 const m = defineMessages({
@@ -43,7 +43,7 @@ export const AlreadyOnProject = ({
   } = useProjectSettings({projectId: projectId});
   const {inviteId} = route.params;
 
-  useListenToInviteStateUpdate(inviteId);
+  useListenToInviteCancel(inviteId);
 
   return (
     <BottomSheetWrapper>

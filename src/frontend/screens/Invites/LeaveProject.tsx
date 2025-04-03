@@ -92,7 +92,7 @@ export const LeaveProject = ({
             {
               onSuccess: () => {
                 setActiveProjectId(newProjectId);
-                navigation.replace('InviteSuccessfullyJoined', {
+                navigation.replace('InviteSuccessfullyAccepted', {
                   projectName: invite.projectName,
                 });
               },

@@ -97,7 +97,7 @@ import {AudioSavedBottomSheet} from '../../screens/Audio/AudioSavedBottomSheet.t
 import {AudioPlaybackSaved} from '../../screens/Audio/AudioPlaybackSaved.tsx';
 import {AudioCustomHeaderLeft} from '../../screens/Audio/AudioCustomHeaderLeft.tsx';
 import {InviteReceived} from '../../screens/Invites/InviteReceived.tsx';
-import {InviteSuccessfullyJoined} from '../../screens/Invites/InviteSuccessfullyJoined.tsx';
+import {InviteSuccessfullyAccepted} from '../../screens/Invites/InviteSuccessfullyAccepted.tsx';
 import {InviteCancelled} from '../../screens/Invites/InviteCancelled.tsx';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagement/ErrorBottomSheet.tsx';
@@ -448,8 +448,8 @@ export const createDefaultScreenGroup = ({
       />
       <RootStack.Screen name="InviteReceived" component={InviteReceived} />
       <RootStack.Screen
-        name="InviteSuccessfullyJoined"
-        component={InviteSuccessfullyJoined}
+        name="InviteSuccessfullyAccepted"
+        component={InviteSuccessfullyAccepted}
       />
       <RootStack.Screen name="InviteCancelled" component={InviteCancelled} />
       <RootStack.Screen name="ErrorBottomSheet" component={ErrorBottomSheet} />

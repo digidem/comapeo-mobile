@@ -27,10 +27,10 @@ const m = defineMessages({
   },
 });
 
-export const InviteSuccessfullyJoined = ({
+export const InviteSuccessfullyAccepted = ({
   route,
   navigation,
-}: NativeRootNavigationProps<'InviteSuccessfullyJoined'>) => {
+}: NativeRootNavigationProps<'InviteSuccessfullyAccepted'>) => {
   const {formatMessage} = useIntl();
   const {dispatch} = useNavigation();
 

@@ -4,7 +4,7 @@ import {StyleSheet, View} from 'react-native';
 import {LIGHT_GREY} from '../../lib/styles';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {defineMessages, useIntl} from 'react-intl';
-import {NativeNavigationComponent} from '../../sharedTypes/navigation';
+import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {
   useAcceptInvite,
   useRejectInvite,
@@ -19,10 +19,6 @@ import * as Sentry from '@sentry/react-native';
 import {useListenToInviteStateUpdate} from '../../hooks/useListenToInviteStateUpdate';
 
 const m = defineMessages({
-  navTitle: {
-    id: 'screens.InviteReceived.navTitle',
-    defaultMessage: 'Invite Received',
-  },
   acceptInvite: {
     id: 'screens.InviteReceived.acceptInvite',
     defaultMessage: 'Accept Invite',
@@ -41,10 +37,10 @@ const m = defineMessages({
   },
 });
 
-export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
+export const InviteReceived = ({
   route,
   navigation,
-}) => {
+}: NativeRootNavigationProps<'InviteReceived'>) => {
   const {formatMessage} = useIntl();
   const inviteId = route.params.inviteId;
   const {data: invite} = useSingleInvite({inviteId});
@@ -130,8 +126,6 @@ export const InviteReceived: NativeNavigationComponent<'InviteReceived'> = ({
     </BottomSheetWrapper>
   );
 };
-
-InviteReceived.navTitle = m.navTitle;
 
 const styles = StyleSheet.create({
   inviteIcon: {

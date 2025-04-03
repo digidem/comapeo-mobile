@@ -293,7 +293,7 @@ export const VerifiedHeader = () => {
   return (
     <>
       <BadgeWithCheck />
-      <View style={[styles.flexRow, {marginBottom: 10}]}>
+      <View style={[styles.flexRow, {marginVertical: 10}]}>
         <VerifiedBadge stroke={COMAPEO_BLUE} style={{marginRight: 10}} />
         <HeaderText variant="header6" style={{color: COMAPEO_BLUE}}>
           {formatMessage(m.howWeCheck)}

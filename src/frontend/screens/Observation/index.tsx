@@ -71,7 +71,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
         }, defaultAcc)
       : [];
 
-  const {lat, lon, originalVersionId} = observation;
+  const {lat, lon, originalVersionId, metadata} = observation;
   const {data: deviceInfo, isPending: isDeviceInfoPending} = useDeviceInfo();
   const {data: convertedDeviceId, isPending: isDeviceIdPending} =
     useOriginalVersionIdToDeviceId(originalVersionId);
@@ -93,7 +93,12 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
       <>
         {/* check lat and lon are undefined. We cannot do `!lat && !lon` as 0 is a valid number but a falsy value */}
         {lat !== undefined && lon !== undefined && (
-          <InsetMapView observationId={observationId} lat={lat} lon={lon} />
+          <InsetMapView
+            accuracy={metadata?.position?.coords.accuracy}
+            observationId={observationId}
+            lat={lat}
+            lon={lon}
+          />
         )}
         <TouchableOpacity
           onPress={() => {

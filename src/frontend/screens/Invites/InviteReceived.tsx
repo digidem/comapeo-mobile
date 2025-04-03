@@ -53,7 +53,7 @@ export const InviteReceived = ({
 
   function accept() {
     if (projects.data.length > 1) {
-      navigation.replace('AlreadyOnProject', {
+      navigation.replace('ExistingProjectWarning', {
         inviteId,
       });
       return;

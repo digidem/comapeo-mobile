@@ -44,7 +44,7 @@ export const InsetMapView = React.memo<MapProps>(
         />
         <MarkerView
           id="locationIndicator"
-          anchor={{x: 0.5, y: 0.75}}
+          anchor={{x: 0.5, y: 0.8}}
           coordinate={[lon, lat]}>
           <TouchableOpacity
             onPress={() => navigate('ObservationMetadata', {observationId})}>

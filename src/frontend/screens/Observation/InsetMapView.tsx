@@ -62,7 +62,6 @@ export const InsetMapView = React.memo<MapProps>(
               </BodyText>
             </TouchableOpacity>
             <View style={styles.arrow} />
-
             <OrangeDot style={{alignSelf: 'center'}} />
           </>
         </MarkerView>

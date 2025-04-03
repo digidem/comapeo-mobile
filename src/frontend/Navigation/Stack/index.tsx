@@ -10,7 +10,7 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {Loading} from '../../sharedComponents/Loading';
 import {createDefaultScreenGroup} from './AppScreens';
 import {createOnboardingScreens} from './OnboardingScreens';
-import {InvitesListener} from '../../sharedComponents/InvitesListener';
+import {PendingInvitesListener} from '../../sharedComponents/PendingInvitesListener';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
@@ -33,7 +33,7 @@ export const RootStackNavigator = () => {
       layout={({children, state, navigation}) => {
         return (
           <React.Suspense fallback={<Loading />}>
-            <InvitesListener
+            <PendingInvitesListener
               currentRouteName={state.routes[state.index]?.name}
               navigateToInviteScreen={inviteId =>
                 navigation.navigate('InviteReceived', {inviteId})

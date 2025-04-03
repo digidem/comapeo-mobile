@@ -4,7 +4,7 @@ import {defineMessages} from 'react-intl';
 import {ReviewInvitation} from './ReviewInvitation';
 import {WaitingForInviteAccept} from './WaitingForInviteAccept';
 import {useSendInvite, useRequestCancelInvite} from '@comapeo/core-react';
-import {useActiveProjectId} from '../../../../../contexts/ActiveProjectIdStoreContext';
+import {useActiveProject} from '../../../../../contexts/ActiveProjectContext';
 import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
@@ -19,15 +19,17 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
   navigation,
 }) => {
   const {role, deviceId, deviceType, name} = route.params;
-  const projectId = useActiveProjectId();
-  const sendInviteMutation = useSendInvite({projectId: projectId!});
-  const requestCancelInviteMutation = useRequestCancelInvite({
-    projectId: projectId!,
-  });
+  const {projectId} = useActiveProject();
+
+  const sendInviteMutation = useSendInvite({projectId});
+  const requestCancelInviteMutation = useRequestCancelInvite({projectId});
 
   function sendInvite() {
     sendInviteMutation.mutate(
-      {deviceId, roleId: role},
+      {
+        deviceId,
+        roleId: role,
+      },
       {
         onSuccess: val => {
           // If user has attempted to cancel an invite, but an invite has already been accepted, let user know their cancellation was unsuccessful
@@ -48,8 +50,8 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
             return;
           }
         },
-        onError: err => {
-          Sentry.captureException(err);
+        onError(error) {
+          Sentry.captureException(error);
           navigation.navigate('ErrorBottomSheet');
         },
       },
@@ -70,7 +72,6 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
       },
     );
   }
-
   return (
     <>
       {sendInviteMutation.status === 'idle' ? (

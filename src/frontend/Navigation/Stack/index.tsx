@@ -11,17 +11,16 @@ import {Loading} from '../../sharedComponents/Loading';
 import {createDefaultScreenGroup} from './AppScreens';
 import {createOnboardingScreens} from './OnboardingScreens';
 import {InvitesListener} from '../../sharedComponents/InvitesListener';
+import {useOwnDeviceInfo} from '@comapeo/core-react';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
 
-export const RootStackNavigator = ({
-  deviceName,
-}: {
-  deviceName: string | undefined;
-}) => {
+export const RootStackNavigator = () => {
   const {formatMessage} = useIntl();
   const security = useAuthContext();
   const {navigate} = useNavigationFromRoot();
+
+  const {data: deviceInfo} = useOwnDeviceInfo();
 
   React.useEffect(() => {
     if (security.authState === 'unauthenticated') {
@@ -50,7 +49,7 @@ export const RootStackNavigator = ({
         );
       }}
       screenOptions={NavigatorScreenOptions}>
-      {deviceName
+      {deviceInfo.name
         ? createDefaultScreenGroup({
             intl: formatMessage,
           })

@@ -5,7 +5,7 @@ import {DARK_GREY} from '../../lib/styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {useDeleteObservation} from '../../hooks/server/observations';
+import {useDeleteDocument} from '@comapeo/core-react';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset.ts';
 import {formatCoords} from '../../lib/coordinateFormat.ts';
 import {UIActivityIndicator} from 'react-native-indicators';
@@ -17,7 +17,7 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
 import {useOpenShareDialog} from '../../hooks/share.ts';
-import {useCoordinateFormat} from '../../contexts/CoordinateFormatContext.ts';
+import {useCoordinateFormat} from '../../contexts/CoordinateFormatStoreContext.ts';
 
 const m = defineMessages({
   delete: {
@@ -92,11 +92,15 @@ export const ButtonFields = ({
 }) => {
   const {formatMessage: t, formatDate} = useIntl();
   const navigation = useNavigationFromRoot();
-  const deleteObservationMutation = useDeleteObservation();
   const {observation, preset} = useObservationWithPreset(observationId);
   const coordinateFormat = useCoordinateFormat();
   const [isShareButtonLoading, setShareButtonLoading] = useState(false);
-  const {projectApi} = useActiveProject();
+  const {projectApi, projectId} = useActiveProject();
+  const {mutate: deleteObservationMutate, error: deleteObservationError} =
+    useDeleteDocument({
+      docType: 'observation',
+      projectId: projectId,
+    });
   const openShare = useOpenShareDialog();
 
   function handlePressDelete() {
@@ -108,8 +112,17 @@ export const ButtonFields = ({
       {
         text: t(m.confirm),
         onPress: () => {
-          deleteObservationMutation.mutate({id: observationId});
-          navigation.pop();
+          deleteObservationMutate(
+            {docId: observationId},
+            {
+              onSuccess: () => {
+                navigation.pop();
+              },
+              onError: () => {
+                Sentry.captureException(deleteObservationError);
+              },
+            },
+          );
         },
       },
     ]);

@@ -27,12 +27,12 @@ import {
 } from './ActiveProjectIdStoreContext';
 import {
   type CoordinateFormatStore,
-  CoordinateFormatProvider,
-} from './CoordinateFormatContext';
+  CoordinateFormatStoreProvider,
+} from './CoordinateFormatStoreContext';
 import {
   type ManualEntryCoordinateFormatStore,
-  ManualEntryCoordinateFormatProvider,
-} from './ManualEntryCoordinateFormatContext';
+  ManualEntryCoordinateFormatStoreProvider,
+} from './ManualEntryCoordinateFormatStoreContext';
 import {
   type MetricsDiagnosticsStore,
   MetricsDiagnosticsStoreProvider,
@@ -75,8 +75,8 @@ export const AppProviders = ({
       <MetricsDiagnosticsStoreProvider value={metricsDiagnosticsStore}>
         <ActiveProjectIdStoreProvider value={activeProjectIdStore}>
           <SecurityStoreProvider value={securityStore}>
-            <CoordinateFormatProvider value={coordinateFormatStore}>
-              <ManualEntryCoordinateFormatProvider
+            <CoordinateFormatStoreProvider value={coordinateFormatStore}>
+              <ManualEntryCoordinateFormatStoreProvider
                 value={manualEntryCoordinateFormatStore}>
                 <TrackStoreProvider value={trackStore}>
                   <IntlProvider>
@@ -111,8 +111,8 @@ export const AppProviders = ({
                     </QueryClientProvider>
                   </IntlProvider>
                 </TrackStoreProvider>
-              </ManualEntryCoordinateFormatProvider>
-            </CoordinateFormatProvider>
+              </ManualEntryCoordinateFormatStoreProvider>
+            </CoordinateFormatStoreProvider>
           </SecurityStoreProvider>
         </ActiveProjectIdStoreProvider>
       </MetricsDiagnosticsStoreProvider>

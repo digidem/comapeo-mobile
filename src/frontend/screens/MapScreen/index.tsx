@@ -59,7 +59,7 @@ export const MapScreen = ({
   const locationServicesEnabled =
     !!locationProviderStatus?.locationServicesEnabled;
 
-  const styleUrlQuery = useMapStyleJsonUrl();
+  const {data: styleUrl} = useMapStyleJsonUrl();
   const existingObservation = usePersistedDraftObservation(
     store => store.value,
   );
@@ -120,7 +120,7 @@ export const MapScreen = ({
         attributionPosition={{right: 8, bottom: 8}}
         compassEnabled={false}
         scaleBarEnabled={false}
-        styleURL={styleUrlQuery.data}
+        styleURL={styleUrl}
         onMapIdle={event => {
           setZoom(event.properties.zoom);
         }}

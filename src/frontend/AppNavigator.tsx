@@ -5,14 +5,14 @@ import {
 import * as React from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import {AppStackParamsList} from './sharedTypes/navigation';
-import {useInvitesListeners} from '@comapeo/core-react';
+import {useSetUpInvitesListeners} from '@comapeo/core-react';
 import {RootStackNavigator} from './Navigation/Stack';
 
 export const rootNavigationRef =
   createNavigationContainerRef<AppStackParamsList>();
 
 export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
-  useInvitesListeners();
+  useSetUpInvitesListeners();
 
   if (permissionAsked) {
     SplashScreen.hide();

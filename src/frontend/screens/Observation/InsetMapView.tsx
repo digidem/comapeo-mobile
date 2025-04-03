@@ -43,7 +43,6 @@ export const InsetMapView = React.memo<MapProps>(
           animationMode="none"
         />
         <MarkerView
-          onTouchEnd={() => console.log('touch')}
           id="locationIndicator"
           anchor={{x: 0.5, y: 0.75}}
           coordinate={[lon, lat]}>

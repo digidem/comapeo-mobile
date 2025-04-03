@@ -17,13 +17,11 @@ import {
   useLeaveProject,
   useSingleInvite,
 } from '@comapeo/core-react';
-import {
-  useActiveProjectId,
-  useActiveProjectIdActions,
-} from '../../contexts/ActiveProjectIdStoreContext';
+import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
 import {useListenToInviteStateUpdate} from '../../hooks/useListenToInviteStateUpdate';
 import {Bar as ProgressBar} from 'react-native-progress';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
 
 const m = defineMessages({
   leaveProj: {
@@ -69,7 +67,7 @@ export const LeaveProject = ({
   const [isChecked, setIsChecked] = useState(false);
   const [error, setError] = useState(false);
   const accept = useAcceptInvite();
-  const currentProjectId = useActiveProjectId();
+  const {projectId: currentProjectId} = useActiveProject();
   const leaveProject = useLeaveProject();
   const {currentProjectName, inviteId} = route.params;
   const {data: invite} = useSingleInvite({inviteId});
@@ -90,7 +88,7 @@ export const LeaveProject = ({
       {
         onSuccess: newProjectId => {
           leaveProject.mutate(
-            {projectId: currentProjectId!},
+            {projectId: currentProjectId},
             {
               onSuccess: () => {
                 setActiveProjectId(newProjectId);

@@ -7,8 +7,8 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import Error from '../../images/Error.svg';
 import {useProjectSettings} from '@comapeo/core-react';
-import {useActiveProjectId} from '../../contexts/ActiveProjectIdStoreContext';
 import {useListenToInviteStateUpdate} from '../../hooks/useListenToInviteStateUpdate';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
 
 const m = defineMessages({
   leaveProj: {
@@ -37,10 +37,10 @@ export const AlreadyOnProject = ({
   navigation,
 }: NativeRootNavigationProps<'AlreadyOnProject'>) => {
   const {formatMessage} = useIntl();
-  const projectId = useActiveProjectId();
+  const {projectId} = useActiveProject();
   const {
     data: {name: currentProjectName},
-  } = useProjectSettings({projectId: projectId!});
+  } = useProjectSettings({projectId: projectId});
   const {inviteId} = route.params;
 
   useListenToInviteStateUpdate(inviteId);

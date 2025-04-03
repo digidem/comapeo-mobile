@@ -12,19 +12,19 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 
 const m = defineMessages({
   leaveProj: {
-    id: 'screens.Invite.AlreadyOnProject.leaveProj',
+    id: 'screens.Invite.ExistingProjectWarning.leaveProj',
     defaultMessage: 'Leave Current Project',
   },
   goBack: {
-    id: 'screens.Invite.AlreadyOnProject.goBack',
+    id: 'screens.Invite.ExistingProjectWarning.goBack',
     defaultMessage: 'Go Back',
   },
   alreadyOnProject: {
-    id: 'screens.Invite.AlreadyOnProject.alreadyOnProject',
+    id: 'screens.Invite.ExistingProjectWarning.alreadyOnProject',
     defaultMessage: 'You are already on a project',
   },
   onProject: {
-    id: 'screens.Invite.AlreadyOnProject.onProject',
+    id: 'screens.Invite.ExistingProjectWarning.onProject',
     defaultMessage: 'You are on {projectName}',
   },
   leaveWarning: {
@@ -32,10 +32,10 @@ const m = defineMessages({
     defaultMessage: 'To join a new project you must leave your current one.',
   },
 });
-export const AlreadyOnProject = ({
+export const ExistingProjectWarning = ({
   route,
   navigation,
-}: NativeRootNavigationProps<'AlreadyOnProject'>) => {
+}: NativeRootNavigationProps<'ExistingProjectWarning'>) => {
   const {formatMessage} = useIntl();
   const {projectId} = useActiveProject();
   const {

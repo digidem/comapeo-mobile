@@ -259,7 +259,11 @@ export const ObservationMetadata: NativeNavigationComponent<
                 <View style={styles.flexRow}>
                   {item[key]!.icon}
                   <BodyText
-                    style={{textAlign: 'left', marginLeft: 5}}
+                    style={{
+                      textAlign: 'left',
+                      marginLeft: 5,
+                      fontWeight: '700',
+                    }}
                     variant="smallMeta">
                     {item[key]!.label}:{' '}
                   </BodyText>

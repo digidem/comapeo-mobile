@@ -11,7 +11,7 @@ export function useListenToInviteCancel(inviteId: string) {
       if (invite.inviteId !== inviteId) return;
 
       if (invite.state === 'canceled') {
-        navigation.replace('InviteCancelled', {
+        navigation.replace('InviteCanceled', {
           projectName: invite.projectName,
         });
         return;

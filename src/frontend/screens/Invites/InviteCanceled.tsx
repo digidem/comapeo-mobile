@@ -22,10 +22,10 @@ const m = defineMessages({
   },
 });
 
-export const InviteCancelled = ({
+export const InviteCanceled = ({
   route,
   navigation,
-}: NativeRootNavigationProps<'InviteCancelled'>) => {
+}: NativeRootNavigationProps<'InviteCanceled'>) => {
   const {formatMessage} = useIntl();
 
   return (

@@ -114,7 +114,7 @@ export type RootStackParamsList = {
   AudioPlaybackSaved: {uri: string; canDelete: boolean; observationId: string};
   InviteReceived: {inviteId: string};
   InviteSuccessfullyAccepted: {projectName: string};
-  InviteCancelled: {projectName: string};
+  InviteCanceled: {projectName: string};
   ExistingProjectWarning: {inviteId: string};
   ErrorBottomSheet: undefined;
   BackgroundMapErrorBottomSheet: {title: string; description: string};

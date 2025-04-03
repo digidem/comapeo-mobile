@@ -46,10 +46,9 @@ export const InsetMapView = React.memo<MapProps>(
           id="locationIndicator"
           anchor={{x: 0.5, y: 0.75}}
           coordinate={[lon, lat]}>
-          <>
-            <TouchableOpacity
-              onPress={() => navigate('ObservationMetadata', {observationId})}
-              style={styles.coords}>
+          <TouchableOpacity
+            onPress={() => navigate('ObservationMetadata', {observationId})}>
+            <View style={styles.coords}>
               <MapPin style={{marginRight: 5}} />
               <BodyText variant="tinyMeta">
                 <FormattedCoords
@@ -59,10 +58,10 @@ export const InsetMapView = React.memo<MapProps>(
                 />
                 {accuracy && ` ± ${accuracy.toFixed(2)} m`}
               </BodyText>
-            </TouchableOpacity>
+            </View>
             <View style={styles.arrow} />
             <OrangeDot style={{alignSelf: 'center'}} />
-          </>
+          </TouchableOpacity>
         </MarkerView>
       </MapboxGL.MapView>
     );

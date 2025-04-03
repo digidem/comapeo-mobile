@@ -265,7 +265,7 @@ export const ObservationMetadata: NativeNavigationComponent<
                       fontWeight: '700',
                     }}
                     variant="smallMeta">
-                    {item[key]!.label}:{' '}
+                    {item[key]!.label}{' '}
                   </BodyText>
                 </View>
                 <View style={styles.valueText}>

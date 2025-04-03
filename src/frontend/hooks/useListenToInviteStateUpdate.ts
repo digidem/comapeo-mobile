@@ -23,15 +23,6 @@ export function useListenToInviteStateUpdate(inviteId: string) {
         navigation.replace('ErrorBottomSheet');
         return;
       }
-
-      if (invite.state === 'joining' || invite.state === 'responding') {
-        return;
-      }
-
-      // this makes sure the user does not get stuck on the invite page
-      if (invite.state !== 'pending') {
-        navigation.goBack();
-      }
     }
 
     mapeoApiInvite.addListener('invite-updated', navigateBasedOnInviteState);

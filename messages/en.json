@@ -653,19 +653,19 @@
   "screens.IntroToCoMapeo.ownData": {
     "message": "Own and control your data"
   },
-  "screens.Invite.AlreadyOnProject.alreadyOnProject": {
-    "message": "You are already on a project"
-  },
-  "screens.Invite.AlreadyOnProject.goBack": {
-    "message": "Go Back"
-  },
-  "screens.Invite.AlreadyOnProject.leaveProj": {
-    "message": "Leave Current Project"
-  },
   "screens.Invite.AlreadyOnProject.leaveWarning": {
     "message": "To join a new project you must leave your current one."
   },
-  "screens.Invite.AlreadyOnProject.onProject": {
+  "screens.Invite.ExistingProjectWarning.alreadyOnProject": {
+    "message": "You are already on a project"
+  },
+  "screens.Invite.ExistingProjectWarning.goBack": {
+    "message": "Go Back"
+  },
+  "screens.Invite.ExistingProjectWarning.leaveProj": {
+    "message": "Leave Current Project"
+  },
+  "screens.Invite.ExistingProjectWarning.onProject": {
     "message": "You are on {projectName}"
   },
   "screens.InviteCancelled.canceled": {

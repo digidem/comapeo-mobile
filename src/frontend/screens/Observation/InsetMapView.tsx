@@ -4,12 +4,12 @@ import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {WHITE} from '../../lib/styles';
 import {FormattedCoords} from '../../sharedComponents/FormattedData';
 import {useMapStyleJsonUrl} from '../../hooks/server/maps';
-import {useCoordinateFormat} from '../../contexts/CoordinateFormatContext';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import MapPin from '../../images/MapPin.svg';
 import OrangeDot from '../../images/OrangeDot.svg';
 import {MarkerView} from '@rnmapbox/maps';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {useCoordinateFormat} from '../../contexts/CoordinateFormatStoreContext';
 
 const MAP_HEIGHT = 175;
 

@@ -1,19 +1,16 @@
 import * as React from 'react';
 import {Invite, InviteRemovalReason} from '@comapeo/core/dist/invite-api';
-import {useClientApi} from '@comapeo/core-react';
+import {useClientApi, useManyProjects} from '@comapeo/core-react';
 
 import {BottomSheetModal, useBottomSheetModal} from '../BottomSheetModal';
-import {
-  useAcceptInvite,
-  usePendingInvites,
-  useRejectInvite,
-} from '../../hooks/server/invites';
+import {usePendingInvites} from '../../hooks/server/invites';
+import {useAcceptInvite, useRejectInvite} from '@comapeo/core-react';
 import {useProjectInvitesListener} from '../../hooks/useProjectInvitesListener';
 import {NewInviteBottomSheetContent} from './NewInviteBottomSheetContent';
 import {InviteSuccessBottomSheetContent} from './InviteSuccessBottomSheetContent';
 import {InviteCanceledBottomSheetContent} from './InviteCanceledBottomSheetContent';
-import {useAllProjects} from '../../hooks/server/projects';
 import {LeaveProjectModalContent} from '../LeaveProjectModalContent';
+import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 
 export type LeaveProjectModalState = 'AlreadyOnProj' | 'LeaveProj';
 
@@ -43,7 +40,7 @@ export const ProjectInviteBottomSheet = ({
     (a, b) => a.receivedAt - b.receivedAt,
   );
 
-  const projects = useAllProjects();
+  const {data: projects} = useManyProjects();
 
   const [leaveModalState, setLeaveModalState] =
     React.useState<LeaveProjectModalState>('AlreadyOnProj');
@@ -60,6 +57,7 @@ export const ProjectInviteBottomSheet = ({
     });
   const accept = useAcceptInvite();
   const reject = useRejectInvite();
+  const {setActiveProjectId} = useActiveProjectIdActions();
 
   React.useEffect(() => {
     if (
@@ -107,13 +105,19 @@ export const ProjectInviteBottomSheet = ({
 
   function handleAccept() {
     if (invite) {
-      // the accept button will be in a loading state until projects.data is available. So user will not be able to get here until the projects have loaded
-      if (projects.data && projects.data.length > 1) {
+      // the accept button will be in a loading state until projects are available. So user will not be able to get here until the projects have loaded
+      if (projects && projects.length > 1) {
         openLeaveSheet();
         return;
       }
-
-      accept.mutate({inviteId: invite.inviteId});
+      accept.mutate(
+        {inviteId: invite.inviteId},
+        {
+          onSuccess: projectPublicId => {
+            setActiveProjectId(projectPublicId);
+          },
+        },
+      );
     }
   }
 
@@ -144,7 +148,7 @@ export const ProjectInviteBottomSheet = ({
           <NewInviteBottomSheetContent
             handleAccept={handleAccept}
             isLoading={
-              accept.isPending || reject.isPending || projects.isPending
+              accept.status === 'pending' || reject.status === 'pending'
             }
             handleReject={handleReject}
             projectName={invite?.projectName}

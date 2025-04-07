@@ -44,7 +44,7 @@ export const MediaSyncSettings: NativeNavigationComponent<
   'MediaSyncSettings'
 > = ({navigation}) => {
   const {formatMessage: t} = useIntl();
-  const {data: mediaSyncSetting} = useGetMediaSyncSetting();
+  const mediaSyncSetting = useGetMediaSyncSetting();
 
   const optimisticSyncSetting = useMutationState<MediaSyncSetting>({
     filters: {mutationKey: [UPDATE_MEDIA_SETTING], status: 'pending'},

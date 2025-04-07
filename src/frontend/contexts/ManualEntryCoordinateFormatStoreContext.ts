@@ -57,13 +57,13 @@ export type ManualEntryCoordinateFormatStore = ReturnType<
   typeof createManualEntryCoordinateFormatStore
 >;
 
-export const ManualEntryCoordinateFormatContext =
+export const ManualEntryCoordinateFormatStoreContext =
   createContext<ManualEntryCoordinateFormatStore | null>(null);
-export const ManualEntryCoordinateFormatProvider =
-  ManualEntryCoordinateFormatContext.Provider;
+export const ManualEntryCoordinateFormatStoreProvider =
+  ManualEntryCoordinateFormatStoreContext.Provider;
 
-function useManualEntryCoordinateFormatContext() {
-  const value = useContext(ManualEntryCoordinateFormatContext);
+function useManualEntryCoordinateFormatStoreContext() {
+  const value = useContext(ManualEntryCoordinateFormatStoreContext);
 
   if (!value) {
     throw new Error(
@@ -75,11 +75,11 @@ function useManualEntryCoordinateFormatContext() {
 }
 
 export function useManualEntryCoordinateFormat(): CoordinateFormat {
-  const {instance} = useManualEntryCoordinateFormatContext();
+  const {instance} = useManualEntryCoordinateFormatStoreContext();
   return useStore(instance).value;
 }
 
 export function useManualEntryCoordinateFormatActions() {
-  const {actions} = useManualEntryCoordinateFormatContext();
+  const {actions} = useManualEntryCoordinateFormatStoreContext();
   return actions;
 }

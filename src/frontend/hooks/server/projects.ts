@@ -1,10 +1,12 @@
-import {useClientApi} from '@comapeo/core-react';
-import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {useMemo} from 'react';
+import {
+  useProjectSettings as useComapeoProjectSettings,
+  useManyMembers,
+  useOwnRoleInProject,
+} from '@comapeo/core-react';
+import {useQuery} from '@tanstack/react-query';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {PRESETS_KEY} from './presets';
-import {ICONS_KEY} from './icons';
-import {FIELDS_KEY} from './fields';
 
 export const ALL_PROJECTS_KEY = 'all_projects';
 export const PROJECT_SETTINGS_KEY = 'project_settings';
@@ -16,177 +18,29 @@ export const ORIGINAL_VERSION_ID_TO_DEVICE_ID_KEY =
 export const THIS_USERS_ROLE_KEY = 'my_role';
 export const REMOTE_ARCHIVE = 'remote_archive';
 
-export function useProject(projectId?: string) {
-  const api = useClientApi();
-
-  return useQuery({
-    queryKey: [PROJECT_KEY, projectId],
-    queryFn: async () => {
-      if (!projectId) throw new Error('Active project ID must exist');
-      const projectApi = await api.getProject(projectId);
-
-      return {projectId, projectApi};
-    },
-    enabled: !!projectId,
-    placeholderData: previousData => previousData,
-  });
-}
-
-export function useAllProjects() {
-  const api = useClientApi();
-
-  return useQuery({
-    queryKey: [ALL_PROJECTS_KEY],
-    queryFn: () => {
-      return api.listProjects();
-    },
-  });
-}
-
-export function useCreateProject() {
-  const api = useClientApi();
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationKey: [CREATE_PROJECT_KEY],
-    mutationFn: (opts?: Parameters<typeof api.createProject>[0]) => {
-      if (opts) {
-        return api.createProject(opts);
-      } else {
-        // Have to avoid passing `undefined` explicitly
-        // See https://github.com/digidem/comapeo-mobile/issues/392
-        return api.createProject();
-      }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [ALL_PROJECTS_KEY],
-      });
-      queryClient.invalidateQueries({
-        queryKey: [PROJECT_SETTINGS_KEY],
-      });
-    },
-  });
-}
-
-export function useProjectMembers() {
-  const {projectId, projectApi} = useActiveProject();
-
-  return useQuery({
-    queryKey: [PROJECT_MEMBERS_KEY, projectId],
-    queryFn: () => {
-      return projectApi.$member.getMany();
-    },
-  });
-}
-
 export function useProjectSettings() {
-  const {projectId, projectApi} = useActiveProject();
-
-  return useQuery({
-    queryKey: [PROJECT_SETTINGS_KEY, projectId],
-    queryFn: () => {
-      return projectApi.$getProjectSettings();
-    },
-  });
-}
-
-export const useOriginalVersionIdToDeviceId = (originalVersionId: string) => {
-  const {projectId, projectApi} = useActiveProject();
-
-  return useQuery({
-    queryKey: [
-      ORIGINAL_VERSION_ID_TO_DEVICE_ID_KEY,
-      projectId,
-      originalVersionId,
-    ],
-    queryFn: async () => {
-      return await projectApi.$originalVersionIdToDeviceId(originalVersionId);
-    },
-  });
-};
-
-export function useLeaveProject() {
-  const mapeoApi = useClientApi();
-
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: (projectId: string) => {
-      return mapeoApi.leaveProject(projectId);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [ALL_PROJECTS_KEY],
-      });
-    },
-  });
-}
-
-export function useImportProjectConfig() {
-  const queryClient = useQueryClient();
-  const {projectApi} = useActiveProject();
-
-  return useMutation({
-    mutationFn: (configPath: string) => {
-      return projectApi.importConfig({configPath});
-    },
-    onSuccess: () => {
-      return Promise.all([
-        queryClient.invalidateQueries({
-          queryKey: [FIELDS_KEY],
-        }),
-        queryClient.invalidateQueries({
-          queryKey: [ICONS_KEY],
-        }),
-        queryClient.invalidateQueries({
-          queryKey: [PROJECT_SETTINGS_KEY],
-        }),
-        queryClient.invalidateQueries({
-          queryKey: [PRESETS_KEY],
-        }),
-      ]);
-    },
-  });
+  const {projectId} = useActiveProject();
+  return useComapeoProjectSettings({projectId});
 }
 
 export function useGetOwnRole() {
-  const {projectId, projectApi} = useActiveProject();
-
-  return useQuery({
-    queryKey: [THIS_USERS_ROLE_KEY, projectId],
-    queryFn: () => {
-      return projectApi.$getOwnRole();
-    },
-  });
+  const {projectId} = useActiveProject();
+  return useOwnRoleInProject({projectId});
 }
 
 export function useGetRemoteArchives() {
-  const {projectId, projectApi} = useActiveProject();
+  const {projectId} = useActiveProject();
+  const {data: members, error, isRefetching} = useManyMembers({projectId});
 
-  return useQuery({
-    queryKey: [REMOTE_ARCHIVE, projectId, PROJECT_MEMBERS_KEY],
-    queryFn: async () => {
-      const members = await projectApi.$member.getMany();
-      const filteredMembers = members.filter(
-        member => member.deviceType === 'selfHostedServer',
-      );
-      return filteredMembers;
-    },
-  });
-}
+  const archives = useMemo(() => {
+    return members?.filter(m => m.deviceType === 'selfHostedServer') ?? [];
+  }, [members]);
 
-export function useAddRemoteArchive() {
-  const {projectApi} = useActiveProject();
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: async (normalizedUrl: string) => {
-      return projectApi.$member.addServerPeer(normalizedUrl);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [REMOTE_ARCHIVE]});
-    },
-  });
+  return {
+    data: archives,
+    error,
+    isRefetching,
+  };
 }
 
 export function useFindRemoteArchive({url}: {url?: string}) {

@@ -1,11 +1,10 @@
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
-import {
-  useAllProjects,
-  useGetRemoteArchives,
-} from '../../../hooks/server/projects';
+import {useManyProjects} from '@comapeo/core-react';
 import {UIActivityIndicator} from 'react-native-indicators';
+
+import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
+import {useGetRemoteArchives} from '../../../hooks/server/projects';
 import {FullScreenMenuList} from '../../../sharedComponents/MenuList/FullScreenMenuList';
 import {MenuListItemType} from '../../../sharedComponents/MenuList/MenuListItem';
 
@@ -50,11 +49,11 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
 }) => {
   const {formatMessage} = useIntl();
 
-  const {data: remoteArchives, isPending} = useGetRemoteArchives();
+  const {data: remoteArchives, isRefetching} = useGetRemoteArchives();
 
   const remoteArchiveOn = remoteArchives && remoteArchives.length > 0;
 
-  const {data: projects} = useAllProjects();
+  const {data: projects} = useManyProjects();
 
   const MenuItems: MenuListItemType[] = [
     {
@@ -88,7 +87,7 @@ export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
               );
             },
             primaryText: formatMessage(m.RemoteArchive),
-            secondaryText: isPending ? (
+            secondaryText: isRefetching ? (
               <UIActivityIndicator size={25} />
             ) : remoteArchiveOn ? (
               formatMessage(m.remoteArchiveOn)

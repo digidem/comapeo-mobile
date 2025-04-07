@@ -4,7 +4,7 @@ import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 
 import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
-import {useDeviceInfo} from '../../../../hooks/server/deviceInfo';
+import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {Text} from '../../../../sharedComponents/Text';
 import {IconButton} from '../../../../sharedComponents/IconButton';
 import {EditIcon} from '../../../../sharedComponents/icons';
@@ -42,7 +42,7 @@ export function createNavigationOptions({
 
 export const DisplayScreen = () => {
   const {formatMessage: t} = useIntl();
-  const {data} = useDeviceInfo();
+  const {data} = useOwnDeviceInfo();
 
   const deviceName = data?.name;
 

@@ -2,7 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byText} from '../../utils/selectors';
 
-describe('Map Screen Component Test', () => {
+describe('Main - Map Screen Component Test', () => {
   it('should verify map screen elements are visible', async () => {
     const mapTab = await $('~Go to Map');
     await mapTab.click();

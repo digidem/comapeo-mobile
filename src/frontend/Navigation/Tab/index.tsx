@@ -11,7 +11,7 @@ import {StyleSheet, View} from 'react-native';
 import {TabBar} from './TabBar';
 import {SharedLocationContextProvider} from '../../contexts/SharedLocationContext';
 import {Loading} from '../../sharedComponents/Loading';
-import {ObservationsListHeader} from '../../screens/ObservationsList/ObservationsListHeader';
+import {WHITE} from '../../lib/styles';
 
 const Tab = createBottomTabNavigator<HomeTabsParamsList>();
 
@@ -58,7 +58,14 @@ export const HomeTabs = () => {
           options={{
             headerTransparent: false,
             header: props => (
-              <ObservationsListHeader {...props} openDrawer={openDrawer} />
+              <React.Suspense fallback={<Loading />}>
+                <HomeHeader
+                  {...props}
+                  openDrawer={openDrawer}
+                  backgroundColor={WHITE}
+                  showBottomBorder
+                />
+              </React.Suspense>
             ),
           }}
         />
@@ -68,7 +75,12 @@ export const HomeTabs = () => {
           options={{
             header: props => (
               <React.Suspense fallback={<Loading />}>
-                <HomeHeader {...props} openDrawer={openDrawer} />
+                <HomeHeader
+                  {...props}
+                  openDrawer={openDrawer}
+                  backgroundColor="transparent"
+                  showBottomBorder={false}
+                />
               </React.Suspense>
             ),
           }}
@@ -77,7 +89,16 @@ export const HomeTabs = () => {
           name="Camera"
           component={CameraScreen}
           options={{
-            header: props => <HomeHeader {...props} openDrawer={openDrawer} />,
+            header: props => (
+              <React.Suspense fallback={<Loading />}>
+                <HomeHeader
+                  {...props}
+                  openDrawer={openDrawer}
+                  backgroundColor="transparent"
+                  showBottomBorder={false}
+                />
+              </React.Suspense>
+            ),
           }}
         />
       </Tab.Navigator>

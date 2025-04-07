@@ -7,7 +7,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import DeviceIcon from '../images/DeviceIcon.svg';
 import {IconButton} from './IconButton';
 import {HeaderText} from './Text/HeaderText';
-import {WHITE} from '../lib/styles';
+import {BLUE_GREY, WHITE} from '../lib/styles';
 import {useProjectSettings} from '../hooks/server/projects';
 
 const m = defineMessages({
@@ -19,18 +19,32 @@ const m = defineMessages({
 
 type HomeHeaderProps = BottomTabHeaderProps & {
   openDrawer: () => void;
+  backgroundColor?: string;
+  showBottomBorder?: boolean;
 };
 
-export function HomeHeader({openDrawer}: HomeHeaderProps) {
+export function HomeHeader({
+  openDrawer,
+  backgroundColor = 'transparent',
+  showBottomBorder = false,
+}: HomeHeaderProps) {
   const insets = useSafeAreaInsets();
   const {formatMessage} = useIntl();
-  const {data, isRefetching} = useProjectSettings();
+  const {data} = useProjectSettings();
 
-  const projectName =
-    !isRefetching && data?.name ? data.name : formatMessage(m.mySoloProject);
+  const projectName = data?.name ? data.name : formatMessage(m.mySoloProject);
 
   return (
-    <View style={[styles.container, {paddingTop: insets.top}]}>
+    <View
+      style={[
+        styles.container,
+        {
+          paddingTop: insets.top,
+          backgroundColor,
+          borderBottomWidth: showBottomBorder ? 1 : 0,
+          borderBottomColor: showBottomBorder ? BLUE_GREY : 'transparent',
+        },
+      ]}>
       <View style={styles.headerRow}>
         <View style={styles.titleBox}>
           <HeaderText
@@ -57,7 +71,6 @@ export function HomeHeader({openDrawer}: HomeHeaderProps) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'transparent',
     padding: 10,
   },
   headerRow: {
@@ -68,11 +81,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   titleBox: {
-    width: '90%',
+    width: '85%',
     minHeight: 32,
     borderRadius: 6,
     justifyContent: 'center',
-    backgroundColor: '#33333380',
+    backgroundColor: '#333333E6',
   },
   text: {
     color: WHITE,

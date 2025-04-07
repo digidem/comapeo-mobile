@@ -3,6 +3,9 @@
 [Projects and Project Settings](#projects-and-project-settings)
 
 - [Overview](#overview)
+- [No/ Solo Project Headers](#solo-project-headers)
+  - [Test Objectives](#test-objectives-4)
+  - [Special Considerations](#special-considerations-4)
 - [Creating a project from the side drawer menu](#creating-a-project-from-the-side-drawer-menu)
   - [Test Objectives](#test-objectives)
   - [Special Considerations](#special-considerations)
@@ -21,6 +24,21 @@
 ### Overview
 
 These tests deal with projects, such as creating a project from the side drawer, creating a project from sync, and that the messaging about projects is correct.
+
+## Solo Project Headers
+
+This test checks the visibility and text of the headers and associated UI elements for a user who has not yet created a project (i.e., “My Solo Project”) and is on the default project.
+
+#### Test Objectives
+
+- Verifies that the **Map screen** header displays “My Solo Project” when no project is named.
+- Verifies that the **ObservationsList** header also displays “My Solo Project,” along with a device icon (drawer button).
+- Ensures that the “You’re mapping on your own.” card text is visible in the ObservationsList.
+
+#### Special Considerations
+
+- These tests require the app to be in a state where the default project is **unnamed** (solo).
+- If the user has previously named the project, the tests will fail because the header text changes.
 
 ## Creating a project from the side drawer menu
 

@@ -1,30 +1,8 @@
-// TODO: Move this into a jest setup file
-jest.mock('expo-localization', () => ({
-  getLocales: (): Locale[] => [
-    {
-      languageTag: 'en-US',
-      languageCode: null,
-      langageCurrencyCode: null,
-      langageCurrencySymbol: null,
-      languageRegionCode: null,
-      regionCode: null,
-      currencyCode: null,
-      currencySymbol: null,
-      decimalSeparator: null,
-      digitGroupingSeparator: null,
-      textDirection: null,
-      measurementSystem: null,
-      temperatureUnit: null,
-    },
-  ],
-}));
-
 import React from 'react';
 import {act, renderHook} from '@testing-library/react-native';
 import {PhotoPromiseProvider} from '../contexts/PhotoPromiseContext/index.tsx';
 import {useDraftObservation} from './useDraftObservation.ts';
 import {usePersistedDraftObservation} from './persistedState/usePersistedDraftObservation/index.ts';
-import type {Locale} from 'expo-localization';
 import type {Preset} from '@comapeo/schema';
 import {randomBytes} from 'crypto';
 

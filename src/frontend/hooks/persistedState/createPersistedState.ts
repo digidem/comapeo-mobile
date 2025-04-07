@@ -1,38 +1,22 @@
-import {StateCreator, create, createStore} from 'zustand';
+import {StateCreator, create} from 'zustand';
 import {persist, createJSONStorage, PersistOptions} from 'zustand/middleware';
 
 import {MMKV_ZUSTAND_STATE_STORAGE} from '../../constants';
 
-type PersistedStoreKey =
-  | 'MapeoLocale'
-  | '@MapeoDraft'
-  | 'MapeoTrack'
-  | 'Passcode'
-  | 'ActiveProjectId'
-  | 'Settings'
-  | 'MetricDiagnosticsPermission';
+type PersistedStoreKey = '@MapeoDraft';
 
 type MigrationOpt<T> =
   | {version: number; migrateFn: PersistOptions<T, T>['migrate']}
   | {version: number};
 
+/**
+ * @deprecated Persisted Zustand state should follow the conventions used in `contexts/*StoreContext.tsx`
+ */
 export function createPersistedState<T>(
   ...args: Parameters<typeof createPersistMiddleware<T>>
 ) {
   const store = create<T>()(createPersistMiddleware(...args));
 
-  store.setState(state => ({
-    ...state,
-    ...args[0],
-  }));
-
-  return store;
-}
-
-export function createPersistedStore<T>(
-  ...args: Parameters<typeof createPersistMiddleware<T>>
-) {
-  const store = createStore<T>()(createPersistMiddleware(...args));
   store.setState(state => ({
     ...state,
     ...args[0],

@@ -310,9 +310,6 @@
   "observationsList.ObservationListHeader.participant": {
     "message": "You’re a participant on this project."
   },
-  "observationsList.header.mySoloProject": {
-    "message": "My Solo Project"
-  },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Coordinator"
   },

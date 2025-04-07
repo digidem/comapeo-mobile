@@ -45,7 +45,6 @@ const RenderIcon = ({color = '#36F927'}: {color?: string}) => (
 type Props = {variant: LocationStatus};
 
 const GpsIconComponent = ({variant}: Props) => {
-  console.log('GpsIconComponent', variant);
   switch (variant) {
     case 'error':
       return <RenderError />;

@@ -43,13 +43,12 @@ export function HomeHeader({openDrawer}: HomeHeaderProps) {
           </HeaderText>
         </View>
 
-        <IconButton onPress={openDrawer} style={styles.iconButton}>
-          <DeviceIcon
-            width={32}
-            height={32}
-            testID="drawer-icon-home"
-            accessibilityLabel="Open Navigation Drawer"
-          />
+        <IconButton
+          onPress={openDrawer}
+          style={styles.iconButton}
+          testID="drawer-icon-home"
+          accessibilityLabel="Open Navigation Drawer">
+          <DeviceIcon width={32} height={32} />
         </IconButton>
       </View>
     </View>

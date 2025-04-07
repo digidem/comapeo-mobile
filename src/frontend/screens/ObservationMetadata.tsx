@@ -17,15 +17,16 @@ import {
   WHITE,
   BLUE_GREY,
 } from '../lib/styles';
-import {useObservation} from '../hooks/server/observations';
 import {NativeNavigationComponent} from '../sharedTypes/navigation';
 import {BodyText} from '../sharedComponents/Text/BodyText';
-import {useCoordinateFormat} from '../contexts/CoordinateFormatContext';
 import {FormattedCoords} from '../sharedComponents/FormattedData';
 import Octicons from 'react-native-vector-icons/Octicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import UnverifiedBadge from '../images/UnverifiedBadge.svg';
+import {useSingleDocByDocId} from '@comapeo/core-react';
+import {useActiveProject} from '../contexts/ActiveProjectContext';
+import {useCoordinateFormat} from '../contexts/CoordinateFormatStoreContext';
 
 const m = defineMessages({
   navTitle: {
@@ -76,9 +77,14 @@ export const ObservationMetadata: NativeNavigationComponent<
   'ObservationMetadata'
 > = ({route}) => {
   const {formatMessage} = useIntl();
+  const {projectId} = useActiveProject();
   const {
     data: {createdAt, lat, lon, metadata},
-  } = useObservation(route.params.observationId);
+  } = useSingleDocByDocId({
+    docId: route.params.observationId,
+    docType: 'observation',
+    projectId,
+  });
   const coordinateFormat = useCoordinateFormat();
   const manualLocation = metadata?.manualLocation;
 

@@ -66,7 +66,11 @@ export const HomeTabs = () => {
           name="Map"
           component={MapScreen}
           options={{
-            header: props => <HomeHeader {...props} openDrawer={openDrawer} />,
+            header: props => (
+              <React.Suspense fallback={<Loading />}>
+                <HomeHeader {...props} openDrawer={openDrawer} />
+              </React.Suspense>
+            ),
           }}
         />
         <Tab.Screen

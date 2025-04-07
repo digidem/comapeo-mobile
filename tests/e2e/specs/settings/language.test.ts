@@ -29,7 +29,7 @@ describe('Settings - Language Settings Flow', () => {
     const obsListTab = await $('~Go to ObservationsList');
     await obsListTab.click();
 
-    await expect($(byTextMatches('Lago'))).toBeDisplayed();
+    await expect($(byTextMatches('segundos'))).toBeDisplayed();
   });
 
   it('should switch back to English and confirm language revert', async () => {

@@ -17,15 +17,15 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   mappingOnYourOwn: {
-    id: 'observationsList.ObservationListHeader.mappingOnYourOwn',
+    id: 'screens.ObservationsList.ProjectCard.mappingOnYourOwn',
     defaultMessage: 'You’re mapping on your own.',
   },
   coordinator: {
-    id: 'observationsList.ObservationListHeader.coordinator',
+    id: 'screens.ObservationsList.ProjectCard.coordinator',
     defaultMessage: 'You’re a coordinator on this project.',
   },
   participant: {
-    id: 'observationsList.ObservationListHeader.participant',
+    id: 'screens.ObservationsList.ProjectCard.participant',
     defaultMessage: 'You’re a participant on this project.',
   },
 });

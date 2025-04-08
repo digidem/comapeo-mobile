@@ -301,15 +301,6 @@
   "homeHeader.header.mySoloProject": {
     "message": "My Solo Project"
   },
-  "observationsList.ObservationListHeader.coordinator": {
-    "message": "You’re a coordinator on this project."
-  },
-  "observationsList.ObservationListHeader.mappingOnYourOwn": {
-    "message": "You’re mapping on your own."
-  },
-  "observationsList.ObservationListHeader.participant": {
-    "message": "You’re a participant on this project."
-  },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Coordinator"
   },
@@ -1068,6 +1059,15 @@
   "screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
     "description": "Title of observation list view when the user has not yet recorded observations",
     "message": "Add Observations"
+  },
+  "screens.ObservationsList.ProjectCard.coordinator": {
+    "message": "You’re a coordinator on this project."
+  },
+  "screens.ObservationsList.ProjectCard.mappingOnYourOwn": {
+    "message": "You’re mapping on your own."
+  },
+  "screens.ObservationsList.ProjectCard.participant": {
+    "message": "You’re a participant on this project."
   },
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",

@@ -16,11 +16,11 @@ describe('Project - Solo Project Headers', () => {
     const obsListTab = await $('~Go to ObservationsList');
     await obsListTab.click();
 
-    const obsHeaderTitle = await $(byResourceId('OBS.header-title'));
+    const obsHeaderTitle = await $(byResourceId('HOME.header-title'));
     await expect(obsHeaderTitle).toBeDisplayed();
     await expect(obsHeaderTitle).toHaveText('My Solo Project');
 
-    const drawerButton = await $(byResourceId('OBS.header-drawer-btn'));
+    const drawerButton = await $(byResourceId('drawer-icon-home'));
     await expect(drawerButton).toBeDisplayed();
 
     const soloCardText = await $(byResourceId('OBS.card-text'));

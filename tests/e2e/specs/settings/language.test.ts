@@ -33,7 +33,7 @@ describe('Settings - Language Settings Flow', () => {
   });
 
   it('should switch back to English and confirm language revert', async () => {
-    const drawerIcon = await $(byResourceId('OBS.header-drawer-btn'));
+    const drawerIcon = await $(byResourceId('drawer-icon-home'));
     if (await drawerIcon.isDisplayed()) {
       await drawerIcon.click();
     }

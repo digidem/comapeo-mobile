@@ -45,11 +45,13 @@ import {LocationHistoryPoint} from '../sharedTypes/location';
 // If the current position on the app state is more than 60 seconds old then we
 // consider it stale and show that the GPS is searching for a new position
 const STALE_TIMEOUT = 60 * 1000; // 60 seconds
-// // If the precision is less than 10 meters then we consider this to be a "good
-// // position" and we change the UI accordingly
-const GOOD_PRECISION = 10; // 10 meters
 
-export type LocationStatus = 'searching' | 'improving' | 'good' | 'error';
+export type LocationStatus = 'searching' | 'good' | 'error';
+
+export interface LocationStatusResult {
+  status: LocationStatus;
+  accuracy?: number;
+}
 
 export function getLocationStatus({
   location,
@@ -57,24 +59,25 @@ export function getLocationStatus({
 }: {
   location?: LocationObject;
   providerStatus?: LocationProviderStatus;
-}): LocationStatus {
+}): LocationStatusResult {
   const gpsAvailable = !!providerStatus?.gpsAvailable;
   const locationServicesEnabled = !!providerStatus?.locationServicesEnabled;
 
-  if (!gpsAvailable || !locationServicesEnabled) return 'error';
+  if (!gpsAvailable || !locationServicesEnabled) return {status: 'error'};
 
   const positionStale =
     location && Date.now() - location.timestamp > STALE_TIMEOUT;
 
-  if (positionStale) return 'searching';
-
-  const precision = location?.coords.accuracy;
-
-  if (typeof precision === 'number') {
-    return Math.round(precision) <= GOOD_PRECISION ? 'good' : 'improving';
+  if (!location || positionStale) {
+    return {status: 'searching'};
   }
 
-  return 'searching';
+  const accuracy = location.coords.accuracy ?? 999999;
+
+  return {
+    status: 'good',
+    accuracy,
+  };
 }
 
 // export function addFieldDefinitions(

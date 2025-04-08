@@ -1,4 +1,4 @@
-import React, {FC, useMemo} from 'react';
+import React, {FC} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {DARK_GREY, WHITE} from '../lib/styles';
@@ -28,27 +28,29 @@ export const GPSPill: FC<GPSPillProps> = ({onPress}) => {
   const locationProviderStatus = useLocationProviderStatus();
   const {locationState, fgPermissions} = useSharedLocationContext();
 
-  const status = useMemo(() => {
-    const isError = !!locationState.error || !fgPermissions;
-    if (isError) return 'error';
+  const {status, accuracy} = getLocationStatus({
+    location: fgPermissions ? locationState.location : undefined,
+    providerStatus: locationProviderStatus,
+  });
 
-    return getLocationStatus({
-      location: locationState.location,
-      providerStatus: locationProviderStatus,
-    });
-  }, [locationState, fgPermissions, locationProviderStatus]);
+  let textValue: string;
 
-  const textValue = useMemo(() => {
-    if (status === 'error') {
-      return formatMessage(m.noGps);
+  switch (status) {
+    case 'error':
+      textValue = formatMessage(m.noGps);
+      break;
+    case 'searching':
+      textValue = formatMessage(m.searching);
+      break;
+    case 'good': {
+      const roundedAcc = accuracy ? Math.round(accuracy) : 9999;
+      textValue = `± ${roundedAcc} m`;
+      break;
     }
-    if (status === 'searching' || !locationState.location?.coords.accuracy) {
-      return formatMessage(m.searching);
-    }
-
-    const precision = Math.round(locationState.location.coords.accuracy);
-    return `${precision} ±`;
-  }, [status, locationState.location, formatMessage]);
+    default:
+      textValue = formatMessage(m.searching);
+      break;
+  }
 
   return (
     <TouchableOpacity

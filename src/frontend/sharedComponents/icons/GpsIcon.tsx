@@ -50,8 +50,6 @@ const GpsIconComponent = ({variant}: Props) => {
       return <RenderError />;
     case 'searching':
       return <RenderIcon color="#0166FF" />;
-    case 'improving':
-      return <RenderIcon color="#00FF02" />;
     case 'good':
     default:
       return <RenderIcon />;

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import {View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import {defineMessages} from 'react-intl';
-import {WHITE, DARK_GREY, LIGHT_GREY, BLUE_GREY} from '../../lib/styles';
+import {WHITE, DARK_GREY, BLUE_GREY, VERY_LIGHT_GREY} from '../../lib/styles';
 
 import {FormattedObservationDate} from '../../sharedComponents/FormattedData';
 import {PresetHeader} from './PresetHeader';
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   time: {
-    backgroundColor: LIGHT_GREY,
+    backgroundColor: VERY_LIGHT_GREY,
     paddingVertical: 10,
     alignItems: 'center',
     flexDirection: 'row',

@@ -30,18 +30,6 @@ const m = defineMessages({
     defaultMessage: 'Observations',
     description: 'Title of screen with list of observations',
   },
-  mappingOnYourOwn: {
-    id: 'observationsList.ObservationListHeader.mappingOnYourOwn',
-    defaultMessage: 'You’re mapping on your own.',
-  },
-  coordinator: {
-    id: 'observationsList.ObservationListHeader.coordinator',
-    defaultMessage: 'You’re a coordinator on this project.',
-  },
-  participant: {
-    id: 'observationsList.ObservationListHeader.participant',
-    defaultMessage: 'You’re a participant on this project.',
-  },
 });
 
 const OBSERVATION_CELL_HEIGHT = 80;

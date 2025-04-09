@@ -28,7 +28,7 @@ export const GPSPill: FC<GPSPillProps> = ({onPress}) => {
   const locationProviderStatus = useLocationProviderStatus();
   const {locationState, fgPermissions} = useSharedLocationContext();
 
-  const {status, accuracy} = getLocationStatus({
+  const locationStatus = getLocationStatus({
     location: fgPermissions ? locationState.location : undefined,
     providerStatus: locationProviderStatus,
   });
@@ -36,7 +36,7 @@ export const GPSPill: FC<GPSPillProps> = ({onPress}) => {
   let textValue: string;
   let IconToRender: React.FC;
 
-  switch (status) {
+  switch (locationStatus.status) {
     case 'error':
       textValue = formatMessage(m.noGps);
       IconToRender = GpsErrorIcon;
@@ -46,8 +46,7 @@ export const GPSPill: FC<GPSPillProps> = ({onPress}) => {
       IconToRender = GpsSearchingIcon;
       break;
     case 'good': {
-      const roundedAcc = accuracy ? Math.round(accuracy) : 9999;
-      textValue = `± ${roundedAcc} m`;
+      textValue = `± ${Math.round(locationStatus.accuracy)} m`;
       IconToRender = GpsGoodIcon;
       break;
     }

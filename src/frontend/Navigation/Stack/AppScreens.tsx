@@ -96,6 +96,7 @@ import {DeleteAudioBottomSheet} from '../../screens/Audio/DeleteAudioBottomSheet
 import {AudioSavedBottomSheet} from '../../screens/Audio/AudioSavedBottomSheet.tsx';
 import {AudioPlaybackSaved} from '../../screens/Audio/AudioPlaybackSaved.tsx';
 import {AudioCustomHeaderLeft} from '../../screens/Audio/AudioCustomHeaderLeft.tsx';
+import {ObservationMetadata} from '../../screens/ObservationMetadata.tsx';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagement/ErrorBottomSheet.tsx';
 
@@ -412,6 +413,11 @@ export const createDefaultScreenGroup = ({
         name="AudioPlaybackUnsavedPreview"
         component={AudioPlaybackUnsaved}
         options={sharedAudioNavOptions}
+      />
+      <RootStack.Screen
+        name="ObservationMetadata"
+        component={ObservationMetadata}
+        options={{headerTitle: intl(ObservationMetadata.navTitle)}}
       />
     </RootStack.Group>
     <RootStack.Group

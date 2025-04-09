@@ -39,9 +39,9 @@ export const WaitingForInviteAccept = ({
   usePreventAndroidBackButton();
 
   React.useEffect(() => {
-    // cancels invite if app is closed or goes into background
+    // cancels invite if app goes into background
     const subscription = AppState.addEventListener('change', nextState => {
-      if (nextState === 'background' || nextState === 'inactive') {
+      if (nextState === 'background') {
         cancelInvite();
       }
     });

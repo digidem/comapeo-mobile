@@ -1,12 +1,8 @@
 import * as React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {useIntl} from 'react-intl';
 import {CameraScreen} from '../../screens/CameraScreen';
 import {MapScreen} from '../../screens/MapScreen';
-import {
-  ObservationsList,
-  createNavigationOptions as createObservationsListNavOptions,
-} from '../../screens/ObservationsList';
+import {ObservationsList} from '../../screens/ObservationsList';
 import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {HomeTabsParamsList} from '../../sharedTypes/navigation';
 import {DrawerContent} from '../../sharedComponents/DrawerContent';
@@ -15,11 +11,11 @@ import {StyleSheet, View} from 'react-native';
 import {TabBar} from './TabBar';
 import {SharedLocationContextProvider} from '../../contexts/SharedLocationContext';
 import {Loading} from '../../sharedComponents/Loading';
+import {WHITE} from '../../lib/styles';
 
 const Tab = createBottomTabNavigator<HomeTabsParamsList>();
 
 export const HomeTabs = () => {
-  const {formatMessage} = useIntl();
   const [drawerOpen, setDrawerOpen] = React.useState(false);
 
   function closeDrawer() {
@@ -44,6 +40,16 @@ export const HomeTabs = () => {
         screenOptions={{
           tabBarShowLabel: false,
           headerTransparent: true,
+          header: props => (
+            <React.Suspense fallback={<Loading />}>
+              <HomeHeader
+                {...props}
+                openDrawer={openDrawer}
+                backgroundColor="transparent"
+                showBottomBorder={false}
+              />
+            </React.Suspense>
+          ),
         }}
         initialRouteName={'Map'}
         screenLayout={({children}) => (
@@ -59,22 +65,22 @@ export const HomeTabs = () => {
         <Tab.Screen
           name="ObservationsList"
           component={ObservationsList}
-          options={createObservationsListNavOptions(formatMessage)}
-        />
-        <Tab.Screen
-          name="Map"
-          component={MapScreen}
           options={{
-            header: props => <HomeHeader {...props} openDrawer={openDrawer} />,
+            headerTransparent: false,
+            header: props => (
+              <React.Suspense fallback={<Loading />}>
+                <HomeHeader
+                  {...props}
+                  openDrawer={openDrawer}
+                  backgroundColor={WHITE}
+                  showBottomBorder
+                />
+              </React.Suspense>
+            ),
           }}
         />
-        <Tab.Screen
-          name="Camera"
-          component={CameraScreen}
-          options={{
-            header: props => <HomeHeader {...props} openDrawer={openDrawer} />,
-          }}
-        />
+        <Tab.Screen name="Map" component={MapScreen} />
+        <Tab.Screen name="Camera" component={CameraScreen} />
       </Tab.Navigator>
     </>
   );

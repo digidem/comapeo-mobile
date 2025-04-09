@@ -52,7 +52,7 @@ export const Security: NativeNavigationComponent<'Security'> = ({
   const {authState} = useAuthContext();
   const [highlight, setHighlight] = React.useState(false);
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (authState === 'obscured') {
       navigation.popTo('AppSettings');
     }

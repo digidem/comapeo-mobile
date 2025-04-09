@@ -33,17 +33,18 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   const [authState, setAuthState] = React.useState<AuthState>(
     passcode === null ? 'authenticated' : 'unauthenticated',
   );
-
+  const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
   const shareDialogIsOpen = useIsShareDialogOpen();
+
   React.useEffect(() => {
-    if (!process.env.EXPO_PUBLIC_E2E_TEST) {
+    if (!isE2E) {
       if (passcode !== null) {
         FlagSecureModule.activate();
       } else {
         FlagSecureModule.deactivate();
       }
     }
-  }, [passcode]);
+  }, [passcode, isE2E]);
 
   React.useEffect(() => {
     const appStateListener = AppState.addEventListener(
@@ -53,9 +54,6 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
         if (shareDialogIsOpen) return;
 
         if (passcode !== null) {
-          if (!process.env.EXPO_PUBLIC_E2E_TEST) {
-            FlagSecureModule.activate();
-          }
           if (
             nextAppState === 'active' ||
             nextAppState === 'background' ||
@@ -63,8 +61,6 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
           ) {
             setAuthState('unauthenticated');
           }
-        } else if (!process.env.EXPO_PUBLIC_E2E_TEST) {
-          FlagSecureModule.deactivate();
         }
       },
     );

@@ -51,7 +51,7 @@ export const ObscurePasscode: NativeNavigationComponent<'ObscurePasscode'> = ({
 
   const {formatMessage: t} = useIntl();
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (authState === 'obscured') {
       navigation.popTo('AppSettings');
     }

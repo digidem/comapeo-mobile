@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {DARK_GREY, WHITE} from '../lib/styles';
-import {GpsIcon} from './icons/GpsIcon';
+import {GpsErrorIcon, GpsSearchingIcon, GpsGoodIcon} from './icons';
 import {useSharedLocationContext} from '../contexts/SharedLocationContext';
 import {useLocationProviderStatus} from '../hooks/useLocationProviderStatus';
 import {getLocationStatus} from '../lib/utils';
@@ -34,21 +34,26 @@ export const GPSPill: FC<GPSPillProps> = ({onPress}) => {
   });
 
   let textValue: string;
+  let IconToRender: React.FC;
 
   switch (status) {
     case 'error':
       textValue = formatMessage(m.noGps);
+      IconToRender = GpsErrorIcon;
       break;
     case 'searching':
       textValue = formatMessage(m.searching);
+      IconToRender = GpsSearchingIcon;
       break;
     case 'good': {
       const roundedAcc = accuracy ? Math.round(accuracy) : 9999;
       textValue = `± ${roundedAcc} m`;
+      IconToRender = GpsGoodIcon;
       break;
     }
     default:
       textValue = formatMessage(m.searching);
+      IconToRender = GpsSearchingIcon;
       break;
   }
 
@@ -58,7 +63,7 @@ export const GPSPill: FC<GPSPillProps> = ({onPress}) => {
       style={styles.container}
       testID="MAP.gps-pill"
       accessibilityLabel="Open GPS Modal">
-      <GpsIcon variant={status} />
+      <IconToRender />
 
       <BodyText variant="regular" style={styles.text} numberOfLines={1}>
         {textValue}

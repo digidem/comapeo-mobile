@@ -189,8 +189,8 @@ export const MapScreen = ({
 const styles = StyleSheet.create({
   locationButton: {
     position: 'absolute',
-    right: 20,
-    bottom: 20,
+    right: 12,
+    bottom: 50,
   },
   gpsPillContainer: {
     position: 'absolute',

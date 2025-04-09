@@ -46,12 +46,9 @@ import {LocationHistoryPoint} from '../sharedTypes/location';
 // consider it stale and show that the GPS is searching for a new position
 const STALE_TIMEOUT = 60 * 1000; // 60 seconds
 
-export type LocationStatus = 'searching' | 'good' | 'error';
-
-export interface LocationStatusResult {
-  status: LocationStatus;
-  accuracy?: number;
-}
+type LocationStatusResult =
+  | {status: 'searching' | 'error'}
+  | {status: 'good'; accuracy: number};
 
 export function getLocationStatus({
   location,
@@ -68,15 +65,13 @@ export function getLocationStatus({
   const positionStale =
     location && Date.now() - location.timestamp > STALE_TIMEOUT;
 
-  if (!location || positionStale) {
+  if (!location || positionStale || !location.coords.accuracy) {
     return {status: 'searching'};
   }
 
-  const accuracy = location.coords.accuracy ?? 999999;
-
   return {
     status: 'good',
-    accuracy,
+    accuracy: location.coords.accuracy,
   };
 }
 

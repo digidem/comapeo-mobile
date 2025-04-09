@@ -1,4 +1,9 @@
 import * as React from 'react';
+import {
+  useDataSyncProgress,
+  useStartSync,
+  type SyncState,
+} from '@comapeo/core-react';
 import {useFocusEffect} from '@react-navigation/native';
 import {useQueryClient} from '@tanstack/react-query';
 import {defineMessages, useIntl} from 'react-intl';
@@ -7,7 +12,6 @@ import {Bar as ProgressBar} from 'react-native-progress';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {useDataSyncProgress} from '../../hooks/useSyncState';
 import ObservationsProjectImage from '../../images/ObservationsProject.svg';
 import {ExhaustivenessError} from '../../lib/ExhaustivenessError';
 import {
@@ -23,7 +27,6 @@ import {
   getConnectedPeersCount,
   getSyncingPeersCount,
   type SyncStage,
-  type SyncState,
 } from '../../lib/sync';
 import {Button} from '../../sharedComponents/Button';
 import {
@@ -115,7 +118,8 @@ export const ProjectSyncDisplay = ({
   const queryClient = useQueryClient();
   const navigation = useNavigationFromRoot();
   const {projectApi, projectId} = useActiveProject();
-  const progress = useDataSyncProgress();
+  const progress = useDataSyncProgress({projectId});
+  const startSync = useStartSync({projectId});
 
   const connectedPeersCount = getConnectedPeersCount(
     syncState.remoteDeviceSyncState,
@@ -183,7 +187,7 @@ export const ProjectSyncDisplay = ({
           renderIcon={({size}) => <SyncIcon size={size} />}
           onPress={() => {
             // TODO: Catch/surface error
-            projectApi.$sync.start();
+            startSync.mutate(undefined);
           }}
         />
       );

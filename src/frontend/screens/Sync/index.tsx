@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import {useManyProjects} from '@comapeo/core-react';
+import {useManyProjects, useSyncState} from '@comapeo/core-react';
 
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {IconButton} from '../../sharedComponents/IconButton';
@@ -16,8 +16,8 @@ import {NoWifiDisplay} from './NoWifiDisplay';
 import {openWiFiSettings} from '../../lib/linking';
 import {ProjectSyncDisplay} from './ProjectSyncDisplay';
 import {Loading} from '../../sharedComponents/Loading';
-import {useSyncState} from '../../hooks/useSyncState';
 import {useNetInfo} from '@react-native-community/netinfo';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
 
 export function createNavigationOptions() {
   return ({
@@ -50,7 +50,9 @@ export const SyncScreen = ({navigation}: NativeRootNavigationProps<'Sync'>) => {
 
   // TODO: Handle error case
   const {data: projects} = useManyProjects();
-  const syncState = useSyncState();
+
+  const {projectId} = useActiveProject();
+  const syncState = useSyncState({projectId});
   const projectSettingsQuery = useProjectSettings();
 
   if (!syncState || remoteArchiveLoading) {

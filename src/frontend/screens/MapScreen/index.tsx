@@ -70,7 +70,7 @@ export const MapScreen = ({
   useFocusEffect(
     React.useCallback(() => {
       // if no exisiting observation, stay home
-      if (!existingObservation) {
+      if (!existingObservation || authState === 'obscured') {
         return;
       }
       // if existing observation and no preset match, user has started creating an observation but had not chosen a preset, so navigate to preset chooser
@@ -83,7 +83,7 @@ export const MapScreen = ({
       } else {
         navigate('ObservationCreate');
       }
-    }, [existingObservation, navigate, presets]),
+    }, [existingObservation, navigate, presets, authState]),
   );
 
   const handleAddPress = () => {

@@ -37,12 +37,10 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   const shareDialogIsOpen = useIsShareDialogOpen();
 
   React.useEffect(() => {
-    if (!isE2E) {
-      if (passcode !== null) {
-        FlagSecureModule.activate();
-      } else {
-        FlagSecureModule.deactivate();
-      }
+    if (passcode !== null && !isE2E) {
+      FlagSecureModule.activate();
+    } else {
+      FlagSecureModule.deactivate();
     }
   }, [passcode, isE2E]);
 

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
-import {useAuthContext} from '../../contexts/AuthContext';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {FullScreenMenuList} from '../../sharedComponents/MenuList/FullScreenMenuList';
 import {MenuListItemType} from '../../sharedComponents/MenuList/MenuListItem';
@@ -49,14 +48,7 @@ export const Security: NativeNavigationComponent<'Security'> = ({
 }) => {
   const {formatMessage: t} = useIntl();
   const passcodeSet = useSecurityState(state => state.passcode !== null);
-  const {authState} = useAuthContext();
   const [highlight, setHighlight] = React.useState(false);
-
-  React.useLayoutEffect(() => {
-    if (authState === 'obscured') {
-      navigation.popTo('AppSettings');
-    }
-  }, [navigation, authState]);
 
   function highlightError() {
     setHighlight(true);

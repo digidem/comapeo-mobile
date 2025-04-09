@@ -8,7 +8,6 @@ import {LIGHT_GREY} from '../lib/styles';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import {useAuthContext} from '../contexts/AuthContext';
 import {
   useSecurityActions,
   useSecurityState,
@@ -40,22 +39,15 @@ const m = defineMessages({
   },
 });
 
-export const ObscurePasscode: NativeNavigationComponent<'ObscurePasscode'> = ({
-  navigation,
-}) => {
-  const {authState} = useAuthContext();
+export const ObscurePasscode: NativeNavigationComponent<
+  'ObscurePasscode'
+> = () => {
   const obscureCodeEnabled = useSecurityState(
     state => state.obscureCodeEnabled,
   );
   const {enableObscureCode} = useSecurityActions();
 
   const {formatMessage: t} = useIntl();
-
-  React.useLayoutEffect(() => {
-    if (authState === 'obscured') {
-      navigation.popTo('AppSettings');
-    }
-  }, [navigation, authState]);
 
   return (
     <ScrollView style={styles.container}>

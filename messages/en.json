@@ -49,46 +49,36 @@
   "Modal.GPSEnable.trackingDescription": {
     "message": "You’ve been recording for"
   },
-  "Navigation.Drawer.aboutCoMapeo": {
+  "Navigation.Menu.Settings": {
+    "message": "Settings"
+  },
+  "Navigation.Menu.aboutCoMapeo": {
     "description": "Primary text for 'About CoMapeo' link (version info)",
     "message": "About CoMapeo"
   },
-  "Navigation.Drawer.aboutCoMapeoDesc": {
-    "description": "Description of the 'About CoMapeo' page",
-    "message": "Version and build number"
+  "Navigation.Menu.coordinator": {
+    "message": "You are a coordinator on this project"
   },
-  "Navigation.Drawer.appSettings": {
-    "message": "App Settings"
+  "Navigation.Menu.currentProject": {
+    "message": "Current Project"
   },
-  "Navigation.Drawer.appSettingsDesc": {
-    "description": "list of avaialable app settings",
-    "message": "Language, Security, Coordinates"
+  "Navigation.Menu.exchange": {
+    "message": "Exchange"
   },
-  "Navigation.Drawer.createOrJoin": {
-    "message": "Create or Join Project"
+  "Navigation.Menu.invite": {
+    "message": "Invite"
   },
-  "Navigation.Drawer.createOrJoinDesc": {
-    "message": "Create a new project or join existing one"
+  "Navigation.Menu.mappingOnOwn": {
+    "message": "You are mapping on your own"
   },
-  "Navigation.Drawer.mappingOnOwn": {
-    "message": "You are currently mapping on your own"
+  "Navigation.Menu.participant": {
+    "message": "You are a participant on this project"
   },
-  "Navigation.Drawer.privacyPolicy": {
-    "message": "Privacy Policy"
+  "Navigation.Menu.privacyPolicy": {
+    "message": "Data & Privacy"
   },
-  "Navigation.Drawer.projName": {
-    "message": "Project {projectName}"
-  },
-  "Navigation.Drawer.projectSettings": {
-    "message": "Project Settings"
-  },
-  "Navigation.Drawer.projectSettingsDesc": {
-    "description": "list of avaialable project settings",
-    "message": "Categories, Config, Team"
-  },
-  "Navigation.Drawer.title": {
-    "description": "Title of settings screen",
-    "message": "Settings"
+  "Navigation.Menu.viewProject": {
+    "message": "View"
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",

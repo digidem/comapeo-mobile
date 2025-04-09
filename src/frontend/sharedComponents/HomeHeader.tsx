@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {defineMessages, useIntl} from 'react-intl';
 
 import DeviceIcon from '../images/DeviceIcon.svg';
@@ -28,7 +27,6 @@ export function HomeHeader({
   backgroundColor = 'transparent',
   showBottomBorder = false,
 }: HomeHeaderProps) {
-  const insets = useSafeAreaInsets();
   const {formatMessage} = useIntl();
   const {data} = useProjectSettings();
 
@@ -39,7 +37,6 @@ export function HomeHeader({
       style={[
         styles.container,
         {
-          paddingTop: insets.top,
           backgroundColor,
           borderBottomWidth: showBottomBorder ? 1 : 0,
           borderBottomColor: showBottomBorder ? BLUE_GREY : 'transparent',

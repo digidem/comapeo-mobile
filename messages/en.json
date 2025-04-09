@@ -1048,6 +1048,36 @@
     "description": "Title of screen with list of observations",
     "message": "Observations"
   },
+  "screens.ObservationMetadataVerified.accuracy": {
+    "message": "Accuracy"
+  },
+  "screens.ObservationMetadataVerified.altitude": {
+    "message": "Altitude"
+  },
+  "screens.ObservationMetadataVerified.altitudeAccuracy": {
+    "message": "Altitude Accuracy"
+  },
+  "screens.ObservationMetadataVerified.dataEntered": {
+    "message": "This data was manually entered."
+  },
+  "screens.ObservationMetadataVerified.howWeCheck": {
+    "message": "How we validate"
+  },
+  "screens.ObservationMetadataVerified.latitude": {
+    "message": "Latitude"
+  },
+  "screens.ObservationMetadataVerified.longitude": {
+    "message": "Longitude"
+  },
+  "screens.ObservationMetadataVerified.manuallyEntered": {
+    "message": "Manually entered."
+  },
+  "screens.ObservationMetadataVerified.navTitle": {
+    "message": "Observation Metadata"
+  },
+  "screens.ObservationMetadataVerified.speed": {
+    "message": "Speed"
+  },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
     "description": "Back button on observation list screen when no observations are yet recorded",
     "message": "Go To Map"

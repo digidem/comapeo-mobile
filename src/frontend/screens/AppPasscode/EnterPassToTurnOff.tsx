@@ -1,9 +1,10 @@
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
-import {useSecurityContext} from '../../contexts/SecurityContext';
+import {useAuthContext} from '../../contexts/AuthContext';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {InputPasscode} from './InputPasscode';
+import {useSecurityState} from '../../contexts/SecurityStoreContext';
 
 const m = defineMessages({
   titleEnter: {
@@ -28,16 +29,17 @@ export const EnterPassToTurnOff: NativeNavigationComponent<
   'EnterPassToTurnOff'
 > = ({navigation}) => {
   const {formatMessage: t} = useIntl();
-  const {authenticate, authValuesSet} = useSecurityContext();
+  const passcode = useSecurityState(state => state.passcode);
+  const {authenticate} = useAuthContext();
   const [error, setError] = React.useState(false);
   const {navigate} = navigation;
 
   // Stops user from accessing this page if no password is set
   React.useLayoutEffect(() => {
-    if (!authValuesSet.passcodeSet) {
+    if (passcode === null) {
       navigate('Security');
     }
-  }, [navigate, authValuesSet]);
+  }, [navigate, passcode]);
 
   function validate(passcode: string) {
     if (!authenticate(passcode, true)) {

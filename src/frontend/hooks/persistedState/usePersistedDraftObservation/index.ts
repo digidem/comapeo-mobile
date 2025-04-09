@@ -259,5 +259,5 @@ export const usePreset = () => {
   }
 };
 
-export const _usePersistedDraftObservationActions = () =>
+export const usePersistedDraftObservationActions = () =>
   usePersistedDraftObservation(state => state.actions);

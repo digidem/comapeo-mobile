@@ -25,6 +25,9 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "Discard observation?"
   },
+  "MapManagement.ErrorBottomSheet.goBack": {
+    "message": "Go Back"
+  },
   "Modal.GPSDisable.button": {
     "message": "Enable"
   },
@@ -650,6 +653,10 @@
   "screens.IntroToCoMapeo.ownData": {
     "message": "Own and control your data"
   },
+  "screens.LanguageSettings.followSystemPreferences": {
+    "description": "Label for language option to follow system preferences",
+    "message": "Follow system preferences"
+  },
   "screens.LanguageSettings.title": {
     "description": "Title language settings screen",
     "message": "Language"
@@ -1038,6 +1045,36 @@
     "description": "Title of screen with list of observations",
     "message": "Observations"
   },
+  "screens.ObservationMetadataVerified.accuracy": {
+    "message": "Accuracy"
+  },
+  "screens.ObservationMetadataVerified.altitude": {
+    "message": "Altitude"
+  },
+  "screens.ObservationMetadataVerified.altitudeAccuracy": {
+    "message": "Altitude Accuracy"
+  },
+  "screens.ObservationMetadataVerified.dataEntered": {
+    "message": "This data was manually entered."
+  },
+  "screens.ObservationMetadataVerified.howWeCheck": {
+    "message": "How we validate"
+  },
+  "screens.ObservationMetadataVerified.latitude": {
+    "message": "Latitude"
+  },
+  "screens.ObservationMetadataVerified.longitude": {
+    "message": "Longitude"
+  },
+  "screens.ObservationMetadataVerified.manuallyEntered": {
+    "message": "Manually entered."
+  },
+  "screens.ObservationMetadataVerified.navTitle": {
+    "message": "Observation Metadata"
+  },
+  "screens.ObservationMetadataVerified.speed": {
+    "message": "Speed"
+  },
   "screens.ObservationsList.NoProjectWarning": {
     "message": "You are currently mapping on your own."
   },
@@ -1306,11 +1343,17 @@
   "screens.Settings.Config.importConfig": {
     "message": "Import Config"
   },
+  "screens.Settings.Config.importSuccessTitle": {
+    "message": "Successfully imported config:"
+  },
   "screens.Settings.Config.name": {
     "message": "Config Name:"
   },
   "screens.Settings.Config.navTitle": {
     "message": "Configuration"
+  },
+  "screens.Settings.Config.okButton": {
+    "message": "OK"
   },
   "screens.Settings.Config.projectName": {
     "message": "Project Name:"
@@ -1319,7 +1362,7 @@
     "message": "Create a Project"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
-    "message": "Go back"
+    "message": "Go Back"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.howTo": {
     "message": "How to Join a Project"
@@ -1357,11 +1400,17 @@
   "screens.Settings.CreateOrJoinProject.importConfigFileError": {
     "message": "File name should end with .comapeocat"
   },
+  "screens.Settings.CreateOrJoinProject.importSuccessTitle": {
+    "message": "Successfully imported config:"
+  },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
     "message": "Join an existing CoMapeo Project"
   },
   "screens.Settings.CreateOrJoinProject.joinProject": {
     "message": "Join a Project"
+  },
+  "screens.Settings.CreateOrJoinProject.okButton": {
+    "message": "OK"
   },
   "screens.Settings.CreateOrJoinProject.projectDescription": {
     "message": "A project is a secure container for your data. Only devices you invite can enter and share data with you. Create or Join a project in order to share data with other devices. This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
@@ -1607,14 +1656,11 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Change"
   },
-  "sharedComponents.ErrorModal.goBack": {
+  "sharedComponents.ErrorBottomSheet.goBack": {
     "message": "Go Back"
   },
-  "sharedComponents.ErrorModal.somethingWrong": {
+  "sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Something Went Wrong"
-  },
-  "sharedComponents.ErrorModal.tryAgain": {
-    "message": "Try Again"
   },
   "sharedComponents.GpsPill.noGps": {
     "message": "No GPS"

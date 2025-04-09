@@ -4,27 +4,29 @@ import {
 } from '@react-navigation/native';
 import * as React from 'react';
 import * as SplashScreen from 'expo-splash-screen';
-import {DrawerNavigator} from './Navigation/Drawer';
 import {ProjectInviteBottomSheet} from './sharedComponents/ProjectInviteBottomSheet';
-import {Loading} from './sharedComponents/Loading';
 import {AppStackParamsList} from './sharedTypes/navigation';
-import {EDITING_SCREEN_NAMES} from './constants';
+import {RootStackNavigator} from './Navigation/Stack';
+import {isEditingScreen} from './lib/isEditingScreen';
 
 export const rootNavigationRef =
   createNavigationContainerRef<AppStackParamsList>();
 
 export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
-  if (permissionAsked) {
-    SplashScreen.hide();
-  }
-
   const [inviteSheetEnabled, setInviteSheetEnabled] = React.useState(() => {
-    return shouldEnableInviteSheet();
+    return false;
   });
 
   React.useEffect(() => {
     const unsubscribe = rootNavigationRef.addListener('state', () => {
-      setInviteSheetEnabled(shouldEnableInviteSheet());
+      const currentRoute = rootNavigationRef?.current?.getCurrentRoute();
+
+      if (!currentRoute || isEditingScreen(currentRoute.name)) {
+        setInviteSheetEnabled(false);
+        return;
+      }
+
+      setInviteSheetEnabled(true);
     });
 
     return () => {
@@ -32,10 +34,16 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
     };
   }, []);
 
+  if (permissionAsked) {
+    SplashScreen.hide();
+  }
+
   return (
     <NavigationContainer ref={rootNavigationRef}>
-      <React.Suspense fallback={<Loading />}>
-        <DrawerNavigator />
+      <React.Suspense fallback={null}>
+        <RootStackNavigator />
+      </React.Suspense>
+      <React.Suspense fallback={null}>
         <ProjectInviteBottomSheet
           enabledForCurrentScreen={inviteSheetEnabled}
         />
@@ -43,15 +51,3 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
     </NavigationContainer>
   );
 };
-
-function shouldEnableInviteSheet() {
-  const currentRoute = rootNavigationRef?.current?.getCurrentRoute();
-
-  if (!currentRoute) return true;
-
-  for (const name of EDITING_SCREEN_NAMES) {
-    if (name === currentRoute.name) return false;
-  }
-
-  return true;
-}

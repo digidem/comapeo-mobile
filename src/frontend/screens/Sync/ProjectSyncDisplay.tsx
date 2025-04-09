@@ -6,13 +6,11 @@ import {StyleSheet, View, Text} from 'react-native';
 import {Bar as ProgressBar} from 'react-native-progress';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {OBSERVATION_KEY} from '../../hooks/server/observations';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useDataSyncProgress} from '../../hooks/useSyncState';
 import ObservationsProjectImage from '../../images/ObservationsProject.svg';
 import {ExhaustivenessError} from '../../lib/ExhaustivenessError';
 import {
-  BLACK,
   COMAPEO_BLUE,
   DARK_GREEN,
   DARK_GREY,
@@ -37,7 +35,8 @@ import {
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {REMOTE_DETECTION_ALERTS_KEY} from '../../hooks/server/remoteDetectionAlert';
+import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
+import {ROOT_QUERY_KEY} from '../../constants';
 
 const m = defineMessages({
   devicesFound: {
@@ -155,11 +154,8 @@ export const ProjectSyncDisplay = ({
         if (shouldAutostopSyncWhenLeavingScreen) {
           projectApi.$sync.setAutostopDataSyncTimeout(30_000);
         }
-        // TODO: All queries associated with project should be invalidated
-        queryClient.invalidateQueries({queryKey: [OBSERVATION_KEY, projectId]});
-
         queryClient.invalidateQueries({
-          queryKey: [REMOTE_DETECTION_ALERTS_KEY, projectId],
+          queryKey: [ROOT_QUERY_KEY, 'projects', projectId],
         });
       });
 
@@ -181,20 +177,15 @@ export const ProjectSyncDisplay = ({
   switch (syncStage.name) {
     case 'idle': {
       dockContent = (
-        <Button
-          fullWidth
-          variant="contained"
+        <PrimaryButton
+          fullSize
+          text={t(m.startSync)}
+          renderIcon={({size}) => <SyncIcon size={size} />}
           onPress={() => {
             // TODO: Catch/surface error
             projectApi.$sync.start();
-          }}>
-          <View style={styles.buttonContentContainer}>
-            <SyncIcon size={20} />
-            <HeaderText variant="header5" style={styles.buttonTextPrimary}>
-              {t(m.startSync)}
-            </HeaderText>
-          </View>
-        </Button>
+          }}
+        />
       );
 
       syncInfoContent = (
@@ -208,18 +199,15 @@ export const ProjectSyncDisplay = ({
     }
     case 'waiting': {
       dockContent = (
-        <Button
-          fullWidth
-          variant="outlined"
+        <SecondaryButton
+          fullSize={true}
           onPress={() => {
             // TODO: Catch/surface error
             projectApi.$sync.stop();
-          }}>
-          <View style={styles.buttonContentContainer}>
-            <StopIcon size={20} color={BLACK} />
-            <HeaderText variant="header5">{t(m.stop)}</HeaderText>
-          </View>
-        </Button>
+          }}
+          text={t(m.stop)}
+          renderIcon={({size, color}) => <StopIcon size={size} color={color} />}
+        />
       );
 
       syncInfoContent = (
@@ -233,18 +221,15 @@ export const ProjectSyncDisplay = ({
     }
     case 'syncing': {
       dockContent = (
-        <Button
-          fullWidth
-          variant="outlined"
+        <SecondaryButton
+          fullSize={true}
           onPress={() => {
             // TODO: Catch/surface error
             projectApi.$sync.stop();
-          }}>
-          <View style={styles.buttonContentContainer}>
-            <StopIcon size={20} color={BLACK} />
-            <HeaderText variant="header5">{t(m.stop)}</HeaderText>
-          </View>
-        </Button>
+          }}
+          text={t(m.stop)}
+          renderIcon={({size, color}) => <StopIcon size={size} color={color} />}
+        />
       );
 
       syncInfoContent = (
@@ -262,18 +247,15 @@ export const ProjectSyncDisplay = ({
     }
     case 'complete-partial': {
       dockContent = (
-        <Button
-          fullWidth
-          variant="outlined"
+        <SecondaryButton
+          fullSize={true}
           onPress={() => {
             // TODO: Catch/surface error
             projectApi.$sync.stop();
-          }}>
-          <View style={styles.buttonContentContainer}>
-            <StopIcon size={20} color={BLACK} />
-            <HeaderText variant="header5">{t(m.stop)}</HeaderText>
-          </View>
-        </Button>
+          }}
+          text={t(m.stop)}
+          renderIcon={({size, color}) => <StopIcon size={size} color={color} />}
+        />
       );
 
       syncInfoContent = (
@@ -289,18 +271,15 @@ export const ProjectSyncDisplay = ({
     }
     case 'complete-full': {
       dockContent = syncState.data.isSyncEnabled ? (
-        <Button
-          fullWidth
-          variant="outlined"
+        <SecondaryButton
+          fullSize={true}
           onPress={() => {
             // TODO: Catch/surface error
             projectApi.$sync.stop();
-          }}>
-          <View style={styles.buttonContentContainer}>
-            <StopIcon size={20} color={BLACK} />
-            <HeaderText variant="header5">{t(m.stop)}</HeaderText>
-          </View>
-        </Button>
+          }}
+          text={t(m.stop)}
+          renderIcon={({size, color}) => <StopIcon size={size} color={color} />}
+        />
       ) : (
         <Button variant="text" disabled onPress={() => {}}>
           <HeaderText variant="header5">{t(m.allCaughtUp)}</HeaderText>
@@ -445,14 +424,6 @@ const styles = StyleSheet.create({
   },
   subtitleText: {
     textAlign: 'center',
-  },
-  buttonContentContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  buttonTextPrimary: {
-    color: WHITE,
   },
   syncProgressContainer: {
     gap: 12,

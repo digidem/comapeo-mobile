@@ -1,22 +1,19 @@
 import * as React from 'react';
 import {View, FlatList, Dimensions, StyleSheet} from 'react-native';
-import {ObservationListItem} from './ObservationListItem';
-import {ObservationEmptyView} from './ObservationsEmptyView';
-
+import {useManyProjects} from '@comapeo/core-react';
 import {Observation, Track} from '@comapeo/schema';
 import {MessageDescriptor, defineMessages} from 'react-intl';
 import {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs';
-import {ObservationsListBarIcon} from '../../Navigation/Tab/TabBar/ObservationsListTabBarIcon';
+
+import {ObservationListItem} from './ObservationListItem';
+import {ObservationEmptyView} from './ObservationsEmptyView';
 import {ObservationListHeaderLeft} from './ObservationListHeaderLeft';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
 import {NoProjectWarning} from './NoProjectWarning';
 import {WHITE} from '../../lib/styles';
-import {useAllProjects} from '../../hooks/server/projects';
-import {Loading} from '../../sharedComponents/Loading';
 import {TrackListItem} from './TrackListItem';
 import {useObservations} from '../../hooks/server/observations';
 import {useTracks} from '../../hooks/server/track';
-import {UIActivityIndicator} from 'react-native-indicators';
 
 const m = defineMessages({
   loading: {
@@ -56,9 +53,9 @@ export const ObservationsList: React.FC<
 > & {
   navTitle: MessageDescriptor;
 } = ({navigation}) => {
-  const {data: observations, isFetching} = useObservations();
+  const {data: observations} = useObservations();
   const {data: tracks} = useTracks();
-  const {data, isPending} = useAllProjects();
+  const {data: projects} = useManyProjects();
 
   const rowsPerWindow = Math.ceil(
     (Dimensions.get('window').height - 65) / OBSERVATION_CELL_HEIGHT,
@@ -74,13 +71,10 @@ export const ObservationsList: React.FC<
 
   return (
     <View style={styles.container} testID="OBS.list-scrn">
-      {isPending ? (
-        <Loading />
-      ) : data && data.length <= 1 ? (
+      {projects && projects.length <= 1 ? (
         <NoProjectWarning style={{margin: 20}} />
       ) : null}
       {/* re: https://github.com/digidem/comapeo-mobile/issues/586  */}
-      {isFetching && <UIActivityIndicator style={{padding: 20, flex: 0}} />}
       <FlatList
         initialNumToRender={rowsPerWindow}
         getItemLayout={getItemLayout}
@@ -130,7 +124,6 @@ export function createNavigationOptions(
   formatMessage: (title: MessageDescriptor) => string,
 ): BottomTabNavigationOptions {
   return {
-    tabBarIcon: ObservationsListBarIcon,
     headerLeft: ObservationListHeaderLeft,
     headerTransparent: false,
     headerTitle: formatMessage(ObservationsList.navTitle),

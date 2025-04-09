@@ -2,7 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches} from '../../utils/selectors';
 
-describe('Coordinates Settings Flow', () => {
+describe('Settings - Coordinates Settings Flow', () => {
   it('should open the App Settings from the drawer', async () => {
     const drawerIcon = await $('~Open Navigation Drawer');
     await drawerIcon.click();
@@ -32,6 +32,7 @@ describe('Coordinates Settings Flow', () => {
     await expect($(byTextMatches('App Settings'))).toBeDisplayed();
 
     await backBtn.click();
+    await $('~Close Navigation Drawer').click();
     await expect($(byResourceId('MAIN.mapbox-map-view'))).toBeDisplayed();
   });
 });

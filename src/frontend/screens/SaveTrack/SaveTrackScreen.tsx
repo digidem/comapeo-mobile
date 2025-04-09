@@ -8,10 +8,13 @@ import {SaveTrackButton} from './SaveTrackButton';
 import {Editor} from '../../sharedComponents/Editor';
 import {TrackDescriptionField} from './TrackDescriptionField';
 import {HeaderLeft} from './HeaderLeft';
+import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
 
 export const SaveTrackScreen = () => {
   const navigation = useNavigationFromRoot();
   const {formatMessage: t} = useIntl();
+
+  usePreventAndroidBackButton();
 
   useFocusEffect(
     useCallback(() => {

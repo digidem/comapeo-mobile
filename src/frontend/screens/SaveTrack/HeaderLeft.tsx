@@ -7,10 +7,9 @@ import {
   BottomSheetModalContent,
 } from '../../sharedComponents/BottomSheetModal';
 import {defineMessages, useIntl} from 'react-intl';
-import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
+
+import {useTrackActions} from '../../contexts/TrackStoreContext';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {CommonActions, useFocusEffect} from '@react-navigation/native';
-import {BackHandler} from 'react-native';
 import DiscardIcon from '../../images/delete.svg';
 import ErrorIcon from '../../images/Error.svg';
 
@@ -45,34 +44,13 @@ export const HeaderLeft = ({headerBackButtonProps}: HeaderLeftProps) => {
     openOnMount: false,
   });
   const {formatMessage} = useIntl();
-  const clearCurrentTrack = usePersistedTrack(state => state.clearCurrentTrack);
+  const {clearCurrentTrack} = useTrackActions();
   const navigation = useNavigationFromRoot();
-
-  useFocusEffect(
-    React.useCallback(() => {
-      const onBackPress = () => {
-        openSheet();
-        return true;
-      };
-
-      const subscription = BackHandler.addEventListener(
-        'hardwareBackPress',
-        onBackPress,
-      );
-
-      return () => subscription.remove();
-    }, [openSheet]),
-  );
 
   function handleDiscard() {
     clearCurrentTrack();
     closeSheet();
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{name: 'Home', params: {screen: 'Map'}}],
-      }),
-    );
+    navigation.popTo('Home', {screen: 'Map'});
   }
 
   return (

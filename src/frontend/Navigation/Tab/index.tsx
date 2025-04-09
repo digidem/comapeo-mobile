@@ -1,12 +1,6 @@
 import * as React from 'react';
-import {
-  createBottomTabNavigator,
-  BottomTabNavigationProp,
-  BottomTabBarButtonProps,
-} from '@react-navigation/bottom-tabs';
-import {Pressable} from 'react-native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useIntl} from 'react-intl';
-import {useCurrentTab} from '../../hooks/useCurrentTab';
 import {CameraScreen} from '../../screens/CameraScreen';
 import {MapScreen} from '../../screens/MapScreen';
 import {
@@ -14,80 +8,86 @@ import {
   createNavigationOptions as createObservationsListNavOptions,
 } from '../../screens/ObservationsList';
 import {HomeHeader} from '../../sharedComponents/HomeHeader';
-import {TAB_BAR_HEIGHT} from '../Stack/AppScreens';
-import {CameraTabBarIcon} from './TabBar/CameraTabBarIcon';
-import {MapTabBarIcon} from './TabBar/MapTabBarIcon';
-import {TrackingTabBarIcon} from './TabBar/TrackingTabBarIcon';
 import {HomeTabsParamsList} from '../../sharedTypes/navigation';
-import {useDrawerNavigation} from '../Stack';
+import {DrawerContent} from '../../sharedComponents/DrawerContent';
+import {useCloseDrawerOnBackPress} from './useCloseDrawerOnBackPress';
+import {StyleSheet, View} from 'react-native';
+import {TabBar} from './TabBar';
+import {SharedLocationContextProvider} from '../../contexts/SharedLocationContext';
+import {Loading} from '../../sharedComponents/Loading';
 
 const Tab = createBottomTabNavigator<HomeTabsParamsList>();
 
-const CustomTabBarButton = (props: BottomTabBarButtonProps) => (
-  <Pressable
-    {...props}
-    style={{justifyContent: 'center', alignItems: 'center', flex: 1}}
-  />
-);
-
 export const HomeTabs = () => {
-  const {handleTabPress} = useCurrentTab();
   const {formatMessage} = useIntl();
-  const {openDrawer} = useDrawerNavigation();
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
+
+  function closeDrawer() {
+    setDrawerOpen(false);
+  }
+
+  function openDrawer() {
+    setDrawerOpen(true);
+  }
+
+  useCloseDrawerOnBackPress({drawerOpen, closeDrawer});
+
   return (
-    <Tab.Navigator
-      screenListeners={{
-        tabPress: handleTabPress,
-      }}
-      screenOptions={({route}) => ({
-        tabBarStyle: {height: TAB_BAR_HEIGHT},
-        tabBarShowLabel: false,
-        headerTransparent: true,
-        tabBarButton: CustomTabBarButton,
-        tabBarButtonTestID: 'tabBarButton' + route.name,
-        tabBarAccessibilityLabel: 'Go to ' + route.name,
-      })}
-      initialRouteName={'Map'}
-      backBehavior="initialRoute">
-      <Tab.Screen
-        name="ObservationsList"
-        component={ObservationsList}
-        options={createObservationsListNavOptions(formatMessage)}
-      />
-      <Tab.Screen
-        name="Map"
-        component={MapScreen}
-        options={{
-          tabBarIcon: MapTabBarIcon,
-          header: props => <HomeHeader {...props} openDrawer={openDrawer} />,
+    <>
+      {drawerOpen && (
+        <View style={styles.backdrop}>
+          <DrawerContent closeDrawer={closeDrawer} />
+        </View>
+      )}
+      <Tab.Navigator
+        tabBar={TabBar}
+        screenOptions={{
+          tabBarShowLabel: false,
+          headerTransparent: true,
         }}
-      />
-      <Tab.Screen
-        name="Camera"
-        component={CameraScreen}
-        options={{
-          tabBarIcon: CameraTabBarIcon,
-          header: props => <HomeHeader {...props} openDrawer={openDrawer} />,
-        }}
-      />
-      <Tab.Screen
-        name="Tracking"
-        options={{
-          tabBarIcon: TrackingTabBarIcon,
-          headerShown: false,
-        }}
-        listeners={({
-          navigation,
-        }: {
-          navigation: BottomTabNavigationProp<HomeTabsParamsList>;
-        }) => ({
-          tabPress: e => {
-            e.preventDefault();
-            navigation.navigate('Map');
-          },
-        })}
-        children={() => <></>}
-      />
-    </Tab.Navigator>
+        initialRouteName={'Map'}
+        screenLayout={({children}) => (
+          <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
+        )}
+        // header needs access the this provider. Layout wraps the entire navigator, while screenLayout wraps each screen (in other words not the header)
+        layout={({children}) => (
+          <SharedLocationContextProvider>
+            {children}
+          </SharedLocationContextProvider>
+        )}
+        backBehavior="initialRoute">
+        <Tab.Screen
+          name="ObservationsList"
+          component={ObservationsList}
+          options={createObservationsListNavOptions(formatMessage)}
+        />
+        <Tab.Screen
+          name="Map"
+          component={MapScreen}
+          options={{
+            header: props => <HomeHeader {...props} openDrawer={openDrawer} />,
+          }}
+        />
+        <Tab.Screen
+          name="Camera"
+          component={CameraScreen}
+          options={{
+            header: props => <HomeHeader {...props} openDrawer={openDrawer} />,
+          }}
+        />
+      </Tab.Navigator>
+    </>
   );
 };
+
+const styles = StyleSheet.create({
+  backdrop: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    zIndex: 2,
+    top: 0,
+    left: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+  },
+});

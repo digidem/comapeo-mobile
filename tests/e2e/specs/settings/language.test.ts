@@ -2,7 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches} from '../../utils/selectors';
 
-describe('Language Settings Flow', () => {
+describe('Settings - Language Settings Flow', () => {
   it('should open the Language list from App Settings', async () => {
     const drawerIcon = await $('~Open Navigation Drawer');
     await drawerIcon.click();
@@ -12,6 +12,8 @@ describe('Language Settings Flow', () => {
 
     const languageOption = await $(byTextMatches('Language'));
     await languageOption.click();
+
+    // TODO: Add assertion about the initially selected option on this screen
   });
 
   it('should scroll to Spanish, select it, and confirm language change', async () => {
@@ -23,19 +25,19 @@ describe('Language Settings Flow', () => {
 
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
-
+    await $('~Close Navigation Drawer').click();
     const obsListTab = await $('~Go to ObservationsList');
     await obsListTab.click();
 
     await expect($(byTextMatches('Observaciones'))).toBeDisplayed();
+    await backBtn.click();
   });
 
   it('should switch back to English and confirm language revert', async () => {
-    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
-
     const drawerIcon = await $('~Open Navigation Drawer');
-    await drawerIcon.click();
+    if (await drawerIcon.isDisplayed()) {
+      await drawerIcon.click();
+    }
 
     const settingsInSpanish = await $(byTextMatches('Ajustes de la'));
     await settingsInSpanish.click();
@@ -45,7 +47,8 @@ describe('Language Settings Flow', () => {
 
     const englishElem = await $(byTextMatches('English'));
     await englishElem.click();
-
+    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
+    await $('~Close Navigation Drawer').click();
   });
 });

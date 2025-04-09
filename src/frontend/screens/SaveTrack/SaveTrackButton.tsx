@@ -1,39 +1,45 @@
-import {Image, Pressable, StyleSheet} from 'react-native';
-import React, {FC} from 'react';
-import {DateTime} from 'luxon';
-import {useCreateTrack} from '../../hooks/server/track';
-import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {CommonActions} from '@react-navigation/native';
+import React, {FC} from 'react';
+import {Image, Pressable, StyleSheet} from 'react-native';
+
+import {useTrackActions, useTrackState} from '../../contexts/TrackStoreContext';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {useCreateDocument} from '@comapeo/core-react';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
 
 export const SaveTrackButton: FC = () => {
-  const saveTrack = useCreateTrack();
   const navigation = useNavigationFromRoot();
-  const currentTrack = usePersistedTrack();
-  const description = usePersistedTrack(state => state.description);
+  const {projectId} = useActiveProject();
+  const {mutate: createTrack, status} = useCreateDocument({
+    docType: 'track',
+    projectId,
+  });
+  const observationRefs = useTrackState(state => state.observationRefs);
+  const locationHistory = useTrackState(state => state.locationHistory);
+  const description = useTrackState(state => state.description);
+  const {clearCurrentTrack} = useTrackActions();
 
   const handleSaveClick = () => {
-    saveTrack.mutate(
+    createTrack(
       {
-        schemaName: 'track',
-        observationRefs: currentTrack.observationRefs,
-        tags: {
-          notes: description,
-        },
-        locations: currentTrack.locationHistory.map(loc => {
-          return {
+        value: {
+          observationRefs: observationRefs,
+          tags: {
+            notes: description,
+          },
+          locations: locationHistory.map(loc => ({
             coords: {
               latitude: loc.latitude,
               longitude: loc.longitude,
             },
             mocked: false,
-            timestamp: DateTime.fromMillis(loc.timestamp).toISO()!,
-          };
-        }),
+            timestamp: new Date(loc.timestamp).toISOString()!,
+          })),
+        },
       },
       {
         onSuccess: () => {
-          currentTrack.clearCurrentTrack();
+          clearCurrentTrack();
           navigation.dispatch(
             CommonActions.reset({
               index: 0,
@@ -46,7 +52,7 @@ export const SaveTrackButton: FC = () => {
   };
 
   return (
-    <Pressable disabled={saveTrack.isPending} onPress={handleSaveClick}>
+    <Pressable disabled={status === 'pending'} onPress={handleSaveClick}>
       <Image
         style={styles.completeIcon}
         source={require('../../images/completed/checkComplete.png')}

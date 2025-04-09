@@ -4,17 +4,18 @@ import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {Editor} from '../../sharedComponents/Editor';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
-import {NativeNavigationComponent} from '../../sharedTypes/navigation';
-import {useEditObservation} from '../../hooks/server/observations';
-import {useCreateBlobMutation} from '../../hooks/server/media';
+import {
+  NativeNavigationComponent,
+  NativeRootNavigationProps,
+} from '../../sharedTypes/navigation';
+import {useUpdateDocument} from '@comapeo/core-react';
+import {useCreateAttachment} from '../../hooks/server/media';
 import {SaveButton} from '../../sharedComponents/SaveButton';
-import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {ActionsRow} from '../../sharedComponents/ActionsRow';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {Loading} from '../../sharedComponents/Loading';
 import {HeaderLeft} from './HeaderLeft';
-import {CommonActions} from '@react-navigation/native';
 import {matchPreset} from '../../lib/utils.ts';
 import {AudioAttachment} from '../../sharedTypes/audio.ts';
 import {
@@ -22,6 +23,7 @@ import {
   isAudioAttachment,
   isUnsavedAudio,
 } from '../../lib/attachmentTypeChecks';
+import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
   observation: {
@@ -50,15 +52,18 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   route,
 }) => {
   const {formatMessage} = useIntl();
-  const {projectApi} = useActiveProject();
+  const {projectApi, projectId} = useActiveProject();
 
   const value = usePersistedDraftObservation(store => store.value);
   const {updateTags, clearDraft, usePreset, existingObservationToDraft} =
     useDraftObservation();
   const preset = usePreset();
-  const editObservationMutation = useEditObservation();
+  const {mutate, status} = useUpdateDocument({
+    docType: 'observation',
+    projectId,
+  });
   const attachments = usePersistedDraftObservation(store => store.attachments);
-  const createBlobMutation = useCreateBlobMutation();
+  const {mutateAsync: createAttachmentAsync} = useCreateAttachment();
 
   const notes = value?.tags.notes;
   const presetName = preset
@@ -73,10 +78,6 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   React.useEffect(() => {
     let cancelled = false;
     if (value) return;
-    if (!route.params?.observationId) {
-      navigation.goBack();
-      return;
-    }
 
     async function createDraftFromExistingObservation(docId: string) {
       const observation = await projectApi.observation.getByDocId(docId);
@@ -110,18 +111,11 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   ]);
 
   const handleNavigationSuccess = React.useCallback(() => {
-    if (navigation.canGoBack()) {
-      navigation.goBack();
-    } else {
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{name: 'Home'}],
-        }),
-      );
-    }
     clearDraft();
-  }, [navigation, clearDraft]);
+    navigation.popTo('Observation', {
+      observationId: route.params.observationId,
+    });
+  }, [clearDraft, route.params.observationId, navigation]);
 
   const editObservation = React.useCallback(() => {
     if (!value) {
@@ -147,7 +141,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       removedAudioAttachments.length > 0;
 
     if (!attachmentsChanged) {
-      editObservationMutation.mutate(
+      mutate(
         {
           versionId: value.versionId,
           value: {
@@ -159,6 +153,10 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         },
         {
           onSuccess: handleNavigationSuccess,
+          onError: err => {
+            Sentry.captureException(err);
+            navigation.navigate('ErrorBottomSheet');
+          },
         },
       );
       return;
@@ -166,12 +164,12 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
 
     const unsavedFiles = [...newPhotos, ...newAudioRecordings];
     const attachmentPromises = unsavedFiles.map(file =>
-      createBlobMutation.mutateAsync(file),
+      createAttachmentAsync(file),
     );
 
     Promise.all(attachmentPromises).then(results => {
       const newAttachments = results.map(
-        ({driveId: driveDiscoveryId, type, name, hash}) => ({
+        ({driveDiscoveryId, type, name, hash}) => ({
           driveDiscoveryId,
           type,
           name,
@@ -189,7 +187,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
         ...newAttachments,
       ];
 
-      editObservationMutation.mutate(
+      mutate(
         {
           versionId: value.versionId,
           value: {
@@ -208,10 +206,11 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   }, [
     preset,
     value,
-    editObservationMutation,
-    createBlobMutation,
+    mutate,
+    createAttachmentAsync,
     attachments,
     handleNavigationSuccess,
+    navigation,
   ]);
 
   React.useLayoutEffect(() => {
@@ -219,42 +218,38 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       headerRight: () => (
         <SaveButton
           onPress={editObservation}
-          isLoading={editObservationMutation.isPending}
+          isLoading={status === 'pending'}
+        />
+      ),
+      headerLeft: props => (
+        <HeaderLeft
+          headerBackButtonProps={props}
+          observationId={route.params?.observationId}
         />
       ),
     });
-  }, [editObservation, editObservationMutation, navigation]);
+  }, [editObservation, status, navigation, route.params?.observationId]);
 
   return !value ? (
     <Loading />
   ) : (
-    <>
-      <Editor
-        presetName={presetName}
-        PresetIcon={
-          <PresetCircleIcon
-            size="medium"
-            iconId={preset?.iconRef?.docId}
-            testID={`OBS.${preset?.name}-icon`}
-          />
-        }
-        onPressPreset={() => navigation.navigate('PresetChooser')}
-        notes={typeof notes !== 'string' ? '' : notes}
-        updateNotes={newVal => {
-          updateTags('notes', newVal);
-        }}
-        attachments={attachments}
-        actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
-      />
-      <ErrorBottomSheet
-        error={editObservationMutation.error || createBlobMutation.error}
-        clearError={() => {
-          editObservationMutation.reset();
-          createBlobMutation.reset();
-        }}
-        tryAgain={editObservation}
-      />
-    </>
+    <Editor
+      presetName={presetName}
+      PresetIcon={
+        <PresetCircleIcon
+          size="medium"
+          iconId={preset?.iconRef?.docId}
+          testID={`OBS.${preset?.name}-icon`}
+        />
+      }
+      onPressPreset={() => navigation.navigate('PresetChooser')}
+      notes={typeof notes !== 'string' ? '' : notes}
+      updateNotes={newVal => {
+        updateTags('notes', newVal);
+      }}
+      attachments={attachments}
+      actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
+    />
   );
 };
 
@@ -265,11 +260,18 @@ export function createNavigationOptions({
 }: {
   intl: (title: MessageDescriptor) => string;
 }) {
-  return (): NativeStackNavigationOptions => {
+  return ({
+    route,
+  }: NativeRootNavigationProps<'ObservationEdit'>): NativeStackNavigationOptions => {
     return {
       headerTitle: intl(m.navTitle),
       headerRight: () => <SaveButton onPress={() => {}} isLoading={false} />,
-      headerLeft: props => <HeaderLeft headerBackButtonProps={props} />,
+      headerLeft: props => (
+        <HeaderLeft
+          headerBackButtonProps={props}
+          observationId={route.params?.observationId} // Pass observationId here
+        />
+      ),
     };
   };
 }

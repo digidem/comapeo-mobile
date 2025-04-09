@@ -1,90 +1,20 @@
 import {useClientApi} from '@comapeo/core-react';
-import {
-  useMutation,
-  useQueryClient,
-  useSuspenseQuery,
-} from '@tanstack/react-query';
+import {useSuspenseQuery} from '@tanstack/react-query';
+import {ROOT_QUERY_KEY} from '../../constants';
 
-import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {usePersistedProjectId} from '../persistedState/usePersistedProjectId';
-import {ALL_PROJECTS_KEY, PROJECT_MEMBERS_KEY} from './projects';
+// Copied from comapeo-core-react (v3.2.0) [src/lib/react-query/invites.ts: L23-L25]
+// Replicated here to ensure consistent query-key usage for pending invites.
 
-export const INVITE_KEY = 'pending_invites';
+function getPendingInvitesQueryKey() {
+  return [ROOT_QUERY_KEY, 'invites', {status: 'pending'}] as const;
+}
 
 export function usePendingInvites() {
   const mapeoApi = useClientApi();
   return useSuspenseQuery({
-    queryKey: [INVITE_KEY],
+    queryKey: getPendingInvitesQueryKey(),
     queryFn: async () => {
       return await mapeoApi.invite.getPending();
-    },
-  });
-}
-
-export function useAcceptInvite() {
-  const mapeoApi = useClientApi();
-  const queryClient = useQueryClient();
-  const switchActiveProject = usePersistedProjectId(
-    state => state.setProjectId,
-  );
-
-  return useMutation({
-    mutationFn: async ({inviteId}: {inviteId: string}) => {
-      return mapeoApi.invite.accept({inviteId});
-    },
-    onSuccess: projectPublicId => {
-      queryClient.invalidateQueries({
-        queryKey: [INVITE_KEY],
-      });
-      queryClient.invalidateQueries({
-        queryKey: [ALL_PROJECTS_KEY],
-      });
-
-      switchActiveProject(projectPublicId);
-    },
-  });
-}
-
-export function useRejectInvite() {
-  const mapeoApi = useClientApi();
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: async ({inviteId}: {inviteId: string}) => {
-      return mapeoApi.invite.reject({inviteId});
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [INVITE_KEY]});
-    },
-  });
-}
-
-export function useSendInvite() {
-  const queryClient = useQueryClient();
-  const {projectApi} = useActiveProject();
-  type InviteParams = Parameters<typeof projectApi.$member.invite>;
-  return useMutation({
-    mutationFn: ({
-      deviceId,
-      role,
-    }: {
-      deviceId: InviteParams[0];
-      role: InviteParams[1];
-    }) => projectApi.$member.invite(deviceId, role),
-    onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [INVITE_KEY]});
-      queryClient.invalidateQueries({queryKey: [PROJECT_MEMBERS_KEY]});
-    },
-  });
-}
-
-export function useRequestCancelInvite() {
-  const queryClient = useQueryClient();
-  const {projectApi} = useActiveProject();
-  return useMutation({
-    mutationFn: (deviceId: string) =>
-      projectApi.$member.requestCancelInvite(deviceId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [INVITE_KEY]});
     },
   });
 }

@@ -26,9 +26,8 @@ export type InviteProps = {
 };
 
 export type HomeTabsParamsList = {
-  Map: undefined;
+  Map: undefined | {trackingOpen: boolean};
   Camera: undefined;
-  Tracking: undefined;
   ObservationsList: undefined;
 };
 
@@ -49,7 +48,7 @@ export type RootStackParamsList = {
   PresetChooser: undefined;
   AddPhoto: undefined;
   Observation: {observationId: string};
-  ObservationEdit: {observationId: string} | undefined;
+  ObservationEdit: {observationId: string};
   ManualGpsScreen: undefined;
   ObservationDetails: {question: number};
   LeaveProjectScreen: undefined;
@@ -114,7 +113,10 @@ export type RootStackParamsList = {
     uri: string;
   };
   AudioSavedBottomSheet: undefined;
-  AudioPlaybackSaved: {uri: string; canDelete: boolean};
+  AudioPlaybackSaved: {uri: string; canDelete: boolean; observationId: string};
+  ObservationMetadata: {observationId: string};
+  ErrorBottomSheet: undefined;
+  BackgroundMapErrorBottomSheet: {title: string; description: string};
 };
 
 export type OnboardingParamsList = {

@@ -1,9 +1,9 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
-import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
+import {byResourceId, byText} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 
-describe('Edit Device Name Test', () => {
+describe('Project - Edit Device Name Test', () => {
   it('should navigate to project settings and edit the device name', async () => {
     const drawerIcon = await $('~Open Navigation Drawer');
     await drawerIcon.tap();
@@ -18,7 +18,6 @@ describe('Edit Device Name Test', () => {
 
     const editIcon = await $(byResourceId('edit-icon'));
     await editIcon.click();
-
     const editDeviceNameField = await $(
       byResourceId('PROJECT.edit-device-name'),
     );
@@ -29,7 +28,7 @@ describe('Edit Device Name Test', () => {
     const backButton = await $(byResourceId('MAIN.header-back-btn'));
     await backButton.click();
 
-    const discardAlert = await $(byTextMatches('DISCARD CHANGES'));
+    const discardAlert = await $(byText('DISCARD CHANGES'));
     await expect(discardAlert).toBeDisplayed();
 
     await discardAlert.click();
@@ -46,7 +45,7 @@ describe('Edit Device Name Test', () => {
 
     await expect(discardAlert).toBeDisplayed();
 
-    const continueEditing = await $(byTextMatches('CONTINUE EDITING'));
+    const continueEditing = await $(byText('CONTINUE EDITING'));
     await continueEditing.click();
 
     const editedDeviceName = await $(byText(output.names.editdevice));
@@ -59,6 +58,8 @@ describe('Edit Device Name Test', () => {
 
     await driver.back();
     await driver.back();
+    await $('~Close Navigation Drawer').click();
+
     await drawerIcon.tap();
     await projectSettingsItem.click();
     await deviceNameListItem.click();
@@ -67,5 +68,6 @@ describe('Edit Device Name Test', () => {
 
     await driver.back();
     await driver.back();
+    await $('~Close Navigation Drawer').click();
   });
 });

@@ -2,29 +2,30 @@ import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 
 import {IconButton} from '../../sharedComponents/IconButton';
-import {useTrackQuery} from '../../hooks/server/track';
-import {useDeviceInfo} from '../../hooks/server/deviceInfo';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {
+  useOwnDeviceInfo,
+  useSingleDocByDocId,
+  useDocumentCreatedBy,
+} from '@comapeo/core-react';
 import {EditIcon} from '../../sharedComponents/icons';
-import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {useActiveProject} from '../../contexts/ActiveProjectContext.tsx';
 
 export const TrackHeaderRight = ({trackId}: {trackId: string}) => {
-  const {data: track, isLoading: isTrackLoading} = useTrackQuery(trackId);
-  const {data: createdByDeviceId, isPending: isCreatedByDeviceIdPending} =
-    useOriginalVersionIdToDeviceId(track?.originalVersionId);
+  const {projectId} = useActiveProject();
+  const {data: track} = useSingleDocByDocId({
+    projectId,
+    docType: 'track',
+    docId: trackId,
+  });
 
-  const {data: deviceInfo, isPending: isDeviceInfoPending} = useDeviceInfo();
+  const {data: createdByDeviceId} = useDocumentCreatedBy({
+    projectId,
+    originalVersionId: track.originalVersionId,
+  });
+
+  const {data: deviceInfo} = useOwnDeviceInfo();
   const navigation = useNavigationFromRoot();
-
-  if (isDeviceInfoPending || isCreatedByDeviceIdPending || isTrackLoading) {
-    return (
-      <UIActivityIndicator
-        size={20}
-        style={{alignItems: 'flex-end', marginRight: 20}}
-      />
-    );
-  }
 
   const canEdit = createdByDeviceId === deviceInfo?.deviceId;
 

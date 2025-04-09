@@ -1,23 +1,21 @@
 import * as FileSystem from 'expo-file-system';
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {StyleSheet, View} from 'react-native';
-import {Text} from '../../sharedComponents/Text';
+import {useImportProjectConfig} from '@comapeo/core-react';
+import {Alert, StyleSheet, View} from 'react-native';
 import {useSelectFile} from '../../hooks/files';
-import {
-  useGetOwnRole,
-  useImportProjectConfig,
-  useProjectSettings,
-} from '../../hooks/server/projects';
-import {Loading} from '../../sharedComponents/Loading';
+import {useProjectSettings, useGetOwnRole} from '../../hooks/server/projects';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
-import {COMAPEO_BLUE, MEDIUM_GREY} from '../../lib/styles';
-import {Button} from '../../sharedComponents/Button';
+import {MEDIUM_GREY} from '../../lib/styles';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../sharedTypes';
 import {convertFileUriToPosixPath} from '../../lib/file-system';
 import noop from '../../lib/noop';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import * as Sentry from '@sentry/react-native';
+import {SecondaryButton} from '../../sharedComponents/Buttons';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   navTitle: {
@@ -40,19 +38,28 @@ const m = defineMessages({
     id: 'screens.Settings.Config.importConfig',
     defaultMessage: 'Import Config',
   },
+  configImportTitle: {
+    id: 'screens.Settings.Config.importSuccessTitle',
+    defaultMessage: 'Successfully imported config:',
+  },
+  okButton: {
+    id: 'screens.Settings.Config.okButton',
+    defaultMessage: 'OK',
+  },
 });
 
 export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
   const {formatMessage} = useIntl();
-  const {data, isPending} = useProjectSettings();
-  const deviceRole = useGetOwnRole();
+  const {data} = useProjectSettings();
+  const {projectId} = useActiveProject();
+  const {data: deviceRole} = useGetOwnRole();
 
   const selectFileMutation = useSelectFile();
-  const importProjectConfigMutation = useImportProjectConfig();
+  const importProjectConfigMutation = useImportProjectConfig({projectId});
 
   const isCoordinator =
-    deviceRole.data?.roleId === COORDINATOR_ROLE_ID ||
-    deviceRole.data?.roleId === CREATOR_ROLE_ID;
+    deviceRole.roleId === COORDINATOR_ROLE_ID ||
+    deviceRole.roleId === CREATOR_ROLE_ID;
 
   const configImportIsPending =
     selectFileMutation.status === 'pending' ||
@@ -85,65 +92,65 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
         onSuccess: selected => {
           if (!selected) return;
           importProjectConfigMutation.mutate(
-            convertFileUriToPosixPath(selected.uri),
+            {configPath: convertFileUriToPosixPath(selected.uri)},
             {
               onSettled: () => {
                 FileSystem.deleteAsync(selected.uri, {idempotent: true}).catch(
                   noop,
                 );
               },
+              onError: err => {
+                Sentry.captureException(err);
+                navigation.navigate('ErrorBottomSheet');
+              },
+              onSuccess: () => {
+                Alert.alert(formatMessage(m.configImportTitle), selected.name, [
+                  {text: formatMessage(m.okButton)},
+                ]);
+              },
             },
           );
         },
+        onError: err => {
+          Sentry.captureException(err);
+          navigation.navigate('ErrorBottomSheet');
+        },
       },
     );
-  }
-
-  if (!data || isPending) {
-    return <Loading />;
   }
 
   return (
     <View style={styles.container}>
       {data.name && (
         <>
-          <Text>{formatMessage(m.projectName)}</Text>
-          <Text style={{marginBottom: 20}}>{data.name}</Text>
+          <HeaderText variant="header5">
+            {formatMessage(m.projectName)}
+          </HeaderText>
+          <BodyText style={{marginBottom: 20}}>{data.name}</BodyText>
         </>
       )}
       {data.configMetadata && (
         <>
-          <Text>{formatMessage(m.name)}</Text>
-          <Text style={{color: MEDIUM_GREY}}>
+          <HeaderText variant="header5">{formatMessage(m.name)}</HeaderText>
+          <BodyText style={{color: MEDIUM_GREY}}>
             {formatMessage(m.created, {
               date: formatDate(data.configMetadata.buildDate),
               time: formatHours(data.configMetadata.buildDate),
             })}
-          </Text>
-          <Text>{data.configMetadata.name}</Text>
+          </BodyText>
+          <BodyText>{data.configMetadata.name}</BodyText>
         </>
       )}
-      {deviceRole.isPending || configImportIsPending ? (
+      {configImportIsPending ? (
         <UIActivityIndicator style={{marginTop: 20, flex: 0}} />
       ) : isCoordinator ? (
-        <Button
-          style={{marginTop: 20}}
-          fullWidth
-          variant="outlined"
-          onPress={selectAndImportConfigFile}>
-          <Text style={{color: COMAPEO_BLUE}}>
-            {formatMessage(m.importConfig)}
-          </Text>
-        </Button>
+        <SecondaryButton
+          style={{marginTop: 20, alignSelf: 'center'}}
+          fullSize={true}
+          onPress={selectAndImportConfigFile}
+          text={formatMessage(m.importConfig)}
+        />
       ) : null}
-      <ErrorBottomSheet
-        error={selectFileMutation.error || importProjectConfigMutation.error}
-        clearError={() => {
-          selectFileMutation.reset();
-          importProjectConfigMutation.reset();
-        }}
-        tryAgain={selectAndImportConfigFile}
-      />
     </View>
   );
 };

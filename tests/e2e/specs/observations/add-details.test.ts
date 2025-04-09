@@ -2,7 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches} from '../../utils/selectors';
 
-describe('Add Details Flow', () => {
+describe('Observations - Add Details Flow', () => {
   it('should create a new observation with Gathering Site category and open Details screen', async () => {
     const addObsBtn = await $('~Add Observation');
     await addObsBtn.click();
@@ -38,7 +38,6 @@ describe('Add Details Flow', () => {
     const detailsInp = await $(byResourceId('OBS.details-inp'));
     await detailsInp.click();
     await detailsInp.setValue('Some details');
-
     const doneBtn = await $(byTextMatches('Done'));
     await doneBtn.click();
   });
@@ -48,8 +47,16 @@ describe('Add Details Flow', () => {
 
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
-
-    const mainBack = await $(byResourceId('MAIN.header-back-btn'));
-    await mainBack.click();
+    await driver.pause(1000);
+    try {
+      const text = await driver.getAlertText();
+      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
+        await driver.execute('mobile: acceptAlert', {
+          buttonLabel: 'SAVE',
+        });
+      }
+    } catch (err) {
+      console.log('No RN Alert dialog was found.');
+    }
   });
 });

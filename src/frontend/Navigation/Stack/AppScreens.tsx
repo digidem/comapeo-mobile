@@ -42,7 +42,6 @@ import {
 } from '../../screens/LocationInfoScreen';
 import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/InviteDeclined';
 import {UnableToCancelInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/UnableToCancelInvite';
-import {SharedLocationContextProvider} from '../../contexts/SharedLocationContext';
 import {
   SyncScreen,
   createNavigationOptions as createSyncNavOptions,
@@ -56,7 +55,6 @@ import {SaveTrackScreen} from '../../screens/SaveTrack/SaveTrackScreen';
 import {ObservationFields} from '../../screens/ObservationFields';
 import {WHITE} from '../../lib/styles';
 import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSettings';
-import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {PhotoPreviewModal} from '../../screens/PhotoPreviewModal';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {
@@ -98,6 +96,9 @@ import {DeleteAudioBottomSheet} from '../../screens/Audio/DeleteAudioBottomSheet
 import {AudioSavedBottomSheet} from '../../screens/Audio/AudioSavedBottomSheet.tsx';
 import {AudioPlaybackSaved} from '../../screens/Audio/AudioPlaybackSaved.tsx';
 import {AudioCustomHeaderLeft} from '../../screens/Audio/AudioCustomHeaderLeft.tsx';
+import {ObservationMetadata} from '../../screens/ObservationMetadata.tsx';
+import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
+import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagement/ErrorBottomSheet.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -113,14 +114,7 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="Home"
         options={{headerShown: false}}
-        children={() => (
-          <SharedLocationContextProvider>
-            {/* This provider allows the bottoms sheet used by tracks to open up behind the drawers */}
-            <BottomSheetModalProvider>
-              <HomeTabs />
-            </BottomSheetModalProvider>
-          </SharedLocationContextProvider>
-        )}
+        component={HomeTabs}
       />
       <RootStack.Screen
         name="AuthScreen"
@@ -420,6 +414,11 @@ export const createDefaultScreenGroup = ({
         component={AudioPlaybackUnsaved}
         options={sharedAudioNavOptions}
       />
+      <RootStack.Screen
+        name="ObservationMetadata"
+        component={ObservationMetadata}
+        options={{headerTitle: intl(ObservationMetadata.navTitle)}}
+      />
     </RootStack.Group>
     <RootStack.Group
       screenOptions={{
@@ -447,6 +446,11 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="AudioSavedBottomSheet"
         component={AudioSavedBottomSheet}
+      />
+      <RootStack.Screen name="ErrorBottomSheet" component={ErrorBottomSheet} />
+      <RootStack.Screen
+        name="BackgroundMapErrorBottomSheet"
+        component={BackgroundMapErrorBottomSheet}
       />
     </RootStack.Group>
   </>

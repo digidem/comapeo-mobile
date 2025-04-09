@@ -2,7 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches} from '../../utils/selectors';
 
-describe('View Observations Flow', () => {
+describe('Observations - View Observations Flow', () => {
   it('should create observation with "Lake" category', async () => {
     const addObsBtn = await $('~Add Observation');
     await addObsBtn.click();
@@ -10,17 +10,27 @@ describe('View Observations Flow', () => {
     const lakeCategory = await $(byTextMatches('Lake'));
     await lakeCategory.click();
 
-    await driver.pause(1000);
-    const noGpsElems = await $$(byTextMatches('No GPS signal'));
-    if ((await noGpsElems.length) > 0 && (await noGpsElems[0].isDisplayed())) {
-      const textSave = await $(byTextMatches('SAVE'));
-      await textSave.click();
-    } else {
-      const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
-      await saveBtn.click();
+    try {
+      await $(byTextMatches('UTM')).waitForExist({
+        timeout: 10000,
+        reverse: false,
+      });
+    } catch (e) {
+      await expect($(byTextMatches('Searching'))).toBeDisplayed();
     }
-    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
+
+    const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
+    await saveBtn.click();
+    try {
+      const text = await driver.getAlertText();
+      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
+        await driver.execute('mobile: acceptAlert', {
+          buttonLabel: 'SAVE',
+        });
+      }
+    } catch (err) {
+      console.log('No RN Alert dialog was found.');
+    }
   });
 
   it('should create observation with "Clay" category', async () => {
@@ -29,20 +39,27 @@ describe('View Observations Flow', () => {
 
     const clayCategory = await $(byTextMatches('Clay'));
     await clayCategory.click();
-
-    await driver.pause(1000);
-
-    const noGpsElems = await $$(byTextMatches('No GPS signal'));
-    if ((await noGpsElems.length) > 0 && (await noGpsElems[0].isDisplayed())) {
-      const textSave = await $(byTextMatches('SAVE'));
-      await textSave.click();
-    } else {
-      const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
-      await saveBtn.click();
+    try {
+      await $(byTextMatches('UTM')).waitForExist({
+        timeout: 10000,
+        reverse: false,
+      });
+    } catch (e) {
+      await expect($(byTextMatches('Searching'))).toBeDisplayed();
     }
+    const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
+    await saveBtn.click();
 
-    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
+    try {
+      const text = await driver.getAlertText();
+      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
+        await driver.execute('mobile: acceptAlert', {
+          buttonLabel: 'SAVE',
+        });
+      }
+    } catch (err) {
+      console.log('No RN Alert dialog was found.');
+    }
   });
 
   it('should open Observations list and verify it is displayed', async () => {

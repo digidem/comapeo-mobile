@@ -1,10 +1,14 @@
 import * as React from 'react';
 import {useClientApi} from '@comapeo/core-react';
 import {type MapeoProjectApi} from '@comapeo/ipc';
+import {useCreateProject} from '@comapeo/core-react';
 
-import {usePersistedProjectId} from '../hooks/persistedState/usePersistedProjectId';
-import {useProject, useCreateProject} from '../hooks/server/projects';
+import {useSingleProject} from '@comapeo/core-react';
 import {Loading} from '../sharedComponents/Loading';
+import {
+  useActiveProjectIdActions,
+  useActiveProjectId,
+} from './ActiveProjectIdStoreContext';
 
 const ActiveProjectContext = React.createContext<
   {projectId: string; projectApi: MapeoProjectApi} | undefined
@@ -17,10 +21,9 @@ export const ActiveProjectProvider = ({
 }) => {
   const mapeoApi = useClientApi();
 
-  const activeProjectId = usePersistedProjectId(store => store.projectId);
-  const setActiveProjectId = usePersistedProjectId(store => store.setProjectId);
+  const activeProjectId = useActiveProjectId();
+  const {setActiveProjectId} = useActiveProjectIdActions();
 
-  const activeProjectQuery = useProject(activeProjectId);
   const {mutate: createProject} = useCreateProject();
 
   // The persisted active project ID may be missing in the following scenarios:
@@ -61,16 +64,38 @@ export const ActiveProjectProvider = ({
       });
   }, [activeProjectId, setActiveProjectId, createProject, mapeoApi]);
 
-  if (!activeProjectQuery.data) {
+  if (!activeProjectId) {
     return <Loading />;
   }
 
   return (
-    <ActiveProjectContext.Provider value={activeProjectQuery.data}>
+    <React.Suspense fallback={<Loading />}>
+      <ProjectApiLoader projectId={activeProjectId}>
+        {children}
+      </ProjectApiLoader>
+    </React.Suspense>
+  );
+};
+
+function ProjectApiLoader({
+  projectId,
+  children,
+}: {
+  projectId: string;
+  children: React.ReactNode;
+}) {
+  const {data: projectApi} = useSingleProject({projectId});
+  const dataValue = React.useMemo(
+    () => ({projectId, projectApi}),
+    [projectId, projectApi],
+  );
+
+  return (
+    <ActiveProjectContext.Provider value={dataValue}>
       {children}
     </ActiveProjectContext.Provider>
   );
-};
+}
 
 export function useActiveProject() {
   const projectContext = React.useContext(ActiveProjectContext);

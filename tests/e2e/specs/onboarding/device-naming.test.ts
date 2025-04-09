@@ -3,7 +3,7 @@ import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches, byText} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 
-describe('Device Naming Test', () => {
+describe('Onboarding - Device Naming Test', () => {
   it('should navigate to Device Naming screen after tapping "Next"', async () => {
     const nextButton = await $(byText('Next'));
     await nextButton.click();
@@ -20,8 +20,17 @@ describe('Device Naming Test', () => {
 
     const successMessage = await $(byTextMatches('Success'));
     await driver.waitUntil(async () => !(await successMessage.isExisting()), {
-      timeout: 5000,
+      timeout: 2000,
       timeoutMsg: 'The success message did not appear within timeout',
+    });
+
+    await deviceNameInput.setValue('    ');
+    await addNameButton.click();
+
+    await driver.waitUntil(async () => !(await successMessage.isExisting()), {
+      timeout: 2000,
+      timeoutMsg:
+        'Success message should not appear when input is only spaces.',
     });
 
     await deviceNameInput.setValue(output.names.device);

@@ -9,6 +9,7 @@ import pluginQuery from '@tanstack/eslint-plugin-query';
 import * as tsParser from '@typescript-eslint/parser';
 import pluginJest from 'eslint-plugin-jest';
 import pluginReactNative from 'eslint-plugin-react-native';
+import * as pluginReactHooks from 'eslint-plugin-react-hooks';
 import globals from 'globals';
 import pluginTs from 'typescript-eslint';
 
@@ -62,6 +63,7 @@ const frontendConfig = pluginTs.config(
       pluginQuery.configs['flat/recommended'],
       pluginReact.configs['recommended-typescript'],
       pluginReact.configs['disable-dom'],
+      pluginReactHooks.configs['recommended-latest'],
       // https://github.com/facebook/react-native/issues/42996#issuecomment-2275994981
       {
         name: 'eslint-plugin-react-native',
@@ -83,6 +85,10 @@ const frontendConfig = pluginTs.config(
       '@eslint-react/web-api/no-leaked-resize-observer': 'off',
       // There are some cases in app code when it's needed
       '@typescript-eslint/no-require-imports': 'off',
+      // We want to strictly adhere
+      'react-hooks/exhaustive-deps': 'error',
+      // We want to strictly adhere
+      'react-hooks/rules-of-hooks': 'error',
       // Doesn't work well with custom components that wrap Text component
       'react-native/no-raw-text': 'off',
       // We only work on Android for now

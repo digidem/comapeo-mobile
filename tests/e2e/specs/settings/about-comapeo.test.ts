@@ -2,7 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches} from '../../utils/selectors';
 
-describe('About CoMapeo Flow', () => {
+describe('Settings - About CoMapeo Flow', () => {
   it('should open About CoMapeo from the drawer', async () => {
     const drawerIcon = await $('~Open Navigation Drawer');
     await drawerIcon.click();
@@ -25,6 +25,7 @@ describe('About CoMapeo Flow', () => {
   it('should navigate back to map screen', async () => {
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
+    await $('~Close Navigation Drawer').click();
 
     await expect($(byResourceId('MAIN.mapbox-map-view'))).toBeDisplayed();
   });

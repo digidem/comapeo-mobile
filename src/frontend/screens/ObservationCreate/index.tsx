@@ -5,19 +5,19 @@ import {Editor} from '../../sharedComponents/Editor';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {useCreateObservation} from '../../hooks/server/observations';
-import {CommonActions} from '@react-navigation/native';
-import {useCreateBlobMutation} from '../../hooks/server/media';
-import {usePersistedTrack} from '../../hooks/persistedState/usePersistedTrack';
+import {useCreateDocument} from '@comapeo/core-react';
 import {SaveButton} from '../../sharedComponents/SaveButton';
 import {useMostAccurateLocationForObservation} from './useMostAccurateLocationForObservation';
-import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';
 import {ActionsRow} from '../../sharedComponents/ActionsRow';
 import {Alert, type AlertButton} from 'react-native';
 import {Observation} from '@comapeo/schema';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {useCreateAttachment} from '../../hooks/server/media';
+import * as Sentry from '@sentry/react-native';
 
+import {useTrackActions, useTrackState} from '../../contexts/TrackStoreContext';
 import {
   isProcessedDraftPhoto,
   isUnsavedAudio,
@@ -89,20 +89,25 @@ export const ObservationCreate = ({
   navigation,
 }: NativeRootNavigationProps<'ObservationCreate'>) => {
   const {formatMessage} = useIntl();
+  const {projectId} = useActiveProject();
   const {usePreset} = useDraftObservation();
   const preset = usePreset();
   const value = usePersistedDraftObservation(store => store.value);
   const attachments = usePersistedDraftObservation(store => store.attachments);
   const {updateTags, clearDraft} = useDraftObservation();
-  const createObservationMutation = useCreateObservation();
-  const createBlobMutation = useCreateBlobMutation();
-  const isTracking = usePersistedTrack(state => state.isTracking);
-  const addNewTrackLocations = usePersistedTrack(
-    state => state.addNewLocations,
-  );
-  const addNewTrackObservation = usePersistedTrack(
-    state => state.addNewObservation,
-  );
+  const {mutateAsync: createAttachmentAsync, status: observationStatus} =
+    useCreateAttachment();
+  const {mutateAsync: createObservationAsync, status: attachmentStatus} =
+    useCreateDocument({
+      docType: 'observation',
+      projectId,
+    });
+
+  const isTracking = useTrackState(state => state.isTracking);
+  const {
+    addNewLocations: addNewTrackLocations,
+    addNewObservation: addNewTrackObservation,
+  } = useTrackActions();
   const liveLocation = useMostAccurateLocationForObservation();
 
   const coordinateInfo = value?.metadata?.manualLocation
@@ -144,73 +149,17 @@ export const ObservationCreate = ({
     [addNewTrackLocations, addNewTrackObservation, value],
   );
 
-  const createObservation = React.useCallback(() => {
+  const createObservation = React.useCallback(async () => {
     if (!value) throw new Error('no observation saved in persisted state ');
 
     const unsavedPhotos = attachments.filter(isProcessedDraftPhoto);
-
     const unsavedAudioRecordings = attachments.filter(isUnsavedAudio);
 
     if (unsavedPhotos.length === 0 && unsavedAudioRecordings.length === 0) {
-      createObservationMutation.mutate(
+      createObservationAsync(
         {
           value: {
             ...value,
-            presetRef: preset
-              ? {docId: preset.docId, versionId: preset.versionId}
-              : undefined,
-          },
-        },
-        {
-          onSuccess: data => {
-            clearDraft();
-            navigation.dispatch(
-              CommonActions.reset({
-                index: 1,
-                routes: [
-                  {name: 'Home', params: {screen: 'Map'}},
-                  {name: 'Home', params: {screen: 'ObservationsList'}},
-                ],
-              }),
-            );
-            if (isTracking) {
-              addObservationRefToTrack(data);
-            }
-          },
-        },
-      );
-
-      return;
-    }
-
-    // Currently, we abort the process of saving an observation if saving any number of photos fails to save,
-    // but this approach is prone to creating "orphaned" blobs.
-    // The alternative is to save the observation but excluding photos that failed to save, which is prone to an odd UX of an observation "missing" some attachments.
-    // This could potentially be alleviated by a more granular and informative UI about the photo-saving state, but currently there is nothing in place.
-    // Basically, which is worse: orphaned attachments or saving observations that seem to be missing attachments?
-
-    const attachmentPromises = [
-      ...unsavedPhotos,
-      ...unsavedAudioRecordings,
-    ].map(file => {
-      return createBlobMutation.mutateAsync(file);
-    });
-
-    Promise.all(attachmentPromises).then(results => {
-      const newAttachments = results.map(
-        ({driveId: driveDiscoveryId, type, name, hash}) => ({
-          driveDiscoveryId,
-          type,
-          name,
-          hash,
-        }),
-      );
-
-      createObservationMutation.mutate(
-        {
-          value: {
-            ...value,
-            attachments: [...value.attachments, ...newAttachments],
             presetRef: preset
               ? {docId: preset.docId, versionId: preset.versionId}
               : undefined,
@@ -224,14 +173,57 @@ export const ObservationCreate = ({
               addObservationRefToTrack(data);
             }
           },
+          onError: err => {
+            Sentry.captureException(err);
+            navigation.navigate('ErrorBottomSheet');
+          },
         },
       );
-    });
+
+      return;
+    }
+
+    // Currently, we abort the process of saving an observation if saving any number of photos fails to save,
+    // but this approach is prone to creating "orphaned" blobs.
+    // The alternative is to save the observation but excluding photos that failed to save, which is prone to an odd UX of an observation "missing" some attachments.
+    // This could potentially be alleviated by a more granular and informative UI about the photo-saving state, but currently there is nothing in place.
+    // Basically, which is worse: orphaned attachments or saving observations that seem to be missing attachments?
+
+    const newAttachments = await Promise.all(
+      [...unsavedPhotos, ...unsavedAudioRecordings].map(file =>
+        createAttachmentAsync(file),
+      ),
+    );
+
+    createObservationAsync(
+      {
+        value: {
+          ...value,
+          attachments: [...value.attachments, ...newAttachments],
+          presetRef: preset
+            ? {docId: preset.docId, versionId: preset.versionId}
+            : undefined,
+        },
+      },
+      {
+        onSuccess: data => {
+          clearDraft();
+          navigation.popTo('Home', {screen: 'Map'});
+          if (isTracking) {
+            addObservationRefToTrack(data);
+          }
+        },
+        onError: err => {
+          Sentry.captureException(err);
+          navigation.navigate('ErrorBottomSheet');
+        },
+      },
+    );
   }, [
     addObservationRefToTrack,
     clearDraft,
-    createBlobMutation,
-    createObservationMutation,
+    createAttachmentAsync,
+    createObservationAsync,
     isTracking,
     navigation,
     attachments,
@@ -301,47 +293,37 @@ export const ObservationCreate = ({
         <SaveButton
           onPress={checkAccuracyAndLocation}
           isLoading={
-            createObservationMutation.isPending || createBlobMutation.isPending
+            observationStatus === 'pending' || attachmentStatus === 'pending'
           }
         />
       ),
     });
   }, [
     navigation,
-    createBlobMutation.isPending,
-    createObservationMutation.isPending,
+    observationStatus,
     checkAccuracyAndLocation,
+    attachmentStatus,
   ]);
 
   return (
-    <>
-      <Editor
-        presetName={presetName}
-        PresetIcon={
-          <PresetCircleIcon
-            size="medium"
-            iconId={preset?.iconRef?.docId}
-            testID={`OBS.${preset?.name}-icon`}
-          />
-        }
-        onPressPreset={() => navigation.navigate('PresetChooser')}
-        notes={typeof notes !== 'string' ? '' : notes}
-        updateNotes={newVal => {
-          updateTags('notes', newVal);
-        }}
-        attachments={attachments}
-        location={coordinateInfo}
-        actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
-      />
-      <ErrorBottomSheet
-        error={createObservationMutation.error || createBlobMutation.error}
-        clearError={() => {
-          createObservationMutation.reset();
-          createBlobMutation.reset();
-        }}
-        tryAgain={createObservation}
-      />
-    </>
+    <Editor
+      presetName={presetName}
+      PresetIcon={
+        <PresetCircleIcon
+          size="medium"
+          iconId={preset?.iconRef?.docId}
+          testID={`OBS.${preset?.name}-icon`}
+        />
+      }
+      onPressPreset={() => navigation.navigate('PresetChooser')}
+      notes={typeof notes !== 'string' ? '' : notes}
+      updateNotes={newVal => {
+        updateTags('notes', newVal);
+      }}
+      attachments={attachments}
+      location={coordinateInfo}
+      actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
+    />
   );
 };
 

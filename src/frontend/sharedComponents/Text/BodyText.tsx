@@ -5,7 +5,7 @@ import {BLACK} from '../../lib/styles';
 type Variant = 'large' | 'regular' | 'smallMeta' | 'tinyMeta';
 
 interface BodyProps extends Omit<TextProps, 'style'> {
-  style?: Omit<TextStyle, 'fontSize' | 'fontFamily' | 'fontWeight'>;
+  style?: Omit<TextStyle, 'fontSize' | 'fontFamily'>;
   variant?: Variant;
 }
 

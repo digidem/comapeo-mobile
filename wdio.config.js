@@ -28,15 +28,15 @@ const config = {
   capabilities: [
     {
       platformName: 'android',
-      'appium:platformVersion': '12.0',
-      'appium:deviceName': 'Samsung Galaxy S22 Ultra',
+      'appium:platformVersion': '13.0',
+      'appium:deviceName': 'Google Pixel 7',
       'appium:automationName': 'UIAutomator2',
       'appium:app': process.env.BROWSERSTACK_APP_URL,
       'appium:autoGrantPermissions': true,
       'bstack:options': {
         projectName: 'CoMapeo',
         buildName: 'CoMapeo Android Build',
-        sessionName: 'Run Android e2e tests',
+        sessionName: 'Pixel 7 - Android 13',
         appiumVersion: '2.12.1',
         debug: true,
         networkLogs: true,

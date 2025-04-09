@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {IconButton} from './IconButton';
@@ -8,9 +8,10 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {DrawerMenuIcon} from './icons/DrawerMenuIcon';
 import SyncIconCircle from '../images/Sync.svg';
 
-export const HomeHeader: FC<
-  BottomTabHeaderProps & {openDrawer: () => void}
-> = ({navigation, openDrawer}) => {
+export const HomeHeader = ({
+  navigation,
+  openDrawer,
+}: BottomTabHeaderProps & {openDrawer: () => void}) => {
   const insets = useSafeAreaInsets();
 
   return (

@@ -1,9 +1,11 @@
 import {StyleSheet, View} from 'react-native';
-import {Text} from '../../../sharedComponents/Text';
+import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {defineMessages, useIntl} from 'react-intl';
 import {Button} from '../../../sharedComponents/Button';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {AppStackParamsList} from '../../../sharedTypes/navigation';
+import {DARK_GREY, NEW_DARK_GREY, BLUE_GREY} from '../../../lib/styles';
 
 const m = defineMessages({
   howTo: {
@@ -17,7 +19,7 @@ const m = defineMessages({
   },
   goBack: {
     id: 'screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack',
-    defaultMessage: 'Go back',
+    defaultMessage: 'Go Back',
   },
 });
 
@@ -27,34 +29,75 @@ export const JoinExistingProject = ({
   const {formatMessage} = useIntl();
   return (
     <View style={styles.container}>
-      <View>
-        <Text style={[styles.text, {fontSize: 20}]}>
+      <View style={styles.topSection}>
+        <View style={styles.helpIconContainer}>
+          <HeaderText variant="header1" style={styles.helpIconText}>
+            ?
+          </HeaderText>
+        </View>
+
+        <HeaderText variant="header1" style={styles.heading}>
           {formatMessage(m.howTo)}
-        </Text>
-        <Text style={[styles.text, {marginTop: 20}]}>
+        </HeaderText>
+
+        <BodyText style={styles.instructions}>
           {formatMessage(m.instructions)}
-        </Text>
+        </BodyText>
       </View>
-      <Button
-        fullWidth
-        variant="outlined"
-        onPress={() => {
-          navigation.goBack();
-        }}>
-        {formatMessage(m.goBack)}
-      </Button>
+
+      <View style={styles.footer}>
+        <Button
+          fullWidth
+          variant="outlined"
+          style={{
+            borderColor: BLUE_GREY,
+          }}
+          color="ComapeoBlue"
+          onPress={() => {
+            navigation.goBack();
+          }}>
+          {formatMessage(m.goBack)}
+        </Button>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
-    paddingTop: 80,
-    justifyContent: 'space-between',
-    height: '100%',
+    flex: 1,
+    paddingHorizontal: 40,
   },
-  text: {
+  topSection: {
+    paddingTop: 80,
+    alignItems: 'center',
+    gap: 20,
+  },
+  helpIconContainer: {
+    height: 80,
+    width: 80,
+    borderRadius: 40,
+    borderWidth: 1,
+    borderColor: NEW_DARK_GREY,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  helpIconText: {
+    color: NEW_DARK_GREY,
+  },
+  heading: {
     textAlign: 'center',
+    color: DARK_GREY,
+  },
+  instructions: {
+    textAlign: 'center',
+    color: DARK_GREY,
+    lineHeight: 24,
+    paddingTop: 20,
+  },
+  footer: {
+    marginTop: 'auto',
+    paddingBottom: 20,
+    width: '100%',
   },
 });

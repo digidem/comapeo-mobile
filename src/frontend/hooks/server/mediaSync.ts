@@ -1,12 +1,7 @@
-import {useClientApi} from '@comapeo/core-react';
-import {
-  useMutation,
-  useQueryClient,
-  useSuspenseQuery,
-} from '@tanstack/react-query';
+import {useMutation} from '@tanstack/react-query';
 import {MediaSyncSetting} from '../../sharedTypes';
+import {useIsArchiveDevice, useSetIsArchiveDevice} from '@comapeo/core-react';
 
-export const MEDIA_SYNC_SETTING_KEY = 'media_sync_setting';
 export const UPDATE_MEDIA_SETTING = 'update_media_setting';
 
 export function convertMediaSyncSetting(isArchive: boolean): MediaSyncSetting {
@@ -18,31 +13,19 @@ export function isArchiveDevice(value: MediaSyncSetting): boolean {
 }
 
 export function useGetMediaSyncSetting() {
-  const api = useClientApi();
-
-  return useSuspenseQuery({
-    queryKey: [MEDIA_SYNC_SETTING_KEY],
-    queryFn: async () => {
-      const isArchive = await api.getIsArchiveDevice();
-      return convertMediaSyncSetting(isArchive);
-    },
-  });
+  const {data: isArchive} = useIsArchiveDevice();
+  return convertMediaSyncSetting(isArchive);
 }
 
 export function useSetMediaSyncSetting() {
-  const api = useClientApi();
-  const queryClient = useQueryClient();
+  const {mutateAsync: setIsArchiveAsync} = useSetIsArchiveDevice();
 
-  return useMutation({
+  const {mutate, status, reset} = useMutation({
     mutationKey: [UPDATE_MEDIA_SETTING],
     mutationFn: async (newSetting: MediaSyncSetting) => {
-      const isArchive = isArchiveDevice(newSetting);
-      return api.setIsArchiveDevice(isArchive);
-    },
-    onSettled: async () => {
-      return await queryClient.invalidateQueries({
-        queryKey: [MEDIA_SYNC_SETTING_KEY],
-      });
+      await setIsArchiveAsync({isArchiveDevice: isArchiveDevice(newSetting)});
     },
   });
+
+  return {mutate, status, reset};
 }

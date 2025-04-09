@@ -99,6 +99,7 @@ import {AudioCustomHeaderLeft} from '../../screens/Audio/AudioCustomHeaderLeft.t
 import {InviteReceived} from '../../screens/Invites/InviteReceived.tsx';
 import {InviteSuccessfullyAccepted} from '../../screens/Invites/InviteSuccessfullyAccepted.tsx';
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled.tsx';
+import {ObservationMetadata} from '../../screens/ObservationMetadata.tsx';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagement/ErrorBottomSheet.tsx';
 import {ExistingProjectWarning} from '../../screens/Invites/ExistingProjectWarning.tsx';
@@ -417,6 +418,11 @@ export const createDefaultScreenGroup = ({
         name="AudioPlaybackUnsavedPreview"
         component={AudioPlaybackUnsaved}
         options={sharedAudioNavOptions}
+      />
+      <RootStack.Screen
+        name="ObservationMetadata"
+        component={ObservationMetadata}
+        options={{headerTitle: intl(ObservationMetadata.navTitle)}}
       />
     </RootStack.Group>
     <RootStack.Group

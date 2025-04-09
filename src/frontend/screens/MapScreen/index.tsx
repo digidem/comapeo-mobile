@@ -161,14 +161,14 @@ export const MapScreen = ({
           </>
         )}
       </Mapbox.MapView>
-      <ScaleBar
-        zoom={zoom || 10}
-        latitude={coords ? coords[1] : undefined}
-        bottom={130}
-      />
       <View style={styles.gpsPillContainer}>
         <GPSPill onPress={() => navigation.navigate('GpsModal')} />
       </View>
+      <ScaleBar
+        zoom={zoom || 10}
+        latitude={coords ? coords[1] : undefined}
+        bottom={20}
+      />
       {coords && locationServicesEnabled && (
         <View style={styles.locationButton}>
           <IconButton onPress={handleLocationPress}>
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
   },
   gpsPillContainer: {
     position: 'absolute',
-    left: 10,
-    bottom: 20,
+    left: 12,
+    bottom: 60,
   },
 });

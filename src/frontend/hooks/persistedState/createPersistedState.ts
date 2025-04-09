@@ -1,4 +1,4 @@
-import {StateCreator, create, createStore} from 'zustand';
+import {StateCreator, create} from 'zustand';
 import {
   StateStorage,
   persist,
@@ -9,14 +9,8 @@ import {MMKV} from 'react-native-mmkv';
 
 export const storage = new MMKV();
 
-type PersistedStoreKey =
-  | 'MapeoLocale'
-  | '@MapeoDraft'
-  | 'MapeoTrack'
-  | 'Passcode'
-  | 'ActiveProjectId'
-  | 'Settings'
-  | 'MetricDiagnosticsPermission';
+type PersistedStoreKey = '@MapeoDraft';
+
 export const MMKVZustandStorage: StateStorage = {
   setItem: (name, value) => {
     return storage.set(name, value);
@@ -34,23 +28,14 @@ type MigrationOpt<T> =
   | {version: number; migrateFn: PersistOptions<T, T>['migrate']}
   | {version: number};
 
+/**
+ * @deprecated Persisted Zustand state should follow the conventions used in `contexts/*StoreContext.tsx`
+ */
 export function createPersistedState<T>(
   ...args: Parameters<typeof createPersistMiddleware<T>>
 ) {
   const store = create<T>()(createPersistMiddleware(...args));
 
-  store.setState(state => ({
-    ...state,
-    ...args[0],
-  }));
-
-  return store;
-}
-
-export function createPersistedStore<T>(
-  ...args: Parameters<typeof createPersistMiddleware<T>>
-) {
-  const store = createStore<T>()(createPersistMiddleware(...args));
   store.setState(state => ({
     ...state,
     ...args[0],

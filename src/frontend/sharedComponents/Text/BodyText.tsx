@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Text as RNText, TextProps, TextStyle} from 'react-native';
-import {BLACK} from '../../lib/styles';
+import {DARK_GREY} from '../../lib/styles';
 
 type Variant = 'large' | 'regular' | 'smallMeta' | 'tinyMeta';
 
@@ -31,7 +31,7 @@ export const BodyText = ({
   return (
     <RNText
       style={[
-        {color: BLACK, fontSize: fontSizeMap[variant || 'regular']},
+        {color: DARK_GREY, fontSize: fontSizeMap[variant || 'regular']},
         style,
       ]}
       {...otherTextProps}>

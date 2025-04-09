@@ -5,7 +5,7 @@ import {MapScreen} from '../../screens/MapScreen';
 import {ObservationsList} from '../../screens/ObservationsList';
 import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {HomeTabsParamsList} from '../../sharedTypes/navigation';
-import {DrawerContent} from '../../sharedComponents/DrawerContent';
+import {MenuContent} from '../../sharedComponents/MenuContent';
 import {useCloseDrawerOnBackPress} from './useCloseDrawerOnBackPress';
 import {StyleSheet, View} from 'react-native';
 import {TabBar} from './TabBar';
@@ -32,7 +32,7 @@ export const HomeTabs = () => {
     <>
       {drawerOpen && (
         <View style={styles.backdrop}>
-          <DrawerContent closeDrawer={closeDrawer} />
+          <MenuContent closeMenu={closeDrawer} />
         </View>
       )}
       <Tab.Navigator

@@ -53,8 +53,6 @@ describe('Passcode - Obscure Passcode Mode', () => {
       ),
     );
     await expect(emptyStateText).toBeDisplayed();
-    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
   });
   it('should not show security after entering obscure passcode', async () => {
     const drawerIcon = await $('~Open Navigation Drawer');
@@ -76,7 +74,5 @@ describe('Passcode - Obscure Passcode Mode', () => {
     await obsListTab.click();
     await expect($(byTextMatches('Lake'))).toBeDisplayed();
     await expect($(byText('Animal'))).not.toBeDisplayed();
-    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
   });
 });

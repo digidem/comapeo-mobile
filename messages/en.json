@@ -1672,12 +1672,6 @@
   "sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Something Went Wrong"
   },
-  "sharedComponents.GpsPill.noGps": {
-    "message": "No GPS"
-  },
-  "sharedComponents.GpsPill.searching": {
-    "message": "Searching…"
-  },
   "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.canceled": {
     "message": "Invite Canceled"
   },

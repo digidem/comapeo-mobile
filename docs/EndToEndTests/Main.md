@@ -34,20 +34,18 @@ These tests deal with all issues related to the main screens of the app.
 
 ## GPS
 
-This tests the GPS pill that is on the main map screen and the main camera screen.
+This tests the GPS pill that is on the main map screen.
 
 ### Test Objectives
 
 - On home **Map** screen, tests that GPS details button shows current device status
-- On home **Camera** screen, tests that GPS details button shows current device status
 - Tests that **GPS details** button from home **Map** screen navigates to **GPS details** screen
-- Tests that **GPS details** button from **Home** camera screen navigates to **GPS details** screen
 - **GPS details** screen shows detailed navigation data of device
-- Tests that the **Back** button returns to last home screen (**Map** or **Camera**)
+- Tests that the **Back** button returns to Map screen
 
 ### Special Considerations
 
-- This test sets the location to Ecuador before the test
+- This test does not check color of dot or whether it is searching or accurate. Just that it shows up.
 
 ## Map
 
@@ -55,11 +53,13 @@ This tests that some of the buttons appear on the map and that an observation ca
 
 ### Test Objectives
 
-- The sync button, drawer icon, and plus button appear where they should
+- The drawer icon and plus button appear where they should
+- When a project is named, check that the header shows the project name.
 - The **Create observation** button goes to categories screen from **Home** map screen
 
 ### Special Considerations
 
+- The location accuracy or presence of GPS is tested separately in the “GPS Pill” tests.
 - A lot of the functionality for the map has to be tested by QA, and is listed in 'docs/EndToEndTests/E2ENoGos.md'
 
 ## On App Restart Navigation

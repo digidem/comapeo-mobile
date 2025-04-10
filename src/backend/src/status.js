@@ -1,25 +1,23 @@
 import { debug } from 'debug'
 import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
-/** @type {import('../types/rn-bridge.js')} */
 const rnBridge = require('rn-bridge')
 
 const log = debug('mapeo:status')
 
 /**
- * @typedef {'STARTING' | 'STARTED' | 'ERROR'} Status
- */
-/**
- * @typedef {{ value: Status, error?: string, context?: string }} StatusMessage
+ * @typedef {{ status: 'starting' } | { status: 'ready' } | { status: 'error', error: Error, context: string }} State
+ *
+ * @typedef {{ status: 'starting' } | { status: 'ready' } | { status: 'error', error: string, context: string }} StatusMessage
  */
 
 export class ServerStatus {
-  /** @type {Status} */
-  #state = 'STARTING'
+  /** @type {State} */
+  #state = { status: 'starting' }
 
   constructor() {
     rnBridge.channel.on('get-server-status', async () => {
-      log('status request -> ' + this.state)
+      log('status request -> ' + this.#state)
       this.#postState()
     })
     // Sometimes rnBridge.channel.post doesn't work if the app is in the
@@ -31,50 +29,41 @@ export class ServerStatus {
     })
   }
 
-  get state() {
-    return this.#state
-  }
   /**
-   *
-   * @param {Status} nextState
-   * @param {Object} [opts]
-   * @param {Error} [opts.error]
-   * @param {string} [opts.context]
-   *
-   * @returns
+   * @param {State} nextState
    */
-  setState(nextState, { error, context } = {}) {
-    if (nextState === this.state) return
+  setState(nextState) {
+    if (nextState.status === this.#state.status) return
     log('state changed', nextState)
 
     // Once we have an uncaught error, don't try to pretend it's gone away
-    if (this.state === 'ERROR') return
+    if (this.#state.status === 'error') return
 
-    if (nextState === 'ERROR') {
-      error = error || new Error('Unknown server error')
-      log(context, error.message)
-      // TODO: Log to Bugsnag
+    if (nextState.status === 'error') {
+      log(nextState.context, nextState.error)
     }
 
     this.#state = nextState
 
-    rnBridge.channel.post(
-      'server:status',
-      /** @type {StatusMessage} */
-      {
-        value: nextState,
-        error: error && error.message,
-        context,
-      },
-    )
+    this.#postState()
   }
 
   #postState() {
-    log('posting state --> ' + this.state)
-    rnBridge.channel.post(
-      'server:status',
-      /** @type {StatusMessage} */
-      { value: this.state },
-    )
+    log('posting state --> ' + this.#state)
+
+    /** @type {StatusMessage} */
+    let message
+
+    if (this.#state.status === 'error') {
+      message = {
+        status: this.#state.status,
+        error: this.#state.error.message,
+        context: this.#state.context,
+      }
+    } else {
+      message = this.#state
+    }
+
+    rnBridge.channel.post('server:status', message)
   }
 }

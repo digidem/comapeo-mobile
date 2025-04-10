@@ -14,7 +14,6 @@ import {
 } from './LocalDiscoveryContext';
 import {type MapeoClientApi} from '@comapeo/ipc';
 import {ServerLoading} from '../ServerLoading';
-import {MessagePortLike} from '../lib/MessagePortLike';
 import {IntlProvider} from './IntlContext';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {DraftObservationProvider} from './DraftObservationContext';
@@ -38,10 +37,13 @@ import {
   MetricsDiagnosticsStoreProvider,
 } from './MetricsDiagnosticsStoreContext';
 import {LocaleStore, LocaleStoreProvider} from './LocaleStoreContext';
+import {
+  ServerStateStore,
+  ServerStateStoreProvider,
+} from './ServerStateStoreContext';
 
 type AppProvidersProps = {
   children: React.ReactNode;
-  messagePort: MessagePortLike;
   localDiscoveryController: ReturnType<typeof createLocalDiscoveryController>;
   mapeoApi: MapeoClientApi;
   persistedDrafObservationStore: DraftObservationStore;
@@ -52,13 +54,13 @@ type AppProvidersProps = {
   activeProjectIdStore: ActiveProjectIdStore;
   metricsDiagnosticsStore: MetricsDiagnosticsStore;
   localeStore: LocaleStore;
+  serverStateStore: ServerStateStore;
 };
 
 const queryClient = new QueryClient();
 
 export const AppProviders = ({
   children,
-  messagePort,
   localDiscoveryController,
   mapeoApi,
   persistedDrafObservationStore,
@@ -69,54 +71,57 @@ export const AppProviders = ({
   activeProjectIdStore,
   metricsDiagnosticsStore,
   localeStore,
+  serverStateStore,
 }: AppProvidersProps) => {
   return (
-    <LocaleStoreProvider value={localeStore}>
-      <MetricsDiagnosticsStoreProvider value={metricsDiagnosticsStore}>
-        <ActiveProjectIdStoreProvider value={activeProjectIdStore}>
-          <SecurityStoreProvider value={securityStore}>
-            <CoordinateFormatStoreProvider value={coordinateFormatStore}>
-              <ManualEntryCoordinateFormatStoreProvider
-                value={manualEntryCoordinateFormatStore}>
-                <TrackStoreProvider value={trackStore}>
-                  <IntlProvider>
-                    <QueryClientProvider client={queryClient}>
-                      <SafeAreaProvider>
-                        <GestureHandlerRootView style={styles.flex}>
-                          <TrackTimerContextProvider>
-                            <ServerLoading messagePort={messagePort}>
-                              <LocalDiscoveryProvider
-                                value={localDiscoveryController}>
-                                <ClientApiProvider clientApi={mapeoApi}>
-                                  <ActiveProjectProvider>
-                                    <BottomSheetModalProvider>
-                                      <PhotoPromiseProvider>
-                                        <DraftObservationProvider
-                                          draftObservationStore={
-                                            persistedDrafObservationStore
-                                          }>
-                                          <AuthProvider>
-                                            {children}
-                                          </AuthProvider>
-                                        </DraftObservationProvider>
-                                      </PhotoPromiseProvider>
-                                    </BottomSheetModalProvider>
-                                  </ActiveProjectProvider>
-                                </ClientApiProvider>
-                              </LocalDiscoveryProvider>
-                            </ServerLoading>
-                          </TrackTimerContextProvider>
-                        </GestureHandlerRootView>
-                      </SafeAreaProvider>
-                    </QueryClientProvider>
-                  </IntlProvider>
-                </TrackStoreProvider>
-              </ManualEntryCoordinateFormatStoreProvider>
-            </CoordinateFormatStoreProvider>
-          </SecurityStoreProvider>
-        </ActiveProjectIdStoreProvider>
-      </MetricsDiagnosticsStoreProvider>
-    </LocaleStoreProvider>
+    <ServerStateStoreProvider value={serverStateStore}>
+      <LocaleStoreProvider value={localeStore}>
+        <MetricsDiagnosticsStoreProvider value={metricsDiagnosticsStore}>
+          <ActiveProjectIdStoreProvider value={activeProjectIdStore}>
+            <SecurityStoreProvider value={securityStore}>
+              <CoordinateFormatStoreProvider value={coordinateFormatStore}>
+                <ManualEntryCoordinateFormatStoreProvider
+                  value={manualEntryCoordinateFormatStore}>
+                  <TrackStoreProvider value={trackStore}>
+                    <IntlProvider>
+                      <QueryClientProvider client={queryClient}>
+                        <SafeAreaProvider>
+                          <GestureHandlerRootView style={styles.flex}>
+                            <TrackTimerContextProvider>
+                              <ServerLoading>
+                                <LocalDiscoveryProvider
+                                  value={localDiscoveryController}>
+                                  <ClientApiProvider clientApi={mapeoApi}>
+                                    <ActiveProjectProvider>
+                                      <BottomSheetModalProvider>
+                                        <PhotoPromiseProvider>
+                                          <DraftObservationProvider
+                                            draftObservationStore={
+                                              persistedDrafObservationStore
+                                            }>
+                                            <AuthProvider>
+                                              {children}
+                                            </AuthProvider>
+                                          </DraftObservationProvider>
+                                        </PhotoPromiseProvider>
+                                      </BottomSheetModalProvider>
+                                    </ActiveProjectProvider>
+                                  </ClientApiProvider>
+                                </LocalDiscoveryProvider>
+                              </ServerLoading>
+                            </TrackTimerContextProvider>
+                          </GestureHandlerRootView>
+                        </SafeAreaProvider>
+                      </QueryClientProvider>
+                    </IntlProvider>
+                  </TrackStoreProvider>
+                </ManualEntryCoordinateFormatStoreProvider>
+              </CoordinateFormatStoreProvider>
+            </SecurityStoreProvider>
+          </ActiveProjectIdStoreProvider>
+        </MetricsDiagnosticsStoreProvider>
+      </LocaleStoreProvider>
+    </ServerStateStoreProvider>
   );
 };
 

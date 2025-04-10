@@ -31,7 +31,11 @@ const serverStatus = new ServerStatus()
 
 process.on('uncaughtException', (error) => {
   log('uncaught exception')
-  serverStatus.setState('ERROR', { error, context: 'uncaughtException' })
+  serverStatus.setState({
+    status: 'error',
+    error,
+    context: 'uncaughtException',
+  })
 })
 process.on('unhandledRejection', (reason) => {
   log('unhandled rejection')
@@ -41,12 +45,16 @@ process.on('unhandledRejection', (reason) => {
   } else {
     error = new Error(typeof reason === 'string' ? reason : 'unknown rejection')
   }
-  serverStatus.setState('ERROR', { error, context: 'unhandledRejection' })
+  serverStatus.setState({
+    status: 'error',
+    error,
+    context: 'unhandledRejection',
+  })
 })
 process.on('exit', (code) => {
   log(`App process exited with code ${code}`)
   const error = new Error(`App process exited with code ${code}`)
-  serverStatus.setState('ERROR', { error, context: 'processExit' })
+  serverStatus.setState({ status: 'error', error, context: 'processExit' })
 })
 
 /**
@@ -106,7 +114,7 @@ export async function init({
   const messagePort = new MessagePortLike()
   createMapeoServer(manager, messagePort)
   messagePort.start()
-  serverStatus.setState('STARTED')
+  serverStatus.setState({ status: 'ready' })
 
   log('App started!')
 }

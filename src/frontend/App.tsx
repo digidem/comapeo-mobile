@@ -27,6 +27,7 @@ import {createActiveProjectIdStore} from './contexts/ActiveProjectIdStoreContext
 import {createMetricsDiagnosticsStore} from './contexts/MetricsDiagnosticsStoreContext';
 import {createLocaleStore} from './contexts/LocaleStoreContext';
 import {getAppLanguageTag} from './lib/intl';
+import {createServerStateStore} from './contexts/ServerStateStoreContext';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -145,6 +146,14 @@ TaskManager.defineTask(
   },
 );
 
+const serverStateStore = createServerStateStore();
+
+serverStateStore.subscribe((current, previous) => {
+  if (previous.status === 'starting' && current.status === 'ready') {
+    messagePort.start();
+  }
+});
+
 const App = () => {
   const [permissionsAsked, setPermissionsAsked] = React.useState(false);
   React.useEffect(() => {
@@ -159,7 +168,6 @@ const App = () => {
 
   return (
     <AppProviders
-      messagePort={messagePort}
       localDiscoveryController={localDiscoveryController}
       mapeoApi={mapeoApi}
       persistedDrafObservationStore={persistedDraftObservationStore}
@@ -171,7 +179,8 @@ const App = () => {
       }
       activeProjectIdStore={persistedActiveProjectIdStore}
       metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
-      localeStore={persistedLocaleStore}>
+      localeStore={persistedLocaleStore}
+      serverStateStore={serverStateStore}>
       <AppNavigator permissionAsked={permissionsAsked} />
     </AppProviders>
   );

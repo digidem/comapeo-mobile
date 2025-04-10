@@ -53,7 +53,6 @@
     "message": "Settings"
   },
   "Navigation.Menu.aboutCoMapeo": {
-    "description": "Primary text for 'About CoMapeo' link (version info)",
     "message": "About CoMapeo"
   },
   "Navigation.Menu.coordinator": {

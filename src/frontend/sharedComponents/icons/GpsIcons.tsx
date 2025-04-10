@@ -1,10 +1,9 @@
 import React from 'react';
 import {View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {WARNING_RED} from '../../lib/styles';
 
-import type {LocationStatus} from '../../lib/utils';
-
-const RenderError = () => (
+export const GpsErrorIcon = () => (
   <View
     style={{
       width: 22,
@@ -23,17 +22,17 @@ const RenderError = () => (
     />
     <Icon
       name="error"
-      color="#660000"
+      color={WARNING_RED}
       size={22}
       style={{position: 'absolute'}}
     />
   </View>
 );
 
-const RenderIcon = ({color = '#36F927'}: {color?: string}) => (
+export const GpsSearchingIcon = () => (
   <View
     style={{
-      backgroundColor: color,
+      backgroundColor: '#0166FF',
       margin: 1.5,
       borderRadius: 7,
       width: 12,
@@ -42,18 +41,14 @@ const RenderIcon = ({color = '#36F927'}: {color?: string}) => (
   />
 );
 
-type Props = {variant: LocationStatus};
-
-const GpsIconComponent = ({variant}: Props) => {
-  switch (variant) {
-    case 'error':
-      return <RenderError />;
-    case 'searching':
-      return <RenderIcon color="#0166FF" />;
-    case 'good':
-    default:
-      return <RenderIcon />;
-  }
-};
-
-export const GpsIcon = React.memo<Props>(GpsIconComponent);
+export const GpsGoodIcon = () => (
+  <View
+    style={{
+      backgroundColor: '#36F927',
+      margin: 1.5,
+      borderRadius: 7,
+      width: 12,
+      height: 12,
+    }}
+  />
+);

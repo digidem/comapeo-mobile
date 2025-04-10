@@ -1234,6 +1234,15 @@
     "description": "Category title for new track screen",
     "message": "Track"
   },
+  "screens.Security.obscurePasscodeDescription": {
+    "message": "To use, turn on App Passcode"
+  },
+  "screens.Security.obscurePasscodeDescriptionActivated": {
+    "message": "Protect your device against seizure"
+  },
+  "screens.Security.obscurePasscodeHeader": {
+    "message": "Obscure Passcode"
+  },
   "screens.Security.passDesriptionPassNotSet": {
     "message": "Passcode not set"
   },
@@ -1651,12 +1660,6 @@
   },
   "sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Something Went Wrong"
-  },
-  "sharedComponents.GpsPill.noGps": {
-    "message": "No GPS"
-  },
-  "sharedComponents.GpsPill.searching": {
-    "message": "Searching…"
   },
   "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.canceled": {
     "message": "Invite Canceled"

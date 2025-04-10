@@ -1,54 +1,49 @@
 import React, {FC} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
-import {defineMessages, useIntl} from 'react-intl';
 import {DARK_GREY, WHITE} from '../lib/styles';
-import {GpsIcon} from './icons/GpsIcon';
+import {GpsErrorIcon, GpsSearchingIcon, GpsGoodIcon} from './icons';
 import {useSharedLocationContext} from '../contexts/SharedLocationContext';
-import {useLocationProviderStatus} from '../hooks/useLocationProviderStatus';
 import {getLocationStatus} from '../lib/utils';
 import {BodyText} from './Text/BodyText';
-
-const m = defineMessages({
-  noGps: {
-    id: 'sharedComponents.GpsPill.noGps',
-    defaultMessage: 'No GPS',
-  },
-  searching: {
-    id: 'sharedComponents.GpsPill.searching',
-    defaultMessage: 'Searching…',
-  },
-});
+import {UIActivityIndicator} from 'react-native-indicators';
+import type {LocationProviderStatus} from 'expo-location';
 
 type GPSPillProps = {
   onPress?: () => void;
+  locationProviderStatus?: LocationProviderStatus;
 };
 
-export const GPSPill: FC<GPSPillProps> = ({onPress}) => {
-  const {formatMessage} = useIntl();
-  const locationProviderStatus = useLocationProviderStatus();
+export const GPSPill: FC<GPSPillProps> = ({
+  onPress,
+  locationProviderStatus,
+}) => {
   const {locationState, fgPermissions} = useSharedLocationContext();
 
-  const {status, accuracy} = getLocationStatus({
+  const locationStatus = getLocationStatus({
     location: fgPermissions ? locationState.location : undefined,
     providerStatus: locationProviderStatus,
   });
 
-  let textValue: string;
+  let textValue: string | React.ReactNode;
+  let IconToRender: React.FC;
 
-  switch (status) {
+  switch (locationStatus.status) {
     case 'error':
-      textValue = formatMessage(m.noGps);
+      textValue = '--';
+      IconToRender = GpsErrorIcon;
       break;
     case 'searching':
-      textValue = formatMessage(m.searching);
+      textValue = <UIActivityIndicator size={20} color={WHITE} />;
+      IconToRender = GpsSearchingIcon;
       break;
     case 'good': {
-      const roundedAcc = accuracy ? Math.round(accuracy) : 9999;
-      textValue = `± ${roundedAcc} m`;
+      textValue = `± ${Math.round(locationStatus.accuracy)} m`;
+      IconToRender = GpsGoodIcon;
       break;
     }
     default:
-      textValue = formatMessage(m.searching);
+      textValue = <UIActivityIndicator size={20} color={WHITE} />;
+      IconToRender = GpsSearchingIcon;
       break;
   }
 
@@ -58,9 +53,13 @@ export const GPSPill: FC<GPSPillProps> = ({onPress}) => {
       style={styles.container}
       testID="MAP.gps-pill"
       accessibilityLabel="Open GPS Modal">
-      <GpsIcon variant={status} />
+      <IconToRender />
 
-      <BodyText variant="regular" style={styles.text} numberOfLines={1}>
+      <BodyText
+        variant="smallMeta"
+        style={styles.text}
+        numberOfLines={1}
+        testID="MAP.gps-pill-text">
         {textValue}
       </BodyText>
     </TouchableOpacity>
@@ -71,15 +70,17 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    minWidth: 68,
+    justifyContent: 'space-evenly',
     minHeight: 32,
     backgroundColor: DARK_GREY,
     borderRadius: 20,
     paddingHorizontal: 10,
     gap: 5,
+    flexShrink: 1,
+    overflow: 'hidden',
   },
   text: {
     color: WHITE,
+    marginBottom: 2,
   },
 });

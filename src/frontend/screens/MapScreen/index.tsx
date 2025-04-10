@@ -29,6 +29,7 @@ import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLa
 import {matchPreset} from '../../lib/utils';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
+import {useAuthContext} from '../../contexts/AuthContext';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -64,11 +65,12 @@ export const MapScreen = ({
     store => store.value,
   );
   const {data: presets} = usePresetsQuery();
+  const {authState} = useAuthContext();
 
   useFocusEffect(
     React.useCallback(() => {
       // if no exisiting observation, stay home
-      if (!existingObservation) {
+      if (!existingObservation || authState === 'obscured') {
         return;
       }
       // if existing observation and no preset match, user has started creating an observation but had not chosen a preset, so navigate to preset chooser
@@ -81,7 +83,7 @@ export const MapScreen = ({
       } else {
         navigate('ObservationCreate');
       }
-    }, [existingObservation, navigate, presets]),
+    }, [existingObservation, navigate, presets, authState]),
   );
 
   const handleAddPress = () => {
@@ -151,7 +153,7 @@ export const MapScreen = ({
           <UserLocation minDisplacement={MIN_DISPLACEMENT} />
         )}
 
-        {isFinishedLoading && (
+        {isFinishedLoading && authState !== 'obscured' && (
           <>
             <RemoteDetectionAlertsMapLayer />
             <CurrentTrackMapLayer />

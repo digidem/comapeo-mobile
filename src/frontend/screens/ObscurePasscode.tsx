@@ -5,9 +5,9 @@ import {StyleSheet, View} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {OBSCURE_PASSCODE} from '../constants';
 import {LIGHT_GREY} from '../lib/styles';
-import {Text} from '../sharedComponents/Text';
+import {HeaderText} from '../sharedComponents/Text/HeaderText';
+import {BodyText} from '../sharedComponents/Text/BodyText';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import {useAuthContext} from '../contexts/AuthContext';
 import {
   useSecurityActions,
   useSecurityState,
@@ -39,10 +39,9 @@ const m = defineMessages({
   },
 });
 
-export const ObscurePasscode: NativeNavigationComponent<'ObscurePasscode'> = ({
-  navigation,
-}) => {
-  const {authState} = useAuthContext();
+export const ObscurePasscode: NativeNavigationComponent<
+  'ObscurePasscode'
+> = () => {
   const obscureCodeEnabled = useSecurityState(
     state => state.obscureCodeEnabled,
   );
@@ -50,38 +49,39 @@ export const ObscurePasscode: NativeNavigationComponent<'ObscurePasscode'> = ({
 
   const {formatMessage: t} = useIntl();
 
-  React.useEffect(() => {
-    if (authState === 'obscured') {
-      navigation.popTo('Settings');
-    }
-  }, [navigation, authState]);
-
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>{t(m.whatIsObscure)}</Text>
+      <HeaderText variant="header1" style={styles.title}>
+        {t(m.whatIsObscure)}
+      </HeaderText>
 
-      <Text style={{fontSize: 16}}>{t(m.description)}</Text>
+      <BodyText>{t(m.description)}</BodyText>
 
       <TouchableOpacity
         style={styles.switch}
         onPress={() => enableObscureCode(!obscureCodeEnabled)}>
         <React.Fragment>
-          <Text style={{fontSize: 16}}>{t(m.toggleMessage)}</Text>
+          <BodyText>{t(m.toggleMessage)}</BodyText>
 
           <MaterialIcon
             name={obscureCodeEnabled ? 'check-box' : 'check-box-outline-blank'}
             size={32}
             color="rgba(0, 0, 0, 0.54)"
+            accessibilityLabel="Enable or Disable Obscure Passcode"
           />
         </React.Fragment>
       </TouchableOpacity>
 
       {obscureCodeEnabled && (
-        <View style={styles.passbox}>
-          <Text style={{textAlign: 'center', marginBottom: 10, fontSize: 20}}>
+        <View
+          style={styles.passbox}
+          accessibilityLabel="Obscure Passcode is Enabled">
+          <BodyText
+            variant="large"
+            style={{textAlign: 'center', marginBottom: 10}}>
             {OBSCURE_PASSCODE}
-          </Text>
-          <Text style={{fontSize: 16}}>{t(m.instructions)}</Text>
+          </BodyText>
+          <BodyText>{t(m.instructions)}</BodyText>
         </View>
       )}
     </ScrollView>
@@ -94,10 +94,8 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 20,
     paddingHorizontal: 20,
-    fontSize: 16,
   },
   title: {
-    fontSize: 32,
     marginBottom: 20,
     textAlign: 'center',
   },
@@ -106,7 +104,6 @@ const styles = StyleSheet.create({
     backgroundColor: LIGHT_GREY,
     marginTop: 30,
     padding: 20,
-    fontSize: 20,
     marginBottom: 40,
   },
   switch: {

@@ -3,17 +3,20 @@ import {StyleSheet, TouchableOpacity} from 'react-native';
 import {DARK_GREY, WHITE} from '../lib/styles';
 import {GpsErrorIcon, GpsSearchingIcon, GpsGoodIcon} from './icons';
 import {useSharedLocationContext} from '../contexts/SharedLocationContext';
-import {useLocationProviderStatus} from '../hooks/useLocationProviderStatus';
 import {getLocationStatus} from '../lib/utils';
 import {BodyText} from './Text/BodyText';
 import {UIActivityIndicator} from 'react-native-indicators';
+import type {LocationProviderStatus} from 'expo-location';
 
 type GPSPillProps = {
   onPress?: () => void;
+  locationProviderStatus?: LocationProviderStatus;
 };
 
-export const GPSPill: FC<GPSPillProps> = ({onPress}) => {
-  const locationProviderStatus = useLocationProviderStatus();
+export const GPSPill: FC<GPSPillProps> = ({
+  onPress,
+  locationProviderStatus,
+}) => {
   const {locationState, fgPermissions} = useSharedLocationContext();
 
   const locationStatus = getLocationStatus({
@@ -68,8 +71,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    minWidth: 68,
-    maxWidth: 96,
     minHeight: 32,
     backgroundColor: DARK_GREY,
     borderRadius: 20,

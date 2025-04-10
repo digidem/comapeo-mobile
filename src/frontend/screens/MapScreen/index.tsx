@@ -164,7 +164,10 @@ export const MapScreen = ({
       </Mapbox.MapView>
       <View style={styles.bottomContainer}>
         <View style={{flex: 1, alignItems: 'center'}}>
-          <GPSPill onPress={() => navigation.navigate('GpsModal')} />
+          <GPSPill
+            onPress={() => navigation.navigate('GpsModal')}
+            locationProviderStatus={locationProviderStatus}
+          />
         </View>
 
         <TouchableOpacity

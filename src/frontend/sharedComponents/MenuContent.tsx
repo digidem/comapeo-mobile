@@ -1,17 +1,24 @@
 import React from 'react';
 import {View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
-import {Divider} from './Divider';
+import IonIcon from 'react-native-vector-icons/Ionicons';
+import Octicons from 'react-native-vector-icons/Octicons';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+
+import DeviceIcon from '../images/DeviceIcon.svg';
+import Exchange from '../images/Exchange.svg';
+import {CloseIcon} from './icons';
+
 import {MenuListItem} from './MenuList/MenuListItem';
 import {HeaderText} from './Text/HeaderText';
 import {BodyText} from './Text/BodyText';
 import {PrimaryButton, SecondaryButton} from './Buttons';
-import Exchange from '../images/Exchange.svg';
-import IonIcon from 'react-native-vector-icons/Ionicons';
-import Octicons from 'react-native-vector-icons/Octicons';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import DeviceIcon from '../images/DeviceIcon.svg';
-import {CloseIcon} from './icons';
+import {Divider} from './Divider';
+
+import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
+import {useOwnDeviceInfo} from '@comapeo/core-react';
+import {useProjectRole} from '../hooks/useProjectRole';
+import {useProjectSettings} from '../hooks/server/projects';
 
 import {
   NEW_DARK_GREY,
@@ -20,16 +27,11 @@ import {
   VERY_LIGHT_GREY,
   BLACK,
 } from '../lib/styles';
-import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
-import {useProjectRole} from '../hooks/useProjectRole';
-import {useProjectSettings} from '../hooks/server/projects';
-import {useOwnDeviceInfo} from '@comapeo/core-react';
 
 const m = defineMessages({
   aboutCoMapeo: {
     id: 'Navigation.Menu.aboutCoMapeo',
     defaultMessage: 'About CoMapeo',
-    description: "Primary text for 'About CoMapeo' link (version info)",
   },
   appSettings: {
     id: 'Navigation.Menu.Settings',
@@ -72,14 +74,16 @@ const m = defineMessages({
 type MenuContentProps = {
   closeMenu: () => void;
 };
+
 export function MenuContent({closeMenu}: MenuContentProps) {
   const {data: deviceData} = useOwnDeviceInfo();
   const {data: projectData} = useProjectSettings();
   const role = useProjectRole(projectData);
-  const deviceName = deviceData?.name;
-  const projectName = projectData?.name || 'My Solo Project';
   const {formatMessage} = useIntl();
   const {navigate} = useNavigationFromRoot();
+
+  const deviceName = deviceData?.name;
+  const projectName = projectData?.name || 'My Solo Project';
 
   return (
     <View style={styles.container}>
@@ -88,7 +92,6 @@ export function MenuContent({closeMenu}: MenuContentProps) {
           <DeviceIcon width={32} height={32} />
           <HeaderText variant="header4">{deviceName}</HeaderText>
         </View>
-
         <TouchableOpacity onPress={closeMenu} accessibilityLabel="Close Menu">
           <CloseIcon size={32} />
         </TouchableOpacity>
@@ -99,7 +102,6 @@ export function MenuContent({closeMenu}: MenuContentProps) {
           <BodyText variant="tinyMeta" style={styles.currentProjectLabel}>
             {formatMessage(m.currentProject)}
           </BodyText>
-
           <TouchableOpacity
             style={[
               styles.card,
@@ -116,6 +118,7 @@ export function MenuContent({closeMenu}: MenuContentProps) {
                   ? formatMessage(m.coordinator)
                   : formatMessage(m.participant)}
             </BodyText>
+
             <View style={styles.buttonsRow}>
               <View style={styles.buttonWrapper}>
                 <SecondaryButton
@@ -124,19 +127,19 @@ export function MenuContent({closeMenu}: MenuContentProps) {
                   fullSize={false}
                 />
               </View>
-              {(role === 'coordinator' || role === 'solo') && (
+              {role === 'coordinator' || role === 'solo' ? (
                 <View style={styles.buttonWrapper}>
                   <PrimaryButton
                     text={formatMessage(m.invite)}
-                    onPress={() => {
-                      navigate('YourTeam');
-                    }}
+                    onPress={() => navigate('YourTeam')}
                     fullSize={false}
                     renderIcon={({size}) => (
                       <IonIcon name="person-add" size={size} color={WHITE} />
                     )}
                   />
                 </View>
+              ) : (
+                <View style={styles.buttonWrapper} />
               )}
             </View>
           </TouchableOpacity>
@@ -144,19 +147,17 @@ export function MenuContent({closeMenu}: MenuContentProps) {
             <Divider />
           </View>
         </View>
+
         <View style={styles.bottomItemsContainer}>
-          <MenuListItem
+          <MenuItem
             item={{
               icon: <Exchange width={20} height={20} color={NEW_DARK_GREY} />,
               onPress: () => navigate('Sync'),
               primaryText: formatMessage(m.exchange),
               accessibilityLabel: 'Go to Exchange Screen',
             }}
-            paddingLeft={0}
-            paddingRight={15}
-            columnGap={15}
           />
-          <MenuListItem
+          <MenuItem
             item={{
               icon: (
                 <IonIcon
@@ -169,11 +170,8 @@ export function MenuContent({closeMenu}: MenuContentProps) {
               primaryText: formatMessage(m.appSettings),
               accessibilityLabel: 'Go to App Settings',
             }}
-            paddingLeft={0}
-            paddingRight={15}
-            columnGap={15}
           />
-          <MenuListItem
+          <MenuItem
             item={{
               icon: (
                 <Octicons name="shield-lock" size={20} color={NEW_DARK_GREY} />
@@ -182,11 +180,8 @@ export function MenuContent({closeMenu}: MenuContentProps) {
               primaryText: formatMessage(m.privacyPolicy),
               accessibilityLabel: 'Go to Data and Privacy Screen',
             }}
-            paddingLeft={0}
-            paddingRight={15}
-            columnGap={15}
           />
-          <MenuListItem
+          <MenuItem
             item={{
               icon: (
                 <MaterialIcon
@@ -199,9 +194,6 @@ export function MenuContent({closeMenu}: MenuContentProps) {
               primaryText: formatMessage(m.aboutCoMapeo),
               accessibilityLabel: 'Go to About CoMapeo Screen',
             }}
-            paddingLeft={0}
-            paddingRight={15}
-            columnGap={15}
           />
         </View>
       </ScrollView>
@@ -209,10 +201,26 @@ export function MenuContent({closeMenu}: MenuContentProps) {
   );
 }
 
+function MenuItem(
+  props: Omit<
+    React.ComponentProps<typeof MenuListItem>,
+    'paddingLeft' | 'paddingRight' | 'columnGap'
+  >,
+) {
+  return (
+    <MenuListItem
+      {...props}
+      paddingLeft={0}
+      paddingRight={15}
+      columnGap={15}
+      style={{paddingVertical: 10}}
+    />
+  );
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
     backgroundColor: WHITE,
   },
   topBar: {
@@ -220,8 +228,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 15,
     height: 58,
-    borderBottomColor: BLUE_GREY,
     borderBottomWidth: 1,
+    borderBottomColor: BLUE_GREY,
   },
   deviceRow: {
     flexDirection: 'row',
@@ -230,9 +238,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContainer: {
+    flexGrow: 1,
     padding: 20,
     flexDirection: 'column',
-    flexGrow: 1,
     justifyContent: 'space-between',
   },
   currentProjectLabel: {
@@ -258,13 +266,13 @@ const styles = StyleSheet.create({
   namedProjectCard: {
     backgroundColor: '#FFF5EB',
   },
-  buttonWrapper: {
-    flex: 1,
-  },
   buttonsRow: {
     flexDirection: 'row',
     gap: 12,
     marginTop: 20,
+  },
+  buttonWrapper: {
+    flex: 1,
   },
   bottomItemsContainer: {
     gap: 20,

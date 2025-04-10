@@ -1,7 +1,7 @@
 import * as React from 'react';
 import BadgeWithCheck from '../images/VerifiedBadgeWithCheck.svg';
 import VerifiedBadgeBlue from '../images/VerifiedBadgeBlue.svg';
-import {FlatList, View} from 'react-native';
+import {FlatList, TouchableOpacity, View} from 'react-native';
 import {
   defineMessages,
   FormattedDate,
@@ -24,9 +24,11 @@ import Octicons from 'react-native-vector-icons/Octicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import UnverifiedBadge from '../images/UnverifiedBadge.svg';
-import {useSingleDocByDocId} from '@comapeo/core-react';
+import {useProjectSettings} from '@comapeo/core-react';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
 import {useCoordinateFormat} from '../contexts/CoordinateFormatStoreContext';
+import {useOpenShareDialog} from '../hooks/share';
+import {useObservationWithPreset} from '../hooks/useObservationWithPreset';
 
 const m = defineMessages({
   navTitle: {
@@ -69,6 +71,24 @@ const m = defineMessages({
     id: 'screens.ObservationMetadataVerified.manuallyEntered',
     defaultMessage: 'Manually entered.',
   },
+  sentFrom: {
+    id: 'screens.ObservationMetadataVerified.sentFrom',
+    defaultMessage: 'CoMapeo Data sent from',
+  },
+  fallbackPresetName: {
+    id: 'screens.Observation.fallbackPresetName',
+    defaultMessage: 'Observation',
+    description:
+      'Fallback name used when category name cannot be determined for observation',
+  },
+  coMapeoData: {
+    id: 'screens.ObservationMetadataVerified.coMapeoData',
+    defaultMessage: 'CoMapeo Data',
+  },
+  date: {
+    id: 'screens.ObservationMetadataVerified.date',
+    defaultMessage: 'Date',
+  },
 });
 
 const ICON_SIZE = 25;
@@ -76,16 +96,18 @@ const ICON_SIZE = 25;
 export const ObservationMetadata: NativeNavigationComponent<
   'ObservationMetadata'
 > = ({route}) => {
-  const {formatMessage} = useIntl();
+  const {formatMessage, formatDate, formatTime} = useIntl();
   const {projectId} = useActiveProject();
   const {
-    data: {createdAt, lat, lon, metadata},
-  } = useSingleDocByDocId({
-    docId: route.params.observationId,
-    docType: 'observation',
-    projectId,
-  });
+    observation: {createdAt, lat, lon, metadata},
+    preset,
+  } = useObservationWithPreset(route.params.observationId);
+
+  const {
+    data: {name},
+  } = useProjectSettings({projectId});
   const coordinateFormat = useCoordinateFormat();
+  const openShare = useOpenShareDialog();
   const manualLocation = metadata?.manualLocation;
 
   const listData: {
@@ -199,96 +221,125 @@ export const ObservationMetadata: NativeNavigationComponent<
       return item[key]?.value !== undefined;
     },
   );
+
+  async function handlePressShare() {
+    const formattedString = filteredListData
+      .map(item => {
+        const key = Object.keys(item)[0] as string;
+        const data = item[key]!;
+        return `${data.label}: ${data.value} ${data.unit}`;
+      })
+      .join('\n');
+
+    await openShare.mutateAsync({
+      subject: `${!name ? formatMessage(m.coMapeoData) : formatMessage(m.sentFrom) + ' ' + name} - ${formatDate(createdAt, {format: 'long'})} - ${preset ? preset.name : formatMessage(m.fallbackPresetName)}`,
+      message: `${!name ? formatMessage(m.coMapeoData) : formatMessage(m.sentFrom) + ' ' + name} - ${preset ? preset.name : formatMessage(m.fallbackPresetName)} \n ${formatMessage(m.date)}: ${formatDate(createdAt, {dateStyle: 'full'})} ${formatTime(createdAt, {timeStyle: 'short'})} \n ${formattedString}`,
+      failOnCancel: false,
+    });
+  }
+
   return (
     <View style={styles.container}>
-      <View style={{alignItems: 'center', marginBottom: 20}}>
-        {manualLocation ? <ManuallyEnteredHeader /> : <VerifiedHeader />}
-      </View>
-
-      <View style={{paddingHorizontal: 20}}>
-        <View
-          style={{
-            marginBottom: 10,
-            flexDirection: 'row',
-          }}>
-          <Octicons
-            name="calendar"
-            color={NEW_DARK_GREY}
-            size={ICON_SIZE}
-            style={{marginRight: 10}}
-          />
-          <View>
-            <BodyText variant="smallMeta">
-              <FormattedDate value={createdAt} dateStyle="full" />
-            </BodyText>
-            <BodyText style={{color: NEW_DARK_GREY}} variant="smallMeta">
-              <FormattedTime value={createdAt} timeStyle="short" />
-            </BodyText>
-          </View>
+      <View>
+        <View style={{alignItems: 'center', marginBottom: 20}}>
+          {manualLocation ? <ManuallyEnteredHeader /> : <VerifiedHeader />}
         </View>
-        {lat !== undefined && lon !== undefined && (
-          <View style={{flexDirection: 'row', marginBottom: 20}}>
-            <MaterialIcons
-              name="place"
+
+        <View style={{paddingHorizontal: 20}}>
+          <View
+            style={{
+              marginBottom: 10,
+              flexDirection: 'row',
+            }}>
+            <Octicons
+              name="calendar"
               color={NEW_DARK_GREY}
               size={ICON_SIZE}
               style={{marginRight: 10}}
             />
             <View>
               <BodyText variant="smallMeta">
-                <FormattedCoords
-                  lat={lat}
-                  lon={lon}
-                  format={coordinateFormat}
-                />
+                <FormattedDate value={createdAt} dateStyle="full" />
               </BodyText>
-              {manualLocation && (
-                <BodyText style={{color: NEW_DARK_GREY}} variant="smallMeta">
-                  {formatMessage(m.manuallyEntered)}
-                </BodyText>
-              )}
+              <BodyText style={{color: NEW_DARK_GREY}} variant="smallMeta">
+                <FormattedTime value={createdAt} timeStyle="short" />
+              </BodyText>
             </View>
           </View>
+          {lat !== undefined && lon !== undefined && (
+            <View style={{flexDirection: 'row', marginBottom: 20}}>
+              <MaterialIcons
+                name="place"
+                color={NEW_DARK_GREY}
+                size={ICON_SIZE}
+                style={{marginRight: 10}}
+              />
+              <View>
+                <BodyText variant="smallMeta">
+                  <FormattedCoords
+                    lat={lat}
+                    lon={lon}
+                    format={coordinateFormat}
+                  />
+                </BodyText>
+                {manualLocation && (
+                  <BodyText style={{color: NEW_DARK_GREY}} variant="smallMeta">
+                    {formatMessage(m.manuallyEntered)}
+                  </BodyText>
+                )}
+              </View>
+            </View>
+          )}
+        </View>
+
+        {filteredListData.length > 0 && (
+          <FlatList
+            data={filteredListData}
+            renderItem={({item, index}) => {
+              const key = Object.keys(item)[0] as string;
+              return (
+                <View
+                  style={[
+                    styles.listItem,
+                    {
+                      backgroundColor:
+                        index % 2 === 0 ? VERY_LIGHT_GREY : WHITE,
+                    },
+                  ]}>
+                  <View style={styles.flexRow}>
+                    {item[key]!.icon}
+                    <BodyText
+                      style={{
+                        textAlign: 'left',
+                        marginLeft: 5,
+                        fontWeight: '700',
+                      }}
+                      variant="smallMeta">
+                      {item[key]!.label}{' '}
+                    </BodyText>
+                  </View>
+                  <View style={styles.valueText}>
+                    <BodyText
+                      variant="smallMeta"
+                      style={{flex: 1, textAlign: 'right'}}
+                      numberOfLines={1}
+                      ellipsizeMode="tail">
+                      {item[key]!.value + ' '}
+                    </BodyText>
+                    <BodyText variant="smallMeta">{item[key]!.unit}</BodyText>
+                  </View>
+                </View>
+              );
+            }}
+          />
         )}
       </View>
-      {filteredListData.length > 0 && (
-        <FlatList
-          data={filteredListData}
-          renderItem={({item, index}) => {
-            const key = Object.keys(item)[0] as string;
-            return (
-              <View
-                style={[
-                  styles.listItem,
-                  {backgroundColor: index % 2 === 0 ? VERY_LIGHT_GREY : WHITE},
-                ]}>
-                <View style={styles.flexRow}>
-                  {item[key]!.icon}
-                  <BodyText
-                    style={{
-                      textAlign: 'left',
-                      marginLeft: 5,
-                      fontWeight: '700',
-                    }}
-                    variant="smallMeta">
-                    {item[key]!.label}{' '}
-                  </BodyText>
-                </View>
-                <View style={styles.valueText}>
-                  <BodyText
-                    variant="smallMeta"
-                    style={{flex: 1, textAlign: 'right'}}
-                    numberOfLines={1}
-                    ellipsizeMode="tail">
-                    {item[key]!.value + ' '}
-                  </BodyText>
-                  <BodyText variant="smallMeta">{item[key]!.unit}</BodyText>
-                </View>
-              </View>
-            );
-          }}
-        />
-      )}
+      <TouchableOpacity
+        onPress={handlePressShare}
+        style={styles.shareContainer}>
+        <MaterialIcons name="share" size={25} />
+        <BodyText>Share</BodyText>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -324,6 +375,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 40,
+    justifyContent: 'space-between',
   },
   listItem: {
     flexDirection: 'row',
@@ -350,6 +402,13 @@ const styles = StyleSheet.create({
     backgroundColor: VERY_LIGHT_GREY,
     borderColor: BLUE_GREY,
     borderWidth: 1,
+  },
+  shareContainer: {
+    alignItems: 'center',
+    borderTopColor: VERY_LIGHT_GREY,
+    borderTopWidth: 1,
+    paddingBottom: 20,
+    paddingTop: 20,
   },
 });
 

@@ -107,11 +107,15 @@ export function MenuContent({closeMenu}: MenuContentProps) {
               styles.card,
               role === 'solo' ? styles.soloCard : styles.namedProjectCard,
             ]}
-            onPress={() => navigate('ProjectSettings')}>
-            <HeaderText variant="header2" numberOfLines={2}>
+            onPress={() => navigate('ProjectSettings')}
+            accessibilityLabel="Go to Project Settings">
+            <HeaderText
+              variant="header2"
+              numberOfLines={2}
+              testID="MENU.project-name">
               {projectName}
             </HeaderText>
-            <BodyText variant="smallMeta">
+            <BodyText variant="smallMeta" testID="MENU.project-status">
               {role === 'solo'
                 ? formatMessage(m.mappingOnOwn)
                 : role === 'coordinator'
@@ -120,7 +124,9 @@ export function MenuContent({closeMenu}: MenuContentProps) {
             </BodyText>
 
             <View style={styles.buttonsRow}>
-              <View style={styles.buttonWrapper}>
+              <View
+                style={styles.buttonWrapper}
+                accessibilityLabel="Go to Project Settings">
                 <SecondaryButton
                   text={formatMessage(m.viewProject)}
                   onPress={() => navigate('ProjectSettings')}

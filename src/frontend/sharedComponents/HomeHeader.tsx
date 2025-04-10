@@ -62,7 +62,7 @@ export function HomeHeader({
             width={32}
             height={32}
             testID="drawer-icon-home"
-            accessibilityLabel="Open Navigation Drawer"
+            accessibilityLabel="Open Menu"
           />
         </IconButton>
       </View>

@@ -17,20 +17,22 @@
 
 These tests deal with all issues related to the main screens of the app.
 
-## Side Drawer Menu
+## Side Drawer Menu No Project
 
 - This tests the look and functioning of the side drawer menu with and without a project.
 
 ### Test Objectives
 
-- Tests that all of the hamburger menu can be opened and closed from the map screen
-- Ensures that the list items that should be present are present
-- Checks that if the user is not on a project the header suggests creating or joining a project
-- Once on a project, checks that the project name is visible in the header of the drawer
+- Opens the side drawer from the home screen
+- Confirms current device name is shown
+- Checks header label says “Current Project”
+- Verifies project name is “My Solo Project”
+- Verifies project role text says “You are mapping on your own.”
+- Asserts presence of Exchange, App Settings, Data & Privacy, and About screens
 
 ### Special Considerations
 
-- These tests need to run before and after the project naming tests.
+- These tests need to run before the project naming tests.
 
 ## GPS
 
@@ -38,7 +40,7 @@ This tests the GPS pill that is on the main map screen.
 
 ### Test Objectives
 
-- On home **Map** screen, tests that GPS details button shows current device status
+- On home **Map** screen, tests that GPS details button has text
 - Tests that **GPS details** button from home **Map** screen navigates to **GPS details** screen
 - **GPS details** screen shows detailed navigation data of device
 - Tests that the **Back** button returns to Map screen

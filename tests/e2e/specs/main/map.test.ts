@@ -7,7 +7,7 @@ describe('Main - Map Screen Component Test', () => {
     const mapTab = await $('~Go to Map');
     await mapTab.click();
 
-    await expect($('~Open Navigation Drawer')).toBeDisplayed();
+    await expect($('~Open Menu')).toBeDisplayed();
     await expect($('~Add Observation')).toBeDisplayed();
   });
 

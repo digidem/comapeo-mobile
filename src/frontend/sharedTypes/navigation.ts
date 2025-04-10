@@ -117,6 +117,7 @@ export type RootStackParamsList = {
   ObservationMetadata: {observationId: string};
   ErrorBottomSheet: undefined;
   BackgroundMapErrorBottomSheet: {title: string; description: string};
+  Menu: undefined;
 };
 
 export type OnboardingParamsList = {

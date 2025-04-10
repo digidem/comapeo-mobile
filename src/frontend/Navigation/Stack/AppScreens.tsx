@@ -99,6 +99,7 @@ import {AudioCustomHeaderLeft} from '../../screens/Audio/AudioCustomHeaderLeft.t
 import {ObservationMetadata} from '../../screens/ObservationMetadata.tsx';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagement/ErrorBottomSheet.tsx';
+import {MenuScreen} from '../../screens/MenuScreen';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -451,6 +452,14 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="BackgroundMapErrorBottomSheet"
         component={BackgroundMapErrorBottomSheet}
+      />
+      <RootStack.Screen
+        name="Menu"
+        component={MenuScreen}
+        options={{
+          animation: 'slide_from_right',
+          headerShown: false,
+        }}
       />
     </RootStack.Group>
   </>

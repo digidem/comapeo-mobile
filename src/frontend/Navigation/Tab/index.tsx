@@ -5,9 +5,6 @@ import {MapScreen} from '../../screens/MapScreen';
 import {ObservationsList} from '../../screens/ObservationsList';
 import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {HomeTabsParamsList} from '../../sharedTypes/navigation';
-import {MenuContent} from '../../sharedComponents/MenuContent';
-import {useCloseDrawerOnBackPress} from './useCloseDrawerOnBackPress';
-import {StyleSheet, View} from 'react-native';
 import {TabBar} from './TabBar';
 import {SharedLocationContextProvider} from '../../contexts/SharedLocationContext';
 import {Loading} from '../../sharedComponents/Loading';
@@ -16,84 +13,47 @@ import {WHITE} from '../../lib/styles';
 const Tab = createBottomTabNavigator<HomeTabsParamsList>();
 
 export const HomeTabs = () => {
-  const [drawerOpen, setDrawerOpen] = React.useState(false);
-
-  function closeDrawer() {
-    setDrawerOpen(false);
-  }
-
-  function openDrawer() {
-    setDrawerOpen(true);
-  }
-
-  useCloseDrawerOnBackPress({drawerOpen, closeDrawer});
-
   return (
-    <>
-      {drawerOpen && (
-        <View style={styles.backdrop}>
-          <MenuContent closeMenu={closeDrawer} />
-        </View>
+    <Tab.Navigator
+      tabBar={TabBar}
+      screenOptions={{
+        tabBarShowLabel: false,
+        headerTransparent: true,
+        header: props => (
+          <React.Suspense fallback={<Loading />}>
+            <HomeHeader
+              {...props}
+              backgroundColor="transparent"
+              showBottomBorder={false}
+            />
+          </React.Suspense>
+        ),
+      }}
+      initialRouteName={'Map'}
+      screenLayout={({children}) => (
+        <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
       )}
-      <Tab.Navigator
-        tabBar={TabBar}
-        screenOptions={{
-          tabBarShowLabel: false,
-          headerTransparent: true,
+      // header needs access the this provider. Layout wraps the entire navigator, while screenLayout wraps each screen (in other words not the header)
+      layout={({children}) => (
+        <SharedLocationContextProvider>
+          {children}
+        </SharedLocationContextProvider>
+      )}
+      backBehavior="initialRoute">
+      <Tab.Screen
+        name="ObservationsList"
+        component={ObservationsList}
+        options={{
+          headerTransparent: false,
           header: props => (
             <React.Suspense fallback={<Loading />}>
-              <HomeHeader
-                {...props}
-                openDrawer={openDrawer}
-                backgroundColor="transparent"
-                showBottomBorder={false}
-              />
+              <HomeHeader {...props} backgroundColor={WHITE} showBottomBorder />
             </React.Suspense>
           ),
         }}
-        initialRouteName={'Map'}
-        screenLayout={({children}) => (
-          <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
-        )}
-        // header needs access the this provider. Layout wraps the entire navigator, while screenLayout wraps each screen (in other words not the header)
-        layout={({children}) => (
-          <SharedLocationContextProvider>
-            {children}
-          </SharedLocationContextProvider>
-        )}
-        backBehavior="initialRoute">
-        <Tab.Screen
-          name="ObservationsList"
-          component={ObservationsList}
-          options={{
-            headerTransparent: false,
-            header: props => (
-              <React.Suspense fallback={<Loading />}>
-                <HomeHeader
-                  {...props}
-                  openDrawer={openDrawer}
-                  backgroundColor={WHITE}
-                  showBottomBorder
-                />
-              </React.Suspense>
-            ),
-          }}
-        />
-        <Tab.Screen name="Map" component={MapScreen} />
-        <Tab.Screen name="Camera" component={CameraScreen} />
-      </Tab.Navigator>
-    </>
+      />
+      <Tab.Screen name="Map" component={MapScreen} />
+      <Tab.Screen name="Camera" component={CameraScreen} />
+    </Tab.Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-  backdrop: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-    zIndex: 2,
-    top: 0,
-    left: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
-  },
-});

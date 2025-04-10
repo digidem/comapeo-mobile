@@ -1,28 +1,29 @@
 import React from 'react';
-import {View, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
-import Animated, {SlideInRight, SlideOutRight} from 'react-native-reanimated';
+import {View, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
 import {useIntl, defineMessages} from 'react-intl';
-
+import {Divider} from './Divider';
+import {MenuListItem} from './MenuList/MenuListItem';
+import {HeaderText} from './Text/HeaderText';
+import {BodyText} from './Text/BodyText';
+import {PrimaryButton, SecondaryButton} from './Buttons';
+import Exchange from '../images/Exchange.svg';
+import IonIcon from 'react-native-vector-icons/Ionicons';
+import Octicons from 'react-native-vector-icons/Octicons';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import DeviceIcon from '../images/DeviceIcon.svg';
 import {CloseIcon} from './icons';
-import {useProjectRole} from '../hooks/useProjectRole';
-import {useProjectSettings} from '../hooks/server/projects';
+
 import {
+  NEW_DARK_GREY,
   WHITE,
   BLUE_GREY,
-  NEW_DARK_GREY,
   VERY_LIGHT_GREY,
   BLACK,
 } from '../lib/styles';
-import IonIcon from 'react-native-vector-icons/Ionicons';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import Octicons from 'react-native-vector-icons/Octicons';
-import Exchange from '../images/Exchange.svg';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
+import {useProjectRole} from '../hooks/useProjectRole';
+import {useProjectSettings} from '../hooks/server/projects';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
-import {BodyText} from './Text/BodyText';
-import {HeaderText} from './Text/HeaderText';
-import {PrimaryButton, SecondaryButton} from './Buttons';
 
 const m = defineMessages({
   aboutCoMapeo: {
@@ -40,15 +41,15 @@ const m = defineMessages({
   },
   mappingOnOwn: {
     id: 'Navigation.Menu.mappingOnOwn',
-    defaultMessage: 'You are mapping on your own',
+    defaultMessage: 'You are mapping on your own.',
   },
   coordinator: {
     id: 'Navigation.Menu.coordinator',
-    defaultMessage: 'You are a coordinator on this project',
+    defaultMessage: 'You are a coordinator on this project.',
   },
   participant: {
     id: 'Navigation.Menu.participant',
-    defaultMessage: 'You are a participant on this project',
+    defaultMessage: 'You are a participant on this project.',
   },
   currentProject: {
     id: 'Navigation.Menu.currentProject',
@@ -72,22 +73,18 @@ type MenuContentProps = {
   closeMenu: () => void;
 };
 export function MenuContent({closeMenu}: MenuContentProps) {
-  const {data} = useProjectSettings();
-  const {navigate} = useNavigationFromRoot();
   const {data: deviceData} = useOwnDeviceInfo();
-  const {formatMessage} = useIntl();
-
+  const {data: projectData} = useProjectSettings();
+  const role = useProjectRole(projectData);
   const deviceName = deviceData?.name;
-  const role = useProjectRole(data);
-  const projectName = data?.name || 'My Solo Project';
+  const projectName = projectData?.name || 'My Solo Project';
+  const {formatMessage} = useIntl();
+  const {navigate} = useNavigationFromRoot();
 
   return (
-    <Animated.View
-      style={styles.container}
-      entering={SlideInRight.duration(250)}
-      exiting={SlideOutRight.duration(250)}>
-      <View style={[styles.topBar, styles.gapRow]}>
-        <View style={[styles.deviceRow, styles.gapRow]}>
+    <View style={styles.container}>
+      <View style={styles.topBar}>
+        <View style={styles.deviceRow}>
           <DeviceIcon width={32} height={32} />
           <HeaderText variant="header4">{deviceName}</HeaderText>
         </View>
@@ -97,18 +94,18 @@ export function MenuContent({closeMenu}: MenuContentProps) {
         </TouchableOpacity>
       </View>
 
-      <ScrollView
-        contentContainerStyle={[styles.scrollContainer, styles.gapColumn]}>
-        <BodyText variant="tinyMeta" style={styles.currentProjectLabel}>
-          {formatMessage(m.currentProject)}
-        </BodyText>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View>
+          <BodyText variant="tinyMeta" style={styles.currentProjectLabel}>
+            {formatMessage(m.currentProject)}
+          </BodyText>
 
-        <View
-          style={[
-            styles.card,
-            role === 'solo' ? styles.soloCard : styles.namedProjectCard,
-          ]}>
-          <View style={styles.cardContent}>
+          <TouchableOpacity
+            style={[
+              styles.card,
+              role === 'solo' ? styles.soloCard : styles.namedProjectCard,
+            ]}
+            onPress={() => navigate('ProjectSettings')}>
             <HeaderText variant="header2" numberOfLines={2}>
               {projectName}
             </HeaderText>
@@ -122,78 +119,91 @@ export function MenuContent({closeMenu}: MenuContentProps) {
             <View style={styles.buttonsRow}>
               <View style={styles.buttonWrapper}>
                 <SecondaryButton
-                  onPress={() => navigate('ProjectSettings')}
                   text={formatMessage(m.viewProject)}
+                  onPress={() => navigate('ProjectSettings')}
                   fullSize={false}
                 />
               </View>
-
               {(role === 'coordinator' || role === 'solo') && (
                 <View style={styles.buttonWrapper}>
                   <PrimaryButton
                     text={formatMessage(m.invite)}
-                    fullSize={false}
                     onPress={() => {
-                      console.log('invite button pressed');
+                      navigate('YourTeam');
                     }}
+                    fullSize={false}
+                    renderIcon={({size}) => (
+                      <IonIcon name="person-add" size={size} color={WHITE} />
+                    )}
                   />
                 </View>
               )}
             </View>
-          </View>
+          </TouchableOpacity>
+          <Divider />
         </View>
-
-        <View style={[styles.menuItems, styles.gapColumn]}>
-          <TouchableOpacity
-            style={[styles.menuItemRow, styles.gapRow]}
-            accessibilityLabel="Go to Exchange Screen"
-            onPress={() => {
-              navigate('Sync');
-            }}>
-            <Exchange width={20} height={20} color={NEW_DARK_GREY} />
-            <HeaderText variant="header4">
-              {formatMessage(m.exchange)}
-            </HeaderText>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.menuItemRow, styles.gapRow]}
-            onPress={() => {
-              navigate('AppSettings');
+        <View style={styles.bottomItemsContainer}>
+          <MenuListItem
+            item={{
+              icon: <Exchange width={20} height={20} color={NEW_DARK_GREY} />,
+              onPress: () => navigate('Sync'),
+              primaryText: formatMessage(m.exchange),
+              accessibilityLabel: 'Go to Exchange Screen',
             }}
-            accessibilityLabel="Go to App Settings">
-            <IonIcon name="settings-outline" size={20} color={NEW_DARK_GREY} />
-            <HeaderText variant="header4">
-              {formatMessage(m.appSettings)}
-            </HeaderText>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.menuItemRow, styles.gapRow]}
-            onPress={() => {
-              navigate('DataAndPrivacy');
+            paddingLeft={0}
+            paddingRight={15}
+            columnGap={15}
+          />
+          <MenuListItem
+            item={{
+              icon: (
+                <IonIcon
+                  name="settings-outline"
+                  size={20}
+                  color={NEW_DARK_GREY}
+                />
+              ),
+              onPress: () => navigate('AppSettings'),
+              primaryText: formatMessage(m.appSettings),
+              accessibilityLabel: 'Go to App Settings',
             }}
-            accessibilityLabel="Go to Data and Privacy Screen">
-            <Octicons name="shield-lock" size={20} color={NEW_DARK_GREY} />
-            <HeaderText variant="header4">
-              {formatMessage(m.privacyPolicy)}
-            </HeaderText>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.menuItemRow, styles.gapRow]}
-            onPress={() => {
-              navigate('AboutSettings');
+            paddingLeft={0}
+            paddingRight={15}
+            columnGap={15}
+          />
+          <MenuListItem
+            item={{
+              icon: (
+                <Octicons name="shield-lock" size={20} color={NEW_DARK_GREY} />
+              ),
+              onPress: () => navigate('DataAndPrivacy'),
+              primaryText: formatMessage(m.privacyPolicy),
+              accessibilityLabel: 'Go to Data and Privacy Screen',
             }}
-            accessibilityLabel="Go to About CoMapeo Screen">
-            <MaterialIcon name="info-outline" size={20} color={NEW_DARK_GREY} />
-            <HeaderText variant="header4">
-              {formatMessage(m.aboutCoMapeo)}
-            </HeaderText>
-          </TouchableOpacity>
+            paddingLeft={0}
+            paddingRight={15}
+            columnGap={15}
+          />
+          <MenuListItem
+            item={{
+              icon: (
+                <MaterialIcon
+                  name="info-outline"
+                  size={20}
+                  color={NEW_DARK_GREY}
+                />
+              ),
+              onPress: () => navigate('AboutSettings'),
+              primaryText: formatMessage(m.aboutCoMapeo),
+              accessibilityLabel: 'Go to About CoMapeo Screen',
+            }}
+            paddingLeft={0}
+            paddingRight={15}
+            columnGap={15}
+          />
         </View>
       </ScrollView>
-    </Animated.View>
+    </View>
   );
 }
 
@@ -202,8 +212,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     backgroundColor: WHITE,
-    borderColor: BLUE_GREY,
-    borderWidth: 1,
   },
   topBar: {
     flexDirection: 'row',
@@ -216,38 +224,31 @@ const styles = StyleSheet.create({
   deviceRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: 10,
     flex: 1,
   },
   scrollContainer: {
-    paddingHorizontal: 20,
-    paddingBottom: 20,
+    padding: 20,
+    flexDirection: 'column',
+    flexGrow: 1,
+    justifyContent: 'space-between',
   },
   currentProjectLabel: {
-    marginTop: 20,
-    marginBottom: 12,
-    fontWeight: '500',
     textTransform: 'uppercase',
-  },
-  buttonsRow: {
-    flexDirection: 'row',
-    gap: 12,
+    fontWeight: '500',
+    marginBottom: 12,
   },
   card: {
-    width: '100%',
-    borderRadius: 6,
     borderWidth: 1,
     borderColor: VERY_LIGHT_GREY,
+    borderRadius: 6,
     padding: 20,
+    gap: 8,
     shadowColor: BLACK,
     shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.25,
     shadowRadius: 5,
     elevation: 2,
-  },
-  cardContent: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 20,
   },
   soloCard: {
     backgroundColor: '#E5F0FF',
@@ -258,21 +259,13 @@ const styles = StyleSheet.create({
   buttonWrapper: {
     flex: 1,
   },
-  gapColumn: {
-    display: 'flex',
-    flexDirection: 'column',
+  buttonsRow: {
+    flexDirection: 'row',
+    gap: 12,
+    marginTop: 20,
+  },
+  bottomItemsContainer: {
     gap: 20,
-  },
-  gapRow: {
-    display: 'flex',
-    flexDirection: 'row',
-    gap: 10,
-  },
-  menuItems: {
-    flexGrow: 1,
-  },
-  menuItemRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    paddingBottom: 20,
   },
 });

@@ -140,7 +140,9 @@ export function MenuContent({closeMenu}: MenuContentProps) {
               )}
             </View>
           </TouchableOpacity>
-          <Divider />
+          <View style={{marginTop: 20}}>
+            <Divider />
+          </View>
         </View>
         <View style={styles.bottomItemsContainer}>
           <MenuListItem

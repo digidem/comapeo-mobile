@@ -57,7 +57,7 @@
     "message": "About CoMapeo"
   },
   "Navigation.Menu.coordinator": {
-    "message": "You are a coordinator on this project"
+    "message": "You are a coordinator on this project."
   },
   "Navigation.Menu.currentProject": {
     "message": "Current Project"
@@ -69,10 +69,10 @@
     "message": "Invite"
   },
   "Navigation.Menu.mappingOnOwn": {
-    "message": "You are mapping on your own"
+    "message": "You are mapping on your own."
   },
   "Navigation.Menu.participant": {
-    "message": "You are a participant on this project"
+    "message": "You are a participant on this project."
   },
   "Navigation.Menu.privacyPolicy": {
     "message": "Data & Privacy"

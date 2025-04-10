@@ -1,6 +1,7 @@
 import React from 'react';
 import {View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {WARNING_RED} from '../../lib/styles';
 
 export const GpsErrorIcon = () => (
   <View
@@ -21,7 +22,7 @@ export const GpsErrorIcon = () => (
     />
     <Icon
       name="error"
-      color="#660000"
+      color={WARNING_RED}
       size={22}
       style={{position: 'absolute'}}
     />

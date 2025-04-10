@@ -7,6 +7,7 @@ import {useSharedLocationContext} from '../contexts/SharedLocationContext';
 import {useLocationProviderStatus} from '../hooks/useLocationProviderStatus';
 import {getLocationStatus} from '../lib/utils';
 import {BodyText} from './Text/BodyText';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 const m = defineMessages({
   noGps: {
@@ -33,16 +34,16 @@ export const GPSPill: FC<GPSPillProps> = ({onPress}) => {
     providerStatus: locationProviderStatus,
   });
 
-  let textValue: string;
+  let textValue: string | React.ReactNode;
   let IconToRender: React.FC;
 
   switch (locationStatus.status) {
     case 'error':
-      textValue = formatMessage(m.noGps);
+      textValue = '--';
       IconToRender = GpsErrorIcon;
       break;
     case 'searching':
-      textValue = formatMessage(m.searching);
+      textValue = <UIActivityIndicator size={20} color={WHITE} />;
       IconToRender = GpsSearchingIcon;
       break;
     case 'good': {
@@ -64,7 +65,11 @@ export const GPSPill: FC<GPSPillProps> = ({onPress}) => {
       accessibilityLabel="Open GPS Modal">
       <IconToRender />
 
-      <BodyText variant="regular" style={styles.text} numberOfLines={1}>
+      <BodyText
+        variant="smallMeta"
+        style={styles.text}
+        numberOfLines={1}
+        testID="MAP.gps-pill-text">
         {textValue}
       </BodyText>
     </TouchableOpacity>
@@ -75,7 +80,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-evenly',
     minWidth: 68,
     maxWidth: 96,
     minHeight: 32,
@@ -88,5 +93,6 @@ const styles = StyleSheet.create({
   },
   text: {
     color: WHITE,
+    marginBottom: 2,
   },
 });

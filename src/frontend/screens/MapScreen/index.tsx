@@ -167,6 +167,7 @@ export const MapScreen = ({
 
         <TouchableOpacity
           testID="MAIN.add-observation-btn"
+          accessibilityLabel="Add Observation"
           onPress={handleAddPress}>
           <AddButtonSVG />
         </TouchableOpacity>

@@ -9,6 +9,7 @@ import {VERY_LIGHT_GREY, WHITE} from '../../lib/styles';
 import {TrackListItem} from './TrackListItem';
 import {useObservations} from '../../hooks/server/observations';
 import {useTracks} from '../../hooks/server/track';
+import {useAuthContext} from '../../contexts/AuthContext';
 import {ProjectCard} from './ProjectCard';
 
 const m = defineMessages({
@@ -51,12 +52,13 @@ export const ObservationsList: React.FC<
 } = ({navigation}) => {
   const {data: observations} = useObservations();
   const {data: tracks} = useTracks();
+  const {authState} = useAuthContext();
 
   const rowsPerWindow = Math.ceil(
     (Dimensions.get('window').height - 65) / OBSERVATION_CELL_HEIGHT,
   );
 
-  if (!observations.length && !tracks.length) {
+  if ((!observations.length && !tracks.length) || authState === 'obscured') {
     return (
       <ObservationEmptyView
         onPressBack={() => navigation.popTo('Home', {screen: 'Map'})}

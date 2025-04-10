@@ -114,6 +114,7 @@ export type RootStackParamsList = {
   };
   AudioSavedBottomSheet: undefined;
   AudioPlaybackSaved: {uri: string; canDelete: boolean; observationId: string};
+  ObservationMetadata: {observationId: string};
   ErrorBottomSheet: undefined;
   BackgroundMapErrorBottomSheet: {title: string; description: string};
 };

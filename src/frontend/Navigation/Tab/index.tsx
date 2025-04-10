@@ -40,6 +40,16 @@ export const HomeTabs = () => {
         screenOptions={{
           tabBarShowLabel: false,
           headerTransparent: true,
+          header: props => (
+            <React.Suspense fallback={<Loading />}>
+              <HomeHeader
+                {...props}
+                openDrawer={openDrawer}
+                backgroundColor="transparent"
+                showBottomBorder={false}
+              />
+            </React.Suspense>
+          ),
         }}
         initialRouteName={'Map'}
         screenLayout={({children}) => (
@@ -69,38 +79,8 @@ export const HomeTabs = () => {
             ),
           }}
         />
-        <Tab.Screen
-          name="Map"
-          component={MapScreen}
-          options={{
-            header: props => (
-              <React.Suspense fallback={<Loading />}>
-                <HomeHeader
-                  {...props}
-                  openDrawer={openDrawer}
-                  backgroundColor="transparent"
-                  showBottomBorder={false}
-                />
-              </React.Suspense>
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Camera"
-          component={CameraScreen}
-          options={{
-            header: props => (
-              <React.Suspense fallback={<Loading />}>
-                <HomeHeader
-                  {...props}
-                  openDrawer={openDrawer}
-                  backgroundColor="transparent"
-                  showBottomBorder={false}
-                />
-              </React.Suspense>
-            ),
-          }}
-        />
+        <Tab.Screen name="Map" component={MapScreen} />
+        <Tab.Screen name="Camera" component={CameraScreen} />
       </Tab.Navigator>
     </>
   );

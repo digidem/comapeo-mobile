@@ -70,7 +70,10 @@ export function ProjectCard() {
   return (
     <View style={styles.card}>
       <RoleIcon width={20} height={20} />
-      <BodyText testID="OBS.card-text" variant="smallMeta">
+      <BodyText
+        testID="OBS.card-text"
+        style={styles.userRoleText}
+        variant="smallMeta">
         {userRoleText}
       </BodyText>
     </View>
@@ -82,13 +85,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: 48,
-    gap: 10,
+    alignSelf: 'center',
+    paddingVertical: 6,
+    paddingHorizontal: 8,
+    gap: 4,
     backgroundColor: VERY_LIGHT_GREY,
     borderWidth: 1,
     borderColor: BLUE_GREY,
     borderRadius: 6,
-    alignSelf: 'center',
-    width: '90%',
+    width: '95%',
+  },
+  userRoleText: {
+    flexShrink: 1,
+    flexWrap: 'wrap',
+    textAlign: 'center',
   },
 });

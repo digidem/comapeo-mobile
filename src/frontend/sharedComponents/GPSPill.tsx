@@ -1,6 +1,5 @@
 import React, {FC} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
-import {defineMessages, useIntl} from 'react-intl';
 import {DARK_GREY, WHITE} from '../lib/styles';
 import {GpsErrorIcon, GpsSearchingIcon, GpsGoodIcon} from './icons';
 import {useSharedLocationContext} from '../contexts/SharedLocationContext';
@@ -9,23 +8,11 @@ import {getLocationStatus} from '../lib/utils';
 import {BodyText} from './Text/BodyText';
 import {UIActivityIndicator} from 'react-native-indicators';
 
-const m = defineMessages({
-  noGps: {
-    id: 'sharedComponents.GpsPill.noGps',
-    defaultMessage: 'No GPS',
-  },
-  searching: {
-    id: 'sharedComponents.GpsPill.searching',
-    defaultMessage: 'Searching…',
-  },
-});
-
 type GPSPillProps = {
   onPress?: () => void;
 };
 
 export const GPSPill: FC<GPSPillProps> = ({onPress}) => {
-  const {formatMessage} = useIntl();
   const locationProviderStatus = useLocationProviderStatus();
   const {locationState, fgPermissions} = useSharedLocationContext();
 
@@ -52,7 +39,7 @@ export const GPSPill: FC<GPSPillProps> = ({onPress}) => {
       break;
     }
     default:
-      textValue = formatMessage(m.searching);
+      textValue = <UIActivityIndicator size={20} color={WHITE} />;
       IconToRender = GpsSearchingIcon;
       break;
   }

@@ -5,12 +5,12 @@ describe('CoMapeo E2E Flow', function () {
   require('./onboarding/privacy-policy.test');
   require('./onboarding/device-naming.test');
   require('./project/edit-device-name.test');
-  require('./main/side-drawer-menu-no-proj.test');
   require('./project/own-project-headers.test');
-  // TODO: Re-enable once project creation flow is reintroduced
-  // require('./project/create-project-from-drawer.test');
+  require('./main/side-drawer-menu-no-proj.test');
+  require('./project/invite-collaborators.test');
+  require('./project/create-project-from-drawer.test');
   // require('./project/unjoin-project.test');
-  // require('./main/side-drawer-menu-proj.test');
+  require('./main/side-drawer-menu-proj.test');
   require('./main/map.test');
   require('./observations/create-observation.test');
   require('./observations/add-details.test');

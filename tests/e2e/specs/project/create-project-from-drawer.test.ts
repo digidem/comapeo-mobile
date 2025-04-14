@@ -5,12 +5,6 @@ import {output} from '../../utils/naming';
 
 describe('Project - Create Project from Drawer', () => {
   it('should allow user to create a new project', async () => {
-    const drawerIcon = await $(byResourceId('drawer-icon-home'));
-    await drawerIcon.click();
-
-    const createJoinOption = await $('~Go to Create or Join Project');
-    await createJoinOption.click();
-
     const createProjectButton = await $(byText('Create a Project'));
     await expect(createProjectButton).toBeDisplayed();
     await createProjectButton.click();

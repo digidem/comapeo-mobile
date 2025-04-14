@@ -137,7 +137,13 @@ export function MenuContent({closeMenu}: MenuContentProps) {
                 <View style={styles.buttonWrapper}>
                   <PrimaryButton
                     text={formatMessage(m.invite)}
-                    onPress={() => navigate('YourTeam')}
+                    onPress={() => {
+                      if (role === 'solo') {
+                        navigate('InviteCollaborators');
+                      } else {
+                        navigate('SelectDevice');
+                      }
+                    }}
                     fullSize={false}
                     renderIcon={({size}) => (
                       <IonIcon name="person-add" size={size} color={WHITE} />

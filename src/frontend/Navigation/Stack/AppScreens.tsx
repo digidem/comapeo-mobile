@@ -100,6 +100,7 @@ import {ObservationMetadata} from '../../screens/ObservationMetadata.tsx';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagement/ErrorBottomSheet.tsx';
 import {MenuScreen} from '../../screens/MenuScreen';
+import {InviteCollaboratorsScreen} from '../../screens/Settings/ProjectSettings/YourTeam/InviteCollaborators.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -458,6 +459,13 @@ export const createDefaultScreenGroup = ({
         component={MenuScreen}
         options={{
           animation: 'slide_from_right',
+          headerShown: false,
+        }}
+      />
+      <RootStack.Screen
+        name="InviteCollaborators"
+        component={InviteCollaboratorsScreen}
+        options={{
           headerShown: false,
         }}
       />

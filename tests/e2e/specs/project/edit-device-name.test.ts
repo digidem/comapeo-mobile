@@ -5,6 +5,7 @@ import {output} from '../../utils/naming';
 
 describe('Project - Edit Device Name Test', () => {
   it('should navigate to project settings and edit the device name', async () => {
+    await driver.pause(2000);
     const drawerIcon = await $('~Open Navigation Drawer');
     await drawerIcon.tap();
 

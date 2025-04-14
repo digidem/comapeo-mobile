@@ -1,98 +1,86 @@
-import React, {FC, useMemo} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Text} from './Text';
-import {ParamListBase, useIsFocused} from '@react-navigation/native';
-import {useLocationProviderStatus} from '../hooks/useLocationProviderStatus';
-import {getLocationStatus} from '../lib/utils';
-import {defineMessages, useIntl} from 'react-intl';
-import {GpsIcon} from './icons';
+import React, {FC} from 'react';
+import {StyleSheet, TouchableOpacity} from 'react-native';
+import {DARK_GREY, WHITE} from '../lib/styles';
+import {GpsErrorIcon, GpsSearchingIcon, GpsGoodIcon} from './icons';
 import {useSharedLocationContext} from '../contexts/SharedLocationContext';
-import {BLACK, WHITE} from '../lib/styles';
-import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
+import {getLocationStatus} from '../lib/utils';
+import {BodyText} from './Text/BodyText';
+import {UIActivityIndicator} from 'react-native-indicators';
+import type {LocationProviderStatus} from 'expo-location';
 
-const m = defineMessages({
-  noGps: {
-    id: 'sharedComponents.GpsPill.noGps',
-    defaultMessage: 'No GPS',
-  },
-  searching: {
-    id: 'sharedComponents.GpsPill.searching',
-    defaultMessage: 'Searching…',
-  },
-});
+type GPSPillProps = {
+  onPress?: () => void;
+  locationProviderStatus?: LocationProviderStatus;
+};
 
-interface GPSPill {
-  navigation: BottomTabNavigationProp<ParamListBase, string, undefined>;
-}
-
-export const GPSPill: FC<GPSPill> = ({navigation}) => {
-  const isFocused = useIsFocused();
-  const {formatMessage: t} = useIntl();
+export const GPSPill: FC<GPSPillProps> = ({
+  onPress,
+  locationProviderStatus,
+}) => {
   const {locationState, fgPermissions} = useSharedLocationContext();
-  const locationProviderStatus = useLocationProviderStatus();
 
-  const precision = locationState?.location?.coords.accuracy;
+  const locationStatus = getLocationStatus({
+    location: fgPermissions ? locationState.location : undefined,
+    providerStatus: locationProviderStatus,
+  });
 
-  const status = useMemo(() => {
-    const isError = !!locationState.error || !fgPermissions;
+  let textValue: string | React.ReactNode;
+  let IconToRender: React.FC;
 
-    return isError
-      ? 'error'
-      : getLocationStatus({
-          location: locationState.location,
-          providerStatus: locationProviderStatus,
-        });
-  }, [
-    locationProviderStatus,
-    locationState.error,
-    locationState.location,
-    fgPermissions,
-  ]);
-
-  const text = useMemo(() => {
-    if (status === 'error') return t(m.noGps);
-    else if (status === 'searching' || typeof precision === 'undefined') {
-      return t(m.searching);
-    } else return `± ${Math.round(precision!)} m`;
-  }, [precision, status, t]);
+  switch (locationStatus.status) {
+    case 'error':
+      textValue = '--';
+      IconToRender = GpsErrorIcon;
+      break;
+    case 'searching':
+      textValue = <UIActivityIndicator size={20} color={WHITE} />;
+      IconToRender = GpsSearchingIcon;
+      break;
+    case 'good': {
+      textValue = `± ${Math.round(locationStatus.accuracy)} m`;
+      IconToRender = GpsGoodIcon;
+      break;
+    }
+    default:
+      textValue = <UIActivityIndicator size={20} color={WHITE} />;
+      IconToRender = GpsSearchingIcon;
+      break;
+  }
 
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('GpsModal')}
-      testID="MAIN.gps-pill-btn">
-      <View
-        style={[
-          styles.container,
-          status === 'error' ? styles.error : undefined,
-        ]}>
-        <View style={styles.icon}>
-          {isFocused && <GpsIcon variant={status} />}
-        </View>
-        <Text style={styles.text} numberOfLines={1}>
-          {text}
-        </Text>
-      </View>
+      onPress={onPress}
+      style={styles.container}
+      testID="MAP.gps-pill"
+      accessibilityLabel="Open GPS Modal">
+      <IconToRender />
+
+      <BodyText
+        variant="smallMeta"
+        style={styles.text}
+        numberOfLines={1}
+        testID="MAP.gps-pill-text">
+        {textValue}
+      </BodyText>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0,
-    minWidth: 100,
-    maxWidth: 200,
-    borderRadius: 18,
-    height: 36,
-    paddingLeft: 32,
-    paddingRight: 20,
-    borderWidth: 3,
-    borderColor: '#33333366',
-    backgroundColor: BLACK,
-    justifyContent: 'center',
-    alignItems: 'center',
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    minHeight: 32,
+    backgroundColor: DARK_GREY,
+    borderRadius: 20,
+    paddingHorizontal: 10,
+    gap: 5,
+    flexShrink: 1,
+    overflow: 'hidden',
   },
-  error: {backgroundColor: '#FF0000'},
-  text: {color: WHITE},
-  icon: {position: 'absolute', left: 6},
+  text: {
+    color: WHITE,
+    marginBottom: 2,
+  },
 });

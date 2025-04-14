@@ -3,6 +3,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, StyleSheet, Text} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useWindowDimensions} from 'react-native';
 
 import {useAuthContext} from '../contexts/AuthContext';
 import CoMapeoLogoSvg from '../images/CoMapeoLogo.svg';
@@ -10,7 +11,6 @@ import {RED} from '../lib/styles';
 import {PasscodeInput} from '../sharedComponents/PasscodeInput';
 import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
 import {AppStackParamsList} from '../sharedTypes/navigation';
-import {useWindowDimensions} from 'react-native';
 
 const m = defineMessages({
   enterPass: {
@@ -47,9 +47,15 @@ export const AuthScreen = ({
   React.useEffect(() => {
     if (authState === 'unauthenticated') return;
 
-    if (navigation.canGoBack()) {
-      navigation.goBack();
-    } else {
+    if (authState === 'authenticated') {
+      if (navigation.canGoBack()) {
+        navigation.goBack();
+      } else {
+        navigation.popTo('Home', {screen: 'Map'});
+      }
+    }
+
+    if (authState === 'obscured') {
       navigation.popTo('Home', {screen: 'Map'});
     }
   }, [authState, navigation]);

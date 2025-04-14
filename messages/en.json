@@ -1699,5 +1699,26 @@
   },
   "sharedComponents.RoleWithIcon.participant": {
     "message": "Participant"
+  },
+  "soloProject.inviteCollaborators.goBack": {
+    "message": "Go Back"
+  },
+  "soloProject.inviteCollaborators.introText": {
+    "message": "Share observations with others using CoMapeo. Name your solo project to add your first collaborator."
+  },
+  "soloProject.inviteCollaborators.inviteOnly": {
+    "message": "Only devices you invite can contribute and share data with you."
+  },
+  "soloProject.inviteCollaborators.manageControl": {
+    "message": "Manage and control sharing and collaboration in Project Settings."
+  },
+  "soloProject.inviteCollaborators.nameProject": {
+    "message": "Name My Project"
+  },
+  "soloProject.inviteCollaborators.readyToShare": {
+    "message": "Once you name your project, all your observations are ready to be shared."
+  },
+  "soloProject.inviteCollaborators.title": {
+    "message": "Invite Collaborators"
   }
 }

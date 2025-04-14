@@ -8,7 +8,7 @@ describe('Main - Side Drawer Menu - Project Joined', () => {
     const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
 
-    await expect($(byText(`Project ${output.names.project}`))).toBeDisplayed();
+    await expect($(byText(`${output.names.project}`))).toBeDisplayed();
     await expect(
       $(byText('You are a coordinator on this project.')),
     ).toBeDisplayed();

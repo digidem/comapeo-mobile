@@ -298,6 +298,9 @@
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
   },
+  "homeHeader.header.mySoloProject": {
+    "message": "My Solo Project"
+  },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Coordinator"
   },
@@ -1075,9 +1078,6 @@
   "screens.ObservationMetadataVerified.speed": {
     "message": "Speed"
   },
-  "screens.ObservationsList.NoProjectWarning": {
-    "message": "You are currently mapping on your own."
-  },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
     "description": "Back button on observation list screen when no observations are yet recorded",
     "message": "Go To Map"
@@ -1090,9 +1090,14 @@
     "description": "Title of observation list view when the user has not yet recorded observations",
     "message": "Add Observations"
   },
-  "screens.ObservationsList.createOrJoin": {
-    "description": "The full sentence is 'Create or Join a Project to collect data with a team. This action will delete observations you have collected so far. Consider sharingimportant observations to you email before proceeding.' The sentence needs to be seperated for styling purposes",
-    "message": "Create or Join a Project"
+  "screens.ObservationsList.ProjectCard.coordinator": {
+    "message": "You’re a coordinator on this project."
+  },
+  "screens.ObservationsList.ProjectCard.mappingOnYourOwn": {
+    "message": "You’re mapping on your own."
+  },
+  "screens.ObservationsList.ProjectCard.participant": {
+    "message": "You’re a participant on this project."
   },
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",
@@ -1101,10 +1106,6 @@
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
     "message": "Loading… this can take a while after synchronizing with a new device"
-  },
-  "screens.ObservationsList.toSync": {
-    "description": "The full sentence is 'Create or Join a Project to collect data with a team. This action will delete observations you have collected so far. Consider sharing important observations to you email before proceeding.' The sentence needs to be seperated for styling purposes",
-    "message": "to collect data with a team. This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
   },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "Privacy Policy"
@@ -1243,6 +1244,15 @@
   "screens.SaveTrack.track": {
     "description": "Category title for new track screen",
     "message": "Track"
+  },
+  "screens.Security.obscurePasscodeDescription": {
+    "message": "To use, turn on App Passcode"
+  },
+  "screens.Security.obscurePasscodeDescriptionActivated": {
+    "message": "Protect your device against seizure"
+  },
+  "screens.Security.obscurePasscodeHeader": {
+    "message": "Obscure Passcode"
   },
   "screens.Security.passDesriptionPassNotSet": {
     "message": "Passcode not set"
@@ -1661,12 +1671,6 @@
   },
   "sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Something Went Wrong"
-  },
-  "sharedComponents.GpsPill.noGps": {
-    "message": "No GPS"
-  },
-  "sharedComponents.GpsPill.searching": {
-    "message": "Searching…"
   },
   "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.canceled": {
     "message": "Invite Canceled"

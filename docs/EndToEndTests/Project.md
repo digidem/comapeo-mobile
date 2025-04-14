@@ -40,6 +40,22 @@ This test checks the visibility and text of the headers and associated UI elemen
 - These tests require the app to be in a state where the default project is **unnamed** (solo).
 - If the user has previously named the project, the tests will fail because the header text changes.
 
+## Inviting Collaborators While Solo
+
+This test validates that a user on the default “solo” project can open the side drawer, select “Invite” to reach the **Invite Collaborators** screen, and optionally proceed to name the project.
+
+### Test Objectives
+
+- Confirms that **My Solo Project** is shown in the side drawer when no named project exists.
+- Ensures an **Invite** button is visible to solo users.
+- Verifies the **Invite Collaborators** screen appears with the correct heading and bullet points when Invite is pressed.
+- Checks that tapping **Name My Project** navigates to the **Name (Create) Project** flow.
+
+### Special Considerations
+
+- This test must run before any other test that names the project.
+- This test doesn’t fully create a project; it only confirms navigation into `CreateProject` (Name a project) -- see below.
+
 ## Creating a project from the side drawer menu
 
 - This tests a user creating a project for the first time.
@@ -57,19 +73,6 @@ This test checks the visibility and text of the headers and associated UI elemen
 - User can be taken to invite devices screen but no other devices will be present on an emulator
 - If the user goes to the invite devices screen and tries to back out it doesn't work
 - When the project is created, the name does not actually appear in the side drawer menu title
-
-## Creating a project from the sync button
-
-- This tests creating a project from the sync screen
-
-### Test Objectives
-
-- Ensures flow is present to Create a project through series of clicks
-- Ensures user cannot create a project without entering a name first
-
-### Special Considerations
-
-- This test is run as part of an alternative flow to show that clearing out the app storage allows a user to create a new project
 
 ## Unjoining a project
 

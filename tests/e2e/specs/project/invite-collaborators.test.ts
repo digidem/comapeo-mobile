@@ -1,9 +1,8 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
-import {output} from '../../utils/naming';
 
-describe('Project - Solo Project Invite Flow', () => {
+describe('Project - Solo Project Invite/ Name Project Flow', () => {
   it('should open side drawer, navigate to Invite Collaborators screen, and verify content', async () => {
     const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();

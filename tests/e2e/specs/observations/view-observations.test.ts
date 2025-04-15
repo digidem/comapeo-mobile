@@ -71,11 +71,9 @@ describe('Observations - View Observations Flow', () => {
   it('should display my role in the observations list', async () => {
     const myRoleText = await $(byResourceId('OBS.card-text'));
     await expect(myRoleText).toBeDisplayed();
-    // temporary change until project naming comes back easily
-    // await expect(myRoleText).toHaveText(
-    //   'You’re a coordinator on this project.',
-    // );
-    await expect(myRoleText).toHaveText('You’re mapping on your own.');
+    await expect(myRoleText).toHaveText(
+      'You’re a coordinator on this project.',
+    );
   });
 
   it('should toggle camera tab and back to confirm correct place', async () => {

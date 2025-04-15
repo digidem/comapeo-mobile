@@ -5,11 +5,11 @@ import {output} from '../../utils/naming';
 
 describe('Main - Side Drawer Menu - Project Joined', () => {
   it('should display the project name in the side drawer', async () => {
-    const drawerIcon = await $('~Open Navigation Drawer');
+    const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
 
     await expect($(byText(`Project ${output.names.project}`))).toBeDisplayed();
 
-    await $('~Close Navigation Drawer').click();
+    await $('~Close Menu').click();
   });
 });

@@ -1,23 +1,26 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
-import {byTextMatches} from '../../utils/selectors';
+import {byResourceId, byTextMatches, byText} from '../../utils/selectors';
+import {output} from '../../utils/naming';
 
 describe('Main - Side Drawer Menu - No Project', () => {
   it('should open the side drawer and verify menu options', async () => {
-    const drawerIcon = await $('~Open Navigation Drawer');
+    const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
+    const editedDeviceName = await $(byText(output.names.editdevice));
+    await expect(editedDeviceName).toBeDisplayed();
 
-    const headerText = await $(
-      byTextMatches('You are currently mapping on your own'),
+    await expect($(byTextMatches('CURRENT PROJECT'))).toBeDisplayed();
+
+    await expect($(byResourceId('MENU.project-name'))).toHaveText(
+      'My Solo Project',
     );
-    await expect(headerText).toBeDisplayed();
+    await expect($(byResourceId('MENU.project-status'))).toHaveText(
+      'You are mapping on your own.',
+    );
 
-    const createJoinOption = await $('~You are currently mapping on your own');
-    await createJoinOption.click();
-    await expect(headerText).toBeDisplayed();
-
-    await expect($('~Go to Create or Join Project')).toBeDisplayed();
-    await expect($('~Go to Project Settings')).toBeDisplayed();
+    await expect($('~Go to Data and Privacy Screen')).toBeDisplayed();
+    await expect($('~Go to Exchange Screen')).toBeDisplayed();
     await expect($('~Go to App Settings')).toBeDisplayed();
     await expect($('~Go to About CoMapeo Screen')).toBeDisplayed();
 

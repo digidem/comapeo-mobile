@@ -4,7 +4,7 @@ import {byResourceId, byTextMatches} from '../../utils/selectors';
 
 describe('Settings - Language Settings Flow', () => {
   it('should open the Language list from App Settings', async () => {
-    const drawerIcon = await $('~Open Navigation Drawer');
+    const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
 
     const appSettingsOption = await $('~Go to App Settings');
@@ -25,7 +25,7 @@ describe('Settings - Language Settings Flow', () => {
 
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
-    await $('~Close Navigation Drawer').click();
+    await $('~Close Menu').click();
     const obsListTab = await $('~Go to ObservationsList');
     await obsListTab.click();
 
@@ -40,8 +40,10 @@ describe('Settings - Language Settings Flow', () => {
       await drawerIcon.click();
     }
 
-    const settingsInSpanish = await $(byTextMatches('Ajustes de la'));
-    await settingsInSpanish.click();
+    //const settingsInSpanish = await $(byTextMatches('Ajustes de la'));
+    // commenting out until translation done
+    const settingsInEnglish = await $(byTextMatches('Settings'));
+    await settingsInEnglish.click();
 
     const idiomaOption = await $(byTextMatches('Idioma'));
     await idiomaOption.click();
@@ -50,6 +52,6 @@ describe('Settings - Language Settings Flow', () => {
     await englishElem.click();
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
-    await $('~Close Navigation Drawer').click();
+    await $('~Close Menu').click();
   });
 });

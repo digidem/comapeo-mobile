@@ -4,7 +4,7 @@ import {byTextMatches, byResourceId} from '../../utils/selectors';
 
 describe('Project - Unjoin Project', () => {
   it('should show message preventing rejoining project', async () => {
-    const drawerIcon = await $('~Open Navigation Drawer');
+    const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
 
     const createJoinOption = await $('~Go to Create or Join Project');
@@ -15,6 +15,6 @@ describe('Project - Unjoin Project', () => {
     ).toBeDisplayed();
     const backButton = $(byResourceId('MAIN.header-back-btn'));
     await backButton.click();
-    await $('~Close Navigation Drawer').click();
+    await $('~Close Menu').click();
   });
 });

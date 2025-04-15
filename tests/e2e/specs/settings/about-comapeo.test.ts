@@ -6,7 +6,7 @@ describe('Settings - About CoMapeo Flow', () => {
   it('should open About CoMapeo from the drawer', async () => {
     const mapTab = await $('~Go to Map');
     await mapTab.click();
-    const drawerIcon = await $('~Open Navigation Drawer');
+    const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
 
     const aboutComapeoOption = await $('~Go to About CoMapeo Screen');
@@ -27,7 +27,7 @@ describe('Settings - About CoMapeo Flow', () => {
   it('should navigate back to map screen', async () => {
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
-    await $('~Close Navigation Drawer').click();
+    await $('~Close Menu').click();
 
     await expect($(byResourceId('MAIN.mapbox-map-view'))).toBeDisplayed();
   });

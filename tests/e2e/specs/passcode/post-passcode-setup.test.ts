@@ -5,7 +5,7 @@ import {output} from '../../utils/naming';
 
 describe('Passcode - Post Passcode Setup Flow', () => {
   it('should navigate to Security and see "Enter Passcode" if passcode is set', async () => {
-    const drawerIcon = await $('~Open Navigation Drawer');
+    const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
 
     const appSettingsOption = await $('~Go to App Settings');

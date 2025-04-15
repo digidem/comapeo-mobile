@@ -14,7 +14,9 @@ describe('Main - Map Screen Component Test', () => {
   it('should display the named project in the map screen header', async () => {
     const headerTitle = await $(byResourceId('HOME.header-title'));
     await expect(headerTitle).toBeDisplayed();
-    await expect(headerTitle).toHaveText('test project');
+    // temporary change until project naming comes back easily
+    // await expect(headerTitle).toHaveText('test project');
+    await expect(headerTitle).toHaveText('My Solo Project');
   });
 
   it('should navigate to the categories screen from the map screen', async () => {

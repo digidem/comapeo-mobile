@@ -7,13 +7,13 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes.ts';
 import Exchange from '../images/Exchange.svg';
 
-import {MenuWrapper} from '../sharedComponents/MenuList/MenuWrapper';
+import {MainMenuItemWrapper} from '../sharedComponents/MainMenuItemWrapper.tsx';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 import {PrimaryButton, SecondaryButton} from '../sharedComponents/Buttons';
 import {Divider} from '../sharedComponents/Divider';
 
-import {useProjectRoleAndName} from '../hooks/useProjectRoleAndName.ts';
+import {useProjectRoleAndDetails} from '../hooks/useProjectRoleAndDetails.ts';
 
 import {NEW_DARK_GREY, WHITE, VERY_LIGHT_GREY, BLACK} from '../lib/styles';
 import {useActiveProject} from '../contexts/ActiveProjectContext.tsx';
@@ -66,7 +66,12 @@ export function MenuScreen() {
   const navigation = useNavigationFromRoot();
 
   const {projectId} = useActiveProject();
-  const {role, projectName} = useProjectRoleAndName(projectId);
+  const projectInfo = useProjectRoleAndDetails(projectId);
+
+  const displayTitle =
+    projectInfo.role === 'solo'
+      ? projectInfo.projectHeader
+      : projectInfo.projectName;
 
   return (
     <View style={styles.container}>
@@ -78,7 +83,9 @@ export function MenuScreen() {
           <TouchableOpacity
             style={[
               styles.card,
-              role === 'solo' ? styles.soloCard : styles.namedProjectCard,
+              projectInfo.role === 'solo'
+                ? styles.soloCard
+                : styles.namedProjectCard,
             ]}
             onPress={() => navigation.navigate('ProjectSettings')}
             accessibilityLabel="Go to Project Settings">
@@ -86,12 +93,12 @@ export function MenuScreen() {
               variant="header2"
               numberOfLines={2}
               testID="MENU.project-name">
-              {projectName}
+              {displayTitle}
             </HeaderText>
             <BodyText variant="smallMeta" testID="MENU.project-status">
-              {role === 'solo'
+              {projectInfo.role === 'solo'
                 ? formatMessage(m.mappingOnOwn)
-                : role === 'coordinator'
+                : projectInfo.role === 'coordinator'
                   ? formatMessage(m.coordinator)
                   : formatMessage(m.participant)}
             </BodyText>
@@ -106,7 +113,8 @@ export function MenuScreen() {
                   fullSize={false}
                 />
               </View>
-              {role === 'coordinator' || role === 'solo' ? (
+              {projectInfo.role === 'coordinator' ||
+              projectInfo.role === 'solo' ? (
                 <View style={styles.buttonWrapper}>
                   <PrimaryButton
                     text={formatMessage(m.invite)}
@@ -128,15 +136,15 @@ export function MenuScreen() {
         </View>
 
         <View style={styles.bottomItemsContainer}>
-          <MenuWrapper
+          <MainMenuItemWrapper
             onPress={() => navigation.navigate('Sync')}
             accessibilityLabel="Go to Exchange Screen">
             <Exchange width={20} height={20} color={NEW_DARK_GREY} />
             <View style={{paddingLeft: 12}}>
               <BodyText variant="medium">{formatMessage(m.exchange)}</BodyText>
             </View>
-          </MenuWrapper>
-          <MenuWrapper
+          </MainMenuItemWrapper>
+          <MainMenuItemWrapper
             onPress={() => navigation.navigate('AppSettings')}
             accessibilityLabel="Go to App Settings">
             <IonIcon name="settings-outline" size={20} color={NEW_DARK_GREY} />
@@ -145,8 +153,8 @@ export function MenuScreen() {
                 {formatMessage(m.appSettings)}
               </BodyText>
             </View>
-          </MenuWrapper>
-          <MenuWrapper
+          </MainMenuItemWrapper>
+          <MainMenuItemWrapper
             onPress={() => navigation.navigate('DataAndPrivacy')}
             accessibilityLabel="Go to Data and Privacy Screen">
             <Octicons name="shield-lock" size={20} color={NEW_DARK_GREY} />
@@ -155,8 +163,8 @@ export function MenuScreen() {
                 {formatMessage(m.privacyPolicy)}
               </BodyText>
             </View>
-          </MenuWrapper>
-          <MenuWrapper
+          </MainMenuItemWrapper>
+          <MainMenuItemWrapper
             onPress={() => navigation.navigate('AboutSettings')}
             accessibilityLabel="Go to About CoMapeo Screen">
             <MaterialIcon name="info-outline" size={20} color={NEW_DARK_GREY} />
@@ -165,7 +173,7 @@ export function MenuScreen() {
                 {formatMessage(m.aboutCoMapeo)}
               </BodyText>
             </View>
-          </MenuWrapper>
+          </MainMenuItemWrapper>
         </View>
       </ScrollView>
     </View>
@@ -187,6 +195,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     fontWeight: '500',
     marginBottom: 12,
+    color: BLACK,
   },
   card: {
     borderWidth: 1,

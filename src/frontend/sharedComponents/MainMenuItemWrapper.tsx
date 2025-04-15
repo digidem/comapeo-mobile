@@ -2,33 +2,26 @@ import React from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
-  ViewStyle,
-  StyleProp,
   TouchableOpacityProps,
 } from 'react-native';
 
-type MenuWrapperProps = {
-  onPress?: TouchableOpacityProps['onPress'];
+type MainMenuItemWrapperProps = {
+  onPress: TouchableOpacityProps['onPress'];
   children: React.ReactNode;
-  style?: StyleProp<ViewStyle>;
-  testID?: string;
-  accessibilityLabel?: string;
+  accessibilityLabel: string;
 };
 
-export function MenuWrapper({
+export function MainMenuItemWrapper({
   onPress,
   children,
-  style,
-  testID,
   accessibilityLabel,
-}: MenuWrapperProps) {
+}: MainMenuItemWrapperProps) {
   return (
     <TouchableOpacity
-      testID={testID}
       accessibilityLabel={accessibilityLabel}
       onPress={onPress}
-      activeOpacity={0.7}
-      style={[styles.container, style]}>
+      style={styles.container}
+      activeOpacity={0.7}>
       {children}
     </TouchableOpacity>
   );

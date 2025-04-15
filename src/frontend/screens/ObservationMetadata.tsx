@@ -249,8 +249,8 @@ export const ObservationMetadata: NativeNavigationComponent<
       .join('\n');
 
     const footer = !manualLocation
-      ? formatMessage(m.validatedByCoMapeo)
-      : `${formatMessage(m.locationManuallyEntered)}\n${formatMessage(m.sentByComapeo)}`;
+      ? `-${formatMessage(m.validatedByCoMapeo)}-`
+      : `-${formatMessage(m.locationManuallyEntered)}-\n-${formatMessage(m.sentByComapeo)}-`;
 
     const projectName = !name
       ? formatMessage(m.coMapeoData)
@@ -271,7 +271,7 @@ export const ObservationMetadata: NativeNavigationComponent<
 
     await openShare.mutateAsync({
       subject: `${projectName} - ${formatDate(createdAt, {format: 'long'})} - ${categoryName}`,
-      message: `${projectName} - ${categoryName}\n${date}\n${time}\n${formattedLocation}\n${metadataAsFormattedString}\n\n-${footer}-`,
+      message: `${projectName} - ${categoryName}\n${date}\n${time}\n${formattedLocation}\n${metadataAsFormattedString}\n\n${footer}`,
       failOnCancel: false,
     });
   }

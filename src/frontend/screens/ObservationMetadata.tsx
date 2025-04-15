@@ -29,6 +29,7 @@ import {useActiveProject} from '../contexts/ActiveProjectContext';
 import {useCoordinateFormat} from '../contexts/CoordinateFormatStoreContext';
 import {useOpenShareDialog} from '../hooks/share';
 import {useObservationWithPreset} from '../hooks/useObservationWithPreset';
+import {formatCoords} from '../lib/coordinateFormat';
 
 const m = defineMessages({
   navTitle: {
@@ -88,6 +89,22 @@ const m = defineMessages({
   date: {
     id: 'screens.ObservationMetadataVerified.date',
     defaultMessage: 'Date',
+  },
+  validatedByCoMapeo: {
+    id: 'screens.ObservationMetadataVerified.validatedByCoMapeo',
+    defaultMessage: 'Sent and Validated by CoMapeo',
+  },
+  sentByComapeo: {
+    id: 'screens.ObservationMetadataVerified.sentByComapeo',
+    defaultMessage: 'Sent by CoMapeo',
+  },
+  locationManuallyEntered: {
+    id: 'screens.ObservationMetadataVerified.locationManuallyEntered',
+    defaultMessage: 'Location was manually entered',
+  },
+  location: {
+    id: 'screens.ObservationMetadataVerified.location',
+    defaultMessage: 'Location',
   },
 });
 
@@ -223,7 +240,7 @@ export const ObservationMetadata: NativeNavigationComponent<
   );
 
   async function handlePressShare() {
-    const formattedString = filteredListData
+    const metadataAsFormattedString = filteredListData
       .map(item => {
         const key = Object.keys(item)[0] as string;
         const data = item[key]!;
@@ -231,9 +248,30 @@ export const ObservationMetadata: NativeNavigationComponent<
       })
       .join('\n');
 
+    const footer = !manualLocation
+      ? formatMessage(m.validatedByCoMapeo)
+      : `${formatMessage(m.locationManuallyEntered)}\n${formatMessage(m.sentByComapeo)}`;
+
+    const projectName = !name
+      ? formatMessage(m.coMapeoData)
+      : formatMessage(m.sentFrom) + ' ' + name;
+
+    const categoryName = preset
+      ? preset.name
+      : formatMessage(m.fallbackPresetName);
+
+    const date = `${formatMessage(m.date)}: ${formatDate(createdAt, {dateStyle: 'full'})}`;
+
+    const time = formatTime(createdAt, {timeStyle: 'medium'});
+
+    const formattedLocation =
+      lat === undefined || lon === undefined
+        ? ''
+        : `${formatMessage(m.location)}: ${formatCoords({lat, lon, format: coordinateFormat})}`;
+
     await openShare.mutateAsync({
-      subject: `${!name ? formatMessage(m.coMapeoData) : formatMessage(m.sentFrom) + ' ' + name} - ${formatDate(createdAt, {format: 'long'})} - ${preset ? preset.name : formatMessage(m.fallbackPresetName)}`,
-      message: `${!name ? formatMessage(m.coMapeoData) : formatMessage(m.sentFrom) + ' ' + name} - ${preset ? preset.name : formatMessage(m.fallbackPresetName)} \n ${formatMessage(m.date)}: ${formatDate(createdAt, {dateStyle: 'full'})} ${formatTime(createdAt, {timeStyle: 'short'})} \n ${formattedString}`,
+      subject: `${projectName} - ${formatDate(createdAt, {format: 'long'})} - ${categoryName}`,
+      message: `${projectName} - ${categoryName}\n${date}\n${time}\n${formattedLocation}\n${metadataAsFormattedString}\n\n-${footer}-`,
       failOnCancel: false,
     });
   }

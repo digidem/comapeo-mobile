@@ -4,7 +4,7 @@ import {byText, byTextMatches, byResourceId} from '../../utils/selectors';
 
 describe('Passcode - Obscure Passcode Visibility', () => {
   it('should show "To use, turn on App Passcode" if passcode is not set', async () => {
-    const drawerIcon = await $('~Open Navigation Drawer');
+    const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
 
     const appSettingsOption = await $('~Go to App Settings');

@@ -17,15 +17,14 @@ const m = defineMessages({
 });
 
 type HomeHeaderProps = BottomTabHeaderProps & {
-  openDrawer: () => void;
   backgroundColor?: string;
   showBottomBorder?: boolean;
 };
 
 export function HomeHeader({
-  openDrawer,
   backgroundColor = 'transparent',
   showBottomBorder = false,
+  navigation,
 }: HomeHeaderProps) {
   const {formatMessage} = useIntl();
   const {data} = useProjectSettings();
@@ -54,12 +53,16 @@ export function HomeHeader({
           </HeaderText>
         </View>
 
-        <IconButton onPress={openDrawer} style={styles.iconButton}>
+        <IconButton
+          style={styles.iconButton}
+          onPress={() => {
+            navigation.navigate('Menu');
+          }}>
           <DeviceIcon
             width={32}
             height={32}
             testID="drawer-icon-home"
-            accessibilityLabel="Open Navigation Drawer"
+            accessibilityLabel="Open Menu"
           />
         </IconButton>
       </View>

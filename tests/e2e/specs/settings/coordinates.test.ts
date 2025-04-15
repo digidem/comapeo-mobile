@@ -4,7 +4,7 @@ import {byResourceId, byTextMatches} from '../../utils/selectors';
 
 describe('Settings - Coordinates Settings Flow', () => {
   it('should open the App Settings from the drawer', async () => {
-    const drawerIcon = await $('~Open Navigation Drawer');
+    const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
 
     const appSettingsOption = await $('~Go to App Settings');
@@ -32,7 +32,7 @@ describe('Settings - Coordinates Settings Flow', () => {
     await expect($(byTextMatches('App Settings'))).toBeDisplayed();
 
     await backBtn.click();
-    await $('~Close Navigation Drawer').click();
+    await $('~Close Menu').click();
     await expect($(byResourceId('MAIN.mapbox-map-view'))).toBeDisplayed();
   });
 });

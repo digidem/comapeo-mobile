@@ -46,7 +46,7 @@ export const HomeTabs = () => {
         options={{
           headerTransparent: false,
           header: props => (
-            <React.Suspense fallback={<Loading />}>
+            <React.Suspense fallback={null}>
               <HomeHeader {...props} backgroundColor={WHITE} showBottomBorder />
             </React.Suspense>
           ),

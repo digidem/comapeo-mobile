@@ -118,7 +118,13 @@ export function MenuScreen() {
                 <View style={styles.buttonWrapper}>
                   <PrimaryButton
                     text={formatMessage(m.invite)}
-                    onPress={() => navigation.navigate('YourTeam')}
+                    onPress={() => {
+                      if (projectInfo.role === 'solo') {
+                        navigation.navigate('InviteCollaborators');
+                      } else {
+                        navigation.navigate('SelectDevice');
+                      }
+                    }}
                     fullSize={false}
                     renderIcon={({size}) => (
                       <IonIcon name="person-add" size={size} color={WHITE} />

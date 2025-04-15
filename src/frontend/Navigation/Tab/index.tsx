@@ -20,7 +20,7 @@ export const HomeTabs = () => {
         tabBarShowLabel: false,
         headerTransparent: true,
         header: props => (
-          <React.Suspense fallback={<Loading />}>
+          <React.Suspense fallback={null}>
             <HomeHeader
               {...props}
               backgroundColor="transparent"

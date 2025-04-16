@@ -1,18 +1,87 @@
 import * as React from 'react';
-import {View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import {FrontendRole} from '../hooks/useProjectRoleAndDetails';
+import {HeaderText} from './Text/HeaderText';
+import {BodyText} from './Text/BodyText';
+import {defineMessages, useIntl} from 'react-intl';
+import {BLACK, DARK_GREY, VERY_LIGHT_GREY} from '../lib/styles';
 
-type ProjectInfoCardProps = {color: string; description?: string} & (
-  | {
-      projectName: string;
+const m = defineMessages({
+  mappingOnOwn: {
+    id: 'projectInfoCard.mappingOnOwn',
+    defaultMessage: 'You are mapping on your own.',
+  },
+  coordinator: {
+    id: 'projectInfoCard.coordinator',
+    defaultMessage: 'You are a coordinator on this project.',
+  },
+  participant: {
+    id: 'projectInfoCard.participant',
+    defaultMessage: 'You are a participant on this project.',
+  },
+});
 
-      role: 'coordinator' | 'participant';
-    }
-  | {
-      header: string;
-      role: 'solo';
-    }
-);
-
-export const ProjectInfoCard = () => {
-  return <View />;
+export type ProjectInfoCardProps = {
+  headerText: string;
+  role: FrontendRole;
+  projectDescription?: string;
+  backgroundColor: string;
+  ButtonsRow?: React.ReactNode;
 };
+
+export const ProjectInfoCard = ({
+  headerText,
+  role,
+  projectDescription,
+  backgroundColor,
+  ButtonsRow,
+}: ProjectInfoCardProps) => {
+  const {formatMessage} = useIntl();
+
+  return (
+    <View
+      style={{
+        ...styles.card,
+        backgroundColor: backgroundColor,
+      }}>
+      <HeaderText variant="header2">{headerText}</HeaderText>
+      {projectDescription && <BodyText>{projectDescription}</BodyText>}
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        {role === 'solo' ? (
+          <></>
+        ) : (
+          <MaterialIcon
+            color={DARK_GREY}
+            size={20}
+            name={role === 'coordinator' ? 'manage-accounts' : 'people'}
+            style={{marginRight: 10}}
+          />
+        )}
+        <BodyText variant="smallMeta">
+          {role === 'solo'
+            ? formatMessage(m.mappingOnOwn)
+            : role === 'coordinator'
+              ? formatMessage(m.coordinator)
+              : formatMessage(m.participant)}
+        </BodyText>
+      </View>
+      {ButtonsRow && ButtonsRow}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  card: {
+    borderWidth: 1,
+    borderColor: VERY_LIGHT_GREY,
+    borderRadius: 6,
+    padding: 20,
+    gap: 8,
+    shadowColor: BLACK,
+    shadowOffset: {width: 0, height: 1},
+    shadowOpacity: 0.25,
+    shadowRadius: 5,
+    elevation: 2,
+  },
+});

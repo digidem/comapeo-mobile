@@ -22,7 +22,7 @@ const m = defineMessages({
  */
 export type FrontendRole = 'coordinator' | 'participant' | 'solo';
 
-export type ProjectDetails = {backgroundColor: string} & (
+export type ProjectDetails = {projectColor: string} & (
   | {
       role: Extract<FrontendRole, 'solo'>;
       projectHeader: string;
@@ -44,7 +44,7 @@ export function useProjectRoleAndDetails(projectId: string): ProjectDetails {
     role: 'solo',
     projectHeader: formatMessage(m.mySoloProject),
     projectName: undefined,
-    backgroundColor: '#E5F0FF',
+    projectColor: '#E5F0FF',
   };
 
   if (!projectData?.name || !roleData?.roleId) {
@@ -56,13 +56,13 @@ export function useProjectRoleAndDetails(projectId: string): ProjectDetails {
     return {
       role: 'coordinator',
       projectName: projectData.name,
-      backgroundColor: '#FFF5EB',
+      projectColor: '#FFF5EB',
     };
   } else if (roleId === MEMBER_ROLE_ID) {
     return {
       role: 'participant',
       projectName: projectData.name,
-      backgroundColor: '#FFF5EB',
+      projectColor: '#FFF5EB',
     };
   }
 

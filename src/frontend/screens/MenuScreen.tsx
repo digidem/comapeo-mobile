@@ -68,7 +68,7 @@ export function MenuScreen() {
             {formatMessage(m.currentProject)}
           </BodyText>
           <ProjectInfoCard
-            backgroundColor={projectInfo.backgroundColor}
+            backgroundColor={projectInfo.projectColor}
             role={role}
             headerText={displayTitle}
             projectDescription={

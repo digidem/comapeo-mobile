@@ -7,14 +7,15 @@ import {
 import {useFocusEffect} from '@react-navigation/native';
 import {useQueryClient} from '@tanstack/react-query';
 import {defineMessages, useIntl} from 'react-intl';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Bar as ProgressBar} from 'react-native-progress';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import ObservationsProjectImage from '../../images/ObservationsProject.svg';
+import {useLocalDiscoveryState} from '../../hooks/useLocalDiscoveryState';
 import {ExhaustivenessError} from '../../lib/ExhaustivenessError';
 import {
+  BLACK,
   COMAPEO_BLUE,
   DARK_GREEN,
   DARK_GREY,
@@ -28,23 +29,30 @@ import {
   getSyncingPeersCount,
   type SyncStage,
 } from '../../lib/sync';
-import {Button} from '../../sharedComponents/Button';
 import {
   DoneIcon,
   StopIcon,
   SyncIcon,
   WifiIcon,
+  WifiOffIcon,
 } from '../../sharedComponents/icons';
+import {Circle} from '../../sharedComponents/icons/Circle';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {ROOT_QUERY_KEY} from '../../constants';
+import {useGetRemoteArchives} from '../../hooks/server/projects';
+import {Button} from '../../sharedComponents/Button';
 
 const m = defineMessages({
   devicesFound: {
     id: 'screens.Sync.ProjectSyncDisplay.devicesFound',
     defaultMessage: 'Devices found',
+  },
+  connectedTo: {
+    id: 'screens.Sync.ProjectSyncDisplay.connectedTo',
+    defaultMessage: 'Connected to',
   },
 
   noDevicesAvailableToSync: {
@@ -61,7 +69,7 @@ const m = defineMessages({
   },
   syncingWithDevices: {
     id: 'screens.Sync.ProjectSyncDisplay.syncingWithDevices',
-    defaultMessage: 'You are syncing with your team',
+    defaultMessage: 'You are exchanging with your team',
   },
   syncingCompleteButWaitingForOthers: {
     id: 'screens.Sync.ProjectSyncDisplay.syncingCompleteButWaitingForOthers',
@@ -71,11 +79,11 @@ const m = defineMessages({
     id: 'screens.Sync.ProjectSyncDisplay.syncingFullyComplete',
     defaultMessage: "Complete! You're up to date",
   },
+
   allDataSynced: {
     id: 'screens.Sync.ProjectSyncDisplay.allDataSynced',
-    defaultMessage: 'All data synced',
+    defaultMessage: 'All data exchanged',
   },
-
   progressLabelWaiting: {
     id: 'screens.Sync.ProjectSyncDisplay.progressLabelWaiting',
     defaultMessage: 'Waiting…',
@@ -92,28 +100,34 @@ const m = defineMessages({
     id: 'screens.Sync.ProjectSyncDisplay.syncProgress',
     defaultMessage: '{value}%',
   },
+  readyToExchange: {
+    id: 'screens.Sync.ProjectSyncDisplay.readyToExchange',
+    defaultMessage: 'Ready to exchange',
+  },
+  remoteArchiveConnected: {
+    id: 'screens.Sync.remoteArchiveConnected',
+    defaultMessage: 'Remote Archive connected',
+  },
 
-  startSync: {
-    id: 'screens.Sync.ProjectSyncDisplay.startSync',
-    defaultMessage: 'Start Sync',
+  start: {
+    id: 'screens.Sync.ProjectSyncDisplay.start',
+    defaultMessage: 'Start',
   },
   stop: {
     id: 'screens.Sync.ProjectSyncDisplay.stop',
     defaultMessage: 'Stop',
+  },
+  wifiCardPlaceholder: {
+    id: 'screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder',
+    defaultMessage: '{ssid}',
   },
   allCaughtUp: {
     id: 'screens.Sync.ProjectSyncDisplay.allCaughtUp',
     defaultMessage: "You're all caught up!",
   },
 });
-// This component has headers that vary from the design system by request of sabella. The headers are manually set to rubik 400 at size 32
-export const ProjectSyncDisplay = ({
-  syncState,
-  projectName,
-}: {
-  syncState: SyncState;
-  projectName?: string;
-}) => {
+
+export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
   const {formatMessage: t} = useIntl();
   const queryClient = useQueryClient();
   const navigation = useNavigationFromRoot();
@@ -121,9 +135,17 @@ export const ProjectSyncDisplay = ({
   const progress = useDataSyncProgress({projectId});
   const startSync = useStartSync({projectId});
 
+  const ssid = useLocalDiscoveryState(state => state.ssid);
+
+  const WifiIconComponent = ssid ? WifiIcon : WifiOffIcon;
+
   const connectedPeersCount = getConnectedPeersCount(
     syncState.remoteDeviceSyncState,
   );
+
+  const {data: remoteArchives} = useGetRemoteArchives();
+
+  const remoteArchiveConnected = remoteArchives && remoteArchives.length > 0;
 
   const syncingPeersCount = getSyncingPeersCount(
     syncState.remoteDeviceSyncState,
@@ -183,7 +205,7 @@ export const ProjectSyncDisplay = ({
       dockContent = (
         <PrimaryButton
           fullSize
-          text={t(m.startSync)}
+          text={t(m.start)}
           renderIcon={({size}) => <SyncIcon size={size} />}
           onPress={() => {
             // TODO: Catch/surface error
@@ -193,11 +215,11 @@ export const ProjectSyncDisplay = ({
       );
 
       syncInfoContent = (
-        <Text style={styles.titleText}>
+        <HeaderText variant="header1" style={{textAlign: 'center'}}>
           {syncStage.connectedPeersCount > 0
-            ? t(m.devicesAvailableToSync)
+            ? t(m.readyToExchange)
             : t(m.noDevicesAvailableToSync)}
-        </Text>
+        </HeaderText>
       );
       break;
     }
@@ -216,7 +238,9 @@ export const ProjectSyncDisplay = ({
 
       syncInfoContent = (
         <>
-          <Text style={styles.titleText}>{t(m.waitingForDevices)}</Text>
+          <HeaderText variant="header1" style={{textAlign: 'center'}}>
+            {t(m.waitingForDevices)}
+          </HeaderText>
           <SyncProgress stage={syncStage} />
         </>
       );
@@ -238,11 +262,11 @@ export const ProjectSyncDisplay = ({
 
       syncInfoContent = (
         <>
-          <Text style={styles.titleText}>
+          <HeaderText variant="header1" style={{textAlign: 'center'}}>
             {syncStage.progress === 0
               ? t(m.waitingForDevices)
               : t(m.syncingWithDevices)}
-          </Text>
+          </HeaderText>
           <SyncProgress stage={syncStage} />
         </>
       );
@@ -264,9 +288,9 @@ export const ProjectSyncDisplay = ({
 
       syncInfoContent = (
         <>
-          <Text style={styles.titleText}>
+          <HeaderText variant="header1" style={{textAlign: 'center'}}>
             {t(m.syncingCompleteButWaitingForOthers)}
-          </Text>
+          </HeaderText>
           <SyncProgress stage={syncStage} />
         </>
       );
@@ -293,8 +317,10 @@ export const ProjectSyncDisplay = ({
       syncInfoContent = (
         <>
           <View>
-            <Text style={styles.titleText}>{t(m.syncingFullyComplete)}</Text>
-            <HeaderText variant="header2" style={styles.subtitleText}>
+            <HeaderText variant="header1" style={{textAlign: 'center'}}>
+              {t(m.syncingFullyComplete)}
+            </HeaderText>
+            <HeaderText variant="header2" style={{textAlign: 'center'}}>
               {t(m.allDataSynced)}
             </HeaderText>
           </View>
@@ -312,19 +338,36 @@ export const ProjectSyncDisplay = ({
     }
   }
 
+  const devicesAvailableText = syncStage.connectedPeersCount > 0 && (
+    <View style={styles.connectedDevicesInfoContainer}>
+      <WifiIcon color={DARK_GREY} size={20} />
+      <BodyText>{t(m.devicesFound)}</BodyText>
+    </View>
+  );
+
   return (
     <ScreenContentWithDock
       contentContainerStyle={styles.contentContainer}
       dockContent={dockContent}>
+      <View style={styles.wifiCard}>
+        <Circle color="#000033" radius={14} style={styles.signalIndicator}>
+          <WifiIconComponent size={16} color={WHITE} />
+        </Circle>
+        <BodyText style={styles.wifiCardText}>
+          {ssid
+            ? t(m.connectedTo) + ' ' + ssid
+            : t(m.wifiCardPlaceholder, {ssid: 'No WiFi'})}
+        </BodyText>
+      </View>
       <View style={styles.projectInfoContainer}>
-        <ObservationsProjectImage />
-        {projectName && (
-          <HeaderText variant="header2">{projectName}</HeaderText>
+        {devicesAvailableText}
+        {remoteArchiveConnected && (
+          <View style={{marginTop: 10}}>
+            <BodyText style={styles.remoteArchiveText}>
+              {t(m.remoteArchiveConnected)}
+            </BodyText>
+          </View>
         )}
-        <View style={styles.connectedDevicesInfoContainer}>
-          <WifiIcon color={DARK_GREY} size={20} />
-          <BodyText>{t(m.devicesFound)}</BodyText>
-        </View>
       </View>
       {syncInfoContent}
     </ScreenContentWithDock>
@@ -369,8 +412,8 @@ function SyncProgress({
   }
 
   return (
-    <View style={styles.syncProgressContainer}>
-      <View style={styles.syncProgressTextContainer}>
+    <View style={styles.progressContainer}>
+      <View style={styles.progressLabelRow}>
         {stage.name === 'complete-full' ? (
           <DoneIcon color={DARK_GREEN} size={20} />
         ) : (
@@ -379,8 +422,7 @@ function SyncProgress({
         <HeaderText
           variant="header3"
           style={{
-            ...styles.syncProgressLabel,
-            ...(stage.name === 'complete-full' && {color: DARK_GREEN}),
+            color: stage.name === 'complete-full' ? DARK_GREEN : COMAPEO_BLUE,
           }}>
           {progressLabel}
         </HeaderText>
@@ -398,7 +440,7 @@ function SyncProgress({
       />
 
       {stage.name !== 'waiting' && (
-        <BodyText style={styles.syncProgressText}>
+        <BodyText style={styles.progressPercent}>
           {t(m.progressSyncPercentage, {
             value: Math.round(stage.progress * 100),
           })}
@@ -407,41 +449,57 @@ function SyncProgress({
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   contentContainer: {
-    paddingVertical: 40,
-    gap: 36,
+    paddingVertical: 20,
+    gap: 10,
+  },
+  wifiCard: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    paddingHorizontal: 15,
+    paddingVertical: 14,
+    gap: 10,
+    width: '100%',
+    backgroundColor: WHITE,
+    borderWidth: 1,
+    borderColor: '#CCCCD6',
+    borderRadius: 6,
+  },
+  wifiCardText: {
+    fontSize: 16,
+    color: BLACK,
   },
   projectInfoContainer: {
     alignItems: 'center',
     gap: 8,
+    paddingTop: 35,
+    paddingBottom: 40,
   },
   connectedDevicesInfoContainer: {
     flexDirection: 'row',
     gap: 8,
   },
-  titleText: {
-    fontSize: 32,
-    textAlign: 'center',
-    fontFamily: 'Rubik_400Regular',
-  },
-  subtitleText: {
+  remoteArchiveText: {
     textAlign: 'center',
   },
-  syncProgressContainer: {
-    gap: 12,
+  progressContainer: {
+    marginTop: 30,
+    gap: 10,
   },
-  syncProgressTextContainer: {
+  progressLabelRow: {
     flexDirection: 'row',
-    gap: 8,
+    gap: 10,
     alignItems: 'center',
+    justifyContent: 'center',
   },
-  syncProgressLabel: {
-    color: COMAPEO_BLUE,
-  },
-  syncProgressText: {
+  progressPercent: {
     color: MEDIUM_GREY,
-    alignSelf: 'flex-end',
+    textAlign: 'right',
+    marginTop: 4,
+  },
+  signalIndicator: {
+    elevation: 0,
+    backgroundColor: '#000033',
   },
 });

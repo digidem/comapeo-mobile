@@ -215,7 +215,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
       );
 
       syncInfoContent = (
-        <HeaderText variant="header1" style={{textAlign: 'center'}}>
+        <HeaderText variant="header1" style={styles.exchangeInfoText}>
           {syncStage.connectedPeersCount > 0
             ? t(m.readyToExchange)
             : t(m.noDevicesAvailableToSync)}
@@ -238,7 +238,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
 
       syncInfoContent = (
         <>
-          <HeaderText variant="header1" style={{textAlign: 'center'}}>
+          <HeaderText variant="header1" style={styles.exchangeInfoText}>
             {t(m.waitingForDevices)}
           </HeaderText>
           <SyncProgress stage={syncStage} />
@@ -262,7 +262,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
 
       syncInfoContent = (
         <>
-          <HeaderText variant="header1" style={{textAlign: 'center'}}>
+          <HeaderText variant="header1" style={styles.exchangeInfoText}>
             {syncStage.progress === 0
               ? t(m.waitingForDevices)
               : t(m.syncingWithDevices)}
@@ -288,7 +288,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
 
       syncInfoContent = (
         <>
-          <HeaderText variant="header1" style={{textAlign: 'center'}}>
+          <HeaderText variant="header1" style={styles.exchangeInfoText}>
             {t(m.syncingCompleteButWaitingForOthers)}
           </HeaderText>
           <SyncProgress stage={syncStage} />
@@ -317,7 +317,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
       syncInfoContent = (
         <>
           <View>
-            <HeaderText variant="header1" style={{textAlign: 'center'}}>
+            <HeaderText variant="header1" style={styles.exchangeInfoText}>
               {t(m.syncingFullyComplete)}
             </HeaderText>
             <HeaderText variant="header2" style={{textAlign: 'center'}}>
@@ -341,7 +341,9 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
   const devicesAvailableText = syncStage.connectedPeersCount > 0 && (
     <View style={styles.connectedDevicesInfoContainer}>
       <WifiIcon color={DARK_GREY} size={20} />
-      <BodyText>{t(m.devicesFound)}</BodyText>
+      <BodyText style={{color: BLACK}} variant="smallMeta">
+        {t(m.devicesFound)}
+      </BodyText>
     </View>
   );
 
@@ -353,7 +355,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
         <Circle color="#000033" radius={14} style={styles.signalIndicator}>
           <WifiIconComponent size={16} color={WHITE} />
         </Circle>
-        <BodyText style={styles.wifiCardText}>
+        <BodyText>
           {ssid
             ? t(m.connectedTo) + ' ' + ssid
             : t(m.wifiCardPlaceholder, {ssid: 'No WiFi'})}
@@ -362,8 +364,13 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
       <View style={styles.projectInfoContainer}>
         {devicesAvailableText}
         {remoteArchiveConnected && (
-          <View style={{marginTop: 10}}>
-            <BodyText style={styles.remoteArchiveText}>
+          <View style={styles.remoteInfoContainer}>
+            <Circle
+              color="#444444"
+              radius={7}
+              style={{backgroundColor: '#444444', elevation: 0}}
+            />
+            <BodyText variant="smallMeta" style={styles.remoteArchiveText}>
               {t(m.remoteArchiveConnected)}
             </BodyText>
           </View>
@@ -466,10 +473,6 @@ const styles = StyleSheet.create({
     borderColor: '#CCCCD6',
     borderRadius: 6,
   },
-  wifiCardText: {
-    fontSize: 16,
-    color: BLACK,
-  },
   projectInfoContainer: {
     alignItems: 'center',
     gap: 8,
@@ -480,8 +483,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 8,
   },
+  remoteInfoContainer: {
+    flexDirection: 'row',
+    gap: 8,
+    alignItems: 'center',
+  },
   remoteArchiveText: {
     textAlign: 'center',
+    color: BLACK,
+  },
+  exchangeInfoText: {
+    textAlign: 'center',
+    color: BLACK,
   },
   progressContainer: {
     marginTop: 30,

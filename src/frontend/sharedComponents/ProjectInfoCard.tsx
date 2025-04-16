@@ -6,6 +6,7 @@ import {HeaderText} from './Text/HeaderText';
 import {BodyText} from './Text/BodyText';
 import {defineMessages, useIntl} from 'react-intl';
 import {BLACK, DARK_GREY, VERY_LIGHT_GREY} from '../lib/styles';
+import NoProjectIcon from '../images/NoProjectIcon.svg';
 
 const m = defineMessages({
   mappingOnOwn: {
@@ -46,19 +47,20 @@ export const ProjectInfoCard = ({
         backgroundColor: backgroundColor,
       }}>
       <HeaderText variant="header2">{headerText}</HeaderText>
-      {projectDescription && <BodyText>{projectDescription}</BodyText>}
+      {projectDescription && (
+        <BodyText variant="smallMeta">{projectDescription}</BodyText>
+      )}
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         {role === 'solo' ? (
-          <></>
+          <NoProjectIcon />
         ) : (
           <MaterialIcon
             color={DARK_GREY}
             size={20}
             name={role === 'coordinator' ? 'manage-accounts' : 'people'}
-            style={{marginRight: 10}}
           />
         )}
-        <BodyText variant="smallMeta">
+        <BodyText style={{marginLeft: 10}} variant="smallMeta">
           {role === 'solo'
             ? formatMessage(m.mappingOnOwn)
             : role === 'coordinator'

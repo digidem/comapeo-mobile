@@ -22,18 +22,18 @@ const m = defineMessages({
  */
 export type FrontendRole = 'coordinator' | 'participant' | 'solo';
 
-export type ProjectDetails =
+export type ProjectDetails = {backgroundColor: string} & (
   | {
       role: Extract<FrontendRole, 'solo'>;
       projectHeader: string;
       projectName: undefined;
-      backgroundColor: string;
     }
   | {
       role: Exclude<FrontendRole, 'solo'>;
       projectName: string;
-      backgroundColor: string;
-    };
+      projectDescription?: string;
+    }
+);
 
 export function useProjectRoleAndDetails(projectId: string): ProjectDetails {
   const {data: projectData} = useProjectSettings();

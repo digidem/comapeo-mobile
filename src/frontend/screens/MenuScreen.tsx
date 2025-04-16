@@ -71,6 +71,12 @@ export function MenuScreen() {
             backgroundColor={projectInfo.backgroundColor}
             role={role}
             headerText={displayTitle}
+            projectDescription={
+              'projectDescription' in projectInfo &&
+              projectInfo.projectDescription
+                ? projectInfo.projectDescription
+                : undefined
+            }
             ButtonsRow={
               <View style={styles.buttonsRow}>
                 <View

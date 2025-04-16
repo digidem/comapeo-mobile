@@ -5,11 +5,19 @@ import {
   CREATOR_ROLE_ID,
   MEMBER_ROLE_ID,
 } from '../sharedTypes';
+import {defineMessages, useIntl} from 'react-intl';
+
+const m = defineMessages({
+  mySoloProject: {
+    id: 'useProjectRoleAndDetails.mySoloProject',
+    defaultMessage: 'My Solo Project',
+  },
+});
 
 export type ProjectDetails =
   | {
       role: 'solo';
-      projectHeader: 'My Solo Project';
+      projectHeader: string;
       projectName: undefined;
     }
   | {
@@ -20,13 +28,16 @@ export type ProjectDetails =
 export function useProjectRoleAndDetails(projectId: string): ProjectDetails {
   const {data: projectData} = useProjectSettings();
   const {data: roleData} = useOwnRoleInProject({projectId});
+  const {formatMessage} = useIntl();
+
+  const soloProject = {
+    role: 'solo',
+    projectHeader: formatMessage(m.mySoloProject),
+    projectName: undefined,
+  };
 
   if (!projectData?.name || !roleData?.roleId) {
-    return {
-      role: 'solo',
-      projectHeader: 'My Solo Project',
-      projectName: undefined,
-    };
+    return soloProject as ProjectDetails;
   }
 
   const {roleId} = roleData;
@@ -42,9 +53,5 @@ export function useProjectRoleAndDetails(projectId: string): ProjectDetails {
     };
   }
 
-  return {
-    role: 'solo',
-    projectHeader: 'My Solo Project',
-    projectName: undefined,
-  };
+  return soloProject as ProjectDetails;
 }

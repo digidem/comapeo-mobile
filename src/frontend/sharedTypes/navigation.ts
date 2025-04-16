@@ -118,6 +118,7 @@ export type RootStackParamsList = {
   ErrorBottomSheet: undefined;
   BackgroundMapErrorBottomSheet: {title: string; description: string};
   Menu: undefined;
+  InviteCollaborators: undefined;
 };
 
 export type OnboardingParamsList = {

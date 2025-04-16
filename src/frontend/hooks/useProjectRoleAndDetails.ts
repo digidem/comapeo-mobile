@@ -14,15 +14,25 @@ const m = defineMessages({
   },
 });
 
+/**
+ * Represents the role of a user within a project, as used in the frontend.
+ * - 'coordinator': Backend role indicating the user manages the project.
+ * - 'participant': Backend role indicating the user contributes to the project.
+ * - 'solo': Derived frontend-only role indicating the user is the sole owner/manager.
+ */
+export type FrontendRole = 'coordinator' | 'participant' | 'solo';
+
 export type ProjectDetails =
   | {
-      role: 'solo';
+      role: Extract<FrontendRole, 'solo'>;
       projectHeader: string;
       projectName: undefined;
+      backgroundColor: string;
     }
   | {
-      role: 'coordinator' | 'participant';
+      role: Exclude<FrontendRole, 'solo'>;
       projectName: string;
+      backgroundColor: string;
     };
 
 export function useProjectRoleAndDetails(projectId: string): ProjectDetails {
@@ -30,14 +40,15 @@ export function useProjectRoleAndDetails(projectId: string): ProjectDetails {
   const {data: roleData} = useOwnRoleInProject({projectId});
   const {formatMessage} = useIntl();
 
-  const soloProject = {
+  const soloProject: ProjectDetails = {
     role: 'solo',
     projectHeader: formatMessage(m.mySoloProject),
     projectName: undefined,
+    backgroundColor: '#E5F0FF',
   };
 
   if (!projectData?.name || !roleData?.roleId) {
-    return soloProject as ProjectDetails;
+    return soloProject;
   }
 
   const {roleId} = roleData;
@@ -45,11 +56,13 @@ export function useProjectRoleAndDetails(projectId: string): ProjectDetails {
     return {
       role: 'coordinator',
       projectName: projectData.name,
+      backgroundColor: '#FFF5EB',
     };
   } else if (roleId === MEMBER_ROLE_ID) {
     return {
       role: 'participant',
       projectName: projectData.name,
+      backgroundColor: '#FFF5EB',
     };
   }
 

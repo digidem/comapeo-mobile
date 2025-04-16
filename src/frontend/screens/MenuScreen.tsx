@@ -14,7 +14,7 @@ import {Divider} from '../sharedComponents/Divider';
 
 import {useProjectRoleAndDetails} from '../hooks/useProjectRoleAndDetails.ts';
 
-import {NEW_DARK_GREY, WHITE, BLACK} from '../lib/styles';
+import {NEW_DARK_GREY, BLACK, WHITE} from '../lib/styles';
 import {useActiveProject} from '../contexts/ActiveProjectContext.tsx';
 import {ProjectInfoCard} from '../sharedComponents/ProjectInfoCard.tsx';
 
@@ -94,8 +94,8 @@ export function MenuScreen() {
                       text={formatMessage(m.invite)}
                       onPress={() => navigation.navigate('YourTeam')}
                       fullSize={false}
-                      renderIcon={({size}) => (
-                        <IonIcon name="person-add" size={size} color={WHITE} />
+                      renderIcon={({size, color}) => (
+                        <IonIcon name="person-add" size={size} color={color} />
                       )}
                     />
                   </View>

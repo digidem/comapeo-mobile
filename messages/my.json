@@ -49,46 +49,35 @@
   "Modal.GPSEnable.trackingDescription": {
     "message": "You’ve been recording for"
   },
-  "Navigation.Drawer.aboutCoMapeo": {
-    "description": "Primary text for 'About CoMapeo' link (version info)",
+  "Navigation.Menu.Settings": {
+    "message": "Settings"
+  },
+  "Navigation.Menu.aboutCoMapeo": {
     "message": "About CoMapeo"
   },
-  "Navigation.Drawer.aboutCoMapeoDesc": {
-    "description": "Description of the 'About CoMapeo' page",
-    "message": "Version and build number"
+  "Navigation.Menu.coordinator": {
+    "message": "You are a coordinator on this project."
   },
-  "Navigation.Drawer.appSettings": {
-    "message": "App Settings"
+  "Navigation.Menu.currentProject": {
+    "message": "Current Project"
   },
-  "Navigation.Drawer.appSettingsDesc": {
-    "description": "list of avaialable app settings",
-    "message": "Language, Security, Coordinates"
+  "Navigation.Menu.exchange": {
+    "message": "Exchange"
   },
-  "Navigation.Drawer.createOrJoin": {
-    "message": "Create or Join Project"
+  "Navigation.Menu.invite": {
+    "message": "Invite"
   },
-  "Navigation.Drawer.createOrJoinDesc": {
-    "message": "Create a new project or join existing one"
+  "Navigation.Menu.mappingOnOwn": {
+    "message": "You are mapping on your own."
   },
-  "Navigation.Drawer.mappingOnOwn": {
-    "message": "You are currently mapping on your own"
+  "Navigation.Menu.participant": {
+    "message": "You are a participant on this project."
   },
-  "Navigation.Drawer.privacyPolicy": {
-    "message": "Privacy Policy"
+  "Navigation.Menu.privacyPolicy": {
+    "message": "Data & Privacy"
   },
-  "Navigation.Drawer.projName": {
-    "message": "Project {projectName}"
-  },
-  "Navigation.Drawer.projectSettings": {
-    "message": "Project Settings"
-  },
-  "Navigation.Drawer.projectSettingsDesc": {
-    "description": "list of avaialable project settings",
-    "message": "Categories, Config, Team"
-  },
-  "Navigation.Drawer.title": {
-    "description": "Title of settings screen",
-    "message": "Settings"
+  "Navigation.Menu.viewProject": {
+    "message": "View"
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -937,6 +926,10 @@
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "လေ့လာတွေ့ရှိချက်များ"
   },
+  "screens.Observation.fallbackPresetName": {
+    "description": "Fallback name used when category name cannot be determined for observation",
+    "message": "Observation"
+  },
   "screens.Observation.shareMediaTitle": {
     "description": "Title of dialog to share an observation with media",
     "message": "Sharing image"
@@ -1057,14 +1050,26 @@
   "screens.ObservationMetadataVerified.altitudeAccuracy": {
     "message": "Altitude Accuracy"
   },
+  "screens.ObservationMetadataVerified.coMapeoData": {
+    "message": "CoMapeo Data"
+  },
   "screens.ObservationMetadataVerified.dataEntered": {
     "message": "This data was manually entered."
+  },
+  "screens.ObservationMetadataVerified.date": {
+    "message": "Date"
   },
   "screens.ObservationMetadataVerified.howWeCheck": {
     "message": "How we validate"
   },
   "screens.ObservationMetadataVerified.latitude": {
     "message": "Latitude"
+  },
+  "screens.ObservationMetadataVerified.location": {
+    "message": "Location"
+  },
+  "screens.ObservationMetadataVerified.locationManuallyEntered": {
+    "message": "Location was manually entered"
   },
   "screens.ObservationMetadataVerified.longitude": {
     "message": "Longitude"
@@ -1075,8 +1080,17 @@
   "screens.ObservationMetadataVerified.navTitle": {
     "message": "Observation Metadata"
   },
+  "screens.ObservationMetadataVerified.sentByComapeo": {
+    "message": "Sent by CoMapeo"
+  },
+  "screens.ObservationMetadataVerified.sentFrom": {
+    "message": "CoMapeo Data sent from"
+  },
   "screens.ObservationMetadataVerified.speed": {
     "message": "Speed"
+  },
+  "screens.ObservationMetadataVerified.validatedByCoMapeo": {
+    "message": "Sent and Validated by CoMapeo"
   },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
     "description": "Back button on observation list screen when no observations are yet recorded",

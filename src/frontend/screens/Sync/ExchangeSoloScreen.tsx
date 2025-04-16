@@ -6,8 +6,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
-import {NEW_DARK_GREY, WHITE, BLUE_GREY, DARK_ORANGE} from '../../lib/styles';
-import ExchangeIcon from '../../images/Exchange.svg';
+import {NEW_DARK_GREY, WHITE, BLUE_GREY} from '../../lib/styles';
+import ExchangeIcon from '../../images/OrangeExchange.svg';
 
 const m = defineMessages({
   screenTitle: {
@@ -51,11 +51,9 @@ export function ExchangeSoloScreen({onGoBack}: ExchangeSoloScreenProps) {
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
-        <ExchangeIcon width={80} height={80} color={DARK_ORANGE} />
+        <ExchangeIcon width={80} height={80} />
       </View>
-      <HeaderText variant="header1" style={styles.title}>
-        {t(m.screenTitle)}
-      </HeaderText>
+      <HeaderText variant="header1">{t(m.screenTitle)}</HeaderText>
       <View style={styles.bodyContainer}>
         <BodyText variant="regular" style={styles.introTextLarge}>
           {t(m.securelyShare)}
@@ -72,20 +70,7 @@ export function ExchangeSoloScreen({onGoBack}: ExchangeSoloScreenProps) {
           {t(m.dataSecure)}
         </BodyText>
       </View>
-      <View style={styles.buttonsContainer}>
-        <SecondaryButton
-          fullSize
-          text={t(m.goBack)}
-          onPress={onGoBack}
-          renderIcon={({size}) => (
-            <MaterialIcons
-              name="keyboard-arrow-left"
-              size={size}
-              color={NEW_DARK_GREY}
-            />
-          )}
-        />
-      </View>
+      <SecondaryButton fullSize text={t(m.goBack)} onPress={onGoBack} />
     </View>
   );
 }
@@ -115,15 +100,15 @@ const styles = StyleSheet.create({
     borderColor: BLUE_GREY,
     borderWidth: 1,
     padding: 20,
+    gap: 30,
+    alignItems: 'center',
   },
-  iconContainer: {},
-  title: {
-    textAlign: 'center',
-    marginBottom: 30,
-  },
+  iconContainer: {paddingTop: 30},
   bodyContainer: {
     flex: 1,
     gap: 12,
+    paddingTop: 30,
+    paddingHorizontal: 30,
   },
   introTextLarge: {
     lineHeight: 21,
@@ -138,9 +123,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   bulletIcon: {
-    marginTop: 6,
-  },
-  buttonsContainer: {
-    gap: 15,
+    marginTop: 8,
   },
 });

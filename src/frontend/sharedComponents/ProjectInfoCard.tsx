@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {FrontendRole} from '../hooks/useProjectRoleAndDetails';
 import {HeaderText} from './Text/HeaderText';
@@ -29,6 +29,7 @@ export type ProjectInfoCardProps = {
   projectDescription?: string;
   backgroundColor: string;
   ButtonsRow?: React.ReactNode;
+  onPress?: () => void;
 };
 
 export const ProjectInfoCard = ({
@@ -37,11 +38,14 @@ export const ProjectInfoCard = ({
   projectDescription,
   backgroundColor,
   ButtonsRow,
+  onPress,
 }: ProjectInfoCardProps) => {
   const {formatMessage} = useIntl();
 
   return (
-    <View
+    <TouchableOpacity
+      disabled={!onPress}
+      onPress={onPress}
       style={{
         ...styles.card,
         backgroundColor: backgroundColor,
@@ -73,7 +77,7 @@ export const ProjectInfoCard = ({
         </BodyText>
       </View>
       {ButtonsRow && ButtonsRow}
-    </View>
+    </TouchableOpacity>
   );
 };
 

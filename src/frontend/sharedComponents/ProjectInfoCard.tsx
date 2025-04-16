@@ -50,7 +50,11 @@ export const ProjectInfoCard = ({
       {projectDescription && (
         <BodyText variant="smallMeta">{projectDescription}</BodyText>
       )}
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}>
         {role === 'solo' ? (
           <NoProjectIcon />
         ) : (
@@ -79,7 +83,7 @@ const styles = StyleSheet.create({
     borderColor: VERY_LIGHT_GREY,
     borderRadius: 6,
     padding: 20,
-    gap: 8,
+    gap: 20,
     shadowColor: BLACK,
     shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.25,

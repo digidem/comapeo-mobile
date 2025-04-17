@@ -1535,21 +1535,6 @@
   "screens.SettingsPrivacyPolicy.navTitle": {
     "message": "Privacy Policy"
   },
-  "screens.Sync.CreateOrJoinProjectDisplay.buttonText": {
-    "message": "Create or Join Project"
-  },
-  "screens.Sync.CreateOrJoinProjectDisplay.subText": {
-    "message": "This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
-  },
-  "screens.Sync.CreateOrJoinProjectDisplay.subTitle": {
-    "message": "You will be able to share data with devices that are part of the same project."
-  },
-  "screens.Sync.CreateOrJoinProjectDisplay.title": {
-    "message": "Create or join a project to collect data with a team"
-  },
-  "screens.Sync.HeaderTitle.noWiFi": {
-    "message": "No WiFi"
-  },
   "screens.Sync.NoWifiDisplay.buttonText": {
     "message": "Open Settings"
   },

@@ -85,94 +85,46 @@ const ProjectInfoCard = ({
   displayTitle: string;
 }) => {
   const {formatMessage} = useIntl();
-  const isSolo = role === 'solo';
-  const isCoordinator = role === 'coordinator';
   const {navigate} = useNavigationFromRoot();
 
-  const onNavigate = () => {
-    if (isSolo) {
-      navigate('InviteCollaborators');
-    } else {
-      // I have no idea where someone would go to edit a project name
-      navigate('ProjectSettings');
-    }
-  };
-  return (
-    <ProjectSettingsCard>
-      <View style={styles.row}>
-        <View>
-          <NoProjectIcon width={24} height={24} />
-        </View>
-        <View style={styles.cardColumn}>
-          <HeaderText variant="header5">{displayTitle}</HeaderText>
-          {isSolo ? (
-            <BodyText variant="smallMeta" style={styles.bodyText}>
-              {formatMessage(m.soloDescription)}
-            </BodyText>
-          ) : null}
+  const isSolo = role === 'solo';
+  const isCoordinator = role === 'coordinator';
 
-          {isSolo || isCoordinator ? (
-            <TouchableOpacity
-              onPress={onNavigate}
-              style={{marginTop: 8}}
-              accessibilityRole="button"
-              accessibilityLabel="Go to Edit Project Name">
-              <HeaderText
-                variant="header5"
-                style={{
-                  color: COMAPEO_BLUE,
-                  textAlign: 'left',
-                  alignSelf: 'flex-start',
-                }}>
-                {isSolo ? formatMessage(m.invite) : formatMessage(m.editInfo)}
-              </HeaderText>
-            </TouchableOpacity>
-          ) : null}
-        </View>
-      </View>
-    </ProjectSettingsCard>
+  return (
+    <SettingsCardRow
+      icon={<NoProjectIcon width={24} height={24} />}
+      title={displayTitle}
+      subtitle={isSolo ? formatMessage(m.soloDescription) : undefined}
+      buttonText={
+        isSolo
+          ? formatMessage(m.invite)
+          : isCoordinator
+            ? formatMessage(m.editInfo)
+            : undefined
+      }
+      onPress={() =>
+        navigate(isSolo ? 'InviteCollaborators' : 'ProjectSettings')
+      }
+    />
   );
 };
 
-const CollaboratorsCard = ({
-  role,
-}: {
-  role: 'coordinator' | 'participant' | 'solo';
-}) => {
+const CollaboratorsCard = ({role}: {role: 'coordinator' | 'participant'}) => {
   const {formatMessage} = useIntl();
   const {navigate} = useNavigationFromRoot();
 
   return (
-    <ProjectSettingsCard>
-      <View style={styles.row}>
-        <View>
-          <ProjectParticipantIcon width={24} height={24} />
-        </View>
-        <View style={styles.cardColumn}>
-          <HeaderText variant="header5">
-            {formatMessage(m.projectCollaborators)}
-          </HeaderText>
-          <BodyText variant="smallMeta" style={styles.bodyText}>
-            {role === 'coordinator'
-              ? formatMessage(m.coordinator)
-              : formatMessage(m.participant)}
-          </BodyText>
-          <TouchableOpacity
-            onPress={() => {
-              navigate('YourTeam');
-            }}
-            style={{marginTop: 8}}
-            accessibilityRole="button"
-            accessibilityLabel="Go To Your Team">
-            <HeaderText
-              variant="header5"
-              style={{color: COMAPEO_BLUE, alignSelf: 'flex-start'}}>
-              {formatMessage(m.viewTeam)}
-            </HeaderText>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </ProjectSettingsCard>
+    <SettingsCardRow
+      icon={<ProjectParticipantIcon width={24} height={24} />}
+      title={formatMessage(m.projectCollaborators)}
+      subtitle={
+        role === 'coordinator'
+          ? formatMessage(m.coordinator)
+          : formatMessage(m.participant)
+      }
+      buttonText={formatMessage(m.viewTeam)}
+      onPress={() => navigate('YourTeam')}
+    />
   );
 };
 
@@ -180,41 +132,67 @@ const ConfigCard = () => {
   const {formatMessage} = useIntl();
   const {data} = useProjectSettings();
   const {navigate} = useNavigationFromRoot();
+
   return (
-    <ProjectSettingsCard>
-      <View style={styles.row}>
-        <View>
-          <ProjectCategoriesIcon width={24} height={24} />
-        </View>
-        <View style={styles.cardColumn}>
-          <HeaderText variant="header5">
-            {formatMessage(m.configTitle)}
-          </HeaderText>
+    <SettingsCardRow
+      icon={<ProjectCategoriesIcon width={24} height={24} />}
+      title={formatMessage(m.configTitle)}
+      subtitle={data.configMetadata?.name}
+      buttonText={formatMessage(m.updateCategories)}
+      onPress={() => navigate('Config')}
+    />
+  );
+};
+
+const SettingsCardRow = ({
+  icon,
+  title,
+  subtitle,
+  buttonText,
+  onPress,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  subtitle?: string;
+  buttonText?: string;
+  onPress?: () => void;
+}) => (
+  <ProjectSettingsCard>
+    <View style={styles.row}>
+      <View>{icon}</View>
+      <View style={styles.cardColumn}>
+        <HeaderText variant="header5">{title}</HeaderText>
+        {!!subtitle && (
           <BodyText variant="smallMeta" style={styles.bodyText}>
-            {data.configMetadata?.name}
+            {subtitle}
           </BodyText>
+        )}
+        {!!buttonText && onPress && (
           <TouchableOpacity
-            onPress={() => {
-              navigate('Config');
-            }}
-            style={{paddingTop: 4}}
+            onPress={onPress}
+            style={{marginTop: 8}}
             accessibilityRole="button"
-            accessibilityLabel="Go to Update Categories">
+            accessibilityLabel={buttonText}>
             <HeaderText
               variant="header5"
               style={{color: COMAPEO_BLUE, alignSelf: 'flex-start'}}>
-              {formatMessage(m.updateCategories)}
+              {buttonText}
             </HeaderText>
           </TouchableOpacity>
-        </View>
+        )}
       </View>
-    </ProjectSettingsCard>
-  );
-};
+    </View>
+  </ProjectSettingsCard>
+);
 
 const styles = StyleSheet.create({
   container: {
     padding: 20,
+    gap: 20,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
     gap: 20,
   },
   cardColumn: {
@@ -226,11 +204,6 @@ const styles = StyleSheet.create({
     color: NEW_DARK_GREY,
     flexShrink: 1,
     flexWrap: 'wrap',
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: 20,
   },
 });
 

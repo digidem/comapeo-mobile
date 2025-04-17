@@ -121,6 +121,10 @@ const m = defineMessages({
     id: 'screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder',
     defaultMessage: '{ssid}',
   },
+  noWifi: {
+    id: 'screens.Sync.ProjectSyncDisplay.noWifi',
+    defaultMessage: 'No Wi-Fi',
+  },
   allCaughtUp: {
     id: 'screens.Sync.ProjectSyncDisplay.allCaughtUp',
     defaultMessage: "You're all caught up!",
@@ -356,9 +360,17 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
           <WifiIconComponent size={16} color={WHITE} />
         </Circle>
         <BodyText>
-          {ssid
-            ? t(m.connectedTo) + ' ' + ssid
-            : t(m.wifiCardPlaceholder, {ssid: 'No WiFi'})}
+          {ssid ? (
+            <>
+              {t(m.connectedTo)}{' '}
+              <BodyText style={{fontWeight: 500}}>{ssid}</BodyText>
+            </>
+          ) : (
+            <>
+              {t(m.wifiCardPlaceholder, {ssid: ''})}
+              <BodyText style={{fontWeight: 500}}>{t(m.noWifi)}</BodyText>
+            </>
+          )}
         </BodyText>
       </View>
       <View style={styles.projectInfoContainer}>
@@ -463,7 +475,7 @@ const styles = StyleSheet.create({
   },
   wifiCard: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     paddingHorizontal: 15,
     paddingVertical: 14,
     gap: 10,
@@ -472,6 +484,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#CCCCD6',
     borderRadius: 6,
+    justifyContent: 'flex-start',
   },
   projectInfoContainer: {
     alignItems: 'center',

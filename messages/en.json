@@ -1577,6 +1577,9 @@
   "screens.Sync.ProjectSyncDisplay.noDevicesAvailableToSync": {
     "message": "No devices available to sync"
   },
+  "screens.Sync.ProjectSyncDisplay.noWifi": {
+    "message": "No Wi-Fi"
+  },
   "screens.Sync.ProjectSyncDisplay.progressLabelSyncing": {
     "message": "Syncing…"
   },

@@ -7,6 +7,7 @@ import {BodyText} from './Text/BodyText';
 import {defineMessages, useIntl} from 'react-intl';
 import {BLACK, DARK_GREY, VERY_LIGHT_GREY} from '../lib/styles';
 import NoProjectIcon from '../images/NoProjectIcon.svg';
+import {ViewStyleProp} from '../sharedTypes';
 
 const m = defineMessages({
   mappingOnOwn: {
@@ -30,6 +31,7 @@ export type ProjectInfoCardProps = {
   backgroundColor: string;
   ButtonsRow?: React.ReactNode;
   onPress?: () => void;
+  style?: ViewStyleProp;
 };
 
 export const ProjectInfoCard = ({
@@ -39,6 +41,7 @@ export const ProjectInfoCard = ({
   backgroundColor,
   ButtonsRow,
   onPress,
+  style,
 }: ProjectInfoCardProps) => {
   const {formatMessage} = useIntl();
 
@@ -46,10 +49,7 @@ export const ProjectInfoCard = ({
     <TouchableOpacity
       disabled={!onPress}
       onPress={onPress}
-      style={{
-        ...styles.card,
-        backgroundColor: backgroundColor,
-      }}>
+      style={[styles.card, {backgroundColor: backgroundColor}, style]}>
       <HeaderText variant="header2">{headerText}</HeaderText>
       {projectDescription && (
         <BodyText variant="smallMeta">{projectDescription}</BodyText>

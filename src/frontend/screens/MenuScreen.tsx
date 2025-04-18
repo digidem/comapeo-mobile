@@ -4,6 +4,7 @@ import {useIntl, defineMessages} from 'react-intl';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes.ts';
 import Exchange from '../images/Exchange.svg';
 
@@ -46,6 +47,10 @@ const m = defineMessages({
   viewProject: {
     id: 'Navigation.Menu.viewProject',
     defaultMessage: 'View',
+  },
+  allProjects: {
+    id: 'Navigation.Menu.allProjects',
+    defaultMessage: 'All Projects',
   },
 });
 
@@ -111,6 +116,20 @@ export function MenuScreen() {
         </View>
 
         <View style={styles.bottomItemsContainer}>
+          <MainMenuItemWrapper
+            onPress={() => navigation.navigate('AllProjects')}
+            accessibilityLabel="Go to All Projects Screen">
+            <MaterialCommunityIcons
+              name="dots-grid"
+              size={20}
+              color={NEW_DARK_GREY}
+            />
+            <View style={{paddingLeft: 12}}>
+              <BodyText variant="medium">
+                {formatMessage(m.allProjects)}
+              </BodyText>
+            </View>
+          </MainMenuItemWrapper>
           <MainMenuItemWrapper
             onPress={() => navigation.navigate('Sync')}
             accessibilityLabel="Go to Exchange Screen">

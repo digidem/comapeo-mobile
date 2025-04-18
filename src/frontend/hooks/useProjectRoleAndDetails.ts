@@ -1,5 +1,4 @@
-import {useOwnRoleInProject} from '@comapeo/core-react';
-import {useProjectSettings} from './server/projects';
+import {useOwnRoleInProject, useProjectSettings} from '@comapeo/core-react';
 import {
   COORDINATOR_ROLE_ID,
   CREATOR_ROLE_ID,
@@ -36,7 +35,7 @@ export type ProjectDetails = {projectColor: string} & (
 );
 
 export function useProjectRoleAndDetails(projectId: string): ProjectDetails {
-  const {data: projectData} = useProjectSettings();
+  const {data: projectData} = useProjectSettings({projectId});
   const {data: roleData} = useOwnRoleInProject({projectId});
   const {formatMessage} = useIntl();
 

@@ -101,6 +101,7 @@ import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagement/ErrorBottomSheet.tsx';
 import {MenuScreen} from '../../screens/MenuScreen';
 import {MenuHeader} from '../../sharedComponents/MenuHeader.tsx';
+import {AllProjects} from '../../screens/AllProjects.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -420,6 +421,11 @@ export const createDefaultScreenGroup = ({
         name="ObservationMetadata"
         component={ObservationMetadata}
         options={{headerTitle: intl(ObservationMetadata.navTitle)}}
+      />
+      <RootStack.Screen
+        name="AllProjects"
+        component={AllProjects}
+        options={{headerTitle: intl(AllProjects.navTitle)}}
       />
     </RootStack.Group>
     <RootStack.Group

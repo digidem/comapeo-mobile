@@ -55,6 +55,9 @@
   "Navigation.Menu.aboutCoMapeo": {
     "message": "About CoMapeo"
   },
+  "Navigation.Menu.allProjects": {
+    "message": "All Projects"
+  },
   "Navigation.Menu.currentProject": {
     "message": "Current Project"
   },
@@ -277,6 +280,12 @@
   },
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
+  },
+  "allProjects.createNewProject": {
+    "message": "Create new project"
+  },
+  "allProjects.navTitle": {
+    "message": "All Projects"
   },
   "homeHeader.header.mySoloProject": {
     "message": "My Solo Project"

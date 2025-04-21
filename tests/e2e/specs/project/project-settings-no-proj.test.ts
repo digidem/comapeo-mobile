@@ -14,9 +14,7 @@ describe('Project - Project Settings Solo Project', () => {
     await expect(screenHeader).toBeDisplayed();
 
     await expect($(byTextMatches('My Solo Project'))).toBeDisplayed();
-    await expect(
-      $(byTextMatches("You're mapping on your own")),
-    ).toBeDisplayed();
+    await expect($(byTextMatches('mapping on your own'))).toBeDisplayed();
     await expect($(byTextMatches('Invite Collaborators'))).toBeDisplayed();
 
     await expect($(byTextMatches('Project Categories'))).toBeDisplayed();

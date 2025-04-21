@@ -16,7 +16,11 @@ import {
 } from 'react-native-gesture-handler';
 import {UIActivityIndicator} from 'react-native-indicators';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {useCreateProject, useUpdateProjectSettings} from '@comapeo/core-react';
+import {
+  useCreateProject,
+  useImportProjectConfig,
+  useUpdateProjectSettings,
+} from '@comapeo/core-react';
 import {useSelectFile} from '../../../../hooks/files';
 import {convertFileUriToPosixPath} from '../../../../lib/file-system';
 import {BLACK, LIGHT_GREY} from '../../../../lib/styles';
@@ -92,6 +96,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
   const updateSettingsMutation = useUpdateProjectSettings({
     projectId: projectId,
   });
+  const {mutate: importProjectConfig} = useImportProjectConfig({projectId});
 
   const mutationIsPending =
     selectFileMutation.status === 'pending' ||
@@ -127,6 +132,20 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
           configMetadata = await extractConfigMetadata(
             configFileResult.file.uri,
           );
+
+          await new Promise<void>((resolve, reject) => {
+            importProjectConfig(
+              {
+                configPath: convertFileUriToPosixPath(
+                  configFileResult.file.uri,
+                ),
+              },
+              {
+                onSuccess: () => resolve(),
+                onError: err => reject(err),
+              },
+            );
+          });
           FileSystem.deleteAsync(configFileResult.file.uri, {
             idempotent: true,
           }).catch(noop);
@@ -136,6 +155,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
           return;
         }
       }
+
       updateSettingsMutation.mutate(
         {
           name: projectName,
@@ -151,7 +171,6 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
           },
         },
       );
-      return;
     }
     createProjectMutation.mutate(
       {

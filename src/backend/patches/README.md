@@ -19,3 +19,9 @@ This is a workaround for [file lock errors on certain Android devices](https://g
 ### [Override Timeout](./@comapeo+core+3.0.0.patch)
 
 This change increases the amount of time that the recipient of an invitation waits after accepting a project. Previously, if this time limit was exceeded, an error would occur. This caused issues because slower devices were unable to complete the process within the original timeout period. The timeout is now 30 seconds, where previously it was 10 seconds.
+
+## `crc-universal`
+
+### [Avoid using `crc-native` module](./crc-universal+1.0.4+001+crc-universal-use-js-only.patch)
+
+Using the native module seems to cause certain devices to crash. See https://github.com/digidem/comapeo-mobile/issues/1096 for more details.

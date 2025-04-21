@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {getLocales} from 'expo-localization';
 import {createMapeoClient} from '@comapeo/ipc';
+import {QueryClient} from '@tanstack/react-query';
 import {AppNavigator} from './AppNavigator';
 import {MessagePortLike} from './lib/MessagePortLike';
 import {initializeNodejs} from './initializeNodejs';
@@ -25,8 +26,13 @@ import {createCoordinateFormatStore} from './contexts/CoordinateFormatStoreConte
 import {createManualEntryCoordinateFormatStore} from './contexts/ManualEntryCoordinateFormatStoreContext';
 import {createActiveProjectIdStore} from './contexts/ActiveProjectIdStoreContext';
 import {createMetricsDiagnosticsStore} from './contexts/MetricsDiagnosticsStoreContext';
-import {createLocaleStore} from './contexts/LocaleStoreContext';
+import {
+  createLocaleStore,
+  LocaleStoreProvider,
+} from './contexts/LocaleStoreContext';
 import {getAppLanguageTag} from './lib/intl';
+import {IntlProvider} from './contexts/IntlContext';
+import {ServerLoading} from './ServerLoading';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -145,6 +151,8 @@ TaskManager.defineTask(
   },
 );
 
+const queryClient = new QueryClient();
+
 const App = () => {
   const [permissionsAsked, setPermissionsAsked] = React.useState(false);
   React.useEffect(() => {
@@ -158,22 +166,28 @@ const App = () => {
   useOnBackgroundedAndForegrounded(mapeoApi);
 
   return (
-    <AppProviders
-      messagePort={messagePort}
-      localDiscoveryController={localDiscoveryController}
-      mapeoApi={mapeoApi}
-      persistedDrafObservationStore={persistedDraftObservationStore}
-      trackStore={persistedTrackStore}
-      securityStore={persistedSecurityStore}
-      coordinateFormatStore={persistedCoordinateFormatStore}
-      manualEntryCoordinateFormatStore={
-        persistedManualEntryCoordinateFormatStore
-      }
-      activeProjectIdStore={persistedActiveProjectIdStore}
-      metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
-      localeStore={persistedLocaleStore}>
-      <AppNavigator permissionAsked={permissionsAsked} />
-    </AppProviders>
+    <LocaleStoreProvider value={persistedLocaleStore}>
+      <IntlProvider>
+        {/* ServerLoading requires internationalization to be set up */}
+        <ServerLoading messagePort={messagePort}>
+          <AppProviders
+            queryClient={queryClient}
+            localDiscoveryController={localDiscoveryController}
+            mapeoApi={mapeoApi}
+            persistedDrafObservationStore={persistedDraftObservationStore}
+            trackStore={persistedTrackStore}
+            securityStore={persistedSecurityStore}
+            coordinateFormatStore={persistedCoordinateFormatStore}
+            manualEntryCoordinateFormatStore={
+              persistedManualEntryCoordinateFormatStore
+            }
+            activeProjectIdStore={persistedActiveProjectIdStore}
+            metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}>
+            <AppNavigator permissionAsked={permissionsAsked} />
+          </AppProviders>
+        </ServerLoading>
+      </IntlProvider>
+    </LocaleStoreProvider>
   );
 };
 

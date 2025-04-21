@@ -16,7 +16,7 @@ import {
 } from 'react-native-gesture-handler';
 import {UIActivityIndicator} from 'react-native-indicators';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {useCreateProject} from '@comapeo/core-react';
+import {useCreateProject, useUpdateProjectSettings} from '@comapeo/core-react';
 import {useSelectFile} from '../../../../hooks/files';
 import {convertFileUriToPosixPath} from '../../../../lib/file-system';
 import {BLACK, LIGHT_GREY} from '../../../../lib/styles';
@@ -30,6 +30,8 @@ import {
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 import {useActiveProjectIdActions} from '../../../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
+import {useActiveProject} from '../../../../contexts/ActiveProjectContext';
+import {extractConfigMetadata} from '../../../../lib/configParser';
 
 const m = defineMessages({
   title: {
@@ -86,6 +88,10 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
   const {setActiveProjectId} = useActiveProjectIdActions();
   const selectFileMutation = useSelectFile();
   const createProjectMutation = useCreateProject();
+  const {projectId} = useActiveProject();
+  const updateSettingsMutation = useUpdateProjectSettings({
+    projectId: projectId,
+  });
 
   const mutationIsPending =
     selectFileMutation.status === 'pending' ||
@@ -110,8 +116,43 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
     defaultValues: {projectName: ''},
   });
 
-  function handleCreateProject(val: ProjectFormType) {
+  async function handleCreateProject(val: ProjectFormType) {
     const projectName = val.projectName.trim();
+
+    if (projectId) {
+      let configMetadata = undefined;
+
+      if (configFileResult?.type === 'success') {
+        try {
+          configMetadata = await extractConfigMetadata(
+            configFileResult.file.uri,
+          );
+          FileSystem.deleteAsync(configFileResult.file.uri, {
+            idempotent: true,
+          }).catch(noop);
+        } catch (e) {
+          Sentry.captureException(e);
+          navigation.navigate('ErrorBottomSheet');
+          return;
+        }
+      }
+      updateSettingsMutation.mutate(
+        {
+          name: projectName,
+          configMetadata,
+        },
+        {
+          onSuccess: () => {
+            navigation.navigate('ProjectCreated', {name: projectName});
+          },
+          onError: err => {
+            Sentry.captureException(err);
+            navigation.navigate('ErrorBottomSheet');
+          },
+        },
+      );
+      return;
+    }
     createProjectMutation.mutate(
       {
         name: projectName,

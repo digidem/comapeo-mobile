@@ -9,9 +9,10 @@ import {
   PrimaryButton,
   SecondaryButton,
 } from '../../../../sharedComponents/Buttons';
-import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
-import {WHITE, BLUE_GREY, NEW_DARK_GREY} from '../../../../lib/styles';
+import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
+import {NEW_DARK_GREY} from '../../../../lib/styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {ScreenContentWithDock} from '../../../../sharedComponents/ScreenContentWithDock';
 
 const m = defineMessages({
   screenTitle: {
@@ -48,9 +49,9 @@ const m = defineMessages({
   },
 });
 
-export const InviteCollaboratorsScreen: NativeNavigationComponent<
-  'InviteCollaborators'
-> = ({navigation}) => {
+type Props = NativeRootNavigationProps<'InviteCollaborators'>;
+
+export const InviteCollaboratorsScreen: React.FC<Props> = ({navigation}) => {
   const {formatMessage: t} = useIntl();
 
   function handleGoBack() {
@@ -62,7 +63,21 @@ export const InviteCollaboratorsScreen: NativeNavigationComponent<
   }
 
   return (
-    <View style={styles.container}>
+    <ScreenContentWithDock
+      dockContent={
+        <View style={styles.buttonsContainer}>
+          <SecondaryButton
+            fullSize={true}
+            text={t(m.goBack)}
+            onPress={handleGoBack}
+          />
+          <PrimaryButton
+            fullSize={true}
+            text={t(m.nameMyProject)}
+            onPress={handleNameProject}
+          />
+        </View>
+      }>
       <View style={styles.headerArea}>
         <AddPersonOrange width={86} height={80} />
         <HeaderText variant="header1" style={styles.title} numberOfLines={2}>
@@ -80,24 +95,9 @@ export const InviteCollaboratorsScreen: NativeNavigationComponent<
           <InfoListItem text={t(m.manageControl)} />
         </View>
       </View>
-
-      <View style={styles.buttonsContainer}>
-        <SecondaryButton
-          fullSize={true}
-          text={t(m.goBack)}
-          onPress={handleGoBack}
-        />
-        <PrimaryButton
-          fullSize={true}
-          text={t(m.nameMyProject)}
-          onPress={handleNameProject}
-        />
-      </View>
-    </View>
+    </ScreenContentWithDock>
   );
 };
-
-InviteCollaboratorsScreen.navTitle = m.screenTitle;
 
 function InfoListItem({text}: {text: string}) {
   return (
@@ -116,42 +116,31 @@ function InfoListItem({text}: {text: string}) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: WHITE,
-    borderColor: BLUE_GREY,
-    borderWidth: 1,
-    padding: 20,
-  },
   headerArea: {
     alignSelf: 'center',
     alignItems: 'center',
     gap: 30,
     paddingTop: 30,
-    width: '60%',
+    paddingHorizontal: 40,
     flexWrap: 'wrap',
   },
   title: {
     textAlign: 'center',
   },
   bodyContainer: {
-    flex: 1,
-    width: '70%',
-    justifyContent: 'flex-start',
     gap: 20,
     alignSelf: 'center',
     paddingTop: 20,
+    paddingHorizontal: 45,
   },
   introText: {
     lineHeight: 21,
   },
   bulletList: {
-    flexDirection: 'column',
     gap: 12,
   },
   bulletItem: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
     columnGap: 8,
   },
   bulletIcon: {
@@ -162,8 +151,6 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
   buttonsContainer: {
-    width: '100%',
     gap: 15,
-    alignItems: 'center',
   },
 });

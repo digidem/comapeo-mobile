@@ -20,11 +20,11 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 const m = defineMessages({
   navTitle: {
     id: 'screens.Settings.Config.navTitle',
-    defaultMessage: 'Configuration',
+    defaultMessage: 'Categories',
   },
   name: {
     id: 'screens.Settings.Config.name',
-    defaultMessage: 'Config Name:',
+    defaultMessage: 'Category Set:',
   },
   projectName: {
     id: 'screens.Settings.Config.projectName',
@@ -35,12 +35,12 @@ const m = defineMessages({
     defaultMessage: 'Created {date} at {time}',
   },
   importConfig: {
-    id: 'screens.Settings.Config.importConfig',
-    defaultMessage: 'Import Config',
+    id: 'screens.Settings.Config.importCategories',
+    defaultMessage: 'Import Categories',
   },
   configImportTitle: {
     id: 'screens.Settings.Config.importSuccessTitle',
-    defaultMessage: 'Successfully imported config:',
+    defaultMessage: 'Successfully imported categories:',
   },
   okButton: {
     id: 'screens.Settings.Config.okButton',

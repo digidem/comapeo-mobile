@@ -18,7 +18,7 @@ describe('Project - Create Project from Drawer', () => {
       byResourceId('PROJECT.advanced-settings-toggle'),
     );
     await advancedSettings.click();
-    await expect($(byText('Import Config'))).toBeDisplayed();
+    await expect($(byText('Import Categories'))).toBeDisplayed();
     await advancedSettings.click();
 
     const nameInput = await $(byResourceId('PROJECT.name-inp'));

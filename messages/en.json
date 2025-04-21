@@ -1351,17 +1351,17 @@
   "screens.Settings.Config.created": {
     "message": "Created {date} at {time}"
   },
-  "screens.Settings.Config.importConfig": {
-    "message": "Import Config"
+  "screens.Settings.Config.importCategories": {
+    "message": "Import Categories"
   },
   "screens.Settings.Config.importSuccessTitle": {
-    "message": "Successfully imported config:"
+    "message": "Successfully imported categories:"
   },
   "screens.Settings.Config.name": {
-    "message": "Config Name:"
+    "message": "Category Set:"
   },
   "screens.Settings.Config.navTitle": {
-    "message": "Configuration"
+    "message": "Categories"
   },
   "screens.Settings.Config.okButton": {
     "message": "OK"
@@ -1370,7 +1370,7 @@
     "message": "Project Name:"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.title": {
-    "message": "Create a Project"
+    "message": "New Project"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
     "message": "Go Back"
@@ -1405,14 +1405,14 @@
   "screens.Settings.CreateOrJoinProject.enterName": {
     "message": "Enter a name for the Project"
   },
-  "screens.Settings.CreateOrJoinProject.importConfig": {
-    "message": "Import Config"
+  "screens.Settings.CreateOrJoinProject.importCategories": {
+    "message": "Import Categories"
   },
   "screens.Settings.CreateOrJoinProject.importConfigFileError": {
     "message": "File name should end with .comapeocat"
   },
   "screens.Settings.CreateOrJoinProject.importSuccessTitle": {
-    "message": "Successfully imported config:"
+    "message": "Successfully imported categories:"
   },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
     "message": "Join an existing CoMapeo Project"

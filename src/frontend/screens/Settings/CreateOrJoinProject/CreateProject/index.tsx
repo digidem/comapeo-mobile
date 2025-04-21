@@ -40,7 +40,7 @@ import {extractConfigMetadata} from '../../../../lib/configParser';
 const m = defineMessages({
   title: {
     id: 'screens.Settings.CreateOrJoinProject.CreateProject.title',
-    defaultMessage: 'Create a Project',
+    defaultMessage: 'New Project',
   },
   enterName: {
     id: 'screens.Settings.CreateOrJoinProject.enterName',
@@ -55,8 +55,8 @@ const m = defineMessages({
     defaultMessage: 'Advanced Project Settings',
   },
   importConfig: {
-    id: 'screens.Settings.CreateOrJoinProject.importConfig',
-    defaultMessage: 'Import Config',
+    id: 'screens.Settings.CreateOrJoinProject.importCategories',
+    defaultMessage: 'Import Categories',
   },
   importConfigFileError: {
     id: 'screens.Settings.CreateOrJoinProject.importConfigFileError',
@@ -64,7 +64,7 @@ const m = defineMessages({
   },
   configImportTitle: {
     id: 'screens.Settings.CreateOrJoinProject.importSuccessTitle',
-    defaultMessage: 'Successfully imported config:',
+    defaultMessage: 'Successfully imported categories:',
   },
   okButton: {
     id: 'screens.Settings.CreateOrJoinProject.okButton',

@@ -422,6 +422,22 @@ export const createDefaultScreenGroup = ({
         component={ObservationMetadata}
         options={{headerTitle: intl(ObservationMetadata.navTitle)}}
       />
+      <RootStack.Screen
+        name="Menu"
+        component={MenuScreen}
+        options={{
+          headerShown: true,
+          animation: 'slide_from_right',
+          header: () => <MenuHeader />,
+        }}
+      />
+      <RootStack.Screen
+        name="InviteCollaborators"
+        component={InviteCollaboratorsScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
     </RootStack.Group>
     <RootStack.Group
       screenOptions={{
@@ -454,22 +470,6 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="BackgroundMapErrorBottomSheet"
         component={BackgroundMapErrorBottomSheet}
-      />
-      <RootStack.Screen
-        name="Menu"
-        component={MenuScreen}
-        options={{
-          headerShown: true,
-          animation: 'slide_from_right',
-          header: () => <MenuHeader />,
-        }}
-      />
-      <RootStack.Screen
-        name="InviteCollaborators"
-        component={InviteCollaboratorsScreen}
-        options={{
-          headerShown: false,
-        }}
       />
     </RootStack.Group>
   </>

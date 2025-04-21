@@ -29,6 +29,6 @@ describe('Main - Side Drawer Menu - No Project', () => {
     await expect($('~Go to App Settings')).toBeDisplayed();
     await expect($('~Go to About CoMapeo Screen')).toBeDisplayed();
 
-    await drawerIcon.click();
+    await $('~Close Menu').click();
   });
 });

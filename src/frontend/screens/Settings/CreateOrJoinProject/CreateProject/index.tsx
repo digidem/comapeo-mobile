@@ -171,6 +171,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
           },
         },
       );
+      return;
     }
     createProjectMutation.mutate(
       {

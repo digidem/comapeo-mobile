@@ -120,7 +120,8 @@ console.log('Downloading native prebuilds...');
 // TODO: Figure out how to know if module uses N-API at runtime
 const NATIVE_MODULES = [
   {name: 'better-sqlite3', usesNapi: false},
-  {name: 'crc-native', usesNapi: true},
+  // Native module seems to cause issues so do not need for now: https://github.com/digidem/comapeo-mobile/issues/1096
+  // {name: 'crc-native', usesNapi: true},
   {name: 'fs-native-extensions', usesNapi: true},
   {name: 'quickbit-native', usesNapi: true},
   {name: 'simdle-native', usesNapi: true},

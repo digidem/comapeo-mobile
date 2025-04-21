@@ -46,7 +46,7 @@ import {LocationHistoryPoint} from '../sharedTypes/location';
 // consider it stale and show that the GPS is searching for a new position
 const STALE_TIMEOUT = 60 * 1000; // 60 seconds
 
-type LocationStatusResult =
+export type LocationStatusResult =
   | {status: 'searching' | 'error'}
   | {status: 'good'; accuracy: number};
 

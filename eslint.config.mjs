@@ -12,6 +12,7 @@ import pluginReactNative from 'eslint-plugin-react-native';
 import * as pluginReactHooks from 'eslint-plugin-react-hooks';
 import globals from 'globals';
 import pluginTs from 'typescript-eslint';
+import pluginTestingLibrary from 'eslint-plugin-testing-library';
 
 const gitignorePath = path.join(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -106,9 +107,12 @@ const frontendConfig = pluginTs.config(
     },
   },
   {
-    ...pluginJest.configs['flat/recommended'],
-    name: 'eslint-plugin-jest',
+    name: 'tests',
     files: ['src/frontend/**/*.test.{js,jsx,mts,ts,tsx}'],
+    extends: [
+      pluginJest.configs['flat/recommended'],
+      pluginTestingLibrary.configs['flat/react'],
+    ],
   },
 );
 

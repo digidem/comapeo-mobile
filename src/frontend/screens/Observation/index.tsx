@@ -97,6 +97,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
           />
         )}
         <TouchableOpacity
+          accessibilityLabel="Open Observation Metadata"
           onPress={() => {
             navigation.navigate('ObservationMetadata', {
               observationId,

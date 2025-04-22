@@ -1,0 +1,49 @@
+diff --git a/node_modules/@comapeo/ipc/dist/client.d.ts b/node_modules/@comapeo/ipc/dist/client.d.ts
+index 630811a..7e60c1f 100644
+--- a/node_modules/@comapeo/ipc/dist/client.d.ts
++++ b/node_modules/@comapeo/ipc/dist/client.d.ts
+@@ -57,16 +57,20 @@ export type MapeoClientApi = {
+     }, { waitForSync }?: {
+         waitForSync?: boolean | undefined;
+     } | undefined) => Promise<string>;
+-    setDeviceInfo: <T extends import("type-fest").Exact<import("@comapeo/core/dist/schema/client.js").DeviceInfoParam & {
+-        deviceType?: "UNRECOGNIZED" | "device_type_unspecified" | "mobile" | "tablet" | "desktop" | "selfHostedServer" | undefined;
++    setDeviceInfo: <T extends import("type-fest").IsEqual<import("@comapeo/core/dist/schema/client.js").DeviceInfoParam & {
++        deviceType?: "device_type_unspecified" | "mobile" | "tablet" | "desktop" | "selfHostedServer" | "UNRECOGNIZED" | undefined;
++    }, T> extends true ? import("@comapeo/core/dist/schema/client.js").DeviceInfoParam & {
++        deviceType?: "device_type_unspecified" | "mobile" | "tablet" | "desktop" | "selfHostedServer" | "UNRECOGNIZED" | undefined;
++    } : import("type-fest/source/exact.js").ExactObject<import("@comapeo/core/dist/schema/client.js").DeviceInfoParam & {
++        deviceType?: "device_type_unspecified" | "mobile" | "tablet" | "desktop" | "selfHostedServer" | "UNRECOGNIZED" | undefined;
+     }, T>>(deviceInfo: T) => Promise<void>;
+     getDeviceInfo: () => Promise<{
+         deviceId: string;
+-        deviceType: "UNRECOGNIZED" | "device_type_unspecified" | "mobile" | "tablet" | "desktop" | "selfHostedServer";
++        deviceType: "device_type_unspecified" | "mobile" | "tablet" | "desktop" | "selfHostedServer" | "UNRECOGNIZED";
+     } & Partial<import("@comapeo/core/dist/schema/client.js").DeviceInfoParam>>;
+     setIsArchiveDevice: (isArchiveDevice: boolean) => Promise<void>;
+     getIsArchiveDevice: () => Promise<boolean>;
+-    readonly invite: import("rpc-reflector/lib/types.js").ClientApi<import("@comapeo/core/dist/invite/invite-api.js").InviteApi> & (() => Promise<import("@comapeo/core/dist/invite/invite-api.js").InviteApi>);
++    readonly invite: import("rpc-reflector/lib/types.js").ClientApi<import("@comapeo/core/dist/invite-api.js").InviteApi> & (() => Promise<import("@comapeo/core/dist/invite-api.js").InviteApi>);
+     startLocalPeerDiscoveryServer: () => Promise<{
+         name: string;
+         port: number;
+diff --git a/node_modules/@comapeo/ipc/dist/client.js b/node_modules/@comapeo/ipc/dist/client.js
+index 96d98b0..168073a 100644
+--- a/node_modules/@comapeo/ipc/dist/client.js
++++ b/node_modules/@comapeo/ipc/dist/client.js
+@@ -1,4 +1,4 @@
+-import { createClient } from 'rpc-reflector';
++import createClient from 'rpc-reflector/client.js';
+ import pDefer from 'p-defer';
+ import { MANAGER_CHANNEL_ID, MAPEO_RPC_ID, SubChannel, } from './lib/sub-channel.js';
+ /**
+diff --git a/node_modules/@comapeo/ipc/dist/server.js b/node_modules/@comapeo/ipc/dist/server.js
+index f49ae9e..519aadc 100644
+--- a/node_modules/@comapeo/ipc/dist/server.js
++++ b/node_modules/@comapeo/ipc/dist/server.js
+@@ -1,4 +1,4 @@
+-import { createServer } from 'rpc-reflector';
++import createServer from 'rpc-reflector/server.js';
+ import { MANAGER_CHANNEL_ID, MAPEO_RPC_ID, SubChannel, } from './lib/sub-channel.js';
+ import { extractMessageEventData } from './lib/utils.js';
+ /**

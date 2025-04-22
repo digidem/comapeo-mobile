@@ -83,12 +83,11 @@ export const InviteCollaboratorsScreen: React.FC<Props> = ({navigation}) => {
         <HeaderText variant="header1" style={styles.title} numberOfLines={2}>
           {t(m.screenTitle)}
         </HeaderText>
-      </View>
-
-      <View style={styles.bodyContainer}>
         <BodyText variant="regular" style={styles.introText}>
           {t(m.introText)}
         </BodyText>
+      </View>
+      <View style={styles.bodyContainer}>
         <View style={styles.bulletList}>
           <InfoListItem text={t(m.readyToShare)} />
           <InfoListItem text={t(m.inviteOnly)} />
@@ -121,7 +120,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 30,
     paddingTop: 30,
-    paddingHorizontal: 40,
     flexWrap: 'wrap',
   },
   title: {
@@ -134,6 +132,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 45,
   },
   introText: {
+    paddingHorizontal: 20,
     lineHeight: 21,
   },
   bulletList: {

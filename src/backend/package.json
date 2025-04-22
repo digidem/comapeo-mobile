@@ -28,6 +28,7 @@
     "@tsconfig/node16": "^16.1.1",
     "@types/debug": "^4.1.7",
     "@types/node": "^20.5.0",
+    "esbuild": "^0.19.5",
     "magic-string": "^0.30.5",
     "patch-package": "^8.0.0",
     "prettier": "^3.0.3",

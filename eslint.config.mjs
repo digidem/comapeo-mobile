@@ -31,6 +31,7 @@ const toolingConfig = pluginTs.config({
     '*.config.{js,mjs,cjs}',
     'scripts/*.{js,mjs,cjs}',
     'expo-config-plugins/*.{js,mjs,cjs}',
+    'expo-config-plugins/**/*.{js,mjs,cjs}',
   ],
   languageOptions: {
     globals: {

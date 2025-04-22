@@ -104,6 +104,8 @@ import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagement/ErrorBottomSheet.tsx';
 import {ExistingProjectWarning} from '../../screens/Invites/ExistingProjectWarning.tsx';
 import {LeaveProject} from '../../screens/Invites/LeaveProject.tsx';
+import {MenuScreen} from '../../screens/MenuScreen';
+import {MenuHeader} from '../../sharedComponents/MenuHeader.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -468,6 +470,15 @@ export const createDefaultScreenGroup = ({
         component={ExistingProjectWarning}
       />
       <RootStack.Screen name="LeaveProject" component={LeaveProject} />
+      <RootStack.Screen
+        name="Menu"
+        component={MenuScreen}
+        options={{
+          headerShown: true,
+          animation: 'slide_from_right',
+          header: () => <MenuHeader />,
+        }}
+      />
     </RootStack.Group>
   </>
 );

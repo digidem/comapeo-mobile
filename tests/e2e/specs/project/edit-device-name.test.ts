@@ -5,7 +5,8 @@ import {output} from '../../utils/naming';
 
 describe('Project - Edit Device Name Test', () => {
   it('should navigate to project settings and edit the device name', async () => {
-    const drawerIcon = await $('~Open Navigation Drawer');
+    await driver.pause(2000);
+    const drawerIcon = await $('~Open Menu');
     await drawerIcon.tap();
 
     const projectSettingsItem = await $('~Go to Project Settings');
@@ -58,7 +59,7 @@ describe('Project - Edit Device Name Test', () => {
 
     await driver.back();
     await driver.back();
-    await $('~Close Navigation Drawer').click();
+    await $('~Close Menu').click();
 
     await drawerIcon.tap();
     await projectSettingsItem.click();
@@ -68,6 +69,6 @@ describe('Project - Edit Device Name Test', () => {
 
     await driver.back();
     await driver.back();
-    await $('~Close Navigation Drawer').click();
+    await $('~Close Menu').click();
   });
 });

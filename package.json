@@ -24,7 +24,6 @@
     "build:backend": "node ./scripts/build-backend.mjs",
     "extract-messages": "formatjs extract 'src/frontend/**/*.{ts,tsx}' --ignore='**/*.d.ts' --format crowdin --out-file ./messages/en.json",
     "eas-build-post-install": "npm run build:backend && npm run build:translations && npm run build:intl-polyfills",
-    "tests": "maestro start-device --platform android && npm run android && maestro test e2e",
     "upgrade-deps:all": "npm-check --update --save-exact",
     "upgrade-deps:production": "npm-check --update --save-exact --production",
     "upgrade-deps:dev": "npm-check --update --save-exact --dev-only",

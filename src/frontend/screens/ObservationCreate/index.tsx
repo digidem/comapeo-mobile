@@ -22,6 +22,7 @@ import {
   isProcessedDraftPhoto,
   isUnsavedAudio,
 } from '../../lib/attachmentTypeChecks';
+import {useAuthContext} from '../../contexts/AuthContext';
 
 const m = defineMessages({
   observation: {
@@ -109,6 +110,7 @@ export const ObservationCreate = ({
     addNewObservation: addNewTrackObservation,
   } = useTrackActions();
   const liveLocation = useMostAccurateLocationForObservation();
+  const {authState} = useAuthContext();
 
   const coordinateInfo = value?.metadata?.manualLocation
     ? {
@@ -151,6 +153,11 @@ export const ObservationCreate = ({
 
   const createObservation = React.useCallback(async () => {
     if (!value) throw new Error('no observation saved in persisted state ');
+    if (authState === 'obscured') {
+      clearDraft();
+      navigation.popTo('Home', {screen: 'Map'});
+      return;
+    }
 
     const unsavedPhotos = attachments.filter(isProcessedDraftPhoto);
     const unsavedAudioRecordings = attachments.filter(isUnsavedAudio);
@@ -229,6 +236,7 @@ export const ObservationCreate = ({
     attachments,
     value,
     preset,
+    authState,
   ]);
 
   const checkAccuracyAndLocation = React.useCallback(() => {

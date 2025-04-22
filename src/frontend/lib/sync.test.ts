@@ -1,4 +1,28 @@
-import {deriveSyncStage} from './sync';
+import {type SyncState} from '@comapeo/core-react';
+
+import {deriveSyncStage, getConnectedPeersCount} from './sync';
+
+test('getConnectedPeersCount', () => {
+  const exampleDeviceSyncState: SyncState['remoteDeviceSyncState'][string] = {
+    initial: {isSyncEnabled: true, want: 0, wanted: 0},
+    data: {isSyncEnabled: true, want: 0, wanted: 0},
+  };
+
+  expect(getConnectedPeersCount({})).toBe(0);
+
+  expect(
+    getConnectedPeersCount({
+      alice: exampleDeviceSyncState,
+    }),
+  ).toBe(1);
+
+  expect(
+    getConnectedPeersCount({
+      alice: exampleDeviceSyncState,
+      bob: exampleDeviceSyncState,
+    }),
+  ).toBe(2);
+});
 
 describe('deriveSyncStage', () => {
   it('returns "waiting" when progress is null', () => {

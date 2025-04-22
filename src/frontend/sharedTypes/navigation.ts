@@ -123,6 +123,7 @@ export type RootStackParamsList = {
     inviteId: string;
     currentProjectName: undefined | string;
   };
+  Menu: undefined;
 };
 
 export type OnboardingParamsList = {

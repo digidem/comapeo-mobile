@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Text as RNText, TextProps, TextStyle} from 'react-native';
-import {BLACK} from '../../lib/styles';
+import {DARK_GREY} from '../../lib/styles';
 
 type Variant =
   | 'header1'
@@ -44,7 +44,7 @@ export const HeaderText = ({
       style={[
         {
           fontFamily: 'Rubik_500Medium',
-          color: BLACK,
+          color: DARK_GREY,
           fontSize: fontSizeMap[variant || 'header1'],
         },
         style,

@@ -6,8 +6,9 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
-import {NEW_DARK_GREY, WHITE, BLUE_GREY} from '../../lib/styles';
+import {NEW_DARK_GREY, WHITE} from '../../lib/styles';
 import ExchangeIcon from '../../images/OrangeExchange.svg';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 
 const m = defineMessages({
   screenTitle: {
@@ -49,29 +50,30 @@ export function ExchangeSoloScreen({onGoBack}: ExchangeSoloScreenProps) {
   const {formatMessage: t} = useIntl();
 
   return (
-    <View style={styles.container}>
-      <View style={styles.iconContainer}>
-        <ExchangeIcon width={80} height={80} />
-      </View>
-      <HeaderText variant="header1">{t(m.screenTitle)}</HeaderText>
-      <View style={styles.bodyContainer}>
+    <ScreenContentWithDock
+      dockContent={
+        <SecondaryButton fullSize text={t(m.goBack)} onPress={onGoBack} />
+      }>
+      <View style={styles.container}>
+        <View style={styles.iconContainer}>
+          <ExchangeIcon width={80} height={80} />
+        </View>
+        <HeaderText variant="header1">{t(m.screenTitle)}</HeaderText>
         <BodyText variant="regular" style={styles.introTextLarge}>
           {t(m.securelyShare)}
         </BodyText>
-
         <BodyText variant="smallMeta" style={styles.regularText}>
           {t(m.getStarted)}
         </BodyText>
-
-        <ListItem text={t(m.inviteCollaborators)} />
-        <ListItem text={t(m.joinExisting)} />
-
+        <View style={styles.bodyContainer}>
+          <ListItem text={t(m.inviteCollaborators)} />
+          <ListItem text={t(m.joinExisting)} />
+        </View>
         <BodyText variant="smallMeta" style={styles.regularText}>
           {t(m.dataSecure)}
         </BodyText>
       </View>
-      <SecondaryButton fullSize text={t(m.goBack)} onPress={onGoBack} />
-    </View>
+    </ScreenContentWithDock>
   );
 }
 
@@ -97,25 +99,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: WHITE,
-    borderColor: BLUE_GREY,
-    borderWidth: 1,
     padding: 20,
-    gap: 30,
+    gap: 10,
     alignItems: 'center',
   },
   iconContainer: {paddingTop: 30},
   bodyContainer: {
     flex: 1,
     gap: 12,
-    paddingTop: 30,
-    paddingHorizontal: 30,
   },
   introTextLarge: {
     lineHeight: 21,
+    alignSelf: 'flex-start',
+    paddingTop: 30,
   },
   regularText: {
     lineHeight: 21,
     color: NEW_DARK_GREY,
+    alignSelf: 'flex-start',
   },
   listItem: {
     flexDirection: 'row',

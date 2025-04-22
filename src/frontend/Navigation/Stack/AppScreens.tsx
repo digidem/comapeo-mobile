@@ -42,7 +42,7 @@ import {
 } from '../../screens/LocationInfoScreen';
 import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/InviteDeclined';
 import {UnableToCancelInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/UnableToCancelInvite';
-import {SyncScreen} from '../../screens/Sync';
+import {SyncScreen} from '../../screens/Exchange/index.tsx';
 import {
   ManualGpsScreen,
   createNavigationOptions as createManualGpsNavigationOptions,

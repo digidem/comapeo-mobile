@@ -359,16 +359,16 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
         <Circle color="#000033" radius={14} style={styles.signalIndicator}>
           <WifiIconComponent size={16} color={WHITE} />
         </Circle>
-        <BodyText>
+        <BodyText style={styles.wifiCardTextContainer}>
           {ssid ? (
             <>
               {t(m.connectedTo)}{' '}
-              <BodyText style={{fontWeight: 500}}>{ssid}</BodyText>
+              <BodyText style={styles.wifiName}>{ssid}</BodyText>
             </>
           ) : (
             <>
               {t(m.wifiCardPlaceholder, {ssid: ''})}
-              <BodyText style={{fontWeight: 500}}>{t(m.noWifi)}</BodyText>
+              <BodyText style={styles.wifiName}>{t(m.noWifi)}</BodyText>
             </>
           )}
         </BodyText>
@@ -485,6 +485,14 @@ const styles = StyleSheet.create({
     borderColor: '#CCCCD6',
     borderRadius: 6,
     justifyContent: 'flex-start',
+  },
+  wifiCardTextContainer: {
+    flex: 1,
+    flexWrap: 'wrap',
+    minWidth: 0,
+  },
+  wifiName: {
+    fontWeight: '500',
   },
   projectInfoContainer: {
     alignItems: 'center',

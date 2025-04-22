@@ -48,7 +48,7 @@
     "@react-navigation/native": "7.0.15",
     "@react-navigation/stack": "7.1.2",
     "@rnmapbox/maps": "10.1.36",
-    "@sentry/react-native": "6.5.0",
+    "@sentry/react-native": "6.10.0",
     "@tanstack/react-query": "5.74.4",
     "@turf/helpers": "7.2.0",
     "@turf/random": "7.2.0",

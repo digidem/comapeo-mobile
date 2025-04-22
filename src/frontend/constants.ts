@@ -3,18 +3,34 @@ import {AppStackParamsList, HomeTabsParamsList} from './sharedTypes/navigation';
 // this has to be a string because js does not recognize 00000 as being 5 digits
 export const OBSCURE_PASSCODE = '00000';
 
-export const EDITING_SCREEN_NAMES:
-  | Omit<keyof AppStackParamsList, 'Home'>[]
-  | (keyof HomeTabsParamsList)[] = [
+export const EDITING_SCREEN_NAMES: (
+  | keyof AppStackParamsList
+  | keyof HomeTabsParamsList
+)[] = [
   'AddPhoto',
   'PresetChooser',
   'ManualGpsScreen',
   'ObservationCreate',
   'ObservationDetails',
   'ObservationEdit',
-  'SaveTrackScreen',
+  'SaveTrack',
   'TrackEdit',
   'Camera',
+  'IntroToCoMapeo',
+  'DataPrivacy',
+  'DeviceNaming',
+  'OnboardingPrivacyPolicy',
+  'Success',
+  'AuthScreen',
+  'ErrorBottomSheet',
+];
+
+export const INVITE_SCREEN_NAME: (keyof AppStackParamsList)[] = [
+  'InviteReceived',
+  'InviteCanceled',
+  'InviteSuccessfullyAccepted',
+  'LeaveProject',
+  'ExistingProjectWarning',
 ];
 
 // Replicates the root query key from comapeo/core-react v3.3.0

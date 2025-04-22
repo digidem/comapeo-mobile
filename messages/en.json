@@ -935,6 +935,10 @@
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "Observation"
   },
+  "screens.Observation.fallbackPresetName": {
+    "description": "Fallback name used when category name cannot be determined for observation",
+    "message": "Observation"
+  },
   "screens.Observation.shareMediaTitle": {
     "description": "Title of dialog to share an observation with media",
     "message": "Sharing image"
@@ -1055,14 +1059,26 @@
   "screens.ObservationMetadataVerified.altitudeAccuracy": {
     "message": "Altitude Accuracy"
   },
+  "screens.ObservationMetadataVerified.coMapeoData": {
+    "message": "CoMapeo Data"
+  },
   "screens.ObservationMetadataVerified.dataEntered": {
     "message": "This data was manually entered."
+  },
+  "screens.ObservationMetadataVerified.date": {
+    "message": "Date"
   },
   "screens.ObservationMetadataVerified.howWeCheck": {
     "message": "How we validate"
   },
   "screens.ObservationMetadataVerified.latitude": {
     "message": "Latitude"
+  },
+  "screens.ObservationMetadataVerified.location": {
+    "message": "Location"
+  },
+  "screens.ObservationMetadataVerified.locationManuallyEntered": {
+    "message": "Location was manually entered"
   },
   "screens.ObservationMetadataVerified.longitude": {
     "message": "Longitude"
@@ -1073,8 +1089,17 @@
   "screens.ObservationMetadataVerified.navTitle": {
     "message": "Observation Metadata"
   },
+  "screens.ObservationMetadataVerified.sentByComapeo": {
+    "message": "Sent by CoMapeo"
+  },
+  "screens.ObservationMetadataVerified.sentFrom": {
+    "message": "CoMapeo Data sent from"
+  },
   "screens.ObservationMetadataVerified.speed": {
     "message": "Speed"
+  },
+  "screens.ObservationMetadataVerified.validatedByCoMapeo": {
+    "message": "Sent and Validated by CoMapeo"
   },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
     "description": "Back button on observation list screen when no observations are yet recorded",

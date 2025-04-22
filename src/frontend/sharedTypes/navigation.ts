@@ -51,8 +51,6 @@ export type RootStackParamsList = {
   ObservationEdit: {observationId: string};
   ManualGpsScreen: undefined;
   ObservationDetails: {question: number};
-  LeaveProjectScreen: undefined;
-  AlreadyOnProj: undefined;
   AddToProjectScreen: undefined;
   UnableToLinkScreen: undefined;
   ConnectingToDeviceScreen: {task: () => Promise<void>};
@@ -114,9 +112,17 @@ export type RootStackParamsList = {
   };
   AudioSavedBottomSheet: undefined;
   AudioPlaybackSaved: {uri: string; canDelete: boolean; observationId: string};
+  InviteReceived: {inviteId: string};
+  InviteSuccessfullyAccepted: {projectName: string};
+  InviteCanceled: {projectName: string};
+  ExistingProjectWarning: {inviteId: string};
   ObservationMetadata: {observationId: string};
   ErrorBottomSheet: undefined;
   BackgroundMapErrorBottomSheet: {title: string; description: string};
+  LeaveProject: {
+    inviteId: string;
+    currentProjectName: undefined | string;
+  };
   Menu: undefined;
   AllProjects: undefined;
 };

@@ -36,6 +36,7 @@ import {useActiveProjectIdActions} from '../../../../contexts/ActiveProjectIdSto
 import * as Sentry from '@sentry/react-native';
 import {useActiveProject} from '../../../../contexts/ActiveProjectContext';
 import {extractConfigMetadata} from '../../../../lib/configParser';
+import {useProjectRoleAndDetails} from '../../../../hooks/useProjectRoleAndDetails';
 
 const m = defineMessages({
   title: {
@@ -93,6 +94,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
   const selectFileMutation = useSelectFile();
   const createProjectMutation = useCreateProject();
   const {projectId} = useActiveProject();
+  const projectInfo = useProjectRoleAndDetails(projectId);
   const updateSettingsMutation = useUpdateProjectSettings({
     projectId: projectId,
   });
@@ -121,85 +123,56 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
     defaultValues: {projectName: ''},
   });
 
-  async function handleCreateProject(val: ProjectFormType) {
+  const handleCreateProject = async (val: ProjectFormType) => {
     const projectName = val.projectName.trim();
+    const fileUri =
+      configFileResult?.type === 'success'
+        ? configFileResult.file.uri
+        : undefined;
 
-    if (projectId) {
-      let configMetadata = undefined;
+    try {
+      if (projectInfo.role === 'solo') {
+        const configMetadata = fileUri
+          ? await extractConfigMetadata(fileUri)
+          : undefined;
 
-      if (configFileResult?.type === 'success') {
-        try {
-          configMetadata = await extractConfigMetadata(
-            configFileResult.file.uri,
-          );
-
-          await new Promise<void>((resolve, reject) => {
-            importProjectConfig(
-              {
-                configPath: convertFileUriToPosixPath(
-                  configFileResult.file.uri,
-                ),
-              },
-              {
-                onSuccess: () => resolve(),
-                onError: err => reject(err),
-              },
-            );
-          });
-          FileSystem.deleteAsync(configFileResult.file.uri, {
-            idempotent: true,
-          }).catch(noop);
-        } catch (e) {
-          Sentry.captureException(e);
-          navigation.navigate('ErrorBottomSheet');
-          return;
+        if (fileUri) {
+          await importProjectConfigAsync(fileUri);
         }
-      }
 
-      updateSettingsMutation.mutate(
-        {
+        await updateSettingsMutation.mutateAsync({
           name: projectName,
           configMetadata,
-        },
-        {
-          onSuccess: () => {
-            navigation.navigate('ProjectCreated', {name: projectName});
-          },
-          onError: err => {
-            Sentry.captureException(err);
-            navigation.navigate('ErrorBottomSheet');
-          },
-        },
-      );
-      return;
+        });
+        navigation.navigate('ProjectCreated', {name: projectName});
+      } else {
+        const newId = await createProjectMutation.mutateAsync({
+          name: projectName,
+          configPath: fileUri && convertFileUriToPosixPath(fileUri),
+        });
+
+        setActiveProjectId(newId);
+        navigation.navigate('ProjectCreated', {name: projectName});
+      }
+    } catch (err) {
+      Sentry.captureException(err);
+      navigation.navigate('ErrorBottomSheet');
+    } finally {
+      if (fileUri) {
+        await FileSystem.deleteAsync(fileUri, {idempotent: true}).catch(noop);
+      }
     }
-    createProjectMutation.mutate(
-      {
-        name: projectName,
-        configPath:
-          configFileResult?.type === 'success'
-            ? convertFileUriToPosixPath(configFileResult.file.uri)
-            : undefined,
-      },
-      {
-        onSuccess: projectId => {
-          if (configFileResult?.type === 'success') {
-            // No need to block UI on this
-            // no-op if something fails here. caches can eventually get cleared by the OS automatically.
-            FileSystem.deleteAsync(configFileResult.file.uri, {
-              idempotent: true,
-            }).catch(noop);
-          }
+  };
 
-          setActiveProjectId(projectId);
-
-          navigation.navigate('ProjectCreated', {name: projectName});
+  function importProjectConfigAsync(fileUri: string) {
+    return new Promise<void>((resolve, reject) =>
+      importProjectConfig(
+        {configPath: convertFileUriToPosixPath(fileUri)},
+        {
+          onSuccess: () => resolve(),
+          onError: err => reject(err),
         },
-        onError: err => {
-          Sentry.captureException(err);
-          navigation.navigate('ErrorBottomSheet');
-        },
-      },
+      ),
     );
   }
 

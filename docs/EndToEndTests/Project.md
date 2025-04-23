@@ -2,22 +2,28 @@
 
 [Projects and Project Settings](#projects-and-project-settings)
 
-- [Overview](#overview)
-- [No/ Solo Project Headers](#solo-project-headers)
-  - [Test Objectives](#test-objectives-4)
-  - [Special Considerations](#special-considerations-4)
-- [Creating a project from the side drawer menu](#creating-a-project-from-the-side-drawer-menu)
+- [Projects and Project Settings](#projects-and-project-settings)
+  - [Overview](#overview)
+- [Solo Project Headers](#solo-project-headers)
   - [Test Objectives](#test-objectives)
   - [Special Considerations](#special-considerations)
-- [Creating a project from the sync button](#creating-a-project-from-the-sync-button)
+- [Inviting Collaborators While Solo](#inviting-collaborators-while-solo)
   - [Test Objectives](#test-objectives-1)
   - [Special Considerations](#special-considerations-1)
-- [Unjoining a project](#unjoining-a-project)
+- [Creating a project from the side drawer menu](#creating-a-project-from-the-side-drawer-menu)
   - [Test Objectives](#test-objectives-2)
   - [Special Considerations](#special-considerations-2)
-- [Editing a Device Name](#editing-a-device-name)
+- [Unjoining a project](#unjoining-a-project)
   - [Test Objectives](#test-objectives-3)
   - [Special Considerations](#special-considerations-3)
+- [Editing a Device Name](#editing-a-device-name)
+  - [Test Objectives](#test-objectives-4)
+- [Project Settings - Solo Project](#project-settings---solo-project)
+  - [Test Objectives](#test-objectives-5)
+  - [Special Considerations](#special-considerations-4)
+- [Project Settings - Named Project (Coordinator)](#project-settings---named-project-coordinator)
+  - [Test Objectives](#test-objectives-6)
+  - [Special Considerations](#special-considerations-5)
 
 ## Projects and Project Settings
 
@@ -99,3 +105,38 @@ This test validates that a user on the default “solo” project can open the s
 - Checks that a user can leave the page without saving and the device name doesn't change
 - Checks that once a user saves the new device name, it appears on the screen
 - Exits device name editing page and reenters it to make sure edited device name is persisted
+
+## Project Settings - Solo Project
+
+This test verifies that a solo user can access and view the **Project Settings** screen which will have two "cards."
+
+### Test Objectives
+
+- Opens the **side drawer** and navigates to **Project Settings** via the **View** button.
+- Confirms the **Project Settings** screen header is visible.
+- Verifies the first card displays a description of it as a solo project and a button to invite collaborators.
+- Verifies the second card displays information about importing categories.
+
+### Special Considerations
+
+- This test requires the app to be in an **unnamed project state** (solo).
+- Must run before any test that names the project.
+- This test does not enter sub-settings like Config or Invite screens — only validates the card content.
+
+## Project Settings - Named Project (Coordinator)
+
+This test verifies that a user who has named a project (becoming a coordinator) can access and view the updated **Project Settings** screen. The layout now includes three cards reflecting project name, collaborators, and categories.
+
+### Test Objectives
+
+- Opens the **side drawer** and navigates to **Project Settings** via the **View** button.
+- Confirms the **Project Settings** screen header is visible.
+- Verifies the first card displays the project name and an **Edit Info** button.
+- Verifies the second card shows project collaborator and a **View Team** button.
+- Verifies the third card displays the information about the categories.
+
+### Special Considerations
+
+- This test assumes a project has already been named in a previous test.
+- It does **not** test editing the project name or navigating into the team or config sub-screens.
+- Cannot currently verify participant view in BrowserStack (can't invite a second device).

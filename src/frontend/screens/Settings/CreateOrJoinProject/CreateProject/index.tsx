@@ -98,11 +98,13 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
   const updateSettingsMutation = useUpdateProjectSettings({
     projectId: projectId,
   });
-  const {mutate: importProjectConfig} = useImportProjectConfig({projectId});
+  const importProjectConfig = useImportProjectConfig({projectId});
 
   const mutationIsPending =
     selectFileMutation.status === 'pending' ||
-    createProjectMutation.status === 'pending';
+    createProjectMutation.status === 'pending' ||
+    importProjectConfig.status === 'pending' ||
+    updateSettingsMutation.status === 'pending';
 
   React.useEffect(() => {
     // Prevent back navigation while project creation mutation is pending
@@ -132,19 +134,40 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
 
     try {
       if (projectInfo.role === 'solo') {
-        const configMetadata = fileUri
-          ? await extractConfigMetadata(fileUri)
-          : undefined;
-
+        // ADD ERROR HANDLING FOR BOTH MUTATIONS
         if (fileUri) {
-          await importProjectConfigAsync(fileUri);
+          importProjectConfig.mutate(
+            {configPath: convertFileUriToPosixPath(fileUri)},
+            {
+              onSuccess: async () => {
+                updateSettingsMutation.mutate(
+                  {
+                    name: projectName,
+                    configMetadata: await extractConfigMetadata(fileUri),
+                  },
+                  {
+                    onSuccess: () => {
+                      navigation.navigate('ProjectCreated', {
+                        name: projectName,
+                      });
+                    },
+                  },
+                );
+              },
+            },
+          );
+          return;
         }
-
-        await updateSettingsMutation.mutateAsync({
-          name: projectName,
-          configMetadata,
-        });
-        navigation.navigate('ProjectCreated', {name: projectName});
+        updateSettingsMutation.mutate(
+          {
+            name: projectName,
+          },
+          {
+            onSuccess: () => {
+              navigation.navigate('ProjectCreated', {name: projectName});
+            },
+          },
+        );
       } else {
         const newId = await createProjectMutation.mutateAsync({
           name: projectName,
@@ -163,18 +186,6 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
       }
     }
   };
-
-  function importProjectConfigAsync(fileUri: string) {
-    return new Promise<void>((resolve, reject) =>
-      importProjectConfig(
-        {configPath: convertFileUriToPosixPath(fileUri)},
-        {
-          onSuccess: () => resolve(),
-          onError: err => reject(err),
-        },
-      ),
-    );
-  }
 
   function selectConfigFile() {
     selectFileMutation.mutate(

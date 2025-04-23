@@ -10,7 +10,7 @@
 - [Inviting Collaborators While Solo](#inviting-collaborators-while-solo)
   - [Test Objectives](#test-objectives-1)
   - [Special Considerations](#special-considerations-1)
-- [Creating a project from the side drawer menu](#creating-a-project-from-the-side-drawer-menu)
+- [Naming the default project from the side drawer menu](#naming-the-default-project-from-the-side-drawer-menu)
   - [Test Objectives](#test-objectives-2)
   - [Special Considerations](#special-considerations-2)
 - [Unjoining a project](#unjoining-a-project)
@@ -62,23 +62,23 @@ This test validates that a user on the default “solo” project can open the s
 - This test must run before any other test that names the project.
 - This test doesn’t fully create a project; it only confirms navigation into `CreateProject` (Name a project) -- see below.
 
-## Creating a project from the side drawer menu
+## Naming the default project from the side drawer menu
 
-- This tests a user creating a project for the first time.
+- This tests a user renaming the default project.
 
 ### Test Objectives
 
-- Ensures flow is present to Create a project through series of clicks
+- Ensures flow is present to rename a project
 - Ensures user cannot create a project without entering a name first
 - Checks for presence of Import Config Button
 - Checks that user sees the 'success' screen and invite device and go to map buttons are present
 - Checks that user can go to the map
+- Checks that the observations created before the project was renamed are still there
 
 ### Special Considerations
 
-- User can be taken to invite devices screen but no other devices will be present on an emulator
-- If the user goes to the invite devices screen and tries to back out it doesn't work
-- When the project is created, the name does not actually appear in the side drawer menu title
+- This can only be done when a user is on a Solo project
+- We cannot test the inviting of a device on Browserstack
 
 ## Unjoining a project
 

@@ -3,8 +3,8 @@ import {describe, it} from 'mocha';
 import {byResourceId, byText} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 
-describe('Project - Create Project from Drawer', () => {
-  it('should allow user to create a new project', async () => {
+describe('Project - Rename Project from Drawer', () => {
+  it('should allow user to rename a project', async () => {
     const createProjectButton = await $(byText('New Project'));
     await expect(createProjectButton).toBeDisplayed();
     await createProjectButton.click();
@@ -28,5 +28,12 @@ describe('Project - Create Project from Drawer', () => {
     await expect($(byText('Invite Device'))).toBeDisplayed();
     const goToMapButton = await $(byText('Go to Map'));
     await goToMapButton.click();
+  });
+  it('should leave observations in place with a renamed project', async () => {
+    const obsListTab = await $('~Go to ObservationsList');
+    await obsListTab.click();
+    await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();
+    await expect($(byText('Threat'))).toBeDisplayed();
+    await expect($(byResourceId('OBS.Threat-list-icon'))).toBeDisplayed();
   });
 });

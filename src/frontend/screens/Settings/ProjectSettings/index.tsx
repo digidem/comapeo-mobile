@@ -159,7 +159,7 @@ const SettingsCardRow = ({
 }) => (
   <ProjectSettingsCard>
     <View style={styles.row}>
-      <View>{icon}</View>
+      <View style={{marginRight: 16}}>{icon}</View>
       <View style={styles.cardColumn}>
         <HeaderText variant="header5">{title}</HeaderText>
         {!!subtitle && (
@@ -193,7 +193,6 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    gap: 20,
   },
   cardColumn: {
     flex: 1,

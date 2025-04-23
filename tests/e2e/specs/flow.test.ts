@@ -8,13 +8,13 @@ describe('CoMapeo E2E Flow', function () {
   require('./project/own-project-headers.test');
   require('./main/side-drawer-menu-no-proj.test');
   require('./project/project-settings-no-proj.test');
+  require('./observations/create-observation.test');
   require('./project/invite-collaborators.test');
-  require('./project/create-project-from-drawer.test');
+  require('./project/rename-project-from-drawer.test');
   // require('./project/unjoin-project.test');
   require('./main/side-drawer-menu-proj.test');
   require('./project/project-settings-proj.test');
   require('./main/map.test');
-  require('./observations/create-observation.test');
   require('./observations/add-details.test');
   require('./observations/view-observations.test');
   require('./settings/coordinates.test');

@@ -96,9 +96,14 @@ import {DeleteAudioBottomSheet} from '../../screens/Audio/DeleteAudioBottomSheet
 import {AudioSavedBottomSheet} from '../../screens/Audio/AudioSavedBottomSheet.tsx';
 import {AudioPlaybackSaved} from '../../screens/Audio/AudioPlaybackSaved.tsx';
 import {AudioCustomHeaderLeft} from '../../screens/Audio/AudioCustomHeaderLeft.tsx';
+import {InviteReceived} from '../../screens/Invites/InviteReceived.tsx';
+import {InviteSuccessfullyAccepted} from '../../screens/Invites/InviteSuccessfullyAccepted.tsx';
+import {InviteCanceled} from '../../screens/Invites/InviteCanceled.tsx';
 import {ObservationMetadata} from '../../screens/ObservationMetadata.tsx';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagement/ErrorBottomSheet.tsx';
+import {ExistingProjectWarning} from '../../screens/Invites/ExistingProjectWarning.tsx';
+import {LeaveProject} from '../../screens/Invites/LeaveProject.tsx';
 import {MenuScreen} from '../../screens/MenuScreen';
 import {InviteCollaboratorsScreen} from '../../screens/Settings/ProjectSettings/YourTeam/InviteCollaborators.tsx';
 import {MenuHeader} from '../../sharedComponents/MenuHeader.tsx';
@@ -466,11 +471,22 @@ export const createDefaultScreenGroup = ({
         name="AudioSavedBottomSheet"
         component={AudioSavedBottomSheet}
       />
+      <RootStack.Screen name="InviteReceived" component={InviteReceived} />
+      <RootStack.Screen
+        name="InviteSuccessfullyAccepted"
+        component={InviteSuccessfullyAccepted}
+      />
+      <RootStack.Screen name="InviteCanceled" component={InviteCanceled} />
       <RootStack.Screen name="ErrorBottomSheet" component={ErrorBottomSheet} />
       <RootStack.Screen
         name="BackgroundMapErrorBottomSheet"
         component={BackgroundMapErrorBottomSheet}
       />
+      <RootStack.Screen
+        name="ExistingProjectWarning"
+        component={ExistingProjectWarning}
+      />
+      <RootStack.Screen name="LeaveProject" component={LeaveProject} />
     </RootStack.Group>
   </>
 );

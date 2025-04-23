@@ -30,7 +30,11 @@ describe('Settings - Language Settings Flow', () => {
     await obsListTab.click();
 
     await expect(
-      $(byTextMatches('hace\\s+(?:[1-5]?\\d|60)\\s+(?:minutos|segundos)')),
+      $(
+        byTextMatches(
+          'hace\\s+(?:[1-5]?\\d|60)\\s+(?:minuto|minutos|segundos)',
+        ),
+      ),
     ).toBeDisplayed();
   });
 

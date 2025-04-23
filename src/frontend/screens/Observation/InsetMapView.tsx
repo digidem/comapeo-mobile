@@ -47,6 +47,7 @@ export const InsetMapView = React.memo<MapProps>(
           anchor={{x: 0.5, y: 0.8}}
           coordinate={[lon, lat]}>
           <TouchableOpacity
+            accessibilityLabel="Open observation metadata via map pin"
             onPress={() => navigate('ObservationMetadata', {observationId})}>
             <View style={styles.coords}>
               <MapPin style={{marginRight: 5}} />

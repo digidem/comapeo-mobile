@@ -609,6 +609,27 @@
   "screens.EnterPassword.wrongPass": {
     "message": "Senha incorreta. Por favor, tente novamente."
   },
+  "screens.ExchangeSoloScreen.dataSecure": {
+    "message": "Your data stays secure while exchanging between trusted devices."
+  },
+  "screens.ExchangeSoloScreen.getStarted": {
+    "message": "Get started in two simple ways:"
+  },
+  "screens.ExchangeSoloScreen.goBack": {
+    "message": "Go Back"
+  },
+  "screens.ExchangeSoloScreen.inviteCollaborators": {
+    "message": "Invite collaborators to your project from the main menu"
+  },
+  "screens.ExchangeSoloScreen.joinExisting": {
+    "message": "Join an existing project by accepting an invitation"
+  },
+  "screens.ExchangeSoloScreen.securelyShare": {
+    "message": "Securely share observations across connected devices."
+  },
+  "screens.ExchangeSoloScreen.title": {
+    "message": "Exchange"
+  },
   "screens.FatalError.restart": {
     "message": "Reiniciar aplicativo"
   },
@@ -645,6 +666,78 @@
   "screens.IntroToCoMapeo.ownData": {
     "message": "Controle e seja o dono dos seus dados"
   },
+  "screens.Invite.AlreadyOnProject.leaveWarning": {
+    "message": "To join a new project you must leave your current one."
+  },
+  "screens.Invite.ExistingProjectWarning.alreadyOnProject": {
+    "message": "You are already on a project"
+  },
+  "screens.Invite.ExistingProjectWarning.goBack": {
+    "message": "Go Back"
+  },
+  "screens.Invite.ExistingProjectWarning.leaveProj": {
+    "message": "Leave Current Project"
+  },
+  "screens.Invite.ExistingProjectWarning.onProject": {
+    "message": "You are on {projectName}"
+  },
+  "screens.InviteCancelled.canceled": {
+    "message": "Invite Canceled"
+  },
+  "screens.InviteCancelled.close": {
+    "message": "Close"
+  },
+  "screens.InviteCancelled.projectInviteCanceled": {
+    "message": "Your invitation to {projectName} has been canceled."
+  },
+  "screens.InviteReceived.acceptInvite": {
+    "message": "Accept Invite"
+  },
+  "screens.InviteReceived.declineInvite": {
+    "message": "Decline Invite"
+  },
+  "screens.InviteReceived.invitedToJoin": {
+    "message": "You've been invited to join {projectName}"
+  },
+  "screens.InviteReceived.joinProject": {
+    "message": "Join {projectName}"
+  },
+  "screens.InviteSuccess.goToMap": {
+    "message": "Go To Map"
+  },
+  "screens.InviteSuccess.goToSync": {
+    "message": "Go To Sync"
+  },
+  "screens.InviteSuccess.success": {
+    "message": "Success"
+  },
+  "screens.InviteSuccess.youHaveJoined": {
+    "message": "You have joined {projectName}"
+  },
+  "screens.Invites.LeaveProject.cancel": {
+    "message": "Cancel"
+  },
+  "screens.Invites.LeaveProject.checkToConfirm": {
+    "message": "Please check the box to confirm"
+  },
+  "screens.Invites.LeaveProject.deleteConsentWithName": {
+    "message": "I understand I will be deleting all data from Project {projectName} from my device."
+  },
+  "screens.Invites.LeaveProject.deleteConsentWithoutName": {
+    "message": "I understand I will be deleting all data from my device."
+  },
+  "screens.Invites.LeaveProject.leaveProj": {
+    "message": "Leave Project"
+  },
+  "screens.Invites.LeaveProject.leavingProject": {
+    "message": "Leaving Project {projectName}"
+  },
+  "screens.Invites.LeaveProject.removeFromProjWithName": {
+    "message": "This will remove all Project {projectName}'s data from your device."
+  },
+  "screens.Invites.LeaveProject.removeFromProjWithoutName": {
+    "message": "This will remove all of the data from your device."
+  },
   "screens.LanguageSettings.followSystemPreferences": {
     "description": "Label for language option to follow system preferences",
     "message": "Follow system preferences"
@@ -652,45 +745,6 @@
   "screens.LanguageSettings.title": {
     "description": "Title language settings screen",
     "message": "Idioma"
-  },
-  "screens.LeaveProject.AlreadyOnProject.alreadyOnProject": {
-    "message": "Você já está em um projeto"
-  },
-  "screens.LeaveProject.AlreadyOnProject.goBack": {
-    "message": "Voltar"
-  },
-  "screens.LeaveProject.AlreadyOnProject.leaveProj": {
-    "message": "Sair do projeto atual"
-  },
-  "screens.LeaveProject.AlreadyOnProject.leaveWarning": {
-    "message": "Para participar de um novo projeto, você deve sair do seu atual."
-  },
-  "screens.LeaveProject.AlreadyOnProject.onProject": {
-    "message": "Você está no projeto {projectName}"
-  },
-  "screens.LeaveProject.cancel": {
-    "message": "Cancelar"
-  },
-  "screens.LeaveProject.checkToConfirm": {
-    "message": "Por favor, selecione a caixa para confirmar"
-  },
-  "screens.LeaveProject.deleteConsentWithName": {
-    "message": "Eu entendo que irei excluir todos os dados do projeto {projectName} do meu dispositivo."
-  },
-  "screens.LeaveProject.deleteConsentWithoutName": {
-    "message": "Eu entendo que irei excluir todos os dados do projeto do meu dispositivo."
-  },
-  "screens.LeaveProject.leaveProj": {
-    "message": "Sair do Projeto"
-  },
-  "screens.LeaveProject.leavingProject": {
-    "message": "Saindo do projeto {projectName}"
-  },
-  "screens.LeaveProject.removeFromProjWithName": {
-    "message": "Isso excluirá todos os dados do projeto {projectName} do seu dispositivo."
-  },
-  "screens.LeaveProject.removeFromProjWithoutName": {
-    "message": "Isto removerá todos os dados do seu dispositivo."
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
@@ -1539,21 +1593,6 @@
   "screens.SettingsPrivacyPolicy.navTitle": {
     "message": "Política de Privacidade"
   },
-  "screens.Sync.CreateOrJoinProjectDisplay.buttonText": {
-    "message": "Criar ou Juntar-se a um Projeto"
-  },
-  "screens.Sync.CreateOrJoinProjectDisplay.subText": {
-    "message": "Esta ação excluirá as observações que você coletou até agora. Considere compartilhar {icon} observações importantes em seu e-mail antes de continuar."
-  },
-  "screens.Sync.CreateOrJoinProjectDisplay.subTitle": {
-    "message": "Você poderá compartilhar dados com dispositivos que fazem parte do mesmo projeto."
-  },
-  "screens.Sync.CreateOrJoinProjectDisplay.title": {
-    "message": "Crie ou participe de um projeto para coletar dados com a equipe"
-  },
-  "screens.Sync.HeaderTitle.noWiFi": {
-    "message": "Sem Wi-Fi"
-  },
   "screens.Sync.NoWifiDisplay.buttonText": {
     "message": "Abrir Configurações"
   },
@@ -1567,7 +1606,10 @@
     "message": "Está tudo sincronizado!"
   },
   "screens.Sync.ProjectSyncDisplay.allDataSynced": {
-    "message": "Todos os dados foram sincronizados"
+    "message": "All data exchanged"
+  },
+  "screens.Sync.ProjectSyncDisplay.connectedTo": {
+    "message": "Connected to"
   },
   "screens.Sync.ProjectSyncDisplay.devicesAvailableToSync": {
     "message": "Dispositivos disponíveis"
@@ -1578,6 +1620,9 @@
   "screens.Sync.ProjectSyncDisplay.noDevicesAvailableToSync": {
     "message": "Não há dispositivos disponíveis para sincronização"
   },
+  "screens.Sync.ProjectSyncDisplay.noWifi": {
+    "message": "No Wi-Fi"
+  },
   "screens.Sync.ProjectSyncDisplay.progressLabelSyncing": {
     "message": "Sincronizando…"
   },
@@ -1587,8 +1632,11 @@
   "screens.Sync.ProjectSyncDisplay.progressLabelWithDeviceCount": {
     "message": "Aguardando dispositivos"
   },
-  "screens.Sync.ProjectSyncDisplay.startSync": {
-    "message": "Iniciar sincronização"
+  "screens.Sync.ProjectSyncDisplay.readyToExchange": {
+    "message": "Ready to exchange"
+  },
+  "screens.Sync.ProjectSyncDisplay.start": {
+    "message": "Start"
   },
   "screens.Sync.ProjectSyncDisplay.stop": {
     "message": "Parar"
@@ -1603,10 +1651,19 @@
     "message": "Completo! Você está atualizado"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "Você está sincronizando com sua equipe"
+    "message": "You are exchanging with your team"
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
     "message": "Aguardando dispositivos"
+  },
+  "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
+    "message": "{ssid}"
+  },
+  "screens.Sync.headerTitle": {
+    "message": "Exchange"
+  },
+  "screens.Sync.remoteArchiveConnected": {
+    "message": "Remote Archive connected"
   },
   "screens.SyncEverythingBottomSheet.cancel": {
     "message": "Cancelar"
@@ -1685,39 +1742,6 @@
   },
   "sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Something Went Wrong"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.canceled": {
-    "message": "Convite cancelado"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.close": {
-    "message": "Fechar"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.projectInviteCanceled": {
-    "message": "Seu convite para {projectName} foi cancelado."
-  },
-  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.acceptInvite": {
-    "message": "Aceitar Convite"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.declineInvite": {
-    "message": "Recusar convite"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.invitedToJoin": {
-    "message": "Você foi convidado a juntar-se a {projectName}"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.joinProject": {
-    "message": "Entrar no projeto {projectName}"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.goToMap": {
-    "message": "Ir para mapa"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.goToSync": {
-    "message": "Ir para Sincronização"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.success": {
-    "message": "Sucesso"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.youHaveJoined": {
-    "message": "Você está no projeto {projectName}"
   },
   "sharedComponents.RoleWithIcon.coordinator": {
     "message": "Coordenador"

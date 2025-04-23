@@ -134,7 +134,6 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
 
     try {
       if (projectInfo.role === 'solo') {
-        // ADD ERROR HANDLING FOR BOTH MUTATIONS
         if (fileUri) {
           importProjectConfig.mutate(
             {configPath: convertFileUriToPosixPath(fileUri)},
@@ -151,8 +150,16 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
                         name: projectName,
                       });
                     },
+                    onError: err => {
+                      Sentry.captureException(err);
+                      navigation.navigate('ErrorBottomSheet');
+                    },
                   },
                 );
+              },
+              onError: error => {
+                Sentry.captureException(error);
+                navigation.navigate('ErrorBottomSheet');
               },
             },
           );
@@ -169,17 +176,23 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
           },
         );
       } else {
-        const newId = await createProjectMutation.mutateAsync({
-          name: projectName,
-          configPath: fileUri && convertFileUriToPosixPath(fileUri),
-        });
-
-        setActiveProjectId(newId);
-        navigation.navigate('ProjectCreated', {name: projectName});
+        createProjectMutation.mutate(
+          {
+            name: projectName,
+            configPath: fileUri && convertFileUriToPosixPath(fileUri),
+          },
+          {
+            onSuccess: projectId => {
+              setActiveProjectId(projectId);
+              navigation.navigate('ProjectCreated', {name: projectName});
+            },
+            onError: err => {
+              Sentry.captureException(err);
+              navigation.navigate('ErrorBottomSheet');
+            },
+          },
+        );
       }
-    } catch (err) {
-      Sentry.captureException(err);
-      navigation.navigate('ErrorBottomSheet');
     } finally {
       if (fileUri) {
         await FileSystem.deleteAsync(fileUri, {idempotent: true}).catch(noop);

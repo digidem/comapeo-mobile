@@ -1,12 +1,12 @@
-import {BackHandler, StyleSheet, View} from 'react-native';
+import {AppState, StyleSheet, View} from 'react-native';
 import InviteSent from '../../../../../images/InviteSent.svg';
 import {defineMessages, useIntl} from 'react-intl';
 import React from 'react';
 import {TextButton} from '../../../../../sharedComponents/TextButton';
-import {useFocusEffect} from '@react-navigation/native';
 import {useNavigationFromRoot} from '../../../../../hooks/useNavigationWithTypes';
 import {HeaderText} from '../../../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../../../sharedComponents/Text/BodyText';
+import {usePreventAndroidBackButton} from '../../../../../hooks/usePreventAndroidBackButton';
 
 const m = defineMessages({
   waitingMessage: {
@@ -36,16 +36,18 @@ export const WaitingForInviteAccept = ({
     navigation.setOptions({headerShown: false});
   }, [navigation]);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const subscription = BackHandler.addEventListener(
-        'hardwareBackPress',
-        () => true,
-      );
+  usePreventAndroidBackButton();
 
-      return () => subscription.remove();
-    }, []),
-  );
+  React.useEffect(() => {
+    // cancels invite if app goes into background
+    const subscription = AppState.addEventListener('change', nextState => {
+      if (nextState === 'background') {
+        cancelInvite();
+      }
+    });
+
+    return () => subscription.remove();
+  }, [cancelInvite]);
 
   React.useEffect(() => {
     const interval = setInterval(() => setTime(prev => prev + 1), 1000);

@@ -102,6 +102,7 @@ import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagemen
 import {ExistingProjectWarning} from '../../screens/Invites/ExistingProjectWarning.tsx';
 import {LeaveProject} from '../../screens/Invites/LeaveProject.tsx';
 import {MenuScreen} from '../../screens/MenuScreen';
+import {InviteCollaboratorsScreen} from '../../screens/Settings/ProjectSettings/YourTeam/InviteCollaborators.tsx';
 import {MenuHeader} from '../../sharedComponents/MenuHeader.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
@@ -423,6 +424,22 @@ export const createDefaultScreenGroup = ({
         component={ObservationMetadata}
         options={{headerTitle: intl(ObservationMetadata.navTitle)}}
       />
+      <RootStack.Screen
+        name="Menu"
+        component={MenuScreen}
+        options={{
+          headerShown: true,
+          animation: 'slide_from_right',
+          header: () => <MenuHeader />,
+        }}
+      />
+      <RootStack.Screen
+        name="InviteCollaborators"
+        component={InviteCollaboratorsScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
     </RootStack.Group>
     <RootStack.Group
       screenOptions={{
@@ -467,15 +484,6 @@ export const createDefaultScreenGroup = ({
         component={ExistingProjectWarning}
       />
       <RootStack.Screen name="LeaveProject" component={LeaveProject} />
-      <RootStack.Screen
-        name="Menu"
-        component={MenuScreen}
-        options={{
-          headerShown: true,
-          animation: 'slide_from_right',
-          header: () => <MenuHeader />,
-        }}
-      />
     </RootStack.Group>
   </>
 );

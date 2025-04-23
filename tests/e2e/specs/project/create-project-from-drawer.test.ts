@@ -5,7 +5,7 @@ import {output} from '../../utils/naming';
 
 describe('Project - Create Project from Drawer', () => {
   it('should allow user to create a new project', async () => {
-    const createProjectButton = await $(byText('Create a Project'));
+    const createProjectButton = await $(byText('New Project'));
     await expect(createProjectButton).toBeDisplayed();
     await createProjectButton.click();
 

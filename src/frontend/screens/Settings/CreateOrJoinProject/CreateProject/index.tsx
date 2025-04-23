@@ -125,78 +125,78 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
     defaultValues: {projectName: ''},
   });
 
-  const handleCreateProject = async (val: ProjectFormType) => {
+  const handleCreateProject = (val: ProjectFormType) => {
     const projectName = val.projectName.trim();
     const fileUri =
       configFileResult?.type === 'success'
         ? configFileResult.file.uri
         : undefined;
 
-    try {
-      if (projectInfo.role === 'solo') {
-        if (fileUri) {
-          importProjectConfig.mutate(
-            {configPath: convertFileUriToPosixPath(fileUri)},
-            {
-              onSuccess: async () => {
-                updateSettingsMutation.mutate(
-                  {
-                    name: projectName,
-                    configMetadata: await extractConfigMetadata(fileUri),
+    if (projectInfo.role === 'solo') {
+      if (fileUri) {
+        importProjectConfig.mutate(
+          {configPath: convertFileUriToPosixPath(fileUri)},
+          {
+            onSuccess: async () => {
+              updateSettingsMutation.mutate(
+                {
+                  name: projectName,
+                  configMetadata: await extractConfigMetadata(fileUri),
+                },
+                {
+                  onSuccess: () => {
+                    FileSystem.deleteAsync(fileUri, {idempotent: true}).catch(
+                      noop,
+                    );
+                    navigation.navigate('ProjectCreated', {
+                      name: projectName,
+                    });
                   },
-                  {
-                    onSuccess: () => {
-                      navigation.navigate('ProjectCreated', {
-                        name: projectName,
-                      });
-                    },
-                    onError: err => {
-                      Sentry.captureException(err);
-                      navigation.navigate('ErrorBottomSheet');
-                    },
+                  onError: err => {
+                    Sentry.captureException(err);
+                    navigation.navigate('ErrorBottomSheet');
                   },
-                );
-              },
-              onError: error => {
-                Sentry.captureException(error);
-                navigation.navigate('ErrorBottomSheet');
-              },
+                },
+              );
             },
-          );
-          return;
-        }
-        updateSettingsMutation.mutate(
-          {
-            name: projectName,
-          },
-          {
-            onSuccess: () => {
-              navigation.navigate('ProjectCreated', {name: projectName});
-            },
-          },
-        );
-      } else {
-        createProjectMutation.mutate(
-          {
-            name: projectName,
-            configPath: fileUri && convertFileUriToPosixPath(fileUri),
-          },
-          {
-            onSuccess: projectId => {
-              setActiveProjectId(projectId);
-              navigation.navigate('ProjectCreated', {name: projectName});
-            },
-            onError: err => {
-              Sentry.captureException(err);
+            onError: error => {
+              Sentry.captureException(error);
               navigation.navigate('ErrorBottomSheet');
             },
           },
         );
+        return;
       }
-    } finally {
-      if (fileUri) {
-        await FileSystem.deleteAsync(fileUri, {idempotent: true}).catch(noop);
-      }
+      updateSettingsMutation.mutate(
+        {
+          name: projectName,
+        },
+        {
+          onSuccess: () => {
+            if (fileUri) {
+              FileSystem.deleteAsync(fileUri, {idempotent: true}).catch(noop);
+            }
+            navigation.navigate('ProjectCreated', {name: projectName});
+          },
+        },
+      );
+    } else {
+      createProjectMutation.mutate(
+        {
+          name: projectName,
+          configPath: fileUri && convertFileUriToPosixPath(fileUri),
+        },
+        {
+          onSuccess: projectId => {
+            setActiveProjectId(projectId);
+            navigation.navigate('ProjectCreated', {name: projectName});
+          },
+          onError: err => {
+            Sentry.captureException(err);
+            navigation.navigate('ErrorBottomSheet');
+          },
+        },
+      );
     }
   };
 

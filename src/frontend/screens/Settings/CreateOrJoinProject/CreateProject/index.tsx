@@ -125,7 +125,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
     defaultValues: {projectName: ''},
   });
 
-  const handleCreateProject = (val: ProjectFormType) => {
+  const handleCreateOrUpdateProject = (val: ProjectFormType) => {
     const projectName = val.projectName.trim();
     const fileUri =
       configFileResult?.type === 'success'
@@ -289,7 +289,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
               testID="PROJECT.create-btn"
               fullSize={true}
               text={t(m.createProjectButton)}
-              onPress={handleSubmit(handleCreateProject)}
+              onPress={handleSubmit(handleCreateOrUpdateProject)}
             />
           )}
         </View>

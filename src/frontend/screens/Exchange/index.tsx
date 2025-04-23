@@ -1,42 +1,27 @@
 import * as React from 'react';
-import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import {useManyProjects, useSyncState} from '@comapeo/core-react';
+import {useSyncState} from '@comapeo/core-react';
 
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {IconButton} from '../../sharedComponents/IconButton';
-import {SettingsIcon} from '../../sharedComponents/icons';
 import {
   useGetRemoteArchives,
   useProjectSettings,
 } from '../../hooks/server/projects';
 import {useLocalDiscoveryState} from '../../hooks/useLocalDiscoveryState';
-import {CreateOrJoinProjectDisplay} from './CreateOrJoinProjectDisplay';
-import {HeaderTitle} from './HeaderTitle';
+import {ExchangeSoloScreen} from './ExchangeSoloScreen';
 import {NoWifiDisplay} from './NoWifiDisplay';
 import {openWiFiSettings} from '../../lib/linking';
-import {ProjectSyncDisplay} from './ProjectSyncDisplay';
+import {ExchangeScreenContent} from './ExchangeScreenContent';
 import {Loading} from '../../sharedComponents/Loading';
 import {useNetInfo} from '@react-native-community/netinfo';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {defineMessages} from 'react-intl';
 
-export function createNavigationOptions() {
-  return ({
-    navigation,
-  }: NativeRootNavigationProps<'Sync'>): NativeStackNavigationOptions => {
-    return {
-      headerTitleAlign: 'center',
-      headerTitle: () => <HeaderTitle />,
-      headerRight: () => (
-        <IconButton
-          onPress={() => {
-            navigation.navigate('ProjectSettings');
-          }}>
-          <SettingsIcon />
-        </IconButton>
-      ),
-    };
-  };
-}
+const m = defineMessages({
+  exchangeTitle: {
+    id: 'screens.Sync.headerTitle',
+    defaultMessage: 'Exchange',
+  },
+});
 
 export const SyncScreen = ({navigation}: NativeRootNavigationProps<'Sync'>) => {
   const wifiStatus = useLocalDiscoveryState(state => state.wifiStatus);
@@ -48,9 +33,6 @@ export const SyncScreen = ({navigation}: NativeRootNavigationProps<'Sync'>) => {
 
   const hasInternetAccess = useNetInfo().isConnected;
 
-  // TODO: Handle error case
-  const {data: projects} = useManyProjects();
-
   const {projectId} = useActiveProject();
   const syncState = useSyncState({projectId});
   const projectSettingsQuery = useProjectSettings();
@@ -59,13 +41,8 @@ export const SyncScreen = ({navigation}: NativeRootNavigationProps<'Sync'>) => {
     return <Loading />;
   }
 
-  // TODO: Replace with proper check of being a part of a shared project
-  if (projects && projects.length === 1) {
-    return (
-      <CreateOrJoinProjectDisplay
-        onCreateOrJoinProject={() => navigation.navigate('CreateOrJoinProject')}
-      />
-    );
+  if (projectSettingsQuery.data?.name === undefined) {
+    return <ExchangeSoloScreen onGoBack={() => navigation.goBack()} />;
   }
 
   const shouldShowNoWifiDisplay = () => {
@@ -94,10 +71,7 @@ export const SyncScreen = ({navigation}: NativeRootNavigationProps<'Sync'>) => {
     );
   }
 
-  return (
-    <ProjectSyncDisplay
-      syncState={syncState}
-      projectName={projectSettingsQuery.data.name}
-    />
-  );
+  return <ExchangeScreenContent syncState={syncState} />;
 };
+
+SyncScreen.navTitle = m.exchangeTitle;

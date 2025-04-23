@@ -621,6 +621,27 @@
   "screens.EnterPassword.wrongPass": {
     "message": "Incorrect passcode, please try again"
   },
+  "screens.ExchangeSoloScreen.dataSecure": {
+    "message": "Your data stays secure while exchanging between trusted devices."
+  },
+  "screens.ExchangeSoloScreen.getStarted": {
+    "message": "Get started in two simple ways:"
+  },
+  "screens.ExchangeSoloScreen.goBack": {
+    "message": "Go Back"
+  },
+  "screens.ExchangeSoloScreen.inviteCollaborators": {
+    "message": "Invite collaborators to your project from the main menu"
+  },
+  "screens.ExchangeSoloScreen.joinExisting": {
+    "message": "Join an existing project by accepting an invitation"
+  },
+  "screens.ExchangeSoloScreen.securelyShare": {
+    "message": "Securely share observations across connected devices."
+  },
+  "screens.ExchangeSoloScreen.title": {
+    "message": "Exchange"
+  },
   "screens.FatalError.restart": {
     "message": "Restart App"
   },
@@ -1580,21 +1601,6 @@
   "screens.SettingsPrivacyPolicy.navTitle": {
     "message": "Privacy Policy"
   },
-  "screens.Sync.CreateOrJoinProjectDisplay.buttonText": {
-    "message": "Create or Join Project"
-  },
-  "screens.Sync.CreateOrJoinProjectDisplay.subText": {
-    "message": "This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
-  },
-  "screens.Sync.CreateOrJoinProjectDisplay.subTitle": {
-    "message": "You will be able to share data with devices that are part of the same project."
-  },
-  "screens.Sync.CreateOrJoinProjectDisplay.title": {
-    "message": "Create or join a project to collect data with a team"
-  },
-  "screens.Sync.HeaderTitle.noWiFi": {
-    "message": "No WiFi"
-  },
   "screens.Sync.NoWifiDisplay.buttonText": {
     "message": "Open Settings"
   },
@@ -1608,7 +1614,10 @@
     "message": "You're all caught up!"
   },
   "screens.Sync.ProjectSyncDisplay.allDataSynced": {
-    "message": "All data synced"
+    "message": "All data exchanged"
+  },
+  "screens.Sync.ProjectSyncDisplay.connectedTo": {
+    "message": "Connected to"
   },
   "screens.Sync.ProjectSyncDisplay.devicesAvailableToSync": {
     "message": "Devices available"
@@ -1619,6 +1628,9 @@
   "screens.Sync.ProjectSyncDisplay.noDevicesAvailableToSync": {
     "message": "No devices available to sync"
   },
+  "screens.Sync.ProjectSyncDisplay.noWifi": {
+    "message": "No Wi-Fi"
+  },
   "screens.Sync.ProjectSyncDisplay.progressLabelSyncing": {
     "message": "Syncing…"
   },
@@ -1628,8 +1640,11 @@
   "screens.Sync.ProjectSyncDisplay.progressLabelWithDeviceCount": {
     "message": "Waiting for other devices"
   },
-  "screens.Sync.ProjectSyncDisplay.startSync": {
-    "message": "Start Sync"
+  "screens.Sync.ProjectSyncDisplay.readyToExchange": {
+    "message": "Ready to exchange"
+  },
+  "screens.Sync.ProjectSyncDisplay.start": {
+    "message": "Start"
   },
   "screens.Sync.ProjectSyncDisplay.stop": {
     "message": "Stop"
@@ -1644,10 +1659,19 @@
     "message": "Complete! You're up to date"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "You are syncing with your team"
+    "message": "You are exchanging with your team"
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
     "message": "Waiting for devices"
+  },
+  "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
+    "message": "{ssid}"
+  },
+  "screens.Sync.headerTitle": {
+    "message": "Exchange"
+  },
+  "screens.Sync.remoteArchiveConnected": {
+    "message": "Remote Archive connected"
   },
   "screens.SyncEverythingBottomSheet.cancel": {
     "message": "Cancel"

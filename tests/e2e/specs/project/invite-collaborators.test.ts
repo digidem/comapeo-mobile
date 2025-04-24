@@ -4,6 +4,7 @@ import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
 
 describe('Project - Solo Project Invite/ Name Project Flow', () => {
   it('should open side drawer, navigate to Invite Collaborators screen, and verify content', async () => {
+    await $('~Open Menu').click();
     const projectName = await $(byResourceId('MENU.project-name'));
     await expect(projectName).toHaveText('My Solo Project');
 

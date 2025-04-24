@@ -424,15 +424,7 @@ export const createDefaultScreenGroup = ({
         component={ObservationMetadata}
         options={{headerTitle: intl(ObservationMetadata.navTitle)}}
       />
-      <RootStack.Screen
-        name="Menu"
-        component={MenuScreen}
-        options={{
-          headerShown: true,
-          animation: 'slide_from_right',
-          header: () => <MenuHeader />,
-        }}
-      />
+
       <RootStack.Screen
         name="InviteCollaborators"
         component={InviteCollaboratorsScreen}
@@ -484,6 +476,15 @@ export const createDefaultScreenGroup = ({
         component={ExistingProjectWarning}
       />
       <RootStack.Screen name="LeaveProject" component={LeaveProject} />
+      <RootStack.Screen
+        name="Menu"
+        component={MenuScreen}
+        options={{
+          headerShown: true,
+          animation: 'slide_from_right',
+          header: () => <MenuHeader />,
+        }}
+      />
     </RootStack.Group>
   </>
 );

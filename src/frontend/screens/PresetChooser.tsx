@@ -8,7 +8,6 @@ import {
   Text,
 } from 'react-native';
 import {defineMessages, FormattedMessage} from 'react-intl';
-import {useDraftObservation} from '../hooks/useDraftObservation';
 import {PresetCircleIcon} from '../sharedComponents/icons/PresetIcon';
 import {WHITE} from '../lib/styles';
 import {NativeNavigationComponent} from '../sharedTypes/navigation';
@@ -16,7 +15,10 @@ import {CustomHeaderLeftClose} from '../sharedComponents/CustomHeaderLeftClose';
 import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 import {Preset} from '@comapeo/schema';
 import {usePresetsQuery} from '../hooks/server/presets';
-import {usePersistedDraftObservation} from '../hooks/persistedState/usePersistedDraftObservation';
+import {
+  useDraftObservationActions,
+  useDraftObservationState,
+} from '../contexts/DraftObservationContext';
 
 const m = defineMessages({
   categoryTitle: {
@@ -35,12 +37,12 @@ const MIN_COL_WIDTH = 100;
 export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
   navigation,
 }) => {
-  const {updatePreset, usePreset} = useDraftObservation();
   const {data: presets} = usePresetsQuery();
-  const observationId = usePersistedDraftObservation(
-    store => store.observationId,
+  const observationId = useDraftObservationState(store => store.id);
+  const existingPreset = useDraftObservationState(
+    store => store.value?.presetRef,
   );
-  const existingPreset = usePreset();
+  const {updatePreset} = useDraftObservationActions();
 
   const handleGoBack = React.useCallback(() => {
     navigation.goBack();
@@ -70,7 +72,9 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
   const handleSelectPreset = (selectedPreset: Preset) => {
     updatePreset(selectedPreset);
     if (observationId) {
-      navigation.navigate('ObservationEdit', {observationId});
+      navigation.navigate('ObservationEdit', {
+        observationId: observationId.docId,
+      });
       return;
     }
     navigation.navigate('ObservationCreate');

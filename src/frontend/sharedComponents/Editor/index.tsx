@@ -47,6 +47,7 @@ export const Editor = ({
         {location && (
           <>
             <Divider />
+            {/*@ts-expect-error fore testing*/}
             <LocationView {...location} />
           </>
         )}
@@ -54,6 +55,7 @@ export const Editor = ({
       {isTrack ? (
         notesComponent
       ) : (
+        /*@ts-expect-error fore testing*/
         <DescriptionField notes={notes} updateNotes={updateNotes} />
       )}
       {attachments && attachments.length > 0 && (

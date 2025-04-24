@@ -61,7 +61,7 @@ export const ObservationCreate = ({
           onPressPreset={() => navigation.popTo('PresetChooser')}
           PresetIcon={
             <PresetCircleIcon
-              iconId={preset?.docId}
+              iconId={preset?.iconRef?.docId}
               size="medium"
               testID={`OBS.${preset?.name}-icon`}
             />
@@ -69,9 +69,9 @@ export const ObservationCreate = ({
         />
         <Divider />
         <LocationView />
-        <DescriptionField />
-        <MediaScrollView attachments={photoAndAudioAttachments} />
       </View>
+      <DescriptionField />
+      <MediaScrollView attachments={photoAndAudioAttachments} />
     </ScreenContentWithDock>
   );
 };

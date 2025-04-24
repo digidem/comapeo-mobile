@@ -9,6 +9,7 @@ import pluginQuery from '@tanstack/eslint-plugin-query';
 import * as tsParser from '@typescript-eslint/parser';
 import pluginJest from 'eslint-plugin-jest';
 import pluginReactNative from 'eslint-plugin-react-native';
+import pluginTestingLibrary from 'eslint-plugin-testing-library';
 import * as pluginReactHooks from 'eslint-plugin-react-hooks';
 import globals from 'globals';
 import pluginTs from 'typescript-eslint';
@@ -106,9 +107,16 @@ const frontendConfig = pluginTs.config(
     },
   },
   {
-    ...pluginJest.configs['flat/recommended'],
-    name: 'eslint-plugin-jest',
+    name: 'tests',
     files: ['src/frontend/**/*.test.{js,jsx,mts,ts,tsx}'],
+    extends: [
+      pluginJest.configs['flat/recommended'],
+      pluginTestingLibrary.configs['flat/react'],
+    ],
+    rules: {
+      // Mostly conventional and doesn't have significant impact on how tests work
+      'testing-library/render-result-naming-convention': 'off',
+    },
   },
 );
 

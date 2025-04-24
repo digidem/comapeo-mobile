@@ -7,8 +7,8 @@ describe('MAIN - GPS Component Test', () => {
     const mapView = await $(byResourceId('MAIN.mapbox-map-view'));
     await expect(mapView).toBeDisplayed();
 
-    const gpsText = await $(byResourceId('MAP.gps-pill-text'));
-    await expect(gpsText).toBeDisplayed();
+    const gpsPill = await $(byResourceId('MAP.gps-pill'));
+    await expect(gpsPill).toBeDisplayed();
   });
 
   it('should verify GPS pill navigation from Home Map screen', async () => {

@@ -1,33 +1,29 @@
-import React, {FC} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
-import {DARK_GREY, WHITE} from '../lib/styles';
-import {GpsErrorIcon, GpsSearchingIcon, GpsGoodIcon} from './icons';
-import {useSharedLocationContext} from '../contexts/SharedLocationContext';
-import {getLocationStatus} from '../lib/utils';
-import {BodyText} from './Text/BodyText';
 import {UIActivityIndicator} from 'react-native-indicators';
-import type {LocationProviderStatus} from 'expo-location';
+
+import {DARK_GREY, WHITE} from '../lib/styles';
+import {GpsErrorIcon, GpsGoodIcon, GpsSearchingIcon} from './icons';
+import {BodyText} from './Text/BodyText';
 
 type GPSPillProps = {
+  accessibilityLabel?: string;
   onPress?: () => void;
-  locationProviderStatus?: LocationProviderStatus;
-};
+  testID?: string;
+} & (
+  | {
+      status: 'searching' | 'error';
+    }
+  | {
+      status: 'good';
+      accuracy: number;
+    }
+);
 
-export const GPSPill: FC<GPSPillProps> = ({
-  onPress,
-  locationProviderStatus,
-}) => {
-  const {locationState, fgPermissions} = useSharedLocationContext();
-
-  const locationStatus = getLocationStatus({
-    location: fgPermissions ? locationState.location : undefined,
-    providerStatus: locationProviderStatus,
-  });
-
+export const GPSPill = (props: GPSPillProps) => {
   let textValue: string | React.ReactNode;
   let IconToRender: React.FC;
 
-  switch (locationStatus.status) {
+  switch (props.status) {
     case 'error':
       textValue = '--';
       IconToRender = GpsErrorIcon;
@@ -37,7 +33,7 @@ export const GPSPill: FC<GPSPillProps> = ({
       IconToRender = GpsSearchingIcon;
       break;
     case 'good': {
-      textValue = `± ${Math.round(locationStatus.accuracy)} m`;
+      textValue = `± ${Math.abs(Math.round(props.accuracy))} m`;
       IconToRender = GpsGoodIcon;
       break;
     }
@@ -49,17 +45,13 @@ export const GPSPill: FC<GPSPillProps> = ({
 
   return (
     <TouchableOpacity
-      onPress={onPress}
+      onPress={props.onPress}
       style={styles.container}
-      testID="MAP.gps-pill"
-      accessibilityLabel="Open GPS Modal">
+      testID={props.testID}
+      accessibilityLabel={props.accessibilityLabel}>
       <IconToRender />
 
-      <BodyText
-        variant="smallMeta"
-        style={styles.text}
-        numberOfLines={1}
-        testID="MAP.gps-pill-text">
+      <BodyText variant="smallMeta" style={styles.text} numberOfLines={1}>
         {textValue}
       </BodyText>
     </TouchableOpacity>

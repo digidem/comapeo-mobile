@@ -9,10 +9,10 @@ import pluginQuery from '@tanstack/eslint-plugin-query';
 import * as tsParser from '@typescript-eslint/parser';
 import pluginJest from 'eslint-plugin-jest';
 import pluginReactNative from 'eslint-plugin-react-native';
+import pluginTestingLibrary from 'eslint-plugin-testing-library';
 import * as pluginReactHooks from 'eslint-plugin-react-hooks';
 import globals from 'globals';
 import pluginTs from 'typescript-eslint';
-import pluginTestingLibrary from 'eslint-plugin-testing-library';
 
 const gitignorePath = path.join(
   path.dirname(fileURLToPath(import.meta.url)),

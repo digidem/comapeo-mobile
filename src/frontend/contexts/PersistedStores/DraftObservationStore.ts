@@ -412,7 +412,10 @@ type ObservationWithPreset = Exclude<Observation, 'presetRef'> & {
   presetRef?: Preset;
 };
 
-type ObservationValueWithPreset = Exclude<ObservationValue, 'presetRef'> & {
+export type ObservationValueWithPreset = Exclude<
+  ObservationValue,
+  'presetRef'
+> & {
   presetRef?: Preset;
 };
 

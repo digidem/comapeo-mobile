@@ -2,7 +2,6 @@ import * as React from 'react';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {SaveButton} from '../../sharedComponents/SaveButton';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';
 import {ActionsRow} from '../../sharedComponents/ActionsRow';
@@ -16,6 +15,7 @@ import {LIGHT_GREY} from '../../lib/styles';
 import {DescriptionField} from '../../sharedComponents/Editor/DescriptionField';
 import {MediaScrollView} from '../../sharedComponents/MediaScrollView';
 import {isAudio, isPhoto} from '../../lib/attachmentTypeChecks';
+import {SaveButtonCreate} from './SaveButtonCreate';
 
 const m = defineMessages({
   observation: {
@@ -27,53 +27,6 @@ const m = defineMessages({
     id: 'screens.ObservationCreate.navTitle',
     defaultMessage: 'New Observation',
     description: 'screen title for new observation screen',
-  },
-  changePreset: {
-    id: 'screens.ObservationCreate.changePreset',
-    defaultMessage: 'Change',
-  },
-  descriptionPlaceholder: {
-    id: 'screens.ObservationCreate.descriptionPlaceholder',
-    defaultMessage: 'What is happening here?',
-    description: 'Placeholder for description/notes field',
-  },
-  noGpsTitle: {
-    id: 'screens.ObservationCreate.noGpsTitle',
-    defaultMessage: 'No GPS signal',
-    description: 'Title of dialog when trying to save with no GPS coords',
-  },
-  noGpsDesc: {
-    id: 'screens.ObservationCreate.noGpsDesc',
-    defaultMessage:
-      'This observation does not have a location. You can continue waiting for a GPS signal, save the observation without a location, or enter coordinates manually',
-    description: 'Description in dialog when trying to save with no GPS coords',
-  },
-  weakGpsTitle: {
-    id: 'screens.ObservationCreate.weakGpsTitle',
-    defaultMessage: 'Weak GPS signal',
-    description: 'Title of dialog when trying to save with low GPS accuracy.',
-  },
-  weakGpsDesc: {
-    id: 'screens.ObservationCreate.weakGpsDesc',
-    defaultMessage:
-      'GPS accuracy is low. You can continue waiting for better accuracy, save the observation with low accuracy, or enter coordinates manually',
-    description:
-      'Description in dialog when trying to save with low GPS accuracy.',
-  },
-  saveAnyway: {
-    id: 'screens.ObservationCreate.saveAnyway',
-    defaultMessage: 'Save',
-    description: 'Button to save regardless of GPS state',
-  },
-  manualEntry: {
-    id: 'screens.ObservationCreate.manualEntry',
-    defaultMessage: 'Manual Coords',
-    description: 'Button to manually enter GPS coordinates',
-  },
-  keepWaiting: {
-    id: 'screens.ObservationCreate.keepWaiting',
-    defaultMessage: 'Continue waiting',
-    description: 'Button to cancel save and continue waiting for GPS',
   },
 });
 
@@ -89,12 +42,14 @@ export const ObservationCreate = ({
       })
     : formatMessage(m.observation);
   const attachments = useDraftObservationState(
-    state => state.value?.attachments,
+    state => state.unsavedAttachments,
   );
 
-  const photoAndAudioAttachments = attachments?.filter(att => {
-    return isAudio(att) || isPhoto(att);
-  });
+  const photoAndAudioAttachments = !attachments
+    ? []
+    : Array.from(attachments.values()).filter(att => {
+        return isAudio(att) || isPhoto(att);
+      });
 
   return (
     <ScreenContentWithDock
@@ -131,7 +86,7 @@ export function createNavigationOptions({
   return (): NativeStackNavigationOptions => {
     return {
       headerTitle: intl(m.navTitle),
-      headerRight: () => <SaveButton onPress={() => {}} isLoading={false} />,
+      headerRight: () => <SaveButtonCreate />,
       headerLeft: props => <HeaderLeft headerBackButtonProps={props} />,
     };
   };

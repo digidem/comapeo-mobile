@@ -1,19 +1,33 @@
+import React, {FC} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
-import {UIActivityIndicator} from 'react-native-indicators';
 import {DARK_GREY, WHITE} from '../lib/styles';
-import {type LocationStatusResult} from '../lib/utils';
-import {GpsErrorIcon, GpsGoodIcon, GpsSearchingIcon} from './icons';
+import {GpsErrorIcon, GpsSearchingIcon, GpsGoodIcon} from './icons';
+import {useSharedLocationContext} from '../contexts/SharedLocationContext';
+import {getLocationStatus} from '../lib/utils';
 import {BodyText} from './Text/BodyText';
+import {UIActivityIndicator} from 'react-native-indicators';
+import type {LocationProviderStatus} from 'expo-location';
 
-type GPSPillProps = LocationStatusResult & {
+type GPSPillProps = {
   onPress?: () => void;
+  locationProviderStatus?: LocationProviderStatus;
 };
 
-export const GPSPill = (props: GPSPillProps) => {
+export const GPSPill: FC<GPSPillProps> = ({
+  onPress,
+  locationProviderStatus,
+}) => {
+  const {locationState, fgPermissions} = useSharedLocationContext();
+
+  const locationStatus = getLocationStatus({
+    location: fgPermissions ? locationState.location : undefined,
+    providerStatus: locationProviderStatus,
+  });
+
   let textValue: string | React.ReactNode;
   let IconToRender: React.FC;
 
-  switch (props.status) {
+  switch (locationStatus.status) {
     case 'error':
       textValue = '--';
       IconToRender = GpsErrorIcon;
@@ -23,7 +37,7 @@ export const GPSPill = (props: GPSPillProps) => {
       IconToRender = GpsSearchingIcon;
       break;
     case 'good': {
-      textValue = `± ${Math.round(props.accuracy)} m`;
+      textValue = `± ${Math.round(locationStatus.accuracy)} m`;
       IconToRender = GpsGoodIcon;
       break;
     }
@@ -35,7 +49,7 @@ export const GPSPill = (props: GPSPillProps) => {
 
   return (
     <TouchableOpacity
-      onPress={props.onPress}
+      onPress={onPress}
       style={styles.container}
       testID="MAP.gps-pill"
       accessibilityLabel="Open GPS Modal">

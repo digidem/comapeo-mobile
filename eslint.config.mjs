@@ -113,6 +113,10 @@ const frontendConfig = pluginTs.config(
       pluginJest.configs['flat/recommended'],
       pluginTestingLibrary.configs['flat/react'],
     ],
+    rules: {
+      // Mostly conventional and doesn't have significant impact on how tests work
+      'testing-library/render-result-naming-convention': 'off',
+    },
   },
 );
 

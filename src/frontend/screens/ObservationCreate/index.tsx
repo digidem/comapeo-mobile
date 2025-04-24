@@ -1,28 +1,21 @@
 import * as React from 'react';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
-import {Editor} from '../../sharedComponents/Editor';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {useCreateDocument} from '@comapeo/core-react';
 import {SaveButton} from '../../sharedComponents/SaveButton';
-import {useMostAccurateLocationForObservation} from './useMostAccurateLocationForObservation';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {HeaderLeft} from './HeaderLeft';
 import {ActionsRow} from '../../sharedComponents/ActionsRow';
-import {Alert, type AlertButton} from 'react-native';
-import {Observation} from '@comapeo/schema';
-import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {useCreateAttachment} from '../../hooks/server/media';
-import * as Sentry from '@sentry/react-native';
-
-import {useTrackActions, useTrackState} from '../../contexts/TrackStoreContext';
-import {
-  isProcessedDraftPhoto,
-  isUnsavedAudio,
-} from '../../lib/attachmentTypeChecks';
-import {useAuthContext} from '../../contexts/AuthContext';
+import {useDraftObservationState} from '../../contexts/DraftObservationContext';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {StyleSheet, View} from 'react-native';
+import {Divider} from '../../sharedComponents/Divider';
+import {LocationView} from '../../sharedComponents/Editor/LocationView';
+import {PresetView} from '../../sharedComponents/Editor/PresetView';
+import {LIGHT_GREY} from '../../lib/styles';
+import {DescriptionField} from '../../sharedComponents/Editor/DescriptionField';
+import {MediaScrollView} from '../../sharedComponents/MediaScrollView';
+import {isAudio, isPhoto} from '../../lib/attachmentTypeChecks';
 
 const m = defineMessages({
   observation: {
@@ -84,254 +77,49 @@ const m = defineMessages({
   },
 });
 
-const MAXIMUM_ACCURACY = 10;
-
 export const ObservationCreate = ({
   navigation,
 }: NativeRootNavigationProps<'ObservationCreate'>) => {
   const {formatMessage} = useIntl();
-  const {projectId} = useActiveProject();
-  const {usePreset} = useDraftObservation();
-  const preset = usePreset();
-  const value = usePersistedDraftObservation(store => store.value);
-  const attachments = usePersistedDraftObservation(store => store.attachments);
-  const {updateTags, clearDraft} = useDraftObservation();
-  const {mutateAsync: createAttachmentAsync, status: observationStatus} =
-    useCreateAttachment();
-  const {mutateAsync: createObservationAsync, status: attachmentStatus} =
-    useCreateDocument({
-      docType: 'observation',
-      projectId,
-    });
-
-  const isTracking = useTrackState(state => state.isTracking);
-  const {
-    addNewLocations: addNewTrackLocations,
-    addNewObservation: addNewTrackObservation,
-  } = useTrackActions();
-  const liveLocation = useMostAccurateLocationForObservation();
-  const {authState} = useAuthContext();
-
-  const coordinateInfo = value?.metadata?.manualLocation
-    ? {
-        lat: value.lat,
-        lon: value.lon,
-        accuracy: liveLocation?.coords?.accuracy,
-      }
-    : {
-        lat: liveLocation?.coords?.latitude,
-        lon: liveLocation?.coords?.longitude,
-        accuracy: liveLocation?.coords?.accuracy,
-      };
-
-  const notes = value?.tags.notes;
+  const preset = useDraftObservationState(state => state.value?.presetRef);
   const presetName = preset
     ? formatMessage({
         id: `presets.${preset.docId}.name`,
         defaultMessage: preset.name,
       })
     : formatMessage(m.observation);
-
-  const addObservationRefToTrack = React.useCallback(
-    (obs: Observation) => {
-      if (value?.lat && value?.lon) {
-        addNewTrackLocations([
-          {
-            timestamp: new Date().getTime(),
-            latitude: value.lat,
-            longitude: value.lon,
-          },
-        ]);
-      }
-      addNewTrackObservation({
-        docId: obs.docId,
-        versionId: obs.versionId,
-      });
-    },
-    [addNewTrackLocations, addNewTrackObservation, value],
+  const attachments = useDraftObservationState(
+    state => state.value?.attachments,
   );
 
-  const createObservation = React.useCallback(async () => {
-    if (!value) throw new Error('no observation saved in persisted state ');
-    if (authState === 'obscured') {
-      clearDraft();
-      navigation.popTo('Home', {screen: 'Map'});
-      return;
-    }
-
-    const unsavedPhotos = attachments.filter(isProcessedDraftPhoto);
-    const unsavedAudioRecordings = attachments.filter(isUnsavedAudio);
-
-    if (unsavedPhotos.length === 0 && unsavedAudioRecordings.length === 0) {
-      createObservationAsync(
-        {
-          value: {
-            ...value,
-            presetRef: preset
-              ? {docId: preset.docId, versionId: preset.versionId}
-              : undefined,
-          },
-        },
-        {
-          onSuccess: data => {
-            clearDraft();
-            navigation.popTo('Home', {screen: 'Map'});
-            if (isTracking) {
-              addObservationRefToTrack(data);
-            }
-          },
-          onError: err => {
-            Sentry.captureException(err);
-            navigation.navigate('ErrorBottomSheet');
-          },
-        },
-      );
-
-      return;
-    }
-
-    // Currently, we abort the process of saving an observation if saving any number of photos fails to save,
-    // but this approach is prone to creating "orphaned" blobs.
-    // The alternative is to save the observation but excluding photos that failed to save, which is prone to an odd UX of an observation "missing" some attachments.
-    // This could potentially be alleviated by a more granular and informative UI about the photo-saving state, but currently there is nothing in place.
-    // Basically, which is worse: orphaned attachments or saving observations that seem to be missing attachments?
-
-    const newAttachments = await Promise.all(
-      [...unsavedPhotos, ...unsavedAudioRecordings].map(file =>
-        createAttachmentAsync(file),
-      ),
-    );
-
-    createObservationAsync(
-      {
-        value: {
-          ...value,
-          attachments: [...value.attachments, ...newAttachments],
-          presetRef: preset
-            ? {docId: preset.docId, versionId: preset.versionId}
-            : undefined,
-        },
-      },
-      {
-        onSuccess: data => {
-          clearDraft();
-          navigation.popTo('Home', {screen: 'Map'});
-          if (isTracking) {
-            addObservationRefToTrack(data);
-          }
-        },
-        onError: err => {
-          Sentry.captureException(err);
-          navigation.navigate('ErrorBottomSheet');
-        },
-      },
-    );
-  }, [
-    addObservationRefToTrack,
-    clearDraft,
-    createAttachmentAsync,
-    createObservationAsync,
-    isTracking,
-    navigation,
-    attachments,
-    value,
-    preset,
-    authState,
-  ]);
-
-  const checkAccuracyAndLocation = React.useCallback(() => {
-    const confirmationOptions: AlertButton[] = [
-      {
-        text: formatMessage(m.saveAnyway),
-        onPress: createObservation,
-        style: 'default',
-      },
-      {
-        text: formatMessage(m.manualEntry),
-        onPress: () => navigation.navigate('ManualGpsScreen'),
-        style: 'cancel',
-      },
-      {
-        text: formatMessage(m.keepWaiting),
-        onPress: () => {},
-      },
-    ];
-
-    if (!value) {
-      return;
-    }
-
-    // If the user has already inputted a manual location, do not check if location is accurate
-    if (value.metadata?.manualLocation) {
-      createObservation();
-      return;
-    }
-
-    const accuracy = value.metadata?.position?.coords?.accuracy;
-
-    if (!liveLocation) {
-      Alert.alert(
-        formatMessage(m.noGpsTitle),
-        formatMessage(m.noGpsDesc),
-        confirmationOptions,
-      );
-      return;
-    }
-
-    // If we don't have accuracy, allow save anyway (this is a remnant from mapeo: https://github.com/digidem/mapeo-mobile/blob/0c0ebbb9ef2261e21cd1d1c8bd5ab2fe42017ea3/src/frontend/screens/ObservationEdit/SaveButton.js#L125C3-L125C50)
-    if (
-      accuracy &&
-      typeof accuracy === 'number' &&
-      accuracy >= MAXIMUM_ACCURACY
-    ) {
-      Alert.alert(
-        formatMessage(m.weakGpsTitle),
-        formatMessage(m.weakGpsDesc),
-        confirmationOptions,
-      );
-      return;
-    }
-
-    createObservation();
-  }, [createObservation, formatMessage, navigation, liveLocation, value]);
-
-  React.useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <SaveButton
-          onPress={checkAccuracyAndLocation}
-          isLoading={
-            observationStatus === 'pending' || attachmentStatus === 'pending'
-          }
-        />
-      ),
-    });
-  }, [
-    navigation,
-    observationStatus,
-    checkAccuracyAndLocation,
-    attachmentStatus,
-  ]);
+  const photoAndAudioAttachments = attachments?.filter(att => {
+    return isAudio(att) || isPhoto(att);
+  });
 
   return (
-    <Editor
-      presetName={presetName}
-      PresetIcon={
-        <PresetCircleIcon
-          size="medium"
-          iconId={preset?.iconRef?.docId}
-          testID={`OBS.${preset?.name}-icon`}
+    <ScreenContentWithDock
+      dockContainerStyle={{padding: 0}}
+      dockContent={<ActionsRow fieldRefs={preset?.fieldRefs} />}>
+      <View style={styles.container}>
+        <PresetView
+          presetName={presetName}
+          onPressPreset={() => navigation.popTo('PresetChooser')}
+          PresetIcon={
+            <PresetCircleIcon
+              iconId={preset?.docId}
+              size="medium"
+              testID={`OBS.${preset?.name}-icon`}
+            />
+          }
         />
-      }
-      onPressPreset={() => navigation.navigate('PresetChooser')}
-      notes={typeof notes !== 'string' ? '' : notes}
-      updateNotes={newVal => {
-        updateTags('notes', newVal);
-      }}
-      attachments={attachments}
-      location={coordinateInfo}
-      actionsRow={<ActionsRow fieldRefs={preset?.fieldRefs} />}
-    />
+        <Divider />
+        <LocationView />
+        <DescriptionField />
+        {photoAndAudioAttachments && (
+          <MediaScrollView attachments={photoAndAudioAttachments} />
+        )}
+      </View>
+    </ScreenContentWithDock>
   );
 };
 
@@ -348,3 +136,11 @@ export function createNavigationOptions({
     };
   };
 }
+
+const styles = StyleSheet.create({
+  container: {
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: LIGHT_GREY,
+  },
+});

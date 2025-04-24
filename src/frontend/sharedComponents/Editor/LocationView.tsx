@@ -5,6 +5,7 @@ import {FormattedMessage, defineMessages} from 'react-intl';
 import LocationIcon from '../../images/Location.svg';
 import {FormattedCoords} from '../FormattedData';
 import {useCoordinateFormat} from '../../contexts/CoordinateFormatStoreContext';
+import {useDraftObservationState} from '../../contexts/DraftObservationContext';
 
 const m = defineMessages({
   searching: {
@@ -14,14 +15,14 @@ const m = defineMessages({
   },
 });
 
-type LocationViewProps = {
-  lat: number | undefined;
-  lon: number | undefined;
-  accuracy: number | undefined;
-};
-
-export const LocationView = ({lat, lon, accuracy}: LocationViewProps) => {
+export const LocationView = () => {
   const coordinateFormat = useCoordinateFormat();
+  const lat = useDraftObservationState(store => store.value?.lat);
+  const lon = useDraftObservationState(store => store.value?.lon);
+  const accuracy = useDraftObservationState(
+    store => store.value?.metadata?.position?.coords?.accuracy,
+  );
+
   return (
     <View style={styles.locationContainer}>
       {lat === undefined || lon === undefined ? (

@@ -125,6 +125,7 @@ export type RootStackParamsList = {
   };
   Menu: undefined;
   AllProjects: undefined;
+  InviteCollaborators: undefined;
 };
 
 export type OnboardingParamsList = {

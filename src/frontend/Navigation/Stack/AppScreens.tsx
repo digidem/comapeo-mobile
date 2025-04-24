@@ -42,10 +42,7 @@ import {
 } from '../../screens/LocationInfoScreen';
 import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/InviteDeclined';
 import {UnableToCancelInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/UnableToCancelInvite';
-import {
-  SyncScreen,
-  createNavigationOptions as createSyncNavOptions,
-} from '../../screens/Sync';
+import {SyncScreen} from '../../screens/Exchange/index.tsx';
 import {
   ManualGpsScreen,
   createNavigationOptions as createManualGpsNavigationOptions,
@@ -105,6 +102,7 @@ import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagemen
 import {ExistingProjectWarning} from '../../screens/Invites/ExistingProjectWarning.tsx';
 import {LeaveProject} from '../../screens/Invites/LeaveProject.tsx';
 import {MenuScreen} from '../../screens/MenuScreen';
+import {InviteCollaboratorsScreen} from '../../screens/Settings/ProjectSettings/YourTeam/InviteCollaborators.tsx';
 import {MenuHeader} from '../../sharedComponents/MenuHeader.tsx';
 import {AllProjects} from '../../screens/AllProjects.tsx';
 
@@ -283,7 +281,7 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="Sync"
         component={SyncScreen}
-        options={createSyncNavOptions()}
+        options={{headerTitle: intl(SyncScreen.navTitle)}}
       />
       <RootStack.Screen
         name="ManualGpsScreen"
@@ -432,6 +430,22 @@ export const createDefaultScreenGroup = ({
         component={AllProjects}
         options={{headerTitle: intl(AllProjects.navTitle)}}
       />
+      <RootStack.Screen
+        name="Menu"
+        component={MenuScreen}
+        options={{
+          headerShown: true,
+          animation: 'slide_from_right',
+          header: () => <MenuHeader />,
+        }}
+      />
+      <RootStack.Screen
+        name="InviteCollaborators"
+        component={InviteCollaboratorsScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
     </RootStack.Group>
     <RootStack.Group
       screenOptions={{
@@ -476,15 +490,6 @@ export const createDefaultScreenGroup = ({
         component={ExistingProjectWarning}
       />
       <RootStack.Screen name="LeaveProject" component={LeaveProject} />
-      <RootStack.Screen
-        name="Menu"
-        component={MenuScreen}
-        options={{
-          headerShown: true,
-          animation: 'slide_from_right',
-          header: () => <MenuHeader />,
-        }}
-      />
     </RootStack.Group>
   </>
 );

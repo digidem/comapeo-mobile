@@ -16,7 +16,11 @@ import {
 } from 'react-native-gesture-handler';
 import {UIActivityIndicator} from 'react-native-indicators';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {useCreateProject} from '@comapeo/core-react';
+import {
+  useCreateProject,
+  useImportProjectConfig,
+  useUpdateProjectSettings,
+} from '@comapeo/core-react';
 import {useSelectFile} from '../../../../hooks/files';
 import {convertFileUriToPosixPath} from '../../../../lib/file-system';
 import {BLACK, LIGHT_GREY} from '../../../../lib/styles';
@@ -30,6 +34,9 @@ import {
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 import {useActiveProjectIdActions} from '../../../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
+import {useActiveProject} from '../../../../contexts/ActiveProjectContext';
+import {extractConfigMetadata} from '../../../../lib/configParser';
+import {useProjectRoleAndDetails} from '../../../../hooks/useProjectRoleAndDetails';
 
 const m = defineMessages({
   title: {
@@ -86,10 +93,18 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
   const {setActiveProjectId} = useActiveProjectIdActions();
   const selectFileMutation = useSelectFile();
   const createProjectMutation = useCreateProject();
+  const {projectId} = useActiveProject();
+  const projectInfo = useProjectRoleAndDetails(projectId);
+  const updateSettingsMutation = useUpdateProjectSettings({
+    projectId: projectId,
+  });
+  const importProjectConfig = useImportProjectConfig({projectId});
 
   const mutationIsPending =
     selectFileMutation.status === 'pending' ||
-    createProjectMutation.status === 'pending';
+    createProjectMutation.status === 'pending' ||
+    importProjectConfig.status === 'pending' ||
+    updateSettingsMutation.status === 'pending';
 
   React.useEffect(() => {
     // Prevent back navigation while project creation mutation is pending
@@ -110,37 +125,80 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
     defaultValues: {projectName: ''},
   });
 
-  function handleCreateProject(val: ProjectFormType) {
+  const handleCreateOrUpdateProject = (val: ProjectFormType) => {
     const projectName = val.projectName.trim();
-    createProjectMutation.mutate(
-      {
-        name: projectName,
-        configPath:
-          configFileResult?.type === 'success'
-            ? convertFileUriToPosixPath(configFileResult.file.uri)
-            : undefined,
-      },
-      {
-        onSuccess: projectId => {
-          if (configFileResult?.type === 'success') {
-            // No need to block UI on this
-            // no-op if something fails here. caches can eventually get cleared by the OS automatically.
-            FileSystem.deleteAsync(configFileResult.file.uri, {
-              idempotent: true,
-            }).catch(noop);
-          }
+    const fileUri =
+      configFileResult?.type === 'success'
+        ? configFileResult.file.uri
+        : undefined;
 
-          setActiveProjectId(projectId);
-
-          navigation.navigate('ProjectCreated', {name: projectName});
+    if (projectInfo.role === 'solo') {
+      if (fileUri) {
+        importProjectConfig.mutate(
+          {configPath: convertFileUriToPosixPath(fileUri)},
+          {
+            onSuccess: async () => {
+              updateSettingsMutation.mutate(
+                {
+                  name: projectName,
+                  configMetadata: await extractConfigMetadata(fileUri),
+                },
+                {
+                  onSuccess: () => {
+                    FileSystem.deleteAsync(fileUri, {idempotent: true}).catch(
+                      noop,
+                    );
+                    navigation.navigate('ProjectCreated', {
+                      name: projectName,
+                    });
+                  },
+                  onError: err => {
+                    Sentry.captureException(err);
+                    navigation.navigate('ErrorBottomSheet');
+                  },
+                },
+              );
+            },
+            onError: error => {
+              Sentry.captureException(error);
+              navigation.navigate('ErrorBottomSheet');
+            },
+          },
+        );
+        return;
+      }
+      updateSettingsMutation.mutate(
+        {
+          name: projectName,
         },
-        onError: err => {
-          Sentry.captureException(err);
-          navigation.navigate('ErrorBottomSheet');
+        {
+          onSuccess: () => {
+            if (fileUri) {
+              FileSystem.deleteAsync(fileUri, {idempotent: true}).catch(noop);
+            }
+            navigation.navigate('ProjectCreated', {name: projectName});
+          },
         },
-      },
-    );
-  }
+      );
+    } else {
+      createProjectMutation.mutate(
+        {
+          name: projectName,
+          configPath: fileUri && convertFileUriToPosixPath(fileUri),
+        },
+        {
+          onSuccess: projectId => {
+            setActiveProjectId(projectId);
+            navigation.navigate('ProjectCreated', {name: projectName});
+          },
+          onError: err => {
+            Sentry.captureException(err);
+            navigation.navigate('ErrorBottomSheet');
+          },
+        },
+      );
+    }
+  };
 
   function selectConfigFile() {
     selectFileMutation.mutate(
@@ -231,7 +289,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
               testID="PROJECT.create-btn"
               fullSize={true}
               text={t(m.createProjectButton)}
-              onPress={handleSubmit(handleCreateProject)}
+              onPress={handleSubmit(handleCreateOrUpdateProject)}
             />
           )}
         </View>

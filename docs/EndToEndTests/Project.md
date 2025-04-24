@@ -2,22 +2,22 @@
 
 [Projects and Project Settings](#projects-and-project-settings)
 
-- [Overview](#overview)
-- [No/ Solo Project Headers](#solo-project-headers)
-  - [Test Objectives](#test-objectives-4)
-  - [Special Considerations](#special-considerations-4)
-- [Creating a project from the side drawer menu](#creating-a-project-from-the-side-drawer-menu)
+- [Projects and Project Settings](#projects-and-project-settings)
+  - [Overview](#overview)
+- [Solo Project Headers](#solo-project-headers)
   - [Test Objectives](#test-objectives)
   - [Special Considerations](#special-considerations)
-- [Creating a project from the sync button](#creating-a-project-from-the-sync-button)
+- [Inviting Collaborators While Solo](#inviting-collaborators-while-solo)
   - [Test Objectives](#test-objectives-1)
   - [Special Considerations](#special-considerations-1)
-- [Unjoining a project](#unjoining-a-project)
+- [Naming the default project from the side drawer menu](#naming-the-default-project-from-the-side-drawer-menu)
   - [Test Objectives](#test-objectives-2)
   - [Special Considerations](#special-considerations-2)
-- [Editing a Device Name](#editing-a-device-name)
+- [Unjoining a project](#unjoining-a-project)
   - [Test Objectives](#test-objectives-3)
   - [Special Considerations](#special-considerations-3)
+- [Editing a Device Name](#editing-a-device-name)
+  - [Test Objectives](#test-objectives-4)
 
 ## Projects and Project Settings
 
@@ -40,36 +40,39 @@ This test checks the visibility and text of the headers and associated UI elemen
 - These tests require the app to be in a state where the default project is **unnamed** (solo).
 - If the user has previously named the project, the tests will fail because the header text changes.
 
-## Creating a project from the side drawer menu
+## Inviting Collaborators While Solo
 
-- This tests a user creating a project for the first time.
+This test validates that a user on the default “solo” project can open the side drawer, select “Invite” to reach the **Invite Collaborators** screen, and optionally proceed to name the project.
 
 ### Test Objectives
 
-- Ensures flow is present to Create a project through series of clicks
+- Confirms that **My Solo Project** is shown in the side drawer when no named project exists.
+- Ensures an **Invite** button is visible to solo users.
+- Verifies the **Invite Collaborators** screen appears with the correct heading and bullet points when Invite is pressed.
+- Checks that tapping **Name My Project** navigates to the **Name (Create) Project** flow.
+
+### Special Considerations
+
+- This test must run before any other test that names the project.
+- This test doesn’t fully create a project; it only confirms navigation into `CreateProject` (Name a project) -- see below.
+
+## Naming the default project from the side drawer menu
+
+- This tests a user renaming the default project.
+
+### Test Objectives
+
+- Ensures flow is present to rename a project
 - Ensures user cannot create a project without entering a name first
 - Checks for presence of Import Config Button
 - Checks that user sees the 'success' screen and invite device and go to map buttons are present
 - Checks that user can go to the map
+- Checks that the observations created before the project was renamed are still there
 
 ### Special Considerations
 
-- User can be taken to invite devices screen but no other devices will be present on an emulator
-- If the user goes to the invite devices screen and tries to back out it doesn't work
-- When the project is created, the name does not actually appear in the side drawer menu title
-
-## Creating a project from the sync button
-
-- This tests creating a project from the sync screen
-
-### Test Objectives
-
-- Ensures flow is present to Create a project through series of clicks
-- Ensures user cannot create a project without entering a name first
-
-### Special Considerations
-
-- This test is run as part of an alternative flow to show that clearing out the app storage allows a user to create a new project
+- This can only be done when a user is on a Solo project
+- We cannot test the inviting of a device on Browserstack
 
 ## Unjoining a project
 

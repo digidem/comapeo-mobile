@@ -20,11 +20,18 @@ describe('Main - Side Drawer Menu - No Project', () => {
 
     await expect($('~Go to All Projects Screen')).toBeDisplayed();
 
+    const inviteButton = await $(byText('Invite'));
+    await expect(inviteButton).toBeDisplayed();
+    const viewButton = await $(byText('View'));
+    await expect(viewButton).toBeDisplayed();
+
     await expect($('~Go to Data and Privacy Screen')).toBeDisplayed();
     await expect($('~Go to Exchange Screen')).toBeDisplayed();
     await expect($('~Go to App Settings')).toBeDisplayed();
     await expect($('~Go to About CoMapeo Screen')).toBeDisplayed();
 
-    await drawerIcon.click();
+    await $('~Close Menu').click();
+    const mapTab = await $('~Go to Map');
+    await mapTab.click();
   });
 });

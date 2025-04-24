@@ -187,7 +187,7 @@ describe('Passcode - Set Passcode Flow', () => {
     if (await backBtn.isDisplayed()) {
       await backBtn.click();
     }
-    const drawerIcon = await $('~Open Menu');
+    const drawerIcon = await $('~Close Menu');
     if (await drawerIcon.isDisplayed()) {
       await drawerIcon.click();
     }

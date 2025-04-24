@@ -55,8 +55,8 @@
   "Navigation.Menu.aboutCoMapeo": {
     "message": "About CoMapeo"
   },
-  "Navigation.Menu.coordinator": {
-    "message": "You are a coordinator on this project."
+  "Navigation.Menu.allProjects": {
+    "message": "All Projects"
   },
   "Navigation.Menu.currentProject": {
     "message": "Current Project"
@@ -66,12 +66,6 @@
   },
   "Navigation.Menu.invite": {
     "message": "Invite"
-  },
-  "Navigation.Menu.mappingOnOwn": {
-    "message": "You are mapping on your own."
-  },
-  "Navigation.Menu.participant": {
-    "message": "You are a participant on this project."
   },
   "Navigation.Menu.privacyPolicy": {
     "message": "Data & Privacy"
@@ -287,8 +281,23 @@
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
   },
+  "allProjects.createNewProject": {
+    "message": "Create new project"
+  },
+  "allProjects.navTitle": {
+    "message": "All Projects"
+  },
   "homeHeader.header.mySoloProject": {
     "message": "My Solo Project"
+  },
+  "projectInfoCard.coordinator": {
+    "message": "You are a coordinator on this project."
+  },
+  "projectInfoCard.mappingOnOwn": {
+    "message": "You are mapping on your own."
+  },
+  "projectInfoCard.participant": {
+    "message": "You are a participant on this project."
   },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Coordinator"
@@ -1769,5 +1778,8 @@
   },
   "soloProject.inviteCollaborators.title": {
     "message": "Invite Collaborators"
+  },
+  "useProjectRoleAndDetails.mySoloProject": {
+    "message": "My Solo Project"
   }
 }

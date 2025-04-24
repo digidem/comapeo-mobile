@@ -1002,13 +1002,6 @@
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
     "message": "Observation"
   },
-  "screens.ObservationCreate.changePreset": {
-    "message": "Change"
-  },
-  "screens.ObservationCreate.descriptionPlaceholder": {
-    "description": "Placeholder for description/notes field",
-    "message": "What is happening here?"
-  },
   "screens.ObservationCreate.keepWaiting": {
     "description": "Button to cancel save and continue waiting for GPS",
     "message": "Continue waiting"

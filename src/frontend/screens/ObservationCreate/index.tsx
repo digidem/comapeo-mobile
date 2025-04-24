@@ -70,9 +70,7 @@ export const ObservationCreate = ({
         <Divider />
         <LocationView />
         <DescriptionField />
-        {photoAndAudioAttachments && (
-          <MediaScrollView attachments={photoAndAudioAttachments} />
-        )}
+        <MediaScrollView attachments={photoAndAudioAttachments} />
       </View>
     </ScreenContentWithDock>
   );

@@ -4,7 +4,7 @@ import {SyncScreen} from './Exchange';
 import {createManager, setUpIPC} from '../../../tests/integration/helpers/core';
 import {createAppProvidersWrapper} from '../../../tests/integration/helpers/react';
 
-describe('Exchange screen', async () => {
+describe('Exchange screen', () => {
   const {manager, fastifyController} = createManager();
   const {client, server} = setUpIPC({manager});
 

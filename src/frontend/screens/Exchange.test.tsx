@@ -5,21 +5,29 @@ import {createManager, setUpIPC} from '../../../tests/integration/helpers/core';
 import {createAppProvidersWrapper} from '../../../tests/integration/helpers/react';
 
 describe('Exchange screen', () => {
+  let appProviders: ReturnType<typeof createAppProvidersWrapper>;
   const {manager, fastifyController} = createManager();
-  const {client, server} = setUpIPC({manager});
+  const {client, server, stop} = setUpIPC({manager});
 
-  beforeAll(() => {
-    fastifyController.start();
+  beforeAll(async () => {
+    await fastifyController.start();
   });
 
-  afterAll(() => {
-    fastifyController.stop();
+  afterAll(async () => {
+    await fastifyController.stop();
     server.close();
+    await stop();
+  });
+
+  beforeEach(() => {
+    appProviders = createAppProvidersWrapper({mapeoApi: client});
+  });
+
+  afterEach(() => {
+    appProviders.teardown();
   });
 
   test('basic', () => {
-    const wrapper = createAppProvidersWrapper({mapeoApi: client});
-
     const navigation = {
       goBack: jest.fn(),
     };
@@ -29,7 +37,7 @@ describe('Exchange screen', () => {
         // @ts-expect-error Not ideal but bare minimum navigation needed by the screen
         navigation={navigation}
       />,
-      {wrapper},
+      {wrapper: appProviders.wrapper},
     );
   });
 });

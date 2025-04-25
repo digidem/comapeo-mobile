@@ -115,7 +115,7 @@ export function createAppProvidersWrapper(
     persist: true,
   });
 
-  return ({children}: {children: ReactNode}) => {
+  const wrapper = ({children}: {children: ReactNode}) => {
     return (
       <AppProviders
         queryClient={queryClient}
@@ -134,4 +134,11 @@ export function createAppProvidersWrapper(
       </AppProviders>
     );
   };
+
+  const teardown = () => {
+    localDiscoveryController.stop();
+    appDiagnosticMetrics.setEnabled(false);
+  };
+
+  return {wrapper, teardown};
 }

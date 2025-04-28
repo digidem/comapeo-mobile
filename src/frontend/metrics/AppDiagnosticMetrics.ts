@@ -139,7 +139,8 @@ export class AppDiagnosticMetrics {
     // beginning of the next day. However, timeouts are a bit unreliable (for
     // example, if the app goes into the background), so we just check
     // periodically. This also simplifies the code a bit.
-    setInterval(this.#update, CHECK_INTERVAL);
+    const checkInterval = setInterval(this.#update, CHECK_INTERVAL);
+    subscriptionCleanupFns.push(() => clearInterval(checkInterval));
 
     this.#subscriptionCleanupFns = subscriptionCleanupFns;
   }

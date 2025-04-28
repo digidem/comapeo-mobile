@@ -59,7 +59,7 @@ export type RootStackParamsList = {
   Security: undefined;
   DirectionalArrow: undefined;
   P2pUpgrade: undefined;
-  ObservationFields: {question: number};
+  ObservationFields: {fieldId: string};
   ObservationCreate: undefined;
   BGMapsSettings: undefined;
   AuthScreen: undefined;

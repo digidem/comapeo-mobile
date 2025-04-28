@@ -1,19 +1,24 @@
 import React from 'react';
-import {StyleSheet, Platform, ScrollView} from 'react-native';
+import {StyleSheet, ScrollView} from 'react-native';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 
-import {Text} from '../../sharedComponents/Text';
 import {TextButton} from '../../sharedComponents/TextButton';
-import {Question} from './Question';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
-
-import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useManyDocs} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useAppLanguageTag} from '../../hooks/useAppLanguageTag';
+import {useDraftObservationState} from '../../contexts/DraftObservationContext';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {QuestionLabel} from './QuestionLabel';
+import {SelectOne} from './SelectOne';
+import {
+  SelectMultipleField,
+  SelectOneField,
+} from '../../sharedTypes/PresetTypes';
+import {SelectMultiple} from './SelectMultiple';
+import {Number} from './Number';
+import {TextArea} from './TextArea';
 
 const m = defineMessages({
   nextQuestion: {
@@ -46,77 +51,69 @@ export const ObservationFields = ({
     docType: 'field',
     lang: languageTag,
   });
-  const {usePreset} = useDraftObservation();
-  const preset = usePreset();
-  const current = route.params.question;
-  const observationId = usePersistedDraftObservation(
-    store => store.observationId,
-  );
 
-  const onBackPress = React.useCallback(() => {
-    if (current === 1) {
-      if (navigation.canGoBack()) {
-        navigation.goBack();
-        return;
-      }
-      if (observationId) {
-        navigation.popTo('ObservationEdit', {observationId});
-        return;
-      }
+  const fieldId = route.params.fieldId;
 
-      navigation.popTo('ObservationCreate');
-    }
-
-    navigation.popTo('ObservationFields', {
-      question: current - 1,
-    });
-  }, [current, navigation, observationId]);
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: props => (
-        <CustomHeaderLeft headerBackButtonProps={props} onPress={onBackPress} />
-      ),
-      headerTitle: () => <DetailsTitle questionNumber={current} />,
-      headerRight: () => <DetailsHeaderRight questionNumber={current} />,
-    });
-  }, [navigation, current, onBackPress]);
-
-  const fieldId = preset?.fieldRefs.map(({docId}) => docId)[current - 1];
   const field = fields.find(val => val.docId === fieldId);
 
   if (!field) {
+    navigation.goBack();
     return null;
   }
 
+  const renderFieldComponent = () => {
+    switch (field.type) {
+      case 'selectOne':
+        return <SelectOne field={field as SelectOneField} />;
+      case 'selectMultiple':
+        return <SelectMultiple field={field as SelectMultipleField} />;
+      case 'number':
+        return <Number field={field} />;
+      default:
+        return <TextArea field={field} />;
+    }
+  };
+
   return (
     <ScrollView style={{flex: 1}} testID="OBS.add-details-scrn">
-      <Question field={field} />
+      <QuestionLabel field={field} />
+      {renderFieldComponent()}
     </ScrollView>
   );
 };
 
-const DetailsHeaderRight = ({questionNumber}: {questionNumber: number}) => {
+export const DetailsHeaderRight = ({fieldId}: {fieldId: string}) => {
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
-  const {usePreset} = useDraftObservation();
-  const preset = usePreset();
-  const observationId = usePersistedDraftObservation(
-    store => store.observationId,
+  const fieldRefs = useDraftObservationState(
+    state => state.value!.presetRef!.fieldRefs,
   );
+  const observationId = useDraftObservationState(state => state.id);
 
-  const isLastQuestion =
-    questionNumber >= (preset ? preset.fieldRefs.length : 0);
-  const buttonText = isLastQuestion ? t(m.done) : t(m.nextQuestion);
+  const questionNumber = getQuestionNumber({
+    fieldRefs,
+    fieldDocId: fieldId,
+  });
 
-  const onPress = () =>
-    !isLastQuestion
-      ? navigation.popTo('ObservationFields', {
-          question: questionNumber + 1,
-        })
-      : observationId
-        ? navigation.popTo('ObservationEdit', {observationId})
-        : navigation.popTo('ObservationCreate');
+  const nextField = fieldRefs[questionNumber + 1]?.docId;
+
+  const buttonText = !nextField ? t(m.done) : t(m.nextQuestion);
+
+  const onPress = () => {
+    if (nextField) {
+      navigation.navigate('ObservationFields', {
+        fieldId: nextField,
+      });
+      return;
+    }
+
+    if (observationId) {
+      navigation.popTo('ObservationEdit', {observationId: observationId.docId});
+      return;
+    }
+
+    navigation.popTo('ObservationCreate');
+  };
 
   return (
     <TextButton
@@ -127,45 +124,47 @@ const DetailsHeaderRight = ({questionNumber}: {questionNumber: number}) => {
   );
 };
 
-const DetailsTitle = ({questionNumber}: {questionNumber: number}) => {
-  const {usePreset} = useDraftObservation();
-  const preset = usePreset();
+export const DetailsTitle = ({fieldId}: {fieldId: string}) => {
+  const fieldRefs = useDraftObservationState(
+    state => state.value!.presetRef!.fieldRefs,
+  );
+
+  const questionNumber = getQuestionNumber({
+    fieldRefs,
+    fieldDocId: fieldId,
+  });
 
   return (
-    <Text numberOfLines={1} style={styles.title}>
+    <HeaderText variant="header3">
       <FormattedMessage
         {...m.title}
         values={{
           current: questionNumber,
-          total: preset?.fieldRefs.length || 0,
+          total: fieldRefs.length || 0,
         }}
       />
-    </Text>
+    </HeaderText>
   );
 };
 
+function getQuestionNumber({
+  fieldDocId,
+  fieldRefs,
+}: {
+  fieldRefs: {
+    docId: string;
+    versionId: string;
+  }[];
+  fieldDocId: string;
+}): number {
+  const index = fieldRefs.findIndex(field => field.docId === fieldDocId);
+  if (index === -1) {
+    throw new Error('FieldRef not found in the array');
+  }
+  return index + 1;
+}
+
 const styles = StyleSheet.create({
-  title: {
-    ...Platform.select({
-      ios: {
-        fontSize: 17,
-        fontWeight: '600',
-        color: 'rgba(0, 0, 0, .9)',
-        marginRight: 16,
-      },
-      android: {
-        fontSize: 20,
-        fontWeight: '500',
-        color: 'rgba(0, 0, 0, .9)',
-        marginRight: 16,
-      },
-      default: {
-        fontSize: 18,
-        fontWeight: '400',
-        color: '#3c4043',
-      },
-    }),
-  },
   headerButton: {
     paddingHorizontal: 20,
     height: 60,

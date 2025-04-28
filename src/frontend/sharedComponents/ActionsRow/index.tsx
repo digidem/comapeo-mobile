@@ -13,6 +13,7 @@ import {Preset} from '@comapeo/schema';
 import {HeaderText} from '../Text/HeaderText';
 import {CustomCircleIcon} from './CustomCircleIcon';
 import {useFocusEffect} from '@react-navigation/native';
+import {useDraftObservationState} from '../../contexts/DraftObservationContext';
 
 const m = defineMessages({
   audioButton: {
@@ -32,13 +33,16 @@ const m = defineMessages({
   },
 });
 
-export function ActionsRow({fieldRefs}: {fieldRefs?: Preset['fieldRefs']}) {
+export function ActionsRow() {
   const {keyboardVisible} = useKeyboardListener();
   const {formatMessage: t} = useIntl();
   const navigation = useNavigationFromRoot();
   const [audioPermission, setAudioPermission] =
     React.useState<Audio.PermissionResponse | null>(null);
 
+  const fieldRefs = useDraftObservationState(
+    state => state.value?.presetRef?.fieldRefs,
+  );
   // Audio permissions are granted on a different page. Since this page stays in the navigation stack,
   // it does not remount when permissions change, leading to stale permission data.
   // To ensure we always have the latest permission status, we check it whenever the page comes into focus.
@@ -54,9 +58,7 @@ export function ActionsRow({fieldRefs}: {fieldRefs?: Preset['fieldRefs']}) {
   const handleCameraPress = () => {
     navigation.navigate('AddPhoto');
   };
-  const handleDetailsPress = () => {
-    navigation.navigate('ObservationFields', {question: 1});
-  };
+
   const handleAudioPress = () => {
     if (audioPermission === null) return;
     if (audioPermission.granted) {
@@ -81,11 +83,15 @@ export function ActionsRow({fieldRefs}: {fieldRefs?: Preset['fieldRefs']}) {
     },
   ];
 
-  if (fieldRefs?.length) {
+  if (fieldRefs && fieldRefs.length > 0) {
     bottomSheetItems.unshift({
       icon: <DetailsIcon width={30} height={30} />,
       label: t(m.detailsButton),
-      onPress: handleDetailsPress,
+      onPress: () => {
+        navigation.navigate('ObservationFields', {
+          fieldId: fieldRefs[0]!.docId,
+        });
+      },
       testID: 'OBS.add-details-btn',
     });
   }

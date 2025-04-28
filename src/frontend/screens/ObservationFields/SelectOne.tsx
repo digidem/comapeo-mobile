@@ -6,17 +6,12 @@ import {useIntl} from 'react-intl';
 
 import {TouchableNativeFeedback} from '../../sharedComponents/Touchables';
 import {VERY_LIGHT_BLUE} from '../../lib/styles';
-import {QuestionLabel} from './QuestionLabel';
-
-import type {QuestionProps} from './Question';
 import {ViewStyleProp} from '../../sharedTypes';
-import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {SelectOneField} from '../../sharedTypes/PresetTypes';
-
-interface Props extends QuestionProps {
-  field: SelectOneField;
-}
+import {
+  useDraftObservationActions,
+  useDraftObservationState,
+} from '../../contexts/DraftObservationContext';
 
 type RadioItemProps = {
   checked: boolean;
@@ -39,19 +34,17 @@ const RadioItem = ({checked, onPress, label, style}: RadioItemProps) => (
   </TouchableNativeFeedback>
 );
 
-export const SelectOne = React.memo<Props>(({field}) => {
+export const SelectOne = React.memo<{field: SelectOneField}>(({field}) => {
   const {formatMessage: t} = useIntl();
-
-  const {updateTags} = useDraftObservation();
-  const tags = usePersistedDraftObservation(store => store.value?.tags);
+  const {updateTag} = useDraftObservationActions();
+  const tags = useDraftObservationState(state => state.value?.tags);
 
   return (
     <>
-      <QuestionLabel field={field} />
       {field.options.map((item, index) => (
         <RadioItem
           key={item.label}
-          onPress={() => updateTags(field.tagKey, item.value)}
+          onPress={() => updateTag(field.tagKey, item.value)}
           checked={tags && item.value === tags[field.tagKey] ? true : false}
           label={t({
             id: `fields.${field.docId}.options.${JSON.stringify(item.value)}`,

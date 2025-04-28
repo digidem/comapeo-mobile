@@ -49,7 +49,11 @@ import {
 } from '../../screens/ManualGpsScreen';
 import {HomeTabs} from '../Tab';
 import {SaveTrackScreen} from '../../screens/SaveTrack/SaveTrackScreen';
-import {ObservationFields} from '../../screens/ObservationFields';
+import {
+  DetailsHeaderRight,
+  DetailsTitle,
+  ObservationFields,
+} from '../../screens/ObservationFields';
 import {WHITE} from '../../lib/styles';
 import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSettings';
 import {PhotoPreviewModal} from '../../screens/PhotoPreviewModal';
@@ -290,6 +294,12 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="ObservationFields"
         component={ObservationFields}
+        options={({route}) => ({
+          headerTitle: () => <DetailsTitle fieldId={route.params.fieldId} />,
+          headerRight: () => (
+            <DetailsHeaderRight fieldId={route.params.fieldId} />
+          ),
+        })}
       />
       <RootStack.Screen
         name="LanguageSettings"

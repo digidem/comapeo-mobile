@@ -9,7 +9,6 @@ import {LIGHT_GREY} from '../../lib/styles';
 import {PresetView} from './PresetView';
 import {LocationView} from './LocationView';
 import {Divider} from '../Divider';
-import {useProjectSettings} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useProjectRoleAndDetails} from '../../hooks/useProjectRoleAndDetails';
 import {HeaderText} from '../Text/HeaderText';

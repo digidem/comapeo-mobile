@@ -51,10 +51,13 @@ export const ObservationCreate = ({
         return isAudio(att) || isPhoto(att);
       });
 
+  console.log('photoAndAudioAttachments', photoAndAudioAttachments);
+  console.log('attachments', attachments);
+
   return (
     <ScreenContentWithDock
       dockContainerStyle={{padding: 0}}
-      dockContent={<ActionsRow fieldRefs={preset?.fieldRefs} />}>
+      dockContent={<ActionsRow />}>
       <View style={styles.container}>
         <PresetView
           presetName={presetName}

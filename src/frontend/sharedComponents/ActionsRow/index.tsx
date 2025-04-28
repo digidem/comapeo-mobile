@@ -9,7 +9,6 @@ import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import PhotoIcon from '../../images/observationEdit/Photo.svg';
 import AudioIcon from '../../images/observationEdit/Audio.svg';
 import DetailsIcon from '../../images/observationEdit/Details.svg';
-import {Preset} from '@comapeo/schema';
 import {HeaderText} from '../Text/HeaderText';
 import {CustomCircleIcon} from './CustomCircleIcon';
 import {useFocusEffect} from '@react-navigation/native';

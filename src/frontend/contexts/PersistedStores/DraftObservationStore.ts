@@ -99,17 +99,24 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
     });
   }
 
-  async function _processPhotoAttachment<T extends {uri: string}>({
+  async function _processPhotoAttachment({
     id,
     outputKey,
     processPromise,
   }: {
     id: number;
     outputKey: 'thumbnail' | 'preview' | 'original' | 'raw';
-    processPromise: Promise<T>;
-  }): Promise<T> {
+    processPromise: Promise<CameraCapturedPicture | undefined>;
+  }) {
     try {
       const processResult = await processPromise;
+
+      console.log(processResult);
+
+      if (!processResult) {
+        throw new Error('No image returned from camera');
+      }
+
       _updateAttachment('photo', id, {
         [outputKey]: {uri: processResult.uri, processingState: 'complete'},
       });
@@ -124,7 +131,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
   }
 
   async function addPhoto(
-    capturePromise: Promise<CameraCapturedPicture>,
+    capturePromise: Promise<CameraCapturedPicture | undefined>,
     metadata: PhotoMetadata,
   ) {
     const newAttachment = createNewPhotoAttachment(
@@ -136,7 +143,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
       id,
     } = newAttachment;
     _addAttachment(newAttachment);
-
+    console.log('yasss');
     try {
       const {uri: rawUri} = await _processPhotoAttachment({
         id,

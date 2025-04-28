@@ -1,13 +1,14 @@
 import React from 'react';
 import {View, StyleSheet, TouchableNativeFeedback} from 'react-native';
-import {Text} from '../sharedComponents/Text';
 import debug from 'debug';
 import {defineMessages, FormattedMessage} from 'react-intl';
 
 import {CameraView} from '../sharedComponents/CameraView';
-import {useDraftObservation} from '../hooks/useDraftObservation';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
-import {PhotoPromiseWithMetadata} from '../contexts/PhotoPromiseContext/types';
+import {useDraftObservationActions} from '../contexts/DraftObservationContext';
+import {CameraCapturedPicture} from 'expo-camera';
+import {PhotoMetadata} from '../contexts/PersistedStores/DraftObservationStore';
+import {HeaderText} from '../sharedComponents/Text/HeaderText';
 
 const m = defineMessages({
   cancel: {
@@ -21,12 +22,16 @@ const log = debug('AddPhotoScreen');
 export const AddPhotoScreen = ({
   navigation,
 }: NativeRootNavigationProps<'AddPhoto'>) => {
-  const {addPhoto} = useDraftObservation();
+  const {addPhoto} = useDraftObservationActions();
 
-  const handleAddPress = (capture: PhotoPromiseWithMetadata) => {
+  const handleAddPress = async (
+    capture: Promise<CameraCapturedPicture | undefined>,
+    metadata: PhotoMetadata,
+  ) => {
     log('pressed add button');
-    addPhoto(capture);
-    navigation.pop();
+    addPhoto(capture, metadata).then(() => {
+      navigation.pop();
+    });
   };
 
   const handleCancelPress = () => {
@@ -39,9 +44,9 @@ export const AddPhotoScreen = ({
       <CameraView onAddPress={handleAddPress} />
       <TouchableNativeFeedback onPress={handleCancelPress}>
         <View style={styles.cancelButton}>
-          <Text style={styles.cancelButtonLabel}>
+          <HeaderText variant="header3" style={styles.cancelButtonLabel}>
             <FormattedMessage {...m.cancel} />
-          </Text>
+          </HeaderText>
         </View>
       </TouchableNativeFeedback>
     </View>
@@ -62,7 +67,5 @@ const styles = StyleSheet.create({
   },
   cancelButtonLabel: {
     color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold',
   },
 });

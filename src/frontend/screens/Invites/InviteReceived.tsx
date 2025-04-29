@@ -52,7 +52,7 @@ export const InviteReceived = ({
   const inviteId = route.params.inviteId;
   const {data: invite} = useSingleInvite({inviteId});
   const translatedRole =
-    invite?.roleName === 'Coordinator'
+    invite.roleName === 'Coordinator'
       ? formatMessage(m.coordinatorRole)
       : formatMessage(m.participantRole);
 

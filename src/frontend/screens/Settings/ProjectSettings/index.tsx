@@ -6,11 +6,16 @@ import {useActiveProject} from '../../../contexts/ActiveProjectContext';
 import {useProjectRoleAndDetails} from '../../../hooks/useProjectRoleAndDetails';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
-import {ProjectSettingsCard} from '../../../sharedComponents/ProjectSettingsCard';
 import NoProjectIcon from '../../../images/NoProjectIcon.svg';
 import ProjectParticipantIcon from '../../../images/ProjectParticipant.svg';
 import ProjectCategoriesIcon from '../../../images/ProjectCategories.svg';
-import {COMAPEO_BLUE, NEW_DARK_GREY} from '../../../lib/styles';
+import {
+  COMAPEO_BLUE,
+  NEW_DARK_GREY,
+  WHITE,
+  VERY_LIGHT_GREY,
+  BLACK,
+} from '../../../lib/styles';
 import {useProjectSettings} from '../../../hooks/server/projects';
 import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
 
@@ -60,135 +65,125 @@ const m = defineMessages({
 export const ProjectSettings = () => {
   const {projectId} = useActiveProject();
   const projectInfo = useProjectRoleAndDetails(projectId);
+  const {formatMessage} = useIntl();
+  const {navigate} = useNavigationFromRoot();
+  const {data: configData} = useProjectSettings();
+  const isSolo = projectInfo.role === 'solo';
+  const isCoordinator = projectInfo.role === 'coordinator';
 
-  const displayTitle =
-    projectInfo.role === 'solo'
-      ? projectInfo.projectHeader
-      : projectInfo.projectName;
+  const displayTitle = isSolo
+    ? projectInfo.projectHeader
+    : projectInfo.projectName;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <ProjectInfoCard role={projectInfo.role} displayTitle={displayTitle} />
-      {projectInfo.role !== 'solo' && (
-        <CollaboratorsCard role={projectInfo.role} />
+      <SettingsCardRow
+        icon={<NoProjectIcon width={24} height={24} />}
+        title={displayTitle}
+        subtitle={isSolo ? formatMessage(m.soloDescription) : undefined}
+        buttonText={
+          isSolo
+            ? formatMessage(m.invite)
+            : isCoordinator
+              ? formatMessage(m.editInfo)
+              : undefined
+        }
+        onPress={() =>
+          navigate(isSolo ? 'InviteCollaborators' : 'ProjectSettings')
+        }
+      />
+      {!isSolo && (
+        <SettingsCardRow
+          icon={<ProjectParticipantIcon width={24} height={24} />}
+          title={formatMessage(m.projectCollaborators)}
+          subtitle={
+            isCoordinator
+              ? formatMessage(m.coordinator)
+              : formatMessage(m.participant)
+          }
+          buttonText={formatMessage(m.viewTeam)}
+          onPress={() => navigate('YourTeam')}
+        />
       )}
-      {projectInfo.role !== 'participant' && <ConfigCard />}
+      {projectInfo.role !== 'participant' && (
+        <SettingsCardRow
+          icon={<ProjectCategoriesIcon width={24} height={24} />}
+          title={formatMessage(m.configTitle)}
+          subtitle={configData?.configMetadata?.name}
+          buttonText={formatMessage(m.updateCategories)}
+          onPress={() => navigate('Config')}
+        />
+      )}
     </ScrollView>
   );
 };
 
-const ProjectInfoCard = ({
-  role,
-  displayTitle,
-}: {
-  role: 'coordinator' | 'participant' | 'solo';
-  displayTitle: string;
-}) => {
-  const {formatMessage} = useIntl();
-  const {navigate} = useNavigationFromRoot();
+type SettingsCardRowProps =
+  | {
+      icon: React.ReactNode;
+      title: string;
+      subtitle?: string;
+    }
+  | {
+      icon: React.ReactNode;
+      title: string;
+      subtitle?: string;
+      buttonText: string;
+      onPress: () => void;
+    };
 
-  const isSolo = role === 'solo';
-  const isCoordinator = role === 'coordinator';
-
-  return (
-    <SettingsCardRow
-      icon={<NoProjectIcon width={24} height={24} />}
-      title={displayTitle}
-      subtitle={isSolo ? formatMessage(m.soloDescription) : undefined}
-      buttonText={
-        isSolo
-          ? formatMessage(m.invite)
-          : isCoordinator
-            ? formatMessage(m.editInfo)
-            : undefined
-      }
-      onPress={() =>
-        navigate(isSolo ? 'InviteCollaborators' : 'ProjectSettings')
-      }
-    />
-  );
-};
-
-const CollaboratorsCard = ({role}: {role: 'coordinator' | 'participant'}) => {
-  const {formatMessage} = useIntl();
-  const {navigate} = useNavigationFromRoot();
+const SettingsCardRow = (props: SettingsCardRowProps) => {
+  const {icon, title, subtitle} = props;
+  const hasButton =
+    'buttonText' in props && 'onPress' in props && !!props.buttonText;
 
   return (
-    <SettingsCardRow
-      icon={<ProjectParticipantIcon width={24} height={24} />}
-      title={formatMessage(m.projectCollaborators)}
-      subtitle={
-        role === 'coordinator'
-          ? formatMessage(m.coordinator)
-          : formatMessage(m.participant)
-      }
-      buttonText={formatMessage(m.viewTeam)}
-      onPress={() => navigate('YourTeam')}
-    />
-  );
-};
-
-const ConfigCard = () => {
-  const {formatMessage} = useIntl();
-  const {data} = useProjectSettings();
-  const {navigate} = useNavigationFromRoot();
-
-  return (
-    <SettingsCardRow
-      icon={<ProjectCategoriesIcon width={24} height={24} />}
-      title={formatMessage(m.configTitle)}
-      subtitle={data.configMetadata?.name}
-      buttonText={formatMessage(m.updateCategories)}
-      onPress={() => navigate('Config')}
-    />
-  );
-};
-
-const SettingsCardRow = ({
-  icon,
-  title,
-  subtitle,
-  buttonText,
-  onPress,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  subtitle?: string;
-  buttonText?: string;
-  onPress?: () => void;
-}) => (
-  <ProjectSettingsCard>
-    <View style={styles.row}>
-      <View style={{marginRight: 16}}>{icon}</View>
-      <View style={styles.cardColumn}>
-        <HeaderText variant="header5">{title}</HeaderText>
-        {!!subtitle && (
-          <BodyText variant="smallMeta" style={styles.bodyText}>
-            {subtitle}
-          </BodyText>
-        )}
-        {!!buttonText && onPress && (
-          <TouchableOpacity
-            onPress={onPress}
-            style={{marginTop: 8}}
-            accessibilityRole="button"
-            accessibilityLabel={buttonText}>
-            <HeaderText
-              variant="header5"
-              style={{color: COMAPEO_BLUE, alignSelf: 'flex-start'}}>
-              {buttonText}
-            </HeaderText>
-          </TouchableOpacity>
-        )}
+    <View style={styles.card}>
+      <View style={styles.row}>
+        <View style={{marginRight: 16}}>{icon}</View>
+        <View style={styles.cardColumn}>
+          <HeaderText variant="header5">{title}</HeaderText>
+          {!!subtitle && (
+            <BodyText variant="smallMeta" style={styles.bodyText}>
+              {subtitle}
+            </BodyText>
+          )}
+          {hasButton && (
+            <TouchableOpacity
+              onPress={props.onPress}
+              style={{marginTop: 8}}
+              accessibilityRole="button"
+              accessibilityLabel={props.buttonText}>
+              <HeaderText
+                variant="header5"
+                style={{color: COMAPEO_BLUE, alignSelf: 'flex-start'}}>
+                {props.buttonText}
+              </HeaderText>
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
     </View>
-  </ProjectSettingsCard>
-);
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     padding: 20,
     gap: 20,
+  },
+  card: {
+    borderWidth: 1.5,
+    borderRadius: 10,
+    padding: 20,
+    gap: 12,
+    shadowColor: BLACK,
+    shadowOffset: {width: 0, height: 1},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 1,
+    backgroundColor: WHITE,
+    borderColor: VERY_LIGHT_GREY,
   },
   row: {
     flexDirection: 'row',

@@ -11,6 +11,7 @@ import {DeviceCard} from '../../../../sharedComponents/DeviceCard';
 import {Text} from '../../../../sharedComponents/Text';
 import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 import {useActiveProject} from '../../../../contexts/ActiveProjectContext';
+import {FAILED_ROLE_ID} from '../../../../sharedTypes';
 
 const m = defineMessages({
   title: {
@@ -58,12 +59,20 @@ function InvitableDevicesList() {
   const projectId = useActiveProject();
   const projectMembersQuery = useManyMembers(projectId);
 
-  const memberDeviceIds = projectMembersQuery.data.map(
-    member => member.deviceId,
-  );
-
   const invitableDevices = devices.filter(device => {
-    return !memberDeviceIds.includes(device.deviceId);
+    const memberMatch = projectMembersQuery.data.find(
+      member => member.deviceId === device.deviceId,
+    );
+
+    if (!memberMatch) {
+      return true;
+    }
+
+    if (memberMatch.role.roleId === FAILED_ROLE_ID) {
+      return true;
+    }
+
+    return false;
   });
 
   return (

@@ -18,9 +18,9 @@ import {useListenToInviteCancel} from '../../hooks/useListenToInviteCancel';
 import {BLACK, NEW_DARK_GREY, VERY_LIGHT_GREY} from '../../lib/styles';
 
 const m = defineMessages({
-  acceptInvite: {
-    id: 'screens.InviteReceived.acceptInvite',
-    defaultMessage: 'Accept Invite',
+  joinProject: {
+    id: 'screens.InviteReceived.joinProject',
+    defaultMessage: 'Join Project',
   },
   declineInvite: {
     id: 'screens.InviteReceived.declineInvite',
@@ -28,11 +28,19 @@ const m = defineMessages({
   },
   invitedToJoin: {
     id: 'screens.InviteReceived.invitedToJoin',
-    defaultMessage: "You've been invited to join:",
+    defaultMessage: "You've been invited to...",
   },
   joinAsRole: {
     id: 'screens.InviteReceived.joinAsRole',
     defaultMessage: 'Join as a {role}?',
+  },
+  coordinatorRole: {
+    id: 'screens.InviteReceived.coordinatorRole',
+    defaultMessage: 'coordinator',
+  },
+  participantRole: {
+    id: 'screens.InviteReceived.participantRole',
+    defaultMessage: 'participant',
   },
 });
 
@@ -43,8 +51,10 @@ export const InviteReceived = ({
   const {formatMessage} = useIntl();
   const inviteId = route.params.inviteId;
   const {data: invite} = useSingleInvite({inviteId});
-  const role =
-    invite?.roleName === 'Coordinator' ? 'coordinator' : 'participant';
+  const translatedRole =
+    invite?.roleName === 'Coordinator'
+      ? formatMessage(m.coordinatorRole)
+      : formatMessage(m.participantRole);
 
   const acceptInvite = useAcceptInvite();
   const rejectInvite = useRejectInvite();
@@ -101,10 +111,10 @@ export const InviteReceived = ({
 
         <View style={styles.cardContainer}>
           <HeaderText variant="header2" style={styles.projectName}>
-            {invite?.projectName}
+            {invite.projectName}
           </HeaderText>
           <BodyText variant="smallMeta" style={styles.rolePrompt}>
-            {formatMessage(m.joinAsRole, {role})}
+            {formatMessage(m.joinAsRole, {role: translatedRole})}
           </BodyText>
         </View>
 
@@ -122,7 +132,7 @@ export const InviteReceived = ({
               <PrimaryButton
                 fullSize
                 onPress={accept}
-                text={formatMessage(m.acceptInvite)}
+                text={formatMessage(m.joinProject)}
               />
             </>
           )}

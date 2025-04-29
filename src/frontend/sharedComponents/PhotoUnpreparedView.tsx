@@ -2,14 +2,13 @@ import * as React from 'react';
 import {StyleSheet, Image, Pressable} from 'react-native';
 
 import {AlertIcon} from './icons';
-import type {PhotoVariant, ViewStyleProp} from '../sharedTypes';
+import type {ViewStyleProp} from '../sharedTypes';
 import {useAttachmentUrlQuery} from '../hooks/server/media';
 import {BLACK} from '../lib/styles.ts';
 import {SavedPhoto} from '../contexts/PhotoPromiseContext/types.ts';
 
 type Props = {
   photo: SavedPhoto;
-  variant: PhotoVariant;
   style?: ViewStyleProp;
   resizeMode?: 'cover' | 'contain' | 'stretch' | 'center';
   onPress?: () => void;
@@ -17,20 +16,48 @@ type Props = {
 
 const PhotoUnpreparedComponent = ({
   photo,
-  variant,
   resizeMode = 'contain',
   style,
   onPress,
 }: Props) => {
-  const {url: attachmentUrl, error} = useAttachmentUrlQuery(photo, variant);
+  const {url: originalAttachmentUrl, error: originalError} =
+    useAttachmentUrlQuery(photo, 'original');
+
+  const {url: previewAttachmentUrl, error: previewError} =
+    useAttachmentUrlQuery(photo, 'preview');
+
+  const [variantToUse, setVariantToUse] = React.useState<
+    'original' | 'preview'
+  >('original');
+
+  const [cannotLoad, setCannotLoad] = React.useState(false);
+
+  const shouldDisplayErrorState =
+    cannotLoad ||
+    (variantToUse === 'original' && originalError) ||
+    (variantToUse === 'preview' && previewError);
 
   return (
     <Pressable onPress={onPress} style={[styles.container, style]}>
-      {error || !attachmentUrl ? (
+      {shouldDisplayErrorState ? (
         <AlertIcon size={96} />
       ) : (
         <Image
-          src={attachmentUrl}
+          src={
+            variantToUse === 'original'
+              ? originalAttachmentUrl
+              : previewAttachmentUrl
+          }
+          onError={() => {
+            // The original may fail to load depending on media sync settings.
+            // Attempt to use the preview URL if using the original does not work.
+            if (variantToUse === 'original') {
+              setVariantToUse('preview');
+              return;
+            }
+
+            setCannotLoad(true);
+          }}
           style={styles.image}
           resizeMethod="scale"
           resizeMode={resizeMode}

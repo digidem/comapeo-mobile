@@ -690,17 +690,23 @@
   "screens.InviteCancelled.projectInviteCanceled": {
     "message": "Your invitation to {projectName} has been canceled."
   },
-  "screens.InviteReceived.acceptInvite": {
-    "message": "Accept Invite"
+  "screens.InviteReceived.coordinatorRole": {
+    "message": "coordinator"
   },
   "screens.InviteReceived.declineInvite": {
     "message": "Decline Invite"
   },
   "screens.InviteReceived.invitedToJoin": {
-    "message": "You've been invited to join {projectName}"
+    "message": "You've been invited to..."
+  },
+  "screens.InviteReceived.joinAsRole": {
+    "message": "Join as a {role}?"
   },
   "screens.InviteReceived.joinProject": {
-    "message": "Join {projectName}"
+    "message": "Join Project"
+  },
+  "screens.InviteReceived.participantRole": {
+    "message": "participant"
   },
   "screens.InviteSuccess.goToMap": {
     "message": "Go To Map"

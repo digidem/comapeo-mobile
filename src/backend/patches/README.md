@@ -2,12 +2,6 @@
 
 These patches use [patch-package](https://github.com/ds300/patch-package) to update dependencies which have unpublished fixes.
 
-## `@rollup/plugin-esm`
-
-### [Fix shim insertion](./@rollup+plugin-esm-shim+0.1.4+001+fix-shim-insertion.patch)
-
-This is a workaround for [a bug in the plugin](https://github.com/rollup/plugins/issues/1709).
-
 ## `random-access-file`
 
 ### [Ignore EINVAL errors](./random-access-file+4.0.7.patch)
@@ -19,3 +13,9 @@ This is a workaround for [file lock errors on certain Android devices](https://g
 ### [Override Timeout](./@comapeo+core+3.0.0.patch)
 
 This change increases the amount of time that the recipient of an invitation waits after accepting a project. Previously, if this time limit was exceeded, an error would occur. This caused issues because slower devices were unable to complete the process within the original timeout period. The timeout is now 30 seconds, where previously it was 10 seconds.
+
+## `crc-universal`
+
+### [Avoid using `crc-native` module](./crc-universal+1.0.4+001+crc-universal-use-js-only.patch)
+
+Using the native module seems to cause certain devices to crash. See https://github.com/digidem/comapeo-mobile/issues/1096 for more details.

@@ -15,12 +15,12 @@ module.exports = {
   },
   resolver: {
     ...config.resolver,
-    // For nodejs-mobile
     blockList: [
       ...defaultBlockList,
+      // for nodejs-mobile: https://nodejs-mobile.github.io/docs/guide/guide-react-native/getting-started#duplicate-module-name
+      /android\/.*/,
+      /ios\/.*/,
       /nodejs-assets\/.*/,
-      // TODO: Update comapeo-schema to make ajv a dev-dep
-      /node_modules\/ajv\/.*/,
     ],
     // For https://github.com/kristerkari/react-native-svg-transformer
     assetExts: config.resolver.assetExts.filter(ext => ext !== 'svg'),

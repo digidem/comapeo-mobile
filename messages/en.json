@@ -211,6 +211,9 @@
   "SaveTrack.HeaderLeft.discardTrackDescription": {
     "message": "Your Track will not be saved. This cannot be undone."
   },
+  "Screens.Project.soloProjectHeader": {
+    "message": "My Solo Project"
+  },
   "Screens.Settings.AppSettings.Drawer.security": {
     "message": "Security"
   },

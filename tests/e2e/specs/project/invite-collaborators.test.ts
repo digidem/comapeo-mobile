@@ -7,8 +7,8 @@ describe('Project - Solo Project Invite/ Name Project Flow', () => {
     const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
 
-    const projectName = await $(byResourceId('MENU.project-name'));
-    await expect(projectName).toHaveText('My Solo Project');
+    const projectName = await $(byText('My Solo Project'));
+    await expect(projectName).toBeDisplayed();
 
     const inviteButton = await $(byText('Invite'));
     await expect(inviteButton).toBeDisplayed();

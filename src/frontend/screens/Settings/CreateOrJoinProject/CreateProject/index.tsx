@@ -41,7 +41,7 @@ import {useProjectRoleAndDetails} from '../../../../hooks/useProjectRoleAndDetai
 const m = defineMessages({
   title: {
     id: 'screens.Settings.CreateOrJoinProject.CreateProject.title',
-    defaultMessage: 'Create a Project',
+    defaultMessage: 'New Project',
   },
   enterName: {
     id: 'screens.Settings.CreateOrJoinProject.enterName',
@@ -55,17 +55,17 @@ const m = defineMessages({
     id: 'screens.Settings.CreateOrJoinProject.advancedSettings',
     defaultMessage: 'Advanced Project Settings',
   },
-  importConfig: {
-    id: 'screens.Settings.CreateOrJoinProject.importConfig',
-    defaultMessage: 'Import Config',
+  importCategories: {
+    id: 'screens.Settings.CreateOrJoinProject.importCategories',
+    defaultMessage: 'Import Categories',
   },
   importConfigFileError: {
     id: 'screens.Settings.CreateOrJoinProject.importConfigFileError',
     defaultMessage: 'File name should end with .comapeocat',
   },
-  configImportTitle: {
+  categoryImportTitle: {
     id: 'screens.Settings.CreateOrJoinProject.importSuccessTitle',
-    defaultMessage: 'Successfully imported config:',
+    defaultMessage: 'Successfully imported categories:',
   },
   okButton: {
     id: 'screens.Settings.CreateOrJoinProject.okButton',
@@ -210,7 +210,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
         onSuccess: selected => {
           if (!selected) return;
           setConfigFileResult({type: 'success', file: selected});
-          Alert.alert(t(m.configImportTitle), selected.name, [
+          Alert.alert(t(m.categoryImportTitle), selected.name, [
             {text: t(m.okButton)},
           ]);
         },
@@ -265,7 +265,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
                   onPress={() => {
                     selectConfigFile();
                   }}
-                  text={t(m.importConfig)}
+                  text={t(m.importCategories)}
                 />
 
                 {configFileResult?.type === 'success' && (

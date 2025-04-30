@@ -51,10 +51,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     padding: 10,
+    paddingHorizontal: 20,
   },
   locationText: {
     color: BLACK,
     fontSize: 12,
+    flex: 1,
   },
   accuracy: {
     color: BLACK,

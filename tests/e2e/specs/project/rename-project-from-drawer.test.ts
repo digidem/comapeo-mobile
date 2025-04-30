@@ -5,7 +5,7 @@ import {output} from '../../utils/naming';
 
 describe('Project - Rename Project from Drawer', () => {
   it('should allow user to rename a project', async () => {
-    const createProjectButton = await $(byText('Create a Project'));
+    const createProjectButton = await $(byText('New Project'));
     await expect(createProjectButton).toBeDisplayed();
     await createProjectButton.click();
 
@@ -18,7 +18,7 @@ describe('Project - Rename Project from Drawer', () => {
       byResourceId('PROJECT.advanced-settings-toggle'),
     );
     await advancedSettings.click();
-    await expect($(byText('Import Config'))).toBeDisplayed();
+    await expect($(byText('Import Categories'))).toBeDisplayed();
     await advancedSettings.click();
 
     const nameInput = await $(byResourceId('PROJECT.name-inp'));

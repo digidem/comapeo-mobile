@@ -79,7 +79,8 @@ export const PhotoPreviewModal: FC<
         <PhotoUnpreparedView
           onPress={() => setShowHeader(!showHeader)}
           photo={photo}
-          variant={'original'}
+          // This needs to be "preview" otherwise the photo will not be shown when the user is only syncing previews
+          variant={'preview'}
         />
       ) : (
         <PhotoPreparedView

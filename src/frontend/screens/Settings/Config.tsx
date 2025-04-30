@@ -20,11 +20,11 @@ import {BodyText} from '../../sharedComponents/Text/BodyText';
 const m = defineMessages({
   navTitle: {
     id: 'screens.Settings.Config.navTitle',
-    defaultMessage: 'Configuration',
+    defaultMessage: 'Categories',
   },
   name: {
     id: 'screens.Settings.Config.name',
-    defaultMessage: 'Config Name:',
+    defaultMessage: 'Category Set:',
   },
   projectName: {
     id: 'screens.Settings.Config.projectName',
@@ -34,13 +34,13 @@ const m = defineMessages({
     id: 'screens.Settings.Config.created',
     defaultMessage: 'Created {date} at {time}',
   },
-  importConfig: {
-    id: 'screens.Settings.Config.importConfig',
-    defaultMessage: 'Import Config',
+  importCategories: {
+    id: 'screens.Settings.Config.importCategories',
+    defaultMessage: 'Import Categories',
   },
-  configImportTitle: {
+  categoryImportTitle: {
     id: 'screens.Settings.Config.importSuccessTitle',
-    defaultMessage: 'Successfully imported config:',
+    defaultMessage: 'Successfully imported categories:',
   },
   okButton: {
     id: 'screens.Settings.Config.okButton',
@@ -104,9 +104,11 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
                 navigation.navigate('ErrorBottomSheet');
               },
               onSuccess: () => {
-                Alert.alert(formatMessage(m.configImportTitle), selected.name, [
-                  {text: formatMessage(m.okButton)},
-                ]);
+                Alert.alert(
+                  formatMessage(m.categoryImportTitle),
+                  selected.name,
+                  [{text: formatMessage(m.okButton)}],
+                );
               },
             },
           );
@@ -148,7 +150,7 @@ export const Config: NativeNavigationComponent<'Config'> = ({navigation}) => {
           style={{marginTop: 20, alignSelf: 'center'}}
           fullSize={true}
           onPress={selectAndImportConfigFile}
-          text={formatMessage(m.importConfig)}
+          text={formatMessage(m.importCategories)}
         />
       ) : null}
     </View>

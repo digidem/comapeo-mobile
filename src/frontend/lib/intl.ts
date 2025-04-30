@@ -44,7 +44,10 @@ function getUsableLanguages(
     if (!hasAtLeastOneTranslatedString) continue;
 
     if (!isSupportedLanguageTag(languageTag)) {
-      if (process.env.APP_VARIANT === 'development') {
+      if (
+        process.env.APP_VARIANT === 'development' &&
+        process.env.NODE_ENV !== 'test'
+      ) {
         console.warn(
           `Language "${languageTag}" is not available in CoMapeo (see \`src/frontend/languages.json\`)`,
         );

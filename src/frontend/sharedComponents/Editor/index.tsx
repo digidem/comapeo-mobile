@@ -9,6 +9,9 @@ import {LIGHT_GREY} from '../../lib/styles';
 import {PresetView} from './PresetView';
 import {LocationView} from './LocationView';
 import {Divider} from '../Divider';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {useProjectRoleAndDetails} from '../../hooks/useProjectRoleAndDetails';
+import {HeaderText} from '../Text/HeaderText';
 
 type EditorProps = {
   presetName: string;
@@ -38,11 +41,29 @@ export const Editor = ({
   isTrack = false,
   ...presetProps
 }: EditorProps) => {
+  const {projectId} = useActiveProject();
+  const projectDetails = useProjectRoleAndDetails(projectId);
+
   return (
     <ScreenContentWithDock
       dockContainerStyle={{padding: 0}}
       dockContent={actionsRow}>
       <View style={styles.container}>
+        <View
+          style={{
+            backgroundColor: projectDetails.projectColor,
+            paddingVertical: 10,
+            // without this the parent container border does not properly show
+            borderTopLeftRadius: 12,
+            borderTopRightRadius: 12,
+            paddingHorizontal: 20,
+          }}>
+          <HeaderText variant="header6">
+            {projectDetails.role === 'solo'
+              ? projectDetails.projectHeader
+              : projectDetails.projectName}
+          </HeaderText>
+        </View>
         <PresetView {...presetProps} />
         {location && (
           <>

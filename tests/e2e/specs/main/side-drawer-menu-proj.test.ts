@@ -22,7 +22,5 @@ describe('Main - Side Drawer Menu - Project Joined', () => {
     await expect($(byTextMatches('Select Device to Invite'))).toBeDisplayed();
     const backButton = $(byResourceId('MAIN.header-back-btn'));
     await backButton.click();
-
-    await $('~Close Menu').click();
   });
 });

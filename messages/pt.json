@@ -211,6 +211,39 @@
   "SaveTrack.HeaderLeft.discardTrackDescription": {
     "message": "Sua trilha não será salva. Isso não poderá ser desfeito."
   },
+  "Screens.Project.soloProjectHeader": {
+    "message": "My Solo Project"
+  },
+  "Screens.ProjectSettings.configTitle": {
+    "message": "Project Categories"
+  },
+  "Screens.ProjectSettings.coordinator": {
+    "message": "This device is a coordinator on this project."
+  },
+  "Screens.ProjectSettings.editInfo": {
+    "message": "Edit Info"
+  },
+  "Screens.ProjectSettings.invite": {
+    "message": "Invite Collaborators"
+  },
+  "Screens.ProjectSettings.participant": {
+    "message": "This device is a participant on this project."
+  },
+  "Screens.ProjectSettings.projectCollaborators": {
+    "message": "Project Collaborators"
+  },
+  "Screens.ProjectSettings.soloDescription": {
+    "message": "You’re mapping on your own."
+  },
+  "Screens.ProjectSettings.title": {
+    "message": "Project Settings"
+  },
+  "Screens.ProjectSettings.updateCategories": {
+    "message": "Update Set"
+  },
+  "Screens.ProjectSettings.viewTeam": {
+    "message": "View Team"
+  },
   "Screens.Settings.AppSettings.Drawer.security": {
     "message": "Segurança"
   },
@@ -234,27 +267,6 @@
   },
   "Screens.Settings.AppSettings.title": {
     "message": "Configurações do Aplicativo"
-  },
-  "Screens.Settings.ProjectSettings.RemoteArchive": {
-    "message": "Remote Archive"
-  },
-  "Screens.Settings.ProjectSettings.deviceName": {
-    "message": "Nome do dispositivo"
-  },
-  "Screens.Settings.ProjectSettings.mediaSyncSettings": {
-    "message": "Configurações de Sincronização"
-  },
-  "Screens.Settings.ProjectSettings.remoteArchiveOff": {
-    "message": "Remote Archive is OFF"
-  },
-  "Screens.Settings.ProjectSettings.remoteArchiveOn": {
-    "message": "Remote Archive is ON"
-  },
-  "Screens.Settings.ProjectSettings.title": {
-    "message": "Configurações do Projeto"
-  },
-  "Screens.Settings.ProjectSettings.yourTeam": {
-    "message": "Sua equipe"
   },
   "SharedComponents.ActionButtons.cancel": {
     "description": "Button to cancel delete of observation",
@@ -690,17 +702,23 @@
   "screens.InviteCancelled.projectInviteCanceled": {
     "message": "Your invitation to {projectName} has been canceled."
   },
-  "screens.InviteReceived.acceptInvite": {
-    "message": "Accept Invite"
+  "screens.InviteReceived.coordinatorRole": {
+    "message": "coordinator"
   },
   "screens.InviteReceived.declineInvite": {
     "message": "Decline Invite"
   },
   "screens.InviteReceived.invitedToJoin": {
-    "message": "You've been invited to join {projectName}"
+    "message": "You've been invited to..."
+  },
+  "screens.InviteReceived.joinAsRole": {
+    "message": "Join as a {role}?"
   },
   "screens.InviteReceived.joinProject": {
-    "message": "Join {projectName}"
+    "message": "Join Project"
+  },
+  "screens.InviteReceived.participantRole": {
+    "message": "participant"
   },
   "screens.InviteSuccess.goToMap": {
     "message": "Go To Map"
@@ -1418,17 +1436,17 @@
   "screens.Settings.Config.created": {
     "message": "Criado em {date} {time}"
   },
-  "screens.Settings.Config.importConfig": {
-    "message": "Importar configuração"
+  "screens.Settings.Config.importCategories": {
+    "message": "Import Categories"
   },
   "screens.Settings.Config.importSuccessTitle": {
-    "message": "Successfully imported config:"
+    "message": "Successfully imported categories:"
   },
   "screens.Settings.Config.name": {
-    "message": "Nome da configuração:"
+    "message": "Category Set:"
   },
   "screens.Settings.Config.navTitle": {
-    "message": "Configurações"
+    "message": "Categories"
   },
   "screens.Settings.Config.okButton": {
     "message": "OK"
@@ -1437,7 +1455,7 @@
     "message": "Nome do projeto:"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.title": {
-    "message": "Criar um Projeto"
+    "message": "New Project"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
     "message": "Go Back"
@@ -1472,14 +1490,14 @@
   "screens.Settings.CreateOrJoinProject.enterName": {
     "message": "Digite um nome para o projeto"
   },
-  "screens.Settings.CreateOrJoinProject.importConfig": {
-    "message": "Importar configuração"
+  "screens.Settings.CreateOrJoinProject.importCategories": {
+    "message": "Import Categories"
   },
   "screens.Settings.CreateOrJoinProject.importConfigFileError": {
     "message": "O nome do arquivo deve terminar com .mapeoconfig"
   },
   "screens.Settings.CreateOrJoinProject.importSuccessTitle": {
-    "message": "Successfully imported config:"
+    "message": "Successfully imported categories:"
   },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
     "message": "Junte-se a um projeto existente"
@@ -1585,10 +1603,6 @@
   },
   "screens.Settings.YourTeam.unableToCancel": {
     "message": "Não foi possível cancelar o convite"
-  },
-  "screens.Settings.config": {
-    "description": "Primary text for project config settings",
-    "message": "Configurações"
   },
   "screens.SettingsPrivacyPolicy.navTitle": {
     "message": "Política de Privacidade"

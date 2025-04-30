@@ -16,7 +16,6 @@ import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreCont
 import * as Sentry from '@sentry/react-native';
 import {useListenToInviteCancel} from '../../hooks/useListenToInviteCancel';
 import {BLACK, NEW_DARK_GREY, VERY_LIGHT_GREY} from '../../lib/styles';
-import {useTrackActions, useTrackState} from '../../contexts/TrackStoreContext';
 import {useTracking} from '../../hooks/useTracking';
 
 const m = defineMessages({

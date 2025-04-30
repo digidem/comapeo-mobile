@@ -5,11 +5,12 @@ import {defineMessages, useIntl} from 'react-intl';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 import {DestructiveButton, SecondaryButton} from '../sharedComponents/Buttons';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
+import Error from '../images/Error.svg';
 
 const m = defineMessages({
   recordingTracks: {
     id: 'screens.TrackRecordingActive.recordingTracks',
-    defaultMessage: 'Recording Tracks',
+    defaultMessage: 'Recording Tracks!',
   },
   warningMessage: {
     id: 'screens.TrackRecordingActive.warningMessage',
@@ -32,18 +33,29 @@ export const TrackRecordingActive = ({
   const {formatMessage} = useIntl();
   return (
     <BottomSheetWrapper>
-      <View>
-        <HeaderText>{formatMessage(m.recordingTracks)}</HeaderText>
-        <BodyText>{formatMessage(m.warningMessage)}</BodyText>
+      <View style={{alignItems: 'center'}}>
+        <Error />
+        <HeaderText
+          style={{textAlign: 'center', marginTop: 20}}
+          variant="header2">
+          {formatMessage(m.recordingTracks)}
+        </HeaderText>
+        <BodyText style={{textAlign: 'center', marginTop: 20}}>
+          {formatMessage(m.warningMessage)}
+        </BodyText>
       </View>
       <DestructiveButton
         fullSize={true}
-        onPress={() => {}}
+        onPress={() => {
+          navigation.navigate('SaveTrack');
+        }}
+        style={{marginTop: 20, alignSelf: 'center'}}
         text={formatMessage(m.stopTracks)}
       />
       <SecondaryButton
         fullSize={true}
         onPress={() => navigation.goBack()}
+        style={{marginTop: 20, alignSelf: 'center'}}
         text={formatMessage(m.cancel)}
       />
     </BottomSheetWrapper>

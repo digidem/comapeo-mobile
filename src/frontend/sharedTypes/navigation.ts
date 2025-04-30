@@ -125,6 +125,7 @@ export type RootStackParamsList = {
   };
   Menu: undefined;
   InviteCollaborators: undefined;
+  TrackRecordingActive: undefined;
 };
 
 export type OnboardingParamsList = {

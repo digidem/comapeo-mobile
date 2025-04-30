@@ -47,7 +47,7 @@
     "message": "Stop Tracks"
   },
   "Modal.GPSEnable.trackingDescription": {
-    "message": "You’ve been recording for"
+    "message": "You’ve been recording for {time}"
   },
   "Navigation.Menu.Settings": {
     "message": "Settings"
@@ -1730,7 +1730,7 @@
     "message": "Cancel"
   },
   "screens.TrackRecordingActive.recordingTracks": {
-    "message": "Recording Tracks"
+    "message": "Recording Tracks!"
   },
   "screens.TrackRecordingActive.stopTracks": {
     "message": "Stop Tracks"

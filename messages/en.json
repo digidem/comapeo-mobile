@@ -1726,6 +1726,18 @@
     "description": "Preset title for new track screen",
     "message": "Track"
   },
+  "screens.TrackRecordingActive.cancel": {
+    "message": "Cancel"
+  },
+  "screens.TrackRecordingActive.recordingTracks": {
+    "message": "Recording Tracks"
+  },
+  "screens.TrackRecordingActive.stopTracks": {
+    "message": "Stop Tracks"
+  },
+  "screens.TrackRecordingActive.warningMessage": {
+    "message": "You’re currently recording a track. To join project, stop recording"
+  },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",
     "message": "Show Options"

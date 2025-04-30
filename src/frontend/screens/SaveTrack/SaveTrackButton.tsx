@@ -40,12 +40,7 @@ export const SaveTrackButton: FC = () => {
       {
         onSuccess: () => {
           clearCurrentTrack();
-          navigation.dispatch(
-            CommonActions.reset({
-              index: 0,
-              routes: [{name: 'Home', params: {screen: 'Map'}}],
-            }),
-          );
+          navigation.goBack();
         },
       },
     );

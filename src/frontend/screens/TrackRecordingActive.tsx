@@ -6,6 +6,7 @@ import {BodyText} from '../sharedComponents/Text/BodyText';
 import {DestructiveButton, SecondaryButton} from '../sharedComponents/Buttons';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 import Error from '../images/Error.svg';
+import {useTracking} from '../hooks/useTracking';
 
 const m = defineMessages({
   recordingTracks: {
@@ -31,6 +32,19 @@ export const TrackRecordingActive = ({
   navigation,
 }: NativeRootNavigationProps<'TrackRecordingActive'>) => {
   const {formatMessage} = useIntl();
+  const {cancelTrackingAndReturnIfTracksSaved} = useTracking();
+
+  function handleStopTracks() {
+    const hasTracksSaved = cancelTrackingAndReturnIfTracksSaved();
+
+    if (hasTracksSaved) {
+      navigation.replace('SaveTrack');
+      return;
+    }
+
+    navigation.goBack();
+  }
+
   return (
     <BottomSheetWrapper>
       <View style={{alignItems: 'center'}}>
@@ -46,9 +60,7 @@ export const TrackRecordingActive = ({
       </View>
       <DestructiveButton
         fullSize={true}
-        onPress={() => {
-          navigation.navigate('SaveTrack');
-        }}
+        onPress={handleStopTracks}
         style={{marginTop: 20, alignSelf: 'center'}}
         text={formatMessage(m.stopTracks)}
       />

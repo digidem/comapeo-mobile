@@ -90,7 +90,4 @@ const styles = StyleSheet.create({
     borderRadius: 99,
     backgroundColor: '#59A553',
   },
-  timer: {
-    marginLeft: 5,
-  },
 });

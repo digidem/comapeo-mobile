@@ -1,5 +1,5 @@
 import * as Location from 'expo-location';
-import {useCallback, useState} from 'react';
+import {useCallback} from 'react';
 import {
   useTrackActions,
   useTrackState,
@@ -22,12 +22,12 @@ export function useTracking() {
     Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
       accuracy: Location.Accuracy.Highest,
       activityType: Location.LocationActivityType.Fitness,
-    }).catch(error => {
+    }).catch(() => {
       setTracking(false);
       // @ts-expect-error - this is typing issue, we are using the not strongly typed hook as this can technically be used in any screen. But regardless of the screen, we want to show the error bottom sheet
       navigation.navigate('ErrorBottomSheet');
     });
-  }, [isTracking, setTracking]);
+  }, [isTracking, setTracking, navigation]);
   /**
    * Cancels location tracking and stops background updates.
    * @returns {boolean} True if location history has more than one entry (track should be kept), false otherwise.
@@ -42,7 +42,7 @@ export function useTracking() {
     }
 
     return hasTrackWithMoreThan1Point;
-  }, [setTracking]);
+  }, [setTracking, clearCurrentTrack, locationHistory]);
 
   return {isTracking, startTracking, cancelTrackingAndReturnIfTracksSaved};
 }

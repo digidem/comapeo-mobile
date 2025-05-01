@@ -76,6 +76,7 @@ export function MenuScreen() {
             backgroundColor={projectInfo.projectColor}
             role={role}
             headerText={displayTitle}
+            testID="MENU.project-name"
             projectDescription={
               'projectDescription' in projectInfo &&
               projectInfo.projectDescription

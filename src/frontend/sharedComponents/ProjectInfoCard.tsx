@@ -32,6 +32,7 @@ export type ProjectInfoCardProps = {
   ButtonsRow?: React.ReactNode;
   onPress?: () => void;
   style?: ViewStyleProp;
+  testID?: string;
 };
 
 export const ProjectInfoCard = ({
@@ -42,6 +43,7 @@ export const ProjectInfoCard = ({
   ButtonsRow,
   onPress,
   style,
+  testID,
 }: ProjectInfoCardProps) => {
   const {formatMessage} = useIntl();
 
@@ -49,6 +51,7 @@ export const ProjectInfoCard = ({
     <TouchableOpacity
       disabled={!onPress}
       onPress={onPress}
+      testID={testID}
       style={[styles.card, {backgroundColor: backgroundColor}, style]}>
       <HeaderText variant="header2">{headerText}</HeaderText>
       {projectDescription && (

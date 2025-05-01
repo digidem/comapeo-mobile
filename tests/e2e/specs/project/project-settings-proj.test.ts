@@ -11,11 +11,12 @@ describe('Project - Project Settings Named Project', () => {
     const screenHeader = await $(byText('Project Settings'));
     await expect(screenHeader).toBeDisplayed();
 
-    await expect($(byText(output.names.project))).toBeDisplayed();
-    await expect(
-      $(byTextMatches('This device is a coordinator on this project.')),
-    ).toBeDisplayed();
-    await expect($(byText('Edit Info'))).toBeDisplayed();
+    //Temporarily removed until multi projects are implemented
+    // await expect($(byText(output.names.project))).toBeDisplayed();
+    // await expect(
+    //   $(byTextMatches('This device is a coordinator on this project.')),
+    // ).toBeDisplayed();
+    // await expect($(byText('Edit Info'))).toBeDisplayed();
 
     await expect($(byText('Project Collaborators'))).toBeDisplayed();
     await expect(

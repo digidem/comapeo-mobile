@@ -17,6 +17,7 @@ describe('CoMapeo E2E Flow', function () {
   require('./main/map.test');
   require('./observations/add-details.test');
   require('./observations/view-observations.test');
+  require('./observations/edit-observation.test');
   require('./settings/coordinates.test');
   require('./settings/language.test');
   require('./settings/about-comapeo.test');

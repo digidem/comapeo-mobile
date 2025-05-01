@@ -57,6 +57,5 @@ describe('Observations - Edit Observation Flow', () => {
     await expect($(byTextMatches('Updated description'))).toBeDisplayed();
     await expect($(byTextMatches('New detail'))).toBeDisplayed();
     await $(byResourceId('MAIN.header-back-btn')).click();
-    await $('~Go to Map').click();
   });
 });

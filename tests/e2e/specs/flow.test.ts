@@ -9,6 +9,7 @@ describe('CoMapeo E2E Flow', function () {
   require('./main/side-drawer-menu-no-proj.test');
   require('./project/project-settings-no-proj.test');
   require('./observations/create-observation.test');
+  require('./tracks/track-start.test');
   require('./project/invite-collaborators.test');
   require('./project/rename-project-from-drawer.test');
   // require('./project/unjoin-project.test');

@@ -16,7 +16,7 @@
 
 ### Overview
 
-These tests deal with all issues related to the main screens of the app.
+These tests deal with all issues related to Observations.
 
 ## Creating Observations
 

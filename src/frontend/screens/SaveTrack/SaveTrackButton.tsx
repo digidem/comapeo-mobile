@@ -55,6 +55,7 @@ export const SaveTrackButton: FC = () => {
     <Pressable
       disabled={status === 'pending'}
       onPress={handleSaveClick}
+      accessible={true}
       accessibilityLabel="Save Track">
       <Image
         style={styles.completeIcon}

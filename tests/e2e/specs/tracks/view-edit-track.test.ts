@@ -46,4 +46,21 @@ describe('Tracks - View and Edit Saved Track', () => {
     const backButton = await $(byResourceId('MAIN.header-back-btn'));
     await backButton.click();
   });
+  it('displays the associated Track in the Observation Detail View', async () => {
+    const lakeObs = await $(byTextMatches('Lake'));
+    await lakeObs.click();
+
+    const trackAccordian = await $(byTextMatches('Track'));
+    await expect(trackAccordian).toBeDisplayed();
+
+    await trackAccordian.click();
+
+    await expect(
+      $(byTextMatches('(second|minute|hour)s? ago')),
+    ).toBeDisplayed();
+
+    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
+    await backBtn.click();
+    await $('~Go to Map').click();
+  });
 });

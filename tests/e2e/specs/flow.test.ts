@@ -9,7 +9,7 @@ describe('CoMapeo E2E Flow', function () {
   require('./main/side-drawer-menu-no-proj.test');
   require('./project/project-settings-no-proj.test');
   require('./observations/create-observation.test');
-  require('./tracks/track-start.test');
+  require('./tracks/start-track.test');
   require('./project/invite-collaborators.test');
   require('./project/rename-project-from-drawer.test');
   // require('./project/unjoin-project.test');
@@ -20,6 +20,8 @@ describe('CoMapeo E2E Flow', function () {
   require('./observations/view-observations.test');
   require('./observations/edit-observation.test');
   require('./observations/delete-observation.test');
+  require('./tracks/save-track.test');
+  require('./tracks/view-edit-track.test');
   require('./settings/coordinates.test');
   require('./settings/language.test');
   require('./settings/about-comapeo.test');

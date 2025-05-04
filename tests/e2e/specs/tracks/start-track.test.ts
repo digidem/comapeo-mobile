@@ -1,18 +1,20 @@
 import {expect} from '@wdio/globals';
-import {describe, it} from 'mocha';
+import {describe, it, before} from 'mocha';
 import {byTextMatches} from '../../utils/selectors';
 
 describe('Tracks - Start Track Flow (Permissions Pre-Granted)', () => {
-  it('should open bottom sheet and start tracking', async () => {
+  before(async () => {
     const mapTab = await $('~Go to Map');
     await mapTab.click();
+  });
 
+  it('opens the track bottom sheet and starts tracking', async () => {
     const trackBtn = await $('~Go to Tracking');
     await trackBtn.click();
 
-    await expect($(byTextMatches('Start Tracks'))).toBeDisplayed();
-
     const startBtn = await $(byTextMatches('Start Tracks'));
+    await expect(startBtn).toBeDisplayed();
+
     await startBtn.click();
 
     await expect($(byTextMatches('Stop Tracks'))).toBeDisplayed();

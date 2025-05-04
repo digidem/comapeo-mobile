@@ -52,7 +52,10 @@ export const SaveTrackButton: FC = () => {
   };
 
   return (
-    <Pressable disabled={status === 'pending'} onPress={handleSaveClick}>
+    <Pressable
+      disabled={status === 'pending'}
+      onPress={handleSaveClick}
+      accessibilityLabel="Save Track">
       <Image
         style={styles.completeIcon}
         source={require('../../images/completed/checkComplete.png')}

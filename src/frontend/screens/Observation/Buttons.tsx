@@ -224,10 +224,9 @@ export const ButtonFields = ({
               .join(',\n    ')}`
           : '';
 
-      const notes =
-        observation.tags.notes !== undefined && observation.tags.notes !== null
-          ? `${t(m.description)} ${observation.tags.notes}`
-          : '';
+      const notes = observation.tags.notes
+        ? `${t(m.description)} ${observation.tags.notes}`
+        : '';
 
       const footer = `— ${t(m.shareMessageFooter)} —`;
 

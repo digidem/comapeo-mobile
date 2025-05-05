@@ -64,10 +64,17 @@ Unfortunately this can't be totally controlled through Appium tests. It does sho
 
 #### Tracks
 
-- Permission flows (OS settings) aren't visible now because we just have one flow that enables all permissions and we can't mock going into the Android settings to enable permissions.
+- Permission flows (OS settings) aren't visible now because we just have one command that enables all permissions and we can't mock going into the Android settings to enable permissions.
 - Real-time GPS line drawing, movement, distance, and accuracy
 - Background and foreground transitions
 - Data recovery after crash or forced app close
+
+#### Audio
+
+- Actual recorded audio content cannot be verified in automation
+- Cannot validate auto-stop at 5 minutes due to test time constraints
+- Cannot validate the screen color/ screen change as recording progresses
+- Permission flows (OS settings) isn't visible now because we just have one command that enables all permissions and we can't mock going into the Android settings to enable permissions.
 
 #### Other
 

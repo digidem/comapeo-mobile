@@ -14,15 +14,14 @@ describe('Audio - Add Additional Recording', () => {
     const micButton = await $(byResourceId('OBS.add-audio-btn'));
     await micButton.click();
 
-    const recordBtn = await $(
-      'android=new UiSelector().className("android.view.View").clickable(true)',
-    );
-    await recordBtn.click();
+    const startButton = await $('~Start Recording Audio');
+    await startButton.click();
     await browser.pause(2000);
-    await recordBtn.click();
+    const stopButton = await $('~Stop Recording Audio');
+    await stopButton.click();
 
-    const stopCloseBtn = await $(byResourceId('close-icon'));
-    await stopCloseBtn.click();
+    const closeBtn = await $(byResourceId('close-icon'));
+    await closeBtn.click();
 
     await expect(
       $(byTextMatches('Your Audio Recording was added')),
@@ -39,21 +38,17 @@ describe('Audio - Add Additional Recording', () => {
     const timer = await $(byTextMatches('00:00'));
     await expect(timer).toBeDisplayed();
 
-    const recordButton = await $(
-      'android=new UiSelector().className("android.view.View").clickable(true)',
-    );
-    await recordButton.click();
+    const startButton = await $('~Start Recording Audio');
+    await startButton.click();
 
     const inProgressText = await $(byTextMatches('Less than 5 minutes left'));
     await expect(inProgressText).toBeDisplayed();
   });
 
   it('stops second recording and returns to editor', async () => {
-    const recordButton = await $(
-      'android=new UiSelector().className("android.view.View").clickable(true)',
-    );
+    const stopButton = await $('~Stop Recording Audio');
     await browser.pause(3000);
-    await recordButton.click();
+    await stopButton.click();
 
     await expect($(byTextMatches('Total length: 00:03'))).toBeDisplayed();
 

@@ -21,21 +21,18 @@ describe('Audio - Recording Flow', () => {
   });
 
   it('starts recording and displays recording in-progress UI', async () => {
-    const recordButton = await $(
-      'android=new UiSelector().className("android.view.View").clickable(true)',
-    );
-    await recordButton.click();
+    const startButton = await $('~Start Recording Audio');
+    await startButton.click();
 
     const inProgressText = await $(byTextMatches('Less than 5 minutes left'));
     await expect(inProgressText).toBeDisplayed();
   });
 
   it('stops recording after 3 seconds and sees duration', async () => {
-    const recordButton = await $(
-      'android=new UiSelector().className("android.view.View").clickable(true)',
-    );
+    const stopButton = await $('~Stop Recording Audio');
+    await stopButton.click();
     await browser.pause(3000);
-    await recordButton.click();
+    await stopButton.click();
 
     await expect($(byTextMatches('Total length: 00:03'))).toBeDisplayed();
   });

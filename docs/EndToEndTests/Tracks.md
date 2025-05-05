@@ -1,4 +1,15 @@
-### Table of Contents
+- [Onboarding](#onboarding)
+  - [Overview](#overview)
+- [Starting a Track](#starting-a-track)
+  - [Test Objectives](#test-objectives)
+  - [Special Considerations](#special-considerations)
+- [Saving a Track](#saving-a-track)
+  - [Test Objectives](#test-objectives-1)
+  - [Special Considerations](#special-considerations-1)
+- [Viewing and Editing a Track](#viewing-and-editing-a-track)
+  - [Test Objectives](#test-objectives-2)
+  - [Special Considerations](#special-considerations-2)
+- [Future Coverage Considerations](#future-coverage-considerations)
 
 ## Onboarding
 

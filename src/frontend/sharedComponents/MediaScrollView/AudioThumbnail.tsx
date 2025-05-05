@@ -65,6 +65,8 @@ export const AudioThumbnail: FC<AudioThumbnailProps> = ({
 
   return (
     <TouchableOpacity
+      accessible={true}
+      accessibilityLabel="Play Audio Recording"
       style={[styles.thumbnailContainer, {width: size, height: size}, style]}
       onPress={handlePress}>
       {loading ? (

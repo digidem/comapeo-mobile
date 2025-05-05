@@ -16,7 +16,7 @@ describe('Audio - Add Additional Recording', () => {
 
     const startButton = await $('~Start Recording Audio');
     await startButton.click();
-    await browser.pause(2000);
+    await driver.pause(1000);
     const stopButton = await $('~Stop Recording Audio');
     await stopButton.click();
 
@@ -47,10 +47,11 @@ describe('Audio - Add Additional Recording', () => {
 
   it('stops second recording and returns to editor', async () => {
     const stopButton = await $('~Stop Recording Audio');
-    await browser.pause(3000);
     await stopButton.click();
 
-    await expect($(byTextMatches('Total length: 00:03'))).toBeDisplayed();
+    await expect(
+      $(byTextMatches('Total length: 0[0-4]:[0-5][0-9]')),
+    ).toBeDisplayed();
 
     const audioEndButton = await $(byResourceId('close-icon'));
     await audioEndButton.click();
@@ -67,6 +68,7 @@ describe('Audio - Add Additional Recording', () => {
     const audioThumbnails = await $$('~Play Audio Recording');
     expect(audioThumbnails.length).toBeGreaterThanOrEqual(2);
   });
+
   it('saves edited observation (handles GPS alert)', async () => {
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();

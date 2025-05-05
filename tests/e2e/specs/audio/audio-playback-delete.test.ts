@@ -1,6 +1,6 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
-import {byResourceId, byTextMatches} from '../../utils/selectors';
+import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
 
 describe('Audio - Playback and Delete', () => {
   it('opens playback screen and verifies audio controls', async () => {
@@ -9,8 +9,7 @@ describe('Audio - Playback and Delete', () => {
 
     await expect($(byTextMatches('Total length:'))).toBeDisplayed();
 
-    const deleteBtn = await $('~Delete Audio');
-    await expect(deleteBtn).toBeDisplayed();
+    await expect($('~Delete Audio')).toBeDisplayed();
   });
 
   it('opens and cancels delete confirmation modal', async () => {
@@ -18,7 +17,7 @@ describe('Audio - Playback and Delete', () => {
     await deleteBtn.click();
 
     const confirmText = await $(
-      byTextMatches('Your Audio Recording will be permanently deleted'),
+      byTextMatches('Your Audio Recording will be permanently deleted.'),
     );
     await expect(confirmText).toBeDisplayed();
 
@@ -30,7 +29,7 @@ describe('Audio - Playback and Delete', () => {
     const deleteBtn = await $('~Delete Audio');
     await deleteBtn.click();
 
-    const confirmDelete = await $(byTextMatches('Delete'));
+    const confirmDelete = await $(byText('Delete'));
     await confirmDelete.click();
 
     await expect($(byTextMatches('Airstrip'))).toBeDisplayed();

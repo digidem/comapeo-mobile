@@ -11,14 +11,11 @@ import {
   FormattedPresetName,
 } from '../../sharedComponents/FormattedData';
 import {PhotoAttachmentView} from '../../sharedComponents/PhotoAttachmentView.tsx';
-import {
-  useOwnDeviceInfo,
-  useDocumentCreatedBy,
-  useManyDocs,
-} from '@comapeo/core-react';
+import {useManyDocs} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
 import {matchPreset} from '../../lib/utils';
+import {useIsMyDocument} from '../../hooks/useIsMyDocument.ts';
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;
@@ -42,17 +39,12 @@ function ObservationListItemNotMemoized({
   onPress,
 }: ObservationListItemProps) {
   const {projectId} = useActiveProject();
-  const {data: deviceInfo} = useOwnDeviceInfo();
-  const {data: createdByDeviceId} = useDocumentCreatedBy({
-    projectId,
-    originalVersionId: observation.originalVersionId,
-  });
   const {data: allPresets} = useManyDocs({projectId, docType: 'preset'});
   const preset = matchPreset(observation.tags, allPresets);
 
   const photos = observation.attachments.filter(isSavedPhoto);
 
-  const isMine = createdByDeviceId === deviceInfo?.deviceId;
+  const isMine = useIsMyDocument(observation.originalVersionId);
 
   return (
     <TouchableHighlight

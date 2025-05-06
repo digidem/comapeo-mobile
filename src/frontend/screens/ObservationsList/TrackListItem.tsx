@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableHighlight, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {FormattedObservationDate} from '../../sharedComponents/FormattedData.tsx';
 import {Track} from '@comapeo/schema';
 import {ViewStyleProp} from '../../sharedTypes/index';
@@ -7,6 +7,8 @@ import {defineMessages, useIntl} from 'react-intl';
 import TrackIcon from '../../images/Track.svg';
 import {useIsMyDocument} from '../../hooks/useIsMyDocument.ts';
 import {sharedStyles} from './SharedStyle.ts';
+import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
 
 const m = defineMessages({
   track: {
@@ -31,25 +33,23 @@ const TrackObservationItemNotMemoized = ({
   const {formatMessage} = useIntl();
   const isMine = useIsMyDocument(track.originalVersionId);
   return (
-    <TouchableHighlight
+    <TouchableOpacity
       onPress={onPress}
       testID={testID}
       style={styles.touchable}>
       <View style={[styles.container, style, !isMine && sharedStyles.synced]}>
         <View style={styles.text}>
-          <Text style={styles.title}>
-            <Text>{formatMessage(m.track)}</Text>
-          </Text>
-          <Text>
+          <HeaderText variant="header4">{formatMessage(m.track)}</HeaderText>
+          <BodyText>
             <FormattedObservationDate
               createdDate={track.createdAt}
               variant="relative"
             />
-          </Text>
+          </BodyText>
         </View>
         <TrackIcon />
       </View>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 };
 
@@ -76,7 +76,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
-  title: {fontSize: 18, fontWeight: '700', color: 'black'},
   touchable: {
     flex: 1,
     height: 80,

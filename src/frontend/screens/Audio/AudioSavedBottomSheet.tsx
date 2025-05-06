@@ -5,8 +5,8 @@ import {defineMessages, useIntl} from 'react-intl';
 import GreenCheck from '../../images/GreenCheck.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {Button} from '../../sharedComponents/Button';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
+import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 
 const m = defineMessages({
   title: {
@@ -46,22 +46,21 @@ export const AudioSavedBottomSheet = ({
             {formatMessage(m.subTitle)}
           </BodyText>
         </View>
-        <View style={{width: '100%'}}>
-          <Button
-            fullWidth
-            variant="outlined"
+        <View style={{width: '100%', alignItems: 'center'}}>
+          <SecondaryButton
+            fullSize={true}
+            text={formatMessage(m.returnToEditor)}
             onPress={() => {
-              navigation.popTo('ObservationCreate');
-            }}>
-            {formatMessage(m.returnToEditor)}
-          </Button>
+              navigation.goBack();
+            }}
+          />
 
-          <Button
-            fullWidth
+          <PrimaryButton
+            fullSize={true}
+            text={formatMessage(m.recordAnother)}
             onPress={() => navigation.replace('AudioRecording')}
-            style={{marginTop: 20}}>
-            {formatMessage(m.recordAnother)}
-          </Button>
+            style={{marginTop: 20}}
+          />
         </View>
       </View>
     </BottomSheetWrapper>

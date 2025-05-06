@@ -15,7 +15,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import {millisecondsToMMSS} from '../../../lib/millisecondsToFormattedTime';
 
 // 5 minutes
-const MAX_RECORDING_DURATION_MS = 300000;
+const MAX_RECORDING_DURATION_MS = 5000;
 const PRIMARY_CONTROL_DIAMETER = 96;
 
 const m = defineMessages({
@@ -66,10 +66,10 @@ export function AudioRecording({
 
   // stop recording at 5 minutes
   React.useEffect(() => {
-    if (timeElapsed >= MAX_RECORDING_DURATION_MS) {
+    if (timeElapsed >= MAX_RECORDING_DURATION_MS && isRecording) {
       finishRecording();
     }
-  }, [timeElapsed, finishRecording]);
+  }, [timeElapsed, finishRecording, isRecording]);
 
   return (
     <>

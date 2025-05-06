@@ -39,4 +39,5 @@ export const COORDINATOR_ROLE_ID = 'f7c150f5a3a9a855';
 export const MEMBER_ROLE_ID = '012fd2d431c0bf60';
 export const BLOCKED_ROLE_ID = '9e6d29263cba36c9';
 export const LEFT_ROLE_ID = '8ced989b1904606b';
+export const FAILED_ROLE_ID = 'a24eaca65ab5d5d0';
 export const NO_ROLE_ID = '08e4251e36f6e7ed';

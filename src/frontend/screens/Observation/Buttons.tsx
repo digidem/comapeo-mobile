@@ -215,18 +215,22 @@ export const ButtonFields = ({
         ? `${t(m.precision)} ${observation.metadata.position.coords.accuracy}m`
         : '';
 
-      const displayedFields =
-        completedFields.length > 0
-          ? `${t(m.details)} \n    ${completedFields
-              .map(({label, value}) => {
-                return `${label}: ${value}`;
-              })
-              .join(',\n    ')}`
-          : '';
+      const displayedFields = completedFields
+        .map(({label, value}) => `${label}: ${value}`)
+        .join(',\n    ');
 
       const notes = observation.tags.notes
         ? `${t(m.description)} ${observation.tags.notes}`
         : '';
+
+      const body = [
+        subject,
+        date,
+        location,
+        precision,
+        displayedFields && `[${displayedFields}]`,
+        notes && `[${notes}]`,
+      ];
 
       const footer = `— ${t(m.shareMessageFooter)} —`;
 
@@ -235,7 +239,7 @@ export const ButtonFields = ({
         title:
           base64Urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),
         urls: !base64Urls.length ? undefined : base64Urls,
-        message: `${subject}\n${date}\n${location}\n${precision}\n[${displayedFields}]\n[${notes}]\n\n${footer}`,
+        message: `${[...body.filter(Boolean), ''].join('\n')}\n${footer}`,
         failOnCancel: false,
       });
     } catch (err) {

@@ -66,10 +66,10 @@ export function AudioRecording({
 
   // stop recording at 5 minutes
   React.useEffect(() => {
-    if (timeElapsed >= MAX_RECORDING_DURATION_MS) {
+    if (timeElapsed >= MAX_RECORDING_DURATION_MS && isRecording) {
       finishRecording();
     }
-  }, [timeElapsed, finishRecording]);
+  }, [timeElapsed, finishRecording, isRecording]);
 
   return (
     <>

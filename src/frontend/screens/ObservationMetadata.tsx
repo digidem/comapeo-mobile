@@ -1,6 +1,5 @@
 import * as React from 'react';
 import BadgeWithCheck from '../images/VerifiedBadgeWithCheck.svg';
-import VerifiedBadgeBlue from '../images/VerifiedBadgeBlue.svg';
 import {FlatList, TouchableOpacity, View} from 'react-native';
 import {
   defineMessages,
@@ -8,15 +7,8 @@ import {
   FormattedTime,
   useIntl,
 } from 'react-intl';
-import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {StyleSheet} from 'react-native';
-import {
-  COMAPEO_BLUE,
-  VERY_LIGHT_GREY,
-  NEW_DARK_GREY,
-  WHITE,
-  BLUE_GREY,
-} from '../lib/styles';
+import {VERY_LIGHT_GREY, NEW_DARK_GREY, WHITE, BLUE_GREY} from '../lib/styles';
 import {NativeNavigationComponent} from '../sharedTypes/navigation';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 import {FormattedCoords} from '../sharedComponents/FormattedData';
@@ -383,17 +375,18 @@ export const ObservationMetadata: NativeNavigationComponent<
 };
 
 export const VerifiedHeader = () => {
-  const {formatMessage} = useIntl();
+  // const {formatMessage} = useIntl();
 
   return (
     <>
       <BadgeWithCheck />
+      {/* Removing until "How we validate" page is created
       <View style={[styles.flexRow, {marginVertical: 10}]}>
         <VerifiedBadgeBlue stroke={COMAPEO_BLUE} style={{marginRight: 10}} />
         <HeaderText variant="header6" style={{color: COMAPEO_BLUE}}>
           {formatMessage(m.howWeCheck)}
         </HeaderText>
-      </View>
+      </View> */}
     </>
   );
 };

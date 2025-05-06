@@ -9,7 +9,7 @@ import {WaitingForInviteAccept} from './WaitingForInviteAccept';
 import {useSendInvite, useRequestCancelInvite} from '@comapeo/core-react';
 import {useActiveProject} from '../../../../../contexts/ActiveProjectContext';
 import * as Sentry from '@sentry/react-native';
-import {CommonActions, NavigationProp} from '@react-navigation/native';
+import {resetToYourTeam} from '../../../../../lib/resetToYourTeam';
 
 const m = defineMessages({
   title: {
@@ -41,25 +41,16 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
             val === 'ACCEPT' &&
             requestCancelInviteMutation.status === 'pending'
           ) {
-            navigation.navigate('InviteDeclined', {
-              ...route.params,
-              onClose: () => resetToYourTeam(navigation),
-            });
+            navigation.navigate('UnableToCancelInvite', {...route.params});
             return;
           }
           if (val === 'ACCEPT') {
-            navigation.navigate('InviteAccepted', {
-              ...route.params,
-              onClose: () => resetToYourTeam(navigation),
-            });
+            navigation.navigate('InviteAccepted', route.params);
             return;
           }
 
           if (val === 'REJECT') {
-            navigation.navigate('InviteDeclined', {
-              ...route.params,
-              onClose: () => resetToYourTeam(navigation),
-            });
+            navigation.navigate('InviteDeclined', route.params);
             return;
           }
         },
@@ -101,14 +92,5 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
     </>
   );
 };
-
-function resetToYourTeam(navigation: NavigationProp<AppStackParamsList>) {
-  navigation.dispatch(
-    CommonActions.reset({
-      index: 2,
-      routes: [{name: 'Home'}, {name: 'ProjectSettings'}, {name: 'YourTeam'}],
-    }),
-  );
-}
 
 ReviewAndInvite.navTitle = m.title;

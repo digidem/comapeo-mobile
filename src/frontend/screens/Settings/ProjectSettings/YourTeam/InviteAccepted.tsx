@@ -6,9 +6,14 @@ import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
 import {DeviceNameWithIcon} from '../../../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../../../sharedComponents/RoleWithIcon';
 import {Button} from '../../../../sharedComponents/Button';
+import {
+  SecondaryButton,
+  PrimaryButton,
+} from '../../../../sharedComponents/Buttons';
 import {useFocusEffect} from '@react-navigation/native';
 import {COORDINATOR_ROLE_ID} from '../../../../sharedTypes';
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
+import {resetToYourTeam} from '../../../../lib/resetToYourTeam';
 
 const m = defineMessages({
   inviteAccepted: {
@@ -31,7 +36,6 @@ export const InviteAccepted = ({
 }: NativeRootNavigationProps<'InviteAccepted'>) => {
   const {formatMessage: t} = useIntl();
   const {role, ...deviceInfo} = route.params;
-  const {onClose} = route.params;
 
   useFocusEffect(
     React.useCallback(() => {
@@ -57,18 +61,20 @@ export const InviteAccepted = ({
           role={role === COORDINATOR_ROLE_ID ? 'coordinator' : 'participant'}
         />
       </View>
-      <View style={{width: '100%'}}>
-        <Button
-          fullWidth
-          variant="outlined"
+      <View style={{alignItems: 'center'}}>
+        <SecondaryButton
+          fullSize
+          text={t(m.addAnotherDevice)}
           onPress={() => {
             navigation.popTo('SelectDevice');
-          }}>
-          {t(m.addAnotherDevice)}
-        </Button>
-        <Button style={{marginTop: 10}} fullWidth onPress={onClose}>
-          {t(m.close)}
-        </Button>
+          }}
+        />
+        <PrimaryButton
+          style={{marginTop: 10}}
+          fullSize
+          text={t(m.close)}
+          onPress={() => resetToYourTeam(navigation)}
+        />
       </View>
     </View>
   );

@@ -7,6 +7,8 @@ import {Text} from '../../../../sharedComponents/Text';
 import {DeviceNameWithIcon} from '../../../../sharedComponents/DeviceNameWithIcon';
 import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
+import {resetToYourTeam} from '../../../../lib/resetToYourTeam';
+import {PrimaryButton} from '../../../../sharedComponents/Buttons';
 
 const m = defineMessages({
   inviteDeclined: {
@@ -25,11 +27,11 @@ const m = defineMessages({
 });
 
 export const InviteDeclined = ({
+  navigation,
   route,
 }: NativeRootNavigationProps<'InviteDeclined'>) => {
   const {formatMessage} = useIntl();
   const {name, deviceType, deviceId} = route.params;
-  const {onClose} = route.params;
 
   useFocusEffect(
     React.useCallback(() => {
@@ -59,9 +61,12 @@ export const InviteDeclined = ({
           style={{marginTop: 20}}
         />
       </View>
-      <Button style={{marginTop: 10}} fullWidth onPress={onClose}>
-        {formatMessage(m.close)}
-      </Button>
+      <PrimaryButton
+        style={{marginTop: 10}}
+        fullSize
+        text={formatMessage(m.close)}
+        onPress={() => resetToYourTeam(navigation)}
+      />
     </View>
   );
 };

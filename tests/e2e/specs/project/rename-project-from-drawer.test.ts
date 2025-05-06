@@ -26,7 +26,7 @@ describe('Project - Rename Project from Drawer', () => {
     await createBtn.click();
 
     await expect($(byText('Invite Device'))).toBeDisplayed();
-    const goToMapButton = await $(byText('Go to map.'));
+    const goToMapButton = await $(byText('Go to Map'));
     await goToMapButton.click();
   });
   it('should leave observations in place with a renamed project', async () => {

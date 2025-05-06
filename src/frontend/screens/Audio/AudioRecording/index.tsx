@@ -15,7 +15,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import {millisecondsToMMSS} from '../../../lib/millisecondsToFormattedTime';
 
 // 5 minutes
-const MAX_RECORDING_DURATION_MS = 5000;
+const MAX_RECORDING_DURATION_MS = 30000;
 const PRIMARY_CONTROL_DIAMETER = 96;
 
 const m = defineMessages({

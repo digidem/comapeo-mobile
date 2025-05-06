@@ -31,6 +31,7 @@ export const InviteAccepted = ({
 }: NativeRootNavigationProps<'InviteAccepted'>) => {
   const {formatMessage: t} = useIntl();
   const {role, ...deviceInfo} = route.params;
+  const {onClose} = route.params;
 
   useFocusEffect(
     React.useCallback(() => {
@@ -65,12 +66,7 @@ export const InviteAccepted = ({
           }}>
           {t(m.addAnotherDevice)}
         </Button>
-        <Button
-          style={{marginTop: 10}}
-          fullWidth
-          onPress={() => {
-            navigation.popTo('YourTeam');
-          }}>
+        <Button style={{marginTop: 10}} fullWidth onPress={onClose}>
           {t(m.close)}
         </Button>
       </View>

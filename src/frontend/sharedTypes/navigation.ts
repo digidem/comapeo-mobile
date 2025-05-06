@@ -23,6 +23,7 @@ export type InviteProps = {
   deviceType: DeviceType;
   deviceId: string;
   role: DeviceRoleForNewInvite;
+  onClose: () => void;
 };
 
 export type HomeTabsParamsList = {

@@ -26,12 +26,12 @@ const m = defineMessages({
 });
 
 export const UnableToCancelInvite = ({
-  navigation,
   route,
 }: NativeRootNavigationProps<'UnableToCancelInvite'>) => {
   const {formatMessage} = useIntl();
   const {role, ...deviceInfo} = route.params;
   const {data} = useProjectSettings();
+  const {onClose} = route.params;
 
   return (
     <View style={styles.container}>
@@ -51,12 +51,7 @@ export const UnableToCancelInvite = ({
           role={role === COORDINATOR_ROLE_ID ? 'coordinator' : 'participant'}
         />
       </View>
-      <Button
-        style={{marginTop: 10}}
-        fullWidth
-        onPress={() => {
-          navigation.popTo('YourTeam');
-        }}>
+      <Button style={{marginTop: 10}} fullWidth onPress={onClose}>
         {formatMessage(m.close)}
       </Button>
     </View>

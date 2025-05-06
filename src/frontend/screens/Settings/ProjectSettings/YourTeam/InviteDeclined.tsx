@@ -25,11 +25,11 @@ const m = defineMessages({
 });
 
 export const InviteDeclined = ({
-  navigation,
   route,
 }: NativeRootNavigationProps<'InviteDeclined'>) => {
   const {formatMessage} = useIntl();
   const {name, deviceType, deviceId} = route.params;
+  const {onClose} = route.params;
 
   useFocusEffect(
     React.useCallback(() => {
@@ -59,12 +59,7 @@ export const InviteDeclined = ({
           style={{marginTop: 20}}
         />
       </View>
-      <Button
-        style={{marginTop: 10}}
-        fullWidth
-        onPress={() => {
-          navigation.popTo('YourTeam');
-        }}>
+      <Button style={{marginTop: 10}} fullWidth onPress={onClose}>
         {formatMessage(m.close)}
       </Button>
     </View>

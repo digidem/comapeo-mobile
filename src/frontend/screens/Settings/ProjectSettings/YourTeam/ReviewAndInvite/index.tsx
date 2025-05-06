@@ -1,11 +1,15 @@
 import * as React from 'react';
-import {NativeNavigationComponent} from '../../../../../sharedTypes/navigation';
+import {
+  AppStackParamsList,
+  NativeNavigationComponent,
+} from '../../../../../sharedTypes/navigation';
 import {defineMessages} from 'react-intl';
 import {ReviewInvitation} from './ReviewInvitation';
 import {WaitingForInviteAccept} from './WaitingForInviteAccept';
 import {useSendInvite, useRequestCancelInvite} from '@comapeo/core-react';
 import {useActiveProject} from '../../../../../contexts/ActiveProjectContext';
 import * as Sentry from '@sentry/react-native';
+import {CommonActions, NavigationProp} from '@react-navigation/native';
 
 const m = defineMessages({
   title: {
@@ -37,16 +41,25 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
             val === 'ACCEPT' &&
             requestCancelInviteMutation.status === 'pending'
           ) {
-            navigation.navigate('UnableToCancelInvite', {...route.params});
+            navigation.navigate('InviteDeclined', {
+              ...route.params,
+              onClose: () => resetToYourTeam(navigation),
+            });
             return;
           }
           if (val === 'ACCEPT') {
-            navigation.navigate('InviteAccepted', route.params);
+            navigation.navigate('InviteAccepted', {
+              ...route.params,
+              onClose: () => resetToYourTeam(navigation),
+            });
             return;
           }
 
           if (val === 'REJECT') {
-            navigation.navigate('InviteDeclined', route.params);
+            navigation.navigate('InviteDeclined', {
+              ...route.params,
+              onClose: () => resetToYourTeam(navigation),
+            });
             return;
           }
         },
@@ -63,7 +76,7 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
       {deviceId},
       {
         onSuccess: () => {
-          navigation.popTo('YourTeam');
+          resetToYourTeam(navigation);
         },
         onError: err => {
           Sentry.captureException(err);
@@ -88,5 +101,14 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
     </>
   );
 };
+
+function resetToYourTeam(navigation: NavigationProp<AppStackParamsList>) {
+  navigation.dispatch(
+    CommonActions.reset({
+      index: 2,
+      routes: [{name: 'Home'}, {name: 'ProjectSettings'}, {name: 'YourTeam'}],
+    }),
+  );
+}
 
 ReviewAndInvite.navTitle = m.title;

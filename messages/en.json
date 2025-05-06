@@ -299,9 +299,6 @@
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
   },
-  "homeHeader.header.mySoloProject": {
-    "message": "My Solo Project"
-  },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Coordinator"
   },

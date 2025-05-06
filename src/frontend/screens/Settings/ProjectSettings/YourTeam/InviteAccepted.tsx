@@ -5,7 +5,6 @@ import React from 'react';
 import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
 import {DeviceNameWithIcon} from '../../../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../../../sharedComponents/RoleWithIcon';
-import {Button} from '../../../../sharedComponents/Button';
 import {
   SecondaryButton,
   PrimaryButton,

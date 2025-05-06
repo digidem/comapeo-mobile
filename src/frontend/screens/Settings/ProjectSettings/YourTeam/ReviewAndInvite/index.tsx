@@ -1,8 +1,5 @@
 import * as React from 'react';
-import {
-  AppStackParamsList,
-  NativeNavigationComponent,
-} from '../../../../../sharedTypes/navigation';
+import {NativeNavigationComponent} from '../../../../../sharedTypes/navigation';
 import {defineMessages} from 'react-intl';
 import {ReviewInvitation} from './ReviewInvitation';
 import {WaitingForInviteAccept} from './WaitingForInviteAccept';

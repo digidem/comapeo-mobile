@@ -10,7 +10,6 @@ import {FieldDetails} from './FieldDetails';
 import {InsetMapView} from './InsetMapView';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
-import {MediaScrollView} from '../../sharedComponents/MediaScrollView/index.tsx';
 import {
   useOwnDeviceInfo,
   useManyDocs,
@@ -29,6 +28,10 @@ import {Loading} from '../../sharedComponents/Loading.tsx';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
 import {Field} from '@comapeo/schema';
+import {HorizontalMediaScrollView} from '../../sharedComponents/HorizontalMediaScrollView.tsx';
+import {ThumbnailLoader} from '../../sharedComponents/Thumbnails/ThumbnailContainer.tsx';
+import {SavedPhotoThumbnailImage} from '../../sharedComponents/Thumbnails/PhotoThumbnail.tsx';
+import {AudioSavedThumbnail} from '../../sharedComponents/Thumbnails/AudioThumbnail.tsx';
 
 const m = defineMessages({
   deleteTitle: {
@@ -124,9 +127,34 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
             </HeaderText>
           ) : null}
           {attachments.length > 0 && (
-            <MediaScrollView
-              attachments={attachments}
-              observationId={observationId}
+            <HorizontalMediaScrollView
+              numberOfAttachments={attachments.length}
+              renderThumbnailChildren={size => (
+                <>
+                  {attachments.map(att => {
+                    if (isSavedPhoto(att)) {
+                      return (
+                        <React.Suspense
+                          key={att.driveDiscoveryId + att.hash + att.type}
+                          fallback={<ThumbnailLoader size={size} />}>
+                          <SavedPhotoThumbnailImage size={size} photo={att} />
+                        </React.Suspense>
+                      );
+                    }
+
+                    if (isAudioAttachment(att)) {
+                      return (
+                        <AudioSavedThumbnail
+                          size={size}
+                          key={att.driveDiscoveryId + att.hash + att.type}
+                          audio={att}
+                          observationId={observationId}
+                        />
+                      );
+                    }
+                  })}
+                </>
+              )}
             />
           )}
         </View>

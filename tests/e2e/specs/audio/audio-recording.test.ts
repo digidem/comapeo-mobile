@@ -21,7 +21,7 @@ describe('Audio - Recording Flow', () => {
   });
 
   it('starts recording and displays recording in-progress UI', async () => {
-    const startButton = await $('~Start Recording Audio');
+    const startButton = await $('~Start recording audio.');
     await startButton.click();
 
     const inProgressText = await $(byTextMatches('Less than 5 minutes left'));
@@ -29,7 +29,7 @@ describe('Audio - Recording Flow', () => {
   });
 
   it('stops recording after 3 seconds and sees duration', async () => {
-    const stopButton = await $('~Stop Recording Audio');
+    const stopButton = await $('~Stop recording audio.');
     await stopButton.click();
 
     await expect(
@@ -53,7 +53,7 @@ describe('Audio - Recording Flow', () => {
     const editorReturn = await $(byTextMatches('Return to Editor'));
     await editorReturn.click();
 
-    await expect($('~Play Audio Recording')).toBeDisplayed();
+    await expect($('~Play audio recording.')).toBeDisplayed();
     await expect($(byTextMatches('Airstrip'))).toBeDisplayed();
   });
 });

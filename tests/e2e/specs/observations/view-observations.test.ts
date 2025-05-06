@@ -63,7 +63,7 @@ describe('Observations - View Observations Flow', () => {
   });
 
   it('should open Observations list and verify it is displayed', async () => {
-    const obsListTab = await $('~Go to ObservationsList');
+    const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();
   });
@@ -77,10 +77,10 @@ describe('Observations - View Observations Flow', () => {
   });
 
   it('should toggle camera tab and back to confirm correct place', async () => {
-    const cameraTab = await $('~Go to Camera');
+    const cameraTab = await $('~Go to camera.');
     await cameraTab.click();
 
-    const obsListTab = await $('~Go to ObservationsList');
+    const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
 
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();

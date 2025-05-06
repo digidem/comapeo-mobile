@@ -4,13 +4,13 @@ import {byResourceId, byTextMatches} from '../../utils/selectors';
 
 describe('Tracks - Post-Observation Track Saving Flow', () => {
   before(async () => {
-    const mapTab = await $('~Go to Map');
+    const mapTab = await $('~Go to map.');
     await mapTab.click();
-    const trackBtn = await $('~Go to Tracking');
+    const trackBtn = await $('~Go to tracking.');
     await trackBtn.click();
   });
   it('opens discard modal and chooses to continue editing', async () => {
-    const trackBtn = await $('~Go to Tracking');
+    const trackBtn = await $('~Go to tracking.');
     await trackBtn.click();
     await $(byTextMatches('Stop Tracks')).click();
     const discardBtn = $(byResourceId('close-icon'));
@@ -30,7 +30,7 @@ describe('Tracks - Post-Observation Track Saving Flow', () => {
     const notesInput = await $(byResourceId('trackDescriptionField'));
     await notesInput.setValue('This is a test track description');
 
-    const saveBtn = await $('~Save Track');
+    const saveBtn = await $('~Save track.');
     await saveBtn.click();
 
     await expect($(byResourceId('MAIN.mapbox-map-view'))).toBeDisplayed();

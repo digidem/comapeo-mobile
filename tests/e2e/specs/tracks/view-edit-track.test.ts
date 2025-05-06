@@ -4,7 +4,7 @@ import {byTextMatches, byResourceId, byText} from '../../utils/selectors';
 
 describe('Tracks - View and Edit Saved Track', () => {
   before(async () => {
-    const obsListTab = await $('~Go to ObservationsList');
+    const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
 
     const trackItem = await $(byText('Track'));
@@ -61,6 +61,6 @@ describe('Tracks - View and Edit Saved Track', () => {
 
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
-    await $('~Go to Map').click();
+    await $('~Go to map.').click();
   });
 });

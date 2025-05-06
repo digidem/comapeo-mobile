@@ -46,7 +46,10 @@ export const AudioSavedThumbnail = ({
   };
 
   return (
-    <ThumbnailContainer size={size} onPress={handlePress}>
+    <ThumbnailContainer
+      size={size}
+      onPress={handlePress}
+      accessibilityLabel="Play audio recording.">
       {loading ? <ActivityIndicator /> : <PlayArrow width={48} height={48} />}
     </ThumbnailContainer>
   );

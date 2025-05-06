@@ -55,8 +55,7 @@ export const SaveTrackButton: FC = () => {
     <Pressable
       disabled={status === 'pending'}
       onPress={handleSaveClick}
-      accessible={true}
-      accessibilityLabel="Save Track">
+      accessibilityLabel="Save track.">
       <Image
         style={styles.completeIcon}
         source={require('../../images/completed/checkComplete.png')}

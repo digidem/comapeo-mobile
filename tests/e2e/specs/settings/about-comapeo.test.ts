@@ -4,7 +4,7 @@ import {byResourceId, byTextMatches} from '../../utils/selectors';
 
 describe('Settings - About CoMapeo Flow', () => {
   it('should open About CoMapeo from the drawer', async () => {
-    const mapTab = await $('~Go to Map');
+    const mapTab = await $('~Go to map.');
     await mapTab.click();
     const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();

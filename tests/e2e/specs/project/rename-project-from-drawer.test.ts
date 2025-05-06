@@ -26,11 +26,11 @@ describe('Project - Rename Project from Drawer', () => {
     await createBtn.click();
 
     await expect($(byText('Invite Device'))).toBeDisplayed();
-    const goToMapButton = await $(byText('Go to Map'));
+    const goToMapButton = await $(byText('Go to map.'));
     await goToMapButton.click();
   });
   it('should leave observations in place with a renamed project', async () => {
-    const obsListTab = await $('~Go to ObservationsList');
+    const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();
     await expect($(byText('Threat'))).toBeDisplayed();

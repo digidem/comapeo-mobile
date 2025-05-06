@@ -33,6 +33,6 @@ describe('Observations - Delete Observation Flow', () => {
 
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();
     await expect($(byTextMatches('Threat'))).not.toBeDisplayed();
-    await $('~Go to Map').click();
+    await $('~Go to map.').click();
   });
 });

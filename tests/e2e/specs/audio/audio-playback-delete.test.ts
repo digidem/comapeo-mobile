@@ -4,16 +4,16 @@ import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
 
 describe('Audio - Playback and Delete', () => {
   it('opens playback screen and verifies audio controls', async () => {
-    const playBtn = await $('~Play Audio Recording');
+    const playBtn = await $('~Play audio recording.');
     await playBtn.click();
 
     await expect($(byTextMatches('Total length:'))).toBeDisplayed();
 
-    await expect($('~Delete Audio')).toBeDisplayed();
+    await expect($('~Delete audio.')).toBeDisplayed();
   });
 
   it('opens and cancels delete confirmation modal', async () => {
-    const deleteBtn = await $('~Delete Audio');
+    const deleteBtn = await $('~Delete audio.');
     await deleteBtn.click();
 
     const confirmText = await $(
@@ -26,14 +26,14 @@ describe('Audio - Playback and Delete', () => {
   });
 
   it('confirms delete and verifies removal from observation', async () => {
-    const deleteBtn = await $('~Delete Audio');
+    const deleteBtn = await $('~Delete audio.');
     await deleteBtn.click();
 
     const confirmDelete = await $(byText('Delete'));
     await confirmDelete.click();
 
     await expect($(byTextMatches('Airstrip'))).toBeDisplayed();
-    await expect($('~Play Audio Recording')).not.toExist();
+    await expect($('~Play audio recording.')).not.toExist();
   });
 
   it('saves edited observation (handles GPS alert)', async () => {

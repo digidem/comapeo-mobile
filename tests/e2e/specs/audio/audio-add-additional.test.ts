@@ -14,10 +14,10 @@ describe('Audio - Add Additional Recording', () => {
     const micButton = await $(byResourceId('OBS.add-audio-btn'));
     await micButton.click();
 
-    const startButton = await $('~Start Recording Audio');
+    const startButton = await $('~Start recording audio.');
     await startButton.click();
     await driver.pause(1000);
-    const stopButton = await $('~Stop Recording Audio');
+    const stopButton = await $('~Stop recording audio.');
     await stopButton.click();
 
     const closeBtn = await $(byResourceId('close-icon'));
@@ -38,7 +38,7 @@ describe('Audio - Add Additional Recording', () => {
     const timer = await $(byTextMatches('00:00'));
     await expect(timer).toBeDisplayed();
 
-    const startButton = await $('~Start Recording Audio');
+    const startButton = await $('~Start recording audio.');
     await startButton.click();
 
     const inProgressText = await $(byTextMatches('Less than 5 minutes left'));
@@ -46,7 +46,7 @@ describe('Audio - Add Additional Recording', () => {
   });
 
   it('stops second recording and returns to editor', async () => {
-    const stopButton = await $('~Stop Recording Audio');
+    const stopButton = await $('~Stop recording audio.');
     await stopButton.click();
 
     await expect(
@@ -65,7 +65,7 @@ describe('Audio - Add Additional Recording', () => {
   });
 
   it('verifies that both audio thumbnails are visible and exits', async () => {
-    const audioThumbnails = await $$('~Play Audio Recording');
+    const audioThumbnails = await $$('~Play audio recording.');
     expect(audioThumbnails.length).toBeGreaterThanOrEqual(2);
   });
 

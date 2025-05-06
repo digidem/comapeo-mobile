@@ -155,6 +155,7 @@
     "@wdio/spec-reporter": "9.9.0",
     "@wdio/types": "9.9.0",
     "babel-jest": "29.7.0",
+    "babel-plugin-transform-import-meta": "2.3.2",
     "babel-plugin-transform-inline-environment-variables": "0.4.4",
     "date-fns": "4.1.0",
     "dotenv-cli": "8.0.0",

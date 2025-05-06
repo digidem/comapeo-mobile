@@ -52,12 +52,7 @@ function ObservationListItemNotMemoized({
       onPress={() => onPress(observation.docId)}
       testID={testID}
       style={{flex: 1, height: 80}}>
-      <View
-        style={[
-          styles.container,
-          style,
-          !isMine && sharedStyles.syncedObservation,
-        ]}>
+      <View style={[styles.container, style, !isMine && sharedStyles.synced]}>
         <View style={styles.text}>
           <HeaderText variant="header4">
             <FormattedPresetName preset={preset} />

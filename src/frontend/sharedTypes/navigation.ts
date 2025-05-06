@@ -18,11 +18,14 @@ export interface TabBarIconProps {
   color: string;
 }
 
-export type InviteProps = {
+export type InviteParams = {
   name: string;
   deviceType: DeviceType;
   deviceId: string;
   role: DeviceRoleForNewInvite;
+};
+
+export type InviteWithOnClose = InviteParams & {
   onClose: () => void;
 };
 
@@ -78,10 +81,10 @@ export type RootStackParamsList = {
   YourTeam: undefined;
   SelectDevice: undefined;
   SelectInviteeRole: {name: string; deviceType: DeviceType; deviceId: string};
-  ReviewAndInvite: InviteProps;
-  InviteAccepted: InviteProps;
-  InviteDeclined: InviteProps;
-  UnableToCancelInvite: InviteProps;
+  ReviewAndInvite: InviteParams;
+  InviteAccepted: InviteWithOnClose;
+  InviteDeclined: InviteWithOnClose;
+  UnableToCancelInvite: InviteWithOnClose;
   DeviceNameDisplay: undefined;
   DeviceNameEdit: undefined;
   SaveTrack: undefined;

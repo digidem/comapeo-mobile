@@ -33,13 +33,12 @@ const m = defineMessages({
 
 export const StartStopTrack = () => {
   const {formatMessage} = useIntl();
-  const {isTracking, cancelTrackingAndReturnIfTracksSaved, startTracking} =
-    useTracking();
+  const {isTracking, cancelTracking, startTracking} = useTracking();
   const {timer} = useTrackTimerContext();
   const navigation = useNavigationFromHomeTabs();
 
   function endTracking() {
-    const hasTracksSaved = cancelTrackingAndReturnIfTracksSaved();
+    const hasTracksSaved = cancelTracking();
 
     if (hasTracksSaved) {
       navigation.navigate('SaveTrack');

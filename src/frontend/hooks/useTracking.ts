@@ -6,6 +6,7 @@ import {
 } from '../contexts/TrackStoreContext.tsx';
 import {LOCATION_TASK_NAME} from '../sharedTypes/location.ts';
 import {useNavigation} from '@react-navigation/native';
+import * as Sentry from '@sentry/react-native';
 
 export function useTracking() {
   const {setTracking, clearCurrentTrack} = useTrackActions();
@@ -22,9 +23,10 @@ export function useTracking() {
     Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
       accuracy: Location.Accuracy.Highest,
       activityType: Location.LocationActivityType.Fitness,
-    }).catch(() => {
+    }).catch(err => {
+      Sentry.captureException(err);
       setTracking(false);
-      // @ts-expect-error - this is typing issue, we are using the not strongly typed hook as this can technically be used in any screen. But regardless of the screen, we want to show the error bottom sheet
+      // @ts-expect-error - this is a typing issue, we are using the non-strongly typed hook as this can technically be used in any screen. But regardless of the screen, we want to show the error bottom sheet.
       navigation.navigate('ErrorBottomSheet');
     });
   }, [isTracking, setTracking, navigation]);
@@ -32,9 +34,11 @@ export function useTracking() {
    * Cancels location tracking and stops background updates.
    * @returns {boolean} True if location history has more than one entry (track should be kept), false otherwise.
    */
-  const cancelTrackingAndReturnIfTracksSaved = useCallback(() => {
+  const cancelTracking = useCallback(() => {
     setTracking(false);
-    Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
+    Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME).catch(err => {
+      Sentry.captureException(err);
+    });
     const hasTrackWithMoreThan1Point = locationHistory.length > 1;
 
     if (!hasTrackWithMoreThan1Point) {
@@ -44,5 +48,9 @@ export function useTracking() {
     return hasTrackWithMoreThan1Point;
   }, [setTracking, clearCurrentTrack, locationHistory]);
 
-  return {isTracking, startTracking, cancelTrackingAndReturnIfTracksSaved};
+  return {
+    isTracking,
+    startTracking,
+    cancelTracking,
+  };
 }

@@ -1,8 +1,6 @@
 import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {Text} from '../../sharedComponents/Text';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 
-import {TouchableHighlight} from '../../sharedComponents/Touchables';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {Attachment, ViewStyleProp} from '../../sharedTypes';
 import {Observation} from '@comapeo/schema';
@@ -16,6 +14,9 @@ import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
 import {matchPreset} from '../../lib/utils';
 import {useIsMyDocument} from '../../hooks/useIsMyDocument.ts';
+import {sharedStyles} from './SharedStyle.ts';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
+import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;
@@ -47,22 +48,26 @@ function ObservationListItemNotMemoized({
   const isMine = useIsMyDocument(observation.originalVersionId);
 
   return (
-    <TouchableHighlight
+    <TouchableOpacity
       onPress={() => onPress(observation.docId)}
       testID={testID}
       style={{flex: 1, height: 80}}>
       <View
-        style={[styles.container, style, !isMine && styles.syncedObservation]}>
+        style={[
+          styles.container,
+          style,
+          !isMine && sharedStyles.syncedObservation,
+        ]}>
         <View style={styles.text}>
-          <Text style={styles.title}>
+          <HeaderText variant="header4">
             <FormattedPresetName preset={preset} />
-          </Text>
-          <Text>
+          </HeaderText>
+          <BodyText>
             <FormattedObservationDate
               createdDate={observation.createdAt}
               variant="relative"
             />
-          </Text>
+          </BodyText>
         </View>
         {photos.length ? (
           <View style={styles.photoContainer}>
@@ -79,7 +84,7 @@ function ObservationListItemNotMemoized({
           />
         )}
       </View>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 }
 
@@ -116,17 +121,12 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 80,
   },
-  syncedObservation: {
-    borderLeftWidth: 5,
-    borderLeftColor: '#3C69F6',
-  },
   text: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
-  title: {fontSize: 18, fontWeight: '700', color: 'black'},
   photoContainer: {
     position: 'relative',
     marginRight: -5,

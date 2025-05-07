@@ -232,6 +232,15 @@
   "Screens.ProjectSettings.projectCollaborators": {
     "message": "Project Collaborators"
   },
+  "Screens.ProjectSettings.remoteArchiveDesc": {
+    "message": "Share with a secure, encypted server. URL required to access."
+  },
+  "Screens.ProjectSettings.remoteArchiveOff": {
+    "message": "Remote Archive | OFF"
+  },
+  "Screens.ProjectSettings.remoteArchiveOn": {
+    "message": "Remote Archive | ON"
+  },
   "Screens.ProjectSettings.soloDescription": {
     "message": "You’re mapping on your own."
   },
@@ -240,6 +249,9 @@
   },
   "Screens.ProjectSettings.updateCategories": {
     "message": "Update Set"
+  },
+  "Screens.ProjectSettings.viewDetails": {
+    "message": "View Details"
   },
   "Screens.ProjectSettings.viewTeam": {
     "message": "View Team"
@@ -252,6 +264,9 @@
   },
   "Screens.Settings.AppSettings.coordinateSystemDesc": {
     "message": "UTM,Lat/Lon,DMS"
+  },
+  "Screens.Settings.AppSettings.deviceName": {
+    "message": "Device Name"
   },
   "Screens.Settings.AppSettings.language": {
     "message": "Bahasa"

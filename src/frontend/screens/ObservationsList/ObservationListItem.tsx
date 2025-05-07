@@ -13,10 +13,10 @@ import {useManyDocs} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
 import {matchPreset} from '../../lib/utils';
-import {useIsMyDocument} from '../../hooks/useIsMyDocument.ts';
 import {sharedStyles} from './SharedStyle.ts';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
+import {useIsMyDocument} from '../../hooks/server/useIsMyDocument.ts';
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;

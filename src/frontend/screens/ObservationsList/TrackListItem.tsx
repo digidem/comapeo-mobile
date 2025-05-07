@@ -5,10 +5,10 @@ import {Track} from '@comapeo/schema';
 import {ViewStyleProp} from '../../sharedTypes/index';
 import {defineMessages, useIntl} from 'react-intl';
 import TrackIcon from '../../images/Track.svg';
-import {useIsMyDocument} from '../../hooks/useIsMyDocument.ts';
 import {sharedStyles} from './SharedStyle.ts';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
+import {useIsMyDocument} from '../../hooks/server/useIsMyDocument.ts';
 
 const m = defineMessages({
   track: {

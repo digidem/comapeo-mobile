@@ -1,5 +1,5 @@
 import {useOwnDeviceInfo, useDocumentCreatedBy} from '@comapeo/core-react';
-import {useActiveProject} from '../contexts/ActiveProjectContext';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
 
 export function useIsMyDocument(originalVersionId: string) {
   const {projectId} = useActiveProject();

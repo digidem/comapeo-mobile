@@ -1,6 +1,7 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
+import {calculateItemWidthForScrollView} from '../lib/calculateItemWidthForScrollView';
 
 type HorizontalMediaScrollViewProps = {
   renderChildren: (itemWidth: number) => React.ReactNode;
@@ -32,7 +33,7 @@ export const HorizontalScrollView = ({
 
   const itemWidth = !containerWidth
     ? minItemWidth
-    : calculateThumbnailSize({
+    : calculateItemWidthForScrollView({
         minItemWidth,
         gap,
         containerSize: containerWidth,
@@ -56,30 +57,6 @@ export const HorizontalScrollView = ({
     </ScrollView>
   );
 };
-
-function calculateThumbnailSize({
-  minItemWidth,
-  gap,
-  containerSize,
-}: {
-  minItemWidth: number;
-  gap: number;
-  containerSize: number;
-}) {
-  // The total space per thumbnail including gap
-  const minSpacePerThumbnail = minItemWidth + gap;
-
-  // Number of full thumbnails that can fit before half thumbnail (minus one gap)
-  const maxFullThumbnails = Math.floor(
-    containerSize / minSpacePerThumbnail - 0.5,
-  );
-
-  // Total number of thumbnails including the half one
-  const totalThumbnails = maxFullThumbnails + 0.5;
-
-  // Calculate width of each thumbnail so that (w + gap) * totalThumbnails fits in windowWidth
-  return (containerSize - gap * totalThumbnails) / totalThumbnails;
-}
 
 const styles = StyleSheet.create({
   mediaContainer: {

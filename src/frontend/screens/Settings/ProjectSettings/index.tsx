@@ -126,27 +126,27 @@ export const ProjectSettings = () => {
           onPress={() => navigate('YourTeam')}
         />
       )}
+      {isCoordinator && (
+        <SettingsCardRow
+          icon={<ExchangeIcon width={24} height={24} />}
+          title={formatMessage(
+            remoteArchiveOn ? m.remoteArchiveOn : m.remoteArchiveOff,
+          )}
+          subtitle={formatMessage(m.remoteArchiveDesc)}
+          buttonText={formatMessage(m.viewDetails)}
+          onPress={() =>
+            navigate(remoteArchiveOn ? 'RemoteArchiveOn' : 'RemoteArchiveOff')
+          }
+        />
+      )}
       {projectInfo.role !== 'participant' && (
-        <>
-          <SettingsCardRow
-            icon={<ExchangeIcon width={24} height={24} />}
-            title={formatMessage(
-              remoteArchiveOn ? m.remoteArchiveOn : m.remoteArchiveOff,
-            )}
-            subtitle={formatMessage(m.remoteArchiveDesc)}
-            buttonText={formatMessage(m.viewDetails)}
-            onPress={() =>
-              navigate(remoteArchiveOn ? 'RemoteArchiveOn' : 'RemoteArchiveOff')
-            }
-          />
-          <SettingsCardRow
-            icon={<ProjectCategoriesIcon width={24} height={24} />}
-            title={formatMessage(m.configTitle)}
-            subtitle={configData?.configMetadata?.name}
-            buttonText={formatMessage(m.updateCategories)}
-            onPress={() => navigate('Config')}
-          />
-        </>
+        <SettingsCardRow
+          icon={<ProjectCategoriesIcon width={24} height={24} />}
+          title={formatMessage(m.configTitle)}
+          subtitle={configData?.configMetadata?.name}
+          buttonText={formatMessage(m.updateCategories)}
+          onPress={() => navigate('Config')}
+        />
       )}
     </ScrollView>
   );

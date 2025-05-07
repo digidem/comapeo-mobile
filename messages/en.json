@@ -302,6 +302,33 @@
   "homeHeader.header.mySoloProject": {
     "message": "My Solo Project"
   },
+  "screen.EditProjectDetails.blue": {
+    "message": "Blue"
+  },
+  "screen.EditProjectDetails.green": {
+    "message": "Green"
+  },
+  "screen.EditProjectDetails.grey": {
+    "message": "Grey"
+  },
+  "screen.EditProjectDetails.navTitle": {
+    "message": "Edit Info"
+  },
+  "screen.EditProjectDetails.orange": {
+    "message": "Orange"
+  },
+  "screen.EditProjectDetails.projectColors": {
+    "message": "Project Card Colors"
+  },
+  "screen.EditProjectDetails.projectDescription": {
+    "message": "Project Description"
+  },
+  "screen.EditProjectDetails.projectName": {
+    "message": "Project Name"
+  },
+  "screen.EditProjectDetails.red": {
+    "message": "Red"
+  },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Coordinator"
   },

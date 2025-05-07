@@ -9,7 +9,7 @@ describe('Settings - About CoMapeo Flow', () => {
     const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
 
-    const aboutComapeoOption = await $('~Go to About CoMapeo Screen');
+    const aboutComapeoOption = await $('~Go to about CoMapeo screen.');
     await aboutComapeoOption.click();
   });
 

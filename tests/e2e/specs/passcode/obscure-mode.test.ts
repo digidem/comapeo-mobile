@@ -57,7 +57,7 @@ describe('Passcode - Obscure Passcode Mode', () => {
   it('should not show security after entering obscure passcode', async () => {
     const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
-    const appSettingsOption = await $('~Go to App Settings');
+    const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
 
     await expect($(byText('Security'))).not.toBeDisplayed();

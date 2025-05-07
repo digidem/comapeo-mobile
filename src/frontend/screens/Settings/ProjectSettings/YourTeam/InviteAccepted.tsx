@@ -72,7 +72,7 @@ export const InviteAccepted = ({
           style={{marginTop: 10}}
           fullSize
           text={t(m.close)}
-          onPress={() => resetToYourTeam(navigation)}
+          onPress={() => resetToYourTeam(navigation.dispatch)}
         />
       </View>
     </View>

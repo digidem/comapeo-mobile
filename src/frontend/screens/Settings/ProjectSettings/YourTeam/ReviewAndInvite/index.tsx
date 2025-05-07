@@ -64,7 +64,7 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
       {deviceId},
       {
         onSuccess: () => {
-          resetToYourTeam(navigation);
+          resetToYourTeam(navigation.dispatch);
         },
         onError: err => {
           Sentry.captureException(err);

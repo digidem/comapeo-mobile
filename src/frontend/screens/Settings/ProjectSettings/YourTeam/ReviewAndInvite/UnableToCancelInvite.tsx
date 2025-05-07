@@ -56,7 +56,7 @@ export const UnableToCancelInvite = ({
         style={{marginTop: 10}}
         fullSize
         text={formatMessage(m.close)}
-        onPress={() => resetToYourTeam(navigation)}
+        onPress={() => resetToYourTeam(navigation.dispatch)}
       />
     </View>
   );

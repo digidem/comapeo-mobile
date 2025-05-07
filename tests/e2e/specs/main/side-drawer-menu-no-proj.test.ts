@@ -24,10 +24,10 @@ describe('Main - Side Drawer Menu - No Project', () => {
     const viewButton = await $(byText('View'));
     await expect(viewButton).toBeDisplayed();
 
-    await expect($('~Go to Data and Privacy Screen')).toBeDisplayed();
-    await expect($('~Go to Exchange Screen')).toBeDisplayed();
-    await expect($('~Go to App Settings')).toBeDisplayed();
-    await expect($('~Go to About CoMapeo Screen')).toBeDisplayed();
+    await expect($('~Go to data and privacy screen.')).toBeDisplayed();
+    await expect($('~Go to exchange screen.')).toBeDisplayed();
+    await expect($('~Go to app settings screen.')).toBeDisplayed();
+    await expect($('~Go to about CoMapeo screen.')).toBeDisplayed();
 
     await $('~Close Menu').click();
     const mapTab = await $('~Go to map.');

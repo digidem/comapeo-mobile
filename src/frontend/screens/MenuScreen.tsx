@@ -144,7 +144,7 @@ export function MenuScreen() {
         <View style={styles.bottomItemsContainer}>
           <MainMenuItemWrapper
             onPress={() => navigation.navigate('Sync')}
-            accessibilityLabel="Go to Exchange Screen">
+            accessibilityLabel="Go to exchange screen.">
             <Exchange width={20} height={20} color={NEW_DARK_GREY} />
             <View style={{paddingLeft: 12}}>
               <BodyText variant="medium">{formatMessage(m.exchange)}</BodyText>
@@ -152,7 +152,7 @@ export function MenuScreen() {
           </MainMenuItemWrapper>
           <MainMenuItemWrapper
             onPress={() => navigation.navigate('AppSettings')}
-            accessibilityLabel="Go to App Settings">
+            accessibilityLabel="Go to app settings screen.">
             <IonIcon name="settings-outline" size={20} color={NEW_DARK_GREY} />
             <View style={{paddingLeft: 12}}>
               <BodyText variant="medium">
@@ -162,7 +162,7 @@ export function MenuScreen() {
           </MainMenuItemWrapper>
           <MainMenuItemWrapper
             onPress={() => navigation.navigate('DataAndPrivacy')}
-            accessibilityLabel="Go to Data and Privacy Screen">
+            accessibilityLabel="Go to data and privacy screen.">
             <Octicons name="shield-lock" size={20} color={NEW_DARK_GREY} />
             <View style={{paddingLeft: 12}}>
               <BodyText variant="medium">
@@ -172,7 +172,7 @@ export function MenuScreen() {
           </MainMenuItemWrapper>
           <MainMenuItemWrapper
             onPress={() => navigation.navigate('AboutSettings')}
-            accessibilityLabel="Go to About CoMapeo Screen">
+            accessibilityLabel="Go to about CoMapeo screen.">
             <MaterialIcon name="info-outline" size={20} color={NEW_DARK_GREY} />
             <View style={{paddingLeft: 12}}>
               <BodyText variant="medium">

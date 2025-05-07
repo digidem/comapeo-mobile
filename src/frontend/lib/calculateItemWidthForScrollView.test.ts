@@ -10,7 +10,7 @@ describe('calculateItemWidthForScrollView', () => {
     expect(result).toBeCloseTo(148.46, 2); // actual expected value
   });
 
-  it('returns minItemWidth if it is greater than container size', () => {
+  it('returns container size if minItemWidth is greater than container size', () => {
     const result = calculateItemWidthForScrollView({
       minItemWidth: 200,
       gap: 10,

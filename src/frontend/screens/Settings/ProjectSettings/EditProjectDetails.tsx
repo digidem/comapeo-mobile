@@ -4,11 +4,14 @@ import {defineMessages, MessageDescriptor, useIntl} from 'react-intl';
 import {HookFormTextInput} from '../../../sharedComponents/HookFormTextInput';
 import {useForm} from 'react-hook-form';
 import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
-import {HorizontalMediaScrollView} from '../../../sharedComponents/HorizontalMediaScrollView';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {COMAPEO_BLUE} from '../../../lib/styles';
 import {useProjectRoleAndDetails} from '../../../hooks/useProjectRoleAndDetails';
 import {useActiveProject} from '../../../contexts/ActiveProjectContext';
+import {HorizontalScrollView} from '../../../sharedComponents/HorizontalScrollView';
+import {SaveButton} from '../../../sharedComponents/SaveButton';
+import {useEffect} from 'react';
+import {useUpdateProjectSettings} from '@comapeo/core-react';
 
 const m = defineMessages({
   projectName: {
@@ -51,52 +54,79 @@ const m = defineMessages({
 
 export const EditProjectDetails: NativeNavigationComponent<
   'EditProjectDetails'
-> = () => {
+> = ({navigation}) => {
   const {formatMessage} = useIntl();
   const {projectId} = useActiveProject();
   const projectDetails = useProjectRoleAndDetails(projectId);
-  const {control, setValue, watch} = useForm<{
+  const {mutate, status} = useUpdateProjectSettings({projectId});
+  const {control, setValue, watch, handleSubmit} = useForm<{
     projectName: string;
-    projectDescription?: string;
     color: string;
   }>({
     defaultValues: {
-      color: '#FFF5EB',
+      color: projectDetails.projectColor,
       projectName: projectDetails.projectName,
-      projectDescription: projectDetails.projectDescription,
     },
   });
 
   const selectedColor = watch('color');
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <SaveButton
+          isLoading={status === 'pending'}
+          onPress={handleSubmit(details => {
+            mutate(
+              {
+                projectColor: details.color,
+                name: details.projectName,
+              },
+              {
+                onSuccess: newVal => {
+                  console.log({newVal});
+                },
+              },
+            );
+          })}
+        />
+      ),
+    });
+  }, [navigation, handleSubmit, mutate, status]);
+
   return (
-    <View style={{padding: 20, gap: 10}}>
-      <HeaderText variant="header6">{formatMessage(m.projectName)}</HeaderText>
-      <HookFormTextInput
-        rules={{maxLength: 60}}
-        control={control}
-        showCharacterCount={true}
-        name="projectName"
-      />
+    <View>
+      <View style={{padding: 20, gap: 10}}>
+        <HeaderText variant="header6">
+          {formatMessage(m.projectName)}
+        </HeaderText>
+        <HookFormTextInput
+          rules={{maxLength: 60}}
+          control={control}
+          showCharacterCount={true}
+          name="projectName"
+        />
 
-      <HeaderText variant="header6">
-        {formatMessage(m.projectDescription)}
-      </HeaderText>
-      <HookFormTextInput
-        rules={{maxLength: 60}}
-        control={control}
-        showCharacterCount={true}
-        name="projectDescription"
-      />
+        <HeaderText variant="header6">
+          {formatMessage(m.projectDescription)}
+        </HeaderText>
+        {/* <HookFormTextInput
+          rules={{maxLength: 60, required: false}}
+          control={control}
+          showCharacterCount={true}
+          name="projectDescription"
+        /> */}
 
-      <HeaderText variant="header6">
-        {formatMessage(m.projectColors)}
-      </HeaderText>
-      <HorizontalMediaScrollView
-        numberOfAttachments={projectColors.length}
-        minThumbnailSize={60}
+        <HeaderText variant="header6">
+          {formatMessage(m.projectColors)}
+        </HeaderText>
+      </View>
+      <HorizontalScrollView
+        numberOfItems={projectColors.length}
+        minItemWidth={60}
         gap={16}
         shouldShowLastItems={false}
-        renderThumbnailChildren={size => {
+        renderChildren={size => {
           return (
             <>
               {projectColors.map(({color, label}) => {

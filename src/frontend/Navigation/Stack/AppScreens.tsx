@@ -444,6 +444,12 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="EditProjectDetails"
         component={EditProjectDetails}
+        options={{
+          headerTitle: intl(EditProjectDetails.navTitle),
+          headerRight: () => (
+            <SaveButton onPress={() => {}} isLoading={false} />
+          ),
+        }}
       />
     </RootStack.Group>
     <RootStack.Group

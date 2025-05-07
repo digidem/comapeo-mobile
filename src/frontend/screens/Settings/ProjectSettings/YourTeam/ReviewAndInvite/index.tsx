@@ -6,6 +6,7 @@ import {WaitingForInviteAccept} from './WaitingForInviteAccept';
 import {useSendInvite, useRequestCancelInvite} from '@comapeo/core-react';
 import {useActiveProject} from '../../../../../contexts/ActiveProjectContext';
 import * as Sentry from '@sentry/react-native';
+import {resetToYourTeam} from '../../../../../lib/resetToYourTeam';
 
 const m = defineMessages({
   title: {
@@ -63,7 +64,7 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
       {deviceId},
       {
         onSuccess: () => {
-          navigation.popTo('YourTeam');
+          resetToYourTeam(navigation.dispatch);
         },
         onError: err => {
           Sentry.captureException(err);

@@ -4,7 +4,7 @@ import {byResourceId, byTextMatches} from '../../utils/selectors';
 
 describe('Project - Solo Project Headers', () => {
   it('should display "My Solo Project" on the Map screen header', async () => {
-    const mapTab = await $('~Go to Map');
+    const mapTab = await $('~Go to map.');
     await mapTab.click();
 
     const headerTitle = await $(byResourceId('HOME.header-title'));
@@ -13,7 +13,7 @@ describe('Project - Solo Project Headers', () => {
   });
 
   it('should display "My Solo Project" on ObservationsList header and show the solo card', async () => {
-    const obsListTab = await $('~Go to ObservationsList');
+    const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
 
     await expect($(byTextMatches('My Solo Project'))).toBeDisplayed();

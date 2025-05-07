@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Photo} from '../../contexts/PhotoPromiseContext/types';
 import {Audio} from '../../sharedTypes/audio';
 import {DescriptionField} from './DescriptionField';
-import {MediaScrollView} from '../MediaScrollView';
+import PlayArrow from '../../images/PlayArrow.svg';
 import {ScreenContentWithDock} from '../ScreenContentWithDock';
 import {StyleSheet, View} from 'react-native';
 import {LIGHT_GREY} from '../../lib/styles';
@@ -12,6 +12,27 @@ import {Divider} from '../Divider';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useProjectRoleAndDetails} from '../../hooks/useProjectRoleAndDetails';
 import {HeaderText} from '../Text/HeaderText';
+import {HorizontalScrollView} from '../HorizontalScrollView';
+import {
+  isAudioAttachment,
+  isDraftPhoto,
+  isSavedPhoto,
+  isUnprocessedDraftPhoto,
+  isUnsavedAudio,
+} from '../../lib/attachmentTypeChecks';
+import {
+  GAP,
+  MIN_WIDTH,
+  ThumbnailContainer,
+  ThumbnailLoader,
+} from '../Thumbnails/ThumbnailContainer';
+import {
+  SavedPhotoThumbnailImage,
+  ThumbnailImage,
+} from '../Thumbnails/PhotoThumbnail';
+import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {AudioSavedThumbnail} from '../Thumbnails/AudioThumbnail';
+import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 
 type EditorProps = {
   presetName: string;
@@ -43,6 +64,10 @@ export const Editor = ({
 }: EditorProps) => {
   const {projectId} = useActiveProject();
   const projectDetails = useProjectRoleAndDetails(projectId);
+  const {navigate} = useNavigationFromRoot();
+  const observationId = usePersistedDraftObservation(
+    store => store.observationId,
+  );
 
   return (
     <ScreenContentWithDock
@@ -78,7 +103,66 @@ export const Editor = ({
         <DescriptionField notes={notes} updateNotes={updateNotes} />
       )}
       {attachments && attachments.length > 0 && (
-        <MediaScrollView attachments={attachments} />
+        <HorizontalScrollView
+          numberOfItems={attachments.length}
+          shouldShowLastItems={true}
+          minItemWidth={MIN_WIDTH}
+          gap={GAP}
+          renderChildren={size => (
+            <>
+              {attachments.map(att => {
+                if (isUnprocessedDraftPhoto(att)) {
+                  return <ThumbnailLoader size={size} key={att.draftPhotoId} />;
+                }
+                if (isDraftPhoto(att)) {
+                  return (
+                    <ThumbnailContainer
+                      key={att.draftPhotoId}
+                      size={size}
+                      onPress={() =>
+                        navigate('PhotoPreviewModal', {photo: att})
+                      }>
+                      <ThumbnailImage uri={att.thumbnailUri} />
+                    </ThumbnailContainer>
+                  );
+                }
+                if (isSavedPhoto(att)) {
+                  return (
+                    <React.Suspense
+                      key={att.driveDiscoveryId + att.hash + att.type}
+                      fallback={<ThumbnailLoader size={size} />}>
+                      <SavedPhotoThumbnailImage size={size} photo={att} />
+                    </React.Suspense>
+                  );
+                }
+
+                if (isAudioAttachment(att) && observationId) {
+                  return (
+                    <AudioSavedThumbnail
+                      size={size}
+                      key={att.driveDiscoveryId + att.hash + att.type}
+                      audio={att}
+                      observationId={observationId}
+                    />
+                  );
+                }
+                if (isUnsavedAudio(att)) {
+                  return (
+                    <ThumbnailContainer
+                      accessibilityLabel="Play audio recording."
+                      key={att.uri}
+                      size={size}
+                      onPress={() =>
+                        navigate('AudioPlaybackUnsavedPreview', {uri: att.uri})
+                      }>
+                      <PlayArrow width={48} height={48} />
+                    </ThumbnailContainer>
+                  );
+                }
+              })}
+            </>
+          )}
+        />
       )}
     </ScreenContentWithDock>
   );

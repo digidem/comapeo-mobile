@@ -4,11 +4,12 @@ describe('CoMapeo E2E Flow', function () {
   require('./onboarding/data-privacy.test');
   require('./onboarding/privacy-policy.test');
   require('./onboarding/device-naming.test');
-  // require('./project/edit-device-name.test');
+  require('./project/edit-device-name.test');
   require('./project/own-project-headers.test');
   require('./main/side-drawer-menu-no-proj.test');
   require('./project/project-settings-no-proj.test');
   require('./observations/create-observation.test');
+  require('./tracks/start-track.test');
   require('./project/invite-collaborators.test');
   require('./project/rename-project-from-drawer.test');
   // require('./project/unjoin-project.test');
@@ -17,6 +18,13 @@ describe('CoMapeo E2E Flow', function () {
   require('./main/map.test');
   require('./observations/add-details.test');
   require('./observations/view-observations.test');
+  require('./observations/edit-observation.test');
+  require('./observations/delete-observation.test');
+  require('./tracks/save-track.test');
+  require('./tracks/view-edit-track.test');
+  require('./audio/audio-recording.test');
+  require('./audio/audio-playback-delete.test');
+  require('./audio/audio-add-additional.test');
   require('./settings/coordinates.test');
   require('./settings/language.test');
   require('./settings/about-comapeo.test');

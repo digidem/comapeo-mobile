@@ -5,7 +5,7 @@ import {output} from '../../utils/naming';
 
 describe('Passcode - Obscure Passcode Mode', () => {
   it('should show a blank Observations screen after entering obscure passcode', async () => {
-    const obsListTab = await $('~Go to ObservationsList');
+    const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
     await expect($(byTextMatches('Lake'))).toBeDisplayed();
     await driver.terminateApp('com.comapeo.rc');
@@ -22,7 +22,7 @@ describe('Passcode - Obscure Passcode Mode', () => {
       ),
     );
     await expect(emptyStateText).toBeDisplayed();
-    const mapTab = await $('~Go to Map');
+    const mapTab = await $('~Go to map.');
     await mapTab.click();
   });
 
@@ -45,7 +45,7 @@ describe('Passcode - Obscure Passcode Mode', () => {
     } catch (err) {
       console.log('No RN Alert dialog was found.');
     }
-    const obsListTab = await $('~Go to ObservationsList');
+    const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
     const emptyStateText = await $(
       byTextMatches(
@@ -57,7 +57,7 @@ describe('Passcode - Obscure Passcode Mode', () => {
   it('should not show security after entering obscure passcode', async () => {
     const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
-    const appSettingsOption = await $('~Go to App Settings');
+    const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
 
     await expect($(byText('Security'))).not.toBeDisplayed();
@@ -70,7 +70,7 @@ describe('Passcode - Obscure Passcode Mode', () => {
     await passcodeField.setValue(output.passcode);
     await driver.hideKeyboard();
 
-    const obsListTab = await $('~Go to ObservationsList');
+    const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
     await expect($(byTextMatches('Lake'))).toBeDisplayed();
     await expect($(byText('Animal'))).not.toBeDisplayed();

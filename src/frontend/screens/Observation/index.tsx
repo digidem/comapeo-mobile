@@ -28,8 +28,12 @@ import {Loading} from '../../sharedComponents/Loading.tsx';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
 import {Field} from '@comapeo/schema';
-import {HorizontalMediaScrollView} from '../../sharedComponents/HorizontalMediaScrollView.tsx';
-import {ThumbnailLoader} from '../../sharedComponents/Thumbnails/ThumbnailContainer.tsx';
+import {HorizontalScrollView} from '../../sharedComponents/HorizontalScrollView.tsx';
+import {
+  GAP,
+  MIN_WIDTH,
+  ThumbnailLoader,
+} from '../../sharedComponents/Thumbnails/ThumbnailContainer.tsx';
 import {SavedPhotoThumbnailImage} from '../../sharedComponents/Thumbnails/PhotoThumbnail.tsx';
 import {AudioSavedThumbnail} from '../../sharedComponents/Thumbnails/AudioThumbnail.tsx';
 
@@ -127,9 +131,12 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
             </HeaderText>
           ) : null}
           {attachments.length > 0 && (
-            <HorizontalMediaScrollView
-              numberOfAttachments={attachments.length}
-              renderThumbnailChildren={size => (
+            <HorizontalScrollView
+              numberOfItems={attachments.length}
+              shouldShowLastItems={false}
+              minItemWidth={MIN_WIDTH}
+              gap={GAP}
+              renderChildren={size => (
                 <>
                   {attachments.map(att => {
                     if (isSavedPhoto(att)) {

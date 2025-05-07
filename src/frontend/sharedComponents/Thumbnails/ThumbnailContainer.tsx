@@ -1,6 +1,9 @@
 import {ActivityIndicator, StyleSheet, TouchableOpacity} from 'react-native';
 import {LIGHT_GREY} from '../../lib/styles';
 
+export const MIN_WIDTH = 100;
+export const GAP = 10;
+
 type ThumbnailContainerProps = {
   onPress: (() => void) | undefined;
   children: React.ReactNode;

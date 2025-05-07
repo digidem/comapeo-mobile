@@ -9,6 +9,7 @@ import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import NoProjectIcon from '../../../images/NoProjectIcon.svg';
 import ProjectParticipantIcon from '../../../images/ProjectParticipant.svg';
 import ProjectCategoriesIcon from '../../../images/ProjectCategories.svg';
+import ExchangeIcon from '../../../images/Exchange.svg';
 import {
   COMAPEO_BLUE,
   NEW_DARK_GREY,
@@ -18,6 +19,7 @@ import {
 } from '../../../lib/styles';
 import {useProjectSettings} from '../../../hooks/server/projects';
 import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
+import {useGetRemoteArchives} from '../../../hooks/server/projects';
 
 const m = defineMessages({
   title: {
@@ -60,6 +62,23 @@ const m = defineMessages({
     id: 'Screens.ProjectSettings.editInfo',
     defaultMessage: 'Edit Info',
   },
+  remoteArchiveOn: {
+    id: 'Screens.ProjectSettings.remoteArchiveOn',
+    defaultMessage: 'Remote Archive  |  ON',
+  },
+  remoteArchiveOff: {
+    id: 'Screens.ProjectSettings.remoteArchiveOff',
+    defaultMessage: 'Remote Archive  |  OFF',
+  },
+  remoteArchiveDesc: {
+    id: 'Screens.ProjectSettings.remoteArchiveDesc',
+    defaultMessage:
+      'Share with a secure, encypted server. URL required to access.',
+  },
+  viewDetails: {
+    id: 'Screens.ProjectSettings.viewDetails',
+    defaultMessage: 'View Details',
+  },
 });
 
 export const ProjectSettings = () => {
@@ -70,6 +89,8 @@ export const ProjectSettings = () => {
   const {data: configData} = useProjectSettings();
   const isSolo = projectInfo.role === 'solo';
   const isCoordinator = projectInfo.role === 'coordinator';
+  const {data: remoteArchives} = useGetRemoteArchives();
+  const remoteArchiveOn = remoteArchives && remoteArchives.length > 0;
 
   const displayTitle = isSolo
     ? projectInfo.projectHeader
@@ -103,6 +124,19 @@ export const ProjectSettings = () => {
           }
           buttonText={formatMessage(m.viewTeam)}
           onPress={() => navigate('YourTeam')}
+        />
+      )}
+      {isCoordinator && (
+        <SettingsCardRow
+          icon={<ExchangeIcon width={24} height={24} />}
+          title={formatMessage(
+            remoteArchiveOn ? m.remoteArchiveOn : m.remoteArchiveOff,
+          )}
+          subtitle={formatMessage(m.remoteArchiveDesc)}
+          buttonText={formatMessage(m.viewDetails)}
+          onPress={() =>
+            navigate(remoteArchiveOn ? 'RemoteArchiveOn' : 'RemoteArchiveOff')
+          }
         />
       )}
       {projectInfo.role !== 'participant' && (

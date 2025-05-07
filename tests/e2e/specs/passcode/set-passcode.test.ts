@@ -9,7 +9,7 @@ describe('Passcode - Set Passcode Flow', () => {
     if (await drawerIcon.isDisplayed()) {
       await drawerIcon.click();
     }
-    const appSettingsOption = await $('~Go to App Settings');
+    const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
 
     const securityOption = await $(byText('Security'));

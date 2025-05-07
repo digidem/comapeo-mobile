@@ -30,7 +30,7 @@ describe('Project - Rename Project from Drawer', () => {
     await goToMapButton.click();
   });
   it('should leave observations in place with a renamed project', async () => {
-    const obsListTab = await $('~Go to ObservationsList');
+    const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();
     await expect($(byText('Threat'))).toBeDisplayed();

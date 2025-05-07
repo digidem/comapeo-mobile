@@ -77,6 +77,7 @@ export const AudioPlaybackUnsaved = ({
           <View
             style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
             <Pressable
+              accessibilityLabel="Delete audio."
               onPress={() =>
                 navigation.navigate('DeleteAudioBottomSheet', {
                   onPressDelete,

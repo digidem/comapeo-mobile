@@ -57,7 +57,7 @@ We use [Appium](https://appium.io/) (with the UIAutomator2 driver on Android) an
       port: 4723, // see above
      ```
 
-- Then run:
+- Then in another terminal run:
   ```bash
   npm run test:e2e
   ```

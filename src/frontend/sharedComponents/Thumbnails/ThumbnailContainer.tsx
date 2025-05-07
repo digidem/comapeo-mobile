@@ -5,15 +5,18 @@ type ThumbnailContainerProps = {
   onPress: (() => void) | undefined;
   children: React.ReactNode;
   size: number;
+  accessibilityLabel?: string;
 };
 
 export const ThumbnailContainer = ({
+  accessibilityLabel,
   onPress,
   children,
   size,
 }: ThumbnailContainerProps) => {
   return (
     <TouchableOpacity
+      accessibilityLabel={accessibilityLabel}
       style={[styles.thumbnailContainer, {width: size, height: size}]}
       disabled={!onPress}
       onPress={onPress}>

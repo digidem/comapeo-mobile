@@ -7,7 +7,7 @@ describe('Settings - Coordinates Settings Flow', () => {
     const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
 
-    const appSettingsOption = await $('~Go to App Settings');
+    const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
   });
 

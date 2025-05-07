@@ -3,12 +3,6 @@ import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches} from '../../utils/selectors';
 
 describe('Tracks - Post-Observation Track Saving Flow', () => {
-  before(async () => {
-    const mapTab = await $('~Go to map.');
-    await mapTab.click();
-    const trackBtn = await $('~Go to tracking.');
-    await trackBtn.click();
-  });
   it('opens discard modal and chooses to continue editing', async () => {
     const trackBtn = await $('~Go to tracking.');
     await trackBtn.click();

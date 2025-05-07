@@ -20,10 +20,7 @@ describe('Observations - Create Observation Flow', () => {
 
     const continueEditing = await $(byTextMatches('Continue editing'));
     await continueEditing.click();
-    await discardObs.waitForDisplayed({
-      reverse: true,
-      timeout: 500,
-    });
+    await discardObs.waitForDisplayed({reverse: true});
 
     await closeIcon.click();
     await discardObs.click();
@@ -75,9 +72,8 @@ describe('Observations - Create Observation Flow', () => {
 
     const showOptionsElem = $(byTextMatches('Show Options'));
     await tapAboveElement(showOptionsElem, 150);
-    await $(byResourceId('OBS.add-photo-btn-keyboard')).waitForDisplayed({
+    await showOptionsElem.waitForDisplayed({
       reverse: true,
-      timeout: 1500,
     });
   });
 

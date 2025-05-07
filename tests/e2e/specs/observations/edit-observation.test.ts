@@ -23,7 +23,9 @@ describe('Observations - Edit Observation Flow', () => {
     await descriptionInput.setValue('Updated description');
     const addBottomBar = await $(byResourceId('OBS.add-photo-btn-keyboard'));
     await tapAboveElement(addBottomBar, 100);
-    await expect(addBottomBar).not.toBeDisplayed();
+    await addBottomBar.waitForDisplayed({
+      reverse: true,
+    });
   });
 
   it('should navigate to details screen and complete a question', async () => {

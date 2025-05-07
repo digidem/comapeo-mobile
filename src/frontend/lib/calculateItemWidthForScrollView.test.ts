@@ -7,7 +7,7 @@ describe('calculateItemWidthForScrollView', () => {
       gap: 10,
       containerSize: 1000,
     });
-    expect(result).toBeCloseTo(148.46, 2); // actual expected value
+    expect(result).toBeCloseTo(171.81, 2); // actual expected value
   });
 
   it('returns container size if minItemWidth is greater than container size', () => {

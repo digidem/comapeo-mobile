@@ -104,6 +104,7 @@ import {LeaveProject} from '../../screens/Invites/LeaveProject.tsx';
 import {MenuScreen} from '../../screens/MenuScreen';
 import {InviteCollaboratorsScreen} from '../../screens/Settings/ProjectSettings/YourTeam/InviteCollaborators.tsx';
 import {MenuHeader} from '../../sharedComponents/MenuHeader.tsx';
+import {EditProjectDetails} from '../../screens/Settings/ProjectSettings/EditProjectDetails.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -439,6 +440,10 @@ export const createDefaultScreenGroup = ({
         options={{
           headerShown: false,
         }}
+      />
+      <RootStack.Screen
+        name="EditProjectDetails"
+        component={EditProjectDetails}
       />
     </RootStack.Group>
     <RootStack.Group

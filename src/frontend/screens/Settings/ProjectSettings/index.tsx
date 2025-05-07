@@ -89,7 +89,7 @@ export const ProjectSettings = () => {
               : undefined
         }
         onPress={() =>
-          navigate(isSolo ? 'InviteCollaborators' : 'ProjectSettings')
+          navigate(isSolo ? 'InviteCollaborators' : 'EditProjectDetails')
         }
       />
       {!isSolo && (

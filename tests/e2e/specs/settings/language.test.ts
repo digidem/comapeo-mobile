@@ -26,7 +26,7 @@ describe('Settings - Language Settings Flow', () => {
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
     await $('~Close Menu').click();
-    const obsListTab = await $('~Go to ObservationsList');
+    const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
 
     await expect(

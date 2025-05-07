@@ -124,6 +124,7 @@ export const Editor = ({
                 if (isUnsavedAudio(att)) {
                   return (
                     <ThumbnailContainer
+                      accessibilityLabel="Play audio recording."
                       key={att.uri}
                       size={size}
                       onPress={() =>

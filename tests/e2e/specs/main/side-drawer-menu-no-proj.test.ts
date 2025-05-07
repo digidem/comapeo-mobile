@@ -30,7 +30,7 @@ describe('Main - Side Drawer Menu - No Project', () => {
     await expect($('~Go to About CoMapeo Screen')).toBeDisplayed();
 
     await $('~Close Menu').click();
-    const mapTab = await $('~Go to Map');
+    const mapTab = await $('~Go to map.');
     await mapTab.click();
   });
 });

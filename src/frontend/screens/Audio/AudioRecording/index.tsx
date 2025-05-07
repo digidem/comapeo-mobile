@@ -92,6 +92,9 @@ export function AudioRecording({
             </View>
           ) : (
             <TouchableOpacity
+              accessibilityLabel={
+                isRecording ? 'Stop recording audio.' : 'Start recording audio.'
+              }
               onPress={isRecording ? finishRecording : startRecording}
               style={AudioStyles.basePressable}>
               {<View style={isRecording ? styles.stop : styles.record} />}

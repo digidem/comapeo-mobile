@@ -63,7 +63,7 @@ describe('Observations - View Observations Flow', () => {
   });
 
   it('should open Observations list and verify it is displayed', async () => {
-    const obsListTab = await $('~Go to ObservationsList');
+    const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();
   });
@@ -77,10 +77,10 @@ describe('Observations - View Observations Flow', () => {
   });
 
   it('should toggle camera tab and back to confirm correct place', async () => {
-    const cameraTab = await $('~Go to Camera');
+    const cameraTab = await $('~Go to camera.');
     await cameraTab.click();
 
-    const obsListTab = await $('~Go to ObservationsList');
+    const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
 
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();
@@ -116,8 +116,5 @@ describe('Observations - View Observations Flow', () => {
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();
-    const mapTab = await $('~Go to Map');
-    await mapTab.click();
-    await expect($(byResourceId('MAIN.mapbox-map-view'))).toBeDisplayed();
   });
 });

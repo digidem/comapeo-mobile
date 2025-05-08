@@ -115,14 +115,9 @@ export type RootStackParamsList = {
   InviteReceived: {inviteId: string};
   InviteSuccessfullyAccepted: {projectName: string};
   InviteCanceled: {projectName: string};
-  ExistingProjectWarning: {inviteId: string};
   ObservationMetadata: {observationId: string};
   ErrorBottomSheet: undefined;
   BackgroundMapErrorBottomSheet: {title: string; description: string};
-  LeaveProject: {
-    inviteId: string;
-    currentProjectName: undefined | string;
-  };
   Menu: undefined;
   AllProjects: undefined;
   InviteCollaborators: undefined;

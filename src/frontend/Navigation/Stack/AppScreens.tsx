@@ -99,8 +99,6 @@ import {InviteCanceled} from '../../screens/Invites/InviteCanceled.tsx';
 import {ObservationMetadata} from '../../screens/ObservationMetadata.tsx';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagement/ErrorBottomSheet.tsx';
-import {ExistingProjectWarning} from '../../screens/Invites/ExistingProjectWarning.tsx';
-import {LeaveProject} from '../../screens/Invites/LeaveProject.tsx';
 import {MenuScreen} from '../../screens/MenuScreen';
 import {InviteCollaboratorsScreen} from '../../screens/Settings/ProjectSettings/YourTeam/InviteCollaborators.tsx';
 import {MenuHeader} from '../../sharedComponents/MenuHeader.tsx';
@@ -485,11 +483,6 @@ export const createDefaultScreenGroup = ({
         name="BackgroundMapErrorBottomSheet"
         component={BackgroundMapErrorBottomSheet}
       />
-      <RootStack.Screen
-        name="ExistingProjectWarning"
-        component={ExistingProjectWarning}
-      />
-      <RootStack.Screen name="LeaveProject" component={LeaveProject} />
     </RootStack.Group>
   </>
 );

@@ -12,7 +12,7 @@ import {Divider} from '../Divider';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {useProjectRoleAndDetails} from '../../hooks/useProjectRoleAndDetails';
 import {HeaderText} from '../Text/HeaderText';
-import {HorizontalMediaScrollView} from '../HorizontalMediaScrollView';
+import {HorizontalScrollView} from '../HorizontalScrollView';
 import {
   isAudioAttachment,
   isDraftPhoto,
@@ -21,6 +21,8 @@ import {
   isUnsavedAudio,
 } from '../../lib/attachmentTypeChecks';
 import {
+  GAP,
+  MIN_WIDTH,
   ThumbnailContainer,
   ThumbnailLoader,
 } from '../Thumbnails/ThumbnailContainer';
@@ -101,9 +103,12 @@ export const Editor = ({
         <DescriptionField notes={notes} updateNotes={updateNotes} />
       )}
       {attachments && attachments.length > 0 && (
-        <HorizontalMediaScrollView
-          numberOfAttachments={attachments.length}
-          renderThumbnailChildren={size => (
+        <HorizontalScrollView
+          numberOfItems={attachments.length}
+          shouldShowLastItems={true}
+          minItemWidth={MIN_WIDTH}
+          gap={GAP}
+          renderChildren={size => (
             <>
               {attachments.map(att => {
                 if (isUnprocessedDraftPhoto(att)) {

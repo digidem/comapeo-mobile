@@ -31,6 +31,7 @@ export const INVITE_SCREEN_NAME: (keyof AppStackParamsList)[] = [
   'InviteSuccessfullyAccepted',
   'LeaveProject',
   'ExistingProjectWarning',
+  'TrackRecordingActive',
 ];
 
 // Replicates the root query key from comapeo/core-react v3.3.0

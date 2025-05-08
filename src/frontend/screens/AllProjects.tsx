@@ -10,6 +10,7 @@ import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import {useActiveProjectIdActions} from '../contexts/ActiveProjectIdStoreContext';
 import {SecondaryButton} from '../sharedComponents/Buttons';
 import AddProjectIcon from '../images/AddProject.svg';
+import {FlatList} from 'react-native';
 
 const m = defineMessages({
   navTitle: {
@@ -38,20 +39,23 @@ export const AllProjects: NativeNavigationComponent<'AllProjects'> = () => {
         }}
         renderIcon={() => <AddProjectIcon />}
       />
-      {data.map(proj => {
-        function handlePress() {
-          setActiveProjectId(proj.projectId);
-          popTo('Menu');
-        }
-        return (
-          <ProjectInfoCardMinimal
-            style={{marginBottom: 20}}
-            key={proj.projectId}
-            projectId={proj.projectId}
-            onPress={handlePress}
-          />
-        );
-      })}
+      <FlatList
+        data={data}
+        renderItem={({item}) => {
+          function handlePress() {
+            setActiveProjectId(item.projectId);
+            popTo('Menu');
+          }
+          return (
+            <ProjectInfoCardMinimal
+              style={{marginBottom: 20}}
+              key={item.projectId}
+              projectId={item.projectId}
+              onPress={handlePress}
+            />
+          );
+        }}
+      />
     </View>
   );
 };

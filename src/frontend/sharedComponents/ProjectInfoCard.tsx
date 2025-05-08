@@ -77,7 +77,7 @@ export const ProjectInfoCard = ({
           {role === 'solo'
             ? formatMessage(m.mappingOnOwn)
             : role === 'coordinator'
-              ? formatMessage(m.participant)
+              ? formatMessage(m.coordinator)
               : formatMessage(m.participant)}
         </BodyText>
       </View>

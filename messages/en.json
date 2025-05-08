@@ -702,21 +702,6 @@
   "screens.IntroToCoMapeo.ownData": {
     "message": "Own and control your data"
   },
-  "screens.Invite.AlreadyOnProject.leaveWarning": {
-    "message": "To join a new project you must leave your current one."
-  },
-  "screens.Invite.ExistingProjectWarning.alreadyOnProject": {
-    "message": "You are already on a project"
-  },
-  "screens.Invite.ExistingProjectWarning.goBack": {
-    "message": "Go Back"
-  },
-  "screens.Invite.ExistingProjectWarning.leaveProj": {
-    "message": "Leave Current Project"
-  },
-  "screens.Invite.ExistingProjectWarning.onProject": {
-    "message": "You are on {projectName}"
-  },
   "screens.InviteCancelled.canceled": {
     "message": "Invite Canceled"
   },
@@ -755,30 +740,6 @@
   },
   "screens.InviteSuccess.youHaveJoined": {
     "message": "You have joined {projectName}"
-  },
-  "screens.Invites.LeaveProject.cancel": {
-    "message": "Cancel"
-  },
-  "screens.Invites.LeaveProject.checkToConfirm": {
-    "message": "Please check the box to confirm"
-  },
-  "screens.Invites.LeaveProject.deleteConsentWithName": {
-    "message": "I understand I will be deleting all data from Project {projectName} from my device."
-  },
-  "screens.Invites.LeaveProject.deleteConsentWithoutName": {
-    "message": "I understand I will be deleting all data from my device."
-  },
-  "screens.Invites.LeaveProject.leaveProj": {
-    "message": "Leave Project"
-  },
-  "screens.Invites.LeaveProject.leavingProject": {
-    "message": "Leaving Project {projectName}"
-  },
-  "screens.Invites.LeaveProject.removeFromProjWithName": {
-    "message": "This will remove all Project {projectName}'s data from your device."
-  },
-  "screens.Invites.LeaveProject.removeFromProjWithoutName": {
-    "message": "This will remove all of the data from your device."
   },
   "screens.LanguageSettings.followSystemPreferences": {
     "description": "Label for language option to follow system preferences",

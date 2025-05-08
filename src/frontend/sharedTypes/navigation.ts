@@ -117,7 +117,7 @@ export type RootStackParamsList = {
   InviteCanceled: {projectName: string};
   ExistingProjectWarning: {inviteId: string};
   ObservationMetadata: {observationId: string};
-  ErrorBottomSheet: undefined;
+  ErrorBottomSheet: undefined | {error: Error};
   BackgroundMapErrorBottomSheet: {title: string; description: string};
   LeaveProject: {
     inviteId: string;

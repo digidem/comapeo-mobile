@@ -59,8 +59,8 @@ export function AudioRecording({
           duration: timeElapsed,
         });
       })
-      .catch(() => {
-        navigation.navigate('ErrorBottomSheet');
+      .catch(error => {
+        navigation.navigate('ErrorBottomSheet', {error});
       });
   }, [stopRecording, navigation, timeElapsed]);
 

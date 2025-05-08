@@ -6,6 +6,7 @@ import ErrorIcon from '../images/Error.svg';
 import {defineMessages, useIntl} from 'react-intl';
 import {HeaderText} from './Text/HeaderText';
 import {SecondaryButton} from './Buttons';
+import {BodyText} from './Text/BodyText';
 
 const m = defineMessages({
   somethingWrong: {
@@ -20,6 +21,7 @@ const m = defineMessages({
 
 export const ErrorBottomSheet = ({
   navigation,
+  route,
 }: NativeRootNavigationProps<'ErrorBottomSheet'>) => {
   const {formatMessage} = useIntl();
   return (
@@ -30,6 +32,11 @@ export const ErrorBottomSheet = ({
           <HeaderText style={{textAlign: 'center'}}>
             {formatMessage(m.somethingWrong)}
           </HeaderText>
+          {route.params && (
+            <BodyText>
+              {route.params?.error.message + route.params?.error.name}
+            </BodyText>
+          )}
         </View>
         <SecondaryButton
           fullSize

@@ -53,7 +53,9 @@ export const ProjectInfoCard = ({
       onPress={onPress}
       testID={testID}
       style={[styles.card, {backgroundColor: backgroundColor}, style]}>
-      <HeaderText variant="header2">{headerText}</HeaderText>
+      <HeaderText numberOfLines={2} variant="header2">
+        {headerText}
+      </HeaderText>
       {projectDescription && (
         <BodyText variant="smallMeta">{projectDescription}</BodyText>
       )}

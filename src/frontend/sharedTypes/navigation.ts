@@ -55,7 +55,7 @@ export type RootStackParamsList = {
   UnableToLinkScreen: undefined;
   ConnectingToDeviceScreen: {task: () => Promise<void>};
   ConfirmLeavePracticeModeScreen: {projectAction: 'join' | 'create'};
-  CreateProject: undefined;
+  CreateProject: {action: 'CreateNewProject' | 'UpdateSoloProject'};
   Security: undefined;
   DirectionalArrow: undefined;
   P2pUpgrade: undefined;

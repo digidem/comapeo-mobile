@@ -34,7 +34,7 @@ export const AllProjects: NativeNavigationComponent<'AllProjects'> = () => {
         style={{alignSelf: 'center', marginBottom: 20}}
         text={formatMessage(m.createNewProject)}
         onPress={() => {
-          navigate('CreateProject');
+          navigate('CreateProject', {action: 'CreateNewProject'});
         }}
         renderIcon={() => <AddProjectIcon />}
       />

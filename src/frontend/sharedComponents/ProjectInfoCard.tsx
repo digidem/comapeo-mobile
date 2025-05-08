@@ -71,11 +71,11 @@ export const ProjectInfoCard = ({
             name={role === 'coordinator' ? 'manage-accounts' : 'people'}
           />
         )}
-        <BodyText style={{marginLeft: 10}} variant="smallMeta">
+        <BodyText style={{marginLeft: 10, flex: 1}} variant="smallMeta">
           {role === 'solo'
             ? formatMessage(m.mappingOnOwn)
             : role === 'coordinator'
-              ? formatMessage(m.coordinator)
+              ? formatMessage(m.participant)
               : formatMessage(m.participant)}
         </BodyText>
       </View>

@@ -36,6 +36,7 @@ const m = defineMessages({
 export function AudioRecording({
   navigation,
 }: NativeRootNavigationProps<'AudioRecording'>) {
+  const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
   const {startRecording, stopRecording, status} = useAudioRecording();
 
   const timeElapsed = status?.durationMillis || 0;
@@ -120,7 +121,11 @@ export function AudioRecording({
           </HeaderText>
         </View>
       </ScreenContentWithDock>
-      <AnimatedBackground timeElapsed={timeElapsed} />
+      {isE2E ? (
+        <View style={{height: 0}} />
+      ) : (
+        <AnimatedBackground timeElapsed={timeElapsed} />
+      )}
     </>
   );
 }

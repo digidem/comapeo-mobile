@@ -29,8 +29,5 @@ describe('Passcode - Obscure Passcode Visibility', () => {
     if (await backBtn.isDisplayed()) {
       await backBtn.click();
     }
-    if (await drawerIcon.isDisplayed()) {
-      await drawerIcon.click();
-    }
   });
 });

@@ -2,6 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byText, byTextMatches, byResourceId} from '../../utils/selectors';
 import {output} from '../../utils/naming';
+import {checkForElementGone} from '../../utils/checkForGone';
 
 describe('Passcode - Obscure Passcode Mode', () => {
   it('should show a blank Observations screen after entering obscure passcode', async () => {
@@ -60,7 +61,7 @@ describe('Passcode - Obscure Passcode Mode', () => {
     const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
 
-    await expect($(byText('Security'))).not.toBeDisplayed();
+    checkForElementGone(byText('Security'));
   });
   it('should show Observations again after entering regular passcode but not new observation', async () => {
     await driver.terminateApp('com.comapeo.rc');
@@ -73,6 +74,6 @@ describe('Passcode - Obscure Passcode Mode', () => {
     const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
     await expect($(byTextMatches('Lake'))).toBeDisplayed();
-    await expect($(byText('Animal'))).not.toBeDisplayed();
+    checkForElementGone(byText('Animal'));
   });
 });

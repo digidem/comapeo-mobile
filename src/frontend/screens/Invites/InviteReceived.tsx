@@ -7,12 +7,10 @@ import {
   useAcceptInvite,
   useRejectInvite,
   useSingleInvite,
-  useManyProjects,
 } from '@comapeo/core-react';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
 import {useListenToInviteCancel} from '../../hooks/useListenToInviteCancel';
 import {BLACK, NEW_DARK_GREY, VERY_LIGHT_GREY} from '../../lib/styles';
@@ -58,33 +56,13 @@ export const InviteReceived = ({
 
   const acceptInvite = useAcceptInvite();
   const rejectInvite = useRejectInvite();
-  const {setActiveProjectId} = useActiveProjectIdActions();
-  const projects = useManyProjects();
 
   useListenToInviteCancel(inviteId);
 
   function accept() {
-    if (projects.data.length > 1) {
-      navigation.replace('ExistingProjectWarning', {
-        inviteId,
-      });
-      return;
-    }
-    acceptInvite.mutate(
-      {inviteId: inviteId},
-      {
-        onSuccess: projectId => {
-          setActiveProjectId(projectId);
-          navigation.replace('InviteSuccessfullyAccepted', {
-            projectName: invite.projectName,
-          });
-        },
-        onError: err => {
-          Sentry.captureException(err);
-          navigation.replace('ErrorBottomSheet');
-        },
-      },
-    );
+    navigation.replace('ExistingProjectWarning', {
+      inviteId,
+    });
   }
 
   function reject() {

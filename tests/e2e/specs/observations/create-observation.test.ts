@@ -2,6 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches, byText} from '../../utils/selectors';
 import {tapAboveElement} from '../../utils/touchActions';
+import {checkForElementGone} from '../../utils/checkForGone';
 
 describe('Observations - Create Observation Flow', () => {
   it('should set location and open create observation screen', async () => {
@@ -20,10 +21,7 @@ describe('Observations - Create Observation Flow', () => {
 
     const continueEditing = await $(byTextMatches('Continue editing'));
     await continueEditing.click();
-    await discardObs.waitForDisplayed({
-      reverse: true,
-      timeout: 500,
-    });
+    checkForElementGone(byTextMatches('Continue editing'));
 
     await closeIcon.click();
     await discardObs.click();
@@ -75,10 +73,7 @@ describe('Observations - Create Observation Flow', () => {
 
     const showOptionsElem = $(byTextMatches('Show Options'));
     await tapAboveElement(showOptionsElem, 150);
-    await $(byResourceId('OBS.add-photo-btn-keyboard')).waitForDisplayed({
-      reverse: true,
-      timeout: 1500,
-    });
+    checkForElementGone(byTextMatches('Show Options'));
   });
 
   it('should open camera, cancel, then save observation', async () => {
@@ -101,14 +96,6 @@ describe('Observations - Create Observation Flow', () => {
       }
     } catch (err) {
       console.log('No RN Alert dialog was found.');
-    }
-    try {
-      const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-      if (await backBtn.isDisplayed()) {
-        await backBtn.click();
-      }
-    } catch (e) {
-      console.info('Back button not visible, continuing...');
     }
   });
 });

@@ -1,6 +1,7 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
+import {checkForElementGone} from '../../utils/checkForGone';
 
 describe('Audio - Playback and Delete', () => {
   it('opens playback screen and verifies audio controls', async () => {
@@ -33,7 +34,7 @@ describe('Audio - Playback and Delete', () => {
     await confirmDelete.click();
 
     await expect($(byTextMatches('Airstrip'))).toBeDisplayed();
-    await expect($('~Play audio recording.')).not.toExist();
+    checkForElementGone('~Play audio recording.');
   });
 
   it('saves edited observation (handles GPS alert)', async () => {

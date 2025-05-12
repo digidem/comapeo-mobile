@@ -18,7 +18,7 @@ describe('Main - Side Drawer Menu - Project Joined', () => {
     const viewButton = await $(byText('View'));
     await expect(viewButton).toBeDisplayed();
 
-    inviteButton.click();
+    await inviteButton.click();
     await expect($(byTextMatches('Select Device to Invite'))).toBeDisplayed();
     const backButton = $(byResourceId('MAIN.header-back-btn'));
     await backButton.click();

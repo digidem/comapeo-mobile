@@ -1,6 +1,7 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches, byText} from '../../utils/selectors';
+import {checkForElementGone} from '../../utils/checkForGone';
 
 describe('Observations - Delete Observation Flow', () => {
   it('should open "Threat" observation and verify it is editable', async () => {
@@ -32,7 +33,7 @@ describe('Observations - Delete Observation Flow', () => {
     await confirmDelete.click();
 
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();
-    await expect($(byTextMatches('Threat'))).not.toBeDisplayed();
+    checkForElementGone(byTextMatches('Threat'));
     await $('~Go to map.').click();
   });
 });

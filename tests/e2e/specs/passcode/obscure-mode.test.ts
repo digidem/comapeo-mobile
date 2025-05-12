@@ -3,6 +3,7 @@ import {describe, it} from 'mocha';
 import {byText, byTextMatches, byResourceId} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 import {checkForElementGone} from '../../utils/checkForGone';
+import {enterPasscodeWithKeyEvents} from '../../utils/enterText';
 
 describe('Passcode - Obscure Passcode Mode', () => {
   it('should show a blank Observations screen after entering obscure passcode', async () => {
@@ -11,9 +12,11 @@ describe('Passcode - Obscure Passcode Mode', () => {
     await expect($(byTextMatches('Lake'))).toBeDisplayed();
     await driver.terminateApp('com.comapeo.rc');
     await driver.activateApp('com.comapeo.rc');
+    if (await driver.isLocked()) await driver.unlock();
     await expect($(byTextMatches('Enter your passcode'))).toBeDisplayed();
     const passcodeField = await $(byResourceId('SETTINGS.auth-passcode-inp'));
-    await passcodeField.setValue(output.obscurepasscode);
+    await passcodeField.click();
+    await enterPasscodeWithKeyEvents(output.obscurepasscode);
     await driver.hideKeyboard();
 
     await obsListTab.click();
@@ -39,11 +42,9 @@ describe('Passcode - Obscure Passcode Mode', () => {
     try {
       const text = await driver.getAlertText();
       if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
-        await driver.execute('mobile: acceptAlert', {
-          buttonLabel: 'SAVE',
-        });
+        await driver.execute('mobile: acceptAlert', {buttonLabel: 'SAVE'});
       }
-    } catch (err) {
+    } catch {
       console.log('No RN Alert dialog was found.');
     }
     const obsListTab = await $('~Go to observations list.');
@@ -66,9 +67,12 @@ describe('Passcode - Obscure Passcode Mode', () => {
   it('should show Observations again after entering regular passcode but not new observation', async () => {
     await driver.terminateApp('com.comapeo.rc');
     await driver.activateApp('com.comapeo.rc');
+    if (await driver.isLocked()) await driver.unlock();
     await expect($(byTextMatches('Enter your passcode'))).toBeDisplayed();
+
     const passcodeField = await $(byResourceId('SETTINGS.auth-passcode-inp'));
-    await passcodeField.setValue(output.passcode);
+    await passcodeField.click();
+    await enterPasscodeWithKeyEvents(output.passcode);
     await driver.hideKeyboard();
 
     const obsListTab = await $('~Go to observations list.');

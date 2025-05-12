@@ -17,9 +17,8 @@ describe('Settings - Language Settings Flow', () => {
   });
 
   it('should scroll to Spanish, select it, and confirm language change', async () => {
-    const spanishElem = await $(byTextMatches('Spanish'));
     await $(byTextMatches('Spanish')).scrollIntoView();
-    await spanishElem.click();
+    await $(byTextMatches('Spanish')).click();
 
     await expect($(byTextMatches('Idioma'))).toBeDisplayed();
 

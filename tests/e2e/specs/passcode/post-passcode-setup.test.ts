@@ -2,6 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byTextMatches, byText, byResourceId} from '../../utils/selectors';
 import {output} from '../../utils/naming';
+import {enterPasscodeWithKeyEvents} from '../../utils/enterText';
 
 describe('Passcode - Post Passcode Setup Flow', () => {
   it('should navigate to Security and see "Enter Passcode" if passcode is set', async () => {
@@ -40,10 +41,12 @@ describe('Passcode - Post Passcode Setup Flow', () => {
     await appPasscodeItem.click();
 
     const passcodeField = await $(byResourceId('SETTINGS.passcode-inp'));
-    await passcodeField.setValue(output.newpasscode);
+    await passcodeField.click();
+    await enterPasscodeWithKeyEvents(output.newpasscode);
     await expect($(byText('Incorrect Passcode'))).toBeDisplayed();
 
-    await passcodeField.setValue(output.passcode);
+    await passcodeField.click();
+    await await enterPasscodeWithKeyEvents(output.passcode);
 
     await expect(appPasscodeItem).toBeDisplayed();
   });

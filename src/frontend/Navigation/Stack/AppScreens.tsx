@@ -103,6 +103,7 @@ import {MenuScreen} from '../../screens/MenuScreen';
 import {InviteCollaboratorsScreen} from '../../screens/Settings/ProjectSettings/YourTeam/InviteCollaborators.tsx';
 import {MenuHeader} from '../../sharedComponents/MenuHeader.tsx';
 import {AllProjects} from '../../screens/AllProjects.tsx';
+import {TrackRecordingActive} from '../../screens/TrackRecordingActive.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -482,6 +483,10 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="BackgroundMapErrorBottomSheet"
         component={BackgroundMapErrorBottomSheet}
+      />
+      <RootStack.Screen
+        name="TrackRecordingActive"
+        component={TrackRecordingActive}
       />
     </RootStack.Group>
   </>

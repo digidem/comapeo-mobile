@@ -47,7 +47,7 @@
     "message": "Stop Tracks"
   },
   "Modal.GPSEnable.trackingDescription": {
-    "message": "You’ve been recording for"
+    "message": "You’ve been recording for {time}"
   },
   "Navigation.Menu.Settings": {
     "message": "Settings"
@@ -969,15 +969,24 @@
     "message": "Cancel"
   },
   "screens.Observation.comapeoAlert": {
-    "message": "CoMapeo Alert"
+    "message": "CoMapeo data sent from *{projectName}*"
   },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
     "message": "Yes, delete"
   },
+  "screens.Observation.defaultProjectName": {
+    "message": "My Project"
+  },
   "screens.Observation.deleteTitle": {
     "description": "Title of dialog asking confirmation to delete an observation",
     "message": "Delete observation?"
+  },
+  "screens.Observation.description": {
+    "message": "Description:"
+  },
+  "screens.Observation.details": {
+    "message": "Details:"
   },
   "screens.Observation.fallbackCategoryName": {
     "description": "Fallback name used when category name cannot be determined for observation",
@@ -986,6 +995,12 @@
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "Observation"
+  },
+  "screens.Observation.location": {
+    "message": "Location:"
+  },
+  "screens.Observation.precision": {
+    "message": "Precision:"
   },
   "screens.Observation.shareMediaTitle": {
     "description": "Title of dialog to share an observation with media",
@@ -1715,6 +1730,18 @@
   "screens.TrackEdit.track": {
     "description": "Preset title for new track screen",
     "message": "Track"
+  },
+  "screens.TrackRecordingActive.cancel": {
+    "message": "Cancel"
+  },
+  "screens.TrackRecordingActive.recordingTracks": {
+    "message": "Recording Tracks!"
+  },
+  "screens.TrackRecordingActive.stopTracks": {
+    "message": "Stop Tracks"
+  },
+  "screens.TrackRecordingActive.warningMessage": {
+    "message": "You’re currently recording a track. To join project, stop recording"
   },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",

@@ -17,7 +17,11 @@ export function sleep(
 
       const onAbort = () => {
         clearTimeout(timeout);
-        reject(signal.reason);
+        // Use the `reason` if it exists. It doesn't currently in React Native,
+        // but we want to be ready in case it's added.
+        const reason =
+          'reason' in signal ? signal.reason : new Error('Aborted');
+        reject(reason);
         signal.removeEventListener('abort', onAbort);
       };
       signal.addEventListener('abort', onAbort);

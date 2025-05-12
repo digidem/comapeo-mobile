@@ -29,7 +29,7 @@ export const AllProjects: NativeNavigationComponent<'AllProjects'> = () => {
   const {popTo, navigate} = useNavigationFromRoot();
   const {formatMessage} = useIntl();
   return (
-    <View style={{padding: 20, flex: 1}}>
+    <View style={{flex: 1}}>
       <SecondaryButton
         fullSize={true}
         style={{alignSelf: 'center', marginBottom: 20}}
@@ -40,6 +40,7 @@ export const AllProjects: NativeNavigationComponent<'AllProjects'> = () => {
         renderIcon={() => <AddProjectIcon />}
       />
       <FlatList
+        style={{padding: 20}}
         data={data}
         renderItem={({item}) => {
           function handlePress() {

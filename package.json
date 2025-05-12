@@ -138,7 +138,7 @@
     "@types/lint-staged": "13.3.0",
     "@types/lodash.isequal": "4.5.8",
     "@types/mocha": "10.0.10",
-    "@types/node": "20.8.4",
+    "@types/node": "20.17.46",
     "@types/react": "18.3.18",
     "@types/react-native-indicators": "0.16.6",
     "@types/react-native-vector-icons": "6.4.18",

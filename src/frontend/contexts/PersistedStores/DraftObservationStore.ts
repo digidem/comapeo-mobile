@@ -12,6 +12,7 @@ import type {CameraCapturedPicture} from 'expo-camera';
 import {manipulateAsync} from 'expo-image-manipulator';
 import {excludeKeys} from 'filter-obj';
 import type {Position} from '../../sharedTypes/index.ts';
+import {throwIfAborted} from '../../lib/throwIfAborted.ts';
 
 export type DraftObservationStore = ReturnType<
   typeof createDraftObservationStore
@@ -143,7 +144,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
         outputKey: 'raw',
         processPromise: capturePromise,
       });
-      signal.throwIfAborted();
+      throwIfAborted(signal);
 
       // TODO: Previously, rotation of the original photo could fail on older
       // devices with low memory, so we would skip rotation and save the raw
@@ -164,7 +165,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
           {compress: ORIGINAL_COMPRESSION},
         ),
       });
-      signal.throwIfAborted();
+      throwIfAborted(signal);
 
       const thumbnailDimensions =
         width > height ? {width: THUMBNAIL_SIZE} : {height: THUMBNAIL_SIZE};
@@ -177,7 +178,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
           {compress: THUMBNAIL_COMPRESSION},
         ),
       });
-      signal.throwIfAborted();
+      throwIfAborted(signal);
 
       const previewDimensions =
         width > height ? {width: PREVIEW_SIZE} : {height: PREVIEW_SIZE};
@@ -190,7 +191,7 @@ export function createDraftObservationStore({persist}: {persist: boolean}) {
           {compress: PREVIEW_COMPRESSION},
         ),
       });
-      signal.throwIfAborted();
+      throwIfAborted(signal);
     } catch (reason) {
       if (reason instanceof Error && reason.name === 'AbortError') {
         // TODO: Remove attachment from state

@@ -13,7 +13,7 @@ export async function checkForElementGone(
     elapsed += interval;
   }
 
-  browser.setTimeout({implicit: 10000});
+  await browser.setTimeout({implicit: 0});
   if (elapsed >= timeout) {
     throw new Error(`Element ${selector} not gone after ${timeout}ms`);
   }

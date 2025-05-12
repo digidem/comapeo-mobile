@@ -2,6 +2,7 @@ import {ImageStyle, StyleProp, TextStyle, ViewStyle} from 'react-native';
 import {Observation, ObservationValue} from '@comapeo/schema';
 import type {RoleId, RoleIdForNewInvite} from '@comapeo/core/dist/roles';
 import {MemberInfo} from '@comapeo/core/dist/member-api';
+import {type BlobId} from '@comapeo/core/dist/types';
 
 export type DeviceConnectionStatus = 'connected' | 'disconnected';
 
@@ -29,7 +30,7 @@ export type ClientGeneratedObservation = Omit<ObservationValue, 'schemaName'>;
 
 export type Attachment = Observation['attachments'][0];
 
-export type PhotoVariant = 'original' | 'thumbnail' | 'preview';
+export type PhotoVariant = (BlobId & {type: 'photo'})['variant'];
 
 export type MediaSyncSetting = 'previews' | 'everything';
 

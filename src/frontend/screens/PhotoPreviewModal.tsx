@@ -1,133 +1,168 @@
-import {NativeRootNavigationProps} from '../sharedTypes/navigation.ts';
-import React, {FC, useEffect, useState} from 'react';
-import {PhotoUnpreparedView} from '../sharedComponents/PhotoUnpreparedView.tsx';
-import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes.ts';
+import {type NativeStackNavigationOptions} from '@react-navigation/native-stack';
+import {Suspense, type ReactNode} from 'react';
+import {defineMessages, useIntl, type MessageDescriptor} from 'react-intl';
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {WHITE} from '../lib/styles.ts';
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {
-  BottomSheetModalContent,
-  BottomSheetModal,
-  useBottomSheetModal,
-} from '../sharedComponents/BottomSheetModal';
-import {defineMessages, useIntl} from 'react-intl';
-import {useDraftObservation} from '../hooks/useDraftObservation.ts';
-import {PhotoPreparedView} from '../sharedComponents/PhotoPreparedView.tsx';
-import ErrorIcon from '../images/Error.svg';
+import Octicons from 'react-native-vector-icons/Octicons';
+
+import {useActiveProject} from '../contexts/ActiveProjectContext.tsx';
+import {BLACK, NEW_DARK_GREY, WHITE} from '../lib/styles.ts';
+import {CoreBlobImage} from '../sharedComponents/CoreBlobImage.tsx';
+import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft.tsx';
+import {BodyText} from '../sharedComponents/Text/BodyText.tsx';
+import {TrulyContainedImage} from '../sharedComponents/TrulyContainedImage.tsx';
+import {type NativeRootNavigationProps} from '../sharedTypes/navigation.ts';
 
 const m = defineMessages({
+  navTitle: {
+    id: 'screens.PhotoPreviewModal.DeletePhoto.navTitle',
+    defaultMessage: 'Photo Info',
+  },
+  validatedByCoMapeo: {
+    id: 'screens.PhotoPreviewModal.DeletePhoto.validatedByCoMapeo',
+    defaultMessage: 'Validated by CoMapeo',
+  },
   headerDeleteButtonText: {
     id: 'screens.PhotoPreviewModal.DeletePhoto.headerButtonText',
     defaultMessage: 'Delete Photo',
   },
-  deleteModalTitle: {
-    id: 'screens.PhotoPreviewModal.DeletePhoto.deleteModalTitle',
-    defaultMessage: 'Delete this photo?',
-  },
-  deleteModalDeleteButton: {
-    id: 'screens.PhotoPreviewModal.DeletePhoto.deleteModalDeleteButton',
-    defaultMessage: 'Delete Image',
-  },
-  deleteModalCancelButton: {
-    id: 'screens.PhotoPreviewModal.DeletePhoto.cancelButton',
-    defaultMessage: 'Cancel',
-  },
 });
 
-export const PhotoPreviewModal: FC<
-  NativeRootNavigationProps<'PhotoPreviewModal'>
-> = ({route}) => {
-  const {photo} = route.params;
-  const navigation = useNavigationFromRoot();
-  const [showHeader, setShowHeader] = useState(true);
-  const draftObservation = useDraftObservation();
-  const {sheetRef, isOpen, closeSheet, openSheet} = useBottomSheetModal({
-    openOnMount: false,
-  });
-  const {formatMessage: t} = useIntl();
+export function PhotoPreviewModal({
+  route,
+}: NativeRootNavigationProps<'PhotoPreviewModal'>) {
+  const {createdByDeviceId, observationDocId, photo, validatedByCoMapeo} =
+    route.params;
+  const {projectId} = useActiveProject();
+  const {formatMessage: t, formatDate} = useIntl();
 
-  const handlePhotoDelete = () => {
-    if ('originalUri' in photo) {
-      draftObservation.deletePhoto(photo.originalUri);
-    }
-    navigation.goBack();
-    closeSheet();
-  };
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerShown: showHeader,
-      headerRight: () =>
-        photo.type === 'processed' ? (
-          <TouchableOpacity
-            onPress={openSheet}
-            style={styles.deleteButtonWrapper}>
-            <MaterialIcons name="delete" size={18} color={WHITE} />
-            <Text style={styles.deleteButtonText}>
-              {t(m.headerDeleteButtonText)}
-            </Text>
-          </TouchableOpacity>
-        ) : (
-          <></>
-        ),
-    });
-  }, [navigation, openSheet, showHeader, t, photo.type]);
+  // TODO: Properly extract timestamp of saved photo
+  const timestamp =
+    photo.type === 'processed' ? photo.mediaMetadata.timestamp : undefined;
 
   return (
-    <>
-      {photo.type === 'photo' ? (
-        <PhotoUnpreparedView
-          onPress={() => setShowHeader(!showHeader)}
-          photo={photo}
-          // This needs to be "preview" otherwise the photo will not be shown when the user is only syncing previews
-          variant={'preview'}
-        />
-      ) : (
-        <PhotoPreparedView
-          onPress={() => setShowHeader(!showHeader)}
-          photo={photo}
-        />
-      )}
+    <ScrollView contentContainerStyle={{padding: 20, gap: 20}}>
+      <View>
+        {photo.type === 'photo' ? (
+          <Suspense fallback={null}>
+            <CoreBlobImage
+              driveId={photo.driveDiscoveryId}
+              name={photo.name}
+              projectId={projectId}
+            />
+          </Suspense>
+        ) : (
+          <View style={{flex: 1, borderRadius: 10, overflow: 'hidden'}}>
+            <TrulyContainedImage src={photo.originalUri} />
+          </View>
+        )}
+      </View>
+      <View style={{gap: 20}}>
+        {validatedByCoMapeo && (
+          <InfoItem
+            icon={
+              <Octicons name="check-circle" size={20} color={NEW_DARK_GREY} />
+            }
+            text={t(m.validatedByCoMapeo)}
+          />
+        )}
 
-      <BottomSheetModal ref={sheetRef} isOpen={isOpen}>
-        <BottomSheetModalContent
-          title={t(m.deleteModalTitle)}
-          buttonConfigs={[
-            {
-              text: t(m.deleteModalDeleteButton),
-              dangerous: true,
-              onPress: handlePhotoDelete,
-              variation: 'filled',
-              icon: <MaterialIcons name="delete" size={24} color={WHITE} />,
-            },
-            {
-              text: t(m.deleteModalCancelButton),
-              onPress: closeSheet,
-              variation: 'outlined',
-            },
-          ]}
-          icon={<ErrorIcon width={60} height={60} />}
-        />
-      </BottomSheetModal>
-    </>
+        {timestamp !== undefined && (
+          <InfoItem
+            icon={<Octicons name="calendar" size={20} color={NEW_DARK_GREY} />}
+            text={formatDate(timestamp, {
+              dateStyle: 'full',
+              timeStyle: 'short',
+            })}
+          />
+        )}
+
+        {observationDocId && (
+          <InfoItem
+            icon={
+              <MaterialIcons name="numbers" size={20} color={NEW_DARK_GREY} />
+            }
+            text={observationDocId}
+          />
+        )}
+
+        {createdByDeviceId && (
+          <InfoItem
+            icon={
+              <MaterialIcons name="devices" size={20} color={NEW_DARK_GREY} />
+            }
+            text={createdByDeviceId}
+          />
+        )}
+      </View>
+    </ScrollView>
   );
-};
+}
 
-const styles = StyleSheet.create({
-  deleteButtonWrapper: {
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderColor: WHITE,
-    borderRadius: 24,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 8,
-    paddingVertical: 6,
-  },
-  deleteButtonText: {
-    marginLeft: 4,
-    color: WHITE,
-    fontSize: 13,
-  },
-});
+function InfoItem({icon, text}: {icon: ReactNode; text: string}) {
+  return (
+    <View style={{flex: 1, flexDirection: 'row', gap: 12}}>
+      <View>{icon}</View>
+      <View style={{flex: 1}}>
+        <BodyText selectable style={{color: WHITE, flexWrap: 'wrap'}}>
+          {text}
+        </BodyText>
+      </View>
+    </View>
+  );
+}
+
+export function createNavigationOptions({
+  intl,
+}: {
+  intl: (title: MessageDescriptor) => string;
+}) {
+  return ({
+    navigation,
+    route,
+  }: NativeRootNavigationProps<'PhotoPreviewModal'>): NativeStackNavigationOptions => {
+    return {
+      headerTitle: intl(m.navTitle),
+      headerTitleStyle: {color: WHITE},
+      headerStyle: {backgroundColor: BLACK},
+      contentStyle: {backgroundColor: BLACK},
+      headerLeft: headerLeftProps => (
+        <CustomHeaderLeft
+          tintColor={WHITE}
+          headerBackButtonProps={headerLeftProps}
+        />
+      ),
+      headerRight: () => {
+        const {photo} = route.params;
+
+        return photo.type === 'processed' ? (
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('ConfirmDeletePhoto', {
+                photo,
+                onSuccess: () => {
+                  navigation.goBack();
+                },
+              });
+            }}
+            style={{
+              borderStyle: 'solid',
+              borderWidth: 1,
+              borderColor: WHITE,
+              borderRadius: 24,
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingHorizontal: 8,
+              paddingVertical: 6,
+            }}>
+            <MaterialIcons name="delete" size={18} color={WHITE} />
+            <Text style={{marginLeft: 4, color: WHITE, fontSize: 13}}>
+              {intl(m.headerDeleteButtonText)}
+            </Text>
+          </TouchableOpacity>
+        ) : null;
+      },
+    };
+  };
+}

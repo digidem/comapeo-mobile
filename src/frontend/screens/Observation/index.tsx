@@ -144,7 +144,18 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
                         <React.Suspense
                           key={att.driveDiscoveryId + att.hash + att.type}
                           fallback={<ThumbnailLoader size={size} />}>
-                          <SavedPhotoThumbnailImage size={size} photo={att} />
+                          <SavedPhotoThumbnailImage
+                            size={size}
+                            photo={att}
+                            onPress={() => {
+                              navigation.navigate('PhotoPreviewModal', {
+                                photo: att,
+                                observationDocId: observationId,
+                                createdByDeviceId,
+                                validatedByCoMapeo: true,
+                              });
+                            }}
+                          />
                         </React.Suspense>
                       );
                     }

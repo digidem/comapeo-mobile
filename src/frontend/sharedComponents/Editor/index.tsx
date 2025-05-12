@@ -62,7 +62,7 @@ export const Editor = ({
   isTrack = false,
   ...presetProps
 }: EditorProps) => {
-  const {projectId} = useActiveProject();
+  const {projectId, projectApi} = useActiveProject();
   const projectDetails = useProjectRoleAndDetails(projectId);
   const {navigate} = useNavigationFromRoot();
   const observationId = usePersistedDraftObservation(
@@ -120,7 +120,10 @@ export const Editor = ({
                       key={att.draftPhotoId}
                       size={size}
                       onPress={() =>
-                        navigate('PhotoPreviewModal', {photo: att})
+                        navigate('PhotoPreviewModal', {
+                          photo: att,
+                          // TODO: Is this considered validated yet?
+                        })
                       }>
                       <ThumbnailImage uri={att.thumbnailUri} />
                     </ThumbnailContainer>
@@ -131,7 +134,45 @@ export const Editor = ({
                     <React.Suspense
                       key={att.driveDiscoveryId + att.hash + att.type}
                       fallback={<ThumbnailLoader size={size} />}>
-                      <SavedPhotoThumbnailImage size={size} photo={att} />
+                      <SavedPhotoThumbnailImage
+                        size={size}
+                        photo={att}
+                        onPress={() => {
+                          if (!observationId) {
+                            navigate('PhotoPreviewModal', {
+                              photo: att,
+                            });
+                            return;
+                          }
+
+                          // TODO: Ideally use the core-react hooks but the error handling makes it tricky
+                          // since a boundary would need to be set up somewhere. Probably requires some bigger changes
+                          // to how this Editor component is implemented.
+                          projectApi.observation
+                            .getByDocId(observationId)
+                            .then(observation => {
+                              return projectApi.$originalVersionIdToDeviceId(
+                                observation.originalVersionId,
+                              );
+                            })
+                            .then(createdByDeviceId => {
+                              navigate('PhotoPreviewModal', {
+                                photo: att,
+                                observationDocId: observationId,
+                                createdByDeviceId,
+                                validatedByCoMapeo: true,
+                              });
+                            })
+                            .catch(() => {
+                              // TODO: Does it make sense to navigate to the screen if we fail to retrieve `createdByDeviceId`?
+                              navigate('PhotoPreviewModal', {
+                                photo: att,
+                                observationDocId: observationId,
+                                validatedByCoMapeo: true,
+                              });
+                            });
+                        }}
+                      />
                     </React.Suspense>
                   );
                 }

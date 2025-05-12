@@ -4,7 +4,6 @@ import {AlertIcon} from '../icons';
 import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types';
 import {useAttachmentUrlQuery} from '../../hooks/server/media';
 import {ThumbnailContainer} from './ThumbnailContainer';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 
 export const ThumbnailImage = ({error, uri}: {error?: Error; uri: string}) => {
   const [nativeImageError, setNativeImageError] = React.useState(false);
@@ -27,27 +26,18 @@ export const ThumbnailImage = ({error, uri}: {error?: Error; uri: string}) => {
 };
 
 export const SavedPhotoThumbnailImage = ({
+  onPress,
   photo,
   size,
 }: {
+  onPress?: () => void;
   photo: SavedPhoto;
   size: number;
 }) => {
   const image = useAttachmentUrlQuery(photo, 'thumbnail');
-  const navigation = useNavigationFromRoot();
 
   return (
-    <ThumbnailContainer
-      size={size}
-      onPress={
-        image.error
-          ? undefined
-          : () => {
-              navigation.navigate('PhotoPreviewModal', {
-                photo,
-              });
-            }
-      }>
+    <ThumbnailContainer size={size} onPress={image.error ? undefined : onPress}>
       <ThumbnailImage error={image.error || undefined} uri={image.url} />
     </ThumbnailContainer>
   );

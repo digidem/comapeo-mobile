@@ -43,7 +43,16 @@ export type RootStackParamsList = {
   CoordinateFormat: undefined;
   Experiments: undefined;
   PhotoPreviewModal: {
+    createdByDeviceId?: string;
+    observationDocId?: string;
     photo: SavedPhoto | ProcessedDraftPhoto;
+    validatedByCoMapeo?: boolean;
+  };
+  ConfirmDeletePhoto: {
+    onSuccess?: () => void;
+    // We currently only support deleting processed draft photos
+    // but we will eventually support deleting saved photos as well.
+    photo: ProcessedDraftPhoto;
   };
   PresetChooser: undefined;
   AddPhoto: undefined;

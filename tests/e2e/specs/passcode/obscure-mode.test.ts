@@ -3,7 +3,6 @@ import {describe, it} from 'mocha';
 import {byText, byTextMatches, byResourceId} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 import {checkForElementGone} from '../../utils/checkForGone';
-import {enterPasscodeWithKeyEvents} from '../../utils/enterText';
 
 describe('Passcode - Obscure Passcode Mode', () => {
   it('should show a blank Observations screen after entering obscure passcode', async () => {
@@ -16,7 +15,7 @@ describe('Passcode - Obscure Passcode Mode', () => {
     await expect($(byTextMatches('Enter your passcode'))).toBeDisplayed();
     const passcodeField = await $(byResourceId('SETTINGS.auth-passcode-inp'));
     await passcodeField.click();
-    await enterPasscodeWithKeyEvents(output.obscurepasscode);
+    await driver.keys(output.obscurepasscode.split(''));
     await driver.hideKeyboard();
 
     await obsListTab.click();
@@ -72,7 +71,7 @@ describe('Passcode - Obscure Passcode Mode', () => {
 
     const passcodeField = await $(byResourceId('SETTINGS.auth-passcode-inp'));
     await passcodeField.click();
-    await enterPasscodeWithKeyEvents(output.passcode);
+    await driver.keys(output.passcode.split(''));
     await driver.hideKeyboard();
 
     const obsListTab = await $('~Go to observations list.');

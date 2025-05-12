@@ -2,7 +2,6 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byTextMatches, byResourceId} from '../../utils/selectors';
 import {output} from '../../utils/naming';
-import {enterPasscodeWithKeyEvents} from '../../utils/enterText';
 
 describe('Passcode - Check Passcode Requirements Flow', () => {
   it('should relaunch app and see Passcode entry screen', async () => {
@@ -32,7 +31,7 @@ describe('Passcode - Check Passcode Requirements Flow', () => {
   it('should handle wrong passcode, then close and reopen app, see passcode again, then correct passcode', async () => {
     const passcodeField = await $(byResourceId('SETTINGS.auth-passcode-inp'));
     await passcodeField.click();
-    await enterPasscodeWithKeyEvents('54321');
+    await driver.keys('54321'.split(''));
     await driver.hideKeyboard();
 
     await expect($(byTextMatches('Incorrect passcode'))).toBeDisplayed();
@@ -49,6 +48,6 @@ describe('Passcode - Check Passcode Requirements Flow', () => {
     await expect($(byTextMatches('Enter your passcode'))).toBeDisplayed();
 
     await passcodeField.click();
-    await enterPasscodeWithKeyEvents(output.passcode);
+    await driver.keys(output.passcode.split(''));
   });
 });

@@ -17,9 +17,11 @@ import {
   VERY_LIGHT_GREY,
   BLACK,
 } from '../../../lib/styles';
-import {useProjectSettings} from '../../../hooks/server/projects';
+import {
+  useActiveArchiveServer,
+  useProjectSettings,
+} from '../../../hooks/server/projects';
 import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
-import {useGetRemoteArchives} from '../../../hooks/server/projects';
 
 const m = defineMessages({
   title: {
@@ -89,8 +91,7 @@ export const ProjectSettings = () => {
   const {data: configData} = useProjectSettings();
   const isSolo = projectInfo.role === 'solo';
   const isCoordinator = projectInfo.role === 'coordinator';
-  const {data: remoteArchives} = useGetRemoteArchives();
-  const remoteArchiveOn = remoteArchives && remoteArchives.length > 0;
+  const remoteArchiveOn = !!useActiveArchiveServer({projectId});
 
   const displayTitle = isSolo
     ? projectInfo.projectHeader
@@ -134,9 +135,7 @@ export const ProjectSettings = () => {
           )}
           subtitle={formatMessage(m.remoteArchiveDesc)}
           buttonText={formatMessage(m.viewDetails)}
-          onPress={() =>
-            navigate(remoteArchiveOn ? 'RemoteArchiveOn' : 'RemoteArchiveOff')
-          }
+          onPress={() => navigate('RemoteArchive')}
         />
       )}
       {projectInfo.role !== 'participant' && (

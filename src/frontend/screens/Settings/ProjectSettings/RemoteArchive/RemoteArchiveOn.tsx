@@ -1,214 +1,167 @@
 import * as React from 'react';
-import {BackHandler, StyleSheet, View} from 'react-native';
 import {FormattedDate, defineMessages, useIntl} from 'react-intl';
-import {
-  useGetOwnRole,
-  useGetRemoteArchives,
-} from '../../../../hooks/server/projects';
-import {Loading} from '../../../../sharedComponents/Loading';
-import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../../../sharedTypes';
-import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
-import {LIGHT_GREY, MEDIUM_GREY} from '../../../../lib/styles';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import {useFocusEffect} from '@react-navigation/native';
-import {CustomHeaderLeft} from '../../../../sharedComponents/CustomHeaderLeft';
-import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
+
+import {LIGHT_GREY, MAGENTA, MEDIUM_GREY} from '../../../../lib/styles';
 import {BodyText} from '../../../../sharedComponents/Text/BodyText';
-// import {TouchableOpacity} from 'react-native';
+import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 
 const m = defineMessages({
   navTitle: {
-    id: 'ProjectSettings.RemoteArchive.navTitle',
+    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOn.navTitle',
     defaultMessage: 'Remote Archive',
   },
   remoteArchiveOn: {
-    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOn',
+    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOn.remoteArchiveOn',
     defaultMessage: 'Remote Archive is On',
   },
   syncWithInternet: {
-    id: 'ProjectSettings.RemoteArchive.syncWithInternet',
+    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOn.syncWithInternet',
     defaultMessage:
       'Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data.',
   },
   remove: {
-    id: 'ProjectSettings.RemoteArchive.remove',
+    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOn.remove',
     defaultMessage: 'Remove the server to stop Remote Archive.',
   },
   coordinatorCanTurnOff: {
-    id: 'ProjectSettings.RemoteArchive.coordinatorCanTurnOff',
+    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOn.coordinatorCanTurnOff',
     defaultMessage: 'Only a Project Coordinator can turn off Remote Archive.',
   },
   thisIncludes: {
-    id: 'ProjectSettings.RemoteArchive.thisIncludes',
-    defaultMessage: 'This includes ',
+    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOn.thisIncludes',
+    defaultMessage: 'This includes:',
   },
   observations: {
-    id: 'ProjectSettings.RemoteArchive.observations',
+    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOn.observations',
     defaultMessage: 'Observations (including photos and audio)',
   },
   tracks: {
-    id: 'ProjectSettings.RemoteArchive.tracks',
+    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOn.tracks',
     defaultMessage: 'Tracks',
   },
   deviceNames: {
-    id: 'ProjectSettings.RemoteArchive.deviceNames',
+    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOn.deviceNames',
     defaultMessage: 'Device Names',
   },
   projectSettings: {
-    id: 'ProjectSettings.RemoteArchive.projectSettings',
+    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOn.projectSettings',
     defaultMessage: 'Project Settings (categories, questions)',
   },
   serverName: {
-    id: 'ProjectSettings.RemoteArchive.serverName',
+    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOn.serverName',
     defaultMessage: 'Server Name',
   },
   dateAdded: {
-    id: 'ProjectSettings.RemoteArchive.dateAdded',
+    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOn.dateAdded',
     defaultMessage: 'Date Added',
   },
-  //   remove: {
-  //     id: 'ProjectSettings.RemoteArchive.remove',
-  //     defaultMessage: 'Remove Server',
-  //   },
+  removeServer: {
+    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOn.removeServer',
+    defaultMessage: 'Remove Server',
+  },
 });
 
-export const RemoteArchiveOn: NativeNavigationComponent<'RemoteArchiveOn'> = ({
-  navigation,
-}) => {
-  const {formatMessage} = useIntl();
-  const {data: role} = useGetOwnRole();
-  const {data: remoteArchive, isRefetching} = useGetRemoteArchives();
-
-  const isCoordinator =
-    role?.roleId === COORDINATOR_ROLE_ID || role?.roleId === CREATOR_ROLE_ID;
-
-  const currentRemoteArchive = !remoteArchive ? undefined : remoteArchive[0];
-
-  const handleGoBack = React.useCallback(() => {
-    navigation.popTo('ProjectSettings');
-  }, [navigation]);
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: props => (
-        <CustomHeaderLeft
-          onPress={handleGoBack}
-          headerBackButtonProps={props}
-        />
-      ),
-    });
-  }, [handleGoBack, navigation]);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      const onBackPress = () => {
-        handleGoBack();
-        return true;
-      };
-
-      const subscription = BackHandler.addEventListener(
-        'hardwareBackPress',
-        onBackPress,
-      );
-
-      return () => subscription.remove();
-    }, [handleGoBack]),
-  );
-
-  if (isRefetching) {
-    return <Loading />;
-  }
+export function RemoteArchiveOn({
+  archiveBaseUrl,
+  archiveDateAdded,
+  archiveName,
+  isCoordinator,
+  onRemove,
+}: {
+  archiveBaseUrl: string;
+  archiveDateAdded?: string;
+  archiveName?: string;
+  isCoordinator: boolean;
+  onRemove: () => void;
+}) {
+  const {formatMessage: t} = useIntl();
 
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={{paddingBottom: 60}}>
+    <ScrollView contentContainerStyle={styles.container}>
       <HeaderText variant="header2" style={styles.title}>
-        {formatMessage(m.remoteArchiveOn)}
+        {t(m.remoteArchiveOn)}
       </HeaderText>
-      <BodyText style={{marginTop: 20}}>
-        {formatMessage(m.syncWithInternet)}
-      </BodyText>
+
+      <View>
+        <BodyText>{t(m.syncWithInternet)}</BodyText>
+        {isCoordinator && <BodyText>{t(m.remove)}</BodyText>}
+      </View>
 
       {isCoordinator ? (
-        <>
-          {/* <Text>{formatMessage(m.remove)}</Text> */}
-          <BodyText variant="smallMeta" style={{marginTop: 20}}>
-            {formatMessage(m.thisIncludes)}
+        <View>
+          <BodyText variant="smallMeta" style={{fontWeight: 'bold'}}>
+            {t(m.thisIncludes)}
           </BodyText>
-          <BodyText variant="smallMeta">
-            {formatMessage(m.observations)}
-          </BodyText>
-          <BodyText variant="smallMeta">{formatMessage(m.tracks)}</BodyText>
-          <BodyText variant="smallMeta">
-            {formatMessage(m.deviceNames)}
-          </BodyText>
-          <BodyText variant="smallMeta">
-            {formatMessage(m.projectSettings)}
-          </BodyText>
-        </>
+          <BodyText variant="smallMeta">{t(m.observations)}</BodyText>
+          <BodyText variant="smallMeta">{t(m.tracks)}</BodyText>
+          <BodyText variant="smallMeta">{t(m.deviceNames)}</BodyText>
+          <BodyText variant="smallMeta">{t(m.projectSettings)}</BodyText>
+        </View>
       ) : (
-        <BodyText>{formatMessage(m.coordinatorCanTurnOff)}</BodyText>
+        <BodyText>{t(m.coordinatorCanTurnOff)}</BodyText>
       )}
 
-      {currentRemoteArchive && (
-        <>
-          <View style={styles.nameDate}>
-            <BodyText variant="smallMeta" style={styles.smallGrayText}>
-              {formatMessage(m.serverName)}
-            </BodyText>
-            <BodyText variant="smallMeta" style={styles.smallGrayText}>
-              {formatMessage(m.dateAdded)}
-            </BodyText>
-          </View>
-          <View style={styles.card}>
-            <View style={{alignSelf: 'flex-start', maxWidth: '70%'}}>
-              <HeaderText variant="header6">
-                {currentRemoteArchive.name}
-              </HeaderText>
-              {currentRemoteArchive.selfHostedServerDetails && (
-                <BodyText variant="smallMeta">
-                  {currentRemoteArchive.selfHostedServerDetails.baseUrl}
-                </BodyText>
-              )}
-              {/* {isCoordinator && (
-                <TouchableOpacity>
-                  <Text style={{fontSize: 14, color: RED, marginTop: 10}}>
-                    {formatMessage(m.remove)}
-                  </Text>
-                </TouchableOpacity>
-              )} */}
+      <View style={{gap: 12}}>
+        <View style={styles.nameDate}>
+          <BodyText variant="smallMeta" style={{color: MEDIUM_GREY}}>
+            {t(m.serverName)}
+          </BodyText>
+          <BodyText variant="smallMeta" style={{color: MEDIUM_GREY}}>
+            {t(m.dateAdded)}
+          </BodyText>
+        </View>
+
+        <View style={styles.card}>
+          <View style={{alignSelf: 'flex-start', maxWidth: '70%', gap: 20}}>
+            <View style={{gap: 4}}>
+              <HeaderText variant="header6">{archiveName}</HeaderText>
+              <BodyText variant="smallMeta" style={{color: MEDIUM_GREY}}>
+                {archiveBaseUrl}
+              </BodyText>
             </View>
-            <BodyText
-              variant="tinyMeta"
-              style={{
-                flex: 1,
-                alignSelf: 'flex-start',
-                textAlign: 'right',
-                justifyContent: 'center',
-                color: MEDIUM_GREY,
-              }}>
-              <FormattedDate
-                value={currentRemoteArchive.joinedAt}
-                year="numeric"
-                month="short"
-                day="2-digit"
-              />
-            </BodyText>
+            {isCoordinator && (
+              <TouchableOpacity
+                onPress={() => {
+                  onRemove();
+                }}>
+                <BodyText
+                  style={{color: MAGENTA, fontWeight: 'bold'}}
+                  variant="smallMeta">
+                  {t(m.removeServer)}
+                </BodyText>
+              </TouchableOpacity>
+            )}
           </View>
-        </>
-      )}
+
+          <BodyText
+            variant="tinyMeta"
+            style={{
+              flex: 1,
+              alignSelf: 'flex-start',
+              textAlign: 'right',
+              justifyContent: 'center',
+              color: MEDIUM_GREY,
+            }}>
+            <FormattedDate
+              value={archiveDateAdded}
+              year="numeric"
+              month="short"
+              day="2-digit"
+            />
+          </BodyText>
+        </View>
+      </View>
     </ScrollView>
   );
-};
-
-RemoteArchiveOn.navTitle = m.navTitle;
+}
 
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    paddingTop: 40,
-    marginBottom: 20,
+    paddingVertical: 40,
+    gap: 20,
   },
   title: {
     textAlign: 'center',
@@ -216,13 +169,7 @@ const styles = StyleSheet.create({
   nameDate: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 20,
     justifyContent: 'space-between',
-    marginBottom: 10,
-  },
-  smallGrayText: {
-    fontSize: 12,
-    color: MEDIUM_GREY,
   },
   card: {
     flex: 1,

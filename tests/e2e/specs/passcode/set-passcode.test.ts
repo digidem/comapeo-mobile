@@ -5,10 +5,6 @@ import {output} from '../../utils/naming';
 
 describe('Passcode - Set Passcode Flow', () => {
   it('should navigate to Security screen from drawer', async () => {
-    const drawerIcon = await $('~Open Menu');
-    if (await drawerIcon.isDisplayed()) {
-      await drawerIcon.click();
-    }
     const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
 
@@ -126,7 +122,6 @@ describe('Passcode - Set Passcode Flow', () => {
 
     await passcodeInput.setValue('54321');
     await nextBtn.click();
-    await driver.hideKeyboard();
     await expect($(byTextMatches('Password does not match'))).toBeDisplayed();
 
     await passcodeInput.setValue(output.passcode);

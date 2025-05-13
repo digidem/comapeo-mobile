@@ -95,7 +95,9 @@ export const AuthScreen = ({
       dockContent={
         error && <Text style={styles.wrongPass}>{t(m.wrongPass)}</Text>
       }>
-      <CoMapeoLogoSvg height={window.height / 3} />
+      {process.env.EXPO_PUBLIC_E2E_TEST !== 'true' && (
+        <CoMapeoLogoSvg height={window.height / 3} />
+      )}
       <Text style={styles.description}>{t(m.enterPass)}</Text>
       <PasscodeInput
         testID="SETTINGS.auth-passcode-inp"

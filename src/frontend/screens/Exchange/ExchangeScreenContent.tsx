@@ -42,7 +42,7 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {ROOT_QUERY_KEY} from '../../constants';
-import {useGetRemoteArchives} from '../../hooks/server/projects';
+import {useActiveArchiveServer} from '../../hooks/server/projects';
 import {Button} from '../../sharedComponents/Button';
 
 const m = defineMessages({
@@ -147,9 +147,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
     syncState.remoteDeviceSyncState,
   );
 
-  const {data: remoteArchives} = useGetRemoteArchives();
-
-  const remoteArchiveConnected = remoteArchives && remoteArchives.length > 0;
+  const remoteArchiveConnected = !!useActiveArchiveServer({projectId});
 
   const syncingPeersCount = getSyncingPeersCount(
     syncState.remoteDeviceSyncState,

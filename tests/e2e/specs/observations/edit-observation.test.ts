@@ -2,6 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches} from '../../utils/selectors';
 import {tapAboveElement} from '../../utils/touchActions';
+import {checkForElementGone} from '../../utils/checkForGone';
 
 describe('Observations - Edit Observation Flow', () => {
   it('should open editable observation and navigate to edit screen', async () => {
@@ -23,7 +24,7 @@ describe('Observations - Edit Observation Flow', () => {
     await descriptionInput.setValue('Updated description');
     const addBottomBar = await $(byResourceId('OBS.add-photo-btn-keyboard'));
     await tapAboveElement(addBottomBar, 100);
-    await expect(addBottomBar).not.toBeDisplayed();
+    checkForElementGone(byResourceId('OBS.add-photo-btn-keyboard'));
   });
 
   it('should navigate to details screen and complete a question', async () => {

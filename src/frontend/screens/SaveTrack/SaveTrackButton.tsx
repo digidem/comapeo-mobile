@@ -1,4 +1,3 @@
-import {CommonActions} from '@react-navigation/native';
 import React, {FC} from 'react';
 import {Image, Pressable, StyleSheet} from 'react-native';
 
@@ -40,12 +39,7 @@ export const SaveTrackButton: FC = () => {
       {
         onSuccess: () => {
           clearCurrentTrack();
-          navigation.dispatch(
-            CommonActions.reset({
-              index: 0,
-              routes: [{name: 'Home', params: {screen: 'Map'}}],
-            }),
-          );
+          navigation.goBack();
         },
       },
     );

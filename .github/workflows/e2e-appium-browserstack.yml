@@ -84,19 +84,9 @@ jobs:
       - name: Upload APK to BrowserStack
         id: upload
         run: |
-          TITLE="${{ github.event.pull_request.title || 'manual' }}"
-          SHA="${{ github.event.pull_request.head.sha || github.sha }}"
-          SHORT_SHA=$(echo "$SHA" | cut -c1-7)
-          SAFE_TITLE=$(echo "$TITLE" | tr ' /:' '-' | cut -c1-50)
-          CUSTOM_ID="${SAFE_TITLE}-${SHORT_SHA}"
-
-          echo "Using custom_id: $CUSTOM_ID"
-
           APP_URL=$(curl -u "$BROWSERSTACK_USERNAME:$BROWSERSTACK_ACCESS_KEY" \
             -X POST "https://api-cloud.browserstack.com/app-automate/upload" \
-            -F "file=@$APK_PATH" \
-            -F "custom_id=$CUSTOM_ID" \
-            | jq -r '.app_url')
+            -F "file=@$APK_PATH" | jq -r '.app_url')
 
           echo "app_url=$APP_URL" >> $GITHUB_ENV
           echo "app_url=$APP_URL" >> $GITHUB_OUTPUT

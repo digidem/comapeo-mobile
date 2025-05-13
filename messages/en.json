@@ -351,6 +351,9 @@
   "screen.EditProjectDetails.blue": {
     "message": "Blue"
   },
+  "screen.EditProjectDetails.descriptionPlaceholder": {
+    "message": "Short Description of the Project, less than 60 characters."
+  },
   "screen.EditProjectDetails.green": {
     "message": "Green"
   },

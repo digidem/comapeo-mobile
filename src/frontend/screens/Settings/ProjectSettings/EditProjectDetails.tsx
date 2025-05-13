@@ -12,6 +12,7 @@ import {HorizontalScrollView} from '../../../sharedComponents/HorizontalScrollVi
 import {SaveButton} from '../../../sharedComponents/SaveButton';
 import {useEffect} from 'react';
 import {useUpdateProjectSettings} from '@comapeo/core-react';
+import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
   projectName: {
@@ -50,6 +51,11 @@ const m = defineMessages({
     id: 'screen.EditProjectDetails.projectColors',
     defaultMessage: 'Project Card Colors',
   },
+  descriptionPlaceholder: {
+    id: 'screen.EditProjectDetails.descriptionPlaceholder',
+    defaultMessage:
+      'Short Description of the Project, less than 60 characters.',
+  },
 });
 
 export const EditProjectDetails: NativeNavigationComponent<
@@ -59,13 +65,15 @@ export const EditProjectDetails: NativeNavigationComponent<
   const {projectId} = useActiveProject();
   const projectDetails = useProjectRoleAndDetails(projectId);
   const {mutate, status} = useUpdateProjectSettings({projectId});
-  const {control, setValue, watch, handleSubmit} = useForm<{
+  const {control, setValue, watch, handleSubmit, setError} = useForm<{
     projectName: string;
     color: string;
+    projectDescription?: string;
   }>({
     defaultValues: {
       color: projectDetails.projectColor,
       projectName: projectDetails.projectName,
+      projectDescription: projectDetails.projectDescription,
     },
   });
 
@@ -77,14 +85,22 @@ export const EditProjectDetails: NativeNavigationComponent<
         <SaveButton
           isLoading={status === 'pending'}
           onPress={handleSubmit(details => {
+            if (!details.projectName.trim()) {
+              setError('projectName', {type: 'required'});
+            }
             mutate(
               {
                 projectColor: details.color,
-                name: details.projectName,
+                name: details.projectName.trim(),
+                projectDescription: details.projectDescription?.trim(),
               },
               {
-                onSuccess: newVal => {
-                  console.log({newVal});
+                onSuccess: () => {
+                  navigation.popTo('Menu');
+                },
+                onError: err => {
+                  Sentry.captureException(err);
+                  navigation.navigate('ErrorBottomSheet');
                 },
               },
             );
@@ -92,7 +108,7 @@ export const EditProjectDetails: NativeNavigationComponent<
         />
       ),
     });
-  }, [navigation, handleSubmit, mutate, status]);
+  }, [navigation, handleSubmit, mutate, status, setError]);
 
   return (
     <View>
@@ -101,21 +117,26 @@ export const EditProjectDetails: NativeNavigationComponent<
           {formatMessage(m.projectName)}
         </HeaderText>
         <HookFormTextInput
-          rules={{maxLength: 60}}
+          rules={{maxLength: 60, required: true}}
+          style={{textAlignVertical: 'top', fontSize: 20}}
           control={control}
           showCharacterCount={true}
           name="projectName"
+          placeholder={`[${formatMessage(m.projectName)}]`}
         />
 
         <HeaderText variant="header6">
           {formatMessage(m.projectDescription)}
         </HeaderText>
-        {/* <HookFormTextInput
-          rules={{maxLength: 60, required: false}}
+        <HookFormTextInput
           control={control}
+          rules={{maxLength: 60, required: false}}
+          multiline={true}
+          style={{textAlignVertical: 'top', fontSize: 20}}
           showCharacterCount={true}
           name="projectDescription"
-        /> */}
+          placeholder={`[${formatMessage(m.descriptionPlaceholder)}]`}
+        />
 
         <HeaderText variant="header6">
           {formatMessage(m.projectColors)}

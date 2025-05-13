@@ -1,15 +1,13 @@
 import * as React from 'react';
 import Mapbox from '@rnmapbox/maps';
 
-import {IconButton} from '../../sharedComponents/IconButton';
 import {
   LocationFollowingIcon,
   LocationNoFollowIcon,
 } from '../../sharedComponents/icons';
 
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {ObservationMapLayer} from './MapLayers/ObservationMapLayer';
-import {AddButton} from '../../sharedComponents/AddButton';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
@@ -26,9 +24,12 @@ import {useMapStyleJsonUrl} from '../../hooks/server/maps';
 import {TracksMapLayer} from './MapLayers/TracksMapLayer';
 import {assert} from '../../lib/assert';
 import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLayer';
-import {matchPreset} from '../../lib/utils';
+import {getLocationStatus, matchPreset} from '../../lib/utils';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
+import {GPSPill} from '../../sharedComponents/GPSPill';
+import AddButtonSVG from '../../images/AddButton.svg';
+import {useAuthContext} from '../../contexts/AuthContext';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -52,7 +53,7 @@ export const MapScreen = ({
   const [following, setFollowing] = React.useState(true);
   const {newDraft} = useDraftObservation();
   const {navigate} = useNavigationFromHomeTabs();
-  const {locationState} = useSharedLocationContext();
+  const {locationState, fgPermissions} = useSharedLocationContext();
   const savedLocation = useLastKnownLocation();
   const coords = locationState.location && getCoords(locationState.location);
   const locationProviderStatus = useLocationProviderStatus();
@@ -64,11 +65,12 @@ export const MapScreen = ({
     store => store.value,
   );
   const {data: presets} = usePresetsQuery();
+  const {authState} = useAuthContext();
 
   useFocusEffect(
     React.useCallback(() => {
       // if no exisiting observation, stay home
-      if (!existingObservation) {
+      if (!existingObservation || authState === 'obscured') {
         return;
       }
       // if existing observation and no preset match, user has started creating an observation but had not chosen a preset, so navigate to preset chooser
@@ -81,7 +83,7 @@ export const MapScreen = ({
       } else {
         navigate('ObservationCreate');
       }
-    }, [existingObservation, navigate, presets]),
+    }, [existingObservation, navigate, presets, authState]),
   );
 
   const handleAddPress = () => {
@@ -151,7 +153,7 @@ export const MapScreen = ({
           <UserLocation minDisplacement={MIN_DISPLACEMENT} />
         )}
 
-        {isFinishedLoading && (
+        {isFinishedLoading && authState !== 'obscured' && (
           <>
             <RemoteDetectionAlertsMapLayer />
             <CurrentTrackMapLayer />
@@ -160,32 +162,54 @@ export const MapScreen = ({
           </>
         )}
       </Mapbox.MapView>
+      <View style={styles.bottomContainer}>
+        <View style={{flex: 1, alignItems: 'center'}}>
+          <GPSPill
+            {...getLocationStatus({
+              providerStatus: locationProviderStatus,
+              location: fgPermissions ? locationState.location : undefined,
+            })}
+            testID="MAP.gps-pill"
+            accessibilityLabel="Open GPS Modal."
+            onPress={() => navigation.navigate('GpsModal')}
+          />
+        </View>
+
+        <TouchableOpacity
+          testID="MAIN.add-observation-btn"
+          accessibilityLabel="Add Observation"
+          onPress={handleAddPress}>
+          <AddButtonSVG />
+        </TouchableOpacity>
+
+        {coords && locationServicesEnabled ? (
+          <TouchableOpacity
+            style={{flex: 1, alignItems: 'center'}}
+            onPress={handleLocationPress}>
+            {following ? <LocationFollowingIcon /> : <LocationNoFollowIcon />}
+          </TouchableOpacity>
+        ) : (
+          <View style={{width: 0, height: 0, flex: 1}} />
+        )}
+      </View>
       <ScaleBar
         zoom={zoom || 10}
         latitude={coords ? coords[1] : undefined}
         bottom={20}
       />
-      {coords && locationServicesEnabled && (
-        <View style={styles.locationButton}>
-          <IconButton onPress={handleLocationPress}>
-            {following ? <LocationFollowingIcon /> : <LocationNoFollowIcon />}
-          </IconButton>
-        </View>
-      )}
-      <AddButton
-        testID="MAIN.add-observation-btn"
-        onPress={handleAddPress}
-        isLoading={!isFinishedLoading}
-      />
+
       {trackBottomSheetOpen && <TrackBottomSheet />}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  locationButton: {
+  bottomContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     position: 'absolute',
-    right: 20,
-    bottom: 20,
+    bottom: 25,
+    width: '100%',
   },
 });

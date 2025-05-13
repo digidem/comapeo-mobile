@@ -36,6 +36,7 @@ const m = defineMessages({
 export function AudioRecording({
   navigation,
 }: NativeRootNavigationProps<'AudioRecording'>) {
+  const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
   const {startRecording, stopRecording, status} = useAudioRecording();
 
   const timeElapsed = status?.durationMillis || 0;
@@ -66,10 +67,10 @@ export function AudioRecording({
 
   // stop recording at 5 minutes
   React.useEffect(() => {
-    if (timeElapsed >= MAX_RECORDING_DURATION_MS) {
+    if (timeElapsed >= MAX_RECORDING_DURATION_MS && isRecording) {
       finishRecording();
     }
-  }, [timeElapsed, finishRecording]);
+  }, [timeElapsed, finishRecording, isRecording]);
 
   return (
     <>
@@ -92,6 +93,9 @@ export function AudioRecording({
             </View>
           ) : (
             <TouchableOpacity
+              accessibilityLabel={
+                isRecording ? 'Stop recording audio.' : 'Start recording audio.'
+              }
               onPress={isRecording ? finishRecording : startRecording}
               style={AudioStyles.basePressable}>
               {<View style={isRecording ? styles.stop : styles.record} />}
@@ -117,7 +121,11 @@ export function AudioRecording({
           </HeaderText>
         </View>
       </ScreenContentWithDock>
-      <AnimatedBackground timeElapsed={timeElapsed} />
+      {isE2E ? (
+        <View style={{height: 0}} />
+      ) : (
+        <AnimatedBackground timeElapsed={timeElapsed} />
+      )}
     </>
   );
 }

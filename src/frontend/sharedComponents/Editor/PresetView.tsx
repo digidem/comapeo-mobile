@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
   },
   preset: {
     padding: 10,
+    paddingHorizontal: 20,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

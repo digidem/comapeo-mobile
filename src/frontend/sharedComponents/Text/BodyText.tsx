@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {Text as RNText, TextProps, TextStyle} from 'react-native';
-import {BLACK} from '../../lib/styles';
+import {DARK_GREY} from '../../lib/styles';
 
-type Variant = 'large' | 'regular' | 'smallMeta' | 'tinyMeta';
+type Variant = 'large' | 'medium' | 'regular' | 'smallMeta' | 'tinyMeta';
 
 interface BodyProps extends Omit<TextProps, 'style'> {
   style?: Omit<TextStyle, 'fontSize' | 'fontFamily'>;
@@ -15,6 +15,8 @@ interface BodyProps extends Omit<TextProps, 'style'> {
  * Different `variant` types (default to 'regular'):
  *
  * large = `{fontSize:20}`
+ *
+ * medium = `{fontSize: 18}`
  *
  * regular = `{fontSize:16}`
  *
@@ -31,7 +33,10 @@ export const BodyText = ({
   return (
     <RNText
       style={[
-        {color: BLACK, fontSize: fontSizeMap[variant || 'regular']},
+        {
+          color: DARK_GREY,
+          fontSize: fontSizeMap[variant || 'regular'],
+        },
         style,
       ]}
       {...otherTextProps}>
@@ -42,6 +47,7 @@ export const BodyText = ({
 
 const fontSizeMap: {[key in Variant]: number} = {
   large: 20,
+  medium: 18,
   regular: 16,
   smallMeta: 14,
   tinyMeta: 12,

@@ -5,10 +5,14 @@ import React from 'react';
 import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
 import {DeviceNameWithIcon} from '../../../../sharedComponents/DeviceNameWithIcon';
 import {RoleWithIcon} from '../../../../sharedComponents/RoleWithIcon';
-import {Button} from '../../../../sharedComponents/Button';
+import {
+  SecondaryButton,
+  PrimaryButton,
+} from '../../../../sharedComponents/Buttons';
 import {useFocusEffect} from '@react-navigation/native';
 import {COORDINATOR_ROLE_ID} from '../../../../sharedTypes';
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
+import {resetToYourTeam} from '../../../../lib/resetToYourTeam';
 
 const m = defineMessages({
   inviteAccepted: {
@@ -56,23 +60,20 @@ export const InviteAccepted = ({
           role={role === COORDINATOR_ROLE_ID ? 'coordinator' : 'participant'}
         />
       </View>
-      <View style={{width: '100%'}}>
-        <Button
-          fullWidth
-          variant="outlined"
+      <View style={{alignItems: 'center'}}>
+        <SecondaryButton
+          fullSize
+          text={t(m.addAnotherDevice)}
           onPress={() => {
             navigation.popTo('SelectDevice');
-          }}>
-          {t(m.addAnotherDevice)}
-        </Button>
-        <Button
+          }}
+        />
+        <PrimaryButton
           style={{marginTop: 10}}
-          fullWidth
-          onPress={() => {
-            navigation.popTo('YourTeam');
-          }}>
-          {t(m.close)}
-        </Button>
+          fullSize
+          text={t(m.close)}
+          onPress={() => resetToYourTeam(navigation.dispatch)}
+        />
       </View>
     </View>
   );

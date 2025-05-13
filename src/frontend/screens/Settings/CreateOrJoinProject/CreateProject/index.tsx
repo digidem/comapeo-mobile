@@ -16,7 +16,11 @@ import {
 } from 'react-native-gesture-handler';
 import {UIActivityIndicator} from 'react-native-indicators';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {useCreateProject} from '@comapeo/core-react';
+import {
+  useCreateProject,
+  useImportProjectConfig,
+  useUpdateProjectSettings,
+} from '@comapeo/core-react';
 import {useSelectFile} from '../../../../hooks/files';
 import {convertFileUriToPosixPath} from '../../../../lib/file-system';
 import {BLACK, LIGHT_GREY} from '../../../../lib/styles';
@@ -30,11 +34,13 @@ import {
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 import {useActiveProjectIdActions} from '../../../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
+import {useActiveProject} from '../../../../contexts/ActiveProjectContext';
+import {useProjectRoleAndDetails} from '../../../../hooks/useProjectRoleAndDetails';
 
 const m = defineMessages({
   title: {
     id: 'screens.Settings.CreateOrJoinProject.CreateProject.title',
-    defaultMessage: 'Create a Project',
+    defaultMessage: 'New Project',
   },
   enterName: {
     id: 'screens.Settings.CreateOrJoinProject.enterName',
@@ -48,17 +54,17 @@ const m = defineMessages({
     id: 'screens.Settings.CreateOrJoinProject.advancedSettings',
     defaultMessage: 'Advanced Project Settings',
   },
-  importConfig: {
-    id: 'screens.Settings.CreateOrJoinProject.importConfig',
-    defaultMessage: 'Import Config',
+  importCategories: {
+    id: 'screens.Settings.CreateOrJoinProject.importCategories',
+    defaultMessage: 'Import Categories',
   },
   importConfigFileError: {
     id: 'screens.Settings.CreateOrJoinProject.importConfigFileError',
     defaultMessage: 'File name should end with .comapeocat',
   },
-  configImportTitle: {
+  categoryImportTitle: {
     id: 'screens.Settings.CreateOrJoinProject.importSuccessTitle',
-    defaultMessage: 'Successfully imported config:',
+    defaultMessage: 'Successfully imported categories:',
   },
   okButton: {
     id: 'screens.Settings.CreateOrJoinProject.okButton',
@@ -86,10 +92,18 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
   const {setActiveProjectId} = useActiveProjectIdActions();
   const selectFileMutation = useSelectFile();
   const createProjectMutation = useCreateProject();
+  const {projectId} = useActiveProject();
+  const projectInfo = useProjectRoleAndDetails(projectId);
+  const updateSettingsMutation = useUpdateProjectSettings({
+    projectId: projectId,
+  });
+  const importProjectConfig = useImportProjectConfig({projectId});
 
   const mutationIsPending =
     selectFileMutation.status === 'pending' ||
-    createProjectMutation.status === 'pending';
+    createProjectMutation.status === 'pending' ||
+    importProjectConfig.status === 'pending' ||
+    updateSettingsMutation.status === 'pending';
 
   React.useEffect(() => {
     // Prevent back navigation while project creation mutation is pending
@@ -110,37 +124,61 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
     defaultValues: {projectName: ''},
   });
 
-  function handleCreateProject(val: ProjectFormType) {
+  const handleCreateOrUpdateProject = (val: ProjectFormType) => {
     const projectName = val.projectName.trim();
-    createProjectMutation.mutate(
-      {
-        name: projectName,
-        configPath:
-          configFileResult?.type === 'success'
-            ? convertFileUriToPosixPath(configFileResult.file.uri)
-            : undefined,
-      },
-      {
-        onSuccess: projectId => {
-          if (configFileResult?.type === 'success') {
-            // No need to block UI on this
-            // no-op if something fails here. caches can eventually get cleared by the OS automatically.
-            FileSystem.deleteAsync(configFileResult.file.uri, {
-              idempotent: true,
-            }).catch(noop);
-          }
+    const fileUri =
+      configFileResult?.type === 'success'
+        ? configFileResult.file.uri
+        : undefined;
+    const configPath = fileUri && convertFileUriToPosixPath(fileUri);
 
-          setActiveProjectId(projectId);
+    const onProjectCreated = () =>
+      navigation.navigate('ProjectCreated', {name: projectName});
 
-          navigation.navigate('ProjectCreated', {name: projectName});
+    const onError = (err: unknown) => {
+      Sentry.captureException(err);
+      navigation.navigate('ErrorBottomSheet');
+    };
+
+    if (projectInfo.role === 'solo') {
+      const updateSettings = () =>
+        updateSettingsMutation.mutate(
+          {name: projectName},
+          {
+            onSuccess: () => {
+              if (fileUri) {
+                FileSystem.deleteAsync(fileUri, {idempotent: true}).catch(noop);
+              }
+              onProjectCreated();
+            },
+            onError,
+          },
+        );
+
+      if (configPath) {
+        importProjectConfig.mutate(
+          {configPath},
+          {
+            onSuccess: updateSettings,
+            onError,
+          },
+        );
+      } else {
+        updateSettings();
+      }
+    } else {
+      createProjectMutation.mutate(
+        {name: projectName, configPath},
+        {
+          onSuccess: projectId => {
+            setActiveProjectId(projectId);
+            onProjectCreated();
+          },
+          onError,
         },
-        onError: err => {
-          Sentry.captureException(err);
-          navigation.navigate('ErrorBottomSheet');
-        },
-      },
-    );
-  }
+      );
+    }
+  };
 
   function selectConfigFile() {
     selectFileMutation.mutate(
@@ -152,7 +190,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
         onSuccess: selected => {
           if (!selected) return;
           setConfigFileResult({type: 'success', file: selected});
-          Alert.alert(t(m.configImportTitle), selected.name, [
+          Alert.alert(t(m.categoryImportTitle), selected.name, [
             {text: t(m.okButton)},
           ]);
         },
@@ -207,7 +245,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
                   onPress={() => {
                     selectConfigFile();
                   }}
-                  text={t(m.importConfig)}
+                  text={t(m.importCategories)}
                 />
 
                 {configFileResult?.type === 'success' && (
@@ -231,7 +269,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
               testID="PROJECT.create-btn"
               fullSize={true}
               text={t(m.createProjectButton)}
-              onPress={handleSubmit(handleCreateProject)}
+              onPress={handleSubmit(handleCreateOrUpdateProject)}
             />
           )}
         </View>

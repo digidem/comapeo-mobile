@@ -7,10 +7,16 @@
 - [Viewing Observations](#viewing-observations)
   - [Test Objectives](#test-objectives-2)
   - [Special Considerations](#special-considerations-2)
+- [Editing Observations](#editing-observations)
+  - [Test Objectives](#test-objectives-3)
+  - [Special Considerations](#special-considerations-3)
+- [Deleting Observations](#deleting-observations)
+  - [Test Objectives](#test-objectives-4)
+  - [Special Considerations](#special-considerations-4)
 
 ### Overview
 
-These tests deal with all issues related to the main screens of the app.
+These tests deal with all issues related to Observations.
 
 ## Creating Observations
 
@@ -58,8 +64,41 @@ These tests deal with all issues related to the main screens of the app.
 - Checks that all of the back buttons work
 - Checks that the observations list button goes to the observations list screen from map and the camera screen
 - Checks that observation names, time captures, thumbnails and icons display as expected on the list screen and the show observation screen
+- Checks the “You’re a coordinator on this project.” or “You’re mapping on your own.” text is displayed at the top of the ObservationsList.
 
 ### Special Considerations
 
 - The test does not check the locations of the dots at this time
 - We are not able to change the location for the app during testing at this time
+
+## Editing Observations
+
+- This tests the experience of editing an existing observation after it has been created and saved
+
+### Test Objectives
+
+- Opens an observation from the list screen and verifies that it has the edit button
+- Navigates to the Edit Observation screen and checks for presence of buttons and input fields (change, save, description, details)
+- Updates the description field and collapses the keyboard by tapping above it
+- Navigates to the details screen, enters a detail, and clicks done
+- Saves the observation and confirms that the updated description and detail are displayed on the view screen
+
+### Special Considerations
+
+- Assumes that at least one editable observation (e.g., with the “Lake” preset) exists and is visible in the observations list before the test begins
+- Does not test changing the category or adding a photo in this flow
+
+## Deleting Observations
+
+- This tests deleting an observation from the view observation screen
+
+### Test Objectives
+
+- Opens an editable observation (with the “Threat” preset), verifies presence of Share and Delete buttons
+- Opens the delete confirmation dialog and tests the cancel flow (returns to view screen)
+- Confirms the delete flow by pressing “Yes, delete” and verifies that the observation no longer appears in the list
+
+### Special Considerations
+
+- Assumes that an observation with the “Threat” preset exists and is editable by the current device
+- Does not currently verify that the deleted document is removed from storage or synced state, only that it no longer appears in the list

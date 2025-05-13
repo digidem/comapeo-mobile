@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {AppState, AppStateStatus} from 'react-native';
+import {AppState, AppStateStatus, NativeModules} from 'react-native';
+const {FlagSecureModule} = NativeModules;
 
 import {useIsShareDialogOpen} from '../hooks/share';
 import {DEFAULT_OBSCURE_CODE} from '../lib/security';
@@ -32,8 +33,16 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   const [authState, setAuthState] = React.useState<AuthState>(
     passcode === null ? 'authenticated' : 'unauthenticated',
   );
-
+  const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
   const shareDialogIsOpen = useIsShareDialogOpen();
+
+  React.useEffect(() => {
+    if (passcode !== null && !isE2E) {
+      FlagSecureModule.activate();
+    } else {
+      FlagSecureModule.deactivate();
+    }
+  }, [passcode, isE2E]);
 
   React.useEffect(() => {
     const appStateListener = AppState.addEventListener(

@@ -13,8 +13,8 @@
   "author": "Digital Democracy",
   "license": "MIT",
   "dependencies": {
-    "@comapeo/core": "2.3.1",
-    "@comapeo/ipc": "2.1.0",
+    "@comapeo/core": "3.1.1",
+    "@comapeo/ipc": "3.0.0",
     "@mapeo/default-config": "5.0.0",
     "debug": "^4.3.4"
   },
@@ -22,7 +22,7 @@
     "@digidem/types": "~2.1.0",
     "@rollup/plugin-alias": "^5.1.0",
     "@rollup/plugin-commonjs": "^25.0.7",
-    "@rollup/plugin-esm-shim": "^0.1.4",
+    "@rollup/plugin-esm-shim": "^0.1.8",
     "@rollup/plugin-json": "^6.0.1",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@tsconfig/node16": "^16.1.1",

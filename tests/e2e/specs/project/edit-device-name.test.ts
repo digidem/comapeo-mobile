@@ -5,22 +5,19 @@ import {output} from '../../utils/naming';
 
 describe('Project - Edit Device Name Test', () => {
   it('should navigate to project settings and edit the device name', async () => {
-    const drawerIcon = await $('~Open Navigation Drawer');
+    await driver.pause(2000);
+    const drawerIcon = await $('~Open Menu');
     await drawerIcon.tap();
 
-    const projectSettingsItem = await $('~Go to Project Settings');
-    await projectSettingsItem.tap();
+    const appSettingsItem = await $('~Go to app settings screen.');
+    await appSettingsItem.tap();
 
-    const deviceNameListItem = await $(
-      byResourceId('PROJECT.device-name-list-item'),
-    );
+    const deviceNameListItem = await $(byResourceId('device-name-list-item'));
     await deviceNameListItem.click();
 
     const editIcon = await $(byResourceId('edit-icon'));
     await editIcon.click();
-    const editDeviceNameField = await $(
-      byResourceId('PROJECT.edit-device-name'),
-    );
+    const editDeviceNameField = await $(byResourceId('edit-device-name'));
     await editDeviceNameField.click();
     await editDeviceNameField.clearValue();
     await editDeviceNameField.setValue(output.names.editdevice);
@@ -58,16 +55,16 @@ describe('Project - Edit Device Name Test', () => {
 
     await driver.back();
     await driver.back();
-    await $('~Close Navigation Drawer').click();
+    await $('~Close Menu').click();
 
     await drawerIcon.tap();
-    await projectSettingsItem.click();
+    await appSettingsItem.click();
     await deviceNameListItem.click();
 
     await expect(editedDeviceName).toBeDisplayed();
 
     await driver.back();
     await driver.back();
-    await $('~Close Navigation Drawer').click();
+    await $('~Close Menu').click();
   });
 });

@@ -47,48 +47,37 @@
     "message": "Stop Tracks"
   },
   "Modal.GPSEnable.trackingDescription": {
-    "message": "You’ve been recording for"
+    "message": "You’ve been recording for {time}"
   },
-  "Navigation.Drawer.aboutCoMapeo": {
-    "description": "Primary text for 'About CoMapeo' link (version info)",
+  "Navigation.Menu.Settings": {
+    "message": "Settings"
+  },
+  "Navigation.Menu.aboutCoMapeo": {
     "message": "About CoMapeo"
   },
-  "Navigation.Drawer.aboutCoMapeoDesc": {
-    "description": "Description of the 'About CoMapeo' page",
-    "message": "Version and build number"
+  "Navigation.Menu.coordinator": {
+    "message": "You are a coordinator on this project."
   },
-  "Navigation.Drawer.appSettings": {
-    "message": "App Settings"
+  "Navigation.Menu.currentProject": {
+    "message": "Current Project"
   },
-  "Navigation.Drawer.appSettingsDesc": {
-    "description": "list of avaialable app settings",
-    "message": "Language, Security, Coordinates"
+  "Navigation.Menu.exchange": {
+    "message": "Exchange"
   },
-  "Navigation.Drawer.createOrJoin": {
-    "message": "Create or Join Project"
+  "Navigation.Menu.invite": {
+    "message": "Invite"
   },
-  "Navigation.Drawer.createOrJoinDesc": {
-    "message": "Create a new project or join existing one"
+  "Navigation.Menu.mappingOnOwn": {
+    "message": "You are mapping on your own."
   },
-  "Navigation.Drawer.mappingOnOwn": {
-    "message": "You are currently mapping on your own"
+  "Navigation.Menu.participant": {
+    "message": "You are a participant on this project."
   },
-  "Navigation.Drawer.privacyPolicy": {
-    "message": "Privacy Policy"
+  "Navigation.Menu.privacyPolicy": {
+    "message": "Data & Privacy"
   },
-  "Navigation.Drawer.projName": {
-    "message": "Project {projectName}"
-  },
-  "Navigation.Drawer.projectSettings": {
-    "message": "Project Settings"
-  },
-  "Navigation.Drawer.projectSettingsDesc": {
-    "description": "list of avaialable project settings",
-    "message": "Categories, Config, Team"
-  },
-  "Navigation.Drawer.title": {
-    "description": "Title of settings screen",
-    "message": "Settings"
+  "Navigation.Menu.viewProject": {
+    "message": "View"
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -222,6 +211,51 @@
   "SaveTrack.HeaderLeft.discardTrackDescription": {
     "message": "Your Track will not be saved. This cannot be undone."
   },
+  "Screens.Project.soloProjectHeader": {
+    "message": "My Solo Project"
+  },
+  "Screens.ProjectSettings.configTitle": {
+    "message": "Project Categories"
+  },
+  "Screens.ProjectSettings.coordinator": {
+    "message": "This device is a coordinator on this project."
+  },
+  "Screens.ProjectSettings.editInfo": {
+    "message": "Edit Info"
+  },
+  "Screens.ProjectSettings.invite": {
+    "message": "Invite Collaborators"
+  },
+  "Screens.ProjectSettings.participant": {
+    "message": "This device is a participant on this project."
+  },
+  "Screens.ProjectSettings.projectCollaborators": {
+    "message": "Project Collaborators"
+  },
+  "Screens.ProjectSettings.remoteArchiveDesc": {
+    "message": "Share with a secure, encypted server. URL required to access."
+  },
+  "Screens.ProjectSettings.remoteArchiveOff": {
+    "message": "Remote Archive | OFF"
+  },
+  "Screens.ProjectSettings.remoteArchiveOn": {
+    "message": "Remote Archive | ON"
+  },
+  "Screens.ProjectSettings.soloDescription": {
+    "message": "You’re mapping on your own."
+  },
+  "Screens.ProjectSettings.title": {
+    "message": "Project Settings"
+  },
+  "Screens.ProjectSettings.updateCategories": {
+    "message": "Update Set"
+  },
+  "Screens.ProjectSettings.viewDetails": {
+    "message": "View Details"
+  },
+  "Screens.ProjectSettings.viewTeam": {
+    "message": "View Team"
+  },
   "Screens.Settings.AppSettings.Drawer.security": {
     "message": "Security"
   },
@@ -230,6 +264,9 @@
   },
   "Screens.Settings.AppSettings.coordinateSystemDesc": {
     "message": "UTM,Lat/Lon,DMS"
+  },
+  "Screens.Settings.AppSettings.deviceName": {
+    "message": "Device Name"
   },
   "Screens.Settings.AppSettings.language": {
     "message": "Language"
@@ -245,27 +282,6 @@
   },
   "Screens.Settings.AppSettings.title": {
     "message": "App Settings"
-  },
-  "Screens.Settings.ProjectSettings.RemoteArchive": {
-    "message": "Remote Archive"
-  },
-  "Screens.Settings.ProjectSettings.deviceName": {
-    "message": "Device Name"
-  },
-  "Screens.Settings.ProjectSettings.mediaSyncSettings": {
-    "message": "Sync Settings"
-  },
-  "Screens.Settings.ProjectSettings.remoteArchiveOff": {
-    "message": "Remote Archive is OFF"
-  },
-  "Screens.Settings.ProjectSettings.remoteArchiveOn": {
-    "message": "Remote Archive is ON"
-  },
-  "Screens.Settings.ProjectSettings.title": {
-    "message": "Project Settings"
-  },
-  "Screens.Settings.ProjectSettings.yourTeam": {
-    "message": "Your Team"
   },
   "SharedComponents.ActionButtons.cancel": {
     "description": "Button to cancel delete of observation",
@@ -297,6 +313,9 @@
   },
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
+  },
+  "homeHeader.header.mySoloProject": {
+    "message": "My Solo Project"
   },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Coordinator"
@@ -617,6 +636,27 @@
   "screens.EnterPassword.wrongPass": {
     "message": "Incorrect passcode, please try again"
   },
+  "screens.ExchangeSoloScreen.dataSecure": {
+    "message": "Your data stays secure while exchanging between trusted devices."
+  },
+  "screens.ExchangeSoloScreen.getStarted": {
+    "message": "Get started in two simple ways:"
+  },
+  "screens.ExchangeSoloScreen.goBack": {
+    "message": "Go Back"
+  },
+  "screens.ExchangeSoloScreen.inviteCollaborators": {
+    "message": "Invite collaborators to your project from the main menu"
+  },
+  "screens.ExchangeSoloScreen.joinExisting": {
+    "message": "Join an existing project by accepting an invitation"
+  },
+  "screens.ExchangeSoloScreen.securelyShare": {
+    "message": "Securely share observations across connected devices."
+  },
+  "screens.ExchangeSoloScreen.title": {
+    "message": "Exchange"
+  },
   "screens.FatalError.restart": {
     "message": "Restart App"
   },
@@ -653,6 +693,84 @@
   "screens.IntroToCoMapeo.ownData": {
     "message": "Own and control your data"
   },
+  "screens.Invite.AlreadyOnProject.leaveWarning": {
+    "message": "To join a new project you must leave your current one."
+  },
+  "screens.Invite.ExistingProjectWarning.alreadyOnProject": {
+    "message": "You are already on a project"
+  },
+  "screens.Invite.ExistingProjectWarning.goBack": {
+    "message": "Go Back"
+  },
+  "screens.Invite.ExistingProjectWarning.leaveProj": {
+    "message": "Leave Current Project"
+  },
+  "screens.Invite.ExistingProjectWarning.onProject": {
+    "message": "You are on {projectName}"
+  },
+  "screens.InviteCancelled.canceled": {
+    "message": "Invite Canceled"
+  },
+  "screens.InviteCancelled.close": {
+    "message": "Close"
+  },
+  "screens.InviteCancelled.projectInviteCanceled": {
+    "message": "Your invitation to {projectName} has been canceled."
+  },
+  "screens.InviteReceived.coordinatorRole": {
+    "message": "coordinator"
+  },
+  "screens.InviteReceived.declineInvite": {
+    "message": "Decline Invite"
+  },
+  "screens.InviteReceived.invitedToJoin": {
+    "message": "You've been invited to..."
+  },
+  "screens.InviteReceived.joinAsRole": {
+    "message": "Join as a {role}?"
+  },
+  "screens.InviteReceived.joinProject": {
+    "message": "Join Project"
+  },
+  "screens.InviteReceived.participantRole": {
+    "message": "participant"
+  },
+  "screens.InviteSuccess.goToMap": {
+    "message": "Go To Map"
+  },
+  "screens.InviteSuccess.goToSync": {
+    "message": "Go To Sync"
+  },
+  "screens.InviteSuccess.success": {
+    "message": "Success"
+  },
+  "screens.InviteSuccess.youHaveJoined": {
+    "message": "You have joined {projectName}"
+  },
+  "screens.Invites.LeaveProject.cancel": {
+    "message": "Cancel"
+  },
+  "screens.Invites.LeaveProject.checkToConfirm": {
+    "message": "Please check the box to confirm"
+  },
+  "screens.Invites.LeaveProject.deleteConsentWithName": {
+    "message": "I understand I will be deleting all data from Project {projectName} from my device."
+  },
+  "screens.Invites.LeaveProject.deleteConsentWithoutName": {
+    "message": "I understand I will be deleting all data from my device."
+  },
+  "screens.Invites.LeaveProject.leaveProj": {
+    "message": "Leave Project"
+  },
+  "screens.Invites.LeaveProject.leavingProject": {
+    "message": "Leaving Project {projectName}"
+  },
+  "screens.Invites.LeaveProject.removeFromProjWithName": {
+    "message": "This will remove all Project {projectName}'s data from your device."
+  },
+  "screens.Invites.LeaveProject.removeFromProjWithoutName": {
+    "message": "This will remove all of the data from your device."
+  },
   "screens.LanguageSettings.followSystemPreferences": {
     "description": "Label for language option to follow system preferences",
     "message": "Follow system preferences"
@@ -660,45 +778,6 @@
   "screens.LanguageSettings.title": {
     "description": "Title language settings screen",
     "message": "Language"
-  },
-  "screens.LeaveProject.AlreadyOnProject.alreadyOnProject": {
-    "message": "You are already on a project"
-  },
-  "screens.LeaveProject.AlreadyOnProject.goBack": {
-    "message": "Go Back"
-  },
-  "screens.LeaveProject.AlreadyOnProject.leaveProj": {
-    "message": "Leave Current Project"
-  },
-  "screens.LeaveProject.AlreadyOnProject.leaveWarning": {
-    "message": "To join a new project you must leave your current one."
-  },
-  "screens.LeaveProject.AlreadyOnProject.onProject": {
-    "message": "You are on {projectName}"
-  },
-  "screens.LeaveProject.cancel": {
-    "message": "Cancel"
-  },
-  "screens.LeaveProject.checkToConfirm": {
-    "message": "Please check the box to confirm"
-  },
-  "screens.LeaveProject.deleteConsentWithName": {
-    "message": "I understand I will be deleting all data from Project {projectName} from my device."
-  },
-  "screens.LeaveProject.deleteConsentWithoutName": {
-    "message": "I understand I will be deleting all data from my device."
-  },
-  "screens.LeaveProject.leaveProj": {
-    "message": "Leave Project"
-  },
-  "screens.LeaveProject.leavingProject": {
-    "message": "Leaving Project {projectName}"
-  },
-  "screens.LeaveProject.removeFromProjWithName": {
-    "message": "This will remove all Project {projectName}'s data from your device."
-  },
-  "screens.LeaveProject.removeFromProjWithoutName": {
-    "message": "This will remove all of the data from your device."
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
@@ -920,19 +999,38 @@
     "message": "Cancel"
   },
   "screens.Observation.comapeoAlert": {
-    "message": "CoMapeo Alert"
+    "message": "CoMapeo data sent from *{projectName}*"
   },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
     "message": "Yes, delete"
   },
+  "screens.Observation.defaultProjectName": {
+    "message": "My Project"
+  },
   "screens.Observation.deleteTitle": {
     "description": "Title of dialog asking confirmation to delete an observation",
     "message": "Delete observation?"
   },
+  "screens.Observation.description": {
+    "message": "Description:"
+  },
+  "screens.Observation.details": {
+    "message": "Details:"
+  },
   "screens.Observation.fallbackCategoryName": {
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "Observation"
+  },
+  "screens.Observation.fallbackPresetName": {
+    "description": "Fallback name used when category name cannot be determined for observation",
+    "message": "Observation"
+  },
+  "screens.Observation.location": {
+    "message": "Location:"
+  },
+  "screens.Observation.precision": {
+    "message": "Precision:"
   },
   "screens.Observation.shareMediaTitle": {
     "description": "Title of dialog to share an observation with media",
@@ -1054,14 +1152,26 @@
   "screens.ObservationMetadataVerified.altitudeAccuracy": {
     "message": "Altitude Accuracy"
   },
+  "screens.ObservationMetadataVerified.coMapeoData": {
+    "message": "CoMapeo Data"
+  },
   "screens.ObservationMetadataVerified.dataEntered": {
     "message": "This data was manually entered."
+  },
+  "screens.ObservationMetadataVerified.date": {
+    "message": "Date"
   },
   "screens.ObservationMetadataVerified.howWeCheck": {
     "message": "How we validate"
   },
   "screens.ObservationMetadataVerified.latitude": {
     "message": "Latitude"
+  },
+  "screens.ObservationMetadataVerified.location": {
+    "message": "Location"
+  },
+  "screens.ObservationMetadataVerified.locationManuallyEntered": {
+    "message": "Location was manually entered"
   },
   "screens.ObservationMetadataVerified.longitude": {
     "message": "Longitude"
@@ -1072,11 +1182,17 @@
   "screens.ObservationMetadataVerified.navTitle": {
     "message": "Observation Metadata"
   },
+  "screens.ObservationMetadataVerified.sentByComapeo": {
+    "message": "Sent by CoMapeo"
+  },
+  "screens.ObservationMetadataVerified.sentFrom": {
+    "message": "CoMapeo Data sent from"
+  },
   "screens.ObservationMetadataVerified.speed": {
     "message": "Speed"
   },
-  "screens.ObservationsList.NoProjectWarning": {
-    "message": "You are currently mapping on your own."
+  "screens.ObservationMetadataVerified.validatedByCoMapeo": {
+    "message": "Sent and Validated by CoMapeo"
   },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
     "description": "Back button on observation list screen when no observations are yet recorded",
@@ -1090,9 +1206,14 @@
     "description": "Title of observation list view when the user has not yet recorded observations",
     "message": "Add Observations"
   },
-  "screens.ObservationsList.createOrJoin": {
-    "description": "The full sentence is 'Create or Join a Project to collect data with a team. This action will delete observations you have collected so far. Consider sharingimportant observations to you email before proceeding.' The sentence needs to be seperated for styling purposes",
-    "message": "Create or Join a Project"
+  "screens.ObservationsList.ProjectCard.coordinator": {
+    "message": "You’re a coordinator on this project."
+  },
+  "screens.ObservationsList.ProjectCard.mappingOnYourOwn": {
+    "message": "You’re mapping on your own."
+  },
+  "screens.ObservationsList.ProjectCard.participant": {
+    "message": "You’re a participant on this project."
   },
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",
@@ -1101,10 +1222,6 @@
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
     "message": "Loading… this can take a while after synchronizing with a new device"
-  },
-  "screens.ObservationsList.toSync": {
-    "description": "The full sentence is 'Create or Join a Project to collect data with a team. This action will delete observations you have collected so far. Consider sharing important observations to you email before proceeding.' The sentence needs to be seperated for styling purposes",
-    "message": "to collect data with a team. This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
   },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "Privacy Policy"
@@ -1244,6 +1361,15 @@
     "description": "Category title for new track screen",
     "message": "Track"
   },
+  "screens.Security.obscurePasscodeDescription": {
+    "message": "To use, turn on App Passcode"
+  },
+  "screens.Security.obscurePasscodeDescriptionActivated": {
+    "message": "Protect your device against seizure"
+  },
+  "screens.Security.obscurePasscodeHeader": {
+    "message": "Obscure Passcode"
+  },
   "screens.Security.passDesriptionPassNotSet": {
     "message": "Passcode not set"
   },
@@ -1340,17 +1466,17 @@
   "screens.Settings.Config.created": {
     "message": "Created {date} at {time}"
   },
-  "screens.Settings.Config.importConfig": {
-    "message": "Import Config"
+  "screens.Settings.Config.importCategories": {
+    "message": "Import Categories"
   },
   "screens.Settings.Config.importSuccessTitle": {
-    "message": "Successfully imported config:"
+    "message": "Successfully imported categories:"
   },
   "screens.Settings.Config.name": {
-    "message": "Config Name:"
+    "message": "Category Set:"
   },
   "screens.Settings.Config.navTitle": {
-    "message": "Configuration"
+    "message": "Categories"
   },
   "screens.Settings.Config.okButton": {
     "message": "OK"
@@ -1359,7 +1485,7 @@
     "message": "Project Name:"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.title": {
-    "message": "Create a Project"
+    "message": "New Project"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
     "message": "Go Back"
@@ -1394,14 +1520,14 @@
   "screens.Settings.CreateOrJoinProject.enterName": {
     "message": "Enter a name for the Project"
   },
-  "screens.Settings.CreateOrJoinProject.importConfig": {
-    "message": "Import Config"
+  "screens.Settings.CreateOrJoinProject.importCategories": {
+    "message": "Import Categories"
   },
   "screens.Settings.CreateOrJoinProject.importConfigFileError": {
     "message": "File name should end with .comapeocat"
   },
   "screens.Settings.CreateOrJoinProject.importSuccessTitle": {
-    "message": "Successfully imported config:"
+    "message": "Successfully imported categories:"
   },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
     "message": "Join an existing CoMapeo Project"
@@ -1508,27 +1634,8 @@
   "screens.Settings.YourTeam.unableToCancel": {
     "message": "Unable to Cancel Invitation"
   },
-  "screens.Settings.config": {
-    "description": "Primary text for project config settings",
-    "message": "Configuration"
-  },
   "screens.SettingsPrivacyPolicy.navTitle": {
     "message": "Privacy Policy"
-  },
-  "screens.Sync.CreateOrJoinProjectDisplay.buttonText": {
-    "message": "Create or Join Project"
-  },
-  "screens.Sync.CreateOrJoinProjectDisplay.subText": {
-    "message": "This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
-  },
-  "screens.Sync.CreateOrJoinProjectDisplay.subTitle": {
-    "message": "You will be able to share data with devices that are part of the same project."
-  },
-  "screens.Sync.CreateOrJoinProjectDisplay.title": {
-    "message": "Create or join a project to collect data with a team"
-  },
-  "screens.Sync.HeaderTitle.noWiFi": {
-    "message": "No WiFi"
   },
   "screens.Sync.NoWifiDisplay.buttonText": {
     "message": "Open Settings"
@@ -1543,7 +1650,10 @@
     "message": "You're all caught up!"
   },
   "screens.Sync.ProjectSyncDisplay.allDataSynced": {
-    "message": "All data synced"
+    "message": "All data exchanged"
+  },
+  "screens.Sync.ProjectSyncDisplay.connectedTo": {
+    "message": "Connected to"
   },
   "screens.Sync.ProjectSyncDisplay.devicesAvailableToSync": {
     "message": "Devices available"
@@ -1554,6 +1664,9 @@
   "screens.Sync.ProjectSyncDisplay.noDevicesAvailableToSync": {
     "message": "No devices available to sync"
   },
+  "screens.Sync.ProjectSyncDisplay.noWifi": {
+    "message": "No Wi-Fi"
+  },
   "screens.Sync.ProjectSyncDisplay.progressLabelSyncing": {
     "message": "Syncing…"
   },
@@ -1563,8 +1676,11 @@
   "screens.Sync.ProjectSyncDisplay.progressLabelWithDeviceCount": {
     "message": "Waiting for other devices"
   },
-  "screens.Sync.ProjectSyncDisplay.startSync": {
-    "message": "Start Sync"
+  "screens.Sync.ProjectSyncDisplay.readyToExchange": {
+    "message": "Ready to exchange"
+  },
+  "screens.Sync.ProjectSyncDisplay.start": {
+    "message": "Start"
   },
   "screens.Sync.ProjectSyncDisplay.stop": {
     "message": "Stop"
@@ -1579,10 +1695,19 @@
     "message": "Complete! You're up to date"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "You are syncing with your team"
+    "message": "You are exchanging with your team"
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
     "message": "Waiting for devices"
+  },
+  "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
+    "message": "{ssid}"
+  },
+  "screens.Sync.headerTitle": {
+    "message": "Exchange"
+  },
+  "screens.Sync.remoteArchiveConnected": {
+    "message": "Remote Archive connected"
   },
   "screens.SyncEverythingBottomSheet.cancel": {
     "message": "Cancel"
@@ -1636,6 +1761,18 @@
     "description": "Preset title for new track screen",
     "message": "Track"
   },
+  "screens.TrackRecordingActive.cancel": {
+    "message": "Cancel"
+  },
+  "screens.TrackRecordingActive.recordingTracks": {
+    "message": "Recording Tracks!"
+  },
+  "screens.TrackRecordingActive.stopTracks": {
+    "message": "Stop Tracks"
+  },
+  "screens.TrackRecordingActive.warningMessage": {
+    "message": "You’re currently recording a track. To join project, stop recording"
+  },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",
     "message": "Show Options"
@@ -1662,49 +1799,31 @@
   "sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Something Went Wrong"
   },
-  "sharedComponents.GpsPill.noGps": {
-    "message": "No GPS"
-  },
-  "sharedComponents.GpsPill.searching": {
-    "message": "Searching…"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.canceled": {
-    "message": "Invite Canceled"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.close": {
-    "message": "Close"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.projectInviteCanceled": {
-    "message": "Your invitation to {projectName} has been canceled."
-  },
-  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.acceptInvite": {
-    "message": "Accept Invite"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.declineInvite": {
-    "message": "Decline Invite"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.invitedToJoin": {
-    "message": "You've been invited to join {projectName}"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.joinProject": {
-    "message": "Join Project {projectName}"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.goToMap": {
-    "message": "Go To Map"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.goToSync": {
-    "message": "Go To Sync"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.success": {
-    "message": "Success"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.youHaveJoined": {
-    "message": "You have joined {projectName}"
-  },
   "sharedComponents.RoleWithIcon.coordinator": {
     "message": "Coordinator"
   },
   "sharedComponents.RoleWithIcon.participant": {
     "message": "Participant"
+  },
+  "soloProject.inviteCollaborators.goBack": {
+    "message": "Go Back"
+  },
+  "soloProject.inviteCollaborators.introText": {
+    "message": "Share observations with others using CoMapeo. Name your solo project to add your first collaborator."
+  },
+  "soloProject.inviteCollaborators.inviteOnly": {
+    "message": "Only devices you invite can contribute and share data with you."
+  },
+  "soloProject.inviteCollaborators.manageControl": {
+    "message": "Manage and control sharing and collaboration in Project Settings."
+  },
+  "soloProject.inviteCollaborators.nameProject": {
+    "message": "Name My Project"
+  },
+  "soloProject.inviteCollaborators.readyToShare": {
+    "message": "Once you name your project, all your observations are ready to be shared."
+  },
+  "soloProject.inviteCollaborators.title": {
+    "message": "Invite Collaborators"
   }
 }

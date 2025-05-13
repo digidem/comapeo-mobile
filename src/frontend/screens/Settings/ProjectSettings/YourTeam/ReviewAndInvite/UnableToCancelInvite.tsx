@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Button} from '../../../../../sharedComponents/Button';
 import ErrorIcon from '../../../../../images/Error.svg';
 import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../../../../sharedComponents/Text';
@@ -9,6 +8,8 @@ import {RoleWithIcon} from '../../../../../sharedComponents/RoleWithIcon';
 import {COORDINATOR_ROLE_ID} from '../../../../../sharedTypes';
 import {useProjectSettings} from '../../../../../hooks/server/projects';
 import {NativeRootNavigationProps} from '../../../../../sharedTypes/navigation';
+import {resetToYourTeam} from '../../../../../lib/resetToYourTeam';
+import {PrimaryButton} from '../../../../../sharedComponents/Buttons';
 
 const m = defineMessages({
   unableToCancel: {
@@ -51,14 +52,12 @@ export const UnableToCancelInvite = ({
           role={role === COORDINATOR_ROLE_ID ? 'coordinator' : 'participant'}
         />
       </View>
-      <Button
+      <PrimaryButton
         style={{marginTop: 10}}
-        fullWidth
-        onPress={() => {
-          navigation.popTo('YourTeam');
-        }}>
-        {formatMessage(m.close)}
-      </Button>
+        fullSize
+        text={formatMessage(m.close)}
+        onPress={() => resetToYourTeam(navigation.dispatch)}
+      />
     </View>
   );
 };

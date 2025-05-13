@@ -1,10 +1,10 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
-import {byResourceId} from '../../utils/selectors';
+import {byResourceId, byTextMatches} from '../../utils/selectors';
 
 describe('Project - Solo Project Headers', () => {
   it('should display "My Solo Project" on the Map screen header', async () => {
-    const mapTab = await $('~Go to Map');
+    const mapTab = await $('~Go to map.');
     await mapTab.click();
 
     const headerTitle = await $(byResourceId('HOME.header-title'));
@@ -13,12 +13,10 @@ describe('Project - Solo Project Headers', () => {
   });
 
   it('should display "My Solo Project" on ObservationsList header and show the solo card', async () => {
-    const obsListTab = await $('~Go to ObservationsList');
+    const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
 
-    const obsHeaderTitle = await $(byResourceId('HOME.header-title'));
-    await expect(obsHeaderTitle).toBeDisplayed();
-    await expect(obsHeaderTitle).toHaveText('My Solo Project');
+    await expect($(byTextMatches('My Solo Project'))).toBeDisplayed();
 
     const drawerButton = await $(byResourceId('drawer-icon-home'));
     await expect(drawerButton).toBeDisplayed();

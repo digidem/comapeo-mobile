@@ -7,7 +7,7 @@ describe('Settings - Language Settings Flow', () => {
     const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
 
-    const appSettingsOption = await $('~Go to App Settings');
+    const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
 
     const languageOption = await $(byTextMatches('Language'));
@@ -17,16 +17,15 @@ describe('Settings - Language Settings Flow', () => {
   });
 
   it('should scroll to Spanish, select it, and confirm language change', async () => {
-    const spanishElem = await $(byTextMatches('Spanish'));
     await $(byTextMatches('Spanish')).scrollIntoView();
-    await spanishElem.click();
+    await $(byTextMatches('Spanish')).click();
 
     await expect($(byTextMatches('Idioma'))).toBeDisplayed();
 
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
     await $('~Close Menu').click();
-    const obsListTab = await $('~Go to ObservationsList');
+    const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
 
     await expect(

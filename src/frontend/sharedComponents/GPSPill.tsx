@@ -22,6 +22,7 @@ type GPSPillProps = {
 export const GPSPill = (props: GPSPillProps) => {
   let textValue: string | React.ReactNode;
   let IconToRender: React.FC;
+  const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
 
   switch (props.status) {
     case 'error':
@@ -29,7 +30,11 @@ export const GPSPill = (props: GPSPillProps) => {
       IconToRender = GpsErrorIcon;
       break;
     case 'searching':
-      textValue = <UIActivityIndicator size={20} color={WHITE} />;
+      textValue = isE2E ? (
+        '...'
+      ) : (
+        <UIActivityIndicator size={20} color={WHITE} />
+      );
       IconToRender = GpsSearchingIcon;
       break;
     case 'good': {
@@ -38,7 +43,11 @@ export const GPSPill = (props: GPSPillProps) => {
       break;
     }
     default:
-      textValue = <UIActivityIndicator size={20} color={WHITE} />;
+      textValue = isE2E ? (
+        '...'
+      ) : (
+        <UIActivityIndicator size={20} color={WHITE} />
+      );
       IconToRender = GpsSearchingIcon;
       break;
   }

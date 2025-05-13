@@ -70,11 +70,9 @@ import {SettingsPrivacyPolicy} from '../../screens/Settings/DataAndPrivacy/Setti
 import {TrackEdit} from '../../screens/TrackEdit/index.tsx';
 import {Config} from '../../screens/Settings/Config';
 import {HowToLeaveProject} from '../../screens/HowToLeaveProject.tsx';
-import {RemoteArchiveOff} from '../../screens/Settings/ProjectSettings/RemoteArchive/RemoteArchiveOff.tsx';
 import {SaveButton} from '../../sharedComponents/SaveButton.tsx';
 import {AddRemoteArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/AddRemoteArchive.tsx';
 import {SuccessfullyAddedArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/SuccessfullyAddedArchive.tsx';
-import {RemoteArchiveOn} from '../../screens/Settings/ProjectSettings/RemoteArchive/RemoteArchiveOn.tsx';
 import {
   createNavigationOptions as createMapManagementNavigationOptions,
   MapManagementScreen,
@@ -99,11 +97,19 @@ import {InviteCanceled} from '../../screens/Invites/InviteCanceled.tsx';
 import {ObservationMetadata} from '../../screens/ObservationMetadata.tsx';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagement/ErrorBottomSheet.tsx';
-import {ExistingProjectWarning} from '../../screens/Invites/ExistingProjectWarning.tsx';
-import {LeaveProject} from '../../screens/Invites/LeaveProject.tsx';
 import {MenuScreen} from '../../screens/MenuScreen';
 import {InviteCollaboratorsScreen} from '../../screens/Settings/ProjectSettings/YourTeam/InviteCollaborators.tsx';
 import {MenuHeader} from '../../sharedComponents/MenuHeader.tsx';
+import {AllProjects} from '../../screens/AllProjects.tsx';
+import {TrackRecordingActive} from '../../screens/TrackRecordingActive.tsx';
+import {
+  RemoteArchiveScreen,
+  createNavigationOptions as createRemoteArchiveNavigationOptions,
+} from '../../screens/Settings/ProjectSettings/RemoteArchive/index.tsx';
+import {
+  RemoveRemoteArchive,
+  navigationOptions as removeRemoteArchiveNavigationOptions,
+} from '../../screens/Settings/ProjectSettings/RemoteArchive/RemoveRemoteArchive.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -363,9 +369,9 @@ export const createDefaultScreenGroup = ({
         />
       )}
       <RootStack.Screen
-        name="RemoteArchiveOff"
-        component={RemoteArchiveOff}
-        options={{headerTitle: intl(RemoteArchiveOff.navTitle)}}
+        name="RemoteArchive"
+        component={RemoteArchiveScreen}
+        options={createRemoteArchiveNavigationOptions({intl})}
       />
       <RootStack.Screen
         name="AddRemoteArchive"
@@ -383,9 +389,9 @@ export const createDefaultScreenGroup = ({
         options={{headerShown: false}}
       />
       <RootStack.Screen
-        name="RemoteArchiveOn"
-        component={RemoteArchiveOn}
-        options={{headerTitle: intl(RemoteArchiveOn.navTitle)}}
+        name="RemoveRemoteArchive"
+        component={RemoveRemoteArchive}
+        options={removeRemoteArchiveNavigationOptions}
       />
       <RootStack.Screen
         name="AudioRecording"
@@ -423,6 +429,11 @@ export const createDefaultScreenGroup = ({
         name="ObservationMetadata"
         component={ObservationMetadata}
         options={{headerTitle: intl(ObservationMetadata.navTitle)}}
+      />
+      <RootStack.Screen
+        name="AllProjects"
+        component={AllProjects}
+        options={{headerTitle: intl(AllProjects.navTitle)}}
       />
       <RootStack.Screen
         name="Menu"
@@ -480,10 +491,9 @@ export const createDefaultScreenGroup = ({
         component={BackgroundMapErrorBottomSheet}
       />
       <RootStack.Screen
-        name="ExistingProjectWarning"
-        component={ExistingProjectWarning}
+        name="TrackRecordingActive"
+        component={TrackRecordingActive}
       />
-      <RootStack.Screen name="LeaveProject" component={LeaveProject} />
     </RootStack.Group>
   </>
 );

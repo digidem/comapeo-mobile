@@ -27,7 +27,7 @@ export const TabBar = ({navigation, state}: BottomTabBarProps) => {
       <TouchableOpacity
         hitSlop={HIT_SLOP}
         testID="tabBarButtonObservationsList"
-        accessibilityLabel="Go to ObservationsList"
+        accessibilityLabel="Go to observations list."
         style={styles.buttonStyle}
         onPress={() => navigation.navigate('ObservationsList')}>
         <ObservationListIcon
@@ -42,7 +42,7 @@ export const TabBar = ({navigation, state}: BottomTabBarProps) => {
       </TouchableOpacity>
       <TouchableOpacity
         testID="tabBarButtonMap"
-        accessibilityLabel="Go to Map"
+        accessibilityLabel="Go to map."
         hitSlop={HIT_SLOP}
         style={styles.buttonStyle}
         onPress={onPressMap}>
@@ -60,7 +60,7 @@ export const TabBar = ({navigation, state}: BottomTabBarProps) => {
       <TouchableOpacity
         hitSlop={HIT_SLOP}
         testID="tabBarButtonCamera"
-        accessibilityLabel="Go to Camera"
+        accessibilityLabel="Go to camera."
         style={styles.buttonStyle}
         onPress={() => navigation.navigate('Camera')}>
         <MaterialIcons
@@ -73,7 +73,7 @@ export const TabBar = ({navigation, state}: BottomTabBarProps) => {
       <TouchableOpacity
         hitSlop={HIT_SLOP}
         testID="tabBarButtonTracking"
-        accessibilityLabel="Go to Tracking"
+        accessibilityLabel="Go to tracking."
         style={styles.trackContainer}
         onPress={onPressTracks}>
         <TrackButtonContent

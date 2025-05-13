@@ -8,7 +8,7 @@ describe('Passcode - Post Passcode Setup Flow', () => {
     const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
 
-    const appSettingsOption = await $('~Go to App Settings');
+    const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
 
     const securityOption = await $(byText('Security'));
@@ -40,10 +40,12 @@ describe('Passcode - Post Passcode Setup Flow', () => {
     await appPasscodeItem.click();
 
     const passcodeField = await $(byResourceId('SETTINGS.passcode-inp'));
-    await passcodeField.setValue(output.newpasscode);
+    await passcodeField.click();
+    await driver.keys(output.newpasscode.split(''));
     await expect($(byText('Incorrect Passcode'))).toBeDisplayed();
 
-    await passcodeField.setValue(output.passcode);
+    await passcodeField.click();
+    await driver.keys(output.passcode.split(''));
 
     await expect(appPasscodeItem).toBeDisplayed();
   });

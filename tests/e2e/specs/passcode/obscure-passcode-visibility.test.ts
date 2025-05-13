@@ -7,7 +7,7 @@ describe('Passcode - Obscure Passcode Visibility', () => {
     const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
 
-    const appSettingsOption = await $('~Go to App Settings');
+    const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
 
     const securityOption = await $(byText('Security'));
@@ -28,9 +28,6 @@ describe('Passcode - Obscure Passcode Visibility', () => {
     }
     if (await backBtn.isDisplayed()) {
       await backBtn.click();
-    }
-    if (await drawerIcon.isDisplayed()) {
-      await drawerIcon.click();
     }
   });
 });

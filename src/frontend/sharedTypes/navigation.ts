@@ -55,7 +55,7 @@ export type RootStackParamsList = {
   UnableToLinkScreen: undefined;
   ConnectingToDeviceScreen: {task: () => Promise<void>};
   ConfirmLeavePracticeModeScreen: {projectAction: 'join' | 'create'};
-  CreateProject: undefined;
+  CreateProject: {action: 'CreateNewProject' | 'UpdateSoloProject'};
   Security: undefined;
   DirectionalArrow: undefined;
   P2pUpgrade: undefined;
@@ -92,10 +92,7 @@ export type RootStackParamsList = {
   DataAndPrivacy: undefined;
   SettingsPrivacyPolicy: undefined;
   HowToLeaveProject: undefined;
-  RemoteArchiveOff: undefined;
-  AddRemoteArchive: undefined;
   SuccessfullyAddedArchive: {archiveName: string; url: string};
-  RemoteArchiveOn: undefined;
   MapManagement: undefined;
   BackgroundMaps: undefined;
   SyncPreviewsBottomSheet: undefined;
@@ -115,16 +112,20 @@ export type RootStackParamsList = {
   InviteReceived: {inviteId: string};
   InviteSuccessfullyAccepted: {projectName: string};
   InviteCanceled: {projectName: string};
-  ExistingProjectWarning: {inviteId: string};
   ObservationMetadata: {observationId: string};
   ErrorBottomSheet: undefined;
   BackgroundMapErrorBottomSheet: {title: string; description: string};
-  LeaveProject: {
-    inviteId: string;
-    currentProjectName: undefined | string;
-  };
   Menu: undefined;
+  AllProjects: undefined;
   InviteCollaborators: undefined;
+  TrackRecordingActive: undefined;
+  RemoteArchive: undefined;
+  AddRemoteArchive: undefined;
+  RemoveRemoteArchive: {
+    baseUrl: string;
+    name?: string;
+    serverDeviceId: string;
+  };
 };
 
 export type OnboardingParamsList = {

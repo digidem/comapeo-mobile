@@ -7,7 +7,6 @@ import {
   useAcceptInvite,
   useRejectInvite,
   useSingleInvite,
-  useManyProjects,
 } from '@comapeo/core-react';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -16,6 +15,7 @@ import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreCont
 import * as Sentry from '@sentry/react-native';
 import {useListenToInviteCancel} from '../../hooks/useListenToInviteCancel';
 import {BLACK, NEW_DARK_GREY, VERY_LIGHT_GREY} from '../../lib/styles';
+import {useTracking} from '../../hooks/useTracking';
 
 const m = defineMessages({
   joinProject: {
@@ -59,17 +59,16 @@ export const InviteReceived = ({
   const acceptInvite = useAcceptInvite();
   const rejectInvite = useRejectInvite();
   const {setActiveProjectId} = useActiveProjectIdActions();
-  const projects = useManyProjects();
+  const {isTracking} = useTracking();
 
   useListenToInviteCancel(inviteId);
 
   function accept() {
-    if (projects.data.length > 1) {
-      navigation.replace('ExistingProjectWarning', {
-        inviteId,
-      });
+    if (isTracking) {
+      navigation.navigate('TrackRecordingActive');
       return;
     }
+
     acceptInvite.mutate(
       {inviteId: inviteId},
       {

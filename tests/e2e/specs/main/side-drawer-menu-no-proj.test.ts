@@ -7,30 +7,31 @@ describe('Main - Side Drawer Menu - No Project', () => {
   it('should open the side drawer and verify menu options', async () => {
     const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
-    const deviceName = await $(byText(output.names.device));
+    const deviceName = await $(byText(output.names.editdevice));
     await expect(deviceName).toBeDisplayed();
 
     await expect($(byTextMatches('CURRENT PROJECT'))).toBeDisplayed();
 
-    await expect($(byResourceId('MENU.project-name'))).toHaveText(
-      'My Solo Project',
-    );
-    await expect($(byResourceId('MENU.project-status'))).toHaveText(
-      'You are mapping on your own.',
-    );
+    await expect($(byTextMatches('My Solo Project'))).toBeDisplayed();
+
+    await expect(
+      $(byTextMatches('You are mapping on your own.')),
+    ).toBeDisplayed();
+
+    await expect($('~Go to All Projects Screen')).toBeDisplayed();
 
     const inviteButton = await $(byText('Invite'));
     await expect(inviteButton).toBeDisplayed();
     const viewButton = await $(byText('View'));
     await expect(viewButton).toBeDisplayed();
 
-    await expect($('~Go to Data and Privacy Screen')).toBeDisplayed();
-    await expect($('~Go to Exchange Screen')).toBeDisplayed();
-    await expect($('~Go to App Settings')).toBeDisplayed();
-    await expect($('~Go to About CoMapeo Screen')).toBeDisplayed();
+    await expect($('~Go to data and privacy screen.')).toBeDisplayed();
+    await expect($('~Go to exchange screen.')).toBeDisplayed();
+    await expect($('~Go to app settings screen.')).toBeDisplayed();
+    await expect($('~Go to about CoMapeo screen.')).toBeDisplayed();
 
     await $('~Close Menu').click();
-    const mapTab = await $('~Go to Map');
+    const mapTab = await $('~Go to map.');
     await mapTab.click();
   });
 });

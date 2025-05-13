@@ -336,9 +336,6 @@
   "allProjects.navTitle": {
     "message": "All Projects"
   },
-  "homeHeader.header.mySoloProject": {
-    "message": "My Solo Project"
-  },
   "projectInfoCard.coordinator": {
     "message": "You are a coordinator on this project."
   },

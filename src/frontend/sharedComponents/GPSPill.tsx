@@ -22,6 +22,7 @@ type GPSPillProps = {
 export const GPSPill = (props: GPSPillProps) => {
   let textValue: string | React.ReactNode;
   let IconToRender: React.FC;
+  // Replace spinner with static text in E2E mode to prevent rendering delays in tests
   const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
 
   switch (props.status) {

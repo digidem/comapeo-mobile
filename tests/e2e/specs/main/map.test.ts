@@ -4,7 +4,7 @@ import {byResourceId, byText} from '../../utils/selectors';
 
 describe('Main - Map Screen Component Test', () => {
   it('should verify map screen elements are visible', async () => {
-    const mapTab = await $('~Go to Map');
+    const mapTab = await $('~Go to map.');
     await mapTab.click();
 
     await expect($('~Open Menu')).toBeDisplayed();

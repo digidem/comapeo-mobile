@@ -1,112 +1,230 @@
-import * as React from 'react';
-import {defineMessages, useIntl} from 'react-intl';
-import {useManyProjects} from '@comapeo/core-react';
-import {UIActivityIndicator} from 'react-native-indicators';
+import React from 'react';
+import {ScrollView, StyleSheet, View, TouchableOpacity} from 'react-native';
+import {useIntl, defineMessages} from 'react-intl';
 
-import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
+import {useActiveProject} from '../../../contexts/ActiveProjectContext';
+import {useProjectRoleAndDetails} from '../../../hooks/useProjectRoleAndDetails';
+import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
+import NoProjectIcon from '../../../images/NoProjectIcon.svg';
+import ProjectParticipantIcon from '../../../images/ProjectParticipant.svg';
+import ProjectCategoriesIcon from '../../../images/ProjectCategories.svg';
+import ExchangeIcon from '../../../images/Exchange.svg';
+import {
+  COMAPEO_BLUE,
+  NEW_DARK_GREY,
+  WHITE,
+  VERY_LIGHT_GREY,
+  BLACK,
+} from '../../../lib/styles';
+import {useProjectSettings} from '../../../hooks/server/projects';
+import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
 import {useGetRemoteArchives} from '../../../hooks/server/projects';
-import {FullScreenMenuList} from '../../../sharedComponents/MenuList/FullScreenMenuList';
-import {MenuListItemType} from '../../../sharedComponents/MenuList/MenuListItem';
 
 const m = defineMessages({
   title: {
-    id: 'Screens.Settings.ProjectSettings.title',
+    id: 'Screens.ProjectSettings.title',
     defaultMessage: 'Project Settings',
   },
-  deviceName: {
-    id: 'Screens.Settings.ProjectSettings.deviceName',
-    defaultMessage: 'Device Name',
+  soloDescription: {
+    id: 'Screens.ProjectSettings.soloDescription',
+    defaultMessage: 'You’re mapping on your own.',
   },
-  yourTeam: {
-    id: 'Screens.Settings.ProjectSettings.yourTeam',
-    defaultMessage: 'Your Team',
+  coordinator: {
+    id: 'Screens.ProjectSettings.coordinator',
+    defaultMessage: 'This device is a coordinator on this project.',
   },
-  mediaSyncSettings: {
-    id: 'Screens.Settings.ProjectSettings.mediaSyncSettings',
-    defaultMessage: 'Sync Settings',
+  participant: {
+    id: 'Screens.ProjectSettings.participant',
+    defaultMessage: 'This device is a participant on this project.',
   },
-  config: {
-    id: 'screens.Settings.config',
-    defaultMessage: 'Configuration',
-    description: 'Primary text for project config settings',
+  invite: {
+    id: 'Screens.ProjectSettings.invite',
+    defaultMessage: 'Invite Collaborators',
   },
-  RemoteArchive: {
-    id: 'Screens.Settings.ProjectSettings.RemoteArchive',
-    defaultMessage: 'Remote Archive',
+  projectCollaborators: {
+    id: 'Screens.ProjectSettings.projectCollaborators',
+    defaultMessage: 'Project Collaborators',
   },
-  remoteArchiveOff: {
-    id: 'Screens.Settings.ProjectSettings.remoteArchiveOff',
-    defaultMessage: 'Remote Archive is OFF',
+  viewTeam: {
+    id: 'Screens.ProjectSettings.viewTeam',
+    defaultMessage: 'View Team',
+  },
+  configTitle: {
+    id: 'Screens.ProjectSettings.configTitle',
+    defaultMessage: 'Project Categories',
+  },
+  updateCategories: {
+    id: 'Screens.ProjectSettings.updateCategories',
+    defaultMessage: 'Update Set',
+  },
+  editInfo: {
+    id: 'Screens.ProjectSettings.editInfo',
+    defaultMessage: 'Edit Info',
   },
   remoteArchiveOn: {
-    id: 'Screens.Settings.ProjectSettings.remoteArchiveOn',
-    defaultMessage: 'Remote Archive is ON',
+    id: 'Screens.ProjectSettings.remoteArchiveOn',
+    defaultMessage: 'Remote Archive  |  ON',
+  },
+  remoteArchiveOff: {
+    id: 'Screens.ProjectSettings.remoteArchiveOff',
+    defaultMessage: 'Remote Archive  |  OFF',
+  },
+  remoteArchiveDesc: {
+    id: 'Screens.ProjectSettings.remoteArchiveDesc',
+    defaultMessage:
+      'Share with a secure, encypted server. URL required to access.',
+  },
+  viewDetails: {
+    id: 'Screens.ProjectSettings.viewDetails',
+    defaultMessage: 'View Details',
   },
 });
 
-export const ProjectSettings: NativeNavigationComponent<'ProjectSettings'> = ({
-  navigation,
-}) => {
+export const ProjectSettings = () => {
+  const {projectId} = useActiveProject();
+  const projectInfo = useProjectRoleAndDetails(projectId);
   const {formatMessage} = useIntl();
-
-  const {data: remoteArchives, isRefetching} = useGetRemoteArchives();
-
+  const {navigate} = useNavigationFromRoot();
+  const {data: configData} = useProjectSettings();
+  const isSolo = projectInfo.role === 'solo';
+  const isCoordinator = projectInfo.role === 'coordinator';
+  const {data: remoteArchives} = useGetRemoteArchives();
   const remoteArchiveOn = remoteArchives && remoteArchives.length > 0;
 
-  const {data: projects} = useManyProjects();
+  const displayTitle = isSolo
+    ? projectInfo.projectHeader
+    : projectInfo.projectName;
 
-  const MenuItems: MenuListItemType[] = [
-    {
-      onPress: () => {
-        navigation.navigate('DeviceNameDisplay');
-      },
-      disabled: remoteArchives === undefined,
-      primaryText: formatMessage(m.deviceName),
-      testID: 'PROJECT.device-name-list-item',
-    },
-    {
-      onPress: () => {
-        navigation.navigate('Config');
-      },
-      primaryText: formatMessage(m.config),
-      testID: 'settingsConfigButton',
-    },
-    {
-      onPress: () => {
-        navigation.navigate('YourTeam');
-      },
-      primaryText: formatMessage(m.yourTeam),
-      testID: 'MAIN.team-list-item',
-    },
-    ...(projects && projects.length > 1
-      ? [
-          {
-            onPress: () => {
-              navigation.navigate(
-                remoteArchiveOn ? 'RemoteArchiveOn' : 'RemoteArchiveOff',
-              );
-            },
-            primaryText: formatMessage(m.RemoteArchive),
-            secondaryText: isRefetching ? (
-              <UIActivityIndicator size={25} />
-            ) : remoteArchiveOn ? (
-              formatMessage(m.remoteArchiveOn)
-            ) : (
-              formatMessage(m.remoteArchiveOff)
-            ),
-          },
-        ]
-      : []),
-    {
-      onPress: () => {
-        navigation.navigate('MediaSyncSettings');
-      },
-      primaryText: formatMessage(m.mediaSyncSettings),
-      testID: 'MAIN.sync-list-item',
-    },
-  ];
-
-  return <FullScreenMenuList data={MenuItems} />;
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      <SettingsCardRow
+        icon={<NoProjectIcon width={24} height={24} />}
+        title={displayTitle}
+        subtitle={isSolo ? formatMessage(m.soloDescription) : undefined}
+        buttonText={isSolo ? formatMessage(m.invite) : undefined}
+        onPress={isSolo ? () => navigate('InviteCollaborators') : undefined}
+      />
+      {!isSolo && (
+        <SettingsCardRow
+          icon={<ProjectParticipantIcon width={24} height={24} />}
+          title={formatMessage(m.projectCollaborators)}
+          subtitle={
+            isCoordinator
+              ? formatMessage(m.coordinator)
+              : formatMessage(m.participant)
+          }
+          buttonText={formatMessage(m.viewTeam)}
+          onPress={() => navigate('YourTeam')}
+        />
+      )}
+      {isCoordinator && (
+        <SettingsCardRow
+          icon={<ExchangeIcon width={24} height={24} />}
+          title={formatMessage(
+            remoteArchiveOn ? m.remoteArchiveOn : m.remoteArchiveOff,
+          )}
+          subtitle={formatMessage(m.remoteArchiveDesc)}
+          buttonText={formatMessage(m.viewDetails)}
+          onPress={() =>
+            navigate(remoteArchiveOn ? 'RemoteArchiveOn' : 'RemoteArchiveOff')
+          }
+        />
+      )}
+      {projectInfo.role !== 'participant' && (
+        <SettingsCardRow
+          icon={<ProjectCategoriesIcon width={24} height={24} />}
+          title={formatMessage(m.configTitle)}
+          subtitle={configData?.configMetadata?.name}
+          buttonText={formatMessage(m.updateCategories)}
+          onPress={() => navigate('Config')}
+        />
+      )}
+    </ScrollView>
+  );
 };
+
+type SettingsCardRowProps =
+  | {
+      icon: React.ReactNode;
+      title: string;
+      subtitle?: string;
+    }
+  | {
+      icon: React.ReactNode;
+      title: string;
+      subtitle?: string;
+      buttonText: string;
+      onPress: () => void;
+    };
+
+const SettingsCardRow = (props: SettingsCardRowProps) => {
+  const {icon, title, subtitle} = props;
+  const hasButton =
+    'buttonText' in props && 'onPress' in props && !!props.buttonText;
+
+  return (
+    <View style={styles.card}>
+      <View style={styles.row}>
+        <View style={{marginRight: 16}}>{icon}</View>
+        <View style={styles.cardColumn}>
+          <HeaderText variant="header5">{title}</HeaderText>
+          {!!subtitle && (
+            <BodyText variant="smallMeta" style={styles.bodyText}>
+              {subtitle}
+            </BodyText>
+          )}
+          {hasButton && (
+            <TouchableOpacity
+              onPress={props.onPress}
+              style={{marginTop: 8}}
+              accessibilityRole="button"
+              accessibilityLabel={props.buttonText}>
+              <HeaderText
+                variant="header5"
+                style={{color: COMAPEO_BLUE, alignSelf: 'flex-start'}}>
+                {props.buttonText}
+              </HeaderText>
+            </TouchableOpacity>
+          )}
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+    gap: 20,
+  },
+  card: {
+    borderWidth: 1.5,
+    borderRadius: 10,
+    padding: 20,
+    gap: 12,
+    shadowColor: BLACK,
+    shadowOffset: {width: 0, height: 1},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 1,
+    backgroundColor: WHITE,
+    borderColor: VERY_LIGHT_GREY,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+  cardColumn: {
+    flex: 1,
+    flexDirection: 'column',
+    gap: 8,
+  },
+  bodyText: {
+    color: NEW_DARK_GREY,
+    flexShrink: 1,
+    flexWrap: 'wrap',
+  },
+});
 
 ProjectSettings.navTitle = m.title;

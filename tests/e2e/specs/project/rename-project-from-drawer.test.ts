@@ -5,7 +5,7 @@ import {output} from '../../utils/naming';
 
 describe('Project - Rename Project from Drawer', () => {
   it('should allow user to rename a project', async () => {
-    const createProjectButton = await $(byText('Create a Project'));
+    const createProjectButton = await $(byText('New Project'));
     await expect(createProjectButton).toBeDisplayed();
     await createProjectButton.click();
 
@@ -18,7 +18,7 @@ describe('Project - Rename Project from Drawer', () => {
       byResourceId('PROJECT.advanced-settings-toggle'),
     );
     await advancedSettings.click();
-    await expect($(byText('Import Config'))).toBeDisplayed();
+    await expect($(byText('Import Categories'))).toBeDisplayed();
     await advancedSettings.click();
 
     const nameInput = await $(byResourceId('PROJECT.name-inp'));
@@ -30,7 +30,7 @@ describe('Project - Rename Project from Drawer', () => {
     await goToMapButton.click();
   });
   it('should leave observations in place with a renamed project', async () => {
-    const obsListTab = await $('~Go to ObservationsList');
+    const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();
     await expect($(byText('Threat'))).toBeDisplayed();

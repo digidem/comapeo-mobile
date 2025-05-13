@@ -90,7 +90,8 @@ export const LeaveProject = ({
           leaveProject.mutate(
             {projectId: currentProjectId},
             {
-              onSuccess: () => {
+              //If the leave project does not work, the user can still be on the other project so no sense in throwing an error
+              onSettled: () => {
                 setActiveProjectId(newProjectId);
                 navigation.replace('InviteSuccessfullyAccepted', {
                   projectName: invite.projectName,
@@ -98,7 +99,6 @@ export const LeaveProject = ({
               },
               onError: err => {
                 Sentry.captureException(err);
-                navigation.replace('ErrorBottomSheet');
               },
             },
           );

@@ -154,7 +154,7 @@ export const EditScreen = ({
     <ScrollView contentContainerStyle={styles.container}>
       <FieldRow label={t(m.deviceNameLabel)}>
         <HookFormTextInput
-          testID="PROJECT.edit-device-name"
+          testID="edit-device-name"
           control={control}
           name="deviceName"
           rules={{maxLength: 60, required: true, minLength: 1}}

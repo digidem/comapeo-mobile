@@ -2,7 +2,7 @@ import React from 'react';
 import {act, renderHook} from '@testing-library/react-native';
 import {PhotoPromiseProvider} from '../contexts/PhotoPromiseContext/index.tsx';
 import {useDraftObservation} from './useDraftObservation.ts';
-import {usePersistedDraftObservation} from './persistedState/usePersistedDraftObservation/index.ts';
+import {usePersistedDraftObservation} from './persistedState/usePersistedDraftObservation.ts';
 import type {Preset} from '@comapeo/schema';
 import {randomBytes} from 'crypto';
 

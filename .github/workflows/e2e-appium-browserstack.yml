@@ -86,7 +86,9 @@ jobs:
         run: |
           APP_URL=$(curl -u "$BROWSERSTACK_USERNAME:$BROWSERSTACK_ACCESS_KEY" \
             -X POST "https://api-cloud.browserstack.com/app-automate/upload" \
-            -F "file=@$APK_PATH" | jq -r '.app_url')
+            -F "file=@$APK_PATH" \
+            -F "custom_id=${{ github.event.pull_request.title || 'manual' }}-${{ github.sha }}" \
+            | jq -r '.app_url')
           echo "app_url=$APP_URL" >> $GITHUB_ENV
           echo "app_url=$APP_URL" >> $GITHUB_OUTPUT
         env:

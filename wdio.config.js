@@ -18,12 +18,12 @@ const config = {
       'browserstack',
       {
         app: process.env.BROWSERSTACK_APP_URL,
-        buildIdentifier: `${process.env.BUILD_NUMBER || `build-${timestamp}`}`,
+        buildIdentifier: timestamp,
         browserstackLocal: true,
         testObservability: true,
         testObservabilityOptions: {
           projectName: 'CoMapeo',
-          buildName: `${prTitle || 'Manual Run'} (${shortSha}) at ${timestamp}`,
+          buildName: `${prTitle || 'Manual Run'} – ${shortSha}`,
         },
       },
     ],
@@ -38,8 +38,8 @@ const config = {
       'appium:autoGrantPermissions': true,
       'bstack:options': {
         projectName: 'CoMapeo',
-        buildName: `${prTitle || 'Manual Run'} (${shortSha}) at ${timestamp}`,
-        sessionName: `Spec Run – ${shortSha}`,
+        buildName: `${prTitle || 'Manual Run'} – ${shortSha}`,
+        sessionName: `E2E: ${shortSha}`,
         appiumVersion: '2.12.1',
         debug: true,
         networkLogs: true,

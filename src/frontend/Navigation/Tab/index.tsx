@@ -31,13 +31,11 @@ export const HomeTabs = () => {
       }}
       initialRouteName={'Map'}
       screenLayout={({children}) => (
-        <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
-      )}
-      // header needs access the this provider. Layout wraps the entire navigator, while screenLayout wraps each screen (in other words not the header)
-      layout={({children}) => (
-        <SharedLocationContextProvider>
-          {children}
-        </SharedLocationContextProvider>
+        <React.Suspense fallback={<Loading />}>
+          <SharedLocationContextProvider>
+            {children}
+          </SharedLocationContextProvider>
+        </React.Suspense>
       )}
       backBehavior="initialRoute">
       <Tab.Screen

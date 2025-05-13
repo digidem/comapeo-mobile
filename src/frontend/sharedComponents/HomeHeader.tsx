@@ -1,35 +1,31 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
-import {defineMessages, useIntl} from 'react-intl';
 
 import DeviceIcon from '../images/DeviceIcon.svg';
 import {IconButton} from './IconButton';
 import {HeaderText} from './Text/HeaderText';
-import {BLUE_GREY, WHITE} from '../lib/styles';
-import {useProjectSettings} from '../hooks/server/projects';
-
-const m = defineMessages({
-  mySoloProject: {
-    id: 'homeHeader.header.mySoloProject',
-    defaultMessage: 'My Solo Project',
-  },
-});
+import {BLUE_GREY, DARK_GREY} from '../lib/styles';
+import {useProjectRoleAndDetails} from '../hooks/useProjectRoleAndDetails';
+import {useActiveProject} from '../contexts/ActiveProjectContext';
 
 type HomeHeaderProps = BottomTabHeaderProps & {
-  backgroundColor?: string;
-  showBottomBorder?: boolean;
+  backgroundColor: string;
+  showBottomBorder: boolean;
 };
 
 export function HomeHeader({
-  backgroundColor = 'transparent',
-  showBottomBorder = false,
+  backgroundColor,
+  showBottomBorder,
   navigation,
 }: HomeHeaderProps) {
-  const {formatMessage} = useIntl();
-  const {data} = useProjectSettings();
+  const {projectId} = useActiveProject();
+  const projectDetails = useProjectRoleAndDetails(projectId);
 
-  const projectName = data?.name ? data.name : formatMessage(m.mySoloProject);
+  const projectName =
+    'projectHeader' in projectDetails
+      ? projectDetails.projectHeader
+      : projectDetails.projectName;
 
   return (
     <View
@@ -42,7 +38,11 @@ export function HomeHeader({
         },
       ]}>
       <View style={styles.headerRow}>
-        <View style={styles.titleBox}>
+        <View
+          style={[
+            styles.titleBox,
+            {backgroundColor: projectDetails.projectColor},
+          ]}>
           <HeaderText
             testID="HOME.header-title"
             variant="header4"
@@ -86,12 +86,10 @@ const styles = StyleSheet.create({
     minHeight: 32,
     borderRadius: 6,
     justifyContent: 'center',
-    backgroundColor: '#333333E6',
   },
   text: {
-    color: WHITE,
-    fontFamily: 'Rubik_600SemiBold',
     paddingLeft: 5,
+    color: DARK_GREY,
   },
   iconButton: {
     width: 40,

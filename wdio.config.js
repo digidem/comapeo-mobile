@@ -1,7 +1,6 @@
 // @ts-check
 const path = require('path');
 const shortSha = process.env.GITHUB_SHORT_SHA || 'manual';
-const timestamp = new Date().toISOString();
 const prTitle = process.env.GITHUB_PR_TITLE;
 // Type is very questionably declared in the global namespace via @wdio/types
 /** @type {WebdriverIO.Config} */
@@ -18,7 +17,7 @@ const config = {
       'browserstack',
       {
         app: process.env.BROWSERSTACK_APP_URL,
-        buildIdentifier: timestamp,
+        buildIdentifier: '#${DATE_TIME}',
         browserstackLocal: true,
         testObservability: true,
         testObservabilityOptions: {

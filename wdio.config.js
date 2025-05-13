@@ -1,8 +1,8 @@
 // @ts-check
 const path = require('path');
-const prNumber = process.env.GITHUB_PR_NUMBER || 'Manual Run';
-const prTitle = process.env.GITHUB_PR_TITLE || 'Manual Trigger';
+const shortSha = process.env.GITHUB_SHORT_SHA || 'manual';
 const timestamp = new Date().toISOString();
+const prTitle = process.env.GITHUB_PR_TITLE;
 // Type is very questionably declared in the global namespace via @wdio/types
 /** @type {WebdriverIO.Config} */
 
@@ -18,12 +18,12 @@ const config = {
       'browserstack',
       {
         app: process.env.BROWSERSTACK_APP_URL,
-        buildIdentifier: prNumber,
+        buildIdentifier: `${process.env.BUILD_NUMBER || `build-${timestamp}`}`,
         browserstackLocal: true,
         testObservability: true,
         testObservabilityOptions: {
           projectName: 'CoMapeo',
-          buildName: `PR #${prNumber} – ${prTitle}`,
+          buildName: `${prTitle || 'Manual Run'} (${shortSha}) at ${timestamp}`,
         },
       },
     ],
@@ -38,8 +38,8 @@ const config = {
       'appium:autoGrantPermissions': true,
       'bstack:options': {
         projectName: 'CoMapeo',
-        buildName: `PR #${prNumber} – ${prTitle}`,
-        sessionName: `Spec Run – ${timestamp}`,
+        buildName: `${prTitle || 'Manual Run'} (${shortSha}) at ${timestamp}`,
+        sessionName: `Spec Run – ${shortSha}`,
         appiumVersion: '2.12.1',
         debug: true,
         networkLogs: true,

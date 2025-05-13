@@ -8,7 +8,7 @@ The environment variable `EXPO_PUBLIC_E2E_TEST=true` is used in CI and for the b
 
 ### Auth Flow (Passcode Input)
 
-- `src/frontend/contexts/AuthContext.tsx`: Disables ``FlagSecureModule` during E2E tests to allow screen recording on BrowserStack.
+- `src/frontend/contexts/AuthContext.tsx`: Disables `FlagSecureModule` during E2E tests to allow screen recording on BrowserStack.
 - `src/frontend/screens/AuthScreen.tsx`: Hides the `CoMapeoLogoSvg`, which was delaying input responsiveness.
 
 ### Map Style Fallback

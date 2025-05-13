@@ -110,8 +110,12 @@ export const ProjectSettings = () => {
               ? formatMessage(m.editInfo)
               : undefined
         }
-        onPress={() =>
-          navigate(isSolo ? 'InviteCollaborators' : 'EditProjectDetails')
+        onPress={
+          isSolo || isCoordinator
+            ? () => {
+                navigate(isSolo ? 'InviteCollaborators' : 'EditProjectDetails');
+              }
+            : undefined
         }
       />
       {!isSolo && (

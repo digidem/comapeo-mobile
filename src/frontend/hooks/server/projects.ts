@@ -1,4 +1,4 @@
-import {useMemo} from 'react';
+import {type MemberInfo} from '@comapeo/core/dist/member-api';
 import {
   useProjectSettings as useComapeoProjectSettings,
   useManyMembers,
@@ -7,16 +7,7 @@ import {
 import {useQuery} from '@tanstack/react-query';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-
-export const ALL_PROJECTS_KEY = 'all_projects';
-export const PROJECT_SETTINGS_KEY = 'project_settings';
-export const CREATE_PROJECT_KEY = 'create_project';
-export const PROJECT_KEY = 'project';
-export const PROJECT_MEMBERS_KEY = 'project_members';
-export const ORIGINAL_VERSION_ID_TO_DEVICE_ID_KEY =
-  'originalVersionIdToDeviceId';
-export const THIS_USERS_ROLE_KEY = 'my_role';
-export const REMOTE_ARCHIVE = 'remote_archive';
+import {MEMBER_ROLE_ID} from '../../sharedTypes';
 
 export function useProjectSettings() {
   const {projectId} = useActiveProject();
@@ -28,19 +19,29 @@ export function useGetOwnRole() {
   return useOwnRoleInProject({projectId});
 }
 
-export function useGetRemoteArchives() {
-  const {projectId} = useActiveProject();
-  const {data: members, error, isRefetching} = useManyMembers({projectId});
+// TODO: Ideally this is handled in @comapeo/core (https://github.com/digidem/comapeo-core/issues/1031)
+export type ArchiveServerMemberInfo = MemberInfo & {
+  deviceType: 'selfHostedServer';
+  selfHostedServerDetails: NonNullable<MemberInfo['selfHostedServerDetails']>;
+};
 
-  const archives = useMemo(() => {
-    return members?.filter(m => m.deviceType === 'selfHostedServer') ?? [];
-  }, [members]);
+// TODO: Ideally this is handled in @comapeo/core (https://github.com/digidem/comapeo-core/issues/1031)
+function isActiveArchiveServerMember(
+  member: MemberInfo,
+): member is ArchiveServerMemberInfo {
+  if (member.deviceType !== 'selfHostedServer') return false;
+  if (!member.selfHostedServerDetails) return false;
+  if (member.role.roleId !== MEMBER_ROLE_ID) return false;
+  return true;
+}
 
-  return {
-    data: archives,
-    error,
-    isRefetching,
-  };
+export function useActiveArchiveServer({
+  projectId,
+}: {
+  projectId: string;
+}): ArchiveServerMemberInfo | undefined {
+  const {data: members} = useManyMembers({projectId});
+  return members.find(isActiveArchiveServerMember);
 }
 
 export function useFindRemoteArchive({url}: {url?: string}) {

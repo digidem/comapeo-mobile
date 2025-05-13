@@ -92,10 +92,7 @@ export type RootStackParamsList = {
   DataAndPrivacy: undefined;
   SettingsPrivacyPolicy: undefined;
   HowToLeaveProject: undefined;
-  RemoteArchiveOff: undefined;
-  AddRemoteArchive: undefined;
   SuccessfullyAddedArchive: {archiveName: string; url: string};
-  RemoteArchiveOn: undefined;
   MapManagement: undefined;
   BackgroundMaps: undefined;
   SyncPreviewsBottomSheet: undefined;
@@ -126,6 +123,13 @@ export type RootStackParamsList = {
   Menu: undefined;
   InviteCollaborators: undefined;
   TrackRecordingActive: undefined;
+  RemoteArchive: undefined;
+  AddRemoteArchive: undefined;
+  RemoveRemoteArchive: {
+    baseUrl: string;
+    name?: string;
+    serverDeviceId: string;
+  };
 };
 
 export type OnboardingParamsList = {

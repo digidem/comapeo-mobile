@@ -1,85 +1,83 @@
-import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
-import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
-import {Button} from '../../../../sharedComponents/Button';
+import {ScrollView, StyleSheet, View} from 'react-native';
+
 import {MEDIUM_GREY} from '../../../../lib/styles';
-import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
-import {useGetOwnRole} from '../../../../hooks/server/projects';
-import {COORDINATOR_ROLE_ID, CREATOR_ROLE_ID} from '../../../../sharedTypes';
-import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
+import {SecondaryButton} from '../../../../sharedComponents/Buttons';
 import {BodyText} from '../../../../sharedComponents/Text/BodyText';
+import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
+import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const m = defineMessages({
-  navTitle: {
-    id: 'ProjectSettings.RemoteArchive.navTitle',
-    defaultMessage: 'Remote Archive',
-  },
   remoteArchiveOff: {
-    id: 'ProjectSettings.RemoteArchive.Coordinator.remoteArchiveOff',
+    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOff.remoteArchiveOff',
     defaultMessage: 'Remote Archive is Off',
   },
   dataNotShared: {
-    id: 'ProjectSettings.RemoteArchive.Coordinator.dataNotShared',
+    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOff.dataNotShared',
     defaultMessage:
       'The data in your project is not shared over the internet. Only people in your project can see your data.',
   },
   experimentalFeature: {
-    id: 'ProjectSettings.RemoteArchive.Coordinator.experimentalFeature',
+    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOff.experimentalFeature',
     defaultMessage:
       'This is an experimental feature. You need a Remote Archive URL to enable Remote Archive.',
   },
   noServers: {
-    id: 'ProjectSettings.RemoteArchive.Coordinator.noServers',
+    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOff.noServers',
     defaultMessage: 'No servers have been added to this project',
   },
   addArchive: {
-    id: 'ProjectSettings.RemoteArchive.Coordinator.addArchive',
-    defaultMessage: '+ Add Remote Archive',
+    id: 'ProjectSettings.RemoteArchive.RemoteArchiveOff.addArchive',
+    defaultMessage: 'Add Remote Archive',
   },
 });
 
-export const RemoteArchiveOff: NativeNavigationComponent<
-  'RemoteArchiveOff'
-> = () => {
-  const {formatMessage} = useIntl();
-  const {navigate} = useNavigationFromRoot();
-  const {data: role} = useGetOwnRole();
-  const isCoordinator =
-    role?.roleId === COORDINATOR_ROLE_ID || role?.roleId === CREATOR_ROLE_ID;
+export function RemoteArchiveOff({
+  isCoordinator,
+  onAdd,
+}: {
+  isCoordinator: boolean;
+  onAdd: () => void;
+}) {
+  const {formatMessage: t} = useIntl();
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <HeaderText variant="header2" style={styles.title}>
-        {formatMessage(m.remoteArchiveOff) + ' '}
+        {t(m.remoteArchiveOff)}
       </HeaderText>
-      <BodyText style={{marginTop: 20}}>
-        {formatMessage(m.dataNotShared)}
-      </BodyText>
-      <BodyText style={{marginTop: 20}}>
-        {formatMessage(m.experimentalFeature)}
-      </BodyText>
-      <BodyText variant="smallMeta" style={styles.subtext}>
-        {formatMessage(m.noServers)}
-      </BodyText>
-      {isCoordinator ? (
-        <Button
-          variant="outlined"
-          style={{marginTop: 20}}
-          onPress={() => {
-            navigate('AddRemoteArchive');
-          }}>
-          {formatMessage(m.addArchive)}
-        </Button>
-      ) : null}
-    </View>
+      <View style={{gap: 20}}>
+        <BodyText>{t(m.dataNotShared)}</BodyText>
+        <BodyText>{t(m.experimentalFeature)}</BodyText>
+      </View>
+
+      <View style={{gap: 20}}>
+        <BodyText variant="smallMeta" style={styles.subtext}>
+          {t(m.noServers)}
+        </BodyText>
+        {isCoordinator && (
+          <SecondaryButton
+            fullSize
+            renderIcon={({color, size}) => (
+              <MaterialIcons size={size} name="plus" color={color} />
+            )}
+            text={t(m.addArchive)}
+            onPress={() => {
+              onAdd();
+            }}
+          />
+        )}
+      </View>
+    </ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    paddingTop: 40,
+    paddingVertical: 40,
+    gap: 40,
+    alignItems: 'center',
   },
   title: {
     textAlign: 'center',
@@ -87,8 +85,5 @@ const styles = StyleSheet.create({
   subtext: {
     color: MEDIUM_GREY,
     textAlign: 'center',
-    marginTop: 20,
   },
 });
-
-RemoteArchiveOff.navTitle = m.navTitle;

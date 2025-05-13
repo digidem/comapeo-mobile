@@ -3,7 +3,7 @@ import {useSyncState} from '@comapeo/core-react';
 
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {
-  useGetRemoteArchives,
+  useActiveArchiveServer,
   useProjectSettings,
 } from '../../hooks/server/projects';
 import {useLocalDiscoveryState} from '../../hooks/useLocalDiscoveryState';
@@ -26,18 +26,15 @@ const m = defineMessages({
 export const SyncScreen = ({navigation}: NativeRootNavigationProps<'Sync'>) => {
   const wifiStatus = useLocalDiscoveryState(state => state.wifiStatus);
 
-  const {data: remoteArchive, isRefetching: remoteArchiveLoading} =
-    useGetRemoteArchives();
-
-  const hasRemoteArchive = remoteArchive && remoteArchive.length > 0;
-
   const hasInternetAccess = useNetInfo().isConnected;
 
   const {projectId} = useActiveProject();
   const syncState = useSyncState({projectId});
   const projectSettingsQuery = useProjectSettings();
 
-  if (!syncState || remoteArchiveLoading) {
+  const hasRemoteArchive = !!useActiveArchiveServer({projectId});
+
+  if (!syncState) {
     return <Loading />;
   }
 

@@ -72,6 +72,7 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
   value: null,
   actions: {
     deletePhoto: uri => {
+      // We currently only allow deletion of processed draft photos
       const newAttachments = get().attachments.filter(attachment => {
         if (!isDraftPhoto(attachment)) return true;
 

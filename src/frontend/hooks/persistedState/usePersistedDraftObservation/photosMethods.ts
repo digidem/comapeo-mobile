@@ -1,14 +1,19 @@
 import {StoreApi} from 'zustand';
 import {DraftPhoto} from '../../../contexts/PhotoPromiseContext/types';
+import {isDraftPhoto} from '../../../lib/attachmentTypeChecks';
 import {DraftObservationSlice} from '.';
 
 type Setter = StoreApi<DraftObservationSlice>['setState'];
 type Getter = StoreApi<DraftObservationSlice>['getState'];
 
 export function deletePhoto(set: Setter, get: Getter, uri: string) {
-  const newAttachments = get().attachments.filter(
-    photo => 'originalUri' in photo && photo.originalUri !== uri,
-  );
+  const newAttachments = get().attachments.filter(attachment => {
+    if (!isDraftPhoto(attachment)) return true;
+
+    if (attachment.type === 'unprocessed') return true;
+
+    return attachment.originalUri !== uri;
+  });
 
   set({attachments: newAttachments});
 }

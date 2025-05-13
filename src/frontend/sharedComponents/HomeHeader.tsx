@@ -5,7 +5,7 @@ import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
 import DeviceIcon from '../images/DeviceIcon.svg';
 import {IconButton} from './IconButton';
 import {HeaderText} from './Text/HeaderText';
-import {BLUE_GREY} from '../lib/styles';
+import {BLUE_GREY, DARK_GREY} from '../lib/styles';
 import {useProjectRoleAndDetails} from '../hooks/useProjectRoleAndDetails';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
 
@@ -86,10 +86,10 @@ const styles = StyleSheet.create({
     minHeight: 32,
     borderRadius: 6,
     justifyContent: 'center',
-    backgroundColor: '#333333E6',
   },
   text: {
     paddingLeft: 5,
+    color: DARK_GREY,
   },
   iconButton: {
     width: 40,

@@ -39,5 +39,7 @@ describe('Exchange screen', () => {
       />,
       {wrapper: appProviders.wrapper},
     );
+
+    // TODO: Add assertions
   });
 });

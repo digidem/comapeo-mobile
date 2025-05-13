@@ -7,7 +7,6 @@ import {
   useAcceptInvite,
   useRejectInvite,
   useSingleInvite,
-  useManyProjects,
 } from '@comapeo/core-react';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -60,7 +59,6 @@ export const InviteReceived = ({
   const acceptInvite = useAcceptInvite();
   const rejectInvite = useRejectInvite();
   const {setActiveProjectId} = useActiveProjectIdActions();
-  const projects = useManyProjects();
   const {isTracking} = useTracking();
 
   useListenToInviteCancel(inviteId);
@@ -71,12 +69,6 @@ export const InviteReceived = ({
       return;
     }
 
-    if (projects.data.length > 1) {
-      navigation.replace('ExistingProjectWarning', {
-        inviteId,
-      });
-      return;
-    }
     acceptInvite.mutate(
       {inviteId: inviteId},
       {

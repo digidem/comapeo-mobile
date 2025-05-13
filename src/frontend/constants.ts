@@ -29,8 +29,6 @@ export const INVITE_SCREEN_NAME: (keyof AppStackParamsList)[] = [
   'InviteReceived',
   'InviteCanceled',
   'InviteSuccessfullyAccepted',
-  'LeaveProject',
-  'ExistingProjectWarning',
   'TrackRecordingActive',
 ];
 

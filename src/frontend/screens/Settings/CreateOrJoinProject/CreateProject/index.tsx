@@ -9,11 +9,9 @@ import {
   KeyboardAvoidingView,
   StyleSheet,
   View,
-} from 'react-native';
-import {
   TouchableOpacity,
   TouchableWithoutFeedback,
-} from 'react-native-gesture-handler';
+} from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {
@@ -35,7 +33,6 @@ import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 import {useActiveProjectIdActions} from '../../../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
 import {useActiveProject} from '../../../../contexts/ActiveProjectContext';
-import {useProjectRoleAndDetails} from '../../../../hooks/useProjectRoleAndDetails';
 
 const m = defineMessages({
   title: {
@@ -83,17 +80,19 @@ type ProjectFormType = {
 
 export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
   navigation,
+  route,
 }) => {
   const {formatMessage: t} = useIntl();
   const [advancedSettingOpen, setAdvancedSettingOpen] = React.useState(false);
   const [configFileResult, setConfigFileResult] =
     React.useState<ConfigFileImportResult | null>(null);
 
+  const action = route.params.action;
+
   const {setActiveProjectId} = useActiveProjectIdActions();
   const selectFileMutation = useSelectFile();
   const createProjectMutation = useCreateProject();
   const {projectId} = useActiveProject();
-  const projectInfo = useProjectRoleAndDetails(projectId);
   const updateSettingsMutation = useUpdateProjectSettings({
     projectId: projectId,
   });
@@ -140,7 +139,7 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
       navigation.navigate('ErrorBottomSheet');
     };
 
-    if (projectInfo.role === 'solo') {
+    if (action === 'UpdateSoloProject') {
       const updateSettings = () =>
         updateSettingsMutation.mutate(
           {name: projectName},
@@ -204,74 +203,76 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
 
   return (
     <KeyboardAvoidingView>
-      <TouchableWithoutFeedback
-        onPress={() => Keyboard.dismiss()}
-        style={styles.container}>
-        <View>
-          <HeaderText variant="header5" style={{marginHorizontal: 20}}>
-            {t(m.enterName)}
-          </HeaderText>
-          <View style={{marginHorizontal: 20, marginTop: 10}}>
-            <HookFormTextInput
-              testID="PROJECT.name-inp"
-              control={control}
-              name="projectName"
-              rules={{maxLength: 100, required: true, minLength: 1}}
-              showCharacterCount
-            />
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <View style={styles.container}>
+          <View>
+            <HeaderText variant="header5" style={{marginHorizontal: 20}}>
+              {t(m.enterName)}
+            </HeaderText>
+            <View style={{marginHorizontal: 20, marginTop: 10}}>
+              <HookFormTextInput
+                testID="PROJECT.name-inp"
+                control={control}
+                name="projectName"
+                rules={{maxLength: 100, required: true, minLength: 1}}
+                showCharacterCount
+              />
+            </View>
+            <View
+              style={{marginTop: 20}}
+              testID="PROJECT.advanced-settings-toggle">
+              <TouchableOpacity
+                onPress={() => setAdvancedSettingOpen(prev => !prev)}
+                style={styles.accordianHeader}>
+                <HeaderText variant="header5">
+                  {t(m.advancedSettings)}
+                </HeaderText>
+                <MaterialIcon
+                  color={BLACK}
+                  name={
+                    !advancedSettingOpen
+                      ? 'keyboard-arrow-up'
+                      : 'keyboard-arrow-down'
+                  }
+                  size={40}
+                />
+              </TouchableOpacity>
+              {advancedSettingOpen && (
+                <View style={styles.importConfigContainer}>
+                  <SecondaryButton
+                    fullSize={true}
+                    style={{alignSelf: 'center'}}
+                    onPress={() => {
+                      selectConfigFile();
+                    }}
+                    text={t(m.importCategories)}
+                  />
+
+                  {configFileResult?.type === 'success' && (
+                    <HeaderText variant="header5" style={styles.configFileName}>
+                      {configFileResult.file.name}
+                    </HeaderText>
+                  )}
+                </View>
+              )}
+            </View>
           </View>
           <View
-            style={{marginTop: 20}}
-            testID="PROJECT.advanced-settings-toggle">
-            <TouchableOpacity
-              onPress={() => setAdvancedSettingOpen(prev => !prev)}
-              style={styles.accordianHeader}>
-              <HeaderText variant="header5">{t(m.advancedSettings)}</HeaderText>
-              <MaterialIcon
-                color={BLACK}
-                name={
-                  !advancedSettingOpen
-                    ? 'keyboard-arrow-up'
-                    : 'keyboard-arrow-down'
-                }
-                size={40}
+            style={{
+              paddingHorizontal: 20,
+              alignItems: 'center',
+            }}>
+            {mutationIsPending ? (
+              <UIActivityIndicator size={30} style={{marginBottom: 20}} />
+            ) : (
+              <PrimaryButton
+                testID="PROJECT.create-btn"
+                fullSize={true}
+                text={t(m.createProjectButton)}
+                onPress={handleSubmit(handleCreateOrUpdateProject)}
               />
-            </TouchableOpacity>
-            {advancedSettingOpen && (
-              <View style={styles.importConfigContainer}>
-                <SecondaryButton
-                  fullSize={true}
-                  style={{alignSelf: 'center'}}
-                  onPress={() => {
-                    selectConfigFile();
-                  }}
-                  text={t(m.importCategories)}
-                />
-
-                {configFileResult?.type === 'success' && (
-                  <HeaderText variant="header5" style={styles.configFileName}>
-                    {configFileResult.file.name}
-                  </HeaderText>
-                )}
-              </View>
             )}
           </View>
-        </View>
-        <View
-          style={{
-            paddingHorizontal: 20,
-            alignItems: 'center',
-          }}>
-          {mutationIsPending ? (
-            <UIActivityIndicator size={30} style={{marginBottom: 20}} />
-          ) : (
-            <PrimaryButton
-              testID="PROJECT.create-btn"
-              fullSize={true}
-              text={t(m.createProjectButton)}
-              onPress={handleSubmit(handleCreateOrUpdateProject)}
-            />
-          )}
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

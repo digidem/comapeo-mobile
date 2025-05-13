@@ -95,6 +95,7 @@ export const AuthScreen = ({
       dockContent={
         error && <Text style={styles.wrongPass}>{t(m.wrongPass)}</Text>
       }>
+      {/* Hide SVG logo in E2E mode to reduce rendering lag on BrowserStack */}
       {process.env.EXPO_PUBLIC_E2E_TEST !== 'true' && (
         <CoMapeoLogoSvg height={window.height / 3} />
       )}

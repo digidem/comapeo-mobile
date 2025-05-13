@@ -110,6 +110,12 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
+      - name: Set PR Metadata Env Vars
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "GITHUB_PR_NUMBER=${{ github.event.pull_request.number }}" >> $GITHUB_ENV
+          echo "GITHUB_PR_TITLE=${{ github.event.pull_request.title }}" >> $GITHUB_ENV
+
       - name: Run Webdriver IO E2E Tests on BrowserStack
         run: |
           set -o pipefail

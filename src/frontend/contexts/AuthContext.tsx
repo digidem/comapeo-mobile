@@ -33,6 +33,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   const [authState, setAuthState] = React.useState<AuthState>(
     passcode === null ? 'authenticated' : 'unauthenticated',
   );
+  // If E2E test mode is enabled, disable FlagSecure to allow screen recordings on BrowserStack
   const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
   const shareDialogIsOpen = useIsShareDialogOpen();
 

@@ -121,6 +121,7 @@ export function AudioRecording({
           </HeaderText>
         </View>
       </ScreenContentWithDock>
+      {/* Remove animated background in E2E mode to avoid performance issues in Appium/BrowserStack */}
       {isE2E ? (
         <View style={{height: 0}} />
       ) : (

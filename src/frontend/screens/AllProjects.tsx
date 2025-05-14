@@ -86,7 +86,7 @@ const ProjectInfoCardMinimal = ({
       headerText={header}
       backgroundColor={projectInfo.projectColor}
       style={style}
-      testID={`project-card-${header?.toLowerCase().replace(/\s+/g, '-')}`}
+      testID={`project_card_${header?.toLowerCase().replace(/\s+/g, '_')}`}
     />
   );
 };

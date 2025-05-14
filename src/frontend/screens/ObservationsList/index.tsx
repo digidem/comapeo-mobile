@@ -5,12 +5,11 @@ import {MessageDescriptor, defineMessages} from 'react-intl';
 import {ObservationListItem} from './ObservationListItem';
 import {ObservationEmptyView} from './ObservationsEmptyView';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
-import {VERY_LIGHT_GREY, WHITE} from '../../lib/styles';
+import {WHITE} from '../../lib/styles';
 import {TrackListItem} from './TrackListItem';
 import {useObservations} from '../../hooks/server/observations';
 import {useTracks} from '../../hooks/server/track';
 import {useAuthContext} from '../../contexts/AuthContext';
-import {ProjectCard} from './ProjectCard';
 
 const m = defineMessages({
   loading: {
@@ -70,11 +69,6 @@ export const ObservationsList: React.FC<
     <View style={styles.container} testID="OBS.list-scrn">
       {/* re: https://github.com/digidem/comapeo-mobile/issues/586  */}
       <FlatList
-        ListHeaderComponent={
-          <View style={styles.projectCardContainer}>
-            <ProjectCard />
-          </View>
-        }
         initialNumToRender={rowsPerWindow}
         getItemLayout={getItemLayout}
         keyExtractor={keyExtractor}
@@ -128,12 +122,5 @@ const styles = StyleSheet.create({
   },
   listItem: {
     height: OBSERVATION_CELL_HEIGHT,
-  },
-  projectCardContainer: {
-    width: '100%',
-    flex: 1,
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: VERY_LIGHT_GREY,
   },
 });

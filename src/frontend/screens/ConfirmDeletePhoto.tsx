@@ -30,7 +30,7 @@ export function ConfirmDeletePhoto({
   navigation,
   route,
 }: NativeRootNavigationProps<'ConfirmDeletePhoto'>) {
-  const {onSuccess, photo} = route.params;
+  const {photo} = route.params;
 
   const {formatMessage: t} = useIntl();
 
@@ -65,8 +65,7 @@ export function ConfirmDeletePhoto({
                 return;
               }
 
-              navigation.goBack();
-              onSuccess?.();
+              navigation.popTo('PhotoPreviewModal', {photo, deleted: true});
             }}
           />
           <SecondaryButton

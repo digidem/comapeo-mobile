@@ -1,5 +1,5 @@
 import {type NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import {Suspense, type ReactNode} from 'react';
+import {Suspense, useEffect, type ReactNode} from 'react';
 import {defineMessages, useIntl, type MessageDescriptor} from 'react-intl';
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -30,16 +30,30 @@ const m = defineMessages({
 });
 
 export function PhotoPreviewModal({
+  navigation,
   route,
 }: NativeRootNavigationProps<'PhotoPreviewModal'>) {
-  const {createdByDeviceId, observationDocId, photo, validatedByCoMapeo} =
-    route.params;
+  const {
+    createdByDeviceId,
+    deleted,
+    observationDocId,
+    photo,
+    validatedByCoMapeo,
+  } = route.params;
   const {projectId} = useActiveProject();
   const {formatMessage: t, formatDate} = useIntl();
 
   // TODO: Properly extract timestamp of saved photo
   const timestamp =
     photo.type === 'processed' ? photo.mediaMetadata.timestamp : undefined;
+
+  // When `deleted` is set, it means that the photo has been deleted and we should navigate away from this screen.
+  // This is an approach that's detailed by the React Navigation docs: https://reactnavigation.org/docs/troubleshooting/#i-get-the-warning-non-serializable-values-were-found-in-the-navigation-state
+  useEffect(() => {
+    if (deleted) {
+      navigation.goBack();
+    }
+  }, [deleted, navigation]);
 
   return (
     <ScrollView contentContainerStyle={{padding: 20, gap: 20}}>
@@ -144,12 +158,7 @@ export function createNavigationOptions({
         return photo.type === 'processed' ? (
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('ConfirmDeletePhoto', {
-                photo,
-                onSuccess: () => {
-                  navigation.goBack();
-                },
-              });
+              navigation.navigate('ConfirmDeletePhoto', {photo});
             }}
             style={{
               borderStyle: 'solid',

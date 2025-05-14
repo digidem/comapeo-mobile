@@ -44,6 +44,7 @@ export type RootStackParamsList = {
   Experiments: undefined;
   PhotoPreviewModal: {
     createdByDeviceId?: string;
+    deleted?: true;
     observationDocId?: string;
     photo: SavedPhoto | ProcessedDraftPhoto;
     validatedByCoMapeo?: boolean;

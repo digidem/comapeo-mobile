@@ -336,6 +336,21 @@
   "allProjects.navTitle": {
     "message": "All Projects"
   },
+  "constants.blue": {
+    "message": "Blue"
+  },
+  "constants.green": {
+    "message": "Green"
+  },
+  "constants.grey": {
+    "message": "Grey"
+  },
+  "constants.orange": {
+    "message": "Orange"
+  },
+  "constants.red": {
+    "message": "Red"
+  },
   "projectInfoCard.coordinator": {
     "message": "You are a coordinator on this project."
   },
@@ -345,23 +360,11 @@
   "projectInfoCard.participant": {
     "message": "You are a participant on this project."
   },
-  "screen.EditProjectDetails.blue": {
-    "message": "Blue"
-  },
   "screen.EditProjectDetails.descriptionPlaceholder": {
     "message": "Short Description of the Project, less than 60 characters."
   },
-  "screen.EditProjectDetails.green": {
-    "message": "Green"
-  },
-  "screen.EditProjectDetails.grey": {
-    "message": "Grey"
-  },
   "screen.EditProjectDetails.navTitle": {
     "message": "Edit Info"
-  },
-  "screen.EditProjectDetails.orange": {
-    "message": "Orange"
   },
   "screen.EditProjectDetails.projectColors": {
     "message": "Project Card Colors"
@@ -371,9 +374,6 @@
   },
   "screen.EditProjectDetails.projectName": {
     "message": "Project Name"
-  },
-  "screen.EditProjectDetails.red": {
-    "message": "Red"
   },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Coordinator"

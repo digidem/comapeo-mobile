@@ -10,6 +10,7 @@ describe('CoMapeo E2E Flow', function () {
   require('./project/project-settings-no-proj.test');
   require('./observations/create-observation.test');
   require('./tracks/start-track.test');
+  require('./multiple-projects/create-and-switch.test');
   require('./project/invite-collaborators.test');
   require('./project/rename-project-from-drawer.test');
   // require('./project/unjoin-project.test');
@@ -35,4 +36,6 @@ describe('CoMapeo E2E Flow', function () {
   require('./passcode/check-passcode-requirements.test');
   require('./passcode/post-passcode-setup.test');
   require('./main/restart-navigation.test');
+  require('./multiple-projects/project-retention.test');
+  require('./multiple-projects/all-projects-screen.test');
 });

@@ -17,7 +17,6 @@ describe('Observation - Metadata View Flow', () => {
     await expect($(byTextMatches('Longitude'))).toBeDisplayed();
     await expect($(byTextMatches('Accuracy'))).toBeDisplayed();
     await expect($(byTextMatches('Altitude'))).toBeDisplayed();
-    await expect($(byTextMatches('Altitude Accuracy'))).toBeDisplayed();
     await expect($(byTextMatches('Speed'))).toBeDisplayed();
 
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));

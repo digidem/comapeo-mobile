@@ -1128,6 +1128,9 @@
   "screens.ObservationList.TrackListItem.Track": {
     "message": "Track"
   },
+  "screens.ObservationList.downloadObservation": {
+    "message": "Download Observations"
+  },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",
     "message": "Observations"

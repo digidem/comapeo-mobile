@@ -1,6 +1,6 @@
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
-import {defineMessages, MessageDescriptor, useIntl} from 'react-intl';
+import {defineMessages, useIntl} from 'react-intl';
 import {HookFormTextInput} from '../../../sharedComponents/HookFormTextInput';
 import {useForm} from 'react-hook-form';
 import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
@@ -13,6 +13,7 @@ import {SaveButton} from '../../../sharedComponents/SaveButton';
 import {useEffect} from 'react';
 import {useUpdateProjectSettings} from '@comapeo/core-react';
 import * as Sentry from '@sentry/react-native';
+import {projectColors} from '../../../constants';
 
 const m = defineMessages({
   projectName: {
@@ -26,26 +27,6 @@ const m = defineMessages({
   navTitle: {
     id: 'screen.EditProjectDetails.navTitle',
     defaultMessage: 'Edit Info',
-  },
-  orange: {
-    id: 'screen.EditProjectDetails.orange',
-    defaultMessage: 'Orange',
-  },
-  blue: {
-    id: 'screen.EditProjectDetails.blue',
-    defaultMessage: 'Blue',
-  },
-  green: {
-    id: 'screen.EditProjectDetails.green',
-    defaultMessage: 'Green',
-  },
-  red: {
-    id: 'screen.EditProjectDetails.red',
-    defaultMessage: 'Red',
-  },
-  grey: {
-    id: 'screen.EditProjectDetails.grey',
-    defaultMessage: 'Grey',
   },
   projectColors: {
     id: 'screen.EditProjectDetails.projectColors',
@@ -178,19 +159,6 @@ export const EditProjectDetails: NativeNavigationComponent<
     </View>
   );
 };
-
-type projectColor = {
-  label: MessageDescriptor;
-  color: string;
-};
-
-const projectColors: projectColor[] = [
-  {color: '#FFF5EB', label: m.orange},
-  {color: '#E5F0FF', label: m.blue},
-  {color: '#EEF6EE', label: m.green},
-  {color: '#FBE9E9', label: m.red},
-  {color: '#E5E5EB', label: m.grey},
-];
 
 EditProjectDetails.navTitle = m.navTitle;
 

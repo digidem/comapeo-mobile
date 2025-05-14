@@ -7,10 +7,11 @@ import Octicons from 'react-native-vector-icons/Octicons';
 
 import {useActiveProject} from '../contexts/ActiveProjectContext.tsx';
 import {BLACK, NEW_DARK_GREY, WHITE} from '../lib/styles.ts';
-import {CoreBlobImage} from '../sharedComponents/CoreBlobImage.tsx';
 import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft.tsx';
+import {CoreBlobImage} from '../sharedComponents/Images/CoreBlobImage.tsx';
+import {GracefulImage} from '../sharedComponents/Images/GracefulImage.tsx';
+import {ImageErrorPlaceholder} from '../sharedComponents/Images/ImageErrorPlaceholder.tsx';
 import {BodyText} from '../sharedComponents/Text/BodyText.tsx';
-import {TrulyContainedImage} from '../sharedComponents/TrulyContainedImage.tsx';
 import {type NativeRootNavigationProps} from '../sharedTypes/navigation.ts';
 
 const m = defineMessages({
@@ -45,15 +46,20 @@ export function PhotoPreviewModal({
       <View>
         {photo.type === 'photo' ? (
           <Suspense fallback={null}>
-            <CoreBlobImage
-              driveId={photo.driveDiscoveryId}
-              name={photo.name}
-              projectId={projectId}
-            />
+            <View style={{flex: 1, borderRadius: 10, overflow: 'hidden'}}>
+              <CoreBlobImage
+                driveId={photo.driveDiscoveryId}
+                name={photo.name}
+                projectId={projectId}
+              />
+            </View>
           </Suspense>
         ) : (
           <View style={{flex: 1, borderRadius: 10, overflow: 'hidden'}}>
-            <TrulyContainedImage src={photo.originalUri} />
+            <GracefulImage
+              src={photo.originalUri}
+              renderError={() => <ImageErrorPlaceholder />}
+            />
           </View>
         )}
       </View>

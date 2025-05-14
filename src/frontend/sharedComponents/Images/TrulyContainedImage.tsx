@@ -1,15 +1,6 @@
 import {useState} from 'react';
 import {Image, type ImageProps} from 'react-native';
 
-type Props = Omit<
-  ImageProps,
-  // Resize mode has no effect.
-  | 'resizeMode'
-  // Dimensions are dictated by the container that lives in the consuming component.
-  | 'height'
-  | 'width'
->;
-
 /**
  * Wrapper around the native Image component that acts similarly to when `resizeMode` is `"contained"`,
  * but works with dynamically sized containers.
@@ -17,7 +8,18 @@ type Props = Omit<
  * The rendered image fills the entire width of the containing component and its height is determined based on this width and the source image's aspect ratio.
  * However, this means that the container should NEVER have an explicit `height`, as it will result in the image being cut off.
  */
-export function TrulyContainedImage({onLoad, style, ...baseImageProps}: Props) {
+export function TrulyContainedImage({
+  onLoad,
+  style,
+  ...baseImageProps
+}: Omit<
+  ImageProps,
+  // Resize mode has no effect.
+  | 'resizeMode'
+  // Dimensions are dictated by the container that lives in the consuming component.
+  | 'height'
+  | 'width'
+>) {
   const [aspectRatio, setAspectRatio] = useState<number | undefined>(undefined);
 
   return (

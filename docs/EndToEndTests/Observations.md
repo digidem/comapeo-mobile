@@ -7,12 +7,15 @@
 - [Viewing Observations](#viewing-observations)
   - [Test Objectives](#test-objectives-2)
   - [Special Considerations](#special-considerations-2)
-- [Editing Observations](#editing-observations)
+- [Viewing Observation Metadata](#viewing-observation-metadata)
   - [Test Objectives](#test-objectives-3)
   - [Special Considerations](#special-considerations-3)
-- [Deleting Observations](#deleting-observations)
+- [Editing Observations](#editing-observations)
   - [Test Objectives](#test-objectives-4)
   - [Special Considerations](#special-considerations-4)
+- [Deleting Observations](#deleting-observations)
+  - [Test Objectives](#test-objectives-5)
+  - [Special Considerations](#special-considerations-5)
 
 ### Overview
 
@@ -70,6 +73,24 @@ These tests deal with all issues related to Observations.
 
 - The test does not check the locations of the dots at this time
 - We are not able to change the location for the app during testing at this time
+
+## Viewing Observation Metadata
+
+- This tests the ability to open and view the metadata associated with an Observation via two different entry points.
+
+### Test Objectives
+
+- Verifies that tapping the **date bar** on the Observation view screen opens the Observation Metadata screen.
+- Verifies that tapping the **GPS bubble** on the embedded map also opens the Metadata screen.
+- Confirms that metadata fields are displayed (if available):
+- Confirms that a **Share** button is present.
+- Confirms that the **back button** on the Metadata screen returns to the previous screen.
+
+### Special Considerations
+
+- This test assumes that the Observation has valid GPS metadata collected automatically (i.e., it is in a _validated_ state).
+- We are currently **unable to simulate an unverified metadata state** (i.e., manually entered location) due to the inability to disable GPS in BrowserStack test environment.
+- If location input can be overridden or skipped in future test configurations, an additional test should be added to verify the _unverified_ state (`"This data was manually entered"`).
 
 ## Editing Observations
 

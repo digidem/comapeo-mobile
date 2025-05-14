@@ -47,7 +47,10 @@ export const HorizontalScrollView = ({
       }}
       horizontal
       scrollEnabled={
-        !containerWidth ? false : itemWidth * numberOfItems > containerWidth
+        !containerWidth
+          ? false
+          : itemWidth * numberOfItems + numberOfItems * (gap - 1) >
+            containerWidth
       }
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={{gap}}

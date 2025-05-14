@@ -111,9 +111,7 @@ export function createAppProvidersWrapper(
       persist: true,
     });
 
-  const persistedActiveProjectIdStore = createActiveProjectIdStore({
-    persist: true,
-  });
+  const persistedActiveProjectIdStore = createActiveProjectIdStore();
 
   const wrapper = ({children}: {children: ReactNode}) => {
     return (

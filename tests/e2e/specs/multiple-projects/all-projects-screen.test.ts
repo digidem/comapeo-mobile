@@ -29,14 +29,27 @@ describe('Multiple Projects - All Projects Screen', () => {
     await expect($(byText('Create new project'))).toBeDisplayed();
   });
 
-  it('should show projects in the correct order', async () => {
-    const elements = await $$('//*[@testID="MENU.project-name"]');
-    if (!Array.isArray(elements)) throw new Error('Expected array of elements');
-    const projectTitles = elements as WebdriverIO.Element[];
-    const titles = await Promise.all(projectTitles.map(el => el.getText()));
+  it('should show projects in the correct order based on testID', async () => {
+    // have to test the test ids because the test id is not on the header text element
+    const rawCards = await $$(
+      '//*[@testID and starts-with(@testID, "project-card-")]',
+    );
+    const cards = rawCards as unknown as WebdriverIO.Element[];
 
-    expect(titles[0]).toBe(output.names.project);
-    expect(titles[1]).toBe(output.names.secondProject);
-    expect(titles[2]).toBe(output.names.thirdProject);
+    const testIds: string[] = [];
+    for (const card of cards) {
+      const id = await card.getAttribute('testID');
+      testIds.push(id);
+    }
+
+    expect(testIds[0]).toBe(
+      `project-card-${output.names.project.toLowerCase().replace(/\s+/g, '-')}`,
+    );
+    expect(testIds[1]).toBe(
+      `project-card-${output.names.secondProject.toLowerCase().replace(/\s+/g, '-')}`,
+    );
+    expect(testIds[2]).toBe(
+      `project-card-${output.names.thirdProject.toLowerCase().replace(/\s+/g, '-')}`,
+    );
   });
 });

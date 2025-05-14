@@ -104,7 +104,6 @@ export const Editor = ({
       )}
       {attachments && attachments.length > 0 && (
         <HorizontalScrollView
-          numberOfItems={attachments.length}
           shouldShowLastItems={true}
           minItemWidth={MIN_WIDTH}
           gap={GAP}

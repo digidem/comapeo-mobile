@@ -143,7 +143,6 @@ export const EditProjectDetails: NativeNavigationComponent<
         </HeaderText>
       </View>
       <HorizontalScrollView
-        numberOfItems={projectColors.length}
         minItemWidth={60}
         gap={16}
         shouldShowLastItems={false}

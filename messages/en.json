@@ -1195,15 +1195,6 @@
     "description": "Title of observation list view when the user has not yet recorded observations",
     "message": "Add Observations"
   },
-  "screens.ObservationsList.ProjectCard.coordinator": {
-    "message": "You’re a coordinator on this project."
-  },
-  "screens.ObservationsList.ProjectCard.mappingOnYourOwn": {
-    "message": "You’re mapping on your own."
-  },
-  "screens.ObservationsList.ProjectCard.participant": {
-    "message": "You’re a participant on this project."
-  },
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",
     "message": "Error loading observations. Try quitting and restarting CoMapeo."

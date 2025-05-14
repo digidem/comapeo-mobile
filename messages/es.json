@@ -55,8 +55,8 @@
   "Navigation.Menu.aboutCoMapeo": {
     "message": "About CoMapeo"
   },
-  "Navigation.Menu.coordinator": {
-    "message": "You are a coordinator on this project."
+  "Navigation.Menu.allProjects": {
+    "message": "All Projects"
   },
   "Navigation.Menu.currentProject": {
     "message": "Current Project"
@@ -66,12 +66,6 @@
   },
   "Navigation.Menu.invite": {
     "message": "Invite"
-  },
-  "Navigation.Menu.mappingOnOwn": {
-    "message": "You are mapping on your own."
-  },
-  "Navigation.Menu.participant": {
-    "message": "You are a participant on this project."
   },
   "Navigation.Menu.privacyPolicy": {
     "message": "Data & Privacy"
@@ -118,23 +112,59 @@
   "ProjectSettings.RemoteArchive.AddRemoteArchive.youAreAdding": {
     "message": "Estás añadiendo"
   },
-  "ProjectSettings.RemoteArchive.Coordinator.addArchive": {
-    "message": "+ Añadir archivo remoto"
+  "ProjectSettings.RemoteArchive.RemoteArchiveOff.addArchive": {
+    "message": "Add Remote Archive"
   },
-  "ProjectSettings.RemoteArchive.Coordinator.dataNotShared": {
-    "message": "Los datos de tu proyecto no se comparten a través de Internet. Sólo las personas de tu proyecto pueden ver tus datos."
+  "ProjectSettings.RemoteArchive.RemoteArchiveOff.dataNotShared": {
+    "message": "The data in your project is not shared over the internet. Only people in your project can see your data."
   },
-  "ProjectSettings.RemoteArchive.Coordinator.experimentalFeature": {
-    "message": "Esta es una función experimental. Necesita una URL de archivo remoto para habilitar el archivo remoto."
+  "ProjectSettings.RemoteArchive.RemoteArchiveOff.experimentalFeature": {
+    "message": "This is an experimental feature. You need a Remote Archive URL to enable Remote Archive."
   },
-  "ProjectSettings.RemoteArchive.Coordinator.noServers": {
-    "message": "No se han añadido servidores a este proyecto"
+  "ProjectSettings.RemoteArchive.RemoteArchiveOff.noServers": {
+    "message": "No servers have been added to this project"
   },
-  "ProjectSettings.RemoteArchive.Coordinator.remoteArchiveOff": {
-    "message": "Archivo remoto está desactivado"
+  "ProjectSettings.RemoteArchive.RemoteArchiveOff.remoteArchiveOff": {
+    "message": "Remote Archive is Off"
   },
-  "ProjectSettings.RemoteArchive.RemoteArchiveOn": {
-    "message": "Archivo remoto está activado"
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.coordinatorCanTurnOff": {
+    "message": "Only a Project Coordinator can turn off Remote Archive."
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.dateAdded": {
+    "message": "Date Added"
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.deviceNames": {
+    "message": "Device Names"
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.navTitle": {
+    "message": "Remote Archive"
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.observations": {
+    "message": "Observations (including photos and audio)"
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.projectSettings": {
+    "message": "Project Settings (categories, questions)"
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.remoteArchiveOn": {
+    "message": "Remote Archive is On"
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.remove": {
+    "message": "Remove the server to stop Remote Archive."
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.removeServer": {
+    "message": "Remove Server"
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.serverName": {
+    "message": "Server Name"
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.syncWithInternet": {
+    "message": "Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data."
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.thisIncludes": {
+    "message": "This includes:"
+  },
+  "ProjectSettings.RemoteArchive.RemoteArchiveOn.tracks": {
+    "message": "Tracks"
   },
   "ProjectSettings.RemoteArchive.Success.archiveAdded": {
     "message": "Archivo remoto añadido"
@@ -163,38 +193,8 @@
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.tracks": {
     "message": "Trayectos"
   },
-  "ProjectSettings.RemoteArchive.coordinatorCanTurnOff": {
-    "message": "Sólo una persona coordinadora del proyecto puede desactivar el archivo remoto."
-  },
-  "ProjectSettings.RemoteArchive.dateAdded": {
-    "message": "Fecha agregada"
-  },
-  "ProjectSettings.RemoteArchive.deviceNames": {
-    "message": "Nombres del dispositivo"
-  },
   "ProjectSettings.RemoteArchive.navTitle": {
     "message": "Archivo remoto"
-  },
-  "ProjectSettings.RemoteArchive.observations": {
-    "message": "Observaciones (incluyendo fotos y audio)"
-  },
-  "ProjectSettings.RemoteArchive.projectSettings": {
-    "message": "Configuración del proyecto (categorías, preguntas)"
-  },
-  "ProjectSettings.RemoteArchive.remove": {
-    "message": "Elimina el servidor para detener el archivo remoto."
-  },
-  "ProjectSettings.RemoteArchive.serverName": {
-    "message": "Nombre del servidor"
-  },
-  "ProjectSettings.RemoteArchive.syncWithInternet": {
-    "message": "Los datos de su proyecto están sincronizando con el archivo a través de internet con el servidor seguro y cifrado a continuación. La persona propietaria del servidor puede ver los datos."
-  },
-  "ProjectSettings.RemoteArchive.thisIncludes": {
-    "message": "Esto incluye"
-  },
-  "ProjectSettings.RemoteArchive.tracks": {
-    "message": "Trayectos"
   },
   "SaveTrack.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -283,6 +283,22 @@
   "Screens.Settings.AppSettings.title": {
     "message": "Ajustes de la aplicación"
   },
+  "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
+    "description": "Text for cancel action button.",
+    "message": "Cancel"
+  },
+  "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.description": {
+    "description": "Explanation for consequences of removing archive server.",
+    "message": "This will stop archiving new data for this project. Existing archived data will not be deleted."
+  },
+  "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.removeArchive": {
+    "description": "Text for destructive action button.",
+    "message": "Remove Archive"
+  },
+  "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.title": {
+    "description": "Text for title that asks about confirming archive server removal.",
+    "message": "Remove {name} from project?"
+  },
   "SharedComponents.ActionButtons.cancel": {
     "description": "Button to cancel delete of observation",
     "message": "Cancelar"
@@ -314,8 +330,20 @@
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Tus cambios no se guardarán. Esto no se puede deshacer."
   },
-  "homeHeader.header.mySoloProject": {
-    "message": "My Solo Project"
+  "allProjects.createNewProject": {
+    "message": "Create new project"
+  },
+  "allProjects.navTitle": {
+    "message": "All Projects"
+  },
+  "projectInfoCard.coordinator": {
+    "message": "You are a coordinator on this project."
+  },
+  "projectInfoCard.mappingOnOwn": {
+    "message": "You are mapping on your own."
+  },
+  "projectInfoCard.participant": {
+    "message": "You are a participant on this project."
   },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Persona Coordinadora"
@@ -693,21 +721,6 @@
   "screens.IntroToCoMapeo.ownData": {
     "message": "Controla tu información y hazla tuya"
   },
-  "screens.Invite.AlreadyOnProject.leaveWarning": {
-    "message": "To join a new project you must leave your current one."
-  },
-  "screens.Invite.ExistingProjectWarning.alreadyOnProject": {
-    "message": "You are already on a project"
-  },
-  "screens.Invite.ExistingProjectWarning.goBack": {
-    "message": "Go Back"
-  },
-  "screens.Invite.ExistingProjectWarning.leaveProj": {
-    "message": "Leave Current Project"
-  },
-  "screens.Invite.ExistingProjectWarning.onProject": {
-    "message": "You are on {projectName}"
-  },
   "screens.InviteCancelled.canceled": {
     "message": "Invite Canceled"
   },
@@ -746,30 +759,6 @@
   },
   "screens.InviteSuccess.youHaveJoined": {
     "message": "You have joined {projectName}"
-  },
-  "screens.Invites.LeaveProject.cancel": {
-    "message": "Cancel"
-  },
-  "screens.Invites.LeaveProject.checkToConfirm": {
-    "message": "Please check the box to confirm"
-  },
-  "screens.Invites.LeaveProject.deleteConsentWithName": {
-    "message": "I understand I will be deleting all data from Project {projectName} from my device."
-  },
-  "screens.Invites.LeaveProject.deleteConsentWithoutName": {
-    "message": "I understand I will be deleting all data from my device."
-  },
-  "screens.Invites.LeaveProject.leaveProj": {
-    "message": "Leave Project"
-  },
-  "screens.Invites.LeaveProject.leavingProject": {
-    "message": "Leaving Project {projectName}"
-  },
-  "screens.Invites.LeaveProject.removeFromProjWithName": {
-    "message": "This will remove all Project {projectName}'s data from your device."
-  },
-  "screens.Invites.LeaveProject.removeFromProjWithoutName": {
-    "message": "This will remove all of the data from your device."
   },
   "screens.LanguageSettings.followSystemPreferences": {
     "description": "Label for language option to follow system preferences",

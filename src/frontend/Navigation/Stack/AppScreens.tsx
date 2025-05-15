@@ -110,6 +110,7 @@ import {
   RemoveRemoteArchive,
   navigationOptions as removeRemoteArchiveNavigationOptions,
 } from '../../screens/Settings/ProjectSettings/RemoteArchive/RemoveRemoteArchive.tsx';
+import {ExportObservations} from '../../screens/ExportObservations.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -493,6 +494,10 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="TrackRecordingActive"
         component={TrackRecordingActive}
+      />
+      <RootStack.Screen
+        name="ExportObservations"
+        component={ExportObservations}
       />
     </RootStack.Group>
   </>

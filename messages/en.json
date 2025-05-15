@@ -685,6 +685,9 @@
   "screens.ExchangeSoloScreen.title": {
     "message": "Exchange"
   },
+  "screens.ExportObservations.Close": {
+    "message": "Close"
+  },
   "screens.FatalError.restart": {
     "message": "Restart App"
   },

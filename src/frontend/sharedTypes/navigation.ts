@@ -43,7 +43,6 @@ export type RootStackParamsList = {
   CoordinateFormat: undefined;
   Experiments: undefined;
   PhotoPreviewModal: {
-    createdByDeviceId?: string;
     observationDocId?: string;
     photo: SavedPhoto | ProcessedDraftPhoto;
     validatedByCoMapeo?: boolean;

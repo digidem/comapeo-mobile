@@ -150,7 +150,6 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
                               navigation.navigate('PhotoPreviewModal', {
                                 photo: att,
                                 observationDocId: observationId,
-                                createdByDeviceId,
                                 validatedByCoMapeo: true,
                               });
                             }}

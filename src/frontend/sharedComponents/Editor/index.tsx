@@ -62,7 +62,7 @@ export const Editor = ({
   isTrack = false,
   ...presetProps
 }: EditorProps) => {
-  const {projectId, projectApi} = useActiveProject();
+  const {projectId} = useActiveProject();
   const projectDetails = useProjectRoleAndDetails(projectId);
   const {navigate} = useNavigationFromRoot();
   const observationId = usePersistedDraftObservation(
@@ -121,6 +121,9 @@ export const Editor = ({
                       onPress={() =>
                         navigate('PhotoPreviewModal', {
                           photo: att,
+                          // TODO: Does it make sense to provide the `observationDocId` in this case?
+                          // Reasoning for not doing so is because the photo isn't actually saved yet, so it's technically not
+                          // officially associated with the observation being created/edited.
                           // TODO: Is this considered validated yet?
                         })
                       }>
@@ -137,39 +140,10 @@ export const Editor = ({
                         size={size}
                         photo={att}
                         onPress={() => {
-                          if (!observationId) {
-                            navigate('PhotoPreviewModal', {
-                              photo: att,
-                            });
-                            return;
-                          }
-
-                          // TODO: Ideally use the core-react hooks but the error handling makes it tricky
-                          // since a boundary would need to be set up somewhere. Probably requires some bigger changes
-                          // to how this Editor component is implemented.
-                          projectApi.observation
-                            .getByDocId(observationId)
-                            .then(observation => {
-                              return projectApi.$originalVersionIdToDeviceId(
-                                observation.originalVersionId,
-                              );
-                            })
-                            .then(createdByDeviceId => {
-                              navigate('PhotoPreviewModal', {
-                                photo: att,
-                                observationDocId: observationId,
-                                createdByDeviceId,
-                                validatedByCoMapeo: true,
-                              });
-                            })
-                            .catch(() => {
-                              // TODO: Does it make sense to navigate to the screen if we fail to retrieve `createdByDeviceId`?
-                              navigate('PhotoPreviewModal', {
-                                photo: att,
-                                observationDocId: observationId,
-                                validatedByCoMapeo: true,
-                              });
-                            });
+                          navigate('PhotoPreviewModal', {
+                            photo: att,
+                            observationDocId: observationId,
+                          });
                         }}
                       />
                     </React.Suspense>

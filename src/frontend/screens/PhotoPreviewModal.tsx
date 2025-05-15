@@ -13,6 +13,8 @@ import {GracefulImage} from '../sharedComponents/Images/GracefulImage.tsx';
 import {ImageErrorPlaceholder} from '../sharedComponents/Images/ImageErrorPlaceholder.tsx';
 import {BodyText} from '../sharedComponents/Text/BodyText.tsx';
 import {type NativeRootNavigationProps} from '../sharedTypes/navigation.ts';
+import {useDocumentCreatedBy, useSingleDocByDocId} from '@comapeo/core-react';
+import {useAppLanguageTag} from '../hooks/useAppLanguageTag.ts';
 
 const m = defineMessages({
   navTitle: {
@@ -32,8 +34,7 @@ const m = defineMessages({
 export function PhotoPreviewModal({
   route,
 }: NativeRootNavigationProps<'PhotoPreviewModal'>) {
-  const {createdByDeviceId, observationDocId, photo, validatedByCoMapeo} =
-    route.params;
+  const {observationDocId, photo, validatedByCoMapeo} = route.params;
   const {projectId} = useActiveProject();
   const {formatMessage: t, formatDate} = useIntl();
 
@@ -109,21 +110,52 @@ export function PhotoPreviewModal({
           />
         )}
 
-        {createdByDeviceId && (
-          <InfoItem
-            icon={
-              <MaterialIcons
-                name="devices"
-                size={20}
-                color={NEW_DARK_GREY}
-                style={{paddingTop: 2}}
-              />
-            }
-            text={createdByDeviceId}
-          />
+        {observationDocId && (
+          <Suspense fallback={null}>
+            <CreatedByDeviceIdInfoItem
+              projectId={projectId}
+              observationDocId={observationDocId}
+            />
+          </Suspense>
         )}
       </View>
     </ScrollView>
+  );
+}
+
+function CreatedByDeviceIdInfoItem({
+  projectId,
+  observationDocId,
+}: {
+  projectId: string;
+  observationDocId: string;
+}) {
+  const lang = useAppLanguageTag();
+
+  const {data: observation} = useSingleDocByDocId({
+    projectId,
+    docType: 'observation',
+    docId: observationDocId,
+    lang,
+  });
+
+  const {data: createdByDeviceId} = useDocumentCreatedBy({
+    projectId,
+    originalVersionId: observation.originalVersionId,
+  });
+
+  return (
+    <InfoItem
+      icon={
+        <MaterialIcons
+          name="devices"
+          size={20}
+          color={NEW_DARK_GREY}
+          style={{paddingTop: 2}}
+        />
+      }
+      text={createdByDeviceId}
+    />
   );
 }
 

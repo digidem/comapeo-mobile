@@ -1,17 +1,18 @@
-import {StateCreator} from 'zustand';
-import {createPersistedState} from '../createPersistedState';
-import {DraftPhoto, Photo} from '../../../contexts/PhotoPromiseContext/types';
-import {Audio, UnsavedAudio} from '../../../sharedTypes/audio';
-import {deletePhoto, replaceDraftPhotos} from './photosMethods';
-import {ClientGeneratedObservation, Position} from '../../../sharedTypes';
 import {Observation, Preset} from '@comapeo/schema';
-import {usePresetsQuery} from '../../server/presets';
-import {matchPreset} from '../../../lib/utils';
+import {StateCreator} from 'zustand';
+
+import {DraftPhoto, Photo} from '../../contexts/PhotoPromiseContext/types';
 import {
-  isSavedPhoto,
   isAudioAttachment,
+  isProcessedDraftPhoto,
+  isSavedPhoto,
   isUnsavedAudio,
-} from '../../../lib/attachmentTypeChecks';
+} from '../../lib/attachmentTypeChecks';
+import {matchPreset} from '../../lib/utils';
+import {ClientGeneratedObservation, Position} from '../../sharedTypes';
+import {Audio, UnsavedAudio} from '../../sharedTypes/audio';
+import {usePresetsQuery} from '../server/presets';
+import {createPersistedState} from './createPersistedState';
 
 const emptyObservation: ClientGeneratedObservation = {
   lat: 0,
@@ -70,7 +71,16 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
   attachments: [],
   value: null,
   actions: {
-    deletePhoto: uri => deletePhoto(set, get, uri),
+    deletePhoto: uri => {
+      const newAttachments = get().attachments.filter(attachment => {
+        // We currently only allow deletion of processed draft photos
+        if (!isProcessedDraftPhoto(attachment)) return true;
+
+        return attachment.originalUri !== uri;
+      });
+
+      set({attachments: newAttachments});
+    },
     addPhotoPlaceholder: draftPhotoId =>
       set({
         attachments: [
@@ -78,8 +88,15 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
           {type: 'unprocessed', draftPhotoId},
         ],
       }),
-    replacePhotoPlaceholderWithPhoto: draftPhoto =>
-      replaceDraftPhotos(set, get, draftPhoto),
+    replacePhotoPlaceholderWithPhoto: draftPhoto => {
+      const updatedAttachments = get().attachments.map(p => {
+        if ('draftPhotoId' in p && p.draftPhotoId === draftPhoto.draftPhotoId) {
+          return draftPhoto;
+        }
+        return p;
+      });
+      set({attachments: updatedAttachments});
+    },
     clearDraft: () => {
       set({
         attachments: [],

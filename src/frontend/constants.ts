@@ -1,4 +1,28 @@
+import {defineMessages, MessageDescriptor} from 'react-intl';
 import {AppStackParamsList, HomeTabsParamsList} from './sharedTypes/navigation';
+
+const m = defineMessages({
+  orange: {
+    id: 'constants.orange',
+    defaultMessage: 'Orange',
+  },
+  blue: {
+    id: 'constants.blue',
+    defaultMessage: 'Blue',
+  },
+  green: {
+    id: 'constants.green',
+    defaultMessage: 'Green',
+  },
+  red: {
+    id: 'constants.red',
+    defaultMessage: 'Red',
+  },
+  grey: {
+    id: 'constants.grey',
+    defaultMessage: 'Grey',
+  },
+});
 
 // this has to be a string because js does not recognize 00000 as being 5 digits
 export const OBSCURE_PASSCODE = '00000';
@@ -36,3 +60,16 @@ export const INVITE_SCREEN_NAME: (keyof AppStackParamsList)[] = [
 // (see https://github.com/digidem/comapeo-core-react/blob/59a80cf0a1b9dad13e5f066233dae2465d2d20b1/src/lib/react-query/shared.ts#L6)
 // so partial invalidations align with the library’s queries.
 export const ROOT_QUERY_KEY = '@comapeo/core-react';
+
+type projectColor = {
+  label: MessageDescriptor;
+  color: string;
+};
+
+export const projectColors: projectColor[] = [
+  {color: '#FFF5EB', label: m.orange},
+  {color: '#E5F0FF', label: m.blue},
+  {color: '#EEF6EE', label: m.green},
+  {color: '#FBE9E9', label: m.red},
+  {color: '#E5E5EB', label: m.grey},
+];

@@ -100,6 +100,7 @@ import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagemen
 import {MenuScreen} from '../../screens/MenuScreen';
 import {InviteCollaboratorsScreen} from '../../screens/Settings/ProjectSettings/YourTeam/InviteCollaborators.tsx';
 import {MenuHeader} from '../../sharedComponents/MenuHeader.tsx';
+import {EditProjectDetails} from '../../screens/Settings/ProjectSettings/EditProjectDetails.tsx';
 import {AllProjects} from '../../screens/AllProjects.tsx';
 import {TrackRecordingActive} from '../../screens/TrackRecordingActive.tsx';
 import {
@@ -449,6 +450,16 @@ export const createDefaultScreenGroup = ({
         component={InviteCollaboratorsScreen}
         options={{
           headerShown: false,
+        }}
+      />
+      <RootStack.Screen
+        name="EditProjectDetails"
+        component={EditProjectDetails}
+        options={{
+          headerTitle: intl(EditProjectDetails.navTitle),
+          headerRight: () => (
+            <SaveButton onPress={() => {}} isLoading={false} />
+          ),
         }}
       />
     </RootStack.Group>

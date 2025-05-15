@@ -102,7 +102,11 @@ export const ProjectSettings = () => {
       <SettingsCardRow
         icon={<NoProjectIcon width={24} height={24} />}
         title={displayTitle}
-        subtitle={isSolo ? formatMessage(m.soloDescription) : undefined}
+        subtitle={
+          isSolo
+            ? formatMessage(m.soloDescription)
+            : projectInfo.projectDescription
+        }
         buttonText={
           isSolo
             ? formatMessage(m.invite)
@@ -110,8 +114,12 @@ export const ProjectSettings = () => {
               ? formatMessage(m.editInfo)
               : undefined
         }
-        onPress={() =>
-          navigate(isSolo ? 'InviteCollaborators' : 'ProjectSettings')
+        onPress={
+          isSolo || isCoordinator
+            ? () => {
+                navigate(isSolo ? 'InviteCollaborators' : 'EditProjectDetails');
+              }
+            : undefined
         }
       />
       {!isSolo && (

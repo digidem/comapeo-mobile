@@ -45,7 +45,6 @@ export type RootStackParamsList = {
   PhotoPreviewModal: {
     observationDocId?: string;
     photo: SavedPhoto | ProcessedDraftPhoto;
-    validatedByCoMapeo?: boolean;
   };
   ConfirmDeletePhoto: {
     onSuccess?: () => void;

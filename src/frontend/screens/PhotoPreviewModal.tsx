@@ -34,13 +34,21 @@ const m = defineMessages({
 export function PhotoPreviewModal({
   route,
 }: NativeRootNavigationProps<'PhotoPreviewModal'>) {
-  const {observationDocId, photo, validatedByCoMapeo} = route.params;
+  const {observationDocId, photo} = route.params;
   const {projectId} = useActiveProject();
   const {formatMessage: t, formatDate} = useIntl();
 
   // TODO: Properly extract timestamp of saved photo
   const timestamp =
     photo.type === 'processed' ? photo.mediaMetadata.timestamp : undefined;
+
+  // TODO: This check needs to be updated in the case of the saved photo.
+  // We need to get the relevant metadata from core, which is supported in a different version of core.
+  const isValidatedByCoMapeo =
+    photo.type === 'photo'
+      ? true
+      : typeof photo.mediaMetadata.timestamp === 'number' &&
+        photo.mediaMetadata.location;
 
   return (
     <ScrollView contentContainerStyle={{padding: 20, gap: 20}}>
@@ -65,7 +73,7 @@ export function PhotoPreviewModal({
         )}
       </View>
       <View style={{gap: 20}}>
-        {validatedByCoMapeo && (
+        {isValidatedByCoMapeo && (
           <InfoItem
             icon={
               <Octicons

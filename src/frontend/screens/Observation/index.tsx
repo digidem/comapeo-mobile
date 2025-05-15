@@ -132,7 +132,6 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
           ) : null}
           {attachments.length > 0 && (
             <HorizontalScrollView
-              numberOfItems={attachments.length}
               shouldShowLastItems={false}
               minItemWidth={MIN_WIDTH}
               gap={GAP}

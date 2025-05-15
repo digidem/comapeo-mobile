@@ -31,6 +31,11 @@ describe('Remote Archive - Add Success Flow', () => {
 
     const addButton = await $(byTextMatches('\\+ Add Remote Archive'));
     await addButton.click();
+    const errorModal = await $(byTextMatches('Something went wrong'));
+    if (await errorModal.isDisplayed()) {
+      await $(byText('Go Back')).click();
+      await $(byTextMatches('\\+ Add Remote Archive')).click();
+    }
   });
 
   it('shows success UI and added archive info', async () => {

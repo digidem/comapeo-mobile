@@ -67,7 +67,12 @@ export function PhotoPreviewModal({
         {validatedByCoMapeo && (
           <InfoItem
             icon={
-              <Octicons name="check-circle" size={20} color={NEW_DARK_GREY} />
+              <Octicons
+                name="check-circle"
+                size={20}
+                color={NEW_DARK_GREY}
+                style={{paddingTop: 2}}
+              />
             }
             text={t(m.validatedByCoMapeo)}
           />
@@ -75,7 +80,14 @@ export function PhotoPreviewModal({
 
         {timestamp !== undefined && (
           <InfoItem
-            icon={<Octicons name="calendar" size={20} color={NEW_DARK_GREY} />}
+            icon={
+              <Octicons
+                name="calendar"
+                size={20}
+                color={NEW_DARK_GREY}
+                style={{paddingTop: 2}}
+              />
+            }
             text={formatDate(timestamp, {
               dateStyle: 'full',
               timeStyle: 'short',
@@ -86,7 +98,12 @@ export function PhotoPreviewModal({
         {observationDocId && (
           <InfoItem
             icon={
-              <MaterialIcons name="numbers" size={20} color={NEW_DARK_GREY} />
+              <MaterialIcons
+                name="numbers"
+                size={20}
+                color={NEW_DARK_GREY}
+                style={{paddingTop: 2}}
+              />
             }
             text={observationDocId}
           />
@@ -95,7 +112,12 @@ export function PhotoPreviewModal({
         {createdByDeviceId && (
           <InfoItem
             icon={
-              <MaterialIcons name="devices" size={20} color={NEW_DARK_GREY} />
+              <MaterialIcons
+                name="devices"
+                size={20}
+                color={NEW_DARK_GREY}
+                style={{paddingTop: 2}}
+              />
             }
             text={createdByDeviceId}
           />

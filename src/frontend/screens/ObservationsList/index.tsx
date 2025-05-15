@@ -78,7 +78,9 @@ export const ObservationsList: React.FC<
         ListHeaderComponent={
           <View style={styles.populatedListHeader}>
             <SecondaryButton
-              onPress={() => {}}
+              onPress={() => {
+                navigation.navigate('ExportObservations');
+              }}
               text={formatMessage(m.downloadObservation)}
               fullSize
             />

@@ -685,8 +685,29 @@
   "screens.ExchangeSoloScreen.title": {
     "message": "Exchange"
   },
-  "screens.ExportObservations.Close": {
+  "screens.ExportObservations.allObservations": {
+    "message": "All Observations"
+  },
+  "screens.ExportObservations.allObservationsAndMedia": {
+    "message": "All Observations with Media"
+  },
+  "screens.ExportObservations.allObservationsAndMediaDescription": {
+    "message": "Images, audio, and video in a .zip file"
+  },
+  "screens.ExportObservations.allObservationsDescription": {
+    "message": "Text only as a GeoJson file"
+  },
+  "screens.ExportObservations.close": {
     "message": "Close"
+  },
+  "screens.ExportObservations.download": {
+    "message": "Download"
+  },
+  "screens.ExportObservations.tracks": {
+    "message": "Tracks"
+  },
+  "screens.ExportObservations.tracksDescription": {
+    "message": "Tracks only as a GeoJson file"
   },
   "screens.FatalError.restart": {
     "message": "Restart App"

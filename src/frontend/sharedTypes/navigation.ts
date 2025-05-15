@@ -127,6 +127,7 @@ export type RootStackParamsList = {
   Menu: undefined;
   AllProjects: undefined;
   InviteCollaborators: undefined;
+  EditProjectDetails: undefined;
   TrackRecordingActive: undefined;
   RemoteArchive: undefined;
   AddRemoteArchive: undefined;

@@ -11,6 +11,7 @@ import {useActiveProjectIdActions} from '../contexts/ActiveProjectIdStoreContext
 import {SecondaryButton} from '../sharedComponents/Buttons';
 import AddProjectIcon from '../images/AddProject.svg';
 import {FlatList} from 'react-native';
+import {useTracking} from '../hooks/useTracking';
 
 const m = defineMessages({
   navTitle: {
@@ -28,6 +29,7 @@ export const AllProjects: NativeNavigationComponent<'AllProjects'> = () => {
   const {setActiveProjectId} = useActiveProjectIdActions();
   const {popTo, navigate} = useNavigationFromRoot();
   const {formatMessage} = useIntl();
+  const {isTracking} = useTracking();
   return (
     <View style={{flex: 1, paddingTop: 40}}>
       <SecondaryButton
@@ -44,6 +46,10 @@ export const AllProjects: NativeNavigationComponent<'AllProjects'> = () => {
         data={data}
         renderItem={({item}) => {
           function handlePress() {
+            if (isTracking) {
+              navigate('TrackRecordingActive');
+              return;
+            }
             setActiveProjectId(item.projectId);
             popTo('Menu');
           }

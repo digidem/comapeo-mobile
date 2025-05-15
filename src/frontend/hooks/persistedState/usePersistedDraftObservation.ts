@@ -4,7 +4,7 @@ import {StateCreator} from 'zustand';
 import {DraftPhoto, Photo} from '../../contexts/PhotoPromiseContext/types';
 import {
   isAudioAttachment,
-  isDraftPhoto,
+  isProcessedDraftPhoto,
   isSavedPhoto,
   isUnsavedAudio,
 } from '../../lib/attachmentTypeChecks';
@@ -72,11 +72,9 @@ const draftObservationSlice: StateCreator<DraftObservationSlice> = (
   value: null,
   actions: {
     deletePhoto: uri => {
-      // We currently only allow deletion of processed draft photos
       const newAttachments = get().attachments.filter(attachment => {
-        if (!isDraftPhoto(attachment)) return true;
-
-        if (attachment.type === 'unprocessed') return true;
+        // We currently only allow deletion of processed draft photos
+        if (!isProcessedDraftPhoto(attachment)) return true;
 
         return attachment.originalUri !== uri;
       });

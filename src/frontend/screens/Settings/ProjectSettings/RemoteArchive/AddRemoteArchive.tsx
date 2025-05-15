@@ -149,6 +149,7 @@ const SearchUrl = ({control, errors}: SearchUrlProp) => {
         </HeaderText>
       </View>
       <HookFormTextInput
+        testID={'RA.url-inp'}
         control={control}
         name="url"
         rules={{required: true, minLength: 1}}

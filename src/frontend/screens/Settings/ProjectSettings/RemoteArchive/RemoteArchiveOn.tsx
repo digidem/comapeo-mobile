@@ -117,7 +117,10 @@ export function RemoteArchiveOn({
           <View style={{alignSelf: 'flex-start', maxWidth: '70%', gap: 20}}>
             <View style={{gap: 4}}>
               <HeaderText variant="header6">{archiveName}</HeaderText>
-              <BodyText variant="smallMeta" style={{color: MEDIUM_GREY}}>
+              <BodyText
+                testID="RA.archive-name"
+                variant="smallMeta"
+                style={{color: MEDIUM_GREY}}>
                 {archiveBaseUrl}
               </BodyText>
             </View>

@@ -1,0 +1,59 @@
+import {expect} from '@wdio/globals';
+import {describe, it, before} from 'mocha';
+import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
+import {getTodayFormattedDate} from '../../utils/date';
+import {output} from '../../utils/naming';
+
+describe('Remote Archive - Add Success Flow', () => {
+  it('navigates to Remote Archive screen', async () => {
+    await expect($(byTextMatches('Remote Archive \\| OFF'))).toBeDisplayed();
+    await $(byText('View Details')).click();
+    await expect($(byText('Add Remote Archive'))).toBeDisplayed();
+  });
+
+  it('fills and submits server URL', async () => {
+    const addArchiveBtn = await $(byText('Add Remote Archive'));
+    await addArchiveBtn.click();
+
+    const urlInput = await $(byResourceId('RA.url-inp'));
+    await urlInput.setValue(output.remoteServer);
+    await $(byResourceId('OBS.edit-save-btn')).click();
+
+    await expect($(byTextMatches('You are adding'))).toBeDisplayed();
+    await expect($(byTextMatches('CoMapeo Server'))).toBeDisplayed();
+    await expect($(byTextMatches(output.remoteServer))).toBeDisplayed();
+
+    const seeIncluded = await $(byTextMatches('See What is Included'));
+    await seeIncluded.click();
+    await expect($(byTextMatches('Observations'))).toBeDisplayed();
+    await expect($(byTextMatches('Tracks'))).toBeDisplayed();
+    await $(byText('Close')).click();
+
+    const addButton = await $(byTextMatches('\\+ Add Remote Archive'));
+    await addButton.click();
+  });
+
+  it('shows success UI and added archive info', async () => {
+    await expect($(byText('Remote Archive Added'))).toBeDisplayed();
+    await expect($(byTextMatches(output.remoteServer))).toBeDisplayed();
+    https: await $(byText('Close')).click();
+
+    await expect($(byTextMatches('Remote Archive is On'))).toBeDisplayed();
+    await expect($(byResourceId('RA.archive-name'))).toHaveText(
+      output.remoteServer,
+    );
+
+    const today = getTodayFormattedDate();
+    await expect($(byText(today))).toBeDisplayed();
+
+    await expect($(byTextMatches('Remove Server'))).toBeDisplayed();
+    const backButton = await $(byResourceId('MAIN.header-back-btn'));
+    await backButton.click();
+  });
+  it('shows remote archive on in project settings', async () => {
+    await expect($(byText('Project Settings'))).toBeDisplayed();
+    await expect($(byTextMatches('Remote Archive \\| ON'))).toBeDisplayed();
+    const backButton = await $(byResourceId('MAIN.header-back-btn'));
+    await backButton.click();
+  });
+});

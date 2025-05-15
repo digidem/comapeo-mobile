@@ -9,4 +9,5 @@ export const output = {
   passcode: '12345',
   newpasscode: '23456',
   obscurepasscode: '00000',
+  remoteServer: 'https://comapeo-cloud.fly.dev/',
 };

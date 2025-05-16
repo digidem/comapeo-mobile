@@ -38,6 +38,7 @@ import {
   MetricsDiagnosticsStoreProvider,
 } from './MetricsDiagnosticsStoreContext';
 import {LocaleStore, LocaleStoreProvider} from './LocaleStoreContext';
+import {LocationProvider} from './LocationContext';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -83,29 +84,31 @@ export const AppProviders = ({
                     <QueryClientProvider client={queryClient}>
                       <SafeAreaProvider>
                         <GestureHandlerRootView style={styles.flex}>
-                          <TrackTimerContextProvider>
-                            <ServerLoading messagePort={messagePort}>
-                              <LocalDiscoveryProvider
-                                value={localDiscoveryController}>
-                                <ClientApiProvider clientApi={mapeoApi}>
-                                  <ActiveProjectProvider>
-                                    <BottomSheetModalProvider>
-                                      <PhotoPromiseProvider>
-                                        <DraftObservationProvider
-                                          draftObservationStore={
-                                            persistedDrafObservationStore
-                                          }>
-                                          <AuthProvider>
-                                            {children}
-                                          </AuthProvider>
-                                        </DraftObservationProvider>
-                                      </PhotoPromiseProvider>
-                                    </BottomSheetModalProvider>
-                                  </ActiveProjectProvider>
-                                </ClientApiProvider>
-                              </LocalDiscoveryProvider>
-                            </ServerLoading>
-                          </TrackTimerContextProvider>
+                          <LocationProvider>
+                            <TrackTimerContextProvider>
+                              <ServerLoading messagePort={messagePort}>
+                                <LocalDiscoveryProvider
+                                  value={localDiscoveryController}>
+                                  <ClientApiProvider clientApi={mapeoApi}>
+                                    <ActiveProjectProvider>
+                                      <BottomSheetModalProvider>
+                                        <PhotoPromiseProvider>
+                                          <DraftObservationProvider
+                                            draftObservationStore={
+                                              persistedDrafObservationStore
+                                            }>
+                                            <AuthProvider>
+                                              {children}
+                                            </AuthProvider>
+                                          </DraftObservationProvider>
+                                        </PhotoPromiseProvider>
+                                      </BottomSheetModalProvider>
+                                    </ActiveProjectProvider>
+                                  </ClientApiProvider>
+                                </LocalDiscoveryProvider>
+                              </ServerLoading>
+                            </TrackTimerContextProvider>
+                          </LocationProvider>
                         </GestureHandlerRootView>
                       </SafeAreaProvider>
                     </QueryClientProvider>

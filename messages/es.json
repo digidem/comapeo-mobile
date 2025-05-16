@@ -336,6 +336,21 @@
   "allProjects.navTitle": {
     "message": "Todos los proyectos"
   },
+  "constants.blue": {
+    "message": "Blue"
+  },
+  "constants.green": {
+    "message": "Green"
+  },
+  "constants.grey": {
+    "message": "Grey"
+  },
+  "constants.orange": {
+    "message": "Orange"
+  },
+  "constants.red": {
+    "message": "Red"
+  },
   "projectInfoCard.coordinator": {
     "message": "Este dispositivo es coordinador de este proyecto."
   },
@@ -344,6 +359,21 @@
   },
   "projectInfoCard.participant": {
     "message": "Eres participante en este proyecto."
+  },
+  "screen.EditProjectDetails.descriptionPlaceholder": {
+    "message": "Short Description of the Project, less than 60 characters."
+  },
+  "screen.EditProjectDetails.navTitle": {
+    "message": "Edit Info"
+  },
+  "screen.EditProjectDetails.projectColors": {
+    "message": "Project Card Colors"
+  },
+  "screen.EditProjectDetails.projectDescription": {
+    "message": "Project Description"
+  },
+  "screen.EditProjectDetails.projectName": {
+    "message": "Project Name"
   },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Persona Coordinadora"

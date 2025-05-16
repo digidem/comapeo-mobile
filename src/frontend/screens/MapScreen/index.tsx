@@ -41,7 +41,6 @@ assert(
   'MAPBOX_ACCESS_TOKEN environment variable should be set',
 );
 Mapbox.setAccessToken(process.env.MAPBOX_ACCESS_TOKEN);
-const MIN_DISPLACEMENT = 3;
 
 export const MapScreen = ({
   route,
@@ -149,10 +148,6 @@ export const MapScreen = ({
           followUserLocation={false}
         />
 
-        {coords && locationServicesEnabled && (
-          <UserLocation minDisplacement={MIN_DISPLACEMENT} />
-        )}
-
         {isFinishedLoading && authState !== 'obscured' && (
           <>
             <RemoteDetectionAlertsMapLayer />
@@ -161,6 +156,7 @@ export const MapScreen = ({
             <ObservationMapLayer />
           </>
         )}
+        <UserLocation />
       </Mapbox.MapView>
       <View style={styles.bottomContainer}>
         <View style={{flex: 1, alignItems: 'center'}}>

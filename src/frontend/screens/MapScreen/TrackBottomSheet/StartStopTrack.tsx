@@ -11,6 +11,8 @@ import {
   PrimaryButton,
 } from '../../../sharedComponents/Buttons.tsx';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText.tsx';
+import {useTrackActions} from '../../../contexts/TrackStoreContext.tsx';
+import {useLocationContext} from '../../../contexts/LocationContext.tsx';
 
 const m = defineMessages({
   defaultButtonText: {
@@ -36,13 +38,30 @@ export const StartStopTrack = () => {
   const {isTracking, cancelTracking, startTracking} = useTracking();
   const {timer} = useTrackTimerContext();
   const navigation = useNavigationFromHomeTabs();
+  const {addNewLocations} = useTrackActions();
+  // this component does not need to be reactive to location. So we are pulling the entire store, and just getting the final location when the user presses 'stop tracking'. Avoids unneccsary re-renders as the location is updating often.
+  const locationStore = useLocationContext();
 
   function endTracking() {
     const hasTracksSaved = cancelTracking();
 
-    if (hasTracksSaved) {
-      navigation.navigate('SaveTrack');
+    if (!hasTracksSaved) return;
+
+    const location = locationStore.getState().location;
+    const lon = location?.coords.longitude;
+    const lat = location?.coords.latitude;
+
+    // We always want to add the final location the user is in to make the tracks as accurate as possible.
+    if (lat !== undefined && lon !== undefined) {
+      addNewLocations([
+        {
+          timestamp: new Date().getTime(),
+          latitude: lat,
+          longitude: lon,
+        },
+      ]);
     }
+    navigation.navigate('SaveTrack');
   }
 
   return (

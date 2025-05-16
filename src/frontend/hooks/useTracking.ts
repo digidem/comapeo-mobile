@@ -22,7 +22,7 @@ export function useTracking() {
     setTracking(true);
     Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
       accuracy: Location.Accuracy.Highest,
-      activityType: Location.LocationActivityType.Fitness,
+      distanceInterval: 1,
     }).catch(err => {
       Sentry.captureException(err);
       setTracking(false);

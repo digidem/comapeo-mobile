@@ -1,7 +1,6 @@
 import {
   watchPositionAsync,
   Accuracy,
-  PermissionStatus,
   LocationSubscription,
   getProviderStatusAsync,
   getForegroundPermissionsAsync,
@@ -31,14 +30,8 @@ const LocationContext = createContext<ReturnType<
 
 const POLL_PROVIDER_STATUS_INTERVAL = 10;
 
-export function LocationProvider({
-  children,
-  locationPermission,
-}: {
-  children: React.ReactNode;
-  locationPermission: PermissionStatus;
-}) {
-  const [store] = React.useState(() => createLocationStore(locationPermission));
+export function LocationProvider({children}: {children: React.ReactNode}) {
+  const [store] = React.useState(() => createLocationStore());
 
   const queryClient = useQueryClient();
 

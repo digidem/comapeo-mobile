@@ -1,14 +1,16 @@
-import React, {useCallback} from 'react';
+import React from 'react';
+import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
-import {Button} from '../../../sharedComponents/Button.tsx';
-import {Text} from '../../../sharedComponents/Text.tsx';
+import {useTrackTimerContext} from '../../../contexts/TrackTimerContext.tsx';
+import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes.ts';
 import {useTracking} from '../../../hooks/useTracking.ts';
 import StartTrackingIcon from '../../../images/StartTracking.svg';
 import StopTrackingIcon from '../../../images/StopTracking.svg';
-import {useTrackTimerContext} from '../../../contexts/TrackTimerContext.tsx';
-import {defineMessages, useIntl} from 'react-intl';
-import {usePersistedTrack} from '../../../hooks/persistedState/usePersistedTrack.ts';
-import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes.ts';
+import {
+  DestructiveButton,
+  PrimaryButton,
+} from '../../../sharedComponents/Buttons.tsx';
+import {HeaderText} from '../../../sharedComponents/Text/HeaderText.tsx';
 
 const m = defineMessages({
   defaultButtonText: {
@@ -25,68 +27,47 @@ const m = defineMessages({
   },
   trackingDescription: {
     id: 'Modal.GPSEnable.trackingDescription',
-    defaultMessage: 'You’ve been recording for',
+    defaultMessage: 'You’ve been recording for {time}',
   },
 });
 
 export const StartStopTrack = () => {
   const {formatMessage} = useIntl();
-  const {isTracking, cancelTracking, startTracking, loading} = useTracking();
-  const locationHistory = usePersistedTrack(state => state.locationHistory);
-  const clearCurrentTrack = usePersistedTrack(state => state.clearCurrentTrack);
+  const {isTracking, cancelTracking, startTracking} = useTracking();
   const {timer} = useTrackTimerContext();
   const navigation = useNavigationFromHomeTabs();
 
-  const handleTracking = useCallback(() => {
-    if (!isTracking) {
-      startTracking();
-      return;
-    }
+  function endTracking() {
+    const hasTracksSaved = cancelTracking();
 
-    cancelTracking();
-
-    if (locationHistory.length <= 1) {
-      clearCurrentTrack();
-      navigation.setParams({trackingOpen: false});
-    } else {
+    if (hasTracksSaved) {
       navigation.navigate('SaveTrack');
     }
-  }, [
-    cancelTracking,
-    clearCurrentTrack,
-    locationHistory,
-    isTracking,
-    startTracking,
-    navigation,
-  ]);
-
-  const getButtonTitle = () => {
-    if (loading) return m.loadingButtonText;
-    if (isTracking) return m.stopButtonText;
-    return m.defaultButtonText;
-  };
+  }
 
   return (
-    <View>
-      <Button
-        fullWidth
-        disabled={loading}
-        onPress={handleTracking}
-        style={{backgroundColor: isTracking ? '#D92222' : '#0066FF'}}>
-        <View style={styles.buttonWrapper}>
-          {isTracking ? <StopTrackingIcon /> : <StartTrackingIcon />}
-          <Text style={styles.buttonText}>
-            {formatMessage(getButtonTitle())}
-          </Text>
-        </View>
-      </Button>
+    <View style={{alignItems: 'center', flex: 1}}>
+      {!isTracking ? (
+        <PrimaryButton
+          fullSize={true}
+          text={formatMessage(m.defaultButtonText)}
+          onPress={startTracking}
+          renderIcon={() => <StartTrackingIcon />}
+        />
+      ) : (
+        <DestructiveButton
+          text={formatMessage(m.stopButtonText)}
+          fullSize={true}
+          renderIcon={() => <StopTrackingIcon />}
+          onPress={endTracking}
+        />
+      )}
       {isTracking && (
         <View style={styles.runtimeWrapper}>
           <View style={styles.indicator} />
-          <Text style={styles.text}>
-            {formatMessage(m.trackingDescription)}
-          </Text>
-          <Text style={styles.timer}>{timer}</Text>
+          <HeaderText style={{textAlign: 'center'}} variant="header5">
+            {formatMessage(m.trackingDescription, {time: timer})}
+          </HeaderText>
         </View>
       )}
     </View>
@@ -94,24 +75,12 @@ export const StartStopTrack = () => {
 };
 
 const styles = StyleSheet.create({
-  buttonWrapper: {
-    flexDirection: 'row',
-    display: 'flex',
-    alignItems: 'center',
-    width: '100%',
-  },
-  buttonText: {
-    fontWeight: '500',
-    color: '#fff',
-    width: '100%',
-    flex: 1,
-    textAlign: 'center',
-  },
   runtimeWrapper: {
     paddingTop: 20,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    flex: 1,
   },
   indicator: {
     marginRight: 5,
@@ -119,13 +88,5 @@ const styles = StyleSheet.create({
     width: 10,
     borderRadius: 99,
     backgroundColor: '#59A553',
-  },
-  text: {
-    fontSize: 16,
-  },
-  timer: {
-    marginLeft: 5,
-    fontWeight: 'bold',
-    fontSize: 16,
   },
 });

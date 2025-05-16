@@ -2,14 +2,19 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byText} from '../../utils/selectors';
 
-describe('Map Screen Component Test', () => {
+describe('Main - Map Screen Component Test', () => {
   it('should verify map screen elements are visible', async () => {
-    const mapTab = await $('~Go to Map');
+    const mapTab = await $('~Go to map.');
     await mapTab.click();
 
-    await expect($('~Go to Sync Screen')).toBeDisplayed();
-    await expect($('~Open Navigation Drawer')).toBeDisplayed();
+    await expect($('~Open Menu')).toBeDisplayed();
     await expect($('~Add Observation')).toBeDisplayed();
+  });
+
+  it('should display the named project in the map screen header', async () => {
+    const headerTitle = await $(byResourceId('HOME.header-title'));
+    await expect(headerTitle).toBeDisplayed();
+    await expect(headerTitle).toHaveText('test project');
   });
 
   it('should navigate to the categories screen from the map screen', async () => {

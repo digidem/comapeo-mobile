@@ -1,61 +1,100 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import {IconButton} from './IconButton';
-import {GPSPill} from './GPSPill';
 import {BottomTabHeaderProps} from '@react-navigation/bottom-tabs';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {DrawerMenuIcon} from './icons/DrawerMenuIcon';
-import SyncIconCircle from '../images/Sync.svg';
 
-export const HomeHeader = ({
-  navigation,
-  openDrawer,
-}: BottomTabHeaderProps & {openDrawer: () => void}) => {
-  const insets = useSafeAreaInsets();
+import DeviceIcon from '../images/DeviceIcon.svg';
+import {IconButton} from './IconButton';
+import {HeaderText} from './Text/HeaderText';
+import {BLUE_GREY, DARK_GREY} from '../lib/styles';
+import {useProjectRoleAndDetails} from '../hooks/useProjectRoleAndDetails';
+import {useActiveProject} from '../contexts/ActiveProjectContext';
 
-  return (
-    <View style={[styles.header, {paddingTop: insets.top}]}>
-      <LinearGradient
-        style={styles.linearGradient}
-        colors={['#0006', '#0000']}
-      />
-      <IconButton
-        style={styles.leftButton}
-        accessibilityLabel="Go to Sync Screen"
-        onPress={() => {
-          navigation.navigate('Sync');
-        }}>
-        <SyncIconCircle testID="MAIN.sync-icon" />
-      </IconButton>
-      <GPSPill navigation={navigation} />
-      <DrawerMenuIcon
-        style={{marginRight: 20}}
-        onPress={openDrawer}
-        testID="drawer-icon-home"
-        accessibilityLabel="Open Navigation Drawer"
-      />
-    </View>
-  );
+type HomeHeaderProps = BottomTabHeaderProps & {
+  backgroundColor: string;
+  showBottomBorder: boolean;
 };
 
+export function HomeHeader({
+  backgroundColor,
+  showBottomBorder,
+  navigation,
+}: HomeHeaderProps) {
+  const {projectId} = useActiveProject();
+  const projectDetails = useProjectRoleAndDetails(projectId);
+
+  const projectName =
+    'projectHeader' in projectDetails
+      ? projectDetails.projectHeader
+      : projectDetails.projectName;
+
+  return (
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor,
+          borderBottomWidth: showBottomBorder ? 1 : 0,
+          borderBottomColor: showBottomBorder ? BLUE_GREY : 'transparent',
+        },
+      ]}>
+      <View style={styles.headerRow}>
+        <View
+          style={[
+            styles.titleBox,
+            {backgroundColor: projectDetails.projectColor},
+          ]}>
+          <HeaderText
+            testID="HOME.header-title"
+            variant="header4"
+            style={styles.text}
+            numberOfLines={1}
+            ellipsizeMode="tail">
+            {projectName}
+          </HeaderText>
+        </View>
+
+        <IconButton
+          style={styles.iconButton}
+          onPress={() => {
+            navigation.navigate('Menu');
+          }}>
+          <DeviceIcon
+            width={32}
+            height={32}
+            testID="drawer-icon-home"
+            accessibilityLabel="Open Menu"
+          />
+        </IconButton>
+      </View>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
-  header: {
+  container: {
+    padding: 10,
+  },
+  headerRow: {
+    width: '100%',
+    minHeight: 58,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: 'transparent',
+    justifyContent: 'space-between',
   },
-  leftButton: {
-    width: 60,
-    height: 60,
+  titleBox: {
+    width: '85%',
+    minHeight: 32,
+    borderRadius: 6,
+    justifyContent: 'center',
   },
-  linearGradient: {
-    height: 60,
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    left: 0,
-    backgroundColor: 'transparent',
+  text: {
+    paddingLeft: 5,
+    color: DARK_GREY,
+  },
+  iconButton: {
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

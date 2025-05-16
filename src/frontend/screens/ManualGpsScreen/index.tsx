@@ -15,16 +15,12 @@ import {
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 
 import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {
-  usePersistedSettings,
-  usePersistedSettingsAction,
-} from '../../hooks/persistedState/usePersistedSettings';
 import {BLACK} from '../../lib/styles';
 import {IconButton} from '../../sharedComponents/IconButton';
 import SaveCheck from '../../images/CheckMark.svg';
 import {Select} from '../../sharedComponents/Select';
 import {Text} from '../../sharedComponents/Text';
-import type {CoordinateFormat} from '../../sharedTypes';
+import {type CoordinateFormat} from '../../lib/coordinateFormat';
 
 import {
   latitudeIsValid,
@@ -36,6 +32,10 @@ import {DmsForm} from './DmsForm';
 import {UtmForm} from './UtmForm';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
+import {
+  useManualEntryCoordinateFormatActions,
+  useManualEntryCoordinateFormat,
+} from '../../contexts/ManualEntryCoordinateFormatStoreContext';
 
 const m = defineMessages({
   title: {
@@ -87,11 +87,9 @@ export const ManualGpsScreen = ({
     observationValueSelector,
   );
 
-  const entryCoordinateFormat = usePersistedSettings(
-    entryCoordinateFormatSelector,
-  );
+  const entryCoordinateFormat = useManualEntryCoordinateFormat();
 
-  const {setManualCoordinateEntryFormat} = usePersistedSettingsAction();
+  const {setFormat} = useManualEntryCoordinateFormatActions();
   const {updateObservationPosition} = useDraftObservation();
 
   React.useEffect(() => {
@@ -165,7 +163,7 @@ export const ManualGpsScreen = ({
                   return;
                 }
 
-                setManualCoordinateEntryFormat(value);
+                setFormat(value);
               }}
               options={ENTRY_FORMAT_OPTIONS}
               selectedValue={entryCoordinateFormat}
@@ -211,12 +209,6 @@ export function createNavigationOptions({
       ),
     };
   };
-}
-
-function entryCoordinateFormatSelector(
-  state: Parameters<Parameters<typeof usePersistedSettings>[0]>[0],
-) {
-  return state.manualCoordinateEntryFormat;
 }
 
 function observationValueSelector(

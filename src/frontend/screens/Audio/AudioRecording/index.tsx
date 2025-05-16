@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Duration} from 'luxon';
 
 import {BLACK, MAGENTA, MEDIUM_GREY, WHITE} from '../../../lib/styles';
 import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
@@ -12,8 +11,8 @@ import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {AudioStyles} from '../shared';
-import {ErrorBottomSheet} from '../../../sharedComponents/ErrorBottomSheet';
 import {UIActivityIndicator} from 'react-native-indicators';
+import {millisecondsToMMSS} from '../../../lib/millisecondsToFormattedTime';
 
 // 5 minutes
 const MAX_RECORDING_DURATION_MS = 300000;
@@ -37,8 +36,8 @@ const m = defineMessages({
 export function AudioRecording({
   navigation,
 }: NativeRootNavigationProps<'AudioRecording'>) {
-  const {startRecording, stopRecording, status, error, setError, reset} =
-    useAudioRecording();
+  const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
+  const {startRecording, stopRecording, status} = useAudioRecording();
 
   const timeElapsed = status?.durationMillis || 0;
   const isRecording = !!status?.isRecording;
@@ -61,17 +60,17 @@ export function AudioRecording({
           duration: timeElapsed,
         });
       })
-      .catch(err => {
-        setError(err);
+      .catch(() => {
+        navigation.navigate('ErrorBottomSheet');
       });
-  }, [stopRecording, setError, navigation, timeElapsed]);
+  }, [stopRecording, navigation, timeElapsed]);
 
   // stop recording at 5 minutes
   React.useEffect(() => {
-    if (timeElapsed >= MAX_RECORDING_DURATION_MS) {
+    if (timeElapsed >= MAX_RECORDING_DURATION_MS && isRecording) {
       finishRecording();
     }
-  }, [timeElapsed, finishRecording]);
+  }, [timeElapsed, finishRecording, isRecording]);
 
   return (
     <>
@@ -94,6 +93,9 @@ export function AudioRecording({
             </View>
           ) : (
             <TouchableOpacity
+              accessibilityLabel={
+                isRecording ? 'Stop recording audio.' : 'Start recording audio.'
+              }
               onPress={isRecording ? finishRecording : startRecording}
               style={AudioStyles.basePressable}>
               {<View style={isRecording ? styles.stop : styles.record} />}
@@ -107,7 +109,7 @@ export function AudioRecording({
                 AudioStyles.timerText,
                 {color: isRecording ? WHITE : MEDIUM_GREY},
               ]}>
-              {Duration.fromMillis(timeElapsed).toFormat('mm:ss')}
+              {millisecondsToMMSS(timeElapsed)}
             </Text>
           </View>
           <HeaderText variant="header3" style={AudioStyles.message}>
@@ -119,8 +121,12 @@ export function AudioRecording({
           </HeaderText>
         </View>
       </ScreenContentWithDock>
-      <AnimatedBackground timeElapsed={timeElapsed} />
-      <ErrorBottomSheet error={error} clearError={reset} />
+      {/* Remove animated background in E2E mode to avoid performance issues in Appium/BrowserStack */}
+      {isE2E ? (
+        <View style={{height: 0}} />
+      ) : (
+        <AnimatedBackground timeElapsed={timeElapsed} />
+      )}
     </>
   );
 }

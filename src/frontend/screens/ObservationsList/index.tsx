@@ -1,21 +1,16 @@
 import * as React from 'react';
 import {View, FlatList, Dimensions, StyleSheet} from 'react-native';
-import {ObservationListItem} from './ObservationListItem';
-import {ObservationEmptyView} from './ObservationsEmptyView';
-
 import {Observation, Track} from '@comapeo/schema';
 import {MessageDescriptor, defineMessages} from 'react-intl';
-import {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs';
-import {ObservationListHeaderLeft} from './ObservationListHeaderLeft';
+import {ObservationListItem} from './ObservationListItem';
+import {ObservationEmptyView} from './ObservationsEmptyView';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
-import {NoProjectWarning} from './NoProjectWarning';
-import {WHITE} from '../../lib/styles';
-import {useAllProjects} from '../../hooks/server/projects';
-import {Loading} from '../../sharedComponents/Loading';
+import {VERY_LIGHT_GREY, WHITE} from '../../lib/styles';
 import {TrackListItem} from './TrackListItem';
 import {useObservations} from '../../hooks/server/observations';
 import {useTracks} from '../../hooks/server/track';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {useAuthContext} from '../../contexts/AuthContext';
+import {ProjectCard} from './ProjectCard';
 
 const m = defineMessages({
   loading: {
@@ -55,15 +50,15 @@ export const ObservationsList: React.FC<
 > & {
   navTitle: MessageDescriptor;
 } = ({navigation}) => {
-  const {data: observations, isFetching} = useObservations();
+  const {data: observations} = useObservations();
   const {data: tracks} = useTracks();
-  const {data, isPending} = useAllProjects();
+  const {authState} = useAuthContext();
 
   const rowsPerWindow = Math.ceil(
     (Dimensions.get('window').height - 65) / OBSERVATION_CELL_HEIGHT,
   );
 
-  if (!observations.length && !tracks.length) {
+  if ((!observations.length && !tracks.length) || authState === 'obscured') {
     return (
       <ObservationEmptyView
         onPressBack={() => navigation.popTo('Home', {screen: 'Map'})}
@@ -73,14 +68,13 @@ export const ObservationsList: React.FC<
 
   return (
     <View style={styles.container} testID="OBS.list-scrn">
-      {isPending ? (
-        <Loading />
-      ) : data && data.length <= 1 ? (
-        <NoProjectWarning style={{margin: 20}} />
-      ) : null}
       {/* re: https://github.com/digidem/comapeo-mobile/issues/586  */}
-      {isFetching && <UIActivityIndicator style={{padding: 20, flex: 0}} />}
       <FlatList
+        ListHeaderComponent={
+          <View style={styles.projectCardContainer}>
+            <ProjectCard />
+          </View>
+        }
         initialNumToRender={rowsPerWindow}
         getItemLayout={getItemLayout}
         keyExtractor={keyExtractor}
@@ -125,16 +119,6 @@ export const ObservationsList: React.FC<
   );
 };
 
-export function createNavigationOptions(
-  formatMessage: (title: MessageDescriptor) => string,
-): BottomTabNavigationOptions {
-  return {
-    headerLeft: ObservationListHeaderLeft,
-    headerTransparent: false,
-    headerTitle: formatMessage(ObservationsList.navTitle),
-  };
-}
-
 ObservationsList.navTitle = m.observationListTitle;
 
 const styles = StyleSheet.create({
@@ -144,5 +128,12 @@ const styles = StyleSheet.create({
   },
   listItem: {
     height: OBSERVATION_CELL_HEIGHT,
+  },
+  projectCardContainer: {
+    width: '100%',
+    flex: 1,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: VERY_LIGHT_GREY,
   },
 });

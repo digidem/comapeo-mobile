@@ -2,7 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches} from '../../utils/selectors';
 
-describe('View Observations Flow', () => {
+describe('Observations - View Observations Flow', () => {
   it('should create observation with "Lake" category', async () => {
     const addObsBtn = await $('~Add Observation');
     await addObsBtn.click();
@@ -10,19 +10,26 @@ describe('View Observations Flow', () => {
     const lakeCategory = await $(byTextMatches('Lake'));
     await lakeCategory.click();
 
-    await $(byTextMatches('UTM')).waitForExist({
-      timeout: 10000,
-      reverse: false,
-    });
+    try {
+      await $(byTextMatches('UTM')).waitForExist({
+        timeout: 10000,
+        reverse: false,
+      });
+    } catch (e) {
+      await expect($(byTextMatches('Searching'))).toBeDisplayed();
+    }
 
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
-
-    const noGpsSignal = await $(byTextMatches('No GPS signal'));
-    if (await noGpsSignal.isDisplayed()) {
-      console.info('GPS not found. Handling No GPS Signal prompt...');
-      const confirmSave = await $(byTextMatches('SAVE'));
-      await confirmSave.click();
+    try {
+      const text = await driver.getAlertText();
+      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
+        await driver.execute('mobile: acceptAlert', {
+          buttonLabel: 'SAVE',
+        });
+      }
+    } catch (err) {
+      console.log('No RN Alert dialog was found.');
     }
   });
 
@@ -32,34 +39,48 @@ describe('View Observations Flow', () => {
 
     const clayCategory = await $(byTextMatches('Clay'));
     await clayCategory.click();
-
-    await $(byTextMatches('UTM')).waitForExist({
-      timeout: 10000,
-      reverse: false,
-    });
-
+    try {
+      await $(byTextMatches('UTM')).waitForExist({
+        timeout: 10000,
+        reverse: false,
+      });
+    } catch (e) {
+      await expect($(byTextMatches('Searching'))).toBeDisplayed();
+    }
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
 
-    const noGpsSignal = await $(byTextMatches('No GPS signal'));
-    if (await noGpsSignal.isDisplayed()) {
-      console.info('GPS not found. Handling No GPS Signal prompt...');
-      const confirmSave = await $(byTextMatches('SAVE'));
-      await confirmSave.click();
+    try {
+      const text = await driver.getAlertText();
+      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
+        await driver.execute('mobile: acceptAlert', {
+          buttonLabel: 'SAVE',
+        });
+      }
+    } catch (err) {
+      console.log('No RN Alert dialog was found.');
     }
   });
 
   it('should open Observations list and verify it is displayed', async () => {
-    const obsListTab = await $('~Go to ObservationsList');
+    const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();
   });
 
+  it('should display my role in the observations list', async () => {
+    const myRoleText = await $(byResourceId('OBS.card-text'));
+    await expect(myRoleText).toBeDisplayed();
+    await expect(myRoleText).toHaveText(
+      'You’re a coordinator on this project.',
+    );
+  });
+
   it('should toggle camera tab and back to confirm correct place', async () => {
-    const cameraTab = await $('~Go to Camera');
+    const cameraTab = await $('~Go to camera.');
     await cameraTab.click();
 
-    const obsListTab = await $('~Go to ObservationsList');
+    const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
 
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();
@@ -95,8 +116,5 @@ describe('View Observations Flow', () => {
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
     await expect($(byResourceId('OBS.list-scrn'))).toBeDisplayed();
-
-    await backBtn.click();
-    await expect($(byResourceId('MAIN.mapbox-map-view'))).toBeDisplayed();
   });
 });

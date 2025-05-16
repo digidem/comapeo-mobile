@@ -66,7 +66,8 @@
         {
           "fonts": [
             "node_modules/@expo-google-fonts/rubik/Rubik_400Regular.ttf",
-            "node_modules/@expo-google-fonts/rubik/Rubik_500Medium.ttf"
+            "node_modules/@expo-google-fonts/rubik/Rubik_500Medium.ttf",
+            "node_modules/@expo-google-fonts/rubik/Rubik_600SemiBold.ttf"
           ]
         }
       ],
@@ -81,6 +82,7 @@
       ["./expo-config-plugins/removeExpoInputStyles.js"],
       ["./expo-config-plugins/targetArmArchsOnly.js"],
       ["./expo-config-plugins/increaseJavaMemory.js"],
+      ["./expo-config-plugins/flagSecure"],
       [
         "react-native-share",
         {

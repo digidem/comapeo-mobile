@@ -70,7 +70,7 @@ When targeting Intel-based architectures (i.e. `x86_64`), the affected Gradle bu
 
 ## @comapeo/ipc
 
-### [Change imports to avoid calling unavailable code](./@comapeo+ipc+2.1.0.patch)
+### [Change imports to avoid calling unavailable code](./@comapeo+ipc+3.0.0+001+fix-client-server-import.patch)
 
 There was an error while running app via Expo because of exports in `rpc-reflector` package. To remove this patch, `rpc-reflector` would need to be updated not to use `encode-decode.js` file which indirect usage results in errors.
 

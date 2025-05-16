@@ -1,5 +1,7 @@
 // @ts-check
 const path = require('path');
+const shortSha = process.env.GITHUB_SHORT_SHA || 'manual';
+const prTitle = process.env.GITHUB_PR_TITLE;
 // Type is very questionably declared in the global namespace via @wdio/types
 /** @type {WebdriverIO.Config} */
 
@@ -15,12 +17,12 @@ const config = {
       'browserstack',
       {
         app: process.env.BROWSERSTACK_APP_URL,
-        buildIdentifier: `${process.env.BUILD_NUMBER || `build-${new Date().toISOString()}`}`,
+        buildIdentifier: '#${DATE_TIME}',
         browserstackLocal: true,
         testObservability: true,
         testObservabilityOptions: {
           projectName: 'CoMapeo',
-          buildName: `CoMapeo E2E Tests - ${new Date().toISOString()}`,
+          buildName: `${prTitle || 'Manual Run'} – ${shortSha}`,
         },
       },
     ],
@@ -28,16 +30,15 @@ const config = {
   capabilities: [
     {
       platformName: 'android',
-      'appium:platformVersion': '12.0',
-      'appium:deviceName': 'Samsung Galaxy S22 Ultra',
+      'appium:platformVersion': '13.0',
+      'appium:deviceName': 'Google Pixel 7',
       'appium:automationName': 'UIAutomator2',
       'appium:app': process.env.BROWSERSTACK_APP_URL,
       'appium:autoGrantPermissions': true,
-      'appium:autoDismissAlerts': true,
       'bstack:options': {
         projectName: 'CoMapeo',
-        buildName: 'CoMapeo Android Build',
-        sessionName: 'Run Android e2e tests',
+        buildName: `${prTitle || 'Manual Run'} – ${shortSha}`,
+        sessionName: `E2E: ${shortSha}`,
         appiumVersion: '2.12.1',
         debug: true,
         networkLogs: true,

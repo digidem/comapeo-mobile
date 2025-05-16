@@ -1,7 +1,7 @@
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeNavigationComponent} from '../../../sharedTypes/navigation';
-import {useSecurityContext} from '../../../contexts/SecurityContext';
+import {useAuthContext} from '../../../contexts/AuthContext';
 import {FullScreenMenuList} from '../../../sharedComponents/MenuList/FullScreenMenuList';
 import {MenuListItemType} from '../../../sharedComponents/MenuList/MenuListItem';
 
@@ -38,14 +38,26 @@ const m = defineMessages({
     id: 'Screens.Settings.AppSettings.Drawer.security',
     defaultMessage: 'Security',
   },
+  deviceName: {
+    id: 'Screens.Settings.AppSettings.deviceName',
+    defaultMessage: 'Device Name',
+  },
 });
 
 export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
   navigation,
 }) => {
-  const {authState} = useSecurityContext();
+  const {authState} = useAuthContext();
   const {formatMessage} = useIntl();
   const MenuItems: MenuListItemType[] = [
+    {
+      onPress: () => {
+        navigation.navigate('DeviceNameDisplay');
+      },
+      testID: 'device-name-list-item',
+      primaryText: formatMessage(m.deviceName),
+      materialIconName: 'phone-android',
+    },
     {
       onPress: () => {
         navigation.navigate('LanguageSettings');
@@ -80,6 +92,17 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
             },
             primaryText: formatMessage(m.security),
             materialIconName: 'security',
+          },
+        ]
+      : []),
+    ...(process.env.EXPO_PUBLIC_FEATURE_TEST_DATA_UI
+      ? [
+          {
+            onPress: () => {
+              navigation.navigate('CreateTestData');
+            },
+            primaryText: 'Create Test Data',
+            materialIconName: 'auto-fix-high',
           },
         ]
       : []),

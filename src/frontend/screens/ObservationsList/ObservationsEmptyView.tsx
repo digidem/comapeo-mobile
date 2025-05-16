@@ -2,11 +2,12 @@ import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 
 import {WHITE} from '../../lib/styles';
-import {Button} from '../../sharedComponents/Button';
 import {ObservationListIcon} from '../../sharedComponents/icons';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {SecondaryButton} from '../../sharedComponents/Buttons';
+import {ProjectCard} from './ProjectCard';
 
 const m = defineMessages({
   noObservationsTitle: {
@@ -38,20 +39,26 @@ export const ObservationEmptyView = ({
   onPressBack: () => void;
 }) => {
   const {formatMessage: t} = useIntl();
+
   return (
     <ScreenContentWithDock
       testID="observationsEmptyView"
       contentContainerStyle={styles.contentContainer}
       dockContainerStyle={styles.dockContainer}
       dockContent={
-        <Button
-          fullWidth
+        <SecondaryButton
+          fullSize
           onPress={onPressBack}
-          variant="outlined"
-          color="ComapeoBlue">
-          {t(m.backButton)}
-        </Button>
+          text={t(m.backButton)}
+        />
       }>
+      <View
+        style={{
+          width: '110%',
+          paddingBottom: 40,
+        }}>
+        <ProjectCard />
+      </View>
       <View style={styles.iconCircle}>
         <ObservationListIcon size={ICON_SIZE} />
       </View>
@@ -65,15 +72,14 @@ export const ObservationEmptyView = ({
 
 const styles = StyleSheet.create({
   contentContainer: {
-    alignItems: 'center',
     backgroundColor: WHITE,
     flex: 1,
     gap: 20,
-    padding: 48,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   dockContainer: {
     backgroundColor: WHITE,
-    paddingHorizontal: 48,
   },
   iconCircle: {
     alignItems: 'center',

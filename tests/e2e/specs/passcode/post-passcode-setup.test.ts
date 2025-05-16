@@ -3,12 +3,12 @@ import {describe, it} from 'mocha';
 import {byTextMatches, byText, byResourceId} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 
-describe('Post Passcode Setup Flow', () => {
+describe('Passcode - Post Passcode Setup Flow', () => {
   it('should navigate to Security and see "Enter Passcode" if passcode is set', async () => {
-    const drawerIcon = await $('~Open Navigation Drawer');
+    const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
 
-    const appSettingsOption = await $('~Go to App Settings');
+    const appSettingsOption = await $('~Go to app settings screen.');
     await appSettingsOption.click();
 
     const securityOption = await $(byText('Security'));
@@ -40,10 +40,12 @@ describe('Post Passcode Setup Flow', () => {
     await appPasscodeItem.click();
 
     const passcodeField = await $(byResourceId('SETTINGS.passcode-inp'));
-    await passcodeField.setValue(output.newpasscode);
+    await passcodeField.click();
+    await driver.keys(output.newpasscode.split(''));
     await expect($(byText('Incorrect Passcode'))).toBeDisplayed();
 
-    await passcodeField.setValue(output.passcode);
+    await passcodeField.click();
+    await driver.keys(output.passcode.split(''));
 
     await expect(appPasscodeItem).toBeDisplayed();
   });

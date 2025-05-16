@@ -29,6 +29,10 @@ interface Props {
   variant?: Variant;
 }
 
+/**
+ *
+ * @deprecated use `PrimaryButton`, `SecondaryButton`, or `DestructiveButton` instead
+ */
 export const Button = ({
   TouchableComponent,
   children,

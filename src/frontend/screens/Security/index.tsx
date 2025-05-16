@@ -1,10 +1,12 @@
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
-import {useSecurityContext} from '../../contexts/SecurityContext';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {FullScreenMenuList} from '../../sharedComponents/MenuList/FullScreenMenuList';
 import {MenuListItemType} from '../../sharedComponents/MenuList/MenuListItem';
+import {useSecurityState} from '../../contexts/SecurityStoreContext';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {MEDIUM_GREY, RED} from '../../lib/styles';
 
 const m = defineMessages({
   title: {
@@ -27,35 +29,59 @@ const m = defineMessages({
     id: 'screens.Security.passDesriptionPassSet',
     defaultMessage: 'Passcode is set',
   },
+  obscurePasscodeHeader: {
+    id: 'screens.Security.obscurePasscodeHeader',
+    defaultMessage: 'Obscure Passcode',
+  },
+  obscurePassDescriptonPassSet: {
+    id: 'screens.Security.obscurePasscodeDescriptionActivated',
+    defaultMessage: 'Protect your device against seizure',
+  },
+  obscurePassDescriptonPassNotSet: {
+    id: 'screens.Security.obscurePasscodeDescription',
+    defaultMessage: 'To use, turn on App Passcode',
+  },
 });
 
 export const Security: NativeNavigationComponent<'Security'> = ({
   navigation,
 }) => {
   const {formatMessage: t} = useIntl();
-  const {authState, authValuesSet} = useSecurityContext();
+  const passcodeSet = useSecurityState(state => state.passcode !== null);
+  const [highlight, setHighlight] = React.useState(false);
 
-  React.useEffect(() => {
-    if (authState === 'obscured') {
-      navigation.popTo('Settings');
-    }
-  }, [navigation, authState]);
+  function highlightError() {
+    setHighlight(true);
+    setTimeout(() => {
+      setHighlight(false);
+    }, 2000);
+  }
 
   const menuItems: MenuListItemType[] = [
     {
       onPress: () =>
-        navigation.navigate(
-          authValuesSet.passcodeSet ? 'EnterPassToTurnOff' : 'AppPasscode',
-        ),
+        navigation.navigate(passcodeSet ? 'EnterPassToTurnOff' : 'AppPasscode'),
       primaryText: t(m.passcodeHeader),
       secondaryText: t(
-        authValuesSet.passcodeSet
-          ? m.passDesriptionPassSet
-          : m.passDesriptionPassNotSet,
+        passcodeSet ? m.passDesriptionPassSet : m.passDesriptionPassNotSet,
+      ),
+    },
+    {
+      onPress: passcodeSet
+        ? () => navigation.navigate('ObscurePasscode')
+        : () => highlightError(),
+      primaryText: t(m.obscurePasscodeHeader),
+      secondaryText: passcodeSet ? (
+        t(m.obscurePassDescriptonPassSet)
+      ) : (
+        <BodyText
+          variant="smallMeta"
+          style={{color: highlight ? RED : MEDIUM_GREY}}>
+          {t(m.obscurePassDescriptonPassNotSet)}
+        </BodyText>
       ),
     },
   ];
-
   return <FullScreenMenuList data={menuItems} />;
 };
 

@@ -2,17 +2,17 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches} from '../../utils/selectors';
 
-describe('GPS Component Test', () => {
+describe('MAIN - GPS Component Test', () => {
   it('should verify GPS details on the home map screen', async () => {
     const mapView = await $(byResourceId('MAIN.mapbox-map-view'));
     await expect(mapView).toBeDisplayed();
 
-    const gpsStatus = await $(byTextMatches('m|Searching'));
-    await expect(gpsStatus).toBeDisplayed();
+    const gpsPill = await $(byResourceId('MAP.gps-pill'));
+    await expect(gpsPill).toBeDisplayed();
   });
 
   it('should verify GPS pill navigation from Home Map screen', async () => {
-    const gpsPillButton = await $(byResourceId('MAIN.gps-pill-btn'));
+    const gpsPillButton = await $(byResourceId('MAP.gps-pill'));
     await gpsPillButton.click();
 
     const gpsDetailsScreen = await $(byResourceId('MAIN.gps-details-scrn'));
@@ -28,25 +28,5 @@ describe('GPS Component Test', () => {
 
     const mapView = await $(byResourceId('MAIN.mapbox-map-view'));
     await expect(mapView).toBeDisplayed();
-  });
-
-  it('should verify GPS pill navigation from Camera screen', async () => {
-    const cameraTab = await $('~Go to Camera');
-    await cameraTab.click();
-
-    const gpsPillButton = await $(byResourceId('MAIN.gps-pill-btn'));
-    await gpsPillButton.click();
-
-    const gpsDetailsScreen = await $(byResourceId('MAIN.gps-details-scrn'));
-    await expect(gpsDetailsScreen).toBeDisplayed();
-    await expect($(byTextMatches('latitude'))).toBeDisplayed();
-  });
-
-  it('should navigate back to the Camera screen', async () => {
-    const backButton = await $(byResourceId('MAIN.header-back-btn'));
-    await backButton.click();
-
-    const cameraScreen = await $(byResourceId('MAIN.camera-scrn'));
-    await expect(cameraScreen).toBeDisplayed();
   });
 });

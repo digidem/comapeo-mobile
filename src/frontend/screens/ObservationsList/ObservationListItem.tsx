@@ -1,8 +1,6 @@
 import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {Text} from '../../sharedComponents/Text';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 
-import {TouchableHighlight} from '../../sharedComponents/Touchables';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import {Attachment, ViewStyleProp} from '../../sharedTypes';
 import {Observation} from '@comapeo/schema';
@@ -11,10 +9,14 @@ import {
   FormattedPresetName,
 } from '../../sharedComponents/FormattedData';
 import {PhotoAttachmentView} from '../../sharedComponents/PhotoAttachmentView.tsx';
-import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
-import {useDeviceInfo} from '../../hooks/server/deviceInfo';
-import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
+import {useManyDocs} from '@comapeo/core-react';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
+import {matchPreset} from '../../lib/utils';
+import {sharedStyles} from './SharedStyle.ts';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
+import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
+import {useIsMyDocument} from '../../hooks/server/useIsMyDocument.ts';
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;
@@ -37,41 +39,30 @@ function ObservationListItemNotMemoized({
   testID,
   onPress,
 }: ObservationListItemProps) {
-  const {preset} = useObservationWithPreset(observation.docId);
-  const {data: deviceInfo, status: deviceInfoQueryStatus} = useDeviceInfo();
+  const {projectId} = useActiveProject();
+  const {data: allPresets} = useManyDocs({projectId, docType: 'preset'});
+  const preset = matchPreset(observation.tags, allPresets);
 
   const photos = observation.attachments.filter(isSavedPhoto);
 
-  const {
-    data: createdByDeviceId,
-    status: originalVersionIdToDeviceIdQueryStatus,
-  } = useOriginalVersionIdToDeviceId(observation.originalVersionId);
-  const isMine = createdByDeviceId === deviceInfo?.deviceId;
-  const queriesSucceeded =
-    deviceInfoQueryStatus === 'success' &&
-    originalVersionIdToDeviceIdQueryStatus === 'success';
+  const isMine = useIsMyDocument(observation.originalVersionId);
 
   return (
-    <TouchableHighlight
+    <TouchableOpacity
       onPress={() => onPress(observation.docId)}
       testID={testID}
       style={{flex: 1, height: 80}}>
-      <View
-        style={[
-          styles.container,
-          style,
-          queriesSucceeded && !isMine && styles.syncedObservation,
-        ]}>
+      <View style={[styles.container, style, !isMine && sharedStyles.synced]}>
         <View style={styles.text}>
-          <Text style={styles.title}>
+          <HeaderText variant="header4">
             <FormattedPresetName preset={preset} />
-          </Text>
-          <Text>
+          </HeaderText>
+          <BodyText>
             <FormattedObservationDate
               createdDate={observation.createdAt}
               variant="relative"
             />
-          </Text>
+          </BodyText>
         </View>
         {photos.length ? (
           <View style={styles.photoContainer}>
@@ -88,7 +79,7 @@ function ObservationListItemNotMemoized({
           />
         )}
       </View>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 }
 
@@ -125,17 +116,12 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 80,
   },
-  syncedObservation: {
-    borderLeftWidth: 5,
-    borderLeftColor: '#3C69F6',
-  },
   text: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
-  title: {fontSize: 18, fontWeight: '700', color: 'black'},
   photoContainer: {
     position: 'relative',
     marginRight: -5,

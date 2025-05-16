@@ -3,30 +3,41 @@ import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
 import {useForm} from 'react-hook-form';
 import {defineMessages, useIntl} from 'react-intl';
-import {Keyboard, KeyboardAvoidingView, StyleSheet, View} from 'react-native';
 import {
+  Alert,
+  Keyboard,
+  KeyboardAvoidingView,
+  StyleSheet,
+  View,
   TouchableOpacity,
   TouchableWithoutFeedback,
-} from 'react-native-gesture-handler';
+} from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-
+import {
+  useCreateProject,
+  useImportProjectConfig,
+  useUpdateProjectSettings,
+} from '@comapeo/core-react';
 import {useSelectFile} from '../../../../hooks/files';
-import {usePersistedProjectId} from '../../../../hooks/persistedState/usePersistedProjectId';
-import {useCreateProject} from '../../../../hooks/server/projects';
 import {convertFileUriToPosixPath} from '../../../../lib/file-system';
 import {BLACK, LIGHT_GREY} from '../../../../lib/styles';
 import noop from '../../../../lib/noop';
-import {Button} from '../../../../sharedComponents/Button';
-import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
-import {Text} from '../../../../sharedComponents/Text';
 import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
+import {
+  PrimaryButton,
+  SecondaryButton,
+} from '../../../../sharedComponents/Buttons';
+import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
+import {useActiveProjectIdActions} from '../../../../contexts/ActiveProjectIdStoreContext';
+import * as Sentry from '@sentry/react-native';
+import {useActiveProject} from '../../../../contexts/ActiveProjectContext';
 
 const m = defineMessages({
   title: {
     id: 'screens.Settings.CreateOrJoinProject.CreateProject.title',
-    defaultMessage: 'Create a Project',
+    defaultMessage: 'New Project',
   },
   enterName: {
     id: 'screens.Settings.CreateOrJoinProject.enterName',
@@ -40,22 +51,28 @@ const m = defineMessages({
     id: 'screens.Settings.CreateOrJoinProject.advancedSettings',
     defaultMessage: 'Advanced Project Settings',
   },
-  importConfig: {
-    id: 'screens.Settings.CreateOrJoinProject.importConfig',
-    defaultMessage: 'Import Config',
+  importCategories: {
+    id: 'screens.Settings.CreateOrJoinProject.importCategories',
+    defaultMessage: 'Import Categories',
   },
   importConfigFileError: {
     id: 'screens.Settings.CreateOrJoinProject.importConfigFileError',
     defaultMessage: 'File name should end with .comapeocat',
   },
+  categoryImportTitle: {
+    id: 'screens.Settings.CreateOrJoinProject.importSuccessTitle',
+    defaultMessage: 'Successfully imported categories:',
+  },
+  okButton: {
+    id: 'screens.Settings.CreateOrJoinProject.okButton',
+    defaultMessage: 'OK',
+  },
 });
 
-type ConfigFileImportResult =
-  | {
-      type: 'success';
-      file: DocumentPicker.DocumentPickerAsset;
-    }
-  | {type: 'error'; error: Error};
+type ConfigFileImportResult = {
+  type: 'success';
+  file: DocumentPicker.DocumentPickerAsset;
+};
 
 type ProjectFormType = {
   projectName: string;
@@ -63,21 +80,29 @@ type ProjectFormType = {
 
 export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
   navigation,
+  route,
 }) => {
   const {formatMessage: t} = useIntl();
   const [advancedSettingOpen, setAdvancedSettingOpen] = React.useState(false);
   const [configFileResult, setConfigFileResult] =
     React.useState<ConfigFileImportResult | null>(null);
 
-  const updateActiveProjectId = usePersistedProjectId(
-    state => state.setProjectId,
-  );
+  const action = route.params.action;
+
+  const {setActiveProjectId} = useActiveProjectIdActions();
   const selectFileMutation = useSelectFile();
   const createProjectMutation = useCreateProject();
+  const {projectId} = useActiveProject();
+  const updateSettingsMutation = useUpdateProjectSettings({
+    projectId: projectId,
+  });
+  const importProjectConfig = useImportProjectConfig({projectId});
 
   const mutationIsPending =
     selectFileMutation.status === 'pending' ||
-    createProjectMutation.status === 'pending';
+    createProjectMutation.status === 'pending' ||
+    importProjectConfig.status === 'pending' ||
+    updateSettingsMutation.status === 'pending';
 
   React.useEffect(() => {
     // Prevent back navigation while project creation mutation is pending
@@ -98,33 +123,61 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
     defaultValues: {projectName: ''},
   });
 
-  function handleCreateProject(val: ProjectFormType) {
+  const handleCreateOrUpdateProject = (val: ProjectFormType) => {
     const projectName = val.projectName.trim();
-    createProjectMutation.mutate(
-      {
-        name: projectName,
-        configPath:
-          configFileResult?.type === 'success'
-            ? convertFileUriToPosixPath(configFileResult.file.uri)
-            : undefined,
-      },
-      {
-        onSuccess: projectId => {
-          if (configFileResult?.type === 'success') {
-            // No need to block UI on this
-            // no-op if something fails here. caches can eventually get cleared by the OS automatically.
-            FileSystem.deleteAsync(configFileResult.file.uri, {
-              idempotent: true,
-            }).catch(noop);
-          }
+    const fileUri =
+      configFileResult?.type === 'success'
+        ? configFileResult.file.uri
+        : undefined;
+    const configPath = fileUri && convertFileUriToPosixPath(fileUri);
 
-          updateActiveProjectId(projectId);
+    const onProjectCreated = () =>
+      navigation.navigate('ProjectCreated', {name: projectName});
 
-          navigation.navigate('ProjectCreated', {name: projectName});
+    const onError = (err: unknown) => {
+      Sentry.captureException(err);
+      navigation.navigate('ErrorBottomSheet');
+    };
+
+    if (action === 'UpdateSoloProject') {
+      const updateSettings = () =>
+        updateSettingsMutation.mutate(
+          {name: projectName},
+          {
+            onSuccess: () => {
+              if (fileUri) {
+                FileSystem.deleteAsync(fileUri, {idempotent: true}).catch(noop);
+              }
+              onProjectCreated();
+            },
+            onError,
+          },
+        );
+
+      if (configPath) {
+        importProjectConfig.mutate(
+          {configPath},
+          {
+            onSuccess: updateSettings,
+            onError,
+          },
+        );
+      } else {
+        updateSettings();
+      }
+    } else {
+      createProjectMutation.mutate(
+        {name: projectName, configPath},
+        {
+          onSuccess: projectId => {
+            setActiveProjectId(projectId);
+            onProjectCreated();
+          },
+          onError,
         },
-      },
-    );
-  }
+      );
+    }
+  };
 
   function selectConfigFile() {
     selectFileMutation.mutate(
@@ -136,22 +189,26 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
         onSuccess: selected => {
           if (!selected) return;
           setConfigFileResult({type: 'success', file: selected});
+          Alert.alert(t(m.categoryImportTitle), selected.name, [
+            {text: t(m.okButton)},
+          ]);
         },
         onError: err => {
-          setConfigFileResult({type: 'error', error: err});
+          navigation.navigate('ErrorBottomSheet');
+          Sentry.captureException(err);
         },
       },
     );
   }
 
   return (
-    <React.Fragment>
-      <KeyboardAvoidingView>
-        <TouchableWithoutFeedback
-          onPress={() => Keyboard.dismiss()}
-          style={styles.container}>
+    <KeyboardAvoidingView>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <View style={styles.container}>
           <View>
-            <Text style={{marginHorizontal: 20}}>{t(m.enterName)}</Text>
+            <HeaderText variant="header5" style={{marginHorizontal: 20}}>
+              {t(m.enterName)}
+            </HeaderText>
             <View style={{marginHorizontal: 20, marginTop: 10}}>
               <HookFormTextInput
                 testID="PROJECT.name-inp"
@@ -167,7 +224,9 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
               <TouchableOpacity
                 onPress={() => setAdvancedSettingOpen(prev => !prev)}
                 style={styles.accordianHeader}>
-                <Text>{t(m.advancedSettings)}</Text>
+                <HeaderText variant="header5">
+                  {t(m.advancedSettings)}
+                </HeaderText>
                 <MaterialIcon
                   color={BLACK}
                   name={
@@ -180,54 +239,43 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
               </TouchableOpacity>
               {advancedSettingOpen && (
                 <View style={styles.importConfigContainer}>
-                  <Button
-                    fullWidth
-                    variant="outlined"
+                  <SecondaryButton
+                    fullSize={true}
+                    style={{alignSelf: 'center'}}
                     onPress={() => {
                       selectConfigFile();
-                    }}>
-                    {t(m.importConfig)}
-                  </Button>
+                    }}
+                    text={t(m.importCategories)}
+                  />
 
                   {configFileResult?.type === 'success' && (
-                    <Text style={styles.configFileName}>
+                    <HeaderText variant="header5" style={styles.configFileName}>
                       {configFileResult.file.name}
-                    </Text>
+                    </HeaderText>
                   )}
                 </View>
               )}
             </View>
           </View>
-          <View style={{paddingHorizontal: 20}}>
-            {selectFileMutation.status === 'pending' ||
-            createProjectMutation.status === 'pending' ? (
+          <View
+            style={{
+              paddingHorizontal: 20,
+              alignItems: 'center',
+            }}>
+            {mutationIsPending ? (
               <UIActivityIndicator size={30} style={{marginBottom: 20}} />
             ) : (
-              <Button
+              <PrimaryButton
                 testID="PROJECT.create-btn"
-                fullWidth
-                onPress={handleSubmit(handleCreateProject)}>
-                {t(m.createProjectButton)}
-              </Button>
+                fullSize={true}
+                text={t(m.createProjectButton)}
+                onPress={handleSubmit(handleCreateOrUpdateProject)}
+              />
             )}
           </View>
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
-      <ErrorBottomSheet
-        error={selectFileMutation.error || createProjectMutation.error}
-        clearError={() => {
-          selectFileMutation.reset();
-          createProjectMutation.reset();
-        }}
-        tryAgain={
-          selectFileMutation.error
-            ? selectConfigFile
-            : createProjectMutation.error
-              ? handleSubmit(handleCreateProject)
-              : undefined
-        }
-      />
-    </React.Fragment>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 

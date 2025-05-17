@@ -34,6 +34,7 @@ import {
 import {getAppLanguageTag} from './lib/intl';
 import {IntlProvider} from './contexts/IntlContext';
 import {ServerLoading} from './ServerLoading';
+import type {StatusMessage} from '../backend/src/status';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -154,6 +155,17 @@ TaskManager.defineTask(
 
 const queryClient = new QueryClient();
 
+const requestServerStatus = () => {
+  nodejs.channel.post('get-server-status');
+};
+
+const subscribeToServerStatus = (listener: (msg: StatusMessage) => unknown) => {
+  nodejs.channel.addListener('server:status', listener);
+  return () => {
+    nodejs.channel.removeListener('server:status', listener);
+  };
+};
+
 const App = () => {
   const [permissionsAsked, setPermissionsAsked] = React.useState(false);
   React.useEffect(() => {
@@ -172,13 +184,8 @@ const App = () => {
         {/* ServerLoading requires internationalization to be set up */}
         <ServerLoading
           messagePort={messagePort}
-          requestServerStatus={() => nodejs.channel.post('get-server-status')}
-          subscribeToServerStatus={listener => {
-            nodejs.channel.addListener('server:status', listener);
-            return () => {
-              nodejs.channel.removeListener('server:status', listener);
-            };
-          }}>
+          requestServerStatus={requestServerStatus}
+          subscribeToServerStatus={subscribeToServerStatus}>
           <AppProviders
             queryClient={queryClient}
             localDiscoveryController={localDiscoveryController}

@@ -119,7 +119,13 @@ export const Editor = ({
                       key={att.draftPhotoId}
                       size={size}
                       onPress={() =>
-                        navigate('PhotoPreviewModal', {photo: att})
+                        navigate('PhotoPreviewModal', {
+                          photo: att,
+                          // TODO: Does it make sense to provide the `observationDocId` in this case?
+                          // Reasoning for not doing so is because the photo isn't actually saved yet, so it's technically not
+                          // officially associated with the observation being created/edited.
+                          // TODO: Is this considered validated yet?
+                        })
                       }>
                       <ThumbnailImage uri={att.thumbnailUri} />
                     </ThumbnailContainer>
@@ -130,7 +136,16 @@ export const Editor = ({
                     <React.Suspense
                       key={att.driveDiscoveryId + att.hash + att.type}
                       fallback={<ThumbnailLoader size={size} />}>
-                      <SavedPhotoThumbnailImage size={size} photo={att} />
+                      <SavedPhotoThumbnailImage
+                        size={size}
+                        photo={att}
+                        onPress={() => {
+                          navigate('PhotoPreviewModal', {
+                            photo: att,
+                            observationDocId: observationId,
+                          });
+                        }}
+                      />
                     </React.Suspense>
                   );
                 }

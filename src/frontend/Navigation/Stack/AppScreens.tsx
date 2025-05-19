@@ -50,10 +50,11 @@ import {
 import {HomeTabs} from '../Tab';
 import {SaveTrackScreen} from '../../screens/SaveTrack/SaveTrackScreen';
 import {ObservationFields} from '../../screens/ObservationFields';
-import {WHITE} from '../../lib/styles';
 import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSettings';
-import {PhotoPreviewModal} from '../../screens/PhotoPreviewModal';
-import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
+import {
+  createNavigationOptions as createPhotoPreviewModalNavigationOptions,
+  PhotoPreviewModal,
+} from '../../screens/PhotoPreviewModal';
 import {
   ObservationCreate,
   createNavigationOptions as createObservationCreateNavigationOptions,
@@ -111,6 +112,10 @@ import {
   RemoveRemoteArchive,
   navigationOptions as removeRemoteArchiveNavigationOptions,
 } from '../../screens/Settings/ProjectSettings/RemoteArchive/RemoveRemoteArchive.tsx';
+import {
+  ConfirmDeletePhoto,
+  navigationOptions as confirmDeletePhotoNavigationOptions,
+} from '../../screens/ConfirmDeletePhoto.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -149,14 +154,12 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="PhotoPreviewModal"
         component={PhotoPreviewModal}
-        options={{
-          headerTitle: '',
-          headerTransparent: true,
-          headerStyle: {backgroundColor: 'transparent'},
-          headerLeft: props => (
-            <CustomHeaderLeft tintColor={WHITE} headerBackButtonProps={props} />
-          ),
-        }}
+        options={createPhotoPreviewModalNavigationOptions({intl})}
+      />
+      <RootStack.Screen
+        name="ConfirmDeletePhoto"
+        component={ConfirmDeletePhoto}
+        options={confirmDeletePhotoNavigationOptions}
       />
       <RootStack.Screen
         name="Security"

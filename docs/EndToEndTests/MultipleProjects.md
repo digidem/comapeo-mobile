@@ -13,6 +13,9 @@
 - [All Projects Screen](#all-projects-screen)
   - [Test Objectives](#test-objectives-2)
   - [Special Considerations](#special-considerations-2)
+- [Edit Project Details](#edit-project-details)
+  - [Test Objectives](#test-objectives-3)
+  - [Special Considerations](#special-considerations-3)
 
 ## Multiple Projects
 
@@ -67,3 +70,20 @@ This test validates the All Projects UI, including role labels and sort order.
 #### Special Considerations
 
 - Can't check for participant at this time because we cannot do the invitation flow.
+
+## Edit Project Details
+
+This test verifies that a Coordinator can update the name and description of a project from the Project Settings screen.
+
+#### Test Objectives
+
+- Checks that a user can update the project’s name and description fields.
+- Verifies that those changes can be saved and are displayed in:
+  1. The Project Settings screen
+  2. The Map/ Home screen
+  3. The Observation List screen
+
+#### Special Considerations
+
+- This test does not verify color changes, as color cannot be asserted through testable attributes at this time.
+- The test assumes the project is named and the role is “Coordinator.”

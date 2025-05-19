@@ -57,6 +57,7 @@ export const GPSPill = (props: Props) => {
       icon = (
         <View testID={props.iconTestID}>
           <UIActivityIndicator
+            // Animations seem to cause issues with test performance on Browserstack
             animating={!isE2E}
             hidesWhenStopped={false}
             size={12}

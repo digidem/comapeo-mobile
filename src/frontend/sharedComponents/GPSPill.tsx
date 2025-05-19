@@ -4,12 +4,13 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {ExhaustivenessError} from '../lib/ExhaustivenessError';
-import {DARK_MAGENTA, MAGENTA, WHITE} from '../lib/styles';
+import {DARK_GREY, DARK_MAGENTA, MAGENTA, WHITE} from '../lib/styles';
 import {BodyText} from './Text/BodyText';
 
-type GPSPillProps = {
+type Props = {
   accessibilityLabel?: string;
   onPress?: () => void;
+  iconTestID?: string;
   testID?: string;
 } & (
   | {
@@ -21,7 +22,7 @@ type GPSPillProps = {
     }
 );
 
-export const GPSPill = (props: GPSPillProps) => {
+export const GPSPill = (props: Props) => {
   let backgroundColor: string;
   let icon: ReactNode;
   let text: string;
@@ -32,7 +33,7 @@ export const GPSPill = (props: GPSPillProps) => {
       text = '--';
       icon = (
         <View
-          role="none"
+          testID={props.iconTestID}
           style={{
             backgroundColor: DARK_MAGENTA,
             borderRadius: 50,
@@ -51,10 +52,10 @@ export const GPSPill = (props: GPSPillProps) => {
     case 'searching': {
       const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
 
-      backgroundColor = '#333333';
+      backgroundColor = DARK_GREY;
       text = '--';
       icon = (
-        <View role="none">
+        <View testID={props.iconTestID}>
           <UIActivityIndicator
             animating={!isE2E}
             hidesWhenStopped={false}
@@ -69,12 +70,13 @@ export const GPSPill = (props: GPSPillProps) => {
     }
 
     case 'good': {
-      backgroundColor = '#333333';
+      backgroundColor = DARK_GREY;
       text = `${Math.abs(Math.round(props.accuracy))} ±`;
       icon = (
         <View
-          role="none"
+          testID={props.iconTestID}
           style={{
+            // TODO: Make this a defined color
             backgroundColor: '#36F927',
             height: 12,
             width: 12,

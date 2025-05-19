@@ -112,7 +112,7 @@ export const GPSPill = (props: Props) => {
         paddingVertical: 4,
         paddingHorizontal: 10,
         borderRadius: 20,
-        backgroundColor: backgroundColor,
+        backgroundColor,
       }}>
       {icon}
       <BodyText

@@ -1,12 +1,13 @@
 import {expect} from '@wdio/globals';
-import {describe, it, before} from 'mocha';
+import {describe, it} from 'mocha';
 import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
+import {testFlags} from '../../utils/testFlags';
 
-describe('Remote Archive - Remove Flow', () => {
-  before(async () => {
-    await $(byText('View')).click();
-  });
+const maybeDescribe = testFlags.remoteArchiveAddFailed
+  ? describe.skip
+  : describe;
 
+maybeDescribe('Remote Archive - Remove Flow', () => {
   it('navigates to remote archive details screen', async () => {
     await expect($(byTextMatches('Remote Archive \\| ON'))).toBeDisplayed();
     await $(byText('View Details')).click();

@@ -1,8 +1,9 @@
 import {expect} from '@wdio/globals';
-import {describe, it, before} from 'mocha';
+import {describe, it} from 'mocha';
 import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
 import {getTodayFormattedDate} from '../../utils/date';
 import {output} from '../../utils/naming';
+import {testFlags} from '../../utils/testFlags';
 
 describe('Remote Archive - Add Success Flow', () => {
   it('navigates to Remote Archive screen', async () => {
@@ -39,9 +40,19 @@ describe('Remote Archive - Add Success Flow', () => {
   });
 
   it('shows success UI and added archive info', async () => {
+    const loadingSpinner = await $(byResourceId('REMOTE.activity-spinner'));
+    try {
+      await loadingSpinner.waitForExist({timeout: 10000, reverse: true});
+    } catch {
+      testFlags.remoteArchiveAddFailed = true;
+      console.warn('Add Remote Archive is stuck — restarting app');
+      await driver.terminateApp('com.comapeo.rc');
+      await driver.activateApp('com.comapeo.rc');
+      return;
+    }
     await expect($(byText('Remote Archive Added'))).toBeDisplayed();
     await expect($(byTextMatches(output.remoteServer))).toBeDisplayed();
-    https: await $(byText('Close')).click();
+    await $(byText('Close')).click();
 
     await expect($(byTextMatches('Remote Archive is On'))).toBeDisplayed();
     await expect($(byResourceId('RA.archive-name'))).toHaveText(

@@ -1,8 +1,10 @@
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {type ReactNode} from 'react';
+import {TouchableOpacity, View} from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {DARK_GREY, WHITE} from '../lib/styles';
-import {GpsErrorIcon, GpsGoodIcon, GpsSearchingIcon} from './icons';
+import {ExhaustivenessError} from '../lib/ExhaustivenessError';
+import {DARK_MAGENTA, MAGENTA, WHITE} from '../lib/styles';
 import {BodyText} from './Text/BodyText';
 
 type GPSPillProps = {
@@ -20,69 +22,102 @@ type GPSPillProps = {
 );
 
 export const GPSPill = (props: GPSPillProps) => {
-  let textValue: string | React.ReactNode;
-  let IconToRender: React.FC;
-  // Replace spinner with static text in E2E mode to prevent rendering delays in tests
-  const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
+  let backgroundColor: string;
+  let icon: ReactNode;
+  let text: string;
 
   switch (props.status) {
-    case 'error':
-      textValue = '--';
-      IconToRender = GpsErrorIcon;
-      break;
-    case 'searching':
-      textValue = isE2E ? (
-        '...'
-      ) : (
-        <UIActivityIndicator size={20} color={WHITE} />
+    case 'error': {
+      backgroundColor = MAGENTA;
+      text = '--';
+      icon = (
+        <View
+          role="none"
+          style={{
+            backgroundColor: DARK_MAGENTA,
+            borderRadius: 50,
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: 14,
+            height: 14,
+          }}>
+          <MaterialCommunityIcon name="exclamation" color={WHITE} size={12} />
+        </View>
       );
-      IconToRender = GpsSearchingIcon;
-      break;
-    case 'good': {
-      textValue = `± ${Math.abs(Math.round(props.accuracy))} m`;
-      IconToRender = GpsGoodIcon;
+
       break;
     }
-    default:
-      textValue = isE2E ? (
-        '...'
-      ) : (
-        <UIActivityIndicator size={20} color={WHITE} />
+
+    case 'searching': {
+      const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
+
+      backgroundColor = '#333333';
+      text = '--';
+      icon = (
+        <View role="none">
+          <UIActivityIndicator
+            animating={!isE2E}
+            hidesWhenStopped={false}
+            size={12}
+            color={WHITE}
+            style={{flex: 0}}
+          />
+        </View>
       );
-      IconToRender = GpsSearchingIcon;
+
       break;
+    }
+
+    case 'good': {
+      backgroundColor = '#333333';
+      text = `${Math.abs(Math.round(props.accuracy))} ±`;
+      icon = (
+        <View
+          role="none"
+          style={{
+            backgroundColor: '#36F927',
+            height: 12,
+            width: 12,
+            borderRadius: 50,
+          }}
+        />
+      );
+
+      break;
+    }
+
+    default:
+      // @ts-expect-error Exhaustive
+      throw new ExhaustivenessError(props.status);
   }
 
   return (
     <TouchableOpacity
       onPress={props.onPress}
-      style={styles.container}
       testID={props.testID}
-      accessibilityLabel={props.accessibilityLabel}>
-      <IconToRender />
-
-      <BodyText variant="smallMeta" style={styles.text} numberOfLines={1}>
-        {textValue}
+      accessibilityLabel={props.accessibilityLabel}
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 8,
+        paddingVertical: 4,
+        paddingHorizontal: 10,
+        borderRadius: 20,
+        backgroundColor: backgroundColor,
+      }}>
+      {icon}
+      <BodyText
+        variant="smallMeta"
+        numberOfLines={1}
+        style={{
+          color: WHITE,
+          paddingBottom: 2,
+          minWidth: 30,
+          textAlign: 'center',
+        }}>
+        {text}
       </BodyText>
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    minHeight: 32,
-    backgroundColor: DARK_GREY,
-    borderRadius: 20,
-    paddingHorizontal: 10,
-    gap: 5,
-    flexShrink: 1,
-    overflow: 'hidden',
-  },
-  text: {
-    color: WHITE,
-    marginBottom: 2,
-  },
-});

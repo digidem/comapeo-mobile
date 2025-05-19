@@ -16,9 +16,9 @@ const m = defineMessages({
     id: 'screens.ConfirmDeletePhoto.title',
     defaultMessage: 'Delete this photo?',
   },
-  deleteImage: {
-    id: 'screens.ConfirmDeletePhoto.deleteImage',
-    defaultMessage: 'Delete Image',
+  deletePhoto: {
+    id: 'screens.ConfirmDeletePhoto.deletePhoto',
+    defaultMessage: 'Delete Photo',
   },
   cancel: {
     id: 'screens.ConfirmDeletePhoto.cancel',
@@ -52,7 +52,7 @@ export function ConfirmDeletePhoto({
         <View style={{gap: 20}}>
           <DestructiveButton
             fullSize
-            text={t(m.deleteImage)}
+            text={t(m.deletePhoto)}
             renderIcon={({color, size}) => (
               <MaterialIcons name="delete" size={size} color={color} />
             )}

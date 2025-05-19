@@ -594,8 +594,8 @@
   "screens.ConfirmDeletePhoto.cancel": {
     "message": "Cancel"
   },
-  "screens.ConfirmDeletePhoto.deleteImage": {
-    "message": "Delete Image"
+  "screens.ConfirmDeletePhoto.deletePhoto": {
+    "message": "Delete Photo"
   },
   "screens.ConfirmDeletePhoto.title": {
     "message": "Delete this photo?"

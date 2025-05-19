@@ -41,4 +41,5 @@ describe('CoMapeo E2E Flow', function () {
   require('./main/restart-navigation.test');
   require('./multiple-projects/project-retention.test');
   require('./multiple-projects/all-projects-screen.test');
+  require('./multiple-projects/edit-project-details.test');
 });

@@ -4,7 +4,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {ExhaustivenessError} from '../lib/ExhaustivenessError';
-import {DARK_GREY, WARNING_RED, WHITE} from '../lib/styles';
+import {DARK_GREY, GREEN, WARNING_RED, WHITE} from '../lib/styles';
 import {BodyText} from './Text/BodyText';
 
 type Props = {
@@ -78,8 +78,7 @@ export const GPSPill = (props: Props) => {
         <View
           testID={props.iconTestID}
           style={{
-            // TODO: Make this a named color
-            backgroundColor: '#36F927',
+            backgroundColor: GREEN,
             height: 12,
             width: 12,
             borderRadius: 50,

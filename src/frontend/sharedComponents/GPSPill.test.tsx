@@ -1,6 +1,6 @@
 import {render, screen} from '@testing-library/react-native';
 
-import {DARK_GREY, WARNING_RED} from '../lib/styles';
+import {DARK_GREY, GREEN, WARNING_RED} from '../lib/styles';
 import {GPSPill} from './GPSPill';
 
 test('searching status', async () => {
@@ -51,7 +51,7 @@ test('good status', async () => {
   });
 
   expect(screen.getByTestId('gps-pill-icon')).toHaveStyle({
-    backgroundColor: '#36F927',
+    backgroundColor: GREEN,
   });
 });
 

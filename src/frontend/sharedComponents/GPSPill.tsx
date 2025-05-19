@@ -4,7 +4,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {ExhaustivenessError} from '../lib/ExhaustivenessError';
-import {DARK_GREY, DARK_MAGENTA, MAGENTA, WHITE} from '../lib/styles';
+import {DARK_GREY, WARNING_RED, WHITE} from '../lib/styles';
 import {BodyText} from './Text/BodyText';
 
 type Props = {
@@ -29,13 +29,14 @@ export const GPSPill = (props: Props) => {
 
   switch (props.status) {
     case 'error': {
-      backgroundColor = MAGENTA;
+      backgroundColor = WARNING_RED;
       text = '--';
       icon = (
         <View
           testID={props.iconTestID}
           style={{
-            backgroundColor: DARK_MAGENTA,
+            // TODO: Make this a named color
+            backgroundColor: '#661010',
             borderRadius: 50,
             justifyContent: 'center',
             alignItems: 'center',
@@ -77,7 +78,7 @@ export const GPSPill = (props: Props) => {
         <View
           testID={props.iconTestID}
           style={{
-            // TODO: Make this a defined color
+            // TODO: Make this a named color
             backgroundColor: '#36F927',
             height: 12,
             width: 12,

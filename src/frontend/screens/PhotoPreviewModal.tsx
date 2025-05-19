@@ -81,6 +81,7 @@ export function PhotoPreviewModal({
                 size={20}
                 color={NEW_DARK_GREY}
                 style={{paddingTop: 2}}
+                allowFontScaling
               />
             }
             text={t(m.validatedByCoMapeo)}
@@ -95,6 +96,7 @@ export function PhotoPreviewModal({
                 size={20}
                 color={NEW_DARK_GREY}
                 style={{paddingTop: 2}}
+                allowFontScaling
               />
             }
             text={formatDate(timestamp, {
@@ -112,6 +114,7 @@ export function PhotoPreviewModal({
                 size={20}
                 color={NEW_DARK_GREY}
                 style={{paddingTop: 2}}
+                allowFontScaling
               />
             }
             text={observationDocId}
@@ -179,6 +182,7 @@ function CreatedByDeviceIdInfoItem({
           size={20}
           color={NEW_DARK_GREY}
           style={{paddingTop: 2}}
+          allowFontScaling
         />
       }
       text={createdByDeviceId}

@@ -1,5 +1,6 @@
 import {useDocumentCreatedBy, useSingleDocByDocId} from '@comapeo/core-react';
 import {type NativeStackNavigationOptions} from '@react-navigation/native-stack';
+import {ErrorBoundary} from '@sentry/react-native';
 import {Suspense, useState, type ReactNode} from 'react';
 import {defineMessages, useIntl, type MessageDescriptor} from 'react-intl';
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
@@ -56,11 +57,13 @@ export function PhotoPreviewModal({
         {photo.type === 'photo' ? (
           <Suspense fallback={null}>
             <View style={{flex: 1, borderRadius: 10, overflow: 'hidden'}}>
-              <CoreBlobImage
-                driveId={photo.driveDiscoveryId}
-                name={photo.name}
-                projectId={projectId}
-              />
+              <ErrorBoundary fallback={() => <ImageErrorPlaceholder />}>
+                <CoreBlobImage
+                  driveId={photo.driveDiscoveryId}
+                  name={photo.name}
+                  projectId={projectId}
+                />
+              </ErrorBoundary>
             </View>
           </Suspense>
         ) : (
@@ -116,12 +119,14 @@ export function PhotoPreviewModal({
         )}
 
         {observationDocId && (
-          <Suspense fallback={null}>
-            <CreatedByDeviceIdInfoItem
-              projectId={projectId}
-              observationDocId={observationDocId}
-            />
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={null}>
+              <CreatedByDeviceIdInfoItem
+                projectId={projectId}
+                observationDocId={observationDocId}
+              />
+            </Suspense>
+          </ErrorBoundary>
         )}
       </View>
     </ScrollView>

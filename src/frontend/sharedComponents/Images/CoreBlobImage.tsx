@@ -16,11 +16,7 @@ export function CoreBlobImage({driveId, name, projectId, testID}: Props) {
   const [displayedVariant, setDisplayedVariant] =
     useState<PhotoVariant>('original');
 
-  const {
-    data: attachmentUrl,
-    error,
-    isRefetching,
-  } = useAttachmentUrl({
+  const {data: attachmentUrl} = useAttachmentUrl({
     projectId,
     blobId: {
       driveId,
@@ -29,17 +25,6 @@ export function CoreBlobImage({driveId, name, projectId, testID}: Props) {
       variant: displayedVariant,
     },
   });
-
-  // May fail to get the URL for the original.
-  // Attempt to get the URL for the preview.
-  if (displayedVariant === 'original' && error) {
-    setDisplayedVariant('preview');
-  }
-
-  // Failed to get the URL for the preview. Just show the error at this point.
-  if (displayedVariant === 'preview' && error && !isRefetching) {
-    return <ImageErrorPlaceholder testID={testID} />;
-  }
 
   if (cannotLoadImage) {
     return <ImageErrorPlaceholder testID={testID} />;

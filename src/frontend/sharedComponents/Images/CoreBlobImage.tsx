@@ -1,23 +1,18 @@
 import {useAttachmentUrl} from '@comapeo/core-react';
 import {type ComponentProps, useState} from 'react';
 
-import {PhotoVariant} from '../../sharedTypes';
-import {GracefulImage} from './GracefulImage';
+import {type PhotoVariant} from '../../sharedTypes';
 import {ImageErrorPlaceholder} from './ImageErrorPlaceholder';
+import {TrulyContainedImage} from './TrulyContainedImage';
 
 type Props = {
   driveId: string;
   name: string;
   projectId: string;
-} & Omit<ComponentProps<typeof GracefulImage>, 'renderError' | 'onLoadError'>;
+} & Pick<ComponentProps<typeof TrulyContainedImage>, 'testID'>;
 
-export const CoreBlobImage = ({
-  driveId,
-  name,
-  projectId,
-  testID,
-  ...otherImageProps
-}: Props) => {
+export function CoreBlobImage({driveId, name, projectId, testID}: Props) {
+  const [cannotLoadImage, setCannotLoadImage] = useState(false);
   const [displayedVariant, setDisplayedVariant] =
     useState<PhotoVariant>('original');
 
@@ -46,22 +41,23 @@ export const CoreBlobImage = ({
     return <ImageErrorPlaceholder testID={testID} />;
   }
 
+  if (cannotLoadImage) {
+    return <ImageErrorPlaceholder testID={testID} />;
+  }
+
   return (
-    <GracefulImage
-      {...otherImageProps}
-      onLoadError={() => {
+    <TrulyContainedImage
+      src={attachmentUrl}
+      onError={() => {
         // The original may fail to load depending on media sync settings.
         // Attempt to use the preview URL if using the original does not work.
         if (displayedVariant === 'original') {
           setDisplayedVariant('preview');
-          return true;
+          return;
         }
 
-        return false;
+        setCannotLoadImage(true);
       }}
-      renderError={() => <ImageErrorPlaceholder testID={testID} />}
-      src={attachmentUrl}
-      testID={testID}
     />
   );
-};
+}

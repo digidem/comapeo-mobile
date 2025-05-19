@@ -1,20 +1,20 @@
+import {useDocumentCreatedBy, useSingleDocByDocId} from '@comapeo/core-react';
 import {type NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import {Suspense, type ReactNode} from 'react';
+import {Suspense, useState, type ReactNode} from 'react';
 import {defineMessages, useIntl, type MessageDescriptor} from 'react-intl';
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
 
 import {useActiveProject} from '../contexts/ActiveProjectContext.tsx';
+import {useAppLanguageTag} from '../hooks/useAppLanguageTag.ts';
 import {BLACK, NEW_DARK_GREY, WHITE} from '../lib/styles.ts';
 import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft.tsx';
 import {CoreBlobImage} from '../sharedComponents/Images/CoreBlobImage.tsx';
-import {GracefulImage} from '../sharedComponents/Images/GracefulImage.tsx';
 import {ImageErrorPlaceholder} from '../sharedComponents/Images/ImageErrorPlaceholder.tsx';
+import {TrulyContainedImage} from '../sharedComponents/Images/TrulyContainedImage.tsx';
 import {BodyText} from '../sharedComponents/Text/BodyText.tsx';
 import {type NativeRootNavigationProps} from '../sharedTypes/navigation.ts';
-import {useDocumentCreatedBy, useSingleDocByDocId} from '@comapeo/core-react';
-import {useAppLanguageTag} from '../hooks/useAppLanguageTag.ts';
 
 const m = defineMessages({
   navTitle: {
@@ -65,10 +65,7 @@ export function PhotoPreviewModal({
           </Suspense>
         ) : (
           <View style={{flex: 1, borderRadius: 10, overflow: 'hidden'}}>
-            <GracefulImage
-              src={photo.originalUri}
-              renderError={() => <ImageErrorPlaceholder />}
-            />
+            <ImageWithErrorFallback src={photo.originalUri} />
           </View>
         )}
       </View>
@@ -128,6 +125,23 @@ export function PhotoPreviewModal({
         )}
       </View>
     </ScrollView>
+  );
+}
+
+function ImageWithErrorFallback({src}: {src: string}) {
+  const [loadError, setLoadError] = useState(false);
+
+  if (loadError) {
+    return <ImageErrorPlaceholder />;
+  }
+
+  return (
+    <TrulyContainedImage
+      src={src}
+      onError={() => {
+        setLoadError(true);
+      }}
+    />
   );
 }
 

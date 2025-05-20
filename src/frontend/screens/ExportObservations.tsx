@@ -5,7 +5,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 import {PrimaryButton, SecondaryButton} from '../sharedComponents/Buttons';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
-import {BLACK, LIGHT_GREY, WARNING_RED} from '../lib/styles';
+import {DARK_GREY, LIGHT_GREY, WARNING_RED} from '../lib/styles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {useState} from 'react';
 
@@ -99,7 +99,7 @@ export const ExportObservations = ({
                 name={
                   isSelected ? 'radio-button-checked' : 'radio-button-unchecked'
                 }
-                color={showErrorStyle ? WARNING_RED : BLACK}
+                color={showErrorStyle ? WARNING_RED : DARK_GREY}
                 size={30}
                 style={{marginRight: 10}}
               />

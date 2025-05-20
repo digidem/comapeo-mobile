@@ -5,10 +5,9 @@ import {defineMessages, useIntl} from 'react-intl';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 import {PrimaryButton, SecondaryButton} from '../sharedComponents/Buttons';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
-import {LIGHT_GREY} from '../lib/styles';
+import {BLACK, LIGHT_GREY, WARNING_RED} from '../lib/styles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {ReactNode, useState} from 'react';
-import {ViewStyleProp} from '../sharedTypes';
+import {useState} from 'react';
 
 const m = defineMessages({
   close: {
@@ -43,62 +42,93 @@ const m = defineMessages({
     id: 'screens.ExportObservations.tracksDescription',
     defaultMessage: 'Tracks only as a GeoJson file',
   },
+  errorMessage: {
+    id: 'screens.ExportObservations.errorMessage',
+    defaultMessage: 'Choose an option',
+  },
 });
 
-type Exports = 'Observation' | 'ObservationsWithMedia' | 'Tracks';
+const EXPORT_OPTIONS = [
+  {
+    type: 'Observation',
+    description: m.allObservationsDescription,
+    title: m.allObservations,
+  },
+  {
+    type: 'ObservationsWithMedia',
+    description: m.allObservationsAndMediaDescription,
+    title: m.allObservationsAndMedia,
+  },
+  {type: 'Tracks', title: m.tracks, description: m.tracksDescription},
+] as const;
+type Exports = (typeof EXPORT_OPTIONS)[number]['type'];
 
 export const ExportObservations = ({
   navigation,
 }: NativeRootNavigationProps<'ExportObservations'>) => {
   const {formatMessage} = useIntl();
   const [typeToExport, setTypeToExport] = useState<null | Exports>(null);
+  const [showError, setShowError] = useState<boolean>(false);
+
+  function handlePressDownload() {
+    if (!typeToExport) {
+      setShowError(true);
+      return;
+    }
+
+    //handle download here
+  }
 
   return (
     <BottomSheetWrapper>
-      <View style={{alignItems: 'center'}}>
-        <ExportOptionCard
-          value="Observation"
-          style={{marginBottom: 10}}
-          selectedValue={typeToExport}
-          setSelectedValue={setTypeToExport}>
-          <View>
-            <HeaderText variant="header5">
-              {formatMessage(m.allObservations)}
-            </HeaderText>
-            <BodyText variant="smallMeta">
-              {formatMessage(m.allObservationsDescription)}
-            </BodyText>
-          </View>
-        </ExportOptionCard>
-        <ExportOptionCard
-          value="ObservationsWithMedia"
-          selectedValue={typeToExport}
-          style={{marginBottom: 10}}
-          setSelectedValue={setTypeToExport}>
-          <View>
-            <HeaderText variant="header5">
-              {formatMessage(m.allObservationsAndMedia)}
-            </HeaderText>
-            <BodyText variant="smallMeta">
-              {formatMessage(m.allObservationsAndMediaDescription)}
-            </BodyText>
-          </View>
-        </ExportOptionCard>
-        <ExportOptionCard
-          value="Tracks"
-          selectedValue={typeToExport}
-          setSelectedValue={setTypeToExport}>
-          <View>
-            <HeaderText variant="header5">{formatMessage(m.tracks)}</HeaderText>
-            <BodyText variant="smallMeta">
-              {formatMessage(m.tracksDescription)}
-            </BodyText>
-          </View>
-        </ExportOptionCard>
+      <View style={{alignItems: 'center', gap: 10}}>
+        {EXPORT_OPTIONS.map(option => {
+          const isSelected = typeToExport === option.type;
+          const showErrorStyle = showError && !typeToExport;
+          return (
+            <TouchableOpacity
+              key={option.type}
+              style={styles.cardButton}
+              onPress={() => {
+                setTypeToExport(option.type);
+                if (showError) {
+                  setShowError(false);
+                }
+              }}>
+              <MaterialIcon
+                name={
+                  isSelected ? 'radio-button-checked' : 'radio-button-unchecked'
+                }
+                color={showErrorStyle ? WARNING_RED : BLACK}
+                size={30}
+                style={{marginRight: 10}}
+              />
+              <View>
+                <HeaderText variant="header5">
+                  {formatMessage(option.title)}
+                </HeaderText>
+                <BodyText variant="smallMeta">
+                  {formatMessage(option.description)}
+                </BodyText>
+              </View>
+            </TouchableOpacity>
+          );
+        })}
       </View>
+      {showError && (
+        <HeaderText
+          variant="header5"
+          style={{
+            color: WARNING_RED,
+            marginTop: 20,
+            textAlign: 'center',
+          }}>
+          {formatMessage(m.errorMessage)}
+        </HeaderText>
+      )}
       <PrimaryButton
         fullSize={true}
-        onPress={() => {}}
+        onPress={handlePressDownload}
         style={{marginTop: 20, alignSelf: 'center'}}
         text={formatMessage(m.download)}
       />
@@ -109,39 +139,6 @@ export const ExportObservations = ({
         text={formatMessage(m.close)}
       />
     </BottomSheetWrapper>
-  );
-};
-
-type ExportOptionCardProps = {
-  value: Exports;
-  selectedValue: Exports | null;
-  setSelectedValue: (val: Exports) => void;
-  children: ReactNode;
-  style?: ViewStyleProp;
-};
-
-export const ExportOptionCard = ({
-  value,
-  setSelectedValue,
-  selectedValue,
-  children,
-  style,
-}: ExportOptionCardProps) => {
-  return (
-    <TouchableOpacity
-      style={[styles.cardButton, style]}
-      onPress={() => setSelectedValue(value)}>
-      <MaterialIcon
-        name={
-          value === selectedValue
-            ? 'radio-button-checked'
-            : 'radio-button-unchecked'
-        }
-        size={30}
-        style={{marginRight: 10}}
-      />
-      {children}
-    </TouchableOpacity>
   );
 };
 

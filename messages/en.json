@@ -703,6 +703,9 @@
   "screens.ExportObservations.download": {
     "message": "Download"
   },
+  "screens.ExportObservations.errorMessage": {
+    "message": "Choose an option"
+  },
   "screens.ExportObservations.tracks": {
     "message": "Tracks"
   },

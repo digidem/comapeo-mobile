@@ -30,11 +30,21 @@ export function useCreatePhotoAttachment({projectId}: {projectId: string}) {
         },
       });
 
-      return {
+      const baseAttachment = {
         driveDiscoveryId: blob.driveId,
         hash: blob.hash,
         name: blob.name,
         type: blob.type,
+      };
+
+      // Should not happen but just in case...
+      if (blob.type !== 'photo') {
+        return baseAttachment;
+      }
+
+      return {
+        ...baseAttachment,
+        photoExif: photo.mediaMetadata.photoExif,
       };
     },
   });

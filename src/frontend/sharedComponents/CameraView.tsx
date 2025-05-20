@@ -1,3 +1,4 @@
+import {captureException} from '@sentry/react-native';
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {
@@ -8,12 +9,17 @@ import {
 } from 'expo-camera';
 import ImageResizer from '@bam.tech/react-native-image-resizer';
 import {Accelerometer, AccelerometerMeasurement} from 'expo-sensors';
+import {parse} from 'valibot';
 
 import {AddButton} from './AddButton';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import {Subscription} from 'expo-sensors/build/DeviceSensor';
-import {PhotoPromiseWithMetadata} from '../contexts/PhotoPromiseContext/types';
+import {
+  MediaMetadata,
+  PhotoPromiseWithMetadata,
+} from '../contexts/PhotoPromiseContext/types';
 import {useLocation} from '../hooks/useLocation';
+import {PhotoEXIFSchema} from '../lib/exif';
 
 const m = defineMessages({
   noCameraAccess: {
@@ -86,13 +92,32 @@ export const CameraView = ({onAddPress}: Props) => {
       .takePictureAsync(captureOptions)
       .then(pic => {
         if (!pic) return;
+
+        let mediaMetadata: MediaMetadata = {
+          location,
+          timestamp: Date.now(),
+        };
+
+        if (pic.exif) {
+          try {
+            const extractedExif = parse(PhotoEXIFSchema, pic.exif);
+
+            mediaMetadata = {
+              ...mediaMetadata,
+              photoExif: extractedExif,
+            };
+          } catch (err) {
+            captureException(err);
+          }
+        }
+
         onAddPress({
           capturePromise: rotatePhoto(pic, accelerometerMeasurement.current),
-          mediaMetadata: {location, timestamp: Date.now()},
+          mediaMetadata,
         });
       })
       .catch(err => {
-        console.log(err);
+        captureException(err);
         setCapturing(false);
       })
       .finally(() => {

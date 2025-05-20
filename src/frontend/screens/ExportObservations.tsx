@@ -8,6 +8,10 @@ import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 import {DARK_GREY, LIGHT_GREY, WARNING_RED} from '../lib/styles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {useState} from 'react';
+import {useExportGeoJSON} from '@comapeo/core-react';
+import {useActiveProject} from '../contexts/ActiveProjectContext';
+import * as FileSystem from 'expo-file-system';
+import {useOpenShareDialog} from '../hooks/share';
 
 const m = defineMessages({
   close: {
@@ -69,14 +73,50 @@ export const ExportObservations = ({
   const {formatMessage} = useIntl();
   const [typeToExport, setTypeToExport] = useState<null | Exports>(null);
   const [showError, setShowError] = useState<boolean>(false);
+  const {projectId} = useActiveProject();
+  const exportNoMedia = useExportGeoJSON({projectId});
+  const [loading, setLoading] = useState(false);
+  const openShare = useOpenShareDialog();
 
-  function handlePressDownload() {
+  async function handlePressDownload() {
     if (!typeToExport) {
       setShowError(true);
       return;
     }
 
-    //handle download here
+    const exportDir = FileSystem.cacheDirectory + 'exports/';
+
+    if (typeToExport === 'Observation') {
+      setLoading(true);
+      const exportDirectory = await FileSystem.getInfoAsync(exportDir);
+
+      if (!exportDirectory.exists) {
+        await FileSystem.makeDirectoryAsync(exportDir);
+      }
+      exportNoMedia.mutate(
+        {
+          path: normalizeFilePath(exportDir),
+          exportOptions: {lang: 'en', observations: true, tracks: false},
+        },
+        {
+          onSuccess: async path => {
+            await openShare
+              .mutateAsync({
+                url: `file://${path}`,
+              })
+              .catch(err => {
+                console.log('error in share', err);
+              });
+
+            setLoading(false);
+          },
+          onError: err => {
+            console.log('Error exporting observations', err);
+            setLoading(false);
+          },
+        },
+      );
+    }
   }
 
   return (
@@ -103,14 +143,16 @@ export const ExportObservations = ({
                 size={30}
                 style={{marginRight: 10}}
               />
-              <View>
-                <HeaderText variant="header5">
-                  {formatMessage(option.title)}
-                </HeaderText>
-                <BodyText variant="smallMeta">
-                  {formatMessage(option.description)}
-                </BodyText>
-              </View>
+              {!loading && (
+                <View>
+                  <HeaderText variant="header5">
+                    {formatMessage(option.title)}
+                  </HeaderText>
+                  <BodyText variant="smallMeta">
+                    {formatMessage(option.description)}
+                  </BodyText>
+                </View>
+              )}
             </TouchableOpacity>
           );
         })}
@@ -153,3 +195,6 @@ const styles = StyleSheet.create({
     borderColor: LIGHT_GREY,
   },
 });
+const normalizeFilePath = (uri: string) => {
+  return uri.replace(/^file:\/\//, '');
+};

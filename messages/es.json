@@ -591,6 +591,15 @@
     "description": "Title for category chooser screen",
     "message": "Elegir qué está pasando"
   },
+  "screens.ConfirmDeletePhoto.cancel": {
+    "message": "Cancel"
+  },
+  "screens.ConfirmDeletePhoto.deletePhoto": {
+    "message": "Delete Photo"
+  },
+  "screens.ConfirmDeletePhoto.title": {
+    "message": "Delete this photo?"
+  },
   "screens.CoordinateFormat.dd": {
     "description": "Decimal Degrees coordinate format",
     "message": "Grados Decimales (DD)"
@@ -1251,17 +1260,14 @@
   "screens.OnboardingPrivacyPolicy.shareDiagnostics": {
     "message": "Compartir información de diagnóstico"
   },
-  "screens.PhotoPreviewModal.DeletePhoto.cancelButton": {
-    "message": "Cancelar"
-  },
-  "screens.PhotoPreviewModal.DeletePhoto.deleteModalDeleteButton": {
-    "message": "Eliminar imagen"
-  },
-  "screens.PhotoPreviewModal.DeletePhoto.deleteModalTitle": {
-    "message": "¿Eliminar esta foto?"
-  },
   "screens.PhotoPreviewModal.DeletePhoto.headerButtonText": {
     "message": "Eliminar foto"
+  },
+  "screens.PhotoPreviewModal.DeletePhoto.navTitle": {
+    "message": "Photo Info"
+  },
+  "screens.PhotoPreviewModal.DeletePhoto.validatedByCoMapeo": {
+    "message": "Validated by CoMapeo"
   },
   "screens.PrivacyPolicy.aboutAwana": {
     "message": "Acerca de Awana Digital"

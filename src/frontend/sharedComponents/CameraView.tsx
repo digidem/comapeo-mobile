@@ -20,6 +20,7 @@ import {
 } from '../contexts/PhotoPromiseContext/types';
 import {useLocation} from '../hooks/useLocation';
 import {PhotoEXIFSchema} from '../lib/exif';
+import {PhotoEXIF} from '../sharedTypes';
 
 const m = defineMessages({
   noCameraAccess: {
@@ -34,7 +35,7 @@ const m = defineMessages({
 
 const CAPTURE_QUALITY = 75;
 
-const captureOptions: CameraPictureOptions = {
+const BASE_CAMERA_CAPTURE_OPTIONS: CameraPictureOptions = {
   base64: false,
   exif: true,
   skipProcessing: true,
@@ -87,6 +88,28 @@ export const CameraView = ({onAddPress}: Props) => {
     }
 
     setCapturing(true);
+
+    const captureOptions = location
+      ? {
+          ...BASE_CAMERA_CAPTURE_OPTIONS,
+          // Apparently not all devices will encode GPS information when taking a photo
+          // so we provide it manually to ensure its presence.
+          // https://github.com/expo/expo/commit/dce5905664dc4559ea1935a6c946526e4c46278c
+          additionalExif: {
+            GPSLongitude: location.coords.longitude,
+            GPSLongitudeRef: location.coords.longitude >= 0 ? 'E' : 'W',
+            GPSLatitude: location.coords.latitude,
+            GPSLatitudeRef: location.coords.latitude >= 0 ? 'N' : 'S',
+            GPSAltitude:
+              typeof location.coords.altitude === 'number'
+                ? location.coords.altitude
+                : undefined,
+            // TODO: Should we also write `GPSDateStamp` and `GPSTimeStamp
+          } satisfies {
+            [key in Extract<keyof PhotoEXIF, `GPS${string}`>]?: PhotoEXIF[key];
+          },
+        }
+      : BASE_CAMERA_CAPTURE_OPTIONS;
 
     ref.current
       .takePictureAsync(captureOptions)

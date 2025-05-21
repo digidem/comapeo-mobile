@@ -57,20 +57,7 @@ const m = defineMessages({
   },
 });
 
-const EXPORT_OPTIONS = [
-  {
-    type: 'Observation',
-    description: m.allObservationsDescription,
-    title: m.allObservations,
-  },
-  {
-    type: 'ObservationsWithMedia',
-    description: m.allObservationsAndMediaDescription,
-    title: m.allObservationsAndMedia,
-  },
-  {type: 'Tracks', title: m.tracks, description: m.tracksDescription},
-] as const;
-type Exports = (typeof EXPORT_OPTIONS)[number]['type'];
+type Exports = 'Observation' | 'Tracks' | 'ObservationsWithMedia';
 
 export const ExportObservations = ({
   navigation,
@@ -159,51 +146,39 @@ export const ExportObservations = ({
   return (
     <BottomSheetWrapper>
       <View style={{alignItems: 'center', gap: 10}}>
-        {EXPORT_OPTIONS.map(option => {
-          //if no tracks, dont show tracks option
-          if (tracks.length === 0 && option.type === 'Tracks') {
-            return;
-          }
-
-          //if no observations, dont show observations options
-          if (
-            observations.length === 0 &&
-            (option.type === 'Observation' ||
-              option.type === 'ObservationsWithMedia')
-          ) {
-            return;
-          }
-          const isSelected = typeToExport === option.type;
-          const showErrorStyle = showError && !typeToExport;
-          return (
-            <TouchableOpacity
-              key={option.type}
-              style={styles.cardButton}
+        {observations.length > 0 && (
+          <>
+            <ExportOptionCard
+              title={formatMessage(m.allObservations)}
+              description={formatMessage(m.allObservationsDescription)}
+              isSelected={typeToExport === 'Observation'}
+              showError={showError && !typeToExport}
               onPress={() => {
-                setTypeToExport(option.type);
-                if (showError) {
-                  setShowError(false);
-                }
-              }}>
-              <MaterialIcon
-                name={
-                  isSelected ? 'radio-button-checked' : 'radio-button-unchecked'
-                }
-                color={showErrorStyle ? WARNING_RED : DARK_GREY}
-                size={30}
-                style={{marginRight: 10}}
-              />
-              <View>
-                <HeaderText style={{flex: 1}} variant="header5">
-                  {formatMessage(option.title)}
-                </HeaderText>
-                <BodyText style={{flex: 1}} variant="smallMeta">
-                  {formatMessage(option.description)}
-                </BodyText>
-              </View>
-            </TouchableOpacity>
-          );
-        })}
+                setTypeToExport('Observation');
+              }}
+            />
+            <ExportOptionCard
+              title={formatMessage(m.allObservationsAndMedia)}
+              description={formatMessage(m.allObservationsAndMediaDescription)}
+              isSelected={typeToExport === 'ObservationsWithMedia'}
+              showError={showError && !typeToExport}
+              onPress={() => {
+                setTypeToExport('ObservationsWithMedia');
+              }}
+            />
+          </>
+        )}
+        {tracks.length > 0 && (
+          <ExportOptionCard
+            title={formatMessage(m.tracks)}
+            description={formatMessage(m.tracksDescription)}
+            isSelected={typeToExport === 'Tracks'}
+            showError={showError && !typeToExport}
+            onPress={() => {
+              setTypeToExport('Tracks');
+            }}
+          />
+        )}
       </View>
       {showError && (
         <HeaderText
@@ -235,6 +210,41 @@ export const ExportObservations = ({
         <UIActivityIndicator style={{paddingTop: 60, paddingBottom: 40}} />
       )}
     </BottomSheetWrapper>
+  );
+};
+
+type ExportOptionCardProps = {
+  title: string;
+  description: string;
+  isSelected: boolean;
+  showError: boolean;
+  onPress: () => void;
+};
+
+export const ExportOptionCard = ({
+  title,
+  description,
+  isSelected,
+  showError,
+  onPress,
+}: ExportOptionCardProps) => {
+  return (
+    <TouchableOpacity style={styles.cardButton} onPress={onPress}>
+      <MaterialIcon
+        name={isSelected ? 'radio-button-checked' : 'radio-button-unchecked'}
+        color={showError ? WARNING_RED : DARK_GREY}
+        size={30}
+        style={{marginRight: 10}}
+      />
+      <View>
+        <HeaderText style={{flex: 1}} variant="header5">
+          {title}
+        </HeaderText>
+        <BodyText style={{flex: 1}} variant="smallMeta">
+          {description}
+        </BodyText>
+      </View>
+    </TouchableOpacity>
   );
 };
 

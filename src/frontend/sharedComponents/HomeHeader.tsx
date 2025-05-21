@@ -32,16 +32,20 @@ export function HomeHeader({
       : projectDetails.projectName;
 
   let RoleIcon: React.FC<SvgProps>;
+  let testID: string;
 
   switch (projectDetails.role) {
     case 'coordinator':
       RoleIcon = ProjectCoordinatorIcon;
+      testID = 'HOME.coordinator-icon';
       break;
     case 'participant':
       RoleIcon = ProjectParticipantIcon;
+      testID = 'HOME.participant-icon';
       break;
     default:
       RoleIcon = NoProjectIcon;
+      testID = 'HOME.no-project-icon';
       break;
   }
 
@@ -61,7 +65,7 @@ export function HomeHeader({
             styles.titleBox,
             {backgroundColor: projectDetails.projectColor},
           ]}>
-          <RoleIcon style={{marginRight: 10}} />
+          <RoleIcon testID={testID} style={{marginRight: 10}} />
           <HeaderText
             testID="HOME.header-title"
             variant="header4"

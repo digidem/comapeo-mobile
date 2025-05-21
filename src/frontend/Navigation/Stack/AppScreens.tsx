@@ -50,10 +50,11 @@ import {
 import {HomeTabs} from '../Tab';
 import {SaveTrackScreen} from '../../screens/SaveTrack/SaveTrackScreen';
 import {ObservationFields} from '../../screens/ObservationFields';
-import {WHITE} from '../../lib/styles';
 import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSettings';
-import {PhotoPreviewModal} from '../../screens/PhotoPreviewModal';
-import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
+import {
+  createNavigationOptions as createPhotoPreviewModalNavigationOptions,
+  PhotoPreviewModal,
+} from '../../screens/PhotoPreviewModal';
 import {
   ObservationCreate,
   createNavigationOptions as createObservationCreateNavigationOptions,
@@ -100,6 +101,7 @@ import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagemen
 import {MenuScreen} from '../../screens/MenuScreen';
 import {InviteCollaboratorsScreen} from '../../screens/Settings/ProjectSettings/YourTeam/InviteCollaborators.tsx';
 import {MenuHeader} from '../../sharedComponents/MenuHeader.tsx';
+import {EditProjectDetails} from '../../screens/Settings/ProjectSettings/EditProjectDetails.tsx';
 import {AllProjects} from '../../screens/AllProjects.tsx';
 import {TrackRecordingActive} from '../../screens/TrackRecordingActive.tsx';
 import {
@@ -111,6 +113,10 @@ import {
   navigationOptions as removeRemoteArchiveNavigationOptions,
 } from '../../screens/Settings/ProjectSettings/RemoteArchive/RemoveRemoteArchive.tsx';
 import {ExportObservations} from '../../screens/ExportObservations.tsx';
+import {
+  ConfirmDeletePhoto,
+  navigationOptions as confirmDeletePhotoNavigationOptions,
+} from '../../screens/ConfirmDeletePhoto.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -149,14 +155,12 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="PhotoPreviewModal"
         component={PhotoPreviewModal}
-        options={{
-          headerTitle: '',
-          headerTransparent: true,
-          headerStyle: {backgroundColor: 'transparent'},
-          headerLeft: props => (
-            <CustomHeaderLeft tintColor={WHITE} headerBackButtonProps={props} />
-          ),
-        }}
+        options={createPhotoPreviewModalNavigationOptions({intl})}
+      />
+      <RootStack.Screen
+        name="ConfirmDeletePhoto"
+        component={ConfirmDeletePhoto}
+        options={confirmDeletePhotoNavigationOptions}
       />
       <RootStack.Screen
         name="Security"
@@ -450,6 +454,16 @@ export const createDefaultScreenGroup = ({
         component={InviteCollaboratorsScreen}
         options={{
           headerShown: false,
+        }}
+      />
+      <RootStack.Screen
+        name="EditProjectDetails"
+        component={EditProjectDetails}
+        options={{
+          headerTitle: intl(EditProjectDetails.navTitle),
+          headerRight: () => (
+            <SaveButton onPress={() => {}} isLoading={false} />
+          ),
         }}
       />
     </RootStack.Group>

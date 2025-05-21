@@ -43,7 +43,14 @@ export type RootStackParamsList = {
   CoordinateFormat: undefined;
   Experiments: undefined;
   PhotoPreviewModal: {
+    observationDocId?: string;
     photo: SavedPhoto | ProcessedDraftPhoto;
+  };
+  ConfirmDeletePhoto: {
+    onSuccess?: () => void;
+    // We currently only support deleting processed draft photos
+    // but we will eventually support deleting saved photos as well.
+    photo: ProcessedDraftPhoto;
   };
   PresetChooser: undefined;
   AddPhoto: undefined;
@@ -118,6 +125,7 @@ export type RootStackParamsList = {
   Menu: undefined;
   AllProjects: undefined;
   InviteCollaborators: undefined;
+  EditProjectDetails: undefined;
   TrackRecordingActive: undefined;
   RemoteArchive: undefined;
   AddRemoteArchive: undefined;

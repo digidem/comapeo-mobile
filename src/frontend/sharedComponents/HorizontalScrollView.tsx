@@ -5,7 +5,6 @@ import {calculateItemWidthForScrollView} from '../lib/calculateItemWidthForScrol
 
 type HorizontalMediaScrollViewProps = {
   renderChildren: (itemWidth: number) => React.ReactNode;
-  numberOfItems: number;
   minItemWidth: number;
   gap: number;
   shouldShowLastItems: boolean;
@@ -15,7 +14,6 @@ export const HorizontalScrollView = ({
   minItemWidth,
   gap,
   renderChildren,
-  numberOfItems,
   shouldShowLastItems,
 }: HorizontalMediaScrollViewProps) => {
   const scrollViewRef = React.useRef<ScrollView>(null);
@@ -46,9 +44,6 @@ export const HorizontalScrollView = ({
         setContainerWidth(event.nativeEvent.layout.width);
       }}
       horizontal
-      scrollEnabled={
-        !containerWidth ? false : itemWidth * numberOfItems > containerWidth
-      }
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={{gap}}
       contentInset={{top: 5, right: 5, bottom: 5, left: 5}}

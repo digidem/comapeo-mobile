@@ -61,6 +61,8 @@ export const InviteReceived = ({
   const {setActiveProjectId} = useActiveProjectIdActions();
   const {isTracking} = useTracking();
 
+  const projectColor = invite.projectColor;
+
   useListenToInviteCancel(inviteId);
 
   function accept() {
@@ -108,7 +110,11 @@ export const InviteReceived = ({
           {formatMessage(m.invitedToJoin)}
         </BodyText>
 
-        <View style={styles.cardContainer}>
+        <View
+          style={[
+            styles.cardContainer,
+            projectColor && {backgroundColor: projectColor},
+          ]}>
           <HeaderText variant="header2" style={styles.projectName}>
             {invite.projectName}
           </HeaderText>

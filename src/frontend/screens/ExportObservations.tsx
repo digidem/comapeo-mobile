@@ -8,15 +8,12 @@ import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 import {DARK_GREY, LIGHT_GREY, WARNING_RED} from '../lib/styles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {useState} from 'react';
-import {useExportGeoJSON, useExportZipFile} from '@comapeo/core-react';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
-import * as FileSystem from 'expo-file-system';
-import {useOpenShareDialog} from '../hooks/share';
-import {useLocaleState} from '../contexts/LocaleStoreContext';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {useObservations} from '../hooks/server/observations';
 import {useTracks} from '../hooks/server/track';
 import * as Sentry from '@sentry/react-native';
+import {useExportObservationsAndShare} from '../hooks/server/projects';
 
 const m = defineMessages({
   close: {
@@ -57,7 +54,7 @@ const m = defineMessages({
   },
 });
 
-type Exports = 'Observation' | 'Tracks' | 'ObservationsWithMedia';
+export type Exports = 'Observation' | 'Tracks' | 'ObservationsWithMedia';
 
 export const ExportObservations = ({
   navigation,
@@ -65,79 +62,22 @@ export const ExportObservations = ({
   const {formatMessage} = useIntl();
   const [typeToExport, setTypeToExport] = useState<null | Exports>(null);
   const [showError, setShowError] = useState<boolean>(false);
-  const {projectId} = useActiveProject();
-  const exportNoMedia = useExportGeoJSON({projectId});
-  const exportWithMedia = useExportZipFile({projectId});
-  const [loading, setLoading] = useState(false);
-  const openShare = useOpenShareDialog();
-  const lang = useLocaleState(store => store.languageTag);
   const {data: observations} = useObservations();
   const {data: tracks} = useTracks();
+  const {projectId} = useActiveProject();
+  const exportAndShare = useExportObservationsAndShare({projectId});
 
   async function handlePressDownload() {
     if (!typeToExport) {
       setShowError(true);
       return;
     }
-    setLoading(true);
-    const exportDir = FileSystem.cacheDirectory + 'exports/';
-    const exportDirectory = await FileSystem.getInfoAsync(exportDir);
-
-    if (!exportDirectory.exists) {
-      await FileSystem.makeDirectoryAsync(exportDir);
-    }
-
-    function shareMutate(path: string) {
-      openShare.mutate(
-        {
-          url: `file://${path}`,
-        },
-        {onSettled: () => setLoading(false)},
-      );
-    }
-
-    if (typeToExport === 'Observation' || typeToExport === 'Tracks') {
-      exportNoMedia.mutate(
-        {
-          path: normalizeFilePath(exportDir),
-          exportOptions: {
-            lang: lang || 'en',
-            observations: typeToExport === 'Observation',
-            tracks: typeToExport === 'Tracks',
-          },
-        },
-        {
-          onSuccess: async path => {
-            shareMutate(path);
-          },
-          onError: err => {
-            Sentry.captureException(err);
-            navigation.replace('ErrorBottomSheet');
-          },
-        },
-      );
-
-      return;
-    }
-
-    // Export with media
-    exportWithMedia.mutate(
+    exportAndShare.mutate(
+      {exportType: typeToExport},
       {
-        path: normalizeFilePath(exportDir),
-        exportOptions: {
-          lang: lang || 'en',
-          observations: true,
-          tracks: true,
-          attachments: true,
-        },
-      },
-      {
-        onSuccess: async path => {
-          shareMutate(path);
-        },
         onError: err => {
           Sentry.captureException(err);
-          navigation.replace('ErrorBottomSheet');
+          navigation.navigate('ErrorBottomSheet');
         },
       },
     );
@@ -155,6 +95,9 @@ export const ExportObservations = ({
               showError={showError && !typeToExport}
               onPress={() => {
                 setTypeToExport('Observation');
+                if (showError) {
+                  setShowError(false);
+                }
               }}
             />
             <ExportOptionCard
@@ -164,6 +107,9 @@ export const ExportObservations = ({
               showError={showError && !typeToExport}
               onPress={() => {
                 setTypeToExport('ObservationsWithMedia');
+                if (showError) {
+                  setShowError(false);
+                }
               }}
             />
           </>
@@ -176,6 +122,9 @@ export const ExportObservations = ({
             showError={showError && !typeToExport}
             onPress={() => {
               setTypeToExport('Tracks');
+              if (showError) {
+                setShowError(false);
+              }
             }}
           />
         )}
@@ -191,7 +140,7 @@ export const ExportObservations = ({
           {formatMessage(m.errorMessage)}
         </HeaderText>
       )}
-      {!loading ? (
+      {!exportAndShare.isPending ? (
         <>
           <PrimaryButton
             fullSize={true}
@@ -259,6 +208,3 @@ const styles = StyleSheet.create({
     borderColor: LIGHT_GREY,
   },
 });
-const normalizeFilePath = (uri: string) => {
-  return uri.replace(/^file:\/\//, '');
-};

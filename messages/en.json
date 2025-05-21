@@ -692,7 +692,7 @@
     "message": "All Observations with Media"
   },
   "screens.ExportObservations.allObservationsAndMediaDescription": {
-    "message": "Images, audio, and video in a .zip file"
+    "message": "Images and audio in a .zip file"
   },
   "screens.ExportObservations.allObservationsDescription": {
     "message": "Text only as a GeoJson file"

@@ -3,6 +3,8 @@ import {describe, it} from 'mocha';
 import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
 import {testFlags} from '../../utils/testFlags';
 
+let cleanupNeeded = false;
+
 describe('Remote Archive - Remove Flow', () => {
   const tests = testFlags.remoteArchiveAddFailed ? describe.skip : describe;
   tests('Removal of Archive', () => {
@@ -28,6 +30,7 @@ describe('Remote Archive - Remove Flow', () => {
       const successText = await $(byTextMatches('Remote Archive is Off'));
       try {
         await successText.waitForDisplayed({timeout: 20000});
+        cleanupNeeded = true;
       } catch {
         console.warn('🛑 Remote Archive removal failed — restarting app');
         await driver.terminateApp('com.comapeo.rc');
@@ -44,8 +47,10 @@ describe('Remote Archive - Remove Flow', () => {
   });
 
   after(async () => {
-    const backButton = await $(byResourceId('MAIN.header-back-btn'));
-    await backButton.click();
-    await $('~Close Menu').click();
+    if (cleanupNeeded) {
+      const backButton = await $(byResourceId('MAIN.header-back-btn'));
+      await backButton.click();
+      await $('~Close Menu').click();
+    }
   });
 });

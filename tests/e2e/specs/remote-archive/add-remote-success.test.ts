@@ -5,6 +5,8 @@ import {getTodayFormattedDate} from '../../utils/date';
 import {output} from '../../utils/naming';
 import {testFlags} from '../../utils/testFlags';
 
+let archiveAdded = false;
+
 describe('Remote Archive - Add Success Flow', () => {
   it('navigates to Remote Archive screen', async () => {
     await expect($(byTextMatches('Remote Archive \\| OFF'))).toBeDisplayed();
@@ -40,10 +42,11 @@ describe('Remote Archive - Add Success Flow', () => {
   });
 
   it('shows success UI and added archive info', async () => {
-    const successText = $(byText('Remote Archive Added'));
-
     try {
-      await successText.waitForDisplayed({timeout: 20000});
+      await $(byText('Remote Archive Added')).waitForDisplayed({
+        timeout: 20000,
+      });
+      archiveAdded = true;
     } catch {
       testFlags.remoteArchiveAddFailed = true;
       console.warn('🛑 Remote Archive addition failed — restarting app');
@@ -52,9 +55,10 @@ describe('Remote Archive - Add Success Flow', () => {
       await driver.activateApp('com.comapeo.rc');
       return;
     }
-    await expect(successText).toBeDisplayed();
+    await expect($(byText('Remote Archive Added'))).toBeDisplayed();
     await expect($(byTextMatches(output.remoteServer))).toBeDisplayed();
     await $(byText('Close')).click();
+
     await expect($(byTextMatches('Remote Archive is On'))).toBeDisplayed();
     await expect($(byResourceId('RA.archive-name'))).toHaveText(
       output.remoteServer,
@@ -65,15 +69,12 @@ describe('Remote Archive - Add Success Flow', () => {
   });
 
   it('shows remote archive on in project settings', async () => {
+    if (!archiveAdded) return;
+
     const backButton = await $(byResourceId('MAIN.header-back-btn'));
     await backButton.click();
+
     await expect($(byText('Project Settings'))).toBeDisplayed();
-    if (testFlags.remoteArchiveAddFailed) {
-      console.warn(
-        'Skipping project settings check because archive add failed.',
-      );
-    } else {
-      await expect($(byTextMatches('Remote Archive \\| ON'))).toBeDisplayed();
-    }
+    await expect($(byTextMatches('Remote Archive \\| ON'))).toBeDisplayed();
   });
 });

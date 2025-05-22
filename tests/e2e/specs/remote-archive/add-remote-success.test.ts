@@ -62,11 +62,11 @@ describe('Remote Archive - Add Success Flow', () => {
     const today = getTodayFormattedDate();
     await expect($(byText(today))).toBeDisplayed();
     await expect($(byTextMatches('Remove Server'))).toBeDisplayed();
-    const backButton = await $(byResourceId('MAIN.header-back-btn'));
-    await backButton.click();
   });
 
   it('shows remote archive on in project settings', async () => {
+    const backButton = await $(byResourceId('MAIN.header-back-btn'));
+    await backButton.click();
     await expect($(byText('Project Settings'))).toBeDisplayed();
     if (testFlags.remoteArchiveAddFailed) {
       console.warn(
@@ -75,7 +75,6 @@ describe('Remote Archive - Add Success Flow', () => {
     } else {
       await expect($(byTextMatches('Remote Archive \\| ON'))).toBeDisplayed();
     }
-    const backButton = await $(byResourceId('MAIN.header-back-btn'));
     await backButton.click();
   });
 });

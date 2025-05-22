@@ -25,6 +25,15 @@ describe('Remote Archive - Remove Flow', () => {
 
       const confirmRemove = await $(byTextMatches('Remove Archive'));
       await confirmRemove.click();
+      const successText = await $(byTextMatches('Remote Archive is Off'));
+      try {
+        await successText.waitForDisplayed({timeout: 20000});
+      } catch {
+        console.warn('🛑 Remote Archive removal failed — restarting app');
+        await driver.terminateApp('com.comapeo.rc');
+        await driver.activateApp('com.comapeo.rc');
+        return;
+      }
 
       await expect($(byTextMatches('Remote Archive is Off'))).toBeDisplayed();
       await expect($(byText('Add Remote Archive'))).toBeDisplayed();

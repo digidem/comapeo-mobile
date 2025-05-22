@@ -4,6 +4,8 @@ import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 import {checkForElementGone} from '../../utils/checkForGone';
 
+const UNIQUE_DESCRIPTION = 'Airstrip test obs for second project';
+
 describe('Multiple Projects - Project Data Retention', () => {
   it('should create an observation in the second project', async () => {
     await $('~Open Menu').click();
@@ -14,6 +16,10 @@ describe('Multiple Projects - Project Data Retention', () => {
     await $('~Go to map.').click();
     await $('~Add Observation').click();
     await $(byTextMatches('Airstrip')).click();
+    const descriptionInput = await $(byResourceId('OBS.description-inp'));
+    await descriptionInput.click();
+    await descriptionInput.setValue(UNIQUE_DESCRIPTION);
+
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
     await driver.pause(1000);
@@ -30,7 +36,12 @@ describe('Multiple Projects - Project Data Retention', () => {
     }
 
     await $('~Go to observations list.').click();
-    await expect($(byText('Airstrip'))).toBeDisplayed();
+    const airstrip = await $(byText('Airstrip'));
+    await expect(airstrip).toBeDisplayed();
+    await airstrip.click();
+
+    const description = await $(byText(UNIQUE_DESCRIPTION));
+    await expect(description).toBeDisplayed();
   });
 
   it('should create a third project and not carry over the observation', async () => {
@@ -58,6 +69,11 @@ describe('Multiple Projects - Project Data Retention', () => {
     await $(byTextMatches(output.names.secondProject)).click();
     await $('~Close Menu').click();
 
-    await expect($(byText('Airstrip'))).toBeDisplayed();
+    const airstrip = await $(byText('Airstrip'));
+    await expect(airstrip).toBeDisplayed();
+    await airstrip.click();
+
+    const description = await $(byText(UNIQUE_DESCRIPTION));
+    await expect(description).toBeDisplayed();
   });
 });

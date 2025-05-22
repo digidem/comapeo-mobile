@@ -4,6 +4,10 @@ import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
 import {output} from '../../utils/naming';
 import {checkForElementGone} from '../../utils/checkForGone';
 
+const UPDATED_PROJECT_NAME = 'Updated Project Name for Last Project';
+const UPDATED_PROJECT_DESCRIPTION =
+  'Updated description here for the last project.';
+
 describe('Multiple Projects - Edit Project Details', () => {
   it('should allow editing a named project’s name and description', async () => {
     const thirdProject = await $(byText(output.names.thirdProject));
@@ -16,33 +20,23 @@ describe('Multiple Projects - Edit Project Details', () => {
 
     const nameInput = await $(byResourceId('edit-project-name'));
     await nameInput.clearValue();
-    await nameInput.setValue('Updated Project Name for Last Project');
+    await nameInput.setValue(UPDATED_PROJECT_NAME);
 
     const descriptionInput = await $(byResourceId('edit-project-description'));
-    await descriptionInput.setValue(
-      'Updated description here for the last project.',
-    );
+    await descriptionInput.setValue(UPDATED_PROJECT_DESCRIPTION);
 
     const saveButton = await $(byResourceId('OBS.edit-save-btn'));
     await saveButton.click();
   });
 
   it('should verify presence of new name and description', async () => {
-    await expect(
-      $(byTextMatches('Updated Project Name for Last Project')),
-    ).toBeDisplayed();
-    await expect(
-      $(byTextMatches('Updated description here for the last project.')),
-    ).toBeDisplayed();
+    await expect($(byTextMatches(UPDATED_PROJECT_NAME))).toBeDisplayed();
+    await expect($(byTextMatches(UPDATED_PROJECT_DESCRIPTION))).toBeDisplayed();
     await checkForElementGone(byText(output.names.thirdProject));
     await $('~Close Menu').click();
-    await expect(
-      $(byTextMatches('Updated Project Name for Last Project')),
-    ).toBeDisplayed();
+    await expect($(byTextMatches(UPDATED_PROJECT_NAME))).toBeDisplayed();
     const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
-    await expect(
-      $(byTextMatches('Updated Project Name for Last Project')),
-    ).toBeDisplayed();
+    await expect($(byTextMatches(UPDATED_PROJECT_NAME))).toBeDisplayed();
   });
 });

@@ -41,8 +41,8 @@ describe('Multiple Projects - All Projects Screen', () => {
       const id = await card.getAttribute('resource-id');
       testIds.push(id);
     }
-    expect(testIds[0]).toMatch(/project_card_test_project$/);
+    expect(testIds[0]).toMatch(/project_card_third_project$/);
     expect(testIds[1]).toMatch(/project_card_second_project$/);
-    expect(testIds[2]).toMatch(/project_card_third_project$/);
+    expect(testIds[2]).toMatch(/project_card_test_project$/);
   });
 });

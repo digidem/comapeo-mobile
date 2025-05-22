@@ -1,12 +1,7 @@
 import * as React from 'react';
 import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
 import {defineMessages, useIntl} from 'react-intl';
-import {
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  ActivityIndicator,
-} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {
   COMAPEO_BLUE,
   BLUE_GREY,
@@ -22,6 +17,7 @@ import {ScreenContentWithDock} from '../../../../sharedComponents/ScreenContentW
 import {Button} from '../../../../sharedComponents/Button';
 import {useNavigationFromRoot} from '../../../../hooks/useNavigationWithTypes';
 import {normalizeRemoteArchiveUrl} from '../../../../utils/normalizeRemoteArchiveUrl';
+import {UIActivityIndicator} from 'react-native-indicators';
 import {
   BottomSheetModal,
   useBottomSheetModal,
@@ -241,10 +237,7 @@ const AddFoundArchive = ({name, url}: AddFoundArchiveProps) => {
       <ScreenContentWithDock
         dockContent={
           status === 'pending' ? (
-            <ActivityIndicator
-              style={{marginBottom: 20}}
-              testID="REMOTE.activity-spinner"
-            />
+            <UIActivityIndicator style={{marginBottom: 20}} />
           ) : (
             <Button
               fullWidth

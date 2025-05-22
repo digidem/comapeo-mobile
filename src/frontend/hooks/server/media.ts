@@ -1,67 +1,76 @@
-import {URL} from 'react-native-url-polyfill';
-import {useCreateBlob, useAttachmentUrl} from '@comapeo/core-react';
-import {Observation} from '@comapeo/schema';
-import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {
-  isProcessedDraftPhoto,
-  isUnsavedAudio,
-} from '../../lib/attachmentTypeChecks';
-import {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
-import {UnsavedAudio} from '../../sharedTypes/audio';
-import {BlobId, BlobVariant} from '@comapeo/core/dist/types';
+import {useAttachmentUrl, useCreateBlob} from '@comapeo/core-react';
+import type {BlobId, BlobVariant} from '@comapeo/core/dist/types';
+import type {Observation} from '@comapeo/schema';
 import {useMutation} from '@tanstack/react-query';
+import {URL} from 'react-native-url-polyfill';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import type {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
+import type {Attachment} from '../../sharedTypes';
+import type {UnsavedAudio} from '../../sharedTypes/audio';
 
-interface Attachment {
-  driveDiscoveryId: string;
-  name: string;
-  type: 'photo' | 'audio' | 'video';
-  hash: string;
-}
-
-type AttachmentParam = ProcessedDraftPhoto | UnsavedAudio;
-
-export function useCreateAttachment() {
-  const {projectId} = useActiveProject();
+export function useCreatePhotoAttachment({projectId}: {projectId: string}) {
   const {mutateAsync: createBlobAsync} = useCreateBlob({projectId});
 
-  return useMutation<Attachment, Error, AttachmentParam>({
-    mutationFn: async file => {
-      const data = await createBlobAsync(createBlobArgs(file));
+  return useMutation({
+    mutationFn: async (photo: ProcessedDraftPhoto): Promise<Attachment> => {
+      const blob = await createBlobAsync({
+        original: new URL(photo.originalUri).pathname,
+        preview: photo.previewUri
+          ? new URL(photo.previewUri).pathname
+          : undefined,
+        thumbnail: photo.thumbnailUri
+          ? new URL(photo.thumbnailUri).pathname
+          : undefined,
+        // TODO: DraftPhoto type should probably carry MIME type info that feeds this
+        // although backend currently only uses first part of path
+        metadata: {
+          mimeType: 'image/jpeg',
+          location: photo.mediaMetadata.location,
+          timestamp: photo.mediaMetadata.timestamp,
+        },
+      });
+
+      const baseAttachment = {
+        driveDiscoveryId: blob.driveId,
+        hash: blob.hash,
+        name: blob.name,
+        type: blob.type,
+      };
+
+      // Should not happen but just in case...
+      if (blob.type !== 'photo') {
+        return baseAttachment;
+      }
+
       return {
-        driveDiscoveryId: data.driveId,
-        name: data.name,
-        type: data.type,
-        hash: data.hash,
+        ...baseAttachment,
+        photoExif: photo.mediaMetadata.photoExif,
       };
     },
   });
 }
 
-function createBlobArgs(file: ProcessedDraftPhoto | UnsavedAudio) {
-  if (isProcessedDraftPhoto(file)) {
-    const {originalUri, previewUri, thumbnailUri, mediaMetadata} = file;
-    return {
-      original: new URL(originalUri).pathname,
-      preview: previewUri ? new URL(previewUri).pathname : undefined,
-      thumbnail: thumbnailUri ? new URL(thumbnailUri).pathname : undefined,
-      // TODO: DraftPhoto type should probably carry MIME type info that feeds this
-      // although backend currently only uses first part of path
-      metadata: {
-        mimeType: 'image/jpeg',
-        location: mediaMetadata.location,
-        timestamp: mediaMetadata.timestamp,
-      },
-    };
-  } else if (isUnsavedAudio(file)) {
-    return {
-      original: new URL(file.uri).pathname,
-      metadata: {
-        mimeType: 'audio/mp4',
-        timestamp: file.createdAt,
-      },
-    };
-  }
-  throw new Error('Unknown file type');
+export function useCreateAudioAttachment({projectId}: {projectId: string}) {
+  const {mutateAsync: createBlobAsync} = useCreateBlob({projectId});
+
+  return useMutation({
+    mutationFn: async (file: UnsavedAudio): Promise<Attachment> => {
+      const blob = await createBlobAsync({
+        original: new URL(file.uri).pathname,
+        metadata: {
+          mimeType: 'audio/mp4',
+          timestamp: file.createdAt,
+        },
+      });
+
+      return {
+        driveDiscoveryId: blob.driveId,
+        hash: blob.hash,
+        name: blob.name,
+        type: blob.type,
+      };
+    },
+  });
 }
 
 function buildBlobId(

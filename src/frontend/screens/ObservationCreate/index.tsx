@@ -14,7 +14,10 @@ import {ActionsRow} from '../../sharedComponents/ActionsRow';
 import {Alert, type AlertButton} from 'react-native';
 import {Observation} from '@comapeo/schema';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {useCreateAttachment} from '../../hooks/server/media';
+import {
+  useCreateAudioAttachment,
+  useCreatePhotoAttachment,
+} from '../../hooks/server/media';
 import * as Sentry from '@sentry/react-native';
 
 import {useTrackActions, useTrackState} from '../../contexts/TrackStoreContext';
@@ -96,9 +99,18 @@ export const ObservationCreate = ({
   const value = usePersistedDraftObservation(store => store.value);
   const attachments = usePersistedDraftObservation(store => store.attachments);
   const {updateTags, clearDraft} = useDraftObservation();
-  const {mutateAsync: createAttachmentAsync, status: observationStatus} =
-    useCreateAttachment();
-  const {mutateAsync: createObservationAsync, status: attachmentStatus} =
+
+  const {
+    mutateAsync: createPhotoAttachmentAsync,
+    status: photoAttachmentStatus,
+  } = useCreatePhotoAttachment({projectId});
+
+  const {
+    mutateAsync: createAudioAttachmentAsync,
+    status: audioAttachmentStatus,
+  } = useCreateAudioAttachment({projectId});
+
+  const {mutateAsync: createObservationAsync, status: observationStatus} =
     useCreateDocument({
       docType: 'observation',
       projectId,
@@ -151,7 +163,7 @@ export const ObservationCreate = ({
     [addNewTrackLocations, addNewTrackObservation, value],
   );
 
-  const createObservation = React.useCallback(async () => {
+  const createObservation = React.useCallback(() => {
     if (!value) throw new Error('no observation saved in persisted state ');
     if (authState === 'obscured') {
       clearDraft();
@@ -163,73 +175,75 @@ export const ObservationCreate = ({
     const unsavedAudioRecordings = attachments.filter(isUnsavedAudio);
 
     if (unsavedPhotos.length === 0 && unsavedAudioRecordings.length === 0) {
-      createObservationAsync(
-        {
-          value: {
-            ...value,
-            presetRef: preset
-              ? {docId: preset.docId, versionId: preset.versionId}
-              : undefined,
-          },
-        },
-        {
-          onSuccess: data => {
-            clearDraft();
-            navigation.popTo('Home', {screen: 'Map'});
-            if (isTracking) {
-              addObservationRefToTrack(data);
-            }
-          },
-          onError: err => {
-            Sentry.captureException(err);
-            navigation.navigate('ErrorBottomSheet');
-          },
-        },
-      );
-
-      return;
-    }
-
-    // Currently, we abort the process of saving an observation if saving any number of photos fails to save,
-    // but this approach is prone to creating "orphaned" blobs.
-    // The alternative is to save the observation but excluding photos that failed to save, which is prone to an odd UX of an observation "missing" some attachments.
-    // This could potentially be alleviated by a more granular and informative UI about the photo-saving state, but currently there is nothing in place.
-    // Basically, which is worse: orphaned attachments or saving observations that seem to be missing attachments?
-
-    const newAttachments = await Promise.all(
-      [...unsavedPhotos, ...unsavedAudioRecordings].map(file =>
-        createAttachmentAsync(file),
-      ),
-    );
-
-    createObservationAsync(
-      {
+      createObservationAsync({
         value: {
           ...value,
-          attachments: [...value.attachments, ...newAttachments],
           presetRef: preset
             ? {docId: preset.docId, versionId: preset.versionId}
             : undefined,
         },
-      },
-      {
-        onSuccess: data => {
+      })
+        .then(observation => {
           clearDraft();
+
           navigation.popTo('Home', {screen: 'Map'});
+
           if (isTracking) {
-            addObservationRefToTrack(data);
+            addObservationRefToTrack(observation);
           }
-        },
-        onError: err => {
+        })
+        .catch(err => {
           Sentry.captureException(err);
           navigation.navigate('ErrorBottomSheet');
-        },
-      },
-    );
+        });
+
+      return;
+    }
+
+    (async () => {
+      let observation: Observation;
+
+      try {
+        // Currently, we abort the process of saving an observation if saving any number of photos fails to save,
+        // but this approach is prone to creating "orphaned" blobs.
+        // The alternative is to save the observation but excluding photos that failed to save, which is prone to an odd UX of an observation "missing" some attachments.
+        // This could potentially be alleviated by a more granular and informative UI about the photo-saving state, but currently there is nothing in place.
+        // Basically, which is worse: orphaned attachments or saving observations that seem to be missing attachments?
+        const newAttachments = await Promise.all([
+          ...unsavedPhotos.map(p => {
+            return createPhotoAttachmentAsync(p);
+          }),
+          ...unsavedAudioRecordings.map(a => {
+            return createAudioAttachmentAsync(a);
+          }),
+        ]);
+
+        observation = await createObservationAsync({
+          value: {
+            ...value,
+            attachments: [...value.attachments, ...newAttachments],
+            presetRef: preset
+              ? {docId: preset.docId, versionId: preset.versionId}
+              : undefined,
+          },
+        });
+      } catch (err) {
+        Sentry.captureException(err);
+        navigation.navigate('ErrorBottomSheet');
+        return;
+      }
+
+      clearDraft();
+      navigation.popTo('Home', {screen: 'Map'});
+      if (isTracking) {
+        addObservationRefToTrack(observation);
+      }
+    })();
   }, [
     addObservationRefToTrack,
     clearDraft,
-    createAttachmentAsync,
+    createPhotoAttachmentAsync,
+    createAudioAttachmentAsync,
     createObservationAsync,
     isTracking,
     navigation,
@@ -301,16 +315,19 @@ export const ObservationCreate = ({
         <SaveButton
           onPress={checkAccuracyAndLocation}
           isLoading={
-            observationStatus === 'pending' || attachmentStatus === 'pending'
+            photoAttachmentStatus === 'pending' ||
+            audioAttachmentStatus === 'pending' ||
+            observationStatus === 'pending'
           }
         />
       ),
     });
   }, [
     navigation,
+    audioAttachmentStatus,
+    photoAttachmentStatus,
     observationStatus,
     checkAccuracyAndLocation,
-    attachmentStatus,
   ]);
 
   return (

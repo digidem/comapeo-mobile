@@ -10,7 +10,7 @@ This is a workaround for [file lock errors on certain Android devices](https://g
 
 ## `@comapeo/core`
 
-### [Override Timeout](./@comapeo+core+3.1.2+001+increase-add-project-timeout.patch)
+### [Override Timeout](./@comapeo+core+3.2.0+001+increase-add-project-timeout.patch)
 
 This change increases the amount of time that the recipient of an invitation waits after accepting a project. Previously, if this time limit was exceeded, an error would occur. This caused issues because slower devices were unable to complete the process within the original timeout period. The timeout is now 45 seconds, where previously it was 10 seconds.
 

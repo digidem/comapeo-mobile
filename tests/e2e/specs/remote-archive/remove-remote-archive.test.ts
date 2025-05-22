@@ -31,11 +31,12 @@ describe('Remote Archive - Remove Flow', () => {
       const backButton = await $(byResourceId('MAIN.header-back-btn'));
       await backButton.click();
       await expect($(byTextMatches('Remote Archive \\| OFF'))).toBeDisplayed();
-      await backButton.click();
     });
   });
 
   after(async () => {
+    const backButton = await $(byResourceId('MAIN.header-back-btn'));
+    await backButton.click();
     await $('~Close Menu').click();
   });
 });

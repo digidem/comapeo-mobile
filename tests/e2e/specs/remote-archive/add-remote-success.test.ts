@@ -75,6 +75,5 @@ describe('Remote Archive - Add Success Flow', () => {
     } else {
       await expect($(byTextMatches('Remote Archive \\| ON'))).toBeDisplayed();
     }
-    await backButton.click();
   });
 });

@@ -88,13 +88,16 @@ export const CameraView = ({onAddPress}: Props) => {
 
     setCapturing(true);
 
-    const captureOptions = location
+    const captureOptions: CameraPictureOptions = location
       ? {
           ...BASE_CAMERA_CAPTURE_OPTIONS,
           // Apparently not all devices will encode GPS information when taking a photo
           // so we provide it manually to ensure its presence.
           // https://github.com/expo/expo/commit/dce5905664dc4559ea1935a6c946526e4c46278c
           additionalExif: locationToEXIF(location),
+          // Needs to be set to false in order for EXIF data to be written into the captured picture.
+          // See implementation here: https://github.com/expo/expo/blob/3003a1f01fb4b74a00cec6fbb1a607fa13737221/packages/expo-camera/android/src/main/java/expo/modules/camera/tasks/ResolveTakenPicture.kt
+          skipProcessing: false,
         }
       : BASE_CAMERA_CAPTURE_OPTIONS;
 

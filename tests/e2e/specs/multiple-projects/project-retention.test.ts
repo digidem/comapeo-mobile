@@ -35,8 +35,6 @@ describe('Multiple Projects - Project Data Retention', () => {
       console.log('No alert found');
     }
 
-    const backButton = await $(byResourceId('MAIN.header-back-btn'));
-    await backButton.click();
     await $('~Go to observations list.').click();
     const airstrip = await $(byText('Airstrip'));
     await expect(airstrip).toBeDisplayed();
@@ -44,6 +42,7 @@ describe('Multiple Projects - Project Data Retention', () => {
 
     const description = await $(byText(UNIQUE_DESCRIPTION));
     await expect(description).toBeDisplayed();
+    const backButton = await $(byResourceId('MAIN.header-back-btn'));
     await backButton.click();
   });
 

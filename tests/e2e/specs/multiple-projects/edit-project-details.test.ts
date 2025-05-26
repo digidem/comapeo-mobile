@@ -10,6 +10,8 @@ const UPDATED_PROJECT_DESCRIPTION =
 
 describe('Multiple Projects - Edit Project Details', () => {
   it('should allow editing a named project’s name and description', async () => {
+    await $('~Open Menu').click();
+    await $(byText('All Projects')).click();
     const thirdProject = await $(byText(output.names.thirdProject));
     await thirdProject.click();
 
@@ -34,6 +36,8 @@ describe('Multiple Projects - Edit Project Details', () => {
     await expect($(byTextMatches(UPDATED_PROJECT_DESCRIPTION))).toBeDisplayed();
     await checkForElementGone(byText(output.names.thirdProject));
     await $('~Close Menu').click();
+    const mapTab = await $('~Go to map.');
+    await mapTab.click();
     await expect($(byTextMatches(UPDATED_PROJECT_NAME))).toBeDisplayed();
     const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();

@@ -77,5 +77,7 @@ describe('Multiple Projects - Project Data Retention', () => {
 
     const description = await $(byText(UNIQUE_DESCRIPTION));
     await expect(description).toBeDisplayed();
+    const backButton = await $(byResourceId('MAIN.header-back-btn'));
+    await backButton.click();
   });
 });

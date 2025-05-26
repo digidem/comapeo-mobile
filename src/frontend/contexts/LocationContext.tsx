@@ -22,7 +22,7 @@ import {createStore} from 'zustand';
 
 export type LocationState = {
   location: LocationObject | undefined;
-  throttledLocation: LocationObject | undefined;
+  throttledMapLocation: LocationObject | undefined;
   locationPermission: PermissionStatus | undefined;
   providerStatus: LocationProviderStatus | undefined;
 };
@@ -31,7 +31,7 @@ export function createLocationStore() {
   const instance = createStore<LocationState>()(() => {
     return {
       location: undefined,
-      throttledLocation: undefined,
+      throttledMapLocation: undefined,
       locationPermission: undefined,
       providerStatus: undefined,
     };
@@ -68,11 +68,11 @@ export function LocationProvider({children}: {children: React.ReactNode}) {
       },
       location => {
         store.setState(prev => ({...prev, location}));
-        const lastThrottledLocation = store.getState().throttledLocation;
+        const lastThrottledLocation = store.getState().throttledMapLocation;
         if (!lastThrottledLocation) {
           store.setState(prev => ({
             ...prev,
-            throttledLocation: location,
+            throttledMapLocation: location,
           }));
           return;
         }
@@ -90,7 +90,7 @@ export function LocationProvider({children}: {children: React.ReactNode}) {
         if (distance > 5) {
           store.setState(prev => ({
             ...prev,
-            throttledLocation: location,
+            throttledMapLocation: location,
           }));
           return;
         }
@@ -116,7 +116,11 @@ export function LocationProvider({children}: {children: React.ReactNode}) {
           if (ignore) return;
           if (!status.locationServicesEnabled)
             queryClient.invalidateQueries({queryKey: ['lastLocation']});
-          store.setState(store => ({...store, providerStatus: status}));
+          store.setState(store => ({
+            ...store,
+            providerStatus: status,
+            throttledMapLocation: undefined,
+          }));
         })
         // Shouldn't happen because we check permissions.granted above, but just in case
         .catch(err => {

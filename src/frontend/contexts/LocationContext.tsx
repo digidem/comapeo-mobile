@@ -6,16 +6,39 @@ import {
   getForegroundPermissionsAsync,
 } from 'expo-location';
 import React, {createContext, useContext} from 'react';
-import {
-  createLocationStore,
-  LocationState,
-} from './PersistedStores/LocationStore';
 import {getCoords} from '../hooks/useLocation';
 import CheapRuler from 'cheap-ruler';
 import {useQueryClient} from '@tanstack/react-query';
 import {AppState, AppStateStatus} from 'react-native';
 import {useStore} from 'zustand';
 import * as Sentry from '@sentry/react-native';
+
+import {
+  LocationObject,
+  PermissionStatus,
+  LocationProviderStatus,
+} from 'expo-location';
+import {createStore} from 'zustand';
+
+export type LocationState = {
+  location: LocationObject | undefined;
+  throttledLocation: LocationObject | undefined;
+  locationPermission: PermissionStatus | undefined;
+  providerStatus: LocationProviderStatus | undefined;
+};
+
+export function createLocationStore() {
+  const instance = createStore<LocationState>()(() => {
+    return {
+      location: undefined,
+      throttledLocation: undefined,
+      locationPermission: undefined,
+      providerStatus: undefined,
+    };
+  });
+
+  return instance;
+}
 
 export function useLocationState(): LocationState;
 export function useLocationState<T>(selector: (state: LocationState) => T): T;

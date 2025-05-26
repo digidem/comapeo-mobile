@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View, AppState} from 'react-native';
 
 import {BLACK, MAGENTA, MEDIUM_GREY, WHITE} from '../../../lib/styles';
 import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
@@ -71,6 +71,18 @@ export function AudioRecording({
       finishRecording();
     }
   }, [timeElapsed, finishRecording, isRecording]);
+
+  React.useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (nextAppState !== 'active' && isRecording) {
+        finishRecording();
+      }
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, [isRecording, finishRecording]);
 
   return (
     <>

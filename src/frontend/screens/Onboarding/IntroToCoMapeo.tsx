@@ -3,7 +3,7 @@ import {StyleSheet, View, ScrollView} from 'react-native';
 import TopoBackground from '../../images/TopoLogo.svg';
 import CoMapeoTextAsSVG from '../../images/CoMapeoText.svg';
 import WorldMap from '../../images/WorldMap.svg';
-import MobilePhoneWithArrow from '../../images/MobilePhoneWithArrow.svg';
+import Handshake from '../../images/Handshake.svg';
 import LockedWithKey from '../../images/LockedWithKey.svg';
 import RaisedFistMediumSkinTone from '../../images/RaisedFistMediumSkinTone.svg';
 import {COMAPEO_DARK_BLUE, WHITE} from '../../lib/styles';
@@ -28,7 +28,7 @@ const m = defineMessages({
   },
   collaborate: {
     id: 'screens.IntroToCoMapeo.collaborate',
-    defaultMessage: 'Collaborate with others',
+    defaultMessage: 'Collaborate on projects',
   },
   ownData: {
     id: 'screens.IntroToCoMapeo.ownData',
@@ -62,7 +62,7 @@ export const IntroToCoMapeo = ({
             <Text style={styles.text}>{formatMessage(m.mapAnywhere)}</Text>
           </View>
           <View style={styles.textItem}>
-            <MobilePhoneWithArrow width={24} height={24} />
+            <Handshake width={24} height={24} />
             <Text style={styles.text}>{formatMessage(m.collaborate)}</Text>
           </View>
           <View style={styles.textItem}>

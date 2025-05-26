@@ -31,22 +31,17 @@ import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
 const m = defineMessages({
   screenTitle: {
     id: 'screens.Settings.MapManagement.BackgroundMaps.screenTitle',
-    defaultMessage: 'Background Maps',
-  },
-  about: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.about',
-    defaultMessage: 'About Custom Map',
+    defaultMessage: 'Background Map',
   },
   description1: {
     id: 'screens.Settings.MapManagement.BackgroundMaps.description1',
-    defaultMessage:
-      'Adding a custom map will enable you to see a map when you are offline.',
+    defaultMessage: 'Custom background maps let you view maps offline.',
   },
   // TODO: Merge into description1 when https://github.com/digidem/comapeo-mobile/issues/669 is addressed
   description2: {
     id: 'screens.Settings.MapManagement.BackgroundMaps.description2',
     defaultMessage:
-      'Your custom map is not shared with other devices in your project.',
+      'Note: Custom background maps are not shared with collaborators.',
   },
 
   customMapInfoLoadError: {
@@ -131,9 +126,6 @@ export function BackgroundMapsScreen() {
   return (
     <>
       <ScrollView contentContainerStyle={styles.container}>
-        <HeaderText variant="header2" style={styles.aboutText}>
-          {t(m.about)}
-        </HeaderText>
         <View style={styles.descriptionContainer}>
           <BodyText>{t(m.description1)}</BodyText>
           <BodyText>{t(m.description2)}</BodyText>
@@ -313,9 +305,6 @@ const styles = StyleSheet.create({
   },
   descriptionContainer: {
     gap: 20,
-  },
-  aboutText: {
-    textAlign: 'center',
   },
   infoLoadErrorText: {
     textAlign: 'center',

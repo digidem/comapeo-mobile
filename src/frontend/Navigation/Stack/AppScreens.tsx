@@ -75,10 +75,6 @@ import {SaveButton} from '../../sharedComponents/SaveButton.tsx';
 import {AddRemoteArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/AddRemoteArchive.tsx';
 import {SuccessfullyAddedArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/SuccessfullyAddedArchive.tsx';
 import {
-  createNavigationOptions as createMapManagementNavigationOptions,
-  MapManagementScreen,
-} from '../../screens/Settings/MapManagement';
-import {
   createNavigationOptions as createBackgroundMapsNavigationOptions,
   BackgroundMapsScreen,
 } from '../../screens/Settings/MapManagement/BackgroundMaps.tsx';
@@ -353,11 +349,6 @@ export const createDefaultScreenGroup = ({
         name="HowToLeaveProject"
         component={HowToLeaveProject}
         options={{headerShown: false}}
-      />
-      <RootStack.Screen
-        name="MapManagement"
-        component={MapManagementScreen}
-        options={createMapManagementNavigationOptions({intl})}
       />
       <RootStack.Screen
         name="BackgroundMaps"

@@ -1,6 +1,6 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
-import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
+import {byText, byTextMatches} from '../../utils/selectors';
 
 describe('Project - Solo Project Invite/ Name Project Flow', () => {
   it('should open side drawer, navigate to Invite Collaborators screen, and verify content', async () => {

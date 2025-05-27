@@ -2,7 +2,6 @@ import {captureException} from '@sentry/react-native';
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {
-  CameraCapturedPicture,
   CameraPictureOptions,
   CameraView as ExpoCameraView,
   useCameraPermissions,
@@ -125,7 +124,13 @@ export const CameraView = ({onAddPress}: Props) => {
         }
 
         onAddPress({
-          capturePromise: rotatePhoto(pic, accelerometerMeasurement.current),
+          capturePromise: resizePhoto({
+            uri: pic.uri,
+            width: pic.width,
+            height: pic.height,
+            rotation: getPhotoRotation(accelerometerMeasurement.current),
+            keepMeta: !!pic.exif,
+          }),
           mediaMetadata,
         });
       })
@@ -171,22 +176,31 @@ export const CameraView = ({onAddPress}: Props) => {
   );
 };
 
-function rotatePhoto(
-  {uri, width, height}: CameraCapturedPicture,
-  acc?: AccelerometerMeasurement,
-) {
-  const resizePromise = ImageResizer.createResizedImage(
+async function resizePhoto({
+  uri,
+  width,
+  height,
+  rotation,
+  keepMeta,
+}: {
+  uri: string;
+  width: number;
+  height: number;
+  rotation?: number;
+  keepMeta?: boolean;
+}) {
+  const result = await ImageResizer.createResizedImage(
     uri,
     width,
     height,
     'JPEG',
     CAPTURE_QUALITY,
-    getPhotoRotation(acc),
-  ).then(resized => {
-    return {uri: resized.uri};
-  });
+    rotation,
+    undefined,
+    keepMeta,
+  );
 
-  return resizePromise;
+  return {uri: result.uri};
 }
 
 const ACC_AT_45_DEG = Math.sin(Math.PI / 4);

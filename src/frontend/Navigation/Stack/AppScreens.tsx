@@ -86,12 +86,8 @@ import {SyncPreviewsBottomSheet} from '../../screens/Settings/ProjectSettings/Me
 import {SyncEverythingBottomSheet} from '../../screens/Settings/ProjectSettings/MediaSyncSettings/SyncEverythingBottomSheet.tsx';
 import {AudioAskPermissionBottomSheet} from '../../screens/Audio/AudioAskPermissionBottomSheet.tsx';
 import {AudioRecording} from '../../screens/Audio/AudioRecording/index.tsx';
-import {AudioPlaybackUnsaved} from '../../screens/Audio/AudioPlaybackUnsaved.tsx';
 import {sharedAudioNavOptions} from '../../screens/Audio/shared';
-import {DeleteAudioBottomSheet} from '../../screens/Audio/DeleteAudioBottomSheet.tsx';
-import {AudioSavedBottomSheet} from '../../screens/Audio/AudioSavedBottomSheet.tsx';
 import {AudioPlaybackSaved} from '../../screens/Audio/AudioPlaybackSaved.tsx';
-import {AudioCustomHeaderLeft} from '../../screens/Audio/AudioCustomHeaderLeft.tsx';
 import {InviteReceived} from '../../screens/Invites/InviteReceived.tsx';
 import {InviteSuccessfullyAccepted} from '../../screens/Invites/InviteSuccessfullyAccepted.tsx';
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled.tsx';
@@ -409,29 +405,8 @@ export const createDefaultScreenGroup = ({
         options={sharedAudioNavOptions}
       />
       <RootStack.Screen
-        name="AudioPlaybackUnsavedReview"
-        component={AudioPlaybackUnsaved}
-        options={({route}) => ({
-          ...sharedAudioNavOptions,
-          headerLeft: props => {
-            return (
-              <AudioCustomHeaderLeft
-                {...props}
-                duration={route.params.duration}
-                uri={route.params.uri}
-              />
-            );
-          },
-        })}
-      />
-      <RootStack.Screen
         name="AudioPlaybackSaved"
         component={AudioPlaybackSaved}
-        options={sharedAudioNavOptions}
-      />
-      <RootStack.Screen
-        name="AudioPlaybackUnsavedPreview"
-        component={AudioPlaybackUnsaved}
         options={sharedAudioNavOptions}
       />
       <RootStack.Screen
@@ -489,14 +464,6 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="AudioAskPermissionBottomSheet"
         component={AudioAskPermissionBottomSheet}
-      />
-      <RootStack.Screen
-        name="DeleteAudioBottomSheet"
-        component={DeleteAudioBottomSheet}
-      />
-      <RootStack.Screen
-        name="AudioSavedBottomSheet"
-        component={AudioSavedBottomSheet}
       />
       <RootStack.Screen name="InviteReceived" component={InviteReceived} />
       <RootStack.Screen

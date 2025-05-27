@@ -113,13 +113,6 @@ export type RootStackParamsList = {
     createdAt: number;
     fromEditorPreview?: boolean;
   };
-  AudioPlaybackUnsavedReview: {uri: string; duration: number};
-  AudioPlaybackUnsavedPreview: {uri: string};
-  DeleteAudioBottomSheet: {
-    onPressDelete: () => void;
-    uri: string;
-  };
-  AudioSavedBottomSheet: undefined;
   AudioPlaybackSaved: {uri: string; canDelete: boolean; observationId: string};
   InviteReceived: {inviteId: string};
   InviteSuccessfullyAccepted: {projectName: string};

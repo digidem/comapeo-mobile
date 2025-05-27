@@ -8,8 +8,10 @@ import {
   useOwnDeviceInfo,
   useSingleDocByDocId,
   useDocumentCreatedBy,
+  useOwnRoleInProject,
 } from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext.tsx';
+import {COORDINATOR_ROLE_ID} from '../../sharedTypes';
 
 interface ObservationHeaderRightProps {
   observationId: string;
@@ -31,9 +33,12 @@ export const ObservationHeaderRight = ({
   });
 
   const {data: deviceInfo} = useOwnDeviceInfo();
+  const {data: roleData} = useOwnRoleInProject({projectId});
   const navigation = useNavigationFromRoot();
 
-  const canEdit = createdByDeviceId === deviceInfo?.deviceId;
+  const canEdit =
+    createdByDeviceId === deviceInfo?.deviceId ||
+    roleData.roleId === COORDINATOR_ROLE_ID;
 
   return canEdit ? (
     <IconButton

@@ -13,7 +13,6 @@ import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {usePresetsQuery} from '../../hooks/server/presets';
 import ScaleBar from 'react-native-scale-bar';
-import {getCoords} from '../../hooks/useLocation';
 import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
 import {TrackBottomSheet} from './TrackBottomSheet';
 import {CurrentTrackMapLayer} from './CurrentTrack/CurrrentTrackMapLayer';
@@ -30,6 +29,7 @@ import {GPSPill} from '../../sharedComponents/GPSPill';
 import AddButtonSVG from '../../images/AddButton.svg';
 import {useAuthContext} from '../../contexts/AuthContext';
 import {useLocationState} from '../../contexts/LocationContext';
+import {getCoords} from '../../lib/coordinateFormat';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the

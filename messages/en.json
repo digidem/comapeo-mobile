@@ -578,18 +578,6 @@
   "screens.AudioRecording.nowRecording": {
     "message": "Now Recording..."
   },
-  "screens.AudioSavedBottomSheet.recordAnother": {
-    "message": "Record Another"
-  },
-  "screens.AudioSavedBottomSheet.returnToEditor": {
-    "message": "Return to Editor"
-  },
-  "screens.AudioSavedBottomSheet.subTitle": {
-    "message": "Your Audio Recording was added"
-  },
-  "screens.AudioSavedBottomSheet.title": {
-    "message": "Success!"
-  },
   "screens.CameraScreen.goToSettings": {
     "message": "Go to Settings"
   },
@@ -669,18 +657,6 @@
   },
   "screens.DataPrivacy.title": {
     "message": "Data & Privacy"
-  },
-  "screens.DeleteAudioBottomSheet.Description": {
-    "message": "Your Audio Recording will be permanently deleted. This cannot be undone."
-  },
-  "screens.DeleteAudioBottomSheet.Title": {
-    "message": "Delete?"
-  },
-  "screens.DeleteAudioBottomSheet.cancel": {
-    "message": "Cancel"
-  },
-  "screens.DeleteAudioBottomSheet.delete": {
-    "message": "Delete"
   },
   "screens.DeviceNaming.Success.description": {
     "message": "You named your device"

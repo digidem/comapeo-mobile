@@ -55,13 +55,14 @@ const POLL_PROVIDER_STATUS_INTERVAL = 10;
 
 export function LocationProvider({children}: {children: React.ReactNode}) {
   const [store] = React.useState(() => createLocationStore());
+  const [subscription, setSubscription] =
+    React.useState<LocationSubscription | null>(null);
+
+  const locationPermission = store.getState().locationPermission;
 
   const queryClient = useQueryClient();
 
-  // These useEffects update the store but do not cause re-renders as the store itself is stable
-  // zustand's useStore deal with the react state.
-  React.useEffect(() => {
-    let subscription: LocationSubscription | null = null;
+  const startWatchPosition = React.useCallback(() => {
     watchPositionAsync(
       {
         accuracy: Accuracy.BestForNavigation,
@@ -96,17 +97,27 @@ export function LocationProvider({children}: {children: React.ReactNode}) {
         }
       },
     )
-      .then(sub => (subscription = sub))
+      .then(sub => setSubscription(sub))
       .catch(error => {
         console.error('Failed to start location tracking:', error);
       });
+  }, [store, setSubscription]);
 
+  React.useEffect(() => {
+    if (
+      locationPermission &&
+      locationPermission === 'granted' &&
+      !subscription
+    ) {
+      startWatchPosition();
+    }
     return () => {
       if (subscription) {
         subscription.remove();
+        setSubscription(null);
       }
     };
-  }, [store]);
+  }, [subscription, locationPermission, startWatchPosition]);
 
   React.useEffect(() => {
     let ignore = false;
@@ -146,11 +157,15 @@ export function LocationProvider({children}: {children: React.ReactNode}) {
           .status;
         if (isCancelled) return;
         const prevPermission = store.getState().locationPermission;
+        console.log(newPermissionStatus);
         if (prevPermission !== newPermissionStatus) {
           store.setState(state => ({
             ...state,
             locationPermission: newPermissionStatus,
           }));
+        }
+        if (newPermissionStatus === 'granted' && !subscription) {
+          startWatchPosition();
         }
       }
     };
@@ -164,7 +179,7 @@ export function LocationProvider({children}: {children: React.ReactNode}) {
       isCancelled = true;
       subscription.remove();
     };
-  }, [store]);
+  }, [store, startWatchPosition]);
 
   return (
     <LocationContext.Provider value={store}>

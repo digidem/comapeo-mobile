@@ -4,6 +4,7 @@ import {
   LocationSubscription,
   getProviderStatusAsync,
   getForegroundPermissionsAsync,
+  useForegroundPermissions,
 } from 'expo-location';
 import React, {createContext, useContext} from 'react';
 import {getCoords} from '../hooks/useLocation';
@@ -51,14 +52,14 @@ const LocationContext = createContext<ReturnType<
   typeof createLocationStore
 > | null>(null);
 
-const POLL_PROVIDER_STATUS_INTERVAL = 10;
+const POLL_PROVIDER_STATUS_INTERVAL = 10000;
 
 export function LocationProvider({children}: {children: React.ReactNode}) {
   const [store] = React.useState(() => createLocationStore());
   const [subscription, setSubscription] =
     React.useState<LocationSubscription | null>(null);
 
-  const locationPermission = store.getState().locationPermission;
+  const [locationPermission] = useForegroundPermissions();
 
   const queryClient = useQueryClient();
 
@@ -104,11 +105,7 @@ export function LocationProvider({children}: {children: React.ReactNode}) {
   }, [store, setSubscription]);
 
   React.useEffect(() => {
-    if (
-      locationPermission &&
-      locationPermission === 'granted' &&
-      !subscription
-    ) {
+    if (locationPermission && locationPermission.granted && !subscription) {
       startWatchPosition();
     }
     return () => {
@@ -125,12 +122,16 @@ export function LocationProvider({children}: {children: React.ReactNode}) {
       getProviderStatusAsync()
         .then(status => {
           if (ignore) return;
-          if (!status.locationServicesEnabled)
+          if (!status.locationServicesEnabled) {
             queryClient.invalidateQueries({queryKey: ['lastLocation']});
+          }
+
           store.setState(store => ({
             ...store,
             providerStatus: status,
-            throttledMapLocation: undefined,
+            ...(!status.locationServicesEnabled
+              ? {location: undefined, throttledMapLocation: undefined}
+              : {}),
           }));
         })
         // Shouldn't happen because we check permissions.granted above, but just in case
@@ -157,7 +158,6 @@ export function LocationProvider({children}: {children: React.ReactNode}) {
           .status;
         if (isCancelled) return;
         const prevPermission = store.getState().locationPermission;
-        console.log(newPermissionStatus);
         if (prevPermission !== newPermissionStatus) {
           store.setState(state => ({
             ...state,

@@ -116,7 +116,7 @@ import {
   ConfirmDeletePhoto,
   navigationOptions as confirmDeletePhotoNavigationOptions,
 } from '../../screens/ConfirmDeletePhoto.tsx';
-import {AudioPlaybackNew} from '../../screens/Audio/AudioPlaybackNew.tsx';
+import {AudioDraftPlaybackScreen} from '../../screens/Audio/AudioDraftPlaybackScreen.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -404,8 +404,8 @@ export const createDefaultScreenGroup = ({
         options={sharedAudioNavOptions}
       />
       <RootStack.Screen
-        name="AudioPlaybackNew"
-        component={AudioPlaybackNew}
+        name="AudioDraftPlaybackScreen"
+        component={AudioDraftPlaybackScreen}
         options={sharedAudioNavOptions}
       />
       <RootStack.Screen

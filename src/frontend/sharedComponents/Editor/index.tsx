@@ -167,7 +167,11 @@ export const Editor = ({
                       key={att.uri}
                       size={size}
                       onPress={() =>
-                        navigate('AudioPlaybackUnsavedPreview', {uri: att.uri})
+                        navigate('AudioDraftPlaybackScreen', {
+                          uri: att.uri,
+                          createdAt: att.createdAt,
+                          fromEditorPreview: true,
+                        })
                       }>
                       <PlayArrow width={48} height={48} />
                     </ThumbnailContainer>

@@ -41,11 +41,11 @@ const m = defineMessages({
   },
 });
 
-export const AudioPlaybackNew = ({
+export const AudioDraftPlaybackScreen = ({
   navigation,
   route,
-}: NativeRootNavigationProps<'AudioPlaybackNew'>) => {
-  const {uri, createdAt} = route.params;
+}: NativeRootNavigationProps<'AudioDraftPlaybackScreen'>) => {
+  const {uri, createdAt, fromEditorPreview} = route.params;
   const {duration, currentPosition, isPlaying, startPlayback, stopPlayback} =
     useAudioPlayback(uri);
   const {formatMessage} = useIntl();
@@ -77,10 +77,13 @@ export const AudioPlaybackNew = ({
           />
         </>
       }>
-      <BodyText variant="large" style={styles.savedHeader}>
-        {formatMessage(m.recordingSaved)}
-      </BodyText>
-
+      <View style={{paddingTop: 65}}>
+        {!fromEditorPreview && (
+          <BodyText variant="large" style={styles.savedHeader}>
+            {formatMessage(m.recordingSaved)}
+          </BodyText>
+        )}
+      </View>
       <View style={styles.audioBox}>
         <TouchableOpacity
           onPress={() => (isPlaying ? stopPlayback() : startPlayback())}
@@ -90,7 +93,6 @@ export const AudioPlaybackNew = ({
           }}>
           {isPlaying ? <StopIcon size={60} color={BLACK} /> : <PlayArrow />}
         </TouchableOpacity>
-
         <Bar
           progress={progress > 0 ? progress : 0.00000001}
           width={200}
@@ -122,7 +124,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   savedHeader: {
-    paddingTop: 65,
     color: NEW_DARK_GREY,
     textAlign: 'center',
   },

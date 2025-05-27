@@ -108,7 +108,11 @@ export type RootStackParamsList = {
     audioPermission: Audio.PermissionResponse;
   };
   AudioRecording: undefined;
-  AudioPlaybackNew: {uri: string; createdAt: number};
+  AudioDraftPlaybackScreen: {
+    uri: string;
+    createdAt: number;
+    fromEditorPreview?: boolean;
+  };
   AudioPlaybackUnsavedReview: {uri: string; duration: number};
   AudioPlaybackUnsavedPreview: {uri: string};
   DeleteAudioBottomSheet: {

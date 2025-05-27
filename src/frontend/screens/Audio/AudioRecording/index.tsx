@@ -54,7 +54,7 @@ export function AudioRecording({
   const finishRecording = React.useCallback(async () => {
     const result = await stopRecording();
     if (result?.uri && result.createdAt) {
-      navigation.replace('AudioPlaybackNew', {
+      navigation.replace('AudioDraftPlaybackScreen', {
         uri: result.uri,
         createdAt: result.createdAt,
       });

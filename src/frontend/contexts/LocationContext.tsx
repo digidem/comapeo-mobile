@@ -7,7 +7,6 @@ import {
   useForegroundPermissions,
 } from 'expo-location';
 import React, {createContext, useContext} from 'react';
-import {getCoords} from '../hooks/useLocation';
 import CheapRuler from 'cheap-ruler';
 import {useQueryClient} from '@tanstack/react-query';
 import {AppState, AppStateStatus} from 'react-native';
@@ -20,6 +19,7 @@ import {
   LocationProviderStatus,
 } from 'expo-location';
 import {createStore} from 'zustand';
+import {getCoords} from '../lib/coordinateFormat';
 
 export type LocationState = {
   location: LocationObject | undefined;

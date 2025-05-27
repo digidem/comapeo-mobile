@@ -15,7 +15,6 @@ import {usePresetsQuery} from '../../hooks/server/presets';
 import ScaleBar from 'react-native-scale-bar';
 import {getCoords} from '../../hooks/useLocation';
 import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
-import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
 import {TrackBottomSheet} from './TrackBottomSheet';
 import {CurrentTrackMapLayer} from './CurrentTrack/CurrrentTrackMapLayer';
 import {UserLocation} from './UserLocation';
@@ -55,11 +54,11 @@ export const MapScreen = ({
   const {newDraft} = useDraftObservation();
   const {navigate} = useNavigationFromHomeTabs();
   const location = useLocationState(store => store.throttledMapLocation);
+  const locationProviderStatus = useLocationState(
+    store => store.providerStatus,
+  );
   const savedLocation = useLastKnownLocation();
   const coords = location && getCoords(location);
-  const locationProviderStatus = useLocationProviderStatus();
-  const locationServicesEnabled =
-    !!locationProviderStatus?.locationServicesEnabled;
 
   const {data: styleUrl} = useMapStyleJsonUrl();
   const existingObservation = usePersistedDraftObservation(
@@ -67,8 +66,6 @@ export const MapScreen = ({
   );
   const {data: presets} = usePresetsQuery();
   const {authState} = useAuthContext();
-
-  console.log({location, locationServicesEnabled});
 
   useFocusEffect(
     React.useCallback(() => {
@@ -143,18 +140,14 @@ export const MapScreen = ({
                 : undefined,
             zoomLevel: zoom,
           }}
-          centerCoordinate={
-            locationServicesEnabled && following ? coords : undefined
-          }
+          centerCoordinate={following ? coords : undefined}
           zoomLevel={following ? zoom : undefined}
           animationDuration={1000}
           animationMode="flyTo"
           followUserLocation={false}
         />
 
-        {coords && locationServicesEnabled && (
-          <UserLocation minDisplacement={MIN_DISPLACEMENT} />
-        )}
+        {coords && <UserLocation minDisplacement={MIN_DISPLACEMENT} />}
 
         {isFinishedLoading && authState !== 'obscured' && (
           <>
@@ -185,7 +178,7 @@ export const MapScreen = ({
           <AddButtonSVG />
         </TouchableOpacity>
 
-        {coords && locationServicesEnabled ? (
+        {coords ? (
           <TouchableOpacity
             style={{flex: 1, alignItems: 'center'}}
             onPress={handleLocationPress}>

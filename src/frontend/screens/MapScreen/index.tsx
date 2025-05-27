@@ -19,7 +19,7 @@ import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
 import {TrackBottomSheet} from './TrackBottomSheet';
 import {CurrentTrackMapLayer} from './CurrentTrack/CurrrentTrackMapLayer';
 import {UserLocation} from './UserLocation';
-import {useSharedLocationContext} from '../../contexts/SharedLocationContext';
+
 import {useMapStyleJsonUrl} from '../../hooks/server/maps';
 import {TracksMapLayer} from './MapLayers/TracksMapLayer';
 import {assert} from '../../lib/assert';
@@ -30,6 +30,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {GPSPill} from '../../sharedComponents/GPSPill';
 import AddButtonSVG from '../../images/AddButton.svg';
 import {useAuthContext} from '../../contexts/AuthContext';
+import {useLocationState} from '../../contexts/LocationContext';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -53,9 +54,9 @@ export const MapScreen = ({
   const [following, setFollowing] = React.useState(true);
   const {newDraft} = useDraftObservation();
   const {navigate} = useNavigationFromHomeTabs();
-  const {locationState, fgPermissions} = useSharedLocationContext();
+  const location = useLocationState(store => store.throttledMapLocation);
   const savedLocation = useLastKnownLocation();
-  const coords = locationState.location && getCoords(locationState.location);
+  const coords = location && getCoords(location);
   const locationProviderStatus = useLocationProviderStatus();
   const locationServicesEnabled =
     !!locationProviderStatus?.locationServicesEnabled;
@@ -66,6 +67,8 @@ export const MapScreen = ({
   );
   const {data: presets} = usePresetsQuery();
   const {authState} = useAuthContext();
+
+  console.log({location, locationServicesEnabled});
 
   useFocusEffect(
     React.useCallback(() => {
@@ -167,7 +170,7 @@ export const MapScreen = ({
           <GPSPill
             {...getLocationStatus({
               providerStatus: locationProviderStatus,
-              location: fgPermissions ? locationState.location : undefined,
+              location: location,
             })}
             testID="MAP.gps-pill"
             accessibilityLabel="Open GPS Modal."

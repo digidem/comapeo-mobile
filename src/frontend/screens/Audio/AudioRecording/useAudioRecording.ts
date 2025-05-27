@@ -1,50 +1,60 @@
 import {useState, useCallback} from 'react';
 import {Audio} from 'expo-av';
 import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
+import {useDraftObservation} from '../../../hooks/useDraftObservation';
 
 export function useAudioRecording() {
-  const [recordingPromise, setRecordingPromise] =
-    useState<Promise<Audio.Recording> | null>(null);
+  const [recordingInstance, setRecordingInstance] =
+    useState<Audio.Recording | null>(null);
   const [status, setStatus] = useState<Audio.RecordingStatus | null>(null);
   const {navigate} = useNavigationFromRoot();
+  const [isStopping, setIsStopping] = useState(false);
+  const {addAudio} = useDraftObservation();
 
   const reset = useCallback(async () => {
     try {
-      if (recordingPromise) {
-        const recording = await recordingPromise;
-        await recording.stopAndUnloadAsync();
+      if (recordingInstance) {
+        await recordingInstance.stopAndUnloadAsync();
       }
-      setRecordingPromise(null);
+    } finally {
+      setRecordingInstance(null);
       setStatus(null);
-    } catch {
-      navigate('ErrorBottomSheet');
     }
-  }, [recordingPromise, navigate]);
+  }, [recordingInstance]);
 
   const startRecording = useCallback(async () => {
     try {
-      const newRecordingPromise = Audio.Recording.createAsync(
+      const {recording} = await Audio.Recording.createAsync(
         Audio.RecordingOptionsPresets.HIGH_QUALITY,
         stat => setStatus(stat),
-      ).then(({recording}) => {
-        return recording;
-      });
-      setRecordingPromise(newRecordingPromise);
+      );
+      setRecordingInstance(recording);
     } catch {
       navigate('ErrorBottomSheet');
     }
   }, [navigate]);
 
   const stopRecording = useCallback(async () => {
+    if (!recordingInstance) throw new Error('No active recording to stop');
+    setIsStopping(true);
     try {
-      if (!recordingPromise) return;
-      const recording = await recordingPromise;
-      await recording.stopAndUnloadAsync();
-      return recording.getURI();
-    } catch {
-      navigate('ErrorBottomSheet');
-    }
-  }, [recordingPromise, navigate]);
+      await recordingInstance.stopAndUnloadAsync();
+      const uri = recordingInstance.getURI();
+      const duration =
+        status?.durationMillis ?? recordingInstance._finalDurationMillis;
 
-  return {reset, startRecording, stopRecording, status};
+      if (!uri || !duration) throw new Error('Missing URI or duration');
+      const createdAt = Date.now();
+
+      addAudio({uri, duration, createdAt});
+      return {uri, createdAt, duration};
+    } catch (err) {
+      console.error('Error stopping audio recording:', err);
+      navigate('ErrorBottomSheet');
+    } finally {
+      setIsStopping(false);
+    }
+  }, [addAudio, navigate, recordingInstance, status]);
+
+  return {startRecording, stopRecording, reset, status, isStopping};
 }

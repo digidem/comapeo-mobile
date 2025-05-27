@@ -1,18 +1,17 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity, View, AppState} from 'react-native';
+import {StyleSheet, TouchableOpacity, View, AppState, Text} from 'react-native';
 
-import {BLACK, MAGENTA, MEDIUM_GREY, WHITE} from '../../../lib/styles';
+import {BLACK, BLUE_GREY, WHITE} from '../../../lib/styles';
 import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
-import {Text} from '../../../sharedComponents/Text';
 import {AnimatedBackground} from './AnimatedBackground';
 import {useAudioRecording} from './useAudioRecording';
 import {usePreventBackButtonWhileRecording} from './usePreventBackButtonWhileRecording';
-import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {AudioStyles} from '../shared';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {millisecondsToMMSS} from '../../../lib/millisecondsToFormattedTime';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
 
 // 5 minutes
 const MAX_RECORDING_DURATION_MS = 300000;
@@ -27,9 +26,9 @@ const m = defineMessages({
     id: 'screens.AudioRecording.lessThan1',
     defaultMessage: 'Less than a minute left',
   },
-  record5Min: {
-    id: 'screens.AudioRecording.record5Min',
-    defaultMessage: 'Record up to 5 minutes',
+  nowRecording: {
+    id: 'screens.AudioRecording.nowRecording',
+    defaultMessage: 'Now Recording...',
   },
 });
 
@@ -37,8 +36,8 @@ export function AudioRecording({
   navigation,
 }: NativeRootNavigationProps<'AudioRecording'>) {
   const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
-  const {startRecording, stopRecording, status} = useAudioRecording();
-
+  const {startRecording, stopRecording, status, isStopping} =
+    useAudioRecording();
   const timeElapsed = status?.durationMillis || 0;
   const isRecording = !!status?.isRecording;
 
@@ -48,29 +47,34 @@ export function AudioRecording({
     shouldPrevent: isRecording,
   });
 
-  const finishRecording = React.useCallback(() => {
-    stopRecording()
-      .then(uri => {
-        if (!uri) {
-          throw new Error('Recording is done, but no URI is available.');
-        }
-        // User cannot navigate back to the Audio Recording Screen. Using replace guarantees it is not in the stack anymore
-        navigation.replace('AudioPlaybackUnsavedReview', {
-          uri,
-          duration: timeElapsed,
-        });
-      })
-      .catch(() => {
-        navigation.navigate('ErrorBottomSheet');
-      });
-  }, [stopRecording, navigation, timeElapsed]);
+  React.useEffect(() => {
+    startRecording();
+  }, [startRecording]);
 
-  // stop recording at 5 minutes
+  const finishRecording = React.useCallback(async () => {
+    const result = await stopRecording();
+    if (result?.uri && result.createdAt) {
+      navigation.replace('AudioPlaybackNew', {
+        uri: result.uri,
+        createdAt: result.createdAt,
+      });
+    }
+  }, [stopRecording, navigation]);
+
   React.useEffect(() => {
     if (timeElapsed >= MAX_RECORDING_DURATION_MS && isRecording) {
       finishRecording();
     }
-  }, [timeElapsed, finishRecording, isRecording]);
+  }, [timeElapsed, isRecording, finishRecording]);
+
+  React.useEffect(() => {
+    const sub = AppState.addEventListener('change', state => {
+      if (state !== 'active' && isRecording) {
+        finishRecording();
+      }
+    });
+    return () => sub.remove();
+  }, [isRecording, finishRecording]);
 
   React.useEffect(() => {
     const subscription = AppState.addEventListener('change', nextAppState => {
@@ -90,14 +94,8 @@ export function AudioRecording({
         contentContainerStyle={AudioStyles.contentContainer}
         dockContainerStyle={AudioStyles.dockContainer}
         dockContent={
-          status?.isDoneRecording ? (
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingBottom: 60,
-                marginTop: 20,
-              }}>
+          isStopping ? (
+            <View style={styles.center}>
               <UIActivityIndicator
                 color={WHITE}
                 size={PRIMARY_CONTROL_DIAMETER}
@@ -105,32 +103,29 @@ export function AudioRecording({
             </View>
           ) : (
             <TouchableOpacity
-              accessibilityLabel={
-                isRecording ? 'Stop recording audio.' : 'Start recording audio.'
-              }
-              onPress={isRecording ? finishRecording : startRecording}
-              style={AudioStyles.basePressable}>
-              {<View style={isRecording ? styles.stop : styles.record} />}
+              onPress={finishRecording}
+              style={AudioStyles.basePressable}
+              accessibilityLabel="Stop recording audio.">
+              <View style={styles.stop} />
             </TouchableOpacity>
           )
         }>
-        <View style={AudioStyles.container}>
-          <View style={AudioStyles.timerContainer}>
-            <Text
-              style={[
-                AudioStyles.timerText,
-                {color: isRecording ? WHITE : MEDIUM_GREY},
-              ]}>
+        <View style={styles.timerContainer}>
+          <View>
+            <BodyText variant="large" style={styles.recordingText}>
+              {formatMessage(m.nowRecording)}
+            </BodyText>
+          </View>
+          <View style={{flex: 1, justifyContent: 'center'}}>
+            <Text style={styles.timerText}>
               {millisecondsToMMSS(timeElapsed)}
             </Text>
-          </View>
-          <HeaderText variant="header3" style={AudioStyles.message}>
-            {!isRecording
-              ? formatMessage(m.record5Min)
-              : timeElapsed < 240000
+            <BodyText variant="smallMeta" style={styles.messageText}>
+              {timeElapsed < 240000
                 ? formatMessage(m.lessThan5)
                 : formatMessage(m.lessThan1)}
-          </HeaderText>
+            </BodyText>
+          </View>
         </View>
       </ScreenContentWithDock>
       {/* Remove animated background in E2E mode to avoid performance issues in Appium/BrowserStack */}
@@ -144,14 +139,33 @@ export function AudioRecording({
 }
 
 const styles = StyleSheet.create({
-  record: {
-    height: PRIMARY_CONTROL_DIAMETER,
-    backgroundColor: MAGENTA,
+  center: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 60,
+    marginTop: 20,
   },
+  timerContainer: {flex: 1, justifyContent: 'flex-start'},
   stop: {
     height: PRIMARY_CONTROL_DIAMETER / 3,
     width: PRIMARY_CONTROL_DIAMETER / 3,
     backgroundColor: BLACK,
     alignSelf: 'center',
+  },
+  recordingText: {
+    color: WHITE,
+    textAlign: 'center',
+    paddingTop: 65,
+  },
+  messageText: {
+    color: BLUE_GREY,
+    textAlign: 'center',
+    paddingTop: 40,
+  },
+  timerText: {
+    color: WHITE,
+    textAlign: 'center',
+    fontSize: 96,
+    fontFamily: 'Rubik_500Medium',
   },
 });

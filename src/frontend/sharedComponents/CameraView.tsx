@@ -1,13 +1,7 @@
 import {captureException} from '@sentry/react-native';
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import {
-  CameraCapturedPicture,
-  CameraPictureOptions,
-  CameraView as ExpoCameraView,
-  useCameraPermissions,
-} from 'expo-camera';
-import ImageResizer from '@bam.tech/react-native-image-resizer';
+import {CameraView as ExpoCameraView, useCameraPermissions} from 'expo-camera';
 import {Accelerometer, AccelerometerMeasurement} from 'expo-sensors';
 import {parse} from 'valibot';
 
@@ -31,14 +25,6 @@ const m = defineMessages({
     defaultMessage: 'Go to Settings',
   },
 });
-
-const CAPTURE_QUALITY = 75;
-
-const BASE_CAMERA_CAPTURE_OPTIONS: CameraPictureOptions = {
-  base64: false,
-  exif: true,
-  skipProcessing: true,
-};
 
 type Props = {
   // Called when the user takes a picture.
@@ -88,18 +74,20 @@ export const CameraView = ({onAddPress}: Props) => {
 
     setCapturing(true);
 
-    const captureOptions = location
-      ? {
-          ...BASE_CAMERA_CAPTURE_OPTIONS,
-          // Apparently not all devices will encode GPS information when taking a photo
-          // so we provide it manually to ensure its presence.
-          // https://github.com/expo/expo/commit/dce5905664dc4559ea1935a6c946526e4c46278c
-          additionalExif: locationToEXIF(location),
-        }
-      : BASE_CAMERA_CAPTURE_OPTIONS;
-
     ref.current
-      .takePictureAsync(captureOptions)
+      .takePictureAsync({
+        base64: false,
+        exif: true,
+        skipProcessing: false,
+        quality: 0.75,
+        imageType: 'jpg',
+        additionalExif: location
+          ? // Apparently not all devices will encode GPS information when taking a photo
+            // so we provide it manually to ensure its presence.
+            // https://github.com/expo/expo/commit/dce5905664dc4559ea1935a6c946526e4c46278c
+            locationToEXIF(location)
+          : undefined,
+      })
       .then(pic => {
         if (!pic) return;
 
@@ -122,7 +110,7 @@ export const CameraView = ({onAddPress}: Props) => {
         }
 
         onAddPress({
-          capturePromise: rotatePhoto(pic, accelerometerMeasurement.current),
+          capturePromise: Promise.resolve({uri: pic.uri}),
           mediaMetadata,
         });
       })
@@ -167,53 +155,6 @@ export const CameraView = ({onAddPress}: Props) => {
     </View>
   );
 };
-
-function rotatePhoto(
-  {uri, width, height}: CameraCapturedPicture,
-  acc?: AccelerometerMeasurement,
-) {
-  const resizePromise = ImageResizer.createResizedImage(
-    uri,
-    width,
-    height,
-    'JPEG',
-    CAPTURE_QUALITY,
-    getPhotoRotation(acc),
-  ).then(resized => {
-    return {uri: resized.uri};
-  });
-
-  return resizePromise;
-}
-
-const ACC_AT_45_DEG = Math.sin(Math.PI / 4);
-
-function getPhotoRotation(acc?: AccelerometerMeasurement) {
-  if (!acc) return 0;
-  const {x, y, z} = acc;
-  let rotation = 0;
-  if (z < -ACC_AT_45_DEG || z > ACC_AT_45_DEG) {
-    // camera is pointing up or down
-    if (Math.abs(y) > Math.abs(x)) {
-      // camera is vertical
-      if (y <= 0) rotation = 180;
-      else rotation = 0;
-    } else {
-      // camera is horizontal
-      if (x >= 0) rotation = -90;
-      else rotation = 90;
-    }
-  } else if (x > -ACC_AT_45_DEG && x < ACC_AT_45_DEG) {
-    // camera is vertical
-    if (y <= 0) rotation = 180;
-    else rotation = 0;
-  } else {
-    // camera is horizontal
-    if (x >= 0) rotation = -90;
-    else rotation = 90;
-  }
-  return rotation;
-}
 
 const styles = StyleSheet.create({
   container: {

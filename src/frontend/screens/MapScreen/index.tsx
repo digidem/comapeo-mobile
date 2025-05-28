@@ -144,7 +144,7 @@ export const MapScreen = ({
           followUserLocation={false}
         />
 
-        {coords && <UserLocation minDisplacement={MIN_DISPLACEMENT} />}
+        {coords && <Mapbox.UserLocation minDisplacement={MIN_DISPLACEMENT} />}
 
         {isFinishedLoading && authState !== 'obscured' && (
           <>

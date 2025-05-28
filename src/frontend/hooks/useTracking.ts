@@ -33,8 +33,10 @@ export function useStartStopTracks() {
       Sentry.captureException(err);
     });
 
-    const totalDistanceRecorded =
-      calculateTotalDistance(locationHistory) * 1000; // Convert to meters
+    const totalDistanceRecorded = calculateTotalDistance({
+      points: locationHistory,
+      units: 'meters',
+    });
 
     return totalDistanceRecorded;
   }, [locationHistory]);
@@ -49,9 +51,12 @@ export function useStartStopTracks() {
 export const useCurrentTrackState = () => {
   const locationHistory = useTrackState(state => state.locationHistory);
   return {
-    hasActiveTrack: locationHistory.length > 0,
-    totalDistance: calculateTotalDistance(locationHistory) * 1000, // Convert to meters
     locationHistory,
+    hasActiveTrack: locationHistory.length > 0,
+    totalDistance: calculateTotalDistance({
+      points: locationHistory,
+      units: 'kilometers',
+    }),
     trackingSince: locationHistory[0]
       ? new Date(locationHistory[0].timestamp)
       : null,

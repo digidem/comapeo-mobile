@@ -87,12 +87,14 @@ describe('useCurrentTrackState()', () => {
     });
 
     const locationHistory = [location1, location2, location3, location4];
-    const totalDistanceKm = calculateTotalDistance(locationHistory);
-    const totalDistanceMeters = totalDistanceKm * 1000;
+    const totalDistanceKm = calculateTotalDistance({
+      points: locationHistory,
+      units: 'kilometers',
+    });
 
     expect(currentTracksHook.result.current).toStrictEqual({
       hasActiveTrack: true,
-      totalDistance: totalDistanceMeters,
+      totalDistance: totalDistanceKm,
       locationHistory: [location1, location2, location3, location4],
       trackingSince: new Date(firstTimestamp),
     });

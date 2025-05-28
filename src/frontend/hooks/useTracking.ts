@@ -10,32 +10,20 @@ import * as Sentry from '@sentry/react-native';
 import {calculateTotalDistance} from '../utils/distance.ts';
 
 export function useStartStopTracks() {
-  const {addNewLocations, clearCurrentTrack} = useTrackActions();
+  const {clearCurrentTrack} = useTrackActions();
   const locationHistory = useTrackState(state => state.locationHistory);
   const navigation = useNavigation();
 
-  const startTracking = useCallback(
-    (initialLocation: Location.LocationObject) => {
-      //Manually insert current location as the first point in the track
-      addNewLocations([
-        {
-          latitude: initialLocation.coords.latitude,
-          longitude: initialLocation.coords.longitude,
-          timestamp: initialLocation.timestamp,
-        },
-      ]);
-
-      Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
-        accuracy: Location.Accuracy.Highest,
-        activityType: Location.LocationActivityType.Fitness,
-      }).catch(err => {
-        Sentry.captureException(err);
-        // @ts-expect-error - this is a typing issue, we are using the non-strongly typed hook as this can technically be used in any screen. But regardless of the screen, we want to show the error bottom sheet.
-        navigation.navigate('ErrorBottomSheet');
-      });
-    },
-    [navigation, addNewLocations],
-  );
+  const startTracking = useCallback(() => {
+    Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
+      accuracy: Location.Accuracy.Highest,
+      activityType: Location.LocationActivityType.Fitness,
+    }).catch(err => {
+      Sentry.captureException(err);
+      // @ts-expect-error - this is a typing issue, we are using the non-strongly typed hook as this can technically be used in any screen. But regardless of the screen, we want to show the error bottom sheet.
+      navigation.navigate('ErrorBottomSheet');
+    });
+  }, [navigation]);
   /**
    * Cancels location tracking and stops background updates.
    * @returns {number} returns the total distance recorded in meters.

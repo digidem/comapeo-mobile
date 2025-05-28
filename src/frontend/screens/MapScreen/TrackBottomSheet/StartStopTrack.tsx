@@ -14,7 +14,6 @@ import {
   PrimaryButton,
 } from '../../../sharedComponents/Buttons.tsx';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText.tsx';
-import {useLocation} from '../../../hooks/useLocation.ts';
 
 const m = defineMessages({
   defaultButtonText: {
@@ -41,7 +40,6 @@ export const StartStopTrack = () => {
   const {hasActiveTrack} = useCurrentTrackState();
   const {timer} = useTrackTimerContext();
   const navigation = useNavigationFromHomeTabs();
-  const {location} = useLocation({maxDistanceInterval: 1});
 
   function endTracks() {
     const distanceTracked = endTracking();
@@ -60,11 +58,7 @@ export const StartStopTrack = () => {
         <PrimaryButton
           fullSize={true}
           text={formatMessage(m.defaultButtonText)}
-          onPress={() => {
-            if (location) {
-              startTracking(location);
-            }
-          }}
+          onPress={startTracking}
           renderIcon={() => <StartTrackingIcon />}
         />
       ) : (

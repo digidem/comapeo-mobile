@@ -109,7 +109,7 @@ function LocationProviderInitialized({
     let locationSubscription: LocationSubscription | null = null;
     let isMounted = true;
 
-    const handlePermissionGranted = () => {
+    const handleCheckAndStartWatchPosition = () => {
       if (!isMounted || locationSubscription) return;
 
       startWatchPosition(store).then(sub => {
@@ -125,13 +125,22 @@ function LocationProviderInitialized({
     const initialPermissionGranted =
       store.getState().locationPermission === 'granted';
 
-    if (initialPermissionGranted) {
-      handlePermissionGranted();
-    } else {
+    const initialGPSEnabled =
+      store.getState().providerStatus.locationServicesEnabled;
+
+    // if we have permission and GPS enabled, start watching position immediately
+    if (initialPermissionGranted && initialGPSEnabled) {
+      handleCheckAndStartWatchPosition();
+    }
+    // otherwise, subscribe to store updates to check when permission is granted and GPS is enabled to start watching position
+    else {
       unsub = store.subscribe(() => {
         const currentState = store.getState();
-        if (currentState.locationPermission === 'granted') {
-          handlePermissionGranted();
+        if (
+          currentState.locationPermission === 'granted' &&
+          currentState.providerStatus.locationServicesEnabled
+        ) {
+          handleCheckAndStartWatchPosition();
         }
       });
     }

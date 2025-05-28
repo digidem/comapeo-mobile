@@ -63,5 +63,8 @@ export const useCurrentTrackState = () => {
     hasActiveTrack: locationHistory.length > 0,
     totalDistance: calculateTotalDistance(locationHistory) * 1000, // Convert to meters
     locationHistory,
+    trackingSince: locationHistory[0]
+      ? new Date(locationHistory[0].timestamp)
+      : null,
   };
 };

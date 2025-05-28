@@ -103,6 +103,7 @@ export const EditProjectDetails: NativeNavigationComponent<
           control={control}
           showCharacterCount={true}
           name="projectName"
+          testID="edit-project-name"
           placeholder={`[${formatMessage(m.projectName)}]`}
         />
 
@@ -116,6 +117,7 @@ export const EditProjectDetails: NativeNavigationComponent<
           style={{textAlignVertical: 'top', fontSize: 20}}
           showCharacterCount={true}
           name="projectDescription"
+          testID="edit-project-description"
           placeholder={`[${formatMessage(m.descriptionPlaceholder)}]`}
         />
 

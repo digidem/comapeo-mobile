@@ -9,7 +9,10 @@ import {
   NativeRootNavigationProps,
 } from '../../sharedTypes/navigation';
 import {useUpdateDocument} from '@comapeo/core-react';
-import {useCreateAttachment} from '../../hooks/server/media';
+import {
+  useCreateAudioAttachment,
+  useCreatePhotoAttachment,
+} from '../../hooks/server/media';
 import {SaveButton} from '../../sharedComponents/SaveButton';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {ActionsRow} from '../../sharedComponents/ActionsRow';
@@ -58,12 +61,17 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
   const {updateTags, clearDraft, usePreset, existingObservationToDraft} =
     useDraftObservation();
   const preset = usePreset();
-  const {mutate, status} = useUpdateDocument({
+  const {mutateAsync: updateObservationAsync, status} = useUpdateDocument({
     docType: 'observation',
     projectId,
   });
   const attachments = usePersistedDraftObservation(store => store.attachments);
-  const {mutateAsync: createAttachmentAsync} = useCreateAttachment();
+  const {mutateAsync: createPhotoAttachmentAsync} = useCreatePhotoAttachment({
+    projectId,
+  });
+  const {mutateAsync: createAudioAttachmentAsync} = useCreateAudioAttachment({
+    projectId,
+  });
 
   const notes = value?.tags.notes;
   const presetName = preset
@@ -141,54 +149,48 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
       removedAudioAttachments.length > 0;
 
     if (!attachmentsChanged) {
-      mutate(
-        {
-          versionId: value.versionId,
-          value: {
-            ...value,
-            presetRef: preset
-              ? {docId: preset.docId, versionId: preset.versionId}
-              : undefined,
-          },
+      updateObservationAsync({
+        versionId: value.versionId,
+        value: {
+          ...value,
+          presetRef: preset
+            ? {docId: preset.docId, versionId: preset.versionId}
+            : undefined,
         },
-        {
-          onSuccess: handleNavigationSuccess,
-          onError: err => {
-            Sentry.captureException(err);
-            navigation.navigate('ErrorBottomSheet');
-          },
-        },
-      );
+      })
+        .then(() => {
+          handleNavigationSuccess();
+        })
+        .catch(err => {
+          Sentry.captureException(err);
+          navigation.navigate('ErrorBottomSheet');
+        });
+
       return;
     }
 
-    const unsavedFiles = [...newPhotos, ...newAudioRecordings];
-    const attachmentPromises = unsavedFiles.map(file =>
-      createAttachmentAsync(file),
-    );
+    (async () => {
+      try {
+        const newAttachments = await Promise.all([
+          ...newPhotos.map(p => {
+            return createPhotoAttachmentAsync(p);
+          }),
+          ...newAudioRecordings.map(a => {
+            return createAudioAttachmentAsync(a);
+          }),
+        ]);
 
-    Promise.all(attachmentPromises).then(results => {
-      const newAttachments = results.map(
-        ({driveDiscoveryId, type, name, hash}) => ({
-          driveDiscoveryId,
-          type,
-          name,
-          hash,
-        }),
-      );
+        const updatedAttachments = [
+          ...value.attachments.filter(
+            attachment =>
+              !removedAudioAttachments.some(
+                removed => removed.name === attachment.name,
+              ),
+          ),
+          ...newAttachments,
+        ];
 
-      const updatedAttachments = [
-        ...value.attachments.filter(
-          attachment =>
-            !removedAudioAttachments.some(
-              removed => removed.name === attachment.name,
-            ),
-        ),
-        ...newAttachments,
-      ];
-
-      mutate(
-        {
+        await updateObservationAsync({
           versionId: value.versionId,
           value: {
             ...value,
@@ -197,17 +199,21 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
               ? {docId: preset.docId, versionId: preset.versionId}
               : undefined,
           },
-        },
-        {
-          onSuccess: handleNavigationSuccess,
-        },
-      );
-    });
+        });
+      } catch (err) {
+        Sentry.captureException(err);
+        navigation.navigate('ErrorBottomSheet');
+        return;
+      }
+
+      handleNavigationSuccess();
+    })();
   }, [
     preset,
     value,
-    mutate,
-    createAttachmentAsync,
+    updateObservationAsync,
+    createAudioAttachmentAsync,
+    createPhotoAttachmentAsync,
     attachments,
     handleNavigationSuccess,
     navigation,

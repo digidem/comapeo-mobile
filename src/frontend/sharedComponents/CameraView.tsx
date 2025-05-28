@@ -1,3 +1,4 @@
+import {captureException} from '@sentry/react-native';
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {
@@ -8,12 +9,17 @@ import {
 } from 'expo-camera';
 import ImageResizer from '@bam.tech/react-native-image-resizer';
 import {Accelerometer, AccelerometerMeasurement} from 'expo-sensors';
+import {parse} from 'valibot';
 
 import {AddButton} from './AddButton';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import {Subscription} from 'expo-sensors/build/DeviceSensor';
-import {PhotoPromiseWithMetadata} from '../contexts/PhotoPromiseContext/types';
+import {
+  MediaMetadata,
+  PhotoPromiseWithMetadata,
+} from '../contexts/PhotoPromiseContext/types';
 import {useLocation} from '../hooks/useLocation';
+import {locationToEXIF, PhotoEXIFSchema} from '../lib/exif';
 
 const m = defineMessages({
   noCameraAccess: {
@@ -28,7 +34,7 @@ const m = defineMessages({
 
 const CAPTURE_QUALITY = 75;
 
-const captureOptions: CameraPictureOptions = {
+const BASE_CAMERA_CAPTURE_OPTIONS: CameraPictureOptions = {
   base64: false,
   exif: true,
   skipProcessing: true,
@@ -82,17 +88,46 @@ export const CameraView = ({onAddPress}: Props) => {
 
     setCapturing(true);
 
+    const captureOptions = location
+      ? {
+          ...BASE_CAMERA_CAPTURE_OPTIONS,
+          // Apparently not all devices will encode GPS information when taking a photo
+          // so we provide it manually to ensure its presence.
+          // https://github.com/expo/expo/commit/dce5905664dc4559ea1935a6c946526e4c46278c
+          additionalExif: locationToEXIF(location),
+        }
+      : BASE_CAMERA_CAPTURE_OPTIONS;
+
     ref.current
       .takePictureAsync(captureOptions)
       .then(pic => {
         if (!pic) return;
+
+        let mediaMetadata: MediaMetadata = {
+          location,
+          timestamp: Date.now(),
+        };
+
+        if (pic.exif) {
+          try {
+            const extractedExif = parse(PhotoEXIFSchema, pic.exif);
+
+            mediaMetadata = {
+              ...mediaMetadata,
+              photoExif: extractedExif,
+            };
+          } catch (err) {
+            captureException(err);
+          }
+        }
+
         onAddPress({
           capturePromise: rotatePhoto(pic, accelerometerMeasurement.current),
-          mediaMetadata: {location, timestamp: Date.now()},
+          mediaMetadata,
         });
       })
       .catch(err => {
-        console.log(err);
+        captureException(err);
         setCapturing(false);
       })
       .finally(() => {

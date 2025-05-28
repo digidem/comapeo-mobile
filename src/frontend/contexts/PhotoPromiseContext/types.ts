@@ -56,6 +56,7 @@ export type CancellablePhotoPromise = Promise<ProcessedDraftPhoto> & {
 export type MediaMetadata = {
   location?: LocationObject;
   timestamp: number;
+  photoExif?: Extract<Attachment, {type: 'photo'}>['photoExif'];
 };
 
 export type PhotoPromiseWithMetadata = {

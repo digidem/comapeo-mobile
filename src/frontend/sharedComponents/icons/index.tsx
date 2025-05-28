@@ -22,7 +22,6 @@ type ImageIconProps = {
   style?: ImageStyleProp;
 };
 
-export {GpsErrorIcon, GpsSearchingIcon, GpsGoodIcon} from './GpsIcons';
 // export { CategoryIcon, CategoryCircleIcon } from "./CategoryIcon";
 
 export const AlertIcon = ({size = 30, color = RED, style}: FontIconProps) => (

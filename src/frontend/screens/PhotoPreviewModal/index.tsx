@@ -12,7 +12,7 @@ import {useCoordinateFormat} from '../../contexts/CoordinateFormatStoreContext.t
 import {useAppLanguageTag} from '../../hooks/useAppLanguageTag.ts';
 import {bytesToMegabytes} from '../../lib/bytesToMegabytes.ts';
 import {formatCoords} from '../../lib/coordinateFormat.ts';
-import {getCoordinatesFromEXIF, getPhotoLayout} from '../../lib/exif.ts';
+import {getPhotoLayout} from '../../lib/exif.ts';
 import {getExpoImageStorageSize} from '../../lib/file-system.ts';
 import {BLACK, NEW_DARK_GREY, WHITE} from '../../lib/styles.ts';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
@@ -67,7 +67,7 @@ export function PhotoPreviewModal({
     photo.type === 'photo'
       ? true
       : typeof photo.mediaMetadata.timestamp === 'number' &&
-        photo.mediaMetadata.location;
+        photo.mediaMetadata;
 
   const exif =
     photo.type === 'photo' ? photo.photoExif : photo.mediaMetadata.photoExif;
@@ -76,13 +76,20 @@ export function PhotoPreviewModal({
     undefined,
   );
 
-  // TODO: Using EXIF `DateTime` is flawed due to it storing the local time and not requiring timezone information
-  // Ideally use `DateTime` + `DateTimeOffset` EXIF tags
-  // In theory, needs to be more rigorous due to limitations of the spec (https://github.com/photostructure/exiftool-vendored.js?tab=readme-ov-file#dates)
+  // TODO: For saved photo, use attachment's `createdAt` field (not yet implemented in schema)
   const timestamp =
     photo.type === 'processed' ? photo.mediaMetadata.timestamp : undefined;
 
-  const coordinates = exif ? getCoordinatesFromEXIF(exif) : undefined;
+  const coordinates =
+    photo.type === 'processed' && photo.mediaMetadata.location
+      ? {
+          lon: photo.mediaMetadata.location.coords.longitude,
+          lat: photo.mediaMetadata.location.coords.latitude,
+        }
+      : photo.type === 'photo'
+        ? // TODO: Use attachment's `position` field (not yet implemented in schema)
+          undefined
+        : undefined;
 
   return (
     <ScrollView contentContainerStyle={{padding: 20, gap: 20}}>
@@ -196,7 +203,7 @@ export function PhotoPreviewModal({
                 allowFontScaling
               />
             }>
-            <DeviceDetailsText make={exif?.Make} model={exif?.Model} />
+            <DeviceDetailsText make={exif.Make} model={exif.Model} />
 
             <CameraDetailsText
               orientation={exif.Orientation}
@@ -204,8 +211,8 @@ export function PhotoPreviewModal({
               fNumber={exif.FNumber}
             />
 
-            {typeof exif?.ImageWidth === 'number' &&
-              typeof exif?.ImageLength === 'number' && (
+            {typeof exif.ImageWidth === 'number' &&
+              typeof exif.ImageLength === 'number' && (
                 <PhotoDetailsText
                   width={exif.ImageWidth}
                   height={exif.ImageLength}
@@ -225,7 +232,14 @@ export function PhotoPreviewModal({
                 allowFontScaling
               />
             }>
-            <InfoText type="primary" text={observationDocId} />
+            <InfoText
+              type="primary"
+              text={
+                // TODO: Showing this ID is a temporary measure
+                // Ideally we use a format that is more human readable/friendly
+                observationDocId.slice(0, 15)
+              }
+            />
           </InfoItem>
         )}
 
@@ -330,7 +344,14 @@ function CreatedByDeviceIdInfoItem({
           allowFontScaling
         />
       }>
-      <InfoText type="primary" text={createdByDeviceId} />
+      <InfoText
+        type="primary"
+        text={
+          // TODO: Showing this ID is a temporary measure
+          // Ideally we use a format that is more human readable/friendly
+          createdByDeviceId.slice(0, 15)
+        }
+      />
     </InfoItem>
   );
 }

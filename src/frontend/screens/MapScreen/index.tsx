@@ -53,7 +53,7 @@ export const MapScreen = ({
   const {newDraft} = useDraftObservation();
   const {navigate} = useNavigationFromHomeTabs();
   const location = useLocationState(store => store.throttledMapLocation);
-  const savedLocation = useLastKnownLocation();
+  const {data: savedLocation} = useLastKnownLocation();
   const coords = location && getCoords(location);
 
   const {data: styleUrl} = useMapStyleJsonUrl();
@@ -131,8 +131,8 @@ export const MapScreen = ({
           defaultSettings={{
             centerCoordinate: coords
               ? coords
-              : savedLocation.data
-                ? getCoords(savedLocation.data)
+              : savedLocation
+                ? getCoords(savedLocation)
                 : undefined,
             zoomLevel: zoom,
           }}

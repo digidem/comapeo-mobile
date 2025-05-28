@@ -3,7 +3,10 @@ import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 import {useTrackTimerContext} from '../../../contexts/TrackTimerContext.tsx';
 import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes.ts';
-import {useTracking} from '../../../hooks/useTracking.ts';
+import {
+  useCurrentTrackState,
+  useStartStopTracks,
+} from '../../../hooks/useTracking.ts';
 import StartTrackingIcon from '../../../images/StartTracking.svg';
 import StopTrackingIcon from '../../../images/StopTracking.svg';
 import {
@@ -11,6 +14,7 @@ import {
   PrimaryButton,
 } from '../../../sharedComponents/Buttons.tsx';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText.tsx';
+import {useLocation} from '../../../hooks/useLocation.ts';
 
 const m = defineMessages({
   defaultButtonText: {
@@ -33,25 +37,34 @@ const m = defineMessages({
 
 export const StartStopTrack = () => {
   const {formatMessage} = useIntl();
-  const {isTracking, cancelTracking, startTracking} = useTracking();
+  const {startTracking, endTracking, clearCurrentTrack} = useStartStopTracks();
+  const {hasActiveTrack} = useCurrentTrackState();
   const {timer} = useTrackTimerContext();
   const navigation = useNavigationFromHomeTabs();
+  const {location} = useLocation({maxDistanceInterval: 1});
 
-  function endTracking() {
-    const hasTracksSaved = cancelTracking();
+  function endTracks() {
+    const distanceTracked = endTracking();
 
-    if (hasTracksSaved) {
+    if (distanceTracked > 1) {
       navigation.navigate('SaveTrack');
+      return;
     }
+
+    clearCurrentTrack();
   }
 
   return (
     <View style={{alignItems: 'center', flex: 1}}>
-      {!isTracking ? (
+      {!hasActiveTrack ? (
         <PrimaryButton
           fullSize={true}
           text={formatMessage(m.defaultButtonText)}
-          onPress={startTracking}
+          onPress={() => {
+            if (location) {
+              startTracking(location);
+            }
+          }}
           renderIcon={() => <StartTrackingIcon />}
         />
       ) : (
@@ -59,10 +72,10 @@ export const StartStopTrack = () => {
           text={formatMessage(m.stopButtonText)}
           fullSize={true}
           renderIcon={() => <StopTrackingIcon />}
-          onPress={endTracking}
+          onPress={endTracks}
         />
       )}
-      {isTracking && (
+      {hasActiveTrack && (
         <View style={styles.runtimeWrapper}>
           <View style={styles.indicator} />
           <HeaderText style={{textAlign: 'center'}} variant="header5">

@@ -10,7 +10,7 @@ import * as Sentry from '@sentry/react-native';
 import {calculateTotalDistance} from '../utils/distance.ts';
 
 export function useStartStopTracks() {
-  const {addNewLocations} = useTrackActions();
+  const {addNewLocations, clearCurrentTrack} = useTrackActions();
   const locationHistory = useTrackState(state => state.locationHistory);
   const navigation = useNavigation();
 
@@ -54,6 +54,7 @@ export function useStartStopTracks() {
   return {
     endTracking,
     startTracking,
+    clearCurrentTrack,
   };
 }
 

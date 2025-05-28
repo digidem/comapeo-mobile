@@ -1,14 +1,14 @@
 import {MarkerView} from '@rnmapbox/maps';
 import {StyleSheet, Text, View} from 'react-native';
 
-import {useTrackState} from '../../../contexts/TrackStoreContext';
 import {useTrackTimerContext} from '../../../contexts/TrackTimerContext';
 import {useSharedLocationContext} from '../../../contexts/SharedLocationContext';
+import {useCurrentTrackState} from '../../../hooks/useTracking';
 
 export const UserTooltipMarker = () => {
   const {timer} = useTrackTimerContext();
   const {locationState} = useSharedLocationContext();
-  const totalDistance = useTrackState(state => state.distance);
+  const {totalDistance} = useCurrentTrackState();
 
   return (
     locationState.location?.coords && (

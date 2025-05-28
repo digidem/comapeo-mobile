@@ -20,12 +20,13 @@ import {
 } from '../../hooks/server/media';
 import * as Sentry from '@sentry/react-native';
 
-import {useTrackActions, useTrackState} from '../../contexts/TrackStoreContext';
+import {useTrackActions} from '../../contexts/TrackStoreContext';
 import {
   isProcessedDraftPhoto,
   isUnsavedAudio,
 } from '../../lib/attachmentTypeChecks';
 import {useAuthContext} from '../../contexts/AuthContext';
+import {useCurrentTrackState} from '../../hooks/useTracking';
 
 const m = defineMessages({
   observation: {
@@ -116,7 +117,7 @@ export const ObservationCreate = ({
       projectId,
     });
 
-  const isTracking = useTrackState(state => state.isTracking);
+  const {hasActiveTrack} = useCurrentTrackState();
   const {
     addNewLocations: addNewTrackLocations,
     addNewObservation: addNewTrackObservation,
@@ -188,7 +189,7 @@ export const ObservationCreate = ({
 
           navigation.popTo('Home', {screen: 'Map'});
 
-          if (isTracking) {
+          if (hasActiveTrack) {
             addObservationRefToTrack(observation);
           }
         })
@@ -235,7 +236,7 @@ export const ObservationCreate = ({
 
       clearDraft();
       navigation.popTo('Home', {screen: 'Map'});
-      if (isTracking) {
+      if (hasActiveTrack) {
         addObservationRefToTrack(observation);
       }
     })();
@@ -245,7 +246,7 @@ export const ObservationCreate = ({
     createPhotoAttachmentAsync,
     createAudioAttachmentAsync,
     createObservationAsync,
-    isTracking,
+    hasActiveTrack,
     navigation,
     attachments,
     value,

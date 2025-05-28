@@ -5,8 +5,8 @@ import ObservationListIcon from '../../images/ObservationList.svg';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {COMAPEO_BLUE, MEDIUM_GREY} from '../../lib/styles';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {useTracking} from '../../hooks/useTracking';
 import {useTrackTimerContext} from '../../contexts/TrackTimerContext';
+import {useCurrentTrackState} from '../../hooks/useTracking';
 
 const BUTTON_SIZE = 25;
 const HIT_SLOP = 20;
@@ -92,11 +92,11 @@ export const TabBar = ({navigation, state}: BottomTabBarProps) => {
 };
 
 const TrackButtonContent = ({isSelected}: {isSelected: boolean}) => {
-  const {isTracking} = useTracking();
+  const {hasActiveTrack} = useCurrentTrackState();
   const {timer} = useTrackTimerContext();
   return (
     <>
-      {isTracking && (
+      {hasActiveTrack && (
         <View style={styles.runtimeWrapper}>
           <View style={styles.indicator} />
           <BodyText variant="tinyMeta" style={styles.timer}>

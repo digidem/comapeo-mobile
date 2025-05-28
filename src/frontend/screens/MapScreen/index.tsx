@@ -22,7 +22,7 @@ import {useMapStyleJsonUrl} from '../../hooks/server/maps';
 import {TracksMapLayer} from './MapLayers/TracksMapLayer';
 import {assert} from '../../lib/assert';
 import {RemoteDetectionAlertsMapLayer} from './MapLayers/RemoteDetectionAlertsLayer';
-import {getLocationStatus, matchPreset} from '../../lib/utils';
+import {matchPreset} from '../../lib/utils';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
 import {GPSPill} from '../../sharedComponents/GPSPill';
@@ -54,9 +54,6 @@ export const MapScreen = ({
   const {newDraft} = useDraftObservation();
   const {navigate} = useNavigationFromHomeTabs();
   const location = useLocationState(store => store.throttledMapLocation);
-  const locationProviderStatus = useLocationState(
-    store => store.providerStatus,
-  );
   const savedLocation = useLastKnownLocation();
   const coords = location && getCoords(location);
 
@@ -160,15 +157,7 @@ export const MapScreen = ({
       </Mapbox.MapView>
       <View style={styles.bottomContainer}>
         <View style={{flex: 1, alignItems: 'center'}}>
-          <GPSPill
-            {...getLocationStatus({
-              providerStatus: locationProviderStatus,
-              location: location,
-            })}
-            testID="MAP.gps-pill"
-            accessibilityLabel="Open GPS Modal."
-            onPress={() => navigation.navigate('GpsModal')}
-          />
+          <GPSPill onPress={() => navigation.navigate('GpsModal')} />
         </View>
 
         <TouchableOpacity

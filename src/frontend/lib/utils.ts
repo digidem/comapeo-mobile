@@ -1,6 +1,6 @@
 // import { Alert } from "react-native";
 import {Preset, Observation, Track} from '@comapeo/schema';
-import {LocationObject, LocationProviderStatus} from 'expo-location';
+import {LocationObject} from 'expo-location';
 import {FeatureCollection, LineString} from 'geojson';
 
 import {LocationHistoryPoint} from '../sharedTypes/location';
@@ -52,14 +52,13 @@ type LocationStatusResult =
 
 export function getLocationStatus({
   location,
-  providerStatus,
+  gpsAvailable,
+  locationServicesEnabled,
 }: {
   location?: LocationObject;
-  providerStatus?: LocationProviderStatus;
+  gpsAvailable: boolean;
+  locationServicesEnabled: boolean;
 }): LocationStatusResult {
-  const gpsAvailable = !!providerStatus?.gpsAvailable;
-  const locationServicesEnabled = !!providerStatus?.locationServicesEnabled;
-
   if (!gpsAvailable || !locationServicesEnabled) return {status: 'error'};
 
   const positionStale =

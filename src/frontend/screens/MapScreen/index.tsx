@@ -16,7 +16,6 @@ import ScaleBar from 'react-native-scale-bar';
 import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
 import {TrackBottomSheet} from './TrackBottomSheet';
 import {CurrentTrackMapLayer} from './CurrentTrack/CurrrentTrackMapLayer';
-import {UserLocation} from './UserLocation';
 
 import {useMapStyleJsonUrl} from '../../hooks/server/maps';
 import {TracksMapLayer} from './MapLayers/TracksMapLayer';

@@ -8,12 +8,10 @@ import * as v from 'valibot';
 
 import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
 import {LocationHistoryPoint} from '../sharedTypes/location';
-import {calculateTotalDistance} from '../utils/distance';
 
 const TrackStateSchema = v.intersect([
   v.object({
     description: v.string(),
-    distance: v.number(),
     locationHistory: v.array(
       // TODO: Create schema for this
       v.object({
@@ -30,16 +28,6 @@ const TrackStateSchema = v.intersect([
       }),
     ),
   }),
-  v.union([
-    v.object({
-      isTracking: v.literal(true),
-      trackingSince: v.date(),
-    }),
-    v.object({
-      isTracking: v.literal(false),
-      trackingSince: v.null(),
-    }),
-  ]),
 ]);
 
 export type TrackState = v.InferOutput<typeof TrackStateSchema>;
@@ -50,11 +38,8 @@ const STORAGE_KEY = 'MapeoTrack' as const;
 function createInitialState(): TrackState {
   return {
     description: '',
-    distance: 0,
-    isTracking: false,
     locationHistory: [],
     observationRefs: [],
-    trackingSince: null,
   };
 }
 
@@ -109,7 +94,6 @@ export function createTrackStore({persist} = {persist: false}) {
         if (data.length > 1) {
           return {
             locationHistory: [...prev.locationHistory, ...data],
-            distance: prev.distance + calculateTotalDistance(data),
           };
         }
 
@@ -128,27 +112,15 @@ export function createTrackStore({persist} = {persist: false}) {
 
         return {
           locationHistory: [...prev.locationHistory, ...data],
-          distance:
-            prev.distance + calculateTotalDistance([lastLocation, ...data]),
         };
       });
     },
     clearCurrentTrack: () => {
       store.setState({
         description: '',
-        distance: 0,
-        isTracking: false,
         locationHistory: [],
         observationRefs: [],
-        trackingSince: null,
       });
-    },
-    setTracking: (isTracking: boolean) => {
-      store.setState(
-        isTracking
-          ? {isTracking: true, trackingSince: new Date()}
-          : {isTracking: false, trackingSince: null},
-      );
     },
   };
 

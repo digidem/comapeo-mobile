@@ -30,7 +30,7 @@ const m = defineMessages({
   },
   allObservationsDescription: {
     id: 'screens.ExportObservations.allObservationsDescription',
-    defaultMessage: 'Text only as a GeoJson file',
+    defaultMessage: 'Text only as a GeoJSON file',
   },
   allObservationsAndMedia: {
     id: 'screens.ExportObservations.allObservationsAndMedia',
@@ -46,7 +46,7 @@ const m = defineMessages({
   },
   tracksDescription: {
     id: 'screens.ExportObservations.tracksDescription',
-    defaultMessage: 'Tracks only as a GeoJson file',
+    defaultMessage: 'Tracks only as a GeoJSON file',
   },
   errorMessage: {
     id: 'screens.ExportObservations.errorMessage',
@@ -185,13 +185,9 @@ export const ExportOptionCard = ({
         size={30}
         style={{marginRight: 10}}
       />
-      <View>
-        <HeaderText style={{flex: 1}} variant="header5">
-          {title}
-        </HeaderText>
-        <BodyText style={{flex: 1}} variant="smallMeta">
-          {description}
-        </BodyText>
+      <View style={{flex: 1}}>
+        <HeaderText variant="header5">{title}</HeaderText>
+        <BodyText variant="smallMeta">{description}</BodyText>
       </View>
     </TouchableOpacity>
   );

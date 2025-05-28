@@ -734,7 +734,7 @@
     "message": "Images and audio in a .zip file"
   },
   "screens.ExportObservations.allObservationsDescription": {
-    "message": "Text only as a GeoJson file"
+    "message": "Text only as a GeoJSON file"
   },
   "screens.ExportObservations.close": {
     "message": "Close"
@@ -749,7 +749,7 @@
     "message": "Tracks"
   },
   "screens.ExportObservations.tracksDescription": {
-    "message": "Tracks only as a GeoJson file"
+    "message": "Tracks only as a GeoJSON file"
   },
   "screens.FatalError.restart": {
     "message": "Restart App"

@@ -32,56 +32,13 @@ describe('useTrackState()', () => {
 
     expect(stateHook.result.current).toStrictEqual({
       description: '',
-      distance: 0,
-      isTracking: false,
       locationHistory: [],
       observationRefs: [],
-      trackingSince: null,
     });
   });
 });
 
 describe('useTrackActions()', () => {
-  test('setTracking()', () => {
-    const dateSpy = jest.spyOn(global, 'Date');
-
-    const trackStore = createTrackStore();
-    const wrapper = createWrapper(trackStore);
-
-    const actionsHook = renderHook(() => useTrackActions(), {
-      wrapper,
-    });
-    const stateHook = renderHook(() => useTrackState(), {
-      wrapper,
-    });
-
-    act(() => {
-      actionsHook.result.current.setTracking(true);
-    });
-
-    expect(stateHook.result.current).toStrictEqual({
-      description: '',
-      distance: 0,
-      isTracking: true,
-      locationHistory: [],
-      observationRefs: [],
-      trackingSince: dateSpy.mock.instances.at(-1),
-    });
-
-    act(() => {
-      actionsHook.result.current.setTracking(false);
-    });
-
-    expect(stateHook.result.current).toStrictEqual({
-      description: '',
-      distance: 0,
-      isTracking: false,
-      locationHistory: [],
-      observationRefs: [],
-      trackingSince: null,
-    });
-  });
-
   test('addNewObservation()', () => {
     const trackStore = createTrackStore();
     const wrapper = createWrapper(trackStore);
@@ -102,17 +59,12 @@ describe('useTrackActions()', () => {
 
     expect(stateHook.result.current).toStrictEqual({
       description: '',
-      distance: 0,
-      isTracking: false,
       locationHistory: [],
       observationRefs: [{docId: 'doc_1', versionId: 'version_1'}],
-      trackingSince: null,
     });
   });
 
   test('clearCurrentTrack()', () => {
-    const dateSpy = jest.spyOn(global, 'Date');
-
     const trackStore = createTrackStore();
     const wrapper = createWrapper(trackStore);
 
@@ -124,16 +76,13 @@ describe('useTrackActions()', () => {
     });
 
     act(() => {
-      actionsHook.result.current.setTracking(true);
+      actionsHook.result.current.setDescription('some description');
     });
 
     expect(stateHook.result.current).toStrictEqual({
-      description: '',
-      distance: 0,
-      isTracking: true,
+      description: 'some description',
       locationHistory: [],
       observationRefs: [],
-      trackingSince: dateSpy.mock.instances.at(-1),
     });
 
     act(() => {
@@ -142,11 +91,8 @@ describe('useTrackActions()', () => {
 
     expect(stateHook.result.current).toStrictEqual({
       description: '',
-      distance: 0,
-      isTracking: false,
       locationHistory: [],
       observationRefs: [],
-      trackingSince: null,
     });
   });
 
@@ -167,11 +113,8 @@ describe('useTrackActions()', () => {
 
     expect(stateHook.result.current).toStrictEqual({
       description: 'some description',
-      distance: 0,
-      isTracking: false,
       locationHistory: [],
       observationRefs: [],
-      trackingSince: null,
     });
   });
 
@@ -198,18 +141,12 @@ describe('useTrackActions()', () => {
 
     expect(stateHook.result.current).toMatchObject({
       description: '',
-      isTracking: false,
       locationHistory: [
         {latitude: 0, longitude: 0, timestamp: timestamp1},
         {latitude: 1, longitude: 1, timestamp: timestamp2},
       ],
       observationRefs: [],
-      trackingSince: null,
-      distance: expect.any(Number),
     });
-    expect(stateHook.result.current.distance).toBeGreaterThan(0);
-
-    const previousDistance = stateHook.result.current.distance;
 
     const timestamp3 = timestamp2 + 1_000;
 
@@ -221,16 +158,12 @@ describe('useTrackActions()', () => {
 
     expect(stateHook.result.current).toMatchObject({
       description: '',
-      isTracking: false,
       locationHistory: [
         {latitude: 0, longitude: 0, timestamp: timestamp1},
         {latitude: 1, longitude: 1, timestamp: timestamp2},
         {latitude: 0.5, longitude: 0.5, timestamp: timestamp3},
       ],
       observationRefs: [],
-      trackingSince: null,
-      distance: expect.any(Number),
     });
-    expect(stateHook.result.current.distance).toBeGreaterThan(previousDistance);
   });
 });

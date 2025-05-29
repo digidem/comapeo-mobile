@@ -9,26 +9,24 @@ import * as v from 'valibot';
 import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
 import {LocationHistoryPoint} from '../sharedTypes/location';
 
-const TrackStateSchema = v.intersect([
-  v.object({
-    description: v.string(),
-    locationHistory: v.array(
-      // TODO: Create schema for this
-      v.object({
-        latitude: v.number(),
-        longitude: v.number(),
-        timestamp: v.number(),
-      }),
-    ),
-    observationRefs: v.array(
-      // TODO: Create schema for this
-      v.object({
-        docId: v.string(),
-        versionId: v.string(),
-      }),
-    ),
-  }),
-]);
+const TrackStateSchema = v.object({
+  description: v.string(),
+  locationHistory: v.array(
+    // TODO: Create schema for this
+    v.object({
+      latitude: v.number(),
+      longitude: v.number(),
+      timestamp: v.number(),
+    }),
+  ),
+  observationRefs: v.array(
+    // TODO: Create schema for this
+    v.object({
+      docId: v.string(),
+      versionId: v.string(),
+    }),
+  ),
+});
 
 export type TrackState = v.InferOutput<typeof TrackStateSchema>;
 
@@ -51,11 +49,11 @@ export function createTrackStore({persist} = {persist: false}) {
       createPersistedState(createInitialState, {
         name: STORAGE_KEY,
         storage: createJSONStorage(() => MMKVZustandStorage),
-        version: 1,
+        version: 2,
         migrate: (persistedState, version): TrackState => {
           const newState = createInitialState();
 
-          if (version === 0) {
+          if (version < 2) {
             try {
               // Even if persisted state has fields that are not part of the schema,
               // Valibot will only extract the relevant fields (assuming all relevant ones pass validation).

@@ -1,64 +1,39 @@
-import * as Location from 'expo-location';
-import {useCallback} from 'react';
-import {
-  useTrackActions,
-  useTrackState,
-} from '../contexts/TrackStoreContext.tsx';
-import {LOCATION_TASK_NAME} from '../sharedTypes/location.ts';
-import {useNavigation} from '@react-navigation/native';
-import * as Sentry from '@sentry/react-native';
+import {TrackState, useTrackState} from '../contexts/TrackStoreContext.tsx';
 import {calculateTotalDistance} from '../utils/distance.ts';
 
-export function useStartStopTracks() {
-  const {clearCurrentTrack} = useTrackActions();
+type CurrentTrackState =
+  | {
+      hasActiveTrack: false;
+      locationHistory: TrackState['locationHistory'];
+      totalDistance: 0;
+      trackingSince: null;
+    }
+  | {
+      hasActiveTrack: true;
+      locationHistory: TrackState['locationHistory'];
+      totalDistance: number;
+      trackingSince: Date;
+    };
+
+export const useCurrentTrackState = (): CurrentTrackState => {
   const locationHistory = useTrackState(state => state.locationHistory);
-  const navigation = useNavigation();
 
-  const startTracking = useCallback(() => {
-    Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
-      accuracy: Location.Accuracy.Highest,
-      activityType: Location.LocationActivityType.Fitness,
-    }).catch(err => {
-      Sentry.captureException(err);
-      // @ts-expect-error - this is a typing issue, we are using the non-strongly typed hook as this can technically be used in any screen. But regardless of the screen, we want to show the error bottom sheet.
-      navigation.navigate('ErrorBottomSheet');
-    });
-  }, [navigation]);
-  /**
-   * Cancels location tracking and stops background updates.
-   * @returns {number} returns the total distance recorded in meters.
-   */
-  const endTracking = useCallback(() => {
-    Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME).catch(err => {
-      Sentry.captureException(err);
-    });
-
-    const totalDistanceRecorded = calculateTotalDistance({
-      points: locationHistory,
-      units: 'meters',
-    });
-
-    return totalDistanceRecorded;
-  }, [locationHistory]);
+  if (locationHistory.length === 0) {
+    return {
+      hasActiveTrack: false,
+      locationHistory,
+      trackingSince: null,
+      totalDistance: 0,
+    };
+  }
 
   return {
-    endTracking,
-    startTracking,
-    clearCurrentTrack,
-  };
-}
-
-export const useCurrentTrackState = () => {
-  const locationHistory = useTrackState(state => state.locationHistory);
-  return {
+    hasActiveTrack: true,
     locationHistory,
-    hasActiveTrack: locationHistory.length > 0,
     totalDistance: calculateTotalDistance({
       points: locationHistory,
       units: 'kilometers',
     }),
-    trackingSince: locationHistory[0]
-      ? new Date(locationHistory[0].timestamp)
-      : null,
+    trackingSince: new Date(locationHistory[0]!.timestamp),
   };
 };

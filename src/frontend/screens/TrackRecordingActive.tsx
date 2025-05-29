@@ -6,7 +6,11 @@ import {BodyText} from '../sharedComponents/Text/BodyText';
 import {DestructiveButton, SecondaryButton} from '../sharedComponents/Buttons';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 import Error from '../images/Error.svg';
-import {useStartStopTracks} from '../hooks/useTracking';
+import {useStopLocationUpdates} from '../hooks/useStopLocationUpdate';
+import {calculateTotalDistance} from '../utils/distance';
+import {useTrackActions} from '../contexts/TrackStoreContext';
+import {useCurrentTrackState} from '../hooks/useTracking';
+import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
   recordingTracks: {
@@ -32,18 +36,29 @@ export const TrackRecordingActive = ({
   navigation,
 }: NativeRootNavigationProps<'TrackRecordingActive'>) => {
   const {formatMessage} = useIntl();
-  const {endTracking, clearCurrentTrack} = useStartStopTracks();
+  const stopTrack = useStopLocationUpdates();
+  const {clearCurrentTrack} = useTrackActions();
+  const {locationHistory} = useCurrentTrackState();
 
   function handleStopTracks() {
-    const distanceSaved = endTracking();
-
-    if (distanceSaved > 1) {
-      navigation.replace('SaveTrack');
-      return;
-    }
-
-    clearCurrentTrack();
-    navigation.goBack();
+    stopTrack.mutate(undefined, {
+      onSuccess: () => {
+        const totalDistanceRecorded = calculateTotalDistance({
+          points: locationHistory,
+          units: 'meters',
+        });
+        if (totalDistanceRecorded >= 1) {
+          navigation.navigate('SaveTrack');
+          return;
+        }
+        clearCurrentTrack();
+        navigation.goBack();
+      },
+      onError: err => {
+        Sentry.captureException(err);
+        navigation.navigate('ErrorBottomSheet');
+      },
+    });
   }
 
   return (

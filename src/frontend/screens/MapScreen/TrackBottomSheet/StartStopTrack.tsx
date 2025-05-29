@@ -3,10 +3,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 import {useTrackTimerContext} from '../../../contexts/TrackTimerContext.tsx';
 import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes.ts';
-import {
-  useCurrentTrackState,
-  useStartStopTracks,
-} from '../../../hooks/useTracking.ts';
+import {useCurrentTrackState} from '../../../hooks/useTracking.ts';
 import StartTrackingIcon from '../../../images/StartTracking.svg';
 import StopTrackingIcon from '../../../images/StopTracking.svg';
 import {
@@ -14,6 +11,11 @@ import {
   PrimaryButton,
 } from '../../../sharedComponents/Buttons.tsx';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText.tsx';
+import {useStartLocationUpdates} from '../../../hooks/useStartLocationUpdates.ts';
+import * as Sentry from '@sentry/react-native';
+import {useStopLocationUpdates} from '../../../hooks/useStopLocationUpdate.ts';
+import {useTrackActions} from '../../../contexts/TrackStoreContext.tsx';
+import {calculateTotalDistance} from '../../../utils/distance.ts';
 
 const m = defineMessages({
   defaultButtonText: {
@@ -36,20 +38,40 @@ const m = defineMessages({
 
 export const StartStopTrack = () => {
   const {formatMessage} = useIntl();
-  const {startTracking, endTracking, clearCurrentTrack} = useStartStopTracks();
-  const {hasActiveTrack} = useCurrentTrackState();
+  const {hasActiveTrack, locationHistory} = useCurrentTrackState();
   const {timer} = useTrackTimerContext();
   const navigation = useNavigationFromHomeTabs();
+  const startTrack = useStartLocationUpdates();
+  const stopTrack = useStopLocationUpdates();
+  const {clearCurrentTrack} = useTrackActions();
 
-  function endTracks() {
-    const distanceTracked = endTracking();
+  function startTracking() {
+    startTrack.mutate(undefined, {
+      onError: err => {
+        Sentry.captureException(err);
+        navigation.navigate('ErrorBottomSheet');
+      },
+    });
+  }
 
-    if (distanceTracked > 1) {
-      navigation.navigate('SaveTrack');
-      return;
-    }
-
-    clearCurrentTrack();
+  function endTracking() {
+    stopTrack.mutate(undefined, {
+      onSuccess: () => {
+        const totalDistanceRecorded = calculateTotalDistance({
+          points: locationHistory,
+          units: 'meters',
+        });
+        if (totalDistanceRecorded >= 1) {
+          navigation.navigate('SaveTrack');
+          return;
+        }
+        clearCurrentTrack();
+      },
+      onError: err => {
+        Sentry.captureException(err);
+        navigation.navigate('ErrorBottomSheet');
+      },
+    });
   }
 
   return (
@@ -66,7 +88,7 @@ export const StartStopTrack = () => {
           text={formatMessage(m.stopButtonText)}
           fullSize={true}
           renderIcon={() => <StopTrackingIcon />}
-          onPress={endTracks}
+          onPress={endTracking}
         />
       )}
       {hasActiveTrack && (

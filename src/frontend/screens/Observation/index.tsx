@@ -10,11 +10,7 @@ import {FieldDetails} from './FieldDetails';
 import {InsetMapView} from './InsetMapView';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
-import {
-  useOwnDeviceInfo,
-  useManyDocs,
-  useDocumentCreatedBy,
-} from '@comapeo/core-react';
+import {useManyDocs} from '@comapeo/core-react';
 import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types.ts';
 import {ButtonFields} from './Buttons.tsx';
 import {AudioAttachment} from '../../sharedTypes/audio.ts';
@@ -36,6 +32,7 @@ import {
 } from '../../sharedComponents/Thumbnails/ThumbnailContainer.tsx';
 import {SavedPhotoThumbnailImage} from '../../sharedComponents/Thumbnails/PhotoThumbnail.tsx';
 import {AudioSavedThumbnail} from '../../sharedComponents/Thumbnails/AudioThumbnail.tsx';
+import {useCanEditOrDelete} from '../../hooks/server/useCanEditorDelete.ts';
 
 const m = defineMessages({
   deleteTitle: {
@@ -68,15 +65,8 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
 
   const {data: fieldsData} = useManyDocs({projectId, docType: 'field'});
   const {lat, lon, originalVersionId, metadata} = observation;
-  const {data: deviceInfo} = useOwnDeviceInfo();
-  const {data: createdByDeviceId} = useDocumentCreatedBy({
-    projectId: projectId,
-    originalVersionId,
-  });
-  const isMine =
-    deviceInfo?.deviceId !== undefined &&
-    createdByDeviceId !== undefined &&
-    deviceInfo.deviceId === createdByDeviceId;
+
+  const canDelete = useCanEditOrDelete(originalVersionId);
 
   const fields = preset
     ? (preset.fieldRefs
@@ -185,7 +175,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
         )}
         <View style={styles.divider} />
         <ButtonFields
-          isMine={isMine}
+          canDelete={canDelete}
           observationId={observationId}
           fields={fields}
         />

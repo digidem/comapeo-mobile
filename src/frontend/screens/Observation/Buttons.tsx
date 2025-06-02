@@ -102,11 +102,11 @@ const m = defineMessages({
 
 export const ButtonFields = ({
   fields,
-  isMine,
+  canDelete,
   observationId,
 }: {
   fields: Array<Field>;
-  isMine: boolean;
+  canDelete: boolean;
   observationId: string;
 }) => {
   const {formatMessage: t, formatDate} = useIntl();
@@ -251,7 +251,7 @@ export const ButtonFields = ({
 
   return (
     <View style={styles.buttonContainer}>
-      {isMine && (
+      {canDelete && (
         <Button
           iconName="delete"
           title={t(m.delete)}

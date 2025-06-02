@@ -16,6 +16,7 @@ import {ActionButtons} from '../../sharedComponents/ActionButtons.tsx';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock.tsx';
 import {TrackHeaderRight} from './TrackHeaderRight';
 import * as Sentry from '@sentry/react-native';
+import {useCanEditOrDelete} from '../../hooks/server/useCanEditorDelete.ts';
 
 const m = defineMessages({
   title: {
@@ -47,6 +48,7 @@ export const TrackScreen = ({
     track.observationRefs.some(ref => ref.docId === observation.docId),
   );
   const {mutate: deleteTrackMutate} = useDeleteTrackMutation();
+  const canDelete = useCanEditOrDelete(track.originalVersionId);
 
   function deleteTrack() {
     deleteTrackMutate(
@@ -71,7 +73,7 @@ export const TrackScreen = ({
         dockContent={
           <ActionButtons
             handleDelete={deleteTrack}
-            isMine={true}
+            isMine={canDelete}
             deleteMessage={m.deleteTitle}
           />
         }>

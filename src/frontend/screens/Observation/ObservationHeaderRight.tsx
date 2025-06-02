@@ -4,14 +4,9 @@ import {IconButton} from '../../sharedComponents/IconButton';
 import {EditIcon} from '../../sharedComponents/icons';
 import {SyncIcon} from '../../sharedComponents/icons';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {
-  useOwnDeviceInfo,
-  useSingleDocByDocId,
-  useDocumentCreatedBy,
-  useOwnRoleInProject,
-} from '@comapeo/core-react';
+import {useSingleDocByDocId} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext.tsx';
-import {COORDINATOR_ROLE_ID} from '../../sharedTypes';
+import {useCanEditOrDelete} from '../../hooks/server/useCanEditorDelete.ts';
 
 interface ObservationHeaderRightProps {
   observationId: string;
@@ -27,18 +22,9 @@ export const ObservationHeaderRight = ({
     docId: observationId,
   });
 
-  const {data: createdByDeviceId} = useDocumentCreatedBy({
-    projectId: projectId,
-    originalVersionId: observation.originalVersionId,
-  });
-
-  const {data: deviceInfo} = useOwnDeviceInfo();
-  const {data: roleData} = useOwnRoleInProject({projectId});
   const navigation = useNavigationFromRoot();
 
-  const canEdit =
-    createdByDeviceId === deviceInfo?.deviceId ||
-    roleData.roleId === COORDINATOR_ROLE_ID;
+  const canEdit = useCanEditOrDelete(observation.originalVersionId);
 
   return canEdit ? (
     <IconButton

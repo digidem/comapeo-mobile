@@ -2,8 +2,19 @@ import {useDocumentCreatedBy, useSingleDocByDocId} from '@comapeo/core-react';
 import type {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {captureException, ErrorBoundary} from '@sentry/react-native';
 import {Suspense, useState} from 'react';
-import {defineMessages, useIntl, type MessageDescriptor} from 'react-intl';
-import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {
+  defineMessages,
+  type IntlShape,
+  useIntl,
+  type MessageDescriptor,
+} from 'react-intl';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
 
@@ -14,13 +25,14 @@ import {bytesToMegabytes} from '../../lib/bytesToMegabytes.ts';
 import {formatCoords} from '../../lib/coordinateFormat.ts';
 import {getPhotoLayout} from '../../lib/exif.ts';
 import {getExpoImageStorageSize} from '../../lib/file-system.ts';
-import {BLACK, NEW_DARK_GREY, WHITE} from '../../lib/styles.ts';
+import {BLACK, BLUE_GREY, NEW_DARK_GREY, WHITE} from '../../lib/styles.ts';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
 import {CoreBlobImage} from '../../sharedComponents/Images/CoreBlobImage.tsx';
 import {ImageErrorPlaceholder} from '../../sharedComponents/Images/ImageErrorPlaceholder.tsx';
+import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import type {NativeRootNavigationProps} from '../../sharedTypes/navigation.ts';
 import {ImageWithErrorFallback} from './ImageWithErrorFallback.tsx';
-import {InfoItem, InfoText} from './InfoItem.tsx';
+import {InfoItem} from './InfoItem.tsx';
 
 const m = defineMessages({
   navTitle: {
@@ -61,8 +73,8 @@ export function PhotoPreviewModal({
 
   const coordinateFormat = useCoordinateFormat();
 
-  // TODO: This check needs to be updated in the case of the saved photo.
-  // We need to get the relevant metadata from core, which is supported in a different version of core.
+  // TODO: This check needs to be updated in the case of the saved photo using attachment fields that will
+  // be available in an unreleased version of core.
   const isValidatedByCoMapeo =
     photo.type === 'photo'
       ? true
@@ -76,7 +88,7 @@ export function PhotoPreviewModal({
     undefined,
   );
 
-  // TODO: For saved photo, use attachment's `createdAt` field (not yet implemented in schema)
+  // TODO: For saved photo, use attachment's `createdAt` field (available in unreleased version of core)
   const timestamp =
     photo.type === 'processed' ? photo.mediaMetadata.timestamp : undefined;
 
@@ -90,6 +102,34 @@ export function PhotoPreviewModal({
         ? // TODO: Use attachment's `position` field (not yet implemented in schema)
           undefined
         : undefined;
+
+  const deviceDetails = exif
+    ? getDeviceDetailsText({make: exif.Make, model: exif.Model})
+    : null;
+
+  const cameraDetails = exif
+    ? getCameraDetailsText(
+        {
+          // @ts-expect-error Need to update schema
+          fNumber: exif.FNumber,
+          orientation: exif.Orientation,
+        },
+        t,
+      )
+    : null;
+
+  const photoDetails =
+    typeof exif?.ImageWidth === 'number' &&
+    typeof exif?.ImageLength === 'number'
+      ? getPhotoDetailsText(
+          {
+            width: exif.ImageWidth,
+            height: exif.ImageLength,
+            storageSize: imageStorageSize,
+          },
+          t,
+        )
+      : null;
 
   return (
     <ScrollView contentContainerStyle={{padding: 20, gap: 20}}>
@@ -143,7 +183,9 @@ export function PhotoPreviewModal({
                 allowFontScaling
               />
             }>
-            <InfoText type="primary" text={t(m.validatedByCoMapeo)} />
+            <BodyText selectable style={styles.primaryInfoText}>
+              {t(m.validatedByCoMapeo)}
+            </BodyText>
           </InfoItem>
         )}
 
@@ -157,18 +199,17 @@ export function PhotoPreviewModal({
                 allowFontScaling
               />
             }>
-            <InfoText
-              type="primary"
-              text={formatDate(timestamp, {
+            <BodyText selectable style={styles.primaryInfoText}>
+              {formatDate(timestamp, {
                 dateStyle: 'full',
               })}
-            />
-            <InfoText
-              type="secondary"
-              text={formatTime(timestamp, {
+            </BodyText>
+
+            <BodyText selectable style={styles.secondaryInfoText}>
+              {formatTime(timestamp, {
                 timeStyle: 'short',
               })}
-            />
+            </BodyText>
           </InfoItem>
         )}
 
@@ -182,18 +223,17 @@ export function PhotoPreviewModal({
                 allowFontScaling
               />
             }>
-            <InfoText
-              type="primary"
-              text={formatCoords({
+            <BodyText selectable style={styles.primaryInfoText}>
+              {formatCoords({
                 lon: coordinates.lon,
                 lat: coordinates.lat,
                 format: coordinateFormat,
               })}
-            />
+            </BodyText>
           </InfoItem>
         )}
 
-        {exif && (
+        {(deviceDetails || cameraDetails || photoDetails) && (
           <InfoItem
             icon={
               <MaterialIcons
@@ -203,22 +243,23 @@ export function PhotoPreviewModal({
                 allowFontScaling
               />
             }>
-            <DeviceDetailsText make={exif.Make} model={exif.Model} />
+            {deviceDetails && (
+              <BodyText selectable style={styles.primaryInfoText}>
+                {deviceDetails}
+              </BodyText>
+            )}
 
-            <CameraDetailsText
-              orientation={exif.Orientation}
-              // @ts-expect-error Need to update schema
-              fNumber={exif.FNumber}
-            />
+            {cameraDetails && (
+              <BodyText selectable style={styles.secondaryInfoText}>
+                {cameraDetails}
+              </BodyText>
+            )}
 
-            {typeof exif.ImageWidth === 'number' &&
-              typeof exif.ImageLength === 'number' && (
-                <PhotoDetailsText
-                  width={exif.ImageWidth}
-                  height={exif.ImageLength}
-                  storageSize={imageStorageSize}
-                />
-              )}
+            {photoDetails && (
+              <BodyText selectable style={styles.secondaryInfoText}>
+                {photoDetails}
+              </BodyText>
+            )}
           </InfoItem>
         )}
 
@@ -232,14 +273,13 @@ export function PhotoPreviewModal({
                 allowFontScaling
               />
             }>
-            <InfoText
-              type="primary"
-              text={
+            <BodyText selectable style={styles.primaryInfoText}>
+              {
                 // TODO: Showing this ID is a temporary measure
                 // Ideally we use a format that is more human readable/friendly
                 observationDocId.slice(0, 15)
               }
-            />
+            </BodyText>
           </InfoItem>
         )}
 
@@ -257,6 +297,17 @@ export function PhotoPreviewModal({
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  primaryInfoText: {
+    color: WHITE,
+    flexWrap: 'wrap',
+  },
+  secondaryInfoText: {
+    color: BLUE_GREY,
+    flexWrap: 'wrap',
+  },
+});
 
 export function createNavigationOptions({
   intl,
@@ -344,19 +395,18 @@ function CreatedByDeviceIdInfoItem({
           allowFontScaling
         />
       }>
-      <InfoText
-        type="primary"
-        text={
+      <BodyText selectable style={styles.primaryInfoText} numberOfLines={1}>
+        {
           // TODO: Showing this ID is a temporary measure
           // Ideally we use a format that is more human readable/friendly
           createdByDeviceId.slice(0, 15)
         }
-      />
+      </BodyText>
     </InfoItem>
   );
 }
 
-function DeviceDetailsText({make, model}: {make?: string; model?: string}) {
+function getDeviceDetailsText({make, model}: {make?: string; model?: string}) {
   const displayedParts: Array<string> = [];
 
   if (make) {
@@ -371,18 +421,19 @@ function DeviceDetailsText({make, model}: {make?: string; model?: string}) {
     return null;
   }
 
-  return <InfoText type="primary" text={displayedParts.join(' ')} />;
+  return displayedParts.join(' ');
 }
 
-function CameraDetailsText({
-  fNumber,
-  orientation,
-}: {
-  fNumber?: number;
-  orientation?: number;
-}) {
-  const {formatMessage: t} = useIntl();
-
+function getCameraDetailsText(
+  {
+    fNumber,
+    orientation,
+  }: {
+    fNumber?: number;
+    orientation?: number;
+  },
+  formatMessage: IntlShape['formatMessage'],
+): string | null {
   const displayedParts: Array<string> = [];
 
   if (typeof orientation === 'number') {
@@ -390,7 +441,9 @@ function CameraDetailsText({
       const layout = getPhotoLayout(orientation);
 
       displayedParts.push(
-        layout === 'horizontal' ? t(m.landscape) : t(m.portrait),
+        layout === 'horizontal'
+          ? formatMessage(m.landscape)
+          : formatMessage(m.portrait),
       );
     } catch (err) {
       captureException(err);
@@ -408,20 +461,21 @@ function CameraDetailsText({
     return null;
   }
 
-  return <InfoText type="secondary" text={displayedParts.join(' — ')} />;
+  return displayedParts.join(' — ');
 }
 
-function PhotoDetailsText({
-  width,
-  height,
-  storageSize,
-}: {
-  width: number;
-  height: number;
-  storageSize?: number;
-}) {
-  const {formatMessage: t} = useIntl();
-
+function getPhotoDetailsText(
+  {
+    width,
+    height,
+    storageSize,
+  }: {
+    width: number;
+    height: number;
+    storageSize?: number;
+  },
+  formatMessage: IntlShape['formatMessage'],
+): string | null {
   const displayedParts: Array<string> = [];
 
   // TODO: Should this be translated?
@@ -429,7 +483,7 @@ function PhotoDetailsText({
 
   if (typeof storageSize === 'number') {
     displayedParts.push(
-      t(m.imageStorageSize, {
+      formatMessage(m.imageStorageSize, {
         // TODO: What should be displayed?
         value: Math.max(bytesToMegabytes(storageSize), 1).toFixed(),
       }),
@@ -440,5 +494,5 @@ function PhotoDetailsText({
     return null;
   }
 
-  return <InfoText type="secondary" text={displayedParts.join(' • ')} />;
+  return displayedParts.join(' • ');
 }

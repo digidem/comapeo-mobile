@@ -484,8 +484,7 @@ function getPhotoDetailsText(
   if (typeof storageSize === 'number') {
     displayedParts.push(
       formatMessage(m.imageStorageSize, {
-        // TODO: What should be displayed?
-        value: Math.max(bytesToMegabytes(storageSize), 1).toFixed(),
+        value: Math.max(bytesToMegabytes(storageSize), 0.01).toFixed(2),
       }),
     );
   }

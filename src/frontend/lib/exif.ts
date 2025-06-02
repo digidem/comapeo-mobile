@@ -63,40 +63,6 @@ export function locationToEXIF(location: LocationObject): GPSEXIFTags {
 }
 
 /**
- * Calculate lon/lat coordinates from EXIF data.
- *
- * @param exif EXIF data
- * @returns Coordinates (in decimal degrees) if the relevant tags exist. Otherwise undefined.
- */
-export function getCoordinatesFromEXIF(
-  exif: PhotoEXIF,
-): {lon: number; lat: number} | undefined {
-  if (
-    typeof exif?.GPSLongitude !== 'number' ||
-    typeof exif?.GPSLatitude !== 'number'
-  ) {
-    return undefined;
-  }
-
-  const lon = exif.GPSLongitude;
-  const lat = exif.GPSLatitude;
-  const lonRef = exif.GPSLongitudeRef;
-  const latRef = exif.GPSLatitudeRef;
-
-  // There are multiple fields that can affect the actual extracted coordinates.
-  // See `ExifTool CSV Log File Format` section in https://www.exiftool.org/geotag.html
-  const lonMultiplier =
-    lon > 0 && lonRef?.toLowerCase().startsWith('w') ? -1 : 1;
-  const latMultiplier =
-    lat > 0 && latRef?.toLowerCase().startsWith('s') ? -1 : 1;
-
-  return {
-    lon: lon * lonMultiplier,
-    lat: lat * latMultiplier,
-  };
-}
-
-/**
  * Convert a JS date to the GPSDateStamp EXIF tag. It is formatted as a UTC-adjusted `YYYY:MM:DD`.
  * See https://exiftool.org/TagNames/GPS.html for reference.
  *

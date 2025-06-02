@@ -48,6 +48,7 @@ describe('Remote Archive - Add Success Flow', () => {
       });
       archiveAdded = true;
     } catch {
+      archiveAdded = false;
       testFlags.remoteArchiveAddFailed = true;
       console.warn('🛑 Remote Archive addition failed — restarting app');
 

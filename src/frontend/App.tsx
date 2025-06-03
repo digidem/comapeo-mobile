@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {getLocales} from 'expo-localization';
 import {createMapeoClient} from '@comapeo/ipc';
+import {QueryClient} from '@tanstack/react-query';
 import {AppNavigator} from './AppNavigator';
 import {MessagePortLike} from './lib/MessagePortLike';
 import {initializeNodejs} from './initializeNodejs';
@@ -11,6 +12,7 @@ import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Sentry from '@sentry/react-native';
 import * as TaskManager from 'expo-task-manager';
+import nodejs from 'nodejs-mobile-react-native';
 import {applicationId} from 'expo-application';
 import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
 import {storage} from './hooks/persistedState/createPersistedState';
@@ -25,8 +27,14 @@ import {createCoordinateFormatStore} from './contexts/CoordinateFormatStoreConte
 import {createManualEntryCoordinateFormatStore} from './contexts/ManualEntryCoordinateFormatStoreContext';
 import {createActiveProjectIdStore} from './contexts/ActiveProjectIdStoreContext';
 import {createMetricsDiagnosticsStore} from './contexts/MetricsDiagnosticsStoreContext';
-import {createLocaleStore} from './contexts/LocaleStoreContext';
+import {
+  createLocaleStore,
+  LocaleStoreProvider,
+} from './contexts/LocaleStoreContext';
 import {getAppLanguageTag} from './lib/intl';
+import {IntlProvider} from './contexts/IntlContext';
+import {ServerLoading} from './ServerLoading';
+import type {StatusMessage} from '../backend/src/status';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -145,6 +153,19 @@ TaskManager.defineTask(
   },
 );
 
+const queryClient = new QueryClient();
+
+const requestServerStatus = () => {
+  nodejs.channel.post('get-server-status');
+};
+
+const subscribeToServerStatus = (listener: (msg: StatusMessage) => unknown) => {
+  nodejs.channel.addListener('server:status', listener);
+  return () => {
+    nodejs.channel.removeListener('server:status', listener);
+  };
+};
+
 const App = () => {
   const [permissionsAsked, setPermissionsAsked] = React.useState(false);
   React.useEffect(() => {
@@ -158,22 +179,31 @@ const App = () => {
   useOnBackgroundedAndForegrounded(mapeoApi);
 
   return (
-    <AppProviders
-      messagePort={messagePort}
-      localDiscoveryController={localDiscoveryController}
-      mapeoApi={mapeoApi}
-      persistedDrafObservationStore={persistedDraftObservationStore}
-      trackStore={persistedTrackStore}
-      securityStore={persistedSecurityStore}
-      coordinateFormatStore={persistedCoordinateFormatStore}
-      manualEntryCoordinateFormatStore={
-        persistedManualEntryCoordinateFormatStore
-      }
-      activeProjectIdStore={persistedActiveProjectIdStore}
-      metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
-      localeStore={persistedLocaleStore}>
-      <AppNavigator permissionAsked={permissionsAsked} />
-    </AppProviders>
+    <LocaleStoreProvider value={persistedLocaleStore}>
+      <IntlProvider>
+        {/* ServerLoading requires internationalization to be set up */}
+        <ServerLoading
+          messagePort={messagePort}
+          requestServerStatus={requestServerStatus}
+          subscribeToServerStatus={subscribeToServerStatus}>
+          <AppProviders
+            queryClient={queryClient}
+            localDiscoveryController={localDiscoveryController}
+            mapeoApi={mapeoApi}
+            persistedDrafObservationStore={persistedDraftObservationStore}
+            trackStore={persistedTrackStore}
+            securityStore={persistedSecurityStore}
+            coordinateFormatStore={persistedCoordinateFormatStore}
+            manualEntryCoordinateFormatStore={
+              persistedManualEntryCoordinateFormatStore
+            }
+            activeProjectIdStore={persistedActiveProjectIdStore}
+            metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}>
+            <AppNavigator permissionAsked={permissionsAsked} />
+          </AppProviders>
+        </ServerLoading>
+      </IntlProvider>
+    </LocaleStoreProvider>
   );
 };
 

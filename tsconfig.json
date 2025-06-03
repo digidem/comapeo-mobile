@@ -3,7 +3,10 @@
   "compilerOptions": {
     "incremental": true,
     "skipLibCheck": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "paths": {
+      "*": ["./node_modules/@digidem/types/vendor/*/index.d.ts"]
+    }
   },
   "include": ["src/frontend/**/*"],
   "exclude": [

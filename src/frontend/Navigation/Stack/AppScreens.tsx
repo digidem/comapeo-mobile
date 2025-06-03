@@ -112,6 +112,7 @@ import {
   RemoveRemoteArchive,
   navigationOptions as removeRemoteArchiveNavigationOptions,
 } from '../../screens/Settings/ProjectSettings/RemoteArchive/RemoveRemoteArchive.tsx';
+import {ExportObservations} from '../../screens/ExportObservations.tsx';
 import {
   ConfirmDeletePhoto,
   navigationOptions as confirmDeletePhotoNavigationOptions,
@@ -507,6 +508,10 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="TrackRecordingActive"
         component={TrackRecordingActive}
+      />
+      <RootStack.Screen
+        name="ExportObservations"
+        component={ExportObservations}
       />
     </RootStack.Group>
   </>

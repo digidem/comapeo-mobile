@@ -113,7 +113,12 @@ export type RootStackParamsList = {
     createdAt: number;
     fromEditorPreview?: boolean;
   };
-  AudioPlaybackSaved: {uri: string; canDelete: boolean; observationId: string};
+  AudioAttachmentPlaybackScreen: {
+    driveDiscoveryId: string;
+    name: string;
+    type: 'audio';
+    createdAt: string;
+  };
   InviteReceived: {inviteId: string};
   InviteSuccessfullyAccepted: {projectName: string};
   InviteCanceled: {projectName: string};

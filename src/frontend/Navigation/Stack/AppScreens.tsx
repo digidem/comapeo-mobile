@@ -86,8 +86,6 @@ import {SyncPreviewsBottomSheet} from '../../screens/Settings/ProjectSettings/Me
 import {SyncEverythingBottomSheet} from '../../screens/Settings/ProjectSettings/MediaSyncSettings/SyncEverythingBottomSheet.tsx';
 import {AudioAskPermissionBottomSheet} from '../../screens/Audio/AudioAskPermissionBottomSheet.tsx';
 import {AudioRecording} from '../../screens/Audio/AudioRecording/index.tsx';
-import {sharedAudioNavOptions} from '../../screens/Audio/shared';
-import {AudioPlaybackSaved} from '../../screens/Audio/AudioPlaybackSaved.tsx';
 import {InviteReceived} from '../../screens/Invites/InviteReceived.tsx';
 import {InviteSuccessfullyAccepted} from '../../screens/Invites/InviteSuccessfullyAccepted.tsx';
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled.tsx';
@@ -113,6 +111,7 @@ import {
   navigationOptions as confirmDeletePhotoNavigationOptions,
 } from '../../screens/ConfirmDeletePhoto.tsx';
 import {AudioDraftPlaybackScreen} from '../../screens/Audio/AudioDraftPlaybackScreen.tsx';
+import {AudioAttachmentPlaybackScreen} from '../../screens/Audio/AudioAttachmentPlaybackScreen.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -397,17 +396,17 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="AudioRecording"
         component={AudioRecording}
-        options={sharedAudioNavOptions}
+        options={{headerShown: false}}
       />
       <RootStack.Screen
         name="AudioDraftPlaybackScreen"
         component={AudioDraftPlaybackScreen}
-        options={sharedAudioNavOptions}
+        options={{headerShown: false}}
       />
       <RootStack.Screen
-        name="AudioPlaybackSaved"
-        component={AudioPlaybackSaved}
-        options={sharedAudioNavOptions}
+        name="AudioAttachmentPlaybackScreen"
+        component={AudioAttachmentPlaybackScreen}
+        options={{headerTitle: intl(AudioAttachmentPlaybackScreen.navTitle)}}
       />
       <RootStack.Screen
         name="ObservationMetadata"

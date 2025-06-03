@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, View, AppState, Text} from 'react-native';
 
-import {BLACK, BLUE_GREY, WHITE} from '../../../lib/styles';
+import {BLACK, BLUE_GREY, DARK_GREY, WHITE} from '../../../lib/styles';
 import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
 import {AnimatedBackground} from './AnimatedBackground';
 import {useAudioRecording} from './useAudioRecording';
@@ -89,10 +89,10 @@ export function AudioRecording({
   }, [isRecording, finishRecording]);
 
   return (
-    <>
+    <View style={styles.background}>
       <ScreenContentWithDock
-        contentContainerStyle={AudioStyles.contentContainer}
-        dockContainerStyle={AudioStyles.dockContainer}
+        contentContainerStyle={styles.contentContainer}
+        dockContainerStyle={styles.dockContainer}
         dockContent={
           isStopping ? (
             <View style={styles.center}>
@@ -129,16 +129,24 @@ export function AudioRecording({
         </View>
       </ScreenContentWithDock>
       {/* Remove animated background in E2E mode to avoid performance issues in Appium/BrowserStack */}
-      {isE2E ? (
-        <View style={{height: 0}} />
-      ) : (
-        <AnimatedBackground timeElapsed={timeElapsed} />
-      )}
-    </>
+      {!isE2E && <AnimatedBackground timeElapsed={timeElapsed} />}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    backgroundColor: DARK_GREY,
+  },
+  contentContainer: {
+    flex: 1,
+    backgroundColor: 'transparent', // ✅ was DARK_GREY — needs to be transparent so animation shows
+  },
+  dockContainer: {
+    paddingVertical: 24,
+    backgroundColor: 'transparent', // ✅ same
+  },
   center: {
     justifyContent: 'center',
     alignItems: 'center',

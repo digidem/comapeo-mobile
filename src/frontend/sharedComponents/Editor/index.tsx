@@ -2,7 +2,6 @@ import * as React from 'react';
 import {Photo} from '../../contexts/PhotoPromiseContext/types';
 import {Audio} from '../../sharedTypes/audio';
 import {DescriptionField} from './DescriptionField';
-import PlayArrow from '../../images/PlayArrow.svg';
 import {ScreenContentWithDock} from '../ScreenContentWithDock';
 import {StyleSheet, View} from 'react-native';
 import {LIGHT_GREY} from '../../lib/styles';
@@ -31,8 +30,9 @@ import {
   ThumbnailImage,
 } from '../Thumbnails/PhotoThumbnail';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {AudioSavedThumbnail} from '../Thumbnails/AudioThumbnail';
+import {AudioSavedThumbnail} from '../Thumbnails/AudioSavedThumbnail';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
+import {AudioDraftThumbnail} from '../Thumbnails/AudioDraftThumbnail';
 
 type EditorProps = {
   presetName: string;
@@ -162,19 +162,11 @@ export const Editor = ({
                 }
                 if (isUnsavedAudio(att)) {
                   return (
-                    <ThumbnailContainer
-                      accessibilityLabel="Play audio recording."
+                    <AudioDraftThumbnail
                       key={att.uri}
                       size={size}
-                      onPress={() =>
-                        navigate('AudioDraftPlaybackScreen', {
-                          uri: att.uri,
-                          createdAt: att.createdAt,
-                          fromEditorPreview: true,
-                        })
-                      }>
-                      <PlayArrow width={48} height={48} />
-                    </ThumbnailContainer>
+                      audio={att}
+                    />
                   );
                 }
               })}

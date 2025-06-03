@@ -1,17 +1,13 @@
-import * as React from 'react';
 import {StyleSheet} from 'react-native';
-import {WHITE, MAGENTA, DARK_GREY, BLACK} from '../../lib/styles';
-import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
+import {WHITE, MAGENTA, BLACK, DARK_GREY} from '../../lib/styles';
 
 const PRIMARY_CONTROL_DIAMETER = 96;
 export const SIDE_ICON_BUTTON_WIDTH = 36;
 export const MAX_RECORDING_DURATION_MS = 5 * 60_000;
 
-/* eslint-disable react-native/no-unused-styles */
 export const AudioStyles = StyleSheet.create({
-  contentContainer: {flex: 1},
-  dockContainer: {paddingVertical: 24},
+  contentContainer: {flex: 1, backgroundColor: DARK_GREY},
+  dockContainer: {paddingVertical: 24, backgroundColor: DARK_GREY},
   container: {
     flex: 1,
     justifyContent: 'flex-end',
@@ -57,19 +53,3 @@ export const AudioStyles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-/* eslint-enable react-native/no-unused-styles */
-
-export const sharedAudioNavOptions: NativeStackNavigationOptions = {
-  contentStyle: {backgroundColor: DARK_GREY},
-  headerTintColor: WHITE,
-  headerShadowVisible: false,
-  headerTitle: () => null,
-  headerStyle: {backgroundColor: 'transparent'},
-  headerTransparent: true,
-  headerLeft: props => (
-    <CustomHeaderLeft
-      tintColor={props.tintColor}
-      headerBackButtonProps={props}
-    />
-  ),
-};

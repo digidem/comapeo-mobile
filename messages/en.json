@@ -537,6 +537,12 @@
   "screens.AppPasscode.TurnOffPasscode.usePasscode": {
     "message": "Use App Passcode"
   },
+  "screens.AudioAttachmentPlayback.navTitle": {
+    "message": "Audio Recording"
+  },
+  "screens.AudioAttachmentPlayback.share": {
+    "message": "Share"
+  },
   "screens.AudioPermission.Button.allow": {
     "description": "Screen button text for granting the audio permission",
     "message": "Allow"
@@ -565,9 +571,6 @@
   },
   "screens.AudioPlaybackNew.recordingSaved": {
     "message": "Recording Saved!"
-  },
-  "screens.AudioPlaybackUnsaved.description": {
-    "message": "Total length: {length}"
   },
   "screens.AudioRecording.lessThan1": {
     "message": "Less than a minute left"

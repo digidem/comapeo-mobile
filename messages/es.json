@@ -724,6 +724,33 @@
   "screens.ExchangeSoloScreen.title": {
     "message": "Intercambiar"
   },
+  "screens.ExportObservations.allObservations": {
+    "message": "All Observations"
+  },
+  "screens.ExportObservations.allObservationsAndMedia": {
+    "message": "All Observations with Media"
+  },
+  "screens.ExportObservations.allObservationsAndMediaDescription": {
+    "message": "Images and audio in a .zip file"
+  },
+  "screens.ExportObservations.allObservationsDescription": {
+    "message": "Text only as a GeoJSON file"
+  },
+  "screens.ExportObservations.close": {
+    "message": "Close"
+  },
+  "screens.ExportObservations.download": {
+    "message": "Download"
+  },
+  "screens.ExportObservations.errorMessage": {
+    "message": "Choose an option"
+  },
+  "screens.ExportObservations.tracks": {
+    "message": "Tracks"
+  },
+  "screens.ExportObservations.tracksDescription": {
+    "message": "Tracks only as a GeoJSON file"
+  },
   "screens.FatalError.restart": {
     "message": "Reiniciar la aplicación"
   },
@@ -1167,6 +1194,9 @@
   "screens.ObservationList.TrackListItem.Track": {
     "message": "Trayecto"
   },
+  "screens.ObservationList.downloadObservation": {
+    "message": "Download Observations"
+  },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",
     "message": "Observaciones"
@@ -1233,15 +1263,6 @@
   "screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
     "description": "Title of observation list view when the user has not yet recorded observations",
     "message": "Añadir observaciones"
-  },
-  "screens.ObservationsList.ProjectCard.coordinator": {
-    "message": "Este dispositivo es un coordinator de este proyecto."
-  },
-  "screens.ObservationsList.ProjectCard.mappingOnYourOwn": {
-    "message": "Estás mapeando por tu cuenta."
-  },
-  "screens.ObservationsList.ProjectCard.participant": {
-    "message": "Eres participante en este proyecto."
   },
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",

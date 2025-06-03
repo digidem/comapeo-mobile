@@ -724,6 +724,33 @@
   "screens.ExchangeSoloScreen.title": {
     "message": "Exchange"
   },
+  "screens.ExportObservations.allObservations": {
+    "message": "All Observations"
+  },
+  "screens.ExportObservations.allObservationsAndMedia": {
+    "message": "All Observations with Media"
+  },
+  "screens.ExportObservations.allObservationsAndMediaDescription": {
+    "message": "Images and audio in a .zip file"
+  },
+  "screens.ExportObservations.allObservationsDescription": {
+    "message": "Text only as a GeoJSON file"
+  },
+  "screens.ExportObservations.close": {
+    "message": "Close"
+  },
+  "screens.ExportObservations.download": {
+    "message": "Download"
+  },
+  "screens.ExportObservations.errorMessage": {
+    "message": "Choose an option"
+  },
+  "screens.ExportObservations.tracks": {
+    "message": "Tracks"
+  },
+  "screens.ExportObservations.tracksDescription": {
+    "message": "Tracks only as a GeoJSON file"
+  },
   "screens.FatalError.restart": {
     "message": "Restart App"
   },
@@ -1167,6 +1194,9 @@
   "screens.ObservationList.TrackListItem.Track": {
     "message": "Track"
   },
+  "screens.ObservationList.downloadObservation": {
+    "message": "Download Observations"
+  },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",
     "message": "Сануулгууд"
@@ -1233,15 +1263,6 @@
   "screens.ObservationsList.ObservationsEmptyView.noObservationsTitle": {
     "description": "Title of observation list view when the user has not yet recorded observations",
     "message": "Сануулгууд нэмэх"
-  },
-  "screens.ObservationsList.ProjectCard.coordinator": {
-    "message": "You’re a coordinator on this project."
-  },
-  "screens.ObservationsList.ProjectCard.mappingOnYourOwn": {
-    "message": "You’re mapping on your own."
-  },
-  "screens.ObservationsList.ProjectCard.participant": {
-    "message": "You’re a participant on this project."
   },
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",

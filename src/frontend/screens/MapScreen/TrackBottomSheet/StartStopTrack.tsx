@@ -13,7 +13,7 @@ import {
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText.tsx';
 import {useStartLocationUpdates} from '../../../hooks/useStartLocationUpdates.ts';
 import * as Sentry from '@sentry/react-native';
-import {useStopLocationUpdates} from '../../../hooks/useStopLocationUpdate.ts';
+import {useStopLocationUpdates} from '../../../hooks/useStopLocationUpdates.ts';
 import {
   useTrackActions,
   useTrackState,

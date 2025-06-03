@@ -6,7 +6,7 @@ import {BodyText} from '../sharedComponents/Text/BodyText';
 import {DestructiveButton, SecondaryButton} from '../sharedComponents/Buttons';
 import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 import Error from '../images/Error.svg';
-import {useStopLocationUpdates} from '../hooks/useStopLocationUpdate';
+import {useStopLocationUpdates} from '../hooks/useStopLocationUpdates';
 import {calculateTotalDistance} from '../utils/distance';
 import {useTrackActions, useTrackState} from '../contexts/TrackStoreContext';
 import * as Sentry from '@sentry/react-native';

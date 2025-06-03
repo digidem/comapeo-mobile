@@ -1,0 +1,142 @@
+import {getLocales} from 'expo-localization';
+import {Component, type ComponentPropsWithoutRef, type ReactNode} from 'react';
+
+import {createActiveProjectIdStore} from '../../../src/frontend/contexts/ActiveProjectIdStoreContext';
+import {AppProviders} from '../../../src/frontend/contexts/AppProviders';
+import {createCoordinateFormatStore} from '../../../src/frontend/contexts/CoordinateFormatStoreContext';
+import {createLocalDiscoveryController} from '../../../src/frontend/contexts/LocalDiscoveryContext';
+import {
+  createLocaleStore,
+  LocaleStore,
+  LocaleStoreProvider,
+} from '../../../src/frontend/contexts/LocaleStoreContext';
+import {createManualEntryCoordinateFormatStore} from '../../../src/frontend/contexts/ManualEntryCoordinateFormatStoreContext';
+import {createMetricsDiagnosticsStore} from '../../../src/frontend/contexts/MetricsDiagnosticsStoreContext';
+import {createDraftObservationStore} from '../../../src/frontend/contexts/PersistedStores/DraftObservationStore';
+import {createSecurityStore} from '../../../src/frontend/contexts/SecurityStoreContext';
+import {createTrackStore} from '../../../src/frontend/contexts/TrackStoreContext';
+import {getAppLanguageTag} from '../../../src/frontend/lib/intl';
+import {AppDiagnosticMetrics} from '../../../src/frontend/metrics/AppDiagnosticMetrics';
+import {DeviceDiagnosticMetrics} from '../../../src/frontend/metrics/DeviceDiagnosticMetrics';
+import {IntlProvider} from '../../../src/frontend/contexts/IntlContext';
+import {QueryClient} from '@tanstack/react-query';
+
+export function createMinimalWrapper() {
+  const localeStore = createLocaleStore({persist: false});
+
+  return ({children}: {children: ReactNode}) => {
+    return (
+      <LocaleStoreProvider value={localeStore}>
+        <IntlProvider>{children}</IntlProvider>
+      </LocaleStoreProvider>
+    );
+  };
+}
+
+export function createAppProvidersWrapper(
+  opts: Pick<ComponentPropsWithoutRef<typeof AppProviders>, 'mapeoApi'> &
+    Partial<
+      Omit<
+        ComponentPropsWithoutRef<typeof AppProviders>,
+        'mapeoApi' | 'children'
+      >
+    >,
+) {
+  const queryClient = new QueryClient();
+
+  const persistedLocaleStore = createLocaleStore({
+    persist: true,
+  });
+
+  const appDiagnosticMetrics = new AppDiagnosticMetrics({
+    getLocaleInfo: () => {
+      const systemLocales = getLocales();
+      const localeState = persistedLocaleStore.instance.getState();
+
+      const appLanguageTag = getAppLanguageTag({
+        localeState,
+        systemLanguageTags: systemLocales.map(l => l.languageTag),
+      }).value;
+
+      return {
+        appLanguageTag,
+        deviceLanguageTag: systemLocales[0]!.languageTag,
+      };
+    },
+  });
+
+  const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
+
+  const persistedMetricsDiagnosticsStore = createMetricsDiagnosticsStore({
+    persist: true,
+  });
+
+  // Ensure that these metrics instances are initially in sync with initial state of relevant store
+  const metricsIsEnabled =
+    persistedMetricsDiagnosticsStore.instance.getState().isEnabled;
+  appDiagnosticMetrics.setEnabled(metricsIsEnabled);
+  deviceDiagnosticMetrics.setEnabled(metricsIsEnabled);
+
+  // Sync metrics instances with subsequent changes in relevant store state
+  persistedMetricsDiagnosticsStore.instance.subscribe((current, previous) => {
+    if (previous.isEnabled !== current.isEnabled) {
+      appDiagnosticMetrics.setEnabled(current.isEnabled);
+      deviceDiagnosticMetrics.setEnabled(current.isEnabled);
+    }
+  });
+
+  const localDiscoveryController = createLocalDiscoveryController(
+    opts.mapeoApi,
+  );
+  localDiscoveryController.start();
+
+  const persistedDraftObservationStore = createDraftObservationStore({
+    persist: true,
+  });
+
+  const persistedTrackStore = createTrackStore({
+    persist: true,
+  });
+
+  const persistedSecurityStore = createSecurityStore({
+    persist: true,
+  });
+
+  const persistedCoordinateFormatStore = createCoordinateFormatStore({
+    persist: true,
+  });
+
+  const persistedManualEntryCoordinateFormatStore =
+    createManualEntryCoordinateFormatStore({
+      persist: true,
+    });
+
+  const persistedActiveProjectIdStore = createActiveProjectIdStore();
+
+  const wrapper = ({children}: {children: ReactNode}) => {
+    return (
+      <AppProviders
+        queryClient={queryClient}
+        mapeoApi={opts.mapeoApi}
+        localDiscoveryController={localDiscoveryController}
+        activeProjectIdStore={persistedActiveProjectIdStore}
+        persistedDrafObservationStore={persistedDraftObservationStore}
+        metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
+        securityStore={persistedSecurityStore}
+        manualEntryCoordinateFormatStore={
+          persistedManualEntryCoordinateFormatStore
+        }
+        coordinateFormatStore={persistedCoordinateFormatStore}
+        trackStore={persistedTrackStore}>
+        {children}
+      </AppProviders>
+    );
+  };
+
+  const teardown = () => {
+    localDiscoveryController.stop();
+    appDiagnosticMetrics.setEnabled(false);
+  };
+
+  return {wrapper, teardown};
+}

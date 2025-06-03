@@ -3,10 +3,12 @@ import * as React from 'react';
 
 import {useLocation} from '../../../hooks/useLocation';
 import {convertToLineString} from '../../../lib/utils';
-import {useCurrentTrackState} from '../../../hooks/useTracking';
+import {useHasActiveTrack} from '../../../hooks/useHasActiveTrack';
+import {useTrackState} from '../../../contexts/TrackStoreContext';
 
 export const CurrentTrackMapLayer = () => {
-  const {hasActiveTrack, locationHistory} = useCurrentTrackState();
+  const hasActiveTrack = useHasActiveTrack();
+  const locationHistory = useTrackState(store => store.locationHistory);
   const {location} = useLocation({maxDistanceInterval: 3});
   const finalLocationHistory = location?.coords
     ? [

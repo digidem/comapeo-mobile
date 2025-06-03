@@ -34,6 +34,7 @@ describe('useTrackState()', () => {
       description: '',
       locationHistory: [],
       observationRefs: [],
+      startTime: null,
     });
   });
 });
@@ -93,6 +94,7 @@ describe('useTrackActions()', () => {
       description: '',
       locationHistory: [],
       observationRefs: [],
+      startTime: null,
     });
   });
 

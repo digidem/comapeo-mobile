@@ -3,7 +3,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
 import {useTrackTimerContext} from '../../../contexts/TrackTimerContext.tsx';
 import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes.ts';
-import {useCurrentTrackState} from '../../../hooks/useTracking.ts';
+import {useHasActiveTrack} from '../../../hooks/useHasActiveTrack.ts';
 import StartTrackingIcon from '../../../images/StartTracking.svg';
 import StopTrackingIcon from '../../../images/StopTracking.svg';
 import {
@@ -14,7 +14,10 @@ import {HeaderText} from '../../../sharedComponents/Text/HeaderText.tsx';
 import {useStartLocationUpdates} from '../../../hooks/useStartLocationUpdates.ts';
 import * as Sentry from '@sentry/react-native';
 import {useStopLocationUpdates} from '../../../hooks/useStopLocationUpdate.ts';
-import {useTrackActions} from '../../../contexts/TrackStoreContext.tsx';
+import {
+  useTrackActions,
+  useTrackState,
+} from '../../../contexts/TrackStoreContext.tsx';
 import {calculateTotalDistance} from '../../../utils/distance.ts';
 
 const m = defineMessages({
@@ -38,12 +41,13 @@ const m = defineMessages({
 
 export const StartStopTrack = () => {
   const {formatMessage} = useIntl();
-  const {hasActiveTrack, locationHistory} = useCurrentTrackState();
+  const hasActiveTrack = useHasActiveTrack();
   const {timer} = useTrackTimerContext();
   const navigation = useNavigationFromHomeTabs();
   const startTrack = useStartLocationUpdates();
   const stopTrack = useStopLocationUpdates();
   const {clearCurrentTrack} = useTrackActions();
+  const locationHistory = useTrackState(store => store.locationHistory);
 
   function startTracking() {
     startTrack.mutate(undefined, {

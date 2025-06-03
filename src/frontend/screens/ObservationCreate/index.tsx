@@ -26,7 +26,7 @@ import {
   isUnsavedAudio,
 } from '../../lib/attachmentTypeChecks';
 import {useAuthContext} from '../../contexts/AuthContext';
-import {useCurrentTrackState} from '../../hooks/useTracking';
+import {useHasActiveTrack} from '../../hooks/useHasActiveTrack';
 
 const m = defineMessages({
   observation: {
@@ -117,7 +117,7 @@ export const ObservationCreate = ({
       projectId,
     });
 
-  const {hasActiveTrack} = useCurrentTrackState();
+  const hasActiveTrack = useHasActiveTrack();
   const {
     addNewLocations: addNewTrackLocations,
     addNewObservation: addNewTrackObservation,

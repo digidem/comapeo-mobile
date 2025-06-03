@@ -8,8 +8,7 @@ import {NativeRootNavigationProps} from '../sharedTypes/navigation';
 import Error from '../images/Error.svg';
 import {useStopLocationUpdates} from '../hooks/useStopLocationUpdate';
 import {calculateTotalDistance} from '../utils/distance';
-import {useTrackActions} from '../contexts/TrackStoreContext';
-import {useCurrentTrackState} from '../hooks/useTracking';
+import {useTrackActions, useTrackState} from '../contexts/TrackStoreContext';
 import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
@@ -38,7 +37,7 @@ export const TrackRecordingActive = ({
   const {formatMessage} = useIntl();
   const stopTrack = useStopLocationUpdates();
   const {clearCurrentTrack} = useTrackActions();
-  const {locationHistory} = useCurrentTrackState();
+  const locationHistory = useTrackState(store => store.locationHistory);
 
   function handleStopTracks() {
     stopTrack.mutate(undefined, {

@@ -3,14 +3,14 @@ import * as React from 'react';
 
 import {useIsFullyFocused} from '../../hooks/useIsFullyFocused';
 import {UserTooltipMarker} from './CurrentTrack/UserTooltipMarker';
-import {useCurrentTrackState} from '../../hooks/useTracking';
+import {useHasActiveTrack} from '../../hooks/useHasActiveTrack';
 
 interface UserLocationProps {
   minDisplacement: number;
 }
 
 export const UserLocation = ({minDisplacement}: UserLocationProps) => {
-  const {hasActiveTrack} = useCurrentTrackState();
+  const hasActiveTrack = useHasActiveTrack();
   const isFocused = useIsFullyFocused();
 
   return (

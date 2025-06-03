@@ -1,6 +1,6 @@
 import React, {createContext, useContext} from 'react';
 import {useFormattedTimeSince} from '../hooks/useFormattedTimeSince';
-import {useCurrentTrackState} from '../hooks/useTracking';
+import {useTrackState} from './TrackStoreContext';
 
 interface TrackTimerContext {
   timer: string;
@@ -9,7 +9,7 @@ interface TrackTimerContext {
 const TrackTimerContext = createContext<TrackTimerContext | null>(null);
 
 const TrackTimerContextProvider = ({children}: {children: React.ReactNode}) => {
-  const {trackingSince} = useCurrentTrackState();
+  const trackingSince = useTrackState(store => store.startTime);
   const timer = useFormattedTimeSince(trackingSince, 1000);
 
   return (

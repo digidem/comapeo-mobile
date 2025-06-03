@@ -12,7 +12,7 @@ import {SecondaryButton} from '../sharedComponents/Buttons';
 import AddProjectIcon from '../images/AddProject.svg';
 import {FlatList} from 'react-native';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
-import {useCurrentTrackState} from '../hooks/useTracking';
+import {useHasActiveTrack} from '../hooks/useHasActiveTrack';
 
 const m = defineMessages({
   navTitle: {
@@ -31,7 +31,7 @@ export const AllProjects: NativeNavigationComponent<'AllProjects'> = () => {
   const {setActiveProjectId} = useActiveProjectIdActions();
   const {popTo, navigate} = useNavigationFromRoot();
   const {formatMessage} = useIntl();
-  const {hasActiveTrack} = useCurrentTrackState();
+  const hasActiveTrack = useHasActiveTrack();
   return (
     <View style={{flex: 1, paddingTop: 40}}>
       <SecondaryButton

@@ -17,8 +17,7 @@ describe('CoMapeo E2E Flow', function () {
   require('./main/side-drawer-menu-proj.test');
   require('./project/project-settings-proj.test');
   require('./remote-archive/add-remote-error.test');
-  require('./remote-archive/add-remote-success.test');
-  require('./remote-archive/remove-remote-archive.test');
+  require('./remote-archive/add-remote-success-and-removal.test');
   require('./main/map.test');
   require('./observations/add-details.test');
   require('./observations/view-observations.test');

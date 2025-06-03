@@ -26,6 +26,7 @@ const TrackStateSchema = v.object({
       versionId: v.string(),
     }),
   ),
+  startTime: v.union([v.date(), v.null()]),
 });
 
 export type TrackState = v.InferOutput<typeof TrackStateSchema>;
@@ -38,6 +39,7 @@ function createInitialState(): TrackState {
     description: '',
     locationHistory: [],
     observationRefs: [],
+    startTime: null,
   };
 }
 
@@ -114,11 +116,10 @@ export function createTrackStore({persist} = {persist: false}) {
       });
     },
     clearCurrentTrack: () => {
-      store.setState({
-        description: '',
-        locationHistory: [],
-        observationRefs: [],
-      });
+      store.setState(createInitialState());
+    },
+    initializeTrackTime: () => {
+      store.setState({startTime: new Date()});
     },
   };
 

@@ -26,7 +26,7 @@ import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
 import {GPSPill} from '../../sharedComponents/GPSPill';
 import AddButtonSVG from '../../images/AddButton.svg';
-import {useAuthContext} from '../../contexts/AuthContext';
+import {AuthState, useAuthContext} from '../../contexts/AuthContext';
 import {useLocationState} from '../../contexts/LocationContext';
 import {getCoords} from '../../lib/coordinateFormat';
 
@@ -60,30 +60,10 @@ export const MapScreen = ({
   const coords = location && getCoords(location);
 
   const {data: styleUrl} = useMapStyleJsonUrl();
-  const existingObservation = usePersistedDraftObservation(
-    store => store.value,
-  );
-  const {data: presets} = usePresetsQuery();
+
   const {authState} = useAuthContext();
 
-  useFocusEffect(
-    React.useCallback(() => {
-      // if no exisiting observation, stay home
-      if (!existingObservation || authState === 'obscured') {
-        return;
-      }
-      // if existing observation and no preset match, user has started creating an observation but had not chosen a preset, so navigate to preset chooser
-      if (!matchPreset(existingObservation.tags, presets)) {
-        navigate('PresetChooser');
-
-        // if existing observation, preset match, and docId exists, navigate to Observation Edit Screen
-      } else if ('docId' in existingObservation) {
-        navigate('ObservationEdit', {observationId: existingObservation.docId});
-      } else {
-        navigate('ObservationCreate');
-      }
-    }, [existingObservation, navigate, presets, authState]),
-  );
+  useCheckDraftObservationAndNavigate({authState});
 
   const handleAddPress = () => {
     newDraft();
@@ -197,6 +177,37 @@ export const MapScreen = ({
     </View>
   );
 };
+
+function useCheckDraftObservationAndNavigate({
+  authState,
+}: {
+  authState: AuthState;
+}) {
+  const {data: presets} = usePresetsQuery();
+  const {navigate} = useNavigationFromHomeTabs();
+  const existingObservation = usePersistedDraftObservation(
+    store => store.value,
+  );
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // if no exisiting observation, stay home
+      if (!existingObservation || authState === 'obscured') {
+        return;
+      }
+      // if existing observation and no preset match, user has started creating an observation but had not chosen a preset, so navigate to preset chooser
+      if (!matchPreset(existingObservation.tags, presets)) {
+        navigate('PresetChooser');
+
+        // if existing observation, preset match, and docId exists, navigate to Observation Edit Screen
+      } else if ('docId' in existingObservation) {
+        navigate('ObservationEdit', {observationId: existingObservation.docId});
+      } else {
+        navigate('ObservationCreate');
+      }
+    }, [existingObservation, navigate, presets, authState]),
+  );
+}
 
 const styles = StyleSheet.create({
   bottomContainer: {

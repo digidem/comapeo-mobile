@@ -134,6 +134,7 @@ export type RootStackParamsList = {
     name?: string;
     serverDeviceId: string;
   };
+  ExportObservations: undefined;
 };
 
 export type OnboardingParamsList = {

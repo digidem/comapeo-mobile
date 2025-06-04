@@ -8,7 +8,7 @@ describe('Observations - Create Observation Flow', () => {
   it('should set location and open create observation screen', async () => {
     const addObsBtn = await $('~Add Observation');
     await addObsBtn.click();
-    await expect($(byTextMatches('Choose what is happening'))).toBeDisplayed();
+    await expect($(byTextMatches('Choose a category'))).toBeDisplayed();
     await expect($(byTextMatches('Airstrip'))).toBeDisplayed();
   });
 
@@ -97,5 +97,7 @@ describe('Observations - Create Observation Flow', () => {
     } catch (err) {
       console.log('No RN Alert dialog was found.');
     }
+    const mapBtn = await $('~Go to map.');
+    await mapBtn.click();
   });
 });

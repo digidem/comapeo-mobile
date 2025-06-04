@@ -7,7 +7,6 @@ import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDoc
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
-import {ProjectCard} from './ProjectCard';
 
 const m = defineMessages({
   noObservationsTitle: {
@@ -52,13 +51,6 @@ export const ObservationEmptyView = ({
           text={t(m.backButton)}
         />
       }>
-      <View
-        style={{
-          width: '110%',
-          paddingBottom: 40,
-        }}>
-        <ProjectCard />
-      </View>
       <View style={styles.iconCircle}>
         <ObservationListIcon size={ICON_SIZE} />
       </View>

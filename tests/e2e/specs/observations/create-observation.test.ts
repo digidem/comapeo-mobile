@@ -97,5 +97,7 @@ describe('Observations - Create Observation Flow', () => {
     } catch (err) {
       console.log('No RN Alert dialog was found.');
     }
+    const mapBtn = await $('~Go to map.');
+    await mapBtn.click();
   });
 });

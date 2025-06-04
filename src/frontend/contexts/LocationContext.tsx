@@ -39,6 +39,8 @@ export function useLocationState<T>(selector?: (state: LocationState) => T) {
 const LocationContext = createContext<StoreApi<LocationState> | null>(null);
 
 const POLL_PROVIDER_STATUS_INTERVAL = 10000;
+const MIN_MS_BETWEEN_UPDATE = 1000;
+const MIN_METERS_BETWEEN_UPDATE = 5;
 
 export function LocationProvider({children}: {children: React.ReactNode}) {
   const {
@@ -193,14 +195,14 @@ function startWatchPosition(store: StoreApi<LocationState>) {
 
       const timeElapsed = location.timestamp - lastThrottledLocation.timestamp;
 
-      if (timeElapsed < 1000) return;
+      if (timeElapsed < MIN_MS_BETWEEN_UPDATE) return;
 
       const coords = getCoords(location);
       const lastCoords = getCoords(lastThrottledLocation);
       const ruler = new CheapRuler(lastCoords[1], 'meters');
       const distance = ruler.distance(coords, lastCoords);
 
-      if (distance > 5) {
+      if (distance > MIN_METERS_BETWEEN_UPDATE) {
         store.setState(prev => ({
           ...prev,
           throttledMapLocation: location,

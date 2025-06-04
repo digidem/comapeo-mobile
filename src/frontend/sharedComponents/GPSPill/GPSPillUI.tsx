@@ -3,21 +3,18 @@ import {TouchableOpacity, View} from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {ExhaustivenessError} from '../lib/ExhaustivenessError';
+import {ExhaustivenessError} from '../../lib/ExhaustivenessError';
 import {
   DARK_GREY,
   DARK_MAGENTA,
   GREEN,
   WARNING_RED,
   WHITE,
-} from '../lib/styles';
-import {BodyText} from './Text/BodyText';
+} from '../../lib/styles';
+import {BodyText} from '../Text/BodyText';
 
 type Props = {
-  accessibilityLabel?: string;
-  onPress?: () => void;
-  iconTestID?: string;
-  testID?: string;
+  onPress: () => void;
 } & (
   | {
       status: 'searching' | 'error';
@@ -28,7 +25,7 @@ type Props = {
     }
 );
 
-export const GPSPill = (props: Props) => {
+export const GPSPillUI = (props: Props) => {
   let backgroundColor: string;
   let icon: ReactNode;
   let text: string;
@@ -39,7 +36,6 @@ export const GPSPill = (props: Props) => {
       text = '--';
       icon = (
         <View
-          testID={props.iconTestID}
           style={{
             backgroundColor: DARK_MAGENTA,
             borderRadius: 50,
@@ -61,7 +57,7 @@ export const GPSPill = (props: Props) => {
       backgroundColor = DARK_GREY;
       text = '--';
       icon = (
-        <View testID={props.iconTestID}>
+        <View>
           <UIActivityIndicator
             // Animations seem to cause issues with test performance on Browserstack
             animating={!isE2E}
@@ -81,7 +77,6 @@ export const GPSPill = (props: Props) => {
       text = `${Math.abs(Math.round(props.accuracy))} ±`;
       icon = (
         <View
-          testID={props.iconTestID}
           style={{
             backgroundColor: GREEN,
             height: 12,
@@ -102,8 +97,8 @@ export const GPSPill = (props: Props) => {
   return (
     <TouchableOpacity
       onPress={props.onPress}
-      testID={props.testID}
-      accessibilityLabel={props.accessibilityLabel}
+      testID="MAP.gps-pill"
+      accessibilityLabel="Open GPS Modal."
       style={{
         flexDirection: 'row',
         alignItems: 'center',

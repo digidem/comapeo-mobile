@@ -124,6 +124,7 @@ export const AudioAttachmentPlaybackScreen = ({
       }>
       <View style={audioStyles.audioBox}>
         <TouchableOpacity
+          testID="audio-play-toggle"
           onPress={() => (isPlaying ? stopPlayback() : startPlayback())}
           style={styles.playButton}>
           {isPlaying ? <StopIcon size={60} color={BLACK} /> : <PlayArrow />}

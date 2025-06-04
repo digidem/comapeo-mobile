@@ -2,73 +2,41 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches} from '../../utils/selectors';
 
-describe('Audio - Add Additional Recording', () => {
-  it('creates observation and records first audio clip', async () => {
-    const addObsBtn = await $('~Add Observation');
-    await addObsBtn.click();
+describe('Audio - Two Recordings Show in Thumbnails', () => {
+  it('creates observation and records first audio', async () => {
+    await $('~Add Observation').click();
+    await $(byTextMatches('Airstrip')).click();
+    await $(byResourceId('OBS.add-audio-btn')).click();
 
-    const communityCategory = await $(byTextMatches('Community'));
-    await communityCategory.click();
-    await expect($(byTextMatches('Community'))).toBeDisplayed();
+    await $('~Stop recording audio.').click();
 
-    const micButton = await $(byResourceId('OBS.add-audio-btn'));
-    await micButton.click();
-
-    const startButton = await $('~Start recording audio.');
-    await startButton.click();
-    await driver.pause(1000);
-    const stopButton = await $('~Stop recording audio.');
-    await stopButton.click();
-
-    const closeBtn = await $(byResourceId('close-icon'));
-    await closeBtn.click();
-
-    await expect(
-      $(byTextMatches('Your Audio Recording was added')),
-    ).toBeDisplayed();
+    await expect($(byTextMatches('Recording Saved!'))).toBeDisplayed();
+    await expect($(byTextMatches('0[0-4]:[0-5][0-9]'))).toBeDisplayed();
+    await $(byTextMatches('Back to Editing')).click();
   });
 
-  it('taps "Record Another" and starts second recording', async () => {
-    const another = await $(byTextMatches('Record Another'));
-    await another.click();
+  it('confirms first audio thumbnail is correct', async () => {
+    const firstThumb = await $('~Play audio recording.');
+    await expect(firstThumb).toBeDisplayed();
 
-    const recordPrompt = await $(byTextMatches('Record up to 5 minutes'));
-    await expect(recordPrompt).toBeDisplayed();
-
-    const timer = await $(byTextMatches('00:00'));
-    await expect(timer).toBeDisplayed();
-
-    const startButton = await $('~Start recording audio.');
-    await startButton.click();
-
-    const inProgressText = await $(byTextMatches('Less than 5 minutes left'));
-    await expect(inProgressText).toBeDisplayed();
+    await expect($(byTextMatches('0[0-4]:[0-5][0-9]'))).toBeDisplayed();
+    await expect($(byTextMatches('(ago|seconds|minutes)'))).toBeDisplayed();
   });
 
-  it('stops second recording and returns to editor', async () => {
-    const stopButton = await $('~Stop recording audio.');
-    await stopButton.click();
+  it('records second audio and confirms both show up', async () => {
+    await $(byResourceId('OBS.add-audio-btn')).click();
+    await $('~Stop recording audio.').click();
+    await $(byTextMatches('Back to Editing')).click();
 
-    await expect(
-      $(byTextMatches('Total length: 0[0-4]:[0-5][0-9]')),
-    ).toBeDisplayed();
+    const thumbnails = await $$('~Play audio recording.');
+    expect(thumbnails.length).toBeGreaterThanOrEqual(2);
 
-    const audioEndButton = await $(byResourceId('close-icon'));
-    await audioEndButton.click();
+    const durations = await $$(byTextMatches('0[0-4]:[0-5][0-9]'));
+    expect(durations.length).toBeGreaterThanOrEqual(1);
 
-    await expect(
-      $(byTextMatches('Your Audio Recording was added')),
-    ).toBeDisplayed();
-
-    const returnBtn = await $(byTextMatches('Return to Editor'));
-    await returnBtn.click();
+    const times = await $$(byTextMatches('(ago|seconds|minutes)'));
+    expect(times.length).toBeGreaterThanOrEqual(1);
   });
-
-  it('verifies that both audio thumbnails are visible and exits', async () => {
-    const audioThumbnails = await $$('~Play audio recording.');
-    expect(audioThumbnails.length).toBeGreaterThanOrEqual(2);
-  });
-
   it('saves edited observation (handles GPS alert)', async () => {
     const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
     await saveBtn.click();
@@ -83,5 +51,33 @@ describe('Audio - Add Additional Recording', () => {
     } catch (err) {
       console.log('No RN Alert dialog was found.');
     }
+  });
+  it('confirms audio recordings can be played from a saved observation', async () => {
+    const obsListTab = await $('~Go to observations list.');
+    await obsListTab.click();
+    await $(byTextMatches('Airstrip')).click();
+    const thumbnails = await $$('~Play audio recording.');
+    thumbnails[0].click();
+    await expect(
+      $(byTextMatches('(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)')),
+    ).toBeDisplayed();
+    await expect($(byTextMatches('Share'))).toBeDisplayed();
+    const initialTimer = await $(byTextMatches('00:00 / \\d{2}:\\d{2}'));
+    await expect(initialTimer).toBeDisplayed();
+    const playBtn = $(byResourceId('audio-play-toggle'));
+    playBtn.click();
+
+    await driver.pause(1500);
+
+    await expect(
+      $(byTextMatches('0[1-9]:\\d{2} / \\d{2}:\\d{2}')),
+    ).toBeDisplayed();
+
+    playBtn.click();
+
+    await driver.back();
+    await driver.back();
+    const mapTab = await $('~Go to map.');
+    await mapTab.click();
   });
 });

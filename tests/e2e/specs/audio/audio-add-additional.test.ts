@@ -5,7 +5,7 @@ import {byResourceId, byTextMatches} from '../../utils/selectors';
 describe('Audio - Two Recordings Show in Thumbnails', () => {
   it('creates observation and records first audio', async () => {
     await $('~Add Observation').click();
-    await $(byTextMatches('Airstrip')).click();
+    await $(byTextMatches('Community')).click();
     await $(byResourceId('OBS.add-audio-btn')).click();
     await driver.pause(3000);
     await $('~Stop recording audio.').click();
@@ -56,7 +56,7 @@ describe('Audio - Two Recordings Show in Thumbnails', () => {
   it('confirms audio recordings can be played from a saved observation', async () => {
     const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
-    await $(byTextMatches('Airstrip')).click();
+    await $(byTextMatches('Community')).click();
     const thumbnails = await $$('~Play audio recording.');
     thumbnails[0].click();
     await expect(

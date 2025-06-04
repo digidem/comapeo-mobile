@@ -30,11 +30,15 @@ import {useLocationState} from '../../contexts/LocationContext';
 import {getCoords} from '../../lib/coordinateFormat';
 import {useTracking} from '../../hooks/useTracking';
 import {UserTooltipMarker} from './CurrentTrack/UserTooltipMarker';
+import {useNonReactiveSavedLocation} from '../../contexts/SavedLocationContext';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
 // current zoom is < 12.
 const DEFAULT_ZOOM = 12;
+
+// Where Peru, Columbia, and Brazil Meet
+const FALLBACK_COORDINATE = [-69.945, -4.231944];
 
 assert(
   process.env.MAPBOX_ACCESS_TOKEN,
@@ -50,15 +54,17 @@ export const MapScreen = ({
   const trackBottomSheetOpen = route.params?.trackingOpen;
   const [zoom, setZoom] = React.useState(DEFAULT_ZOOM);
   const [isFinishedLoading, setIsFinishedLoading] = React.useState(false);
-  const [following, setFollowing] = React.useState(true);
+
   const {newDraft} = useDraftObservation();
   const {navigate} = useNavigationFromHomeTabs();
   const location = useLocationState(store => store.throttledMapLocation);
   const coords = location && getCoords(location);
+  const [following, setFollowing] = React.useState(() => !!coords);
   const {isTracking} = useTracking();
   const {data: styleUrl} = useMapStyleJsonUrl();
 
   const {authState} = useAuthContext();
+  const savedLocation = useNonReactiveSavedLocation();
 
   useCheckDraftObservationAndNavigate({authState});
 
@@ -108,12 +114,14 @@ export const MapScreen = ({
           return true;
         }}>
         <Mapbox.Camera
-          defaultSettings={{
-            centerCoordinate: coords || [0, 0],
-            zoomLevel: zoom,
-          }}
-          centerCoordinate={following ? coords : undefined}
-          zoomLevel={following ? zoom : undefined}
+          centerCoordinate={
+            coords && following
+              ? coords
+              : savedLocation
+                ? getCoords(savedLocation)
+                : FALLBACK_COORDINATE
+          }
+          zoomLevel={DEFAULT_ZOOM}
           animationDuration={1000}
           animationMode="flyTo"
           followUserLocation={false}

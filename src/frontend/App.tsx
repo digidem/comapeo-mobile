@@ -35,6 +35,7 @@ import {getAppLanguageTag} from './lib/intl';
 import {IntlProvider} from './contexts/IntlContext';
 import {ServerLoading} from './ServerLoading';
 import type {StatusMessage} from '../backend/src/status';
+import {createSavedLocationStore} from './contexts/SavedLocationContext';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -119,6 +120,8 @@ const persistedMetricsDiagnosticsStore = createMetricsDiagnosticsStore({
   persist: true,
 });
 
+const savedLocationStore = createSavedLocationStore({persist: true});
+
 // Ensure that these metrics instances are initially in sync with initial state of relevant store
 const metricsIsEnabled =
   persistedMetricsDiagnosticsStore.instance.getState().isEnabled;
@@ -197,6 +200,7 @@ const App = () => {
             manualEntryCoordinateFormatStore={
               persistedManualEntryCoordinateFormatStore
             }
+            savedLocationStore={savedLocationStore}
             activeProjectIdStore={persistedActiveProjectIdStore}
             metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}>
             <AppNavigator permissionAsked={permissionsAsked} />

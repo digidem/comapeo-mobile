@@ -10,7 +10,6 @@ import {StyleSheet, TextInput, ToastAndroid, View} from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {useLocation} from '../../hooks/useLocation';
 import {LIGHT_GREY, RED, WHITE} from '../../lib/styles';
 import {Button} from '../../sharedComponents/Button';
 import {LocationView} from '../../sharedComponents/Editor/LocationView';
@@ -18,6 +17,7 @@ import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDoc
 import {Text} from '../../sharedComponents/Text';
 import type {Metadata} from '../../sharedTypes';
 import {usePresetsQuery} from '../../hooks/server/presets';
+import {useLocationState} from '../../contexts/LocationContext';
 
 const DISTANCE_BUFFER_KM = 50;
 
@@ -26,7 +26,7 @@ const BASE_NUMBER_INPUT_RULES = {
 };
 
 export function CreateTestDataScreen() {
-  const locationState = useLocation({maxDistanceInterval: 0});
+  const location = useLocationState(store => store.location);
   const createFakeObservations = useCreateFakeObservationsMutation();
 
   const {
@@ -47,7 +47,7 @@ export function CreateTestDataScreen() {
           disabled={createFakeObservations.status === 'pending'}
           onPress={handleSubmit(data => {
             if (data.count === undefined) return;
-            if (!locationState.location) {
+            if (!location) {
               ToastAndroid.show('Waiting for location', ToastAndroid.SHORT);
               return;
             }
@@ -55,7 +55,7 @@ export function CreateTestDataScreen() {
             createFakeObservations.mutate(
               {
                 count: data.count,
-                location: locationState.location,
+                location: location,
                 distance:
                   data.distance === undefined
                     ? DISTANCE_BUFFER_KM
@@ -126,11 +126,11 @@ export function CreateTestDataScreen() {
         </Text>
         <View>
           <Text>Current location: </Text>
-          {locationState.location ? (
+          {location ? (
             <LocationView
-              lat={locationState.location.coords.latitude}
-              lon={locationState.location.coords.longitude}
-              accuracy={locationState.location.coords.accuracy || undefined}
+              lat={location.coords.latitude}
+              lon={location.coords.longitude}
+              accuracy={location.coords.accuracy || undefined}
             />
           ) : (
             <UIActivityIndicator size={20} />

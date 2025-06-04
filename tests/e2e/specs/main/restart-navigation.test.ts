@@ -14,7 +14,7 @@ describe('MAIN - Observation Navigation Flow', () => {
     const addObsBtn = await $('~Add Observation');
     await addObsBtn.click();
 
-    await expect($(byTextMatches('Choose what is happening'))).toBeDisplayed();
+    await expect($(byTextMatches('Choose a category'))).toBeDisplayed();
     await expect($(byTextMatches('Airstrip'))).toBeDisplayed();
   });
 
@@ -22,7 +22,7 @@ describe('MAIN - Observation Navigation Flow', () => {
     await driver.terminateApp('com.comapeo.rc');
     await driver.activateApp('com.comapeo.rc');
 
-    await expect($(byTextMatches('Choose what is happening'))).toBeDisplayed();
+    await expect($(byTextMatches('Choose a category'))).toBeDisplayed();
   });
 
   it('should navigate to ObservationCreate when a preset is selected', async () => {

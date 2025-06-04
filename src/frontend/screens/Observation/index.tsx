@@ -10,11 +10,7 @@ import {FieldDetails} from './FieldDetails';
 import {InsetMapView} from './InsetMapView';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
-import {
-  useOwnDeviceInfo,
-  useManyDocs,
-  useDocumentCreatedBy,
-} from '@comapeo/core-react';
+import {useManyDocs} from '@comapeo/core-react';
 import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types.ts';
 import {ButtonFields} from './Buttons.tsx';
 import {AudioAttachment} from '../../sharedTypes/audio.ts';
@@ -67,16 +63,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   const {observation, preset} = useObservationWithPreset(observationId);
 
   const {data: fieldsData} = useManyDocs({projectId, docType: 'field'});
-  const {lat, lon, originalVersionId, metadata} = observation;
-  const {data: deviceInfo} = useOwnDeviceInfo();
-  const {data: createdByDeviceId} = useDocumentCreatedBy({
-    projectId: projectId,
-    originalVersionId,
-  });
-  const isMine =
-    deviceInfo?.deviceId !== undefined &&
-    createdByDeviceId !== undefined &&
-    deviceInfo.deviceId === createdByDeviceId;
+  const {lat, lon, metadata} = observation;
 
   const fields = preset
     ? (preset.fieldRefs
@@ -184,11 +171,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
           </>
         )}
         <View style={styles.divider} />
-        <ButtonFields
-          isMine={isMine}
-          observationId={observationId}
-          fields={fields}
-        />
+        <ButtonFields observationId={observationId} fields={fields} />
       </>
     </ScrollView>
   );

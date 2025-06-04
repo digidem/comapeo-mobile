@@ -75,10 +75,6 @@ import {SaveButton} from '../../sharedComponents/SaveButton.tsx';
 import {AddRemoteArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/AddRemoteArchive.tsx';
 import {SuccessfullyAddedArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/SuccessfullyAddedArchive.tsx';
 import {
-  createNavigationOptions as createMapManagementNavigationOptions,
-  MapManagementScreen,
-} from '../../screens/Settings/MapManagement';
-import {
   createNavigationOptions as createBackgroundMapsNavigationOptions,
   BackgroundMapsScreen,
 } from '../../screens/Settings/MapManagement/BackgroundMaps.tsx';
@@ -106,6 +102,7 @@ import {
   RemoveRemoteArchive,
   navigationOptions as removeRemoteArchiveNavigationOptions,
 } from '../../screens/Settings/ProjectSettings/RemoteArchive/RemoveRemoteArchive.tsx';
+import {ExportObservations} from '../../screens/ExportObservations.tsx';
 import {
   ConfirmDeletePhoto,
   navigationOptions as confirmDeletePhotoNavigationOptions,
@@ -351,11 +348,6 @@ export const createDefaultScreenGroup = ({
         options={{headerShown: false}}
       />
       <RootStack.Screen
-        name="MapManagement"
-        component={MapManagementScreen}
-        options={createMapManagementNavigationOptions({intl})}
-      />
-      <RootStack.Screen
         name="BackgroundMaps"
         component={BackgroundMapsScreen}
         options={createBackgroundMapsNavigationOptions({intl})}
@@ -478,6 +470,10 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="TrackRecordingActive"
         component={TrackRecordingActive}
+      />
+      <RootStack.Screen
+        name="ExportObservations"
+        component={ExportObservations}
       />
     </RootStack.Group>
   </>

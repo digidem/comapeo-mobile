@@ -8,6 +8,10 @@ import {HeaderText} from './Text/HeaderText';
 import {BLUE_GREY, DARK_GREY} from '../lib/styles';
 import {useProjectRoleAndDetails} from '../hooks/useProjectRoleAndDetails';
 import {useActiveProject} from '../contexts/ActiveProjectContext';
+import ProjectCoordinatorIcon from '../images/ProjectCoordinator.svg';
+import ProjectParticipantIcon from '../images/ProjectParticipant.svg';
+import NoProjectIcon from '../images/NoProjectIcon.svg';
+import {SvgProps} from 'react-native-svg';
 
 type HomeHeaderProps = BottomTabHeaderProps & {
   backgroundColor: string;
@@ -27,6 +31,24 @@ export function HomeHeader({
       ? projectDetails.projectHeader
       : projectDetails.projectName;
 
+  let RoleIcon: React.FC<SvgProps>;
+  let testID: string;
+
+  switch (projectDetails.role) {
+    case 'coordinator':
+      RoleIcon = ProjectCoordinatorIcon;
+      testID = 'HOME.coordinator-icon';
+      break;
+    case 'participant':
+      RoleIcon = ProjectParticipantIcon;
+      testID = 'HOME.participant-icon';
+      break;
+    default:
+      RoleIcon = NoProjectIcon;
+      testID = 'HOME.no-project-icon';
+      break;
+  }
+
   return (
     <View
       style={[
@@ -43,6 +65,7 @@ export function HomeHeader({
             styles.titleBox,
             {backgroundColor: projectDetails.projectColor},
           ]}>
+          <RoleIcon testID={testID} style={{marginRight: 10}} />
           <HeaderText
             testID="HOME.header-title"
             variant="header4"
@@ -85,7 +108,9 @@ const styles = StyleSheet.create({
     width: '85%',
     minHeight: 32,
     borderRadius: 6,
-    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 5,
   },
   text: {
     paddingLeft: 5,

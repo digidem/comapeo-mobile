@@ -1,6 +1,6 @@
 {
   "name": "comapeo-mobile",
-  "version": "1.4.0-pre",
+  "version": "1.5.0-pre",
   "private": true,
   "main": "index.js",
   "scripts": {
@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@bam.tech/react-native-image-resizer": "3.0.11",
-    "@comapeo/core-react": "4.2.1",
+    "@comapeo/core-react": "4.3.0",
     "@comapeo/ipc": "3.0.0",
     "@expo-google-fonts/rubik": "0.2.3",
     "@formatjs/intl-getcanonicallocales": "2.5.5",

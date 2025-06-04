@@ -24,14 +24,14 @@ const m = defineMessages({
     id: 'screens.DeviceNaming.Success.description',
     defaultMessage: 'You named your device',
   },
-  goToMap: {
-    id: 'screens.DeviceNaming.Success.goToMap',
-    defaultMessage: 'Go to Map',
+  startUsing: {
+    id: 'screens.DeviceNaming.Success.startUsihng',
+    defaultMessage: 'Start Using CoMapeo',
   },
   startMappingInstructions: {
     id: 'screens.DeviceNaming.Success.startMappingInstructions',
     defaultMessage:
-      'You can start mapping alone or start mapping with a team. Create or join a project in order to share data with other devices that are part of the same project.',
+      'On the next screen, tap the orange button to record your first observation.',
   },
   findSettings: {
     id: 'screens.DeviceNaming.Success.findSettings',
@@ -57,8 +57,11 @@ export const Success = ({
           <NewDeviceLogo />
           <Text style={{marginLeft: 10}}>{deviceName}</Text>
         </View>
-        <Text style={{marginTop: 20}}>{t(m.startMappingInstructions)}</Text>
-        <Text>{t(m.findSettings)}</Text>
+        <View>
+          <Text style={{marginTop: 20}}>{t(m.startMappingInstructions)}</Text>
+          <Text></Text>
+          <Text>{t(m.findSettings)}</Text>
+        </View>
       </View>
       <Button
         testID="ONBOARDING.go-to-map-btn"
@@ -74,7 +77,7 @@ export const Success = ({
         ) : status === 'success' ? (
           <MaterialIcons name="check" size={30} color={WHITE} />
         ) : (
-          t(m.goToMap)
+          t(m.startUsing)
         )}
       </Button>
     </View>

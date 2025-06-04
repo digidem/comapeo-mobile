@@ -40,6 +40,29 @@ describe('useTrackState()', () => {
 });
 
 describe('useTrackActions()', () => {
+  test('initializeTrackTime()', () => {
+    const trackStore = createTrackStore();
+    const wrapper = createWrapper(trackStore);
+    const dateSpy = jest.spyOn(global, 'Date');
+
+    const actionsHook = renderHook(() => useTrackActions(), {
+      wrapper,
+    });
+    const stateHook = renderHook(() => useTrackState(), {
+      wrapper,
+    });
+
+    act(() => {
+      actionsHook.result.current.initializeTrackTime();
+    });
+
+    expect(stateHook.result.current).toStrictEqual({
+      description: '',
+      locationHistory: [],
+      observationRefs: [],
+      startTime: dateSpy.mock.instances.at(-1),
+    });
+  });
   test('addNewObservation()', () => {
     const trackStore = createTrackStore();
     const wrapper = createWrapper(trackStore);
@@ -62,6 +85,7 @@ describe('useTrackActions()', () => {
       description: '',
       locationHistory: [],
       observationRefs: [{docId: 'doc_1', versionId: 'version_1'}],
+      startTime: null,
     });
   });
 
@@ -84,6 +108,7 @@ describe('useTrackActions()', () => {
       description: 'some description',
       locationHistory: [],
       observationRefs: [],
+      startTime: null,
     });
 
     act(() => {
@@ -117,6 +142,7 @@ describe('useTrackActions()', () => {
       description: 'some description',
       locationHistory: [],
       observationRefs: [],
+      startTime: null,
     });
   });
 
@@ -148,6 +174,7 @@ describe('useTrackActions()', () => {
         {latitude: 1, longitude: 1, timestamp: timestamp2},
       ],
       observationRefs: [],
+      startTime: null,
     });
 
     const timestamp3 = timestamp2 + 1_000;
@@ -166,6 +193,7 @@ describe('useTrackActions()', () => {
         {latitude: 0.5, longitude: 0.5, timestamp: timestamp3},
       ],
       observationRefs: [],
+      startTime: null,
     });
   });
 });

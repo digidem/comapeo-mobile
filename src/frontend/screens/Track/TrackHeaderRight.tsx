@@ -6,7 +6,7 @@ import {useSingleDocByDocId} from '@comapeo/core-react';
 import {EditIcon} from '../../sharedComponents/icons';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useActiveProject} from '../../contexts/ActiveProjectContext.tsx';
-import {useCanEditOrDelete} from '../../hooks/server/useCanEditorDelete.ts';
+import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
 
 export const TrackHeaderRight = ({trackId}: {trackId: string}) => {
   const {projectId} = useActiveProject();

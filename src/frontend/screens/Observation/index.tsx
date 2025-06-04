@@ -32,7 +32,6 @@ import {
 } from '../../sharedComponents/Thumbnails/ThumbnailContainer.tsx';
 import {SavedPhotoThumbnailImage} from '../../sharedComponents/Thumbnails/PhotoThumbnail.tsx';
 import {AudioSavedThumbnail} from '../../sharedComponents/Thumbnails/AudioThumbnail.tsx';
-import {useCanEditOrDelete} from '../../hooks/server/useCanEditorDelete.ts';
 
 const m = defineMessages({
   deleteTitle: {
@@ -64,9 +63,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   const {observation, preset} = useObservationWithPreset(observationId);
 
   const {data: fieldsData} = useManyDocs({projectId, docType: 'field'});
-  const {lat, lon, originalVersionId, metadata} = observation;
-
-  const canDelete = useCanEditOrDelete(originalVersionId);
+  const {lat, lon, metadata} = observation;
 
   const fields = preset
     ? (preset.fieldRefs
@@ -174,11 +171,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
           </>
         )}
         <View style={styles.divider} />
-        <ButtonFields
-          canDelete={canDelete}
-          observationId={observationId}
-          fields={fields}
-        />
+        <ButtonFields observationId={observationId} fields={fields} />
       </>
     </ScrollView>
   );

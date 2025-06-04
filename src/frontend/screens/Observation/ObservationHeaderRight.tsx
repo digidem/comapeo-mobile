@@ -6,7 +6,7 @@ import {SyncIcon} from '../../sharedComponents/icons';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useSingleDocByDocId} from '@comapeo/core-react';
 import {useActiveProject} from '../../contexts/ActiveProjectContext.tsx';
-import {useCanEditOrDelete} from '../../hooks/server/useCanEditorDelete.ts';
+import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
 
 interface ObservationHeaderRightProps {
   observationId: string;

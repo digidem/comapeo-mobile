@@ -5,9 +5,9 @@ import {ThumbnailContainer} from './ThumbnailContainer';
 import {UnsavedAudio} from '../../sharedTypes/audio';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {millisecondsToMMSS} from '../../lib/millisecondsToFormattedTime';
-import {FormattedObservationDate} from '../FormattedData';
 import {BodyText} from '../Text/BodyText';
-import {COMAPEO_BLUE, WHITE} from '../../lib/styles';
+import {COMAPEO_BLUE, DARK_GREY, WHITE} from '../../lib/styles';
+import {DateDistance} from '../DateDistance';
 
 type Props = {
   size: number;
@@ -33,12 +33,11 @@ export const AudioDraftThumbnail = ({audio, size}: Props) => {
       <BodyText variant="tinyMeta" style={styles.durationText}>
         {millisecondsToMMSS(audio.duration)}
       </BodyText>
-      <BodyText variant="tinyMeta">
-        <FormattedObservationDate
-          createdDate={audio.createdAt.toString()}
-          variant="short"
-        />
-      </BodyText>
+
+      <DateDistance
+        date={new Date(audio.createdAt)}
+        style={{fontSize: 12, fontWeight: 400, color: DARK_GREY}}
+      />
     </ThumbnailContainer>
   );
 };

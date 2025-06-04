@@ -10,14 +10,7 @@ import {
 import {useAudioPlayback} from '../../hooks/useAudioPlayback';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {Bar} from 'react-native-progress';
-import {
-  COMAPEO_BLUE,
-  WHITE,
-  NEW_DARK_GREY,
-  BLUE_GREY,
-  VERY_LIGHT_GREY,
-  BLACK,
-} from '../../lib/styles';
+import {COMAPEO_BLUE, WHITE, VERY_LIGHT_GREY, BLACK} from '../../lib/styles';
 import {StopIcon} from '../../sharedComponents/icons';
 import PlayArrow from '../../images/PlayArrow.svg';
 import {millisecondsToMMSS} from '../../lib/millisecondsToFormattedTime';
@@ -25,6 +18,7 @@ import {DateDistance} from '../../sharedComponents/DateDistance';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {audioStyles} from './shared';
 
 const m = defineMessages({
   recordingSaved: {
@@ -79,12 +73,12 @@ export const AudioDraftPlaybackScreen = ({
       }>
       <View style={{paddingTop: 65}}>
         {!fromEditorPreview && (
-          <BodyText variant="large" style={styles.savedHeader}>
+          <BodyText variant="large" style={audioStyles.textStyle}>
             {formatMessage(m.recordingSaved)}
           </BodyText>
         )}
       </View>
-      <View style={styles.audioBox}>
+      <View style={audioStyles.audioBox}>
         <TouchableOpacity
           onPress={() => (isPlaying ? stopPlayback() : startPlayback())}
           style={{
@@ -103,12 +97,12 @@ export const AudioDraftPlaybackScreen = ({
           borderWidth={0}
         />
         <View>
-          <HeaderText style={styles.durationText} variant="header3">
+          <HeaderText style={{textAlign: 'center'}} variant="header3">
             {millisecondsToMMSS(isPlaying ? currentPosition : duration)}
           </HeaderText>
           <DateDistance
             date={new Date(createdAt)}
-            style={styles.relativeTime}
+            style={audioStyles.textStyle}
           />
         </View>
       </View>
@@ -122,26 +116,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 30,
     flex: 1,
-  },
-  savedHeader: {
-    color: NEW_DARK_GREY,
-    textAlign: 'center',
-  },
-  audioBox: {
-    width: 300,
-    height: 300,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: BLUE_GREY,
-    alignItems: 'center',
-    gap: 30,
-    paddingBottom: 40,
-  },
-  durationText: {
-    textAlign: 'center',
-  },
-  relativeTime: {
-    textAlign: 'center',
-    color: NEW_DARK_GREY,
   },
 });

@@ -11,7 +11,6 @@ import {
   WHITE,
   VERY_LIGHT_GREY,
   BLACK,
-  NEW_DARK_GREY,
   BLUE_GREY,
 } from '../../lib/styles';
 import {StopIcon} from '../../sharedComponents/icons';
@@ -20,7 +19,7 @@ import {millisecondsToMMSS} from '../../lib/millisecondsToFormattedTime';
 import * as FileSystem from 'expo-file-system';
 import Share from 'react-native-share';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {SIDE_ICON_BUTTON_WIDTH} from '../../screens/Audio/shared';
+import {audioStyles, SIDE_ICON_BUTTON_WIDTH} from '../../screens/Audio/shared';
 import * as Sentry from '@sentry/react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -123,7 +122,7 @@ export const AudioAttachmentPlaybackScreen = ({
           </Pressable>
         )
       }>
-      <View style={styles.audioBox}>
+      <View style={audioStyles.audioBox}>
         <TouchableOpacity
           onPress={() => (isPlaying ? stopPlayback() : startPlayback())}
           style={styles.playButton}>
@@ -140,11 +139,11 @@ export const AudioAttachmentPlaybackScreen = ({
           borderWidth={0}
         />
 
-        <HeaderText style={styles.durationText} variant="header3">
+        <HeaderText style={{textAlign: 'center'}} variant="header3">
           {millisecondsToMMSS(currentPosition)} / {millisecondsToMMSS(duration)}
         </HeaderText>
 
-        <BodyText variant="smallMeta" style={styles.dateRecorded}>
+        <BodyText variant="smallMeta" style={audioStyles.textStyle}>
           <FormattedObservationDate createdDate={createdAt} variant="long" />
         </BodyText>
       </View>
@@ -164,27 +163,9 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
     paddingBottom: 20,
   },
-  audioBox: {
-    width: 300,
-    height: 300,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: BLUE_GREY,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 20,
-    paddingBottom: 30,
-  },
   playButton: {
     flex: 1,
     justifyContent: 'flex-end',
-  },
-  durationText: {
-    textAlign: 'center',
-  },
-  dateRecorded: {
-    textAlign: 'center',
-    color: NEW_DARK_GREY,
   },
   shareButton: {
     width: 60,

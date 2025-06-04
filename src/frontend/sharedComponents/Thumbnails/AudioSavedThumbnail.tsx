@@ -4,10 +4,9 @@ import PlayArrow from '../../images/PlayArrow.svg';
 import {ThumbnailContainer} from './ThumbnailContainer';
 import {AudioAttachment} from '../../sharedTypes/audio';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {FormattedObservationDate} from '../FormattedData';
-import {BodyText} from '../Text/BodyText';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
-import {COMAPEO_BLUE, WHITE} from '../../lib/styles';
+import {COMAPEO_BLUE, DARK_GREY, WHITE} from '../../lib/styles';
+import {DateDistance} from '../DateDistance';
 
 type Props = {
   size: number;
@@ -33,12 +32,10 @@ export const AudioSavedThumbnail = ({audio, observationId, size}: Props) => {
       containerStyle={styles.container}
       accessibilityLabel="Play audio recording.">
       <PlayArrow width={48} height={48} />
-      <BodyText variant="tinyMeta">
-        <FormattedObservationDate
-          createdDate={observation.createdAt}
-          variant="long"
-        />
-      </BodyText>
+      <DateDistance
+        date={new Date(observation.createdAt)}
+        style={{fontSize: 12, fontWeight: 400, color: DARK_GREY}}
+      />
     </ThumbnailContainer>
   );
 };
@@ -49,5 +46,6 @@ const styles = StyleSheet.create({
     borderColor: COMAPEO_BLUE,
     borderWidth: 2,
     paddingVertical: 12,
+    gap: 8,
   },
 });

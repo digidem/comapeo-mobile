@@ -1,21 +1,22 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, View, AppState, Text} from 'react-native';
 
-import {BLACK, BLUE_GREY, DARK_GREY, WHITE} from '../../../lib/styles';
+import {BLUE_GREY, DARK_GREY, WHITE} from '../../../lib/styles';
 import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
 import {AnimatedBackground} from './AnimatedBackground';
 import {useAudioRecording} from './useAudioRecording';
 import {usePreventBackButtonWhileRecording} from './usePreventBackButtonWhileRecording';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
-import {AudioStyles} from '../shared';
+import {
+  audioStyles,
+  PRIMARY_CONTROL_DIAMETER,
+  MAX_RECORDING_DURATION_MS,
+} from '../shared';
+
 import {UIActivityIndicator} from 'react-native-indicators';
 import {millisecondsToMMSS} from '../../../lib/millisecondsToFormattedTime';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
-
-// 5 minutes
-const MAX_RECORDING_DURATION_MS = 300000;
-const PRIMARY_CONTROL_DIAMETER = 96;
 
 const m = defineMessages({
   lessThan5: {
@@ -40,6 +41,7 @@ export function AudioRecording({
     useAudioRecording();
   const timeElapsed = status?.durationMillis || 0;
   const isRecording = !!status?.isRecording;
+  const [recordingReady, setRecordingReady] = React.useState(false);
 
   const {formatMessage} = useIntl();
 
@@ -48,7 +50,11 @@ export function AudioRecording({
   });
 
   React.useEffect(() => {
-    startRecording();
+    const start = async () => {
+      await startRecording();
+      setRecordingReady(true);
+    };
+    start();
   }, [startRecording]);
 
   const finishRecording = React.useCallback(async () => {
@@ -88,6 +94,20 @@ export function AudioRecording({
     };
   }, [isRecording, finishRecording]);
 
+  if (!recordingReady) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: DARK_GREY,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <UIActivityIndicator color={WHITE} />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.background}>
       <ScreenContentWithDock
@@ -104,9 +124,9 @@ export function AudioRecording({
           ) : (
             <TouchableOpacity
               onPress={finishRecording}
-              style={AudioStyles.basePressable}
+              style={audioStyles.basePressable}
               accessibilityLabel="Stop recording audio.">
-              <View style={styles.stop} />
+              <View style={audioStyles.stop} />
             </TouchableOpacity>
           )
         }>
@@ -117,7 +137,7 @@ export function AudioRecording({
             </BodyText>
           </View>
           <View style={{flex: 1, justifyContent: 'center'}}>
-            <Text style={styles.timerText}>
+            <Text style={audioStyles.timerText}>
               {millisecondsToMMSS(timeElapsed)}
             </Text>
             <BodyText variant="smallMeta" style={styles.messageText}>
@@ -141,11 +161,11 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    backgroundColor: 'transparent', // ✅ was DARK_GREY — needs to be transparent so animation shows
+    backgroundColor: 'transparent',
   },
   dockContainer: {
     paddingVertical: 24,
-    backgroundColor: 'transparent', // ✅ same
+    backgroundColor: 'transparent',
   },
   center: {
     justifyContent: 'center',
@@ -154,12 +174,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   timerContainer: {flex: 1, justifyContent: 'flex-start'},
-  stop: {
-    height: PRIMARY_CONTROL_DIAMETER / 3,
-    width: PRIMARY_CONTROL_DIAMETER / 3,
-    backgroundColor: BLACK,
-    alignSelf: 'center',
-  },
   recordingText: {
     color: WHITE,
     textAlign: 'center',
@@ -169,11 +183,5 @@ const styles = StyleSheet.create({
     color: BLUE_GREY,
     textAlign: 'center',
     paddingTop: 40,
-  },
-  timerText: {
-    color: WHITE,
-    textAlign: 'center',
-    fontSize: 96,
-    fontFamily: 'Rubik_500Medium',
   },
 });

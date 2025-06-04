@@ -34,6 +34,7 @@ import {
   type MetricsDiagnosticsStore,
   MetricsDiagnosticsStoreProvider,
 } from './MetricsDiagnosticsStoreContext';
+import {LocationProvider} from './LocationContext';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -73,25 +74,27 @@ export const AppProviders = ({
                 <QueryClientProvider client={queryClient}>
                   <SafeAreaProvider>
                     <GestureHandlerRootView style={styles.flex}>
-                      <TrackTimerContextProvider>
-                        <LocalDiscoveryProvider
-                          value={localDiscoveryController}>
-                          <ClientApiProvider clientApi={mapeoApi}>
-                            <ActiveProjectProvider>
-                              <BottomSheetModalProvider>
-                                <PhotoPromiseProvider>
-                                  <DraftObservationProvider
-                                    draftObservationStore={
-                                      persistedDrafObservationStore
-                                    }>
-                                    <AuthProvider>{children}</AuthProvider>
-                                  </DraftObservationProvider>
-                                </PhotoPromiseProvider>
-                              </BottomSheetModalProvider>
-                            </ActiveProjectProvider>
-                          </ClientApiProvider>
-                        </LocalDiscoveryProvider>
-                      </TrackTimerContextProvider>
+                      <LocationProvider>
+                        <TrackTimerContextProvider>
+                          <LocalDiscoveryProvider
+                            value={localDiscoveryController}>
+                            <ClientApiProvider clientApi={mapeoApi}>
+                              <ActiveProjectProvider>
+                                <BottomSheetModalProvider>
+                                  <PhotoPromiseProvider>
+                                    <DraftObservationProvider
+                                      draftObservationStore={
+                                        persistedDrafObservationStore
+                                      }>
+                                      <AuthProvider>{children}</AuthProvider>
+                                    </DraftObservationProvider>
+                                  </PhotoPromiseProvider>
+                                </BottomSheetModalProvider>
+                              </ActiveProjectProvider>
+                            </ClientApiProvider>
+                          </LocalDiscoveryProvider>
+                        </TrackTimerContextProvider>
+                      </LocationProvider>
                     </GestureHandlerRootView>
                   </SafeAreaProvider>
                 </QueryClientProvider>

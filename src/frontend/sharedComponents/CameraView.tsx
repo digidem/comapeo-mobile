@@ -12,8 +12,8 @@ import {
   MediaMetadata,
   PhotoPromiseWithMetadata,
 } from '../contexts/PhotoPromiseContext/types';
-import {useLocation} from '../hooks/useLocation';
 import {locationToEXIF, PhotoEXIFSchema} from '../lib/exif';
+import {useLocationState} from '../contexts/LocationContext';
 
 const m = defineMessages({
   noCameraAccess: {
@@ -37,7 +37,7 @@ export const CameraView = ({onAddPress}: Props) => {
   const ref = React.useRef<ExpoCameraView>(null);
   const accelerometerMeasurement = React.useRef<AccelerometerMeasurement>();
   const [permissionsResponse] = useCameraPermissions();
-  const {location} = useLocation({maxDistanceInterval: 0});
+  const location = useLocationState(store => store.location);
 
   React.useEffect(() => {
     let isCancelled = false;

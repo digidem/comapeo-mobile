@@ -2,14 +2,11 @@ import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 
 import {IconButton} from '../../sharedComponents/IconButton';
-import {
-  useOwnDeviceInfo,
-  useSingleDocByDocId,
-  useDocumentCreatedBy,
-} from '@comapeo/core-react';
+import {useSingleDocByDocId} from '@comapeo/core-react';
 import {EditIcon} from '../../sharedComponents/icons';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useActiveProject} from '../../contexts/ActiveProjectContext.tsx';
+import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
 
 export const TrackHeaderRight = ({trackId}: {trackId: string}) => {
   const {projectId} = useActiveProject();
@@ -19,15 +16,9 @@ export const TrackHeaderRight = ({trackId}: {trackId: string}) => {
     docId: trackId,
   });
 
-  const {data: createdByDeviceId} = useDocumentCreatedBy({
-    projectId,
-    originalVersionId: track.originalVersionId,
-  });
-
-  const {data: deviceInfo} = useOwnDeviceInfo();
   const navigation = useNavigationFromRoot();
 
-  const canEdit = createdByDeviceId === deviceInfo?.deviceId;
+  const canEdit = useCanEditOrDelete(track.originalVersionId);
 
   return canEdit ? (
     <IconButton

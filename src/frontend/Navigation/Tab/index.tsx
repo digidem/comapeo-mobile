@@ -6,7 +6,6 @@ import {ObservationsList} from '../../screens/ObservationsList';
 import {HomeHeader} from '../../sharedComponents/HomeHeader';
 import {HomeTabsParamsList} from '../../sharedTypes/navigation';
 import {TabBar} from './TabBar';
-import {SharedLocationContextProvider} from '../../contexts/SharedLocationContext';
 import {Loading} from '../../sharedComponents/Loading';
 import {WHITE} from '../../lib/styles';
 
@@ -31,11 +30,7 @@ export const HomeTabs = () => {
       }}
       initialRouteName={'Map'}
       screenLayout={({children}) => (
-        <React.Suspense fallback={<Loading />}>
-          <SharedLocationContextProvider>
-            {children}
-          </SharedLocationContextProvider>
-        </React.Suspense>
+        <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
       )}
       backBehavior="initialRoute">
       <Tab.Screen

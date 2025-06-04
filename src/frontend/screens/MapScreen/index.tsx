@@ -29,6 +29,8 @@ import AddButtonSVG from '../../images/AddButton.svg';
 import {AuthState, useAuthContext} from '../../contexts/AuthContext';
 import {useLocationState} from '../../contexts/LocationContext';
 import {getCoords} from '../../lib/coordinateFormat';
+import {useTracking} from '../../hooks/useTracking';
+import {UserTooltipMarker} from './CurrentTrack/UserTooltipMarker';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -58,7 +60,7 @@ export const MapScreen = ({
   );
   const savedLocation = useLastKnownLocation();
   const coords = location && getCoords(location);
-
+  const {isTracking} = useTracking();
   const {data: styleUrl} = useMapStyleJsonUrl();
 
   const {authState} = useAuthContext();
@@ -116,7 +118,7 @@ export const MapScreen = ({
               ? coords
               : savedLocation.data
                 ? getCoords(savedLocation.data)
-                : undefined,
+                : [0, 0],
             zoomLevel: zoom,
           }}
           centerCoordinate={following ? coords : undefined}
@@ -131,7 +133,12 @@ export const MapScreen = ({
         {isFinishedLoading && authState !== 'obscured' && (
           <>
             <RemoteDetectionAlertsMapLayer />
-            <CurrentTrackMapLayer />
+            {isTracking && (
+              <>
+                <CurrentTrackMapLayer />
+                <UserTooltipMarker />
+              </>
+            )}
             <TracksMapLayer />
             <ObservationMapLayer />
           </>

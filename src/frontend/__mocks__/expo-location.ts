@@ -15,6 +15,12 @@ export const getForegroundPermissionsAsync = () =>
     canAskAgain: true,
   });
 
+export const getProviderStatusAsync = () =>
+  Promise.resolve({
+    locationServicesEnabled: true,
+    backgroundModeEnabled: true,
+  });
+
 export const getLastKnownPositionAsync = () => Promise.resolve(null);
 
 export const watchPositionAsync = () => Promise.resolve({remove: () => {}});

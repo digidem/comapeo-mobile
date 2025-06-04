@@ -50,7 +50,7 @@
     "message": "You’ve been recording for {time}"
   },
   "Navigation.Menu.Settings": {
-    "message": "Settings"
+    "message": "App Settings"
   },
   "Navigation.Menu.aboutCoMapeo": {
     "message": "About CoMapeo"
@@ -275,10 +275,7 @@
     "message": "Idioma de exibição do aplicativo"
   },
   "Screens.Settings.AppSettings.mapManagement": {
-    "message": "Gerenciamento de Mapa"
-  },
-  "Screens.Settings.AppSettings.mapManagementDesc": {
-    "message": "Mapa de fundo, dados de mapa"
+    "message": "Background Map"
   },
   "Screens.Settings.AppSettings.title": {
     "message": "Configurações do Aplicativo"
@@ -589,7 +586,7 @@
   },
   "screens.CategoryChooser.categoryTitle": {
     "description": "Title for category chooser screen",
-    "message": "Escolha o que está acontecendo"
+    "message": "Choose a category"
   },
   "screens.ConfirmDeletePhoto.cancel": {
     "message": "Cancel"
@@ -679,11 +676,11 @@
   "screens.DeviceNaming.Success.findSettings": {
     "message": "Para encontrar as configurações do seu projeto, vá até o menu principal localizado na tela do mapa."
   },
-  "screens.DeviceNaming.Success.goToMap": {
-    "message": "Ir para Mapas"
-  },
   "screens.DeviceNaming.Success.startMappingInstructions": {
-    "message": "Você pode começar a mapear sozinho ou com uma equipe. Crie ou junte-se a um projeto para compartilhar dados com outros dispositivos que fazem parte do mesmo projeto."
+    "message": "On the next screen, tap the orange button to record your first observation."
+  },
+  "screens.DeviceNaming.Success.startUsihng": {
+    "message": "Start Using CoMapeo"
   },
   "screens.DeviceNaming.Success.success": {
     "message": "Sucesso!"
@@ -692,10 +689,10 @@
     "message": "Adicionar Nome"
   },
   "screens.DeviceNaming.description": {
-    "message": "Você pode começar a mapear sozinho ou com uma equipe. Compartilhe dados com outros dispositivos, criando um novo ou juntando-se ao mesmo projeto."
+    "message": "Distinct, memorable names help collaborators recognize you."
   },
   "screens.DeviceNaming.header": {
-    "message": "Adicione um nome para o seu dispositivo"
+    "message": "Name your device"
   },
   "screens.EnterPassword.enterPass": {
     "message": "Insira sua senha"
@@ -770,7 +767,7 @@
     "message": "Se você é o único Coordenador no projeto, ninguém mais poderá editar os detalhes do projeto ou convidar outros dispositivos!"
   },
   "screens.IntroToCoMapeo.collaborate": {
-    "message": "Colabore com outras pessoas"
+    "message": "Collaborate on projects"
   },
   "screens.IntroToCoMapeo.designedFor": {
     "message": "Desenvolvido com e para povos indígenas e comunidades que estão na linha de frente"
@@ -1602,9 +1599,6 @@
   "screens.Settings.MapManagement.BackgroundMaps.ChooseMapFile.chooseFile": {
     "message": "Selecionar Arquivo"
   },
-  "screens.Settings.MapManagement.BackgroundMaps.about": {
-    "message": "Sobre o mapa personalizado"
-  },
   "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
     "message": "Isto não pode ser desfeito."
   },
@@ -1630,10 +1624,10 @@
     "message": "Excluir mapa"
   },
   "screens.Settings.MapManagement.BackgroundMaps.description1": {
-    "message": "Adicionar um mapa personalizado permitirá que você veja um mapa quando estiver offline."
+    "message": "Custom background maps let you view maps offline."
   },
   "screens.Settings.MapManagement.BackgroundMaps.description2": {
-    "message": "Seu mapa personalizado não está compartilhado com outros dispositivos no seu projeto."
+    "message": "Note: Custom background maps are not shared with collaborators."
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorDescription": {
     "message": "Não foi possível importar o arquivo. Por favor, volte e tente novamente."
@@ -1645,7 +1639,7 @@
     "message": "Remover arquivo do mapa"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
-    "message": "Mapas de fundo"
+    "message": "Background Map"
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.dateAdded": {
     "message": "Data de inclusão"
@@ -1658,12 +1652,6 @@
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
     "message": "{value} MB"
-  },
-  "screens.Settings.MapManagement.backgroundMaps": {
-    "message": "Mapas de fundo"
-  },
-  "screens.Settings.MapManagement.screenTitle": {
-    "message": "Gerenciamento de Mapa"
   },
   "screens.Settings.YourTeam.InviteDeclined": {
     "message": "Convite recusado"

@@ -17,6 +17,7 @@ import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
 import {useOpenShareDialog} from '../../hooks/share.ts';
 import {useCoordinateFormat} from '../../contexts/CoordinateFormatStoreContext.ts';
+import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
 
 const m = defineMessages({
   delete: {
@@ -102,11 +103,9 @@ const m = defineMessages({
 
 export const ButtonFields = ({
   fields,
-  isMine,
   observationId,
 }: {
   fields: Array<Field>;
-  isMine: boolean;
   observationId: string;
 }) => {
   const {formatMessage: t, formatDate} = useIntl();
@@ -124,6 +123,7 @@ export const ButtonFields = ({
       projectId: projectId,
     });
   const openShare = useOpenShareDialog();
+  const canDelete = useCanEditOrDelete(observation.originalVersionId);
 
   function handlePressDelete() {
     Alert.alert(t(m.deleteTitle), undefined, [
@@ -251,7 +251,7 @@ export const ButtonFields = ({
 
   return (
     <View style={styles.buttonContainer}>
-      {isMine && (
+      {canDelete && (
         <Button
           iconName="delete"
           title={t(m.delete)}

@@ -26,7 +26,7 @@ const m = defineMessages({
   },
   appSettings: {
     id: 'Navigation.Menu.Settings',
-    defaultMessage: 'Settings',
+    defaultMessage: 'App Settings',
   },
   privacyPolicy: {
     id: 'Navigation.Menu.privacyPolicy',

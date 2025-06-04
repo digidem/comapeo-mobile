@@ -41,13 +41,14 @@
         "expo-location",
         {
           "isIosBackgroundLocationEnabled": true,
-          "isAndroidBackgroundLocationEnabled": true
+          "isAndroidBackgroundLocationEnabled": true,
+          "locationPermission": "Allow $(PRODUCT_NAME) to use location?"
         }
       ],
       [
         "expo-camera",
         {
-          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+          "cameraPermission": "Allow $(PRODUCT_NAME) to use the camera?",
           "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
           "recordAudioAndroid": true
         }
@@ -83,6 +84,7 @@
       ["./expo-config-plugins/targetArmArchsOnly.js"],
       ["./expo-config-plugins/increaseJavaMemory.js"],
       ["./expo-config-plugins/flagSecure"],
+      ["./expo-config-plugins/customPermissionText.js"],
       [
         "react-native-share",
         {

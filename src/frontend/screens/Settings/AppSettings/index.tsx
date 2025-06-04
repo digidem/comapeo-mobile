@@ -28,11 +28,7 @@ const m = defineMessages({
   },
   mapManagement: {
     id: 'Screens.Settings.AppSettings.mapManagement',
-    defaultMessage: 'Map Management',
-  },
-  mapManagementDesc: {
-    id: 'Screens.Settings.AppSettings.mapManagementDesc',
-    defaultMessage: 'Backgrounds, Map Data',
+    defaultMessage: 'Background Map',
   },
   security: {
     id: 'Screens.Settings.AppSettings.Drawer.security',
@@ -77,11 +73,10 @@ export const AppSettings: NativeNavigationComponent<'AppSettings'> = ({
     },
     {
       onPress: () => {
-        navigation.navigate('MapManagement');
+        navigation.navigate('BackgroundMaps');
       },
       testID: 'mapManagementButton',
       primaryText: formatMessage(m.mapManagement),
-      secondaryText: formatMessage(m.mapManagementDesc),
       materialIconName: 'map',
     },
     ...(authState !== 'obscured'

@@ -21,7 +21,7 @@ import {usePersistedDraftObservation} from '../hooks/persistedState/usePersisted
 const m = defineMessages({
   categoryTitle: {
     id: 'screens.CategoryChooser.categoryTitle',
-    defaultMessage: 'Choose what is happening',
+    defaultMessage: 'Choose a category',
     description: 'Title for category chooser screen',
   },
 });

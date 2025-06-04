@@ -7,7 +7,7 @@ describe('Audio - Two Recordings Show in Thumbnails', () => {
     await $('~Add Observation').click();
     await $(byTextMatches('Airstrip')).click();
     await $(byResourceId('OBS.add-audio-btn')).click();
-
+    await driver.pause(3000);
     await $('~Stop recording audio.').click();
 
     await expect($(byTextMatches('Recording Saved!'))).toBeDisplayed();
@@ -25,6 +25,7 @@ describe('Audio - Two Recordings Show in Thumbnails', () => {
 
   it('records second audio and confirms both show up', async () => {
     await $(byResourceId('OBS.add-audio-btn')).click();
+    await driver.pause(3000);
     await $('~Stop recording audio.').click();
     await $(byTextMatches('Back to Editing')).click();
 

@@ -16,11 +16,13 @@ import {useLocalDiscoveryState} from '../../hooks/useLocalDiscoveryState';
 import {ExhaustivenessError} from '../../lib/ExhaustivenessError';
 import {
   BLACK,
+  BLUE_GREY,
   COMAPEO_BLUE,
   DARK_GREEN,
-  DARK_GREY,
+  DARK_ORANGE,
   LIGHT_GREY,
   MEDIUM_GREY,
+  NEW_DARK_GREY,
   WHITE,
 } from '../../lib/styles';
 import {
@@ -44,32 +46,25 @@ import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {ROOT_QUERY_KEY} from '../../constants';
 import {useActiveArchiveServer} from '../../hooks/server/projects';
 import {Button} from '../../sharedComponents/Button';
+import OrangeStar from '../../images/OrangeStar.svg';
+import GreyLeaf from '../../images/GreyLeaf.svg';
 
 const m = defineMessages({
   devicesFound: {
     id: 'screens.Sync.ProjectSyncDisplay.devicesFound',
-    defaultMessage: 'Devices found',
+    defaultMessage: 'Devices found.',
   },
-  connectedTo: {
-    id: 'screens.Sync.ProjectSyncDisplay.connectedTo',
-    defaultMessage: 'Connected to',
-  },
-
-  noDevicesAvailableToSync: {
-    id: 'screens.Sync.ProjectSyncDisplay.noDevicesAvailableToSync',
-    defaultMessage: 'No devices available to sync',
-  },
-  devicesAvailableToSync: {
-    id: 'screens.Sync.ProjectSyncDisplay.devicesAvailableToSync',
-    defaultMessage: 'Devices available',
+  noDevicesFound: {
+    id: 'screens.Sync.ProjectSyncDisplay.noDevicesFound',
+    defaultMessage: 'No devices found.',
   },
   waitingForDevices: {
     id: 'screens.Sync.ProjectSyncDisplay.waitingForDevices',
-    defaultMessage: 'Waiting for devices',
+    defaultMessage: 'Waiting for devices...',
   },
   syncingWithDevices: {
     id: 'screens.Sync.ProjectSyncDisplay.syncingWithDevices',
-    defaultMessage: 'You are exchanging with your team',
+    defaultMessage: 'Exchanging...',
   },
   syncingCompleteButWaitingForOthers: {
     id: 'screens.Sync.ProjectSyncDisplay.syncingCompleteButWaitingForOthers',
@@ -77,32 +72,15 @@ const m = defineMessages({
   },
   syncingFullyComplete: {
     id: 'screens.Sync.ProjectSyncDisplay.syncingFullyComplete',
-    defaultMessage: "Complete! You're up to date",
+    defaultMessage: 'Complete!',
   },
-
   allDataSynced: {
     id: 'screens.Sync.ProjectSyncDisplay.allDataSynced',
-    defaultMessage: 'All data exchanged',
-  },
-  progressLabelWaiting: {
-    id: 'screens.Sync.ProjectSyncDisplay.progressLabelWaiting',
-    defaultMessage: 'Waiting…',
-  },
-  progressLabelSyncing: {
-    id: 'screens.Sync.ProjectSyncDisplay.progressLabelSyncing',
-    defaultMessage: 'Syncing…',
-  },
-  progressLabelWithDeviceCount: {
-    id: 'screens.Sync.ProjectSyncDisplay.progressLabelWithDeviceCount',
-    defaultMessage: 'Waiting for other devices',
+    defaultMessage: 'Up to date!',
   },
   progressSyncPercentage: {
     id: 'screens.Sync.ProjectSyncDisplay.syncProgress',
     defaultMessage: '{value}%',
-  },
-  readyToExchange: {
-    id: 'screens.Sync.ProjectSyncDisplay.readyToExchange',
-    defaultMessage: 'Ready to exchange',
   },
   remoteArchiveConnected: {
     id: 'screens.Sync.remoteArchiveConnected',
@@ -128,6 +106,22 @@ const m = defineMessages({
   allCaughtUp: {
     id: 'screens.Sync.ProjectSyncDisplay.allCaughtUp',
     defaultMessage: "You're all caught up!",
+  },
+  exchangeTitle: {
+    id: 'screens.Sync.ProjectSyncDisplay.exchangeTitle',
+    defaultMessage: 'Exchange everything.',
+  },
+  exchangeMediaDescription: {
+    id: 'screens.Sync.ProjectSyncDisplay.exchangeMediaDescription',
+    defaultMessage: 'Full size photos and audio.',
+  },
+  exchangeStorageDescription: {
+    id: 'screens.Sync.ProjectSyncDisplay.exchangeStorageDescription',
+    defaultMessage: 'Uses more storage.',
+  },
+  exchangeAction: {
+    id: 'screens.Sync.ProjectSyncDisplay.exchangeAction',
+    defaultMessage: 'Change Settings',
   },
 });
 
@@ -217,11 +211,14 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
       );
 
       syncInfoContent = (
-        <HeaderText variant="header1" style={styles.exchangeInfoText}>
-          {syncStage.connectedPeersCount > 0
-            ? t(m.readyToExchange)
-            : t(m.noDevicesAvailableToSync)}
-        </HeaderText>
+        <>
+          <HeaderText variant="header1" style={styles.exchangeInfoText}>
+            {syncStage.connectedPeersCount > 0
+              ? t(m.devicesFound)
+              : t(m.noDevicesFound)}
+          </HeaderText>
+          <View style={{height: 120}}></View>
+        </>
       );
       break;
     }
@@ -318,14 +315,9 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
 
       syncInfoContent = (
         <>
-          <View>
-            <HeaderText variant="header1" style={styles.exchangeInfoText}>
-              {t(m.syncingFullyComplete)}
-            </HeaderText>
-            <HeaderText variant="header2" style={{textAlign: 'center'}}>
-              {t(m.allDataSynced)}
-            </HeaderText>
-          </View>
+          <HeaderText variant="header1" style={styles.exchangeInfoText}>
+            {t(m.syncingFullyComplete)}
+          </HeaderText>
           <SyncProgress stage={syncStage} />
         </>
       );
@@ -340,12 +332,30 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
     }
   }
 
-  const devicesAvailableText = syncStage.connectedPeersCount > 0 && (
-    <View style={styles.connectedDevicesInfoContainer}>
-      <WifiIcon color={DARK_GREY} size={20} />
-      <BodyText style={{color: BLACK}} variant="smallMeta">
-        {t(m.devicesFound)}
-      </BodyText>
+  const devicesAvailableHeader = (
+    <View style={styles.syncStatusIconWrapper}>
+      <View
+        style={[
+          styles.syncStatusCircle,
+          {
+            borderColor:
+              syncStage.connectedPeersCount > 0 ? DARK_ORANGE : BLUE_GREY,
+          },
+        ]}>
+        <SyncIcon
+          size={28}
+          color={syncStage.connectedPeersCount > 0 ? DARK_ORANGE : BLUE_GREY}
+        />
+      </View>
+      {syncStage.connectedPeersCount > 0 ? (
+        <OrangeStar
+          width={40}
+          height={40}
+          style={styles.syncStatusOverlayIcon}
+        />
+      ) : (
+        <GreyLeaf width={30} height={30} style={styles.syncStatusOverlayIcon} />
+      )}
     </View>
   );
 
@@ -354,39 +364,63 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
       contentContainerStyle={styles.contentContainer}
       dockContent={dockContent}>
       <View style={styles.wifiCard}>
-        <Circle color="#000033" radius={14} style={styles.signalIndicator}>
-          <WifiIconComponent size={16} color={WHITE} />
-        </Circle>
-        <BodyText style={styles.wifiCardTextContainer}>
-          {ssid ? (
-            <>
-              {t(m.connectedTo)}{' '}
+        <View style={styles.wifiCardContent}>
+          <Circle color="#CCE0FF" radius={14} style={styles.signalIndicator}>
+            <WifiIconComponent size={16} color={BLACK} />
+          </Circle>
+          <View style={styles.wifiCardTextContainer}>
+            {ssid ? (
               <BodyText style={styles.wifiName}>{ssid}</BodyText>
-            </>
-          ) : (
-            <>
-              {t(m.wifiCardPlaceholder, {ssid: ''})}
-              <BodyText style={styles.wifiName}>{t(m.noWifi)}</BodyText>
-            </>
-          )}
-        </BodyText>
-      </View>
-      <View style={styles.projectInfoContainer}>
-        {devicesAvailableText}
-        {remoteArchiveConnected && (
-          <View style={styles.remoteInfoContainer}>
-            <Circle
-              color="#444444"
-              radius={7}
-              style={{backgroundColor: '#444444', elevation: 0}}
-            />
-            <BodyText variant="smallMeta" style={styles.remoteArchiveText}>
-              {t(m.remoteArchiveConnected)}
-            </BodyText>
+            ) : (
+              <>
+                <BodyText>{t(m.wifiCardPlaceholder, {ssid: ''})}</BodyText>
+                <BodyText style={styles.wifiName}>{t(m.noWifi)}</BodyText>
+              </>
+            )}
           </View>
-        )}
+        </View>
       </View>
-      {syncInfoContent}
+      <View style={styles.contentWrapper}>
+        <View style={styles.projectInfoContainer}>
+          {devicesAvailableHeader}
+          {remoteArchiveConnected && (
+            <View style={styles.remoteInfoContainer}>
+              <Circle
+                color="#444444"
+                radius={7}
+                style={{backgroundColor: '#444444', elevation: 0}}
+              />
+              <BodyText variant="smallMeta" style={styles.remoteArchiveText}>
+                {t(m.remoteArchiveConnected)}
+              </BodyText>
+            </View>
+          )}
+        </View>
+        {syncInfoContent}
+        <View style={styles.exchangeSettingsCard}>
+          <HeaderText variant="header6" style={{color: BLACK}}>
+            {t(m.exchangeTitle)}
+          </HeaderText>
+          <BodyText variant="smallMeta" style={{color: NEW_DARK_GREY}}>
+            {t(m.exchangeMediaDescription)}
+          </BodyText>
+          <BodyText variant="smallMeta" style={{color: NEW_DARK_GREY}}>
+            {t(m.exchangeStorageDescription)}
+          </BodyText>
+          {syncStage.name !== 'syncing' && (
+            <Button
+              variant="text"
+              onPress={() => {
+                // TODO: open exchange settings bottom sheet
+                console.log('Open Exchange Settings');
+              }}>
+              <HeaderText variant="header6" style={styles.exchangeChangeLink}>
+                {t(m.exchangeAction)}
+              </HeaderText>
+            </Button>
+          )}
+        </View>
+      </View>
     </ScreenContentWithDock>
   );
 };
@@ -401,38 +435,11 @@ function SyncProgress({
 }) {
   const {formatMessage: t} = useIntl();
 
-  let progressLabel: string;
-
-  switch (stage.name) {
-    case 'waiting': {
-      progressLabel = t(m.progressLabelWaiting);
-      break;
-    }
-    case 'syncing': {
-      progressLabel = t(m.progressLabelSyncing);
-      break;
-    }
-    case 'complete-partial': {
-      progressLabel = t(m.progressLabelWithDeviceCount);
-      break;
-    }
-    case 'complete-full': {
-      progressLabel = '';
-      break;
-    }
-    default: {
-      throw new ExhaustivenessError(
-        // @ts-expect-error Handled at runtime
-        stage.name,
-      );
-    }
-  }
-
   return (
     <View style={styles.progressContainer}>
       <View style={styles.progressLabelRow}>
         {stage.name === 'complete-full' ? (
-          <DoneIcon color={DARK_GREEN} size={20} />
+          <DoneIcon color={DARK_GREEN} size={30} />
         ) : (
           <SyncIcon color={COMAPEO_BLUE} size={20} />
         )}
@@ -440,9 +447,7 @@ function SyncProgress({
           variant="header3"
           style={{
             color: stage.name === 'complete-full' ? DARK_GREEN : COMAPEO_BLUE,
-          }}>
-          {progressLabel}
-        </HeaderText>
+          }}></HeaderText>
       </View>
       <ProgressBar
         {...(stage.name === 'waiting'
@@ -472,22 +477,29 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   wifiCard: {
-    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     paddingHorizontal: 15,
     paddingVertical: 14,
-    gap: 10,
     width: '100%',
     backgroundColor: WHITE,
     borderWidth: 1,
-    borderColor: '#CCCCD6',
+    borderColor: BLUE_GREY,
     borderRadius: 6,
-    justifyContent: 'flex-start',
   },
   wifiCardTextContainer: {
-    flex: 1,
+    flexShrink: 1,
+    flexGrow: 0,
+    flexBasis: 'auto',
+    maxWidth: '80%',
+  },
+  wifiCardContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     flexWrap: 'wrap',
-    minWidth: 0,
+    maxWidth: '100%',
+    gap: 10,
   },
   wifiName: {
     fontWeight: '500',
@@ -497,10 +509,6 @@ const styles = StyleSheet.create({
     gap: 8,
     paddingTop: 35,
     paddingBottom: 40,
-  },
-  connectedDevicesInfoContainer: {
-    flexDirection: 'row',
-    gap: 8,
   },
   remoteInfoContainer: {
     flexDirection: 'row',
@@ -516,14 +524,13 @@ const styles = StyleSheet.create({
     color: BLACK,
   },
   progressContainer: {
-    marginTop: 30,
     gap: 10,
   },
   progressLabelRow: {
     flexDirection: 'row',
     gap: 10,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   progressPercent: {
     color: MEDIUM_GREY,
@@ -532,6 +539,43 @@ const styles = StyleSheet.create({
   },
   signalIndicator: {
     elevation: 0,
-    backgroundColor: '#000033',
+    backgroundColor: '#CCE0FF',
+    borderColor: '#CCE0FF',
+  },
+  syncStatusIconWrapper: {
+    width: 80,
+    height: 80,
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  syncStatusCircle: {
+    width: 80,
+    height: 80,
+    borderWidth: 6,
+    borderRadius: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  syncStatusOverlayIcon: {
+    position: 'absolute',
+    right: -8,
+    bottom: -8,
+  },
+  exchangeSettingsCard: {
+    marginTop: 25,
+    alignItems: 'center',
+  },
+  exchangeChangeLink: {
+    color: COMAPEO_BLUE,
+    marginTop: 12,
+  },
+  contentWrapper: {
+    borderWidth: 1,
+    borderColor: BLUE_GREY,
+    borderRadius: 10,
+    paddingTop: 20,
+    paddingBottom: 40,
+    paddingHorizontal: 20,
   },
 });

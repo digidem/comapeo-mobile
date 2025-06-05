@@ -58,8 +58,7 @@ export function useAudioRecording() {
 
       addAudio({uri, duration, createdAt});
       return {uri, createdAt, duration};
-    } catch (err) {
-      console.error('Error stopping audio recording:', err);
+    } catch {
       navigate('ErrorBottomSheet');
     } finally {
       setIsStopping(false);

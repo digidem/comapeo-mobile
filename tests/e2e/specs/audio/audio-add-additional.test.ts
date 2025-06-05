@@ -59,6 +59,8 @@ describe('Audio - Two Recordings Show in Thumbnails', () => {
     await $(byTextMatches('Community')).click();
     const thumbnails = await $$('~Play audio recording.');
     expect(thumbnails.length).toBeGreaterThanOrEqual(2);
+    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
+    await backBtn.click();
     const mapTab = await $('~Go to map.');
     await mapTab.click();
   });

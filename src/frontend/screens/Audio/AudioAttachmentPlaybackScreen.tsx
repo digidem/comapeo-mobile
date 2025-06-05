@@ -97,14 +97,6 @@ export const AudioAttachmentPlaybackScreen = ({
     };
   }, [localUri]);
 
-  if (!uri || duration === 0) {
-    return (
-      <View style={styles.container}>
-        <UIActivityIndicator color={COMAPEO_BLUE} />
-      </View>
-    );
-  }
-
   return (
     <ScreenContentWithDock
       contentContainerStyle={styles.container}

@@ -63,16 +63,16 @@ Tests the ability to add more than one recording to the same observation and tha
 ### Test Objectives
 
 - Start a new observation and record an audio clip
-- After stopping, record another from the Observation
-- Start and stop a second recording
+- After stopping, return to the Observation and record another
 - Return to the editor and verify that at least two audio thumbnails are visible
 - Verify that the duration and relative time are displayed on the thumbnails
-- Save the observation and then verify that clicking on the thumbnail plays it
+- Save the observation and then verify that thumbnails appear in saved observation
 
 ### Special Considerations
 
 - Assumes previous recording workflow already functions
 - Validates UI behavior only (not content of recordings)
+- BrowserStack devices cannot access the audio URLs returned by the app. This results in 00:00 / 00:00 showing on the screen and a failed playback attempt. The app behaves correctly outside of BrowserStack.
 
 ## Todo (these are broken right now)
 

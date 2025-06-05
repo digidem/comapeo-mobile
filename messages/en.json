@@ -1684,34 +1684,28 @@
     "message": "You're all caught up!"
   },
   "screens.Sync.ProjectSyncDisplay.allDataSynced": {
-    "message": "All data exchanged"
-  },
-  "screens.Sync.ProjectSyncDisplay.connectedTo": {
-    "message": "Connected to"
-  },
-  "screens.Sync.ProjectSyncDisplay.devicesAvailableToSync": {
-    "message": "Devices available"
+    "message": "Up to date!"
   },
   "screens.Sync.ProjectSyncDisplay.devicesFound": {
-    "message": "Devices found"
+    "message": "Devices found."
   },
-  "screens.Sync.ProjectSyncDisplay.noDevicesAvailableToSync": {
-    "message": "No devices available to sync"
+  "screens.Sync.ProjectSyncDisplay.exchangeAction": {
+    "message": "Change Settings"
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangeMediaDescription": {
+    "message": "Full size photos and audio."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangeStorageDescription": {
+    "message": "Uses more storage."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangeTitle": {
+    "message": "Exchange everything."
+  },
+  "screens.Sync.ProjectSyncDisplay.noDevicesFound": {
+    "message": "No devices found."
   },
   "screens.Sync.ProjectSyncDisplay.noWifi": {
     "message": "No Wi-Fi"
-  },
-  "screens.Sync.ProjectSyncDisplay.progressLabelSyncing": {
-    "message": "Syncing…"
-  },
-  "screens.Sync.ProjectSyncDisplay.progressLabelWaiting": {
-    "message": "Waiting…"
-  },
-  "screens.Sync.ProjectSyncDisplay.progressLabelWithDeviceCount": {
-    "message": "Waiting for other devices"
-  },
-  "screens.Sync.ProjectSyncDisplay.readyToExchange": {
-    "message": "Ready to exchange"
   },
   "screens.Sync.ProjectSyncDisplay.start": {
     "message": "Start"
@@ -1726,13 +1720,13 @@
     "message": "Complete! Waiting for other devices to join"
   },
   "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
-    "message": "Complete! You're up to date"
+    "message": "Complete!"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "You are exchanging with your team"
+    "message": "Exchanging..."
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
-    "message": "Waiting for devices"
+    "message": "Waiting for devices..."
   },
   "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
     "message": "{ssid}"

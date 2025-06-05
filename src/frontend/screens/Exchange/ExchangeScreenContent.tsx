@@ -95,6 +95,10 @@ const m = defineMessages({
     id: 'screens.Sync.ProjectSyncDisplay.stop',
     defaultMessage: 'Stop',
   },
+  close: {
+    id: 'screens.Sync.ProjectSyncDisplay.close',
+    defaultMessage: 'Close',
+  },
   wifiCardPlaceholder: {
     id: 'screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder',
     defaultMessage: '{ssid}',
@@ -198,17 +202,24 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
 
   switch (syncStage.name) {
     case 'idle': {
-      dockContent = (
-        <PrimaryButton
-          fullSize
-          text={t(m.start)}
-          renderIcon={({size}) => <SyncIcon size={size} />}
-          onPress={() => {
-            // TODO: Catch/surface error
-            startSync.mutate(undefined);
-          }}
-        />
-      );
+      dockContent =
+        syncStage.connectedPeersCount > 0 ? (
+          <PrimaryButton
+            fullSize
+            text={t(m.start)}
+            renderIcon={({size}) => <SyncIcon size={size} />}
+            onPress={() => {
+              // TODO: Catch/surface error
+              startSync.mutate(undefined);
+            }}
+          />
+        ) : (
+          <SecondaryButton
+            fullSize={true}
+            text={t(m.close)}
+            onPress={() => {}}
+          />
+        );
 
       syncInfoContent = (
         <>
@@ -559,8 +570,8 @@ const styles = StyleSheet.create({
   },
   syncStatusOverlayIcon: {
     position: 'absolute',
-    right: -8,
-    bottom: -8,
+    right: -5,
+    bottom: -5,
   },
   exchangeSettingsCard: {
     marginTop: 25,

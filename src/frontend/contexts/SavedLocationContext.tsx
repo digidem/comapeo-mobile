@@ -24,6 +24,7 @@ export const SavedLocationProvider = ({
   store: SavedLocationStore;
   children: ReactNode;
 }) => {
+  // using location store as we do not need to be reactive to state updates
   const locationStore = useLocationContext();
   // persist last known location everytime app goes into the background/is closed
   useEffect(() => {

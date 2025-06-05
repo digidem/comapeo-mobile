@@ -57,8 +57,20 @@ describe('Audio - Two Recordings Show in Thumbnails', () => {
     const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
     await $(byTextMatches('Community')).click();
+    await browser.waitUntil(
+      async () => {
+        const thumbs = await $$('~Play audio recording.');
+        const count = await thumbs.length;
+        return count >= 2;
+      },
+      {
+        timeout: 5000,
+        timeoutMsg: 'Expected at least two audio thumbnails to appear',
+      },
+    );
     const thumbnails = await $$('~Play audio recording.');
-    expect(thumbnails.length).toBeGreaterThanOrEqual(2);
+    expect((await Promise.all(thumbnails)).length).toBeGreaterThanOrEqual(2);
+
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
     const mapTab = await $('~Go to map.');

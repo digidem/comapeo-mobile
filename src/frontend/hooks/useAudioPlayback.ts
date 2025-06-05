@@ -62,7 +62,8 @@ export const useAudioPlayback = (recordingUri: string) => {
 
       await recordedSoundRef.current.playAsync();
       setPlaying(true);
-    } catch {
+    } catch (error) {
+      console.error('Playback error:', error);
       navigate('ErrorBottomSheet');
     }
   }, [isPlaying, currentPosition, duration, navigate]);

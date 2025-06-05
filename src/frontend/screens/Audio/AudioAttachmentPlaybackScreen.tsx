@@ -97,6 +97,14 @@ export const AudioAttachmentPlaybackScreen = ({
     };
   }, [localUri]);
 
+  if (!uri || duration === 0) {
+    return (
+      <View style={styles.container}>
+        <UIActivityIndicator color={COMAPEO_BLUE} />
+      </View>
+    );
+  }
+
   return (
     <ScreenContentWithDock
       contentContainerStyle={styles.container}
@@ -125,7 +133,8 @@ export const AudioAttachmentPlaybackScreen = ({
       <View style={audioStyles.audioBox}>
         <TouchableOpacity
           testID="audio-play-toggle"
-          onPress={() => (isPlaying ? stopPlayback() : startPlayback())}
+          onPress={() => uri && (isPlaying ? stopPlayback() : startPlayback())}
+          disabled={!uri}
           style={styles.playButton}>
           {isPlaying ? <StopIcon size={60} color={BLACK} /> : <PlayArrow />}
         </TouchableOpacity>

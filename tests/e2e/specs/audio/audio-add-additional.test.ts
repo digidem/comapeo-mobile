@@ -63,15 +63,23 @@ describe('Audio - Two Recordings Show in Thumbnails', () => {
       $(byTextMatches('(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)')),
     ).toBeDisplayed();
     await expect($(byTextMatches('Share'))).toBeDisplayed();
-    const initialTimer = await $(byTextMatches('00:00 / \\d{2}:\\d{2}'));
-    await expect(initialTimer).toBeDisplayed();
+    await browser.waitUntil(
+      async () => {
+        const durationText = await $(byTextMatches('00:00 / \\d{2}:\\d{2}'));
+        return await durationText.isDisplayed();
+      },
+      {
+        timeout: 5000,
+        timeoutMsg: 'Expected audio duration to be loaded',
+      },
+    );
     const playBtn = $(byResourceId('audio-play-toggle'));
     playBtn.click();
 
     await driver.pause(1500);
 
     await expect(
-      $(byTextMatches('0[1-9]:\\d{2} / \\d{2}:\\d{2}')),
+      $(byTextMatches('0[1-9]:\\d{2}\\s/\\s\\d{2}:\\d{2}')),
     ).toBeDisplayed();
 
     playBtn.click();

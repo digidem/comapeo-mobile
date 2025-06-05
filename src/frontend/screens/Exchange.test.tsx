@@ -1,4 +1,4 @@
-import {render} from '@testing-library/react-native';
+import {render, screen} from '@testing-library/react-native';
 
 import {SyncScreen} from './Exchange';
 import {createManager, setUpIPC} from '../../../tests/integration/helpers/core';
@@ -27,7 +27,7 @@ describe('Exchange screen', () => {
     appProviders.teardown();
   });
 
-  test('basic', () => {
+  test('basic', async () => {
     const navigation = {
       goBack: jest.fn(),
     };
@@ -40,6 +40,6 @@ describe('Exchange screen', () => {
       {wrapper: appProviders.wrapper},
     );
 
-    // TODO: Add assertions
+    expect(await screen.findByText('Exchange')).toBeOnTheScreen();
   });
 });

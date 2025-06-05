@@ -2,13 +2,13 @@ import {LineJoin, LineLayer, ShapeSource} from '@rnmapbox/maps';
 import * as React from 'react';
 
 import {useTrackState} from '../../../contexts/TrackStoreContext';
-import {useLocation} from '../../../hooks/useLocation';
 import {convertToLineString} from '../../../lib/utils';
+import {useLocationState} from '../../../contexts/LocationContext';
 
 export const CurrentTrackMapLayer = () => {
   const locationHistory = useTrackState(state => state.locationHistory);
   const isTracking = useTrackState(state => state.isTracking);
-  const {location} = useLocation({maxDistanceInterval: 3});
+  const location = useLocationState(store => store.location);
   const finalLocationHistory = location?.coords
     ? [
         ...locationHistory,

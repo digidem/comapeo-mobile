@@ -1,3 +1,4 @@
+import {LocationObject} from 'expo-location';
 import {fromLatLon} from 'utm';
 import {union, literal, type InferOutput} from 'valibot';
 
@@ -98,4 +99,14 @@ function formatDms({
   seconds: number;
 }) {
   return `${degrees}° ${minutes}' ${seconds.toFixed(3)}"`;
+}
+
+/**
+ * For a LocationObject, get the lon,lat tuple
+ *
+ * @returns [longitude, latitude]
+ */
+export function getCoords(location: LocationObject): [number, number] {
+  const {longitude, latitude} = location.coords;
+  return [longitude, latitude];
 }

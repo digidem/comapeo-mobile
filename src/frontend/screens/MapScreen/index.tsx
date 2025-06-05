@@ -13,13 +13,11 @@ import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {usePresetsQuery} from '../../hooks/server/presets';
 import ScaleBar from 'react-native-scale-bar';
-import {getCoords} from '../../hooks/useLocation';
 import {useLastKnownLocation} from '../../hooks/useLastSavedLocation';
-import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
 import {TrackBottomSheet} from './TrackBottomSheet';
 import {CurrentTrackMapLayer} from './CurrentTrack/CurrrentTrackMapLayer';
 import {UserLocation} from './UserLocation';
-import {useSharedLocationContext} from '../../contexts/SharedLocationContext';
+
 import {useMapStyleJsonUrl} from '../../hooks/server/maps';
 import {TracksMapLayer} from './MapLayers/TracksMapLayer';
 import {assert} from '../../lib/assert';
@@ -30,6 +28,8 @@ import {useFocusEffect} from '@react-navigation/native';
 import {GPSPill} from '../../sharedComponents/GPSPill';
 import AddButtonSVG from '../../images/AddButton.svg';
 import {useAuthContext} from '../../contexts/AuthContext';
+import {useLocationState} from '../../contexts/LocationContext';
+import {getCoords} from '../../lib/coordinateFormat';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -53,12 +53,12 @@ export const MapScreen = ({
   const [following, setFollowing] = React.useState(true);
   const {newDraft} = useDraftObservation();
   const {navigate} = useNavigationFromHomeTabs();
-  const {locationState, fgPermissions} = useSharedLocationContext();
+  const location = useLocationState(store => store.throttledMapLocation);
+  const locationProviderStatus = useLocationState(
+    store => store.providerStatus,
+  );
   const savedLocation = useLastKnownLocation();
-  const coords = locationState.location && getCoords(locationState.location);
-  const locationProviderStatus = useLocationProviderStatus();
-  const locationServicesEnabled =
-    !!locationProviderStatus?.locationServicesEnabled;
+  const coords = location && getCoords(location);
 
   const {data: styleUrl} = useMapStyleJsonUrl();
   const existingObservation = usePersistedDraftObservation(
@@ -140,18 +140,14 @@ export const MapScreen = ({
                 : undefined,
             zoomLevel: zoom,
           }}
-          centerCoordinate={
-            locationServicesEnabled && following ? coords : undefined
-          }
+          centerCoordinate={following ? coords : undefined}
           zoomLevel={following ? zoom : undefined}
           animationDuration={1000}
           animationMode="flyTo"
           followUserLocation={false}
         />
 
-        {coords && locationServicesEnabled && (
-          <UserLocation minDisplacement={MIN_DISPLACEMENT} />
-        )}
+        {coords && <UserLocation minDisplacement={MIN_DISPLACEMENT} />}
 
         {isFinishedLoading && authState !== 'obscured' && (
           <>
@@ -167,7 +163,7 @@ export const MapScreen = ({
           <GPSPill
             {...getLocationStatus({
               providerStatus: locationProviderStatus,
-              location: fgPermissions ? locationState.location : undefined,
+              location: location,
             })}
             testID="MAP.gps-pill"
             accessibilityLabel="Open GPS Modal."
@@ -182,7 +178,7 @@ export const MapScreen = ({
           <AddButtonSVG />
         </TouchableOpacity>
 
-        {coords && locationServicesEnabled ? (
+        {coords ? (
           <TouchableOpacity
             style={{flex: 1, alignItems: 'center'}}
             onPress={handleLocationPress}>

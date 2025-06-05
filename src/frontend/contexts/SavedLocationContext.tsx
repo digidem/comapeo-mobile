@@ -15,6 +15,7 @@ export const STORAGE_KEY = 'savedLocation' as const;
 
 const SavedLocationContext = createContext<SavedLocationStore | null>(null);
 
+// store is stable
 // eslint-disable-next-line @eslint-react/no-unstable-context-value
 export const SavedLocationProvider = ({
   store,
@@ -88,7 +89,7 @@ function useSavedLocationContext() {
   const value = useContext(SavedLocationContext);
 
   if (!value) {
-    throw new Error('Must set up SelectedSavedLocationStoreProvider first');
+    throw new Error('Must set up Selected SavedLocationStoreProvider first');
   }
 
   return value;
@@ -96,7 +97,7 @@ function useSavedLocationContext() {
 
 /**
  *
- * This hook provides the last save location but is NOT reactive to state. Currently it is only being used once when the map is initially loading, so the consuming component does not need to reactive.
+ * This hook provides the last saved location but is NOT reactive to state. Currently it is only being used once when the map is initially loading, so the consuming component does not need to reactive.
  */
 export function useNonReactiveSavedLocation() {
   const {instance} = useSavedLocationContext();

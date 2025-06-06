@@ -22,7 +22,12 @@ const clientMigrationsFolder = path.join(
   'drizzle/client',
 );
 
-export function createManager() {
+export async function createManager(
+  deviceInfo: Pick<
+    Parameters<typeof MapeoManager.prototype.setDeviceInfo>[0],
+    'name' | 'deviceType'
+  >,
+) {
   const fastify = Fastify();
 
   const manager = new MapeoManager({
@@ -33,6 +38,7 @@ export function createManager() {
     clientMigrationsFolder,
     fastify,
   });
+  await manager.setDeviceInfo(deviceInfo);
 
   const fastifyController = new FastifyController({fastify});
 

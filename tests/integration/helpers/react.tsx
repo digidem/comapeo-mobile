@@ -20,6 +20,8 @@ import {AppDiagnosticMetrics} from '../../../src/frontend/metrics/AppDiagnosticM
 import {DeviceDiagnosticMetrics} from '../../../src/frontend/metrics/DeviceDiagnosticMetrics';
 import {IntlProvider} from '../../../src/frontend/contexts/IntlContext';
 import {QueryClient} from '@tanstack/react-query';
+import {NavigationContainer} from '@react-navigation/native';
+import {rootNavigationRef} from '../../../src/frontend/AppNavigator';
 
 export function createMinimalWrapper() {
   const localeStore = createLocaleStore({persist: false});
@@ -151,7 +153,10 @@ export function createAppProvidersWrapper(
           }
           coordinateFormatStore={persistedCoordinateFormatStore}
           trackStore={persistedTrackStore}>
-          {children}
+          {/* We don't use navigation in our tests, but we set up the context. */}
+          <NavigationContainer ref={rootNavigationRef}>
+            {children}
+          </NavigationContainer>
         </AppProviders>
       </OuterWrapper>
     );

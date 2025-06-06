@@ -1,4 +1,5 @@
 import * as React from 'react';
+import type {PickDeep} from 'type-fest';
 import {useSyncState} from '@comapeo/core-react';
 
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
@@ -23,7 +24,9 @@ const m = defineMessages({
   },
 });
 
-export const SyncScreen = ({navigation}: NativeRootNavigationProps<'Sync'>) => {
+export const SyncScreen = ({
+  navigation,
+}: PickDeep<NativeRootNavigationProps<'Sync'>, 'navigation.goBack'>) => {
   const wifiStatus = useLocalDiscoveryState(state => state.wifiStatus);
 
   const hasInternetAccess = useNetInfo().isConnected;

@@ -23,7 +23,6 @@ import {
   LIGHT_GREY,
   MEDIUM_GREY,
   NEW_DARK_GREY,
-  WARNING_RED,
   WHITE,
 } from '../../lib/styles';
 import {
@@ -108,10 +107,6 @@ const m = defineMessages({
   noWifi: {
     id: 'screens.Sync.ProjectSyncDisplay.noWifi',
     defaultMessage: 'No Wi-Fi.',
-  },
-  noWifiInstructions: {
-    id: 'screens.Sync.ProjectSyncDisplay.noWifiInstructions',
-    defaultMessage: 'Check device’s settings and connectivity.',
   },
   allCaughtUp: {
     id: 'screens.Sync.ProjectSyncDisplay.allCaughtUp',
@@ -394,6 +389,26 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
     }
   }
 
+  const wifiCard = (
+    <View style={styles.wifiCard}>
+      <View style={styles.wifiCardContent}>
+        <Circle color="#CCE0FF" radius={14} style={styles.signalIndicator}>
+          <WifiIconComponent size={16} color={BLACK} />
+        </Circle>
+        <View style={styles.wifiCardTextContainer}>
+          {ssid ? (
+            <BodyText style={styles.wifiName}>{ssid}</BodyText>
+          ) : (
+            <>
+              <BodyText>{t(m.wifiCardPlaceholder, {ssid: ''})}</BodyText>
+              <BodyText style={styles.wifiName}>{t(m.noWifi)}</BodyText>
+            </>
+          )}
+        </View>
+      </View>
+    </View>
+  );
+
   const devicesAvailableHeader = (
     <View style={styles.syncStatusIconWrapper}>
       <View
@@ -420,94 +435,50 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
       )}
     </View>
   );
-  if (!ssid) {
-    return (
-      <ScreenContentWithDock
-        contentContainerStyle={styles.contentContainer}
-        dockContent={
-          <SecondaryButton
-            fullSize
-            text={t(m.close)}
-            onPress={() => navigation.goBack()}
-          />
-        }>
-        <View style={styles.wifiCard}>
-          <View style={styles.wifiCardContent}>
-            <Circle
-              color={BLUE_GREY}
-              radius={14}
-              style={styles.signalIndicator}>
-              <WifiIcon size={16} color={WHITE} />
-            </Circle>
-            <View style={styles.wifiCardTextContainer}>
-              <BodyText style={styles.wifiName}>--</BodyText>
-            </View>
-          </View>
-        </View>
 
-        <View style={styles.contentWrapper}>
-          <View style={styles.projectInfoContainer}>
-            <View style={styles.syncStatusIconWrapper}>
-              <View style={styles.syncStatusCircleOffline}>
-                <WifiOffIcon size={28} color={BLACK} />
-              </View>
-              <Circle
-                radius={14}
-                color={WARNING_RED}
-                style={{
-                  position: 'absolute',
-                  right: 0,
-                  bottom: 0,
-                  backgroundColor: WARNING_RED,
-                }}>
-                <HeaderText variant="header4" style={{color: WHITE}}>
-                  !
-                </HeaderText>
-              </Circle>
-            </View>
-          </View>
-
-          <View style={styles.exchangeSettingsCard}>
-            <HeaderText variant="header2" style={{textAlign: 'center'}}>
-              {t(m.noWifi)}
-            </HeaderText>
-            <View style={{height: '30%'}} />
-            <HeaderText
-              variant="header6"
-              style={{
-                textAlign: 'center',
-                marginBottom: 40,
-                paddingHorizontal: 30,
-              }}>
-              {t(m.noWifiInstructions)}
-            </HeaderText>
-          </View>
-        </View>
-      </ScreenContentWithDock>
-    );
-  }
+  const exchangeSettingsCard = (
+    <View style={styles.exchangeSettingsCard}>
+      <HeaderText variant="header6" style={{color: BLACK}}>
+        {t(
+          currentMediaSetting === 'everything'
+            ? m.exchangeEverythingTitle
+            : m.exchangePreviewsOnlyTitle,
+        )}
+      </HeaderText>
+      <BodyText variant="smallMeta" style={{color: NEW_DARK_GREY}}>
+        {t(
+          currentMediaSetting === 'everything'
+            ? m.exchangeEverythingMediaDescription
+            : m.exchangePreviewsOnlyMediaDescription,
+        )}
+      </BodyText>
+      <BodyText variant="smallMeta" style={{color: NEW_DARK_GREY}}>
+        {t(
+          currentMediaSetting === 'everything'
+            ? m.exchangeEverythingStorageDescription
+            : m.exchangePreviewsOnlyAudioDescription,
+        )}
+      </BodyText>
+      {((syncWasStopped && syncStage.name === 'complete-full') ||
+        syncStage.name === 'idle') && (
+        <Button
+          variant="text"
+          onPress={() => {
+            navigation.navigate('ExchangeSettingsBottomSheet');
+          }}>
+          <HeaderText variant="header6" style={styles.exchangeChangeLink}>
+            {t(m.exchangeAction)}
+          </HeaderText>
+        </Button>
+      )}
+    </View>
+  );
 
   return (
     <ScreenContentWithDock
       contentContainerStyle={styles.contentContainer}
       dockContent={dockContent}>
-      <View style={styles.wifiCard}>
-        <View style={styles.wifiCardContent}>
-          <Circle color="#CCE0FF" radius={14} style={styles.signalIndicator}>
-            <WifiIconComponent size={16} color={BLACK} />
-          </Circle>
-          <View style={styles.wifiCardTextContainer}>
-            {ssid ? (
-              <BodyText style={styles.wifiName}>{ssid}</BodyText>
-            ) : (
-              <>
-                <BodyText>{t(m.wifiCardPlaceholder, {ssid: ''})}</BodyText>
-                <BodyText style={styles.wifiName}>{t(m.noWifi)}</BodyText>
-              </>
-            )}
-          </View>
-        </View>
-      </View>
+      {wifiCard}
       <View style={styles.contentWrapper}>
         <View style={styles.projectInfoContainer}>
           {devicesAvailableHeader}
@@ -525,41 +496,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
           )}
         </View>
         {syncInfoContent}
-        <View style={styles.exchangeSettingsCard}>
-          <HeaderText variant="header6" style={{color: BLACK}}>
-            {t(
-              currentMediaSetting === 'everything'
-                ? m.exchangeEverythingTitle
-                : m.exchangePreviewsOnlyTitle,
-            )}
-          </HeaderText>
-          <BodyText variant="smallMeta" style={{color: NEW_DARK_GREY}}>
-            {t(
-              currentMediaSetting === 'everything'
-                ? m.exchangeEverythingMediaDescription
-                : m.exchangePreviewsOnlyMediaDescription,
-            )}
-          </BodyText>
-          <BodyText variant="smallMeta" style={{color: NEW_DARK_GREY}}>
-            {t(
-              currentMediaSetting === 'everything'
-                ? m.exchangeEverythingStorageDescription
-                : m.exchangePreviewsOnlyAudioDescription,
-            )}
-          </BodyText>
-          {((syncWasStopped && syncStage.name === 'complete-full') ||
-            syncStage.name === 'idle') && (
-            <Button
-              variant="text"
-              onPress={() => {
-                navigation.navigate('ExchangeSettingsBottomSheet');
-              }}>
-              <HeaderText variant="header6" style={styles.exchangeChangeLink}>
-                {t(m.exchangeAction)}
-              </HeaderText>
-            </Button>
-          )}
-        </View>
+        {exchangeSettingsCard}
       </View>
     </ScreenContentWithDock>
   );
@@ -692,15 +629,6 @@ const styles = StyleSheet.create({
     borderRadius: 60,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  syncStatusCircleOffline: {
-    width: 80,
-    height: 80,
-    borderRadius: 60,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: WHITE,
-    elevation: 4,
   },
   syncStatusOverlayIcon: {
     position: 'absolute',

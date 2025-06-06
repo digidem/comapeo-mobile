@@ -68,7 +68,7 @@ export const ExchangeSettingsBottomSheet = () => {
             description={t(m.everythingDesc)}
             selected={selected}
             onSelect={setSelected}
-            testID="EXCHANGE.opton-everything"
+            testID="EXCHANGE.option-everything"
           />
           <OptionCard
             setting="previews"
@@ -77,7 +77,7 @@ export const ExchangeSettingsBottomSheet = () => {
             description={t(m.previewsDesc)}
             selected={selected}
             onSelect={setSelected}
-            testID="EXCHANGE.opton-previews"
+            testID="EXCHANGE.option-previews"
           />
           <PrimaryButton
             fullSize

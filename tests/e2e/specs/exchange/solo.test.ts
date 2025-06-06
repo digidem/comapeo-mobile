@@ -22,7 +22,7 @@ describe('Exchange - Exchange Screen Solo Project', () => {
     await expect($(byTextMatches('Invite collaborators'))).toBeDisplayed();
 
     await expect($(byTextMatches('Join an existing project'))).toBeDisplayed();
-    await expect($(byTextMatches('Your Data stay secure'))).toBeDisplayed();
+    await expect($(byTextMatches('Your data stays secure'))).toBeDisplayed();
     await expect($(byTextMatches('Go Back'))).toBeDisplayed();
 
     const backButton = $(byResourceId('MAIN.header-back-btn'));

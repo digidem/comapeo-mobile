@@ -14,7 +14,10 @@ import {
 import {BodyText} from '../Text/BodyText';
 
 type Props = {
-  onPress: () => void;
+  accessibilityLabel?: string;
+  onPress?: () => void;
+  iconTestID?: string;
+  testID?: string;
 } & (
   | {
       status: 'searching' | 'error';
@@ -36,6 +39,7 @@ export const GPSPillUI = (props: Props) => {
       text = '--';
       icon = (
         <View
+          testID={props.iconTestID}
           style={{
             backgroundColor: DARK_MAGENTA,
             borderRadius: 50,
@@ -57,7 +61,7 @@ export const GPSPillUI = (props: Props) => {
       backgroundColor = DARK_GREY;
       text = '--';
       icon = (
-        <View>
+        <View testID={props.iconTestID}>
           <UIActivityIndicator
             // Animations seem to cause issues with test performance on Browserstack
             animating={!isE2E}
@@ -77,6 +81,7 @@ export const GPSPillUI = (props: Props) => {
       text = `${Math.abs(Math.round(props.accuracy))} ±`;
       icon = (
         <View
+          testID={props.iconTestID}
           style={{
             backgroundColor: GREEN,
             height: 12,
@@ -97,8 +102,8 @@ export const GPSPillUI = (props: Props) => {
   return (
     <TouchableOpacity
       onPress={props.onPress}
-      testID="MAP.gps-pill"
-      accessibilityLabel="Open GPS Modal."
+      testID={props.testID}
+      accessibilityLabel={props.accessibilityLabel}
       style={{
         flexDirection: 'row',
         alignItems: 'center',

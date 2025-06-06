@@ -13,7 +13,7 @@ export const STORAGE_KEY = 'savedLocation' as const;
 
 const SavedLocationContext = createContext<SavedLocationStore | null>(null);
 
-export const SavedLocationProvider = SavedLocationContext.Provider;
+export const SavedLocationStoreProvider = SavedLocationContext.Provider;
 
 export function createInitialState() {
   return {savedLocation: null};

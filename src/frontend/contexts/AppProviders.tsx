@@ -36,7 +36,7 @@ import {
 } from './MetricsDiagnosticsStoreContext';
 import {LocationProvider} from './LocationContext';
 import {
-  SavedLocationProvider,
+  SavedLocationStoreProvider,
   SavedLocationStore,
 } from './SavedLocationContext';
 
@@ -80,7 +80,7 @@ export const AppProviders = ({
                 <QueryClientProvider client={queryClient}>
                   <SafeAreaProvider>
                     <GestureHandlerRootView style={styles.flex}>
-                      <SavedLocationProvider value={savedLocationStore}>
+                      <SavedLocationStoreProvider value={savedLocationStore}>
                         <LocationProvider>
                           <TrackTimerContextProvider>
                             <LocalDiscoveryProvider
@@ -102,7 +102,7 @@ export const AppProviders = ({
                             </LocalDiscoveryProvider>
                           </TrackTimerContextProvider>
                         </LocationProvider>
-                      </SavedLocationProvider>
+                      </SavedLocationStoreProvider>
                     </GestureHandlerRootView>
                   </SafeAreaProvider>
                 </QueryClientProvider>

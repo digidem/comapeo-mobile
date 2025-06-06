@@ -1692,20 +1692,32 @@
   "screens.Sync.ProjectSyncDisplay.exchangeAction": {
     "message": "Change Settings"
   },
-  "screens.Sync.ProjectSyncDisplay.exchangeMediaDescription": {
+  "screens.Sync.ProjectSyncDisplay.exchangeEverythingMediaDescription": {
     "message": "Full size photos and audio."
   },
-  "screens.Sync.ProjectSyncDisplay.exchangeStorageDescription": {
+  "screens.Sync.ProjectSyncDisplay.exchangeEverythingStorageDescription": {
     "message": "Uses more storage."
   },
-  "screens.Sync.ProjectSyncDisplay.exchangeTitle": {
+  "screens.Sync.ProjectSyncDisplay.exchangeEverythingTitle": {
     "message": "Exchange everything."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyAudioDescription": {
+    "message": "No audio included."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyMediaDescription": {
+    "message": "Reduced smaller size photos."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyTitle": {
+    "message": "Exchange previews only."
   },
   "screens.Sync.ProjectSyncDisplay.noDevicesFound": {
     "message": "No devices found."
   },
   "screens.Sync.ProjectSyncDisplay.noWifi": {
-    "message": "No Wi-Fi"
+    "message": "No Wi-Fi."
+  },
+  "screens.Sync.ProjectSyncDisplay.noWifiInstructions": {
+    "message": "Check device’s settings and connectivity."
   },
   "screens.Sync.ProjectSyncDisplay.start": {
     "message": "Start"

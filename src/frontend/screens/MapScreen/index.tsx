@@ -59,12 +59,15 @@ export const MapScreen = ({
   const {navigate} = useNavigationFromHomeTabs();
   const location = useLocationState(store => store.throttledMapLocation);
   const coords = location && getCoords(location);
-  const [following, setFollowing] = React.useState(() => !!coords);
+  const [following, setFollowing] = React.useState(true);
   const {isTracking} = useTracking();
   const {data: styleUrl} = useMapStyleJsonUrl();
 
   const {authState} = useAuthContext();
-  const savedLocation = useNonReactiveSavedLocation();
+  const {savedLocation} = useNonReactiveSavedLocation();
+  const initialPositionSet = React.useRef(false);
+
+  console.log({coords});
 
   useCheckDraftObservationAndNavigate({authState});
 
@@ -114,13 +117,20 @@ export const MapScreen = ({
           return true;
         }}>
         <Mapbox.Camera
-          centerCoordinate={
-            coords && following
-              ? coords
-              : savedLocation
-                ? getCoords(savedLocation)
-                : FALLBACK_COORDINATE
-          }
+          ref={cam => {
+            if (cam && !initialPositionSet.current) {
+              cam.setCamera({
+                centerCoordinate: coords
+                  ? coords
+                  : savedLocation
+                    ? getCoords(savedLocation)
+                    : FALLBACK_COORDINATE,
+                zoomLevel: DEFAULT_ZOOM,
+              });
+              initialPositionSet.current = true;
+            }
+          }}
+          centerCoordinate={following ? coords : undefined}
           zoomLevel={DEFAULT_ZOOM}
           animationDuration={1000}
           animationMode="flyTo"

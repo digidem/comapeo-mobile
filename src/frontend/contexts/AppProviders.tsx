@@ -80,8 +80,8 @@ export const AppProviders = ({
                 <QueryClientProvider client={queryClient}>
                   <SafeAreaProvider>
                     <GestureHandlerRootView style={styles.flex}>
-                      <LocationProvider>
-                        <SavedLocationProvider store={savedLocationStore}>
+                      <SavedLocationProvider value={savedLocationStore}>
+                        <LocationProvider>
                           <TrackTimerContextProvider>
                             <LocalDiscoveryProvider
                               value={localDiscoveryController}>
@@ -101,8 +101,8 @@ export const AppProviders = ({
                               </ClientApiProvider>
                             </LocalDiscoveryProvider>
                           </TrackTimerContextProvider>
-                        </SavedLocationProvider>
-                      </LocationProvider>
+                        </LocationProvider>
+                      </SavedLocationProvider>
                     </GestureHandlerRootView>
                   </SafeAreaProvider>
                 </QueryClientProvider>

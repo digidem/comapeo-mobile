@@ -21,6 +21,7 @@ import {createStore} from 'zustand';
 import {getCoords} from '../lib/coordinateFormat';
 import {Loading} from '../sharedComponents/Loading';
 import {FatalError} from '../screens/FatalError';
+import {useSavedLocationActions} from './SavedLocationContext';
 
 export type LocationState = {
   location: LocationObject | undefined;
@@ -214,19 +215,38 @@ function startWatchPosition(store: StoreApi<LocationState>) {
 }
 
 function useCheckPermissionOnAppStateChange(store: StoreApi<LocationState>) {
+  const {setSavedLocation} = useSavedLocationActions();
+
   React.useEffect(() => {
     let isCancelled = false;
+
     const handleAppStateChange = async (nextAppState: AppStateStatus) => {
+      if (isCancelled) return;
+
+      const location = store.getState().location;
+      // update saved location when app goes in the background
+      if (nextAppState === 'background' || nextAppState === 'inactive') {
+        if (location) setSavedLocation(location);
+        return;
+      }
+
       if (nextAppState === 'active') {
-        const newPermissionStatus = (await getForegroundPermissionsAsync())
-          .status;
+        const {status: newPermissionStatus} =
+          await getForegroundPermissionsAsync();
         if (isCancelled) return;
-        const prevPermission = store.getState().locationPermission;
-        if (prevPermission !== newPermissionStatus) {
+
+        const {locationPermission} = store.getState();
+
+        if (newPermissionStatus !== locationPermission) {
+          // if the user removed permission, update saved location
+          if (newPermissionStatus !== PermissionStatus.GRANTED && location) {
+            setSavedLocation(location);
+          }
+
           store.setState(state => ({
             ...state,
             locationPermission: newPermissionStatus,
-            // dont return stale location
+            // don't return stale location
             ...(newPermissionStatus !== PermissionStatus.GRANTED
               ? {location: undefined, throttledMapLocation: undefined}
               : {}),
@@ -244,43 +264,52 @@ function useCheckPermissionOnAppStateChange(store: StoreApi<LocationState>) {
       isCancelled = true;
       subscription.remove();
     };
-  }, [store]);
+  }, [store, setSavedLocation]);
 }
 
 function usePollProviderStatus(store: StoreApi<LocationState>) {
   const queryClient = useQueryClient();
+  const {setSavedLocation} = useSavedLocationActions();
+
   React.useEffect(() => {
     let ignore = false;
-    async function checkProviderStatus() {
-      getProviderStatusAsync()
-        .then(status => {
-          if (ignore) return;
-          if (!status.locationServicesEnabled) {
-            queryClient.invalidateQueries({queryKey: ['lastLocation']});
-          }
 
-          store.setState(store => ({
-            ...store,
-            providerStatus: status,
-            // dont return stale location
-            ...(!status.locationServicesEnabled
-              ? {location: undefined, throttledMapLocation: undefined}
-              : {}),
-          }));
-        })
-        // Shouldn't happen because we check permissions.granted above, but just in case
-        .catch(err => {
-          Sentry.captureException(err);
-        });
-    }
+    const checkProviderStatus = async () => {
+      try {
+        const status = await getProviderStatusAsync();
+        if (ignore) return;
+
+        const locationServicesEnabled = status.locationServicesEnabled;
+        const location = store.getState().location;
+
+        if (!locationServicesEnabled) {
+          queryClient.invalidateQueries({queryKey: ['lastLocation']});
+          if (location) setSavedLocation(location);
+        }
+
+        store.setState(prevState => ({
+          ...prevState,
+          providerStatus: status,
+          // dont provide a stale location
+          ...(locationServicesEnabled
+            ? {}
+            : {location: undefined, throttledMapLocation: undefined}),
+        }));
+      } catch (err) {
+        Sentry.captureException(err);
+      }
+    };
+
+    // Initial call
     checkProviderStatus();
     const intervalId = setInterval(
       checkProviderStatus,
       POLL_PROVIDER_STATUS_INTERVAL,
     );
+
     return () => {
-      clearInterval(intervalId);
       ignore = true;
+      clearInterval(intervalId);
     };
-  }, [store, queryClient]);
+  }, [store, queryClient, setSavedLocation]);
 }

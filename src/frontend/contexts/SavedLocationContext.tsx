@@ -1,4 +1,4 @@
-import {createContext, ReactNode, useContext, useEffect} from 'react';
+import {createContext, useContext} from 'react';
 import {createStore, type StoreApi} from 'zustand';
 import {
   createJSONStorage,
@@ -7,58 +7,19 @@ import {
 
 import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
 import {LocationObject} from 'expo-location';
-import {AppState, AppStateStatus} from 'react-native';
-import {useLocationContext} from './LocationContext';
 
 // Do not change!
 export const STORAGE_KEY = 'savedLocation' as const;
 
 const SavedLocationContext = createContext<SavedLocationStore | null>(null);
 
-// store is stable
-// eslint-disable-next-line @eslint-react/no-unstable-context-value
-export const SavedLocationProvider = ({
-  store,
-  children,
-}: {
-  store: SavedLocationStore;
-  children: ReactNode;
-}) => {
-  // using location store as we do not need to be reactive to state updates
-  const locationStore = useLocationContext();
-  // persist last known location everytime app goes into the background/is closed
-  useEffect(() => {
-    let isCancelled = false;
-
-    const handleAppStateChange = async (nextAppState: AppStateStatus) => {
-      const currentLocation = locationStore.getState().location;
-      if (nextAppState === 'background' || nextAppState === 'inactive') {
-        if (isCancelled || !currentLocation) return;
-        store.actions.setSavedLocation(currentLocation);
-      }
-    };
-    const subscription = AppState.addEventListener(
-      'change',
-      handleAppStateChange,
-    );
-
-    return () => {
-      isCancelled = true;
-      subscription.remove();
-    };
-  });
-  return (
-    <SavedLocationContext.Provider value={store}>
-      {children}
-    </SavedLocationContext.Provider>
-  );
-};
+export const SavedLocationProvider = SavedLocationContext.Provider;
 
 export function createInitialState() {
-  return null;
+  return {savedLocation: null};
 }
 
-type SavedLocationState = LocationObject | null;
+type SavedLocationState = {savedLocation: LocationObject | null};
 
 export function createSavedLocationStore({persist} = {persist: false}) {
   let store: StoreApi<SavedLocationState>;
@@ -77,7 +38,7 @@ export function createSavedLocationStore({persist} = {persist: false}) {
 
   const actions = {
     setSavedLocation: (location: LocationObject | null) => {
-      store.setState(location);
+      store.setState({savedLocation: location});
     },
   };
 
@@ -98,9 +59,14 @@ function useSavedLocationContext() {
 
 /**
  *
- * This hook provides the last saved location but is NOT reactive to state. Currently it is only being used once when the map is initially loading, so the consuming component does not need to reactive.
+ * This hook provides the last saved location but is NOT reactive to state. Currently it is only being used once when the map is initially loading, so the consuming component does not need it to be reactive.
  */
 export function useNonReactiveSavedLocation() {
   const {instance} = useSavedLocationContext();
   return instance.getState();
+}
+
+export function useSavedLocationActions() {
+  const {actions} = useSavedLocationContext();
+  return actions;
 }

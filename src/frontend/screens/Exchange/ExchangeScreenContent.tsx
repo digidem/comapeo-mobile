@@ -217,7 +217,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
           <SecondaryButton
             fullSize={true}
             text={t(m.close)}
-            onPress={() => {}}
+            onPress={() => navigation.goBack()}
           />
         );
 
@@ -422,8 +422,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
             <Button
               variant="text"
               onPress={() => {
-                // TODO: open exchange settings bottom sheet
-                console.log('Open Exchange Settings');
+                navigation.navigate('ExchangeSettingsBottomSheet');
               }}>
               <HeaderText variant="header6" style={styles.exchangeChangeLink}>
                 {t(m.exchangeAction)}

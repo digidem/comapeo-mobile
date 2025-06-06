@@ -1686,6 +1686,9 @@
   "screens.Sync.ProjectSyncDisplay.allDataSynced": {
     "message": "Up to date!"
   },
+  "screens.Sync.ProjectSyncDisplay.close": {
+    "message": "Close"
+  },
   "screens.Sync.ProjectSyncDisplay.devicesFound": {
     "message": "Devices found."
   },

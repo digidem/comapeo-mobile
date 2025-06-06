@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Pressable} from 'react-native';
+import {View, StyleSheet, Pressable, ScrollView} from 'react-native';
 import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -10,7 +10,7 @@ import {
   useGetMediaSyncSetting,
 } from '../../hooks/server/mediaSync';
 import {MediaSyncSetting} from '../../sharedTypes';
-import {DARK_GREY, NEW_DARK_GREY, WHITE} from '../../lib/styles';
+import {BLACK, DARK_GREY, NEW_DARK_GREY, WHITE} from '../../lib/styles';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
@@ -59,36 +59,38 @@ export const ExchangeSettingsBottomSheet = () => {
 
   return (
     <BottomSheetWrapper>
-      <View style={styles.container}>
-        <OptionCard
-          setting="everything"
-          icon={<OrangeStar width={30} height={30} />}
-          title={t(m.everythingTitle)}
-          description={t(m.everythingDesc)}
-          selected={selected}
-          onSelect={setSelected}
-        />
-        <OptionCard
-          setting="previews"
-          icon={<GreyLeaf width={30} height={30} />}
-          title={t(m.previewsTitle)}
-          description={t(m.previewsDesc)}
-          selected={selected}
-          onSelect={setSelected}
-        />
-        <PrimaryButton
-          fullSize
-          style={styles.saveButton}
-          onPress={handleSave}
-          text={t(m.save)}
-        />
-        <SecondaryButton
-          fullSize
-          style={styles.closeButton}
-          text={t(m.close)}
-          onPress={() => goBack()}
-        />
-      </View>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.container}>
+          <OptionCard
+            setting="everything"
+            icon={<OrangeStar width={30} height={30} />}
+            title={t(m.everythingTitle)}
+            description={t(m.everythingDesc)}
+            selected={selected}
+            onSelect={setSelected}
+          />
+          <OptionCard
+            setting="previews"
+            icon={<GreyLeaf width={30} height={30} />}
+            title={t(m.previewsTitle)}
+            description={t(m.previewsDesc)}
+            selected={selected}
+            onSelect={setSelected}
+          />
+          <PrimaryButton
+            fullSize
+            style={styles.saveButton}
+            onPress={handleSave}
+            text={t(m.save)}
+          />
+          <SecondaryButton
+            fullSize
+            style={styles.closeButton}
+            text={t(m.close)}
+            onPress={() => goBack()}
+          />
+        </View>
+      </ScrollView>
     </BottomSheetWrapper>
   );
 };
@@ -121,10 +123,16 @@ const OptionCard = ({
         )}
       </View>
       <View style={styles.optionTextContainer}>
-        <HeaderText variant="header5" style={styles.optionTitle}>
+        <HeaderText
+          variant="header5"
+          style={styles.optionTitle}
+          numberOfLines={undefined}>
           {title}
         </HeaderText>
-        <BodyText variant="smallMeta" style={styles.optionDescription}>
+        <BodyText
+          variant="smallMeta"
+          style={styles.optionDescription}
+          numberOfLines={undefined}>
           {description}
         </BodyText>
       </View>
@@ -141,30 +149,33 @@ const styles = StyleSheet.create({
     gap: 15,
   },
   optionCard: {
-    width: 320,
-    height: 100,
+    maxWidth: 320,
+    minHeight: 100,
     backgroundColor: WHITE,
     borderWidth: 1,
     borderColor: '#EFEFEF',
     borderRadius: 4,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 20,
     gap: 20,
-    shadowColor: '#000',
+    shadowColor: BLACK,
     shadowOpacity: 0.15,
     shadowRadius: 4,
     elevation: 2,
   },
   optionTextContainer: {
     flex: 1,
+    paddingVertical: 5,
   },
   optionTitle: {
-    color: '#333333',
+    flexShrink: 1,
   },
   optionDescription: {
     color: NEW_DARK_GREY,
     marginTop: 5,
+    flexShrink: 1,
   },
   radioOuter: {
     width: 18,

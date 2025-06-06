@@ -22,7 +22,6 @@ import {
   DARK_ORANGE,
   LIGHT_GREY,
   MEDIUM_GREY,
-  NEW_DARK_GREY,
   WHITE,
 } from '../../lib/styles';
 import {
@@ -31,13 +30,7 @@ import {
   getSyncingPeersCount,
   type SyncStage,
 } from '../../lib/sync';
-import {
-  DoneIcon,
-  StopIcon,
-  SyncIcon,
-  WifiIcon,
-  WifiOffIcon,
-} from '../../sharedComponents/icons';
+import {DoneIcon, StopIcon, SyncIcon} from '../../sharedComponents/icons';
 import {Circle} from '../../sharedComponents/icons/Circle';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
@@ -46,9 +39,10 @@ import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {ROOT_QUERY_KEY} from '../../constants';
 import {useActiveArchiveServer} from '../../hooks/server/projects';
 import {Button} from '../../sharedComponents/Button';
-import OrangeStar from '../../images/OrangeStar.svg';
-import GreyLeaf from '../../images/GreyLeaf.svg';
 import {useGetMediaSyncSetting} from '../../hooks/server/mediaSync';
+import {ExchangeSettingsCard} from './ExchangeSettingsCard';
+import {WifiCard} from './WifiCard';
+import {DevicesAvailableHeader} from './DevicesAvailableHeader';
 
 const m = defineMessages({
   devicesFound: {
@@ -153,8 +147,6 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
   const [syncWasStopped, setSyncWasStopped] = React.useState(false);
 
   const ssid = useLocalDiscoveryState(state => state.ssid);
-
-  const WifiIconComponent = ssid ? WifiIcon : WifiOffIcon;
 
   const connectedPeersCount = getConnectedPeersCount(
     syncState.remoteDeviceSyncState,
@@ -264,7 +256,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
                 ? t(m.devicesFound)
                 : t(m.noDevicesFound)}
             </HeaderText>
-            <View style={{height: '30%'}}></View>
+            <View style={{height: 120}}></View>
           </>
         );
         break;
@@ -389,99 +381,20 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
     }
   }
 
-  const wifiCard = (
-    <View style={styles.wifiCard}>
-      <View style={styles.wifiCardContent}>
-        <Circle color="#CCE0FF" radius={14} style={styles.signalIndicator}>
-          <WifiIconComponent size={16} color={BLACK} />
-        </Circle>
-        <View style={styles.wifiCardTextContainer}>
-          {ssid ? (
-            <BodyText style={styles.wifiName}>{ssid}</BodyText>
-          ) : (
-            <>
-              <BodyText>{t(m.wifiCardPlaceholder, {ssid: ''})}</BodyText>
-              <BodyText style={styles.wifiName}>{t(m.noWifi)}</BodyText>
-            </>
-          )}
-        </View>
-      </View>
-    </View>
-  );
-
-  const devicesAvailableHeader = (
-    <View style={styles.syncStatusIconWrapper}>
-      <View
-        style={[
-          styles.syncStatusCircle,
-          {
-            borderColor:
-              syncStage.connectedPeersCount > 0 ? DARK_ORANGE : BLUE_GREY,
-          },
-        ]}>
-        <SyncIcon
-          size={28}
-          color={syncStage.connectedPeersCount > 0 ? DARK_ORANGE : BLUE_GREY}
-        />
-      </View>
-      {currentMediaSetting === 'everything' ? (
-        <OrangeStar
-          width={30}
-          height={30}
-          style={styles.syncStatusOverlayIcon}
-        />
-      ) : (
-        <GreyLeaf width={30} height={30} style={styles.syncStatusOverlayIcon} />
-      )}
-    </View>
-  );
-
-  const exchangeSettingsCard = (
-    <View style={styles.exchangeSettingsCard}>
-      <HeaderText variant="header6" style={{color: BLACK}}>
-        {t(
-          currentMediaSetting === 'everything'
-            ? m.exchangeEverythingTitle
-            : m.exchangePreviewsOnlyTitle,
-        )}
-      </HeaderText>
-      <BodyText variant="smallMeta" style={{color: NEW_DARK_GREY}}>
-        {t(
-          currentMediaSetting === 'everything'
-            ? m.exchangeEverythingMediaDescription
-            : m.exchangePreviewsOnlyMediaDescription,
-        )}
-      </BodyText>
-      <BodyText variant="smallMeta" style={{color: NEW_DARK_GREY}}>
-        {t(
-          currentMediaSetting === 'everything'
-            ? m.exchangeEverythingStorageDescription
-            : m.exchangePreviewsOnlyAudioDescription,
-        )}
-      </BodyText>
-      {((syncWasStopped && syncStage.name === 'complete-full') ||
-        syncStage.name === 'idle') && (
-        <Button
-          variant="text"
-          onPress={() => {
-            navigation.navigate('ExchangeSettingsBottomSheet');
-          }}>
-          <HeaderText variant="header6" style={styles.exchangeChangeLink}>
-            {t(m.exchangeAction)}
-          </HeaderText>
-        </Button>
-      )}
-    </View>
-  );
-
   return (
     <ScreenContentWithDock
       contentContainerStyle={styles.contentContainer}
       dockContent={dockContent}>
-      {wifiCard}
+      <WifiCard ssid={ssid} />
       <View style={styles.contentWrapper}>
         <View style={styles.projectInfoContainer}>
-          {devicesAvailableHeader}
+          <DevicesAvailableHeader
+            iconColor={
+              syncStage.connectedPeersCount > 0 ? DARK_ORANGE : BLUE_GREY
+            }
+            overlayType={currentMediaSetting === 'everything' ? 'star' : 'leaf'}
+            showOverlay={syncStage.connectedPeersCount > 0}
+          />
           {remoteArchiveConnected && (
             <View style={styles.remoteInfoContainer}>
               <Circle
@@ -496,7 +409,30 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
           )}
         </View>
         {syncInfoContent}
-        {exchangeSettingsCard}
+        <ExchangeSettingsCard
+          title={t(
+            currentMediaSetting === 'everything'
+              ? m.exchangeEverythingTitle
+              : m.exchangePreviewsOnlyTitle,
+          )}
+          mediaDescription={t(
+            currentMediaSetting === 'everything'
+              ? m.exchangeEverythingMediaDescription
+              : m.exchangePreviewsOnlyMediaDescription,
+          )}
+          storageDescription={t(
+            currentMediaSetting === 'everything'
+              ? m.exchangeEverythingStorageDescription
+              : m.exchangePreviewsOnlyAudioDescription,
+          )}
+          showChangeSettingsLink={
+            (syncWasStopped && syncStage.name === 'complete-full') ||
+            syncStage.name === 'idle'
+          }
+          onPressChangeSettings={() =>
+            navigation.navigate('ExchangeSettingsBottomSheet')
+          }
+        />
       </View>
     </ScreenContentWithDock>
   );
@@ -549,34 +485,6 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     gap: 10,
   },
-  wifiCard: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 15,
-    paddingVertical: 14,
-    width: '100%',
-    backgroundColor: WHITE,
-    borderWidth: 1,
-    borderColor: BLUE_GREY,
-    borderRadius: 6,
-  },
-  wifiCardTextContainer: {
-    flexShrink: 1,
-    flexGrow: 0,
-    flexBasis: 'auto',
-    maxWidth: '80%',
-  },
-  wifiCardContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-    maxWidth: '100%',
-    gap: 10,
-  },
-  wifiName: {
-    fontWeight: '500',
-  },
   projectInfoContainer: {
     alignItems: 'center',
     gap: 8,
@@ -594,7 +502,6 @@ const styles = StyleSheet.create({
   },
   exchangeInfoText: {
     textAlign: 'center',
-    color: BLACK,
   },
   progressContainer: {
     gap: 10,
@@ -609,39 +516,6 @@ const styles = StyleSheet.create({
     color: MEDIUM_GREY,
     textAlign: 'right',
     marginTop: 4,
-  },
-  signalIndicator: {
-    elevation: 0,
-    backgroundColor: '#CCE0FF',
-    borderColor: '#CCE0FF',
-  },
-  syncStatusIconWrapper: {
-    width: 80,
-    height: 80,
-    position: 'relative',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  syncStatusCircle: {
-    width: 80,
-    height: 80,
-    borderWidth: 6,
-    borderRadius: 60,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  syncStatusOverlayIcon: {
-    position: 'absolute',
-    right: 0,
-    bottom: 0,
-  },
-  exchangeSettingsCard: {
-    marginTop: 25,
-    alignItems: 'center',
-  },
-  exchangeChangeLink: {
-    color: COMAPEO_BLUE,
-    marginTop: 12,
   },
   contentWrapper: {
     borderWidth: 1,

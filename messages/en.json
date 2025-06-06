@@ -1669,13 +1669,13 @@
     "message": "Privacy Policy"
   },
   "screens.Sync.NoWifiDisplay.buttonText": {
-    "message": "Open Settings"
+    "message": "Close"
   },
   "screens.Sync.NoWifiDisplay.description": {
-    "message": "Open your phone settings and connect to a WiFi network to synchronize"
+    "message": "Check device’s settings and connectivity."
   },
   "screens.Sync.NoWifiDisplay.title": {
-    "message": "No WiFi"
+    "message": "No Wi-Fi."
   },
   "screens.Sync.ProjectSyncDisplay.allCaughtUp": {
     "message": "You're all caught up!"
@@ -1715,9 +1715,6 @@
   },
   "screens.Sync.ProjectSyncDisplay.noWifi": {
     "message": "No Wi-Fi."
-  },
-  "screens.Sync.ProjectSyncDisplay.noWifiInstructions": {
-    "message": "Check device’s settings and connectivity."
   },
   "screens.Sync.ProjectSyncDisplay.start": {
     "message": "Start"

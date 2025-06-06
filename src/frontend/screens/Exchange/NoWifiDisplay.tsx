@@ -74,7 +74,7 @@ export const NoWifiDisplay = ({onGoBack}: {onGoBack: () => void}) => {
           <HeaderText variant="header2" style={{textAlign: 'center'}}>
             {t(m.title)}
           </HeaderText>
-          <View style={{height: '30%'}} />
+          <View style={{height: 165}} />
           <HeaderText
             variant="header6"
             style={{
@@ -131,8 +131,8 @@ const styles = StyleSheet.create({
   },
   signalIndicator: {
     elevation: 0,
-    backgroundColor: '#CCE0FF',
-    borderColor: '#CCE0FF',
+    backgroundColor: BLUE_GREY,
+    borderColor: BLUE_GREY,
   },
   syncStatusIconWrapper: {
     width: 80,

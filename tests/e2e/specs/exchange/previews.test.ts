@@ -13,7 +13,9 @@ describe('Exchange - Exchange Settings for Previews', () => {
     await expect($(byTextMatches('No audio included.'))).toBeDisplayed();
     const previewsOption = await $(byResourceId('EXCHANGE.option-previews'));
     await previewsOption.click();
-
+    await expect(
+      $(byResourceId('EXCHANGE.radio-selected-previews')),
+    ).toBeDisplayed();
     const saveBtn = await $(byText('Save'));
     await saveBtn.click();
     await $(byText('Close')).click();

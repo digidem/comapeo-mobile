@@ -13,10 +13,9 @@ describe('Exchange - Exchange Settings for Everything', () => {
     const changeSettingsBtn = await $(byTextMatches('Change Settings'));
     await changeSettingsBtn.click();
     await $(byResourceId('EXCHANGE.option-everything')).waitForDisplayed();
-    const selectedEverythingRadio = await $$(
-      'android=new UiSelector().className("android.view.View").descriptionContains("Exchange Everything")',
-    );
-    expect(selectedEverythingRadio.length).toBeGreaterThan(0);
+    await expect(
+      $(byResourceId('EXCHANGE.radio-selected-everything')),
+    ).toBeDisplayed();
     await $(byText('Close')).click();
     await expect($(byTextMatches('Exchange everything'))).toBeDisplayed();
   });

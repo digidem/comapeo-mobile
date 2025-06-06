@@ -121,12 +121,16 @@ const OptionCard = ({
       style={styles.optionCard}
       testID={testID}>
       <View
+        testID={`EXCHANGE.radio-outer-${setting}`}
         style={[
           styles.radioOuter,
           {borderColor: isSelected ? DARK_GREY : NEW_DARK_GREY},
         ]}>
         {isSelected && (
-          <View style={[styles.radioInner, {backgroundColor: DARK_GREY}]} />
+          <View
+            style={[styles.radioInner, {backgroundColor: DARK_GREY}]}
+            testID={`EXCHANGE.radio-selected-${setting}`}
+          />
         )}
       </View>
       <View style={styles.optionTextContainer}>

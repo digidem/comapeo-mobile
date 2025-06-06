@@ -155,8 +155,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
   const progress = useDataSyncProgress({projectId});
   const startSync = useStartSync({projectId});
   const currentMediaSetting = useGetMediaSyncSetting();
-  const [wasSyncManuallyStopped, setWasSyncManuallyStopped] =
-    React.useState(false);
+  const [syncWasStopped, setSyncWasStopped] = React.useState(false);
 
   const ssid = useLocalDiscoveryState(state => state.ssid);
 
@@ -221,167 +220,177 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
   let dockContent: React.ReactNode;
   let syncInfoContent: React.ReactNode;
 
-  switch (syncStage.name) {
-    case 'idle': {
-      dockContent =
-        syncStage.connectedPeersCount > 0 ? (
-          <PrimaryButton
-            fullSize
-            text={t(m.start)}
-            renderIcon={({size}) => <SyncIcon size={size} />}
-            onPress={() => {
-              // TODO: Catch/surface error
-              startSync.mutate(undefined);
-            }}
-          />
-        ) : (
-          <SecondaryButton
-            fullSize={true}
-            text={t(m.close)}
-            onPress={() => navigation.goBack()}
-          />
+  if (syncStage.name === 'complete-full' && syncWasStopped) {
+    dockContent = (
+      <SecondaryButton
+        fullSize
+        text={t(m.close)}
+        onPress={() => {
+          setSyncWasStopped(false);
+          navigation.goBack();
+        }}
+      />
+    );
+
+    syncInfoContent = (
+      <>
+        <HeaderText variant="header1" style={styles.exchangeInfoText}>
+          {t(m.allDataSynced)}
+        </HeaderText>
+        <View style={{height: 120}} />
+      </>
+    );
+  } else {
+    switch (syncStage.name) {
+      case 'idle': {
+        dockContent =
+          syncStage.connectedPeersCount > 0 ? (
+            <PrimaryButton
+              fullSize
+              text={t(m.start)}
+              renderIcon={({size}) => <SyncIcon size={size} />}
+              onPress={() => {
+                // TODO: Catch/surface error
+                startSync.mutate(undefined);
+              }}
+            />
+          ) : (
+            <SecondaryButton
+              fullSize={true}
+              text={t(m.close)}
+              onPress={() => navigation.goBack()}
+            />
+          );
+
+        syncInfoContent = (
+          <>
+            <HeaderText variant="header1" style={styles.exchangeInfoText}>
+              {syncStage.connectedPeersCount > 0
+                ? t(m.devicesFound)
+                : t(m.noDevicesFound)}
+            </HeaderText>
+            <View style={{height: '30%'}}></View>
+          </>
         );
-
-      syncInfoContent = (
-        <>
-          <HeaderText variant="header1" style={styles.exchangeInfoText}>
-            {syncStage.connectedPeersCount > 0
-              ? t(m.devicesFound)
-              : t(m.noDevicesFound)}
-          </HeaderText>
-          <View style={{height: '30%'}}></View>
-        </>
-      );
-      break;
-    }
-    case 'waiting': {
-      dockContent = (
-        <SecondaryButton
-          fullSize={true}
-          onPress={() => {
-            // TODO: Catch/surface error
-            projectApi.$sync.stop();
-          }}
-          text={t(m.stop)}
-          renderIcon={({size, color}) => <StopIcon size={size} color={color} />}
-        />
-      );
-
-      syncInfoContent = (
-        <>
-          <HeaderText variant="header1" style={styles.exchangeInfoText}>
-            {t(m.waitingForDevices)}
-          </HeaderText>
-          <SyncProgress stage={syncStage} />
-        </>
-      );
-
-      break;
-    }
-    case 'syncing': {
-      dockContent = (
-        <SecondaryButton
-          fullSize={true}
-          onPress={() => {
-            // TODO: Catch/surface error
-            projectApi.$sync.stop();
-          }}
-          text={t(m.stop)}
-          renderIcon={({size, color}) => <StopIcon size={size} color={color} />}
-        />
-      );
-
-      syncInfoContent = (
-        <>
-          <HeaderText variant="header1" style={styles.exchangeInfoText}>
-            {syncStage.progress === 0
-              ? t(m.waitingForDevices)
-              : t(m.syncingWithDevices)}
-          </HeaderText>
-          <SyncProgress stage={syncStage} />
-        </>
-      );
-
-      break;
-    }
-    case 'complete-partial': {
-      dockContent = (
-        <SecondaryButton
-          fullSize={true}
-          onPress={() => {
-            // TODO: Catch/surface error
-            projectApi.$sync.stop();
-          }}
-          text={t(m.stop)}
-          renderIcon={({size, color}) => <StopIcon size={size} color={color} />}
-        />
-      );
-
-      syncInfoContent = (
-        <>
-          <HeaderText variant="header1" style={styles.exchangeInfoText}>
-            {t(m.syncingCompleteButWaitingForOthers)}
-          </HeaderText>
-          <SyncProgress stage={syncStage} />
-        </>
-      );
-
-      break;
-    }
-    case 'complete-full': {
-      dockContent = syncState.data.isSyncEnabled ? (
-        wasSyncManuallyStopped ? (
-          <SecondaryButton
-            fullSize
-            text={t(m.close)}
-            onPress={() => {
-              setWasSyncManuallyStopped(false);
-              navigation.goBack();
-            }}
-          />
-        ) : (
+        break;
+      }
+      case 'waiting': {
+        dockContent = (
           <SecondaryButton
             fullSize={true}
             onPress={() => {
               // TODO: Catch/surface error
               projectApi.$sync.stop();
-              setWasSyncManuallyStopped(true);
             }}
             text={t(m.stop)}
             renderIcon={({size, color}) => (
               <StopIcon size={size} color={color} />
             )}
           />
-        )
-      ) : (
-        <Button variant="text" disabled onPress={() => {}}>
-          <HeaderText variant="header5">{t(m.allCaughtUp)}</HeaderText>
-        </Button>
-      );
+        );
 
-      syncInfoContent = wasSyncManuallyStopped ? (
-        <>
-          <HeaderText variant="header1" style={styles.exchangeInfoText}>
-            {t(m.allDataSynced)}
-          </HeaderText>
-          <View style={{height: 120}} />
-        </>
-      ) : (
-        <>
-          <HeaderText variant="header1" style={styles.exchangeInfoText}>
-            {t(m.syncingFullyComplete)}
-          </HeaderText>
-          <SyncProgress stage={syncStage} />
-        </>
-      );
+        syncInfoContent = (
+          <>
+            <HeaderText variant="header1" style={styles.exchangeInfoText}>
+              {t(m.waitingForDevices)}
+            </HeaderText>
+            <SyncProgress stage={syncStage} />
+          </>
+        );
 
-      break;
-    }
-    default: {
-      throw new ExhaustivenessError(
-        // @ts-expect-error Handled at runtime
-        syncState.status,
-      );
+        break;
+      }
+      case 'syncing': {
+        dockContent = (
+          <SecondaryButton
+            fullSize={true}
+            onPress={() => {
+              // TODO: Catch/surface error
+              projectApi.$sync.stop();
+            }}
+            text={t(m.stop)}
+            renderIcon={({size, color}) => (
+              <StopIcon size={size} color={color} />
+            )}
+          />
+        );
+
+        syncInfoContent = (
+          <>
+            <HeaderText variant="header1" style={styles.exchangeInfoText}>
+              {syncStage.progress === 0
+                ? t(m.waitingForDevices)
+                : t(m.syncingWithDevices)}
+            </HeaderText>
+            <SyncProgress stage={syncStage} />
+          </>
+        );
+
+        break;
+      }
+      case 'complete-partial': {
+        dockContent = (
+          <SecondaryButton
+            fullSize={true}
+            onPress={() => {
+              // TODO: Catch/surface error
+              projectApi.$sync.stop();
+            }}
+            text={t(m.stop)}
+            renderIcon={({size, color}) => (
+              <StopIcon size={size} color={color} />
+            )}
+          />
+        );
+
+        syncInfoContent = (
+          <>
+            <HeaderText variant="header1" style={styles.exchangeInfoText}>
+              {t(m.syncingCompleteButWaitingForOthers)}
+            </HeaderText>
+            <SyncProgress stage={syncStage} />
+          </>
+        );
+
+        break;
+      }
+      case 'complete-full': {
+        dockContent = syncState.data.isSyncEnabled ? (
+          <SecondaryButton
+            fullSize={true}
+            onPress={() => {
+              // TODO: Catch/surface error
+              projectApi.$sync.stop();
+              setSyncWasStopped(true);
+            }}
+            text={t(m.stop)}
+            renderIcon={({size, color}) => (
+              <StopIcon size={size} color={color} />
+            )}
+          />
+        ) : (
+          <Button variant="text" disabled onPress={() => {}}>
+            <HeaderText variant="header5">{t(m.allCaughtUp)}</HeaderText>
+          </Button>
+        );
+
+        syncInfoContent = (
+          <>
+            <HeaderText variant="header1" style={styles.exchangeInfoText}>
+              {t(m.syncingFullyComplete)}
+            </HeaderText>
+            <SyncProgress stage={syncStage} />
+          </>
+        );
+
+        break;
+      }
+      default: {
+        throw new ExhaustivenessError(
+          // @ts-expect-error Handled at runtime
+          syncState.status,
+        );
+      }
     }
   }
 
@@ -402,8 +411,8 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
       </View>
       {currentMediaSetting === 'everything' ? (
         <OrangeStar
-          width={40}
-          height={40}
+          width={30}
+          height={30}
           style={styles.syncStatusOverlayIcon}
         />
       ) : (
@@ -538,8 +547,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
                 : m.exchangePreviewsOnlyAudioDescription,
             )}
           </BodyText>
-          {(wasSyncManuallyStopped ||
-            syncStage.name === 'complete-full' ||
+          {((syncWasStopped && syncStage.name === 'complete-full') ||
             syncStage.name === 'idle') && (
             <Button
               variant="text"
@@ -696,8 +704,8 @@ const styles = StyleSheet.create({
   },
   syncStatusOverlayIcon: {
     position: 'absolute',
-    right: -5,
-    bottom: -5,
+    right: 0,
+    bottom: 0,
   },
   exchangeSettingsCard: {
     marginTop: 25,

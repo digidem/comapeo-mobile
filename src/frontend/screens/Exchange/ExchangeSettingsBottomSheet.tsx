@@ -68,6 +68,7 @@ export const ExchangeSettingsBottomSheet = () => {
             description={t(m.everythingDesc)}
             selected={selected}
             onSelect={setSelected}
+            testID="EXCHANGE.opton-everything"
           />
           <OptionCard
             setting="previews"
@@ -76,6 +77,7 @@ export const ExchangeSettingsBottomSheet = () => {
             description={t(m.previewsDesc)}
             selected={selected}
             onSelect={setSelected}
+            testID="EXCHANGE.opton-previews"
           />
           <PrimaryButton
             fullSize
@@ -102,6 +104,7 @@ const OptionCard = ({
   description,
   selected,
   onSelect,
+  testID,
 }: {
   setting: MediaSyncSetting;
   icon: React.ReactElement;
@@ -109,10 +112,14 @@ const OptionCard = ({
   description: string;
   selected: MediaSyncSetting;
   onSelect: (s: MediaSyncSetting) => void;
+  testID: string;
 }) => {
   const isSelected = selected === setting;
   return (
-    <Pressable onPress={() => onSelect(setting)} style={styles.optionCard}>
+    <Pressable
+      onPress={() => onSelect(setting)}
+      style={styles.optionCard}
+      testID={testID}>
       <View
         style={[
           styles.radioOuter,

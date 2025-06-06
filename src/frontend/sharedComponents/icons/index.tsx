@@ -138,7 +138,13 @@ export const WifiIcon = ({
   color = 'white',
   style,
 }: FontIconProps) => (
-  <MaterialIcon color={color} style={style} name="wifi" size={size} />
+  <MaterialIcon
+    color={color}
+    style={style}
+    name="wifi"
+    size={size}
+    testID="wifi-icon"
+  />
 );
 export const SyncIcon = ({size = 20, color = WHITE}: FontIconProps) => (
   <FontAwesomeIcon

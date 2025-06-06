@@ -8,6 +8,7 @@ describe('CoMapeo E2E Flow', function () {
   require('./project/own-project-headers.test');
   require('./main/side-drawer-menu-no-proj.test');
   require('./project/project-settings-no-proj.test');
+  require('./exchange/solo.test');
   require('./observations/create-observation.test');
   require('./multiple-projects/create-and-switch.test');
   require('./tracks/start-track.test');
@@ -19,6 +20,9 @@ describe('CoMapeo E2E Flow', function () {
   require('./remote-archive/add-remote-error.test');
   require('./remote-archive/add-remote-success-and-removal.test');
   require('./main/map.test');
+  require('./exchange/no-devices.test');
+  require('./exchange/everything.test');
+  require('./exchange/previews.test');
   require('./observations/add-details.test');
   require('./observations/view-observations.test');
   require('./observations/observation-metadata.test');

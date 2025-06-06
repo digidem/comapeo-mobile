@@ -130,12 +130,7 @@ export const WifiOffIcon = ({
   color = '#490827',
   style,
 }: FontIconProps) => (
-  <MaterialIcon
-    color={color}
-    style={style}
-    name="signal-wifi-off"
-    size={size}
-  />
+  <MaterialIcon color={color} style={style} name="wifi-off" size={size} />
 );
 
 export const WifiIcon = ({

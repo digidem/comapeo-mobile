@@ -23,6 +23,7 @@ import {
   LIGHT_GREY,
   MEDIUM_GREY,
   NEW_DARK_GREY,
+  WARNING_RED,
   WHITE,
 } from '../../lib/styles';
 import {
@@ -48,6 +49,7 @@ import {useActiveArchiveServer} from '../../hooks/server/projects';
 import {Button} from '../../sharedComponents/Button';
 import OrangeStar from '../../images/OrangeStar.svg';
 import GreyLeaf from '../../images/GreyLeaf.svg';
+import {useGetMediaSyncSetting} from '../../hooks/server/mediaSync';
 
 const m = defineMessages({
   devicesFound: {
@@ -105,23 +107,39 @@ const m = defineMessages({
   },
   noWifi: {
     id: 'screens.Sync.ProjectSyncDisplay.noWifi',
-    defaultMessage: 'No Wi-Fi',
+    defaultMessage: 'No Wi-Fi.',
+  },
+  noWifiInstructions: {
+    id: 'screens.Sync.ProjectSyncDisplay.noWifiInstructions',
+    defaultMessage: 'Check device’s settings and connectivity.',
   },
   allCaughtUp: {
     id: 'screens.Sync.ProjectSyncDisplay.allCaughtUp',
     defaultMessage: "You're all caught up!",
   },
-  exchangeTitle: {
-    id: 'screens.Sync.ProjectSyncDisplay.exchangeTitle',
+  exchangeEverythingTitle: {
+    id: 'screens.Sync.ProjectSyncDisplay.exchangeEverythingTitle',
     defaultMessage: 'Exchange everything.',
   },
-  exchangeMediaDescription: {
-    id: 'screens.Sync.ProjectSyncDisplay.exchangeMediaDescription',
+  exchangeEverythingMediaDescription: {
+    id: 'screens.Sync.ProjectSyncDisplay.exchangeEverythingMediaDescription',
     defaultMessage: 'Full size photos and audio.',
   },
-  exchangeStorageDescription: {
-    id: 'screens.Sync.ProjectSyncDisplay.exchangeStorageDescription',
+  exchangeEverythingStorageDescription: {
+    id: 'screens.Sync.ProjectSyncDisplay.exchangeEverythingStorageDescription',
     defaultMessage: 'Uses more storage.',
+  },
+  exchangePreviewsOnlyTitle: {
+    id: 'screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyTitle',
+    defaultMessage: 'Exchange previews only.',
+  },
+  exchangePreviewsOnlyMediaDescription: {
+    id: 'screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyMediaDescription',
+    defaultMessage: 'Reduced smaller size photos.',
+  },
+  exchangePreviewsOnlyAudioDescription: {
+    id: 'screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyAudioDescription',
+    defaultMessage: 'No audio included.',
   },
   exchangeAction: {
     id: 'screens.Sync.ProjectSyncDisplay.exchangeAction',
@@ -136,6 +154,9 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
   const {projectApi, projectId} = useActiveProject();
   const progress = useDataSyncProgress({projectId});
   const startSync = useStartSync({projectId});
+  const currentMediaSetting = useGetMediaSyncSetting();
+  const [wasSyncManuallyStopped, setWasSyncManuallyStopped] =
+    React.useState(false);
 
   const ssid = useLocalDiscoveryState(state => state.ssid);
 
@@ -228,7 +249,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
               ? t(m.devicesFound)
               : t(m.noDevicesFound)}
           </HeaderText>
-          <View style={{height: 120}}></View>
+          <View style={{height: '30%'}}></View>
         </>
       );
       break;
@@ -309,22 +330,43 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
     }
     case 'complete-full': {
       dockContent = syncState.data.isSyncEnabled ? (
-        <SecondaryButton
-          fullSize={true}
-          onPress={() => {
-            // TODO: Catch/surface error
-            projectApi.$sync.stop();
-          }}
-          text={t(m.stop)}
-          renderIcon={({size, color}) => <StopIcon size={size} color={color} />}
-        />
+        wasSyncManuallyStopped ? (
+          <SecondaryButton
+            fullSize
+            text={t(m.close)}
+            onPress={() => {
+              setWasSyncManuallyStopped(false);
+              navigation.goBack();
+            }}
+          />
+        ) : (
+          <SecondaryButton
+            fullSize={true}
+            onPress={() => {
+              // TODO: Catch/surface error
+              projectApi.$sync.stop();
+              setWasSyncManuallyStopped(true);
+            }}
+            text={t(m.stop)}
+            renderIcon={({size, color}) => (
+              <StopIcon size={size} color={color} />
+            )}
+          />
+        )
       ) : (
         <Button variant="text" disabled onPress={() => {}}>
           <HeaderText variant="header5">{t(m.allCaughtUp)}</HeaderText>
         </Button>
       );
 
-      syncInfoContent = (
+      syncInfoContent = wasSyncManuallyStopped ? (
+        <>
+          <HeaderText variant="header1" style={styles.exchangeInfoText}>
+            {t(m.allDataSynced)}
+          </HeaderText>
+          <View style={{height: 120}} />
+        </>
+      ) : (
         <>
           <HeaderText variant="header1" style={styles.exchangeInfoText}>
             {t(m.syncingFullyComplete)}
@@ -358,7 +400,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
           color={syncStage.connectedPeersCount > 0 ? DARK_ORANGE : BLUE_GREY}
         />
       </View>
-      {syncStage.connectedPeersCount > 0 ? (
+      {currentMediaSetting === 'everything' ? (
         <OrangeStar
           width={40}
           height={40}
@@ -369,6 +411,72 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
       )}
     </View>
   );
+  if (!ssid) {
+    return (
+      <ScreenContentWithDock
+        contentContainerStyle={styles.contentContainer}
+        dockContent={
+          <SecondaryButton
+            fullSize
+            text={t(m.close)}
+            onPress={() => navigation.goBack()}
+          />
+        }>
+        <View style={styles.wifiCard}>
+          <View style={styles.wifiCardContent}>
+            <Circle
+              color={BLUE_GREY}
+              radius={14}
+              style={styles.signalIndicator}>
+              <WifiIcon size={16} color={WHITE} />
+            </Circle>
+            <View style={styles.wifiCardTextContainer}>
+              <BodyText style={styles.wifiName}>--</BodyText>
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.contentWrapper}>
+          <View style={styles.projectInfoContainer}>
+            <View style={styles.syncStatusIconWrapper}>
+              <View style={styles.syncStatusCircleOffline}>
+                <WifiOffIcon size={28} color={BLACK} />
+              </View>
+              <Circle
+                radius={14}
+                color={WARNING_RED}
+                style={{
+                  position: 'absolute',
+                  right: 0,
+                  bottom: 0,
+                  backgroundColor: WARNING_RED,
+                }}>
+                <HeaderText variant="header4" style={{color: WHITE}}>
+                  !
+                </HeaderText>
+              </Circle>
+            </View>
+          </View>
+
+          <View style={styles.exchangeSettingsCard}>
+            <HeaderText variant="header2" style={{textAlign: 'center'}}>
+              {t(m.noWifi)}
+            </HeaderText>
+            <View style={{height: '30%'}} />
+            <HeaderText
+              variant="header6"
+              style={{
+                textAlign: 'center',
+                marginBottom: 40,
+                paddingHorizontal: 30,
+              }}>
+              {t(m.noWifiInstructions)}
+            </HeaderText>
+          </View>
+        </View>
+      </ScreenContentWithDock>
+    );
+  }
 
   return (
     <ScreenContentWithDock
@@ -410,15 +518,29 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
         {syncInfoContent}
         <View style={styles.exchangeSettingsCard}>
           <HeaderText variant="header6" style={{color: BLACK}}>
-            {t(m.exchangeTitle)}
+            {t(
+              currentMediaSetting === 'everything'
+                ? m.exchangeEverythingTitle
+                : m.exchangePreviewsOnlyTitle,
+            )}
           </HeaderText>
           <BodyText variant="smallMeta" style={{color: NEW_DARK_GREY}}>
-            {t(m.exchangeMediaDescription)}
+            {t(
+              currentMediaSetting === 'everything'
+                ? m.exchangeEverythingMediaDescription
+                : m.exchangePreviewsOnlyMediaDescription,
+            )}
           </BodyText>
           <BodyText variant="smallMeta" style={{color: NEW_DARK_GREY}}>
-            {t(m.exchangeStorageDescription)}
+            {t(
+              currentMediaSetting === 'everything'
+                ? m.exchangeEverythingStorageDescription
+                : m.exchangePreviewsOnlyAudioDescription,
+            )}
           </BodyText>
-          {syncStage.name !== 'syncing' && (
+          {(wasSyncManuallyStopped ||
+            syncStage.name === 'complete-full' ||
+            syncStage.name === 'idle') && (
             <Button
               variant="text"
               onPress={() => {
@@ -450,14 +572,9 @@ function SyncProgress({
       <View style={styles.progressLabelRow}>
         {stage.name === 'complete-full' ? (
           <DoneIcon color={DARK_GREEN} size={30} />
-        ) : (
+        ) : stage.name !== 'waiting' ? (
           <SyncIcon color={COMAPEO_BLUE} size={20} />
-        )}
-        <HeaderText
-          variant="header3"
-          style={{
-            color: stage.name === 'complete-full' ? DARK_GREEN : COMAPEO_BLUE,
-          }}></HeaderText>
+        ) : null}
       </View>
       <ProgressBar
         {...(stage.name === 'waiting'
@@ -471,13 +588,14 @@ function SyncProgress({
         borderColor={WHITE}
       />
 
-      {stage.name !== 'waiting' && (
+      {
         <BodyText style={styles.progressPercent}>
           {t(m.progressSyncPercentage, {
-            value: Math.round(stage.progress * 100),
+            value:
+              stage.name === 'waiting' ? 0 : Math.round(stage.progress * 100),
           })}
         </BodyText>
-      )}
+      }
     </View>
   );
 }
@@ -566,6 +684,15 @@ const styles = StyleSheet.create({
     borderRadius: 60,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  syncStatusCircleOffline: {
+    width: 80,
+    height: 80,
+    borderRadius: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: WHITE,
+    elevation: 4,
   },
   syncStatusOverlayIcon: {
     position: 'absolute',

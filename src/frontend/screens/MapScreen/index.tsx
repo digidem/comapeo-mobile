@@ -67,8 +67,6 @@ export const MapScreen = ({
   const {savedLocation} = useNonReactiveSavedLocation();
   const initialPositionSet = React.useRef(false);
 
-  console.log({coords});
-
   useCheckDraftObservationAndNavigate({authState});
 
   const handleAddPress = () => {

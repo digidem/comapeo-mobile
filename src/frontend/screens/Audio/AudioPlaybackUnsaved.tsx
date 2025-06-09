@@ -19,6 +19,7 @@ import PlayArrow from '../../images/PlayArrow.svg';
 import {useFocusEffect} from '@react-navigation/native';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {millisecondsToMMSS} from '../../lib/millisecondsToFormattedTime';
+import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 
 const m = defineMessages({
   description: {
@@ -37,6 +38,8 @@ export const AudioPlaybackUnsaved = ({
     useAudioPlayback(uri);
 
   const {deleteAudio} = useDraftObservation();
+  const value = usePersistedDraftObservation(store => store.value);
+  const observationId = value && 'docId' in value ? value.docId : undefined;
 
   useFocusEffect(
     React.useCallback(() => {
@@ -60,14 +63,9 @@ export const AudioPlaybackUnsaved = ({
 
   function onPressDelete() {
     deleteAudio(uri, false);
-    if (
-      route.name === 'AudioPlaybackUnsavedReview' &&
-      'from' in route.params &&
-      route.params.from === 'ObservationEdit' &&
-      route.params.observationId
-    ) {
+    if (observationId !== undefined) {
       navigation.popTo('ObservationEdit', {
-        observationId: route.params.observationId,
+        observationId: observationId,
       });
     } else {
       navigation.popTo('ObservationCreate');

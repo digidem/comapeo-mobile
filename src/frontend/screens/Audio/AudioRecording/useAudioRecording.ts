@@ -8,7 +8,6 @@ export function useAudioRecording() {
     useState<Audio.Recording | null>(null);
   const [status, setStatus] = useState<Audio.RecordingStatus | null>(null);
   const {navigate} = useNavigationFromRoot();
-  const [isStopping, setIsStopping] = useState(false);
   const {addAudio} = useDraftObservation();
 
   const reset = useCallback(async () => {
@@ -46,7 +45,6 @@ export function useAudioRecording() {
 
   const stopRecording = useCallback(async () => {
     if (!recordingInstance) throw new Error('No active recording to stop');
-    setIsStopping(true);
     try {
       await recordingInstance.stopAndUnloadAsync();
       const uri = recordingInstance.getURI();
@@ -60,10 +58,8 @@ export function useAudioRecording() {
       return {uri, createdAt, duration};
     } catch {
       navigate('ErrorBottomSheet');
-    } finally {
-      setIsStopping(false);
     }
   }, [addAudio, navigate, recordingInstance, status]);
 
-  return {startRecording, stopRecording, reset, status, isStopping};
+  return {startRecording, stopRecording, reset, status};
 }

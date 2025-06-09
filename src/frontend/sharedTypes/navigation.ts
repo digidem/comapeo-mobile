@@ -111,7 +111,7 @@ export type RootStackParamsList = {
   AudioDraftPlaybackScreen: {
     uri: string;
     createdAt: number;
-    fromEditorPreview?: boolean;
+    showRecordingSavedText: boolean;
   };
   AudioAttachmentPlaybackScreen: {
     driveDiscoveryId: string;

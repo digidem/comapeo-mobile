@@ -37,11 +37,11 @@ export function AudioRecording({
   navigation,
 }: NativeRootNavigationProps<'AudioRecording'>) {
   const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
-  const {startRecording, stopRecording, status, isStopping} =
-    useAudioRecording();
+  const {startRecording, stopRecording, status} = useAudioRecording();
   const timeElapsed = status?.durationMillis || 0;
   const isRecording = !!status?.isRecording;
   const [recordingReady, setRecordingReady] = React.useState(false);
+  const [isStopping, setIsStopping] = React.useState(false);
 
   const {formatMessage} = useIntl();
 
@@ -58,12 +58,22 @@ export function AudioRecording({
   }, [startRecording]);
 
   const finishRecording = React.useCallback(async () => {
-    const result = await stopRecording();
-    if (result?.uri && result.createdAt) {
+    setIsStopping(true);
+    try {
+      const result = await stopRecording();
+
+      if (!result?.uri || !result.createdAt) {
+        navigation.replace('ErrorBottomSheet');
+        return;
+      }
+
       navigation.replace('AudioDraftPlaybackScreen', {
         uri: result.uri,
         createdAt: result.createdAt,
+        showRecordingSavedText: true,
       });
+    } finally {
+      setIsStopping(false);
     }
   }, [stopRecording, navigation]);
 
@@ -80,18 +90,6 @@ export function AudioRecording({
       }
     });
     return () => sub.remove();
-  }, [isRecording, finishRecording]);
-
-  React.useEffect(() => {
-    const subscription = AppState.addEventListener('change', nextAppState => {
-      if (nextAppState !== 'active' && isRecording) {
-        finishRecording();
-      }
-    });
-
-    return () => {
-      subscription.remove();
-    };
   }, [isRecording, finishRecording]);
 
   if (!recordingReady) {

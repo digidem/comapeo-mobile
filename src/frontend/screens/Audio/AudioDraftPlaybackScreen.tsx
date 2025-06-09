@@ -39,7 +39,7 @@ export const AudioDraftPlaybackScreen = ({
   navigation,
   route,
 }: NativeRootNavigationProps<'AudioDraftPlaybackScreen'>) => {
-  const {uri, createdAt, fromEditorPreview} = route.params;
+  const {uri, createdAt, showRecordingSavedText} = route.params;
   const {duration, currentPosition, isPlaying, startPlayback, stopPlayback} =
     useAudioPlayback(uri);
   const {formatMessage} = useIntl();
@@ -72,7 +72,7 @@ export const AudioDraftPlaybackScreen = ({
         </>
       }>
       <View style={{paddingTop: 65}}>
-        {!fromEditorPreview && (
+        {showRecordingSavedText && (
           <BodyText variant="large" style={audioStyles.textStyle}>
             {formatMessage(m.recordingSaved)}
           </BodyText>

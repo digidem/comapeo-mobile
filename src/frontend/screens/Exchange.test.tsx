@@ -3,14 +3,16 @@ import {act, render, screen, userEvent} from '@testing-library/react-native';
 import {SyncScreen} from './Exchange';
 import type {MapeoManager} from '@comapeo/core';
 import type {MapeoClientApi, MapeoProjectApi} from '@comapeo/ipc';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {randomBytes} from 'node:crypto';
 import {pEvent} from 'p-event';
 import pEvery from 'p-every';
 import {createManager, setUpIPC} from '../../../tests/integration/helpers/core';
 import {createAppProvidersWrapper} from '../../../tests/integration/helpers/react';
-import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
 import {sleep} from '../lib/sleep';
 import {MEMBER_ROLE_ID} from '../sharedTypes';
+import type {AppStackParamsList} from '../sharedTypes/navigation';
 
 jest.mock('../hooks/useCurrentTime');
 
@@ -46,15 +48,19 @@ describe('Exchange screen', () => {
     for (const fn of onTeardown) await fn();
   });
 
-  const renderSyncScreen = () => {
-    const SyncScreenWrapper = () => {
-      const navigation = useNavigationFromRoot();
-      return <SyncScreen navigation={navigation} />;
-    };
+  const Stack = createNativeStackNavigator<Pick<AppStackParamsList, 'Sync'>>();
 
-    const {unmount} = render(<SyncScreenWrapper />, {
-      wrapper: appProviders.wrapper,
-    });
+  const renderSyncScreen = () => {
+    const {unmount} = render(
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Sync" component={SyncScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>,
+      {
+        wrapper: appProviders.wrapper,
+      },
+    );
 
     // When the sync screen is unfocused, it makes a cleanup request via RPC.
     // Without this test cleanup happening first, the following can happen:

@@ -700,6 +700,9 @@
   "screens.EnterPassword.wrongPass": {
     "message": "Incorrect passcode, please try again"
   },
+  "screens.Exchange.WifiCard.noWifi": {
+    "message": "No Wi-Fi"
+  },
   "screens.ExchangeSettingsBottomSheet.close": {
     "message": "Close"
   },

@@ -718,6 +718,9 @@
   "screens.ExchangeSettingsBottomSheet.save": {
     "message": "Save"
   },
+  "screens.ExchangeSettingsCard.changeSettings": {
+    "message": "Change Settings"
+  },
   "screens.ExchangeSoloScreen.dataSecure": {
     "message": "Your data stays secure while exchanging between trusted devices."
   },

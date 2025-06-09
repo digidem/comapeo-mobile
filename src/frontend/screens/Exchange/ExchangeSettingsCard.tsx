@@ -5,6 +5,7 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {Button} from '../../sharedComponents/Button';
 import {COMAPEO_BLUE, NEW_DARK_GREY, BLACK} from '../../lib/styles';
+import {defineMessages, useIntl} from 'react-intl';
 
 type Props = {
   title: string;
@@ -14,6 +15,13 @@ type Props = {
   onPressChangeSettings: () => void;
 };
 
+const m = defineMessages({
+  changeSettings: {
+    id: 'screens.ExchangeSettingsCard.changeSettings',
+    defaultMessage: 'Change Settings',
+  },
+});
+
 export const ExchangeSettingsCard = ({
   title,
   mediaDescription,
@@ -21,6 +29,7 @@ export const ExchangeSettingsCard = ({
   showChangeSettingsLink,
   onPressChangeSettings,
 }: Props) => {
+  const {formatMessage: t} = useIntl();
   return (
     <View style={styles.container}>
       <HeaderText variant="header6" style={{color: BLACK}}>
@@ -35,7 +44,7 @@ export const ExchangeSettingsCard = ({
       {showChangeSettingsLink && (
         <Button variant="text" onPress={onPressChangeSettings}>
           <HeaderText variant="header6" style={styles.changeLink}>
-            Change Settings
+            {t(m.changeSettings)}
           </HeaderText>
         </Button>
       )}
@@ -45,7 +54,6 @@ export const ExchangeSettingsCard = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 25,
     alignItems: 'center',
   },
   changeLink: {

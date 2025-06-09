@@ -221,10 +221,9 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
 
     syncInfoContent = (
       <>
-        <HeaderText variant="header1" style={styles.exchangeInfoText}>
+        <HeaderText variant="header2" style={styles.exchangeInfoText}>
           {t(m.allDataSynced)}
         </HeaderText>
-        <View style={{height: 120}} />
       </>
     );
   } else {
@@ -251,12 +250,11 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
 
         syncInfoContent = (
           <>
-            <HeaderText variant="header1" style={styles.exchangeInfoText}>
+            <HeaderText variant="header2" style={styles.exchangeInfoText}>
               {syncStage.connectedPeersCount > 0
                 ? t(m.devicesFound)
                 : t(m.noDevicesFound)}
             </HeaderText>
-            <View style={{height: 120}}></View>
           </>
         );
         break;
@@ -278,7 +276,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
 
         syncInfoContent = (
           <>
-            <HeaderText variant="header1" style={styles.exchangeInfoText}>
+            <HeaderText variant="header2" style={styles.exchangeInfoText}>
               {t(m.waitingForDevices)}
             </HeaderText>
             <SyncProgress stage={syncStage} />
@@ -304,7 +302,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
 
         syncInfoContent = (
           <>
-            <HeaderText variant="header1" style={styles.exchangeInfoText}>
+            <HeaderText variant="header2" style={styles.exchangeInfoText}>
               {syncStage.progress === 0
                 ? t(m.waitingForDevices)
                 : t(m.syncingWithDevices)}
@@ -332,7 +330,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
 
         syncInfoContent = (
           <>
-            <HeaderText variant="header1" style={styles.exchangeInfoText}>
+            <HeaderText variant="header2" style={styles.exchangeInfoText}>
               {t(m.syncingCompleteButWaitingForOthers)}
             </HeaderText>
             <SyncProgress stage={syncStage} />
@@ -363,7 +361,7 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
 
         syncInfoContent = (
           <>
-            <HeaderText variant="header1" style={styles.exchangeInfoText}>
+            <HeaderText variant="header2" style={styles.exchangeInfoText}>
               {t(m.syncingFullyComplete)}
             </HeaderText>
             <SyncProgress stage={syncStage} />
@@ -408,31 +406,33 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
             </View>
           )}
         </View>
-        {syncInfoContent}
-        <ExchangeSettingsCard
-          title={t(
-            currentMediaSetting === 'everything'
-              ? m.exchangeEverythingTitle
-              : m.exchangePreviewsOnlyTitle,
-          )}
-          mediaDescription={t(
-            currentMediaSetting === 'everything'
-              ? m.exchangeEverythingMediaDescription
-              : m.exchangePreviewsOnlyMediaDescription,
-          )}
-          storageDescription={t(
-            currentMediaSetting === 'everything'
-              ? m.exchangeEverythingStorageDescription
-              : m.exchangePreviewsOnlyAudioDescription,
-          )}
-          showChangeSettingsLink={
-            (syncWasStopped && syncStage.name === 'complete-full') ||
-            syncStage.name === 'idle'
-          }
-          onPressChangeSettings={() =>
-            navigation.navigate('ExchangeSettingsBottomSheet')
-          }
-        />
+        <View style={{flexGrow: 1, justifyContent: 'space-between'}}>
+          {syncInfoContent}
+          <ExchangeSettingsCard
+            title={t(
+              currentMediaSetting === 'everything'
+                ? m.exchangeEverythingTitle
+                : m.exchangePreviewsOnlyTitle,
+            )}
+            mediaDescription={t(
+              currentMediaSetting === 'everything'
+                ? m.exchangeEverythingMediaDescription
+                : m.exchangePreviewsOnlyMediaDescription,
+            )}
+            storageDescription={t(
+              currentMediaSetting === 'everything'
+                ? m.exchangeEverythingStorageDescription
+                : m.exchangePreviewsOnlyAudioDescription,
+            )}
+            showChangeSettingsLink={
+              (syncWasStopped && syncStage.name === 'complete-full') ||
+              syncStage.name === 'idle'
+            }
+            onPressChangeSettings={() =>
+              navigation.navigate('ExchangeSettingsBottomSheet')
+            }
+          />
+        </View>
       </View>
     </ScreenContentWithDock>
   );
@@ -484,6 +484,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingVertical: 20,
     gap: 10,
+    flexGrow: 1,
   },
   projectInfoContainer: {
     alignItems: 'center',
@@ -518,10 +519,10 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   contentWrapper: {
+    flexGrow: 1,
     borderWidth: 1,
     borderColor: BLUE_GREY,
     borderRadius: 10,
-    paddingTop: 20,
     paddingBottom: 40,
     paddingHorizontal: 20,
   },

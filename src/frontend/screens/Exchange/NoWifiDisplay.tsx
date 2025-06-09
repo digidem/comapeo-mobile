@@ -8,6 +8,7 @@ import {Circle} from '../../sharedComponents/icons/Circle';
 import {WifiIcon, WifiOffIcon} from '../../sharedComponents/icons';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
 const m = defineMessages({
   title: {
@@ -54,19 +55,17 @@ export const NoWifiDisplay = ({onGoBack}: {onGoBack: () => void}) => {
             <View style={styles.syncStatusCircleOffline}>
               <WifiOffIcon size={28} color={BLACK} />
             </View>
-            <Circle
-              radius={14}
+            <MaterialIcon
+              name="error"
+              size={28}
               color={WARNING_RED}
               style={{
                 position: 'absolute',
                 right: 0,
                 bottom: 0,
-                backgroundColor: WARNING_RED,
-              }}>
-              <HeaderText variant="header4" style={{color: WHITE}}>
-                !
-              </HeaderText>
-            </Circle>
+                borderRadius: 14,
+              }}
+            />
           </View>
         </View>
 
@@ -108,17 +107,14 @@ const styles = StyleSheet.create({
   },
   wifiCardTextContainer: {
     flexShrink: 1,
-    flexGrow: 0,
-    flexBasis: 'auto',
-    maxWidth: '80%',
   },
   wifiCardContent: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     flexWrap: 'wrap',
-    maxWidth: '100%',
     gap: 10,
+    paddingHorizontal: 40,
   },
   wifiName: {
     fontWeight: '500',

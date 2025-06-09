@@ -14,6 +14,8 @@ import {BLACK, DARK_GREY, NEW_DARK_GREY, WHITE} from '../../lib/styles';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
   save: {
@@ -46,11 +48,21 @@ export const ExchangeSettingsBottomSheet = () => {
   const {mutate: setMediaSyncSetting} = useSetMediaSyncSetting();
   const currentSetting = useGetMediaSyncSetting();
   const {formatMessage: t} = useIntl();
-  const [selected, setSelected] = useState<MediaSyncSetting>('everything');
-  const {goBack} = useNavigationFromRoot();
+  const [selected, setSelected] = useState<MediaSyncSetting>(() => {
+    return currentSetting;
+  });
+  const {goBack, navigate} = useNavigationFromRoot();
 
   const handleSave = () => {
-    setMediaSyncSetting(selected);
+    setMediaSyncSetting(selected, {
+      onSuccess: () => {
+        goBack();
+      },
+      onError: error => {
+        Sentry.captureException(error);
+        navigate('ErrorBottomSheet');
+      },
+    });
   };
 
   React.useEffect(() => {
@@ -66,7 +78,7 @@ export const ExchangeSettingsBottomSheet = () => {
             icon={<OrangeStar width={30} height={30} />}
             title={t(m.everythingTitle)}
             description={t(m.everythingDesc)}
-            selected={selected}
+            isSelected={selected === 'everything'}
             onSelect={setSelected}
             testID="EXCHANGE.option-everything"
           />
@@ -75,7 +87,7 @@ export const ExchangeSettingsBottomSheet = () => {
             icon={<GreyLeaf width={30} height={30} />}
             title={t(m.previewsTitle)}
             description={t(m.previewsDesc)}
-            selected={selected}
+            isSelected={selected === 'previews'}
             onSelect={setSelected}
             testID="EXCHANGE.option-previews"
           />
@@ -102,7 +114,7 @@ const OptionCard = ({
   icon,
   title,
   description,
-  selected,
+  isSelected,
   onSelect,
   testID,
 }: {
@@ -110,29 +122,21 @@ const OptionCard = ({
   icon: React.ReactElement;
   title: string;
   description: string;
-  selected: MediaSyncSetting;
+  isSelected: boolean;
   onSelect: (s: MediaSyncSetting) => void;
   testID: string;
 }) => {
-  const isSelected = selected === setting;
   return (
     <Pressable
       onPress={() => onSelect(setting)}
       style={styles.optionCard}
       testID={testID}>
-      <View
-        testID={`EXCHANGE.radio-outer-${setting}`}
-        style={[
-          styles.radioOuter,
-          {borderColor: isSelected ? DARK_GREY : NEW_DARK_GREY},
-        ]}>
-        {isSelected && (
-          <View
-            style={[styles.radioInner, {backgroundColor: DARK_GREY}]}
-            testID={`EXCHANGE.radio-selected-${setting}`}
-          />
-        )}
-      </View>
+      <MaterialIcon
+        name={isSelected ? 'radio-button-checked' : 'radio-button-unchecked'}
+        size={24}
+        color={isSelected ? DARK_GREY : NEW_DARK_GREY}
+        testID={`EXCHANGE.radio-${isSelected ? 'selected' : 'unselected'}-${setting}`}
+      />
       <View style={styles.optionTextContainer}>
         <HeaderText
           variant="header5"
@@ -187,19 +191,6 @@ const styles = StyleSheet.create({
     color: NEW_DARK_GREY,
     marginTop: 5,
     flexShrink: 1,
-  },
-  radioOuter: {
-    width: 18,
-    height: 18,
-    borderRadius: 9,
-    borderWidth: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  radioInner: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
   },
   saveButton: {
     marginTop: 10,

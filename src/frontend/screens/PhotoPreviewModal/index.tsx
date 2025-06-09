@@ -1,11 +1,12 @@
 import {useDocumentCreatedBy, useSingleDocByDocId} from '@comapeo/core-react';
 import type {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {captureException, ErrorBoundary} from '@sentry/react-native';
+import type {ImageLoadEventData} from 'expo-image';
 import {Suspense, useState} from 'react';
 import {
   defineMessages,
-  type IntlShape,
   useIntl,
+  type IntlShape,
   type MessageDescriptor,
 } from 'react-intl';
 import {
@@ -23,8 +24,9 @@ import {useCoordinateFormat} from '../../contexts/CoordinateFormatStoreContext.t
 import {useAppLanguageTag} from '../../hooks/useAppLanguageTag.ts';
 import {bytesToMegabytes} from '../../lib/bytesToMegabytes.ts';
 import {formatCoords} from '../../lib/coordinateFormat.ts';
-import {getPhotoLayout} from '../../lib/exif.ts';
+import type {PhotoLayout} from '../../lib/exif.ts';
 import {getExpoImageStorageSize} from '../../lib/file-system.ts';
+import {getAttachmentPhotoInfo, getDraftPhotoInfo} from '../../lib/photos.ts';
 import {BLACK, BLUE_GREY, NEW_DARK_GREY, WHITE} from '../../lib/styles.ts';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
 import {CoreBlobImage} from '../../sharedComponents/Images/CoreBlobImage.tsx';
@@ -73,63 +75,65 @@ export function PhotoPreviewModal({
 
   const coordinateFormat = useCoordinateFormat();
 
-  // TODO: This check needs to be updated in the case of the saved photo using attachment fields that will
-  // be available in an unreleased version of core.
-  const isValidatedByCoMapeo =
+  const [imageLoadInfo, setImageLoadInfo] = useState<
+    {height: number; width: number; storageSize?: number} | undefined
+  >(undefined);
+
+  const photoInfo =
     photo.type === 'photo'
-      ? true
-      : typeof photo.mediaMetadata.timestamp === 'number' &&
-        photo.mediaMetadata;
+      ? getAttachmentPhotoInfo(photo)
+      : getDraftPhotoInfo(photo);
 
-  const exif =
-    photo.type === 'photo' ? photo.photoExif : photo.mediaMetadata.photoExif;
+  const deviceDetailsText = getDeviceDetailsText({
+    make: photoInfo.make,
+    model: photoInfo.model,
+  });
 
-  const [imageStorageSize, setImageStorageSize] = useState<number | undefined>(
-    undefined,
+  const cameraDetailsText = getCameraDetailsText(
+    {fNumber: photoInfo.fNumber, layout: photoInfo.layout},
+    t,
   );
 
-  // TODO: For saved photo, use attachment's `createdAt` field (available in unreleased version of core)
-  const timestamp =
-    photo.type === 'processed' ? photo.mediaMetadata.timestamp : undefined;
-
-  const coordinates =
-    photo.type === 'processed' && photo.mediaMetadata.location
+  // Uses the EXIF information if possible and falls back to the image load info if needed
+  const photoDimensions =
+    typeof photoInfo.height === 'number' && typeof photoInfo.width === 'number'
       ? {
-          lon: photo.mediaMetadata.location.coords.longitude,
-          lat: photo.mediaMetadata.location.coords.latitude,
+          height: photoInfo.height,
+          width: photoInfo.width,
         }
-      : photo.type === 'photo'
-        ? // TODO: Use attachment's `position` field (not yet implemented in schema)
-          undefined
+      : typeof imageLoadInfo?.height === 'number' &&
+          typeof imageLoadInfo?.width === 'number'
+        ? {
+            height: imageLoadInfo.height,
+            width: imageLoadInfo.width,
+          }
         : undefined;
 
-  const deviceDetails = exif
-    ? getDeviceDetailsText({make: exif.Make, model: exif.Model})
-    : null;
-
-  const cameraDetails = exif
-    ? getCameraDetailsText(
-        {
-          // @ts-expect-error Need to update schema
-          fNumber: exif.FNumber,
-          orientation: exif.Orientation,
-        },
+  const photoDetailsText = photoDimensions
+    ? getPhotoDetailsText(
+        {...photoDimensions, storageSize: imageLoadInfo?.storageSize},
         t,
       )
     : null;
 
-  const photoDetails =
-    typeof exif?.ImageWidth === 'number' &&
-    typeof exif?.ImageLength === 'number'
-      ? getPhotoDetailsText(
-          {
-            width: exif.ImageWidth,
-            height: exif.ImageLength,
-            storageSize: imageStorageSize,
-          },
-          t,
-        )
-      : null;
+  async function onImageLoad(event: ImageLoadEventData) {
+    try {
+      const storageSize = await getExpoImageStorageSize(event.source.url);
+
+      setImageLoadInfo({
+        height: event.source.height,
+        width: event.source.width,
+        storageSize,
+      });
+    } catch (err) {
+      captureException(err);
+
+      setImageLoadInfo({
+        height: event.source.height,
+        width: event.source.width,
+      });
+    }
+  }
 
   return (
     <ScrollView contentContainerStyle={{padding: 20, gap: 20}}>
@@ -142,15 +146,7 @@ export function PhotoPreviewModal({
                   driveId={photo.driveDiscoveryId}
                   name={photo.name}
                   projectId={projectId}
-                  onLoad={event => {
-                    getExpoImageStorageSize(event.source.url)
-                      .then(size => {
-                        setImageStorageSize(size);
-                      })
-                      .catch(err => {
-                        captureException(err);
-                      });
-                  }}
+                  onLoad={onImageLoad}
                 />
               </ErrorBoundary>
             </View>
@@ -159,21 +155,13 @@ export function PhotoPreviewModal({
           <View style={{flex: 1, borderRadius: 10, overflow: 'hidden'}}>
             <ImageWithErrorFallback
               source={photo.originalUri}
-              onLoad={event => {
-                getExpoImageStorageSize(event.source.url)
-                  .then(size => {
-                    setImageStorageSize(size);
-                  })
-                  .catch(err => {
-                    captureException(err);
-                  });
-              }}
+              onLoad={onImageLoad}
             />
           </View>
         )}
       </View>
       <View style={{gap: 20}}>
-        {isValidatedByCoMapeo && (
+        {!photoInfo.external && (
           <InfoItem
             icon={
               <Octicons
@@ -189,7 +177,7 @@ export function PhotoPreviewModal({
           </InfoItem>
         )}
 
-        {timestamp !== undefined && (
+        {photoInfo.createdAt !== undefined && (
           <InfoItem
             icon={
               <Octicons
@@ -200,20 +188,20 @@ export function PhotoPreviewModal({
               />
             }>
             <BodyText selectable style={styles.primaryInfoText}>
-              {formatDate(timestamp, {
+              {formatDate(photoInfo.createdAt, {
                 dateStyle: 'full',
               })}
             </BodyText>
 
             <BodyText selectable style={styles.secondaryInfoText}>
-              {formatTime(timestamp, {
+              {formatTime(photoInfo.createdAt, {
                 timeStyle: 'short',
               })}
             </BodyText>
           </InfoItem>
         )}
 
-        {coordinates && (
+        {photoInfo.coordinates && (
           <InfoItem
             icon={
               <Octicons
@@ -225,15 +213,15 @@ export function PhotoPreviewModal({
             }>
             <BodyText selectable style={styles.primaryInfoText}>
               {formatCoords({
-                lon: coordinates.lon,
-                lat: coordinates.lat,
+                lon: photoInfo.coordinates.longitude,
+                lat: photoInfo.coordinates.latitude,
                 format: coordinateFormat,
               })}
             </BodyText>
           </InfoItem>
         )}
 
-        {(deviceDetails || cameraDetails || photoDetails) && (
+        {(deviceDetailsText || cameraDetailsText || photoDetailsText) && (
           <InfoItem
             icon={
               <MaterialIcons
@@ -243,21 +231,21 @@ export function PhotoPreviewModal({
                 allowFontScaling
               />
             }>
-            {deviceDetails && (
+            {deviceDetailsText && (
               <BodyText selectable style={styles.primaryInfoText}>
-                {deviceDetails}
+                {deviceDetailsText}
               </BodyText>
             )}
 
-            {cameraDetails && (
+            {cameraDetailsText && (
               <BodyText selectable style={styles.secondaryInfoText}>
-                {cameraDetails}
+                {cameraDetailsText}
               </BodyText>
             )}
 
-            {photoDetails && (
+            {photoDetailsText && (
               <BodyText selectable style={styles.secondaryInfoText}>
-                {photoDetails}
+                {photoDetailsText}
               </BodyText>
             )}
           </InfoItem>
@@ -427,30 +415,21 @@ function getDeviceDetailsText({make, model}: {make?: string; model?: string}) {
 function getCameraDetailsText(
   {
     fNumber,
-    orientation,
+    layout,
   }: {
     fNumber?: number;
-    orientation?: number;
+    layout?: PhotoLayout;
   },
   formatMessage: IntlShape['formatMessage'],
 ): string | null {
   const displayedParts: Array<string> = [];
 
-  if (typeof orientation === 'number') {
-    try {
-      const layout = getPhotoLayout(orientation);
-
-      displayedParts.push(
-        layout === 'horizontal'
-          ? formatMessage(m.landscape)
-          : formatMessage(m.portrait),
-      );
-    } catch (err) {
-      captureException(err);
-
-      // TODO: What happens if layout cannot be determined or is missing?
-      // Should we still try to display something?
-    }
+  if (layout) {
+    displayedParts.push(
+      layout === 'horizontal'
+        ? formatMessage(m.landscape)
+        : formatMessage(m.portrait),
+    );
   }
 
   if (typeof fNumber === 'number') {

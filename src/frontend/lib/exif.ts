@@ -3,6 +3,8 @@ import type {LocationObject} from 'expo-location';
 
 import type {PhotoEXIF} from '../sharedTypes';
 
+export type PhotoLayout = 'horizontal' | 'vertical';
+
 export const PhotoEXIFSchema = v.object({
   ApertureValue: v.optional(v.number()),
   DateTime: v.optional(v.string()),
@@ -96,9 +98,7 @@ function dateToGPSTimeStamp(d: Date): string {
  * @param exifOrientation Value of EXIF orientation tag
  * @returns The layout
  */
-export function getPhotoLayout(
-  exifOrientation: number,
-): 'horizontal' | 'vertical' {
+export function getPhotoLayout(exifOrientation: number): PhotoLayout {
   // See "Orientation" tag in https://exiftool.org/TagNames/EXIF.html
   // Helpful explainer: https://www.ameto.de/blog/exif-orientation-primer/
 

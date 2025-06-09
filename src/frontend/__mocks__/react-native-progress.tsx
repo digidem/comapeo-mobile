@@ -9,7 +9,11 @@
 //
 // [0]: https://wiki.c2.com/?ArrangeActAssert
 
-export const Bar = () => null;
-export const Circle = () => null;
-export const CircleSnail = () => null;
-export const Pie = () => null;
+import {View} from 'react-native';
+
+const Empty = () => <View />;
+
+export const Bar = Empty;
+export const Circle = Empty;
+export const CircleSnail = Empty;
+export const Pie = Empty;

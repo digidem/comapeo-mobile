@@ -9,13 +9,17 @@
 //
 // [0]: https://wiki.c2.com/?ArrangeActAssert
 
-export const Indicator = () => null;
-export const BarIndicator = () => null;
-export const BallIndicator = () => null;
-export const DotIndicator = () => null;
-export const MaterialIndicator = () => null;
-export const PacmanIndicator = () => null;
-export const PulseIndicator = () => null;
-export const SkypeIndicator = () => null;
-export const UIActivityIndicator = () => null;
-export const WaveIndicator = () => null;
+import {View} from 'react-native';
+
+const Empty = () => <View />;
+
+export const Indicator = Empty;
+export const BarIndicator = Empty;
+export const BallIndicator = Empty;
+export const DotIndicator = Empty;
+export const MaterialIndicator = Empty;
+export const PacmanIndicator = Empty;
+export const PulseIndicator = Empty;
+export const SkypeIndicator = Empty;
+export const UIActivityIndicator = Empty;
+export const WaveIndicator = Empty;

@@ -13,6 +13,7 @@ import {Preset} from '@comapeo/schema';
 import {HeaderText} from '../Text/HeaderText';
 import {CustomCircleIcon} from './CustomCircleIcon';
 import {useFocusEffect} from '@react-navigation/native';
+import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 
 const m = defineMessages({
   audioButton: {
@@ -38,6 +39,8 @@ export function ActionsRow({fieldRefs}: {fieldRefs?: Preset['fieldRefs']}) {
   const navigation = useNavigationFromRoot();
   const [audioPermission, setAudioPermission] =
     React.useState<Audio.PermissionResponse | null>(null);
+  const value = usePersistedDraftObservation(store => store.value);
+  const observationId = value && 'docId' in value ? value.docId : undefined;
 
   // Audio permissions are granted on a different page. Since this page stays in the navigation stack,
   // it does not remount when permissions change, leading to stale permission data.
@@ -60,7 +63,10 @@ export function ActionsRow({fieldRefs}: {fieldRefs?: Preset['fieldRefs']}) {
   const handleAudioPress = () => {
     if (audioPermission === null) return;
     if (audioPermission.granted) {
-      navigation.navigate('AudioRecording');
+      navigation.navigate('AudioRecording', {
+        from: observationId ? 'ObservationEdit' : 'ObservationCreate',
+        observationId,
+      });
       return;
     }
     navigation.navigate('AudioAskPermissionBottomSheet', {audioPermission});

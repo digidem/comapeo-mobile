@@ -107,8 +107,16 @@ export type RootStackParamsList = {
   AudioAskPermissionBottomSheet: {
     audioPermission: Audio.PermissionResponse;
   };
-  AudioRecording: undefined;
-  AudioPlaybackUnsavedReview: {uri: string; duration: number};
+  AudioRecording: {
+    from: 'ObservationCreate' | 'ObservationEdit';
+    observationId?: string;
+  };
+  AudioPlaybackUnsavedReview: {
+    uri: string;
+    duration: number;
+    from: 'ObservationCreate' | 'ObservationEdit';
+    observationId?: string;
+  };
   AudioPlaybackUnsavedPreview: {uri: string};
   DeleteAudioBottomSheet: {
     onPressDelete: () => void;

@@ -60,7 +60,18 @@ export const AudioPlaybackUnsaved = ({
 
   function onPressDelete() {
     deleteAudio(uri, false);
-    navigation.popTo('ObservationCreate');
+    if (
+      route.name === 'AudioPlaybackUnsavedReview' &&
+      'from' in route.params &&
+      route.params.from === 'ObservationEdit' &&
+      route.params.observationId
+    ) {
+      navigation.popTo('ObservationEdit', {
+        observationId: route.params.observationId,
+      });
+    } else {
+      navigation.popTo('ObservationCreate');
+    }
   }
 
   return (

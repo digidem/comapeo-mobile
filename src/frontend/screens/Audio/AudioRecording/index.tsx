@@ -35,9 +35,11 @@ const m = defineMessages({
 
 export function AudioRecording({
   navigation,
+  route,
 }: NativeRootNavigationProps<'AudioRecording'>) {
   const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
   const {startRecording, stopRecording, status} = useAudioRecording();
+  const {from, observationId} = route.params;
 
   const timeElapsed = status?.durationMillis || 0;
   const isRecording = !!status?.isRecording;
@@ -58,12 +60,14 @@ export function AudioRecording({
         navigation.replace('AudioPlaybackUnsavedReview', {
           uri,
           duration: timeElapsed,
+          from,
+          observationId,
         });
       })
       .catch(() => {
         navigation.navigate('ErrorBottomSheet');
       });
-  }, [stopRecording, navigation, timeElapsed]);
+  }, [stopRecording, navigation, timeElapsed, from, observationId]);
 
   // stop recording at 5 minutes
   React.useEffect(() => {

@@ -14,15 +14,15 @@ import nativePaths from './rollup-plugin-native-paths.mjs'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const { values } = parseArgs({
+const {
+  values: { minify: shouldMinify },
+} = parseArgs({
   options: {
-    entry: { type: 'string' },
-    output: { type: 'string' },
     minify: { type: 'boolean' },
   },
 })
 
-const { entry, output, minify: shouldMinify } = values
+const projectRoot = path.join(__dirname, '..')
 
 /** @type {import('rollup').RollupOptions['plugins']} */
 const plugins = [
@@ -49,14 +49,44 @@ if (shouldMinify) {
   plugins.push(minify())
 }
 
-async function build() {
+async function buildMain() {
+  const input = path.join(projectRoot, 'index.js')
+  const output = path.join(projectRoot, 'index.bundle.js')
   const bundle = await rollup({
     external: ['rn-bridge'],
-    input: entry,
+    input,
     plugins,
   })
   await bundle.write({ file: output, format: 'esm' })
   await bundle.close()
 }
 
-build()
+async function buildLoader() {
+  const input = path.join(projectRoot, 'loader.js')
+  const output = path.join(projectRoot, 'loader.bundle.js')
+  const bundle = await rollup({
+    external: ['rn-bridge', './index.js'],
+    input,
+    plugins,
+  })
+  await bundle.write({ file: output, format: 'esm' })
+  await bundle.close()
+}
+
+async function buildImportHook() {
+  const input = path.join(
+    projectRoot,
+    'node_modules/import-in-the-middle/hook.mjs',
+  )
+  const output = path.join(projectRoot, 'import-in-the-middle-hook.bundle.mjs')
+  const bundle = await rollup({
+    input,
+    plugins,
+  })
+  await bundle.write({ file: output, format: 'esm' })
+  await bundle.close()
+}
+
+buildMain()
+buildLoader()
+buildImportHook()

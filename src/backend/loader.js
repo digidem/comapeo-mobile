@@ -2,6 +2,7 @@
 // nodejs-mobile, e.g. the cwd points to root ("/") on mobile, so we override it
 // with the nodejs project dir
 
+import * as Sentry from '@sentry/node'
 import os from 'os'
 import path from 'path'
 import { createRequire } from 'module'
@@ -14,8 +15,6 @@ os.homedir = () => nodejsProjectDir
 process.cwd = () => nodejsProjectDir
 process.env = process.env || {}
 
-const Sentry = require('@sentry/node')
-
 // Ensure to call this before requiring any other modules!
 Sentry.init({
   dsn: 'https://5326989762cd5899283975f5459524c1@o4507148235702272.ingest.us.sentry.io/4509442300641281',
@@ -23,6 +22,8 @@ Sentry.init({
   // Adds request headers and IP for users, for more info visit:
   // https://docs.sentry.io/platforms/javascript/guides/node/configuration/options/#sendDefaultPii
   sendDefaultPii: false,
+  // TODO: Set this depending on the environment - it outputs Sentry debug information to stdout
+  debug: true,
   _experiments: { enableLogs: true },
   tracesSampleRate: 1.0,
   integrations: [
@@ -31,4 +32,5 @@ Sentry.init({
   ],
 })
 
-import './index.js'
+// Dynamic import so that Sentry can instrument the code before it runs
+await import('./index.js')

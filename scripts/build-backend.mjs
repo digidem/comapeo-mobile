@@ -96,7 +96,8 @@ console.log(
 const KEEP_THESE = [
   'package.json',
   'index.bundle.js',
-  'loader.js',
+  'loader.bundle.js',
+  'import-in-the-middle-hook.bundle.mjs',
   // Static folders referenced by @comapeo/core code
   'node_modules/@comapeo/core/drizzle',
   // zip file that is the default config
@@ -105,12 +106,22 @@ const KEEP_THESE = [
   'node_modules/@comapeo/fallback-smp',
 ];
 
+// Map of bundled files to their destination names
+// We create 3 bundles:
+// 1. The main app code
+// 2. The loader code that includes Sentry and instrumentation
+// 3. ESM loader hooks from Sentry that enable instrumentation
+const destinationMapping = {
+  'index.bundle.js': 'index.js',
+  'loader.bundle.js': 'loader.js',
+  'import-in-the-middle-hook.bundle.mjs':
+    'node_modules/import-in-the-middle/hook.mjs',
+};
+
 for (const name of KEEP_THESE) {
   const source = path.join(nodejsAssetsBackendDirectory, name);
-  const destination = path.join(
-    nodejsAssetsProjectDirectory,
-    name === 'index.bundle.js' ? 'index.js' : name,
-  );
+  const destName = destinationMapping[name] || name;
+  const destination = path.join(nodejsAssetsProjectDirectory, destName);
 
   fs.cpSync(source, destination, {recursive: true});
 }

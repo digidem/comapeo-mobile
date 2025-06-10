@@ -18,7 +18,6 @@ describe('Exchange - Exchange Settings for Previews', () => {
     ).toBeDisplayed();
     const saveBtn = await $(byText('Save'));
     await saveBtn.click();
-    await $(byText('Close')).click();
 
     await $(byTextMatches('Exchange previews only')).waitForDisplayed();
 

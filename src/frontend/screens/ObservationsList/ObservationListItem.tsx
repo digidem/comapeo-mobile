@@ -17,6 +17,7 @@ import {sharedStyles} from './SharedStyle.ts';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {useIsMyDocument} from '../../hooks/server/useIsMyDocument.ts';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 interface ObservationListItemProps {
   style?: ViewStyleProp;
@@ -39,47 +40,64 @@ function ObservationListItemNotMemoized({
   testID,
   onPress,
 }: ObservationListItemProps) {
-  const {projectId} = useActiveProject();
-  const {data: allPresets} = useManyDocs({projectId, docType: 'preset'});
-  const preset = matchPreset(observation.tags, allPresets);
-
-  const photos = observation.attachments.filter(isSavedPhoto);
-
-  const isMine = useIsMyDocument(observation.originalVersionId);
-
   return (
     <TouchableOpacity
       onPress={() => onPress(observation.docId)}
       testID={testID}
       style={{flex: 1, height: 80}}>
-      <View style={[styles.container, style, !isMine && sharedStyles.synced]}>
-        <View style={styles.text}>
-          <HeaderText variant="header4">
-            <FormattedPresetName preset={preset} />
-          </HeaderText>
-          <BodyText>
-            <FormattedObservationDate
-              createdDate={observation.createdAt}
-              variant="relative"
-            />
-          </BodyText>
-        </View>
-        {photos.length ? (
-          <View style={styles.photoContainer}>
-            <PhotoStack photos={photos} />
-            <View style={styles.smallIconContainer}>
-              <PresetCircleIcon iconId={preset?.iconRef?.docId} size="small" />
-            </View>
+      <React.Suspense
+        fallback={
+          <View style={[styles.container, style]}>
+            <UIActivityIndicator />
           </View>
-        ) : (
-          <PresetCircleIcon
-            iconId={preset?.iconRef?.docId}
-            size="medium"
-            testID={`OBS.${preset?.name}-list-icon`}
-          />
-        )}
-      </View>
+        }>
+        <ObservationListItemInner observation={observation} style={style} />
+      </React.Suspense>
     </TouchableOpacity>
+  );
+}
+
+function ObservationListItemInner({
+  style,
+  observation,
+}: {
+  style?: ViewStyleProp;
+  observation: Observation;
+}) {
+  const {projectId} = useActiveProject();
+  const {data: allPresets} = useManyDocs({projectId, docType: 'preset'});
+  const preset = matchPreset(observation.tags, allPresets);
+  const photos = observation.attachments.filter(isSavedPhoto);
+  const isMine = useIsMyDocument(observation.originalVersionId);
+
+  return (
+    <View style={[styles.container, style, !isMine && sharedStyles.synced]}>
+      <View style={styles.text}>
+        <HeaderText variant="header4">
+          <FormattedPresetName preset={preset} />
+        </HeaderText>
+        <BodyText>
+          <FormattedObservationDate
+            createdDate={observation.createdAt}
+            variant="relative"
+          />
+        </BodyText>
+      </View>
+      {photos.length ? (
+        <View style={styles.photoContainer}>
+          <PhotoStack photos={photos} />
+          <View style={styles.smallIconContainer}>
+            <PresetCircleIcon iconId={preset?.iconRef?.docId} size="small" />
+          </View>
+        </View>
+      ) : (
+        <PresetCircleIcon
+          iconId={preset?.iconRef?.docId}
+          size="medium"
+          testID={`OBS.${preset?.name}-list-icon`}
+        />
+      )}
+    </View>
   );
 }
 

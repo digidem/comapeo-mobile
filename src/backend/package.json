@@ -6,7 +6,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "node ./scripts/bundle-backend.mjs --entry=index.js --output=index.bundle.js",
+    "build": "rollup -c",
     "lint:types": "tsc --noEmit",
     "postinstall": "patch-package"
   },
@@ -16,6 +16,8 @@
     "@comapeo/core": "3.2.0",
     "@comapeo/ipc": "3.0.0",
     "@mapeo/default-config": "5.0.0",
+    "@sentry/node": "9.28.0",
+    "@sentry/rollup-plugin": "^3.5.0",
     "debug": "^4.3.4"
   },
   "devDependencies": {
@@ -32,7 +34,7 @@
     "patch-package": "^8.0.0",
     "prettier": "^3.0.3",
     "rollup": "^3.5.0",
-    "rollup-plugin-esbuild": "^6.1.0",
+    "rollup-plugin-esbuild": "^6.2.1",
     "typescript": "^5.2.2"
   },
   "prettier": {

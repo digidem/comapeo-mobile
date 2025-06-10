@@ -14,4 +14,21 @@ os.homedir = () => nodejsProjectDir
 process.cwd = () => nodejsProjectDir
 process.env = process.env || {}
 
+const Sentry = require('@sentry/node')
+
+// Ensure to call this before requiring any other modules!
+Sentry.init({
+  dsn: 'https://5326989762cd5899283975f5459524c1@o4507148235702272.ingest.us.sentry.io/4509442300641281',
+
+  // Adds request headers and IP for users, for more info visit:
+  // https://docs.sentry.io/platforms/javascript/guides/node/configuration/options/#sendDefaultPii
+  sendDefaultPii: false,
+  _experiments: { enableLogs: true },
+  tracesSampleRate: 1.0,
+  integrations: [
+    // send console.log, console.error, and console.warn calls as logs to Sentry
+    Sentry.consoleLoggingIntegration({ levels: ['log', 'error', 'warn'] }),
+  ],
+})
+
 import './index.js'

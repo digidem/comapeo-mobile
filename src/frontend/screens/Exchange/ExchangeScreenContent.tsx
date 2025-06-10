@@ -146,7 +146,6 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
   const {data: isArchive} = useIsArchiveDevice();
 
   const currentMediaSetting = isArchive ? 'everything' : 'previews';
-  const [syncWasStopped, setSyncWasStopped] = React.useState(false);
 
   const ssid = useLocalDiscoveryState(state => state.ssid);
 
@@ -209,16 +208,9 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
   let dockContent: React.ReactNode;
   let syncInfoContent: React.ReactNode;
 
-  if (syncStage.name === 'complete-full' && syncWasStopped) {
+  if (syncStage.name === 'complete-full' && !syncState.data.isSyncEnabled) {
     dockContent = (
-      <SecondaryButton
-        fullSize
-        text={t(m.close)}
-        onPress={() => {
-          setSyncWasStopped(false);
-          navigation.goBack();
-        }}
-      />
+      <SecondaryButton fullSize text={t(m.close)} onPress={navigation.goBack} />
     );
 
     syncInfoContent = (
@@ -348,7 +340,6 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
             onPress={() => {
               // TODO: Catch/surface error
               projectApi.$sync.stop();
-              setSyncWasStopped(true);
             }}
             text={t(m.stop)}
             renderIcon={({size, color}) => (
@@ -427,7 +418,8 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
                 : m.exchangePreviewsOnlyAudioDescription,
             )}
             showChangeSettingsLink={
-              (syncWasStopped && syncStage.name === 'complete-full') ||
+              (!syncState.data.isSyncEnabled &&
+                syncStage.name === 'complete-full') ||
               syncStage.name === 'idle'
             }
             onPressChangeSettings={() =>

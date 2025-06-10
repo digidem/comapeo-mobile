@@ -76,7 +76,7 @@ export const ExchangeSettingsBottomSheet = () => {
             title={t(m.everythingTitle)}
             description={t(m.everythingDesc)}
             isSelected={selected === 'everything'}
-            onSelect={setSelected}
+            onSelect={() => setSelected('everything')}
             testID="EXCHANGE.option-everything"
           />
           <OptionCard
@@ -85,7 +85,7 @@ export const ExchangeSettingsBottomSheet = () => {
             title={t(m.previewsTitle)}
             description={t(m.previewsDesc)}
             isSelected={selected === 'previews'}
-            onSelect={setSelected}
+            onSelect={() => setSelected('previews')}
             testID="EXCHANGE.option-previews"
           />
           <PrimaryButton
@@ -120,14 +120,11 @@ const OptionCard = ({
   title: string;
   description: string;
   isSelected: boolean;
-  onSelect: (s: MediaSyncSetting) => void;
+  onSelect: () => void;
   testID: string;
 }) => {
   return (
-    <Pressable
-      onPress={() => onSelect(setting)}
-      style={styles.optionCard}
-      testID={testID}>
+    <Pressable onPress={onSelect} style={styles.optionCard} testID={testID}>
       <MaterialIcon
         name={isSelected ? 'radio-button-checked' : 'radio-button-unchecked'}
         size={24}
@@ -152,8 +149,6 @@ const OptionCard = ({
     </Pressable>
   );
 };
-
-ExchangeSettingsBottomSheet.navTitle = m.save;
 
 const styles = StyleSheet.create({
   container: {

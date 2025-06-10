@@ -54,8 +54,8 @@ export const PasscodeInput = React.forwardRef<TextInput, PasscodeInputProps>(
         textChild = (
           <MaskSymbol
             maskSymbol={maskValues ? '*' : symbol}
-            isLastFilledCell={isLastFilledCell({index, value: inputValue})}>
-            {symbol}
+            isLastFilledCell={isLastFilledCell(inputValue, index)}>
+            {maskValues ? '*' : symbol}
           </MaskSymbol>
         );
       } else if (isFocused) {

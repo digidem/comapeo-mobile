@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, TextInput, View} from 'react-native';
 import {useBlurOnFulfill} from 'react-native-confirmation-code-field';
 
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
@@ -54,7 +54,7 @@ export const InputPasscode = ({
   const inputRef = useBlurOnFulfill({
     value: inputValue,
     cellCount: CELL_COUNT,
-  });
+  }) as React.RefObject<TextInput>;
 
   if (error) {
     inputRef.current?.focus();

@@ -170,7 +170,7 @@ describe('Exchange screen', () => {
       return disconnect2;
     });
 
-    expect(await screen.findByText('Devices found')).toBeVisible();
+    expect(await screen.findByText('Devices found.')).toBeVisible();
 
     // Start sync and verify that observations are exchanged
 
@@ -190,9 +190,7 @@ describe('Exchange screen', () => {
       otherProject.observation.getByDocId(myObservation.docId),
     ).resolves.toBeDefined();
 
-    expect(
-      await screen.findByText("Complete! You're up to date"),
-    ).toBeVisible();
+    expect(await screen.findByText('Complete!')).toBeVisible();
   });
 });
 

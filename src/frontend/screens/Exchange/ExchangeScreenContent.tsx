@@ -363,12 +363,8 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
 
         break;
       }
-      default: {
-        throw new ExhaustivenessError(
-          // @ts-expect-error Handled at runtime
-          syncState.status,
-        );
-      }
+      default:
+        throw new ExhaustivenessError(syncStage);
     }
   }
 

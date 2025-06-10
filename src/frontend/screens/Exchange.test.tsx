@@ -160,9 +160,7 @@ describe('Exchange screen', () => {
     renderSyncScreen();
 
     expect(await screen.findByText('CoMapeo Test Wi-Fi')).toBeVisible();
-    expect(
-      await screen.findByText('No devices available to sync'),
-    ).toBeVisible();
+    expect(await screen.findByText('No devices found.')).toBeVisible();
 
     // Connect peers, which should change the screen
 
@@ -172,7 +170,7 @@ describe('Exchange screen', () => {
       return disconnect2;
     });
 
-    expect(await screen.findByText('Ready to exchange')).toBeVisible();
+    expect(await screen.findByText('Devices found')).toBeVisible();
 
     // Start sync and verify that observations are exchanged
 

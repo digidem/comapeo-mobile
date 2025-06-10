@@ -1,18 +1,19 @@
 import {act, render, screen, userEvent} from '@testing-library/react-native';
 
-import {SyncScreen} from './Exchange';
 import type {MapeoManager} from '@comapeo/core';
-import type {MapeoClientApi, MapeoProjectApi} from '@comapeo/ipc';
+import type {MapeoClientApi} from '@comapeo/ipc';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {randomBytes} from 'node:crypto';
-import {pEvent} from 'p-event';
-import pEvery from 'p-every';
-import {createManager, setUpIPC} from '../../../tests/integration/helpers/core';
+import {
+  connectPeers,
+  createManager,
+  inviteToProject,
+  setUpIPC,
+} from '../../../tests/integration/helpers/core';
 import {createAppProvidersWrapper} from '../../../tests/integration/helpers/react';
 import {sleep} from '../lib/sleep';
-import {MEMBER_ROLE_ID} from '../sharedTypes';
 import type {AppStackParamsList} from '../sharedTypes/navigation';
+import {SyncScreen} from './Exchange';
 
 jest.mock('../hooks/useCurrentTime');
 
@@ -193,91 +194,3 @@ describe('Exchange screen', () => {
     expect(await screen.findByText('Complete!')).toBeVisible();
   });
 });
-
-async function connectPeers(
-  managers: ReadonlyArray<MapeoManager>,
-): Promise<() => Promise<void>> {
-  await tellPeersAboutEachOther(managers);
-  await waitForPeersToBeConnected(managers);
-  return () => stopPeerDiscovery(managers);
-}
-
-async function tellPeersAboutEachOther(
-  managers: ReadonlyArray<MapeoManager>,
-): Promise<void> {
-  await Promise.all(
-    managers.map(async manager => {
-      const {name, port} = await manager.startLocalPeerDiscoveryServer();
-      for (const otherManager of managers) {
-        if (otherManager === manager) continue;
-        otherManager.connectLocalPeer({address: '127.0.0.1', name, port});
-      }
-    }),
-  );
-}
-
-async function waitForPeersToBeConnected(
-  managers: ReadonlyArray<MapeoManager>,
-): Promise<void> {
-  const deviceIds = new Set(managers.map(m => m.deviceId));
-
-  const isDone = async (): Promise<boolean> =>
-    pEvery(managers, async manager => {
-      const unconnectedDeviceIds = new Set(deviceIds);
-      unconnectedDeviceIds.delete(manager.deviceId);
-      for (const peer of await manager.listLocalPeers()) {
-        if (peer.status === 'connected') {
-          unconnectedDeviceIds.delete(peer.deviceId);
-        }
-      }
-      return unconnectedDeviceIds.size === 0;
-    });
-
-  if (await isDone()) return;
-
-  return new Promise(res => {
-    const onLocalPeers = async () => {
-      if (await isDone()) {
-        for (const manager of managers) {
-          manager.off('local-peers', onLocalPeers);
-        }
-        res();
-      }
-    };
-    for (const manager of managers) manager.on('local-peers', onLocalPeers);
-  });
-}
-
-async function stopPeerDiscovery(
-  managers: ReadonlyArray<MapeoManager>,
-): Promise<void> {
-  await Promise.all(
-    managers.map(manager =>
-      manager.stopLocalPeerDiscoveryServer({force: true}),
-    ),
-  );
-}
-
-async function inviteToProject(
-  project: MapeoProjectApi,
-  invitee: MapeoManager,
-): Promise<void> {
-  const inviteId = randomBytes(32);
-
-  const inviteeInvitePromise = pEvent(
-    invitee.invite,
-    'invite-received',
-    invite => Buffer.from(invite.inviteId, 'hex').equals(inviteId),
-  );
-
-  await Promise.all([
-    project.$member.invite(invitee.deviceId, {
-      roleId: MEMBER_ROLE_ID,
-      __testOnlyInviteId: inviteId,
-    }),
-    (async () => {
-      const invite = await inviteeInvitePromise;
-      await invitee.invite.accept(invite);
-    })(),
-  ]);
-}

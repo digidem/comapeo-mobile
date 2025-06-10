@@ -80,6 +80,17 @@ The next version of Mapeo Mobile
         npm run android-no-backend-rebuild
         ```
 
+## Adding Dependencies
+
+We have separate depenencies for the frontend inside `./package.json` and for the backend inside `./src/backend/package.json`.
+
+Here's a guideline for installing new deps:
+
+- If it's purely used in the frontend e.g. react native application or tooling related to that, update the root package.json
+- If it's purely used in the backend, update the backend package.json. if the dep is core-related, there's a good chance that the root level package.json also needs to be updated in order for correct resolution of types
+- If it's used in both, update both package.json files.
+- For the backend, prefer to pin exact versions (e.g. `"core": "4.2.0"`) instead of relative versions (e.g. `"core": "^4.2.0"`)
+
 ## E2E Testing
 
 This project is tested with BrowserStack.

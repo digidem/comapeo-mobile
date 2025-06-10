@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {
   useDataSyncProgress,
+  useIsArchiveDevice,
   useStartSync,
   type SyncState,
 } from '@comapeo/core-react';
@@ -39,7 +40,6 @@ import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {ROOT_QUERY_KEY} from '../../constants';
 import {useActiveArchiveServer} from '../../hooks/server/projects';
 import {Button} from '../../sharedComponents/Button';
-import {useGetMediaSyncSetting} from '../../hooks/server/mediaSync';
 import {ExchangeSettingsCard} from './ExchangeSettingsCard';
 import {WifiCard} from './WifiCard';
 import {DevicesAvailableHeader} from './DevicesAvailableHeader';
@@ -143,7 +143,9 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
   const {projectApi, projectId} = useActiveProject();
   const progress = useDataSyncProgress({projectId});
   const startSync = useStartSync({projectId});
-  const currentMediaSetting = useGetMediaSyncSetting();
+  const {data: isArchive} = useIsArchiveDevice();
+
+  const currentMediaSetting = isArchive ? 'everything' : 'previews';
   const [syncWasStopped, setSyncWasStopped] = React.useState(false);
 
   const ssid = useLocalDiscoveryState(state => state.ssid);

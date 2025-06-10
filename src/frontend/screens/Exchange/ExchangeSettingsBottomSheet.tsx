@@ -5,7 +5,6 @@ import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import OrangeStar from '../../images/OrangeStar.svg';
 import GreyLeaf from '../../images/GreyLeaf.svg';
-import {useGetMediaSyncSetting} from '../../hooks/server/mediaSync';
 import {MediaSyncSetting} from '../../sharedTypes';
 import {BLACK, DARK_GREY, NEW_DARK_GREY, WHITE} from '../../lib/styles';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
@@ -13,7 +12,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import * as Sentry from '@sentry/react-native';
-import {useSetIsArchiveDevice} from '@comapeo/core-react';
+import {useIsArchiveDevice, useSetIsArchiveDevice} from '@comapeo/core-react';
 
 const m = defineMessages({
   save: {
@@ -44,7 +43,8 @@ const m = defineMessages({
 
 export const ExchangeSettingsBottomSheet = () => {
   const {mutate: setIsArchiveDevice} = useSetIsArchiveDevice();
-  const currentSetting = useGetMediaSyncSetting();
+  const {data: isArchive} = useIsArchiveDevice();
+  const currentSetting = isArchive ? 'everything' : 'previews';
   const {formatMessage: t} = useIntl();
   const [selected, setSelected] = useState<MediaSyncSetting>(() => {
     return currentSetting;

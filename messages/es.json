@@ -700,6 +700,30 @@
   "screens.EnterPassword.wrongPass": {
     "message": "Contraseña incorrecta, inténtelo de nuevo"
   },
+  "screens.Exchange.WifiCard.noWifi": {
+    "message": "No Wi-Fi"
+  },
+  "screens.ExchangeSettingsBottomSheet.close": {
+    "message": "Close"
+  },
+  "screens.ExchangeSettingsBottomSheet.everythingDesc": {
+    "message": "Full size photos and audio. Uses more storage."
+  },
+  "screens.ExchangeSettingsBottomSheet.everythingTitle": {
+    "message": "Exchange Everything"
+  },
+  "screens.ExchangeSettingsBottomSheet.previewsDesc": {
+    "message": "Reduced smaller size photos. No audio included."
+  },
+  "screens.ExchangeSettingsBottomSheet.previewsTitle": {
+    "message": "Exchange Previews Only"
+  },
+  "screens.ExchangeSettingsBottomSheet.save": {
+    "message": "Save"
+  },
+  "screens.ExchangeSettingsCard.changeSettings": {
+    "message": "Change Settings"
+  },
   "screens.ExchangeSoloScreen.dataSecure": {
     "message": "Tus datos se mantienen seguros al intercambiar entre dispositivos de confianza."
   },
@@ -990,27 +1014,6 @@
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
     "message": "Usar tu ubicación"
-  },
-  "screens.MediaSyncActionSheetContent.cancel": {
-    "message": "Cancelar"
-  },
-  "screens.MediaSyncSettings.syncEverything": {
-    "message": "Sincronizar todo"
-  },
-  "screens.MediaSyncSettings.syncEverythingDescription": {
-    "message": "Tu dispositivo sincronizará <bold>todo el contenido</bold> en tamaño completo incluyendo fotos, audio y vídeos."
-  },
-  "screens.MediaSyncSettings.syncEverythingWarning": {
-    "message": "Nota: Esto utilizará más almacenamiento."
-  },
-  "screens.MediaSyncSettings.syncPreviews": {
-    "message": "Sincronizar vistas previas (sólo fotos)"
-  },
-  "screens.MediaSyncSettings.syncPreviewsDescription": {
-    "message": "Las fotos se van a sincronizar en un tamaño reducido. Tu dispositivo <bold>no</bold> sincronizará audio y video."
-  },
-  "screens.MediaSyncSettings.title": {
-    "message": "Ajustes de sincronización"
   },
   "screens.ObscurePasscode.description": {
     "message": "La Contraseña Oscura es una funcionalidad de seguridad que te permite abrir CoMapeo en un modo que oculta toda tu información. Al introducir la Constraseña Oscura en la pantalla de inicio, se mostrará una versión vacía de CoMapeo que te permite crear observaciones de demostración que no se guardan en la base de datos de CoMapeo."
@@ -1672,46 +1675,52 @@
     "message": "Política de privacidad"
   },
   "screens.Sync.NoWifiDisplay.buttonText": {
-    "message": "Abrir ajustes"
+    "message": "Close"
   },
   "screens.Sync.NoWifiDisplay.description": {
-    "message": "Abre los ajustes de tu teléfono y conéctate a una red WiFi para sincronizar"
+    "message": "Check device’s settings and connectivity."
   },
   "screens.Sync.NoWifiDisplay.title": {
-    "message": "Sin WiFi"
+    "message": "No Wi-Fi."
   },
   "screens.Sync.ProjectSyncDisplay.allCaughtUp": {
     "message": "¡Estás al día!"
   },
   "screens.Sync.ProjectSyncDisplay.allDataSynced": {
-    "message": "Todos los datos intercambiados"
+    "message": "Up to date!"
   },
-  "screens.Sync.ProjectSyncDisplay.connectedTo": {
-    "message": "Conectado con"
-  },
-  "screens.Sync.ProjectSyncDisplay.devicesAvailableToSync": {
-    "message": "Dispositivos disponibles"
+  "screens.Sync.ProjectSyncDisplay.close": {
+    "message": "Close"
   },
   "screens.Sync.ProjectSyncDisplay.devicesFound": {
-    "message": "Dispositivos encontrados"
+    "message": "Devices found."
   },
-  "screens.Sync.ProjectSyncDisplay.noDevicesAvailableToSync": {
-    "message": "No hay dispositivos disponibles para sincronizar"
+  "screens.Sync.ProjectSyncDisplay.exchangeAction": {
+    "message": "Change Settings"
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangeEverythingMediaDescription": {
+    "message": "Full size photos and audio."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangeEverythingStorageDescription": {
+    "message": "Uses more storage."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangeEverythingTitle": {
+    "message": "Exchange everything."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyAudioDescription": {
+    "message": "No audio included."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyMediaDescription": {
+    "message": "Reduced smaller size photos."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyTitle": {
+    "message": "Exchange previews only."
+  },
+  "screens.Sync.ProjectSyncDisplay.noDevicesFound": {
+    "message": "No devices found."
   },
   "screens.Sync.ProjectSyncDisplay.noWifi": {
-    "message": "No Wi-Fi"
-  },
-  "screens.Sync.ProjectSyncDisplay.progressLabelSyncing": {
-    "message": "Sincronizando…"
-  },
-  "screens.Sync.ProjectSyncDisplay.progressLabelWaiting": {
-    "message": "Esperando…"
-  },
-  "screens.Sync.ProjectSyncDisplay.progressLabelWithDeviceCount": {
-    "message": "Esperando a otros dispositivos"
-  },
-  "screens.Sync.ProjectSyncDisplay.readyToExchange": {
-    "message": "Listo para intercambiar"
+    "message": "No Wi-Fi."
   },
   "screens.Sync.ProjectSyncDisplay.start": {
     "message": "Comenzar"
@@ -1726,13 +1735,13 @@
     "message": "¡Completado! Esperando a que se unan otros dispositivos"
   },
   "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
-    "message": "¡Listo! Ya te actualizaste"
+    "message": "Complete!"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "Estás intercambiando con tu equipo"
+    "message": "Exchanging..."
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
-    "message": "Esperando a los dispositivos"
+    "message": "Waiting for devices..."
   },
   "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
     "message": "{ssid}"
@@ -1742,33 +1751,6 @@
   },
   "screens.Sync.remoteArchiveConnected": {
     "message": "Archivo Remoto añadido"
-  },
-  "screens.SyncEverythingBottomSheet.cancel": {
-    "message": "Cancelar"
-  },
-  "screens.SyncEverythingBottomSheet.confirm": {
-    "message": "Sincronizar todo"
-  },
-  "screens.SyncEverythingBottomSheet.syncEverything": {
-    "message": "¿Sincronizar todo?"
-  },
-  "screens.SyncEverythingBottomSheet.syncEverythingDescription": {
-    "message": "Está a punto de sincronizar todo. Esto puede aumentar el espacio de disco usado en tu dispositivo."
-  },
-  "screens.SyncPreviewBottomSheet.cancel": {
-    "message": "Cancelar"
-  },
-  "screens.SyncPreviewBottomSheet.confirm": {
-    "message": "Sincronizar vistas previas"
-  },
-  "screens.SyncPreviewBottomSheet.syncPreviewWarningBottomSheet": {
-    "message": "Ya no sincronizarás Audio o Video."
-  },
-  "screens.SyncPreviewBottomSheet.syncPreviewsButtonBottomSheet": {
-    "message": "¿Sincronizar vistas previas?"
-  },
-  "screens.SyncPreviewBottomSheet.syncPreviewsDescriptionBottomSheet": {
-    "message": "Tu dispositivo mantendrá todos los datos existentes, pero las nuevas observaciones se sincronizarán en un tamaño más pequeño, de vista previa."
   },
   "screens.Track.ObservationList.observation": {
     "message": "Observación"

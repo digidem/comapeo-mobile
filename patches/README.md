@@ -86,3 +86,11 @@ As this feature is not used in CoMapeo, this can be safely hardcoded to `false`.
 ### [Fix `key` prop error when using components](./react-native-indicators+0.17.0+001+fix-key-prop-error.patch)
 
 Refer to https://github.com/n4kz/react-native-indicators/issues/43 for details.
+
+## `react-native-confirmation-code-field`
+
+### [Fix mask symbol logic issue](./react-native-confirmation-code-field+8.0.1+001+fix-mask-symbol-logic-issue.patch)
+
+Fixes a bug in the `MaskSymbol` component where the mask (`*`) briefly un-hides when typing quickly. This patch sets the `visibleFlag` to `false` immediately, preventing the undesired flicker.
+
+See: [Reviewer context](https://github.com/recruiters/github/blob/master/README.md).

@@ -23,7 +23,10 @@ interface PasscodeInputProps {
   testID?: string;
 }
 
-export const PasscodeInput = React.forwardRef<TextInput, PasscodeInputProps>(
+export const PasscodeInput = React.forwardRef<
+  TextInput | null,
+  PasscodeInputProps
+>(
   (
     {
       stylesProps,
@@ -51,12 +54,14 @@ export const PasscodeInput = React.forwardRef<TextInput, PasscodeInputProps>(
       let textChild;
 
       if (symbol) {
-        textChild = (
+        textChild = maskValues ? (
           <MaskSymbol
-            maskSymbol={maskValues ? '*' : symbol}
+            maskSymbol="*"
             isLastFilledCell={isLastFilledCell(inputValue, index)}>
-            {maskValues ? '*' : symbol}
+            {symbol}
           </MaskSymbol>
+        ) : (
+          symbol
         );
       } else if (isFocused) {
         textChild = <Cursor />;

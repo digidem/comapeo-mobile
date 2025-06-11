@@ -38,7 +38,13 @@ Sentry.init({
   debug: sentryDebug,
   environment: sentryEnvironment,
   initialScope,
-  _experiments: { enableLogs: true },
+  _experiments: {
+    enableLogs: true,
+    beforeSendLog: (log) => {
+      log.attributes.user = { id: sentryUserId }
+      return log
+    },
+  },
   tracesSampleRate: 1.0,
   integrations: [
     // send console.log, console.error, and console.warn calls as logs to Sentry

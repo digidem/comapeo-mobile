@@ -16,7 +16,7 @@ const require = createRequire(import.meta.url)
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const env = process.env.NODE_ENV || 'development'
+const env = process.env.BUILD_ENV || 'development'
 
 /** @type {import('rollup').RollupOptions['plugins']} */
 const plugins = [
@@ -38,8 +38,10 @@ const plugins = [
   esmShim(),
   nodeResolve({ preferBuiltins: true }),
   json(),
+  // Set the environment variable BUILD_ENV to 'production' to enable minification
   env === 'production' && minify(),
   sentryRollupPlugin({
+    // You can set this in env.sentry-build-plugin for local dev
     authToken: process.env.SENTRY_AUTH_TOKEN,
     org: 'awana-digital',
     project: 'comapeo-backend',
@@ -54,7 +56,15 @@ const config = {
   input: {
     index: path.join(__dirname, 'index.js'),
     loader: path.join(__dirname, 'loader.js'),
+    // This is a [module loading hook]
+    // (https://nodejs.org/api/module.html#customization-hooks) used by
+    // OpenTelemetry (which is used by Sentry) to install instrumentation. It is
+    // loaded with `module.register()` which can't be inlined into the same
+    // bundle, so we bundle the hook separately.
     importHook: require.resolve('import-in-the-middle/hook.mjs'),
+    // This is a dependency of the import hook above, and the way it is used
+    // means it can't be bundled, so we copy it across so it can be found at the
+    // expected relative path.
     'lib/register': require.resolve('import-in-the-middle/lib/register.js'),
   },
   output: {

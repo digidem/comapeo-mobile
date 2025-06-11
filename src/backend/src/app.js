@@ -24,6 +24,8 @@ const MAPBOX_ACCESS_TOKEN =
   'pk.eyJ1IjoiZGlnaWRlbSIsImEiOiJjbHRyaGh3cm0wN3l4Mmpsam95NDI3c2xiIn0.daq2iZFZXQ08BD0VZWAGUw'
 const DEFAULT_ONLINE_MAP_STYLE_URL = `https://api.mapbox.com/styles/v1/mapbox/outdoors-v11?access_token=${MAPBOX_ACCESS_TOKEN}`
 
+debug.enable('mapeo:*')
+
 const log = debug('mapeo:app')
 
 // Set these up as soon as possible (e.g. before the init function)

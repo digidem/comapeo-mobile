@@ -29,6 +29,12 @@ const { sentryEnvironment, sentryUserId, metricsIsEnabled } = values
 const sentryDebug = sentryEnvironment === 'development'
 const initialScope = sentryUserId ? { user: { id: sentryUserId } } : undefined
 
+const logLevels = ['error']
+
+if (sentryEnvironment !== 'production') {
+  logLevels.push('log', 'warn')
+}
+
 // Ensure to call this before requiring any other modules!
 Sentry.init({
   dsn: 'https://5326989762cd5899283975f5459524c1@o4507148235702272.ingest.us.sentry.io/4509442300641281',
@@ -46,10 +52,7 @@ Sentry.init({
     },
   },
   tracesSampleRate: 1.0,
-  integrations: [
-    // send console.log, console.error, and console.warn calls as logs to Sentry
-    Sentry.consoleLoggingIntegration({ levels: ['log', 'error', 'warn'] }),
-  ],
+  integrations: [Sentry.consoleLoggingIntegration({ levels: logLevels })],
 })
 
 // Dynamic import so that Sentry can instrument the code before it runs

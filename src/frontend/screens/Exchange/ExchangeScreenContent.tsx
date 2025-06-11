@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {
   useDataSyncProgress,
+  useIsArchiveDevice,
   useStartSync,
   type SyncState,
 } from '@comapeo/core-react';
@@ -16,9 +17,10 @@ import {useLocalDiscoveryState} from '../../hooks/useLocalDiscoveryState';
 import {ExhaustivenessError} from '../../lib/ExhaustivenessError';
 import {
   BLACK,
+  BLUE_GREY,
   COMAPEO_BLUE,
   DARK_GREEN,
-  DARK_GREY,
+  DARK_ORANGE,
   LIGHT_GREY,
   MEDIUM_GREY,
   WHITE,
@@ -29,13 +31,7 @@ import {
   getSyncingPeersCount,
   type SyncStage,
 } from '../../lib/sync';
-import {
-  DoneIcon,
-  StopIcon,
-  SyncIcon,
-  WifiIcon,
-  WifiOffIcon,
-} from '../../sharedComponents/icons';
+import {DoneIcon, StopIcon, SyncIcon} from '../../sharedComponents/icons';
 import {Circle} from '../../sharedComponents/icons/Circle';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
@@ -44,32 +40,26 @@ import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {ROOT_QUERY_KEY} from '../../constants';
 import {useActiveArchiveServer} from '../../hooks/server/projects';
 import {Button} from '../../sharedComponents/Button';
+import {ExchangeSettingsCard} from './ExchangeSettingsCard';
+import {WifiCard} from './WifiCard';
+import {DevicesAvailableHeader} from './DevicesAvailableHeader';
 
 const m = defineMessages({
   devicesFound: {
     id: 'screens.Sync.ProjectSyncDisplay.devicesFound',
-    defaultMessage: 'Devices found',
+    defaultMessage: 'Devices found.',
   },
-  connectedTo: {
-    id: 'screens.Sync.ProjectSyncDisplay.connectedTo',
-    defaultMessage: 'Connected to',
-  },
-
-  noDevicesAvailableToSync: {
-    id: 'screens.Sync.ProjectSyncDisplay.noDevicesAvailableToSync',
-    defaultMessage: 'No devices available to sync',
-  },
-  devicesAvailableToSync: {
-    id: 'screens.Sync.ProjectSyncDisplay.devicesAvailableToSync',
-    defaultMessage: 'Devices available',
+  noDevicesFound: {
+    id: 'screens.Sync.ProjectSyncDisplay.noDevicesFound',
+    defaultMessage: 'No devices found.',
   },
   waitingForDevices: {
     id: 'screens.Sync.ProjectSyncDisplay.waitingForDevices',
-    defaultMessage: 'Waiting for devices',
+    defaultMessage: 'Waiting for devices...',
   },
   syncingWithDevices: {
     id: 'screens.Sync.ProjectSyncDisplay.syncingWithDevices',
-    defaultMessage: 'You are exchanging with your team',
+    defaultMessage: 'Exchanging...',
   },
   syncingCompleteButWaitingForOthers: {
     id: 'screens.Sync.ProjectSyncDisplay.syncingCompleteButWaitingForOthers',
@@ -77,32 +67,15 @@ const m = defineMessages({
   },
   syncingFullyComplete: {
     id: 'screens.Sync.ProjectSyncDisplay.syncingFullyComplete',
-    defaultMessage: "Complete! You're up to date",
+    defaultMessage: 'Complete!',
   },
-
   allDataSynced: {
     id: 'screens.Sync.ProjectSyncDisplay.allDataSynced',
-    defaultMessage: 'All data exchanged',
-  },
-  progressLabelWaiting: {
-    id: 'screens.Sync.ProjectSyncDisplay.progressLabelWaiting',
-    defaultMessage: 'Waiting…',
-  },
-  progressLabelSyncing: {
-    id: 'screens.Sync.ProjectSyncDisplay.progressLabelSyncing',
-    defaultMessage: 'Syncing…',
-  },
-  progressLabelWithDeviceCount: {
-    id: 'screens.Sync.ProjectSyncDisplay.progressLabelWithDeviceCount',
-    defaultMessage: 'Waiting for other devices',
+    defaultMessage: 'Up to date!',
   },
   progressSyncPercentage: {
     id: 'screens.Sync.ProjectSyncDisplay.syncProgress',
     defaultMessage: '{value}%',
-  },
-  readyToExchange: {
-    id: 'screens.Sync.ProjectSyncDisplay.readyToExchange',
-    defaultMessage: 'Ready to exchange',
   },
   remoteArchiveConnected: {
     id: 'screens.Sync.remoteArchiveConnected',
@@ -117,17 +90,49 @@ const m = defineMessages({
     id: 'screens.Sync.ProjectSyncDisplay.stop',
     defaultMessage: 'Stop',
   },
+  close: {
+    id: 'screens.Sync.ProjectSyncDisplay.close',
+    defaultMessage: 'Close',
+  },
   wifiCardPlaceholder: {
     id: 'screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder',
     defaultMessage: '{ssid}',
   },
   noWifi: {
     id: 'screens.Sync.ProjectSyncDisplay.noWifi',
-    defaultMessage: 'No Wi-Fi',
+    defaultMessage: 'No Wi-Fi.',
   },
   allCaughtUp: {
     id: 'screens.Sync.ProjectSyncDisplay.allCaughtUp',
     defaultMessage: "You're all caught up!",
+  },
+  exchangeEverythingTitle: {
+    id: 'screens.Sync.ProjectSyncDisplay.exchangeEverythingTitle',
+    defaultMessage: 'Exchange everything.',
+  },
+  exchangeEverythingMediaDescription: {
+    id: 'screens.Sync.ProjectSyncDisplay.exchangeEverythingMediaDescription',
+    defaultMessage: 'Full size photos and audio.',
+  },
+  exchangeEverythingStorageDescription: {
+    id: 'screens.Sync.ProjectSyncDisplay.exchangeEverythingStorageDescription',
+    defaultMessage: 'Uses more storage.',
+  },
+  exchangePreviewsOnlyTitle: {
+    id: 'screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyTitle',
+    defaultMessage: 'Exchange previews only.',
+  },
+  exchangePreviewsOnlyMediaDescription: {
+    id: 'screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyMediaDescription',
+    defaultMessage: 'Reduced smaller size photos.',
+  },
+  exchangePreviewsOnlyAudioDescription: {
+    id: 'screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyAudioDescription',
+    defaultMessage: 'No audio included.',
+  },
+  exchangeAction: {
+    id: 'screens.Sync.ProjectSyncDisplay.exchangeAction',
+    defaultMessage: 'Change Settings',
   },
 });
 
@@ -138,10 +143,11 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
   const {projectApi, projectId} = useActiveProject();
   const progress = useDataSyncProgress({projectId});
   const startSync = useStartSync({projectId});
+  const {data: isArchive} = useIsArchiveDevice();
+
+  const currentMediaSetting = isArchive ? 'everything' : 'previews';
 
   const ssid = useLocalDiscoveryState(state => state.ssid);
-
-  const WifiIconComponent = ssid ? WifiIcon : WifiOffIcon;
 
   const connectedPeersCount = getConnectedPeersCount(
     syncState.remoteDeviceSyncState,
@@ -202,191 +208,226 @@ export const ExchangeScreenContent = ({syncState}: {syncState: SyncState}) => {
   let dockContent: React.ReactNode;
   let syncInfoContent: React.ReactNode;
 
-  switch (syncStage.name) {
-    case 'idle': {
-      dockContent = (
-        <PrimaryButton
-          fullSize
-          text={t(m.start)}
-          renderIcon={({size}) => <SyncIcon size={size} />}
-          onPress={() => {
-            // TODO: Catch/surface error
-            startSync.mutate(undefined);
-          }}
-        />
-      );
+  if (syncStage.name === 'complete-full' && !syncState.data.isSyncEnabled) {
+    dockContent = (
+      <SecondaryButton fullSize text={t(m.close)} onPress={navigation.goBack} />
+    );
 
-      syncInfoContent = (
-        <HeaderText variant="header1" style={styles.exchangeInfoText}>
-          {syncStage.connectedPeersCount > 0
-            ? t(m.readyToExchange)
-            : t(m.noDevicesAvailableToSync)}
+    syncInfoContent = (
+      <>
+        <HeaderText variant="header2" style={styles.exchangeInfoText}>
+          {t(m.allDataSynced)}
         </HeaderText>
-      );
-      break;
-    }
-    case 'waiting': {
-      dockContent = (
-        <SecondaryButton
-          fullSize={true}
-          onPress={() => {
-            // TODO: Catch/surface error
-            projectApi.$sync.stop();
-          }}
-          text={t(m.stop)}
-          renderIcon={({size, color}) => <StopIcon size={size} color={color} />}
-        />
-      );
+      </>
+    );
+  } else {
+    switch (syncStage.name) {
+      case 'idle': {
+        dockContent =
+          syncStage.connectedPeersCount > 0 ? (
+            <PrimaryButton
+              fullSize
+              text={t(m.start)}
+              renderIcon={({size}) => <SyncIcon size={size} />}
+              onPress={() => {
+                // TODO: Catch/surface error
+                startSync.mutate(undefined);
+              }}
+            />
+          ) : (
+            <SecondaryButton
+              fullSize={true}
+              text={t(m.close)}
+              onPress={() => navigation.goBack()}
+            />
+          );
 
-      syncInfoContent = (
-        <>
-          <HeaderText variant="header1" style={styles.exchangeInfoText}>
-            {t(m.waitingForDevices)}
-          </HeaderText>
-          <SyncProgress stage={syncStage} />
-        </>
-      );
+        syncInfoContent = (
+          <>
+            <HeaderText variant="header2" style={styles.exchangeInfoText}>
+              {syncStage.connectedPeersCount > 0
+                ? t(m.devicesFound)
+                : t(m.noDevicesFound)}
+            </HeaderText>
+          </>
+        );
+        break;
+      }
+      case 'waiting': {
+        dockContent = (
+          <SecondaryButton
+            fullSize={true}
+            onPress={() => {
+              // TODO: Catch/surface error
+              projectApi.$sync.stop();
+            }}
+            text={t(m.stop)}
+            renderIcon={({size, color}) => (
+              <StopIcon size={size} color={color} />
+            )}
+          />
+        );
 
-      break;
-    }
-    case 'syncing': {
-      dockContent = (
-        <SecondaryButton
-          fullSize={true}
-          onPress={() => {
-            // TODO: Catch/surface error
-            projectApi.$sync.stop();
-          }}
-          text={t(m.stop)}
-          renderIcon={({size, color}) => <StopIcon size={size} color={color} />}
-        />
-      );
+        syncInfoContent = (
+          <>
+            <HeaderText variant="header2" style={styles.exchangeInfoText}>
+              {t(m.waitingForDevices)}
+            </HeaderText>
+            <SyncProgress stage={syncStage} />
+          </>
+        );
 
-      syncInfoContent = (
-        <>
-          <HeaderText variant="header1" style={styles.exchangeInfoText}>
-            {syncStage.progress === 0
-              ? t(m.waitingForDevices)
-              : t(m.syncingWithDevices)}
-          </HeaderText>
-          <SyncProgress stage={syncStage} />
-        </>
-      );
+        break;
+      }
+      case 'syncing': {
+        dockContent = (
+          <SecondaryButton
+            fullSize={true}
+            onPress={() => {
+              // TODO: Catch/surface error
+              projectApi.$sync.stop();
+            }}
+            text={t(m.stop)}
+            renderIcon={({size, color}) => (
+              <StopIcon size={size} color={color} />
+            )}
+          />
+        );
 
-      break;
-    }
-    case 'complete-partial': {
-      dockContent = (
-        <SecondaryButton
-          fullSize={true}
-          onPress={() => {
-            // TODO: Catch/surface error
-            projectApi.$sync.stop();
-          }}
-          text={t(m.stop)}
-          renderIcon={({size, color}) => <StopIcon size={size} color={color} />}
-        />
-      );
+        syncInfoContent = (
+          <>
+            <HeaderText variant="header2" style={styles.exchangeInfoText}>
+              {syncStage.progress === 0
+                ? t(m.waitingForDevices)
+                : t(m.syncingWithDevices)}
+            </HeaderText>
+            <SyncProgress stage={syncStage} />
+          </>
+        );
 
-      syncInfoContent = (
-        <>
-          <HeaderText variant="header1" style={styles.exchangeInfoText}>
-            {t(m.syncingCompleteButWaitingForOthers)}
-          </HeaderText>
-          <SyncProgress stage={syncStage} />
-        </>
-      );
+        break;
+      }
+      case 'complete-partial': {
+        dockContent = (
+          <SecondaryButton
+            fullSize={true}
+            onPress={() => {
+              // TODO: Catch/surface error
+              projectApi.$sync.stop();
+            }}
+            text={t(m.stop)}
+            renderIcon={({size, color}) => (
+              <StopIcon size={size} color={color} />
+            )}
+          />
+        );
 
-      break;
-    }
-    case 'complete-full': {
-      dockContent = syncState.data.isSyncEnabled ? (
-        <SecondaryButton
-          fullSize={true}
-          onPress={() => {
-            // TODO: Catch/surface error
-            projectApi.$sync.stop();
-          }}
-          text={t(m.stop)}
-          renderIcon={({size, color}) => <StopIcon size={size} color={color} />}
-        />
-      ) : (
-        <Button variant="text" disabled onPress={() => {}}>
-          <HeaderText variant="header5">{t(m.allCaughtUp)}</HeaderText>
-        </Button>
-      );
+        syncInfoContent = (
+          <>
+            <HeaderText variant="header2" style={styles.exchangeInfoText}>
+              {t(m.syncingCompleteButWaitingForOthers)}
+            </HeaderText>
+            <SyncProgress stage={syncStage} />
+          </>
+        );
 
-      syncInfoContent = (
-        <>
-          <View>
-            <HeaderText variant="header1" style={styles.exchangeInfoText}>
+        break;
+      }
+      case 'complete-full': {
+        dockContent = syncState.data.isSyncEnabled ? (
+          <SecondaryButton
+            fullSize={true}
+            onPress={() => {
+              // TODO: Catch/surface error
+              projectApi.$sync.stop();
+            }}
+            text={t(m.stop)}
+            renderIcon={({size, color}) => (
+              <StopIcon size={size} color={color} />
+            )}
+          />
+        ) : (
+          <Button variant="text" disabled onPress={() => {}}>
+            <HeaderText variant="header5">{t(m.allCaughtUp)}</HeaderText>
+          </Button>
+        );
+
+        syncInfoContent = (
+          <>
+            <HeaderText variant="header2" style={styles.exchangeInfoText}>
               {t(m.syncingFullyComplete)}
             </HeaderText>
-            <HeaderText variant="header2" style={{textAlign: 'center'}}>
-              {t(m.allDataSynced)}
-            </HeaderText>
-          </View>
-          <SyncProgress stage={syncStage} />
-        </>
-      );
+            <SyncProgress stage={syncStage} />
+          </>
+        );
 
-      break;
-    }
-    default: {
-      throw new ExhaustivenessError(
-        // @ts-expect-error Handled at runtime
-        syncState.status,
-      );
+        break;
+      }
+      default: {
+        throw new ExhaustivenessError(
+          // @ts-expect-error Handled at runtime
+          syncState.status,
+        );
+      }
     }
   }
-
-  const devicesAvailableText = syncStage.connectedPeersCount > 0 && (
-    <View style={styles.connectedDevicesInfoContainer}>
-      <WifiIcon color={DARK_GREY} size={20} />
-      <BodyText style={{color: BLACK}} variant="smallMeta">
-        {t(m.devicesFound)}
-      </BodyText>
-    </View>
-  );
 
   return (
     <ScreenContentWithDock
       contentContainerStyle={styles.contentContainer}
       dockContent={dockContent}>
-      <View style={styles.wifiCard}>
-        <Circle color="#000033" radius={14} style={styles.signalIndicator}>
-          <WifiIconComponent size={16} color={WHITE} />
-        </Circle>
-        <BodyText style={styles.wifiCardTextContainer}>
-          {ssid ? (
-            <>
-              {t(m.connectedTo)}{' '}
-              <BodyText style={styles.wifiName}>{ssid}</BodyText>
-            </>
-          ) : (
-            <>
-              {t(m.wifiCardPlaceholder, {ssid: ''})}
-              <BodyText style={styles.wifiName}>{t(m.noWifi)}</BodyText>
-            </>
+      <WifiCard ssid={ssid} />
+      <View style={styles.contentWrapper}>
+        <View style={styles.projectInfoContainer}>
+          <DevicesAvailableHeader
+            iconColor={
+              syncStage.connectedPeersCount > 0 ? DARK_ORANGE : BLUE_GREY
+            }
+            overlayType={currentMediaSetting === 'everything' ? 'star' : 'leaf'}
+            showOverlay={syncStage.connectedPeersCount > 0}
+          />
+          {remoteArchiveConnected && (
+            <View style={styles.remoteInfoContainer}>
+              <Circle
+                color="#444444"
+                radius={7}
+                style={{backgroundColor: '#444444', elevation: 0}}
+              />
+              <BodyText variant="smallMeta" style={styles.remoteArchiveText}>
+                {t(m.remoteArchiveConnected)}
+              </BodyText>
+            </View>
           )}
-        </BodyText>
+        </View>
+        <View style={{flexGrow: 1, justifyContent: 'space-between'}}>
+          {syncInfoContent}
+          <ExchangeSettingsCard
+            title={t(
+              currentMediaSetting === 'everything'
+                ? m.exchangeEverythingTitle
+                : m.exchangePreviewsOnlyTitle,
+            )}
+            mediaDescription={t(
+              currentMediaSetting === 'everything'
+                ? m.exchangeEverythingMediaDescription
+                : m.exchangePreviewsOnlyMediaDescription,
+            )}
+            storageDescription={t(
+              currentMediaSetting === 'everything'
+                ? m.exchangeEverythingStorageDescription
+                : m.exchangePreviewsOnlyAudioDescription,
+            )}
+            showChangeSettingsLink={
+              (!syncState.data.isSyncEnabled &&
+                syncStage.name === 'complete-full') ||
+              syncStage.name === 'idle'
+            }
+            onPressChangeSettings={() =>
+              navigation.navigate('ExchangeSettingsBottomSheet')
+            }
+          />
+        </View>
       </View>
-      <View style={styles.projectInfoContainer}>
-        {devicesAvailableText}
-        {remoteArchiveConnected && (
-          <View style={styles.remoteInfoContainer}>
-            <Circle
-              color="#444444"
-              radius={7}
-              style={{backgroundColor: '#444444', elevation: 0}}
-            />
-            <BodyText variant="smallMeta" style={styles.remoteArchiveText}>
-              {t(m.remoteArchiveConnected)}
-            </BodyText>
-          </View>
-        )}
-      </View>
-      {syncInfoContent}
     </ScreenContentWithDock>
   );
 };
@@ -401,48 +442,14 @@ function SyncProgress({
 }) {
   const {formatMessage: t} = useIntl();
 
-  let progressLabel: string;
-
-  switch (stage.name) {
-    case 'waiting': {
-      progressLabel = t(m.progressLabelWaiting);
-      break;
-    }
-    case 'syncing': {
-      progressLabel = t(m.progressLabelSyncing);
-      break;
-    }
-    case 'complete-partial': {
-      progressLabel = t(m.progressLabelWithDeviceCount);
-      break;
-    }
-    case 'complete-full': {
-      progressLabel = '';
-      break;
-    }
-    default: {
-      throw new ExhaustivenessError(
-        // @ts-expect-error Handled at runtime
-        stage.name,
-      );
-    }
-  }
-
   return (
     <View style={styles.progressContainer}>
       <View style={styles.progressLabelRow}>
         {stage.name === 'complete-full' ? (
-          <DoneIcon color={DARK_GREEN} size={20} />
-        ) : (
+          <DoneIcon color={DARK_GREEN} size={30} />
+        ) : stage.name !== 'waiting' ? (
           <SyncIcon color={COMAPEO_BLUE} size={20} />
-        )}
-        <HeaderText
-          variant="header3"
-          style={{
-            color: stage.name === 'complete-full' ? DARK_GREEN : COMAPEO_BLUE,
-          }}>
-          {progressLabel}
-        </HeaderText>
+        ) : null}
       </View>
       <ProgressBar
         {...(stage.name === 'waiting'
@@ -456,13 +463,14 @@ function SyncProgress({
         borderColor={WHITE}
       />
 
-      {stage.name !== 'waiting' && (
+      {
         <BodyText style={styles.progressPercent}>
           {t(m.progressSyncPercentage, {
-            value: Math.round(stage.progress * 100),
+            value:
+              stage.name === 'waiting' ? 0 : Math.round(stage.progress * 100),
           })}
         </BodyText>
-      )}
+      }
     </View>
   );
 }
@@ -470,37 +478,13 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingVertical: 20,
     gap: 10,
-  },
-  wifiCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 15,
-    paddingVertical: 14,
-    gap: 10,
-    width: '100%',
-    backgroundColor: WHITE,
-    borderWidth: 1,
-    borderColor: '#CCCCD6',
-    borderRadius: 6,
-    justifyContent: 'flex-start',
-  },
-  wifiCardTextContainer: {
-    flex: 1,
-    flexWrap: 'wrap',
-    minWidth: 0,
-  },
-  wifiName: {
-    fontWeight: '500',
+    flexGrow: 1,
   },
   projectInfoContainer: {
     alignItems: 'center',
     gap: 8,
     paddingTop: 35,
     paddingBottom: 40,
-  },
-  connectedDevicesInfoContainer: {
-    flexDirection: 'row',
-    gap: 8,
   },
   remoteInfoContainer: {
     flexDirection: 'row',
@@ -513,25 +497,27 @@ const styles = StyleSheet.create({
   },
   exchangeInfoText: {
     textAlign: 'center',
-    color: BLACK,
   },
   progressContainer: {
-    marginTop: 30,
     gap: 10,
   },
   progressLabelRow: {
     flexDirection: 'row',
     gap: 10,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   progressPercent: {
     color: MEDIUM_GREY,
     textAlign: 'right',
     marginTop: 4,
   },
-  signalIndicator: {
-    elevation: 0,
-    backgroundColor: '#000033',
+  contentWrapper: {
+    flexGrow: 1,
+    borderWidth: 1,
+    borderColor: BLUE_GREY,
+    borderRadius: 10,
+    paddingBottom: 40,
+    paddingHorizontal: 20,
   },
 });

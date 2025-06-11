@@ -700,6 +700,30 @@
   "screens.EnterPassword.wrongPass": {
     "message": "Incorrect passcode, please try again"
   },
+  "screens.Exchange.WifiCard.noWifi": {
+    "message": "No Wi-Fi"
+  },
+  "screens.ExchangeSettingsBottomSheet.close": {
+    "message": "Close"
+  },
+  "screens.ExchangeSettingsBottomSheet.everythingDesc": {
+    "message": "Full size photos and audio. Uses more storage."
+  },
+  "screens.ExchangeSettingsBottomSheet.everythingTitle": {
+    "message": "Exchange Everything"
+  },
+  "screens.ExchangeSettingsBottomSheet.previewsDesc": {
+    "message": "Reduced smaller size photos. No audio included."
+  },
+  "screens.ExchangeSettingsBottomSheet.previewsTitle": {
+    "message": "Exchange Previews Only"
+  },
+  "screens.ExchangeSettingsBottomSheet.save": {
+    "message": "Save"
+  },
+  "screens.ExchangeSettingsCard.changeSettings": {
+    "message": "Change Settings"
+  },
   "screens.ExchangeSoloScreen.dataSecure": {
     "message": "Your data stays secure while exchanging between trusted devices."
   },
@@ -990,27 +1014,6 @@
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
     "message": "Use Your Location"
-  },
-  "screens.MediaSyncActionSheetContent.cancel": {
-    "message": "ပယ်ဖျက်သည်"
-  },
-  "screens.MediaSyncSettings.syncEverything": {
-    "message": "Sync Everything"
-  },
-  "screens.MediaSyncSettings.syncEverythingDescription": {
-    "message": "Your device will sync <bold>all</bold> content at full size, including photos, audio, and videos."
-  },
-  "screens.MediaSyncSettings.syncEverythingWarning": {
-    "message": "Note: This will use more storage."
-  },
-  "screens.MediaSyncSettings.syncPreviews": {
-    "message": "Sync Previews (Photos Only)"
-  },
-  "screens.MediaSyncSettings.syncPreviewsDescription": {
-    "message": "Photos will sync at a reduced smaller size. Device will <bold>not</bold> sync audio or video."
-  },
-  "screens.MediaSyncSettings.title": {
-    "message": "Sync Settings"
   },
   "screens.ObscurePasscode.description": {
     "message": "Obscure Passcode is a security feature that allows you to open CoMapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of CoMapeo which allows you to create demonstration observations that are not saved to the CoMapeo database."
@@ -1672,46 +1675,52 @@
     "message": "Privacy Policy"
   },
   "screens.Sync.NoWifiDisplay.buttonText": {
-    "message": "Open Settings"
+    "message": "Close"
   },
   "screens.Sync.NoWifiDisplay.description": {
-    "message": "Open your phone settings and connect to a WiFi network to synchronize"
+    "message": "Check device’s settings and connectivity."
   },
   "screens.Sync.NoWifiDisplay.title": {
-    "message": "No WiFi"
+    "message": "No Wi-Fi."
   },
   "screens.Sync.ProjectSyncDisplay.allCaughtUp": {
     "message": "You're all caught up!"
   },
   "screens.Sync.ProjectSyncDisplay.allDataSynced": {
-    "message": "All data exchanged"
+    "message": "Up to date!"
   },
-  "screens.Sync.ProjectSyncDisplay.connectedTo": {
-    "message": "Connected to"
-  },
-  "screens.Sync.ProjectSyncDisplay.devicesAvailableToSync": {
-    "message": "Devices available"
+  "screens.Sync.ProjectSyncDisplay.close": {
+    "message": "Close"
   },
   "screens.Sync.ProjectSyncDisplay.devicesFound": {
-    "message": "Devices found"
+    "message": "Devices found."
   },
-  "screens.Sync.ProjectSyncDisplay.noDevicesAvailableToSync": {
-    "message": "No devices available to sync"
+  "screens.Sync.ProjectSyncDisplay.exchangeAction": {
+    "message": "Change Settings"
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangeEverythingMediaDescription": {
+    "message": "Full size photos and audio."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangeEverythingStorageDescription": {
+    "message": "Uses more storage."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangeEverythingTitle": {
+    "message": "Exchange everything."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyAudioDescription": {
+    "message": "No audio included."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyMediaDescription": {
+    "message": "Reduced smaller size photos."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyTitle": {
+    "message": "Exchange previews only."
+  },
+  "screens.Sync.ProjectSyncDisplay.noDevicesFound": {
+    "message": "No devices found."
   },
   "screens.Sync.ProjectSyncDisplay.noWifi": {
-    "message": "No Wi-Fi"
-  },
-  "screens.Sync.ProjectSyncDisplay.progressLabelSyncing": {
-    "message": "Syncing…"
-  },
-  "screens.Sync.ProjectSyncDisplay.progressLabelWaiting": {
-    "message": "Waiting…"
-  },
-  "screens.Sync.ProjectSyncDisplay.progressLabelWithDeviceCount": {
-    "message": "Waiting for other devices"
-  },
-  "screens.Sync.ProjectSyncDisplay.readyToExchange": {
-    "message": "Ready to exchange"
+    "message": "No Wi-Fi."
   },
   "screens.Sync.ProjectSyncDisplay.start": {
     "message": "Start"
@@ -1726,13 +1735,13 @@
     "message": "Complete! Waiting for other devices to join"
   },
   "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
-    "message": "Complete! You're up to date"
+    "message": "Complete!"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "You are exchanging with your team"
+    "message": "Exchanging..."
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
-    "message": "Waiting for devices"
+    "message": "Waiting for devices..."
   },
   "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
     "message": "{ssid}"
@@ -1742,33 +1751,6 @@
   },
   "screens.Sync.remoteArchiveConnected": {
     "message": "Remote Archive connected"
-  },
-  "screens.SyncEverythingBottomSheet.cancel": {
-    "message": "ပယ်ဖျက်သည်"
-  },
-  "screens.SyncEverythingBottomSheet.confirm": {
-    "message": "Sync Everything"
-  },
-  "screens.SyncEverythingBottomSheet.syncEverything": {
-    "message": "Sync Everything?"
-  },
-  "screens.SyncEverythingBottomSheet.syncEverythingDescription": {
-    "message": "You are about to sync everything. This may increase the disk space used on your device."
-  },
-  "screens.SyncPreviewBottomSheet.cancel": {
-    "message": "ပယ်ဖျက်သည်"
-  },
-  "screens.SyncPreviewBottomSheet.confirm": {
-    "message": "Sync Previews"
-  },
-  "screens.SyncPreviewBottomSheet.syncPreviewWarningBottomSheet": {
-    "message": "You will no longer sync Audio or Video."
-  },
-  "screens.SyncPreviewBottomSheet.syncPreviewsButtonBottomSheet": {
-    "message": "Sync Previews?"
-  },
-  "screens.SyncPreviewBottomSheet.syncPreviewsDescriptionBottomSheet": {
-    "message": "Your device will keep all existing data but new observations will sync in a smaller, preview size."
   },
   "screens.Track.ObservationList.observation": {
     "message": "လေ့လာတွေ့ရှိချက်များ"

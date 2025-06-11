@@ -169,6 +169,8 @@
     "lint-staged": "15.4.3",
     "metro": "0.81.0",
     "npm-check": "6.0.1",
+    "p-event": "6.0.1",
+    "p-every": "2.0.0",
     "patch-package": "8.0.0",
     "prettier": "3.5.1",
     "random-access-memory": "6.2.1",

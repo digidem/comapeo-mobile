@@ -76,6 +76,11 @@ Unfortunately this can't be totally controlled through Appium tests. It does sho
 - Cannot validate the screen color/ screen change as recording progresses
 - Permission flows (OS settings) isn't visible now because we just have one command that enables all permissions and we can't mock going into the Android settings to enable permissions.
 
+#### Exchange
+
+- Cannot test the actual view on the screen when devices are available
+- Cannot test the sync/ exchange process itself
+
 #### Other
 
 - If category names are long, text wraps using hyphenation at expected points (none are long enough to wrap)

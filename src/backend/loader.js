@@ -5,6 +5,7 @@
 import * as Sentry from '@sentry/node'
 import os from 'os'
 import path from 'path'
+import { parseArgs } from 'util'
 import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
 /** @type {import('./types/rn-bridge.js')} */
@@ -15,15 +16,28 @@ os.homedir = () => nodejsProjectDir
 process.cwd = () => nodejsProjectDir
 process.env = process.env || {}
 
+const { values } = parseArgs({
+  options: {
+    sentryEnvironment: { type: 'string' },
+    sentryUserId: { type: 'string' },
+    metricsIsEnabled: { type: 'boolean' },
+  },
+  strict: false,
+})
+
+const { sentryEnvironment, sentryUserId, metricsIsEnabled } = values
+const sentryDebug = sentryEnvironment === 'development'
+const initialScope = sentryUserId ? { user: { id: sentryUserId } } : undefined
+
 // Ensure to call this before requiring any other modules!
 Sentry.init({
   dsn: 'https://5326989762cd5899283975f5459524c1@o4507148235702272.ingest.us.sentry.io/4509442300641281',
 
-  // Adds request headers and IP for users, for more info visit:
-  // https://docs.sentry.io/platforms/javascript/guides/node/configuration/options/#sendDefaultPii
+  enabled: metricsIsEnabled,
   sendDefaultPii: false,
-  // TODO: Set this depending on the environment - it outputs Sentry debug information to stdout
-  debug: true,
+  debug: sentryDebug,
+  environment: sentryEnvironment,
+  initialScope,
   _experiments: { enableLogs: true },
   tracesSampleRate: 1.0,
   integrations: [

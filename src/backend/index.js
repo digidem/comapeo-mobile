@@ -2,8 +2,6 @@ import { parseArgs } from 'util'
 
 import { init } from './src/app.js'
 
-console.log('Test Sentry logging')
-
 // We define this here so we don't need to do additional bundling adjustments to get the path correct when running on the device
 // This assumes that we keep the relevant directory as part of the built assets when building for nodejs mobile
 // (see `KEEP_THESE` variable in build-backend.mjs)
@@ -23,6 +21,7 @@ try {
       version: { type: 'string' },
       rootKey: { type: 'string' },
     },
+    strict: false,
   })
 
   if (typeof values.rootKey !== 'string') {

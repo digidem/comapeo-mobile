@@ -93,4 +93,4 @@ Refer to https://github.com/n4kz/react-native-indicators/issues/43 for details.
 
 Fixes a bug in the `MaskSymbol` component where the mask (`*`) briefly un-hides when typing quickly. This patch sets the `visibleFlag` to `false` immediately, preventing the undesired flicker.
 
-See: [Reviewer context](https://github.com/recruiters/github/blob/master/README.md).
+See: [Reviewer context](https://github.com/digidem/comapeo-mobile/pull/1225).

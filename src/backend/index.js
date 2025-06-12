@@ -27,6 +27,10 @@ try {
   if (typeof values.rootKey !== 'string') {
     throw new Error('backend did not receive root key from front end')
   }
+  if (typeof values.version === 'boolean') {
+    // This should never happenm but TS complains
+    throw new Error('backend got invalid version')
+  }
 
   // Do not await this as we want this to run indefinitely
   init({

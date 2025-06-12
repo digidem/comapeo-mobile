@@ -26,6 +26,14 @@ const { values } = parseArgs({
 })
 
 const { sentryEnvironment, sentryUserId, metricsIsEnabled } = values
+
+if (typeof metricsIsEnabled !== 'boolean')
+  throw new Error('backend did not receive metricsIsEnabled')
+if (typeof sentryUserId !== 'string')
+  throw new Error('backend did not receive sentryUserId')
+if (typeof sentryEnvironment !== 'string')
+  throw new Error('backend did not receive sentryEnvironment')
+
 const sentryDebug = sentryEnvironment === 'development'
 const initialScope = sentryUserId ? { user: { id: sentryUserId } } : undefined
 
@@ -47,11 +55,13 @@ Sentry.init({
   _experiments: {
     enableLogs: true,
     beforeSendLog: (log) => {
+      if (!log.attributes) log.attributes = {}
       log.attributes.user = { id: sentryUserId }
       return log
     },
   },
   tracesSampleRate: 1.0,
+  // @ts-expect-error Unclear where to import type from their docs
   integrations: [Sentry.consoleLoggingIntegration({ levels: logLevels })],
 })
 

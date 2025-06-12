@@ -65,9 +65,9 @@
         "expo-font",
         {
           "fonts": [
-            "node_modules/@expo-google-fonts/rubik/Rubik_400Regular.ttf",
-            "node_modules/@expo-google-fonts/rubik/Rubik_500Medium.ttf",
-            "node_modules/@expo-google-fonts/rubik/Rubik_600SemiBold.ttf"
+            "node_modules/@expo-google-fonts/rubik/400Regular/Rubik_400Regular.ttf",
+            "node_modules/@expo-google-fonts/rubik/500Medium/Rubik_500Medium.ttf",
+            "node_modules/@expo-google-fonts/rubik/600SemiBold/Rubik_600SemiBold.ttf"
           ]
         }
       ],

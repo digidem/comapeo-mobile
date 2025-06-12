@@ -1,4 +1,4 @@
-const assert = require('assert');
+const assert = require('node:assert');
 
 const requiredEnvVars = [
   'MAPBOX_ACCESS_TOKEN',

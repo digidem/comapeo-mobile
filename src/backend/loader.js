@@ -20,14 +20,14 @@ const { values } = parseArgs({
   options: {
     sentryEnvironment: { type: 'string' },
     sentryUserId: { type: 'string' },
-    metricsIsEnabled: { type: 'boolean' },
+    metricsIsEnabled: { type: 'string' },
   },
   strict: false,
 })
 
 const { sentryEnvironment, sentryUserId, metricsIsEnabled } = values
 
-if (typeof metricsIsEnabled !== 'boolean')
+if (typeof metricsIsEnabled !== 'string')
   throw new Error('backend did not receive metricsIsEnabled')
 if (typeof sentryUserId !== 'string')
   throw new Error('backend did not receive sentryUserId')
@@ -47,7 +47,7 @@ if (sentryEnvironment !== 'production') {
 Sentry.init({
   dsn: 'https://5326989762cd5899283975f5459524c1@o4507148235702272.ingest.us.sentry.io/4509442300641281',
 
-  enabled: metricsIsEnabled,
+  enabled: metricsIsEnabled === 'true',
   sendDefaultPii: false,
   debug: sentryDebug,
   environment: sentryEnvironment,

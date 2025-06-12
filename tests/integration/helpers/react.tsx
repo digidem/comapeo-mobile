@@ -1,10 +1,14 @@
+import {type MapeoClientApi} from '@comapeo/ipc';
 import {getLocales} from 'expo-localization';
 import {Component, type ComponentPropsWithoutRef, type ReactNode} from 'react';
 
 import {createActiveProjectIdStore} from '../../../src/frontend/contexts/ActiveProjectIdStoreContext';
 import {AppProviders} from '../../../src/frontend/contexts/AppProviders';
 import {createCoordinateFormatStore} from '../../../src/frontend/contexts/CoordinateFormatStoreContext';
-import type {createLocalDiscoveryController} from '../../../src/frontend/contexts/LocalDiscoveryContext';
+import type {
+  createLocalDiscoveryController,
+  LocalDiscoveryState,
+} from '../../../src/frontend/contexts/LocalDiscoveryContext';
 import {
   createLocaleStore,
   LocaleStore,
@@ -21,6 +25,22 @@ import {DeviceDiagnosticMetrics} from '../../../src/frontend/metrics/DeviceDiagn
 import {IntlProvider} from '../../../src/frontend/contexts/IntlContext';
 import {QueryClient} from '@tanstack/react-query';
 
+const DEFAULT_LOCAL_DISCOVERY_STATE: LocalDiscoveryState = {
+  status: 'started',
+  ssid: 'CoMapeo Test Wi-Fi',
+  wifiStatus: 'on',
+  wifiConnection: 'connected',
+  wifiLinkSpeed: 1234,
+};
+
+const DISCONNECTED_LOCAL_DISCOVERY_STATE: LocalDiscoveryState = {
+  status: 'started',
+  ssid: null,
+  wifiStatus: 'off',
+  wifiConnection: 'disconnected',
+  wifiLinkSpeed: null,
+};
+
 export function createMinimalWrapper() {
   const localeStore = createLocaleStore({persist: false});
 
@@ -33,15 +53,13 @@ export function createMinimalWrapper() {
   };
 }
 
-export function createAppProvidersWrapper(
-  opts: Pick<ComponentPropsWithoutRef<typeof AppProviders>, 'mapeoApi'> &
-    Partial<
-      Omit<
-        ComponentPropsWithoutRef<typeof AppProviders>,
-        'mapeoApi' | 'children'
-      >
-    >,
-) {
+export function createAppProvidersWrapper({
+  mapeoApi,
+  isOnline = true,
+}: {
+  mapeoApi: MapeoClientApi;
+  isOnline?: boolean;
+}) {
   const queryClient = new QueryClient({
     // Disable garbage collection, so that no "collect garbage" timers are
     // started, which would otherwise leave an open handle, giving a Jest
@@ -101,11 +119,9 @@ export function createAppProvidersWrapper(
   > = {
     subscribe: jest.fn(() => jest.fn()),
     getSnapshot: () => ({
-      status: 'started',
-      ssid: 'CoMapeo Test Wi-Fi',
-      wifiStatus: 'on',
-      wifiConnection: 'connected',
-      wifiLinkSpeed: 1234,
+      ...(isOnline
+        ? DEFAULT_LOCAL_DISCOVERY_STATE
+        : DISCONNECTED_LOCAL_DISCOVERY_STATE),
     }),
     start: jest.fn(),
     stop: jest.fn(),
@@ -140,7 +156,7 @@ export function createAppProvidersWrapper(
       <OuterWrapper>
         <AppProviders
           queryClient={queryClient}
-          mapeoApi={opts.mapeoApi}
+          mapeoApi={mapeoApi}
           localDiscoveryController={localDiscoveryController}
           activeProjectIdStore={persistedActiveProjectIdStore}
           persistedDrafObservationStore={persistedDraftObservationStore}

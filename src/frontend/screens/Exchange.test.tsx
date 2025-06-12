@@ -4,9 +4,11 @@ import type {MapeoManager} from '@comapeo/core';
 import type {MapeoClientApi} from '@comapeo/ipc';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {pEventIterator} from 'p-event';
 import {
   connectPeers,
   createManager,
+  createTestServer,
   inviteToProject,
   setUpIPC,
 } from '../../../tests/integration/helpers/core';
@@ -18,7 +20,6 @@ import {SyncScreen} from './Exchange';
 jest.mock('../hooks/useCurrentTime');
 
 describe('Exchange screen', () => {
-  let appProviders: ReturnType<typeof createAppProvidersWrapper>;
   let manager: MapeoManager;
   let client: MapeoClientApi;
   let onTeardown: Array<() => unknown> = [];
@@ -40,9 +41,6 @@ describe('Exchange screen', () => {
 
     await fastifyController.start();
     onTeardown.push(() => fastifyController.stop());
-
-    appProviders = createAppProvidersWrapper({mapeoApi: client});
-    onTeardown.push(appProviders.teardown);
   });
 
   afterEach(async () => {
@@ -51,7 +49,15 @@ describe('Exchange screen', () => {
 
   const Stack = createNativeStackNavigator<Pick<AppStackParamsList, 'Sync'>>();
 
-  const renderSyncScreen = () => {
+  const renderSyncScreen = ({
+    isOnline = true,
+  }: Readonly<{isOnline?: boolean}> = {}) => {
+    const appProviders = createAppProvidersWrapper({
+      mapeoApi: client,
+      isOnline,
+    });
+    onTeardown.push(appProviders.teardown);
+
     const {unmount} = render(
       <NavigationContainer>
         <Stack.Navigator>
@@ -74,10 +80,18 @@ describe('Exchange screen', () => {
     // This deferral works around that problem. It's a little clunky, I admit.
     // But it's the only solution that worked for me, without adding test-only
     // code to the component.
-    onTeardown.unshift(async () => {
+    const actualTeardown = async () => {
       unmount();
       await sleep(0);
-    });
+    };
+
+    onTeardown.unshift(actualTeardown);
+
+    return () => {
+      const result = actualTeardown();
+      onTeardown = onTeardown.filter(fn => fn !== actualTeardown);
+      return result;
+    };
   };
 
   test('when project is in "solo mode", renders a screen with info', async () => {
@@ -89,6 +103,52 @@ describe('Exchange screen', () => {
         'Invite collaborators to your project from the main menu',
       ),
     ).resolves.toBeVisible();
+  });
+
+  test('shows "no Wi-Fi screen" when no Wi-Fi connection is available and there is no remote archive', async () => {
+    // Create project with another device
+
+    const projectId = await client.createProject({name: 'test project'});
+    const project = await client.getProject(projectId);
+
+    const {manager: otherManager} = await createManager({
+      name: 'other',
+      deviceType: 'mobile',
+    });
+
+    const disconnect = await connectPeers([manager, otherManager]);
+    onTeardown.push(disconnect);
+    await inviteToProject(project, otherManager);
+    await project.$sync.waitForSync('initial');
+    const otherProject = await otherManager.getProject(projectId);
+    await otherProject.$sync.waitForSync('initial');
+    await disconnect();
+    onTeardown = onTeardown.filter(fn => fn !== disconnect);
+
+    // Render the sync screen
+
+    renderSyncScreen({isOnline: false});
+
+    await expect(screen.findByText('No Wi-Fi.')).resolves.toBeVisible();
+  });
+
+  test("shows sync screen if there's a remote archive, even if Wi-Fi is off", async () => {
+    const projectId = await client.createProject({name: 'test project'});
+    const project = await client.getProject(projectId);
+
+    const {serverBaseUrl, close} = await createTestServer();
+    onTeardown.push(close);
+
+    await project.$member.addServerPeer(serverBaseUrl, {
+      dangerouslyAllowInsecureConnections: true,
+    });
+
+    renderSyncScreen({isOnline: false});
+
+    await expect(
+      screen.findByText('Remote Archive connected'),
+    ).resolves.toBeVisible();
+    await expect(screen.findByText('Start')).resolves.toBeVisible();
   });
 
   test('syncing data between two devices', async () => {
@@ -192,5 +252,102 @@ describe('Exchange screen', () => {
     ).resolves.toBeDefined();
 
     expect(await screen.findByText('Complete!')).toBeVisible();
+  });
+
+  test('syncing with a remote archive', async () => {
+    // General test support
+
+    const user = userEvent.setup();
+
+    // Create project
+
+    const projectId = await client.createProject({name: 'test project'});
+    const project = await client.getProject(projectId);
+
+    // Add remote archive
+
+    const {serverBaseUrl, close} = await createTestServer();
+    onTeardown.push(close);
+
+    await project.$member.addServerPeer(serverBaseUrl, {
+      dangerouslyAllowInsecureConnections: true,
+    });
+
+    // Create other simulated device
+
+    const {manager: otherManager} = await createManager({
+      name: 'other',
+      deviceType: 'mobile',
+    });
+    const managers = [manager, otherManager];
+
+    const observation = await project.observation.create({
+      schemaName: 'observation',
+      lat: 12,
+      lon: 34,
+      attachments: [],
+      tags: {},
+    });
+
+    const disconnectDevices = await connectPeers(managers);
+    await inviteToProject(project, otherManager);
+
+    const otherProject = await otherManager.getProject(projectId);
+
+    await project.$sync.waitForSync('initial');
+    await otherProject.$sync.waitForSync('initial');
+
+    await disconnectDevices();
+
+    const hasObservationSyncedToOtherProject = () =>
+      otherProject.observation
+        .getByDocId(observation.docId)
+        .then(() => true)
+        .catch(() => false);
+
+    expect(await hasObservationSyncedToOtherProject()).toBe(false);
+
+    // Sync with the remote archive (but not the other manager)
+
+    const unmount = renderSyncScreen();
+
+    await user.press(await screen.findByText('Start'));
+
+    await act(async () => {
+      await project.$sync.waitForSync('full');
+    });
+
+    expect(await screen.findByText('Complete!')).toBeVisible();
+    await user.press(screen.getByText('Stop'));
+
+    // Tear down the UI (and its project); it should not have synced to the other manager
+
+    await unmount();
+    project.$sync.stop();
+    await project.close();
+
+    expect(await hasObservationSyncedToOtherProject()).toBe(false);
+
+    // Start other project syncing, only with server
+
+    otherProject.$sync.connectServers();
+    onTeardown.push(() => {
+      otherProject.$sync.disconnectServers();
+    });
+
+    otherProject.$sync.start();
+    onTeardown.push(() => {
+      otherProject.$sync.stop();
+    });
+
+    // Keep fetching `sync-state` events until the observation has synced
+
+    const syncStateIterator = pEventIterator(otherProject.$sync, 'sync-state', {
+      timeout: 10_000,
+    });
+    while (!(await hasObservationSyncedToOtherProject())) {
+      await syncStateIterator.next();
+    }
+    expect(await hasObservationSyncedToOtherProject()).toBe(true);
   });
 });

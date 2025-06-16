@@ -1,6 +1,5 @@
 import {useAttachmentUrl, useCreateBlob} from '@comapeo/core-react';
 import type {BlobId, BlobVariant} from '@comapeo/core/dist/types';
-import type {Observation} from '@comapeo/schema';
 import {useMutation} from '@tanstack/react-query';
 import {URL} from 'react-native-url-polyfill';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
@@ -25,8 +24,6 @@ export function useCreatePhotoAttachment({projectId}: {projectId: string}) {
         // although backend currently only uses first part of path
         metadata: {
           mimeType: 'image/jpeg',
-          location: photo.mediaMetadata.location,
-          timestamp: photo.mediaMetadata.timestamp,
         },
       });
 
@@ -35,6 +32,7 @@ export function useCreatePhotoAttachment({projectId}: {projectId: string}) {
         hash: blob.hash,
         name: blob.name,
         type: blob.type,
+        external: false,
       };
 
       // Should not happen but just in case...
@@ -59,7 +57,6 @@ export function useCreateAudioAttachment({projectId}: {projectId: string}) {
         original: new URL(file.uri).pathname,
         metadata: {
           mimeType: 'audio/mp4',
-          timestamp: file.createdAt,
         },
       });
 
@@ -68,6 +65,7 @@ export function useCreateAudioAttachment({projectId}: {projectId: string}) {
         hash: blob.hash,
         name: blob.name,
         type: blob.type,
+        external: false,
       };
     },
   });
@@ -93,7 +91,7 @@ function buildBlobId(
       variant: requestedVariant,
       name: attachment.name,
       driveId: attachment.driveDiscoveryId,
-    } satisfies BlobId;
+    };
   }
 
   return {
@@ -101,11 +99,11 @@ function buildBlobId(
     variant: 'original',
     name: attachment.name,
     driveId: attachment.driveDiscoveryId,
-  } satisfies BlobId;
+  };
 }
 
 export function useAttachmentUrlQuery(
-  attachment: Observation['attachments'][0],
+  attachment: Attachment,
   variant: BlobVariant<'photo' | 'audio' | 'video'>,
 ) {
   const {projectId} = useActiveProject();
@@ -116,15 +114,7 @@ export function useAttachmentUrlQuery(
     throw new Error(`Invalid attachment type: ${attachment.type}`);
   }
 
-  const blobId = buildBlobId(
-    {
-      driveDiscoveryId: attachment.driveDiscoveryId,
-      name: attachment.name,
-      type: attachment.type as 'photo' | 'audio' | 'video',
-      hash: attachment.hash,
-    },
-    variant,
-  );
+  const blobId = buildBlobId(attachment, variant);
 
   const {
     data: rawUrl,

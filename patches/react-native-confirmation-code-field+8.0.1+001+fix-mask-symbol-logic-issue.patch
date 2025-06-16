@@ -1,0 +1,13 @@
+diff --git a/node_modules/react-native-confirmation-code-field/esm/MaskSymbol.js b/node_modules/react-native-confirmation-code-field/esm/MaskSymbol.js
+index 68347ca..f2dd2b1 100644
+--- a/node_modules/react-native-confirmation-code-field/esm/MaskSymbol.js
++++ b/node_modules/react-native-confirmation-code-field/esm/MaskSymbol.js
+@@ -5,7 +5,7 @@ export function MaskSymbol({ isLastFilledCell, children: symbol, maskSymbol, del
+     'use memo';
+     const [visibleFlag, setFlag] = useState(true);
+     const toggleVisibility = useCallback(function toggleMaskVisibility() {
+-        setFlag((prev) => !prev);
++        setFlag(false);
+     }, []);
+     useTimeout(toggleVisibility, delay);
+     useEffect(() => {

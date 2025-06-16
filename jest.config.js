@@ -17,6 +17,9 @@ const config = {
   transformIgnorePatterns: [
     'node_modules/(?!(...|@rnmapbox|(jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg)',
   ],
+  moduleNameMapper: {
+    '\\.svg$': '<rootDir>/src/frontend/__mocks__/svg.tsx',
+  },
   // Avoid `jest-haste-map: Haste module naming collision` warnings
   modulePathIgnorePatterns: [
     '<rootDir>/android',

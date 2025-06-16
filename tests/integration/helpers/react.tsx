@@ -4,7 +4,7 @@ import {Component, type ComponentPropsWithoutRef, type ReactNode} from 'react';
 import {createActiveProjectIdStore} from '../../../src/frontend/contexts/ActiveProjectIdStoreContext';
 import {AppProviders} from '../../../src/frontend/contexts/AppProviders';
 import {createCoordinateFormatStore} from '../../../src/frontend/contexts/CoordinateFormatStoreContext';
-import {createLocalDiscoveryController} from '../../../src/frontend/contexts/LocalDiscoveryContext';
+import type {createLocalDiscoveryController} from '../../../src/frontend/contexts/LocalDiscoveryContext';
 import {
   createLocaleStore,
   LocaleStore,
@@ -43,7 +43,18 @@ export function createAppProvidersWrapper(
       >
     >,
 ) {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    // Disable garbage collection, so that no "collect garbage" timers are
+    // started, which would otherwise leave an open handle, giving a Jest
+    // warning. See [this tip in the Tanstack Query docs][0] and [this cache
+    // example scenario][1].
+    // [0]: https://tanstack.com/query/latest/docs/framework/react/guides/testing#set-gctime-to-infinity-with-jest
+    // [1]: https://tanstack.com/query/latest/docs/framework/react/guides/caching
+    defaultOptions: {
+      queries: {gcTime: Infinity},
+      mutations: {gcTime: Infinity},
+    },
+  });
 
   const persistedLocaleStore = createLocaleStore({
     persist: true,
@@ -86,10 +97,20 @@ export function createAppProvidersWrapper(
     }
   });
 
-  const localDiscoveryController = createLocalDiscoveryController(
-    opts.mapeoApi,
-  );
-  localDiscoveryController.start();
+  const localDiscoveryController: ReturnType<
+    typeof createLocalDiscoveryController
+  > = {
+    subscribe: jest.fn(() => jest.fn()),
+    getSnapshot: () => ({
+      status: 'started',
+      ssid: 'CoMapeo Test Wi-Fi',
+      wifiStatus: 'on',
+      wifiConnection: 'connected',
+      wifiLinkSpeed: 1234,
+    }),
+    start: jest.fn(),
+    stop: jest.fn(),
+  };
 
   const persistedDraftObservationStore = createDraftObservationStore({
     persist: true,
@@ -117,31 +138,34 @@ export function createAppProvidersWrapper(
   const persistedSavedLocationStore = createSavedLocationStore({
     persist: false,
   });
-
+  const OuterWrapper = createMinimalWrapper();
   const wrapper = ({children}: {children: ReactNode}) => {
     return (
-      <AppProviders
-        queryClient={queryClient}
-        mapeoApi={opts.mapeoApi}
-        localDiscoveryController={localDiscoveryController}
-        activeProjectIdStore={persistedActiveProjectIdStore}
-        persistedDrafObservationStore={persistedDraftObservationStore}
-        metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
-        securityStore={persistedSecurityStore}
-        manualEntryCoordinateFormatStore={
-          persistedManualEntryCoordinateFormatStore
-        }
-        coordinateFormatStore={persistedCoordinateFormatStore}
-        savedLocationStore={persistedSavedLocationStore}
-        trackStore={persistedTrackStore}>
-        {children}
-      </AppProviders>
+      <OuterWrapper>
+        <AppProviders
+          queryClient={queryClient}
+          mapeoApi={opts.mapeoApi}
+          localDiscoveryController={localDiscoveryController}
+          activeProjectIdStore={persistedActiveProjectIdStore}
+          persistedDrafObservationStore={persistedDraftObservationStore}
+          metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
+          securityStore={persistedSecurityStore}
+          manualEntryCoordinateFormatStore={
+            persistedManualEntryCoordinateFormatStore
+          }
+          coordinateFormatStore={persistedCoordinateFormatStore}
+          savedLocationStore={persistedSavedLocationStore}
+          trackStore={persistedTrackStore}>
+          {children}
+        </AppProviders>
+      </OuterWrapper>
     );
   };
 
   const teardown = () => {
     localDiscoveryController.stop();
     appDiagnosticMetrics.setEnabled(false);
+    deviceDiagnosticMetrics.setEnabled(false);
   };
 
   return {wrapper, teardown};

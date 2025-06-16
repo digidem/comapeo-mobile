@@ -92,11 +92,8 @@ export const CameraView = ({onAddPress}: Props) => {
 
         if (pic.exif) {
           try {
-            console.log('ORIGINAL EXIF', pic.exif);
-
             const extractedExif = parse(PhotoEXIFSchema, pic.exif);
 
-            console.log('EXTRACTED EXIF', extractedExif);
             mediaMetadata = {
               ...mediaMetadata,
               photoExif: extractedExif,

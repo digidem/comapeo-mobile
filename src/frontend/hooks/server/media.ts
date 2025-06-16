@@ -1,6 +1,7 @@
 import {useAttachmentUrl, useCreateBlob} from '@comapeo/core-react';
 import type {BlobId, BlobVariant} from '@comapeo/core/dist/types';
 import {useMutation} from '@tanstack/react-query';
+import type {LocationObject} from 'expo-location';
 import {URL} from 'react-native-url-polyfill';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import type {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
@@ -27,21 +28,33 @@ export function useCreatePhotoAttachment({projectId}: {projectId: string}) {
         },
       });
 
-      const baseAttachment = {
+      const position = photo.mediaMetadata.location
+        ? expoLocationToAttachmentPosition(photo.mediaMetadata.location)
+        : undefined;
+
+      const createdAt = new Date(photo.mediaMetadata.timestamp).toISOString();
+
+      // Should not happen but just in case...
+      if (blob.type !== 'photo') {
+        return {
+          driveDiscoveryId: blob.driveId,
+          hash: blob.hash,
+          name: blob.name,
+          type: blob.type,
+          external: false,
+          createdAt,
+          position,
+        };
+      }
+
+      return {
         driveDiscoveryId: blob.driveId,
         hash: blob.hash,
         name: blob.name,
         type: blob.type,
         external: false,
-      };
-
-      // Should not happen but just in case...
-      if (blob.type !== 'photo') {
-        return baseAttachment;
-      }
-
-      return {
-        ...baseAttachment,
+        createdAt,
+        position,
         photoExif: photo.mediaMetadata.photoExif,
       };
     },
@@ -66,6 +79,7 @@ export function useCreateAudioAttachment({projectId}: {projectId: string}) {
         name: blob.name,
         type: blob.type,
         external: false,
+        createdAt: new Date(file.createdAt).toISOString(),
       };
     },
   });
@@ -129,5 +143,38 @@ export function useAttachmentUrlQuery(
     url: rawUrl ?? undefined,
     error,
     isRefetching,
+  };
+}
+
+function expoLocationToAttachmentPosition(
+  location: LocationObject,
+): Attachment['position'] {
+  return {
+    timestamp: new Date(location.timestamp).toISOString(),
+    mocked: location.mocked,
+    coords: {
+      accuracy:
+        typeof location.coords.accuracy === 'number'
+          ? location.coords.accuracy
+          : undefined,
+      altitude:
+        typeof location.coords.altitude === 'number'
+          ? location.coords.altitude
+          : undefined,
+      altitudeAccuracy:
+        typeof location.coords.altitudeAccuracy === 'number'
+          ? location.coords.altitudeAccuracy
+          : undefined,
+      heading:
+        typeof location.coords.heading === 'number'
+          ? location.coords.heading
+          : undefined,
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+      speed:
+        typeof location.coords.speed === 'number'
+          ? location.coords.speed
+          : undefined,
+    },
   };
 }

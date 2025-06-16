@@ -124,14 +124,15 @@ export const MapScreen = ({
                     ? getCoords(savedLocation)
                     : FALLBACK_COORDINATE,
                 zoomLevel: DEFAULT_ZOOM,
+                animationDuration: 50,
               });
               initialPositionSet.current = true;
             }
           }}
           centerCoordinate={following ? coords : undefined}
           zoomLevel={DEFAULT_ZOOM}
-          animationDuration={1000}
-          animationMode="flyTo"
+          animationDuration={0}
+          animationMode="none"
           followUserLocation={false}
         />
 

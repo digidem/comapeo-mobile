@@ -28,7 +28,7 @@ export type PositionProvider = Metadata['positionProvider'];
 
 export type ClientGeneratedObservation = Omit<ObservationValue, 'schemaName'>;
 
-export type Attachment = Observation['attachments'][0];
+export type Attachment = Observation['attachments'][number];
 
 export type PhotoVariant = (BlobId & {type: 'photo'})['variant'];
 

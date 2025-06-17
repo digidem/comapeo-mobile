@@ -37,6 +37,7 @@ if (typeof sentryEnvironment !== 'string')
 const sentryDebug = sentryEnvironment === 'development'
 const initialScope = sentryUserId ? { user: { id: sentryUserId } } : undefined
 
+/** @type {Array<"error" | "log" | "warn">} */
 const logLevels = ['error']
 
 if (sentryEnvironment !== 'production') {

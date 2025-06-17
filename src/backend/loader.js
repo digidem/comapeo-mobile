@@ -62,7 +62,6 @@ Sentry.init({
     },
   },
   tracesSampleRate: 1.0,
-  // @ts-expect-error Unclear where to import type from their docs
   integrations: [Sentry.consoleLoggingIntegration({ levels: logLevels })],
 })
 

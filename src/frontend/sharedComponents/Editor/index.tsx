@@ -124,7 +124,6 @@ export const Editor = ({
                           // TODO: Does it make sense to provide the `observationDocId` in this case?
                           // Reasoning for not doing so is because the photo isn't actually saved yet, so it's technically not
                           // officially associated with the observation being created/edited.
-                          // TODO: Is this considered validated yet?
                         })
                       }>
                       <ThumbnailImage uri={att.thumbnailUri} />

@@ -17,7 +17,6 @@ type Props = {
 export const AudioSavedThumbnail = ({audio, observationId, size}: Props) => {
   const {navigate} = useNavigationFromRoot();
   const {observation} = useObservationWithPreset(observationId);
-
   return (
     <ThumbnailContainer
       size={size}
@@ -26,14 +25,14 @@ export const AudioSavedThumbnail = ({audio, observationId, size}: Props) => {
           driveDiscoveryId: audio.driveDiscoveryId,
           name: audio.name,
           type: audio.type,
-          createdAt: observation.createdAt,
+          createdAt: audio.createdAt || observation?.createdAt,
         })
       }
       containerStyle={styles.container}
       accessibilityLabel="Play audio recording.">
       <PlayArrow width={48} height={48} />
       <DateDistance
-        date={new Date(observation.createdAt)}
+        date={new Date(audio.createdAt || observation?.createdAt)}
         style={{fontSize: 12, fontWeight: 400, color: DARK_GREY}}
       />
     </ThumbnailContainer>

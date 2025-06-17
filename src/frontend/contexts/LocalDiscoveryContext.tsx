@@ -105,34 +105,52 @@ export function createLocalDiscoveryController(mapeoApi: MapeoClientApi) {
 
   const sm = new StateMachine({
     async start() {
-      // start browsing straight away
-      const startZeroconfPromise = startZeroconf(zeroconf);
-      const {name, port} = await mapeoApi.startLocalPeerDiscoveryServer();
-      // publishedName could be different from the name we requested, if there
-      // was a conflict on the network (the conflict could come from the same
-      // name still being registered on the network and not yet cleaned up)
-      try {
-        const publishedName = await publishZeroconf(zeroconf, {name, port});
-        publishedNames.add(publishedName);
-      } catch (e) {
-        // Publishing could fail (timeout), but we don't want to throw the
-        // state machine start(), because that would leave the state machine
-        // in an "error" state and stop other things from working. By silently
-        // failing (with the report to Sentry), we are able to try again next
-        // time.
-        Sentry.captureException(e);
-      }
-      await startZeroconfPromise;
+      Sentry.startSpan(
+        {
+          name: 'startLocalDiscovery',
+          op: 'network.dns-sd',
+        },
+        async span => {
+          // start browsing straight away
+          const startZeroconfPromise = startZeroconf(zeroconf);
+          const {name, port} = await mapeoApi.startLocalPeerDiscoveryServer();
+          span.setAttribute('name', name);
+          // publishedName could be different from the name we requested, if there
+          // was a conflict on the network (the conflict could come from the same
+          // name still being registered on the network and not yet cleaned up)
+          try {
+            const publishedName = await publishZeroconf(zeroconf, {name, port});
+            publishedNames.add(publishedName);
+            span.setAttribute('publishedName', publishedName);
+          } catch (e) {
+            // Publishing could fail (timeout), but we don't want to throw the
+            // state machine start(), because that would leave the state machine
+            // in an "error" state and stop other things from working. By silently
+            // failing (with the report to Sentry), we are able to try again next
+            // time.
+            Sentry.captureException(e);
+          }
+          await startZeroconfPromise;
+        },
+      );
     },
     async stop() {
-      await Promise.all([
-        mapeoApi.stopLocalPeerDiscoveryServer(),
-        stopZeroconf(zeroconf),
-        unpublishZeroconf(zeroconf, publishedNames).catch(e => {
-          // See above for why we silently fail here
-          Sentry.captureException(e);
-        }),
-      ]);
+      Sentry.startSpan(
+        {
+          name: 'stopLocalDiscovery',
+          op: 'network.dns-sd',
+        },
+        async () => {
+          await Promise.all([
+            mapeoApi.stopLocalPeerDiscoveryServer(),
+            stopZeroconf(zeroconf),
+            unpublishZeroconf(zeroconf, publishedNames).catch(e => {
+              // See above for why we silently fail here
+              Sentry.captureException(e);
+            }),
+          ]);
+        },
+      );
     },
   });
   sm.on('state', smState => {
@@ -158,7 +176,26 @@ export function createLocalDiscoveryController(mapeoApi: MapeoClientApi) {
       onAppState,
     );
     const onZeroconfResolved = (service: ZeroconfService) => {
+      Sentry.addBreadcrumb({
+        message: 'Zeroconf service resolved',
+        type: 'network',
+        data: {
+          serviceName: service.name,
+          serviceFullName: service.fullName,
+          serviceHost: service.host,
+          serviceAddresses: service.addresses,
+          servicePort: service.port,
+          serviceTxt: service.txt,
+        },
+      });
       const peer = zeroconfServiceToMapeoPeer(service);
+      if (!peer) {
+        Sentry.captureMessage(
+          'Zeroconf service resolved, but no peer found',
+          'warning',
+        );
+        return;
+      }
       if (peer) mapeoApi.connectLocalPeer(peer);
     };
     zeroconf.on('resolved', onZeroconfResolved);
@@ -300,104 +337,132 @@ export function createLocalDiscoveryController(mapeoApi: MapeoClientApi) {
 }
 
 function startZeroconf(zeroconf: Zeroconf): Promise<void> {
-  return new Promise((resolve, reject) => {
-    const cleanup = () => {
-      zeroconf.off('start', onStart);
-      zeroconf.off('error', onError);
-    };
-    const onStart = () => {
-      cleanup();
-      resolve();
-    };
-    const onError = (err: Error) => {
-      cleanup();
-      reject(err);
-    };
-    zeroconf.on('start', onStart);
-    zeroconf.on('error', onError);
+  return Sentry.startSpan(
+    {name: 'startBrowsingZeroconf', op: 'network.dns-sd'},
+    () =>
+      new Promise((resolve, reject) => {
+        const cleanup = () => {
+          zeroconf.off('start', onStart);
+          zeroconf.off('error', onError);
+        };
+        const onStart = () => {
+          cleanup();
+          resolve();
+        };
+        const onError = (err: Error) => {
+          cleanup();
+          reject(err);
+        };
+        zeroconf.on('start', onStart);
+        zeroconf.on('error', onError);
 
-    zeroconf.scan(ZEROCONF_SERVICE_TYPE, ZEROCONF_PROTOCOL, ZEROCONF_DOMAIN);
-  });
+        zeroconf.scan(
+          ZEROCONF_SERVICE_TYPE,
+          ZEROCONF_PROTOCOL,
+          ZEROCONF_DOMAIN,
+        );
+      }),
+  );
 }
 
 function publishZeroconf(
   zeroconf: Zeroconf,
   {name, port}: {name: string; port: number},
 ): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const timeoutId = setTimeout(() => {
-      cleanup();
-      reject(new Error('Timed out publishing zeroconf service'));
-    }, ZEROCONF_PUBLISH_TIMEOUT_MS);
+  return Sentry.startSpan(
+    {name: 'publishZeroconf', op: 'network.dns-sd'},
+    () =>
+      new Promise((resolve, reject) => {
+        const timeoutId = setTimeout(() => {
+          cleanup();
+          reject(new Error('Timed out publishing zeroconf service'));
+        }, ZEROCONF_PUBLISH_TIMEOUT_MS);
 
-    const cleanup = () => {
-      clearTimeout(timeoutId);
-      zeroconf.off('published', onPublish);
-    };
-    const onPublish = ({name: publishedName}: ZeroconfService) => {
-      cleanup();
-      resolve(publishedName);
-    };
+        const cleanup = () => {
+          clearTimeout(timeoutId);
+          zeroconf.off('published', onPublish);
+        };
+        const onPublish = ({name: publishedName}: ZeroconfService) => {
+          cleanup();
+          resolve(publishedName);
+        };
 
-    zeroconf.on('published', onPublish);
-    zeroconf.publishService(
-      ZEROCONF_SERVICE_TYPE,
-      ZEROCONF_PROTOCOL,
-      ZEROCONF_DOMAIN,
-      name,
-      port,
-    );
-  });
+        zeroconf.on('published', onPublish);
+        zeroconf.publishService(
+          ZEROCONF_SERVICE_TYPE,
+          ZEROCONF_PROTOCOL,
+          ZEROCONF_DOMAIN,
+          name,
+          port,
+        );
+      }),
+  );
 }
 
 function stopZeroconf(zeroconf: Zeroconf): Promise<void> {
-  return new Promise((resolve, reject) => {
-    const cleanup = () => {
-      zeroconf.off('stop', onStop);
-      zeroconf.off('error', onError);
-    };
-    const onStop = () => {
-      cleanup();
-      resolve();
-    };
-    const onError = (err: Error) => {
-      cleanup();
-      reject(err);
-    };
-    zeroconf.on('stop', onStop);
-    zeroconf.on('error', onError);
+  return Sentry.startSpan(
+    {name: 'stopBrowsingZeroconf', op: 'network.dns-sd'},
+    () =>
+      new Promise((resolve, reject) => {
+        const cleanup = () => {
+          zeroconf.off('stop', onStop);
+          zeroconf.off('error', onError);
+        };
+        const onStop = () => {
+          cleanup();
+          resolve();
+        };
+        const onError = (err: Error) => {
+          cleanup();
+          reject(err);
+        };
+        zeroconf.on('stop', onStop);
+        zeroconf.on('error', onError);
 
-    zeroconf.stop();
-  });
+        zeroconf.stop();
+      }),
+  );
 }
 
 function unpublishZeroconf(
   zeroconf: Zeroconf,
   publishedNamesToBeMutated: Set<string>,
 ): Promise<void> {
-  if (publishedNamesToBeMutated.size === 0) return Promise.resolve();
-  return new Promise((resolve, reject) => {
-    const timeoutId = setTimeout(() => {
-      cleanup();
-      reject(new Error('Timed out unpublishing zeroconf service'));
-    }, ZEROCONF_UNPUBLISH_TIMEOUT_MS);
+  return Sentry.startSpan(
+    {
+      name: 'unpublishZeroconf',
+      op: 'network.dns-sd',
+    },
+    span => {
+      span.setAttribute(
+        'publishedNames',
+        Array.from(publishedNamesToBeMutated),
+      );
+      if (publishedNamesToBeMutated.size === 0) return Promise.resolve();
+      return new Promise((resolve, reject) => {
+        const timeoutId = setTimeout(() => {
+          cleanup();
+          reject(new Error('Timed out unpublishing zeroconf service'));
+        }, ZEROCONF_UNPUBLISH_TIMEOUT_MS);
 
-    const cleanup = () => {
-      clearTimeout(timeoutId);
-      zeroconf.off('remove', onRemove);
-    };
-    const onRemove = (name: string) => {
-      publishedNamesToBeMutated.delete(name);
-      if (publishedNamesToBeMutated.size === 0) {
-        cleanup();
-        resolve();
-      }
-    };
-    zeroconf.on('remove', onRemove);
-    for (const name of publishedNamesToBeMutated) {
-      zeroconf.unpublishService(name);
-    }
-  });
+        const cleanup = () => {
+          clearTimeout(timeoutId);
+          zeroconf.off('remove', onRemove);
+        };
+        const onRemove = (name: string) => {
+          publishedNamesToBeMutated.delete(name);
+          if (publishedNamesToBeMutated.size === 0) {
+            cleanup();
+            resolve();
+          }
+        };
+        zeroconf.on('remove', onRemove);
+        for (const name of publishedNamesToBeMutated) {
+          zeroconf.unpublishService(name);
+        }
+      });
+    },
+  );
 }
 
 function zeroconfServiceToMapeoPeer({

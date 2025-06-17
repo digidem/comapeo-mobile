@@ -7,11 +7,20 @@ import * as SplashScreen from 'expo-splash-screen';
 import {AppStackParamsList} from './sharedTypes/navigation';
 import {useSetUpInvitesListeners} from '@comapeo/core-react';
 import {RootStackNavigator} from './Navigation/Stack';
+import type Sentry from '@sentry/react-native';
 
 export const rootNavigationRef =
   createNavigationContainerRef<AppStackParamsList>();
 
-export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
+export const AppNavigator = ({
+  permissionAsked,
+  navigationIntegration,
+}: {
+  permissionAsked: boolean;
+  navigationIntegration:
+    | ReturnType<(typeof Sentry)['reactNavigationIntegration']>
+    | undefined;
+}) => {
   useSetUpInvitesListeners();
 
   if (permissionAsked) {
@@ -19,7 +28,11 @@ export const AppNavigator = ({permissionAsked}: {permissionAsked: boolean}) => {
   }
 
   return (
-    <NavigationContainer ref={rootNavigationRef}>
+    <NavigationContainer
+      ref={rootNavigationRef}
+      onReady={() => {
+        navigationIntegration?.registerNavigationContainer(rootNavigationRef);
+      }}>
       <React.Suspense fallback={null}>
         <RootStackNavigator />
       </React.Suspense>

@@ -46,13 +46,29 @@ if (applicationId?.endsWith('.dev') || applicationId?.endsWith('.pre')) {
 }
 
 const sentryDebug = applicationId?.endsWith('.dev');
+const appMetricsOptIn = sentryEnvironment !== 'production';
+let sentryIntegrations: Sentry.ReactNativeOptions['integrations'] = [];
+let navigationIntegration:
+  | ReturnType<(typeof Sentry)['reactNavigationIntegration']>
+  | undefined = undefined;
+if (appMetricsOptIn) {
+  navigationIntegration = Sentry.reactNavigationIntegration({
+    enableTimeToInitialDisplay: true,
+  });
+  sentryIntegrations = [
+    Sentry.reactNativeTracingIntegration(),
+    navigationIntegration,
+  ];
+}
 
 Sentry.init({
   dsn: 'https://e0e02907e05dc72a6da64c3483ed88a6@o4507148235702272.ingest.us.sentry.io/4507170965618688',
-  tracesSampleRate: 1.0,
+  tracesSampleRate: appMetricsOptIn ? 1.0 : 0, // Only enable tracing once we have user consent
+  enableUserInteractionTracing: appMetricsOptIn, // Only enable user interaction tracing once we have user consent
   environment: sentryEnvironment,
   debug: sentryDebug, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
   initialScope: {user: {id: getSentryUserId({now: new Date(), storage})}},
+  integrations: sentryIntegrations,
 });
 
 Mapbox.setTelemetryEnabled(false);
@@ -199,7 +215,10 @@ const App = () => {
             }
             activeProjectIdStore={persistedActiveProjectIdStore}
             metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}>
-            <AppNavigator permissionAsked={permissionsAsked} />
+            <AppNavigator
+              permissionAsked={permissionsAsked}
+              navigationIntegration={navigationIntegration}
+            />
           </AppProviders>
         </ServerLoading>
       </IntlProvider>

@@ -1,6 +1,7 @@
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, StyleSheet, View} from 'react-native';
+import * as Sentry from '@sentry/react-native';
 
 import {useManyMembers} from '@comapeo/core-react';
 import {useLocalDiscoveryState} from '../../../../hooks/useLocalDiscoveryState';
@@ -77,6 +78,27 @@ function InvitableDevicesList() {
 
     return false;
   });
+
+  React.useEffect(() => {
+    const span = Sentry.startInactiveSpan({
+      name: 'invitable devices list',
+      op: 'mapeo.invitableDevices',
+    });
+    span.setAttributes({
+      devices: devices.map(d => JSON.stringify(d)),
+      projectMembers: projectMembersQuery.data.map(m =>
+        JSON.stringify({
+          deviceId: m.deviceId,
+          role: m.role.name,
+          name: m.name,
+          joinedAt: m.joinedAt,
+        }),
+      ),
+      invitableDevices: invitableDevices.map(d => JSON.stringify(d)),
+    });
+
+    span.end();
+  }, [devices, projectMembersQuery.data, invitableDevices]);
 
   return (
     <View style={styles.deviceListContainer}>

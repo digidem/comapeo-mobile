@@ -65,7 +65,6 @@ import {
   TrackScreen,
   createNavigationOptions as createTrackNavigationOptions,
 } from '../../screens/Track/index.tsx';
-import {MediaSyncSettings} from '../../screens/Settings/ProjectSettings/MediaSyncSettings/index.tsx';
 import {DataAndPrivacy} from '../../screens/Settings/DataAndPrivacy/DataAndPrivacy';
 import {SettingsPrivacyPolicy} from '../../screens/Settings/DataAndPrivacy/SettingsPrivacyPolicy';
 import {TrackEdit} from '../../screens/TrackEdit/index.tsx';
@@ -78,8 +77,7 @@ import {
   createNavigationOptions as createBackgroundMapsNavigationOptions,
   BackgroundMapsScreen,
 } from '../../screens/Settings/MapManagement/BackgroundMaps.tsx';
-import {SyncPreviewsBottomSheet} from '../../screens/Settings/ProjectSettings/MediaSyncSettings/SyncPreviewsBottomSheet.tsx';
-import {SyncEverythingBottomSheet} from '../../screens/Settings/ProjectSettings/MediaSyncSettings/SyncEverythingBottomSheet.tsx';
+import {ExchangeSettingsBottomSheet} from '../../screens/Exchange/ExchangeSettingsBottomSheet.tsx';
 import {AudioAskPermissionBottomSheet} from '../../screens/Audio/AudioAskPermissionBottomSheet.tsx';
 import {AudioRecording} from '../../screens/Audio/AudioRecording/index.tsx';
 import {InviteReceived} from '../../screens/Invites/InviteReceived.tsx';
@@ -317,12 +315,6 @@ export const createDefaultScreenGroup = ({
         options={{headerTitle: intl(AboutSettings.navTitle)}}
       />
       <RootStack.Screen
-        name="MediaSyncSettings"
-        component={MediaSyncSettings}
-        options={{headerTitle: intl(MediaSyncSettings.navTitle)}}
-      />
-
-      <RootStack.Screen
         name="DataAndPrivacy"
         component={DataAndPrivacy}
         options={{headerTitle: intl(DataAndPrivacy.navTitle)}}
@@ -445,12 +437,8 @@ export const createDefaultScreenGroup = ({
         contentStyle: {backgroundColor: 'transparent'},
       }}>
       <RootStack.Screen
-        name="SyncPreviewsBottomSheet"
-        component={SyncPreviewsBottomSheet}
-      />
-      <RootStack.Screen
-        name="SyncEverythingBottomSheet"
-        component={SyncEverythingBottomSheet}
+        name="ExchangeSettingsBottomSheet"
+        component={ExchangeSettingsBottomSheet}
       />
       <RootStack.Screen
         name="AudioAskPermissionBottomSheet"

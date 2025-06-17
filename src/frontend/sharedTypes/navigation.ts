@@ -104,6 +104,7 @@ export type RootStackParamsList = {
   BackgroundMaps: undefined;
   SyncPreviewsBottomSheet: undefined;
   SyncEverythingBottomSheet: undefined;
+  ExchangeSettingsBottomSheet: undefined;
   AudioAskPermissionBottomSheet: {
     audioPermission: Audio.PermissionResponse;
   };

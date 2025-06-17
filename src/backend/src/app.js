@@ -28,7 +28,7 @@ const DEFAULT_ONLINE_MAP_STYLE_URL = `https://api.mapbox.com/styles/v1/mapbox/ou
 // needed to have logs captured by sentry
 debug.log = function log(...args) {
   // @ts-expect-error InspectOpts shouldn't be undefined but might be
-  return console.log(formatWithOptions(debug.inspectOpts, ...args))
+  return console.log(formatWithOptions(debug.inspectOpts || {}, ...args))
 }
 debug.enable('mapeo:*')
 

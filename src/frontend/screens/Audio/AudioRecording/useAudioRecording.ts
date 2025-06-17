@@ -30,8 +30,6 @@ export function useAudioRecording() {
       setRecordingInstance(recording);
     } catch {
       try {
-        // Retry once after short delay — helps avoid timing issues when mic permission was just granted
-        await new Promise(res => setTimeout(res, 200));
         const {recording} = await Audio.Recording.createAsync(
           Audio.RecordingOptionsPresets.HIGH_QUALITY,
           stat => setStatus(stat),

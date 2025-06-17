@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, View, AppState, Text} from 'react-native';
-
 import {BLUE_GREY, DARK_GREY, WHITE} from '../../../lib/styles';
 import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
 import {AnimatedBackground} from './AnimatedBackground';
@@ -13,10 +12,10 @@ import {
   PRIMARY_CONTROL_DIAMETER,
   MAX_RECORDING_DURATION_MS,
 } from '../shared';
-
 import {UIActivityIndicator} from 'react-native-indicators';
 import {millisecondsToMMSS} from '../../../lib/millisecondsToFormattedTime';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
+import {Audio} from 'expo-av';
 
 const m = defineMessages({
   lessThan5: {
@@ -39,72 +38,60 @@ export function AudioRecording({
   const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
   const {startRecording, stopRecording, status} = useAudioRecording();
   const timeElapsed = status?.durationMillis || 0;
-  const isRecording = !!status?.isRecording;
-  const [recordingReady, setRecordingReady] = React.useState(false);
-  const [isStopping, setIsStopping] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [audioPermission] = Audio.usePermissions();
 
   const {formatMessage} = useIntl();
 
   usePreventBackButtonWhileRecording({
-    shouldPrevent: isRecording,
+    shouldPrevent: !isLoading,
   });
 
   React.useEffect(() => {
     const start = async () => {
+      if (!audioPermission) return;
+      if (!audioPermission.granted) {
+        navigation.replace('AudioAskPermissionBottomSheet', {audioPermission});
+        return;
+      }
       await startRecording();
-      setRecordingReady(true);
+      setIsLoading(false);
     };
     start();
-  }, [startRecording]);
+  }, [startRecording, audioPermission, navigation]);
 
   const finishRecording = React.useCallback(async () => {
-    setIsStopping(true);
+    setIsLoading(true);
     try {
       const result = await stopRecording();
-
       if (!result?.uri || !result.createdAt) {
         navigation.replace('ErrorBottomSheet');
         return;
       }
-
       navigation.replace('AudioDraftPlaybackScreen', {
         uri: result.uri,
         createdAt: result.createdAt,
         showRecordingSavedText: true,
       });
     } finally {
-      setIsStopping(false);
+      setIsLoading(false);
     }
   }, [stopRecording, navigation]);
 
   React.useEffect(() => {
-    if (timeElapsed >= MAX_RECORDING_DURATION_MS && isRecording) {
+    if (timeElapsed >= MAX_RECORDING_DURATION_MS && !isLoading) {
       finishRecording();
     }
-  }, [timeElapsed, isRecording, finishRecording]);
+  }, [timeElapsed, isLoading, finishRecording]);
 
   React.useEffect(() => {
     const sub = AppState.addEventListener('change', state => {
-      if (state !== 'active' && isRecording) {
+      if (state !== 'active' && !isLoading) {
         finishRecording();
       }
     });
     return () => sub.remove();
-  }, [isRecording, finishRecording]);
-
-  if (!recordingReady) {
-    return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: DARK_GREY,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <UIActivityIndicator color={WHITE} />
-      </View>
-    );
-  }
+  }, [isLoading, finishRecording]);
 
   return (
     <View style={styles.background}>
@@ -112,7 +99,7 @@ export function AudioRecording({
         contentContainerStyle={styles.contentContainer}
         dockContainerStyle={styles.dockContainer}
         dockContent={
-          isStopping ? (
+          isLoading ? (
             <View style={styles.center}>
               <UIActivityIndicator
                 color={WHITE}

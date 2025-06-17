@@ -27,29 +27,18 @@ export function getAttachmentPhotoInfo(
 
   return {
     ...exifBasedInfo,
-    createdAt:
-      // @ts-expect-error Updated core needed
-      photo.createdAt
-        ? new Date(
-            // @ts-expect-error Updated core needed
-            photo.createdAt,
-          ).getTime()
-        : undefined,
+    createdAt: photo.createdAt
+      ? new Date(photo.createdAt).getTime()
+      : undefined,
     coordinates:
-      // @ts-expect-error Updated core needed
       typeof photo.position?.coords.longitude === 'number' &&
-      // @ts-expect-error Updated core needed
       typeof photo.position?.coords.latitude === 'number'
         ? {
-            // @ts-expect-error Updated core needed
             longitude: photo.position.coords.longitude,
-            // @ts-expect-error Updated core needed
             latitude: photo.position.coords.latitude,
           }
         : undefined,
-    external:
-      // @ts-expect-error Updated core needed
-      !!photo.external,
+    external: photo.external,
   };
 }
 
@@ -92,7 +81,6 @@ function extractInfoFromEXIF(
   }
 
   return {
-    // @ts-expect-error Updated core needed
     fNumber: exif.FNumber,
     layout,
     make: exif.Make,

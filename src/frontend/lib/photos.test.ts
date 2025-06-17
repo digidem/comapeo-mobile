@@ -1,7 +1,7 @@
 import {getAttachmentPhotoInfo, getDraftPhotoInfo} from './photos';
 
 test('getAttachmentPhoto()', () => {
-  const baseFields = {
+  const baseAttachmentFields = {
     type: 'photo' as const,
     driveDiscoveryId: 'some_drive_id',
     hash: 'some_hash',
@@ -10,19 +10,13 @@ test('getAttachmentPhoto()', () => {
 
   const now = Date.now();
 
-  expect(getAttachmentPhotoInfo(baseFields)).toStrictEqual({
-    external: false,
-    coordinates: undefined,
-    createdAt: undefined,
-  });
-
   /**
    * timestamp available
    */
   expect(
     getAttachmentPhotoInfo({
-      ...baseFields,
-      // @ts-expect-error Updated core needed
+      ...baseAttachmentFields,
+      external: false,
       createdAt: new Date(now).toISOString(),
     }),
   ).toStrictEqual({
@@ -32,12 +26,11 @@ test('getAttachmentPhoto()', () => {
   });
 
   /**
-   * `external` field available
+   * `external` field
    */
   expect(
     getAttachmentPhotoInfo({
-      ...baseFields,
-      // @ts-expect-error Updated core needed
+      ...baseAttachmentFields,
       external: true,
     }),
   ).toStrictEqual({
@@ -48,8 +41,7 @@ test('getAttachmentPhoto()', () => {
 
   expect(
     getAttachmentPhotoInfo({
-      ...baseFields,
-      // @ts-expect-error Updated core needed
+      ...baseAttachmentFields,
       external: false,
     }),
   ).toStrictEqual({
@@ -63,8 +55,8 @@ test('getAttachmentPhoto()', () => {
    */
   expect(
     getAttachmentPhotoInfo({
-      ...baseFields,
-      // @ts-expect-error Updated core needed
+      ...baseAttachmentFields,
+      external: false,
       position: {
         timestamp: new Date().toISOString(),
         mocked: false,
@@ -94,11 +86,11 @@ test('getAttachmentPhoto()', () => {
   // Horizontal photo
   expect(
     getAttachmentPhotoInfo({
-      ...baseFields,
+      ...baseAttachmentFields,
+      external: false,
       photoExif: {
         Make: 'Google',
         Model: 'Pixel 2',
-        // @ts-expect-error Updated core needed
         FNumber: 1.85,
         Orientation: 1,
         ImageLength: 100,
@@ -120,11 +112,11 @@ test('getAttachmentPhoto()', () => {
   // Vertical photo
   expect(
     getAttachmentPhotoInfo({
-      ...baseFields,
+      ...baseAttachmentFields,
+      external: false,
       photoExif: {
         Make: 'Samsung',
         Model: 'Galaxy S25',
-        // @ts-expect-error Updated core needed
         FNumber: 2.5,
         Orientation: 8,
         ImageLength: 200,
@@ -145,7 +137,7 @@ test('getAttachmentPhoto()', () => {
 });
 
 test('getDraftPhotoInfo()', () => {
-  const baseFields = {
+  const baseDraftPhotoFields = {
     type: 'processed' as const,
     draftPhotoId: 'some_photo_id',
     originalUri: 'file:///original/foo.jpg',
@@ -160,7 +152,7 @@ test('getDraftPhotoInfo()', () => {
    */
   expect(
     getDraftPhotoInfo({
-      ...baseFields,
+      ...baseDraftPhotoFields,
       mediaMetadata: {
         timestamp: now,
       },
@@ -176,7 +168,7 @@ test('getDraftPhotoInfo()', () => {
    */
   expect(
     getDraftPhotoInfo({
-      ...baseFields,
+      ...baseDraftPhotoFields,
       mediaMetadata: {
         timestamp: now,
         location: {
@@ -206,12 +198,12 @@ test('getDraftPhotoInfo()', () => {
   // Horizontal photo
   expect(
     getDraftPhotoInfo({
-      ...baseFields,
+      ...baseDraftPhotoFields,
       mediaMetadata: {
+        timestamp: now,
         photoExif: {
           Make: 'Google',
           Model: 'Pixel 2',
-          // @ts-expect-error Updated core needed
           FNumber: 1.85,
           Orientation: 1,
           ImageLength: 100,
@@ -221,7 +213,7 @@ test('getDraftPhotoInfo()', () => {
     }),
   ).toStrictEqual({
     external: false,
-    createdAt: undefined,
+    createdAt: now,
     coordinates: undefined,
     width: 200,
     height: 100,
@@ -234,13 +226,12 @@ test('getDraftPhotoInfo()', () => {
   // Vertical photo
   expect(
     getDraftPhotoInfo({
-      ...baseFields,
+      ...baseDraftPhotoFields,
       mediaMetadata: {
         timestamp: now,
         photoExif: {
           Make: 'Samsung',
           Model: 'Galaxy S25',
-          // @ts-expect-error Updated core needed
           FNumber: 2.5,
           Orientation: 8,
           ImageLength: 200,

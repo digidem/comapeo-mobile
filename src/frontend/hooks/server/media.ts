@@ -1,7 +1,7 @@
 import {useAttachmentUrl, useCreateBlob} from '@comapeo/core-react';
 import type {BlobId, BlobVariant} from '@comapeo/core/dist/types';
-import type {Observation} from '@comapeo/schema';
 import {useMutation} from '@tanstack/react-query';
+import type {LocationObject} from 'expo-location';
 import {URL} from 'react-native-url-polyfill';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import type {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
@@ -25,25 +25,36 @@ export function useCreatePhotoAttachment({projectId}: {projectId: string}) {
         // although backend currently only uses first part of path
         metadata: {
           mimeType: 'image/jpeg',
-          location: photo.mediaMetadata.location,
-          timestamp: photo.mediaMetadata.timestamp,
         },
       });
 
-      const baseAttachment = {
+      const position = photo.mediaMetadata.location
+        ? expoLocationToAttachmentPosition(photo.mediaMetadata.location)
+        : undefined;
+
+      const createdAt = new Date(photo.mediaMetadata.timestamp).toISOString();
+
+      // Should not happen but just in case...
+      if (blob.type !== 'photo') {
+        return {
+          driveDiscoveryId: blob.driveId,
+          hash: blob.hash,
+          name: blob.name,
+          type: blob.type,
+          external: false,
+          createdAt,
+          position,
+        };
+      }
+
+      return {
         driveDiscoveryId: blob.driveId,
         hash: blob.hash,
         name: blob.name,
         type: blob.type,
-      };
-
-      // Should not happen but just in case...
-      if (blob.type !== 'photo') {
-        return baseAttachment;
-      }
-
-      return {
-        ...baseAttachment,
+        external: false,
+        createdAt,
+        position,
         photoExif: photo.mediaMetadata.photoExif,
       };
     },
@@ -59,7 +70,6 @@ export function useCreateAudioAttachment({projectId}: {projectId: string}) {
         original: new URL(file.uri).pathname,
         metadata: {
           mimeType: 'audio/mp4',
-          timestamp: file.createdAt,
         },
       });
 
@@ -68,6 +78,8 @@ export function useCreateAudioAttachment({projectId}: {projectId: string}) {
         hash: blob.hash,
         name: blob.name,
         type: blob.type,
+        external: false,
+        createdAt: new Date(file.createdAt).toISOString(),
       };
     },
   });
@@ -93,7 +105,7 @@ function buildBlobId(
       variant: requestedVariant,
       name: attachment.name,
       driveId: attachment.driveDiscoveryId,
-    } satisfies BlobId;
+    };
   }
 
   return {
@@ -101,11 +113,11 @@ function buildBlobId(
     variant: 'original',
     name: attachment.name,
     driveId: attachment.driveDiscoveryId,
-  } satisfies BlobId;
+  };
 }
 
 export function useAttachmentUrlQuery(
-  attachment: Observation['attachments'][0],
+  attachment: Attachment,
   variant: BlobVariant<'photo' | 'audio' | 'video'>,
 ) {
   const {projectId} = useActiveProject();
@@ -116,15 +128,7 @@ export function useAttachmentUrlQuery(
     throw new Error(`Invalid attachment type: ${attachment.type}`);
   }
 
-  const blobId = buildBlobId(
-    {
-      driveDiscoveryId: attachment.driveDiscoveryId,
-      name: attachment.name,
-      type: attachment.type as 'photo' | 'audio' | 'video',
-      hash: attachment.hash,
-    },
-    variant,
-  );
+  const blobId = buildBlobId(attachment, variant);
 
   const {
     data: rawUrl,
@@ -139,5 +143,38 @@ export function useAttachmentUrlQuery(
     url: rawUrl ?? undefined,
     error,
     isRefetching,
+  };
+}
+
+function expoLocationToAttachmentPosition(
+  location: LocationObject,
+): Attachment['position'] {
+  return {
+    timestamp: new Date(location.timestamp).toISOString(),
+    mocked: location.mocked,
+    coords: {
+      accuracy:
+        typeof location.coords.accuracy === 'number'
+          ? location.coords.accuracy
+          : undefined,
+      altitude:
+        typeof location.coords.altitude === 'number'
+          ? location.coords.altitude
+          : undefined,
+      altitudeAccuracy:
+        typeof location.coords.altitudeAccuracy === 'number'
+          ? location.coords.altitudeAccuracy
+          : undefined,
+      heading:
+        typeof location.coords.heading === 'number'
+          ? location.coords.heading
+          : undefined,
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+      speed:
+        typeof location.coords.speed === 'number'
+          ? location.coords.speed
+          : undefined,
+    },
   };
 }

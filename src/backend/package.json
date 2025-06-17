@@ -13,8 +13,8 @@
   "author": "Digital Democracy",
   "license": "MIT",
   "dependencies": {
-    "@comapeo/core": "3.2.0",
-    "@comapeo/ipc": "3.0.0",
+    "@comapeo/core": "4.0.0",
+    "@comapeo/ipc": "4.0.0",
     "@mapeo/default-config": "5.0.0",
     "debug": "^4.3.4"
   },

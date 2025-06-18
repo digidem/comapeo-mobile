@@ -274,12 +274,8 @@ export const ObservationMetadata: NativeNavigationComponent<
         <View style={{alignItems: 'center', marginBottom: 20}}>
           {manualLocation ? <ManuallyEnteredHeader /> : <VerifiedHeader />}
         </View>
-        <View>
-          <View
-            style={{
-              marginBottom: 10,
-              flexDirection: 'row',
-            }}>
+        <View style={{paddingHorizontal: 20}}>
+          <View style={{marginBottom: 10, flexDirection: 'row'}}>
             <Octicons
               name="calendar"
               color={NEW_DARK_GREY}
@@ -400,18 +396,18 @@ export const ManuallyEnteredHeader = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 40,
     justifyContent: 'space-between',
   },
   scrollContent: {
     paddingBottom: 20,
-    paddingHorizontal: 20,
+    paddingTop: 40,
   },
   listItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 10,
+    paddingHorizontal: 20,
   },
   flexRow: {flexDirection: 'row', alignItems: 'center'},
   valueText: {

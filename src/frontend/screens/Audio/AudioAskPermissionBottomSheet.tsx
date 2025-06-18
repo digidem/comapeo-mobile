@@ -1,12 +1,6 @@
 import * as React from 'react';
 import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
-import {
-  AppState,
-  AppStateStatus,
-  Linking,
-  StyleSheet,
-  View,
-} from 'react-native';
+import {Linking, StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import AudioPermission from '../../images/observationEdit/AudioPermission.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
@@ -15,6 +9,7 @@ import {Audio} from 'expo-av';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
+import {useAudioPermissionModalMutation} from '../../hooks/useAudioPermissionTracker';
 
 const m = defineMessages({
   title: {
@@ -55,44 +50,38 @@ export const AudioAskPermissionBottomSheet = ({
   const [permission, setPermission] = React.useState<Audio.PermissionResponse>(
     route.params.audioPermission,
   );
+  const hasNavigatedRef = React.useRef(false);
 
-  // When the user changes their permission in phone settings and returns to the app,
-  // we need to check for updates and navigate accordingly.
-  // Without this, the app won't detect the permission change.
+  // Re-check microphone permission on focus in case it was granted via system settings,
+  // and navigate to AudioRecording if so.
   useFocusEffect(
     React.useCallback(() => {
-      let isCancelled = false;
-      const handleAppStateChange = async (nextAppState: AppStateStatus) => {
-        if (nextAppState === 'active') {
-          const newPermission = await Audio.getPermissionsAsync();
-          if (isCancelled) return;
-          setPermission(newPermission);
-          if (newPermission.status === 'granted') {
-            replace('AudioRecording');
-          }
+      const checkAndNavigate = async () => {
+        const newPermission = await Audio.getPermissionsAsync();
+        setPermission(newPermission);
+
+        if (newPermission.status === 'granted' && !hasNavigatedRef.current) {
+          hasNavigatedRef.current = true;
+          replace('AudioRecording');
         }
       };
 
-      const subscription = AppState.addEventListener(
-        'change',
-        handleAppStateChange,
-      );
-
-      return () => {
-        isCancelled = true;
-        subscription.remove();
-      };
+      checkAndNavigate();
     }, [replace]),
   );
 
-  async function askPermission() {
+  const askPermissionMutation = useAudioPermissionModalMutation(async () => {
     const response = await Audio.requestPermissionsAsync();
     setPermission(response);
     if (response.granted) {
       replace('AudioRecording');
       return;
     }
-  }
+  });
+
+  const goToSettingsMutation = useAudioPermissionModalMutation(() =>
+    Linking.openSettings(),
+  );
 
   return (
     <BottomSheetWrapper>
@@ -119,13 +108,13 @@ export const AudioAskPermissionBottomSheet = ({
             <PrimaryButton
               fullSize
               text={formatMessage(m.allowButtonText)}
-              onPress={askPermission}
+              onPress={() => askPermissionMutation.mutateAsync()}
             />
           ) : (
             <PrimaryButton
               fullSize
               text={formatMessage(m.goToSettingsButtonText)}
-              onPress={() => Linking.openSettings()}
+              onPress={() => goToSettingsMutation.mutateAsync()}
             />
           )}
         </View>

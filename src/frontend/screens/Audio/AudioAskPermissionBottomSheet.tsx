@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
-import {Linking, StyleSheet, View} from 'react-native';
+import {AppState, Linking, StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import AudioPermission from '../../images/observationEdit/AudioPermission.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
@@ -10,6 +10,7 @@ import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 import {useAudioPermissionModalMutation} from '../../hooks/useAudioPermissionTracker';
+import {useSecurityState} from '../../contexts/SecurityStoreContext';
 
 const m = defineMessages({
   title: {
@@ -51,24 +52,40 @@ export const AudioAskPermissionBottomSheet = ({
     route.params.audioPermission,
   );
   const hasNavigatedRef = React.useRef(false);
+  const {passcode} = useSecurityState();
 
-  // Re-check microphone permission on focus in case it was granted via system settings,
+  // Re-check microphone permission in case it was granted via system settings,
   // and navigate to AudioRecording if so.
+  const checkAndNavigateIfGranted = React.useCallback(() => {
+    Audio.getPermissionsAsync().then(newPermission => {
+      setPermission(newPermission);
+      if (newPermission.status === 'granted' && !hasNavigatedRef.current) {
+        hasNavigatedRef.current = true;
+        replace('AudioRecording');
+      }
+    });
+  }, [replace]);
+
+  // Covers re-entering from Auth screen (passcode is active flow)
   useFocusEffect(
     React.useCallback(() => {
-      const checkAndNavigate = async () => {
-        const newPermission = await Audio.getPermissionsAsync();
-        setPermission(newPermission);
-
-        if (newPermission.status === 'granted' && !hasNavigatedRef.current) {
-          hasNavigatedRef.current = true;
-          replace('AudioRecording');
-        }
-      };
-
-      checkAndNavigate();
-    }, [replace]),
+      if (
+        passcode &&
+        !hasNavigatedRef.current &&
+        permission.status !== 'granted'
+      ) {
+        checkAndNavigateIfGranted();
+      }
+    }, [checkAndNavigateIfGranted, permission.status, passcode]),
   );
+
+  // Covers non-passcode flow from system settings
+  React.useEffect(() => {
+    const subscription = AppState.addEventListener('change', state => {
+      if (!passcode && state === 'active') checkAndNavigateIfGranted();
+    });
+    return () => subscription.remove();
+  }, [checkAndNavigateIfGranted, passcode]);
 
   const askPermissionMutation = useAudioPermissionModalMutation(async () => {
     const response = await Audio.requestPermissionsAsync();

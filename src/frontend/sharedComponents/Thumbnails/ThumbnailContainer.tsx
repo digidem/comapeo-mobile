@@ -1,4 +1,9 @@
-import {ActivityIndicator, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  TouchableOpacity,
+  ViewStyle,
+} from 'react-native';
 import {LIGHT_GREY} from '../../lib/styles';
 
 export const MIN_WIDTH = 100;
@@ -9,6 +14,7 @@ type ThumbnailContainerProps = {
   children: React.ReactNode;
   size: number;
   accessibilityLabel?: string;
+  containerStyle?: ViewStyle;
 };
 
 export const ThumbnailContainer = ({
@@ -16,11 +22,16 @@ export const ThumbnailContainer = ({
   onPress,
   children,
   size,
+  containerStyle,
 }: ThumbnailContainerProps) => {
   return (
     <TouchableOpacity
       accessibilityLabel={accessibilityLabel}
-      style={[styles.thumbnailContainer, {width: size, height: size}]}
+      style={[
+        styles.thumbnailContainer,
+        {width: size, height: size},
+        containerStyle,
+      ]}
       disabled={!onPress}
       onPress={onPress}>
       {children}

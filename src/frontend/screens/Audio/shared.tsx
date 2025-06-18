@@ -1,50 +1,21 @@
-import * as React from 'react';
 import {StyleSheet} from 'react-native';
-import {WHITE, MAGENTA, DARK_GREY, BLACK} from '../../lib/styles';
-import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
+import {WHITE, BLACK, BLUE_GREY, NEW_DARK_GREY} from '../../lib/styles';
 
-const PRIMARY_CONTROL_DIAMETER = 96;
-export const SIDE_ICON_BUTTON_WIDTH = 36;
+export const PRIMARY_CONTROL_DIAMETER = 96;
+export const SIDE_ICON_BUTTON_WIDTH = 60;
 export const MAX_RECORDING_DURATION_MS = 5 * 60_000;
 
-/* eslint-disable react-native/no-unused-styles */
-export const AudioStyles = StyleSheet.create({
-  contentContainer: {flex: 1},
-  dockContainer: {paddingVertical: 24},
-  container: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-  timerContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    gap: 48,
-  },
-  message: {
-    color: WHITE,
-    textAlign: 'center',
-  },
-  timerText: {
-    fontFamily: 'Rubik',
-    fontSize: 96,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
+export const audioStyles = StyleSheet.create({
   basePressable: {
     height: PRIMARY_CONTROL_DIAMETER,
     width: PRIMARY_CONTROL_DIAMETER,
     borderRadius: PRIMARY_CONTROL_DIAMETER,
     borderWidth: 12,
     borderColor: WHITE,
-    overflow: 'hidden',
     backgroundColor: WHITE,
     justifyContent: 'center',
     alignSelf: 'center',
-  },
-  record: {
-    height: PRIMARY_CONTROL_DIAMETER,
-    backgroundColor: MAGENTA,
+    overflow: 'hidden',
   },
   stop: {
     height: PRIMARY_CONTROL_DIAMETER / 3,
@@ -52,24 +23,25 @@ export const AudioStyles = StyleSheet.create({
     backgroundColor: BLACK,
     alignSelf: 'center',
   },
-  play: {
-    justifyContent: 'center',
+  audioBox: {
+    width: 300,
+    height: 300,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: BLUE_GREY,
     alignItems: 'center',
+    justifyContent: 'center',
+    gap: 20,
+    paddingBottom: 30,
+  },
+  timerText: {
+    color: WHITE,
+    textAlign: 'center',
+    fontSize: 96,
+    fontFamily: 'Rubik_500Medium',
+  },
+  textStyle: {
+    color: NEW_DARK_GREY,
+    textAlign: 'center',
   },
 });
-/* eslint-enable react-native/no-unused-styles */
-
-export const sharedAudioNavOptions: NativeStackNavigationOptions = {
-  contentStyle: {backgroundColor: DARK_GREY},
-  headerTintColor: WHITE,
-  headerShadowVisible: false,
-  headerTitle: () => null,
-  headerStyle: {backgroundColor: 'transparent'},
-  headerTransparent: true,
-  headerLeft: props => (
-    <CustomHeaderLeft
-      tintColor={props.tintColor}
-      headerBackButtonProps={props}
-    />
-  ),
-};

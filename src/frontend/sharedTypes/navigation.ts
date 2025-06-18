@@ -109,14 +109,17 @@ export type RootStackParamsList = {
     audioPermission: Audio.PermissionResponse;
   };
   AudioRecording: undefined;
-  AudioPlaybackUnsavedReview: {uri: string; duration: number};
-  AudioPlaybackUnsavedPreview: {uri: string};
-  DeleteAudioBottomSheet: {
-    onPressDelete: () => void;
+  AudioDraftPlaybackScreen: {
     uri: string;
+    createdAt: number;
+    showRecordingSavedText: boolean;
   };
-  AudioSavedBottomSheet: undefined;
-  AudioPlaybackSaved: {uri: string; canDelete: boolean; observationId: string};
+  AudioAttachmentPlaybackScreen: {
+    driveDiscoveryId: string;
+    name: string;
+    type: 'audio';
+    createdAt: string;
+  };
   InviteReceived: {inviteId: string};
   InviteSuccessfullyAccepted: {projectName: string};
   InviteCanceled: {projectName: string};

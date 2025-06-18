@@ -31,7 +31,7 @@ import {
   ThumbnailLoader,
 } from '../../sharedComponents/Thumbnails/ThumbnailContainer.tsx';
 import {SavedPhotoThumbnailImage} from '../../sharedComponents/Thumbnails/PhotoThumbnail.tsx';
-import {AudioSavedThumbnail} from '../../sharedComponents/Thumbnails/AudioThumbnail.tsx';
+import {AudioSavedThumbnail} from '../../sharedComponents/Thumbnails/AudioSavedThumbnail.tsx';
 
 const m = defineMessages({
   deleteTitle: {

@@ -2,10 +2,9 @@ import * as React from 'react';
 import {Photo} from '../../contexts/PhotoPromiseContext/types';
 import {Audio} from '../../sharedTypes/audio';
 import {DescriptionField} from './DescriptionField';
-import PlayArrow from '../../images/PlayArrow.svg';
 import {ScreenContentWithDock} from '../ScreenContentWithDock';
 import {StyleSheet, View} from 'react-native';
-import {LIGHT_GREY} from '../../lib/styles';
+import {COMAPEO_BLUE, DARK_GREY, LIGHT_GREY, WHITE} from '../../lib/styles';
 import {PresetView} from './PresetView';
 import {LocationView} from './LocationView';
 import {Divider} from '../Divider';
@@ -31,8 +30,12 @@ import {
   ThumbnailImage,
 } from '../Thumbnails/PhotoThumbnail';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {AudioSavedThumbnail} from '../Thumbnails/AudioThumbnail';
+import {AudioSavedThumbnail} from '../Thumbnails/AudioSavedThumbnail';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
+import PlayArrow from '../../images/PlayArrow.svg';
+import {BodyText} from '../Text/BodyText';
+import {millisecondsToMMSS} from '../../lib/millisecondsToFormattedTime';
+import {DateDistance} from '../DateDistance';
 
 type EditorProps = {
   presetName: string;
@@ -162,13 +165,34 @@ export const Editor = ({
                 if (isUnsavedAudio(att)) {
                   return (
                     <ThumbnailContainer
-                      accessibilityLabel="Play audio recording."
                       key={att.uri}
                       size={size}
                       onPress={() =>
-                        navigate('AudioPlaybackUnsavedPreview', {uri: att.uri})
-                      }>
+                        navigate('AudioDraftPlaybackScreen', {
+                          uri: att.uri,
+                          createdAt: att.createdAt,
+                          showRecordingSavedText: false,
+                        })
+                      }
+                      containerStyle={{
+                        backgroundColor: WHITE,
+                        borderColor: COMAPEO_BLUE,
+                        borderWidth: 2,
+                        paddingVertical: 8,
+                      }}
+                      accessibilityLabel="Play audio recording.">
                       <PlayArrow width={48} height={48} />
+                      <BodyText variant="tinyMeta" style={{fontWeight: '500'}}>
+                        {millisecondsToMMSS(att.duration)}
+                      </BodyText>
+                      <DateDistance
+                        date={new Date(att.createdAt)}
+                        style={{
+                          fontSize: 12,
+                          fontWeight: '400',
+                          color: DARK_GREY,
+                        }}
+                      />
                     </ThumbnailContainer>
                   );
                 }

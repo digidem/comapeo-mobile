@@ -98,7 +98,6 @@ export type RootStackParamsList = {
   MediaSyncSettings: undefined;
   DataAndPrivacy: undefined;
   SettingsPrivacyPolicy: undefined;
-  HowToLeaveProject: undefined;
   SuccessfullyAddedArchive: {archiveName: string; url: string};
   MapManagement: undefined;
   BackgroundMaps: undefined;

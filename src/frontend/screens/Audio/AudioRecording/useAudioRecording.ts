@@ -10,17 +10,6 @@ export function useAudioRecording() {
   const {navigate} = useNavigationFromRoot();
   const {addAudio} = useDraftObservation();
 
-  const reset = useCallback(async () => {
-    try {
-      if (recordingInstance) {
-        await recordingInstance.stopAndUnloadAsync();
-      }
-    } finally {
-      setRecordingInstance(null);
-      setStatus(null);
-    }
-  }, [recordingInstance]);
-
   const startRecording = useCallback(async () => {
     try {
       const {recording} = await Audio.Recording.createAsync(
@@ -59,5 +48,5 @@ export function useAudioRecording() {
     }
   }, [addAudio, navigate, recordingInstance, status]);
 
-  return {startRecording, stopRecording, reset, status};
+  return {startRecording, stopRecording, status};
 }

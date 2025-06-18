@@ -4,37 +4,22 @@ import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
 import {checkForElementGone} from '../../utils/checkForGone';
 
 describe('Audio - Playback and Delete', () => {
-  it('opens playback screen and verifies audio controls', async () => {
-    const playBtn = await $('~Play audio recording.');
-    await playBtn.click();
+  it('opens playback screen and verifies display', async () => {
+    const thumbnail = await $('~Play audio recording.');
+    await thumbnail.click();
 
-    await expect($(byTextMatches('Total length:'))).toBeDisplayed();
-
-    await expect($('~Delete audio.')).toBeDisplayed();
+    checkForElementGone(byTextMatches('Recording Saved!'));
+    await expect($(byTextMatches('\\d+:\\d{2}'))).toBeDisplayed();
+    await expect($(byText('Delete'))).toBeDisplayed();
+    await expect($(byText('Back to Editing'))).toBeDisplayed();
   });
 
-  it('opens and cancels delete confirmation modal', async () => {
-    const deleteBtn = await $('~Delete audio.');
+  it('deletes audio and verifies removal from observation', async () => {
+    const deleteBtn = await $(byText('Delete'));
     await deleteBtn.click();
-
-    const confirmText = await $(
-      byTextMatches('Your Audio Recording will be permanently deleted.'),
-    );
-    await expect(confirmText).toBeDisplayed();
-
-    const cancelBtn = await $(byTextMatches('Cancel'));
-    await cancelBtn.click();
-  });
-
-  it('confirms delete and verifies removal from observation', async () => {
-    const deleteBtn = await $('~Delete audio.');
-    await deleteBtn.click();
-
-    const confirmDelete = await $(byText('Delete'));
-    await confirmDelete.click();
 
     await expect($(byTextMatches('Airstrip'))).toBeDisplayed();
-    checkForElementGone('~Play audio recording.');
+    await checkForElementGone('~Play audio recording.');
   });
 
   it('saves edited observation (handles GPS alert)', async () => {

@@ -7,6 +7,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {MAX_RECORDING_DURATION_MS} from '../shared';
+import {COMAPEO_BLUE} from '../../../lib/styles';
 
 export function AnimatedBackground({timeElapsed}: {timeElapsed: number}) {
   const {top} = useSafeAreaInsets();
@@ -20,7 +21,7 @@ export function AnimatedBackground({timeElapsed}: {timeElapsed: number}) {
     height:
       (height + top) *
       (elapsedTimeValue.value * (1 / MAX_RECORDING_DURATION_MS)),
-    backgroundColor: `hsl(216, 100%, ${elapsedTimeValue.value * (1 / MAX_RECORDING_DURATION_MS) * 50}%)`,
+    backgroundColor: COMAPEO_BLUE,
   }));
 
   return <Animated.View style={[styles.fill, animatedStyles]} />;

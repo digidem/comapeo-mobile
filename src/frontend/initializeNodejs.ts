@@ -31,10 +31,13 @@ export async function initializeNodejs({
 
   const flags = [
     `--rootKey=${rootKey}`,
-    `--metricsIsEnabled=${metricsIsEnabled}`,
     `--sentryEnvironment=${sentryEnvironment}`,
     `--sentryUserId=${sentryUserId}`,
   ];
+
+  if (metricsIsEnabled) {
+    flags.push('--metricsIsEnabled');
+  }
 
   nodejs.startWithArgs(`loader.js ${flags.join(' ')}`);
 }

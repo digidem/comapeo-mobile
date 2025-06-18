@@ -5,7 +5,7 @@
 import * as Sentry from '@sentry/node'
 import os from 'os'
 import path from 'path'
-import { parseArgs } from 'util'
+import parseArgs from './src/args.js'
 import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
 /** @type {import('./types/rn-bridge.js')} */
@@ -16,23 +16,7 @@ os.homedir = () => nodejsProjectDir
 process.cwd = () => nodejsProjectDir
 process.env = process.env || {}
 
-const { values } = parseArgs({
-  options: {
-    sentryEnvironment: { type: 'string' },
-    sentryUserId: { type: 'string' },
-    metricsIsEnabled: { type: 'string' },
-  },
-  strict: false,
-})
-
-const { sentryEnvironment, sentryUserId, metricsIsEnabled } = values
-
-if (typeof metricsIsEnabled !== 'string')
-  throw new Error('backend did not receive metricsIsEnabled')
-if (typeof sentryUserId !== 'string')
-  throw new Error('backend did not receive sentryUserId')
-if (typeof sentryEnvironment !== 'string')
-  throw new Error('backend did not receive sentryEnvironment')
+const { sentryEnvironment, sentryUserId, metricsIsEnabled } = parseArgs()
 
 const sentryDebug = sentryEnvironment === 'development'
 const initialScope = sentryUserId ? { user: { id: sentryUserId } } : undefined

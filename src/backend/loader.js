@@ -40,8 +40,11 @@ const initialScope = sentryUserId ? { user: { id: sentryUserId } } : undefined
 /** @type {Array<"error" | "log" | "warn">} */
 const logLevels = ['error']
 
+let enableLogs = false
+
 if (sentryEnvironment !== 'production') {
   logLevels.push('log', 'warn')
+  enableLogs = true
 }
 
 // Ensure to call this before requiring any other modules!
@@ -54,7 +57,7 @@ Sentry.init({
   environment: sentryEnvironment,
   initialScope,
   _experiments: {
-    enableLogs: true,
+    enableLogs,
     beforeSendLog: (log) => {
       if (!log.attributes) log.attributes = {}
       log.attributes.user = { id: sentryUserId }

@@ -134,7 +134,7 @@ persistedMetricsDiagnosticsStore.instance.subscribe((current, previous) => {
 });
 
 // Need to know if metrics are enabled before starting node
-initializeNodejs(metricsIsEnabled, sentryEnvironment, sentryUserId);
+initializeNodejs({metricsIsEnabled, sentryEnvironment, sentryUserId});
 
 // Defines task that handles background location updates for tracks feature
 TaskManager.defineTask(

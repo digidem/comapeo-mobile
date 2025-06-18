@@ -5,11 +5,17 @@ import {uint8ArrayToHex} from 'uint8array-extras';
 
 const ROOT_KEY = '__RootKey';
 
-export async function initializeNodejs(
-  metricsIsEnabled: boolean,
-  sentryEnvironment: string,
-  sentryUserId: string,
-) {
+interface InitializeOpts {
+  metricsIsEnabled: boolean;
+  sentryEnvironment: string;
+  sentryUserId: string;
+}
+
+export async function initializeNodejs({
+  metricsIsEnabled,
+  sentryEnvironment,
+  sentryUserId,
+}: InitializeOpts) {
   let rootKey = await getItemAsync(ROOT_KEY);
   if (!rootKey) {
     try {

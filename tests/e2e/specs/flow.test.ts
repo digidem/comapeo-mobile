@@ -13,7 +13,6 @@ describe('CoMapeo E2E Flow', function () {
   require('./tracks/start-track.test');
   require('./project/invite-collaborators.test');
   require('./project/rename-project-from-drawer.test');
-  // require('./project/unjoin-project.test');
   require('./main/side-drawer-menu-proj.test');
   require('./project/project-settings-proj.test');
   require('./remote-archive/add-remote-error.test');

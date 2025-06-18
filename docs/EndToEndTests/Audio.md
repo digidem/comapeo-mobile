@@ -6,7 +6,7 @@
 - [Playback and Delete](#playback-and-delete)
   - [Test Objectives](#test-objectives-1)
   - [Special Considerations](#special-considerations-1)
-- [Adding Multiple Audio Clips](#adding-multiple-audio-clips)
+- [Adding Multiple Audio Clips and Verifying playback](#adding-multiple-audio-clips-and-verifying-playback)
   - [Test Objectives](#test-objectives-2)
   - [Special Considerations](#special-considerations-2)
 - [Todo (these are broken right now)](#todo-these-are-broken-right-now)
@@ -19,7 +19,7 @@ These tests cover the audio recording functionality in CoMapeo. Users can record
 
 ## Recording Audio
 
-Verifies the ability to begin and stop audio recording, and the correct display of the success modal after a recording.
+Verifies the ability to begin and stop audio recording.
 
 ### Test Objectives
 
@@ -31,8 +31,7 @@ Verifies the ability to begin and stop audio recording, and the correct display 
 - Stop recording manually after a few seconds
 - Confirm that:
   - Total recording time is displayed
-  - Success modal appears
-  - "Return to Editor" and "Record Another" buttons are shown
+  - "Return to Editor" and "Delete" buttons are shown
   - Audio thumbnail is visible upon returning to editor
 
 ### Special Considerations
@@ -48,8 +47,7 @@ Covers entering the playback screen, verifying audio controls, and deleting the 
 
 - Tap the audio thumbnail and verify playback screen opens
 - Confirm total length and delete button are visible
-- Tap delete, verify confirmation modal
-- Cancel the delete action, then confirm delete
+- Tap delete
 - Confirm user is returned to the observation and audio is removed
 - Save the updated observation
 
@@ -58,23 +56,24 @@ Covers entering the playback screen, verifying audio controls, and deleting the 
 - Cannot validate audio playback sound
 - Handles optional GPS warning dialog during save
 
-## Adding Multiple Audio Clips
+## Adding Multiple Audio Clips and Verifying playback
 
-Tests the ability to add more than one recording to the same observation via the “Record Another” option.
+Tests the ability to add more than one recording to the same observation and that it can be played after being saved.
 
 ### Test Objectives
 
 - Start a new observation and record an audio clip
-- After stopping, choose "Record Another"
-- Start and stop a second recording
+- After stopping, return to the Observation and record another
 - Return to the editor and verify that at least two audio thumbnails are visible
+- Verify that the duration and relative time are displayed on the thumbnails
+- Save the observation and then verify that thumbnails appear in saved observation
 
 ### Special Considerations
 
 - Assumes previous recording workflow already functions
 - Validates UI behavior only (not content of recordings)
+- BrowserStack devices cannot access the audio URLs returned by the app. This results in 00:00 / 00:00 showing on the screen and a failed playback attempt. The app behaves correctly outside of BrowserStack.
 
 ## Todo (these are broken right now)
 
-- Check for playback of audio from a saved observation
 - Check for adding an audio file when editing an observation

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import BadgeWithCheck from '../images/VerifiedBadgeWithCheck.svg';
-import {FlatList, TouchableOpacity, View} from 'react-native';
+import {ScrollView, TouchableOpacity, View} from 'react-native';
 import {
   defineMessages,
   FormattedDate,
@@ -270,12 +270,11 @@ export const ObservationMetadata: NativeNavigationComponent<
 
   return (
     <View style={styles.container}>
-      <View>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={{alignItems: 'center', marginBottom: 20}}>
           {manualLocation ? <ManuallyEnteredHeader /> : <VerifiedHeader />}
         </View>
-
-        <View style={{paddingHorizontal: 20}}>
+        <View>
           <View
             style={{
               marginBottom: 10,
@@ -322,48 +321,44 @@ export const ObservationMetadata: NativeNavigationComponent<
           )}
         </View>
 
-        {filteredListData.length > 0 && (
-          <FlatList
-            data={filteredListData}
-            renderItem={({item, index}) => {
-              const key = Object.keys(item)[0] as string;
-              return (
-                <View
-                  style={[
-                    styles.listItem,
-                    {
-                      backgroundColor:
-                        index % 2 === 0 ? VERY_LIGHT_GREY : WHITE,
-                    },
-                  ]}>
-                  <View style={styles.flexRow}>
-                    {item[key]!.icon}
-                    <BodyText
-                      style={{
-                        textAlign: 'left',
-                        marginLeft: 5,
-                        fontWeight: '700',
-                      }}
-                      variant="smallMeta">
-                      {item[key]!.label}{' '}
-                    </BodyText>
-                  </View>
-                  <View style={styles.valueText}>
-                    <BodyText
-                      variant="smallMeta"
-                      style={{flex: 1, textAlign: 'right'}}
-                      numberOfLines={1}
-                      ellipsizeMode="tail">
-                      {item[key]!.value + ' '}
-                    </BodyText>
-                    <BodyText variant="smallMeta">{item[key]!.unit}</BodyText>
-                  </View>
+        {filteredListData.length > 0 &&
+          filteredListData.map((item, index) => {
+            const key = Object.keys(item)[0] as string;
+            return (
+              <View
+                key={key}
+                style={[
+                  styles.listItem,
+                  {
+                    backgroundColor: index % 2 === 0 ? VERY_LIGHT_GREY : WHITE,
+                  },
+                ]}>
+                <View style={styles.flexRow}>
+                  {item[key]!.icon}
+                  <BodyText
+                    style={{
+                      textAlign: 'left',
+                      marginLeft: 5,
+                      fontWeight: '700',
+                    }}
+                    variant="smallMeta">
+                    {item[key]!.label}{' '}
+                  </BodyText>
                 </View>
-              );
-            }}
-          />
-        )}
-      </View>
+                <View style={styles.valueText}>
+                  <BodyText
+                    variant="smallMeta"
+                    style={{flex: 1, textAlign: 'right'}}
+                    numberOfLines={1}
+                    ellipsizeMode="tail">
+                    {item[key]!.value + ' '}
+                  </BodyText>
+                  <BodyText variant="smallMeta">{item[key]!.unit}</BodyText>
+                </View>
+              </View>
+            );
+          })}
+      </ScrollView>
       <TouchableOpacity
         onPress={handlePressShare}
         style={styles.shareContainer}>
@@ -408,11 +403,14 @@ const styles = StyleSheet.create({
     marginTop: 40,
     justifyContent: 'space-between',
   },
+  scrollContent: {
+    paddingBottom: 20,
+    paddingHorizontal: 20,
+  },
   listItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
     paddingVertical: 10,
   },
   flexRow: {flexDirection: 'row', alignItems: 'center'},

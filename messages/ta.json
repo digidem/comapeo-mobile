@@ -534,6 +534,12 @@
   "screens.AppPasscode.TurnOffPasscode.usePasscode": {
     "message": "Use App Passcode"
   },
+  "screens.AudioAttachmentPlayback.navTitle": {
+    "message": "Audio Recording"
+  },
+  "screens.AudioAttachmentPlayback.share": {
+    "message": "Share"
+  },
   "screens.AudioPermission.Button.allow": {
     "description": "Screen button text for granting the audio permission",
     "message": "Allow"
@@ -554,8 +560,14 @@
     "description": "Screen title for audio permission screen",
     "message": "Recording Audio with CoMapeo"
   },
-  "screens.AudioPlaybackUnsaved.description": {
-    "message": "Total length: {length}"
+  "screens.AudioPlaybackNew.backToEditing": {
+    "message": "Back to Editing"
+  },
+  "screens.AudioPlaybackNew.delete": {
+    "message": "Delete"
+  },
+  "screens.AudioPlaybackNew.recordingSaved": {
+    "message": "Recording Saved!"
   },
   "screens.AudioRecording.lessThan1": {
     "message": "Less than a minute left"
@@ -563,20 +575,8 @@
   "screens.AudioRecording.lessThan5": {
     "message": "Less than 5 minutes left"
   },
-  "screens.AudioRecording.record5Min": {
-    "message": "Record up to 5 minutes"
-  },
-  "screens.AudioSavedBottomSheet.recordAnother": {
-    "message": "Record Another"
-  },
-  "screens.AudioSavedBottomSheet.returnToEditor": {
-    "message": "Return to Editor"
-  },
-  "screens.AudioSavedBottomSheet.subTitle": {
-    "message": "Your Audio Recording was added"
-  },
-  "screens.AudioSavedBottomSheet.title": {
-    "message": "Success!"
+  "screens.AudioRecording.nowRecording": {
+    "message": "Now Recording..."
   },
   "screens.CameraScreen.goToSettings": {
     "message": "Go to Settings"
@@ -657,18 +657,6 @@
   },
   "screens.DataPrivacy.title": {
     "message": "Data & Privacy"
-  },
-  "screens.DeleteAudioBottomSheet.Description": {
-    "message": "Your Audio Recording will be permanently deleted. This cannot be undone."
-  },
-  "screens.DeleteAudioBottomSheet.Title": {
-    "message": "Delete?"
-  },
-  "screens.DeleteAudioBottomSheet.cancel": {
-    "message": "Cancel"
-  },
-  "screens.DeleteAudioBottomSheet.delete": {
-    "message": "Delete"
   },
   "screens.DeviceNaming.Success.description": {
     "message": "You named your device"

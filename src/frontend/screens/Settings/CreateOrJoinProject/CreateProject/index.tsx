@@ -1,96 +1,87 @@
 import * as React from 'react';
-import * as DocumentPicker from 'expo-document-picker';
-import * as FileSystem from 'expo-file-system';
 import {useForm} from 'react-hook-form';
-import {defineMessages, useIntl} from 'react-intl';
+import {defineMessages, MessageDescriptor, useIntl} from 'react-intl';
 import {
-  Alert,
   Keyboard,
   KeyboardAvoidingView,
   StyleSheet,
   View,
-  TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {
   useCreateProject,
   useImportProjectConfig,
   useUpdateProjectSettings,
 } from '@comapeo/core-react';
-import {useSelectFile} from '../../../../hooks/files';
-import {convertFileUriToPosixPath} from '../../../../lib/file-system';
-import {BLACK, LIGHT_GREY} from '../../../../lib/styles';
-import noop from '../../../../lib/noop';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
-import {NativeNavigationComponent} from '../../../../sharedTypes/navigation';
-import {
-  PrimaryButton,
-  SecondaryButton,
-} from '../../../../sharedComponents/Buttons';
+import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
+import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
+import {PrimaryButton} from '../../../../sharedComponents/Buttons';
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 import {useActiveProjectIdActions} from '../../../../contexts/ActiveProjectIdStoreContext';
 import * as Sentry from '@sentry/react-native';
 import {useActiveProject} from '../../../../contexts/ActiveProjectContext';
+import UniqueProjectIcon from '../../../../images/IndexPointingUp.svg';
+import NameMismatchIcon from '../../../../images/WarningYellow.svg';
+import {BLUE_GREY, NEW_DARK_GREY} from '../../../../lib/styles';
+import {BodyText} from '../../../../sharedComponents/Text/BodyText';
+import {SvgProps} from 'react-native-svg';
 
 const m = defineMessages({
   title: {
     id: 'screens.Settings.CreateOrJoinProject.CreateProject.title',
-    defaultMessage: 'New Project',
+    defaultMessage: 'Start New Project',
+  },
+  titleSoloProject: {
+    id: 'screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject',
+    defaultMessage: 'Name My Project',
   },
   enterName: {
     id: 'screens.Settings.CreateOrJoinProject.enterName',
-    defaultMessage: 'Enter a name for the Project',
+    defaultMessage: 'Project Name',
   },
   createProjectButton: {
     id: 'screens.Settings.CreateOrJoinProject.createProjectButton',
-    defaultMessage: 'Create Project',
+    defaultMessage: 'Create',
   },
-  advancedSettings: {
-    id: 'screens.Settings.CreateOrJoinProject.advancedSettings',
-    defaultMessage: 'Advanced Project Settings',
+  saveProjectButton: {
+    id: 'screens.Settings.CreateOrJoinProject.saveProjectButton',
+    defaultMessage: 'Save',
   },
-  importCategories: {
-    id: 'screens.Settings.CreateOrJoinProject.importCategories',
-    defaultMessage: 'Import Categories',
+  keepInMind: {
+    id: 'screens.Settings.CreateOrJoinProject.keepInMind',
+    defaultMessage: 'Keep in mind',
   },
-  importConfigFileError: {
-    id: 'screens.Settings.CreateOrJoinProject.importConfigFileError',
-    defaultMessage: 'File name should end with .comapeocat',
+  projectUnique: {
+    id: 'screens.Settings.CreateOrJoinProject.projectUnique',
+    defaultMessage:
+      'Each project is unique and cannot exchange with another project.',
   },
-  categoryImportTitle: {
-    id: 'screens.Settings.CreateOrJoinProject.importSuccessTitle',
-    defaultMessage: 'Successfully imported categories:',
+  existingProjectName: {
+    id: 'screens.Settings.CreateOrJoinProject.existingProjectName',
+    defaultMessage:
+      'Using an existing project name does not make them the same project.',
   },
-  okButton: {
-    id: 'screens.Settings.CreateOrJoinProject.okButton',
-    defaultMessage: 'OK',
+  requestInvites: {
+    id: 'screens.Settings.CreateOrJoinProject.requestInvites',
+    defaultMessage: 'Request invites to join existing projects.',
   },
 });
-
-type ConfigFileImportResult = {
-  type: 'success';
-  file: DocumentPicker.DocumentPickerAsset;
-};
 
 type ProjectFormType = {
   projectName: string;
 };
 
-export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
+export const CreateProject = ({
   navigation,
   route,
-}) => {
+}: NativeRootNavigationProps<'CreateProject'>) => {
   const {formatMessage: t} = useIntl();
-  const [advancedSettingOpen, setAdvancedSettingOpen] = React.useState(false);
-  const [configFileResult, setConfigFileResult] =
-    React.useState<ConfigFileImportResult | null>(null);
 
   const action = route.params.action;
 
   const {setActiveProjectId} = useActiveProjectIdActions();
-  const selectFileMutation = useSelectFile();
   const createProjectMutation = useCreateProject();
   const {projectId} = useActiveProject();
   const updateSettingsMutation = useUpdateProjectSettings({
@@ -99,7 +90,6 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
   const importProjectConfig = useImportProjectConfig({projectId});
 
   const mutationIsPending =
-    selectFileMutation.status === 'pending' ||
     createProjectMutation.status === 'pending' ||
     importProjectConfig.status === 'pending' ||
     updateSettingsMutation.status === 'pending';
@@ -125,11 +115,6 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
 
   const handleCreateOrUpdateProject = (val: ProjectFormType) => {
     const projectName = val.projectName.trim();
-    const fileUri =
-      configFileResult?.type === 'success'
-        ? configFileResult.file.uri
-        : undefined;
-    const configPath = fileUri && convertFileUriToPosixPath(fileUri);
 
     const onProjectCreated = () =>
       navigation.navigate('ProjectCreated', {name: projectName});
@@ -140,34 +125,18 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
     };
 
     if (action === 'UpdateSoloProject') {
-      const updateSettings = () =>
-        updateSettingsMutation.mutate(
-          {name: projectName},
-          {
-            onSuccess: () => {
-              if (fileUri) {
-                FileSystem.deleteAsync(fileUri, {idempotent: true}).catch(noop);
-              }
-              onProjectCreated();
-            },
-            onError,
+      updateSettingsMutation.mutate(
+        {name: projectName},
+        {
+          onSuccess: () => {
+            onProjectCreated();
           },
-        );
-
-      if (configPath) {
-        importProjectConfig.mutate(
-          {configPath},
-          {
-            onSuccess: updateSettings,
-            onError,
-          },
-        );
-      } else {
-        updateSettings();
-      }
+          onError,
+        },
+      );
     } else {
       createProjectMutation.mutate(
-        {name: projectName, configPath},
+        {name: projectName},
         {
           onSuccess: projectId => {
             setActiveProjectId(projectId);
@@ -178,28 +147,6 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
       );
     }
   };
-
-  function selectConfigFile() {
-    selectFileMutation.mutate(
-      {
-        copyToCacheDirectory: true,
-        allowedExtensions: ['comapeocat', 'zip'],
-      },
-      {
-        onSuccess: selected => {
-          if (!selected) return;
-          setConfigFileResult({type: 'success', file: selected});
-          Alert.alert(t(m.categoryImportTitle), selected.name, [
-            {text: t(m.okButton)},
-          ]);
-        },
-        onError: err => {
-          navigation.navigate('ErrorBottomSheet');
-          Sentry.captureException(err);
-        },
-      },
-    );
-  }
 
   return (
     <KeyboardAvoidingView>
@@ -218,45 +165,20 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
                 showCharacterCount
               />
             </View>
-            <View
-              style={{marginTop: 20}}
-              testID="PROJECT.advanced-settings-toggle">
-              <TouchableOpacity
-                onPress={() => setAdvancedSettingOpen(prev => !prev)}
-                style={styles.accordianHeader}>
-                <HeaderText variant="header5">
-                  {t(m.advancedSettings)}
-                </HeaderText>
-                <MaterialIcon
-                  color={BLACK}
-                  name={
-                    !advancedSettingOpen
-                      ? 'keyboard-arrow-up'
-                      : 'keyboard-arrow-down'
-                  }
-                  size={40}
-                />
-              </TouchableOpacity>
-              {advancedSettingOpen && (
-                <View style={styles.importConfigContainer}>
-                  <SecondaryButton
-                    fullSize={true}
-                    style={{alignSelf: 'center'}}
-                    onPress={() => {
-                      selectConfigFile();
-                    }}
-                    text={t(m.importCategories)}
-                  />
+            <View style={styles.divider} />
+            <View style={styles.infoBox}>
+              <HeaderText variant="header6" style={styles.infoHeading}>
+                {t(m.keepInMind)}
+              </HeaderText>
 
-                  {configFileResult?.type === 'success' && (
-                    <HeaderText variant="header5" style={styles.configFileName}>
-                      {configFileResult.file.name}
-                    </HeaderText>
-                  )}
-                </View>
-              )}
+              <InfoRow Icon={UniqueProjectIcon} text={t(m.projectUnique)} />
+              <InfoRow
+                Icon={NameMismatchIcon}
+                text={t(m.existingProjectName)}
+              />
             </View>
           </View>
+
           <View
             style={{
               paddingHorizontal: 20,
@@ -268,7 +190,11 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
               <PrimaryButton
                 testID="PROJECT.create-btn"
                 fullSize={true}
-                text={t(m.createProjectButton)}
+                text={
+                  action === 'UpdateSoloProject'
+                    ? t(m.saveProjectButton)
+                    : t(m.createProjectButton)
+                }
                 onPress={handleSubmit(handleCreateOrUpdateProject)}
               />
             )}
@@ -279,7 +205,38 @@ export const CreateProject: NativeNavigationComponent<'CreateProject'> = ({
   );
 };
 
-CreateProject.navTitle = m.title;
+export function createNavigationOptions({
+  intl,
+}: {
+  intl: (title: MessageDescriptor) => string;
+}) {
+  return ({
+    route,
+  }: NativeRootNavigationProps<'CreateProject'>): NativeStackNavigationOptions => {
+    return {
+      headerTitle:
+        route.params.action === 'UpdateSoloProject'
+          ? intl(m.titleSoloProject)
+          : intl(m.title),
+    };
+  };
+}
+
+type InfoRowProps = {
+  Icon: React.FC<SvgProps>;
+  text: string;
+};
+
+function InfoRow({Icon, text}: InfoRowProps) {
+  return (
+    <View style={styles.infoRow}>
+      <Icon width={20} height={26} style={styles.infoIcon} />
+      <BodyText variant="smallMeta" style={styles.infoText}>
+        {text}
+      </BodyText>
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -288,20 +245,35 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'space-between',
   },
-  accordianHeader: {
+  divider: {
+    height: 1,
+    backgroundColor: BLUE_GREY,
+    marginHorizontal: 20,
+    marginTop: 30,
+    marginBottom: 20,
+  },
+  infoBox: {
+    marginHorizontal: 20,
+    padding: 15,
+    borderWidth: 1,
+    borderColor: BLUE_GREY,
+    borderRadius: 10,
+    gap: 12,
+  },
+  infoHeading: {
+    marginBottom: 4,
+    paddingLeft: 4,
+  },
+  infoRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 20,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: LIGHT_GREY,
+    gap: 12,
   },
-  importConfigContainer: {
-    padding: 20,
-    gap: 20,
+  infoIcon: {
+    marginTop: 2,
   },
-  configFileName: {
-    textAlign: 'center',
+  infoText: {
+    flex: 1,
+    color: NEW_DARK_GREY,
   },
 });

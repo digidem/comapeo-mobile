@@ -1507,7 +1507,10 @@
     "message": "Project Name:"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.title": {
-    "message": "New Project"
+    "message": "Start New Project"
+  },
+  "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
+    "message": "Name My Project"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
     "message": "Go Back"
@@ -1527,9 +1530,6 @@
   "screens.Settings.CreateOrJoinProject.ProjectCreated.projectCreated": {
     "message": "{projectName} Created!"
   },
-  "screens.Settings.CreateOrJoinProject.advancedSettings": {
-    "message": "Advanced Project Settings"
-  },
   "screens.Settings.CreateOrJoinProject.alreadyOnProject": {
     "message": "You are already on a project. To create a new Project you must uninstall and reininstall CoMapeo."
   },
@@ -1537,19 +1537,13 @@
     "message": "Create a Project"
   },
   "screens.Settings.CreateOrJoinProject.createProjectButton": {
-    "message": "Create Project"
+    "message": "Create"
   },
   "screens.Settings.CreateOrJoinProject.enterName": {
-    "message": "Enter a name for the Project"
+    "message": "Project Name"
   },
-  "screens.Settings.CreateOrJoinProject.importCategories": {
-    "message": "Import Categories"
-  },
-  "screens.Settings.CreateOrJoinProject.importConfigFileError": {
-    "message": "File name should end with .comapeocat"
-  },
-  "screens.Settings.CreateOrJoinProject.importSuccessTitle": {
-    "message": "Successfully imported categories:"
+  "screens.Settings.CreateOrJoinProject.existingProjectName": {
+    "message": "Using an existing project name does not make them the same project."
   },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
     "message": "Join an existing CoMapeo Project"
@@ -1557,11 +1551,20 @@
   "screens.Settings.CreateOrJoinProject.joinProject": {
     "message": "Join a Project"
   },
-  "screens.Settings.CreateOrJoinProject.okButton": {
-    "message": "OK"
+  "screens.Settings.CreateOrJoinProject.keepInMind": {
+    "message": "Keep in mind"
   },
   "screens.Settings.CreateOrJoinProject.projectDescription": {
     "message": "A project is a secure container for your data. Only devices you invite can enter and share data with you. Create or Join a project in order to share data with other devices. This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
+  },
+  "screens.Settings.CreateOrJoinProject.projectUnique": {
+    "message": "Each project is unique and cannot exchange with another project."
+  },
+  "screens.Settings.CreateOrJoinProject.requestInvites": {
+    "message": "Request invites to join existing projects."
+  },
+  "screens.Settings.CreateOrJoinProject.saveProjectButton": {
+    "message": "Save"
   },
   "screens.Settings.CreateOrJoinProject.startProject": {
     "message": "Start a CoMapeo Project"

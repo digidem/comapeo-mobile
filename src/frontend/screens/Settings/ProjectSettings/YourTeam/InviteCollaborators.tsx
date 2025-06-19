@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: 'center',
+    paddingHorizontal: 20,
   },
   bodyContainer: {
     gap: 20,
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 45,
   },
   introText: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 30,
     lineHeight: 21,
   },
   bulletList: {

@@ -19,7 +19,10 @@ import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
 import {CoordinateFormat} from '../../screens/Settings/AppSettings/CoordinateFormat';
 import {CreateOrJoinProject} from '../../screens/Settings/CreateOrJoinProject';
-import {CreateProject} from '../../screens/Settings/CreateOrJoinProject/CreateProject';
+import {
+  CreateProject,
+  createNavigationOptions as createNameProjectNavOptions,
+} from '../../screens/Settings/CreateOrJoinProject/CreateProject';
 import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateProject/ProjectCreated';
 import {JoinExistingProject} from '../../screens/Settings/CreateOrJoinProject/JoinExistingProject';
 import {YourTeam} from '../../screens/Settings/ProjectSettings/YourTeam';
@@ -214,7 +217,7 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="CreateProject"
         component={CreateProject}
-        options={{headerTitle: intl(CreateProject.navTitle)}}
+        options={createNameProjectNavOptions({intl})}
       />
       <RootStack.Screen
         name="ProjectCreated"

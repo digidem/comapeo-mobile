@@ -766,18 +766,6 @@
   "screens.FatalError.somethingWrong": {
     "message": "Algo salió mal"
   },
-  "screens.HowToLeaveProject.goBack": {
-    "message": "Regresar"
-  },
-  "screens.HowToLeaveProject.howTo": {
-    "message": "Cómo salir de un Proyecto"
-  },
-  "screens.HowToLeaveProject.instructions": {
-    "message": "Para salir de un Proyecto desinstala y reinstala CoMapeo. Toda la información del Proyecto será eliminada de este dispositivo."
-  },
-  "screens.HowToLeaveProject.warning": {
-    "message": "Si eres la única persona Coordinadora en el proyecto, nadie más tendrá acceso a editar los detalles del proyecto o invitar a otros dispositivos!"
-  },
   "screens.IntroToCoMapeo.collaborate": {
     "message": "Collaborate on projects"
   },
@@ -1780,9 +1768,6 @@
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",
     "message": "Mostrar opciones"
-  },
-  "sharedComponents.DeviceCard.leaveProject": {
-    "message": "Abandonar proyecto"
   },
   "sharedComponents.DeviceIconWithName.Disconnected": {
     "message": "Desconectado"

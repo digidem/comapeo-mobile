@@ -1,5 +1,5 @@
 import {BackHandler, StyleSheet, View} from 'react-native';
-import GreenCheck from '../../../../images/GreenCheck.svg';
+import GreenCheck from '../../../../images/Success.svg';
 import {defineMessages, useIntl} from 'react-intl';
 import React from 'react';
 import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';

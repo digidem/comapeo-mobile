@@ -3,6 +3,9 @@ import {View, StyleSheet} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 
 import AddPersonOrange from '../../../../images/AddPersonOrange.svg';
+import LockedWithKey from '../../../../images/LockedWithKey.svg';
+import Handshake from '../../../../images/HandshakeMediumMediumDark.svg';
+import Checkmark from '../../../../images/GreenSquareCheckmark.svg';
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../../sharedComponents/Text/BodyText';
 import {
@@ -10,9 +13,8 @@ import {
   SecondaryButton,
 } from '../../../../sharedComponents/Buttons';
 import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
-import {NEW_DARK_GREY} from '../../../../lib/styles';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {ScreenContentWithDock} from '../../../../sharedComponents/ScreenContentWithDock';
+import {SvgProps} from 'react-native-svg';
 
 const m = defineMessages({
   screenTitle: {
@@ -21,23 +23,19 @@ const m = defineMessages({
   },
   introText: {
     id: 'soloProject.inviteCollaborators.introText',
-    defaultMessage:
-      'Share observations with others using CoMapeo. Name your solo project to add your first collaborator.',
+    defaultMessage: 'Share observations with others using CoMapeo.',
   },
-  readyToShare: {
-    id: 'soloProject.inviteCollaborators.readyToShare',
-    defaultMessage:
-      'Once you name your project, all your observations are ready to be shared.',
+  nameProjectDescription: {
+    id: 'soloProject.inviteCollaborators.nameProjectDescription',
+    defaultMessage: 'Name your project to start collaborating.',
   },
   inviteOnly: {
     id: 'soloProject.inviteCollaborators.inviteOnly',
-    defaultMessage:
-      'Only devices you invite can contribute and share data with you.',
+    defaultMessage: 'Only devices invited to this project can contribute.',
   },
   manageControl: {
     id: 'soloProject.inviteCollaborators.manageControl',
-    defaultMessage:
-      'Manage and control sharing and collaboration in Project Settings.',
+    defaultMessage: 'Easily manage project contributors and settings.',
   },
   goBack: {
     id: 'soloProject.inviteCollaborators.goBack',
@@ -89,24 +87,19 @@ export const InviteCollaboratorsScreen: React.FC<Props> = ({navigation}) => {
       </View>
       <View style={styles.bodyContainer}>
         <View style={styles.bulletList}>
-          <InfoListItem text={t(m.readyToShare)} />
-          <InfoListItem text={t(m.inviteOnly)} />
-          <InfoListItem text={t(m.manageControl)} />
+          <InfoListItem Icon={Handshake} text={t(m.nameProjectDescription)} />
+          <InfoListItem Icon={LockedWithKey} text={t(m.inviteOnly)} />
+          <InfoListItem Icon={Checkmark} text={t(m.manageControl)} />
         </View>
       </View>
     </ScreenContentWithDock>
   );
 };
 
-function InfoListItem({text}: {text: string}) {
+function InfoListItem({text, Icon}: {text: string; Icon: React.FC<SvgProps>}) {
   return (
     <View style={styles.bulletItem}>
-      <MaterialIcons
-        name="circle"
-        size={4}
-        color={NEW_DARK_GREY}
-        style={styles.bulletIcon}
-      />
+      <Icon width={20} height={26} style={styles.bulletIcon} />
       <BodyText variant="smallMeta" style={styles.bulletText}>
         {text}
       </BodyText>
@@ -140,10 +133,11 @@ const styles = StyleSheet.create({
   },
   bulletItem: {
     flexDirection: 'row',
-    columnGap: 8,
+    alignItems: 'center',
+    gap: 12,
   },
   bulletIcon: {
-    marginTop: 6,
+    marginTop: 0,
   },
   bulletText: {
     lineHeight: 18,

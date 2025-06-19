@@ -6,7 +6,7 @@ import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {CommonActions, useNavigation} from '@react-navigation/native';
-import SuccessCheck from '../../images/GreenCheck.svg';
+import SuccessCheck from '../../images/Success.svg';
 
 const m = defineMessages({
   goToMap: {

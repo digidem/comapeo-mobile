@@ -1798,19 +1798,19 @@
     "message": "Go Back"
   },
   "soloProject.inviteCollaborators.introText": {
-    "message": "Share observations with others using CoMapeo. Name your solo project to add your first collaborator."
+    "message": "Share observations with others using CoMapeo."
   },
   "soloProject.inviteCollaborators.inviteOnly": {
-    "message": "Only devices you invite can contribute and share data with you."
+    "message": "Only devices invited to this project can contribute."
   },
   "soloProject.inviteCollaborators.manageControl": {
-    "message": "Manage and control sharing and collaboration in Project Settings."
+    "message": "Easily manage project contributors and settings."
   },
   "soloProject.inviteCollaborators.nameProject": {
     "message": "Name My Project"
   },
-  "soloProject.inviteCollaborators.readyToShare": {
-    "message": "Once you name your project, all your observations are ready to be shared."
+  "soloProject.inviteCollaborators.nameProjectDescription": {
+    "message": "Name your project to start collaborating."
   },
   "soloProject.inviteCollaborators.title": {
     "message": "Invite Collaborators"

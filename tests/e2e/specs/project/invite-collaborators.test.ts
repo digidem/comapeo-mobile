@@ -25,7 +25,7 @@ describe('Project - Solo Project Invite/ Name Project Flow', () => {
       $(byTextMatches('Only devices invited to this project')),
     ).toBeDisplayed();
     await expect(
-      $(byTextMatches('Easiy manage project contributors')),
+      $(byTextMatches('Easily manage project contributors')),
     ).toBeDisplayed();
 
     const nameProjectBtn = await $(byText('Name My Project'));

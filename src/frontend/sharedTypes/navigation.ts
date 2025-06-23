@@ -85,7 +85,7 @@ export type RootStackParamsList = {
   SelectDevice: undefined;
   SelectInviteeRole: {name: string; deviceType: DeviceType; deviceId: string};
   ReviewAndInvite: InviteProps;
-  InviteAccepted: InviteProps;
+  InviteAccepted: {name: string};
   InviteDeclined: InviteProps;
   UnableToCancelInvite: InviteProps;
   DeviceNameDisplay: undefined;

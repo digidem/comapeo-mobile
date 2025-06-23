@@ -328,7 +328,7 @@
     "message": "Your changes will not be saved. This cannot be undone."
   },
   "allProjects.createNewProject": {
-    "message": "Create new project"
+    "message": "Start new project"
   },
   "allProjects.navTitle": {
     "message": "All Projects"
@@ -1429,13 +1429,16 @@
     "message": "Device Name"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
-    "message": "Add Another Device"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.close": {
-    "message": "Close"
+    "message": "Invite Another Device"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
-    "message": "Invite Accepted"
+    "message": "Accepted!"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
+    "message": "<bold>{deviceName}</bold> is now part of your project."
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
+    "message": "View Team"
   },
   "screens.Setting.ProjectSettings.YourTeam.NotOnProject.createOrJoin": {
     "message": "Create or Join Project"
@@ -1829,5 +1832,26 @@
   },
   "soloProject.inviteCollaborators.title": {
     "message": "Invite Collaborators"
+  },
+  "soloProject.startNewProject.goBack": {
+    "message": "Go Back"
+  },
+  "soloProject.startNewProject.introText": {
+    "message": "Secure and private way to exchange with collaborators."
+  },
+  "soloProject.startNewProject.inviteOnly": {
+    "message": "Only devices invited to a project can contribute."
+  },
+  "soloProject.startNewProject.manageControl": {
+    "message": "Easily manage project contributors and settings."
+  },
+  "soloProject.startNewProject.start": {
+    "message": "Start"
+  },
+  "soloProject.startNewProject.title": {
+    "message": "Start New Project"
+  },
+  "soloProject.startNewProject.uniqueProject": {
+    "message": "Each project is unique and separate."
   }
 }

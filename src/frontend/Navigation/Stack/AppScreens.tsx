@@ -90,6 +90,7 @@ import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagement/ErrorBottomSheet.tsx';
 import {MenuScreen} from '../../screens/MenuScreen';
 import {InviteCollaboratorsScreen} from '../../screens/Settings/ProjectSettings/YourTeam/InviteCollaborators.tsx';
+import {StartNewProjectScreen} from '../../screens/Settings/ProjectSettings/StartNewProject.tsx';
 import {MenuHeader} from '../../sharedComponents/MenuHeader.tsx';
 import {EditProjectDetails} from '../../screens/Settings/ProjectSettings/EditProjectDetails.tsx';
 import {AllProjects} from '../../screens/AllProjects.tsx';
@@ -411,6 +412,13 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="InviteCollaborators"
         component={InviteCollaboratorsScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <RootStack.Screen
+        name="StartNewProject"
+        component={StartNewProjectScreen}
         options={{
           headerShown: false,
         }}

@@ -79,7 +79,7 @@ export type RootStackParamsList = {
   AppSettings: undefined;
   ProjectSettings: undefined;
   CreateOrJoinProject: undefined;
-  ProjectCreated: {name: string};
+  ProjectCreated: {name: string; type: 'updatedSolo' | 'newlyCreated'};
   JoinExistingProject: undefined;
   YourTeam: undefined;
   SelectDevice: undefined;
@@ -128,6 +128,7 @@ export type RootStackParamsList = {
   Menu: undefined;
   AllProjects: undefined;
   InviteCollaborators: undefined;
+  StartNewProject: undefined;
   EditProjectDetails: undefined;
   TrackRecordingActive: undefined;
   RemoteArchive: undefined;

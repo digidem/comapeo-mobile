@@ -2,63 +2,64 @@ import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 
-import AddPersonOrange from '../../../../images/AddPersonOrange.svg';
-import LockedWithKey from '../../../../images/LockedWithKey.svg';
-import Handshake from '../../../../images/HandshakeMediumMediumDark.svg';
-import Checkmark from '../../../../images/GreenSquareCheckmark.svg';
-import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
-import {BodyText} from '../../../../sharedComponents/Text/BodyText';
+import ProjectIcon from '../../../images/ObservationsProject.svg';
+import IndexPointingUp from '../../../images/IndexPointingUp.svg';
+import LockedWithKey from '../../../images/LockedWithKey.svg';
+import GreenCheck from '../../../images/GreenSquareCheckmark.svg';
+
+import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {
   PrimaryButton,
   SecondaryButton,
-} from '../../../../sharedComponents/Buttons';
-import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
-import {ScreenContentWithDock} from '../../../../sharedComponents/ScreenContentWithDock';
+} from '../../../sharedComponents/Buttons';
+import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
+import {ScreenContentWithDock} from '../../../sharedComponents/ScreenContentWithDock';
 import {SvgProps} from 'react-native-svg';
-import {NEW_DARK_GREY} from '../../../../lib/styles';
+import {DARK_ORANGE, NEW_DARK_GREY} from '../../../lib/styles';
 
 const m = defineMessages({
   screenTitle: {
-    id: 'soloProject.inviteCollaborators.title',
-    defaultMessage: 'Invite Collaborators',
+    id: 'soloProject.startNewProject.title',
+    defaultMessage: 'Start New Project',
   },
   introText: {
-    id: 'soloProject.inviteCollaborators.introText',
-    defaultMessage: 'Share observations with others using CoMapeo.',
+    id: 'soloProject.startNewProject.introText',
+    defaultMessage: 'Secure and private way to exchange with collaborators.',
   },
-  nameProjectDescription: {
-    id: 'soloProject.inviteCollaborators.nameProjectDescription',
-    defaultMessage: 'Name your project to start collaborating.',
+  uniqueProject: {
+    id: 'soloProject.startNewProject.uniqueProject',
+    defaultMessage: 'Each project is unique and separate.',
   },
   inviteOnly: {
-    id: 'soloProject.inviteCollaborators.inviteOnly',
-    defaultMessage: 'Only devices invited to this project can contribute.',
+    id: 'soloProject.startNewProject.inviteOnly',
+    defaultMessage: 'Only devices invited to a project can contribute.',
   },
   manageControl: {
-    id: 'soloProject.inviteCollaborators.manageControl',
+    id: 'soloProject.startNewProject.manageControl',
     defaultMessage: 'Easily manage project contributors and settings.',
   },
   goBack: {
-    id: 'soloProject.inviteCollaborators.goBack',
+    id: 'soloProject.startNewProject.goBack',
     defaultMessage: 'Go Back',
   },
-  nameMyProject: {
-    id: 'soloProject.inviteCollaborators.nameProject',
-    defaultMessage: 'Name My Project',
+  start: {
+    id: 'soloProject.startNewProject.start',
+    defaultMessage: 'Start',
   },
 });
 
-type Props = NativeRootNavigationProps<'InviteCollaborators'>;
+type Props = NativeRootNavigationProps<'StartNewProject'>;
 
-export const InviteCollaboratorsScreen: React.FC<Props> = ({navigation}) => {
+export const StartNewProjectScreen: React.FC<Props> = ({navigation}) => {
   const {formatMessage: t} = useIntl();
 
   function handleGoBack() {
     navigation.goBack();
   }
 
-  function handleNameProject() {
-    navigation.navigate('CreateProject', {action: 'UpdateSoloProject'});
+  function handleStart() {
+    navigation.navigate('CreateProject', {action: 'CreateNewProject'});
   }
 
   return (
@@ -72,25 +73,23 @@ export const InviteCollaboratorsScreen: React.FC<Props> = ({navigation}) => {
           />
           <PrimaryButton
             fullSize={true}
-            text={t(m.nameMyProject)}
-            onPress={handleNameProject}
+            text={t(m.start)}
+            onPress={handleStart}
           />
         </View>
       }>
       <View style={styles.headerArea}>
-        <AddPersonOrange width={86} height={80} />
+        <ProjectIcon color={DARK_ORANGE} width={90} height={90} />
         <HeaderText variant="header1" style={styles.title} numberOfLines={2}>
           {t(m.screenTitle)}
         </HeaderText>
-        <BodyText variant="regular" style={styles.introText}>
-          {t(m.introText)}
-        </BodyText>
+        <BodyText style={styles.introText}>{t(m.introText)}</BodyText>
       </View>
       <View style={styles.bodyContainer}>
         <View style={styles.bulletList}>
-          <InfoListItem Icon={Handshake} text={t(m.nameProjectDescription)} />
+          <InfoListItem Icon={IndexPointingUp} text={t(m.uniqueProject)} />
           <InfoListItem Icon={LockedWithKey} text={t(m.inviteOnly)} />
-          <InfoListItem Icon={Checkmark} text={t(m.manageControl)} />
+          <InfoListItem Icon={GreenCheck} text={t(m.manageControl)} />
         </View>
       </View>
     </ScreenContentWithDock>
@@ -113,7 +112,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     gap: 30,
-    paddingTop: 30,
+    paddingTop: 40,
     flexWrap: 'wrap',
   },
   title: {

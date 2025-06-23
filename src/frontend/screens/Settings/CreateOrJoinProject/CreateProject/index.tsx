@@ -9,11 +9,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {
-  useCreateProject,
-  useImportProjectConfig,
-  useUpdateProjectSettings,
-} from '@comapeo/core-react';
+import {useCreateProject, useUpdateProjectSettings} from '@comapeo/core-react';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
 import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
 import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
@@ -24,6 +20,7 @@ import * as Sentry from '@sentry/react-native';
 import {useActiveProject} from '../../../../contexts/ActiveProjectContext';
 import UniqueProjectIcon from '../../../../images/IndexPointingUp.svg';
 import NameMismatchIcon from '../../../../images/WarningYellow.svg';
+import ChatBubbleIcon from '../../../../images/ChatBubble.svg';
 import {BLUE_GREY, NEW_DARK_GREY} from '../../../../lib/styles';
 import {BodyText} from '../../../../sharedComponents/Text/BodyText';
 import {SvgProps} from 'react-native-svg';
@@ -73,6 +70,8 @@ type ProjectFormType = {
   projectName: string;
 };
 
+type ProjectType = 'updatedSolo' | 'newlyCreated';
+
 export const CreateProject = ({
   navigation,
   route,
@@ -87,11 +86,9 @@ export const CreateProject = ({
   const updateSettingsMutation = useUpdateProjectSettings({
     projectId: projectId,
   });
-  const importProjectConfig = useImportProjectConfig({projectId});
 
   const mutationIsPending =
     createProjectMutation.status === 'pending' ||
-    importProjectConfig.status === 'pending' ||
     updateSettingsMutation.status === 'pending';
 
   React.useEffect(() => {
@@ -116,8 +113,8 @@ export const CreateProject = ({
   const handleCreateOrUpdateProject = (val: ProjectFormType) => {
     const projectName = val.projectName.trim();
 
-    const onProjectCreated = () =>
-      navigation.navigate('ProjectCreated', {name: projectName});
+    const onProjectCreated = (type: ProjectType) =>
+      navigation.navigate('ProjectCreated', {name: projectName, type});
 
     const onError = (err: unknown) => {
       Sentry.captureException(err);
@@ -129,7 +126,7 @@ export const CreateProject = ({
         {name: projectName},
         {
           onSuccess: () => {
-            onProjectCreated();
+            onProjectCreated('updatedSolo');
           },
           onError,
         },
@@ -140,7 +137,7 @@ export const CreateProject = ({
         {
           onSuccess: projectId => {
             setActiveProjectId(projectId);
-            onProjectCreated();
+            onProjectCreated('newlyCreated');
           },
           onError,
         },
@@ -176,6 +173,7 @@ export const CreateProject = ({
                 Icon={NameMismatchIcon}
                 text={t(m.existingProjectName)}
               />
+              {/* <InfoRow Icon={ChatBubbleIcon} text={t(m.requestInvites)} /> */}
             </View>
           </View>
 

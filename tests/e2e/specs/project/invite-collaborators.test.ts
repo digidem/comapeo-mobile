@@ -19,18 +19,20 @@ describe('Project - Solo Project Invite/ Name Project Flow', () => {
     ).toBeDisplayed();
 
     await expect(
-      $(byTextMatches('Once you name your project')),
+      $(byTextMatches('Name your project to start collaborating')),
     ).toBeDisplayed();
-    await expect($(byTextMatches('Only devices you invite'))).toBeDisplayed();
     await expect(
-      $(byTextMatches('Manage and control sharing')),
+      $(byTextMatches('Only devices invited to this project')),
+    ).toBeDisplayed();
+    await expect(
+      $(byTextMatches('Easiy manage project contributors')),
     ).toBeDisplayed();
 
     const nameProjectBtn = await $(byText('Name My Project'));
     await expect(nameProjectBtn).toBeDisplayed();
     await nameProjectBtn.click();
 
-    const projectTitle = await $(byTextMatches('Enter a name for the Project'));
+    const projectTitle = await $(byTextMatches('Project Name'));
     await expect(projectTitle).toBeDisplayed();
   });
 });

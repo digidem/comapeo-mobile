@@ -46,9 +46,6 @@
   "Modal.GPSEnable.button.stop": {
     "message": "Stop Tracks"
   },
-  "Modal.GPSEnable.trackingDescription": {
-    "message": "You’ve been recording for {time}"
-  },
   "Navigation.Menu.Settings": {
     "message": "App Settings"
   },
@@ -311,6 +308,24 @@
   "SharedComponents.ActionButtons.share": {
     "description": "Button to share an observation",
     "message": "Share"
+  },
+  "TrackBottomSheet.DidNotMove.delete": {
+    "message": "Exit Tracks"
+  },
+  "TrackBottomSheet.DidNotMove.didNotMove": {
+    "message": "You didn't move beyond one meter."
+  },
+  "TrackBottomSheet.DidNotMove.keepRecording": {
+    "message": "Continue Recording"
+  },
+  "TrackBottomSheet.DidNotMove.noTrackRecorded": {
+    "message": "No Track Recorded"
+  },
+  "TrackBottomSheet.StartStopTrack.readyToRecord": {
+    "message": "Ready to record new track?"
+  },
+  "TrackBottomSheet.StartStopTrack.trackingRequirement": {
+    "message": "Move one meter to see track."
   },
   "TrackEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",

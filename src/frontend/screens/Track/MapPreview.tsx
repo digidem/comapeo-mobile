@@ -4,13 +4,13 @@ import MapboxGL from '@rnmapbox/maps';
 import {LocationHistoryPoint} from '../../sharedTypes/location.ts';
 import {convertToLineString} from '../../lib/utils.ts';
 import {Observation} from '@comapeo/schema';
-import {BLACK} from '../../lib/styles.ts';
 import {usePresetsQuery} from '../../hooks/server/presets.ts';
 import {
   createObservationMapLayerStyle,
   observationsToFeatureCollection,
 } from '../../lib/ObservationMapLayer.ts';
 import {useMapStyleJsonUrl} from '../../hooks/server/maps.ts';
+import {getTrackLineStyles} from '../../lib/trackMapStyles';
 interface TrackScreenMapPreview {
   locationHistory: LocationHistoryPoint[];
   observations: Observation[];
@@ -78,21 +78,16 @@ function TrackMapLayer({
 }: {
   locationHistory: LocationHistoryPoint[];
 }) {
+  const {base, overlay} = getTrackLineStyles();
   return (
     <MapboxGL.ShapeSource
       id="trackShapeSource"
       shape={convertToLineString(locationHistory)}>
-      <MapboxGL.LineLayer id="trackLineLayer" style={lineLayer} />
+      <MapboxGL.LineLayer id="trackPreviewBase" style={base} />
+      <MapboxGL.LineLayer id="trackPreviewOverlay" style={overlay} />
     </MapboxGL.ShapeSource>
   );
 }
-
-const lineLayer: MapboxGL.LineLayerStyle = {
-  lineColor: BLACK,
-  lineWidth: 3,
-  lineCap: MapboxGL.LineJoin.Round,
-  lineOpacity: 1.84,
-};
 
 const MAP_HEIGHT = 250;
 // Minimum bound size to ensure sufficient map detail

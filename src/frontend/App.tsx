@@ -35,7 +35,6 @@ import {getAppLanguageTag} from './lib/intl';
 import {IntlProvider} from './contexts/IntlContext';
 import {ServerLoading} from './ServerLoading';
 import type {StatusMessage} from '../backend/src/status';
-import type {EventEmitter} from 'events';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -169,8 +168,8 @@ const subscribeToServerStatus = (listener: (msg: StatusMessage) => unknown) => {
     //        in IntlProvider (created by IntlProvider)
     //        in IntlProvider (created by App)
     //        in App (created by RootApp)
-    const channel = nodejs.channel as unknown as EventEmitter;
-    if (channel?.removeListener instanceof Function) {
+    const channel = nodejs.channel;
+    if (channel?.removeListener) {
       channel.removeListener('server:status', listener);
     }
   };

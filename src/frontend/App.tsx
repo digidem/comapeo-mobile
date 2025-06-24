@@ -35,6 +35,7 @@ import {getAppLanguageTag} from './lib/intl';
 import {IntlProvider} from './contexts/IntlContext';
 import {ServerLoading} from './ServerLoading';
 import type {StatusMessage} from '../backend/src/status';
+import type {EventEmitter} from 'events';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -162,10 +163,18 @@ const requestServerStatus = () => {
 const subscribeToServerStatus = (listener: (msg: StatusMessage) => unknown) => {
   nodejs.channel.addListener('server:status', listener);
   return () => {
-    nodejs.channel.removeListener('server:status', listener);
+    // ERROR    Warning: TypeError: channel.removeListener is not a function (it is undefined)
+    //     This error is located at:
+    //        in ServerLoading (created by App)
+    //        in IntlProvider (created by IntlProvider)
+    //        in IntlProvider (created by App)
+    //        in App (created by RootApp)
+    const channel = nodejs.channel as unknown as EventEmitter;
+    if (channel?.removeListener instanceof Function) {
+      channel.removeListener('server:status', listener);
+    }
   };
 };
-
 const App = () => {
   const [permissionsAsked, setPermissionsAsked] = React.useState(false);
   React.useEffect(() => {

@@ -66,14 +66,20 @@ export const AudioAskPermissionBottomSheet = ({
     });
   }, [replace]);
 
+  // We need *both* the AppState listener and the useFocusEffect because passcode being active shifts the timing.
+  //
+  // In the no-passcode flow, the app becomes "active" *after* returning from settings —
+  // so the AppState change is enough to detect permission changes.
+  //
+  // But in the passcode flow, the app becomes "active" *before* the user finishes authenticating.
+  // So we use useFocusEffect to re-check permissions after the user actually lands back on this screen.
+  //
+  // Without both, we’d miss the permission change in one of the two flows.
+
   // Covers re-entering from Auth screen (passcode is active flow)
   useFocusEffect(
     React.useCallback(() => {
-      if (
-        passcode &&
-        !hasNavigatedRef.current &&
-        permission.status !== 'granted'
-      ) {
+      if (passcode && permission.status !== 'granted') {
         checkAndNavigateIfGranted();
       }
     }, [checkAndNavigateIfGranted, permission.status, passcode]),

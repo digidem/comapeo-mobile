@@ -6,7 +6,7 @@ import {useIsShareDialogOpen} from '../hooks/share';
 import {DEFAULT_OBSCURE_CODE} from '../lib/security';
 import {useSecurityState} from './SecurityStoreContext';
 
-type AuthState = 'unauthenticated' | 'authenticated' | 'obscured';
+export type AuthState = 'unauthenticated' | 'authenticated' | 'obscured';
 
 type AuthContextType = {
   authenticate: (

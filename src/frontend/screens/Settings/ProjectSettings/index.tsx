@@ -92,6 +92,8 @@ export const ProjectSettings = () => {
   const isSolo = projectInfo.role === 'solo';
   const isCoordinator = projectInfo.role === 'coordinator';
   const remoteArchiveOn = !!useActiveArchiveServer({projectId});
+  const participantWithRemote =
+    projectInfo.role === 'participant' && remoteArchiveOn;
 
   const displayTitle = isSolo
     ? projectInfo.projectHeader
@@ -135,7 +137,7 @@ export const ProjectSettings = () => {
           onPress={() => navigate('YourTeam')}
         />
       )}
-      {isCoordinator && (
+      {(isCoordinator || participantWithRemote) && (
         <SettingsCardRow
           icon={<ExchangeIcon width={24} height={24} />}
           title={formatMessage(

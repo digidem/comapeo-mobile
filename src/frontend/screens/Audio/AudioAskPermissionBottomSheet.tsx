@@ -11,10 +11,10 @@ import {defineMessages, useIntl} from 'react-intl';
 import AudioPermission from '../../images/observationEdit/AudioPermission.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {Button} from '../../sharedComponents/Button';
 import {Audio} from 'expo-av';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
+import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 
 const m = defineMessages({
   title: {
@@ -108,21 +108,25 @@ export const AudioAskPermissionBottomSheet = ({
             {formatMessage(m.description)}
           </BodyText>
         </View>
-        <View style={{width: '100%'}}>
-          <Button fullWidth variant="outlined" onPress={goBack}>
-            {formatMessage(m.notNowButtonText)}
-          </Button>
+        <View
+          style={{width: '100%', gap: 20, alignItems: 'center', marginTop: 30}}>
+          <SecondaryButton
+            fullSize
+            text={formatMessage(m.notNowButtonText)}
+            onPress={goBack}
+          />
           {permission.canAskAgain ? (
-            <Button fullWidth onPress={askPermission} style={{marginTop: 20}}>
-              {formatMessage(m.allowButtonText)}
-            </Button>
+            <PrimaryButton
+              fullSize
+              text={formatMessage(m.allowButtonText)}
+              onPress={askPermission}
+            />
           ) : (
-            <Button
-              fullWidth
+            <PrimaryButton
+              fullSize
+              text={formatMessage(m.goToSettingsButtonText)}
               onPress={() => Linking.openSettings()}
-              style={{marginTop: 20}}>
-              {formatMessage(m.goToSettingsButtonText)}
-            </Button>
+            />
           )}
         </View>
       </View>

@@ -537,6 +537,12 @@
   "screens.AppPasscode.TurnOffPasscode.usePasscode": {
     "message": "Use App Passcode"
   },
+  "screens.AudioAttachmentPlayback.navTitle": {
+    "message": "Audio Recording"
+  },
+  "screens.AudioAttachmentPlayback.share": {
+    "message": "Share"
+  },
   "screens.AudioPermission.Button.allow": {
     "description": "Screen button text for granting the audio permission",
     "message": "Allow"
@@ -557,8 +563,14 @@
     "description": "Screen title for audio permission screen",
     "message": "Recording Audio with CoMapeo"
   },
-  "screens.AudioPlaybackUnsaved.description": {
-    "message": "Total length: {length}"
+  "screens.AudioPlaybackNew.backToEditing": {
+    "message": "Back to Editing"
+  },
+  "screens.AudioPlaybackNew.delete": {
+    "message": "Delete"
+  },
+  "screens.AudioPlaybackNew.recordingSaved": {
+    "message": "Recording Saved!"
   },
   "screens.AudioRecording.lessThan1": {
     "message": "Less than a minute left"
@@ -566,20 +578,8 @@
   "screens.AudioRecording.lessThan5": {
     "message": "Less than 5 minutes left"
   },
-  "screens.AudioRecording.record5Min": {
-    "message": "Record up to 5 minutes"
-  },
-  "screens.AudioSavedBottomSheet.recordAnother": {
-    "message": "Record Another"
-  },
-  "screens.AudioSavedBottomSheet.returnToEditor": {
-    "message": "Return to Editor"
-  },
-  "screens.AudioSavedBottomSheet.subTitle": {
-    "message": "Your Audio Recording was added"
-  },
-  "screens.AudioSavedBottomSheet.title": {
-    "message": "Success!"
+  "screens.AudioRecording.nowRecording": {
+    "message": "Now Recording..."
   },
   "screens.CameraScreen.goToSettings": {
     "message": "Go to Settings"
@@ -660,18 +660,6 @@
   },
   "screens.DataPrivacy.title": {
     "message": "Data & Privacy"
-  },
-  "screens.DeleteAudioBottomSheet.Description": {
-    "message": "Your Audio Recording will be permanently deleted. This cannot be undone."
-  },
-  "screens.DeleteAudioBottomSheet.Title": {
-    "message": "Delete?"
-  },
-  "screens.DeleteAudioBottomSheet.cancel": {
-    "message": "Cancel"
-  },
-  "screens.DeleteAudioBottomSheet.delete": {
-    "message": "Delete"
   },
   "screens.DeviceNaming.Success.description": {
     "message": "You named your device"
@@ -756,18 +744,6 @@
   },
   "screens.FatalError.somethingWrong": {
     "message": "Something Went Wrong"
-  },
-  "screens.HowToLeaveProject.goBack": {
-    "message": "Go back"
-  },
-  "screens.HowToLeaveProject.howTo": {
-    "message": "How to Leave Project"
-  },
-  "screens.HowToLeaveProject.instructions": {
-    "message": "To leave this project please uninstall and reinstall CoMapeo. All project data will be removed from this device."
-  },
-  "screens.HowToLeaveProject.warning": {
-    "message": "If you are the only Coordinator on the project no one else will be able to edit project details or invite other devices!"
   },
   "screens.IntroToCoMapeo.collaborate": {
     "message": "Collaborate with others"
@@ -1822,9 +1798,6 @@
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",
     "message": "Show Options"
-  },
-  "sharedComponents.DeviceCard.leaveProject": {
-    "message": "Leave Project"
   },
   "sharedComponents.DeviceIconWithName.Disconnected": {
     "message": "Disconnected"

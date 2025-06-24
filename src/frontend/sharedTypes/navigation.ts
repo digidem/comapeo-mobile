@@ -138,6 +138,7 @@ export type RootStackParamsList = {
     serverDeviceId: string;
   };
   ExportObservations: undefined;
+  DidNotMoveBottomSheet: undefined;
 };
 
 export type OnboardingParamsList = {

@@ -9,10 +9,11 @@ import {useNavigation} from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
 
 export function useTracking() {
-  const {setTracking, clearCurrentTrack} = useTrackActions();
+  const {setTracking} = useTrackActions();
   const navigation = useNavigation();
   const isTracking = useTrackState(state => state.isTracking);
   const locationHistory = useTrackState(state => state.locationHistory);
+  const distance = useTrackState(state => state.distance);
 
   const startTracking = useCallback(() => {
     if (isTracking) {
@@ -35,18 +36,17 @@ export function useTracking() {
    * @returns {boolean} True if location history has more than one entry (track should be kept), false otherwise.
    */
   const cancelTracking = useCallback(() => {
-    setTracking(false);
     Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME).catch(err => {
       Sentry.captureException(err);
     });
-    const hasTrackWithMoreThan1Point = locationHistory.length > 1;
+    const hasMovedEnough = distance > 0.001;
+    const hasMultiplePoints = locationHistory.length > 1;
 
-    if (!hasTrackWithMoreThan1Point) {
-      clearCurrentTrack();
-    }
-
-    return hasTrackWithMoreThan1Point;
-  }, [setTracking, clearCurrentTrack, locationHistory]);
+    return {
+      hasMovedEnough,
+      hasMultiplePoints,
+    };
+  }, [locationHistory, distance]);
 
   return {
     isTracking,

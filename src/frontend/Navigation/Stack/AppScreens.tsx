@@ -106,6 +106,7 @@ import {
 } from '../../screens/ConfirmDeletePhoto.tsx';
 import {AudioDraftPlaybackScreen} from '../../screens/Audio/AudioDraftPlaybackScreen.tsx';
 import {AudioAttachmentPlaybackScreen} from '../../screens/Audio/AudioAttachmentPlaybackScreen.tsx';
+import {DidNotMoveBottomSheet} from '../../screens/MapScreen/TrackBottomSheet/DidNotMoveBottomSheet.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -456,6 +457,10 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="ExportObservations"
         component={ExportObservations}
+      />
+      <RootStack.Screen
+        name="DidNotMoveBottomSheet"
+        component={DidNotMoveBottomSheet}
       />
     </RootStack.Group>
   </>

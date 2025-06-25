@@ -20,7 +20,7 @@ import * as Sentry from '@sentry/react-native';
 import {useActiveProject} from '../../../../contexts/ActiveProjectContext';
 import UniqueProjectIcon from '../../../../images/IndexPointingUp.svg';
 import NameMismatchIcon from '../../../../images/WarningYellow.svg';
-// import ChatBubbleIcon from '../../../../images/ChatBubble.svg';
+import SpeechBubbleIcon from '../../../../images/SpeechBubble.svg';
 import {BLUE_GREY, NEW_DARK_GREY} from '../../../../lib/styles';
 import {BodyText} from '../../../../sharedComponents/Text/BodyText';
 import {SvgProps} from 'react-native-svg';
@@ -173,7 +173,7 @@ export const CreateProject = ({
                 Icon={NameMismatchIcon}
                 text={t(m.existingProjectName)}
               />
-              {/* <InfoRow Icon={ChatBubbleIcon} text={t(m.requestInvites)} /> */}
+              <InfoRow Icon={SpeechBubbleIcon} text={t(m.requestInvites)} />
             </View>
           </View>
 

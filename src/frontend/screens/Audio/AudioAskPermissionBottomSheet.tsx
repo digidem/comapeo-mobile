@@ -1,12 +1,6 @@
 import * as React from 'react';
 import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
-import {
-  AppState,
-  AppStateStatus,
-  Linking,
-  StyleSheet,
-  View,
-} from 'react-native';
+import {AppState, Linking, StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import AudioPermission from '../../images/observationEdit/AudioPermission.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
@@ -15,6 +9,8 @@ import {Audio} from 'expo-av';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
 import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
+import {useAudioPermissionModalMutation} from '../../hooks/useAudioPermissionTracker';
+import {useSecurityState} from '../../contexts/SecurityStoreContext';
 
 const m = defineMessages({
   title: {
@@ -55,44 +51,60 @@ export const AudioAskPermissionBottomSheet = ({
   const [permission, setPermission] = React.useState<Audio.PermissionResponse>(
     route.params.audioPermission,
   );
+  const hasNavigatedRef = React.useRef(false);
+  const {passcode} = useSecurityState();
 
-  // When the user changes their permission in phone settings and returns to the app,
-  // we need to check for updates and navigate accordingly.
-  // Without this, the app won't detect the permission change.
+  // Re-check microphone permission in case it was granted via system settings,
+  // and navigate to AudioRecording if so.
+  const checkAndNavigateIfGranted = React.useCallback(() => {
+    Audio.getPermissionsAsync().then(newPermission => {
+      setPermission(newPermission);
+      if (newPermission.status === 'granted' && !hasNavigatedRef.current) {
+        hasNavigatedRef.current = true;
+        replace('AudioRecording');
+      }
+    });
+  }, [replace]);
+
+  // We need *both* the AppState listener and the useFocusEffect because passcode being active shifts the timing.
+  //
+  // In the no-passcode flow, the app becomes "active" *after* returning from settings —
+  // so the AppState change is enough to detect permission changes.
+  //
+  // But in the passcode flow, the app becomes "active" *before* the user finishes authenticating.
+  // So we use useFocusEffect to re-check permissions after the user actually lands back on this screen.
+  //
+  // Without both, we’d miss the permission change in one of the two flows.
+
+  // Covers re-entering from Auth screen (passcode is active flow)
   useFocusEffect(
     React.useCallback(() => {
-      let isCancelled = false;
-      const handleAppStateChange = async (nextAppState: AppStateStatus) => {
-        if (nextAppState === 'active') {
-          const newPermission = await Audio.getPermissionsAsync();
-          if (isCancelled) return;
-          setPermission(newPermission);
-          if (newPermission.status === 'granted') {
-            replace('AudioRecording');
-          }
-        }
-      };
-
-      const subscription = AppState.addEventListener(
-        'change',
-        handleAppStateChange,
-      );
-
-      return () => {
-        isCancelled = true;
-        subscription.remove();
-      };
-    }, [replace]),
+      if (passcode && permission.status !== 'granted') {
+        checkAndNavigateIfGranted();
+      }
+    }, [checkAndNavigateIfGranted, permission.status, passcode]),
   );
 
-  async function askPermission() {
+  // Covers non-passcode flow from system settings
+  React.useEffect(() => {
+    const subscription = AppState.addEventListener('change', state => {
+      if (!passcode && state === 'active') checkAndNavigateIfGranted();
+    });
+    return () => subscription.remove();
+  }, [checkAndNavigateIfGranted, passcode]);
+
+  const askPermissionMutation = useAudioPermissionModalMutation(async () => {
     const response = await Audio.requestPermissionsAsync();
     setPermission(response);
     if (response.granted) {
       replace('AudioRecording');
       return;
     }
-  }
+  });
+
+  const goToSettingsMutation = useAudioPermissionModalMutation(() =>
+    Linking.openSettings(),
+  );
 
   return (
     <BottomSheetWrapper>
@@ -119,13 +131,13 @@ export const AudioAskPermissionBottomSheet = ({
             <PrimaryButton
               fullSize
               text={formatMessage(m.allowButtonText)}
-              onPress={askPermission}
+              onPress={() => askPermissionMutation.mutateAsync()}
             />
           ) : (
             <PrimaryButton
               fullSize
               text={formatMessage(m.goToSettingsButtonText)}
-              onPress={() => Linking.openSettings()}
+              onPress={() => goToSettingsMutation.mutateAsync()}
             />
           )}
         </View>

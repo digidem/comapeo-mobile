@@ -17,6 +17,7 @@ export const SaveTrackButton: FC = () => {
   const locationHistory = useTrackState(state => state.locationHistory);
   const description = useTrackState(state => state.description);
   const {clearCurrentTrack} = useTrackActions();
+  const preset = useTrackState(state => state.preset);
 
   const handleSaveClick = () => {
     createTrack(
@@ -34,6 +35,14 @@ export const SaveTrackButton: FC = () => {
             mocked: false,
             timestamp: new Date(loc.timestamp).toISOString()!,
           })),
+          ...(preset
+            ? {
+                presetRef: {
+                  docId: preset.docId,
+                  versionId: preset.versionId,
+                },
+              }
+            : {}),
         },
       },
       {

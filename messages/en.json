@@ -342,6 +342,9 @@
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
   },
+  "TrackStats.kilometers": {
+    "message": "km"
+  },
   "allProjects.createNewProject": {
     "message": "Create new project"
   },

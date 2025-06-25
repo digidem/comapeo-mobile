@@ -16,6 +16,7 @@ const PresetSchema = v.object({
   name: v.string(),
   geometry: v.array(v.string()),
   iconRef: v.optional(v.object({docId: v.string()})),
+  versionId: v.string(),
 });
 
 const TrackStateSchema = v.intersect([

@@ -425,6 +425,10 @@
     "description": "Label for Android version",
     "message": "Android version"
   },
+  "screens.AboutSettings.emojiSource": {
+    "description": "Label for the source of emojis used in CoMapeo",
+    "message": "Emojis source:"
+  },
   "screens.AboutSettings.phoneModel": {
     "description": "Label for phone model",
     "message": "Phone model"

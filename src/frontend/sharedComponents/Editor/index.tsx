@@ -36,6 +36,7 @@ import PlayArrow from '../../images/PlayArrow.svg';
 import {BodyText} from '../Text/BodyText';
 import {millisecondsToMMSS} from '../../lib/millisecondsToFormattedTime';
 import {DateDistance} from '../DateDistance';
+import {TrackStats} from './TrackStats';
 
 type EditorProps = {
   presetName: string;
@@ -93,6 +94,12 @@ export const Editor = ({
           </HeaderText>
         </View>
         <PresetView {...presetProps} />
+        {isTrack && (
+          <>
+            <Divider />
+            <TrackStats />
+          </>
+        )}
         {location && (
           <>
             <Divider />

@@ -15,7 +15,7 @@ export function useTracking() {
   const isTracking = useTrackState(state => state.isTracking);
   const locationHistory = useTrackState(state => state.locationHistory);
   const distance = useTrackState(state => state.distance);
-  const location = useLocationState(state => state.throttledMapLocation);
+  const location = useLocationState(state => state.location);
 
   const startTracking = useCallback(() => {
     if (isTracking) {
@@ -55,26 +55,17 @@ export function useTracking() {
     });
 
     if (location?.coords) {
-      const last = locationHistory[locationHistory.length - 1];
-      // or should I use lastSavedLocation?
-      const isNew =
-        !last ||
-        last.latitude !== location.coords.latitude ||
-        last.longitude !== location.coords.longitude;
-
-      if (isNew) {
-        addNewLocations([
-          {
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-            timestamp: location.timestamp ?? Date.now(),
-          },
-        ]);
-      }
+      addNewLocations([
+        {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          timestamp: location.timestamp ?? Date.now(),
+        },
+      ]);
     }
 
     setTracking(false);
-  }, [location, locationHistory, addNewLocations, setTracking]);
+  }, [location, addNewLocations, setTracking]);
 
   return {
     isTracking,

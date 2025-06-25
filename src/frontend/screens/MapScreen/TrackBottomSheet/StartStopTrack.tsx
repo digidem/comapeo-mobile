@@ -10,6 +10,7 @@ import {
   PrimaryButton,
 } from '../../../sharedComponents/Buttons.tsx';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText.tsx';
+import {usePresetsQuery} from '../../../hooks/server/presets';
 
 const m = defineMessages({
   defaultButtonText: {
@@ -39,6 +40,12 @@ export const StartStopTrack = () => {
   const {isTracking, evaluateTrackStatus, endTracking, startTracking} =
     useTracking();
   const navigation = useNavigationFromHomeTabs();
+  const {data: presets} = usePresetsQuery();
+
+  const trackPresets = React.useMemo(
+    () => presets?.filter(p => p.geometry.includes('line')) ?? [],
+    [presets],
+  );
 
   async function finishTracking() {
     const {hasMovedEnough, hasMultiplePoints} = evaluateTrackStatus();
@@ -51,7 +58,11 @@ export const StartStopTrack = () => {
     endTracking();
 
     if (hasMultiplePoints) {
-      navigation.navigate('PresetChooser', {mode: 'track'});
+      if (trackPresets.length === 0) {
+        navigation.navigate('SaveTrack');
+      } else {
+        navigation.navigate('PresetChooser', {mode: 'track'});
+      }
     }
   }
 

@@ -1,4 +1,5 @@
 import React, {useCallback} from 'react';
+import {StyleSheet} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useFocusEffect} from '@react-navigation/native';
@@ -9,6 +10,7 @@ import {HeaderLeft} from './HeaderLeft';
 import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
 import {useTrackState} from '../../contexts/TrackStoreContext';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
+import TrackIcon from '../../images/Track.svg';
 
 export const SaveTrackScreen = () => {
   const navigation = useNavigationFromRoot();
@@ -38,14 +40,28 @@ export const SaveTrackScreen = () => {
       notesComponent={<TrackDescriptionField />}
       isTrack={true}
       PresetIcon={
-        <PresetCircleIcon iconId={preset?.iconRef?.docId} size="medium" />
+        preset ? (
+          <PresetCircleIcon iconId={preset.iconRef?.docId} size="medium" />
+        ) : (
+          <TrackIcon style={styles.icon} />
+        )
       }
-      onPressPreset={() =>
-        navigation.navigate('PresetChooser', {mode: 'track'})
+      onPressPreset={
+        preset
+          ? () => navigation.navigate('PresetChooser', {mode: 'track'})
+          : undefined
       }
+      presetDisabled={preset ? false : true}
     />
   );
 };
+
+const styles = StyleSheet.create({
+  icon: {
+    width: 30,
+    height: 30,
+  },
+});
 
 export const m = defineMessages({
   trackEditScreenTitle: {

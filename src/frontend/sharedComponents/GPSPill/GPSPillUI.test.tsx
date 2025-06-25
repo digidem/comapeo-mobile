@@ -1,11 +1,15 @@
 import {render, screen} from '@testing-library/react-native';
 
-import {DARK_GREY, DARK_MAGENTA, GREEN, WARNING_RED} from '../lib/styles';
-import {GPSPill} from './GPSPill';
+import {DARK_GREY, DARK_MAGENTA, GREEN, WARNING_RED} from '../../lib/styles';
+import {GPSPillUI} from './GPSPillUI';
 
 test('searching status', async () => {
   render(
-    <GPSPill status="searching" testID="gps-pill" iconTestID="gps-pill-icon" />,
+    <GPSPillUI
+      status="searching"
+      testID="gps-pill"
+      iconTestID="gps-pill-icon"
+    />,
   );
 
   expect(screen.getByText('--')).toBeOnTheScreen();
@@ -20,7 +24,7 @@ test('searching status', async () => {
 
 test('error status', async () => {
   render(
-    <GPSPill status="error" testID="gps-pill" iconTestID="gps-pill-icon" />,
+    <GPSPillUI status="error" testID="gps-pill" iconTestID="gps-pill-icon" />,
   );
 
   expect(screen.getByText('--')).toBeOnTheScreen();
@@ -36,7 +40,7 @@ test('error status', async () => {
 
 test('good status', async () => {
   render(
-    <GPSPill
+    <GPSPillUI
       status="good"
       accuracy={1}
       testID="gps-pill"
@@ -57,20 +61,20 @@ test('good status', async () => {
 
 test('displayed accuracy', async () => {
   // Handles integers
-  render(<GPSPill status="good" accuracy={10} />);
+  render(<GPSPillUI status="good" accuracy={10} />);
   expect(screen.getByText('10 ±')).toBeOnTheScreen();
 
   // Handles negative accuracy elegantly
-  render(<GPSPill status="good" accuracy={-1} />);
+  render(<GPSPillUI status="good" accuracy={-1} />);
   expect(screen.getByText('1 ±')).toBeOnTheScreen();
 
   // Handles floats
-  render(<GPSPill status="good" accuracy={0.5} />);
+  render(<GPSPillUI status="good" accuracy={0.5} />);
   expect(screen.getByText('1 ±')).toBeOnTheScreen();
 
-  render(<GPSPill status="good" accuracy={5.25} />);
+  render(<GPSPillUI status="good" accuracy={5.25} />);
   expect(screen.getByText('5 ±')).toBeOnTheScreen();
 
-  render(<GPSPill status="good" accuracy={10.75} />);
+  render(<GPSPillUI status="good" accuracy={10.75} />);
   expect(screen.getByText('11 ±')).toBeOnTheScreen();
 });

@@ -27,8 +27,7 @@ describe('Exchange - Exchange Settings for Previews', () => {
       $(byTextMatches('Reduced smaller size photos.')),
     ).toBeDisplayed();
     await expect($(byTextMatches('No audio included.'))).toBeDisplayed();
-    const backButton = $(byResourceId('MAIN.header-back-btn'));
-    await backButton.click();
+    await $(byResourceId('MAIN.header-back-btn')).click();
     await $('~Close Menu').click();
   });
 });

@@ -52,7 +52,7 @@ export type RootStackParamsList = {
     // but we will eventually support deleting saved photos as well.
     photo: ProcessedDraftPhoto;
   };
-  PresetChooser: undefined;
+  PresetChooser: {mode: 'observation' | 'track'} | undefined;
   AddPhoto: undefined;
   Observation: {observationId: string};
   ObservationEdit: {observationId: string};

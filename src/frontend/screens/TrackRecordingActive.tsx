@@ -32,17 +32,19 @@ export const TrackRecordingActive = ({
   navigation,
 }: NativeRootNavigationProps<'TrackRecordingActive'>) => {
   const {formatMessage} = useIntl();
-  const {cancelTracking} = useTracking();
+  const {endTracking, evaluateTrackStatus} = useTracking();
 
   function handleStopTracks() {
-    const hasTracksSaved = cancelTracking();
+    const {hasMovedEnough, hasMultiplePoints} = evaluateTrackStatus();
 
-    if (hasTracksSaved) {
+    endTracking();
+
+    if (hasMovedEnough && hasMultiplePoints) {
       navigation.replace('SaveTrack');
       return;
+    } else {
+      navigation.goBack();
     }
-
-    navigation.goBack();
   }
 
   return (

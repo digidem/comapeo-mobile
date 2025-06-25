@@ -36,19 +36,22 @@ const m = defineMessages({
 
 export const StartStopTrack = () => {
   const {formatMessage} = useIntl();
-  const {isTracking, cancelTracking, startTracking} = useTracking();
+  const {isTracking, evaluateTrackStatus, endTracking, startTracking} =
+    useTracking();
   const navigation = useNavigationFromHomeTabs();
 
-  async function endTracking() {
-    const {hasMovedEnough, hasMultiplePoints} = cancelTracking();
+  async function finishTracking() {
+    const {hasMovedEnough, hasMultiplePoints} = evaluateTrackStatus();
 
     if (!hasMovedEnough) {
       navigation.navigate('DidNotMoveBottomSheet');
       return;
     }
 
+    endTracking();
+
     if (hasMultiplePoints) {
-      navigation.navigate('SaveTrack');
+      navigation.navigate('PresetChooser', {mode: 'track'});
     }
   }
 
@@ -75,7 +78,7 @@ export const StartStopTrack = () => {
             text={formatMessage(m.stopButtonText)}
             fullSize={true}
             renderIcon={() => <StopTrackingIcon />}
-            onPress={endTracking}
+            onPress={finishTracking}
           />
         </>
       )}

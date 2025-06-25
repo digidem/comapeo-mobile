@@ -17,6 +17,8 @@ import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 import {Preset} from '@comapeo/schema';
 import {usePresetsQuery} from '../hooks/server/presets';
 import {usePersistedDraftObservation} from '../hooks/persistedState/usePersistedDraftObservation';
+import {useTrackActions, useTrackState} from '../contexts/TrackStoreContext';
+import {HeaderLeft} from './SaveTrack/HeaderLeft';
 
 const m = defineMessages({
   categoryTitle: {
@@ -33,14 +35,19 @@ const ROW_HEIGHT = 120;
 const MIN_COL_WIDTH = 100;
 
 export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
+  route,
   navigation,
 }) => {
   const {updatePreset, usePreset} = useDraftObservation();
   const {data: presets} = usePresetsQuery();
+  const {setTrackPreset} = useTrackActions();
   const observationId = usePersistedDraftObservation(
     store => store.observationId,
   );
-  const existingPreset = usePreset();
+  const observationPreset = usePreset();
+  const trackPreset = useTrackState(state => state.preset);
+  const mode = route.params?.mode || 'observation';
+  const existingPreset = mode === 'track' ? trackPreset : observationPreset;
 
   const handleGoBack = React.useCallback(() => {
     navigation.goBack();
@@ -49,8 +56,16 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: props =>
-        // If a preset exists, the user is editting the preset, so they should just navigate BACK to the create or edit observation screen
-        existingPreset ? (
+        mode === 'track' ? (
+          existingPreset ? (
+            <CustomHeaderLeft
+              onPress={handleGoBack}
+              headerBackButtonProps={props}
+            />
+          ) : (
+            <HeaderLeft headerBackButtonProps={props} />
+          )
+        ) : existingPreset ? (
           <CustomHeaderLeft
             onPress={handleGoBack}
             headerBackButtonProps={props}
@@ -59,21 +74,26 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
           <CustomHeaderLeftClose headerBackButtonProps={props} />
         ),
     });
-  }, [navigation, existingPreset, handleGoBack]);
+  }, [navigation, existingPreset, handleGoBack, mode]);
 
   const presetsList = Array.from(presets)
     // Only show presets where the geometry property includes "point"
-    .filter(p => p.geometry.includes('point'))
+    .filter(p => p.geometry.includes(mode === 'track' ? 'line' : 'point'))
     // Sort presets by sort property and then by name, then filter only point presets
     .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
 
   const handleSelectPreset = (selectedPreset: Preset) => {
-    updatePreset(selectedPreset);
-    if (observationId) {
-      navigation.navigate('ObservationEdit', {observationId});
-      return;
+    if (mode === 'track') {
+      setTrackPreset(selectedPreset);
+      navigation.navigate('SaveTrack');
+    } else {
+      updatePreset(selectedPreset);
+      if (observationId) {
+        navigation.navigate('ObservationEdit', {observationId});
+      } else {
+        navigation.navigate('ObservationCreate');
+      }
     }
-    navigation.navigate('ObservationCreate');
   };
 
   const rowsPerWindow = Math.ceil(

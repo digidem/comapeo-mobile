@@ -9,11 +9,20 @@ import * as v from 'valibot';
 import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
 import {LocationHistoryPoint} from '../sharedTypes/location';
 import {calculateTotalDistance} from '../utils/distance';
+import {Preset} from '@comapeo/schema';
+
+const PresetSchema = v.object({
+  docId: v.string(),
+  name: v.string(),
+  geometry: v.array(v.string()),
+  iconRef: v.optional(v.object({docId: v.string()})),
+});
 
 const TrackStateSchema = v.intersect([
   v.object({
     description: v.string(),
     distance: v.number(),
+    preset: v.nullable(PresetSchema),
     locationHistory: v.array(
       // TODO: Create schema for this
       v.object({
@@ -55,6 +64,7 @@ function createInitialState(): TrackState {
     locationHistory: [],
     observationRefs: [],
     trackingSince: null,
+    preset: null,
   };
 }
 
@@ -92,6 +102,9 @@ export function createTrackStore({persist} = {persist: false}) {
   }
 
   const actions = {
+    setTrackPreset: (preset: Preset) => {
+      store.setState({preset});
+    },
     setDescription: (description: string) => {
       store.setState({description});
     },
@@ -141,6 +154,7 @@ export function createTrackStore({persist} = {persist: false}) {
         locationHistory: [],
         observationRefs: [],
         trackingSince: null,
+        preset: null,
       });
     },
     setTracking: (isTracking: boolean) => {

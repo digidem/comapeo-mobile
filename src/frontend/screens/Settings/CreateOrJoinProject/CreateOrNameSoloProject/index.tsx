@@ -7,6 +7,7 @@ import {
   StyleSheet,
   View,
   TouchableWithoutFeedback,
+  BackHandler,
 } from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {useCreateProject, useUpdateProjectSettings} from '@comapeo/core-react';
@@ -90,19 +91,17 @@ export const CreateOrNameSoloProject = ({
     updateSettingsMutation.status === 'pending';
 
   React.useEffect(() => {
-    // Prevent back navigation while project creation mutation is pending
-    const unsubscribe = navigation.addListener('beforeRemove', event => {
-      if (!mutationIsPending) {
-        return;
-      }
+    const subscription = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => {
+        if (mutationIsPending) {
+          return true;
+        }
+      },
+    );
 
-      event.preventDefault();
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, [navigation, mutationIsPending]);
+    return () => subscription.remove();
+  }, [mutationIsPending]);
 
   const {control, handleSubmit} = useForm<ProjectFormType>({
     defaultValues: {projectName: ''},
@@ -121,7 +120,7 @@ export const CreateOrNameSoloProject = ({
         {name: projectName},
         {
           onSuccess: () => {
-            navigation.navigate('ProjectCreatedNewSolo', {name: projectName});
+            navigation.replace('ProjectCreatedNewSolo', {name: projectName});
           },
           onError,
         },
@@ -132,7 +131,7 @@ export const CreateOrNameSoloProject = ({
         {
           onSuccess: projectId => {
             setActiveProjectId(projectId);
-            navigation.navigate('ProjectCreatedNewProject', {
+            navigation.replace('ProjectCreatedNewProject', {
               name: projectName,
             });
           },

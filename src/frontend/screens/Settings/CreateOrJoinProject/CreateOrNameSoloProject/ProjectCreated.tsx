@@ -3,7 +3,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {BackHandler, StyleSheet, View} from 'react-native';
 import GreenCheck from '../../../../images/Success.svg';
 import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, CommonActions} from '@react-navigation/native';
 import {
   PrimaryButton,
   SecondaryButton,
@@ -65,8 +65,12 @@ export const ProjectCreated = ({
   );
 
   function handleGoToConfig() {
-    navigation.popToTop();
-    navigation.replace('Config');
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{name: 'Home'}, {name: 'Config'}],
+      }),
+    );
   }
 
   function handleGoToMap() {
@@ -74,15 +78,22 @@ export const ProjectCreated = ({
   }
 
   function handleGoToInviteScreen() {
-    navigation.popToTop();
-    navigation.replace('SelectDevice');
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{name: 'Home'}, {name: 'SelectDevice'}],
+      }),
+    );
   }
 
   function handleViewProject() {
-    navigation.popToTop();
-    navigation.replace('ProjectSettings');
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{name: 'Home'}, {name: 'ProjectSettings'}],
+      }),
+    );
   }
-
   const screenActionsAndLabels = isSolo
     ? {
         message: m.projectReady,

@@ -26,9 +26,9 @@ export default function args() {
     throw new Error('backend did not receive sentryUserId')
   if (typeof sentryEnvironment !== 'string')
     throw new Error('backend did not receive sentryEnvironment')
-  if (typeof values.rootKey !== 'string')
+  if (typeof rootKey !== 'string')
     throw new Error('backend did not receive root key from front end')
-  if (typeof values.version === 'string')
+  if (typeof version !== 'string')
     throw new Error('backend got invalid version')
 
   return { sentryEnvironment, sentryUserId, metricsIsEnabled, version, rootKey }

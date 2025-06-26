@@ -59,7 +59,7 @@ export const StartNewProjectScreen: React.FC<Props> = ({navigation}) => {
   }
 
   function handleStart() {
-    navigation.navigate('CreateProject', {action: 'CreateNewProject'});
+    navigation.navigate('CreateProject');
   }
 
   return (

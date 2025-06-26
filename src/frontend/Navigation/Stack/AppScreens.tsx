@@ -20,10 +20,10 @@ import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
 import {CoordinateFormat} from '../../screens/Settings/AppSettings/CoordinateFormat';
 import {CreateOrJoinProject} from '../../screens/Settings/CreateOrJoinProject';
 import {
-  CreateProject,
+  CreateOrNameSoloProject,
   createNavigationOptions as createNameProjectNavOptions,
-} from '../../screens/Settings/CreateOrJoinProject/CreateProject';
-import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateProject/ProjectCreated';
+} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject';
+import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject/ProjectCreated';
 import {JoinExistingProject} from '../../screens/Settings/CreateOrJoinProject/JoinExistingProject';
 import {YourTeam} from '../../screens/Settings/ProjectSettings/YourTeam';
 import {SelectDevice} from '../../screens/Settings/ProjectSettings/YourTeam/SelectDevice';
@@ -217,7 +217,12 @@ export const createDefaultScreenGroup = ({
       />
       <RootStack.Screen
         name="CreateProject"
-        component={CreateProject}
+        component={CreateOrNameSoloProject}
+        options={createNameProjectNavOptions({intl})}
+      />
+      <RootStack.Screen
+        name="NameSoloProject"
+        component={CreateOrNameSoloProject}
         options={createNameProjectNavOptions({intl})}
       />
       <RootStack.Screen

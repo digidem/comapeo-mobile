@@ -89,9 +89,7 @@ export const CreateOrJoinProject: NativeNavigationComponent<
             subHeader={m.startProject}
             style={{marginTop: 10}}
             onPress={() => {
-              navigation.navigate('CreateProject', {
-                action: 'CreateNewProject',
-              });
+              navigation.navigate('CreateProject');
             }}
           />
         )}

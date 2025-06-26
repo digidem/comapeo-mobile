@@ -58,7 +58,7 @@ export const InviteCollaboratorsScreen: React.FC<Props> = ({navigation}) => {
   }
 
   function handleNameProject() {
-    navigation.navigate('CreateProject', {action: 'UpdateSoloProject'});
+    navigation.navigate('NameSoloProject');
   }
 
   return (

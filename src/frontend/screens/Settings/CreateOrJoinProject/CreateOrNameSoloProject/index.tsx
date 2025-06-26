@@ -72,13 +72,13 @@ type ProjectFormType = {
 
 type ProjectType = 'updatedSolo' | 'newlyCreated';
 
-export const CreateProject = ({
+export const CreateOrNameSoloProject = ({
   navigation,
   route,
-}: NativeRootNavigationProps<'CreateProject'>) => {
-  const {formatMessage: t} = useIntl();
+}: NativeRootNavigationProps<'CreateProject' | 'NameSoloProject'>) => {
+  const isSolo = route.name === 'NameSoloProject';
 
-  const action = route.params.action;
+  const {formatMessage: t} = useIntl();
 
   const {setActiveProjectId} = useActiveProjectIdActions();
   const createProjectMutation = useCreateProject();
@@ -121,7 +121,7 @@ export const CreateProject = ({
       navigation.navigate('ErrorBottomSheet');
     };
 
-    if (action === 'UpdateSoloProject') {
+    if (isSolo) {
       updateSettingsMutation.mutate(
         {name: projectName},
         {
@@ -189,9 +189,7 @@ export const CreateProject = ({
                 testID="PROJECT.create-btn"
                 fullSize={true}
                 text={
-                  action === 'UpdateSoloProject'
-                    ? t(m.saveProjectButton)
-                    : t(m.createProjectButton)
+                  isSolo ? t(m.saveProjectButton) : t(m.createProjectButton)
                 }
                 onPress={handleSubmit(handleCreateOrUpdateProject)}
               />
@@ -210,12 +208,12 @@ export function createNavigationOptions({
 }) {
   return ({
     route,
-  }: NativeRootNavigationProps<'CreateProject'>): NativeStackNavigationOptions => {
+  }:
+    | NativeRootNavigationProps<'CreateProject'>
+    | NativeRootNavigationProps<'NameSoloProject'>): NativeStackNavigationOptions => {
+    const isSolo = route.name === 'NameSoloProject';
     return {
-      headerTitle:
-        route.params.action === 'UpdateSoloProject'
-          ? intl(m.titleSoloProject)
-          : intl(m.title),
+      headerTitle: isSolo ? intl(m.titleSoloProject) : intl(m.title),
     };
   };
 }

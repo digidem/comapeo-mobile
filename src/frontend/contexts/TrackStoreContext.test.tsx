@@ -37,6 +37,7 @@ describe('useTrackState()', () => {
       locationHistory: [],
       observationRefs: [],
       trackingSince: null,
+      preset: null,
     });
   });
 });
@@ -66,6 +67,7 @@ describe('useTrackActions()', () => {
       locationHistory: [],
       observationRefs: [],
       trackingSince: dateSpy.mock.instances.at(-1),
+      preset: null,
     });
 
     act(() => {
@@ -79,6 +81,7 @@ describe('useTrackActions()', () => {
       locationHistory: [],
       observationRefs: [],
       trackingSince: null,
+      preset: null,
     });
   });
 
@@ -107,6 +110,7 @@ describe('useTrackActions()', () => {
       locationHistory: [],
       observationRefs: [{docId: 'doc_1', versionId: 'version_1'}],
       trackingSince: null,
+      preset: null,
     });
   });
 
@@ -134,6 +138,7 @@ describe('useTrackActions()', () => {
       locationHistory: [],
       observationRefs: [],
       trackingSince: dateSpy.mock.instances.at(-1),
+      preset: null,
     });
 
     act(() => {
@@ -147,6 +152,7 @@ describe('useTrackActions()', () => {
       locationHistory: [],
       observationRefs: [],
       trackingSince: null,
+      preset: null,
     });
   });
 
@@ -172,6 +178,7 @@ describe('useTrackActions()', () => {
       locationHistory: [],
       observationRefs: [],
       trackingSince: null,
+      preset: null,
     });
   });
 
@@ -230,6 +237,7 @@ describe('useTrackActions()', () => {
       observationRefs: [],
       trackingSince: null,
       distance: expect.any(Number),
+      preset: null,
     });
     expect(stateHook.result.current.distance).toBeGreaterThan(previousDistance);
   });

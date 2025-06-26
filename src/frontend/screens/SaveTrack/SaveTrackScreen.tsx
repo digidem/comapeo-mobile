@@ -11,12 +11,16 @@ import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButt
 import {useTrackState} from '../../contexts/TrackStoreContext';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import TrackIcon from '../../images/Track.svg';
+import {getTrackDurationAndDistance} from '../../utils/trackMetrics';
 
 export const SaveTrackScreen = () => {
   const navigation = useNavigationFromRoot();
   const {formatMessage: t} = useIntl();
   const preset = useTrackState(state => state.preset);
   usePreventAndroidBackButton();
+  const locationHistory = useTrackState(state => state.locationHistory);
+  const {durationMs, distance} = getTrackDurationAndDistance(locationHistory);
+
   const presetName = preset
     ? t({
         id: `presets.${preset.docId}.name`,
@@ -39,6 +43,8 @@ export const SaveTrackScreen = () => {
       presetName={presetName}
       notesComponent={<TrackDescriptionField />}
       isTrack={true}
+      trackDurationMs={durationMs}
+      trackDistance={distance}
       PresetIcon={
         preset ? (
           <PresetCircleIcon iconId={preset.iconRef?.docId} size="medium" />

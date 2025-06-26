@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {useTrackState} from '../../contexts/TrackStoreContext';
 import SimpleTrackIcon from '../../images/SimpleTrack.svg';
 import {millisecondsToHHMMSS} from '../../lib/millisecondsToFormattedTime';
 import {BLUE_GREY} from '../../lib/styles';
@@ -14,23 +13,30 @@ const m = defineMessages({
   },
 });
 
-export const TrackStats = () => {
-  const locationHistory = useTrackState(state => state.locationHistory);
-  const distance = useTrackState(state => state.distance);
+type TrackStatsProps = {
+  distance: number;
+  durationMs: number;
+  backgroundColor?: string;
+  center?: boolean;
+};
+
+export const TrackStats = ({
+  distance,
+  durationMs,
+  backgroundColor,
+  center = false,
+}: TrackStatsProps) => {
   const {formatMessage} = useIntl();
-
-  let totalMs = 0;
-  if (locationHistory.length >= 2) {
-    const first = locationHistory[0];
-    const last = locationHistory.at(-1);
-    totalMs = first && last ? last.timestamp - first.timestamp : 0;
-  }
-
-  const totalTime = millisecondsToHHMMSS(totalMs);
+  const totalTime = millisecondsToHHMMSS(durationMs);
   const totalKm = distance.toFixed(2);
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        center && {justifyContent: 'center'},
+        backgroundColor && {backgroundColor},
+      ]}>
       <View style={styles.timeBlock}>
         <SimpleTrackIcon width={9} height={12} />
         <BodyText variant="tinyMeta">{totalTime}</BodyText>

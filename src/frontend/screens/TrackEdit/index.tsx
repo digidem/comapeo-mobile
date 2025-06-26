@@ -10,6 +10,10 @@ import {SaveButton} from '../../sharedComponents/SaveButton';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {TrackDescriptionField} from '../SaveTrack/TrackDescriptionField';
 import {HeaderLeft} from './HeaderLeft';
+import {
+  getLocationHistoryFromTrack,
+  getTrackDurationAndDistance,
+} from '../../utils/trackMetrics';
 
 export const m = defineMessages({
   trackEditScreenTitle: {
@@ -34,6 +38,8 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
   const editTrackMutation = useEditTrackMutation();
   const description = useTrackState(state => state.description);
   const {setDescription, clearCurrentTrack} = useTrackActions();
+  const locationHistory = track ? getLocationHistoryFromTrack(track) : [];
+  const {durationMs, distance} = getTrackDurationAndDistance(locationHistory);
 
   useEffect(() => {
     if (track && typeof track.tags.notes === 'string') {
@@ -82,6 +88,8 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
       notesComponent={<TrackDescriptionField />}
       PresetIcon={<TrackIcon style={styles.icon} />}
       isTrack={true}
+      trackDurationMs={durationMs}
+      trackDistance={distance}
       presetDisabled={true}
     />
   );

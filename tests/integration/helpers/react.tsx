@@ -24,6 +24,7 @@ import {AppDiagnosticMetrics} from '../../../src/frontend/metrics/AppDiagnosticM
 import {DeviceDiagnosticMetrics} from '../../../src/frontend/metrics/DeviceDiagnosticMetrics';
 import {IntlProvider} from '../../../src/frontend/contexts/IntlContext';
 import {QueryClient} from '@tanstack/react-query';
+import {createSavedLocationStore} from '../../../src/frontend/contexts/SavedLocationContext';
 
 const DEFAULT_LOCAL_DISCOVERY_STATE: LocalDiscoveryState = {
   status: 'started',
@@ -150,6 +151,9 @@ export function createAppProvidersWrapper({
 
   const persistedActiveProjectIdStore = createActiveProjectIdStore();
 
+  const persistedSavedLocationStore = createSavedLocationStore({
+    persist: false,
+  });
   const OuterWrapper = createMinimalWrapper();
   const wrapper = ({children}: {children: ReactNode}) => {
     return (
@@ -166,6 +170,7 @@ export function createAppProvidersWrapper({
             persistedManualEntryCoordinateFormatStore
           }
           coordinateFormatStore={persistedCoordinateFormatStore}
+          savedLocationStore={persistedSavedLocationStore}
           trackStore={persistedTrackStore}>
           {children}
         </AppProviders>

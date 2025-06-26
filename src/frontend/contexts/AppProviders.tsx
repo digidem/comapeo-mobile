@@ -35,6 +35,10 @@ import {
   MetricsDiagnosticsStoreProvider,
 } from './MetricsDiagnosticsStoreContext';
 import {LocationProvider} from './LocationContext';
+import {
+  SavedLocationStoreProvider,
+  SavedLocationStore,
+} from './SavedLocationContext';
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -47,6 +51,7 @@ type AppProvidersProps = {
   manualEntryCoordinateFormatStore: ManualEntryCoordinateFormatStore;
   activeProjectIdStore: ActiveProjectIdStore;
   metricsDiagnosticsStore: MetricsDiagnosticsStore;
+  savedLocationStore: SavedLocationStore;
   queryClient: QueryClient;
 };
 
@@ -61,6 +66,7 @@ export const AppProviders = ({
   manualEntryCoordinateFormatStore,
   activeProjectIdStore,
   metricsDiagnosticsStore,
+  savedLocationStore,
   queryClient,
 }: AppProvidersProps) => {
   return (
@@ -74,27 +80,29 @@ export const AppProviders = ({
                 <QueryClientProvider client={queryClient}>
                   <SafeAreaProvider>
                     <GestureHandlerRootView style={styles.flex}>
-                      <LocationProvider>
-                        <TrackTimerContextProvider>
-                          <LocalDiscoveryProvider
-                            value={localDiscoveryController}>
-                            <ClientApiProvider clientApi={mapeoApi}>
-                              <ActiveProjectProvider>
-                                <BottomSheetModalProvider>
-                                  <PhotoPromiseProvider>
-                                    <DraftObservationProvider
-                                      draftObservationStore={
-                                        persistedDrafObservationStore
-                                      }>
-                                      <AuthProvider>{children}</AuthProvider>
-                                    </DraftObservationProvider>
-                                  </PhotoPromiseProvider>
-                                </BottomSheetModalProvider>
-                              </ActiveProjectProvider>
-                            </ClientApiProvider>
-                          </LocalDiscoveryProvider>
-                        </TrackTimerContextProvider>
-                      </LocationProvider>
+                      <SavedLocationStoreProvider value={savedLocationStore}>
+                        <LocationProvider>
+                          <TrackTimerContextProvider>
+                            <LocalDiscoveryProvider
+                              value={localDiscoveryController}>
+                              <ClientApiProvider clientApi={mapeoApi}>
+                                <ActiveProjectProvider>
+                                  <BottomSheetModalProvider>
+                                    <PhotoPromiseProvider>
+                                      <DraftObservationProvider
+                                        draftObservationStore={
+                                          persistedDrafObservationStore
+                                        }>
+                                        <AuthProvider>{children}</AuthProvider>
+                                      </DraftObservationProvider>
+                                    </PhotoPromiseProvider>
+                                  </BottomSheetModalProvider>
+                                </ActiveProjectProvider>
+                              </ClientApiProvider>
+                            </LocalDiscoveryProvider>
+                          </TrackTimerContextProvider>
+                        </LocationProvider>
+                      </SavedLocationStoreProvider>
                     </GestureHandlerRootView>
                   </SafeAreaProvider>
                 </QueryClientProvider>

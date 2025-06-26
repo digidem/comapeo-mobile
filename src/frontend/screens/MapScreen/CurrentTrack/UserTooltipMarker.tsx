@@ -11,6 +11,7 @@ export const UserTooltipMarker = () => {
   const totalDistance = useTrackState(state => state.distance);
 
   return (
+    // We dont want to put this check in the parent because it will cause the parent (the map) to render too often
     location?.coords && (
       <MarkerView
         id="locationView"

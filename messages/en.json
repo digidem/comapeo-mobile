@@ -602,10 +602,6 @@
   "screens.CameraScreen.noCameraAccess": {
     "message": "No access to camera. Please Allow access in setting"
   },
-  "screens.CategoryChooser.categoryTitle": {
-    "description": "Title for category chooser screen",
-    "message": "Choose a category"
-  },
   "screens.ConfirmDeletePhoto.cancel": {
     "message": "Cancel"
   },

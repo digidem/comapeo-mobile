@@ -35,7 +35,7 @@ if (sentryEnvironment !== 'production') {
 Sentry.init({
   dsn: 'https://5326989762cd5899283975f5459524c1@o4507148235702272.ingest.us.sentry.io/4509442300641281',
 
-  enabled: metricsIsEnabled === 'true',
+  enabled: metricsIsEnabled,
   sendDefaultPii: false,
   debug: sentryDebug,
   environment: sentryEnvironment,

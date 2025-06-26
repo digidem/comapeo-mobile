@@ -26,6 +26,7 @@ describe('Project - Rename Project from Drawer', () => {
     await expect(screenTitle).toBeDisplayed();
     await expect($(byText('Import Categories'))).toBeDisplayed();
     await $(byResourceId('MAIN.header-back-btn')).click();
+    await $('~Close Menu').click();
   });
   it('should leave observations in place with a renamed project', async () => {
     const obsListTab = await $('~Go to observations list.');

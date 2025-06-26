@@ -3,7 +3,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {BackHandler, StyleSheet, View} from 'react-native';
 import GreenCheck from '../../../../images/Success.svg';
 import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
-import {CommonActions, useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 import {
   PrimaryButton,
   SecondaryButton,
@@ -46,7 +46,10 @@ const m = defineMessages({
 export const ProjectCreated = ({
   route,
   navigation,
-}: NativeRootNavigationProps<'ProjectCreated'>) => {
+}: NativeRootNavigationProps<
+  'ProjectCreatedNewProject' | 'ProjectCreatedNewSolo'
+>) => {
+  const isSolo = route.name === 'ProjectCreatedNewSolo';
   const {formatMessage: t} = useIntl();
 
   // disables back button
@@ -61,60 +64,40 @@ export const ProjectCreated = ({
     }, []),
   );
 
-  function resetTo(routes: {name: string}[]) {
-    navigation.dispatch(
-      CommonActions.reset({
-        routes,
-        index: routes.length - 1,
-      }),
-    );
-  }
-
   function handleGoToConfig() {
-    resetTo([
-      {name: 'Home'},
-      {name: 'Menu'},
-      {name: 'ProjectSettings'},
-      {name: 'Config'},
-    ]);
+    navigation.popToTop();
+    navigation.replace('Config');
   }
 
   function handleGoToMap() {
-    resetTo([{name: 'Home'}]);
+    navigation.popToTop();
   }
 
   function handleGoToInviteScreen() {
-    resetTo([
-      {name: 'Home'},
-      {name: 'Menu'},
-      {name: 'ProjectSettings'},
-      {name: 'YourTeam'},
-      {name: 'SelectDevice'},
-    ]);
+    navigation.popToTop();
+    navigation.replace('SelectDevice');
   }
 
   function handleViewProject() {
-    resetTo([{name: 'Home'}, {name: 'Menu'}, {name: 'ProjectSettings'}]);
+    navigation.popToTop();
+    navigation.replace('ProjectSettings');
   }
 
-  const screenOptionsObject = {
-    updatedSolo: {
-      message: m.projectReady,
-      secondaryLabel: m.updateCategories,
-      secondaryAction: () => handleGoToConfig(),
-      primaryLabel: m.inviteDevice,
-      primaryAction: () => handleGoToInviteScreen(),
-    },
-    newlyCreated: {
-      message: m.nowAdded,
-      secondaryLabel: m.goToMap,
-      secondaryAction: () => handleGoToMap(),
-      primaryLabel: m.viewProject,
-      primaryAction: () => handleViewProject(),
-    },
-  };
-
-  const setup = screenOptionsObject[route.params.type];
+  const screenActionsAndLabels = isSolo
+    ? {
+        message: m.projectReady,
+        secondaryLabel: m.updateCategories,
+        secondaryAction: () => handleGoToConfig(),
+        primaryLabel: m.inviteDevice,
+        primaryAction: () => handleGoToInviteScreen(),
+      }
+    : {
+        message: m.nowAdded,
+        secondaryLabel: m.goToMap,
+        secondaryAction: () => handleGoToMap(),
+        primaryLabel: m.viewProject,
+        primaryAction: () => handleViewProject(),
+      };
 
   return (
     <View style={styles.container}>
@@ -141,21 +124,21 @@ export const ProjectCreated = ({
               textAlign: 'center',
               color: NEW_DARK_GREY,
             }}>
-            {t(setup.message)}
+            {t(screenActionsAndLabels.message)}
           </BodyText>
         </View>
       </View>
       <View style={{width: '100%', alignItems: 'center'}}>
         <SecondaryButton
           fullSize
-          text={t(setup.secondaryLabel)}
-          onPress={setup.secondaryAction}
+          text={t(screenActionsAndLabels.secondaryLabel)}
+          onPress={screenActionsAndLabels.secondaryAction}
         />
         <PrimaryButton
           style={{marginTop: 20}}
           fullSize
-          onPress={setup.primaryAction}
-          text={t(setup.primaryLabel)}
+          onPress={screenActionsAndLabels.primaryAction}
+          text={t(screenActionsAndLabels.primaryLabel)}
         />
       </View>
     </View>

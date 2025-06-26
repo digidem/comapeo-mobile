@@ -70,8 +70,6 @@ type ProjectFormType = {
   projectName: string;
 };
 
-type ProjectType = 'updatedSolo' | 'newlyCreated';
-
 export const CreateOrNameSoloProject = ({
   navigation,
   route,
@@ -113,9 +111,6 @@ export const CreateOrNameSoloProject = ({
   const handleCreateOrUpdateProject = (val: ProjectFormType) => {
     const projectName = val.projectName.trim();
 
-    const onProjectCreated = (type: ProjectType) =>
-      navigation.navigate('ProjectCreated', {name: projectName, type});
-
     const onError = (err: unknown) => {
       Sentry.captureException(err);
       navigation.navigate('ErrorBottomSheet');
@@ -126,7 +121,7 @@ export const CreateOrNameSoloProject = ({
         {name: projectName},
         {
           onSuccess: () => {
-            onProjectCreated('updatedSolo');
+            navigation.navigate('ProjectCreatedNewSolo', {name: projectName});
           },
           onError,
         },
@@ -137,7 +132,9 @@ export const CreateOrNameSoloProject = ({
         {
           onSuccess: projectId => {
             setActiveProjectId(projectId);
-            onProjectCreated('newlyCreated');
+            navigation.navigate('ProjectCreatedNewProject', {
+              name: projectName,
+            });
           },
           onError,
         },

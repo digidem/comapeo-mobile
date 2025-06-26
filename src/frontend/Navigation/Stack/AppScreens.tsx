@@ -226,7 +226,12 @@ export const createDefaultScreenGroup = ({
         options={createNameProjectNavOptions({intl})}
       />
       <RootStack.Screen
-        name="ProjectCreated"
+        name="ProjectCreatedNewProject"
+        component={ProjectCreated}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="ProjectCreatedNewSolo"
         component={ProjectCreated}
         options={{headerShown: false}}
       />

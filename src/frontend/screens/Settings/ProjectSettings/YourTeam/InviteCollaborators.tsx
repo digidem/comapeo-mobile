@@ -100,7 +100,7 @@ export const InviteCollaboratorsScreen: React.FC<Props> = ({navigation}) => {
 function InfoListItem({text, Icon}: {text: string; Icon: React.FC<SvgProps>}) {
   return (
     <View style={styles.bulletItem}>
-      <Icon width={20} height={26} style={styles.bulletIcon} />
+      <Icon width={20} height={26} />
       <BodyText variant="smallMeta" style={styles.bulletText}>
         {text}
       </BodyText>
@@ -137,9 +137,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
-  },
-  bulletIcon: {
-    marginTop: 0,
   },
   bulletText: {
     lineHeight: 18,

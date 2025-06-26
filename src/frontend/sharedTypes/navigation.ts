@@ -80,7 +80,8 @@ export type RootStackParamsList = {
   AppSettings: undefined;
   ProjectSettings: undefined;
   CreateOrJoinProject: undefined;
-  ProjectCreated: {name: string; type: 'updatedSolo' | 'newlyCreated'};
+  ProjectCreatedNewProject: {name: string};
+  ProjectCreatedNewSolo: {name: string};
   JoinExistingProject: undefined;
   YourTeam: undefined;
   SelectDevice: undefined;

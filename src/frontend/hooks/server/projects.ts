@@ -118,7 +118,7 @@ export function useExportObservationsAndShare({
         exportOptions: {
           lang,
           observations: true,
-          tracks: true,
+          tracks: false,
           attachments: true,
         },
       });

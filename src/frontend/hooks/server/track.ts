@@ -6,6 +6,7 @@ import {
 } from '@comapeo/core-react';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {Track} from '@comapeo/schema';
 
 export function useTracks() {
   const {projectId} = useActiveProject();
@@ -38,4 +39,13 @@ export function useDeleteTrackMutation() {
     projectId,
     docType: 'track',
   });
+}
+
+export function useGetPresetFromTrack(track: Track) {
+  const {projectId} = useActiveProject();
+  const {data: allPresets} = useManyDocs({projectId, docType: 'preset'});
+
+  if (!track?.presetRef || !allPresets) return null;
+
+  return allPresets.find(p => p.docId === track.presetRef?.docId) ?? null;
 }

@@ -3,7 +3,11 @@ import React, {useCallback, useEffect} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
 import {useTrackActions, useTrackState} from '../../contexts/TrackStoreContext';
-import {useEditTrackMutation, useTrackQuery} from '../../hooks/server/track';
+import {
+  useEditTrackMutation,
+  useTrackQuery,
+  useGetPresetFromTrack,
+} from '../../hooks/server/track';
 import TrackIcon from '../../images/Track.svg';
 import {Editor} from '../../sharedComponents/Editor';
 import {SaveButton} from '../../sharedComponents/SaveButton';
@@ -14,6 +18,7 @@ import {
   getLocationHistoryFromTrack,
   getTrackDurationAndDistance,
 } from '../../utils/trackMetrics';
+import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 
 export const m = defineMessages({
   trackEditScreenTitle: {
@@ -40,6 +45,13 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
   const {setDescription, clearCurrentTrack} = useTrackActions();
   const locationHistory = track ? getLocationHistoryFromTrack(track) : [];
   const {durationMs, distance} = getTrackDurationAndDistance(locationHistory);
+  const preset = useGetPresetFromTrack(track);
+  const presetName = preset
+    ? formatMessage({
+        id: `presets.${preset.docId}.name`,
+        defaultMessage: preset.name,
+      })
+    : formatMessage(m.presetTitle);
 
   useEffect(() => {
     if (track && typeof track.tags.notes === 'string') {
@@ -84,9 +96,15 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
 
   return (
     <Editor
-      presetName={formatMessage(m.presetTitle)}
+      presetName={presetName}
       notesComponent={<TrackDescriptionField />}
-      PresetIcon={<TrackIcon style={styles.icon} />}
+      PresetIcon={
+        preset ? (
+          <PresetCircleIcon iconId={preset.iconRef?.docId} size="medium" />
+        ) : (
+          <TrackIcon style={styles.icon} />
+        )
+      }
       isTrack={true}
       trackDurationMs={durationMs}
       trackDistance={distance}

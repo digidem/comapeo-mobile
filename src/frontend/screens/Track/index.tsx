@@ -7,6 +7,7 @@ import {FormattedMessage, MessageDescriptor, defineMessages} from 'react-intl';
 import {
   useDeleteTrackMutation,
   useTrackQuery,
+  useGetPresetFromTrack,
 } from '../../hooks/server/track.ts';
 import {useObservations} from '../../hooks/server/observations.ts';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
@@ -22,6 +23,7 @@ import {
   getTrackDurationAndDistance,
 } from '../../utils/trackMetrics';
 import {TrackStats} from '../../sharedComponents/Editor/TrackStats.tsx';
+import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 
 const m = defineMessages({
   title: {
@@ -56,6 +58,7 @@ export const TrackScreen = ({
   const canDelete = useCanEditOrDelete(track.originalVersionId);
   const locationHistory = getLocationHistoryFromTrack(track);
   const {durationMs, distance} = getTrackDurationAndDistance(locationHistory);
+  const preset = useGetPresetFromTrack(track);
 
   function deleteTrack() {
     deleteTrackMutate(
@@ -100,7 +103,11 @@ export const TrackScreen = ({
             center
           />
           <View style={styles.trackTitleWrapper}>
-            <TrackIcon />
+            {preset ? (
+              <PresetCircleIcon iconId={preset.iconRef?.docId} size="medium" />
+            ) : (
+              <TrackIcon />
+            )}
             <Text style={styles.trackTitle}>
               <FormattedMessage {...m.tracks} />
             </Text>

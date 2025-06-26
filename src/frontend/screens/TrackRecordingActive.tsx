@@ -37,9 +37,8 @@ export const TrackRecordingActive = ({
   function handleStopTracks() {
     const {hasMovedEnough, hasMultiplePoints} = evaluateTrackStatus();
 
-    endTracking();
-
     if (hasMovedEnough && hasMultiplePoints) {
+      endTracking();
       navigation.replace('SaveTrack');
       return;
     } else {

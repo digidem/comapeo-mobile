@@ -1099,6 +1099,9 @@
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
     "message": "Observation"
   },
+  "screens.ObservationCategoryChooser.title": {
+    "message": "Choose a category"
+  },
   "screens.ObservationCreate.changePreset": {
     "message": "Change"
   },
@@ -1762,6 +1765,9 @@
   },
   "screens.Track.tracks": {
     "message": "Tracks"
+  },
+  "screens.TrackCategoryChooser.title": {
+    "message": "Choose a category"
   },
   "screens.TrackEdit.title": {
     "description": "Title for editing track screen",

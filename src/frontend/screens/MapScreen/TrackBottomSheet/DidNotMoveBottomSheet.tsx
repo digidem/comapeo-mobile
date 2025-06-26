@@ -7,7 +7,7 @@ import {
   DestructiveButton,
 } from '../../../sharedComponents/Buttons';
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
-import {useTrackActions} from '../../../contexts/TrackStoreContext';
+import {useTracking} from '../../../hooks/useTracking';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import ErrorIcon from '../../../images/Error.svg';
 import {StyleSheet, View} from 'react-native';
@@ -35,10 +35,9 @@ export const DidNotMoveBottomSheet = ({
   navigation,
 }: NativeRootNavigationProps<'DidNotMoveBottomSheet'>) => {
   const {formatMessage} = useIntl();
-  const {clearCurrentTrack, setTracking} = useTrackActions();
+  const {cancelTracking} = useTracking();
   const clearAndDismiss = () => {
-    setTracking(false);
-    clearCurrentTrack();
+    cancelTracking();
     navigation.goBack();
   };
 

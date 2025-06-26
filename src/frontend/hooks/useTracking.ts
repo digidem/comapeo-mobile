@@ -10,7 +10,7 @@ import * as Sentry from '@sentry/react-native';
 import {useLocationState} from '../contexts/LocationContext';
 
 export function useTracking() {
-  const {setTracking, addNewLocations} = useTrackActions();
+  const {setTracking, addNewLocations, clearCurrentTrack} = useTrackActions();
   const navigation = useNavigation();
   const isTracking = useTrackState(state => state.isTracking);
   const locationHistory = useTrackState(state => state.locationHistory);
@@ -67,10 +67,20 @@ export function useTracking() {
     setTracking(false);
   }, [location, addNewLocations, setTracking]);
 
+  const cancelTracking = useCallback(() => {
+    Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME).catch(err => {
+      Sentry.captureException(err);
+    });
+
+    setTracking(false);
+    clearCurrentTrack();
+  }, [setTracking, clearCurrentTrack]);
+
   return {
     isTracking,
     startTracking,
     evaluateTrackStatus,
     endTracking,
+    cancelTracking,
   };
 }

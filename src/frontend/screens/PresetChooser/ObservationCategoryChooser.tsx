@@ -61,7 +61,7 @@ export const ObservationCategoryChooser: NativeNavigationComponent<
   }, [navigation, currentPreset, handleGoBack]);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="MAIN.categories-scrn">
       <CategoryGrid presets={filteredPresets} onSelect={handleSelect} />
     </View>
   );

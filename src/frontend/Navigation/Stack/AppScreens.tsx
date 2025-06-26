@@ -13,7 +13,8 @@ import {TurnOffPasscode} from '../../screens/AppPasscode/TurnOffPasscode';
 import {Security} from '../../screens/Security';
 import {AuthScreen} from '../../screens/AuthScreen';
 import {ObscurePasscode} from '../../screens/ObscurePasscode';
-import {PresetChooser} from '../../screens/PresetChooser';
+import {ObservationCategoryChooser} from '../../screens/PresetChooser/ObservationCategoryChooser.tsx';
+import {TrackCategoryChooser} from '../../screens/PresetChooser/TrackCategoryChooser.tsx';
 import {ObservationScreen} from '../../screens/Observation';
 import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
@@ -183,9 +184,14 @@ export const createDefaultScreenGroup = ({
         options={{headerTitle: intl(ObscurePasscode.navTitle)}}
       />
       <RootStack.Screen
-        name="PresetChooser"
-        component={PresetChooser}
-        options={{headerTitle: intl(PresetChooser.navTitle)}}
+        name="TrackCategoryChooser"
+        component={TrackCategoryChooser}
+        options={{headerTitle: intl(TrackCategoryChooser.navTitle)}}
+      />
+      <RootStack.Screen
+        name="ObservationCategoryChooser"
+        component={ObservationCategoryChooser}
+        options={{headerTitle: intl(ObservationCategoryChooser.navTitle)}}
       />
       <RootStack.Screen
         name="Observation"

@@ -340,7 +340,7 @@ export const ObservationCreate = ({
           testID={`OBS.${preset?.name}-icon`}
         />
       }
-      onPressPreset={() => navigation.navigate('PresetChooser')}
+      onPressPreset={() => navigation.navigate('ObservationCategoryChooser')}
       notes={typeof notes !== 'string' ? '' : notes}
       updateNotes={newVal => {
         updateTags('notes', newVal);

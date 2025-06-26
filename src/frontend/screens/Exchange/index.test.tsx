@@ -11,13 +11,13 @@ import {
   createTestServer,
   inviteToProject,
   setUpIPC,
-} from '../../../tests/integration/helpers/core';
-import {createAppProvidersWrapper} from '../../../tests/integration/helpers/react';
-import {sleep} from '../lib/sleep';
-import type {AppStackParamsList} from '../sharedTypes/navigation';
-import {SyncScreen} from './Exchange';
+} from '../../../../tests/integration/helpers/core';
+import {createAppProvidersWrapper} from '../../../../tests/integration/helpers/react';
+import {sleep} from '../../lib/sleep';
+import type {AppStackParamsList} from '../../sharedTypes/navigation';
+import {SyncScreen} from '.';
 
-jest.mock('../hooks/useCurrentTime');
+jest.mock('../../hooks/useCurrentTime');
 
 describe('Exchange screen', () => {
   let manager: MapeoManager;

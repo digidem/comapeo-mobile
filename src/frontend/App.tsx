@@ -160,10 +160,9 @@ const requestServerStatus = () => {
 };
 
 const subscribeToServerStatus = (listener: (msg: StatusMessage) => unknown) => {
-  nodejs.channel.addListener('server:status', listener);
-  return () => {
-    nodejs.channel.removeListener('server:status', listener);
-  };
+  const subscription = nodejs.channel.addListener('server:status', listener);
+  // @ts-expect-error - incorrect types on nodejs.channel
+  return () => subscription.remove();
 };
 
 const App = () => {

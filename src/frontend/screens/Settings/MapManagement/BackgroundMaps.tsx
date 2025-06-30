@@ -11,7 +11,7 @@ import {
   useRemoveCustomMapFile,
 } from '../../../hooks/server/maps';
 import ErrorSvg from '../../../images/Error.svg';
-import GreenCheckSvg from '../../../images/GreenCheck.svg';
+import GreenCheckSvg from '../../../images/Success.svg';
 import {RED, WHITE} from '../../../lib/styles';
 import {
   BottomSheetModal,

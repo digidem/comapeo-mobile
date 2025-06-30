@@ -8,7 +8,8 @@ describe('Multiple Projects - Create and Switch Between Projects', () => {
     await $('~Open Menu').click();
     await $(byText('All Projects')).click();
 
-    await $(byText('Create new project')).click();
+    await $(byText('Start new project')).click();
+    await $(byText('Start')).click();
     const nameInput = await $(byResourceId('PROJECT.name-inp'));
     await nameInput.setValue(output.names.secondProject);
     await $(byResourceId('PROJECT.create-btn')).click();
@@ -17,7 +18,7 @@ describe('Multiple Projects - Create and Switch Between Projects', () => {
   });
 
   it('should land in the new project and display it on the Map screen', async () => {
-    const mapBtn = await $(byTextMatches('Go to Map'));
+    const mapBtn = await $(byTextMatches('Start Mapping'));
     await mapBtn.click();
 
     const header = await $(byResourceId('HOME.header-title'));

@@ -1,31 +1,34 @@
 import {BackHandler, StyleSheet, View} from 'react-native';
-import GreenCheck from '../../../../images/GreenCheck.svg';
+import GreenCheck from '../../../../images/Success.svg';
 import {defineMessages, useIntl} from 'react-intl';
 import React from 'react';
 import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
-import {DeviceNameWithIcon} from '../../../../sharedComponents/DeviceNameWithIcon';
-import {RoleWithIcon} from '../../../../sharedComponents/RoleWithIcon';
 import {
   SecondaryButton,
   PrimaryButton,
 } from '../../../../sharedComponents/Buttons';
 import {useFocusEffect} from '@react-navigation/native';
-import {COORDINATOR_ROLE_ID} from '../../../../sharedTypes';
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
 import {resetToYourTeam} from '../../../../lib/resetToYourTeam';
+import {BodyText} from '../../../../sharedComponents/Text/BodyText';
+import {BLACK} from '../../../../lib/styles';
 
 const m = defineMessages({
   inviteAccepted: {
     id: 'screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted',
-    defaultMessage: 'Invite Accepted',
+    defaultMessage: 'Accepted!',
   },
   addAnotherDevice: {
     id: 'screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice',
-    defaultMessage: 'Add Another Device',
+    defaultMessage: 'Invite Another Device',
   },
-  close: {
-    id: 'screens.Setting.ProjectSettings.YourTeam.InviteAccepted.close',
-    defaultMessage: 'Close',
+  viewTeam: {
+    id: 'screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam',
+    defaultMessage: 'View Team',
+  },
+  partOfProject: {
+    id: 'screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject',
+    defaultMessage: '<bold>{deviceName}</bold> is now part of your project.',
   },
 });
 
@@ -34,7 +37,7 @@ export const InviteAccepted = ({
   route,
 }: NativeRootNavigationProps<'InviteAccepted'>) => {
   const {formatMessage: t} = useIntl();
-  const {role, ...deviceInfo} = route.params;
+  const {name} = route.params;
 
   useFocusEffect(
     React.useCallback(() => {
@@ -49,30 +52,29 @@ export const InviteAccepted = ({
 
   return (
     <View style={styles.container}>
-      <View style={{alignItems: 'center'}}>
-        <GreenCheck />
-        <HeaderText variant="header3" style={{marginTop: 10}}>
+      <View style={{alignItems: 'center', gap: 30}}>
+        <GreenCheck width="80" height="80" />
+        <HeaderText variant="header1" style={{color: BLACK}}>
           {t(m.inviteAccepted)}
         </HeaderText>
-        <DeviceNameWithIcon {...deviceInfo} style={{marginTop: 10}} />
-        <RoleWithIcon
-          style={{marginTop: 20}}
-          role={role === COORDINATOR_ROLE_ID ? 'coordinator' : 'participant'}
-        />
+        <BodyText style={{textAlign: 'center', paddingHorizontal: 40}}>
+          {t(m.partOfProject, {
+            deviceName: name,
+          })}
+        </BodyText>
       </View>
-      <View style={{alignItems: 'center'}}>
+      <View style={{alignItems: 'center', gap: 12}}>
         <SecondaryButton
+          fullSize
+          text={t(m.viewTeam)}
+          onPress={() => resetToYourTeam(navigation.dispatch)}
+        />
+        <PrimaryButton
           fullSize
           text={t(m.addAnotherDevice)}
           onPress={() => {
             navigation.popTo('SelectDevice');
           }}
-        />
-        <PrimaryButton
-          style={{marginTop: 10}}
-          fullSize
-          text={t(m.close)}
-          onPress={() => resetToYourTeam(navigation.dispatch)}
         />
       </View>
     </View>

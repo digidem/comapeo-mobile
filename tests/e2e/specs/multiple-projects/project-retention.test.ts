@@ -49,13 +49,14 @@ describe('Multiple Projects - Project Data Retention', () => {
   it('should create a third project and not carry over the observation', async () => {
     await $('~Open Menu').click();
     await $(byText('All Projects')).click();
-    await $(byText('Create new project')).click();
+    await $(byText('Start new project')).click();
+    await $(byText('Start')).click();
 
     const nameInput = await $(byResourceId('PROJECT.name-inp'));
     await nameInput.setValue(output.names.thirdProject);
     await $(byResourceId('PROJECT.create-btn')).click();
 
-    const mapBtn = await $(byText('Go to Map'));
+    const mapBtn = await $(byText('Start Mapping'));
     await mapBtn.click();
 
     const header = await $(byResourceId('HOME.header-title'));

@@ -5,29 +5,28 @@ import {output} from '../../utils/naming';
 
 describe('Project - Rename Project from Drawer', () => {
   it('should allow user to rename a project', async () => {
-    const createProjectButton = await $(byText('New Project'));
-    await expect(createProjectButton).toBeDisplayed();
-    await createProjectButton.click();
+    const screenTitle = await $(byText('Name My Project'));
+    await expect(screenTitle).toBeDisplayed();
 
     const createBtn = await $(byResourceId('PROJECT.create-btn'));
     await createBtn.click();
 
     await expect($(byResourceId('error-icon'))).toBeDisplayed();
 
-    const advancedSettings = await $(
-      byResourceId('PROJECT.advanced-settings-toggle'),
-    );
-    await advancedSettings.click();
-    await expect($(byText('Import Categories'))).toBeDisplayed();
-    await advancedSettings.click();
-
     const nameInput = await $(byResourceId('PROJECT.name-inp'));
     await nameInput.setValue(output.names.project);
     await createBtn.click();
 
-    await expect($(byText('Invite Device'))).toBeDisplayed();
-    const goToMapButton = await $(byText('Go to Map'));
-    await goToMapButton.click();
+    await expect($(byText('Invite a Device'))).toBeDisplayed();
+    const categoriesButton = await $(byText('Update Categories Set'));
+    await categoriesButton.click();
+  });
+  it('should take the user to the categories screen', async () => {
+    const screenTitle = await $(byText('Categories'));
+    await expect(screenTitle).toBeDisplayed();
+    await expect($(byText('Import Categories'))).toBeDisplayed();
+    await $(byResourceId('MAIN.header-back-btn')).click();
+    await $('~Close Menu').click();
   });
   it('should leave observations in place with a renamed project', async () => {
     const obsListTab = await $('~Go to observations list.');

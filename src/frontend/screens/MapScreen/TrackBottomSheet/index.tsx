@@ -1,7 +1,7 @@
 import React from 'react';
 import {GPSForegroundPermissionDisabled} from './GPSForegroundPermissionDisabled';
 import * as Location from 'expo-location';
-import {Linking, StyleSheet, View} from 'react-native';
+import {Linking, StyleSheet, View, AppState} from 'react-native';
 import {GPSBackgroundPermissionDisabled} from './GPSBackgroundPermissionDisabled';
 import {Loading} from '../../../sharedComponents/Loading';
 import {StartStopTrack} from './StartStopTrack';
@@ -19,17 +19,43 @@ export const TrackBottomSheet = React.memo(() => {
   const [backgroundPermission, setBackgroundPermission] =
     React.useState<Location.LocationPermissionResponse | null>(null);
 
+  const checkPermissions = React.useCallback(async () => {
+    const [foreground, background] = await Promise.all([
+      Location.getForegroundPermissionsAsync(),
+      Location.getBackgroundPermissionsAsync(),
+    ]);
+    setForegroundPermission(foreground);
+    setBackgroundPermission(background);
+  }, []);
+
+  // Re-check permissions on screen focus
+  // Handles re-checking when navigating back from in-app
   useFocusEffect(
     React.useCallback(() => {
-      Location.getForegroundPermissionsAsync().then(permission =>
-        setForegroundPermission(permission),
-      );
-
-      Location.getBackgroundPermissionsAsync().then(permission =>
-        setBackgroundPermission(permission),
-      );
-    }, []),
+      checkPermissions();
+    }, [checkPermissions]),
   );
+
+  // Re-check permissions when returning from system settings
+  // App goes to background during system settings, then becomes active again when user returns
+  // Only needed if permissions haven't been granted yet
+  React.useEffect(() => {
+    if (foregroundPermission?.granted && backgroundPermission?.granted) {
+      return;
+    }
+
+    const sub = AppState.addEventListener('change', state => {
+      if (state === 'active') {
+        checkPermissions();
+      }
+    });
+
+    return () => sub.remove();
+  }, [
+    foregroundPermission?.granted,
+    backgroundPermission?.granted,
+    checkPermissions,
+  ]);
 
   const renderContent = () => {
     if (!foregroundPermission || !backgroundPermission) {

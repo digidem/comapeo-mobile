@@ -7,7 +7,6 @@ import {
   StyleSheet,
   View,
   TouchableWithoutFeedback,
-  BackHandler,
 } from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {useCreateProject, useUpdateProjectSettings} from '@comapeo/core-react';
@@ -92,17 +91,23 @@ export const CreateOrNameSoloProject = ({
 
   React.useEffect(() => {
     // Prevent back navigation while project creation mutation is pending
-    const subscription = BackHandler.addEventListener(
-      'hardwareBackPress',
-      () => {
-        if (mutationIsPending) {
-          return true;
-        }
-      },
-    );
+    const unsubscribe = navigation.addListener('beforeRemove', event => {
+      if (!mutationIsPending) {
+        return;
+      }
 
-    return () => subscription.remove();
-  }, [mutationIsPending]);
+      if (
+        event.data.action.type === 'GO_BACK' ||
+        event.data.action.type === 'POP'
+      ) {
+        event.preventDefault();
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [navigation, mutationIsPending]);
 
   const {control, handleSubmit} = useForm<ProjectFormType>({
     defaultValues: {projectName: ''},

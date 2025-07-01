@@ -63,7 +63,8 @@ export type RootStackParamsList = {
   UnableToLinkScreen: undefined;
   ConnectingToDeviceScreen: {task: () => Promise<void>};
   ConfirmLeavePracticeModeScreen: {projectAction: 'join' | 'create'};
-  CreateProject: {action: 'CreateNewProject' | 'UpdateSoloProject'};
+  CreateProject: undefined;
+  NameSoloProject: undefined;
   Security: undefined;
   DirectionalArrow: undefined;
   P2pUpgrade: undefined;
@@ -80,13 +81,14 @@ export type RootStackParamsList = {
   AppSettings: undefined;
   ProjectSettings: undefined;
   CreateOrJoinProject: undefined;
-  ProjectCreated: {name: string};
+  ProjectCreatedNewProject: {name: string};
+  ProjectCreatedNewSolo: {name: string};
   JoinExistingProject: undefined;
   YourTeam: undefined;
   SelectDevice: undefined;
   SelectInviteeRole: {name: string; deviceType: DeviceType; deviceId: string};
   ReviewAndInvite: InviteProps;
-  InviteAccepted: InviteProps;
+  InviteAccepted: {name: string};
   InviteDeclined: InviteProps;
   UnableToCancelInvite: InviteProps;
   DeviceNameDisplay: undefined;
@@ -129,6 +131,7 @@ export type RootStackParamsList = {
   Menu: undefined;
   AllProjects: undefined;
   InviteCollaborators: undefined;
+  StartNewProject: undefined;
   EditProjectDetails: undefined;
   TrackRecordingActive: undefined;
   RemoteArchive: undefined;

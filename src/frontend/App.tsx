@@ -47,13 +47,14 @@ if (applicationId?.endsWith('.dev') || applicationId?.endsWith('.pre')) {
 }
 
 const sentryDebug = applicationId?.endsWith('.dev');
+const sentryUserId = getSentryUserId({now: new Date(), storage});
 
 Sentry.init({
   dsn: 'https://e0e02907e05dc72a6da64c3483ed88a6@o4507148235702272.ingest.us.sentry.io/4507170965618688',
   tracesSampleRate: 1.0,
   environment: sentryEnvironment,
   debug: sentryDebug, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
-  initialScope: {user: {id: getSentryUserId({now: new Date(), storage})}},
+  initialScope: {user: {id: sentryUserId}},
 });
 
 Mapbox.setTelemetryEnabled(false);
@@ -84,7 +85,6 @@ const messagePort = new MessagePortLike();
 const mapeoApi = createMapeoClient(messagePort, {timeout: Infinity});
 const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();
-initializeNodejs();
 
 SplashScreen.setOptions({fade: true});
 SplashScreen.preventAutoHideAsync().catch(err => {
@@ -135,6 +135,9 @@ persistedMetricsDiagnosticsStore.instance.subscribe((current, previous) => {
     deviceDiagnosticMetrics.setEnabled(current.isEnabled);
   }
 });
+
+// Need to know if metrics are enabled before starting node
+initializeNodejs({metricsIsEnabled, sentryEnvironment, sentryUserId});
 
 // Defines task that handles background location updates for tracks feature
 TaskManager.defineTask(

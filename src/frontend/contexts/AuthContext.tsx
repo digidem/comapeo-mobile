@@ -5,8 +5,9 @@ const {FlagSecureModule} = NativeModules;
 import {useIsShareDialogOpen} from '../hooks/share';
 import {DEFAULT_OBSCURE_CODE} from '../lib/security';
 import {useSecurityState} from './SecurityStoreContext';
+import {useIsAudioPermissionModalOpen} from '../hooks/useAudioPermissionTracker';
 
-type AuthState = 'unauthenticated' | 'authenticated' | 'obscured';
+export type AuthState = 'unauthenticated' | 'authenticated' | 'obscured';
 
 type AuthContextType = {
   authenticate: (
@@ -36,6 +37,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   // If E2E test mode is enabled, disable FlagSecure to allow screen recordings on BrowserStack
   const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
   const shareDialogIsOpen = useIsShareDialogOpen();
+  const isAudioPermissionModalOpen = useIsAudioPermissionModalOpen();
 
   React.useEffect(() => {
     if (passcode !== null && !isE2E) {
@@ -49,8 +51,8 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
     const appStateListener = AppState.addEventListener(
       'change',
       (nextAppState: AppStateStatus) => {
-        // If the app state changes due to opening a share dialog, do not unauthenticate
-        if (shareDialogIsOpen) return;
+        // If the app state changes due to opening a share dialog or the in app Audio Permissions, do not unauthenticate
+        if (shareDialogIsOpen || isAudioPermissionModalOpen) return;
 
         if (passcode !== null) {
           if (
@@ -65,7 +67,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
     );
 
     return () => appStateListener.remove();
-  }, [passcode, shareDialogIsOpen]);
+  }, [passcode, shareDialogIsOpen, isAudioPermissionModalOpen]);
 
   const authenticate: AuthContextType['authenticate'] = React.useCallback(
     (passcodeValue, validateOnly = false) => {

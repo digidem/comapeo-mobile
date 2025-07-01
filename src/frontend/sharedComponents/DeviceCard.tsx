@@ -1,24 +1,15 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {LIGHT_GREY, MAGENTA, MEDIUM_GREY} from '../lib/styles';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {LIGHT_GREY, MEDIUM_GREY} from '../lib/styles';
 import {ExhaustivenessError} from '../lib/ExhaustivenessError';
 import type {
   DeviceConnectionStatus,
   DeviceType,
   ViewStyleProp,
 } from '../sharedTypes';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import {DeviceNameWithIcon} from './DeviceNameWithIcon';
-import {FormattedDate, defineMessages, useIntl} from 'react-intl';
-import {Text} from './Text';
-import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes';
-
-const m = defineMessages({
-  leaveProject: {
-    id: 'sharedComponents.DeviceCard.leaveProject',
-    defaultMessage: 'Leave Project',
-  },
-});
+import {FormattedDate} from 'react-intl';
+import {BodyText} from './Text/BodyText';
 
 type DeviceCardProps = {
   deviceType: DeviceType;
@@ -54,9 +45,6 @@ export const DeviceCard = ({
       throw new ExhaustivenessError(deviceConnectionStatus);
   }
 
-  const {navigate} = useNavigationFromRoot();
-  const {formatMessage} = useIntl();
-
   return (
     <TouchableOpacity
       disabled={!onPress || isDisconnected}
@@ -74,24 +62,16 @@ export const DeviceCard = ({
         />
         <View style={{alignSelf: 'flex-start'}}>
           {dateAdded && (
-            <Text style={{fontSize: 12, marginBottom: 10, color: MEDIUM_GREY}}>
+            <BodyText
+              variant="tinyMeta"
+              style={{marginBottom: 10, color: MEDIUM_GREY}}>
               <FormattedDate
                 value={dateAdded}
                 year="numeric"
                 month="short"
                 day="2-digit"
               />
-            </Text>
-          )}
-          {thisDevice && (
-            <TouchableOpacity
-              onPress={() => {
-                navigate('HowToLeaveProject');
-              }}>
-              <Text style={{fontSize: 12, color: MAGENTA, fontWeight: 'bold'}}>
-                {formatMessage(m.leaveProject)}
-              </Text>
-            </TouchableOpacity>
+            </BodyText>
           )}
         </View>
       </View>

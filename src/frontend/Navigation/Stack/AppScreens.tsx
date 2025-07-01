@@ -19,8 +19,11 @@ import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
 import {CoordinateFormat} from '../../screens/Settings/AppSettings/CoordinateFormat';
 import {CreateOrJoinProject} from '../../screens/Settings/CreateOrJoinProject';
-import {CreateProject} from '../../screens/Settings/CreateOrJoinProject/CreateProject';
-import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateProject/ProjectCreated';
+import {
+  CreateOrNameSoloProject,
+  createNavigationOptions as createNameProjectNavOptions,
+} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject';
+import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject/ProjectCreated';
 import {JoinExistingProject} from '../../screens/Settings/CreateOrJoinProject/JoinExistingProject';
 import {YourTeam} from '../../screens/Settings/ProjectSettings/YourTeam';
 import {SelectDevice} from '../../screens/Settings/ProjectSettings/YourTeam/SelectDevice';
@@ -69,7 +72,6 @@ import {DataAndPrivacy} from '../../screens/Settings/DataAndPrivacy/DataAndPriva
 import {SettingsPrivacyPolicy} from '../../screens/Settings/DataAndPrivacy/SettingsPrivacyPolicy';
 import {TrackEdit} from '../../screens/TrackEdit/index.tsx';
 import {Config} from '../../screens/Settings/Config';
-import {HowToLeaveProject} from '../../screens/HowToLeaveProject.tsx';
 import {SaveButton} from '../../sharedComponents/SaveButton.tsx';
 import {AddRemoteArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/AddRemoteArchive.tsx';
 import {SuccessfullyAddedArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/SuccessfullyAddedArchive.tsx';
@@ -88,6 +90,7 @@ import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagement/ErrorBottomSheet.tsx';
 import {MenuScreen} from '../../screens/MenuScreen';
 import {InviteCollaboratorsScreen} from '../../screens/Settings/ProjectSettings/YourTeam/InviteCollaborators.tsx';
+import {StartNewProjectScreen} from '../../screens/Settings/ProjectSettings/StartNewProject.tsx';
 import {MenuHeader} from '../../sharedComponents/MenuHeader.tsx';
 import {EditProjectDetails} from '../../screens/Settings/ProjectSettings/EditProjectDetails.tsx';
 import {AllProjects} from '../../screens/AllProjects.tsx';
@@ -214,11 +217,21 @@ export const createDefaultScreenGroup = ({
       />
       <RootStack.Screen
         name="CreateProject"
-        component={CreateProject}
-        options={{headerTitle: intl(CreateProject.navTitle)}}
+        component={CreateOrNameSoloProject}
+        options={createNameProjectNavOptions({intl})}
       />
       <RootStack.Screen
-        name="ProjectCreated"
+        name="NameSoloProject"
+        component={CreateOrNameSoloProject}
+        options={createNameProjectNavOptions({intl})}
+      />
+      <RootStack.Screen
+        name="ProjectCreatedNewProject"
+        component={ProjectCreated}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="ProjectCreatedNewSolo"
         component={ProjectCreated}
         options={{headerShown: false}}
       />
@@ -335,11 +348,6 @@ export const createDefaultScreenGroup = ({
         options={{headerTitle: intl(Config.navTitle)}}
       />
       <RootStack.Screen
-        name="HowToLeaveProject"
-        component={HowToLeaveProject}
-        options={{headerShown: false}}
-      />
-      <RootStack.Screen
         name="BackgroundMaps"
         component={BackgroundMapsScreen}
         options={createBackgroundMapsNavigationOptions({intl})}
@@ -414,6 +422,13 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="InviteCollaborators"
         component={InviteCollaboratorsScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <RootStack.Screen
+        name="StartNewProject"
+        component={StartNewProjectScreen}
         options={{
           headerShown: false,
         }}

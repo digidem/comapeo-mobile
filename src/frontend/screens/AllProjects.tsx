@@ -21,7 +21,7 @@ const m = defineMessages({
   },
   createNewProject: {
     id: 'allProjects.createNewProject',
-    defaultMessage: 'Create new project',
+    defaultMessage: 'Start new project',
   },
 });
 
@@ -39,7 +39,7 @@ export const AllProjects: NativeNavigationComponent<'AllProjects'> = () => {
         style={{alignSelf: 'center', marginBottom: 20}}
         text={formatMessage(m.createNewProject)}
         onPress={() => {
-          navigate('CreateProject', {action: 'CreateNewProject'});
+          navigate('StartNewProject');
         }}
         renderIcon={() => <AddProjectIcon />}
       />

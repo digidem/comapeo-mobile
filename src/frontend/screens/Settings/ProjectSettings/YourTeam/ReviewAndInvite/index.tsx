@@ -42,7 +42,7 @@ export const ReviewAndInvite: NativeNavigationComponent<'ReviewAndInvite'> = ({
             return;
           }
           if (val === 'ACCEPT') {
-            navigation.navigate('InviteAccepted', route.params);
+            navigation.navigate('InviteAccepted', {name});
             return;
           }
 

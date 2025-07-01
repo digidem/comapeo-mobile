@@ -7,7 +7,6 @@ import {useLocationState} from '../../../contexts/LocationContext';
 
 export const CurrentTrackMapLayer = () => {
   const locationHistory = useTrackState(state => state.locationHistory);
-  const isTracking = useTrackState(state => state.isTracking);
   const location = useLocationState(store => store.location);
   const finalLocationHistory = location?.coords
     ? [
@@ -21,8 +20,7 @@ export const CurrentTrackMapLayer = () => {
     : locationHistory;
 
   return (
-    locationHistory.length > 1 &&
-    isTracking && (
+    locationHistory.length > 1 && (
       <ShapeSource
         id="routeSource"
         shape={convertToLineString(finalLocationHistory)}>

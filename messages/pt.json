@@ -328,7 +328,7 @@
     "message": "Suas alterações não serão salvas. Isso não poderá ser desfeito."
   },
   "allProjects.createNewProject": {
-    "message": "Create new project"
+    "message": "Start new project"
   },
   "allProjects.navTitle": {
     "message": "All Projects"
@@ -424,6 +424,10 @@
   "screens.AboutSettings.androidVersion": {
     "description": "Label for Android version",
     "message": "Versão do Android"
+  },
+  "screens.AboutSettings.emojiSource": {
+    "description": "Label for the source of emojis used in CoMapeo",
+    "message": "Emojis source:"
   },
   "screens.AboutSettings.phoneModel": {
     "description": "Label for phone model",
@@ -1429,13 +1433,16 @@
     "message": "Nome do dispositivo"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
-    "message": "Adicionar outro dispositivo"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.close": {
-    "message": "Fechar"
+    "message": "Invite Another Device"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
-    "message": "Convite aceito"
+    "message": "Accepted!"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
+    "message": "<bold>{deviceName}</bold> is now part of your project."
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
+    "message": "View Team"
   },
   "screens.Setting.ProjectSettings.YourTeam.NotOnProject.createOrJoin": {
     "message": "Criar ou Juntar-se a um Projeto"
@@ -1507,7 +1514,10 @@
     "message": "Nome do projeto:"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.title": {
-    "message": "New Project"
+    "message": "Start New Project"
+  },
+  "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
+    "message": "Name My Project"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
     "message": "Go Back"
@@ -1519,16 +1529,25 @@
     "message": "Para participar de um projeto, encontre o Coordenador do projeto que você deseja participar. Diga a eles o nome do seu dispositivo e o Coordenador lhe enviará um convite."
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.goToMap": {
-    "message": "Ir para Mapas"
+    "message": "Start Mapping"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.invitedDevice": {
-    "message": "Convidar dispositivo"
+    "message": "Invite a Device"
   },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.projectCreated": {
-    "message": "{projectName} criado!"
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.nowAdded": {
+    "message": "now added to All Projects"
   },
-  "screens.Settings.CreateOrJoinProject.advancedSettings": {
-    "message": "Configurações Avançadas do Projeto"
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.projectReady": {
+    "message": "is now ready for you to invite devices."
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
+    "message": "Success!"
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.updateCategories": {
+    "message": "Update Categories Set"
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.viewProject": {
+    "message": "View Project"
   },
   "screens.Settings.CreateOrJoinProject.alreadyOnProject": {
     "message": "Você já está em um projeto. Para criar um novo projeto, você deve desinstalar e reinstalar o CoMapeo."
@@ -1537,19 +1556,13 @@
     "message": "Criar um Projeto"
   },
   "screens.Settings.CreateOrJoinProject.createProjectButton": {
-    "message": "Criar Projeto"
+    "message": "Create"
   },
   "screens.Settings.CreateOrJoinProject.enterName": {
-    "message": "Digite um nome para o projeto"
+    "message": "Project Name"
   },
-  "screens.Settings.CreateOrJoinProject.importCategories": {
-    "message": "Import Categories"
-  },
-  "screens.Settings.CreateOrJoinProject.importConfigFileError": {
-    "message": "O nome do arquivo deve terminar com .mapeoconfig"
-  },
-  "screens.Settings.CreateOrJoinProject.importSuccessTitle": {
-    "message": "Successfully imported categories:"
+  "screens.Settings.CreateOrJoinProject.existingProjectName": {
+    "message": "Using an existing project name does not make them the same project."
   },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
     "message": "Junte-se a um projeto existente"
@@ -1557,11 +1570,20 @@
   "screens.Settings.CreateOrJoinProject.joinProject": {
     "message": "Participe de um projeto"
   },
-  "screens.Settings.CreateOrJoinProject.okButton": {
-    "message": "OK"
+  "screens.Settings.CreateOrJoinProject.keepInMind": {
+    "message": "Keep in mind"
   },
   "screens.Settings.CreateOrJoinProject.projectDescription": {
     "message": "Um projeto é um espaço seguro para os seus dados, apenas dispositivos que você convidar podem inserir e compartilhar informações com você. Crie ou participe de projetos para compartilhar dados com outros dispositivos. Esta ação irá apagar as observações que você coletou até agora. Considere compartilhar {icon} observações importantes para seu e-mail antes de continuar."
+  },
+  "screens.Settings.CreateOrJoinProject.projectUnique": {
+    "message": "Each project is unique and cannot exchange with another project."
+  },
+  "screens.Settings.CreateOrJoinProject.requestInvites": {
+    "message": "Request invites to join existing projects."
+  },
+  "screens.Settings.CreateOrJoinProject.saveProjectButton": {
+    "message": "Save"
   },
   "screens.Settings.CreateOrJoinProject.startProject": {
     "message": "Iniciar um projeto CoMapeo"
@@ -1798,21 +1820,42 @@
     "message": "Go Back"
   },
   "soloProject.inviteCollaborators.introText": {
-    "message": "Share observations with others using CoMapeo. Name your solo project to add your first collaborator."
+    "message": "Share observations with others using CoMapeo."
   },
   "soloProject.inviteCollaborators.inviteOnly": {
-    "message": "Only devices you invite can contribute and share data with you."
+    "message": "Only devices invited to this project can contribute."
   },
   "soloProject.inviteCollaborators.manageControl": {
-    "message": "Manage and control sharing and collaboration in Project Settings."
+    "message": "Easily manage project contributors and settings."
   },
   "soloProject.inviteCollaborators.nameProject": {
     "message": "Name My Project"
   },
-  "soloProject.inviteCollaborators.readyToShare": {
-    "message": "Once you name your project, all your observations are ready to be shared."
+  "soloProject.inviteCollaborators.nameProjectDescription": {
+    "message": "Name your project to start collaborating."
   },
   "soloProject.inviteCollaborators.title": {
     "message": "Invite Collaborators"
+  },
+  "soloProject.startNewProject.goBack": {
+    "message": "Go Back"
+  },
+  "soloProject.startNewProject.introText": {
+    "message": "Secure and private way to exchange with collaborators."
+  },
+  "soloProject.startNewProject.inviteOnly": {
+    "message": "Only devices invited to a project can contribute."
+  },
+  "soloProject.startNewProject.manageControl": {
+    "message": "Easily manage project contributors and settings."
+  },
+  "soloProject.startNewProject.start": {
+    "message": "Start"
+  },
+  "soloProject.startNewProject.title": {
+    "message": "Start New Project"
+  },
+  "soloProject.startNewProject.uniqueProject": {
+    "message": "Each project is unique and separate."
   }
 }

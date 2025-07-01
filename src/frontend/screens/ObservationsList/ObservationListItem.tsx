@@ -87,7 +87,11 @@ function ObservationListItemInner({
         <View style={styles.photoContainer}>
           <PhotoStack photos={photos} />
           <View style={styles.smallIconContainer}>
-            <PresetCircleIcon iconId={preset?.iconRef?.docId} size="small" />
+            <PresetCircleIcon
+              iconId={preset?.iconRef?.docId}
+              size="small"
+              color={preset?.color}
+            />
           </View>
         </View>
       ) : (
@@ -95,6 +99,7 @@ function ObservationListItemInner({
           iconId={preset?.iconRef?.docId}
           size="medium"
           testID={`OBS.${preset?.name}-list-icon`}
+          color={preset?.color}
         />
       )}
     </View>

@@ -6,7 +6,7 @@ import {ViewStyleProp} from '../../sharedTypes';
 
 const BORDER_DEFAULTS = {
   color: '#EAEAEA',
-  width: 1,
+  width: 3,
 } as const;
 
 export const Circle = ({

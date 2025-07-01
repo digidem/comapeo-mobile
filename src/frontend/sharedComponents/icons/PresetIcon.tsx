@@ -9,6 +9,7 @@ interface PresetIconProps {
   iconId?: string;
   size: IconSize;
   testID?: string;
+  color?: string;
 }
 
 const iconSizes = {
@@ -58,9 +59,14 @@ const PresetIcon = ({iconId, size, testID}: PresetIconProps) => {
   return <LoadedPresetIcon iconId={iconId} size={size} testID={testID} />;
 };
 
-export const PresetCircleIcon = ({iconId, size, testID}: PresetIconProps) => {
+export const PresetCircleIcon = ({
+  iconId,
+  size,
+  testID,
+  color,
+}: PresetIconProps) => {
   return (
-    <Circle radius={radii[size]} style={{elevation: 5}}>
+    <Circle radius={radii[size]} style={{elevation: 5}} color={color}>
       <PresetIcon iconId={iconId} size={size} testID={testID} />
     </Circle>
   );

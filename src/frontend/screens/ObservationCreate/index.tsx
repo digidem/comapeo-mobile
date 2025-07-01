@@ -338,6 +338,7 @@ export const ObservationCreate = ({
           size="medium"
           iconId={preset?.iconRef?.docId}
           testID={`OBS.${preset?.name}-icon`}
+          color={preset?.color}
         />
       }
       onPressPreset={() => navigation.navigate('ObservationCategoryChooser')}

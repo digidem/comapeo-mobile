@@ -66,7 +66,10 @@ export const PresetCircleIcon = ({
   color,
 }: PresetIconProps) => {
   return (
-    <Circle radius={radii[size]} style={{elevation: 5}} color={color}>
+    <Circle
+      radius={radii[size]}
+      style={{elevation: 5, borderWidth: 3}}
+      color={color}>
       <PresetIcon iconId={iconId} size={size} testID={testID} />
     </Circle>
   );

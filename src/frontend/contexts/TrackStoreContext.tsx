@@ -11,10 +11,14 @@ import {LocationHistoryPoint} from '../sharedTypes/location';
 import {calculateTotalDistance} from '../utils/distance';
 import {Preset} from '@comapeo/schema';
 
-const PresetSchema = v.object({
+export const PresetSchema = v.object({
   docId: v.string(),
   name: v.string(),
-  geometry: v.array(v.string()),
+  geometry: v.custom(
+    (value): value is string[] =>
+      Array.isArray(value) && value.includes('line'),
+    'geometry must include "line"',
+  ),
   iconRef: v.optional(v.object({docId: v.string()})),
   versionId: v.string(),
 });

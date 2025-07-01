@@ -13,8 +13,6 @@ export function useTracking() {
   const {setTracking, addNewLocations, clearCurrentTrack} = useTrackActions();
   const navigation = useNavigation();
   const isTracking = useTrackState(state => state.isTracking);
-  const locationHistory = useTrackState(state => state.locationHistory);
-  const distance = useTrackState(state => state.distance);
   const location = useLocationState(state => state.location);
 
   const startTracking = useCallback(() => {
@@ -27,7 +25,6 @@ export function useTracking() {
       accuracy: Location.Accuracy.Highest,
       activityType: Location.LocationActivityType.Fitness,
       distanceInterval: 1,
-      timeInterval: 5000,
     }).catch(err => {
       Sentry.captureException(err);
       setTracking(false);
@@ -36,14 +33,6 @@ export function useTracking() {
     });
   }, [isTracking, setTracking, navigation]);
 
-  /**
-   * @returns [distance and number of points] to determine next behavior.
-   */
-  const evaluateTrackStatus = useCallback(() => {
-    const hasMovedEnough = distance > 0.001;
-    const hasMultiplePoints = locationHistory.length > 1;
-    return {hasMovedEnough, hasMultiplePoints};
-  }, [distance, locationHistory]);
   /**
    * Stops location tracking and finalizes the track.
    * Adds the current location to the track if it's new.
@@ -79,7 +68,6 @@ export function useTracking() {
   return {
     isTracking,
     startTracking,
-    evaluateTrackStatus,
     endTracking,
     cancelTracking,
   };

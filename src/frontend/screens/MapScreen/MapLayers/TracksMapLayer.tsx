@@ -6,12 +6,10 @@ import {useTracks} from '../../../hooks/server/track';
 import {Track} from '@comapeo/schema';
 import {OnPressEvent} from '@rnmapbox/maps/lib/typescript/src/types/OnPressEvent';
 import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes';
-import {getTrackLineStyles} from '../../../lib/trackMapStyles';
-
+import {SAVED_TRACK_LINE_STYLE} from '../../../lib/trackMapStyles';
 export const TracksMapLayer = () => {
   const {data: tracks} = useTracks();
   const {navigate} = useNavigationFromHomeTabs();
-  const {base, overlay} = getTrackLineStyles();
 
   function handlePress(event: OnPressEvent) {
     const properties = event.features[0]?.properties;
@@ -25,8 +23,7 @@ export const TracksMapLayer = () => {
       onPress={handlePress}
       id="tracks"
       shape={convertTracksToFeatures(tracks)}>
-      <LineLayer id="trackLineBase" style={base} existing />
-      <LineLayer id="trackLineOverlay" style={overlay} existing />
+      <LineLayer id="trackLines" style={SAVED_TRACK_LINE_STYLE} existing />
     </ShapeSource>
   );
 };

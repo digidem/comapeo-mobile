@@ -68,7 +68,7 @@ export const DidNotMoveBottomSheet = ({
             fullSize
             text={formatMessage(m.keepRecording)}
             onPress={() => {
-              navigation.navigate('Home', {
+              navigation.popTo('Home', {
                 screen: 'Map',
                 params: {trackingOpen: true},
               });

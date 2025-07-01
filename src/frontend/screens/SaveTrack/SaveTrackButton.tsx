@@ -48,7 +48,7 @@ export const SaveTrackButton: FC = () => {
       {
         onSuccess: () => {
           clearCurrentTrack();
-          navigation.navigate('Home', {
+          navigation.popTo('Home', {
             screen: 'Map',
           });
         },

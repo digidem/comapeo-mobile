@@ -4,12 +4,14 @@ import * as React from 'react';
 import {useTrackState} from '../../../contexts/TrackStoreContext';
 import {convertToLineString} from '../../../lib/utils';
 import {useLocationState} from '../../../contexts/LocationContext';
-import {getTrackLineStyles} from '../../../lib/trackMapStyles';
+import {
+  BASE_TRACK_LINE_STYLE,
+  OVERLAY_TRACK_LINE_STYLE,
+} from '../../../lib/trackMapStyles';
 
 export const CurrentTrackMapLayer = () => {
   const locationHistory = useTrackState(state => state.locationHistory);
   const location = useLocationState(store => store.location);
-  const {base, overlay} = getTrackLineStyles();
   const finalLocationHistory = location?.coords
     ? [
         ...locationHistory,
@@ -29,13 +31,13 @@ export const CurrentTrackMapLayer = () => {
         <LineLayer
           id="currentTrackBase"
           belowLayerID="mapboxUserLocationPulseCircle"
-          style={base}
+          style={BASE_TRACK_LINE_STYLE}
           existing
         />
         <LineLayer
           id="currentTrackOverlay"
           belowLayerID="mapboxUserLocationPulseCircle"
-          style={overlay}
+          style={OVERLAY_TRACK_LINE_STYLE}
           existing
         />
       </ShapeSource>

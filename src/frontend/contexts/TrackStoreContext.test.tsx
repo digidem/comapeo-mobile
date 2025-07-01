@@ -1,5 +1,6 @@
 import {act, renderHook} from '@testing-library/react-native';
 import {type ReactNode} from 'react';
+import {parse} from 'valibot';
 
 import {
   createTrackStore,
@@ -7,6 +8,7 @@ import {
   TrackStoreProvider,
   useTrackActions,
   useTrackState,
+  PresetSchema,
 } from './TrackStoreContext';
 
 function createWrapper(trackStore: TrackStore) {
@@ -19,6 +21,28 @@ function createWrapper(trackStore: TrackStore) {
 
 afterEach(() => {
   jest.restoreAllMocks();
+});
+
+describe('PresetSchema', () => {
+  it('validates geometry includes line', () => {
+    expect(() =>
+      parse(PresetSchema, {
+        docId: 'id',
+        name: 'Test Preset',
+        geometry: ['point', 'line'],
+        versionId: 'v1',
+      }),
+    ).not.toThrow();
+
+    expect(() =>
+      parse(PresetSchema, {
+        docId: 'id',
+        name: 'Test Preset',
+        geometry: ['point'],
+        versionId: 'v1',
+      }),
+    ).toThrow(/geometry must include "line"/);
+  });
 });
 
 describe('useTrackState()', () => {

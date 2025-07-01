@@ -10,7 +10,7 @@ import {
   observationsToFeatureCollection,
 } from '../../lib/ObservationMapLayer.ts';
 import {useMapStyleJsonUrl} from '../../hooks/server/maps.ts';
-import {getTrackLineStyles} from '../../lib/trackMapStyles';
+import {SAVED_TRACK_LINE_STYLE} from '../../lib/trackMapStyles';
 interface TrackScreenMapPreview {
   locationHistory: LocationHistoryPoint[];
   observations: Observation[];
@@ -78,13 +78,15 @@ function TrackMapLayer({
 }: {
   locationHistory: LocationHistoryPoint[];
 }) {
-  const {base, overlay} = getTrackLineStyles();
   return (
     <MapboxGL.ShapeSource
       id="trackShapeSource"
       shape={convertToLineString(locationHistory)}>
-      <MapboxGL.LineLayer id="trackPreviewBase" style={base} />
-      <MapboxGL.LineLayer id="trackPreviewOverlay" style={overlay} />
+      <MapboxGL.LineLayer
+        id="trackLines"
+        style={SAVED_TRACK_LINE_STYLE}
+        existing
+      />
     </MapboxGL.ShapeSource>
   );
 }

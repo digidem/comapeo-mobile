@@ -14,7 +14,7 @@ import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersis
 import {usePresetsQuery} from '../../hooks/server/presets';
 import ScaleBar from 'react-native-scale-bar';
 import {TrackBottomSheet} from './TrackBottomSheet';
-import {CurrentTrackMapLayer} from './CurrentTrack/CurrrentTrackMapLayer';
+import {CurrentTrackMapLayer} from './CurrentTrack/CurrentTrackMapLayer';
 
 import {useMapStyleJsonUrl} from '../../hooks/server/maps';
 import {TracksMapLayer} from './MapLayers/TracksMapLayer';

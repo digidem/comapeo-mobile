@@ -11,6 +11,7 @@ import {
 } from '../../../sharedComponents/Buttons.tsx';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText.tsx';
 import {usePresetsQuery} from '../../../hooks/server/presets';
+import {useTrackState} from '../../../contexts/TrackStoreContext.tsx';
 
 const m = defineMessages({
   defaultButtonText: {
@@ -37,10 +38,10 @@ const m = defineMessages({
 
 export const StartStopTrack = () => {
   const {formatMessage} = useIntl();
-  const {isTracking, evaluateTrackStatus, endTracking, startTracking} =
-    useTracking();
+  const {isTracking, endTracking, startTracking} = useTracking();
   const navigation = useNavigationFromHomeTabs();
   const {data: presets} = usePresetsQuery();
+  const distance = useTrackState(store => store.distance);
 
   const trackPresets = React.useMemo(
     () => presets?.filter(p => p.geometry.includes('line')) ?? [],
@@ -48,7 +49,7 @@ export const StartStopTrack = () => {
   );
 
   async function finishTracking() {
-    const {hasMovedEnough, hasMultiplePoints} = evaluateTrackStatus();
+    const hasMovedEnough = distance > 0.001;
 
     if (!hasMovedEnough) {
       navigation.navigate('DidNotMoveBottomSheet');
@@ -57,12 +58,10 @@ export const StartStopTrack = () => {
 
     endTracking();
 
-    if (hasMultiplePoints) {
-      if (trackPresets.length === 0) {
-        navigation.navigate('SaveTrack');
-      } else {
-        navigation.navigate('TrackCategoryChooser');
-      }
+    if (trackPresets.length === 0) {
+      navigation.navigate('SaveTrack');
+    } else {
+      navigation.navigate('TrackCategoryChooser');
     }
   }
 

@@ -118,48 +118,46 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
             </HeaderText>
           ) : null}
           {attachments.length > 0 && (
-            <View style={{paddingBottom: 15}}>
-              <HorizontalScrollView
-                shouldShowLastItems={false}
-                minItemWidth={MIN_WIDTH}
-                gap={GAP}
-                renderChildren={size => (
-                  <>
-                    {attachments.map(att => {
-                      if (isSavedPhoto(att)) {
-                        return (
-                          <React.Suspense
-                            key={att.driveDiscoveryId + att.hash + att.type}
-                            fallback={<ThumbnailLoader size={size} />}>
-                            <SavedPhotoThumbnailImage
-                              size={size}
-                              photo={att}
-                              onPress={() => {
-                                navigation.navigate('PhotoPreviewModal', {
-                                  photo: att,
-                                  observationDocId: observationId,
-                                });
-                              }}
-                            />
-                          </React.Suspense>
-                        );
-                      }
-
-                      if (isAudioAttachment(att)) {
-                        return (
-                          <AudioSavedThumbnail
+            <HorizontalScrollView
+              shouldShowLastItems={false}
+              minItemWidth={MIN_WIDTH}
+              gap={GAP}
+              renderChildren={size => (
+                <>
+                  {attachments.map(att => {
+                    if (isSavedPhoto(att)) {
+                      return (
+                        <React.Suspense
+                          key={att.driveDiscoveryId + att.hash + att.type}
+                          fallback={<ThumbnailLoader size={size} />}>
+                          <SavedPhotoThumbnailImage
                             size={size}
-                            key={att.driveDiscoveryId + att.hash + att.type}
-                            audio={att}
-                            observationId={observationId}
+                            photo={att}
+                            onPress={() => {
+                              navigation.navigate('PhotoPreviewModal', {
+                                photo: att,
+                                observationDocId: observationId,
+                              });
+                            }}
                           />
-                        );
-                      }
-                    })}
-                  </>
-                )}
-              />
-            </View>
+                        </React.Suspense>
+                      );
+                    }
+
+                    if (isAudioAttachment(att)) {
+                      return (
+                        <AudioSavedThumbnail
+                          size={size}
+                          key={att.driveDiscoveryId + att.hash + att.type}
+                          audio={att}
+                          observationId={observationId}
+                        />
+                      );
+                    }
+                  })}
+                </>
+              )}
+            />
           )}
         </View>
         {fields.length > 0 && (

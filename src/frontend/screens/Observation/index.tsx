@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
     flexDirection: 'column',
   },
-  scrollContent: {minHeight: '100%', justifyContent: 'space-between'},
+  scrollContent: {minHeight: '100%'},
   divider: {
     backgroundColor: BLUE_GREY,
     paddingVertical: 15,

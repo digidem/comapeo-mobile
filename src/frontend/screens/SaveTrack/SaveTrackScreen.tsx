@@ -55,7 +55,7 @@ export const SaveTrackScreen = () => {
       onPressPreset={
         preset ? () => navigation.navigate('TrackCategoryChooser') : undefined
       }
-      presetDisabled={preset ? false : true}
+      presetDisabled={false}
     />
   );
 };

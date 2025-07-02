@@ -53,8 +53,11 @@ export const MapScreen = ({
 }: NativeHomeTabsNavigationProps<'Map'>) => {
   const trackBottomSheetOpen = route.params?.trackingOpen;
   const [zoom, setZoom] = React.useState(DEFAULT_ZOOM);
+  const [isFinishedLoadingStyle, setIsFinishedLoadingStyle] =
+    React.useState(false);
   const [isFinishedRenderingMap, setIsFinishedRenderingMap] =
     React.useState(false);
+  const cameraRef = React.useRef<Mapbox.Camera>(null);
 
   const {newDraft} = useDraftObservation();
   const {navigate} = useNavigationFromHomeTabs();
@@ -90,9 +93,34 @@ export const MapScreen = ({
     setFollowing(prev => !prev);
   }
 
+  function handleDidFinishLoadingStyle() {
+    setIsFinishedLoadingStyle(true);
+  }
+
   function handleDidFinishRenderingMap() {
     setIsFinishedRenderingMap(true);
   }
+
+  React.useEffect(() => {
+    if (
+      cameraRef.current &&
+      isFinishedRenderingMap &&
+      !initialPositionSet.current
+    ) {
+      const center = coords
+        ? coords
+        : savedLocation
+          ? getCoords(savedLocation)
+          : FALLBACK_COORDINATE;
+
+      cameraRef.current?.setCamera({
+        centerCoordinate: center,
+        zoomLevel: DEFAULT_ZOOM,
+        animationDuration: 50,
+      });
+      initialPositionSet.current = true;
+    }
+  }, [coords, savedLocation, isFinishedRenderingMap]);
 
   return (
     <View style={{flex: 1}}>
@@ -110,26 +138,14 @@ export const MapScreen = ({
         onMapIdle={event => {
           setZoom(event.properties.zoom);
         }}
+        onDidFinishLoadingStyle={handleDidFinishLoadingStyle}
         onDidFinishRenderingMap={handleDidFinishRenderingMap}
         onMoveShouldSetResponder={() => {
           if (following) setFollowing(false);
           return true;
         }}>
         <Mapbox.Camera
-          ref={cam => {
-            if (cam && !initialPositionSet.current) {
-              cam.setCamera({
-                centerCoordinate: coords
-                  ? coords
-                  : savedLocation
-                    ? getCoords(savedLocation)
-                    : FALLBACK_COORDINATE,
-                zoomLevel: DEFAULT_ZOOM,
-                animationDuration: 50,
-              });
-              initialPositionSet.current = true;
-            }
-          }}
+          ref={cameraRef}
           centerCoordinate={following ? coords : undefined}
           zoomLevel={DEFAULT_ZOOM}
           animationDuration={0}
@@ -139,7 +155,7 @@ export const MapScreen = ({
 
         {coords && <Mapbox.UserLocation minDisplacement={MIN_DISPLACEMENT} />}
 
-        {isFinishedRenderingMap && authState !== 'obscured' && (
+        {isFinishedLoadingStyle && authState !== 'obscured' && (
           <>
             <RemoteDetectionAlertsMapLayer />
             {isTracking && (

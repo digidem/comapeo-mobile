@@ -19,6 +19,7 @@ export const PresetHeader = ({
         size="medium"
         iconId={preset?.iconRef?.docId}
         testID={`OBS.${preset?.name}-view-icon`}
+        color={preset?.color}
       />
       <HeaderText
         variant="header3"

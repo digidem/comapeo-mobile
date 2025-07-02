@@ -31,7 +31,9 @@ The next version of Mapeo Mobile
       `COMAPEO_METRICS_URL`: URL pointing to a hosted CoMapeo metrics server. Reach out to the maintainers about getting access to this credential.
       `COMAPEO_METRICS_API_KEY`: API key needed for accessing a CoMapeo metrics server. Reach out to the maintainers about getting access to this credential.
 
-3. Run the app locally
+3. To enable Sentry source map uploads from the backend when developing locally, create a file `.env.sentry-build-plugin` with a `SENTRY_AUTH_TOKEN`. This is only necessary when trying to debug source map uploads.
+
+4. Run the app locally
 
    1. Install dependencies
 

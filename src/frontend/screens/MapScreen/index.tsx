@@ -53,7 +53,8 @@ export const MapScreen = ({
 }: NativeHomeTabsNavigationProps<'Map'>) => {
   const trackBottomSheetOpen = route.params?.trackingOpen;
   const [zoom, setZoom] = React.useState(DEFAULT_ZOOM);
-  const [isFinishedLoading, setIsFinishedLoading] = React.useState(false);
+  const [isFinishedRenderingMap, setIsFinishedRenderingMap] =
+    React.useState(false);
 
   const {newDraft} = useDraftObservation();
   const {navigate} = useNavigationFromHomeTabs();
@@ -89,8 +90,8 @@ export const MapScreen = ({
     setFollowing(prev => !prev);
   }
 
-  function handleDidFinishLoadingStyle() {
-    setIsFinishedLoading(true);
+  function handleDidFinishRenderingMap() {
+    setIsFinishedRenderingMap(true);
   }
 
   return (
@@ -109,7 +110,7 @@ export const MapScreen = ({
         onMapIdle={event => {
           setZoom(event.properties.zoom);
         }}
-        onDidFinishLoadingStyle={handleDidFinishLoadingStyle}
+        onDidFinishRenderingMap={handleDidFinishRenderingMap}
         onMoveShouldSetResponder={() => {
           if (following) setFollowing(false);
           return true;
@@ -138,7 +139,7 @@ export const MapScreen = ({
 
         {coords && <Mapbox.UserLocation minDisplacement={MIN_DISPLACEMENT} />}
 
-        {isFinishedLoading && authState !== 'obscured' && (
+        {isFinishedRenderingMap && authState !== 'obscured' && (
           <>
             <RemoteDetectionAlertsMapLayer />
             {isTracking && (

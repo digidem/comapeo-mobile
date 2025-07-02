@@ -37,7 +37,11 @@ const Item = React.memo(
       activeOpacity={1}
       underlayColor="#000033">
       <View style={styles.cellContainer}>
-        <PresetCircleIcon iconId={item.iconRef?.docId} size="medium" />
+        <PresetCircleIcon
+          iconId={item.iconRef?.docId}
+          size="medium"
+          color={item.color}
+        />
         <Text numberOfLines={3} style={styles.categoryName}>
           <DynFormattedMessage
             id={`presets.${item.docId}.name`}

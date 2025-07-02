@@ -1,12 +1,12 @@
 import {useFocusEffect} from '@react-navigation/native';
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
 import {useTrackActions, useTrackState} from '../../contexts/TrackStoreContext';
 import {
   useEditTrackMutation,
   useTrackQuery,
-  useGetPresetFromTrack,
+  useGetPresetById,
 } from '../../hooks/server/track';
 import TrackIcon from '../../images/Track.svg';
 import {Editor} from '../../sharedComponents/Editor';
@@ -42,16 +42,12 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
   const {data: track} = useTrackQuery(trackId);
   const editTrackMutation = useEditTrackMutation();
   const description = useTrackState(state => state.description);
-  const {setDescription, clearCurrentTrack} = useTrackActions();
+  const {setDescription, clearCurrentTrack, setTrackPreset, setTrackId} =
+    useTrackActions();
   const locationHistory = track ? getLocationHistoryFromTrack(track) : [];
   const {durationMs, distance} = getTrackDurationAndDistance(locationHistory);
-  const preset = useGetPresetFromTrack(track);
-  const presetName = preset
-    ? formatMessage({
-        id: `presets.${preset.docId}.name`,
-        defaultMessage: preset.name,
-      })
-    : formatMessage(m.presetTitle);
+  const foundPreset = useGetPresetById(track?.presetRef?.docId);
+  const preset = useTrackState(state => state.preset);
 
   useEffect(() => {
     if (track && typeof track.tags.notes === 'string') {
@@ -59,8 +55,35 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
     }
   }, [track, setDescription]);
 
+  useEffect(() => {
+    if (
+      track?.presetRef?.docId &&
+      foundPreset?.docId === track.presetRef.docId
+    ) {
+      setTrackPreset(foundPreset);
+    }
+  }, [track, foundPreset, setTrackPreset]);
+
+  useEffect(() => {
+    if (trackId) {
+      setTrackId(trackId);
+    }
+    return () => {
+      setTrackId(null);
+    };
+  }, [trackId, setTrackId]);
+
+  const presetName = useMemo(() => {
+    return preset
+      ? formatMessage({
+          id: `presets.${preset.docId}.name`,
+          defaultMessage: preset.name,
+        })
+      : formatMessage(m.presetTitle);
+  }, [preset, formatMessage]);
+
   const saveTrack = useCallback(() => {
-    if (!track) return;
+    if (!track?.versionId || !track.docId) return;
 
     editTrackMutation.mutate(
       {
@@ -68,16 +91,28 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
         value: {
           ...track,
           tags: {...track.tags, notes: description},
+          presetRef: preset
+            ? {docId: preset.docId, versionId: preset.versionId}
+            : undefined,
         },
       },
       {
         onSuccess: () => {
           clearCurrentTrack();
-          navigation.goBack();
+          navigation.popTo('Track', {
+            trackId: track.docId,
+          });
         },
       },
     );
-  }, [track, description, editTrackMutation, clearCurrentTrack, navigation]);
+  }, [
+    track,
+    description,
+    editTrackMutation,
+    clearCurrentTrack,
+    navigation,
+    preset,
+  ]);
 
   useFocusEffect(
     useCallback(() => {
@@ -108,7 +143,8 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
       isTrack={true}
       trackDurationMs={durationMs}
       trackDistance={distance}
-      presetDisabled={true}
+      presetDisabled={false}
+      onPressPreset={() => navigation.navigate('TrackCategoryChooser')}
     />
   );
 };

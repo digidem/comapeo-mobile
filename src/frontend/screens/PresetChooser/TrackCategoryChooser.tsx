@@ -26,6 +26,7 @@ export const TrackCategoryChooser: NativeNavigationComponent<
     .filter(p => p.geometry.includes('line'))
     .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
   const existingPreset = useTrackState(state => state.preset);
+  const trackId = useTrackState(state => state.docId);
 
   const handleGoBack = React.useCallback(() => {
     navigation.goBack();
@@ -33,13 +34,17 @@ export const TrackCategoryChooser: NativeNavigationComponent<
 
   const handleSelect = (preset: Preset) => {
     setTrackPreset(preset);
-    navigation.navigate('SaveTrack');
+    if (trackId) {
+      navigation.navigate('TrackEdit', {trackId});
+    } else {
+      navigation.navigate('SaveTrack');
+    }
   };
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: props =>
-        existingPreset ? (
+        existingPreset || trackId ? (
           <CustomHeaderLeft
             onPress={handleGoBack}
             headerBackButtonProps={props}
@@ -48,7 +53,7 @@ export const TrackCategoryChooser: NativeNavigationComponent<
           <HeaderLeft headerBackButtonProps={props} />
         ),
     });
-  }, [navigation, existingPreset, handleGoBack]);
+  }, [navigation, existingPreset, handleGoBack, trackId]);
 
   return (
     <View style={styles.container}>

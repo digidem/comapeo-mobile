@@ -28,6 +28,7 @@ const TrackStateSchema = v.intersect([
     description: v.string(),
     distance: v.number(),
     preset: v.nullable(PresetSchema),
+    docId: v.nullable(v.string()),
     locationHistory: v.array(
       // TODO: Create schema for this
       v.object({
@@ -70,6 +71,7 @@ function createInitialState(): TrackState {
     observationRefs: [],
     trackingSince: null,
     preset: null,
+    docId: null,
   };
 }
 
@@ -109,6 +111,9 @@ export function createTrackStore({persist} = {persist: false}) {
   const actions = {
     setTrackPreset: (preset: Preset) => {
       store.setState({preset});
+    },
+    setTrackId: (docId: string | null) => {
+      store.setState({docId});
     },
     setDescription: (description: string) => {
       store.setState({description});

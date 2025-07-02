@@ -7,7 +7,7 @@ import {FormattedMessage, MessageDescriptor, defineMessages} from 'react-intl';
 import {
   useDeleteTrackMutation,
   useTrackQuery,
-  useGetPresetFromTrack,
+  useGetPresetById,
 } from '../../hooks/server/track.ts';
 import {useObservations} from '../../hooks/server/observations.ts';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
@@ -58,7 +58,7 @@ export const TrackScreen = ({
   const canDelete = useCanEditOrDelete(track.originalVersionId);
   const locationHistory = getLocationHistoryFromTrack(track);
   const {durationMs, distance} = getTrackDurationAndDistance(locationHistory);
-  const preset = useGetPresetFromTrack(track);
+  const preset = useGetPresetById(track?.presetRef?.docId);
 
   function deleteTrack() {
     deleteTrackMutate(

@@ -186,13 +186,14 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
     flexDirection: 'column',
   },
-  scrollContent: {minHeight: '100%'},
+  scrollContent: {minHeight: '100%', justifyContent: 'space-between'},
   divider: {
     backgroundColor: BLUE_GREY,
     paddingVertical: 15,
   },
   section: {
-    paddingTop: 15,
+    flex: 1,
+    paddingVertical: 15,
   },
   textNotes: {
     color: DARK_GREY,

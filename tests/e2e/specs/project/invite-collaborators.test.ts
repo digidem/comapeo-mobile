@@ -6,7 +6,7 @@ describe('Project - Solo Project Invite/ Name Project Flow', () => {
   it('should open side drawer, navigate to Invite Collaborators screen, and verify content', async () => {
     const openMenuBtn = await $('~Open Menu');
     await openMenuBtn.waitForDisplayed();
-    await openMenuBtn.touchAction('tap');
+    await openMenuBtn.click();
     await expect($(byTextMatches('My Solo Project'))).toBeDisplayed();
 
     const inviteButton = await $(byText('Invite'));

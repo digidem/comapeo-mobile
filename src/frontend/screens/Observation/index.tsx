@@ -125,7 +125,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
           <React.Suspense fallback={<Loading />}>
             <TrackAccordian observationId={observationId} />
           </React.Suspense>
-          {typeof observation.tags.notes === 'string' ? (
+          {observation?.tags?.notes ? (
             <HeaderText variant="header3" style={styles.textNotes}>
               {observation.tags.notes}
             </HeaderText>

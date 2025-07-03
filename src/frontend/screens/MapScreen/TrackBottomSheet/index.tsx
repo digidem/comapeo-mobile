@@ -30,10 +30,11 @@ export const TrackBottomSheet = React.memo(() => {
 
   // Re-check permissions on screen focus
   // Handles re-checking when navigating back from in-app
-  useFocusEffect(() => {
-    checkPermissions();
-  });
-
+  useFocusEffect(
+    React.useCallback(() => {
+      checkPermissions();
+    }, [checkPermissions]),
+  );
   // Re-check permissions when returning from system settings
   // App goes to background during system settings, then becomes active again when user returns
   // Only needed if permissions haven't been granted yet

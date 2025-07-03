@@ -19,6 +19,7 @@ import {
   getTrackDurationAndDistance,
 } from '../../utils/trackMetrics';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
+import {usePresetsQuery} from '../../hooks/server/presets';
 
 export const m = defineMessages({
   trackEditScreenTitle: {
@@ -48,6 +49,12 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
   const {durationMs, distance} = getTrackDurationAndDistance(locationHistory);
   const foundPreset = useGetPresetById(track?.presetRef?.docId);
   const preset = useTrackState(state => state.preset);
+  const {data: presets} = usePresetsQuery();
+  const trackPresets = useMemo(
+    () => Array.from(presets ?? []).filter(p => p.geometry.includes('line')),
+    [presets],
+  );
+  const canChoosePreset = trackPresets.length > 0;
 
   useEffect(() => {
     if (track && typeof track.tags.notes === 'string') {
@@ -143,8 +150,12 @@ export const TrackEdit: NativeNavigationComponent<'TrackEdit'> = ({
       isTrack={true}
       trackDurationMs={durationMs}
       trackDistance={distance}
-      presetDisabled={false}
-      onPressPreset={() => navigation.navigate('TrackCategoryChooser')}
+      presetDisabled={!canChoosePreset}
+      onPressPreset={
+        canChoosePreset
+          ? () => navigation.navigate('TrackCategoryChooser')
+          : undefined
+      }
     />
   );
 };

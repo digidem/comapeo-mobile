@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
@@ -12,6 +12,7 @@ import {useTrackState} from '../../contexts/TrackStoreContext';
 import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 import TrackIcon from '../../images/Track.svg';
 import {getTrackDurationAndDistance} from '../../utils/trackMetrics';
+import {usePresetsQuery} from '../../hooks/server/presets';
 
 export const SaveTrackScreen = () => {
   const navigation = useNavigationFromRoot();
@@ -20,6 +21,13 @@ export const SaveTrackScreen = () => {
   usePreventAndroidBackButton();
   const locationHistory = useTrackState(state => state.locationHistory);
   const {durationMs, distance} = getTrackDurationAndDistance(locationHistory);
+  const {data: presets} = usePresetsQuery();
+  const trackPresets = useMemo(
+    () => Array.from(presets ?? []).filter(p => p.geometry.includes('line')),
+    [presets],
+  );
+
+  const canChoosePreset = trackPresets.length > 0;
 
   const presetName = preset
     ? t({
@@ -53,9 +61,11 @@ export const SaveTrackScreen = () => {
         )
       }
       onPressPreset={
-        preset ? () => navigation.navigate('TrackCategoryChooser') : undefined
+        canChoosePreset
+          ? () => navigation.navigate('TrackCategoryChooser')
+          : undefined
       }
-      presetDisabled={false}
+      presetDisabled={!canChoosePreset}
     />
   );
 };

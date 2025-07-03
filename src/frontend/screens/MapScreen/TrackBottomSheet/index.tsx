@@ -14,6 +14,7 @@ const handleOpenSettings = () => {
 };
 
 export const TrackBottomSheet = React.memo(() => {
+  const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
   const [foregroundPermission, setForegroundPermission] =
     React.useState<Location.LocationPermissionResponse | null>(null);
   const [backgroundPermission, setBackgroundPermission] =
@@ -77,8 +78,8 @@ export const TrackBottomSheet = React.memo(() => {
     <View style={styles.container}>
       <Animated.View
         style={styles.animatedBackground}
-        entering={SlideInDown.duration(250)}
-        exiting={SlideOutDown.duration(250)}>
+        entering={isE2E ? undefined : SlideInDown.duration(250)}
+        exiting={isE2E ? undefined : SlideOutDown.duration(250)}>
         {renderContent()}
       </Animated.View>
     </View>

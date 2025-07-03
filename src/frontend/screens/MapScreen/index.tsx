@@ -96,10 +96,6 @@ export const MapScreen = ({
     setIsFinishedLoadingStyle(true);
   }
 
-  function handleDidFinishRenderingMap() {
-    setIsFinishedRenderingMap(true);
-  }
-
   return (
     <View
       style={{flex: 1}}
@@ -127,7 +123,6 @@ export const MapScreen = ({
             setZoom(event.properties.zoom);
           }}
           onDidFinishLoadingStyle={handleDidFinishLoadingStyle}
-          onDidFinishRenderingMap={handleDidFinishRenderingMap}
           onMoveShouldSetResponder={() => {
             if (following) setFollowing(false);
             return true;

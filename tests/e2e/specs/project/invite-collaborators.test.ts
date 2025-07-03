@@ -4,7 +4,9 @@ import {byText, byTextMatches} from '../../utils/selectors';
 
 describe('Project - Solo Project Invite/ Name Project Flow', () => {
   it('should open side drawer, navigate to Invite Collaborators screen, and verify content', async () => {
-    await $('~Open Menu').click();
+    const openMenuBtn = await $('~Open Menu');
+    await openMenuBtn.waitForDisplayed();
+    await openMenuBtn.touchAction('tap');
     await expect($(byTextMatches('My Solo Project'))).toBeDisplayed();
 
     const inviteButton = await $(byText('Invite'));

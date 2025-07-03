@@ -35,7 +35,6 @@ export const TrackBottomSheet = React.memo(() => {
       checkPermissions();
     }, [checkPermissions]),
   );
-
   // Re-check permissions when returning from system settings
   // App goes to background during system settings, then becomes active again when user returns
   // Only needed if permissions haven't been granted yet

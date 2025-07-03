@@ -5,17 +5,7 @@ import {uint8ArrayToHex} from 'uint8array-extras';
 
 const ROOT_KEY = '__RootKey';
 
-interface InitializeOpts {
-  metricsIsEnabled: boolean;
-  sentryEnvironment: string;
-  sentryUserId: string;
-}
-
-export async function initializeNodejs({
-  metricsIsEnabled,
-  sentryEnvironment,
-  sentryUserId,
-}: InitializeOpts) {
+export async function initializeNodejs() {
   let rootKey = await getItemAsync(ROOT_KEY);
   if (!rootKey) {
     try {
@@ -29,15 +19,7 @@ export async function initializeNodejs({
     }
   }
 
-  const flags = [
-    `--rootKey=${rootKey}`,
-    `--sentryEnvironment=${sentryEnvironment}`,
-    `--sentryUserId=${sentryUserId}`,
-  ];
-
-  if (metricsIsEnabled) {
-    flags.push('--metricsIsEnabled');
-  }
+  const flags = [`--rootKey=${rootKey}`];
 
   nodejs.startWithArgs(`loader.js ${flags.join(' ')}`);
 }

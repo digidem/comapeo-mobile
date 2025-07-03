@@ -19,5 +19,7 @@ describe('Tracks - Start Track Flow (Permissions Pre-Granted)', () => {
 
     await expect($(byTextMatches('Stop Tracks'))).toBeDisplayed();
     await expect($(byTextMatches('You’ve been recording for'))).toBeDisplayed();
+    const mapTab = await $('~Go to map.');
+    await mapTab.click();
   });
 });

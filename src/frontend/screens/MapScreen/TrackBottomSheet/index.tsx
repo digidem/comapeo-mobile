@@ -14,7 +14,6 @@ const handleOpenSettings = () => {
 };
 
 export const TrackBottomSheet = React.memo(() => {
-  const isE2E = process.env.EXPO_PUBLIC_E2E_TEST === 'true';
   const [foregroundPermission, setForegroundPermission] =
     React.useState<Location.LocationPermissionResponse | null>(null);
   const [backgroundPermission, setBackgroundPermission] =
@@ -31,9 +30,11 @@ export const TrackBottomSheet = React.memo(() => {
 
   // Re-check permissions on screen focus
   // Handles re-checking when navigating back from in-app
-  useFocusEffect(() => {
-    checkPermissions();
-  });
+  useFocusEffect(
+    React.useCallback(() => {
+      checkPermissions();
+    }, [checkPermissions]),
+  );
 
   // Re-check permissions when returning from system settings
   // App goes to background during system settings, then becomes active again when user returns
@@ -102,8 +103,8 @@ export const TrackBottomSheet = React.memo(() => {
     <View style={styles.container}>
       <Animated.View
         style={styles.animatedBackground}
-        entering={isE2E ? undefined : SlideInDown.duration(250)}
-        exiting={isE2E ? undefined : SlideOutDown.duration(250)}>
+        entering={SlideInDown.duration(250)}
+        exiting={SlideOutDown.duration(250)}>
         {renderContent()}
       </Animated.View>
     </View>

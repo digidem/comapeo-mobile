@@ -1,22 +1,13 @@
 import * as v from 'valibot';
-import type {LocationObject} from 'expo-location';
 
 import type {PhotoEXIF} from '../sharedTypes';
 
 export const PhotoEXIFSchema = v.object({
   ApertureValue: v.optional(v.number()),
-  DateTime: v.optional(v.string()),
   ExposureTime: v.optional(v.number()),
   Flash: v.optional(v.number()),
   FocalLength: v.optional(v.number()),
-  GPSAltitude: v.optional(v.number()),
-  GPSAltitudeRef: v.optional(v.number()),
-  GPSDateStamp: v.optional(v.string()),
-  GPSLatitude: v.optional(v.number()),
-  GPSLatitudeRef: v.optional(v.string()),
-  GPSLongitude: v.optional(v.number()),
-  GPSLongitudeRef: v.optional(v.string()),
-  GPSTimeStamp: v.optional(v.string()),
+  FNumber: v.optional(v.number()),
   ISOSpeedRatings: v.optional(v.number()),
   ImageLength: v.optional(v.number()),
   ImageWidth: v.optional(v.number()),
@@ -27,63 +18,3 @@ export const PhotoEXIFSchema = v.object({
 } satisfies Required<{
   [field in keyof PhotoEXIF]: v.GenericSchema<PhotoEXIF[field]>;
 }>) satisfies v.GenericSchema<PhotoEXIF>;
-
-type GPSEXIFTags = {
-  [key in Extract<keyof PhotoEXIF, `GPS${string}`>]?: PhotoEXIF[key];
-};
-
-/**
- * Calculates GPS-related EXIF tags based on a location object.
- * See https://exiftool.org/TagNames/GPS.html for reference.
- *
- * @param location Location object (from `expo-location`)
- */
-export function locationToEXIF(location: LocationObject): GPSEXIFTags {
-  const timestampDate = new Date(location.timestamp);
-
-  return {
-    GPSLongitude: location.coords.longitude,
-    GPSLongitudeRef: location.coords.longitude >= 0 ? 'E' : 'W',
-    GPSLatitude: location.coords.latitude,
-    GPSLatitudeRef: location.coords.latitude >= 0 ? 'N' : 'S',
-    GPSAltitude:
-      typeof location.coords.altitude === 'number'
-        ? location.coords.altitude
-        : undefined,
-    // `LocationObject.coords.altitude` is "altitude in meters above the WGS 84 reference ellipsoid." (https://docs.expo.dev/versions/latest/sdk/location/#locationobjectcoords),
-    // which - from my understanding - translates to ""altitude in meters above sea level".
-    // `0` is used by the EXIF spec to indicate that the `GPSAltitude` measurement is "above sea level".
-    GPSAltitudeRef:
-      typeof location.coords.altitude === 'number' ? 0 : undefined,
-    GPSDateStamp: dateToGPSDateStamp(timestampDate),
-    GPSTimeStamp: dateToGPSTimeStamp(timestampDate),
-  };
-}
-
-/**
- * Convert a JS date to the GPSDateStamp EXIF tag. It is formatted as a UTC-adjusted `YYYY:MM:DD`.
- * See https://exiftool.org/TagNames/GPS.html for reference.
- *
- * @param d Date object
- */
-function dateToGPSDateStamp(d: Date): string {
-  const year = `${d.getUTCFullYear()}`;
-  const month = `${d.getUTCMonth() + 1}`.padStart(2, '0');
-  const date = `${d.getUTCDate()}`.padStart(2, '0');
-
-  return `${year}:${month}:${date}`;
-}
-
-/**
- * Convert a JS date to the GPSTimeStamp EXIF tag. It is formatted as a UTC-adjusted `HH:MM:SS`.
- * See https://exiftool.org/TagNames/GPS.html for reference.
- *
- * @param d Date object
- */
-function dateToGPSTimeStamp(d: Date): string {
-  const hours = `${d.getUTCHours()}`.padStart(2, '0');
-  const minutes = `${d.getUTCMinutes()}`.padStart(2, '0');
-  const seconds = `${d.getUTCSeconds()}`;
-
-  return `${hours}:${minutes}:${seconds}`;
-}

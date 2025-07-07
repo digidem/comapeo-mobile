@@ -3,15 +3,15 @@ import {TouchableOpacity, View} from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {ExhaustivenessError} from '../lib/ExhaustivenessError';
+import {ExhaustivenessError} from '../../lib/ExhaustivenessError';
 import {
   DARK_GREY,
   DARK_MAGENTA,
   GREEN,
   WARNING_RED,
   WHITE,
-} from '../lib/styles';
-import {BodyText} from './Text/BodyText';
+} from '../../lib/styles';
+import {BodyText} from '../Text/BodyText';
 
 type Props = {
   accessibilityLabel?: string;
@@ -28,7 +28,7 @@ type Props = {
     }
 );
 
-export const GPSPill = (props: Props) => {
+export const GPSPillUI = (props: Props) => {
   let backgroundColor: string;
   let icon: ReactNode;
   let text: string;

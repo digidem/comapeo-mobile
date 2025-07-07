@@ -62,7 +62,8 @@ export type RootStackParamsList = {
   UnableToLinkScreen: undefined;
   ConnectingToDeviceScreen: {task: () => Promise<void>};
   ConfirmLeavePracticeModeScreen: {projectAction: 'join' | 'create'};
-  CreateProject: {action: 'CreateNewProject' | 'UpdateSoloProject'};
+  CreateProject: undefined;
+  NameSoloProject: undefined;
   Security: undefined;
   DirectionalArrow: undefined;
   P2pUpgrade: undefined;
@@ -79,13 +80,14 @@ export type RootStackParamsList = {
   AppSettings: undefined;
   ProjectSettings: undefined;
   CreateOrJoinProject: undefined;
-  ProjectCreated: {name: string};
+  ProjectCreatedNewProject: {name: string};
+  ProjectCreatedNewSolo: {name: string};
   JoinExistingProject: undefined;
   YourTeam: undefined;
   SelectDevice: undefined;
   SelectInviteeRole: {name: string; deviceType: DeviceType; deviceId: string};
   ReviewAndInvite: InviteProps;
-  InviteAccepted: InviteProps;
+  InviteAccepted: {name: string};
   InviteDeclined: InviteProps;
   UnableToCancelInvite: InviteProps;
   DeviceNameDisplay: undefined;
@@ -98,24 +100,27 @@ export type RootStackParamsList = {
   MediaSyncSettings: undefined;
   DataAndPrivacy: undefined;
   SettingsPrivacyPolicy: undefined;
-  HowToLeaveProject: undefined;
   SuccessfullyAddedArchive: {archiveName: string; url: string};
   MapManagement: undefined;
   BackgroundMaps: undefined;
   SyncPreviewsBottomSheet: undefined;
   SyncEverythingBottomSheet: undefined;
+  ExchangeSettingsBottomSheet: undefined;
   AudioAskPermissionBottomSheet: {
     audioPermission: Audio.PermissionResponse;
   };
   AudioRecording: undefined;
-  AudioPlaybackUnsavedReview: {uri: string; duration: number};
-  AudioPlaybackUnsavedPreview: {uri: string};
-  DeleteAudioBottomSheet: {
-    onPressDelete: () => void;
+  AudioDraftPlaybackScreen: {
     uri: string;
+    createdAt: number;
+    showRecordingSavedText: boolean;
   };
-  AudioSavedBottomSheet: undefined;
-  AudioPlaybackSaved: {uri: string; canDelete: boolean; observationId: string};
+  AudioAttachmentPlaybackScreen: {
+    driveDiscoveryId: string;
+    name: string;
+    type: 'audio';
+    createdAt: string;
+  };
   InviteReceived: {inviteId: string};
   InviteSuccessfullyAccepted: {projectName: string};
   InviteCanceled: {projectName: string};
@@ -125,6 +130,7 @@ export type RootStackParamsList = {
   Menu: undefined;
   AllProjects: undefined;
   InviteCollaborators: undefined;
+  StartNewProject: undefined;
   EditProjectDetails: undefined;
   TrackRecordingActive: undefined;
   RemoteArchive: undefined;

@@ -328,7 +328,7 @@
     "message": "Your changes will not be saved. This cannot be undone."
   },
   "allProjects.createNewProject": {
-    "message": "Create new project"
+    "message": "Start new project"
   },
   "allProjects.navTitle": {
     "message": "All Projects"
@@ -424,6 +424,10 @@
   "screens.AboutSettings.androidVersion": {
     "description": "Label for Android version",
     "message": "Android version"
+  },
+  "screens.AboutSettings.emojiSource": {
+    "description": "Label for the source of emojis used in CoMapeo",
+    "message": "Emojis source:"
   },
   "screens.AboutSettings.phoneModel": {
     "description": "Label for phone model",
@@ -534,6 +538,12 @@
   "screens.AppPasscode.TurnOffPasscode.usePasscode": {
     "message": "Use App Passcode"
   },
+  "screens.AudioAttachmentPlayback.navTitle": {
+    "message": "Audio Recording"
+  },
+  "screens.AudioAttachmentPlayback.share": {
+    "message": "Share"
+  },
   "screens.AudioPermission.Button.allow": {
     "description": "Screen button text for granting the audio permission",
     "message": "Allow"
@@ -554,8 +564,14 @@
     "description": "Screen title for audio permission screen",
     "message": "Recording Audio with CoMapeo"
   },
-  "screens.AudioPlaybackUnsaved.description": {
-    "message": "Total length: {length}"
+  "screens.AudioPlaybackNew.backToEditing": {
+    "message": "Back to Editing"
+  },
+  "screens.AudioPlaybackNew.delete": {
+    "message": "Delete"
+  },
+  "screens.AudioPlaybackNew.recordingSaved": {
+    "message": "Recording Saved!"
   },
   "screens.AudioRecording.lessThan1": {
     "message": "Less than a minute left"
@@ -563,20 +579,8 @@
   "screens.AudioRecording.lessThan5": {
     "message": "Less than 5 minutes left"
   },
-  "screens.AudioRecording.record5Min": {
-    "message": "Record up to 5 minutes"
-  },
-  "screens.AudioSavedBottomSheet.recordAnother": {
-    "message": "Record Another"
-  },
-  "screens.AudioSavedBottomSheet.returnToEditor": {
-    "message": "Return to Editor"
-  },
-  "screens.AudioSavedBottomSheet.subTitle": {
-    "message": "Your Audio Recording was added"
-  },
-  "screens.AudioSavedBottomSheet.title": {
-    "message": "Success!"
+  "screens.AudioRecording.nowRecording": {
+    "message": "Now Recording..."
   },
   "screens.CameraScreen.goToSettings": {
     "message": "Go to Settings"
@@ -658,18 +662,6 @@
   "screens.DataPrivacy.title": {
     "message": "Data & Privacy"
   },
-  "screens.DeleteAudioBottomSheet.Description": {
-    "message": "Your Audio Recording will be permanently deleted. This cannot be undone."
-  },
-  "screens.DeleteAudioBottomSheet.Title": {
-    "message": "Delete?"
-  },
-  "screens.DeleteAudioBottomSheet.cancel": {
-    "message": "Cancel"
-  },
-  "screens.DeleteAudioBottomSheet.delete": {
-    "message": "Delete"
-  },
   "screens.DeviceNaming.Success.description": {
     "message": "You named your device"
   },
@@ -699,6 +691,30 @@
   },
   "screens.EnterPassword.wrongPass": {
     "message": "Incorrect passcode, please try again"
+  },
+  "screens.Exchange.WifiCard.noWifi": {
+    "message": "No Wi-Fi"
+  },
+  "screens.ExchangeSettingsBottomSheet.close": {
+    "message": "Close"
+  },
+  "screens.ExchangeSettingsBottomSheet.everythingDesc": {
+    "message": "Full size photos and audio. Uses more storage."
+  },
+  "screens.ExchangeSettingsBottomSheet.everythingTitle": {
+    "message": "Exchange Everything"
+  },
+  "screens.ExchangeSettingsBottomSheet.previewsDesc": {
+    "message": "Reduced smaller size photos. No audio included."
+  },
+  "screens.ExchangeSettingsBottomSheet.previewsTitle": {
+    "message": "Exchange Previews Only"
+  },
+  "screens.ExchangeSettingsBottomSheet.save": {
+    "message": "Save"
+  },
+  "screens.ExchangeSettingsCard.changeSettings": {
+    "message": "Change Settings"
   },
   "screens.ExchangeSoloScreen.dataSecure": {
     "message": "Your data stays secure while exchanging between trusted devices."
@@ -753,18 +769,6 @@
   },
   "screens.FatalError.somethingWrong": {
     "message": "Something Went Wrong"
-  },
-  "screens.HowToLeaveProject.goBack": {
-    "message": "Go back"
-  },
-  "screens.HowToLeaveProject.howTo": {
-    "message": "How to Leave Project"
-  },
-  "screens.HowToLeaveProject.instructions": {
-    "message": "To leave this project please uninstall and reinstall CoMapeo. All project data will be removed from this device."
-  },
-  "screens.HowToLeaveProject.warning": {
-    "message": "If you are the only Coordinator on the project no one else will be able to edit project details or invite other devices!"
   },
   "screens.IntroToCoMapeo.collaborate": {
     "message": "Collaborate on projects"
@@ -990,27 +994,6 @@
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
     "message": "Use Your Location"
-  },
-  "screens.MediaSyncActionSheetContent.cancel": {
-    "message": "Cancel"
-  },
-  "screens.MediaSyncSettings.syncEverything": {
-    "message": "Sync Everything"
-  },
-  "screens.MediaSyncSettings.syncEverythingDescription": {
-    "message": "Your device will sync <bold>all</bold> content at full size, including photos, audio, and videos."
-  },
-  "screens.MediaSyncSettings.syncEverythingWarning": {
-    "message": "Note: This will use more storage."
-  },
-  "screens.MediaSyncSettings.syncPreviews": {
-    "message": "Sync Previews (Photos Only)"
-  },
-  "screens.MediaSyncSettings.syncPreviewsDescription": {
-    "message": "Photos will sync at a reduced smaller size. Device will <bold>not</bold> sync audio or video."
-  },
-  "screens.MediaSyncSettings.title": {
-    "message": "Sync Settings"
   },
   "screens.ObscurePasscode.description": {
     "message": "Obscure Passcode is a security feature that allows you to open CoMapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of CoMapeo which allows you to create demonstration observations that are not saved to the CoMapeo database."
@@ -1450,13 +1433,16 @@
     "message": "Device Name"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
-    "message": "Add Another Device"
-  },
-  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.close": {
-    "message": "Close"
+    "message": "Invite Another Device"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
-    "message": "Invite Accepted"
+    "message": "Accepted!"
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
+    "message": "<bold>{deviceName}</bold> is now part of your project."
+  },
+  "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
+    "message": "View Team"
   },
   "screens.Setting.ProjectSettings.YourTeam.NotOnProject.createOrJoin": {
     "message": "Create or Join Project"
@@ -1528,7 +1514,10 @@
     "message": "Project Name:"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.title": {
-    "message": "New Project"
+    "message": "Start New Project"
+  },
+  "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
+    "message": "Name My Project"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
     "message": "Go Back"
@@ -1540,16 +1529,25 @@
     "message": "To join a project find a Coordinator of the project you wish to join. Tell them your device name and the Coordinator will send you an invite."
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.goToMap": {
-    "message": "Go to Map"
+    "message": "Start Mapping"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.invitedDevice": {
-    "message": "Invite Device"
+    "message": "Invite a Device"
   },
-  "screens.Settings.CreateOrJoinProject.ProjectCreated.projectCreated": {
-    "message": "{projectName} Created!"
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.nowAdded": {
+    "message": "now added to All Projects"
   },
-  "screens.Settings.CreateOrJoinProject.advancedSettings": {
-    "message": "Advanced Project Settings"
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.projectReady": {
+    "message": "is now ready for you to invite devices."
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
+    "message": "Success!"
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.updateCategories": {
+    "message": "Update Categories Set"
+  },
+  "screens.Settings.CreateOrJoinProject.ProjectCreated.viewProject": {
+    "message": "View Project"
   },
   "screens.Settings.CreateOrJoinProject.alreadyOnProject": {
     "message": "You are already on a project. To create a new Project you must uninstall and reininstall CoMapeo."
@@ -1558,19 +1556,13 @@
     "message": "Create a Project"
   },
   "screens.Settings.CreateOrJoinProject.createProjectButton": {
-    "message": "Create Project"
+    "message": "Create"
   },
   "screens.Settings.CreateOrJoinProject.enterName": {
-    "message": "Enter a name for the Project"
+    "message": "Project Name"
   },
-  "screens.Settings.CreateOrJoinProject.importCategories": {
-    "message": "Import Categories"
-  },
-  "screens.Settings.CreateOrJoinProject.importConfigFileError": {
-    "message": "File name should end with .comapeocat"
-  },
-  "screens.Settings.CreateOrJoinProject.importSuccessTitle": {
-    "message": "Successfully imported categories:"
+  "screens.Settings.CreateOrJoinProject.existingProjectName": {
+    "message": "Using an existing project name does not make them the same project."
   },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
     "message": "Join an existing CoMapeo Project"
@@ -1578,11 +1570,20 @@
   "screens.Settings.CreateOrJoinProject.joinProject": {
     "message": "Join a Project"
   },
-  "screens.Settings.CreateOrJoinProject.okButton": {
-    "message": "OK"
+  "screens.Settings.CreateOrJoinProject.keepInMind": {
+    "message": "Keep in mind"
   },
   "screens.Settings.CreateOrJoinProject.projectDescription": {
     "message": "A project is a secure container for your data. Only devices you invite can enter and share data with you. Create or Join a project in order to share data with other devices. This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
+  },
+  "screens.Settings.CreateOrJoinProject.projectUnique": {
+    "message": "Each project is unique and cannot exchange with another project."
+  },
+  "screens.Settings.CreateOrJoinProject.requestInvites": {
+    "message": "Request invites to join existing projects."
+  },
+  "screens.Settings.CreateOrJoinProject.saveProjectButton": {
+    "message": "Save"
   },
   "screens.Settings.CreateOrJoinProject.startProject": {
     "message": "Start a CoMapeo Project"
@@ -1672,46 +1673,52 @@
     "message": "Privacy Policy"
   },
   "screens.Sync.NoWifiDisplay.buttonText": {
-    "message": "Open Settings"
+    "message": "Close"
   },
   "screens.Sync.NoWifiDisplay.description": {
-    "message": "Open your phone settings and connect to a WiFi network to synchronize"
+    "message": "Check device’s settings and connectivity."
   },
   "screens.Sync.NoWifiDisplay.title": {
-    "message": "No WiFi"
+    "message": "No Wi-Fi."
   },
   "screens.Sync.ProjectSyncDisplay.allCaughtUp": {
     "message": "You're all caught up!"
   },
   "screens.Sync.ProjectSyncDisplay.allDataSynced": {
-    "message": "All data exchanged"
+    "message": "Up to date!"
   },
-  "screens.Sync.ProjectSyncDisplay.connectedTo": {
-    "message": "Connected to"
-  },
-  "screens.Sync.ProjectSyncDisplay.devicesAvailableToSync": {
-    "message": "Devices available"
+  "screens.Sync.ProjectSyncDisplay.close": {
+    "message": "Close"
   },
   "screens.Sync.ProjectSyncDisplay.devicesFound": {
-    "message": "Devices found"
+    "message": "Devices found."
   },
-  "screens.Sync.ProjectSyncDisplay.noDevicesAvailableToSync": {
-    "message": "No devices available to sync"
+  "screens.Sync.ProjectSyncDisplay.exchangeAction": {
+    "message": "Change Settings"
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangeEverythingMediaDescription": {
+    "message": "Full size photos and audio."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangeEverythingStorageDescription": {
+    "message": "Uses more storage."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangeEverythingTitle": {
+    "message": "Exchange everything."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyAudioDescription": {
+    "message": "No audio included."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyMediaDescription": {
+    "message": "Reduced smaller size photos."
+  },
+  "screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyTitle": {
+    "message": "Exchange previews only."
+  },
+  "screens.Sync.ProjectSyncDisplay.noDevicesFound": {
+    "message": "No devices found."
   },
   "screens.Sync.ProjectSyncDisplay.noWifi": {
-    "message": "No Wi-Fi"
-  },
-  "screens.Sync.ProjectSyncDisplay.progressLabelSyncing": {
-    "message": "Syncing…"
-  },
-  "screens.Sync.ProjectSyncDisplay.progressLabelWaiting": {
-    "message": "Waiting…"
-  },
-  "screens.Sync.ProjectSyncDisplay.progressLabelWithDeviceCount": {
-    "message": "Waiting for other devices"
-  },
-  "screens.Sync.ProjectSyncDisplay.readyToExchange": {
-    "message": "Ready to exchange"
+    "message": "No Wi-Fi."
   },
   "screens.Sync.ProjectSyncDisplay.start": {
     "message": "Start"
@@ -1726,13 +1733,13 @@
     "message": "Complete! Waiting for other devices to join"
   },
   "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
-    "message": "Complete! You're up to date"
+    "message": "Complete!"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "You are exchanging with your team"
+    "message": "Exchanging..."
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
-    "message": "Waiting for devices"
+    "message": "Waiting for devices..."
   },
   "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
     "message": "{ssid}"
@@ -1742,33 +1749,6 @@
   },
   "screens.Sync.remoteArchiveConnected": {
     "message": "Remote Archive connected"
-  },
-  "screens.SyncEverythingBottomSheet.cancel": {
-    "message": "Cancel"
-  },
-  "screens.SyncEverythingBottomSheet.confirm": {
-    "message": "Sync Everything"
-  },
-  "screens.SyncEverythingBottomSheet.syncEverything": {
-    "message": "Sync Everything?"
-  },
-  "screens.SyncEverythingBottomSheet.syncEverythingDescription": {
-    "message": "You are about to sync everything. This may increase the disk space used on your device."
-  },
-  "screens.SyncPreviewBottomSheet.cancel": {
-    "message": "Cancel"
-  },
-  "screens.SyncPreviewBottomSheet.confirm": {
-    "message": "Sync Previews"
-  },
-  "screens.SyncPreviewBottomSheet.syncPreviewWarningBottomSheet": {
-    "message": "You will no longer sync Audio or Video."
-  },
-  "screens.SyncPreviewBottomSheet.syncPreviewsButtonBottomSheet": {
-    "message": "Sync Previews?"
-  },
-  "screens.SyncPreviewBottomSheet.syncPreviewsDescriptionBottomSheet": {
-    "message": "Your device will keep all existing data but new observations will sync in a smaller, preview size."
   },
   "screens.Track.ObservationList.observation": {
     "message": "Observation"
@@ -1811,9 +1791,6 @@
     "description": "title for observation options",
     "message": "Show Options"
   },
-  "sharedComponents.DeviceCard.leaveProject": {
-    "message": "Leave Project"
-  },
   "sharedComponents.DeviceIconWithName.Disconnected": {
     "message": "Disconnected"
   },
@@ -1843,21 +1820,42 @@
     "message": "Go Back"
   },
   "soloProject.inviteCollaborators.introText": {
-    "message": "Share observations with others using CoMapeo. Name your solo project to add your first collaborator."
+    "message": "Share observations with others using CoMapeo."
   },
   "soloProject.inviteCollaborators.inviteOnly": {
-    "message": "Only devices you invite can contribute and share data with you."
+    "message": "Only devices invited to this project can contribute."
   },
   "soloProject.inviteCollaborators.manageControl": {
-    "message": "Manage and control sharing and collaboration in Project Settings."
+    "message": "Easily manage project contributors and settings."
   },
   "soloProject.inviteCollaborators.nameProject": {
     "message": "Name My Project"
   },
-  "soloProject.inviteCollaborators.readyToShare": {
-    "message": "Once you name your project, all your observations are ready to be shared."
+  "soloProject.inviteCollaborators.nameProjectDescription": {
+    "message": "Name your project to start collaborating."
   },
   "soloProject.inviteCollaborators.title": {
     "message": "Invite Collaborators"
+  },
+  "soloProject.startNewProject.goBack": {
+    "message": "Go Back"
+  },
+  "soloProject.startNewProject.introText": {
+    "message": "Secure and private way to exchange with collaborators."
+  },
+  "soloProject.startNewProject.inviteOnly": {
+    "message": "Only devices invited to a project can contribute."
+  },
+  "soloProject.startNewProject.manageControl": {
+    "message": "Easily manage project contributors and settings."
+  },
+  "soloProject.startNewProject.start": {
+    "message": "Start"
+  },
+  "soloProject.startNewProject.title": {
+    "message": "Start New Project"
+  },
+  "soloProject.startNewProject.uniqueProject": {
+    "message": "Each project is unique and separate."
   }
 }

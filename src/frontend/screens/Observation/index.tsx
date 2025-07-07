@@ -31,7 +31,7 @@ import {
   ThumbnailLoader,
 } from '../../sharedComponents/Thumbnails/ThumbnailContainer.tsx';
 import {SavedPhotoThumbnailImage} from '../../sharedComponents/Thumbnails/PhotoThumbnail.tsx';
-import {AudioSavedThumbnail} from '../../sharedComponents/Thumbnails/AudioThumbnail.tsx';
+import {AudioSavedThumbnail} from '../../sharedComponents/Thumbnails/AudioSavedThumbnail.tsx';
 
 const m = defineMessages({
   deleteTitle: {
@@ -112,7 +112,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
           <React.Suspense fallback={<Loading />}>
             <TrackAccordian observationId={observationId} />
           </React.Suspense>
-          {typeof observation.tags.notes === 'string' ? (
+          {observation?.tags?.notes ? (
             <HeaderText variant="header3" style={styles.textNotes}>
               {observation.tags.notes}
             </HeaderText>

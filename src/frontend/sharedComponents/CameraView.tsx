@@ -12,7 +12,7 @@ import {
   MediaMetadata,
   PhotoPromiseWithMetadata,
 } from '../contexts/PhotoPromiseContext/types';
-import {locationToEXIF, PhotoEXIFSchema} from '../lib/exif';
+import {PhotoEXIFSchema} from '../lib/exif';
 import {useLocationState} from '../contexts/LocationContext';
 
 const m = defineMessages({
@@ -81,12 +81,6 @@ export const CameraView = ({onAddPress}: Props) => {
         skipProcessing: false,
         quality: 0.75,
         imageType: 'jpg',
-        additionalExif: location
-          ? // Apparently not all devices will encode GPS information when taking a photo
-            // so we provide it manually to ensure its presence.
-            // https://github.com/expo/expo/commit/dce5905664dc4559ea1935a6c946526e4c46278c
-            locationToEXIF(location)
-          : undefined,
       })
       .then(pic => {
         if (!pic) return;

@@ -9,7 +9,6 @@ import {
 import {useLocalDiscoveryState} from '../../hooks/useLocalDiscoveryState';
 import {ExchangeSoloScreen} from './ExchangeSoloScreen';
 import {NoWifiDisplay} from './NoWifiDisplay';
-import {openWiFiSettings} from '../../lib/linking';
 import {ExchangeScreenContent} from './ExchangeScreenContent';
 import {Loading} from '../../sharedComponents/Loading';
 import {useNetInfo} from '@react-native-community/netinfo';
@@ -56,16 +55,7 @@ export const SyncScreen = ({navigation}: NativeRootNavigationProps<'Sync'>) => {
   };
 
   if (shouldShowNoWifiDisplay()) {
-    return (
-      <NoWifiDisplay
-        onOpenSettings={() => {
-          openWiFiSettings().catch(err => {
-            // Should not throw but in case it does, no-op
-            console.warn(err);
-          });
-        }}
-      />
-    );
+    return <NoWifiDisplay onGoBack={() => navigation.goBack()} />;
   }
 
   return <ExchangeScreenContent syncState={syncState} />;

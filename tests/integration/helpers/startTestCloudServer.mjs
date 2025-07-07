@@ -41,4 +41,4 @@ server.register(comapeoServer, {
   serverBearerToken: 'ignored',
 });
 
-console.log(await server.listen({port: 0}));
+console.log(await server.listen());

@@ -34,7 +34,9 @@ export async function createManager(
     'name' | 'deviceType'
   >,
 ) {
-  const fastify = Fastify();
+  const fastify = Fastify() as any;
+  fastify.getDefaultRoute = () => {};
+  fastify.setDefaultRoute = () => {};
 
   const manager = new MapeoManager({
     rootKey: KeyManager.generateRootKey(),

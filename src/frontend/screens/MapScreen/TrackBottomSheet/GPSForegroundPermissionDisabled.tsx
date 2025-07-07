@@ -1,9 +1,11 @@
 import * as React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
-import {Button} from '../../../sharedComponents/Button';
+import {StyleSheet, View} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
+import {PrimaryButton} from '../../../sharedComponents/Buttons';
+import NoGpsAlert from '../../../images/AlertIcon.svg';
+import {Circle} from '../../../sharedComponents/icons/Circle';
 
 const m = defineMessages({
   gpsDisabledTitle: {
@@ -12,12 +14,11 @@ const m = defineMessages({
   },
   gpsDisabledDescription: {
     id: 'Modal.GPSDisable.description',
-    defaultMessage:
-      'To create a Track CoMapeo needs access to your location and GPS.',
+    defaultMessage: 'GPS and location needed to record tracks.',
   },
   gpsDisabledButtonText: {
     id: 'Modal.GPSDisable.button',
-    defaultMessage: 'Enable',
+    defaultMessage: 'Enable GPS',
   },
 });
 
@@ -31,26 +32,20 @@ export const GPSForegroundPermissionDisabled = ({
 
   return (
     <View style={styles.wrapper}>
-      <Image
-        source={require('../../../images/alert-icon.png')}
-        width={60}
-        height={60}
-        style={styles.image}
-      />
-
+      <Circle radius={30} style={{marginBottom: 20, overflow: 'visible'}}>
+        <NoGpsAlert width={70} height={70} />
+      </Circle>
       <HeaderText variant="header2" style={{marginBottom: 10}}>
         {formatMessage(m.gpsDisabledTitle)}
       </HeaderText>
       <BodyText style={styles.description}>
         {formatMessage(m.gpsDisabledDescription)}
       </BodyText>
-      <Button
-        fullWidth
+      <PrimaryButton
+        fullSize
         onPress={askForegroundLocationPermission}
-        variant="contained"
-        color="ComapeoBlue">
-        {formatMessage(m.gpsDisabledButtonText)}
-      </Button>
+        text={formatMessage(m.gpsDisabledButtonText)}
+      />
     </View>
   );
 };
@@ -61,6 +56,5 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
   },
-  image: {marginBottom: 20},
-  description: {marginBottom: 30},
+  description: {marginBottom: 30, paddingHorizontal: 50, textAlign: 'center'},
 });

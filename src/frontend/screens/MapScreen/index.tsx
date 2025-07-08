@@ -14,7 +14,7 @@ import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersis
 import {usePresetsQuery} from '../../hooks/server/presets';
 import ScaleBar from 'react-native-scale-bar';
 import {TrackBottomSheet} from './TrackBottomSheet';
-import {CurrentTrackMapLayer} from './CurrentTrack/CurrrentTrackMapLayer';
+import {CurrentTrackMapLayer} from './CurrentTrack/CurrentTrackMapLayer';
 
 import {useMapStyleJsonUrl} from '../../hooks/server/maps';
 import {TracksMapLayer} from './MapLayers/TracksMapLayer';
@@ -74,7 +74,7 @@ export const MapScreen = ({
 
   const handleAddPress = () => {
     newDraft();
-    navigate('PresetChooser');
+    navigate('ObservationCategoryChooser');
   };
 
   // This closes the track bottom sheet whenever the user is navigated away.
@@ -210,7 +210,7 @@ function useCheckDraftObservationAndNavigate({
       }
       // if existing observation and no preset match, user has started creating an observation but had not chosen a preset, so navigate to preset chooser
       if (!matchPreset(existingObservation.tags, presets)) {
-        navigate('PresetChooser');
+        navigate('ObservationCategoryChooser');
 
         // if existing observation, preset match, and docId exists, navigate to Observation Edit Screen
       } else if ('docId' in existingObservation) {

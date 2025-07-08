@@ -1,5 +1,6 @@
 import {act, renderHook} from '@testing-library/react-native';
 import {type ReactNode} from 'react';
+import {parse} from 'valibot';
 
 import {
   createTrackStore,
@@ -7,6 +8,7 @@ import {
   TrackStoreProvider,
   useTrackActions,
   useTrackState,
+  PresetSchema,
 } from './TrackStoreContext';
 
 function createWrapper(trackStore: TrackStore) {
@@ -19,6 +21,28 @@ function createWrapper(trackStore: TrackStore) {
 
 afterEach(() => {
   jest.restoreAllMocks();
+});
+
+describe('PresetSchema', () => {
+  it('validates geometry includes line', () => {
+    expect(() =>
+      parse(PresetSchema, {
+        docId: 'id',
+        name: 'Test Preset',
+        geometry: ['point', 'line'],
+        versionId: 'v1',
+      }),
+    ).not.toThrow();
+
+    expect(() =>
+      parse(PresetSchema, {
+        docId: 'id',
+        name: 'Test Preset',
+        geometry: ['point'],
+        versionId: 'v1',
+      }),
+    ).toThrow(/geometry must include "line"/);
+  });
 });
 
 describe('useTrackState()', () => {
@@ -37,6 +61,8 @@ describe('useTrackState()', () => {
       locationHistory: [],
       observationRefs: [],
       trackingSince: null,
+      preset: null,
+      docId: null,
     });
   });
 });
@@ -66,6 +92,8 @@ describe('useTrackActions()', () => {
       locationHistory: [],
       observationRefs: [],
       trackingSince: dateSpy.mock.instances.at(-1),
+      preset: null,
+      docId: null,
     });
 
     act(() => {
@@ -79,6 +107,8 @@ describe('useTrackActions()', () => {
       locationHistory: [],
       observationRefs: [],
       trackingSince: null,
+      preset: null,
+      docId: null,
     });
   });
 
@@ -107,6 +137,8 @@ describe('useTrackActions()', () => {
       locationHistory: [],
       observationRefs: [{docId: 'doc_1', versionId: 'version_1'}],
       trackingSince: null,
+      preset: null,
+      docId: null,
     });
   });
 
@@ -134,6 +166,8 @@ describe('useTrackActions()', () => {
       locationHistory: [],
       observationRefs: [],
       trackingSince: dateSpy.mock.instances.at(-1),
+      preset: null,
+      docId: null,
     });
 
     act(() => {
@@ -147,6 +181,8 @@ describe('useTrackActions()', () => {
       locationHistory: [],
       observationRefs: [],
       trackingSince: null,
+      preset: null,
+      docId: null,
     });
   });
 
@@ -172,6 +208,8 @@ describe('useTrackActions()', () => {
       locationHistory: [],
       observationRefs: [],
       trackingSince: null,
+      preset: null,
+      docId: null,
     });
   });
 
@@ -230,6 +268,8 @@ describe('useTrackActions()', () => {
       observationRefs: [],
       trackingSince: null,
       distance: expect.any(Number),
+      preset: null,
+      docId: null,
     });
     expect(stateHook.result.current.distance).toBeGreaterThan(previousDistance);
   });

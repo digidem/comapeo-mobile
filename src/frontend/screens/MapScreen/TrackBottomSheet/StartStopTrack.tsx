@@ -1,7 +1,6 @@
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
-import {useTrackTimerContext} from '../../../contexts/TrackTimerContext.tsx';
 import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes.ts';
 import {useTracking} from '../../../hooks/useTracking.ts';
 import StartTrackingIcon from '../../../images/StartTracking.svg';
@@ -11,6 +10,8 @@ import {
   PrimaryButton,
 } from '../../../sharedComponents/Buttons.tsx';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText.tsx';
+import {usePresetsQuery} from '../../../hooks/server/presets';
+import {useTrackState} from '../../../contexts/TrackStoreContext.tsx';
 
 const m = defineMessages({
   defaultButtonText: {
@@ -25,68 +26,79 @@ const m = defineMessages({
     id: 'Modal.GPSEnable.button.loading',
     defaultMessage: 'Loading…',
   },
-  trackingDescription: {
-    id: 'Modal.GPSEnable.trackingDescription',
-    defaultMessage: 'You’ve been recording for {time}',
+  trackingRequirement: {
+    id: 'TrackBottomSheet.StartStopTrack.trackingRequirement',
+    defaultMessage: 'Move one meter to see track.',
+  },
+  readyToRecord: {
+    id: 'TrackBottomSheet.StartStopTrack.readyToRecord',
+    defaultMessage: 'Ready to record new track?',
   },
 });
 
 export const StartStopTrack = () => {
   const {formatMessage} = useIntl();
-  const {isTracking, cancelTracking, startTracking} = useTracking();
-  const {timer} = useTrackTimerContext();
+  const {isTracking, endTracking, startTracking} = useTracking();
   const navigation = useNavigationFromHomeTabs();
+  const {data: presets} = usePresetsQuery();
+  const distance = useTrackState(store => store.distance);
 
-  function endTracking() {
-    const hasTracksSaved = cancelTracking();
+  const trackPresets = React.useMemo(
+    () => presets?.filter(p => p.geometry.includes('line')) ?? [],
+    [presets],
+  );
 
-    if (hasTracksSaved) {
+  async function finishTracking() {
+    const hasMovedEnough = distance > 0.001;
+
+    if (!hasMovedEnough) {
+      navigation.navigate('DidNotMoveBottomSheet');
+      return;
+    }
+
+    endTracking();
+
+    if (trackPresets.length === 0) {
       navigation.navigate('SaveTrack');
+    } else {
+      navigation.navigate('TrackCategoryChooser');
     }
   }
 
   return (
     <View style={{alignItems: 'center', flex: 1}}>
       {!isTracking ? (
-        <PrimaryButton
-          fullSize={true}
-          text={formatMessage(m.defaultButtonText)}
-          onPress={startTracking}
-          renderIcon={() => <StartTrackingIcon />}
-        />
-      ) : (
-        <DestructiveButton
-          text={formatMessage(m.stopButtonText)}
-          fullSize={true}
-          renderIcon={() => <StopTrackingIcon />}
-          onPress={endTracking}
-        />
-      )}
-      {isTracking && (
-        <View style={styles.runtimeWrapper}>
-          <View style={styles.indicator} />
-          <HeaderText style={{textAlign: 'center'}} variant="header5">
-            {formatMessage(m.trackingDescription, {time: timer})}
+        <>
+          <HeaderText style={styles.aboveButton} variant="header6">
+            {formatMessage(m.readyToRecord)}
           </HeaderText>
-        </View>
+          <PrimaryButton
+            fullSize={true}
+            text={formatMessage(m.defaultButtonText)}
+            onPress={startTracking}
+            renderIcon={() => <StartTrackingIcon />}
+          />
+        </>
+      ) : (
+        <>
+          <HeaderText style={styles.aboveButton} variant="header6">
+            {formatMessage(m.trackingRequirement)}
+          </HeaderText>
+          <DestructiveButton
+            text={formatMessage(m.stopButtonText)}
+            fullSize={true}
+            renderIcon={() => <StopTrackingIcon />}
+            onPress={finishTracking}
+          />
+        </>
       )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  runtimeWrapper: {
-    paddingTop: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-  },
-  indicator: {
-    marginRight: 5,
-    height: 10,
-    width: 10,
-    borderRadius: 99,
-    backgroundColor: '#59A553',
+  aboveButton: {
+    textAlign: 'center',
+    paddingBottom: 10,
   },
 });

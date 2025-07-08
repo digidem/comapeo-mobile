@@ -32,7 +32,8 @@ export const EDITING_SCREEN_NAMES: (
   | keyof HomeTabsParamsList
 )[] = [
   'AddPhoto',
-  'PresetChooser',
+  'TrackCategoryChooser',
+  'ObservationCategoryChooser',
   'ManualGpsScreen',
   'ObservationCreate',
   'ObservationDetails',

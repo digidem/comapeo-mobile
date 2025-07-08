@@ -36,6 +36,7 @@ import PlayArrow from '../../images/PlayArrow.svg';
 import {BodyText} from '../Text/BodyText';
 import {millisecondsToMMSS} from '../../lib/millisecondsToFormattedTime';
 import {DateDistance} from '../DateDistance';
+import {TrackStats} from './TrackStats';
 
 type EditorProps = {
   presetName: string;
@@ -52,6 +53,8 @@ type EditorProps = {
   actionsRow?: React.ReactNode;
   notesComponent?: React.ReactNode;
   isTrack?: boolean;
+  trackDistance?: number;
+  trackDurationMs?: number;
   presetDisabled?: boolean;
 };
 
@@ -63,6 +66,8 @@ export const Editor = ({
   actionsRow,
   notesComponent,
   isTrack = false,
+  trackDistance = 0,
+  trackDurationMs = 0,
   ...presetProps
 }: EditorProps) => {
   const {projectId} = useActiveProject();
@@ -93,6 +98,12 @@ export const Editor = ({
           </HeaderText>
         </View>
         <PresetView {...presetProps} />
+        {isTrack && (
+          <>
+            <Divider />
+            <TrackStats distance={trackDistance} durationMs={trackDurationMs} />
+          </>
+        )}
         {location && (
           <>
             <Divider />

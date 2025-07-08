@@ -1,12 +1,13 @@
 import React from 'react';
 import {StyleSheet, View, Text, SafeAreaView} from 'react-native';
-import {BLUE_GREY, DARK_GREY} from '../../lib/styles.ts';
+import {BLUE_GREY, DARK_GREY, VERY_LIGHT_GREY} from '../../lib/styles.ts';
 
 import TrackIcon from '../../images/Track.svg';
 import {FormattedMessage, MessageDescriptor, defineMessages} from 'react-intl';
 import {
   useDeleteTrackMutation,
   useTrackQuery,
+  useGetPresetById,
 } from '../../hooks/server/track.ts';
 import {useObservations} from '../../hooks/server/observations.ts';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
@@ -17,6 +18,12 @@ import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDoc
 import {TrackHeaderRight} from './TrackHeaderRight';
 import * as Sentry from '@sentry/react-native';
 import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
+import {
+  getLocationHistoryFromTrack,
+  getTrackDurationAndDistance,
+} from '../../utils/trackMetrics';
+import {TrackStats} from '../../sharedComponents/Editor/TrackStats.tsx';
+import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
 
 const m = defineMessages({
   title: {
@@ -49,6 +56,9 @@ export const TrackScreen = ({
   );
   const {mutate: deleteTrackMutate} = useDeleteTrackMutation();
   const canDelete = useCanEditOrDelete(track.originalVersionId);
+  const locationHistory = getLocationHistoryFromTrack(track);
+  const {durationMs, distance} = getTrackDurationAndDistance(locationHistory);
+  const preset = useGetPresetById(track?.presetRef?.docId);
 
   function deleteTrack() {
     deleteTrackMutate(
@@ -86,8 +96,18 @@ export const TrackScreen = ({
             }))}
             observations={trackObservations}
           />
+          <TrackStats
+            distance={distance}
+            durationMs={durationMs}
+            backgroundColor={VERY_LIGHT_GREY}
+            center
+          />
           <View style={styles.trackTitleWrapper}>
-            <TrackIcon />
+            {preset ? (
+              <PresetCircleIcon iconId={preset.iconRef?.docId} size="medium" />
+            ) : (
+              <TrackIcon />
+            )}
             <Text style={styles.trackTitle}>
               <FormattedMessage {...m.tracks} />
             </Text>

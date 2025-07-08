@@ -29,10 +29,10 @@
     "message": "Go Back"
   },
   "Modal.GPSDisable.button": {
-    "message": "Enable"
+    "message": "Enable GPS"
   },
   "Modal.GPSDisable.description": {
-    "message": "To create a Track CoMapeo needs access to your location and GPS."
+    "message": "GPS and location needed to record tracks."
   },
   "Modal.GPSDisable.title": {
     "message": "GPS Disabled"
@@ -1001,13 +1001,13 @@
     "message": "Zone Number"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
-    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
+    "message": "Use Location? Tracks location even when closed. Data remains on device only."
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Turn On"
+    "message": "Turn On Location"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
-    "message": "Use Your Location"
+    "message": "Use Location?"
   },
   "screens.ObscurePasscode.description": {
     "message": "Obscure Passcode is a security feature that allows you to open CoMapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of CoMapeo which allows you to create demonstration observations that are not saved to the CoMapeo database."

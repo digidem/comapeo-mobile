@@ -31,6 +31,7 @@ import {getCoords} from '../../lib/coordinateFormat';
 import {useTracking} from '../../hooks/useTracking';
 import {UserTooltipMarker} from './CurrentTrack/UserTooltipMarker';
 import {useNonReactiveSavedLocation} from '../../contexts/SavedLocationContext';
+import {useResetMapLayout} from '../../hooks/useResetMapLayout';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -55,8 +56,7 @@ export const MapScreen = ({
   const [zoom, setZoom] = React.useState(DEFAULT_ZOOM);
   const [isFinishedLoadingStyle, setIsFinishedLoadingStyle] =
     React.useState(false);
-  const [mapKey, setMapKey] = React.useState(0);
-  const [dims, setDims] = React.useState<{w: number; h: number} | null>(null);
+  const {dimensions, mapKey, onLayout} = useResetMapLayout();
 
   const {newDraft} = useDraftObservation();
   const {navigate} = useNavigationFromHomeTabs();
@@ -97,20 +97,12 @@ export const MapScreen = ({
   }
 
   return (
-    <View
-      style={{flex: 1}}
-      onLayout={({nativeEvent}) => {
-        const {width, height} = nativeEvent.layout;
-        if (width && height) {
-          setDims({w: width, h: height});
-          setMapKey(k => k + 1);
-        }
-      }}>
-      {dims && (
+    <View style={{flex: 1}} onLayout={onLayout}>
+      {dimensions && (
         <Mapbox.MapView
           key={mapKey}
           testID="MAIN.mapbox-map-view"
-          style={{width: dims.w, height: dims.h}}
+          style={{width: dimensions.width, height: dimensions.height}}
           logoEnabled={false}
           pitchEnabled={false}
           rotateEnabled={false}

@@ -31,6 +31,7 @@ import {getCoords} from '../../lib/coordinateFormat';
 import {useTracking} from '../../hooks/useTracking';
 import {UserTooltipMarker} from './CurrentTrack/UserTooltipMarker';
 import {useNonReactiveSavedLocation} from '../../contexts/SavedLocationContext';
+import {useResetMapLayout} from '../../hooks/useResetMapLayout';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -53,7 +54,9 @@ export const MapScreen = ({
 }: NativeHomeTabsNavigationProps<'Map'>) => {
   const trackBottomSheetOpen = route.params?.trackingOpen;
   const [zoom, setZoom] = React.useState(DEFAULT_ZOOM);
-  const [isFinishedLoading, setIsFinishedLoading] = React.useState(false);
+  const [isFinishedLoadingStyle, setIsFinishedLoadingStyle] =
+    React.useState(false);
+  const {dimensions, mapKey, onLayout} = useResetMapLayout();
 
   const {newDraft} = useDraftObservation();
   const {navigate} = useNavigationFromHomeTabs();
@@ -90,68 +93,71 @@ export const MapScreen = ({
   }
 
   function handleDidFinishLoadingStyle() {
-    setIsFinishedLoading(true);
+    setIsFinishedLoadingStyle(true);
   }
 
   return (
-    <View style={{flex: 1}}>
-      <Mapbox.MapView
-        testID="MAIN.mapbox-map-view"
-        style={{flex: 1}}
-        logoEnabled={false}
-        pitchEnabled={false}
-        rotateEnabled={false}
-        surfaceView={true}
-        attributionPosition={{right: 8, bottom: 8}}
-        compassEnabled={false}
-        scaleBarEnabled={false}
-        styleURL={styleUrl}
-        onMapIdle={event => {
-          setZoom(event.properties.zoom);
-        }}
-        onDidFinishLoadingStyle={handleDidFinishLoadingStyle}
-        onMoveShouldSetResponder={() => {
-          if (following) setFollowing(false);
-          return true;
-        }}>
-        <Mapbox.Camera
-          ref={cam => {
-            if (cam && !initialPositionSet.current) {
-              cam.setCamera({
-                centerCoordinate: coords
-                  ? coords
-                  : savedLocation
-                    ? getCoords(savedLocation)
-                    : FALLBACK_COORDINATE,
-                zoomLevel: DEFAULT_ZOOM,
-                animationDuration: 50,
-              });
-              initialPositionSet.current = true;
-            }
+    <View style={{flex: 1}} onLayout={onLayout}>
+      {dimensions && (
+        <Mapbox.MapView
+          key={mapKey}
+          testID="MAIN.mapbox-map-view"
+          style={{width: dimensions.width, height: dimensions.height}}
+          logoEnabled={false}
+          pitchEnabled={false}
+          rotateEnabled={false}
+          surfaceView={true}
+          attributionPosition={{right: 8, bottom: 8}}
+          compassEnabled={false}
+          scaleBarEnabled={false}
+          styleURL={styleUrl}
+          onMapIdle={event => {
+            setZoom(event.properties.zoom);
           }}
-          centerCoordinate={following ? coords : undefined}
-          zoomLevel={DEFAULT_ZOOM}
-          animationDuration={0}
-          animationMode="none"
-          followUserLocation={false}
-        />
+          onDidFinishLoadingStyle={handleDidFinishLoadingStyle}
+          onMoveShouldSetResponder={() => {
+            if (following) setFollowing(false);
+            return true;
+          }}>
+          <Mapbox.Camera
+            ref={cam => {
+              if (cam && !initialPositionSet.current) {
+                cam.setCamera({
+                  centerCoordinate: coords
+                    ? coords
+                    : savedLocation
+                      ? getCoords(savedLocation)
+                      : FALLBACK_COORDINATE,
+                  zoomLevel: DEFAULT_ZOOM,
+                  animationDuration: 50,
+                });
+                initialPositionSet.current = true;
+              }
+            }}
+            centerCoordinate={following ? coords : undefined}
+            zoomLevel={DEFAULT_ZOOM}
+            animationDuration={0}
+            animationMode="none"
+            followUserLocation={false}
+          />
 
-        {coords && <Mapbox.UserLocation minDisplacement={MIN_DISPLACEMENT} />}
+          {coords && <Mapbox.UserLocation minDisplacement={MIN_DISPLACEMENT} />}
 
-        {isFinishedLoading && authState !== 'obscured' && (
-          <>
-            <RemoteDetectionAlertsMapLayer />
-            {isTracking && (
-              <>
-                <CurrentTrackMapLayer />
-                <UserTooltipMarker />
-              </>
-            )}
-            <TracksMapLayer />
-            <ObservationMapLayer />
-          </>
-        )}
-      </Mapbox.MapView>
+          {isFinishedLoadingStyle && authState !== 'obscured' && (
+            <>
+              <RemoteDetectionAlertsMapLayer />
+              {isTracking && (
+                <>
+                  <CurrentTrackMapLayer />
+                  <UserTooltipMarker />
+                </>
+              )}
+              <TracksMapLayer />
+              <ObservationMapLayer />
+            </>
+          )}
+        </Mapbox.MapView>
+      )}
       <View style={styles.bottomContainer}>
         <View style={{flex: 1, alignItems: 'center'}}>
           <GPSPill onPress={() => navigation.navigate('GpsModal')} />

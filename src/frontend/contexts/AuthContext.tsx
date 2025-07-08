@@ -4,7 +4,7 @@ const {FlagSecureModule} = NativeModules;
 
 import {useIsShareDialogOpen} from '../hooks/share';
 import {DEFAULT_OBSCURE_CODE} from '../lib/security';
-import {useSecurityState} from './SecurityStoreContext';
+import {useSecurityState, useSecurityActions} from './SecurityStoreContext';
 import {useIsAudioPermissionModalOpen} from '../hooks/useAudioPermissionTracker';
 
 export type AuthState = 'unauthenticated' | 'authenticated' | 'obscured';
@@ -30,7 +30,9 @@ export const useAuthContext = () => {
 };
 
 export const AuthProvider = ({children}: {children: React.ReactNode}) => {
-  const {passcode, obscureCodeEnabled} = useSecurityState();
+  const {passcode, obscureCodeEnabled, lockUntil} = useSecurityState();
+  const {incrementAndGetAttempts, resetFailedAttempts, setLockout} =
+    useSecurityActions();
   const [authState, setAuthState] = React.useState<AuthState>(
     passcode === null ? 'authenticated' : 'unauthenticated',
   );
@@ -71,21 +73,45 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
 
   const authenticate: AuthContextType['authenticate'] = React.useCallback(
     (passcodeValue, validateOnly = false) => {
+      const isLockedOut = lockUntil !== null && Date.now() < lockUntil;
+      if (isLockedOut) {
+        throw new Error('LOCKED_OUT');
+      }
       if (validateOnly) return passcodeValue === passcode;
 
       if (obscureCodeEnabled && passcodeValue === DEFAULT_OBSCURE_CODE) {
         setAuthState('obscured');
+        resetFailedAttempts();
         return true;
       }
 
       if (passcodeValue === passcode) {
         setAuthState('authenticated');
+        resetFailedAttempts();
         return true;
+      }
+
+      const attempts = incrementAndGetAttempts();
+      let duration: number | null = null;
+      if (attempts === 5) duration = 1 * 60 * 1000;
+      else if (attempts === 7) duration = 3 * 60 * 1000;
+      else if (attempts >= 8) duration = 5 * 60 * 1000;
+
+      if (duration) {
+        setLockout(Date.now() + duration);
       }
 
       throw new Error('Incorrect Passcode');
     },
-    [passcode, obscureCodeEnabled],
+    [
+      passcode,
+      obscureCodeEnabled,
+      incrementAndGetAttempts,
+      resetFailedAttempts,
+      setLockout,
+      lockUntil,
+      setAuthState,
+    ],
   );
 
   const contextValue: AuthContextType = React.useMemo(

@@ -67,6 +67,7 @@ web-build/
 # local env files
 .env*.local
 ios/*.env*.local
+.env.sentry-build-plugin
 
 # typescript
 *.tsbuildinfo

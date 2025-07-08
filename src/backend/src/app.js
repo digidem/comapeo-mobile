@@ -1,5 +1,6 @@
 import debug from 'debug'
 import { join } from 'path'
+import { formatWithOptions } from 'util'
 import { mkdirSync } from 'fs'
 import { createRequire } from 'module'
 import { MapeoManager, FastifyController } from '@comapeo/core'
@@ -23,6 +24,13 @@ const DEFAULT_CUSTOM_MAP_FILE_NAME = 'default.smp'
 const MAPBOX_ACCESS_TOKEN =
   'pk.eyJ1IjoiZGlnaWRlbSIsImEiOiJjbHRyaGh3cm0wN3l4Mmpsam95NDI3c2xiIn0.daq2iZFZXQ08BD0VZWAGUw'
 const DEFAULT_ONLINE_MAP_STYLE_URL = `https://api.mapbox.com/styles/v1/mapbox/outdoors-v11?access_token=${MAPBOX_ACCESS_TOKEN}`
+
+// needed to have logs captured by sentry
+debug.log = function log(...args) {
+  // @ts-expect-error InspectOpts shouldn't be undefined but might be
+  return console.log(formatWithOptions(debug.inspectOpts || {}, ...args))
+}
+debug.enable('mapeo:*')
 
 const log = debug('mapeo:app')
 

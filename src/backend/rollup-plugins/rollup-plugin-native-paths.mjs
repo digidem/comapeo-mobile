@@ -3,7 +3,7 @@ import MagicString from 'magic-string'
 import path from 'path'
 
 /**
- *
+ * Rollup plugin to fix bindings & node-gyp-build paths in native modules.
  * @param {object} [opts]
  * @param {string} [opts.relativePath=node_modules]
  * @returns

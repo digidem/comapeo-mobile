@@ -42,7 +42,7 @@ const TrackObservationItemNotMemoized = ({
     track.presetRef && allPresets.find(p => p.docId === track.presetRef?.docId);
 
   const icon = matchedPreset ? (
-    <PresetCircleIcon iconId={matchedPreset.iconRef?.docId} size="small" />
+    <PresetCircleIcon iconId={matchedPreset.iconRef?.docId} size="medium" />
   ) : (
     <TrackIcon />
   );

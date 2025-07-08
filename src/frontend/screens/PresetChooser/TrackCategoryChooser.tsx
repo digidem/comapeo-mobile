@@ -41,12 +41,6 @@ export const TrackCategoryChooser: NativeNavigationComponent<
     }
   };
 
-  React.useEffect(() => {
-    if (trackPresets.length === 0) {
-      navigation.goBack();
-    }
-  }, [trackPresets.length, navigation]);
-
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: props =>

@@ -44,13 +44,17 @@ export function useTracking() {
     });
 
     if (location?.coords) {
-      addNewLocations([
-        {
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-          timestamp: location.timestamp ?? Date.now(),
-        },
-      ]);
+      const {latitude, longitude, accuracy} = location.coords;
+
+      if (typeof accuracy === 'number' && accuracy <= 3) {
+        addNewLocations([
+          {
+            latitude,
+            longitude,
+            timestamp: location.timestamp,
+          },
+        ]);
+      }
     }
 
     setTracking(false);

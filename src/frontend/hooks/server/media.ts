@@ -1,162 +1,180 @@
-import {Observation} from '@comapeo/schema';
-import {BlobVariant} from '@comapeo/core/dist/types';
-import {useMutation, useQueries, useQuery} from '@tanstack/react-query';
+import {useAttachmentUrl, useCreateBlob} from '@comapeo/core-react';
+import type {BlobId, BlobVariant} from '@comapeo/core/dist/types';
+import {useMutation} from '@tanstack/react-query';
+import type {LocationObject} from 'expo-location';
 import {URL} from 'react-native-url-polyfill';
-
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
-import type {MapeoProjectApi} from '@comapeo/ipc';
-import {ClientApi} from 'rpc-reflector';
-import {UnsavedAudio} from '../../sharedTypes/audio';
-import {
-  isProcessedDraftPhoto,
-  isUnsavedAudio,
-} from '../../lib/attachmentTypeChecks';
+import type {ProcessedDraftPhoto} from '../../contexts/PhotoPromiseContext/types';
+import type {Attachment} from '../../sharedTypes';
+import type {UnsavedAudio} from '../../sharedTypes/audio';
 
-export function useCreateBlobMutation(opts: {retry?: number} = {}) {
-  const {projectApi} = useActiveProject();
+export function useCreatePhotoAttachment({projectId}: {projectId: string}) {
+  const {mutateAsync: createBlobAsync} = useCreateBlob({projectId});
 
   return useMutation({
-    retry: opts.retry,
-    mutationFn: async (attachment: ProcessedDraftPhoto | UnsavedAudio) => {
-      if (isProcessedDraftPhoto(attachment)) {
-        const {originalUri, previewUri, thumbnailUri} = attachment;
-        return projectApi.$blobs.create(
-          {
-            original: new URL(originalUri).pathname,
-            preview: previewUri ? new URL(previewUri).pathname : undefined,
-            thumbnail: thumbnailUri
-              ? new URL(thumbnailUri).pathname
-              : undefined,
-          },
-          // TODO: DraftPhoto type should probably carry MIME type info that feeds this
-          // although backend currently only uses first part of path
-          {
-            mimeType: 'image/jpeg',
-            location: attachment.mediaMetadata.location,
-            timestamp: attachment.mediaMetadata.timestamp,
-          },
-        );
-      } else if (isUnsavedAudio(attachment)) {
-        const {uri, createdAt} = attachment;
-        return projectApi.$blobs.create(
-          {
-            original: new URL(uri).pathname,
-          },
-          {
-            mimeType: 'audio/mp4',
-            timestamp: createdAt,
-          },
-        );
-      } else {
-        throw new Error('Unknown attachment type');
+    mutationFn: async (photo: ProcessedDraftPhoto): Promise<Attachment> => {
+      const blob = await createBlobAsync({
+        original: new URL(photo.originalUri).pathname,
+        preview: photo.previewUri
+          ? new URL(photo.previewUri).pathname
+          : undefined,
+        thumbnail: photo.thumbnailUri
+          ? new URL(photo.thumbnailUri).pathname
+          : undefined,
+        // TODO: DraftPhoto type should probably carry MIME type info that feeds this
+        // although backend currently only uses first part of path
+        metadata: {
+          mimeType: 'image/jpeg',
+        },
+      });
+
+      const position = photo.mediaMetadata.location
+        ? expoLocationToAttachmentPosition(photo.mediaMetadata.location)
+        : undefined;
+
+      const createdAt = new Date(photo.mediaMetadata.timestamp).toISOString();
+
+      // Should not happen but just in case...
+      if (blob.type !== 'photo') {
+        return {
+          driveDiscoveryId: blob.driveId,
+          hash: blob.hash,
+          name: blob.name,
+          type: blob.type,
+          external: false,
+          createdAt,
+          position,
+        };
       }
+
+      return {
+        driveDiscoveryId: blob.driveId,
+        hash: blob.hash,
+        name: blob.name,
+        type: blob.type,
+        external: false,
+        createdAt,
+        position,
+        photoExif: photo.mediaMetadata.photoExif,
+      };
     },
   });
 }
 
-const resolveAttachmentUrlQueryOptions = (
-  projectId: string,
-  projectApi: ClientApi<MapeoProjectApi>,
-  attachment: Observation['attachments'][0],
-  variant: BlobVariant<
-    Exclude<
-      Observation['attachments'][number]['type'],
-      'UNRECOGNIZED' | 'attachment_type_unspecified'
-    >
-  >,
-  enabledByDefault: boolean = true,
-) => {
-  return {
-    enabled: enabledByDefault,
-    queryKey: [
-      'attachmentUrl',
-      projectId,
-      attachment.driveDiscoveryId,
-      attachment.type,
-      variant,
-      attachment.name,
-    ],
-    queryFn: async () => {
-      switch (attachment.type) {
-        case 'UNRECOGNIZED': {
-          throw new Error('Cannot get URL for unrecognized attachment type');
-        }
-        case 'video':
-        case 'audio': {
-          if (variant !== 'original') {
-            throw new Error('Cannot get URL of attachment for variant');
-          }
+export function useCreateAudioAttachment({projectId}: {projectId: string}) {
+  const {mutateAsync: createBlobAsync} = useCreateBlob({projectId});
 
-          return {
-            ...attachment,
-            url: await projectApi.$blobs.getUrl({
-              driveId: attachment.driveDiscoveryId,
-              name: attachment.name,
-              type: attachment.type,
-              variant,
-            }),
-          };
-        }
-        case 'photo': {
-          return {
-            ...attachment,
-            url: await projectApi.$blobs.getUrl({
-              driveId: attachment.driveDiscoveryId,
-              name: attachment.name,
-              type: attachment.type,
-              variant,
-            }),
-          };
-        }
-      }
+  return useMutation({
+    mutationFn: async (file: UnsavedAudio): Promise<Attachment> => {
+      const blob = await createBlobAsync({
+        original: new URL(file.uri).pathname,
+        metadata: {
+          mimeType: 'audio/mp4',
+        },
+      });
+
+      return {
+        driveDiscoveryId: blob.driveId,
+        hash: blob.hash,
+        name: blob.name,
+        type: blob.type,
+        external: false,
+        createdAt: new Date(file.createdAt).toISOString(),
+      };
     },
+  });
+}
+
+function buildBlobId(
+  attachment: Attachment,
+  requestedVariant: 'original' | 'thumbnail' | 'preview',
+): BlobId {
+  if (
+    attachment.type !== 'photo' &&
+    attachment.type !== 'audio' &&
+    attachment.type !== 'video'
+  ) {
+    throw new Error(
+      `Cannot fetch URL for attachment type "${attachment.type}"`,
+    );
+  }
+
+  if (attachment.type === 'photo') {
+    return {
+      type: 'photo',
+      variant: requestedVariant,
+      name: attachment.name,
+      driveId: attachment.driveDiscoveryId,
+    };
+  }
+
+  return {
+    type: attachment.type,
+    variant: 'original',
+    name: attachment.name,
+    driveId: attachment.driveDiscoveryId,
   };
-};
+}
 
 export function useAttachmentUrlQuery(
-  attachment: Observation['attachments'][0],
-  variant: BlobVariant<
-    Exclude<
-      Observation['attachments'][number]['type'],
-      'UNRECOGNIZED' | 'attachment_type_unspecified'
-    >
-  >,
-  enabledByDefault: boolean = true,
+  attachment: Attachment,
+  variant: BlobVariant<'photo' | 'audio' | 'video'>,
 ) {
-  const {projectId, projectApi} = useActiveProject();
-  return useQuery(
-    resolveAttachmentUrlQueryOptions(
-      projectId,
-      projectApi,
-      attachment,
-      variant,
-      enabledByDefault,
-    ),
-  );
+  const {projectId} = useActiveProject();
+  if (
+    attachment.type === 'UNRECOGNIZED' ||
+    attachment.type === 'attachment_type_unspecified'
+  ) {
+    throw new Error(`Invalid attachment type: ${attachment.type}`);
+  }
+
+  const blobId = buildBlobId(attachment, variant);
+
+  const {
+    data: rawUrl,
+    error,
+    isRefetching,
+  } = useAttachmentUrl({
+    projectId,
+    blobId,
+  });
+
+  return {
+    url: rawUrl ?? undefined,
+    error,
+    isRefetching,
+  };
 }
 
-export function useAttachmentUrlQueries(
-  attachments: Observation['attachments'],
-  variant: BlobVariant<
-    Exclude<
-      Observation['attachments'][number]['type'],
-      'UNRECOGNIZED' | 'attachment_type_unspecified'
-    >
-  >,
-  enabledByDefault: boolean = true,
-) {
-  const {projectId, projectApi} = useActiveProject();
-
-  return useQueries({
-    queries: attachments.map(attachment =>
-      resolveAttachmentUrlQueryOptions(
-        projectId,
-        projectApi,
-        attachment,
-        variant,
-        enabledByDefault,
-      ),
-    ),
-  });
+function expoLocationToAttachmentPosition(
+  location: LocationObject,
+): Attachment['position'] {
+  return {
+    timestamp: new Date(location.timestamp).toISOString(),
+    mocked: location.mocked,
+    coords: {
+      accuracy:
+        typeof location.coords.accuracy === 'number'
+          ? location.coords.accuracy
+          : undefined,
+      altitude:
+        typeof location.coords.altitude === 'number'
+          ? location.coords.altitude
+          : undefined,
+      altitudeAccuracy:
+        typeof location.coords.altitudeAccuracy === 'number'
+          ? location.coords.altitudeAccuracy
+          : undefined,
+      heading:
+        typeof location.coords.heading === 'number'
+          ? location.coords.heading
+          : undefined,
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+      speed:
+        typeof location.coords.speed === 'number'
+          ? location.coords.speed
+          : undefined,
+    },
+  };
 }

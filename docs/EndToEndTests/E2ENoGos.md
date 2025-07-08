@@ -52,16 +52,34 @@ Camera does not work on emulator, see "Platform Compatibility" at the top. https
 
 #### Weak GPS signal
 
-Unfortunately this can't be mocked either through the android settings on the emulator or through Maestro tests.
+Unfortunately this can't be totally controlled through Appium tests. It does show up, but we cannot determine exactly when it will show up.
 
 - If precision is greater than 10m or GPS is off
-  - No GPS Signal or Weak GPS Signal warning dialogue appears with descriptive text and 3 clickable options in selected app language
   - [On click] CONTINUE WAITING returns to New observation screen
   - GPS bar displays active GPS precision data
   - [On click] MANUAL COORDS goes to Enter Coordinates screen
   - Enter coordinates heading displays in selected app language
   - [On click] Coordinate Format input field opens coordinate format selection window
   - [On click] SAVE saves data and returns to Home screen most recently used (Map or Camera)
+
+#### Tracks
+
+- Permission flows (OS settings) aren't visible now because we just have one command that enables all permissions and we can't mock going into the Android settings to enable permissions.
+- Real-time GPS line drawing, movement, distance, and accuracy
+- Background and foreground transitions
+- Data recovery after crash or forced app close
+
+#### Audio
+
+- Actual recorded audio content cannot be verified in automation
+- Cannot validate auto-stop at 5 minutes due to test time constraints
+- Cannot validate the screen color/ screen change as recording progresses
+- Permission flows (OS settings) isn't visible now because we just have one command that enables all permissions and we can't mock going into the Android settings to enable permissions.
+
+#### Exchange
+
+- Cannot test the actual view on the screen when devices are available
+- Cannot test the sync/ exchange process itself
 
 #### Other
 

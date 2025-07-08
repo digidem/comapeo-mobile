@@ -6,16 +6,15 @@ import {useForm} from 'react-hook-form';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
-import {
-  useDeviceInfo,
-  useEditDeviceInfo,
-} from '../../../../hooks/server/deviceInfo';
+import {useOwnDeviceInfo, useSetOwnDeviceInfo} from '@comapeo/core-react';
 import {BLACK} from '../../../../lib/styles';
 import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
 import {IconButton} from '../../../../sharedComponents/IconButton';
 import SaveIcon from '../../../../images/CheckMark.svg';
-import {ErrorBottomSheet} from '../../../../sharedComponents/ErrorBottomSheet';
 import {FieldRow} from './FieldRow';
+import {expoToCoreDeviceType} from '../../../../lib/deviceTypeMap';
+import {deviceType} from 'expo-device';
+import * as Sentry from '@sentry/react-native';
 
 const m = defineMessages({
   title: {
@@ -50,7 +49,7 @@ export function createNavigationOptions({
       headerTitle: intl(m.title),
       animation: 'none',
       headerRight: () => (
-        <IconButton testID="save-icon" onPress={() => {}}>
+        <IconButton onPress={() => {}}>
           <SaveIcon />
         </IconButton>
       ),
@@ -58,13 +57,12 @@ export function createNavigationOptions({
   };
 }
 
-// TODO: Add the test for saving an edited device name to the end to end test once the save button works correctly https://github.com/digidem/comapeo-mobile/issues/434
 export const EditScreen = ({
   navigation,
 }: NativeRootNavigationProps<'DeviceNameEdit'>) => {
   const {formatMessage: t} = useIntl();
 
-  const {data} = useDeviceInfo();
+  const {data} = useOwnDeviceInfo();
 
   const deviceName = data?.name;
 
@@ -72,7 +70,8 @@ export const EditScreen = ({
     deviceName: string;
   }>({defaultValues: {deviceName}});
 
-  const {isPending, mutate, error, reset} = useEditDeviceInfo();
+  const {mutate, status} = useSetOwnDeviceInfo();
+  const isPending = status === 'pending';
 
   const {isDirty: nameHasChanges} = control.getFieldState(
     'deviceName',
@@ -111,13 +110,24 @@ export const EditScreen = ({
   const onSubmit = React.useMemo(() => {
     return handleSubmit(value => {
       if (!nameHasChanges) {
-        navigation.navigate('DeviceNameDisplay');
+        navigation.popTo('DeviceNameDisplay');
         return;
       }
-
-      mutate(value.deviceName, {
-        onSuccess: () => navigation.navigate('DeviceNameDisplay'),
-      });
+      mutate(
+        {
+          name: value.deviceName,
+          deviceType: expoToCoreDeviceType(deviceType),
+        },
+        {
+          onSuccess: () => {
+            navigation.popTo('DeviceNameDisplay');
+          },
+          onError: err => {
+            Sentry.captureException(err);
+            navigation.navigate('ErrorBottomSheet');
+          },
+        },
+      );
     });
   }, [handleSubmit, mutate, nameHasChanges, navigation]);
 
@@ -126,7 +136,7 @@ export const EditScreen = ({
       navigation.setOptions({
         headerRight: () => {
           return isPending ? (
-            <IconButton testID="save-icon">
+            <IconButton>
               <UIActivityIndicator size={30} />
             </IconButton>
           ) : (
@@ -141,26 +151,23 @@ export const EditScreen = ({
   );
 
   return (
-    <>
-      <ScrollView contentContainerStyle={styles.container}>
-        <FieldRow label={t(m.deviceNameLabel)}>
-          <HookFormTextInput
-            testID="PROJECT.edit-device-name"
-            control={control}
-            name="deviceName"
-            rules={{maxLength: 60, required: true, minLength: 1}}
-            // TODO: Update HookFormTextInput implementation so that either:
-            // - the implementation fully determines the text input's base style and this component doesn't allow custom styling
-            // - this style prop is properly merged with the text input's base style in the implementation
-            style={{flex: 1, color: BLACK, fontSize: 16}}
-            showCharacterCount
-            autoFocus
-            editable={!isPending}
-          />
-        </FieldRow>
-      </ScrollView>
-      <ErrorBottomSheet error={error} clearError={reset} tryAgain={onSubmit} />
-    </>
+    <ScrollView contentContainerStyle={styles.container}>
+      <FieldRow label={t(m.deviceNameLabel)}>
+        <HookFormTextInput
+          testID="edit-device-name"
+          control={control}
+          name="deviceName"
+          rules={{maxLength: 60, required: true, minLength: 1}}
+          // TODO: Update HookFormTextInput implementation so that either:
+          // - the implementation fully determines the text input's base style and this component doesn't allow custom styling
+          // - this style prop is properly merged with the text input's base style in the implementation
+          style={{flex: 1, color: BLACK, fontSize: 16}}
+          showCharacterCount
+          autoFocus
+          editable={!isPending}
+        />
+      </FieldRow>
+    </ScrollView>
   );
 };
 

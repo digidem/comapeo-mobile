@@ -25,9 +25,4 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderColor: '#F3F3F3',
   },
-  hint: {
-    fontSize: 16,
-    color: '#666666',
-    fontWeight: '500',
-  },
 });

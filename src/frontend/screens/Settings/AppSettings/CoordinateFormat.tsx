@@ -2,15 +2,15 @@ import * as React from 'react';
 import {ScrollView} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 
-import {formatCoords} from '../../../lib/utils';
-import {
-  usePersistedSettings,
-  usePersistedSettingsAction,
-} from '../../../hooks/persistedState/usePersistedSettings';
+import {formatCoords} from '../../../lib/coordinateFormat';
 import {SelectOne} from '../../../sharedComponents/SelectOne';
-import type {CoordinateFormat as CoordinateFormatType} from '../../../sharedTypes';
+import {type CoordinateFormat as CoordinateFormatType} from '../../../lib/coordinateFormat';
 import type {NativeNavigationComponent} from '../../../sharedTypes/navigation';
 import {useLastKnownLocation} from '../../../hooks/useLastSavedLocation';
+import {
+  useCoordinateFormatActions,
+  useCoordinateFormat,
+} from '../../../contexts/CoordinateFormatStoreContext';
 
 const m = defineMessages({
   title: {
@@ -43,23 +43,13 @@ export const CoordinateFormat: NativeNavigationComponent<
   'CoordinateFormat'
 > = () => {
   const {formatMessage} = useIntl();
-  const coordinateFormat = usePersistedSettings(
-    store => store.coordinateFormat,
-  );
-  const {setCoordinateFormat} = usePersistedSettingsAction();
+  const coordinateFormat = useCoordinateFormat();
+  const {setFormat} = useCoordinateFormatActions();
 
   const location = useLastKnownLocation();
 
-  const lat = getNestedProperty(
-    location,
-    'position.coords.latitude',
-    EXAMPLE_LOCATION.latitude,
-  );
-  const lon = getNestedProperty(
-    location,
-    'position.coords.longitude',
-    EXAMPLE_LOCATION.longitude,
-  );
+  const lat = location.data?.coords.latitude || EXAMPLE_LOCATION.latitude;
+  const lon = location.data?.coords.longitude || EXAMPLE_LOCATION.longitude;
 
   const options: React.ComponentProps<
     typeof SelectOne<CoordinateFormatType>
@@ -85,7 +75,7 @@ export const CoordinateFormat: NativeNavigationComponent<
     <ScrollView testID="coordinateFormatScrollView">
       <SelectOne
         value={coordinateFormat}
-        onChange={val => setCoordinateFormat(val)}
+        onChange={val => setFormat(val)}
         options={options}
       />
     </ScrollView>
@@ -93,12 +83,3 @@ export const CoordinateFormat: NativeNavigationComponent<
 };
 
 CoordinateFormat.navTitle = m.title;
-
-function getNestedProperty<T>(obj: T, path: string, defaultValue: any): any {
-  const keys = path.split('.');
-  return keys.reduce(
-    (acc: any, key: string) =>
-      acc && acc[key] !== undefined ? acc[key] : defaultValue,
-    obj,
-  );
-}

@@ -3,11 +3,10 @@ import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigationFromHomeTabs} from '../../hooks/useNavigationWithTypes';
 
-export const ObservationListHeaderLeft = (props: {
+export const ObservationListHeaderLeft = ({
+  tintColor,
+}: {
   tintColor?: string;
-  pressColor?: string;
-  pressOpacity?: number;
-  labelVisible?: boolean;
 }) => {
   const {goBack} = useNavigationFromHomeTabs();
 
@@ -16,8 +15,7 @@ export const ObservationListHeaderLeft = (props: {
       <CustomHeaderLeft
         onPress={() => goBack()}
         headerBackButtonProps={{
-          canGoBack: true,
-          tintColor: props?.tintColor,
+          tintColor,
         }}
       />
     </TouchableOpacity>

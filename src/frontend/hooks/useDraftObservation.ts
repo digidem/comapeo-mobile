@@ -1,7 +1,7 @@
 import {useCallback} from 'react';
 import {usePhotoPromiseContext} from '../contexts/PhotoPromiseContext';
 import {
-  _usePersistedDraftObservationActions,
+  usePersistedDraftObservationActions,
   usePreset,
 } from './persistedState/usePersistedDraftObservation';
 import {
@@ -30,7 +30,7 @@ export const useDraftObservation = () => {
     existingObservationToDraft,
     addAudio,
     deleteAudio,
-  } = _usePersistedDraftObservationActions();
+  } = usePersistedDraftObservationActions();
 
   const addPhoto = useCallback(
     async ({capturePromise, mediaMetadata}: PhotoPromiseWithMetadata) => {

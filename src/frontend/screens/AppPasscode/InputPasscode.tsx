@@ -6,11 +6,12 @@ import {useBlurOnFulfill} from 'react-native-confirmation-code-field';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {RED} from '../../lib/styles';
 import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
-import {Button} from '../../sharedComponents/Button';
+import {SecondaryButton, PrimaryButton} from '../../sharedComponents/Buttons';
 import {CELL_COUNT, PasscodeInput} from '../../sharedComponents/PasscodeInput';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
-import {Text} from '../../sharedComponents/Text';
 import {ConfirmPasscodeSheet} from './ConfirmPasscodeSheet';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   button: {
@@ -66,7 +67,7 @@ export const InputPasscode = ({
     if (!showNext && newVal.length === 5) validate(newVal);
   }
 
-  const {navigate} = useNavigationFromRoot();
+  const {popTo} = useNavigationFromRoot();
 
   return (
     <>
@@ -74,31 +75,31 @@ export const InputPasscode = ({
         contentContainerStyle={styles.contentContainer}
         dockContent={
           <View style={styles.buttonsContainer}>
-            <Button
-              fullWidth
-              variant="outlined"
-              color="ComapeoBlue"
+            <SecondaryButton
+              fullSize
               onPress={() => {
-                navigate('Security');
-              }}>
-              {t(m.cancel)}
-            </Button>
+                popTo('Security');
+              }}
+              text={t(m.cancel)}
+            />
 
             {showNext && (
-              <Button
-                fullWidth
+              <PrimaryButton
+                fullSize
                 onPress={() => {
                   if (validate(inputValue)) {
                     openSheet();
                   }
-                }}>
-                {t(m.button)}
-              </Button>
+                }}
+                text={t(m.button)}
+              />
             )}
           </View>
         }>
-        <Text style={styles.header}>{title}</Text>
-        <Text style={styles.subtext}>{subtitle}</Text>
+        <HeaderText variant="header1" style={styles.header}>
+          {title}
+        </HeaderText>
+        <BodyText style={styles.subtext}>{subtitle}</BodyText>
 
         <PasscodeInput
           testID="SETTINGS.passcode-inp"
@@ -109,7 +110,11 @@ export const InputPasscode = ({
           maskValues={!showPasscodeValues}
         />
 
-        {error && <Text style={styles.error}>{errorMessage}</Text>}
+        {error && (
+          <HeaderText variant="header5" style={styles.error}>
+            {errorMessage}
+          </HeaderText>
+        )}
       </ScreenContentWithDock>
 
       <ConfirmPasscodeSheet
@@ -126,7 +131,6 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   header: {
-    fontSize: 32,
     textAlign: 'center',
   },
   buttonsContainer: {
@@ -134,11 +138,9 @@ const styles = StyleSheet.create({
   },
   subtext: {
     textAlign: 'center',
-    fontSize: 16,
   },
   error: {
     textAlign: 'center',
-    fontSize: 16,
     color: RED,
   },
 });

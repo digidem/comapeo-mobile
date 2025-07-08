@@ -9,7 +9,7 @@ import {
 } from 'expo-location';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
-import {useLocationProviderStatus} from '../../hooks/useLocationProviderStatus';
+import {useLocationState} from '../../contexts/LocationContext';
 
 export function useMostAccurateLocationForObservation() {
   const value = usePersistedDraftObservation(store => store.value);
@@ -17,7 +17,7 @@ export function useMostAccurateLocationForObservation() {
 
   const [permissions] = useForegroundPermissions();
 
-  const providerStatus = useLocationProviderStatus();
+  const providerStatus = useLocationState(store => store.providerStatus);
   const locationServicesTurnedOff =
     providerStatus && !providerStatus.locationServicesEnabled;
 
@@ -58,9 +58,9 @@ export function useMostAccurateLocationForObservation() {
       );
 
       // Should not happen because we are checking permissions above, but just in case
-      locationSubscriptionProm.catch(error => {
+      locationSubscriptionProm.catch(() => {
         if (ignore) return;
-        // We should probably set up an error boundary and throw
+        // TODO: We should probably set up an error boundary and throw
       });
 
       return () => {

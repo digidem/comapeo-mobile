@@ -26,6 +26,8 @@ jobs:
         run: npm ci
       - name: Check formatting
         run: npm run lint:prettier
+      - name: Run ESLint
+        run: npm run lint:eslint
 
   backend:
     runs-on: ubuntu-latest

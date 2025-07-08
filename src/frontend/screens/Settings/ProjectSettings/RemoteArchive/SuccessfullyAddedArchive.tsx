@@ -3,7 +3,7 @@ import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
 import {defineMessages, useIntl} from 'react-intl';
 import {ScreenContentWithDock} from '../../../../sharedComponents/ScreenContentWithDock';
 import {Button} from '../../../../sharedComponents/Button';
-import GreenCheck from '../../../../images/GreenCheck.svg';
+import GreenCheck from '../../../../images/Success.svg';
 import {StyleSheet, View} from 'react-native';
 import {MEDIUM_GREY} from '../../../../lib/styles';
 import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
@@ -38,7 +38,7 @@ export const SuccessfullyAddedArchive = ({
           fullWidth
           variant="outlined"
           onPress={() => {
-            navigation.navigate('RemoteArchiveOn');
+            navigation.popTo('RemoteArchive');
           }}>
           {formatMessage(m.close)}
         </Button>

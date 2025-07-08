@@ -8,13 +8,15 @@ export const ScreenContentWithDock = ({
   contentContainerStyle,
   dockContainerStyle,
   dockContent,
+  testID,
 }: PropsWithChildren<{
   dockContent: ReactNode;
   dockContainerStyle?: ViewStyleProp;
   contentContainerStyle?: ViewStyleProp;
+  testID?: string;
 }>) => {
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID={testID}>
       <ScrollView
         style={styles.scrollViewRoot}
         contentContainerStyle={[
@@ -39,5 +41,6 @@ const styles = StyleSheet.create({
   dockedContentContainer: {
     flex: 0,
     padding: 20,
+    alignItems: 'center',
   },
 });

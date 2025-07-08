@@ -19,8 +19,11 @@ import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
 import {CoordinateFormat} from '../../screens/Settings/AppSettings/CoordinateFormat';
 import {CreateOrJoinProject} from '../../screens/Settings/CreateOrJoinProject';
-import {CreateProject} from '../../screens/Settings/CreateOrJoinProject/CreateProject';
-import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateProject/ProjectCreated';
+import {
+  CreateOrNameSoloProject,
+  createNavigationOptions as createNameProjectNavOptions,
+} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject';
+import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject/ProjectCreated';
 import {JoinExistingProject} from '../../screens/Settings/CreateOrJoinProject/JoinExistingProject';
 import {YourTeam} from '../../screens/Settings/ProjectSettings/YourTeam';
 import {SelectDevice} from '../../screens/Settings/ProjectSettings/YourTeam/SelectDevice';
@@ -42,11 +45,7 @@ import {
 } from '../../screens/LocationInfoScreen';
 import {InviteDeclined} from '../../screens/Settings/ProjectSettings/YourTeam/InviteDeclined';
 import {UnableToCancelInvite} from '../../screens/Settings/ProjectSettings/YourTeam/ReviewAndInvite/UnableToCancelInvite';
-import {SharedLocationContextProvider} from '../../contexts/SharedLocationContext';
-import {
-  SyncScreen,
-  createNavigationOptions as createSyncNavOptions,
-} from '../../screens/Sync';
+import {SyncScreen} from '../../screens/Exchange/index.tsx';
 import {
   ManualGpsScreen,
   createNavigationOptions as createManualGpsNavigationOptions,
@@ -54,11 +53,11 @@ import {
 import {HomeTabs} from '../Tab';
 import {SaveTrackScreen} from '../../screens/SaveTrack/SaveTrackScreen';
 import {ObservationFields} from '../../screens/ObservationFields';
-import {WHITE} from '../../lib/styles';
 import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSettings';
-import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
-import {PhotoPreviewModal} from '../../screens/PhotoPreviewModal';
-import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
+import {
+  createNavigationOptions as createPhotoPreviewModalNavigationOptions,
+  PhotoPreviewModal,
+} from '../../screens/PhotoPreviewModal';
 import {
   ObservationCreate,
   createNavigationOptions as createObservationCreateNavigationOptions,
@@ -69,31 +68,48 @@ import {
   TrackScreen,
   createNavigationOptions as createTrackNavigationOptions,
 } from '../../screens/Track/index.tsx';
-import {MediaSyncSettings} from '../../screens/Settings/ProjectSettings/MediaSyncSettings/index.tsx';
 import {DataAndPrivacy} from '../../screens/Settings/DataAndPrivacy/DataAndPrivacy';
 import {SettingsPrivacyPolicy} from '../../screens/Settings/DataAndPrivacy/SettingsPrivacyPolicy';
 import {TrackEdit} from '../../screens/TrackEdit/index.tsx';
 import {Config} from '../../screens/Settings/Config';
-import {HowToLeaveProject} from '../../screens/HowToLeaveProject.tsx';
-import {RemoteArchiveOff} from '../../screens/Settings/ProjectSettings/RemoteArchive/RemoteArchiveOff.tsx';
 import {SaveButton} from '../../sharedComponents/SaveButton.tsx';
 import {AddRemoteArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/AddRemoteArchive.tsx';
 import {SuccessfullyAddedArchive} from '../../screens/Settings/ProjectSettings/RemoteArchive/SuccessfullyAddedArchive.tsx';
-import {RemoteArchiveOn} from '../../screens/Settings/ProjectSettings/RemoteArchive/RemoteArchiveOn.tsx';
-import {
-  Audio,
-  navigationOptions as audioNavigationOptions,
-} from '../../screens/Audio/index.tsx';
-import {
-  createNavigationOptions as createMapManagementNavigationOptions,
-  MapManagementScreen,
-} from '../../screens/Settings/MapManagement';
 import {
   createNavigationOptions as createBackgroundMapsNavigationOptions,
   BackgroundMapsScreen,
 } from '../../screens/Settings/MapManagement/BackgroundMaps.tsx';
-import {SyncPreviewsBottomSheet} from '../../screens/Settings/ProjectSettings/MediaSyncSettings/SyncPreviewsBottomSheet.tsx';
-import {SyncEverythingBottomSheet} from '../../screens/Settings/ProjectSettings/MediaSyncSettings/SyncEverythingBottomSheet.tsx';
+import {ExchangeSettingsBottomSheet} from '../../screens/Exchange/ExchangeSettingsBottomSheet.tsx';
+import {AudioAskPermissionBottomSheet} from '../../screens/Audio/AudioAskPermissionBottomSheet.tsx';
+import {AudioRecording} from '../../screens/Audio/AudioRecording/index.tsx';
+import {InviteReceived} from '../../screens/Invites/InviteReceived.tsx';
+import {InviteSuccessfullyAccepted} from '../../screens/Invites/InviteSuccessfullyAccepted.tsx';
+import {InviteCanceled} from '../../screens/Invites/InviteCanceled.tsx';
+import {ObservationMetadata} from '../../screens/ObservationMetadata.tsx';
+import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
+import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagement/ErrorBottomSheet.tsx';
+import {MenuScreen} from '../../screens/MenuScreen';
+import {InviteCollaboratorsScreen} from '../../screens/Settings/ProjectSettings/YourTeam/InviteCollaborators.tsx';
+import {StartNewProjectScreen} from '../../screens/Settings/ProjectSettings/StartNewProject.tsx';
+import {MenuHeader} from '../../sharedComponents/MenuHeader.tsx';
+import {EditProjectDetails} from '../../screens/Settings/ProjectSettings/EditProjectDetails.tsx';
+import {AllProjects} from '../../screens/AllProjects.tsx';
+import {TrackRecordingActive} from '../../screens/TrackRecordingActive.tsx';
+import {
+  RemoteArchiveScreen,
+  createNavigationOptions as createRemoteArchiveNavigationOptions,
+} from '../../screens/Settings/ProjectSettings/RemoteArchive/index.tsx';
+import {
+  RemoveRemoteArchive,
+  navigationOptions as removeRemoteArchiveNavigationOptions,
+} from '../../screens/Settings/ProjectSettings/RemoteArchive/RemoveRemoteArchive.tsx';
+import {ExportObservations} from '../../screens/ExportObservations.tsx';
+import {
+  ConfirmDeletePhoto,
+  navigationOptions as confirmDeletePhotoNavigationOptions,
+} from '../../screens/ConfirmDeletePhoto.tsx';
+import {AudioDraftPlaybackScreen} from '../../screens/Audio/AudioDraftPlaybackScreen.tsx';
+import {AudioAttachmentPlaybackScreen} from '../../screens/Audio/AudioAttachmentPlaybackScreen.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -109,14 +125,7 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="Home"
         options={{headerShown: false}}
-        children={() => (
-          <SharedLocationContextProvider>
-            {/* This provider allows the bottoms sheet used by tracks to open up behind the drawers */}
-            <BottomSheetModalProvider>
-              <HomeTabs />
-            </BottomSheetModalProvider>
-          </SharedLocationContextProvider>
-        )}
+        component={HomeTabs}
       />
       <RootStack.Screen
         name="AuthScreen"
@@ -139,14 +148,12 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="PhotoPreviewModal"
         component={PhotoPreviewModal}
-        options={{
-          headerTitle: '',
-          headerTransparent: true,
-          headerStyle: {backgroundColor: 'transparent'},
-          headerLeft: props => (
-            <CustomHeaderLeft tintColor={WHITE} headerBackButtonProps={props} />
-          ),
-        }}
+        options={createPhotoPreviewModalNavigationOptions({intl})}
+      />
+      <RootStack.Screen
+        name="ConfirmDeletePhoto"
+        component={ConfirmDeletePhoto}
+        options={confirmDeletePhotoNavigationOptions}
       />
       <RootStack.Screen
         name="Security"
@@ -210,11 +217,21 @@ export const createDefaultScreenGroup = ({
       />
       <RootStack.Screen
         name="CreateProject"
-        component={CreateProject}
-        options={{headerTitle: intl(CreateProject.navTitle)}}
+        component={CreateOrNameSoloProject}
+        options={createNameProjectNavOptions({intl})}
       />
       <RootStack.Screen
-        name="ProjectCreated"
+        name="NameSoloProject"
+        component={CreateOrNameSoloProject}
+        options={createNameProjectNavOptions({intl})}
+      />
+      <RootStack.Screen
+        name="ProjectCreatedNewProject"
+        component={ProjectCreated}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="ProjectCreatedNewSolo"
         component={ProjectCreated}
         options={{headerShown: false}}
       />
@@ -277,7 +294,7 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="Sync"
         component={SyncScreen}
-        options={createSyncNavOptions()}
+        options={{headerTitle: intl(SyncScreen.navTitle)}}
       />
       <RootStack.Screen
         name="ManualGpsScreen"
@@ -311,12 +328,6 @@ export const createDefaultScreenGroup = ({
         options={{headerTitle: intl(AboutSettings.navTitle)}}
       />
       <RootStack.Screen
-        name="MediaSyncSettings"
-        component={MediaSyncSettings}
-        options={{headerTitle: intl(MediaSyncSettings.navTitle)}}
-      />
-
-      <RootStack.Screen
         name="DataAndPrivacy"
         component={DataAndPrivacy}
         options={{headerTitle: intl(DataAndPrivacy.navTitle)}}
@@ -337,21 +348,6 @@ export const createDefaultScreenGroup = ({
         options={{headerTitle: intl(Config.navTitle)}}
       />
       <RootStack.Screen
-        name="HowToLeaveProject"
-        component={HowToLeaveProject}
-        options={{headerShown: false}}
-      />
-      <RootStack.Screen
-        name="Audio"
-        options={audioNavigationOptions}
-        component={Audio}
-      />
-      <RootStack.Screen
-        name="MapManagement"
-        component={MapManagementScreen}
-        options={createMapManagementNavigationOptions({intl})}
-      />
-      <RootStack.Screen
         name="BackgroundMaps"
         component={BackgroundMapsScreen}
         options={createBackgroundMapsNavigationOptions({intl})}
@@ -365,9 +361,9 @@ export const createDefaultScreenGroup = ({
         />
       )}
       <RootStack.Screen
-        name="RemoteArchiveOff"
-        component={RemoteArchiveOff}
-        options={{headerTitle: intl(RemoteArchiveOff.navTitle)}}
+        name="RemoteArchive"
+        component={RemoteArchiveScreen}
+        options={createRemoteArchiveNavigationOptions({intl})}
       />
       <RootStack.Screen
         name="AddRemoteArchive"
@@ -385,9 +381,67 @@ export const createDefaultScreenGroup = ({
         options={{headerShown: false}}
       />
       <RootStack.Screen
-        name="RemoteArchiveOn"
-        component={RemoteArchiveOn}
-        options={{headerTitle: intl(RemoteArchiveOn.navTitle)}}
+        name="RemoveRemoteArchive"
+        component={RemoveRemoteArchive}
+        options={removeRemoteArchiveNavigationOptions}
+      />
+      <RootStack.Screen
+        name="AudioRecording"
+        component={AudioRecording}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="AudioDraftPlaybackScreen"
+        component={AudioDraftPlaybackScreen}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="AudioAttachmentPlaybackScreen"
+        component={AudioAttachmentPlaybackScreen}
+        options={{headerTitle: intl(AudioAttachmentPlaybackScreen.navTitle)}}
+      />
+      <RootStack.Screen
+        name="ObservationMetadata"
+        component={ObservationMetadata}
+        options={{headerTitle: intl(ObservationMetadata.navTitle)}}
+      />
+      <RootStack.Screen
+        name="AllProjects"
+        component={AllProjects}
+        options={{headerTitle: intl(AllProjects.navTitle)}}
+      />
+      <RootStack.Screen
+        name="Menu"
+        component={MenuScreen}
+        options={{
+          headerShown: true,
+          animation: 'slide_from_right',
+          header: () => <MenuHeader />,
+        }}
+      />
+      <RootStack.Screen
+        name="InviteCollaborators"
+        component={InviteCollaboratorsScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <RootStack.Screen
+        name="StartNewProject"
+        component={StartNewProjectScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <RootStack.Screen
+        name="EditProjectDetails"
+        component={EditProjectDetails}
+        options={{
+          headerTitle: intl(EditProjectDetails.navTitle),
+          headerRight: () => (
+            <SaveButton onPress={() => {}} isLoading={false} />
+          ),
+        }}
       />
     </RootStack.Group>
     <RootStack.Group
@@ -398,12 +452,31 @@ export const createDefaultScreenGroup = ({
         contentStyle: {backgroundColor: 'transparent'},
       }}>
       <RootStack.Screen
-        name="SyncPreviewsBottomSheet"
-        component={SyncPreviewsBottomSheet}
+        name="ExchangeSettingsBottomSheet"
+        component={ExchangeSettingsBottomSheet}
       />
       <RootStack.Screen
-        name="SyncEverythingBottomSheet"
-        component={SyncEverythingBottomSheet}
+        name="AudioAskPermissionBottomSheet"
+        component={AudioAskPermissionBottomSheet}
+      />
+      <RootStack.Screen name="InviteReceived" component={InviteReceived} />
+      <RootStack.Screen
+        name="InviteSuccessfullyAccepted"
+        component={InviteSuccessfullyAccepted}
+      />
+      <RootStack.Screen name="InviteCanceled" component={InviteCanceled} />
+      <RootStack.Screen name="ErrorBottomSheet" component={ErrorBottomSheet} />
+      <RootStack.Screen
+        name="BackgroundMapErrorBottomSheet"
+        component={BackgroundMapErrorBottomSheet}
+      />
+      <RootStack.Screen
+        name="TrackRecordingActive"
+        component={TrackRecordingActive}
+      />
+      <RootStack.Screen
+        name="ExportObservations"
+        component={ExportObservations}
       />
     </RootStack.Group>
   </>

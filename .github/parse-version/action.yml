@@ -1,0 +1,40 @@
+name: 'Parse version'
+description: 'Get the target release and next development cycle release numbers'
+outputs:
+    releaseVersion:
+        description: 'The target release full semver version number'
+        value: ${{ fromJSON(steps.version.outputs.result).target.version }}
+    releaseMinor:
+        description: 'The target release minor version number'
+        value: ${{ fromJSON(steps.version.outputs.result).target.minor }}
+    releasePatch:
+        description: 'The target release patch version number'
+        value: ${{ fromJSON(steps.version.outputs.result).target.patch }}
+    releaseShort:
+        description: 'The target release short version number vX.Y'
+        value: ${{ fromJSON(steps.version.outputs.result).target.minor }}.${{ fromJSON(steps.version.outputs.result).target.patch }}
+    nextVersion:
+        description: 'The next dev cycle full semver version number'
+        value: ${{ fromJSON(steps.version.outputs.result).next.version }}
+    nextMinor:
+        description: 'The next dev cycle minor version number'
+        value: ${{ fromJSON(steps.version.outputs.result).next.minor }}
+    nextPatch:
+        description: 'The next dev cycle patch version number'
+        value: ${{ fromJSON(steps.version.outputs.result).next.patch }}
+runs:
+    using: 'composite'
+    steps:
+        - run: npm install --no-save semver
+          shell: bash
+        - name: Parse version name
+          id: version
+          uses: actions/github-script@v7
+          with:
+              script: |
+                  const {version} = require('./package.json');
+                  const semver = require('semver');
+                  const target = semver.parse(version);
+                  target.inc('patch');
+                  const next = semver.parse(semver.inc(version, 'preminor', 'pre', false));
+                  return { target, next };

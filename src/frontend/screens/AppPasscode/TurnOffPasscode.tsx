@@ -15,15 +15,17 @@ import ErrorIcon from '../../images/Error.svg';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {useFocusEffect, StackActions} from '@react-navigation/native';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
-import {HeaderButtonProps} from '@react-navigation/native-stack/lib/typescript/src/types';
-import {usePersistedPasscode} from '../../hooks/persistedState/usePersistedPasscode';
-import {useSecurityContext} from '../../contexts/SecurityContext';
+import {HeaderBackButtonProps} from '@react-navigation/elements';
 import {Text} from '../../sharedComponents/Text';
 import {
   BottomSheetModal,
   BottomSheetModalContent,
   useBottomSheetModal,
 } from '../../sharedComponents/BottomSheetModal';
+import {
+  useSecurityActions,
+  useSecurityState,
+} from '../../contexts/SecurityStoreContext';
 
 const m = defineMessages({
   usePasscode: {
@@ -65,14 +67,12 @@ const m = defineMessages({
 export const TurnOffPasscode: NativeNavigationComponent<'DisablePasscode'> = ({
   navigation,
 }) => {
-  const {authValuesSet} = useSecurityContext();
-  const setPasscode = usePersistedPasscode(state => state.setPasscode);
+  const passcodeSet = useSecurityState(state => state.passcode !== null);
+  const {setPasscode} = useSecurityActions();
 
   const {sheetRef, openSheet, closeSheet, isOpen} = useBottomSheetModal({
     openOnMount: false,
   });
-
-  const {navigate} = navigation;
 
   const {formatMessage: t} = useIntl();
 
@@ -84,7 +84,7 @@ export const TurnOffPasscode: NativeNavigationComponent<'DisablePasscode'> = ({
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerLeft: (props: HeaderButtonProps) => (
+      headerLeft: (props: HeaderBackButtonProps) => (
         <CustomHeaderLeft headerBackButtonProps={props} onPress={backPress} />
       ),
     });
@@ -108,7 +108,7 @@ export const TurnOffPasscode: NativeNavigationComponent<'DisablePasscode'> = ({
 
   function unsetAppPasscode() {
     setPasscode(null);
-    navigate('Security');
+    navigation.popTo('Security');
   }
 
   return (
@@ -125,14 +125,8 @@ export const TurnOffPasscode: NativeNavigationComponent<'DisablePasscode'> = ({
           />
           <TouchableOpacity shouldActivateOnStart onPress={openSheet}>
             <MaterialIcon
-              name={
-                authValuesSet.passcodeSet
-                  ? 'check-box'
-                  : 'check-box-outline-blank'
-              }
-              testID={
-                authValuesSet.passcodeSet ? 'SETTINGS.passcode-checked' : ''
-              }
+              name={passcodeSet ? 'check-box' : 'check-box-outline-blank'}
+              testID={passcodeSet ? 'SETTINGS.passcode-checked' : ''}
               size={24}
               color={MEDIUM_GREY}
             />
@@ -140,11 +134,11 @@ export const TurnOffPasscode: NativeNavigationComponent<'DisablePasscode'> = ({
         </ListItem>
         <ListDivider />
 
-        {/* User is not able to see this option unlesss they already have a pass */}
-        {authValuesSet.passcodeSet && (
+        {/* User is not able to see this option unless they already have a pass */}
+        {passcodeSet && (
           <ListItem
             onPress={() => {
-              navigate('SetPasscode');
+              navigation.navigate('SetPasscode');
             }}
             style={{marginTop: 20}}>
             <ListItemText

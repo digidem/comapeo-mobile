@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {HeaderLeftClose} from '../../sharedComponents/HeaderLeftClose';
-import {HeaderBackButtonProps} from '@react-navigation/native-stack/lib/typescript/src/types';
+import {HeaderBackButtonProps} from '@react-navigation/elements';
 import {
   BottomSheetModal,
   useBottomSheetModal,
@@ -9,7 +9,7 @@ import {ConfirmDiscardBottomSheetContent} from '../../sharedComponents/ConfirmDi
 import {defineMessages, useIntl} from 'react-intl';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {CommonActions, useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 import {BackHandler} from 'react-native';
 
 const m = defineMessages({
@@ -66,9 +66,7 @@ export const HeaderLeft = ({headerBackButtonProps}: HeaderLeftProps) => {
   function handleDiscard() {
     clearDraft();
     closeSheet();
-    navigation.dispatch(
-      CommonActions.reset({index: 0, routes: [{name: 'Home'}]}),
-    );
+    navigation.popTo('Home', {screen: 'Map'});
   }
 
   return (

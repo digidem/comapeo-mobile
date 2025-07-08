@@ -1,23 +1,23 @@
 import React, {useState} from 'react';
 import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Field, Observation} from '@comapeo/schema';
+import {Field} from '@comapeo/schema';
 import {DARK_GREY} from '../../lib/styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
-import {useDeleteObservation} from '../../hooks/server/observations';
-import Share from 'react-native-share';
+import {useDeleteDocument, useProjectSettings} from '@comapeo/core-react';
 import {useObservationWithPreset} from '../../hooks/useObservationWithPreset.ts';
-import {formatCoords} from '../../lib/utils.ts';
+import {formatCoords} from '../../lib/coordinateFormat.ts';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {convertUrlToBase64} from '../../utils/base64.ts';
-import {usePersistedSettings} from '../../hooks/persistedState/usePersistedSettings.ts';
 import * as Sentry from '@sentry/react-native';
-import {CoordinateFormat} from '../../sharedTypes/index.ts';
 import {getValueLabel} from '../../sharedComponents/FormattedData.tsx';
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {isSavedPhoto} from '../../lib/attachmentTypeChecks.ts';
+import {useOpenShareDialog} from '../../hooks/share.ts';
+import {useCoordinateFormat} from '../../contexts/CoordinateFormatStoreContext.ts';
+import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
 
 const m = defineMessages({
   delete: {
@@ -75,28 +75,55 @@ const m = defineMessages({
     description:
       'Fallback name used when category name cannot be determined for observation',
   },
-  comapeoAlert: {
+  comapeoData: {
     id: 'screens.Observation.comapeoAlert',
-    defaultMessage: 'CoMapeo Alert',
+    defaultMessage: 'CoMapeo data sent from *{projectName}*',
+  },
+  defaultProjectName: {
+    id: 'screens.Observation.defaultProjectName',
+    defaultMessage: 'My Project',
+  },
+  location: {
+    id: 'screens.Observation.location',
+    defaultMessage: 'Location:',
+  },
+  precision: {
+    id: 'screens.Observation.precision',
+    defaultMessage: 'Precision:',
+  },
+  details: {
+    id: 'screens.Observation.details',
+    defaultMessage: 'Details:',
+  },
+  description: {
+    id: 'screens.Observation.description',
+    defaultMessage: 'Description:',
   },
 });
 
 export const ButtonFields = ({
   fields,
-  isMine,
   observationId,
 }: {
   fields: Array<Field>;
-  isMine: boolean;
   observationId: string;
 }) => {
   const {formatMessage: t, formatDate} = useIntl();
   const navigation = useNavigationFromRoot();
-  const deleteObservationMutation = useDeleteObservation();
   const {observation, preset} = useObservationWithPreset(observationId);
-  const format = usePersistedSettings(store => store.coordinateFormat);
+  const coordinateFormat = useCoordinateFormat();
   const [isShareButtonLoading, setShareButtonLoading] = useState(false);
-  const {projectApi} = useActiveProject();
+  const {projectApi, projectId} = useActiveProject();
+  const {
+    data: {name},
+  } = useProjectSettings({projectId});
+  const {mutate: deleteObservationMutate, error: deleteObservationError} =
+    useDeleteDocument({
+      docType: 'observation',
+      projectId: projectId,
+    });
+  const openShare = useOpenShareDialog();
+  const canDelete = useCanEditOrDelete(observation.originalVersionId);
 
   function handlePressDelete() {
     Alert.alert(t(m.deleteTitle), undefined, [
@@ -107,8 +134,17 @@ export const ButtonFields = ({
       {
         text: t(m.confirm),
         onPress: () => {
-          deleteObservationMutation.mutate({id: observationId});
-          navigation.pop();
+          deleteObservationMutate(
+            {docId: observationId},
+            {
+              onSuccess: () => {
+                navigation.pop();
+              },
+              onError: () => {
+                Sentry.captureException(deleteObservationError);
+              },
+            },
+          );
         },
       },
     ]);
@@ -162,20 +198,48 @@ export const ButtonFields = ({
         completedFields.push({label: field.label, value: displayedValue});
       }
 
-      await Share.open({
-        subject: `${t(m.comapeoAlert)} — _*${preset ? preset.name : t(m.fallbackCategoryName)}*_ — ${formatDate(observation.createdAt, {format: 'long'})}`,
+      const subject = `${t(m.comapeoData, {projectName: name || t(m.defaultProjectName)})} - _*${preset ? preset.name : t(m.fallbackCategoryName)}*_`;
+
+      const date = formatDate(observation.createdAt, {format: 'long'});
+
+      const location =
+        observation.lat !== undefined && observation.lon !== undefined
+          ? `${t(m.location)} ${formatCoords({
+              lon: observation.lon,
+              lat: observation.lat,
+              format: coordinateFormat,
+            })}`
+          : '';
+
+      const precision = observation.metadata?.position?.coords?.accuracy
+        ? `${t(m.precision)} ${observation.metadata.position.coords.accuracy}m`
+        : '';
+
+      const displayedFields = completedFields
+        .map(({label, value}) => `${label}: ${value}`)
+        .join(',\n    ');
+
+      const notes = observation.tags.notes
+        ? `${t(m.description)} ${observation.tags.notes}`
+        : '';
+
+      const body = [
+        subject,
+        date,
+        location,
+        precision,
+        displayedFields && `[${displayedFields}]`,
+        notes && `[${notes}]`,
+      ];
+
+      const footer = `— ${t(m.shareMessageFooter)} —`;
+
+      await openShare.mutateAsync({
+        subject: subject,
         title:
           base64Urls.length > 0 ? t(m.shareMediaTitle) : t(m.shareTextTitle),
         urls: !base64Urls.length ? undefined : base64Urls,
-        message: createObservationShareMessage({
-          categoryName: preset ? preset.name : t(m.fallbackCategoryName),
-          coordinateFormat: format,
-          completedFields,
-          footerText: t(m.shareMessageFooter),
-          observation,
-          timestamp: formatDate(observation.createdAt, {format: 'long'}),
-          titleText: t(m.shareMessageTitle),
-        }),
+        message: `${[...body.filter(Boolean), ''].join('\n')}\n${footer}`,
         failOnCancel: false,
       });
     } catch (err) {
@@ -187,7 +251,7 @@ export const ButtonFields = ({
 
   return (
     <View style={styles.buttonContainer}>
-      {isMine && (
+      {canDelete && (
         <Button
           iconName="delete"
           title={t(m.delete)}
@@ -205,7 +269,7 @@ export const ButtonFields = ({
 };
 
 type ButtonProps = {
-  onPress: () => any;
+  onPress: () => void;
   iconName: 'delete' | 'share';
   title: string;
   isLoading?: boolean;
@@ -247,59 +311,3 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
 });
-
-function createObservationShareMessage({
-  categoryName,
-  coordinateFormat,
-  completedFields,
-  footerText,
-  observation,
-  timestamp,
-  titleText,
-}: {
-  categoryName?: string;
-  coordinateFormat: CoordinateFormat;
-  completedFields: Array<{label: string; value: string}>;
-  footerText: string;
-  observation: Observation;
-  timestamp: string;
-  titleText: string;
-}): string {
-  const header = titleText + (categoryName ? ` — _*${categoryName}*_` : '');
-
-  const coordinates =
-    observation.lat !== undefined && observation.lon !== undefined
-      ? formatCoords({
-          lon: observation.lon,
-          lat: observation.lat,
-          format: coordinateFormat,
-        })
-      : '';
-
-  const notes =
-    observation.tags.notes !== undefined && observation.tags.notes !== null
-      ? `${observation.tags.notes}`
-      : '';
-
-  const displayedFields =
-    completedFields.length > 0
-      ? completedFields
-          .map(({label, value}) => {
-            return `*${label}*\n_${value}_`;
-          })
-          .join('\n\n')
-      : '';
-
-  const footer = `— ${footerText} —`;
-
-  // No empty line between each item
-  const sectionTop = [header, timestamp, coordinates]
-    .filter(v => !!v)
-    .join('\n');
-
-  // One empty line between each item
-  const sectionMiddle = [notes, displayedFields].filter(v => !!v).join('\n\n');
-
-  // One empty line between each section
-  return [sectionTop, sectionMiddle, footer].filter(s => !!s).join('\n\n');
-}

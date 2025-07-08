@@ -7,10 +7,8 @@ import {ViewStyleProp} from '../../sharedTypes';
 
 interface ListItemProp {
   alignItems?: 'flex-start' | 'center';
-  button?: boolean;
   children: React.ReactNode;
   style?: ViewStyleProp;
-  dense?: boolean;
   disabled?: boolean;
   disableGutters?: boolean;
   divider?: boolean;
@@ -20,16 +18,13 @@ interface ListItemProp {
 
 export const ListItem = ({
   alignItems = 'center',
-  button = false,
   children,
   style,
-  dense = false,
   disabled = false,
   disableGutters = false,
   divider = false,
   onPress,
   testID,
-  ...otherProps
 }: ListItemProp) => {
   const componentStyle = [
     styles.root,
@@ -45,7 +40,6 @@ export const ListItem = ({
       testID={testID}
       onPress={onPress}
       disabled={disabled}
-      {...otherProps}
       background={TouchableNativeFeedback.Ripple(VERY_LIGHT_BLUE, false)}>
       <View testID={testID} style={componentStyle}>
         {children}
@@ -68,7 +62,6 @@ export const ListDivider = ({
   return (
     <ListItem
       disabled={true}
-      button={false}
       onPress={() => {}}
       style={[
         {

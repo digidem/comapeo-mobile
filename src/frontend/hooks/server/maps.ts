@@ -1,4 +1,4 @@
-import {useClientApi} from '@comapeo/core-react';
+import {useClientApi, useMapStyleUrl} from '@comapeo/core-react';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import * as FileSystem from 'expo-file-system';
 import * as v from 'valibot';
@@ -7,8 +7,16 @@ import {DOCUMENT_DIRECTORY} from '../../lib/file-system';
 
 import {createRefreshTokenStore} from '../refreshTokenStore';
 import noop from '../../lib/noop';
+import {ROOT_QUERY_KEY} from '../../constants';
 
-export const MAPS_QUERY_KEY = 'maps';
+/**
+ * Copied from comapeo/core-react to match its query key structure:
+ * https://github.com/digidem/comapeo-core-react/blob/59a80cf0a1b9dad13e5f066233dae2465d2d20b1/src/lib/react-query/maps.ts#L6
+ * Ensures partial invalidations align with the library’s queries.
+ */
+function getMapsQueryKey() {
+  return [ROOT_QUERY_KEY, 'maps'] as const;
+}
 
 const CUSTOM_MAPS_DIRECTORY = new URL('maps', DOCUMENT_DIRECTORY).href;
 const DEFAULT_CUSTOM_MAP_FILE_PATH = CUSTOM_MAPS_DIRECTORY + '/default.smp';
@@ -28,16 +36,32 @@ export type CustomMapInfo = v.InferOutput<typeof CustomMapInfoSchema>;
 const {useRefreshToken, useRefreshTokenActions} = createRefreshTokenStore();
 
 export function useMapStyleJsonUrl() {
-  const api = useClientApi();
   const refreshToken = useRefreshToken();
 
-  return useQuery({
-    queryKey: [MAPS_QUERY_KEY, 'stylejson-url', refreshToken],
-    queryFn: async () => {
-      let result = await api.getMapStyleJsonUrl();
-      return result + `?refresh_token=${refreshToken}`;
-    },
+  const {
+    data: baseUrl,
+    error,
+    isRefetching,
+  } = useMapStyleUrl({
+    refreshToken: refreshToken?.toString(),
   });
+
+  // If we're running E2E tests (e.g. on BrowserStack), fall back to a
+  // public Mapbox style rather than our local style server to avoid 502 errors.
+  // (see https://github.com/digidem/comapeo-mobile/issues/1008)
+  if (process.env.EXPO_PUBLIC_E2E_TEST) {
+    return {
+      data: 'mapbox://styles/mapbox/streets-v11',
+      error: null,
+      isRefetching: false,
+    };
+  }
+
+  return {
+    data: baseUrl,
+    error,
+    isRefetching,
+  };
 }
 
 export function useImportCustomMapFile() {
@@ -67,7 +91,7 @@ export function useImportCustomMapFile() {
     onSuccess: () => {
       refresh();
       queryClient.invalidateQueries({
-        queryKey: [MAPS_QUERY_KEY],
+        queryKey: getMapsQueryKey(),
       });
     },
   });
@@ -86,7 +110,7 @@ export function useRemoveCustomMapFile() {
     onSuccess: () => {
       refresh();
       queryClient.invalidateQueries({
-        queryKey: [MAPS_QUERY_KEY],
+        queryKey: getMapsQueryKey(),
       });
     },
   });
@@ -96,13 +120,11 @@ export function useRemoveCustomMapFile() {
  * Returns `null` if no viable map is found. Throws an error if a detected map is invalid.
  */
 export function useGetCustomMapInfo() {
-  const api = useClientApi();
+  const {data: styleUrl} = useMapStyleJsonUrl();
 
   return useQuery({
-    queryKey: [MAPS_QUERY_KEY, 'custom', 'info'],
+    queryKey: [getMapsQueryKey, 'custom', 'info', {styleUrl}],
     queryFn: async () => {
-      const styleUrl = await api.getMapStyleJsonUrl();
-
       const response = await fetchCustomMapInfo(styleUrl);
 
       if (response.status === 404) {

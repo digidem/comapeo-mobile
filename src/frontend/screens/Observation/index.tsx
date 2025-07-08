@@ -1,23 +1,16 @@
 import * as React from 'react';
 
-import {View, ScrollView, StyleSheet} from 'react-native';
+import {View, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import {defineMessages} from 'react-intl';
-import {WHITE, DARK_GREY, LIGHT_GREY, BLUE_GREY} from '../../lib/styles';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {WHITE, DARK_GREY, BLUE_GREY, VERY_LIGHT_GREY} from '../../lib/styles';
 
 import {FormattedObservationDate} from '../../sharedComponents/FormattedData';
-import {Field} from '@comapeo/schema';
 import {PresetHeader} from './PresetHeader';
-import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
-import {useFieldsQuery} from '../../hooks/server/fields';
 import {FieldDetails} from './FieldDetails';
 import {InsetMapView} from './InsetMapView';
-
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {ObservationHeaderRight} from './ObservationHeaderRight';
-import {MediaScrollView} from '../../sharedComponents/MediaScrollView/index.tsx';
-import {useDeviceInfo} from '../../hooks/server/deviceInfo';
-import {useOriginalVersionIdToDeviceId} from '../../hooks/server/projects.ts';
+import {useManyDocs} from '@comapeo/core-react';
 import {SavedPhoto} from '../../contexts/PhotoPromiseContext/types.ts';
 import {ButtonFields} from './Buttons.tsx';
 import {AudioAttachment} from '../../sharedTypes/audio.ts';
@@ -26,6 +19,19 @@ import {TrackAccordian} from './TrackAccordian.tsx';
 import {Divider} from '../../sharedComponents/Divider.tsx';
 import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText.tsx';
+import VerifiedBadge from '../../images/verifiedBadge.svg';
+import {Loading} from '../../sharedComponents/Loading.tsx';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {useObservationWithPreset} from '../../hooks/useObservationWithPreset';
+import {Field} from '@comapeo/schema';
+import {HorizontalScrollView} from '../../sharedComponents/HorizontalScrollView.tsx';
+import {
+  GAP,
+  MIN_WIDTH,
+  ThumbnailLoader,
+} from '../../sharedComponents/Thumbnails/ThumbnailContainer.tsx';
+import {SavedPhotoThumbnailImage} from '../../sharedComponents/Thumbnails/PhotoThumbnail.tsx';
+import {AudioSavedThumbnail} from '../../sharedComponents/Thumbnails/AudioSavedThumbnail.tsx';
 
 const m = defineMessages({
   deleteTitle: {
@@ -46,7 +52,6 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
   navigation,
 }) => {
   const {observationId} = route.params;
-
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -54,31 +59,17 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
       ),
     });
   }, [navigation, observationId]);
-
+  const {projectId} = useActiveProject();
   const {observation, preset} = useObservationWithPreset(observationId);
-  const {data: fieldData} = useFieldsQuery();
 
-  const defaultAcc: Field[] = [];
-  const fields =
-    preset && fieldData
-      ? preset.fieldRefs.reduce((acc, pres) => {
-          const fieldToAdd = fieldData.find(
-            field => field.docId === pres.docId,
-          );
-          if (!fieldToAdd) return acc;
-          return [...acc, fieldToAdd];
-        }, defaultAcc)
-      : [];
+  const {data: fieldsData} = useManyDocs({projectId, docType: 'field'});
+  const {lat, lon, metadata} = observation;
 
-  const {lat, lon, originalVersionId} = observation;
-  const {data: deviceInfo, isPending: isDeviceInfoPending} = useDeviceInfo();
-  const {data: convertedDeviceId, isPending: isDeviceIdPending} =
-    useOriginalVersionIdToDeviceId(originalVersionId);
-
-  const isMine =
-    deviceInfo?.deviceId !== undefined &&
-    convertedDeviceId !== undefined &&
-    deviceInfo.deviceId === convertedDeviceId;
+  const fields = preset
+    ? (preset.fieldRefs
+        .map(ref => fieldsData.find(field => field.docId === ref.docId))
+        .filter(Boolean) as Field[])
+    : [];
 
   const attachments = observation.attachments.filter(
     (attachment): attachment is SavedPhoto | AudioAttachment =>
@@ -90,31 +81,82 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
       style={styles.root}
       contentContainerStyle={styles.scrollContent}>
       <>
-        {/* check lat and lon are not null or undefined */}
-        {lat != null && lon != null && <InsetMapView lat={lat} lon={lon} />}
-        <View>
-          <BodyText variant="smallMeta" style={styles.time}>
+        {/* check lat and lon are undefined. We cannot do `!lat && !lon` as 0 is a valid number but a falsy value */}
+        {lat !== undefined && lon !== undefined && (
+          <InsetMapView
+            accuracy={metadata?.position?.coords.accuracy}
+            observationId={observationId}
+            lat={lat}
+            lon={lon}
+          />
+        )}
+        <TouchableOpacity
+          accessibilityLabel="Open Observation Metadata"
+          onPress={() => {
+            navigation.navigate('ObservationMetadata', {
+              observationId,
+            });
+          }}
+          style={styles.time}>
+          <BodyText variant="smallMeta">
             <FormattedObservationDate
               createdDate={observation.createdAt}
               variant="long"
             />
           </BodyText>
-        </View>
+          <VerifiedBadge style={{marginLeft: 10}} />
+        </TouchableOpacity>
 
         <View style={styles.section}>
           <PresetHeader preset={preset} style={{paddingHorizontal: 20}} />
-          <React.Suspense fallback={<UIActivityIndicator />}>
+          <React.Suspense fallback={<Loading />}>
             <TrackAccordian observationId={observationId} />
           </React.Suspense>
-          {typeof observation.tags.notes === 'string' ? (
+          {observation?.tags?.notes ? (
             <HeaderText variant="header3" style={styles.textNotes}>
               {observation.tags.notes}
             </HeaderText>
           ) : null}
           {attachments.length > 0 && (
-            <MediaScrollView
-              attachments={attachments}
-              observationId={observationId}
+            <HorizontalScrollView
+              shouldShowLastItems={false}
+              minItemWidth={MIN_WIDTH}
+              gap={GAP}
+              renderChildren={size => (
+                <>
+                  {attachments.map(att => {
+                    if (isSavedPhoto(att)) {
+                      return (
+                        <React.Suspense
+                          key={att.driveDiscoveryId + att.hash + att.type}
+                          fallback={<ThumbnailLoader size={size} />}>
+                          <SavedPhotoThumbnailImage
+                            size={size}
+                            photo={att}
+                            onPress={() => {
+                              navigation.navigate('PhotoPreviewModal', {
+                                photo: att,
+                                observationDocId: observationId,
+                              });
+                            }}
+                          />
+                        </React.Suspense>
+                      );
+                    }
+
+                    if (isAudioAttachment(att)) {
+                      return (
+                        <AudioSavedThumbnail
+                          size={size}
+                          key={att.driveDiscoveryId + att.hash + att.type}
+                          audio={att}
+                          observationId={observationId}
+                        />
+                      );
+                    }
+                  })}
+                </>
+              )}
             />
           )}
         </View>
@@ -129,15 +171,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
           </>
         )}
         <View style={styles.divider} />
-        {isDeviceInfoPending || isDeviceIdPending ? (
-          <UIActivityIndicator size={20} />
-        ) : (
-          <ButtonFields
-            isMine={isMine}
-            observationId={observationId}
-            fields={fields}
-          />
-        )}
+        <ButtonFields observationId={observationId} fields={fields} />
       </>
     </ScrollView>
   );
@@ -165,8 +199,10 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   time: {
-    backgroundColor: LIGHT_GREY,
+    backgroundColor: VERY_LIGHT_GREY,
     paddingVertical: 10,
-    textAlign: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
 });

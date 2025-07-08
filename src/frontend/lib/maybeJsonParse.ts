@@ -6,7 +6,7 @@ import type {JsonValue} from 'type-fest';
 export function maybeJsonParse(value: string): undefined | JsonValue {
   try {
     return JSON.parse(value);
-  } catch (_) {
-    return;
+  } catch {
+    // no-op
   }
 }

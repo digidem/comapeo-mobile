@@ -8,13 +8,13 @@ export class MessagePortLike extends EventEmitter {
   #API_EVENT_NAME = '@@API_MESSAGE';
   #channelSubscription: EventSubscription;
   #state: ServerState = 'idle';
-  #queuedMessages: any[] = [];
+  #queuedMessages: unknown[] = [];
   #handleChannelMessage;
 
   constructor() {
     super();
 
-    this.#handleChannelMessage = (message: any) => {
+    this.#handleChannelMessage = (message: unknown) => {
       if (this.#state === 'idle') {
         this.#queuedMessages.push(message);
       } else if (this.#state === 'started') {
@@ -25,14 +25,14 @@ export class MessagePortLike extends EventEmitter {
       }
     };
 
-    // @ts-expect-error
+    // @ts-expect-error Typings from nodejs-mobile-react-native are incorrect
     this.#channelSubscription = nodejs.channel.addListener(
       this.#API_EVENT_NAME,
       this.#handleChannelMessage,
     );
   }
 
-  postMessage(message: any) {
+  postMessage(message: unknown) {
     nodejs.channel.post(this.#API_EVENT_NAME, message);
   }
 
@@ -60,11 +60,11 @@ export class MessagePortLike extends EventEmitter {
     this.#channelSubscription.remove();
   }
 
-  addEventListener(event: string, listener: (msg: any) => void) {
+  addEventListener(event: string, listener: (msg: unknown) => void) {
     this.addListener(event, listener);
   }
 
-  removeEventListener(event: string, listener: (msg: any) => void) {
+  removeEventListener(event: string, listener: (msg: unknown) => void) {
     this.removeListener(event, listener);
   }
 }

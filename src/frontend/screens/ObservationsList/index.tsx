@@ -1,22 +1,16 @@
 import * as React from 'react';
 import {View, FlatList, Dimensions, StyleSheet} from 'react-native';
-import {ObservationListItem} from './ObservationListItem';
-import ObservationEmptyView from './ObservationsEmptyView';
-
 import {Observation, Track} from '@comapeo/schema';
-import {MessageDescriptor, defineMessages} from 'react-intl';
-import {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs';
-import {ObservationsListBarIcon} from '../../Navigation/Tab/TabBar/ObservationsListTabBarIcon';
-import {ObservationListHeaderLeft} from './ObservationListHeaderLeft';
+import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
+import {ObservationListItem} from './ObservationListItem';
+import {ObservationEmptyView} from './ObservationsEmptyView';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
-import {NoProjectWarning} from './NoProjectWarning';
 import {LIGHT_GREY, WHITE} from '../../lib/styles';
-import {useAllProjects} from '../../hooks/server/projects';
-import {Loading} from '../../sharedComponents/Loading';
 import {TrackListItem} from './TrackListItem';
 import {useObservations} from '../../hooks/server/observations';
 import {useTracks} from '../../hooks/server/track';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {useAuthContext} from '../../contexts/AuthContext';
+import {SecondaryButton} from '../../sharedComponents/Buttons';
 
 const m = defineMessages({
   loading: {
@@ -37,6 +31,10 @@ const m = defineMessages({
     defaultMessage: 'Observations',
     description: 'Title of screen with list of observations',
   },
+  downloadObservation: {
+    id: 'screens.ObservationList.downloadObservation',
+    defaultMessage: 'Download Observations',
+  },
 });
 
 const OBSERVATION_CELL_HEIGHT = 80;
@@ -56,39 +54,42 @@ export const ObservationsList: React.FC<
 > & {
   navTitle: MessageDescriptor;
 } = ({navigation}) => {
-  const {data: observations, isFetching} = useObservations();
+  const {data: observations} = useObservations();
   const {data: tracks} = useTracks();
-  const {data, isPending} = useAllProjects();
+  const {authState} = useAuthContext();
+  const {formatMessage} = useIntl();
 
   const rowsPerWindow = Math.ceil(
     (Dimensions.get('window').height - 65) / OBSERVATION_CELL_HEIGHT,
   );
 
-  if (!observations.length && !tracks.length) {
+  if ((!observations.length && !tracks.length) || authState === 'obscured') {
     return (
       <ObservationEmptyView
-        onPressBack={() => navigation.navigate('Home', {screen: 'Map'})}
+        onPressBack={() => navigation.popTo('Home', {screen: 'Map'})}
       />
     );
   }
 
   return (
     <View style={styles.container} testID="OBS.list-scrn">
-      {isPending ? (
-        <Loading />
-      ) : data && data.length <= 1 ? (
-        <NoProjectWarning style={{margin: 20}} />
-      ) : null}
       {/* re: https://github.com/digidem/comapeo-mobile/issues/586  */}
-      {isFetching && <UIActivityIndicator style={{padding: 20, flex: 0}} />}
       <FlatList
+        ListHeaderComponent={
+          <View style={styles.populatedListHeader}>
+            <SecondaryButton
+              onPress={() => {
+                navigation.navigate('ExportObservations');
+              }}
+              text={formatMessage(m.downloadObservation)}
+              fullSize
+            />
+          </View>
+        }
         initialNumToRender={rowsPerWindow}
         getItemLayout={getItemLayout}
         keyExtractor={keyExtractor}
-        style={[
-          styles.container,
-          {borderTopColor: LIGHT_GREY, borderTopWidth: 1},
-        ]}
+        style={styles.container}
         windowSize={3}
         removeClippedSubviews
         renderItem={({item, index}) => {
@@ -129,23 +130,6 @@ export const ObservationsList: React.FC<
   );
 };
 
-export function createNavigationOptions(
-  formatMessage: (title: MessageDescriptor) => string,
-): BottomTabNavigationOptions {
-  return {
-    tabBarIcon: ObservationsListBarIcon,
-    headerLeft: ObservationListHeaderLeft,
-    headerTransparent: false,
-    headerTitle: formatMessage(ObservationsList.navTitle),
-    headerShadowVisible: true,
-    headerStyle: {
-      elevation: 15,
-      shadowOpacity: 0,
-      borderBottomWidth: 1,
-    },
-  };
-}
-
 ObservationsList.navTitle = m.observationListTitle;
 
 const styles = StyleSheet.create({
@@ -153,18 +137,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: WHITE,
   },
-  messageContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-  },
   listItem: {
     height: OBSERVATION_CELL_HEIGHT,
   },
-  scrollViewContent: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
+  populatedListHeader: {
+    alignItems: 'center',
+    padding: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: LIGHT_GREY,
   },
 });

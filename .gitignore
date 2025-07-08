@@ -67,6 +67,7 @@ web-build/
 # local env files
 .env*.local
 ios/*.env*.local
+.env.sentry-build-plugin
 
 # typescript
 *.tsbuildinfo
@@ -85,3 +86,10 @@ ios/*.env*.local
 # Expo
 android/
 ios/
+
+# WebdriverIO and BrowserStack logs
+logs/
+logs/*.log
+logs/*.json
+local.log
+test-results/

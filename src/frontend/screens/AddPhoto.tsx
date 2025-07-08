@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, TouchableNativeFeedback} from 'react-native';
 import {Text} from '../sharedComponents/Text';
-import debug from 'debug';
 import {defineMessages, FormattedMessage} from 'react-intl';
 
 import {CameraView} from '../sharedComponents/CameraView';
@@ -16,21 +15,17 @@ const m = defineMessages({
   },
 });
 
-const log = debug('AddPhotoScreen');
-
 export const AddPhotoScreen = ({
   navigation,
 }: NativeRootNavigationProps<'AddPhoto'>) => {
   const {addPhoto} = useDraftObservation();
 
   const handleAddPress = (capture: PhotoPromiseWithMetadata) => {
-    log('pressed add button');
     addPhoto(capture);
     navigation.pop();
   };
 
   const handleCancelPress = () => {
-    log('cancelled');
     navigation.pop();
   };
 

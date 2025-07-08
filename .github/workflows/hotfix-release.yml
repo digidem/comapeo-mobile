@@ -1,0 +1,123 @@
+# Summary:
+#
+# Initializes a hotfix release. This should be used for adding fixes to specific releases.
+#
+# Triggers:
+#
+# - Manually triggered by the team via a workflow dispatch when they want to start a new hotfix release.
+#   User must enter the release version to hotfix. For example, to start a hotfix release for a release with version `1.0`, enter `1`.
+#
+# Effects:
+#
+# - Creates a new release candidate branch from the target release branch (e.g. `release/v4.x`) named `rc/v${release_version}.${hotfix_version}`.
+# - Creates a new pull request from `rc/v${release_version}.${hotfix_version}` to `release/v${release_version}.x`.
+#   A release candidate build will be triggered by the creation of the PR (see `./build-rc.yml`).
+name: Start Hotfix Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to hotfix'
+        required: true
+        type: number
+
+env:
+  RELEASE_BRANCH: 'release/v${{ inputs.version }}.x'
+
+permissions:
+  contents: write
+
+concurrency:
+  # Only run one instance of this workflow at a time
+  group: ${{ github.workflow }}
+
+jobs:
+  check-inputs:
+    name: Check Inputs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check release branch exists
+        # Check inputs with a GitHub API request rather than checking out repo
+        # first and using git show-ref --verify, because this is much faster.
+        run: |
+          curl --location \
+            --head \
+            --silent \
+            -w "%{http_code}" \
+            -H "Authorization: token ${{ github.token }}" \
+            "https://api.github.com/repos/${{ github.repository }}/branches/${{ env.RELEASE_BRANCH }}" \
+          | grep -q "^200$" || exit 1
+
+  rc-pr:
+    name: Create Release Candidate PR
+    runs-on: ubuntu-latest
+    needs: check-inputs
+
+    steps:
+      - name: Create GitHub App Token
+        uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.RELEASE_BOT_APP_ID }}
+          private-key: ${{ secrets.RELEASE_BOT_PRIVATE_KEY }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.RELEASE_BRANCH }}
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Parse version
+        id: version
+        uses: ./.github/parse-version
+
+      - name: Get RC Branch
+        id: branches
+        run: |
+          echo "rc=rc/v${{ steps.version.outputs.releaseShort }}" >> $GITHUB_OUTPUT
+
+      - name: Create branches
+        run: |
+          git config --global user.name 'awana-release-bot[bot]'
+          git config --global user.email '${{ vars.RELEASE_BOT_USER_ID }}+awana-release-bot[bot]@users.noreply.github.com'
+          git checkout -b ${{ steps.branches.outputs.rc }}
+
+      - name: Set target release version in package.json
+        run: |
+          npm version ${{ steps.version.outputs.releaseVersion }} --no-git-tag-version
+          git commit -am "chore: prepare for release v${{ steps.version.outputs.releaseShort }}"
+
+      - name: Push changes
+        run: |
+          git push origin ${{ steps.branches.outputs.rc }}
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+
+      - name: Create Pull Request
+        run: |
+          gh pr create \
+          --base ${{ env.RELEASE_BRANCH }} \
+          --head ${{ steps.branches.outputs.rc }} \
+          --title "$PR_TITLE" \
+          --body "$PR_BODY"
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          PR_TITLE: Hotfix Release Candidate v${{ steps.version.outputs.releaseShort }}
+          PR_BODY: |
+            This PR tracks QA of the release candidate for hotfix v${{ steps.version.outputs.releaseShort }}.
+
+            :cherries: All changes to this branch should be cherry-picked from `${{ github.event.repository.default_branch  }}`.
+
+            :warning: Only add bug fixes, copy edits and translation updates during the QA process.
+
+            :test_tube: Create a new Release Candidate build by commenting on this PR with the `${{ vars.BUILD_COMMENT_TRIGGER || '/build-rc' }}` command.
+
+            :construction: An initial Release Candidate build will be triggered shortly, and the build URL will be posted here.
+
+            :rocket: Merging this PR will trigger a release build.

@@ -9,14 +9,16 @@ const BORDER_DEFAULTS = {
   width: 1,
 } as const;
 
-interface Props
-  extends React.PropsWithChildren<{
-    color?: string;
-    radius?: number;
-    style?: ViewStyleProp;
-  }> {}
-
-export const Circle = ({children, color, radius = 25, style}: Props) => {
+export const Circle = ({
+  children,
+  color,
+  radius = 25,
+  style,
+}: React.PropsWithChildren<{
+  color?: string;
+  radius?: number;
+  style?: ViewStyleProp;
+}>) => {
   const validColor = !!(color && validateColor(color));
   return (
     <View

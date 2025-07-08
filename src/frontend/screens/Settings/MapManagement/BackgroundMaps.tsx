@@ -11,7 +11,7 @@ import {
   useRemoveCustomMapFile,
 } from '../../../hooks/server/maps';
 import ErrorSvg from '../../../images/Error.svg';
-import GreenCheckSvg from '../../../images/GreenCheck.svg';
+import GreenCheckSvg from '../../../images/Success.svg';
 import {RED, WHITE} from '../../../lib/styles';
 import {
   BottomSheetModal,
@@ -19,33 +19,29 @@ import {
   useBottomSheetModal,
 } from '../../../sharedComponents/BottomSheetModal';
 import {Button} from '../../../sharedComponents/Button';
-import {ErrorBottomSheet} from '../../../sharedComponents/ErrorBottomSheet';
 import {Loading} from '../../../sharedComponents/Loading';
 import {HeaderText} from '../../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../../sharedComponents/Text/BodyText';
 import {type NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 import {ChooseMapFile} from './ChooseMapFile';
 import {CustomMapDetails} from './CustomMapDetails';
+import * as Sentry from '@sentry/react-native';
+import {useNavigationFromRoot} from '../../../hooks/useNavigationWithTypes';
 
 const m = defineMessages({
   screenTitle: {
     id: 'screens.Settings.MapManagement.BackgroundMaps.screenTitle',
-    defaultMessage: 'Background Maps',
-  },
-  about: {
-    id: 'screens.Settings.MapManagement.BackgroundMaps.about',
-    defaultMessage: 'About Custom Map',
+    defaultMessage: 'Background Map',
   },
   description1: {
     id: 'screens.Settings.MapManagement.BackgroundMaps.description1',
-    defaultMessage:
-      'Adding a custom map will enable you to see a map when you are offline.',
+    defaultMessage: 'Custom background maps let you view maps offline.',
   },
   // TODO: Merge into description1 when https://github.com/digidem/comapeo-mobile/issues/669 is addressed
   description2: {
     id: 'screens.Settings.MapManagement.BackgroundMaps.description2',
     defaultMessage:
-      'Your custom map is not shared with other devices in your project.',
+      'Note: Custom background maps are not shared with collaborators.',
   },
 
   customMapInfoLoadError: {
@@ -118,6 +114,7 @@ export function createNavigationOptions({
 export function BackgroundMapsScreen() {
   const {formatMessage: t} = useIntl();
 
+  const {navigate} = useNavigationFromRoot();
   const mapAddedBottomSheet = useBottomSheetModal({openOnMount: false});
   const removeMapBottomSheet = useBottomSheetModal({openOnMount: false});
 
@@ -129,9 +126,6 @@ export function BackgroundMapsScreen() {
   return (
     <>
       <ScrollView contentContainerStyle={styles.container}>
-        <HeaderText variant="header2" style={styles.aboutText}>
-          {t(m.about)}
-        </HeaderText>
         <View style={styles.descriptionContainer}>
           <BodyText>{t(m.description1)}</BodyText>
           <BodyText>{t(m.description2)}</BodyText>
@@ -141,7 +135,8 @@ export function BackgroundMapsScreen() {
           onChooseFile={() => {
             selectFileMutation.mutate(
               {
-                extensionFilters: ['smp'],
+                copyToCacheDirectory: false,
+                allowedExtensions: ['smp'],
               },
               {
                 onSuccess: asset => {
@@ -155,8 +150,22 @@ export function BackgroundMapsScreen() {
                       onSuccess: () => {
                         mapAddedBottomSheet.openSheet();
                       },
+                      onError: err => {
+                        Sentry.captureException(err);
+                        navigate('BackgroundMapErrorBottomSheet', {
+                          title: t(m.importErrorTitle),
+                          description: t(m.importErrorDesciption),
+                        });
+                      },
                     },
                   );
+                },
+                onError: err => {
+                  Sentry.captureException(err);
+                  navigate('BackgroundMapErrorBottomSheet', {
+                    title: t(m.importErrorTitle),
+                    description: t(m.importErrorDesciption),
+                  });
                 },
               },
             );
@@ -175,7 +184,12 @@ export function BackgroundMapsScreen() {
               fullWidth
               variant="outlined"
               onPress={() => {
-                removeCustomMapMutation.mutate();
+                removeCustomMapMutation.mutate(undefined, {
+                  onError: err => {
+                    Sentry.captureException(err);
+                    navigate('ErrorBottomSheet');
+                  },
+                });
               }}>
               <HeaderText
                 variant="header5"
@@ -247,35 +261,6 @@ export function BackgroundMapsScreen() {
           ]}
         />
       </BottomSheetModal>
-
-      <ErrorBottomSheet
-        error={
-          removeCustomMapMutation.error ||
-          selectFileMutation.error ||
-          importCustomMapMutation.error
-        }
-        title={
-          selectFileMutation.error || importCustomMapMutation.error
-            ? m.importErrorTitle
-            : undefined
-        }
-        description={
-          selectFileMutation.error || importCustomMapMutation.error
-            ? m.importErrorDesciption
-            : undefined
-        }
-        clearError={() => {
-          if (removeCustomMapMutation.error) {
-            removeCustomMapMutation.reset();
-          }
-          if (selectFileMutation.error) {
-            selectFileMutation.reset();
-          }
-          if (importCustomMapMutation.error) {
-            importCustomMapMutation.reset();
-          }
-        }}
-      />
     </>
   );
 }
@@ -321,15 +306,9 @@ const styles = StyleSheet.create({
   descriptionContainer: {
     gap: 20,
   },
-  aboutText: {
-    textAlign: 'center',
-  },
   infoLoadErrorText: {
     textAlign: 'center',
     color: RED,
-  },
-  removeMapFileButton: {
-    backgroundColor: RED,
   },
   removeMapFileButtonText: {
     letterSpacing: 0.5,

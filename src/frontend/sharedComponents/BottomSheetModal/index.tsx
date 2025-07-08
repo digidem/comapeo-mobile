@@ -75,43 +75,42 @@ const useBackHandler = (enable: boolean, onBack?: () => void) => {
   }, [enable, onBack]);
 };
 
-interface Props extends React.PropsWithChildren<{}> {
-  isOpen: boolean;
-  onDismiss?: () => void;
-  // Triggered by: Android hardware back press and gesture back swipe
-  onBack?: () => void;
-  fullScreen?: boolean;
-}
+export const BottomSheetModal = React.forwardRef<
+  RNBottomSheetModal,
+  React.PropsWithChildren<{
+    isOpen: boolean;
+    onDismiss?: () => void;
+    // Triggered by: Android hardware back press and gesture back swipe
+    onBack?: () => void;
+    fullScreen?: boolean;
+  }>
+>(({children, isOpen, onBack, onDismiss, fullScreen}, ref) => {
+  useBackHandler(isOpen, onBack);
 
-export const BottomSheetModal = React.forwardRef<RNBottomSheetModal, Props>(
-  ({children, isOpen, onBack, onDismiss, fullScreen}, ref) => {
-    useBackHandler(isOpen, onBack);
+  const {top} = useSafeAreaInsets();
 
-    const {top} = useSafeAreaInsets();
-
-    return (
-      <RNBottomSheetModal
-        enableDynamicSizing
-        snapPoints={fullScreen ? ['100%'] : undefined}
-        ref={ref}
-        backgroundStyle={
-          fullScreen ? styles.backgroundFullScreen : styles.backgroundDynamic
-        }
-        backdropComponent={DefaultBackdrop}
-        onDismiss={onDismiss}
-        enableContentPanningGesture={false}
-        enableHandlePanningGesture={false}
-        handleComponent={() => null}>
-        <BottomSheetView style={fullScreen ? {paddingTop: top} : undefined}>
-          <BottomSheetModalPropertiesContext.Provider
-            value={{fullScreen: !!fullScreen}}>
-            {children}
-          </BottomSheetModalPropertiesContext.Provider>
-        </BottomSheetView>
-      </RNBottomSheetModal>
-    );
-  },
-);
+  return (
+    <RNBottomSheetModal
+      enableDynamicSizing
+      snapPoints={fullScreen ? ['100%'] : undefined}
+      ref={ref}
+      backgroundStyle={
+        fullScreen ? styles.backgroundFullScreen : styles.backgroundDynamic
+      }
+      backdropComponent={DefaultBackdrop}
+      onDismiss={onDismiss}
+      enableContentPanningGesture={false}
+      enableHandlePanningGesture={false}
+      handleComponent={() => null}>
+      <BottomSheetView style={fullScreen ? {paddingTop: top} : undefined}>
+        <BottomSheetModalPropertiesContext.Provider
+          value={{fullScreen: !!fullScreen}}>
+          {children}
+        </BottomSheetModalPropertiesContext.Provider>
+      </BottomSheetView>
+    </RNBottomSheetModal>
+  );
+});
 
 const styles = StyleSheet.create({
   backgroundDynamic: {borderWidth: 1, borderColor: DARK_GREY},

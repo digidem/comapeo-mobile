@@ -103,17 +103,15 @@ export const DeviceNameWithIcon = ({
 const DeviceArchive = () => {
   return (
     <View
-      style={[
-        {
-          alignItems: 'center',
-          position: 'relative',
-          backgroundColor: LIGHT_GREY,
-          borderRadius: 100,
-          padding: 40,
-          width: 35,
-          height: 35,
-        },
-      ]}>
+      style={{
+        alignItems: 'center',
+        position: 'relative',
+        backgroundColor: LIGHT_GREY,
+        borderRadius: 100,
+        padding: 40,
+        width: 35,
+        height: 35,
+      }}>
       <ShieldIcon
         width={50}
         height={50}

@@ -32,7 +32,7 @@ const m = defineMessages({
 type ActionButtonsProps = {
   handleDelete: () => void;
   handlePressShare?: () => void;
-  isMine: boolean;
+  canDelete: boolean;
   isShareButtonLoading?: boolean;
   deleteMessage: MessageDescriptor;
 };
@@ -40,7 +40,7 @@ type ActionButtonsProps = {
 export const ActionButtons = ({
   handleDelete,
   handlePressShare,
-  isMine,
+  canDelete,
   isShareButtonLoading,
   deleteMessage,
 }: ActionButtonsProps) => {
@@ -61,7 +61,7 @@ export const ActionButtons = ({
 
   return (
     <View style={styles.buttonContainer}>
-      {isMine && (
+      {canDelete && (
         <Button
           iconName="delete"
           title={t(m.delete)}
@@ -81,7 +81,7 @@ export const ActionButtons = ({
 };
 
 type ButtonProps = {
-  onPress: () => any;
+  onPress: () => void;
   iconName: 'delete' | 'share';
   title: string;
   isLoading?: boolean;

@@ -10,7 +10,7 @@ function parseUrl(userInput: string): URL {
 
   try {
     return new URL(userInput);
-  } catch (_err) {
+  } catch {
     /* ignored */
   }
 

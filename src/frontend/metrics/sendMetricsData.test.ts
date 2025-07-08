@@ -42,9 +42,8 @@ describe('sendMetricsReport', () => {
   };
 
   it("doesn't send data in development", async () => {
-    const serverOrigin = await createTestServer(() => {
-      throw new Error('Unexpected request');
-    });
+    const requestHandler = jest.fn();
+    const serverOrigin = await createTestServer(requestHandler);
 
     const metricsUrl = new URL('/metrics', serverOrigin).href;
 
@@ -54,6 +53,8 @@ describe('sendMetricsReport', () => {
       metricsApiKey: 'foo123',
       dataToSend: {foo: 'bar'},
     });
+
+    expect(requestHandler).not.toHaveBeenCalled();
   });
 
   it('makes a request to the metrics server', async () => {

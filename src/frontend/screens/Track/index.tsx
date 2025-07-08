@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text, SafeAreaView} from 'react-native';
-import {BLACK, BLUE_GREY, DARK_GREY} from '../../lib/styles.ts';
+import {BLUE_GREY, DARK_GREY} from '../../lib/styles.ts';
 
 import TrackIcon from '../../images/Track.svg';
 import {FormattedMessage, MessageDescriptor, defineMessages} from 'react-intl';
@@ -12,10 +12,11 @@ import {useObservations} from '../../hooks/server/observations.ts';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {MapPreview} from './MapPreview.tsx';
 import {ObservationList} from './ObservationList.tsx';
-import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {ActionButtons} from '../../sharedComponents/ActionButtons.tsx';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock.tsx';
 import {TrackHeaderRight} from './TrackHeaderRight';
+import * as Sentry from '@sentry/react-native';
+import {useCanEditOrDelete} from '../../hooks/server/useCanEditOrDelete.ts';
 
 const m = defineMessages({
   title: {
@@ -46,15 +47,22 @@ export const TrackScreen = ({
   const trackObservations = observations.filter(observation =>
     track.observationRefs.some(ref => ref.docId === observation.docId),
   );
-
-  const deleteTrackMutation = useDeleteTrackMutation();
+  const {mutate: deleteTrackMutate} = useDeleteTrackMutation();
+  const canDelete = useCanEditOrDelete(track.originalVersionId);
 
   function deleteTrack() {
-    deleteTrackMutation.mutate(track.docId, {
-      onSuccess: () => {
-        navigation.pop();
+    deleteTrackMutate(
+      {docId: track.docId},
+      {
+        onSuccess: () => {
+          navigation.pop();
+        },
+        onError: err => {
+          Sentry.captureException(err);
+          navigation.navigate('ErrorBottomSheet');
+        },
       },
-    });
+    );
   }
 
   return (
@@ -65,7 +73,7 @@ export const TrackScreen = ({
         dockContent={
           <ActionButtons
             handleDelete={deleteTrack}
-            isMine={true}
+            canDelete={canDelete}
             deleteMessage={m.deleteTitle}
           />
         }>
@@ -90,11 +98,6 @@ export const TrackScreen = ({
           <Text style={styles.text}>{track.tags.notes}</Text>
         </View>
       </ScreenContentWithDock>
-      <ErrorBottomSheet
-        error={deleteTrackMutation.error}
-        clearError={deleteTrackMutation.reset}
-        tryAgain={deleteTrack}
-      />
     </SafeAreaView>
   );
 };
@@ -114,11 +117,6 @@ export function createNavigationOptions({
 }
 
 export const styles = StyleSheet.create({
-  positionText: {
-    fontSize: 12,
-    color: BLACK,
-    fontWeight: '700',
-  },
   root: {
     flex: 1,
     flexDirection: 'column',

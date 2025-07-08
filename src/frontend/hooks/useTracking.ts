@@ -1,38 +1,56 @@
 import * as Location from 'expo-location';
-import {useCallback, useState} from 'react';
-import {usePersistedTrack} from './persistedState/usePersistedTrack';
-import {useGPSModalContext} from '../contexts/GPSModalContext.tsx';
+import {useCallback} from 'react';
+import {
+  useTrackActions,
+  useTrackState,
+} from '../contexts/TrackStoreContext.tsx';
 import {LOCATION_TASK_NAME} from '../sharedTypes/location.ts';
+import {useNavigation} from '@react-navigation/native';
+import * as Sentry from '@sentry/react-native';
 
 export function useTracking() {
-  const {bottomSheetRef} = useGPSModalContext();
-  const [loading, setLoading] = useState(false);
-  const setTracking = usePersistedTrack(state => state.setTracking);
-  const isTracking = usePersistedTrack(state => state.isTracking);
+  const {setTracking, clearCurrentTrack} = useTrackActions();
+  const navigation = useNavigation();
+  const isTracking = useTrackState(state => state.isTracking);
+  const locationHistory = useTrackState(state => state.locationHistory);
 
-  const startTracking = useCallback(async () => {
+  const startTracking = useCallback(() => {
     if (isTracking) {
       console.warn('Start tracking attempt while tracking already enabled');
-      setLoading(false);
       return;
     }
-
-    setLoading(true);
-
-    await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
+    setTracking(true);
+    Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
       accuracy: Location.Accuracy.Highest,
       activityType: Location.LocationActivityType.Fitness,
+    }).catch(err => {
+      Sentry.captureException(err);
+      setTracking(false);
+      // @ts-expect-error - this is a typing issue, we are using the non-strongly typed hook as this can technically be used in any screen. But regardless of the screen, we want to show the error bottom sheet.
+      navigation.navigate('ErrorBottomSheet');
     });
-
-    setTracking(true);
-    setLoading(false);
-  }, [isTracking, setTracking]);
-
-  const cancelTracking = useCallback(async () => {
-    await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
-    bottomSheetRef.current?.close();
+  }, [isTracking, setTracking, navigation]);
+  /**
+   * Cancels location tracking and stops background updates.
+   * @returns {boolean} True if location history has more than one entry (track should be kept), false otherwise.
+   */
+  const cancelTracking = useCallback(() => {
     setTracking(false);
-  }, [bottomSheetRef, setTracking]);
+    Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME).catch(err => {
+      Sentry.captureException(err);
+    });
+    const hasTrackWithMoreThan1Point = locationHistory.length > 1;
 
-  return {isTracking, startTracking, cancelTracking, loading};
+    if (!hasTrackWithMoreThan1Point) {
+      clearCurrentTrack();
+    }
+
+    return hasTrackWithMoreThan1Point;
+  }, [setTracking, clearCurrentTrack, locationHistory]);
+
+  return {
+    isTracking,
+    startTracking,
+    cancelTracking,
+  };
 }

@@ -1,12 +1,12 @@
-import React from 'react';
-import {View, StyleSheet, Dimensions} from 'react-native';
-import {Text} from '../../sharedComponents/Text';
 import {defineMessages, useIntl} from 'react-intl';
+import {StyleSheet, View} from 'react-native';
+
+import {WHITE} from '../../lib/styles';
 import {ObservationListIcon} from '../../sharedComponents/icons';
-
-import {Button} from '../../sharedComponents/Button';
-
-const {width} = Dimensions.get('window');
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {SecondaryButton} from '../../sharedComponents/Buttons';
 
 const m = defineMessages({
   noObservationsTitle: {
@@ -30,79 +30,58 @@ const m = defineMessages({
   },
 });
 
-type Props = {
-  onPressBack: () => any;
-};
+const ICON_SIZE = 48;
 
-const ObservationEmptyView = ({onPressBack}: Props) => {
+export const ObservationEmptyView = ({
+  onPressBack,
+}: {
+  onPressBack: () => void;
+}) => {
   const {formatMessage: t} = useIntl();
+
   return (
-    <View style={styles.root} testID="observationsEmptyView">
-      <View style={styles.iconContainer}>
-        <View style={styles.iconCircle}>
-          <ObservationListIcon size={150} />
-        </View>
+    <ScreenContentWithDock
+      testID="observationsEmptyView"
+      contentContainerStyle={styles.contentContainer}
+      dockContainerStyle={styles.dockContainer}
+      dockContent={
+        <SecondaryButton
+          fullSize
+          onPress={onPressBack}
+          text={t(m.backButton)}
+        />
+      }>
+      <View style={styles.iconCircle}>
+        <ObservationListIcon size={ICON_SIZE} />
       </View>
-      <View style={styles.textContainer}>
-        <Text style={[styles.infoHeader, styles.text]}>
-          {t(m.noObservationsTitle)}
-        </Text>
-        <Text style={[styles.infoSubheader, styles.text]}>
-          {t(m.noObservationsDesc)}
-        </Text>
-      </View>
-      <View style={styles.backButton}>
-        <Button onPress={onPressBack} variant="outlined" color="dark">
-          {t(m.backButton)}
-        </Button>
-      </View>
-    </View>
+      <HeaderText variant="header2" style={styles.text}>
+        {t(m.noObservationsTitle)}
+      </HeaderText>
+      <BodyText style={styles.text}>{t(m.noObservationsDesc)}</BodyText>
+    </ScreenContentWithDock>
   );
 };
 
-export default ObservationEmptyView;
-
 const styles = StyleSheet.create({
-  root: {
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    alignItems: 'stretch',
+  contentContainer: {
+    backgroundColor: WHITE,
     flex: 1,
-  },
-  iconContainer: {
-    flexDirection: 'column',
+    gap: 20,
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    flex: 0,
+  },
+  dockContainer: {
+    backgroundColor: WHITE,
   },
   iconCircle: {
-    width: width - 125,
-    height: width - 125,
-    backgroundColor: '#CCE0FF',
-    borderRadius: (width - 125) / 2,
     alignItems: 'center',
+    backgroundColor: '#CCE0FF',
+    borderRadius: ICON_SIZE,
+    height: ICON_SIZE * 2,
     justifyContent: 'center',
-  },
-  infoHeader: {
-    fontWeight: '700',
-    fontSize: 24,
-  },
-  infoSubheader: {
-    fontWeight: '400',
-    fontSize: 18,
-  },
-  textContainer: {
-    flex: 0,
-    justifyContent: 'center',
-    paddingHorizontal: 20,
+    width: ICON_SIZE * 2,
   },
   text: {
     textAlign: 'center',
-    color: '#888888',
-  },
-  backButton: {
-    flex: 0,
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });

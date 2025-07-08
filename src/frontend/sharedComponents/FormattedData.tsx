@@ -7,9 +7,9 @@ import {
 } from 'react-intl';
 import {Field, Preset} from '@comapeo/schema';
 
-import {formatCoords} from '../lib/utils';
+import {formatCoords} from '../lib/coordinateFormat';
 import {DateDistance} from './DateDistance';
-import {CoordinateFormat} from '../sharedTypes';
+import {type CoordinateFormat} from '../lib/coordinateFormat';
 
 const m = defineMessages({
   noAnswer: {
@@ -83,7 +83,7 @@ export const FormattedFieldValue = ({
   value,
   field,
 }: {
-  value: any;
+  value: unknown;
   field: Field;
 }) => {
   const {formatMessage: t} = useIntl();

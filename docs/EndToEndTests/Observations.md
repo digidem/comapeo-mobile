@@ -7,10 +7,19 @@
 - [Viewing Observations](#viewing-observations)
   - [Test Objectives](#test-objectives-2)
   - [Special Considerations](#special-considerations-2)
+- [Viewing Observation Metadata](#viewing-observation-metadata)
+  - [Test Objectives](#test-objectives-3)
+  - [Special Considerations](#special-considerations-3)
+- [Editing Observations](#editing-observations)
+  - [Test Objectives](#test-objectives-4)
+  - [Special Considerations](#special-considerations-4)
+- [Deleting Observations](#deleting-observations)
+  - [Test Objectives](#test-objectives-5)
+  - [Special Considerations](#special-considerations-5)
 
 ### Overview
 
-These tests deal with all issues related to the main screens of the app.
+These tests deal with all issues related to Observations.
 
 ## Creating Observations
 
@@ -27,7 +36,7 @@ These tests deal with all issues related to the main screens of the app.
 
 ### Special Considerations
 
-- All QA relating to the camera (that buttons appear where they should, adding photos, viewing photos, and deleting photos) will have to be done by a real person until we update Expo and Expo camera. See E2ENoGos.
+- All QA relating to the camera (that buttons appear where they should, adding photos, viewing photos, and deleting photos) has not been added yet.
 
 ## Adding Details
 
@@ -54,13 +63,63 @@ These tests deal with all issues related to the main screens of the app.
 
 ### Test Objectives
 
-- First the test changes locations slightly and adds observations with different preset categories
-- Takes a screenshot of the map so someone can check the dots if they want
-- Checks that clicking on a point on the map goes to that observation
+- First the test adds observations with different preset categories
 - Checks that all of the back buttons work
 - Checks that the observations list button goes to the observations list screen from map and the camera screen
 - Checks that observation names, time captures, thumbnails and icons display as expected on the list screen and the show observation screen
+- Checks the “You’re a coordinator on this project.” or “You’re mapping on your own.” text is displayed at the top of the ObservationsList.
 
 ### Special Considerations
 
-- There is no way to automatically test the appearance of the dots, but it can be checked on a screenshot
+- The test does not check the locations of the dots at this time
+- We are not able to change the location for the app during testing at this time
+
+## Viewing Observation Metadata
+
+- This tests the ability to open and view the metadata associated with an Observation via two different entry points.
+
+### Test Objectives
+
+- Verifies that tapping the **date bar** on the Observation view screen opens the Observation Metadata screen.
+- Verifies that tapping the **GPS bubble** on the embedded map also opens the Metadata screen.
+- Confirms that metadata fields are displayed (if available):
+- Confirms that a **Share** button is present.
+- Confirms that the **back button** on the Metadata screen returns to the previous screen.
+
+### Special Considerations
+
+- This test assumes that the Observation has valid GPS metadata collected automatically (i.e., it is in a _validated_ state).
+- We are currently **unable to simulate an unverified metadata state** (i.e., manually entered location) due to the inability to disable GPS in BrowserStack test environment.
+- If location input can be overridden or skipped in future test configurations, an additional test should be added to verify the _unverified_ state (`"This data was manually entered"`).
+
+## Editing Observations
+
+- This tests the experience of editing an existing observation after it has been created and saved
+
+### Test Objectives
+
+- Opens an observation from the list screen and verifies that it has the edit button
+- Navigates to the Edit Observation screen and checks for presence of buttons and input fields (change, save, description, details)
+- Updates the description field and collapses the keyboard by tapping above it
+- Navigates to the details screen, enters a detail, and clicks done
+- Saves the observation and confirms that the updated description and detail are displayed on the view screen
+
+### Special Considerations
+
+- Assumes that at least one editable observation (e.g., with the “Lake” preset) exists and is visible in the observations list before the test begins
+- Does not test changing the category or adding a photo in this flow
+
+## Deleting Observations
+
+- This tests deleting an observation from the view observation screen
+
+### Test Objectives
+
+- Opens an editable observation (with the “Threat” preset), verifies presence of Share and Delete buttons
+- Opens the delete confirmation dialog and tests the cancel flow (returns to view screen)
+- Confirms the delete flow by pressing “Yes, delete” and verifies that the observation no longer appears in the list
+
+### Special Considerations
+
+- Assumes that an observation with the “Threat” preset exists and is editable by the current device
+- Does not currently verify that the deleted document is removed from storage or synced state, only that it no longer appears in the list

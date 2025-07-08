@@ -47,7 +47,7 @@ export const UtmForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
           fromLatLon(initialCoordinates.lat, initialCoordinates.lon).zoneNum +
           ''
         );
-      } catch (e) {
+      } catch {
         return '';
       }
     } else {
@@ -63,7 +63,7 @@ export const UtmForm = ({initialCoordinates, onValueUpdate}: FormProps) => {
       try {
         return fromLatLon(initialCoordinates.lat, initialCoordinates.lon)
           .zoneLetter;
-      } catch (e) {
+      } catch {
         return '';
       }
     } else {

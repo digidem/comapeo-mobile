@@ -1,0 +1,100 @@
+# Summary:
+#
+# All commits in a release branch _should_ have been cherry-picked from the main
+# branch, but sometimes it's unavoidable to commit directly to the release
+# branch. In that case, there should be a manual review of the commits that are
+# not on the main branch to check whether any fixes in them need applied to
+# main. In most cases they can probably be ignored. This workflow creates an
+# issue for reviewing these non-cherry-picked commits.
+#
+# Triggers:
+#
+# - Merging a PR that targets a base branch that matches release/**
+#
+# Effects:
+#
+# - Checks for any commits made to the release candidate since branching from develop that were not cherry-picked from develop.
+# - Creates an issue to manually check any non-cherry-picked commits and add them to develop if necessary.
+name: Post Release Check
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - 'release/**'
+
+jobs:
+  non-cherry-picked-commits:
+    name: Check for non-cherry-picked commits
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    outputs:
+      commit_list: ${{ steps.commit_list.outputs.commit_list }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+
+      # Using the SHA of the PR head here and below, rather than the ref,
+      # because the ref could have been deleted when the PR was merged.
+      # We use the PR head rather than the merge commit, because the PR head is
+      # what we build the release from.
+      - name: Fetch PR head
+        run: git fetch origin ${{ github.event.pull_request.head.sha }}
+
+      - name: Get non-cherry-picked commits
+        id: commit_list
+        # The syntax below is for writing a multiline string to GITHUB_OUTPUT
+        # From https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#multiline-strings
+        run: |
+          {
+            echo 'commit_list<<EOF'
+            git cherry -v \
+              ${{ github.event.repository.default_branch }} \
+              ${{ github.event.pull_request.head.sha }} \
+            | grep '^+' \
+            | grep -v 'chore: prepare for release' \
+            | sed 's/^+/\- \[ \]/'
+            echo EOF
+          } >> "$GITHUB_OUTPUT"
+
+  create-issue:
+    name: Create Issue
+    runs-on: ubuntu-latest
+    needs: [non-cherry-picked-commits]
+    if: needs.non-cherry-picked-commits.outputs.commit_list != ''
+
+    steps:
+      - name: Create GitHub App Token
+        uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.RELEASE_BOT_APP_ID }}
+          private-key: ${{ secrets.RELEASE_BOT_PRIVATE_KEY }}
+
+      - name: Parse PR release version
+        id: release_version
+        run: |
+          pr_branch=${{ github.event.pull_request.head.ref }}
+          echo "release_version=${pr_branch#rc/}" >> $GITHUB_OUTPUT
+
+      - name: Create issue to review non-cherry-picked commits
+        env:
+          GH_REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          ISSUE_BODY: >
+            The release candidate branch `${{ github.event.pull_request.head.ref }}`
+            was merged with `${{ github.event.pull_request.base.ref }}` with
+            commits that are not on the `${{ github.event.repository.default_branch }}`
+            branch. Please review each commit below and check it can either be
+            ignored or has been applied to the `${{ github.event.repository.default_branch }}`
+            branch. You can close this issue when all commits are reviewed.
+
+            ${{ needs.non-cherry-picked-commits.outputs.commit_list }}
+          ISSUE_TITLE: 'Release ${{ steps.release_version.outputs.release_version }}: Review commits not cherry-picked from `${{ github.event.repository.default_branch }}`'
+        run: |
+          gh issue create --title "$ISSUE_TITLE" --body "$ISSUE_BODY"

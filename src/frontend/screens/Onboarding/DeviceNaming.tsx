@@ -18,12 +18,12 @@ import {OnboardingParamsList} from '../../sharedTypes/navigation';
 const m = defineMessages({
   header: {
     id: 'screens.DeviceNaming.header',
-    defaultMessage: 'Add a name for your device',
+    defaultMessage: 'Name your device',
   },
   description: {
     id: 'screens.DeviceNaming.description',
     defaultMessage:
-      'You can start mapping alone or start mapping with a team. Create or join a project in order to share data with other devices that are part of the same project.',
+      'Distinct, memorable names help collaborators recognize you.',
   },
   addName: {
     id: 'screens.DeviceNaming.addName',
@@ -36,7 +36,6 @@ export const DeviceNaming = ({
 }: NativeStackScreenProps<OnboardingParamsList, 'DeviceNaming'>) => {
   const [name, setName] = React.useState('');
   const [errorTimeout, setErrorTimeout] = useTemporaryError();
-  const invalidName = name.length === 0 || name.length > 60;
   const {formatMessage: t} = useIntl();
 
   function setNameWithValidation(nameValue: string) {
@@ -48,12 +47,13 @@ export const DeviceNaming = ({
   }
 
   function handleAddNamePress() {
-    if (invalidName) {
+    const trimmedName = name.trim();
+    if (trimmedName.length === 0 || trimmedName.length > 60) {
       setErrorTimeout();
       return;
     }
 
-    navigation.navigate('Success', {deviceName: name});
+    navigation.navigate('Success', {deviceName: trimmedName});
   }
   return (
     <KeyboardAvoidingView style={{width: '100%', height: '100%'}}>

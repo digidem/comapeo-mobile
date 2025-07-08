@@ -73,7 +73,7 @@ export const ReviewInvitation = ({
         />
       </View>
       <Button fullWidth onPress={sendInvite}>
-        <View style={[styles.flexRow]}>
+        <View style={styles.flexRow}>
           <MaterialIcon name="send" size={25} color={WHITE} />
           <Text style={{color: WHITE, fontWeight: 'bold', marginLeft: 10}}>
             {t(m.sendInvite)}

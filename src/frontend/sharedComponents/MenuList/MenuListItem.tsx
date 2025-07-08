@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {NEW_DARK_GREY, VERY_LIGHT_BLUE} from '../../lib/styles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {Text} from '../Text';
+import {BodyText} from '../Text/BodyText';
 
 export type MenuListItemType = {
   primaryText: string;
@@ -17,6 +17,7 @@ export type MenuListItemType = {
   secondaryText?: string | React.ReactNode;
   testID?: string;
   disabled?: boolean;
+  accessibilityLabel?: string;
 } & (
   | {materialIconName: string; icon?: never} // Has materialIconName but no icon
   | {icon: React.ReactNode; materialIconName?: never} // Has icon but no materialIconName
@@ -39,6 +40,7 @@ export const MenuListItem = ({
   return (
     <TouchableNativeFeedback
       testID={item.testID}
+      accessibilityLabel={item.accessibilityLabel}
       onPress={item.onPress}
       disabled={item.disabled}
       background={TouchableNativeFeedback.Ripple(VERY_LIGHT_BLUE, false)}>
@@ -59,9 +61,11 @@ export const MenuListItem = ({
           item.icon
         ) : null}
         <View>
-          <Text>{item.primaryText}</Text>
+          <BodyText>{item.primaryText}</BodyText>
           {item.secondaryText && (
-            <Text style={styles.secondaryText}>{item.secondaryText}</Text>
+            <BodyText variant="smallMeta" style={styles.secondaryText}>
+              {item.secondaryText}
+            </BodyText>
           )}
         </View>
       </View>
@@ -75,5 +79,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     minHeight: 40,
   },
-  secondaryText: {fontSize: 14, color: NEW_DARK_GREY},
+  secondaryText: {color: NEW_DARK_GREY},
 });

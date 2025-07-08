@@ -17,12 +17,11 @@ import {CustomHeaderLeft} from '../sharedComponents/CustomHeaderLeft';
 import {Preset} from '@comapeo/schema';
 import {usePresetsQuery} from '../hooks/server/presets';
 import {usePersistedDraftObservation} from '../hooks/persistedState/usePersistedDraftObservation';
-import {CommonActions} from '@react-navigation/native';
 
 const m = defineMessages({
   categoryTitle: {
     id: 'screens.CategoryChooser.categoryTitle',
-    defaultMessage: 'Choose what is happening',
+    defaultMessage: 'Choose a category',
     description: 'Title for category chooser screen',
   },
 });
@@ -44,36 +43,11 @@ export const PresetChooser: NativeNavigationComponent<'PresetChooser'> = ({
   const existingPreset = usePreset();
 
   const handleGoBack = React.useCallback(() => {
-    if (navigation.canGoBack()) {
-      navigation.goBack();
-      return;
-    }
-
-    // If the user closes the app while editing of creating an observations, we
-    if (observationId) {
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 1,
-          routes: [
-            {name: 'Home'},
-            {name: 'ObservationEdit', params: {observationId}},
-          ],
-        }),
-      );
-      return;
-    }
-
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 1,
-        routes: [{name: 'Home'}, {name: 'ObservationCreate'}],
-      }),
-    );
-  }, [navigation, observationId]);
+    navigation.goBack();
+  }, [navigation]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      // eslint-disable-next-line react/no-unstable-nested-components
       headerLeft: props =>
         // If a preset exists, the user is editting the preset, so they should just navigate BACK to the create or edit observation screen
         existingPreset ? (
@@ -151,7 +125,11 @@ const Item = React.memo(
       activeOpacity={1}
       underlayColor="#000033">
       <View style={styles.cellContainer}>
-        <PresetCircleIcon iconId={item.iconRef?.docId} size="medium" />
+        <PresetCircleIcon
+          iconId={item.iconRef?.docId}
+          size="medium"
+          color={item.color}
+        />
         <Text numberOfLines={3} style={styles.categoryName}>
           <DynFormattedMessage
             id={`presets.${item.docId}.name`}

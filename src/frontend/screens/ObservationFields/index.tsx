@@ -8,11 +8,12 @@ import {Question} from './Question';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 
-import {Loading} from '../../sharedComponents/Loading';
-import {useFieldsQuery} from '../../hooks/server/fields';
 import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {NativeRootNavigationProps} from '../../sharedTypes/navigation';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
+import {useManyDocs} from '@comapeo/core-react';
+import {useActiveProject} from '../../contexts/ActiveProjectContext';
+import {useAppLanguageTag} from '../../hooks/useAppLanguageTag';
 
 const m = defineMessages({
   nextQuestion: {
@@ -37,10 +38,17 @@ export const ObservationFields = ({
   navigation,
   route,
 }: NativeRootNavigationProps<'ObservationFields'>) => {
+  const {projectId} = useActiveProject();
+  const languageTag = useAppLanguageTag();
+
+  const {data: fields} = useManyDocs({
+    projectId,
+    docType: 'field',
+    lang: languageTag,
+  });
   const {usePreset} = useDraftObservation();
   const preset = usePreset();
   const current = route.params.question;
-  const fields = useFieldsQuery();
   const observationId = usePersistedDraftObservation(
     store => store.observationId,
   );
@@ -52,14 +60,14 @@ export const ObservationFields = ({
         return;
       }
       if (observationId) {
-        navigation.navigate('ObservationEdit', {observationId});
+        navigation.popTo('ObservationEdit', {observationId});
         return;
       }
 
-      navigation.navigate('ObservationCreate');
+      navigation.popTo('ObservationCreate');
     }
 
-    navigation.navigate('ObservationFields', {
+    navigation.popTo('ObservationFields', {
       question: current - 1,
     });
   }, [current, navigation, observationId]);
@@ -74,16 +82,8 @@ export const ObservationFields = ({
     });
   }, [navigation, current, onBackPress]);
 
-  if (fields.isPending) {
-    return <Loading />;
-  }
-
-  if (fields.isError) {
-    return null;
-  }
-
   const fieldId = preset?.fieldRefs.map(({docId}) => docId)[current - 1];
-  const field = fields.data?.find(val => val.docId === fieldId);
+  const field = fields.find(val => val.docId === fieldId);
 
   if (!field) {
     return null;
@@ -111,12 +111,12 @@ const DetailsHeaderRight = ({questionNumber}: {questionNumber: number}) => {
 
   const onPress = () =>
     !isLastQuestion
-      ? navigation.navigate('ObservationFields', {
+      ? navigation.popTo('ObservationFields', {
           question: questionNumber + 1,
         })
       : observationId
-        ? navigation.navigate('ObservationEdit', {observationId})
-        : navigation.navigate('ObservationCreate');
+        ? navigation.popTo('ObservationEdit', {observationId})
+        : navigation.popTo('ObservationCreate');
 
   return (
     <TextButton

@@ -1,192 +1,53 @@
-import {useClientApi} from '@comapeo/core-react';
-import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
+import {type MemberInfo} from '@comapeo/core/dist/member-api';
+import {
+  useProjectSettings as useComapeoProjectSettings,
+  useExportGeoJSON,
+  useExportZipFile,
+  useManyMembers,
+  useOwnRoleInProject,
+} from '@comapeo/core-react';
+import {useMutation, useQuery} from '@tanstack/react-query';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
-import {PRESETS_KEY} from './presets';
-import {ICONS_KEY} from './icons';
-import {FIELDS_KEY} from './fields';
-
-export const ALL_PROJECTS_KEY = 'all_projects';
-export const PROJECT_SETTINGS_KEY = 'project_settings';
-export const CREATE_PROJECT_KEY = 'create_project';
-export const PROJECT_KEY = 'project';
-export const PROJECT_MEMBERS_KEY = 'project_members';
-export const ORIGINAL_VERSION_ID_TO_DEVICE_ID_KEY =
-  'originalVersionIdToDeviceId';
-export const THIS_USERS_ROLE_KEY = 'my_role';
-export const REMOTE_ARCHIVE = 'remote_archive';
-
-export function useProject(projectId?: string) {
-  const api = useClientApi();
-
-  return useQuery({
-    queryKey: [PROJECT_KEY, projectId],
-    queryFn: async () => {
-      if (!projectId) throw new Error('Active project ID must exist');
-      const projectApi = await api.getProject(projectId);
-
-      return {projectId, projectApi};
-    },
-    enabled: !!projectId,
-    placeholderData: previousData => previousData,
-  });
-}
-
-export function useAllProjects() {
-  const api = useClientApi();
-
-  return useQuery({
-    queryKey: [ALL_PROJECTS_KEY],
-    queryFn: () => {
-      return api.listProjects();
-    },
-  });
-}
-
-export function useCreateProject() {
-  const api = useClientApi();
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationKey: [CREATE_PROJECT_KEY],
-    mutationFn: (opts?: Parameters<typeof api.createProject>[0]) => {
-      if (opts) {
-        return api.createProject(opts);
-      } else {
-        // Have to avoid passing `undefined` explicitly
-        // See https://github.com/digidem/comapeo-mobile/issues/392
-        return api.createProject();
-      }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [ALL_PROJECTS_KEY],
-      });
-      queryClient.invalidateQueries({
-        queryKey: [PROJECT_SETTINGS_KEY],
-      });
-    },
-  });
-}
-
-export function useProjectMembers() {
-  const {projectId, projectApi} = useActiveProject();
-
-  return useQuery({
-    queryKey: [PROJECT_MEMBERS_KEY, projectId],
-    queryFn: () => {
-      return projectApi.$member.getMany();
-    },
-  });
-}
+import {MEMBER_ROLE_ID} from '../../sharedTypes';
+import {useOpenShareDialog} from '../share';
+import {Exports} from '../../screens/ExportObservations';
+import * as FileSystem from 'expo-file-system';
+import {useAppLanguageTag} from '../useAppLanguageTag';
 
 export function useProjectSettings() {
-  const {projectId, projectApi} = useActiveProject();
-
-  return useQuery({
-    queryKey: [PROJECT_SETTINGS_KEY, projectId],
-    queryFn: () => {
-      return projectApi.$getProjectSettings();
-    },
-  });
-}
-
-export const useOriginalVersionIdToDeviceId = (originalVersionId: string) => {
-  const {projectId, projectApi} = useActiveProject();
-
-  return useQuery({
-    queryKey: [
-      ORIGINAL_VERSION_ID_TO_DEVICE_ID_KEY,
-      projectId,
-      originalVersionId,
-    ],
-    queryFn: async () => {
-      return await projectApi.$originalVersionIdToDeviceId(originalVersionId);
-    },
-  });
-};
-
-export function useLeaveProject() {
-  const mapeoApi = useClientApi();
-
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: (projectId: string) => {
-      return mapeoApi.leaveProject(projectId);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [ALL_PROJECTS_KEY],
-      });
-    },
-  });
-}
-
-export function useImportProjectConfig() {
-  const queryClient = useQueryClient();
-  const {projectApi} = useActiveProject();
-
-  return useMutation({
-    mutationFn: (configPath: string) => {
-      return projectApi.importConfig({configPath});
-    },
-    onSuccess: () => {
-      return Promise.all([
-        queryClient.invalidateQueries({
-          queryKey: [FIELDS_KEY],
-        }),
-        queryClient.invalidateQueries({
-          queryKey: [ICONS_KEY],
-        }),
-        queryClient.invalidateQueries({
-          queryKey: [PROJECT_SETTINGS_KEY],
-        }),
-        queryClient.invalidateQueries({
-          queryKey: [PRESETS_KEY],
-        }),
-      ]);
-    },
-  });
+  const {projectId} = useActiveProject();
+  return useComapeoProjectSettings({projectId});
 }
 
 export function useGetOwnRole() {
-  const {projectId, projectApi} = useActiveProject();
-
-  return useQuery({
-    queryKey: [THIS_USERS_ROLE_KEY, projectId],
-    queryFn: () => {
-      return projectApi.$getOwnRole();
-    },
-  });
+  const {projectId} = useActiveProject();
+  return useOwnRoleInProject({projectId});
 }
 
-export function useGetRemoteArchives() {
-  const {projectId, projectApi} = useActiveProject();
+// TODO: Ideally this is handled in @comapeo/core (https://github.com/digidem/comapeo-core/issues/1031)
+export type ArchiveServerMemberInfo = MemberInfo & {
+  deviceType: 'selfHostedServer';
+  selfHostedServerDetails: NonNullable<MemberInfo['selfHostedServerDetails']>;
+};
 
-  return useQuery({
-    queryKey: [REMOTE_ARCHIVE, projectId, PROJECT_MEMBERS_KEY],
-    queryFn: async () => {
-      const members = await projectApi.$member.getMany();
-      const filteredMembers = members.filter(
-        member => member.deviceType === 'selfHostedServer',
-      );
-      return filteredMembers;
-    },
-  });
+// TODO: Ideally this is handled in @comapeo/core (https://github.com/digidem/comapeo-core/issues/1031)
+function isActiveArchiveServerMember(
+  member: MemberInfo,
+): member is ArchiveServerMemberInfo {
+  if (member.deviceType !== 'selfHostedServer') return false;
+  if (!member.selfHostedServerDetails) return false;
+  if (member.role.roleId !== MEMBER_ROLE_ID) return false;
+  return true;
 }
 
-export function useAddRemoteArchive() {
-  const {projectApi} = useActiveProject();
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: async (normalizedUrl: string) => {
-      return projectApi.$member.addServerPeer(normalizedUrl);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: [REMOTE_ARCHIVE]});
-    },
-  });
+export function useActiveArchiveServer({
+  projectId,
+}: {
+  projectId: string;
+}): ArchiveServerMemberInfo | undefined {
+  const {data: members} = useManyMembers({projectId});
+  return members.find(isActiveArchiveServerMember);
 }
 
 export function useFindRemoteArchive({url}: {url?: string}) {
@@ -220,3 +81,54 @@ export function useFindRemoteArchive({url}: {url?: string}) {
     enabled: !!url,
   });
 }
+
+export function useExportObservationsAndShare({
+  projectId,
+}: {
+  projectId: string;
+}) {
+  const exportNoMedia = useExportGeoJSON({projectId});
+  const exportWithMedia = useExportZipFile({projectId});
+  const openShare = useOpenShareDialog();
+  const lang = useAppLanguageTag();
+
+  return useMutation({
+    retry: false,
+    networkMode: 'always',
+    mutationFn: async ({exportType}: {exportType: Exports}) => {
+      const exportDir = FileSystem.cacheDirectory + 'exports/';
+      const exportDirectory = await FileSystem.getInfoAsync(exportDir);
+
+      if (!exportDirectory.exists) {
+        await FileSystem.makeDirectoryAsync(exportDir);
+      }
+      if (exportType === 'Observation' || exportType === 'Tracks') {
+        return exportNoMedia.mutateAsync({
+          path: normalizeFilePath(exportDir),
+          exportOptions: {
+            lang,
+            observations: exportType === 'Observation',
+            tracks: exportType === 'Tracks',
+          },
+        });
+      }
+
+      return exportWithMedia.mutateAsync({
+        path: normalizeFilePath(exportDir),
+        exportOptions: {
+          lang,
+          observations: true,
+          tracks: false,
+          attachments: true,
+        },
+      });
+    },
+    onSuccess: async path => {
+      await openShare.mutateAsync({url: `file://${path}`, failOnCancel: false});
+    },
+  });
+}
+
+const normalizeFilePath = (uri: string) => {
+  return uri.replace(/^file:\/\//, '');
+};

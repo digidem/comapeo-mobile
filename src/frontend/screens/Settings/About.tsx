@@ -48,6 +48,11 @@ const m = defineMessages({
     defaultMessage: 'Unknown',
     description: 'Shown when a device info (e.g. version number) is unknown',
   },
+  emojiSource: {
+    id: 'screens.AboutSettings.emojiSource',
+    defaultMessage: 'Emojis source:',
+    description: 'Label for the source of emojis used in CoMapeo',
+  },
 });
 
 const DeviceInfoListItem = ({
@@ -108,6 +113,12 @@ export const AboutSettings = () => {
           label={t(m.phoneModel)}
           deviceInfoMethod="getModel"
         />
+        <ListItem disableGutters>
+          <ListItemText
+            primary={t(m.emojiSource)}
+            secondary="https://openmoji.org/"
+          />
+        </ListItem>
       </List>
     </ScrollView>
   );

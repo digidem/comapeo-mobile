@@ -3,14 +3,14 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, StyleSheet, Text} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useWindowDimensions} from 'react-native';
 
-import {useSecurityContext} from '../contexts/SecurityContext';
+import {useAuthContext} from '../contexts/AuthContext';
 import CoMapeoLogoSvg from '../images/CoMapeoLogo.svg';
 import {RED} from '../lib/styles';
 import {PasscodeInput} from '../sharedComponents/PasscodeInput';
 import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
 import {AppStackParamsList} from '../sharedTypes/navigation';
-import {useWindowDimensions} from 'react-native';
 
 const m = defineMessages({
   enterPass: {
@@ -28,30 +28,35 @@ export const AuthScreen = ({
 }: NativeStackScreenProps<AppStackParamsList, 'AuthScreen'>) => {
   const {formatMessage: t} = useIntl();
   const [error, setError] = React.useState(false);
-  const {authenticate, authState} = useSecurityContext();
+  const {authenticate, authState} = useAuthContext();
   const [inputtedPass, setInputtedPass] = React.useState('');
   const scrollViewRef = React.useRef<ScrollView>(null);
 
   React.useEffect(() => {
-    function disableBack(e: any) {
+    const unsubscribe = navigation.addListener('beforeRemove', event => {
       if (authState !== 'unauthenticated') return;
       // Prevent back if unauthenticated
-      e.preventDefault();
-    }
-    navigation.addListener('beforeRemove', disableBack);
+      event.preventDefault();
+    });
 
     return () => {
-      navigation.removeListener('beforeRemove', disableBack);
+      unsubscribe();
     };
   }, [authState, navigation]);
 
   React.useEffect(() => {
     if (authState === 'unauthenticated') return;
 
-    if (navigation.canGoBack()) {
-      navigation.goBack();
-    } else {
-      navigation.navigate('Home', {screen: 'Map'});
+    if (authState === 'authenticated') {
+      if (navigation.canGoBack()) {
+        navigation.goBack();
+      } else {
+        navigation.popTo('Home', {screen: 'Map'});
+      }
+    }
+
+    if (authState === 'obscured') {
+      navigation.popTo('Home', {screen: 'Map'});
     }
   }, [authState, navigation]);
 
@@ -72,7 +77,7 @@ export const AuthScreen = ({
   function validatePass(passValue: string) {
     try {
       authenticate(passValue);
-    } catch (err) {
+    } catch {
       scrollViewRef.current?.scrollToEnd();
       setError(true);
     }
@@ -90,7 +95,10 @@ export const AuthScreen = ({
       dockContent={
         error && <Text style={styles.wrongPass}>{t(m.wrongPass)}</Text>
       }>
-      <CoMapeoLogoSvg height={window.height / 3} />
+      {/* Hide SVG logo in E2E mode to reduce rendering lag on BrowserStack */}
+      {process.env.EXPO_PUBLIC_E2E_TEST !== 'true' && (
+        <CoMapeoLogoSvg height={window.height / 3} />
+      )}
       <Text style={styles.description}>{t(m.enterPass)}</Text>
       <PasscodeInput
         testID="SETTINGS.auth-passcode-inp"

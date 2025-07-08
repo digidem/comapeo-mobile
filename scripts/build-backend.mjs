@@ -95,8 +95,8 @@ console.log(
 
 const KEEP_THESE = [
   'package.json',
-  'index.bundle.js',
-  'loader.js',
+  // Packaged backend code
+  'dist',
   // Static folders referenced by @comapeo/core code
   'node_modules/@comapeo/core/drizzle',
   // zip file that is the default config
@@ -107,11 +107,10 @@ const KEEP_THESE = [
 
 for (const name of KEEP_THESE) {
   const source = path.join(nodejsAssetsBackendDirectory, name);
-  const destination = path.join(
-    nodejsAssetsProjectDirectory,
-    name === 'index.bundle.js' ? 'index.js' : name,
-  );
-
+  const destination =
+    name === 'dist'
+      ? nodejsAssetsProjectDirectory
+      : path.join(nodejsAssetsProjectDirectory, name);
   fs.cpSync(source, destination, {recursive: true});
 }
 
@@ -120,7 +119,8 @@ console.log('Downloading native prebuilds...');
 // TODO: Figure out how to know if module uses N-API at runtime
 const NATIVE_MODULES = [
   {name: 'better-sqlite3', usesNapi: false},
-  {name: 'crc-native', usesNapi: true},
+  // Native module seems to cause issues so do not need for now: https://github.com/digidem/comapeo-mobile/issues/1096
+  // {name: 'crc-native', usesNapi: true},
   {name: 'fs-native-extensions', usesNapi: true},
   {name: 'quickbit-native', usesNapi: true},
   {name: 'simdle-native', usesNapi: true},

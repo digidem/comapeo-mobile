@@ -1,12 +1,13 @@
 import * as React from 'react';
 import {BackHandler, StyleSheet, View} from 'react-native';
-import {Button} from '../../../../sharedComponents/Button';
 import ErrorIcon from '../../../../images/Error.svg';
 import {defineMessages, useIntl} from 'react-intl';
 import {Text} from '../../../../sharedComponents/Text';
 import {DeviceNameWithIcon} from '../../../../sharedComponents/DeviceNameWithIcon';
 import {NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
 import {useFocusEffect} from '@react-navigation/native';
+import {resetToYourTeam} from '../../../../lib/resetToYourTeam';
+import {PrimaryButton} from '../../../../sharedComponents/Buttons';
 
 const m = defineMessages({
   inviteDeclined: {
@@ -29,7 +30,7 @@ export const InviteDeclined = ({
   route,
 }: NativeRootNavigationProps<'InviteDeclined'>) => {
   const {formatMessage} = useIntl();
-  const {role, ...deviceInfo} = route.params;
+  const {name, deviceType, deviceId} = route.params;
 
   useFocusEffect(
     React.useCallback(() => {
@@ -52,16 +53,19 @@ export const InviteDeclined = ({
         <Text style={{marginTop: 10, textAlign: 'center'}}>
           {formatMessage(m.inviteDeclinedDes)}
         </Text>
-        <DeviceNameWithIcon {...deviceInfo} style={{marginTop: 20}} />
+        <DeviceNameWithIcon
+          name={name}
+          deviceType={deviceType}
+          deviceId={deviceId}
+          style={{marginTop: 20}}
+        />
       </View>
-      <Button
+      <PrimaryButton
         style={{marginTop: 10}}
-        fullWidth
-        onPress={() => {
-          navigation.navigate('YourTeam');
-        }}>
-        {formatMessage(m.close)}
-      </Button>
+        fullSize
+        text={formatMessage(m.close)}
+        onPress={() => resetToYourTeam(navigation.dispatch)}
+      />
     </View>
   );
 };

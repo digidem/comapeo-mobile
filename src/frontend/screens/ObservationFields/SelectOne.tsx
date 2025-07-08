@@ -20,7 +20,7 @@ interface Props extends QuestionProps {
 
 type RadioItemProps = {
   checked: boolean;
-  onPress: () => any;
+  onPress: () => void;
   label: string;
   style: ViewStyleProp;
 };

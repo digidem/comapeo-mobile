@@ -1,8 +1,4 @@
-import type {MapeoProjectApi} from '@comapeo/ipc';
-
-export type SyncState = Awaited<
-  ReturnType<MapeoProjectApi['$sync']['getState']>
->;
+import {type SyncState} from '@comapeo/core-react';
 
 export type SyncStage =
   | {
@@ -38,13 +34,6 @@ export type SyncStage =
       syncingPeersCount: number;
       progress: number;
     };
-
-export function getDataSyncCountForDevice(
-  syncStateForDevice: SyncState['remoteDeviceSyncState'][string],
-) {
-  const {data} = syncStateForDevice;
-  return data.want + data.wanted;
-}
 
 export function getConnectedPeersCount(
   deviceSyncState: SyncState['remoteDeviceSyncState'],

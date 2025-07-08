@@ -22,7 +22,6 @@ type ImageIconProps = {
   style?: ImageStyleProp;
 };
 
-export {GpsIcon} from './GpsIcon';
 // export { CategoryIcon, CategoryCircleIcon } from "./CategoryIcon";
 
 export const AlertIcon = ({size = 30, color = RED, style}: FontIconProps) => (
@@ -130,12 +129,14 @@ export const WifiOffIcon = ({
   size = 30,
   color = '#490827',
   style,
+  testID,
 }: FontIconProps) => (
   <MaterialIcon
     color={color}
     style={style}
-    name="signal-wifi-off"
+    name="wifi-off"
     size={size}
+    testID={testID}
   />
 );
 
@@ -143,8 +144,15 @@ export const WifiIcon = ({
   size = 30,
   color = 'white',
   style,
+  testID,
 }: FontIconProps) => (
-  <MaterialIcon color={color} style={style} name="wifi" size={size} />
+  <MaterialIcon
+    color={color}
+    style={style}
+    name="wifi"
+    size={size}
+    testID={testID}
+  />
 );
 export const SyncIcon = ({size = 20, color = WHITE}: FontIconProps) => (
   <FontAwesomeIcon

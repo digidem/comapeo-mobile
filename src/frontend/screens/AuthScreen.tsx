@@ -1,16 +1,19 @@
 import * as React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {defineMessages, useIntl} from 'react-intl';
-import {ScrollView, StyleSheet, Text} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useWindowDimensions} from 'react-native';
 
 import {useAuthContext} from '../contexts/AuthContext';
 import CoMapeoLogoSvg from '../images/CoMapeoLogo.svg';
-import {RED} from '../lib/styles';
+import ClockIcon from '../images/ClockOutlined.svg';
+import {RED, BLACK} from '../lib/styles';
+import {BodyText} from '../sharedComponents/Text/BodyText';
 import {PasscodeInput} from '../sharedComponents/PasscodeInput';
 import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
 import {AppStackParamsList} from '../sharedTypes/navigation';
+import {useSecurityState} from '../contexts/SecurityStoreContext';
 
 const m = defineMessages({
   enterPass: {
@@ -19,7 +22,7 @@ const m = defineMessages({
   },
   wrongPass: {
     id: 'screens.EnterPassword.wrongPass',
-    defaultMessage: 'Incorrect passcode, please try again ',
+    defaultMessage: 'Incorrect Passcode ',
   },
 });
 
@@ -31,6 +34,11 @@ export const AuthScreen = ({
   const {authenticate, authState} = useAuthContext();
   const [inputtedPass, setInputtedPass] = React.useState('');
   const scrollViewRef = React.useRef<ScrollView>(null);
+  const [isLockedOut, setIsLockedOut] = React.useState(false);
+  const [lockoutMessage, setLockoutMessage] = React.useState<string | null>(
+    null,
+  );
+  const {lockUntil} = useSecurityState();
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', event => {
@@ -43,6 +51,36 @@ export const AuthScreen = ({
       unsubscribe();
     };
   }, [authState, navigation]);
+
+  React.useEffect(() => {
+    if (!lockUntil) {
+      setIsLockedOut(false);
+      setLockoutMessage(null);
+      return;
+    }
+
+    const now = Date.now();
+    const msUntilUnlock = lockUntil - now;
+
+    if (msUntilUnlock <= 0) {
+      setIsLockedOut(false);
+      setLockoutMessage(null);
+      return;
+    }
+
+    const minutes = Math.ceil(msUntilUnlock / 60000);
+    setIsLockedOut(true);
+    setLockoutMessage(
+      `Try again in ${minutes} minute${minutes > 1 ? 's' : ''}`,
+    );
+
+    const timeout = setTimeout(() => {
+      setIsLockedOut(false);
+      setLockoutMessage(null);
+    }, msUntilUnlock);
+
+    return () => clearTimeout(timeout);
+  }, [lockUntil]);
 
   React.useEffect(() => {
     if (authState === 'unauthenticated') return;
@@ -77,9 +115,18 @@ export const AuthScreen = ({
   function validatePass(passValue: string) {
     try {
       authenticate(passValue);
-    } catch {
+    } catch (e) {
       scrollViewRef.current?.scrollToEnd();
       setError(true);
+      if (e instanceof Error && e.message === 'LOCKED_OUT') {
+        const now = Date.now();
+        const minutes = Math.ceil((lockUntil! - now) / 60000);
+        setLockoutMessage(
+          `Try again in ${minutes} minute${minutes > 1 ? 's' : ''}`,
+        );
+      } else {
+        setLockoutMessage(null); // standard incorrect passcode
+      }
     }
   }
 
@@ -99,7 +146,14 @@ export const AuthScreen = ({
       {process.env.EXPO_PUBLIC_E2E_TEST !== 'true' && (
         <CoMapeoLogoSvg height={window.height / 3} />
       )}
-      <Text style={styles.description}>{t(m.enterPass)}</Text>
+      {isLockedOut ? (
+        <View style={styles.lockoutContainer}>
+          <ClockIcon width={20} height={20} />
+          <BodyText style={styles.lockoutText}>{lockoutMessage}</BodyText>
+        </View>
+      ) : (
+        <Text style={styles.description}>{t(m.enterPass)}</Text>
+      )}
       <PasscodeInput
         testID="SETTINGS.auth-passcode-inp"
         error={error}
@@ -122,5 +176,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: RED,
     textAlign: 'center',
+  },
+  lockoutContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    justifyContent: 'center',
+    height: 24,
+  },
+  lockoutText: {
+    color: BLACK,
+    fontSize: 16,
   },
 });

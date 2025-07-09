@@ -70,7 +70,12 @@ export function createSecurityStore({persist} = {persist: false}) {
     setPasscode: (passcode: string | null) => {
       // Obscure code needs to be unset when passcode is unset
       if (passcode === null) {
-        store.setState({passcode, obscureCodeEnabled: false});
+        store.setState({
+          passcode: null,
+          obscureCodeEnabled: false,
+          failedAttempts: 0,
+          lockUntil: null,
+        });
         return;
       }
 

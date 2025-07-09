@@ -6,6 +6,7 @@ import {useIsShareDialogOpen} from '../hooks/share';
 import {DEFAULT_OBSCURE_CODE} from '../lib/security';
 import {useSecurityState, useSecurityActions} from './SecurityStoreContext';
 import {useIsAudioPermissionModalOpen} from '../hooks/useAudioPermissionTracker';
+import {PASSCODE_LOCKOUT_THRESHOLDS} from '../constants';
 
 export type AuthState = 'unauthenticated' | 'authenticated' | 'obscured';
 
@@ -92,13 +93,12 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
       }
 
       const attempts = incrementAndGetAttempts();
-      let duration: number | null = null;
-      if (attempts === 5) duration = 1 * 60 * 1000;
-      else if (attempts === 7) duration = 3 * 60 * 1000;
-      else if (attempts >= 8) duration = 5 * 60 * 1000;
+      const threshold = PASSCODE_LOCKOUT_THRESHOLDS.find(
+        t => t.attempts === attempts || (attempts > 8 && t.attempts === 8),
+      );
 
-      if (duration) {
-        setLockout(Date.now() + duration);
+      if (threshold) {
+        setLockout(Date.now() + threshold.minutes * 60 * 1000);
       }
 
       throw new Error('Incorrect Passcode');

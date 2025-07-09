@@ -21,6 +21,7 @@ interface PasscodeInputProps {
   maskValues?: boolean;
   error: boolean;
   testID?: string;
+  editable?: boolean;
 }
 
 export const PasscodeInput = React.forwardRef<
@@ -35,6 +36,7 @@ export const PasscodeInput = React.forwardRef<
       maskValues = true,
       error,
       testID,
+      editable,
     },
     inputRef,
   ) => {
@@ -94,6 +96,7 @@ export const PasscodeInput = React.forwardRef<
         keyboardType="numeric"
         textContentType="oneTimeCode"
         renderCell={renderCell}
+        editable={editable !== false}
       />
     );
   },

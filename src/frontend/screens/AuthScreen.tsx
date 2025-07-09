@@ -159,6 +159,7 @@ export const AuthScreen = ({
         error={error}
         inputValue={inputtedPass}
         onChangeTextWithValidation={setInputWithValidation}
+        editable={!isLockedOut}
       />
     </ScreenContentWithDock>
   );

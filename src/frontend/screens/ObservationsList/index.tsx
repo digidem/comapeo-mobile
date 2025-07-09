@@ -1,16 +1,16 @@
 import * as React from 'react';
 import {View, FlatList, Dimensions, StyleSheet} from 'react-native';
 import {Observation, Track} from '@comapeo/schema';
-import {MessageDescriptor, defineMessages, useIntl} from 'react-intl';
+import {MessageDescriptor, defineMessages} from 'react-intl';
 import {ObservationListItem} from './ObservationListItem';
 import {ObservationEmptyView} from './ObservationsEmptyView';
 import {NativeHomeTabsNavigationProps} from '../../sharedTypes/navigation';
-import {LIGHT_GREY, WHITE} from '../../lib/styles';
+import {VERY_LIGHT_GREY, WHITE} from '../../lib/styles';
 import {TrackListItem} from './TrackListItem';
 import {useObservations} from '../../hooks/server/observations';
 import {useTracks} from '../../hooks/server/track';
 import {useAuthContext} from '../../contexts/AuthContext';
-import {SecondaryButton} from '../../sharedComponents/Buttons';
+import {ProjectCard} from './ProjectCard';
 
 const m = defineMessages({
   loading: {
@@ -30,10 +30,6 @@ const m = defineMessages({
     id: 'screens.ObservationList.observationListTitle',
     defaultMessage: 'Observations',
     description: 'Title of screen with list of observations',
-  },
-  downloadObservation: {
-    id: 'screens.ObservationList.downloadObservation',
-    defaultMessage: 'Download Observations',
   },
 });
 
@@ -57,7 +53,6 @@ export const ObservationsList: React.FC<
   const {data: observations} = useObservations();
   const {data: tracks} = useTracks();
   const {authState} = useAuthContext();
-  const {formatMessage} = useIntl();
 
   const rowsPerWindow = Math.ceil(
     (Dimensions.get('window').height - 65) / OBSERVATION_CELL_HEIGHT,
@@ -76,14 +71,8 @@ export const ObservationsList: React.FC<
       {/* re: https://github.com/digidem/comapeo-mobile/issues/586  */}
       <FlatList
         ListHeaderComponent={
-          <View style={styles.populatedListHeader}>
-            <SecondaryButton
-              onPress={() => {
-                navigation.navigate('ExportObservations');
-              }}
-              text={formatMessage(m.downloadObservation)}
-              fullSize
-            />
+          <View style={styles.projectCardContainer}>
+            <ProjectCard />
           </View>
         }
         initialNumToRender={rowsPerWindow}
@@ -140,10 +129,11 @@ const styles = StyleSheet.create({
   listItem: {
     height: OBSERVATION_CELL_HEIGHT,
   },
-  populatedListHeader: {
-    alignItems: 'center',
-    padding: 20,
+  projectCardContainer: {
+    width: '100%',
+    flex: 1,
+    paddingVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: LIGHT_GREY,
+    borderBottomColor: VERY_LIGHT_GREY,
   },
 });

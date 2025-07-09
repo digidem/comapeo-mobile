@@ -12,7 +12,7 @@ describe('Project - Solo Project Headers', () => {
     await expect(headerTitle).toHaveText('My Solo Project');
   });
 
-  it('should display "My Solo Project" on ObservationsList header and show the solo icon', async () => {
+  it('should display "My Solo Project" on ObservationsList header and show the solo card', async () => {
     const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
 
@@ -21,7 +21,8 @@ describe('Project - Solo Project Headers', () => {
     const drawerButton = await $(byResourceId('drawer-icon-home'));
     await expect(drawerButton).toBeDisplayed();
 
-    const soloCardText = await $(byResourceId('HOME.no-project-icon'));
+    const soloCardText = await $(byResourceId('OBS.card-text'));
     await expect(soloCardText).toBeDisplayed();
+    await expect(soloCardText).toHaveText('You’re mapping on your own.');
   });
 });

@@ -690,7 +690,7 @@
     "message": "Enter your passcode"
   },
   "screens.EnterPassword.wrongPass": {
-    "message": "Incorrect passcode, please try again"
+    "message": "Incorrect Passcode"
   },
   "screens.Exchange.WifiCard.noWifi": {
     "message": "No Wi-Fi"

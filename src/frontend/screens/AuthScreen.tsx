@@ -14,6 +14,7 @@ import {PasscodeInput} from '../sharedComponents/PasscodeInput';
 import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
 import {AppStackParamsList} from '../sharedTypes/navigation';
 import {useSecurityState} from '../contexts/SecurityStoreContext';
+import {getRemainingLockoutMinutes} from '../lib/security';
 
 const m = defineMessages({
   enterPass: {
@@ -23,6 +24,11 @@ const m = defineMessages({
   wrongPass: {
     id: 'screens.EnterPassword.wrongPass',
     defaultMessage: 'Incorrect Passcode ',
+  },
+  lockoutMessage: {
+    id: 'screens.EnterPassword.lockoutMessage',
+    defaultMessage:
+      'Try again in {minutes, plural, one {# minute} other {# minutes}}',
   },
 });
 
@@ -59,28 +65,23 @@ export const AuthScreen = ({
       return;
     }
 
-    const now = Date.now();
-    const msUntilUnlock = lockUntil - now;
+    const minutes = getRemainingLockoutMinutes(lockUntil);
 
-    if (msUntilUnlock <= 0) {
+    if (minutes <= 0) {
       setIsLockedOut(false);
       setLockoutMessage(null);
       return;
     }
-
-    const minutes = Math.ceil(msUntilUnlock / 60000);
     setIsLockedOut(true);
-    setLockoutMessage(
-      `Try again in ${minutes} minute${minutes > 1 ? 's' : ''}`,
-    );
+    setLockoutMessage(t(m.lockoutMessage, {minutes}));
 
     const timeout = setTimeout(() => {
       setIsLockedOut(false);
       setLockoutMessage(null);
-    }, msUntilUnlock);
+    }, minutes * 60000);
 
     return () => clearTimeout(timeout);
-  }, [lockUntil]);
+  }, [lockUntil, t]);
 
   React.useEffect(() => {
     if (authState === 'unauthenticated') return;
@@ -119,13 +120,10 @@ export const AuthScreen = ({
       scrollViewRef.current?.scrollToEnd();
       setError(true);
       if (e instanceof Error && e.message === 'LOCKED_OUT') {
-        const now = Date.now();
-        const minutes = Math.ceil((lockUntil! - now) / 60000);
-        setLockoutMessage(
-          `Try again in ${minutes} minute${minutes > 1 ? 's' : ''}`,
-        );
+        const minutes = getRemainingLockoutMinutes(lockUntil);
+        setLockoutMessage(t(m.lockoutMessage, {minutes}));
       } else {
-        setLockoutMessage(null); // standard incorrect passcode
+        setLockoutMessage(null);
       }
     }
   }

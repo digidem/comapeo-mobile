@@ -78,7 +78,25 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
       if (isLockedOut) {
         throw new Error('LOCKED_OUT');
       }
-      if (validateOnly) return passcodeValue === passcode;
+
+      const isCorrect = passcodeValue === passcode;
+
+      if (validateOnly) {
+        if (isCorrect) {
+          return true;
+        }
+
+        const attempts = incrementAndGetAttempts();
+        const threshold = PASSCODE_LOCKOUT_THRESHOLDS.find(
+          t => t.attempts === attempts || (attempts > 8 && t.attempts === 8),
+        );
+
+        if (threshold) {
+          setLockout(Date.now() + threshold.minutes * 60 * 1000);
+        }
+
+        return false;
+      }
 
       if (obscureCodeEnabled && passcodeValue === DEFAULT_OBSCURE_CODE) {
         setAuthState('obscured');
@@ -86,7 +104,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
         return true;
       }
 
-      if (passcodeValue === passcode) {
+      if (isCorrect) {
         setAuthState('authenticated');
         resetFailedAttempts();
         return true;

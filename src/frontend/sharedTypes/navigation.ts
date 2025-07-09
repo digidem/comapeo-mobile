@@ -52,7 +52,8 @@ export type RootStackParamsList = {
     // but we will eventually support deleting saved photos as well.
     photo: ProcessedDraftPhoto;
   };
-  PresetChooser: undefined;
+  TrackCategoryChooser: undefined;
+  ObservationCategoryChooser: undefined;
   AddPhoto: undefined;
   Observation: {observationId: string};
   ObservationEdit: {observationId: string};
@@ -141,6 +142,7 @@ export type RootStackParamsList = {
     serverDeviceId: string;
   };
   ExportObservations: undefined;
+  DidNotMoveBottomSheet: undefined;
 };
 
 export type OnboardingParamsList = {

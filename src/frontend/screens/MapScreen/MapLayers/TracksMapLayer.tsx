@@ -1,14 +1,12 @@
-import {LineJoin, LineLayer, ShapeSource, LineLayerStyle} from '@rnmapbox/maps';
+import {LineLayer, ShapeSource} from '@rnmapbox/maps';
 import * as React from 'react';
-import {StyleSheet} from 'react-native';
 
 import {FeatureCollection} from 'geojson';
-import {BLACK} from '../../../lib/styles';
 import {useTracks} from '../../../hooks/server/track';
 import {Track} from '@comapeo/schema';
 import {OnPressEvent} from '@rnmapbox/maps/lib/typescript/src/types/OnPressEvent';
 import {useNavigationFromHomeTabs} from '../../../hooks/useNavigationWithTypes';
-
+import {SAVED_TRACK_LINE_STYLE} from '../../../lib/trackMapStyles';
 export const TracksMapLayer = () => {
   const {data: tracks} = useTracks();
   const {navigate} = useNavigationFromHomeTabs();
@@ -25,19 +23,10 @@ export const TracksMapLayer = () => {
       onPress={handlePress}
       id="tracks"
       shape={convertTracksToFeatures(tracks)}>
-      <LineLayer id="trackLines" style={styles.lineLayer} existing />
+      <LineLayer id="trackLines" style={SAVED_TRACK_LINE_STYLE} existing />
     </ShapeSource>
   );
 };
-
-const styles = StyleSheet.create({
-  lineLayer: {
-    lineColor: BLACK,
-    lineWidth: 5,
-    lineCap: LineJoin.Round,
-    lineOpacity: 1.84,
-  } as LineLayerStyle,
-});
 
 function convertTracksToFeatures(tracks: Track[]): FeatureCollection {
   return {

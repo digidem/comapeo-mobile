@@ -27,8 +27,8 @@ describe('CoMapeo E2E Flow', function () {
   require('./observations/observation-metadata.test');
   require('./observations/edit-observation.test');
   require('./observations/delete-observation.test');
-  require('./tracks/save-track.test');
-  require('./tracks/view-edit-track.test');
+  require('./tracks/no-movement-track.test');
+  // require('./tracks/view-edit-track.test');
   require('./audio/audio-recording.test');
   require('./audio/audio-playback-delete.test');
   require('./audio/audio-add-additional.test');

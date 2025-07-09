@@ -15,7 +15,7 @@ export const CameraScreen = ({
 
   function handleAddPress(capture: PhotoPromiseWithMetadata) {
     newDraft(capture);
-    navigation.navigate('PresetChooser');
+    navigation.navigate('ObservationCategoryChooser');
   }
 
   return (

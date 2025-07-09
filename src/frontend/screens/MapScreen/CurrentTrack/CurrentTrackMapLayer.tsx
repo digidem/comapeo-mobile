@@ -1,9 +1,13 @@
-import {LineJoin, LineLayer, ShapeSource} from '@rnmapbox/maps';
+import {LineLayer, ShapeSource} from '@rnmapbox/maps';
 import * as React from 'react';
 
 import {useTrackState} from '../../../contexts/TrackStoreContext';
 import {convertToLineString} from '../../../lib/utils';
 import {useLocationState} from '../../../contexts/LocationContext';
+import {
+  BASE_TRACK_LINE_STYLE,
+  OVERLAY_TRACK_LINE_STYLE,
+} from '../../../lib/trackMapStyles';
 
 export const CurrentTrackMapLayer = () => {
   const locationHistory = useTrackState(state => state.locationHistory);
@@ -25,14 +29,15 @@ export const CurrentTrackMapLayer = () => {
         id="routeSource"
         shape={convertToLineString(finalLocationHistory)}>
         <LineLayer
-          id="currentTrack"
+          id="currentTrackBase"
           belowLayerID="mapboxUserLocationPulseCircle"
-          style={{
-            lineColor: '#000000',
-            lineWidth: 5,
-            lineCap: LineJoin.Round,
-            lineOpacity: 1.84,
-          }}
+          style={BASE_TRACK_LINE_STYLE}
+          existing
+        />
+        <LineLayer
+          id="currentTrackOverlay"
+          belowLayerID="mapboxUserLocationPulseCircle"
+          style={OVERLAY_TRACK_LINE_STYLE}
           existing
         />
       </ShapeSource>

@@ -7,12 +7,13 @@ import {
 import {LOCATION_TASK_NAME} from '../sharedTypes/location.ts';
 import {useNavigation} from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
+import {useLocationState} from '../contexts/LocationContext';
 
 export function useTracking() {
-  const {setTracking, clearCurrentTrack} = useTrackActions();
+  const {setTracking, addNewLocations, clearCurrentTrack} = useTrackActions();
   const navigation = useNavigation();
   const isTracking = useTrackState(state => state.isTracking);
-  const locationHistory = useTrackState(state => state.locationHistory);
+  const location = useLocationState(state => state.location);
 
   const startTracking = useCallback(() => {
     if (isTracking) {
@@ -23,6 +24,7 @@ export function useTracking() {
     Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
       accuracy: Location.Accuracy.Highest,
       activityType: Location.LocationActivityType.Fitness,
+      distanceInterval: 1,
     }).catch(err => {
       Sentry.captureException(err);
       setTracking(false);
@@ -30,27 +32,47 @@ export function useTracking() {
       navigation.navigate('ErrorBottomSheet');
     });
   }, [isTracking, setTracking, navigation]);
+
   /**
-   * Cancels location tracking and stops background updates.
-   * @returns {boolean} True if location history has more than one entry (track should be kept), false otherwise.
+   * Stops location tracking and finalizes the track.
+   * Adds the current location to the track if it's new.
+   * Should be called only after confirming tracking should end.
    */
-  const cancelTracking = useCallback(() => {
-    setTracking(false);
+  const endTracking = useCallback(() => {
     Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME).catch(err => {
       Sentry.captureException(err);
     });
-    const hasTrackWithMoreThan1Point = locationHistory.length > 1;
 
-    if (!hasTrackWithMoreThan1Point) {
-      clearCurrentTrack();
+    if (location?.coords) {
+      const {latitude, longitude, accuracy} = location.coords;
+
+      if (typeof accuracy === 'number' && accuracy <= 3) {
+        addNewLocations([
+          {
+            latitude,
+            longitude,
+            timestamp: location.timestamp,
+          },
+        ]);
+      }
     }
 
-    return hasTrackWithMoreThan1Point;
-  }, [setTracking, clearCurrentTrack, locationHistory]);
+    setTracking(false);
+  }, [location, addNewLocations, setTracking]);
+
+  const cancelTracking = useCallback(() => {
+    Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME).catch(err => {
+      Sentry.captureException(err);
+    });
+
+    setTracking(false);
+    clearCurrentTrack();
+  }, [setTracking, clearCurrentTrack]);
 
   return {
     isTracking,
     startTracking,
+    endTracking,
     cancelTracking,
   };
 }

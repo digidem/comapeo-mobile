@@ -39,3 +39,12 @@ export function useDeleteTrackMutation() {
     docType: 'track',
   });
 }
+
+export function useGetPresetById(presetRefId: string | undefined) {
+  const {projectId} = useActiveProject();
+  const {data: allPresets} = useManyDocs({projectId, docType: 'preset'});
+
+  if (!presetRefId || !allPresets) return null;
+
+  return allPresets.find(p => p.docId === presetRefId) ?? null;
+}

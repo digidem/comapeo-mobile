@@ -31,6 +31,8 @@ test('initial state', () => {
   expect(stateHook.result.current).toStrictEqual({
     passcode: null,
     obscureCodeEnabled: false,
+    failedAttempts: 0,
+    lockUntil: null,
   });
 });
 
@@ -64,6 +66,8 @@ test('passcode cannot be set to invalid value', () => {
   expect(stateHook.result.current).toStrictEqual({
     passcode: null,
     obscureCodeEnabled: false,
+    failedAttempts: 0,
+    lockUntil: null,
   });
 });
 
@@ -86,6 +90,8 @@ test('obscure code cannot be set when passcode is not set', () => {
   expect(stateHook.result.current).toStrictEqual({
     passcode: null,
     obscureCodeEnabled: false,
+    failedAttempts: 0,
+    lockUntil: null,
   });
 });
 
@@ -108,6 +114,8 @@ test('obscure code has expected value when enabled', () => {
   expect(stateHook.result.current).toStrictEqual({
     passcode: '12345',
     obscureCodeEnabled: false,
+    failedAttempts: 0,
+    lockUntil: null,
   });
 
   act(() => {
@@ -117,6 +125,8 @@ test('obscure code has expected value when enabled', () => {
   expect(stateHook.result.current).toStrictEqual({
     passcode: '12345',
     obscureCodeEnabled: true,
+    failedAttempts: 0,
+    lockUntil: null,
   });
 });
 
@@ -140,6 +150,8 @@ test('obscure code is unset when passcode is unset', () => {
   expect(stateHook.result.current).toStrictEqual({
     passcode: '12345',
     obscureCodeEnabled: true,
+    failedAttempts: 0,
+    lockUntil: null,
   });
 
   act(() => {
@@ -149,5 +161,37 @@ test('obscure code is unset when passcode is unset', () => {
   expect(stateHook.result.current).toStrictEqual({
     passcode: null,
     obscureCodeEnabled: false,
+    failedAttempts: 0,
+    lockUntil: null,
   });
+});
+test('increments attempts and sets lockout', () => {
+  const store = createSecurityStore();
+  const wrapper = createWrapper(store);
+  const actionsHook = renderHook(() => useSecurityActions(), {wrapper});
+  const stateHook = renderHook(() => useSecurityState(), {wrapper});
+
+  act(() => {
+    actionsHook.result.current.incrementAndGetAttempts();
+    actionsHook.result.current.incrementAndGetAttempts();
+    actionsHook.result.current.setLockout(123456789);
+  });
+
+  expect(stateHook.result.current.failedAttempts).toBe(2);
+  expect(stateHook.result.current.lockUntil).toBe(123456789);
+});
+test('resets attempts and lockout', () => {
+  const store = createSecurityStore();
+  const wrapper = createWrapper(store);
+  const actionsHook = renderHook(() => useSecurityActions(), {wrapper});
+  const stateHook = renderHook(() => useSecurityState(), {wrapper});
+
+  act(() => {
+    actionsHook.result.current.incrementAndGetAttempts();
+    actionsHook.result.current.setLockout(999999);
+    actionsHook.result.current.resetFailedAttempts();
+  });
+
+  expect(stateHook.result.current.failedAttempts).toBe(0);
+  expect(stateHook.result.current.lockUntil).toBe(null);
 });

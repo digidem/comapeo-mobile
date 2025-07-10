@@ -87,7 +87,8 @@ describe('Passcode - Check Passcode Requirements Flow', () => {
       await driver.pause(intervalMs);
     }
     const elapsed = Date.now() - start;
-    expect(elapsed).toBeGreaterThanOrEqual(60000);
+    // there is a bit of time, a second or five, between when the user is locked out in the previous test and when we start
+    expect(elapsed).toBeGreaterThanOrEqual(55000);
     expect(messageGone).toBe(true);
 
     const passcodeField = await $(byResourceId('SETTINGS.auth-passcode-inp'));

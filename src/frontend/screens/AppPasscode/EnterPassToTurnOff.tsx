@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {StyleSheet, View} from 'react-native';
-import {useBlurOnFulfill} from 'react-native-confirmation-code-field';
 
 import {useAuthContext} from '../../contexts/AuthContext';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
@@ -10,9 +9,10 @@ import {getRemainingLockoutMinutes} from '../../lib/security';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {PasscodeInput, CELL_COUNT} from '../../sharedComponents/PasscodeInput';
+import {PasscodeInput} from '../../sharedComponents/PasscodeInput';
 import ClockIcon from '../../images/ClockOutlined.svg';
 import {BLACK, RED} from '../../lib/styles';
+import {SecondaryButton} from '../../sharedComponents/Buttons';
 
 const m = defineMessages({
   titleEnter: {
@@ -20,17 +20,21 @@ const m = defineMessages({
     defaultMessage: 'Enter Passcode',
   },
   passwordError: {
-    id: 'screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordError',
+    id: 'screens.AppPasscode.EnterPassToTurnOff.passwordError',
     defaultMessage: 'Incorrect Passcode',
   },
   title: {
-    id: 'screens.AppPasscode.NewPasscode.InputPasscodeScreen.title',
+    id: 'screens.AppPasscode.EnterPassToTurnOff.title',
     defaultMessage: 'Confirm Passcode',
   },
   lockoutMessage: {
     id: 'screens.AppPasscode.EnterPassToTurnOff.lockoutMessage',
     defaultMessage:
       'Try again in {minutes, plural, one {# minute} other {# minutes}}',
+  },
+  cancel: {
+    id: 'screens.AppPasscode.EnterPassToTurnOff.cancel',
+    defaultMessage: 'Cancel',
   },
 });
 
@@ -47,8 +51,6 @@ export const EnterPassToTurnOff: NativeNavigationComponent<
   const [lockoutMessage, setLockoutMessage] = React.useState<string | null>(
     null,
   );
-
-  const inputRef = useBlurOnFulfill({value: inputValue, cellCount: CELL_COUNT});
 
   // Stops user from accessing this page if no password is set
   React.useLayoutEffect(() => {
@@ -112,11 +114,13 @@ export const EnterPassToTurnOff: NativeNavigationComponent<
     <ScreenContentWithDock
       contentContainerStyle={styles.container}
       dockContent={
-        error && (
-          <HeaderText variant="header5" style={styles.error}>
-            {t(m.passwordError)}
-          </HeaderText>
-        )
+        <SecondaryButton
+          fullSize
+          onPress={() => {
+            navigation.popTo('Security');
+          }}
+          text={t(m.cancel)}
+        />
       }>
       <HeaderText variant="header1" style={styles.header}>
         {t(m.titleEnter)}
@@ -129,12 +133,16 @@ export const EnterPassToTurnOff: NativeNavigationComponent<
       )}
       <PasscodeInput
         testID="SETTINGS.passcode-inp"
-        ref={inputRef}
         inputValue={inputValue}
         onChangeTextWithValidation={updateInput}
         error={error}
         editable={!isLockedOut}
       />
+      {error && (
+        <HeaderText variant="header5" style={styles.error}>
+          {t(m.passwordError)}
+        </HeaderText>
+      )}
     </ScreenContentWithDock>
   );
 };

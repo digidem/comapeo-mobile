@@ -481,8 +481,8 @@
   "screens.AppPasscode.ConfirmPasscodeSheet.title": {
     "message": "App Passcodes can never be recovered if lost or forgotten!"
   },
-  "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
-    "message": "Please Enter Passcode"
+  "screens.AppPasscode.EnterPassToTurnOff.lockoutMessage": {
+    "message": "Try again in {minutes, plural, one {# minute} other {# minutes}}"
   },
   "screens.AppPasscode.EnterPassToTurnOff.titleEnter": {
     "message": "Enter Passcode"
@@ -702,6 +702,9 @@
   },
   "screens.EnterPassword.enterPass": {
     "message": "Enter your passcode"
+  },
+  "screens.EnterPassword.lockoutMessage": {
+    "message": "Try again in {minutes, plural, one {# minute} other {# minutes}}"
   },
   "screens.EnterPassword.wrongPass": {
     "message": "Incorrect Passcode"

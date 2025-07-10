@@ -83,6 +83,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
 
       if (validateOnly) {
         if (isCorrect) {
+          resetFailedAttempts();
           return true;
         }
 

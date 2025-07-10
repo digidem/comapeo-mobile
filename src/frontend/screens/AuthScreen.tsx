@@ -13,8 +13,7 @@ import {BodyText} from '../sharedComponents/Text/BodyText';
 import {PasscodeInput} from '../sharedComponents/PasscodeInput';
 import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
 import {AppStackParamsList} from '../sharedTypes/navigation';
-import {useSecurityState} from '../contexts/SecurityStoreContext';
-import {getRemainingLockoutMinutes} from '../lib/security';
+import {usePasscodeLockout} from '../hooks/usePasscodeLockout';
 
 const m = defineMessages({
   enterPass: {
@@ -40,11 +39,7 @@ export const AuthScreen = ({
   const {authenticate, authState} = useAuthContext();
   const [inputtedPass, setInputtedPass] = React.useState('');
   const scrollViewRef = React.useRef<ScrollView>(null);
-  const [isLockedOut, setIsLockedOut] = React.useState(false);
-  const [lockoutMessage, setLockoutMessage] = React.useState<string | null>(
-    null,
-  );
-  const {lockUntil} = useSecurityState();
+  const {isLockedOut, lockoutMessage} = usePasscodeLockout(m.lockoutMessage);
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', event => {
@@ -57,31 +52,6 @@ export const AuthScreen = ({
       unsubscribe();
     };
   }, [authState, navigation]);
-
-  React.useEffect(() => {
-    if (!lockUntil) {
-      setIsLockedOut(false);
-      setLockoutMessage(null);
-      return;
-    }
-
-    const minutes = getRemainingLockoutMinutes(lockUntil);
-
-    if (minutes <= 0) {
-      setIsLockedOut(false);
-      setLockoutMessage(null);
-      return;
-    }
-    setIsLockedOut(true);
-    setLockoutMessage(t(m.lockoutMessage, {minutes}));
-
-    const timeout = setTimeout(() => {
-      setIsLockedOut(false);
-      setLockoutMessage(null);
-    }, minutes * 60000);
-
-    return () => clearTimeout(timeout);
-  }, [lockUntil, t]);
 
   React.useEffect(() => {
     if (authState === 'unauthenticated') return;
@@ -116,15 +86,9 @@ export const AuthScreen = ({
   function validatePass(passValue: string) {
     try {
       authenticate(passValue);
-    } catch (e) {
+    } catch {
       scrollViewRef.current?.scrollToEnd();
       setError(true);
-      if (e instanceof Error && e.message === 'LOCKED_OUT') {
-        const minutes = getRemainingLockoutMinutes(lockUntil);
-        setLockoutMessage(t(m.lockoutMessage, {minutes}));
-      } else {
-        setLockoutMessage(null);
-      }
     }
   }
 

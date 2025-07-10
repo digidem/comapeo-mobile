@@ -6,7 +6,7 @@ import {useIsShareDialogOpen} from '../hooks/share';
 import {DEFAULT_OBSCURE_CODE} from '../lib/security';
 import {useSecurityState, useSecurityActions} from './SecurityStoreContext';
 import {useIsAudioPermissionModalOpen} from '../hooks/useAudioPermissionTracker';
-import {PASSCODE_LOCKOUT_THRESHOLDS} from '../constants';
+import {getLockoutThreshold} from '../lib/security';
 
 export type AuthState = 'unauthenticated' | 'authenticated' | 'obscured';
 
@@ -81,45 +81,36 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
 
       const isCorrect = passcodeValue === passcode;
 
-      if (validateOnly) {
-        if (isCorrect) {
-          resetFailedAttempts();
-          return true;
-        }
-
-        const attempts = incrementAndGetAttempts();
-        const threshold = PASSCODE_LOCKOUT_THRESHOLDS.find(
-          t => t.attempts === attempts || (attempts > 8 && t.attempts === 8),
-        );
-
-        if (threshold) {
-          setLockout(Date.now() + threshold.minutes * 60 * 1000);
-        }
-
-        return false;
+      if (validateOnly && isCorrect) {
+        resetFailedAttempts();
+        return true;
       }
 
-      if (obscureCodeEnabled && passcodeValue === DEFAULT_OBSCURE_CODE) {
+      if (
+        !validateOnly &&
+        obscureCodeEnabled &&
+        passcodeValue === DEFAULT_OBSCURE_CODE
+      ) {
         setAuthState('obscured');
         resetFailedAttempts();
         return true;
       }
 
-      if (isCorrect) {
+      if (isCorrect && !validateOnly) {
         setAuthState('authenticated');
         resetFailedAttempts();
         return true;
       }
 
       const attempts = incrementAndGetAttempts();
-      const threshold = PASSCODE_LOCKOUT_THRESHOLDS.find(
-        t => t.attempts === attempts || (attempts > 8 && t.attempts === 8),
-      );
-
-      if (threshold) {
-        setLockout(Date.now() + threshold.minutes * 60 * 1000);
+      const minutes = getLockoutThreshold(attempts);
+      if (minutes) {
+        setLockout(Date.now() + minutes * 60 * 1000);
       }
 
+      if (validateOnly) {
+        return false;
+      }
       throw new Error('Incorrect Passcode');
     },
     [

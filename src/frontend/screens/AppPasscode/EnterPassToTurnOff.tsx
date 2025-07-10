@@ -5,7 +5,6 @@ import {StyleSheet, View} from 'react-native';
 import {useAuthContext} from '../../contexts/AuthContext';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {useSecurityState} from '../../contexts/SecurityStoreContext';
-import {getRemainingLockoutMinutes} from '../../lib/security';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
@@ -13,6 +12,7 @@ import {PasscodeInput} from '../../sharedComponents/PasscodeInput';
 import ClockIcon from '../../images/ClockOutlined.svg';
 import {BLACK, RED} from '../../lib/styles';
 import {SecondaryButton} from '../../sharedComponents/Buttons';
+import {usePasscodeLockout} from '../../hooks/usePasscodeLockout';
 
 const m = defineMessages({
   titleEnter: {
@@ -43,14 +43,10 @@ export const EnterPassToTurnOff: NativeNavigationComponent<
 > = ({navigation}) => {
   const {formatMessage: t} = useIntl();
   const passcode = useSecurityState(state => state.passcode);
-  const {lockUntil} = useSecurityState();
   const {authenticate} = useAuthContext();
   const [error, setError] = React.useState(false);
   const [inputValue, setInputValue] = React.useState('');
-  const [isLockedOut, setIsLockedOut] = React.useState(false);
-  const [lockoutMessage, setLockoutMessage] = React.useState<string | null>(
-    null,
-  );
+  const {isLockedOut, lockoutMessage} = usePasscodeLockout(m.lockoutMessage);
 
   // Stops user from accessing this page if no password is set
   React.useLayoutEffect(() => {
@@ -58,31 +54,6 @@ export const EnterPassToTurnOff: NativeNavigationComponent<
       navigation.navigate('Security');
     }
   }, [navigation, passcode]);
-
-  React.useEffect(() => {
-    if (!lockUntil) {
-      setIsLockedOut(false);
-      setLockoutMessage(null);
-      return;
-    }
-
-    const minutes = getRemainingLockoutMinutes(lockUntil);
-    if (minutes <= 0) {
-      setIsLockedOut(false);
-      setLockoutMessage(null);
-      return;
-    }
-
-    setIsLockedOut(true);
-    setLockoutMessage(t(m.lockoutMessage, {minutes}));
-
-    const timeout = setTimeout(() => {
-      setIsLockedOut(false);
-      setLockoutMessage(null);
-    }, minutes * 60000);
-
-    return () => clearTimeout(timeout);
-  }, [lockUntil, t]);
 
   function updateInput(newVal: string) {
     if (error) setError(false);
@@ -99,17 +70,10 @@ export const EnterPassToTurnOff: NativeNavigationComponent<
       } else {
         setError(true);
       }
-    } catch (e) {
+    } catch {
       setError(true);
-      if (e instanceof Error && e.message === 'LOCKED_OUT') {
-        const minutes = getRemainingLockoutMinutes(lockUntil);
-        setLockoutMessage(t(m.lockoutMessage, {minutes}));
-      } else {
-        setLockoutMessage(null);
-      }
     }
   }
-
   return (
     <ScreenContentWithDock
       contentContainerStyle={styles.container}

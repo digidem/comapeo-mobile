@@ -69,9 +69,11 @@ export const EnterPassToTurnOff: NativeNavigationComponent<
         navigation.navigate('DisablePasscode');
       } else {
         setError(true);
+        setInputValue('');
       }
     } catch {
       setError(true);
+      setInputValue('');
     }
   }
   return (

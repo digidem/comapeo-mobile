@@ -48,6 +48,8 @@ Passcode/ security e2e tests test the user's interactions with the security butt
 - When phone is turned off and back on, when reopening CoMapeo, passcode is required
 - Number keyboard is displayed and letters can't be entered
 - An error is displayed if the wrong passcode is entered
+- If a wrong passcode is entered five times, a lockout time of 1 minutes is enforced
+- After that 1 minute, someone can log in with the correct passcode
 
 ### Special Considerations
 

@@ -481,8 +481,17 @@
   "screens.AppPasscode.ConfirmPasscodeSheet.title": {
     "message": "App Passcodes can never be recovered if lost or forgotten!"
   },
+  "screens.AppPasscode.EnterPassToTurnOff.cancel": {
+    "message": "Cancel"
+  },
   "screens.AppPasscode.EnterPassToTurnOff.lockoutMessage": {
     "message": "Try again in {minutes, plural, one {# minute} other {# minutes}}"
+  },
+  "screens.AppPasscode.EnterPassToTurnOff.passwordError": {
+    "message": "Incorrect Passcode"
+  },
+  "screens.AppPasscode.EnterPassToTurnOff.title": {
+    "message": "Confirm Passcode"
   },
   "screens.AppPasscode.EnterPassToTurnOff.titleEnter": {
     "message": "Enter Passcode"
@@ -508,14 +517,8 @@
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordDoesNotMatch": {
     "message": "Password does not match"
   },
-  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.passwordError": {
-    "message": "Incorrect Passcode"
-  },
   "screens.AppPasscode.NewPasscode.InputPasscodeScreen.subTitleSet": {
     "message": "This passcode will be required to open the CoMapeo App"
-  },
-  "screens.AppPasscode.NewPasscode.InputPasscodeScreen.title": {
-    "message": "Confirm Passcode"
   },
   "screens.AppPasscode.NewPasscode.SetPasscodeScreen.title": {
     "message": "Set Passcode"

@@ -26,10 +26,10 @@
     "message": "Excluir observação?"
   },
   "MapManagement.ErrorBottomSheet.goBack": {
-    "message": "Go Back"
+    "message": "Voltar"
   },
   "Modal.GPSDisable.button": {
-    "message": "Enable GPS"
+    "message": "Ativar GPS"
   },
   "Modal.GPSDisable.description": {
     "message": "GPS and location needed to record tracks."

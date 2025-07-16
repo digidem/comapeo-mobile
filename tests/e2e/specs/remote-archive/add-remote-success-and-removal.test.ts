@@ -109,7 +109,7 @@ describe('Remote Archive - Add Success Flow', () => {
       console.warn('🛑 Remote Archive removal failed — restarting app');
       await driver.terminateApp('com.comapeo.rc');
       await driver.activateApp('com.comapeo.rc');
-      await driver.pause(1000);
+      await driver.pause(15000);
       return;
     }
 

@@ -1,6 +1,5 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
-import TrackIcon from '../../images/Track.svg';
 import {defineMessages, useIntl} from 'react-intl';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {useFocusEffect} from '@react-navigation/native';
@@ -9,12 +8,33 @@ import {Editor} from '../../sharedComponents/Editor';
 import {TrackDescriptionField} from './TrackDescriptionField';
 import {HeaderLeft} from './HeaderLeft';
 import {usePreventAndroidBackButton} from '../../hooks/usePreventAndroidBackButton';
+import {useTrackState} from '../../contexts/TrackStoreContext';
+import {PresetCircleIcon} from '../../sharedComponents/icons/PresetIcon';
+import TrackIcon from '../../images/Track.svg';
+import {getTrackDurationAndDistance} from '../../utils/trackMetrics';
+import {usePresetsQuery} from '../../hooks/server/presets';
 
 export const SaveTrackScreen = () => {
   const navigation = useNavigationFromRoot();
   const {formatMessage: t} = useIntl();
-
+  const preset = useTrackState(state => state.preset);
   usePreventAndroidBackButton();
+  const locationHistory = useTrackState(state => state.locationHistory);
+  const {durationMs, distance} = getTrackDurationAndDistance(locationHistory);
+  const {data: presets} = usePresetsQuery();
+  const trackPresets = useMemo(
+    () => Array.from(presets ?? []).filter(p => p.geometry.includes('line')),
+    [presets],
+  );
+
+  const canChoosePreset = trackPresets.length > 0;
+
+  const presetName = preset
+    ? t({
+        id: `presets.${preset.docId}.name`,
+        defaultMessage: preset.name,
+      })
+    : t(m.newTitle);
 
   useFocusEffect(
     useCallback(() => {
@@ -28,17 +48,33 @@ export const SaveTrackScreen = () => {
 
   return (
     <Editor
-      presetName={t(m.newTitle)}
+      presetName={presetName}
       notesComponent={<TrackDescriptionField />}
-      PresetIcon={<TrackIcon style={styles.icon} />}
       isTrack={true}
-      presetDisabled={true}
+      trackDurationMs={durationMs}
+      trackDistance={distance}
+      PresetIcon={
+        preset ? (
+          <PresetCircleIcon iconId={preset.iconRef?.docId} size="medium" />
+        ) : (
+          <TrackIcon style={styles.icon} />
+        )
+      }
+      onPressPreset={
+        canChoosePreset
+          ? () => navigation.navigate('TrackCategoryChooser')
+          : undefined
+      }
+      presetDisabled={!canChoosePreset}
     />
   );
 };
 
 const styles = StyleSheet.create({
-  icon: {width: 30, height: 30},
+  icon: {
+    width: 30,
+    height: 30,
+  },
 });
 
 export const m = defineMessages({

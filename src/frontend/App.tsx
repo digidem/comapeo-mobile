@@ -12,7 +12,6 @@ import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Sentry from '@sentry/react-native';
 import * as TaskManager from 'expo-task-manager';
-import nodejs from 'nodejs-mobile-react-native';
 import {applicationId} from 'expo-application';
 import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
 import {storage} from './hooks/persistedState/createPersistedState';
@@ -34,8 +33,8 @@ import {
 import {getAppLanguageTag} from './lib/intl';
 import {IntlProvider} from './contexts/IntlContext';
 import {ServerLoading} from './ServerLoading';
-import type {StatusMessage} from '../backend/src/status';
 import {createSavedLocationStore} from './contexts/SavedLocationContext';
+import {createServerStateStore} from './lib/ServerStateStore.ts';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -47,13 +46,14 @@ if (applicationId?.endsWith('.dev') || applicationId?.endsWith('.pre')) {
 }
 
 const sentryDebug = applicationId?.endsWith('.dev');
+const sentryUserId = getSentryUserId({now: new Date(), storage});
 
 Sentry.init({
   dsn: 'https://e0e02907e05dc72a6da64c3483ed88a6@o4507148235702272.ingest.us.sentry.io/4507170965618688',
   tracesSampleRate: 1.0,
   environment: sentryEnvironment,
   debug: sentryDebug, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
-  initialScope: {user: {id: getSentryUserId({now: new Date(), storage})}},
+  initialScope: {user: {id: sentryUserId}},
 });
 
 Mapbox.setTelemetryEnabled(false);
@@ -80,11 +80,12 @@ const appDiagnosticMetrics = new AppDiagnosticMetrics({
 });
 
 const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
-const messagePort = new MessagePortLike();
+const serverStateStore = createServerStateStore();
+const messagePort = new MessagePortLike({serverStateStore});
 const mapeoApi = createMapeoClient(messagePort, {timeout: Infinity});
+messagePort.start();
 const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();
-initializeNodejs();
 
 SplashScreen.setOptions({fade: true});
 SplashScreen.preventAutoHideAsync().catch(err => {
@@ -136,6 +137,9 @@ persistedMetricsDiagnosticsStore.instance.subscribe((current, previous) => {
   }
 });
 
+// Need to know if metrics are enabled before starting node
+initializeNodejs({metricsIsEnabled, sentryEnvironment, sentryUserId});
+
 // Defines task that handles background location updates for tracks feature
 TaskManager.defineTask(
   LOCATION_TASK_NAME,
@@ -158,16 +162,6 @@ TaskManager.defineTask(
 
 const queryClient = new QueryClient();
 
-const requestServerStatus = () => {
-  nodejs.channel.post('get-server-status');
-};
-
-const subscribeToServerStatus = (listener: (msg: StatusMessage) => unknown) => {
-  const subscription = nodejs.channel.addListener('server:status', listener);
-  // @ts-expect-error - incorrect types on nodejs.channel
-  return () => subscription.remove();
-};
-
 const App = () => {
   const [permissionsAsked, setPermissionsAsked] = React.useState(false);
   React.useEffect(() => {
@@ -184,10 +178,7 @@ const App = () => {
     <LocaleStoreProvider value={persistedLocaleStore}>
       <IntlProvider>
         {/* ServerLoading requires internationalization to be set up */}
-        <ServerLoading
-          messagePort={messagePort}
-          requestServerStatus={requestServerStatus}
-          subscribeToServerStatus={subscribeToServerStatus}>
+        <ServerLoading serverStateStore={serverStateStore}>
           <AppProviders
             queryClient={queryClient}
             localDiscoveryController={localDiscoveryController}

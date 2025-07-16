@@ -12,9 +12,9 @@
 /* global console */
 import comapeoServer from '@comapeo/cloud';
 import createFastify from 'fastify';
-import { randomBytes } from 'node:crypto';
+import {randomBytes} from 'node:crypto';
 import * as path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import {fileURLToPath} from 'node:url';
 import RAM from 'random-access-memory';
 
 const COMAPEO_CORE_PKG_FOLDER = path.dirname(

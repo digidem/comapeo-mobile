@@ -95,8 +95,8 @@ console.log(
 
 const KEEP_THESE = [
   'package.json',
-  'index.bundle.js',
-  'loader.js',
+  // Packaged backend code
+  'dist',
   // Static folders referenced by @comapeo/core code
   'node_modules/@comapeo/core/drizzle',
   // zip file that is the default config
@@ -107,11 +107,10 @@ const KEEP_THESE = [
 
 for (const name of KEEP_THESE) {
   const source = path.join(nodejsAssetsBackendDirectory, name);
-  const destination = path.join(
-    nodejsAssetsProjectDirectory,
-    name === 'index.bundle.js' ? 'index.js' : name,
-  );
-
+  const destination =
+    name === 'dist'
+      ? nodejsAssetsProjectDirectory
+      : path.join(nodejsAssetsProjectDirectory, name);
   fs.cpSync(source, destination, {recursive: true});
 }
 

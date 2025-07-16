@@ -29,10 +29,10 @@
     "message": "Go Back"
   },
   "Modal.GPSDisable.button": {
-    "message": "Enable"
+    "message": "Enable GPS"
   },
   "Modal.GPSDisable.description": {
-    "message": "To create a Track CoMapeo needs access to your location and GPS."
+    "message": "GPS and location needed to record tracks."
   },
   "Modal.GPSDisable.title": {
     "message": "GPS Disabled"
@@ -45,9 +45,6 @@
   },
   "Modal.GPSEnable.button.stop": {
     "message": "Stop Tracks"
-  },
-  "Modal.GPSEnable.trackingDescription": {
-    "message": "You’ve been recording for {time}"
   },
   "Navigation.Menu.Settings": {
     "message": "App Settings"
@@ -312,6 +309,24 @@
     "description": "Button to share an observation",
     "message": "Share"
   },
+  "TrackBottomSheet.DidNotMove.delete": {
+    "message": "Exit Tracks"
+  },
+  "TrackBottomSheet.DidNotMove.didNotMove": {
+    "message": "You didn't move beyond one meter."
+  },
+  "TrackBottomSheet.DidNotMove.keepRecording": {
+    "message": "Continue Recording"
+  },
+  "TrackBottomSheet.DidNotMove.noTrackRecorded": {
+    "message": "No Track Recorded"
+  },
+  "TrackBottomSheet.StartStopTrack.readyToRecord": {
+    "message": "Ready to record new track?"
+  },
+  "TrackBottomSheet.StartStopTrack.trackingRequirement": {
+    "message": "Move one meter to see track."
+  },
   "TrackEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
     "message": "Continue editing"
@@ -326,6 +341,9 @@
   },
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
+  },
+  "TrackStats.kilometers": {
+    "message": "km"
   },
   "allProjects.createNewProject": {
     "message": "Start new project"
@@ -587,10 +605,6 @@
   },
   "screens.CameraScreen.noCameraAccess": {
     "message": "No access to camera. Please Allow access in setting"
-  },
-  "screens.CategoryChooser.categoryTitle": {
-    "description": "Title for category chooser screen",
-    "message": "Choose a category"
   },
   "screens.ConfirmDeletePhoto.cancel": {
     "message": "Cancel"
@@ -987,13 +1001,13 @@
     "message": "Zone Number"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
-    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
+    "message": "Use Location? Tracks location even when closed. Data remains on device only."
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Turn On"
+    "message": "Turn On Location"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
-    "message": "Use Your Location"
+    "message": "Use Location?"
   },
   "screens.ObscurePasscode.description": {
     "message": "Obscure Passcode is a security feature that allows you to open CoMapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of CoMapeo which allows you to create demonstration observations that are not saved to the CoMapeo database."
@@ -1084,6 +1098,9 @@
   "screens.Observation.title": {
     "description": "Title of observation screen showing (non-editable) view of observation with map and answered questions",
     "message": "Observation"
+  },
+  "screens.ObservationCategoryChooser.title": {
+    "message": "Choose a category"
   },
   "screens.ObservationCreate.changePreset": {
     "message": "Change"
@@ -1778,6 +1795,9 @@
   },
   "screens.Track.tracks": {
     "message": "Tracks"
+  },
+  "screens.TrackCategoryChooser.title": {
+    "message": "Choose a category"
   },
   "screens.TrackEdit.title": {
     "description": "Title for editing track screen",

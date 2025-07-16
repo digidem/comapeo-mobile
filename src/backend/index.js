@@ -1,6 +1,5 @@
-import { parseArgs } from 'util'
-
 import { init } from './src/app.js'
+import parseArgs from './src/args.js'
 
 // We define this here so we don't need to do additional bundling adjustments to get the path correct when running on the device
 // This assumes that we keep the relevant directory as part of the built assets when building for nodejs mobile
@@ -16,21 +15,12 @@ const DEFAULT_CONFIG_PATH = new URL(
 ).pathname
 
 try {
-  const { values } = parseArgs({
-    options: {
-      version: { type: 'string' },
-      rootKey: { type: 'string' },
-    },
-  })
-
-  if (typeof values.rootKey !== 'string') {
-    throw new Error('backend did not receive root key from front end')
-  }
+  const { version, rootKey } = parseArgs()
 
   // Do not await this as we want this to run indefinitely
   init({
-    version: values.version,
-    rootKey: Buffer.from(values.rootKey, 'hex'),
+    version,
+    rootKey: Buffer.from(rootKey, 'hex'),
     migrationsFolderPath: MIGRATIONS_FOLDER_PATH,
     defaultConfigPath: DEFAULT_CONFIG_PATH,
   }).catch((err) => {

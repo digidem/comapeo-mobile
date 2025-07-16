@@ -1,22 +1,43 @@
 import {EventSubscription} from 'react-native';
 import EventEmitter from 'eventemitter3';
 import nodejs from 'nodejs-mobile-react-native';
+import type {ServerStateStore, ServerState} from './serverStateStore.ts';
+import {ExhaustivenessError} from './ExhaustivenessError.ts';
 
-export type ServerState = 'idle' | 'started' | 'closed';
+type MessagePortState = 'idle' | 'started' | 'closed';
 
 export class MessagePortLike extends EventEmitter {
   #API_EVENT_NAME = '@@API_MESSAGE';
   #channelSubscription: EventSubscription;
-  #state: ServerState = 'idle';
-  #queuedMessages: unknown[] = [];
+  #unsubscribeServerState: () => void;
+  #state: MessagePortState = 'idle';
+  #serverState: ServerState = {value: 'STARTING'};
+  #incomingQueue: unknown[] = [];
+  #outgoingQueue: unknown[] = [];
   #handleChannelMessage;
 
-  constructor() {
+  #handleServerStateChange = () => {
+    this.#serverState = this.#serverStateStore.getSnapshot();
+    if (this.#serverState.value === 'STARTED') {
+      let message;
+      while ((message = this.#outgoingQueue.shift())) {
+        this.postMessage(message);
+      }
+    }
+  };
+  #serverStateStore: ServerStateStore;
+
+  constructor({serverStateStore}: {serverStateStore: ServerStateStore}) {
     super();
+
+    this.#serverStateStore = serverStateStore;
+    this.#unsubscribeServerState = serverStateStore.subscribe(
+      this.#handleServerStateChange,
+    );
 
     this.#handleChannelMessage = (message: unknown) => {
       if (this.#state === 'idle') {
-        this.#queuedMessages.push(message);
+        this.#incomingQueue.push(message);
       } else if (this.#state === 'started') {
         this.emit('message', message);
       } else {
@@ -33,9 +54,24 @@ export class MessagePortLike extends EventEmitter {
   }
 
   postMessage(message: unknown) {
-    nodejs.channel.post(this.#API_EVENT_NAME, message);
+    switch (this.#serverState.value) {
+      case 'STARTING':
+        this.#outgoingQueue.push(message);
+        break;
+      case 'STARTED':
+        nodejs.channel.post(this.#API_EVENT_NAME, message);
+        break;
+      case 'ERROR':
+        throw new Error(this.#serverState.error || 'Unknown server error');
+      default:
+        throw new ExhaustivenessError(this.#serverState.value);
+    }
   }
 
+  /**
+   * Start receiving messages from the channel. Messages received before calling
+   * `start` are queued and processed once `start` is called.
+   */
   start() {
     if (this.#state !== 'idle') {
       return;
@@ -44,7 +80,7 @@ export class MessagePortLike extends EventEmitter {
 
     let message;
 
-    while ((message = this.#queuedMessages.shift())) {
+    while ((message = this.#incomingQueue.shift())) {
       this.#handleChannelMessage(message);
     }
   }
@@ -55,9 +91,10 @@ export class MessagePortLike extends EventEmitter {
     }
 
     this.#state = 'closed';
-    this.#queuedMessages = [];
+    this.#incomingQueue = [];
 
     this.#channelSubscription.remove();
+    this.#unsubscribeServerState();
   }
 
   addEventListener(event: string, listener: (msg: unknown) => void) {

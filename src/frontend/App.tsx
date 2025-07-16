@@ -34,7 +34,7 @@ import {getAppLanguageTag} from './lib/intl';
 import {IntlProvider} from './contexts/IntlContext';
 import {ServerLoading} from './ServerLoading';
 import {createSavedLocationStore} from './contexts/SavedLocationContext';
-import {createServerStateStore} from './lib/serverStateStore.ts';
+import {createServerStateStore} from './lib/ServerStateStore.ts';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 

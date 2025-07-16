@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 
 import {FatalError} from './screens/FatalError';
-import type {ServerStateStore} from './lib/serverStateStore.js';
+import type {ServerStateStore} from './lib/ServerStateStore.js';
 
 export const ServerLoading = ({
   serverStateStore,

@@ -2,29 +2,30 @@ import {is} from 'valibot';
 
 import {
   DEFAULT_OBSCURE_CODE,
-  PasscodeSchema,
+  PasscodeInputSchema,
   getRemainingLockoutMinutes,
   getLockoutThreshold,
+  StoredPasscodeSchema,
 } from './security';
 
 test('DEFAULT_OBSCURE_CODE has expected value', () => {
   expect(DEFAULT_OBSCURE_CODE).toBe('00000');
 });
 
-describe('PasscodeSchema', () => {
+describe('PasscodeInputSchema', () => {
   test('handles valid values', () => {
-    expect(is(PasscodeSchema, '12345')).toBe(true);
+    expect(is(PasscodeInputSchema, '12345')).toBe(true);
   });
 
   test('handles invalid values', () => {
     // Incorrect length
-    expect(is(PasscodeSchema, '')).toBe(false);
-    expect(is(PasscodeSchema, '123')).toBe(false);
-    expect(is(PasscodeSchema, '123456')).toBe(false);
+    expect(is(PasscodeInputSchema, '')).toBe(false);
+    expect(is(PasscodeInputSchema, '123')).toBe(false);
+    expect(is(PasscodeInputSchema, '123456')).toBe(false);
 
     // Non-digits
-    expect(is(PasscodeSchema, 'abcde')).toBe(false);
-    expect(is(PasscodeSchema, '123.4')).toBe(false);
+    expect(is(PasscodeInputSchema, 'abcde')).toBe(false);
+    expect(is(PasscodeInputSchema, '123.4')).toBe(false);
   });
 });
 
@@ -55,5 +56,20 @@ describe('getLockoutThreshold', () => {
     [20, 5],
   ])('returns expected minutes for %i attempts', (attempts, expected) => {
     expect(getLockoutThreshold(attempts)).toBe(expected);
+  });
+});
+
+describe('StoredPasscodeSchema', () => {
+  test('valid hashed passcode format', () => {
+    const salt = 'abcdef1234567890';
+    const hash = 'a'.repeat(64);
+    const stored = `${salt}:${hash}`;
+    expect(is(StoredPasscodeSchema, stored)).toBe(true);
+  });
+
+  test('too short or malformed values', () => {
+    expect(is(StoredPasscodeSchema, 'shortstringwithoutcolon')).toBe(false);
+    expect(is(StoredPasscodeSchema, 'a:b')).toBe(false);
+    expect(is(StoredPasscodeSchema, 'a'.repeat(64))).toBe(false);
   });
 });

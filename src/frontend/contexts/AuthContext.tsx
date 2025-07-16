@@ -3,10 +3,11 @@ import {AppState, AppStateStatus, NativeModules} from 'react-native';
 const {FlagSecureModule} = NativeModules;
 
 import {useIsShareDialogOpen} from '../hooks/share';
-import {DEFAULT_OBSCURE_CODE} from '../lib/security';
+import {DEFAULT_OBSCURE_CODE, verifyPasscode} from '../lib/security';
 import {useSecurityState, useSecurityActions} from './SecurityStoreContext';
 import {useIsAudioPermissionModalOpen} from '../hooks/useAudioPermissionTracker';
-import {getLockoutThreshold} from '../lib/security';
+import {getLockoutThreshold, PasscodeInputSchema} from '../lib/security';
+import {safeParse} from 'valibot';
 
 export type AuthState = 'unauthenticated' | 'authenticated' | 'obscured';
 
@@ -14,7 +15,7 @@ type AuthContextType = {
   authenticate: (
     passcodeValue: string | null,
     validateOnly?: boolean,
-  ) => boolean;
+  ) => Promise<boolean>;
   authState: AuthState;
 };
 
@@ -32,8 +33,12 @@ export const useAuthContext = () => {
 
 export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   const {passcode, obscureCodeEnabled, lockUntil} = useSecurityState();
-  const {incrementAndGetAttempts, resetFailedAttempts, setLockout} =
-    useSecurityActions();
+  const {
+    incrementAndGetAttempts,
+    resetFailedAttempts,
+    setLockout,
+    updateToHashedPasscode,
+  } = useSecurityActions();
   const [authState, setAuthState] = React.useState<AuthState>(
     passcode === null ? 'authenticated' : 'unauthenticated',
   );
@@ -73,13 +78,22 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   }, [passcode, shareDialogIsOpen, isAudioPermissionModalOpen]);
 
   const authenticate: AuthContextType['authenticate'] = React.useCallback(
-    (passcodeValue, validateOnly = false) => {
+    async (passcodeValue, validateOnly = false) => {
       const isLockedOut = lockUntil !== null && Date.now() < lockUntil;
       if (isLockedOut) {
         throw new Error('LOCKED_OUT');
       }
 
-      const isCorrect = passcodeValue === passcode;
+      let isCorrect = false;
+
+      if (passcodeValue && passcode) {
+        if (safeParse(PasscodeInputSchema, passcode).success) {
+          isCorrect = passcodeValue === passcode;
+          await updateToHashedPasscode(passcodeValue);
+        } else {
+          isCorrect = await verifyPasscode(passcodeValue, passcode);
+        }
+      }
 
       if (validateOnly && isCorrect) {
         resetFailedAttempts();
@@ -118,6 +132,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
       obscureCodeEnabled,
       incrementAndGetAttempts,
       resetFailedAttempts,
+      updateToHashedPasscode,
       setLockout,
       lockUntil,
       setAuthState,

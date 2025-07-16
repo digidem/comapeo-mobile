@@ -61,9 +61,9 @@ export const EnterPassToTurnOff: NativeNavigationComponent<
     if (newVal.length === 5) validate(newVal);
   }
 
-  function validate(passcode: string) {
+  async function validate(passcode: string) {
     try {
-      const valid = authenticate(passcode, true);
+      const valid = await authenticate(passcode, true);
 
       if (valid) {
         navigation.navigate('DisablePasscode');

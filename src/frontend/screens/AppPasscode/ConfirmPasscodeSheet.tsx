@@ -50,8 +50,8 @@ export const ConfirmPasscodeSheet = React.forwardRef<
   const {setPasscode} = useSecurityActions();
   const navigation = useNavigationFromRoot();
 
-  function setPasscodeAndNavigateBack() {
-    setPasscode(inputtedPasscode);
+  async function setPasscodeAndNavigateBack() {
+    await setPasscode(inputtedPasscode);
     navigation.popTo('Security');
   }
 

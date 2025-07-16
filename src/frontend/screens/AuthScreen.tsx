@@ -83,9 +83,9 @@ export const AuthScreen = ({
     }
   }
 
-  function validatePass(passValue: string) {
+  async function validatePass(passValue: string) {
     try {
-      authenticate(passValue);
+      await authenticate(passValue);
     } catch {
       scrollViewRef.current?.scrollToEnd();
       setError(true);

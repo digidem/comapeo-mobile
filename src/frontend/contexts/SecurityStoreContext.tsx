@@ -7,12 +7,17 @@ import {
   persist as createPersistedState,
 } from 'zustand/middleware';
 
-import {PasscodeSchema} from '../lib/security';
+import {
+  hashPasscode,
+  generateSalt,
+  PasscodeInputSchema,
+  StoredPasscodeSchema,
+} from '../lib/security';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SecurityStateSchema = v.variant('passcode', [
   v.object({
-    passcode: PasscodeSchema,
+    passcode: StoredPasscodeSchema,
     obscureCodeEnabled: v.boolean(),
     failedAttempts: v.number(),
     lockUntil: v.union([v.number(), v.null()]),
@@ -67,7 +72,7 @@ export function createSecurityStore({persist} = {persist: false}) {
   }
 
   const actions = {
-    setPasscode: (passcode: string | null) => {
+    setPasscode: async (passcode: string | null) => {
       // Obscure code needs to be unset when passcode is unset
       if (passcode === null) {
         store.setState({
@@ -78,10 +83,23 @@ export function createSecurityStore({persist} = {persist: false}) {
         });
         return;
       }
+      v.parse(PasscodeInputSchema, passcode, {abortPipeEarly: true});
+      const salt = generateSalt();
+      const hashed = await hashPasscode(passcode, salt);
 
       store.setState({
-        passcode: v.parse(PasscodeSchema, passcode, {abortPipeEarly: true}),
+        passcode: hashed,
       });
+    },
+
+    updateToHashedPasscode: async (passcode: string) => {
+      const salt = generateSalt();
+      const hashed = await hashPasscode(passcode, salt);
+      store.setState({passcode: hashed});
+      await setItem(
+        STORAGE_KEY,
+        JSON.stringify({...store.getState(), passcode: hashed}),
+      );
     },
 
     enableObscureCode: (enable: boolean) => {

@@ -21,6 +21,7 @@ export function createServerStateStore(): ServerStateStore {
       'server:status',
       (msg: StatusMessage) => {
         serverState = msg;
+        listeners.forEach(listener => listener());
       },
     );
     // The backend will send a `'server:status'` message when it starts, but if

@@ -1,0 +1,26 @@
+name: Crowdin Sync Reminder on RC PR Update
+
+on:
+  pull_request:
+    branches:
+      - 'release/**'
+    types: [synchronize]
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create GitHub App Token
+        uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.RELEASE_BOT_APP_ID }}
+          private-key: ${{ secrets.RELEASE_BOT_PRIVATE_KEY }}
+
+      - name: Add Crowdin reminder comment
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          gh pr comment $PR_NUMBER --repo "$GITHUB_REPOSITORY" --body ":globe_with_meridians: **Reminder:** Please ensure translations are synced for this release branch in [Crowdin](https://crowdin.com/project/comapeo-mobile)."

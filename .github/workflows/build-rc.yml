@@ -103,7 +103,6 @@ jobs:
           PR_NUMBER: ${{ inputs.pr_number || github.event.pull_request.number }}
           COMMENT_BODY: |
             :construction: Release candidate build based on ${{ needs.build.outputs.build_sha }} (potential merge of ${{ needs.build.outputs.pr_head_sha }}): ${{ needs.build.outputs.eas_build_url }}
-            **Reminder:** Please ensure the translations for the release branch are synced in Crowdin.
 
         run: |
           gh pr comment $PR_NUMBER --body "$COMMENT_BODY" --repo "$GITHUB_REPOSITORY"

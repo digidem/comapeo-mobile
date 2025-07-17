@@ -105,6 +105,8 @@ jobs:
 
             :warning: Only add bug fixes, copy edits and translation updates during the QA process.
 
+            :globe_with_meridians: **Reminder: Please sync this release branch in [Crowdin](https://crowdin.com/project/comapeo-mobile) before triggering a build.**
+
             :test_tube: Create a new Release Candidate build by commenting on this PR with the `${{ vars.BUILD_COMMENT_TRIGGER || '/build-rc' }}` command.
 
             :construction: An initial Release Candidate build will be triggered shortly, and the build URL will be posted here.

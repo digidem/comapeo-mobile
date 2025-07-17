@@ -29,8 +29,8 @@ describe('PasscodeSchema', () => {
 });
 
 describe('getRemainingLockoutMinutes', () => {
-  test('returns 0 when lockUntil is null', () => {
-    expect(getRemainingLockoutMinutes(null)).toBe(0);
+  test('returns 0 when lockUntil is 0', () => {
+    expect(getRemainingLockoutMinutes(0)).toBe(0);
   });
 
   test('returns rounded-up minutes if in future', () => {

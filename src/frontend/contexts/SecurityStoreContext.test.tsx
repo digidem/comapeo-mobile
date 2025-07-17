@@ -32,7 +32,7 @@ test('initial state', () => {
     passcode: null,
     obscureCodeEnabled: false,
     failedAttempts: 0,
-    lockUntil: null,
+    lockUntil: 0,
   });
 });
 
@@ -67,7 +67,7 @@ test('passcode cannot be set to invalid value', () => {
     passcode: null,
     obscureCodeEnabled: false,
     failedAttempts: 0,
-    lockUntil: null,
+    lockUntil: 0,
   });
 });
 
@@ -91,7 +91,7 @@ test('obscure code cannot be set when passcode is not set', () => {
     passcode: null,
     obscureCodeEnabled: false,
     failedAttempts: 0,
-    lockUntil: null,
+    lockUntil: 0,
   });
 });
 
@@ -115,7 +115,7 @@ test('obscure code has expected value when enabled', () => {
     passcode: '12345',
     obscureCodeEnabled: false,
     failedAttempts: 0,
-    lockUntil: null,
+    lockUntil: 0,
   });
 
   act(() => {
@@ -126,7 +126,7 @@ test('obscure code has expected value when enabled', () => {
     passcode: '12345',
     obscureCodeEnabled: true,
     failedAttempts: 0,
-    lockUntil: null,
+    lockUntil: 0,
   });
 });
 
@@ -151,7 +151,7 @@ test('obscure code is unset when passcode is unset', () => {
     passcode: '12345',
     obscureCodeEnabled: true,
     failedAttempts: 0,
-    lockUntil: null,
+    lockUntil: 0,
   });
 
   act(() => {
@@ -162,7 +162,7 @@ test('obscure code is unset when passcode is unset', () => {
     passcode: null,
     obscureCodeEnabled: false,
     failedAttempts: 0,
-    lockUntil: null,
+    lockUntil: 0,
   });
 });
 test('increments attempts and sets lockout', () => {

@@ -818,17 +818,17 @@
     "message": "Ir para o Mapa"
   },
   "screens.InviteSuccess.goToSync": {
-    "message": "Go To Sync"
+    "message": "Ir para Sincronização"
   },
   "screens.InviteSuccess.success": {
-    "message": "Success"
+    "message": "Sucesso"
   },
   "screens.InviteSuccess.youHaveJoined": {
-    "message": "You have joined {projectName}"
+    "message": "Você está no projeto {projectName}"
   },
   "screens.LanguageSettings.followSystemPreferences": {
     "description": "Label for language option to follow system preferences",
-    "message": "Follow system preferences"
+    "message": "Seguir preferências do sistema"
   },
   "screens.LanguageSettings.title": {
     "description": "Title language settings screen",
@@ -1047,7 +1047,7 @@
     "message": "Compartilhar"
   },
   "screens.Observation.TrackList.track": {
-    "message": "Track"
+    "message": "Trilha"
   },
   "screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
@@ -1061,17 +1061,17 @@
     "message": "Sim, excluir"
   },
   "screens.Observation.defaultProjectName": {
-    "message": "My Project"
+    "message": "Meu Projeto"
   },
   "screens.Observation.deleteTitle": {
     "description": "Title of dialog asking confirmation to delete an observation",
     "message": "Excluir observação?"
   },
   "screens.Observation.description": {
-    "message": "Description:"
+    "message": "Descrição:"
   },
   "screens.Observation.details": {
-    "message": "Details:"
+    "message": "Detalhes:"
   },
   "screens.Observation.fallbackCategoryName": {
     "description": "Fallback name used when category name cannot be determined for observation",
@@ -1079,13 +1079,13 @@
   },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "Observation"
+    "message": "Observação"
   },
   "screens.Observation.location": {
-    "message": "Location:"
+    "message": "Localização:"
   },
   "screens.Observation.precision": {
-    "message": "Precision:"
+    "message": "Precisão:"
   },
   "screens.Observation.shareMediaTitle": {
     "description": "Title of dialog to share an observation with media",
@@ -1195,62 +1195,62 @@
     "message": "Trilha"
   },
   "screens.ObservationList.downloadObservation": {
-    "message": "Download Observations"
+    "message": "Baixar observações"
   },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",
     "message": "Observações"
   },
   "screens.ObservationMetadataVerified.accuracy": {
-    "message": "Accuracy"
+    "message": "Precisão"
   },
   "screens.ObservationMetadataVerified.altitude": {
     "message": "Altitude"
   },
   "screens.ObservationMetadataVerified.altitudeAccuracy": {
-    "message": "Altitude Accuracy"
+    "message": "Precisão da Altitude"
   },
   "screens.ObservationMetadataVerified.coMapeoData": {
-    "message": "CoMapeo Data"
+    "message": "Dados do CoMapeo"
   },
   "screens.ObservationMetadataVerified.dataEntered": {
-    "message": "This data was manually entered."
+    "message": "Este dado foi inserido manualmente."
   },
   "screens.ObservationMetadataVerified.date": {
-    "message": "Date"
+    "message": "Data"
   },
   "screens.ObservationMetadataVerified.howWeCheck": {
-    "message": "How we validate"
+    "message": "Como nós validamos"
   },
   "screens.ObservationMetadataVerified.latitude": {
     "message": "Latitude"
   },
   "screens.ObservationMetadataVerified.location": {
-    "message": "Location"
+    "message": "Localização"
   },
   "screens.ObservationMetadataVerified.locationManuallyEntered": {
-    "message": "Location was manually entered"
+    "message": "A localização foi inserida manualmente"
   },
   "screens.ObservationMetadataVerified.longitude": {
     "message": "Longitude"
   },
   "screens.ObservationMetadataVerified.manuallyEntered": {
-    "message": "Manually entered."
+    "message": "Inserido manualmente."
   },
   "screens.ObservationMetadataVerified.navTitle": {
-    "message": "Observation Metadata"
+    "message": "Metadados da Observação"
   },
   "screens.ObservationMetadataVerified.sentByComapeo": {
-    "message": "Sent by CoMapeo"
+    "message": "Enviado por CoMapeo"
   },
   "screens.ObservationMetadataVerified.sentFrom": {
-    "message": "CoMapeo Data sent from"
+    "message": "Dados CoMapeo enviados de"
   },
   "screens.ObservationMetadataVerified.speed": {
-    "message": "Speed"
+    "message": "Velocidade"
   },
   "screens.ObservationMetadataVerified.validatedByCoMapeo": {
-    "message": "Sent and Validated by CoMapeo"
+    "message": "Enviado e validado pelo CoMapeo"
   },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
     "description": "Back button on observation list screen when no observations are yet recorded",
@@ -1282,13 +1282,13 @@
     "message": "Compartilhar Informações de Diagnóstico"
   },
   "screens.PhotoPreviewModal.DeletePhoto.headerButtonText": {
-    "message": "Excluir Foto"
+    "message": "Excluir foto"
   },
   "screens.PhotoPreviewModal.DeletePhoto.navTitle": {
-    "message": "Photo Info"
+    "message": "Informações da foto"
   },
   "screens.PhotoPreviewModal.DeletePhoto.validatedByCoMapeo": {
-    "message": "Validated by CoMapeo"
+    "message": "Validado por CoMapeo"
   },
   "screens.PrivacyPolicy.aboutAwana": {
     "message": "Sobre Awana Digital"
@@ -1408,13 +1408,13 @@
     "message": "Trilha"
   },
   "screens.Security.obscurePasscodeDescription": {
-    "message": "To use, turn on App Passcode"
+    "message": "Para usar, ative a senha do aplicativo"
   },
   "screens.Security.obscurePasscodeDescriptionActivated": {
     "message": "Protect your device against seizure"
   },
   "screens.Security.obscurePasscodeHeader": {
-    "message": "Obscure Passcode"
+    "message": "Senha obscura"
   },
   "screens.Security.passDesriptionPassNotSet": {
     "message": "Senha não definida"
@@ -1513,16 +1513,16 @@
     "message": "Criado em {date} {time}"
   },
   "screens.Settings.Config.importCategories": {
-    "message": "Import Categories"
+    "message": "Importar categorias"
   },
   "screens.Settings.Config.importSuccessTitle": {
-    "message": "Successfully imported categories:"
+    "message": "Categorias importadas com sucesso:"
   },
   "screens.Settings.Config.name": {
-    "message": "Category Set:"
+    "message": "Conjunto de categoria:"
   },
   "screens.Settings.Config.navTitle": {
-    "message": "Categories"
+    "message": "Categorias"
   },
   "screens.Settings.Config.okButton": {
     "message": "OK"
@@ -1534,7 +1534,7 @@
     "message": "New Project"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
-    "message": "Go Back"
+    "message": "Voltar"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.howTo": {
     "message": "Como participar de um projeto"
@@ -1567,13 +1567,13 @@
     "message": "Enter a name for the Project"
   },
   "screens.Settings.CreateOrJoinProject.importCategories": {
-    "message": "Import Categories"
+    "message": "Importar categorias"
   },
   "screens.Settings.CreateOrJoinProject.importConfigFileError": {
     "message": "File name should end with .comapeocat"
   },
   "screens.Settings.CreateOrJoinProject.importSuccessTitle": {
-    "message": "Successfully imported categories:"
+    "message": "Categorias importadas com sucesso:"
   },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
     "message": "Junte-se a um projeto existente"
@@ -1726,7 +1726,7 @@
     "message": "Ready to exchange"
   },
   "screens.Sync.ProjectSyncDisplay.start": {
-    "message": "Start"
+    "message": "Iniciar"
   },
   "screens.Sync.ProjectSyncDisplay.stop": {
     "message": "Parar"
@@ -1750,10 +1750,10 @@
     "message": "{ssid}"
   },
   "screens.Sync.headerTitle": {
-    "message": "Exchange"
+    "message": "Trocar"
   },
   "screens.Sync.remoteArchiveConnected": {
-    "message": "Remote Archive connected"
+    "message": "Arquivo remoto conectado"
   },
   "screens.SyncEverythingBottomSheet.cancel": {
     "message": "Cancelar"
@@ -1808,16 +1808,16 @@
     "message": "Trilha"
   },
   "screens.TrackRecordingActive.cancel": {
-    "message": "Cancel"
+    "message": "Cancelar"
   },
   "screens.TrackRecordingActive.recordingTracks": {
-    "message": "Recording Tracks!"
+    "message": "Gravando Trilhas!"
   },
   "screens.TrackRecordingActive.stopTracks": {
-    "message": "Stop Tracks"
+    "message": "Parar trilhas"
   },
   "screens.TrackRecordingActive.warningMessage": {
-    "message": "You’re currently recording a track. To join project, stop recording"
+    "message": "Você está gravando uma trilha agora. Para entrar em um projeto, pare a gravação"
   },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",
@@ -1840,10 +1840,10 @@
     "message": "Alterar"
   },
   "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "Go Back"
+    "message": "Voltar"
   },
   "sharedComponents.ErrorBottomSheet.somethingWrong": {
-    "message": "Something Went Wrong"
+    "message": "Ocorreu um erro"
   },
   "sharedComponents.RoleWithIcon.coordinator": {
     "message": "Coordenador"
@@ -1852,7 +1852,7 @@
     "message": "Participante"
   },
   "soloProject.inviteCollaborators.goBack": {
-    "message": "Go Back"
+    "message": "Voltar"
   },
   "soloProject.inviteCollaborators.introText": {
     "message": "Share observations with others using CoMapeo. Name your solo project to add your first collaborator."
@@ -1864,12 +1864,12 @@
     "message": "Manage and control sharing and collaboration in Project Settings."
   },
   "soloProject.inviteCollaborators.nameProject": {
-    "message": "Name My Project"
+    "message": "Nomear meu projeto"
   },
   "soloProject.inviteCollaborators.readyToShare": {
     "message": "Once you name your project, all your observations are ready to be shared."
   },
   "soloProject.inviteCollaborators.title": {
-    "message": "Invite Collaborators"
+    "message": "Convide colaboradores"
   }
 }

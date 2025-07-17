@@ -1278,13 +1278,25 @@
   "screens.OnboardingPrivacyPolicy.shareDiagnostics": {
     "message": "Share Diagnostic Information"
   },
-  "screens.PhotoPreviewModal.DeletePhoto.headerButtonText": {
+  "screens.PhotoPreviewModal.headerButtonText": {
     "message": "Delete Photo"
   },
-  "screens.PhotoPreviewModal.DeletePhoto.navTitle": {
+  "screens.PhotoPreviewModal.imageStorageSize": {
+    "description": "Image size in megabytes",
+    "message": "{value} MB"
+  },
+  "screens.PhotoPreviewModal.landscape": {
+    "description": "Describes image layout when taking photo horizontally",
+    "message": "Landscape"
+  },
+  "screens.PhotoPreviewModal.navTitle": {
     "message": "Photo Info"
   },
-  "screens.PhotoPreviewModal.DeletePhoto.validatedByCoMapeo": {
+  "screens.PhotoPreviewModal.portrait": {
+    "description": "Describes image layout when taking photo vertically",
+    "message": "Portrait"
+  },
+  "screens.PhotoPreviewModal.validatedByCoMapeo": {
     "message": "Validated by CoMapeo"
   },
   "screens.PrivacyPolicy.aboutAwana": {

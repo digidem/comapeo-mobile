@@ -15,13 +15,13 @@ const SecurityStateSchema = v.variant('passcode', [
     passcode: PasscodeSchema,
     obscureCodeEnabled: v.boolean(),
     failedAttempts: v.number(),
-    lockUntil: v.union([v.number(), v.null()]),
+    lockUntil: v.number(),
   }),
   v.object({
     passcode: v.null(),
     obscureCodeEnabled: v.literal(false),
     failedAttempts: v.number(),
-    lockUntil: v.union([v.number(), v.null()]),
+    lockUntil: v.number(),
   }),
 ]);
 
@@ -35,7 +35,7 @@ function createInitialState(): SecurityState {
     passcode: null,
     obscureCodeEnabled: false,
     failedAttempts: 0,
-    lockUntil: null,
+    lockUntil: 0,
   };
 }
 
@@ -74,7 +74,7 @@ export function createSecurityStore({persist} = {persist: false}) {
           passcode: null,
           obscureCodeEnabled: false,
           failedAttempts: 0,
-          lockUntil: null,
+          lockUntil: 0,
         });
         return;
       }
@@ -100,7 +100,7 @@ export function createSecurityStore({persist} = {persist: false}) {
     },
 
     resetFailedAttempts: () => {
-      store.setState({failedAttempts: 0, lockUntil: null});
+      store.setState({failedAttempts: 0, lockUntil: 0});
     },
 
     setLockout: (lockUntil: number) => {

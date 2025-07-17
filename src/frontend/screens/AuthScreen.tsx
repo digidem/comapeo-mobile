@@ -24,11 +24,6 @@ const m = defineMessages({
     id: 'screens.EnterPassword.wrongPass',
     defaultMessage: 'Incorrect Passcode ',
   },
-  lockoutMessage: {
-    id: 'screens.EnterPassword.lockoutMessage',
-    defaultMessage:
-      'Try again in {minutes, plural, one {# minute} other {# minutes}}',
-  },
 });
 
 export const AuthScreen = ({
@@ -39,7 +34,7 @@ export const AuthScreen = ({
   const {authenticate, authState} = useAuthContext();
   const [inputtedPass, setInputtedPass] = React.useState('');
   const scrollViewRef = React.useRef<ScrollView>(null);
-  const {isLockedOut, lockoutMessage} = usePasscodeLockout(m.lockoutMessage);
+  const {isLockedOut, message: lockoutMessage} = usePasscodeLockout();
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', event => {

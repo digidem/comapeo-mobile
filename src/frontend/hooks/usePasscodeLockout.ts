@@ -1,42 +1,42 @@
 import {useEffect, useState} from 'react';
-import {useIntl} from 'react-intl';
-import {useSecurityState} from '../contexts/SecurityStoreContext';
+import {
+  useSecurityActions,
+  useSecurityState,
+} from '../contexts/SecurityStoreContext';
 import {getRemainingLockoutMinutes} from '../lib/security';
+import {defineMessages, useIntl} from 'react-intl';
 
-export function usePasscodeLockout(message: {
-  id: string;
-  defaultMessage: string;
-}) {
+const m = defineMessages({
+  lockoutMessage: {
+    id: 'hooks.usePasscodeLockout.lockoutMessage',
+    defaultMessage:
+      'Try again in {minutes, plural, one {# minute} other {# minutes}}',
+  },
+});
+
+export function usePasscodeLockout() {
   const {lockUntil} = useSecurityState();
-  const [isLockedOut, setIsLockedOut] = useState(false);
-  const [lockoutMessage, setLockoutMessage] = useState<string | null>(null);
+  const {setLockout} = useSecurityActions();
+  const [minutes, setMinutes] = useState(0);
   const {formatMessage} = useIntl();
 
   useEffect(() => {
-    if (!lockUntil) {
-      setIsLockedOut(false);
-      setLockoutMessage(null);
-      return;
+    let timeout: NodeJS.Timeout | null = null;
+    if (lockUntil) {
+      const calcMinutes = getRemainingLockoutMinutes(lockUntil);
+      setMinutes(calcMinutes);
+      timeout = setTimeout(() => {
+        setLockout(0);
+      }, calcMinutes * 60_000);
     }
 
-    const minutes = getRemainingLockoutMinutes(lockUntil);
+    return () => {
+      if (timeout) clearTimeout(timeout);
+    };
+  }, [lockUntil, setLockout]);
 
-    if (minutes <= 0) {
-      setIsLockedOut(false);
-      setLockoutMessage(null);
-      return;
-    }
-
-    setIsLockedOut(true);
-    setLockoutMessage(formatMessage(message, {minutes}));
-
-    const timeout = setTimeout(() => {
-      setIsLockedOut(false);
-      setLockoutMessage(null);
-    }, minutes * 60_000);
-
-    return () => clearTimeout(timeout);
-  }, [lockUntil, formatMessage, message]);
-
-  return {isLockedOut, lockoutMessage};
+  return {
+    isLockedOut: !!lockUntil,
+    message: formatMessage(m.lockoutMessage, {minutes}),
+  };
 }

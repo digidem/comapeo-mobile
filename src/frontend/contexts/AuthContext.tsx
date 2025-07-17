@@ -74,29 +74,20 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
 
   const authenticate: AuthContextType['authenticate'] = React.useCallback(
     (passcodeValue, validateOnly = false) => {
+      if (validateOnly) return passcodeValue === passcode;
+
       const isLockedOut = lockUntil !== null && Date.now() < lockUntil;
       if (isLockedOut) {
         throw new Error('LOCKED_OUT');
       }
 
-      const isCorrect = passcodeValue === passcode;
-
-      if (validateOnly && isCorrect) {
-        resetFailedAttempts();
-        return true;
-      }
-
-      if (
-        !validateOnly &&
-        obscureCodeEnabled &&
-        passcodeValue === DEFAULT_OBSCURE_CODE
-      ) {
+      if (obscureCodeEnabled && passcodeValue === DEFAULT_OBSCURE_CODE) {
         setAuthState('obscured');
         resetFailedAttempts();
         return true;
       }
 
-      if (isCorrect && !validateOnly) {
+      if (passcodeValue === passcode) {
         setAuthState('authenticated');
         resetFailedAttempts();
         return true;
@@ -106,10 +97,6 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
       const minutes = getLockoutThreshold(attempts);
       if (minutes) {
         setLockout(Date.now() + minutes * 60 * 1000);
-      }
-
-      if (validateOnly) {
-        return false;
       }
       throw new Error('Incorrect Passcode');
     },

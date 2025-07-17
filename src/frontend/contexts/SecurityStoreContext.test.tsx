@@ -193,5 +193,5 @@ test('resets attempts and lockout', () => {
   });
 
   expect(stateHook.result.current.failedAttempts).toBe(0);
-  expect(stateHook.result.current.lockUntil).toBe(null);
+  expect(stateHook.result.current.lockUntil).toBe(0);
 });

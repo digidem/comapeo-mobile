@@ -50,7 +50,7 @@
     "message": "You’ve been recording for {time}"
   },
   "Navigation.Menu.Settings": {
-    "message": "Settings"
+    "message": "Ajustes"
   },
   "Navigation.Menu.aboutCoMapeo": {
     "message": "Sobre o CoMapeo"
@@ -275,10 +275,10 @@
     "message": "Idioma de exibição do aplicativo"
   },
   "Screens.Settings.AppSettings.mapManagement": {
-    "message": "Map Management"
+    "message": "Gerenciamento de Mapa"
   },
   "Screens.Settings.AppSettings.mapManagementDesc": {
-    "message": "Backgrounds, Map Data"
+    "message": "Mapa de fundo, dados de mapa"
   },
   "Screens.Settings.AppSettings.title": {
     "message": "Configurações do Aplicativo"
@@ -558,7 +558,7 @@
     "message": "Gravando Áudio com CoMapeo"
   },
   "screens.AudioPlaybackUnsaved.description": {
-    "message": "Total length: {length}"
+    "message": "Duração total: {length}"
   },
   "screens.AudioRecording.lessThan1": {
     "message": "Menos de um minuto restante"
@@ -570,10 +570,10 @@
     "message": "Record up to 5 minutes"
   },
   "screens.AudioSavedBottomSheet.recordAnother": {
-    "message": "Record Another"
+    "message": "Fazer Outra Gravação"
   },
   "screens.AudioSavedBottomSheet.returnToEditor": {
-    "message": "Return to Editor"
+    "message": "Voltar ao Editor"
   },
   "screens.AudioSavedBottomSheet.subTitle": {
     "message": "Your Audio Recording was added"
@@ -589,7 +589,7 @@
   },
   "screens.CategoryChooser.categoryTitle": {
     "description": "Title for category chooser screen",
-    "message": "Choose what is happening"
+    "message": "Escolha o que está acontecendo"
   },
   "screens.ConfirmDeletePhoto.cancel": {
     "message": "Cancelar"
@@ -662,10 +662,10 @@
     "message": "Dados & Privacidade"
   },
   "screens.DeleteAudioBottomSheet.Description": {
-    "message": "Your Audio Recording will be permanently deleted. This cannot be undone."
+    "message": "Sua gravação de áudio será excluída permanentemente. Isto não pode ser desfeito."
   },
   "screens.DeleteAudioBottomSheet.Title": {
-    "message": "Delete?"
+    "message": "Excluir?"
   },
   "screens.DeleteAudioBottomSheet.cancel": {
     "message": "Cancelar"
@@ -680,10 +680,10 @@
     "message": "Para encontrar as configurações do seu projeto, vá até o menu principal localizado na tela do mapa."
   },
   "screens.DeviceNaming.Success.goToMap": {
-    "message": "Go to Map"
+    "message": "Ir para Mapas"
   },
   "screens.DeviceNaming.Success.startMappingInstructions": {
-    "message": "You can start mapping alone or start mapping with a team. Create or join a project in order to share data with other devices that are part of the same project."
+    "message": "Você pode começar a mapear sozinho ou com uma equipe. Crie ou junte-se a um projeto para compartilhar dados com outros dispositivos que fazem parte do mesmo projeto."
   },
   "screens.DeviceNaming.Success.success": {
     "message": "Sucesso!"
@@ -692,10 +692,10 @@
     "message": "Adicionar Nome"
   },
   "screens.DeviceNaming.description": {
-    "message": "You can start mapping alone or start mapping with a team. Create or join a project in order to share data with other devices that are part of the same project."
+    "message": "Você pode começar a mapear sozinho ou com uma equipe. Compartilhe dados com outros dispositivos, criando um novo ou juntando-se ao mesmo projeto."
   },
   "screens.DeviceNaming.header": {
-    "message": "Add a name for your device"
+    "message": "Adicione um nome para o seu dispositivo"
   },
   "screens.EnterPassword.enterPass": {
     "message": "Insira sua senha"
@@ -758,19 +758,19 @@
     "message": "Ocorreu um erro"
   },
   "screens.HowToLeaveProject.goBack": {
-    "message": "Go back"
+    "message": "Voltar"
   },
   "screens.HowToLeaveProject.howTo": {
-    "message": "How to Leave Project"
+    "message": "Como sair do projeto"
   },
   "screens.HowToLeaveProject.instructions": {
-    "message": "To leave this project please uninstall and reinstall CoMapeo. All project data will be removed from this device."
+    "message": "Para sair deste projeto, desinstale e reinstale o CoMapeo. Todos os dados do projeto serão removidos deste dispositivo."
   },
   "screens.HowToLeaveProject.warning": {
-    "message": "If you are the only Coordinator on the project no one else will be able to edit project details or invite other devices!"
+    "message": "Se você é o único Coordenador no projeto, ninguém mais poderá editar os detalhes do projeto ou convidar outros dispositivos!"
   },
   "screens.IntroToCoMapeo.collaborate": {
-    "message": "Collaborate with others"
+    "message": "Colabore com outras pessoas"
   },
   "screens.IntroToCoMapeo.designedFor": {
     "message": "Desenvolvido com e para povos indígenas e comunidades que estão na linha de frente"
@@ -998,22 +998,22 @@
     "message": "Cancelar"
   },
   "screens.MediaSyncSettings.syncEverything": {
-    "message": "Sync Everything"
+    "message": "Sincronizar tudo"
   },
   "screens.MediaSyncSettings.syncEverythingDescription": {
-    "message": "Your device will sync <bold>all</bold> content at full size, including photos, audio, and videos."
+    "message": "Seu dispositivo irá sincronizar <bold>todos os conteúdos</bold>, incluindo fotos, áudio e vídeos."
   },
   "screens.MediaSyncSettings.syncEverythingWarning": {
-    "message": "Note: This will use more storage."
+    "message": "Nota: Isso usará mais armazenamento do seu dispositivo."
   },
   "screens.MediaSyncSettings.syncPreviews": {
-    "message": "Sync Previews (Photos Only)"
+    "message": "Pré-visualizações de Sincronização (Apenas Fotos)"
   },
   "screens.MediaSyncSettings.syncPreviewsDescription": {
-    "message": "Photos will sync at a reduced smaller size. Device will <bold>not</bold> sync audio or video."
+    "message": "Fotos serão sincronizadas em um tamanho menor. Dispositivo <bold>não</bold> sincronizará áudio ou vídeo."
   },
   "screens.MediaSyncSettings.title": {
-    "message": "Sync Settings"
+    "message": "Configurações de Sincronização"
   },
   "screens.ObscurePasscode.description": {
     "message": "A senha secreta é um recurso de segurança que permite abrir o CoMapeo em um modo que oculta todos os seus dados. Digitar essa senha secreta na tela de início do app exibirá uma versão vazia do CoMapeo, permitindo que você crie observações de demonstração que não são salvas no banco de dados do CoMapeo."
@@ -1411,7 +1411,7 @@
     "message": "Para usar, ative a senha do aplicativo"
   },
   "screens.Security.obscurePasscodeDescriptionActivated": {
-    "message": "Protect your device against seizure"
+    "message": "Proteja seu dispositivo contra apreensão"
   },
   "screens.Security.obscurePasscodeHeader": {
     "message": "Senha obscura"
@@ -1453,13 +1453,13 @@
     "message": "Nome do dispositivo"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
-    "message": "Add Another Device"
+    "message": "Adicionar outro dispositivo"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.close": {
     "message": "Fechar"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
-    "message": "Invite Accepted"
+    "message": "Convite aceito"
   },
   "screens.Setting.ProjectSettings.YourTeam.NotOnProject.createOrJoin": {
     "message": "Criar ou Juntar-se a um Projeto"
@@ -1543,16 +1543,16 @@
     "message": "Para participar de um projeto, encontre o Coordenador do projeto que você deseja participar. Diga a eles o nome do seu dispositivo e o Coordenador lhe enviará um convite."
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.goToMap": {
-    "message": "Go to Map"
+    "message": "Ir para Mapas"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.invitedDevice": {
     "message": "Convidar dispositivo"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.projectCreated": {
-    "message": "{projectName} Created!"
+    "message": "{projectName} criado!"
   },
   "screens.Settings.CreateOrJoinProject.advancedSettings": {
-    "message": "Advanced Project Settings"
+    "message": "Configurações Avançadas do Projeto"
   },
   "screens.Settings.CreateOrJoinProject.alreadyOnProject": {
     "message": "Você já está em um projeto. Para criar um novo projeto, você deve desinstalar e reinstalar o CoMapeo."
@@ -1561,16 +1561,16 @@
     "message": "Criar um Projeto"
   },
   "screens.Settings.CreateOrJoinProject.createProjectButton": {
-    "message": "Create Project"
+    "message": "Criar Projeto"
   },
   "screens.Settings.CreateOrJoinProject.enterName": {
-    "message": "Enter a name for the Project"
+    "message": "Digite um nome para o projeto"
   },
   "screens.Settings.CreateOrJoinProject.importCategories": {
     "message": "Importar categorias"
   },
   "screens.Settings.CreateOrJoinProject.importConfigFileError": {
-    "message": "File name should end with .comapeocat"
+    "message": "O nome do arquivo deve terminar com .mapeoconfig"
   },
   "screens.Settings.CreateOrJoinProject.importSuccessTitle": {
     "message": "Categorias importadas com sucesso:"
@@ -1603,7 +1603,7 @@
     "message": "Selecionar Arquivo"
   },
   "screens.Settings.MapManagement.BackgroundMaps.about": {
-    "message": "About Custom Map"
+    "message": "Sobre o mapa personalizado"
   },
   "screens.Settings.MapManagement.BackgroundMaps.cannotBeUndone": {
     "message": "Isto não pode ser desfeito."
@@ -1630,10 +1630,10 @@
     "message": "Excluir mapa"
   },
   "screens.Settings.MapManagement.BackgroundMaps.description1": {
-    "message": "Adding a custom map will enable you to see a map when you are offline."
+    "message": "Adicionar um mapa personalizado permitirá que você veja um mapa quando estiver offline."
   },
   "screens.Settings.MapManagement.BackgroundMaps.description2": {
-    "message": "Your custom map is not shared with other devices in your project."
+    "message": "Seu mapa personalizado não está compartilhado com outros dispositivos no seu projeto."
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorDescription": {
     "message": "Não foi possível importar o arquivo. Por favor, volte e tente novamente."
@@ -1645,7 +1645,7 @@
     "message": "Remover arquivo do mapa"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
-    "message": "Background Maps"
+    "message": "Mapas de fundo"
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.dateAdded": {
     "message": "Data de inclusão"
@@ -1660,10 +1660,10 @@
     "message": "{value} MB"
   },
   "screens.Settings.MapManagement.backgroundMaps": {
-    "message": "Background Maps"
+    "message": "Mapas de fundo"
   },
   "screens.Settings.MapManagement.screenTitle": {
-    "message": "Map Management"
+    "message": "Gerenciamento de Mapa"
   },
   "screens.Settings.YourTeam.InviteDeclined": {
     "message": "Convite recusado"
@@ -1684,13 +1684,13 @@
     "message": "Política de Privacidade"
   },
   "screens.Sync.NoWifiDisplay.buttonText": {
-    "message": "Open Settings"
+    "message": "Abrir Configurações"
   },
   "screens.Sync.NoWifiDisplay.description": {
-    "message": "Open your phone settings and connect to a WiFi network to synchronize"
+    "message": "Abra as configurações do seu dispositivo e conecte-se a uma rede Wi-Fi para sincronizar"
   },
   "screens.Sync.NoWifiDisplay.title": {
-    "message": "No WiFi"
+    "message": "Sem Wi-Fi"
   },
   "screens.Sync.ProjectSyncDisplay.allCaughtUp": {
     "message": "Está tudo sincronizado!"
@@ -1702,25 +1702,25 @@
     "message": "Connected to"
   },
   "screens.Sync.ProjectSyncDisplay.devicesAvailableToSync": {
-    "message": "Devices available"
+    "message": "Dispositivos disponíveis"
   },
   "screens.Sync.ProjectSyncDisplay.devicesFound": {
-    "message": "Devices found"
+    "message": "Dispositivos encontrados"
   },
   "screens.Sync.ProjectSyncDisplay.noDevicesAvailableToSync": {
-    "message": "No devices available to sync"
+    "message": "Não há dispositivos disponíveis para sincronização"
   },
   "screens.Sync.ProjectSyncDisplay.noWifi": {
     "message": "Sem Wi-Fi"
   },
   "screens.Sync.ProjectSyncDisplay.progressLabelSyncing": {
-    "message": "Syncing…"
+    "message": "Sincronizando…"
   },
   "screens.Sync.ProjectSyncDisplay.progressLabelWaiting": {
-    "message": "Waiting…"
+    "message": "Esperando…"
   },
   "screens.Sync.ProjectSyncDisplay.progressLabelWithDeviceCount": {
-    "message": "Waiting for other devices"
+    "message": "Aguardando dispositivos"
   },
   "screens.Sync.ProjectSyncDisplay.readyToExchange": {
     "message": "Ready to exchange"
@@ -1738,13 +1738,13 @@
     "message": "Concluído! Esperando que outros dispositivos participem"
   },
   "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
-    "message": "Complete! You're up to date"
+    "message": "Completo! Você está atualizado"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
     "message": "You are exchanging with your team"
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
-    "message": "Waiting for devices"
+    "message": "Aguardando dispositivos"
   },
   "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
     "message": "{ssid}"
@@ -1759,28 +1759,28 @@
     "message": "Cancelar"
   },
   "screens.SyncEverythingBottomSheet.confirm": {
-    "message": "Sync Everything"
+    "message": "Sincronizar tudo"
   },
   "screens.SyncEverythingBottomSheet.syncEverything": {
-    "message": "Sync Everything?"
+    "message": "Sincronizar tudo?"
   },
   "screens.SyncEverythingBottomSheet.syncEverythingDescription": {
-    "message": "You are about to sync everything. This may increase the disk space used on your device."
+    "message": "Você está prestes a sincronizar todas as informações. Isso pode aumentar o espaço ocupado na memória do seu dispositivo."
   },
   "screens.SyncPreviewBottomSheet.cancel": {
     "message": "Cancelar"
   },
   "screens.SyncPreviewBottomSheet.confirm": {
-    "message": "Sync Previews"
+    "message": "Pré-visualizações de Sincronização"
   },
   "screens.SyncPreviewBottomSheet.syncPreviewWarningBottomSheet": {
-    "message": "You will no longer sync Audio or Video."
+    "message": "Você não sincronizará mais áudios ou vídeos."
   },
   "screens.SyncPreviewBottomSheet.syncPreviewsButtonBottomSheet": {
-    "message": "Sync Previews?"
+    "message": "Pré-visualizações de Sincronização?"
   },
   "screens.SyncPreviewBottomSheet.syncPreviewsDescriptionBottomSheet": {
-    "message": "Your device will keep all existing data but new observations will sync in a smaller, preview size."
+    "message": "Seu dispositivo manterá todos os dados já existentes, mas as novas observações serão sincronizadas em uma visualização menor."
   },
   "screens.Track.ObservationList.observation": {
     "message": "Observação"
@@ -1824,7 +1824,7 @@
     "message": "Mostrar opções"
   },
   "sharedComponents.DeviceCard.leaveProject": {
-    "message": "Leave Project"
+    "message": "Sair do Projeto"
   },
   "sharedComponents.DeviceIconWithName.Disconnected": {
     "message": "Desconectado"

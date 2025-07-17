@@ -47,7 +47,7 @@
     "message": "Detener Tracks"
   },
   "Navigation.Menu.Settings": {
-    "message": "App Settings"
+    "message": "Ajustes de la aplicación"
   },
   "Navigation.Menu.aboutCoMapeo": {
     "message": "Acerca de CoMapeo"
@@ -379,7 +379,7 @@
     "message": "Short Description of the Project, less than 60 characters."
   },
   "screen.EditProjectDetails.navTitle": {
-    "message": "Edit Info"
+    "message": "Editar información"
   },
   "screen.EditProjectDetails.projectColors": {
     "message": "Project Card Colors"
@@ -388,7 +388,7 @@
     "message": "Project Description"
   },
   "screen.EditProjectDetails.projectName": {
-    "message": "Project Name"
+    "message": "Nombre del proyecto"
   },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Persona Coordinadora"
@@ -557,10 +557,10 @@
     "message": "Usar la Contraseña de la aplicación"
   },
   "screens.AudioAttachmentPlayback.navTitle": {
-    "message": "Audio Recording"
+    "message": "Grabación de audio"
   },
   "screens.AudioAttachmentPlayback.share": {
-    "message": "Share"
+    "message": "Enviar"
   },
   "screens.AudioPermission.Button.allow": {
     "description": "Screen button text for granting the audio permission",
@@ -586,7 +586,7 @@
     "message": "Back to Editing"
   },
   "screens.AudioPlaybackNew.delete": {
-    "message": "Delete"
+    "message": "Borrar"
   },
   "screens.AudioPlaybackNew.recordingSaved": {
     "message": "Recording Saved!"
@@ -607,13 +607,13 @@
     "message": "No hay acceso a la cámara. Por favor permite el acceso en ajustes"
   },
   "screens.ConfirmDeletePhoto.cancel": {
-    "message": "Cancel"
+    "message": "Cancelar"
   },
   "screens.ConfirmDeletePhoto.deletePhoto": {
-    "message": "Delete Photo"
+    "message": "Eliminar foto"
   },
   "screens.ConfirmDeletePhoto.title": {
-    "message": "Delete this photo?"
+    "message": "¿Eliminar esta foto?"
   },
   "screens.CoordinateFormat.dd": {
     "description": "Decimal Degrees coordinate format",
@@ -710,7 +710,7 @@
     "message": "No Wi-Fi"
   },
   "screens.ExchangeSettingsBottomSheet.close": {
-    "message": "Close"
+    "message": "Cerrar"
   },
   "screens.ExchangeSettingsBottomSheet.everythingDesc": {
     "message": "Full size photos and audio. Uses more storage."
@@ -725,7 +725,7 @@
     "message": "Exchange Previews Only"
   },
   "screens.ExchangeSettingsBottomSheet.save": {
-    "message": "Save"
+    "message": "Guardar"
   },
   "screens.ExchangeSettingsCard.changeSettings": {
     "message": "Change Settings"
@@ -764,16 +764,16 @@
     "message": "Text only as a GeoJSON file"
   },
   "screens.ExportObservations.close": {
-    "message": "Close"
+    "message": "Cerrar"
   },
   "screens.ExportObservations.download": {
-    "message": "Download"
+    "message": "Descargar"
   },
   "screens.ExportObservations.errorMessage": {
     "message": "Choose an option"
   },
   "screens.ExportObservations.tracks": {
-    "message": "Tracks"
+    "message": "Trayectos"
   },
   "screens.ExportObservations.tracksDescription": {
     "message": "Tracks only as a GeoJSON file"
@@ -1279,7 +1279,7 @@
     "message": "Compartir información de diagnóstico"
   },
   "screens.PhotoPreviewModal.headerButtonText": {
-    "message": "Delete Photo"
+    "message": "Eliminar foto"
   },
   "screens.PhotoPreviewModal.imageStorageSize": {
     "description": "Image size in megabytes",
@@ -1465,13 +1465,13 @@
     "message": "Invite Another Device"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
-    "message": "Accepted!"
+    "message": "¡Aceptado!"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> is now part of your project."
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
-    "message": "View Team"
+    "message": "Ver equipo"
   },
   "screens.Setting.ProjectSettings.YourTeam.NotOnProject.createOrJoin": {
     "message": "Crear o unirse a un proyecto"
@@ -1546,7 +1546,7 @@
     "message": "Start New Project"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
-    "message": "Name My Project"
+    "message": "Nombre de mi proyecto"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
     "message": "Regresar"
@@ -1558,7 +1558,7 @@
     "message": "Para unirte a un Proyecto encuentra una persona coordinadora del proyecto al que deseas unirte. Dile el nombre de tu dispositivo y la persona Coordinadora te enviará una invitación."
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.goToMap": {
-    "message": "Start Mapping"
+    "message": "Comenzar a mapear"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.invitedDevice": {
     "message": "Invite a Device"
@@ -1570,7 +1570,7 @@
     "message": "is now ready for you to invite devices."
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
-    "message": "Success!"
+    "message": "¡Éxito!"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.updateCategories": {
     "message": "Update Categories Set"
@@ -1588,7 +1588,7 @@
     "message": "Create"
   },
   "screens.Settings.CreateOrJoinProject.enterName": {
-    "message": "Project Name"
+    "message": "Nombre del proyecto"
   },
   "screens.Settings.CreateOrJoinProject.existingProjectName": {
     "message": "Using an existing project name does not make them the same project."
@@ -1612,7 +1612,7 @@
     "message": "Request invites to join existing projects."
   },
   "screens.Settings.CreateOrJoinProject.saveProjectButton": {
-    "message": "Save"
+    "message": "Guardar"
   },
   "screens.Settings.CreateOrJoinProject.startProject": {
     "message": "Iniciar un nuevo Proyecto en CoMapeo"
@@ -1702,7 +1702,7 @@
     "message": "Política de privacidad"
   },
   "screens.Sync.NoWifiDisplay.buttonText": {
-    "message": "Close"
+    "message": "Cerrar"
   },
   "screens.Sync.NoWifiDisplay.description": {
     "message": "Check device’s settings and connectivity."
@@ -1717,10 +1717,10 @@
     "message": "Up to date!"
   },
   "screens.Sync.ProjectSyncDisplay.close": {
-    "message": "Close"
+    "message": "Cerrar"
   },
   "screens.Sync.ProjectSyncDisplay.devicesFound": {
-    "message": "Devices found."
+    "message": "Dispositivos encontrados."
   },
   "screens.Sync.ProjectSyncDisplay.exchangeAction": {
     "message": "Change Settings"
@@ -1762,13 +1762,13 @@
     "message": "¡Completado! Esperando a que se unan otros dispositivos"
   },
   "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
-    "message": "Complete!"
+    "message": "¡Completo!"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
     "message": "Exchanging..."
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
-    "message": "Waiting for devices..."
+    "message": "Esperando a los dispositivos..."
   },
   "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
     "message": "{ssid}"
@@ -1870,7 +1870,7 @@
     "message": "Invita colaboradores"
   },
   "soloProject.startNewProject.goBack": {
-    "message": "Go Back"
+    "message": "Regresar"
   },
   "soloProject.startNewProject.introText": {
     "message": "Secure and private way to exchange with collaborators."
@@ -1882,7 +1882,7 @@
     "message": "Easily manage project contributors and settings."
   },
   "soloProject.startNewProject.start": {
-    "message": "Start"
+    "message": "Comenzar"
   },
   "soloProject.startNewProject.title": {
     "message": "Start New Project"

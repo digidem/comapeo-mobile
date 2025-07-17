@@ -1282,7 +1282,7 @@
     "message": "Compartir información de diagnóstico"
   },
   "screens.PhotoPreviewModal.DeletePhoto.headerButtonText": {
-    "message": "Eliminar foto"
+    "message": "Delete Photo"
   },
   "screens.PhotoPreviewModal.DeletePhoto.navTitle": {
     "message": "Photo Info"

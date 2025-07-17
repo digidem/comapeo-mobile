@@ -833,17 +833,17 @@
     "message": "Ir para o Mapa"
   },
   "screens.InviteSuccess.goToSync": {
-    "message": "Go To Sync"
+    "message": "Ir para Sincronização"
   },
   "screens.InviteSuccess.success": {
-    "message": "Success"
+    "message": "Sucesso"
   },
   "screens.InviteSuccess.youHaveJoined": {
-    "message": "You have joined {projectName}"
+    "message": "Você está no projeto {projectName}"
   },
   "screens.LanguageSettings.followSystemPreferences": {
     "description": "Label for language option to follow system preferences",
-    "message": "Follow system preferences"
+    "message": "Seguir preferências do sistema"
   },
   "screens.LanguageSettings.title": {
     "description": "Title language settings screen",
@@ -1004,10 +1004,10 @@
     "message": "Use Location? Tracks location even when closed. Data remains on device only."
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Turn On Location"
+    "message": "Ativar localização"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
-    "message": "Use Location?"
+    "message": "Usar a localização?"
   },
   "screens.ObscurePasscode.description": {
     "message": "A senha secreta é um recurso de segurança que permite abrir o CoMapeo em um modo que oculta todos os seus dados. Digitar essa senha secreta na tela de início do app exibirá uma versão vazia do CoMapeo, permitindo que você crie observações de demonstração que não são salvas no banco de dados do CoMapeo."
@@ -1041,7 +1041,7 @@
     "message": "Compartilhar"
   },
   "screens.Observation.TrackList.track": {
-    "message": "Track"
+    "message": "Trilha"
   },
   "screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
@@ -1055,17 +1055,17 @@
     "message": "Sim, excluir"
   },
   "screens.Observation.defaultProjectName": {
-    "message": "My Project"
+    "message": "Meu Projeto"
   },
   "screens.Observation.deleteTitle": {
     "description": "Title of dialog asking confirmation to delete an observation",
     "message": "Excluir observação?"
   },
   "screens.Observation.description": {
-    "message": "Description:"
+    "message": "Descrição:"
   },
   "screens.Observation.details": {
-    "message": "Details:"
+    "message": "Detalhes:"
   },
   "screens.Observation.fallbackCategoryName": {
     "description": "Fallback name used when category name cannot be determined for observation",
@@ -1073,13 +1073,13 @@
   },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "Observation"
+    "message": "Observação"
   },
   "screens.Observation.location": {
-    "message": "Location:"
+    "message": "Localização:"
   },
   "screens.Observation.precision": {
-    "message": "Precision:"
+    "message": "Precisão:"
   },
   "screens.Observation.shareMediaTitle": {
     "description": "Title of dialog to share an observation with media",
@@ -1100,7 +1100,7 @@
     "message": "Observação"
   },
   "screens.ObservationCategoryChooser.title": {
-    "message": "Choose a category"
+    "message": "Escolha uma categoria"
   },
   "screens.ObservationCreate.changePreset": {
     "message": "Alterar"
@@ -1192,62 +1192,62 @@
     "message": "Trilha"
   },
   "screens.ObservationList.downloadObservation": {
-    "message": "Download Observations"
+    "message": "Baixar observações"
   },
   "screens.ObservationList.observationListTitle": {
     "description": "Title of screen with list of observations",
     "message": "Observações"
   },
   "screens.ObservationMetadataVerified.accuracy": {
-    "message": "Accuracy"
+    "message": "Precisão"
   },
   "screens.ObservationMetadataVerified.altitude": {
     "message": "Altitude"
   },
   "screens.ObservationMetadataVerified.altitudeAccuracy": {
-    "message": "Altitude Accuracy"
+    "message": "Precisão da Altitude"
   },
   "screens.ObservationMetadataVerified.coMapeoData": {
-    "message": "CoMapeo Data"
+    "message": "Dados do CoMapeo"
   },
   "screens.ObservationMetadataVerified.dataEntered": {
-    "message": "This data was manually entered."
+    "message": "Este dado foi inserido manualmente."
   },
   "screens.ObservationMetadataVerified.date": {
-    "message": "Date"
+    "message": "Data"
   },
   "screens.ObservationMetadataVerified.howWeCheck": {
-    "message": "How we validate"
+    "message": "Como nós validamos"
   },
   "screens.ObservationMetadataVerified.latitude": {
     "message": "Latitude"
   },
   "screens.ObservationMetadataVerified.location": {
-    "message": "Location"
+    "message": "Localização"
   },
   "screens.ObservationMetadataVerified.locationManuallyEntered": {
-    "message": "Location was manually entered"
+    "message": "A localização foi inserida manualmente"
   },
   "screens.ObservationMetadataVerified.longitude": {
     "message": "Longitude"
   },
   "screens.ObservationMetadataVerified.manuallyEntered": {
-    "message": "Manually entered."
+    "message": "Inserido manualmente."
   },
   "screens.ObservationMetadataVerified.navTitle": {
-    "message": "Observation Metadata"
+    "message": "Metadados da Observação"
   },
   "screens.ObservationMetadataVerified.sentByComapeo": {
-    "message": "Sent by CoMapeo"
+    "message": "Enviado por CoMapeo"
   },
   "screens.ObservationMetadataVerified.sentFrom": {
-    "message": "CoMapeo Data sent from"
+    "message": "Dados CoMapeo enviados de"
   },
   "screens.ObservationMetadataVerified.speed": {
-    "message": "Speed"
+    "message": "Velocidade"
   },
   "screens.ObservationMetadataVerified.validatedByCoMapeo": {
-    "message": "Sent and Validated by CoMapeo"
+    "message": "Enviado e validado pelo CoMapeo"
   },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
     "description": "Back button on observation list screen when no observations are yet recorded",
@@ -1278,14 +1278,26 @@
   "screens.OnboardingPrivacyPolicy.shareDiagnostics": {
     "message": "Compartilhar Informações de Diagnóstico"
   },
-  "screens.PhotoPreviewModal.DeletePhoto.headerButtonText": {
-    "message": "Excluir Foto"
+  "screens.PhotoPreviewModal.headerButtonText": {
+    "message": "Excluir foto"
   },
-  "screens.PhotoPreviewModal.DeletePhoto.navTitle": {
-    "message": "Photo Info"
+  "screens.PhotoPreviewModal.imageStorageSize": {
+    "description": "Image size in megabytes",
+    "message": "{value} MB"
   },
-  "screens.PhotoPreviewModal.DeletePhoto.validatedByCoMapeo": {
-    "message": "Validated by CoMapeo"
+  "screens.PhotoPreviewModal.landscape": {
+    "description": "Describes image layout when taking photo horizontally",
+    "message": "Paisagem"
+  },
+  "screens.PhotoPreviewModal.navTitle": {
+    "message": "Informações da foto"
+  },
+  "screens.PhotoPreviewModal.portrait": {
+    "description": "Describes image layout when taking photo vertically",
+    "message": "Retrato"
+  },
+  "screens.PhotoPreviewModal.validatedByCoMapeo": {
+    "message": "Validado por CoMapeo"
   },
   "screens.PrivacyPolicy.aboutAwana": {
     "message": "Sobre Awana Digital"
@@ -1405,13 +1417,13 @@
     "message": "Trilha"
   },
   "screens.Security.obscurePasscodeDescription": {
-    "message": "To use, turn on App Passcode"
+    "message": "Para usar, ative a senha do aplicativo"
   },
   "screens.Security.obscurePasscodeDescriptionActivated": {
     "message": "Protect your device against seizure"
   },
   "screens.Security.obscurePasscodeHeader": {
-    "message": "Obscure Passcode"
+    "message": "Senha obscura"
   },
   "screens.Security.passDesriptionPassNotSet": {
     "message": "Senha não definida"
@@ -1450,16 +1462,16 @@
     "message": "Nome do dispositivo"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
-    "message": "Invite Another Device"
+    "message": "Convidar outro dispositivo"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
-    "message": "Accepted!"
+    "message": "Aceito!"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
-    "message": "<bold>{deviceName}</bold> is now part of your project."
+    "message": "<bold>{deviceName}</bold> agora faz parte do seu projeto."
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.viewTeam": {
-    "message": "View Team"
+    "message": "Ver Equipe"
   },
   "screens.Setting.ProjectSettings.YourTeam.NotOnProject.createOrJoin": {
     "message": "Criar ou Juntar-se a um Projeto"
@@ -1513,16 +1525,16 @@
     "message": "Criado em {date} {time}"
   },
   "screens.Settings.Config.importCategories": {
-    "message": "Import Categories"
+    "message": "Importar categorias"
   },
   "screens.Settings.Config.importSuccessTitle": {
-    "message": "Successfully imported categories:"
+    "message": "Categorias importadas com sucesso:"
   },
   "screens.Settings.Config.name": {
-    "message": "Category Set:"
+    "message": "Conjunto de categoria:"
   },
   "screens.Settings.Config.navTitle": {
-    "message": "Categories"
+    "message": "Categorias"
   },
   "screens.Settings.Config.okButton": {
     "message": "OK"
@@ -1531,13 +1543,13 @@
     "message": "Nome do projeto:"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.title": {
-    "message": "Start New Project"
+    "message": "Começar um novo projeto"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
-    "message": "Name My Project"
+    "message": "Nomear meu projeto"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
-    "message": "Go Back"
+    "message": "Voltar"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.howTo": {
     "message": "Como participar de um projeto"
@@ -1546,10 +1558,10 @@
     "message": "Para participar de um projeto, encontre o Coordenador do projeto que você deseja participar. Diga a eles o nome do seu dispositivo e o Coordenador lhe enviará um convite."
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.goToMap": {
-    "message": "Start Mapping"
+    "message": "Começar a Mapear"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.invitedDevice": {
-    "message": "Invite a Device"
+    "message": "Convidar dispositivo"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.nowAdded": {
     "message": "now added to All Projects"
@@ -1558,13 +1570,13 @@
     "message": "is now ready for you to invite devices."
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
-    "message": "Success!"
+    "message": "Sucesso!"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.updateCategories": {
-    "message": "Update Categories Set"
+    "message": "Atualizar conjunto de categorias"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.viewProject": {
-    "message": "View Project"
+    "message": "Ver Projeto"
   },
   "screens.Settings.CreateOrJoinProject.alreadyOnProject": {
     "message": "Você já está em um projeto. Para criar um novo projeto, você deve desinstalar e reinstalar o CoMapeo."
@@ -1573,10 +1585,10 @@
     "message": "Criar um Projeto"
   },
   "screens.Settings.CreateOrJoinProject.createProjectButton": {
-    "message": "Create"
+    "message": "Criar"
   },
   "screens.Settings.CreateOrJoinProject.enterName": {
-    "message": "Project Name"
+    "message": "Nome do Projeto"
   },
   "screens.Settings.CreateOrJoinProject.existingProjectName": {
     "message": "Using an existing project name does not make them the same project."
@@ -1588,13 +1600,13 @@
     "message": "Participe de um projeto"
   },
   "screens.Settings.CreateOrJoinProject.keepInMind": {
-    "message": "Keep in mind"
+    "message": "Lembrar"
   },
   "screens.Settings.CreateOrJoinProject.projectDescription": {
     "message": "Um projeto é um espaço seguro para os seus dados, apenas dispositivos que você convidar podem inserir e compartilhar informações com você. Crie ou participe de projetos para compartilhar dados com outros dispositivos. Esta ação irá apagar as observações que você coletou até agora. Considere compartilhar {icon} observações importantes para seu e-mail antes de continuar."
   },
   "screens.Settings.CreateOrJoinProject.projectUnique": {
-    "message": "Each project is unique and cannot exchange with another project."
+    "message": "Cada projeto é único e não pode trocar dados com outro projeto."
   },
   "screens.Settings.CreateOrJoinProject.requestInvites": {
     "message": "Request invites to join existing projects."
@@ -1732,13 +1744,13 @@
     "message": "Exchange previews only."
   },
   "screens.Sync.ProjectSyncDisplay.noDevicesFound": {
-    "message": "No devices found."
+    "message": "Nenhum dispositivo encontrado."
   },
   "screens.Sync.ProjectSyncDisplay.noWifi": {
-    "message": "No Wi-Fi."
+    "message": "Sem Wi-Fi."
   },
   "screens.Sync.ProjectSyncDisplay.start": {
-    "message": "Start"
+    "message": "Iniciar"
   },
   "screens.Sync.ProjectSyncDisplay.stop": {
     "message": "Parar"
@@ -1750,22 +1762,22 @@
     "message": "Concluído! Esperando que outros dispositivos participem"
   },
   "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
-    "message": "Complete!"
+    "message": "Concluído!"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "Exchanging..."
+    "message": "Trocando..."
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
-    "message": "Waiting for devices..."
+    "message": "Aguardando dispositivos..."
   },
   "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
     "message": "{ssid}"
   },
   "screens.Sync.headerTitle": {
-    "message": "Exchange"
+    "message": "Trocar"
   },
   "screens.Sync.remoteArchiveConnected": {
-    "message": "Remote Archive connected"
+    "message": "Arquivo remoto conectado"
   },
   "screens.Track.ObservationList.observation": {
     "message": "Observação"
@@ -1785,7 +1797,7 @@
     "message": "Trilhas"
   },
   "screens.TrackCategoryChooser.title": {
-    "message": "Choose a category"
+    "message": "Escolha uma categoria"
   },
   "screens.TrackEdit.title": {
     "description": "Title for editing track screen",
@@ -1796,16 +1808,16 @@
     "message": "Trilha"
   },
   "screens.TrackRecordingActive.cancel": {
-    "message": "Cancel"
+    "message": "Cancelar"
   },
   "screens.TrackRecordingActive.recordingTracks": {
-    "message": "Recording Tracks!"
+    "message": "Gravando Trilhas!"
   },
   "screens.TrackRecordingActive.stopTracks": {
-    "message": "Stop Tracks"
+    "message": "Parar trilhas"
   },
   "screens.TrackRecordingActive.warningMessage": {
-    "message": "You’re currently recording a track. To join project, stop recording"
+    "message": "Você está gravando uma trilha agora. Para entrar em um projeto, pare a gravação"
   },
   "shareComponent.KeyboardAccessory.showOptions": {
     "description": "title for observation options",
@@ -1825,10 +1837,10 @@
     "message": "Alterar"
   },
   "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "Go Back"
+    "message": "Voltar"
   },
   "sharedComponents.ErrorBottomSheet.somethingWrong": {
-    "message": "Something Went Wrong"
+    "message": "Ocorreu um erro"
   },
   "sharedComponents.RoleWithIcon.coordinator": {
     "message": "Coordenador"
@@ -1837,45 +1849,45 @@
     "message": "Participante"
   },
   "soloProject.inviteCollaborators.goBack": {
-    "message": "Go Back"
+    "message": "Voltar"
   },
   "soloProject.inviteCollaborators.introText": {
-    "message": "Share observations with others using CoMapeo."
+    "message": "Compartilhe observações com outras pessoas usando o CoMapeo."
   },
   "soloProject.inviteCollaborators.inviteOnly": {
-    "message": "Only devices invited to this project can contribute."
+    "message": "Apenas dispositivos convidados para esse projeto podem contribuir."
   },
   "soloProject.inviteCollaborators.manageControl": {
     "message": "Easily manage project contributors and settings."
   },
   "soloProject.inviteCollaborators.nameProject": {
-    "message": "Name My Project"
+    "message": "Nomear meu projeto"
   },
   "soloProject.inviteCollaborators.nameProjectDescription": {
-    "message": "Name your project to start collaborating."
+    "message": "Dê um nome para seu Projeto para começar a colaborar."
   },
   "soloProject.inviteCollaborators.title": {
-    "message": "Invite Collaborators"
+    "message": "Convide colaboradores"
   },
   "soloProject.startNewProject.goBack": {
-    "message": "Go Back"
+    "message": "Voltar"
   },
   "soloProject.startNewProject.introText": {
-    "message": "Secure and private way to exchange with collaborators."
+    "message": "Uma forma segura e privada para trocar com os colaboradores."
   },
   "soloProject.startNewProject.inviteOnly": {
-    "message": "Only devices invited to a project can contribute."
+    "message": "Apenas dispositivos convidados para um projeto podem contribuir."
   },
   "soloProject.startNewProject.manageControl": {
-    "message": "Easily manage project contributors and settings."
+    "message": "Gerencie facilmente os colaboradores e as configurações do projeto."
   },
   "soloProject.startNewProject.start": {
-    "message": "Start"
+    "message": "Iniciar"
   },
   "soloProject.startNewProject.title": {
-    "message": "Start New Project"
+    "message": "Começar um novo projeto"
   },
   "soloProject.startNewProject.uniqueProject": {
-    "message": "Each project is unique and separate."
+    "message": "Cada projeto é único e separado."
   }
 }

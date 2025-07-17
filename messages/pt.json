@@ -1420,7 +1420,7 @@
     "message": "Para usar, ative a senha do aplicativo"
   },
   "screens.Security.obscurePasscodeDescriptionActivated": {
-    "message": "Protect your device against seizure"
+    "message": "Proteja seu dispositivo contra apreensão"
   },
   "screens.Security.obscurePasscodeHeader": {
     "message": "Senha obscura"
@@ -1858,7 +1858,7 @@
     "message": "Apenas dispositivos convidados para esse projeto podem contribuir."
   },
   "soloProject.inviteCollaborators.manageControl": {
-    "message": "Easily manage project contributors and settings."
+    "message": "Gerencie facilmente os colaboradores e as configurações do projeto."
   },
   "soloProject.inviteCollaborators.nameProject": {
     "message": "Nomear meu projeto"

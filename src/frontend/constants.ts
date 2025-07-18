@@ -74,12 +74,3 @@ export const projectColors: projectColor[] = [
   {color: '#FBE9E9', label: m.red},
   {color: '#E5E5EB', label: m.grey},
 ];
-
-export const PASSCODE_LOCKOUT_THRESHOLDS: {
-  attempts: number;
-  minutes: number;
-}[] = [
-  {attempts: 5, minutes: 1},
-  {attempts: 7, minutes: 3},
-  {attempts: 8, minutes: 5}, // 8 and above get 5 minutes
-];

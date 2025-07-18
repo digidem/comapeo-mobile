@@ -366,6 +366,9 @@
   "constants.red": {
     "message": "Red"
   },
+  "hooks.usePasscodeLockout.lockoutMessage": {
+    "message": "Try again in {minutes, plural, one {# minute} other {# minutes}}"
+  },
   "projectInfoCard.coordinator": {
     "message": "You are a coordinator on this project."
   },
@@ -704,7 +707,7 @@
     "message": "Nhập mật khẩu"
   },
   "screens.EnterPassword.wrongPass": {
-    "message": "Mật khẩu không đúng, vui lòng thử lại"
+    "message": "Mật khẩu không đúng"
   },
   "screens.Exchange.WifiCard.noWifi": {
     "message": "No Wi-Fi"

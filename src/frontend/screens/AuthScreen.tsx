@@ -101,7 +101,7 @@ export const AuthScreen = ({
       }>
       {/* Hide SVG logo in E2E mode to reduce rendering lag on BrowserStack */}
       {process.env.EXPO_PUBLIC_E2E_TEST !== 'true' && (
-        <CoMapeoLogoSvg height={window.height / 2.5} />
+        <CoMapeoLogoSvg style={{height: window.height / 3, aspectRatio: 1}} />
       )}
       {isLockedOut ? (
         <View style={styles.lockoutContainer}>

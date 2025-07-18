@@ -30,8 +30,8 @@ describe('PasscodeInputSchema', () => {
 });
 
 describe('getRemainingLockoutMinutes', () => {
-  test('returns 0 when lockUntil is null', () => {
-    expect(getRemainingLockoutMinutes(null)).toBe(0);
+  test('returns 0 when lockUntil is 0', () => {
+    expect(getRemainingLockoutMinutes(0)).toBe(0);
   });
 
   test('returns rounded-up minutes if in future', () => {
@@ -47,9 +47,10 @@ describe('getRemainingLockoutMinutes', () => {
 
 describe('getLockoutThreshold', () => {
   test.each([
-    [1, null],
-    [4, null],
+    [1, 0],
+    [4, 0],
     [5, 1],
+    [6, 0],
     [7, 3],
     [8, 5],
     [9, 5],

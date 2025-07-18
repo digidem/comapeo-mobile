@@ -32,7 +32,7 @@ test('initial state', () => {
     passcode: null,
     obscureCodeEnabled: false,
     failedAttempts: 0,
-    lockUntil: null,
+    lockUntil: 0,
   });
 });
 
@@ -67,7 +67,7 @@ test('passcode cannot be set to invalid value', async () => {
     passcode: null,
     obscureCodeEnabled: false,
     failedAttempts: 0,
-    lockUntil: null,
+    lockUntil: 0,
   });
 });
 
@@ -110,7 +110,7 @@ test('obscure code cannot be set when passcode is not set', () => {
     passcode: null,
     obscureCodeEnabled: false,
     failedAttempts: 0,
-    lockUntil: null,
+    lockUntil: 0,
   });
 });
 
@@ -150,7 +150,6 @@ test('obscure code is unset when passcode is unset', async () => {
     await actionsHook.result.current.setPasscode('12345');
     actionsHook.result.current.enableObscureCode(true);
   });
-
   expect(stateHook.result.current.passcode).not.toBe(null);
   expect(stateHook.result.current.obscureCodeEnabled).toBe(true);
 
@@ -162,7 +161,7 @@ test('obscure code is unset when passcode is unset', async () => {
     passcode: null,
     obscureCodeEnabled: false,
     failedAttempts: 0,
-    lockUntil: null,
+    lockUntil: 0,
   });
 });
 
@@ -175,7 +174,7 @@ test('increments attempts and sets lockout', () => {
   act(() => {
     actionsHook.result.current.incrementAndGetAttempts();
     actionsHook.result.current.incrementAndGetAttempts();
-    actionsHook.result.current.setLockout(123456789);
+    actionsHook.result.current.setLockUntil(123456789);
   });
 
   expect(stateHook.result.current.failedAttempts).toBe(2);
@@ -190,10 +189,10 @@ test('resets attempts and lockout', () => {
 
   act(() => {
     actionsHook.result.current.incrementAndGetAttempts();
-    actionsHook.result.current.setLockout(999999);
+    actionsHook.result.current.setLockUntil(999999);
     actionsHook.result.current.resetFailedAttempts();
   });
 
   expect(stateHook.result.current.failedAttempts).toBe(0);
-  expect(stateHook.result.current.lockUntil).toBe(null);
+  expect(stateHook.result.current.lockUntil).toBe(0);
 });

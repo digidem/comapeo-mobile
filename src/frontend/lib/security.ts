@@ -1,5 +1,4 @@
 import {digits, length, notValue, pipe, string} from 'valibot';
-import {PASSCODE_LOCKOUT_THRESHOLDS} from '../constants';
 import * as Crypto from 'expo-crypto';
 import * as v from 'valibot';
 
@@ -18,17 +17,18 @@ export const StoredPasscodeSchema = pipe(
   v.includes(':'),
 );
 
-export function getRemainingLockoutMinutes(lockUntil: number | null): number {
+export function getRemainingLockoutMinutes(lockUntil: number): number {
   if (!lockUntil) return 0;
   const msRemaining = lockUntil - Date.now();
   return msRemaining > 0 ? Math.ceil(msRemaining / 60000) : 0;
 }
 
 export function getLockoutThreshold(attempts: number): number | null {
-  const match = PASSCODE_LOCKOUT_THRESHOLDS.find(
-    t => t.attempts === attempts || (attempts > 8 && t.attempts === 8),
-  );
-  return match ? match.minutes : null;
+  if (attempts === 5) return 1;
+  if (attempts === 7) return 3;
+  if (attempts >= 8) return 5;
+
+  return 0;
 }
 
 export function generateSalt(): string {

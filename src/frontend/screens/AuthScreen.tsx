@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {defineMessages, useIntl} from 'react-intl';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useWindowDimensions} from 'react-native';
 
@@ -24,11 +24,6 @@ const m = defineMessages({
     id: 'screens.EnterPassword.wrongPass',
     defaultMessage: 'Incorrect Passcode ',
   },
-  lockoutMessage: {
-    id: 'screens.EnterPassword.lockoutMessage',
-    defaultMessage:
-      'Try again in {minutes, plural, one {# minute} other {# minutes}}',
-  },
 });
 
 export const AuthScreen = ({
@@ -39,7 +34,7 @@ export const AuthScreen = ({
   const {authenticate, authState} = useAuthContext();
   const [inputtedPass, setInputtedPass] = React.useState('');
   const scrollViewRef = React.useRef<ScrollView>(null);
-  const {isLockedOut, lockoutMessage} = usePasscodeLockout(m.lockoutMessage);
+  const {isLockedOut, message: lockoutMessage} = usePasscodeLockout();
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', event => {
@@ -102,11 +97,11 @@ export const AuthScreen = ({
         {paddingTop: top + 20, paddingBottom: 20},
       ]}
       dockContent={
-        error && <Text style={styles.wrongPass}>{t(m.wrongPass)}</Text>
+        error && <BodyText style={styles.wrongPass}>{t(m.wrongPass)}</BodyText>
       }>
       {/* Hide SVG logo in E2E mode to reduce rendering lag on BrowserStack */}
       {process.env.EXPO_PUBLIC_E2E_TEST !== 'true' && (
-        <CoMapeoLogoSvg height={window.height / 3} />
+        <CoMapeoLogoSvg style={{height: window.height / 3, aspectRatio: 1}} />
       )}
       {isLockedOut ? (
         <View style={styles.lockoutContainer}>
@@ -114,7 +109,7 @@ export const AuthScreen = ({
           <BodyText style={styles.lockoutText}>{lockoutMessage}</BodyText>
         </View>
       ) : (
-        <Text style={styles.description}>{t(m.enterPass)}</Text>
+        <BodyText>{t(m.enterPass)}</BodyText>
       )}
       <PasscodeInput
         testID="SETTINGS.auth-passcode-inp"
@@ -132,11 +127,7 @@ const styles = StyleSheet.create({
     gap: 20,
     alignItems: 'center',
   },
-  description: {
-    fontSize: 16,
-  },
   wrongPass: {
-    fontSize: 16,
     color: RED,
     textAlign: 'center',
   },
@@ -144,11 +135,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
-    justifyContent: 'center',
-    height: 24,
   },
   lockoutText: {
     color: BLACK,
-    fontSize: 16,
   },
 });

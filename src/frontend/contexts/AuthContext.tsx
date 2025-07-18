@@ -36,7 +36,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   const {
     incrementAndGetAttempts,
     resetFailedAttempts,
-    setLockout,
+    setLockUntil,
     updateToHashedPasscode,
   } = useSecurityActions();
   const [authState, setAuthState] = React.useState<AuthState>(
@@ -95,22 +95,15 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
         }
       }
 
-      if (validateOnly && isCorrect) {
-        resetFailedAttempts();
-        return true;
-      }
+      if (validateOnly) return isCorrect;
 
-      if (
-        !validateOnly &&
-        obscureCodeEnabled &&
-        passcodeValue === DEFAULT_OBSCURE_CODE
-      ) {
+      if (obscureCodeEnabled && passcodeValue === DEFAULT_OBSCURE_CODE) {
         setAuthState('obscured');
         resetFailedAttempts();
         return true;
       }
 
-      if (isCorrect && !validateOnly) {
+      if (isCorrect) {
         setAuthState('authenticated');
         resetFailedAttempts();
         return true;
@@ -119,12 +112,9 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
       const attempts = incrementAndGetAttempts();
       const minutes = getLockoutThreshold(attempts);
       if (minutes) {
-        setLockout(Date.now() + minutes * 60 * 1000);
+        setLockUntil(Date.now() + minutes * 60 * 1000);
       }
 
-      if (validateOnly) {
-        return false;
-      }
       throw new Error('Incorrect Passcode');
     },
     [
@@ -133,7 +123,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
       incrementAndGetAttempts,
       resetFailedAttempts,
       updateToHashedPasscode,
-      setLockout,
+      setLockUntil,
       lockUntil,
       setAuthState,
     ],

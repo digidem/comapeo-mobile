@@ -6,8 +6,7 @@ export const THUMBNAIL_QUALITY = 30;
 export const PREVIEW_SIZE = 1200;
 export const PREVIEW_QUALITY = 30;
 
-export type SavedPhoto = Omit<Attachment, 'type'> & {
-  type: 'photo';
+export type SavedPhoto = Extract<Attachment, {type: 'photo'}> & {
   deleted?: boolean;
 };
 

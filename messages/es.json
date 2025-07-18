@@ -101,7 +101,7 @@
     "message": "Añadir archivo remoto"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.permission": {
-    "message": "Sólo una persona coordinadora del proyecto puede desactivar el archivo remoto."
+    "message": "Solo una persona coordinadora del proyecto puede desactivar el archivo remoto."
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.url": {
     "message": "Url"
@@ -110,7 +110,7 @@
     "message": "Ve lo que está incluido"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.youAreAdding": {
-    "message": "Estás añadiendo"
+    "message": "Estás añadiendo:"
   },
   "ProjectSettings.RemoteArchive.RemoteArchiveOff.addArchive": {
     "message": "Añadir archivo remoto"

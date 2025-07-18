@@ -14,10 +14,14 @@ const SecurityStateSchema = v.variant('passcode', [
   v.object({
     passcode: PasscodeSchema,
     obscureCodeEnabled: v.boolean(),
+    failedAttempts: v.number(),
+    lockUntil: v.number(),
   }),
   v.object({
     passcode: v.null(),
     obscureCodeEnabled: v.literal(false),
+    failedAttempts: v.literal(0),
+    lockUntil: v.literal(0),
   }),
 ]);
 
@@ -30,6 +34,8 @@ function createInitialState(): SecurityState {
   return {
     passcode: null,
     obscureCodeEnabled: false,
+    failedAttempts: 0,
+    lockUntil: 0,
   };
 }
 
@@ -64,7 +70,12 @@ export function createSecurityStore({persist} = {persist: false}) {
     setPasscode: (passcode: string | null) => {
       // Obscure code needs to be unset when passcode is unset
       if (passcode === null) {
-        store.setState({passcode, obscureCodeEnabled: false});
+        store.setState({
+          passcode: null,
+          obscureCodeEnabled: false,
+          failedAttempts: 0,
+          lockUntil: 0,
+        });
         return;
       }
 
@@ -81,6 +92,19 @@ export function createSecurityStore({persist} = {persist: false}) {
       }
 
       store.setState({obscureCodeEnabled: enable});
+    },
+    incrementAndGetAttempts: () => {
+      const current = store.getState().failedAttempts + 1;
+      store.setState({failedAttempts: current});
+      return current;
+    },
+
+    resetFailedAttempts: () => {
+      store.setState({failedAttempts: 0, lockUntil: 0});
+    },
+
+    setLockUntil: (lockUntil: number) => {
+      store.setState({lockUntil});
     },
   };
 

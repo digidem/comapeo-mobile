@@ -4,8 +4,9 @@ const {FlagSecureModule} = NativeModules;
 
 import {useIsShareDialogOpen} from '../hooks/share';
 import {DEFAULT_OBSCURE_CODE} from '../lib/security';
-import {useSecurityState} from './SecurityStoreContext';
+import {useSecurityState, useSecurityActions} from './SecurityStoreContext';
 import {useIsAudioPermissionModalOpen} from '../hooks/useAudioPermissionTracker';
+import {getLockoutThreshold} from '../lib/security';
 
 export type AuthState = 'unauthenticated' | 'authenticated' | 'obscured';
 
@@ -30,7 +31,9 @@ export const useAuthContext = () => {
 };
 
 export const AuthProvider = ({children}: {children: React.ReactNode}) => {
-  const {passcode, obscureCodeEnabled} = useSecurityState();
+  const {passcode, obscureCodeEnabled, lockUntil} = useSecurityState();
+  const {incrementAndGetAttempts, resetFailedAttempts, setLockUntil} =
+    useSecurityActions();
   const [authState, setAuthState] = React.useState<AuthState>(
     passcode === null ? 'authenticated' : 'unauthenticated',
   );
@@ -73,19 +76,39 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
     (passcodeValue, validateOnly = false) => {
       if (validateOnly) return passcodeValue === passcode;
 
+      const isLockedOut = Date.now() < lockUntil;
+      if (isLockedOut) {
+        throw new Error('LOCKED_OUT');
+      }
+
       if (obscureCodeEnabled && passcodeValue === DEFAULT_OBSCURE_CODE) {
         setAuthState('obscured');
+        resetFailedAttempts();
         return true;
       }
 
       if (passcodeValue === passcode) {
         setAuthState('authenticated');
+        resetFailedAttempts();
         return true;
       }
 
+      const attempts = incrementAndGetAttempts();
+      const minutes = getLockoutThreshold(attempts);
+      if (minutes) {
+        setLockUntil(Date.now() + minutes * 60 * 1000);
+      }
       throw new Error('Incorrect Passcode');
     },
-    [passcode, obscureCodeEnabled],
+    [
+      passcode,
+      obscureCodeEnabled,
+      incrementAndGetAttempts,
+      resetFailedAttempts,
+      setLockUntil,
+      lockUntil,
+      setAuthState,
+    ],
   );
 
   const contextValue: AuthContextType = React.useMemo(

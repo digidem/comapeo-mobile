@@ -709,9 +709,6 @@
   "screens.EnterPassword.enterPass": {
     "message": "Enter your passcode"
   },
-  "screens.EnterPassword.lockoutMessage": {
-    "message": "Try again in {minutes, plural, one {# minute} other {# minutes}}"
-  },
   "screens.EnterPassword.wrongPass": {
     "message": "Incorrect Passcode"
   },

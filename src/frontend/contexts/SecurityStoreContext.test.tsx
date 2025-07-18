@@ -174,7 +174,7 @@ test('increments attempts and sets lockout', () => {
   act(() => {
     actionsHook.result.current.incrementAndGetAttempts();
     actionsHook.result.current.incrementAndGetAttempts();
-    actionsHook.result.current.setLockout(123456789);
+    actionsHook.result.current.setLockUntil(123456789);
   });
 
   expect(stateHook.result.current.failedAttempts).toBe(2);
@@ -188,7 +188,7 @@ test('resets attempts and lockout', () => {
 
   act(() => {
     actionsHook.result.current.incrementAndGetAttempts();
-    actionsHook.result.current.setLockout(999999);
+    actionsHook.result.current.setLockUntil(999999);
     actionsHook.result.current.resetFailedAttempts();
   });
 

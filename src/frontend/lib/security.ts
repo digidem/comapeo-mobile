@@ -1,5 +1,4 @@
 import {digits, length, notValue, pipe, string} from 'valibot';
-import {PASSCODE_LOCKOUT_THRESHOLDS} from '../constants';
 
 export const DEFAULT_OBSCURE_CODE = '00000';
 
@@ -17,8 +16,9 @@ export function getRemainingLockoutMinutes(lockUntil: number): number {
 }
 
 export function getLockoutThreshold(attempts: number): number | null {
-  const match = PASSCODE_LOCKOUT_THRESHOLDS.find(
-    t => t.attempts === attempts || (attempts > 8 && t.attempts === 8),
-  );
-  return match ? match.minutes : null;
+  if (attempts === 5) return 1;
+  if (attempts === 7) return 3;
+  if (attempts >= 8) return 5;
+
+  return 0;
 }

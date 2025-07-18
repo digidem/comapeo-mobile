@@ -46,9 +46,10 @@ describe('getRemainingLockoutMinutes', () => {
 
 describe('getLockoutThreshold', () => {
   test.each([
-    [1, null],
-    [4, null],
+    [1, 0],
+    [4, 0],
     [5, 1],
+    [6, 0],
     [7, 3],
     [8, 5],
     [9, 5],

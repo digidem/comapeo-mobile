@@ -20,8 +20,8 @@ const SecurityStateSchema = v.variant('passcode', [
   v.object({
     passcode: v.null(),
     obscureCodeEnabled: v.literal(false),
-    failedAttempts: v.number(),
-    lockUntil: v.number(),
+    failedAttempts: v.literal(0),
+    lockUntil: v.literal(0),
   }),
 ]);
 
@@ -103,7 +103,7 @@ export function createSecurityStore({persist} = {persist: false}) {
       store.setState({failedAttempts: 0, lockUntil: 0});
     },
 
-    setLockout: (lockUntil: number) => {
+    setLockUntil: (lockUntil: number) => {
       store.setState({lockUntil});
     },
   };

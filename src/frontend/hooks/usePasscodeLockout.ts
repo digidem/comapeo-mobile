@@ -16,7 +16,7 @@ const m = defineMessages({
 
 export function usePasscodeLockout() {
   const {lockUntil} = useSecurityState();
-  const {setLockout} = useSecurityActions();
+  const {setLockUntil} = useSecurityActions();
   const [minutes, setMinutes] = useState(0);
   const {formatMessage} = useIntl();
 
@@ -26,14 +26,14 @@ export function usePasscodeLockout() {
       const calcMinutes = getRemainingLockoutMinutes(lockUntil);
       setMinutes(calcMinutes);
       timeout = setTimeout(() => {
-        setLockout(0);
+        setLockUntil(0);
       }, calcMinutes * 60_000);
     }
 
     return () => {
       if (timeout) clearTimeout(timeout);
     };
-  }, [lockUntil, setLockout]);
+  }, [lockUntil, setLockUntil]);
 
   return {
     isLockedOut: !!lockUntil,

@@ -32,7 +32,7 @@ export const useAuthContext = () => {
 
 export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   const {passcode, obscureCodeEnabled, lockUntil} = useSecurityState();
-  const {incrementAndGetAttempts, resetFailedAttempts, setLockout} =
+  const {incrementAndGetAttempts, resetFailedAttempts, setLockUntil} =
     useSecurityActions();
   const [authState, setAuthState] = React.useState<AuthState>(
     passcode === null ? 'authenticated' : 'unauthenticated',
@@ -76,7 +76,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
     (passcodeValue, validateOnly = false) => {
       if (validateOnly) return passcodeValue === passcode;
 
-      const isLockedOut = lockUntil !== null && Date.now() < lockUntil;
+      const isLockedOut = Date.now() < lockUntil;
       if (isLockedOut) {
         throw new Error('LOCKED_OUT');
       }
@@ -96,7 +96,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
       const attempts = incrementAndGetAttempts();
       const minutes = getLockoutThreshold(attempts);
       if (minutes) {
-        setLockout(Date.now() + minutes * 60 * 1000);
+        setLockUntil(Date.now() + minutes * 60 * 1000);
       }
       throw new Error('Incorrect Passcode');
     },
@@ -105,7 +105,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
       obscureCodeEnabled,
       incrementAndGetAttempts,
       resetFailedAttempts,
-      setLockout,
+      setLockUntil,
       lockUntil,
       setAuthState,
     ],

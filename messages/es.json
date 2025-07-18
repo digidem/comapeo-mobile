@@ -98,7 +98,7 @@
     "message": "Añadir archivo remoto"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.permission": {
-    "message": "Sólo una persona coordinadora del proyecto puede desactivar el archivo remoto."
+    "message": "Solo una persona coordinadora del proyecto puede desactivar el archivo remoto."
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.url": {
     "message": "Url"
@@ -107,7 +107,7 @@
     "message": "Ve lo que está incluido"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.youAreAdding": {
-    "message": "Estás añadiendo"
+    "message": "Estás añadiendo:"
   },
   "ProjectSettings.RemoteArchive.RemoteArchiveOff.addArchive": {
     "message": "Añadir archivo remoto"
@@ -365,6 +365,9 @@
   },
   "constants.red": {
     "message": "Red"
+  },
+  "hooks.usePasscodeLockout.lockoutMessage": {
+    "message": "Try again in {minutes, plural, one {# minute} other {# minutes}}"
   },
   "projectInfoCard.coordinator": {
     "message": "Este dispositivo es coordinador de este proyecto."
@@ -704,7 +707,7 @@
     "message": "Introduzca su contraseña"
   },
   "screens.EnterPassword.wrongPass": {
-    "message": "Contraseña incorrecta, inténtelo de nuevo"
+    "message": "Contraseña incorrecta"
   },
   "screens.Exchange.WifiCard.noWifi": {
     "message": "No Wi-Fi"

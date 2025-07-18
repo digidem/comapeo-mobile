@@ -366,6 +366,9 @@
   "constants.red": {
     "message": "Vermelho"
   },
+  "hooks.usePasscodeLockout.lockoutMessage": {
+    "message": "Try again in {minutes, plural, one {# minute} other {# minutes}}"
+  },
   "projectInfoCard.coordinator": {
     "message": "Você é o Coordenador desse projeto."
   },
@@ -704,7 +707,7 @@
     "message": "Insira sua senha"
   },
   "screens.EnterPassword.wrongPass": {
-    "message": "Senha incorreta. Por favor, tente novamente."
+    "message": "Senha incorreta"
   },
   "screens.Exchange.WifiCard.noWifi": {
     "message": "Sem Wi-Fi"

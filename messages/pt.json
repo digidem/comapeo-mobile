@@ -367,7 +367,7 @@
     "message": "Vermelho"
   },
   "hooks.usePasscodeLockout.lockoutMessage": {
-    "message": "Try again in {minutes, plural, one {# minute} other {# minutes}}"
+    "message": "Tente novamente em {minutes, plural, one {# minute} other {# minutes}}"
   },
   "projectInfoCard.coordinator": {
     "message": "Você é o Coordenador desse projeto."
@@ -1004,7 +1004,7 @@
     "message": "Número do fuso"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
-    "message": "Use Location? Tracks location even when closed. Data remains on device only."
+    "message": "Usar localização? Acompanhe a localização das trilhas mesmo quando fechado. Os dados ficam somente no dispositivo."
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
     "message": "Ativar localização"
@@ -1051,7 +1051,7 @@
     "message": "Cancelar"
   },
   "screens.Observation.comapeoAlert": {
-    "message": "CoMapeo data sent from *{projectName}*"
+    "message": "Dados do CoMapeo enviados do projeto *{projectName}*"
   },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
@@ -1567,10 +1567,10 @@
     "message": "Convidar dispositivo"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.nowAdded": {
-    "message": "now added to All Projects"
+    "message": "agora adicionado a Todos os Projetos"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.projectReady": {
-    "message": "is now ready for you to invite devices."
+    "message": "agora está tudo pronto para convidar dispositivos."
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
     "message": "Sucesso!"
@@ -1594,7 +1594,7 @@
     "message": "Nome do Projeto"
   },
   "screens.Settings.CreateOrJoinProject.existingProjectName": {
-    "message": "Using an existing project name does not make them the same project."
+    "message": "Usar um nome de projeto que já existe, não faz deles o mesmo projeto."
   },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
     "message": "Junte-se a um projeto existente"
@@ -1612,7 +1612,7 @@
     "message": "Cada projeto é único e não pode trocar dados com outro projeto."
   },
   "screens.Settings.CreateOrJoinProject.requestInvites": {
-    "message": "Request invites to join existing projects."
+    "message": "Envie convites para outros participarem de projetos existentes."
   },
   "screens.Settings.CreateOrJoinProject.saveProjectButton": {
     "message": "Salvar"
@@ -1744,7 +1744,7 @@
     "message": "Fotos com tamanho reduzido."
   },
   "screens.Sync.ProjectSyncDisplay.exchangePreviewsOnlyTitle": {
-    "message": "Exchange previews only."
+    "message": "Trocar apenas as prévias."
   },
   "screens.Sync.ProjectSyncDisplay.noDevicesFound": {
     "message": "Nenhum dispositivo encontrado."

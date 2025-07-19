@@ -47,7 +47,7 @@
     "message": "Parar trilha"
   },
   "Modal.GPSEnable.trackingDescription": {
-    "message": "You’ve been recording for {time}"
+    "message": "Você está gravando há {time}"
   },
   "Navigation.Menu.Settings": {
     "message": "Ajustes"
@@ -331,7 +331,7 @@
     "message": "Suas alterações não serão salvas. Isso não poderá ser desfeito."
   },
   "allProjects.createNewProject": {
-    "message": "Create new project"
+    "message": "Criar um novo projeto"
   },
   "allProjects.navTitle": {
     "message": "Todos os Projetos"
@@ -567,7 +567,7 @@
     "message": "Menos de 5 minutos restantes"
   },
   "screens.AudioRecording.record5Min": {
-    "message": "Record up to 5 minutes"
+    "message": "Grave até 5 minutos"
   },
   "screens.AudioSavedBottomSheet.recordAnother": {
     "message": "Fazer Outra Gravação"
@@ -576,7 +576,7 @@
     "message": "Voltar ao Editor"
   },
   "screens.AudioSavedBottomSheet.subTitle": {
-    "message": "Your Audio Recording was added"
+    "message": "Sua gravação de áudio foi adicionada"
   },
   "screens.AudioSavedBottomSheet.title": {
     "message": "Sucesso!"
@@ -1054,7 +1054,7 @@
     "message": "Cancelar"
   },
   "screens.Observation.comapeoAlert": {
-    "message": "CoMapeo data sent from *{projectName}*"
+    "message": "Dados do CoMapeo enviados do projeto *{projectName}*"
   },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
@@ -1531,7 +1531,7 @@
     "message": "Nome do projeto:"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.title": {
-    "message": "New Project"
+    "message": "Novo Projeto"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
     "message": "Voltar"
@@ -1696,10 +1696,10 @@
     "message": "Está tudo sincronizado!"
   },
   "screens.Sync.ProjectSyncDisplay.allDataSynced": {
-    "message": "All data exchanged"
+    "message": "Todos os dados foram trocados"
   },
   "screens.Sync.ProjectSyncDisplay.connectedTo": {
-    "message": "Connected to"
+    "message": "Conectado à"
   },
   "screens.Sync.ProjectSyncDisplay.devicesAvailableToSync": {
     "message": "Dispositivos disponíveis"
@@ -1723,7 +1723,7 @@
     "message": "Aguardando dispositivos"
   },
   "screens.Sync.ProjectSyncDisplay.readyToExchange": {
-    "message": "Ready to exchange"
+    "message": "Pronto para trocar"
   },
   "screens.Sync.ProjectSyncDisplay.start": {
     "message": "Iniciar"
@@ -1741,7 +1741,7 @@
     "message": "Completo! Você está atualizado"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "You are exchanging with your team"
+    "message": "Você está trocando dados com sua equipe"
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
     "message": "Aguardando dispositivos"
@@ -1855,19 +1855,19 @@
     "message": "Voltar"
   },
   "soloProject.inviteCollaborators.introText": {
-    "message": "Share observations with others using CoMapeo. Name your solo project to add your first collaborator."
+    "message": "Compartilhe observações com outras pessoas usando CoMapeo. Nomeie seu projeto para adicionar seu primeiro colaborador."
   },
   "soloProject.inviteCollaborators.inviteOnly": {
-    "message": "Only devices you invite can contribute and share data with you."
+    "message": "Apenas dispositivos que você convidar podem contribuir e compartilhar dados com você."
   },
   "soloProject.inviteCollaborators.manageControl": {
-    "message": "Manage and control sharing and collaboration in Project Settings."
+    "message": "Gerencie e controle compartilhamento de dados e colaborações em Configurações do Projeto."
   },
   "soloProject.inviteCollaborators.nameProject": {
     "message": "Nomear meu projeto"
   },
   "soloProject.inviteCollaborators.readyToShare": {
-    "message": "Once you name your project, all your observations are ready to be shared."
+    "message": "Uma vez que você nomear seu projeto, todas as suas observações estarão prontas para serem compartilhadas com outros dispositivos."
   },
   "soloProject.inviteCollaborators.title": {
     "message": "Convide colaboradores"

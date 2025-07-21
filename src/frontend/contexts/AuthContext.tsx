@@ -56,7 +56,8 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
       (nextAppState: AppStateStatus) => {
         // If the app state changes due to opening a share dialog or the in app Audio Permissions, do not unauthenticate
         if (shareDialogIsOpen || isAudioPermissionModalOpen) return;
-
+        console.warn('[AppState] Changed to:', nextAppState);
+        console.warn('password is ', passcode);
         if (passcode !== null) {
           if (
             nextAppState === 'active' ||

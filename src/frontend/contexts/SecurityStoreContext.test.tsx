@@ -86,7 +86,7 @@ test('set and verify hashed passcode', async () => {
   expect(typeof stored).toBe('string');
   expect(stored).toContain(':');
 
-  const verified = await verifyPasscode('12345', stored!);
+  const verified = await verifyPasscode({input: '12345', stored: stored!});
   expect(verified).toBe(true);
 });
 

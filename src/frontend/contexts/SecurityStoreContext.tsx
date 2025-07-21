@@ -15,7 +15,6 @@ import {
   StoredPasscodeSchema,
 } from '../lib/security';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SecurityStateSchema = v.variant('passcode', [
   v.object({
     passcode: StoredPasscodeSchema,
@@ -49,8 +48,10 @@ const migrate = async (
   persistedState: unknown,
   version: number,
 ): Promise<SecurityState> => {
+  console.warn('[Migration] Starting migration from version:', version);
+  console.warn('Persisted state:', persistedState);
   if (version !== 0) {
-    console.log('[Migration] Skipping migration: version is already 1');
+    console.warn('[Migration] Skipping migration: version is already 1');
     return persistedState as SecurityState;
   }
   try {
@@ -58,13 +59,13 @@ const migrate = async (
       typeof persistedState === 'string' &&
       v.safeParse(PasscodeInputSchema, persistedState).success
     ) {
-      console.log(
+      console.warn(
         '[Migration] Wrapping legacy string passcode into state:',
         persistedState,
       );
       const salt = generateSalt();
       const hashed = await hashPasscode({passcode: persistedState, salt});
-      console.log('[Migration] Hashed passcode:', hashed);
+      console.warn('[Migration] Hashed passcode:', hashed);
       return {
         passcode: hashed,
         obscureCodeEnabled: false,
@@ -77,7 +78,7 @@ const migrate = async (
       typeof parsed.passcode === 'string' &&
       v.safeParse(PasscodeInputSchema, parsed.passcode).success
     ) {
-      console.log('[Migration] Hashing legacy passcode in state object');
+      console.warn('[Migration] Hashing legacy passcode in state object');
       const salt = generateSalt();
       const hashed = await hashPasscode({passcode: parsed.passcode, salt});
       return {
@@ -86,12 +87,12 @@ const migrate = async (
       };
     }
 
-    console.log(
+    console.warn(
       '[Migration] No valid legacy passcode found, using parsed state as-is',
     );
     return parsed;
   } catch (e) {
-    console.log('[Migration] Failed to parse persisted state:', e);
+    console.warn('[Migration] Failed to parse persisted state:', e);
     return createInitialState();
   }
 };

@@ -23,6 +23,7 @@ export const RootStackNavigator = () => {
   const {data: deviceInfo} = useOwnDeviceInfo();
 
   React.useEffect(() => {
+    console.warn('Auth state changed:', security.authState);
     if (security.authState === 'unauthenticated') {
       navigate('AuthScreen');
     }

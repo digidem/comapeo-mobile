@@ -55,24 +55,18 @@ const migrate = async (
   persistedState: unknown,
   version: number,
 ): Promise<SecurityState> => {
-  console.warn('[Migration] Starting migration from version:', version);
-  console.warn('[Migration] Persisted state:', persistedState);
-
   if (version !== 0) {
-    console.warn('[Migration] Skipping migration: version is already 1');
     return persistedState as SecurityState;
   }
-
   try {
     const raw = persistedState as LegacyPasscodeState;
+    // not sure if I need this if check here.
     if (
       typeof raw.passcode === 'string' &&
       v.safeParse(PasscodeInputSchema, raw.passcode).success
     ) {
-      console.warn('[Migration] Hashing legacy passcode in state object');
       const salt = generateSalt();
       const hashed = await hashPasscode({passcode: raw.passcode, salt});
-
       return {
         passcode: hashed,
         obscureCodeEnabled: raw.obscureCodeEnabled ?? false,
@@ -80,10 +74,8 @@ const migrate = async (
         lockUntil: raw.lockUntil ?? 0,
       };
     }
-    console.warn('[Migration] Passcode missing or already hashed');
     return v.parse(SecurityStateSchema, persistedState);
-  } catch (e) {
-    console.warn('[Migration] Failed to parse persisted state:', e);
+  } catch {
     return createInitialState();
   }
 };

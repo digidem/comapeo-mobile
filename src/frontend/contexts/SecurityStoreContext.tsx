@@ -44,28 +44,34 @@ function createInitialState(): SecurityState {
   };
 }
 
+type LegacyPasscodeState = {
+  passcode: string;
+  obscureCodeEnabled?: boolean;
+  failedAttempts?: number;
+  lockUntil?: number;
+};
+
 const migrate = async (
   persistedState: unknown,
   version: number,
 ): Promise<SecurityState> => {
   console.warn('[Migration] Starting migration from version:', version);
-  console.warn('Persisted state:', persistedState);
+  console.warn('[Migration] Persisted state:', persistedState);
+
   if (version !== 0) {
     console.warn('[Migration] Skipping migration: version is already 1');
     return persistedState as SecurityState;
   }
+
   try {
     if (
       typeof persistedState === 'string' &&
       v.safeParse(PasscodeInputSchema, persistedState).success
     ) {
-      console.warn(
-        '[Migration] Wrapping legacy string passcode into state:',
-        persistedState,
-      );
+      console.warn('[Migration] Wrapping legacy string passcode into state');
       const salt = generateSalt();
       const hashed = await hashPasscode({passcode: persistedState, salt});
-      console.warn('[Migration] Hashed passcode:', hashed);
+
       return {
         passcode: hashed,
         obscureCodeEnabled: false,
@@ -73,23 +79,33 @@ const migrate = async (
         lockUntil: 0,
       };
     }
-    const parsed = v.parse(SecurityStateSchema, persistedState);
+
     if (
-      typeof parsed.passcode === 'string' &&
-      v.safeParse(PasscodeInputSchema, parsed.passcode).success
+      typeof persistedState === 'object' &&
+      persistedState !== null &&
+      'passcode' in persistedState
     ) {
-      console.warn('[Migration] Hashing legacy passcode in state object');
-      const salt = generateSalt();
-      const hashed = await hashPasscode({passcode: parsed.passcode, salt});
-      return {
-        ...parsed,
-        passcode: hashed,
-      };
+      const raw = persistedState as LegacyPasscodeState;
+
+      if (
+        typeof raw.passcode === 'string' &&
+        v.safeParse(PasscodeInputSchema, raw.passcode).success
+      ) {
+        console.warn('[Migration] Hashing legacy passcode in state object');
+        const salt = generateSalt();
+        const hashed = await hashPasscode({passcode: raw.passcode, salt});
+
+        return {
+          passcode: hashed,
+          obscureCodeEnabled: raw.obscureCodeEnabled ?? false,
+          failedAttempts: raw.failedAttempts ?? 0,
+          lockUntil: raw.lockUntil ?? 0,
+        };
+      }
     }
 
-    console.warn(
-      '[Migration] No valid legacy passcode found, using parsed state as-is',
-    );
+    const parsed = v.parse(SecurityStateSchema, persistedState);
+    console.warn('[Migration] Using validated parsed state as-is');
     return parsed;
   } catch (e) {
     console.warn('[Migration] Failed to parse persisted state:', e);

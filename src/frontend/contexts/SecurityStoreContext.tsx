@@ -50,25 +50,48 @@ const migrate = async (
   version: number,
 ): Promise<SecurityState> => {
   if (version !== 0) {
+    console.log('[Migration] Skipping migration: version is already 1');
     return persistedState as SecurityState;
   }
   try {
+    if (
+      typeof persistedState === 'string' &&
+      v.safeParse(PasscodeInputSchema, persistedState).success
+    ) {
+      console.log(
+        '[Migration] Wrapping legacy string passcode into state:',
+        persistedState,
+      );
+      const salt = generateSalt();
+      const hashed = await hashPasscode({passcode: persistedState, salt});
+      console.log('[Migration] Hashed passcode:', hashed);
+      return {
+        passcode: hashed,
+        obscureCodeEnabled: false,
+        failedAttempts: 0,
+        lockUntil: 0,
+      };
+    }
     const parsed = v.parse(SecurityStateSchema, persistedState);
-    // not sure if I need this if check...
     if (
       typeof parsed.passcode === 'string' &&
       v.safeParse(PasscodeInputSchema, parsed.passcode).success
     ) {
+      console.log('[Migration] Hashing legacy passcode in state object');
       const salt = generateSalt();
       const hashed = await hashPasscode({passcode: parsed.passcode, salt});
-
       return {
         ...parsed,
         passcode: hashed,
       };
     }
+
+    console.log(
+      '[Migration] No valid legacy passcode found, using parsed state as-is',
+    );
     return parsed;
-  } catch {
+  } catch (e) {
+    console.log('[Migration] Failed to parse persisted state:', e);
     return createInitialState();
   }
 };

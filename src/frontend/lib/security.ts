@@ -36,10 +36,13 @@ export function generateSalt(): string {
   return [...bytes].map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-export async function hashPasscode(
-  passcode: string,
-  salt: string,
-): Promise<string> {
+export async function hashPasscode({
+  passcode,
+  salt,
+}: {
+  passcode: string;
+  salt: string;
+}): Promise<string> {
   const toHash = `${salt}:${passcode}`;
   const hash = await Crypto.digestStringAsync(
     Crypto.CryptoDigestAlgorithm.SHA256,
@@ -48,14 +51,18 @@ export async function hashPasscode(
   return `${salt}:${hash}`;
 }
 
-export async function verifyPasscode(
-  input: string,
-  stored: string,
-): Promise<boolean> {
+export async function verifyPasscode({
+  input,
+  stored,
+}: {
+  input: string;
+  stored: string;
+}): Promise<boolean> {
   const parts = stored.split(':');
   if (parts.length !== 2) return false;
 
-  const [salt, originalHash] = parts;
-  const recomputed = await hashPasscode(input, salt!);
+  const [salt, originalHash] = parts as [string, string];
+
+  const recomputed = await hashPasscode({passcode: input, salt});
   return recomputed === `${salt}:${originalHash}`;
 }

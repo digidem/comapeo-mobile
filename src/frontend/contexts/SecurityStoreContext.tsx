@@ -4,6 +4,7 @@ import * as v from 'valibot';
 import {createStore, useStore, type StoreApi} from 'zustand';
 import {
   createJSONStorage,
+  StateStorage,
   persist as createPersistedState,
 } from 'zustand/middleware';
 
@@ -44,6 +45,34 @@ function createInitialState(): SecurityState {
   };
 }
 
+const migrate = async (
+  persistedState: unknown,
+  version: number,
+): Promise<SecurityState> => {
+  if (version !== 0) {
+    return persistedState as SecurityState;
+  }
+  try {
+    const parsed = v.parse(SecurityStateSchema, persistedState);
+    // not sure if I need this if check...
+    if (
+      typeof parsed.passcode === 'string' &&
+      v.safeParse(PasscodeInputSchema, parsed.passcode).success
+    ) {
+      const salt = generateSalt();
+      const hashed = await hashPasscode({passcode: parsed.passcode, salt});
+
+      return {
+        ...parsed,
+        passcode: hashed,
+      };
+    }
+    return parsed;
+  } catch {
+    return createInitialState();
+  }
+};
+
 export function createSecurityStore({persist} = {persist: false}) {
   let store: StoreApi<SecurityState>;
 
@@ -51,20 +80,15 @@ export function createSecurityStore({persist} = {persist: false}) {
     store = createStore(
       createPersistedState(createInitialState, {
         name: STORAGE_KEY,
-        version: 0,
-        storage: createJSONStorage(() => {
-          return {
-            getItem: key => {
-              return getItem(key);
-            },
-            setItem: (key, value) => {
-              return setItem(key, value);
-            },
-            removeItem: key => {
-              return deleteItemAsync(key);
-            },
-          };
-        }),
+        version: 1,
+        migrate,
+        storage: createJSONStorage(
+          (): StateStorage => ({
+            getItem: key => getItem(key),
+            setItem: (key, value) => setItem(key, value),
+            removeItem: key => deleteItemAsync(key),
+          }),
+        ),
       }),
     );
   } else {
@@ -85,21 +109,11 @@ export function createSecurityStore({persist} = {persist: false}) {
       }
       v.parse(PasscodeInputSchema, passcode, {abortPipeEarly: true});
       const salt = generateSalt();
-      const hashed = await hashPasscode(passcode, salt);
+      const hashed = await hashPasscode({passcode, salt});
 
       store.setState({
         passcode: hashed,
       });
-    },
-
-    updateToHashedPasscode: async (passcode: string) => {
-      const salt = generateSalt();
-      const hashed = await hashPasscode(passcode, salt);
-      store.setState({passcode: hashed});
-      await setItem(
-        STORAGE_KEY,
-        JSON.stringify({...store.getState(), passcode: hashed}),
-      );
     },
 
     enableObscureCode: (enable: boolean) => {
@@ -111,6 +125,7 @@ export function createSecurityStore({persist} = {persist: false}) {
 
       store.setState({obscureCodeEnabled: enable});
     },
+
     incrementAndGetAttempts: () => {
       const current = store.getState().failedAttempts + 1;
       store.setState({failedAttempts: current});

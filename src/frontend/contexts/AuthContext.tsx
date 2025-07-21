@@ -6,8 +6,7 @@ import {useIsShareDialogOpen} from '../hooks/share';
 import {DEFAULT_OBSCURE_CODE, verifyPasscode} from '../lib/security';
 import {useSecurityState, useSecurityActions} from './SecurityStoreContext';
 import {useIsAudioPermissionModalOpen} from '../hooks/useAudioPermissionTracker';
-import {getLockoutThreshold, PasscodeInputSchema} from '../lib/security';
-import {safeParse} from 'valibot';
+import {getLockoutThreshold} from '../lib/security';
 
 export type AuthState = 'unauthenticated' | 'authenticated' | 'obscured';
 
@@ -33,12 +32,8 @@ export const useAuthContext = () => {
 
 export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   const {passcode, obscureCodeEnabled, lockUntil} = useSecurityState();
-  const {
-    incrementAndGetAttempts,
-    resetFailedAttempts,
-    setLockUntil,
-    updateToHashedPasscode,
-  } = useSecurityActions();
+  const {incrementAndGetAttempts, resetFailedAttempts, setLockUntil} =
+    useSecurityActions();
   const [authState, setAuthState] = React.useState<AuthState>(
     passcode === null ? 'authenticated' : 'unauthenticated',
   );
@@ -79,7 +74,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
 
   const authenticate: AuthContextType['authenticate'] = React.useCallback(
     async (passcodeValue, validateOnly = false) => {
-      const isLockedOut = lockUntil !== null && Date.now() < lockUntil;
+      const isLockedOut = Date.now() < lockUntil;
       if (isLockedOut) {
         throw new Error('LOCKED_OUT');
       }
@@ -87,12 +82,10 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
       let isCorrect = false;
 
       if (passcodeValue && passcode) {
-        if (safeParse(PasscodeInputSchema, passcode).success) {
-          isCorrect = passcodeValue === passcode;
-          await updateToHashedPasscode(passcodeValue);
-        } else {
-          isCorrect = await verifyPasscode(passcodeValue, passcode);
-        }
+        isCorrect = await verifyPasscode({
+          input: passcodeValue,
+          stored: passcode,
+        });
       }
 
       if (validateOnly) return isCorrect;
@@ -122,7 +115,6 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
       obscureCodeEnabled,
       incrementAndGetAttempts,
       resetFailedAttempts,
-      updateToHashedPasscode,
       setLockUntil,
       lockUntil,
       setAuthState,

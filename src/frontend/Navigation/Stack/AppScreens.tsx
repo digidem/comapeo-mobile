@@ -112,6 +112,7 @@ import {
 import {AudioDraftPlaybackScreen} from '../../screens/Audio/AudioDraftPlaybackScreen.tsx';
 import {AudioAttachmentPlaybackScreen} from '../../screens/Audio/AudioAttachmentPlaybackScreen.tsx';
 import {DidNotMoveBottomSheet} from '../../screens/MapScreen/TrackBottomSheet/DidNotMoveBottomSheet.tsx';
+import {ConfirmPasscodeBottomSheet} from '../../screens/AppPasscode/ConfirmPasscodeSheet.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -488,6 +489,10 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="DidNotMoveBottomSheet"
         component={DidNotMoveBottomSheet}
+      />
+      <RootStack.Screen
+        name="ConfirmPasscodeSheet"
+        component={ConfirmPasscodeBottomSheet}
       />
     </RootStack.Group>
   </>

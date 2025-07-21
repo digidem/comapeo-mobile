@@ -3,6 +3,7 @@ import * as SplashScreen from 'expo-splash-screen';
 
 import {FatalError} from './screens/FatalError';
 import type {ServerStateStore} from './lib/ServerStateStore.js';
+import {useStore} from 'zustand';
 
 export const ServerLoading = ({
   serverStateStore,
@@ -10,10 +11,7 @@ export const ServerLoading = ({
 }: React.PropsWithChildren<{
   serverStateStore: ServerStateStore;
 }>) => {
-  const serverState = React.useSyncExternalStore(
-    serverStateStore.subscribe,
-    serverStateStore.getSnapshot,
-  );
+  const serverState = useStore(serverStateStore);
 
   // TODO: We could now render the app during the server startup, however
   // leaving as-is for now since this is the current behavior.

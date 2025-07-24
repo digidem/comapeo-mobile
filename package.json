@@ -19,6 +19,7 @@
     "prepare": "husky",
     "format": "prettier \"src/**/*.{js,ts,jsx,tsx}\" --write",
     "deep-clean": "./scripts/deep-clean.sh",
+    "build:android:e2e":"export SENTRY_DISABLE_AUTO_UPLOAD=\"true\" && dotenv -- eas build --platform android --profile test --local --clear-cache",
     "build:translations": "node ./scripts/build-translations.mjs",
     "build:intl-polyfills": "node ./scripts/build-intl-polyfills.mjs",
     "build:backend": "node ./scripts/build-backend.mjs",

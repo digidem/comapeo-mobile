@@ -112,7 +112,9 @@
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.comapeo"
+      "package": "com.comapeo",
+      "targetSdkVersion": 35,
+      "compileSdkVersion": 35
     },
     "ios": {
       "bundleIdentifier": "com.comapeo"

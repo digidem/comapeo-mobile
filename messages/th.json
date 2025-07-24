@@ -5,7 +5,7 @@
   },
   "AppContainer.EditHeader.discardChangesButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes"
+    "message": "ยกเลิกการเปลี่ยนแปลง"
   },
   "AppContainer.EditHeader.discardChangesDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
@@ -26,7 +26,7 @@
     "message": "ยืนยันการยกเลิก?"
   },
   "MapManagement.ErrorBottomSheet.goBack": {
-    "message": "Go Back"
+    "message": "ย้อนกลับ"
   },
   "Modal.GPSDisable.button": {
     "message": "Enable"
@@ -41,7 +41,7 @@
     "message": "Start Tracks"
   },
   "Modal.GPSEnable.button.loading": {
-    "message": "Loading…"
+    "message": "กำลังโหลด…"
   },
   "Modal.GPSEnable.button.stop": {
     "message": "Stop Tracks"
@@ -65,7 +65,7 @@
     "message": "Exchange"
   },
   "Navigation.Menu.invite": {
-    "message": "Invite"
+    "message": "เชิญชวน"
   },
   "Navigation.Menu.mappingOnOwn": {
     "message": "You are mapping on your own."
@@ -77,7 +77,7 @@
     "message": "Data & Privacy"
   },
   "Navigation.Menu.viewProject": {
-    "message": "View"
+    "message": "มุมมอง"
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -85,7 +85,7 @@
   },
   "ObservationEdit.HeaderLeft.discardObservationButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes"
+    "message": "ยกเลิกการเปลี่ยนแปลง"
   },
   "ObservationEdit.HeaderLeft.discardObservationDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
@@ -143,10 +143,10 @@
     "message": "All project devices can sync with this Archive, sharing data over the internet."
   },
   "ProjectSettings.RemoteArchive.Success.close": {
-    "message": "Close"
+    "message": "ปิด"
   },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.close": {
-    "message": "Close"
+    "message": "ปิด"
   },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.deviceNames": {
     "message": "Device Names"
@@ -263,7 +263,7 @@
     "message": "UTM,Lat/Lon,DMS"
   },
   "Screens.Settings.AppSettings.deviceName": {
-    "message": "Device Name"
+    "message": "ชื่ออุปกรณ์"
   },
   "Screens.Settings.AppSettings.language": {
     "message": "ภาษา"
@@ -294,7 +294,7 @@
   },
   "SharedComponents.ActionButtons.share": {
     "description": "Button to share an observation",
-    "message": "Share"
+    "message": "แบ่งปัน"
   },
   "TrackEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -306,7 +306,7 @@
   },
   "TrackEdit.HeaderLeft.discardTrackButton": {
     "description": "Button to confirm discarding the track",
-    "message": "Discard changes"
+    "message": "ยกเลิกการเปลี่ยนแปลง"
   },
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
@@ -361,15 +361,15 @@
   },
   "screens.AboutSettings.androidBuild": {
     "description": "Label for Android build number",
-    "message": "Android build number"
+    "message": "รหัส Build Number บน Android"
   },
   "screens.AboutSettings.androidVersion": {
     "description": "Label for Android version",
-    "message": "Android version"
+    "message": "เวอร์ชันของแอนดรอยด์"
   },
   "screens.AboutSettings.phoneModel": {
     "description": "Label for phone model",
-    "message": "Phone model"
+    "message": "รุ่นของโทรศัพท์"
   },
   "screens.AboutSettings.title": {
     "description": "Title of 'About CoMapeo' screen",
@@ -377,7 +377,7 @@
   },
   "screens.AboutSettings.unknownValue": {
     "description": "Shown when a device info (e.g. version number) is unknown",
-    "message": "Unknown"
+    "message": "ไม่มีข้อมูล"
   },
   "screens.AddPhoto.cancel": {
     "message": "ยกเลิก"
@@ -438,7 +438,7 @@
     "message": "Confirm Passcode"
   },
   "screens.AppPasscode.NewPasscode.SetPasscodeScreen.title": {
-    "message": "Set Passcode"
+    "message": "กำหนดรหัสผ่าน"
   },
   "screens.AppPasscode.NewPasscode.Splash.continue": {
     "message": "ดำเนินการต่อ"
@@ -518,7 +518,7 @@
     "message": "Your Audio Recording was added"
   },
   "screens.AudioSavedBottomSheet.title": {
-    "message": "Success!"
+    "message": "เสร็จสมบูรณ์!"
   },
   "screens.CameraScreen.goToSettings": {
     "message": "Go to Settings"
@@ -532,19 +532,19 @@
   },
   "screens.CoordinateFormat.dd": {
     "description": "Decimal Degrees coordinate format",
-    "message": "Decimal Degrees (DD)"
+    "message": "องศาทศนิยม (DD)"
   },
   "screens.CoordinateFormat.dms": {
     "description": "Degrees/Minutes/Seconds coordinate format",
-    "message": "Degrees/Minutes/Seconds (DMS)"
+    "message": "องศา ลิปดา ฟิลิปดา (DMS)"
   },
   "screens.CoordinateFormat.title": {
     "description": "Title coordinate format screen",
-    "message": "Coordinate Format"
+    "message": "รูปแบบพิกัด"
   },
   "screens.CoordinateFormat.utm": {
     "description": "Universal Transverse Mercator coordinate format",
-    "message": "Universal Transverse Mercator (UTM)"
+    "message": "ระบบพิกัดกริดแบบยูทีเอ็ม (Universal Transverse Mercator - UTM)"
   },
   "screens.DataAndPrivacy.diagnosticInfoText": {
     "message": "Anonymized information about your device, app crashes, errors and performance helps Awana Digital improve the app and fix errors."
@@ -616,7 +616,7 @@
     "message": "You can start mapping alone or start mapping with a team. Create or join a project in order to share data with other devices that are part of the same project."
   },
   "screens.DeviceNaming.Success.success": {
-    "message": "Success!"
+    "message": "เสร็จสมบูรณ์!"
   },
   "screens.DeviceNaming.addName": {
     "message": "Add Name"
@@ -640,7 +640,7 @@
     "message": "Get started in two simple ways:"
   },
   "screens.ExchangeSoloScreen.goBack": {
-    "message": "Go Back"
+    "message": "ย้อนกลับ"
   },
   "screens.ExchangeSoloScreen.inviteCollaborators": {
     "message": "Invite collaborators to your project from the main menu"
@@ -697,7 +697,7 @@
     "message": "คุณอยู่ในโครงการแล้ว"
   },
   "screens.Invite.ExistingProjectWarning.goBack": {
-    "message": "Go Back"
+    "message": "ย้อนกลับ"
   },
   "screens.Invite.ExistingProjectWarning.leaveProj": {
     "message": "ออกจากโครงการปัจจุบัน"
@@ -709,7 +709,7 @@
     "message": "Invite Canceled"
   },
   "screens.InviteCancelled.close": {
-    "message": "Close"
+    "message": "ปิด"
   },
   "screens.InviteCancelled.projectInviteCanceled": {
     "message": "Your invitation to {projectName} has been canceled."
@@ -718,7 +718,7 @@
     "message": "coordinator"
   },
   "screens.InviteReceived.declineInvite": {
-    "message": "Decline Invite"
+    "message": "ปฏิเสธคำเชิญ"
   },
   "screens.InviteReceived.invitedToJoin": {
     "message": "You've been invited to..."
@@ -733,13 +733,13 @@
     "message": "participant"
   },
   "screens.InviteSuccess.goToMap": {
-    "message": "Go To Map"
+    "message": "เปิดแผนที่"
   },
   "screens.InviteSuccess.goToSync": {
     "message": "Go To Sync"
   },
   "screens.InviteSuccess.success": {
-    "message": "Success"
+    "message": "สำเร็จ"
   },
   "screens.InviteSuccess.youHaveJoined": {
     "message": "You have joined {projectName}"
@@ -778,129 +778,129 @@
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
-    "message": "Details"
+    "message": "รายละเอียด"
   },
   "screens.LocationInfoScreen.gpsHeader": {
     "description": "Header for GPS screen",
-    "message": "Current GPS Location"
+    "message": "ตำแหน่ง GPS ปัจจุบัน"
   },
   "screens.LocationInfoScreen.lastUpdate": {
     "description": "Section title for time of last GPS update",
-    "message": "Last update"
+    "message": "ปรับปรุงล่าสุด"
   },
   "screens.LocationInfoScreen.locationDD": {
     "description": "Section title for DD coordinates",
-    "message": "Coordinates Decimal Degrees"
+    "message": "ระบบพิกัดองศาทศนิยม (Decimal Degrees - DD)"
   },
   "screens.LocationInfoScreen.locationDMS": {
     "description": "Section title for DMS coordinates",
-    "message": "Coordinates DMS"
+    "message": "ระบบพิกัดองศา ลิปดา ฟิลิปดา (DMS)"
   },
   "screens.LocationInfoScreen.locationSensors": {
     "description": "Heading for section about location sensor status",
-    "message": "Sensor Status"
+    "message": "สถานะเซ็นเซอร์"
   },
   "screens.LocationInfoScreen.locationUTM": {
     "description": "Section title for UTM coordinates",
-    "message": "Coordinates UTM"
+    "message": "ระบบพิกัด UTM"
   },
   "screens.LocationInfoScreen.no": {
     "description": "if a location sensor is active yes/no",
-    "message": "No"
+    "message": "ไม่ใช่"
   },
   "screens.LocationInfoScreen.yes": {
     "description": "if a location sensor is active yes/no",
-    "message": "Yes"
+    "message": "ใช่"
   },
   "screens.ManualGpsScreen.DdForm.east": {
-    "message": "East"
+    "message": "ตะวันออก"
   },
   "screens.ManualGpsScreen.DdForm.invalidCoordinates": {
-    "message": "Invalid coordinates"
+    "message": "พิกัดไม่ถูกต้อง"
   },
   "screens.ManualGpsScreen.DdForm.latInputLabel": {
-    "message": "Latitude value"
+    "message": "พิกัดละติจูด"
   },
   "screens.ManualGpsScreen.DdForm.latitude": {
-    "message": "Latitude"
+    "message": "ละติจูด"
   },
   "screens.ManualGpsScreen.DdForm.lonInputLabel": {
-    "message": "Longitude value"
+    "message": "พิกัดลองจิจูด"
   },
   "screens.ManualGpsScreen.DdForm.longitude": {
-    "message": "Longitude"
+    "message": "ลองจิจูด"
   },
   "screens.ManualGpsScreen.DdForm.north": {
-    "message": "North"
+    "message": "เหนือ"
   },
   "screens.ManualGpsScreen.DdForm.selectLatCardinality": {
-    "message": "Select latitude cardinality"
+    "message": "เลือกละติจูด"
   },
   "screens.ManualGpsScreen.DdForm.selectLonCardinality": {
-    "message": "Select longitude cardinality"
+    "message": "เลือกลองจิจูด"
   },
   "screens.ManualGpsScreen.DdForm.south": {
-    "message": "South"
+    "message": "ใต้"
   },
   "screens.ManualGpsScreen.DdForm.west": {
-    "message": "West"
+    "message": "ตะวันตก"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.MinutesInputLabel": {
-    "message": "{field} minutes input"
+    "message": "ป้อน {field} ลิปดา"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.SecondsInputLabel": {
-    "message": "{field} seconds input"
+    "message": "ป้อน {field} ฟิลิปดา"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.degrees": {
-    "message": "Degrees"
+    "message": "องศา"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.degreesInputLabel": {
-    "message": "{field} degrees input"
+    "message": "ป้อน {field} องศา"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.direction": {
-    "message": "Direction"
+    "message": "ทิศทาง"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.minutes": {
-    "message": "Minutes"
+    "message": "นาที"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.seconds": {
-    "message": "Seconds"
+    "message": "วินาที"
   },
   "screens.ManualGpsScreen.DmsForm.east": {
-    "message": "East"
+    "message": "ตะวันออก"
   },
   "screens.ManualGpsScreen.DmsForm.invalidCoordinates": {
-    "message": "Invalid coordinates"
+    "message": "พิกัดไม่ถูกต้อง"
   },
   "screens.ManualGpsScreen.DmsForm.latitude": {
-    "message": "Latitude"
+    "message": "ละติจูด"
   },
   "screens.ManualGpsScreen.DmsForm.longitude": {
-    "message": "Longitude"
+    "message": "ลองจิจูด"
   },
   "screens.ManualGpsScreen.DmsForm.north": {
-    "message": "North"
+    "message": "เหนือ"
   },
   "screens.ManualGpsScreen.DmsForm.selectLatCardinality": {
-    "message": "Select latitude cardinality"
+    "message": "เลือกละติจูด"
   },
   "screens.ManualGpsScreen.DmsForm.south": {
-    "message": "South"
+    "message": "ใต้"
   },
   "screens.ManualGpsScreen.DmsForm.west": {
-    "message": "West"
+    "message": "ตะวันตก"
   },
   "screens.ManualGpsScreen.coordinateFormat": {
-    "message": "Coordinate Format"
+    "message": "รูปแบบพิกัด"
   },
   "screens.ManualGpsScreen.decimalDegrees": {
-    "message": "Decimal Degrees (DD)"
+    "message": "องศาทศนิยม (DD)"
   },
   "screens.ManualGpsScreen.degreesMinutesSeconds": {
-    "message": "Degrees/Minutes/Seconds (DMS)"
+    "message": "องศา ลิปดา ฟิลิปดา (DMS)"
   },
   "screens.ManualGpsScreen.easting": {
-    "message": "East"
+    "message": "ตะวันออก"
   },
   "screens.ManualGpsScreen.eastingSuffix": {
     "message": "mE"
@@ -909,23 +909,23 @@
     "message": "Invalid coordinates. Latitude must be between -90 and 90. Longitude must be between -180 and 180"
   },
   "screens.ManualGpsScreen.northing": {
-    "message": "North"
+    "message": "เหนือ"
   },
   "screens.ManualGpsScreen.northingSuffix": {
     "message": "mN"
   },
   "screens.ManualGpsScreen.title": {
     "description": "title of manual GPS screen",
-    "message": "Enter coordinates"
+    "message": "ป้อนพิกัด"
   },
   "screens.ManualGpsScreen.universalTransverseMercator": {
-    "message": "Universal Transverse Mercator (UTM)"
+    "message": "ระบบพิกัดกริดแบบยูทีเอ็ม (Universal Transverse Mercator - UTM)"
   },
   "screens.ManualGpsScreen.zoneLetter": {
-    "message": "Zone Letter"
+    "message": "ตัวอักษรโซน"
   },
   "screens.ManualGpsScreen.zoneNumber": {
-    "message": "Zone Number"
+    "message": "หมายเลขโซน"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
     "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
@@ -986,7 +986,7 @@
   },
   "screens.Observation.ObservationView.share": {
     "description": "Button to share an observation",
-    "message": "Share"
+    "message": "แบ่งปัน"
   },
   "screens.Observation.TrackList.track": {
     "message": "Track"
@@ -1012,7 +1012,7 @@
   },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "Observation"
+    "message": "การสังเกต"
   },
   "screens.Observation.shareMediaTitle": {
     "description": "Title of dialog to share an observation with media",
@@ -1033,7 +1033,7 @@
     "message": "การสังเกต"
   },
   "screens.ObservationCreate.changePreset": {
-    "message": "Change"
+    "message": "แก้ไข"
   },
   "screens.ObservationCreate.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
@@ -1049,7 +1049,7 @@
   },
   "screens.ObservationCreate.navTitle": {
     "description": "screen title for new observation screen",
-    "message": "New Observation"
+    "message": "การสังเกตใหม่"
   },
   "screens.ObservationCreate.noGpsDesc": {
     "description": "Description in dialog when trying to save with no GPS coords",
@@ -1077,7 +1077,7 @@
   },
   "screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
-    "message": "Done"
+    "message": "เสร็จสิ้น"
   },
   "screens.ObservationDetails.nextQuestion": {
     "description": "Button text to navigate to next question",
@@ -1085,7 +1085,7 @@
   },
   "screens.ObservationDetails.title": {
     "description": "Title of observation details screen showing question number and total",
-    "message": "Question {current} of {total}"
+    "message": "คำถาม {current} ใน {total}"
   },
   "screens.ObservationEdit.ObservationEditView.audioButton": {
     "description": "Button label for adding audio",
@@ -1097,14 +1097,14 @@
   },
   "screens.ObservationEdit.ObservationEditView.detailsButton": {
     "description": "Button label to add details",
-    "message": "Details"
+    "message": "รายละเอียด"
   },
   "screens.ObservationEdit.ObservationEditView.photoButton": {
     "description": "Button label for adding photo",
     "message": "Photo"
   },
   "screens.ObservationEdit.changePreset": {
-    "message": "Change"
+    "message": "แก้ไข"
   },
   "screens.ObservationEdit.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
@@ -1112,7 +1112,7 @@
   },
   "screens.ObservationEdit.navTitle": {
     "description": "screen title for new observation screen",
-    "message": "Edit Observation"
+    "message": "แก้ไขการสังเกต"
   },
   "screens.ObservationEdit.observation": {
     "description": "Default name of observation with no matching preset",
@@ -1147,16 +1147,16 @@
     "message": "How we validate"
   },
   "screens.ObservationMetadataVerified.latitude": {
-    "message": "Latitude"
+    "message": "ละติจูด"
   },
   "screens.ObservationMetadataVerified.location": {
-    "message": "Location"
+    "message": "สถานที่"
   },
   "screens.ObservationMetadataVerified.locationManuallyEntered": {
     "message": "Location was manually entered"
   },
   "screens.ObservationMetadataVerified.longitude": {
-    "message": "Longitude"
+    "message": "ลองจิจูด"
   },
   "screens.ObservationMetadataVerified.manuallyEntered": {
     "message": "Manually entered."
@@ -1221,7 +1221,7 @@
     "message": "ลบรูปภาพ"
   },
   "screens.PhotoPreviewModal.DeletePhoto.deleteModalTitle": {
-    "message": "Delete this photo?"
+    "message": "ลบรูปนี้หรือไม่?"
   },
   "screens.PhotoPreviewModal.DeletePhoto.headerButtonText": {
     "message": "Delete Photo"
@@ -1347,7 +1347,7 @@
     "message": "To use, turn on App Passcode"
   },
   "screens.Security.obscurePasscodeDescriptionActivated": {
-    "message": "Protect your device against seizure"
+    "message": "ปกป้องอุปกรณ์ของคุณจากหน้าจอค้าง"
   },
   "screens.Security.obscurePasscodeHeader": {
     "message": "Obscure Passcode"
@@ -1392,7 +1392,7 @@
     "message": "Add Another Device"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.close": {
-    "message": "Close"
+    "message": "ปิด"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
@@ -1434,7 +1434,7 @@
     "message": "ชื่ออุปกรณ์"
   },
   "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
-    "message": "Invite Device"
+    "message": "ส่งคำเชิญไปยังอุปกรณ์"
   },
   "screens.Setting.ProjectSettings.YourTeam.participantDescription": {
     "message": "Participants can take and share observations. They cannot manage users or project details."
@@ -1461,16 +1461,16 @@
     "message": "Categories"
   },
   "screens.Settings.Config.okButton": {
-    "message": "OK"
+    "message": "ตกลง"
   },
   "screens.Settings.Config.projectName": {
-    "message": "Project Name:"
+    "message": "ชื่อโครงการ:"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.title": {
     "message": "New Project"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
-    "message": "Go Back"
+    "message": "ย้อนกลับ"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.howTo": {
     "message": "How to Join a Project"
@@ -1482,7 +1482,7 @@
     "message": "Go to Map"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.invitedDevice": {
-    "message": "Invite Device"
+    "message": "ส่งคำเชิญไปยังอุปกรณ์"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.projectCreated": {
     "message": "{projectName} Created!"
@@ -1494,7 +1494,7 @@
     "message": "You are already on a project. To create a new Project you must uninstall and reininstall CoMapeo."
   },
   "screens.Settings.CreateOrJoinProject.createProject": {
-    "message": "Create a Project"
+    "message": "สร้างโครงการ"
   },
   "screens.Settings.CreateOrJoinProject.createProjectButton": {
     "message": "Create Project"
@@ -1515,10 +1515,10 @@
     "message": "Join an existing CoMapeo Project"
   },
   "screens.Settings.CreateOrJoinProject.joinProject": {
-    "message": "Join a Project"
+    "message": "เข้าร่วมโครงการ"
   },
   "screens.Settings.CreateOrJoinProject.okButton": {
-    "message": "OK"
+    "message": "ตกลง"
   },
   "screens.Settings.CreateOrJoinProject.projectDescription": {
     "message": "A project is a secure container for your data. Only devices you invite can enter and share data with you. Create or Join a project in order to share data with other devices. This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
@@ -1545,7 +1545,7 @@
     "message": "This cannot be undone."
   },
   "screens.Settings.MapManagement.BackgroundMaps.close": {
-    "message": "Close"
+    "message": "ปิด"
   },
   "screens.Settings.MapManagement.BackgroundMaps.customMapAddedDescription": {
     "message": "You will see this map when you are offline, but you will not see a map outside the area defined in your custom map."
@@ -1575,7 +1575,7 @@
     "message": "Unable to import the file. Please go back and try again."
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
-    "message": "Import Error"
+    "message": "ข้อผิดพลาดในการนำเข้า"
   },
   "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
     "message": "Remove Map File"
@@ -1590,7 +1590,7 @@
     "message": "Map Name"
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.removeMap": {
-    "message": "Remove Map"
+    "message": "นำแผนที่ออก"
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.sizeInMegabytes": {
     "message": "{value} MB"
@@ -1605,7 +1605,7 @@
     "message": "Invitation Declined"
   },
   "screens.Settings.YourTeam.close": {
-    "message": "Close"
+    "message": "ปิด"
   },
   "screens.Settings.YourTeam.deviceHasJoined": {
     "message": "Device Has Joined {projectName}"
@@ -1751,7 +1751,7 @@
     "message": "Leave Project"
   },
   "sharedComponents.DeviceIconWithName.Disconnected": {
-    "message": "Disconnected"
+    "message": "ขาดการเชื่อมต่อ"
   },
   "sharedComponents.DeviceIconWithName.thisDevice": {
     "message": "This Device!"
@@ -1761,10 +1761,10 @@
     "message": "กำลัง​ค้น​หา..."
   },
   "sharedComponents.Editor.PresetView.Change": {
-    "message": "Change"
+    "message": "แก้ไข"
   },
   "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "Go Back"
+    "message": "ย้อนกลับ"
   },
   "sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Something Went Wrong"
@@ -1776,7 +1776,7 @@
     "message": "Participant"
   },
   "soloProject.inviteCollaborators.goBack": {
-    "message": "Go Back"
+    "message": "ย้อนกลับ"
   },
   "soloProject.inviteCollaborators.introText": {
     "message": "Share observations with others using CoMapeo. Name your solo project to add your first collaborator."

@@ -5,7 +5,7 @@
   },
   "AppContainer.EditHeader.discardChangesButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes"
+    "message": "ပြောင်းလဲမှုများကို ဖျက်ခြင်း"
   },
   "AppContainer.EditHeader.discardChangesDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
@@ -26,7 +26,7 @@
     "message": "လေ့လာထားရှိမှုများကို ဖျက်ပစ်မှာလား?"
   },
   "MapManagement.ErrorBottomSheet.goBack": {
-    "message": "Go Back"
+    "message": "နောက်သို့ ပြန်သွား"
   },
   "Modal.GPSDisable.button": {
     "message": "Enable"
@@ -85,7 +85,7 @@
   },
   "ObservationEdit.HeaderLeft.discardObservationButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes"
+    "message": "ပြောင်းလဲမှုများကို ဖျက်ခြင်း"
   },
   "ObservationEdit.HeaderLeft.discardObservationDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
@@ -294,7 +294,7 @@
   },
   "SharedComponents.ActionButtons.share": {
     "description": "Button to share an observation",
-    "message": "Share"
+    "message": "မျှဝေခြင်း"
   },
   "TrackEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -306,7 +306,7 @@
   },
   "TrackEdit.HeaderLeft.discardTrackButton": {
     "description": "Button to confirm discarding the track",
-    "message": "Discard changes"
+    "message": "ပြောင်းလဲမှုများကို ဖျက်ခြင်း"
   },
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
@@ -361,15 +361,15 @@
   },
   "screens.AboutSettings.androidBuild": {
     "description": "Label for Android build number",
-    "message": "Android build number"
+    "message": "အန့်ဒရိုက် Android တည်ဆောက် နံပါတ်"
   },
   "screens.AboutSettings.androidVersion": {
     "description": "Label for Android version",
-    "message": "Android version"
+    "message": "အန့်ဒရိုက် Android ဘားရှင်း"
   },
   "screens.AboutSettings.phoneModel": {
     "description": "Label for phone model",
-    "message": "Phone model"
+    "message": "ဖုန်းမော်ဒယ်"
   },
   "screens.AboutSettings.title": {
     "description": "Title of 'About CoMapeo' screen",
@@ -377,7 +377,7 @@
   },
   "screens.AboutSettings.unknownValue": {
     "description": "Shown when a device info (e.g. version number) is unknown",
-    "message": "Unknown"
+    "message": "မသိသော"
   },
   "screens.AddPhoto.cancel": {
     "message": "ပယ်ဖျက်သည်"
@@ -532,19 +532,19 @@
   },
   "screens.CoordinateFormat.dd": {
     "description": "Decimal Degrees coordinate format",
-    "message": "Decimal Degrees (DD)"
+    "message": "ဒသမ ဒီဂရီ"
   },
   "screens.CoordinateFormat.dms": {
     "description": "Degrees/Minutes/Seconds coordinate format",
-    "message": "Degrees/Minutes/Seconds (DMS)"
+    "message": "ဒီဂရီ/ မိနစ်/ စက္ကန့်"
   },
   "screens.CoordinateFormat.title": {
     "description": "Title coordinate format screen",
-    "message": "Coordinate Format"
+    "message": "ကိုဩဒိနိတ် ပုံစံ"
   },
   "screens.CoordinateFormat.utm": {
     "description": "Universal Transverse Mercator coordinate format",
-    "message": "Universal Transverse Mercator (UTM)"
+    "message": "UTM (Universal Transverse Mercator)"
   },
   "screens.DataAndPrivacy.diagnosticInfoText": {
     "message": "Anonymized information about your device, app crashes, errors and performance helps Awana Digital improve the app and fix errors."
@@ -640,7 +640,7 @@
     "message": "Get started in two simple ways:"
   },
   "screens.ExchangeSoloScreen.goBack": {
-    "message": "Go Back"
+    "message": "နောက်သို့ ပြန်သွား"
   },
   "screens.ExchangeSoloScreen.inviteCollaborators": {
     "message": "Invite collaborators to your project from the main menu"
@@ -697,7 +697,7 @@
     "message": "စီမံကိန်းတစ်ခုတွင် သင် ရောက်နှင့်ပြီးဖြစ်သည်"
   },
   "screens.Invite.ExistingProjectWarning.goBack": {
-    "message": "Go Back"
+    "message": "နောက်သို့ ပြန်သွား"
   },
   "screens.Invite.ExistingProjectWarning.leaveProj": {
     "message": "လက်ရှိ စီမံကိန်းမှ ထွက်သည်"
@@ -813,7 +813,7 @@
     "message": "Yes"
   },
   "screens.ManualGpsScreen.DdForm.east": {
-    "message": "East"
+    "message": "အရှေ့"
   },
   "screens.ManualGpsScreen.DdForm.invalidCoordinates": {
     "message": "Invalid coordinates"
@@ -831,7 +831,7 @@
     "message": "Longitude"
   },
   "screens.ManualGpsScreen.DdForm.north": {
-    "message": "North"
+    "message": "မြောက်"
   },
   "screens.ManualGpsScreen.DdForm.selectLatCardinality": {
     "message": "Select latitude cardinality"
@@ -867,7 +867,7 @@
     "message": "Seconds"
   },
   "screens.ManualGpsScreen.DmsForm.east": {
-    "message": "East"
+    "message": "အရှေ့"
   },
   "screens.ManualGpsScreen.DmsForm.invalidCoordinates": {
     "message": "Invalid coordinates"
@@ -879,7 +879,7 @@
     "message": "Longitude"
   },
   "screens.ManualGpsScreen.DmsForm.north": {
-    "message": "North"
+    "message": "မြောက်"
   },
   "screens.ManualGpsScreen.DmsForm.selectLatCardinality": {
     "message": "Select latitude cardinality"
@@ -891,16 +891,16 @@
     "message": "West"
   },
   "screens.ManualGpsScreen.coordinateFormat": {
-    "message": "Coordinate Format"
+    "message": "ကိုဩဒိနိတ် ပုံစံ"
   },
   "screens.ManualGpsScreen.decimalDegrees": {
-    "message": "Decimal Degrees (DD)"
+    "message": "ဒသမ ဒီဂရီ"
   },
   "screens.ManualGpsScreen.degreesMinutesSeconds": {
-    "message": "Degrees/Minutes/Seconds (DMS)"
+    "message": "ဒီဂရီ/ မိနစ်/ စက္ကန့်"
   },
   "screens.ManualGpsScreen.easting": {
-    "message": "East"
+    "message": "အရှေ့"
   },
   "screens.ManualGpsScreen.eastingSuffix": {
     "message": "mE"
@@ -909,23 +909,23 @@
     "message": "Invalid coordinates. Latitude must be between -90 and 90. Longitude must be between -180 and 180"
   },
   "screens.ManualGpsScreen.northing": {
-    "message": "North"
+    "message": "မြောက်"
   },
   "screens.ManualGpsScreen.northingSuffix": {
     "message": "mN"
   },
   "screens.ManualGpsScreen.title": {
     "description": "title of manual GPS screen",
-    "message": "Enter coordinates"
+    "message": "ကိုဩဒိနိတ်အမှတ်များ ရိုက်ထည့်ပါ"
   },
   "screens.ManualGpsScreen.universalTransverseMercator": {
-    "message": "Universal Transverse Mercator (UTM)"
+    "message": "UTM (Universal Transverse Mercator)"
   },
   "screens.ManualGpsScreen.zoneLetter": {
     "message": "Zone Letter"
   },
   "screens.ManualGpsScreen.zoneNumber": {
-    "message": "Zone Number"
+    "message": "ဇုန်နံပါတ်"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
     "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
@@ -986,7 +986,7 @@
   },
   "screens.Observation.ObservationView.share": {
     "description": "Button to share an observation",
-    "message": "Share"
+    "message": "မျှဝေခြင်း"
   },
   "screens.Observation.TrackList.track": {
     "message": "Track"
@@ -1012,7 +1012,7 @@
   },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "Observation"
+    "message": "လေ့လာတွေ့ရှိချက်များ"
   },
   "screens.Observation.shareMediaTitle": {
     "description": "Title of dialog to share an observation with media",
@@ -1033,7 +1033,7 @@
     "message": "လေ့လာတွေ့ရှိချက်များ"
   },
   "screens.ObservationCreate.changePreset": {
-    "message": "Change"
+    "message": "ပြောင်းလဲသည်"
   },
   "screens.ObservationCreate.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
@@ -1077,7 +1077,7 @@
   },
   "screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
-    "message": "Done"
+    "message": "ပြီးသွားပြီ"
   },
   "screens.ObservationDetails.nextQuestion": {
     "description": "Button text to navigate to next question",
@@ -1085,7 +1085,7 @@
   },
   "screens.ObservationDetails.title": {
     "description": "Title of observation details screen showing question number and total",
-    "message": "Question {current} of {total}"
+    "message": "{စုစုပေါင်း} မှ {လက်ရှိ} မေးခွန်း"
   },
   "screens.ObservationEdit.ObservationEditView.audioButton": {
     "description": "Button label for adding audio",
@@ -1104,7 +1104,7 @@
     "message": "Photo"
   },
   "screens.ObservationEdit.changePreset": {
-    "message": "Change"
+    "message": "ပြောင်းလဲသည်"
   },
   "screens.ObservationEdit.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
@@ -1434,7 +1434,7 @@
     "message": "Device Name"
   },
   "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
-    "message": "Invite Device"
+    "message": "ကိရိယာများကို ဖိတ်ခေါ်ပါ"
   },
   "screens.Setting.ProjectSettings.YourTeam.participantDescription": {
     "message": "Participants can take and share observations. They cannot manage users or project details."
@@ -1461,7 +1461,7 @@
     "message": "Categories"
   },
   "screens.Settings.Config.okButton": {
-    "message": "OK"
+    "message": "အိုကေ"
   },
   "screens.Settings.Config.projectName": {
     "message": "Project Name:"
@@ -1470,7 +1470,7 @@
     "message": "New Project"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
-    "message": "Go Back"
+    "message": "နောက်သို့ ပြန်သွား"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.howTo": {
     "message": "How to Join a Project"
@@ -1482,7 +1482,7 @@
     "message": "Go to Map"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.invitedDevice": {
-    "message": "Invite Device"
+    "message": "ကိရိယာများကို ဖိတ်ခေါ်ပါ"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.projectCreated": {
     "message": "{projectName} Created!"
@@ -1518,7 +1518,7 @@
     "message": "Join a Project"
   },
   "screens.Settings.CreateOrJoinProject.okButton": {
-    "message": "OK"
+    "message": "အိုကေ"
   },
   "screens.Settings.CreateOrJoinProject.projectDescription": {
     "message": "A project is a secure container for your data. Only devices you invite can enter and share data with you. Create or Join a project in order to share data with other devices. This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
@@ -1761,10 +1761,10 @@
     "message": "ရှာဖွေခြင်း…"
   },
   "sharedComponents.Editor.PresetView.Change": {
-    "message": "Change"
+    "message": "ပြောင်းလဲသည်"
   },
   "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "Go Back"
+    "message": "နောက်သို့ ပြန်သွား"
   },
   "sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Something Went Wrong"
@@ -1776,7 +1776,7 @@
     "message": "Participant"
   },
   "soloProject.inviteCollaborators.goBack": {
-    "message": "Go Back"
+    "message": "နောက်သို့ ပြန်သွား"
   },
   "soloProject.inviteCollaborators.introText": {
     "message": "Share observations with others using CoMapeo. Name your solo project to add your first collaborator."

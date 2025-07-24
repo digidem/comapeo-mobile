@@ -27,5 +27,7 @@ module.exports = {
     // For https://github.com/kristerkari/react-native-svg-transformer
     assetExts: config.resolver.assetExts.filter(ext => ext !== 'svg'),
     sourceExts: [...config.resolver.sourceExts, 'svg'],
+    // Required for importing @comapeo/ipc and rpc-reflector without bundling the server/backend code also
+    unstable_enablePackageExports: true,
   },
 };

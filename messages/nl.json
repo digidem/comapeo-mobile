@@ -5,7 +5,7 @@
   },
   "AppContainer.EditHeader.discardChangesButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes"
+    "message": "Wijzigingen annuleren"
   },
   "AppContainer.EditHeader.discardChangesDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
@@ -41,7 +41,7 @@
     "message": "Start Tracks"
   },
   "Modal.GPSEnable.button.loading": {
-    "message": "Loading…"
+    "message": "Bezig met laden…"
   },
   "Modal.GPSEnable.button.stop": {
     "message": "Stop Tracks"
@@ -77,7 +77,7 @@
     "message": "Data & Privacy"
   },
   "Navigation.Menu.viewProject": {
-    "message": "View"
+    "message": "Toon"
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -85,7 +85,7 @@
   },
   "ObservationEdit.HeaderLeft.discardObservationButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes"
+    "message": "Wijzigingen annuleren"
   },
   "ObservationEdit.HeaderLeft.discardObservationDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
@@ -143,10 +143,10 @@
     "message": "All project devices can sync with this Archive, sharing data over the internet."
   },
   "ProjectSettings.RemoteArchive.Success.close": {
-    "message": "Close"
+    "message": "Afsluiten"
   },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.close": {
-    "message": "Close"
+    "message": "Afsluiten"
   },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.deviceNames": {
     "message": "Device Names"
@@ -294,7 +294,7 @@
   },
   "SharedComponents.ActionButtons.share": {
     "description": "Button to share an observation",
-    "message": "Share"
+    "message": "Delen"
   },
   "TrackEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -306,7 +306,7 @@
   },
   "TrackEdit.HeaderLeft.discardTrackButton": {
     "description": "Button to confirm discarding the track",
-    "message": "Discard changes"
+    "message": "Wijzigingen annuleren"
   },
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
@@ -361,15 +361,15 @@
   },
   "screens.AboutSettings.androidBuild": {
     "description": "Label for Android build number",
-    "message": "Android build number"
+    "message": "Android build nummer"
   },
   "screens.AboutSettings.androidVersion": {
     "description": "Label for Android version",
-    "message": "Android version"
+    "message": "Android versie"
   },
   "screens.AboutSettings.phoneModel": {
     "description": "Label for phone model",
-    "message": "Phone model"
+    "message": "Telefoon model"
   },
   "screens.AboutSettings.title": {
     "description": "Title of 'About CoMapeo' screen",
@@ -377,7 +377,7 @@
   },
   "screens.AboutSettings.unknownValue": {
     "description": "Shown when a device info (e.g. version number) is unknown",
-    "message": "Unknown"
+    "message": "Onbekend"
   },
   "screens.AddPhoto.cancel": {
     "message": "Annuleren"
@@ -532,15 +532,15 @@
   },
   "screens.CoordinateFormat.dd": {
     "description": "Decimal Degrees coordinate format",
-    "message": "Decimal Degrees (DD)"
+    "message": "Decimale graden (DD)"
   },
   "screens.CoordinateFormat.dms": {
     "description": "Degrees/Minutes/Seconds coordinate format",
-    "message": "Degrees/Minutes/Seconds (DMS)"
+    "message": "Graden/Minuten/Seconden (DMS)"
   },
   "screens.CoordinateFormat.title": {
     "description": "Title coordinate format screen",
-    "message": "Coordinate Format"
+    "message": "Coördinaat formaat"
   },
   "screens.CoordinateFormat.utm": {
     "description": "Universal Transverse Mercator coordinate format",
@@ -709,7 +709,7 @@
     "message": "Invite Canceled"
   },
   "screens.InviteCancelled.close": {
-    "message": "Close"
+    "message": "Afsluiten"
   },
   "screens.InviteCancelled.projectInviteCanceled": {
     "message": "Your invitation to {projectName} has been canceled."
@@ -733,7 +733,7 @@
     "message": "participant"
   },
   "screens.InviteSuccess.goToMap": {
-    "message": "Go To Map"
+    "message": "Ga naar de kaart"
   },
   "screens.InviteSuccess.goToSync": {
     "message": "Go To Sync"
@@ -782,38 +782,38 @@
   },
   "screens.LocationInfoScreen.gpsHeader": {
     "description": "Header for GPS screen",
-    "message": "Current GPS Location"
+    "message": "Huidige GPS locatie"
   },
   "screens.LocationInfoScreen.lastUpdate": {
     "description": "Section title for time of last GPS update",
-    "message": "Last update"
+    "message": "Laatste update"
   },
   "screens.LocationInfoScreen.locationDD": {
     "description": "Section title for DD coordinates",
-    "message": "Coordinates Decimal Degrees"
+    "message": "Coördinaten Decimale Graden"
   },
   "screens.LocationInfoScreen.locationDMS": {
     "description": "Section title for DMS coordinates",
-    "message": "Coordinates DMS"
+    "message": "DMS coördinaten"
   },
   "screens.LocationInfoScreen.locationSensors": {
     "description": "Heading for section about location sensor status",
-    "message": "Sensor Status"
+    "message": "Status van de sensor"
   },
   "screens.LocationInfoScreen.locationUTM": {
     "description": "Section title for UTM coordinates",
-    "message": "Coordinates UTM"
+    "message": "UTM coördinaten"
   },
   "screens.LocationInfoScreen.no": {
     "description": "if a location sensor is active yes/no",
-    "message": "No"
+    "message": "Nee"
   },
   "screens.LocationInfoScreen.yes": {
     "description": "if a location sensor is active yes/no",
-    "message": "Yes"
+    "message": "Ja"
   },
   "screens.ManualGpsScreen.DdForm.east": {
-    "message": "East"
+    "message": "Oost"
   },
   "screens.ManualGpsScreen.DdForm.invalidCoordinates": {
     "message": "Invalid coordinates"
@@ -831,7 +831,7 @@
     "message": "Longitude"
   },
   "screens.ManualGpsScreen.DdForm.north": {
-    "message": "North"
+    "message": "Noord"
   },
   "screens.ManualGpsScreen.DdForm.selectLatCardinality": {
     "message": "Select latitude cardinality"
@@ -867,7 +867,7 @@
     "message": "Seconds"
   },
   "screens.ManualGpsScreen.DmsForm.east": {
-    "message": "East"
+    "message": "Oost"
   },
   "screens.ManualGpsScreen.DmsForm.invalidCoordinates": {
     "message": "Invalid coordinates"
@@ -879,7 +879,7 @@
     "message": "Longitude"
   },
   "screens.ManualGpsScreen.DmsForm.north": {
-    "message": "North"
+    "message": "Noord"
   },
   "screens.ManualGpsScreen.DmsForm.selectLatCardinality": {
     "message": "Select latitude cardinality"
@@ -891,16 +891,16 @@
     "message": "West"
   },
   "screens.ManualGpsScreen.coordinateFormat": {
-    "message": "Coordinate Format"
+    "message": "Coördinaat formaat"
   },
   "screens.ManualGpsScreen.decimalDegrees": {
-    "message": "Decimal Degrees (DD)"
+    "message": "Decimale graden (DD)"
   },
   "screens.ManualGpsScreen.degreesMinutesSeconds": {
-    "message": "Degrees/Minutes/Seconds (DMS)"
+    "message": "Graden/Minuten/Seconden (DMS)"
   },
   "screens.ManualGpsScreen.easting": {
-    "message": "East"
+    "message": "Oost"
   },
   "screens.ManualGpsScreen.eastingSuffix": {
     "message": "mE"
@@ -909,23 +909,23 @@
     "message": "Invalid coordinates. Latitude must be between -90 and 90. Longitude must be between -180 and 180"
   },
   "screens.ManualGpsScreen.northing": {
-    "message": "North"
+    "message": "Noord"
   },
   "screens.ManualGpsScreen.northingSuffix": {
     "message": "mN"
   },
   "screens.ManualGpsScreen.title": {
     "description": "title of manual GPS screen",
-    "message": "Enter coordinates"
+    "message": "Coördinaten invoeren"
   },
   "screens.ManualGpsScreen.universalTransverseMercator": {
     "message": "Universal Transverse Mercator (UTM)"
   },
   "screens.ManualGpsScreen.zoneLetter": {
-    "message": "Zone Letter"
+    "message": "Zone letter"
   },
   "screens.ManualGpsScreen.zoneNumber": {
-    "message": "Zone Number"
+    "message": "Zone nummer"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
     "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
@@ -986,7 +986,7 @@
   },
   "screens.Observation.ObservationView.share": {
     "description": "Button to share an observation",
-    "message": "Share"
+    "message": "Delen"
   },
   "screens.Observation.TrackList.track": {
     "message": "Track"
@@ -1012,7 +1012,7 @@
   },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "Observation"
+    "message": "Waarneming"
   },
   "screens.Observation.shareMediaTitle": {
     "description": "Title of dialog to share an observation with media",
@@ -1033,7 +1033,7 @@
     "message": "Waarneming"
   },
   "screens.ObservationCreate.changePreset": {
-    "message": "Change"
+    "message": "Wijzigen"
   },
   "screens.ObservationCreate.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
@@ -1049,7 +1049,7 @@
   },
   "screens.ObservationCreate.navTitle": {
     "description": "screen title for new observation screen",
-    "message": "New Observation"
+    "message": "Nieuwe waarneming"
   },
   "screens.ObservationCreate.noGpsDesc": {
     "description": "Description in dialog when trying to save with no GPS coords",
@@ -1077,7 +1077,7 @@
   },
   "screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
-    "message": "Done"
+    "message": "Voltooid"
   },
   "screens.ObservationDetails.nextQuestion": {
     "description": "Button text to navigate to next question",
@@ -1085,7 +1085,7 @@
   },
   "screens.ObservationDetails.title": {
     "description": "Title of observation details screen showing question number and total",
-    "message": "Question {current} of {total}"
+    "message": "Vraag {current} van {total}"
   },
   "screens.ObservationEdit.ObservationEditView.audioButton": {
     "description": "Button label for adding audio",
@@ -1104,7 +1104,7 @@
     "message": "Photo"
   },
   "screens.ObservationEdit.changePreset": {
-    "message": "Change"
+    "message": "Wijzigen"
   },
   "screens.ObservationEdit.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
@@ -1112,7 +1112,7 @@
   },
   "screens.ObservationEdit.navTitle": {
     "description": "screen title for new observation screen",
-    "message": "Edit Observation"
+    "message": "Waarneming wijzigen"
   },
   "screens.ObservationEdit.observation": {
     "description": "Default name of observation with no matching preset",
@@ -1150,7 +1150,7 @@
     "message": "Latitude"
   },
   "screens.ObservationMetadataVerified.location": {
-    "message": "Location"
+    "message": "Locatie"
   },
   "screens.ObservationMetadataVerified.locationManuallyEntered": {
     "message": "Location was manually entered"
@@ -1392,7 +1392,7 @@
     "message": "Add Another Device"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.close": {
-    "message": "Close"
+    "message": "Afsluiten"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
@@ -1545,7 +1545,7 @@
     "message": "This cannot be undone."
   },
   "screens.Settings.MapManagement.BackgroundMaps.close": {
-    "message": "Close"
+    "message": "Afsluiten"
   },
   "screens.Settings.MapManagement.BackgroundMaps.customMapAddedDescription": {
     "message": "You will see this map when you are offline, but you will not see a map outside the area defined in your custom map."
@@ -1575,7 +1575,7 @@
     "message": "Unable to import the file. Please go back and try again."
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
-    "message": "Import Error"
+    "message": "Fout bij importeren"
   },
   "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
     "message": "Remove Map File"
@@ -1605,7 +1605,7 @@
     "message": "Invitation Declined"
   },
   "screens.Settings.YourTeam.close": {
-    "message": "Close"
+    "message": "Afsluiten"
   },
   "screens.Settings.YourTeam.deviceHasJoined": {
     "message": "Device Has Joined {projectName}"
@@ -1751,7 +1751,7 @@
     "message": "Leave Project"
   },
   "sharedComponents.DeviceIconWithName.Disconnected": {
-    "message": "Disconnected"
+    "message": "Losgekoppeld"
   },
   "sharedComponents.DeviceIconWithName.thisDevice": {
     "message": "This Device!"
@@ -1761,7 +1761,7 @@
     "message": "Bezig te zoeken…"
   },
   "sharedComponents.Editor.PresetView.Change": {
-    "message": "Change"
+    "message": "Wijzigen"
   },
   "sharedComponents.ErrorBottomSheet.goBack": {
     "message": "Go Back"

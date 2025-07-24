@@ -5,7 +5,7 @@
   },
   "AppContainer.EditHeader.discardChangesButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes"
+    "message": "Batalkan perubahan"
   },
   "AppContainer.EditHeader.discardChangesDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
@@ -26,7 +26,7 @@
     "message": "Hapus pengamatan?"
   },
   "MapManagement.ErrorBottomSheet.goBack": {
-    "message": "Go Back"
+    "message": "Kembali"
   },
   "Modal.GPSDisable.button": {
     "message": "Enable GPS"
@@ -62,7 +62,7 @@
     "message": "Exchange"
   },
   "Navigation.Menu.invite": {
-    "message": "Invite"
+    "message": "Undang"
   },
   "Navigation.Menu.privacyPolicy": {
     "message": "Data & Privacy"
@@ -76,7 +76,7 @@
   },
   "ObservationEdit.HeaderLeft.discardObservationButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes"
+    "message": "Batalkan perubahan"
   },
   "ObservationEdit.HeaderLeft.discardObservationDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
@@ -170,10 +170,10 @@
     "message": "All project devices can sync with this Archive, sharing data over the internet."
   },
   "ProjectSettings.RemoteArchive.Success.close": {
-    "message": "Close"
+    "message": "Tutup"
   },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.close": {
-    "message": "Close"
+    "message": "Tutup"
   },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.deviceNames": {
     "message": "Device Names"
@@ -263,7 +263,7 @@
     "message": "UTM,Lat/Lon,DMS"
   },
   "Screens.Settings.AppSettings.deviceName": {
-    "message": "Device Name"
+    "message": "Nama Perangkat"
   },
   "Screens.Settings.AppSettings.language": {
     "message": "Bahasa"
@@ -279,7 +279,7 @@
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "description": "Text for cancel action button.",
-    "message": "Cancel"
+    "message": "Batal"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.description": {
     "description": "Explanation for consequences of removing archive server.",
@@ -307,7 +307,7 @@
   },
   "SharedComponents.ActionButtons.share": {
     "description": "Button to share an observation",
-    "message": "Share"
+    "message": "Bagikan"
   },
   "TrackBottomSheet.DidNotMove.delete": {
     "message": "Exit Tracks"
@@ -337,7 +337,7 @@
   },
   "TrackEdit.HeaderLeft.discardTrackButton": {
     "description": "Button to confirm discarding the track",
-    "message": "Discard changes"
+    "message": "Batalkan perubahan"
   },
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
@@ -391,7 +391,7 @@
     "message": "Project Description"
   },
   "screen.EditProjectDetails.projectName": {
-    "message": "Project Name"
+    "message": "Nama proyek"
   },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Coordinator"
@@ -440,11 +440,11 @@
   },
   "screens.AboutSettings.androidBuild": {
     "description": "Label for Android build number",
-    "message": "Android build number"
+    "message": "Nomor seri Android"
   },
   "screens.AboutSettings.androidVersion": {
     "description": "Label for Android version",
-    "message": "Android version"
+    "message": "Versi Android"
   },
   "screens.AboutSettings.emojiSource": {
     "description": "Label for the source of emojis used in CoMapeo",
@@ -452,7 +452,7 @@
   },
   "screens.AboutSettings.phoneModel": {
     "description": "Label for phone model",
-    "message": "Phone model"
+    "message": "Model telepon"
   },
   "screens.AboutSettings.title": {
     "description": "Title of 'About CoMapeo' screen",
@@ -460,7 +460,7 @@
   },
   "screens.AboutSettings.unknownValue": {
     "description": "Shown when a device info (e.g. version number) is unknown",
-    "message": "Unknown"
+    "message": "Tidak diketahui"
   },
   "screens.AddPhoto.cancel": {
     "message": "Batal"
@@ -563,7 +563,7 @@
     "message": "Audio Recording"
   },
   "screens.AudioAttachmentPlayback.share": {
-    "message": "Share"
+    "message": "Bagikan"
   },
   "screens.AudioPermission.Button.allow": {
     "description": "Screen button text for granting the audio permission",
@@ -589,7 +589,7 @@
     "message": "Back to Editing"
   },
   "screens.AudioPlaybackNew.delete": {
-    "message": "Delete"
+    "message": "Hapus"
   },
   "screens.AudioPlaybackNew.recordingSaved": {
     "message": "Recording Saved!"
@@ -610,7 +610,7 @@
     "message": "No access to camera. Please Allow access in setting"
   },
   "screens.ConfirmDeletePhoto.cancel": {
-    "message": "Cancel"
+    "message": "Batal"
   },
   "screens.ConfirmDeletePhoto.deletePhoto": {
     "message": "Delete Photo"
@@ -620,19 +620,19 @@
   },
   "screens.CoordinateFormat.dd": {
     "description": "Decimal Degrees coordinate format",
-    "message": "Decimal Degrees (DD)"
+    "message": "Derajat Desimal (DD)"
   },
   "screens.CoordinateFormat.dms": {
     "description": "Degrees/Minutes/Seconds coordinate format",
-    "message": "Degrees/Minutes/Seconds (DMS)"
+    "message": "Derajat/Menit/Detik (DMD)"
   },
   "screens.CoordinateFormat.title": {
     "description": "Title coordinate format screen",
-    "message": "Coordinate Format"
+    "message": "Format Koordinat"
   },
   "screens.CoordinateFormat.utm": {
     "description": "Universal Transverse Mercator coordinate format",
-    "message": "Universal Transverse Mercator (UTM)"
+    "message": "Mercator Transversal Universal (UTM)"
   },
   "screens.DataAndPrivacy.diagnosticInfoText": {
     "message": "Anonymized information about your device, app crashes, errors and performance helps Awana Digital improve the app and fix errors."
@@ -692,7 +692,7 @@
     "message": "Start Using CoMapeo"
   },
   "screens.DeviceNaming.Success.success": {
-    "message": "Success!"
+    "message": "Berhasil!"
   },
   "screens.DeviceNaming.addName": {
     "message": "Add Name"
@@ -713,7 +713,7 @@
     "message": "No Wi-Fi"
   },
   "screens.ExchangeSettingsBottomSheet.close": {
-    "message": "Close"
+    "message": "Tutup"
   },
   "screens.ExchangeSettingsBottomSheet.everythingDesc": {
     "message": "Full size photos and audio. Uses more storage."
@@ -728,7 +728,7 @@
     "message": "Exchange Previews Only"
   },
   "screens.ExchangeSettingsBottomSheet.save": {
-    "message": "Save"
+    "message": "Simpan"
   },
   "screens.ExchangeSettingsCard.changeSettings": {
     "message": "Change Settings"
@@ -740,7 +740,7 @@
     "message": "Get started in two simple ways:"
   },
   "screens.ExchangeSoloScreen.goBack": {
-    "message": "Go Back"
+    "message": "Kembali"
   },
   "screens.ExchangeSoloScreen.inviteCollaborators": {
     "message": "Invite collaborators to your project from the main menu"
@@ -767,7 +767,7 @@
     "message": "Text only as a GeoJSON file"
   },
   "screens.ExportObservations.close": {
-    "message": "Close"
+    "message": "Tutup"
   },
   "screens.ExportObservations.download": {
     "message": "Download"
@@ -809,7 +809,7 @@
     "message": "Invite Canceled"
   },
   "screens.InviteCancelled.close": {
-    "message": "Close"
+    "message": "Tutup"
   },
   "screens.InviteCancelled.projectInviteCanceled": {
     "message": "Your invitation to {projectName} has been canceled."
@@ -818,7 +818,7 @@
     "message": "coordinator"
   },
   "screens.InviteReceived.declineInvite": {
-    "message": "Decline Invite"
+    "message": "Tolak Undangan"
   },
   "screens.InviteReceived.invitedToJoin": {
     "message": "You've been invited to..."
@@ -833,13 +833,13 @@
     "message": "participant"
   },
   "screens.InviteSuccess.goToMap": {
-    "message": "Go To Map"
+    "message": "Pergi ke Peta"
   },
   "screens.InviteSuccess.goToSync": {
     "message": "Go To Sync"
   },
   "screens.InviteSuccess.success": {
-    "message": "Success"
+    "message": "Berhasil"
   },
   "screens.InviteSuccess.youHaveJoined": {
     "message": "You have joined {projectName}"
@@ -854,154 +854,154 @@
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
-    "message": "Details"
+    "message": "Rincian"
   },
   "screens.LocationInfoScreen.gpsHeader": {
     "description": "Header for GPS screen",
-    "message": "Current GPS Location"
+    "message": "Lokasi GPS saat ini"
   },
   "screens.LocationInfoScreen.lastUpdate": {
     "description": "Section title for time of last GPS update",
-    "message": "Last update"
+    "message": "Pembaharuan terakhir"
   },
   "screens.LocationInfoScreen.locationDD": {
     "description": "Section title for DD coordinates",
-    "message": "Coordinates Decimal Degrees"
+    "message": "Koordinat Derajat Desimal"
   },
   "screens.LocationInfoScreen.locationDMS": {
     "description": "Section title for DMS coordinates",
-    "message": "Coordinates DMS"
+    "message": "Koordinat DMS"
   },
   "screens.LocationInfoScreen.locationSensors": {
     "description": "Heading for section about location sensor status",
-    "message": "Sensor Status"
+    "message": "Status Sensor"
   },
   "screens.LocationInfoScreen.locationUTM": {
     "description": "Section title for UTM coordinates",
-    "message": "Coordinates UTM"
+    "message": "Koordinat UTM"
   },
   "screens.LocationInfoScreen.no": {
     "description": "if a location sensor is active yes/no",
-    "message": "No"
+    "message": "Tidak"
   },
   "screens.LocationInfoScreen.yes": {
     "description": "if a location sensor is active yes/no",
-    "message": "Yes"
+    "message": "Ya"
   },
   "screens.ManualGpsScreen.DdForm.east": {
-    "message": "East"
+    "message": "Timur"
   },
   "screens.ManualGpsScreen.DdForm.invalidCoordinates": {
-    "message": "Invalid coordinates"
+    "message": "Koordinat tidak valid"
   },
   "screens.ManualGpsScreen.DdForm.latInputLabel": {
-    "message": "Latitude value"
+    "message": "Nilai lintang"
   },
   "screens.ManualGpsScreen.DdForm.latitude": {
-    "message": "Latitude"
+    "message": "Garis Lintang"
   },
   "screens.ManualGpsScreen.DdForm.lonInputLabel": {
-    "message": "Longitude value"
+    "message": "Nilai bujur"
   },
   "screens.ManualGpsScreen.DdForm.longitude": {
-    "message": "Longitude"
+    "message": "Garis bujur"
   },
   "screens.ManualGpsScreen.DdForm.north": {
-    "message": "North"
+    "message": "Utara"
   },
   "screens.ManualGpsScreen.DdForm.selectLatCardinality": {
-    "message": "Select latitude cardinality"
+    "message": "Pilih kardinalitas garis lintang"
   },
   "screens.ManualGpsScreen.DdForm.selectLonCardinality": {
-    "message": "Select longitude cardinality"
+    "message": "Pilih kardinalitas garis bujur"
   },
   "screens.ManualGpsScreen.DdForm.south": {
-    "message": "South"
+    "message": "Selatan"
   },
   "screens.ManualGpsScreen.DdForm.west": {
-    "message": "West"
+    "message": "Barat"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.MinutesInputLabel": {
-    "message": "{field} minutes input"
+    "message": "{field} menit dimasukkan"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.SecondsInputLabel": {
-    "message": "{field} seconds input"
+    "message": "{field} detik dimasukkan"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.degrees": {
-    "message": "Degrees"
+    "message": "Derajat"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.degreesInputLabel": {
-    "message": "{field} degrees input"
+    "message": "{field} derajat dimasukkan"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.direction": {
-    "message": "Direction"
+    "message": "Arah"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.minutes": {
-    "message": "Minutes"
+    "message": "Menit"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.seconds": {
-    "message": "Seconds"
+    "message": "Detik"
   },
   "screens.ManualGpsScreen.DmsForm.east": {
-    "message": "East"
+    "message": "Timur"
   },
   "screens.ManualGpsScreen.DmsForm.invalidCoordinates": {
-    "message": "Invalid coordinates"
+    "message": "Koordinat tidak valid"
   },
   "screens.ManualGpsScreen.DmsForm.latitude": {
-    "message": "Latitude"
+    "message": "Garis Lintang"
   },
   "screens.ManualGpsScreen.DmsForm.longitude": {
-    "message": "Longitude"
+    "message": "Garis bujur"
   },
   "screens.ManualGpsScreen.DmsForm.north": {
-    "message": "North"
+    "message": "Utara"
   },
   "screens.ManualGpsScreen.DmsForm.selectLatCardinality": {
-    "message": "Select latitude cardinality"
+    "message": "Pilih kardinalitas garis lintang"
   },
   "screens.ManualGpsScreen.DmsForm.south": {
-    "message": "South"
+    "message": "Selatan"
   },
   "screens.ManualGpsScreen.DmsForm.west": {
-    "message": "West"
+    "message": "Barat"
   },
   "screens.ManualGpsScreen.coordinateFormat": {
-    "message": "Coordinate Format"
+    "message": "Format Koordinat"
   },
   "screens.ManualGpsScreen.decimalDegrees": {
-    "message": "Decimal Degrees (DD)"
+    "message": "Derajat Desimal (DD)"
   },
   "screens.ManualGpsScreen.degreesMinutesSeconds": {
-    "message": "Degrees/Minutes/Seconds (DMS)"
+    "message": "Derajat/Menit/Detik (DMD)"
   },
   "screens.ManualGpsScreen.easting": {
-    "message": "East"
+    "message": "Timur"
   },
   "screens.ManualGpsScreen.eastingSuffix": {
-    "message": "mE"
+    "message": "mT"
   },
   "screens.ManualGpsScreen.invalidCoordinates": {
     "message": "Invalid coordinates. Latitude must be between -90 and 90. Longitude must be between -180 and 180"
   },
   "screens.ManualGpsScreen.northing": {
-    "message": "North"
+    "message": "Utara"
   },
   "screens.ManualGpsScreen.northingSuffix": {
-    "message": "mN"
+    "message": "mU"
   },
   "screens.ManualGpsScreen.title": {
     "description": "title of manual GPS screen",
-    "message": "Enter coordinates"
+    "message": "Masukkan koordinat"
   },
   "screens.ManualGpsScreen.universalTransverseMercator": {
-    "message": "Universal Transverse Mercator (UTM)"
+    "message": "Mercator Transversal Universal (UTM)"
   },
   "screens.ManualGpsScreen.zoneLetter": {
-    "message": "Zone Letter"
+    "message": "Huruf Zona"
   },
   "screens.ManualGpsScreen.zoneNumber": {
-    "message": "Zone Number"
+    "message": "Nomor Zona"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
     "message": "Use Location? Tracks location even when closed. Data remains on device only."
@@ -1041,7 +1041,7 @@
   },
   "screens.Observation.ObservationView.share": {
     "description": "Button to share an observation",
-    "message": "Share"
+    "message": "Bagikan"
   },
   "screens.Observation.TrackList.track": {
     "message": "Track"
@@ -1068,7 +1068,7 @@
     "message": "Description:"
   },
   "screens.Observation.details": {
-    "message": "Details:"
+    "message": "Rincian:"
   },
   "screens.Observation.fallbackCategoryName": {
     "description": "Fallback name used when category name cannot be determined for observation",
@@ -1076,7 +1076,7 @@
   },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "Observation"
+    "message": "Pengamatan"
   },
   "screens.Observation.location": {
     "message": "Location:"
@@ -1106,7 +1106,7 @@
     "message": "Choose a category"
   },
   "screens.ObservationCreate.changePreset": {
-    "message": "Change"
+    "message": "Ubah"
   },
   "screens.ObservationCreate.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
@@ -1122,7 +1122,7 @@
   },
   "screens.ObservationCreate.navTitle": {
     "description": "screen title for new observation screen",
-    "message": "New Observation"
+    "message": "Pengamatan Baru"
   },
   "screens.ObservationCreate.noGpsDesc": {
     "description": "Description in dialog when trying to save with no GPS coords",
@@ -1150,7 +1150,7 @@
   },
   "screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
-    "message": "Done"
+    "message": "Selesai"
   },
   "screens.ObservationDetails.nextQuestion": {
     "description": "Button text to navigate to next question",
@@ -1158,7 +1158,7 @@
   },
   "screens.ObservationDetails.title": {
     "description": "Title of observation details screen showing question number and total",
-    "message": "Question {current} of {total}"
+    "message": "Pertanyaan {current} dari {total}"
   },
   "screens.ObservationEdit.ObservationEditView.audioButton": {
     "description": "Button label for adding audio",
@@ -1170,14 +1170,14 @@
   },
   "screens.ObservationEdit.ObservationEditView.detailsButton": {
     "description": "Button label to add details",
-    "message": "Details"
+    "message": "Rincian"
   },
   "screens.ObservationEdit.ObservationEditView.photoButton": {
     "description": "Button label for adding photo",
     "message": "Photo"
   },
   "screens.ObservationEdit.changePreset": {
-    "message": "Change"
+    "message": "Ubah"
   },
   "screens.ObservationEdit.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
@@ -1185,7 +1185,7 @@
   },
   "screens.ObservationEdit.navTitle": {
     "description": "screen title for new observation screen",
-    "message": "Edit Observation"
+    "message": "Sunting Pengamatan"
   },
   "screens.ObservationEdit.observation": {
     "description": "Default name of observation with no matching preset",
@@ -1223,7 +1223,7 @@
     "message": "How we validate"
   },
   "screens.ObservationMetadataVerified.latitude": {
-    "message": "Latitude"
+    "message": "Garis Lintang"
   },
   "screens.ObservationMetadataVerified.location": {
     "message": "Location"
@@ -1232,7 +1232,7 @@
     "message": "Location was manually entered"
   },
   "screens.ObservationMetadataVerified.longitude": {
-    "message": "Longitude"
+    "message": "Garis bujur"
   },
   "screens.ObservationMetadataVerified.manuallyEntered": {
     "message": "Manually entered."
@@ -1513,7 +1513,7 @@
     "message": "Nama Perangkat"
   },
   "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
-    "message": "Invite Device"
+    "message": "Undang Perangkat"
   },
   "screens.Setting.ProjectSettings.YourTeam.participantDescription": {
     "message": "Participants can take and share observations. They cannot manage users or project details."
@@ -1540,10 +1540,10 @@
     "message": "Categories"
   },
   "screens.Settings.Config.okButton": {
-    "message": "OK"
+    "message": "Oke"
   },
   "screens.Settings.Config.projectName": {
-    "message": "Project Name:"
+    "message": "Nama Proyek:"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.title": {
     "message": "Start New Project"
@@ -1552,7 +1552,7 @@
     "message": "Name My Project"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
-    "message": "Go Back"
+    "message": "Kembali"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.howTo": {
     "message": "How to Join a Project"
@@ -1561,7 +1561,7 @@
     "message": "To join a project find a Coordinator of the project you wish to join. Tell them your device name and the Coordinator will send you an invite."
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.goToMap": {
-    "message": "Start Mapping"
+    "message": "Mulai Pemetaan"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.invitedDevice": {
     "message": "Invite a Device"
@@ -1573,7 +1573,7 @@
     "message": "is now ready for you to invite devices."
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.success": {
-    "message": "Success!"
+    "message": "Berhasil!"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.updateCategories": {
     "message": "Update Categories Set"
@@ -1585,13 +1585,13 @@
     "message": "You are already on a project. To create a new Project you must uninstall and reininstall CoMapeo."
   },
   "screens.Settings.CreateOrJoinProject.createProject": {
-    "message": "Create a Project"
+    "message": "Buat proyek"
   },
   "screens.Settings.CreateOrJoinProject.createProjectButton": {
     "message": "Create"
   },
   "screens.Settings.CreateOrJoinProject.enterName": {
-    "message": "Project Name"
+    "message": "Nama proyek"
   },
   "screens.Settings.CreateOrJoinProject.existingProjectName": {
     "message": "Using an existing project name does not make them the same project."
@@ -1600,7 +1600,7 @@
     "message": "Join an existing CoMapeo Project"
   },
   "screens.Settings.CreateOrJoinProject.joinProject": {
-    "message": "Join a Project"
+    "message": "Bergabung dengan Proyek"
   },
   "screens.Settings.CreateOrJoinProject.keepInMind": {
     "message": "Keep in mind"
@@ -1615,7 +1615,7 @@
     "message": "Request invites to join existing projects."
   },
   "screens.Settings.CreateOrJoinProject.saveProjectButton": {
-    "message": "Save"
+    "message": "Simpan"
   },
   "screens.Settings.CreateOrJoinProject.startProject": {
     "message": "Start a CoMapeo Project"
@@ -1636,7 +1636,7 @@
     "message": "This cannot be undone."
   },
   "screens.Settings.MapManagement.BackgroundMaps.close": {
-    "message": "Close"
+    "message": "Tutup"
   },
   "screens.Settings.MapManagement.BackgroundMaps.customMapAddedDescription": {
     "message": "You will see this map when you are offline, but you will not see a map outside the area defined in your custom map."
@@ -1666,7 +1666,7 @@
     "message": "Unable to import the file. Please go back and try again."
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
-    "message": "Import Error"
+    "message": "Kesalahan Impor"
   },
   "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
     "message": "Remove Map File"
@@ -1690,7 +1690,7 @@
     "message": "Invitation Declined"
   },
   "screens.Settings.YourTeam.close": {
-    "message": "Close"
+    "message": "Tutup"
   },
   "screens.Settings.YourTeam.deviceHasJoined": {
     "message": "Device Has Joined {projectName}"
@@ -1705,7 +1705,7 @@
     "message": "Privacy Policy"
   },
   "screens.Sync.NoWifiDisplay.buttonText": {
-    "message": "Close"
+    "message": "Tutup"
   },
   "screens.Sync.NoWifiDisplay.description": {
     "message": "Check device’s settings and connectivity."
@@ -1720,7 +1720,7 @@
     "message": "Up to date!"
   },
   "screens.Sync.ProjectSyncDisplay.close": {
-    "message": "Close"
+    "message": "Tutup"
   },
   "screens.Sync.ProjectSyncDisplay.devicesFound": {
     "message": "Devices found."
@@ -1765,7 +1765,7 @@
     "message": "Complete! Waiting for other devices to join"
   },
   "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
-    "message": "Complete!"
+    "message": "Selesai!"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
     "message": "Exchanging..."
@@ -1811,7 +1811,7 @@
     "message": "Track"
   },
   "screens.TrackRecordingActive.cancel": {
-    "message": "Cancel"
+    "message": "Batal"
   },
   "screens.TrackRecordingActive.recordingTracks": {
     "message": "Recording Tracks!"
@@ -1827,7 +1827,7 @@
     "message": "Show Options"
   },
   "sharedComponents.DeviceIconWithName.Disconnected": {
-    "message": "Disconnected"
+    "message": "Terputus"
   },
   "sharedComponents.DeviceIconWithName.thisDevice": {
     "message": "This Device!"
@@ -1837,10 +1837,10 @@
     "message": "Mencari…"
   },
   "sharedComponents.Editor.PresetView.Change": {
-    "message": "Change"
+    "message": "Ubah"
   },
   "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "Go Back"
+    "message": "Kembali"
   },
   "sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Something Went Wrong"
@@ -1852,7 +1852,7 @@
     "message": "Participant"
   },
   "soloProject.inviteCollaborators.goBack": {
-    "message": "Go Back"
+    "message": "Kembali"
   },
   "soloProject.inviteCollaborators.introText": {
     "message": "Share observations with others using CoMapeo."
@@ -1873,7 +1873,7 @@
     "message": "Invite Collaborators"
   },
   "soloProject.startNewProject.goBack": {
-    "message": "Go Back"
+    "message": "Kembali"
   },
   "soloProject.startNewProject.introText": {
     "message": "Secure and private way to exchange with collaborators."

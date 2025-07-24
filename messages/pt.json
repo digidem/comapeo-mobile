@@ -25,20 +25,8 @@
     "description": "Title of dialog that shows when cancelling a new observation",
     "message": "Excluir observação?"
   },
-  "AudioPlaybackScreen.DeleteAudioRecordingModal.successDescription": {
-    "message": "A sua <bold>{audioRecording}</bold> foi adicionada."
-  },
-  "AudioPlaybackScreen.DeleteAudioRecordingModal.successTitle": {
-    "message": "Sucesso!"
-  },
-  "AudioPlaybackScreen.SuccessAudioRecordingModal.audioRecording": {
-    "message": "Gravação de Áudio"
-  },
-  "AudioPlaybackScreen.SuccessAudioRecordingModal.recordAnother": {
-    "message": "Fazer Outra Gravação"
-  },
-  "AudioPlaybackScreen.SuccessAudioRecordingModal.returnToEditor": {
-    "message": "Voltar ao Editor"
+  "MapManagement.ErrorBottomSheet.goBack": {
+    "message": "Voltar"
   },
   "Modal.GPSDisable.button": {
     "message": "Habilitado"
@@ -61,46 +49,35 @@
   "Modal.GPSEnable.trackingDescription": {
     "message": "Você está gravando há"
   },
-  "Navigation.Drawer.aboutCoMapeo": {
-    "description": "Primary text for 'About CoMapeo' link (version info)",
-    "message": "Sobre CoMapeo"
-  },
-  "Navigation.Drawer.aboutCoMapeoDesc": {
-    "description": "Description of the 'About CoMapeo' page",
-    "message": "Versão e número do build"
-  },
-  "Navigation.Drawer.appSettings": {
-    "message": "Configurações do Aplicativo"
-  },
-  "Navigation.Drawer.appSettingsDesc": {
-    "description": "list of avaialable app settings",
-    "message": "Idioma, Segurança, Coordenadas"
-  },
-  "Navigation.Drawer.createOrJoin": {
-    "message": "Criar ou Juntar-se a um Projeto"
-  },
-  "Navigation.Drawer.createOrJoinDesc": {
-    "message": "Criar um novo projeto ou se juntar a um já existente"
-  },
-  "Navigation.Drawer.mappingOnOwn": {
-    "message": "Agora você está mapeando por contra própria"
-  },
-  "Navigation.Drawer.privacyPolicy": {
-    "message": "Política de Privacidade"
-  },
-  "Navigation.Drawer.projName": {
-    "message": "Projeto {projectName}"
-  },
-  "Navigation.Drawer.projectSettings": {
-    "message": "Configurações do Projeto"
-  },
-  "Navigation.Drawer.projectSettingsDesc": {
-    "description": "list of avaialable project settings",
-    "message": "Categorias, Configurações, Equipe"
-  },
-  "Navigation.Drawer.title": {
-    "description": "Title of settings screen",
+  "Navigation.Menu.Settings": {
     "message": "Ajustes"
+  },
+  "Navigation.Menu.aboutCoMapeo": {
+    "message": "Sobre o CoMapeo"
+  },
+  "Navigation.Menu.coordinator": {
+    "message": "Você é o Coordenador desse projeto."
+  },
+  "Navigation.Menu.currentProject": {
+    "message": "Projeto Atual"
+  },
+  "Navigation.Menu.exchange": {
+    "message": "Trocar"
+  },
+  "Navigation.Menu.invite": {
+    "message": "Convidar"
+  },
+  "Navigation.Menu.mappingOnOwn": {
+    "message": "Você está mapeando sozinho."
+  },
+  "Navigation.Menu.participant": {
+    "message": "Você é um participante desse projeto."
+  },
+  "Navigation.Menu.privacyPolicy": {
+    "message": "Dados & Privacidade"
+  },
+  "Navigation.Menu.viewProject": {
+    "message": "Visualizar"
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -118,106 +95,106 @@
     "message": "Descartar alterações?"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
-    "message": "When project participants sync their data, they will also be archived on the internet. Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data."
+    "message": "Quando os participantes do projeto sincronizam seus dados, eles também serão arquivados na internet. Os dados do seu projeto estão sendo sincronizados com a internet para o servidor seguro e criptografado abaixo. O proprietário do servidor pode ver os dados."
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.invalidUrl": {
-    "message": "Invalid URL"
+    "message": "URL inválida"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.looking": {
-    "message": "Looking for Remote Archive..."
+    "message": "Procurando pelo Arquivo Remoto..."
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.navTitle": {
-    "message": "Add Remote Archive"
+    "message": "Adicionar Arquivo Remoto"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.permission": {
-    "message": "Only a Project Coordinator can turn off Remote Archive."
+    "message": "Somente um Coordenador de Projeto pode desativar o Arquivo Remoto."
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.url": {
     "message": "Url"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.whatsIncluded": {
-    "message": "See What is Included"
+    "message": "Veja o que está incluído"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.youAreAdding": {
-    "message": "You are adding:"
+    "message": "Você está adicionando:"
   },
   "ProjectSettings.RemoteArchive.Coordinator.addArchive": {
-    "message": "+ Add Remote Archive"
+    "message": "+ Adicionar Arquivo Remoto"
   },
   "ProjectSettings.RemoteArchive.Coordinator.dataNotShared": {
-    "message": "The data in your project is not shared over the internet. Only people in your project can see your data."
+    "message": "Os dados do seu Projeto não são compartilhados na internet. Apenas as pessoas que fazem parte do seu Projeto podem ver seus dados."
   },
   "ProjectSettings.RemoteArchive.Coordinator.experimentalFeature": {
-    "message": "This is an experimental feature. You need a Remote Archive URL to enable Remote Archive."
+    "message": "Este é um recurso experimental. Você precisa do URL do Arquivo Remoto para ativá-lo."
   },
   "ProjectSettings.RemoteArchive.Coordinator.noServers": {
-    "message": "No servers have been added to this project"
+    "message": "Nenhum servidor foi adicionado a este projeto"
   },
   "ProjectSettings.RemoteArchive.Coordinator.remoteArchiveOff": {
-    "message": "Remote Archive is Off"
+    "message": "O Arquivo Remoto está desativado"
   },
   "ProjectSettings.RemoteArchive.RemoteArchiveOn": {
-    "message": "Remote Archive is On"
+    "message": "O Arquivo Remoto está ativado"
   },
   "ProjectSettings.RemoteArchive.Success.archiveAdded": {
-    "message": "Remote Archive Added"
+    "message": "Arquivo remoto adicionado"
   },
   "ProjectSettings.RemoteArchive.Success.canSyncOnInternet": {
-    "message": "All project devices can sync with this Archive, sharing data over the internet."
+    "message": "Todos os dispositivos desse Projeto podem sincronizar com esse Arquivo, compartilhando dados na internet."
   },
   "ProjectSettings.RemoteArchive.Success.close": {
-    "message": "Close"
+    "message": "Fechar"
   },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.close": {
-    "message": "Close"
+    "message": "Fechar"
   },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.deviceNames": {
-    "message": "Device Names"
+    "message": "Nomes dos dispositivos"
   },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.observations": {
-    "message": "Observations (including photos and audio)"
+    "message": "Observações (incluindo fotos e áudio)"
   },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.projectSettings": {
-    "message": "Project Settings (categories, questions)"
+    "message": "Configurações do Projeto (categorias, questões)"
   },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.title": {
-    "message": "What is Included"
+    "message": "O que está incluído"
   },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.tracks": {
-    "message": "Tracks"
+    "message": "Trilhas"
   },
   "ProjectSettings.RemoteArchive.coordinatorCanTurnOff": {
-    "message": "Only a Project Coordinator can turn off Remote Archive."
+    "message": "Somente um Coordenador de Projeto pode desativar o Arquivo Remoto."
   },
   "ProjectSettings.RemoteArchive.dateAdded": {
-    "message": "Date Added"
+    "message": "Data de inclusão"
   },
   "ProjectSettings.RemoteArchive.deviceNames": {
-    "message": "Device Names"
+    "message": "Nomes dos dispositivos"
   },
   "ProjectSettings.RemoteArchive.navTitle": {
-    "message": "Remote Archive"
+    "message": "Arquivo Remoto"
   },
   "ProjectSettings.RemoteArchive.observations": {
-    "message": "Observations (including photos and audio)"
+    "message": "Observações (incluindo fotos e áudio)"
   },
   "ProjectSettings.RemoteArchive.projectSettings": {
-    "message": "Project Settings (categories, questions)"
+    "message": "Configurações do Projeto (categorias, questões)"
   },
   "ProjectSettings.RemoteArchive.remove": {
-    "message": "Remove the server to stop Remote Archive."
+    "message": "Remova o servidor para parar o Arquivo Remoto."
   },
   "ProjectSettings.RemoteArchive.serverName": {
-    "message": "Server Name"
+    "message": "Nome do servidor"
   },
   "ProjectSettings.RemoteArchive.syncWithInternet": {
-    "message": "Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data."
+    "message": "Os dados do seu projeto estão sendo sincronizados com a internet para o servidor seguro e criptografado abaixo. O proprietário do servidor pode ver os dados."
   },
   "ProjectSettings.RemoteArchive.thisIncludes": {
-    "message": "This includes"
+    "message": "Isso inclui"
   },
   "ProjectSettings.RemoteArchive.tracks": {
-    "message": "Tracks"
+    "message": "Trilhas"
   },
   "SaveTrack.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -234,6 +211,48 @@
   "SaveTrack.HeaderLeft.discardTrackDescription": {
     "message": "Sua trilha não será salva. Isso não poderá ser desfeito."
   },
+  "Screens.ProjectSettings.configTitle": {
+    "message": "Categorias do Projeto"
+  },
+  "Screens.ProjectSettings.coordinator": {
+    "message": "Este dispositivo é um coordenador do projeto."
+  },
+  "Screens.ProjectSettings.editInfo": {
+    "message": "Editar Informação"
+  },
+  "Screens.ProjectSettings.invite": {
+    "message": "Convidar colaboradores"
+  },
+  "Screens.ProjectSettings.participant": {
+    "message": "Este dispositivo é um participante do projeto."
+  },
+  "Screens.ProjectSettings.projectCollaborators": {
+    "message": "Colaboradores do projeto"
+  },
+  "Screens.ProjectSettings.remoteArchiveDesc": {
+    "message": "Compartilhe com um servidor seguro e encriptado. URL é necessária para acesso."
+  },
+  "Screens.ProjectSettings.remoteArchiveOff": {
+    "message": "Arquivo Remoto | DESLIGADO"
+  },
+  "Screens.ProjectSettings.remoteArchiveOn": {
+    "message": "Arquivo Remoto | LIGADO"
+  },
+  "Screens.ProjectSettings.soloDescription": {
+    "message": "Você está mapeando sozinho."
+  },
+  "Screens.ProjectSettings.title": {
+    "message": "Configurações do Projeto"
+  },
+  "Screens.ProjectSettings.updateCategories": {
+    "message": "Atualizar Configuração"
+  },
+  "Screens.ProjectSettings.viewDetails": {
+    "message": "Ver Detalhes"
+  },
+  "Screens.ProjectSettings.viewTeam": {
+    "message": "Ver Equipe"
+  },
   "Screens.Settings.AppSettings.Drawer.security": {
     "message": "Segurança"
   },
@@ -242,6 +261,9 @@
   },
   "Screens.Settings.AppSettings.coordinateSystemDesc": {
     "message": "UTM,Lat/Lon,DMS"
+  },
+  "Screens.Settings.AppSettings.deviceName": {
+    "message": "Nome do Dispositivo"
   },
   "Screens.Settings.AppSettings.language": {
     "message": "Idioma"
@@ -257,27 +279,6 @@
   },
   "Screens.Settings.AppSettings.title": {
     "message": "Configurações do Aplicativo"
-  },
-  "Screens.Settings.ProjectSettings.RemoteArchive": {
-    "message": "Remote Archive"
-  },
-  "Screens.Settings.ProjectSettings.deviceName": {
-    "message": "Nome do dispositivo"
-  },
-  "Screens.Settings.ProjectSettings.mediaSyncSettings": {
-    "message": "Configurações de Sincronização"
-  },
-  "Screens.Settings.ProjectSettings.remoteArchiveOff": {
-    "message": "Remote Archive is OFF"
-  },
-  "Screens.Settings.ProjectSettings.remoteArchiveOn": {
-    "message": "Remote Archive is ON"
-  },
-  "Screens.Settings.ProjectSettings.title": {
-    "message": "Configurações do Projeto"
-  },
-  "Screens.Settings.ProjectSettings.yourTeam": {
-    "message": "Sua equipe"
   },
   "SharedComponents.ActionButtons.cancel": {
     "description": "Button to cancel delete of observation",
@@ -309,6 +310,9 @@
   },
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Suas alterações não serão salvas. Isso não poderá ser desfeito."
+  },
+  "homeHeader.header.mySoloProject": {
+    "message": "Meu projeto Solo"
   },
   "screen.Settings.ProjectSettings.YourTeam.ReviewAndInvite.ReviewInvitation.coordinator": {
     "message": "Coordenador"
@@ -398,7 +402,7 @@
     "message": "As senhas do aplicativo não poderão ser recuperadas se forem perdidas ou esquecidas!"
   },
   "screens.AppPasscode.EnterPassToTurnOff.subTitleEnter": {
-    "message": "Por favor insira sua senha"
+    "message": "Por favor, insira sua senha"
   },
   "screens.AppPasscode.EnterPassToTurnOff.titleEnter": {
     "message": "Insira sua senha"
@@ -473,15 +477,15 @@
     "message": "Usar Senha do aplicativo"
   },
   "screens.AudioPermission.Button.allow": {
-    "description": "Screen button text for allow the audio permission",
+    "description": "Screen button text for granting the audio permission",
     "message": "Permitir"
   },
   "screens.AudioPermission.Button.goToSettings": {
-    "description": "Screen button text for navigate user to settings when audio permission was denied",
+    "description": "Screen button text for navigating the user to settings when audio permission is denied",
     "message": "Ir para Configurações"
   },
   "screens.AudioPermission.Button.notNow": {
-    "description": "Screen button text for not allowed audio permission",
+    "description": "Screen button text for not granting audio permission",
     "message": "Agora não"
   },
   "screens.AudioPermission.description": {
@@ -492,38 +496,29 @@
     "description": "Screen title for audio permission screen",
     "message": "Gravando Áudio com CoMapeo"
   },
-  "screens.AudioScreen.CreateRecording.RecordingActive.description": {
-    "message": "Menos que {length} {length, plural, one {minuto} other {minutos}} restantes"
-  },
-  "screens.AudioScreen.CreateRecording.RecordingDone.deleteBottomSheetDescription": {
-    "message": "Sua gravação de áudio será excluída permanentemente. Isto não pode ser desfeito."
-  },
-  "screens.AudioScreen.CreateRecording.RecordingDone.deleteBottomSheetPrimaryButtonText": {
-    "message": "Excluir"
-  },
-  "screens.AudioScreen.CreateRecording.RecordingDone.deleteBottomSheetSecondaryButtonText": {
-    "message": "Cancelar"
-  },
-  "screens.AudioScreen.CreateRecording.RecordingDone.deleteBottomSheetTitle": {
-    "message": "Excluir?"
-  },
-  "screens.AudioScreen.CreateRecording.RecordingIdle.description": {
-    "message": "Grave até {length} {length, plural, one {minuto} other {minutos}}"
-  },
-  "screens.AudioScreen.ExistingRecording.deleteBottomSheetDescription": {
-    "message": "Sua gravação de áudio será excluída permanentemente. Isto não pode ser desfeito."
-  },
-  "screens.AudioScreen.ExistingRecording.deleteBottomSheetPrimaryButtonText": {
-    "message": "Excluir"
-  },
-  "screens.AudioScreen.ExistingRecording.deleteBottomSheetSecondaryButtonText": {
-    "message": "Cancelar"
-  },
-  "screens.AudioScreen.ExistingRecording.deleteBottomSheetTitle": {
-    "message": "Excluir?"
-  },
-  "screens.AudioScreen.Playback.description": {
+  "screens.AudioPlaybackUnsaved.description": {
     "message": "Duração total: {length}"
+  },
+  "screens.AudioRecording.lessThan1": {
+    "message": "Menos de um minuto restante"
+  },
+  "screens.AudioRecording.lessThan5": {
+    "message": "Menos de 5 minutos restantes"
+  },
+  "screens.AudioRecording.record5Min": {
+    "message": "Grave até 5 minutos"
+  },
+  "screens.AudioSavedBottomSheet.recordAnother": {
+    "message": "Fazer Outra Gravação"
+  },
+  "screens.AudioSavedBottomSheet.returnToEditor": {
+    "message": "Voltar ao Editor"
+  },
+  "screens.AudioSavedBottomSheet.subTitle": {
+    "message": "Sua gravação de áudio foi adicionada"
+  },
+  "screens.AudioSavedBottomSheet.title": {
+    "message": "Sucesso!"
   },
   "screens.CameraScreen.goToSettings": {
     "message": "Ir para Configurações"
@@ -596,6 +591,18 @@
   "screens.DataPrivacy.title": {
     "message": "Dados & Privacidade"
   },
+  "screens.DeleteAudioBottomSheet.Description": {
+    "message": "Sua gravação de áudio será excluída permanentemente. Isto não pode ser desfeito."
+  },
+  "screens.DeleteAudioBottomSheet.Title": {
+    "message": "Excluir?"
+  },
+  "screens.DeleteAudioBottomSheet.cancel": {
+    "message": "Cancelar"
+  },
+  "screens.DeleteAudioBottomSheet.delete": {
+    "message": "Excluir"
+  },
   "screens.DeviceNaming.Success.description": {
     "message": "Você nomeou seu dispositivo"
   },
@@ -625,6 +632,27 @@
   },
   "screens.EnterPassword.wrongPass": {
     "message": "Senha incorreta. Por favor, tente novamente."
+  },
+  "screens.ExchangeSoloScreen.dataSecure": {
+    "message": "Seus dados continuam seguros ao trocar entre dispositivos confiáveis."
+  },
+  "screens.ExchangeSoloScreen.getStarted": {
+    "message": "Comece de duas formas simples:"
+  },
+  "screens.ExchangeSoloScreen.goBack": {
+    "message": "Voltar"
+  },
+  "screens.ExchangeSoloScreen.inviteCollaborators": {
+    "message": "Convide colaboradores para o seu projeto no Menu Principal"
+  },
+  "screens.ExchangeSoloScreen.joinExisting": {
+    "message": "Entre em um projeto existente aceitando um convite"
+  },
+  "screens.ExchangeSoloScreen.securelyShare": {
+    "message": "Compartilhe observações de forma segura entre os dispositivos conectados."
+  },
+  "screens.ExchangeSoloScreen.title": {
+    "message": "Trocar"
   },
   "screens.FatalError.restart": {
     "message": "Reiniciar aplicativo"
@@ -662,48 +690,91 @@
   "screens.IntroToCoMapeo.ownData": {
     "message": "Controle e seja o dono dos seus dados"
   },
+  "screens.Invite.AlreadyOnProject.leaveWarning": {
+    "message": "Para participar de um novo projeto, você deve sair do seu atual."
+  },
+  "screens.Invite.ExistingProjectWarning.alreadyOnProject": {
+    "message": "Você já está em um projeto"
+  },
+  "screens.Invite.ExistingProjectWarning.goBack": {
+    "message": "Voltar"
+  },
+  "screens.Invite.ExistingProjectWarning.leaveProj": {
+    "message": "Sair do projeto atual"
+  },
+  "screens.Invite.ExistingProjectWarning.onProject": {
+    "message": "Você está no projeto {projectName}"
+  },
+  "screens.InviteCancelled.canceled": {
+    "message": "Convite cancelado!"
+  },
+  "screens.InviteCancelled.close": {
+    "message": "Fechar"
+  },
+  "screens.InviteCancelled.projectInviteCanceled": {
+    "message": "Seu convite para o {projectName} foi cancelado."
+  },
+  "screens.InviteReceived.coordinatorRole": {
+    "message": "coordenador"
+  },
+  "screens.InviteReceived.declineInvite": {
+    "message": "Recusar convite"
+  },
+  "screens.InviteReceived.invitedToJoin": {
+    "message": "Você foi convidado a..."
+  },
+  "screens.InviteReceived.joinAsRole": {
+    "message": "Participar como{role}?"
+  },
+  "screens.InviteReceived.joinProject": {
+    "message": "Participar do Projeto"
+  },
+  "screens.InviteReceived.participantRole": {
+    "message": "participante"
+  },
+  "screens.InviteSuccess.goToMap": {
+    "message": "Ir para o Mapa"
+  },
+  "screens.InviteSuccess.goToSync": {
+    "message": "Ir para Sincronização"
+  },
+  "screens.InviteSuccess.success": {
+    "message": "Sucesso"
+  },
+  "screens.InviteSuccess.youHaveJoined": {
+    "message": "Você está no projeto {projectName}"
+  },
+  "screens.Invites.LeaveProject.cancel": {
+    "message": "Cancelar"
+  },
+  "screens.Invites.LeaveProject.checkToConfirm": {
+    "message": "Por favor, selecione a caixa para confirmar"
+  },
+  "screens.Invites.LeaveProject.deleteConsentWithName": {
+    "message": "Eu entendo que irei excluir todos os dados do projeto {projectName} do meu dispositivo."
+  },
+  "screens.Invites.LeaveProject.deleteConsentWithoutName": {
+    "message": "Eu entendo que irei excluir todos os dados do projeto do meu dispositivo."
+  },
+  "screens.Invites.LeaveProject.leaveProj": {
+    "message": "Sair do Projeto"
+  },
+  "screens.Invites.LeaveProject.leavingProject": {
+    "message": "Saindo do projeto {projectName}"
+  },
+  "screens.Invites.LeaveProject.removeFromProjWithName": {
+    "message": "Isso excluirá todos os dados do projeto {projectName} do seu dispositivo."
+  },
+  "screens.Invites.LeaveProject.removeFromProjWithoutName": {
+    "message": "Isto removerá todos os dados do seu dispositivo."
+  },
+  "screens.LanguageSettings.followSystemPreferences": {
+    "description": "Label for language option to follow system preferences",
+    "message": "Seguir preferências do sistema"
+  },
   "screens.LanguageSettings.title": {
     "description": "Title language settings screen",
     "message": "Idioma"
-  },
-  "screens.LeaveProject.AlreadyOnProject.alreadyOnProject": {
-    "message": "Você já está em um projeto"
-  },
-  "screens.LeaveProject.AlreadyOnProject.goBack": {
-    "message": "Voltar"
-  },
-  "screens.LeaveProject.AlreadyOnProject.leaveProj": {
-    "message": "Sair do projeto atual"
-  },
-  "screens.LeaveProject.AlreadyOnProject.leaveWarning": {
-    "message": "Para participar de um novo projeto, você deve sair do seu atual."
-  },
-  "screens.LeaveProject.AlreadyOnProject.onProject": {
-    "message": "Você está no projeto {projectName}"
-  },
-  "screens.LeaveProject.cancel": {
-    "message": "Cancelar"
-  },
-  "screens.LeaveProject.checkToConfirm": {
-    "message": "Por favor, selecione a caixa para confirmar"
-  },
-  "screens.LeaveProject.deleteConsentWithName": {
-    "message": "Eu entendo que irei excluir todos os dados do projeto {projectName} do meu dispositivo."
-  },
-  "screens.LeaveProject.deleteConsentWithoutName": {
-    "message": "Eu entendo que irei excluir todos os dados do projeto do meu dispositivo."
-  },
-  "screens.LeaveProject.leaveProj": {
-    "message": "Sair do Projeto"
-  },
-  "screens.LeaveProject.leavingProject": {
-    "message": "Saindo do projeto {projectName}"
-  },
-  "screens.LeaveProject.removeFromProjWithName": {
-    "message": "Isso excluirá todos os dados do projeto {projectName} do seu dispositivo."
-  },
-  "screens.LeaveProject.removeFromProjWithoutName": {
-    "message": "Isto removerá todos os dados do seu dispositivo."
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
@@ -871,35 +942,17 @@
   "screens.MediaSyncSettings.syncEverything": {
     "message": "Sincronizar tudo"
   },
-  "screens.MediaSyncSettings.syncEverythingButtonBottomSheet": {
-    "message": "Sincronizar tudo?"
-  },
   "screens.MediaSyncSettings.syncEverythingDescription": {
     "message": "Seu dispositivo irá sincronizar <bold>todos os conteúdos</bold>, incluindo fotos, áudio e vídeos."
-  },
-  "screens.MediaSyncSettings.syncEverythingDescriptionBottomSheet": {
-    "message": "Você está prestes a sincronizar todas as informações. Isso pode aumentar o espaço ocupado na memória do seu dispositivo."
   },
   "screens.MediaSyncSettings.syncEverythingWarning": {
     "message": "Nota: Isso usará mais armazenamento do seu dispositivo."
   },
-  "screens.MediaSyncSettings.syncPreviewWarningBottomSheet": {
-    "message": "Você não sincronizará mais áudios ou vídeos."
-  },
   "screens.MediaSyncSettings.syncPreviews": {
     "message": "Pré-visualizações de Sincronização (Apenas Fotos)"
   },
-  "screens.MediaSyncSettings.syncPreviewsBottomSheetConfirm": {
-    "message": "Pré-visualizações de Sincronização"
-  },
-  "screens.MediaSyncSettings.syncPreviewsButtonBottomSheet": {
-    "message": "Pré-visualizações de Sincronização?"
-  },
   "screens.MediaSyncSettings.syncPreviewsDescription": {
     "message": "Fotos serão sincronizadas em um tamanho menor. Dispositivo <bold>não</bold> sincronizará áudio ou vídeo."
-  },
-  "screens.MediaSyncSettings.syncPreviewsDescriptionBottomSheet": {
-    "message": "Seu dispositivo manterá todos os dados já existentes, mas as novas observações serão sincronizadas em uma visualização menor."
   },
   "screens.MediaSyncSettings.title": {
     "message": "Configurações de Sincronização"
@@ -936,7 +989,7 @@
     "message": "Compartilhar"
   },
   "screens.Observation.TrackList.track": {
-    "message": "Track"
+    "message": "Trilha"
   },
   "screens.Observation.cancel": {
     "description": "Button to cancel delete of observation",
@@ -954,6 +1007,10 @@
     "message": "Excluir observação?"
   },
   "screens.Observation.fallbackCategoryName": {
+    "description": "Fallback name used when category name cannot be determined for observation",
+    "message": "Observação"
+  },
+  "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",
     "message": "Observação"
   },
@@ -1068,8 +1125,56 @@
     "description": "Title of screen with list of observations",
     "message": "Observações"
   },
-  "screens.ObservationsList.NoProjectWarning": {
-    "message": "Agora você está mapeando por contra própria."
+  "screens.ObservationMetadataVerified.accuracy": {
+    "message": "Precisão"
+  },
+  "screens.ObservationMetadataVerified.altitude": {
+    "message": "Altitude"
+  },
+  "screens.ObservationMetadataVerified.altitudeAccuracy": {
+    "message": "Precisão da Altitude"
+  },
+  "screens.ObservationMetadataVerified.coMapeoData": {
+    "message": "Dados do CoMapeo"
+  },
+  "screens.ObservationMetadataVerified.dataEntered": {
+    "message": "Este dado foi inserido manualmente."
+  },
+  "screens.ObservationMetadataVerified.date": {
+    "message": "Data"
+  },
+  "screens.ObservationMetadataVerified.howWeCheck": {
+    "message": "Como nós validamos"
+  },
+  "screens.ObservationMetadataVerified.latitude": {
+    "message": "Latitude"
+  },
+  "screens.ObservationMetadataVerified.location": {
+    "message": "Localização"
+  },
+  "screens.ObservationMetadataVerified.locationManuallyEntered": {
+    "message": "A localização foi inserida manualmente"
+  },
+  "screens.ObservationMetadataVerified.longitude": {
+    "message": "Longitude"
+  },
+  "screens.ObservationMetadataVerified.manuallyEntered": {
+    "message": "Inserido manualmente."
+  },
+  "screens.ObservationMetadataVerified.navTitle": {
+    "message": "Metadados da Observação"
+  },
+  "screens.ObservationMetadataVerified.sentByComapeo": {
+    "message": "Enviado por CoMapeo"
+  },
+  "screens.ObservationMetadataVerified.sentFrom": {
+    "message": "Dados CoMapeo enviados de"
+  },
+  "screens.ObservationMetadataVerified.speed": {
+    "message": "Velocidade"
+  },
+  "screens.ObservationMetadataVerified.validatedByCoMapeo": {
+    "message": "Enviado e validado pelo CoMapeo"
   },
   "screens.ObservationsList.ObservationsEmptyView.backButton": {
     "description": "Back button on observation list screen when no observations are yet recorded",
@@ -1083,9 +1188,14 @@
     "description": "Title of observation list view when the user has not yet recorded observations",
     "message": "Adicionar observações"
   },
-  "screens.ObservationsList.createOrJoin": {
-    "description": "The full sentence is 'Create or Join a Project to collect data with a team. This action will delete observations you have collected so far. Consider sharingimportant observations to you email before proceeding.' The sentence needs to be seperated for styling purposes",
-    "message": "Criar ou Participar de um Projeto"
+  "screens.ObservationsList.ProjectCard.coordinator": {
+    "message": "Você é o Coordenador desse projeto."
+  },
+  "screens.ObservationsList.ProjectCard.mappingOnYourOwn": {
+    "message": "Você está mapeando sozinho."
+  },
+  "screens.ObservationsList.ProjectCard.participant": {
+    "message": "Você é um participante desse projeto."
   },
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",
@@ -1094,10 +1204,6 @@
   "screens.ObservationsList.loading": {
     "description": "message shown whilst observations are loading",
     "message": "Carregando... pode demorar um pouco após a sincronização com um novo dispositivo"
-  },
-  "screens.ObservationsList.toSync": {
-    "description": "The full sentence is 'Create or Join a Project to collect data with a team. This action will delete observations you have collected so far. Consider sharing important observations to you email before proceeding.' The sentence needs to be seperated for styling purposes",
-    "message": "para coletar dados com uma equipe. Esta ação apagará todas as observações que você coletou até agora. Considere compartilhar {icon} observações importantes em seu e-mail antes de continuar."
   },
   "screens.OnboardingPrivacyPolicy.navTitle": {
     "message": "Política de Privacidade"
@@ -1115,10 +1221,10 @@
     "message": "Excluir imagem"
   },
   "screens.PhotoPreviewModal.DeletePhoto.deleteModalTitle": {
-    "message": "Excluir esta foto?"
+    "message": "Excluir essa foto?"
   },
   "screens.PhotoPreviewModal.DeletePhoto.headerButtonText": {
-    "message": "Excluir Foto"
+    "message": "Excluir foto"
   },
   "screens.PrivacyPolicy.aboutAwana": {
     "message": "Sobre Awana Digital"
@@ -1237,6 +1343,15 @@
     "description": "Category title for new track screen",
     "message": "Trilha"
   },
+  "screens.Security.obscurePasscodeDescription": {
+    "message": "Para usar, ative a senha do aplicativo"
+  },
+  "screens.Security.obscurePasscodeDescriptionActivated": {
+    "message": "Proteja seu dispositivo contra apreensão"
+  },
+  "screens.Security.obscurePasscodeHeader": {
+    "message": "Senha obscura"
+  },
   "screens.Security.passDesriptionPassNotSet": {
     "message": "Senha não definida"
   },
@@ -1333,20 +1448,26 @@
   "screens.Settings.Config.created": {
     "message": "Criado em {date} {time}"
   },
-  "screens.Settings.Config.importConfig": {
-    "message": "Importar configuração"
+  "screens.Settings.Config.importCategories": {
+    "message": "Importar categorias"
+  },
+  "screens.Settings.Config.importSuccessTitle": {
+    "message": "Categorias importadas com sucesso:"
   },
   "screens.Settings.Config.name": {
-    "message": "Nome da configuração:"
+    "message": "Conjunto de categoria:"
   },
   "screens.Settings.Config.navTitle": {
-    "message": "Configurações"
+    "message": "Categorias"
+  },
+  "screens.Settings.Config.okButton": {
+    "message": "OK"
   },
   "screens.Settings.Config.projectName": {
     "message": "Nome do projeto:"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.title": {
-    "message": "Criar um Projeto"
+    "message": "Novo Projeto"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
     "message": "Voltar"
@@ -1381,17 +1502,23 @@
   "screens.Settings.CreateOrJoinProject.enterName": {
     "message": "Digite um nome para o projeto"
   },
-  "screens.Settings.CreateOrJoinProject.importConfig": {
-    "message": "Importar configuração"
+  "screens.Settings.CreateOrJoinProject.importCategories": {
+    "message": "Importar categorias"
   },
   "screens.Settings.CreateOrJoinProject.importConfigFileError": {
     "message": "O nome do arquivo deve terminar com .mapeoconfig"
+  },
+  "screens.Settings.CreateOrJoinProject.importSuccessTitle": {
+    "message": "Categorias importadas com sucesso:"
   },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
     "message": "Junte-se a um projeto existente"
   },
   "screens.Settings.CreateOrJoinProject.joinProject": {
     "message": "Participe de um projeto"
+  },
+  "screens.Settings.CreateOrJoinProject.okButton": {
+    "message": "OK"
   },
   "screens.Settings.CreateOrJoinProject.projectDescription": {
     "message": "Um projeto é um espaço seguro para os seus dados, apenas dispositivos que você convidar podem inserir e compartilhar informações com você. Crie ou participe de projetos para compartilhar dados com outros dispositivos. Esta ação irá apagar as observações que você coletou até agora. Considere compartilhar {icon} observações importantes para seu e-mail antes de continuar."
@@ -1489,27 +1616,8 @@
   "screens.Settings.YourTeam.unableToCancel": {
     "message": "Não foi possível cancelar o convite"
   },
-  "screens.Settings.config": {
-    "description": "Primary text for project config settings",
-    "message": "Configurações"
-  },
   "screens.SettingsPrivacyPolicy.navTitle": {
     "message": "Política de Privacidade"
-  },
-  "screens.Sync.CreateOrJoinProjectDisplay.buttonText": {
-    "message": "Criar ou Juntar-se a um Projeto"
-  },
-  "screens.Sync.CreateOrJoinProjectDisplay.subText": {
-    "message": "Esta ação excluirá as observações que você coletou até agora. Considere compartilhar {icon} observações importantes em seu e-mail antes de continuar."
-  },
-  "screens.Sync.CreateOrJoinProjectDisplay.subTitle": {
-    "message": "Você poderá compartilhar dados com dispositivos que fazem parte do mesmo projeto."
-  },
-  "screens.Sync.CreateOrJoinProjectDisplay.title": {
-    "message": "Crie ou participe de um projeto para coletar dados com a equipe"
-  },
-  "screens.Sync.HeaderTitle.noWiFi": {
-    "message": "Sem Wi-Fi"
   },
   "screens.Sync.NoWifiDisplay.buttonText": {
     "message": "Abrir Configurações"
@@ -1524,7 +1632,10 @@
     "message": "Está tudo sincronizado!"
   },
   "screens.Sync.ProjectSyncDisplay.allDataSynced": {
-    "message": "Todos os dados foram sincronizados"
+    "message": "Todos os dados foram trocados"
+  },
+  "screens.Sync.ProjectSyncDisplay.connectedTo": {
+    "message": "Conectado à"
   },
   "screens.Sync.ProjectSyncDisplay.devicesAvailableToSync": {
     "message": "Dispositivos disponíveis"
@@ -1535,6 +1646,9 @@
   "screens.Sync.ProjectSyncDisplay.noDevicesAvailableToSync": {
     "message": "Não há dispositivos disponíveis para sincronização"
   },
+  "screens.Sync.ProjectSyncDisplay.noWifi": {
+    "message": "Sem Wi-Fi"
+  },
   "screens.Sync.ProjectSyncDisplay.progressLabelSyncing": {
     "message": "Sincronizando…"
   },
@@ -1544,8 +1658,11 @@
   "screens.Sync.ProjectSyncDisplay.progressLabelWithDeviceCount": {
     "message": "Aguardando dispositivos"
   },
-  "screens.Sync.ProjectSyncDisplay.startSync": {
-    "message": "Iniciar sincronização"
+  "screens.Sync.ProjectSyncDisplay.readyToExchange": {
+    "message": "Pronto para trocar"
+  },
+  "screens.Sync.ProjectSyncDisplay.start": {
+    "message": "Iniciar"
   },
   "screens.Sync.ProjectSyncDisplay.stop": {
     "message": "Parar"
@@ -1560,10 +1677,46 @@
     "message": "Completo! Você está atualizado"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "Você está sincronizando com sua equipe"
+    "message": "Você está trocando dados com sua equipe"
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
     "message": "Aguardando dispositivos"
+  },
+  "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
+    "message": "{ssid}"
+  },
+  "screens.Sync.headerTitle": {
+    "message": "Trocar"
+  },
+  "screens.Sync.remoteArchiveConnected": {
+    "message": "Arquivo remoto conectado"
+  },
+  "screens.SyncEverythingBottomSheet.cancel": {
+    "message": "Cancelar"
+  },
+  "screens.SyncEverythingBottomSheet.confirm": {
+    "message": "Sincronizar tudo"
+  },
+  "screens.SyncEverythingBottomSheet.syncEverything": {
+    "message": "Sincronizar tudo?"
+  },
+  "screens.SyncEverythingBottomSheet.syncEverythingDescription": {
+    "message": "Você está prestes a sincronizar todas as informações. Isso pode aumentar o espaço ocupado na memória do seu dispositivo."
+  },
+  "screens.SyncPreviewBottomSheet.cancel": {
+    "message": "Cancelar"
+  },
+  "screens.SyncPreviewBottomSheet.confirm": {
+    "message": "Pré-visualizações de Sincronização"
+  },
+  "screens.SyncPreviewBottomSheet.syncPreviewWarningBottomSheet": {
+    "message": "Você não sincronizará mais áudios ou vídeos."
+  },
+  "screens.SyncPreviewBottomSheet.syncPreviewsButtonBottomSheet": {
+    "message": "Pré-visualizações de Sincronização?"
+  },
+  "screens.SyncPreviewBottomSheet.syncPreviewsDescriptionBottomSheet": {
+    "message": "Seu dispositivo manterá todos os dados já existentes, mas as novas observações serão sincronizadas em uma visualização menor."
   },
   "screens.Track.ObservationList.observation": {
     "message": "Observação"
@@ -1610,58 +1763,37 @@
   "sharedComponents.Editor.PresetView.Change": {
     "message": "Alterar"
   },
-  "sharedComponents.ErrorModal.goBack": {
+  "sharedComponents.ErrorBottomSheet.goBack": {
     "message": "Voltar"
   },
-  "sharedComponents.ErrorModal.somethingWrong": {
+  "sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Ocorreu um erro"
-  },
-  "sharedComponents.ErrorModal.tryAgain": {
-    "message": "Tente novamente"
-  },
-  "sharedComponents.GpsPill.noGps": {
-    "message": "Sem GPS"
-  },
-  "sharedComponents.GpsPill.searching": {
-    "message": "Procurando…"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.canceled": {
-    "message": "Convite cancelado"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.close": {
-    "message": "Fechar"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.InviteCancelled.projectInviteCanceled": {
-    "message": "Seu convite para {projectName} foi cancelado."
-  },
-  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.acceptInvite": {
-    "message": "Aceitar Convite"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.declineInvite": {
-    "message": "Recusar convite"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.invitedToJoin": {
-    "message": "Você foi convidado a juntar-se a {projectName}"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.NewInviteBottomSheetContent.joinProject": {
-    "message": "Entrar no projeto {projectName}"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.goToMap": {
-    "message": "Ir para mapa"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.goToSync": {
-    "message": "Ir para Sincronização"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.success": {
-    "message": "Sucesso"
-  },
-  "sharedComponents.ProjectInviteBottomSheet.youHaveJoined": {
-    "message": "Você está no projeto {projectName}"
   },
   "sharedComponents.RoleWithIcon.coordinator": {
     "message": "Coordenador"
   },
   "sharedComponents.RoleWithIcon.participant": {
     "message": "Participante"
+  },
+  "soloProject.inviteCollaborators.goBack": {
+    "message": "Voltar"
+  },
+  "soloProject.inviteCollaborators.introText": {
+    "message": "Compartilhe observações com outras pessoas usando CoMapeo. Nomeie seu projeto para adicionar seu primeiro colaborador."
+  },
+  "soloProject.inviteCollaborators.inviteOnly": {
+    "message": "Apenas dispositivos que você convidar podem contribuir e compartilhar dados com você."
+  },
+  "soloProject.inviteCollaborators.manageControl": {
+    "message": "Gerencie e controle compartilhamento de dados e colaborações em Configurações do Projeto."
+  },
+  "soloProject.inviteCollaborators.nameProject": {
+    "message": "Nomear meu projeto"
+  },
+  "soloProject.inviteCollaborators.readyToShare": {
+    "message": "Uma vez que você nomear seu projeto, todas as suas observações estarão prontas para serem compartilhadas com outros dispositivos."
+  },
+  "soloProject.inviteCollaborators.title": {
+    "message": "Convide colaboradores"
   }
 }

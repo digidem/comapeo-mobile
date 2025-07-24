@@ -133,7 +133,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
 
   return (
     <AuthContext.Provider value={contextValue}>
-      {hasHydrated ? <Loading /> : children}
+      {!hasHydrated ? <Loading /> : children}
     </AuthContext.Provider>
   );
 };

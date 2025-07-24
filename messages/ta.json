@@ -5,7 +5,7 @@
   },
   "AppContainer.EditHeader.discardChangesButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes"
+    "message": "மாற்றங்களை நிராகரிக்கவும்"
   },
   "AppContainer.EditHeader.discardChangesDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
@@ -26,7 +26,7 @@
     "message": "அவதானிப்புகளை நீக்கவா?"
   },
   "MapManagement.ErrorBottomSheet.goBack": {
-    "message": "Go Back"
+    "message": "பின் செல்"
   },
   "Modal.GPSDisable.button": {
     "message": "Enable"
@@ -41,7 +41,7 @@
     "message": "Start Tracks"
   },
   "Modal.GPSEnable.button.loading": {
-    "message": "Loading…"
+    "message": "ஏற்றுகிறது..."
   },
   "Modal.GPSEnable.button.stop": {
     "message": "Stop Tracks"
@@ -65,7 +65,7 @@
     "message": "Exchange"
   },
   "Navigation.Menu.invite": {
-    "message": "Invite"
+    "message": "அழைக்கவும்"
   },
   "Navigation.Menu.mappingOnOwn": {
     "message": "You are mapping on your own."
@@ -77,7 +77,7 @@
     "message": "Data & Privacy"
   },
   "Navigation.Menu.viewProject": {
-    "message": "View"
+    "message": "பார்க்கவும் "
   },
   "ObservationEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -85,7 +85,7 @@
   },
   "ObservationEdit.HeaderLeft.discardObservationButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes"
+    "message": "மாற்றங்களை நிராகரிக்கவும்"
   },
   "ObservationEdit.HeaderLeft.discardObservationDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
@@ -143,10 +143,10 @@
     "message": "All project devices can sync with this Archive, sharing data over the internet."
   },
   "ProjectSettings.RemoteArchive.Success.close": {
-    "message": "Close"
+    "message": "மூடுக"
   },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.close": {
-    "message": "Close"
+    "message": "மூடுக"
   },
   "ProjectSettings.RemoteArchive.WhatsIncludedSheet.deviceNames": {
     "message": "Device Names"
@@ -263,7 +263,7 @@
     "message": "UTM,Lat/Lon,DMS"
   },
   "Screens.Settings.AppSettings.deviceName": {
-    "message": "Device Name"
+    "message": "சாதனத்தின் பெயர்"
   },
   "Screens.Settings.AppSettings.language": {
     "message": "மொழி"
@@ -294,7 +294,7 @@
   },
   "SharedComponents.ActionButtons.share": {
     "description": "Button to share an observation",
-    "message": "Share"
+    "message": "பகிரவும்"
   },
   "TrackEdit.HeaderLeft.discardCancel": {
     "description": "Button on dialog to keep editing (cancelling close action)",
@@ -306,7 +306,7 @@
   },
   "TrackEdit.HeaderLeft.discardTrackButton": {
     "description": "Button to confirm discarding the track",
-    "message": "Discard changes"
+    "message": "மாற்றங்களை நிராகரிக்கவும்"
   },
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
@@ -361,15 +361,15 @@
   },
   "screens.AboutSettings.androidBuild": {
     "description": "Label for Android build number",
-    "message": "Android build number"
+    "message": "Android உருவாக்க எண்"
   },
   "screens.AboutSettings.androidVersion": {
     "description": "Label for Android version",
-    "message": "Android version"
+    "message": "ஆண்ட்ராய்டு பதிப்பு (Android version)"
   },
   "screens.AboutSettings.phoneModel": {
     "description": "Label for phone model",
-    "message": "Phone model"
+    "message": "போன் மாடல்"
   },
   "screens.AboutSettings.title": {
     "description": "Title of 'About CoMapeo' screen",
@@ -377,7 +377,7 @@
   },
   "screens.AboutSettings.unknownValue": {
     "description": "Shown when a device info (e.g. version number) is unknown",
-    "message": "Unknown"
+    "message": "தெரியாத"
   },
   "screens.AddPhoto.cancel": {
     "message": "ரத்து செய்க"
@@ -518,7 +518,7 @@
     "message": "Your Audio Recording was added"
   },
   "screens.AudioSavedBottomSheet.title": {
-    "message": "Success!"
+    "message": "வெற்றி!"
   },
   "screens.CameraScreen.goToSettings": {
     "message": "Go to Settings"
@@ -532,19 +532,19 @@
   },
   "screens.CoordinateFormat.dd": {
     "description": "Decimal Degrees coordinate format",
-    "message": "Decimal Degrees (DD)"
+    "message": "தசம டிகிரி (DD)"
   },
   "screens.CoordinateFormat.dms": {
     "description": "Degrees/Minutes/Seconds coordinate format",
-    "message": "Degrees/Minutes/Seconds (DMS)"
+    "message": "டிகிரி/நிமிடங்கள்/வினாடிகள் (DMS)"
   },
   "screens.CoordinateFormat.title": {
     "description": "Title coordinate format screen",
-    "message": "Coordinate Format"
+    "message": "ஒருங்கிணைப்பு வடிவம்"
   },
   "screens.CoordinateFormat.utm": {
     "description": "Universal Transverse Mercator coordinate format",
-    "message": "Universal Transverse Mercator (UTM)"
+    "message": "யுனிவர்சல் டிரான்ஸ்வர்ஸ் மெர்கேட்டர் (UTM)"
   },
   "screens.DataAndPrivacy.diagnosticInfoText": {
     "message": "Anonymized information about your device, app crashes, errors and performance helps Awana Digital improve the app and fix errors."
@@ -616,7 +616,7 @@
     "message": "You can start mapping alone or start mapping with a team. Create or join a project in order to share data with other devices that are part of the same project."
   },
   "screens.DeviceNaming.Success.success": {
-    "message": "Success!"
+    "message": "வெற்றி!"
   },
   "screens.DeviceNaming.addName": {
     "message": "Add Name"
@@ -640,7 +640,7 @@
     "message": "Get started in two simple ways:"
   },
   "screens.ExchangeSoloScreen.goBack": {
-    "message": "Go Back"
+    "message": "பின் செல்"
   },
   "screens.ExchangeSoloScreen.inviteCollaborators": {
     "message": "Invite collaborators to your project from the main menu"
@@ -697,7 +697,7 @@
     "message": "நீங்கள் ஏற்கனவே ஒரு திட்டப்பணியில் உள்ளீர்கள்"
   },
   "screens.Invite.ExistingProjectWarning.goBack": {
-    "message": "Go Back"
+    "message": "பின் செல்"
   },
   "screens.Invite.ExistingProjectWarning.leaveProj": {
     "message": "தற்போதைய திட்டத்திலிருந்து வெளியேறவும்"
@@ -709,7 +709,7 @@
     "message": "Invite Canceled"
   },
   "screens.InviteCancelled.close": {
-    "message": "Close"
+    "message": "மூடுக"
   },
   "screens.InviteCancelled.projectInviteCanceled": {
     "message": "Your invitation to {projectName} has been canceled."
@@ -718,7 +718,7 @@
     "message": "coordinator"
   },
   "screens.InviteReceived.declineInvite": {
-    "message": "Decline Invite"
+    "message": "அழைப்பை நிராகரி"
   },
   "screens.InviteReceived.invitedToJoin": {
     "message": "You've been invited to..."
@@ -733,7 +733,7 @@
     "message": "participant"
   },
   "screens.InviteSuccess.goToMap": {
-    "message": "Go To Map"
+    "message": "வரைபடத்திற்குச் செல்லவும்"
   },
   "screens.InviteSuccess.goToSync": {
     "message": "Go To Sync"
@@ -778,154 +778,154 @@
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
-    "message": "Details"
+    "message": "விபரங்கள்"
   },
   "screens.LocationInfoScreen.gpsHeader": {
     "description": "Header for GPS screen",
-    "message": "Current GPS Location"
+    "message": "தற்போதைய GPS இடம்"
   },
   "screens.LocationInfoScreen.lastUpdate": {
     "description": "Section title for time of last GPS update",
-    "message": "Last update"
+    "message": "கடைசியாகப் புதுப்பித்தது"
   },
   "screens.LocationInfoScreen.locationDD": {
     "description": "Section title for DD coordinates",
-    "message": "Coordinates Decimal Degrees"
+    "message": "தசம டிகிரிகளை ஒருங்கிணைக்கிறது"
   },
   "screens.LocationInfoScreen.locationDMS": {
     "description": "Section title for DMS coordinates",
-    "message": "Coordinates DMS"
+    "message": "DMS ஒருங்கிணைப்பு"
   },
   "screens.LocationInfoScreen.locationSensors": {
     "description": "Heading for section about location sensor status",
-    "message": "Sensor Status"
+    "message": "சென்சார் நிலை"
   },
   "screens.LocationInfoScreen.locationUTM": {
     "description": "Section title for UTM coordinates",
-    "message": "Coordinates UTM"
+    "message": "UTM ஒருங்கிணைப்பு"
   },
   "screens.LocationInfoScreen.no": {
     "description": "if a location sensor is active yes/no",
-    "message": "No"
+    "message": "இல்லை"
   },
   "screens.LocationInfoScreen.yes": {
     "description": "if a location sensor is active yes/no",
-    "message": "Yes"
+    "message": "ஆம்"
   },
   "screens.ManualGpsScreen.DdForm.east": {
-    "message": "East"
+    "message": "கிழக்கு"
   },
   "screens.ManualGpsScreen.DdForm.invalidCoordinates": {
-    "message": "Invalid coordinates"
+    "message": "தவறான ஒருங்கிணைப்புகள்"
   },
   "screens.ManualGpsScreen.DdForm.latInputLabel": {
-    "message": "Latitude value"
+    "message": "அட்சரேகை மதிப்பு"
   },
   "screens.ManualGpsScreen.DdForm.latitude": {
-    "message": "Latitude"
+    "message": "அட்சரேகை"
   },
   "screens.ManualGpsScreen.DdForm.lonInputLabel": {
-    "message": "Longitude value"
+    "message": "தீர்க்கரேகை மதிப்பு"
   },
   "screens.ManualGpsScreen.DdForm.longitude": {
-    "message": "Longitude"
+    "message": "தீர்க்கரேகை"
   },
   "screens.ManualGpsScreen.DdForm.north": {
-    "message": "North"
+    "message": "வடக்கு"
   },
   "screens.ManualGpsScreen.DdForm.selectLatCardinality": {
-    "message": "Select latitude cardinality"
+    "message": "அட்சரேகை கார்டினாலிட்டியைத் தேர்ந்தெடுக்கவும்"
   },
   "screens.ManualGpsScreen.DdForm.selectLonCardinality": {
-    "message": "Select longitude cardinality"
+    "message": "தீர்க்கரேகை கார்டினாலிட்டியைத் தேர்ந்தெடுக்கவும்"
   },
   "screens.ManualGpsScreen.DdForm.south": {
-    "message": "South"
+    "message": "தெற்கு"
   },
   "screens.ManualGpsScreen.DdForm.west": {
-    "message": "West"
+    "message": "மேற்கு"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.MinutesInputLabel": {
-    "message": "{field} minutes input"
+    "message": "{களம்} நிமிட உள்ளீடு"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.SecondsInputLabel": {
-    "message": "{field} seconds input"
+    "message": "{களம்} வினாடிகள் உள்ளீடு"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.degrees": {
-    "message": "Degrees"
+    "message": "கோணங்கள்"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.degreesInputLabel": {
-    "message": "{field} degrees input"
+    "message": "{களம்} ஒப்பீட்டு உள்ளீடு"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.direction": {
-    "message": "Direction"
+    "message": "வழிகாட்டுதல்"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.minutes": {
-    "message": "Minutes"
+    "message": "நிமிடம்"
   },
   "screens.ManualGpsScreen.DmsForm.DmsInputGroup.seconds": {
-    "message": "Seconds"
+    "message": "நொடிகள்"
   },
   "screens.ManualGpsScreen.DmsForm.east": {
-    "message": "East"
+    "message": "கிழக்கு"
   },
   "screens.ManualGpsScreen.DmsForm.invalidCoordinates": {
-    "message": "Invalid coordinates"
+    "message": "தவறான ஒருங்கிணைப்புகள்"
   },
   "screens.ManualGpsScreen.DmsForm.latitude": {
-    "message": "Latitude"
+    "message": "அட்சரேகை"
   },
   "screens.ManualGpsScreen.DmsForm.longitude": {
-    "message": "Longitude"
+    "message": "தீர்க்கரேகை"
   },
   "screens.ManualGpsScreen.DmsForm.north": {
-    "message": "North"
+    "message": "வடக்கு"
   },
   "screens.ManualGpsScreen.DmsForm.selectLatCardinality": {
-    "message": "Select latitude cardinality"
+    "message": "அட்சரேகை கார்டினாலிட்டியைத் தேர்ந்தெடுக்கவும்"
   },
   "screens.ManualGpsScreen.DmsForm.south": {
-    "message": "South"
+    "message": "தெற்கு"
   },
   "screens.ManualGpsScreen.DmsForm.west": {
-    "message": "West"
+    "message": "மேற்கு"
   },
   "screens.ManualGpsScreen.coordinateFormat": {
-    "message": "Coordinate Format"
+    "message": "ஒருங்கிணைப்பு வடிவம்"
   },
   "screens.ManualGpsScreen.decimalDegrees": {
-    "message": "Decimal Degrees (DD)"
+    "message": "தசம டிகிரி (DD)"
   },
   "screens.ManualGpsScreen.degreesMinutesSeconds": {
-    "message": "Degrees/Minutes/Seconds (DMS)"
+    "message": "டிகிரி/நிமிடங்கள்/வினாடிகள் (DMS)"
   },
   "screens.ManualGpsScreen.easting": {
-    "message": "East"
+    "message": "கிழக்கு"
   },
   "screens.ManualGpsScreen.eastingSuffix": {
-    "message": "mE"
+    "message": "மீட்டர் கிழக்கு ME"
   },
   "screens.ManualGpsScreen.invalidCoordinates": {
     "message": "Invalid coordinates. Latitude must be between -90 and 90. Longitude must be between -180 and 180"
   },
   "screens.ManualGpsScreen.northing": {
-    "message": "North"
+    "message": "வடக்கு"
   },
   "screens.ManualGpsScreen.northingSuffix": {
-    "message": "mN"
+    "message": "மீட்டர் வடக்கு MN"
   },
   "screens.ManualGpsScreen.title": {
     "description": "title of manual GPS screen",
-    "message": "Enter coordinates"
+    "message": "ஒருங்கிணைப்புகள் உள்ளிடவும்"
   },
   "screens.ManualGpsScreen.universalTransverseMercator": {
-    "message": "Universal Transverse Mercator (UTM)"
+    "message": "யுனிவர்சல் டிரான்ஸ்வர்ஸ் மெர்கேட்டர் (UTM)"
   },
   "screens.ManualGpsScreen.zoneLetter": {
-    "message": "Zone Letter"
+    "message": "மண்டல கடிதம்"
   },
   "screens.ManualGpsScreen.zoneNumber": {
-    "message": "Zone Number"
+    "message": "மண்டல எண்"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
     "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
@@ -986,7 +986,7 @@
   },
   "screens.Observation.ObservationView.share": {
     "description": "Button to share an observation",
-    "message": "Share"
+    "message": "பகிரவும்"
   },
   "screens.Observation.TrackList.track": {
     "message": "Track"
@@ -1012,7 +1012,7 @@
   },
   "screens.Observation.fallbackPresetName": {
     "description": "Fallback name used when category name cannot be determined for observation",
-    "message": "Observation"
+    "message": "அவதானிப்புகள்"
   },
   "screens.Observation.shareMediaTitle": {
     "description": "Title of dialog to share an observation with media",
@@ -1033,7 +1033,7 @@
     "message": "அவதானிப்புகள்"
   },
   "screens.ObservationCreate.changePreset": {
-    "message": "Change"
+    "message": "மாற்றுக"
   },
   "screens.ObservationCreate.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
@@ -1049,7 +1049,7 @@
   },
   "screens.ObservationCreate.navTitle": {
     "description": "screen title for new observation screen",
-    "message": "New Observation"
+    "message": "புதிய கவனிப்பு"
   },
   "screens.ObservationCreate.noGpsDesc": {
     "description": "Description in dialog when trying to save with no GPS coords",
@@ -1077,7 +1077,7 @@
   },
   "screens.ObservationDetails.done": {
     "description": "Button text when all questions are complete",
-    "message": "Done"
+    "message": "முடிந்தது"
   },
   "screens.ObservationDetails.nextQuestion": {
     "description": "Button text to navigate to next question",
@@ -1085,7 +1085,7 @@
   },
   "screens.ObservationDetails.title": {
     "description": "Title of observation details screen showing question number and total",
-    "message": "Question {current} of {total}"
+    "message": "கேள்வி {தற்போதைய} இல் {மொத்தம்}"
   },
   "screens.ObservationEdit.ObservationEditView.audioButton": {
     "description": "Button label for adding audio",
@@ -1097,14 +1097,14 @@
   },
   "screens.ObservationEdit.ObservationEditView.detailsButton": {
     "description": "Button label to add details",
-    "message": "Details"
+    "message": "விபரங்கள்"
   },
   "screens.ObservationEdit.ObservationEditView.photoButton": {
     "description": "Button label for adding photo",
     "message": "Photo"
   },
   "screens.ObservationEdit.changePreset": {
-    "message": "Change"
+    "message": "மாற்றுக"
   },
   "screens.ObservationEdit.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",
@@ -1112,7 +1112,7 @@
   },
   "screens.ObservationEdit.navTitle": {
     "description": "screen title for new observation screen",
-    "message": "Edit Observation"
+    "message": "கவனிப்பைத் திருத்து"
   },
   "screens.ObservationEdit.observation": {
     "description": "Default name of observation with no matching preset",
@@ -1147,7 +1147,7 @@
     "message": "How we validate"
   },
   "screens.ObservationMetadataVerified.latitude": {
-    "message": "Latitude"
+    "message": "அட்சரேகை"
   },
   "screens.ObservationMetadataVerified.location": {
     "message": "Location"
@@ -1156,7 +1156,7 @@
     "message": "Location was manually entered"
   },
   "screens.ObservationMetadataVerified.longitude": {
-    "message": "Longitude"
+    "message": "தீர்க்கரேகை"
   },
   "screens.ObservationMetadataVerified.manuallyEntered": {
     "message": "Manually entered."
@@ -1221,7 +1221,7 @@
     "message": "படத்தை நீக்கு"
   },
   "screens.PhotoPreviewModal.DeletePhoto.deleteModalTitle": {
-    "message": "Delete this photo?"
+    "message": "இந்தப் படத்தை நீக்கவா?"
   },
   "screens.PhotoPreviewModal.DeletePhoto.headerButtonText": {
     "message": "Delete Photo"
@@ -1347,7 +1347,7 @@
     "message": "To use, turn on App Passcode"
   },
   "screens.Security.obscurePasscodeDescriptionActivated": {
-    "message": "Protect your device against seizure"
+    "message": "வலிப்புத்தாக்கத்திலிருந்து உங்கள் சாதனத்தைப் பாதுகாக்கவும்"
   },
   "screens.Security.obscurePasscodeHeader": {
     "message": "Obscure Passcode"
@@ -1392,7 +1392,7 @@
     "message": "Add Another Device"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.close": {
-    "message": "Close"
+    "message": "மூடுக"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
     "message": "Invite Accepted"
@@ -1434,7 +1434,7 @@
     "message": "சாதனத்தின் பெயர்"
   },
   "screens.Setting.ProjectSettings.YourTeam.inviteDevice": {
-    "message": "Invite Device"
+    "message": "சாதனத்தை அழைக்கவும்"
   },
   "screens.Setting.ProjectSettings.YourTeam.participantDescription": {
     "message": "Participants can take and share observations. They cannot manage users or project details."
@@ -1461,16 +1461,16 @@
     "message": "Categories"
   },
   "screens.Settings.Config.okButton": {
-    "message": "OK"
+    "message": "சரி"
   },
   "screens.Settings.Config.projectName": {
-    "message": "Project Name:"
+    "message": "செயற்திட்டத்தின் பெயர்"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.title": {
     "message": "New Project"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
-    "message": "Go Back"
+    "message": "பின் செல்"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.howTo": {
     "message": "How to Join a Project"
@@ -1482,7 +1482,7 @@
     "message": "Go to Map"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.invitedDevice": {
-    "message": "Invite Device"
+    "message": "சாதனத்தை அழைக்கவும்"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.projectCreated": {
     "message": "{projectName} Created!"
@@ -1494,7 +1494,7 @@
     "message": "You are already on a project. To create a new Project you must uninstall and reininstall CoMapeo."
   },
   "screens.Settings.CreateOrJoinProject.createProject": {
-    "message": "Create a Project"
+    "message": "திட்டப்பணியை உருவாக்கு"
   },
   "screens.Settings.CreateOrJoinProject.createProjectButton": {
     "message": "Create Project"
@@ -1515,10 +1515,10 @@
     "message": "Join an existing CoMapeo Project"
   },
   "screens.Settings.CreateOrJoinProject.joinProject": {
-    "message": "Join a Project"
+    "message": "திட்டத்தில் சேரவும்"
   },
   "screens.Settings.CreateOrJoinProject.okButton": {
-    "message": "OK"
+    "message": "சரி"
   },
   "screens.Settings.CreateOrJoinProject.projectDescription": {
     "message": "A project is a secure container for your data. Only devices you invite can enter and share data with you. Create or Join a project in order to share data with other devices. This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
@@ -1545,7 +1545,7 @@
     "message": "This cannot be undone."
   },
   "screens.Settings.MapManagement.BackgroundMaps.close": {
-    "message": "Close"
+    "message": "மூடுக"
   },
   "screens.Settings.MapManagement.BackgroundMaps.customMapAddedDescription": {
     "message": "You will see this map when you are offline, but you will not see a map outside the area defined in your custom map."
@@ -1575,7 +1575,7 @@
     "message": "Unable to import the file. Please go back and try again."
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
-    "message": "Import Error"
+    "message": "பதிவிறக்கப் பிழை"
   },
   "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
     "message": "Remove Map File"
@@ -1605,7 +1605,7 @@
     "message": "Invitation Declined"
   },
   "screens.Settings.YourTeam.close": {
-    "message": "Close"
+    "message": "மூடுக"
   },
   "screens.Settings.YourTeam.deviceHasJoined": {
     "message": "Device Has Joined {projectName}"
@@ -1751,7 +1751,7 @@
     "message": "Leave Project"
   },
   "sharedComponents.DeviceIconWithName.Disconnected": {
-    "message": "Disconnected"
+    "message": "துண்டிக்கப்பட்டது"
   },
   "sharedComponents.DeviceIconWithName.thisDevice": {
     "message": "This Device!"
@@ -1761,10 +1761,10 @@
     "message": "தேடு…"
   },
   "sharedComponents.Editor.PresetView.Change": {
-    "message": "Change"
+    "message": "மாற்றுக"
   },
   "sharedComponents.ErrorBottomSheet.goBack": {
-    "message": "Go Back"
+    "message": "பின் செல்"
   },
   "sharedComponents.ErrorBottomSheet.somethingWrong": {
     "message": "Something Went Wrong"
@@ -1776,7 +1776,7 @@
     "message": "Participant"
   },
   "soloProject.inviteCollaborators.goBack": {
-    "message": "Go Back"
+    "message": "பின் செல்"
   },
   "soloProject.inviteCollaborators.introText": {
     "message": "Share observations with others using CoMapeo. Name your solo project to add your first collaborator."

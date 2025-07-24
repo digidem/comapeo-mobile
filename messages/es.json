@@ -1189,13 +1189,13 @@
     "message": "Añadir observaciones"
   },
   "screens.ObservationsList.ProjectCard.coordinator": {
-    "message": "You’re a coordinator on this project."
+    "message": "Este dispositivo es un coordinator de este proyecto."
   },
   "screens.ObservationsList.ProjectCard.mappingOnYourOwn": {
     "message": "Estás mapeando por tu cuenta."
   },
   "screens.ObservationsList.ProjectCard.participant": {
-    "message": "You’re a participant on this project."
+    "message": "Eres participante en este proyecto."
   },
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",
@@ -1218,7 +1218,7 @@
     "message": "Cancelar"
   },
   "screens.PhotoPreviewModal.DeletePhoto.deleteModalDeleteButton": {
-    "message": "Delete Image"
+    "message": "Eliminar imagen"
   },
   "screens.PhotoPreviewModal.DeletePhoto.deleteModalTitle": {
     "message": "¿Eliminar esta foto?"

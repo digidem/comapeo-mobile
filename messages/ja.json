@@ -5,7 +5,7 @@
   },
   "AppContainer.EditHeader.discardChangesButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes"
+    "message": "変更を破棄"
   },
   "AppContainer.EditHeader.discardChangesDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
@@ -76,7 +76,7 @@
   },
   "ObservationEdit.HeaderLeft.discardObservationButton": {
     "description": "Title of dialog that shows when cancelling observation edits",
-    "message": "Discard changes"
+    "message": "変更を破棄"
   },
   "ObservationEdit.HeaderLeft.discardObservationDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
@@ -279,7 +279,7 @@
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.cancel": {
     "description": "Text for cancel action button.",
-    "message": "Cancel"
+    "message": "取消"
   },
   "Settings.ProjectSettings.RemoteArchive.RemoveRemoteArchive.description": {
     "description": "Explanation for consequences of removing archive server.",
@@ -307,7 +307,7 @@
   },
   "SharedComponents.ActionButtons.share": {
     "description": "Button to share an observation",
-    "message": "Share"
+    "message": "共有"
   },
   "TrackBottomSheet.DidNotMove.delete": {
     "message": "Exit Tracks"
@@ -337,7 +337,7 @@
   },
   "TrackEdit.HeaderLeft.discardTrackButton": {
     "description": "Button to confirm discarding the track",
-    "message": "Discard changes"
+    "message": "変更を破棄"
   },
   "TrackEdit.HeaderLeft.discardTrackDescription": {
     "message": "Your changes will not be saved. This cannot be undone."
@@ -440,11 +440,11 @@
   },
   "screens.AboutSettings.androidBuild": {
     "description": "Label for Android build number",
-    "message": "Android build number"
+    "message": "Android ビルド番号"
   },
   "screens.AboutSettings.androidVersion": {
     "description": "Label for Android version",
-    "message": "Android version"
+    "message": "Androidバージョン"
   },
   "screens.AboutSettings.emojiSource": {
     "description": "Label for the source of emojis used in CoMapeo",
@@ -452,7 +452,7 @@
   },
   "screens.AboutSettings.phoneModel": {
     "description": "Label for phone model",
-    "message": "Phone model"
+    "message": "携帯電話の機種"
   },
   "screens.AboutSettings.title": {
     "description": "Title of 'About CoMapeo' screen",
@@ -460,7 +460,7 @@
   },
   "screens.AboutSettings.unknownValue": {
     "description": "Shown when a device info (e.g. version number) is unknown",
-    "message": "Unknown"
+    "message": "不明"
   },
   "screens.AddPhoto.cancel": {
     "message": "取消"
@@ -563,7 +563,7 @@
     "message": "Audio Recording"
   },
   "screens.AudioAttachmentPlayback.share": {
-    "message": "Share"
+    "message": "共有"
   },
   "screens.AudioPermission.Button.allow": {
     "description": "Screen button text for granting the audio permission",
@@ -589,7 +589,7 @@
     "message": "Back to Editing"
   },
   "screens.AudioPlaybackNew.delete": {
-    "message": "Delete"
+    "message": "削除"
   },
   "screens.AudioPlaybackNew.recordingSaved": {
     "message": "Recording Saved!"
@@ -610,7 +610,7 @@
     "message": "No access to camera. Please Allow access in setting"
   },
   "screens.ConfirmDeletePhoto.cancel": {
-    "message": "Cancel"
+    "message": "取消"
   },
   "screens.ConfirmDeletePhoto.deletePhoto": {
     "message": "Delete Photo"
@@ -620,19 +620,19 @@
   },
   "screens.CoordinateFormat.dd": {
     "description": "Decimal Degrees coordinate format",
-    "message": "Decimal Degrees (DD)"
+    "message": "十進緯経度(DD)"
   },
   "screens.CoordinateFormat.dms": {
     "description": "Degrees/Minutes/Seconds coordinate format",
-    "message": "Degrees/Minutes/Seconds (DMS)"
+    "message": "時分秒緯経度(DMS)"
   },
   "screens.CoordinateFormat.title": {
     "description": "Title coordinate format screen",
-    "message": "Coordinate Format"
+    "message": "緯度/経度の形式"
   },
   "screens.CoordinateFormat.utm": {
     "description": "Universal Transverse Mercator coordinate format",
-    "message": "Universal Transverse Mercator (UTM)"
+    "message": "ユニバーサル横メルカトル図法(UTM)"
   },
   "screens.DataAndPrivacy.diagnosticInfoText": {
     "message": "Anonymized information about your device, app crashes, errors and performance helps Awana Digital improve the app and fix errors."
@@ -728,7 +728,7 @@
     "message": "Exchange Previews Only"
   },
   "screens.ExchangeSettingsBottomSheet.save": {
-    "message": "Save"
+    "message": "保存"
   },
   "screens.ExchangeSettingsCard.changeSettings": {
     "message": "Change Settings"
@@ -833,7 +833,7 @@
     "message": "participant"
   },
   "screens.InviteSuccess.goToMap": {
-    "message": "Go To Map"
+    "message": "マップに移動"
   },
   "screens.InviteSuccess.goToSync": {
     "message": "Go To Sync"
@@ -854,39 +854,39 @@
   },
   "screens.LocationInfoScreen.details": {
     "description": "Section title for details about current position",
-    "message": "Details"
+    "message": "詳細情報"
   },
   "screens.LocationInfoScreen.gpsHeader": {
     "description": "Header for GPS screen",
-    "message": "Current GPS Location"
+    "message": "現在のGPS測位"
   },
   "screens.LocationInfoScreen.lastUpdate": {
     "description": "Section title for time of last GPS update",
-    "message": "Last update"
+    "message": "前回更新:"
   },
   "screens.LocationInfoScreen.locationDD": {
     "description": "Section title for DD coordinates",
-    "message": "Coordinates Decimal Degrees"
+    "message": "十進緯経度"
   },
   "screens.LocationInfoScreen.locationDMS": {
     "description": "Section title for DMS coordinates",
-    "message": "Coordinates DMS"
+    "message": "時分秒緯経度"
   },
   "screens.LocationInfoScreen.locationSensors": {
     "description": "Heading for section about location sensor status",
-    "message": "Sensor Status"
+    "message": "GPSセンサー状態"
   },
   "screens.LocationInfoScreen.locationUTM": {
     "description": "Section title for UTM coordinates",
-    "message": "Coordinates UTM"
+    "message": "UTM座標"
   },
   "screens.LocationInfoScreen.no": {
     "description": "if a location sensor is active yes/no",
-    "message": "No"
+    "message": "いいえ"
   },
   "screens.LocationInfoScreen.yes": {
     "description": "if a location sensor is active yes/no",
-    "message": "Yes"
+    "message": "はい"
   },
   "screens.ManualGpsScreen.DdForm.east": {
     "message": "East"
@@ -967,13 +967,13 @@
     "message": "West"
   },
   "screens.ManualGpsScreen.coordinateFormat": {
-    "message": "Coordinate Format"
+    "message": "緯度/経度の形式"
   },
   "screens.ManualGpsScreen.decimalDegrees": {
-    "message": "Decimal Degrees (DD)"
+    "message": "十進緯経度(DD)"
   },
   "screens.ManualGpsScreen.degreesMinutesSeconds": {
-    "message": "Degrees/Minutes/Seconds (DMS)"
+    "message": "時分秒緯経度(DMS)"
   },
   "screens.ManualGpsScreen.easting": {
     "message": "East"
@@ -992,16 +992,16 @@
   },
   "screens.ManualGpsScreen.title": {
     "description": "title of manual GPS screen",
-    "message": "Enter coordinates"
+    "message": "座標を入力"
   },
   "screens.ManualGpsScreen.universalTransverseMercator": {
-    "message": "Universal Transverse Mercator (UTM)"
+    "message": "ユニバーサル横メルカトル図法(UTM)"
   },
   "screens.ManualGpsScreen.zoneLetter": {
-    "message": "Zone Letter"
+    "message": "ゾーン記号"
   },
   "screens.ManualGpsScreen.zoneNumber": {
-    "message": "Zone Number"
+    "message": "ゾーン番号"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
     "message": "Use Location? Tracks location even when closed. Data remains on device only."
@@ -1041,7 +1041,7 @@
   },
   "screens.Observation.ObservationView.share": {
     "description": "Button to share an observation",
-    "message": "Share"
+    "message": "共有"
   },
   "screens.Observation.TrackList.track": {
     "message": "Track"
@@ -1068,7 +1068,7 @@
     "message": "Description:"
   },
   "screens.Observation.details": {
-    "message": "Details:"
+    "message": "詳細情報:"
   },
   "screens.Observation.fallbackCategoryName": {
     "description": "Fallback name used when category name cannot be determined for observation",
@@ -1170,7 +1170,7 @@
   },
   "screens.ObservationEdit.ObservationEditView.detailsButton": {
     "description": "Button label to add details",
-    "message": "Details"
+    "message": "詳細情報"
   },
   "screens.ObservationEdit.ObservationEditView.photoButton": {
     "description": "Button label for adding photo",
@@ -1615,7 +1615,7 @@
     "message": "Request invites to join existing projects."
   },
   "screens.Settings.CreateOrJoinProject.saveProjectButton": {
-    "message": "Save"
+    "message": "保存"
   },
   "screens.Settings.CreateOrJoinProject.startProject": {
     "message": "Start a CoMapeo Project"
@@ -1666,7 +1666,7 @@
     "message": "Unable to import the file. Please go back and try again."
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorTitle": {
-    "message": "Import Error"
+    "message": "インポートエラー"
   },
   "screens.Settings.MapManagement.BackgroundMaps.removeMapFile": {
     "message": "Remove Map File"
@@ -1765,7 +1765,7 @@
     "message": "Complete! Waiting for other devices to join"
   },
   "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
-    "message": "Complete!"
+    "message": "完了!"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
     "message": "Exchanging..."
@@ -1811,7 +1811,7 @@
     "message": "Track"
   },
   "screens.TrackRecordingActive.cancel": {
-    "message": "Cancel"
+    "message": "取消"
   },
   "screens.TrackRecordingActive.recordingTracks": {
     "message": "Recording Tracks!"
@@ -1827,7 +1827,7 @@
     "message": "Show Options"
   },
   "sharedComponents.DeviceIconWithName.Disconnected": {
-    "message": "Disconnected"
+    "message": "切断済み"
   },
   "sharedComponents.DeviceIconWithName.thisDevice": {
     "message": "This Device!"

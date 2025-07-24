@@ -28,7 +28,15 @@ test('initial state', () => {
     wrapper,
   });
 
-  expect(stateHook.result.current).toStrictEqual({
+  const {passcode, obscureCodeEnabled, failedAttempts, lockUntil} =
+    stateHook.result.current;
+
+  expect({
+    passcode,
+    obscureCodeEnabled,
+    failedAttempts,
+    lockUntil,
+  }).toStrictEqual({
     passcode: null,
     obscureCodeEnabled: false,
     failedAttempts: 0,
@@ -63,7 +71,15 @@ test('passcode cannot be set to invalid value', async () => {
     }).rejects.toThrow();
   }
 
-  expect(stateHook.result.current).toStrictEqual({
+  const {passcode, obscureCodeEnabled, failedAttempts, lockUntil} =
+    stateHook.result.current;
+
+  expect({
+    passcode,
+    obscureCodeEnabled,
+    failedAttempts,
+    lockUntil,
+  }).toStrictEqual({
     passcode: null,
     obscureCodeEnabled: false,
     failedAttempts: 0,
@@ -106,7 +122,15 @@ test('obscure code cannot be set when passcode is not set', () => {
     actionsHook.result.current.enableObscureCode(true);
   }).toThrow();
 
-  expect(stateHook.result.current).toStrictEqual({
+  const {passcode, obscureCodeEnabled, failedAttempts, lockUntil} =
+    stateHook.result.current;
+
+  expect({
+    passcode,
+    obscureCodeEnabled,
+    failedAttempts,
+    lockUntil,
+  }).toStrictEqual({
     passcode: null,
     obscureCodeEnabled: false,
     failedAttempts: 0,
@@ -157,7 +181,15 @@ test('obscure code is unset when passcode is unset', async () => {
     await actionsHook.result.current.setPasscode(null);
   });
 
-  expect(stateHook.result.current).toStrictEqual({
+  const {passcode, obscureCodeEnabled, failedAttempts, lockUntil} =
+    stateHook.result.current;
+
+  expect({
+    passcode,
+    obscureCodeEnabled,
+    failedAttempts,
+    lockUntil,
+  }).toStrictEqual({
     passcode: null,
     obscureCodeEnabled: false,
     failedAttempts: 0,

@@ -30,7 +30,10 @@ const SecurityStateSchema = v.variant('passcode', [
   }),
 ]);
 
-export type SecurityState = v.InferOutput<typeof SecurityStateSchema>;
+export type SecurityState = v.InferOutput<typeof SecurityStateSchema> & {
+  _hasHydrated: boolean;
+  setHasHydrated: (hydrated: boolean) => void;
+};
 
 // NOTE: Do not change!
 const STORAGE_KEY = 'security' as const;
@@ -41,9 +44,14 @@ function createInitialState(): SecurityState {
     obscureCodeEnabled: false,
     failedAttempts: 0,
     lockUntil: 0,
+    _hasHydrated: false,
+    setHasHydrated: () => {},
   };
 }
 
+/**
+ * @deprecated Removed in v1. Use SecurityState instead.
+ */
 type LegacyPasscodeState = {
   passcode: string;
   obscureCodeEnabled?: boolean;
@@ -55,16 +63,13 @@ const migrate = async (
   persistedState: unknown,
   version: number,
 ): Promise<SecurityState> => {
-  if (version !== 0) {
+  if (version === 1) {
     return persistedState as SecurityState;
   }
   try {
     const raw = persistedState as LegacyPasscodeState;
-    // not sure if I need this if check here.
-    if (
-      typeof raw.passcode === 'string' &&
-      v.safeParse(PasscodeInputSchema, raw.passcode).success
-    ) {
+
+    if (typeof raw.passcode === 'string') {
       const salt = generateSalt();
       const hashed = await hashPasscode({passcode: raw.passcode, salt});
       return {
@@ -72,9 +77,17 @@ const migrate = async (
         obscureCodeEnabled: raw.obscureCodeEnabled ?? false,
         failedAttempts: raw.failedAttempts ?? 0,
         lockUntil: raw.lockUntil ?? 0,
+        _hasHydrated: true,
+        setHasHydrated: () => {},
       };
     }
-    return v.parse(SecurityStateSchema, persistedState);
+
+    const parsed = v.parse(SecurityStateSchema, persistedState);
+    return {
+      ...parsed,
+      _hasHydrated: true,
+      setHasHydrated: () => {},
+    };
   } catch {
     return createInitialState();
   }
@@ -85,18 +98,27 @@ export function createSecurityStore({persist} = {persist: false}) {
 
   if (persist) {
     store = createStore(
-      createPersistedState(createInitialState, {
-        name: STORAGE_KEY,
-        version: 1,
-        migrate,
-        storage: createJSONStorage(
-          (): StateStorage => ({
-            getItem: key => getItem(key),
-            setItem: (key, value) => setItem(key, value),
-            removeItem: key => deleteItemAsync(key),
-          }),
-        ),
-      }),
+      createPersistedState(
+        (set): SecurityState => ({
+          ...createInitialState(),
+          setHasHydrated: (hydrated: boolean) => set({_hasHydrated: hydrated}),
+        }),
+        {
+          name: STORAGE_KEY,
+          version: 1,
+          migrate,
+          storage: createJSONStorage(
+            (): StateStorage => ({
+              getItem: key => getItem(key),
+              setItem: (key, value) => setItem(key, value),
+              removeItem: key => deleteItemAsync(key),
+            }),
+          ),
+          onRehydrateStorage: state => {
+            return () => state?.setHasHydrated(true);
+          },
+        },
+      ),
     );
   } else {
     store = createStore(createInitialState);
@@ -117,10 +139,7 @@ export function createSecurityStore({persist} = {persist: false}) {
       v.parse(PasscodeInputSchema, passcode, {abortPipeEarly: true});
       const salt = generateSalt();
       const hashed = await hashPasscode({passcode, salt});
-
-      store.setState({
-        passcode: hashed,
-      });
+      store.setState({passcode: hashed});
     },
 
     enableObscureCode: (enable: boolean) => {

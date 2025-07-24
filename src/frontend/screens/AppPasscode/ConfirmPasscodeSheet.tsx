@@ -71,30 +71,30 @@ export const ConfirmPasscodeBottomSheet = ({
         <HeaderText variant="header2" style={styles.title}>
           {t(m.title)}
         </HeaderText>
-        <BodyText variant="large" style={styles.description}>
-          {t(m.suggestion)}
-          {'\n\n'}
-          {t(m.passcode, {passcode: route.params.passcode})}
-        </BodyText>
-
         {loading ? (
           <View style={styles.loading}>
             <UIActivityIndicator size={32} />
           </View>
         ) : (
-          <View style={styles.buttonsContainer}>
-            <SecondaryButton
-              fullSize
-              text={t(m.cancel)}
-              onPress={() => navigation.goBack()}
-            />
-            <PrimaryButton
-              fullSize
-              text={t(m.saveAppPasscode)}
-              onPress={handleSave}
-            />
-          </View>
+          <BodyText variant="large" style={styles.description}>
+            {t(m.suggestion)}
+            {'\n\n'}
+            {t(m.passcode, {passcode: route.params.passcode})}
+          </BodyText>
         )}
+
+        <View style={styles.buttonsContainer}>
+          <SecondaryButton
+            fullSize
+            text={t(m.cancel)}
+            onPress={() => navigation.goBack()}
+          />
+          <PrimaryButton
+            fullSize
+            text={t(m.saveAppPasscode)}
+            onPress={handleSave}
+          />
+        </View>
       </View>
     </BottomSheetWrapper>
   );

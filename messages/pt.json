@@ -1189,13 +1189,13 @@
     "message": "Adicionar observações"
   },
   "screens.ObservationsList.ProjectCard.coordinator": {
-    "message": "You’re a coordinator on this project."
+    "message": "Você é o Coordenador desse projeto."
   },
   "screens.ObservationsList.ProjectCard.mappingOnYourOwn": {
     "message": "Você está mapeando sozinho."
   },
   "screens.ObservationsList.ProjectCard.participant": {
-    "message": "You’re a participant on this project."
+    "message": "Você é um participante desse projeto."
   },
   "screens.ObservationsList.error": {
     "description": "message shown when there is an unexpected error when loading observations",

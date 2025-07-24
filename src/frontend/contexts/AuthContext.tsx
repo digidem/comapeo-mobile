@@ -7,6 +7,7 @@ import {DEFAULT_OBSCURE_CODE, verifyPasscode} from '../lib/security';
 import {useSecurityState, useSecurityActions} from './SecurityStoreContext';
 import {useIsAudioPermissionModalOpen} from '../hooks/useAudioPermissionTracker';
 import {getLockoutThreshold} from '../lib/security';
+import {Loading} from '../sharedComponents/Loading';
 
 export type AuthState = 'unauthenticated' | 'authenticated' | 'obscured';
 
@@ -31,7 +32,12 @@ export const useAuthContext = () => {
 };
 
 export const AuthProvider = ({children}: {children: React.ReactNode}) => {
-  const {passcode, obscureCodeEnabled, lockUntil} = useSecurityState();
+  const {
+    passcode,
+    obscureCodeEnabled,
+    lockUntil,
+    _hasHydrated: hasHydrated,
+  } = useSecurityState();
   const {incrementAndGetAttempts, resetFailedAttempts, setLockUntil} =
     useSecurityActions();
   const [authState, setAuthState] = React.useState<AuthState>(
@@ -126,6 +132,8 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   );
 
   return (
-    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>
+      {hasHydrated ? <Loading /> : children}
+    </AuthContext.Provider>
   );
 };

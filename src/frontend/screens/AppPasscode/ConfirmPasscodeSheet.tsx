@@ -87,7 +87,7 @@ export const ConfirmPasscodeBottomSheet = ({
           <SecondaryButton
             fullSize
             text={t(m.cancel)}
-            onPress={() => navigation.goBack()}
+            onPress={() => navigation.popTo('Security')}
           />
           <PrimaryButton
             fullSize

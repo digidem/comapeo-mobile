@@ -85,6 +85,7 @@ export const ConfirmPasscodeBottomSheet = ({
 
         <View style={styles.buttonsContainer}>
           <SecondaryButton
+            testID="PASSCODE:cancel-btn"
             fullSize
             text={t(m.cancel)}
             onPress={() => navigation.popTo('Security')}
@@ -122,6 +123,7 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     width: '100%',
     gap: 16,
+    alignItems: 'center',
   },
   loading: {
     height: 40,

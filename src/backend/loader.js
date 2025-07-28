@@ -3,6 +3,7 @@
 // with the nodejs project dir
 
 import * as Sentry from '@sentry/node'
+import { makeOfflineSqliteTransport } from 'sentry-offline-transport-better-sqlite'
 import os from 'os'
 import path from 'path'
 import parseArgs from './src/args.js'

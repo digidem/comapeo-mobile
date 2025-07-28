@@ -6,7 +6,10 @@ import NetInfo, {
   type NetInfoDisconnectedStates,
 } from '@react-native-community/netinfo';
 import StateMachine from 'start-stop-state-machine';
-import Zeroconf, {type Service as ZeroconfService} from 'react-native-zeroconf';
+import Zeroconf, {
+  type Service,
+  type Service as ZeroconfService,
+} from 'react-native-zeroconf';
 import {type MapeoClientApi} from '@comapeo/ipc';
 import * as Sentry from '@sentry/react-native';
 import noop from '../lib/noop';
@@ -384,16 +387,16 @@ function unpublishZeroconf(
 
     const cleanup = () => {
       clearTimeout(timeoutId);
-      zeroconf.off('remove', onRemove);
+      zeroconf.off('unpublished', onUnpublished);
     };
-    const onRemove = (name: string) => {
-      publishedNamesToBeMutated.delete(name);
+    const onUnpublished = (service: Service) => {
+      publishedNamesToBeMutated.delete(service.name);
       if (publishedNamesToBeMutated.size === 0) {
         cleanup();
         resolve();
       }
     };
-    zeroconf.on('remove', onRemove);
+    zeroconf.on('unpublished', onUnpublished);
     for (const name of publishedNamesToBeMutated) {
       zeroconf.unpublishService(name);
     }

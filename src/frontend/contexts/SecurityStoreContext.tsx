@@ -14,6 +14,7 @@ import {
   PasscodeInputSchema,
   StoredPasscodeSchema,
 } from '../lib/security';
+import {Loading} from '../sharedComponents/Loading';
 
 const SecurityStateSchema = v.variant('passcode', [
   v.object({
@@ -32,7 +33,6 @@ const SecurityStateSchema = v.variant('passcode', [
 
 export type SecurityState = v.InferOutput<typeof SecurityStateSchema> & {
   _hasHydrated: boolean;
-  setHasHydrated: (hydrated: boolean) => void;
 };
 
 // NOTE: Do not change!
@@ -45,7 +45,6 @@ function createInitialState(): SecurityState {
     failedAttempts: 0,
     lockUntil: 0,
     _hasHydrated: false,
-    setHasHydrated: () => {},
   };
 }
 
@@ -78,16 +77,11 @@ const migrate = async (
         failedAttempts: raw.failedAttempts ?? 0,
         lockUntil: raw.lockUntil ?? 0,
         _hasHydrated: true,
-        setHasHydrated: () => {},
       };
     }
 
     const parsed = v.parse(SecurityStateSchema, persistedState);
-    return {
-      ...parsed,
-      _hasHydrated: true,
-      setHasHydrated: () => {},
-    };
+    return {...parsed, _hasHydrated: true};
   } catch {
     return createInitialState();
   }
@@ -96,29 +90,28 @@ const migrate = async (
 export function createSecurityStore({persist} = {persist: false}) {
   let store: StoreApi<SecurityState>;
 
+  const baseState: SecurityState = {
+    ...createInitialState(),
+    _hasHydrated: false,
+  };
+
   if (persist) {
     store = createStore(
-      createPersistedState(
-        (set): SecurityState => ({
-          ...createInitialState(),
-          setHasHydrated: (hydrated: boolean) => set({_hasHydrated: hydrated}),
-        }),
-        {
-          name: STORAGE_KEY,
-          version: 1,
-          migrate,
-          storage: createJSONStorage(
-            (): StateStorage => ({
-              getItem: key => getItem(key),
-              setItem: (key, value) => setItem(key, value),
-              removeItem: key => deleteItemAsync(key),
-            }),
-          ),
-          onRehydrateStorage: state => {
-            return () => state?.setHasHydrated(true);
-          },
+      createPersistedState(() => baseState, {
+        name: STORAGE_KEY,
+        version: 1,
+        migrate,
+        storage: createJSONStorage(
+          (): StateStorage => ({
+            getItem: key => getItem(key),
+            setItem: (key, value) => setItem(key, value),
+            removeItem: key => deleteItemAsync(key),
+          }),
+        ),
+        onRehydrateStorage: state => {
+          return () => state && (state._hasHydrated = true);
         },
-      ),
+      }),
     );
   } else {
     store = createStore(createInitialState);
@@ -165,6 +158,9 @@ export function createSecurityStore({persist} = {persist: false}) {
     setLockUntil: (lockUntil: number) => {
       store.setState({lockUntil});
     },
+    setHasHydrated: (hydrated: boolean) => {
+      store.setState({_hasHydrated: hydrated});
+    },
   };
 
   return {
@@ -176,7 +172,21 @@ export function createSecurityStore({persist} = {persist: false}) {
 export type SecurityStore = ReturnType<typeof createSecurityStore>;
 
 export const SecurityStoreContext = createContext<SecurityStore | null>(null);
-export const SecurityStoreProvider = SecurityStoreContext.Provider;
+export const SecurityStoreProvider = ({
+  value,
+  children,
+}: {
+  value: SecurityStore;
+  children: React.ReactNode;
+}) => {
+  const hasHydrated = useStore(value.instance, state => state._hasHydrated);
+
+  return (
+    <SecurityStoreContext.Provider value={value}>
+      {!hasHydrated ? <Loading /> : children}
+    </SecurityStoreContext.Provider>
+  );
+};
 
 function useSecurityStoreContext() {
   const value = useContext(SecurityStoreContext);

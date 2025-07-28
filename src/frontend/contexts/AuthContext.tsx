@@ -7,15 +7,12 @@ import {DEFAULT_OBSCURE_CODE, verifyPasscode} from '../lib/security';
 import {useSecurityState, useSecurityActions} from './SecurityStoreContext';
 import {useIsAudioPermissionModalOpen} from '../hooks/useAudioPermissionTracker';
 import {getLockoutThreshold} from '../lib/security';
-import {Loading} from '../sharedComponents/Loading';
+import {useShallow} from 'zustand/react/shallow';
 
 export type AuthState = 'unauthenticated' | 'authenticated' | 'obscured';
 
 type AuthContextType = {
-  authenticate: (
-    passcodeValue: string | null,
-    validateOnly?: boolean,
-  ) => Promise<boolean>;
+  authenticate: (passcodeValue: string) => Promise<boolean>;
   authState: AuthState;
 };
 
@@ -32,12 +29,13 @@ export const useAuthContext = () => {
 };
 
 export const AuthProvider = ({children}: {children: React.ReactNode}) => {
-  const {
-    passcode,
-    obscureCodeEnabled,
-    lockUntil,
-    _hasHydrated: hasHydrated,
-  } = useSecurityState();
+  const {passcode, obscureCodeEnabled, lockUntil} = useSecurityState(
+    useShallow(state => ({
+      passcode: state.passcode,
+      obscureCodeEnabled: state.obscureCodeEnabled,
+      lockUntil: state.lockUntil,
+    })),
+  );
   const {incrementAndGetAttempts, resetFailedAttempts, setLockUntil} =
     useSecurityActions();
   const [authState, setAuthState] = React.useState<AuthState>(
@@ -78,22 +76,16 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   }, [passcode, shareDialogIsOpen, isAudioPermissionModalOpen]);
 
   const authenticate: AuthContextType['authenticate'] = React.useCallback(
-    async (passcodeValue, validateOnly = false) => {
+    async passcodeValue => {
       const isLockedOut = Date.now() < lockUntil;
       if (isLockedOut) {
         throw new Error('LOCKED_OUT');
       }
 
-      let isCorrect = false;
-
-      if (passcodeValue && passcode) {
-        isCorrect = await verifyPasscode({
-          input: passcodeValue,
-          stored: passcode,
-        });
-      }
-
-      if (validateOnly) return isCorrect;
+      const isCorrect =
+        passcodeValue && passcode
+          ? await verifyPasscode({input: passcodeValue, stored: passcode})
+          : false;
 
       if (obscureCodeEnabled && passcodeValue === DEFAULT_OBSCURE_CODE) {
         setAuthState('obscured');
@@ -132,8 +124,6 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   );
 
   return (
-    <AuthContext.Provider value={contextValue}>
-      {!hasHydrated ? <Loading /> : children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };

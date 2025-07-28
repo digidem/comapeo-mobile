@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
-import {useAuthContext} from '../../contexts/AuthContext';
 import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {InputPasscode} from './InputPasscode';
 import {useSecurityState} from '../../contexts/SecurityStoreContext';
+import {verifyPasscode} from '../../lib/security';
 
 const m = defineMessages({
   titleEnter: {
@@ -30,7 +30,6 @@ export const EnterPassToTurnOff: NativeNavigationComponent<
 > = ({navigation}) => {
   const {formatMessage: t} = useIntl();
   const passcode = useSecurityState(state => state.passcode);
-  const {authenticate} = useAuthContext();
   const [error, setError] = React.useState(false);
   const {navigate} = navigation;
 
@@ -41,8 +40,10 @@ export const EnterPassToTurnOff: NativeNavigationComponent<
     }
   }, [navigate, passcode]);
 
-  function validate(passcode: string): void {
-    authenticate(passcode, true).then(success => {
+  function validate(passcodeValue: string): void {
+    if (!passcode) return;
+
+    verifyPasscode({input: passcodeValue, stored: passcode}).then(success => {
       if (!success) {
         setError(true);
         return;

@@ -401,13 +401,20 @@ function unpublishZeroconf(
 function zeroconfServiceToMapeoPeer({
   addresses,
   port,
-  name,
+  name: serviceName,
 }: Readonly<ZeroconfService>): null | {
   address: string;
   port: number;
   name: string;
 } {
   const address = addresses[0];
+  if (!address) return null;
+  // The service name can include a suffix ' (1)' when there is a conflict,
+  // which could happen when the device is still unpublishing the current
+  // service when it tries to start publishing again, e.g. after the user leaves
+  // the app and returns. Because the service name is the peer name, we need to
+  // remove the suffix when connecting to the peer.
+  const name = serviceName.replace(/[^a-fA-F0-9].*/g, '');
   return address ? {address, port, name} : null;
 }
 

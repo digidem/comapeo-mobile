@@ -35,6 +35,7 @@ import {IntlProvider} from './contexts/IntlContext';
 import {ServerLoading} from './ServerLoading';
 import {createSavedLocationStore} from './contexts/SavedLocationContext';
 import {createServerStateStore} from './lib/ServerStateStore.ts';
+import {createAppUsageStatsPromptStore} from './contexts/AppUsageStatsPromptContext.tsx';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -123,6 +124,10 @@ const persistedMetricsDiagnosticsStore = createMetricsDiagnosticsStore({
 
 const savedLocationStore = createSavedLocationStore({persist: true});
 
+const appUsageStatsPromptStore = createAppUsageStatsPromptStore({
+  persist: true,
+});
+
 // Ensure that these metrics instances are initially in sync with initial state of relevant store
 const metricsIsEnabled =
   persistedMetricsDiagnosticsStore.instance.getState().isEnabled;
@@ -192,7 +197,8 @@ const App = () => {
             }
             savedLocationStore={savedLocationStore}
             activeProjectIdStore={persistedActiveProjectIdStore}
-            metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}>
+            metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}
+            appUsageStatsPromptStore={appUsageStatsPromptStore}>
             <AppNavigator permissionAsked={permissionsAsked} />
           </AppProviders>
         </ServerLoading>

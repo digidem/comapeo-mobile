@@ -68,11 +68,11 @@ jobs:
         uses: ./.github/parse-version
 
       - name: Generate cherry pick release notes
+        if: ${{ github.event_name == 'workflow_call' }}
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           RELEASE_BRANCH: rc/v${{ steps.version.outputs.releaseMinor }}.0
         run: |
-          chmod +x scripts/generate-cherry-pick-release-notes.sh
           ./scripts/generate-cherry-pick-release-notes.sh
 
           # Format the release notes

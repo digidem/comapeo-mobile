@@ -37,12 +37,6 @@ const POLL_WIFI_STATE_INTERVAL_MS = 2000;
 const ZEROCONF_SERVICE_TYPE = 'comapeo';
 const ZEROCONF_PROTOCOL = 'tcp';
 const ZEROCONF_DOMAIN = 'local.';
-// react-native-zeroconf does not notify when a service fails to register or unregister
-// https://github.com/balthazar/react-native-zeroconf/blob/master/android/src/main/java/com/balthazargronon/RCTZeroconf/nsd/NsdServiceImpl.java#L210
-// so we need a timeout, otherwise the service would never be considered
-// "started" or "stopped", which would stop browsing for peers.
-const ZEROCONF_PUBLISH_TIMEOUT_MS = 5000;
-const ZEROCONF_UNPUBLISH_TIMEOUT_MS = 5000;
 
 const LocalDiscoveryContext = React.createContext<
   LocalDiscoveryController | undefined
@@ -328,21 +322,22 @@ function publishZeroconf(
   {name, port}: {name: string; port: number},
 ): Promise<string> {
   return new Promise((resolve, reject) => {
-    const timeoutId = setTimeout(() => {
-      cleanup();
-      reject(new Error('Timed out publishing zeroconf service'));
-    }, ZEROCONF_PUBLISH_TIMEOUT_MS);
-
     const cleanup = () => {
-      clearTimeout(timeoutId);
+      zeroconf.off('publishError', onPublishError);
       zeroconf.off('published', onPublish);
     };
     const onPublish = ({name: publishedName}: ZeroconfService) => {
       cleanup();
       resolve(publishedName);
     };
+    const onPublishError = (error: Error) => {
+      cleanup();
+      reject(error);
+    };
 
     zeroconf.on('published', onPublish);
+    zeroconf.on('publishError', onPublishError);
+
     zeroconf.publishService(
       ZEROCONF_SERVICE_TYPE,
       ZEROCONF_PROTOCOL,
@@ -380,13 +375,8 @@ function unpublishZeroconf(
 ): Promise<void> {
   if (publishedNamesToBeMutated.size === 0) return Promise.resolve();
   return new Promise((resolve, reject) => {
-    const timeoutId = setTimeout(() => {
-      cleanup();
-      reject(new Error('Timed out unpublishing zeroconf service'));
-    }, ZEROCONF_UNPUBLISH_TIMEOUT_MS);
-
     const cleanup = () => {
-      clearTimeout(timeoutId);
+      zeroconf.off('unpublishError', onUnpublishError);
       zeroconf.off('unpublished', onUnpublished);
     };
     const onUnpublished = (service: Service) => {
@@ -396,6 +386,11 @@ function unpublishZeroconf(
         resolve();
       }
     };
+    const onUnpublishError = (error: Error) => {
+      cleanup();
+      reject(error);
+    };
+    zeroconf.on('unpublishError', onUnpublishError);
     zeroconf.on('unpublished', onUnpublished);
     for (const name of publishedNamesToBeMutated) {
       zeroconf.unpublishService(name);

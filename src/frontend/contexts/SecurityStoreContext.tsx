@@ -92,7 +92,7 @@ export function createSecurityStore({persist} = {persist: false}) {
 
   const baseState: SecurityState = {
     ...createInitialState(),
-    _hasHydrated: false,
+    _hasHydrated: !persist,
   };
 
   if (persist) {
@@ -114,7 +114,7 @@ export function createSecurityStore({persist} = {persist: false}) {
       }),
     );
   } else {
-    store = createStore(createInitialState);
+    store = createStore(() => baseState);
   }
 
   const actions = {

@@ -22,7 +22,6 @@ function createWrapper(settingsStore: SecurityStore) {
 
 test('initial state', () => {
   const store = createSecurityStore();
-  store.instance.setState({_hasHydrated: true});
   const wrapper = createWrapper(store);
 
   const stateHook = renderHook(() => useSecurityState(), {
@@ -47,7 +46,6 @@ test('initial state', () => {
 
 test('passcode cannot be set to invalid value', async () => {
   const store = createSecurityStore();
-  store.instance.setState({_hasHydrated: true});
   const wrapper = createWrapper(store);
 
   const actionsHook = renderHook(() => useSecurityActions(), {
@@ -91,7 +89,6 @@ test('passcode cannot be set to invalid value', async () => {
 
 test('set and verify hashed passcode', async () => {
   const store = createSecurityStore();
-  store.instance.setState({_hasHydrated: true});
   const wrapper = createWrapper(store);
 
   const actionsHook = renderHook(() => useSecurityActions(), {wrapper});
@@ -111,7 +108,6 @@ test('set and verify hashed passcode', async () => {
 
 test('obscure code cannot be set when passcode is not set', () => {
   const store = createSecurityStore();
-  store.instance.setState({_hasHydrated: true});
   const wrapper = createWrapper(store);
 
   const actionsHook = renderHook(() => useSecurityActions(), {
@@ -144,7 +140,6 @@ test('obscure code cannot be set when passcode is not set', () => {
 
 test('obscure code has expected value when enabled', async () => {
   const store = createSecurityStore();
-  store.instance.setState({_hasHydrated: true});
   const wrapper = createWrapper(store);
 
   const stateHook = renderHook(() => useSecurityState(), {wrapper});
@@ -165,7 +160,6 @@ test('obscure code has expected value when enabled', async () => {
 
 test('obscure code is unset when passcode is unset', async () => {
   const store = createSecurityStore();
-  store.instance.setState({_hasHydrated: true});
   const wrapper = createWrapper(store);
 
   const stateHook = renderHook(() => useSecurityState(), {
@@ -205,7 +199,6 @@ test('obscure code is unset when passcode is unset', async () => {
 
 test('increments attempts and sets lockout', () => {
   const store = createSecurityStore();
-  store.instance.setState({_hasHydrated: true});
   const wrapper = createWrapper(store);
   const actionsHook = renderHook(() => useSecurityActions(), {wrapper});
   const stateHook = renderHook(() => useSecurityState(), {wrapper});
@@ -222,7 +215,6 @@ test('increments attempts and sets lockout', () => {
 
 test('resets attempts and lockout', () => {
   const store = createSecurityStore();
-  store.instance.setState({_hasHydrated: true});
   const wrapper = createWrapper(store);
   const actionsHook = renderHook(() => useSecurityActions(), {wrapper});
   const stateHook = renderHook(() => useSecurityState(), {wrapper});

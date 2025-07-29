@@ -6,7 +6,7 @@ import {
 } from 'zustand/middleware';
 import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
 
-interface AppUsageStatsPromptState {
+export interface AppUsageStatsPromptState {
   optedIn: boolean | null; // null = never asked, true = opted in, false = opted out
   completedOnboardingAt: number | null;
   lastPromptAt: number | null;

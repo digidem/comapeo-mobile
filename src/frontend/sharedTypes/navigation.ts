@@ -143,6 +143,7 @@ export type RootStackParamsList = {
   };
   ExportObservations: undefined;
   DidNotMoveBottomSheet: undefined;
+  AppUsagePromptInterstitial: undefined;
 };
 
 export type OnboardingParamsList = {

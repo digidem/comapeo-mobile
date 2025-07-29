@@ -12,6 +12,9 @@ import {createDefaultScreenGroup} from './AppScreens';
 import {createOnboardingScreens} from './OnboardingScreens';
 import {PendingInvitesListener} from '../../sharedComponents/PendingInvitesListener';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
+import {useAppUsageStatsPromptState} from '../../contexts/AppUsageStatsPromptContext';
+import {shouldShowAppUsagePrompt} from '../../lib/shouldShowAppUsagePrompt';
+import {createAppUsagePromptScreens} from './UsagePromptScreens';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
 
@@ -19,6 +22,8 @@ export const RootStackNavigator = () => {
   const {formatMessage} = useIntl();
   const security = useAuthContext();
   const {navigate} = useNavigationFromRoot();
+  const usagePromptState = useAppUsageStatsPromptState(s => s);
+  const showUsagePrompt = shouldShowAppUsagePrompt(usagePromptState);
 
   const {data: deviceInfo} = useOwnDeviceInfo();
 
@@ -50,9 +55,9 @@ export const RootStackNavigator = () => {
       }}
       screenOptions={NavigatorScreenOptions}>
       {deviceInfo.name
-        ? createDefaultScreenGroup({
-            intl: formatMessage,
-          })
+        ? showUsagePrompt
+          ? createAppUsagePromptScreens()
+          : createDefaultScreenGroup({intl: formatMessage})
         : createOnboardingScreens({intl: formatMessage})}
     </RootStack.Navigator>
   );

@@ -112,6 +112,7 @@ import {
 import {AudioDraftPlaybackScreen} from '../../screens/Audio/AudioDraftPlaybackScreen.tsx';
 import {AudioAttachmentPlaybackScreen} from '../../screens/Audio/AudioAttachmentPlaybackScreen.tsx';
 import {DidNotMoveBottomSheet} from '../../screens/MapScreen/TrackBottomSheet/DidNotMoveBottomSheet.tsx';
+import {AppUsagePromptInterstitial} from '../../screens/AppUsagePromptInterstitial.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -448,6 +449,13 @@ export const createDefaultScreenGroup = ({
           headerRight: () => (
             <SaveButton onPress={() => {}} isLoading={false} />
           ),
+        }}
+      />
+      <RootStack.Screen
+        name="AppUsagePromptInterstitial"
+        component={AppUsagePromptInterstitial}
+        options={{
+          headerShown: false,
         }}
       />
     </RootStack.Group>

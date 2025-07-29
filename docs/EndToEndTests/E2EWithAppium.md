@@ -16,12 +16,10 @@ We use [Appium](https://appium.io/) (with the UIAutomator2 driver on Android) an
 ## Local Setup & Testing
 
 1. **Build an APK**
-
    - `eas build --platform android --profile test --local --clear-cache`
    - Note the path to the `.apk` (build number, etc)
 
 2. **Start the Emulator/ Device**
-
    - Get the device name with: `adb devices`.
 
 3. **Start Appium Server** (in one terminal)
@@ -40,21 +38,22 @@ We use [Appium](https://appium.io/) (with the UIAutomator2 driver on Android) an
    - Update your `wdio.config.js` to run locally and point to the local `.apk`:
      ```js
      const config = {
-     runner: 'local',
-     specs: [path.resolve(__dirname, 'tests/e2e/specs/flow.test.ts')],
-     maxInstances: 1,
-      capabilities: [
-      {
-      platformName: 'Android',
-      'appium:deviceName': 'emulator-5554', // Replace with your device name/ device ID (from adb devices)
-      'appium:platformVersion': '13.0', // Replace with your platformVersion
-      'appium:automationName': 'UIAutomator2',
-      'appium:app': 'build-1741119529300.apk', // Replace with relative path of where your apk is and what your apk is
-      'appium:autoGrantPermissions': true,
-      },
-      ],
-      hostname: '127.0.0.1', // Use local Appium (This is what it comes back for me when I start Appium... Just check this is how you see it)
-      port: 4723, // see above
+       runner: 'local',
+       specs: [path.resolve(__dirname, 'tests/e2e/specs/flow.test.ts')],
+       maxInstances: 1,
+       capabilities: [
+         {
+           platformName: 'Android',
+           'appium:deviceName': 'emulator-5554', // Replace with your device name/ device ID (from adb devices)
+           'appium:platformVersion': '13.0', // Replace with your platformVersion
+           'appium:automationName': 'UIAutomator2',
+           'appium:app': 'build-1741119529300.apk', // Replace with relative path of where your apk is and what your apk is
+           'appium:autoGrantPermissions': true,
+         },
+       ],
+       hostname: '127.0.0.1', // Use local Appium (This is what it comes back for me when I start Appium... Just check this is how you see it)
+       port: 4723, // see above
+     };
      ```
 
 - Then in another terminal run:
@@ -77,7 +76,6 @@ We use [Appium](https://appium.io/) (with the UIAutomator2 driver on Android) an
    You’ll get an `app_url` (e.g. `bs://<some_id>`).
 
 2. **Use the BrowserStack config** (example below).
-
    - The `services` block and `capabilities` define the device, OS version, etc.
    - Reference the `app_url` you got from the upload.
 
@@ -133,7 +131,6 @@ We use [Appium](https://appium.io/) (with the UIAutomator2 driver on Android) an
 ## Adding Tests
 
 1. **Create a New Spec**
-
    - Add a new `.ts` file in `tests/e2e/specs`.
    - Create a folder for it if it makes sense.
    - Write your tests using the same style/pattern as existing specs.
@@ -141,7 +138,6 @@ We use [Appium](https://appium.io/) (with the UIAutomator2 driver on Android) an
    - See guidelines below in Additional Notes.
 
 2. **Reference in Flow**
-
    - Our test runner executes `flow.test.ts`, which imports other spec files in a specific sequence.
    - Update or reference your new spec in `flow.test.ts` so that it can be added to the order.
 

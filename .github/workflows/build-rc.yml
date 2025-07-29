@@ -50,10 +50,44 @@ jobs:
       pr_head_sha: ${{ inputs.pr_head_sha || github.event.pull_request.head.sha }}
 
     steps:
+      - name: Create GitHub App Token
+        uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.RELEASE_BOT_APP_ID }}
+          private-key: ${{ secrets.RELEASE_BOT_PRIVATE_KEY }}
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           ref: ${{ env.BUILD_SHA }}
+          fetch-depth: 0
+
+      - name: Parse version
+        id: version
+        uses: ./.github/parse-version
+
+      - name: Generate cherry pick release notes
+        if: ${{ github.event_name == 'workflow_call' }}
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          RELEASE_BRANCH: rc/v${{ steps.version.outputs.releaseMinor }}.0
+        run: |
+          ./scripts/generate-cherry-pick-release-notes.sh
+
+          # Format the release notes
+          npx prettier --write release-notes/**/*.md
+
+          git config --global user.name 'awana-release-bot[bot]'
+          git config --global user.email '${{ vars.RELEASE_BOT_USER_ID }}+awana-release-bot[bot]@users.noreply.github.com'
+
+          # Fetch and checkout the branch
+          git fetch origin $RELEASE_BRANCH
+          git checkout $RELEASE_BRANCH
+
+          git add release-notes/
+          git commit -m "docs: add cherry pick commits to release notes"
+          git push origin $RELEASE_BRANCH
 
       - name: Setup Node.js
         uses: actions/setup-node@v4

@@ -559,6 +559,27 @@
   "screens.AppPasscode.TurnOffPasscode.usePasscode": {
     "message": "Use App Passcode"
   },
+  "screens.AppUsagePrompt.countIn": {
+    "message": "Yes, count me in"
+  },
+  "screens.AppUsagePrompt.idsScrambled": {
+    "message": "IDs are scrambled randomly and changed every month."
+  },
+  "screens.AppUsagePrompt.introText": {
+    "message": "Share how you use CoMapeo—any data shared cannot be used to track you."
+  },
+  "screens.AppUsagePrompt.neverStores": {
+    "message": "CoMapeo never stores IP addresses."
+  },
+  "screens.AppUsagePrompt.notNow": {
+    "message": "No, not now"
+  },
+  "screens.AppUsagePrompt.screenTitle": {
+    "message": "Help improve your experience."
+  },
+  "screens.AppUsagePrompt.turnOffAnytime": {
+    "message": "Turn off at any time."
+  },
   "screens.AudioAttachmentPlayback.navTitle": {
     "message": "Audio Recording"
   },

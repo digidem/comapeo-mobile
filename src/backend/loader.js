@@ -4,13 +4,21 @@
 
 import * as Sentry from '@sentry/node'
 import { makeOfflineSqliteTransport } from 'sentry-offline-transport-better-sqlite'
+import Database from 'better-sqlite3'
+
+import parseArgs from './src/args.js'
+
 import os from 'os'
 import path from 'path'
-import parseArgs from './src/args.js'
 import { createRequire } from 'module'
+
 const require = createRequire(import.meta.url)
 /** @type {import('./types/rn-bridge.js')} */
 const rnBridge = require('rn-bridge')
+
+const DB_DIR_NAME = 'sentry-logs'
+const privateStorageDir = rnBridge.app.datadir()
+const dbDir = join(privateStorageDir, DB_DIR_NAME)
 
 const nodejsProjectDir = path.resolve(rnBridge.app.datadir(), 'nodejs-project')
 os.homedir = () => nodejsProjectDir
@@ -32,6 +40,8 @@ if (sentryEnvironment !== 'production') {
   enableLogs = true
 }
 
+const sentryDB = new Database(dbDir)
+
 // Ensure to call this before requiring any other modules!
 Sentry.init({
   dsn: 'https://5326989762cd5899283975f5459524c1@o4507148235702272.ingest.us.sentry.io/4509442300641281',
@@ -51,6 +61,7 @@ Sentry.init({
   },
   tracesSampleRate: 1.0,
   integrations: [Sentry.consoleLoggingIntegration({ levels: logLevels })],
+  transport: (opts = {}) => makeOfflineSqliteTransport({ ...opts, db }),
 })
 
 // Dynamic import so that Sentry can instrument the code before it runs

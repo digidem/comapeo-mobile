@@ -6,62 +6,40 @@ We use [Appium](https://appium.io/) (with the UIAutomator2 driver on Android) an
 
 ## Prerequisites
 
-- **Appium** installed globally (`npm i -g appium`) or run via `npx appium`
 - **UiAutomator2** installed `npx appium driver install uiautomator2`
-- A running emulator or device
-- (Optional) A [BrowserStack](https://www.browserstack.com/) account to test there
+- An Android emulator or device
+- An `.env` file according to [.env.template](../../.env.template) at the root of the project. The `.env` file must have `MAPBOX_ACCESS_TOKEN`, `COMAPEO_METRICS_URL`, and `COMAPEO_METRICS_API_KEY`
+- A `wdio.local.config` file according to [wdio.local.config.js.template](../../wdio.local.config.js.template]) at the root of the project
+- (Optional) To use [BrowserStack](https://www.browserstack.com/), you must have an account
 
 ---
 
 ## Local Setup & Testing
 
-1. **Build an APK**
-   - `eas build --platform android --profile test --local --clear-cache`
-   - Note the path to the `.apk` (build number, etc)
-
-2. **Start the Emulator/ Device**
-   - Get the device name with: `adb devices`.
-
-3. **Start Appium Server** (in one terminal)
-
-   ```bash
-   appium --log-level debug
-   ```
-
-   or
+1. **Start Appium Server**
 
    ```bash
    npx appium
    ```
 
-4. **Run Tests** (in another terminal)
-   - Update your `wdio.config.js` to run locally and point to the local `.apk`:
-     ```js
-     const config = {
-       runner: 'local',
-       specs: [path.resolve(__dirname, 'tests/e2e/specs/flow.test.ts')],
-       maxInstances: 1,
-       capabilities: [
-         {
-           platformName: 'Android',
-           'appium:deviceName': 'emulator-5554', // Replace with your device name/ device ID (from adb devices)
-           'appium:platformVersion': '13.0', // Replace with your platformVersion
-           'appium:automationName': 'UIAutomator2',
-           'appium:app': 'build-1741119529300.apk', // Replace with relative path of where your apk is and what your apk is
-           'appium:autoGrantPermissions': true,
-         },
-       ],
-       hostname: '127.0.0.1', // Use local Appium (This is what it comes back for me when I start Appium... Just check this is how you see it)
-       port: 4723, // see above
-     };
-     ```
+2. **Get host name and port from appium terminal**
+   - Appium will retuirn a url with the following format `http://${hostName}:${port}/`.
+   - For example: `http://127.0.0.1:4723/`, where `hostName===127.0.0.1` and `port===4723`
 
-- Then in another terminal run:
-  ```bash
-  npm run test:e2e
-  ```
+3. **Fill in host name and port in wdio config**
+   - Updates the `wdio.local.config.js` to the hostName and port as determined in step above.
 
----
+4. **Build App and Run Tests**
+
+   ```bash
+   npm run test:e2e:build
+   ```
+
+   You can skip the build step if the apk has already been built into the build folder:
+
+   ```bash
+   npm run test:e2e:nobuild
+   ```
 
 ## Testing on BrowserStack (Locally)
 

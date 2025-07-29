@@ -102,12 +102,14 @@ export async function init({
 
   rnBridge.app.on('pause', async (pauseLock) => {
     log('App went into background')
+    manager.onBackgrounded()
     await fastifyController.stop()
     pauseLock.release()
   })
 
   rnBridge.app.on('resume', () => {
     log('App went into foreground')
+    manager.onForegrounded()
     fastifyController.start()
   })
 

@@ -10,7 +10,6 @@
     "ios-no-backend-rebuild": "expo run:ios",
     "prestart": "npm run build:translations && npm run build:intl-polyfills",
     "start": "expo start",
-    "test": "dotenv -- jest",
     "lint:prettier": "prettier \"src/**/*.{js,ts,jsx,tsx}\" --check",
     "lint:eslint": "eslint --cache .",
     "lint:types": "tsc --noEmit",
@@ -19,6 +18,7 @@
     "prepare": "husky",
     "format": "prettier \"src/**/*.{js,ts,jsx,tsx}\" --write",
     "deep-clean": "./scripts/deep-clean.sh",
+    "build:android:e2e": "dotenv -- eas build --platform android --profile test --local --clear-cache && mkdir -p build && mv build-*.apk build/ && mv build/build-*.apk build/Comapeo-e2e.apk",
     "build:translations": "node ./scripts/build-translations.mjs",
     "build:intl-polyfills": "node ./scripts/build-intl-polyfills.mjs",
     "build:backend": "node ./scripts/build-backend.mjs",
@@ -27,7 +27,10 @@
     "upgrade-deps:all": "npm-check --update --save-exact",
     "upgrade-deps:production": "npm-check --update --save-exact --production",
     "upgrade-deps:dev": "npm-check --update --save-exact --dev-only",
-    "test:e2e": "wdio run ./wdio.config.js"
+    "test:jest": "dotenv -- jest",
+    "test:e2e:nobuild": "wdio run ./wdio.local.config.js",
+    "test:e2e:build": "npm run build:android:e2e && npm run test:e2e:nobuild"
+
   },
   "dependencies": {
     "@bam.tech/react-native-image-resizer": "3.0.11",

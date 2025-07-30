@@ -1,7 +1,9 @@
 const {getSentryExpoConfig} = require('@sentry/react-native/metro');
 
 /** @type {import('expo/metro-config').MetroConfig} */
-const config = getSentryExpoConfig(__dirname);
+const config = getSentryExpoConfig(__dirname, {
+  annotateReactComponents: true,
+});
 const defaultBlockList = Array.isArray(config.resolver.blockList)
   ? config.resolver.blockList
   : [config.resolver.blockList];

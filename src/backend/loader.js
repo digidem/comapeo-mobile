@@ -7,6 +7,7 @@ import os from 'os'
 import path from 'path'
 import parseArgs from './src/args.js'
 import { createRequire } from 'module'
+import debug from 'debug'
 const require = createRequire(import.meta.url)
 /** @type {import('./types/rn-bridge.js')} */
 const rnBridge = require('rn-bridge')
@@ -23,12 +24,21 @@ const initialScope = sentryUserId ? { user: { id: sentryUserId } } : undefined
 
 /** @type {Array<"error" | "log" | "warn">} */
 const logLevels = ['error']
-
 let enableLogs = false
 
 if (sentryEnvironment !== 'production') {
   logLevels.push('log', 'warn')
   enableLogs = true
+}
+
+if (enableLogs) {
+  // needed to have logs captured by sentry
+  debug.log = function log(...args) {
+    // @ts-expect-error InspectOpts shouldn't be undefined but might be
+    return console.log(formatWithOptions(debug.inspectOpts || {}, ...args))
+  }
+  // This has a high overhead, so we don't want to do this in production
+  debug.enable('mapeo:*')
 }
 
 // Ensure to call this before requiring any other modules!

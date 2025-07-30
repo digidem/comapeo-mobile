@@ -10,6 +10,7 @@ import Zeroconf, {type Service as ZeroconfService} from 'react-native-zeroconf';
 import {type MapeoClientApi} from '@comapeo/ipc';
 import * as Sentry from '@sentry/react-native';
 import noop from '../lib/noop';
+import pTimeout from 'p-timeout';
 
 type LocalDiscoveryController = ReturnType<
   typeof createLocalDiscoveryController
@@ -40,6 +41,8 @@ const ZEROCONF_DOMAIN = 'local.';
 // "started" or "stopped", which would stop browsing for peers.
 const ZEROCONF_PUBLISH_TIMEOUT_MS = 5000;
 const ZEROCONF_UNPUBLISH_TIMEOUT_MS = 5000;
+const DISCOVERY_START_TIMEOUT_MS = 5000;
+const DISCOVERY_STOP_TIMEOUT_MS = 1000; // Should be fast
 
 const LocalDiscoveryContext = React.createContext<
   LocalDiscoveryController | undefined
@@ -125,14 +128,30 @@ export function createLocalDiscoveryController(mapeoApi: MapeoClientApi) {
       await startZeroconfPromise;
     },
     async stop() {
-      await Promise.all([
-        mapeoApi.stopLocalPeerDiscoveryServer(),
-        stopZeroconf(zeroconf),
-        unpublishZeroconf(zeroconf, publishedNames).catch(e => {
-          // See above for why we silently fail here
-          Sentry.captureException(e);
-        }),
-      ]);
+      // We won't want to throw here, because it would leave the state machine
+      // in the "error" state. We add the timeout because if the promises fail
+      // to resolve, the service would never stop and hence never start again.
+      // Capturing any error in Sentry will allow us to detect issues in
+      // production.
+      try {
+        await pTimeout(
+          // Note: we do not try to stop the discovery server here, because it
+          // will not stop if there are active peer connections, and closing a
+          // server is non-cancellable, so it would leave us stuck in the
+          // "stopping" state and the server would never start again. We just
+          // leave the discovery server always listening.
+          Promise.all([
+            stopZeroconf(zeroconf),
+            unpublishZeroconf(zeroconf, publishedNames),
+          ]),
+          {
+            milliseconds: DISCOVERY_STOP_TIMEOUT_MS,
+            message: 'Timed out stopping local discovery',
+          },
+        );
+      } catch (e) {
+        Sentry.captureException(e);
+      }
     },
   });
   sm.on('state', smState => {

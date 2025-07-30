@@ -8,6 +8,7 @@ import path from 'path'
 import parseArgs from './src/args.js'
 import { createRequire } from 'module'
 import debug from 'debug'
+import { formatWithOptions } from 'node:util'
 const require = createRequire(import.meta.url)
 /** @type {import('./types/rn-bridge.js')} */
 const rnBridge = require('rn-bridge')

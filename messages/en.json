@@ -580,6 +580,18 @@
   "screens.AppUsagePrompt.turnOffAnytime": {
     "message": "Turn off at any time."
   },
+  "screens.AppUsageSharingSuccess.done": {
+    "message": "Done"
+  },
+  "screens.AppUsageSharingSuccess.nowSharing": {
+    "message": "is now sharing how you use CoMapeo with Awana Digital."
+  },
+  "screens.AppUsageSharingSuccess.removeAnytime": {
+    "message": "Change this anytime by navigating to Data & Privacy in the Menu."
+  },
+  "screens.AppUsageSharingSuccess.success": {
+    "message": "Success!"
+  },
   "screens.AudioAttachmentPlayback.navTitle": {
     "message": "Audio Recording"
   },

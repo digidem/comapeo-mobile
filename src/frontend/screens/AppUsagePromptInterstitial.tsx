@@ -13,13 +13,14 @@ import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 import {SvgProps} from 'react-native-svg';
 import {NEW_DARK_GREY} from '../lib/styles';
-import {NativeRootNavigationProps} from '../sharedTypes/navigation';
+import {AppStackParamsList} from '../sharedTypes/navigation';
 
 import {
   useAppUsageStatsPromptActions,
   useAppUsageStatsPromptState,
 } from '../contexts/AppUsageStatsPromptContext';
 import {shouldShowAppUsagePrompt} from '../lib/shouldShowAppUsagePrompt';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 const m = defineMessages({
   screenTitle: {
@@ -53,9 +54,12 @@ const m = defineMessages({
   },
 });
 
-type Props = NativeRootNavigationProps<'AppUsagePromptInterstitial'>;
-
-export const AppUsagePromptInterstitial: React.FC<Props> = ({navigation}) => {
+export const AppUsagePromptInterstitial = ({
+  navigation,
+}: NativeStackScreenProps<
+  AppStackParamsList,
+  'AppUsagePromptInterstitial'
+>) => {
   const {formatMessage: t} = useIntl();
   const {setOptedIn} = useAppUsageStatsPromptActions();
   const showPrompt = shouldShowAppUsagePrompt(

@@ -4,6 +4,9 @@ export function shouldShowAppUsagePrompt(
   state: AppUsageStatsPromptState,
   now: number = Date.now(),
 ) {
+  if (state.optedIn === true) {
+    return false;
+  }
   const oneWeek = 7 * 24 * 60 * 60 * 1000;
   const threeMonths = 90 * 24 * 60 * 60 * 1000;
 

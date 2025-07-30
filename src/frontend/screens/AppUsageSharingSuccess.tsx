@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 
-import SuccessIcon from '../../images/Success.svg';
+import SuccessIcon from '../images/Success.svg';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {defineMessages, useIntl} from 'react-intl';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
@@ -15,7 +15,6 @@ import {
   useAppUsageStatsPromptActions,
   useAppUsageStatsPromptState,
 } from '../contexts/AppUsageStatsPromptContext';
-import {shouldShowAppUsagePrompt} from '../lib/shouldShowAppUsagePrompt';
 
 const m = defineMessages({
   success: {
@@ -44,15 +43,13 @@ export const AppUsageSharingSuccess = ({
   const {data} = useOwnDeviceInfo();
   const deviceName = data?.name;
   const {setOptedIn} = useAppUsageStatsPromptActions();
-  const showPrompt = shouldShowAppUsagePrompt(
-    useAppUsageStatsPromptState(s => s),
-  );
+  const {optedIn} = useAppUsageStatsPromptState(s => s);
 
   React.useEffect(() => {
-    if (!showPrompt) {
+    if (optedIn) {
       navigation.replace('Home', {screen: 'Map'});
     }
-  }, [showPrompt, navigation]);
+  }, [optedIn, navigation]);
 
   return (
     <ScreenContentWithDock
@@ -68,13 +65,16 @@ export const AppUsageSharingSuccess = ({
       contentContainerStyle={{marginTop: 80}}>
       <View style={{alignItems: 'center'}}>
         <SuccessIcon />
-        <HeaderText variant="header5" style={styles.centerText}>
+        <HeaderText variant="header1" style={styles.headerText}>
+          {formatMessage(m.success)}
+        </HeaderText>
+        <HeaderText variant="header5" style={styles.headerText}>
           {deviceName}
         </HeaderText>
-        <BodyText style={{...styles.centerText, color: NEW_DARK_GREY}}>
+        <BodyText style={styles.bodyText}>
           {formatMessage(m.nowSharing)}
         </BodyText>
-        <BodyText style={{...styles.centerText, color: NEW_DARK_GREY}}>
+        <BodyText style={{...styles.bodyText, marginTop: 30}}>
           {formatMessage(m.removeAnytime)}
         </BodyText>
       </View>
@@ -83,5 +83,10 @@ export const AppUsageSharingSuccess = ({
 };
 
 const styles = StyleSheet.create({
-  centerText: {textAlign: 'center', marginTop: 20},
+  headerText: {textAlign: 'center', marginTop: 30},
+  bodyText: {
+    textAlign: 'center',
+    color: NEW_DARK_GREY,
+    paddingHorizontal: 40,
+  },
 });

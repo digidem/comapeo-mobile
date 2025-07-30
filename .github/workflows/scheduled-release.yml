@@ -118,6 +118,15 @@ jobs:
 
             :warning: Only add bug fixes, copy edits and translation updates during the QA process.
 
+            :globe_with_meridians: **Reminder:** Please ensure this release branch is synced with [Crowdin GitHub Integration](https://crowdin.com/project/comapeo-mobile/integrations/system/github) **before triggering a build**.   
+
+            **To sync this branch:**  
+            1. Open the [Crowdin GitHub Integration settings](https://crowdin.com/project/comapeo-mobile/integrations/system/github).    
+            2. Click **Edit** on the Github integration screen.  
+            3. In the **Select Branches for Translation** section, make sure this release branch is listed and selected.  
+            4. Click **Save** to confirm.  
+            5. After saving, click the **three dots** next to the branch and select **Sync branch** to immediately create a PR with the translations.  
+
             :test_tube: Create a new Release Candidate build by commenting on this PR with the `${{ vars.BUILD_COMMENT_TRIGGER || '/build-rc' }}` command.
 
             :construction: An initial Release Candidate build will be triggered shortly, and the build URL will be posted here.

@@ -83,8 +83,7 @@ export const AppUsagePromptInterstitial: React.FC<Props> = ({navigation}) => {
             fullSize
             text={t(m.countIn)}
             onPress={() => {
-              setOptedIn(true);
-              // navigation.navigate('AppUsageSuccess');
+              navigation.navigate('AppUsageSharingSuccess');
             }}
           />
         </View>

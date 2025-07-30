@@ -144,6 +144,7 @@ export type RootStackParamsList = {
   ExportObservations: undefined;
   DidNotMoveBottomSheet: undefined;
   AppUsagePromptInterstitial: undefined;
+  AppUsageSharingSuccess: undefined;
 };
 
 export type OnboardingParamsList = {

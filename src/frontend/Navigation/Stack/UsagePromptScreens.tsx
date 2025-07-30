@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {RootStack} from '.';
 import {AppUsagePromptInterstitial} from '../../screens/AppUsagePromptInterstitial';
-// import {AppUsageSuccess} from '../../screens/AppUsageSuccess';
+import {AppUsageSharingSuccess} from '../../screens/AppUsageSharingSuccess';
 
 export const createAppUsagePromptScreens = () => (
   <RootStack.Group key="appUsagePrompt">
@@ -10,10 +10,10 @@ export const createAppUsagePromptScreens = () => (
       component={AppUsagePromptInterstitial}
       options={{headerShown: false}}
     />
-    {/* <RootStack.Screen
-      name="AppUsageSuccess"
-      component={AppUsageSuccess}
+    <RootStack.Screen
+      name="AppUsageSharingSuccess"
+      component={AppUsageSharingSuccess}
       options={{headerShown: false}}
-    /> */}
+    />
   </RootStack.Group>
 );

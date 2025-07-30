@@ -6,7 +6,10 @@ import NetInfo, {
   type NetInfoDisconnectedStates,
 } from '@react-native-community/netinfo';
 import StateMachine from 'start-stop-state-machine';
-import Zeroconf, {type Service as ZeroconfService} from 'react-native-zeroconf';
+import Zeroconf, {
+  type Service,
+  type Service as ZeroconfService,
+} from 'react-native-zeroconf';
 import {type MapeoClientApi} from '@comapeo/ipc';
 import * as Sentry from '@sentry/react-native';
 import noop from '../lib/noop';
@@ -34,12 +37,6 @@ const POLL_WIFI_STATE_INTERVAL_MS = 2000;
 const ZEROCONF_SERVICE_TYPE = 'comapeo';
 const ZEROCONF_PROTOCOL = 'tcp';
 const ZEROCONF_DOMAIN = 'local.';
-// react-native-zeroconf does not notify when a service fails to register or unregister
-// https://github.com/balthazar/react-native-zeroconf/blob/master/android/src/main/java/com/balthazargronon/RCTZeroconf/nsd/NsdServiceImpl.java#L210
-// so we need a timeout, otherwise the service would never be considered
-// "started" or "stopped", which would stop browsing for peers.
-const ZEROCONF_PUBLISH_TIMEOUT_MS = 5000;
-const ZEROCONF_UNPUBLISH_TIMEOUT_MS = 5000;
 
 const LocalDiscoveryContext = React.createContext<
   LocalDiscoveryController | undefined
@@ -325,21 +322,22 @@ function publishZeroconf(
   {name, port}: {name: string; port: number},
 ): Promise<string> {
   return new Promise((resolve, reject) => {
-    const timeoutId = setTimeout(() => {
-      cleanup();
-      reject(new Error('Timed out publishing zeroconf service'));
-    }, ZEROCONF_PUBLISH_TIMEOUT_MS);
-
     const cleanup = () => {
-      clearTimeout(timeoutId);
+      zeroconf.off('publishError', onPublishError);
       zeroconf.off('published', onPublish);
     };
     const onPublish = ({name: publishedName}: ZeroconfService) => {
       cleanup();
       resolve(publishedName);
     };
+    const onPublishError = (error: Error) => {
+      cleanup();
+      reject(error);
+    };
 
     zeroconf.on('published', onPublish);
+    zeroconf.on('publishError', onPublishError);
+
     zeroconf.publishService(
       ZEROCONF_SERVICE_TYPE,
       ZEROCONF_PROTOCOL,
@@ -377,23 +375,23 @@ function unpublishZeroconf(
 ): Promise<void> {
   if (publishedNamesToBeMutated.size === 0) return Promise.resolve();
   return new Promise((resolve, reject) => {
-    const timeoutId = setTimeout(() => {
-      cleanup();
-      reject(new Error('Timed out unpublishing zeroconf service'));
-    }, ZEROCONF_UNPUBLISH_TIMEOUT_MS);
-
     const cleanup = () => {
-      clearTimeout(timeoutId);
-      zeroconf.off('remove', onRemove);
+      zeroconf.off('unpublishError', onUnpublishError);
+      zeroconf.off('unpublished', onUnpublished);
     };
-    const onRemove = (name: string) => {
-      publishedNamesToBeMutated.delete(name);
+    const onUnpublished = (service: Service) => {
+      publishedNamesToBeMutated.delete(service.name);
       if (publishedNamesToBeMutated.size === 0) {
         cleanup();
         resolve();
       }
     };
-    zeroconf.on('remove', onRemove);
+    const onUnpublishError = (error: Error) => {
+      cleanup();
+      reject(error);
+    };
+    zeroconf.on('unpublishError', onUnpublishError);
+    zeroconf.on('unpublished', onUnpublished);
     for (const name of publishedNamesToBeMutated) {
       zeroconf.unpublishService(name);
     }
@@ -403,13 +401,20 @@ function unpublishZeroconf(
 function zeroconfServiceToMapeoPeer({
   addresses,
   port,
-  name,
+  name: serviceName,
 }: Readonly<ZeroconfService>): null | {
   address: string;
   port: number;
   name: string;
 } {
   const address = addresses[0];
+  if (!address) return null;
+  // The service name can include a suffix ' (1)' when there is a conflict,
+  // which could happen when the device is still unpublishing the current
+  // service when it tries to start publishing again, e.g. after the user leaves
+  // the app and returns. Because the service name is the peer name, we need to
+  // remove the suffix when connecting to the peer.
+  const name = serviceName.replace(/[^a-fA-F0-9].*/g, '');
   return address ? {address, port, name} : null;
 }
 

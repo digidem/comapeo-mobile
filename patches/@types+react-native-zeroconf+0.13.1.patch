@@ -1,0 +1,17 @@
+diff --git a/node_modules/@types/react-native-zeroconf/index.d.ts b/node_modules/@types/react-native-zeroconf/index.d.ts
+index de76d2e..edccf7c 100644
+--- a/node_modules/@types/react-native-zeroconf/index.d.ts
++++ b/node_modules/@types/react-native-zeroconf/index.d.ts
+@@ -153,8 +153,12 @@ export default class Zeroconf extends EventEmitter {
+ 
+     on(e: "published", listener: (service: Service) => unknown): this;
+ 
++    on(e: "publishError", listener: (error: Error) => unknown): this;
++
+     on(e: "unpublished", listener: (service: Service) => unknown): this;
+ 
++    on(e: "unpublishError", listener: (error: Error) => unknown): this;
++
+     /**
+      * Triggered when an error occurs.
+      */

@@ -108,15 +108,18 @@ export function createSecurityStore({persist} = {persist: false}) {
             removeItem: key => deleteItemAsync(key),
           }),
         ),
-        onRehydrateStorage: state => {
-          return () => state && (state._hasHydrated = true);
+        onRehydrateStorage: () => {
+          return (state?: SecurityState) => {
+            if (state) {
+              state._hasHydrated = true;
+            }
+          };
         },
       }),
     );
   } else {
     store = createStore(() => baseState);
   }
-
   const actions = {
     setPasscode: async (passcode: string | null) => {
       // Obscure code needs to be unset when passcode is unset

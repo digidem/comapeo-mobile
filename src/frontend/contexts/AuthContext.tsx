@@ -82,10 +82,9 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
         throw new Error('LOCKED_OUT');
       }
 
-      const isCorrect =
-        passcodeValue && passcode
-          ? await verifyPasscode({input: passcodeValue, stored: passcode})
-          : false;
+      const isCorrect = passcode
+        ? await verifyPasscode({input: passcodeValue, stored: passcode})
+        : false;
 
       if (obscureCodeEnabled && passcodeValue === DEFAULT_OBSCURE_CODE) {
         setAuthState('obscured');

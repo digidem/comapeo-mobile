@@ -22,18 +22,18 @@ const SecurityStateSchema = v.variant('passcode', [
     obscureCodeEnabled: v.boolean(),
     failedAttempts: v.number(),
     lockUntil: v.number(),
+    _hasHydrated: v.boolean(),
   }),
   v.object({
     passcode: v.null(),
     obscureCodeEnabled: v.literal(false),
     failedAttempts: v.literal(0),
     lockUntil: v.literal(0),
+    _hasHydrated: v.literal(false),
   }),
 ]);
 
-export type SecurityState = v.InferOutput<typeof SecurityStateSchema> & {
-  _hasHydrated: boolean;
-};
+export type SecurityState = v.InferOutput<typeof SecurityStateSchema>;
 
 // NOTE: Do not change!
 const STORAGE_KEY = 'security' as const;
@@ -81,7 +81,7 @@ const migrate = async (
     }
 
     const parsed = v.parse(SecurityStateSchema, persistedState);
-    return {...parsed, _hasHydrated: true};
+    return {...parsed};
   } catch {
     return createInitialState();
   }
@@ -90,14 +90,9 @@ const migrate = async (
 export function createSecurityStore({persist} = {persist: false}) {
   let store: StoreApi<SecurityState>;
 
-  const baseState: SecurityState = {
-    ...createInitialState(),
-    _hasHydrated: !persist,
-  };
-
   if (persist) {
     store = createStore(
-      createPersistedState(() => baseState, {
+      createPersistedState(createInitialState, {
         name: STORAGE_KEY,
         version: 1,
         migrate,
@@ -118,7 +113,16 @@ export function createSecurityStore({persist} = {persist: false}) {
       }),
     );
   } else {
-    store = createStore(() => baseState);
+    // hydration set to true here because when you are creating a NON persisted store,
+    // you are setting the store to the value returned by createInitialState(),
+    // where _hasHydrated will always return false unless we otherwise specify
+    store = createStore<SecurityState>(
+      () =>
+        ({
+          ...createInitialState(),
+          _hasHydrated: true,
+        }) as SecurityState,
+    );
   }
   const actions = {
     setPasscode: async (passcode: string | null) => {
@@ -160,9 +164,6 @@ export function createSecurityStore({persist} = {persist: false}) {
 
     setLockUntil: (lockUntil: number) => {
       store.setState({lockUntil});
-    },
-    setHasHydrated: (hydrated: boolean) => {
-      store.setState({_hasHydrated: hydrated});
     },
   };
 

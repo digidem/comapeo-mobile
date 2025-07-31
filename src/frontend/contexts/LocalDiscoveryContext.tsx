@@ -38,7 +38,6 @@ const POLL_WIFI_STATE_INTERVAL_MS = 2000;
 const ZEROCONF_SERVICE_TYPE = 'comapeo';
 const ZEROCONF_PROTOCOL = 'tcp';
 const ZEROCONF_DOMAIN = 'local.';
-const DISCOVERY_START_TIMEOUT_MS = 5000;
 const DISCOVERY_STOP_TIMEOUT_MS = 1000; // Stopping publishing and discovery should be fast
 
 const LocalDiscoveryContext = React.createContext<

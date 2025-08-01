@@ -32,7 +32,7 @@
   "dependencies": {
     "@bam.tech/react-native-image-resizer": "3.0.11",
     "@comapeo/core-react": "5.0.0",
-    "@comapeo/ipc": "file:comapeo-ipc-4.0.0.tgz",
+    "@comapeo/ipc": "5.0.0-prerelease.0",
     "@expo-google-fonts/rubik": "0.4.1",
     "@formatjs/intl-getcanonicallocales": "2.5.5",
     "@formatjs/intl-locale": "4.2.11",

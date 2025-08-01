@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "@comapeo/core": "4.1.0",
-    "@comapeo/ipc": "file:comapeo-ipc-4.0.0.tgz",
+    "@comapeo/ipc": "^5.0.0-prerelease.0",
     "@mapeo/default-config": "5.0.0",
     "@sentry/node": "9.28.0",
     "@sentry/rollup-plugin": "^3.5.0",

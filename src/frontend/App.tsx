@@ -1,9 +1,7 @@
 import * as React from 'react';
 import {getLocales} from 'expo-localization';
-import {createMapeoClient} from '@comapeo/ipc/client';
 import {QueryClient} from '@tanstack/react-query';
 import {AppNavigator} from './AppNavigator';
-import {MessagePortLike} from './lib/MessagePortLike';
 import {initializeNodejs} from './initializeNodejs';
 import Mapbox from '@rnmapbox/maps';
 import {PermissionsAndroid} from 'react-native';
@@ -11,7 +9,6 @@ import {AppProviders} from './contexts/AppProviders';
 import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Sentry from '@sentry/react-native';
-import {getTraceData} from '@sentry/core';
 import * as TaskManager from 'expo-task-manager';
 import {applicationId} from 'expo-application';
 import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
@@ -35,6 +32,7 @@ import {IntlProvider} from './contexts/IntlContext';
 import {ServerLoading} from './ServerLoading';
 import {createSavedLocationStore} from './contexts/SavedLocationContext';
 import {createServerStateStore} from './lib/ServerStateStore.ts';
+import {createMapeoApi} from './lib/createMapeoApi.ts';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -93,46 +91,11 @@ const appDiagnosticMetrics = new AppDiagnosticMetrics({
   },
 });
 
-function noop() {}
+export function noop() {}
 
 const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
 const serverStateStore = createServerStateStore();
-const messagePort = new MessagePortLike({serverStateStore});
-const mapeoApi = createMapeoClient(messagePort, {
-  timeout: Infinity,
-  onRequestHook: (request, next) => {
-    const parentSpan = Sentry.getActiveSpan();
-    if (!parentSpan) {
-      // Tracing is not enabled (no root span) so we don't need to do anything
-      next(request).catch(noop);
-      return;
-    }
-    Sentry.startSpan(
-      {
-        name: request.method.join('.'),
-        op: 'ipc',
-      },
-      async span => {
-        const traceHeaders = getTraceData({span});
-        if (traceHeaders) {
-          // @ts-expect-error - need to update types in rpc-reflector
-          request.metadata = {
-            'sentry-trace': traceHeaders['sentry-trace'],
-            baggage: traceHeaders['baggage'],
-          };
-        }
-        try {
-          await next(request);
-          span.setStatus({code: 1, message: 'ok'});
-        } catch (error) {
-          span.setStatus({code: 2, message: 'internal_error'});
-          Sentry.captureException(error);
-        }
-      },
-    );
-  },
-});
-messagePort.start();
+const mapeoApi = createMapeoApi({serverStateStore});
 const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();
 

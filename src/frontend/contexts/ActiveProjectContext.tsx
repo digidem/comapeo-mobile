@@ -40,7 +40,6 @@ export const ActiveProjectProvider = ({
 
     mapeoApi
       .listProjects()
-      // @ts-expect-error - ignore for now, needs fixed before merge
       .then(projects => {
         // TODO: Be smarter about which project we select if multiple exist in the database
         const chosenActiveProject = projects[0];
@@ -59,7 +58,6 @@ export const ActiveProjectProvider = ({
           });
         }
       })
-      // @ts-expect-error - ignore for now, needs fixed before merge
       .catch(err => {
         // TODO: Surface error in UI
         console.error(err);

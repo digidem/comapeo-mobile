@@ -1,4 +1,4 @@
-import {createMapeoClient} from '@comapeo/ipc';
+import {createMapeoClient} from '@comapeo/ipc/client.js';
 import {getTraceData} from '@sentry/core';
 import * as Sentry from '@sentry/react-native';
 import {noop} from '../App.tsx';

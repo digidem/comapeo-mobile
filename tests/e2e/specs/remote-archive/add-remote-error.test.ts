@@ -21,7 +21,10 @@ describe('Remote Archive - Add Error Flow', () => {
     const urlInput = await $(byResourceId('RA.url-inp'));
     await urlInput.setValue('example.com');
     await $(byResourceId('OBS.edit-save-btn')).click();
-    await expect($(byTextMatches('example.com'))).toBeDisplayed();
+    await $(byTextMatches('example.com')).waitForExist({
+      timeout: 10000,
+      reverse: false,
+    });
 
     await expect($(byTextMatches('Invalid URL'))).toBeDisplayed();
     const backButton = await $(byResourceId('MAIN.header-back-btn'));

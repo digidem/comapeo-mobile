@@ -4,7 +4,7 @@ import { formatWithOptions } from 'util'
 import { mkdirSync } from 'fs'
 import { createRequire } from 'module'
 import { MapeoManager, FastifyController } from '@comapeo/core'
-import { createMapeoServer } from '@comapeo/ipc/server'
+import { createMapeoServer } from '@comapeo/ipc/server.js'
 import Fastify from 'fastify'
 import * as Sentry from '@sentry/node'
 

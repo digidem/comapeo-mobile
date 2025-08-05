@@ -27,7 +27,13 @@ import {formatCoords} from '../../lib/coordinateFormat.ts';
 import type {PhotoLayout} from '../../lib/exif.ts';
 import {getExpoImageStorageSize} from '../../lib/file-system.ts';
 import {getAttachmentPhotoInfo, getDraftPhotoInfo} from '../../lib/photos.ts';
-import {BLACK, BLUE_GREY, NEW_DARK_GREY, WHITE} from '../../lib/styles.ts';
+import {
+  BLACK,
+  BLUE_GREY,
+  DARK_GREY,
+  NEW_DARK_GREY,
+  WHITE,
+} from '../../lib/styles.ts';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
 import {CoreBlobImage} from '../../sharedComponents/Images/CoreBlobImage.tsx';
 import {ImageErrorPlaceholder} from '../../sharedComponents/Images/ImageErrorPlaceholder.tsx';
@@ -35,6 +41,7 @@ import {BodyText} from '../../sharedComponents/Text/BodyText.tsx';
 import type {NativeRootNavigationProps} from '../../sharedTypes/navigation.ts';
 import {ImageWithErrorFallback} from './ImageWithErrorFallback.tsx';
 import {InfoItem} from './InfoItem.tsx';
+import {Accordian} from '../../sharedComponents/Accordian.tsx';
 
 const m = defineMessages({
   navTitle: {
@@ -162,19 +169,44 @@ export function PhotoPreviewModal({
       </View>
       <View style={{gap: 20}}>
         {!photoInfo.external && (
-          <InfoItem
-            icon={
-              <Octicons
-                name="check-circle"
-                size={20}
-                color={NEW_DARK_GREY}
-                allowFontScaling
-              />
-            }>
-            <BodyText selectable style={styles.primaryInfoText}>
-              {t(m.validatedByCoMapeo)}
-            </BodyText>
-          </InfoItem>
+          <View
+            style={{
+              flex: 1,
+              padding: 20,
+              borderColor: DARK_GREY,
+              borderWidth: 1,
+              borderRadius: 10,
+            }}>
+            <Accordian
+              title={
+                <View style={{flexDirection: 'row', gap: 12}}>
+                  <Octicons
+                    name="check-circle"
+                    size={20}
+                    color={NEW_DARK_GREY}
+                    allowFontScaling
+                  />
+                  <BodyText selectable style={styles.primaryInfoText}>
+                    {t(m.validatedByCoMapeo)}
+                  </BodyText>
+                </View>
+              }
+              innerAccordianDetails={
+                <>
+                  {'createdAt' in photoInfo && (
+                    <BodyText selectable style={styles.primaryInfoText}>
+                      {photoInfo.createdAt}
+                    </BodyText>
+                  )}
+                  {'coordinates' in photoInfo && (
+                    <BodyText selectable style={styles.primaryInfoText}>
+                      {photoInfo.coordinates?.latitude}
+                    </BodyText>
+                  )}
+                </>
+              }
+            />
+          </View>
         )}
 
         {photoInfo.createdAt !== undefined && (

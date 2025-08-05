@@ -90,9 +90,6 @@ const appDiagnosticMetrics = new AppDiagnosticMetrics({
     };
   },
 });
-
-export function noop() {}
-
 const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
 const serverStateStore = createServerStateStore();
 const mapeoApi = createMapeoApi({serverStateStore});

@@ -1,9 +1,9 @@
 import {createMapeoClient} from '@comapeo/ipc/client.js';
 import {getTraceData} from '@sentry/core';
 import * as Sentry from '@sentry/react-native';
-import {noop} from '../App.tsx';
 import {MessagePortLike} from './MessagePortLike.ts';
 import type {ServerStateStore} from './ServerStateStore.ts';
+import noop from './noop.ts';
 
 export function createMapeoApi({
   serverStateStore,

@@ -51,6 +51,7 @@
     "@rnmapbox/maps": "10.1.36",
     "@sentry/react-native": "6.18.1",
     "@tanstack/react-query": "5.80.6",
+    "@turf/distance": "^7.2.0",
     "@turf/helpers": "7.2.0",
     "@turf/random": "7.2.0",
     "buffer": "6.0.3",

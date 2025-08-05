@@ -3,6 +3,7 @@ name: Update @comapeo/core
 env:
   BRANCH_NAME_PREFIX: 'chore/update-core-v'
   COMMIT_MESSAGE_PREFIX: 'chore: update @comapeo/core to v'
+  PR_COMMENT_IDENTIFIER: '<!-- update-core -->'
 
 on:
   workflow_dispatch:
@@ -81,17 +82,27 @@ jobs:
           COMMIT_MESSAGE: ${{ env.COMMIT_MESSAGE_PREFIX }}${{ steps.latest-version.outputs.latest_version }}
 
       - name: Push changes
-        run: git push origin {{ steps.commit-changes.outputs.branch_name }}
+        run: git push origin ${{ steps.commit-changes.outputs.branch_name }}
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
 
       - name: Create Pull Request
         run: |
-          gh pr create \
-          --title "$PR_TITLE" \
-          --body "$PR_BODY"
+          url=$(gh pr create --title "$PR_TITLE" --body "$PR_BODY")
+          echo "pr_url=$url" >> $GITHUB_OUTPUT
+        id: create-pr
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           PR_TITLE: ${{ steps.commit-changes.outputs.commit_message }}
           PR_BODY: |
+            ${{ env.PR_COMMENT_IDENTIFIER }}
             Update @comapeo/core to v${{ steps.latest-version.outputs.latest_version }}
+
+      - name: Close stale pull requests
+        run: |
+          gh pr list --state open --json body,number \
+            --jq 'map(select(.body | contains("${{ env.PR_COMMENT_IDENTIFIER }}")) | .number)[]' | \
+            xargs -I {} gh pr close {} --comment "$CLOSE_COMMENT"
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          CLOSE_COMMENT: 'Closed in favor of ${{ steps.create-pr.outputs.pr_url }}.'

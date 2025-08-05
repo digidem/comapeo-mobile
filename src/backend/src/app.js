@@ -3,8 +3,9 @@ import { join } from 'path'
 import { mkdirSync } from 'fs'
 import { createRequire } from 'module'
 import { MapeoManager, FastifyController } from '@comapeo/core'
-import { createMapeoServer } from '@comapeo/ipc'
+import { createMapeoServer } from '@comapeo/ipc/server.js'
 import Fastify from 'fastify'
+import * as Sentry from '@sentry/node'
 
 import MessagePortLike from './message-port-like.js'
 import { ServerStatus } from './status.js'
@@ -106,7 +107,40 @@ export async function init({
   })
 
   const messagePort = new MessagePortLike()
-  createMapeoServer(manager, messagePort)
+  createMapeoServer(manager, messagePort, {
+    onRequestHook: (request, next) => {
+      const sentryTrace = request.metadata?.['sentry-trace']
+      const baggage = request.metadata?.baggage
+      Sentry.continueTrace(
+        {
+          sentryTrace,
+          baggage,
+        },
+        () => {
+          Sentry.startSpan(
+            {
+              op: 'rpc',
+              name: request.method.join('.'),
+              forceTransaction: true,
+              attributes: {
+                'rpc.method': request.method.join('.'),
+                'rpc.args': JSON.stringify(request.args),
+              },
+            },
+            async (span) => {
+              try {
+                await next(request)
+                span.setStatus({ code: 1, message: 'ok' })
+              } catch (error) {
+                span.setStatus({ code: 2, message: 'internal_error' })
+                Sentry.captureException(error)
+              }
+            },
+          )
+        },
+      )
+    },
+  })
   messagePort.start()
   serverStatus.setState('STARTED')
 

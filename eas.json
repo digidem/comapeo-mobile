@@ -56,9 +56,11 @@
     },
     "match-production": {
       "extends": "base",
-      "distribution": "internal", 
-      "buildType": "apk",
-      "autoIncrement":false,
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "autoIncrement": false,
       "env": {
         "APP_VARIANT": "production"
       }

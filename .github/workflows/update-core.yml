@@ -68,7 +68,7 @@ jobs:
           latest_version: ${{ steps.latest-version.outputs.latest_version }}
 
       - name: Update @comapeo/core in frontend
-        run: npm install --save-exact @comapeo/core@latest
+        run: npm install --save-exact --save-dev @comapeo/core@latest
 
       - name: Update @comapeo/core in backend
         working-directory: ./src/backend

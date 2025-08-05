@@ -4,7 +4,7 @@ The next version of Mapeo Mobile
 
 ## Getting started
 
-1. Clone repository
+1. Clone repository 
 
    ```sh
    git clone https://github.com/digidem/comapeo-mobile.git

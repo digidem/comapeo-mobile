@@ -7,6 +7,8 @@ env:
 
 on:
   workflow_dispatch:
+  repository_dispatch:
+    types: [update-core]
 
 permissions:
   contents: write

@@ -1,0 +1,95 @@
+name: Update @comapeo/core
+
+env:
+  BRANCH_NAME_PREFIX: 'chore/update-core-v'
+  COMMIT_MESSAGE_PREFIX: 'chore: update @comapeo/core to v'
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-core:
+    runs-on: ubuntu-latest
+    name: Update @comapeo/core
+    steps:
+      - name: Create GitHub App Token
+        uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.RELEASE_BOT_APP_ID }}
+          private-key: ${{ secrets.RELEASE_BOT_PRIVATE_KEY }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Get installed version of @comapeo/core
+        id: current-version
+        run: |
+          current=$(npm list @comapeo/core --json | jq -r '.dependencies["@comapeo/core"].version')
+          echo "current_version=$current" >> $GITHUB_OUTPUT
+
+      - name: Get latest version of @comapeo/core
+        id: latest-version
+        run: |
+          latest=$(npm show @comapeo/core version)
+          echo "latest_version=$latest" >> $GITHUB_OUTPUT
+
+      - name: Fail if no update is needed
+        id: check-update
+        run: |
+          if [ "$current_version" != "$latest_version" ]; then
+            exit 1
+          fi
+        env:
+          current_version: ${{ steps.current-version.outputs.current_version }}
+          latest_version: ${{ steps.latest-version.outputs.latest_version }}
+
+      - name: Update @comapeo/core in frontend
+        run: npm install --save-exact @comapeo/core@latest
+
+      - name: Update @comapeo/core in backend
+        working-directory: ./src/backend
+        run: npm install --save-exact @comapeo/core@latest
+
+      - name: Commit changes
+        id: commit-changes
+        run: |
+          git config --global user.name 'awana-release-bot[bot]'
+          git config --global user.email '${{ vars.RELEASE_BOT_USER_ID }}+awana-release-bot[bot]@users.noreply.github.com'
+          git checkout -b "$BRANCH_NAME"
+          git commit -am "$COMMIT_MESSAGE"
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          echo "commit_message=$COMMIT_MESSAGE" >> $GITHUB_OUTPUT
+        env:
+          BRANCH_NAME: ${{ env.BRANCH_NAME_PREFIX }}${{ steps.latest-version.outputs.latest_version }}
+          COMMIT_MESSAGE: ${{ env.COMMIT_MESSAGE_PREFIX }}${{ steps.latest-version.outputs.latest_version }}
+
+      - name: Push changes
+        run: git push origin {{ steps.commit-changes.outputs.branch_name }}
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+
+      - name: Create Pull Request
+        run: |
+          gh pr create \
+          --title "$PR_TITLE" \
+          --body "$PR_BODY"
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          PR_TITLE: ${{ steps.commit-changes.outputs.commit_message }}
+          PR_BODY: |
+            Update @comapeo/core to v${{ steps.latest-version.outputs.latest_version }}

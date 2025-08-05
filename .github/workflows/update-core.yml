@@ -34,13 +34,11 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install dependencies
-        run: npm ci
-
       - name: Get installed version of @comapeo/core
+        # We assume that the backend version is the same as the frontend version
         id: current-version
         run: |
-          current=$(npm list @comapeo/core --json | jq -r '.dependencies["@comapeo/core"].version')
+          current=$(npm list @comapeo/core --json --package-lock-only | jq -r '.dependencies["@comapeo/core"].version')
           echo "current_version=$current" >> $GITHUB_OUTPUT
 
       - name: Get latest version of @comapeo/core
@@ -53,6 +51,9 @@ jobs:
         id: check-update
         run: |
           if [ "$current_version" != "$latest_version" ]; then
+            echo "Update needed: $current_version -> $latest_version"
+          else
+            echo "No update needed. Current version: $current_version, Latest version: $latest_version"
             exit 1
           fi
         env:

@@ -6,8 +6,12 @@ env:
   PR_COMMENT_IDENTIFIER: '<!-- update-core -->'
 
 on:
+  # To allow manual triggering of the workflow
   workflow_dispatch:
   repository_dispatch:
+    # This event type is sent by the update-app.yml workflow in digidem/comapeo-core
+    # (https://github.com/digidem/comapeo-core/blob/main/.github/workflows/update-app.yml)
+    # Whenever a new version of @comapeo/core is released
     types: [update-core]
 
 permissions:

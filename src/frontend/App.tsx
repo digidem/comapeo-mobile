@@ -1,9 +1,7 @@
 import * as React from 'react';
 import {getLocales} from 'expo-localization';
-import {createMapeoClient} from '@comapeo/ipc';
 import {QueryClient} from '@tanstack/react-query';
 import {AppNavigator} from './AppNavigator';
-import {MessagePortLike} from './lib/MessagePortLike';
 import {initializeNodejs} from './initializeNodejs';
 import Mapbox from '@rnmapbox/maps';
 import {PermissionsAndroid} from 'react-native';
@@ -34,6 +32,7 @@ import {IntlProvider} from './contexts/IntlContext';
 import {ServerLoading} from './ServerLoading';
 import {createSavedLocationStore} from './contexts/SavedLocationContext';
 import {createServerStateStore} from './lib/ServerStateStore.ts';
+import {createMapeoApi} from './lib/createMapeoApi.ts';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -91,12 +90,9 @@ const appDiagnosticMetrics = new AppDiagnosticMetrics({
     };
   },
 });
-
 const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
 const serverStateStore = createServerStateStore();
-const messagePort = new MessagePortLike({serverStateStore});
-const mapeoApi = createMapeoClient(messagePort, {timeout: Infinity});
-messagePort.start();
+const mapeoApi = createMapeoApi({serverStateStore});
 const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();
 

@@ -1,9 +1,7 @@
 import * as React from 'react';
 import {getLocales} from 'expo-localization';
-import {createMapeoClient} from '@comapeo/ipc';
 import {QueryClient} from '@tanstack/react-query';
 import {AppNavigator} from './AppNavigator';
-import {MessagePortLike} from './lib/MessagePortLike';
 import {initializeNodejs} from './initializeNodejs';
 import Mapbox from '@rnmapbox/maps';
 import {PermissionsAndroid} from 'react-native';
@@ -15,7 +13,6 @@ import * as TaskManager from 'expo-task-manager';
 import {applicationId} from 'expo-application';
 import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
 import {storage} from './hooks/persistedState/createPersistedState';
-import {useOnBackgroundedAndForegrounded} from './hooks/useOnBackgroundedAndForegrounded';
 import {getSentryUserId} from './metrics/getSentryUserId';
 import {AppDiagnosticMetrics} from './metrics/AppDiagnosticMetrics';
 import {DeviceDiagnosticMetrics} from './metrics/DeviceDiagnosticMetrics';
@@ -35,6 +32,7 @@ import {IntlProvider} from './contexts/IntlContext';
 import {ServerLoading} from './ServerLoading';
 import {createSavedLocationStore} from './contexts/SavedLocationContext';
 import {createServerStateStore} from './lib/ServerStateStore.ts';
+import {createMapeoApi} from './lib/createMapeoApi.ts';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -46,15 +44,29 @@ if (applicationId?.endsWith('.dev') || applicationId?.endsWith('.pre')) {
 }
 
 const sentryDebug = applicationId?.endsWith('.dev');
+const appMetricsOptIn = sentryEnvironment !== 'production';
+let navigationIntegration:
+  | ReturnType<(typeof Sentry)['reactNavigationIntegration']>
+  | undefined = undefined;
 const sentryUserId = getSentryUserId({now: new Date(), storage});
 
 Sentry.init({
   dsn: 'https://e0e02907e05dc72a6da64c3483ed88a6@o4507148235702272.ingest.us.sentry.io/4507170965618688',
-  tracesSampleRate: 1.0,
+  tracesSampleRate: appMetricsOptIn ? 1.0 : 0, // Only enable tracing once we have user consent
+  enableUserInteractionTracing: appMetricsOptIn, // Only enable user interaction tracing once we have user consent
   environment: sentryEnvironment,
   debug: sentryDebug, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
   initialScope: {user: {id: sentryUserId}},
 });
+
+if (appMetricsOptIn) {
+  Sentry.setTag('appMetricsOptIn', 'true');
+  navigationIntegration = Sentry.reactNavigationIntegration({
+    enableTimeToInitialDisplay: true,
+    ignoreEmptyBackNavigationTransactions: false,
+  });
+  Sentry.getClient()?.addIntegration(navigationIntegration);
+}
 
 Mapbox.setTelemetryEnabled(false);
 
@@ -78,12 +90,9 @@ const appDiagnosticMetrics = new AppDiagnosticMetrics({
     };
   },
 });
-
 const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
 const serverStateStore = createServerStateStore();
-const messagePort = new MessagePortLike({serverStateStore});
-const mapeoApi = createMapeoClient(messagePort, {timeout: Infinity});
-messagePort.start();
+const mapeoApi = createMapeoApi({serverStateStore});
 const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();
 
@@ -172,8 +181,6 @@ const App = () => {
     ]).then(() => setPermissionsAsked(true));
   }, []);
 
-  useOnBackgroundedAndForegrounded(mapeoApi);
-
   return (
     <LocaleStoreProvider value={persistedLocaleStore}>
       <IntlProvider>
@@ -193,7 +200,10 @@ const App = () => {
             savedLocationStore={savedLocationStore}
             activeProjectIdStore={persistedActiveProjectIdStore}
             metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}>
-            <AppNavigator permissionAsked={permissionsAsked} />
+            <AppNavigator
+              permissionAsked={permissionsAsked}
+              navigationIntegration={navigationIntegration}
+            />
           </AppProviders>
         </ServerLoading>
       </IntlProvider>
@@ -201,4 +211,8 @@ const App = () => {
   );
 };
 
-export default Sentry.wrap(App);
+export default Sentry.wrap(App, {
+  touchEventBoundaryProps: {
+    labelName: 'accessibilityLabel',
+  },
+});

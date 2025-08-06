@@ -23,7 +23,7 @@ We use [Appium](https://appium.io/) (with the UIAutomator2 driver on Android) an
    ```
 
 2. **Get host name and port from appium terminal**
-   - Appium will retuirn a url with the following format `http://${hostName}:${port}/`.
+   - Appium will return a url with the following format `http://${hostName}:${port}/`.
    - For example: `http://127.0.0.1:4723/`, where `hostName===127.0.0.1` and `port===4723`
 
 3. **Fill in host name and port in wdio config**

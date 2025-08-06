@@ -1,11 +1,11 @@
 import debug from 'debug'
 import { join } from 'path'
-import { formatWithOptions } from 'util'
 import { mkdirSync } from 'fs'
 import { createRequire } from 'module'
 import { MapeoManager, FastifyController } from '@comapeo/core'
-import { createMapeoServer } from '@comapeo/ipc'
+import { createMapeoServer } from '@comapeo/ipc/server.js'
 import Fastify from 'fastify'
+import * as Sentry from '@sentry/node'
 
 import MessagePortLike from './message-port-like.js'
 import { ServerStatus } from './status.js'
@@ -24,13 +24,6 @@ const DEFAULT_CUSTOM_MAP_FILE_NAME = 'default.smp'
 const MAPBOX_ACCESS_TOKEN =
   'pk.eyJ1IjoiZGlnaWRlbSIsImEiOiJjbHRyaGh3cm0wN3l4Mmpsam95NDI3c2xiIn0.daq2iZFZXQ08BD0VZWAGUw'
 const DEFAULT_ONLINE_MAP_STYLE_URL = `https://api.mapbox.com/styles/v1/mapbox/outdoors-v11?access_token=${MAPBOX_ACCESS_TOKEN}`
-
-// needed to have logs captured by sentry
-debug.log = function log(...args) {
-  // @ts-expect-error InspectOpts shouldn't be undefined but might be
-  return console.log(formatWithOptions(debug.inspectOpts || {}, ...args))
-}
-debug.enable('mapeo:*')
 
 const log = debug('mapeo:app')
 
@@ -102,17 +95,52 @@ export async function init({
 
   rnBridge.app.on('pause', async (pauseLock) => {
     log('App went into background')
+    manager.onBackgrounded()
     await fastifyController.stop()
     pauseLock.release()
   })
 
   rnBridge.app.on('resume', () => {
     log('App went into foreground')
+    manager.onForegrounded()
     fastifyController.start()
   })
 
   const messagePort = new MessagePortLike()
-  createMapeoServer(manager, messagePort)
+  createMapeoServer(manager, messagePort, {
+    onRequestHook: (request, next) => {
+      const sentryTrace = request.metadata?.['sentry-trace']
+      const baggage = request.metadata?.baggage
+      Sentry.continueTrace(
+        {
+          sentryTrace,
+          baggage,
+        },
+        () => {
+          Sentry.startSpan(
+            {
+              op: 'rpc',
+              name: request.method.join('.'),
+              forceTransaction: true,
+              attributes: {
+                'rpc.method': request.method.join('.'),
+                'rpc.args': JSON.stringify(request.args),
+              },
+            },
+            async (span) => {
+              try {
+                await next(request)
+                span.setStatus({ code: 1, message: 'ok' })
+              } catch (error) {
+                span.setStatus({ code: 2, message: 'internal_error' })
+                Sentry.captureException(error)
+              }
+            },
+          )
+        },
+      )
+    },
+  })
   messagePort.start()
   serverStatus.setState('STARTED')
 

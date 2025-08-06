@@ -10,7 +10,7 @@ const config = {
   capabilities: [
     {
       platformName: 'android',
-      'appium:platformVersion': '', // Add your Android devvice's platfromVersion (e.g., '13.0'),
+      'appium:platformVersion': '', // Add your Android device's platformVersion (e.g., '13.0'),
       'appium:deviceName': '', // Add your device name/ device ID (from adb devices),
       'appium:automationName': 'UIAutomator2',
       'appium:app': 'build/Comapeo-e2e.apk',

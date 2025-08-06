@@ -45,7 +45,7 @@ const m = defineMessages({
   },
   verifiedOriginal: {
     id: 'screens.PhotoPreviewModal.verifiedOriginal',
-    defaultMessage: 'This is a verified original',
+    defaultMessage: 'This is a verified unaltered original',
     description: 'Text indicating that the photo is a verified original',
   },
   timeAttached: {
@@ -65,6 +65,12 @@ const m = defineMessages({
     description:
       'Label for the time when the photo was attached to an observation',
   },
+  attachedBy: {
+    id: 'screens.PhotoPreviewModal.attachedBy',
+    defaultMessage: 'Attached by {name}',
+    description:
+      'Label for the person who attached the photo to the observation',
+  },
 });
 
 export function AttachedPhotoPreviewModal({
@@ -80,6 +86,8 @@ export function AttachedPhotoPreviewModal({
     data: {
       originalVersionId: observationOriginalVersionId,
       createdAt: observationCreatedAt,
+      lat,
+      lon,
     },
   } = useSingleDocByDocId({
     projectId,
@@ -88,27 +96,31 @@ export function AttachedPhotoPreviewModal({
     lang,
   });
 
+  const {data: memberInfo} = useGetCreatedBy(observationOriginalVersionId);
+
   const {formatMessage} = useIntl();
 
   const photoTimeRelativeToObs = photoCreatedAt
     ? calcPhotoTimeRelativeToObs({
         photoCreatedAt: photoCreatedAt,
-        observationCreatedAt: parseInt(observationCreatedAt),
+        observationCreatedAt: new Date(observationCreatedAt).getTime(),
       })
     : undefined;
 
-  const distanceFromObservation = photoCoordinates
-    ? calculateDistanceFromObservation({
-        photoLocation: [photoCoordinates.longitude, photoCoordinates.latitude],
-        observationLocation: [0, 0],
-      })
-    : undefined;
+  const distanceFromObservation =
+    photoCoordinates && lon && lat
+      ? calculateDistanceFromObservation({
+          photoLocation: [
+            photoCoordinates.longitude,
+            photoCoordinates.latitude,
+          ],
+          observationLocation: [lon, lat],
+        })
+      : undefined;
 
   const [imageLoadInfo, setImageLoadInfo] = useState<
     {height: number; width: number; storageSize?: number} | undefined
   >(undefined);
-
-  const {data: memberInfo} = useGetCreatedBy(observationOriginalVersionId);
 
   const deviceDetailsText = getDeviceDetailsText({
     make: photoInfo.make,
@@ -178,13 +190,12 @@ export function AttachedPhotoPreviewModal({
       <View style={{gap: 20}}>
         <View
           style={{
-            flex: 1,
-            padding: 20,
             borderColor: DARK_GREY,
             borderWidth: 1,
             borderRadius: 10,
           }}>
           <Accordian
+            style={{padding: 20}}
             title={
               <View style={{flexDirection: 'row', gap: 12}}>
                 <Octicons
@@ -199,29 +210,71 @@ export function AttachedPhotoPreviewModal({
               </View>
             }
             innerAccordianDetails={
-              <>
+              <View
+                style={{
+                  gap: 20,
+                  padding: 20,
+                  borderTopColor: DARK_GREY,
+                  borderTopWidth: 1,
+                }}>
                 <BodyText selectable style={sharedStyles.primaryInfoText}>
                   {formatMessage(m.verifiedOriginal)}
                 </BodyText>
 
                 {photoTimeRelativeToObs && (
-                  <BodyText selectable style={sharedStyles.primaryInfoText}>
-                    {photoTimeRelativeToObs > 0
-                      ? formatMessage(m.timeAttached, {
-                          min: photoTimeRelativeToObs,
-                        })
-                      : formatMessage(m.attachedAtTime)}
-                  </BodyText>
+                  <InfoItem
+                    icon={
+                      <MaterialIcons
+                        name="timer"
+                        size={20}
+                        color={NEW_DARK_GREY}
+                        allowFontScaling
+                      />
+                    }>
+                    <BodyText selectable style={sharedStyles.primaryInfoText}>
+                      {photoTimeRelativeToObs > 0
+                        ? formatMessage(m.timeAttached, {
+                            min: photoTimeRelativeToObs,
+                          })
+                        : formatMessage(m.attachedAtTime)}
+                    </BodyText>
+                  </InfoItem>
                 )}
 
                 {distanceFromObservation && (
-                  <BodyText selectable style={sharedStyles.primaryInfoText}>
-                    {formatMessage(m.distanceFromObservation, {
-                      distance: distanceFromObservation.toFixed(2),
-                    })}
-                  </BodyText>
+                  <InfoItem
+                    icon={
+                      <Octicons
+                        name="arrow-both"
+                        size={20}
+                        color={NEW_DARK_GREY}
+                        allowFontScaling
+                      />
+                    }>
+                    <BodyText selectable style={sharedStyles.primaryInfoText}>
+                      {formatMessage(m.distanceFromObservation, {
+                        distance: distanceFromObservation.toFixed(2),
+                      })}
+                    </BodyText>
+                  </InfoItem>
                 )}
-              </>
+
+                {memberInfo.name && (
+                  <InfoItem
+                    icon={
+                      <MaterialIcons
+                        name="devices"
+                        size={20}
+                        color={NEW_DARK_GREY}
+                        allowFontScaling
+                      />
+                    }>
+                    <BodyText selectable style={sharedStyles.primaryInfoText}>
+                      {formatMessage(m.attachedBy, {name: memberInfo.name})}
+                    </BodyText>
+                  </InfoItem>
+                )}
+              </View>
             }
           />
         </View>

@@ -31,7 +31,7 @@ export function calculateDistanceFromObservation({
 }): number {
   const photoPoint = point(photoLocation);
   const observationPoint = point(observationLocation);
-  return distance(photoPoint, observationPoint);
+  return distance(photoPoint, observationPoint, {units: 'meters'});
 }
 
 export function calcPhotoTimeRelativeToObs({
@@ -41,8 +41,9 @@ export function calcPhotoTimeRelativeToObs({
   photoCreatedAt: number;
   observationCreatedAt: number;
 }): number {
-  const diffInMilliseconds = Math.abs(observationCreatedAt - photoCreatedAt);
-  return diffInMilliseconds / 1000 / 60;
+  const diffInMilliseconds = photoCreatedAt - observationCreatedAt;
+  const min = diffInMilliseconds / 1000 / 60;
+  return parseFloat(min.toFixed(2));
 }
 
 export function getDeviceDetailsText({

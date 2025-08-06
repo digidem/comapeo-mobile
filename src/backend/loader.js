@@ -20,7 +20,7 @@ process.env = process.env || {}
 
 const { sentryEnvironment, sentryUserId, metricsIsEnabled } = parseArgs()
 
-const sentryDebug = sentryEnvironment === 'development'
+const sentryDebug = false //sentryEnvironment === 'development'
 const initialScope = sentryUserId ? { user: { id: sentryUserId } } : undefined
 
 /** @type {Array<"error" | "log" | "warn">} */

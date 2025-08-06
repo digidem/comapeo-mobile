@@ -1,0 +1,17 @@
+{
+  "platforms": [
+    "apple",
+    "android",
+    "web"
+  ],
+  "apple": {
+    "modules": [
+      "CreateDocumentModule"
+    ]
+  },
+  "android": {
+    "modules": [
+      "expo.modules.actioncreatedocument.CreateDocumentModule"
+    ]
+  }
+}

@@ -43,7 +43,7 @@ if (applicationId?.endsWith('.dev') || applicationId?.endsWith('.pre')) {
   sentryEnvironment = 'qa';
 }
 
-const sentryDebug = applicationId?.endsWith('.dev');
+const sentryDebug = false; // applicationId?.endsWith('.dev');
 const appMetricsOptIn = sentryEnvironment !== 'production';
 let navigationIntegration:
   | ReturnType<(typeof Sentry)['reactNavigationIntegration']>

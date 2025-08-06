@@ -84,8 +84,8 @@ ios/*.env*.local
 *.mobileprovision
 
 # Expo
-android/
-ios/
+/android
+/ios
 
 # WebdriverIO local configuration
 wdio.local.config.js

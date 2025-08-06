@@ -18,7 +18,7 @@ const rnBridge = require('rn-bridge')
 
 const DB_DIR_NAME = 'sentry-logs'
 const privateStorageDir = rnBridge.app.datadir()
-const dbDir = join(privateStorageDir, DB_DIR_NAME)
+const dbDir = path.join(privateStorageDir, DB_DIR_NAME)
 
 const nodejsProjectDir = path.resolve(rnBridge.app.datadir(), 'nodejs-project')
 os.homedir = () => nodejsProjectDir
@@ -61,7 +61,8 @@ Sentry.init({
   },
   tracesSampleRate: 1.0,
   integrations: [Sentry.consoleLoggingIntegration({ levels: logLevels })],
-  transport: (opts = {}) => makeOfflineSqliteTransport({ ...opts, db }),
+  transport: (opts = {}) =>
+    makeOfflineSqliteTransport({ ...opts, db: sentryDB }),
 })
 
 // Dynamic import so that Sentry can instrument the code before it runs

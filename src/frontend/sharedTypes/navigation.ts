@@ -42,6 +42,9 @@ export type RootStackParamsList = {
   LanguageSettings: undefined;
   CoordinateFormat: undefined;
   Experiments: undefined;
+  DraftPhotoPreviewModal: {
+    photo: ProcessedDraftPhoto;
+  };
   PhotoPreviewModal: {
     observationDocId?: string;
     photo: SavedPhoto | ProcessedDraftPhoto;

@@ -141,7 +141,12 @@ export const Editor = ({
                     </ThumbnailContainer>
                   );
                 }
+                // observationId must exist if there is a saved photo
                 if (isSavedPhoto(att)) {
+                  if (!observationId)
+                    throw new Error(
+                      'Observation ID is required for saved photos',
+                    );
                   return (
                     <React.Suspense
                       key={att.driveDiscoveryId + att.hash + att.type}
@@ -150,7 +155,7 @@ export const Editor = ({
                         size={size}
                         photo={att}
                         onPress={() => {
-                          navigate('PhotoPreviewModal', {
+                          navigate('AttachedPhotoPreviewModal', {
                             photo: att,
                             observationDocId: observationId,
                           });

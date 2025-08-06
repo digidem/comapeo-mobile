@@ -56,10 +56,6 @@ import {SaveTrackScreen} from '../../screens/SaveTrack/SaveTrackScreen';
 import {ObservationFields} from '../../screens/ObservationFields';
 import {LanguageSettings} from '../../screens/Settings/AppSettings/LanguageSettings';
 import {
-  createNavigationOptions as createPhotoPreviewModalNavigationOptions,
-  PhotoPreviewModal,
-} from '../../screens/PhotoPreviewModal';
-import {
   ObservationCreate,
   createNavigationOptions as createObservationCreateNavigationOptions,
 } from '../../screens/ObservationCreate';
@@ -112,6 +108,14 @@ import {
 import {AudioDraftPlaybackScreen} from '../../screens/Audio/AudioDraftPlaybackScreen.tsx';
 import {AudioAttachmentPlaybackScreen} from '../../screens/Audio/AudioAttachmentPlaybackScreen.tsx';
 import {DidNotMoveBottomSheet} from '../../screens/MapScreen/TrackBottomSheet/DidNotMoveBottomSheet.tsx';
+import {
+  DraftPhotoPreviewModal,
+  createNavigationOptions as DraftPhotoPreviewModalNavOptions,
+} from '../../screens/PhotoPreviewModal/DraftPhotoPreviewModal.tsx';
+import {
+  AttachedPhotoPreviewModal,
+  createNavigationOptions as AttachedPhotoPreviewModalNavigationOptions,
+} from '../../screens/PhotoPreviewModal/AttachedPhotoPreviewModal.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -148,9 +152,9 @@ export const createDefaultScreenGroup = ({
         options={{headerShown: false}}
       />
       <RootStack.Screen
-        name="PhotoPreviewModal"
-        component={PhotoPreviewModal}
-        options={createPhotoPreviewModalNavigationOptions({intl})}
+        name="AttachedPhotoPreviewModal"
+        component={AttachedPhotoPreviewModal}
+        options={AttachedPhotoPreviewModalNavigationOptions({intl})}
       />
       <RootStack.Screen
         name="ConfirmDeletePhoto"
@@ -449,6 +453,11 @@ export const createDefaultScreenGroup = ({
             <SaveButton onPress={() => {}} isLoading={false} />
           ),
         }}
+      />
+      <RootStack.Screen
+        name="DraftPhotoPreviewModal"
+        component={DraftPhotoPreviewModal}
+        options={DraftPhotoPreviewModalNavOptions({intl})}
       />
     </RootStack.Group>
     <RootStack.Group

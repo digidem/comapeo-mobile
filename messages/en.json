@@ -1281,6 +1281,10 @@
   "screens.OnboardingPrivacyPolicy.shareDiagnostics": {
     "message": "Share Diagnostic Information"
   },
+  "screens.PhotoPreviewModal.attachedAtTime": {
+    "description": "Label for the time when the photo was attached to an observation",
+    "message": "Attached at the time of the observation"
+  },
   "screens.PhotoPreviewModal.distanceFromObservation": {
     "message": "Attached {distance} m from observation"
   },

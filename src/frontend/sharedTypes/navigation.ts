@@ -45,9 +45,9 @@ export type RootStackParamsList = {
   DraftPhotoPreviewModal: {
     photo: ProcessedDraftPhoto;
   };
-  PhotoPreviewModal: {
-    observationDocId?: string;
-    photo: SavedPhoto | ProcessedDraftPhoto;
+  AttachedPhotoPreviewModal: {
+    photo: SavedPhoto;
+    observationDocId: string;
   };
   ConfirmDeletePhoto: {
     onSuccess?: () => void;

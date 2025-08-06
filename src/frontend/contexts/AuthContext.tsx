@@ -3,18 +3,16 @@ import {AppState, AppStateStatus, NativeModules} from 'react-native';
 const {FlagSecureModule} = NativeModules;
 
 import {useIsShareDialogOpen} from '../hooks/share';
-import {DEFAULT_OBSCURE_CODE} from '../lib/security';
+import {DEFAULT_OBSCURE_CODE, verifyPasscode} from '../lib/security';
 import {useSecurityState, useSecurityActions} from './SecurityStoreContext';
 import {useIsAudioPermissionModalOpen} from '../hooks/useAudioPermissionTracker';
 import {getLockoutThreshold} from '../lib/security';
+import {useShallow} from 'zustand/react/shallow';
 
 export type AuthState = 'unauthenticated' | 'authenticated' | 'obscured';
 
 type AuthContextType = {
-  authenticate: (
-    passcodeValue: string | null,
-    validateOnly?: boolean,
-  ) => boolean;
+  authenticate: (passcodeValue: string) => Promise<boolean>;
   authState: AuthState;
 };
 
@@ -31,7 +29,13 @@ export const useAuthContext = () => {
 };
 
 export const AuthProvider = ({children}: {children: React.ReactNode}) => {
-  const {passcode, obscureCodeEnabled, lockUntil} = useSecurityState();
+  const {passcode, obscureCodeEnabled, lockUntil} = useSecurityState(
+    useShallow(state => ({
+      passcode: state.passcode,
+      obscureCodeEnabled: state.obscureCodeEnabled,
+      lockUntil: state.lockUntil,
+    })),
+  );
   const {incrementAndGetAttempts, resetFailedAttempts, setLockUntil} =
     useSecurityActions();
   const [authState, setAuthState] = React.useState<AuthState>(
@@ -56,7 +60,6 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
       (nextAppState: AppStateStatus) => {
         // If the app state changes due to opening a share dialog or the in app Audio Permissions, do not unauthenticate
         if (shareDialogIsOpen || isAudioPermissionModalOpen) return;
-
         if (passcode !== null) {
           if (
             nextAppState === 'active' ||
@@ -73,13 +76,15 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   }, [passcode, shareDialogIsOpen, isAudioPermissionModalOpen]);
 
   const authenticate: AuthContextType['authenticate'] = React.useCallback(
-    (passcodeValue, validateOnly = false) => {
-      if (validateOnly) return passcodeValue === passcode;
-
+    async passcodeValue => {
       const isLockedOut = Date.now() < lockUntil;
       if (isLockedOut) {
         throw new Error('LOCKED_OUT');
       }
+
+      const isCorrect = passcode
+        ? await verifyPasscode({input: passcodeValue, stored: passcode})
+        : false;
 
       if (obscureCodeEnabled && passcodeValue === DEFAULT_OBSCURE_CODE) {
         setAuthState('obscured');
@@ -87,7 +92,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
         return true;
       }
 
-      if (passcodeValue === passcode) {
+      if (isCorrect) {
         setAuthState('authenticated');
         resetFailedAttempts();
         return true;
@@ -98,6 +103,7 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
       if (minutes) {
         setLockUntil(Date.now() + minutes * 60 * 1000);
       }
+
       throw new Error('Incorrect Passcode');
     },
     [

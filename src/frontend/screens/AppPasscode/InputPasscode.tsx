@@ -5,11 +5,9 @@ import {useBlurOnFulfill} from 'react-native-confirmation-code-field';
 
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {RED} from '../../lib/styles';
-import {useBottomSheetModal} from '../../sharedComponents/BottomSheetModal';
 import {SecondaryButton, PrimaryButton} from '../../sharedComponents/Buttons';
 import {CELL_COUNT, PasscodeInput} from '../../sharedComponents/PasscodeInput';
 import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
-import {ConfirmPasscodeSheet} from './ConfirmPasscodeSheet';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 
@@ -47,9 +45,6 @@ export const InputPasscode = ({
 }: InputPasscodeProps) => {
   const {formatMessage: t} = useIntl();
   const [inputValue, setInputValue] = React.useState('');
-  const {sheetRef, isOpen, openSheet} = useBottomSheetModal({
-    openOnMount: false,
-  });
 
   const inputRef = useBlurOnFulfill({
     value: inputValue,
@@ -67,7 +62,7 @@ export const InputPasscode = ({
     if (!showNext && newVal.length === 5) validate(newVal);
   }
 
-  const {popTo} = useNavigationFromRoot();
+  const {popTo, navigate} = useNavigationFromRoot();
 
   return (
     <>
@@ -88,7 +83,9 @@ export const InputPasscode = ({
                 fullSize
                 onPress={() => {
                   if (validate(inputValue)) {
-                    openSheet();
+                    navigate('ConfirmPasscodeSheet', {
+                      passcode: inputValue,
+                    });
                   }
                 }}
                 text={t(m.button)}
@@ -116,12 +113,6 @@ export const InputPasscode = ({
           </HeaderText>
         )}
       </ScreenContentWithDock>
-
-      <ConfirmPasscodeSheet
-        inputtedPasscode={inputValue}
-        ref={sheetRef}
-        isOpen={isOpen}
-      />
     </>
   );
 };

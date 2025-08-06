@@ -1,15 +1,16 @@
 import * as React from 'react';
-import {BottomSheetModalMethods} from '@gorhom/bottom-sheet/lib/typescript/types';
-import {defineMessages, useIntl} from 'react-intl';
-
-import {useSecurityActions} from '../../contexts/SecurityStoreContext';
 import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
+import {BottomSheetWrapper} from '../../sharedComponents/BottomSheetWrapper';
+import {useSecurityActions} from '../../contexts/SecurityStoreContext';
 import ErrorIcon from '../../images/Error.svg';
 import {RED} from '../../lib/styles';
-import {
-  BottomSheetModal,
-  BottomSheetModalContent,
-} from '../../sharedComponents/BottomSheetModal';
+import {useIntl, defineMessages} from 'react-intl';
+import {UIActivityIndicator} from 'react-native-indicators';
+import {StyleSheet, View} from 'react-native';
+import * as Sentry from '@sentry/react-native';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {PrimaryButton, SecondaryButton} from '../../sharedComponents/Buttons';
 
 const m = defineMessages({
   title: {
@@ -37,47 +38,96 @@ const m = defineMessages({
   },
 });
 
-type ConfirmPasscodeSheetProps = {
-  inputtedPasscode: string;
-  isOpen: boolean;
-};
-
-export const ConfirmPasscodeSheet = React.forwardRef<
-  BottomSheetModalMethods,
-  ConfirmPasscodeSheetProps
->(({inputtedPasscode, isOpen}, sheetRef) => {
+export const ConfirmPasscodeBottomSheet = ({
+  route,
+}: {
+  route: {params: {passcode: string}};
+}) => {
   const {formatMessage: t} = useIntl();
   const {setPasscode} = useSecurityActions();
   const navigation = useNavigationFromRoot();
+  const [loading, setLoading] = React.useState(false);
 
-  function setPasscodeAndNavigateBack() {
-    setPasscode(inputtedPasscode);
-    navigation.popTo('Security');
-  }
+  const handleSave = async () => {
+    try {
+      setLoading(true);
+      await setPasscode(route.params.passcode);
+      navigation.popTo('Security');
+    } catch (e) {
+      Sentry.captureException(e);
+      navigation.navigate('ErrorBottomSheet');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <BottomSheetModal isOpen={isOpen} ref={sheetRef} onDismiss={() => {}}>
-      <BottomSheetModalContent
-        title={t(m.title)}
-        description={
-          t(m.suggestion) + '\n\n' + t(m.passcode, {passcode: inputtedPasscode})
-        }
-        buttonConfigs={[
-          {
-            text: t(m.cancel),
-            onPress: () => {
-              navigation.popTo('Security');
-            },
-            variation: 'outlined',
-          },
-          {
-            text: t(m.saveAppPasscode),
-            variation: 'filled',
-            onPress: setPasscodeAndNavigateBack,
-          },
-        ]}
-        icon={<ErrorIcon width={60} height={60} color={RED} />}
-      />
-    </BottomSheetModal>
+    <BottomSheetWrapper>
+      <View style={styles.container}>
+        <View style={styles.icon}>
+          {<ErrorIcon width={60} height={60} color={RED} />}
+        </View>
+
+        <HeaderText variant="header2" style={styles.title}>
+          {t(m.title)}
+        </HeaderText>
+
+        <BodyText variant="large" style={styles.description}>
+          {t(m.suggestion)}
+          {'\n\n'}
+          {t(m.passcode, {passcode: route.params.passcode})}
+        </BodyText>
+        {loading ? (
+          <View style={styles.loading}>
+            <UIActivityIndicator size={32} />
+          </View>
+        ) : (
+          <View style={styles.buttonsContainer}>
+            <SecondaryButton
+              testID="PASSCODE:cancel-btn"
+              fullSize
+              text={t(m.cancel)}
+              onPress={() => navigation.popTo('Security')}
+            />
+            <PrimaryButton
+              fullSize
+              text={t(m.saveAppPasscode)}
+              onPress={handleSave}
+            />
+          </View>
+        )}
+      </View>
+    </BottomSheetWrapper>
   );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    gap: 20,
+    minHeight: 400,
+    paddingTop: 20,
+    paddingHorizontal: 20,
+    paddingBottom: 30,
+    alignItems: 'center',
+  },
+  icon: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    textAlign: 'center',
+  },
+  description: {
+    textAlign: 'center',
+  },
+  buttonsContainer: {
+    width: '100%',
+    gap: 16,
+    alignItems: 'center',
+  },
+  loading: {
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });

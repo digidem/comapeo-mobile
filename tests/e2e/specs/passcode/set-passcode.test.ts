@@ -131,7 +131,8 @@ describe('Passcode - Set Passcode Flow', () => {
     ).toBeDisplayed();
     await expect($(byTextMatches(output.passcode))).toBeDisplayed();
 
-    await cancelBtn.click();
+    const otherCancelBtn = await $(byResourceId('PASSCODE:cancel-btn'));
+    await otherCancelBtn.click();
     await expect($(byText('Security'))).toBeDisplayed();
   });
 

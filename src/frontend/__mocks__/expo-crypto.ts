@@ -6,6 +6,7 @@ import {
 
 export enum CryptoDigestAlgorithm {
   SHA512 = 'sha512',
+  SHA256 = 'sha256',
 }
 
 export enum CryptoEncoding {

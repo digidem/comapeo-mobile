@@ -1,13 +1,12 @@
-import type {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {captureException, ErrorBoundary} from '@sentry/react-native';
 import type {ImageLoadEventData} from 'expo-image';
 import React, {useState} from 'react';
-import {defineMessages, useIntl, type MessageDescriptor} from 'react-intl';
+import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, View} from 'react-native';
 import {getExpoImageStorageSize} from '../../lib/file-system.ts';
 import {getAttachmentPhotoInfo} from '../../lib/photos.ts';
-import {BLACK, DARK_GREY, NEW_DARK_GREY, WHITE} from '../../lib/styles.ts';
-import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
+import {DARK_GREY, NEW_DARK_GREY} from '../../lib/styles.ts';
+
 import type {NativeRootNavigationProps} from '../../sharedTypes/navigation.ts';
 import {
   CoordinateInfoItem,
@@ -35,10 +34,6 @@ import {Accordian} from '../../sharedComponents/Accordian.tsx';
 import Octicons from 'react-native-vector-icons/Octicons';
 
 const m = defineMessages({
-  navTitle: {
-    id: 'screens.PhotoPreviewModal.navTitle',
-    defaultMessage: 'Photo Info',
-  },
   validatedByCoMapeo: {
     id: 'screens.PhotoPreviewModal.validatedByCoMapeo',
     defaultMessage: 'Validated by CoMapeo',
@@ -327,25 +322,4 @@ export function AttachedPhotoPreviewModal({
       </View>
     </ScrollView>
   );
-}
-
-export function createNavigationOptions({
-  intl,
-}: {
-  intl: (title: MessageDescriptor) => string;
-}) {
-  return (): NativeStackNavigationOptions => {
-    return {
-      headerTitle: intl(m.navTitle),
-      headerTitleStyle: {color: WHITE},
-      headerStyle: {backgroundColor: BLACK},
-      contentStyle: {backgroundColor: BLACK},
-      headerLeft: headerLeftProps => (
-        <CustomHeaderLeft
-          tintColor={WHITE}
-          headerBackButtonProps={headerLeftProps}
-        />
-      ),
-    };
-  };
 }

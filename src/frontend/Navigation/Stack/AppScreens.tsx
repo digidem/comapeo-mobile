@@ -110,12 +110,10 @@ import {AudioAttachmentPlaybackScreen} from '../../screens/Audio/AudioAttachment
 import {DidNotMoveBottomSheet} from '../../screens/MapScreen/TrackBottomSheet/DidNotMoveBottomSheet.tsx';
 import {
   DraftPhotoPreviewModal,
-  createNavigationOptions as DraftPhotoPreviewModalNavOptions,
+  DraftPhotoPreviewModalNavOptions,
 } from '../../screens/PhotoPreviewModal/DraftPhotoPreviewModal.tsx';
-import {
-  AttachedPhotoPreviewModal,
-  createNavigationOptions as AttachedPhotoPreviewModalNavigationOptions,
-} from '../../screens/PhotoPreviewModal/AttachedPhotoPreviewModal.tsx';
+import {AttachedPhotoPreviewModal} from '../../screens/PhotoPreviewModal/AttachedPhotoPreviewModal.tsx';
+import {sharedPhotoPreviewNavOptions} from '../../screens/PhotoPreviewModal/sharedNavOptions.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -154,7 +152,7 @@ export const createDefaultScreenGroup = ({
       <RootStack.Screen
         name="AttachedPhotoPreviewModal"
         component={AttachedPhotoPreviewModal}
-        options={AttachedPhotoPreviewModalNavigationOptions({intl})}
+        options={sharedPhotoPreviewNavOptions({intl})}
       />
       <RootStack.Screen
         name="ConfirmDeletePhoto"

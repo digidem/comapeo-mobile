@@ -7,8 +7,7 @@ import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {getExpoImageStorageSize} from '../../lib/file-system.ts';
 import {getDraftPhotoInfo} from '../../lib/photos.ts';
-import {BLACK, WHITE} from '../../lib/styles.ts';
-import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
+import {WHITE} from '../../lib/styles.ts';
 import type {NativeRootNavigationProps} from '../../sharedTypes/navigation.ts';
 import {ImageWithErrorFallback} from './ImageWithErrorFallback.tsx';
 import {
@@ -21,12 +20,9 @@ import {
   getDeviceDetailsText,
   getPhotoDetailsText,
 } from './helpers.ts';
+import {sharedPhotoPreviewNavOptions} from './sharedNavOptions.tsx';
 
 const m = defineMessages({
-  navTitle: {
-    id: 'screens.PhotoPreviewModal.navTitle',
-    defaultMessage: 'Photo Info',
-  },
   headerDeleteButtonText: {
     id: 'screens.PhotoPreviewModal.headerButtonText',
     defaultMessage: 'Delete Photo',
@@ -127,7 +123,7 @@ export function DraftPhotoPreviewModal({
   );
 }
 
-export function createNavigationOptions({
+export function DraftPhotoPreviewModalNavOptions({
   intl,
 }: {
   intl: (title: MessageDescriptor) => string;
@@ -137,16 +133,7 @@ export function createNavigationOptions({
     route,
   }: NativeRootNavigationProps<'DraftPhotoPreviewModal'>): NativeStackNavigationOptions => {
     return {
-      headerTitle: intl(m.navTitle),
-      headerTitleStyle: {color: WHITE},
-      headerStyle: {backgroundColor: BLACK},
-      contentStyle: {backgroundColor: BLACK},
-      headerLeft: headerLeftProps => (
-        <CustomHeaderLeft
-          tintColor={WHITE}
-          headerBackButtonProps={headerLeftProps}
-        />
-      ),
+      ...sharedPhotoPreviewNavOptions({intl}),
       headerRight: () => {
         const {photo} = route.params;
 

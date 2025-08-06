@@ -8,7 +8,7 @@ import {
   useSecurityActions,
   useSecurityState,
 } from './SecurityStoreContext';
-import {DEFAULT_OBSCURE_CODE} from '../lib/security';
+import {DEFAULT_OBSCURE_CODE, verifyPasscode} from '../lib/security';
 
 function createWrapper(settingsStore: SecurityStore) {
   return ({children}: {children: ReactNode}) => {
@@ -28,7 +28,15 @@ test('initial state', () => {
     wrapper,
   });
 
-  expect(stateHook.result.current).toStrictEqual({
+  const {passcode, obscureCodeEnabled, failedAttempts, lockUntil} =
+    stateHook.result.current;
+
+  expect({
+    passcode,
+    obscureCodeEnabled,
+    failedAttempts,
+    lockUntil,
+  }).toStrictEqual({
     passcode: null,
     obscureCodeEnabled: false,
     failedAttempts: 0,
@@ -36,7 +44,7 @@ test('initial state', () => {
   });
 });
 
-test('passcode cannot be set to invalid value', () => {
+test('passcode cannot be set to invalid value', async () => {
   const store = createSecurityStore();
   const wrapper = createWrapper(store);
 
@@ -58,17 +66,44 @@ test('passcode cannot be set to invalid value', () => {
   ];
 
   for (const v of invalidValues) {
-    expect(() => {
-      actionsHook.result.current.setPasscode(v);
-    }).toThrow();
+    await expect(async () => {
+      await actionsHook.result.current.setPasscode(v);
+    }).rejects.toThrow();
   }
 
-  expect(stateHook.result.current).toStrictEqual({
+  const {passcode, obscureCodeEnabled, failedAttempts, lockUntil} =
+    stateHook.result.current;
+
+  expect({
+    passcode,
+    obscureCodeEnabled,
+    failedAttempts,
+    lockUntil,
+  }).toStrictEqual({
     passcode: null,
     obscureCodeEnabled: false,
     failedAttempts: 0,
     lockUntil: 0,
   });
+});
+
+test('set and verify hashed passcode', async () => {
+  const store = createSecurityStore();
+  const wrapper = createWrapper(store);
+
+  const actionsHook = renderHook(() => useSecurityActions(), {wrapper});
+  const stateHook = renderHook(() => useSecurityState(), {wrapper});
+
+  await act(async () => {
+    await actionsHook.result.current.setPasscode('12345');
+  });
+
+  const stored = stateHook.result.current.passcode;
+  expect(typeof stored).toBe('string');
+  expect(stored).toContain(':');
+
+  const verified = await verifyPasscode({input: '12345', stored: stored!});
+  expect(verified).toBe(true);
 });
 
 test('obscure code cannot be set when passcode is not set', () => {
@@ -87,7 +122,15 @@ test('obscure code cannot be set when passcode is not set', () => {
     actionsHook.result.current.enableObscureCode(true);
   }).toThrow();
 
-  expect(stateHook.result.current).toStrictEqual({
+  const {passcode, obscureCodeEnabled, failedAttempts, lockUntil} =
+    stateHook.result.current;
+
+  expect({
+    passcode,
+    obscureCodeEnabled,
+    failedAttempts,
+    lockUntil,
+  }).toStrictEqual({
     passcode: null,
     obscureCodeEnabled: false,
     failedAttempts: 0,
@@ -95,7 +138,27 @@ test('obscure code cannot be set when passcode is not set', () => {
   });
 });
 
-test('obscure code has expected value when enabled', () => {
+test('obscure code has expected value when enabled', async () => {
+  const store = createSecurityStore();
+  const wrapper = createWrapper(store);
+
+  const stateHook = renderHook(() => useSecurityState(), {wrapper});
+  const actionsHook = renderHook(() => useSecurityActions(), {wrapper});
+
+  await act(async () => {
+    await actionsHook.result.current.setPasscode('12345');
+  });
+
+  expect(stateHook.result.current.obscureCodeEnabled).toBe(false);
+
+  act(() => {
+    actionsHook.result.current.enableObscureCode(true);
+  });
+
+  expect(stateHook.result.current.obscureCodeEnabled).toBe(true);
+});
+
+test('obscure code is unset when passcode is unset', async () => {
   const store = createSecurityStore();
   const wrapper = createWrapper(store);
 
@@ -107,64 +170,33 @@ test('obscure code has expected value when enabled', () => {
     wrapper,
   });
 
-  act(() => {
-    actionsHook.result.current.setPasscode('12345');
-  });
-
-  expect(stateHook.result.current).toStrictEqual({
-    passcode: '12345',
-    obscureCodeEnabled: false,
-    failedAttempts: 0,
-    lockUntil: 0,
-  });
-
-  act(() => {
+  await act(async () => {
+    await actionsHook.result.current.setPasscode('12345');
     actionsHook.result.current.enableObscureCode(true);
   });
+  expect(stateHook.result.current.passcode).not.toBe(null);
+  expect(stateHook.result.current.obscureCodeEnabled).toBe(true);
 
-  expect(stateHook.result.current).toStrictEqual({
-    passcode: '12345',
-    obscureCodeEnabled: true,
-    failedAttempts: 0,
-    lockUntil: 0,
-  });
-});
-
-test('obscure code is unset when passcode is unset', () => {
-  const store = createSecurityStore();
-  const wrapper = createWrapper(store);
-
-  const stateHook = renderHook(() => useSecurityState(), {
-    wrapper,
+  await act(async () => {
+    await actionsHook.result.current.setPasscode(null);
   });
 
-  const actionsHook = renderHook(() => useSecurityActions(), {
-    wrapper,
-  });
+  const {passcode, obscureCodeEnabled, failedAttempts, lockUntil} =
+    stateHook.result.current;
 
-  act(() => {
-    actionsHook.result.current.setPasscode('12345');
-    actionsHook.result.current.enableObscureCode(true);
-  });
-
-  expect(stateHook.result.current).toStrictEqual({
-    passcode: '12345',
-    obscureCodeEnabled: true,
-    failedAttempts: 0,
-    lockUntil: 0,
-  });
-
-  act(() => {
-    actionsHook.result.current.setPasscode(null);
-  });
-
-  expect(stateHook.result.current).toStrictEqual({
+  expect({
+    passcode,
+    obscureCodeEnabled,
+    failedAttempts,
+    lockUntil,
+  }).toStrictEqual({
     passcode: null,
     obscureCodeEnabled: false,
     failedAttempts: 0,
     lockUntil: 0,
   });
 });
+
 test('increments attempts and sets lockout', () => {
   const store = createSecurityStore();
   const wrapper = createWrapper(store);
@@ -180,6 +212,7 @@ test('increments attempts and sets lockout', () => {
   expect(stateHook.result.current.failedAttempts).toBe(2);
   expect(stateHook.result.current.lockUntil).toBe(123456789);
 });
+
 test('resets attempts and lockout', () => {
   const store = createSecurityStore();
   const wrapper = createWrapper(store);

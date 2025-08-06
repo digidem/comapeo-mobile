@@ -6,7 +6,7 @@ import {defineMessages, useIntl, type MessageDescriptor} from 'react-intl';
 import {ScrollView, View} from 'react-native';
 import {getExpoImageStorageSize} from '../../lib/file-system.ts';
 import {getAttachmentPhotoInfo} from '../../lib/photos.ts';
-import {BLACK, NEW_DARK_GREY, WHITE} from '../../lib/styles.ts';
+import {BLACK, DARK_GREY, NEW_DARK_GREY, WHITE} from '../../lib/styles.ts';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft.tsx';
 import type {NativeRootNavigationProps} from '../../sharedTypes/navigation.ts';
 import {
@@ -16,6 +16,8 @@ import {
   InfoItem,
 } from './InfoItem.tsx';
 import {
+  calcPhotoTimeRelativeToObs,
+  calculateDistanceFromObservation,
   getCameraDetailsText,
   getDeviceDetailsText,
   getPhotoDetailsText,
@@ -29,11 +31,39 @@ import {sharedStyles} from './sharedStyles.ts';
 import {useGetCreatedBy} from '../../hooks/server/useGetCreatedBy.ts';
 import {useSingleDocByDocId} from '@comapeo/core-react';
 import {useAppLanguageTag} from '../../hooks/useAppLanguageTag.ts';
+import {Accordian} from '../../sharedComponents/Accordian.tsx';
+import Octicons from 'react-native-vector-icons/Octicons';
 
 const m = defineMessages({
   navTitle: {
     id: 'screens.PhotoPreviewModal.navTitle',
     defaultMessage: 'Photo Info',
+  },
+  validatedByCoMapeo: {
+    id: 'screens.PhotoPreviewModal.validatedByCoMapeo',
+    defaultMessage: 'Validated by CoMapeo',
+  },
+  verifiedOriginal: {
+    id: 'screens.PhotoPreviewModal.verifiedOriginal',
+    defaultMessage: 'This is a verified original',
+    description: 'Text indicating that the photo is a verified original',
+  },
+  timeAttached: {
+    id: 'screens.PhotoPreviewModal.timeAttached',
+    defaultMessage:
+      'Attached {min} {min, plural, one {minute} other {minutes}} after observation',
+    description:
+      'Label for the time when the photo was attached to an observation',
+  },
+  distanceFromObservation: {
+    id: 'screens.PhotoPreviewModal.distanceFromObservation',
+    defaultMessage: 'Attached {distance} m from observation',
+  },
+  attachedAtTime: {
+    id: 'screens.PhotoPreviewModal.attachedAtTime',
+    defaultMessage: 'Attached at the time of the observation',
+    description:
+      'Label for the time when the photo was attached to an observation',
   },
 });
 
@@ -41,25 +71,44 @@ export function AttachedPhotoPreviewModal({
   route,
 }: NativeRootNavigationProps<'AttachedPhotoPreviewModal'>) {
   const {photo, observationDocId} = route.params;
-  const {formatMessage} = useIntl();
+  const photoInfo = getAttachmentPhotoInfo(photo);
+  const {createdAt: photoCreatedAt, coordinates: photoCoordinates} = photoInfo;
+
   const {projectId} = useActiveProject();
-
   const lang = useAppLanguageTag();
-
-  const {data: observation} = useSingleDocByDocId({
+  const {
+    data: {
+      originalVersionId: observationOriginalVersionId,
+      createdAt: observationCreatedAt,
+    },
+  } = useSingleDocByDocId({
     projectId,
     docType: 'observation',
     docId: observationDocId,
     lang,
   });
 
+  const {formatMessage} = useIntl();
+
+  const photoTimeRelativeToObs = photoCreatedAt
+    ? calcPhotoTimeRelativeToObs({
+        photoCreatedAt: photoCreatedAt,
+        observationCreatedAt: parseInt(observationCreatedAt),
+      })
+    : undefined;
+
+  const distanceFromObservation = photoCoordinates
+    ? calculateDistanceFromObservation({
+        photoLocation: [photoCoordinates.longitude, photoCoordinates.latitude],
+        observationLocation: [0, 0],
+      })
+    : undefined;
+
   const [imageLoadInfo, setImageLoadInfo] = useState<
     {height: number; width: number; storageSize?: number} | undefined
   >(undefined);
 
-  const {data: memberInfo} = useGetCreatedBy(observation.originalVersionId);
-
-  const photoInfo = getAttachmentPhotoInfo(photo);
+  const {data: memberInfo} = useGetCreatedBy(observationOriginalVersionId);
 
   const deviceDetailsText = getDeviceDetailsText({
     make: photoInfo.make,
@@ -127,6 +176,55 @@ export function AttachedPhotoPreviewModal({
         </View>
       </View>
       <View style={{gap: 20}}>
+        <View
+          style={{
+            flex: 1,
+            padding: 20,
+            borderColor: DARK_GREY,
+            borderWidth: 1,
+            borderRadius: 10,
+          }}>
+          <Accordian
+            title={
+              <View style={{flexDirection: 'row', gap: 12}}>
+                <Octicons
+                  name="check-circle"
+                  size={20}
+                  color={NEW_DARK_GREY}
+                  allowFontScaling
+                />
+                <BodyText selectable style={sharedStyles.primaryInfoText}>
+                  {formatMessage(m.validatedByCoMapeo)}
+                </BodyText>
+              </View>
+            }
+            innerAccordianDetails={
+              <>
+                <BodyText selectable style={sharedStyles.primaryInfoText}>
+                  {formatMessage(m.verifiedOriginal)}
+                </BodyText>
+
+                {photoTimeRelativeToObs && (
+                  <BodyText selectable style={sharedStyles.primaryInfoText}>
+                    {photoTimeRelativeToObs > 0
+                      ? formatMessage(m.timeAttached, {
+                          min: photoTimeRelativeToObs,
+                        })
+                      : formatMessage(m.attachedAtTime)}
+                  </BodyText>
+                )}
+
+                {distanceFromObservation && (
+                  <BodyText selectable style={sharedStyles.primaryInfoText}>
+                    {formatMessage(m.distanceFromObservation, {
+                      distance: distanceFromObservation.toFixed(2),
+                    })}
+                  </BodyText>
+                )}
+              </>
+            }
+          />
+        </View>
         {photoInfo.createdAt !== undefined && (
           <CreatedAtInfoItem createdAt={photoInfo.createdAt} />
         )}

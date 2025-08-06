@@ -1285,6 +1285,10 @@
     "description": "Label for the time when the photo was attached to an observation",
     "message": "Attached at the time of the observation"
   },
+  "screens.PhotoPreviewModal.attachedBy": {
+    "description": "Label for the person who attached the photo to the observation",
+    "message": "Attached by {name}"
+  },
   "screens.PhotoPreviewModal.distanceFromObservation": {
     "message": "Attached {distance} m from observation"
   },
@@ -1315,7 +1319,7 @@
   },
   "screens.PhotoPreviewModal.verifiedOriginal": {
     "description": "Text indicating that the photo is a verified original",
-    "message": "This is a verified original"
+    "message": "This is a verified unaltered original"
   },
   "screens.PrivacyPolicy.aboutAwana": {
     "message": "About Awana Digital"

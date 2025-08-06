@@ -76,6 +76,19 @@ describe('Observations - Create Observation Flow', () => {
     checkForElementGone(byTextMatches('Show Options'));
   });
 
+  it('should take a photo', async () => {
+    const addPhotoBtn = await $(byResourceId('OBS.add-photo-btn'));
+    await addPhotoBtn.click();
+    await expect($(byResourceId('MAIN.camera-scrn'))).toBeDisplayed();
+
+    const takePhotoButton = await $(byResourceId('addButtonCamera'));
+
+    await takePhotoButton.click();
+    const descriptionInput = await $(byResourceId('OBS.description-inp'));
+
+    await expect(descriptionInput).toBeDisplayed();
+  });
+
   it('should open camera, cancel, then save observation', async () => {
     const addPhotoBtn = await $(byResourceId('OBS.add-photo-btn'));
     await addPhotoBtn.click();

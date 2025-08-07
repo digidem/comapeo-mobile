@@ -5,9 +5,6 @@ import {output} from '../../utils/naming';
 
 describe('Passcode - Set Passcode Flow', () => {
   it('should navigate to Security screen from drawer', async () => {
-    const appSettingsOption = await $('~Go to app settings screen.');
-    await appSettingsOption.click();
-
     const securityOption = await $(byText('Security'));
     await securityOption.click();
 

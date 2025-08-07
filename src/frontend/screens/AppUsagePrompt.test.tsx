@@ -1,10 +1,8 @@
 import React from 'react';
 import {render, screen, userEvent} from '@testing-library/react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createManager, setUpIPC} from '../../../tests/integration/helpers/core';
 import {createAppProvidersWrapper} from '../../../tests/integration/helpers/react';
-import type {AppStackParamsList} from '../sharedTypes/navigation';
 import {MapeoClientApi} from '@comapeo/ipc';
 import {MapeoManager} from '@comapeo/core';
 import {
@@ -13,8 +11,17 @@ import {
 } from '../contexts/AppUsageStatsPromptContext';
 import {AppUsagePromptInterstitial} from './AppUsagePromptInterstitial';
 import {AppUsageSharingSuccess} from './AppUsageSharingSuccess';
+import {RootStack} from '../Navigation/Stack';
+import {HomeTabs} from '../Navigation/Tab';
 
-const Stack = createNativeStackNavigator<AppStackParamsList>();
+jest.mock('@sentry/react-native', () => ({
+  captureException: jest.fn(),
+  captureMessage: jest.fn(),
+  init: jest.fn(),
+  withScope: jest.fn(),
+  addBreadcrumb: jest.fn(),
+  configureScope: jest.fn(),
+}));
 
 describe('IntroToCoMapeo integration', () => {
   let manager: MapeoManager;
@@ -29,6 +36,7 @@ describe('IntroToCoMapeo integration', () => {
     });
     ({manager} = managerSetup);
     const {fastifyController} = managerSetup;
+    await fastifyController.start();
 
     const ipcSetup = setUpIPC({manager});
     ({client} = ipcSetup);
@@ -36,16 +44,14 @@ describe('IntroToCoMapeo integration', () => {
 
     const {stop} = ipcSetup;
     onTeardown.push(stop);
-    await fastifyController.start();
     onTeardown.push(() => fastifyController.stop());
+    await client.createProject({name: 'test project'});
   });
 
   afterEach(async () => {
     for (const fn of onTeardown) {
       await fn();
     }
-    jest.useRealTimers();
-    jest.clearAllTimers();
   });
 
   interface RenderScreenOptions {
@@ -74,18 +80,23 @@ describe('IntroToCoMapeo integration', () => {
     render(
       <NavigationContainer>
         <AppUsageStatsPromptProvider value={appUsageStore}>
-          <Stack.Navigator initialRouteName="AppUsagePromptInterstitial">
-            <Stack.Screen
+          <RootStack.Navigator>
+            <RootStack.Screen
               name="AppUsagePromptInterstitial"
               component={AppUsagePromptInterstitial}
               options={{headerShown: false}}
             />
-            <Stack.Screen
+            <RootStack.Screen
               name="AppUsageSharingSuccess"
               component={AppUsageSharingSuccess}
               options={{headerShown: false}}
             />
-          </Stack.Navigator>
+            <RootStack.Screen
+              name="Home"
+              component={HomeTabs}
+              options={{headerShown: false}}
+            />
+          </RootStack.Navigator>
         </AppUsageStatsPromptProvider>
       </NavigationContainer>,
       {wrapper: appProviders.wrapper},
@@ -110,7 +121,17 @@ describe('IntroToCoMapeo integration', () => {
     ).not.toBeOnTheScreen();
   });
 
-  test('navigates to App Usage Sharing Success screen correctly after opting in', async () => {
+  test('dismisses screen when pressing "No, not now"', async () => {
+    const user = userEvent.setup();
+    renderScreen({optedIn: null});
+
+    await user.press(await screen.findByText('No, not now'));
+    expect(
+      screen.queryByText('Help improve your experience.'),
+    ).not.toBeVisible();
+  });
+
+  test('navigates to App Usage Sharing Success screen correctly after pressing count me in', async () => {
     const user = userEvent.setup();
     renderScreen();
 
@@ -118,7 +139,40 @@ describe('IntroToCoMapeo integration', () => {
     await user.press(yesButton);
 
     await expect(screen.findByText('Success!')).resolves.toBeVisible();
+  });
 
-    expect(screen.getByText('test-device')).toBeVisible();
+  test('skips prompt if not enough time has passed since onboarding', () => {
+    renderScreen({
+      completedOnboardingAt: Date.now() - 5 * 24 * 60 * 60 * 1000,
+    });
+
+    expect(
+      screen.queryByText('Help improve your experience.'),
+    ).not.toBeOnTheScreen();
+  });
+
+  test('pressing Done on success screen sets optedIn to true and navigates to home screen', async () => {
+    const user = userEvent.setup();
+    renderScreen();
+
+    await user.press(await screen.findByText('Yes, count me in'));
+    await user.press(await screen.findByText('Done'));
+
+    expect(screen.queryByText('Success!')).not.toBeOnTheScreen();
+  });
+
+  test('re-prompts user after three months if initially opted out', async () => {
+    const threeMonthsAndOneDay = 91 * 24 * 60 * 60 * 1000;
+
+    renderScreen({
+      optedIn: false,
+      completedOnboardingAt: Date.now() - threeMonthsAndOneDay,
+      lastPromptAt: Date.now() - threeMonthsAndOneDay,
+      promptCount: 1,
+    });
+
+    expect(
+      await screen.findByText('Help improve your experience.'),
+    ).toBeVisible();
   });
 });

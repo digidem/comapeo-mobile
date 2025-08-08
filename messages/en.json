@@ -656,13 +656,10 @@
     "message": "CoMapeo Respects Your Privacy & Autonomy"
   },
   "screens.DataPrivacy.description": {
-    "message": "CoMapeo allows you and your collaborators to map offline without needing servers."
+    "message": "CoMapeo helps territory monitors & mappers securely collaborate—without needing the internet."
   },
   "screens.DataPrivacy.diagnostic": {
-    "message": "Private by default — diagnostic information is fully anonymized and you can opt-out any time."
-  },
-  "screens.DataPrivacy.encrypted": {
-    "message": "All data stays fully encrypted"
+    "message": "Private by default—diagnostic information is fully anonymized and you can opt-out any time."
   },
   "screens.DataPrivacy.learnMore": {
     "message": "Learn More"
@@ -674,7 +671,7 @@
     "message": "Next"
   },
   "screens.DataPrivacy.stays": {
-    "message": "Your data stays on your devices."
+    "message": "Your data stays on your devices—fully encrypted, in your control."
   },
   "screens.DataPrivacy.title": {
     "message": "Data & Privacy"
@@ -788,10 +785,10 @@
     "message": "Something Went Wrong"
   },
   "screens.IntroToCoMapeo.collaborate": {
-    "message": "Collaborate on projects"
+    "message": "Join or create project teams"
   },
   "screens.IntroToCoMapeo.designedFor": {
-    "message": "Designed with and for Indigenous peoples & frontline communities"
+    "message": "Designed with and for Indigenous territory monitors & mappers"
   },
   "screens.IntroToCoMapeo.getStarted": {
     "message": "Get Started"

@@ -1,33 +1,47 @@
 import * as React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import CoMapeoText from '../../images/CoMapeoTextBlue.svg';
 import {
   StyleSheet,
   View,
   TextInput,
-  KeyboardAvoidingView,
   Keyboard,
+  TouchableWithoutFeedback,
+  StyleSheet as RNStyleSheet,
 } from 'react-native';
-import {BLACK, LIGHT_GREY, MEDIUM_GREY, RED} from '../../lib/styles';
-import {Text} from '../../sharedComponents/Text';
-import {Button} from '../../sharedComponents/Button';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {defineMessages, useIntl} from 'react-intl';
+
+import DeviceIcon from '../../images/Device.svg';
+import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {PrimaryButton} from '../../sharedComponents/Buttons';
+import {
+  BLACK,
+  BLUE_GREY,
+  LIGHT_GREY,
+  NEW_DARK_GREY,
+  RED,
+  VERY_LIGHT_GREY,
+} from '../../lib/styles';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
 
 const m = defineMessages({
   header: {
     id: 'screens.DeviceNaming.header',
-    defaultMessage: 'Name your device',
+    defaultMessage: 'Name Your Device',
   },
   description: {
     id: 'screens.DeviceNaming.description',
     defaultMessage:
-      'Distinct, memorable names help collaborators recognize you.',
+      'Distinct, memorable names help collaborators using CoMapeo to recognize you.',
   },
   addName: {
     id: 'screens.DeviceNaming.addName',
-    defaultMessage: 'Add Name',
+    defaultMessage: 'Save',
+  },
+  placeholder: {
+    id: 'screens.DeviceNaming.placeholder',
+    defaultMessage: 'Device Name',
   },
 });
 
@@ -56,49 +70,58 @@ export const DeviceNaming = ({
     navigation.navigate('Success', {deviceName: trimmedName});
   }
   return (
-    <KeyboardAvoidingView style={{width: '100%', height: '100%'}}>
-      <TouchableWithoutFeedback
-        style={styles.container}
-        onPress={Keyboard.dismiss}>
-        <View>
-          <CoMapeoText style={{alignSelf: 'center'}} />
-
-          <View
-            style={{flexDirection: 'row', alignItems: 'center', marginTop: 20}}>
-            <Text style={{fontWeight: '500'}}>{t(m.header)}</Text>
-            <Text style={{color: RED}}>*</Text>
+    <ScreenContentWithDock
+      contentContainerStyle={styles.contentContainer}
+      dockContainerStyle={styles.dockContainer}
+      dockContent={
+        <PrimaryButton
+          testID="ONBOARDING.add-name-btn"
+          fullSize
+          onPress={handleAddNamePress}
+          text={t(m.addName)}
+        />
+      }>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.headerAndForm}>
+          <View style={styles.headerArea}>
+            <DeviceIcon width={51} height={80} />
+            <HeaderText
+              variant="header1"
+              style={styles.title}
+              numberOfLines={2}>
+              {t(m.header)}
+            </HeaderText>
           </View>
-          <TextInput
-            testID="ONBOARDING.device-name-inp"
-            style={[
-              styles.textInput,
-              {borderColor: !errorTimeout ? LIGHT_GREY : RED},
-            ]}
-            value={name}
-            onChangeText={setNameWithValidation}
-            placeholderTextColor={LIGHT_GREY}
-            placeholder="Device Name"
-          />
-          <Text
-            style={{
-              alignSelf: 'flex-end',
-              color: errorTimeout ? RED : MEDIUM_GREY,
-            }}>
-            {`${name.length}/60`}
-          </Text>
-          <View style={styles.greyBox}>
-            <Text>{t(m.description)}</Text>
+          <View style={styles.form}>
+            <TextInput
+              testID="ONBOARDING.device-name-inp"
+              style={[
+                styles.textInput,
+                {borderColor: errorTimeout ? RED : NEW_DARK_GREY},
+              ]}
+              value={name}
+              onChangeText={setNameWithValidation}
+              placeholderTextColor={LIGHT_GREY}
+              placeholder={t(m.placeholder)}
+            />
+
+            <BodyText
+              style={RNStyleSheet.flatten([
+                styles.counterText,
+                {color: errorTimeout ? RED : NEW_DARK_GREY},
+              ])}>
+              {`${name.length}/60`}
+            </BodyText>
+
+            <View style={styles.infoBox}>
+              <BodyText variant="tinyMeta" style={styles.infoText}>
+                {t(m.description)}
+              </BodyText>
+            </View>
           </View>
         </View>
-
-        <Button
-          testID="ONBOARDING.add-name-btn"
-          fullWidth
-          onPress={handleAddNamePress}>
-          {t(m.addName)}
-        </Button>
       </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    </ScreenContentWithDock>
   );
 };
 
@@ -113,7 +136,6 @@ function useTemporaryError() {
         timer.current = undefined;
       }, 1500);
     }
-
     return () => {
       if (timer.current) {
         clearTimeout(timer.current);
@@ -129,28 +151,49 @@ function useTemporaryError() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  contentContainer: {
+    paddingTop: 40,
+    alignItems: 'center',
+  },
+  dockContainer: {
+    paddingBottom: 30,
+  },
+  headerAndForm: {
     width: '100%',
-    height: '100%',
-    padding: 20,
-    paddingTop: 80,
-    justifyContent: 'space-between',
+    gap: 30,
+  },
+  headerArea: {
+    alignItems: 'center',
+  },
+  title: {
+    textAlign: 'center',
+  },
+  form: {
+    alignSelf: 'center',
+    gap: 10,
   },
   textInput: {
-    borderWidth: 1.5,
-    borderRadius: 5,
+    borderWidth: 1,
+    borderRadius: 4,
+    paddingHorizontal: 16,
     color: BLACK,
     fontSize: 16,
-    marginTop: 10,
-    paddingLeft: 10,
-    paddingRight: 10,
   },
-  greyBox: {
-    borderRadius: 10,
-    backgroundColor: LIGHT_GREY,
-    marginTop: 20,
-    padding: 20,
+  counterText: {
+    alignSelf: 'flex-end',
+    lineHeight: 16,
+  },
+  infoBox: {
+    backgroundColor: VERY_LIGHT_GREY,
+    borderColor: BLUE_GREY,
+    borderWidth: 1,
+    borderRadius: 6,
+    padding: 10,
+    alignItems: 'center',
     fontSize: 20,
-    marginBottom: 40,
+  },
+  infoText: {
+    textAlign: 'center',
+    lineHeight: 16,
   },
 });

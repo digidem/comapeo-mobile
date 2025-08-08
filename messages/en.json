@@ -692,13 +692,16 @@
     "message": "Success!"
   },
   "screens.DeviceNaming.addName": {
-    "message": "Add Name"
+    "message": "Save"
   },
   "screens.DeviceNaming.description": {
-    "message": "Distinct, memorable names help collaborators recognize you."
+    "message": "Distinct, memorable names help collaborators using CoMapeo to recognize you."
   },
   "screens.DeviceNaming.header": {
-    "message": "Name your device"
+    "message": "Name Your Device"
+  },
+  "screens.DeviceNaming.placeholder": {
+    "message": "Device Name"
   },
   "screens.EnterPassword.enterPass": {
     "message": "Enter your passcode"

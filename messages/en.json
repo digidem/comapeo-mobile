@@ -676,17 +676,14 @@
   "screens.DataPrivacy.title": {
     "message": "Data & Privacy"
   },
-  "screens.DeviceNaming.Success.description": {
-    "message": "You named your device"
+  "screens.DeviceNaming.Success.joinProject": {
+    "message": "Join a Project"
   },
-  "screens.DeviceNaming.Success.findSettings": {
-    "message": "To find your project settings go to the main menu found on the map screen."
+  "screens.DeviceNaming.Success.next": {
+    "message": "Next"
   },
-  "screens.DeviceNaming.Success.startMappingInstructions": {
-    "message": "On the next screen, tap the orange button to record your first observation."
-  },
-  "screens.DeviceNaming.Success.startUsihng": {
-    "message": "Start Using CoMapeo"
+  "screens.DeviceNaming.Success.ready": {
+    "message": "is now ready."
   },
   "screens.DeviceNaming.Success.success": {
     "message": "Success!"
@@ -1406,6 +1403,24 @@
   },
   "screens.PrivacyPolicy.whyCollectedDescription": {
     "message": "Crash data and app errors together with the device and app info provide Awana Digital with the information we need to fix errors and bugs in the app. The performance data helps us improve the responsiveness of the app and identify errors. User counts, including total users, users per country, and users per project, help justify ongoing investment in the development of CoMapeo."
+  },
+  "screens.ProjectsIntro.intro": {
+    "message": "CoMapeo helps teams securely store territory mapping observations."
+  },
+  "screens.ProjectsIntro.joinExisting": {
+    "message": "Join an Existing Project"
+  },
+  "screens.ProjectsIntro.mapSolo": {
+    "message": "Go to Map"
+  },
+  "screens.ProjectsIntro.sharingNote": {
+    "message": "Observations can only be shared with other devices on the same project."
+  },
+  "screens.ProjectsIntro.startNew": {
+    "message": "Start a New Project"
+  },
+  "screens.ProjectsIntro.title": {
+    "message": "Secure & Private Collaborations"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",

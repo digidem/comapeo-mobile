@@ -3,12 +3,15 @@ import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {ProjectOnboardingParamsList} from '../../sharedTypes/navigation';
-import CoMapeoShield from '../../images/CoMapeoShield.svg';
 import {HeaderText} from '../../sharedComponents/Text/HeaderText';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
-import {NEW_DARK_GREY, BLUE_GREY, DARK_GREY, WHITE} from '../../lib/styles';
-import {ScreenContentWithDock} from '../../sharedComponents/ScreenContentWithDock';
-import NoProjectIcon from '../../images/NoProjectIcon.svg';
+import {NEW_DARK_GREY, BLUE_GREY, DARK_GREY} from '../../lib/styles';
+import ExistingProjectIcon from '../../images/AddPerson.svg';
+import IntroProjectIcon from '../../images/NoProjectOrange.svg';
+import NewProjectIcon from '../../images/AddSquare.svg';
+import MapSoloIcon from '../../images/NoProjectIcon.svg';
+import ChevronRightIcon from '../../images/ChevronRight.svg';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const m = defineMessages({
   title: {
@@ -40,14 +43,10 @@ export const ProjectsIntro = ({
   navigation,
 }: NativeStackScreenProps<ProjectOnboardingParamsList, 'ProjectsIntro'>) => {
   const {formatMessage: t} = useIntl();
-
   return (
-    <ScreenContentWithDock
-      contentContainerStyle={styles.container}
-      dockContent={<View />}
-      dockContainerStyle={{paddingVertical: 0}}>
+    <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.headerArea}>
-        <CoMapeoShield width={80} height={80} />
+        <IntroProjectIcon width={80} height={80} />
         <HeaderText variant="header1" style={styles.title} numberOfLines={2}>
           {t(m.title)}
         </HeaderText>
@@ -62,28 +61,43 @@ export const ProjectsIntro = ({
 
       <View style={styles.actions}>
         <Row
+          icon={<ExistingProjectIcon width={20} height={20} />}
           text={t(m.joinExisting)}
-          onPress={() => navigation.navigate('JoinExistingProject')}
+          onPress={() => console.log('navigate to join existing project')}
         />
         <Row
+          icon={<NewProjectIcon width={20} height={20} />}
           text={t(m.startNew)}
-          onPress={() => navigation.navigate('CreateProject')}
+          onPress={() =>
+            console.log(navigation, 'navigate to start new project')
+          }
         />
         <Row
+          icon={<MapSoloIcon width={20} height={20} />}
           text={t(m.mapSolo)}
-          onPress={() => navigation.navigate('Home', {screen: 'Map'})}
+          onPress={() => console.log('navigate to map solo')}
         />
       </View>
-    </ScreenContentWithDock>
+    </ScrollView>
   );
 };
 
-function Row({text, onPress}: {text: string; onPress: () => void}) {
+function Row({
+  icon,
+  text,
+  onPress,
+}: {
+  icon: React.ReactNode;
+  text: string;
+  onPress: () => void;
+}) {
   return (
     <TouchableOpacity onPress={onPress} style={styles.row}>
-      <HeaderText variant="header5">{text}</HeaderText>
-      <BodyText style={{color: NEW_DARK_GREY}}>{'>'}</BodyText>
-      <View style={{width: 10, height: 16}} />
+      <View style={styles.rowLeft}>
+        {icon}
+        <HeaderText variant="header5">{text}</HeaderText>
+      </View>
+      <ChevronRightIcon width={20} height={20} />
     </TouchableOpacity>
   );
 }
@@ -91,12 +105,9 @@ function Row({text, onPress}: {text: string; onPress: () => void}) {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 40,
-    paddingHorizontal: 30,
     alignItems: 'center',
     gap: 15,
-    backgroundColor: WHITE,
-    borderColor: BLUE_GREY,
-    borderWidth: 1,
+    paddingBottom: 20,
   },
   headerArea: {
     alignItems: 'center',
@@ -108,10 +119,9 @@ const styles = StyleSheet.create({
   },
   infoCard: {
     alignItems: 'center',
-    padding: 20,
+    paddingVertical: 20,
+    paddingHorizontal: 40,
     gap: 12,
-    width: 320,
-    borderRadius: 10,
   },
   infoText: {
     textAlign: 'center',
@@ -121,17 +131,23 @@ const styles = StyleSheet.create({
     color: NEW_DARK_GREY,
   },
   actions: {
-    width: 300,
-    gap: 12,
+    gap: 15,
+    paddingHorizontal: 20,
   },
   row: {
-    minHeight: 64,
     borderColor: BLUE_GREY,
     borderWidth: 1,
     borderRadius: 6,
-    paddingHorizontal: 20,
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
+    width: '100%',
+    paddingHorizontal: 30,
+    paddingVertical: 21,
+  },
+  rowLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
   },
 });

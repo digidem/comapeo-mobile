@@ -153,7 +153,13 @@ export type OnboardingParamsList = {
   Success: {deviceName: string};
 };
 
-export type AppStackParamsList = RootStackParamsList & OnboardingParamsList;
+export type ProjectOnboardingParamsList = {
+  ProjectsIntro: undefined;
+};
+
+export type AppStackParamsList = RootStackParamsList &
+  OnboardingParamsList &
+  ProjectOnboardingParamsList;
 
 export type NativeRootNavigationProps<
   ScreenName extends keyof AppStackParamsList,

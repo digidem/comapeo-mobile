@@ -12,6 +12,8 @@ import {createDefaultScreenGroup} from './AppScreens';
 import {createOnboardingScreens} from './OnboardingScreens';
 import {PendingInvitesListener} from '../../sharedComponents/PendingInvitesListener';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
+import {createProjectOnboardingScreens} from './ProjectOnboardingScreens';
+import {useHasCompletedProjectOnboarding} from '../../contexts/ProjectOnboardingStoreContext';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
 
@@ -21,6 +23,7 @@ export const RootStackNavigator = () => {
   const {navigate} = useNavigationFromRoot();
 
   const {data: deviceInfo} = useOwnDeviceInfo();
+  const hasCompletedProjectOnboarding = useHasCompletedProjectOnboarding();
 
   React.useEffect(() => {
     if (security.authState === 'unauthenticated') {
@@ -49,11 +52,11 @@ export const RootStackNavigator = () => {
         );
       }}
       screenOptions={NavigatorScreenOptions}>
-      {deviceInfo.name
-        ? createDefaultScreenGroup({
-            intl: formatMessage,
-          })
-        : createOnboardingScreens({intl: formatMessage})}
+      {!deviceInfo?.name
+        ? createOnboardingScreens({intl: formatMessage})
+        : !hasCompletedProjectOnboarding
+          ? createProjectOnboardingScreens({intl: formatMessage})
+          : createDefaultScreenGroup({intl: formatMessage})}
     </RootStack.Navigator>
   );
 };

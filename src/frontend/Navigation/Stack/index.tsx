@@ -54,7 +54,7 @@ export const RootStackNavigator = () => {
       {!deviceInfo?.name
         ? createOnboardingScreens({intl: formatMessage})
         : projects && projects.length === 0
-          ? createProjectOnboardingScreens({intl: formatMessage})
+          ? createProjectOnboardingScreens()
           : createDefaultScreenGroup({intl: formatMessage})}
     </RootStack.Navigator>
   );

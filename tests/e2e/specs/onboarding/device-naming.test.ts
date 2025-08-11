@@ -41,8 +41,10 @@ describe('Onboarding - Device Naming Test', () => {
     const addedDeviceName = await $(byText(output.names.device));
     await expect(addedDeviceName).toBeDisplayed();
 
-    const goToMapButton = await $(byResourceId('ONBOARDING.go-to-map-btn'));
-    await expect(goToMapButton).toBeDisplayed();
-    await goToMapButton.click();
+    const gotoProjectButton = await $(
+      byResourceId('ONBOARDING.go-to-project-btn'),
+    );
+    await expect(gotoProjectButton).toBeDisplayed();
+    await gotoProjectButton.click();
   });
 });

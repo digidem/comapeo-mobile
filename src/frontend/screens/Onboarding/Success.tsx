@@ -55,7 +55,7 @@ export const Success = ({
           <Loading />
         ) : (
           <PrimaryButton
-            testID="ONBOARDING.go-to-map-btn"
+            testID="ONBOARDING.go-to-project-btn"
             fullSize
             onPress={() => {
               mutate({

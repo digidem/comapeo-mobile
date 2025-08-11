@@ -11,9 +11,8 @@ import {Loading} from '../../sharedComponents/Loading';
 import {createDefaultScreenGroup} from './AppScreens';
 import {createOnboardingScreens} from './OnboardingScreens';
 import {PendingInvitesListener} from '../../sharedComponents/PendingInvitesListener';
-import {useOwnDeviceInfo} from '@comapeo/core-react';
+import {useOwnDeviceInfo, useManyProjects} from '@comapeo/core-react';
 import {createProjectOnboardingScreens} from './ProjectOnboardingScreens';
-import {useHasCompletedProjectOnboarding} from '../../contexts/ProjectOnboardingStoreContext';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
 
@@ -23,7 +22,7 @@ export const RootStackNavigator = () => {
   const {navigate} = useNavigationFromRoot();
 
   const {data: deviceInfo} = useOwnDeviceInfo();
-  const hasCompletedProjectOnboarding = useHasCompletedProjectOnboarding();
+  const {data: projects} = useManyProjects();
 
   React.useEffect(() => {
     if (security.authState === 'unauthenticated') {
@@ -54,7 +53,7 @@ export const RootStackNavigator = () => {
       screenOptions={NavigatorScreenOptions}>
       {!deviceInfo?.name
         ? createOnboardingScreens({intl: formatMessage})
-        : !hasCompletedProjectOnboarding
+        : projects && projects.length === 0
           ? createProjectOnboardingScreens({intl: formatMessage})
           : createDefaultScreenGroup({intl: formatMessage})}
     </RootStack.Navigator>

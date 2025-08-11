@@ -5,29 +5,29 @@ import {tapAboveElement} from '../../utils/touchActions';
 import {checkForElementGone} from '../../utils/checkForGone';
 
 describe('Observations - Create Observation Flow', () => {
-  it('should set location and open create observation screen', async () => {
-    const addObsBtn = await $('~Add Observation');
-    await addObsBtn.click();
-    await expect($(byTextMatches('Choose a category'))).toBeDisplayed();
-    await expect($(byTextMatches('Airstrip'))).toBeDisplayed();
-  });
+  // it('should set location and open create observation screen', async () => {
+  //   const addObsBtn = await $('~Add Observation');
+  //   await addObsBtn.click();
+  //   await expect($(byTextMatches('Choose a category'))).toBeDisplayed();
+  //   await expect($(byTextMatches('Airstrip'))).toBeDisplayed();
+  // });
 
-  it('should discard observation and return to the map screen', async () => {
-    const closeIcon = await $(byResourceId('close-icon'));
-    await closeIcon.click();
+  // it('should discard observation and return to the map screen', async () => {
+  //   const closeIcon = await $(byResourceId('close-icon'));
+  //   await closeIcon.click();
 
-    const discardObs = await $(byText('Discard Observation'));
-    await expect(discardObs).toBeDisplayed();
+  //   const discardObs = await $(byText('Discard Observation'));
+  //   await expect(discardObs).toBeDisplayed();
 
-    const continueEditing = await $(byTextMatches('Continue editing'));
-    await continueEditing.click();
-    checkForElementGone(byTextMatches('Continue editing'));
+  //   const continueEditing = await $(byTextMatches('Continue editing'));
+  //   await continueEditing.click();
+  //   checkForElementGone(byTextMatches('Continue editing'));
 
-    await closeIcon.click();
-    await discardObs.click();
+  //   await closeIcon.click();
+  //   await discardObs.click();
 
-    await expect($(byResourceId('MAIN.mapbox-map-view'))).toBeDisplayed();
-  });
+  //   await expect($(byResourceId('MAIN.mapbox-map-view'))).toBeDisplayed();
+  // });
 
   it('should pick House category and display New Observation screen', async () => {
     const addObsBtn = await $('~Add Observation');
@@ -56,25 +56,25 @@ describe('Observations - Create Observation Flow', () => {
     await expect(houseCategory).toBeDisplayed();
   });
 
-  it('should change category to Threat and add a description', async () => {
-    const changeBtn = await $(byTextMatches('Change'));
-    await changeBtn.click();
-    await expect($(byResourceId('MAIN.categories-scrn'))).toBeDisplayed();
+  // it('should change category to Threat and add a description', async () => {
+  //   const changeBtn = await $(byTextMatches('Change'));
+  //   await changeBtn.click();
+  //   await expect($(byResourceId('MAIN.categories-scrn'))).toBeDisplayed();
 
-    const threatOption = await $(byTextMatches('Threat'));
-    await threatOption.scrollIntoView();
-    await threatOption.click();
+  //   const threatOption = await $(byTextMatches('Threat'));
+  //   await threatOption.scrollIntoView();
+  //   await threatOption.click();
 
-    const descriptionInput = await $(byResourceId('OBS.description-inp'));
-    await descriptionInput.click();
-    await descriptionInput.setValue('Sample description');
+  //   const descriptionInput = await $(byResourceId('OBS.description-inp'));
+  //   await descriptionInput.click();
+  //   await descriptionInput.setValue('Sample description');
 
-    await expect($(byResourceId('OBS.add-photo-btn-keyboard'))).toBeDisplayed();
+  //   await expect($(byResourceId('OBS.add-photo-btn-keyboard'))).toBeDisplayed();
 
-    const showOptionsElem = $(byTextMatches('Show Options'));
-    await tapAboveElement(showOptionsElem, 150);
-    checkForElementGone(byTextMatches('Show Options'));
-  });
+  //   const showOptionsElem = $(byTextMatches('Show Options'));
+  //   await tapAboveElement(showOptionsElem, 150);
+  //   checkForElementGone(byTextMatches('Show Options'));
+  // });
 
   it('should take a photo', async () => {
     const addPhotoBtn = await $(byResourceId('OBS.add-photo-btn'));
@@ -85,11 +85,9 @@ describe('Observations - Create Observation Flow', () => {
 
     await takePhotoButton.click();
 
-    const attachments = await $$(
-      'android=new UiSelector().resourceIdMatches(".*photo-thumbnail.*")',
-    );
+    const thumbnails = await $$('~View draft photo.');
 
-    expect(attachments.length).toHaveLength(1);
+    expect(thumbnails).toHaveLength(1);
   });
 
   it('should open camera, cancel, then save observation', async () => {

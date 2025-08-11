@@ -61,16 +61,16 @@ export const ProjectsIntro = ({
 
       <View style={styles.actions}>
         <Row
-          icon={<ExistingProjectIcon width={20} height={20} />}
+          icon={
+            <ExistingProjectIcon width={20} height={20} color={NEW_DARK_GREY} />
+          }
           text={t(m.joinExisting)}
-          onPress={() => console.log('navigate to join existing project')}
+          onPress={() => navigation.navigate('JoinProject')}
         />
         <Row
-          icon={<NewProjectIcon width={20} height={20} />}
+          icon={<NewProjectIcon width={20} height={20} color={NEW_DARK_GREY} />}
           text={t(m.startNew)}
-          onPress={() =>
-            console.log(navigation, 'navigate to start new project')
-          }
+          onPress={() => navigation.navigate('StartNewProject')}
         />
         <Row
           icon={<MapSoloIcon width={20} height={20} />}

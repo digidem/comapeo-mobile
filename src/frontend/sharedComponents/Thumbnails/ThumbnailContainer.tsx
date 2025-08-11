@@ -15,6 +15,7 @@ type ThumbnailContainerProps = {
   size: number;
   accessibilityLabel?: string;
   containerStyle?: ViewStyle;
+  testId?: string;
 };
 
 export const ThumbnailContainer = ({
@@ -23,6 +24,7 @@ export const ThumbnailContainer = ({
   children,
   size,
   containerStyle,
+  testId,
 }: ThumbnailContainerProps) => {
   return (
     <TouchableOpacity
@@ -33,6 +35,7 @@ export const ThumbnailContainer = ({
         containerStyle,
       ]}
       disabled={!onPress}
+      testID={testId}
       onPress={onPress}>
       {children}
     </TouchableOpacity>

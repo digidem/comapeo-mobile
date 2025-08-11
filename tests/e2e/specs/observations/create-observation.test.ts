@@ -84,9 +84,12 @@ describe('Observations - Create Observation Flow', () => {
     const takePhotoButton = await $(byResourceId('addButtonCamera'));
 
     await takePhotoButton.click();
-    const descriptionInput = await $(byResourceId('OBS.description-inp'));
 
-    await expect(descriptionInput).toBeDisplayed();
+    const attachments = await $$(
+      'android=new UiSelector().resourceIdMatches(".*photo-thumbnail.*")',
+    );
+
+    expect(attachments.length).toHaveLength(1);
   });
 
   it('should open camera, cancel, then save observation', async () => {

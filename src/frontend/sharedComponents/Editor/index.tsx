@@ -123,7 +123,7 @@ export const Editor = ({
           gap={GAP}
           renderChildren={size => (
             <>
-              {attachments.map(att => {
+              {attachments.map((att, index) => {
                 if (isUnprocessedDraftPhoto(att)) {
                   return <ThumbnailLoader size={size} key={att.draftPhotoId} />;
                 }
@@ -131,6 +131,7 @@ export const Editor = ({
                   return (
                     <ThumbnailContainer
                       key={att.draftPhotoId}
+                      testId={`EDITOR.PHOTO_THUMBNAIL.DRAFT.${index}`}
                       size={size}
                       onPress={() =>
                         navigate('DraftPhotoPreviewModal', {
@@ -152,6 +153,7 @@ export const Editor = ({
                       key={att.driveDiscoveryId + att.hash + att.type}
                       fallback={<ThumbnailLoader size={size} />}>
                       <SavedPhotoThumbnailImage
+                        testId={`EDITOR.PHOTO_THUMBNAI.SAVED.${index}`}
                         size={size}
                         photo={att}
                         onPress={() => {

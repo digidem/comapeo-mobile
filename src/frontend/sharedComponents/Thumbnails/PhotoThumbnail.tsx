@@ -29,15 +29,20 @@ export const SavedPhotoThumbnailImage = ({
   onPress,
   photo,
   size,
+  testId,
 }: {
   onPress?: () => void;
   photo: SavedPhoto;
   size: number;
+  testId: string;
 }) => {
   const image = useAttachmentUrlQuery(photo, 'thumbnail');
 
   return (
-    <ThumbnailContainer size={size} onPress={image.error ? undefined : onPress}>
+    <ThumbnailContainer
+      testId={testId}
+      size={size}
+      onPress={image.error ? undefined : onPress}>
       <ThumbnailImage error={image.error || undefined} uri={image.url} />
     </ThumbnailContainer>
   );

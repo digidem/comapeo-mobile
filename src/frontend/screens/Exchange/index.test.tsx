@@ -51,10 +51,12 @@ describe('Exchange screen', () => {
 
   const renderSyncScreen = ({
     isOnline = true,
-  }: Readonly<{isOnline?: boolean}> = {}) => {
+    activeProjectId,
+  }: Readonly<{isOnline?: boolean; activeProjectId?: string}> = {}) => {
     const appProviders = createAppProvidersWrapper({
       mapeoApi: client,
       isOnline,
+      activeProjectId,
     });
     onTeardown.push(appProviders.teardown);
 
@@ -95,7 +97,8 @@ describe('Exchange screen', () => {
   };
 
   test('when project is in "solo mode", renders a screen with info', async () => {
-    renderSyncScreen();
+    const projectId = await client.createProject({name: undefined});
+    renderSyncScreen({activeProjectId: projectId});
 
     await expect(screen.findByText('Exchange')).resolves.toBeVisible();
     await expect(
@@ -127,7 +130,7 @@ describe('Exchange screen', () => {
 
     // Render the sync screen
 
-    renderSyncScreen({isOnline: false});
+    renderSyncScreen({isOnline: false, activeProjectId: projectId});
 
     await expect(screen.findByText('No Wi-Fi.')).resolves.toBeVisible();
   });
@@ -143,7 +146,7 @@ describe('Exchange screen', () => {
       dangerouslyAllowInsecureConnections: true,
     });
 
-    renderSyncScreen({isOnline: false});
+    renderSyncScreen({isOnline: false, activeProjectId: projectId});
 
     await expect(
       screen.findByText('Remote Archive connected'),
@@ -218,7 +221,7 @@ describe('Exchange screen', () => {
 
     // Render the sync screen, which should show no connection
 
-    renderSyncScreen();
+    renderSyncScreen({activeProjectId: projectId});
 
     expect(await screen.findByText('CoMapeo Test Wi-Fi')).toBeVisible();
     expect(await screen.findByText('No devices found.')).toBeVisible();
@@ -309,7 +312,7 @@ describe('Exchange screen', () => {
 
     // Sync with the remote archive (but not the other manager)
 
-    const unmount = renderSyncScreen();
+    const unmount = renderSyncScreen({activeProjectId: projectId});
 
     await user.press(await screen.findByText('Start'));
 

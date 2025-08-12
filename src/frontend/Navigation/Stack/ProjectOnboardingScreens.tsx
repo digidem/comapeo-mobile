@@ -5,6 +5,7 @@ import {JoinProject} from '../../screens/ProjectOnboarding/JoinProject';
 import {StartNewProject} from '../../screens/ProjectOnboarding/StartNewProject';
 import {CreateProject} from '../../screens/ProjectOnboarding/CreateProject';
 import {MessageDescriptor} from 'react-intl';
+import {MapOnOwn} from '../../screens/ProjectOnboarding/MapOnOwn';
 
 export const createProjectOnboardingScreens = ({
   intl,
@@ -31,6 +32,11 @@ export const createProjectOnboardingScreens = ({
       name="CreateProject"
       component={CreateProject}
       options={{headerTitle: intl(CreateProject.navTitle)}}
+    />
+    <RootStack.Screen
+      name="MapOnOwn"
+      component={MapOnOwn}
+      options={{headerShown: false}}
     />
   </RootStack.Group>
 );

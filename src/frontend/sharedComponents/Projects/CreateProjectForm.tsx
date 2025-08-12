@@ -21,41 +21,41 @@ import SpeechBubbleIcon from '../../images/SpeechBubble.svg';
 
 const m = defineMessages({
   title: {
-    id: 'screens.Settings.CreateOrJoinProject.CreateProject.title',
+    id: 'screens.CreateProjectForm.title',
     defaultMessage: 'Start New Project',
   },
   titleSoloProject: {
-    id: 'screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject',
+    id: 'screens.CreateProjectForm.titleSoloProject',
     defaultMessage: 'Name My Project',
   },
   enterName: {
-    id: 'screens.Settings.CreateOrJoinProject.enterName',
+    id: 'screens.CreateProjectForm.enterName',
     defaultMessage: 'Project Name',
   },
   createProjectButton: {
-    id: 'screens.Settings.CreateOrJoinProject.createProjectButton',
+    id: 'screens.CreateProjectForm.createProjectButton',
     defaultMessage: 'Create',
   },
   saveProjectButton: {
-    id: 'screens.Settings.CreateOrJoinProject.saveProjectButton',
+    id: 'screens.CreateProjectForm.saveProjectButton',
     defaultMessage: 'Save',
   },
   keepInMind: {
-    id: 'screens.Settings.CreateOrJoinProject.keepInMind',
+    id: 'screens.CreateProjectForm.keepInMind',
     defaultMessage: 'Keep in mind',
   },
   projectUnique: {
-    id: 'screens.Settings.CreateOrJoinProject.projectUnique',
+    id: 'screens.CreateProjectForm.projectUnique',
     defaultMessage:
       'Each project is unique and cannot exchange with another project.',
   },
   existingProjectName: {
-    id: 'screens.Settings.CreateOrJoinProject.existingProjectName',
+    id: 'screens.CreateProjectForm.existingProjectName',
     defaultMessage:
       'Using an existing project name does not make them the same project.',
   },
   requestInvites: {
-    id: 'screens.Settings.CreateOrJoinProject.requestInvites',
+    id: 'screens.CreateProjectForm.requestInvites',
     defaultMessage: 'Request invites to join existing projects.',
   },
 });

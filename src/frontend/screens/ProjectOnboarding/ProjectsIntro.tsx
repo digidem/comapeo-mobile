@@ -75,7 +75,7 @@ export const ProjectsIntro = ({
         <Row
           icon={<MapSoloIcon width={20} height={20} />}
           text={t(m.mapSolo)}
-          onPress={() => console.log('navigate to map solo')}
+          onPress={() => navigation.navigate('MapOnOwn')}
         />
       </View>
     </ScrollView>

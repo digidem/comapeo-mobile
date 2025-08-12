@@ -10,11 +10,11 @@ import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 
 const m = defineMessages({
   title: {
-    id: 'screens.Settings.CreateOrJoinProject.CreateProject.title',
+    id: 'screens.Settings.CreateOrJoinProject.title',
     defaultMessage: 'Start New Project',
   },
   titleSoloProject: {
-    id: 'screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject',
+    id: 'screens.Settings.CreateOrJoinProject.titleSoloProject',
     defaultMessage: 'Name My Project',
   },
   createProjectButton: {

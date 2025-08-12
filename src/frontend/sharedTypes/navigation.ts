@@ -158,6 +158,7 @@ export type ProjectOnboardingParamsList = {
   JoinProject: undefined;
   StartNewProject: undefined;
   CreateProject: undefined;
+  MapOnOwn: undefined;
 };
 
 export type AppStackParamsList = RootStackParamsList &

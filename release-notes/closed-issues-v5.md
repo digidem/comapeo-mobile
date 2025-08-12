@@ -51,3 +51,7 @@
 [closed #1292](https://github.com/digidem/comapeo-mobile/issues/1292): Automate release notes on each release
 
 [closed #999](https://github.com/digidem/comapeo-mobile/issues/999): Obvs w track - no pic / blank space
+
+## Closed Issues Added to RC created on 2025-08-12 18:16:57 EDT
+[closed #1309](https://github.com/digidem/comapeo-mobile/issues/1309): Slowdown from excessive logging in the backend
+

@@ -124,3 +124,20 @@ PR #1298: Hotfix Release Candidate v3.1
 
 PR #1293: docs: automated release notes
 [closed #1292](https://github.com/digidem/comapeo-mobile/issues/1292)
+
+## Closed Prs cherry picked onto RC created on 2025-08-12 18:16:57 EDT
+PR #1295: chore: turn on Sentry tracing for non-production environments
+
+PR #1306: fix: fixes and improvements to network service discovery
+
+PR #1310: fix: don't debug log in production
+[closed #1309](https://github.com/digidem/comapeo-mobile/issues/1309)
+
+PR #1311: fix: Do not stop the discovery server
+
+PR #1308: chore: easier e2e testing
+
+PR #1296: chore: Add Sentry distributed tracing for RPC calls
+
+PR #1320: chore (deps): update to core to latest
+

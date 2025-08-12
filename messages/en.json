@@ -85,6 +85,15 @@
     "description": "Title of dialog that shows when cancelling observation edits",
     "message": "Discard changes?"
   },
+  "ProjectOnboarding.JoinProject.bodyText": {
+    "message": "Ask a Project Coordinator for an invitation to their Project."
+  },
+  "ProjectOnboarding.JoinProject.goBackButton": {
+    "message": "Go Back"
+  },
+  "ProjectOnboarding.JoinProject.title": {
+    "message": "Join a Project"
+  },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
     "message": "When project participants sync their data, they will also be archived on the internet. Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data."
   },

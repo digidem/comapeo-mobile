@@ -1,17 +1,16 @@
 import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
-import {HeaderText} from './Text/HeaderText';
-import {BodyText} from './Text/BodyText';
-import {PrimaryButton, SecondaryButton} from './Buttons';
-import {NativeRootNavigationProps} from '../sharedTypes/navigation';
-import {ScreenContentWithDock} from './ScreenContentWithDock';
+import {HeaderText} from '../Text/HeaderText';
+import {BodyText} from '../Text/BodyText';
+import {PrimaryButton, SecondaryButton} from '../Buttons';
+import {ScreenContentWithDock} from '../ScreenContentWithDock';
 import {SvgProps} from 'react-native-svg';
-import {DARK_ORANGE, NEW_DARK_GREY} from '../lib/styles';
+import {DARK_ORANGE, NEW_DARK_GREY} from '../../lib/styles';
 
-import IndexPointingUp from '../images/IndexPointingUp.svg';
-import LockedWithKey from '../images/LockedWithKey.svg';
-import GreenCheck from '../images/GreenSquareCheckmark.svg';
+import IndexPointingUp from '../../images/IndexPointingUp.svg';
+import LockedWithKey from '../../images/LockedWithKey.svg';
+import GreenCheck from '../../images/GreenSquareCheckmark.svg';
 
 const m = defineMessages({
   screenTitle: {
@@ -44,7 +43,7 @@ const m = defineMessages({
   },
 });
 
-type Props = NativeRootNavigationProps<'StartNewProject'> & {
+type Props = {
   TopIcon: React.FC<SvgProps>;
   iconProps?: SvgProps;
   onGoBack: () => void;

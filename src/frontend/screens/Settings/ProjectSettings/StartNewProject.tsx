@@ -1,14 +1,13 @@
 import ProjectIcon from '../../../images/ObservationsProject.svg';
-import {StartNewProjectBaseScreen} from '../../../sharedComponents/StartNewProjectBase';
+import {StartNewProjectBaseScreen} from '../../../sharedComponents/Projects/StartNewProjectBase';
 import {NativeRootNavigationProps} from '../../../sharedTypes/navigation';
 
 type Props = NativeRootNavigationProps<'StartNewProject'>;
 
-export const StartNewProjectScreen: React.FC<Props> = props => (
+export const StartNewProjectScreen: React.FC<Props> = ({navigation}) => (
   <StartNewProjectBaseScreen
-    {...props}
     TopIcon={ProjectIcon}
-    onGoBack={props.navigation.goBack}
-    onStart={() => props.navigation.replace('CreateProject')}
+    onGoBack={navigation.goBack}
+    onStart={() => navigation.replace('CreateProject')}
   />
 );

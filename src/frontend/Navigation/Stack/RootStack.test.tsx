@@ -6,6 +6,7 @@ import {
   screen,
   userEvent,
   waitFor,
+  within,
 } from '@testing-library/react-native';
 
 import type {MapeoManager} from '@comapeo/core';
@@ -52,7 +53,7 @@ describe('Root navigation onboarding → next screen', () => {
     });
     onTeardown.push(appProviders.teardown);
 
-    return render(
+    const r = render(
       <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="Root" component={RootStackNavigator} />
@@ -60,6 +61,14 @@ describe('Root navigation onboarding → next screen', () => {
       </NavigationContainer>,
       {wrapper: appProviders.wrapper},
     );
+    const unmountSafely = async () => {
+      r.unmount();
+      await new Promise(res => setTimeout(res, 0));
+    };
+
+    onTeardown.unshift(unmountSafely);
+
+    return {...r, unmountSafely};
   }
 
   it('without a device name, goes to the intro to comapeo screen', async () => {
@@ -105,6 +114,100 @@ describe('Root navigation onboarding → next screen', () => {
     await expect(screen.findByTestId('MAIN.map-screen')).resolves.toBeVisible();
   });
 
+  it('does not create a project when name is blank/whitespace', async () => {
+    await client.setDeviceInfo({name: 'My Device', deviceType: 'mobile'});
+
+    const user = userEvent.setup();
+    renderRoot();
+
+    await user.press(
+      await screen.findByText('Secure & Private Collaborations'),
+    );
+    await user.press(screen.getByText('Start a New Project'));
+    await user.press(await screen.findByText('Start'));
+
+    const input = await screen.findByTestId('PROJECT.name-inp');
+    await user.clear(input);
+    await user.type(input, '     ');
+    await user.press(screen.getByTestId('PROJECT.submit-btn'));
+
+    await waitFor(async () => {
+      const projects = await client.listProjects();
+      if (projects.length !== 0) throw new Error('Unexpected project creation');
+    });
+
+    expect(screen.getByTestId('PROJECT.name-inp')).toBeVisible();
+  });
+
+  it('Map Solo creates exactly one default (unnamed) project on quick double press', async () => {
+    await client.setDeviceInfo({name: 'My Device', deviceType: 'mobile'});
+    const user = userEvent.setup();
+    const {unmountSafely} = renderRoot();
+
+    await user.press(await screen.findByText('Go to Map'));
+    await screen.findByText('Map on Your Own');
+
+    const start = await screen.findByText('Start Mapping');
+    await user.press(start);
+
+    const maybeStart = screen.queryByText('Start Mapping');
+    if (maybeStart) {
+      await user.press(maybeStart);
+    }
+
+    await waitFor(async () => {
+      const projects = await client.listProjects();
+      if (projects.length !== 1) throw new Error('Project not created yet');
+    });
+
+    const [proj] = await client.listProjects();
+    expect(proj?.name).toBeUndefined();
+
+    await unmountSafely();
+  });
+
+  it('shows error bottom sheet when project creation fails', async () => {
+    await client.setDeviceInfo({name: 'My Device', deviceType: 'mobile'});
+
+    const orig = manager.createProject.bind(manager);
+    const spy = jest
+      .spyOn(manager, 'createProject')
+      .mockImplementationOnce(async () => {
+        throw new Error('boom');
+      })
+      .mockImplementation(
+        async (opts: Parameters<typeof manager.createProject>[0]) => {
+          return orig(opts);
+        },
+      );
+
+    const {unmountSafely} = renderRoot();
+
+    const user = userEvent.setup();
+    await user.press(await screen.findByText('Start a New Project'));
+    await user.press(await screen.findByText('Start'));
+
+    const input = await screen.findByTestId('PROJECT.name-inp');
+    await user.type(input, 'My Project');
+    await user.press(screen.getByTestId('PROJECT.submit-btn'));
+    await expect(
+      screen.findByTestId('ERROR.bottom-sheet'),
+    ).resolves.toBeVisible();
+
+    const sheet = screen.getByTestId('ERROR.bottom-sheet');
+    await user.press(within(sheet).getByText('Go Back'));
+
+    await user.press(await screen.findByTestId('PROJECT.submit-btn'));
+
+    await waitFor(async () => {
+      const projects = await client.listProjects();
+      if (projects.length !== 1) throw new Error('Project not created yet');
+    });
+
+    spy.mockRestore();
+    await unmountSafely();
+  });
+
   it('after a device has been named, goes to Map when a project exists', async () => {
     await client.setDeviceInfo({name: 'My Device', deviceType: 'mobile'});
 
@@ -112,5 +215,47 @@ describe('Root navigation onboarding → next screen', () => {
     renderRoot();
 
     await expect(screen.findByTestId('MAIN.map-screen')).resolves.toBeVisible();
+  });
+
+  it('only creates a single project on rapid double-tap', async () => {
+    await client.setDeviceInfo({name: 'My Device', deviceType: 'mobile'});
+
+    let callCount = 0;
+    const orig = manager.createProject.bind(manager);
+    const spy = jest
+      .spyOn(manager, 'createProject')
+      .mockImplementation(
+        async (opts: Parameters<typeof manager.createProject>[0]) => {
+          callCount += 1;
+          await new Promise(r => setTimeout(r, 200));
+          return orig(opts);
+        },
+      );
+
+    const {unmountSafely} = renderRoot();
+
+    const user = userEvent.setup();
+    await user.press(await screen.findByText('Start a New Project'));
+    await user.press(await screen.findByText('Start'));
+
+    const input = await screen.findByTestId('PROJECT.name-inp');
+    await user.type(input, 'Racey Project');
+
+    const submit = screen.getByTestId('PROJECT.submit-btn');
+
+    await user.press(submit);
+    if (screen.queryByTestId('PROJECT.submit-btn')) {
+      await user.press(submit);
+    }
+
+    await waitFor(async () => {
+      const projects = await client.listProjects();
+      if (projects.length !== 1) throw new Error('Project not created yet');
+    });
+
+    expect(callCount).toBe(1);
+
+    spy.mockRestore();
+    await unmountSafely();
   });
 });

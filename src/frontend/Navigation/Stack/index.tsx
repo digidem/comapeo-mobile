@@ -13,6 +13,7 @@ import {createOnboardingScreens} from './OnboardingScreens';
 import {PendingInvitesListener} from '../../sharedComponents/PendingInvitesListener';
 import {useOwnDeviceInfo, useManyProjects} from '@comapeo/core-react';
 import {createProjectOnboardingScreens} from './ProjectOnboardingScreens';
+import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
 
@@ -56,6 +57,18 @@ export const RootStackNavigator = () => {
         : projects && projects.length === 0
           ? createProjectOnboardingScreens({intl: formatMessage})
           : createDefaultScreenGroup({intl: formatMessage})}
+      <RootStack.Group
+        screenOptions={{
+          presentation: 'transparentModal',
+          headerShown: false,
+          animation: 'none',
+          contentStyle: {backgroundColor: 'transparent'},
+        }}>
+        <RootStack.Screen
+          name="ErrorBottomSheet"
+          component={ErrorBottomSheet}
+        />
+      </RootStack.Group>
     </RootStack.Navigator>
   );
 };

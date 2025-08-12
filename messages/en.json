@@ -94,6 +94,18 @@
   "ProjectOnboarding.JoinProject.title": {
     "message": "Join a Project"
   },
+  "ProjectOnboarding.MapOnOwn.bodyText": {
+    "message": "Explore everything CoMapeo offers without inviting others to participate."
+  },
+  "ProjectOnboarding.MapOnOwn.goBackButton": {
+    "message": "Go Back"
+  },
+  "ProjectOnboarding.MapOnOwn.startMappingButton": {
+    "message": "Start Mapping"
+  },
+  "ProjectOnboarding.MapOnOwn.title": {
+    "message": "Map on Your Own"
+  },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
     "message": "When project participants sync their data, they will also be archived on the internet. Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data."
   },
@@ -645,6 +657,33 @@
   "screens.CoordinateFormat.utm": {
     "description": "Universal Transverse Mercator coordinate format",
     "message": "Universal Transverse Mercator (UTM)"
+  },
+  "screens.CreateProjectForm.createProjectButton": {
+    "message": "Create"
+  },
+  "screens.CreateProjectForm.enterName": {
+    "message": "Project Name"
+  },
+  "screens.CreateProjectForm.existingProjectName": {
+    "message": "Using an existing project name does not make them the same project."
+  },
+  "screens.CreateProjectForm.keepInMind": {
+    "message": "Keep in mind"
+  },
+  "screens.CreateProjectForm.projectUnique": {
+    "message": "Each project is unique and cannot exchange with another project."
+  },
+  "screens.CreateProjectForm.requestInvites": {
+    "message": "Request invites to join existing projects."
+  },
+  "screens.CreateProjectForm.saveProjectButton": {
+    "message": "Save"
+  },
+  "screens.CreateProjectForm.title": {
+    "message": "Start New Project"
+  },
+  "screens.CreateProjectForm.titleSoloProject": {
+    "message": "Name My Project"
   },
   "screens.DataAndPrivacy.diagnosticInfoText": {
     "message": "Anonymized information about your device, app crashes, errors and performance helps Awana Digital improve the app and fix errors."
@@ -1575,12 +1614,6 @@
   "screens.Settings.Config.projectName": {
     "message": "Project Name:"
   },
-  "screens.Settings.CreateOrJoinProject.CreateProject.title": {
-    "message": "Start New Project"
-  },
-  "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
-    "message": "Name My Project"
-  },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
     "message": "Go Back"
   },
@@ -1620,29 +1653,14 @@
   "screens.Settings.CreateOrJoinProject.createProjectButton": {
     "message": "Create"
   },
-  "screens.Settings.CreateOrJoinProject.enterName": {
-    "message": "Project Name"
-  },
-  "screens.Settings.CreateOrJoinProject.existingProjectName": {
-    "message": "Using an existing project name does not make them the same project."
-  },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
     "message": "Join an existing CoMapeo Project"
   },
   "screens.Settings.CreateOrJoinProject.joinProject": {
     "message": "Join a Project"
   },
-  "screens.Settings.CreateOrJoinProject.keepInMind": {
-    "message": "Keep in mind"
-  },
   "screens.Settings.CreateOrJoinProject.projectDescription": {
     "message": "A project is a secure container for your data. Only devices you invite can enter and share data with you. Create or Join a project in order to share data with other devices. This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
-  },
-  "screens.Settings.CreateOrJoinProject.projectUnique": {
-    "message": "Each project is unique and cannot exchange with another project."
-  },
-  "screens.Settings.CreateOrJoinProject.requestInvites": {
-    "message": "Request invites to join existing projects."
   },
   "screens.Settings.CreateOrJoinProject.saveProjectButton": {
     "message": "Save"
@@ -1651,7 +1669,10 @@
     "message": "Start a CoMapeo Project"
   },
   "screens.Settings.CreateOrJoinProject.title": {
-    "message": "Create or Join"
+    "message": "Start New Project"
+  },
+  "screens.Settings.CreateOrJoinProject.titleSoloProject": {
+    "message": "Name My Project"
   },
   "screens.Settings.CreateOrJoinProject.whatIsAProject": {
     "message": "What is a Project"

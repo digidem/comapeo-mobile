@@ -1,7 +1,12 @@
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {render, screen} from '@testing-library/react-native';
+import {
+  render,
+  screen,
+  userEvent,
+  waitFor,
+} from '@testing-library/react-native';
 
 import type {MapeoManager} from '@comapeo/core';
 import type {MapeoClientApi} from '@comapeo/ipc';
@@ -71,6 +76,33 @@ describe('Root navigation onboarding → next screen', () => {
     await expect(
       screen.findByText('Secure & Private Collaborations'),
     ).resolves.toBeVisible();
+  });
+
+  it('creates a project during onboarding and switches to the main app', async () => {
+    await client.setDeviceInfo({name: 'My Device', deviceType: 'mobile'});
+    const user = userEvent.setup();
+    renderRoot();
+    await expect(
+      screen.findByText('Secure & Private Collaborations'),
+    ).resolves.toBeVisible();
+
+    await user.press(await screen.findByText('Start a New Project'));
+
+    await user.press(await screen.findByText('Start'));
+
+    const input = await screen.findByTestId('PROJECT.name-inp');
+    await user.type(input, 'Test Project');
+    await user.press(screen.getByTestId('PROJECT.submit-btn'));
+
+    await waitFor(async () => {
+      const projects = await client.listProjects();
+      if (projects.length !== 1) {
+        throw new Error('Project not created yet');
+      }
+    });
+    const [project] = await client.listProjects();
+    expect(project?.name).toBe('Test Project');
+    await expect(screen.findByTestId('MAIN.map-screen')).resolves.toBeVisible();
   });
 
   it('after a device has been named, goes to Map when a project exists', async () => {

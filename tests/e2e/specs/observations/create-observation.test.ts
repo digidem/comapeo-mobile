@@ -85,9 +85,9 @@ describe('Observations - Create Observation Flow', () => {
 
     await takePhotoButton.click();
 
-    const thumbnail = await $('~View draft photo.');
+    const thumbnails = await $$('~View draft photo.');
 
-    await expect(thumbnail).toBeDisplayed();
+    expect(thumbnails).toHaveLength(1);
   });
 
   it('should open camera, cancel, then save observation', async () => {

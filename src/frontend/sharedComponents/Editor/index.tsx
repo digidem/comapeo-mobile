@@ -139,8 +139,7 @@ export const Editor = ({
                           photo: att,
                         })
                       }>
-                      <></>
-                      {/* <ThumbnailImage uri={att.thumbnailUri} /> */}
+                      <ThumbnailImage uri={att.thumbnailUri} />
                     </ThumbnailContainer>
                   );
                 }

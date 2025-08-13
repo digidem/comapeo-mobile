@@ -685,6 +685,9 @@
   "screens.DeviceNaming.Success.findSettings": {
     "message": "To find your project settings go to the main menu found on the map screen."
   },
+  "screens.DeviceNaming.Success.shareProjectStats": {
+    "message": "Share Project Statistics"
+  },
   "screens.DeviceNaming.Success.startMappingInstructions": {
     "message": "On the next screen, tap the orange button to record your first observation."
   },

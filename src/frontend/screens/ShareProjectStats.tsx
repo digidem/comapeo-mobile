@@ -3,8 +3,8 @@ import {StyleSheet, View} from 'react-native';
 
 import GraphIcon from '../../images/Graph.svg';
 import {defineMessages, useIntl} from 'react-intl';
-import {HeaderText} from '../../sharedComponents/Text/HeaderText';
-import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {HeaderText} from '../sharedComponents/Text/HeaderText';
+import {BodyText} from '../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   shareProjectStats: {

@@ -113,6 +113,7 @@ import {AudioDraftPlaybackScreen} from '../../screens/Audio/AudioDraftPlaybackSc
 import {AudioAttachmentPlaybackScreen} from '../../screens/Audio/AudioAttachmentPlaybackScreen.tsx';
 import {DidNotMoveBottomSheet} from '../../screens/MapScreen/TrackBottomSheet/DidNotMoveBottomSheet.tsx';
 import {ConfirmPasscodeBottomSheet} from '../../screens/AppPasscode/ConfirmPasscodeSheet.tsx';
+import {ShareProjectStats} from '../../screens/ShareProjectStats.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -450,6 +451,11 @@ export const createDefaultScreenGroup = ({
             <SaveButton onPress={() => {}} isLoading={false} />
           ),
         }}
+      />
+      <RootStack.Screen
+        name="ShareProjectStats"
+        component={ShareProjectStats}
+        options={{headerShown: false}}
       />
     </RootStack.Group>
     <RootStack.Group

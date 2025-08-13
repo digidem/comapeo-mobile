@@ -126,7 +126,10 @@ export const CreateOrNameSoloProject = ({
         {name: projectName},
         {
           onSuccess: () => {
-            navigation.replace('ShareProjectStats', {projectType: 'solo'});
+            navigation.replace('ShareProjectStats', {
+              projectType: 'solo',
+              projectName,
+            });
             // navigation.replace('ProjectCreatedNewSolo', {name: projectName});
           },
           onError,
@@ -140,6 +143,7 @@ export const CreateOrNameSoloProject = ({
             setActiveProjectId(projectId);
             navigation.replace('ShareProjectStats', {
               projectType: 'newProject',
+              projectName,
             });
             // navigation.replace('ProjectCreatedNewProject', {
             //   name: projectName,

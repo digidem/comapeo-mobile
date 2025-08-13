@@ -51,11 +51,7 @@ export const ActiveProjectProvider = ({
   }, [activeProjectId, setActiveProjectId, mapeoApi]);
 
   if (!activeProjectId) {
-    return (
-      <ActiveProjectContext.Provider value={undefined}>
-        {children}
-      </ActiveProjectContext.Provider>
-    );
+    return <Loading />;
   }
 
   return (

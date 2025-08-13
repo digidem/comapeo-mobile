@@ -13,8 +13,15 @@ import {createOnboardingScreens} from './OnboardingScreens';
 import {PendingInvitesListener} from '../../sharedComponents/PendingInvitesListener';
 import {useOwnDeviceInfo, useManyProjects} from '@comapeo/core-react';
 import {createProjectOnboardingScreens} from './ProjectOnboardingScreens';
+import {ActiveProjectProvider} from '../../contexts/ActiveProjectContext';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
+export type NavigatorLayout = NonNullable<
+  React.ComponentProps<typeof RootStack.Navigator>['layout']
+>;
+export type NavigatorScreenLayout = NonNullable<
+  React.ComponentProps<typeof RootStack.Navigator>['screenLayout']
+>;
 
 export const RootStackNavigator = () => {
   const {formatMessage} = useIntl();
@@ -30,33 +37,50 @@ export const RootStackNavigator = () => {
     }
   }, [security.authState, navigate]);
 
+  const layout: NavigatorLayout = ({children, state, navigation}) => (
+    <React.Suspense fallback={<Loading />}>
+      <PendingInvitesListener
+        currentRouteName={state.routes[state.index]?.name}
+        navigateToInviteScreen={inviteId =>
+          navigation.navigate('InviteReceived', {inviteId})
+        }
+      />
+      {children}
+    </React.Suspense>
+  );
+
+  const screenLayout: NavigatorScreenLayout = ({children}) => (
+    <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
+  );
+
+  const commonNavigatorProps = {
+    layout,
+    screenLayout,
+    screenOptions: NavigatorScreenOptions,
+  } as const;
+
+  if (!deviceInfo?.name) {
+    return (
+      <RootStack.Navigator {...commonNavigatorProps}>
+        {createOnboardingScreens({intl: formatMessage})}
+      </RootStack.Navigator>
+    );
+  }
+
+  if (projects.length === 0) {
+    return (
+      <RootStack.Navigator {...commonNavigatorProps}>
+        {createProjectOnboardingScreens()}
+      </RootStack.Navigator>
+    );
+  }
+
   return (
-    <RootStack.Navigator
-      layout={({children, state, navigation}) => {
-        return (
-          <React.Suspense fallback={<Loading />}>
-            <PendingInvitesListener
-              currentRouteName={state.routes[state.index]?.name}
-              navigateToInviteScreen={inviteId =>
-                navigation.navigate('InviteReceived', {inviteId})
-              }
-            />
-            {children}
-          </React.Suspense>
-        );
-      }}
-      screenLayout={({children}) => {
-        return (
-          <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
-        );
-      }}
-      screenOptions={NavigatorScreenOptions}>
-      {!deviceInfo?.name
-        ? createOnboardingScreens({intl: formatMessage})
-        : projects && projects.length === 0
-          ? createProjectOnboardingScreens()
-          : createDefaultScreenGroup({intl: formatMessage})}
-    </RootStack.Navigator>
+    <ActiveProjectProvider>
+      <RootStack.Navigator {...commonNavigatorProps}>
+        {createDefaultScreenGroup({intl: formatMessage})}
+      </RootStack.Navigator>
+    </ActiveProjectProvider>
   );
 };
 

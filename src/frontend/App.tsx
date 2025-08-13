@@ -33,6 +33,7 @@ import {ServerLoading} from './ServerLoading';
 import {createSavedLocationStore} from './contexts/SavedLocationContext';
 import {createServerStateStore} from './lib/ServerStateStore.ts';
 import {createMapeoApi} from './lib/createMapeoApi.ts';
+import {useStorageStatus} from './hooks/useStorageStatus.ts';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -181,6 +182,11 @@ const App = () => {
     ]).then(() => setPermissionsAsked(true));
   }, []);
 
+  function StorageStatusBootstrap() {
+    useStorageStatus();
+    return null;
+  }
+
   return (
     <LocaleStoreProvider value={persistedLocaleStore}>
       <IntlProvider>
@@ -200,6 +206,7 @@ const App = () => {
             savedLocationStore={savedLocationStore}
             activeProjectIdStore={persistedActiveProjectIdStore}
             metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}>
+            <StorageStatusBootstrap />
             <AppNavigator
               permissionAsked={permissionsAsked}
               navigationIntegration={navigationIntegration}

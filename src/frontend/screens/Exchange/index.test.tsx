@@ -16,6 +16,8 @@ import {createAppProvidersWrapper} from '../../../../tests/integration/helpers/r
 import {sleep} from '../../lib/sleep';
 import type {AppStackParamsList} from '../../sharedTypes/navigation';
 import {SyncScreen} from '.';
+import {ActiveProjectProvider} from '../../contexts/ActiveProjectContext';
+import React from 'react';
 
 jest.mock('../../hooks/useCurrentTime');
 
@@ -23,6 +25,7 @@ describe('Exchange screen', () => {
   let manager: MapeoManager;
   let client: MapeoClientApi;
   let onTeardown: Array<() => unknown> = [];
+  let projectId: string;
 
   beforeEach(async () => {
     onTeardown = [];
@@ -41,6 +44,7 @@ describe('Exchange screen', () => {
 
     await fastifyController.start();
     onTeardown.push(() => fastifyController.stop());
+    projectId = await client.createProject({name: undefined});
   });
 
   afterEach(async () => {
@@ -51,7 +55,7 @@ describe('Exchange screen', () => {
 
   const renderSyncScreen = ({
     isOnline = true,
-    activeProjectId,
+    activeProjectId = projectId,
   }: Readonly<{isOnline?: boolean; activeProjectId?: string}> = {}) => {
     const appProviders = createAppProvidersWrapper({
       mapeoApi: client,
@@ -61,11 +65,15 @@ describe('Exchange screen', () => {
     onTeardown.push(appProviders.teardown);
 
     const {unmount} = render(
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Sync" component={SyncScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>,
+      <React.Suspense fallback={null}>
+        <ActiveProjectProvider activeProjectId={activeProjectId}>
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen name="Sync" component={SyncScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </ActiveProjectProvider>
+      </React.Suspense>,
       {
         wrapper: appProviders.wrapper,
       },
@@ -97,7 +105,6 @@ describe('Exchange screen', () => {
   };
 
   test('when project is in "solo mode", renders a screen with info', async () => {
-    const projectId = await client.createProject({name: undefined});
     renderSyncScreen({activeProjectId: projectId});
 
     await expect(screen.findByText('Exchange')).resolves.toBeVisible();

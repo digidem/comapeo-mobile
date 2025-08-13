@@ -6,7 +6,6 @@ import {StyleSheet} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {TrackTimerContextProvider} from './TrackTimerContext';
 import {PhotoPromiseProvider} from './PhotoPromiseContext';
-import {ActiveProjectProvider} from './ActiveProjectContext';
 import {AuthProvider} from './AuthContext';
 import {
   LocalDiscoveryProvider,
@@ -86,18 +85,16 @@ export const AppProviders = ({
                             <LocalDiscoveryProvider
                               value={localDiscoveryController}>
                               <ClientApiProvider clientApi={mapeoApi}>
-                                <ActiveProjectProvider>
-                                  <BottomSheetModalProvider>
-                                    <PhotoPromiseProvider>
-                                      <DraftObservationProvider
-                                        draftObservationStore={
-                                          persistedDrafObservationStore
-                                        }>
-                                        <AuthProvider>{children}</AuthProvider>
-                                      </DraftObservationProvider>
-                                    </PhotoPromiseProvider>
-                                  </BottomSheetModalProvider>
-                                </ActiveProjectProvider>
+                                <BottomSheetModalProvider>
+                                  <PhotoPromiseProvider>
+                                    <DraftObservationProvider
+                                      draftObservationStore={
+                                        persistedDrafObservationStore
+                                      }>
+                                      <AuthProvider>{children}</AuthProvider>
+                                    </DraftObservationProvider>
+                                  </PhotoPromiseProvider>
+                                </BottomSheetModalProvider>
                               </ClientApiProvider>
                             </LocalDiscoveryProvider>
                           </TrackTimerContextProvider>

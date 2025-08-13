@@ -16,11 +16,13 @@ describe('Project - Rename Project from Drawer', () => {
     const nameInput = await $(byResourceId('PROJECT.name-inp'));
     await nameInput.setValue(output.names.project);
     await createBtn.click();
-
+  });
+  it('should take user to app status screen', async () => {
     await expect($(byText('Invite a Device'))).toBeDisplayed();
     const categoriesButton = await $(byText('Update Categories Set'));
     await categoriesButton.click();
   });
+
   it('should take the user to the categories screen', async () => {
     const screenTitle = await $(byText('Categories'));
     await expect(screenTitle).toBeDisplayed();

@@ -130,7 +130,6 @@ export const CreateOrNameSoloProject = ({
               projectType: 'solo',
               projectName,
             });
-            // navigation.replace('ProjectCreatedNewSolo', {name: projectName});
           },
           onError,
         },
@@ -145,9 +144,6 @@ export const CreateOrNameSoloProject = ({
               projectType: 'newProject',
               projectName,
             });
-            // navigation.replace('ProjectCreatedNewProject', {
-            //   name: projectName,
-            // });
           },
           onError,
         },

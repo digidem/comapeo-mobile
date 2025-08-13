@@ -685,9 +685,6 @@
   "screens.DeviceNaming.Success.findSettings": {
     "message": "To find your project settings go to the main menu found on the map screen."
   },
-  "screens.DeviceNaming.Success.shareProjectStats": {
-    "message": "Share Project Statistics"
-  },
   "screens.DeviceNaming.Success.startMappingInstructions": {
     "message": "On the next screen, tap the orange button to record your first observation."
   },
@@ -1706,6 +1703,12 @@
   },
   "screens.SettingsPrivacyPolicy.navTitle": {
     "message": "Privacy Policy"
+  },
+  "screens.ShareProjectStats.description": {
+    "message": "This will help us gather data about how CoMapeo is being used and what additional features are needed."
+  },
+  "screens.ShareProjectStats.shareProjectStats": {
+    "message": "Share Project Statistics"
   },
   "screens.Sync.NoWifiDisplay.buttonText": {
     "message": "Close"

@@ -23,10 +23,6 @@ const m = defineMessages({
     id: 'screens.DeviceNaming.Success.ready',
     defaultMessage: 'is now ready.',
   },
-  joinProject: {
-    id: 'screens.DeviceNaming.Success.joinProject',
-    defaultMessage: 'Join a Project',
-  },
   next: {
     id: 'screens.DeviceNaming.Success.next',
     defaultMessage: 'Next',
@@ -63,7 +59,7 @@ export const Success = ({
                 deviceType: expoToCoreDeviceType(deviceType),
               });
             }}
-            text={status === 'success' ? t(m.next) : t(m.joinProject)}
+            text={t(m.next)}
           />
         )}
       </View>

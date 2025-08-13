@@ -54,7 +54,7 @@ describe('Exchange screen', () => {
 
   const renderSyncScreen = ({
     isOnline = true,
-    activeProjectId,
+    activeProjectId = projectId,
   }: Readonly<{isOnline?: boolean; activeProjectId?: string}> = {}) => {
     const appProviders = createAppProvidersWrapper({
       mapeoApi: client,
@@ -64,7 +64,7 @@ describe('Exchange screen', () => {
     onTeardown.push(appProviders.teardown);
 
     const {unmount} = render(
-      <ActiveProjectProvider>
+      <ActiveProjectProvider activeProjectId={activeProjectId}>
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen name="Sync" component={SyncScreen} />

@@ -1,59 +1,18 @@
 import * as React from 'react';
-import {useClientApi} from '@comapeo/core-react';
-import {type MapeoProjectApi} from '@comapeo/ipc';
-
 import {useSingleProject} from '@comapeo/core-react';
+import {type MapeoProjectApi} from '@comapeo/ipc';
 import {Loading} from '../sharedComponents/Loading';
-import {
-  useActiveProjectIdActions,
-  useActiveProjectId,
-} from './ActiveProjectIdStoreContext';
 
 const ActiveProjectContext = React.createContext<
   {projectId: string; projectApi: MapeoProjectApi} | undefined
 >(undefined);
 
-export const ActiveProjectProvider = ({
-  children,
-}: {
+type Props = {
+  activeProjectId: string;
   children: React.ReactNode;
-}) => {
-  const mapeoApi = useClientApi();
-  const activeProjectId = useActiveProjectId();
-  const {setActiveProjectId} = useActiveProjectIdActions();
+};
 
-  // The persisted active project ID may be missing in the following scenarios:
-  //
-  // 1. Opening the app for the first time
-  // 2. The entry in storage somehow gets deleted
-  //
-  // In the case of (1), we will wait until project onboarding to create a new or default project
-  // In the case of (2), we choose one of the existing projects in the database.
-  //
-  // How this is currently done is naive for now, but is sufficient until a UI to choose from a list of existing projects is implemented.
-  React.useEffect(() => {
-    if (activeProjectId) return;
-
-    mapeoApi
-      .listProjects()
-      .then(projects => {
-        // TODO: Be smarter about which project we select if multiple exist in the database
-        const chosenActiveProject = projects[0];
-
-        if (chosenActiveProject) {
-          setActiveProjectId(chosenActiveProject.projectId);
-        }
-      })
-      .catch(err => {
-        // TODO: Surface error in UI
-        console.error(err);
-      });
-  }, [activeProjectId, setActiveProjectId, mapeoApi]);
-
-  if (!activeProjectId) {
-    return <Loading />;
-  }
-
+export function ActiveProjectProvider({activeProjectId, children}: Props) {
   return (
     <React.Suspense fallback={<Loading />}>
       <ProjectApiLoader projectId={activeProjectId}>
@@ -61,7 +20,7 @@ export const ActiveProjectProvider = ({
       </ProjectApiLoader>
     </React.Suspense>
   );
-};
+}
 
 function ProjectApiLoader({
   projectId,
@@ -75,7 +34,6 @@ function ProjectApiLoader({
     () => ({projectId, projectApi}),
     [projectId, projectApi],
   );
-
   return (
     <ActiveProjectContext.Provider value={dataValue}>
       {children}

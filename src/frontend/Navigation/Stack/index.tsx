@@ -14,6 +14,10 @@ import {PendingInvitesListener} from '../../sharedComponents/PendingInvitesListe
 import {useOwnDeviceInfo, useManyProjects} from '@comapeo/core-react';
 import {createProjectOnboardingScreens} from './ProjectOnboardingScreens';
 import {ActiveProjectProvider} from '../../contexts/ActiveProjectContext';
+import {
+  useActiveProjectId,
+  useActiveProjectIdActions,
+} from '../../contexts/ActiveProjectIdStoreContext';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
 export type NavigatorLayout = NonNullable<
@@ -29,7 +33,18 @@ export const RootStackNavigator = () => {
   const {navigate} = useNavigationFromRoot();
 
   const {data: deviceInfo} = useOwnDeviceInfo();
-  const {data: projects} = useManyProjects();
+  const {data: projects = []} = useManyProjects();
+
+  const storedActiveProjectId = useActiveProjectId();
+  const {setActiveProjectId} = useActiveProjectIdActions();
+  const fallbackProjectId = projects[0]?.projectId;
+  const effectiveProjectId = storedActiveProjectId ?? fallbackProjectId;
+
+  React.useEffect(() => {
+    if (!storedActiveProjectId && fallbackProjectId) {
+      setActiveProjectId(fallbackProjectId);
+    }
+  }, [storedActiveProjectId, fallbackProjectId, setActiveProjectId]);
 
   React.useEffect(() => {
     if (security.authState === 'unauthenticated') {
@@ -75,8 +90,12 @@ export const RootStackNavigator = () => {
     );
   }
 
+  if (!effectiveProjectId) {
+    return <Loading />;
+  }
+
   return (
-    <ActiveProjectProvider>
+    <ActiveProjectProvider activeProjectId={effectiveProjectId}>
       <RootStack.Navigator {...commonNavigatorProps}>
         {createDefaultScreenGroup({intl: formatMessage})}
       </RootStack.Navigator>

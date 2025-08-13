@@ -1,18 +1,18 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 
-import GraphIcon from '../../images/Graph.svg';
+import GraphIcon from '../images/Graph.svg';
 import {defineMessages, useIntl} from 'react-intl';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BodyText} from '../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   shareProjectStats: {
-    id: 'screens.DeviceNaming.Success.shareProjectStats',
+    id: 'screens.ShareProjectStats.shareProjectStats',
     defaultMessage: 'Share Project Statistics',
   },
   description: {
-    id: 'screens.DeviceNaming.Success.description',
+    id: 'screens.ShareProjectStats.description',
     defaultMessage:
       'This will help us gather data about how CoMapeo is being used and what additional features are needed.',
   },
@@ -47,5 +47,6 @@ const styles = StyleSheet.create({
   },
   text: {
     marginTop: 20,
+    textAlign: 'center',
   },
 });

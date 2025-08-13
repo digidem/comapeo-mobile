@@ -676,9 +676,6 @@
   "screens.DataPrivacy.title": {
     "message": "Data & Privacy"
   },
-  "screens.DeviceNaming.Success.joinProject": {
-    "message": "Join a Project"
-  },
   "screens.DeviceNaming.Success.next": {
     "message": "Next"
   },

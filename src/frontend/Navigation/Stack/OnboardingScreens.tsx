@@ -6,6 +6,7 @@ import {OnboardingPrivacyPolicy} from '../../screens/Onboarding/OnboardingPrivac
 import {DeviceNaming} from '../../screens/Onboarding/DeviceNaming';
 import {Success} from '../../screens/Onboarding/Success';
 import {MessageDescriptor} from 'react-intl';
+import {ShareProjectStats} from '../../screens/Onboarding/ShareProjectStats';
 
 export const createOnboardingScreens = ({
   intl,
@@ -36,6 +37,11 @@ export const createOnboardingScreens = ({
     <RootStack.Screen
       name="Success"
       component={Success}
+      options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="ShareProjectStats"
+      component={ShareProjectStats}
       options={{headerShown: false}}
     />
   </RootStack.Group>

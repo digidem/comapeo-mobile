@@ -150,6 +150,7 @@ export type OnboardingParamsList = {
   DataPrivacy: undefined;
   DeviceNaming: undefined;
   OnboardingPrivacyPolicy: undefined;
+  ShareProjectStats: undefined;
   Success: {deviceName: string};
 };
 

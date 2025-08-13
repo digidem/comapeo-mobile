@@ -1707,8 +1707,20 @@
   "screens.ShareProjectStats.description": {
     "message": "This will help us gather data about how CoMapeo is being used and what additional features are needed."
   },
+  "screens.ShareProjectStats.fullyEncrypted": {
+    "message": "Your project will stay fully encrypted"
+  },
+  "screens.ShareProjectStats.infoAnonymized": {
+    "message": "Shared information will be completely anonymized"
+  },
   "screens.ShareProjectStats.shareProjectStats": {
     "message": "Share Project Statistics"
+  },
+  "screens.ShareProjectStats.skip": {
+    "message": "No, Skip for now"
+  },
+  "screens.ShareProjectStats.yesShare": {
+    "message": "Yes, Share Stats"
   },
   "screens.Sync.NoWifiDisplay.buttonText": {
     "message": "Close"

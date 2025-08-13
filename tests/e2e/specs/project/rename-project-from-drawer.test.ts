@@ -17,10 +17,12 @@ describe('Project - Rename Project from Drawer', () => {
     await nameInput.setValue(output.names.project);
     await createBtn.click();
   });
-  it('should take user to app status screen', async () => {
+
+  require('./project-usage-stats.test');
+
+  it('should take user to success screen', async () => {
+    await expect($(byText(output.names.project))).toBeDisplayed();
     await expect($(byText('Invite a Device'))).toBeDisplayed();
-    const categoriesButton = await $(byText('Update Categories Set'));
-    await categoriesButton.click();
   });
 
   it('should take the user to the categories screen', async () => {
@@ -30,6 +32,7 @@ describe('Project - Rename Project from Drawer', () => {
     await $(byResourceId('MAIN.header-back-btn')).click();
     await $('~Close Menu').click();
   });
+
   it('should leave observations in place with a renamed project', async () => {
     const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();

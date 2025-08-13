@@ -13,8 +13,15 @@ describe('Multiple Projects - Create and Switch Between Projects', () => {
     const nameInput = await $(byResourceId('PROJECT.name-inp'));
     await nameInput.setValue(output.names.secondProject);
     await $(byResourceId('PROJECT.create-btn')).click();
+  });
 
-    await expect($(byTextMatches(output.names.secondProject))).toBeDisplayed();
+  require('../project/project-usage-stats.test');
+
+  require('./project-usage-stats.test');
+
+  it('should take user to success screen', async () => {
+    await expect($(byText(output.names.project))).toBeDisplayed();
+    await expect($(byText('Invite a Device'))).toBeDisplayed();
   });
 
   it('should land in the new project and display it on the Map screen', async () => {

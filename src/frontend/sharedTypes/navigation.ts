@@ -143,6 +143,7 @@ export type RootStackParamsList = {
   };
   ExportObservations: undefined;
   DidNotMoveBottomSheet: undefined;
+  ShareProjectStats: {projectType: 'solo' | 'newProject'};
 };
 
 export type OnboardingParamsList = {
@@ -150,7 +151,6 @@ export type OnboardingParamsList = {
   DataPrivacy: undefined;
   DeviceNaming: undefined;
   OnboardingPrivacyPolicy: undefined;
-  ShareProjectStats: undefined;
   Success: {deviceName: string};
 };
 

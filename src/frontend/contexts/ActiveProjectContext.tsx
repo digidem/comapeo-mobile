@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {useSingleProject} from '@comapeo/core-react';
 import {type MapeoProjectApi} from '@comapeo/ipc';
-import {Loading} from '../sharedComponents/Loading';
 
 const ActiveProjectContext = React.createContext<
   {projectId: string; projectApi: MapeoProjectApi} | undefined
@@ -13,27 +12,13 @@ type Props = {
 };
 
 export function ActiveProjectProvider({activeProjectId, children}: Props) {
-  return (
-    <React.Suspense fallback={<Loading />}>
-      <ProjectApiLoader projectId={activeProjectId}>
-        {children}
-      </ProjectApiLoader>
-    </React.Suspense>
-  );
-}
+  const {data: projectApi} = useSingleProject({projectId: activeProjectId});
 
-function ProjectApiLoader({
-  projectId,
-  children,
-}: {
-  projectId: string;
-  children: React.ReactNode;
-}) {
-  const {data: projectApi} = useSingleProject({projectId});
   const dataValue = React.useMemo(
-    () => ({projectId, projectApi}),
-    [projectId, projectApi],
+    () => ({projectId: activeProjectId, projectApi}),
+    [activeProjectId, projectApi],
   );
+
   return (
     <ActiveProjectContext.Provider value={dataValue}>
       {children}

@@ -17,6 +17,7 @@ import {sleep} from '../../lib/sleep';
 import type {AppStackParamsList} from '../../sharedTypes/navigation';
 import {SyncScreen} from '.';
 import {ActiveProjectProvider} from '../../contexts/ActiveProjectContext';
+import React from 'react';
 
 jest.mock('../../hooks/useCurrentTime');
 
@@ -64,13 +65,15 @@ describe('Exchange screen', () => {
     onTeardown.push(appProviders.teardown);
 
     const {unmount} = render(
-      <ActiveProjectProvider activeProjectId={activeProjectId}>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen name="Sync" component={SyncScreen} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </ActiveProjectProvider>,
+      <React.Suspense fallback={null}>
+        <ActiveProjectProvider activeProjectId={activeProjectId}>
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen name="Sync" component={SyncScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </ActiveProjectProvider>
+      </React.Suspense>,
       {
         wrapper: appProviders.wrapper,
       },

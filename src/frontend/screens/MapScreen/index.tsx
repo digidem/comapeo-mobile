@@ -13,6 +13,7 @@ import {useDraftObservation} from '../../hooks/useDraftObservation';
 import {usePersistedDraftObservation} from '../../hooks/persistedState/usePersistedDraftObservation';
 import {usePresetsQuery} from '../../hooks/server/presets';
 import ScaleBar from 'react-native-scale-bar';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {TrackBottomSheet} from './TrackBottomSheet';
 import {CurrentTrackMapLayer} from './CurrentTrack/CurrentTrackMapLayer';
 
@@ -32,6 +33,8 @@ import {useTracking} from '../../hooks/useTracking';
 import {UserTooltipMarker} from './CurrentTrack/UserTooltipMarker';
 import {useNonReactiveSavedLocation} from '../../contexts/SavedLocationContext';
 import {useResetMapLayout} from '../../hooks/useResetMapLayout';
+import {useStorageStatusStore} from '../../contexts/StorageStatusStoreContext';
+import {LowStorageBanner} from '../../sharedComponents/Storage/LowStorageBanner';
 
 // This is the default zoom used when the map first loads, and also the zoom
 // that the map will zoom to if the user clicks the "Locate" button and the
@@ -69,6 +72,10 @@ export const MapScreen = ({
   const {authState} = useAuthContext();
   const {savedLocation} = useNonReactiveSavedLocation();
   const initialPositionSet = React.useRef(false);
+  const {setDismissedMapBannerSession, dismissedMapBannerSession, isLow} =
+    useStorageStatusStore();
+  const insets = useSafeAreaInsets();
+  const BANNER_TOP = insets.top + 75;
 
   useCheckDraftObservationAndNavigate({authState});
 
@@ -98,6 +105,16 @@ export const MapScreen = ({
 
   return (
     <View style={{flex: 1}} onLayout={onLayout}>
+      <View
+        pointerEvents="box-none"
+        style={[styles.lowStorageBanner, {top: BANNER_TOP}]}>
+        {isLow && !dismissedMapBannerSession && (
+          <LowStorageBanner
+            onDismiss={() => setDismissedMapBannerSession(true)}
+            testID="MAP:low-storage-banner"
+          />
+        )}
+      </View>
       {dimensions && (
         <Mapbox.MapView
           key={mapKey}
@@ -230,5 +247,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 25,
     width: '100%',
+  },
+  lowStorageBanner: {
+    position: 'absolute',
+    left: 20,
+    right: 20,
+    zIndex: 2,
+    elevation: 2,
   },
 });

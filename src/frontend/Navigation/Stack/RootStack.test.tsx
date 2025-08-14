@@ -91,6 +91,7 @@ describe('Root navigation onboarding → next screen', () => {
     await client.setDeviceInfo({name: 'My Device', deviceType: 'mobile'});
     const user = userEvent.setup();
     renderRoot();
+
     await expect(
       screen.findByText('Secure & Private Collaborations'),
     ).resolves.toBeVisible();
@@ -101,7 +102,7 @@ describe('Root navigation onboarding → next screen', () => {
 
     const input = await screen.findByTestId('PROJECT.name-inp');
     await user.type(input, 'Test Project');
-    await user.press(screen.getByTestId('PROJECT.submit-btn'));
+    await user.press(screen.getByText('Next'));
 
     await waitFor(async () => {
       const projects = await client.listProjects();
@@ -162,6 +163,7 @@ describe('Root navigation onboarding → next screen', () => {
 
     const [proj] = await client.listProjects();
     expect(proj?.name).toBeUndefined();
+    await expect(screen.findByTestId('MAIN.map-screen')).resolves.toBeVisible();
 
     await unmountSafely();
   });

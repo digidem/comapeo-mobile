@@ -109,12 +109,14 @@ export const RootStackNavigator = () => {
   }
 
   return (
-    <ActiveProjectProvider activeProjectId={effectiveProjectId}>
-      <RootStack.Navigator {...commonNavigatorProps}>
-        {createDefaultScreenGroup({intl: formatMessage})}
-        {ErrorBottomSheetGroup}
-      </RootStack.Navigator>
-    </ActiveProjectProvider>
+    <React.Suspense fallback={<Loading />}>
+      <ActiveProjectProvider activeProjectId={effectiveProjectId}>
+        <RootStack.Navigator {...commonNavigatorProps}>
+          {createDefaultScreenGroup({intl: formatMessage})}
+          {ErrorBottomSheetGroup}
+        </RootStack.Navigator>
+      </ActiveProjectProvider>
+    </React.Suspense>
   );
 };
 

@@ -1,4 +1,5 @@
 import {createContext, useContext} from 'react';
+import * as v from 'valibot';
 import {createStore, useStore, type StoreApi} from 'zustand';
 import {
   createJSONStorage,
@@ -6,21 +7,41 @@ import {
 } from 'zustand/middleware';
 import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
 
-export interface AppUsageStatsPromptState {
-  optedIn: boolean | null; // null = never asked, true = opted in, false = opted out
-  completedOnboardingAt: number | null;
-  lastPromptAt: number | null;
-  promptCount: number;
-}
+// Do not change!
+export const STORAGE_KEY = 'AppUsageStatsPrompt';
+
+export const AppUsageStatsPromptSchemaV0 = v.object({
+  optedIn: v.union([v.boolean(), v.null()]),
+  completedOnboardingAt: v.union([v.number(), v.null()]),
+  lastPromptAt: v.union([v.number(), v.null()]),
+  promptCount: v.number(),
+  optInStartedAt: v.optional(v.union([v.number(), v.null()])),
+  optInExpiresAt: v.optional(v.union([v.number(), v.null()])),
+});
+
+export type AppUsageStatsPromptState = v.InferOutput<
+  typeof AppUsageStatsPromptSchemaV0
+>;
 
 const initialState: AppUsageStatsPromptState = {
   optedIn: null,
   completedOnboardingAt: null,
   lastPromptAt: null,
   promptCount: 0,
+  optInStartedAt: null,
+  optInExpiresAt: null,
 };
 
-const STORAGE_KEY = 'AppUsageStatsPrompt';
+function createInitialState(): AppUsageStatsPromptState {
+  return {
+    optedIn: null,
+    completedOnboardingAt: null,
+    lastPromptAt: null,
+    promptCount: 0,
+    optInStartedAt: null,
+    optInExpiresAt: null,
+  };
+}
 
 export function createAppUsageStatsPromptStore({persist} = {persist: false}) {
   let store: StoreApi<AppUsageStatsPromptState>;
@@ -34,7 +55,7 @@ export function createAppUsageStatsPromptStore({persist} = {persist: false}) {
       }),
     );
   } else {
-    store = createStore(() => initialState);
+    store = createStore(createInitialState);
   }
 
   const actions = {
@@ -45,12 +66,27 @@ export function createAppUsageStatsPromptStore({persist} = {persist: false}) {
       }
     },
     setOptedIn: (optedIn: boolean) => {
+      const now = Date.now();
       const state = store.getState();
-      store.setState({
-        optedIn,
-        lastPromptAt: Date.now(),
-        promptCount: optedIn ? state.promptCount : state.promptCount + 1,
-      });
+      const TWELVE_MONTHS_MS = 365 * 24 * 60 * 60 * 1000;
+
+      if (optedIn) {
+        store.setState({
+          optedIn: true,
+          lastPromptAt: now,
+          promptCount: state.promptCount,
+          optInStartedAt: now,
+          optInExpiresAt: now + TWELVE_MONTHS_MS,
+        });
+      } else {
+        store.setState({
+          optedIn: false,
+          lastPromptAt: now,
+          promptCount: state.promptCount + 1,
+          optInStartedAt: null,
+          optInExpiresAt: null,
+        });
+      }
     },
   };
 

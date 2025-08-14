@@ -15,11 +15,7 @@ import {SvgProps} from 'react-native-svg';
 import {NEW_DARK_GREY} from '../lib/styles';
 import {AppStackParamsList} from '../sharedTypes/navigation';
 
-import {
-  useAppUsageStatsPromptActions,
-  useAppUsageStatsPromptState,
-} from '../contexts/AppUsageStatsPromptContext';
-import {shouldShowAppUsagePrompt} from '../lib/shouldShowAppUsagePrompt';
+import {useAppUsageStatsPromptActions} from '../contexts/AppUsageStatsPromptContext';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 const m = defineMessages({
@@ -62,15 +58,6 @@ export const AppUsagePromptInterstitial = ({
 >) => {
   const {formatMessage: t} = useIntl();
   const {setOptedIn} = useAppUsageStatsPromptActions();
-  const showPrompt = shouldShowAppUsagePrompt(
-    useAppUsageStatsPromptState(s => s),
-  );
-
-  React.useEffect(() => {
-    if (!showPrompt) {
-      navigation.replace('Home', {screen: 'Map'});
-    }
-  }, [showPrompt, navigation]);
 
   return (
     <ScreenContentWithDock

@@ -2,19 +2,14 @@ import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 
 import SuccessIcon from '../images/Success.svg';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {defineMessages, useIntl} from 'react-intl';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
 import {NEW_DARK_GREY} from '../lib/styles';
-import {AppStackParamsList} from '../sharedTypes/navigation';
 import {SecondaryButton} from '../sharedComponents/Buttons';
 import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BodyText} from '../sharedComponents/Text/BodyText';
-import {
-  useAppUsageStatsPromptActions,
-  useAppUsageStatsPromptState,
-} from '../contexts/AppUsageStatsPromptContext';
+import {useAppUsageStatsPromptActions} from '../contexts/AppUsageStatsPromptContext';
 
 const m = defineMessages({
   success: {
@@ -36,20 +31,11 @@ const m = defineMessages({
   },
 });
 
-export const AppUsageSharingSuccess = ({
-  navigation,
-}: NativeStackScreenProps<AppStackParamsList, 'AppUsageSharingSuccess'>) => {
+export const AppUsageSharingSuccess = () => {
   const {formatMessage} = useIntl();
   const {data} = useOwnDeviceInfo();
   const deviceName = data?.name;
   const {setOptedIn} = useAppUsageStatsPromptActions();
-  const {optedIn} = useAppUsageStatsPromptState(s => s);
-
-  React.useEffect(() => {
-    if (optedIn) {
-      navigation.replace('Home', {screen: 'Map'});
-    }
-  }, [optedIn, navigation]);
 
   return (
     <ScreenContentWithDock

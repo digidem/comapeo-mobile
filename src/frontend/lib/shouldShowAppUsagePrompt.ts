@@ -7,8 +7,9 @@ export function shouldShowAppUsagePrompt(
   if (state.optedIn === true) {
     return false;
   }
-  const oneWeek = 7 * 24 * 60 * 60 * 1000;
+  // const oneWeek = 7 * 24 * 60 * 60 * 1000;
   const threeMonths = 90 * 24 * 60 * 60 * 1000;
+  const oneWeek = 60 * 1000;
 
   const shouldShowInitialPrompt =
     !!state.completedOnboardingAt &&

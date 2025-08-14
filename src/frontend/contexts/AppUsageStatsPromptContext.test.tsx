@@ -19,6 +19,7 @@ function createWrapper(store: AppUsageStatsPromptStore) {
 
 describe('AppUsageStatsPromptContext', () => {
   const FAKE_NOW = 1_000_000;
+  const TWELVE_MONTHS_MS = 365 * 24 * 60 * 60 * 1000;
 
   beforeAll(() => {
     jest.useFakeTimers({legacyFakeTimers: false});
@@ -43,6 +44,8 @@ describe('AppUsageStatsPromptContext', () => {
       completedOnboardingAt: null,
       lastPromptAt: null,
       promptCount: 0,
+      optInStartedAt: null,
+      optInExpiresAt: null,
     } as AppUsageStatsPromptState);
   });
 
@@ -69,7 +72,7 @@ describe('AppUsageStatsPromptContext', () => {
     expect(stateHook.result.current).toBe(FAKE_NOW);
   });
 
-  it('sets opted-in to true and updates lastPromptAt without touching promptCount', () => {
+  it('setOptedIn(true) sets 12-month window fields, updates lastPromptAt, and does not bump promptCount', () => {
     const store = createAppUsageStatsPromptStore();
     const wrapper = createWrapper(store);
     const actionsHook = renderHook(() => useAppUsageStatsPromptActions(), {
@@ -82,14 +85,17 @@ describe('AppUsageStatsPromptContext', () => {
     act(() => {
       actionsHook.result.current.setOptedIn(true);
     });
+
     expect(stateHook.result.current).toMatchObject({
       optedIn: true,
       lastPromptAt: FAKE_NOW,
       promptCount: 0,
+      optInStartedAt: FAKE_NOW,
+      optInExpiresAt: FAKE_NOW + TWELVE_MONTHS_MS,
     });
   });
 
-  it('sets opted-in to false, updates lastPromptAt and bumps promptCount each time', () => {
+  it('setOptedIn(false) clears 12-month window fields, updates lastPromptAt, and bumps promptCount each time', () => {
     const store = createAppUsageStatsPromptStore();
     const wrapper = createWrapper(store);
     const actionsHook = renderHook(() => useAppUsageStatsPromptActions(), {
@@ -106,6 +112,8 @@ describe('AppUsageStatsPromptContext', () => {
       optedIn: false,
       lastPromptAt: FAKE_NOW,
       promptCount: 1,
+      optInStartedAt: null,
+      optInExpiresAt: null,
     });
 
     act(() => {
@@ -113,5 +121,35 @@ describe('AppUsageStatsPromptContext', () => {
       actionsHook.result.current.setOptedIn(false);
     });
     expect(stateHook.result.current.promptCount).toBe(2);
+    expect(stateHook.result.current.optInStartedAt).toBeNull();
+    expect(stateHook.result.current.optInExpiresAt).toBeNull();
+  });
+
+  it('accepting after a decline keeps promptCount unchanged on accept but sets the 12-month window', () => {
+    const store = createAppUsageStatsPromptStore();
+    const wrapper = createWrapper(store);
+    const actionsHook = renderHook(() => useAppUsageStatsPromptActions(), {
+      wrapper,
+    });
+    const stateHook = renderHook(() => useAppUsageStatsPromptState(s => s), {
+      wrapper,
+    });
+
+    act(() => {
+      actionsHook.result.current.setOptedIn(false);
+    });
+    expect(stateHook.result.current.promptCount).toBe(1);
+
+    act(() => {
+      jest.setSystemTime(FAKE_NOW + 2000);
+      actionsHook.result.current.setOptedIn(true);
+    });
+
+    expect(stateHook.result.current.promptCount).toBe(1);
+    expect(stateHook.result.current.optInStartedAt).toBe(FAKE_NOW + 2000);
+    expect(stateHook.result.current.optInExpiresAt).toBe(
+      FAKE_NOW + 2000 + TWELVE_MONTHS_MS,
+    );
+    expect(stateHook.result.current.lastPromptAt).toBe(FAKE_NOW + 2000);
   });
 });

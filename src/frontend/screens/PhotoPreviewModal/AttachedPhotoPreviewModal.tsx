@@ -40,7 +40,7 @@ const m = defineMessages({
   },
   verifiedOriginal: {
     id: 'screens.PhotoPreviewModal.verifiedOriginal',
-    defaultMessage: 'This is a verified unaltered original',
+    defaultMessage: 'This is a verified unaltered original.',
     description: 'Text indicating that the photo is a verified original',
   },
   timeAttached: {

@@ -103,7 +103,7 @@ export function AttachedPhotoPreviewModal({
     : undefined;
 
   const distanceFromObservation =
-    photoCoordinates && lon && lat
+    photoCoordinates && lon !== undefined && lat !== undefined
       ? calculateDistanceFromObservation({
           photoLocation: [
             photoCoordinates.longitude,
@@ -216,7 +216,7 @@ export function AttachedPhotoPreviewModal({
                   {formatMessage(m.verifiedOriginal)}
                 </BodyText>
 
-                {photoTimeRelativeToObs && (
+                {photoTimeRelativeToObs !== undefined && (
                   <InfoItem
                     icon={
                       <MaterialIcons
@@ -236,7 +236,7 @@ export function AttachedPhotoPreviewModal({
                   </InfoItem>
                 )}
 
-                {distanceFromObservation && (
+                {distanceFromObservation !== undefined && (
                   <InfoItem
                     icon={
                       <Octicons

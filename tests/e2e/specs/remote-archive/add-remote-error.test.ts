@@ -19,7 +19,7 @@ describe('Remote Archive - Add Error Flow', () => {
 
   it('shows error when invalid URL is submitted', async () => {
     const urlInput = await $(byResourceId('RA.url-inp'));
-    await urlInput.setValue('example.com');
+    await urlInput.setValue('example');
     await $(byResourceId('OBS.edit-save-btn')).click();
     await expect($(byTextMatches('example.com'))).toBeDisplayed();
 

@@ -41,7 +41,7 @@ const config = {
       'bstack:options': {
         projectName: 'CoMapeo',
         buildName: `${prTitle || 'Manual Run'} – ${shortSha}`,
-        sessionName: `E2E: ${shortSha}`,
+        sessionName: `test1: ${shortSha}`,
         appiumVersion: '2.12.1',
         debug: true,
         networkLogs: true,
@@ -58,7 +58,7 @@ const config = {
       'bstack:options': {
         projectName: 'CoMapeo',
         buildName: `${prTitle || 'Manual Run'} – ${shortSha}`,
-        sessionName: `E2E: ${shortSha}`,
+        sessionName: `test2: ${shortSha}`,
         appiumVersion: '2.12.1',
         debug: true,
         networkLogs: true,

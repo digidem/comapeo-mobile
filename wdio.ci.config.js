@@ -14,7 +14,7 @@ const config = {
     path.resolve(__dirname, 'tests/e2e/specs/parallel1.test.ts'),
     path.resolve(__dirname, 'tests/e2e/specs/parallel2.test.ts'),
   ],
-  maxInstances: 1,
+  maxInstances: 5,
   services: [
     [
       'browserstack',

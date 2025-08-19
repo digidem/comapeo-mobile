@@ -29,10 +29,10 @@
     "message": "Voltar"
   },
   "Modal.GPSDisable.button": {
-    "message": "Ativar GPS"
+    "message": "Habilitado"
   },
   "Modal.GPSDisable.description": {
-    "message": "GPS e localização precisam estar ativados para gravar as trilhas."
+    "message": "Para criar uma nova trilha, CoMapeo precisa acessar sua localização e GPS."
   },
   "Modal.GPSDisable.title": {
     "message": "GPS desativado"
@@ -272,7 +272,7 @@
     "message": "Idioma de exibição do aplicativo"
   },
   "Screens.Settings.AppSettings.mapManagement": {
-    "message": "Mapa de Fundo"
+    "message": "Gerenciamento de Mapa"
   },
   "Screens.Settings.AppSettings.title": {
     "message": "Configurações do Aplicativo"
@@ -686,7 +686,7 @@
     "message": "Para encontrar as configurações do seu projeto, vá até o menu principal localizado na tela do mapa."
   },
   "screens.DeviceNaming.Success.startMappingInstructions": {
-    "message": "Na próxima tela, toque no botão laranja para gravar sua primeira observação."
+    "message": "Você pode começar a mapear sozinho ou com uma equipe. Crie ou junte-se a um projeto para compartilhar dados com outros dispositivos que fazem parte do mesmo projeto."
   },
   "screens.DeviceNaming.Success.startUsihng": {
     "message": "Começar a usar o CoMapeo"
@@ -698,16 +698,16 @@
     "message": "Adicionar Nome"
   },
   "screens.DeviceNaming.description": {
-    "message": "Nomes fáceis de lembrar ajudam os colaboradores a reconhecê-lo."
+    "message": "Você pode começar a mapear sozinho ou com uma equipe. Compartilhe dados com outros dispositivos, criando um novo ou juntando-se ao mesmo projeto."
   },
   "screens.DeviceNaming.header": {
-    "message": "Dê um nome para o seu dispositivo"
+    "message": "Adicione um nome para o seu dispositivo"
   },
   "screens.EnterPassword.enterPass": {
     "message": "Insira sua senha"
   },
   "screens.EnterPassword.wrongPass": {
-    "message": "Senha incorreta"
+    "message": "Senha incorreta. Por favor, tente novamente."
   },
   "screens.Exchange.WifiCard.noWifi": {
     "message": "Sem Wi-Fi"
@@ -788,7 +788,7 @@
     "message": "Ocorreu um erro"
   },
   "screens.IntroToCoMapeo.collaborate": {
-    "message": "Colabore em projetos"
+    "message": "Colabore com outras pessoas"
   },
   "screens.IntroToCoMapeo.designedFor": {
     "message": "Desenvolvido com e para povos indígenas e comunidades que estão na linha de frente"
@@ -1004,13 +1004,13 @@
     "message": "Número do fuso"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
-    "message": "Usar localização? Acompanhe a localização das trilhas mesmo quando fechado. Os dados ficam somente no dispositivo."
+    "message": "O CoMapeo coleta dados de localização para rastrear a sua rota no mapa, mesmo quando o app é fechado. Seus dados de localização são armazenados apenas no seu dispositivo por padrão e não são armazenados ou enviados para lugar algum."
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Ativar localização"
+    "message": "Ligar"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
-    "message": "Usar a localização?"
+    "message": "Use sua localização"
   },
   "screens.ObscurePasscode.description": {
     "message": "A senha secreta é um recurso de segurança que permite abrir o CoMapeo em um modo que oculta todos os seus dados. Digitar essa senha secreta na tela de início do app exibirá uma versão vazia do CoMapeo, permitindo que você crie observações de demonstração que não são salvas no banco de dados do CoMapeo."
@@ -1051,7 +1051,7 @@
     "message": "Cancelar"
   },
   "screens.Observation.comapeoAlert": {
-    "message": "Dados do CoMapeo enviados do projeto *{projectName}*"
+    "message": "Alerta CoMapeo"
   },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
@@ -1465,10 +1465,10 @@
     "message": "Nome do dispositivo"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
-    "message": "Convidar outro dispositivo"
+    "message": "Adicionar outro dispositivo"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
-    "message": "Aceito!"
+    "message": "Convite aceito"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> agora faz parte do seu projeto."
@@ -1534,10 +1534,10 @@
     "message": "Categorias importadas com sucesso:"
   },
   "screens.Settings.Config.name": {
-    "message": "Conjunto de categoria:"
+    "message": "Nome da configuração:"
   },
   "screens.Settings.Config.navTitle": {
-    "message": "Categorias"
+    "message": "Configurações"
   },
   "screens.Settings.Config.okButton": {
     "message": "OK"
@@ -1546,7 +1546,7 @@
     "message": "Nome do projeto:"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.title": {
-    "message": "Começar um novo projeto"
+    "message": "Criar um Projeto"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
     "message": "Nomear meu projeto"
@@ -1561,7 +1561,7 @@
     "message": "Para participar de um projeto, encontre o Coordenador do projeto que você deseja participar. Diga a eles o nome do seu dispositivo e o Coordenador lhe enviará um convite."
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.goToMap": {
-    "message": "Começar a Mapear"
+    "message": "Ir para Mapas"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.invitedDevice": {
     "message": "Convidar dispositivo"
@@ -1588,10 +1588,10 @@
     "message": "Criar um Projeto"
   },
   "screens.Settings.CreateOrJoinProject.createProjectButton": {
-    "message": "Criar"
+    "message": "Criar Projeto"
   },
   "screens.Settings.CreateOrJoinProject.enterName": {
-    "message": "Nome do Projeto"
+    "message": "Digite um nome para o projeto"
   },
   "screens.Settings.CreateOrJoinProject.existingProjectName": {
     "message": "Usar um nome de projeto que já existe, não faz deles o mesmo projeto."
@@ -1657,10 +1657,10 @@
     "message": "Excluir mapa"
   },
   "screens.Settings.MapManagement.BackgroundMaps.description1": {
-    "message": "Mapas de fundo personalizados permitem que você os veja mesmo offline."
+    "message": "Adicionar um mapa personalizado permitirá que você veja um mapa quando estiver offline."
   },
   "screens.Settings.MapManagement.BackgroundMaps.description2": {
-    "message": "Nota: Mapas de fundo personalizados não são compartilhados com os colaboradores."
+    "message": "Seu mapa personalizado não está compartilhado com outros dispositivos no seu projeto."
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorDescription": {
     "message": "Não foi possível importar o arquivo. Por favor, volte e tente novamente."
@@ -1672,7 +1672,7 @@
     "message": "Remover arquivo do mapa"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
-    "message": "Mapa de Fundo"
+    "message": "Mapas de fundo"
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.dateAdded": {
     "message": "Data de inclusão"
@@ -1705,25 +1705,25 @@
     "message": "Política de Privacidade"
   },
   "screens.Sync.NoWifiDisplay.buttonText": {
-    "message": "Fechar"
+    "message": "Abrir Configurações"
   },
   "screens.Sync.NoWifiDisplay.description": {
-    "message": "Verifique as configurações e conectividade do dispositivo."
+    "message": "Abra as configurações do seu dispositivo e conecte-se a uma rede Wi-Fi para sincronizar"
   },
   "screens.Sync.NoWifiDisplay.title": {
-    "message": "Sem Wi-Fi."
+    "message": "Sem Wi-Fi"
   },
   "screens.Sync.ProjectSyncDisplay.allCaughtUp": {
     "message": "Está tudo sincronizado!"
   },
   "screens.Sync.ProjectSyncDisplay.allDataSynced": {
-    "message": "Atualizado!"
+    "message": "Todos os dados foram sincronizados"
   },
   "screens.Sync.ProjectSyncDisplay.close": {
     "message": "Fechar"
   },
   "screens.Sync.ProjectSyncDisplay.devicesFound": {
-    "message": "Dispositivos encontrados."
+    "message": "Dispositivos encontrados"
   },
   "screens.Sync.ProjectSyncDisplay.exchangeAction": {
     "message": "Mudar Configurações"
@@ -1765,13 +1765,13 @@
     "message": "Concluído! Esperando que outros dispositivos participem"
   },
   "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
-    "message": "Concluído!"
+    "message": "Completo! Você está atualizado"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "Trocando..."
+    "message": "Você está sincronizando com sua equipe"
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
-    "message": "Aguardando dispositivos..."
+    "message": "Aguardando dispositivos"
   },
   "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
     "message": "{ssid}"

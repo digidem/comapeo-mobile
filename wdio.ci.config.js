@@ -10,7 +10,10 @@ const config = {
   user: process.env.BROWSERSTACK_USERNAME,
   key: process.env.BROWSERSTACK_ACCESS_KEY,
   hostname: 'hub.browserstack.com',
-  specs: [path.resolve(__dirname, 'tests/e2e/specs/flow.test.ts')],
+  specs: [
+    path.resolve(__dirname, 'tests/e2e/specs/parallel1.test.ts'),
+    path.resolve(__dirname, 'tests/e2e/specs/parallel2.test.ts'),
+  ],
   maxInstances: 1,
   services: [
     [
@@ -28,6 +31,23 @@ const config = {
     ],
   ],
   capabilities: [
+    {
+      platformName: 'android',
+      'appium:platformVersion': '13.0',
+      'appium:deviceName': 'Google Pixel 7',
+      'appium:automationName': 'UIAutomator2',
+      'appium:app': process.env.BROWSERSTACK_APP_URL,
+      'appium:autoGrantPermissions': true,
+      'bstack:options': {
+        projectName: 'CoMapeo',
+        buildName: `${prTitle || 'Manual Run'} – ${shortSha}`,
+        sessionName: `E2E: ${shortSha}`,
+        appiumVersion: '2.12.1',
+        debug: true,
+        networkLogs: true,
+        gpsLocation: '0.198214, 78.472225',
+      },
+    },
     {
       platformName: 'android',
       'appium:platformVersion': '13.0',

@@ -29,10 +29,10 @@
     "message": "Go Back"
   },
   "Modal.GPSDisable.button": {
-    "message": "Enable GPS"
+    "message": "Enable"
   },
   "Modal.GPSDisable.description": {
-    "message": "GPS and location needed to record tracks."
+    "message": "To create a Track CoMapeo needs access to your location and GPS."
   },
   "Modal.GPSDisable.title": {
     "message": "GPS Disabled"
@@ -272,7 +272,7 @@
     "message": "Display language for app"
   },
   "Screens.Settings.AppSettings.mapManagement": {
-    "message": "Background Map"
+    "message": "Map Management"
   },
   "Screens.Settings.AppSettings.title": {
     "message": "App Settings"
@@ -686,7 +686,7 @@
     "message": "To find your project settings go to the main menu found on the map screen."
   },
   "screens.DeviceNaming.Success.startMappingInstructions": {
-    "message": "On the next screen, tap the orange button to record your first observation."
+    "message": "You can start mapping alone or start mapping with a team. Create or join a project in order to share data with other devices that are part of the same project."
   },
   "screens.DeviceNaming.Success.startUsihng": {
     "message": "Start Using CoMapeo"
@@ -698,16 +698,16 @@
     "message": "Add Name"
   },
   "screens.DeviceNaming.description": {
-    "message": "Distinct, memorable names help collaborators recognize you."
+    "message": "You can start mapping alone or start mapping with a team. Create or join a project in order to share data with other devices that are part of the same project."
   },
   "screens.DeviceNaming.header": {
-    "message": "Name your device"
+    "message": "Add a name for your device"
   },
   "screens.EnterPassword.enterPass": {
     "message": "Enter your passcode"
   },
   "screens.EnterPassword.wrongPass": {
-    "message": "Incorrect Passcode"
+    "message": "Incorrect passcode, please try again"
   },
   "screens.Exchange.WifiCard.noWifi": {
     "message": "No Wi-Fi"
@@ -788,7 +788,7 @@
     "message": "Something Went Wrong"
   },
   "screens.IntroToCoMapeo.collaborate": {
-    "message": "Collaborate on projects"
+    "message": "Collaborate with others"
   },
   "screens.IntroToCoMapeo.designedFor": {
     "message": "Designed with and for Indigenous peoples & frontline communities"
@@ -1004,13 +1004,13 @@
     "message": "Zone Number"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.collectsLocation": {
-    "message": "Use Location? Tracks location even when closed. Data remains on device only."
+    "message": "CoMapeo collects location data to track your route on the map, even when the app is closed. Your location data is only stored on your device by default, and is not stored or sent anywhere."
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.turnOn": {
-    "message": "Turn On Location"
+    "message": "Turn On"
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
-    "message": "Use Location?"
+    "message": "Use Your Location"
   },
   "screens.ObscurePasscode.description": {
     "message": "Obscure Passcode is a security feature that allows you to open CoMapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of CoMapeo which allows you to create demonstration observations that are not saved to the CoMapeo database."
@@ -1051,7 +1051,7 @@
     "message": "Noomtee"
   },
   "screens.Observation.comapeoAlert": {
-    "message": "CoMapeo data sent from *{projectName}*"
+    "message": "CoMapeo Alert"
   },
   "screens.Observation.confirm": {
     "description": "Button to confirm delete of observation",
@@ -1465,10 +1465,10 @@
     "message": "Device Name"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.addAnotherDevice": {
-    "message": "Invite Another Device"
+    "message": "Add Another Device"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.inviteAccepted": {
-    "message": "Accepted!"
+    "message": "Invite Accepted"
   },
   "screens.Setting.ProjectSettings.YourTeam.InviteAccepted.partOfProject": {
     "message": "<bold>{deviceName}</bold> is now part of your project."
@@ -1534,10 +1534,10 @@
     "message": "Successfully imported categories:"
   },
   "screens.Settings.Config.name": {
-    "message": "Category Set:"
+    "message": "Config Name:"
   },
   "screens.Settings.Config.navTitle": {
-    "message": "Categories"
+    "message": "Configuration"
   },
   "screens.Settings.Config.okButton": {
     "message": "Karaam"
@@ -1546,13 +1546,13 @@
     "message": "Project Name:"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.title": {
-    "message": "Start New Project"
+    "message": "Create a Project"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
     "message": "Name My Project"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.goBack": {
-    "message": "Go Back"
+    "message": "Go back"
   },
   "screens.Settings.CreateOrJoinProject.JoinExistingProject.howTo": {
     "message": "How to Join a Project"
@@ -1561,10 +1561,10 @@
     "message": "To join a project find a Coordinator of the project you wish to join. Tell them your device name and the Coordinator will send you an invite."
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.goToMap": {
-    "message": "Start Mapping"
+    "message": "Go to Map"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.invitedDevice": {
-    "message": "Invite a Device"
+    "message": "Invite Device"
   },
   "screens.Settings.CreateOrJoinProject.ProjectCreated.nowAdded": {
     "message": "now added to All Projects"
@@ -1588,10 +1588,10 @@
     "message": "Create a Project"
   },
   "screens.Settings.CreateOrJoinProject.createProjectButton": {
-    "message": "Create"
+    "message": "Create Project"
   },
   "screens.Settings.CreateOrJoinProject.enterName": {
-    "message": "Project Name"
+    "message": "Enter a name for the Project"
   },
   "screens.Settings.CreateOrJoinProject.existingProjectName": {
     "message": "Using an existing project name does not make them the same project."
@@ -1657,10 +1657,10 @@
     "message": "Delete Map"
   },
   "screens.Settings.MapManagement.BackgroundMaps.description1": {
-    "message": "Custom background maps let you view maps offline."
+    "message": "Adding a custom map will enable you to see a map when you are offline."
   },
   "screens.Settings.MapManagement.BackgroundMaps.description2": {
-    "message": "Note: Custom background maps are not shared with collaborators."
+    "message": "Your custom map is not shared with other devices in your project."
   },
   "screens.Settings.MapManagement.BackgroundMaps.importErrorDescription": {
     "message": "Unable to import the file. Please go back and try again."
@@ -1672,7 +1672,7 @@
     "message": "Remove Map File"
   },
   "screens.Settings.MapManagement.BackgroundMaps.screenTitle": {
-    "message": "Background Map"
+    "message": "Background Maps"
   },
   "screens.Settings.MapManagement.MapsList.CustomMapDetails.dateAdded": {
     "message": "Date Added"
@@ -1705,25 +1705,25 @@
     "message": "Privacy Policy"
   },
   "screens.Sync.NoWifiDisplay.buttonText": {
-    "message": "Keer"
+    "message": "Open Settings"
   },
   "screens.Sync.NoWifiDisplay.description": {
-    "message": "Check device’s settings and connectivity."
+    "message": "Open your phone settings and connect to a WiFi network to synchronize"
   },
   "screens.Sync.NoWifiDisplay.title": {
-    "message": "No Wi-Fi."
+    "message": "No WiFi"
   },
   "screens.Sync.ProjectSyncDisplay.allCaughtUp": {
     "message": "You're all caught up!"
   },
   "screens.Sync.ProjectSyncDisplay.allDataSynced": {
-    "message": "Up to date!"
+    "message": "All data synced"
   },
   "screens.Sync.ProjectSyncDisplay.close": {
     "message": "Keer"
   },
   "screens.Sync.ProjectSyncDisplay.devicesFound": {
-    "message": "Devices found."
+    "message": "Devices found"
   },
   "screens.Sync.ProjectSyncDisplay.exchangeAction": {
     "message": "Change Settings"
@@ -1765,13 +1765,13 @@
     "message": "Complete! Waiting for other devices to join"
   },
   "screens.Sync.ProjectSyncDisplay.syncingFullyComplete": {
-    "message": "Waany!"
+    "message": "Complete! You're up to date"
   },
   "screens.Sync.ProjectSyncDisplay.syncingWithDevices": {
-    "message": "Exchanging..."
+    "message": "You are syncing with your team"
   },
   "screens.Sync.ProjectSyncDisplay.waitingForDevices": {
-    "message": "Waiting for devices..."
+    "message": "Waiting for devices"
   },
   "screens.Sync.ProjectSyncDisplay.wifiCardPlaceholder": {
     "message": "{ssid}"

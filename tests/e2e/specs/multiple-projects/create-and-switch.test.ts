@@ -46,7 +46,6 @@ describe('Multiple Projects - Create and Switch Between Projects', () => {
   });
 
   it('should switch back to the Solo project and update headers accordingly', async () => {
-    await $('~Open Menu').click();
     await $(byText('All Projects')).click();
     await $(byTextMatches('My Solo Project')).click();
     await $('~Close Menu').click();

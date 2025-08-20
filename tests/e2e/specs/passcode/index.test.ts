@@ -1,6 +1,6 @@
 import {describe} from 'mocha';
 
-describe('CoMapeo E2E Flow', function () {
+describe('Passcode', function () {
   //   require('../onboarding/helper/minimal-onboarding-setup.test');
   require('./obscure-passcode-visibility.test');
   require('./set-passcode.test');

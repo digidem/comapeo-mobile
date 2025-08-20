@@ -16,46 +16,19 @@ jobs:
   build-apk:
     runs-on: ubuntu-latest
     outputs:
-      app_url: ${{ steps.load-or-upload.outputs.app_url }}
+      app_url: ${{ steps.upload.outputs.app_url }}
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Determine PR Number
-        id: pr-number
-        run: |
-          echo "PR_NUMBER=${GITHUB_HEAD_REF#refs/pull/}" >> $GITHUB_ENV
-          echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
-
-      - name: Check for Existing APK URL
-        id: load-existing
-        uses: actions/github-script@v7
-        with:
-          script: |
-            try {
-              const { data } = await github.rest.actions.downloadArtifact({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                artifact_name: `apks-${steps.pr-number.outputs.pr_number}`,
-                archive_format: 'zip'
-              });
-              // We don't actually need to download it, just test existence
-              return { app_url: 'exists' };
-            } catch (error) {
-              core.info('No existing APK URL found for this PR.');
-              return { app_url: '' };
-            }
-
-      - name: Setup EAS (Skip if APK exists)
-        if: steps.load-existing.outputs.app_url == ''
+      - name: Setup EAS
         uses: expo/expo-github-action@v8
         with:
           eas-version: latest
           token: ${{ secrets.EXPO }}
 
-      - name: Free Up Space (Skip if APK exists)
-        if: steps.load-existing.outputs.app_url == ''
+      - name: Free Up Space
         run: |
           echo "Disk space before cleanup:"
           df -h
@@ -69,15 +42,15 @@ jobs:
           df -h
 
       - name: Cache Dependencies
-        if: steps.load-existing.outputs.app_url == ''
         id: cache-dependencies
         uses: actions/cache@v4
         with:
           path: |
-            ~/.gradle/caches/
-            ~/.gradle/wrapper/
-            ~/.gradle/daemon/
-            node_modules
+            path: |
+             ~/.gradle/caches/
+             ~/.gradle/wrapper/
+             ~/.gradle/daemon/
+             node_modules
           key: dependencies-cache-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             dependencies-cache-
@@ -89,12 +62,10 @@ jobs:
           cache: 'npm'
 
       - name: Install Dependencies
-        if: steps.load-existing.outputs.app_url == '' && steps.cache-dependencies.outputs.cache-hit != 'true'
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: npm ci
 
-      - name: Build and Upload APK to BrowserStack
-        id: build-and-upload
-        if: steps.load-existing.outputs.app_url == ''
+      - name: Build APK
         env:
           SENTRY_DISABLE_AUTO_UPLOAD: 'true'
           EXPO_PUBLIC_E2E_TEST: 'true'
@@ -106,48 +77,21 @@ jobs:
           npx expo prebuild -p android
           eas build --platform android --profile test --local
 
-          APK_PATH=$(ls -t build-*.apk | head -n 1)
-          echo "Found APK: $APK_PATH"
+      - name: Find Built APK
+        id: find-apk
+        run: echo "APK_PATH=$(ls -t build-*.apk | head -n 1)" >> $GITHUB_ENV
 
+      - name: Upload APK to BrowserStack
+        id: upload
+        run: |
           APP_URL=$(curl -u "$BROWSERSTACK_USERNAME:$BROWSERSTACK_ACCESS_KEY" \
             -X POST "https://api-cloud.browserstack.com/app-automate/upload" \
             -F "file=@$APK_PATH" | jq -r '.app_url')
-
           echo "app_url=$APP_URL" >> $GITHUB_ENV
           echo "app_url=$APP_URL" >> $GITHUB_OUTPUT
-
-      - name: Save App URL as Artifact
-        if: steps.load-existing.outputs.app_url == '' && steps.build-and-upload.outputs.app_url != ''
-        uses: actions/upload-artifact@v4
-        with:
-          name: apks-${{ steps.pr-number.outputs.pr_number }}
-          path: |
-            ${{ steps.build-and-upload.outputs.app_url }}
-          path: ./app_url.txt
-        # We'll write it in the next step
-
-      - name: Write App URL to File for Artifact
-        if: steps.load-existing.outputs.app_url == '' && steps.build-and-upload.outputs.app_url != ''
-        run: |
-          echo "${{ steps.build-and-upload.outputs.app_url }}" > app_url.txt
-
-      - name: Load Existing App URL from Artifact
-        id: load-or-upload
-        if: steps.load-existing.outputs.app_url != ''
-        run: |
-          echo "Downloading existing APK URL..."
-          gh artifact download "apks-${{ steps.pr-number.outputs.pr_number }}" --repo ${{ github.repository }} -p tmp/
-          APP_URL=$(cat tmp/app_url.txt)
-          echo "app_url=$APP_URL" >> $GITHUB_OUTPUT
-          echo "Reusing existing app_url: $APP_URL"
-
-      - name: Fallback Output if No Existing APK
-        id: fallback-output
-        if: steps.load-existing.outputs.app_url == '' && steps.build-and-upload.outputs.app_url == ''
-        run: |
-          echo "app_url=" >> $GITHUB_OUTPUT
-          echo "No APK built or found."
-        # Handle edge case
+        env:
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
 
   run-e2e-tests:
     runs-on: ubuntu-latest

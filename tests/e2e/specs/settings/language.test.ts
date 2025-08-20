@@ -1,6 +1,6 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
-import {byResourceId, byTextMatches} from '../../utils/selectors';
+import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
 
 describe('Settings - Language Settings Flow', () => {
   it('should open the Language list from App Settings', async () => {
@@ -12,8 +12,6 @@ describe('Settings - Language Settings Flow', () => {
 
     const languageOption = await $(byTextMatches('Language'));
     await languageOption.click();
-
-    // TODO: Add assertion about the initially selected option on this screen
   });
 
   it('should scroll to Spanish, select it, and confirm language change', async () => {
@@ -28,13 +26,7 @@ describe('Settings - Language Settings Flow', () => {
     const obsListTab = await $('~Go to observations list.');
     await obsListTab.click();
 
-    await expect(
-      $(
-        byTextMatches(
-          'hace\\s+(?:[1-5]?\\d|60)\\s+(?:minuto|minutos|segundos)',
-        ),
-      ),
-    ).toBeDisplayed();
+    await expect($(byText('Añadir observaciones'))).toBeDisplayed();
   });
 
   it('should switch back to English and confirm language revert', async () => {

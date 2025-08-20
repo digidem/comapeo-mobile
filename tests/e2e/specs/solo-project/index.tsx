@@ -1,6 +1,6 @@
 import {describe} from 'mocha';
 
-describe('CoMapeo E2E Flow', function () {
+describe('Solo Project', function () {
   require('../onboarding/helper/minimal-onboarding-setup.test');
   require('./own-project-headers.test');
   require('./side-drawer-menu-no-proj.test');

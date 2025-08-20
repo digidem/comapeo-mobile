@@ -123,6 +123,8 @@ jobs:
           name: apks-${{ steps.pr-number.outputs.pr_number }}
           path: |
             ${{ steps.build-and-upload.outputs.app_url }}
+          path: ./app_url.txt
+        # We'll write it in the next step
 
       - name: Write App URL to File for Artifact
         if: steps.load-existing.outputs.app_url == '' && steps.build-and-upload.outputs.app_url != ''

@@ -137,7 +137,7 @@ export function createAppProvidersWrapper({
   });
 
   const persistedSecurityStore = createSecurityStore({
-    persist: true,
+    persist: false,
   });
 
   const persistedCoordinateFormatStore = createCoordinateFormatStore({

@@ -1,9 +1,7 @@
 import * as React from 'react';
 import {getLocales} from 'expo-localization';
-import {createMapeoClient} from '@comapeo/ipc';
 import {QueryClient} from '@tanstack/react-query';
 import {AppNavigator} from './AppNavigator';
-import {MessagePortLike} from './lib/MessagePortLike';
 import {initializeNodejs} from './initializeNodejs';
 import Mapbox from '@rnmapbox/maps';
 import {PermissionsAndroid} from 'react-native';
@@ -12,11 +10,9 @@ import {createLocalDiscoveryController} from './contexts/LocalDiscoveryContext';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Sentry from '@sentry/react-native';
 import * as TaskManager from 'expo-task-manager';
-import nodejs from 'nodejs-mobile-react-native';
 import {applicationId} from 'expo-application';
 import {LOCATION_TASK_NAME, LocationCallbackInfo} from './sharedTypes/location';
 import {storage} from './hooks/persistedState/createPersistedState';
-import {useOnBackgroundedAndForegrounded} from './hooks/useOnBackgroundedAndForegrounded';
 import {getSentryUserId} from './metrics/getSentryUserId';
 import {AppDiagnosticMetrics} from './metrics/AppDiagnosticMetrics';
 import {DeviceDiagnosticMetrics} from './metrics/DeviceDiagnosticMetrics';
@@ -34,8 +30,9 @@ import {
 import {getAppLanguageTag} from './lib/intl';
 import {IntlProvider} from './contexts/IntlContext';
 import {ServerLoading} from './ServerLoading';
-import type {StatusMessage} from '../backend/src/status';
 import {createSavedLocationStore} from './contexts/SavedLocationContext';
+import {createServerStateStore} from './lib/ServerStateStore.ts';
+import {createMapeoApi} from './lib/createMapeoApi.ts';
 
 type SentryEnvironment = 'development' | 'qa' | 'production';
 
@@ -47,15 +44,29 @@ if (applicationId?.endsWith('.dev') || applicationId?.endsWith('.pre')) {
 }
 
 const sentryDebug = applicationId?.endsWith('.dev');
+const appMetricsOptIn = sentryEnvironment !== 'production';
+let navigationIntegration:
+  | ReturnType<(typeof Sentry)['reactNavigationIntegration']>
+  | undefined = undefined;
 const sentryUserId = getSentryUserId({now: new Date(), storage});
 
 Sentry.init({
   dsn: 'https://e0e02907e05dc72a6da64c3483ed88a6@o4507148235702272.ingest.us.sentry.io/4507170965618688',
-  tracesSampleRate: 1.0,
+  tracesSampleRate: appMetricsOptIn ? 1.0 : 0, // Only enable tracing once we have user consent
+  enableUserInteractionTracing: appMetricsOptIn, // Only enable user interaction tracing once we have user consent
   environment: sentryEnvironment,
   debug: sentryDebug, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
   initialScope: {user: {id: sentryUserId}},
 });
+
+if (appMetricsOptIn) {
+  Sentry.setTag('appMetricsOptIn', 'true');
+  navigationIntegration = Sentry.reactNavigationIntegration({
+    enableTimeToInitialDisplay: true,
+    ignoreEmptyBackNavigationTransactions: false,
+  });
+  Sentry.getClient()?.addIntegration(navigationIntegration);
+}
 
 Mapbox.setTelemetryEnabled(false);
 
@@ -79,10 +90,9 @@ const appDiagnosticMetrics = new AppDiagnosticMetrics({
     };
   },
 });
-
 const deviceDiagnosticMetrics = new DeviceDiagnosticMetrics();
-const messagePort = new MessagePortLike();
-const mapeoApi = createMapeoClient(messagePort, {timeout: Infinity});
+const serverStateStore = createServerStateStore();
+const mapeoApi = createMapeoApi({serverStateStore});
 const localDiscoveryController = createLocalDiscoveryController(mapeoApi);
 localDiscoveryController.start();
 
@@ -161,16 +171,6 @@ TaskManager.defineTask(
 
 const queryClient = new QueryClient();
 
-const requestServerStatus = () => {
-  nodejs.channel.post('get-server-status');
-};
-
-const subscribeToServerStatus = (listener: (msg: StatusMessage) => unknown) => {
-  const subscription = nodejs.channel.addListener('server:status', listener);
-  // @ts-expect-error - incorrect types on nodejs.channel
-  return () => subscription.remove();
-};
-
 const App = () => {
   const [permissionsAsked, setPermissionsAsked] = React.useState(false);
   React.useEffect(() => {
@@ -181,16 +181,11 @@ const App = () => {
     ]).then(() => setPermissionsAsked(true));
   }, []);
 
-  useOnBackgroundedAndForegrounded(mapeoApi);
-
   return (
     <LocaleStoreProvider value={persistedLocaleStore}>
       <IntlProvider>
         {/* ServerLoading requires internationalization to be set up */}
-        <ServerLoading
-          messagePort={messagePort}
-          requestServerStatus={requestServerStatus}
-          subscribeToServerStatus={subscribeToServerStatus}>
+        <ServerLoading serverStateStore={serverStateStore}>
           <AppProviders
             queryClient={queryClient}
             localDiscoveryController={localDiscoveryController}
@@ -205,7 +200,10 @@ const App = () => {
             savedLocationStore={savedLocationStore}
             activeProjectIdStore={persistedActiveProjectIdStore}
             metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}>
-            <AppNavigator permissionAsked={permissionsAsked} />
+            <AppNavigator
+              permissionAsked={permissionsAsked}
+              navigationIntegration={navigationIntegration}
+            />
           </AppProviders>
         </ServerLoading>
       </IntlProvider>
@@ -213,4 +211,8 @@ const App = () => {
   );
 };
 
-export default Sentry.wrap(App);
+export default Sentry.wrap(App, {
+  touchEventBoundaryProps: {
+    labelName: 'accessibilityLabel',
+  },
+});

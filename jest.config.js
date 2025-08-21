@@ -13,6 +13,7 @@ const NODE_MODULE_PATTERNS_TO_TRANSFORM = [
   // Awana modules distributed as ESM
   '@comapeo/',
   '@mapeo/',
+  'rpc-reflector',
   // Helper modules distributed as ESM
   '@sindresorhus/merge-streams',
   'bcp-47',
@@ -26,6 +27,7 @@ const NODE_MODULE_PATTERNS_TO_TRANSFORM = [
   'is-alphabetical',
   'is-alphanumerical',
   'is-decimal',
+  'is-plain-obj',
   'is-stream',
   'ky',
   'map-obj',
@@ -36,6 +38,7 @@ const NODE_MODULE_PATTERNS_TO_TRANSFORM = [
   'p-event',
   'p-limit',
   'p-timeout',
+  'serialize-error',
   'string-timing-safe-equal',
   'styled-map-package',
   'uint8array-extras',
@@ -64,6 +67,7 @@ const config = {
   ],
   moduleNameMapper: {
     '\\.svg$': '<rootDir>/src/frontend/__mocks__/svg.tsx',
+    '^@comapeo/ipc$': '<rootDir>/node_modules/@comapeo/ipc/dist/index.js',
   },
   // Avoid `jest-haste-map: Haste module naming collision` warnings
   modulePathIgnorePatterns: [

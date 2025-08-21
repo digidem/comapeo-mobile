@@ -9,11 +9,26 @@ import * as v from 'valibot';
 import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
 import {LocationHistoryPoint} from '../sharedTypes/location';
 import {calculateTotalDistance} from '../utils/distance';
+import {Preset} from '@comapeo/schema';
+
+export const PresetSchema = v.object({
+  docId: v.string(),
+  name: v.string(),
+  geometry: v.custom(
+    (value): value is string[] =>
+      Array.isArray(value) && value.includes('line'),
+    'geometry must include "line"',
+  ),
+  iconRef: v.optional(v.object({docId: v.string()})),
+  versionId: v.string(),
+});
 
 const TrackStateSchema = v.intersect([
   v.object({
     description: v.string(),
     distance: v.number(),
+    preset: v.nullable(PresetSchema),
+    docId: v.nullable(v.string()),
     locationHistory: v.array(
       // TODO: Create schema for this
       v.object({
@@ -55,6 +70,8 @@ function createInitialState(): TrackState {
     locationHistory: [],
     observationRefs: [],
     trackingSince: null,
+    preset: null,
+    docId: null,
   };
 }
 
@@ -92,6 +109,12 @@ export function createTrackStore({persist} = {persist: false}) {
   }
 
   const actions = {
+    setTrackPreset: (preset: Preset) => {
+      store.setState({preset});
+    },
+    setTrackId: (docId: string | null) => {
+      store.setState({docId});
+    },
     setDescription: (description: string) => {
       store.setState({description});
     },
@@ -141,6 +164,7 @@ export function createTrackStore({persist} = {persist: false}) {
         locationHistory: [],
         observationRefs: [],
         trackingSince: null,
+        preset: null,
       });
     },
     setTracking: (isTracking: boolean) => {

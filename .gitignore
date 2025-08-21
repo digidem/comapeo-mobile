@@ -87,6 +87,9 @@ ios/*.env*.local
 android/
 ios/
 
+# WebdriverIO local configuration
+wdio.local.config.js
+
 # WebdriverIO and BrowserStack logs
 logs/
 logs/*.log

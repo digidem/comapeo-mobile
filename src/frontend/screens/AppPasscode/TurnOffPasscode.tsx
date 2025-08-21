@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {BackHandler, StyleSheet, View} from 'react-native';
+import {BackHandler, StyleSheet, View, TouchableOpacity} from 'react-native';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 import {
   List,
@@ -16,7 +15,7 @@ import {NativeNavigationComponent} from '../../sharedTypes/navigation';
 import {useFocusEffect, StackActions} from '@react-navigation/native';
 import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {HeaderBackButtonProps} from '@react-navigation/elements';
-import {Text} from '../../sharedComponents/Text';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {
   BottomSheetModal,
   BottomSheetModalContent,
@@ -106,24 +105,23 @@ export const TurnOffPasscode: NativeNavigationComponent<'DisablePasscode'> = ({
     }, [backPress]),
   );
 
-  function unsetAppPasscode() {
-    setPasscode(null);
+  async function unsetAppPasscode() {
+    await setPasscode(null);
+    closeSheet();
     navigation.popTo('Security');
   }
 
   return (
     <View style={styles.pageContainer}>
-      <Text style={styles.description}>{t(m.description)}</Text>
-      <Text style={{fontSize: 16, marginBottom: 20}}>
-        {t(m.currentlyUsing)}
-      </Text>
+      <BodyText style={styles.description}>{t(m.description)}</BodyText>
+      <BodyText style={{marginBottom: 20}}>{t(m.currentlyUsing)}</BodyText>
       <List>
         <ListItem style={styles.checkBoxContainer} onPress={openSheet}>
           <ListItemText
             style={styles.text}
             primary={<FormattedMessage {...m.usePasscode} />}
           />
-          <TouchableOpacity shouldActivateOnStart onPress={openSheet}>
+          <TouchableOpacity onPress={openSheet}>
             <MaterialIcon
               name={passcodeSet ? 'check-box' : 'check-box-outline-blank'}
               testID={passcodeSet ? 'SETTINGS.passcode-checked' : ''}
@@ -184,7 +182,6 @@ const styles = StyleSheet.create({
   },
   description: {
     marginTop: 40,
-    fontSize: 16,
     marginBottom: 20,
   },
   pageContainer: {

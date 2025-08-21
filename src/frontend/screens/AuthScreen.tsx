@@ -1,16 +1,20 @@
 import * as React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {defineMessages, useIntl} from 'react-intl';
-import {ScrollView, StyleSheet, Text} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useWindowDimensions} from 'react-native';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 import {useAuthContext} from '../contexts/AuthContext';
 import CoMapeoLogoSvg from '../images/CoMapeoLogo.svg';
-import {RED} from '../lib/styles';
+import ClockIcon from '../images/ClockOutlined.svg';
+import {RED, BLACK} from '../lib/styles';
+import {BodyText} from '../sharedComponents/Text/BodyText';
 import {PasscodeInput} from '../sharedComponents/PasscodeInput';
 import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
 import {AppStackParamsList} from '../sharedTypes/navigation';
+import {usePasscodeLockout} from '../hooks/usePasscodeLockout';
 
 const m = defineMessages({
   enterPass: {
@@ -19,7 +23,7 @@ const m = defineMessages({
   },
   wrongPass: {
     id: 'screens.EnterPassword.wrongPass',
-    defaultMessage: 'Incorrect passcode, please try again ',
+    defaultMessage: 'Incorrect Passcode ',
   },
 });
 
@@ -28,9 +32,11 @@ export const AuthScreen = ({
 }: NativeStackScreenProps<AppStackParamsList, 'AuthScreen'>) => {
   const {formatMessage: t} = useIntl();
   const [error, setError] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const {authenticate, authState} = useAuthContext();
   const [inputtedPass, setInputtedPass] = React.useState('');
   const scrollViewRef = React.useRef<ScrollView>(null);
+  const {isLockedOut, message: lockoutMessage} = usePasscodeLockout();
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', event => {
@@ -38,10 +44,7 @@ export const AuthScreen = ({
       // Prevent back if unauthenticated
       event.preventDefault();
     });
-
-    return () => {
-      unsubscribe();
-    };
+    return () => unsubscribe();
   }, [authState, navigation]);
 
   React.useEffect(() => {
@@ -65,21 +68,22 @@ export const AuthScreen = ({
   }
 
   function setInputWithValidation(passValue: string) {
-    if (error) {
-      setError(false);
-    }
+    if (error) setError(false);
     setInputtedPass(passValue);
     if (passValue.length === 5) {
       validatePass(passValue);
     }
   }
 
-  function validatePass(passValue: string) {
+  async function validatePass(passValue: string) {
+    setLoading(true);
     try {
-      authenticate(passValue);
+      await authenticate(passValue);
     } catch {
       scrollViewRef.current?.scrollToEnd();
       setError(true);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -93,19 +97,33 @@ export const AuthScreen = ({
         {paddingTop: top + 20, paddingBottom: 20},
       ]}
       dockContent={
-        error && <Text style={styles.wrongPass}>{t(m.wrongPass)}</Text>
+        error && <BodyText style={styles.wrongPass}>{t(m.wrongPass)}</BodyText>
       }>
       {/* Hide SVG logo in E2E mode to reduce rendering lag on BrowserStack */}
       {process.env.EXPO_PUBLIC_E2E_TEST !== 'true' && (
-        <CoMapeoLogoSvg height={window.height / 3} />
+        <CoMapeoLogoSvg style={{height: window.height / 3, aspectRatio: 1}} />
       )}
-      <Text style={styles.description}>{t(m.enterPass)}</Text>
-      <PasscodeInput
-        testID="SETTINGS.auth-passcode-inp"
-        error={error}
-        inputValue={inputtedPass}
-        onChangeTextWithValidation={setInputWithValidation}
-      />
+      {isLockedOut ? (
+        <View style={styles.lockoutContainer}>
+          <ClockIcon width={20} height={20} />
+          <BodyText style={styles.lockoutText}>{lockoutMessage}</BodyText>
+        </View>
+      ) : (
+        <BodyText>{t(m.enterPass)}</BodyText>
+      )}
+      {loading ? (
+        <View style={styles.loadingContainer}>
+          <UIActivityIndicator size={32} />
+        </View>
+      ) : (
+        <PasscodeInput
+          testID="SETTINGS.auth-passcode-inp"
+          error={error}
+          inputValue={inputtedPass}
+          onChangeTextWithValidation={setInputWithValidation}
+          editable={!isLockedOut}
+        />
+      )}
     </ScreenContentWithDock>
   );
 };
@@ -115,12 +133,21 @@ const styles = StyleSheet.create({
     gap: 20,
     alignItems: 'center',
   },
-  description: {
-    fontSize: 16,
-  },
   wrongPass: {
-    fontSize: 16,
     color: RED,
     textAlign: 'center',
+  },
+  lockoutContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  lockoutText: {
+    color: BLACK,
+  },
+  loadingContainer: {
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

@@ -249,7 +249,7 @@ export const ObservationEdit: NativeNavigationComponent<'ObservationEdit'> = ({
           color={preset?.color}
         />
       }
-      onPressPreset={() => navigation.navigate('PresetChooser')}
+      onPressPreset={() => navigation.navigate('ObservationCategoryChooser')}
       notes={typeof notes !== 'string' ? '' : notes}
       updateNotes={newVal => {
         updateTags('notes', newVal);

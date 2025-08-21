@@ -9,9 +9,15 @@ type Props = {
   driveId: string;
   name: string;
   projectId: string;
-} & Pick<ComponentProps<typeof TrulyContainedImage>, 'testID'>;
+} & Pick<ComponentProps<typeof TrulyContainedImage>, 'testID' | 'onLoad'>;
 
-export function CoreBlobImage({driveId, name, projectId, testID}: Props) {
+export function CoreBlobImage({
+  driveId,
+  name,
+  projectId,
+  testID,
+  onLoad,
+}: Props) {
   const [cannotLoadImage, setCannotLoadImage] = useState(false);
   const [displayedVariant, setDisplayedVariant] =
     useState<PhotoVariant>('original');
@@ -32,7 +38,7 @@ export function CoreBlobImage({driveId, name, projectId, testID}: Props) {
 
   return (
     <TrulyContainedImage
-      src={attachmentUrl}
+      source={attachmentUrl}
       onError={() => {
         // The original may fail to load depending on media sync settings.
         // Attempt to use the preview URL if using the original does not work.
@@ -43,6 +49,7 @@ export function CoreBlobImage({driveId, name, projectId, testID}: Props) {
 
         setCannotLoadImage(true);
       }}
+      onLoad={onLoad}
     />
   );
 }

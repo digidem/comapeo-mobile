@@ -309,6 +309,9 @@
     "description": "Button to share an observation",
     "message": "Share"
   },
+  "Storage.MapBanner.title": {
+    "message": "Your device has low storage."
+  },
   "Storage.MenuAlert.cta": {
     "message": "Free up space"
   },

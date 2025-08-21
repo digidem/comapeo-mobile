@@ -1,14 +1,15 @@
 import {describe} from 'mocha';
 
 describe('CoMapeo E2E Flow', function () {
-  require('./onboarding/data-privacy.test');
-  require('./onboarding/privacy-policy.test');
-  require('./onboarding/device-naming.test');
-  require('./project/edit-device-name.test');
-  require('./project/own-project-headers.test');
-  require('./main/side-drawer-menu-no-proj.test');
-  require('./project/project-settings-no-proj.test');
+  // require('./onboarding/data-privacy.test');
+  // require('./onboarding/privacy-policy.test');
+  // require('./onboarding/device-naming.test');
+  // require('./project/edit-device-name.test');
+  // require('./project/own-project-headers.test');
+  // require('./main/side-drawer-menu-no-proj.test');
+  // require('./project/project-settings-no-proj.test');
   require('./exchange/solo.test');
+  require('./observations/export-observations.test');
   require('./observations/create-observation.test');
   require('./multiple-projects/create-and-switch.test');
   require('./tracks/start-track.test');

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import SuccessIcon from '../../images/Success.svg';
@@ -49,20 +49,22 @@ export const Success = ({
 
   return (
     <View style={styles.container}>
-      <View style={{alignItems: 'center'}}>
-        <SuccessIcon />
-        <Text style={styles.text}>{t(m.success)}</Text>
-        <Text style={{marginTop: 20}}>{t(m.description)} </Text>
-        <View style={styles.deviceText}>
-          <NewDeviceLogo />
-          <Text style={{marginLeft: 10}}>{deviceName}</Text>
+      <ScrollView>
+        <View style={{alignItems: 'center'}}>
+          <SuccessIcon />
+          <Text style={styles.text}>{t(m.success)}</Text>
+          <Text style={{marginTop: 20}}>{t(m.description)} </Text>
+          <View style={styles.deviceText}>
+            <NewDeviceLogo />
+            <Text style={{marginLeft: 10}}>{deviceName}</Text>
+          </View>
+          <View>
+            <Text style={{marginTop: 20}}>{t(m.startMappingInstructions)}</Text>
+            <Text></Text>
+            <Text>{t(m.findSettings)}</Text>
+          </View>
         </View>
-        <View>
-          <Text style={{marginTop: 20}}>{t(m.startMappingInstructions)}</Text>
-          <Text></Text>
-          <Text>{t(m.findSettings)}</Text>
-        </View>
-      </View>
+      </ScrollView>
       <Button
         testID="ONBOARDING.go-to-map-btn"
         fullWidth

@@ -10,7 +10,7 @@ import {useMutation, useQuery} from '@tanstack/react-query';
 
 import {useActiveProject} from '../../contexts/ActiveProjectContext';
 import {MEMBER_ROLE_ID} from '../../sharedTypes';
-import {useOpenShareDialog} from '../share';
+import {saveDocuments} from '@react-native-documents/picker';
 import {Exports} from '../../screens/ExportObservations';
 import * as FileSystem from 'expo-file-system';
 import {useAppLanguageTag} from '../useAppLanguageTag';
@@ -89,7 +89,6 @@ export function useExportObservationsAndShare({
 }) {
   const exportNoMedia = useExportGeoJSON({projectId});
   const exportWithMedia = useExportZipFile({projectId});
-  const openShare = useOpenShareDialog();
   const lang = useAppLanguageTag();
 
   return useMutation({
@@ -103,31 +102,46 @@ export function useExportObservationsAndShare({
         await FileSystem.makeDirectoryAsync(exportDir);
       }
       if (exportType === 'Observation' || exportType === 'Tracks') {
-        return exportNoMedia.mutateAsync({
+        return exportNoMedia
+          .mutateAsync({
+            path: normalizeFilePath(exportDir),
+            exportOptions: {
+              lang,
+              observations: exportType === 'Observation',
+              tracks: exportType === 'Tracks',
+            },
+          })
+          .then(path => {
+            saveDocuments({
+              sourceUris: [`file://${path}`],
+              mimeType: 'application/geo+json',
+            });
+          });
+      }
+
+      return await exportWithMedia
+        .mutateAsync({
           path: normalizeFilePath(exportDir),
           exportOptions: {
             lang,
-            observations: exportType === 'Observation',
-            tracks: exportType === 'Tracks',
+            observations: true,
+            tracks: false,
+            attachments: true,
           },
+        })
+        .then(path => {
+          saveDocuments({
+            sourceUris: [`file://${path}`],
+            mimeType: 'application/zip',
+          });
         });
-      }
-
-      return exportWithMedia.mutateAsync({
-        path: normalizeFilePath(exportDir),
-        exportOptions: {
-          lang,
-          observations: true,
-          tracks: false,
-          attachments: true,
-        },
-      });
-    },
-    onSuccess: async path => {
-      await openShare.mutateAsync({url: `file://${path}`, failOnCancel: false});
     },
   });
 }
+
+// onSuccess: async path => {
+//   await openShare.mutateAsync({url: `file://${path}`, failOnCancel: false});
+// },
 
 const normalizeFilePath = (uri: string) => {
   return uri.replace(/^file:\/\//, '');

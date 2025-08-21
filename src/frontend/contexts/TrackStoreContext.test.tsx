@@ -10,6 +10,7 @@ import {
   useTrackState,
   PresetSchema,
 } from './TrackStoreContext';
+import {calculateTotalDistance} from '../utils/distance.ts';
 
 function createWrapper(trackStore: TrackStore) {
   return ({children}: {children: ReactNode}) => {
@@ -272,5 +273,24 @@ describe('useTrackActions()', () => {
       docId: null,
     });
     expect(stateHook.result.current.distance).toBeGreaterThan(previousDistance);
+    expect(stateHook.result.current.distance).toBeCloseTo(
+      calculateTotalDistance(stateHook.result.current.locationHistory),
+      1,
+    );
+
+    // This test exists to check a previous implementation bug where adding more
+    // than one location when there is already a location history would result
+    // in incorrect distance calculation.
+    act(() => {
+      actionsHook.result.current.addNewLocations([
+        {latitude: 0.5, longitude: 1, timestamp: timestamp3 + 1_000},
+        {latitude: 0.5, longitude: 1.5, timestamp: timestamp3 + 2_000},
+      ]);
+    });
+
+    expect(stateHook.result.current.distance).toBeCloseTo(
+      calculateTotalDistance(stateHook.result.current.locationHistory),
+      1,
+    );
   });
 });

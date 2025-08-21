@@ -76,7 +76,6 @@ export const ExportObservations = ({
       {exportType: typeToExport},
       {
         onError: err => {
-          console.error({err});
           Sentry.captureException(err);
           navigation.navigate('ErrorBottomSheet');
         },

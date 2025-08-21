@@ -43,14 +43,9 @@ describe('Settings - Language Settings Flow', () => {
       await drawerIcon.click();
     }
 
-    const english = $(byTextMatches('Settings'));
-    const spanish = $(byTextMatches('Ajustes de la'));
+    const settingsInSpanish = $(byTextMatches('Ajustes de la'));
+    await settingsInSpanish.click();
 
-    if (await spanish.isDisplayed()) {
-      await spanish.click();
-    } else {
-      await english.click();
-    }
     const idiomaOption = await $(byTextMatches('Idioma'));
     await idiomaOption.click();
 

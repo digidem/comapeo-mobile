@@ -139,10 +139,6 @@ export function useExportObservationsAndShare({
   });
 }
 
-// onSuccess: async path => {
-//   await openShare.mutateAsync({url: `file://${path}`, failOnCancel: false});
-// },
-
 const normalizeFilePath = (uri: string) => {
   return uri.replace(/^file:\/\//, '');
 };

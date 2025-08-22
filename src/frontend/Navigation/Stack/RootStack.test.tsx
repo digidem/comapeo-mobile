@@ -102,7 +102,7 @@ describe('Root navigation onboarding → next screen', () => {
 
     const input = await screen.findByTestId('PROJECT.name-inp');
     await user.type(input, 'Test Project');
-    await user.press(screen.getByText('Next'));
+    await user.press(screen.getByText('Create'));
 
     await waitFor(async () => {
       const projects = await client.listProjects();

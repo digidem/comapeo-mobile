@@ -399,9 +399,6 @@
   "projectInfoCard.participant": {
     "message": "You are a participant on this project."
   },
-  "projectOnboarding.createProject.next": {
-    "message": "Next"
-  },
   "screen.EditProjectDetails.descriptionPlaceholder": {
     "message": "Short Description of the Project, less than 60 characters."
   },
@@ -658,32 +655,26 @@
     "description": "Universal Transverse Mercator coordinate format",
     "message": "Universal Transverse Mercator (UTM)"
   },
-  "screens.CreateProjectForm.createProjectButton": {
+  "screens.CreateProject.createProjectButton": {
     "message": "Create"
   },
-  "screens.CreateProjectForm.enterName": {
+  "screens.CreateProject.enterName": {
     "message": "Project Name"
   },
-  "screens.CreateProjectForm.existingProjectName": {
+  "screens.CreateProject.existingProjectName": {
     "message": "Using an existing project name does not make them the same project."
   },
-  "screens.CreateProjectForm.keepInMind": {
+  "screens.CreateProject.keepInMind": {
     "message": "Keep in mind"
   },
-  "screens.CreateProjectForm.projectUnique": {
-    "message": "Each project is unique and cannot exchange with another project."
-  },
-  "screens.CreateProjectForm.requestInvites": {
-    "message": "Request invites to join existing projects."
-  },
-  "screens.CreateProjectForm.saveProjectButton": {
-    "message": "Save"
-  },
-  "screens.CreateProjectForm.title": {
+  "screens.CreateProject.navTitle": {
     "message": "Start New Project"
   },
-  "screens.CreateProjectForm.titleSoloProject": {
-    "message": "Name My Project"
+  "screens.CreateProject.projectUnique": {
+    "message": "Each project is unique and cannot exchange with another project."
+  },
+  "screens.CreateProject.requestInvites": {
+    "message": "Request invites to join existing projects."
   },
   "screens.DataAndPrivacy.diagnosticInfoText": {
     "message": "Anonymized information about your device, app crashes, errors and performance helps Awana Digital improve the app and fix errors."
@@ -1056,6 +1047,27 @@
   },
   "screens.MapScreen.GPSBackgroundPermissionDisabled.useLocation": {
     "message": "Use Location?"
+  },
+  "screens.NameSoloProject.enterName": {
+    "message": "Project Name"
+  },
+  "screens.NameSoloProject.existingProjectName": {
+    "message": "Using an existing project name does not make them the same project."
+  },
+  "screens.NameSoloProject.keepInMind": {
+    "message": "Keep in mind"
+  },
+  "screens.NameSoloProject.navTitle": {
+    "message": "Name My Project"
+  },
+  "screens.NameSoloProject.projectUnique": {
+    "message": "Each project is unique and cannot exchange with another project."
+  },
+  "screens.NameSoloProject.requestInvites": {
+    "message": "Request invites to join existing projects."
+  },
+  "screens.NameSoloProject.saveProjectButton": {
+    "message": "Save"
   },
   "screens.ObscurePasscode.description": {
     "message": "Obscure Passcode is a security feature that allows you to open CoMapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of CoMapeo which allows you to create demonstration observations that are not saved to the CoMapeo database."
@@ -1452,9 +1464,6 @@
   "screens.PrivacyPolicy.whyCollectedDescription": {
     "message": "Crash data and app errors together with the device and app info provide Awana Digital with the information we need to fix errors and bugs in the app. The performance data helps us improve the responsiveness of the app and identify errors. User counts, including total users, users per country, and users per project, help justify ongoing investment in the development of CoMapeo."
   },
-  "screens.ProjectOnboarding.CreateProject.title": {
-    "message": "Start New Project"
-  },
   "screens.ProjectsIntro.intro": {
     "message": "CoMapeo helps teams securely store territory mapping observations."
   },
@@ -1647,9 +1656,6 @@
   "screens.Settings.CreateOrJoinProject.createProject": {
     "message": "Create a Project"
   },
-  "screens.Settings.CreateOrJoinProject.createProjectButton": {
-    "message": "Create"
-  },
   "screens.Settings.CreateOrJoinProject.joinExisting": {
     "message": "Join an existing CoMapeo Project"
   },
@@ -1659,17 +1665,11 @@
   "screens.Settings.CreateOrJoinProject.projectDescription": {
     "message": "A project is a secure container for your data. Only devices you invite can enter and share data with you. Create or Join a project in order to share data with other devices. This action will delete observations you have collected so far. Consider sharing {icon} important observations to your email before proceeding."
   },
-  "screens.Settings.CreateOrJoinProject.saveProjectButton": {
-    "message": "Save"
-  },
   "screens.Settings.CreateOrJoinProject.startProject": {
     "message": "Start a CoMapeo Project"
   },
   "screens.Settings.CreateOrJoinProject.title": {
-    "message": "Start New Project"
-  },
-  "screens.Settings.CreateOrJoinProject.titleSoloProject": {
-    "message": "Name My Project"
+    "message": "Create or Join"
   },
   "screens.Settings.CreateOrJoinProject.whatIsAProject": {
     "message": "What is a Project"

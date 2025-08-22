@@ -61,10 +61,11 @@ export const StartNewProjectScreen: React.FC<Props> = ({navigation, route}) => {
   }
 
   function handleStart() {
-    const target: 'CreateProject' | 'OnboardingCreateProject' = isOnboarding
-      ? 'OnboardingCreateProject'
-      : 'CreateProject';
-    navigation.replace(target);
+    if (isOnboarding) {
+      navigation.navigate('OnboardingCreateProject');
+    } else {
+      navigation.replace('CreateProject');
+    }
   }
 
   return (

@@ -2,7 +2,7 @@ import * as React from 'react';
 import {RootStack} from '.';
 import {ProjectsIntro} from '../../screens/ProjectOnboarding/ProjectsIntro';
 import {JoinProject} from '../../screens/ProjectOnboarding/JoinProject';
-import {StartNewProject} from '../../screens/ProjectOnboarding/StartNewProject';
+import {StartNewProjectScreen} from '../../screens/Settings/ProjectSettings/StartNewProject';
 import {CreateProject} from '../../screens/ProjectOnboarding/CreateProject';
 import {MessageDescriptor} from 'react-intl';
 import {MapOnOwn} from '../../screens/ProjectOnboarding/MapOnOwn';
@@ -25,7 +25,7 @@ export const createProjectOnboardingScreens = ({
     />
     <RootStack.Screen
       name="StartNewProject"
-      component={StartNewProject}
+      component={StartNewProjectScreen}
       options={{headerShown: false}}
     />
     <RootStack.Screen

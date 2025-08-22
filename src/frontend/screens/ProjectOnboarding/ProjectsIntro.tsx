@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   infoCard: {
     alignItems: 'center',
     paddingVertical: 20,
-    paddingHorizontal: 40,
+    paddingHorizontal: 20,
     gap: 12,
   },
   infoText: {
@@ -141,7 +141,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
-    width: '100%',
     paddingHorizontal: 30,
     paddingVertical: 21,
   },

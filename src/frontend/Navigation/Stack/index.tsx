@@ -28,17 +28,12 @@ export type NavigatorScreenLayout = NonNullable<
   React.ComponentProps<typeof RootStack.Navigator>['screenLayout']
 >;
 
-export const ErrorBottomSheetGroup = (
-  <RootStack.Group
-    screenOptions={{
-      presentation: 'transparentModal',
-      headerShown: false,
-      animation: 'none',
-      contentStyle: {backgroundColor: 'transparent'},
-    }}>
-    <RootStack.Screen name="ErrorBottomSheet" component={ErrorBottomSheet} />
-  </RootStack.Group>
-);
+const ErrorBottomSheetOptions: NativeStackNavigationOptions = {
+  presentation: 'transparentModal',
+  headerShown: false,
+  animation: 'none',
+  contentStyle: {backgroundColor: 'transparent'},
+};
 
 export const RootStackNavigator = () => {
   const {formatMessage} = useIntl();
@@ -99,7 +94,11 @@ export const RootStackNavigator = () => {
     return (
       <RootStack.Navigator {...commonNavigatorProps}>
         {createProjectOnboardingScreens({intl: formatMessage})}
-        {ErrorBottomSheetGroup}
+        <RootStack.Screen
+          name="ErrorBottomSheet"
+          component={ErrorBottomSheet}
+          options={ErrorBottomSheetOptions}
+        />
       </RootStack.Navigator>
     );
   }
@@ -113,7 +112,11 @@ export const RootStackNavigator = () => {
       <ActiveProjectProvider activeProjectId={effectiveProjectId}>
         <RootStack.Navigator {...commonNavigatorProps}>
           {createDefaultScreenGroup({intl: formatMessage})}
-          {ErrorBottomSheetGroup}
+          <RootStack.Screen
+            name="ErrorBottomSheet"
+            component={ErrorBottomSheet}
+            options={ErrorBottomSheetOptions}
+          />
         </RootStack.Navigator>
       </ActiveProjectProvider>
     </React.Suspense>

@@ -1,11 +1,10 @@
 import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import SuccessIcon from '../../images/Success.svg';
 import NewDeviceLogo from '../../images/NewDeviceLogo.svg';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {Text} from '../../sharedComponents/Text';
 import {Button} from '../../sharedComponents/Button';
 import {defineMessages, useIntl} from 'react-intl';
 import {useSetOwnDeviceInfo} from '@comapeo/core-react';
@@ -15,6 +14,8 @@ import {OnboardingParamsList} from '../../sharedTypes/navigation';
 import {deviceType} from 'expo-device';
 import {expoToCoreDeviceType} from '../../lib/deviceTypeMap';
 import {useAppUsageStatsPromptActions} from '../../contexts/AppUsageStatsPromptContext';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
 
 const m = defineMessages({
   success: {
@@ -50,40 +51,45 @@ export const Success = ({
   const {formatMessage: t} = useIntl();
 
   return (
-    <View style={styles.container}>
-      <View style={{alignItems: 'center'}}>
-        <SuccessIcon />
-        <Text style={styles.text}>{t(m.success)}</Text>
-        <Text style={{marginTop: 20}}>{t(m.description)} </Text>
-        <View style={styles.deviceText}>
-          <NewDeviceLogo />
-          <Text style={{marginLeft: 10}}>{deviceName}</Text>
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={{alignItems: 'center'}}>
+          <SuccessIcon />
+          <HeaderText style={styles.text}>{t(m.success)}</HeaderText>
+          <BodyText style={{marginTop: 20}}>{t(m.description)} </BodyText>
+          <View style={styles.deviceText}>
+            <NewDeviceLogo />
+            <BodyText style={{marginLeft: 10}}>{deviceName}</BodyText>
+          </View>
+          <View>
+            <BodyText style={{marginTop: 20}}>
+              {t(m.startMappingInstructions)}
+            </BodyText>
+            <BodyText></BodyText>
+            <BodyText>{t(m.findSettings)}</BodyText>
+          </View>
         </View>
-        <View>
-          <Text style={{marginTop: 20}}>{t(m.startMappingInstructions)}</Text>
-          <Text></Text>
-          <Text>{t(m.findSettings)}</Text>
-        </View>
+        <Button
+          testID="ONBOARDING.go-to-map-btn"
+          fullWidth
+          style={{marginTop: 20}}
+          onPress={() => {
+            recordCompleteOnboarding();
+            mutate({
+              name: deviceName,
+              deviceType: expoToCoreDeviceType(deviceType),
+            });
+          }}>
+          {status === 'pending' ? (
+            <Loading style={{padding: 15}} size={15} color={WHITE} />
+          ) : status === 'success' ? (
+            <MaterialIcons name="check" size={30} color={WHITE} />
+          ) : (
+            t(m.startUsing)
+          )}
+        </Button>
       </View>
-      <Button
-        testID="ONBOARDING.go-to-map-btn"
-        fullWidth
-        onPress={() => {
-          recordCompleteOnboarding();
-          mutate({
-            name: deviceName,
-            deviceType: expoToCoreDeviceType(deviceType),
-          });
-        }}>
-        {status === 'pending' ? (
-          <Loading style={{padding: 15}} size={15} color={WHITE} />
-        ) : status === 'success' ? (
-          <MaterialIcons name="check" size={30} color={WHITE} />
-        ) : (
-          t(m.startUsing)
-        )}
-      </Button>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -97,7 +103,6 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   text: {
-    fontSize: 32,
     marginTop: 20,
   },
   deviceText: {

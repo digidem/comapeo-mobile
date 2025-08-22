@@ -2,6 +2,7 @@ import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {defineMessages, useIntl} from 'react-intl';
 import * as Sentry from '@sentry/react-native';
+import {UIActivityIndicator} from 'react-native-indicators';
 import {useCreateProject} from '@comapeo/core-react';
 import {useActiveProjectIdActions} from '../../contexts/ActiveProjectIdStoreContext';
 
@@ -56,6 +57,7 @@ export const MapOnOwn: React.FC<Props> = ({navigation}) => {
   }, [navigation, isPending]);
 
   function handleGoBack() {
+    if (isPending) return;
     navigation.goBack();
   }
 
@@ -82,16 +84,22 @@ export const MapOnOwn: React.FC<Props> = ({navigation}) => {
     <ScreenContentWithDock
       dockContent={
         <View style={styles.buttonsContainer}>
-          <SecondaryButton
-            fullSize={true}
-            text={t(m.goBackButton)}
-            onPress={handleGoBack}
-          />
-          <PrimaryButton
-            fullSize={true}
-            text={t(m.startMappingButton)}
-            onPress={handleStartMapping}
-          />
+          {isPending ? (
+            <UIActivityIndicator size={30} style={{flex: 0}} />
+          ) : (
+            <>
+              <SecondaryButton
+                fullSize={true}
+                text={t(m.goBackButton)}
+                onPress={handleGoBack}
+              />
+              <PrimaryButton
+                fullSize
+                text={t(m.startMappingButton)}
+                onPress={handleStartMapping}
+              />
+            </>
+          )}
         </View>
       }>
       <View style={styles.contentArea}>

@@ -48,17 +48,23 @@ const m = defineMessages({
   },
 });
 
-type Props = NativeRootNavigationProps<'StartNewProject'>;
+type Props = NativeRootNavigationProps<
+  'StartNewProject' | 'OnboardingStartNewProject'
+>;
 
-export const StartNewProjectScreen: React.FC<Props> = ({navigation}) => {
+export const StartNewProjectScreen: React.FC<Props> = ({navigation, route}) => {
   const {formatMessage: t} = useIntl();
+  const isOnboarding = route.name === 'OnboardingStartNewProject';
 
   function handleGoBack() {
     navigation.goBack();
   }
 
   function handleStart() {
-    navigation.replace('CreateProject');
+    const target: 'CreateProject' | 'OnboardingCreateProject' = isOnboarding
+      ? 'OnboardingCreateProject'
+      : 'CreateProject';
+    navigation.replace(target);
   }
 
   return (

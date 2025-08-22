@@ -70,7 +70,7 @@ export const ProjectsIntro = ({
         <Row
           icon={<NewProjectIcon width={20} height={20} color={NEW_DARK_GREY} />}
           text={t(m.startNew)}
-          onPress={() => navigation.navigate('StartNewProject')}
+          onPress={() => navigation.navigate('OnboardingStartNewProject')}
         />
         <Row
           icon={<MapSoloIcon width={20} height={20} />}

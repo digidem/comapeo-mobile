@@ -156,8 +156,8 @@ export type OnboardingParamsList = {
 export type ProjectOnboardingParamsList = {
   ProjectsIntro: undefined;
   JoinProject: undefined;
-  StartNewProject: undefined;
-  CreateProject: undefined;
+  OnboardingStartNewProject: undefined;
+  OnboardingCreateProject: undefined;
   MapOnOwn: undefined;
 };
 

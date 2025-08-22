@@ -3,9 +3,9 @@ import {RootStack} from '.';
 import {ProjectsIntro} from '../../screens/ProjectOnboarding/ProjectsIntro';
 import {JoinProject} from '../../screens/ProjectOnboarding/JoinProject';
 import {StartNewProjectScreen} from '../../screens/Settings/ProjectSettings/StartNewProject';
-import {CreateProject} from '../../screens/ProjectOnboarding/CreateProject';
 import {MessageDescriptor} from 'react-intl';
 import {MapOnOwn} from '../../screens/ProjectOnboarding/MapOnOwn';
+import {CreateProjectScreen} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject/CreateProject';
 
 export const createProjectOnboardingScreens = ({
   intl,
@@ -24,14 +24,14 @@ export const createProjectOnboardingScreens = ({
       options={{headerShown: false}}
     />
     <RootStack.Screen
-      name="StartNewProject"
+      name="OnboardingStartNewProject"
       component={StartNewProjectScreen}
       options={{headerShown: false}}
     />
     <RootStack.Screen
-      name="CreateProject"
-      component={CreateProject}
-      options={{headerTitle: intl(CreateProject.navTitle)}}
+      name="OnboardingCreateProject"
+      component={CreateProjectScreen}
+      options={{headerTitle: intl(CreateProjectScreen.navTitle)}}
     />
     <RootStack.Screen
       name="MapOnOwn"

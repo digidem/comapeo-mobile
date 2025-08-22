@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useForm} from 'react-hook-form';
 import {defineMessages, useIntl} from 'react-intl';
 import {
   Keyboard,
@@ -8,73 +9,93 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import {UIActivityIndicator} from 'react-native-indicators';
-import {useForm} from 'react-hook-form';
-import {HeaderText} from '../Text/HeaderText';
-import {PrimaryButton} from '../Buttons';
-import {HookFormTextInput} from '../HookFormTextInput';
-import {BodyText} from '../Text/BodyText';
-import {SvgProps} from 'react-native-svg';
-import {BLUE_GREY, NEW_DARK_GREY} from '../../lib/styles';
-import UniqueProjectIcon from '../../images/IndexPointingUp.svg';
-import NameMismatchIcon from '../../images/WarningYellow.svg';
-import SpeechBubbleIcon from '../../images/SpeechBubble.svg';
+import {useUpdateProjectSettings} from '@comapeo/core-react';
+import {HookFormTextInput} from '../../../../sharedComponents/HookFormTextInput';
+import {PrimaryButton} from '../../../../sharedComponents/Buttons';
+import {HeaderText} from '../../../../sharedComponents/Text/HeaderText';
+import * as Sentry from '@sentry/react-native';
+import {type NativeRootNavigationProps} from '../../../../sharedTypes/navigation';
+import UniqueProjectIcon from '../../../../images/IndexPointingUp.svg';
+import NameMismatchIcon from '../../../../images/WarningYellow.svg';
+import SpeechBubbleIcon from '../../../../images/SpeechBubble.svg';
+import {BLUE_GREY, NEW_DARK_GREY} from '../../../../lib/styles';
+import {BodyText} from '../../../../sharedComponents/Text/BodyText';
+import {type SvgProps} from 'react-native-svg';
+import {useActiveProject} from '../../../../contexts/ActiveProjectContext';
 
 const m = defineMessages({
-  title: {
-    id: 'screens.CreateProjectForm.title',
-    defaultMessage: 'Start New Project',
-  },
-  titleSoloProject: {
-    id: 'screens.CreateProjectForm.titleSoloProject',
+  navTitle: {
+    id: 'screens.NameSoloProject.navTitle',
     defaultMessage: 'Name My Project',
   },
   enterName: {
-    id: 'screens.CreateProjectForm.enterName',
+    id: 'screens.NameSoloProject.enterName',
     defaultMessage: 'Project Name',
   },
-  createProjectButton: {
-    id: 'screens.CreateProjectForm.createProjectButton',
-    defaultMessage: 'Create',
-  },
   saveProjectButton: {
-    id: 'screens.CreateProjectForm.saveProjectButton',
+    id: 'screens.NameSoloProject.saveProjectButton',
     defaultMessage: 'Save',
   },
   keepInMind: {
-    id: 'screens.CreateProjectForm.keepInMind',
+    id: 'screens.NameSoloProject.keepInMind',
     defaultMessage: 'Keep in mind',
   },
   projectUnique: {
-    id: 'screens.CreateProjectForm.projectUnique',
+    id: 'screens.NameSoloProject.projectUnique',
     defaultMessage:
       'Each project is unique and cannot exchange with another project.',
   },
   existingProjectName: {
-    id: 'screens.CreateProjectForm.existingProjectName',
+    id: 'screens.NameSoloProject.existingProjectName',
     defaultMessage:
       'Using an existing project name does not make them the same project.',
   },
   requestInvites: {
-    id: 'screens.CreateProjectForm.requestInvites',
+    id: 'screens.NameSoloProject.requestInvites',
     defaultMessage: 'Request invites to join existing projects.',
   },
 });
 
-export type CreateProjectFormProps = {
-  submitLabel: string;
-  isPending: boolean;
-  onSubmit: (projectName: string) => void;
-};
+type FormValues = {projectName: string};
 
-export const CreateProjectForm: React.FC<CreateProjectFormProps> = ({
-  submitLabel,
-  isPending,
-  onSubmit,
-}) => {
+export const NameSoloProjectScreen = ({
+  navigation,
+}: NativeRootNavigationProps<'NameSoloProject'>) => {
   const {formatMessage: t} = useIntl();
-  const {control, handleSubmit} = useForm<{projectName: string}>({
+  const {projectId} = useActiveProject();
+  const {control, handleSubmit} = useForm<FormValues>({
     defaultValues: {projectName: ''},
   });
+  const updateSettings = useUpdateProjectSettings({projectId});
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', event => {
+      if (updateSettings.status !== 'pending') return;
+      if (
+        event.data.action.type === 'GO_BACK' ||
+        event.data.action.type === 'POP'
+      )
+        event.preventDefault();
+    });
+    return unsubscribe;
+  }, [navigation, updateSettings.status]);
+
+  const onSubmit = (values: FormValues) => {
+    const name = values.projectName.trim();
+    if (!name) return;
+    updateSettings.mutate(
+      {name},
+      {
+        onSuccess: () => {
+          navigation.replace('ProjectCreatedNewSolo', {name});
+        },
+        onError: err => {
+          Sentry.captureException(err);
+          navigation.navigate('ErrorBottomSheet');
+        },
+      },
+    );
+  };
 
   return (
     <KeyboardAvoidingView>
@@ -84,6 +105,7 @@ export const CreateProjectForm: React.FC<CreateProjectFormProps> = ({
             <HeaderText variant="header5" style={{marginHorizontal: 20}}>
               {t(m.enterName)}
             </HeaderText>
+
             <View style={{marginHorizontal: 20, marginTop: 10}}>
               <HookFormTextInput
                 testID="PROJECT.name-inp"
@@ -93,12 +115,13 @@ export const CreateProjectForm: React.FC<CreateProjectFormProps> = ({
                 showCharacterCount
               />
             </View>
+
             <View style={styles.divider} />
+
             <View style={styles.infoBox}>
               <HeaderText variant="header6" style={styles.infoHeading}>
                 {t(m.keepInMind)}
               </HeaderText>
-
               <InfoRow Icon={UniqueProjectIcon} text={t(m.projectUnique)} />
               <InfoRow
                 Icon={NameMismatchIcon}
@@ -109,16 +132,14 @@ export const CreateProjectForm: React.FC<CreateProjectFormProps> = ({
           </View>
 
           <View style={{paddingHorizontal: 20, alignItems: 'center'}}>
-            {isPending ? (
+            {updateSettings.status === 'pending' ? (
               <UIActivityIndicator size={30} style={{marginBottom: 20}} />
             ) : (
               <PrimaryButton
                 testID="PROJECT.submit-btn"
                 fullSize
-                text={submitLabel}
-                onPress={handleSubmit(({projectName}) =>
-                  onSubmit(projectName.trim()),
-                )}
+                text={t(m.saveProjectButton)}
+                onPress={handleSubmit(onSubmit)}
               />
             )}
           </View>
@@ -128,11 +149,9 @@ export const CreateProjectForm: React.FC<CreateProjectFormProps> = ({
   );
 };
 
-type InfoRowProps = {
-  Icon: React.FC<SvgProps>;
-  text: string;
-};
+NameSoloProjectScreen.navTitle = m.navTitle;
 
+type InfoRowProps = {Icon: React.FC<SvgProps>; text: string};
 function InfoRow({Icon, text}: InfoRowProps) {
   return (
     <View style={styles.infoRow}>

@@ -10,13 +10,11 @@ import {
 type Options = {
   thresholdBytes?: number;
   pollMs?: number;
-  enabled?: boolean;
 };
 
 export function useStorageStatus(opts: Options = {}) {
   const threshold = opts.thresholdBytes ?? LOW_THRESHOLD_BYTES;
   const pollMs = opts.pollMs ?? 30000;
-  const enabled = opts.enabled ?? true;
 
   const setReading = useStorageStatusStore(s => s.setReading);
   const setPartial = useStorageStatusStore(s => s.setPartial);
@@ -40,22 +38,16 @@ export function useStorageStatus(opts: Options = {}) {
   }, [setReading, setPartial, threshold]);
 
   React.useEffect(() => {
-    if (!enabled) return;
     const subscribe = AppState.addEventListener('change', status => {
       if (status === 'active') check();
     });
     return () => subscribe.remove();
-  }, [check, enabled]);
+  }, [check]);
 
   React.useEffect(() => {
-    if (enabled) check();
-  }, [check, enabled]);
-
-  React.useEffect(() => {
-    if (!enabled) return;
     const id = setInterval(check, pollMs);
     return () => clearInterval(id);
-  }, [check, pollMs, enabled]);
+  }, [check, pollMs]);
 
   return {
     refresh: check,

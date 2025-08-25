@@ -1,7 +1,7 @@
 import {create} from 'zustand';
 import * as v from 'valibot';
 
-export const LOW_THRESHOLD_BYTES = 100000 * 1024 * 1024;
+export const LOW_THRESHOLD_BYTES = 500 * 1024 * 1024;
 
 const StorageReadingSchema = v.object({
   freeBytes: v.number(),

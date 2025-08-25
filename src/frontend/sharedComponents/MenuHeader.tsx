@@ -1,23 +1,35 @@
-// src/frontend/screens/MenuHeader.tsx
 import React from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, StyleSheet, Text} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useOwnDeviceInfo} from '@comapeo/core-react';
 
 import {HeaderText} from './Text/HeaderText';
 import DeviceIcon from '../images/DeviceIcon.svg';
 import {CloseIcon} from './icons';
-import {WHITE, BLUE_GREY} from '../lib/styles';
+import {WHITE, BLUE_GREY, DARK_ORANGE} from '../lib/styles';
+import {useStorageStatusStore} from '../contexts/StorageStatusStoreContext';
 
 export function MenuHeader() {
   const navigation = useNavigation();
   const {data: deviceData} = useOwnDeviceInfo();
   const deviceName = deviceData?.name;
+  const isLow = useStorageStatusStore(s => s.isLow);
 
   return (
     <View style={styles.container}>
       <View style={styles.leftRow}>
-        <DeviceIcon width={32} height={32} />
+        <View style={styles.deviceWrap} pointerEvents="box-none">
+          <DeviceIcon width={32} height={32} />
+          {isLow && (
+            <View
+              testID="low-storage-badge-settings"
+              accessibilityLabel="Low storage alert"
+              style={styles.badge}
+              pointerEvents="none">
+              <Text style={styles.mark}>!</Text>
+            </View>
+          )}
+        </View>
         <HeaderText variant="header4">{deviceName}</HeaderText>
       </View>
 
@@ -45,5 +57,30 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
+  },
+  deviceWrap: {
+    width: 32,
+    height: 32,
+    position: 'relative',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  badge: {
+    position: 'absolute',
+    top: -2,
+    right: -2,
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: DARK_ORANGE,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  mark: {
+    color: WHITE,
+    fontSize: 7,
+    fontWeight: '700',
+    includeFontPadding: false,
+    textAlign: 'center',
   },
 });

@@ -182,8 +182,8 @@ const App = () => {
     ]).then(() => setPermissionsAsked(true));
   }, []);
 
-  function StorageStatusBootstrap() {
-    useStorageStatus();
+  function StorageStatusListener() {
+    useStorageStatus({pollMs: 300000});
     return null;
   }
 
@@ -206,7 +206,7 @@ const App = () => {
             savedLocationStore={savedLocationStore}
             activeProjectIdStore={persistedActiveProjectIdStore}
             metricsDiagnosticsStore={persistedMetricsDiagnosticsStore}>
-            <StorageStatusBootstrap />
+            <StorageStatusListener />
             <AppNavigator
               permissionAsked={permissionsAsked}
               navigationIntegration={navigationIntegration}

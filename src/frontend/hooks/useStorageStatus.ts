@@ -18,7 +18,8 @@ export function useStorageStatus(opts: Options = {}) {
   const pollMs = opts.pollMs ?? 30000;
   const enabled = opts.enabled ?? true;
 
-  const setSnapshot = useStorageStatusStore(s => s.setSnapshot);
+  const setReading = useStorageStatusStore(s => s.setReading);
+  const setPartial = useStorageStatusStore(s => s.setPartial);
 
   const check = React.useCallback(async () => {
     try {
@@ -26,19 +27,17 @@ export function useStorageStatus(opts: Options = {}) {
         DeviceInfo.getFreeDiskStorage(),
         DeviceInfo.getTotalDiskCapacity(),
       ]);
-      setSnapshot({
-        freeBytes: free,
-        totalBytes: total,
-        isLow: free <= threshold,
-      });
+      setReading({freeBytes: free, totalBytes: total});
+      if (threshold !== LOW_THRESHOLD_BYTES) {
+        setPartial({isLow: free <= threshold});
+      }
     } catch {
-      setSnapshot({
+      setPartial({
         freeBytes: null,
         totalBytes: null,
-        isLow: false,
       });
     }
-  }, [setSnapshot, threshold]);
+  }, [setReading, setPartial, threshold]);
 
   React.useEffect(() => {
     if (!enabled) return;

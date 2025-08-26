@@ -1,6 +1,6 @@
 import {useManyProjects} from '@comapeo/core-react';
 import * as React from 'react';
-import {View} from 'react-native';
+import {ListRenderItem, View} from 'react-native';
 import {ProjectInfoCard} from '../sharedComponents/ProjectInfoCard';
 import {useProjectRoleAndDetails} from '../hooks/useProjectRoleAndDetails';
 import {defineMessages, useIntl} from 'react-intl';
@@ -25,6 +25,8 @@ const m = defineMessages({
   },
 });
 
+type ProjectListItem = ReturnType<typeof useManyProjects>['data'][number];
+
 export const AllProjects: NativeNavigationComponent<'AllProjects'> = () => {
   const {data} = useManyProjects();
   const {projectId: currentProjectId} = useActiveProject();
@@ -32,6 +34,36 @@ export const AllProjects: NativeNavigationComponent<'AllProjects'> = () => {
   const {popTo, navigate} = useNavigationFromRoot();
   const {formatMessage} = useIntl();
   const {isTracking} = useTracking();
+
+  const handlePressId = React.useCallback(
+    (targetProjectId: string) => {
+      if (currentProjectId === targetProjectId) {
+        popTo('Menu');
+        return;
+      }
+      if (isTracking && currentProjectId !== targetProjectId) {
+        navigate('TrackRecordingActive');
+        return;
+      }
+      setActiveProjectId(targetProjectId);
+      popTo('Menu');
+    },
+    [currentProjectId, isTracking, popTo, navigate, setActiveProjectId],
+  );
+
+  const renderItem = React.useCallback<ListRenderItem<ProjectListItem>>(
+    ({item}) => (
+      <React.Suspense fallback={<ProjectCardLoader />}>
+        <ProjectInfoCardMinimal
+          style={{marginBottom: 20}}
+          projectId={item.projectId}
+          onPress={() => handlePressId(item.projectId)}
+        />
+      </React.Suspense>
+    ),
+    [handlePressId],
+  );
+
   return (
     <View style={{flex: 1, paddingTop: 40}}>
       <SecondaryButton
@@ -43,36 +75,29 @@ export const AllProjects: NativeNavigationComponent<'AllProjects'> = () => {
         }}
         renderIcon={() => <AddProjectIcon />}
       />
-      <FlatList
-        style={{padding: 20}}
+      <FlatList<ProjectListItem>
+        contentContainerStyle={{padding: 20}}
         data={data}
-        renderItem={({item}) => {
-          function handlePress() {
-            if (currentProjectId === item.projectId) {
-              popTo('Menu');
-              return;
-            }
-
-            if (isTracking && currentProjectId !== item.projectId) {
-              navigate('TrackRecordingActive');
-              return;
-            }
-            setActiveProjectId(item.projectId);
-            popTo('Menu');
-          }
-          return (
-            <ProjectInfoCardMinimal
-              style={{marginBottom: 20}}
-              key={item.projectId}
-              projectId={item.projectId}
-              onPress={handlePress}
-            />
-          );
-        }}
+        keyExtractor={p => p.projectId}
+        initialNumToRender={6}
+        windowSize={5}
+        removeClippedSubviews
+        renderItem={renderItem}
       />
     </View>
   );
 };
+
+export const ProjectCardLoader = () => (
+  <View
+    style={{
+      height: 112,
+      borderRadius: 12,
+      backgroundColor: '#eee',
+      marginBottom: 20,
+    }}
+  />
+);
 
 AllProjects.navTitle = m.navTitle;
 

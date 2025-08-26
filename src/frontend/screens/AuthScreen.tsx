@@ -4,6 +4,7 @@ import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useWindowDimensions} from 'react-native';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 import {useAuthContext} from '../contexts/AuthContext';
 import CoMapeoLogoSvg from '../images/CoMapeoLogo.svg';
@@ -31,6 +32,7 @@ export const AuthScreen = ({
 }: NativeStackScreenProps<AppStackParamsList, 'AuthScreen'>) => {
   const {formatMessage: t} = useIntl();
   const [error, setError] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const {authenticate, authState} = useAuthContext();
   const [inputtedPass, setInputtedPass] = React.useState('');
   const scrollViewRef = React.useRef<ScrollView>(null);
@@ -42,10 +44,7 @@ export const AuthScreen = ({
       // Prevent back if unauthenticated
       event.preventDefault();
     });
-
-    return () => {
-      unsubscribe();
-    };
+    return () => unsubscribe();
   }, [authState, navigation]);
 
   React.useEffect(() => {
@@ -69,21 +68,22 @@ export const AuthScreen = ({
   }
 
   function setInputWithValidation(passValue: string) {
-    if (error) {
-      setError(false);
-    }
+    if (error) setError(false);
     setInputtedPass(passValue);
     if (passValue.length === 5) {
       validatePass(passValue);
     }
   }
 
-  function validatePass(passValue: string) {
+  async function validatePass(passValue: string) {
+    setLoading(true);
     try {
-      authenticate(passValue);
+      await authenticate(passValue);
     } catch {
       scrollViewRef.current?.scrollToEnd();
       setError(true);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -111,13 +111,19 @@ export const AuthScreen = ({
       ) : (
         <BodyText>{t(m.enterPass)}</BodyText>
       )}
-      <PasscodeInput
-        testID="SETTINGS.auth-passcode-inp"
-        error={error}
-        inputValue={inputtedPass}
-        onChangeTextWithValidation={setInputWithValidation}
-        editable={!isLockedOut}
-      />
+      {loading ? (
+        <View style={styles.loadingContainer}>
+          <UIActivityIndicator size={32} />
+        </View>
+      ) : (
+        <PasscodeInput
+          testID="SETTINGS.auth-passcode-inp"
+          error={error}
+          inputValue={inputtedPass}
+          onChangeTextWithValidation={setInputWithValidation}
+          editable={!isLockedOut}
+        />
+      )}
     </ScreenContentWithDock>
   );
 };
@@ -138,5 +144,10 @@ const styles = StyleSheet.create({
   },
   lockoutText: {
     color: BLACK,
+  },
+  loadingContainer: {
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

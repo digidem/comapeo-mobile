@@ -36,7 +36,7 @@ jobs:
       - name: NPM Lockfile Changes
         # The original doesn't support v3 lockfiles so we use a fork that adds support for them
         # The fork doesn't update comments by an app token, so we use our own fork
-        uses: digidem/npm-lockfile-changes@614dfc33742374cb40bec2878e5b690580d11ede
+        uses: digidem/npm-lockfile-changes@b896950dbf7427d281c2c9bfde5e16089a5d18bd
         with:
           token: ${{ steps.app-token.outputs.token }}
           updateComment: true

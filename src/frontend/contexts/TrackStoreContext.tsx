@@ -129,30 +129,11 @@ export function createTrackStore({persist} = {persist: false}) {
     },
     addNewLocations: (data: Array<LocationHistoryPoint>) => {
       store.setState(prev => {
-        if (data.length > 1) {
-          return {
-            locationHistory: [...prev.locationHistory, ...data],
-            distance: prev.distance + calculateTotalDistance(data),
-          };
-        }
-
-        if (prev.locationHistory.length < 1) {
-          return {
-            locationHistory: [...prev.locationHistory, ...data],
-          };
-        }
-
-        const lastLocation =
-          prev.locationHistory[prev.locationHistory.length - 1];
-
-        if (!lastLocation) {
-          throw Error('No lastLocation for state.locationHistory.length > 1');
-        }
-
+        const lastLocation = prev.locationHistory.at(-1);
+        const pointsToMeasure = lastLocation ? [lastLocation, ...data] : data;
         return {
           locationHistory: [...prev.locationHistory, ...data],
-          distance:
-            prev.distance + calculateTotalDistance([lastLocation, ...data]),
+          distance: prev.distance + calculateTotalDistance(pointsToMeasure),
         };
       });
     },

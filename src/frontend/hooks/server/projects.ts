@@ -14,6 +14,8 @@ import {saveDocuments} from '@react-native-documents/picker';
 import {Exports} from '../../screens/ExportObservations';
 import * as FileSystem from 'expo-file-system';
 import {useAppLanguageTag} from '../useAppLanguageTag';
+import {useIntl} from 'react-intl';
+import noop from '../../lib/noop';
 
 export function useProjectSettings() {
   const {projectId} = useActiveProject();
@@ -90,6 +92,7 @@ export function useExportObservationsAndShare({
   const exportNoMedia = useExportGeoJSON({projectId});
   const exportWithMedia = useExportZipFile({projectId});
   const lang = useAppLanguageTag();
+  const {formatDate} = useIntl();
 
   return useMutation({
     retry: false,
@@ -111,11 +114,20 @@ export function useExportObservationsAndShare({
               tracks: exportType === 'Tracks',
             },
           })
-          .then(path => {
-            return saveDocuments({
-              sourceUris: [`file://${path}`],
+          .then(async path => {
+            const filepath = `file://${path}`;
+            const results = await saveDocuments({
+              sourceUris: [filepath],
               mimeType: 'application/geo+json',
+              fileName: `CoMapeo_Obsvns_${formatDate(Date.now())}`,
             });
+
+            FileSystem.deleteAsync(filepath, {idempotent: true}).catch(() => {
+              //do nothing as it is a temp file system that will eventually delete itself
+              noop();
+            });
+
+            return results;
           });
       }
 
@@ -129,11 +141,20 @@ export function useExportObservationsAndShare({
             attachments: true,
           },
         })
-        .then(path => {
-          return saveDocuments({
-            sourceUris: [`file://${path}`],
+        .then(async path => {
+          const filepath = `file://${path}`;
+          const results = await saveDocuments({
+            sourceUris: [filepath],
             mimeType: 'application/zip',
+            fileName: `CoMapeo_Obsvns_${formatDate(Date.now())}`,
           });
+
+          FileSystem.deleteAsync(filepath, {idempotent: true}).catch(() => {
+            //do nothing as it is a temp file system that will eventually delete itself
+            noop();
+          });
+
+          return results;
         });
     },
   });

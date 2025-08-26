@@ -112,7 +112,7 @@ export function useExportObservationsAndShare({
             },
           })
           .then(path => {
-            saveDocuments({
+            return saveDocuments({
               sourceUris: [`file://${path}`],
               mimeType: 'application/geo+json',
             });
@@ -130,7 +130,7 @@ export function useExportObservationsAndShare({
           },
         })
         .then(path => {
-          saveDocuments({
+          return saveDocuments({
             sourceUris: [`file://${path}`],
             mimeType: 'application/zip',
           });

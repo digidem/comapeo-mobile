@@ -101,30 +101,32 @@ export const ProjectCardLoader = () => (
 
 AllProjects.navTitle = m.navTitle;
 
-const ProjectInfoCardMinimal = ({
-  projectId,
-  style,
-  onPress,
-}: {
-  projectId: string;
-  style?: ViewStyleProp;
-  onPress: () => void;
-}) => {
-  const projectInfo = useProjectRoleAndDetails(projectId);
+const ProjectInfoCardMinimal = React.memo(
+  ({
+    projectId,
+    style,
+    onPress,
+  }: {
+    projectId: string;
+    style?: ViewStyleProp;
+    onPress: () => void;
+  }) => {
+    const projectInfo = useProjectRoleAndDetails(projectId);
 
-  const header =
-    'projectHeader' in projectInfo
-      ? projectInfo.projectHeader
-      : projectInfo.projectName;
+    const header =
+      'projectHeader' in projectInfo
+        ? projectInfo.projectHeader
+        : projectInfo.projectName;
 
-  return (
-    <ProjectInfoCard
-      onPress={onPress}
-      role={projectInfo.role}
-      headerText={header}
-      backgroundColor={projectInfo.projectColor}
-      style={style}
-      testID={`project_card_${header?.toLowerCase().replace(/\s+/g, '_')}`}
-    />
-  );
-};
+    return (
+      <ProjectInfoCard
+        onPress={onPress}
+        role={projectInfo.role}
+        headerText={header}
+        backgroundColor={projectInfo.projectColor}
+        style={style}
+        testID={`project_card_${header?.toLowerCase().replace(/\s+/g, '_')}`}
+      />
+    );
+  },
+);

@@ -214,9 +214,11 @@ export function MenuScreen() {
             </View>
           </MainMenuItemWrapper>
         </View>
-        <PrefetchProjectsList />
-        <PrefetchAllProjectRoles />
-        <PrefetchExchangeQueries />
+        <React.Suspense fallback={null}>
+          <PrefetchProjectsList />
+          <PrefetchAllProjectRoles />
+          <PrefetchExchangeQueries />
+        </React.Suspense>
       </ScrollView>
     </View>
   );

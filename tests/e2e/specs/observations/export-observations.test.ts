@@ -85,7 +85,7 @@ describe('Observations - should show download options', () => {
     await expect($(byText('All Observations with Media'))).toBeDisplayed();
   });
 
-  it('should open show error if no option is chosed', async () => {
+  it('should show error if no option is chosen', async () => {
     const downloadBtn = await $(byText('Download'));
     await downloadBtn.click();
     await expect($(byText('Choose an option'))).toBeDisplayed();

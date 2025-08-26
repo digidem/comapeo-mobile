@@ -84,11 +84,7 @@ export function useFindRemoteArchive({url}: {url?: string}) {
   });
 }
 
-export function useExportObservationsAndShare({
-  projectId,
-}: {
-  projectId: string;
-}) {
+export function useExportObservations({projectId}: {projectId: string}) {
   const exportNoMedia = useExportGeoJSON({projectId});
   const exportWithMedia = useExportZipFile({projectId});
   const lang = useAppLanguageTag();

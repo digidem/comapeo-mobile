@@ -144,7 +144,7 @@ export const CreateProjectScreen = ({
               <UIActivityIndicator size={30} style={{marginBottom: 20}} />
             ) : (
               <PrimaryButton
-                testID="PROJECT.submit-btn"
+                testID="PROJECT.create-btn"
                 fullSize
                 text={t(m.createProjectButton)}
                 onPress={handleSubmit(onSubmit)}

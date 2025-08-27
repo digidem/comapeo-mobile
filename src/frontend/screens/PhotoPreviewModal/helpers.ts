@@ -137,6 +137,34 @@ export function getPhotoDetailsText(
   return displayedParts.join(' • ');
 }
 
+type getPhotoDimensionsProps = {
+  photoInfoHeight?: number;
+  photoInfoWidth?: number;
+  imageLoadInfoHeight?: number;
+  imageLoadInfoWidth?: number;
+};
+
+export function getPhotoDimensions({
+  photoInfoHeight,
+  photoInfoWidth,
+  imageLoadInfoHeight,
+  imageLoadInfoWidth,
+}: getPhotoDimensionsProps): {height: number; width: number} | undefined {
+  return typeof photoInfoHeight === 'number' &&
+    typeof photoInfoWidth === 'number'
+    ? {
+        height: photoInfoHeight,
+        width: photoInfoWidth,
+      }
+    : typeof imageLoadInfoHeight === 'number' &&
+        typeof imageLoadInfoWidth === 'number'
+      ? {
+          height: imageLoadInfoHeight,
+          width: imageLoadInfoWidth,
+        }
+      : undefined;
+}
+
 export function useImageLoadInfo() {
   const [imageLoadInfo, setImageLoadInfo] = useState<
     {height: number; width: number; storageSize?: number} | undefined

@@ -18,6 +18,7 @@ import {
   getCameraDetailsText,
   getDeviceDetailsText,
   getPhotoDetailsText,
+  getPhotoDimensions,
   useImageLoadInfo,
 } from './helpers.ts';
 import {CoreBlobImage} from '../../sharedComponents/Images/CoreBlobImage.tsx';
@@ -124,20 +125,12 @@ export function AttachedPhotoPreviewModal({
     formatMessage,
   );
 
-  // Uses the EXIF information if possible and falls back to the image load info if needed
-  const photoDimensions =
-    typeof photoInfo.height === 'number' && typeof photoInfo.width === 'number'
-      ? {
-          height: photoInfo.height,
-          width: photoInfo.width,
-        }
-      : typeof imageLoadInfo?.height === 'number' &&
-          typeof imageLoadInfo?.width === 'number'
-        ? {
-            height: imageLoadInfo.height,
-            width: imageLoadInfo.width,
-          }
-        : undefined;
+  const photoDimensions = getPhotoDimensions({
+    photoInfoHeight: photoInfo.height,
+    photoInfoWidth: photoInfo.width,
+    imageLoadInfoHeight: imageLoadInfo?.height,
+    imageLoadInfoWidth: imageLoadInfo?.width,
+  });
 
   const photoDetailsText = photoDimensions
     ? getPhotoDetailsText(

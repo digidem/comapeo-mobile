@@ -22,6 +22,8 @@ describe('Settings - About CoMapeo Flow', () => {
     await expect($(byTextMatches('Android version'))).toBeDisplayed();
     await expect($(byTextMatches('Android build number'))).toBeDisplayed();
     await expect($(byTextMatches('Phone model'))).toBeDisplayed();
+    await expect($(byTextMatches('Emojis source'))).toBeDisplayed();
+    await expect($(byTextMatches('Release name'))).toBeDisplayed();
   });
 
   it('should navigate back to map screen', async () => {

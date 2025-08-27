@@ -448,11 +448,19 @@
   },
   "screens.AboutSettings.emojiSource": {
     "description": "Label for the source of emojis used in CoMapeo",
-    "message": "Emojis source:"
+    "message": "Emojis source"
   },
   "screens.AboutSettings.phoneModel": {
     "description": "Label for phone model",
     "message": "Phone model"
+  },
+  "screens.AboutSettings.releaseName": {
+    "description": "The CoMapeo chosen release name for the version of the app",
+    "message": "Preview"
+  },
+  "screens.AboutSettings.releaseNameLabel": {
+    "description": "Label for the release name",
+    "message": "Release name"
   },
   "screens.AboutSettings.title": {
     "description": "Title of 'About CoMapeo' screen",

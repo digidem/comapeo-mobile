@@ -1319,7 +1319,7 @@
   },
   "screens.PhotoPreviewModal.verifiedOriginal": {
     "description": "Text indicating that the photo is a verified original",
-    "message": "This is a verified unaltered original"
+    "message": "This is a verified unaltered original."
   },
   "screens.PrivacyPolicy.aboutAwana": {
     "message": "About Awana Digital"

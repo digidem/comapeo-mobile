@@ -2,7 +2,7 @@ import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches, byText} from '../../utils/selectors';
 
-describe('Observations - Create Observation Flow', () => {
+describe('Photos - Save and Delete Photo', () => {
   it('should create a new observation', async () => {
     const addObsBtn = await $('~Add Observation');
     await addObsBtn.click();
@@ -37,7 +37,7 @@ describe('Observations - Create Observation Flow', () => {
 
     const thumbnails = await $$('~View draft photo.');
 
-    expect(thumbnails.length).toBe(1);
+    await expect(thumbnails.length).toBe(1);
   });
 
   it('should take another photo and show 2 thumbnails', async () => {
@@ -59,12 +59,12 @@ describe('Observations - Create Observation Flow', () => {
     );
 
     const thumbnails = await $$('~View draft photo.');
-    expect(thumbnails.length).toBe(2);
+    await expect(thumbnails.length).toBe(2);
   });
 
   it('should open the photo modal when thumbnail clicked', async () => {
     const thumbnails = await $$('~View draft photo.');
-    expect(thumbnails.length).toBe(2);
+    await expect(thumbnails.length).toBe(2);
     await thumbnails[0].click();
     await expect($(byText('Photo Info'))).toBeDisplayed();
     await expect($(byText('Delete Photo'))).toBeDisplayed();
@@ -75,12 +75,14 @@ describe('Observations - Create Observation Flow', () => {
     const deleteBtn = await $(byTextMatches('Delete Photo'));
     await deleteBtn.click();
 
-    expect(await $(byTextMatches('Delete this photo?'))).toBeDisplayed();
+    await expect(await $(byTextMatches('Delete this photo?'))).toBeDisplayed();
 
     const cancelBtn = await $(byTextMatches('Cancel'));
     await cancelBtn.click();
 
-    expect(await $(byTextMatches('Delete this photo?'))).not.toBeDisplayed();
+    await expect(
+      await $(byTextMatches('Delete this photo?')),
+    ).not.toBeDisplayed();
 
     await deleteBtn.click();
 

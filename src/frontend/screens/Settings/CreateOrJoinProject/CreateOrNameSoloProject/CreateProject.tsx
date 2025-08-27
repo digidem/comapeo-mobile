@@ -4,7 +4,6 @@ import {defineMessages, useIntl} from 'react-intl';
 import {
   Keyboard,
   KeyboardAvoidingView,
-  StyleSheet,
   View,
   TouchableWithoutFeedback,
 } from 'react-native';
@@ -18,9 +17,8 @@ import {type NativeRootNavigationProps} from '../../../../sharedTypes/navigation
 import UniqueProjectIcon from '../../../../images/IndexPointingUp.svg';
 import NameMismatchIcon from '../../../../images/WarningYellow.svg';
 import SpeechBubbleIcon from '../../../../images/SpeechBubble.svg';
-import {BLUE_GREY, NEW_DARK_GREY} from '../../../../lib/styles';
-import {BodyText} from '../../../../sharedComponents/Text/BodyText';
-import {type SvgProps} from 'react-native-svg';
+import {InfoRow} from './InfoRow';
+import {createStyles} from './sharedCreateNameStyles';
 import {useActiveProjectIdActions} from '../../../../contexts/ActiveProjectIdStoreContext';
 
 const m = defineMessages({
@@ -89,11 +87,14 @@ export const CreateProjectScreen = ({
       {name},
       {
         onSuccess: newProjectId => {
-          setActiveProjectId(newProjectId);
-          if (!isOnboarding) {
-            navigation.replace('ProjectCreatedNewProject', {
-              name: name,
+          if (isOnboarding) {
+            navigation.replace('ProjectCreatedOnboarding', {
+              projectId: newProjectId,
+              name,
             });
+          } else {
+            setActiveProjectId(newProjectId);
+            navigation.replace('ProjectCreatedNewProject', {name});
           }
         },
         onError: err => {
@@ -107,7 +108,7 @@ export const CreateProjectScreen = ({
   return (
     <KeyboardAvoidingView>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View style={styles.container}>
+        <View style={createStyles.container}>
           <View>
             <HeaderText variant="header5" style={{marginHorizontal: 20}}>
               {t(m.enterName)}
@@ -123,10 +124,10 @@ export const CreateProjectScreen = ({
               />
             </View>
 
-            <View style={styles.divider} />
+            <View style={createStyles.divider} />
 
-            <View style={styles.infoBox}>
-              <HeaderText variant="header6" style={styles.infoHeading}>
+            <View style={createStyles.infoBox}>
+              <HeaderText variant="header6" style={createStyles.infoHeading}>
                 {t(m.keepInMind)}
               </HeaderText>
               <InfoRow Icon={UniqueProjectIcon} text={t(m.projectUnique)} />
@@ -157,43 +158,3 @@ export const CreateProjectScreen = ({
 };
 
 CreateProjectScreen.navTitle = m.navTitle;
-
-type InfoRowProps = {Icon: React.FC<SvgProps>; text: string};
-function InfoRow({Icon, text}: InfoRowProps) {
-  return (
-    <View style={styles.infoRow}>
-      <Icon width={20} height={26} style={styles.infoIcon} />
-      <BodyText variant="smallMeta" style={styles.infoText}>
-        {text}
-      </BodyText>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 40,
-    paddingBottom: 20,
-    height: '100%',
-    justifyContent: 'space-between',
-  },
-  divider: {
-    height: 1,
-    backgroundColor: BLUE_GREY,
-    marginHorizontal: 20,
-    marginTop: 30,
-    marginBottom: 20,
-  },
-  infoBox: {
-    marginHorizontal: 20,
-    padding: 15,
-    borderWidth: 1,
-    borderColor: BLUE_GREY,
-    borderRadius: 10,
-    gap: 12,
-  },
-  infoHeading: {marginBottom: 4, paddingLeft: 4},
-  infoRow: {flexDirection: 'row', alignItems: 'center', gap: 12},
-  infoIcon: {marginTop: 2},
-  infoText: {flex: 1, color: NEW_DARK_GREY},
-});

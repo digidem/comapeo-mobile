@@ -4,7 +4,6 @@ import {defineMessages, useIntl} from 'react-intl';
 import {
   Keyboard,
   KeyboardAvoidingView,
-  StyleSheet,
   View,
   TouchableWithoutFeedback,
 } from 'react-native';
@@ -18,10 +17,9 @@ import {type NativeRootNavigationProps} from '../../../../sharedTypes/navigation
 import UniqueProjectIcon from '../../../../images/IndexPointingUp.svg';
 import NameMismatchIcon from '../../../../images/WarningYellow.svg';
 import SpeechBubbleIcon from '../../../../images/SpeechBubble.svg';
-import {BLUE_GREY, NEW_DARK_GREY} from '../../../../lib/styles';
-import {BodyText} from '../../../../sharedComponents/Text/BodyText';
-import {type SvgProps} from 'react-native-svg';
 import {useActiveProject} from '../../../../contexts/ActiveProjectContext';
+import {InfoRow} from './InfoRow';
+import {createStyles} from './sharedCreateNameStyles';
 
 const m = defineMessages({
   navTitle: {
@@ -87,7 +85,9 @@ export const NameSoloProjectScreen = ({
       {name},
       {
         onSuccess: () => {
-          navigation.replace('ProjectCreatedNewSolo', {name});
+          navigation.replace('ProjectCreatedNewSolo', {
+            name,
+          });
         },
         onError: err => {
           Sentry.captureException(err);
@@ -100,7 +100,7 @@ export const NameSoloProjectScreen = ({
   return (
     <KeyboardAvoidingView>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View style={styles.container}>
+        <View style={createStyles.container}>
           <View>
             <HeaderText variant="header5" style={{marginHorizontal: 20}}>
               {t(m.enterName)}
@@ -116,10 +116,10 @@ export const NameSoloProjectScreen = ({
               />
             </View>
 
-            <View style={styles.divider} />
+            <View style={createStyles.divider} />
 
-            <View style={styles.infoBox}>
-              <HeaderText variant="header6" style={styles.infoHeading}>
+            <View style={createStyles.infoBox}>
+              <HeaderText variant="header6" style={createStyles.infoHeading}>
                 {t(m.keepInMind)}
               </HeaderText>
               <InfoRow Icon={UniqueProjectIcon} text={t(m.projectUnique)} />
@@ -150,43 +150,3 @@ export const NameSoloProjectScreen = ({
 };
 
 NameSoloProjectScreen.navTitle = m.navTitle;
-
-type InfoRowProps = {Icon: React.FC<SvgProps>; text: string};
-function InfoRow({Icon, text}: InfoRowProps) {
-  return (
-    <View style={styles.infoRow}>
-      <Icon width={20} height={26} style={styles.infoIcon} />
-      <BodyText variant="smallMeta" style={styles.infoText}>
-        {text}
-      </BodyText>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 40,
-    paddingBottom: 20,
-    height: '100%',
-    justifyContent: 'space-between',
-  },
-  divider: {
-    height: 1,
-    backgroundColor: BLUE_GREY,
-    marginHorizontal: 20,
-    marginTop: 30,
-    marginBottom: 20,
-  },
-  infoBox: {
-    marginHorizontal: 20,
-    padding: 15,
-    borderWidth: 1,
-    borderColor: BLUE_GREY,
-    borderRadius: 10,
-    gap: 12,
-  },
-  infoHeading: {marginBottom: 4, paddingLeft: 4},
-  infoRow: {flexDirection: 'row', alignItems: 'center', gap: 12},
-  infoIcon: {marginTop: 2},
-  infoText: {flex: 1, color: NEW_DARK_GREY},
-});

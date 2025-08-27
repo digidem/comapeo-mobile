@@ -6,6 +6,7 @@ import {StartNewProjectScreen} from '../../screens/Settings/ProjectSettings/Star
 import {MessageDescriptor} from 'react-intl';
 import {MapOnOwn} from '../../screens/ProjectOnboarding/MapOnOwn';
 import {CreateProjectScreen} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject/CreateProject';
+import {ProjectCreated} from '../../screens/ProjectOnboarding/ProjectCreated';
 
 export const createProjectOnboardingScreens = ({
   intl,
@@ -36,6 +37,11 @@ export const createProjectOnboardingScreens = ({
     <RootStack.Screen
       name="MapOnOwn"
       component={MapOnOwn}
+      options={{headerShown: false}}
+    />
+    <RootStack.Screen
+      name="ProjectCreatedOnboarding"
+      component={ProjectCreated}
       options={{headerShown: false}}
     />
   </RootStack.Group>

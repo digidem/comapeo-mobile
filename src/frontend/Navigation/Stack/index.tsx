@@ -46,13 +46,22 @@ export const RootStackNavigator = () => {
   const storedActiveProjectId = useActiveProjectId();
   const {setActiveProjectId} = useActiveProjectIdActions();
   const fallbackProjectId = projects[0]?.projectId;
-  const effectiveProjectId = storedActiveProjectId ?? fallbackProjectId;
+
+  const [hasInitialized, setHasInitialized] = React.useState(false);
 
   React.useEffect(() => {
-    if (!storedActiveProjectId && fallbackProjectId) {
-      setActiveProjectId(fallbackProjectId);
+    if (!hasInitialized) {
+      if (!storedActiveProjectId && fallbackProjectId) {
+        setActiveProjectId(fallbackProjectId);
+      }
+      setHasInitialized(true);
     }
-  }, [storedActiveProjectId, fallbackProjectId, setActiveProjectId]);
+  }, [
+    hasInitialized,
+    storedActiveProjectId,
+    fallbackProjectId,
+    setActiveProjectId,
+  ]);
 
   React.useEffect(() => {
     if (security.authState === 'unauthenticated') {
@@ -90,26 +99,22 @@ export const RootStackNavigator = () => {
     );
   }
 
-  if (projects.length === 0) {
+  if (!storedActiveProjectId) {
     return (
       <RootStack.Navigator {...commonNavigatorProps}>
         {createProjectOnboardingScreens({intl: formatMessage})}
         <RootStack.Screen
           name="ErrorBottomSheet"
-          component={ErrorBottomSheet}
           options={ErrorBottomSheetOptions}
+          component={ErrorBottomSheet}
         />
       </RootStack.Navigator>
     );
   }
 
-  if (!effectiveProjectId) {
-    return <Loading />;
-  }
-
   return (
     <React.Suspense fallback={<Loading />}>
-      <ActiveProjectProvider activeProjectId={effectiveProjectId}>
+      <ActiveProjectProvider activeProjectId={storedActiveProjectId}>
         <RootStack.Navigator {...commonNavigatorProps}>
           {createDefaultScreenGroup({intl: formatMessage})}
           <RootStack.Screen

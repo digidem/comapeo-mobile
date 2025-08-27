@@ -133,7 +133,7 @@ describe('Root navigation onboarding → next screen', () => {
     const input = await screen.findByTestId('PROJECT.name-inp');
     await user.clear(input);
     await user.type(input, '     ');
-    await user.press(screen.getByTestId('PROJECT.submit-btn'));
+    await user.press(screen.getByTestId('PROJECT.create-btn'));
 
     await waitFor(async () => {
       const projects = await client.listProjects();
@@ -194,7 +194,7 @@ describe('Root navigation onboarding → next screen', () => {
 
     const input = await screen.findByTestId('PROJECT.name-inp');
     await user.type(input, 'My Project');
-    await user.press(screen.getByTestId('PROJECT.submit-btn'));
+    await user.press(screen.getByTestId('PROJECT.create-btn'));
     await expect(
       screen.findByTestId('ERROR.bottom-sheet'),
     ).resolves.toBeVisible();
@@ -202,7 +202,7 @@ describe('Root navigation onboarding → next screen', () => {
     const sheet = screen.getByTestId('ERROR.bottom-sheet');
     await user.press(within(sheet).getByText('Go Back'));
 
-    await user.press(await screen.findByTestId('PROJECT.submit-btn'));
+    await user.press(await screen.findByTestId('PROJECT.create-btn'));
 
     await waitFor(async () => {
       const projects = await client.listProjects();
@@ -246,10 +246,10 @@ describe('Root navigation onboarding → next screen', () => {
     const input = await screen.findByTestId('PROJECT.name-inp');
     await user.type(input, 'Racey Project');
 
-    const submit = screen.getByTestId('PROJECT.submit-btn');
+    const submit = screen.getByTestId('PROJECT.create-btn');
 
     await user.press(submit);
-    if (screen.queryByTestId('PROJECT.submit-btn')) {
+    if (screen.queryByTestId('PROJECT.create-btn')) {
       await user.press(submit);
     }
 

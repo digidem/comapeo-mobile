@@ -41,22 +41,22 @@ export const RootStackNavigator = () => {
   const {navigate} = useNavigationFromRoot();
 
   const {data: deviceInfo} = useOwnDeviceInfo();
-  const {data: projects = []} = useManyProjects();
+  const {data: projects} = useManyProjects();
 
   const storedActiveProjectId = useActiveProjectId();
   const {setActiveProjectId} = useActiveProjectIdActions();
-  const fallbackProjectId = projects[0]?.projectId;
+  const fallbackProjectId = projects?.[0]?.projectId;
 
   const [hasInitialized, setHasInitialized] = React.useState(false);
 
   React.useEffect(() => {
-    if (!hasInitialized) {
-      if (!storedActiveProjectId && fallbackProjectId) {
-        setActiveProjectId(fallbackProjectId);
-      }
-      setHasInitialized(true);
+    if (projects === undefined || hasInitialized) return;
+    if (!storedActiveProjectId && fallbackProjectId) {
+      setActiveProjectId(fallbackProjectId);
     }
+    setHasInitialized(true);
   }, [
+    projects,
     hasInitialized,
     storedActiveProjectId,
     fallbackProjectId,
@@ -90,6 +90,10 @@ export const RootStackNavigator = () => {
     screenLayout,
     screenOptions: NavigatorScreenOptions,
   } as const;
+
+  if (projects === undefined) {
+    return <Loading />;
+  }
 
   if (!deviceInfo?.name) {
     return (

@@ -63,7 +63,7 @@ This test validates the All Projects UI, including role labels and sort order.
 - Confirm that the correct role ("coordinator") is shown for each.
 - Ensure that “mapping on your own” and “participant” roles are not displayed if not expected.
 - Validate that the projects appear in the expected order:
-  1. Original project
+  1. My Solo Project
   2. Second project
   3. Third project
 

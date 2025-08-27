@@ -5,6 +5,8 @@ import {output} from '../../utils/naming';
 
 describe('Project - Project Settings Named Project', () => {
   it('should navigate to project settings screen and verify content for named project', async () => {
+    const drawerIcon = await $('~Open Menu');
+    await drawerIcon.click();
     const viewButton = await $(byText('View'));
     await viewButton.click();
 

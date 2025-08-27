@@ -7,13 +7,14 @@ import {
 import {LOCATION_TASK_NAME} from '../sharedTypes/location.ts';
 import {useNavigation} from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
-import {useLocationState} from '../contexts/LocationContext';
+import {useLocationContext} from '../contexts/LocationContext';
 
 export function useTracking() {
   const {setTracking, addNewLocations, clearCurrentTrack} = useTrackActions();
   const navigation = useNavigation();
   const isTracking = useTrackState(state => state.isTracking);
-  const location = useLocationState(state => state.location);
+  // TODO: Once use() is available, we can put this in the cancel tracking function
+  const locationContext = useLocationContext();
 
   const startTracking = useCallback(() => {
     if (isTracking) {
@@ -43,22 +44,24 @@ export function useTracking() {
       Sentry.captureException(err);
     });
 
-    if (location?.coords) {
-      const {latitude, longitude, accuracy} = location.coords;
+    const currentLocation = locationContext.getState().location;
+
+    if (currentLocation?.coords) {
+      const {latitude, longitude, accuracy} = currentLocation.coords;
 
       if (typeof accuracy === 'number' && accuracy <= 3) {
         addNewLocations([
           {
             latitude,
             longitude,
-            timestamp: location.timestamp,
+            timestamp: currentLocation.timestamp,
           },
         ]);
       }
     }
 
     setTracking(false);
-  }, [location, addNewLocations, setTracking]);
+  }, [addNewLocations, setTracking, locationContext]);
 
   const cancelTracking = useCallback(() => {
     Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME).catch(err => {

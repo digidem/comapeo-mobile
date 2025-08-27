@@ -18,6 +18,7 @@ import {
   useActiveProjectId,
   useActiveProjectIdActions,
 } from '../../contexts/ActiveProjectIdStoreContext';
+import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
 export type NavigatorLayout = NonNullable<
@@ -27,24 +28,40 @@ export type NavigatorScreenLayout = NonNullable<
   React.ComponentProps<typeof RootStack.Navigator>['screenLayout']
 >;
 
+const ErrorBottomSheetOptions: NativeStackNavigationOptions = {
+  presentation: 'transparentModal',
+  headerShown: false,
+  animation: 'none',
+  contentStyle: {backgroundColor: 'transparent'},
+};
+
 export const RootStackNavigator = () => {
   const {formatMessage} = useIntl();
   const security = useAuthContext();
   const {navigate} = useNavigationFromRoot();
 
   const {data: deviceInfo} = useOwnDeviceInfo();
-  const {data: projects = []} = useManyProjects();
+  const {data: projects} = useManyProjects();
 
   const storedActiveProjectId = useActiveProjectId();
   const {setActiveProjectId} = useActiveProjectIdActions();
-  const fallbackProjectId = projects[0]?.projectId;
-  const effectiveProjectId = storedActiveProjectId ?? fallbackProjectId;
+  const fallbackProjectId = projects?.[0]?.projectId;
+
+  const [hasInitialized, setHasInitialized] = React.useState(false);
 
   React.useEffect(() => {
+    if (projects === undefined || hasInitialized) return;
     if (!storedActiveProjectId && fallbackProjectId) {
       setActiveProjectId(fallbackProjectId);
     }
-  }, [storedActiveProjectId, fallbackProjectId, setActiveProjectId]);
+    setHasInitialized(true);
+  }, [
+    projects,
+    hasInitialized,
+    storedActiveProjectId,
+    fallbackProjectId,
+    setActiveProjectId,
+  ]);
 
   React.useEffect(() => {
     if (security.authState === 'unauthenticated') {
@@ -74,6 +91,10 @@ export const RootStackNavigator = () => {
     screenOptions: NavigatorScreenOptions,
   } as const;
 
+  if (projects === undefined) {
+    return <Loading />;
+  }
+
   if (!deviceInfo?.name) {
     return (
       <RootStack.Navigator {...commonNavigatorProps}>
@@ -82,24 +103,32 @@ export const RootStackNavigator = () => {
     );
   }
 
-  if (projects.length === 0) {
+  if (!storedActiveProjectId) {
     return (
       <RootStack.Navigator {...commonNavigatorProps}>
-        {createProjectOnboardingScreens()}
+        {createProjectOnboardingScreens({intl: formatMessage})}
+        <RootStack.Screen
+          name="ErrorBottomSheet"
+          options={ErrorBottomSheetOptions}
+          component={ErrorBottomSheet}
+        />
       </RootStack.Navigator>
     );
   }
 
-  if (!effectiveProjectId) {
-    return <Loading />;
-  }
-
   return (
-    <ActiveProjectProvider activeProjectId={effectiveProjectId}>
-      <RootStack.Navigator {...commonNavigatorProps}>
-        {createDefaultScreenGroup({intl: formatMessage})}
-      </RootStack.Navigator>
-    </ActiveProjectProvider>
+    <React.Suspense fallback={<Loading />}>
+      <ActiveProjectProvider activeProjectId={storedActiveProjectId}>
+        <RootStack.Navigator {...commonNavigatorProps}>
+          {createDefaultScreenGroup({intl: formatMessage})}
+          <RootStack.Screen
+            name="ErrorBottomSheet"
+            component={ErrorBottomSheet}
+            options={ErrorBottomSheetOptions}
+          />
+        </RootStack.Navigator>
+      </ActiveProjectProvider>
+    </React.Suspense>
   );
 };
 

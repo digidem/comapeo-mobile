@@ -61,21 +61,21 @@ export const ProjectsIntro = ({
 
       <View style={styles.actions}>
         <Row
-          icon={<ExistingProjectIcon width={20} height={20} />}
+          icon={
+            <ExistingProjectIcon width={20} height={20} color={NEW_DARK_GREY} />
+          }
           text={t(m.joinExisting)}
-          onPress={() => console.log('navigate to join existing project')}
+          onPress={() => navigation.navigate('JoinProject')}
         />
         <Row
-          icon={<NewProjectIcon width={20} height={20} />}
+          icon={<NewProjectIcon width={20} height={20} color={NEW_DARK_GREY} />}
           text={t(m.startNew)}
-          onPress={() =>
-            console.log(navigation, 'navigate to start new project')
-          }
+          onPress={() => navigation.navigate('OnboardingStartNewProject')}
         />
         <Row
           icon={<MapSoloIcon width={20} height={20} />}
           text={t(m.mapSolo)}
-          onPress={() => console.log('navigate to map solo')}
+          onPress={() => navigation.navigate('MapOnOwn')}
         />
       </View>
     </ScrollView>
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   infoCard: {
     alignItems: 'center',
     paddingVertical: 20,
-    paddingHorizontal: 40,
+    paddingHorizontal: 20,
     gap: 12,
   },
   infoText: {
@@ -141,7 +141,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
-    width: '100%',
     paddingHorizontal: 30,
     paddingVertical: 21,
   },

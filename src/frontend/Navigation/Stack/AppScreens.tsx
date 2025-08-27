@@ -20,10 +20,6 @@ import {AppSettings} from '../../screens/Settings/AppSettings';
 import {ProjectSettings} from '../../screens/Settings/ProjectSettings';
 import {CoordinateFormat} from '../../screens/Settings/AppSettings/CoordinateFormat';
 import {CreateOrJoinProject} from '../../screens/Settings/CreateOrJoinProject';
-import {
-  CreateOrNameSoloProject,
-  createNavigationOptions as createNameProjectNavOptions,
-} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject';
 import {ProjectCreated} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject/ProjectCreated';
 import {JoinExistingProject} from '../../screens/Settings/CreateOrJoinProject/JoinExistingProject';
 import {YourTeam} from '../../screens/Settings/ProjectSettings/YourTeam';
@@ -87,7 +83,6 @@ import {InviteReceived} from '../../screens/Invites/InviteReceived.tsx';
 import {InviteSuccessfullyAccepted} from '../../screens/Invites/InviteSuccessfullyAccepted.tsx';
 import {InviteCanceled} from '../../screens/Invites/InviteCanceled.tsx';
 import {ObservationMetadata} from '../../screens/ObservationMetadata.tsx';
-import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet.tsx';
 import {BackgroundMapErrorBottomSheet} from '../../screens/Settings/MapManagement/ErrorBottomSheet.tsx';
 import {MenuScreen} from '../../screens/MenuScreen';
 import {InviteCollaboratorsScreen} from '../../screens/Settings/ProjectSettings/YourTeam/InviteCollaborators.tsx';
@@ -113,6 +108,8 @@ import {AudioDraftPlaybackScreen} from '../../screens/Audio/AudioDraftPlaybackSc
 import {AudioAttachmentPlaybackScreen} from '../../screens/Audio/AudioAttachmentPlaybackScreen.tsx';
 import {DidNotMoveBottomSheet} from '../../screens/MapScreen/TrackBottomSheet/DidNotMoveBottomSheet.tsx';
 import {ConfirmPasscodeBottomSheet} from '../../screens/AppPasscode/ConfirmPasscodeSheet.tsx';
+import {CreateProjectScreen} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject/CreateProject.tsx';
+import {NameSoloProjectScreen} from '../../screens/Settings/CreateOrJoinProject/CreateOrNameSoloProject/NameSoloProject.tsx';
 
 export const TAB_BAR_HEIGHT = 70;
 
@@ -225,13 +222,13 @@ export const createDefaultScreenGroup = ({
       />
       <RootStack.Screen
         name="CreateProject"
-        component={CreateOrNameSoloProject}
-        options={createNameProjectNavOptions({intl})}
+        component={CreateProjectScreen}
+        options={{headerTitle: intl(CreateProjectScreen.navTitle)}}
       />
       <RootStack.Screen
         name="NameSoloProject"
-        component={CreateOrNameSoloProject}
-        options={createNameProjectNavOptions({intl})}
+        component={NameSoloProjectScreen}
+        options={{headerTitle: intl(NameSoloProjectScreen.navTitle)}}
       />
       <RootStack.Screen
         name="ProjectCreatedNewProject"
@@ -473,7 +470,6 @@ export const createDefaultScreenGroup = ({
         component={InviteSuccessfullyAccepted}
       />
       <RootStack.Screen name="InviteCanceled" component={InviteCanceled} />
-      <RootStack.Screen name="ErrorBottomSheet" component={ErrorBottomSheet} />
       <RootStack.Screen
         name="BackgroundMapErrorBottomSheet"
         component={BackgroundMapErrorBottomSheet}

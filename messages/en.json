@@ -106,6 +106,15 @@
   "ProjectOnboarding.MapOnOwn.title": {
     "message": "Map on Your Own"
   },
+  "ProjectOnboarding.Success.body": {
+    "message": "is ready for collaboration."
+  },
+  "ProjectOnboarding.Success.done": {
+    "message": "Done"
+  },
+  "ProjectOnboarding.Success.title": {
+    "message": "Success!"
+  },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
     "message": "When project participants sync their data, they will also be archived on the internet. Your project data is syncing to the archive over the internet to the secure, encrypted server below. The server owner can view the data."
   },

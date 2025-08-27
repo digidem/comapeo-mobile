@@ -87,7 +87,7 @@ describe('Root navigation onboarding → next screen', () => {
     ).resolves.toBeVisible();
   });
 
-  it('creates a project during onboarding and switches to the main app', async () => {
+  it('creates a project during onboarding and after success screen, switches to the main app', async () => {
     await client.setDeviceInfo({name: 'My Device', deviceType: 'mobile'});
     const user = userEvent.setup();
     renderRoot();
@@ -112,6 +112,9 @@ describe('Root navigation onboarding → next screen', () => {
     });
     const [project] = await client.listProjects();
     expect(project?.name).toBe('Test Project');
+    await expect(screen.findByText('Success!')).resolves.toBeVisible();
+    await user.press(screen.getByText('Done'));
+
     await expect(screen.findByTestId('MAIN.map-screen')).resolves.toBeVisible();
   });
 

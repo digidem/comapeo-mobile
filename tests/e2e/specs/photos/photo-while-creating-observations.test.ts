@@ -1,8 +1,6 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches, byText} from '../../utils/selectors';
-import {tapAboveElement} from '../../utils/touchActions';
-import {checkForElementGone} from '../../utils/checkForGone';
 
 describe('Observations - Create Observation Flow', () => {
   it('should create a new observation', async () => {
@@ -71,5 +69,45 @@ describe('Observations - Create Observation Flow', () => {
     await expect($(byText('Photo Info'))).toBeDisplayed();
     await expect($(byText('Delete Photo'))).toBeDisplayed();
     await expect($(byText('Validated By CoMapeo'))).not.toBeDisplayed();
+  });
+
+  it('should delete photo', async () => {
+    const deleteBtn = await $(byTextMatches('Delete Photo'));
+    await deleteBtn.click();
+
+    expect(await $(byTextMatches('Delete this photo?'))).toBeDisplayed();
+
+    const cancelBtn = await $(byTextMatches('Cancel'));
+    await cancelBtn.click();
+
+    expect(await $(byTextMatches('Delete this photo?'))).not.toBeDisplayed();
+
+    await deleteBtn.click();
+
+    const deletePhotoBtn = await $(byResourceId('PHOTO.deletePhoto'));
+    await deletePhotoBtn.click();
+
+    const thumbnails = await $$('~View draft photo.');
+    await expect(thumbnails.length).toBe(1);
+  });
+
+  it('should save observation with photo', async () => {
+    const saveBtn = await $(byResourceId('OBS.edit-save-btn'));
+    await saveBtn.click();
+    await driver.pause(1000);
+    try {
+      const text = await driver.getAlertText();
+      if (text.includes('No GPS signal') || text.includes('Weak GPS signal')) {
+        await driver.execute('mobile: acceptAlert', {
+          buttonLabel: 'SAVE',
+        });
+      }
+    } catch (err) {
+      console.log('No RN Alert dialog was found.');
+    }
+    const obsListTab = await $('~Go to observations list.');
+    await obsListTab.click();
+    const houseObservation = await $(byTextMatches('House'));
+    await expect(houseObservation).toBeDisplayed();
   });
 });

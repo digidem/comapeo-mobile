@@ -14,6 +14,8 @@ import { createRequire } from 'module'
 import debug from 'debug'
 import { formatWithOptions } from 'node:util'
 
+/** @typedef {Parameters<import('@sentry/node').makeNodeTransport>[0]} NodeTransportOptions */
+
 const require = createRequire(import.meta.url)
 /** @type {import('./types/rn-bridge.js')} */
 const rnBridge = require('rn-bridge')
@@ -72,7 +74,7 @@ Sentry.init({
   },
   tracesSampleRate: 1.0,
   integrations: [Sentry.consoleLoggingIntegration({ levels: logLevels })],
-  transport: (opts = {}) =>
+  transport: (opts /** @type NodeTransportOptions */) =>
     makeOfflineSqliteTransport({ ...opts, db: sentryDB }),
 })
 

@@ -41,10 +41,10 @@ We use [Appium](https://appium.io/) (with the UIAutomator2 driver on Android) an
    npm run test:e2e:nobuild
    ```
 
-**Running on e2e test on a dev build**
+**Running e2e tests on a dev build**
 E2e can be run on the expo dev build. The advantage to this is that any updates to the code means that the APK does not need to be rebuilt again, as those changes are automatically reflected in the dev build.
 
-You can run e2e test on this build by adding the following properties in your config:
+You can run e2e tests on this build by adding the following properties to your config:
 
 ```js
    capabilities: [
@@ -59,7 +59,7 @@ You can run e2e test on this build by adding the following properties in your co
 
 ```
 
-The one caveat is that e2e in CI rely on a fresh install of the app when running e2e test. Since the dev build may already have data, the tests may have different results when run on CI vs locally on a dev build. For example, all the tests in CI rely on the onboarding to set up the tests. If the dev build has already gone through the onboarding, those same tests will fail.
+One caveat is that e2e in CI rely on a fresh install of the app when running e2e test. Since the dev build may already have data, the tests may have different results when run on CI vs locally on a dev build. For example, all the tests in CI rely on the onboarding to set up the tests. If the dev build has already gone through the onboarding, those same tests will fail.
 
 ## Testing on BrowserStack (Locally)
 
@@ -128,15 +128,15 @@ The one caveat is that e2e in CI rely on a fresh install of the app when running
 
 ## Adding Tests
 
-Tests are divided by feature. Each feature that is being tested has a folder in `tests/e2e/specs`. Tests should be able to run indepedently, and should require minimal interactions from other tests.
+Tests are divided by feature. Each feature that is being tested has a folder in `tests/e2e/specs`. Tests should be able to run independently, and should require minimal interactions from other tests.
 
 In CI, all tests are executed from a fresh install of the app, and require the onboarding flow to be completed. Use the tests from `tests/e2e/specs/onboarding/helper/minimal-onboarding-setup.test.ts` to run the onboarding to setup your tests.
 
 Some tests also require a project to be initialized, run `tests/e2e/specs/solo-project/helper/minimal-project-creation.test.ts` before hand to initialize a project.
 
-1. **Create a New Test Folder and create test**
+1. **Create a New Test Folder and Create Tests**
    - Create a folder, and add test files using the same style/pattern as existing specs.
-   - Add an `index.test.ts`, which runs all the tests in the folder
+   - Add an `index.test.ts`, which runs all the tests in the folder. The `minimal-onboarding-setup.test.ts` and `minimal-project-creation.test.ts` can be used in this file to setup the tests as needed.
 
 2. **Add to config `specs`**
    - Our test runner executes all the files found in the config's `specs` array. Add the file path of your the test folder's `index.test.ts`

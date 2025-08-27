@@ -65,7 +65,7 @@ describe('Project - Rename Project from Drawer while perserving observations', (
   });
 
   it('should allow user to rename a project', async () => {
-    const createBtn = await $(byResourceId('PROJECT.create-btn'));
+    const createBtn = await $(byResourceId('PROJECT.submit-btn'));
     await createBtn.click();
 
     await expect($(byResourceId('error-icon'))).toBeDisplayed();

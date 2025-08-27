@@ -10,4 +10,13 @@ export const sharedStyles = StyleSheet.create({
     color: BLUE_GREY,
     flexWrap: 'wrap',
   },
+  container: {
+    padding: 20,
+    gap: 20,
+  },
+  imageContainer: {
+    flex: 1,
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
 });

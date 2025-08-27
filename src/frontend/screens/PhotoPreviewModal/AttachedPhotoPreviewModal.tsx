@@ -169,9 +169,9 @@ export function AttachedPhotoPreviewModal({
   }
 
   return (
-    <ScrollView contentContainerStyle={{padding: 20, gap: 20}}>
+    <ScrollView contentContainerStyle={sharedStyles.container}>
       <View>
-        <View style={{flex: 1, borderRadius: 10, overflow: 'hidden'}}>
+        <View style={sharedStyles.imageContainer}>
           <ErrorBoundary fallback={() => <ImageErrorPlaceholder />}>
             <CoreBlobImage
               driveId={photo.driveDiscoveryId}

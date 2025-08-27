@@ -21,6 +21,7 @@ import {
   getPhotoDetailsText,
 } from './helpers.ts';
 import {sharedPhotoPreviewNavOptions} from './sharedNavOptions.tsx';
+import {sharedStyles} from './sharedStyles.ts';
 
 const m = defineMessages({
   headerDeleteButtonText: {
@@ -93,9 +94,9 @@ export function DraftPhotoPreviewModal({
   }
 
   return (
-    <ScrollView contentContainerStyle={{padding: 20, gap: 20}}>
+    <ScrollView contentContainerStyle={sharedStyles.container}>
       <View>
-        <View style={{flex: 1, borderRadius: 10, overflow: 'hidden'}}>
+        <View style={sharedStyles.imageContainer}>
           <ImageWithErrorFallback
             source={photo.originalUri}
             onLoad={onImageLoad}

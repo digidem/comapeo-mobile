@@ -97,6 +97,14 @@ export function useExportObservations({projectId}: {projectId: string}) {
       const exportDir = FileSystem.cacheDirectory + 'exports/';
       const exportDirectory = await FileSystem.getInfoAsync(exportDir);
 
+      function dealWithError(err: any) {
+        if (err.message === 'user canceled the document picker') {
+          //don't surface error if user cancels doc picker
+          return;
+        }
+        throw err;
+      }
+
       if (!exportDirectory.exists) {
         await FileSystem.makeDirectoryAsync(exportDir);
       }
@@ -124,7 +132,8 @@ export function useExportObservations({projectId}: {projectId: string}) {
             });
 
             return results;
-          });
+          })
+          .catch(dealWithError);
       }
 
       return await exportWithMedia
@@ -151,7 +160,8 @@ export function useExportObservations({projectId}: {projectId: string}) {
           });
 
           return results;
-        });
+        })
+        .catch(dealWithError);
     },
   });
 }

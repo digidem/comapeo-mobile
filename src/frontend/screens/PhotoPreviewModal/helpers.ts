@@ -3,6 +3,10 @@ import {distance} from '@turf/distance';
 import type {PhotoLayout} from '../../lib/exif.ts';
 import {bytesToMegabytes} from '../../lib/bytesToMegabytes.ts';
 import {defineMessages, type IntlShape} from 'react-intl';
+import {useCallback, useState} from 'react';
+import {captureException} from '@sentry/react-native';
+import type {ImageLoadEventData} from 'expo-image';
+import {getExpoImageStorageSize} from '../../lib/file-system.ts';
 
 const m = defineMessages({
   imageStorageSize: {
@@ -131,4 +135,31 @@ export function getPhotoDetailsText(
   }
 
   return displayedParts.join(' • ');
+}
+
+export function useImageLoadInfo() {
+  const [imageLoadInfo, setImageLoadInfo] = useState<
+    {height: number; width: number; storageSize?: number} | undefined
+  >(undefined);
+
+  const onImageLoad = useCallback(async (event: ImageLoadEventData) => {
+    try {
+      const storageSize = await getExpoImageStorageSize(event.source.url);
+
+      setImageLoadInfo({
+        height: event.source.height,
+        width: event.source.width,
+        storageSize,
+      });
+    } catch (err) {
+      captureException(err);
+
+      setImageLoadInfo({
+        height: event.source.height,
+        width: event.source.width,
+      });
+    }
+  }, []);
+
+  return {imageLoadInfo, onImageLoad};
 }

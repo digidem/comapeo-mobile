@@ -1,9 +1,7 @@
-import {captureException, ErrorBoundary} from '@sentry/react-native';
-import type {ImageLoadEventData} from 'expo-image';
-import React, {useState} from 'react';
+import {ErrorBoundary} from '@sentry/react-native';
+import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {ScrollView, View} from 'react-native';
-import {getExpoImageStorageSize} from '../../lib/file-system.ts';
 import {getAttachmentPhotoInfo} from '../../lib/photos.ts';
 import {DARK_GREY, NEW_DARK_GREY} from '../../lib/styles.ts';
 
@@ -20,6 +18,7 @@ import {
   getCameraDetailsText,
   getDeviceDetailsText,
   getPhotoDetailsText,
+  useImageLoadInfo,
 } from './helpers.ts';
 import {CoreBlobImage} from '../../sharedComponents/Images/CoreBlobImage.tsx';
 import {ImageErrorPlaceholder} from '../../sharedComponents/Images/ImageErrorPlaceholder.tsx';
@@ -113,9 +112,7 @@ export function AttachedPhotoPreviewModal({
         })
       : undefined;
 
-  const [imageLoadInfo, setImageLoadInfo] = useState<
-    {height: number; width: number; storageSize?: number} | undefined
-  >(undefined);
+  const {imageLoadInfo, onImageLoad} = useImageLoadInfo();
 
   const deviceDetailsText = getDeviceDetailsText({
     make: photoInfo.make,
@@ -148,25 +145,6 @@ export function AttachedPhotoPreviewModal({
         formatMessage,
       )
     : null;
-
-  async function onImageLoad(event: ImageLoadEventData) {
-    try {
-      const storageSize = await getExpoImageStorageSize(event.source.url);
-
-      setImageLoadInfo({
-        height: event.source.height,
-        width: event.source.width,
-        storageSize,
-      });
-    } catch (err) {
-      captureException(err);
-
-      setImageLoadInfo({
-        height: event.source.height,
-        width: event.source.width,
-      });
-    }
-  }
 
   return (
     <ScrollView contentContainerStyle={sharedStyles.container}>

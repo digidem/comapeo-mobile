@@ -1,11 +1,7 @@
 import type {NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import {captureException} from '@sentry/react-native';
-import type {ImageLoadEventData} from 'expo-image';
-import {useState} from 'react';
 import {defineMessages, useIntl, type MessageDescriptor} from 'react-intl';
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {getExpoImageStorageSize} from '../../lib/file-system.ts';
 import {getDraftPhotoInfo} from '../../lib/photos.ts';
 import {WHITE} from '../../lib/styles.ts';
 import type {NativeRootNavigationProps} from '../../sharedTypes/navigation.ts';
@@ -19,6 +15,7 @@ import {
   getCameraDetailsText,
   getDeviceDetailsText,
   getPhotoDetailsText,
+  useImageLoadInfo,
 } from './helpers.ts';
 import {sharedPhotoPreviewNavOptions} from './sharedNavOptions.tsx';
 import {sharedStyles} from './sharedStyles.ts';
@@ -36,10 +33,7 @@ export function DraftPhotoPreviewModal({
   const {photo} = route.params;
   const {formatMessage} = useIntl();
 
-  const [imageLoadInfo, setImageLoadInfo] = useState<
-    {height: number; width: number; storageSize?: number} | undefined
-  >(undefined);
-
+  const {imageLoadInfo, onImageLoad} = useImageLoadInfo();
   const photoInfo = getDraftPhotoInfo(photo);
 
   const deviceDetailsText = getDeviceDetailsText({
@@ -73,25 +67,6 @@ export function DraftPhotoPreviewModal({
         formatMessage,
       )
     : null;
-
-  async function onImageLoad(event: ImageLoadEventData) {
-    try {
-      const storageSize = await getExpoImageStorageSize(event.source.url);
-
-      setImageLoadInfo({
-        height: event.source.height,
-        width: event.source.width,
-        storageSize,
-      });
-    } catch (err) {
-      captureException(err);
-
-      setImageLoadInfo({
-        height: event.source.height,
-        width: event.source.width,
-      });
-    }
-  }
 
   return (
     <ScrollView contentContainerStyle={sharedStyles.container}>

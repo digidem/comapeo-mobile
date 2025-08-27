@@ -8,12 +8,6 @@ These patches use [patch-package](https://github.com/ds300/patch-package) to upd
 
 This is a workaround for [file lock errors on certain Android devices](https://github.com/digidem/comapeo-core/issues/995). The workaround means that the failure to gain a lock is silently ignored, which may lead to data corruption if more than one process tries to access the file, which should not happen in normal operation.
 
-## `@comapeo/core`
-
-### [Override Timeout](./@comapeo+core+4.0.0+001+increase-add-project-timeout.patch)
-
-This change increases the amount of time that the recipient of an invitation waits after accepting a project. Previously, if this time limit was exceeded, an error would occur. This caused issues because slower devices were unable to complete the process within the original timeout period. The timeout is now 45 seconds, where previously it was 10 seconds.
-
 ## `crc-universal`
 
 ### [Avoid using `crc-native` module](./crc-universal+1.0.4+001+crc-universal-use-js-only.patch)

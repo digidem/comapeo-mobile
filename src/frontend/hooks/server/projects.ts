@@ -97,8 +97,13 @@ export function useExportObservations({projectId}: {projectId: string}) {
       const exportDir = FileSystem.cacheDirectory + 'exports/';
       const exportDirectory = await FileSystem.getInfoAsync(exportDir);
 
-      function dealWithError(err: any) {
-        if (err.message === 'user canceled the document picker') {
+      function dealWithError(err: unknown) {
+        if (
+          typeof err === 'object' &&
+          err !== null &&
+          'message' in err &&
+          err.message === 'user canceled the document picker'
+        ) {
           //don't surface error if user cancels doc picker
           return;
         }

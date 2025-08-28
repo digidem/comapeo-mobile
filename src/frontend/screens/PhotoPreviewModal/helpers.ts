@@ -53,10 +53,10 @@ export function calcPhotoTimeRelativeToObs({
   let value: number;
   let unit: 'second' | 'minute' | 'hour';
 
-  if (hours >= 1) {
-    value = hours; // negative for "ago"
+  if (Math.abs(hours) >= 1) {
+    value = hours;
     unit = 'hour';
-  } else if (minutes >= 1) {
+  } else if (Math.abs(minutes) >= 1) {
     value = minutes;
     unit = 'minute';
   } else {

@@ -44,10 +44,27 @@ export function calcPhotoTimeRelativeToObs({
 }: {
   photoCreatedAt: number;
   observationCreatedAt: number;
-}): number {
-  const diffInMilliseconds = photoCreatedAt - observationCreatedAt;
-  const min = diffInMilliseconds / 1000 / 60;
-  return parseFloat(min.toFixed(2));
+}) {
+  const ms = photoCreatedAt - observationCreatedAt;
+  const seconds = Math.floor(ms / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+
+  let value: number;
+  let unit: 'second' | 'minute' | 'hour';
+
+  if (hours >= 1) {
+    value = hours; // negative for "ago"
+    unit = 'hour';
+  } else if (minutes >= 1) {
+    value = minutes;
+    unit = 'minute';
+  } else {
+    value = seconds;
+    unit = 'second';
+  }
+
+  return {value, unit};
 }
 
 export function getDeviceDetailsText({

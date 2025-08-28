@@ -45,19 +45,15 @@ const m = defineMessages({
   },
   timeAttached: {
     id: 'screens.PhotoPreviewModal.timeAttached',
-    defaultMessage:
-      'Attached {min} {min, plural, one {minute} other {minutes}} after observation',
+    defaultMessage: 'Attached {formattedNum} after observation',
     description:
       'Label for the time when the photo was attached to an observation',
   },
-  metersFromObservation: {
+  distanceFromObservation: {
     id: 'screens.PhotoPreviewModal.distanceFromObservation',
-    defaultMessage: 'Attached {distance} m from observation',
+    defaultMessage: 'Attached {distance} from observation',
   },
-  kmFromObservation: {
-    id: 'screens.PhotoPreviewModal.kmFromObservation',
-    defaultMessage: 'Attached {distance} km from observation',
-  },
+
   attachedAtTime: {
     id: 'screens.PhotoPreviewModal.attachedAtTime',
     defaultMessage: 'Attached at the time of the observation',
@@ -97,7 +93,7 @@ export function AttachedPhotoPreviewModal({
 
   const {data: memberInfo} = useGetCreatedBy(observationOriginalVersionId);
 
-  const {formatMessage} = useIntl();
+  const {formatMessage, formatNumber} = useIntl();
 
   const photoTimeRelativeToObs = photoCreatedAt
     ? calcPhotoTimeRelativeToObs({
@@ -202,9 +198,15 @@ export function AttachedPhotoPreviewModal({
                       />
                     }>
                     <BodyText selectable style={sharedStyles.primaryInfoText}>
-                      {photoTimeRelativeToObs > 0
+                      {photoTimeRelativeToObs
                         ? formatMessage(m.timeAttached, {
-                            min: photoTimeRelativeToObs,
+                            formattedNum: formatNumber(
+                              photoTimeRelativeToObs.value,
+                              {
+                                style: 'unit',
+                                unit: photoTimeRelativeToObs.unit,
+                              },
+                            ),
                           })
                         : formatMessage(m.attachedAtTime)}
                     </BodyText>
@@ -223,11 +225,17 @@ export function AttachedPhotoPreviewModal({
                     }>
                     <BodyText selectable style={sharedStyles.primaryInfoText}>
                       {metersFromObservation < 1000
-                        ? formatMessage(m.metersFromObservation, {
-                            distance: metersFromObservation.toFixed(3),
+                        ? formatMessage(m.distanceFromObservation, {
+                            distance: formatNumber(metersFromObservation, {
+                              style: 'unit',
+                              unit: 'meter',
+                            }),
                           })
-                        : formatMessage(m.kmFromObservation, {
-                            distance: metersFromObservation / 1000,
+                        : formatMessage(m.distanceFromObservation, {
+                            distance: formatNumber(metersFromObservation, {
+                              style: 'unit',
+                              unit: 'kilometer',
+                            }),
                           })}
                     </BodyText>
                   </InfoItem>

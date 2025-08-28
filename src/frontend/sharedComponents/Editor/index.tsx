@@ -128,7 +128,6 @@ export const Editor = ({
                   return <ThumbnailLoader size={size} key={att.draftPhotoId} />;
                 }
                 if (isDraftPhoto(att)) {
-                  console.log('is draft photo');
                   return (
                     <ThumbnailContainer
                       key={att.draftPhotoId}

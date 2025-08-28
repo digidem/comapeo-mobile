@@ -44,5 +44,8 @@ describe('Photo - show validated photo', () => {
     await expect(
       await $(byTextMatches('Attached at the time of the observation')),
     ).toBeDisplayed();
+
+    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
+    await backBtn.click();
   });
 });

@@ -45,6 +45,9 @@ describe('Photo - show validated photo', () => {
       await $(byTextMatches('Attached at the time of the observation')),
     ).toBeDisplayed();
 
+    await expect(
+      await $(byTextMatches('^Attached \\d+(\\.\\d+)? m from observation$')),
+    ).toBeDisplayed();
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
   });

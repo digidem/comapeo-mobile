@@ -49,8 +49,8 @@ const m = defineMessages({
     description:
       'Label for the time when the photo was attached to an observation',
   },
-  distanceFromObservation: {
-    id: 'screens.PhotoPreviewModal.distanceFromObservation',
+  distanceFromObs: {
+    id: 'screens.PhotoPreviewModal.distanceFromObs',
     defaultMessage: 'Attached {distance} from observation',
   },
 
@@ -226,13 +226,13 @@ export function AttachedPhotoPreviewModal({
                       }>
                       <BodyText selectable style={sharedStyles.primaryInfoText}>
                         {metersFromObservation < 1000
-                          ? formatMessage(m.distanceFromObservation, {
+                          ? formatMessage(m.distanceFromObs, {
                               distance: formatNumber(metersFromObservation, {
                                 style: 'unit',
                                 unit: 'meter',
                               }),
                             })
-                          : formatMessage(m.distanceFromObservation, {
+                          : formatMessage(m.distanceFromObs, {
                               distance: formatNumber(metersFromObservation, {
                                 style: 'unit',
                                 unit: 'kilometer',

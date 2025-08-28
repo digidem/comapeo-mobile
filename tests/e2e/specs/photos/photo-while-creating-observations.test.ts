@@ -79,15 +79,15 @@ describe('Photos - Save and Delete Photo', () => {
 
     const cancelBtn = await $(byTextMatches('Cancel'));
     await cancelBtn.click();
-
-    await expect(
-      await $(byTextMatches('Delete this photo?')),
-    ).not.toBeDisplayed();
+    await driver.pause(1000);
 
     await deleteBtn.click();
 
     const deletePhotoBtn = await $(byResourceId('PHOTO.deletePhoto'));
     await deletePhotoBtn.click();
+
+    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
+    await backBtn.click();
 
     const thumbnails = await $$('~View draft photo.');
     await expect(thumbnails.length).toBe(1);

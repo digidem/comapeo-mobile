@@ -199,7 +199,7 @@ export function AttachedPhotoPreviewModal({
                         />
                       }>
                       <BodyText selectable style={sharedStyles.primaryInfoText}>
-                        {photoTimeRelativeToObs
+                        {photoTimeRelativeToObs.value > 0
                           ? formatMessage(m.timeAttached, {
                               formattedNum: formatNumber(
                                 photoTimeRelativeToObs.value,

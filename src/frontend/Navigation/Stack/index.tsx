@@ -6,7 +6,6 @@ import {CustomHeaderLeft} from '../../sharedComponents/CustomHeaderLeft';
 import {AppStackParamsList} from '../../sharedTypes/navigation';
 import {useIntl} from 'react-intl';
 import {useAuthContext} from '../../contexts/AuthContext';
-import {useNavigationFromRoot} from '../../hooks/useNavigationWithTypes';
 import {Loading} from '../../sharedComponents/Loading';
 import {createDefaultScreenGroup} from './AppScreens';
 import {createOnboardingScreens} from './OnboardingScreens';
@@ -19,6 +18,7 @@ import {
   useActiveProjectIdActions,
 } from '../../contexts/ActiveProjectIdStoreContext';
 import {ErrorBottomSheet} from '../../sharedComponents/ErrorBottomSheet';
+import {AuthScreen} from '../../screens/AuthScreen';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
 export type NavigatorLayout = NonNullable<
@@ -37,8 +37,7 @@ const ErrorBottomSheetOptions: NativeStackNavigationOptions = {
 
 export const RootStackNavigator = () => {
   const {formatMessage} = useIntl();
-  const security = useAuthContext();
-  const {navigate} = useNavigationFromRoot();
+  const {authState} = useAuthContext();
 
   const {data: deviceInfo} = useOwnDeviceInfo();
   const {data: projects} = useManyProjects();
@@ -63,12 +62,6 @@ export const RootStackNavigator = () => {
     setActiveProjectId,
   ]);
 
-  React.useEffect(() => {
-    if (security.authState === 'unauthenticated') {
-      navigate('AuthScreen');
-    }
-  }, [security.authState, navigate]);
-
   const layout: NavigatorLayout = ({children, state, navigation}) => (
     <React.Suspense fallback={<Loading />}>
       <PendingInvitesListener
@@ -90,6 +83,18 @@ export const RootStackNavigator = () => {
     screenLayout,
     screenOptions: NavigatorScreenOptions,
   } as const;
+
+  if (authState === 'unauthenticated') {
+    return (
+      <RootStack.Navigator {...commonNavigatorProps}>
+        <RootStack.Screen
+          name="AuthScreen"
+          component={AuthScreen}
+          options={{headerShown: false}}
+        />
+      </RootStack.Navigator>
+    );
+  }
 
   if (projects === undefined) {
     return <Loading />;

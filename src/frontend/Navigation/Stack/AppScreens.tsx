@@ -11,7 +11,6 @@ import {EnterPassToTurnOff} from '../../screens/AppPasscode/EnterPassToTurnOff';
 import {SetPasscode} from '../../screens/AppPasscode/SetPasscode';
 import {TurnOffPasscode} from '../../screens/AppPasscode/TurnOffPasscode';
 import {Security} from '../../screens/Security';
-import {AuthScreen} from '../../screens/AuthScreen';
 import {ObscurePasscode} from '../../screens/ObscurePasscode';
 import {ObservationCategoryChooser} from '../../screens/PresetChooser/ObservationCategoryChooser.tsx';
 import {TrackCategoryChooser} from '../../screens/PresetChooser/TrackCategoryChooser.tsx';
@@ -126,14 +125,6 @@ export const createDefaultScreenGroup = ({
         name="Home"
         options={{headerShown: false}}
         component={HomeTabs}
-      />
-      <RootStack.Screen
-        name="AuthScreen"
-        component={AuthScreen}
-        options={{
-          headerShown: false,
-          animation: 'fade',
-        }}
       />
       <RootStack.Screen
         name="ObservationEdit"

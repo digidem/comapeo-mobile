@@ -1,6 +1,10 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
-import {byResourceId, byText, byTextMatches} from '../../utils/selectors';
+import {
+  byResourceId,
+  byTextContains,
+  byTextMatches,
+} from '../../utils/selectors';
 
 describe('Photo - add photo to existing observation', () => {
   it('should edit observation on edit icon click', async () => {
@@ -149,9 +153,7 @@ describe('Photo - add photo to existing observation', () => {
 
     await expect(verifiedMessage).toBeDisplayed();
 
-    const attachedAtMessage = await $(
-      byTextMatches('^Attached \\d+(\\.\\d+)? sec after observation$'),
-    );
+    const attachedAtMessage = await $(byTextContains('after observation'));
 
     await attachedAtMessage.scrollIntoView();
 

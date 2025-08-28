@@ -154,112 +154,114 @@ export function AttachedPhotoPreviewModal({
         </View>
       </View>
       <View style={{gap: 20}}>
-        <View
-          style={{
-            borderColor: DARK_GREY,
-            borderWidth: 1,
-            borderRadius: 10,
-          }}>
-          <Accordian
-            style={{padding: 20}}
-            title={
-              <View style={{flexDirection: 'row', gap: 12}}>
-                <Octicons
-                  name="check-circle"
-                  size={20}
-                  color={NEW_DARK_GREY}
-                  allowFontScaling
-                />
-                <BodyText selectable style={sharedStyles.primaryInfoText}>
-                  {formatMessage(m.validatedByCoMapeo)}
-                </BodyText>
-              </View>
-            }
-            innerAccordianDetails={
-              <View
-                style={{
-                  gap: 20,
-                  padding: 20,
-                  borderTopColor: DARK_GREY,
-                  borderTopWidth: 1,
-                }}>
-                <BodyText selectable style={sharedStyles.primaryInfoText}>
-                  {formatMessage(m.verifiedOriginal)}
-                </BodyText>
+        {!photoInfo.external && (
+          <View
+            style={{
+              borderColor: DARK_GREY,
+              borderWidth: 1,
+              borderRadius: 10,
+            }}>
+            <Accordian
+              style={{padding: 20}}
+              title={
+                <View style={{flexDirection: 'row', gap: 12}}>
+                  <Octicons
+                    name="check-circle"
+                    size={20}
+                    color={NEW_DARK_GREY}
+                    allowFontScaling
+                  />
+                  <BodyText selectable style={sharedStyles.primaryInfoText}>
+                    {formatMessage(m.validatedByCoMapeo)}
+                  </BodyText>
+                </View>
+              }
+              innerAccordianDetails={
+                <View
+                  style={{
+                    gap: 20,
+                    padding: 20,
+                    borderTopColor: DARK_GREY,
+                    borderTopWidth: 1,
+                  }}>
+                  <BodyText selectable style={sharedStyles.primaryInfoText}>
+                    {formatMessage(m.verifiedOriginal)}
+                  </BodyText>
 
-                {photoTimeRelativeToObs !== undefined && (
-                  <InfoItem
-                    icon={
-                      <MaterialIcons
-                        name="timer"
-                        size={20}
-                        color={NEW_DARK_GREY}
-                        allowFontScaling
-                      />
-                    }>
-                    <BodyText selectable style={sharedStyles.primaryInfoText}>
-                      {photoTimeRelativeToObs
-                        ? formatMessage(m.timeAttached, {
-                            formattedNum: formatNumber(
-                              photoTimeRelativeToObs.value,
-                              {
+                  {photoTimeRelativeToObs !== undefined && (
+                    <InfoItem
+                      icon={
+                        <MaterialIcons
+                          name="timer"
+                          size={20}
+                          color={NEW_DARK_GREY}
+                          allowFontScaling
+                        />
+                      }>
+                      <BodyText selectable style={sharedStyles.primaryInfoText}>
+                        {photoTimeRelativeToObs
+                          ? formatMessage(m.timeAttached, {
+                              formattedNum: formatNumber(
+                                photoTimeRelativeToObs.value,
+                                {
+                                  style: 'unit',
+                                  unit: photoTimeRelativeToObs.unit,
+                                },
+                              ),
+                            })
+                          : formatMessage(m.attachedAtTime)}
+                      </BodyText>
+                    </InfoItem>
+                  )}
+
+                  {metersFromObservation !== undefined && (
+                    <InfoItem
+                      icon={
+                        <Octicons
+                          name="arrow-both"
+                          size={20}
+                          color={NEW_DARK_GREY}
+                          allowFontScaling
+                        />
+                      }>
+                      <BodyText selectable style={sharedStyles.primaryInfoText}>
+                        {metersFromObservation < 1000
+                          ? formatMessage(m.distanceFromObservation, {
+                              distance: formatNumber(metersFromObservation, {
                                 style: 'unit',
-                                unit: photoTimeRelativeToObs.unit,
-                              },
-                            ),
-                          })
-                        : formatMessage(m.attachedAtTime)}
-                    </BodyText>
-                  </InfoItem>
-                )}
+                                unit: 'meter',
+                              }),
+                            })
+                          : formatMessage(m.distanceFromObservation, {
+                              distance: formatNumber(metersFromObservation, {
+                                style: 'unit',
+                                unit: 'kilometer',
+                              }),
+                            })}
+                      </BodyText>
+                    </InfoItem>
+                  )}
 
-                {metersFromObservation !== undefined && (
-                  <InfoItem
-                    icon={
-                      <Octicons
-                        name="arrow-both"
-                        size={20}
-                        color={NEW_DARK_GREY}
-                        allowFontScaling
-                      />
-                    }>
-                    <BodyText selectable style={sharedStyles.primaryInfoText}>
-                      {metersFromObservation < 1000
-                        ? formatMessage(m.distanceFromObservation, {
-                            distance: formatNumber(metersFromObservation, {
-                              style: 'unit',
-                              unit: 'meter',
-                            }),
-                          })
-                        : formatMessage(m.distanceFromObservation, {
-                            distance: formatNumber(metersFromObservation, {
-                              style: 'unit',
-                              unit: 'kilometer',
-                            }),
-                          })}
-                    </BodyText>
-                  </InfoItem>
-                )}
-
-                {memberInfo.name && (
-                  <InfoItem
-                    icon={
-                      <MaterialIcons
-                        name="devices"
-                        size={20}
-                        color={NEW_DARK_GREY}
-                        allowFontScaling
-                      />
-                    }>
-                    <BodyText selectable style={sharedStyles.primaryInfoText}>
-                      {formatMessage(m.attachedBy, {name: memberInfo.name})}
-                    </BodyText>
-                  </InfoItem>
-                )}
-              </View>
-            }
-          />
-        </View>
+                  {memberInfo.name && (
+                    <InfoItem
+                      icon={
+                        <MaterialIcons
+                          name="devices"
+                          size={20}
+                          color={NEW_DARK_GREY}
+                          allowFontScaling
+                        />
+                      }>
+                      <BodyText selectable style={sharedStyles.primaryInfoText}>
+                        {formatMessage(m.attachedBy, {name: memberInfo.name})}
+                      </BodyText>
+                    </InfoItem>
+                  )}
+                </View>
+              }
+            />
+          </View>
+        )}
         {photoInfo.createdAt !== undefined && (
           <CreatedAtInfoItem createdAt={photoInfo.createdAt} />
         )}

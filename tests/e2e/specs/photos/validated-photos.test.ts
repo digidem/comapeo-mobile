@@ -50,5 +50,6 @@ describe('Photo - show validated photo', () => {
     ).toBeDisplayed();
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
+    await driver.pause(1000);
   });
 });

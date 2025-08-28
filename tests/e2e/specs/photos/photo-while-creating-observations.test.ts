@@ -86,8 +86,16 @@ describe('Photos - Save and Delete Photo', () => {
     const deletePhotoBtn = await $(byResourceId('PHOTO.deletePhoto'));
     await deletePhotoBtn.click();
 
-    const backBtn = await $(byResourceId('MAIN.header-back-btn'));
-    await backBtn.click();
+    await browser.waitUntil(
+      async () => {
+        const thumbs = await $$('~View draft photo.');
+        const count = await thumbs.length;
+        return count === 1;
+      },
+      {
+        timeout: 5000,
+      },
+    );
 
     const thumbnails = await $$('~View draft photo.');
     await expect(thumbnails.length).toBe(1);

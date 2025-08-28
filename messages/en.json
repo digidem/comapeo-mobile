@@ -1299,6 +1299,9 @@
     "description": "Image size in megabytes",
     "message": "{value} MB"
   },
+  "screens.PhotoPreviewModal.kmFromObservation": {
+    "message": "Attached {distance} km from observation"
+  },
   "screens.PhotoPreviewModal.landscape": {
     "description": "Describes image layout when taking photo horizontally",
     "message": "Landscape"

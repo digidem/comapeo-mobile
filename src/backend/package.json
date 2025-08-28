@@ -18,7 +18,8 @@
     "@mapeo/default-config": "5.0.0",
     "@sentry/node": "9.28.0",
     "@sentry/rollup-plugin": "^3.5.0",
-    "debug": "^4.3.4"
+    "debug": "^4.3.4",
+    "sentry-offline-transport-better-sqlite": "^1.1.2"
   },
   "devDependencies": {
     "@digidem/types": "~2.1.0",

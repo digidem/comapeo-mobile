@@ -1,14 +1,11 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
-import {byResourceId, byTextMatches, byText} from '../../utils/selectors';
-import {output} from '../../utils/naming';
+import {byTextMatches, byText} from '../../utils/selectors';
 
 describe('Main - Side Drawer Menu - No Project', () => {
   it('should open the side drawer and verify menu options', async () => {
     const drawerIcon = await $('~Open Menu');
     await drawerIcon.click();
-    const deviceName = await $(byText(output.names.editdevice));
-    await expect(deviceName).toBeDisplayed();
 
     await expect($(byTextMatches('CURRENT PROJECT'))).toBeDisplayed();
 

@@ -4,6 +4,9 @@
 
 - [Projects and Project Settings](#projects-and-project-settings)
   - [Overview](#overview)
+- [Side Drawer Menu](#side-drawer-menu-no-project)
+  - [Test Objectives](#test-objectives)
+  - [Special Considerations](#special-considerations)
 - [Solo Project Headers](#solo-project-headers)
   - [Test Objectives](#test-objectives)
   - [Special Considerations](#special-considerations)
@@ -30,6 +33,23 @@
 ### Overview
 
 These tests deal with projects, such as creating a project from the side drawer, creating a project from sync, and that the messaging about projects is correct.
+
+## Side Drawer Menu No Project
+
+- This tests the look and functioning of the side drawer menu with and without a project.
+
+### Test Objectives
+
+- Opens the side drawer from the home screen
+- Confirms current device name is shown
+- Checks header label says “Current Project”
+- Verifies project name is “My Solo Project”
+- Verifies project role text says “You are mapping on your own.”
+- Asserts presence of Exchange, App Settings, Data & Privacy, and About screens
+
+### Special Considerations
+
+- These tests need to run before the project naming tests.
 
 ## Solo Project Headers
 

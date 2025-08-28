@@ -26,7 +26,7 @@ const m = defineMessages({
   },
 });
 
-export function calculateDistanceFromObservation({
+export function calculateDistanceAsMeters({
   photoLocation,
   observationLocation,
 }: {

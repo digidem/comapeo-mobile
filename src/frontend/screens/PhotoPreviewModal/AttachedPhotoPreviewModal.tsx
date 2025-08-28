@@ -14,7 +14,7 @@ import {
 } from './InfoItem.tsx';
 import {
   calcPhotoTimeRelativeToObs,
-  calculateDistanceFromObservation,
+  calculateDistanceAsMeters,
   getCameraDetailsText,
   getDeviceDetailsText,
   getPhotoDetailsText,
@@ -50,9 +50,13 @@ const m = defineMessages({
     description:
       'Label for the time when the photo was attached to an observation',
   },
-  distanceFromObservation: {
+  metersFromObservation: {
     id: 'screens.PhotoPreviewModal.distanceFromObservation',
     defaultMessage: 'Attached {distance} m from observation',
+  },
+  kmFromObservation: {
+    id: 'screens.PhotoPreviewModal.kmFromObservation',
+    defaultMessage: 'Attached {distance} km from observation',
   },
   attachedAtTime: {
     id: 'screens.PhotoPreviewModal.attachedAtTime',
@@ -102,9 +106,9 @@ export function AttachedPhotoPreviewModal({
       })
     : undefined;
 
-  const distanceFromObservation =
+  const metersFromObservation =
     photoCoordinates && lon !== undefined && lat !== undefined
-      ? calculateDistanceFromObservation({
+      ? calculateDistanceAsMeters({
           photoLocation: [
             photoCoordinates.longitude,
             photoCoordinates.latitude,
@@ -207,7 +211,7 @@ export function AttachedPhotoPreviewModal({
                   </InfoItem>
                 )}
 
-                {distanceFromObservation !== undefined && (
+                {metersFromObservation !== undefined && (
                   <InfoItem
                     icon={
                       <Octicons
@@ -218,9 +222,13 @@ export function AttachedPhotoPreviewModal({
                       />
                     }>
                     <BodyText selectable style={sharedStyles.primaryInfoText}>
-                      {formatMessage(m.distanceFromObservation, {
-                        distance: distanceFromObservation.toFixed(2),
-                      })}
+                      {metersFromObservation < 1000
+                        ? formatMessage(m.metersFromObservation, {
+                            distance: metersFromObservation.toFixed(3),
+                          })
+                        : formatMessage(m.kmFromObservation, {
+                            distance: metersFromObservation / 1000,
+                          })}
                     </BodyText>
                   </InfoItem>
                 )}

@@ -49,13 +49,12 @@ export const RootStackNavigator = () => {
   const [hasInitialized, setHasInitialized] = React.useState(false);
 
   React.useEffect(() => {
-    if (projects === undefined || hasInitialized) return;
+    if (hasInitialized) return;
     if (!storedActiveProjectId && fallbackProjectId) {
       setActiveProjectId(fallbackProjectId);
     }
     setHasInitialized(true);
   }, [
-    projects,
     hasInitialized,
     storedActiveProjectId,
     fallbackProjectId,
@@ -99,7 +98,7 @@ export const RootStackNavigator = () => {
     );
   }
 
-  if (projects === undefined) {
+  if (!hasInitialized) {
     return <Loading />;
   }
 

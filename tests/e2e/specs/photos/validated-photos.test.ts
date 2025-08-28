@@ -37,17 +37,30 @@ describe('Photo - show validated photo', () => {
 
     await expect(verifiedMessage).not.toBeDisplayed();
 
+    await validatedByAccordion.scrollIntoView();
+
     await validatedByAccordion.click();
+
+    await verifiedMessage.scrollIntoView();
 
     await expect(verifiedMessage).toBeDisplayed();
 
-    await expect(
-      await $(byTextMatches('Attached at the time of the observation')),
-    ).toBeDisplayed();
+    const attachedAtMessage = await $(
+      byTextMatches('Attached at the time of the observation'),
+    );
 
-    await expect(
-      await $(byTextMatches('^Attached \\d+(\\.\\d+)? m from observation$')),
-    ).toBeDisplayed();
+    await attachedAtMessage.scrollIntoView();
+
+    await expect(attachedAtMessage).toBeDisplayed();
+
+    const attachedDistance = await $(
+      byTextMatches('^Attached \\d+(\\.\\d+)? m from observation$'),
+    );
+
+    await attachedDistance.scrollIntoView();
+
+    await expect(attachedDistance).toBeDisplayed();
+
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
     await driver.pause(1000);

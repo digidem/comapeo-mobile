@@ -59,13 +59,21 @@ describe('Photo - add photo to existing observation', () => {
 
     await expect(verifiedMessage).not.toBeDisplayed();
 
+    await validatedByAccordion.scrollIntoView();
+
     await validatedByAccordion.click();
+
+    await verifiedMessage.scrollIntoView();
 
     await expect(verifiedMessage).toBeDisplayed();
 
-    await expect(
-      await $(byTextMatches('Attached at the time of the observation')),
-    ).toBeDisplayed();
+    const attachedAtMessage = await $(
+      byTextMatches('Attached at the time of the observation'),
+    );
+
+    await attachedAtMessage.scrollIntoView();
+
+    await expect(attachedAtMessage).toBeDisplayed();
 
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
@@ -92,17 +100,28 @@ describe('Photo - add photo to existing observation', () => {
 
     await expect(verifiedMessage).not.toBeDisplayed();
 
+    await validatedByAccordion.scrollIntoView();
     await validatedByAccordion.click();
+
+    await verifiedMessage.scrollIntoView();
 
     await expect(verifiedMessage).toBeDisplayed();
 
-    await expect(
-      await $(byTextMatches('Attached at the time of the observation')),
-    ).toBeDisplayed();
+    const attachedAtMessage = await $(
+      byTextMatches('Attached at the time of the observation'),
+    );
 
-    await expect(
-      await $(byTextMatches('^Attached \\d+(\\.\\d+)? m from observation$')),
-    ).toBeDisplayed();
+    await attachedAtMessage.scrollIntoView();
+
+    await expect(attachedAtMessage).toBeDisplayed();
+
+    const attachedDistance = await $(
+      byTextMatches('^Attached \\d+(\\.\\d+)? m from observation$'),
+    );
+
+    await attachedDistance.scrollIntoView();
+
+    await expect(attachedDistance).toBeDisplayed();
 
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
@@ -122,18 +141,29 @@ describe('Photo - add photo to existing observation', () => {
 
     await expect(verifiedMessage).not.toBeDisplayed();
 
+    await validatedByAccordion.scrollIntoView();
+
     await validatedByAccordion.click();
+
+    await verifiedMessage.scrollIntoView();
 
     await expect(verifiedMessage).toBeDisplayed();
 
-    await expect(
-      await $(byTextMatches('^Attached \\d+(\\.\\d+)? sec after observation$')),
-    ).toBeDisplayed();
+    const attachedAtMessage = await $(
+      byTextMatches('^Attached \\d+(\\.\\d+)? sec after observation$'),
+    );
 
-    await expect(
-      await $(byTextMatches('^Attached \\d+(\\.\\d+)? m from observation$')),
-    ).toBeDisplayed();
+    await attachedAtMessage.scrollIntoView();
 
+    await expect(attachedAtMessage).toBeDisplayed();
+
+    const attachedDistance = await $(
+      byTextMatches('^Attached \\d+(\\.\\d+)? m from observation$'),
+    );
+
+    await attachedDistance.scrollIntoView();
+
+    await expect(attachedDistance).toBeDisplayed();
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
   });

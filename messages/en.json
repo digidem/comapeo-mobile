@@ -1289,7 +1289,7 @@
     "description": "Label for the person who attached the photo to the observation",
     "message": "Attached by {name}"
   },
-  "screens.PhotoPreviewModal.distanceFromObservation": {
+  "screens.PhotoPreviewModal.distanceFromObs": {
     "message": "Attached {distance} from observation"
   },
   "screens.PhotoPreviewModal.headerButtonText": {

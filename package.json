@@ -44,6 +44,7 @@
     "@osm_borders/maritime_10000m": "1.1.0",
     "@react-native-community/hooks": "100.1.0",
     "@react-native-community/netinfo": "11.4.1",
+    "@react-native-documents/picker": "10.1.5",
     "@react-native-picker/picker": "2.11.0",
     "@react-navigation/bottom-tabs": "7.3.14",
     "@react-navigation/native": "7.1.14",

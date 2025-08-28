@@ -1290,7 +1290,7 @@
     "message": "Attached by {name}"
   },
   "screens.PhotoPreviewModal.distanceFromObservation": {
-    "message": "Attached {distance} m from observation"
+    "message": "Attached {distance} from observation"
   },
   "screens.PhotoPreviewModal.headerButtonText": {
     "message": "Delete Photo"
@@ -1298,9 +1298,6 @@
   "screens.PhotoPreviewModal.imageStorageSize": {
     "description": "Image size in megabytes",
     "message": "{value} MB"
-  },
-  "screens.PhotoPreviewModal.kmFromObservation": {
-    "message": "Attached {distance} km from observation"
   },
   "screens.PhotoPreviewModal.landscape": {
     "description": "Describes image layout when taking photo horizontally",
@@ -1315,7 +1312,7 @@
   },
   "screens.PhotoPreviewModal.timeAttached": {
     "description": "Label for the time when the photo was attached to an observation",
-    "message": "Attached {min} {min, plural, one {minute} other {minutes}} after observation"
+    "message": "Attached {formattedNum} after observation"
   },
   "screens.PhotoPreviewModal.validatedByCoMapeo": {
     "message": "Validated by CoMapeo"

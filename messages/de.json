@@ -1546,7 +1546,7 @@
     "message": "Projektname:"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.title": {
-    "message": "Create a Project"
+    "message": "Neues Projekt starten"
   },
   "screens.Settings.CreateOrJoinProject.CreateProject.titleSoloProject": {
     "message": "Mein Projekt benennen"
@@ -1591,7 +1591,7 @@
     "message": "Create Project"
   },
   "screens.Settings.CreateOrJoinProject.enterName": {
-    "message": "Enter a name for the Project"
+    "message": "Name des Projektes"
   },
   "screens.Settings.CreateOrJoinProject.existingProjectName": {
     "message": "Die Verwendung eines existierenden Projektnamens macht sie nicht zum selben Projekt."

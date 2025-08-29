@@ -86,7 +86,7 @@
     "message": "Wijzigingen annuleren?"
   },
   "ProjectOnboarding.JoinProject.bodyText": {
-    "message": "Ask a Project Coordinator for an invitation to their Project."
+    "message": "Vraag een projectcoördinator om een uitnodiging voor hun project."
   },
   "ProjectOnboarding.JoinProject.goBackButton": {
     "message": "Go back"
@@ -95,7 +95,7 @@
     "message": "Deelnemen aan een project"
   },
   "ProjectOnboarding.MapOnOwn.bodyText": {
-    "message": "Explore everything CoMapeo offers without inviting others to participate."
+    "message": "Ontdek alles wat CoMapeo biedt zonder anderen uit te nodigen om deel te nemen."
   },
   "ProjectOnboarding.MapOnOwn.goBackButton": {
     "message": "Go back"
@@ -104,7 +104,7 @@
     "message": "Go to Map"
   },
   "ProjectOnboarding.MapOnOwn.title": {
-    "message": "Map on Your Own"
+    "message": "Kaart op je eigen"
   },
   "ProjectOnboarding.Success.body": {
     "message": "is klaar voor samenwerking."
@@ -113,7 +113,7 @@
     "message": "Voltooid"
   },
   "ProjectOnboarding.Success.title": {
-    "message": "Success!"
+    "message": "Voltooid!"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
     "message": "Wanneer projectdeelnemers hun gegevens synchroniseren, worden ze ook gearchiveerd op het internet. Uw projectgegevens synchroniseren naar het archief via het internet naar de veilige, versleutelde server hieronder. De eigenaar van de server kan de gegevens bekijken."
@@ -486,7 +486,7 @@
   },
   "screens.AboutSettings.releaseName": {
     "description": "The CoMapeo chosen release name for the version of the app",
-    "message": "Preview"
+    "message": "Voorvertoning"
   },
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
@@ -688,10 +688,10 @@
     "message": "Create a Project"
   },
   "screens.CreateProject.projectUnique": {
-    "message": "Each project is unique and cannot exchange with another project."
+    "message": "Elk project is uniek en kan niet met een ander project uitwisselen."
   },
   "screens.CreateProject.requestInvites": {
-    "message": "Request invites to join existing projects."
+    "message": "Verzoek uitnodigingen om deel te nemen aan bestaande projecten."
   },
   "screens.DataAndPrivacy.diagnosticInfoText": {
     "message": "Geanonimiseerde informatie over uw apparaat, app crasht, fouten en prestaties helpt Awana Digital om de app te verbeteren en fouten op te lossen."
@@ -715,10 +715,10 @@
     "message": "CoMapeo Respecteert uw Privacy & Autonomie"
   },
   "screens.DataPrivacy.description": {
-    "message": "CoMapeo helps territory monitors & mappers securely collaborate—without needing the internet."
+    "message": "CoMapeo helpt het territorium te monitoren & mappers veilig samen te werken — zonder het internet nodig te hebben."
   },
   "screens.DataPrivacy.diagnostic": {
-    "message": "Private by default—diagnostic information is fully anonymized and you can opt-out any time."
+    "message": "Standaard Privé—diagnostische informatie is volledig geanonimiseerd en je kunt er altijd gebruik van maken."
   },
   "screens.DataPrivacy.learnMore": {
     "message": "Meer informatie"
@@ -730,7 +730,7 @@
     "message": "Volgende"
   },
   "screens.DataPrivacy.stays": {
-    "message": "Your data stays on your devices—fully encrypted, in your control."
+    "message": "Je gegevens blijven op je apparaten - volledig versleuteld, in je besturingsapparaat."
   },
   "screens.DataPrivacy.title": {
     "message": "Gegevens & Privacy"
@@ -739,7 +739,7 @@
     "message": "Volgende"
   },
   "screens.DeviceNaming.Success.ready": {
-    "message": "is now ready."
+    "message": "is nu klaar."
   },
   "screens.DeviceNaming.Success.success": {
     "message": "Voltooid!"
@@ -748,13 +748,13 @@
     "message": "Opslaan"
   },
   "screens.DeviceNaming.description": {
-    "message": "Distinct, memorable names help collaborators using CoMapeo to recognize you."
+    "message": "Verschillende namen helpen medewerkers met behulp van CoMapeo om u te herkennen."
   },
   "screens.DeviceNaming.header": {
-    "message": "Name Your Device"
+    "message": "Benoem uw apparaat"
   },
   "screens.DeviceNaming.placeholder": {
-    "message": "Device Name"
+    "message": "Apparaat Naam"
   },
   "screens.EnterPassword.enterPass": {
     "message": "Voer uw toegangscode in"
@@ -841,10 +841,10 @@
     "message": "Er is iets misgegaan"
   },
   "screens.IntroToCoMapeo.collaborate": {
-    "message": "Join or create project teams"
+    "message": "Deelnemen aan of aanmaken van projectteams"
   },
   "screens.IntroToCoMapeo.designedFor": {
-    "message": "Designed with and for Indigenous territory monitors & mappers"
+    "message": "Ontworpen met en voor inheemse gebieden monitoren & mappers"
   },
   "screens.IntroToCoMapeo.getStarted": {
     "message": "Nu inschrijven"
@@ -1069,19 +1069,19 @@
     "message": "Enter a name for the Project"
   },
   "screens.NameSoloProject.existingProjectName": {
-    "message": "Using an existing project name does not make them the same project."
+    "message": "Het gebruik van een bestaande projectnaam maakt ze niet hetzelfde project."
   },
   "screens.NameSoloProject.keepInMind": {
-    "message": "Keep in mind"
+    "message": "Onthoud houden"
   },
   "screens.NameSoloProject.navTitle": {
-    "message": "Name My Project"
+    "message": "Benoem mijn project"
   },
   "screens.NameSoloProject.projectUnique": {
-    "message": "Each project is unique and cannot exchange with another project."
+    "message": "Elk project is uniek en kan niet met een ander project uitwisselen."
   },
   "screens.NameSoloProject.requestInvites": {
-    "message": "Request invites to join existing projects."
+    "message": "Verzoek uitnodigingen om deel te nemen aan bestaande projecten."
   },
   "screens.NameSoloProject.saveProjectButton": {
     "message": "Opslaan"
@@ -1482,22 +1482,22 @@
     "message": "Crashen van gegevens en app-fouten, samen met de informatie van het apparaat en app bieden Awana Digital de informatie die nodig is om fouten en fouten in de app op te lossen. De prestatiegegevens helpen ons bij het verbeteren van het reactievermogen van de app en het identificeren van fouten. Gebruikers tellen, waaronder totale gebruikers, gebruikers per land en gebruikers per project, rechtvaardigen voortdurende investeringen in de ontwikkeling van CoMapeo."
   },
   "screens.ProjectsIntro.intro": {
-    "message": "CoMapeo helps teams securely store territory mapping observations."
+    "message": "CoMapeo helpt teams om territorium mapping waarnemingen veilig op te slaan."
   },
   "screens.ProjectsIntro.joinExisting": {
-    "message": "Join an Existing Project"
+    "message": "Deelnemen aan een bestaand project"
   },
   "screens.ProjectsIntro.mapSolo": {
-    "message": "Go to Map"
+    "message": "Ga naar Kaart"
   },
   "screens.ProjectsIntro.sharingNote": {
-    "message": "Observations can only be shared with other devices on the same project."
+    "message": "Waarnemingen kunnen alleen worden gedeeld met andere apparaten van hetzelfde project."
   },
   "screens.ProjectsIntro.startNew": {
-    "message": "Start a New Project"
+    "message": "Een nieuw project starten"
   },
   "screens.ProjectsIntro.title": {
-    "message": "Secure & Private Collaborations"
+    "message": "Veilige & privé samenwerkingen"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",

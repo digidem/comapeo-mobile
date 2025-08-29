@@ -86,7 +86,7 @@
     "message": "変更を破棄してよろしいですか？"
   },
   "ProjectOnboarding.JoinProject.bodyText": {
-    "message": "Ask a Project Coordinator for an invitation to their Project."
+    "message": "プロジェクトコーディネーターにプロジェクトへの招待を依頼します。"
   },
   "ProjectOnboarding.JoinProject.goBackButton": {
     "message": "Go back"
@@ -95,7 +95,7 @@
     "message": "プロジェクトに参加"
   },
   "ProjectOnboarding.MapOnOwn.bodyText": {
-    "message": "Explore everything CoMapeo offers without inviting others to participate."
+    "message": "CoMapeoが提供するすべてのものを、他の人に参加させることなく探索してください。"
   },
   "ProjectOnboarding.MapOnOwn.goBackButton": {
     "message": "Go back"
@@ -104,16 +104,16 @@
     "message": "Go to Map"
   },
   "ProjectOnboarding.MapOnOwn.title": {
-    "message": "Map on Your Own"
+    "message": "自分の地図を見る"
   },
   "ProjectOnboarding.Success.body": {
     "message": "コラボレーションの準備ができています"
   },
   "ProjectOnboarding.Success.done": {
-    "message": "Done"
+    "message": "完了"
   },
   "ProjectOnboarding.Success.title": {
-    "message": "Success!"
+    "message": "成功！"
   },
   "ProjectSettings.RemoteArchive.AddRemoteArchive.archiveInfo": {
     "message": "プロジェクト参加者がデータを同期すると、インターネット上でアーカイブされます。 あなたのプロジェクト データは、以下の安全な暗号化されたサーバーにインターネット経由でアーカイブに同期されています。サーバーの所有者はデータを表示できます。"
@@ -486,7 +486,7 @@
   },
   "screens.AboutSettings.releaseName": {
     "description": "The CoMapeo chosen release name for the version of the app",
-    "message": "Preview"
+    "message": "プレビュー"
   },
   "screens.AboutSettings.releaseNameLabel": {
     "description": "Label for the release name",
@@ -688,10 +688,10 @@
     "message": "Create a Project"
   },
   "screens.CreateProject.projectUnique": {
-    "message": "Each project is unique and cannot exchange with another project."
+    "message": "各プロジェクトは一意であり、他のプロジェクトと交換することはできません。"
   },
   "screens.CreateProject.requestInvites": {
-    "message": "Request invites to join existing projects."
+    "message": "既存のプロジェクトへの招待をリクエストします。"
   },
   "screens.DataAndPrivacy.diagnosticInfoText": {
     "message": "デバイスに関する匿名化された情報、アプリのクラッシュ、エラー、パフォーマンスは、Awana Digitalがアプリを改善し、エラーを修正するのに役立ちます。"
@@ -715,10 +715,10 @@
     "message": "CoMapeoはあなたのプライバシーと自律性を尊重します"
   },
   "screens.DataPrivacy.description": {
-    "message": "CoMapeo helps territory monitors & mappers securely collaborate—without needing the internet."
+    "message": "CoMapeoは、インターネットを必要とせずに、テリトリーモニターとマップパーを安全に連携させることができます。"
   },
   "screens.DataPrivacy.diagnostic": {
-    "message": "Private by default—diagnostic information is fully anonymized and you can opt-out any time."
+    "message": "デフォルトでプライベート—診断情報は完全に匿名化され、いつでもオプトアウトできます。"
   },
   "screens.DataPrivacy.learnMore": {
     "message": "もっと詳しく"
@@ -730,31 +730,31 @@
     "message": "次へ"
   },
   "screens.DataPrivacy.stays": {
-    "message": "Your data stays on your devices—fully encrypted, in your control."
+    "message": "お客様のデータは、お客様のデバイスに完全に暗号化された状態で保存されます。"
   },
   "screens.DataPrivacy.title": {
     "message": "データ & プライバシー"
   },
   "screens.DeviceNaming.Success.next": {
-    "message": "Next"
+    "message": "次へ"
   },
   "screens.DeviceNaming.Success.ready": {
-    "message": "is now ready."
+    "message": "準備が整いました"
   },
   "screens.DeviceNaming.Success.success": {
     "message": "成功！"
   },
   "screens.DeviceNaming.addName": {
-    "message": "Save"
+    "message": "保存"
   },
   "screens.DeviceNaming.description": {
-    "message": "Distinct, memorable names help collaborators using CoMapeo to recognize you."
+    "message": "際立った思い出に残る名前は、CoMapeoを使用してあなたを認識するコラボレーターに役立ちます。"
   },
   "screens.DeviceNaming.header": {
-    "message": "Name Your Device"
+    "message": "デバイスに名前を付ける"
   },
   "screens.DeviceNaming.placeholder": {
-    "message": "Device Name"
+    "message": "端末名"
   },
   "screens.EnterPassword.enterPass": {
     "message": "パスコードを入力してください"
@@ -841,10 +841,10 @@
     "message": "問題が発生しました"
   },
   "screens.IntroToCoMapeo.collaborate": {
-    "message": "Join or create project teams"
+    "message": "プロジェクトチームに参加または作成"
   },
   "screens.IntroToCoMapeo.designedFor": {
-    "message": "Designed with and for Indigenous territory monitors & mappers"
+    "message": "先住民族の領域モニターとマップパーのために設計された"
   },
   "screens.IntroToCoMapeo.getStarted": {
     "message": "はじめよう"
@@ -1066,25 +1066,25 @@
     "message": "Use Your Location"
   },
   "screens.NameSoloProject.enterName": {
-    "message": "Project Name"
+    "message": "Enter a name for the Project"
   },
   "screens.NameSoloProject.existingProjectName": {
-    "message": "Using an existing project name does not make them the same project."
+    "message": "既存のプロジェクト名を使用すると、同じプロジェクトにはなりません。"
   },
   "screens.NameSoloProject.keepInMind": {
-    "message": "Keep in mind"
+    "message": "覚えておいてください"
   },
   "screens.NameSoloProject.navTitle": {
-    "message": "Name My Project"
+    "message": "プロジェクトの名前"
   },
   "screens.NameSoloProject.projectUnique": {
-    "message": "Each project is unique and cannot exchange with another project."
+    "message": "各プロジェクトは一意であり、他のプロジェクトと交換することはできません。"
   },
   "screens.NameSoloProject.requestInvites": {
-    "message": "Request invites to join existing projects."
+    "message": "既存のプロジェクトへの招待をリクエストします。"
   },
   "screens.NameSoloProject.saveProjectButton": {
-    "message": "Save"
+    "message": "保存"
   },
   "screens.ObscurePasscode.description": {
     "message": "Obscure Passcodeは、CoMapeoをすべてのデータを非表示にするデコイモードで開くことができるセキュリティ機能です。 イントロ画面に「Obscure Passcode」を入力すると、空のバージョンのCoMapeoが表示され、CoMapeoデータベースに保存されていないデモ観察記録を作成できます。"
@@ -1482,22 +1482,22 @@
     "message": "デバイスとアプリ情報と共にクラッシュデータとアプリエラーが発生すると、Awana Digitalはアプリのエラーやバグを修正するために必要な情報を提供します。 パフォーマンスデータは、アプリの応答性を向上させ、エラーを特定するのに役立ちます。 ユーザー数は、国ごとのユーザー、プロジェクトごとのユーザーを含み、CoMapeoの開発における継続的な投資を正当化するのに役立ちます。"
   },
   "screens.ProjectsIntro.intro": {
-    "message": "CoMapeo helps teams securely store territory mapping observations."
+    "message": "CoMapeoは、チームがテリトリーマッピングの観察記録を安全に保存するのに役立ちます。"
   },
   "screens.ProjectsIntro.joinExisting": {
-    "message": "Join an Existing Project"
+    "message": "既存のプロジェクトに参加"
   },
   "screens.ProjectsIntro.mapSolo": {
-    "message": "Go to Map"
+    "message": "地図に移動"
   },
   "screens.ProjectsIntro.sharingNote": {
-    "message": "Observations can only be shared with other devices on the same project."
+    "message": "観察記録は、同じプロジェクト上の他のデバイスとのみ共有できます。"
   },
   "screens.ProjectsIntro.startNew": {
-    "message": "Start a New Project"
+    "message": "新規プロジェクトを開始"
   },
   "screens.ProjectsIntro.title": {
-    "message": "Secure & Private Collaborations"
+    "message": "安全でプライベートなコラボレーション"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",

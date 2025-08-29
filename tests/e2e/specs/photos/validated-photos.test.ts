@@ -1,6 +1,7 @@
 import {expect} from '@wdio/globals';
 import {describe, it} from 'mocha';
 import {byResourceId, byTextMatches, byText} from '../../utils/selectors';
+import {checkForElementGone} from '../../utils/checkForGone';
 
 describe('Photo - show validated photo', () => {
   it('should open observation with photo', async () => {
@@ -26,21 +27,21 @@ describe('Photo - show validated photo', () => {
     expect(thumbnails.length).toBe(1);
     await thumbnails[0].click();
     await expect($(byText('Photo Info'))).toBeDisplayed();
-    await expect($(byText('Validated by CoMapeo'))).toBeDisplayed();
+    await expect($(byTextMatches('Validated by CoMapeo'))).toBeDisplayed();
   });
 
   it('should show validated accordian', async () => {
-    const validatedByAccordion = await $(byText('Validated by CoMapeo'));
-    const verifiedMessage = await $(
+    const validatedByAccordion = await $(byTextMatches('Validated by CoMapeo'));
+    await checkForElementGone(
       byTextMatches('This is a verified unaltered original.'),
     );
-
-    await expect(verifiedMessage).not.toBeDisplayed();
 
     await validatedByAccordion.scrollIntoView();
 
     await validatedByAccordion.click();
-
+    const verifiedMessage = await $(
+      byTextMatches('This is a verified unaltered original.'),
+    );
     await verifiedMessage.scrollIntoView();
 
     await expect(verifiedMessage).toBeDisplayed();

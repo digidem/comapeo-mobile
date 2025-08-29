@@ -5,6 +5,7 @@ import {
   byTextContains,
   byTextMatches,
 } from '../../utils/selectors';
+import {checkForElementGone} from '../../utils/checkForGone';
 
 describe('Photo - add photo to existing observation', () => {
   it('should edit observation on edit icon click', async () => {
@@ -45,8 +46,8 @@ describe('Photo - add photo to existing observation', () => {
     await draftThumbnails[0].click();
     await expect(await $(byTextMatches('Photo Info'))).toBeDisplayed();
     await expect(await $(byTextMatches('Delete Photo'))).toBeDisplayed();
+    await checkForElementGone(byTextMatches('Validated by CoMapeo'));
 
-    await expect($(byTextMatches('Validated by CoMapeo'))).not.toBeDisplayed();
     const backBtn = await $(byResourceId('MAIN.header-back-btn'));
     await backBtn.click();
     await driver.pause(1000);
@@ -57,15 +58,17 @@ describe('Photo - add photo to existing observation', () => {
     await attachedThumbnails[0].click();
 
     const validatedByAccordion = await $(byTextMatches('Validated by CoMapeo'));
-    const verifiedMessage = await $(
+    await checkForElementGone(
       byTextMatches('This is a verified unaltered original.'),
     );
-
-    await expect(verifiedMessage).not.toBeDisplayed();
 
     await validatedByAccordion.scrollIntoView();
 
     await validatedByAccordion.click();
+
+    const verifiedMessage = await $(
+      byTextMatches('This is a verified unaltered original.'),
+    );
 
     await verifiedMessage.scrollIntoView();
 
@@ -98,15 +101,16 @@ describe('Photo - add photo to existing observation', () => {
 
     const validatedByAccordion = await $(byTextMatches('Validated by CoMapeo'));
 
-    const verifiedMessage = await $(
+    await checkForElementGone(
       byTextMatches('This is a verified unaltered original.'),
     );
-
-    await expect(verifiedMessage).not.toBeDisplayed();
 
     await validatedByAccordion.scrollIntoView();
     await validatedByAccordion.click();
 
+    const verifiedMessage = await $(
+      byTextMatches('This is a verified unaltered original.'),
+    );
     await verifiedMessage.scrollIntoView();
 
     await expect(verifiedMessage).toBeDisplayed();
@@ -138,16 +142,17 @@ describe('Photo - add photo to existing observation', () => {
     await attachedThumbnails[1].click();
 
     const validatedByAccordion = await $(byTextMatches('Validated by CoMapeo'));
-
-    const verifiedMessage = await $(
+    await checkForElementGone(
       byTextMatches('This is a verified unaltered original.'),
     );
-
-    await expect(verifiedMessage).not.toBeDisplayed();
 
     await validatedByAccordion.scrollIntoView();
 
     await validatedByAccordion.click();
+
+    const verifiedMessage = await $(
+      byTextMatches('This is a verified unaltered original.'),
+    );
 
     await verifiedMessage.scrollIntoView();
 

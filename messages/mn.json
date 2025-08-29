@@ -754,7 +754,7 @@
     "message": "Name Your Device"
   },
   "screens.DeviceNaming.placeholder": {
-    "message": "Device Name"
+    "message": "Төхөөрөмжний нэр"
   },
   "screens.EnterPassword.enterPass": {
     "message": "Нууц үгээ оруулах"
@@ -1066,7 +1066,7 @@
     "message": "Use Your Location"
   },
   "screens.NameSoloProject.enterName": {
-    "message": "Project Name"
+    "message": "Enter a name for the Project"
   },
   "screens.NameSoloProject.existingProjectName": {
     "message": "Using an existing project name does not make them the same project."
@@ -1084,7 +1084,7 @@
     "message": "Request invites to join existing projects."
   },
   "screens.NameSoloProject.saveProjectButton": {
-    "message": "Save"
+    "message": "Хадгалах"
   },
   "screens.ObscurePasscode.description": {
     "message": "Obscure Passcode is a security feature that allows you to open CoMapeo in a decoy mode that hides all of your data. Entering the Obscure Passcode on the intro screen will display an empty version of CoMapeo which allows you to create demonstration observations that are not saved to the CoMapeo database."

@@ -1482,22 +1482,22 @@
     "message": "Dados sobre erros do aplicativo, juntamente com as informações do dispositivo, fornecem à Awana Digital as informações necessárias para corrigir bugs no aplicativo. Os dados de desempenho nos ajudam a melhorar a capacidade de resposta do aplicativo e a identificar erros. A contagem de usuários, incluindo o total de usuários, usuários por país e usuários por projeto, ajuda a justificar o investimento contínuo no desenvolvimento do CoMapeo."
   },
   "screens.ProjectsIntro.intro": {
-    "message": "CoMapeo helps teams securely store territory mapping observations."
+    "message": "CoMapeo ajuda as equipes a armazenar de forma segura observações de mapeamento de território."
   },
   "screens.ProjectsIntro.joinExisting": {
-    "message": "Join an Existing Project"
+    "message": "Participar de um projeto existente"
   },
   "screens.ProjectsIntro.mapSolo": {
     "message": "Ir para Mapas"
   },
   "screens.ProjectsIntro.sharingNote": {
-    "message": "Observations can only be shared with other devices on the same project."
+    "message": "As observações só podem ser compartilhadas com outros dispositivos no mesmo projeto."
   },
   "screens.ProjectsIntro.startNew": {
-    "message": "Start a New Project"
+    "message": "Iniciar um novo projeto"
   },
   "screens.ProjectsIntro.title": {
-    "message": "Secure & Private Collaborations"
+    "message": "Colaborações seguras e privadas"
   },
   "screens.SaveTrack.TrackEditView.descriptionPlaceholder": {
     "description": "Placeholder for description/notes field",

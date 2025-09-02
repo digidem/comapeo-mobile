@@ -5,11 +5,6 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {
-  useManyProjects,
-  useOwnRoleInProject,
-  useSyncState,
-} from '@comapeo/core-react';
 
 import {useNavigationFromRoot} from '../hooks/useNavigationWithTypes.ts';
 import Exchange from '../images/Exchange.svg';
@@ -21,10 +16,6 @@ import {useProjectRoleAndDetails} from '../hooks/useProjectRoleAndDetails.ts';
 import {NEW_DARK_GREY, BLACK, WHITE} from '../lib/styles';
 import {useActiveProject} from '../contexts/ActiveProjectContext.tsx';
 import {ProjectInfoCard} from '../sharedComponents/ProjectInfoCard.tsx';
-import {
-  useActiveArchiveServer,
-  useProjectSettings,
-} from '../hooks/server/projects.ts';
 
 const m = defineMessages({
   aboutCoMapeo: {
@@ -60,36 +51,6 @@ const m = defineMessages({
     defaultMessage: 'All Projects',
   },
 });
-
-function PrefetchProjectsList() {
-  useManyProjects();
-  return null;
-}
-
-function PrefetchProjectRole({projectId}: {projectId: string}) {
-  useOwnRoleInProject({projectId});
-  return null;
-}
-
-function PrefetchExchangeQueries() {
-  const {projectId} = useActiveProject();
-  useProjectSettings();
-  useActiveArchiveServer({projectId});
-  useSyncState({projectId});
-  return null;
-}
-
-function PrefetchAllProjectRoles() {
-  const {data: projects} = useManyProjects();
-
-  return (
-    <>
-      {projects.map(p => (
-        <PrefetchProjectRole projectId={p.projectId} key={p.projectId} />
-      ))}
-    </>
-  );
-}
 
 export function MenuScreen() {
   const {formatMessage} = useIntl();
@@ -214,11 +175,6 @@ export function MenuScreen() {
             </View>
           </MainMenuItemWrapper>
         </View>
-        <React.Suspense fallback={null}>
-          <PrefetchProjectsList />
-          <PrefetchAllProjectRoles />
-          <PrefetchExchangeQueries />
-        </React.Suspense>
       </ScrollView>
     </View>
   );

@@ -24,7 +24,7 @@ export const ErrorBottomSheet = ({
   const {formatMessage} = useIntl();
   return (
     <BottomSheetWrapper>
-      <View style={styles.container}>
+      <View style={styles.container} testID="ERROR.bottom-sheet">
         <View style={{alignItems: 'center'}}>
           <ErrorIcon width={160} height={160} style={styles.icon} />
           <HeaderText style={{textAlign: 'center'}}>

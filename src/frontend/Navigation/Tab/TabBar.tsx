@@ -6,7 +6,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {COMAPEO_BLUE, MEDIUM_GREY} from '../../lib/styles';
 import {BodyText} from '../../sharedComponents/Text/BodyText';
 import {useTracking} from '../../hooks/useTracking';
-import {useTrackTimerContext} from '../../contexts/TrackTimerContext';
+import {useTrackTimer} from '../../hooks/useTrackTimer.ts';
 
 const BUTTON_SIZE = 25;
 const HIT_SLOP = 20;
@@ -93,7 +93,7 @@ export const TabBar = ({navigation, state}: BottomTabBarProps) => {
 
 const TrackButtonContent = ({isSelected}: {isSelected: boolean}) => {
   const {isTracking} = useTracking();
-  const {timer} = useTrackTimerContext();
+  const timer = useTrackTimer();
   return (
     <>
       {isTracking && (

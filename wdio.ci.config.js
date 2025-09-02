@@ -42,8 +42,8 @@ const config = {
   capabilities: [
     {
       platformName: 'android',
-      'appium:platformVersion': '13.0',
-      'appium:deviceName': 'Google Pixel 7',
+      'appium:platformVersion': '14.0',
+      'appium:deviceName': 'Google Pixel 8',
       'appium:automationName': 'UIAutomator2',
       'appium:app': process.env.BROWSERSTACK_APP_URL,
       'appium:autoGrantPermissions': true,

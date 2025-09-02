@@ -15,8 +15,8 @@ import {SvgProps} from 'react-native-svg';
 import {NEW_DARK_GREY} from '../lib/styles';
 import {AppStackParamsList} from '../sharedTypes/navigation';
 
-import {useAppUsageStatsPromptActions} from '../contexts/AppUsageStatsPromptContext';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {useAppUsageStats} from '../contexts/AppUsageStatsProvider';
 
 const m = defineMessages({
   screenTitle: {
@@ -57,7 +57,7 @@ export const AppUsagePromptInterstitial = ({
   'AppUsagePromptInterstitial'
 >) => {
   const {formatMessage: t} = useIntl();
-  const {setOptedIn} = useAppUsageStatsPromptActions();
+  const {optOut} = useAppUsageStats();
 
   return (
     <ScreenContentWithDock
@@ -67,7 +67,7 @@ export const AppUsagePromptInterstitial = ({
             fullSize
             text={t(m.notNow)}
             onPress={() => {
-              setOptedIn(false);
+              optOut();
             }}
           />
           <PrimaryButton

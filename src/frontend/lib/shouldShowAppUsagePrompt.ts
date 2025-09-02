@@ -2,13 +2,15 @@ import type {AppUsageStatsPromptState} from '../contexts/AppUsageStatsPromptCont
 
 export function shouldShowAppUsagePrompt(
   state: AppUsageStatsPromptState,
-  now: number = Date.now(),
+  optedIn: boolean,
 ) {
-  if (state.optedIn === true) {
+  if (optedIn === true) {
     return false;
   }
   const oneWeek = 7 * 24 * 60 * 60 * 1000;
   const threeMonths = 90 * 24 * 60 * 60 * 1000;
+
+  const now = Date.now();
 
   const shouldShowInitialPrompt =
     !!state.completedOnboardingAt &&

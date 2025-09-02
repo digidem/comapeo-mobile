@@ -9,7 +9,8 @@ import {SecondaryButton} from '../sharedComponents/Buttons';
 import {ScreenContentWithDock} from '../sharedComponents/ScreenContentWithDock';
 import {HeaderText} from '../sharedComponents/Text/HeaderText';
 import {BodyText} from '../sharedComponents/Text/BodyText';
-import {useAppUsageStatsPromptActions} from '../contexts/AppUsageStatsPromptContext';
+
+import {useAppUsageStats} from '../contexts/AppUsageStatsProvider';
 
 const m = defineMessages({
   success: {
@@ -35,17 +36,14 @@ export const AppUsageSharingSuccess = () => {
   const {formatMessage} = useIntl();
   const {data} = useOwnDeviceInfo();
   const deviceName = data?.name;
-  const {setOptedIn} = useAppUsageStatsPromptActions();
-
+  const {optIn} = useAppUsageStats();
   return (
     <ScreenContentWithDock
       dockContent={
         <SecondaryButton
           fullSize
           text={formatMessage(m.done)}
-          onPress={() => {
-            setOptedIn(true);
-          }}
+          onPress={optIn}
         />
       }
       contentContainerStyle={{marginTop: 80}}>

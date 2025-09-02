@@ -18,6 +18,7 @@ import {
 } from '../../contexts/AppUsageStatsPromptContext';
 import {shouldShowAppUsagePrompt} from '../../lib/shouldShowAppUsagePrompt';
 import {createAppUsagePromptScreens} from './UsagePromptScreens';
+import {usePostHog} from 'posthog-react-native';
 
 export const RootStack = createNativeStackNavigator<AppStackParamsList>();
 
@@ -29,8 +30,13 @@ export const RootStackNavigator = () => {
   const completedOnboardingAt = useAppUsageStatsPromptState(
     state => state.completedOnboardingAt,
   );
+
+  const posthog = usePostHog();
   const usagePromptState = useAppUsageStatsPromptState(s => s);
-  const showUsagePrompt = shouldShowAppUsagePrompt(usagePromptState);
+  const showUsagePrompt = shouldShowAppUsagePrompt(
+    usagePromptState,
+    !posthog.optedOut,
+  );
 
   const {data: deviceInfo} = useOwnDeviceInfo();
 

@@ -11,12 +11,10 @@ import {MMKVZustandStorage} from '../hooks/persistedState/createPersistedState';
 export const STORAGE_KEY = 'AppUsageStatsPrompt';
 
 export const AppUsageStatsPromptSchemaV0 = v.object({
-  optedIn: v.union([v.boolean(), v.null()]),
   completedOnboardingAt: v.union([v.number(), v.null()]),
   lastPromptAt: v.union([v.number(), v.null()]),
   promptCount: v.number(),
   optInStartedAt: v.optional(v.union([v.number(), v.null()])),
-  optInExpiresAt: v.optional(v.union([v.number(), v.null()])),
 });
 
 export type AppUsageStatsPromptState = v.InferOutput<
@@ -24,22 +22,18 @@ export type AppUsageStatsPromptState = v.InferOutput<
 >;
 
 const initialState: AppUsageStatsPromptState = {
-  optedIn: null,
   completedOnboardingAt: null,
   lastPromptAt: null,
   promptCount: 0,
   optInStartedAt: null,
-  optInExpiresAt: null,
 };
 
 function createInitialState(): AppUsageStatsPromptState {
   return {
-    optedIn: null,
     completedOnboardingAt: null,
     lastPromptAt: null,
     promptCount: 0,
     optInStartedAt: null,
-    optInExpiresAt: null,
   };
 }
 
@@ -65,28 +59,20 @@ export function createAppUsageStatsPromptStore({persist} = {persist: false}) {
         store.setState({completedOnboardingAt: Date.now()});
       }
     },
-    setOptedIn: (optedIn: boolean) => {
-      const now = Date.now();
+    setOptedInStartedAt: (date: number) => {
+      store.setState({
+        lastPromptAt: null,
+        promptCount: 0,
+        optInStartedAt: date,
+      });
+    },
+    clearOptedInStartedAt: () => {
+      store.setState({optInStartedAt: null});
+    },
+    incrementPromptCount: () => {
       const state = store.getState();
-      const TWELVE_MONTHS_MS = 365 * 24 * 60 * 60 * 1000;
-
-      if (optedIn) {
-        store.setState({
-          optedIn: true,
-          lastPromptAt: now,
-          promptCount: state.promptCount,
-          optInStartedAt: now,
-          optInExpiresAt: now + TWELVE_MONTHS_MS,
-        });
-      } else {
-        store.setState({
-          optedIn: false,
-          lastPromptAt: now,
-          promptCount: state.promptCount + 1,
-          optInStartedAt: null,
-          optInExpiresAt: null,
-        });
-      }
+      const now = Date.now();
+      store.setState({lastPromptAt: now, promptCount: state.promptCount + 1});
     },
   };
 

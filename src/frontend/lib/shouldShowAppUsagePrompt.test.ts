@@ -8,63 +8,57 @@ describe('shouldShowAppUsagePrompt', () => {
 
   it('never shows if optedIn === true', () => {
     const state: AppUsageStatsPromptState = {
-      optedIn: true,
       completedOnboardingAt: NOW - ONE_WEEK - 1,
       lastPromptAt: NOW - THREE_MO - 1,
       promptCount: 5,
     };
-    expect(shouldShowAppUsagePrompt(state, NOW)).toBe(false);
+    expect(shouldShowAppUsagePrompt(state, false)).toBe(false);
   });
 
   it('shows initial prompt once a week after onboarding, when promptCount===0', () => {
     const state: AppUsageStatsPromptState = {
-      optedIn: null,
       completedOnboardingAt: NOW - ONE_WEEK,
       lastPromptAt: null,
       promptCount: 0,
     };
-    expect(shouldShowAppUsagePrompt(state, NOW)).toBe(true);
+    expect(shouldShowAppUsagePrompt(state, false)).toBe(true);
   });
 
   it('does not show initial prompt if not enough time passed', () => {
     const state: AppUsageStatsPromptState = {
-      optedIn: null,
       completedOnboardingAt: NOW - (ONE_WEEK - 1),
       lastPromptAt: null,
       promptCount: 0,
     };
-    expect(shouldShowAppUsagePrompt(state, NOW)).toBe(false);
+    expect(shouldShowAppUsagePrompt(state, false)).toBe(false);
   });
 
   it('shows re-prompt up to 3 times, every 3 months', () => {
     for (let count = 1; count <= 3; count++) {
       const state: AppUsageStatsPromptState = {
-        optedIn: false,
         completedOnboardingAt: NOW - ONE_WEEK - 1,
         lastPromptAt: NOW - THREE_MO,
         promptCount: count,
       };
-      expect(shouldShowAppUsagePrompt(state, NOW)).toBe(true);
+      expect(shouldShowAppUsagePrompt(state, false)).toBe(true);
     }
   });
 
   it('does not show re-prompt if promptCount > 3', () => {
     const state: AppUsageStatsPromptState = {
-      optedIn: false,
       completedOnboardingAt: NOW - ONE_WEEK - 1,
       lastPromptAt: NOW - THREE_MO,
       promptCount: 4,
     };
-    expect(shouldShowAppUsagePrompt(state, NOW)).toBe(false);
+    expect(shouldShowAppUsagePrompt(state, false)).toBe(false);
   });
 
   it('does not show re-prompt if 3mo not passed yet', () => {
     const state: AppUsageStatsPromptState = {
-      optedIn: false,
       completedOnboardingAt: NOW - ONE_WEEK - 1,
       lastPromptAt: NOW - (THREE_MO - 1),
       promptCount: 2,
     };
-    expect(shouldShowAppUsagePrompt(state, NOW)).toBe(false);
+    expect(shouldShowAppUsagePrompt(state, false)).toBe(false);
   });
 });

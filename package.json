@@ -49,7 +49,7 @@
     "@react-navigation/bottom-tabs": "7.4.7",
     "@react-navigation/native": "7.1.17",
     "@react-navigation/stack": "7.4.8",
-    "@rnmapbox/maps": "10.1.42",
+    "@rnmapbox/maps": "10.1.36",
     "@sentry/react-native": "7.0.1",
     "@tanstack/react-query": "5.85.9",
     "@turf/helpers": "7.2.0",

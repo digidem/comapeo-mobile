@@ -67,7 +67,6 @@ These tests deal with all issues related to Observations.
 - Checks that all of the back buttons work
 - Checks that the observations list button goes to the observations list screen from map and the camera screen
 - Checks that observation names, time captures, thumbnails and icons display as expected on the list screen and the show observation screen
-- Checks the “You’re a coordinator on this project.” or “You’re mapping on your own.” text is displayed at the top of the ObservationsList.
 
 ### Special Considerations
 

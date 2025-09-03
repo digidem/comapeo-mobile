@@ -104,7 +104,7 @@ export const MapScreen = ({
   }
 
   return (
-    <View style={{flex: 1}} onLayout={onLayout}>
+    <View style={{flex: 1}} onLayout={onLayout} testID="MAIN.map-screen">
       <View
         pointerEvents="box-none"
         style={[styles.lowStorageBanner, {top: BANNER_TOP}]}>

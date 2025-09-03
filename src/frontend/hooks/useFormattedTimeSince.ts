@@ -3,8 +3,9 @@ import {useCurrentTime} from './useCurrentTime';
 
 export const useFormattedTimeSince = (start: Date | null, interval: number) => {
   const currentTime = useCurrentTime(interval);
-  const startDate = start ? new Date(start) : new Date();
 
-  const millisPassed = Math.abs(currentTime.getTime() - startDate.getTime());
+  const millisPassed = start
+    ? Math.abs(currentTime.getTime() - start.getTime())
+    : 0;
   return millisecondsToHHMMSS(millisPassed);
 };

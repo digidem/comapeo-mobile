@@ -3,15 +3,16 @@ import {StyleSheet, View, ScrollView} from 'react-native';
 import TopoBackground from '../../images/TopoLogo.svg';
 import CoMapeoTextAsSVG from '../../images/CoMapeoText.svg';
 import WorldMap from '../../images/WorldMap.svg';
-import Handshake from '../../images/Handshake.svg';
+import HandshakeMediumMediumDark from '../../images/HandshakeMediumMediumDark.svg';
 import LockedWithKey from '../../images/LockedWithKey.svg';
 import RaisedFistMediumSkinTone from '../../images/RaisedFistMediumSkinTone.svg';
 import {COMAPEO_DARK_BLUE, WHITE} from '../../lib/styles';
 import {defineMessages, useIntl} from 'react-intl';
-import {Text} from '../../sharedComponents/Text';
-import {Button} from '../../sharedComponents/Button';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {OnboardingParamsList} from '../../sharedTypes/navigation';
+import {HeaderText} from '../../sharedComponents/Text/HeaderText';
+import {BodyText} from '../../sharedComponents/Text/BodyText';
+import {PrimaryButton} from '../../sharedComponents/Buttons';
 
 const m = defineMessages({
   getStarted: {
@@ -28,7 +29,7 @@ const m = defineMessages({
   },
   collaborate: {
     id: 'screens.IntroToCoMapeo.collaborate',
-    defaultMessage: 'Collaborate on projects',
+    defaultMessage: 'Join or create project teams',
   },
   ownData: {
     id: 'screens.IntroToCoMapeo.ownData',
@@ -37,7 +38,7 @@ const m = defineMessages({
   designedFor: {
     id: 'screens.IntroToCoMapeo.designedFor',
     defaultMessage:
-      'Designed with and for Indigenous peoples & frontline communities',
+      'Designed with and for Indigenous territory monitors & mappers',
   },
 });
 
@@ -52,37 +53,45 @@ export const IntroToCoMapeo = ({
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <CoMapeoTextAsSVG width={'95%'} height={48} style={styles.logo} />
         <View style={styles.mainTextContainer}>
-          <Text style={styles.mainText}>
+          <HeaderText variant="header3" style={styles.mainText}>
             {formatMessage(m.mapWorldTogether)}
-          </Text>
+          </HeaderText>
         </View>
         <View style={styles.textBox}>
           <View style={styles.textItem}>
             <WorldMap width={24} height={24} />
-            <Text style={styles.text}>{formatMessage(m.mapAnywhere)}</Text>
+            <BodyText variant="smallMeta" style={styles.text}>
+              {formatMessage(m.mapAnywhere)}
+            </BodyText>
           </View>
           <View style={styles.textItem}>
-            <Handshake width={24} height={24} />
-            <Text style={styles.text}>{formatMessage(m.collaborate)}</Text>
+            <HandshakeMediumMediumDark width={24} height={24} />
+            <BodyText variant="smallMeta" style={styles.text}>
+              {formatMessage(m.collaborate)}
+            </BodyText>
           </View>
           <View style={styles.textItem}>
             <LockedWithKey width={24} height={24} />
-            <Text style={styles.text}>{formatMessage(m.ownData)}</Text>
+            <BodyText variant="smallMeta" style={styles.text}>
+              {formatMessage(m.ownData)}
+            </BodyText>
           </View>
           <View style={styles.textItem}>
             <RaisedFistMediumSkinTone width={24} height={24} />
-            <Text style={styles.text}>{formatMessage(m.designedFor)}</Text>
+            <BodyText variant="smallMeta" style={styles.text}>
+              {formatMessage(m.designedFor)}
+            </BodyText>
           </View>
         </View>
-        <Button
+        <PrimaryButton
           testID="ONBOARDING.get-started-btn"
-          fullWidth
+          fullSize
           onPress={() => {
             navigation.navigate('DataPrivacy');
           }}
-          style={styles.getStartedButton}>
-          {formatMessage(m.getStarted)}
-        </Button>
+          style={styles.getStartedButton}
+          text={formatMessage(m.getStarted)}
+        />
       </ScrollView>
     </View>
   );
@@ -114,7 +123,6 @@ const styles = StyleSheet.create({
   },
   mainText: {
     color: WHITE,
-    fontSize: 24,
     textAlign: 'center',
   },
   textBox: {
@@ -135,13 +143,11 @@ const styles = StyleSheet.create({
   },
   text: {
     color: WHITE,
-    fontSize: 16,
     textAlign: 'left',
     flexShrink: 1,
     flex: 1,
   },
   getStartedButton: {
-    width: '85%',
     marginTop: 16,
   },
 });

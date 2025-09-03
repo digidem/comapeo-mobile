@@ -134,7 +134,7 @@ export const ObservationScreen: NativeNavigationComponent<'Observation'> = ({
                             size={size}
                             photo={att}
                             onPress={() => {
-                              navigation.navigate('PhotoPreviewModal', {
+                              navigation.navigate('AttachedPhotoPreviewModal', {
                                 photo: att,
                                 observationDocId: observationId,
                               });

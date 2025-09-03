@@ -230,13 +230,18 @@ export function AttachedPhotoPreviewModal({
                               distance: formatNumber(metersFromObservation, {
                                 style: 'unit',
                                 unit: 'meter',
+                                maximumFractionDigits: 2,
                               }),
                             })
                           : formatMessage(m.distanceFromObs, {
-                              distance: formatNumber(metersFromObservation, {
-                                style: 'unit',
-                                unit: 'kilometer',
-                              }),
+                              distance: formatNumber(
+                                metersFromObservation / 1000,
+                                {
+                                  style: 'unit',
+                                  unit: 'kilometer',
+                                  maximumFractionDigits: 2,
+                                },
+                              ),
                             })}
                       </BodyText>
                     </InfoItem>

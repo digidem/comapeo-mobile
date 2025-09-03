@@ -42,9 +42,12 @@ export type RootStackParamsList = {
   LanguageSettings: undefined;
   CoordinateFormat: undefined;
   Experiments: undefined;
-  PhotoPreviewModal: {
-    observationDocId?: string;
-    photo: SavedPhoto | ProcessedDraftPhoto;
+  DraftPhotoPreviewModal: {
+    photo: ProcessedDraftPhoto;
+  };
+  AttachedPhotoPreviewModal: {
+    photo: SavedPhoto;
+    observationDocId: string;
   };
   ConfirmDeletePhoto: {
     onSuccess?: () => void;

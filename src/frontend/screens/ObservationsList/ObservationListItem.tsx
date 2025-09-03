@@ -89,6 +89,7 @@ function ObservationListItemInner({
           <View style={styles.smallIconContainer}>
             <PresetCircleIcon
               iconId={preset?.iconRef?.docId}
+              testID={`OBS.${preset?.name}-list-icon`}
               size="small"
               color={preset?.color}
             />

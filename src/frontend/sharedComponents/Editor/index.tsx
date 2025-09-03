@@ -131,20 +131,23 @@ export const Editor = ({
                   return (
                     <ThumbnailContainer
                       key={att.draftPhotoId}
+                      accessibilityLabel="View draft photo."
                       size={size}
                       onPress={() =>
-                        navigate('PhotoPreviewModal', {
+                        navigate('DraftPhotoPreviewModal', {
                           photo: att,
-                          // TODO: Does it make sense to provide the `observationDocId` in this case?
-                          // Reasoning for not doing so is because the photo isn't actually saved yet, so it's technically not
-                          // officially associated with the observation being created/edited.
                         })
                       }>
                       <ThumbnailImage uri={att.thumbnailUri} />
                     </ThumbnailContainer>
                   );
                 }
+                // observationId must exist if there is a saved photo
                 if (isSavedPhoto(att)) {
+                  if (!observationId)
+                    throw new Error(
+                      'Observation ID is required for saved photos',
+                    );
                   return (
                     <React.Suspense
                       key={att.driveDiscoveryId + att.hash + att.type}
@@ -153,7 +156,7 @@ export const Editor = ({
                         size={size}
                         photo={att}
                         onPress={() => {
-                          navigate('PhotoPreviewModal', {
+                          navigate('AttachedPhotoPreviewModal', {
                             photo: att,
                             observationDocId: observationId,
                           });

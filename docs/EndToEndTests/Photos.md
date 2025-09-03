@@ -10,6 +10,8 @@
 
 ## Photos
 
+**These test cannot run on CI as browserstack has issues dealing with photos, but they can be run locally**
+
 ### Overview
 
 These tests check that photos can be successfully added and deleted when creating an observation. Checks that the proper photo screen opens when the photo is a draft photo vs when the photo is an attached photo
